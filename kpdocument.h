@@ -26,8 +26,8 @@
 */
 
 
-#ifndef __kpdocument_h__
-#define __kpdocument_h__
+#ifndef KP_DOCUMENT_H
+#define KP_DOCUMENT_H
 
 #include <qbitmap.h>
 #include <qobject.h>
@@ -64,7 +64,9 @@ public:
 
     static QPixmap getPixmapFromFile (const KURL &url, bool suppressDoesntExistDialog,
                                       QWidget *parent,
-                                      QString &mimeType);
+                                      QString *mimeType = 0);
+    // TODO: fix: open*() should only be called once.
+    //            Create a new kpDocument() if you want to open again.
     void openNew (const KURL &url);
     bool open (const KURL &url, bool newDocSameNameIfNotExist = false);
 
@@ -75,6 +77,18 @@ public:
     bool saveAs (const KURL &url, const QString &mimetype, bool overwritePrompt = true);
 
     KURL url () const;
+    void setURL (const KURL &url, bool isFromURL);
+
+    // Returns whether the document's pixmap was successfully opened from
+    // or saved to the URL returned by url().  This is not true for a
+    // new kpDocument and in the case of open() being passed
+    // "newDocSameNameIfNotExist = true" when the URL doesn't exist.
+    //
+    // If this returns true and the kpDocument hasn't been modified,
+    // this gives a pretty good indication that the pixmap stored at url()
+    // is equal to pixmap() (unless the something has happened to that url
+    // outside of KolourPaint).
+    bool isFromURL (bool checkURLStillExists = true) const;
 
     // (will convert: empty URL --> "Untitled")
     static QString prettyURLForURL (const KURL &url);
@@ -85,6 +99,7 @@ public:
     QString prettyFilename () const;
 
     QString mimetype () const;
+    int quality () const;
 
 
     /*
@@ -95,10 +110,12 @@ public:
     bool isModified () const;
     bool isEmpty () const;
 
+    int constructorWidth () const;  // as passed to the constructor
     int width (bool ofSelection = false) const;
     int oldWidth () const;  // only valid in a slot connected to sizeChanged()
     void setWidth (int w, const kpColor &backgroundColor);
 
+    int constructorHeight () const;  // as passed to the constructor
     int height (bool ofSelection = false) const;
     int oldHeight () const;  // only valid in a slot connected to sizeChanged()
     void setHeight (int h, const kpColor &backgroundColor);
@@ -183,8 +200,15 @@ private:
     int m_colorDepth, m_oldColorDepth;
     kpMainWindow *m_mainWindow;
     KURL m_url;
+    bool m_isFromURL;
     QString m_mimetype;
+    int m_quality;
     bool m_modified;
+
+    // There is no need to maintain binary compatibility at this stage.
+    // The d-pointer is just so that you can experiment without recompiling
+    // the kitchen sink.
+    class kpDocumentPrivate *d;
 };
 
-#endif  // __kpdocument_h__
+#endif  // KP_DOCUMENT_H

@@ -240,7 +240,10 @@ bool kpMainWindow::open (const KURL &url, bool newDocSameNameIfNotExist)
     // create doc
     kpDocument *newDoc = new kpDocument (docSize.width (), docSize.height (), 32, this);
     if (newDoc->open (url, newDocSameNameIfNotExist))
-        addRecentURL (url);
+    {
+        if (newDoc->isFromURL (false/*don't bother checking exists*/))
+            addRecentURL (url);
+    }
     else
     {
         delete newDoc;
@@ -539,7 +542,7 @@ bool kpMainWindow::slotExport ()
 // private slot
 void kpMainWindow::slotEnableReload ()
 {
-    m_actionReload->setEnabled (m_document && !m_document->url ().isEmpty ());
+    m_actionReload->setEnabled (m_document);
 }
 
 // private slot
@@ -548,28 +551,79 @@ bool kpMainWindow::slotReload ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    if (m_document && m_document->isModified ())
+    if (!m_document)
+        return false;
+
+
+    KURL oldURL = m_document->url ();
+
+
+    if (m_document->isModified ())
     {
-        int result = KMessageBox::warningContinueCancel (this,
+        int result = KMessageBox::Cancel;
+
+        if (m_document->isFromURL () && !oldURL.isEmpty ())
+        {
+            result = KMessageBox::warningContinueCancel (this,
                          i18n ("The document \"%1\" has been modified.\n"
                                "Reloading will lose all changes since you last saved it.\n"
                                "Are you sure?")
                              .arg (m_document->prettyFilename ()),
-                        QString::null/*caption*/,
-                        i18n ("&Reload"));
+                         QString::null/*caption*/,
+                         i18n ("&Reload"));
+        }
+        else
+        {
+            result = KMessageBox::warningContinueCancel (this,
+                         i18n ("The document \"%1\" has been modified.\n"
+                               "Reloading will lose all changes.\n"
+                               "Are you sure?")
+                             .arg (m_document->prettyFilename ()),
+                         QString::null/*caption*/,
+                         i18n ("&Reload"));
+        }
 
         if (result != KMessageBox::Continue)
             return false;
     }
 
-    KURL oldURL = m_document->url ();
 
-#if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotReload() reloading!" << endl;
-#endif
-    setDocument (0);  // make sure we don't open in a new window
+    kpDocument *doc = 0;
 
-    return open (oldURL);
+    // If it's _supposed to_ come from a URL or it exists
+    if (m_document->isFromURL (false/*don't bother checking exists*/) ||
+        (!oldURL.isEmpty () && KIO::NetAccess::exists (oldURL, true/*open*/, this)))
+    {
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "kpMainWindow::slotReload() reloading from disk!" << endl;
+    #endif
+
+        doc = new kpDocument (1, 1, 32, this);
+        if (!doc->open (oldURL))
+        {
+            delete doc; doc = 0;
+            return false;
+        }
+
+        addRecentURL (oldURL);
+    }
+    else
+    {
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "kpMainWindow::slotReload() create doc" << endl;
+    #endif
+
+        doc = new kpDocument (m_document->constructorWidth (),
+                              m_document->constructorHeight (),
+                              32,
+                              this);
+        doc->setURL (oldURL, false/*not from URL*/);
+    }
+
+
+    setDocument (doc);
+
+    return true;
 }
 
 
@@ -646,8 +700,9 @@ void kpMainWindow::slotPrintPreview ()
 // private slot
 void kpMainWindow::slotMail ()
 {
-    if (m_document->url ().isEmpty () ||  // no name
-        m_document->isModified ())        // hasn't been saved
+    if (m_document->url ().isEmpty ()/*no name*/ ||
+        !m_document->isFromURL () ||
+        m_document->isModified ()/*needs to be saved*/)
     {
         int result = KMessageBox::questionYesNo (this,
                         i18n ("You must save this image before sending it.\n"
@@ -684,9 +739,10 @@ void kpMainWindow::slotMail ()
 // private
 void kpMainWindow::setAsWallpaper (bool centered)
 {
-    if (!m_document->url ().isLocalFile () ||  // remote file
-        m_document->url ().isEmpty ()      ||  // no name
-        m_document->isModified ())             // hasn't been saved
+    if (m_document->url ().isEmpty ()/*no name*/ ||
+        !m_document->url ().isLocalFile ()/*remote file*/ ||
+        !m_document->isFromURL () ||
+        m_document->isModified ()/*needs to be saved*/)
     {
         QString question;
 

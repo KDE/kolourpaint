@@ -698,11 +698,9 @@ void kpMainWindow::slotPasteFromFile ()
     d->m_lastPasteFromURL = url;
 
 
-    QString mimeType_Ignored;
     QPixmap pixmap = kpDocument::getPixmapFromFile (url,
         false/*show error message if doesn't exist*/,
-        this,
-        mimeType_Ignored);
+        this);
 
 
     if (pixmap.isNull ())

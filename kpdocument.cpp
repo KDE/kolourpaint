@@ -61,16 +61,27 @@
 #include <kpviewmanager.h>
 
 
+struct kpDocumentPrivate
+{
+    int m_constructorWidth, m_constructorHeight;
+};
+
+
 kpDocument::kpDocument (int w, int h, int colorDepth, kpMainWindow *mainWindow)
     : m_selection (0),
       m_oldWidth (-1), m_oldHeight (-1),
       m_colorDepth (colorDepth), m_oldColorDepth (-1),
       m_mainWindow (mainWindow),
-      m_modified (false)
+      m_isFromURL (false),
+      m_modified (false),
+      d (new kpDocumentPrivate ())
 {
 #if DEBUG_KP_DOCUMENT && 0
     kdDebug () << "kpDocument::kpDocument (" << w << "," << h << "," << colorDepth << ")" << endl;
 #endif
+
+    d->m_constructorWidth = w;
+    d->m_constructorHeight = h;
 
     m_pixmap = new QPixmap (w, h);
     m_pixmap->fill (Qt::white);
@@ -78,6 +89,8 @@ kpDocument::kpDocument (int w, int h, int colorDepth, kpMainWindow *mainWindow)
 
 kpDocument::~kpDocument ()
 {
+    delete d;
+
     delete m_pixmap;
     delete m_selection;
 }
@@ -101,13 +114,14 @@ void kpDocument::setMainWindow (kpMainWindow *mainWindow)
 // public static
 QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExistDialog,
                                        QWidget *parent,
-                                       QString &mimeType)
+                                       QString *mimeType)
 {
 #if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::getPixmapFromFile(" << url << "," << parent << ")" << endl;
 #endif
 
-    mimeType = QString::null;
+    if (mimeType)
+        *mimeType = QString::null;
 
 
     QString tempFile;
@@ -126,7 +140,9 @@ QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExist
 
     // sync: remember to "KIO::NetAccess::removeTempFile (tempFile)" in all exit paths
 
-    mimeType = KImageIO::mimeType (tempFile);
+    QString detectedMimeType = KImageIO::mimeType (tempFile);
+    if (mimeType)
+        *mimeType = detectedMimeType;
 
 #if DEBUG_KP_DOCUMENT
     kdDebug () << "\ttempFile=" << tempFile << endl;
@@ -135,7 +151,7 @@ QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExist
     kdDebug () << "\tmimetype of src=" << KImageIO::mimeType (url.path ()) << endl;
 #endif
 
-    if (mimeType.isEmpty ())
+    if (detectedMimeType.isEmpty ())
     {
         KMessageBox::sorry (parent,
                             i18n ("Could not open \"%1\" - unknown mimetype.")
@@ -214,7 +230,7 @@ void kpDocument::openNew (const KURL &url)
 
     m_pixmap->fill (Qt::white);
 
-    m_url = url;
+    setURL (url, false/*not from url*/);
     m_mimetype = QString::null;
     m_modified = false;
 
@@ -231,14 +247,14 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
     QPixmap newPixmap = kpDocument::getPixmapFromFile (url,
         newDocSameNameIfNotExist/*suppress "doesn't exist" dialog*/,
         m_mainWindow,
-        newMimeType/*ref*/);
+        &newMimeType);
 
     if (!newPixmap.isNull ())
     {
         delete m_pixmap;
         m_pixmap = new QPixmap (newPixmap);
 
-        m_url = url;
+        setURL (url, true/*is from url*/);
         m_mimetype = newMimeType;
         m_modified = false;
 
@@ -400,7 +416,7 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
                                       overwritePrompt,
                                       m_mainWindow))
     {
-        m_url = url;
+        setURL (url, true/*is from url*/);
         m_mimetype = mimetype;
         m_modified = false;
 
@@ -413,9 +429,30 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
     }
 }
 
+// public
 KURL kpDocument::url () const
 {
     return m_url;
+}
+
+// public
+void kpDocument::setURL (const KURL &url, bool isFromURL)
+{
+    m_url = url;
+    m_isFromURL = isFromURL;
+}
+
+// public
+bool kpDocument::isFromURL (bool checkURLStillExists) const
+{
+    if (!m_isFromURL)
+        return false;
+
+    if (!checkURLStillExists)
+        return true;
+
+    return (!m_url.isEmpty () &&
+            KIO::NetAccess::exists (m_url, true/*open*/, m_mainWindow));
 }
 
 
@@ -482,6 +519,12 @@ bool kpDocument::isEmpty () const
     return url ().isEmpty () && !isModified ();
 }
 
+
+int kpDocument::constructorWidth () const
+{
+    return d->m_constructorWidth;
+}
+
 int kpDocument::width (bool ofSelection) const
 {
     if (ofSelection && m_selection)
@@ -498,6 +541,12 @@ int kpDocument::oldWidth () const
 void kpDocument::setWidth (int w, const kpColor &backgroundColor)
 {
     resize (w, height (), backgroundColor);
+}
+
+
+int kpDocument::constructorHeight () const
+{
+    return d->m_constructorHeight;
 }
 
 int kpDocument::height (bool ofSelection) const
