@@ -47,6 +47,7 @@
 #include <kptool.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
+#include <kpwidgetmapper.h>
 
 
 // private
@@ -525,15 +526,13 @@ void kpMainWindow::updateMainViewGrid ()
 // private
 QRect kpMainWindow::mapToGlobal (const QRect &rect) const
 {
-    QPoint topLeft = KMainWindow::mapToGlobal (rect.topLeft ());
-    return QRect (topLeft.x (), topLeft.y (), rect.width (), rect.height ());
+    return kpWidgetMapper::toGlobal (this, rect);
 }
 
 // private
 QRect kpMainWindow::mapFromGlobal (const QRect &rect) const
 {
-    QPoint topLeft = KMainWindow::mapFromGlobal (rect.topLeft ());
-    return QRect (topLeft.x (), topLeft.y (), rect.width (), rect.height ());
+    return kpWidgetMapper::fromGlobal (this, rect);
 }
 
 
