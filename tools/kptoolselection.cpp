@@ -28,6 +28,9 @@
 
 #define DEBUG_KP_TOOL_SELECTION 0
 
+
+#include <kptoolselection.h>
+
 #include <qbitmap.h>
 #include <qcursor.h>
 #include <qpainter.h>
@@ -40,7 +43,6 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kpselection.h>
-#include <kptoolselection.h>
 #include <kptooltoolbar.h>
 #include <kptoolwidgetopaqueortransparent.h>
 #include <kpviewmanager.h>
@@ -311,29 +313,6 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
         return;
     }
 
-    // Prevent both NOP drag-moves and unintentional 1-pixel selections
-    const bool beganOperation = (m_dragHasBegun ||
-                                 (!m_dragHasBegun && thisPoint != m_startPoint));
-    if (!beganOperation)
-    {
-        if (m_dragType == Create)
-        {
-            /*if (m_mode == Rectangle || m_mode == Ellipse)
-                setUserShapePoints (thisPoint, thisPoint);
-            else*/
-                setUserShapePoints (thisPoint);
-        }
-        else if (m_dragType == Move)
-        {
-            setUserShapePoints (document ()->selection ()->topLeft (),
-                                document ()->selection ()->topLeft (),
-                                false/*don't set size*/);
-            setUserShapeSize (0, 0);
-        }
-
-        return;
-    }
-
 
     if (m_dragType == Create)
     {
@@ -341,6 +320,14 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
         kdDebug () << "\tnot moving - resizing rect to" << normalizedRect
                    << endl;
     #endif
+
+        // Prevent unintentional 1-pixel selections
+        if (!m_dragHasBegun && thisPoint == m_startPoint)
+        {
+            setUserShapePoints (thisPoint);
+            return;
+        }
+
 
         switch (m_mode)
         {
@@ -451,11 +438,57 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
     }
     else if (m_dragType == Move)
     {
-    #if DEBUG_KP_TOOL_SELECTION && 0
+    #if DEBUG_KP_TOOL_SELECTION && 1
        kdDebug () << "\tmoving selection" << endl;
     #endif
 
-        if (!document ()->selection ()->pixmap () && !m_currentPullFromDocumentCommand)
+        kpSelection *sel = document ()->selection ();
+
+        QRect targetSelRect = QRect (thisPoint.x () - m_startDragFromSelectionTopLeft.x (),
+                                     thisPoint.y () - m_startDragFromSelectionTopLeft.y (),
+                                     sel->width (),
+                                     sel->height ());
+
+    #if DEBUG_KP_TOOL_SELECTION && 1
+        kdDebug () << "\t\tstartPoint=" << m_startPoint
+                   << " thisPoint=" << thisPoint
+                   << " startDragFromSel=" << m_startDragFromSelectionTopLeft
+                   << " targetSelRect=" << targetSelRect
+                   << endl;
+    #endif
+
+        // Try to make sure selection still intersects document so that it's
+        // reachable.
+
+        if (targetSelRect.right () < 0)
+            targetSelRect.moveBy (-targetSelRect.right (), 0);
+        else if (targetSelRect.left () >= document ()->width ())
+            targetSelRect.moveBy (document ()->width () - targetSelRect.left () - 1, 0);
+
+        if (targetSelRect.bottom () < 0)
+            targetSelRect.moveBy (0, -targetSelRect.bottom ());
+        else if (targetSelRect.top () >= document ()->height ())
+            targetSelRect.moveBy (0, document ()->height () - targetSelRect.top () - 1);
+
+    #if DEBUG_KP_TOOL_SELECTION && 1
+        kdDebug () << "\t\t\tafter ensure sel rect clickable=" << targetSelRect << endl;
+    #endif
+
+
+        if (!m_dragHasBegun &&
+            targetSelRect.topLeft () + m_startDragFromSelectionTopLeft == m_startPoint)
+        {
+        #if DEBUG_KP_TOOL_SELECTION && 1
+            kdDebug () << "\t\t\t\tnop" << endl;
+        #endif
+
+            // Prevent both NOP drag-moves
+            setUserShapePoints (sel->topLeft ());
+            return;
+        }
+
+
+        if (!sel->pixmap () && !m_currentPullFromDocumentCommand)
         {
             m_currentPullFromDocumentCommand = new kpToolSelectionPullFromDocumentCommand (
                 QString::null/*uninteresting child of macro cmd*/,
@@ -481,17 +514,7 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
         if (!m_dragHasBegun && (m_controlPressed || m_shiftPressed))
             m_currentMoveCommand->copyOntoDocument ();
 
-    #if DEBUG_KP_TOOL_SELECTION && 0
-        kdDebug () << "\t\ttopLeft=" << normalizedRect.topLeft ()
-                   << " startPoint=" << m_startPoint
-                   << " startDragFromSel=" << m_startDragFromSelectionTopLeft
-                   << endl;
-
-        kdDebug () << "\t\tthisPoint=" << thisPoint
-                   << " destPoint=" << thisPoint - m_startDragFromSelectionTopLeft
-                   << endl;
-    #endif
-        m_currentMoveCommand->moveTo (thisPoint - m_startDragFromSelectionTopLeft);
+        m_currentMoveCommand->moveTo (targetSelRect.topLeft ());
 
         if (m_shiftPressed)
             m_currentMoveCommand->copyOntoDocument ();
@@ -500,7 +523,7 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
         //viewManager ()->restoreQueueUpdates ();
 
         QPoint start = m_currentMoveCommand->originalSelection ().topLeft ();
-        QPoint end = thisPoint - m_startDragFromSelectionTopLeft;
+        QPoint end = targetSelRect.topLeft ();
         setUserShapePoints (start, end, false/*don't set size*/);
         setUserShapeSize (end.x () - start.x (), end.y () - start.y ());
     }
