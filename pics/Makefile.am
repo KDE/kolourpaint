@@ -1,3 +1,4 @@
+SUBDIRS = custom
 
 KDE_ICON = kolourpaint
 
