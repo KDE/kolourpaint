@@ -20,8 +20,6 @@ selections:
 - ability to freehand stretch selections
 - maybe always have 1 width display of border - try editing a B&W icon to see what I mean
 
-get rid of Line Style Widget?
-
 introduce kpRGB class to avoid using undefined QColor::isValid() behaviour for transparency
 
 pulsating transparent brush cursor (not black)
@@ -213,4 +211,6 @@ line: shift+alt doesn't work but alt+shift does
   (until I can think up a better key combo/way to activate it)
 
 Colour Eraser as part of the Image Menu? You can dbl-click on the tool after all.
+
+On open, dither alpha channel to mask?
 
