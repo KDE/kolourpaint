@@ -485,9 +485,10 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
 
         if (allowNewTextSelectionPointShift)
         {
-            // HACK: wrong
-            pointToUse -= QPoint (kpSelection::textBorderSize (),
-                                  kpSelection::textBorderSize ());
+            // TODO: In terms of doc pixels, would be inconsistent behaviour
+            //       based on zoomLevel of view.
+            // pointToUse -= QPoint (-view->selectionResizeHandleAtomicSize (),
+            //                       -view->selectionResizehandleAtomicSize ());
         }
 
         pasteText (text, true/*force new text selection*/, pointToUse);
