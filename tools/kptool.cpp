@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -26,25 +26,28 @@
 */
 
 
-#define DEBUG_KP_TOOL 1
+#define DEBUG_KP_TOOL 0
+
+#include <limits.h>
 
 #include <qcursor.h>
 #include <qevent.h>
 #include <qlayout.h>
 #include <qpainter.h>
+#include <qpixmap.h>
 
+#include <kapplication.h>
 #include <kdebug.h>
 
 #include <kpcolor.h>
 #include <kpcolortoolbar.h>
+#include <kpdefs.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
+#include <kptool.h>
 #include <kptooltoolbar.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
-
-#include <kpdefs.h>
-#include <kptool.h>
 
 
 //
@@ -53,13 +56,13 @@
 
 kpTool::kpTool (const QString &text, const QString &description,
                 kpMainWindow *mainWindow, const char *name)
-    : m_beganDraw (false),
+    : m_shiftPressed (false), m_controlPressed (false), m_altPressed (false),  // set in beginInternal()
+      m_beganDraw (false),
       m_text (text), m_description (description), m_name (name),
       m_mainWindow (mainWindow),
       m_began (false),
       m_viewUnderStartPoint (0)
 {
-    m_shiftPressed = m_controlPressed = m_altPressed = false;
 }
 
 kpTool::~kpTool ()
@@ -88,6 +91,93 @@ QPixmap kpTool::neededPixmap (const QPixmap &pixmap, const QRect &boundingRect)
     return kpPixmapFX::getPixmapAt (pixmap, boundingRect);
 }
 
+
+// public
+bool kpTool::hasCurrentPoint () const
+{
+    return (viewUnderStartPoint () || viewUnderCursor ());
+}
+
+// public
+QPoint kpTool::currentPoint (bool zoomToDoc) const
+{
+#if DEBUG_KP_TOOL && 1
+    kdDebug () << "kpTool::currentPoint(zoomToDoc=" << zoomToDoc << ")" << endl;
+    kdDebug () << "\tviewUnderStartPoint="
+               << (viewUnderStartPoint () ? viewUnderStartPoint ()->name () : "(none)")
+               << " viewUnderCursor="
+               << (viewUnderCursor () ? viewUnderCursor ()->name () : "(none)")
+               << endl;
+#endif
+
+    kpView *v = viewUnderStartPoint ();
+    if (!v)
+    {
+        v = viewUnderCursor ();
+        if (!v)
+        {
+        #if DEBUG_KP_TOOL && 1
+            kdDebug () << "\tno view - returning sentinel" << endl;
+        #endif
+            return QPoint (INT_MIN, INT_MIN);
+        }
+    }
+
+
+    const QPoint globalPos = QCursor::pos ();
+    const QPoint viewPos = v->mapFromGlobal (globalPos);
+#if DEBUG_KP_TOOL && 1
+    kdDebug () << "\tglobalPos=" << globalPos
+               << " viewPos=" << viewPos
+               << endl;
+#endif
+    if (!zoomToDoc)
+        return viewPos;
+
+
+    const QPoint docPos = v->zoomViewToDoc (viewPos);
+#if DEBUG_KP_TOOL && 1
+    kdDebug () << "\tdocPos=" << docPos << endl;
+#endif
+    return docPos;
+}
+
+
+// public slot
+void kpTool::somethingBelowTheCursorChanged ()
+{
+    if (hasCurrentPoint ())
+        somethingBelowTheCursorChanged (currentPoint ());
+}
+
+// public slot
+// TODO: don't dup code from mouseMoveEvent()
+void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_)
+{
+#if DEBUG_KP_TOOL && 1
+    kdDebug () << "kpTool::somethingBelowTheCursorChanged" << currentPoint_ << endl;
+    kdDebug () << "\tviewUnderStartPoint="
+               << (viewUnderStartPoint () ? viewUnderStartPoint ()->name () : "(none)")
+               << " viewUnderCursor="
+               << (viewUnderCursor () ? viewUnderCursor ()->name () : "(none)")
+               << endl;
+    kdDebug () << "\tbegan draw=" << m_beganDraw << endl;
+#endif
+
+    m_currentPoint = currentPoint_;
+
+    if (m_beganDraw)
+    {
+        draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+        m_lastPoint = m_currentPoint;
+    }
+    else
+    {
+        hover (currentPoint_);
+    }
+}
+
+
 void kpTool::beginInternal ()
 {
     kdDebug () << "kpTool::beginInternal()" << endl;
@@ -102,6 +192,16 @@ void kpTool::beginInternal ()
 
         // but we haven't started drawing with it
         m_beganDraw = false;
+
+
+        uint keyState = KApplication::keyboardModifiers ();
+
+        m_shiftPressed = (keyState & KApplication::ShiftModifier);
+        m_controlPressed = (keyState & KApplication::ControlModifier);
+
+        // TODO: Can't do much about ALT - unless it's always KApplication::Modifier1?
+        //       Ditto for everywhere else where I set SHIFT & CTRL but not alt.
+        m_altPressed = false;
     }
 }
 
@@ -209,15 +309,15 @@ void kpTool::cancelShape ()
 void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRect,
                               bool wantEndShape)
 {
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 1
     kdDebug () << "kpTool::endDrawInternal() wantEndShape=" << wantEndShape << endl;
 #endif
-    
+
     if (wantEndShape && !hasBegunShape ())
         return;
     else if (!wantEndShape && !hasBegunDraw ())
         return;
-    
+
     if (wantEndShape)
     {
     #if DEBUG_KP_TOOL && 0
@@ -302,7 +402,7 @@ kpColor kpTool::backgroundColor () const
 {
     return color (1);
 }
-        
+
 
 double kpTool::colorSimilarity () const
 {
@@ -356,7 +456,7 @@ kpCommandHistory *kpTool::commandHistory () const
 
 void kpTool::mousePressEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 1
     kdDebug () << "kpTool::mousePressEvent pos=" << e->pos ()
                << " btnStateAfter=" << (int) e->stateAfter ()
                << " beganDraw=" << m_beganDraw << endl;
@@ -397,7 +497,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
         kdError () << "kpTool::mousePressEvent() without a view under the cursor!" << endl;
     }
 
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 1
     if (view)
         kdDebug () << "\tview=" << view->name () << endl;
 #endif
@@ -405,12 +505,14 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
     // let user know what mouse button is being used for entire draw
     m_mouseButton = mouseButton (buttonState);
-
+    m_shiftPressed = (buttonState & Qt::ShiftButton);
+    m_controlPressed = (buttonState & Qt::ControlButton);
+    m_altPressed = (buttonState & Qt::AltButton);
     m_startPoint = m_currentPoint = view ? view->zoomViewToDoc (e->pos ()) : QPoint (-1, -1);
     m_viewUnderStartPoint = view;
     m_lastPoint = QPoint (-1, -1);
 
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 1
     kdDebug () << "\tBeginning draw @ " << m_currentPoint << endl;
 #endif
 
@@ -422,9 +524,17 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
 void kpTool::mouseMoveEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 1
     kdDebug () << "kpTool::mouseMoveEvent pos=" << e->pos ()
                << " btnStateAfter=" << (int) e->stateAfter () << endl;
+    kpView *v0 = viewUnderCursor (),
+           *v1 = viewManager ()->viewUnderCursor (true/*use Qt*/),
+           *v2 = viewUnderStartPoint ();
+    kdDebug () << "\tviewUnderCursor=" << (v0 ? v0->name () : "(none)")
+               << " viewUnderCursorQt=" << (v1 ? v1->name () : "(none)")
+               << " viewUnderStartPoint=" << (v2 ? v2->name () : "(none)")
+               << endl;
+    kdDebug () << "\tfocusWidget=" << kapp->focusWidget () << endl;
 #endif
     if (m_beganDraw)
     {
@@ -437,7 +547,12 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 
         m_currentPoint = view->zoomViewToDoc (e->pos ());
 
-    #if DEBUG_KP_TOOL && 0
+        Qt::ButtonState buttonState = e->stateAfter ();
+        m_shiftPressed = (buttonState & Qt::ShiftButton);
+        m_controlPressed = (buttonState & Qt::ControlButton);
+        m_altPressed = (buttonState & Qt::AltButton);
+
+    #if DEBUG_KP_TOOL && 1
         kdDebug () << "\tDraw!" << endl;
     #endif
         draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
@@ -456,7 +571,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 
 void kpTool::mouseReleaseEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 1
     kdDebug () << "kpTool::mouseReleaseEvent pos=" << e->pos ()
                << " btnStateAfter=" << (int) e->stateAfter () << endl;
 #endif
@@ -479,14 +594,18 @@ void kpTool::keyPressEvent (QKeyEvent *e)
 {
     int dx = 0, dy = 0;
 
+    e->ignore ();
+
     switch (e->key ())
     {
+    case 0:
+    case Qt::Key_unknown:
+        kdDebug () << "kpTool::keyPressEvent() picked up unknown key!" << endl;
+        // --- fall thru and update all modifiers ---
     case Qt::Key_Alt:
     case Qt::Key_Shift:
     case Qt::Key_Control:
-        setShiftPressed (e->stateAfter () & Qt::ShiftButton);
-        setControlPressed (e->stateAfter () & Qt::ControlButton);
-        setAltPressed (e->stateAfter () & Qt::AltButton);
+        keyUpdateModifierState (e);
 
         e->accept ();
         break;
@@ -513,6 +632,7 @@ void kpTool::keyPressEvent (QKeyEvent *e)
     // TODO: what's the 5 key called?
         if (view)
         {
+            // TODO: what about the modifiers
             QMouseEvent me (QEvent::MouseButtonPress,
                             view->mapFromGlobal (QCursor::pos ()),
                             Qt::LeftButton,
@@ -520,12 +640,9 @@ void kpTool::keyPressEvent (QKeyEvent *e)
             mousePressEvent (&me);
             e->accept ();
         }
+
         break;
-    }
-    default:
-        e->ignore ();
-        break;
-    }
+    }}
 
     kpView *view = viewUnderCursor ();
     if (view && (dx || dy))
@@ -542,14 +659,25 @@ void kpTool::keyPressEvent (QKeyEvent *e)
 
 void kpTool::keyReleaseEvent (QKeyEvent *e)
 {
+#if DEBUG_KP_TOOL && 0
+    kdDebug () << "kpTool::keyReleaseEvent() e->key=" << e->key () << endl;
+#endif
+
+    e->ignore ();
+
     switch (e->key ())
     {
+    case 0:
+    case Qt::Key_unknown:
+        kdDebug () << "kpTool::keyReleaseEvent() picked up unknown key!" << endl;
+        // HACK: around Qt bug: if you hold a modifier before you start the
+        //                      program and then release it over the view,
+        //                      Qt reports it as the release of an unknown key
+        // --- fall thru and update all modifiers ---
     case Qt::Key_Alt:
     case Qt::Key_Shift:
     case Qt::Key_Control:
-        setShiftPressed (e->stateAfter () & Qt::ShiftButton);
-        setControlPressed (e->stateAfter () & Qt::ControlButton);
-        setAltPressed (e->stateAfter () & Qt::AltButton);
+        keyUpdateModifierState (e);
 
         e->accept ();
         break;
@@ -579,23 +707,74 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
     }}
 }
 
+// private
+void kpTool::keyUpdateModifierState (QKeyEvent *e)
+{
+#if DEBUG_KP_TOOL && 0
+    kdDebug () << "kpTool::updateModifierState() e->key=" << e->key () << endl;
+    kdDebug () << "\tshift="
+               << (e->stateAfter () & Qt::ShiftButton)
+               << " control="
+               << (e->stateAfter () & Qt::ControlButton)
+               << " alt="
+               << (e->stateAfter () & Qt::AltButton)
+               << endl;
+#endif
+    if (e->key () & (Qt::Key_Alt | Qt::Key_Shift | Qt::Key_Control))
+    {
+    #if DEBUG_KP_TOOL && 0
+        kdDebug () << "\t\tmodifier changed - use e's claims" << endl;
+    #endif
+        setShiftPressed (e->stateAfter () & Qt::ShiftButton);
+        setControlPressed (e->stateAfter () & Qt::ControlButton);
+        setAltPressed (e->stateAfter () & Qt::AltButton);
+    }
+    else
+    {
+    #if DEBUG_KP_TOOL && 0
+        kdDebug () << "\t\tmodifiers not changed - figure out the truth" << endl;
+    #endif
+        uint keyState = KApplication::keyboardModifiers ();
+
+        setShiftPressed (keyState & KApplication::ShiftModifier);
+        setControlPressed (keyState & KApplication::ControlModifier);
+
+        // TODO: Can't do much about ALT - unless it's always KApplication::Modifier1?
+        //       Ditto for everywhere else where I set SHIFT & CTRL but not alt.
+        setAltPressed (e->stateAfter () & Qt::AltButton);
+    }
+}
+
+
 void kpTool::setShiftPressed (bool pressed)
 {
+    if (pressed == m_shiftPressed)
+        return;
+
     m_shiftPressed = pressed;
+
     if (m_beganDraw && careAboutModifierState ())
         draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
 }
 
 void kpTool::setControlPressed (bool pressed)
 {
+    if (pressed == m_controlPressed)
+        return;
+
     m_controlPressed = pressed;
+
     if (m_beganDraw && careAboutModifierState ())
         draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
 }
 
 void kpTool::setAltPressed (bool pressed)
 {
+    if (pressed = m_altPressed)
+        return;
+
     m_altPressed = pressed;
+
     if (m_beganDraw && careAboutModifierState ())
         draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
 }
