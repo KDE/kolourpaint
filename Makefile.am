@@ -2,7 +2,7 @@ SUBDIRS = pics pixmapfx tools widgets
 
 bin_PROGRAMS = kolourpaint
 
-kolourpaint_COMPILE_FIRST = kolourpaintlicense.h
+kolourpaint.lo: kolourpaintlicense.h
 
 kolourpaintlicense.h : $(srcdir)/LICENCE
 	echo "#include <klocale.h>" > kolourpaintlicense.h
