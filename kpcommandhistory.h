@@ -54,6 +54,9 @@ class kpMainWindow;
 //       slot in the history.  Arguably you shouldn't be able to Redo
 //       something you never finished drawing.
 //
+//       The solution is to rewrite/clone KCommandHistory and add this
+//       functionality.
+//
 class kpCommandHistory : public KCommandHistory
 {
 public:
