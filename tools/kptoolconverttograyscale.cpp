@@ -50,7 +50,7 @@ kpToolConvertToGrayscaleCommand::kpToolConvertToGrayscaleCommand (bool actOnSele
 // public virtual [base KCommand]
 QString kpToolConvertToGrayscaleCommand::name () const
 {
-    QString opName = i18n ("Convert to grayscale");
+    QString opName = i18n ("Convert to Grayscale");
 
     if (m_actOnSelection)
         return i18n ("Selection: %1").arg (opName);
