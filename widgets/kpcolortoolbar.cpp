@@ -214,6 +214,9 @@ static const QColor kpLightGreen = blend (kpGreen, kpWhite);
 static const QColor kpLightBlue = blend (kpBlue, kpWhite);
 static const QColor kpTan = blend (kpYellow, kpWhite);
 
+/* TODO: clean up this code!!!
+ *       (probably when adding palette load/save)
+ */
 #define rows 2
 #define cols 11
 kpColorCells::kpColorCells (QWidget *parent,
@@ -224,12 +227,54 @@ kpColorCells::kpColorCells (QWidget *parent,
 {
     setName (name);
 
-    setFixedSize (cols * 26, rows * 26);
     KColorCells::setShading (false);  // no 3D look
 
     // don't let the user clobber the palette too easily
     KColorCells::setAcceptDrops (false);
 
+    connect (this, SIGNAL (colorDoubleClicked (int)),
+             SLOT (slotColorDoubleClicked (int)));
+
+    setOrientation (o);
+}
+
+kpColorCells::~kpColorCells ()
+{
+}
+
+Qt::Orientation kpColorCells::orientation () const
+{
+    return m_orientation;
+}
+
+void kpColorCells::setOrientation (Qt::Orientation o)
+{
+    int c, r;
+
+    if (o == Qt::Horizontal)
+    {
+        c = cols;
+        r = rows;
+    }
+    else
+    {
+        c = rows;
+        r = cols;
+    }
+
+    kdDebug () << "kpColorCells::setOrientation(): r=" << r << " c=" << c << endl;
+    
+    setNumRows (r);
+    setNumCols (c);
+    
+    setFixedSize (c * 26, r * 26);
+
+/*
+    kdDebug () << "\tlimits: array=" << sizeof (colors) / sizeof (colors [0])
+               << " r*c=" << r * c << endl;
+    kdDebug () << "\tsizeof (colors)=" << sizeof (colors)
+               << " sizeof (colors [0])=" << sizeof (colors [0])
+               << endl;*/
     QColor colors [] =
     {
         kpBlack,
@@ -258,28 +303,23 @@ kpColorCells::kpColorCells (QWidget *parent,
     };
 
     for (int i = 0;
-         i < int (sizeof (colors) / sizeof (colors [0])) &&
-         i < rows * cols;
+         /*i < int (sizeof (colors) / sizeof (colors [0])) &&*/
+         i < r * c;
          i++)
     {
-        KColorCells::setColor (i, colors [i]);
+        int y = i / c;
+        int x = i % c;
+        
+        if (o == Qt::Vertical)
+            x = (c - 1) - (i % c);
+
+        int arrayIndex = y * c + x;
+        
+        kdDebug () << "\tadding array index" << arrayIndex << " to colorcell " << i << endl;
+        KColorCells::setColor (i, colors [arrayIndex]);
     }
-
-    connect (this, SIGNAL (colorDoubleClicked (int)),
-             SLOT (slotColorDoubleClicked (int)));
-}
-
-kpColorCells::~kpColorCells ()
-{
-}
-
-Qt::Orientation kpColorCells::orientation () const
-{
-    return Qt::Horizontal;
-}
-
-void setOrientation (Qt::Orientation o)
-{
+    
+    m_orientation = o;
 }
     
 // virtual protected
