@@ -435,6 +435,8 @@ void kpColorToolBar::setOrientation (Qt::Orientation o)
     }
 
     m_colorCells->setOrientation (o);
+
+    KToolBar::setOrientation (o);
 }
 
 kpColorToolBar::~kpColorToolBar ()
