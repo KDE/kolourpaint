@@ -63,9 +63,10 @@ kpThumbnail::kpThumbnail (kpMainWindow *parent, const char *name)
 #if !KP_IS_QT_3_3
     if (parent)
     {
+        hide ();
+
         // sync: make sure outside of dock
         parent->moveDockWindow (this, Qt::DockTornOff);
-        hide ();
     }
 #endif
 
@@ -166,7 +167,8 @@ void kpThumbnail::updateVariableZoom ()
         return;
 
 #if DEBUG_KP_THUMBNAIL
-    kdDebug () << "\tbefore: hzoom=" << v->zoomLevelX ()
+    kdDebug () << "\tbefore: size=" << v->size ()
+               << " hzoom=" << v->zoomLevelX ()
                << " vzoom=" << v->zoomLevelY ()
                << endl;
 #endif
@@ -174,7 +176,8 @@ void kpThumbnail::updateVariableZoom ()
     v->slotUpdateVariableZoom ();
 
 #if DEBUG_KP_THUMBNAIL
-    kdDebug () << "\tafter: hzoom=" << v->zoomLevelX ()
+    kdDebug () << "\tafter: size=" << v->size ()
+               << " hzoom=" << v->zoomLevelX ()
                << " vzoom=" << v->zoomLevelY ()
                << endl;
 #endif
@@ -195,11 +198,14 @@ void kpThumbnail::dock ()
 
 
 // protected virtual [base QWidget]
-void kpThumbnail::resizeEvent (QResizeEvent * /*e*/)
+void kpThumbnail::resizeEvent (QResizeEvent *e)
 {
 #if DEBUG_KP_THUMBNAIL
-    kdDebug () << "kpThumbnail::resize(" << width () << "," << height () << ")" << endl;
+    kdDebug () << "kpThumbnail::resizeEvent(" << width ()
+               << "," << height () << ")" << endl;
 #endif
+
+    QDockWindow::resizeEvent (e);
 
     updateVariableZoom ();;
 
