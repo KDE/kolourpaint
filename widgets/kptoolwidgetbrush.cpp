@@ -40,11 +40,14 @@
 /* sync: <brushes> */
 static int brushSize [][3] =
 {
-    {9, 5, 1/*like Pen*/},
+    {8, 4, 1/*like Pen*/},
     {9, 5, 2},
     {9, 5, 2},
     {9, 5, 2}
 };
+
+#define BRUSH_SIZE_NUM_COLS (int (sizeof (brushSize [0]) / sizeof (brushSize [0][0])))
+#define BRUSH_SIZE_NUM_ROWS (int (sizeof (brushSize) / sizeof (brushSize [0])))
 
 kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent)
     : kpToolWidgetBase (parent)
@@ -53,12 +56,12 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent)
 
     QPixmap *pm = m_brushBitmaps;
     
-    for (int shape = 0; shape < 4; shape++)
+    for (int shape = 0; shape < BRUSH_SIZE_NUM_ROWS; shape++)
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < BRUSH_SIZE_NUM_COLS; i++)
         {
-            int w = (width () - 2/*margin*/ - 2/*spacing*/) / 3;
-            int h = (height () - 2/*margin*/ - 3/*spacing*/) / 4;
+            int w = (width () - 2/*margin*/ - 2/*spacing*/) / BRUSH_SIZE_NUM_COLS;
+            int h = (height () - 2/*margin*/ - 3/*spacing*/) / BRUSH_SIZE_NUM_ROWS;
             pm->resize ((w <= 0 ? width () : w),
                         (h <= 0 ? height () : h));
 
@@ -167,8 +170,7 @@ QString kpToolWidgetBrush::brushName (int shape, int whichSize)
 
 QPixmap kpToolWidgetBrush::brush () const
 {
-    // sync: <brushes>
-    return m_brushBitmaps [selectedRow () * 3 + selectedCol ()];
+    return m_brushBitmaps [selectedRow () * BRUSH_SIZE_NUM_COLS + selectedCol ()];
 }
 
 bool kpToolWidgetBrush::brushIsDiagonalLine () const
