@@ -401,8 +401,9 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     // viewManager will die and so will the selection
     m_actionCopy->setEnabled (false);
     m_actionCut->setEnabled (false);
-    m_actionDeselect->setEnabled (false);
     m_actionDelete->setEnabled (false);
+    m_actionDeselect->setEnabled (false);
+    d->m_actionCopyToFile->setEnabled (false);
 
     delete m_viewManager; m_viewManager = 0;
 
@@ -460,6 +461,8 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
                  m_actionDelete, SLOT (setEnabled (bool)));
         connect (m_document, SIGNAL (selectionEnabled (bool)),
                  m_actionDeselect, SLOT (setEnabled (bool)));
+        connect (m_document, SIGNAL (selectionEnabled (bool)),
+                 d->m_actionCopyToFile, SLOT (setEnabled (bool)));
 
         // this code won't actually enable any actions at this stage
         // (fresh document) but better safe than sorry
@@ -467,6 +470,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         m_actionCut->setEnabled (m_document->selection ());
         m_actionDeselect->setEnabled (m_document->selection ());
         m_actionDelete->setEnabled (m_document->selection ());
+        d->m_actionCopyToFile->setEnabled (m_document->selection ());
 
         connect (m_document, SIGNAL (selectionEnabled (bool)),
                  this, SLOT (slotImageMenuUpdateDueToSelection ()));

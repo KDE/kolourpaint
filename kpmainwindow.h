@@ -239,15 +239,34 @@ private:
 private slots:
     void slotNew ();
 
+private:
     bool open (const KURL &url, bool newDocSameNameIfNotExist = false);
+    KURL::List askForOpenURLs (const QString &caption,
+                               const QString &startURL,
+                               bool allowMultipleURLs = true);
+
+private slots:
     void slotOpen ();
     void slotOpenRecent (const KURL &url);
 
     bool save (bool localOnly = false);
     bool slotSave ();
 
+private:
+    KURL askForSaveURL (const QString &caption,
+                        const QString &startURL,
+                        const QString &startMimeType,
+                        const char *lastOutputMimeTypeSettingsPrefix,
+                        bool localOnly,
+                        QString &chosenMimeType);
+    void saveLastOutputMimeType (const QString &mimeType,
+                                 const char *lastOutputMimeTypeSettingsPrefix);
+
+private slots:
     bool saveAs (bool localOnly = false);
     bool slotSaveAs ();
+
+    bool slotExport ();
 
     void slotEnableReload ();
     bool slotReload ();
@@ -309,6 +328,9 @@ private:
     void addDeselectFirstCommand (KCommand *cmd);
 public slots:
     void slotDeselect ();
+private slots:
+    void slotCopyToFile ();
+    void slotPasteFromFile ();
 
 
     /*
@@ -521,7 +543,14 @@ private:
 struct kpMainWindowPrivate
 {
     KToggleFullScreenAction *m_actionFullScreen;
+    KAction *m_actionExport;
     KAction *m_actionPasteInNewWindow;
+    KAction *m_actionCopyToFile, *m_actionPasteFromFile;
+    KURL m_lastPasteFromURL;
+    KURL m_lastCopyToURL;
+    QString m_lastCopyToMimeType;
+    KURL m_lastExportURL;
+    QString m_lastExportMimeType;
 };
 
 #endif  // __kp_main_window_h__

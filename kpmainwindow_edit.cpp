@@ -84,6 +84,13 @@ void kpMainWindow::setupEditMenuActions ()
     m_actionSelectAll = KStdAction::selectAll (this, SLOT (slotSelectAll ()), ac);
     m_actionDeselect = KStdAction::deselect (this, SLOT (slotDeselect ()), ac);
 
+
+    d->m_actionCopyToFile = new KAction (i18n ("C&opy To File..."), 0,
+        this, SLOT (slotCopyToFile ()), ac, "edit_copy_to_file");
+    d->m_actionPasteFromFile = new KAction (i18n ("Paste &From File..."), 0,
+        this, SLOT (slotPasteFromFile ()), ac, "edit_paste_from_file");
+
+
     m_editMenuDocumentActionsEnabled = false;
     enableEditMenuDocumentActions (false);
 
@@ -108,6 +115,9 @@ void kpMainWindow::enableEditMenuDocumentActions (bool enable)
     // m_actionDeselect
 
     m_editMenuDocumentActionsEnabled = enable;
+
+    // m_actionCopyToFile
+    d->m_actionPasteFromFile->setEnabled (enable);
 }
 
 
@@ -190,8 +200,8 @@ void kpMainWindow::slotEnablePaste ()
                         QTextDrag::canDecode (ms));
     }
 
-    m_actionPaste->setEnabled (shouldEnable);
     d->m_actionPasteInNewWindow->setEnabled (shouldEnable);
+    m_actionPaste->setEnabled (shouldEnable);
 }
 
 
@@ -624,3 +634,85 @@ void kpMainWindow::slotDeselect ()
 
     addDeselectFirstCommand (0);
 }
+
+
+// private slot
+void kpMainWindow::slotCopyToFile ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotCopyToFile()" << endl;
+#endif
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+
+    QString chosenMimeType;
+    KURL chosenURL = askForSaveURL (i18n ("Copy To File"),
+                                    d->m_lastCopyToURL.url (),
+                                    d->m_lastCopyToMimeType,
+                                    "Edit/Copy To File",
+                                    false/*allow remote files*/,
+                                    chosenMimeType/*ref*/);
+
+    if (chosenURL.isEmpty () || chosenMimeType.isEmpty ())
+        return;
+
+
+    d->m_lastCopyToURL = chosenURL;
+    d->m_lastCopyToMimeType = chosenMimeType;
+    saveLastOutputMimeType (chosenMimeType, "Edit/Copy To File");
+
+
+    if (!kpDocument::savePixmapToFile (m_document->getSelectedPixmap (),
+                                       chosenURL, chosenMimeType,
+                                       true/*overwrite prompt*/,
+                                       this))
+    {
+        return;
+    }
+
+
+    addRecentURL (chosenURL);
+}
+
+// private slot
+void kpMainWindow::slotPasteFromFile ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotPasteFromFile()" << endl;
+#endif
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+
+    KURL::List urls = askForOpenURLs (i18n ("Paste From File"),
+                                      d->m_lastPasteFromURL.url (),
+                                      false/*only 1 URL*/);
+
+    if (urls.count () != 1)
+        return;
+
+    KURL url = urls.first ();
+    d->m_lastPasteFromURL = url;
+
+
+    QString mimeType_Ignored;
+    QPixmap pixmap = kpDocument::getPixmapFromFile (url,
+        false/*show error message if doesn't exist*/,
+        this,
+        mimeType_Ignored);
+
+
+    if (pixmap.isNull ())
+        return;
+
+
+    addRecentURL (url);
+
+    paste (kpSelection (kpSelection::Rectangle,
+                        QRect (0, 0, pixmap.width (), pixmap.height ()),
+                        pixmap));
+}
+

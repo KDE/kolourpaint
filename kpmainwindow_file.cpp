@@ -68,6 +68,10 @@ void kpMainWindow::setupFileMenuActions ()
 
     m_actionSave = KStdAction::save (this, SLOT (slotSave ()), ac);
     m_actionSaveAs = KStdAction::saveAs (this, SLOT (slotSaveAs ()), ac);
+
+    d->m_actionExport = new KAction (i18n ("E&xport..."), 0,
+        this, SLOT (slotExport ()), ac, "file_export");
+
     //m_actionRevert = KStdAction::revert (this, SLOT (slotRevert ()), ac);
     m_actionReload = new KAction (i18n ("Reloa&d"), KStdAccel::reload (),
         this, SLOT (slotReload ()), ac, "file_revert");
@@ -99,6 +103,9 @@ void kpMainWindow::enableFileMenuDocumentActions (bool enable)
 
     m_actionSave->setEnabled (enable);
     m_actionSaveAs->setEnabled (enable);
+
+    d->m_actionExport->setEnabled (enable);
+
     // m_actionReload
 
     m_actionPrint->setEnabled (enable);
@@ -224,7 +231,7 @@ static QSize defaultDocSize ()
     return docSize;
 }
 
-// private slot
+// private
 bool kpMainWindow::open (const KURL &url, bool newDocSameNameIfNotExist)
 {
     QSize docSize = ::defaultDocSize ();
@@ -255,32 +262,41 @@ bool kpMainWindow::open (const KURL &url, bool newDocSameNameIfNotExist)
     return true;
 }
 
+// private
+KURL::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &startURL,
+                                         bool allowMultipleURLs)
+{
+    QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
+    QString filter = mimeTypes.join (" ");
+
+    KFileDialog fd (startURL, filter, this, "fd", true/*modal*/);
+    fd.setCaption (caption);
+    fd.setOperationMode (KFileDialog::Opening);
+    if (allowMultipleURLs)
+        fd.setMode (KFile::Files);
+    fd.setPreviewWidget (new KImageFilePreview (&fd));
+
+    if (fd.exec ())
+        return fd.selectedURLs ();
+    else
+        return KURL::List ();
+}
+
 // private slot
 void kpMainWindow::slotOpen ()
 {
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    QString startURL = m_document ? m_document->url ().url () : QString::null;
-    QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
-    QString filter = mimeTypes.join (" ");
 
-    KFileDialog fd (startURL, filter, this, "fd", true/*modal*/);
-    fd.setCaption (i18n ("Open Image"));
-    fd.setOperationMode (KFileDialog::Opening);
-    fd.setMode (KFile::Files);
-    fd.setPreviewWidget (new KImageFilePreview (&fd));
+    const KURL::List urls = askForOpenURLs (i18n ("Open Image"),
+        m_document ? m_document->url ().url () : QString::null);
 
-    if (fd.exec ())
+    for (KURL::List::const_iterator it = urls.begin ();
+         it != urls.end ();
+         it++)
     {
-        KURL::List urls = fd.selectedURLs ();
-
-        for (KURL::List::ConstIterator it = urls.begin ();
-             it != urls.end ();
-             it++)
-        {
-            open (*it);
-        }
+        open (*it);
     }
 }
 
@@ -328,26 +344,31 @@ bool kpMainWindow::slotSave ()
     return save ();
 }
 
-
-// private slot
-bool kpMainWindow::saveAs (bool localOnly)
+// private
+KURL kpMainWindow::askForSaveURL (const QString &caption,
+                                  const QString &startURL,
+                                  const QString &startMimeType,
+                                  const char *lastOutputMimeTypeSettingsPrefix,
+                                  bool localOnly,
+                                  QString &chosenMimeType)
 {
+    chosenMimeType = QString::null;
+
+
     QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Writing);
     if (mimeTypes.isEmpty ())
     {
         kdError () << "No KImageIO output mimetypes!" << endl;
-        return false;
+        return KURL ();
     }
 
-    KURL url = m_document->url ();
-#if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::saveAs URL=" << url << endl;
-#endif
-    KFileDialog fd (url.url (), QString::null, this, "fd", true/*modal*/);
-    fd.setCaption (i18n ("Save Image As"));
+
+    KFileDialog fd (startURL, QString::null, this, "fd", true/*modal*/);
+    fd.setCaption (caption);
     fd.setOperationMode (KFileDialog::Saving);
     if (localOnly)
         fd.setMode (KFile::File | KFile::LocalOnly);
+
 
     QString defaultMimeType;
 
@@ -355,9 +376,8 @@ bool kpMainWindow::saveAs (bool localOnly)
     //
     // this is so as to not stuff up users who are just changing the filename
     // but want to save in the same type
-    QString docMimeType = m_document->mimetype ();
-    if (!docMimeType.isEmpty () && mimeTypes.findIndex (docMimeType) > -1)
-        defaultMimeType = docMimeType;
+    if (!startMimeType.isEmpty () && mimeTypes.findIndex (startMimeType) > -1)
+        defaultMimeType = startMimeType;
 
     if (defaultMimeType.isEmpty ())
     {
@@ -368,8 +388,15 @@ bool kpMainWindow::saveAs (bool localOnly)
         KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
         KConfigBase *cfg = cfgGroupSaver.config ();
 
-        QString lastOutputMimeType = cfg->readEntry (kpSettingLastOutputMimeType,
+
+        const QString lastOutputMimeTypeEntry =
+            QString::fromLatin1 (lastOutputMimeTypeSettingsPrefix) +
+            QString::fromLatin1 (" ") +
+            kpSettingLastOutputMimeType;
+
+        QString lastOutputMimeType = cfg->readEntry (lastOutputMimeTypeEntry,
                                                      QString::fromLatin1 ("image/png"));
+
 
         if (mimeTypes.findIndex (lastOutputMimeType) > -1)
             defaultMimeType = lastOutputMimeType;
@@ -385,39 +412,72 @@ bool kpMainWindow::saveAs (bool localOnly)
     kdDebug () << "mimeTypes=" << mimeTypes << endl;
 #endif
     fd.setMimeFilter (mimeTypes, defaultMimeType);
+
+
     if (fd.exec ())
     {
-        QString mimetype = fd.currentMimeFilter ();
-        if (!m_document->saveAs (fd.selectedURL (), mimetype))
-        {
-            return false;
-        }
-        else
-        {
-            addRecentURL (fd.selectedURL ());
-
-            // user forced a mimetype (as opposed to selecting the same type as the current doc)
-            // - probably wants to use it in the future
-            if (mimetype != docMimeType)
-            {
-            #if DEBUG_KP_MAIN_WINDOW
-                kdDebug () << "\tCONFIG: saving Last Output MimeType = " << mimetype << endl;
-            #endif
-                KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
-                KConfigBase *cfg = cfgGroupSaver.config ();
-
-                cfg->writeEntry (kpSettingLastOutputMimeType, mimetype);
-                cfg->sync ();
-            }
-        }
+        chosenMimeType = fd.currentMimeFilter ();
+        return fd.selectedURL ();
     }
     else
-    {
-    #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "fd aborted" << endl;
-    #endif
+        return KURL ();
+}
+
+// private
+void kpMainWindow::saveLastOutputMimeType (const QString &mimeType,
+                                           const char *lastOutputMimeTypeSettingsPrefix)
+{
+
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tCONFIG: saveLastOutputMimeType(" << mimeType
+               << "," << lastOutputMimeType
+               << ")"
+               << endl;
+#endif
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    const QString lastOutputMimeTypeEntry =
+        QString::fromLatin1 (lastOutputMimeTypeSettingsPrefix) +
+        QString::fromLatin1 (" ") +
+        kpSettingLastOutputMimeType;
+
+    cfg->writeEntry (lastOutputMimeTypeEntry, mimeType);
+    cfg->sync ();
+}
+
+
+// private slot
+bool kpMainWindow::saveAs (bool localOnly)
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::saveAs URL=" << m_document->url () << endl;
+#endif
+
+    QString chosenMimeType;
+    KURL chosenURL = askForSaveURL (i18n ("Save Image As"),
+                                    m_document->url ().url (),
+                                    m_document->mimetype (),
+                                    "File/Save As",
+                                    localOnly,
+                                    chosenMimeType/*ref*/);
+
+
+    if (chosenURL.isEmpty () || chosenMimeType.isEmpty ())
         return false;
-    }
+
+
+    // user forced a mimetype (as opposed to selecting the same type as the current doc)
+    // - probably wants to use it in the future
+    if (chosenMimeType != m_document->mimetype ())
+        saveLastOutputMimeType (chosenMimeType, "File/Save As");
+
+
+    if (!m_document->saveAs (chosenURL, chosenMimeType))
+        return false;
+
+
+    addRecentURL (chosenURL);
 
     return true;
 }
@@ -429,6 +489,49 @@ bool kpMainWindow::slotSaveAs ()
         tool ()->endShapeInternal ();
 
     return saveAs ();
+}
+
+// private slot
+bool kpMainWindow::slotExport ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotExport()" << endl;
+#endif
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+
+    QString chosenMimeType;
+    KURL chosenURL = askForSaveURL (i18n ("Export"),
+                                    d->m_lastExportURL.url (),
+                                    d->m_lastExportMimeType,
+                                    "File/Export",
+                                    false/*allow remote files*/,
+                                    chosenMimeType/*ref*/);
+
+
+    if (chosenURL.isEmpty () || chosenMimeType.isEmpty ())
+        return false;
+
+
+    d->m_lastExportURL = chosenURL;
+    d->m_lastExportMimeType = chosenMimeType;
+    saveLastOutputMimeType (chosenMimeType, "File/Export");
+
+
+    if (!kpDocument::savePixmapToFile (m_document->pixmapWithSelection (),
+                                       chosenURL, chosenMimeType,
+                                       true/*overwrite prompt*/,
+                                       this))
+    {
+        return false;
+    }
+
+
+    addRecentURL (chosenURL);
+
+    return true;
 }
 
 
