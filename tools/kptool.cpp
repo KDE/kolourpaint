@@ -1108,9 +1108,38 @@ void kpTool::keyPressEvent (QKeyEvent *e)
     if (view && (dx || dy))
     {
         QPoint oldPoint = view->mapFromGlobal (QCursor::pos ());
+    #if DEBUG_KP_TOOL && 0
+        kdDebug () << "\toldPoint=" << oldPoint
+                   << " dx=" << dx << " dy=" << dy << endl;
+    #endif
 
-        int x = QMIN (QMAX (oldPoint.x () + dx, 0), view->width () - 1);
-        int y = QMIN (QMAX (oldPoint.y () + dy, 0), view->height () - 1);
+
+        const int viewIncX = (dx ? QMAX (1, view->zoomLevelX () / 100) * dx : 0);
+        const int viewIncY = (dy ? QMAX (1, view->zoomLevelY () / 100) * dy : 0);
+
+        int newViewX = oldPoint.x () + viewIncX;
+        int newViewY = oldPoint.y () + viewIncY;
+
+
+    #if DEBUG_KP_TOOL && 0
+        kdDebug () << "\tnewPoint=" << QPoint (newViewX, newViewY) << endl;
+    #endif
+
+        if (view->zoomViewToDoc (QPoint (newViewX, newViewY)) ==
+            view->zoomViewToDoc (oldPoint))
+        {
+            newViewX += viewIncX, newViewY += viewIncY;
+
+        #if DEBUG_KP_TOOL && 0
+            kdDebug () << "\tneed adjust for doc - newPoint="
+                       << QPoint (newViewX, newViewY) << endl;
+        #endif
+        }
+
+
+        // TODO: visible width/height (e.g. with scrollbars)
+        int x = QMIN (QMAX (newViewX, 0), view->width () - 1);
+        int y = QMIN (QMAX (newViewY, 0), view->height () - 1);
 
         QCursor::setPos (view->mapToGlobal (QPoint (x, y)));
         e->accept ();
