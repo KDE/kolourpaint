@@ -2,9 +2,9 @@ Eliminates flicker when moving document resize lines / dragging resize
 handles by:
 
 1. Not erasing areas that will be subsequently painted over with resize
-   lines
+   lines.
 2. Erasing the old areas and painting the new ones atomicly by using
-   clever NOT'ing of pixels
+   clever NOT'ing of pixels.
 
 Additionally, recover the resize lines after a window pops up momentarily
 over KolourPaint (kpViewScrollableContainer::windowActivationChange()).
