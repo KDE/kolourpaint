@@ -70,13 +70,27 @@ int main (int argc, char *argv [])
         I18N_NOOP("Paint Program for KDE"),
         KAboutData::License_Custom,
         "Copyright (c) 2003-2004 Clarence Dang",
-        0
+        0,
+        "http://kolourpaint.sf.net/"
     );
 
     // this is _not_ the same as KAboutData::License_BSD
     aboutData.setLicenseText (kpLicenseText);
 
     aboutData.addAuthor ("Clarence Dang", I18N_NOOP ("Maintainer"), "dang@kde.org");
+    aboutData.addAuthor ("Thurston Dang");
+
+    aboutData.addCredit ("Stephan Binner");
+    aboutData.addCredit ("Rob Buis");
+    aboutData.addCredit ("Lucijan Busch");
+    aboutData.addCredit ("David Faure");
+    aboutData.addCredit ("Wilco Greven");
+    aboutData.addCredit ("Stephan Kulow");
+    aboutData.addCredit ("Ralf Nolden");
+    aboutData.addCredit ("Boudewijn Rempt");
+    aboutData.addCredit ("Dirk Schönberger");
+    aboutData.addCredit ("Peter Simonsson");
+
 
     KCmdLineArgs::init (argc, argv, &aboutData);
     KCmdLineArgs::addCmdLineOptions (cmdLineOptions);
