@@ -432,7 +432,7 @@ bool kpMainWindow::queryClose ()
     int result = KMessageBox::warningYesNoCancel (this,
                      i18n ("The document \"%1\" has been modified.\n"
                            "Do you want to save it?")
-                         .arg (m_document->filename ()),
+                         .arg (m_document->prettyFilename ()),
                     QString::null/*caption*/,
                     KStdGuiItem::save (), KStdGuiItem::discard ());
 
@@ -489,7 +489,7 @@ void kpMainWindow::slotUpdateCaption ()
     if (m_document)
     {
         setCaption (m_configShowPath ? m_document->prettyURL ()
-                                     : m_document->filename (),
+                                     : m_document->prettyFilename (),
                     m_document->isModified ());
     }
     else

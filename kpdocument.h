@@ -68,8 +68,9 @@ public:
     static QString prettyURLForURL (const KURL &url);
     QString prettyURL () const;
 
-    static QString filenameForURL (const KURL &url);
-    QString filename () const;
+    // (will convert: empty URL --> "Untitled")
+    static QString prettyFilenameForURL (const KURL &url);
+    QString prettyFilename () const;
 
     QString mimetype () const;
 

@@ -179,7 +179,8 @@ bool kpMainWindow::slotOpen ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    KURL url = KFileDialog::getImageOpenURL (":kolourpaint", this, i18n ("Open Image"));
+    QString startDir = m_document ? m_document->url ().directory () : QString::null;
+    KURL url = KFileDialog::getImageOpenURL (startDir, this, i18n ("Open Image"));
     if (url.isEmpty ())
         return false;
 
@@ -237,9 +238,12 @@ bool kpMainWindow::saveAs (bool localOnly)
         return false;
     }
 
-    QString path = m_document->url ().path ();
-    kdDebug () << "kpMainWindow::slotSaveAs currentPath=" << path << endl;
-    KFileDialog *fd = new KFileDialog (path.isEmpty () ? ":kolourpaint" : path,
+    KURL url = m_document->url ();
+#if DEBUG_KPMAINWINDOW
+    kdDebug () << "kpMainWindow::saveAs URL=" << url
+               << " dir=" << url.directory () << endl;
+#endif
+    KFileDialog *fd = new KFileDialog (url.directory (),
                                        QString::null, this, "fd", true);
     fd->setOperationMode (KFileDialog::Saving);
     if (localOnly)
@@ -332,7 +336,7 @@ bool kpMainWindow::slotReload ()
                          i18n ("The document \"%1\" has been modified.\n"
                                "Reloading will lose all changes since you last saved it.\n"
                                "Are you sure?")
-                             .arg (m_document->filename ()),
+                             .arg (m_document->prettyFilename ()),
                         QString::null/*caption*/,
                         i18n ("&Reload"));
 
@@ -411,6 +415,7 @@ void kpMainWindow::slotPrintPreview ()
     // TODO: get it to reflect default printer's settings
     KPrinter printer (false/*separate settings from ordinary printer*/);
     
+    // TODO: pass "this" as parent
     printer.setPreviewOnly (true);
     sendFilenameToPrinter (&printer);
     

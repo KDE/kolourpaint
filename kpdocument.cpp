@@ -120,8 +120,9 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
 
         if (mimetype.isEmpty ())
         {
-            KMessageBox::sorry (0, i18n ("Could not open \"%1\" - unknown mimetype.")
-                                        .arg (kpDocument::filenameForURL (url)));
+            KMessageBox::sorry (m_mainWindow,
+                                i18n ("Could not open \"%1\" - unknown mimetype.")
+                                    .arg (kpDocument::prettyFilenameForURL (url)));
             return false;
         }
 
@@ -129,9 +130,10 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
 #if 0
         if (!KImageIO::isSupported (mimetype, KImageIO::Reading))
         {
-            KMessageBox::sorry (0, i18n ("Could not open \"%1\" - unsupported image format \"%2\".")
-                                        .arg (kpDocument::filenameForURL (url))
-                                        .arg (mimetype));
+            KMessageBox::sorry (m_mainWindow,
+                                i18n ("Could not open \"%1\" - unsupported image format \"%2\".")
+                                    .arg (kpDocument::prettyFilenameForURL (url))
+                                    .arg (mimetype));
             return false;
         }
 #endif
@@ -139,9 +141,10 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
         QPixmap *newPixmap = new QPixmap (tempFile);
         if (newPixmap->isNull ())
         {
-            KMessageBox::sorry (0, i18n ("Could not open \"%1\" - unsupported image format.\n"
-                                         "The file may be corrupt.")
-                                       .arg (kpDocument::filenameForURL (url)));
+            KMessageBox::sorry (m_mainWindow,
+                                i18n ("Could not open \"%1\" - unsupported image format.\n"
+                                      "The file may be corrupt.")
+                                    .arg (kpDocument::prettyFilenameForURL (url)));
             delete newPixmap;
             return false;
         }
@@ -168,8 +171,9 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
         }
         else
         {
-            KMessageBox::sorry (0, i18n ("Could not open \"%1\".")
-                                    .arg (kpDocument::filenameForURL (url)));
+            KMessageBox::sorry (m_mainWindow,
+                                i18n ("Could not open \"%1\".")
+                                    .arg (kpDocument::prettyFilenameForURL (url)));
             return false;
         }
     }
@@ -183,7 +187,8 @@ bool kpDocument::save ()
 
     if (m_url.isEmpty () || m_mimetype.isEmpty ())
     {
-        KMessageBox::detailedError (0, i18n ("Could not save image - insufficient information."),
+        KMessageBox::detailedError (m_mainWindow,
+                                    i18n ("Could not save image - insufficient information."),
             i18n ("URL: %1\n"
                   "Mimetype: %2")
                 .arg (prettyURL ())
@@ -203,10 +208,10 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
 
     if (overwritePrompt && KIO::NetAccess::exists (url, false/*write*/, m_mainWindow))
     {
-        int result = KMessageBox::warningContinueCancel (0,
+        int result = KMessageBox::warningContinueCancel (m_mainWindow,
             i18n ("A document called \"%1\" already exists.\n"
                   "Do you want to overwrite it?")
-                .arg (filenameForURL (url)),
+                .arg (prettyFilenameForURL (url)),
             QString::null,
             i18n ("Overwrite"));
 
@@ -230,7 +235,8 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
         filename = tempFile.name ();
         if (filename.isEmpty ())
         {
-            KMessageBox::error (0, i18n ("Could not save image - unable to create temporary file."));
+            KMessageBox::error (m_mainWindow,
+                                i18n ("Could not save image - unable to create temporary file."));
             return false;
         }
     }
@@ -243,7 +249,10 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
 #endif
     if (!pixmapWithSelection ().save (filename, type.latin1 ()))
     {
-        KMessageBox::error (0, i18n ("Could not save image as type <b>%1 (%2)</b>.").arg (mimetype).arg (type));
+        KMessageBox::error (m_mainWindow,
+                            i18n ("Could not save image as type <b>%1 (%2)</b>.")
+                                .arg (mimetype)
+                                .arg (type));
         return false;
     }
 
@@ -251,7 +260,8 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
     {
         if (!KIO::NetAccess::upload (filename, url, m_mainWindow))
         {
-            KMessageBox::error (0, i18n ("Could not save image - failed to upload."));
+            KMessageBox::error (m_mainWindow,
+                                i18n ("Could not save image - failed to upload."));
             return false;
         }
     }
@@ -286,7 +296,7 @@ QString kpDocument::prettyURL () const
 
 
 // static
-QString kpDocument::filenameForURL (const KURL &url)
+QString kpDocument::prettyFilenameForURL (const KURL &url)
 {
     if (url.isEmpty ())
         return i18n ("Untitled");
@@ -294,9 +304,9 @@ QString kpDocument::filenameForURL (const KURL &url)
         return url.fileName ();
 }
 
-QString kpDocument::filename () const
+QString kpDocument::prettyFilename () const
 {
-    return filenameForURL (m_url);
+    return prettyFilenameForURL (m_url);
 }
 
 
