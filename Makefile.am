@@ -23,6 +23,7 @@ kolourpaint_SOURCES = kolourpaint.cpp kpdocument.cpp kpview.cpp \
     kptemppixmap.cpp kptextstyle.cpp \
     kpthumbnail.cpp \
     kpviewmanager.cpp \
+    kpviewscrollablecontainer.cpp \
     kpwidgetmapper.cpp
 kolourpaint_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kolourpaint_LDADD = $(LIB_KDEPRINT) \
