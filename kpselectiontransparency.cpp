@@ -25,7 +25,8 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_SELECTION_TRANSPARENCY 1
+
+#define DEBUG_KP_SELECTION_TRANSPARENCY 0
 
 #include <kdebug.h>
 
@@ -55,7 +56,7 @@ kpSelectionTransparency::kpSelectionTransparency (bool isOpaque, const kpColor &
     setColorSimilarity (colorSimilarity);
 }
 
-bool kpSelectionTransparency::operator== (const kpSelectionTransparency &rhs)
+bool kpSelectionTransparency::operator== (const kpSelectionTransparency &rhs) const
 {
 #if DEBUG_KP_SELECTION_TRANSPARENCY && 0
     kdDebug () << "kpSelectionTransparency::operator==()" << endl;
@@ -92,7 +93,7 @@ bool kpSelectionTransparency::operator== (const kpSelectionTransparency &rhs)
             m_colorSimilarity == rhs.m_colorSimilarity);
 }
 
-bool kpSelectionTransparency::operator!= (const kpSelectionTransparency &rhs)
+bool kpSelectionTransparency::operator!= (const kpSelectionTransparency &rhs) const
 {
     return !(*this == rhs);
 }

@@ -43,8 +43,8 @@ public:
     // Returns whether they are visually equivalent.
     // This is the same as a memcmp() except that if they are both opaque,
     // this function will return true regardless of the transaprentColor's.
-    bool operator== (const kpSelectionTransparency &rhs);
-    bool operator!= (const kpSelectionTransparency &rhs);
+    bool operator== (const kpSelectionTransparency &rhs) const;
+    bool operator!= (const kpSelectionTransparency &rhs) const;
     ~kpSelectionTransparency ();
 
     bool isOpaque () const;
