@@ -2,6 +2,9 @@
 $Id$
 
 
+Look in patches/, grep sources for "TODO" and look here:
+
+
 Before 1.0
 ===========
 
@@ -9,7 +12,6 @@ Short-Term
 ----------
 
 kptoolwidgetbase - spacing between items, make contentsRect() actual size wanted
-                 - tooltips
 tool widget colours hard (i.e. impossible) to see on an 8-bit display
 make fill style GUI clearer
 
@@ -22,21 +24,19 @@ Reason: the mouse isn't moving relative to the view (as the view is moving
 relative to the mouse instead) so its position stays the same
 (relative to the document).
 if brush, close, move cursor, new; brush in wrong place
-
-zoom levels < 100%
-
-line: shift + alt doesn't work but alt+shift does
-- alt is backfiring (conflicts with kwin)...hmm what should I do?
+shift+ctrl+alt modifiers can go out of sync
 
 rewrite colour eraser
 - faster
 - rwlbuis' test
-
-warn about lossy saves
+double click on colour eraser
 
 
 Medium Term (2-4 weeks)
 ---------------------
+
+transparent images
+- will also require an additional colour in the kpColorToolBar
 
 fix selections; implement free-form selection
 - clean interface
@@ -45,6 +45,8 @@ fix selections; implement free-form selection
 - transparent & opaque selections
 Image menu items as ordinary tools
 honour background colour for Skew, Rotate
+icons for some of the Image dialogs (if I decide to keep the dialogs around)
+Colour Eraser as part of the Image Menu;
 
 clean up kpmainwindow
 - statusbar
@@ -52,9 +54,6 @@ clean up kpmainwindow
 - propagation of settings thru mainwindows
 
 config dialogs (look into new kconfig generator)
-
-Colour Eraser as part of the Image Menu;
-dbl-click on Colour Eraser does whole image?
 
 tool/text
 paste text (editable after you paste it)
@@ -67,10 +66,6 @@ Killer Feature: with flow tools (pen, brush, spraycan), holding SHIFT forces hor
 Long-Term (approx 1-2 months)
 -----------------------------
 
-intersect bounding rect with document rect when saving undo info
-- e.g. if you drag a large rect bigger than the view, waste a lot of memory
-ditto for setTempPixmapAt et. al. (maybe not for selections, still thinking)
-
 Rethink kpView/kpViewManager design because of:
 - flicker
 - performance
@@ -78,20 +73,15 @@ Rethink kpView/kpViewManager design because of:
 Ideas:
 - region-based rendering (for performance)
 - blockUpdates() for transaction-based rendering (removes flicker)
-- do something about this horrible tempPixmap hack (it slooooow)
+- do something about this horrible tempPixmap hack (so slooooow)
 
 make sure session restore actually works
-
-icons for some of the Image dialogs
-
-transparent images
-- will also require an additional colour in the kpColorToolBar
 
 colour depth audit
 - do 8-bit pixmaps work?
 - are we incorrectly using kpDocument::setPixmap() with mono pixmaps?
 
-random pixels in the view showing up with the Colour Eraser Tool and Zoom over a remote display
+random pixels in the view showing up with the Colour Eraser Tool and Zoom over 8-bit VNC
 
 tool icons - if a more experienced artist doesn't offer to draw new ones,
 I'll be forced to redo them myself once transparency is supported
@@ -101,6 +91,10 @@ documentation (assigned to Thurston)
 
 Can be delayed till after 1.0
 -----------------------------
+
+intersect bounding rect with document rect when saving undo info
+- e.g. if you drag a large rect bigger than the view, waste a lot of memory
+ditto for setTempPixmapAt et. al. (maybe not for selections, still thinking)
 
 Zoom zooms into/out of the centre, not the top-left (like a camera)
 
@@ -113,6 +107,11 @@ guard all ptr derefs with if (ptr) ptr->whatever
 
 kdError -> KP_PANIC or KMessageBox
 wait cursor for slow ops - should it be in kpDocument or in the commands???
+
+warn about lossy saves (e.g. JPEG)
+
+use of QPoint () or QPoint (-1, -1) as a sentinel is worrying since it's a
+legal point when dragging out a rectangle
 
 
 After 1.0
@@ -172,7 +171,7 @@ tool/ruler (can even measure length & angle of diagonal lines)
 
 readonly mode
 
-network friendly - async save with progress bar
+network friendly - async save
 
 Edit/Paste in New Window; if !kpMainWindow::shouldOpenInNewWindow(),
 it should resize the existing view to fit the selection (most useful if
@@ -182,3 +181,8 @@ this case (but wouldn't an action with 2 names be confusing?).
 
 Image/ Contrast, Brightness, ...
 
+line: shift+alt doesn't work but alt+shift does
+- doesn't look like Bug #64019
+- alt alone is backfiring anyway (conflicts with kwin)
+  so I'll just leave 30deg & 60deg lines as hidden functionality for now
+  (until I can think up a better key combo/way to activate it)
