@@ -370,14 +370,14 @@ void kpMainWindow::enableDocumentActions (bool enable)
 // public
 bool kpMainWindow::actionsSingleKeyTriggersEnabled () const
 {
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::actionsSingleKeyTriggersEnabled()" << endl;
     QTime timer; timer.start ();
 #endif
 
     if (m_toolToolBar)
     {
-    #if DEBUG_KP_MAIN_WINDOW || 1
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\ttime=" << timer.restart () << endl;
     #endif
         return m_toolToolBar->toolsSingleKeyTriggersEnabled ();
@@ -392,7 +392,7 @@ bool kpMainWindow::actionsSingleKeyTriggersEnabled () const
 // public
 void kpMainWindow::enableActionsSingleKeyTriggers (bool enable)
 {
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::enableActionsSingleKeyTriggers("
                << enable << ")" << endl;
     QTime timer; timer.start ();
@@ -406,7 +406,7 @@ void kpMainWindow::enableActionsSingleKeyTriggers (bool enable)
     d->m_actionPrevToolOptionGroup2->enableSingleKeyTriggers (enable);
     d->m_actionNextToolOptionGroup2->enableSingleKeyTriggers (enable);
 
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\ttime=" << timer.restart () << endl;
 #endif
 }
@@ -701,7 +701,7 @@ void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
 // private virtual [base QWidget]
 void kpMainWindow::dropEvent (QDropEvent *e)
 {
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::dropEvent" << e->pos () << endl;
 #endif
 
@@ -725,7 +725,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
     {
         QPoint selTopLeft = KP_INVALID_POINT;
         const QPoint globalPos = QWidget::mapToGlobal (e->pos ());
-    #if DEBUG_KP_MAIN_WINDOW || 1
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tpos toGlobal=" << globalPos << endl;
     #endif
 
@@ -734,14 +734,14 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         if (m_viewManager)
         {
             view = m_viewManager->viewUnderCursor ();
-        #if DEBUG_KP_MAIN_WINDOW || 1
+        #if DEBUG_KP_MAIN_WINDOW
             kdDebug () << "\t\tviewUnderCursor=" << view << endl;
         #endif
             if (!view)
             {
                 // HACK: see kpViewManager::setViewUnderCursor() to see why
                 //       it's not reliable
-            #if DEBUG_KP_MAIN_WINDOW || 1
+            #if DEBUG_KP_MAIN_WINDOW
                 kdDebug () << "\t\tattempting to discover view" << endl;
 
                 if (m_mainView && m_scrollView)
@@ -785,9 +785,10 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 
             selTopLeft = view->zoomViewToDoc (viewPos);
 
-            // HACK: wrong
-            selTopLeft -= QPoint (kpSelection::textBorderSize (),
-                                  kpSelection::textBorderSize ());
+            // TODO: In terms of doc pixels, would be inconsistent behaviour
+            //       based on zoomLevel of view.
+            // selTopLeft -= QPoint (-view->selectionResizeHandleAtomicSize (),
+            //                       -view->selectionResizehandleAtomicSize ());
         }
 
         pasteText (text, true/*force new text selection*/, selTopLeft);
