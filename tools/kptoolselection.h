@@ -81,6 +81,7 @@ private:
 
     class kpToolSelectionPullFromDocumentCommand *m_currentPullFromDocumentCommand;
     class kpToolSelectionMoveCommand *m_currentMoveCommand;
+    bool m_currentMoveCommandIsSmear;
 };
 
 class kpToolSelectionCreateCommand : public KCommand

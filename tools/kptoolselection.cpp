@@ -195,13 +195,22 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
             if (document ()->selection ())
                 points = document ()->selection ()->points ();
 
+
+            // (not detached so will modify "points" directly but
+            //  still need to call kpDocument::setSelection() to
+            //  update screen)
+
+            if (!m_dragHasBegun)
+            {
+                // We thought the drag at startPoint was a NOP
+                // but it turns out that it wasn't...
+                points.putPoints (points.count (), 1, m_startPoint.x (), m_startPoint.y ());
+            }
+
             // TODO: there should be an upper limit on this before drawing the
             //       polygon becomes too slow
-
-            // not detached so will modify "points" directly but
-            // still need to call setSelectionBorderPoints() to
-            // set selectionBorderType at least once & update screen every time
             points.putPoints (points.count (), 1, thisPoint.x (), thisPoint.y ());
+
 
             document ()->setSelection (kpSelection (points));
         #if DEBUG_KP_TOOL_SELECTION
@@ -231,11 +240,15 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
             m_currentMoveCommand = new kpToolSelectionMoveCommand (
                 QString::null/*uninteresting child of macro cmd*/,
                 mainWindow ());
+            m_currentMoveCommandIsSmear = false;
         }
 
 
         //viewManager ()->setQueueUpdates ();
         //viewManager ()->setFastUpdates ();
+
+        if (m_shiftPressed)
+            m_currentMoveCommandIsSmear = true;
 
         if (!m_dragHasBegun && (m_controlPressed || m_shiftPressed))
             m_currentMoveCommand->copyOntoDocument ();
@@ -318,11 +331,14 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
     if (m_mouseButton != 0/*left*/)
         return;
 
-    KMacroCommand *cmd = m_currentMoveCommand
-                             ?
-                         new KMacroCommand (i18n ("Move selection"))
-                             :
-                         0;
+    KMacroCommand *cmd = 0;
+    if (m_currentMoveCommand)
+    {
+        if (m_currentMoveCommandIsSmear)
+            cmd = new KMacroCommand (i18n ("Selection: Smear"));
+        else
+            cmd = new KMacroCommand (i18n ("Selection: Move"));
+    }
 
     if (m_currentPullFromDocumentCommand)
     {
@@ -340,7 +356,7 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
             selection.setPixmap (QPixmap ());
 
             commandHistory ()->addCommand (new kpToolSelectionCreateCommand (
-                i18n ("Create selection"),
+                i18n ("Selection: Create"),
                 selection,
                 mainWindow ()),
                 false/*no exec - user already dragged out sel*/);
