@@ -556,7 +556,8 @@ void kpToolSelectionCreateCommand::unexecute ()
 
     if (!doc->selection ())
     {
-        kdError () << "kpToolSelectionCreateCommand::unexecute() without sel region" << endl;
+        // TODO: be a kdError() after I fix Bug #5 (2 "Selection: Create" Undo entries)
+        kdDebug () << "kpToolSelectionCreateCommand::unexecute() without sel region" << endl;
         return;
     }
 
