@@ -28,6 +28,9 @@
 
 #define DEBUG_KP_TOOL_FLOOD_FILL 0
 
+
+#include <kptoolfloodfill.h>
+
 #include <qapplication.h>
 #include <qcursor.h>
 #include <qpainter.h>
@@ -40,7 +43,6 @@
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
-#include <kptoolfloodfill.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
 

@@ -25,6 +25,9 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+#include <kpcolorsimilaritydialog.h>
+
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -33,7 +36,6 @@
 #include <knuminput.h>
 
 #include <kpcolorsimilaritycube.h>
-#include <kpcolorsimilaritydialog.h>
 
 
 // public static

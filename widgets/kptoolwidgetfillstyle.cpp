@@ -27,6 +27,9 @@
 
 #define DEBUG_KP_TOOL_WIDGET_FILL_STYLE 0
 
+
+#include <kptoolwidgetfillstyle.h>
+
 #include <qbitmap.h>
 #include <qbrush.h>
 #include <qpainter.h>
@@ -37,7 +40,6 @@
 #include <kpcolor.h>
 #include <kpdefs.h>
 #include <kptool.h>
-#include <kptoolwidgetfillstyle.h>
 
 
 kpToolWidgetFillStyle::kpToolWidgetFillStyle (QWidget *parent)

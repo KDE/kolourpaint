@@ -26,6 +26,8 @@
 */
 
 
+#include <kptoolinvertcolors.h>
+
 #include <qapplication.h>
 
 #include <klocale.h>
@@ -35,7 +37,6 @@
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
-#include <kptoolinvertcolors.h>
 
 
 kpToolInvertColorsCommand::kpToolInvertColorsCommand (bool actOnSelection,

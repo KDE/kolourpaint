@@ -27,6 +27,8 @@
 
 #define DEBUG_KP_TOOL_PREVIEW_DIALOG 0
 
+#include <kptoolpreviewdialog.h>
+
 #include <qlayout.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
@@ -39,7 +41,6 @@
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
-#include <kptoolpreviewdialog.h>
 
 
 kpToolPreviewDialog::kpToolPreviewDialog (const QString &actionName,

@@ -28,11 +28,11 @@
 #define DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT 0
 
 
+#include <kptoolwidgetopaqueortransparent.h>
+
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <klocale.h>
-
-#include <kptoolwidgetopaqueortransparent.h>
 
 
 kpToolWidgetOpaqueOrTransparent::kpToolWidgetOpaqueOrTransparent (QWidget *parent)

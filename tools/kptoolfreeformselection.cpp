@@ -26,8 +26,10 @@
 */
 
 
-#include <klocale.h>
 #include <kptoolfreeformselection.h>
+
+#include <klocale.h>
+
 
 kpToolFreeFormSelection::kpToolFreeFormSelection (kpMainWindow *mainWindow)
     : kpToolSelection (mainWindow)

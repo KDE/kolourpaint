@@ -26,8 +26,10 @@
 */
 
 
-#include <klocale.h>
 #include <kptoolellipticalselection.h>
+
+#include <klocale.h>
+
 
 kpToolEllipticalSelection::kpToolEllipticalSelection (kpMainWindow *mainWindow)
     : kpToolSelection (mainWindow)

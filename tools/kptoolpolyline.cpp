@@ -26,8 +26,10 @@
 */
 
 
-#include <klocale.h>
 #include <kptoolpolyline.h>
+
+#include <klocale.h>
+
 
 kpToolPolyline::kpToolPolyline (kpMainWindow *mainWindow)
     : kpToolPolygon (mainWindow)

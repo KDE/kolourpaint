@@ -28,6 +28,9 @@
 
 #define DEBUG_KP_COLOR_TOOL_BAR 0
 
+
+#include <kpcolortoolbar.h>
+
 #include <qbitmap.h>
 #include <qdrawutil.h>
 #include <qframe.h>
@@ -46,7 +49,6 @@
 #include <klocale.h>
 
 #include <kpcolorsimilaritydialog.h>
-#include <kpcolortoolbar.h>
 #include <kpdefs.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>

@@ -27,6 +27,9 @@
 
 #define DEBUG_KP_TOOL_ROTATE 0
 
+
+#include <kptoolrotate.h>
+
 #include <qapplication.h>
 #include <qbuttongroup.h>
 #include <qgroupbox.h>
@@ -47,7 +50,6 @@
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kptool.h>
-#include <kptoolrotate.h>
 #include <kpviewmanager.h>
 
 

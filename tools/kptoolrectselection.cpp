@@ -26,8 +26,10 @@
 */
 
 
-#include <klocale.h>
 #include <kptoolrectselection.h>
+
+#include <klocale.h>
+
 
 kpToolRectSelection::kpToolRectSelection (kpMainWindow *mainWindow)
     : kpToolSelection (mainWindow)

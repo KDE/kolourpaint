@@ -28,6 +28,8 @@
 #define DEBUG_KP_TOOL_WIDGET_ERASER_SIZE 0
 
 
+#include <kptoolwidgeterasersize.h>
+
 #include <qbitmap.h>
 #include <qpainter.h>
 
@@ -36,7 +38,6 @@
 
 #include <kpcolor.h>
 #include <kptool.h>
-#include <kptoolwidgeterasersize.h>
 
 
 static int eraserSizes [] = {2, 3, 5, 9, 17, 29};

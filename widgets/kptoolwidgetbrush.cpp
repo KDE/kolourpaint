@@ -28,6 +28,9 @@
 
 #define DEBUG_KP_TOOL_WIDGET_BRUSH 0
 
+
+#include <kptoolwidgetbrush.h>
+
 #include <qbitmap.h>
 #include <qpainter.h>
 
@@ -35,7 +38,7 @@
 #include <klocale.h>
 
 #include <kpdefs.h>
-#include <kptoolwidgetbrush.h>
+
 
 /* sync: <brushes> */
 static int brushSize [][3] =

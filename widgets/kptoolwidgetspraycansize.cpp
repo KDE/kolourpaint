@@ -28,6 +28,9 @@
 
 #define DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE 0
 
+
+#include <kptoolwidgetspraycansize.h>
+
 #include <qbitmap.h>
 #include <qimage.h>
 #include <qpainter.h>
@@ -37,7 +40,6 @@
 #include <klocale.h>
 
 #include <kppixmapfx.h>
-#include <kptoolwidgetspraycansize.h>
 
 
 static int spraycanSizes [] = {9, 17, 29};

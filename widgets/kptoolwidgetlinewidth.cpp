@@ -26,12 +26,13 @@
 */
 
 
+#include <kptoolwidgetlinewidth.h>
+
 #include <qbitmap.h>
 #include <qpainter.h>
 
 #include <klocale.h>
 
-#include <kptoolwidgetlinewidth.h>
 
 static int lineWidths [] = {1, 2, 3, 5, 8};
 

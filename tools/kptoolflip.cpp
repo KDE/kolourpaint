@@ -26,6 +26,8 @@
 */
 
 
+#include <kptoolflip.h>
+
 #include <qapplication.h>
 #include <qradiobutton.h>
 #include <qvbox.h>
@@ -39,7 +41,6 @@
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kptool.h>
-#include <kptoolflip.h>
 #include <kpmainwindow.h>
 
 

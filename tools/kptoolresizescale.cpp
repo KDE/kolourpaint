@@ -28,6 +28,9 @@
 #define DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND 0
 #define DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG 0
 
+
+#include <kptoolresizescale.h>
+
 #include <math.h>
 
 #include <qapplication.h>
@@ -51,7 +54,6 @@
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kptool.h>
-#include <kptoolresizescale.h>
 
 
 /*

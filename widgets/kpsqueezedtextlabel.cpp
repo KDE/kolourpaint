@@ -27,14 +27,15 @@
 
 #define DEBUG_KP_SQUEEZED_TEXT_LABEL 0
 
+
+#include <kpsqueezedtextlabel.h>
+
 #include <qfont.h>
 #include <qfontmetrics.h>
 #include <qstring.h>
 
 #include <kdebug.h>
 #include <klocale.h>
-
-#include <kpsqueezedtextlabel.h>
 
 
 kpSqueezedTextLabel::kpSqueezedTextLabel (QWidget *parent, const char *name)

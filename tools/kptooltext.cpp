@@ -28,6 +28,8 @@
 #define DEBUG_KP_TOOL_TEXT 0
 
 
+#include <kptooltext.h>
+
 #include <qvaluevector.h>
 
 #include <kdebug.h>
@@ -37,7 +39,6 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kpselection.h>
-#include <kptooltext.h>
 #include <kpviewmanager.h>
 
 

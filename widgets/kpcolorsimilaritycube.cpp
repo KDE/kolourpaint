@@ -28,6 +28,8 @@
 #define DEBUG_KP_COLOR_SIMILARITY_CUBE 0
 
 
+#include <kpcolorsimilaritycube.h>
+
 #include <math.h>
 
 #include <qpainter.h>
@@ -38,7 +40,6 @@
 #include <klocale.h>
 
 #include <kpcolor.h>
-#include <kpcolorsimilaritycube.h>
 #include <kpcolorsimilaritydialog.h>
 #include <kpdefs.h>
 

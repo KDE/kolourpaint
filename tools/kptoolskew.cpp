@@ -29,6 +29,8 @@
 #define DEBUG_KP_TOOL_SKEW_DIALOG 0
 
 
+#include <kptoolskew.h>
+
 #include <qapplication.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
@@ -47,7 +49,6 @@
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kptool.h>
-#include <kptoolskew.h>
 
 
 /*

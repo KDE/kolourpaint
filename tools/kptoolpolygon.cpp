@@ -28,6 +28,8 @@
 
 #define DEBUG_KP_TOOL_POLYGON 0
 
+#include <kptoolpolygon.h>
+
 #include <float.h>
 #include <math.h>
 
@@ -50,7 +52,6 @@
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kptemppixmap.h>
-#include <kptoolpolygon.h>
 #include <kptooltoolbar.h>
 #include <kptoolwidgetlinewidth.h>
 #include <kpviewmanager.h>
