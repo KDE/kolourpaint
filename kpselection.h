@@ -124,6 +124,8 @@ public:
     int height () const;
 
 
+    // (for non-rectangular selections, may return false even if
+    //  kpView::onSelectionResizeHandle())
     bool contains (const QPoint &point) const;
     bool contains (int x, int y);
 
@@ -143,18 +145,6 @@ public:
     QRect textAreaRect () const;
     bool pointIsInTextBorderArea (const QPoint &globalPoint) const;
     bool pointIsInTextArea (const QPoint &globalPoint) const;
-
-    enum ResizeType
-    {
-        None = 0,
-        Left = 1,
-        Right = 2,
-        Top = 4,
-        Bottom = 8
-    };
-
-    // Returns the ResizeType
-    int pointOnResizeHandle (const QPoint &globalPoint) const;
 
 
     void textResize (int width, int height);

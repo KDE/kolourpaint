@@ -809,7 +809,7 @@ void kpSelection::setTextLines (const QValueVector <QString> &textLines_)
 // public static
 int kpSelection::textBorderSize ()
 {
-    return 4;
+    return 1;
 }
 
 // public
@@ -851,66 +851,6 @@ bool kpSelection::pointIsInTextArea (const QPoint &globalPoint) const
     return textAreaRect ().contains (globalPoint);
 }
 
-// public
-int kpSelection::pointOnResizeHandle (const QPoint &globalPoint) const
-{
-    // (even if this is not a text selection - be consistent after all)
-    const int atomicLength = textBorderSize ();
-
-    // Heuristic:
-    //
-    // For text selections:
-    // Non-corner handles are of size <atomicLength>.
-    // Corner handles have height and width both <atomicLength>.
-    //
-    // For other selections,
-
-
-    //if (m_rect.width () > atomicLength
-    // TODO: wrong for small selections - probably want to move, not resize/scale
-    // TODO: give more than a 1 pixel leeway
-
-    if (globalPoint == boundingRect ().topLeft ())
-    {
-        return Top | Left;
-    }
-    else if (globalPoint == boundingRect ().topRight ())
-    {
-        return Top | Right;
-    }
-    else if (globalPoint == boundingRect ().bottomLeft ())
-    {
-        return Bottom | Left;
-    }
-    else if (globalPoint == boundingRect ().bottomRight ())
-    {
-        return Bottom | Right;
-    }
-    else if (globalPoint.x () == boundingRect ().left () &&
-             globalPoint.y () == (boundingRect ().top () + boundingRect ().bottom ()) / 2)
-    {
-        return Left;
-    }
-    else if (globalPoint.x () == boundingRect ().right () &&
-             globalPoint.y () == (boundingRect ().top () + boundingRect ().bottom ()) / 2)
-    {
-        return Right;
-    }
-    else if (globalPoint.y () == boundingRect ().top () &&
-             globalPoint.x () == (boundingRect ().left () + boundingRect ().right ()) / 2)
-    {
-        return Top;
-    }
-    else if (globalPoint.y () == boundingRect ().bottom () &&
-             globalPoint.x () == (boundingRect ().left () + boundingRect ().right ()) / 2)
-    {
-        return Bottom;
-    }
-    else
-    {
-        return 0;
-    }
-}
 
 // public
 void kpSelection::textResize (int width, int height)
@@ -935,13 +875,13 @@ void kpSelection::textResize (int width, int height)
 // public static
 int kpSelection::minimumWidthForTextStyle (const kpTextStyle &)
 {
-    return (kpSelection::textBorderSize () * 2 + 1);
+    return (kpSelection::textBorderSize () * 2 + 5);
 }
 
 // public static
 int kpSelection::minimumHeightForTextStyle (const kpTextStyle &)
 {
-    return (kpSelection::textBorderSize () * 2 + 1);
+    return (kpSelection::textBorderSize () * 2 + 5);
 }
 
 // public static

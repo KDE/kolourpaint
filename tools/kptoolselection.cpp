@@ -85,6 +85,37 @@ void kpToolSelection::pushOntoDocument ()
 }
 
 
+// protected
+bool kpToolSelection::onSelectionToMove () const
+{
+    kpView *v = viewManager ()->viewUnderCursor ();
+    if (!v)
+        return 0;
+
+    return v->mouseOnSelectionToMove ();
+}
+
+// protected
+int kpToolSelection::onSelectionResizeHandle () const
+{
+    kpView *v = viewManager ()->viewUnderCursor ();
+    if (!v)
+        return 0;
+
+    return v->mouseOnSelectionResizeHandle ();
+}
+
+// protected
+bool kpToolSelection::onSelectionToSelectText () const
+{
+    kpView *v = viewManager ()->viewUnderCursor ();
+    if (!v)
+        return 0;
+
+    return v->mouseOnSelectionToSelectText ();
+}
+
+
 // public
 QString kpToolSelection::haventBegunDrawUserMessage () const
 {
@@ -98,23 +129,26 @@ QString kpToolSelection::haventBegunDrawUserMessage () const
     if (m_cancelledShapeButStillHoldingButtons)
         return i18n ("Let go of all the mouse buttons.");
 
-    if (document () && document ()->selection () && document ()->selection ()->contains (m_currentPoint))
+    kpSelection *sel = document ()->selection ();
+    if (sel && onSelectionResizeHandle () && !controlOrShiftPressed ())
+    {
+        if (m_mode == Text)
+            return i18n ("Left drag to resize text box.");
+        else
+            return i18n ("Left drag to scale selection.");
+    }
+    else if (sel && sel->contains (m_currentPoint))
     {
         if (m_mode == Text)
         {
-            if (document ()->selection ()->pointIsInTextArea (m_currentPoint))
+            if (onSelectionToSelectText () && !controlOrShiftPressed ())
                 return i18n ("Left click to change cursor position.");
-            else if (document ()->selection ()->pointOnResizeHandle (m_currentPoint))
-                return i18n ("Left drag to resize text box.");
             else
                 return i18n ("Left drag to move text box.");
         }
         else
         {
-            if (document ()->selection ()->pointOnResizeHandle (m_currentPoint))
-                return i18n ("Left drag to scale selection.");
-            else
-                return i18n ("Left drag to move selection.");
+            return i18n ("Left drag to move selection.");
         }
     }
     else
@@ -237,9 +271,23 @@ void kpToolSelection::beginDraw ()
     #endif
         QRect selectionRect = sel->boundingRect ();
 
-        if (sel->contains (m_currentPoint))
+        if (onSelectionResizeHandle () && !controlOrShiftPressed ())
         {
-            if (m_mode == Text && sel->pointIsInTextArea (m_currentPoint))
+        #if DEBUG_KP_TOOL_SELECTION
+            kdDebug () << "\t\tis resize/scale" << endl;
+        #endif
+
+            m_startDragFromSelectionTopLeft = m_currentPoint - selectionRect.topLeft ();
+            m_dragType = ResizeScale;
+            m_resizeScaleType = onSelectionResizeHandle ();
+
+            viewManager ()->setSelectionBorderVisible (true);
+            viewManager ()->setSelectionBorderFinished (true);
+            viewManager ()->setTextCursorEnabled (false);
+        }
+        else if (sel->contains (m_currentPoint))
+        {
+            if (m_mode == Text && onSelectionToSelectText () && !controlOrShiftPressed ())
             {
             #if DEBUG_KP_TOOL_SELECTION
                 kdDebug () << "\t\tis select cursor pos" << endl;
@@ -249,20 +297,6 @@ void kpToolSelection::beginDraw ()
 
                 viewManager ()->setTextCursorPosition (sel->textRowForPoint (m_currentPoint),
                                                        sel->textColForPoint (m_currentPoint));
-            }
-            else if (document ()->selection ()->pointOnResizeHandle (m_currentPoint))
-            {
-            #if DEBUG_KP_TOOL_SELECTION
-                kdDebug () << "\t\tis resize/scale" << endl;
-            #endif
-
-                m_startDragFromSelectionTopLeft = m_currentPoint - selectionRect.topLeft ();
-                m_dragType = ResizeScale;
-                m_resizeScaleType = document ()->selection ()->pointOnResizeHandle (m_currentPoint);
-
-                viewManager ()->setSelectionBorderVisible (true);
-                viewManager ()->setSelectionBorderFinished (true);
-                viewManager ()->setTextCursorEnabled (false);
             }
             else
             {
@@ -309,40 +343,58 @@ void kpToolSelection::beginDraw ()
 
 
 // protected
-const QCursor &kpToolSelection::cursorForPoint (const QPoint &point) const
+const QCursor &kpToolSelection::cursor () const
 {
-    if (document () && document ()->selection () && document ()->selection ()->contains (point))
+#if DEBUG_KP_TOOL_SELECTION || 1
+    kdDebug () << "kpToolSelection::cursor()" << endl;
+#endif
+
+    kpSelection *sel = document () ? document ()->selection () : 0;
+
+    if (sel && onSelectionResizeHandle () && !controlOrShiftPressed ())
     {
-        if (m_mode == Text && document ()->selection ()->pointIsInTextArea (point))
+    #if DEBUG_KP_TOOL_SELECTION || 1
+        kdDebug () << "\tonSelectionResizeHandle="
+                   << onSelectionResizeHandle () << endl;
+    #endif
+        switch (onSelectionResizeHandle ())
+        {
+        case (kpView::Top | kpView::Left):
+        case (kpView::Bottom | kpView::Right):
+            return Qt::sizeFDiagCursor;
+
+        case (kpView::Bottom | kpView::Left):
+        case (kpView::Top | kpView::Right):
+            return Qt::sizeBDiagCursor;
+
+        case kpView::Top:
+        case kpView::Bottom:
+            return Qt::sizeVerCursor;
+
+        case kpView::Left:
+        case kpView::Right:
+            return Qt::sizeHorCursor;
+        }
+
+        return Qt::arrowCursor;
+    }
+    else if (sel && sel->contains (m_currentPoint))
+    {
+    #if DEBUG_KP_TOOL_SELECTION || 1
+        kdDebug () << "\tsel contains currentPoint; selecting text? "
+                   << onSelectionToSelectText () << endl;
+    #endif
+
+        if (m_mode == Text && onSelectionToSelectText () && !controlOrShiftPressed ())
             return Qt::ibeamCursor;
         else
-        {
-            switch (document ()->selection ()->pointOnResizeHandle (point))
-            {
-            case 0:
-            default:
-                return Qt::sizeAllCursor;
-
-            case (kpSelection::Top | kpSelection::Left):
-            case (kpSelection::Bottom | kpSelection::Right):
-                return Qt::sizeFDiagCursor;
-
-            case (kpSelection::Bottom | kpSelection::Left):
-            case (kpSelection::Top | kpSelection::Right):
-                return Qt::sizeBDiagCursor;
-
-            case kpSelection::Top:
-            case kpSelection::Bottom:
-                return Qt::sizeVerCursor;
-
-            case kpSelection::Left:
-            case kpSelection::Right:
-                return Qt::sizeHorCursor;
-            }
-        }
+            return Qt::sizeAllCursor;
     }
     else
     {
+    #if DEBUG_KP_TOOL_SELECTION || 1
+        kdDebug () << "\tnot on sel" << endl;
+    #endif
         return Qt::crossCursor;
     }
 }
@@ -350,7 +402,7 @@ const QCursor &kpToolSelection::cursorForPoint (const QPoint &point) const
 // virtual
 void kpToolSelection::hover (const QPoint &point)
 {
-    viewManager ()->setCursor (cursorForPoint (point));
+    viewManager ()->setCursor (cursor ());
 
     setUserShapePoints (point, KP_INVALID_POINT, false/*don't set size*/);
     if (document () && document ()->selection ())
@@ -754,25 +806,25 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
         int newX = originalSelection.x ();
         int newY = originalSelection.y ();
 
-        if (m_resizeScaleType & kpSelection::Left)
+        if (m_resizeScaleType & kpView::Left)
         {
             newWidth = QMAX (originalSelection.minimumWidth (),
                              newWidth - (thisPoint.x () - m_startPoint.x ()));
             newX -= (newWidth - originalSelection.width ());
         }
-        else if (m_resizeScaleType & kpSelection::Right)
+        else if (m_resizeScaleType & kpView::Right)
         {
             newWidth = QMAX (originalSelection.minimumWidth (),
                              newWidth + (thisPoint.x () - m_startPoint.x ()));
         }
 
-        if (m_resizeScaleType & kpSelection::Top)
+        if (m_resizeScaleType & kpView::Top)
         {
             newHeight = QMAX (originalSelection.minimumHeight (),
                               newHeight - (thisPoint.y () - m_startPoint.y ()));
             newY -= (newHeight - originalSelection.height ());
         }
-        else if (m_resizeScaleType & kpSelection::Bottom)
+        else if (m_resizeScaleType & kpView::Bottom)
         {
             newHeight = QMAX (originalSelection.minimumHeight (),
                               newHeight + (thisPoint.y () - m_startPoint.y ()));

@@ -33,6 +33,7 @@
 #include <qregion.h>
 #include <qwmatrix.h>
 
+
 class QDragEnterEvent;
 class QDragLeaveEvent;
 class QDropEvent;
@@ -41,12 +42,15 @@ class QKeyEvent;
 class QPixmap;
 class QPoint;
 class QRect;
+class QRegion;
 class QSize;
 
 class kpDocument;
+class kpSelection;
 class kpTool;
 class kpMainWindow;
 class kpViewManager;
+
 
 class kpView : public QWidget
 {
@@ -65,6 +69,7 @@ private:
 public:
     kpViewManager *viewManager () const;
     kpDocument *document () const;
+    kpSelection *selection () const;
     bool hasVariableZoom () const;
 
     // all incompatible with autoVariableZoom
@@ -97,7 +102,41 @@ public:
 signals:
     void sizeChanged (int width, int height);
     void sizeChanged (const QSize &size);
-    
+
+
+public:
+    QRect selectionViewRect () const;
+
+    QPoint mouseViewPoint () const;
+    QPoint mouseViewPointRelativeToSelection () const;
+    bool mouseOnSelection () const;
+
+    int textSelectionMoveBorderAtomicSize () const;
+    bool mouseOnSelectionToMove () const;
+
+protected:
+    bool selectionLargeEnoughToHaveResizeHandlesIfAtomicSize (int atomicSize) const;
+public:
+    int selectionResizeHandleAtomicSize () const;
+    bool selectionLargeEnoughToHaveResizeHandles () const;
+
+    QRegion selectionResizeHandlesViewRegion () const;
+
+    enum SelectionResizeType
+    {
+        None = 0,
+        Left = 1,
+        Right = 2,
+        Top = 4,
+        Bottom = 8
+    };
+
+    // Returns a bitwise OR of the SelectionResizeType's
+    int mouseOnSelectionResizeHandle () const;
+
+    bool mouseOnSelectionToSelectText () const;
+
+
 public slots:
     // connect to document resize signal
     bool slotUpdateVariableZoom ();
@@ -130,6 +169,8 @@ private:
     QRect paintEventGetDocRect (const QRect &viewRect) const;
     void paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRect);
     void paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect);
+    bool selectionResizeHandleAtomicSizeCloseToZoomLevel () const;
+    void paintEventDrawSelectionResizeHandles (QPainter *painter, const QRect &viewRect);
     void paintEventDrawTempPixmap (QPixmap *destPixmap, const QRect &docRect);
     void paintEventDrawGridLines (QPainter *painter, const QRect &viewRect);
 

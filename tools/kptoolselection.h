@@ -74,6 +74,11 @@ public:
 private:
     void pushOntoDocument ();
 
+protected:
+    bool onSelectionToMove () const;
+    int onSelectionResizeHandle () const;
+    bool onSelectionToSelectText () const;
+
 public:
     QString haventBegunDrawUserMessage () const;
 
@@ -82,10 +87,11 @@ public:
     virtual void reselect ();
 
     virtual bool careAboutModifierState () const { return true; }
+    bool controlOrShiftPressed () const { return (m_controlPressed || m_shiftPressed); }
 
     virtual void beginDraw ();
 protected:
-    const QCursor &cursorForPoint (const QPoint &point) const;
+    const QCursor &cursor () const;
 public:
     virtual void hover (const QPoint &point);
 protected slots:

@@ -33,6 +33,7 @@
 #include <kpview.h>
 
 #include <math.h>
+#include <stdlib.h>
 
 #include <qbitmap.h>
 #include <qcursor.h>
@@ -42,6 +43,9 @@
 #include <qpixmap.h>
 #include <qpoint.h>
 #include <qrect.h>
+#include <qregion.h>
+#include <qmemarray.h>
+
 #if DEBUG_KP_VIEW || DEBUG_KP_VIEW_RENDERER
     #include <qdatetime.h>
 #endif
@@ -125,6 +129,12 @@ kpViewManager *kpView::viewManager () const
 kpDocument *kpView::document () const
 {
     return m_mainWindow ? m_mainWindow->document () : 0;
+}
+
+kpSelection *kpView::selection () const
+{
+    kpDocument *doc = document ();
+    return doc ? doc->selection () : 0;
 }
 
 bool kpView::hasVariableZoom () const
@@ -443,6 +453,272 @@ void kpView::updateQueuedArea ()
         vm->updateView (this, m_queuedUpdateArea);
 
     invalidateQueuedArea ();
+}
+
+
+// public
+QRect kpView::selectionViewRect () const
+{
+    return selection () ?
+               zoomDocToView (selection ()->boundingRect ()) :
+               QRect ();
+
+}
+
+
+// public
+QPoint kpView::mouseViewPoint () const
+{
+    return mapFromGlobal (QCursor::pos ());
+}
+
+// public
+QPoint kpView::mouseViewPointRelativeToSelection () const
+{
+    if (!selection ())
+        return KP_INVALID_POINT;
+
+    return mouseViewPoint () - zoomDocToView (selection ()->topLeft ());
+}
+
+// public
+bool kpView::mouseOnSelection () const
+{
+    const QRect selViewRect = selectionViewRect ();
+    if (!selViewRect.isValid ())
+        return false;
+
+    return selViewRect.contains (mouseViewPoint ());
+}
+
+
+// public
+int kpView::textSelectionMoveBorderAtomicSize () const
+{
+    if (!selection () || !selection ()->isText ())
+        return 0;
+
+    return QMAX (4, zoomLevelX () / 100);
+}
+
+// public
+bool kpView::mouseOnSelectionToMove () const
+{
+    if (!mouseOnSelection ())
+        return false;
+
+    if (!selection ()->isText ())
+        return true;
+
+    if (mouseOnSelectionResizeHandle ())
+        return false;
+
+
+    const QPoint viewPointRelSel = mouseViewPointRelativeToSelection ();
+
+    // Middle point should always be selectable
+    const QPoint selCenterDocPoint = selection ()->boundingRect ().center ();
+    if (m_mainWindow->tool () &&
+        m_mainWindow->tool ()->currentPoint () == selCenterDocPoint)
+    {
+        return false;
+    }
+
+
+    const int atomicSize = textSelectionMoveBorderAtomicSize ();
+    const QRect selViewRect = selectionViewRect ();
+
+    return (viewPointRelSel.x () < atomicSize ||
+            viewPointRelSel.x () >= selViewRect.width () - atomicSize ||
+            viewPointRelSel.y () < atomicSize ||
+            viewPointRelSel.y () >= selViewRect.height () - atomicSize);
+}
+
+
+// protected
+bool kpView::selectionLargeEnoughToHaveResizeHandlesIfAtomicSize (int atomicSize) const
+{
+    if (!selection ())
+        return false;
+
+    const QRect selViewRect = selectionViewRect ();
+
+    return (selViewRect.width () >= atomicSize * 5 ||
+            selViewRect.height () >= atomicSize * 5);
+}
+
+// public
+int kpView::selectionResizeHandleAtomicSize () const
+{
+    int atomicSize = QMIN (7, QMAX (4, zoomLevelX () / 100));
+    while (atomicSize > 0 &&
+           !selectionLargeEnoughToHaveResizeHandlesIfAtomicSize (atomicSize))
+    {
+        atomicSize--;
+    }
+
+    return atomicSize;
+}
+
+// public
+bool kpView::selectionLargeEnoughToHaveResizeHandles () const
+{
+    return (selectionResizeHandleAtomicSize () > 0);
+}
+
+// public
+QRegion kpView::selectionResizeHandlesViewRegion () const
+{
+    QRegion ret;
+
+    const int atomicLength = selectionResizeHandleAtomicSize ();
+    if (atomicLength <= 0)
+        return QRegion ();
+
+    const QRect selViewRect = selectionViewRect ();
+
+#define ADD_BOX_RELATIVE_TO_SELECTION(x,y)    \
+    ret += QRect ((x), (y), atomicLength, atomicLength)
+
+    ADD_BOX_RELATIVE_TO_SELECTION (selViewRect.width () - atomicLength,
+                                   selViewRect.height () - atomicLength);
+    ADD_BOX_RELATIVE_TO_SELECTION (selViewRect.width () - atomicLength, 0);
+    ADD_BOX_RELATIVE_TO_SELECTION (0, selViewRect.height () - atomicLength);
+    ADD_BOX_RELATIVE_TO_SELECTION (0, 0);
+    ADD_BOX_RELATIVE_TO_SELECTION (selViewRect.width () - atomicLength,
+                                   (selViewRect.height () - atomicLength) / 2);
+    ADD_BOX_RELATIVE_TO_SELECTION ((selViewRect.width () - atomicLength) / 2,
+                                   selViewRect.height () - atomicLength);
+    ADD_BOX_RELATIVE_TO_SELECTION ((selViewRect.width () - atomicLength) / 2, 0);
+    ADD_BOX_RELATIVE_TO_SELECTION (0, (selViewRect.height () - atomicLength) / 2);
+
+#undef ADD_BOX_RELATIVE_TO_SELECTION
+
+    ret.translate (selViewRect.x (), selViewRect.y ());
+    ret = ret.intersect (selViewRect);
+
+    return ret;
+}
+
+// public
+int kpView::mouseOnSelectionResizeHandle () const
+{
+#if DEBUG_KP_VIEW || 1
+    kdDebug () << "kpView::mouseOnSelectionResizeHandle()" << endl;
+#endif
+
+    if (!mouseOnSelection ())
+    {
+    #if DEBUG_KP_VIEW || 1
+        kdDebug () << "\tmouse not on sel" << endl;
+    #endif
+        return 0;
+    }
+
+
+    const QRect selViewRect = selectionViewRect ();
+#if DEBUG_KP_VIEW || 1
+    kdDebug () << "\tselViewRect=" << selViewRect << endl;
+#endif
+
+
+    const int atomicLength = selectionResizeHandleAtomicSize ();
+#if DEBUG_KP_VIEW || 1
+    kdDebug () << "\tatomicLength=" << atomicLength << endl;
+#endif
+
+    if (atomicLength <= 0)
+    {
+    #if DEBUG_KP_VIEW || 1
+        kdDebug () << "\tsel not large enough to have resize handles" << endl;
+    #endif
+        // Want to make it possible to move a small selection
+        return 0;
+    }
+
+
+    const QPoint viewPointRelSel = mouseViewPointRelativeToSelection ();
+#if DEBUG_KP_VIEW || 1
+    kdDebug () << "\tviewPointRelSel=" << viewPointRelSel << endl;
+#endif
+
+
+#define LOCAL_POINT_IN_BOX_AT(x,y)  \
+    QRect ((x), (y), atomicLength, atomicLength).contains (viewPointRelSel)
+
+    // Favour the bottom & right and the corners.
+    if (LOCAL_POINT_IN_BOX_AT (selViewRect.width () - atomicLength,
+                               selViewRect.height () - atomicLength))
+    {
+        return Bottom | Right;
+    }
+    else if (LOCAL_POINT_IN_BOX_AT (selViewRect.width () - atomicLength, 0))
+    {
+        return Top | Right;
+    }
+    else if (LOCAL_POINT_IN_BOX_AT (0, selViewRect.height () - atomicLength))
+    {
+        return Bottom | Left;
+    }
+    else if (LOCAL_POINT_IN_BOX_AT (0, 0))
+    {
+        return Top | Left;
+    }
+    else if (LOCAL_POINT_IN_BOX_AT (selViewRect.width () - atomicLength,
+                                    (selViewRect.height () - atomicLength) / 2))
+    {
+        return Right;
+    }
+    else if (LOCAL_POINT_IN_BOX_AT ((selViewRect.width () - atomicLength) / 2,
+                                    selViewRect.height () - atomicLength))
+    {
+        return Bottom;
+    }
+    else if (LOCAL_POINT_IN_BOX_AT ((selViewRect.width () - atomicLength) / 2, 0))
+    {
+        return Top;
+    }
+    else if (LOCAL_POINT_IN_BOX_AT (0, (selViewRect.height () - atomicLength) / 2))
+    {
+        return Left;
+    }
+    else
+    {
+        return 0;
+    }
+#undef LOCAL_POINT_IN_BOX_AT
+}
+
+// public
+bool kpView::mouseOnSelectionToSelectText () const
+{
+#if DEBUG_KP_VIEW || 1
+    kdDebug () << "kpView::mouseOnSelectionToSelectText()" << endl;
+#endif
+
+    if (!mouseOnSelection ())
+    {
+    #if DEBUG_KP_VIEW || 1
+        kdDebug () << "\tmouse non on sel" << endl;
+    #endif
+        return false;
+    }
+
+    if (!selection ()->isText ())
+    {
+    #if DEBUG_KP_VIEW || 1
+        kdDebug () << "\tsel not text" << endl;
+    #endif
+        return false;
+    }
+
+#if DEBUG_KP_VIEW || 1
+    kdDebug () << "\tmouse on sel: to move=" << mouseOnSelectionToMove ()
+               << " to resize=" << mouseOnSelectionResizeHandle ()
+               << endl;
+#endif
+
+    return (!mouseOnSelectionToMove () && !mouseOnSelectionResizeHandle ());
 }
 
 
@@ -823,8 +1099,9 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
         QPoint topLeft = sel->pointForTextRowCol (vm->textCursorRow (), vm->textCursorCol ());
         if (topLeft != KP_INVALID_POINT)
         {
-            QRect rect = QRect (topLeft.x (), topLeft.y (), 1, sel->textStyle ().fontMetrics ().height ());
-            rect = rect.intersect (sel->boundingRect ());
+            QRect rect = QRect (topLeft.x (), topLeft.y (),
+                                1, sel->textStyle ().fontMetrics ().height ());
+            rect = rect.intersect (sel->textAreaRect ());
             if (!rect.isEmpty ())
             {
                 rect.moveBy (-docRect.x (), -docRect.y ());
@@ -850,6 +1127,82 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
             }
         }
     }
+}
+
+// private
+bool kpView::selectionResizeHandleAtomicSizeCloseToZoomLevel () const
+{
+    return (abs (selectionResizeHandleAtomicSize () - zoomLevelX () / 100) < 3);
+}
+
+// private
+void kpView::paintEventDrawSelectionResizeHandles (QPainter *painter, const QRect &viewRect)
+{
+#if DEBUG_KP_VIEW_RENDERER && 1 || 1
+    kdDebug () << "kpView::paintEventDrawSelectionResizeHandles("
+               << viewRect << ")" << endl;
+#endif
+
+    if (!selectionLargeEnoughToHaveResizeHandles ())
+    {
+    #if DEBUG_KP_VIEW_RENDERER && 1 || 1
+        kdDebug () << "\tsel not large enough to have resize handles" << endl;
+    #endif
+        return;
+    }
+
+    kpViewManager *vm = viewManager ();
+    if (!vm || !vm->selectionBorderVisible () || !vm->selectionBorderFinished ())
+    {
+    #if DEBUG_KP_VIEW_RENDERER && 1 || 1
+        kdDebug () << "\tsel border not visible or not finished" << endl;
+    #endif
+
+        return;
+    }
+
+    const QRect selViewRect = selectionViewRect ();
+#if DEBUG_KP_VIEW_RENDERER && 1 || 1
+    kdDebug () << "\tselViewRect=" << selViewRect << endl;
+#endif
+    if (!selViewRect.intersects (viewRect))
+    {
+    #if DEBUG_KP_VIEW_RENDERER && 1 || 1
+        kdDebug () << "\tdoesn't intersect viewRect" << endl;
+    #endif
+        return;
+    }
+
+    QRegion selResizeHandlesRegion = selectionResizeHandlesViewRegion ();
+#if DEBUG_KP_VIEW_RENDERER && 1 || 1
+    kdDebug () << "\tsel resize handles view region="
+               << selResizeHandlesRegion << endl;
+#endif
+    selResizeHandlesRegion.translate (-viewRect.x (), -viewRect.y ());
+
+    painter->save ();
+
+    QColor fillColor;
+    if (selectionResizeHandleAtomicSizeCloseToZoomLevel ())
+    {
+        fillColor = Qt::blue;
+        painter->setRasterOp (Qt::CopyROP);
+    }
+    else
+    {
+        fillColor = Qt::white;
+        painter->setRasterOp (Qt::XorROP);
+    }
+
+    QMemArray <QRect> rects = selResizeHandlesRegion.rects ();
+    for (QMemArray <QRect>::ConstIterator it = rects.begin ();
+         it != rects.end ();
+         it++)
+    {
+        painter->fillRect (*it, fillColor);
+    }
+
+    painter->restore ();
 }
 
 // private
@@ -1079,6 +1432,12 @@ void kpView::paintEvent (QPaintEvent *e)
                                 double (m_vzoom) / 100.0);
         backBufferPainter.drawPixmap (docRect, docPixmap);
         backBufferPainter.resetXForm ();  // back to 1-1 scaling
+
+        if (doc->selection ())
+        {
+            paintEventDrawSelectionResizeHandles (&backBufferPainter, viewRect);
+        }
+
     }  // if (!docRect.isEmpty ()) {
 
 
