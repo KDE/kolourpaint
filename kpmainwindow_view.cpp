@@ -671,6 +671,9 @@ void kpMainWindow::slotSaveThumbnailGeometry ()
 
     QRect rect (m_thumbnail->x (), m_thumbnail->y (),
                 m_thumbnail->width (), m_thumbnail->height ());
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tthumbnail relative geometry=" << rect << endl;
+#endif
 
     m_configThumbnailGeometry = mapFromGlobal (rect);
 
