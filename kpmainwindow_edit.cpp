@@ -648,7 +648,7 @@ void kpMainWindow::slotCopyToFile ()
 
 
     QString chosenMimeType;
-    KURL chosenURL = askForSaveURL (i18n ("Copy To File"),
+    KURL chosenURL = askForSaveURL (i18n ("Copy to File"),
                                     d->m_lastCopyToURL.url (),
                                     d->m_lastCopyToMimeType,
                                     "Edit/Copy To File",
