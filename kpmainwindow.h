@@ -262,6 +262,10 @@ private slots:
     void slotNew ();
 
 private:
+    QSize defaultDocSize () const;
+    void saveDefaultDocSize (const QSize &size);
+
+private:
     bool open (const KURL &url, bool newDocSameNameIfNotExist = false);
     KURL::List askForOpenURLs (const QString &caption,
                                const QString &startURL,

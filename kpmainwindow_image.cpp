@@ -321,20 +321,11 @@ void kpMainWindow::slotResizeScale ()
                 this));
 
         // Resized document?
-        if (!m_document->selection () && dialog.type () == kpToolResizeScaleCommand::Resize)
+        if (!m_document->selection () &&
+            dialog.type () == kpToolResizeScaleCommand::Resize)
         {
-        #if DEBUG_KP_MAIN_WINDOW
-            kdDebug () << "\tCONFIG: saving Last Doc Size = "
-                       << QSize (dialog.imageWidth (), dialog.imageHeight ())
-                       << endl;
-        #endif
-
-            KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
-            KConfigBase *cfg = cfgGroupSaver.config ();
-
-            cfg->writeEntry (kpSettingLastDocSize,
-                             QSize (dialog.imageWidth (), dialog.imageHeight ()));
-            cfg->sync ();
+            // TODO: this should be the responsibility of kpDocument
+            saveDefaultDocSize (QSize (dialog.imageWidth (), dialog.imageHeight ()));
         }
     }
 }

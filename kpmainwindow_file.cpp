@@ -215,7 +215,9 @@ void kpMainWindow::slotNew ()
     }
 }
 
-static QSize defaultDocSize ()
+
+// private
+QSize kpMainWindow::defaultDocSize () const
 {
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
     // realise what other processes have done e.g. Settings / Show Path
@@ -233,9 +235,26 @@ static QSize defaultDocSize ()
 }
 
 // private
+void kpMainWindow::saveDefaultDocSize (const QSize &size)
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tCONFIG: saving Last Doc Size = "
+               << QSize (dialog.imageWidth (), dialog.imageHeight ())
+               << endl;
+#endif
+
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    cfg->writeEntry (kpSettingLastDocSize, size);
+    cfg->sync ();
+}
+
+
+// private
 bool kpMainWindow::open (const KURL &url, bool newDocSameNameIfNotExist)
 {
-    QSize docSize = ::defaultDocSize ();
+    QSize docSize = defaultDocSize ();
 
     // create doc
     kpDocument *newDoc = new kpDocument (docSize.width (), docSize.height (), 32, this);
