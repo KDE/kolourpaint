@@ -299,6 +299,11 @@ KURL::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &
                                          bool allowMultipleURLs)
 {
     QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kdDebug () << "kpMainWindow::askForURLs(allowMultiple="
+               << allowMultipleURLs
+               << ") mimeTypes=" << mimeTypes << endl;
+#endif
     QString filter = mimeTypes.join (" ");
 
     KFileDialog fd (startURL, filter, this, "fd", true/*modal*/);
