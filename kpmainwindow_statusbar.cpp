@@ -36,10 +36,10 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kstatusbar.h>
-#include <kpsqueezedtextlabel.h>
 
 #include <kpdefs.h>
 #include <kpdocument.h>
+#include <kpsqueezedtextlabel.h>
 #include <kptool.h>
 #include <kpview.h>
 
