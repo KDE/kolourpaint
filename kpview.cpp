@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <math.h>
+
 #include <qbitmap.h>
 #include <qcursor.h>
 #include <qdragobject.h>
