@@ -6,6 +6,8 @@ Before 1.0
 
 why does the toolsToolBar get arranged differently if run under valgrind???
 
+random pixels in the view showing up with the Color Washer Tool and Zoom over a remote display
+
 spraycan sizes
 
 make fill style GUI clearer
