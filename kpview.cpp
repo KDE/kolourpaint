@@ -866,6 +866,9 @@ void kpView::focusInEvent (QFocusEvent *e)
 // virtual
 void kpView::focusOutEvent (QFocusEvent *e)
 {
+#if DEBUG_KP_VIEW && 0
+    kdDebug () << "kpView(" << name () << ")::focusOutEvent()" << endl;
+#endif
     m_mainWindow->tool ()->focusOutEvent (e);
 }
 
@@ -876,7 +879,11 @@ void kpView::enterEvent (QEvent *e)
     kdDebug () << "kpView(" << name () << ")::enterEvent()" << endl;
 #endif
 
-    setHasMouse (true);
+    // Don't call setHasMouse(true) as it displays the brush cursor (if
+    // active) when dragging open a menu and then dragging
+    // past the extents of the menu due to Qt sending us an EnterEvent.
+    // We're already covered by MouseMoveEvent anyway.
+    //setHasMouse (true);
     m_mainWindow->tool ()->enterEvent (e);
 }
 
