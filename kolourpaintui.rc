@@ -1,7 +1,7 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui name="kolourpaint" version="20">
+<gui name="kolourpaint" version="23">
 
-<!-- 
+<!--
 SYNC: Check for duplicate actions in menus caused by some of our actions
       being added to ui_standards.rc.  Makes me wonder why we are using
       merging in the first place.
@@ -53,9 +53,9 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
         <!-- <MergeLocal/> -->
         <Action name="view_show_grid" />
         <Action name="view_show_thumbnail" />
-        
+
         <Separator/>
-        
+
         <Action name="view_zoomed_thumbnail" />
         <Action name="view_show_thumbnail_rectangle" />
     </Menu>
@@ -85,7 +85,7 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
     <Menu name="help">
         <Action name="help_taking_screenshots" />
     </Menu>
- 
+
 </MenuBar>
 
 <ToolBar name="mainToolBar">
@@ -103,5 +103,60 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
     <Action name="text_underline" />
     <Action name="text_strike_thru" />
 </ToolBar>
+
+<Menu name="selectionToolRMBMenu"><text>Selection Tool RMB Menu</text>
+    <!-- SRC: ui_standards.rc v10 (KDE 3.3) -->
+    <!-- <Menu name="edit"><text>&amp;Edit</text> -->
+
+        <!-- <Action name="edit_undo"/>
+        <Action name="edit_redo"/>
+        <MergeLocal name="edit_undo_merge"/>
+        <Separator/> -->
+        <Action name="edit_cut"/>
+        <Action name="edit_copy"/>
+        <Action name="edit_paste"/>
+        <!-- CUSTOM -->  <!-- <Action name="edit_paste_in_new_window" /> -->
+        <MergeLocal name="edit_paste_merge"/>
+        <Action name="edit_clear"/>
+        <!-- <Separator/> -->
+        <Action name="edit_select_all"/>
+        <!-- <Action name="edit_deselect"/>  -->
+        <MergeLocal name="edit_select_merge"/>
+        <Separator/>
+        <Action name="edit_find"/>
+        <Action name="edit_find_next"/>
+        <Action name="edit_find_last"/>
+        <Action name="edit_replace"/>
+        <MergeLocal name="edit_find_merge"/>
+        <Separator/>
+        <!-- CUSTOM -->  <Action name="edit_copy_to_file" />
+        <!-- CUSTOM -->  <Action name="edit_paste_from_file" />
+        <MergeLocal/>
+
+    <!-- </Menu> -->
+
+
+    <Separator/>
+
+
+    <!-- <Menu name="image"><text>&amp;Image</text> -->
+
+        <Action name="image_crop" />
+        <!-- <Action name="image_auto_crop" /> -->
+        <Separator />
+        <Action name="image_resize_scale" />
+        <Action name="image_flip" />
+        <Action name="image_rotate" />
+        <Action name="image_skew" />
+        <Separator />
+        <!-- <Action name="image_convert_to_black_and_white" /> -->
+        <!-- <Action name="image_convert_to_grayscale" /> -->
+        <!-- <Action name="image_more_effects" />  -->
+        <!-- <Separator /> -->
+        <Action name="image_invert_colors" />
+        <!-- <Action name="image_clear" /> -->
+
+    <!-- </Menu> -->
+</Menu>
 
 </gui>

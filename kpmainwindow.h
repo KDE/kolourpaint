@@ -47,6 +47,7 @@
 
 class QPainter;
 class QPoint;
+class QPopupMenu;
 class QRect;
 class QSize;
 class QStringList;
@@ -380,6 +381,9 @@ private:
     KURL m_lastCopyToURL;
     kpDocumentSaveOptions m_lastCopyToSaveOptions;
     bool m_copyToFirstTime;
+
+public:
+    QPopupMenu *selectionToolRMBMenu ();
 
 private slots:
     void slotCut ();

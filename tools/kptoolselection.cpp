@@ -35,6 +35,7 @@
 #include <qbitmap.h>
 #include <qcursor.h>
 #include <qpainter.h>
+#include <qpopupmenu.h>
 #include <qtimer.h>
 
 #include <kdebug.h>
@@ -255,11 +256,6 @@ void kpToolSelection::beginDraw ()
     // make sure it is correct during this operation.
     hover (m_currentPoint);
 
-    // Dragging with the RMB would make no sense
-    // TODO: RMB click brings up Image popupmenu
-    if (m_mouseButton != 0/*left*/)
-        return;
-
     // Currently used only to end the current text
     if (hasBegunShape ())
         endShape (m_currentPoint, QRect (m_startPoint/* TODO: wrong */, m_currentPoint).normalize ());
@@ -431,6 +427,16 @@ void kpToolSelection::hover (const QPoint &point)
         setUserMessage (mess);
 }
 
+// protected
+void kpToolSelection::popupRMBMenu ()
+{
+    QPopupMenu *pop = mainWindow () ? mainWindow ()->selectionToolRMBMenu () : 0;
+    if (!pop)
+        return;
+
+    pop->exec (QCursor::pos ());
+}
+
 // protected slot
 void kpToolSelection::delayedDraw ()
 {
@@ -462,15 +468,6 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
                << " startPoint=" << m_startPoint
                << " normalizedRect=" << normalizedRect << endl;
 #endif
-
-    // Dragging with the RMB would make no sense
-    // TODO: RMB click brings up Image popupmenu
-    if (m_mouseButton != 0/*left*/)
-    {
-        setUserShapePoints (inThisPoint, KP_INVALID_POINT, false/*don't set size*/);
-        setUserMessage (i18n ("Let go of all the mouse buttons."));
-        return;
-    }
 
 
     // OPT: return when thisPoint == m_lastPoint so that e.g. when creating
@@ -575,6 +572,14 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             #if DEBUG_KP_TOOL_SELECTION && 1
                 kdDebug () << "\tclick creating text box" << endl;
             #endif
+
+                // (Click creating text box with RMB would not be obvious
+                //  since RMB menu most likely hides text box immediately
+                //  afterwards)
+                if (m_mouseButton == 1)
+                    break;
+
+
                 minimumWidth = kpSelection::preferredMinimumWidthForTextStyle (textStyle);
                 if (thisPoint.x () >= m_startPoint.x ())
                 {
@@ -902,85 +907,77 @@ void kpToolSelection::cancelShape ()
 
     m_createNOPTimer->stop ();
 
-    if (m_mouseButton == 0/*left*/)
-    {
-        if (m_dragType == Move)
-        {
-        #if DEBUG_KP_TOOL_SELECTION
-            kdDebug () << "\twas drag moving - undo drag and undo acquire" << endl;
-        #endif
-
-            if (m_currentMoveCommand)
-            {
-            #if DEBUG_KP_TOOL_SELECTION
-                kdDebug () << "\t\tundo currentMoveCommand" << endl;
-            #endif
-                m_currentMoveCommand->finalize ();
-                m_currentMoveCommand->unexecute ();
-                delete m_currentMoveCommand;
-                m_currentMoveCommand = 0;
-
-                if (document ()->selection ()->isText ())
-                    viewManager ()->setTextCursorBlinkState (true);
-            }
-        }
-        else if (m_dragType == Create)
-        {
-        #if DEBUG_KP_TOOL_SELECTION
-            kdDebug () << "\twas creating sel - kill" << endl;
-        #endif
-
-            // TODO: should we give the user back the selection s/he had before (if any)?
-            document ()->selectionDelete ();
-
-            if (m_currentCreateTextCommand)
-            {
-                delete m_currentCreateTextCommand;
-                m_currentCreateTextCommand = 0;
-            }
-        }
-        else if (m_dragType == ResizeScale)
-        {
-        #if DEBUG_KP_TOOL_SELECTION
-            kdDebug () << "\twas resize/scale sel - kill" << endl;
-        #endif
-
-            if (m_currentResizeScaleCommand)
-            {
-            #if DEBUG_KP_TOOL_SELECTION
-                kdDebug () << "\t\tundo currentResizeScaleCommand" << endl;
-            #endif
-                m_currentResizeScaleCommand->unexecute ();
-                delete m_currentResizeScaleCommand;
-                m_currentResizeScaleCommand = 0;
-
-                if (document ()->selection ()->isText ())
-                    viewManager ()->setTextCursorBlinkState (true);
-            }
-        }
-
-
-        if (m_currentPullFromDocumentCommand)
-        {
-        #if DEBUG_KP_TOOL_SELECTION
-            kdDebug () << "\t\tundo pullFromDocumentCommand" << endl;
-        #endif
-            m_currentPullFromDocumentCommand->unexecute ();
-            delete m_currentPullFromDocumentCommand;
-            m_currentPullFromDocumentCommand = 0;
-        }
-
-
-        viewManager ()->setSelectionBorderVisible (true);
-        viewManager ()->setSelectionBorderFinished (true);
-        viewManager ()->setTextCursorEnabled (m_mode == Text && true);
-    }
-    else
+    if (m_dragType == Move)
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "\tstarted draw with right button (which is banned)" << endl;
+        kdDebug () << "\twas drag moving - undo drag and undo acquire" << endl;
     #endif
+
+        if (m_currentMoveCommand)
+        {
+        #if DEBUG_KP_TOOL_SELECTION
+            kdDebug () << "\t\tundo currentMoveCommand" << endl;
+        #endif
+            m_currentMoveCommand->finalize ();
+            m_currentMoveCommand->unexecute ();
+            delete m_currentMoveCommand;
+            m_currentMoveCommand = 0;
+
+            if (document ()->selection ()->isText ())
+                viewManager ()->setTextCursorBlinkState (true);
+        }
     }
+    else if (m_dragType == Create)
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kdDebug () << "\twas creating sel - kill" << endl;
+    #endif
+
+        // TODO: should we give the user back the selection s/he had before (if any)?
+        document ()->selectionDelete ();
+
+        if (m_currentCreateTextCommand)
+        {
+            delete m_currentCreateTextCommand;
+            m_currentCreateTextCommand = 0;
+        }
+    }
+    else if (m_dragType == ResizeScale)
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kdDebug () << "\twas resize/scale sel - kill" << endl;
+    #endif
+
+        if (m_currentResizeScaleCommand)
+        {
+        #if DEBUG_KP_TOOL_SELECTION
+            kdDebug () << "\t\tundo currentResizeScaleCommand" << endl;
+        #endif
+            m_currentResizeScaleCommand->unexecute ();
+            delete m_currentResizeScaleCommand;
+            m_currentResizeScaleCommand = 0;
+
+            if (document ()->selection ()->isText ())
+                viewManager ()->setTextCursorBlinkState (true);
+        }
+    }
+
+
+    if (m_currentPullFromDocumentCommand)
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kdDebug () << "\t\tundo pullFromDocumentCommand" << endl;
+    #endif
+        m_currentPullFromDocumentCommand->unexecute ();
+        delete m_currentPullFromDocumentCommand;
+        m_currentPullFromDocumentCommand = 0;
+    }
+
+
+    viewManager ()->setSelectionBorderVisible (true);
+    viewManager ()->setSelectionBorderFinished (true);
+    viewManager ()->setTextCursorEnabled (m_mode == Text && true);
+
 
     m_dragType = Unknown;
     m_cancelledShapeButStillHoldingButtons = true;
@@ -997,9 +994,6 @@ void kpToolSelection::releasedAllButtons ()
 // virtual
 void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*normalizedRect*/)
 {
-    if (m_mouseButton != 0/*left*/)
-        return;
-
     m_createNOPTimer->stop ();
 
     if (m_currentCreateTextCommand)
@@ -1102,6 +1096,10 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
 
     m_dragType = Unknown;
     setUserMessage (haventBegunDrawUserMessage ());
+
+
+    if (m_mouseButton == 1/*right*/)
+        popupRMBMenu ();
 }
 
 

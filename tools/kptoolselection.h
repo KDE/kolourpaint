@@ -94,6 +94,8 @@ protected:
     const QCursor &cursor () const;
 public:
     virtual void hover (const QPoint &point);
+protected:
+    void popupRMBMenu ();
 protected slots:
     void delayedDraw ();
 public:

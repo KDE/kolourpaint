@@ -153,6 +153,13 @@ void kpMainWindow::enableEditMenuDocumentActions (bool enable)
 }
 
 
+// public
+QPopupMenu *kpMainWindow::selectionToolRMBMenu ()
+{
+    return (QPopupMenu *) guiFactory ()->container ("selectionToolRMBMenu", this);
+}
+
+
 // private slot
 void kpMainWindow::slotCut ()
 {
