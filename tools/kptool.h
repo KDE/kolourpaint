@@ -121,6 +121,7 @@ protected:
     KCommandHistory *commandHistory () const;
 
     QColor color (int which) const;
+    
     QColor foregroundColor () const { return color (0); }
     QColor backgroundColor () const { return color (1); }
 
