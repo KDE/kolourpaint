@@ -57,8 +57,15 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
                            actOnSelection,
                            parent,
                            name),
+      m_effectsComboBox (0),
+      m_settingsGroupBox (0),
+      m_settingsLayout (),
       m_colorEffectWidget (0)
 {
+#if DEBUG_KP_EFFECTS_DIALOG
+    kdDebug () << "kpEffectsDialog::kpEffectsDialog()" << endl;
+#endif
+
     if (actOnSelection)
         setCaption (i18n ("More Image Effects (Selection)"));
     else
@@ -81,7 +88,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     addCustomWidgetToFront (effectContainer);
 
 
-    m_settingsGroupBox = new QGroupBox (i18n ("Settings"), mainWidget ());
+    m_settingsGroupBox = new QGroupBox (i18n ("&Settings"), mainWidget ());
     m_settingsLayout = new QVBoxLayout (m_settingsGroupBox,
                                         marginHint () * 2,
                                         spacingHint ());
@@ -98,6 +105,12 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     setMinimumSize (500, 480);
 
     resize (500, 480);
+
+
+#if DEBUG_KP_EFFECTS_DIALOG
+    kdDebug () << "\tabout to slotUpdate()" << endl;
+#endif
+    slotUpdate ();
 }
 
 kpEffectsDialog::~kpEffectsDialog ()
@@ -157,9 +170,9 @@ void kpEffectsDialog::slotEffectSelected (int which)
     kdDebug () << "kpEffectsDialog::slotEffectSelected(" << which << ")" << endl;
 #endif
 
-    QWidget *oldColorEffectWidget = m_colorEffectWidget;
-
+    delete m_colorEffectWidget;
     m_colorEffectWidget = 0;
+
 
     switch (which)
     {
@@ -176,22 +189,23 @@ void kpEffectsDialog::slotEffectSelected (int which)
         break;
     }
 
+
     if (m_colorEffectWidget)
     {
     #if DEBUG_KP_EFFECTS_DIALOG
         kdDebug () << "\twidget exists for effect #" << endl;
     #endif
-
         m_settingsLayout->addWidget (m_colorEffectWidget);
+        m_colorEffectWidget->show ();
+
 
         connect (m_colorEffectWidget, SIGNAL (settingsChanged ()),
                  this, SLOT (slotUpdate ()));
+        slotUpdate ();
 
 
         s_lastEffectSelected = which;
     }
-
-    delete oldColorEffectWidget;
 }
 
 
