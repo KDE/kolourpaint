@@ -57,9 +57,6 @@ static const KCmdLineOptions cmdLineOptions [] =
 };
 
 
-// SYNC remove before release
-#include <kmessagebox.h>
-
 int main (int argc, char *argv [])
 {
     KAboutData aboutData
@@ -123,27 +120,6 @@ int main (int argc, char *argv [])
         }
 
         args->clear ();
-
-
-    #if 1
-        KMessageBox::information
-        (
-            mainWindow/*parent*/,
-            /* no i18n() because this message shouldn't be in releases */
-            I18N_NOOP
-            (
-                "This is a development version of KolourPaint.\n"
-                "This is NOT a proper release.\n"
-                "There are heaps of bugs and missing features, "
-                "as well as GUI and performance issues. "
-                "KolourPaint still needs months of work before its "
-                "completely usable.\n"
-            ),
-            "Development Version",
-            "DevelopmentVersion"/*dontShowAgainName*/,
-            0/*options*/
-        );
-    #endif
     }
 
     return app.exec ();
