@@ -8,8 +8,11 @@ its changes.
 
 
    * Update image format associations to all formats supported by KDE 3.3
+   * [also in 1.2 branch] Remove unused images in doc directory
+   * [also in 1.2 branch] Fix remaining untranslatable strings (closing KDE
+     Bug #85785)
 
-   
+
 KolourPaint 1.2_kde3 Series (kolourpaint_1_2_kde3_branch)
 ===========================
 
@@ -19,6 +22,11 @@ the changes required for backporting and nothing else.  However,
 non-backporting changes can be applied as long as they are applied to
 KDE_3_3_BRANCH first.
 
+   * [also in KDE 3.3 branch] Remove unused images in doc directory
+   * Fix missing Tool Box icons under some linux distributions by working
+     around broken iconthemes that don't inherit from "hicolor" - duplicate
+     icons so that they install in both hicolor/ and crystalsvg/.
+     Thanks to Christoph Eckert for the fix.
    * [also in KDE 3.3 branch] Fix remaining untranslatable strings (closing
      KDE Bug #85785)
 
@@ -41,6 +49,7 @@ Version 1.2_kde3 "ByFiat Everytime" (2004/08/18)
 KolourPaint 1.2 Series (KDE_3_3_BRANCH)
 ======================
 
+   * Remove unused images in doc directory
    * Fix remaining untranslatable strings (closing KDE Bug #85785)
    * Update docs (README, NEWS, ...)
 
