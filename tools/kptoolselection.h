@@ -55,13 +55,15 @@ public:
     kpToolSelection (kpMainWindow *mainWindow);
     virtual ~kpToolSelection ();
 
-    enum Mode {Rectangle, Ellipse, FreeForm};
+    enum Mode {Rectangle, Ellipse, FreeForm, Text};
     void setMode (Mode mode) { m_mode = mode; }
 
 private:
     void pushOntoDocument ();
 
 public:
+    QString haventBegunDrawUserMessage () const;
+
     virtual void begin ();
     virtual void end ();
 
@@ -72,27 +74,35 @@ public:
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint,
                        const QRect &normalizedRect);
     virtual void cancelShape ();
+    virtual void releasedAllButtons ();
     virtual void endDraw (const QPoint &thisPoint, const QRect &normalizedRect);
 
-private:
+protected:
     void selectionTransparencyChanged (const QString &name);
 
-private slots:
-    void slotIsOpaqueChanged ();
+protected slots:
+    virtual void slotIsOpaqueChanged ();
     virtual void slotBackgroundColorChanged (const kpColor &color);
     virtual void slotColorSimilarityChanged (double similarity, int);
 
-private:
+protected:
     Mode m_mode;
 
     QPoint m_startDragFromSelectionTopLeft;
-    bool m_dragIsMove;
+    enum DragType
+    {
+        Unknown, Create, Move, SelectText
+    };
+    DragType m_dragType;
     bool m_dragHasBegun;
 
     class kpToolSelectionPullFromDocumentCommand *m_currentPullFromDocumentCommand;
     class kpToolSelectionMoveCommand *m_currentMoveCommand;
     bool m_currentMoveCommandIsSmear;
     kpToolWidgetOpaqueOrTransparent *m_toolWidgetOpaqueOrTransparent;
+
+    class kpToolSelectionCreateCommand *m_currentCreateTextCommand;
+    bool m_cancelledShapeButStillHoldingButtons;
 };
 
 class kpToolSelectionCreateCommand : public KCommand
@@ -101,7 +111,6 @@ public:
     // (if fromSelection doesn't have a pixmap, it will only recreate the region)
     kpToolSelectionCreateCommand (const QString &name, const kpSelection &fromSelection,
                                   kpMainWindow *mainWindow);
-
     virtual QString name () const;
     virtual ~kpToolSelectionCreateCommand ();
 
@@ -109,6 +118,8 @@ private:
     kpDocument *document () const;
 
 public:
+    void setFromSelection (const kpSelection &fromSelection);
+
     virtual void execute ();
     virtual void unexecute ();
 
@@ -116,6 +127,8 @@ private:
     QString m_name;
     kpSelection *m_fromSelection;
     kpMainWindow *m_mainWindow;
+
+    int m_textRow, m_textCol;
 };
 
 class kpToolSelectionPullFromDocumentCommand : public KCommand
@@ -218,6 +231,8 @@ private:
     QPixmap m_oldDocPixmap;
     kpSelection *m_oldSelection;
     kpMainWindow *m_mainWindow;
+
+    int m_textRow, m_textCol;
 };
 
 #endif  // __kptoolselection_h__

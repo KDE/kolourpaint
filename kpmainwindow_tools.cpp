@@ -197,7 +197,7 @@ void kpMainWindow::setSelectionTransparency (const kpSelectionTransparency &tran
         return;
     }
 
-    d->m_settingSelectionTransparency++;
+    m_settingSelectionTransparency++;
     
     oot->setOpaque (transparency.isOpaque ());
     if (transparency.isTransparent () || forceColorChange)
@@ -206,13 +206,13 @@ void kpMainWindow::setSelectionTransparency (const kpSelectionTransparency &tran
         m_colorToolBar->setColorSimilarity (transparency.colorSimilarity ());
     }
 
-    d->m_settingSelectionTransparency--;
+    m_settingSelectionTransparency--;
 }
 
 // public
 int kpMainWindow::settingSelectionTransparency () const
 {
-    return d->m_settingSelectionTransparency;
+    return m_settingSelectionTransparency;
 }
     
 
@@ -234,12 +234,14 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
         disconnect (previousTool, SIGNAL (userShapeSizeChanged (const QSize &)),
                    this, SLOT (slotUpdateStatusBarShapeSize (const QSize &)));
 
+        disconnect (m_colorToolBar, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
+                    previousTool, SLOT (slotColorsSwappedInternal (const kpColor &, const kpColor &)));
         disconnect (m_colorToolBar, SIGNAL (foregroundColorChanged (const kpColor &)),
-                    previousTool, SLOT (slotForegroundColorChanged (const kpColor &)));
+                    previousTool, SLOT (slotForegroundColorChangedInternal (const kpColor &)));
         disconnect (m_colorToolBar, SIGNAL (backgroundColorChanged (const kpColor &)),
-                    previousTool, SLOT (slotBackgroundColorChanged (const kpColor &)));
+                    previousTool, SLOT (slotBackgroundColorChangedInternal (const kpColor &)));
         disconnect (m_colorToolBar, SIGNAL (colorSimilarityChanged (double, int)),
-                    previousTool, SLOT (slotColorSimilarityChanged (double, int)));
+                    previousTool, SLOT (slotColorSimilarityChangedInternal (double, int)));
     }
 
     if (tool)
@@ -252,12 +254,14 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
                  this, SLOT (slotUpdateStatusBarShapeSize (const QSize &)));
         slotUpdateStatusBar ();
 
+        connect (m_colorToolBar, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
+                 tool, SLOT (slotColorsSwappedInternal (const kpColor &, const kpColor &)));
         connect (m_colorToolBar, SIGNAL (foregroundColorChanged (const kpColor &)),
-                 tool, SLOT (slotForegroundColorChanged (const kpColor &)));
+                 tool, SLOT (slotForegroundColorChangedInternal (const kpColor &)));
         connect (m_colorToolBar, SIGNAL (backgroundColorChanged (const kpColor &)),
-                 tool, SLOT (slotBackgroundColorChanged (const kpColor &)));
+                 tool, SLOT (slotBackgroundColorChangedInternal (const kpColor &)));
         connect (m_colorToolBar, SIGNAL (colorSimilarityChanged (double, int)),
-                 tool, SLOT (slotColorSimilarityChanged (double, int)));
+                 tool, SLOT (slotColorSimilarityChangedInternal (double, int)));
     }
 }
 

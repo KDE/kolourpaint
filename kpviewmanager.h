@@ -37,6 +37,7 @@
 
 class QPixmap;
 class QRect;
+class QTimer;
 
 class kpDocument;
 class kpView;
@@ -80,6 +81,32 @@ public:
     bool selectionBorderFinished () const;
     void setSelectionBorderFinished (bool yes = true);
 
+
+    //
+    // Text Cursor
+    //
+
+    bool textCursorEnabled () const;
+    void setTextCursorEnabled (bool yes = true);
+
+    int textCursorRow () const;
+    int textCursorCol () const;
+    void setTextCursorPosition (int row, int col);
+
+    bool textCursorBlinkState () const;
+    void setTextCursorBlinkState (bool on = true);
+
+protected:
+    void updateTextCursor ();
+
+    QTimer *m_textCursorBlinkTimer;
+    int m_textCursorRow, m_textCursorCol;
+    bool m_textCursorBlinkState;
+
+protected slots:
+    void slotTextCursorBlink ();
+
+public:
 
     //
     // Cursors
@@ -164,7 +191,7 @@ private:
     kpViewManager (const kpViewManager &);
     bool operator= (const kpViewManager &);
 
-    kpDocument *document ();
+    kpDocument *document () const;
 
     kpMainWindow *m_mainWindow;
     QPtrList <kpView> m_views;
@@ -173,7 +200,13 @@ private:
     kpTempPixmap *m_tempPixmap;
     kpView *m_viewUnderCursor;
 
-    bool m_selectionBorderVisible, m_selectionBorderFinished;
+    bool m_selectionBorderVisible;
+    bool m_selectionBorderFinished;
+
+    // There is no need to maintain binary compatibility at this stage.
+    // The d-pointer is just so that you can experiment without recompiling
+    // the kitchen sink.
+    class kpViewManagerPrivate *d;
 };
 
 #endif  // __kpviewmanager_h__

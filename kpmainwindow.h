@@ -26,10 +26,10 @@
 */
 
 
-#ifndef __kpmainwindow_h__
-#define __kpmainwindow_h__
+#ifndef __kp_main_window_h__
+#define __kp_main_window_h__
 
-#define DEBUG_KP_MAIN_WINDOW 1
+#define DEBUG_KP_MAIN_WINDOW 0
 
 #include <qptrlist.h>
 #include <qvaluevector.h>
@@ -178,6 +178,8 @@ private:
 
     QPtrList <kpTool> m_tools;
 
+    int m_settingSelectionTransparency;
+
 public:
     kpTool *tool () const;
     bool toolHasBegunShape () const;
@@ -291,8 +293,12 @@ private slots:
 private:
     QRect calcUsefulPasteRect (int pixmapWidth, int pixmapHeight);
     void paste (const kpSelection &sel);
+public:
+    void pasteText (const QString &text, bool forceNewTextSelection = false);
+    void pasteTextAt (const QString &text, const QPoint &point);
 private slots:
     void slotPaste ();
+public slots:
     void slotDelete ();
 
     void slotSelectAll ();
@@ -376,10 +382,13 @@ private:
 
 private:
     bool isSelectionActive () const;
+    bool isTextSelection () const;
     QString actionResizeScaleText () const;
 
     void setupImageMenuActions ();
     void enableImageMenuDocumentActions (bool enable = true);
+
+    bool m_imageMenuDocumentActionsEnabled;
 
     KAction *m_actionResizeScale,
             *m_actionCrop, *m_actionAutoCrop,
@@ -483,12 +492,18 @@ private slots:
 public:
     KToolBar *textToolBar ();
     kpTextStyle textStyle () const;
+    void setTextStyle (const kpTextStyle &textStyle_);
+    int settingTextStyle () const;
 
 private:
     KFontAction *m_actionTextFontFamily;
     KFontSizeAction *m_actionTextFontSize;
     KToggleAction *m_actionTextBold, *m_actionTextItalic,
                   *m_actionTextUnderline, *m_actionTextStrikeThru;
+
+    int m_settingTextStyle;
+    QString m_textOldFontFamily;
+    int m_textOldFontSize;
 
 private:
     // There is no need to maintain binary compatibility at this stage.
@@ -497,18 +512,4 @@ private:
     class kpMainWindowPrivate *d;
 };
 
-class kpMainWindowPrivate
-{
-public:
-    kpMainWindowPrivate ()
-    {
-    }
-
-    ~kpMainWindowPrivate ()
-    {
-    }
-
-    int m_settingSelectionTransparency;
-};
-
-#endif  // __kpmainwindow_h__
+#endif  // __kp_main_window_h__

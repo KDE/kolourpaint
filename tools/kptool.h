@@ -132,6 +132,7 @@ signals:
 protected:
     virtual bool returnToPreviousToolAfterEndDraw () const { return false; }
     virtual bool careAboutModifierState () const { return false; }
+    virtual bool careAboutColorsSwapped () const { return false; }
 
     virtual void beginDraw ();
 
@@ -171,7 +172,18 @@ protected:
     double colorSimilarity () const;
     int processedColorSimilarity () const;
 
+protected:
+    int m_ignoreColorSignals;
+    
 protected slots:
+    void slotColorsSwappedInternal (const kpColor &newForegroundColor,
+                                    const kpColor &newBackgroundColor);
+    void slotForegroundColorChangedInternal (const kpColor &color);
+    void slotBackgroundColorChangedInternal (const kpColor &color);
+    void slotColorSimilarityChangedInternal (double similarity, int processedSimilarity);
+        
+protected slots:  // TODO: there is no reason why these should be slots
+    virtual void slotColorsSwapped (const kpColor & /*newForegroundColor*/, const kpColor & /*newBackgroundColor*/) {}
     virtual void slotForegroundColorChanged (const kpColor & /*color*/) {}
     virtual void slotBackgroundColorChanged (const kpColor & /*color*/) {}
     virtual void slotColorSimilarityChanged (double /*similarity*/, int /*processedSimilarity*/) {};

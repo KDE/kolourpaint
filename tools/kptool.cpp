@@ -30,6 +30,8 @@
 
 #include <limits.h>
 
+#include <qapplication.h>
+#include <qclipboard.h>
 #include <qcursor.h>
 #include <qevent.h>
 #include <qlayout.h>
@@ -53,7 +55,8 @@
 
 kpTool::kpTool (const QString &text, const QString &description,
                 kpMainWindow *mainWindow, const char *name)
-    : m_shiftPressed (false), m_controlPressed (false), m_altPressed (false),  // set in beginInternal()
+    : m_ignoreColorSignals (0),
+      m_shiftPressed (false), m_controlPressed (false), m_altPressed (false),  // set in beginInternal()
       m_beganDraw (false),
       m_text (text), m_description (description), m_name (name),
       m_mainWindow (mainWindow),
@@ -146,8 +149,7 @@ QPoint kpTool::currentPoint (bool zoomToDoc) const
 // public slot
 void kpTool::somethingBelowTheCursorChanged ()
 {
-    if (hasCurrentPoint ())
-        somethingBelowTheCursorChanged (currentPoint ());
+    somethingBelowTheCursorChanged (currentPoint ());
 }
 
 // public slot
@@ -168,19 +170,24 @@ void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_)
 
     if (m_beganDraw)
     {
-        draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
-        m_lastPoint = m_currentPoint;
+        if (m_currentPoint != KP_INVALID_POINT)
+        {
+            draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+            m_lastPoint = m_currentPoint;
+        }
     }
     else
     {
-        hover (currentPoint_);
+        hover (m_currentPoint);
     }
 }
 
 
 void kpTool::beginInternal ()
 {
+#if DEBUG_KP_TOOL
     kdDebug () << "kpTool::beginInternal()" << endl;
+#endif
 
     if (!m_began)
     {
@@ -295,13 +302,13 @@ void kpTool::cancelShapeInternal ()
 {
     if (hasBegunShape ())
     {
+        m_beganDraw = false;
         cancelShape ();
         m_viewUnderStartPoint = 0;
-        m_beganDraw = false;
         if (viewUnderCursor ())
             hover (m_currentPoint);
         else
-            setUserShapePoints ();
+            hover (m_currentPoint = KP_INVALID_POINT);
 
         if (returnToPreviousToolAfterEndDraw ())
         {
@@ -334,6 +341,8 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
     else if (!wantEndShape && !hasBegunDraw ())
         return;
 
+    m_beganDraw = false;
+
     if (wantEndShape)
     {
     #if DEBUG_KP_TOOL && 0
@@ -349,13 +358,12 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
         endDraw (thisPoint, normalizedRect);
     }
     m_viewUnderStartPoint = 0;
-    m_beganDraw = false;
 
     emit endedDraw (m_currentPoint);
     if (viewUnderCursor ())
         hover (m_currentPoint);
     else
-        setUserShapePoints ();
+        hover (m_currentPoint = KP_INVALID_POINT);
 
     if (returnToPreviousToolAfterEndDraw ())
     {
@@ -481,6 +489,51 @@ double kpTool::oldColorSimilarity () const
 }
 
 
+void kpTool::slotColorsSwappedInternal (const kpColor &newForegroundColor,
+                                        const kpColor &newBackgroundColor)
+{
+    if (careAboutColorsSwapped ())
+    {
+        slotColorsSwapped (newForegroundColor, newBackgroundColor);
+        m_ignoreColorSignals = 2;
+    }
+    else
+        m_ignoreColorSignals = 0;
+}
+
+void kpTool::slotForegroundColorChangedInternal (const kpColor &color)
+{
+    if (m_ignoreColorSignals > 0)
+    {
+    #if DEBUG_KP_TOOL && 1
+        kdDebug () << "kpTool::slotForegroundColorChangedInternal() ignoreColorSignals=" << m_ignoreColorSignals << endl;
+    #endif
+        m_ignoreColorSignals--;
+        return;
+    }
+
+    slotForegroundColorChanged (color);
+}
+
+void kpTool::slotBackgroundColorChangedInternal (const kpColor &color)
+{
+    if (m_ignoreColorSignals > 0)
+    {
+    #if DEBUG_KP_TOOL && 1
+        kdDebug () << "kpTool::slotBackgroundColorChangedInternal() ignoreColorSignals=" << m_ignoreColorSignals << endl;
+    #endif
+        m_ignoreColorSignals--;
+        return;
+    }
+
+    slotBackgroundColorChanged (color);
+}
+
+void kpTool::slotColorSimilarityChangedInternal (double similarity, int processedSimilarity)
+{
+    slotColorSimilarityChanged (similarity, processedSimilarity);
+}
+
 bool kpTool::currentPointNextToLast () const
 {
     if (m_lastPoint == QPoint (-1, -1))
@@ -518,6 +571,17 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
     // state of all the buttons - not just the one that triggered the event (button())
     Qt::ButtonState buttonState = e->stateAfter ();
+
+    if (m_mainWindow && (e->button () & Qt::MidButton) && viewUnderCursor ())
+    {
+        const QString text = QApplication::clipboard ()->text (QClipboard::Selection);
+    #if DEBUG_KP_TOOL && 1
+        kdDebug () << "\tMMB pasteText='" << text << "'" << endl;
+    #endif
+        if (!text.isEmpty ())
+            m_mainWindow->pasteTextAt (text, viewUnderCursor ()->zoomViewToDoc (e->pos ()));
+    }
+
     int mb = mouseButton (buttonState);
 
     if (mb == -1 && !m_beganDraw) return; // ignore
@@ -669,6 +733,10 @@ void kpTool::keyPressEvent (QKeyEvent *e)
         keyUpdateModifierState (e);
 
         e->accept ();
+        break;
+
+    case Qt::Key_Delete:
+        m_mainWindow->slotDelete ();
         break;
 
     /*
@@ -864,7 +932,7 @@ void kpTool::leaveEvent (QEvent *)
 {
     // if we haven't started drawing (e.g. dragging a rectangle)...
     if (!m_beganDraw)
-        setUserShapePoints ();
+        hover (m_currentPoint = KP_INVALID_POINT);
 }
 
 // static
@@ -975,12 +1043,12 @@ QString kpTool::userMessage () const
 void kpTool::setUserMessage (const QString &userMessage)
 {
     m_userMessage = userMessage;
-    
+
     if (m_userMessage.isEmpty ())
         m_userMessage = text ();
     else
         m_userMessage.prepend (i18n ("%1: ").arg (text ()));
-    
+
     emit userMessageChanged (m_userMessage);
 }
 

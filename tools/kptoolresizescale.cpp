@@ -25,8 +25,8 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND 1
-#define DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG 1
+#define DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND 0
+#define DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG 0
 
 #include <math.h>
 
@@ -50,6 +50,7 @@
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
+#include <kptool.h>
 #include <kptoolresizescale.h>
 
 
@@ -72,6 +73,10 @@ kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
     m_oldWidth = doc->width (m_actOnSelection);
     m_oldHeight = doc->height (m_actOnSelection);
 
+    m_actOnTextSelection = (m_actOnSelection &&
+                            doc && doc->selection () &&
+                            doc->selection ()->isText ());
+
     m_isLosslessScale = (scaleToFit &&
                          (m_newWidth / m_oldWidth * m_oldWidth == m_newWidth) &&
                          (m_newHeight / m_oldHeight * m_oldHeight == m_newHeight));
@@ -88,7 +93,12 @@ QString kpToolResizeScaleCommand::name () const
         opName = i18n ("Resize");
 
     if (m_actOnSelection)
-        return i18n ("Selection: %1").arg (opName);
+    {
+        if (m_actOnTextSelection)
+            return i18n ("Text: %1 Box").arg (opName);
+        else
+            return i18n ("Selection: %1").arg (opName);
+    }
     else
         return opName;
 }
@@ -125,34 +135,48 @@ void kpToolResizeScaleCommand::execute ()
     {
         if (m_actOnSelection)
         {
-            kdError () << "kpToolResizeScaleCommand::execute() resizing sel doesn't make sense" << endl;
-            return;
+            if (!m_actOnTextSelection)
+            {
+                kdError () << "kpToolResizeScaleCommand::execute() resizing sel doesn't make sense" << endl;
+                return;
+            }
+            else
+            {
+                QApplication::setOverrideCursor (Qt::waitCursor);
+                document ()->selection ()->textResize (m_newWidth, m_newHeight);
+
+                if (m_mainWindow->tool ())
+                    m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+
+                QApplication::restoreOverrideCursor ();
+            }
         }
-
-
-        QApplication::setOverrideCursor (Qt::waitCursor);
-
-
-        if (m_newWidth < m_oldWidth)
+        else
         {
-            m_oldRightPixmap = kpPixmapFX::getPixmapAt (
-                *document ()->pixmap (),
-                QRect (m_newWidth, 0,
-                       m_oldWidth - m_newWidth, m_oldHeight));
+            QApplication::setOverrideCursor (Qt::waitCursor);
+
+
+            if (m_newWidth < m_oldWidth)
+            {
+                m_oldRightPixmap = kpPixmapFX::getPixmapAt (
+                    *document ()->pixmap (),
+                    QRect (m_newWidth, 0,
+                        m_oldWidth - m_newWidth, m_oldHeight));
+            }
+
+            if (m_newHeight < m_oldHeight)
+            {
+                m_oldBottomPixmap = kpPixmapFX::getPixmapAt (
+                    *document ()->pixmap (),
+                    QRect (0, m_newHeight,
+                        m_newWidth, m_oldHeight - m_newHeight));
+            }
+
+            document ()->resize (m_newWidth, m_newHeight, m_backgroundColor);
+
+
+            QApplication::restoreOverrideCursor ();
         }
-
-        if (m_newHeight < m_oldHeight)
-        {
-            m_oldBottomPixmap = kpPixmapFX::getPixmapAt (
-                *document ()->pixmap (),
-                QRect (0, m_newHeight,
-                       m_newWidth, m_oldHeight - m_newHeight));
-        }
-
-        document ()->resize (m_newWidth, m_newHeight, m_backgroundColor);
-
-
-        QApplication::restoreOverrideCursor ();
     }
     else
     {
@@ -181,6 +205,9 @@ void kpToolResizeScaleCommand::execute ()
             document ()->setSelection (
                 kpSelection (kpSelection::Rectangle, newRect, newPixmap,
                              m_oldSelection.transparency ()));
+
+            if (m_mainWindow->tool ())
+                m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
         }
         else
         {
@@ -211,37 +238,51 @@ void kpToolResizeScaleCommand::unexecute ()
     {
         if (m_actOnSelection)
         {
-            kdError () << "kpToolResizeScaleCommand::unexecute() resizing sel doesn't make sense" << endl;
-            return;
+            if (!m_actOnTextSelection)
+            {
+                kdError () << "kpToolResizeScaleCommand::unexecute() resizing sel doesn't make sense" << endl;
+                return;
+            }
+            else
+            {
+                QApplication::setOverrideCursor (Qt::waitCursor);
+                document ()->selection ()->textResize (m_oldWidth, m_oldHeight);
+
+                if (m_mainWindow->tool ())
+                    m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+
+                QApplication::restoreOverrideCursor ();
+            }
         }
-
-
-        QApplication::setOverrideCursor (Qt::waitCursor);
-
-
-        QPixmap newPixmap (m_oldWidth, m_oldHeight);
-
-        kpPixmapFX::setPixmapAt (&newPixmap, QPoint (0, 0),
-                                 *doc->pixmap ());
-
-        if (m_newWidth < m_oldWidth)
+        else
         {
-            kpPixmapFX::setPixmapAt (&newPixmap,
-                                     QPoint (m_newWidth, 0),
-                                     m_oldRightPixmap);
+            QApplication::setOverrideCursor (Qt::waitCursor);
+
+
+            QPixmap newPixmap (m_oldWidth, m_oldHeight);
+
+            kpPixmapFX::setPixmapAt (&newPixmap, QPoint (0, 0),
+                                    *doc->pixmap ());
+
+            if (m_newWidth < m_oldWidth)
+            {
+                kpPixmapFX::setPixmapAt (&newPixmap,
+                                        QPoint (m_newWidth, 0),
+                                        m_oldRightPixmap);
+            }
+
+            if (m_newHeight < m_oldHeight)
+            {
+                kpPixmapFX::setPixmapAt (&newPixmap,
+                                        QPoint (0, m_newHeight),
+                                        m_oldBottomPixmap);
+            }
+
+            doc->setPixmap (newPixmap);
+
+
+            QApplication::restoreOverrideCursor ();
         }
-
-        if (m_newHeight < m_oldHeight)
-        {
-            kpPixmapFX::setPixmapAt (&newPixmap,
-                                     QPoint (0, m_newHeight),
-                                     m_oldBottomPixmap);
-        }
-
-        doc->setPixmap (newPixmap);
-
-
-        QApplication::restoreOverrideCursor ();
     }
     else
     {
@@ -262,6 +303,9 @@ void kpToolResizeScaleCommand::unexecute ()
             kpSelection oldSelection = m_oldSelection;
             oldSelection.setPixmap (oldPixmap);
             doc->setSelection (oldSelection);
+
+            if (m_mainWindow->tool ())
+                m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
         }
         else
             doc->setPixmap (oldPixmap);
@@ -316,6 +360,10 @@ kpToolResizeScaleDialog::kpToolResizeScaleDialog (bool actOnSelection,
     m_oldWidth = document->width (actOnSelection);
     m_oldHeight = document->height (actOnSelection);
 
+    m_actOnTextSelection = (m_actOnSelection &&
+                            document && document->selection () &&
+                            document->selection ()->isText ());
+
 
     // Using the percentage from last time become too confusing so disable for now
     s_lastPercentWidth = 100, s_lastPercentHeight = 100;
@@ -357,7 +405,8 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
     m_resizeRadioButton = new QRadioButton (i18n ("&Resize"), m_operationGroupBox);
     m_scaleRadioButton = new QRadioButton (i18n ("&Scale"), m_operationGroupBox);
 
-    m_scaleRadioButton->setChecked (!s_lastIsResize || m_actOnSelection);
+    m_scaleRadioButton->setChecked (!m_actOnTextSelection &&
+                                    (!s_lastIsResize || m_actOnSelection));
     m_resizeRadioButton->setChecked (!m_scaleRadioButton->isChecked ());
 
     m_operationGroupBox->setEnabled (!m_actOnSelection);
@@ -402,10 +451,10 @@ void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
 
     QLabel *newLabel = new QLabel (i18n ("&New:"), m_dimensionsGroupBox);
     m_newWidthInput = new KIntNumInput (m_dimensionsGroupBox);
-    m_newWidthInput->setMinValue (1);
+    m_newWidthInput->setMinValue (!m_actOnTextSelection ? 1 : kpSelection::minimumWidth ());
     QLabel *xLabel1 = new QLabel (i18n ("x"), m_dimensionsGroupBox);
     m_newHeightInput = new KIntNumInput (m_dimensionsGroupBox);
-    m_newHeightInput->setMinValue (1);
+    m_newHeightInput->setMinValue (!m_actOnTextSelection ? 1 : kpSelection::minimumHeight ());
 
     QLabel *percentLabel = new QLabel (i18n ("&Percent:"), m_dimensionsGroupBox);
     m_percentWidthInput = new KDoubleNumInput (0.01/*lower*/, 1000000/*upper*/,

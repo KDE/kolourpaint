@@ -154,8 +154,6 @@ void kpMainWindow::readThumbnailSettings ()
 // private
 void kpMainWindow::init ()
 {
-    d = new kpMainWindowPrivate ();
-
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow(" << name () << ")::init()" << endl;
     QTime totalTime; totalTime.start ();
@@ -172,7 +170,8 @@ void kpMainWindow::init ()
     m_toolToolBar = 0;
     m_commandHistory = 0;
     m_statusBarCreated = false;
-    d->m_settingSelectionTransparency = 0;
+    m_settingSelectionTransparency = 0;
+    m_settingTextStyle = 0;
 
 
     //
@@ -290,8 +289,6 @@ kpMainWindow::~kpMainWindow ()
 
     delete m_commandHistory; m_commandHistory = 0;
     delete m_scrollView; m_scrollView = 0;
-
-    delete d; d = 0;
 }
 
 
@@ -471,6 +468,8 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 
         connect (m_document, SIGNAL (selectionEnabled (bool)),
                  this, SLOT (slotImageMenuUpdateDueToSelection ()));
+        connect (m_document, SIGNAL (selectionIsTextChanged (bool)),
+                 this, SLOT (slotImageMenuUpdateDueToSelection ()));
 
         // Status bar
         connect (m_document, SIGNAL (documentOpened ()),
@@ -542,7 +541,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     //       width == 1 when !this->isShown().  So for consistency,
     //       never create the thumbnail.
     #if 0
-        if (d->m_configThumbnailShown)
+        if (m_configThumbnailShown)
         {
             if (isShown ())
             {
@@ -614,7 +613,9 @@ bool kpMainWindow::queryClose ()
 // private virtual [base QWidget]
 void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
 {
-    e->accept (kpSelectionDrag::canDecode (e) || KURLDrag::canDecode (e));
+    e->accept (kpSelectionDrag::canDecode (e) ||
+               KURLDrag::canDecode (e) ||
+               QTextDrag::canDecode (e));
 }
 
 // private virtual [base QWidget]
@@ -622,18 +623,23 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 {
     kpSelection sel;
     KURL::List urls;
+    QString text;
 
     if (kpSelectionDrag::decode (e, sel/*ref*/, pasteWarnAboutLossInfo ()))
     {
         sel.setTransparency (selectionTransparency ());
         paste (sel);
     }
-    else if (KURLDrag::decode (e, urls))
+    else if (KURLDrag::decode (e, urls/*ref*/))
     {
         for (KURL::List::ConstIterator it = urls.begin (); it != urls.end (); it++)
         {
             open (*it);
         }
+    }
+    else if (QTextDrag::decode (e, text/*ref*/))
+    {
+        pasteText (text, true/*force new text selection*/);
     }
 }
 

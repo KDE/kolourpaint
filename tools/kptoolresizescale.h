@@ -74,6 +74,7 @@ private:
     kpColor m_backgroundColor;
 
     int m_oldWidth, m_oldHeight;
+    bool m_actOnTextSelection;
     QPixmap m_oldPixmap, m_oldRightPixmap, m_oldBottomPixmap;
     kpSelection m_oldSelection;
 };
@@ -119,6 +120,7 @@ public:
 
 private:
     bool m_actOnSelection;
+    bool m_actOnTextSelection;
     int m_oldWidth, m_oldHeight;
 
     QGroupBox *m_operationGroupBox;

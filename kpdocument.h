@@ -167,6 +167,9 @@ signals:
 
     void selectionEnabled (bool on);
 
+    // HACK: until we support Text Selection -> Rectangular Selection for Image ops
+    void selectionIsTextChanged (bool isText);
+
 private:
     QPixmap *m_pixmap;
     kpSelection *m_selection;

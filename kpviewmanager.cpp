@@ -28,6 +28,9 @@
 
 #define DEBUG_KP_VIEW_MANAGER 0
 
+#include <qapplication.h>
+#include <qtimer.h>
+
 #include <kdebug.h>
 
 #include <kpdefs.h>
@@ -41,17 +44,22 @@
 
 
 kpViewManager::kpViewManager (kpMainWindow *mainWindow)
-    : m_mainWindow (mainWindow),
+    : m_textCursorBlinkTimer (0),
+      m_textCursorRow (-1),
+      m_textCursorCol (-1),
+      m_textCursorBlinkState (true),
+      m_mainWindow (mainWindow),
       m_tempPixmap (0),
       m_viewUnderCursor (0),
       m_selectionBorderVisible (false),
       m_selectionBorderFinished (false)
 {
+
     m_queueUpdatesCounter = m_fastUpdatesCounter =  0;
 }
 
 // private
-kpDocument *kpViewManager::document ()
+kpDocument *kpViewManager::document () const
 {
     return m_mainWindow ? m_mainWindow->document () : 0;
 }
@@ -184,6 +192,206 @@ void kpViewManager::setSelectionBorderFinished (bool yes)
 
     if (document () && document ()->selection ())
         updateViews (document ()->selection ()->boundingRect ());
+}
+
+
+bool kpViewManager::textCursorEnabled () const
+{
+    return (bool) m_textCursorBlinkTimer;
+}
+
+void kpViewManager::setTextCursorEnabled (bool yes)
+{
+#if DEBUG_KP_VIEW_MANAGER && 1
+    kdDebug () << "kpViewManager::setTextCursorEnabled(" << yes << ")" << endl;
+#endif
+
+    if (yes == textCursorEnabled ())
+        return;
+
+    delete m_textCursorBlinkTimer;
+    m_textCursorBlinkTimer = 0;
+
+    setFastUpdates ();
+    setQueueUpdates ();
+
+    m_textCursorBlinkState = true;
+
+    if (yes)
+    {
+        m_textCursorBlinkTimer = new QTimer (this);
+        connect (m_textCursorBlinkTimer, SIGNAL (timeout ()),
+                 this, SLOT (slotTextCursorBlink ()));
+        slotTextCursorBlink ();
+    }
+
+    restoreQueueUpdates ();
+    restoreFastUpdates ();
+}
+
+
+int kpViewManager::textCursorRow () const
+{
+    bool handledErrors = false;
+    if (m_mainWindow)
+    {
+        kpDocument *doc = m_mainWindow->document ();
+        if (doc)
+        {
+            kpSelection *sel = doc->selection ();
+            if (sel && sel->isText ())
+            {
+                if (m_textCursorRow >= (int) sel->textLines ().size ())
+                {
+                #if DEBUG_KP_VIEW_MANAGER && 1
+                    kdDebug () << "kpViewManager::textCursorRow() row="
+                               << m_textCursorRow
+                               << endl;
+                #endif
+                    (const_cast <kpViewManager *> (this))->m_textCursorRow =
+                        sel->textLines ().size () - 1;
+                }
+
+                handledErrors = true;
+            }
+        }
+    }
+
+    if (!handledErrors)
+    {
+    #if DEBUG_KP_VIEW_MANAGER && 1
+        kdDebug () << "kpViewManager::textCursorRow() no mw, doc or text sel" << endl;
+    #endif
+        (const_cast <kpViewManager *> (this))->m_textCursorRow = -1;
+    }
+
+    return m_textCursorRow;
+}
+
+int kpViewManager::textCursorCol () const
+{
+    int row = textCursorRow ();
+    if (row < 0)
+        return -1;
+
+    bool handledErrors = false;
+    if (m_mainWindow)
+    {
+        kpDocument *doc = m_mainWindow->document ();
+        if (doc)
+        {
+            kpSelection *sel = doc->selection ();
+            if (sel && sel->isText ())
+            {
+                if (m_textCursorCol > (int) sel->textLines () [row].length ())
+                {
+                #if DEBUG_KP_VIEW_MANAGER && 1
+                    kdDebug () << "kpViewManager::textCursorRow() col="
+                               << m_textCursorCol
+                               << endl;
+                #endif
+                    (const_cast <kpViewManager *> (this))->m_textCursorCol =
+                        sel->textLines () [row].length ();
+                }
+
+                handledErrors = true;
+            }
+        }
+    }
+
+    if (!handledErrors)
+    {
+    #if DEBUG_KP_VIEW_MANAGER && 1
+        kdDebug () << "kpViewManager::textCursorCol() no mw, doc or text sel" << endl;
+    #endif
+        (const_cast <kpViewManager *> (this))->m_textCursorCol = -1;
+    }
+
+    return m_textCursorCol;
+}
+
+void kpViewManager::setTextCursorPosition (int row, int col)
+{
+    if (row == m_textCursorRow && col == m_textCursorCol)
+        return;
+
+    setFastUpdates ();
+    setQueueUpdates ();
+
+    m_textCursorBlinkState = false;
+    updateTextCursor ();
+
+    m_textCursorRow = row;
+    m_textCursorCol = col;
+
+    m_textCursorBlinkState = true;
+    updateTextCursor ();
+
+    restoreQueueUpdates ();
+    restoreFastUpdates ();
+}
+
+
+bool kpViewManager::textCursorBlinkState () const
+{
+    return m_textCursorBlinkState;
+}
+
+void kpViewManager::setTextCursorBlinkState (bool on)
+{
+    if (on == m_textCursorBlinkState)
+        return;
+
+    m_textCursorBlinkState = on;
+
+    updateTextCursor ();
+}
+
+
+// protected
+void kpViewManager::updateTextCursor ()
+{
+#if DEBUG_KP_VIEW_MANAGER && 0
+    kdDebug () << "kpViewManager::updateTextCursor()" << endl;
+#endif
+
+    if (!m_mainWindow)
+        return;
+
+    kpDocument *doc = m_mainWindow->document ();
+    if (!doc)
+        return;
+
+    kpSelection *sel = doc->selection ();
+    if (!sel || !sel->isText ())
+        return;
+
+    // TODO: fix code duplication with kpView::paintEventDrawSelection()
+    QPoint topLeft = sel->pointForTextRowCol (m_textCursorRow, m_textCursorCol);
+    if (topLeft != KP_INVALID_POINT)
+    {
+        setFastUpdates ();
+        updateViews (QRect (topLeft.x (), topLeft.y (), 1, sel->textStyle ().fontMetrics ().height ()));
+        restoreFastUpdates ();
+    }
+}
+
+// protected slot
+void kpViewManager::slotTextCursorBlink ()
+{
+#if DEBUG_KP_VIEW_MANAGER && 0
+    kdDebug () << "kpViewManager::slotTextCursorBlink() cursorBlinkState="
+               << m_textCursorBlinkState << endl;
+#endif
+
+    if (m_textCursorBlinkTimer)
+    {
+        m_textCursorBlinkTimer->start (QApplication::cursorFlashTime () / 2,
+                                       true/*single shot*/);
+    }
+
+    updateTextCursor ();
+    m_textCursorBlinkState = !m_textCursorBlinkState;
 }
 
 
@@ -330,7 +538,7 @@ bool kpViewManager::fastUpdates () const
 void kpViewManager::setFastUpdates ()
 {
     m_fastUpdatesCounter++;
-#if DEBUG_KP_VIEW_MANAGER && 1
+#if DEBUG_KP_VIEW_MANAGER && 0
     kdDebug () << "kpViewManager::setFastUpdates() counter="
                << m_fastUpdatesCounter << endl;
 #endif
@@ -340,7 +548,7 @@ void kpViewManager::setFastUpdates ()
 void kpViewManager::restoreFastUpdates ()
 {
     m_fastUpdatesCounter--;
-#if DEBUG_KP_VIEW_MANAGER && 1
+#if DEBUG_KP_VIEW_MANAGER && 0
     kdDebug () << "kpViewManager::restoreFastUpdates() counter="
                << m_fastUpdatesCounter << endl;
 #endif
@@ -398,8 +606,8 @@ void kpViewManager::updateViews ()
 
 void kpViewManager::updateViews (const QRect &docRect)
 {
-#if DEBUG_KP_VIEW_MANAGER && 1
-    kdDebug () << "KpViewManager::updateViews (" << docRect << ")" << endl;
+#if DEBUG_KP_VIEW_MANAGER && 0
+    kdDebug () << "kpViewManager::updateViews (" << docRect << ")" << endl;
 #endif
 
     for (QPtrList <kpView>::const_iterator it = m_views.begin ();
@@ -408,12 +616,12 @@ void kpViewManager::updateViews (const QRect &docRect)
     {
         kpView *view = *it;
 
-    #if DEBUG_KP_VIEW_MANAGER && 1
+    #if DEBUG_KP_VIEW_MANAGER && 0
         kdDebug () << "\tupdating view " << view->name () << endl;
     #endif
         if (view->zoomLevelX () % 100 == 0 && view->zoomLevelY () % 100 == 0)
         {
-        #if DEBUG_KP_VIEW_MANAGER && 1
+        #if DEBUG_KP_VIEW_MANAGER && 0
             kdDebug () << "\t\tviewRect=" << view->zoomDocToView (docRect) << endl;
         #endif
             updateView (view, view->zoomDocToView (docRect));
@@ -430,7 +638,7 @@ void kpViewManager::updateViews (const QRect &docRect)
                                    viewRect.height () + 2 * diff)
                                 .intersect (QRect (0, 0, view->width (), view->height ()));
 
-        #if DEBUG_KP_VIEW_MANAGER && 1
+        #if DEBUG_KP_VIEW_MANAGER && 0
             kdDebug () << "\t\tviewRect (+compensate)=" << newRect << endl;
         #endif
             updateView (view, newRect);

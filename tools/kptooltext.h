@@ -26,113 +26,177 @@
 */
 
 
-#ifndef __kptooltext_h__
-#define __kptooltext_h__
+#ifndef __kp_tool_text_h__
+#define __kp_tool_text_h__
 
-#include <qpoint.h>
 #include <qstring.h>
-#include <qvaluevector.h>
 
-#include <kptool.h>
+#include <kcommand.h>
 
+#include <kptextstyle.h>
+#include <kptoolselection.h>
 
+class kpColor;
 class kpMainWindow;
-class kpToolWidgetOpaqueOrTransparent;
+class kpSelection;
+class kpViewManager;
 
-
-class kpTextStyle
-{
-public:
-    kpTextStyle ()
-        : m_fontSize (0),
-          m_isBold (false), m_isItalic (false),
-          m_isUnderline (false), m_isStrikeThru (false)
-    {
-    }
-
-    kpTextStyle (const QString &fontFamily,
-                 int fontSize,
-                 bool isBold, bool isItalic,
-                 bool isUnderline, bool isStrikeThru)
-        : m_fontFamily (fontFamily),
-          m_fontSize (fontSize),
-          m_isBold (isBold), m_isItalic (isItalic),
-          m_isUnderline (isUnderline), m_isStrikeThru (isStrikeThru)
-    {
-    }
-
-    ~kpTextStyle ()
-    {
-    }
-
-
-    QString fontFamily () const { return m_fontFamily; }
-    void setFontFamily (const QString &f) { m_fontFamily = f; }
-
-    int fontSize () const { return m_fontSize; }
-    void setFontSize (int s) { m_fontSize = s; }
-
-    bool isBold () const { return m_isBold; }
-    void setBold (bool yes = true) { m_isBold = yes; }
-
-    bool isItalic () const { return m_isItalic; }
-    void setItalic (bool yes = true) { m_isItalic = yes; }
-
-    bool isUnderline () const { return m_isUnderline; }
-    void setUnderline (bool yes = true) { m_isUnderline = yes; }
-
-    bool isStrikeThru () const { return m_isStrikeThru; }
-    void setStrikeThru (bool yes = true) { m_isStrikeThru = yes; }
-
-private:
-    QString m_fontFamily;
-    int m_fontSize;
-    bool m_isBold, m_isItalic, m_isUnderline, m_isStrikeThru;
-};
-
-
-class kpToolText : public kpTool
+class kpToolText : public kpToolSelection
 {
 Q_OBJECT
 
 public:
-    kpToolText (kpMainWindow *);
+    kpToolText (kpMainWindow *mainWindow);
     virtual ~kpToolText ();
+
+    virtual bool careAboutColorsSwapped () const { return true; }
 
     virtual void begin ();
     virtual void end ();
 
-    virtual void beginDraw ();
+    bool hasBegunText () const;
+    virtual bool hasBegunShape () const;
     virtual void cancelShape ();
-    virtual void endDraw (const QPoint &thisPoint, const QRect &);
-
-    bool hasDecidedTextTopLeft () const;
-    QPoint textTopLeft () const;
+    virtual void endShape (const QPoint &thisPoint, const QRect &normalizedRect);
 
 protected:
     virtual void keyPressEvent (QKeyEvent *e);
 
+protected:
+    bool shouldChangeTextStyle () const;
+    void changeTextStyle (const QString &name,
+                          const kpTextStyle &newTextStyle,
+                          const kpTextStyle &oldTextStyle);
+
+protected slots:
+    virtual void slotIsOpaqueChanged ();
+    virtual void slotColorsSwapped (const kpColor &newForegroundColor,
+                                    const kpColor &newBackgroundColor);
+    virtual void slotForegroundColorChanged (const kpColor &color);
+    virtual void slotBackgroundColorChanged (const kpColor &color);
+    virtual void slotColorSimilarityChanged (double, int);
+
 public slots:
-    void slotFontFamilyChanged (const QString &fontFamily);
-    void slotFontSizeChanged (int fontSize);
+    void slotFontFamilyChanged (const QString &fontFamily, const QString &oldFontFamily);
+    void slotFontSizeChanged (int fontSize, int oldFontSize);
     void slotBoldChanged (bool isBold);
     void slotItalicChanged (bool isItalic);
     void slotUnderlineChanged (bool isUnderline);
     void slotStrikeThruChanged (bool isStrikeThru);
 
-private slots:
-    void slotIsOpaqueChanged ();
-
-private:
-    bool m_hasDecidedTextTopLeft;
-    QPoint m_textTopLeft;
-    QValueVector <QString> m_textLines;
-    kpTextStyle m_textStyle;
-    int m_cursorRow, m_cursorCol;
-    bool m_cursorOn;
-    QPixmap m_textPixmap;
-    kpToolWidgetOpaqueOrTransparent *m_toolWidgetOpaqueOrTransparent;
+protected:
+    class kpToolTextInsertCommand *m_insertCommand;
+    class kpToolTextEnterCommand *m_enterCommand;
+    class kpToolTextBackspaceCommand *m_backspaceCommand;
+    class kpToolTextDeleteCommand *m_deleteCommand;
 };
 
-#endif  // __kptooltext_h__
+
+class kpToolTextCommand : public KCommand
+{
+public:
+    kpToolTextCommand (const QString &name, kpMainWindow *mainWindow);
+    virtual QString name () const;
+    virtual ~kpToolTextCommand ();
+
+protected:
+    kpSelection *selection () const;
+    kpViewManager *viewManager () const;
+
+protected:
+    QString m_name;
+    kpMainWindow *m_mainWindow;
+};
+
+
+class kpToolTextChangeStyleCommand : public kpToolTextCommand
+{
+public:
+    kpToolTextChangeStyleCommand (const QString &name,
+        const kpTextStyle &newTextStyle, const kpTextStyle &oldTextStyle,
+        kpMainWindow *mainWindow);
+    virtual ~kpToolTextChangeStyleCommand ();
+
+    virtual void execute ();
+    virtual void unexecute ();
+
+protected:
+    kpTextStyle m_newTextStyle, m_oldTextStyle;
+};
+
+class kpToolTextInsertCommand : public kpToolTextCommand
+{
+public:
+    kpToolTextInsertCommand (const QString &name,
+        int row, int col, QString newText,
+        kpMainWindow *mainWindow);
+    virtual ~kpToolTextInsertCommand ();
+
+    void addText (const QString &moreText);
+
+    virtual void execute ();
+    virtual void unexecute ();
+
+protected:
+    int m_row, m_col;
+    QString m_newText;
+};
+
+class kpToolTextEnterCommand : public kpToolTextCommand
+{
+public:
+    kpToolTextEnterCommand (const QString &name,
+        int row, int col,
+        kpMainWindow *mainWindow);
+    virtual ~kpToolTextEnterCommand ();
+
+    void addEnter ();
+
+    virtual void execute ();
+    virtual void unexecute ();
+
+protected:
+    int m_row, m_col;
+    int m_numEnters;
+};
+
+class kpToolTextBackspaceCommand : public kpToolTextCommand
+{
+public:
+    kpToolTextBackspaceCommand (const QString &name,
+        int row, int col,
+        kpMainWindow *mainWindow);
+    virtual ~kpToolTextBackspaceCommand ();
+
+    void addBackspace ();
+
+    virtual void execute ();
+    virtual void unexecute ();
+
+protected:
+    int m_row, m_col;
+    int m_numBackspaces;
+    QString m_deletedText;
+};
+
+class kpToolTextDeleteCommand : public kpToolTextCommand
+{
+public:
+    kpToolTextDeleteCommand (const QString &name,
+        int row, int col,
+        kpMainWindow *mainWindow);
+    virtual ~kpToolTextDeleteCommand ();
+
+    void addDelete ();
+
+    virtual void execute ();
+    virtual void unexecute ();
+
+protected:
+    int m_row, m_col;
+    int m_numDeletes;
+    QString m_deletedText;
+};
+
+#endif  // __kp_tool_text_h__
 

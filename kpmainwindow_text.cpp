@@ -32,8 +32,10 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpcolortoolbar.h>
 #include <kpdefs.h>
 #include <kpmainwindow.h>
+#include <kptextstyle.h>
 #include <kptooltext.h>
 #include <kpview.h>
 
@@ -48,13 +50,17 @@ void kpMainWindow::setupTextToolBarActions ()
     m_actionTextFontSize = new KFontSizeAction (i18n ("Font Size"), 0/*shortcut*/,
         this, SLOT (slotTextFontSizeChanged ()), ac, "text_font_size");
 
-    m_actionTextBold = new KToggleAction (i18n ("Bold"), 0/*shortcut*/,
+    m_actionTextBold = new KToggleAction (i18n ("Bold"),
+        "text_bold"/*icon*/, 0/*shortcut*/,
         this, SLOT (slotTextBoldChanged ()), ac, "text_bold");
-    m_actionTextItalic = new KToggleAction (i18n ("Italic"), 0/*shortcut*/,
+    m_actionTextItalic = new KToggleAction (i18n ("Italic"),
+        "text_italic"/*icon*/, 0/*shortcut*/,
         this, SLOT (slotTextItalicChanged ()), ac, "text_italic");
-    m_actionTextUnderline = new KToggleAction (i18n ("Underline"), 0/*shortcut*/,
+    m_actionTextUnderline = new KToggleAction (i18n ("Underline"),
+        "text_underline"/*icon*/, 0/*shortcut*/,
         this, SLOT (slotTextUnderlineChanged ()), ac, "text_underline");
-    m_actionTextStrikeThru = new KToggleAction (i18n ("Strike Through"), 0/*shortcut*/,
+    m_actionTextStrikeThru = new KToggleAction (i18n ("Strike Through"),
+        "text_strike_thru"/*icon*/, 0/*shortcut*/,
         this, SLOT (slotTextStrikeThruChanged ()), ac, "text_strike_thru");
 
 
@@ -76,6 +82,9 @@ void kpMainWindow::readAndApplyTextSettings ()
     m_actionTextItalic->setChecked (cfg->readBoolEntry (kpSettingItalic, false));
     m_actionTextUnderline->setChecked (cfg->readBoolEntry (kpSettingUnderline, false));
     m_actionTextStrikeThru->setChecked (cfg->readBoolEntry (kpSettingStrikeThru, false));
+
+    m_textOldFontFamily = m_actionTextFontFamily->font ();
+    m_textOldFontSize = m_actionTextFontSize->fontSize ();
 }
 
 
@@ -118,7 +127,10 @@ void kpMainWindow::slotTextFontFamilyChanged ()
         return;
 
     if (m_toolText && m_toolText->hasBegun ())
-        m_toolText->slotFontFamilyChanged (m_actionTextFontFamily->font ());
+    {
+        m_toolText->slotFontFamilyChanged (m_actionTextFontFamily->font (),
+                                           m_textOldFontFamily);
+    }
 
     // Since editable KSelectAction's steal focus from view, switch back to mainView
     // TODO: back to the last view
@@ -129,6 +141,8 @@ void kpMainWindow::slotTextFontFamilyChanged ()
     KConfigBase *cfg = cfgGroupSaver.config ();
     cfg->writeEntry (kpSettingFontFamily, m_actionTextFontFamily->font ());
     cfg->sync ();
+
+    m_textOldFontFamily = m_actionTextFontFamily->font ();
 }
 
 // private slot
@@ -146,7 +160,10 @@ void kpMainWindow::slotTextFontSizeChanged ()
         return;
 
     if (m_toolText && m_toolText->hasBegun ())
-        m_toolText->slotFontSizeChanged (m_actionTextFontSize->fontSize ());
+    {
+        m_toolText->slotFontSizeChanged (m_actionTextFontSize->fontSize (),
+                                         m_textOldFontSize);
+    }
 
     // Since editable KSelectAction's steal focus from view, switch back to mainView
     // TODO: back to the last view
@@ -157,6 +174,8 @@ void kpMainWindow::slotTextFontSizeChanged ()
     KConfigBase *cfg = cfgGroupSaver.config ();
     cfg->writeEntry (kpSettingFontSize, m_actionTextFontSize->fontSize ());
     cfg->sync ();
+
+    m_textOldFontSize = m_actionTextFontSize->fontSize ();
 }
 
 // private slot
@@ -266,5 +285,73 @@ kpTextStyle kpMainWindow::textStyle () const
                         m_actionTextBold->isChecked (),
                         m_actionTextItalic->isChecked (),
                         m_actionTextUnderline->isChecked (),
-                        m_actionTextStrikeThru->isChecked ());
+                        m_actionTextStrikeThru->isChecked (),
+                        m_colorToolBar ? m_colorToolBar->foregroundColor () : kpColor::invalid,
+                        m_colorToolBar ? m_colorToolBar->backgroundColor () : kpColor::invalid);
 }
+
+// public
+void kpMainWindow::setTextStyle (const kpTextStyle &textStyle_)
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::setTextStyle()" << endl;
+#endif
+
+    m_settingTextStyle++;
+
+    if (textStyle_.fontFamily () != m_actionTextFontFamily->font ())
+    {
+        m_actionTextFontFamily->setFont (textStyle_.fontFamily ());
+        slotTextFontFamilyChanged ();
+    }
+
+    if (textStyle_.fontSize () != m_actionTextFontSize->fontSize ())
+    {
+        m_actionTextFontSize->setFontSize (textStyle_.fontSize ());
+        slotTextFontSizeChanged ();
+    }
+
+    if (textStyle_.isBold () != m_actionTextBold->isChecked ())
+    {
+        m_actionTextBold->setChecked (textStyle_.isBold ());
+        slotTextBoldChanged ();
+    }
+
+    if (textStyle_.isItalic () != m_actionTextItalic->isChecked ())
+    {
+        m_actionTextItalic->setChecked (textStyle_.isItalic ());
+        slotTextItalicChanged ();
+    }
+
+    if (textStyle_.isUnderline () != m_actionTextUnderline->isChecked ())
+    {
+        m_actionTextUnderline->setChecked (textStyle_.isUnderline ());
+        slotTextUnderlineChanged ();
+    }
+
+    if (textStyle_.isStrikeThru () != m_actionTextStrikeThru->isChecked ())
+    {
+        m_actionTextStrikeThru->setChecked (textStyle_.isStrikeThru ());
+        slotTextStrikeThruChanged ();
+    }
+
+
+    if (textStyle_.foregroundColor () != m_colorToolBar->foregroundColor ())
+    {
+        m_colorToolBar->setForegroundColor (textStyle_.foregroundColor ());
+    }
+
+    if (textStyle_.backgroundColor () != m_colorToolBar->backgroundColor ())
+    {
+        m_colorToolBar->setBackgroundColor (textStyle_.backgroundColor ());
+    }
+
+    m_settingTextStyle--;
+}
+
+// public
+int kpMainWindow::settingTextStyle () const
+{
+    return m_settingTextStyle;
+}
+

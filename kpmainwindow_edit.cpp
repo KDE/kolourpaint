@@ -28,8 +28,10 @@
 
 #include <qapplication.h>
 #include <qclipboard.h>
+#include <qfontmetrics.h>
 #include <qimage.h>
 #include <qpixmap.h>
+#include <qvaluevector.h>
 
 #include <kaction.h>
 #include <kcommand.h>
@@ -46,6 +48,7 @@
 #include <kptool.h>
 #include <kptoolresizescale.h>
 #include <kptoolselection.h>
+#include <kptooltext.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
 
@@ -73,7 +76,7 @@ void kpMainWindow::setupEditMenuActions ()
     m_actionPaste = KStdAction::paste (this, SLOT (slotPaste ()), ac);
 
     //m_actionDelete = KStdAction::clear (this, SLOT (slotDelete ()), ac);
-    m_actionDelete = new KAction (i18n ("&Delete"), Key_Delete,
+    m_actionDelete = new KAction (i18n ("&Delete Selection"), 0,
         this, SLOT (slotDelete ()), ac, "edit_clear");
 
     m_actionSelectAll = KStdAction::selectAll (this, SLOT (slotSelectAll ()), ac);
@@ -111,6 +114,7 @@ void kpMainWindow::slotCut ()
 #if DEBUG_KP_MAIN_WINDOW && 1
     kdDebug () << "kpMainWindow::slotCut() CALLED" << endl;
 #endif
+
     if (!m_document || !m_document->selection ())
     {
         kdError () << "kpMainWindow::slotCut () doc=" << m_document
@@ -121,6 +125,9 @@ void kpMainWindow::slotCut ()
 
 
     QApplication::setOverrideCursor (Qt::waitCursor);
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
     slotCopy ();
     slotDelete ();
@@ -135,6 +142,7 @@ void kpMainWindow::slotCopy ()
 #if DEBUG_KP_MAIN_WINDOW && 1
     kdDebug () << "kpMainWindow::slotCopy() CALLED" << endl;
 #endif
+
     if (!m_document || !m_document->selection ())
     {
         kdError () << "kpMainWindow::slotCopy () doc=" << m_document
@@ -143,12 +151,27 @@ void kpMainWindow::slotCopy ()
         return;
     }
 
+
     QApplication::setOverrideCursor (Qt::waitCursor);
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
     kpSelection sel = *m_document->selection ();
-    if (!sel.pixmap ())
-        sel.setPixmap (m_document->getSelectedPixmap ());
-    QApplication::clipboard ()->setData (new kpSelectionDrag (sel),
-                                         QClipboard::Clipboard);
+
+    if (sel.isText ())
+    {
+        QApplication::clipboard ()->setData (new QTextDrag (sel.text ()),
+                                             QClipboard::Clipboard);
+    }
+    else
+    {
+        if (!sel.pixmap ())
+            sel.setPixmap (m_document->getSelectedPixmap ());
+        QApplication::clipboard ()->setData (new kpSelectionDrag (sel),
+                                             QClipboard::Clipboard);
+    }
+
     QApplication::restoreOverrideCursor ();
 }
 
@@ -159,7 +182,10 @@ void kpMainWindow::slotEnablePaste ()
 
     QMimeSource *ms = QApplication::clipboard ()->data (QClipboard::Clipboard);
     if (ms)
-        shouldEnable = kpSelectionDrag::canDecode (ms);
+    {
+        shouldEnable = (kpSelectionDrag::canDecode (ms) ||
+                        QTextDrag::canDecode (ms));
+    }
 
     m_actionPaste->setEnabled (shouldEnable);
 }
@@ -202,7 +228,7 @@ QRect kpMainWindow::calcUsefulPasteRect (int pixmapWidth, int pixmapHeight)
     return QRect (0, 0, pixmapWidth, pixmapHeight);
 }
 
-// private slot
+// private
 void kpMainWindow::paste (const kpSelection &sel)
 {
     if (!sel.pixmap ())
@@ -212,6 +238,9 @@ void kpMainWindow::paste (const kpSelection &sel)
     }
 
     QApplication::setOverrideCursor (Qt::waitCursor);
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
 
     //
@@ -235,7 +264,9 @@ void kpMainWindow::paste (const kpSelection &sel)
     kpSelection selInUsefulPos = sel;
     selInUsefulPos.moveTo (calcUsefulPasteRect (sel.width (), sel.height ()).topLeft ());
     addDeselectFirstCommand (new kpToolSelectionCreateCommand (
-        i18n ("Selection: Create"),
+        selInUsefulPos.isText () ?
+            i18n ("Text: Create Box") :
+            i18n ("Selection: Create"),
         selInUsefulPos,
         this));
 
@@ -262,6 +293,121 @@ void kpMainWindow::paste (const kpSelection &sel)
     QApplication::restoreOverrideCursor ();
 }
 
+// public
+void kpMainWindow::pasteText (const QString &text, bool forceNewTextSelection)
+{
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kdDebug () << "kpMainWindow::pasteText(" << text
+               << ",forceNewTextSelection=" << forceNewTextSelection
+               << ")" << endl;
+#endif
+
+    QApplication::setOverrideCursor (Qt::waitCursor);
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+
+    if (!forceNewTextSelection &&
+        m_document && m_document->selection () &&
+        m_document->selection ()->type () == kpSelection::Text &&
+        m_commandHistory && m_viewManager)
+    {
+    #if DEBUG_KP_MAIN_WINDOW && 1
+        kdDebug () << "\treusing existing Text Selection" << endl;
+    #endif
+        m_commandHistory->addCommand (new kpToolTextInsertCommand (
+            i18n ("Text: Paste"),
+            m_viewManager->textCursorRow (), m_viewManager->textCursorCol (),
+            text,
+            this),
+            false/*no exec*/);
+    }
+    else
+    {
+    #if DEBUG_KP_MAIN_WINDOW && 1
+        kdDebug () << "\tcreating Text Selection" << endl;
+    #endif
+
+        QValueVector <QString> textLines (1, QString::null);
+
+        for (int i = 0; i < (int) text.length (); i++)
+        {
+            if (text [i] == '\n')
+                textLines.push_back (QString::null);
+            else
+                textLines [textLines.size () - 1].append (text [i]);
+        }
+
+
+        const kpTextStyle ts = textStyle ();
+        const QFontMetrics fontMetrics = ts.fontMetrics ();
+
+        int height = textLines.size () * fontMetrics.height ();
+        if (textLines.size () >= 1)
+            height += (textLines.size () - 1) * fontMetrics.leading ();
+
+        int width = 0;
+        for (QValueVector <QString>::const_iterator it = textLines.begin ();
+             it != textLines.end ();
+             it++)
+        {
+            const int w = fontMetrics.width (*it);
+            if (w > width)
+                width = w;
+        }
+
+
+        kpSelection sel (QRect (0, 0,
+                                width + kpSelection::textBorderSize () * 2,
+                                height + kpSelection::textBorderSize () * 2),
+                         textLines,
+                         ts);
+
+        paste (sel);
+    }
+
+
+    QApplication::restoreOverrideCursor ();
+}
+
+// public
+void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point)
+{
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kdDebug () << "kpMainWindow::pasteTextAt(" << text
+               << ",point=" << point
+               << ")" << endl;
+#endif
+
+    QApplication::setOverrideCursor (Qt::waitCursor);
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+
+    if (m_document &&
+        m_document->selection () &&
+        m_document->selection ()->type () == kpSelection::Text &&
+        m_document->selection ()->pointIsInTextArea (point))
+    {
+        kpSelection *sel = m_document->selection ();
+
+        const int row = sel->textRowForPoint (point);
+        const int col = sel->textColForPoint (point);
+
+        m_viewManager->setTextCursorPosition (row, col);
+
+        pasteText (text);
+    }
+    else
+    {
+        pasteText (text, true/*force new text selection*/);
+    }
+
+    QApplication::restoreOverrideCursor ();
+}
+
 // private slot
 void kpMainWindow::slotPaste ()
 {
@@ -271,6 +417,9 @@ void kpMainWindow::slotPaste ()
 
     // sync: restoreOverrideCursor() in all exit paths
     QApplication::setOverrideCursor (Qt::waitCursor);
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
 
     //
@@ -286,27 +435,40 @@ void kpMainWindow::slotPaste ()
     }
 
     kpSelection sel;
-    if (!kpSelectionDrag::decode (ms, sel/*ref*/, pasteWarnAboutLossInfo ()))
+    QString text;
+    if (kpSelectionDrag::decode (ms, sel/*ref*/, pasteWarnAboutLossInfo ()))
+    {
+        sel.setTransparency (selectionTransparency ());
+        paste (sel);
+    }
+    else if (QTextDrag::decode (ms, text/*ref*/))
+    {
+        pasteText (text);
+    }
+    else
     {
         kdError () << "kpMainWindow::slotPaste() could not decode selection" << endl;
         QApplication::restoreOverrideCursor ();
         return;
     }
 
-
-    sel.setTransparency (selectionTransparency ());
-    paste (sel);
-
-
     QApplication::restoreOverrideCursor ();
 }
 
-// private slot
+// public slot
 void kpMainWindow::slotDelete ()
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
     kdDebug () << "kpMainWindow::slotDelete() CALLED" << endl;
 #endif
+    if (!m_actionDelete->isEnabled ())
+    {
+    #if DEBUG_KP_MAIN_WINDOW && 1
+        kdDebug () << "\taction not enabled - was probably called from kpTool::keyPressEvent()" << endl;
+    #endif
+        return;
+    }
+
     if (!m_document || !m_document->selection ())
     {
         kdError () << "kpMainWindow::slotDelete () doc=" << m_document
@@ -315,8 +477,13 @@ void kpMainWindow::slotDelete ()
         return;
     }
 
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
     addImageOrSelectionCommand (new kpToolSelectionDestroyCommand (
-        i18n ("Selection: Delete"),
+        m_document->selection ()->isText () ?
+            i18n ("Text: Delete Box") :  // not to be confused with i18n ("Text: Delete")
+            i18n ("Selection: Delete"),
         false/*no push onto doc*/,
         this));
 }
@@ -334,11 +501,17 @@ void kpMainWindow::slotSelectAll ()
         return;
     }
 
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
     if (m_document->selection ())
         slotDeselect ();
 
     // just the border - don't actually pull pixmap from doc yet
     m_document->setSelection (kpSelection (kpSelection::Rectangle, m_document->rect (), selectionTransparency ()));
+
+    if (tool ())
+        tool ()->somethingBelowTheCursorChanged ();
 }
 
 
@@ -369,6 +542,9 @@ void kpMainWindow::addDeselectFirstCommand (KCommand *cmd)
             kdDebug () << "\tjust a fresh border - was nop - delete" << endl;
         #endif
             m_document->selectionDelete ();
+            if (tool ())
+                tool ()->somethingBelowTheCursorChanged ();
+
             if (cmd)
                 m_commandHistory->addCommand (cmd);
         }
@@ -378,7 +554,9 @@ void kpMainWindow::addDeselectFirstCommand (KCommand *cmd)
             kdDebug () << "\treal selection with pixmap - push onto doc cmd" << endl;
         #endif
             KCommand *deselectCommand = new kpToolSelectionDestroyCommand (
-                i18n ("Selection: Deselect"),
+                sel->isText () ?
+                    i18n ("Text: Finish") :
+                    i18n ("Selection: Deselect"),
                 true/*push onto document*/,
                 this);
 
@@ -414,6 +592,9 @@ void kpMainWindow::slotDeselect ()
                    << endl;
         return;
     }
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
     addDeselectFirstCommand (0);
 }

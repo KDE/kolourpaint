@@ -707,6 +707,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
             switch (sel->type ())
             {
             case kpSelection::Rectangle:
+            case kpSelection::Text:
             #if DEBUG_KP_VIEW_RENDERER && 1
                 kdDebug () << "\tselection border = rectangle" << endl;
                 kdDebug () << "\t\tx=" << boundingRect.x () - docRect.x ()
@@ -769,6 +770,47 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
             maskBitmapPainter.end ();
 
         destPixmap->setMask (maskBitmap);
+    }
+
+
+    //
+    // Draw text cursor
+    //
+
+    if (sel->isText () &&
+        vm->textCursorEnabled () &&
+        (vm->textCursorBlinkState () || (m_mainWindow && !m_mainWindow->isActiveWindow ())))
+    {
+        // TODO: fix code duplication with kpViewManager::updateTextCursor()
+        QPoint topLeft = sel->pointForTextRowCol (vm->textCursorRow (), vm->textCursorCol ());
+        if (topLeft != KP_INVALID_POINT)
+        {
+            QRect rect = QRect (topLeft.x (), topLeft.y (), 1, sel->textStyle ().fontMetrics ().height ());
+            rect = rect.intersect (sel->boundingRect ());
+            if (!rect.isEmpty ())
+            {
+                rect.moveBy (-docRect.x (), -docRect.y ());
+
+                QBitmap maskBitmap;
+                QPainter destPixmapPainter, maskBitmapPainter;
+
+                if (destPixmap->mask ())
+                {
+                    maskBitmap = *destPixmap->mask ();
+                    maskBitmapPainter.begin (&maskBitmap);
+                    maskBitmapPainter.fillRect (rect, Qt::color1/*opaque*/);
+                    maskBitmapPainter.end ();
+                }
+
+                destPixmapPainter.begin (destPixmap);
+                destPixmapPainter.setRasterOp (Qt::XorROP);
+                destPixmapPainter.fillRect (rect, Qt::white);
+                destPixmapPainter.end ();
+
+                if (!maskBitmap.isNull ())
+                    destPixmap->setMask (maskBitmap);
+            }
+        }
     }
 }
 

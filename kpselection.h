@@ -33,14 +33,19 @@
 #include <qdatastream.h>
 #include <qobject.h>
 #include <qpixmap.h>
+#include <qpoint.h>
 #include <qpointarray.h>
 #include <qvaluevector.h>
 #include <qrect.h>
+#include <qstring.h>
 
 #include <kpcolor.h>
 #include <kppixmapfx.h>
 #include <kpselectiontransparency.h>
-#include <kptooltext.h>
+#include <kptextstyle.h>
+
+
+class QSize;
 
 
 /*
@@ -56,16 +61,26 @@ public:
     {
         Rectangle,
         Ellipse,
-        Points
+        Points,
+        Text
     };
 
+    // (for any)
     kpSelection (const kpSelectionTransparency &transparency = kpSelectionTransparency ());
+
+    // (for Rectangle & Ellipse)
     kpSelection (Type type, const QRect &rect, const QPixmap &pixmap = QPixmap (),
                  const kpSelectionTransparency &transparency = kpSelectionTransparency ());
     kpSelection (Type type, const QRect &rect, const kpSelectionTransparency &transparency);
+
+    // (for Text)
+    kpSelection (const QRect &rect, const QValueVector <QString> &textLines_, const kpTextStyle &textStyle_);
+
+    // (for Points)
     kpSelection (const QPointArray &points, const QPixmap &pixmap = QPixmap (),
                  const kpSelectionTransparency &transparency = kpSelectionTransparency ());
     kpSelection (const QPointArray &points, const kpSelectionTransparency &transparency);
+
     kpSelection (const kpSelection &rhs);
     kpSelection &operator= (const kpSelection &rhs);
     friend QDataStream &operator<< (QDataStream &stream, const kpSelection &selection);
@@ -79,8 +94,10 @@ private:
     void calculatePoints ();
 
 public:
-
     Type type () const;
+    bool isText () const;
+    // returns either i18n ("Selection") or i18n ("Text")
+    QString name () const;
 
     // synonyms
     QPoint topLeft () const;
@@ -104,19 +121,47 @@ public:
     bool contains (const QPoint &point) const;
     bool contains (int x, int y);
 
-    QPixmap *pixmap () const;
+    QPixmap *pixmap (bool evenIfText = true) const;
     void setPixmap (const QPixmap &pixmap);
+
+private:
+    void calculateTextPixmap ();
+
+public:
+    static QString textForTextLines (const QValueVector <QString> &textLines_);
+    QString text () const;  // textLines() as one long string
+    QValueVector <QString> textLines () const;
+    void setTextLines (const QValueVector <QString> &textLines_);
+
+    static int textBorderSize ();
+    QRect textAreaRect () const;
+    bool pointIsInTextBorderArea (const QPoint &globalPoint) const;
+    bool pointIsInTextArea (const QPoint &globalPoint) const;
+
+    void textResize (int width, int height);
+
+    // (only for text selections)
+    static int minimumWidth ();
+    static int minimumHeight ();
+    static QSize minimumSize ();
+
+    int textRowForPoint (const QPoint &globalPoint) const;
+    int textColForPoint (const QPoint &globalPoint) const;
+    QPoint pointForTextRowCol (int row, int col);
+
+    kpTextStyle textStyle () const;
+    void setTextStyle (const kpTextStyle &textStyle);
 
     // TODO: ret val inconstent with pixmap()
     //       - fix when merge with kpTempPixmap
-    QPixmap opaquePixmap () const;  // same as pixmap()
+    QPixmap opaquePixmap (bool evenIfText = true) const;  // same as pixmap()
 
 private:
     void calculateTransparencyMask ();
 
 public:
     // Returns opaquePixmap() after applying kpSelectionTransparency
-    QPixmap transparentPixmap () const;
+    QPixmap transparentPixmap (bool evenIfText = true) const;
 
     kpSelectionTransparency transparency () const;
     // Returns whether or not the selection changed due to setting the
@@ -143,12 +188,10 @@ private:
     QPointArray m_points;
     QPixmap *m_pixmap;
 
-    // TODO: (unused / reserved)
     QValueVector <QString> m_textLines;
     kpTextStyle m_textStyle;
 
     kpSelectionTransparency m_transparency;
-    bool BIC_HACK;
     QBitmap m_transparencyMask;
 
 private:

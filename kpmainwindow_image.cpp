@@ -64,13 +64,31 @@ bool kpMainWindow::isSelectionActive () const
 }
 
 // private
+bool kpMainWindow::isTextSelection () const
+{
+    return (m_document && m_document->selection () &&
+            m_document->selection ()->type () == kpSelection::Text);
+}
+
+// private
 QString kpMainWindow::actionResizeScaleText () const
 {
-    // Resize doesn't make sense when there's a selection
     if (isSelectionActive ())
-        return i18n ("Scal&e...");
+    {
+        if (isTextSelection ())
+        {
+            return i18n ("R&esize");
+        }
+        else
+        {
+            // Resize doesn't make sense when there's an ordinary selection
+            return i18n ("Scal&e...");
+        }
+    }
     else
+    {
         return i18n ("R&esize / Scale...");
+    }
 }
 
 
@@ -125,6 +143,8 @@ void kpMainWindow::enableImageMenuDocumentActions (bool enable)
     m_actionConvertToGrayscale->setEnabled (enable);
     m_actionInvertColors->setEnabled (enable);
     m_actionClear->setEnabled (enable);
+
+    m_imageMenuDocumentActionsEnabled = enable;
 }
 
 
@@ -158,16 +178,24 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
     }
 
 
-    // Resize doesn't make sense when there's a selection
+    // "Resize", "Scale" or "Resize/Scale"
     m_actionResizeScale->setText (actionResizeScaleText ());
 
 
-    // (any action other than Image/Crop will do)
-    bool imageMenuDocumentActionsEnabled = m_actionClear->isEnabled ();
+    m_actionResizeScale->setEnabled (m_imageMenuDocumentActionsEnabled);
+    m_actionCrop->setEnabled (m_imageMenuDocumentActionsEnabled &&
+                              isSelectionActive () &&
+                              !isTextSelection ());
 
-    // Image/Crop available only with active selection
-    m_actionCrop->setEnabled (imageMenuDocumentActionsEnabled &&
-                              isSelectionActive ());
+    const bool enable = (m_imageMenuDocumentActionsEnabled && !isTextSelection ());
+    m_actionAutoCrop->setEnabled (enable);
+    m_actionFlip->setEnabled (enable);
+    m_actionRotate->setEnabled (enable);
+    m_actionSkew->setEnabled (enable);
+    m_actionConvertToBlackAndWhite->setEnabled (enable);
+    m_actionConvertToGrayscale->setEnabled (enable);
+    m_actionInvertColors->setEnabled (enable);
+    m_actionClear->setEnabled (enable);
 }
 
 
@@ -278,7 +306,7 @@ void kpMainWindow::slotResizeScale ()
     {
         addImageOrSelectionCommand (
             new kpToolResizeScaleCommand (
-                m_document->selection (),
+                (bool) m_document->selection (),
                 dialog->imageWidth (), dialog->imageHeight (),
                 dialog->scaleToFit (),
                 this));
