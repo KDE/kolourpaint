@@ -281,6 +281,23 @@ bool kpDocument::save ()
     return saveAs (m_url, m_mimetype, false);
 }
 
+static QPixmap pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
+                                                   const QColor &transparentColor)
+{
+    if (!pixmap.mask ())
+        return pixmap;
+
+    QPixmap retPixmap (pixmap.width (), pixmap.height ());
+    retPixmap.fill (transparentColor);
+
+    QPainter p (&retPixmap);
+    p.drawPixmap (QPoint (0, 0), pixmap);
+    p.end ();
+
+    retPixmap.setMask (*pixmap.mask ());
+    return retPixmap;
+}
+
 bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwritePrompt)
 {
 #if DEBUG_KP_DOCUMENT
@@ -328,8 +345,11 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
 #if DEBUG_KP_DOCUMENT
     kdDebug () << "\tmimetype=" << mimetype << " type=" << type << endl;
 #endif
-    // TODO: define transparent pixels
-    if (!pixmapWithSelection ().save (filename, type.latin1 ()))
+    QPixmap pixmapToSave =
+        pixmapWithDefinedTransparentPixels (pixmapWithSelection (),
+                                            Qt::white);  // CONFIG
+
+    if (!pixmapToSave.save (filename, type.latin1 ()))
     {
         KMessageBox::error (m_mainWindow,
                             i18n ("Could not save as \"%1\".")
