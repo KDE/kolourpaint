@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -27,6 +27,7 @@
 
 
 #define DEBUG_KP_VIEW 0
+#define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 0) || 1)
 
 #include <math.h>
 
@@ -38,7 +39,7 @@
 #include <qpixmap.h>
 #include <qpoint.h>
 #include <qrect.h>
-#if DEBUG_KP_VIEW
+#if DEBUG_KP_VIEW || DEBUG_KP_VIEW_RENDERER
     #include <qdatetime.h>
 #endif
 
@@ -346,7 +347,7 @@ void kpView::resize (int w, int h)
                << ")::resize(" << w << "," << h << ")"
                << endl;
 #endif
-    
+
     QWidget::resize (w, h);
 
     // TODO: The QWidget::resizeEvent() description says that this isn't needed
@@ -532,8 +533,6 @@ void kpView::dragLeaveEvent (QDragLeaveEvent *)
 // Renderer
 //
 
-#define DEBUG_KP_VIEW_RENDERER (DEBUG_KP_VIEW && 0)
-
 // private
 QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
 {
@@ -631,11 +630,19 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
     //
 
     kpViewManager *vm = viewManager ();
+#if DEBUG_KP_VIEW_RENDERER && 1
+    kdDebug () << "\tsel border visible="
+               << vm->selectionBorderVisible ()
+               << endl;
+#endif
     if (vm->selectionBorderVisible ())
     {
         QPainter destPixmapPainter (destPixmap);
         destPixmapPainter.setRasterOp (Qt::XorROP);
         destPixmapPainter.setPen (QPen (Qt::white, 1, Qt::DotLine));
+
+        destPixmapPainter.setBackgroundMode (QPainter::OpaqueMode);
+        destPixmapPainter.setBackgroundColor (Qt::blue);
 
         QBitmap maskBitmap;
         QPainter maskBitmapPainter;
@@ -643,7 +650,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
         {
             maskBitmap = *destPixmap->mask ();
             maskBitmapPainter.begin (&maskBitmap);
-            maskBitmapPainter.setPen (QPen (Qt::color1/*opaque*/, 1, Qt::DotLine));
+            maskBitmapPainter.setPen (Qt::color1/*opaque*/);
         }
 
 
@@ -655,6 +662,12 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
     }
 
         QRect boundingRect = sel->boundingRect ();
+    #if DEBUG_KP_VIEW_RENDERER && 1
+        kdDebug () << "\tsel boundingRect="
+                   << boundingRect
+                   << endl;
+    #endif
+
         if (boundingRect.topLeft () != boundingRect.bottomRight ())
         {
             switch (sel->type ())
@@ -705,6 +718,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
             }
 
             default:
+                kdError () << "kpView::paintEventDrawSelection() unknown sel border type" << endl;
                 break;
             }
         }
@@ -884,10 +898,21 @@ void kpView::paintEvent (QPaintEvent *e)
 
     QPixmap docPixmap;
 
-    if (!docRect.isEmpty ())
-        docPixmap = doc->getPixmapAt (docRect);
+    bool tempPixmapWillBeDisplayed = false;
 
-    if (docPixmap.mask () || m_needBorder)
+    if (!docRect.isEmpty ())
+    {
+        docPixmap = doc->getPixmapAt (docRect);
+        tempPixmapWillBeDisplayed =
+            (!doc->selection () &&
+             vm->tempPixmapActive () &&
+             (!vm->brushActive () || vm->shouldBrushBeDisplayed (this)) &&
+             docRect.intersects (vm->tempPixmapRect ()));
+    }
+
+    if (docPixmap.mask () ||
+        (tempPixmapWillBeDisplayed && !vm->brushActive ()) ||
+        m_needBorder)
     {
     #if DEBUG_KP_VIEW_RENDERER && 1
         kdDebug () << "\tmask=" << (bool) docPixmap.mask ()
@@ -914,9 +939,7 @@ void kpView::paintEvent (QPaintEvent *e)
         {
             paintEventDrawSelection (&docPixmap, docRect);
         }
-        else if (vm->tempPixmapActive () &&
-            (!vm->brushActive () || vm->shouldBrushBeDisplayed (this)) &&
-            docRect.intersects (vm->tempPixmapRect ()))
+        else if (tempPixmapWillBeDisplayed)
         {
         #if DEBUG_KP_VIEW_RENDERER && 1
             kdDebug () << "\ttempPixmap: active"
