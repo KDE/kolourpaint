@@ -468,8 +468,8 @@ kpColorCells::kpColorCells (QWidget *parent,
     if (!ownColorsInitialised)
     {
         // Don't initialise globally when we probably don't have a colour
-        // allocation context.  This way, the colours aren't invalid
-        // sometimes.
+        // allocation context.  This way, the colours aren't sometimes
+        // invalid (e.g. at 8-bit).
 
         kpRed = QColor (255, 0, 0);
         kpGreen = QColor (0, 255, 0);
