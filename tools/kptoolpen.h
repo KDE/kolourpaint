@@ -79,6 +79,7 @@ public:
 
     virtual void beginDraw ();
     virtual void hover (const QPoint &point);
+    virtual void globalDraw ();
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &);
     virtual void cancelShape ();
     virtual void endDraw (const QPoint &, const QRect &);
@@ -91,8 +92,12 @@ private slots:
     void slotEraserSizeChanged (int size);
 
 private:
-    void wash (QImage *image, const QRect &imageRect, int plotx, int ploty);
-    void wash (QImage *image, const QRect &imageRect, const QRect &drawRect);
+    bool wash (QPainter *painter, const QImage &image,
+               QRgb colorToReplace,
+               const QRect &imageRect, int plotx, int ploty);
+    bool wash (QPainter *painter, const QImage &image,
+               QRgb colorToReplace,
+               const QRect &imageRect, const QRect &drawRect);
 
     QColor color (int which);
 
