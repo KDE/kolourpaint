@@ -29,12 +29,12 @@
 #ifndef __kpviewmanager_h__
 #define __kpviewmanager_h__
 
+#include <qcursor.h>
 #include <qobject.h>
 #include <qptrlist.h>
 #include <qrect.h>
 
 
-class QCursor;
 class QPixmap;
 class QRect;
 
@@ -93,7 +93,7 @@ public:
     // View
     //
 
-    kpView *viewUnderCursor () /*const*/;
+    kpView *viewUnderCursor (bool usingQt = false) const;
 
     //
     // QWidget::hasMouse() is unreliable:
@@ -168,6 +168,7 @@ private:
 
     kpMainWindow *m_mainWindow;
     QPtrList <kpView> m_views;
+    QCursor m_cursor;
 
     kpTempPixmap *m_tempPixmap;
     kpView *m_viewUnderCursor;

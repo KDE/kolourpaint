@@ -35,6 +35,7 @@
 #include <kpmainwindow.h>
 #include <kpselection.h>
 #include <kptemppixmap.h>
+#include <kptool.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
 
@@ -73,6 +74,7 @@ void kpViewManager::registerView (kpView *view)
     #if DEBUG_KP_VIEW_MANAGER && 1
         kdDebug () << "\tadded view" << endl;
     #endif
+        view->setCursor (m_cursor);
         m_views.append (view);
     }
     else
@@ -87,6 +89,10 @@ void kpViewManager::unregisterView (kpView *view)
 {
     if (view)
     {
+        if (view == m_viewUnderCursor)
+            m_viewUnderCursor = 0;
+
+        view->unsetCursor ();
         m_views.removeRef (view);
     }
 }
@@ -189,6 +195,8 @@ void kpViewManager::setCursor (const QCursor &cursor)
     {
         (*it)->setCursor (cursor);
     }
+
+    m_cursor = cursor;
 }
 
 void kpViewManager::unsetCursor ()
@@ -199,30 +207,74 @@ void kpViewManager::unsetCursor ()
     {
         (*it)->unsetCursor ();
     }
+
+    m_cursor = QCursor ();
 }
 
 
-kpView *kpViewManager::viewUnderCursor () /*const*/
+kpView *kpViewManager::viewUnderCursor (bool usingQt) const
 {
-    if (m_viewUnderCursor && m_views.findRef (m_viewUnderCursor) < 0)
+    if (!usingQt)
     {
-        kdError () << "kpViewManager::viewUnderCursor(): invalid view" << endl;
-        m_viewUnderCursor = 0;
-    }
+        kpViewManager *nonConstThis = const_cast <kpViewManager *> (this);
 
-    return m_viewUnderCursor;
+        if (m_viewUnderCursor && nonConstThis->m_views.findRef (m_viewUnderCursor) < 0)
+        {
+            kdError () << "kpViewManager::viewUnderCursor(): invalid view" << endl;
+            nonConstThis->m_viewUnderCursor = 0;
+        }
+
+
+        return m_viewUnderCursor;
+    }
+    else
+    {
+        for (QPtrList <kpView>::const_iterator it = m_views.begin ();
+             it != m_views.end ();
+             it++)
+        {
+            if ((*it)->hasMouse ())
+                return (*it);
+        }
+
+        return 0;
+    }
 }
 
 void kpViewManager::setViewUnderCursor (kpView *view)
 {
-#if DEBUG_KP_VIEW_MANAGER && 0
-    kdDebug () << "kpViewManager::setViewUnderCursor (" << view << ")" << endl;
+#if DEBUG_KP_VIEW_MANAGER && 1
+    kdDebug () << "kpViewManager::setViewUnderCursor ("
+               << (view ? view->name () : "(none)") << ")"
+               << "  old=" << (m_viewUnderCursor ? m_viewUnderCursor->name () : "(none)")
+               << endl;
 #endif
+    if (view == m_viewUnderCursor)
+        return;
+
     m_viewUnderCursor = view;
 
-    // Hide the brush if the mouse cursor just left the view
-    if (!view && m_tempPixmap && m_tempPixmap->isBrush ())
-        updateViews (m_tempPixmap->rect ());
+    if (!m_viewUnderCursor)
+    {
+        // Hide the brush if the mouse cursor just left the view
+        if (m_tempPixmap && m_tempPixmap->isBrush ())
+        {
+        #if DEBUG_KP_VIEW_MANAGER && 1
+            kdDebug () << "\thiding brush pixmap since cursor left view" << endl;
+        #endif
+            updateViews (m_tempPixmap->rect ());
+        }
+    }
+    else
+    {
+        if (m_mainWindow && m_mainWindow->tool ())
+        {
+        #if DEBUG_KP_VIEW_MANAGER && 1
+            kdDebug () << "\tnotify tool that something changed below cursor" << endl;
+        #endif
+            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+        }
+    }
 }
 
 
