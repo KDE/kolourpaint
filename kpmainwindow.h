@@ -87,7 +87,7 @@ public:
 
 private:
     QScrollView *m_scrollView;
-    kpView *m_mainView;
+    kpView *m_mainView, *m_thumbnailView;
     kpDocument *m_document;
     kpViewManager *m_viewManager;
     kpColorToolBar *m_colorToolBar;

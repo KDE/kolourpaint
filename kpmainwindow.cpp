@@ -104,7 +104,7 @@ kpMainWindow::kpMainWindow (const KURL &url)
 
     // TODO: change to a child window
     toolBar ("toolbar_thumbnaila")->setFullSize ();
-    kpView *m_thumbnailView = new kpView (toolBar ("toolbar_thumbnaila"), "thumbnailView", this, 200, 200, true /* autoVariableZoom */);
+    m_thumbnailView = new kpView (toolBar ("toolbar_thumbnaila"), "thumbnailView", this, 200, 200, true /* autoVariableZoom */);
     m_viewManager->registerView (m_thumbnailView);    // TODO: unregister
     toolBar ("toolbar_thumbnaila")->insertWidget (2000, toolBar ("toolbar_thumbnaila")->width (), m_thumbnailView);
     toolBar ("toolbar_thumbnaila")->setFullSize ();
@@ -131,6 +131,7 @@ kpMainWindow::~kpMainWindow ()
 
     delete m_commandHistory;
 
+    delete m_thumbnailView;
     delete m_mainView;
     delete m_document;
     delete m_scrollView;
