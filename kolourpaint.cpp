@@ -66,7 +66,7 @@ int main (int argc, char *argv [])
     (
         "kolourpaint",
         I18N_NOOP("KolourPaint"),
-        versionNumberString,
+        versionNumberString.utf8(),
         I18N_NOOP("Paint Program for KDE"),
         KAboutData::License_Custom,
         "Copyright (c) 2003-2004 Clarence Dang",
