@@ -97,7 +97,7 @@ void kpToolClearCommand::execute ()
         kpPixmapFX::fill (&newPixmap, m_newColor);
         // TODO: maybe disable Image/Clear if transparent colour
         if (m_newColor.isOpaque ())
-            newPixmap.setMask (doc->selectionGetMask ());
+            newPixmap.setMask (sel->maskForOwnType ());
 
         sel->setPixmap (newPixmap);
     }

@@ -303,6 +303,12 @@ kpSelection::Type kpSelection::type () const
 }
 
 // public
+bool kpSelection::isRectangular () const
+{
+    return (m_type == Rectangle || m_type == Text);
+}
+
+// public
 bool kpSelection::isText () const
 {
     return (m_type == Text);
@@ -316,6 +322,54 @@ QString kpSelection::name () const
 
     return i18n ("Selection");
 }
+
+
+// public
+QBitmap kpSelection::maskForOwnType (bool nullForRectangular) const
+{
+    if (!m_rect.isValid ())
+    {
+        kdError () << "kpSelection::maskForOwnType() boundingRect invalid" << endl;
+        return QBitmap ();
+    }
+
+
+    if (isRectangular ())
+    {
+        if (nullForRectangular)
+            return QBitmap ();
+
+        QBitmap maskBitmap (m_rect.width (), m_rect.height ());
+        maskBitmap.fill (Qt::color1/*opaque*/);
+        return maskBitmap;
+    }
+
+
+    QBitmap maskBitmap (m_rect.width (), m_rect.height ());
+    maskBitmap.fill (Qt::color0/*transparent*/);
+
+    QPainter painter;
+    painter.begin (&maskBitmap);
+    painter.setPen (Qt::color1)/*opaque*/;
+    painter.setBrush (Qt::color1/*opaque*/);
+
+    if (m_type == kpSelection::Ellipse)
+        painter.drawEllipse (0, 0, m_rect.width (), m_rect.height ());
+    else if (m_type == kpSelection::Points)
+    {
+        QPointArray points = m_points;
+        points.detach ();
+        points.translate (-m_rect.x (), -m_rect.y ());
+
+        painter.drawPolygon (points, false/*even-odd algo*/);
+    }
+
+    painter.end ();
+
+
+    return maskBitmap;
+}
+
 
 // public
 QPoint kpSelection::topLeft () const
@@ -449,6 +503,8 @@ bool kpSelection::contains (const QPoint &point) const
     case kpSelection::Ellipse:
         return QRegion (m_rect, QRegion::Ellipse).contains (point);
     case kpSelection::Points:
+        // TODO: make this always include the border
+        //       (draw up a rect sel in this mode to see what I mean)
         return QRegion (m_points, false/*even-odd algo*/).contains (point);
     default:
         return false;

@@ -130,7 +130,6 @@ public:
     kpSelection *selection () const;
     void setSelection (const kpSelection &selection);
 
-    QBitmap selectionGetMask () const;
     QPixmap getSelectedPixmap (const QBitmap &maskBitmap = QBitmap ()) const;
 
     bool selectionPullFromDocument (const kpColor &backgroundColor);

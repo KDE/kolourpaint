@@ -8,6 +8,7 @@ libkolourpainttools_la_SOURCES = kptool.cpp kptoolairspray.cpp \
     kptoolbrush.cpp kptoolclear.cpp \
     kptoolcolorpicker.cpp kptoolcolorwasher.cpp \
     kptoolconverttograyscale.cpp kptoolconverttoblackandwhite.cpp \
+    kptoolcrop.cpp \
     kptoolcurve.cpp \
     kptoolellipse.cpp \
     kptoolellipticalselection.cpp kptooleraser.cpp \

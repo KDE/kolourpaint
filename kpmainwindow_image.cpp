@@ -49,6 +49,7 @@
 #include <kptoolclear.h>
 #include <kptoolconverttograyscale.h>
 #include <kptoolconverttoblackandwhite.h>
+#include <kptoolcrop.h>
 #include <kptoolflip.h>
 #include <kptoolinvertcolors.h>
 #include <kptoolresizescale.h>
@@ -345,32 +346,7 @@ void kpMainWindow::slotCrop ()
         return;
     }
 
-    kpSelection *sel = m_document->selection ();
-
-
-    KMacroCommand *macroCmd = new KMacroCommand (i18n ("Crop Outside the Selection"));
-
-    macroCmd->addCommand (
-        new kpToolResizeScaleCommand (
-            false/*act on doc, not sel*/,
-            sel->width (), sel->height (),
-            kpToolResizeScaleCommand::Resize,
-            this));
-
-    macroCmd->addCommand (
-        new kpToolClearCommand (
-            false/*act on doc, not sel*/,
-            this));
-
-    kpToolSelectionMoveCommand *moveCmd =
-        new kpToolSelectionMoveCommand (
-            QString::null/*uninteresting child of macro cmd*/,
-            this);
-    moveCmd->moveTo (QPoint (0, 0), true/*move on exec, not now*/);
-    moveCmd->finalize ();
-    macroCmd->addCommand (moveCmd);
-
-    addImageOrSelectionCommand (macroCmd);
+    addImageOrSelectionCommand (new kpToolCropCommand (this));
 }
 
 // private slot

@@ -752,63 +752,6 @@ void kpDocument::setSelection (const kpSelection &selection)
 }
 
 // public
-QBitmap kpDocument::selectionGetMask () const
-{
-    kpSelection *sel = selection ();
-
-    // must have a selection region
-    if (!sel)
-    {
-        kdError () << "kpDocument::selectionGetMask() no sel region" << endl;
-        return QBitmap ();
-    }
-
-    // easy if we already have it :)
-    if (sel->pixmap ())
-        return kpPixmapFX::getNonNullMask (*sel->pixmap ());
-
-
-    const QRect boundingRect = sel->boundingRect ();
-    if (!boundingRect.isValid ())
-    {
-        kdError () << "kpDocument::selectionGetMask() boundingRect invalid" << endl;
-        return QBitmap ();
-    }
-
-
-    QBitmap maskBitmap (boundingRect.width (), boundingRect.height ());
-    if (sel->type () == kpSelection::Rectangle)
-    {
-        maskBitmap.fill (Qt::color1/*opaque*/);
-        return maskBitmap;
-    }
-
-
-    maskBitmap.fill (Qt::color0/*transparent*/);
-
-    QPainter painter;
-    painter.begin (&maskBitmap);
-    painter.setPen (Qt::color1)/*opaque*/;
-    painter.setBrush (Qt::color1/*opaque*/);
-
-    if (sel->type () == kpSelection::Ellipse)
-        painter.drawEllipse (0, 0, boundingRect.width (), boundingRect.height ());
-    else if (sel->type () == kpSelection::Points)
-    {
-        QPointArray points = sel->points ();
-        points.detach ();
-        points.translate (-boundingRect.x (), -boundingRect.y ());
-
-        painter.drawPolygon (points, false/*even-odd algo*/);
-    }
-
-    painter.end ();
-
-
-    return maskBitmap;
-}
-
-// public
 QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
 {
     kpSelection *sel = selection ();
@@ -834,10 +777,10 @@ QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
 
 
     QBitmap maskBitmap = maskBitmap_;
-    if (sel->type () != kpSelection::Rectangle &&
-        maskBitmap.isNull ())
+    if (maskBitmap.isNull () &&
+        !sel->isRectangular ())
     {
-        maskBitmap = selectionGetMask ();
+        maskBitmap = sel->maskForOwnType ();
 
         if (maskBitmap.isNull ())
         {
@@ -902,10 +845,7 @@ bool kpDocument::selectionPullFromDocument (const kpColor &backgroundColor)
     // Figure out mask for non-rectangular selections
     //
 
-    QBitmap maskBitmap;
-
-    if (sel->type () == kpSelection::Ellipse || sel->type () == kpSelection::Points)
-        maskBitmap = selectionGetMask ();
+    QBitmap maskBitmap = sel->maskForOwnType (true/*return null bitmap for rectangular*/);
 
 
     //
