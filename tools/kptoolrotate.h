@@ -89,6 +89,7 @@ public:
     virtual ~kpToolRotateDialog ();
 
 private:
+    static int s_lastWidth, s_lastHeight;
     static bool s_lastIsClockwise;
     static int s_lastAngleRadioButtonID;
     static int s_lastAngleCustom;

@@ -220,6 +220,11 @@ void kpToolRotateCommand::unexecute ()
  * kpToolRotateDialog
  */
 
+
+// private static
+int kpToolRotateDialog::s_lastWidth = -1,
+    kpToolRotateDialog::s_lastHeight = -1;
+
 // private static
 bool kpToolRotateDialog::s_lastIsClockwise = true;
 int kpToolRotateDialog::s_lastAngleRadioButtonID = 3;
@@ -242,12 +247,17 @@ kpToolRotateDialog::kpToolRotateDialog (bool actOnSelection,
     createAngleGroupBox ();
 
 
+    if (s_lastWidth > 0 && s_lastHeight > 0)
+        resize (s_lastWidth, s_lastHeight);
+
+
     slotAngleCustomRadioButtonToggled (m_angleCustomRadioButton->isChecked ());
     slotUpdate ();
 }
 
 kpToolRotateDialog::~kpToolRotateDialog ()
 {
+    s_lastWidth = width (), s_lastHeight = height ();
 }
 
 
