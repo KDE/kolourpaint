@@ -72,7 +72,8 @@ int main (int argc, char *argv [])
     aboutData.setLicenseText (kpLicenseText);
 
     aboutData.addAuthor ("Clarence Dang", I18N_NOOP ("Maintainer"), "dang@kde.org");
-    aboutData.addAuthor ("Thurston Dang", I18N_NOOP ("Chief Investigator"));
+    aboutData.addAuthor ("Thurston Dang", I18N_NOOP ("Chief Investigator"),
+                         "thurston_dang@users.sourceforge.net");
     aboutData.addAuthor ("Kristof Borrey", I18N_NOOP ("Icons"), "borrey@kde.org");
 
     aboutData.addCredit ("Waldo Bastian");
