@@ -44,6 +44,7 @@
 
 class QPoint;
 class QRect;
+class QTimer;
 
 class kpMainWindow;
 class kpSelection;
