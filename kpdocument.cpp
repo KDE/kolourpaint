@@ -109,6 +109,8 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
     QString tempFile;
     if (KIO::NetAccess::download (url, tempFile, m_mainWindow))
     {
+        // sync: remember to "KIO::NetAccess::removeTempFile (tempFile)" in all exit paths
+
         QString mimetype = KImageIO::mimeType (tempFile);
 
     #if DEBUG_KPDOCUMENT
@@ -123,6 +125,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
             KMessageBox::sorry (m_mainWindow,
                                 i18n ("Could not open \"%1\" - unknown mimetype.")
                                     .arg (kpDocument::prettyFilenameForURL (url)));
+            KIO::NetAccess::removeTempFile (tempFile);    
             return false;
         }
 
@@ -135,6 +138,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
                                 i18n ("Could not open \"%1\" - unsupported image format \"%2\".")
                                     .arg (kpDocument::prettyFilenameForURL (url))
                                     .arg (mimetype));
+            KIO::NetAccess::removeTempFile (tempFile);    
             return false;
         }
     #endif
@@ -147,6 +151,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
                                       "The file may be corrupt.")
                                     .arg (kpDocument::prettyFilenameForURL (url)));
             delete newPixmap;
+            KIO::NetAccess::removeTempFile (tempFile);    
             return false;
         }
 
