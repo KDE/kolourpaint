@@ -284,10 +284,14 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
 
     if (m_startPoint != KP_INVALID_POINT)
     {
-        emit endedDraw (((m_type & Right) ? m_currentPoint.x () - m_startPoint.x () : 0),
-                        ((m_type & Bottom) ? m_currentPoint.y () - m_startPoint.y () : 0));
+        const int dx = m_currentPoint.x () - m_startPoint.x (),
+                  dy = m_currentPoint.y () - m_startPoint.y ();
+
         m_currentPoint = KP_INVALID_POINT;
         m_startPoint = KP_INVALID_POINT;
+
+        emit endedDraw ((m_type & Right) ? dx : 0,
+                        (m_type & Bottom) ? dy : 0);
     }
 
     if ((e->stateAfter () & Qt::MouseButtonMask) == 0)
@@ -746,6 +750,8 @@ void kpViewScrollableContainer::slotGripEndedDraw (int viewDX, int viewDY)
     if (!m_view)
         return;
 
+    const QSize newSize = newDocSize (viewDX, viewDY);
+
     m_haveMovedFromOriginalDocSize = false;
 
     // must erase lines before view size changes
@@ -753,7 +759,7 @@ void kpViewScrollableContainer::slotGripEndedDraw (int viewDX, int viewDY)
 
     calculateDocResizingGrip ();
 
-    emit endedDocResize (newDocSize (viewDX, viewDY));
+    emit endedDocResize (newSize);
 
     endDragScroll ();
 }
