@@ -32,6 +32,8 @@
 #include <kpcoloreffect.h>
 
 
+class QLabel;
+
 class KComboBox;
 class KIntNumInput;
 
@@ -48,22 +50,24 @@ public:
         RGB = Red | Green | Blue
     };
 
+    // <brightness>, <contrast> & <gamma> are from -50 to 50
+
     kpEffectBalanceCommand (int channels,
-                            int contrast, int brightness, int gamma,
+                            int brightness, int contrast, int gamma,
                             bool actOnSelection,
                             kpMainWindow *mainWindow);
     virtual ~kpEffectBalanceCommand ();
 
     static QPixmap applyColorEffect (const QPixmap &pixmap,
                                      int channels,
-                                     int contrast, int brightness, int gamma);
+                                     int brightness, int contrast, int gamma);
 
 protected:
     virtual QPixmap applyColorEffect (const QPixmap &pixmap);
 
 protected:
     int m_channels;
-    int m_contrast, m_brightness, m_gamma;
+    int m_brightness, m_contrast, m_gamma;
 };
 
 
@@ -87,21 +91,24 @@ public:
 protected:
     int channels () const;
 
-    int contrast () const;
     int brightness () const;
+    int contrast () const;
     int gamma () const;
 
 protected slots:
-    void resetContrast ();
+    void recalculateGammaLabel ();
+
     void resetBrightness ();
+    void resetContrast ();
     void resetGamma ();
 
     void resetAll ();
 
 protected:
-    KIntNumInput *m_contrastInput,
-                 *m_brightnessInput,
+    KIntNumInput *m_brightnessInput,
+                 *m_contrastInput,
                  *m_gammaInput;
+    QLabel *m_gammaLabel;
     KComboBox *m_channelsComboBox;
 };
 

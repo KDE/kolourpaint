@@ -29,6 +29,7 @@
 
 #include <kptoolpreviewdialog.h>
 
+#include <qapplication.h>
 #include <qlayout.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
@@ -179,7 +180,7 @@ void kpToolPreviewDialog::createPreviewGroupBox ()
     QPushButton *updatePushButton = new QPushButton (i18n ("&Update"),
                                                      m_previewGroupBox);
     connect (updatePushButton, SIGNAL (clicked ()),
-             this, SLOT (slotUpdate ()));
+             this, SLOT (slotUpdateWithWaitCursor ()));
 
 
     QVBoxLayout *previewLayout = new QVBoxLayout (m_previewGroupBox,
@@ -363,6 +364,8 @@ void kpToolPreviewDialog::updatePreview ()
                                            1,  // min
                                            m_previewPixmapLabel->height ());  // max
 
+        // TODO: Some effects work directly on QImage; so could cache the
+        //       QImage so that transformPixmap() is faster
         QPixmap transformedShrunkenDocumentPixmap =
             transformPixmap (m_shrunkenDocumentPixmap, targetWidth, targetHeight);
 
@@ -419,6 +422,21 @@ void kpToolPreviewDialog::slotUpdate ()
 #endif
     updateDimensions ();
     updatePreview ();
+}
+
+// protected slot virtual
+void kpToolPreviewDialog::slotUpdateWithWaitCursor ()
+{
+#if DEBUG_KP_TOOL_PREVIEW_DIALOG
+    kdDebug () << "kpToolPreviewDialog::slotUpdateWithWaitCursor()"
+               << endl;
+#endif
+
+    QApplication::setOverrideCursor (Qt::waitCursor);
+
+    slotUpdate ();
+
+    QApplication::restoreOverrideCursor ();
 }
 
 

@@ -101,6 +101,8 @@ protected slots:
     // and the Dimensions & Preview need to be updated
     virtual void slotUpdate ();
 
+    virtual void slotUpdateWithWaitCursor ();
+
 protected:
     QString m_actionName;
     bool m_actOnSelection;

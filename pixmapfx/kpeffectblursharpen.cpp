@@ -139,10 +139,9 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
 
 
     connect (m_amountInput, SIGNAL (valueChanged (int)),
-             this, SIGNAL (settingsChanged ()));
+             this, SIGNAL (settingsChangedDelayed ()));
 
-
-    connect (this, SIGNAL (settingsChanged ()),
+    connect (m_amountInput, SIGNAL (valueChanged (int)),
              this, SLOT (slotUpdateTypeLabel ()));
 }
 

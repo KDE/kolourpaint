@@ -141,8 +141,11 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
     lay->addMultiCellWidget (m_enableCheckBox, 0, 0, 0, 1, Qt::AlignCenter);
 
 
+    // (settingsChangedDelayed() instead of settingsChanged() so that the
+    //  user can quickly press OK to apply effect to document directly and
+    //  not have to wait for the also slow preview)
     connect (m_enableCheckBox, SIGNAL (toggled (bool)),
-             this, SIGNAL (settingsChanged ()));
+             this, SIGNAL (settingsChangedDelayed ()));
 }
 
 kpEffectEmbossWidget::~kpEffectEmbossWidget ()

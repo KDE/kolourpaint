@@ -34,6 +34,7 @@
 #include <qhbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qtimer.h>
 
 #include <kcombobox.h>
 #include <kdebug.h>
@@ -51,6 +52,8 @@
 
 // protected static
 int kpEffectsDialog::s_lastEffectSelected = 0;
+int kpEffectsDialog::s_lastWidth = 640;
+int kpEffectsDialog::s_lastHeight = 620;
 
 
 kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
@@ -62,6 +65,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
                            actOnSelection,
                            parent,
                            name),
+      m_delayedUpdateTimer (new QTimer (this)),
       m_effectsComboBox (0),
       m_settingsGroupBox (0),
       m_settingsLayout (0),
@@ -75,6 +79,10 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
         setCaption (i18n ("More Image Effects (Selection)"));
     else
         setCaption (i18n ("More Image Effects"));
+
+
+    connect (m_delayedUpdateTimer, SIGNAL (timeout ()),
+             this, SLOT (slotUpdateWithWaitCursor ()));
 
 
     QHBox *effectContainer = new QHBox (mainWidget ());
@@ -111,10 +119,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     slotEffectSelected (s_lastEffectSelected);
 
 
-    // TODO: actually work
-    setMinimumSize (500, 480);
-
-    resize (640, 620);
+    resize (s_lastWidth, s_lastHeight);
 
 
 #if DEBUG_KP_EFFECTS_DIALOG
@@ -125,6 +130,8 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 
 kpEffectsDialog::~kpEffectsDialog ()
 {
+    s_lastWidth = width ();
+    s_lastHeight = height ();
 }
 
 
@@ -227,25 +234,120 @@ void kpEffectsDialog::slotEffectSelected (int which)
         m_settingsGroupBox->setTitle (m_colorEffectWidget->caption ());
 
 
+        // Don't resize the preview when showing the widget:
+        // TODO: actually work
+
         QSize previewGroupBoxMinSize = m_previewGroupBox->minimumSize ();
         QSize previewGroupBoxMaxSize = m_previewGroupBox->maximumSize ();
-        // TODO: actually work
-        m_previewGroupBox->setFixedSize (m_previewGroupBox->size ());
+        QLayout::ResizeMode previewGroupBoxResizeMode =
+            m_previewGroupBox->layout () ?
+                m_previewGroupBox->layout ()->resizeMode () :
+                QLayout::Auto;
+    #if DEBUG_KP_EFFECTS_DIALOG
+        kdDebug () << "\tpreviewGroupBox: minSize=" << previewGroupBoxMinSize
+                   << " maxSize=" << previewGroupBoxMaxSize
+                   << " size=" << m_previewGroupBox->size ()
+                   << " layout=" << m_previewGroupBox->layout ()
+                   << " resizeMode=" << previewGroupBoxResizeMode
+                   << endl;
+    #endif
 
+        if (m_previewGroupBox->layout ())
+            m_previewGroupBox->layout ()->setResizeMode (QLayout::FreeResize);
+    #if DEBUG_KP_EFFECTS_DIALOG
+        kdDebug () << "\tafter set resizeMode, previewGroupBox.size="
+                   << m_previewGroupBox->size () << endl;
+    #endif
+        m_previewGroupBox->setFixedSize (m_previewGroupBox->size ());
+    #if DEBUG_KP_EFFECTS_DIALOG
+        kdDebug () << "\tafter set fixedSize, previewGroupBox.size="
+                   << m_previewGroupBox->size () << endl;
+    #endif
+
+        // Show widget
         m_settingsLayout->addWidget (m_colorEffectWidget);
+    #if DEBUG_KP_EFFECTS_DIALOG
+        kdDebug () << "\tafter addWidget, previewGroupBox.size="
+                   << m_previewGroupBox->size () << endl;
+    #endif
         m_colorEffectWidget->show ();
+    #if DEBUG_KP_EFFECTS_DIALOG
+        kdDebug () << "\tafter addWidget show, previewGroupBox.size="
+                   << m_previewGroupBox->size () << endl;
+    #endif
 
         m_previewGroupBox->setMinimumSize (previewGroupBoxMinSize);
         m_previewGroupBox->setMaximumSize (previewGroupBoxMaxSize);
+    #if DEBUG_KP_EFFECTS_DIALOG
+        kdDebug () << "\tafter set fixedSize, previewGroupBox.size="
+                   << m_previewGroupBox->size () << endl;
+    #endif
+        if (m_previewGroupBox->layout ())
+            m_previewGroupBox->layout ()->setResizeMode (previewGroupBoxResizeMode);
+    #if DEBUG_KP_EFFECTS_DIALOG
+        kdDebug () << "\tafter restore resizeMode, previewGroupBox.size="
+                   << m_previewGroupBox->size () << endl;
+    #endif
 
 
-        connect (m_colorEffectWidget, SIGNAL (settingsChanged ()),
+        connect (m_colorEffectWidget, SIGNAL (settingsChangedNoWaitCursor ()),
                  this, SLOT (slotUpdate ()));
-        slotUpdate ();
+        connect (m_colorEffectWidget, SIGNAL (settingsChanged ()),
+                 this, SLOT (slotUpdateWithWaitCursor ()));
+        connect (m_colorEffectWidget, SIGNAL (settingsChangedDelayed ()),
+                 this, SLOT (slotDelayedUpdate ()));
+        slotUpdateWithWaitCursor ();
+    #if DEBUG_KP_EFFECTS_DIALOG
+        kdDebug () << "\tafter slotUpdateWithWaitCursor, previewGroupBox.size="
+                   << m_previewGroupBox->size () << endl;
+    #endif
 
 
         s_lastEffectSelected = which;
     }
+}
+
+
+// protected slot virtual [base kpToolPreviewDialog]
+void kpEffectsDialog::slotUpdate ()
+{
+#if DEBUG_KP_EFFECTS_DIALOG
+    kdDebug () << "kpEffectsDialog::slotUpdate()"
+               << " timerActive=" << m_delayedUpdateTimer->isActive ()
+               << endl;
+#endif
+
+    m_delayedUpdateTimer->stop ();
+
+    kpToolPreviewDialog::slotUpdate ();
+}
+
+// protected slot virtual [base kpToolPreviewDialog]
+void kpEffectsDialog::slotUpdateWithWaitCursor ()
+{
+#if DEBUG_KP_EFFECTS_DIALOG
+    kdDebug () << "kpEffectsDialog::slotUpdateWithWaitCursor()"
+               << " timerActive=" << m_delayedUpdateTimer->isActive ()
+               << endl;
+#endif
+
+    m_delayedUpdateTimer->stop ();
+
+    kpToolPreviewDialog::slotUpdateWithWaitCursor ();
+}
+
+
+// protected slot
+void kpEffectsDialog::slotDelayedUpdate ()
+{
+#if DEBUG_KP_EFFECTS_DIALOG
+    kdDebug () << "kpEffectsDialog::slotDelayedUpdate()"
+               << " timerActive=" << m_delayedUpdateTimer->isActive ()
+               << endl;
+#endif
+    m_delayedUpdateTimer->stop ();
+
+    m_delayedUpdateTimer->start (400/*ms*/, true/*single shot*/);
 }
 
 

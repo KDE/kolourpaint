@@ -35,6 +35,7 @@
 
 class QGroupBox;
 class QStringList;
+class QTimer;
 class QVBoxLayout;
 
 class KComboBox;
@@ -65,8 +66,17 @@ protected:
 protected slots:
     void slotEffectSelected (int which);
 
+    virtual void slotUpdate ();
+    virtual void slotUpdateWithWaitCursor ();
+
+    void slotDelayedUpdate ();
+
 protected:
     static int s_lastEffectSelected;
+
+    static int s_lastWidth, s_lastHeight;
+
+    QTimer *m_delayedUpdateTimer;
 
     KComboBox *m_effectsComboBox;
     QGroupBox *m_settingsGroupBox;
