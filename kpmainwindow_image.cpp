@@ -301,24 +301,24 @@ void kpMainWindow::slotResizeScale ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpToolResizeScaleDialog *dialog = new kpToolResizeScaleDialog ((bool) m_document->selection (),
-                                                                   this);
+    kpToolResizeScaleDialog dialog ((bool) m_document->selection (),
+                                    this);
 
-    if (dialog->exec () && !dialog->isNoOp ())
+    if (dialog.exec () && !dialog.isNoOp ())
     {
         addImageOrSelectionCommand (
             new kpToolResizeScaleCommand (
                 (bool) m_document->selection (),
-                dialog->imageWidth (), dialog->imageHeight (),
-                dialog->type (),
+                dialog.imageWidth (), dialog.imageHeight (),
+                dialog.type (),
                 this));
 
         // Resized document?
-        if (!m_document->selection () && dialog->type () == kpToolResizeScaleCommand::Resize)
+        if (!m_document->selection () && dialog.type () == kpToolResizeScaleCommand::Resize)
         {
         #if DEBUG_KP_MAIN_WINDOW
             kdDebug () << "\tCONFIG: saving Last Doc Size = "
-                       << QSize (dialog->imageWidth (), dialog->imageHeight ())
+                       << QSize (dialog.imageWidth (), dialog.imageHeight ())
                        << endl;
         #endif
 
@@ -326,7 +326,7 @@ void kpMainWindow::slotResizeScale ()
             KConfigBase *cfg = cfgGroupSaver.config ();
 
             cfg->writeEntry (kpSettingLastDocSize,
-                             QSize (dialog->imageWidth (), dialog->imageHeight ()));
+                             QSize (dialog.imageWidth (), dialog.imageHeight ()));
             cfg->sync ();
         }
     }
@@ -364,13 +364,13 @@ void kpMainWindow::slotFlip ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpToolFlipDialog *dialog = new kpToolFlipDialog ((bool) m_document->selection (), this);
+    kpToolFlipDialog dialog ((bool) m_document->selection (), this);
 
-    if (dialog->exec () && !dialog->isNoOp ())
+    if (dialog.exec () && !dialog.isNoOp ())
     {
         addImageOrSelectionCommand (
             new kpToolFlipCommand (m_document->selection (),
-                                   dialog->getHorizontalFlip (), dialog->getVerticalFlip (),
+                                   dialog.getHorizontalFlip (), dialog.getVerticalFlip (),
                                    this));
     }
 }
@@ -381,13 +381,13 @@ void kpMainWindow::slotRotate ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpToolRotateDialog *dialog = new kpToolRotateDialog ((bool) m_document->selection (), this);
+    kpToolRotateDialog dialog ((bool) m_document->selection (), this);
 
-    if (dialog->exec () && !dialog->isNoOp ())
+    if (dialog.exec () && !dialog.isNoOp ())
     {
         addImageOrSelectionCommand (
             new kpToolRotateCommand (m_document->selection (),
-                                     dialog->angle (),
+                                     dialog.angle (),
                                      this));
     }
 }
@@ -398,13 +398,13 @@ void kpMainWindow::slotSkew ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpToolSkewDialog *dialog = new kpToolSkewDialog ((bool) m_document->selection (), this);
+    kpToolSkewDialog dialog ((bool) m_document->selection (), this);
 
-    if (dialog->exec () && !dialog->isNoOp ())
+    if (dialog.exec () && !dialog.isNoOp ())
     {
         addImageOrSelectionCommand (
             new kpToolSkewCommand (m_document->selection (),
-                                   dialog->horizontalAngle (), dialog->verticalAngle (),
+                                   dialog.horizontalAngle (), dialog.verticalAngle (),
                                    this));
     }
 }
