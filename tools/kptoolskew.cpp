@@ -210,6 +210,10 @@ void kpToolSkewCommand::unexecute ()
 
 
 // private static
+int kpToolSkewDialog::s_lastWidth = -1,
+    kpToolSkewDialog::s_lastHeight = -1;
+
+// private static
 int kpToolSkewDialog::s_lastHorizontalAngle = 0,
     kpToolSkewDialog::s_lastVerticalAngle = 0;
 
@@ -223,11 +227,20 @@ kpToolSkewDialog::kpToolSkewDialog (bool actOnSelection, kpMainWindow *parent,
     // Too confusing - disable for now
     s_lastHorizontalAngle = s_lastVerticalAngle = 0;
 
+
     createAngleGroupBox ();
+
+
+    if (s_lastWidth > 0 && s_lastHeight > 0)
+        resize (s_lastWidth, s_lastHeight);
+
+
+    slotUpdate ();
 }
 
 kpToolSkewDialog::~kpToolSkewDialog ()
 {
+    s_lastWidth = width (), s_lastHeight = height ();
 }
 
 
@@ -282,8 +295,6 @@ void kpToolSkewDialog::createAngleGroupBox ()
              this, SLOT (slotUpdate ()));
     connect (m_verticalSkewInput, SIGNAL (valueChanged (int)),
              this, SLOT (slotUpdate ()));
-
-    slotUpdate ();
 }
 
 

@@ -83,6 +83,7 @@ public:
     virtual ~kpToolSkewDialog ();
 
 private:
+    static int s_lastWidth, s_lastHeight;
     static int s_lastHorizontalAngle, s_lastVerticalAngle;
 
     void createAngleGroupBox ();
