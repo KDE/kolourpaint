@@ -38,8 +38,6 @@
 #include <kpview.h>
 
 
-#define TOOL_TEXT_READY 0
-
 // private
 void kpMainWindow::setupTextToolBarActions ()
 {
@@ -119,10 +117,8 @@ void kpMainWindow::slotTextFontFamilyChanged ()
     if (!m_isFullyConstructed)
         return;
 
-#if TOOL_TEXT_READY
     if (m_toolText && m_toolText->hasBegun ())
         m_toolText->slotFontFamilyChanged (m_actionTextFontFamily->font ());
-#endif
 
     // Since editable KSelectAction's steal focus from view, switch back to mainView
     // TODO: back to the last view
@@ -149,10 +145,8 @@ void kpMainWindow::slotTextFontSizeChanged ()
     if (!m_isFullyConstructed)
         return;
 
-#if TOOL_TEXT_READY
     if (m_toolText && m_toolText->hasBegun ())
         m_toolText->slotFontSizeChanged (m_actionTextFontSize->fontSize ());
-#endif
 
     // Since editable KSelectAction's steal focus from view, switch back to mainView
     // TODO: back to the last view
@@ -179,10 +173,8 @@ void kpMainWindow::slotTextBoldChanged ()
     if (!m_isFullyConstructed)
         return;
 
-#if TOOL_TEXT_READY
     if (m_toolText && m_toolText->hasBegun ())
         m_toolText->slotBoldChanged (m_actionTextBold->isChecked ());
-#endif
 
     KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupText);
     KConfigBase *cfg = cfgGroupSaver.config ();
@@ -204,10 +196,8 @@ void kpMainWindow::slotTextItalicChanged ()
     if (!m_isFullyConstructed)
         return;
 
-#if TOOL_TEXT_READY
     if (m_toolText && m_toolText->hasBegun ())
         m_toolText->slotItalicChanged (m_actionTextItalic->isChecked ());
-#endif
 
     KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupText);
     KConfigBase *cfg = cfgGroupSaver.config ();
@@ -229,10 +219,8 @@ void kpMainWindow::slotTextUnderlineChanged ()
     if (!m_isFullyConstructed)
         return;
 
-#if TOOL_TEXT_READY
     if (m_toolText && m_toolText->hasBegun ())
         m_toolText->slotUnderlineChanged (m_actionTextUnderline->isChecked ());
-#endif
 
     KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupText);
     KConfigBase *cfg = cfgGroupSaver.config ();
@@ -254,10 +242,8 @@ void kpMainWindow::slotTextStrikeThruChanged ()
     if (!m_isFullyConstructed)
         return;
 
-#if TOOL_TEXT_READY
     if (m_toolText && m_toolText->hasBegun ())
         m_toolText->slotStrikeThruChanged (m_actionTextStrikeThru->isChecked ());
-#endif
 
     KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupText);
     KConfigBase *cfg = cfgGroupSaver.config ();

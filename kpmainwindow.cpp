@@ -29,6 +29,7 @@
 #include <qdragobject.h>
 #include <qpainter.h>
 #include <qscrollview.h>
+#include <qtimer.h>
 
 #include <kactionclasses.h>
 #include <kapplication.h>
@@ -41,6 +42,7 @@
 #include <kurldrag.h>
 
 #include <kpcolortoolbar.h>
+#include <kpcommandhistory.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kppixmapfx.h>
@@ -53,37 +55,114 @@
 #include <kpview.h>
 #include <kpviewmanager.h>
 
+#if DEBUG_KP_MAIN_WINDOW
+    #include <qdatetime.h>
+#endif
+
 
 kpMainWindow::kpMainWindow ()
-    : KMainWindow (0/*parent*/, "mainWindow")
+    : KMainWindow (0/*parent*/, "mainWindow"),
+      m_isFullyConstructed (false)
 {
-    initGUI ();
+    init ();
     open (KURL (), true/*create an empty doc*/);
 
-    m_alive = true;
+    m_isFullyConstructed = true;
 }
 
 kpMainWindow::kpMainWindow (const KURL &url)
-    : KMainWindow (0/*parent*/, "mainWindow")
+    : KMainWindow (0/*parent*/, "mainWindow"),
+      m_isFullyConstructed (false)
 {
-    initGUI ();
+    init ();
     open (url, true/*create an empty doc with the same url if url !exist*/);
-    
-    m_alive = true;
+
+    m_isFullyConstructed = true;
 }
 
 kpMainWindow::kpMainWindow (kpDocument *newDoc)
-    : KMainWindow (0/*parent*/, "mainWindow")
+    : KMainWindow (0/*parent*/, "mainWindow"),
+      m_isFullyConstructed (false)
 {
-    initGUI ();
+    init ();
     setDocument (newDoc);
 
-    m_alive = true;
+    m_isFullyConstructed = true;
+}
+
+
+// public
+double kpMainWindow::configColorSimilarity () const
+{
+    return m_configColorSimilarity;
+}
+
+// public
+void kpMainWindow::configSetColorSimilarity (double val)
+{
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    cfg->writeEntry (kpSettingColorSimilarity, m_configColorSimilarity = val);
+    cfg->sync ();
+}
+
+
+// private
+void kpMainWindow::readGeneralSettings ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tkpMainWindow(" << name () << ")::readGeneralSettings()" << endl;
+#endif
+
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    m_configFirstTime = cfg->readBoolEntry (kpSettingFirstTime, true);
+    m_configShowGrid = cfg->readBoolEntry (kpSettingShowGrid, false);
+    m_configShowPath = cfg->readBoolEntry (kpSettingShowPath, false);
+    m_configColorSimilarity = cfg->readDoubleNumEntry (kpSettingColorSimilarity, 0);
+
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\t\tGeneral Settings: firstTime=" << m_configFirstTime
+               << " showGrid=" << m_configShowGrid
+               << " showPath=" << m_configShowPath
+               << " colorSimilarity=" << m_configColorSimilarity
+               << endl;
+#endif
 }
 
 // private
-void kpMainWindow::initGUI ()
+void kpMainWindow::readThumbnailSettings ()
 {
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tkpMainWindow(" << name () << ")::readThumbnailSettings()" << endl;
+#endif
+
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupThumbnail);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    d->m_configThumbnailShown = cfg->readBoolEntry (kpSettingThumbnailShown, false);
+    d->m_configThumbnailGeometry = cfg->readRectEntry (kpSettingThumbnailGeometry);
+
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\t\tThumbnail Settings: shown=" << d->m_configThumbnailShown
+               << " geometry=" << d->m_configThumbnailGeometry
+               << endl;
+#endif
+}
+
+// private
+void kpMainWindow::init ()
+{
+    d = new kpMainWindowPrivate ();
+
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow(" << name () << ")::init()" << endl;
+    QTime totalTime; totalTime.start ();
+    QTime time; time.start ();
+#endif
+
     m_scrollView = 0;
     m_mainView = 0;
     m_thumbnail = 0;
@@ -101,27 +180,31 @@ void kpMainWindow::initGUI ()
 
     setMinimumSize (320, 260);
     setAcceptDrops (true);
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tTIME: little init = " << time.restart () << "msec" << endl;
+#endif
 
 
     //
-    // read config (TODO: clean config code, put in right place)
+    // read config
     //
 
-    KConfigGroupSaver configGroupSaver (kapp->config (), kpSettingsGroupGeneral);
-    m_configFirstTime = configGroupSaver.config ()->readBoolEntry (kpSettingFirstTime, true);
-    m_configShowGrid = configGroupSaver.config ()->readBoolEntry (kpSettingShowGrid, false);
-    m_configShowPath = configGroupSaver.config ()->readBoolEntry (kpSettingShowPath, false);
-    m_configDefaultOutputMimetype = configGroupSaver.config ()->readEntry (kpSettingDefaultOutputMimetype, "image/png");
-    if (m_configFirstTime)
-    {
-        configGroupSaver.config ()->writeEntry (kpSettingFirstTime, false);
-        configGroupSaver.config ()->sync ();
-    }
-    kdDebug () << "read config: firstTime=" << m_configFirstTime
-               << " showGrid=" << m_configShowGrid
-               << " showPath=" << m_configShowPath
-               << " outputMimeType=" << m_configDefaultOutputMimetype
-               << endl;
+    // KConfig::readEntry() does not actually reread from disk, hence doesn't
+    // realise what other processes have done e.g. Settings / Show Path
+    kapp->config ()->reparseConfiguration ();
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tTIME: reparseConfig = " << time.restart () << "msec" << endl;
+#endif
+
+    readGeneralSettings ();
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tTIME: readGeneralSettings = " << time.restart () << "msec" << endl;
+#endif
+
+    readThumbnailSettings ();
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tTIME: readThumbnailSettings = " << time.restart () << "msec" << endl;
+#endif
 
 
     //
@@ -129,8 +212,14 @@ void kpMainWindow::initGUI ()
     //
 
     setupActions ();
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tTIME: setupActions = " << time.restart () << "msec" << endl;
+#endif
 
     createGUI ();
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tTIME: createGUI = " << time.restart () << "msec" << endl;
+#endif
 
 
     //
@@ -138,11 +227,22 @@ void kpMainWindow::initGUI ()
     //
 
     m_colorToolBar = new kpColorToolBar (this, "Color Palette");
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tTIME: new kpColorToolBar = " << time.restart () << "msec" << endl;
+#endif
 
     setupTools ();
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tTIME: setupTools = " << time.restart () << "msec" << endl;
+#endif
 
     m_scrollView = new QScrollView (this, "scrollView", Qt::WStaticContents | Qt::WNoAutoErase);
+    connect (m_scrollView, SIGNAL (contentsMoving (int, int)),
+             this, SLOT (slotScrollViewAboutToScroll ()));
     setCentralWidget (m_scrollView);
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tTIME: m_scrollView = " << time.restart () << "msec" << endl;
+#endif
 
     statusBar ()->insertItem (QString::null, StatusBarItemDocInfo, 2/*stretch*/);
     statusBar ()->insertItem (QString::null, StatusBarItemShapeEndPoints, 1/*stretch*/);
@@ -153,27 +253,43 @@ void kpMainWindow::initGUI ()
     // set initial pos/size of GUI
     //
 
-    setAutoSaveSettings ("kpmainwindow", true);
+    setAutoSaveSettings ();
 
-    // put our non-XMLGUI toolbars in a sane place, the first time around
+    // Put our non-XMLGUI toolbars in a sane place, the first time around
+    // (have to do this _after_ setAutoSaveSettings as that applies default
+    //  (i.e. random) settings to the toolbars)
     if (m_configFirstTime)
     {
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\tfirstTime: positioning toolbars" << endl;
+    #endif
+
         m_toolToolBar->setBarPos (KToolBar::Left);
         m_colorToolBar->setBarPos (KToolBar::Bottom);
+
+        KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+        KConfigBase *cfg = cfgGroupSaver.config ();
+
+        cfg->writeEntry (kpSettingFirstTime, m_configFirstTime = false);
+        cfg->sync ();
     }
+
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tall done in " << totalTime.elapsed () << "msec" << endl;
+#endif
 }
 
 kpMainWindow::~kpMainWindow ()
 {
-    m_alive = false;
-
-    m_actionOpenRecent->saveEntries (kapp->config ());
+    m_isFullyConstructed = false;
 
     // delete document & views
     setDocument (0);
 
     delete m_commandHistory; m_commandHistory = 0;
     delete m_scrollView; m_scrollView = 0;
+
+    delete d; d = 0;
 }
 
 
@@ -216,6 +332,7 @@ void kpMainWindow::setupActions ()
     setupViewMenuActions ();
     setupImageMenuActions ();
     setupSettingsMenuActions ();
+    setupTextToolBarActions ();
 }
 
 // private
@@ -253,8 +370,17 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
                        << endl;
         }
 
-        enableToolsDocumentActions (false);
+        enableTextToolBarActions (false);
+    }
 
+    // Always disable the tools.
+    // If we decide to open a new document/mainView we want
+    // kpTool::begin() to be called again e.g. in case it sets the cursor.
+    // kpViewManager won't do this because we nuke it to avoid stale state.
+    enableToolsDocumentActions (false);
+
+    if (!newDoc)
+    {
         enableDocumentActions (false);
 
         m_actionReload->setEnabled (false);
@@ -319,12 +445,6 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
             kdError () << "kpMainWindow::setDocument() without scrollView" << endl;
         m_viewManager->registerView (m_mainView);
         m_mainView->show ();
-
-    #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tcreating thumbnail view" << endl;
-    #endif
-
-        slotShowThumbnail ();
 
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\thooking up document signals" << endl;
@@ -407,9 +527,37 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
                        << endl;
         }
 
+
+        // Hide the text toolbar - it will be shown by kpToolText::begin()
+        enableTextToolBarActions (false);
+
         enableToolsDocumentActions (true);
 
         enableDocumentActions (true);
+
+    // TODO: The thumbnail auto zoom doesn't work because it thinks its
+    //       width == 1 when !this->isShown().  So for consistency,
+    //       never create the thumbnail.
+    #if 0
+        if (d->m_configThumbnailShown)
+        {
+            if (isShown ())
+            {
+            #if DEBUG_KP_MAIN_WINDOW
+                kdDebug () << "\tcreating thumbnail immediately" << endl;
+            #endif
+                slotCreateThumbnail ();
+            }
+            // this' geometry is weird ATM
+            else
+            {
+            #if DEBUG_KP_MAIN_WINDOW
+                kdDebug () << "\tcreating thumbnail LATER" << endl;
+            #endif
+                QTimer::singleShot (0, this, SLOT (slotCreateThumbnail ()));
+            }
+        }
+    #endif
     }
 
 #if DEBUG_KP_MAIN_WINDOW
@@ -480,10 +628,27 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 }
 
 
-// protected virtual [base QWidget]
+// private slot
+void kpMainWindow::slotScrollViewAboutToScroll ()
+{
+    if (tool ())
+    {
+        // TODO: can tool() become 0 after the event loop?
+        QTimer::singleShot (0, tool (), SLOT (somethingBelowTheCursorChanged ()));
+    }
+}
+
+
+// private virtual [base QWidget]
 void kpMainWindow::moveEvent (QMoveEvent * /*e*/)
 {
-    notifyThumbnailGeometryChanged ();
+    if (m_thumbnail)
+    {
+        // Disabled because it lags too far behind the mainWindow
+        // m_thumbnail->move (m_thumbnail->pos () + (e->pos () - e->oldPos ()));
+
+        notifyThumbnailGeometryChanged ();
+    }
 }
 
 

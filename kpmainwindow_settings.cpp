@@ -33,6 +33,7 @@
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <kstdaction.h>
 
 #include <kpdefs.h>
@@ -44,22 +45,23 @@ void kpMainWindow::setupSettingsMenuActions ()
 {
     KActionCollection *ac = actionCollection ();
 
+
     // Settings/Toolbars |> %s
     setStandardToolBarMenuEnabled (true);
 
     // Settings/Show Statusbar
     createStandardStatusBarAction ();
 
+
     m_actionShowPath = new KToggleAction (i18n ("Sho&w Path"), 0,
-        this, SLOT (slotShowPath ()), ac, "settings_show_path");
+        this, SLOT (slotShowPathToggled ()), ac, "settings_show_path");
     m_actionShowPath->setChecked (m_configShowPath);
-    kdDebug () << "BLAH: m_configShowPath=" << m_configShowPath << " isCheck=" << m_actionShowPath->isChecked () << endl;
-    connect (m_actionShowPath, SIGNAL (toggled (bool)),
-             this, SLOT (slotActionShowPathToggled (bool)));
+
 
     m_actionKeyBindings = KStdAction::keyBindings (this, SLOT (slotKeyBindings ()), ac);
     m_actionConfigureToolbars = KStdAction::configureToolbars (this, SLOT (slotConfigureToolBars ()), ac);
     // m_actionConfigure = KStdAction::preferences (this, SLOT (slotConfigure ()), ac);
+
 
     enableSettingsMenuDocumentActions (false);
 }
@@ -68,28 +70,88 @@ void kpMainWindow::setupSettingsMenuActions ()
 void kpMainWindow::enableSettingsMenuDocumentActions (bool enable)
 {
     m_actionShowPath->setEnabled (enable);
+    m_actionShowPath->setChecked (enable && m_configShowPath);
 }
 
 
 // private slot
-void kpMainWindow::slotShowPath ()
+void kpMainWindow::slotShowPathToggled ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotShowPath ()" << endl;
+    kdDebug () << "kpMainWindow::slotShowPathToggled()" << endl;
 #endif
 
     m_configShowPath = m_actionShowPath->isChecked ();
+
     slotUpdateCaption ();
+
+
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    cfg->writeEntry (kpSettingShowPath, m_configShowPath);
+    cfg->sync ();
+}
+
+
+// private slot
+void kpMainWindow::slotKeyBindings ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotKeyBindings()" << endl;
+#endif
+
+    if (KKeyDialog::configure (actionCollection (), this))
+    {
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\tdialog accepted" << endl;
+    #endif
+        // TODO: PROPAGATE: thru mainWindow's and interprocess
+    }
+}
+
+
+// private slot
+void kpMainWindow::slotConfigureToolBars ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotConfigureToolBars()" << endl;
+#endif
+
+    //saveMainWindowSettings (kapp->config (), autoSaveGroup ());
+
+    KEditToolbar dialog (actionCollection (),
+                         QString::null/*default ui.rc file*/,
+                         true/*global resource*/,
+                         this/*parent*/);
+    // Clicking on OK after Apply brings up the dialog (below) again.
+    // Bug with KEditToolBar.
+    dialog.showButtonApply (false);
+    connect (&dialog, SIGNAL (newToolbarConfig ()),
+             this, SLOT (slotNewToolBarConfig ()));
+
+    dialog.exec ();
 }
 
 // private slot
-void kpMainWindow::slotActionShowPathToggled (bool on)
+void kpMainWindow::slotNewToolBarConfig ()
 {
-    m_configShowPath = on;
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotNewToolBarConfig()" << endl;
+#endif
 
-    KConfigGroupSaver configGroupSaver (kapp->config (), kpSettingsGroupGeneral);
-    configGroupSaver.config ()->writeEntry (kpSettingShowPath, m_configShowPath);
-    configGroupSaver.config ()->sync ();
+    // Wouldn't it be nice if createGUI () didn't nuke all the KToolBar's?
+    // (including my non-XMLGUI ones whose states take a _lot_ of effort to
+    //  restore).
+    // TODO: this message is probably unacceptable - so restore the state of
+    //       my toolbars instead.
+    KMessageBox::information (this,
+        i18n ("You have to restart KolourPaint for these changes to take effect."),
+        i18n ("Toolbar Settings Changed"),
+        QString::fromLatin1 ("ToolBarSettingsChanged"));
+
+    //createGUI();
+    //applyMainWindowSettings (kapp->config (), autoSaveGroup ());
 }
 
 
@@ -97,22 +159,4 @@ void kpMainWindow::slotActionShowPathToggled (bool on)
 void kpMainWindow::slotConfigure ()
 {
     // TODO
-}
-
-// private slot
-void kpMainWindow::slotKeyBindings ()
-{
-    // TODO: wrong - need propagate to other mainWindows
-    KKeyDialog::configure (actionCollection (), this);
-    actionCollection ()->readShortcutSettings ();
-}
-
-// private slot
-void kpMainWindow::slotConfigureToolBars ()
-{
-    // TODO: wrong
-    // TODO: parent
-    KEditToolbar dialog (actionCollection ());
-    if (dialog.exec ())
-        createGUI ();
 }

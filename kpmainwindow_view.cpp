@@ -52,6 +52,9 @@
 // private
 void kpMainWindow::setupViewMenuActions ()
 {
+    m_viewMenuDocumentActionsEnabled = false;
+
+
     KActionCollection *ac = actionCollection ();
 
     /*m_actionFullScreen = KStdAction::fullScreen (0, 0, ac);
@@ -82,21 +85,28 @@ void kpMainWindow::setupViewMenuActions ()
 
 
     m_actionShowGrid = new KToggleAction (i18n ("Show &Grid"), CTRL + Key_G,
-        this, SLOT (slotShowGrid ()), actionCollection (), "view_show_grid");
-    m_actionShowGrid->setChecked (m_configShowGrid);
-    connect (m_actionShowGrid, SIGNAL (toggled (bool)), this, SLOT (slotActionShowGridToggled (bool)));
+        this, SLOT (slotShowGridToggled ()), actionCollection (), "view_show_grid");
 
 
     m_actionShowThumbnail = new KToggleAction (i18n ("Show T&humbnail"), CTRL + Key_H,
-        this, SLOT (slotShowThumbnail ()), actionCollection (), "view_show_thumbnail");
+        this, SLOT (slotShowThumbnailToggled ()), actionCollection (), "view_show_thumbnail");
 
 
     enableViewMenuDocumentActions (false);
 }
 
 // private
+bool kpMainWindow::viewMenuDocumentActionsEnabled () const
+{
+    return m_viewMenuDocumentActionsEnabled;
+}
+
+// private
 void kpMainWindow::enableViewMenuDocumentActions (bool enable)
 {
+    m_viewMenuDocumentActionsEnabled = enable;
+
+
     m_actionActualSize->setEnabled (enable);
     /*m_actionFitToPage->setEnabled (enable);
     m_actionFitToWidth->setEnabled (enable);
@@ -107,7 +117,7 @@ void kpMainWindow::enableViewMenuDocumentActions (bool enable)
 
     m_actionZoom->setEnabled (enable);
 
-    m_actionShowGrid->setEnabled (enable);
+    actionShowGridUpdate ();
     m_actionShowThumbnail->setEnabled (enable);
 
     // TODO: for the time being, assume that we start at zoom 100%
@@ -118,6 +128,19 @@ void kpMainWindow::enableViewMenuDocumentActions (bool enable)
     // always be correct:
 
     zoomTo (100);
+}
+
+// private
+void kpMainWindow::actionShowGridUpdate ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::actionShowGridUpdate()" << endl;
+#endif
+    const bool enable = (viewMenuDocumentActionsEnabled () &&
+                         m_mainView && m_mainView->canShowGrid ());
+
+    m_actionShowGrid->setEnabled (enable);
+    m_actionShowGrid->setChecked (enable && m_configShowGrid);
 }
 
 
@@ -206,9 +229,7 @@ void kpMainWindow::zoomTo (int zoomLevel)
     m_actionZoom->setCurrentItem (index);
 
 
-    bool viewMenuDocumentActionsEnabled = m_actionShowThumbnail->isEnabled ();
-
-    if (viewMenuDocumentActionsEnabled)
+    if (viewMenuDocumentActionsEnabled ())
     {
         m_actionActualSize->setEnabled (zoomLevel != 100);
 
@@ -308,16 +329,8 @@ void kpMainWindow::zoomTo (int zoomLevel)
 
     if (m_mainView)
     {
-        m_actionShowGrid->setEnabled (m_mainView->canShowGrid ());
-        if (m_actionShowGrid->isEnabled ())
-        {
-            m_actionShowGrid->setChecked (m_configShowGrid);
-            slotShowGrid ();
-        }
-        else
-        {
-            m_actionShowGrid->setChecked (false);
-        }
+        actionShowGridUpdate ();
+        updateMainViewGrid ();
 
         // Since Zoom Level KSelectAction on ToolBar grabs focus after changing
         // Zoom, switch back to the Main View.
@@ -330,7 +343,7 @@ void kpMainWindow::zoomTo (int zoomLevel)
     if (tool ())
         tool ()->somethingBelowTheCursorChanged ();
 
-    
+
     // HACK: make sure all of Qt's update() calls trigger
     //       kpView::paintEvent() _now_ so that they can be queued by us
     //       (until kpViewManager::restoreQueueUpdates()) to reduce flicker
@@ -476,24 +489,31 @@ void kpMainWindow::slotZoom ()
 
 
 // private slot
-void kpMainWindow::slotShowGrid ()
+void kpMainWindow::slotShowGridToggled ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotShowGrid ()" << endl;
+    kdDebug () << "kpMainWindow::slotActionShowGridToggled()" << endl;
 #endif
 
-    m_configShowGrid = m_actionShowGrid->isChecked ();
-    m_mainView->showGrid (m_configShowGrid);
+    updateMainViewGrid ();
+
+
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    cfg->writeEntry (kpSettingShowGrid, m_configShowGrid = m_actionShowGrid->isChecked ());
+    cfg->sync ();
 }
 
-// private slot
-void kpMainWindow::slotActionShowGridToggled (bool on)
+// private
+void kpMainWindow::updateMainViewGrid ()
 {
-    m_configShowGrid = on;
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::updateMainViewGrid ()" << endl;
+#endif
 
-    KConfigGroupSaver configGroupSaver (kapp->config (), kpSettingsGroupGeneral);
-    configGroupSaver.config ()->writeEntry (kpSettingShowGrid, m_configShowGrid);
-    configGroupSaver.config ()->sync ();
+    if (m_mainView)
+        m_mainView->showGrid (m_actionShowGrid->isChecked ());
 }
 
 
@@ -516,22 +536,39 @@ QRect kpMainWindow::mapFromGlobal (const QRect &rect) const
 void kpMainWindow::slotDestroyThumbnailIfNotVisible (bool tnIsVisible)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "destroyThumbnailIfClosed(isVisible=" << tnIsVisible << ")" << endl;
+    kdDebug () << "slotDestroyThumbnailIfNotVisible(isVisible="
+               << tnIsVisible
+               << ")"
+               << endl;
 #endif
 
     if (!tnIsVisible)
     {
         // The thumbnail is probably still closing itself so don't
         // destroy it until after it's finished its work
-        QTimer::singleShot (0, this, SLOT (slotDestroyThumbnail ()));
+        QTimer::singleShot (0, this, SLOT (slotDestroyThumbnailInitatedByUser ()));
     }
 }
 
-// public slot
+// private slot
 void kpMainWindow::slotDestroyThumbnail ()
 {
     m_actionShowThumbnail->setChecked (false);
-    slotShowThumbnail ();
+    updateThumbnail ();
+}
+
+// private slot
+void kpMainWindow::slotDestroyThumbnailInitatedByUser ()
+{
+    m_actionShowThumbnail->setChecked (false);
+    slotShowThumbnailToggled ();
+}
+
+// private slot
+void kpMainWindow::slotCreateThumbnail ()
+{
+    m_actionShowThumbnail->setChecked (true);
+    updateThumbnail ();
 }
 
 // public
@@ -541,31 +578,73 @@ void kpMainWindow::notifyThumbnailGeometryChanged ()
     kdDebug () << "kpMainWindow::notifyThumbnailGeometryChanged()" << endl;
 #endif
 
-    if (m_thumbnail)
+    if (!d->m_timer)
     {
-        QRect rect (m_thumbnail->x (), m_thumbnail->y (),
-                    m_thumbnail->width (), m_thumbnail->height ());
-
-    #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tsaving geometry "
-                   << mapFromGlobal (rect)
-                   << endl;
-    #endif
-
-        KConfigGroupSaver configGroupSaver (kapp->config (), kpSettingsGroupGeneral);
-        configGroupSaver.config ()->writeEntry ("Thumbnail Geometry",
-                                                mapFromGlobal (rect));
-        configGroupSaver.config ()->sync ();
+        d->m_timer = new QTimer (this);
+        connect (d->m_timer, SIGNAL (timeout ()),
+                 this, SLOT (slotSaveThumbnailGeometry ()));
     }
+
+    d->m_timer->start (500/*msec*/, true/*single shot*/);
 }
 
 // private slot
-void kpMainWindow::slotShowThumbnail ()
+void kpMainWindow::slotSaveThumbnailGeometry ()
 {
-    bool enable = m_actionShowThumbnail->isChecked ();
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::saveThumbnailGeometry()" << endl;
+#endif
+
+    if (!m_thumbnail)
+        return;
+
+    QRect rect (m_thumbnail->x (), m_thumbnail->y (),
+                m_thumbnail->width (), m_thumbnail->height ());
+
+    d->m_configThumbnailGeometry = mapFromGlobal (rect);
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotShowThumbnail() thumbnail="
+    kdDebug () << "\tCONFIG: saving thumbnail geometry "
+                << d->m_configThumbnailGeometry
+                << endl;
+#endif
+
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupThumbnail);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    cfg->writeEntry (kpSettingThumbnailGeometry, d->m_configThumbnailGeometry);
+    cfg->sync ();
+}
+
+// private slot
+void kpMainWindow::slotShowThumbnailToggled ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotShowThumbnailToggled()" << endl;
+#endif
+
+    updateThumbnail ();
+
+
+    d->m_configThumbnailShown = m_actionShowThumbnail->isChecked ();
+
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupThumbnail);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    cfg->writeEntry (kpSettingThumbnailShown, d->m_configThumbnailShown);
+    cfg->sync ();
+}
+
+// private
+void kpMainWindow::updateThumbnail ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::updateThumbnail()" << endl;
+#endif
+   bool enable = m_actionShowThumbnail->isChecked ();
+
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tthumbnail="
                << bool (m_thumbnail)
                << " action_isChecked="
                << enable
@@ -581,11 +660,12 @@ void kpMainWindow::slotShowThumbnail ()
         kdDebug () << "\tcreating thumbnail" << endl;
     #endif
 
-        KConfigGroupSaver configGroupSaver (kapp->config (), kpSettingsGroupGeneral);
         // Read last saved geometry before creating thumbnail & friends
         // in case they call notifyThumbnailGeometryChanged()
-        QRect thumbnailGeometry = configGroupSaver.config ()->readRectEntry ("Thumbnail Geometry");
-
+        QRect thumbnailGeometry = d->m_configThumbnailGeometry;
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\t\tlast used geometry=" << thumbnailGeometry << endl;
+    #endif
 
         m_thumbnail = new kpThumbnail (this, "thumbnail");
         m_thumbnail->hide ();
@@ -612,14 +692,12 @@ void kpMainWindow::slotShowThumbnail ()
         }
 
 
-        if (thumbnailGeometry.isValid ())
+        if (!thumbnailGeometry.isEmpty () &&
+            QRect (0, 0, width (), height ()).intersects (thumbnailGeometry))
         {
-        #if DEBUG_KP_MAIN_WINDOW
-            kdDebug () << "\t\tlast used geometry=" << thumbnailGeometry << endl;
-        #endif
-            thumbnailGeometry = mapToGlobal (thumbnailGeometry);
-            m_thumbnail->resize (thumbnailGeometry.size ());
-            m_thumbnail->move (thumbnailGeometry.topLeft ());
+            const QRect geometry = mapToGlobal (thumbnailGeometry);
+            m_thumbnail->resize (geometry.size ());
+            m_thumbnail->move (geometry.topLeft ());
         }
         else
         {
@@ -666,4 +744,3 @@ void kpMainWindow::slotShowThumbnail ()
         delete m_thumbnail; m_thumbnail = 0;
     }
 }
-

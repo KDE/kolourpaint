@@ -27,13 +27,17 @@
 
 
 #include <qcolor.h>
+#include <qsize.h>
 
 #include <kaction.h>
+#include <kapplication.h>
+#include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmenubar.h>
 
 #include <kpcolor.h>
+#include <kpdefs.h>
 #include <kpcolortoolbar.h>
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
@@ -278,6 +282,23 @@ void kpMainWindow::slotResizeScale ()
                 dialog->imageWidth (), dialog->imageHeight (),
                 dialog->scaleToFit (),
                 this));
+
+        // Resized document?
+        if (!m_document->selection () && !dialog->scaleToFit ())
+        {
+        #if DEBUG_KP_MAIN_WINDOW
+            kdDebug () << "\tCONFIG: saving Last Doc Size = "
+                       << QSize (dialog->imageWidth (), dialog->imageHeight ())
+                       << endl;
+        #endif
+
+            KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+            KConfigBase *cfg = cfgGroupSaver.config ();
+
+            cfg->writeEntry (kpSettingLastDocSize,
+                             QSize (dialog->imageWidth (), dialog->imageHeight ()));
+            cfg->sync ();
+        }
     }
 }
 

@@ -44,11 +44,15 @@ class QPainter;
 class QPoint;
 class QRect;
 class QScrollView;
+class QStringList;
 
+class KAction;
+class KFontAction;
+class KFontSizeAction;
 class KCommand;
 class KSelectAction;
 class KToggleAction;
-class KAction;
+class KToolBar;
 class KPrinter;
 class KRecentFilesAction;
 
@@ -59,9 +63,12 @@ class kpDocument;
 class kpView;
 class kpViewManager;
 class kpSelection;
+class kpTextStyle;
 class kpThumbnail;
 class kpTool;
+class kpToolText;
 class kpToolToolBar;
+
 
 class kpMainWindow : public KMainWindow
 {
@@ -80,16 +87,25 @@ public:
     //  window without a document at all).
     kpMainWindow (kpDocument *newDoc);
 
-private:
-    void initGUI ();
-
 public:
-
-    ~kpMainWindow ();
+    double configColorSimilarity () const;
+    void configSetColorSimilarity (double val);
 
 private:
     bool m_configFirstTime;
-    bool m_alive;
+    bool m_configShowGrid;
+    bool m_configShowPath;
+    double m_configColorSimilarity;
+
+    void readGeneralSettings ();
+    void readThumbnailSettings ();
+    void init ();
+
+public:
+    ~kpMainWindow ();
+
+private:
+    bool m_isFullyConstructed;
 
 public:
     kpDocument *document () const;
@@ -120,7 +136,10 @@ private:
     virtual void dragEnterEvent (QDragEnterEvent *e);
     virtual void dropEvent (QDropEvent *e);
 
-protected:
+private slots:
+    void slotScrollViewAboutToScroll ();
+
+private:
     virtual void moveEvent (QMoveEvent *e);
 
 public:
@@ -166,7 +185,8 @@ private:
            *m_toolFloodFill, *m_toolFreeFormSelection,
            *m_toolLine, *m_toolPen, *m_toolPolygon,
            *m_toolPolyline, *m_toolRectangle, *m_toolRectSelection,
-           *m_toolRoundedRectangle, *m_toolText;
+           *m_toolRoundedRectangle;
+    kpToolText *m_toolText;
 
     QPtrList <kpTool> m_tools;
 
@@ -174,6 +194,7 @@ public:
     kpTool *tool () const;
     bool toolHasBegunShape () const;
     bool toolIsASelectionTool () const;
+    bool toolIsTextTool () const;
 
 private slots:
     void slotToolSelected (kpTool *tool);
@@ -215,11 +236,10 @@ private:
             *m_actionSetAsWallpaperTiled, *m_actionSetAsWallpaperCentered,
             *m_actionClose, *m_actionQuit;
 
-    QString m_configDefaultOutputMimetype;
-
 private:
     bool shouldOpenInNewWindow () const;
     void addRecentURL (const KURL &url);
+    void setRecentURLs (const QStringList &items);
 
 private slots:
     void slotNew ();
@@ -295,8 +315,12 @@ public slots:
      */
 
 private:
+    bool m_viewMenuDocumentActionsEnabled;
+
     void setupViewMenuActions ();
+    bool viewMenuDocumentActionsEnabled () const;
     void enableViewMenuDocumentActions (bool enable = true);
+    void actionShowGridUpdate ();
 
     KAction *m_actionFullScreen,
             *m_actionActualSize,
@@ -306,7 +330,6 @@ private:
     KToggleAction *m_actionShowGrid, *m_actionShowThumbnail;
 
     QValueVector <int> m_zoomList;
-    bool m_configShowGrid;
 
 private:
     void sendZoomListToActionZoom ();
@@ -328,8 +351,9 @@ private slots:
 
     void slotZoom ();
 
-    void slotShowGrid ();
-    void slotActionShowGridToggled (bool on);
+    void slotShowGridToggled ();
+private:
+    void updateMainViewGrid ();
 
 private:
     QRect mapToGlobal (const QRect &rect) const;
@@ -338,12 +362,17 @@ private:
 private slots:
     void slotDestroyThumbnailIfNotVisible (bool tnIsVisible);
     void slotDestroyThumbnail ();
+    void slotDestroyThumbnailInitatedByUser ();
+    void slotCreateThumbnail ();
 
 public:
     void notifyThumbnailGeometryChanged ();
 
 private slots:
-    void slotShowThumbnail ();
+    void slotSaveThumbnailGeometry ();
+    void slotShowThumbnailToggled ();
+private:
+    void updateThumbnail ();
 
 
     /*
@@ -394,15 +423,70 @@ private:
     KToggleAction *m_actionShowPath;
     KAction *m_actionKeyBindings, *m_actionConfigureToolbars, *m_actionConfigure;
 
-    bool m_configShowPath;
-
 private slots:
-    void slotShowPath ();
-    void slotActionShowPathToggled (bool on);
+    void slotShowPathToggled ();
+
+    void slotKeyBindings ();
+
+    void slotConfigureToolBars ();
+    void slotNewToolBarConfig ();
 
     void slotConfigure ();
-    void slotKeyBindings ();
-    void slotConfigureToolBars ();
+
+
+    /*
+     * Text ToolBar
+     */
+
+private:
+    void setupTextToolBarActions ();
+    void readAndApplyTextSettings ();
+
+public:
+    void enableTextToolBarActions (bool enable = true);
+
+private slots:
+    void slotTextFontFamilyChanged ();
+    void slotTextFontSizeChanged ();
+    void slotTextBoldChanged ();
+    void slotTextItalicChanged ();
+    void slotTextUnderlineChanged ();
+    void slotTextStrikeThruChanged ();
+
+public:
+    KToolBar *textToolBar ();
+    kpTextStyle textStyle () const;
+
+private:
+    KFontAction *m_actionTextFontFamily;
+    KFontSizeAction *m_actionTextFontSize;
+    KToggleAction *m_actionTextBold, *m_actionTextItalic,
+                  *m_actionTextUnderline, *m_actionTextStrikeThru;
+
+private:
+    // There is no need to maintain binary compatibility at this stage.
+    // The d-pointer is just so that you can experiment without recompiling.
+    class kpMainWindowPrivate *d;
+};
+
+#include <qrect.h>
+class QTimer;
+
+class kpMainWindowPrivate
+{
+public:
+    kpMainWindowPrivate ()
+        : m_timer (0)
+    {
+    }
+    
+    ~kpMainWindowPrivate ()
+    {
+    }
+
+    bool m_configThumbnailShown;    
+    QRect m_configThumbnailGeometry;
+    QTimer *m_timer;
 };
 
 #endif  // __kpmainwindow_h__

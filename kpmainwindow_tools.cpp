@@ -157,6 +157,12 @@ bool kpMainWindow::toolIsASelectionTool () const
             (currentTool == m_toolEllipticalSelection));
 }
 
+// public
+bool kpMainWindow::toolIsTextTool () const
+{
+    return (tool () == m_toolText);
+}
+
 
 // private slot
 void kpMainWindow::slotToolSelected (kpTool *tool)

@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -29,6 +29,7 @@
 #include <qcstring.h>
 #include <qdatastream.h>
 #include <qpainter.h>
+#include <qsize.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -121,9 +122,71 @@ bool kpMainWindow::shouldOpenInNewWindow () const
 // private
 void kpMainWindow::addRecentURL (const KURL &url)
 {
-    if (!url.isEmpty ())
-        m_actionOpenRecent->addURL (url);
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::addRecentURL(" << url << ")" << endl;
+#endif
+    if (url.isEmpty ())
+        return;
+
+
+    KConfig *cfg = kapp->config ();
+
+    // KConfig::readEntry() does not actually reread from disk, hence doesn't
+    // realise what other processes have done e.g. Settings / Show Path
+    cfg->reparseConfiguration ();
+
+    // HACK: Something might have changed interprocess.
+    // If we could PROPAGATE: interprocess, then this wouldn't be required.
+    m_actionOpenRecent->loadEntries (cfg);
+
+    m_actionOpenRecent->addURL (url);
+
+    m_actionOpenRecent->saveEntries (cfg);
+    cfg->sync ();
+
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tnew recent URLs=" << m_actionOpenRecent->items () << endl;
+#endif
+
+
+    // TODO: PROPAGATE: interprocess
+    if (KMainWindow::memberList)
+    {
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\thave memberList" << endl;
+    #endif
+
+        for (QPtrList <KMainWindow>::const_iterator it = KMainWindow::memberList->begin ();
+             it != KMainWindow::memberList->end ();
+             it++)
+        {
+            kpMainWindow *mw = dynamic_cast <kpMainWindow *> (*it);
+
+            if (!mw)
+            {
+                kdError () << "kpMainWindow::addRecentURL() given fake kpMainWindow: " << (*it) << endl;
+                continue;
+            }
+        #if DEBUG_KP_MAIN_WINDOW
+            kdDebug () << "\t\tmw=" << mw << endl;
+        #endif
+
+            if (mw != this)
+                mw->setRecentURLs (m_actionOpenRecent->items ());
+        }
+    }
 }
+
+// private
+void kpMainWindow::setRecentURLs (const QStringList &items)
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow(" << name () << ")::setRecentURLs()" << endl;
+    kdDebug () << "\titems=" << items << endl;
+#endif
+    m_actionOpenRecent->setItems (items);
+}
+
 
 
 // private slot
@@ -143,11 +206,30 @@ void kpMainWindow::slotNew ()
     }
 }
 
+static QSize defaultDocSize ()
+{
+    // KConfig::readEntry() does not actually reread from disk, hence doesn't
+    // realise what other processes have done e.g. Settings / Show Path
+    kapp->config ()->reparseConfiguration ();
+
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    QSize docSize = cfg->readSizeEntry (kpSettingLastDocSize);
+
+    if (docSize.isEmpty ())
+        docSize = QSize (400, 300);
+
+    return docSize;
+}
+
 // private slot
 bool kpMainWindow::open (const KURL &url, bool newDocSameNameIfNotExist)
 {
+    QSize docSize = ::defaultDocSize ();
+
     // create doc
-    kpDocument *newDoc = new kpDocument (400, 300, 32, this);
+    kpDocument *newDoc = new kpDocument (docSize.width (), docSize.height (), 32, this);
     if (newDoc->open (url, newDocSameNameIfNotExist))
         addRecentURL (url);
     else
@@ -274,8 +356,20 @@ bool kpMainWindow::saveAs (bool localOnly)
 
     if (defaultMimeType.isEmpty ())
     {
-        if (mimeTypes.findIndex (m_configDefaultOutputMimetype) > -1)
-            defaultMimeType = m_configDefaultOutputMimetype;
+        // KConfig::readEntry() does not actually reread from disk, hence doesn't
+        // realise what other processes have done e.g. Settings / Show Path
+        kapp->config ()->reparseConfiguration ();
+
+        KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+        KConfigBase *cfg = cfgGroupSaver.config ();
+
+        QString lastOutputMimeType = cfg->readEntry (kpSettingLastOutputMimeType,
+                                                     QString::fromLatin1 ("image/png"));
+
+        if (mimeTypes.findIndex (lastOutputMimeType) > -1)
+            defaultMimeType = lastOutputMimeType;
+        else if (mimeTypes.findIndex ("image/png") > -1)
+            defaultMimeType = "image/png";
         else if (mimeTypes.findIndex ("image/x-bmp") > -1)
             defaultMimeType = "image/x-bmp";
         else
@@ -301,9 +395,14 @@ bool kpMainWindow::saveAs (bool localOnly)
             // - probably wants to use it in the future
             if (mimetype != docMimeType)
             {
-                KConfigGroupSaver configGroupSaver (kapp->config (), kpSettingsGroupGeneral);
-                configGroupSaver.config ()->writeEntry (kpSettingDefaultOutputMimetype, mimetype);
-                configGroupSaver.config ()->sync ();
+            #if DEBUG_KP_MAIN_WINDOW
+                kdDebug () << "\tCONFIG: saving Last Output MimeType = " << mimetype << endl;
+            #endif
+                KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+                KConfigBase *cfg = cfgGroupSaver.config ();
+
+                cfg->writeEntry (kpSettingLastOutputMimeType, mimetype);
+                cfg->sync ();
             }
         }
     }

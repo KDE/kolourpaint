@@ -794,10 +794,7 @@ kpColorSimilarityToolBarItem::kpColorSimilarityToolBarItem (kpMainWindow *mainWi
       m_mainWindow (mainWindow),
       m_processedColorSimilarity (kpColor::Exact)
 {
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
-    KConfigBase *cfg = cfgGroupSaver.config ();
-
-    setColorSimilarity (cfg->readDoubleNumEntry (kpSettingColorSimilarity, 0));
+    setColorSimilarity (mainWindow->configColorSimilarity ());
 }
 
 kpColorSimilarityToolBarItem::~kpColorSimilarityToolBarItem ()
@@ -823,11 +820,7 @@ void kpColorSimilarityToolBarItem::setColorSimilarity (double similarity)
 
     m_processedColorSimilarity = kpColor::processSimilarity (colorSimilarity ());
 
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
-    KConfigBase *cfg = cfgGroupSaver.config ();
-
-    cfg->writeEntry (kpSettingColorSimilarity, colorSimilarity ());
-    cfg->sync ();
+    m_mainWindow->configSetColorSimilarity (colorSimilarity ());
 
     emit colorSimilarityChanged (colorSimilarity (), m_processedColorSimilarity);
 }
