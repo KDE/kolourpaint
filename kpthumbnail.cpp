@@ -190,17 +190,14 @@ void kpThumbnail::resizeEvent (QResizeEvent * /*e*/)
     kdDebug () << "kpThumbnail::resize(" << width () << "," << height () << ")" << endl;
 #endif
 
-    // HACK: need singleShot() else m_view gets the wrong geometry!?
-    //       Probably due to the relayouting.
-    QTimer::singleShot (0, this, SLOT (updateVariableZoom ()));
+    updateVariableZoom ();;
 
     if (m_mainWindow)
     {
         m_mainWindow->notifyThumbnailGeometryChanged ();
 
-        // HACK: required due to above HACK :(
         if (m_mainWindow->tool ())
-            QTimer::singleShot (0, m_mainWindow->tool (), SLOT (somethingBelowTheCursorChanged ()));
+            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
     }
 }
 
