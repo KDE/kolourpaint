@@ -1,4 +1,4 @@
-SUBDIRS = pics pixmapfx tools widgets
+SUBDIRS = cursors pics pixmapfx tools widgets
 
 bin_PROGRAMS = kolourpaint
 
@@ -17,14 +17,16 @@ kolourpaint_SOURCES = kolourpaint.cpp kpdocument.cpp kpview.cpp \
     kpmainwindow.cpp \
     kpmainwindow_edit.cpp kpmainwindow_image.cpp kpmainwindow_tools.cpp \
     kpmainwindow_file.cpp kpmainwindow_settings.cpp kpmainwindow_view.cpp \
-    kpselection.cpp kpthumbnail.cpp \
+    kpselection.cpp kptemppixmap.cpp kpthumbnail.cpp \
     kpviewmanager.cpp
 kolourpaint_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kolourpaint_LDADD = $(LIB_KDECORE) $(LIB_KDEUI) $(LIB_KIO) $(LIB_KDEPRINT) \
-    pixmapfx/libkolourpaintpixmapfx.la tools/libkolourpainttools.la \
+    cursors/libkolourpaintcursors.la \
+    pixmapfx/libkolourpaintpixmapfx.la \
+    tools/libkolourpainttools.la \
     widgets/libkolourpaintwidgets.la
 
-AM_CPPFLAGS = -I $(srcdir) -I $(srcdir)/pixmapfx \
+AM_CPPFLAGS = -I $(srcdir) -I $(srcdir)/cursors -I $(srcdir)/pixmapfx \
     -I $(srcdir)/tools -I $(srcdir)/widgets \
     $(all_includes)
 
@@ -37,11 +39,13 @@ xdg_apps_DATA = kolourpaint.desktop
 
 messages: rc.cpp
 	$(EXTRACTRC) *.rc *.ui \
+		cursors/*.rc cursors/*.ui \
 		pixmapfx/*.rc pixmapfx/*.ui \
 		tools/*.rc tools/*.ui \
 		widgets/*.rc widgets/*.ui \
 		>> rc.cpp
 	$(XGETTEXT) *.cpp *.h \
+		cursors/*.cpp cursors/*.h \
 		pixmapfx/*.cpp pixmapfx/*.h \
 		tools/*.cpp tools/*.h \
 		widgets/*.cpp widgets/*.h \
