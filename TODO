@@ -84,6 +84,8 @@ File/Save selection
 
 blur & sharpen
 Image/ Contrast, Brightness, ... more image effects
+greyscale masks (Bela-Andreas Bargel's idea)
+
 "a simple plugins framework that allows plugins to be written in various
 languages (C, Python and Perl being the obvious choices) to allow people to
 extend it into the realms of PaintShop Pro without impacting on the core
