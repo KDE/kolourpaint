@@ -634,7 +634,7 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
     m_smoothScaleButton = new QToolButton (m_operationGroupBox);
     toolButtonSetPixmap (m_smoothScaleButton,
                          QString::fromLatin1 ("smooth_scale"),
-                         i18n ("S&mooth scale"));
+                         i18n ("S&mooth Scale"));
 
 
     //m_resizeLabel = new QLabel (i18n ("&Resize"), m_operationGroupBox);
