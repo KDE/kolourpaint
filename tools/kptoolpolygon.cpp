@@ -28,6 +28,7 @@
 
 #define DEBUG_KP_TOOL_POLYGON 1
 
+#include <float.h>
 #include <math.h>
 
 #include <qbitmap.h>
@@ -49,7 +50,6 @@
 #include <kppixmapfx.h>
 #include <kptoolpolygon.h>
 #include <kptooltoolbar.h>
-#include <kptoolwidgetlinestyle.h>
 #include <kptoolwidgetlinewidth.h>
 #include <kpviewmanager.h>
 
@@ -268,7 +268,6 @@ kpToolPolygon::kpToolPolygon (kpMainWindow *mainWindow)
     : kpTool (i18n ("Polygon"), i18n ("Draws polygons"), mainWindow, "tool_polygon"),
       m_mode (Polygon),
       m_toolWidgetFillStyle (0),
-      m_toolWidgetLineStyle (0),
       m_toolWidgetLineWidth (0)
 {
 }
@@ -297,7 +296,6 @@ void kpToolPolygon::begin ()
         else
             m_toolWidgetFillStyle = 0;
 
-        m_toolWidgetLineStyle = tb->toolWidgetLineStyle ();
         m_toolWidgetLineWidth = tb->toolWidgetLineWidth ();
 
         if (m_toolWidgetFillStyle)
@@ -305,26 +303,20 @@ void kpToolPolygon::begin ()
             connect (m_toolWidgetFillStyle, SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
                      this, SLOT (slotFillStyleChanged (kpToolWidgetFillStyle::FillStyle)));
         }
-        connect (m_toolWidgetLineStyle, SIGNAL (lineStyleChanged (Qt::PenStyle)),
-                 this, SLOT (slotLineStyleChanged (Qt::PenStyle)));
         connect (m_toolWidgetLineWidth, SIGNAL (lineWidthChanged (int)),
                  this, SLOT (slotLineWidthChanged (int)));
 
         if (m_toolWidgetFillStyle)
             m_toolWidgetFillStyle->show ();
-        m_toolWidgetLineStyle->show ();
         m_toolWidgetLineWidth->show ();
 
-        m_lineStyle = m_toolWidgetLineStyle->lineStyle ();
         m_lineWidth = m_toolWidgetLineWidth->lineWidth ();
     }
     else
     {
         m_toolWidgetFillStyle = 0;
-        m_toolWidgetLineStyle = 0;
         m_toolWidgetLineWidth = 0;
 
-        m_lineStyle = Qt::SolidLine;
         m_lineWidth = 1;
     }
 
@@ -350,13 +342,6 @@ void kpToolPolygon::end ()
         disconnect (m_toolWidgetLineWidth, SIGNAL (lineWidthChanged (int)),
                     this, SLOT (slotLineWidthChanged (int)));
         m_toolWidgetLineWidth = 0;
-    }
-
-    if (m_toolWidgetLineStyle)
-    {
-        disconnect (m_toolWidgetLineStyle, SIGNAL (lineStyleChanged (Qt::PenStyle)),
-                    this, SLOT (slotLineStyleChanged (Qt::PenStyle)));
-        m_toolWidgetLineStyle = 0;
     }
 
     viewManager ()->unsetCursor ();
@@ -424,7 +409,7 @@ void kpToolPolygon::applyModifiers ()
 
         double ratio;
         if (fabs (diffx - 0) < KP_EPSILON)
-            ratio = KP_DOCUMENT_MAX_HEIGHT * 16;  // where's DBL_MAX?
+            ratio = DBL_MAX;
         else
             ratio = fabs (double (diffy) / double (diffx));
 
@@ -534,7 +519,7 @@ void kpToolPolygon::updateShape ()
     QPixmap newPixmap = pixmap (oldPixmap,
                                 m_points, boundingRect,
                                 color (m_mouseButton), color (1 - m_mouseButton),
-                                m_lineWidth, m_lineStyle,
+                                m_lineWidth, Qt::SolidLine,
                                 m_toolWidgetFillStyle,
                                 m_mode, false/*not final*/);
 
@@ -592,7 +577,7 @@ void kpToolPolygon::endShape (const QPoint &, const QRect &)
             text (),
             m_points, boundingRect,
             color (m_mouseButton), color (1 - m_mouseButton),
-            m_lineWidth, m_lineStyle,
+            m_lineWidth, Qt::SolidLine,
             m_toolWidgetFillStyle,
             document ()->getPixmapAt (boundingRect),
             m_mode);
@@ -608,13 +593,6 @@ bool kpToolPolygon::hasBegunShape () const
     return (m_points.count () > 0);
 }
 
-
-// public slot
-void kpToolPolygon::slotLineStyleChanged (Qt::PenStyle lineStyle)
-{
-    m_lineStyle = lineStyle;
-    updateShape ();
-}
 
 // public slot
 void kpToolPolygon::slotLineWidthChanged (int width)

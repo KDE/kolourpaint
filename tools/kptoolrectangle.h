@@ -39,7 +39,6 @@
 
 class kpMainWindow;
 class kpToolWidgetFillStyle;
-class kpToolWidgetLineStyle;
 class kpToolWidgetLineWidth;
 class kpViewManager;
 
@@ -77,7 +76,6 @@ private slots:
 private:
     Mode m_mode;
     
-    kpToolWidgetLineStyle *m_toolWidgetLineStyle;
     kpToolWidgetLineWidth *m_toolWidgetLineWidth;
     kpToolWidgetFillStyle *m_toolWidgetFillStyle;
 

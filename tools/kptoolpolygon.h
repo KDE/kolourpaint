@@ -52,7 +52,6 @@ class kpDocument;
 class kpMainWindow;
 
 class kpToolWidgetFillStyle;
-class kpToolWidgetLineStyle;
 class kpToolWidgetLineWidth;
 class kpViewManager;
 
@@ -85,7 +84,6 @@ public:
     virtual bool hasBegunShape () const;
 
 public slots:
-    void slotLineStyleChanged (Qt::PenStyle lineStyle);
     void slotLineWidthChanged (int width);
     void slotFillStyleChanged (kpToolWidgetFillStyle::FillStyle fillStyle);
     
@@ -101,9 +99,6 @@ private:
 
     kpToolWidgetFillStyle *m_toolWidgetFillStyle;
     
-    Qt::PenStyle m_lineStyle;
-    kpToolWidgetLineStyle *m_toolWidgetLineStyle;
-
     int m_lineWidth;
     kpToolWidgetLineWidth *m_toolWidgetLineWidth;
 

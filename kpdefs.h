@@ -30,14 +30,8 @@
 #define __kpdefs_h__
 
 
-// set to 1 for extra, obscure features
-// SYNC: set to 0 for release
-#define KP_BLOATWARE 1
-
-#define KP_BLANK_DOCUMENT_COLOR Qt::white
-
-#define KP_DOCUMENT_MAX_WIDTH 4000
-#define KP_DOCUMENT_MAX_HEIGHT 4000
+#define KP_BIG_IMAGE_WIDTH 4000
+#define KP_BIG_IMAGE_HEIGHT 4000
 
 #define KP_PI 3.141592653589793238462
 #define KP_EPSILON 0.0001

@@ -43,7 +43,6 @@
 #include <kptoolrectangle.h>
 #include <kptooltoolbar.h>
 #include <kptoolwidgetfillstyle.h>
-#include <kptoolwidgetlinestyle.h>
 #include <kptoolwidgetlinewidth.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
@@ -158,7 +157,6 @@ kpToolRectangle::kpToolRectangle (kpMainWindow *mainWindow)
     : kpTool (i18n ("Rectangle"), i18n ("Draws rectangles and squares"),
       mainWindow, "tool_rectangle"),
       m_mode (Rectangle),
-      m_toolWidgetLineStyle (0),
       m_toolWidgetLineWidth (0),
       m_toolWidgetFillStyle (0)
 {
@@ -221,7 +219,7 @@ void kpToolRectangle::updatePen (int mouseButton)
     else
         maskPenColor = Qt::color0/*transparent*/;
 
-    if (!m_toolWidgetLineWidth || !m_toolWidgetLineStyle)
+    if (!m_toolWidgetLineWidth)
     {
         m_pen [mouseButton] = QPen (color (mouseButton));
         m_maskPen [mouseButton] = QPen (maskPenColor);
@@ -230,10 +228,10 @@ void kpToolRectangle::updatePen (int mouseButton)
     {
         m_pen [mouseButton] = QPen (color (mouseButton),
                                     m_toolWidgetLineWidth->lineWidth (),
-                                    m_toolWidgetLineStyle->lineStyle ());
+                                    Qt::SolidLine);
         m_maskPen [mouseButton] = QPen (maskPenColor,
                                         m_toolWidgetLineWidth->lineWidth (),
-                                        m_toolWidgetLineStyle->lineStyle ());
+                                        Qt::SolidLine);
     }
 }
 
@@ -277,11 +275,6 @@ void kpToolRectangle::begin ()
 
     if (tb)
     {
-        m_toolWidgetLineStyle = tb->toolWidgetLineStyle ();
-        connect (m_toolWidgetLineStyle, SIGNAL (lineStyleChanged (Qt::PenStyle)),
-                 this, SLOT (updatePens ()));
-        m_toolWidgetLineStyle->show ();
-                 
         m_toolWidgetLineWidth = tb->toolWidgetLineWidth ();
         connect (m_toolWidgetLineWidth, SIGNAL (lineWidthChanged (int)),
                  this, SLOT (updatePens ()));
@@ -312,13 +305,6 @@ void kpToolRectangle::end ()
     kdDebug () << "kpToolRectangle::end ()" << endl;
 #endif
 
-    if (m_toolWidgetLineStyle)
-    {
-        disconnect (m_toolWidgetLineStyle, SIGNAL (lineStyleChanged (Qt::PenStyle)),
-                    this, SLOT (updatePens ()));
-        m_toolWidgetLineStyle = 0;
-    }
-    
     if (m_toolWidgetLineWidth)
     {
         disconnect (m_toolWidgetLineWidth, SIGNAL (lineWidthChanged (int)),

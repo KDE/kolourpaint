@@ -44,7 +44,6 @@ class kpTool;
 class kpToolWidgetBrush;
 class kpToolWidgetEraserSize;
 class kpToolWidgetFillStyle;
-class kpToolWidgetLineStyle;
 class kpToolWidgetLineWidth;
 class kpToolWidgetSpraycanSize;
 
@@ -71,7 +70,6 @@ public:
     kpToolWidgetBrush *toolWidgetBrush () const { return m_toolWidgetBrush; }
     kpToolWidgetEraserSize *toolWidgetEraserSize () const { return m_toolWidgetEraserSize; }
     kpToolWidgetFillStyle *toolWidgetFillStyle () const { return m_toolWidgetFillStyle; }
-    kpToolWidgetLineStyle *toolWidgetLineStyle () const { return m_toolWidgetLineStyle; }
     kpToolWidgetLineWidth *toolWidgetLineWidth () const { return m_toolWidgetLineWidth; }
     kpToolWidgetSpraycanSize *toolWidgetSpraycanSize () const { return m_toolWidgetSpraycanSize; }
 
@@ -99,7 +97,6 @@ private:
     kpToolWidgetBrush *m_toolWidgetBrush;
     kpToolWidgetEraserSize *m_toolWidgetEraserSize;
     kpToolWidgetFillStyle *m_toolWidgetFillStyle;
-    kpToolWidgetLineStyle *m_toolWidgetLineStyle;
     kpToolWidgetLineWidth *m_toolWidgetLineWidth;
     kpToolWidgetSpraycanSize *m_toolWidgetSpraycanSize;
 

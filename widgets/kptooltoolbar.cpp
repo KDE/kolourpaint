@@ -45,7 +45,6 @@
 #include <kptoolwidgetbrush.h>
 #include <kptoolwidgeterasersize.h>
 #include <kptoolwidgetfillstyle.h>
-#include <kptoolwidgetlinestyle.h>
 #include <kptoolwidgetlinewidth.h>
 #include <kptoolwidgetspraycansize.h>
 
@@ -92,11 +91,6 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
     m_toolWidgetBrush = new kpToolWidgetBrush (m_baseWidget);
     m_toolWidgetEraserSize = new kpToolWidgetEraserSize (m_baseWidget);
     m_toolWidgetFillStyle = new kpToolWidgetFillStyle (m_baseWidget);
-#if KP_BLOATWARE
-    m_toolWidgetLineStyle = new kpToolWidgetLineStyle (m_baseWidget);
-#else
-    m_toolWidgetLineStyle = 0;
-#endif
     m_toolWidgetLineWidth = new kpToolWidgetLineWidth (m_baseWidget);
     m_toolWidgetSpraycanSize = new kpToolWidgetSpraycanSize (m_baseWidget);
     
@@ -244,7 +238,6 @@ void kpToolToolBar::hideAllToolWidgets ()
     HIDE_WIDGET (m_toolWidgetBrush);
     HIDE_WIDGET (m_toolWidgetEraserSize);
     HIDE_WIDGET (m_toolWidgetFillStyle);
-    HIDE_WIDGET (m_toolWidgetLineStyle);
     HIDE_WIDGET (m_toolWidgetLineWidth);
     HIDE_WIDGET (m_toolWidgetSpraycanSize);
 #undef HIDE_WIDGET
@@ -362,7 +355,6 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
 }
     ADD_WIDGET (m_toolWidgetFillStyle);
     ADD_WIDGET (m_toolWidgetLineWidth);
-    ADD_WIDGET (m_toolWidgetLineStyle);
     ADD_WIDGET (m_toolWidgetBrush);
     ADD_WIDGET (m_toolWidgetEraserSize);
     ADD_WIDGET (m_toolWidgetSpraycanSize);
