@@ -84,7 +84,7 @@ int main (int argc, char *argv [])
     if (!client->attach ())
         kdError () << "Could not contact DCOP server" << endl;
 
-    // mainly for the Air Spray Tool
+    // mainly for the Spraycan Tool
     srand ((unsigned int) (getpid () + getppid ()));
 
     // access more formats
@@ -124,4 +124,3 @@ int main (int argc, char *argv [])
 
     return app.exec ();
 }
-
