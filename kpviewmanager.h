@@ -91,7 +91,7 @@ public:
 
     int textCursorRow () const;
     int textCursorCol () const;
-    void setTextCursorPosition (int row, int col, bool isUpdateMicroFocusHint = false);
+    void setTextCursorPosition (int row, int col);
 
     bool textCursorBlinkState () const;
     void setTextCursorBlinkState (bool on = true);

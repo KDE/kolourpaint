@@ -7,9 +7,6 @@ tagged on the mainline up to (and including) the forkpoint and of course,
 its changes.
 
 
-   * Fix crash after using the Colour Picker if it was the first used tool
-     [kolourpaint-1.2.2_kde3-color_picker_crash.diff]
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
    * Fix crash due to text box when scaling image behind it
      [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
    * Empty text clipboard fixes:

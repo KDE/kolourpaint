@@ -657,15 +657,9 @@ void kpTool::cancelShapeInternal ()
 
         if (returnToPreviousToolAfterEndDraw ())
         {
-            kpToolToolBar *tb = mainWindow ()->toolToolBar ();
-            
-            // (don't end up with no tool selected)
-            if (tb->previousTool ())
-            {
-                // endInternal() will be called by kpMainWindow (thanks to this line)
-                // so we won't have the view anymore
-                tb->selectPreviousTool ();
-            }
+            // endInternal() will be called by kpMainWindow (thanks to this line)
+            // so we won't have the view anymore
+            mainWindow ()->toolToolBar ()->selectPreviousTool ();
         }
     }
 }
@@ -722,15 +716,9 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
 
     if (returnToPreviousToolAfterEndDraw ())
     {
-        kpToolToolBar *tb = mainWindow ()->toolToolBar ();
-        
-        // (don't end up with no tool selected)
-        if (tb->previousTool ())
-        {
-            // endInternal() will be called by kpMainWindow (thanks to this line)
-            // so we won't have the view anymore
-            tb->selectPreviousTool ();
-        }
+        // endInternal() will be called by kpMainWindow (thanks to this line)
+        // so we won't have the view anymore
+        mainWindow ()->toolToolBar ()->selectPreviousTool ();
     }
 }
 

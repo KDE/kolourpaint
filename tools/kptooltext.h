@@ -61,9 +61,6 @@ public:
 
 protected:
     virtual void keyPressEvent (QKeyEvent *e);
-    virtual void imStartEvent (QIMEvent *e);
-    virtual void imComposeEvent (QIMEvent *e);
-    virtual void imEndEvent (QIMEvent *e);
 
 protected:
     bool shouldChangeTextStyle () const;
@@ -92,11 +89,6 @@ protected:
     class kpToolTextEnterCommand *m_enterCommand;
     class kpToolTextBackspaceCommand *m_backspaceCommand;
     class kpToolTextDeleteCommand *m_deleteCommand;
-
-    bool m_isIMStarted;
-    int m_IMStartCursorRow;
-    int m_IMStartCursorCol;
-    QString m_IMPreeditStr;
 };
 
 

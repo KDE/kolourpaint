@@ -100,7 +100,6 @@ public:
     void addToQueuedArea (const QRegion &region);
     void invalidateQueuedArea ();
     void updateQueuedArea ();
-    void updateMicroFocusHint (const QRect &microFocusHint);
 
 signals:
     void sizeChanged (int width, int height);
@@ -160,9 +159,6 @@ private:
     virtual void leaveEvent (QEvent *e);
     virtual void dragEnterEvent (QDragEnterEvent *);
     virtual void dragLeaveEvent (QDragLeaveEvent *);
-    virtual void imStartEvent (QIMEvent *e);
-    virtual void imComposeEvent (QIMEvent *e);
-    virtual void imEndEvent (QIMEvent *e);
 
     kpMainWindow *m_mainWindow;
 
