@@ -32,9 +32,7 @@
 #include <qdragobject.h>
 
 #include <kppixmapfx.h>
-
-
-class kpSelection;
+#include <kpselection.h>
 
 
 class kpSelectionDrag : public QImageDrag
