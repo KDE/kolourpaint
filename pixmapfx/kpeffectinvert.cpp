@@ -48,14 +48,16 @@
 kpEffectInvertCommand::kpEffectInvertCommand (int channels,
                                               bool actOnSelection,
                                               kpMainWindow *mainWindow)
-    : kpColorEffectCommand (i18n ("Invert"), actOnSelection, mainWindow),
+    : kpColorEffectCommand (channels == RGB ?
+                                i18n ("Invert Colors") : i18n ("Invert"),
+                            actOnSelection, mainWindow),
       m_channels (channels)
 {
 }
 
 kpEffectInvertCommand::kpEffectInvertCommand (bool actOnSelection,
                                               kpMainWindow *mainWindow)
-    : kpColorEffectCommand (i18n ("Invert"), actOnSelection, mainWindow),
+    : kpColorEffectCommand (i18n ("Invert Colors"), actOnSelection, mainWindow),
       m_channels (RGB)
 {
 }
