@@ -37,6 +37,7 @@
 #include <kcolordialog.h>
 #include <ktoolbar.h>
 
+class QBoxLayout;
 class KColorButton;
 
 class kpDualColorButton : public QWidget
@@ -45,12 +46,12 @@ Q_OBJECT
 
 public:
     kpDualColorButton (QWidget *parent,
-                       Qt::Orientation o = Qt::Horizontal,
+                       QBoxLayout::Direction dir = QBoxLayout::TopToBottom,
                        const char *name = 0);
     virtual ~kpDualColorButton ();
 
-    Qt::Orientation orientation () const;
-    void setOrientation (Qt::Orientation o);
+    QBoxLayout::Direction direction () const;
+    void setDirection (QBoxLayout::Direction dir);
     
     QColor color (int which) const;
     void setColor (int which, const QColor &color);
@@ -62,9 +63,8 @@ public:
     void setBackgroundColor (const QColor &color);
 
 private:
-    Qt::Orientation m_orientation;
-
     KColorButton *m_colorButton [2];
+    QBoxLayout *m_boxLayout;
 };
 
 class kpColorCells : public KColorCells
