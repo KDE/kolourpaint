@@ -117,15 +117,24 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
 
         if (mimetype.isNull ())
         {
-            KMessageBox::sorry (0, i18n ("Could not open \"%1\" - unsupported image format")
-                                       .arg (kpDocument::filenameForURL (url)));
+            KMessageBox::sorry (0, i18n ("Could not open \"%1\" - unknown mimetype.")
+                                        .arg (kpDocument::filenameForURL (url)));
+            return false;
+        }
+
+        if (!KImageIO::isSupported (mimetype, KImageIO::Reading))
+        {
+            KMessageBox::sorry (0, i18n ("Could not open \"%1\" - unsupported image format \"%2\".")
+                                        .arg (kpDocument::filenameForURL (url))
+                                        .arg (mimetype));
             return false;
         }
 
         QPixmap *newPixmap = new QPixmap (tempFile);
         if (newPixmap->isNull ())
         {
-            KMessageBox::sorry (0, i18n ("Could not open \"%1\" - unsupported image format")
+            KMessageBox::sorry (0, i18n ("Could not open \"%1\".\n"
+                                         "The file may be corrupt.")
                                        .arg (kpDocument::filenameForURL (url)));
             delete newPixmap;
             return false;
@@ -236,7 +245,7 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
     {
         if (!KIO::NetAccess::upload (filename, url, m_mainWindow))
         {
-            KMessageBox::error (0, i18n ("Could not save image - failed to upload.."));
+            KMessageBox::error (0, i18n ("Could not save image - failed to upload."));
             return false;
         }
     }
