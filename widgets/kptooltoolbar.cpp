@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-
+   
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-
+   
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-
+   
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -58,11 +58,11 @@ public:
           m_tool (tool)
     {
     }
-
+    
     virtual ~kpToolButton ()
     {
     }
-
+    
 protected:
     // virtual [base QWidget]
     void mouseDoubleClickEvent (QMouseEvent *e)
@@ -89,13 +89,13 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
 
     m_baseWidget = new QWidget (this);
 
-    m_toolWidgetBrush = new kpToolWidgetBrush (m_baseWidget, "Tool Widget Brush");
-    m_toolWidgetEraserSize = new kpToolWidgetEraserSize (m_baseWidget, "Tool Widget Eraser Size");
-    m_toolWidgetFillStyle = new kpToolWidgetFillStyle (m_baseWidget, "Tool Widget Fill Style");
-    m_toolWidgetLineWidth = new kpToolWidgetLineWidth (m_baseWidget, "Tool Widget Line Width");
-    m_toolWidgetOpaqueOrTransparent = new kpToolWidgetOpaqueOrTransparent (m_baseWidget, "Tool Widget Opaque/Transparent");
-    m_toolWidgetSpraycanSize = new kpToolWidgetSpraycanSize (m_baseWidget, "Tool Widget Spraycan Size");
-
+    m_toolWidgetBrush = new kpToolWidgetBrush (m_baseWidget);
+    m_toolWidgetEraserSize = new kpToolWidgetEraserSize (m_baseWidget);
+    m_toolWidgetFillStyle = new kpToolWidgetFillStyle (m_baseWidget);
+    m_toolWidgetLineWidth = new kpToolWidgetLineWidth (m_baseWidget);
+    m_toolWidgetOpaqueOrTransparent = new kpToolWidgetOpaqueOrTransparent (m_baseWidget);
+    m_toolWidgetSpraycanSize = new kpToolWidgetSpraycanSize (m_baseWidget);
+    
     m_lastDockedOrientationSet = false;
     setOrientation (orientation ());
 
@@ -267,7 +267,7 @@ void kpToolToolBar::slotToolSelected ()
             break;
         }
     }
-
+    
 #if DEBUG_KP_TOOL_TOOL_BAR
     kdDebug () << "\ttool=" << tool
                << " currentTool=" << m_currentTool
@@ -275,19 +275,14 @@ void kpToolToolBar::slotToolSelected ()
 #endif
 
     if (tool == m_currentTool)
-    {
-        if (m_currentTool)
-            m_currentTool->reselect ();
-
         return;
-    }
 
     if (m_currentTool)
         m_currentTool->endInternal ();
 
-    m_previousTool = m_currentTool;
+    m_previousTool = m_currentTool;        
     m_currentTool = tool;
-
+    
     if (m_currentTool)
         m_currentTool->beginInternal ();
 
@@ -312,7 +307,7 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
         m_lastDockedOrientation = o;
         m_lastDockedOrientationSet = true;
     }
-
+    
     if (isOutsideDock)
     {
     #if DEBUG_KP_TOOL_TOOL_BAR
@@ -347,7 +342,7 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
     }
 
     int num = 0;
-
+    
     for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
          it != m_buttonToolPairs.end ();
          it++)
