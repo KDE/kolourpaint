@@ -228,6 +228,7 @@ private:
 
     KURL m_url;
     bool m_isFromURL;
+    bool m_savedAtLeastOnceBefore;
 
     kpDocumentSaveOptions *m_saveOptions;
     kpDocumentMetaInfo *m_metaInfo;

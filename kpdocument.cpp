@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_DOCUMENT 1
+#define DEBUG_KP_DOCUMENT 0
 
 
 #include <kpdocument.h>
@@ -71,11 +71,8 @@
 struct kpDocumentPrivate
 {
     kpDocumentPrivate ()
-        : m_savedAtLeastOnceBefore (false)
     {
     }
-
-    bool m_savedAtLeastOnceBefore;
 };
 
 
@@ -83,6 +80,7 @@ kpDocument::kpDocument (int w, int h, kpMainWindow *mainWindow)
     : m_constructorWidth (w), m_constructorHeight (h),
       m_mainWindow (mainWindow),
       m_isFromURL (false),
+      m_savedAtLeastOnceBefore (false),
       m_saveOptions (new kpDocumentSaveOptions ()),
       m_metaInfo (new kpDocumentMetaInfo ()),
       m_modified (false),
@@ -692,7 +690,7 @@ bool kpDocument::saveAs (const KURL &url,
         *m_saveOptions = saveOptions;
         m_modified = false;
 
-        d->m_savedAtLeastOnceBefore = true;
+        m_savedAtLeastOnceBefore = true;
 
         emit documentSaved ();
         return true;
@@ -706,7 +704,7 @@ bool kpDocument::saveAs (const KURL &url,
 // public
 bool kpDocument::savedAtLeastOnceBefore () const
 {
-    return d->m_savedAtLeastOnceBefore;
+    return m_savedAtLeastOnceBefore;
 }
 
 // public
