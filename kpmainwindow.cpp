@@ -1114,6 +1114,10 @@ void kpMainWindow::switchToPreviousTool ()
         switchToTool (m_previousToolNum);
 }
 
+// TODO: switchToTool(x): x is wrong
+// This code will probably be deleted unless we go back to using KAction's
+// for the tools.
+
 void kpMainWindow::slotToolPen ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
