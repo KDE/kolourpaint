@@ -31,6 +31,10 @@ This file lists known bugs in the 1.??? release that are not considered
    b) The text and brush-like tools set the document modified flag even if
       user cancels the draw operation.
 
+   c) Select a region, manipulate it (e.g. move), undo - the document is
+      still marked as modified (because 2 commands - the create selection
+      and the move - were added but only one was undone).
+
 7. Certain shapes may have the wrong size (usually only a pixel off and
    only in extreme cases) e.g. an ellipse of height 1 always has a width 1
    pixel less than it should be.  This is a Qt bug.
