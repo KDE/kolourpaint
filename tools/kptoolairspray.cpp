@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -42,6 +42,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpcommandhistory.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
@@ -78,17 +79,17 @@ void kpToolAirSpray::begin ()
 
     m_toolWidgetSpraycanSize = 0;
     m_size = 10;
-    
+
     if (tb)
     {
         m_toolWidgetSpraycanSize = tb->toolWidgetSpraycanSize ();
-        
+
         if (m_toolWidgetSpraycanSize)
         {
             m_size = m_toolWidgetSpraycanSize->spraycanSize ();
             connect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged (int)),
                      this, SLOT (slotSpraycanSizeChanged (int)));
-            
+
             m_toolWidgetSpraycanSize->show ();
         }
     }
@@ -105,7 +106,7 @@ void kpToolAirSpray::end ()
     }
 }
 
-// private slot    
+// private slot
 void kpToolAirSpray::slotSpraycanSizeChanged (int size)
 {
     m_size = size;
@@ -184,6 +185,7 @@ void kpToolAirSpray::cancelShape ()
 #else
     m_timer->stop ();
 
+    m_currentCommand->finalize ();
     m_currentCommand->cancel ();
 
     delete m_currentCommand;
@@ -280,38 +282,38 @@ void kpToolAirSprayCommand::addPoints (const QPointArray &points)
     QBitmap mask;
 
     QPainter painter, maskPainter;
-    
+
     if (m_color.isOpaque ())
     {
         painter.begin (&pixmap);
         painter.setPen (m_color.toQColor ());
     }
-    
+
     if (pixmap.mask () || m_color.isTransparent ())
     {
         mask = kpPixmapFX::getNonNullMask (pixmap);
         maskPainter.begin (&mask);
         maskPainter.setPen (m_color.maskColor ());
     }
-    
+
     for (int i = 0; i < (int) points.count (); i++)
     {
         QPoint pt (points [i].x () - docRect.x (),
                    points [i].y () - docRect.y ());
-        
+
         if (painter.isActive ())
             painter.drawPoint (pt);
-        
+
         if (maskPainter.isActive ())
             maskPainter.drawPoint (pt);
     }
-    
+
     if (maskPainter.isActive ())
         maskPainter.end ();
-        
+
     if (painter.isActive ())
         painter.end ();
-        
+
     if (!mask.isNull ())
         pixmap.setMask (mask);
 
@@ -332,7 +334,9 @@ void kpToolAirSprayCommand::cancel ()
 {
     if (m_boundingRect.isValid ())
     {
-        m_document->setPixmapAt (m_oldPixmap, QPoint (0, 0));
+        m_viewManager->setFastUpdates ();
+        m_document->setPixmapAt (m_oldPixmap, m_boundingRect.topLeft ());
+        m_viewManager->restoreFastUpdates ();
     }
 }
 
