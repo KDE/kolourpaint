@@ -50,6 +50,7 @@
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
+#include <kptemppixmap.h>
 #include <kptool.h>
 #include <kptoolpen.h>
 #include <kpview.h>
@@ -745,20 +746,11 @@ void kpView::paintEventDrawTempPixmap (QPixmap *destPixmap, const QRect &docRect
     if (!vm)
         return;
 
-    QRect tempPixmapRect = vm->tempPixmapRect ();
-    QPixmap tempPixmap = vm->tempPixmap ();
+    const kpTempPixmap *tpm = vm->tempPixmap ();
+    if (!tpm || !tpm->isVisible (vm))
+        return;
 
-
-    //
-    // Draw tempPixmap on top of destPixmap
-    //
-
-#define PARAMS destPixmap, tempPixmapRect.topLeft () - docRect.topLeft (), tempPixmap
-    if (vm->shouldBrushBeDisplayed (this))
-        kpPixmapFX::paintPixmapAt (PARAMS);
-    else
-        kpPixmapFX::setPixmapAt (PARAMS);
-#undef PARAMS
+    tpm->paint (destPixmap, docRect);
 }
 
 // private
@@ -898,20 +890,21 @@ void kpView::paintEvent (QPaintEvent *e)
 
     QPixmap docPixmap;
 
-    bool tempPixmapWillBeDisplayed = false;
+    bool tempPixmapWillBeRendered = false;
 
     if (!docRect.isEmpty ())
     {
         docPixmap = doc->getPixmapAt (docRect);
-        tempPixmapWillBeDisplayed =
+
+        tempPixmapWillBeRendered =
             (!doc->selection () &&
-             vm->tempPixmapActive () &&
-             (!vm->brushActive () || vm->shouldBrushBeDisplayed (this)) &&
-             docRect.intersects (vm->tempPixmapRect ()));
+             vm->tempPixmap () &&
+             vm->tempPixmap ()->isVisible (vm) &&
+             docRect.intersects (vm->tempPixmap ()->rect ()));
     }
 
     if (docPixmap.mask () ||
-        (tempPixmapWillBeDisplayed && !vm->brushActive ()) ||
+        (tempPixmapWillBeRendered && vm->tempPixmap ()->mayChangeDocumentMask ()) ||
         m_needBorder)
     {
     #if DEBUG_KP_VIEW_RENDERER && 1
@@ -939,14 +932,8 @@ void kpView::paintEvent (QPaintEvent *e)
         {
             paintEventDrawSelection (&docPixmap, docRect);
         }
-        else if (tempPixmapWillBeDisplayed)
+        else if (tempPixmapWillBeRendered)
         {
-        #if DEBUG_KP_VIEW_RENDERER && 1
-            kdDebug () << "\ttempPixmap: active"
-                    << " rect=" << vm->tempPixmapRect ()
-                    << " brush=" << vm->brushActive ()
-                    << endl;
-        #endif
             paintEventDrawTempPixmap (&docPixmap, docRect);
         }
 

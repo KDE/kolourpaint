@@ -40,6 +40,7 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
+#include <kptemppixmap.h>
 #include <kptoolrectangle.h>
 #include <kptooltoolbar.h>
 #include <kptoolwidgetfillstyle.h>
@@ -397,14 +398,22 @@ void kpToolRectangle::draw (const QPoint &, const QPoint &, const QRect &)
 {
     applyModifiers ();
     
+    
     viewManager ()->setFastUpdates ();
-    viewManager ()->setTempPixmapAt (pixmap (m_mode, document (), m_toolRectangleRect,
-                                             m_toolRectangleStartPoint, m_toolRectangleEndPoint,
-                                             m_pen [m_mouseButton], m_maskPen [m_mouseButton],
-                                             m_brush [m_mouseButton], m_maskBrush [m_mouseButton]),
-                                             m_toolRectangleRect.topLeft ());
+    
+    QPixmap newPixmap = pixmap (m_mode, document (), m_toolRectangleRect,
+                                m_toolRectangleStartPoint, m_toolRectangleEndPoint,
+                                m_pen [m_mouseButton], m_maskPen [m_mouseButton],
+                                m_brush [m_mouseButton], m_maskBrush [m_mouseButton]);
+    kpTempPixmap newTempPixmap (false/*always display*/,
+                                kpTempPixmap::SetPixmap/*render mode*/,
+                                m_toolRectangleRect.topLeft (),
+                                newPixmap);
+    viewManager ()->setTempPixmap (newTempPixmap);
+    
     viewManager ()->restoreFastUpdates ();
 
+    
     // TODO: for thick rect's, this'll be wrong...
     emit mouseDragged (QRect (m_startPoint, m_currentPoint));
 }

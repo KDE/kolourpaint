@@ -48,6 +48,7 @@
 #include <kpdefs.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
+#include <kptemppixmap.h>
 #include <kptoolpolygon.h>
 #include <kptooltoolbar.h>
 #include <kptoolwidgetlinewidth.h>
@@ -524,7 +525,10 @@ void kpToolPolygon::updateShape ()
                                 m_mode, false/*not final*/);
 
     viewManager ()->setFastUpdates ();
-    viewManager ()->setTempPixmapAt (newPixmap, boundingRect.topLeft ());
+    viewManager ()->setTempPixmap (kpTempPixmap (false/*always display*/,
+                                                 kpTempPixmap::SetPixmap/*render mode*/,
+                                                 boundingRect.topLeft (),
+                                                 newPixmap));
     viewManager ()->restoreFastUpdates ();
 }
 
@@ -568,7 +572,7 @@ void kpToolPolygon::endShape (const QPoint &, const QRect &)
     if (!hasBegunShape ())
         return;
         
-    viewManager ()->invalidateTempPixmap (true);
+    viewManager ()->invalidateTempPixmap ();
 
     QRect boundingRect = kpTool::neededRect (m_points.boundingRect (), m_lineWidth);
     

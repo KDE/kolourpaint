@@ -22,8 +22,6 @@ selections:
 
 introduce kpRGB class to avoid using undefined QColor::isValid() behaviour for transparency
 
-pulsating transparent brush cursor (not black)
-
 freehand resize document
 
 colour similarity option for Fill and Colour Eraser
@@ -78,6 +76,9 @@ flexible kpCommandHistory - would virtually solve all the Undo/Redo annoyances
 intersect bounding rect with document rect when saving undo info
 - e.g. if you drag a large rect bigger than the view, waste a lot of memory
 ditto for setTempPixmapAt et. al. (maybe not for selections, still thinking)
+
+a better set of cursors that don't obscure the pixel you're drawing at
+(e.g. compare the excellent Brush cursor to the Line Tool's cursor)
 
 warn about lossy saves (e.g. JPEG)
 

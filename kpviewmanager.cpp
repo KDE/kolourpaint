@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -34,20 +34,22 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kpselection.h>
+#include <kptemppixmap.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
 
 
 kpViewManager::kpViewManager (kpMainWindow *mainWindow)
     : m_mainWindow (mainWindow),
+      m_tempPixmap (0),
       m_viewUnderCursor (0),
       m_selectionBorderVisible (false),
-      m_selectionBorderFinished (false),
-      m_tempPixmapType (NoPixmap)
+      m_selectionBorderFinished (false)
 {
     m_queueUpdatesCounter = m_fastUpdatesCounter =  0;
 }
 
+// private
 kpDocument *kpViewManager::document ()
 {
     return m_mainWindow ? m_mainWindow->document () : 0;
@@ -56,6 +58,8 @@ kpDocument *kpViewManager::document ()
 kpViewManager::~kpViewManager ()
 {
     unregisterAllViews ();
+
+    delete m_tempPixmap; m_tempPixmap = 0;
 }
 
 
@@ -94,77 +98,48 @@ void kpViewManager::unregisterAllViews ()
 }
 
 
-void kpViewManager::setTempPixmapAt (const QPixmap &pixmap, const QPoint &at,
-                                     enum TempPixmapType type)
+// public
+const kpTempPixmap *kpViewManager::tempPixmap () const
 {
-#if DEBUG_KP_VIEW_MANAGER && 0
-    kdDebug () << "kpViewManager::setTempPixmapAt (pixmap (w="
-               << pixmap.width ()
-               << ",h=" << pixmap.height ()
-               << "), x=" << at.x ()
-               << ",y=" << at.y ()
-               << endl;
-#endif
+    return m_tempPixmap;
+}
 
-    bool oldPixmapActive = tempPixmapActive ();
-    QRect oldPixmapRect = m_tempPixmapRect;  // only valid if oldPixmapActive
+// public
+void kpViewManager::setTempPixmap (const kpTempPixmap &tempPixmap)
+{
+    QRect oldRect;
 
-    m_tempPixmap = pixmap;
-    m_tempPixmapRect = QRect (at.x (), at.y (), pixmap.width (), pixmap.height ());
-    m_tempPixmapType = type;
+    if (m_tempPixmap)
+    {
+        oldRect = m_tempPixmap->rect ();
+        delete m_tempPixmap;
+        m_tempPixmap = 0;
+    }
+
+    m_tempPixmap = new kpTempPixmap (tempPixmap);
+
 
     setQueueUpdates ();
 
-    if (oldPixmapActive)
-        updateViews (oldPixmapRect);
-    updateViews (m_tempPixmapRect);
+    if (oldRect.isValid ())
+        updateViews (oldRect);
+    updateViews (m_tempPixmap->rect ());
 
     restoreQueueUpdates ();
 }
 
-void kpViewManager::invalidateTempPixmap (const bool doUpdate)
+// public
+void kpViewManager::invalidateTempPixmap ()
 {
-    if (!tempPixmapActive ()) return;
+    if (!m_tempPixmap)
+        return;
 
-    m_tempPixmapType = NoPixmap;
+    QRect oldRect = m_tempPixmap->rect ();
 
-    if (doUpdate)
-        updateViews (m_tempPixmapRect);
-}
+    delete m_tempPixmap;
+    m_tempPixmap = 0;
 
-enum kpViewManager::TempPixmapType kpViewManager::tempPixmapType () /*const*/
-{
-    return m_tempPixmapType;
-}
-
-bool kpViewManager::tempPixmapActive () /*const*/
-{
-    return tempPixmapType () != NoPixmap;
-}
-
-bool kpViewManager::normalActive () /*const*/
-{
-    return tempPixmapType () == NormalPixmap;
-}
-
-bool kpViewManager::brushActive () /*const*/
-{
-    return tempPixmapType () == BrushPixmap;
-}
-
-bool kpViewManager::shouldBrushBeDisplayed (kpView * /*view*/) /*const*/
-{
-    return brushActive () && viewUnderCursor ();
-}
-
-QRect kpViewManager::tempPixmapRect () const
-{
-    return m_tempPixmapRect;
-}
-
-QPixmap kpViewManager::tempPixmap () const
-{
-    return m_tempPixmap;
+    updateViews (oldRect);
 }
 
 
@@ -205,7 +180,7 @@ void kpViewManager::setSelectionBorderFinished (bool yes)
         updateViews (document ()->selection ()->boundingRect ());
 }
 
-        
+
 void kpViewManager::setCursor (const QCursor &cursor)
 {
     for (QPtrList <kpView>::const_iterator it = m_views.begin ();
@@ -245,7 +220,9 @@ void kpViewManager::setViewUnderCursor (kpView *view)
 #endif
     m_viewUnderCursor = view;
 
-    updateBrushPixmap ();
+    // Hide the brush if the mouse cursor just left the view
+    if (!view && m_tempPixmap && m_tempPixmap->isBrush ())
+        updateViews (m_tempPixmap->rect ());
 }
 
 
@@ -320,16 +297,6 @@ void kpViewManager::restoreFastUpdates ()
         kdError () << "kpViewManager::restoreFastUpdates() counter="
                    << m_fastUpdatesCounter;
     }
-}
-
-
-void kpViewManager::updateBrushPixmap ()
-{
-#if DEBUG_KP_VIEW_MANAGER && 0
-    kdDebug () << "kpViewManager::updateBrushPixmap () viewUnderCursor="
-               << viewUnderCursor () << endl;
-#endif
-    updateViews (tempPixmapRect ());
 }
 
 
@@ -437,7 +404,7 @@ void kpViewManager::resizeViews (int docWidth, int docHeight)
          it++)
     {
         kpView *view = *it;
-        
+
     #if DEBUG_KP_VIEW_MANAGER && 1
         kdDebug () << "\tresize view: " << view->name ()
                    << " (variableZoom=" << view->hasVariableZoom () << ")"
