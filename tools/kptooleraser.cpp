@@ -35,7 +35,9 @@
 kpToolEraser::kpToolEraser (kpMainWindow *mainWindow)
     : kpToolPen (mainWindow)
 {
+    // TODO: don't be lazy and don't break all the rules of inheritance!
     setMode (kpToolPen::Eraser);
+
     setText (i18n ("Eraser"));
     setDescription ("Lets you rub out mistakes");
     setName ("tool_eraser");

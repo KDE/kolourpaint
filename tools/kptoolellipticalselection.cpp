@@ -35,7 +35,9 @@
 kpToolEllipticalSelection::kpToolEllipticalSelection (kpMainWindow *mainWindow)
     : kpToolSelection (mainWindow)
 {
+    // TODO: don't be lazy and don't break all the rules of inheritance!
     setMode (kpToolSelection::Ellipse);
+
     setText (i18n ("Selection (Elliptical)"));
     setDescription ("Makes an elliptical or circular selection");
     setName ("tool_elliptical_selection");

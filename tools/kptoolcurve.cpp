@@ -35,6 +35,7 @@
 kpToolCurve::kpToolCurve (kpMainWindow *mainWindow)
     : kpToolPolygon (mainWindow)
 {
+    // TODO: don't be lazy and don't break all the rules of inheritance!
     setMode (Curve);
 
     setText (i18n ("Curve"));

@@ -35,6 +35,7 @@
 kpToolLine::kpToolLine (kpMainWindow *mainWindow)
     : kpToolPolygon (mainWindow)
 {
+    // TODO: don't be lazy and don't break all the rules of inheritance!
     setMode (Line);
 
     setText (i18n ("Line"));

@@ -35,7 +35,9 @@
 kpToolEllipse::kpToolEllipse (kpMainWindow *mainWindow)
     : kpToolRectangle (mainWindow)
 {
+    // TODO: don't be lazy and don't break all the rules of inheritance!
     setMode (kpToolRectangle::Ellipse);
+
     setText (i18n ("Ellipse"));
     setDescription (i18n ("Draws ellipses and circles"));
     setName ("tool_ellipse");

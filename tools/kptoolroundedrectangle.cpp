@@ -35,6 +35,7 @@
 kpToolRoundedRectangle::kpToolRoundedRectangle (kpMainWindow *mainWindow)
     : kpToolRectangle (mainWindow)
 {
+    // TODO: don't be lazy and don't break all the rules of inheritance!
     setMode (kpToolRectangle::RoundedRectangle);
 
     setText (i18n ("Rounded Rectangle"));

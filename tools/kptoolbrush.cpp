@@ -35,7 +35,9 @@
 kpToolBrush::kpToolBrush (kpMainWindow *mainWindow)
     : kpToolPen (mainWindow)
 {
+    // TODO: don't be lazy and don't break all the rules of inheritance!
     setMode (kpToolPen::Brush);
+    
     setText (i18n ("Brush"));
     setDescription (i18n ("Draw using brushes of different shapes and sizes"));
     setName ("tool_brush");
