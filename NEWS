@@ -7,26 +7,17 @@ tagged on the mainline up to (and including) the forkpoint and of course,
 its changes.
 
 
-
-   * Smaller selection and text box resize handles (visually not
-     actually) - covers up fewer selected pixels, doesn't cover up text
-
-
-
-
-
    * Fix crash due to text box when scaling image behind it
-
-
-
-
-
+     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
    * Empty text clipboard fixes:
      - Don't get stuck on a wait cursor after attempting to paste empty
        text into a text box
      - Prevent pasting text from creating a new text box if text is empty
      - Prevent copying of empty text box
-     
+     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+   * Smaller selection and text box resize handles (visually not
+     actually) - covers up fewer selected pixels, doesn't cover up text
+     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
    * Fix selection regressions introduced in 1.2:
      - Make selection dragging with CTRL work again (copies selection onto
        document)
@@ -56,7 +47,9 @@ its changes.
      [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
    * Remove unused images in doc directory
      [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
-
+   * Correct kolourpaint.desktop "Terminal=" and "Categories=" syntax
+     (Benjamin Meyer)
+   
 
 KolourPaint 1.2_kde3 Series (kolourpaint_1_2_kde3_branch)
 ===========================
