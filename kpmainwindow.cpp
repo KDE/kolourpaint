@@ -290,6 +290,18 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     // not a close operation?
     if (m_document)
     {
+        if (m_document->mainWindow () != this)
+        {
+        #if DEBUG_KP_MAIN_WINDOW
+            kdDebug () << "\tchanging doc's mainWindow from "
+                       << m_document->mainWindow ()
+                       << " to this="
+                       << this
+                       << endl;
+        #endif
+            m_document->setMainWindow (this);
+        }
+        
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () <<"\tcreating viewManager" << endl;
     #endif
