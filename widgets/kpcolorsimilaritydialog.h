@@ -57,8 +57,6 @@ private:
     kpMainWindow *m_mainWindow;
     kpColorSimilarityCube *m_colorSimilarityCube;
     KIntNumInput *m_colorSimilarityInput;
-
-    double m_colorSimilarity;
 };
 
 #endif  // __kp_color_similarity_dialog_h__
