@@ -39,6 +39,7 @@
 #include <kpview.h>
 
 
+// TODO: get out of the Alt+Tab list
 kpThumbnail::kpThumbnail (kpMainWindow *parent, const char *name)
     : QDockWindow (QDockWindow::InDock, parent, name),
       m_mainWindow (parent),
@@ -144,6 +145,7 @@ void kpThumbnail::resizeEvent (QResizeEvent * /*e*/)
 #endif
 
     // HACK: need singleShot() else m_view gets the wrong geometry!?
+    //       Probably due to the relayouting.
     QTimer::singleShot (0, this, SLOT (updateVariableZoom ()));
 
     if (m_mainWindow)
