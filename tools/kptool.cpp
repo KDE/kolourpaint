@@ -259,7 +259,8 @@ kpDocument *kpTool::document () const
 
 kpView *kpTool::viewUnderCursor () const
 {
-    return viewManager ()->viewUnderCursor ();
+    kpViewManager *vm = viewManager ();
+    return vm ? vm->viewUnderCursor () : 0;
 }
 
 kpViewManager *kpTool::viewManager () const
