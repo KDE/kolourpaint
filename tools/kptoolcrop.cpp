@@ -45,7 +45,7 @@
  * kpToolCropSetImageCommand
  */
 
-class kpToolCropSetImageCommand : public KCommand
+class kpToolCropSetImageCommand : public kpCommand
 {
 public:
     kpToolCropSetImageCommand (kpMainWindow *mainWindow);
@@ -53,23 +53,20 @@ public:
 
     /* (uninteresting child of macro cmd) */
     virtual QString name () const { return QString::null; }
+    
+    virtual int size () const { return kpPixmapFX::pixmapSize (m_oldPixmap); }
 
     virtual void execute ();
     virtual void unexecute ();
 
 protected:
-    kpDocument *document () const { return m_mainWindow ? m_mainWindow->document () : 0; }
-
-protected:
-    kpMainWindow *m_mainWindow;
     kpColor m_backgroundColor;
     QPixmap m_oldPixmap;
 };
 
 
 kpToolCropSetImageCommand::kpToolCropSetImageCommand (kpMainWindow *mainWindow)
-    : KCommand (),
-      m_mainWindow (mainWindow),
+    : kpCommand (mainWindow),
       m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid)
 {
 }
@@ -79,7 +76,7 @@ kpToolCropSetImageCommand::~kpToolCropSetImageCommand ()
 }
 
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolCropSetImageCommand::execute ()
 {
     m_oldPixmap = *document ()->pixmap ();
@@ -136,7 +133,7 @@ void kpToolCropSetImageCommand::execute ()
     document ()->setPixmap (newDocPixmap);
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolCropSetImageCommand::unexecute ()
 {
     document ()->setPixmap (m_oldPixmap);
@@ -149,7 +146,7 @@ void kpToolCropSetImageCommand::unexecute ()
  */
 
 kpToolCropCommand::kpToolCropCommand (kpMainWindow *mainWindow)
-    : KMacroCommand (i18n ("Crop Outside Selection"))
+    : kpMacroCommand (i18n ("Crop Outside Selection"), mainWindow)
 {
     if (!mainWindow ||
         !mainWindow->document () ||

@@ -29,7 +29,7 @@
 #ifndef __kptoolconverttoblackandwhite_h__
 #define __kptoolconverttoblackandwhite_h__
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 
 class QPixmap;
 class QString;
@@ -37,24 +37,22 @@ class QString;
 class kpMainWindow;
 
 
-class kpToolConvertToBlackAndWhiteCommand : public KCommand
+class kpToolConvertToBlackAndWhiteCommand : public kpCommand
 {
 public:
     kpToolConvertToBlackAndWhiteCommand (bool actOnSelection,
                                          kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpToolConvertToBlackAndWhiteCommand ();
+    
+    virtual QString name () const;
 
-private:
-    kpDocument *document () const;
+    virtual int size () const;
 
-public:
     virtual void execute ();
     virtual void unexecute ();
 
 private:
     bool m_actOnSelection;
-    kpMainWindow *m_mainWindow;
 
     QPixmap *m_oldPixmapPtr;
 };

@@ -202,7 +202,7 @@ kpColor kpMainWindow::backgroundColor (bool ofSelection) const
 
 
 // public
-void kpMainWindow::addImageOrSelectionCommand (KCommand *cmd,
+void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
     bool addSelCreateCmdIfSelAvail,
     bool addSelPullCmdIfSelAvail)
 {
@@ -233,17 +233,22 @@ void kpMainWindow::addImageOrSelectionCommand (KCommand *cmd,
     if (addSelCreateCmdIfSelAvail && sel && !sel->pixmap ())
     {
         // create selection region
-        m_commandHistory->addCommand (new kpToolSelectionCreateCommand (
+        kpCommand *createCommand = new kpToolSelectionCreateCommand (
             i18n ("Selection: Create"),
             *sel,
-            this),
-            false/*no exec - user already dragged out sel*/);
+            this);
+
+        if (kpToolSelectionCreateCommand::nextUndoCommandIsCreateBorder (commandHistory ()))
+            commandHistory ()->setNextUndoCommand (createCommand);
+        else
+            commandHistory ()->addCommand (createCommand,
+                                           false/*no exec - user already dragged out sel*/);
     }
 
 
     if (addSelPullCmdIfSelAvail && sel && !sel->pixmap ())
     {
-        KMacroCommand *macroCmd = new KMacroCommand (cmd->name ());
+        kpMacroCommand *macroCmd = new kpMacroCommand (cmd->name (), this);
 
         macroCmd->addCommand (new kpToolSelectionPullFromDocumentCommand (
             QString::null/*uninteresting child of macro cmd*/,

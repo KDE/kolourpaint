@@ -797,15 +797,16 @@ void kpToolPolygon::endShape (const QPoint &, const QRect &)
 
     QRect boundingRect = kpTool::neededRect (m_points.boundingRect (), m_lineWidth);
 
-    kpToolPolygonCommand *lineCommand = new kpToolPolygonCommand
-        (viewManager (), document (),
-            text (),
-            m_points, boundingRect,
-            color (m_mouseButton), color (1 - m_mouseButton),
-            m_lineWidth, Qt::SolidLine,
-            m_toolWidgetFillStyle,
-            document ()->getPixmapAt (boundingRect),
-            m_mode);
+    kpToolPolygonCommand *lineCommand =
+        new kpToolPolygonCommand
+            (text (),
+             m_points, boundingRect,
+             color (m_mouseButton), color (1 - m_mouseButton),
+             m_lineWidth, Qt::SolidLine,
+             m_toolWidgetFillStyle,
+             document ()->getPixmapAt (boundingRect),
+             m_mode,
+             mainWindow ());
 
     commandHistory ()->addCommand (lineCommand);
 
@@ -851,17 +852,16 @@ void kpToolPolygon::slotBackgroundColorChanged (const kpColor &)
  * kpToolPolygonCommand
  */
 
-kpToolPolygonCommand::kpToolPolygonCommand (kpViewManager *viewManager, kpDocument *document,
-                                            const QString &toolText,
+kpToolPolygonCommand::kpToolPolygonCommand (const QString &name,
                                             const QPointArray &points,
                                             const QRect &normalizedRect,
                                             const kpColor &foregroundColor, const kpColor &backgroundColor,
                                             int lineWidth, Qt::PenStyle lineStyle,
                                             kpToolWidgetFillStyle *toolWidgetFillStyle,
                                             const QPixmap &originalArea,
-                                            enum kpToolPolygon::Mode mode)
-    : m_viewManager (viewManager), m_document (document),
-      m_name (toolText),
+                                            enum kpToolPolygon::Mode mode,
+                                            kpMainWindow *mainWindow)
+    : kpNamedCommand (name, mainWindow),
       m_points (points),
       m_normalizedRect (normalizedRect),
       m_foregroundColor (foregroundColor), m_backgroundColor (backgroundColor),
@@ -877,6 +877,16 @@ kpToolPolygonCommand::~kpToolPolygonCommand ()
 {
 }
 
+
+// public virtual [base kpCommand]
+int kpToolPolygonCommand::size () const
+{
+    return kpPixmapFX::pointArraySize (m_points) +
+           kpPixmapFX::pixmapSize (m_originalArea);
+}
+
+
+// public virtual [base kpCommand]
 void kpToolPolygonCommand::execute ()
 {
     QPixmap p = pixmap (m_originalArea,
@@ -885,17 +895,13 @@ void kpToolPolygonCommand::execute ()
                         m_lineWidth, m_lineStyle,
                         m_toolWidgetFillStyle,
                         m_mode);
-    m_document->setPixmapAt (p, m_normalizedRect.topLeft ());
+    document ()->setPixmapAt (p, m_normalizedRect.topLeft ());
 }
 
+// public virtual [base kpCommand]
 void kpToolPolygonCommand::unexecute ()
 {
-    m_document->setPixmapAt (m_originalArea, m_normalizedRect.topLeft ());
-}
-
-QString kpToolPolygonCommand::name () const
-{
-    return m_name;
+    document ()->setPixmapAt (m_originalArea, m_normalizedRect.topLeft ());
 }
 
 #include <kptoolpolygon.moc>

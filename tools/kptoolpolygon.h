@@ -37,7 +37,7 @@
 #include <qpointarray.h>
 #include <qrect.h>
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 
 #include <kpcolor.h>
 #include <kptool.h>
@@ -122,31 +122,26 @@ private:
     QPointArray m_points;
 };
 
-class kpToolPolygonCommand : public KCommand
+class kpToolPolygonCommand : public kpNamedCommand
 {
 public:
-    kpToolPolygonCommand (kpViewManager *m_viewManager, kpDocument *m_document,
-                          const QString &toolText,
+    kpToolPolygonCommand (const QString &name,
                           const QPointArray &points,
                           const QRect &normalizedRect,
                           const kpColor &foregroundColor, const kpColor &backgroundColor,
                           int lineWidth, Qt::PenStyle lineStyle,
                           kpToolWidgetFillStyle *toolWidgetFillStyle,
                           const QPixmap &originalArea,
-                          kpToolPolygon::Mode mode);
+                          kpToolPolygon::Mode mode,
+                          kpMainWindow *mainWindow);
     virtual ~kpToolPolygonCommand ();
 
+    virtual int size () const;
+    
     virtual void execute ();
     virtual void unexecute ();
 
-    virtual QString name () const;
-
 private:
-    kpViewManager *m_viewManager;
-    kpDocument *m_document;
-
-    QString m_name;
-
     QPointArray m_points;
     QRect m_normalizedRect;
 

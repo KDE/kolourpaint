@@ -828,19 +828,21 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
         m_currentCreateTextCommand = 0;
     }
 
-    KMacroCommand *cmd = 0;
+    kpMacroCommand *cmd = 0;
     if (m_currentMoveCommand)
     {
         if (m_currentMoveCommandIsSmear)
         {
-            cmd = new KMacroCommand (i18n ("%1: Smear")
-                                         .arg (document ()->selection ()->name ()));
+            cmd = new kpMacroCommand (i18n ("%1: Smear")
+                                         .arg (document ()->selection ()->name ()),
+                                      mainWindow ());
         }
         else
         {
-            cmd = new KMacroCommand (document ()->selection ()->isText () ?
-                                         i18n ("Text: Move Box") :
-                                         i18n ("Selection: Move"));
+            cmd = new kpMacroCommand ((document ()->selection ()->isText () ?
+                                        i18n ("Text: Move Box") :
+                                        i18n ("Selection: Move")),
+                                      mainWindow ());
         }
 
         if (document ()->selection ()->isText ())
@@ -848,7 +850,8 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
     }
     else if (m_currentResizeScaleCommand)
     {
-        cmd = new KMacroCommand (m_currentResizeScaleCommand->KNamedCommand::name ());
+        cmd = new kpMacroCommand (m_currentResizeScaleCommand->kpNamedCommand::name (),
+                                  mainWindow ());
 
         if (document ()->selection ()->isText ())
             viewManager ()->setTextCursorBlinkState (true);
@@ -874,11 +877,16 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
             // just the border
             selection.setPixmap (QPixmap ());
 
-            commandHistory ()->addCommand (new kpToolSelectionCreateCommand (
+            kpCommand *createCommand = new kpToolSelectionCreateCommand (
                 i18n ("Selection: Create"),
                 selection,
-                mainWindow ()),
-                false/*no exec - user already dragged out sel*/);
+                mainWindow ());
+
+            if (kpToolSelectionCreateCommand::nextUndoCommandIsCreateBorder (commandHistory ()))
+                commandHistory ()->setNextUndoCommand (createCommand);
+            else
+                commandHistory ()->addCommand (createCommand,
+                                               false/*no exec - user already dragged out sel*/);
 
 
             cmd->addCommand (m_currentPullFromDocumentCommand);
@@ -1139,18 +1147,11 @@ void kpToolSelection::slotColorSimilarityChanged (double, int)
 kpToolSelectionCreateCommand::kpToolSelectionCreateCommand (const QString &name,
                                                             const kpSelection &fromSelection,
                                                             kpMainWindow *mainWindow)
-    : m_name (name),
+    : kpNamedCommand (name, mainWindow),
       m_fromSelection (0),
-      m_mainWindow (mainWindow),
       m_textRow (0), m_textCol (0)
 {
     setFromSelection (fromSelection);
-}
-
-// public virtual [base KCommand]
-QString kpToolSelectionCreateCommand::name () const
-{
-    return m_name;
 }
 
 kpToolSelectionCreateCommand::~kpToolSelectionCreateCommand ()
@@ -1159,12 +1160,41 @@ kpToolSelectionCreateCommand::~kpToolSelectionCreateCommand ()
 }
 
 
-// private
-kpDocument *kpToolSelectionCreateCommand::document () const
+// public virtual [base kpCommand]
+int kpToolSelectionCreateCommand::size () const
 {
-    return m_mainWindow ? m_mainWindow->document () : 0;
+    return kpPixmapFX::selectionSize (m_fromSelection);
 }
 
+
+// public static
+bool kpToolSelectionCreateCommand::nextUndoCommandIsCreateBorder (
+    kpCommandHistory *commandHistory)
+{
+    if (!commandHistory)
+        return false;
+
+    kpCommand *cmd = commandHistory->nextUndoCommand ();
+    if (!cmd)
+        return false;
+
+    kpToolSelectionCreateCommand *c = dynamic_cast <kpToolSelectionCreateCommand *> (cmd);
+    if (!c)
+        return false;
+
+    const kpSelection *sel = c->fromSelection ();
+    if (!sel)
+        return false;
+
+    return (!sel->pixmap ());
+}
+
+
+// public
+const kpSelection *kpToolSelectionCreateCommand::fromSelection () const
+{
+    return m_fromSelection;
+}
 
 // public
 void kpToolSelectionCreateCommand::setFromSelection (const kpSelection &fromSelection)
@@ -1173,7 +1203,7 @@ void kpToolSelectionCreateCommand::setFromSelection (const kpSelection &fromSele
     m_fromSelection = new kpSelection (fromSelection);
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolSelectionCreateCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION
@@ -1214,7 +1244,7 @@ void kpToolSelectionCreateCommand::execute ()
     }
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolSelectionCreateCommand::unexecute ()
 {
     kpDocument *doc = document ();
@@ -1226,8 +1256,7 @@ void kpToolSelectionCreateCommand::unexecute ()
 
     if (!doc->selection ())
     {
-        // TODO: be a kdError() after I fix Bug #5 (2 "Selection: Create" Undo entries)
-        kdDebug () << "kpToolSelectionCreateCommand::unexecute() without sel region" << endl;
+        kdError () << "kpToolSelectionCreateCommand::unexecute() without sel region" << endl;
         return;
     }
 
@@ -1247,8 +1276,7 @@ void kpToolSelectionCreateCommand::unexecute ()
 
 kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (const QString &name,
                                                                                 kpMainWindow *mainWindow)
-    : m_name (name),
-      m_mainWindow (mainWindow),
+    : kpNamedCommand (name, mainWindow),
       m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid),
       m_originalSelectionRegion (0)
 {
@@ -1259,26 +1287,20 @@ kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (
 #endif
 }
 
-// public virtual [base KCommand]
-QString kpToolSelectionPullFromDocumentCommand::name () const
-{
-    return m_name;
-}
-
 kpToolSelectionPullFromDocumentCommand::~kpToolSelectionPullFromDocumentCommand ()
 {
     delete m_originalSelectionRegion;
 }
 
 
-// private
-kpDocument *kpToolSelectionPullFromDocumentCommand::document () const
+// public virtual [base kpCommand]
+int kpToolSelectionPullFromDocumentCommand::size () const
 {
-    return m_mainWindow ? m_mainWindow->document () : 0;
+    return kpPixmapFX::selectionSize (m_originalSelectionRegion);
 }
 
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolSelectionPullFromDocumentCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
@@ -1329,7 +1351,7 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
         vm->restoreQueueUpdates ();
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolSelectionPullFromDocumentCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
@@ -1376,30 +1398,25 @@ kpToolSelectionTransparencyCommand::kpToolSelectionTransparencyCommand (const QS
     const kpSelectionTransparency &st,
     const kpSelectionTransparency &oldST,
     kpMainWindow *mainWindow)
-    : m_name (name),
+    : kpNamedCommand (name, mainWindow),
       m_st (st),
-      m_oldST (oldST),
-      m_mainWindow (mainWindow)
+      m_oldST (oldST)
 {
-}
-
-// public virtual [base KCommand]
-QString kpToolSelectionTransparencyCommand::name () const
-{
-    return m_name;
 }
 
 kpToolSelectionTransparencyCommand::~kpToolSelectionTransparencyCommand ()
 {
 }
 
-// private
-kpDocument *kpToolSelectionTransparencyCommand::document () const
+
+// public virtual [base kpCommand]
+int kpToolSelectionTransparencyCommand::size () const
 {
-    return m_mainWindow ? m_mainWindow->document () : 0;
+    return 0;
 }
 
-// public virtual [base KCommand]
+
+// public virtual [base kpCommand]
 void kpToolSelectionTransparencyCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
@@ -1415,7 +1432,7 @@ void kpToolSelectionTransparencyCommand::execute ()
         doc->selection ()->setTransparency (m_st);
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolSelectionTransparencyCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
@@ -1439,8 +1456,7 @@ void kpToolSelectionTransparencyCommand::unexecute ()
 
 kpToolSelectionMoveCommand::kpToolSelectionMoveCommand (const QString &name,
                                                         kpMainWindow *mainWindow)
-    : m_name (name),
-      m_mainWindow (mainWindow)
+    : kpNamedCommand (name, mainWindow)
 {
     kpDocument *doc = document ();
     if (doc && doc->selection ())
@@ -1449,21 +1465,8 @@ kpToolSelectionMoveCommand::kpToolSelectionMoveCommand (const QString &name,
     }
 }
 
-// public virtual [base KCommand]
-QString kpToolSelectionMoveCommand::name () const
-{
-    return m_name;
-}
-
 kpToolSelectionMoveCommand::~kpToolSelectionMoveCommand ()
 {
-}
-
-
-// private
-kpDocument *kpToolSelectionMoveCommand::document () const
-{
-    return m_mainWindow ? m_mainWindow->document () : 0;
 }
 
 
@@ -1488,7 +1491,15 @@ kpSelection kpToolSelectionMoveCommand::originalSelection () const
 }
 
 
-// public virtual [base KCommand]
+// public virtual [base kpComand]
+int kpToolSelectionMoveCommand::size () const
+{
+    return kpPixmapFX::pixmapSize (m_oldDocumentPixmap) +
+           kpPixmapFX::pointArraySize (m_copyOntoDocumentPoints);
+}
+
+
+// public virtual [base kpCommand]
 void kpToolSelectionMoveCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
@@ -1536,7 +1547,7 @@ void kpToolSelectionMoveCommand::execute ()
         vm->restoreQueueUpdates ();
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolSelectionMoveCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
@@ -1685,10 +1696,10 @@ void kpToolSelectionMoveCommand::finalize ()
 
 kpToolSelectionResizeScaleCommand::kpToolSelectionResizeScaleCommand (
         kpMainWindow *mainWindow)
-    : KNamedCommand (mainWindow->document ()->selection ()->isText () ?
+    : kpNamedCommand (mainWindow->document ()->selection ()->isText () ?
                          i18n ("Text: Resize Box") :
-                         i18n ("Selection: Smooth Scale")),
-      m_mainWindow (mainWindow),
+                         i18n ("Selection: Smooth Scale"),
+                      mainWindow),
       m_smoothScaleTimer (new QTimer (this))
 {
     m_originalSelection = *selection ();
@@ -1706,10 +1717,10 @@ kpToolSelectionResizeScaleCommand::~kpToolSelectionResizeScaleCommand ()
 }
 
 
-// protected
-kpSelection *kpToolSelectionResizeScaleCommand::selection () const
+// public virtual
+int kpToolSelectionResizeScaleCommand::size () const
 {
-    return m_mainWindow->document ()->selection ();
+    return m_originalSelection.size ();
 }
 
 
@@ -1768,8 +1779,11 @@ void kpToolSelectionResizeScaleCommand::resizeAndMoveTo (int width, int height,
                                                          const QPoint &point,
                                                          bool delayed)
 {
-    if (width == m_newWidth && height == m_newHeight && point == m_newTopLeft)
+    if (width == m_newWidth && height == m_newHeight &&
+        point == m_newTopLeft)
+    {
         return;
+    }
 
     m_newWidth = width;
     m_newHeight = height;
@@ -1875,17 +1889,10 @@ void kpToolSelectionResizeScaleCommand::unexecute ()
 kpToolSelectionDestroyCommand::kpToolSelectionDestroyCommand (const QString &name,
                                                               bool pushOntoDocument,
                                                               kpMainWindow *mainWindow)
-    : m_name (name),
+    : kpNamedCommand (name, mainWindow),
       m_pushOntoDocument (pushOntoDocument),
-      m_oldSelection (0),
-      m_mainWindow (mainWindow)
+      m_oldSelection (0)
 {
-}
-
-// public virtual [base KCommand]
-QString kpToolSelectionDestroyCommand::name () const
-{
-    return m_name;
 }
 
 kpToolSelectionDestroyCommand::~kpToolSelectionDestroyCommand ()
@@ -1894,14 +1901,15 @@ kpToolSelectionDestroyCommand::~kpToolSelectionDestroyCommand ()
 }
 
 
-// private
-kpDocument *kpToolSelectionDestroyCommand::document () const
+// public virtual [base kpCommand]
+int kpToolSelectionDestroyCommand::size () const
 {
-    return m_mainWindow ? m_mainWindow->document () : 0;
+    return kpPixmapFX::pixmapSize (m_oldDocPixmap) +
+           kpPixmapFX::selectionSize (m_oldSelection);
 }
 
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolSelectionDestroyCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION
@@ -1937,7 +1945,7 @@ void kpToolSelectionDestroyCommand::execute ()
         m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolSelectionDestroyCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION

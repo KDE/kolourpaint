@@ -31,7 +31,7 @@
 
 #include <qrect.h>
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 
 #include <kpcolor.h>
 #include <kpselection.h>
@@ -51,6 +51,8 @@ class kpToolAutoCropBorder
 public:
     kpToolAutoCropBorder (const QPixmap *pixmapPtr, int processedColorSimilarity);
 
+    int size () const;
+    
     const QPixmap *pixmap () const;
     int processedColorSimilarity () const;
     QRect rect () const;
@@ -80,7 +82,7 @@ private:
 };
 
 
-class kpToolAutoCropCommand : public KCommand
+class kpToolAutoCropCommand : public kpCommand
 {
 public:
     kpToolAutoCropCommand (bool actOnSelection,
@@ -89,13 +91,12 @@ public:
                            const kpToolAutoCropBorder &topBorder,
                            const kpToolAutoCropBorder &botBorder,
                            kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpToolAutoCropCommand ();
+    
+    virtual QString name () const;
 
-private:
-    kpDocument *document () const;
-    kpViewManager *viewManager () const;
-
+    virtual int size () const;
+    
 private:
     void getUndoPixmap (const kpToolAutoCropBorder &border, QPixmap **pixmap);
     void getUndoPixmaps ();
@@ -111,7 +112,6 @@ private:
     bool m_actOnSelection;
     kpToolAutoCropBorder m_leftBorder, m_rightBorder, m_topBorder, m_botBorder;
     QPixmap *m_leftPixmap, *m_rightPixmap, *m_topPixmap, *m_botPixmap;
-    kpMainWindow *m_mainWindow;
 
     QRect m_contentsRect;
     int m_oldWidth, m_oldHeight;

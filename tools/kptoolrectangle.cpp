@@ -530,11 +530,13 @@ void kpToolRectangle::endDraw (const QPoint &, const QRect &)
     // TODO: flicker
     viewManager ()->invalidateTempPixmap ();
 
-    mainWindow ()->commandHistory ()->addCommand (new kpToolRectangleCommand
-        (document (), viewManager (), m_mode,
-        m_pen [m_mouseButton], m_maskPen [m_mouseButton],
-        m_brush [m_mouseButton], m_maskBrush [m_mouseButton],
-        m_toolRectangleRect, m_toolRectangleStartPoint, m_toolRectangleEndPoint));
+    mainWindow ()->commandHistory ()->addCommand (
+        new kpToolRectangleCommand
+            (m_mode,
+             m_pen [m_mouseButton], m_maskPen [m_mouseButton],
+             m_brush [m_mouseButton], m_maskBrush [m_mouseButton],
+             m_toolRectangleRect, m_toolRectangleStartPoint, m_toolRectangleEndPoint,
+             mainWindow ()));
 
     setUserMessage (haventBegunDrawUserMessage ());
 }
@@ -544,13 +546,13 @@ void kpToolRectangle::endDraw (const QPoint &, const QRect &)
  * kpToolRectangleCommand
  */
 
-kpToolRectangleCommand::kpToolRectangleCommand (kpDocument *document, kpViewManager *viewManager,
-                                                kpToolRectangle::Mode mode,
+kpToolRectangleCommand::kpToolRectangleCommand (kpToolRectangle::Mode mode,
                                                 const QPen &pen, const QPen &maskPen,
                                                 const QBrush &brush, const QBrush &maskBrush,
                                                 const QRect &rect,
-                                                const QPoint &startPoint, const QPoint &endPoint)
-    : m_document (document), m_viewManager (viewManager),
+                                                const QPoint &startPoint, const QPoint &endPoint,
+                                                kpMainWindow *mainWindow)
+    : kpCommand (mainWindow),
       m_mode (mode),
       m_pen (pen), m_maskPen (maskPen),
       m_brush (brush), m_maskBrush (maskBrush),
@@ -566,40 +568,8 @@ kpToolRectangleCommand::~kpToolRectangleCommand ()
     delete m_oldPixmapPtr;
 }
 
-// virtual
-void kpToolRectangleCommand::execute ()
-{
-    // store Undo info
-    if (!m_oldPixmapPtr)
-    {
-        // OPT: I can do better with no brush
-        m_oldPixmapPtr = new QPixmap ();
-        *m_oldPixmapPtr = m_document->getPixmapAt (m_rect);
-    }
-    else
-        kdError () << "kpToolRectangleCommand::execute() m_oldPixmapPtr not null" << endl;
 
-    m_document->setPixmapAt (pixmap (m_mode, m_document,
-                                     m_rect, m_startPoint, m_endPoint,
-                                     m_pen, m_maskPen,
-                                     m_brush, m_maskBrush),
-                             m_rect.topLeft ());
-}
-
-// virtual
-void kpToolRectangleCommand::unexecute ()
-{
-    if (m_oldPixmapPtr)
-    {
-        m_document->setPixmapAt (*m_oldPixmapPtr, m_rect.topLeft ());
-
-        delete m_oldPixmapPtr;
-        m_oldPixmapPtr = 0;
-    }
-    else
-        kdError () << "kpToolRectangleCommand::unexecute() m_oldPixmapPtr null" << endl;
-}
-
+// public virtual [base kpCommand]
 QString kpToolRectangleCommand::name () const
 {
     switch (m_mode)
@@ -614,6 +584,56 @@ QString kpToolRectangleCommand::name () const
         kdError () << "kpToolRectangleCommand::name() passed unknown mode: " << int (m_mode) << endl;
         return QString::null;
     }
+}
+
+
+// public virtual [base kpCommand]
+int kpToolRectangleCommand::size () const
+{
+    return kpPixmapFX::pixmapSize (m_oldPixmapPtr);
+}
+
+
+// public virtual [base kpCommand]
+void kpToolRectangleCommand::execute ()
+{
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
+    
+    // store Undo info
+    if (!m_oldPixmapPtr)
+    {
+        // OPT: I can do better with no brush
+        m_oldPixmapPtr = new QPixmap ();
+        *m_oldPixmapPtr = doc->getPixmapAt (m_rect);
+    }
+    else
+        kdError () << "kpToolRectangleCommand::execute() m_oldPixmapPtr not null" << endl;
+
+    doc->setPixmapAt (pixmap (m_mode, doc,
+                              m_rect, m_startPoint, m_endPoint,
+                              m_pen, m_maskPen,
+                              m_brush, m_maskBrush),
+                      m_rect.topLeft ());
+}
+
+// public virtual [base kpCommand]
+void kpToolRectangleCommand::unexecute ()
+{
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
+    
+    if (m_oldPixmapPtr)
+    {
+        doc->setPixmapAt (*m_oldPixmapPtr, m_rect.topLeft ());
+
+        delete m_oldPixmapPtr;
+        m_oldPixmapPtr = 0;
+    }
+    else
+        kdError () << "kpToolRectangleCommand::unexecute() m_oldPixmapPtr null" << endl;
 }
 
 #include <kptoolrectangle.moc>

@@ -46,13 +46,19 @@
 kpToolConvertToBlackAndWhiteCommand::kpToolConvertToBlackAndWhiteCommand (
     bool actOnSelection,
     kpMainWindow *mainWindow)
-    : m_actOnSelection (actOnSelection),
-      m_mainWindow (mainWindow),
+    : kpCommand (mainWindow),
+      m_actOnSelection (actOnSelection),
       m_oldPixmapPtr (0)
 {
 }
 
-// public virtual [base KCommand]
+kpToolConvertToBlackAndWhiteCommand::~kpToolConvertToBlackAndWhiteCommand ()
+{
+    delete m_oldPixmapPtr;
+}
+
+
+// public virtual [base kpCommand]
 QString kpToolConvertToBlackAndWhiteCommand::name () const
 {
     QString opName = i18n ("Convert to Black && White");
@@ -63,20 +69,15 @@ QString kpToolConvertToBlackAndWhiteCommand::name () const
         return opName;
 }
 
-kpToolConvertToBlackAndWhiteCommand::~kpToolConvertToBlackAndWhiteCommand ()
+
+// public virtual [base kpCommand]
+int kpToolConvertToBlackAndWhiteCommand::size () const
 {
-    delete m_oldPixmapPtr;
+    return kpPixmapFX::pixmapSize (m_oldPixmapPtr);
 }
 
 
-// private
-kpDocument *kpToolConvertToBlackAndWhiteCommand::document () const
-{
-    return m_mainWindow ? m_mainWindow->document () : 0;
-}
-
-
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolConvertToBlackAndWhiteCommand::execute ()
 {
 #if DEBUG_KP_TOOL_CONVERT_TO_BLACK_AND_WHITE && 0
@@ -100,7 +101,7 @@ void kpToolConvertToBlackAndWhiteCommand::execute ()
     QApplication::restoreOverrideCursor ();
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolConvertToBlackAndWhiteCommand::unexecute ()
 {
     kpDocument *doc = document ();

@@ -30,12 +30,12 @@
 #define KP_TOOL_CROP_H
 
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 
 class kpMainWindow;
 
 
-class kpToolCropCommand : public KMacroCommand
+class kpToolCropCommand : public kpMacroCommand
 {
 public:
     kpToolCropCommand (kpMainWindow *mainWindow);

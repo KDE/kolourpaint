@@ -45,6 +45,8 @@ public:
                  int processedColorSimilarity);
     ~kpFloodFill ();
 
+    int size () const;
+    
     kpColor color () const { return m_color; }
     int processedColorSimilarity () const { return m_processedColorSimilarity; }
 
@@ -76,9 +78,16 @@ private:
         {
         }
 
+        static int size ()
+        {
+            return sizeof (FillLine);
+        }
+        
         int m_y, m_x1, m_x2;
     };
 
+    int fillLinesListSize (const QValueList <kpFloodFill::FillLine> &fillLines) const;
+    
     void addLine (int y, int x1, int x2);
     kpColor pixelColor (int x, int y, bool *beenHere = 0) const;
     bool shouldGoTo (int x, int y) const;

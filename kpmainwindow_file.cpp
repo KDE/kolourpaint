@@ -36,7 +36,6 @@
 #include <dcopclient.h>
 #include <kapplication.h>
 #include <kaction.h>
-#include <kcommand.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kfiledialog.h>

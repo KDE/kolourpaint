@@ -41,13 +41,19 @@
 
 kpToolConvertToGrayscaleCommand::kpToolConvertToGrayscaleCommand (bool actOnSelection,
                                                                   kpMainWindow *mainWindow)
-    : m_actOnSelection (actOnSelection),
-      m_mainWindow (mainWindow),
+    : kpCommand (mainWindow),
+      m_actOnSelection (actOnSelection),
       m_oldPixmapPtr (0)
 {
 }
 
-// public virtual [base KCommand]
+kpToolConvertToGrayscaleCommand::~kpToolConvertToGrayscaleCommand ()
+{
+    delete m_oldPixmapPtr;
+}
+
+
+// public virtual [base kpCommand]
 QString kpToolConvertToGrayscaleCommand::name () const
 {
     QString opName = i18n ("Convert to Grayscale");
@@ -58,20 +64,15 @@ QString kpToolConvertToGrayscaleCommand::name () const
         return opName;
 }
 
-kpToolConvertToGrayscaleCommand::~kpToolConvertToGrayscaleCommand ()
+
+// public virtual [base kpCommand]
+int kpToolConvertToGrayscaleCommand::size () const
 {
-    delete m_oldPixmapPtr;
+    return kpPixmapFX::pixmapSize (m_oldPixmapPtr);
 }
 
 
-// private
-kpDocument *kpToolConvertToGrayscaleCommand::document () const
-{
-    return m_mainWindow ? m_mainWindow->document () : 0;
-}
-
-
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolConvertToGrayscaleCommand::execute ()
 {
     kpDocument *doc = document ();
@@ -90,7 +91,7 @@ void kpToolConvertToGrayscaleCommand::execute ()
     QApplication::restoreOverrideCursor ();
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolConvertToGrayscaleCommand::unexecute ()
 {
     kpDocument *doc = document ();

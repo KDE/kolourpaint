@@ -29,7 +29,7 @@
 #ifndef __kptoolclear_h__
 #define __kptoolclear_h__
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 
 #include <kpcolor.h>
 
@@ -40,23 +40,21 @@ class kpDocument;
 class kpMainWindow;
 
 
-class kpToolClearCommand : public KCommand
+class kpToolClearCommand : public kpCommand
 {
 public:
     kpToolClearCommand (bool actOnSelection, kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpToolClearCommand ();
 
-private:
-    kpDocument *document () const;
+    virtual QString name () const;
 
-public:
+    virtual int size () const;
+    
     virtual void execute ();
     virtual void unexecute ();
 
 private:
     bool m_actOnSelection;
-    kpMainWindow *m_mainWindow;
 
     kpColor m_newColor;
     QPixmap *m_oldPixmapPtr;

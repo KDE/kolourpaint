@@ -32,7 +32,7 @@
 #include <qstring.h>
 #include <qwidget.h>
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 
 class QPixmap;
 
@@ -40,17 +40,16 @@ class kpDocument;
 class kpMainWindow;
 
 
-class kpColorEffectCommand : public KCommand
+class kpColorEffectCommand : public kpCommand
 {
 public:
     kpColorEffectCommand (const QString &name,
                           bool actOnSelection,
                           kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpColorEffectCommand ();
 
-private:
-    kpDocument *document () const;
+    virtual QString name () const;
+    virtual int size () const;
 
 public:
     virtual void execute ();
@@ -62,7 +61,6 @@ protected:
 private:
     QString m_name;
     bool m_actOnSelection;
-    kpMainWindow *m_mainWindow;
 
     QPixmap *m_oldPixmapPtr;
 };

@@ -72,9 +72,9 @@ kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
                                                     int newWidth, int newHeight,
                                                     Type type,
                                                     kpMainWindow *mainWindow)
-    : m_actOnSelection (actOnSelection),
+    : kpCommand (mainWindow),
+      m_actOnSelection (actOnSelection),
       m_type (type),
-      m_mainWindow (mainWindow),
       m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid),
       m_oldSelection (0)
 {
@@ -97,7 +97,13 @@ kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
                                  !document ()->selection ()->pixmap ());
 }
 
-// virtual
+kpToolResizeScaleCommand::~kpToolResizeScaleCommand ()
+{
+    delete m_oldSelection;
+}
+
+
+// public virtual [base kpCommand]
 QString kpToolResizeScaleCommand::name () const
 {
     QString opName;
@@ -126,9 +132,13 @@ QString kpToolResizeScaleCommand::name () const
         return opName;
 }
 
-kpToolResizeScaleCommand::~kpToolResizeScaleCommand ()
+// public virtual [base kpCommand]
+int kpToolResizeScaleCommand::size () const
 {
-    delete m_oldSelection;
+    return kpPixmapFX::pixmapSize (m_oldPixmap) +
+           kpPixmapFX::pixmapSize (m_oldRightPixmap) +
+           kpPixmapFX::pixmapSize (m_oldBottomPixmap) +
+           (m_oldSelection ? m_oldSelection->size () : 0);
 }
 
 
@@ -173,13 +183,6 @@ void kpToolResizeScaleCommand::resize (int width, int height)
     m_isLosslessScale = ((m_type == Scale) &&
                          (m_newWidth / m_oldWidth * m_oldWidth == m_newWidth) &&
                          (m_newHeight / m_oldHeight * m_oldHeight == m_newHeight));
-}
-
-
-// protected
-kpDocument *kpToolResizeScaleCommand::document () const
-{
-    return m_mainWindow ? m_mainWindow->document () : 0;
 }
 
 
@@ -243,7 +246,7 @@ void kpToolResizeScaleCommand::scaleSelectionRegionWithDocument ()
 }
 
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolResizeScaleCommand::execute ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
@@ -356,7 +359,7 @@ void kpToolResizeScaleCommand::execute ()
     }
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolResizeScaleCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND

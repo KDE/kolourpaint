@@ -50,7 +50,6 @@ class QStringList;
 class KAction;
 class KFontAction;
 class KFontSizeAction;
-class KCommand;
 class KSelectAction;
 class KToggleAction;
 class KToolBar;
@@ -59,6 +58,7 @@ class KRecentFilesAction;
 
 class kpColor;
 class kpColorToolBar;
+class kpCommand;
 class kpCommandHistory;
 class kpDocument;
 class kpView;
@@ -360,7 +360,7 @@ public slots:
 
     void slotSelectAll ();
 private:
-    void addDeselectFirstCommand (KCommand *cmd);
+    void addDeselectFirstCommand (kpCommand *cmd);
 public slots:
     void slotDeselect ();
 private slots:
@@ -460,7 +460,7 @@ private slots:
 
 public:
     kpColor backgroundColor (bool ofSelection = false) const;
-    void addImageOrSelectionCommand (KCommand *cmd,
+    void addImageOrSelectionCommand (kpCommand *cmd,
                                      bool addSelCreateCmdIfSelAvail = true,
                                      bool addSelPullCmdIfSelAvail = true);
 

@@ -84,9 +84,9 @@ void kpToolFloodFill::beginDraw ()
 
     // Flood Fill is an expensive CPU operation so we only fill at a
     // mouse click (beginDraw ()), not on mouse move (virtually draw())
-    m_currentCommand = new kpToolFloodFillCommand (document (), viewManager (),
-                                                   m_currentPoint.x (), m_currentPoint.y (),
-                                                   color (m_mouseButton), processedColorSimilarity ());
+    m_currentCommand = new kpToolFloodFillCommand (m_currentPoint.x (), m_currentPoint.y (),
+                                                   color (m_mouseButton), processedColorSimilarity (),
+                                                   mainWindow ());
 
     if (m_currentCommand->prepareColorToChange ())
     {
@@ -162,29 +162,38 @@ void kpToolFloodFill::endDraw (const QPoint &, const QRect &)
  * kpToolFloodFillCommand
  */
 
-kpToolFloodFillCommand::kpToolFloodFillCommand (kpDocument *document, kpViewManager *viewManager,
-                                                int x, int y,
-                                                const kpColor &color, int processedColorSimilarity)
-    : kpFloodFill (document->pixmap (), x, y, color, processedColorSimilarity),
-      m_document (document), m_viewManager (viewManager),
+kpToolFloodFillCommand::kpToolFloodFillCommand (int x, int y,
+                                                const kpColor &color, int processedColorSimilarity,
+                                                kpMainWindow *mainWindow)
+    : kpCommand (mainWindow),
+      kpFloodFill (document ()->pixmap (), x, y, color, processedColorSimilarity),
       m_fillEntirePixmap (false)
 {
-}
-
-// virtual
-QString kpToolFloodFillCommand::name () const
-{
-    return i18n ("Flood Fill");
 }
 
 kpToolFloodFillCommand::~kpToolFloodFillCommand ()
 {
 }
 
+
+// public virtual [base kpCommand]
+QString kpToolFloodFillCommand::name () const
+{
+    return i18n ("Flood Fill");
+}
+
+// public virtual [base kpCommand]
+int kpToolFloodFillCommand::size () const
+{
+    return kpFloodFill::size () + kpPixmapFX::pixmapSize (m_oldPixmap);
+}
+
+
 void kpToolFloodFillCommand::setFillEntirePixmap (bool yes)
 {
     m_fillEntirePixmap = yes;
 }
+
 
 // virtual
 void kpToolFloodFillCommand::execute ()
@@ -193,9 +202,14 @@ void kpToolFloodFillCommand::execute ()
     kdDebug () << "kpToolFloodFillCommand::execute() m_fillEntirePixmap=" << m_fillEntirePixmap << endl;
 #endif
 
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
+
+    
     if (m_fillEntirePixmap)
     {
-        m_document->fill (kpFloodFill::color ());
+        doc->fill (kpFloodFill::color ());
     }
     else
     {
@@ -204,10 +218,10 @@ void kpToolFloodFillCommand::execute ()
         {
             QApplication::setOverrideCursor (QCursor::waitCursor);
 
-            m_oldPixmap = m_document->getPixmapAt (rect);
+            m_oldPixmap = doc->getPixmapAt (rect);
 
             kpFloodFill::fill ();
-            m_document->slotContentsChanged (rect);
+            doc->slotContentsChanged (rect);
 
             QApplication::restoreOverrideCursor ();
         }
@@ -223,20 +237,25 @@ void kpToolFloodFillCommand::execute ()
 // virtual
 void kpToolFloodFillCommand::unexecute ()
 {
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
+
+    
     if (m_fillEntirePixmap)
     {
-        m_document->fill (kpFloodFill::colorToChange ());
+        doc->fill (kpFloodFill::colorToChange ());
     }
     else
     {
         QRect rect = kpFloodFill::boundingRect ();
         if (rect.isValid ())
         {
-            m_document->setPixmapAt (m_oldPixmap, rect.topLeft ());
+            doc->setPixmapAt (m_oldPixmap, rect.topLeft ());
 
             m_oldPixmap.resize (0, 0);
 
-            m_document->slotContentsChanged (rect);
+            doc->slotContentsChanged (rect);
         }
     }
 }

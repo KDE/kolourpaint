@@ -26,26 +26,55 @@
 */
 
 
-#ifndef __kppixmapfx_h__
-#define __kppixmapfx_h__
+#ifndef KP_PIXMAP_FX_H
+#define KP_PIXMAP_FX_H
 
 
 #include <qstring.h>
 
 class QBitmap;
 class QImage;
+class QPointArray;
 class QPixmap;
 class QPoint;
 class QRect;
+class QString;
 class QWidget;
 class QWMatrix;
 
 class kpColor;
+class kpSelection;
 
 
 class kpPixmapFX
 {
 public:
+    //
+    // QPixmap Statistics
+    //
+
+    // Returns the width * height.
+    static int pixmapArea (const QPixmap &pixmap);
+    static int pixmapArea (const QPixmap *pixmap);
+    static int pixmapArea (int width, int height);
+
+    // Returns the estimated size of <pixmap> in pixmap memory.
+    static int pixmapSize (const QPixmap &pixmap);
+    static int pixmapSize (const QPixmap *pixmap);
+    static int pixmapSize (int width, int height, int depth);
+
+    static int imageSize (const QImage &image);
+    static int imageSize (const QImage *image);
+    static int imageSize (int width, int height, int depth);
+
+    static int selectionSize (const kpSelection &sel);
+    static int selectionSize (const kpSelection *sel);
+
+    static int stringSize (const QString &string);
+
+    static int pointArraySize (const QPointArray &points);
+
+
     //
     // QPixmap/QImage Conversion Functions
     //
@@ -361,4 +390,4 @@ public:
 };
 
 
-#endif  // __kppixmapfx_h__
+#endif  // KP_PIXMAP_FX_H

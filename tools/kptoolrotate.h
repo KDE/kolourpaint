@@ -32,10 +32,10 @@
 #include <qpixmap.h>
 #include <qpoint.h>
 
-#include <kcommand.h>
 #include <kdialogbase.h>
 
 #include <kpcolor.h>
+#include <kpcommandhistory.h>
 #include <kpselection.h>
 #include <kptoolpreviewdialog.h>
 
@@ -51,27 +51,24 @@ class kpViewManager;
 class kpMainWindow;
 
 
-class kpToolRotateCommand : public KCommand
+class kpToolRotateCommand : public kpCommand
 {
 public:
     kpToolRotateCommand (bool actOnSelection,
                          double angle,  // 0 <= angle < 360 (clockwise)
                          kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpToolRotateCommand ();
+    
+    virtual QString name () const;
 
-private:
-    kpDocument *document () const;
-    kpViewManager *viewManager () const;
-
-public:
+    virtual int size () const;
+    
     virtual void execute ();
     virtual void unexecute ();
 
 private:
     bool m_actOnSelection;
     double m_angle;
-    kpMainWindow *m_mainWindow;
 
     kpColor m_backgroundColor;
 

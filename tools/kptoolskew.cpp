@@ -58,15 +58,21 @@
 kpToolSkewCommand::kpToolSkewCommand (bool actOnSelection,
                                       int hangle, int vangle,
                                       kpMainWindow *mainWindow)
-    : m_actOnSelection (actOnSelection),
+    : kpCommand (mainWindow),
+      m_actOnSelection (actOnSelection),
       m_hangle (hangle), m_vangle (vangle),
-      m_mainWindow (mainWindow),
       m_backgroundColor (mainWindow ? mainWindow->backgroundColor (actOnSelection) : kpColor::invalid),
       m_oldPixmapPtr (0)
 {
 }
 
-// public virtual [base KCommand]
+kpToolSkewCommand::~kpToolSkewCommand ()
+{
+    delete m_oldPixmapPtr;
+}
+
+
+// public virtual [base kpCommand]
 QString kpToolSkewCommand::name () const
 {
     QString opName = i18n ("Skew");
@@ -77,20 +83,16 @@ QString kpToolSkewCommand::name () const
         return opName;
 }
 
-kpToolSkewCommand::~kpToolSkewCommand ()
+
+// public virtual [base kpCommand]
+int kpToolSkewCommand::size () const
 {
-    delete m_oldPixmapPtr;
+    return kpPixmapFX::pixmapSize (m_oldPixmapPtr) +
+           m_oldSelection.size ();
 }
 
 
-// private
-kpDocument *kpToolSkewCommand::document () const
-{
-    return m_mainWindow ? m_mainWindow->document () : 0;
-}
-
-
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolSkewCommand::execute ()
 {
     kpDocument *doc = document ();
@@ -171,7 +173,7 @@ void kpToolSkewCommand::execute ()
     QApplication::restoreOverrideCursor ();
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolSkewCommand::unexecute ()
 {
     kpDocument *doc = document ();

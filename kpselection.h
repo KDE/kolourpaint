@@ -100,6 +100,8 @@ public:
     // returns either i18n ("Selection") or i18n ("Text")
     QString name () const;
 
+    int size () const;
+
     QBitmap maskForOwnType (bool nullForRectangular = false) const;
 
     // synonyms

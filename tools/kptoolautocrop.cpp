@@ -75,6 +75,13 @@ kpToolAutoCropBorder::kpToolAutoCropBorder (const QPixmap *pixmapPtr,
 
 
 // public
+int kpToolAutoCropBorder::size () const
+{
+    return sizeof (kpToolAutoCropBorder);
+}
+
+
+// public
 const QPixmap *kpToolAutoCropBorder::pixmap () const
 {
     return m_pixmapPtr;
@@ -459,7 +466,8 @@ kpToolAutoCropCommand::kpToolAutoCropCommand (bool actOnSelection,
                                               const kpToolAutoCropBorder &topBorder,
                                               const kpToolAutoCropBorder &botBorder,
                                               kpMainWindow *mainWindow)
-    : m_actOnSelection (actOnSelection),
+    : kpCommand (mainWindow),
+      m_actOnSelection (actOnSelection),
       m_leftBorder (leftBorder),
       m_rightBorder (rightBorder),
       m_topBorder (topBorder),
@@ -467,8 +475,7 @@ kpToolAutoCropCommand::kpToolAutoCropCommand (bool actOnSelection,
       m_leftPixmap (0),
       m_rightPixmap (0),
       m_topPixmap (0),
-      m_botPixmap (0),
-      m_mainWindow (mainWindow)
+      m_botPixmap (0)
 {
     kpDocument *doc = document ();
     if (!doc)
@@ -483,7 +490,13 @@ kpToolAutoCropCommand::kpToolAutoCropCommand (bool actOnSelection,
     m_oldHeight = doc->height (m_actOnSelection);
 }
 
-// public virtual [base KCommand]
+kpToolAutoCropCommand::~kpToolAutoCropCommand ()
+{
+    deleteUndoPixmaps ();
+}
+
+
+// public virtual [base kpCommand]
 QString kpToolAutoCropCommand::name () const
 {
     const QString opName = i18n ("Autocrop");
@@ -494,22 +507,19 @@ QString kpToolAutoCropCommand::name () const
         return opName;
 }
 
-kpToolAutoCropCommand::~kpToolAutoCropCommand ()
-{
-    deleteUndoPixmaps ();
-}
 
-
-// private
-kpDocument *kpToolAutoCropCommand::document () const
+// public virtual [base kpCommand]
+int kpToolAutoCropCommand::size () const
 {
-    return m_mainWindow ? m_mainWindow->document () : 0;
-}
-
-// private
-kpViewManager *kpToolAutoCropCommand::viewManager () const
-{
-    return m_mainWindow ? m_mainWindow->viewManager () : 0;
+    return m_leftBorder.size () +
+           m_rightBorder.size () +
+           m_topBorder.size () +
+           m_botBorder.size () +
+           kpPixmapFX::pixmapSize (m_leftPixmap) +
+           kpPixmapFX::pixmapSize (m_rightPixmap) +
+           kpPixmapFX::pixmapSize (m_topPixmap) +
+           kpPixmapFX::pixmapSize (m_botPixmap) +
+           m_oldSelection.size ();
 }
 
 
@@ -569,7 +579,7 @@ void kpToolAutoCropCommand::deleteUndoPixmaps ()
 }
 
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolAutoCropCommand::execute ()
 {
     if (!m_contentsRect.isValid ())
@@ -613,7 +623,7 @@ void kpToolAutoCropCommand::execute ()
     }
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolAutoCropCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_AUTO_CROP && 1

@@ -51,13 +51,18 @@
 kpToolFlipCommand::kpToolFlipCommand (bool actOnSelection,
                                       bool horiz, bool vert,
                                       kpMainWindow *mainWindow)
-    : m_actOnSelection (actOnSelection),
-      m_horiz (horiz), m_vert (vert),
-      m_mainWindow (mainWindow)
+    : kpCommand (mainWindow),
+      m_actOnSelection (actOnSelection),
+      m_horiz (horiz), m_vert (vert)
 {
 }
 
-// public virtual [base KCommand]
+kpToolFlipCommand::~kpToolFlipCommand ()
+{
+}
+
+
+// public virtual [base kpCommand]
 QString kpToolFlipCommand::name () const
 {
     QString opName;
@@ -86,25 +91,21 @@ QString kpToolFlipCommand::name () const
         return opName;
 }
 
-kpToolFlipCommand::~kpToolFlipCommand ()
+
+// public virtual [base kpCommand]
+int kpToolFlipCommand::size () const
 {
+    return 0;
 }
 
 
-// private
-kpDocument *kpToolFlipCommand::document () const
-{
-    return m_mainWindow ? m_mainWindow->document () : 0;
-}
-
-
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolFlipCommand::execute ()
 {
     flip ();
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolFlipCommand::unexecute ()
 {
     flip ();

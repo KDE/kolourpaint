@@ -325,6 +325,16 @@ QString kpSelection::name () const
 
 
 // public
+int kpSelection::size () const
+{
+    return kpPixmapFX::pointArraySize (m_points) +
+           kpPixmapFX::pixmapSize (m_pixmap) +
+           kpPixmapFX::stringSize (text ()) +
+           kpPixmapFX::pixmapSize (m_transparencyMask);
+}
+
+
+// public
 QBitmap kpSelection::maskForOwnType (bool nullForRectangular) const
 {
     if (!m_rect.isValid ())
@@ -740,7 +750,6 @@ QString kpSelection::text () const
 {
     if (!isText ())
     {
-        kdError () << "kpSelection::text() not a text selection" << endl;
         return QString::null;
     }
 

@@ -35,7 +35,7 @@
 #include <qpoint.h>
 #include <qrect.h>
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 
 #include <kptool.h>
 
@@ -112,25 +112,25 @@ private:
     QRect m_toolRectangleRectWithoutLineWidth, m_toolRectangleRect;
 };
 
-class kpToolRectangleCommand : public KCommand
+class kpToolRectangleCommand : public kpCommand
 {
 public:
-    kpToolRectangleCommand (kpDocument *document, kpViewManager *viewManager,
-                            kpToolRectangle::Mode mode,
+    kpToolRectangleCommand (kpToolRectangle::Mode mode,
                             const QPen &pen, const QPen &maskPen,
                             const QBrush &brush, const QBrush &maskBrush,
                             const QRect &rect,
-                            const QPoint &startPoint, const QPoint &endPoint);
+                            const QPoint &startPoint, const QPoint &endPoint,
+                            kpMainWindow *mainWindow);
     virtual ~kpToolRectangleCommand ();
+
+    virtual QString name () const;
+
+    virtual int size () const;
 
     virtual void execute ();
     virtual void unexecute ();
 
-    virtual QString name () const;
-
 private:
-    kpDocument *m_document;
-    kpViewManager *m_viewManager;
     kpToolRectangle::Mode m_mode;
     QPen m_pen, m_maskPen;
     QBrush m_brush, m_maskBrush;

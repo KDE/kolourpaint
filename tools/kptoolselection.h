@@ -35,9 +35,8 @@
 #include <qpointarray.h>
 #include <qrect.h>
 
-#include <kcommand.h>
-
 #include <kpcolor.h>
+#include <kpcommandhistory.h>
 #include <kpselection.h>
 #include <kpselectiontransparency.h>
 #include <kptool.h>
@@ -129,88 +128,73 @@ protected:
     bool m_cancelledShapeButStillHoldingButtons;
 };
 
-class kpToolSelectionCreateCommand : public KCommand
+class kpToolSelectionCreateCommand : public kpNamedCommand
 {
 public:
     // (if fromSelection doesn't have a pixmap, it will only recreate the region)
     kpToolSelectionCreateCommand (const QString &name, const kpSelection &fromSelection,
                                   kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpToolSelectionCreateCommand ();
 
-private:
-    kpDocument *document () const;
+    virtual int size () const;
 
-public:
+    static bool nextUndoCommandIsCreateBorder (kpCommandHistory *commandHistory);
+
+    const kpSelection *fromSelection () const;
     void setFromSelection (const kpSelection &fromSelection);
 
     virtual void execute ();
     virtual void unexecute ();
 
 private:
-    QString m_name;
     kpSelection *m_fromSelection;
-    kpMainWindow *m_mainWindow;
 
     int m_textRow, m_textCol;
 };
 
-class kpToolSelectionPullFromDocumentCommand : public KCommand
+class kpToolSelectionPullFromDocumentCommand : public kpNamedCommand
 {
 public:
     kpToolSelectionPullFromDocumentCommand (const QString &name, kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpToolSelectionPullFromDocumentCommand ();
 
-private:
-    kpDocument *document () const;
+    virtual int size () const;
 
-public:
     virtual void execute ();
     virtual void unexecute ();
 
 private:
-    QString m_name;
-    kpMainWindow *m_mainWindow;
     kpColor m_backgroundColor;
     kpSelection *m_originalSelectionRegion;
 };
 
-class kpToolSelectionTransparencyCommand : public KCommand
+class kpToolSelectionTransparencyCommand : public kpNamedCommand
 {
 public:
     kpToolSelectionTransparencyCommand (const QString &name,
         const kpSelectionTransparency &st,
         const kpSelectionTransparency &oldST,
         kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpToolSelectionTransparencyCommand ();
 
-private:
-    kpDocument *document () const;
+    virtual int size () const;
 
-public:
     virtual void execute ();
     virtual void unexecute ();
 
 private:
-    QString m_name;
     kpSelectionTransparency m_st, m_oldST;
-    kpMainWindow *m_mainWindow;
 };
 
-class kpToolSelectionMoveCommand : public KCommand
+class kpToolSelectionMoveCommand : public kpNamedCommand
 {
 public:
     kpToolSelectionMoveCommand (const QString &name, kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpToolSelectionMoveCommand ();
 
-private:
-    kpDocument *document () const;
-
-public:
     kpSelection originalSelection () const;
+
+    virtual int size () const;
 
     virtual void execute ();
     virtual void unexecute ();
@@ -221,9 +205,6 @@ public:
     void finalize ();
 
 private:
-    QString m_name;
-    kpMainWindow *m_mainWindow;
-
     QPoint m_startPoint, m_endPoint;
 
     QPixmap m_oldDocumentPixmap;
@@ -243,7 +224,7 @@ private:
 //    before execute().
 //
 class kpToolSelectionResizeScaleCommand : public QObject,
-                                          public KNamedCommand
+                                          public kpNamedCommand
 {
 Q_OBJECT
 
@@ -251,8 +232,7 @@ public:
     kpToolSelectionResizeScaleCommand (kpMainWindow *mainWindow);
     virtual ~kpToolSelectionResizeScaleCommand ();
 
-protected:
-    kpSelection *selection () const;
+    virtual int size () const;
 
 public:
     kpSelection originalSelection () const;
@@ -284,8 +264,6 @@ public:
     virtual void unexecute ();
 
 protected:
-    kpMainWindow *m_mainWindow;
-
     kpSelection m_originalSelection;
 
     QPoint m_newTopLeft;
@@ -294,27 +272,22 @@ protected:
     QTimer *m_smoothScaleTimer;
 };
 
-class kpToolSelectionDestroyCommand : public KCommand
+class kpToolSelectionDestroyCommand : public kpNamedCommand
 {
 public:
     kpToolSelectionDestroyCommand (const QString &name, bool pushOntoDocument,
                                    kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpToolSelectionDestroyCommand ();
 
-private:
-    kpDocument *document () const;
+    virtual int size () const;
 
-public:
     virtual void execute ();
     virtual void unexecute ();
 
 private:
-    QString m_name;
     bool m_pushOntoDocument;
     QPixmap m_oldDocPixmap;
     kpSelection *m_oldSelection;
-    kpMainWindow *m_mainWindow;
 
     int m_textRow, m_textCol;
 };

@@ -31,7 +31,7 @@
 
 #include <qpixmap.h>
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 #include <kdialogbase.h>
 
 #include <kpcolor.h>
@@ -48,26 +48,24 @@ class kpDocument;
 class kpMainWindow;
 
 
-class kpToolSkewCommand : public KCommand
+class kpToolSkewCommand : public kpCommand
 {
 public:
     kpToolSkewCommand (bool actOnSelection,
                        int hangle, int vangle,
                        kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpToolSkewCommand ();
+    
+    virtual QString name () const;
 
-private:
-    kpDocument *document () const;
+    virtual int size () const;
 
-public:
     virtual void execute ();
     virtual void unexecute ();
 
 private:
     bool m_actOnSelection;
     int m_hangle, m_vangle;
-    kpMainWindow *m_mainWindow;
 
     kpColor m_backgroundColor;
     QPixmap *m_oldPixmapPtr;

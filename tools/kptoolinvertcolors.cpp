@@ -41,12 +41,17 @@
 
 kpToolInvertColorsCommand::kpToolInvertColorsCommand (bool actOnSelection,
                                                       kpMainWindow *mainWindow)
-    : m_actOnSelection (actOnSelection),
-      m_mainWindow (mainWindow)
+    : kpCommand (mainWindow),
+      m_actOnSelection (actOnSelection)
 {
 }
 
-// public virtual [base KCommand]
+kpToolInvertColorsCommand::~kpToolInvertColorsCommand ()
+{
+}
+
+
+// public virtual [base kpCommand]
 QString kpToolInvertColorsCommand::name () const
 {
     QString opName = i18n ("Invert Colors");
@@ -57,18 +62,21 @@ QString kpToolInvertColorsCommand::name () const
         return opName;
 }
 
-kpToolInvertColorsCommand::~kpToolInvertColorsCommand ()
+
+// public virtual [base kpCommand]
+int kpToolInvertColorsCommand::size () const
 {
+    return 0;
 }
 
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolInvertColorsCommand::execute ()
 {
     invert ();
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolInvertColorsCommand::unexecute ()
 {
     // symmetric operation
@@ -79,7 +87,7 @@ void kpToolInvertColorsCommand::unexecute ()
 // private
 void kpToolInvertColorsCommand::invert ()
 {
-    kpDocument *doc = m_mainWindow ? m_mainWindow->document () : 0;
+    kpDocument *doc = document ();
     if (!doc)
         return;
 

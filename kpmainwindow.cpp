@@ -35,7 +35,6 @@
 #include <kactionclasses.h>
 #include <kapplication.h>
 #include <kconfig.h>
-#include <kcommand.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>

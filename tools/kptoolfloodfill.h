@@ -31,19 +31,19 @@
 
 #include <qpixmap.h>
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 
 #include <kpfloodfill.h>
 #include <kptool.h>
+
 
 class QString;
 
 class kpColor;
 
-class kpDocument;
 class kpMainWindow;
 class kpToolFloodFillCommand;
-class kpViewManager;
+
 
 class kpToolFloodFill : public kpTool
 {
@@ -69,14 +69,17 @@ private:
 };
 
 
-class kpToolFloodFillCommand : public KCommand, public kpFloodFill
+class kpToolFloodFillCommand : public kpCommand, public kpFloodFill
 {
 public:
-    kpToolFloodFillCommand (kpDocument *document, kpViewManager *viewManager,
-                            int x, int y,
-                            const kpColor &color, int processedColorSimilarity);
-    virtual QString name () const;
+    kpToolFloodFillCommand (int x, int y,
+                            const kpColor &color, int processedColorSimilarity,
+                            kpMainWindow *mainWindow);
     virtual ~kpToolFloodFillCommand ();
+    
+    virtual QString name () const;
+
+    virtual int size () const;
 
     void setFillEntirePixmap (bool yes = true);
 
@@ -84,9 +87,6 @@ public:
     virtual void unexecute ();
 
 private:
-    kpDocument *m_document;
-    kpViewManager *m_viewManager;
-
     QPixmap m_oldPixmap;
     bool m_fillEntirePixmap;
 };

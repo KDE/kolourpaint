@@ -130,7 +130,7 @@ void kpToolAirSpray::beginDraw ()
     m_currentCommand = new kpToolAirSprayCommand (
         color (m_mouseButton),
         m_size,
-        document (), viewManager ());
+        mainWindow ());
 
     // without delay
     actuallyDraw ();
@@ -237,20 +237,35 @@ void kpToolAirSpray::endDraw (const QPoint &, const QRect &)
  */
 
 kpToolAirSprayCommand::kpToolAirSprayCommand (const kpColor &color, int size,
-                                              kpDocument *document, kpViewManager *viewManager)
-    : m_color (color),
+                                              kpMainWindow *mainWindow)
+    : kpCommand (mainWindow),
+      m_color (color),
       m_size (size),
-      m_document (document),
-      m_viewManager (viewManager),
       m_newPixmapPtr (0)
 {
-    m_oldPixmap = *document->pixmap ();
+    m_oldPixmap = *document ()->pixmap ();
 }
 
 kpToolAirSprayCommand::~kpToolAirSprayCommand ()
 {
     delete m_newPixmapPtr;
 }
+
+
+// public virtual [base kpCommand]
+QString kpToolAirSprayCommand::name () const
+{
+    return i18n ("Spraycan");
+}
+
+
+// public virtual [base kpCommand]
+int kpToolAirSprayCommand::size () const
+{
+    return kpPixmapFX::pixmapSize (m_newPixmapPtr) +
+           kpPixmapFX::pixmapSize (m_oldPixmap);
+}
+
 
 // Redo:
 //
@@ -261,7 +276,7 @@ void kpToolAirSprayCommand::execute ()
 {
     if (m_newPixmapPtr)
     {
-        m_document->setPixmapAt (*m_newPixmapPtr, m_boundingRect.topLeft ());
+        document ()->setPixmapAt (*m_newPixmapPtr, m_boundingRect.topLeft ());
 
         // (will be regenerated in unexecute() if required)
         delete m_newPixmapPtr;
@@ -278,19 +293,14 @@ void kpToolAirSprayCommand::unexecute ()
     {
         // the ultimate in laziness - figure out Redo info only if we Undo
         m_newPixmapPtr = new QPixmap (m_boundingRect.width (), m_boundingRect.height ());
-        *m_newPixmapPtr = m_document->getPixmapAt (m_boundingRect);
+        *m_newPixmapPtr = document ()->getPixmapAt (m_boundingRect);
     }
     else
         kdError () << "kpToolAirSprayCommand::unexecute() has non-null newPixmapPtr" << endl;
 
-    m_document->setPixmapAt (m_oldPixmap, m_boundingRect.topLeft ());
+    document ()->setPixmapAt (m_oldPixmap, m_boundingRect.topLeft ());
 }
 
-// public virtual [base KCommand]
-QString kpToolAirSprayCommand::name () const
-{
-    return i18n ("Spraycan");
-}
 
 // public
 void kpToolAirSprayCommand::addPoints (const QPointArray &points)
@@ -304,7 +314,7 @@ void kpToolAirSprayCommand::addPoints (const QPointArray &points)
         kdDebug () << "\t" << i << ": " << points [i] << endl;
 #endif
 
-    QPixmap pixmap = m_document->getPixmapAt (docRect);
+    QPixmap pixmap = document ()->getPixmapAt (docRect);
     QBitmap mask;
 
     QPainter painter, maskPainter;
@@ -343,9 +353,9 @@ void kpToolAirSprayCommand::addPoints (const QPointArray &points)
     if (!mask.isNull ())
         pixmap.setMask (mask);
 
-    m_viewManager->setFastUpdates ();
-    m_document->setPixmapAt (pixmap, docRect.topLeft ());
-    m_viewManager->restoreFastUpdates ();
+    viewManager ()->setFastUpdates ();
+    document ()->setPixmapAt (pixmap, docRect.topLeft ());
+    viewManager ()->restoreFastUpdates ();
 
     m_boundingRect = m_boundingRect.unite (docRect);
 }
@@ -360,9 +370,9 @@ void kpToolAirSprayCommand::cancel ()
 {
     if (m_boundingRect.isValid ())
     {
-        m_viewManager->setFastUpdates ();
-        m_document->setPixmapAt (m_oldPixmap, m_boundingRect.topLeft ());
-        m_viewManager->restoreFastUpdates ();
+        viewManager ()->setFastUpdates ();
+        document ()->setPixmapAt (m_oldPixmap, m_boundingRect.topLeft ());
+        viewManager ()->restoreFastUpdates ();
     }
 }
 

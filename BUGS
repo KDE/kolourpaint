@@ -20,10 +20,6 @@ This file lists known bugs in the 1.??? release that are not considered
    the percentages and dimensions in sync in the Resize / Scale dialog are
    manifestations of the current QSpinBox behaviour.
 
-5. If you drag out a selection, manipulate it (e.g. move), undo and then
-   manipulate it again, another "Selection: Create" is put into the undo
-   history.
-
 6. a) The undo history and document modified state are not updated during
       the drawing of multi-segment shapes (Polygon, Connected Lines,
       Curve).  They are however updated after shapes' completion.

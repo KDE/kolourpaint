@@ -43,20 +43,11 @@
 kpColorEffectCommand::kpColorEffectCommand (const QString &name,
                                             bool actOnSelection,
                                             kpMainWindow *mainWindow)
-    : m_name (name),
+    : kpCommand (mainWindow),
+      m_name (name),
       m_actOnSelection (actOnSelection),
-      m_mainWindow (mainWindow),
       m_oldPixmapPtr (0)
 {
-}
-
-// public virtual [base KCommand]
-QString kpColorEffectCommand::name () const
-{
-    if (m_actOnSelection)
-        return i18n ("Selection: %1").arg (m_name);
-    else
-        return m_name;
 }
 
 kpColorEffectCommand::~kpColorEffectCommand ()
@@ -65,14 +56,24 @@ kpColorEffectCommand::~kpColorEffectCommand ()
 }
 
 
-// private
-kpDocument *kpColorEffectCommand::document () const
+// public virtual [base kpCommand]
+QString kpColorEffectCommand::name () const
 {
-    return m_mainWindow ? m_mainWindow->document () : 0;
+    if (m_actOnSelection)
+        return i18n ("Selection: %1").arg (m_name);
+    else
+        return m_name;
 }
 
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
+int kpColorEffectCommand::size () const
+{
+    return kpPixmapFX::pixmapSize (m_oldPixmapPtr);
+}
+
+
+// public virtual [base kpCommand]
 void kpColorEffectCommand::execute ()
 {
     kpDocument *doc = document ();
@@ -91,7 +92,7 @@ void kpColorEffectCommand::execute ()
     QApplication::restoreOverrideCursor ();
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpColorEffectCommand::unexecute ()
 {
     kpDocument *doc = document ();

@@ -32,7 +32,7 @@
 #include <qpixmap.h>
 #include <qrect.h>
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 #include <kptool.h>
 
 class QPoint;
@@ -133,13 +133,14 @@ private:
     kpToolPenCommand *m_currentCommand;
 };
 
-class kpToolPenCommand : public KCommand
+class kpToolPenCommand : public kpNamedCommand
 {
 public:
-    kpToolPenCommand (const QString &name, kpDocument *document, kpViewManager *viewManager);
-    virtual QString name () const { return m_name; }
+    kpToolPenCommand (const QString &name, kpMainWindow *mainWindow);
     virtual ~kpToolPenCommand ();
 
+    virtual int size () const;
+    
     virtual void execute ();
     virtual void unexecute ();
 
@@ -151,10 +152,6 @@ public:
 
 private:
     void swapOldAndNew ();
-
-    QString m_name;
-    kpDocument *m_document;
-    kpViewManager *m_viewManager;
 
     QPixmap m_pixmap;
     QRect m_boundingRect;

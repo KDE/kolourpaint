@@ -29,7 +29,7 @@
 #ifndef __kptoolcolorpicker_h__
 #define __kptoolcolorpicker_h__
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 
 #include <kpcolor.h>
 #include <kptool.h>
@@ -68,21 +68,25 @@ private:
     kpColor m_oldColor;
 };
 
-class kpToolColorPickerCommand : public KCommand
+class kpToolColorPickerCommand : public kpCommand
 {
 public:
-    kpToolColorPickerCommand (kpColorToolBar *colorToolBar,
-                              int mouseButton,
-                              const kpColor &newColor, const kpColor &oldColor);
+    kpToolColorPickerCommand (int mouseButton,
+                              const kpColor &newColor, const kpColor &oldColor,
+                              kpMainWindow *mainWindow);
     virtual ~kpToolColorPickerCommand ();
+
+    virtual QString name () const;
+
+    virtual int size () const;
 
     virtual void execute ();
     virtual void unexecute ();
 
-    virtual QString name () const;
-
 private:
-    kpColorToolBar *m_colorToolBar;
+    kpColorToolBar *colorToolBar () const;
+    
+private:
     int m_mouseButton;
     kpColor m_newColor;
     kpColor m_oldColor;

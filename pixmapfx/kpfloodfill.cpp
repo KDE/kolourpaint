@@ -55,6 +55,30 @@ kpFloodFill::~kpFloodFill ()
 {
 }
 
+
+// private
+int kpFloodFill::fillLinesListSize (const QValueList <kpFloodFill::FillLine> &fillLines) const
+{
+    return (fillLines.size () * kpFloodFill::FillLine::size ());
+}
+    
+// public
+int kpFloodFill::size () const
+{
+    int fillLinesCacheSize = 0;
+    for (QValueVector < QValueList <kpFloodFill::FillLine > >::const_iterator it = m_fillLinesCache.begin ();
+         it != m_fillLinesCache.end ();
+         it++)
+    {
+        fillLinesCacheSize += fillLinesListSize (*it);
+    }
+    
+    return fillLinesListSize (m_fillLines) +
+           kpPixmapFX::imageSize (m_image) +
+           fillLinesCacheSize;
+}
+
+
 QRect kpFloodFill::boundingRect () const
 {
     return m_boundingRect;

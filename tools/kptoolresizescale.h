@@ -31,7 +31,7 @@
 
 #include <qpixmap.h>
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 #include <kdialogbase.h>
 
 #include <kpcolor.h>
@@ -53,7 +53,7 @@ class kpDocument;
 class kpMainWindow;
 class kpViewManager;
 
-class kpToolResizeScaleCommand : public KCommand
+class kpToolResizeScaleCommand : public kpCommand
 {
 public:
     enum Type
@@ -65,8 +65,10 @@ public:
                               int newWidth, int newHeight,
                               Type type,
                               kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpToolResizeScaleCommand ();
+
+    virtual QString name () const;
+    virtual int size () const;
 
 public:
     int newWidth () const;
@@ -81,9 +83,6 @@ public:
 public:
     bool scaleSelectionWithImage () const;
 
-protected:
-    kpDocument *document () const;
-
 private:
     void scaleSelectionRegionWithDocument ();
 
@@ -97,7 +96,6 @@ protected:
     Type m_type;
     bool m_isLosslessScale;
     bool m_scaleSelectionWithImage;
-    kpMainWindow *m_mainWindow;
     kpColor m_backgroundColor;
 
     int m_oldWidth, m_oldHeight;

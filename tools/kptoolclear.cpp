@@ -42,14 +42,20 @@
 
 kpToolClearCommand::kpToolClearCommand (bool actOnSelection,
                                         kpMainWindow *mainWindow)
-    : m_actOnSelection (actOnSelection),
-      m_mainWindow (mainWindow),
+    : kpCommand (mainWindow),
+      m_actOnSelection (actOnSelection),
       m_newColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid),
       m_oldPixmapPtr (0)
 {
 }
 
-// public virtual [base KCommand]
+kpToolClearCommand::~kpToolClearCommand ()
+{
+    delete m_oldPixmapPtr;
+}
+
+
+// public virtual [base kpCommand]
 QString kpToolClearCommand::name () const
 {
     QString opName = i18n ("Clear");
@@ -60,20 +66,15 @@ QString kpToolClearCommand::name () const
         return opName;
 }
 
-kpToolClearCommand::~kpToolClearCommand ()
+
+// public virtual [base kpCommand]
+int kpToolClearCommand::size () const
 {
-    delete m_oldPixmapPtr;
+    return kpPixmapFX::pixmapSize (m_oldPixmapPtr);
 }
 
 
-// private
-kpDocument *kpToolClearCommand::document () const
-{
-    return m_mainWindow ? m_mainWindow->document () : 0;
-}
-
-
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolClearCommand::execute ()
 {
     kpDocument *doc = document ();
@@ -105,7 +106,7 @@ void kpToolClearCommand::execute ()
         doc->fill (m_newColor);
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolClearCommand::unexecute ()
 {
     kpDocument *doc = document ();

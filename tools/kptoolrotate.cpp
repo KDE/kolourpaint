@@ -56,15 +56,20 @@
 kpToolRotateCommand::kpToolRotateCommand (bool actOnSelection,
                                           double angle,
                                           kpMainWindow *mainWindow)
-    : m_actOnSelection (actOnSelection),
+    : kpCommand (mainWindow),
+      m_actOnSelection (actOnSelection),
       m_angle (angle),
-      m_mainWindow (mainWindow),
       m_backgroundColor (mainWindow ? mainWindow->backgroundColor (actOnSelection) : kpColor::invalid),
       m_losslessRotation (kpPixmapFX::isLosslessRotation (angle))
 {
 }
 
-// public virtual [base KCommand]
+kpToolRotateCommand::~kpToolRotateCommand ()
+{
+}
+
+
+// public virtual [base kpCommand]
 QString kpToolRotateCommand::name () const
 {
     QString opName = i18n ("Rotate");
@@ -75,25 +80,16 @@ QString kpToolRotateCommand::name () const
         return opName;
 }
 
-kpToolRotateCommand::~kpToolRotateCommand ()
+
+// public virtual [base kpCommand]
+int kpToolRotateCommand::size () const
 {
+    return kpPixmapFX::pixmapSize (m_oldPixmap) +
+           m_oldSelection.size ();
 }
 
 
-// private
-kpDocument *kpToolRotateCommand::document () const
-{
-    return m_mainWindow ? m_mainWindow->document () : 0;
-}
-
-// private
-kpViewManager *kpToolRotateCommand::viewManager () const
-{
-    return m_mainWindow ? m_mainWindow->viewManager () : 0;
-}
-
-
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolRotateCommand::execute ()
 {
     kpDocument *doc = document ();
@@ -177,7 +173,7 @@ void kpToolRotateCommand::execute ()
     QApplication::restoreOverrideCursor ();
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolRotateCommand::unexecute ()
 {
     kpDocument *doc = document ();

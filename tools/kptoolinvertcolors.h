@@ -29,17 +29,20 @@
 #ifndef __kptoolinvertcolors_h__
 #define __kptoolinvertcolors_h__
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 
 class kpMainWindow;
 
-class kpToolInvertColorsCommand : public KCommand
+class kpToolInvertColorsCommand : public kpCommand
 {
 public:
     kpToolInvertColorsCommand (bool actOnSelection,
                                kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpToolInvertColorsCommand ();
+    
+    virtual QString name () const;
+
+    virtual int size () const;
 
     virtual void execute ();
     virtual void unexecute ();
@@ -48,7 +51,6 @@ private:
     void invert ();
 
     bool m_actOnSelection;
-    kpMainWindow *m_mainWindow;
 };
 
 #endif  // __kptoolinvertcolors_h__

@@ -79,6 +79,12 @@
 #define kpSettingLastDocSize QString::fromLatin1 ("Last Document Size")
 
 
+#define kpSettingsGroupUndoRedo QString::fromLatin1 ("Undo/Redo Settings")
+#define kpSettingUndoMinLimit QString::fromLatin1 ("Min Limit")
+#define kpSettingUndoMaxLimit QString::fromLatin1 ("Max Limit")
+#define kpSettingUndoMaxLimitSizeLimit QString::fromLatin1 ("Max Limit Size Limit")
+
+
 #define kpSettingsGroupThumbnail QString::fromLatin1 ("Thumbnail Settings")
 #define kpSettingThumbnailShown QString::fromLatin1 ("Shown")
 #define kpSettingThumbnailGeometry QString::fromLatin1 ("Geometry")

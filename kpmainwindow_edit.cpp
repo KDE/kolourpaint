@@ -35,7 +35,6 @@
 #include <qvaluevector.h>
 
 #include <kaction.h>
-#include <kcommand.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kstdaction.h>
@@ -68,9 +67,17 @@ void kpMainWindow::setupEditMenuActions ()
 {
     KActionCollection *ac = actionCollection ();
 
+
     // Undo/Redo
-    m_commandHistory = new kpCommandHistory (this);
-    m_commandHistory->setUndoLimit (10);  // CONFIG
+    // CONFIG: need GUI
+    m_commandHistory = new kpCommandHistory (true/*read config*/, this);
+    
+    if (m_configFirstTime)
+    {
+        // (so that cfg-file-editing user can modify in the meantime)
+        m_commandHistory->writeConfig ();
+    }
+
 
     m_actionCut = KStdAction::cut (this, SLOT (slotCut ()), ac);
     m_actionCopy = KStdAction::copy (this, SLOT (slotCopy ()), ac);
@@ -556,7 +563,7 @@ void kpMainWindow::slotSelectAll ()
 
 
 // private
-void kpMainWindow::addDeselectFirstCommand (KCommand *cmd)
+void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
     kdDebug () << "kpMainWindow::addDeselectFirstCommand("
@@ -593,7 +600,7 @@ void kpMainWindow::addDeselectFirstCommand (KCommand *cmd)
         #if DEBUG_KP_MAIN_WINDOW && 1
             kdDebug () << "\treal selection with pixmap - push onto doc cmd" << endl;
         #endif
-            KCommand *deselectCommand = new kpToolSelectionDestroyCommand (
+            kpCommand *deselectCommand = new kpToolSelectionDestroyCommand (
                 sel->isText () ?
                     i18n ("Text: Finish") :
                     i18n ("Selection: Deselect"),
@@ -602,7 +609,7 @@ void kpMainWindow::addDeselectFirstCommand (KCommand *cmd)
 
             if (cmd)
             {
-                KMacroCommand *macroCmd = new KMacroCommand (cmd->name ());
+                kpMacroCommand *macroCmd = new kpMacroCommand (cmd->name (), this);
                 macroCmd->addCommand (deselectCommand);
                 macroCmd->addCommand (cmd);
                 m_commandHistory->addCommand (macroCmd);

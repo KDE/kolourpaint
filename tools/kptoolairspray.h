@@ -29,7 +29,7 @@
 #ifndef __kptoolairspray_h__
 #define __kptoolairspray_h__
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 #include <kpcolor.h>
 #include <kptool.h>
 
@@ -79,17 +79,19 @@ private:
     int m_size;
 };
 
-class kpToolAirSprayCommand : public KCommand
+class kpToolAirSprayCommand : public kpCommand
 {
 public:
     kpToolAirSprayCommand (const kpColor &color, int size,
-                           kpDocument *document, kpViewManager *viewManager);
+                           kpMainWindow *mainWindow);
     virtual ~kpToolAirSprayCommand ();
 
+    virtual QString name () const;
+
+    virtual int size () const;
+    
     virtual void execute ();
     virtual void unexecute ();
-
-    virtual QString name () const;
 
     // interface for KToolAirSpray
     void addPoints (const QPointArray &points);
@@ -99,9 +101,6 @@ public:
 private:
     kpColor m_color;
     int m_size;
-
-    kpDocument *m_document;
-    kpViewManager *m_viewManager;
 
     QPixmap *m_newPixmapPtr;
     QPixmap m_oldPixmap;

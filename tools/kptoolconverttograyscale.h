@@ -29,31 +29,28 @@
 #ifndef __kptoolconverttograyscale_h__
 #define __kptoolconverttograyscale_h__
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 
 class QPixmap;
 class QString;
 
 class kpMainWindow;
 
-class kpToolConvertToGrayscaleCommand : public KCommand
+class kpToolConvertToGrayscaleCommand : public kpCommand
 {
 public:
     kpToolConvertToGrayscaleCommand (bool actOnSelection,
                                      kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpToolConvertToGrayscaleCommand ();
+    
+    virtual QString name () const;
+    virtual int size () const;
 
-private:
-    kpDocument *document () const;
-
-public:
     virtual void execute ();
     virtual void unexecute ();
 
 private:
     bool m_actOnSelection;
-    kpMainWindow *m_mainWindow;
     QPixmap *m_oldPixmapPtr;
 };
 

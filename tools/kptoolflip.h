@@ -29,7 +29,7 @@
 #ifndef __kptoolflip_h__
 #define __kptoolflip_h__
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 #include <kdialogbase.h>
 
 class QRadioButton;
@@ -39,19 +39,18 @@ class kpDocument;
 class kpMainWindow;
 
 
-class kpToolFlipCommand : public KCommand
+class kpToolFlipCommand : public kpCommand
 {
 public:
     kpToolFlipCommand (bool actOnSelection,
                        bool horiz, bool vert,
                        kpMainWindow *mainWindow);
-    virtual QString name () const;
     virtual ~kpToolFlipCommand ();
 
-private:
-    kpDocument *document () const;
+    virtual QString name () const;
 
-public:
+    virtual int size () const;
+
     virtual void execute ();
     virtual void unexecute ();
 
@@ -60,7 +59,6 @@ private:
 
     bool m_actOnSelection;
     bool m_horiz, m_vert;
-    kpMainWindow *m_mainWindow;
 };
 
 

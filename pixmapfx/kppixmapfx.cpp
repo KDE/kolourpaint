@@ -40,6 +40,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qpoint.h>
+#include <qpointarray.h>
 #include <qrect.h>
 
 #include <kdebug.h>
@@ -48,7 +49,133 @@
 
 #include <kpcolor.h>
 #include <kpdefs.h>
+#include <kpselection.h>
 #include <kptool.h>
+
+
+//
+// QPixmap Statistics
+//
+
+// public static
+int kpPixmapFX::pixmapArea (const QPixmap &pixmap)
+{
+    return kpPixmapFX::pixmapArea (pixmap.width (), pixmap.height ());
+}
+
+// public static
+int kpPixmapFX::pixmapArea (const QPixmap *pixmap)
+{
+    return (pixmap ? kpPixmapFX::pixmapArea (*pixmap) : 0);
+}
+
+// public static
+int kpPixmapFX::pixmapArea (int width, int height)
+{
+    return width * height;
+}
+
+
+// public static
+int kpPixmapFX::pixmapSize (const QPixmap &pixmap)
+{
+    return kpPixmapFX::pixmapSize (pixmap.width (), pixmap.height (),
+                                   pixmap.depth ());
+}
+
+// public static
+int kpPixmapFX::pixmapSize (const QPixmap *pixmap)
+{
+    return (pixmap ? kpPixmapFX::pixmapSize (*pixmap) : 0);
+}
+
+// public static
+int kpPixmapFX::pixmapSize (int width, int height, int depth)
+{
+    // handle 15bpp
+    int roundedDepth = (depth > 8 ? (depth + 7) / 8 * 8 : depth);
+
+#if DEBUG_KP_PIXMAP_FX && 0
+    kdDebug () << "kpPixmapFX::pixmapSize() w=" << width
+               << " h=" << height
+               << " d=" << depth
+               << " roundedDepth=" << roundedDepth
+               << " ret=" << (kpPixmapFX::pixmapArea (width, height) * roundedDepth / 8)
+               << endl;
+#endif
+    return (kpPixmapFX::pixmapArea (width, height) * roundedDepth / 8);
+}
+
+
+// public static
+int kpPixmapFX::imageSize (const QImage &image)
+{
+    return kpPixmapFX::imageSize (image.width (), image.height (), image.depth ());
+}
+
+// public static
+int kpPixmapFX::imageSize (const QImage *image)
+{
+    return (image ? kpPixmapFX::imageSize (*image) : 0);
+}
+
+// public static
+int kpPixmapFX::imageSize (int width, int height, int depth)
+{
+    // handle 15bpp
+    int roundedDepth = (depth > 8 ? (depth + 7) / 8 * 8 : depth);
+
+#if DEBUG_KP_PIXMAP_FX && 0
+    kdDebug () << "kpPixmapFX::imageSize() w=" << width
+               << " h=" << height
+               << " d=" << depth
+               << " roundedDepth=" << roundedDepth
+               << " ret=" << (width * height * roundedDepth / 8)
+               << endl;
+#endif
+
+    return (width * height * roundedDepth / 8);
+}
+
+
+// public static
+int kpPixmapFX::selectionSize (const kpSelection &sel)
+{
+    return sel.size ();
+}
+
+// public static
+int kpPixmapFX::selectionSize (const kpSelection *sel)
+{
+    return (sel ? sel->size () : 0);
+}
+
+
+// public static
+int kpPixmapFX::stringSize (const QString &string)
+{
+#if DEBUG_KP_PIXMAP_FX && 1
+    kdDebug () << "kpPixmapFX::stringSize(" << string << ")"
+               << " len=" << string.length ()
+               << " sizeof(QChar)=" << sizeof (QChar)
+               << endl;
+#endif
+    return string.length () * sizeof (QChar);
+}
+
+
+// public static
+int kpPixmapFX::pointArraySize (const QPointArray &points)
+{
+#if DEBUG_KP_PIXMAP_FX && 1
+    kdDebug () << "kpPixmapFX::pointArraySize() points.size="
+               << points.size ()
+               << " sizeof(QPoint)=" << sizeof (QPoint)
+               << endl;
+#endif
+
+    return (points.size () * sizeof (QPoint));
+}
 
 
 //

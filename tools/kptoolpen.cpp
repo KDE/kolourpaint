@@ -197,20 +197,20 @@ void kpToolPen::beginDraw ()
     switch (m_mode)
     {
     case Pen:
-        m_currentCommand = new kpToolPenCommand (i18n ("Pen"), document (), viewManager ());
+        m_currentCommand = new kpToolPenCommand (i18n ("Pen"), mainWindow ());
         break;
     case Brush:
-        m_currentCommand = new kpToolPenCommand (i18n ("Brush"), document (), viewManager ());
+        m_currentCommand = new kpToolPenCommand (i18n ("Brush"), mainWindow ());
         break;
     case Eraser:
-        m_currentCommand = new kpToolPenCommand (i18n ("Eraser"), document (), viewManager ());
+        m_currentCommand = new kpToolPenCommand (i18n ("Eraser"), mainWindow ());
         break;
     case ColorWasher:
-        m_currentCommand = new kpToolPenCommand (i18n ("Color Eraser"), document (), viewManager ());
+        m_currentCommand = new kpToolPenCommand (i18n ("Color Eraser"), mainWindow ());
         break;
 
     default:
-        m_currentCommand = new kpToolPenCommand (i18n ("Custom Pen or Brush"), document (), viewManager ());
+        m_currentCommand = new kpToolPenCommand (i18n ("Custom Pen or Brush"), mainWindow ());
         break;
     }
 
@@ -380,7 +380,7 @@ void kpToolPen::globalDraw ()
         QApplication::setOverrideCursor (Qt::waitCursor);
 
         kpToolPenCommand *cmd = new kpToolPenCommand (
-            i18n ("Color Eraser"), document (), viewManager ());
+            i18n ("Color Eraser"), mainWindow ());
 
         QPainter painter, maskPainter;
         QBitmap maskBitmap;
@@ -1034,47 +1034,57 @@ void kpToolPen::updateBrushCursor (bool recalc)
  * kpToolPenCommand
  */
 
-kpToolPenCommand::kpToolPenCommand (const QString &name, kpDocument *document, kpViewManager *viewManager)
-    : m_name (name),
-      m_document (document),
-      m_viewManager (viewManager)
+kpToolPenCommand::kpToolPenCommand (const QString &name, kpMainWindow *mainWindow)
+    : kpNamedCommand (name, mainWindow),
+      m_pixmap (*document ()->pixmap ())
 {
-    m_pixmap = *document->pixmap ();
 }
 
 kpToolPenCommand::~kpToolPenCommand ()
 {
 }
 
-// virtual
+
+// public virtual [base kpCommand]
+int kpToolPenCommand::size () const
+{
+    return kpPixmapFX::pixmapSize (m_pixmap);
+}
+
+
+// public virtual [base kpCommand]
 void kpToolPenCommand::execute ()
 {
     swapOldAndNew ();
 }
 
-// virtual
+// public virtual [base kpCommand]
 void kpToolPenCommand::unexecute ()
 {
     swapOldAndNew ();
 }
 
+
+// private
 void kpToolPenCommand::swapOldAndNew ()
 {
     if (m_boundingRect.isValid ())
     {
-        QPixmap oldPixmap = m_document->getPixmapAt (m_boundingRect);
+        QPixmap oldPixmap = document ()->getPixmapAt (m_boundingRect);
 
-        m_document->setPixmapAt (m_pixmap, m_boundingRect.topLeft ());
+        document ()->setPixmapAt (m_pixmap, m_boundingRect.topLeft ());
 
         m_pixmap = oldPixmap;
     }
 }
 
+// public
 void kpToolPenCommand::updateBoundingRect (const QPoint &point)
 {
     updateBoundingRect (QRect (point, point));
 }
 
+// public
 void kpToolPenCommand::updateBoundingRect (const QRect &rect)
 {
 #if DEBUG_KP_TOOL_PEN & 0
@@ -1090,6 +1100,7 @@ void kpToolPenCommand::updateBoundingRect (const QRect &rect)
 #endif
 }
 
+// public
 void kpToolPenCommand::finalize ()
 {
     if (m_boundingRect.isValid ())
@@ -1103,13 +1114,14 @@ void kpToolPenCommand::finalize ()
     }
 }
 
+// public
 void kpToolPenCommand::cancel ()
 {
     if (m_boundingRect.isValid ())
     {
-        m_viewManager->setFastUpdates ();
-        m_document->setPixmapAt (m_pixmap, m_boundingRect.topLeft ());
-        m_viewManager->restoreFastUpdates ();
+        viewManager ()->setFastUpdates ();
+        document ()->setPixmapAt (m_pixmap, m_boundingRect.topLeft ());
+        viewManager ()->restoreFastUpdates ();
     }
 }
 

@@ -31,7 +31,7 @@
 
 #include <qstring.h>
 
-#include <kcommand.h>
+#include <kpcommandhistory.h>
 
 #include <kptextstyle.h>
 #include <kptoolselection.h>
@@ -92,24 +92,7 @@ protected:
 };
 
 
-class kpToolTextCommand : public KCommand
-{
-public:
-    kpToolTextCommand (const QString &name, kpMainWindow *mainWindow);
-    virtual QString name () const;
-    virtual ~kpToolTextCommand ();
-
-protected:
-    kpSelection *selection () const;
-    kpViewManager *viewManager () const;
-
-protected:
-    QString m_name;
-    kpMainWindow *m_mainWindow;
-};
-
-
-class kpToolTextChangeStyleCommand : public kpToolTextCommand
+class kpToolTextChangeStyleCommand : public kpNamedCommand
 {
 public:
     kpToolTextChangeStyleCommand (const QString &name,
@@ -117,6 +100,8 @@ public:
         kpMainWindow *mainWindow);
     virtual ~kpToolTextChangeStyleCommand ();
 
+    virtual int size () const;
+    
     virtual void execute ();
     virtual void unexecute ();
 
@@ -124,7 +109,7 @@ protected:
     kpTextStyle m_newTextStyle, m_oldTextStyle;
 };
 
-class kpToolTextInsertCommand : public kpToolTextCommand
+class kpToolTextInsertCommand : public kpNamedCommand
 {
 public:
     kpToolTextInsertCommand (const QString &name,
@@ -134,6 +119,8 @@ public:
 
     void addText (const QString &moreText);
 
+    virtual int size () const;
+    
     virtual void execute ();
     virtual void unexecute ();
 
@@ -142,7 +129,7 @@ protected:
     QString m_newText;
 };
 
-class kpToolTextEnterCommand : public kpToolTextCommand
+class kpToolTextEnterCommand : public kpNamedCommand
 {
 public:
     kpToolTextEnterCommand (const QString &name,
@@ -152,6 +139,8 @@ public:
 
     void addEnter ();
 
+    virtual int size () const;
+    
     virtual void execute ();
     virtual void unexecute ();
 
@@ -160,7 +149,7 @@ protected:
     int m_numEnters;
 };
 
-class kpToolTextBackspaceCommand : public kpToolTextCommand
+class kpToolTextBackspaceCommand : public kpNamedCommand
 {
 public:
     kpToolTextBackspaceCommand (const QString &name,
@@ -170,6 +159,8 @@ public:
 
     void addBackspace ();
 
+    virtual int size () const;
+    
     virtual void execute ();
     virtual void unexecute ();
 
@@ -179,7 +170,7 @@ protected:
     QString m_deletedText;
 };
 
-class kpToolTextDeleteCommand : public kpToolTextCommand
+class kpToolTextDeleteCommand : public kpNamedCommand
 {
 public:
     kpToolTextDeleteCommand (const QString &name,
@@ -189,6 +180,8 @@ public:
 
     void addDelete ();
 
+    virtual int size () const;
+    
     virtual void execute ();
     virtual void unexecute ();
 

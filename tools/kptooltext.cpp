@@ -784,53 +784,13 @@ void kpToolText::slotStrikeThruChanged (bool isStrikeThru)
 
 
 /*
- * kpToolTextCommand
- */
-
-kpToolTextCommand::kpToolTextCommand (const QString &name, kpMainWindow *mainWindow)
-    : m_name (name), m_mainWindow (mainWindow)
-{
-}
-
-// public virtual [base KCommand]
-QString kpToolTextCommand::name () const
-{
-    return m_name;
-}
-
-kpToolTextCommand::~kpToolTextCommand ()
-{
-}
-
-
-// protected
-kpSelection *kpToolTextCommand::selection () const
-{
-    if (!m_mainWindow)
-        return 0;
-
-    kpDocument *doc = m_mainWindow->document ();
-    if (!doc)
-        return 0;
-
-    return doc->selection ();
-}
-
-// protected
-kpViewManager *kpToolTextCommand::viewManager () const
-{
-    return m_mainWindow ? m_mainWindow->viewManager () : 0;
-}
-
-
-/*
  * kpToolTextChangeStyleCommand
  */
 
 kpToolTextChangeStyleCommand::kpToolTextChangeStyleCommand (const QString &name,
     const kpTextStyle &newTextStyle, const kpTextStyle &oldTextStyle,
     kpMainWindow *mainWindow)
-    : kpToolTextCommand (name, mainWindow),
+    : kpNamedCommand (name, mainWindow),
       m_newTextStyle (newTextStyle),
       m_oldTextStyle (oldTextStyle)
 {
@@ -841,7 +801,14 @@ kpToolTextChangeStyleCommand::~kpToolTextChangeStyleCommand ()
 }
 
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
+int kpToolTextChangeStyleCommand::size () const
+{
+    return 0;
+}
+
+
+// public virtual [base kpCommand]
 void kpToolTextChangeStyleCommand::execute ()
 {
 #if DEBUG_KP_TOOL_TEXT && 1
@@ -862,7 +829,7 @@ void kpToolTextChangeStyleCommand::execute ()
         kdError () << "kpToolTextChangeStyleCommand::execute() without sel" << endl;
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolTextChangeStyleCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_TEXT && 1
@@ -891,7 +858,7 @@ void kpToolTextChangeStyleCommand::unexecute ()
 kpToolTextInsertCommand::kpToolTextInsertCommand (const QString &name,
     int row, int col, QString newText,
     kpMainWindow *mainWindow)
-    : kpToolTextCommand (name, mainWindow),
+    : kpNamedCommand (name, mainWindow),
       m_row (row), m_col (col)
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
@@ -921,7 +888,15 @@ void kpToolTextInsertCommand::addText (const QString &moreText)
     viewManager ()->setTextCursorPosition (m_row, m_col);
 }
 
-// public virtual [base KCommand]
+
+// public virtual [base kpCommand]
+int kpToolTextInsertCommand::size () const
+{
+    return m_newText.length () * sizeof (QChar);
+}
+
+
+// public virtual [base kpCommand]
 void kpToolTextInsertCommand::execute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
@@ -931,7 +906,7 @@ void kpToolTextInsertCommand::execute ()
     addText (text);
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolTextInsertCommand::unexecute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
@@ -955,7 +930,7 @@ void kpToolTextInsertCommand::unexecute ()
 kpToolTextEnterCommand::kpToolTextEnterCommand (const QString &name,
     int row, int col,
     kpMainWindow *mainWindow)
-    : kpToolTextCommand (name, mainWindow),
+    : kpNamedCommand (name, mainWindow),
       m_row (row), m_col (col),
       m_numEnters (0)
 {
@@ -989,7 +964,14 @@ void kpToolTextEnterCommand::addEnter ()
 }
 
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
+int kpToolTextEnterCommand::size () const
+{
+    return 0;
+}
+
+
+// public virtual [base kpCommand]
 void kpToolTextEnterCommand::execute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
@@ -1000,7 +982,7 @@ void kpToolTextEnterCommand::execute ()
         addEnter ();
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolTextEnterCommand::unexecute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
@@ -1042,7 +1024,7 @@ void kpToolTextEnterCommand::unexecute ()
 kpToolTextBackspaceCommand::kpToolTextBackspaceCommand (const QString &name,
     int row, int col,
     kpMainWindow *mainWindow)
-    : kpToolTextCommand (name, mainWindow),
+    : kpNamedCommand (name, mainWindow),
       m_row (row), m_col (col),
       m_numBackspaces (0)
 {
@@ -1093,7 +1075,15 @@ void kpToolTextBackspaceCommand::addBackspace ()
     m_numBackspaces++;
 }
 
-// public virtual [base KCommand]
+
+// public virtual [base kpCommand]
+int kpToolTextBackspaceCommand::size () const
+{
+    return m_deletedText.length () * sizeof (QChar);
+}
+
+
+// public virtual [base kpCommand]
 void kpToolTextBackspaceCommand::execute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
@@ -1106,7 +1096,7 @@ void kpToolTextBackspaceCommand::execute ()
         addBackspace ();
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolTextBackspaceCommand::unexecute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
@@ -1150,7 +1140,7 @@ void kpToolTextBackspaceCommand::unexecute ()
 kpToolTextDeleteCommand::kpToolTextDeleteCommand (const QString &name,
     int row, int col,
     kpMainWindow *mainWindow)
-    : kpToolTextCommand (name, mainWindow),
+    : kpNamedCommand (name, mainWindow),
       m_row (row), m_col (col),
       m_numDeletes (0)
 {
@@ -1194,7 +1184,14 @@ void kpToolTextDeleteCommand::addDelete ()
 }
 
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
+int kpToolTextDeleteCommand::size () const
+{
+    return m_deletedText.length () * sizeof (QChar);
+}
+
+
+// public virtual [base kpCommand]
 void kpToolTextDeleteCommand::execute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
@@ -1207,7 +1204,7 @@ void kpToolTextDeleteCommand::execute ()
         addDelete ();
 }
 
-// public virtual [base KCommand]
+// public virtual [base kpCommand]
 void kpToolTextDeleteCommand::unexecute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
