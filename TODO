@@ -61,6 +61,7 @@ Luxi Sans 14 draw in green with trans background versus white background (see qu
 15. edit/paste may disappear due to klipper
 16. check kpcommandhistory all sizes are correct
 17. delayed kpcommand popupmenu creation
+18. text tool could autoresize if font size changes or paste text
 
 
 KolourPaint 1.4
