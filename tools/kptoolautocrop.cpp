@@ -253,7 +253,7 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
                      !kpTool::colorEq (topBorder.m_color, botBorder.m_color))
             {
             #if DEBUG_KP_TOOL_AUTO_CROP
-                kdDebug () << "\t\tignoring right border" << endl;
+                kdDebug () << "\t\tignoring top border" << endl;
             #endif
                 topBorder.invalidate ();
             }
