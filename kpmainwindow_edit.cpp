@@ -488,7 +488,7 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
             // TODO: In terms of doc pixels, would be inconsistent behaviour
             //       based on zoomLevel of view.
             // pointToUse -= QPoint (-view->selectionResizeHandleAtomicSize (),
-            //                       -view->selectionResizehandleAtomicSize ());
+            //                       -view->selectionResizeHandleAtomicSize ());
         }
 
         pasteText (text, true/*force new text selection*/, pointToUse);

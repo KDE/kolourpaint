@@ -788,7 +788,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
             // TODO: In terms of doc pixels, would be inconsistent behaviour
             //       based on zoomLevel of view.
             // selTopLeft -= QPoint (-view->selectionResizeHandleAtomicSize (),
-            //                       -view->selectionResizehandleAtomicSize ());
+            //                       -view->selectionResizeHandleAtomicSize ());
         }
 
         pasteText (text, true/*force new text selection*/, selTopLeft);
