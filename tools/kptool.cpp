@@ -98,15 +98,6 @@ void kpTool::beginInternal ()
 
     if (!m_began)
     {
-        if (m_mainWindow)
-        {
-            kpToolToolBar *tb = m_mainWindow->toolToolBar ();
-            if (tb)
-            {
-                tb->hideAllToolWidgets ();
-            }
-        }
-
         // call user virtual func
         begin ();
 
@@ -134,6 +125,16 @@ void kpTool::endInternal ()
 
         // and so we can't be drawing with it
         m_beganDraw = false;
+
+        if (m_mainWindow)
+        {
+            kpToolToolBar *tb = m_mainWindow->toolToolBar ();
+            if (tb)
+            {
+                tb->hideAllToolWidgets ();
+            }
+        }
+
     }
 }
 
