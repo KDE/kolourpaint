@@ -927,7 +927,7 @@ void kpMainWindow::setAsWallpaper (bool centered)
     // 1 = Centered
     // 2 = Tiled
     // 6 = Scaled
-    // 8 = lastWallpaperMode
+    // 9 = lastWallpaperMode
     //
     // Why restrict the user to Centered & Tiled?
     // Why don't we let the user choose if it should be common to all desktops?
