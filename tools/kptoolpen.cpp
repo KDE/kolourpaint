@@ -380,7 +380,6 @@ void kpToolPen::globalDraw ()
                 document ()->pixmap ()->setMask (maskBitmap);
 
 
-            // OPT: wash could return rect
             document ()->slotContentsChanged (rect);
 
 
