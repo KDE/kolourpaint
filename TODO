@@ -8,7 +8,6 @@ Look in BUGS, patches/, grep sources for "OPT" & "TODO" and look here:
 1.0 Branch
 ==========
 
-
 These issues are not release critical:
 
 kpViewManager::setTextCursorBlinkState() needs to restart timer
@@ -20,7 +19,6 @@ When scrolling, text cursor is not fully repainted until next blink (Bug #14)
 
 Feature Plan for 1.1
 ====================
-
 
 There's a lot of stuff here so it's likely that most of it will be pushed
 to post 1.1:
