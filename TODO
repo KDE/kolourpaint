@@ -5,10 +5,6 @@ $Id$
 Currently Underway
 ==================
 
-Zoom zooms into/out of the centre, not the top-left (like a camera)
-
-Image/Autocrop
-
 fix selections; implement free-form selection
 - clean interface
 - drastically improve performance
@@ -36,6 +32,8 @@ paste text (editable after you paste it)
 Killer Feature: with flow tools (pen, brush, spraycan), holding SHIFT forces horizontal drawing;
                 CTRL forces vertical - so those of us without perfectly steady hands
                 can still draw straight without continually hitting the Undo button :)
+
+Zoom zooms into/out of the centre, not the top-left (like a camera)
 
 
 Before 1.0
