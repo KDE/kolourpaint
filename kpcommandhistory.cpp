@@ -33,6 +33,8 @@
 
 #include <limits.h>
 
+#include <qdatetime.h>
+
 #include <kactionclasses.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -158,26 +160,26 @@ kpMacroCommand::~kpMacroCommand ()
 // public virtual [base kpCommand]
 int kpMacroCommand::size () const
 {
-#if DEBUG_KP_COMMAND_HISTORY
+#if DEBUG_KP_COMMAND_HISTORY && 0
     kdDebug () << "kpMacroCommand::size()" << endl;
 #endif
     int s = 0;
 
-#if DEBUG_KP_COMMAND_HISTORY
+#if DEBUG_KP_COMMAND_HISTORY && 0
     kdDebug () << "\tcalculating:" << endl;
 #endif
     for (QValueList <kpCommand *>::const_iterator it = m_commandList.begin ();
          it != m_commandList.end ();
          it++)
     {
-    #if DEBUG_KP_COMMAND_HISTORY
+    #if DEBUG_KP_COMMAND_HISTORY && 0
         kdDebug () << "\t\tcurrentSize=" << s << " + "
                    << (*it)->name () << ".size=" << (*it)->size ()
                    << endl;
     #endif
         if (s > INT_MAX - (*it)->size ())
         {
-        #if DEBUG_KP_COMMAND_HISTORY
+        #if DEBUG_KP_COMMAND_HISTORY && 0
             kdDebug () << "\t\t\toverflow" << endl;
         #endif
             s = INT_MAX;
@@ -189,7 +191,7 @@ int kpMacroCommand::size () const
         }
     }
 
-#if DEBUG_KP_COMMAND_HISTORY
+#if DEBUG_KP_COMMAND_HISTORY && 0
     kdDebug () << "\treturning " << s << endl;
 #endif
     return s;
@@ -656,6 +658,7 @@ void kpCommandHistoryBase::trimCommandList (QValueList <kpCommand *> *commandLis
 {
 #if DEBUG_KP_COMMAND_HISTORY
     kdDebug () << "kpCommandHistoryBase::trimCommandList()" << endl;
+    QTime timer; timer.start ();
 #endif
 
     if (!commandList)
@@ -682,7 +685,7 @@ void kpCommandHistoryBase::trimCommandList (QValueList <kpCommand *> *commandLis
     }
 
 
-#if DEBUG_KP_COMMAND_HISTORY
+#if DEBUG_KP_COMMAND_HISTORY && 0
     kdDebug () << "\tsize over undoMinLimit - iterating thru cmds:" << endl;
 #endif
 
@@ -703,7 +706,7 @@ void kpCommandHistoryBase::trimCommandList (QValueList <kpCommand *> *commandLis
                 sizeSoFar += (*it)->size ();
         }
 
-    #if DEBUG_KP_COMMAND_HISTORY
+    #if DEBUG_KP_COMMAND_HISTORY && 0
         kdDebug () << "\t\t" << upto << ":"
                    << " name='" << (*it)->name ()
                    << "' size=" << (*it)->size ()
@@ -716,7 +719,7 @@ void kpCommandHistoryBase::trimCommandList (QValueList <kpCommand *> *commandLis
             if (upto >= m_undoMaxLimit ||
                 sizeSoFar > m_undoMaxLimitSizeLimit)
             {
-            #if DEBUG_KP_COMMAND_HISTORY
+            #if DEBUG_KP_COMMAND_HISTORY && 0
                 kdDebug () << "\t\t\tkill" << endl;
             #endif
                 delete (*it);
@@ -729,6 +732,10 @@ void kpCommandHistoryBase::trimCommandList (QValueList <kpCommand *> *commandLis
             it++;
         upto++;
     }
+
+#if DEBUG_KP_COMMAND_HISTORY
+    kdDebug () << "\ttook " << timer.elapsed () << "ms" << endl;
+#endif
 }
 
 // protected
@@ -802,15 +809,29 @@ void kpCommandHistoryBase::updateActions ()
 
     m_actionUndo->setEnabled ((bool) nextUndoCommand ());
     m_actionUndo->setText (undoActionText ());
+#if DEBUG_KP_COMMAND_HISTORY
+    QTime timer; timer.start ();
+#endif
     populatePopupMenu (m_actionUndo->popupMenu (),
                        i18n ("Undo"),
                        m_undoCommandList);
+#if DEBUG_KP_COMMAND_HISTORY
+    kdDebug () << "\tpopuplatePopupMenu undo=" << timer.elapsed ()
+               << "ms" << endl;;
+#endif
 
     m_actionRedo->setEnabled ((bool) nextRedoCommand ());
     m_actionRedo->setText (redoActionText ());
+#if DEBUG_KP_COMMAND_HISTORY
+    timer.restart ();
+#endif
     populatePopupMenu (m_actionRedo->popupMenu (),
                        i18n ("Redo"),
                        m_redoCommandList);
+#if DEBUG_KP_COMMAND_HISTORY
+    kdDebug () << "\tpopuplatePopupMenu redo=" << timer.elapsed ()
+               << "ms" << endl;
+#endif
 }
 
 
