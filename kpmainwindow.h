@@ -279,6 +279,8 @@ private slots:
     void slotDelete ();
 
     void slotSelectAll ();
+private:
+    void addDeselectFirstCommand (KCommand *cmd);
 public slots:
     void slotDeselect ();
 

@@ -218,9 +218,6 @@ void kpMainWindow::paste (const kpSelection &sel)
         setDocument (newDoc);
     }
 
-    if (m_document->selection ())
-        slotDeselect ();
-
 
     //
     // Paste as new selection
@@ -228,7 +225,7 @@ void kpMainWindow::paste (const kpSelection &sel)
 
     kpSelection selInUsefulPos = sel;
     selInUsefulPos.moveTo (calcUsefulPasteRect (sel.width (), sel.height ()).topLeft ());
-    m_commandHistory->addCommand (new kpToolSelectionCreateCommand (
+    addDeselectFirstCommand (new kpToolSelectionCreateCommand (
         i18n ("Selection: Create"),
         selInUsefulPos,
         this));
@@ -334,6 +331,66 @@ void kpMainWindow::slotSelectAll ()
     m_document->setSelection (kpSelection (kpSelection::Rectangle, m_document->rect ()));
 }
 
+
+// private
+void kpMainWindow::addDeselectFirstCommand (KCommand *cmd)
+{
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kdDebug () << "kpMainWindow::addDeselectFirstCommand("
+               << cmd
+               << ")"
+               << endl;
+#endif
+
+
+    kpSelection *sel = m_document->selection ();
+
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kdDebug () << "\tsel=" << sel << endl;
+#endif
+
+    if (sel)
+    {
+        // if you just dragged out something with no action then
+        // forget the drag
+        if (!sel->pixmap ())
+        {
+        #if DEBUG_KP_MAIN_WINDOW && 1
+            kdDebug () << "\tjust a fresh border - was nop - delete" << endl;
+        #endif
+            m_document->selectionDelete ();
+            if (cmd)
+                m_commandHistory->addCommand (cmd);
+        }
+        else
+        {
+        #if DEBUG_KP_MAIN_WINDOW && 1
+            kdDebug () << "\treal selection with pixmap - push onto doc cmd" << endl;
+        #endif
+            KCommand *deselectCommand = new kpToolSelectionDestroyCommand (
+                i18n ("Selection: Deselect"),
+                true/*push onto document*/,
+                this);
+
+            if (cmd)
+            {
+                KMacroCommand *macroCmd = new KMacroCommand (cmd->name ());
+                macroCmd->addCommand (deselectCommand);
+                macroCmd->addCommand (cmd);
+                m_commandHistory->addCommand (macroCmd);
+            }
+            else
+                m_commandHistory->addCommand (deselectCommand);
+        }
+    }
+    else
+    {
+        if (cmd)
+            m_commandHistory->addCommand (cmd);
+    }
+}
+
+
 // public slot
 void kpMainWindow::slotDeselect ()
 {
@@ -348,37 +405,5 @@ void kpMainWindow::slotDeselect ()
         return;
     }
 
-    kpSelection *sel = m_document->selection ();
-
-    if (sel)
-    {
-    #if DEBUG_KP_MAIN_WINDOW && 1
-        kdDebug () << "\twith selection" << endl;
-    #endif
-        // if you just dragged out something with no action then
-        // forget the drag
-        if (!sel->pixmap ())
-        {
-        #if DEBUG_KP_MAIN_WINDOW && 1
-            kdDebug () << "\tjust a fresh border - was nop - delete" << endl;
-        #endif
-            m_document->selectionDelete ();
-        }
-        else
-        {
-        #if DEBUG_KP_MAIN_WINDOW && 1
-            kdDebug () << "\treal selection with pixmap - push onto doc cmd" << endl;
-        #endif
-            m_commandHistory->addCommand (new kpToolSelectionDestroyCommand (
-                i18n ("Selection: Deselect"),
-                true/*push onto document*/,
-                this));
-        }
-    }
-    else
-    {
-    #if DEBUG_KP_MAIN_WINDOW && 1
-        kdDebug () << "\tno selection - nop" << endl;
-    #endif
-    }
+    addDeselectFirstCommand (0);
 }
