@@ -36,6 +36,7 @@
 #include <kpdocument.h>
 #include <kpthumbnail.h>
 #include <kpmainwindow.h>
+#include <kptool.h>
 #include <kpview.h>
 
 
@@ -149,7 +150,13 @@ void kpThumbnail::resizeEvent (QResizeEvent * /*e*/)
     QTimer::singleShot (0, this, SLOT (updateVariableZoom ()));
 
     if (m_mainWindow)
+    {
         m_mainWindow->notifyThumbnailGeometryChanged ();
+
+        // HACK: required due to above HACK :(
+        if (m_mainWindow->tool ())
+            QTimer::singleShot (0, m_mainWindow->tool (), SLOT (somethingBelowTheCursorChanged ()));
+    }
 }
 
 // protected virtual [base QWidget]
