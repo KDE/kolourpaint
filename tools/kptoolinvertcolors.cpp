@@ -48,7 +48,7 @@ kpToolInvertColorsCommand::kpToolInvertColorsCommand (bool actOnSelection,
 // public virtual [base KCommand]
 QString kpToolInvertColorsCommand::name () const
 {
-    QString opName = i18n ("Invert colors");
+    QString opName = i18n ("Invert Colors");
 
     if (m_actOnSelection)
         return i18n ("Selection: %1").arg (opName);
