@@ -61,9 +61,27 @@
 // private
 kpPixmapFX::WarnAboutLossInfo kpMainWindow::pasteWarnAboutLossInfo ()
 {
-    return kpPixmapFX::WarnAboutLossInfo (this,
-        i18n ("image to be pasted"),
-        "paste");
+    return kpPixmapFX::WarnAboutLossInfo (
+               i18n ("The image to be pasted"
+                     " may have more colors than the current screen mode."
+                     " In order to display it, some colors may be changed."
+                     " Try increasing your screen depth to at least %1bpp."
+
+                     "\nIt also"
+
+                     " contains translucency which is not fully"
+                     " supported. The translucency data will be"
+                     " approximated with a 1-bit transparency mask."),
+               i18n ("The image to be pasted"
+                     " may have more colors than the current screen mode."
+                     " In order to display it, some colors may be changed."
+                     " Try increasing your screen depth to at least %1bpp."),
+               i18n ("The image to be pasted"
+                     " contains translucency which is not fully"
+                     " supported. The translucency data will be"
+                     " approximated with a 1-bit transparency mask."),
+               "paste",
+               this);
 }
 
 

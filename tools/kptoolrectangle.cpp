@@ -440,10 +440,7 @@ void kpToolRectangle::applyModifiers ()
 
 void kpToolRectangle::beginDraw ()
 {
-    setUserMessage (i18n ("%1 to cancel.")
-                        .arg (mouseClickText (true/*other mouse button*/,
-                                              true/*start of sentence*/)));
-
+    setUserMessage (cancelUserMessage ());
 }
 
 void kpToolRectangle::updateShape ()
@@ -600,7 +597,7 @@ void kpToolRectangleCommand::execute ()
     kpDocument *doc = document ();
     if (!doc)
         return;
-    
+
     // store Undo info
     if (!m_oldPixmapPtr)
     {
@@ -624,7 +621,7 @@ void kpToolRectangleCommand::unexecute ()
     kpDocument *doc = document ();
     if (!doc)
         return;
-    
+
     if (m_oldPixmapPtr)
     {
         doc->setPixmapAt (*m_oldPixmapPtr, m_rect.topLeft ());

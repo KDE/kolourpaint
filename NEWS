@@ -2,6 +2,9 @@
 KolourPaint 1.2 Series (KDE_3_3_BRANCH)
 ======================
 
+   * Fix remaining untranslatable strings (closing KDE Bug #85785)
+   * Update docs (README, NEWS, ...)
+
 Version 1.2 "ByFiat Everytime" (2004/08/18)
    * Add up to 500 levels of Undo/Redo (minimum of 10 levels, maximum of
      500 as long as the total history size < 16MB)

@@ -220,9 +220,7 @@ void kpToolPen::beginDraw ()
     // to avoid confusion
     viewManager ()->invalidateTempPixmap ();
 
-    setUserMessage (i18n ("%1 to cancel.")
-                        .arg (mouseClickText (true/*other mouse button*/,
-                                              true/*start of sentence*/)));
+    setUserMessage (cancelUserMessage ());
 }
 
 // virtual

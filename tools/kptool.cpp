@@ -1384,76 +1384,20 @@ int kpTool::mouseButton (const Qt::ButtonState &buttonState)
  * User Notifications
  */
 
-// private
-int kpTool::calcMouseButton (bool otherMouseButton) const
+
+// public static
+QString kpTool::cancelUserMessage (int mouseButton)
 {
-    if (!otherMouseButton)
-        return m_mouseButton;
+    if (mouseButton == 0)
+        return i18n ("Right click to cancel.");
     else
-        return 1 - m_mouseButton;
+        return i18n ("Left click to cancel.");
 }
 
 // public
-QString kpTool::mouseButtonText (bool otherMouseButton, bool sentenceStart) const
+QString kpTool::cancelUserMessage () const
 {
-    int mb = calcMouseButton (otherMouseButton);
-
-    if (mb == 0)
-    {
-        if (sentenceStart)
-            return i18n ("Left");
-        else
-            return i18n ("left");
-    }
-    else
-    {
-        if (sentenceStart)
-            return i18n ("Right");
-        else
-            return i18n ("right");
-    }
-}
-
-// public
-QString kpTool::mouseClickText (bool otherMouseButton, bool sentenceStart) const
-{
-    int mb = calcMouseButton (otherMouseButton);
-
-    if (mb == 0)
-    {
-        if (sentenceStart)
-            return i18n ("Left click");
-        else
-            return i18n ("left click");
-    }
-    else
-    {
-        if (sentenceStart)
-            return i18n ("Right click");
-        else
-            return i18n ("right click");
-    }
-}
-
-// public
-QString kpTool::mouseDragText (bool otherMouseButton, bool sentenceStart) const
-{
-    int mb = calcMouseButton (otherMouseButton);
-
-    if (mb == 0)
-    {
-        if (sentenceStart)
-            return i18n ("Left drag");
-        else
-            return i18n ("left drag");
-    }
-    else
-    {
-        if (sentenceStart)
-            return i18n ("Right drag");
-        else
-            return i18n ("right drag");
-    }
+    return cancelUserMessage (m_mouseButton);
 }
 
 

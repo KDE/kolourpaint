@@ -108,30 +108,35 @@ kpToolResizeScaleCommand::~kpToolResizeScaleCommand ()
 // public virtual [base kpCommand]
 QString kpToolResizeScaleCommand::name () const
 {
-    QString opName;
-
-    switch (m_type)
-    {
-    case Resize:
-        opName = i18n ("Resize");
-        break;
-    case Scale:
-        opName = i18n ("Scale");
-        break;
-    case SmoothScale:
-        opName = i18n ("Smooth Scale");
-        break;
-    }
-
     if (m_actOnSelection)
     {
         if (m_actOnTextSelection)
-            return i18n ("Text: %1 Box").arg (opName);
+        {
+            if (m_type == Resize)
+                return i18n ("Text: Resize Box");
+        }
         else
-            return i18n ("Selection: %1").arg (opName);
+        {
+            if (m_type == Scale)
+                return i18n ("Selection: Scale");
+            else if (m_type == SmoothScale)
+                return i18n ("Selection: Smooth Scale");
+        }
     }
     else
-        return opName;
+    {
+        switch (m_type)
+        {
+        case Resize:
+            return i18n ("Resize");
+        case Scale:
+            return i18n ("Scale");
+        case SmoothScale:
+            return i18n ("Smooth Scale");
+        }
+    }
+
+    return QString::null;
 }
 
 // public virtual [base kpCommand]

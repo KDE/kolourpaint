@@ -114,9 +114,7 @@ void kpToolFloodFill::beginDraw ()
 
     QApplication::restoreOverrideCursor ();
 
-    setUserMessage (i18n ("%1 to cancel.")
-                        .arg (mouseClickText (true/*other mouse button*/,
-                                              true/*start of sentence*/)));
+    setUserMessage (cancelUserMessage ());
 }
 
 // virtual
@@ -206,7 +204,7 @@ void kpToolFloodFillCommand::execute ()
     if (!doc)
         return;
 
-    
+
     if (m_fillEntirePixmap)
     {
         doc->fill (kpFloodFill::color ());
@@ -241,7 +239,7 @@ void kpToolFloodFillCommand::unexecute ()
     if (!doc)
         return;
 
-    
+
     if (m_fillEntirePixmap)
     {
         doc->fill (kpFloodFill::colorToChange ());

@@ -137,11 +137,8 @@ void kpToolAirSpray::beginDraw ()
 
     // use a timer instead of reimplementing draw() (we don't draw all the time)
     m_timer->start (25);
-    
-    setUserMessage (i18n ("%1 to cancel.")
-                        .arg (mouseClickText (true/*other mouse button*/,
-                                              true/*start of sentence*/)));
-    
+
+    setUserMessage (cancelUserMessage ());
 }
 
 void kpToolAirSpray::draw (const QPoint &thisPoint, const QPoint &, const QRect &)
@@ -227,7 +224,7 @@ void kpToolAirSpray::endDraw (const QPoint &, const QRect &)
 
     // don't delete - it's up to the commandHistory
     m_currentCommand = 0;
-    
+
     setUserMessage (haventBegunDrawUserMessage ());
 }
 
