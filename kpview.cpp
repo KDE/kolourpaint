@@ -134,13 +134,20 @@ bool kpView::hasVariableZoom () const
 
 bool kpView::slotUpdateVariableZoom ()
 {
+#if DEBUG_KP_VIEW
+    kdDebug () << "kpView::slotUpdateVariableZoom(" << width () << "," << height () << ")" << endl;
+#endif
     return updateVariableZoom (width (), height ());
 }
 
 bool kpView::updateVariableZoom (int viewWidth, int viewHeight)
 {
 #if DEBUG_KP_VIEW
-    kdDebug () << "kpView::updateVariableZoom (" << viewWidth << "," << viewHeight << ")" << endl;
+    kdDebug () << "kpView::updateVariableZoom (" << viewWidth
+               << "," << viewHeight << ")"
+               << " actualWidth=" << width ()
+               << " actualheight=" << height ()
+               << endl;
 #endif
 
     if (!hasVariableZoom ())
