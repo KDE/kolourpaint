@@ -2,9 +2,7 @@
 KolourPaint 1.2 Series (KDE_3_3_BRANCH)
 ======================
 
-   * When changing between colour depth and quality widgets in the save
-     filedialog, make sure "Convert to:" and "Quality:" are correctly
-     rendered (hacking around a Qt redraw glitch)
+Version 1.2.1 (2004/10/02)
    * Fix selection regressions introduced in 1.2:
      - Make selection dragging with CTRL work again (copies selection onto
        document)
@@ -15,8 +13,19 @@ KolourPaint 1.2 Series (KDE_3_3_BRANCH)
        selection instead of moving it
      - Draw resize handles above the grid lines - not below - so that the
        handles are always visible if they are supposed to be there
+   * Speed up renderer (most noticeable with diagonal drag-scrolling at
+     high zoom)
+     - Don't paint anything outside of the view's visible region
+       (previously, clipped only on view _widget_ region)
+     - Region-aware: paint component rectangles of the update region,
+       rather than the bounding rectangle
+   * When changing between colour depth and quality widgets in the save
+     filedialog, make sure "Convert to:" and "Quality:" are correctly
+     rendered (hacking around a Qt redraw glitch)
+     [from kolourpaint_1_2_kde3_branch at time of 1.2 release]
    * Update image format associations to all formats supported by KDE 3.3
    * Fix remaining untranslatable strings (closing KDE Bug #85785)
+   * Remove unused images in doc directory
    * Update docs (README, NEWS, ...)
 
 Version 1.2 "ByFiat Everytime" (2004/08/18)
