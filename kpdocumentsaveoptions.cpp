@@ -407,6 +407,7 @@ int kpDocumentSaveOptions::mimeTypeMaximumColorDepth (const QString &mimeType)
 
     defaultList << QString::fromLatin1 ("image/x-eps:1");  // well, greyscale actually
     defaultList << QString::fromLatin1 ("image/x-portable-bitmap:1");
+    defaultList << QString::fromLatin1 ("image/x-portable-greymap:1");  // well, greyscale actually
     defaultList << QString::fromLatin1 ("image/x-xbm:1");
 
     const QStringList mimeTypeList = mimeTypesSupportingProperty (
