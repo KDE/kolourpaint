@@ -945,7 +945,7 @@ int kpSelection::preferredMinimumWidthForTextStyle (const kpTextStyle &textStyle
               textBorderSize () * 2 + about15CharsWidth);
 
     return QMAX (minimumWidthForTextStyle (textStyle),
-                 QMIN (400, preferredMinWidth));
+                 QMIN (250, preferredMinWidth));
 }
 
 // public static
