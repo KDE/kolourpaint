@@ -184,7 +184,7 @@ KDE = 3.0
    The widget for selecting saving options in the file dialog does not line
    up with the "Location" and "Filter" combo boxes.
 
-5. [RUNTIME]
+5. [COMPILE-TIME]
    The "Settings / Configure Toolbars..." menu item is not available.  This
    is to protect you from destroying all the standard actions in the Main
    Toolbar due to action merging not working for toolbars.
