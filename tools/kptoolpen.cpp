@@ -42,6 +42,7 @@
 #include <klocale.h>
 
 #include <kpcolor.h>
+#include <kpcommandhistory.h>
 #include <kpcursorprovider.h>
 #include <kptoolpen.h>
 #include <kpdefs.h>
@@ -194,8 +195,6 @@ void kpToolPen::hover (const QPoint &point)
     {
         m_mouseButton = 0;
 
-        viewManager ()->setFastUpdates ();
-
         kpTempPixmap::RenderMode renderMode;
         QPixmap cursorPixmapForTempPixmap = m_cursorPixmap;
 
@@ -211,6 +210,8 @@ void kpToolPen::hover (const QPoint &point)
                 cursorPixmapForTempPixmap = kpPixmapFX::getNonNullMask (m_cursorPixmap);
             }
         }
+
+        viewManager ()->setFastUpdates ();
 
         viewManager ()->setTempPixmap (
             kpTempPixmap (true/*brush*/,
@@ -821,6 +822,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
 // virtual
 void kpToolPen::cancelShape ()
 {
+    m_currentCommand->finalize ();
     m_currentCommand->cancel ();
 
     delete m_currentCommand;
@@ -1058,7 +1060,7 @@ void kpToolPenCommand::cancel ()
     if (m_boundingRect.isValid ())
     {
         m_viewManager->setFastUpdates ();
-        m_document->setPixmapAt (m_pixmap, QPoint (0, 0));
+        m_document->setPixmapAt (m_pixmap, m_boundingRect.topLeft ());
         m_viewManager->restoreFastUpdates ();
     }
 }
