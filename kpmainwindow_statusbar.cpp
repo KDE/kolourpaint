@@ -27,6 +27,9 @@
 
 #define DEBUG_STATUS_BAR (DEBUG_KP_MAIN_WINDOW && 0)
 
+
+#include <kpmainwindow.h>
+
 #include <qlabel.h>
 #include <qstring.h>
 
@@ -37,7 +40,6 @@
 
 #include <kpdefs.h>
 #include <kpdocument.h>
-#include <kpmainwindow.h>
 #include <kptool.h>
 #include <kpview.h>
 

@@ -28,9 +28,11 @@
 
 #define DEBUG_KP_COMMAND_HISTORY 0
 
-#include <kdebug.h>
 
 #include <kpcommandhistory.h>
+
+#include <kdebug.h>
+
 #include <kpmainwindow.h>
 #include <kptool.h>
 

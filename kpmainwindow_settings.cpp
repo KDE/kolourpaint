@@ -26,6 +26,8 @@
 */
 
 
+#include <kpmainwindow.h>
+
 #include <kactionclasses.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -38,7 +40,6 @@
 
 #include <kpdefs.h>
 #include <kpdocument.h>
-#include <kpmainwindow.h>
 
 
 // private

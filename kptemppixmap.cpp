@@ -28,8 +28,10 @@
 
 #define DEBUG_KP_TEMP_PIXMAP 0
 
-#include <kppixmapfx.h>
+
 #include <kptemppixmap.h>
+
+#include <kppixmapfx.h>
 #include <kpviewmanager.h>
 
 

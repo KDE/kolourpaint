@@ -25,6 +25,9 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+#include <kpmainwindow.h>
+
 #include <kactionclasses.h>
 #include <kapplication.h>
 
@@ -34,7 +37,6 @@
 
 #include <kpcolortoolbar.h>
 #include <kpdefs.h>
-#include <kpmainwindow.h>
 #include <kptextstyle.h>
 #include <kptooltext.h>
 #include <kpview.h>

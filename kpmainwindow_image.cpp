@@ -26,6 +26,8 @@
 */
 
 
+#include <kpmainwindow.h>
+
 #include <qcolor.h>
 #include <qsize.h>
 
@@ -41,7 +43,6 @@
 #include <kpcolortoolbar.h>
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
-#include <kpmainwindow.h>
 #include <kpselection.h>
 #include <kptool.h>
 #include <kptoolautocrop.h>

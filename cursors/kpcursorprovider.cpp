@@ -26,12 +26,13 @@
 */
 
 
+#include <kpcursorprovider.h>
+
 #include <qcursor.h>
 
 #include <kstaticdeleter.h>
 
 #include <kpcursorlightcross.h>
-#include <kpcursorprovider.h>
 
 
 static const QCursor *theLightCursor = 0;

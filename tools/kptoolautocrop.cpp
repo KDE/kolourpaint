@@ -43,6 +43,9 @@
 
 #define DEBUG_KP_TOOL_AUTO_CROP 0
 
+
+#include <kptoolautocrop.h>
+
 #include <qapplication.h>
 #include <qbitmap.h>
 #include <qimage.h>
@@ -59,7 +62,6 @@
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kptool.h>
-#include <kptoolautocrop.h>
 #include <kpviewmanager.h>
 
 

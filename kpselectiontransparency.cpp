@@ -28,11 +28,13 @@
 
 #define DEBUG_KP_SELECTION_TRANSPARENCY 0
 
+
+#include <kpselectiontransparency.h>
+
 #include <kdebug.h>
 
 #include <kpcolor.h>
 #include <kpcolorsimilaritydialog.h>
-#include <kpselectiontransparency.h>
 
 
 kpSelectionTransparency::kpSelectionTransparency ()

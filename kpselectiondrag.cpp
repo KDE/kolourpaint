@@ -28,13 +28,14 @@
 #define DEBUG_KP_SELECTION_DRAG 0
 
 
+#include <kpselectiondrag.h>
+
 #include <qdatastream.h>
 
 #include <kdebug.h>
 
 #include <kppixmapfx.h>
 #include <kpselection.h>
-#include <kpselectiondrag.h>
 
 
 // public static

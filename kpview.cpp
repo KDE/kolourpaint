@@ -29,6 +29,9 @@
 #define DEBUG_KP_VIEW 0
 #define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 0) || 0)
 
+
+#include <kpview.h>
+
 #include <math.h>
 
 #include <qbitmap.h>
@@ -53,7 +56,6 @@
 #include <kptemppixmap.h>
 #include <kptool.h>
 #include <kptoolpen.h>
-#include <kpview.h>
 #include <kpviewmanager.h>
 
 

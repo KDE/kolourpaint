@@ -28,6 +28,9 @@
 
 #define DEBUG_KP_PIXMAP_FX 0
 
+
+#include <kppixmapfx.h>
+
 #include <math.h>
 
 #include <qapplication.h>
@@ -45,7 +48,6 @@
 
 #include <kpcolor.h>
 #include <kpdefs.h>
-#include <kppixmapfx.h>
 #include <kptool.h>
 
 

@@ -28,6 +28,9 @@
 
 #define DEBUG_KP_SELECTION 0
 
+
+#include <kpselection.h>
+
 #include <qfont.h>
 #include <qimage.h>
 #include <qpainter.h>
@@ -39,7 +42,6 @@
 #include <kpcolorsimilaritydialog.h>
 #include <kpdefs.h>
 #include <kppixmapfx.h>
-#include <kpselection.h>
 #include <kptool.h>
 
 

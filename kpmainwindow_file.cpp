@@ -26,6 +26,8 @@
 */
 
 
+#include <kpmainwindow.h>
+
 #include <qcstring.h>
 #include <qdatastream.h>
 #include <qpainter.h>
@@ -49,7 +51,6 @@
 
 #include <kpdefs.h>
 #include <kpdocument.h>
-#include <kpmainwindow.h>
 #include <kptool.h>
 #include <kpview.h>
 #include <kpviewmanager.h>

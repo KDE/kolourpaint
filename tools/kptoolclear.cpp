@@ -26,6 +26,8 @@
 */
 
 
+#include <kptoolclear.h>
+
 #include <qpixmap.h>
 
 #include <kdebug.h>
@@ -36,7 +38,6 @@
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
-#include <kptoolclear.h>
 
 
 kpToolClearCommand::kpToolClearCommand (bool actOnSelection,

@@ -29,6 +29,8 @@
 #define DEBUG_KP_FLOOD_FILL 0
 
 
+#include <kpfloodfill.h>
+
 #include <qapplication.h>
 #include <qbitmap.h>
 #include <qpainter.h>
@@ -37,7 +39,6 @@
 #include <kdebug.h>
 #include <kpdefs.h>
 
-#include <kpfloodfill.h>
 #include <kppixmapfx.h>
 #include <kptool.h>
 

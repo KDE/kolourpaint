@@ -29,11 +29,11 @@
 #define DEBUG_KP_COLOR 0
 
 
+#include <kpcolor.h>
+
 #include <qdatastream.h>
 
 #include <kdebug.h>
-
-#include <kpcolor.h>
 
 
 // public static

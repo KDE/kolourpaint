@@ -26,8 +26,10 @@
 */
 
 
-#include <klocale.h>
 #include <kptoolcurve.h>
+
+#include <klocale.h>
+
 
 kpToolCurve::kpToolCurve (kpMainWindow *mainWindow)
     : kpToolPolygon (mainWindow)

@@ -25,11 +25,12 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+#include <kptextstyle.h>
+
 #include <qdatastream.h>
 #include <qfont.h>
 #include <qfontmetrics.h>
-
-#include <kptextstyle.h>
 
 
 kpTextStyle::kpTextStyle ()

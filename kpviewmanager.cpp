@@ -28,6 +28,9 @@
 
 #define DEBUG_KP_VIEW_MANAGER 0
 
+
+#include <kpviewmanager.h>
+
 #include <qapplication.h>
 #include <qtimer.h>
 
@@ -40,7 +43,6 @@
 #include <kptemppixmap.h>
 #include <kptool.h>
 #include <kpview.h>
-#include <kpviewmanager.h>
 
 
 kpViewManager::kpViewManager (kpMainWindow *mainWindow)

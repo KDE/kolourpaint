@@ -28,6 +28,9 @@
 
 #define DEBUG_KP_TOOL_COLOR_PICKER 0
 
+
+#include <kptoolcolorpicker.h>
+
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qpoint.h>
@@ -41,7 +44,6 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
-#include <kptoolcolorpicker.h>
 
 
 /*

@@ -26,6 +26,8 @@
 */
 
 
+#include <kpmainwindow.h>
+
 #include <qdragobject.h>
 #include <qpainter.h>
 #include <qscrollview.h>
@@ -50,7 +52,6 @@
 #include <kpthumbnail.h>
 #include <kptool.h>
 #include <kptooltoolbar.h>
-#include <kpmainwindow.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
 
