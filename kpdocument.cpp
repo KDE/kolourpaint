@@ -703,7 +703,7 @@ void kpDocument::setSelection (const kpSelection &selection)
 }
 
 // public
-QPixmap kpDocument::selectionGetMask () const
+QBitmap kpDocument::selectionGetMask () const
 {
     kpSelection *sel = selection ();
 
@@ -711,14 +711,19 @@ QPixmap kpDocument::selectionGetMask () const
     if (!sel)
     {
         kdError () << "kpDocument::selectionGetMask() no sel region" << endl;
-        return QPixmap ();
+        return QBitmap ();
     }
+
+    // easy if we already have it :)
+    if (sel->pixmap ())
+        return kpPixmapFX::getNonNullMask (*sel->pixmap ());
+    
 
     const QRect boundingRect = sel->boundingRect ();
     if (!boundingRect.isValid ())
     {
         kdError () << "kpDocument::selectionGetMask() boundingRect invalid" << endl;
-        return QPixmap ();
+        return QBitmap ();
     }
 
 
