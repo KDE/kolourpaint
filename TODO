@@ -5,28 +5,8 @@ Before each release of KolourPaint and/or KDE, grep sources for
 Look in BUGS, patches/, grep sources for "OPT" & "TODO" and look here:
 
 
-Feature Plan for 1.2
-====================
-
-High Priority
--------------
-
-shape selections should support CTRL, ALT, SHIFT to alter shape but
-ATM, CTRL means copy, SHIFT means sweep.
-
-flexible kpCommandHistory - would virtually solve all the Undo/Redo annoyances
-(such as very limited Undo/Redo even though you're making 1 pixel changes)
-- drag out a selection, move, undo, move
-  - there's 2 "Selection/Create" Undo entries (Bug #5)
-- merge neighbouring move commands
-
-fix flicker when zooming in/out (Bug #1)
-
-scrollview scrolls during drag operations
-
-font textbox size should be smarter, freehand resizeable
-
-freehand resize document
+KolourPaint 1.2 (7 days)
+========================
 
 Image/Convert Colour Depth (only be able to dither to colour depths lower
 than the current display - limitation of X).  Hmmm, I could understand
@@ -34,51 +14,27 @@ going down to mono (image effect) but why would you want to e.g. convert
 to 8 bit - if you save in an 8-bit format after that, you'll lose colour
 info twice.  Allow saving at different colour depths (else saving a mono BMP
 saves it as full colour 32x bigger).
+warn about lossy saves (e.g. JPEG)
 
-Image/ Contrast, Brightness, ... more image effects
+Image/ Contrast, Brightness, ... more image effects, greyscale masks (Bela-Andreas Bargel)
 
-option to dither image on open if not enough colors else that season jpg
-looks bad on 8-bit screen
-- it seems that AvoidDither means only do colour match/dithering if need to
-  while PreferDither means try to _always_ smooth out (even in a single colour
-  darkgreen document)
+m0ns00n@gmx.net:
+- configurable palette size (up to 256 colours)  + <stephen.sweeney@lehman.com>
+- generate gradient between 2 colours in palette
+
+kpcolortoolbar - open/save palette
+
+
+-----
 
 warn when about to exceed KP_BIG_IMAGE_WIDTH or KP_BIG_IMAGE_HEIGHT
 
-m0ns00n@gmx.net:
-- configurable palette size (up to 256 colours)
-- generate gradient between 2 colours in palette
-- keyboard shortcuts for tools, brush sizes ('+' and '-'?)
-
-make scale vs smoothscale icons significantly different and obvious
-
-smooth scale - apple sel 32x32 to 44x44 adds grey line on right but not if fresh image
-
-spraycan should be continuous - merge with kpToolBrush base?
-
-text transparency widget because setting the transparent colour as the
-background colour isn't obvious enough
-
-make configuring colour similarity more obvious - for a start, say dblclick in whatsthis
-
-documentation (assigned to Thurston)
+rename crop options
 
 
-Low Priority
-------------
+use of QPoint () or QPoint (-1, -1) as a sentinel is worrying since it's a
+legal point when dragging out a rectangle
 
-kpViewManager::setTextCursorBlinkState() needs to restart timer
-kpToolText: cursor doesn't immediately appear after creating or moving
-            a text box
-
-When scrolling, text cursor is not fully repainted until next blink (Bug #14)
-
-selections
-- ability to freehand stretch selections
-- maybe always have 1 width display of border - try editing a B&W icon to see what I mean
-- should be able to use selection/image commands on text box
-
-eraser cursor border should not get magnified
 
 intersect bounding rect with document rect when saving undo info
 - e.g. if you drag a large rect bigger than the view, waste a lot of memory
@@ -87,24 +43,73 @@ ditto for setTempPixmapAt et. al. (maybe not for selections, still thinking)
 Bug: dragging a line extending outside of doc makes it transparent (RGB_A_ for PNG saves)
 Hypothesis: kpPixmapFX::getPixmapAt() defines undefined pixels as transparent
 
+
+Luxi Sans 14 draw in green with trans background versus white background (see quality difference - black marks)
+
+
+1. creating new text selection sucks a lot of CPU
+2. when switching to a tool with a fake cursor, it uses a previous mouse position
+6. resizing doc flickers
+7. emulate3buttons cancel
+10. delta drawing of resize line to stop flicker
+11. draw rectangle and land on doc resize handle - wrong status mess
+12. remove dynamic cast
+9. speed up drag scroll
+6. keyboard friendly scrollview
+7. resize doc or sel freehand and usershapepoints have , not x even though is dimen, not point
+13. check kpcommandhistory INT_MAX overflow protection
+14. edit/paste slow QImageDrag::canDecode check
+15. edit/paste may disappear due to klipper
+16. check kpcommandhistory all sizes are correct
+17. delayed kpcommand popupmenu creation
+
+
+KolourPaint 1.4
+===============
+
+componentisation
+
+DCOP scriptable
+
+Rethink kpView/kpViewManager design because of:
+- performance
+- problems with the image "sparkling" at zoom levels % 100 != 0
+Ideas:
+- region-based rendering (for performance)
+- do something about this horrible tempPixmap hack (so slooooow)
+Bug #6: modified states incorrectly set
+
+allow user to hide Tool Box & Colour Palette if they really insist (it is possible to ALT+F4 them and can't get them back!)
+
+sel border should not be xored against uninitialised rgb values (transparent pixels)
+e.g. CTRL+A, Crop Outside the Selection
+
+tool box icons should have same background color as the other controls
+
+* kpSelection::setPixmap (QPixmap ()) hack allegedly for saving memory in commands
+  backfires:
+  - implicit sharing means that (most of the time), this isn't true
+  - it forces kpSelection::calculateTransparencyMask() sloooowing things down
+
+* kpsqueezedtextlabel could use (or be replaced by) KStringHandler::rPixelSqueeze()
+
+* AUDIT "The QImage class uses explicit sharing, similar to that used by QMemArray."
+
+spraycan should be continuous - merge with kpToolBrush base?
+* [cleanup] remove all instances of kpTool*::setMode() - use proper class hierarchy
+
+fix flicker when zooming in/out (Bug #1)
+
+option to dither image on open if not enough colors else that season jpg
+looks bad on 8-bit screen
+- it seems that AvoidDither means only do colour match/dithering if need to
+  while PreferDither means try to _always_ smooth out (even in a single colour
+  darkgreen document)
+
+autocrop (moves top & left or just top; keep autocropping and undoing - nondeterministic???)
+
 a better set of cursors that don't obscure the pixel you're drawing at
 (e.g. compare the excellent Brush cursor to the Line Tool's cursor)
-
-"brushes / stamps, hopefully configured from an external source.
- I.e. not only slanted lines and points of multiple thickness, but
- arbitrary images." - Dirk Schönberger
-I want to avoid making the widgets too complicated but this sounds
-like a very neat must-have feature.
-
-Performance tuning
-
-tool to select rectangular area to zoom into
-
-thumbnail doesn't flicker heaps when appearing (Bug #2)
-thumbnail has a rectangle that shows the visible mainView area
-
-Edit/Redo as Stretch,
-Edit/Redo as Resize
 
 kptoolpreviewdialog shows checkerboard
 
@@ -125,17 +130,50 @@ config dialogs (look into new kconfig generator)
 bug: draw rectangle, drag out selection, undo - kills rect but not selection
 is this a feature?
 
-mchristoph.eckert@t-online.de (Christoph Eckert):
-- Icons could be rearranged; drawing and editing tools should
-  be grouped together instead of being spread over the toolbox
-
 checkerboard + grid doesn't mix at certain zoom levels
 
-http://dot.kde.org/1078028599/:
-* Anonymous on Sunday 29/Feb/2004, @09:15:
-  - Free definable sizes for line thickness/spraycan/color eraser,
-    line styles (dashed, dotted, ...),
-    fill patterns, chooseable brushes, rulers
+Edit/Find a particular colour
+
+"Open documents in the same window" mode - goes against what most KDE apps do
+but it is convenient sometimes
+
+tool/ruler (can even measure length & angle of diagonal lines)
+
+Image menu items as ordinary tools - e.g. freehand rotate would be nice
+
+kptoolwidgetbase - spacing between items, make contentsRect() actual size wanted
+
+blur & sharpen
+
+"a simple plugins framework that allows plugins to be written in various
+languages (C, Python and Perl being the obvious choices) to allow people to
+extend it into the realms of PaintShop Pro without impacting on the core
+philosophy of the app, which seems to be simplicity." -- Tom
+
+Brad.Grant@Glenayre.com's ideas:
+- red-eye removal (see QImage for windows and LPhoto from Lindows (Bela-Andreas))
+
+Bela-Andreas Bargel:
+- kooka scanning
+
+double click on transparent in colour tablet and press OK - becomes black
+
+kpViewManager::setTextCursorBlinkState() needs to restart timer
+kpToolText: cursor doesn't immediately appear after creating or moving
+            a text box
+
+When scrolling, text cursor is not fully repainted until next blink (Bug #14)
+
+selections
+- maybe always have 1 width display of border - try editing a B&W icon to see what I mean
+- should be able to use selection/image commands on text box
+
+eraser cursor border should not get magnified
+
+tool to select rectangular area to zoom into
+
+thumbnail has a rectangle that shows the visible mainView area
+
 * Mike on Sunday 29/Feb/2004, @10:54:
   - A "Hand" tool which activates by keeping the "Space" key pressed
     down to scroll the visible part of the image around just like
@@ -148,43 +186,20 @@ http://dot.kde.org/1078028599/:
     I know that most people hate GIF but as a web developer PNGs aren't a
     solution yet because of their awful buggy support in IE.
 
-kde-apps.org:
-* posthuman  on: 02/28/2004, 15:50
-  - GIMP stuff like Crop Images and the intelligent scissor and a couple of more stuff.
+Emmeran Seehuber <rototor@rototor.de>
+> The Escape-key
+> could exit the input text mode, so that the other tools would be available
+> again.
+
+make sure session restore actually works
 
 
-Cleanups
---------
-
-* remove all instances of kpTool*::setMode() - use proper class hierarchy
-
-* kpSelection::setPixmap (QPixmap ()) hack allegedly for saving memory in commands
-  backfires:
-  - implicit sharing means that (most of the time), this isn't true
-  - it forces kpSelection::calculateTransparencyMask() sloooowing things down
-
-* kpsqueezedtextlabel could use (or be replaced by) KStringHandler::rPixelSqueeze()
-
-* AUDIT "The QImage class uses explicit sharing, similar to that used by QMemArray."
-
-* kpDocument::selectionGetMask()
-  * return existing selection pixmap mask if available
-    (TODO: actually, I think this is inconsistent)
-
-
-Feature Plan for KDE 3.3
-========================
+KDE 3.4
+=======
 
 re-enable the ICO write support
 
 multicolumn KToolBar's (Bug #3)
-
-
-if you undock a vertical toolbar and right click --> Orientation --> Bottom,
-it stays vertically oriented
-
-Look at KPixmapIO for QPixmap <-> QImage conversion optimisation
-Update: qt-copy/patches/0005-qpixmap_mitshm.patch: "this obsoletes KPixmapIO"
 
 
 Other Ideas
@@ -201,15 +216,9 @@ guard all ptr derefs with if (ptr) ptr->whatever
 kdError -> KP_PANIC or KMessageBox
 wait cursor for slow ops - should it be in kpDocument or in the commands???
 
-use of QPoint () or QPoint (-1, -1) as a sentinel is worrying since it's a
-legal point when dragging out a rectangle
-
-make sure session restore actually works
-
-
-Killer Feature: with flow tools (pen, brush, spraycan), holding SHIFT forces horizontal drawing;
-                CTRL forces vertical - so those of us without perfectly steady hands
-                can still draw straight without continually hitting the Undo button :)
+With flow tools (pen, brush, spraycan), holding SHIFT forces horizontal drawing;
+CTRL forces vertical - so those of us without perfectly steady hands
+can still draw straight without continually hitting the Undo button :)
 
 fill - can optimise mem usage by deleting kpFloodFill object
        when execute() (don't derive object)
@@ -223,20 +232,9 @@ grid for zoom levels > 200 but % 100 != 0
 
 maybe allow editing when a selection is active (selection becomes bounding rect)
 
-DCOP scriptable
-
 offer to save Undo/Redo QPixmap's as PNGs to save memory
 
-Edit/Find a particular colour
-
-allow user to hide Tool Box & Colour Palette if they really insist
-
-"Open documents in the same window" mode - goes against what most KDE apps do
-but it is convenient sometimes
-
 colour palette shows frequently used colours for the current image
-
-tool/ruler (can even measure length & angle of diagonal lines)
 
 readonly mode
 
@@ -252,39 +250,54 @@ Colour Eraser as part of the Image Menu? You can dbl-click on the tool after all
 
 On open, dither alpha channel to mask?
 
-Rethink kpView/kpViewManager design because of:
-- performance
-- problems with the image "sparkling" at zoom levels % 100 != 0
-Ideas:
-- region-based rendering (for performance)
-- do something about this horrible tempPixmap hack (so slooooow)
-
-warn about lossy saves (e.g. JPEG)
-
-Image menu items as ordinary tools - e.g. freehand rotate would be nice
-
 Open 800x600 image, Skew, set horizontal to 60, vertical to 30 and play with
 vertical and the image flips over!  I'm sure that's not supposed to happen.
 Needs investigating.
 
-kptoolwidgetbase - spacing between items, make contentsRect() actual size wanted
-
-kpcolortoolbar - open/save palette
-
-blur & sharpen
-
-greyscale masks (Bela-Andreas Bargel's idea)
-
-"a simple plugins framework that allows plugins to be written in various
-languages (C, Python and Perl being the obvious choices) to allow people to
-extend it into the realms of PaintShop Pro without impacting on the core
-philosophy of the app, which seems to be simplicity." -- Tom
-
 Brad.Grant@Glenayre.com's ideas:
-- red-eye removal (see QImage for windows)
 - rotating a JPG losslessly
 - resampling a picture to enlarge it with quality choices (bilinear,
   bicubic, lanczos, ...)
 
 view/preview OR view/fullscreen (not the same as settings/fullscreen)
 
+mchristoph.eckert@t-online.de (Christoph Eckert):
+shape selections should support CTRL, ALT, SHIFT to alter shape but
+ATM, CTRL means copy, SHIFT means sweep.
+
+if you undock a vertical toolbar and right click --> Orientation --> Bottom,
+it stays vertically oriented
+
+Look at KPixmapIO for QPixmap <-> QImage conversion optimisation
+Update: qt-copy/patches/0005-qpixmap_mitshm.patch: "this obsoletes KPixmapIO"
+
+Bela-Andreas Bargel:
+- extra toolbar with slideshow and other image viewing options
+- "CTRL-mousewheel" to zoom in/out of the window
+- add a "info-button" (or menu-entry) which
+  shows all (meta-)data about the image (eg. to set its
+  dpi-resolution, its size, jpg/png-comments, colour
+  mode, used colours, file size,EXIF-data...)
+- add ksnapshot mode to paste grabbed thing directly into kolourpaint so
+  that kolourpaint gets a "Take screenshot" menu item
+- (LPhoto from Lindows): red-eye removal, enhance image
+
+"brushes / stamps, hopefully configured from an external source.
+ I.e. not only slanted lines and points of multiple thickness, but
+ arbitrary images." - Dirk Schönberger
+I want to avoid making the widgets too complicated but this sounds
+like a very neat feature.
+
+mchristoph.eckert@t-online.de (Christoph Eckert):
+- Icons could be rearranged; drawing and editing tools should
+  be grouped together instead of being spread over the toolbox
+
+http://dot.kde.org/1078028599/:
+* Anonymous on Sunday 29/Feb/2004, @09:15:
+  - Free definable sizes for line thickness/spraycan/color eraser,
+    line styles (dashed, dotted, ...),
+    fill patterns, chooseable brushes, rulers
+
+kde-apps.org:
+* posthuman  on: 02/28/2004, 15:50
+  - GIMP stuff like Crop Images and the intelligent scissor and a couple of more stuff.
