@@ -171,6 +171,9 @@ void kpMainWindow::zoomTo (int zoomLevel)
 
     if (zoomLevel <= 0)
         zoomLevel = m_mainView ? m_mainView->zoomLevelX () : 100;
+
+// mute point since the thumbnail suffers from this too
+#if 0
     else if (m_mainView && m_mainView->zoomLevelX () % 100 == 0 && zoomLevel % 100)
     {
         if (KMessageBox::warningContinueCancel (this,
@@ -185,6 +188,7 @@ void kpMainWindow::zoomTo (int zoomLevel)
             zoomLevel = m_mainView->zoomLevelX ();
         }
     }
+#endif
 
     int index = 0;
     QValueVector <int>::Iterator it = m_zoomList.begin ();
