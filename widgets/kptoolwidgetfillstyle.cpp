@@ -25,6 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_TOOL_WIDGET_FILL_STYLE 0
 
 #include <qbitmap.h>
 #include <qbrush.h>
@@ -128,7 +129,7 @@ QString kpToolWidgetFillStyle::fillStyleName (FillStyle fs) const
 // public
 kpToolWidgetFillStyle::FillStyle kpToolWidgetFillStyle::fillStyle () const
 {
-#if 1
+#if DEBUG_KP_TOOL_WIDGET_FILL_STYLE
     kdDebug () << "kpToolWidgetFillStyle::fillStyle() selected="
                << selectedRow ()
                << endl;
