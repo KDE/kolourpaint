@@ -94,7 +94,10 @@ Version 1.2_kde3 "ByFiat Everytime" (2004/08/18)
        (previously, tested for KDE >= 3.x instead of Qt >= 3.x;
         this worked because Qt ver >= KDE ver);
        this change only benefits people who run Qt Ver > KDE ver
-
+   * When changing between colour depth and quality widgets in the save
+     filedialog, make sure "Convert to:" and "Quality:" are correctly
+     rendered (hacking around a Qt redraw glitch)
+ 
 
 KolourPaint 1.2 Series (KDE_3_3_BRANCH)
 ======================
