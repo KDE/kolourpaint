@@ -45,6 +45,7 @@
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <qsize.h>
 #include <ktempfile.h>
 
 #include <kpcolor.h>
@@ -989,6 +990,12 @@ void kpDocument::slotSizeChanged (int newWidth, int newHeight)
 {
     setModified ();
     emit sizeChanged (newWidth, newHeight);
+    emit sizeChanged (QSize (newWidth, newHeight));
+}
+
+void kpDocument::slotSizeChanged (const QSize &newSize)
+{
+    slotSizeChanged (newSize.width (), newSize.height ());
 }
 
 #include <kpdocument.moc>

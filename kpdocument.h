@@ -39,6 +39,7 @@
 class QPixmap;
 class QPoint;
 class QRect;
+class QSize;
 
 class kpColor;
 class kpMainWindow;
@@ -149,6 +150,7 @@ public slots:
     // these will emit signals!
     void slotContentsChanged (const QRect &rect);
     void slotSizeChanged (int newWidth, int newHeight);
+    void slotSizeChanged (const QSize &newSize);
 
 signals:
     void documentOpened ();
@@ -160,6 +162,7 @@ signals:
 
     void contentsChanged (const QRect &rect);
     void sizeChanged (int newWidth, int newHeight);  // see oldWidth(), oldHeight()
+    void sizeChanged (const QSize &newSize);
     void colorDepthChanged (int newDepth);  // see oldColorDepth()
 
     void selectionEnabled (bool on);
