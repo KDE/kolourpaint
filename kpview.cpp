@@ -1025,7 +1025,13 @@ void kpView::enterEvent (QEvent *e)
     // active) when dragging open a menu and then dragging
     // past the extents of the menu due to Qt sending us an EnterEvent.
     // We're already covered by MouseMoveEvent anyway.
-    //setHasMouse (true);
+    //
+    // But disabling this causes a more serious problem: RMB on a text
+    // box and Esc.  We have no other reliable way to determine if the 
+    // mouse is still above the view (user could have moved mouse out
+    // while RMB menu was up) and hence the cursor is not updated.
+    setHasMouse (true);
+    
     if (tool ())
         tool ()->enterEvent (e);
 }

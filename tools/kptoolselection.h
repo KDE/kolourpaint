@@ -96,7 +96,9 @@ public:
     virtual void hover (const QPoint &point);
 protected:
     void popupRMBMenu ();
+    void setSelectionBorderForMove ();
 protected slots:
+    void slotRMBMoveUpdateGUI ();
     void delayedDraw ();
 public:
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint,
@@ -138,7 +140,7 @@ protected:
     kpToolSelectionCreateCommand *m_currentCreateTextCommand;
     bool m_cancelledShapeButStillHoldingButtons;
 
-    QTimer *m_createNOPTimer;
+    QTimer *m_createNOPTimer, *m_RMBMoveUpdateGUITimer;
 };
 
 class kpToolSelectionCreateCommand : public kpNamedCommand
