@@ -472,7 +472,11 @@ void kpTool::beginInternal ()
     {
         // clear leftover statusbar messages
         setUserMessage ();
-        setUserShapePoints (currentPoint ());
+        setUserShapePoints (m_currentPoint = currentPoint ());
+
+        // TODO: Audit all the code in this file - states like "m_began" &
+        //       "m_beganDraw" should be set before calling user func.
+        //       Also, m_currentPoint should be more frequently initialised.
 
         // call user virtual func
         begin ();

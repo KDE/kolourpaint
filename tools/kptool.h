@@ -275,7 +275,7 @@ protected:
 
     int m_mouseButton;  /* 0 = left, 1 = right */
     bool m_shiftPressed, m_controlPressed, m_altPressed;  // m_altPressed is unreliable
-    bool m_beganDraw;  // set before beginDraw() is called, unset after endDraw() is called
+    bool m_beganDraw;  // set after beginDraw() is called, unset before endDraw() is called
     QPoint m_startPoint, m_currentPoint, m_lastPoint;
 
 protected:
