@@ -400,6 +400,9 @@ static bool mimeTypeSupportsProperty (const QString &mimeType,
 }
 
 
+// SYNC: update mime info
+
+
 // public static
 int kpDocumentSaveOptions::mimeTypeMaximumColorDepth (const QString &mimeType)
 {
