@@ -876,7 +876,7 @@ void kpToolResizeScaleDialog::slotActOnChanged ()
 
         m_newHeightInput->setMinValue (
             kpSelection::minimumHeightForTextStyle (
-                ((kpMainWindow *) parent ())->textStyle ())));
+                ((kpMainWindow *) parent ())->textStyle ()));
     }
     else
     {
