@@ -351,7 +351,7 @@ void kpMainWindow::recalculateStatusBar ()
     if (m_document)
     {
         setStatusBarDocSize (QSize (m_document->width (), m_document->height ()));
-        setStatusBarDocDepth (m_document->colorDepth ());
+        setStatusBarDocDepth (m_document->pixmap ()->depth ());
     }
     else
     {
