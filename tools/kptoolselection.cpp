@@ -221,6 +221,8 @@ void kpToolSelection::end ()
                     this, SLOT (slotIsOpaqueChanged ()));
         m_toolWidgetOpaqueOrTransparent = 0;
     }
+
+    viewManager ()->unsetCursor ();
 }
 
 // virtual

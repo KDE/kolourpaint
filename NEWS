@@ -18,6 +18,8 @@ its changes.
    * Smaller selection and text box resize handles (visually not
      actually) - covers up fewer selected pixels, doesn't cover up text
      [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+   * Restore mouse cursor after deselecting selection/text tools
+     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
    * Fix selection regressions introduced in 1.2:
      - Make selection dragging with CTRL work again (copies selection onto
        document)
