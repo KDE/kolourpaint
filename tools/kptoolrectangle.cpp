@@ -124,7 +124,7 @@ void kpToolRectangle::slotForegroundColorChanged (const QColor &)
     kdDebug () << "kpToolRectangle::slotForegroundColorChanged()" << endl;
 #endif
     m_pen [0] = pen (0);
-    m_brush [0] = brush (0);
+    m_brush [1] = brush (1);
 }
 
 // virtual private slot
@@ -132,9 +132,10 @@ void kpToolRectangle::slotBackgroundColorChanged (const QColor &)
 {
 #if DEBUG_KPTOOLRECTANGLE
     kdDebug () << "kpToolRectangle::slotBackgroundColorChanged()" << endl;
+    kdDebug () << "\tm_toolWidgetFillStyle=" << m_toolWidgetFillStyle << endl;
 #endif
     m_pen [1] = pen (1);
-    m_brush [1] = brush (1);
+    m_brush [0] = brush (0);
 }
 
 // private
@@ -150,6 +151,11 @@ QPen kpToolRectangle::pen (int mouseButton) const
 
 QBrush kpToolRectangle::brush (int mouseButton) const
 {
+#if DEBUG_KPTOOLRECTANGLE
+    kdDebug () << "kpToolRectangle::brush ()  mouseButton=" << mouseButton
+               << " m_toolWidgetFillStyle=" << m_toolWidgetFillStyle
+               << endl;
+#endif
     return QBrush (color (1 - mouseButton),
                    m_toolWidgetFillStyle->fillStyle ());
 }
@@ -161,7 +167,13 @@ void kpToolRectangle::begin ()
 #if DEBUG_KPTOOLRECTANGLE
     kdDebug () << "kpToolRectangle::begin ()" << endl;
 #endif
+    
     kpToolToolBar *tb = toolToolBar ();
+
+#if DEBUG_KPTOOLRECTANGLE
+    kdDebug () << "\ttoolToolBar=" << tb << endl;
+#endif
+
     if (tb)
     {
         m_toolWidgetLineStyle = tb->toolWidgetLineStyle ();
@@ -184,6 +196,10 @@ void kpToolRectangle::begin ()
 
         updateBrushes ();
     }
+    
+#if DEBUG_KPTOOLRECTANGLE
+    kdDebug () << "\t\tm_toolWidgetFillStyle=" << m_toolWidgetFillStyle << endl;
+#endif
     
     viewManager ()->setCursor (QCursor (CrossCursor));
 }
