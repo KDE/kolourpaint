@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_THUMBNAIL 0
+#define DEBUG_KP_THUMBNAIL 1
 
 #include <kpthumbnail.h>
 
@@ -126,9 +126,20 @@ void kpThumbnail::updateCaption ()
 {
     kpView *v = view ();
     if (v)
+    {
+    #if DEBUG_KP_THUMBNAIL
+        kdDebug () << "kpThumbnail::updateCaption() haveView; zoomLevelX="
+                   << v->zoomLevelX () << endl;
+    #endif
         setCaption (i18n ("%1% - Thumbnail").arg (v->zoomLevelX ()));
+    }
     else
+    {
+    #if DEBUG_KP_THUMBNAIL
+        kdDebug () << "kpThumbnail::updateCaption() no view" << endl;
+    #endif
         setCaption (i18n ("Thumbnail"));
+    }
 }
 
 // public slot
