@@ -42,6 +42,14 @@ Luxi Sans 14 draw in green with trans background versus white background (see qu
 20. setup.bmp monochrome open and save loses a lot of info
 mosfet's image effects don't respect alpha - hack around it
 verify gamma, check contrast,brightness,gamma order
+21. use KSaveFile for atomic writes
+22. crash on close after playing with eps preview in save dialog
+
+option to dither image on open if not enough colors else that season jpg
+looks bad on 8-bit screen
+- it seems that AvoidDither means only do colour match/dithering if need to
+  while PreferDither means try to _always_ smooth out (even in a single colour
+  darkgreen document)
 
 
 KolourPaint 1.4
@@ -85,12 +93,6 @@ spraycan should be continuous - merge with kpToolBrush base?
 * [cleanup] remove all instances of kpTool*::setMode() - use proper class hierarchy
 
 fix flicker when zooming in/out (Bug #1)
-
-option to dither image on open if not enough colors else that season jpg
-looks bad on 8-bit screen
-- it seems that AvoidDither means only do colour match/dithering if need to
-  while PreferDither means try to _always_ smooth out (even in a single colour
-  darkgreen document)
 
 autocrop (moves top & left or just top; keep autocropping and undoing - nondeterministic???)
 
