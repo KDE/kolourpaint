@@ -47,10 +47,10 @@
 #include <kolourpaintlicense.h>
 
 
-static const QString versionNumber = QString::number
-(
-    #include <VERSION>
-);
+static const QString versionNumberString =
+    QString ().sprintf ("%.1f",
+                        #include <VERSION>
+                       );
 
 
 static const KCmdLineOptions cmdLineOptions [] =
@@ -66,7 +66,7 @@ int main (int argc, char *argv [])
     (
         "kolourpaint",
         I18N_NOOP("KolourPaint"),
-        versionNumber.latin1 (),
+        versionNumberString,
         I18N_NOOP("Paint Program for KDE"),
         KAboutData::License_Custom,
         "Copyright (c) 2003-2004 Clarence Dang",
