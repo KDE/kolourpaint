@@ -42,6 +42,8 @@ public:
 
     bool isOpaque () const;
     bool isTransparent () const;
+    void setOpaque (bool yes = true);
+    void setTransparent (bool yes = true);
 
 signals:
     void isOpaqueChanged (bool isOpaque_);

@@ -25,6 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT 0
+
+
+#include <kdebug.h>
 #include <kiconloader.h>
 #include <klocale.h>
 
@@ -61,10 +65,32 @@ bool kpToolWidgetOpaqueOrTransparent::isTransparent () const
     return (!isOpaque ());
 }
 
+// public
+void kpToolWidgetOpaqueOrTransparent::setOpaque (bool yes)
+{
+#if DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT && 1
+    kdDebug () << "kpToolWidgetOpaqueOrTransparent::setOpaque(" << yes << ")" << endl;
+#endif
+    setSelected (yes ? 0 : 1, 0);
+}
+
+// public
+void kpToolWidgetOpaqueOrTransparent::setTransparent (bool yes)
+{
+#if DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT && 1
+    kdDebug () << "kpToolWidgetOpaqueOrTransparent::setTransparent(" << yes << ")" << endl;
+#endif
+    setSelected (yes ? 1 : 0, 0);
+}
+
 
 // protected slot virtual [base kpToolWidgetBase]
 void kpToolWidgetOpaqueOrTransparent::setSelected (int row, int col)
 {
+#if DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT && 1
+    kdDebug () << "kpToolWidgetOpaqueOrTransparent::setSelected("
+               << row << "," << col << ")" << endl;
+#endif
     kpToolWidgetBase::setSelected (row, col);
     emit isOpaqueChanged (isOpaque ());
 }
