@@ -447,6 +447,40 @@ int kpTool::processedColorSimilarity () const
 }
 
 
+kpColor kpTool::oldForegroundColor () const
+{
+    if (m_mainWindow)
+        return m_mainWindow->colorToolBar ()->oldForegroundColor ();
+    else
+    {
+        kdError () << "kpTool::oldForegroundColor() without mainWindow" << endl;
+        return kpColor::invalid;
+    }
+}
+
+kpColor kpTool::oldBackgroundColor () const
+{
+    if (m_mainWindow)
+        return m_mainWindow->colorToolBar ()->oldBackgroundColor ();
+    else
+    {
+        kdError () << "kpTool::oldBackgroundColor() without mainWindow" << endl;
+        return kpColor::invalid;
+    }
+}
+
+double kpTool::oldColorSimilarity () const
+{
+    if (m_mainWindow)
+        return m_mainWindow->colorToolBar ()->oldColorSimilarity ();
+    else
+    {
+        kdError () << "kpTool::oldColorSimilarity() without mainWindow" << endl;
+        return 0;
+    }
+}
+
+
 bool kpTool::currentPointNextToLast () const
 {
     if (m_lastPoint == QPoint (-1, -1))
@@ -608,7 +642,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
         m_currentPoint = view ? view->zoomViewToDoc (e->pos ()) : QPoint (-1, -1);
         endDrawInternal (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
     }
-    
+
     if ((e->stateAfter () & Qt::MouseButtonMask) == 0)
     {
         releasedAllButtons ();
@@ -625,7 +659,9 @@ void kpTool::keyPressEvent (QKeyEvent *e)
     {
     case 0:
     case Qt::Key_unknown:
+    #if DEBUG_KP_TOOL
         kdDebug () << "kpTool::keyPressEvent() picked up unknown key!" << endl;
+    #endif
         // --- fall thru and update all modifiers ---
     case Qt::Key_Alt:
     case Qt::Key_Shift:
@@ -694,7 +730,9 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
     {
     case 0:
     case Qt::Key_unknown:
+    #if DEBUG_KP_TOOL
         kdDebug () << "kpTool::keyReleaseEvent() picked up unknown key!" << endl;
+    #endif
         // HACK: around Qt bug: if you hold a modifier before you start the
         //                      program and then release it over the view,
         //                      Qt reports it as the release of an unknown key
@@ -937,8 +975,12 @@ QString kpTool::userMessage () const
 void kpTool::setUserMessage (const QString &userMessage)
 {
     m_userMessage = userMessage;
-    if (!m_userMessage.isEmpty ())
+    
+    if (m_userMessage.isEmpty ())
+        m_userMessage = text ();
+    else
         m_userMessage.prepend (i18n ("%1: ").arg (text ()));
+    
     emit userMessageChanged (m_userMessage);
 }
 

@@ -177,6 +177,12 @@ protected slots:
     virtual void slotColorSimilarityChanged (double /*similarity*/, int /*processedSimilarity*/) {};
 
 protected:
+    // (only valid in slots connected to the respective signals above)
+    kpColor oldForegroundColor () const;
+    kpColor oldBackgroundColor () const;
+    double oldColorSimilarity () const;
+
+protected:
     // returns true if m_currentPoint <= 1 pixel away from m_lastPoint
     // or if there was no lastPoint
     bool currentPointNextToLast () const;  // (includes diagonal adjacency)
