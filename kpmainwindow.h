@@ -135,7 +135,7 @@ private:
     {
         StatusBarItemDocInfo,
         StatusBarItemShapeEndPoints,
-        StatusBarItemShapeSize,
+        StatusBarItemShapeSize
     };
     
 private slots:
