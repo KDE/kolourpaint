@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
-  <!ENTITY kappname "&kolourpaint;">
+  <!ENTITY kappname "kolourpaint">
   <!ENTITY package "kdegraphics">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE">
@@ -9,7 +9,7 @@
 <book lang="&language;">
 
 <bookinfo>
-<title>The &kolourpaint; Handbook</title>
+<title>The &kappname; Handbook</title>
 
 <authorgroup>
 <author>
@@ -43,7 +43,7 @@
 
 <abstract>
 <para>
-&kolourpaint; is a free, easy-to-use paint program for &kde;.
+&kappname; is a free, easy-to-use paint program for &kde;.
 </para>
 </abstract>
 
@@ -56,7 +56,7 @@
 
 <chapter id="introduction">
 <title>Introduction</title>
-<para>&kolourpaint; is a free, easy-to-use paint program for &kde;. It's
+<para>&kappname; is a free, easy-to-use paint program for &kde;. It's
 perfect for everyday tasks such as:</para>
 
 <itemizedlist>
@@ -74,9 +74,9 @@ effects</para>
 </chapter>
 
 <chapter id="using-kolourpaint">
-<title>Using &kolourpaint;</title>
+<title>Using &kappname;</title>
 
-<para>Click on the following links to explore &kolourpaint;'s
+<para>Click on the following links to explore &kappname;'s
 capabilities:</para>
 
 <itemizedlist>
@@ -403,7 +403,7 @@ background color.</para>
 </title>
 
 <para>To set the foreground color, <mousebutton>Left</mousebutton> click on
-a pixel. To set the background color, &RMB; click on a pixel. &kolourpaint;
+a pixel. To set the background color, &RMB; click on a pixel. &kappname;
 will then return to the previously selected tool.</para>
 
 </sect1>
@@ -1127,13 +1127,13 @@ honest documentation.
 </epigraph>
 
 <para>
-&kolourpaint;
+&kappname;
 </para>
 <para>Program Copyright &copy; 2003-2004 Clarence Dang
 <email>dang@kde.org</email></para>
 
 
-<para>&kolourpaint;-specific icons except The Ghost Copyright &copy; 2004
+<para>&kappname;-specific icons except The Ghost Copyright &copy; 2004
 Kristof Borrey <email>borrey@kde.org</email></para>
 
 <para>Documentation and additional documentation artwork Copyright &copy;
@@ -1181,7 +1181,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <appendix id="installation">
 <title>Installation</title>
 <sect1 id="getting-kapp">
-<title>How to obtain &kolourpaint;</title>
+<title>How to obtain &kappname;</title>
 
 &install.intro.documentation;
 
@@ -1194,7 +1194,7 @@ url="http://kolourpaint.sourceforge.net/">http://kolourpaint.sourceforge.net/</u
 <sect1 id="requirements">
 <title>Requirements</title>
 
-<para> &kolourpaint; 1.0.2 requires &kde; 3.x.</para>
+<para> &kappname; 1.0.2 requires &kde; 3.x.</para>
 
 <para> For release and change log information, visit <ulink
 url="http://kolourpaint.sourceforge.net/"></ulink>.</para>
@@ -1205,7 +1205,7 @@ url="http://kolourpaint.sourceforge.net/"></ulink>.</para>
 
 <note>
 <para>
-If you are reading this help in the &khelpcenter;, then &kolourpaint; has already been
+If you are reading this help in the &khelpcenter;, then &kappname; has already been
 installed on this system and you do not need to follow these generic instructions.
 </para>
 </note>
@@ -1217,7 +1217,7 @@ installed on this system and you do not need to follow these generic instruction
 <sect1 id="configuration">
 <title>Configuration</title>
 
-<para>&kolourpaint; should run without any additional configuration.</para>
+<para>&kappname; should run without any additional configuration.</para>
 </sect1>
 
 </appendix>
