@@ -588,13 +588,15 @@ void kpMainWindow::sendFilenameToPrinter (KPrinter *printer)
         if (dot > 0)
             fileName.truncate (dot);
 
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "kpMainWindow::sendFilenameToPrinter() fileName="
                    << fileName
                    << " dir="
                    << url.directory ()
                    << endl;
+    #endif
         printer->setDocName (fileName);
-        printer->setDocFileName (fileName);  // TODO: wrong if filename has space!
+        printer->setDocFileName (fileName);
         printer->setDocDirectory (url.directory ());
     }
 }
