@@ -659,7 +659,7 @@ void kpToolText::slotColorSimilarityChanged (double, int)
 
 
 // public slot
-void kpToolText::slotFontFamilyChanged (const QString & /*fontFamily*/,
+void kpToolText::slotFontFamilyChanged (const QString &fontFamily,
                                         const QString &oldFontFamily)
 {
 #if DEBUG_KP_TOOL_TEXT
@@ -683,7 +683,7 @@ void kpToolText::slotFontFamilyChanged (const QString & /*fontFamily*/,
 }
 
 // public slot
-void kpToolText::slotFontSizeChanged (int /*fontSize*/, int oldFontSize)
+void kpToolText::slotFontSizeChanged (int fontSize, int oldFontSize)
 {
 #if DEBUG_KP_TOOL_TEXT
     kdDebug () << "kpToolText::slotFontSizeChanged() new="
