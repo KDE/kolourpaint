@@ -42,6 +42,7 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
              "view_zoom").
           -->
         <Action name="view_zoom_to"/>
+
         <Action name="view_zoom_out"/>
 
         <WeakSeparator/>
