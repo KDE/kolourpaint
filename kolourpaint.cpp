@@ -65,7 +65,7 @@ int main (int argc, char *argv [])
         KAboutData::License_Custom,
         "Copyright (c) 2003-2004 Clarence Dang",
         0,
-        "http://kolourpaint.sf.net/"
+        "http://kolourpaint.sourceforge.net/"
     );
 
     // this is _not_ the same as KAboutData::License_BSD
@@ -73,18 +73,22 @@ int main (int argc, char *argv [])
 
     aboutData.addAuthor ("Clarence Dang", I18N_NOOP ("Maintainer"), "dang@kde.org");
     aboutData.addAuthor ("Thurston Dang", I18N_NOOP ("Chief Investigator"));
+    aboutData.addAuthor ("Kristof Borrey", I18N_NOOP ("Icons"), "borrey@kde.org");
 
     aboutData.addCredit ("Waldo Bastian");
     aboutData.addCredit ("Stephan Binner");
     aboutData.addCredit ("Rob Buis");
     aboutData.addCredit ("Lucijan Busch");
     aboutData.addCredit ("Albert Astals Cid");
+    aboutData.addCredit ("Jennifer Dang");
     aboutData.addCredit ("Christoph Eckert");
     aboutData.addCredit ("David Faure");
+    aboutData.addCredit ("P. Fisher");
     aboutData.addCredit ("Wilco Greven");
     aboutData.addCredit ("Werner Joss");
     aboutData.addCredit ("Stephan Kulow");
     aboutData.addCredit ("Anders Lund");
+    aboutData.addCredit ("Amir Michail");
     aboutData.addCredit ("Dirk Mueller");
     aboutData.addCredit ("Ralf Nolden");
     aboutData.addCredit ("Boudewijn Rempt");
