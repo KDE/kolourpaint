@@ -107,7 +107,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
     }
 
     QString tempFile;
-    if (KIO::NetAccess::download (url, tempFile))
+    if (KIO::NetAccess::download (url, tempFile, m_mainWindow))
     {
         QString mimetype = KImageIO::mimeType (tempFile);
 
@@ -145,7 +145,8 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
     }
     else
     {
-        if (newDocSameNameIfNotExist && !KIO::NetAccess::exists (url))
+        if (newDocSameNameIfNotExist &&
+            !KIO::NetAccess::exists (url, true/*open*/, m_mainWindow))
         {
             openNew (url);
             return true;
@@ -185,7 +186,7 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
     kdDebug () << "kpDocument::saveAs (" << url << "," << mimetype << ")" << endl;
 #endif
 
-    if (overwritePrompt && KIO::NetAccess::exists (url))
+    if (overwritePrompt && KIO::NetAccess::exists (url, false/*write*/, m_mainWindow))
     {
         int result = KMessageBox::warningContinueCancel (0,
             i18n ("A document called \"%1\" already exists.\n"
@@ -233,7 +234,7 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
 
     if (!url.isLocalFile ())
     {
-        if (!KIO::NetAccess::upload (filename, url))
+        if (!KIO::NetAccess::upload (filename, url, m_mainWindow))
         {
             KMessageBox::error (0, i18n ("Could not save image - failed to upload.."));
             return false;
