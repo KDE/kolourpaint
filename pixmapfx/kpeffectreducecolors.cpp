@@ -416,7 +416,7 @@ bool kpEffectReduceColorsWidget::dither () const
 // public virtual [base kpColorEffectWidget]
 QString kpEffectReduceColorsWidget::caption () const
 {
-    return i18n ("Reduce To:");
+    return i18n ("Reduce To");
 }
 
 
