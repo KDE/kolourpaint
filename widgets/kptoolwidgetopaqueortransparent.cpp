@@ -91,6 +91,9 @@ void kpToolWidgetOpaqueOrTransparent::setSelected (int row, int col)
     kdDebug () << "kpToolWidgetOpaqueOrTransparent::setSelected("
                << row << "," << col << ")" << endl;
 #endif
+    if (row == selectedRow () && col == selectedCol ())
+        return;
+
     kpToolWidgetBase::setSelected (row, col);
     emit isOpaqueChanged (isOpaque ());
 }
