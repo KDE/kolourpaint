@@ -3,7 +3,7 @@ Encoding=UTF-8
 
 Name=KolourPaint
 Name[sv]=Kolourpaint
-Name[ta]=கோளர் பெயின்ட் 
+Name[ta]=நிற பெயின்ட் 
 Name[xx]=xxKolourPaintxx
 GenericName=Paint Program
 GenericName[af]=Verf Program
@@ -38,7 +38,6 @@ GenericName[nb]=Maleprogram
 GenericName[nl]=Tekenprogramma
 GenericName[nn]=Måleprogram
 GenericName[nso]=Lenaneo la Paint
-GenericName[pa]=ਪੇਂਟ ਚਿੱਤਰ
 GenericName[pl]=Program Paint
 GenericName[pt]=Programa de Pintura
 GenericName[pt_BR]=Programa de Pintura
@@ -51,7 +50,7 @@ GenericName[sr@Latn]=Program za slikanje
 GenericName[ss]=Luhlelo lwependi
 GenericName[sv]=Ritprogram
 GenericName[ta]=பெயிண்ட் நிரலி
-GenericName[tg]=Барнома Барои Расм Кашидан
+GenericName[tg]=Муҳаррири графикӣ
 GenericName[th]=โปรแกรมวาดภาพธรรมดาๆ
 GenericName[tr]=Boyama Programı
 GenericName[uk]=Програма для малювання
@@ -69,7 +68,7 @@ Type=Application
 Exec=kolourpaint %u
 DocPath=kolourpaint/index.html
 
-MimeType=image/x-bmp;image/x-eps;image/gif;image/x-ico;image/jpeg;image/x-pcx;image/png;image/x-portable-bitmap;image/x-portable-pixmap;image/x-targa;image/tiff;image/x-xbm;image/x-xpm
+MimeType=image/fax-g3;image/gif;image/jp2;image/jpeg;image/png;image/tiff;image/x-bmp;image/x-dds;image/x-eps;image/x-exr;image/x-ico;image/x-pcx;image/x-portable-bitmap;image/x-portable-greymap;image/x-portable-pixmap;image/x-rgb;image/x-targa;image/x-xbm;image/x-xpm
 
 Categories=Qt;KDE;Graphics
 Terminal=0
