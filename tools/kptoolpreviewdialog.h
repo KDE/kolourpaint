@@ -29,6 +29,7 @@
 #define __kp_tool_preview_dialog_h__
 
 
+#include <qlabel.h>
 #include <qpixmap.h>
 
 #include <kdialogbase.h>
@@ -36,10 +37,26 @@
 
 class QGridLayout;
 class QGroupBox;
-class QLabel;
 
 class kpDocument;
 class kpMainWindow;
+
+
+class kpResizeSignallingLabel : public QLabel
+{
+Q_OBJECT
+
+public:
+    kpResizeSignallingLabel (const QString &string, QWidget *parent, const char *name = 0);
+    kpResizeSignallingLabel (QWidget *parent, const char *name = 0);
+    virtual ~kpResizeSignallingLabel ();
+
+signals:
+    void resized ();
+
+protected:
+    virtual void resizeEvent (QResizeEvent *e);
+};
 
 
 class kpToolPreviewDialog : public KDialogBase
@@ -92,15 +109,12 @@ private:
     int scaleDimension (int dimension, double scale, int min, int max) const;
     void updateShrukenDocumentPixmap ();
 
+protected slots:
     void updatePreview ();
 
-protected slots:
     // Call this whenever a value (e.g. an angle) changes
     // and the Dimensions & Preview need to be updated
     virtual void slotUpdate ();
-
-protected:
-    virtual void resizeEvent (QResizeEvent *e);
 
 protected:
     QString m_actionName;
@@ -113,7 +127,7 @@ protected:
     QLabel *m_afterTransformDimensionsLabel;
 
     QGroupBox *m_previewGroupBox;
-    QLabel *m_previewPixmapLabel;
+    kpResizeSignallingLabel *m_previewPixmapLabel;
     QSize m_previewPixmapLabelSizeWhenUpdatedPixmap;
     QPixmap m_shrunkenDocumentPixmap;
 

@@ -43,6 +43,37 @@
 #include <kpselection.h>
 
 
+kpResizeSignallingLabel::kpResizeSignallingLabel (const QString &string,
+                                                  QWidget *parent,
+                                                  const char *name)
+    : QLabel (string, parent, name)
+{
+}
+
+kpResizeSignallingLabel::kpResizeSignallingLabel (QWidget *parent,
+                                                  const char *name)
+    : QLabel (parent, name)
+{
+}
+
+kpResizeSignallingLabel::~kpResizeSignallingLabel ()
+{
+}
+
+
+// protected virtual [base QLabel]
+void kpResizeSignallingLabel::resizeEvent (QResizeEvent *e)
+{
+#if DEBUG_KP_TOOL_PREVIEW_DIALOG
+    kdDebug () << "kpResizeSignallingLabel::resizeEvent() newSize=" << e->size ()
+               << " oldSize=" << e->oldSize () << endl;
+#endif
+    QLabel::resizeEvent (e);
+
+    emit resized ();
+}
+
+
 kpToolPreviewDialog::kpToolPreviewDialog (Features features,
                                           const QString &actionName,
                                           bool actOnSelection,
@@ -94,7 +125,7 @@ kpToolPreviewDialog::kpToolPreviewDialog (Features features,
         {
             m_gridLayout->addWidget (m_dimensionsGroupBox, 1, 0);
             m_gridLayout->addWidget (m_previewGroupBox, 1, 1);
-            
+
             m_gridLayout->setColStretch (1, 1);
         }
         else if (m_dimensionsGroupBox)
@@ -172,8 +203,10 @@ void kpToolPreviewDialog::createPreviewGroupBox ()
 {
     m_previewGroupBox = new QGroupBox (i18n ("Preview"), mainWidget ());
 
-    m_previewPixmapLabel = new QLabel (m_previewGroupBox);
+    m_previewPixmapLabel = new kpResizeSignallingLabel (m_previewGroupBox);
     m_previewPixmapLabel->setMinimumSize (150, 110);
+    connect (m_previewPixmapLabel, SIGNAL (resized ()),
+             this, SLOT (updatePreview ()));
 
 
     QVBoxLayout *previewLayout = new QVBoxLayout (m_previewGroupBox,
@@ -389,6 +422,9 @@ void kpToolPreviewDialog::updatePreview ()
 
         m_previewPixmapLabel->setPixmap (previewPixmap);
 
+        // immediate update esp. for expensive previews
+        m_previewPixmapLabel->repaint (false/*no erase*/);
+
 #if DEBUG_KP_TOOL_PREVIEW_DIALOG
     kdDebug () << "\tafter QLabel::setPixmap() previewPixmapLabel: w="
                << m_previewPixmapLabel->width ()
@@ -407,16 +443,6 @@ void kpToolPreviewDialog::slotUpdate ()
     kdDebug () << "kpToolPreviewDialog::slotUpdate()" << endl;
 #endif
     updateDimensions ();
-    updatePreview ();
-}
-
-
-// protected virtual [base QWidget]
-void kpToolPreviewDialog::resizeEvent (QResizeEvent * /*e*/)
-{
-#if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kdDebug () << "kpToolPreviewDialog::resizeEvent()" << endl;
-#endif
     updatePreview ();
 }
 
