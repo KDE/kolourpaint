@@ -712,6 +712,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
     if (kpSelectionDrag::decode (e, sel/*ref*/, pasteWarnAboutLossInfo ()))
     {
         sel.setTransparency (selectionTransparency ());
+        // TODO: drop at point like with QTextDrag below?
         paste (sel);
     }
     else if (KURLDrag::decode (e, urls/*ref*/))
