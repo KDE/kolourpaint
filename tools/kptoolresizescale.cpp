@@ -88,7 +88,7 @@ kpToolResizeScaleCommand::~kpToolResizeScaleCommand ()
 
 void kpToolResizeScaleCommand::execute ()
 {
-    if (m_oldWidth == m_newWidth && m_oldHeight == m_oldHeight)
+    if (m_oldWidth == m_newWidth && m_oldHeight == m_newHeight)
         return;
 
     if (!m_scaleToFit)
