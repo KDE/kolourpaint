@@ -150,6 +150,14 @@ bool kpGrip::isDrawing () const
 
 
 // public
+QString kpGrip::haventBegunDrawUserMessage () const
+{
+    // TODO: "Left drag..." to be consistent
+    return i18n ("Drag the handle to resize the image.");
+}
+
+
+// public
 QString kpGrip::userMessage () const
 {
     return m_userMessage;
@@ -158,8 +166,9 @@ QString kpGrip::userMessage () const
 // public
 void kpGrip::setUserMessage (const QString &message)
 {
-    if (message == m_userMessage)
-        return;
+    // Don't do NOP checking here since another grip might have changed
+    // the message so an apparent NOP for this grip is not a NOP in the
+    // global sense (kpViewScrollableContainer::slotGripStatusMessageChanged()).
 
     m_userMessage = message;
     emit statusMessageChanged (message);
@@ -230,8 +239,8 @@ void kpGrip::mousePressEvent (QMouseEvent *e)
     {
         m_startPoint = e->pos ();
         m_currentPoint = e->pos ();
-        grabKeyboard ();
         emit beganDraw ();
+        grabKeyboard ();
 
         setUserMessage (i18n ("Resize Image: Right click to cancel."));
         setCursor (cursorForType (m_type));
@@ -266,7 +275,7 @@ void kpGrip::mouseMoveEvent (QMouseEvent *e)
     if (m_startPoint == KP_INVALID_POINT)
     {
         if ((e->stateAfter () & Qt::MouseButtonMask) == 0)
-            setUserMessage (i18n ("Drag the handle to resize the image."));
+            setUserMessage (haventBegunDrawUserMessage ());
         return;
     }
 
@@ -290,6 +299,7 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
         m_currentPoint = KP_INVALID_POINT;
         m_startPoint = KP_INVALID_POINT;
 
+        releaseKeyboard ();
         emit endedDraw ((m_type & Right) ? dx : 0,
                         (m_type & Bottom) ? dy : 0);
     }
@@ -317,8 +327,34 @@ void kpGrip::resizeEvent (QResizeEvent *)
 
 
 // protected virtual [base QWidget]
+void kpGrip::enterEvent (QEvent * /*e*/)
+{
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+    kdDebug () << "kpGrip::enterEvent()"
+               << " m_startPoint=" << m_startPoint
+               << " shouldReleaseMouseButtons="
+               << m_shouldReleaseMouseButtons << endl;
+#endif
+
+    if (m_startPoint == KP_INVALID_POINT &&
+        !m_shouldReleaseMouseButtons)
+    {
+    #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+        kdDebug () << "\tsending message" << endl;
+    #endif
+        setUserMessage (haventBegunDrawUserMessage ());
+    }
+}
+
+// protected virtual [base QWidget]
 void kpGrip::leaveEvent (QEvent * /*e*/)
 {
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+    kdDebug () << "kpGrip::leaveEvent()"
+               << " m_startPoint=" << m_startPoint
+               << " shouldReleaseMouseButtons="
+               << m_shouldReleaseMouseButtons << endl;
+#endif
     if (m_startPoint == KP_INVALID_POINT &&
         !m_shouldReleaseMouseButtons)
     {
@@ -398,7 +434,7 @@ void kpViewScrollableContainer::connectGripSignals (kpGrip *grip)
              this, SLOT (slotGripStatusMessageChanged (const QString &)));
 
     connect (grip, SIGNAL (releasedAllButtons ()),
-             this, SLOT (slotGripReleasedAllButtons ()));
+             this, SLOT (recalculateGripStatusMessage ()));
 }
 
 
@@ -768,24 +804,50 @@ void kpViewScrollableContainer::slotGripEndedDraw (int viewDX, int viewDY)
 // protected slot
 void kpViewScrollableContainer::slotGripStatusMessageChanged (const QString &string)
 {
+    if (string == m_gripStatusMessage)
+        return;
+
     m_gripStatusMessage = string;
     emit statusMessageChanged (string);
 }
 
 
 // protected slot
-void kpViewScrollableContainer::slotGripReleasedAllButtons ()
+void kpViewScrollableContainer::recalculateGripStatusMessage ()
 {
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER || 1
+    kdDebug () << "kpViewScrollabelContainer::recalculateGripStatusMessage()" << endl;
+    kdDebug () << "\tQCursor::pos=" << QCursor::pos ()
+               << " brGrip.hotRect=" << m_bottomRightGrip->hotRect (true)
+               << " bGrip.hotRect=" << m_bottomGrip->hotRect (true)
+               << " rGrip.hotRect=" << m_rightGrip->hotRect (true)
+               << endl;
+#endif
+
     // HACK: After dragging to a new size, handles move so that they are now
     //       under the mouse pointer but no mouseMoveEvent() is generated for
     //       any grip.  This also handles the case of cancelling over any
     //       grip.
-    if (m_bottomRightGrip->hotRect (true/*to global*/).contains (QCursor::pos ()))
+    //
+    // TODO: "Left drag..." to be consistent
+    if (m_bottomRightGrip->isShown () &&
+        m_bottomRightGrip->hotRect (true/*to global*/)
+            .contains (QCursor::pos ()))
+    {
         m_bottomRightGrip->setUserMessage (i18n ("Drag the handle to resize the image."));
-    else if (m_bottomGrip->hotRect (true/*to global*/).contains (QCursor::pos ()))
+    }
+    else if (m_bottomGrip->isShown () &&
+             m_bottomGrip->hotRect (true/*to global*/)
+                 .contains (QCursor::pos ()))
+    {
         m_bottomGrip->setUserMessage (i18n ("Drag the handle to resize the image."));
-    else if (m_rightGrip->hotRect (true/*to global*/).contains (QCursor::pos ()))
+    }
+    else if (m_rightGrip->isShown () &&
+             m_rightGrip->hotRect (true/*to global*/)
+                 .contains (QCursor::pos ()))
+    {
         m_rightGrip->setUserMessage (i18n ("Drag the handle to resize the image."));
+    }
 }
 
 
@@ -929,6 +991,8 @@ void kpViewScrollableContainer::updateGrips ()
     {
         resizeContents (0, 0);
     }
+
+    recalculateGripStatusMessage ();
 }
 
 // protected slot
@@ -1025,7 +1089,7 @@ void kpViewScrollableContainer::slotDragScroll ()
     const QRect rect = noDragScrollRect ();
     const QPoint pos = mapFromGlobal (QCursor::pos ());
 
-#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
     kdDebug () << "kpViewScrollableContainer::slotDragScroll()"
                   << " noDragScrollRect=" << rect
                   << " pos=" << pos << endl;
@@ -1056,7 +1120,7 @@ void kpViewScrollableContainer::slotDragScroll ()
         dyMultiplier = distanceFromRectToMultiplier (pos.y () - rect.bottom ());
     }
 
-#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
     kdDebug () << "kpViewScrollableContainer::slotDragScroll()"
                   << " dx=" << dx << " * " << dxMultiplier
                   << " dy=" << dy << " * " << dyMultiplier

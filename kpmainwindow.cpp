@@ -176,6 +176,8 @@ void kpMainWindow::init ()
     m_settingSelectionTransparency = 0;
     m_settingTextStyle = 0;
 
+    d->m_docResizeToBeCompleted = false;
+
 
     //
     // set mainwindow properties

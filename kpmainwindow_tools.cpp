@@ -28,8 +28,6 @@
 
 #include <kpmainwindow.h>
 
-#include <qtimer.h>
-
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -457,24 +455,31 @@ void kpMainWindow::slotCancelledDocResize ()
 // private slot
 void kpMainWindow::slotEndedDocResize (const QSize &size)
 {
-    d->m_docResizeWidth = (size.width () > 0 ? size.width () : 1),
-    d->m_docResizeHeight = (size.height () > 0 ? size.height () : 1);
-
-    // kpGrip has grabbed mouse and keyboard - wait for it to release
-    // them before potentially popping up a dialog.
-    QTimer::singleShot (0, this, SLOT (slotDocResize ()));
+#define DOC_RESIZE_COMPLETED()           \
+{                                        \
+    d->m_docResizeToBeCompleted = false; \
+    recalculateStatusBar ();             \
 }
 
-// private slot
-void kpMainWindow::slotDocResize ()
-{
-    recalculateStatusBar ();
+    // Prevent statusbar updates
+    d->m_docResizeToBeCompleted = true;
+
+    d->m_docResizeWidth = (size.width () > 0 ? size.width () : 1),
+    d->m_docResizeHeight = (size.height () > 0 ? size.height () : 1);
 
     if (d->m_docResizeWidth == m_document->width () &&
         d->m_docResizeHeight == m_document->height ())
     {
+        DOC_RESIZE_COMPLETED ();
         return;
     }
+
+
+    // Blank status to avoid confusion if dialog comes up
+    setStatusBarMessage ();
+    setStatusBarShapePoints ();
+    setStatusBarShapeSize ();
+
 
     if (kpTool::warnIfBigImageSize (m_document->width (),
             m_document->height (),
@@ -502,15 +507,24 @@ void kpMainWindow::slotDocResize ()
 
         saveDefaultDocSize (QSize (d->m_docResizeWidth, d->m_docResizeHeight));
     }
+
+
+    DOC_RESIZE_COMPLETED ();
+
+#undef DOC_RESIZE_COMPLETED
 }
 
 // private slot
 void kpMainWindow::slotDocResizeMessageChanged (const QString &string)
 {
 #if DEBUG_KP_MAIN_WINDOW || 1
-    kdDebug () << "kpMainWindow::slotDocResizeMessageChanged("
-               << string << ")" << endl;
+    kdDebug () << "kpMainWindow::slotDocResizeMessageChanged(" << string
+               << ") docResizeToBeCompleted=" << d->m_docResizeToBeCompleted
+               << endl;
 #endif
+
+    if (d->m_docResizeToBeCompleted)
+        return;
 
     recalculateStatusBarMessage ();
 }

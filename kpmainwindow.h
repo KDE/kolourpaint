@@ -219,7 +219,6 @@ private slots:
     void slotContinuedDocResize (const QSize &size);
     void slotCancelledDocResize ();
     void slotEndedDocResize (const QSize &size);
-    void slotDocResize ();
 
     void slotDocResizeMessageChanged (const QString &string);
 
@@ -533,7 +532,7 @@ private:
 private slots:
     void setStatusBarMessage (const QString &message = QString::null);
     void setStatusBarShapePoints (const QPoint &startPoint = KP_INVALID_POINT,
-                                         const QPoint &endPoint = KP_INVALID_POINT);
+                                  const QPoint &endPoint = KP_INVALID_POINT);
     void setStatusBarShapeSize (const QSize &size = KP_INVALID_SIZE);
     void setStatusBarDocSize (const QSize &size = KP_INVALID_SIZE);
     void setStatusBarDocDepth (int depth = 0);
@@ -623,6 +622,7 @@ struct kpMainWindowPrivate
                               *m_actionNextToolOptionGroup2;
 
     int m_docResizeWidth, m_docResizeHeight;
+    bool m_docResizeToBeCompleted;
 };
 
 #endif  // __kp_main_window_h__
