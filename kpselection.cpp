@@ -589,6 +589,23 @@ void kpSelection::setPixmap (const QPixmap &pixmap)
     calculateTransparencyMask ();
 }
 
+
+static int mostContrastingValue (int val)
+{
+    if (val <= 127)
+        return 255;
+    else
+        return 0;
+}
+
+static QRgb mostContrastingRGB (QRgb val)
+{
+    return qRgba (mostContrastingValue (qRed (val)),
+                  mostContrastingValue (qGreen (val)),
+                  mostContrastingValue (qBlue (val)),
+                  mostContrastingValue (qAlpha (val)));
+}
+
 // private
 void kpSelection::calculateTextPixmap ()
 {
@@ -629,35 +646,37 @@ void kpSelection::calculateTextPixmap ()
 
     QPainter pixmapPainter, pixmapMaskPainter;
 
-    if (m_textStyle.foregroundColor ().isOpaque () ||
-        m_textStyle.effectiveBackgroundColor ().isOpaque ())
-    {
-        if (m_textStyle.effectiveBackgroundColor ().isOpaque ())
-            m_pixmap->fill (m_textStyle.effectiveBackgroundColor ().toQColor ());
-        else
-            m_pixmap->fill (Qt::black);  // see hack below
 
-        pixmapPainter.begin (m_pixmap);
-        if (m_textStyle.foregroundColor ().isOpaque ())
-        {
-            pixmapPainter.setPen (m_textStyle.foregroundColor ().toQColor ());
-        }
-        else
-        {
-            // HACK: Transparent foreground colour + antialiased fonts don't
-            // work - they don't seem to be able to draw in
-            // Qt::color0/*transparent*/ (but Qt::color1 seems Ok).
-            // So we draw in a contrasting color to the background so that
-            // we can identify the transparent pixels for manually creating
-            // the mask.
-            if (m_textStyle.effectiveBackgroundColor ().isTransparent ())
-                pixmapPainter.setPen (Qt::white);
-            else
-                pixmapPainter.setPen (
-                    QColor ((m_textStyle.effectiveBackgroundColor ().toQRgb () & RGB_MASK) ^ 0xFFFFFF));
-        }
-        pixmapPainter.setFont (font);
+    if (m_textStyle.effectiveBackgroundColor ().isOpaque ())
+    {
+        m_pixmap->fill (m_textStyle.effectiveBackgroundColor ().toQColor ());
     }
+    else  // background transparent -> foreground opaque
+    {
+        // Set the background colour == foreground colour (independent
+        // of what happens with the mask bitmap) to avoid anti-aliasing the
+        // foreground coloured text with some other arbitrarily chosen colour
+        m_pixmap->fill (m_textStyle.foregroundColor ().toQColor ());
+    }
+
+    pixmapPainter.begin (m_pixmap);
+    if (m_textStyle.foregroundColor ().isOpaque ())
+    {
+        pixmapPainter.setPen (m_textStyle.foregroundColor ().toQColor ());
+    }
+    else  // foreground transparent -> background opaque
+    {
+        // HACK: Transparent foreground colour + antialiased fonts don't
+        // work - they don't seem to be able to draw in
+        // Qt::color0/*transparent*/ (but Qt::color1 seems Ok).
+        // So we draw in a contrasting color to the background so that
+        // we can identify the transparent pixels for manually creating
+        // the mask.
+        pixmapPainter.setPen (
+            QColor (mostContrastingRGB (m_textStyle.effectiveBackgroundColor ().toQRgb () & RGB_MASK)));
+    }
+    pixmapPainter.setFont (font);
+
 
     if (m_textStyle.foregroundColor ().isTransparent () ||
         m_textStyle.effectiveBackgroundColor ().isTransparent ())
