@@ -59,7 +59,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
                            name),
       m_effectsComboBox (0),
       m_settingsGroupBox (0),
-      m_settingsLayout (),
+      m_settingsLayout (0),
       m_colorEffectWidget (0)
 {
 #if DEBUG_KP_EFFECTS_DIALOG
