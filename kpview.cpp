@@ -1121,7 +1121,8 @@ void kpView::imStartEvent (QIMEvent *e)
     kdDebug () << "kpView(" << name () << ")::imStartEvent" << endl;
 #endif
 
-    m_mainWindow->tool ()->imStartEvent (e);
+    if (tool ())
+        tool ()->imStartEvent (e);
     e->accept();
 }
 
@@ -1132,7 +1133,8 @@ void kpView::imComposeEvent (QIMEvent *e)
     kdDebug () << "kpView(" << name () << ")::imComposeEvent" << endl;
 #endif
 
-    m_mainWindow->tool ()->imComposeEvent (e);
+    if (tool ())
+        tool ()->imComposeEvent (e);
     e->accept();
 }
 
@@ -1143,7 +1145,8 @@ void kpView::imEndEvent (QIMEvent *e)
     kdDebug () << "kpView(" << name () << ")::imEndEvent" << endl;
 #endif
 
-    m_mainWindow->tool ()->imEndEvent (e);
+    if (tool ())
+        tool ()->imEndEvent (e);
     e->accept();
 }
 
