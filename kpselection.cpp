@@ -37,6 +37,7 @@
 #include <klocale.h>
 
 #include <kpcolorsimilaritydialog.h>
+#include <kpdefs.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kptool.h>
@@ -152,16 +153,36 @@ kpSelection &kpSelection::operator= (const kpSelection &rhs)
 // friend
 QDataStream &operator<< (QDataStream &stream, const kpSelection &selection)
 {
+#if DEBUG_KP_SELECTION && 1
+    kdDebug () << "kpSelection::operator<<(sel: rect=" << selection.boundingRect ()
+               << " pixmap rect=" << (selection.pixmap () ? selection.pixmap ()->rect () : QRect ())
+               << endl;
+#endif
     stream << int (selection.m_type);
     stream << selection.m_rect;
     stream << selection.m_points;
+#if DEBUG_KP_SELECTION && 1
+    kdDebug () << "\twrote type=" << int (selection.m_type) << " rect=" << selection.m_rect
+               << " and points" << endl;
+#endif
 
     // TODO: need for text?
     //       For now we just use QTextDrag for Text Selections so this point is mute.
     if (selection.m_pixmap)
-        stream << kpPixmapFX::convertToImage (*selection.m_pixmap);
+    {
+        const QImage image = kpPixmapFX::convertToImage (*selection.m_pixmap);
+    #if DEBUG_KP_SELECTION && 1
+        kdDebug () << "\twrote image rect=" << image.rect () << endl;
+    #endif
+        stream << image;
+    }
     else
+    {
+    #if DEBUG_KP_SELECTION && 1
+        kdDebug () << "\twrote no image because no pixmap" << endl;
+    #endif
         stream << QImage ();
+    }
 
     //stream << selection.m_textLines;
     //stream << selection.m_textStyle;
@@ -180,13 +201,23 @@ QDataStream &operator>> (QDataStream &stream, kpSelection &selection)
 void kpSelection::readFromStream (QDataStream &stream,
                                   const kpPixmapFX::WarnAboutLossInfo &wali)
 {
+#if DEBUG_KP_SELECTION && 1
+    kdDebug () << "kpSelection::readFromStream()" << endl;
+#endif
     int typeAsInt;
     stream >> typeAsInt;
     m_type = kpSelection::Type (typeAsInt);
+#if DEBUG_KP_SELECTION && 1
+    kdDebug () << "\ttype=" << typeAsInt << endl;
+#endif
 
     stream >> m_rect;
     stream >> m_points;
     m_points.detach ();
+#if DEBUG_KP_SELECTION && 1
+    kdDebug () << "\trect=" << m_rect << endl;
+    //kdDebug () << "\tpoints=" << m_points << endl;
+#endif
 
     QImage image;
     stream >> image;
@@ -195,6 +226,19 @@ void kpSelection::readFromStream (QDataStream &stream,
         m_pixmap = new QPixmap (kpPixmapFX::convertToPixmap (image, false/*no dither*/, wali));
     else
         m_pixmap = 0;
+#if DEBUG_KP_SELECTION && 1
+    kdDebug () << "\timage: w=" << image.width () << " h=" << image.height ()
+               << " depth=" << image.depth () << endl;
+    if (m_pixmap)
+    {
+        kdDebug () << "\tpixmap: w=" << m_pixmap->width () << " h=" << m_pixmap->height ()
+                   << endl;
+    }
+    else
+    {
+        kdDebug () << "\tpixmap: none" << endl;
+    }
+#endif
 
     //stream >> m_textLines;
     //stream >> m_textStyle;
