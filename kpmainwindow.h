@@ -215,6 +215,7 @@ private slots:
     bool saveAs (bool localOnly = false);
     bool slotSaveAs ();
     
+    void slotEnableReload ();
     bool slotReload ();
 
 private:       

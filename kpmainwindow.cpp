@@ -249,6 +249,8 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         enableToolsDocumentActions (false);
         
         enableDocumentActions (false);
+
+        m_actionReload->setEnabled (false);
     }
     
 #if DEBUG_KP_MAINWINDOW
@@ -359,6 +361,11 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         connect (m_document, SIGNAL (documentSaved ()),
                  this, SLOT (slotUpdateCaption ()));
 
+        // File/Reload action only available with non-empty URL
+        connect (m_document, SIGNAL (documentSaved ()),
+                 this, SLOT (slotEnableReload ()));
+        slotEnableReload ();  // will check for non-empty URL
+
         // command history
         if (m_commandHistory)
         {
@@ -426,7 +433,7 @@ bool kpMainWindow::queryClose ()
                      i18n ("The document \"%1\" has been modified.\n"
                            "Do you want to save it?")
                          .arg (m_document->filename ()),
-                    QString::null,
+                    QString::null/*caption*/,
                     KStdGuiItem::save (), KStdGuiItem::discard ());
 
     switch (result)

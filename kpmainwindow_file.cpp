@@ -97,7 +97,7 @@ void kpMainWindow::enableFileMenuDocumentActions (bool enable)
 
     m_actionSave->setEnabled (enable);
     m_actionSaveAs->setEnabled (enable);
-    m_actionReload->setEnabled (enable);
+    // m_actionReload
 
     m_actionPrint->setEnabled (enable);
     m_actionPrintPreview->setEnabled (enable);
@@ -315,14 +315,30 @@ bool kpMainWindow::slotSaveAs ()
 
 
 // private slot
+void kpMainWindow::slotEnableReload ()
+{
+    m_actionReload->setEnabled (m_document && !m_document->url ().isEmpty ());
+}
+
+// private slot
 bool kpMainWindow::slotReload ()
 {
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    // TODO: fix stupid question - why would we offer to Save?
-    if (!queryClose ())
-        return false;
+    if (m_document && m_document->isModified ())
+    {
+        int result = KMessageBox::warningContinueCancel (this,
+                         i18n ("The document \"%1\" has been modified.\n"
+                               "Reloading will lose all changes since you last saved it.\n"
+                               "Are you sure?")
+                             .arg (m_document->filename ()),
+                        QString::null/*caption*/,
+                        i18n ("&Reload"));
+
+        if (result != KMessageBox::Continue)
+            return false;
+    }
 
     KURL oldURL = m_document->url ();
 
