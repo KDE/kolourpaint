@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_VIEW_MANAGER 1
+
 #include <kdebug.h>
 
 #include <kpdefs.h>
@@ -58,14 +60,22 @@ kpViewManager::~kpViewManager ()
 
 void kpViewManager::registerView (kpView *view)
 {
+#if DEBUG_KP_VIEW_MANAGER && 0
     kdDebug () << "kpViewManager::registerView (" << view << ")" << endl;
+#endif
     if (view && m_views.findRef (view) < 0)
     {
+    #if DEBUG_KP_VIEW_MANAGER && 0
         kdDebug () << "\tadded view" << endl;
+    #endif
         m_views.append (view);
     }
     else
+    {
+    #if DEBUG_KP_VIEW_MANAGER && 0
         kdDebug () << "\tignored register view attempt" << endl;
+    #endif
+    }
 }
 
 void kpViewManager::unregisterView (kpView *view)
@@ -99,12 +109,14 @@ void kpViewManager::setTempPixmapAt (const QPixmap &pixmap, const QPoint &at,
                                      enum TempPixmapType type,
                                      enum SelectionBorderType selBorderType)
 {
+#if DEBUG_KP_VIEW_MANAGER && 0
     kdDebug () << "kpViewManager::setTempPixmapAt (pixmap (w="
                << pixmap.width ()
                << ",h=" << pixmap.height ()
                << "), x=" << at.x ()
                << ",y=" << at.y ()
                << endl;
+#endif
 
     bool oldPixmapActive = tempPixmapActive ();
     QRect oldPixmapRect = m_tempPixmapRect;  // only valid if oldPixmapActive
@@ -211,7 +223,9 @@ kpView *kpViewManager::viewUnderCursor () /*const*/
 
 void kpViewManager::setViewUnderCursor (kpView *view)
 {
+#if DEBUG_KP_VIEW_MANAGER && 0
     kdDebug () << "kpViewManager::setViewUnderCursor (" << view << ")" << endl;
+#endif
     m_viewUnderCursor = view;
 
     repaintBrushPixmap ();
@@ -220,8 +234,10 @@ void kpViewManager::setViewUnderCursor (kpView *view)
 
 void kpViewManager::repaintBrushPixmap ()
 {
+#if DEBUG_KP_VIEW_MANAGER && 0
     kdDebug () << "kpViewManager::repaintBrushPixmap () viewUnderCursor="
                << viewUnderCursor () << endl;
+#endif
 
     // sync with updateViews()
     for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())
@@ -240,7 +256,9 @@ void kpViewManager::updateViews ()
 
 void kpViewManager::updateViews (const QRect &docRect)
 {
+#if DEBUG_KP_VIEW_MANAGER && 0
     kdDebug () << "KpViewManager::updateViews (" << docRect << ")" << endl;
+#endif
 
     // sync with repaintBrushPixmap()
     for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())
