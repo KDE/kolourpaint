@@ -1,0 +1,262 @@
+Attempts to improve the performance of the Color Eraser & Eraser
+by drawing only _unique_ rectangles across interpolation lines
+and by not drawing pixmaps when the user has a solid rectangular
+brush.
+
+- appears to decrease the performance of the Eraser (QRegion
+  overhead?).
+- reduces code clarity
+- unsure of whether it increases performance of Color Eraser
+  (sometimes it seems faster, sometimes not)
+
+Index: tools/kptoolpen.cpp
+===================================================================
+RCS file: /home/kde/kdenonbeta/kolourpaint/tools/kptoolpen.cpp,v
+retrieving revision 1.9
+diff -u -p -r1.9 kptoolpen.cpp
+--- tools/kptoolpen.cpp	6 Dec 2003 06:53:36 -0000	1.9
++++ tools/kptoolpen.cpp	6 Dec 2003 06:55:46 -0000
+@@ -34,12 +34,13 @@
+ #include <qapplication.h>
+ #include <qbitmap.h>
+ #include <qcursor.h>
+-#include <qimage.h>
+-#include <qpainter.h>
+-#include <qpixmap.h>
+ #if DEBUG_KP_TOOL_PEN
+     #include <qdatetime.h>
+ #endif
++#include <qimage.h>
++#include <qpainter.h>
++#include <qpixmap.h>
++#include <qregion.h>
+ 
+ #include <kdebug.h>
+ #include <klocale.h>
+@@ -416,31 +417,28 @@ void kpToolPen::draw (const QPoint &this
+             rect = neededRect (rect, m_brushPixmap [m_mouseButton].width ());
+ 
+     #if DEBUG_KP_TOOL_PEN
+-        if (m_mode & WashesPixmaps)
+-        {
+-            kdDebug () << "Washing pixmap (w=" << rect.width ()
+-                       << ",h=" << rect.height () << ")" << endl;
+-        }
++        kdDebug () << "kpToolPen::draw() interpolate: area (w=" << rect.width ()
++                    << ",h=" << rect.height () << ")" << endl;
+         QTime timer;
+         int convAndWashTime;
+     #endif
+         
+-        QPixmap pixmap = document ()->getPixmapAt (rect);
+-        QPainter painter (&pixmap);
++        // optimsation - only render intersections of rectangles once
++        bool delayedDraw = ((m_mode & SquareBrushes) &&
++                                ((m_mode & WashesPixmaps) ||
++                                (m_mode == Eraser)/*solid rectangular brush*/));
++            
++            
++        QPixmap pixmap;
++        QPainter painter;
++        pixmap = document ()->getPixmapAt (rect);
++        painter.begin (&pixmap);
+         painter.setPen (color (m_mouseButton));
+ 
+-        QImage image;
+-        if (m_mode & WashesPixmaps)
+-        {
+         #if DEBUG_KP_TOOL_PEN
++        if (m_mode & WashesPixmaps)
+             timer.start ();
+         #endif
+-            image = pixmap.convertToImage ();
+-        #if DEBUG_KP_TOOL_PEN
+-            convAndWashTime = timer.restart ();
+-            kdDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;    
+-        #endif
+-        }
+         
+         bool didSomething = false;
+ 
+@@ -453,10 +451,21 @@ void kpToolPen::draw (const QPoint &this
+         else if (m_mode & (DrawsPixmaps | WashesPixmaps))
+         {
+             QRgb colorToReplace;
++            QImage image;
++            QRegion region;
+             
+             if (m_mode & WashesPixmaps)
++            {
+                 colorToReplace = color (1 - m_mouseButton).rgb ();
+ 
++                image = pixmap.convertToImage ();
++        
++            #if DEBUG_KP_TOOL_PEN
++                convAndWashTime = timer.restart ();
++                kdDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;    
++            #endif
++            }
++
+             // Sweeps a pixmap along a line (modified Bresenham's line algorithm,
+             // see MODIFIED comment below).
+             //
+@@ -485,19 +494,27 @@ void kpToolPen::draw (const QPoint &this
+             int x = 0;
+             int y = 0;
+ 
+-            if (m_mode & WashesPixmaps)
++            if (delayedDraw)
+             {
+-                if (wash (&painter, image,
+-                          colorToReplace,
+-                          rect, plotx + rect.left (), ploty + rect.top ()))
+-                {
+-                    didSomething = true;
+-                }
++                region = region.unite (hotRect (plotx + rect.left (), ploty + rect.top ()));
+             }
+             else
+             {
+-                painter.drawPixmap (hotPoint (plotx, ploty), m_brushPixmap [m_mouseButton]);
+-                didSomething = true;
++                if (m_mode & WashesPixmaps)
++                {
++                    if (wash (&painter, image,
++                              colorToReplace,
++                              rect, plotx + rect.left (), ploty + rect.top ()))
++                    {
++                        didSomething = true;
++                    }
++                }
++                else
++                {
++                    painter.drawPixmap (hotPoint (plotx, ploty),
++                                        m_brushPixmap [m_mouseButton]);
++                    didSomething = true;
++                }
+             }
+ 
+             for (int i = 0; i <= inc; i++)
+@@ -541,39 +558,115 @@ void kpToolPen::draw (const QPoint &this
+                         // is more than 1 point, of course).  This is in contrast to the
+                         // ordinary line algorithm which can create diagonal adjacencies.
+ 
++                        if (delayedDraw)
++                        {
++                            region = region.unite (hotRect (plotx + rect.left (), oldploty + rect.top ()));
++                        }
++                        else
++                        {
++                            if (m_mode & WashesPixmaps)
++                            {
++                                if (wash (&painter, image,
++                                          colorToReplace,
++                                          rect, plotx + rect.left (), oldploty + rect.top ()))
++                                {
++                                    didSomething = true;
++                                }
++                            }
++                            else
++                            {
++                                painter.drawPixmap (hotPoint (plotx, oldploty),
++                                                    m_brushPixmap [m_mouseButton]);
++                                didSomething = true;
++                            }
++                        }
++                    }
++
++                    if (delayedDraw)
++                    {
++                        region = region.unite (hotRect (plotx + rect.left (), ploty + rect.top ()));
++                    }
++                    else
++                    {
+                         if (m_mode & WashesPixmaps)
+                         {
+                             if (wash (&painter, image,
+                                       colorToReplace,
+-                                      rect, plotx + rect.left (), oldploty + rect.top ()))
++                                      rect, plotx + rect.left (), ploty + rect.top ()))
+                             {
+                                 didSomething = true;
+                             }
+                         }
+                         else
+                         {
+-                            painter.drawPixmap (hotPoint (plotx, oldploty), m_brushPixmap [m_mouseButton]);
++                            painter.drawPixmap (hotPoint (plotx, ploty),
++                                                m_brushPixmap [m_mouseButton]);
+                             didSomething = true;
+                         }
+                     }
+-
++                }
++            }
++            
++            if (delayedDraw)
++            {
++                QMemArray <QRect> rects = region.rects ();
++                
++                int numRects = rects.count ();
++            #if DEBUG_KP_TOOL_PEN
++                kdDebug () << "\tdelayed draw now happening: numRects="
++                           << numRects << endl;
++                int convImageMS = 0;
++                int washMS = 0;
++                int setDocMS = 0;
++                QTime timer;
++            #endif
++                for (int i = 0; i < numRects; i++)
++                {
++                    QRect r = rects [i];
++                    QPixmap pm = document ()->getPixmapAt (r);
++                #if DEBUG_KP_TOOL_PEN && 0
++                    kdDebug () << "\tr=" << r << endl;
++                #endif
++            
++                    bool drew = false;
++                    
+                     if (m_mode & WashesPixmaps)
+                     {
++                        timer.start ();
++                        
+                         if (wash (&painter, image,
+                                   colorToReplace,
+-                                  rect, plotx + rect.left (), ploty + rect.top ()))
++                                  rect, r))
+                         {
+-                            didSomething = true;
++                            drew = true;
+                         }
++                        washMS += timer.restart ();
+                     }
+                     else
+                     {
+-                        painter.drawPixmap (hotPoint (plotx, ploty), m_brushPixmap [m_mouseButton]);
++                        painter.setBrush (color (m_mouseButton));
++                        painter.drawRect (r.x () - rect.x (),
++                                          r.y () - rect.y (),
++                                          r.width (),
++                                          r.height ());
++                        drew = true;
++                    }
++                    
++                    if (drew)
++                    {
++                        m_currentCommand->updateBoundingRect (r);
+                         didSomething = true;
++                        setDocMS += timer.restart ();
+                     }
+                 }
++                
++            #if DEBUG_KP_TOOL_PEN
++                kdDebug () << "convImageMS=" << convImageMS
++                           << " washMS=" << washMS
++                           << " setDocMS=" << setDocMS
++                           << endl;
++            #endif
+             }
+-
+         }
+ 
+         painter.end ();
