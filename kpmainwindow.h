@@ -44,7 +44,7 @@
 class QPainter;
 class QPoint;
 class QRect;
-class QScrollView;
+class QSize;
 class QStringList;
 
 class KAction;
@@ -63,6 +63,7 @@ class kpCommandHistory;
 class kpDocument;
 class kpView;
 class kpViewManager;
+class kpViewScrollableContainer;
 class kpSelection;
 class kpSelectionTransparency;
 class kpSingleKeyTriggersAction;
@@ -123,7 +124,7 @@ public:
     kpCommandHistory *commandHistory () const;
 
 private:
-    QScrollView *m_scrollView;
+    kpViewScrollableContainer *m_scrollView;
     kpView *m_mainView;
     kpThumbnail *m_thumbnail;
     kpView *m_thumbnailView;
@@ -209,6 +210,14 @@ private:
     void readLastTool ();
     int toolNumber () const;
     void saveLastTool ();
+
+private slots:
+    void slotBeganDocResize ();
+    void slotContinuedDocResize (const QSize &size);
+    void slotCancelledDocResize ();
+    void slotEndedDocResize (const QSize &size);
+
+    void slotDocResizeMessageChanged (const QString &string);
 
 private slots:
     void slotActionPrevToolOptionGroup1 ();

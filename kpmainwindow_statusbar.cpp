@@ -42,6 +42,7 @@
 #include <kpsqueezedtextlabel.h>
 #include <kptool.h>
 #include <kpview.h>
+#include <kpviewscrollablecontainer.h>
 
 
 // private
@@ -273,31 +274,62 @@ void kpMainWindow::setStatusBarZoom (int zoom)
 
 void kpMainWindow::recalculateStatusBarMessage ()
 {
-    const kpTool *t = tool ();
-    if (t)
+    QString scrollViewMessage = m_scrollView->statusMessage ();
+    if (!scrollViewMessage.isEmpty ())
     {
-        setStatusBarMessage (t->userMessage ());
+        setStatusBarMessage (scrollViewMessage);
     }
     else
     {
-        setStatusBarMessage ();
+        const kpTool *t = tool ();
+        if (t)
+        {
+            setStatusBarMessage (t->userMessage ());
+        }
+        else
+        {
+            setStatusBarMessage ();
+        }
     }
 }
 
 // private slot
 void kpMainWindow::recalculateStatusBarShape ()
 {
-    const kpTool *t = tool ();
-    if (t)
+    QSize docResizeTo = m_scrollView->newDocSize ();
+    if (docResizeTo.isValid ())
     {
-        setStatusBarShapePoints (t->userShapeStartPoint (),
-                                t->userShapeEndPoint ());
-        setStatusBarShapeSize (t->userShapeSize ());
+        const QPoint startPoint (m_document->width (), m_document->height ());
+
+        if (!m_scrollView->haveMovedFromOriginalDocSize ())
+        {
+            setStatusBarShapePoints (startPoint);
+            setStatusBarShapeSize ();
+        }
+        else
+        {
+            const int newWidth = docResizeTo.width ();
+            const int newHeight = docResizeTo.height ();
+
+            setStatusBarShapePoints (startPoint, QPoint (newWidth, newHeight));
+            const QPoint sizeAsPoint (QPoint (newWidth, newHeight) - startPoint);
+            setStatusBarShapeSize (QSize (sizeAsPoint.x (), sizeAsPoint.y ()));
+        }
     }
     else
     {
-        setStatusBarShapePoints ();
-        setStatusBarShapeSize ();
+        const kpTool *t = tool ();
+        if (t)
+        {
+            setStatusBarShapePoints (t->userShapeStartPoint (),
+                                    t->userShapeEndPoint ());
+            setStatusBarShapeSize (t->userShapeSize ());
+        }
+        else
+        {
+            setStatusBarShapePoints ();
+            setStatusBarShapeSize ();
+        }
     }
 }
 

@@ -51,6 +51,7 @@
 #include <kptooltext.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
+#include <kpviewscrollablecontainer.h>
 
 
 // private

@@ -34,6 +34,8 @@
 #include <klocale.h>
 
 #include <kpcolortoolbar.h>
+#include <kpcommandhistory.h>
+#include <kpdocument.h>
 #include <kpselectiontransparency.h>
 #include <kpsinglekeytriggersaction.h>
 #include <kptool.h>
@@ -54,10 +56,12 @@
 #include <kptoolpolyline.h>
 #include <kptoolrectangle.h>
 #include <kptoolrectselection.h>
+#include <kptoolresizescale.h>
 #include <kptoolroundedrectangle.h>
 #include <kptooltext.h>
 #include <kptooltoolbar.h>
 #include <kptoolwidgetopaqueortransparent.h>
+#include <kpviewscrollablecontainer.h>
 
 
 // private
@@ -326,6 +330,13 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
 
     if (previousTool)
     {
+        disconnect (previousTool, SIGNAL (movedAndAboutToDraw (const QPoint &, const QPoint &, int)),
+                    m_scrollView, SLOT (beginDragScroll (const QPoint &, const QPoint &, int)));
+        disconnect (previousTool, SIGNAL (endedDraw (const QPoint &)),
+                    m_scrollView, SLOT (endDragScroll ()));
+        disconnect (previousTool, SIGNAL (cancelledShape (const QPoint &)),
+                    m_scrollView, SLOT (endDragScroll ()));
+
         disconnect (previousTool, SIGNAL (userMessageChanged (const QString &)),
                    this, SLOT (recalculateStatusBarMessage ()));
         disconnect (previousTool, SIGNAL (userShapePointsChanged (const QPoint &, const QPoint &)),
@@ -345,6 +356,13 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
 
     if (tool)
     {
+        connect (tool, SIGNAL (movedAndAboutToDraw (const QPoint &, const QPoint &, int)),
+                 m_scrollView, SLOT (beginDragScroll (const QPoint &, const QPoint &, int)));
+        connect (tool, SIGNAL (endedDraw (const QPoint &)),
+                 m_scrollView, SLOT (endDragScroll ()));
+        connect (tool, SIGNAL (cancelledShape (const QPoint &)),
+                 m_scrollView, SLOT (endDragScroll ()));
+
         connect (tool, SIGNAL (userMessageChanged (const QString &)),
                  this, SLOT (recalculateStatusBarMessage ()));
         connect (tool, SIGNAL (userShapePointsChanged (const QPoint &, const QPoint &)),
@@ -409,6 +427,61 @@ void kpMainWindow::saveLastTool ()
 
     cfg->writeEntry (kpSettingLastTool, number);
     cfg->sync ();
+}
+
+
+// private slot
+void kpMainWindow::slotBeganDocResize ()
+{
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+    recalculateStatusBarShape ();
+}
+
+// private slot
+void kpMainWindow::slotContinuedDocResize (const QSize &)
+{
+    recalculateStatusBarShape ();
+}
+
+// private slot
+void kpMainWindow::slotCancelledDocResize ()
+{
+    recalculateStatusBar ();
+}
+
+// private slot
+void kpMainWindow::slotEndedDocResize (const QSize &size)
+{
+    int newWidth = (size.width () > 0 ? size.width () : 1),
+        newHeight = (size.height () > 0 ? size.height () : 1);
+
+    if (newWidth != m_document->width () ||
+        newHeight != m_document->height ())
+    {
+        m_commandHistory->addCommand (
+            new kpToolResizeScaleCommand (
+                false/*doc, not sel*/,
+                newWidth, newHeight,
+                kpToolResizeScaleCommand::Resize,
+                this));
+
+        saveDefaultDocSize (QSize (newWidth, newHeight));
+    }
+
+    recalculateStatusBar ();
+}
+
+// private slot
+void kpMainWindow::slotDocResizeMessageChanged (const QString &string)
+{
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kdDebug () << "kpMainWindow::slotDocResizeMessageChanged("
+               << string << ")" << endl;
+#endif
+
+    recalculateStatusBarMessage ();
 }
 
 

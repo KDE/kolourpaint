@@ -30,7 +30,6 @@
 
 #include <qdragobject.h>
 #include <qpainter.h>
-#include <qscrollview.h>
 #include <qtimer.h>
 
 #include <kactionclasses.h>
@@ -55,6 +54,7 @@
 #include <kptooltoolbar.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
+#include <kpviewscrollablecontainer.h>
 
 #if DEBUG_KP_MAIN_WINDOW
     #include <qdatetime.h>
@@ -245,7 +245,19 @@ void kpMainWindow::init ()
     kdDebug () << "\tTIME: createToolBox = " << time.restart () << "msec" << endl;
 #endif
 
-    m_scrollView = new QScrollView (this, "scrollView", Qt::WStaticContents | Qt::WNoAutoErase);
+    m_scrollView = new kpViewScrollableContainer (this, "scrollView");
+    connect (m_scrollView, SIGNAL (beganDocResize ()),
+             this, SLOT (slotBeganDocResize ()));
+    connect (m_scrollView, SIGNAL (continuedDocResize (const QSize &)),
+             this, SLOT (slotContinuedDocResize (const QSize &)));
+    connect (m_scrollView, SIGNAL (cancelledDocResize ()),
+             this, SLOT (slotCancelledDocResize ()));
+    connect (m_scrollView, SIGNAL (endedDocResize (const QSize &)),
+             this, SLOT (slotEndedDocResize (const QSize &)));
+
+    connect (m_scrollView, SIGNAL (statusMessageChanged (const QString &)),
+             this, SLOT (slotDocResizeMessageChanged (const QString &)));
+
     connect (m_scrollView, SIGNAL (contentsMoving (int, int)),
              this, SLOT (slotScrollViewAboutToScroll ()));
     setCentralWidget (m_scrollView);
@@ -471,7 +483,10 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         m_mainView = new kpView (m_scrollView->viewport (), "mainView", this,
                                  m_document->width (), m_document->height ());
         if (m_scrollView)
+        {
             m_scrollView->addChild (m_mainView);
+            m_scrollView->setView (m_mainView);  // TODO: could just combine into addChild()
+        }
         else
             kdError () << "kpMainWindow::setDocument() without scrollView" << endl;
         m_viewManager->registerView (m_mainView);

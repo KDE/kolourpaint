@@ -31,7 +31,6 @@
 
 #include <qdatetime.h>
 #include <qpainter.h>
-#include <qscrollview.h>
 #include <qtimer.h>
 
 #include <kactionclasses.h>
@@ -47,6 +46,7 @@
 #include <kptool.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
+#include <kpviewscrollablecontainer.h>
 #include <kpwidgetmapper.h>
 
 
