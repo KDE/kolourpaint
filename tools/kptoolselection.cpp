@@ -438,14 +438,29 @@ void kpToolSelection::selectionTransparencyChanged (const QString &name)
         kpSelectionTransparency oldST = document ()->selection ()->transparency ();
         kpSelectionTransparency st = mainWindow ()->selectionTransparency ();
 
-        if (document ()->selection ()->setTransparency (st, true/*check harder for no change in mask*/))
+        // TODO: This "NOP" check causes us a great deal of trouble e.g.:
+        //
+        //       Select a solid red rectangle.
+        //       Switch to transparent and set red as the background colour.
+        //       (the selection is now invisible)
+        //       Invert Colours.
+        //       (the selection is now cyan)
+        //       Change the background colour to green.
+        //       (no command is added to undo this as the selection does not change)
+        //       Undo.
+        //       The rectangle is no longer invisible.
+        //
+        //if (document ()->selection ()->setTransparency (st, true/*check harder for no change in mask*/))
+
+        document ()->selection ()->setTransparency (st);
+        if (true)
         {
         #if DEBUG_KP_TOOL_SELECTION
             kdDebug () << "\t\twhich changed the pixmap" << endl;
         #endif
 
             commandHistory ()->addCommand (new kpToolSelectionTransparencyCommand (
-                name,
+                i18n ("Selection: Transparency"), // name,
                 st, oldST,
                 mainWindow ()),
                 false/* no exec*/);
