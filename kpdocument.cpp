@@ -230,7 +230,7 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
 #if DEBUG_KPDOCUMENT
     kdDebug () << "\tmimetype=" << mimetype << " type=" << type << endl;
 #endif
-    if (!m_pixmap->save (filename, type))
+    if (!m_pixmap->save (filename, type.latin1 ()))
     {
         KMessageBox::error (0, i18n ("Could not save image as type <b>%1 (%2)</b>.").arg (mimetype).arg (type));
         return false;
