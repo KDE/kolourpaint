@@ -64,6 +64,11 @@ kpDocumentSaveOptionsPreviewDialog::kpDocumentSaveOptionsPreviewDialog (
                Qt::WStyle_Customize |
                    Qt::WStyle_DialogBorder |
                    Qt::WStyle_Title),
+#if 0
+KDialogBase (parent, name, false/*non-modal*/,
+                   i18n ("Save Preview"),
+                   0/*no buttons*/),
+#endif
       m_filePixmap (0),
       m_fileSize (0)
 {
