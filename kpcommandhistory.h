@@ -57,6 +57,9 @@ class kpMainWindow;
 //       The solution is to rewrite/clone KCommandHistory and add this
 //       functionality.
 //
+//       Also, Undo/Redo Limit based on estimated storage size would be _very_
+//       useful.
+//
 class kpCommandHistory : public KCommandHistory
 {
 public:
