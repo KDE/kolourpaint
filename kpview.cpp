@@ -603,13 +603,13 @@ QRegion kpView::selectionResizeHandlesViewRegion () const
 // public
 int kpView::mouseOnSelectionResizeHandle () const
 {
-#if DEBUG_KP_VIEW || 1
+#if DEBUG_KP_VIEW
     kdDebug () << "kpView::mouseOnSelectionResizeHandle()" << endl;
 #endif
 
     if (!mouseOnSelection ())
     {
-    #if DEBUG_KP_VIEW || 1
+    #if DEBUG_KP_VIEW
         kdDebug () << "\tmouse not on sel" << endl;
     #endif
         return 0;
@@ -617,19 +617,19 @@ int kpView::mouseOnSelectionResizeHandle () const
 
 
     const QRect selViewRect = selectionViewRect ();
-#if DEBUG_KP_VIEW || 1
+#if DEBUG_KP_VIEW
     kdDebug () << "\tselViewRect=" << selViewRect << endl;
 #endif
 
 
     const int atomicLength = selectionResizeHandleAtomicSize ();
-#if DEBUG_KP_VIEW || 1
+#if DEBUG_KP_VIEW
     kdDebug () << "\tatomicLength=" << atomicLength << endl;
 #endif
 
     if (atomicLength <= 0)
     {
-    #if DEBUG_KP_VIEW || 1
+    #if DEBUG_KP_VIEW
         kdDebug () << "\tsel not large enough to have resize handles" << endl;
     #endif
         // Want to make it possible to move a small selection
@@ -638,7 +638,7 @@ int kpView::mouseOnSelectionResizeHandle () const
 
 
     const QPoint viewPointRelSel = mouseViewPointRelativeToSelection ();
-#if DEBUG_KP_VIEW || 1
+#if DEBUG_KP_VIEW
     kdDebug () << "\tviewPointRelSel=" << viewPointRelSel << endl;
 #endif
 
@@ -692,13 +692,13 @@ int kpView::mouseOnSelectionResizeHandle () const
 // public
 bool kpView::mouseOnSelectionToSelectText () const
 {
-#if DEBUG_KP_VIEW || 1
+#if DEBUG_KP_VIEW
     kdDebug () << "kpView::mouseOnSelectionToSelectText()" << endl;
 #endif
 
     if (!mouseOnSelection ())
     {
-    #if DEBUG_KP_VIEW || 1
+    #if DEBUG_KP_VIEW
         kdDebug () << "\tmouse non on sel" << endl;
     #endif
         return false;
@@ -706,13 +706,13 @@ bool kpView::mouseOnSelectionToSelectText () const
 
     if (!selection ()->isText ())
     {
-    #if DEBUG_KP_VIEW || 1
+    #if DEBUG_KP_VIEW
         kdDebug () << "\tsel not text" << endl;
     #endif
         return false;
     }
 
-#if DEBUG_KP_VIEW || 1
+#if DEBUG_KP_VIEW
     kdDebug () << "\tmouse on sel: to move=" << mouseOnSelectionToMove ()
                << " to resize=" << mouseOnSelectionResizeHandle ()
                << endl;
@@ -1138,14 +1138,14 @@ bool kpView::selectionResizeHandleAtomicSizeCloseToZoomLevel () const
 // private
 void kpView::paintEventDrawSelectionResizeHandles (QPainter *painter, const QRect &viewRect)
 {
-#if DEBUG_KP_VIEW_RENDERER && 1 || 1
+#if DEBUG_KP_VIEW_RENDERER && 1
     kdDebug () << "kpView::paintEventDrawSelectionResizeHandles("
                << viewRect << ")" << endl;
 #endif
 
     if (!selectionLargeEnoughToHaveResizeHandles ())
     {
-    #if DEBUG_KP_VIEW_RENDERER && 1 || 1
+    #if DEBUG_KP_VIEW_RENDERER && 1
         kdDebug () << "\tsel not large enough to have resize handles" << endl;
     #endif
         return;
@@ -1154,7 +1154,7 @@ void kpView::paintEventDrawSelectionResizeHandles (QPainter *painter, const QRec
     kpViewManager *vm = viewManager ();
     if (!vm || !vm->selectionBorderVisible () || !vm->selectionBorderFinished ())
     {
-    #if DEBUG_KP_VIEW_RENDERER && 1 || 1
+    #if DEBUG_KP_VIEW_RENDERER && 1
         kdDebug () << "\tsel border not visible or not finished" << endl;
     #endif
 
@@ -1162,19 +1162,19 @@ void kpView::paintEventDrawSelectionResizeHandles (QPainter *painter, const QRec
     }
 
     const QRect selViewRect = selectionViewRect ();
-#if DEBUG_KP_VIEW_RENDERER && 1 || 1
+#if DEBUG_KP_VIEW_RENDERER && 1
     kdDebug () << "\tselViewRect=" << selViewRect << endl;
 #endif
     if (!selViewRect.intersects (viewRect))
     {
-    #if DEBUG_KP_VIEW_RENDERER && 1 || 1
+    #if DEBUG_KP_VIEW_RENDERER && 1
         kdDebug () << "\tdoesn't intersect viewRect" << endl;
     #endif
         return;
     }
 
     QRegion selResizeHandlesRegion = selectionResizeHandlesViewRegion ();
-#if DEBUG_KP_VIEW_RENDERER && 1 || 1
+#if DEBUG_KP_VIEW_RENDERER && 1
     kdDebug () << "\tsel resize handles view region="
                << selResizeHandlesRegion << endl;
 #endif
