@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -60,7 +60,7 @@ void kpToolWidgetBase::addOption (const QPixmap &pixmap, const QString &toolTip)
 {
     if (m_pixmaps.isEmpty ())
         startNewOptionRow ();
-    
+
     m_pixmaps.last ().append (pixmap);
     m_pixmapRects.last ().append (QRect ());
     m_toolTips.last ().append (toolTip);
@@ -82,15 +82,15 @@ QValueVector <int> kpToolWidgetBase::spreadOutElements (const QValueVector <int>
         return QValueVector <int> ();
     else if (sizes.count () == 1)
         return QValueVector <int> (1, sizes.first () > max ? 0 : 1/*margin*/);
-        
+
     QValueVector <int> retOffsets (sizes.count ());
-    
+
     int totalSize = 0;
     for (int i = 0; i < (int) sizes.count (); i++)
         totalSize += sizes [i];
-        
+
     int margin = 1;
-    
+
     // if don't fit with margin, then just return elements
     // packed right next to each other
     if (totalSize + margin * 2 > max)
@@ -103,19 +103,19 @@ QValueVector <int> kpToolWidgetBase::spreadOutElements (const QValueVector <int>
     }
 
     int maxLeftOver = max - (totalSize + margin * 2);
-    
+
     int startCompensating = -1;
     int numCompensate = 0;
-    
+
     int spacing = 0;
-    
+
     spacing = maxLeftOver / (sizes.count () - 1);
     if (spacing * int (sizes.count () - 1) < maxLeftOver)
     {
         numCompensate = maxLeftOver - spacing * (sizes.count () - 1);
         startCompensating = ((sizes.count () - 1) - numCompensate) / 2;
     }
-    
+
     retOffsets [0] = margin;
     for (int i = 1; i < (int) sizes.count (); i++)
     {
@@ -126,7 +126,7 @@ QValueVector <int> kpToolWidgetBase::spreadOutElements (const QValueVector <int>
                            i >= startCompensating &&
                            i < startCompensating + numCompensate) ? 1 : 0);
     }
-        
+
     return retOffsets;
 }
 
@@ -154,9 +154,9 @@ void kpToolWidgetBase::relayoutOptions ()
     kdDebug () << "\tsurvived killing of empty rows" << endl;
     kdDebug () << "\tfinding heights of rows:" << endl;
 #endif
-    
+
     QValueVector <int> maxHeightOfRow (m_pixmaps.count ());
-    
+
     for (int r = 0; r < (int) m_pixmaps.count (); r++)
     {
         for (int c = 0; c < (int) m_pixmaps [r].count (); c++)
@@ -168,7 +168,7 @@ void kpToolWidgetBase::relayoutOptions ()
         kdDebug () << "\t\t" << r << ": " << maxHeightOfRow [r] << endl;
     #endif
     }
-    
+
     QValueVector <int> rowYOffset = spreadOutElements (maxHeightOfRow, height ());
 #if DEBUG_KP_TOOL_WIDGET_BASE
     kdDebug () << "\tspread out offsets of rows:" << endl;
@@ -178,8 +178,10 @@ void kpToolWidgetBase::relayoutOptions ()
 
     for (int r = 0; r < (int) m_pixmaps.count (); r++)
     {
+    #if DEBUG_KP_TOOL_WIDGET_BASE
         kdDebug () << "\tlaying out row " << r << ":" << endl;
-        
+    #endif
+
         QValueVector <int> widths (m_pixmaps [r].count ());
         for (int c = 0; c < (int) m_pixmaps [r].count (); c++)
             widths [c] = m_pixmaps [r][c].width ();
@@ -188,7 +190,7 @@ void kpToolWidgetBase::relayoutOptions ()
         for (int c = 0; c < (int) m_pixmaps [r].count (); c++)
             kdDebug () << "\t\t\t" << c << ": " << widths [c] << endl;
     #endif
-        
+
         QValueVector <int> colXOffset = spreadOutElements (widths, width ());
     #if DEBUG_KP_TOOL_WIDGET_BASE
         kdDebug () << "\t\tspread out offsets of cols:" << endl;
@@ -201,7 +203,7 @@ void kpToolWidgetBase::relayoutOptions ()
             int x = colXOffset [c];
             int y = rowYOffset [r];
             int w, h;
-             
+
             if (c == (int) colXOffset.count () - 1)
             {
                 if (x + m_pixmaps [r][c].width () >= width ())
@@ -211,7 +213,7 @@ void kpToolWidgetBase::relayoutOptions ()
             }
             else
                 w = colXOffset [c + 1] - x;
-                 
+
             if (r == (int) m_pixmaps.count () - 1)
             {
                 if (y + m_pixmaps [r][c].height () >= height ())
@@ -221,14 +223,14 @@ void kpToolWidgetBase::relayoutOptions ()
             }
             else
                 h = rowYOffset [r + 1] - y;
-            
+
             m_pixmapRects [r][c] = QRect (x, y, w, h);
-            
+
             if (!m_toolTips [r][c].isEmpty ())
                 QToolTip::add (this, m_pixmapRects [r][c], m_toolTips [r][c]);
         }
     }
-    
+
     update ();
 }
 
@@ -280,7 +282,7 @@ void kpToolWidgetBase::setSelected (int row, int col)
 
     if (wasSelectedRow >= 0 && wasSelectedCol >= 0)
     {
-        // unhighlight old option    
+        // unhighlight old option
         update (m_pixmapRects [wasSelectedRow][wasSelectedCol]);
     }
 
@@ -322,7 +324,7 @@ void kpToolWidgetBase::drawContents (QPainter *painter)
         #if DEBUG_KP_TOOL_WIDGET_BASE && 1
             kdDebug () << "\tRow: " << i << endl;
         #endif
-        
+
         for (int j = 0; j < (int) m_pixmaps [i].count (); j++)
         {
             QRect rect = m_pixmapRects [i][j];
@@ -330,12 +332,12 @@ void kpToolWidgetBase::drawContents (QPainter *painter)
 
         #if DEBUG_KP_TOOL_WIDGET_BASE && 1
             kdDebug () << "\t\tCol: " << j << " rect=" << rect << endl;
-        #endif        
+        #endif
 
             if (i == m_selectedRow && j == m_selectedCol)
             {
                 painter->fillRect (rect, Qt::blue/*selection color*/);
-             
+
                 if (m_invertSelectedPixmap)
                     kpPixmapFX::invertColors (&pixmap);
             }
@@ -346,7 +348,7 @@ void kpToolWidgetBase::drawContents (QPainter *painter)
                        << " y="
                        << rect.y () + (rect.height () - pixmap.height ()) / 2
                        << endl;
-                       
+
         #endif
 
             painter->drawPixmap (QPoint (rect.x () + (rect.width () - pixmap.width ()) / 2,
