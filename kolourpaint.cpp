@@ -68,11 +68,11 @@ int main (int argc, char *argv [])
         "http://kolourpaint.sourceforge.net/"
     );
 
-    
+
     // this is _not_ the same as KAboutData::License_BSD
     aboutData.setLicenseText (kpLicenseText);
 
-    
+
     // SYNC: with AUTHORS
 
     aboutData.addAuthor ("Clarence Dang", I18N_NOOP ("Maintainer"), "dang@kde.org");
@@ -80,16 +80,20 @@ int main (int argc, char *argv [])
                          "thurston_dang@users.sourceforge.net");
     aboutData.addAuthor ("Kristof Borrey", I18N_NOOP ("Icons"), "borrey@kde.org");
 
+
     aboutData.addCredit ("Rashid N. Achilov");
     aboutData.addCredit ("Toyohiro Asukai");
     aboutData.addCredit ("Bela-Andreas Bargel");
     aboutData.addCredit ("Waldo Bastian");
     aboutData.addCredit ("Ismail Belhachmi");
     aboutData.addCredit ("Sashmit Bhaduri");
+    aboutData.addCredit ("Antonio Bianco");
     aboutData.addCredit ("Stephan Binner");
     aboutData.addCredit ("Markus Brueffer");
     aboutData.addCredit ("Rob Buis");
     aboutData.addCredit ("Lucijan Busch");
+    aboutData.addCredit ("Mikhail Capone");
+    aboutData.addCredit ("Enrico Ceppi");
     aboutData.addCredit ("Tom Chance");
     aboutData.addCredit ("Albert Astals Cid");
     aboutData.addCredit ("Jennifer Dang");
@@ -98,36 +102,60 @@ int main (int argc, char *argv [])
     aboutData.addCredit ("David Faure");
     aboutData.addCredit ("P. Fisher");
     aboutData.addCredit ("Nicolas Goutte");
+    aboutData.addCredit ("Herbert Graeber");
     aboutData.addCredit ("Brad Grant");
     aboutData.addCredit ("David Greenaway");
     aboutData.addCredit ("Wilco Greven");
+    aboutData.addCredit ("Hubert Grininger");
     aboutData.addCredit ("Adriaan de Groot");
+    aboutData.addCredit ("Esben Mose Hansen");
     aboutData.addCredit ("Simon Hausmann");
+    aboutData.addCredit ("Andrew J");
     aboutData.addCredit ("Werner Joss");
     aboutData.addCredit ("Derek Kite");
+    aboutData.addCredit ("Dmitry Kolesnikov");
     aboutData.addCredit ("Stephan Kulow");
     aboutData.addCredit ("Eric Laffoon");
     aboutData.addCredit ("Michael Lake");
     aboutData.addCredit ("Sebastien Laout");
+    aboutData.addCredit ("David Ling");
+    aboutData.addCredit ("Volker Lochte");
     aboutData.addCredit ("Anders Lund");
+    aboutData.addCredit ("Jacek Masiulaniec");
+    aboutData.addCredit ("Benjamin Meyer");
     aboutData.addCredit ("Amir Michail");
     aboutData.addCredit ("Dirk Mueller");
     aboutData.addCredit ("Ruivaldo Neto");
     aboutData.addCredit ("Ralf Nolden");
+    aboutData.addCredit ("Steven Pasternak");
     aboutData.addCredit ("Cédric Pasteur");
     aboutData.addCredit ("Erik K. Pedersen");
+    aboutData.addCredit ("Dennis Pennekamp");
+    aboutData.addCredit ("Jos Poortvliet");
     aboutData.addCredit ("Boudewijn Rempt");
+    aboutData.addCredit ("Marcos Rodriguez");
+    aboutData.addCredit ("Matt Rogers");
     aboutData.addCredit ("Bram Schoenmakers");
     aboutData.addCredit ("Dirk Schönberger");
     aboutData.addCredit ("Emmeran Seehuber");
     aboutData.addCredit ("Peter Simonsson");
     aboutData.addCredit ("Andrew Simpson");
+    aboutData.addCredit ("A T Somers");
     aboutData.addCredit ("Igor Stepin");
     aboutData.addCredit ("Stephen Sweeney");
     aboutData.addCredit ("Bart Symons");
+    aboutData.addCredit ("Stefan Taferner");
     aboutData.addCredit ("Hogne Titlestad");
     aboutData.addCredit ("Brandon Mark Turner");
+    aboutData.addCredit ("Jonathan Turner");
+    aboutData.addCredit ("Stephan Unknown");
+    aboutData.addCredit ("Dries Verachtert");
+    aboutData.addCredit ("Simon Vermeersch");
     aboutData.addCredit ("Lauri Watts");
+    aboutData.addCredit ("Mark Wege");
+    aboutData.addCredit ("Christoph Wiesen");
+    aboutData.addCredit ("Maxim_86ualb2");
+    aboutData.addCredit ("Michele");
 
 
     KCmdLineArgs::init (argc, argv, &aboutData);
