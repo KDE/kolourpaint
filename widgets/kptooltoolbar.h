@@ -49,6 +49,7 @@ class kpToolWidgetEraserSize;
 class kpToolWidgetFillStyle;
 class kpToolWidgetLineStyle;
 class kpToolWidgetLineWidth;
+class kpToolWidgetSpraycanSize;
 
 class kpToolToolBar : public KToolBar
 {
@@ -75,6 +76,7 @@ public:
     kpToolWidgetFillStyle *toolWidgetFillStyle () const { return m_toolWidgetFillStyle; }
     kpToolWidgetLineStyle *toolWidgetLineStyle () const { return m_toolWidgetLineStyle; }
     kpToolWidgetLineWidth *toolWidgetLineWidth () const { return m_toolWidgetLineWidth; }
+    kpToolWidgetSpraycanSize *toolWidgetSpraycanSize () const { return m_toolWidgetSpraycanSize; }
 
 signals:
     void sigToolSelected (kpTool *tool);  // tool may be 0
@@ -102,6 +104,7 @@ private:
     kpToolWidgetFillStyle *m_toolWidgetFillStyle;
     kpToolWidgetLineStyle *m_toolWidgetLineStyle;
     kpToolWidgetLineWidth *m_toolWidgetLineWidth;
+    kpToolWidgetSpraycanSize *m_toolWidgetSpraycanSize;
 
     struct kpButtonToolPair
     {

@@ -50,6 +50,8 @@
 #include <kptoolwidgetfillstyle.h>
 #include <kptoolwidgetlinestyle.h>
 #include <kptoolwidgetlinewidth.h>
+#include <kptoolwidgetspraycansize.h>
+
 
 kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const char *name)
     : KToolBar ((QWidget *) mainWindow, name, false/*don't use global toolBar settings*/, true/*readConfig*/),
@@ -68,8 +70,13 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
     m_toolWidgetBrush = new kpToolWidgetBrush (m_baseWidget);
     m_toolWidgetEraserSize = new kpToolWidgetEraserSize (m_baseWidget);
     m_toolWidgetFillStyle = new kpToolWidgetFillStyle (m_baseWidget);
+#if KP_BLOATWARE
     m_toolWidgetLineStyle = new kpToolWidgetLineStyle (m_baseWidget);
+#else
+    m_toolWidgetLineStyle = 0;
+#endif
     m_toolWidgetLineWidth = new kpToolWidgetLineWidth (m_baseWidget);
+    m_toolWidgetSpraycanSize = new kpToolWidgetSpraycanSize (m_baseWidget);
     
     m_lastDockedOrientationSet = false;
     setOrientation (orientation ());
@@ -211,11 +218,14 @@ void kpToolToolBar::selectPreviousTool ()
 // public
 void kpToolToolBar::hideAllToolWidgets ()
 {
-    m_toolWidgetBrush->hide ();
-    m_toolWidgetEraserSize->hide ();
-    m_toolWidgetFillStyle->hide ();
-    m_toolWidgetLineStyle->hide ();
-    m_toolWidgetLineWidth->hide ();
+#define HIDE_WIDGET(w) if (w) w->hide ()
+    HIDE_WIDGET (m_toolWidgetBrush);
+    HIDE_WIDGET (m_toolWidgetEraserSize);
+    HIDE_WIDGET (m_toolWidgetFillStyle);
+    HIDE_WIDGET (m_toolWidgetLineStyle);
+    HIDE_WIDGET (m_toolWidgetLineWidth);
+    HIDE_WIDGET (m_toolWidgetSpraycanSize);
+#undef HIDE_WIDGET(w)
 }
 
 
@@ -319,11 +329,14 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
         num++;
     }
 
-    m_baseLayout->addWidget (m_toolWidgetFillStyle);
-    m_baseLayout->addWidget (m_toolWidgetLineWidth);
-    m_baseLayout->addWidget (m_toolWidgetLineStyle);
-    m_baseLayout->addWidget (m_toolWidgetBrush);
-    m_baseLayout->addWidget (m_toolWidgetEraserSize);
+#define ADD_WIDGET(w) if (w) m_baseLayout->addWidget (w)
+    ADD_WIDGET (m_toolWidgetFillStyle);
+    ADD_WIDGET (m_toolWidgetLineWidth);
+    ADD_WIDGET (m_toolWidgetLineStyle);
+    ADD_WIDGET (m_toolWidgetBrush);
+    ADD_WIDGET (m_toolWidgetEraserSize);
+    ADD_WIDGET (m_toolWidgetSpraycanSize);
+#undef ADD_WIDGET(w)
 
     KToolBar::setOrientation (o);
 }
