@@ -114,6 +114,6 @@ bool kpToolWidgetSpraycanSize::setSelected (int row, int col, bool saveAsDefault
     if (ret)
         emit spraycanSizeChanged (spraycanSize ());
     return ret;
-};
+}
 
 #include <kptoolwidgetspraycansize.moc>

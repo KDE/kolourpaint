@@ -217,6 +217,6 @@ bool kpToolWidgetFillStyle::setSelected (int row, int col, bool saveAsDefault)
     if (ret)
         emit fillStyleChanged (fillStyle ());
     return ret;
-};
+}
 
 #include <kptoolwidgetfillstyle.moc>

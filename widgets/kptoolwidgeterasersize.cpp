@@ -156,6 +156,6 @@ bool kpToolWidgetEraserSize::setSelected (int row, int col, bool saveAsDefault)
     if (ret)
         emit eraserSizeChanged (eraserSize ());
     return ret;
-};
+}
 
 #include <kptoolwidgeterasersize.moc>
