@@ -25,7 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_TOOL_PREVIEW_DIALOG 0
+#define DEBUG_KP_TOOL_PREVIEW_DIALOG 1
 
 #include <kptoolpreviewdialog.h>
 
@@ -400,9 +400,12 @@ void kpToolPreviewDialog::updatePreview ()
 }
 
 
-// protected slot virtual [base this]
+// protected slot virtual
 void kpToolPreviewDialog::slotUpdate ()
 {
+#if DEBUG_KP_TOOL_PREVIEW_DIALOG
+    kdDebug () << "kpToolPreviewDialog::slotUpdate()" << endl;
+#endif
     updateDimensions ();
     updatePreview ();
 }
@@ -411,6 +414,9 @@ void kpToolPreviewDialog::slotUpdate ()
 // protected virtual [base QWidget]
 void kpToolPreviewDialog::resizeEvent (QResizeEvent * /*e*/)
 {
+#if DEBUG_KP_TOOL_PREVIEW_DIALOG
+    kdDebug () << "kpToolPreviewDialog::resizeEvent()" << endl;
+#endif
     updatePreview ();
 }
 
