@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -66,11 +66,11 @@ public:
      */
     static QPixmap convertToPixmap (const QImage &image, bool pretty = false);
 
-    
+
     /*
      * Get/Set Parts of Pixmap
      */
-     
+
 
     /*
      * Returns the pixel and mask data found at the <rect> in <pm>.
@@ -80,7 +80,7 @@ public:
     /*
      * Sets the pixel and mask data at <destRect> in <*destPixmapPtr>
      * to <srcPixmap>.
-     */    
+     */
     static void setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
                              const QPixmap &srcPixmap);
 
@@ -115,7 +115,7 @@ public:
      */
     static QColor getColorAtPixel (const QImage &img, const QPoint &at);
     static QColor getColorAtPixel (const QImage &img, int x, int y);
-    
+
 
     /*
      * Mask Operations
@@ -136,7 +136,7 @@ public:
      * if <pm> does not have a mask.
      */
     static QBitmap getNonNullMask (const QPixmap &pm);
-    
+
     /*
      * Returns the mask data found at the <rect> in <pm>.
      */
@@ -167,14 +167,14 @@ public:
      * Ensures that <*destPixmapPtr> is opaque at <rect>.
      */
     static void ensureOpaqueAt (QPixmap *destPixmapPtr, const QRect &destRect);
-    
+
     /*
      * Ensures that <srcPixmap>'s opaque pixels will be opaque if
      * painted onto <*destPixmapPtr> at <destAt>.
      */
     static void ensureOpaqueAt (QPixmap *destPixmapPtr, const QPoint &destAt,
                                 const QPixmap &srcPixmap);
-                  
+
 
     /*
      * Effects
@@ -195,6 +195,73 @@ public:
     static QPixmap invertColors (const QPixmap &pm);
     static void invertColors (QImage *destImagePtr);
     static QImage invertColors (const QImage &img);
+
+    /*
+     * Converts the image to grayscale.
+     */
+    static void convertToGrayscale (QPixmap *destPixmapPtr);
+    static QPixmap convertToGrayscale (const QPixmap &pm);
+    static void convertToGrayscale (QImage *destImagePtr);
+    static QImage convertToGrayscale (const QImage &img);
+
+    /*
+     * Converts the image to monochrome.
+     */
+    static void convertToBlackAndWhite (QPixmap *destPixmapPtr);
+    static QPixmap convertToBlackAndWhite (const QPixmap &pm);
+
+    /*
+     * Fills an image in the given color.
+     */
+    static void fill (QPixmap *destPixmapPtr, const QColor &color);
+    static QPixmap fill (const QPixmap &pm, const QColor &color);
+
+    /*
+     * Resizes an image to the given width and height,
+     * filling any new areas with <backgroundColor> if <fillNewAreas> is set.
+     */
+    static void resize (QPixmap *destPixmapPtr, int w, int h,
+                        const QColor &backgroundColor, bool fillNewAreas = true);
+    static QPixmap resize (const QPixmap &pm, int w, int h,
+                           const QColor &backgroundColor, bool fillNewAreas = true);
+
+    /*
+     * Scales an image to the given width and height.
+     */
+    static void scale (QPixmap *destPixmapPtr, int w, int h);
+    static QPixmap scale (const QPixmap &pm, int w, int h);
+
+    /*
+     * Skews an image.
+     *
+     * <hangle>             horizontal angle clockwise (-90 < x < 90)
+     * <vangle>             vertical angle clockwise (-90 < x < 90)
+     * <backgroundColor>    color to fill new areas with
+     */
+    static void skew (QPixmap *destPixmapPtr, double hangle, double vangle,
+                      const QColor &backgroundColor);
+    static QPixmap skew (const QPixmap &pm, double hangle, double vangle,
+                         const QColor &backgroundColor);
+
+    /*
+     * Rotates an image.
+     *
+     * <angle>              clockwise angle to rotate by
+     * <backgroundColor>    color to fill new areas with
+     */
+    static bool isLosslessRotation (double angle);
+    static void rotate (QPixmap *destPixmapPtr, double angle,
+                        const QColor &backgroundColor);
+    static QPixmap rotate (const QPixmap &pm, double angle,
+                           const QColor &backgroundColor);
+
+    /*
+     * Flips an image in the given directions.
+     */
+    static void flip (QPixmap *destPixmapPtr, bool horz, bool vert);
+    static QPixmap flip (const QPixmap &pm, bool horz, bool vert);
+    static void flip (QImage *destImagePtr, bool horz, bool vert);
+    static QImage flip (const QImage &img, bool horz, bool vert);
 };
 
 

@@ -78,7 +78,7 @@ void kpMainWindow::enableSettingsMenuDocumentActions (bool enable)
 // private slot
 void kpMainWindow::slotShowPath ()
 {
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotShowPath ()" << endl;
 #endif
 

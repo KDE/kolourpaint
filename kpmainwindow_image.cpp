@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -34,9 +34,12 @@
 #include <kaction.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kmenubar.h>
 
 #include <kpcolortoolbar.h>
+#include <kpdocument.h>
 #include <kpmainwindow.h>
+#include <kpselection.h>
 #include <kptool.h>
 #include <kptoolautocrop.h>
 #include <kptoolclear.h>
@@ -46,7 +49,9 @@
 #include <kptoolinvertcolors.h>
 #include <kptoolresizescale.h>
 #include <kptoolrotate.h>
+#include <kptoolselection.h>
 #include <kptoolskew.h>
+#include <kpviewmanager.h>
 
 
 // private
@@ -57,7 +62,7 @@ void kpMainWindow::setupImageMenuActions ()
     m_actionResizeScale = new KAction (i18n ("R&esize / Scale..."), CTRL + Key_E,
         this, SLOT (slotResizeScale ()), ac, "image_resize_scale");
 
-    m_actionCrop = new KAction (i18n ("C&rop"), CTRL + Key_R,
+    m_actionCrop = new KAction (i18n ("C&rop outside the selection"), CTRL + Key_R,
         this, SLOT (slotCrop ()), ac, "image_crop");
 
     m_actionAutoCrop = new KAction (i18n ("A&utocrop"), CTRL + Key_U,
@@ -91,6 +96,7 @@ void kpMainWindow::setupImageMenuActions ()
 void kpMainWindow::enableImageMenuDocumentActions (bool enable)
 {
     m_actionResizeScale->setEnabled (enable);
+    m_actionCrop->setEnabled (enable);
     m_actionAutoCrop->setEnabled (enable);
     m_actionFlip->setEnabled (enable);
     m_actionRotate->setEnabled (enable);
@@ -102,13 +108,132 @@ void kpMainWindow::enableImageMenuDocumentActions (bool enable)
 }
 
 
-// private
+// private slot
+void kpMainWindow::slotImageMenuUpdateName ()
+{
+    bool isSelectionEnabled = m_document ? m_document->selection () : false;
+
+
+    KMenuBar *mBar = menuBar ();
+    if (!mBar)  // just in case
+        return;
+
+    int mBarNumItems = (int) mBar->count ();
+    for (int index = 0; index < mBarNumItems; index++)
+    {
+        int id = mBar->idAt (index);
+
+        // SYNC: kolourpaintui.rc
+        QString menuBarItemTextImage = i18n ("&Image");
+        QString menuBarItemTextSelection = i18n ("Select&ion");
+
+        const QString menuBarItemText = mBar->text (id);
+        if (menuBarItemText == menuBarItemTextImage ||
+            menuBarItemText == menuBarItemTextSelection)
+        {
+            if (isSelectionEnabled)
+                mBar->changeItem (id, menuBarItemTextSelection);
+            else
+                mBar->changeItem (id, menuBarItemTextImage);
+
+            break;
+        }
+    }
+
+
+    // (any action other than Image/Crop will do)
+    bool imageMenuDocumentActionsEnabled = m_actionClear->isEnabled ();
+
+    // Image/Crop available only with active selection
+    m_actionCrop->setEnabled (imageMenuDocumentActionsEnabled &&
+                              isSelectionEnabled);
+}
+
+
+// public
 QColor kpMainWindow::backgroundColor () const
 {
     if (m_colorToolBar)
         return m_colorToolBar->backgroundColor ();
     else
         return QColor ();  // transparent
+}
+
+
+// public
+void kpMainWindow::addImageOrSelectionCommand (KCommand *cmd, bool actOnSelectionIfAvail)
+{
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kdDebug () << "kpMainWindow::addImageOrSelectionCommand() actOnSelectionIfAvail="
+               << actOnSelectionIfAvail
+               << endl;
+#endif
+
+    if (!m_document)
+    {
+        kdError () << "kpMainWindow::addImageOrSelectionCommand() without doc" << endl;
+        return;
+    }
+
+
+    if (m_viewManager)
+        m_viewManager->setQueueUpdates ();
+
+
+    kpSelection *sel = m_document->selection ();
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kdDebug () << "\tsel=" << sel
+               << " sel->pixmap=" << (sel ? sel->pixmap () : 0)
+               << endl;
+#endif
+    if (actOnSelectionIfAvail && sel && !sel->pixmap ())
+    {
+    #if DEBUG_KP_MAIN_WINDOW && 1
+        kdDebug () << "\tmust pull selection from doc" << endl;
+    #endif
+
+        // create selection region
+        m_commandHistory->addCommand (new kpToolSelectionCreateCommand (
+            i18n ("Create selection"),
+            *sel,
+            this),
+            false/*no exec - user already dragged out sel*/);
+
+    #if DEBUG_KP_MAIN_WINDOW && 1
+        kdDebug () << "\t\tsel=" << sel
+                << " sel->pixmap=" << (sel ? sel->pixmap () : 0)
+                << endl;
+    #endif
+
+
+        KMacroCommand *macroCmd = new KMacroCommand (cmd->name ());
+
+        macroCmd->addCommand (new kpToolSelectionPullFromDocumentCommand (
+            QString::null/*uninteresting child of macro cmd*/,
+            this));
+
+        macroCmd->addCommand (cmd);
+
+        m_commandHistory->addCommand (macroCmd);
+
+    #if DEBUG_KP_MAIN_WINDOW && 1
+        kdDebug () << "\t\tsel=" << sel
+               << " sel->pixmap=" << (sel ? sel->pixmap () : 0)
+               << endl;
+    #endif
+    }
+    else
+    {
+    #if DEBUG_KP_MAIN_WINDOW && 1
+        kdDebug () << "\tjust add cmd" << endl;
+    #endif
+
+        m_commandHistory->addCommand (cmd);
+    }
+
+
+    if (m_viewManager)
+        m_viewManager->restoreQueueUpdates ();
 }
 
 // private slot
@@ -121,11 +246,12 @@ void kpMainWindow::slotResizeScale ()
 
     if (dialog->exec () && !dialog->isNoop ())
     {
-        m_commandHistory->addCommand (
-            new kpToolResizeScaleCommand (m_document, m_viewManager,
-                                          dialog->imageWidth (), dialog->imageHeight (),
-                                          dialog->scaleToFit (),
-                                          backgroundColor ()));
+        addImageOrSelectionCommand (
+            new kpToolResizeScaleCommand (
+                m_document->selection (),
+                dialog->imageWidth (), dialog->imageHeight (),
+                dialog->scaleToFit (),
+                this));
     }
 }
 
@@ -134,6 +260,41 @@ void kpMainWindow::slotCrop ()
 {
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
+
+    if (!m_document || !m_document->selection ())
+    {
+        kdError () << "kpMainWindow::slotCrop() doc=" << m_document
+                   << " sel=" << (m_document ? m_document->selection () : 0)
+                   << endl;
+        return;
+    }
+
+    kpSelection *sel = m_document->selection ();
+
+
+    KMacroCommand *macroCmd = new KMacroCommand (i18n ("Crop outside the selection"));
+
+    macroCmd->addCommand (
+        new kpToolResizeScaleCommand (
+            false/*act on doc, not sel*/,
+            sel->width (), sel->height (),
+            false/*resize, not scale*/,
+            this));
+
+    macroCmd->addCommand (
+        new kpToolClearCommand (
+            false/*act on doc, not sel*/,
+            this));
+
+    kpToolSelectionMoveCommand *moveCmd =
+        new kpToolSelectionMoveCommand (
+            QString::null/*uninteresting child of macro cmd*/,
+            this);
+    moveCmd->moveTo (QPoint (0, 0), true/*move on exec, not now*/);
+    moveCmd->finalize ();
+    macroCmd->addCommand (moveCmd);
+
+    addImageOrSelectionCommand (macroCmd);
 }
 
 // private slot
@@ -141,8 +302,8 @@ void kpMainWindow::slotAutoCrop ()
 {
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
-        
-    kpToolAutoCrop (this);
+
+    ::kpToolAutoCrop (this);
 }
 
 // private slot
@@ -150,14 +311,15 @@ void kpMainWindow::slotFlip ()
 {
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
-    
+
     kpToolFlipDialog *dialog = new kpToolFlipDialog (this);
 
     if (dialog->exec () && !dialog->isNoopFlip ())
     {
-        m_commandHistory->addCommand (
-            new kpToolFlipCommand (m_document, m_viewManager,
-                                   dialog->getHorizontalFlip (), dialog->getVerticalFlip ()));
+        addImageOrSelectionCommand (
+            new kpToolFlipCommand (m_document->selection (),
+                                   dialog->getHorizontalFlip (), dialog->getVerticalFlip (),
+                                   this));
     }
 }
 
@@ -171,10 +333,10 @@ void kpMainWindow::slotRotate ()
 
     if (dialog->exec () && !dialog->isNoopRotate ())
     {
-        m_commandHistory->addCommand (
-            new kpToolRotateCommand (m_document, m_viewManager,
+        addImageOrSelectionCommand (
+            new kpToolRotateCommand (m_document->selection (),
                                      dialog->angle (),
-                                     backgroundColor ()));
+                                     this));
     }
 }
 
@@ -188,10 +350,10 @@ void kpMainWindow::slotSkew ()
 
     if (dialog->exec () && !dialog->isNoop ())
     {
-        m_commandHistory->addCommand (
-            new kpToolSkewCommand (m_document, m_viewManager,
+        addImageOrSelectionCommand (
+            new kpToolSkewCommand (m_document->selection (),
                                    dialog->horizontalAngle (), dialog->verticalAngle (),
-                                   backgroundColor ()));
+                                   this));
     }
 }
 
@@ -201,8 +363,8 @@ void kpMainWindow::slotConvertToBlackAndWhite ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    m_commandHistory->addCommand (
-        new kpToolConvertToBlackAndWhiteCommand (m_document, m_viewManager));
+    addImageOrSelectionCommand (
+        new kpToolConvertToBlackAndWhiteCommand (m_document->selection (), this));
 }
 
 // private slot
@@ -211,8 +373,8 @@ void kpMainWindow::slotConvertToGrayscale ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    m_commandHistory->addCommand (
-        new kpToolConvertToGrayscaleCommand (m_document, m_viewManager));
+    addImageOrSelectionCommand (
+        new kpToolConvertToGrayscaleCommand (m_document->selection (), this));
 }
 
 // private slot
@@ -221,27 +383,26 @@ void kpMainWindow::slotInvertColors ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    m_commandHistory->addCommand (
-        new kpToolInvertColorsCommand (m_document, m_viewManager));
+    addImageOrSelectionCommand (
+        new kpToolInvertColorsCommand (m_document->selection (), this));
 }
 
 // private slot
 void kpMainWindow::slotClear ()
 {
-#if DEBUG_KPMAINWINDOW && 1
+#if DEBUG_KP_MAIN_WINDOW && 1
     kdDebug () << "toolHasBegunShape: " << toolHasBegunShape () << endl;
 #endif
-    
+
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotClear ()" << endl;
-    kdDebug () << "\ttoolHasBegunShape now: " << toolHasBegunShape () << endl;
 #endif
 
-    m_commandHistory->addCommand (
-        new kpToolClearCommand (m_document, m_viewManager,
-                                backgroundColor ()));
+    addImageOrSelectionCommand (
+        new kpToolClearCommand (m_document->selection (), this));
 }
+
 

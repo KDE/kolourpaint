@@ -51,6 +51,7 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
+#include <kpselection.h>
 #include <kptool.h>
 #include <kptoolpen.h>
 #include <kpview.h>
@@ -571,10 +572,150 @@ void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRec
 }
 
 // private
+void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
+{
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView::paintEventDrawSelection() docRect=" << docRect << endl;
+#endif
+
+    kpDocument *doc = document ();
+    if (!doc)
+    {
+    #if DEBUG_KP_VIEW && 1
+        kdDebug () << "\tno doc - abort" << endl;
+    #endif
+        return;
+    }
+
+    kpSelection *sel = doc->selection ();
+    if (!sel)
+    {
+    #if DEBUG_KP_VIEW && 1
+        kdDebug () << "\tno sel - abort" << endl;
+    #endif
+        return;
+    }
+
+
+    //
+    // Draw selection pixmap (if there is one)
+    //
+
+    if (sel->pixmap () && !sel->pixmap ()->isNull ())
+    {
+    #if DEBUG_KP_VIEW && 1
+        kdDebug () << "\tdraw sel pixmap @ " << sel->topLeft () << endl;
+    #endif
+        kpPixmapFX::paintPixmapAt (destPixmap,
+                                   sel->topLeft () - docRect.topLeft (),
+                                   *sel->pixmap ());
+    }
+
+
+    //
+    // Draw selection border
+    //
+
+    kpViewManager *vm = viewManager ();
+    if (vm->selectionBorderVisible ())
+    {
+        QPainter destPixmapPainter (destPixmap);
+        destPixmapPainter.setRasterOp (Qt::XorROP);
+        destPixmapPainter.setPen (QPen (Qt::white, 1, Qt::DotLine));
+
+        QBitmap maskBitmap;
+        QPainter maskBitmapPainter;
+        if (destPixmap->mask ())
+        {
+            maskBitmap = *destPixmap->mask ();
+            maskBitmapPainter.begin (&maskBitmap);
+            maskBitmapPainter.setPen (QPen (Qt::color1/*opaque*/, 1, Qt::DotLine));
+        }
+
+
+    #define PAINTER_CMD(cmd)                 \
+    {                                        \
+        destPixmapPainter . cmd;             \
+        if (maskBitmapPainter.isActive ())   \
+            maskBitmapPainter . cmd;         \
+    }
+
+        QRect boundingRect = sel->boundingRect ();
+        if (boundingRect.topLeft () != boundingRect.bottomRight ())
+        {
+            switch (sel->type ())
+            {
+            case kpSelection::Rectangle:
+            #if DEBUG_KP_VIEW && 1
+                kdDebug () << "\tselection border = rectangle" << endl;
+                kdDebug () << "\t\tx=" << boundingRect.x () - docRect.x ()
+                           << " y=" << boundingRect.y () - docRect.y ()
+                           << " w=" << boundingRect.width ()
+                           << " h=" << boundingRect.height ()
+                           << endl;
+            #endif
+                PAINTER_CMD (drawRect (boundingRect.x () - docRect.x (),
+                                       boundingRect.y () - docRect.y (),
+                                       boundingRect.width (),
+                                       boundingRect.height ()));
+                break;
+
+            case kpSelection::Ellipse:
+            #if DEBUG_KP_VIEW && 1
+                kdDebug () << "\tselection border = ellipse" << endl;
+            #endif
+                PAINTER_CMD (drawEllipse (boundingRect.x () - docRect.x (),
+                                          boundingRect.y () - docRect.y (),
+                                          boundingRect.width (),
+                                          boundingRect.height ()));
+                break;
+
+            case kpSelection::Points:
+            {
+            #if DEBUG_KP_VIEW
+                kdDebug () << "\tselection border = freeForm" << endl;
+            #endif
+                QPointArray points = sel->points ();
+                points.detach ();
+                points.translate (-docRect.x (), -docRect.y ());
+                if (vm->selectionBorderFinished ())
+                {
+                    PAINTER_CMD (drawPolygon (points));
+                }
+                else
+                {
+                    PAINTER_CMD (drawPolyline (points));
+                }
+
+                break;
+            }
+
+            default:
+                break;
+            }
+        }
+        else
+        {
+            // SYNC: Work around Qt bug: can't draw 1x1 rectangle
+            PAINTER_CMD (drawPoint (boundingRect.topLeft () - docRect.topLeft ()));
+        }
+
+    #undef PAINTER_CMD
+
+        destPixmapPainter.end ();
+        if (maskBitmapPainter.isActive ())
+            maskBitmapPainter.end ();
+
+        destPixmap->setMask (maskBitmap);
+    }
+}
+
+// private
 void kpView::paintEventDrawTempPixmap (QPixmap *destPixmap, const QRect &docRect)
 {
     kpViewManager *vm = viewManager ();
-    if (!vm) return;
+    if (!vm)
+        return;
 
     QRect tempPixmapRect = vm->tempPixmapRect ();
     QPixmap tempPixmap = vm->tempPixmap ();
@@ -590,58 +731,6 @@ void kpView::paintEventDrawTempPixmap (QPixmap *destPixmap, const QRect &docRect
     else
         kpPixmapFX::setPixmapAt (PARAMS);
 #undef PARAMS
-
-
-    //
-    // Draw selection border
-    //
-
-    if (vm->selectionActive ())
-    {
-        QPainter destPixmapPainter (destPixmap);
-
-        destPixmapPainter.setRasterOp (Qt::XorROP);
-        destPixmapPainter.setPen (QPen (Qt::white, 1, Qt::DotLine));
-
-        switch (vm->selectionBorderType ())
-        {
-        case kpViewManager::Rectangle:
-        #if DEBUG_KP_VIEW && 1
-            kdDebug () << "\tselection border = rectangle" << endl;
-            kdDebug () << "\t\tx=" << tempPixmapRect.x () - docRect.x ()
-                       << " y=" << tempPixmapRect.y () - docRect.y ()
-                       << " w=" << tempPixmapRect.width ()
-                       << " h=" << tempPixmapRect.height ()
-                       << endl;
-        #endif
-            destPixmapPainter.drawRect (tempPixmapRect.x () - docRect.x (),
-                                        tempPixmapRect.y () - docRect.y (),
-                                        tempPixmapRect.width (),
-                                        tempPixmap.height ());
-            break;
-
-        case kpViewManager::Ellipse:
-        #if DEBUG_KP_VIEW && 1
-            kdDebug () << "\tselection border = ellipse" << endl;
-        #endif
-            destPixmapPainter.drawEllipse (tempPixmapRect.x () - docRect.x (),
-                                           tempPixmapRect.y () - docRect.y (),
-                                           tempPixmapRect.width (),
-                                           tempPixmap.height ());
-            break;
-
-        case kpViewManager::FreeForm:
-        #if DEBUG_KP_VIEW
-            kdDebug () << "\tselection border = freeForm" << endl;
-        #endif
-            break;
-
-        default:
-            break;
-        }
-
-        destPixmapPainter.end ();
-    }
 }
 
 // private
@@ -807,14 +896,18 @@ void kpView::paintEvent (QPaintEvent *e)
         // Draw docPixmap + tempPixmap
         //
 
-        if (vm->tempPixmapActive () &&
+        if (doc->selection ())
+        {
+            paintEventDrawSelection (&docPixmap, docRect);
+        }
+        else if (vm->tempPixmapActive () &&
             (!vm->brushActive () || vm->shouldBrushBeDisplayed (this)) &&
             docRect.intersects (vm->tempPixmapRect ()))
         {
         #if DEBUG_KP_VIEW && 1
             kdDebug () << "\ttempPixmap: active"
                     << " rect=" << vm->tempPixmapRect ()
-                    << " sel=" << vm->selectionActive ()
+                    << " brush=" << vm->brushActive ()
                     << endl;
         #endif
             paintEventDrawTempPixmap (&docPixmap, docRect);

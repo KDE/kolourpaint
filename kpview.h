@@ -112,7 +112,7 @@ private:
     virtual void leaveEvent (QEvent *e);
     virtual void dragEnterEvent (QDragEnterEvent *);
     virtual void dragLeaveEvent (QDragLeaveEvent *);
-    
+
     kpMainWindow *m_mainWindow;
 
     bool m_autoVariableZoom;
@@ -125,6 +125,7 @@ private:
 private:
     QRect paintEventGetDocRect (const QRect &viewRect) const;
     void paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRect);
+    void paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect);
     void paintEventDrawTempPixmap (QPixmap *destPixmap, const QRect &docRect);
     void paintEventDrawGridLines (QPainter *painter, const QRect &viewRect);
 

@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -55,12 +55,14 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
+#include <kpselection.h>
 #include <kptool.h>
 #include <kpviewmanager.h>
 
 
 kpDocument::kpDocument (int w, int h, int colorDepth, kpMainWindow *mainWindow)
-    : m_oldWidth (-1), m_oldHeight (-1),
+    : m_selection (0),
+      m_oldWidth (-1), m_oldHeight (-1),
       m_colorDepth (colorDepth), m_oldColorDepth (-1),
       m_mainWindow (mainWindow),
       m_modified (false)
@@ -76,6 +78,7 @@ kpDocument::kpDocument (int w, int h, int colorDepth, kpMainWindow *mainWindow)
 kpDocument::~kpDocument ()
 {
     delete m_pixmap;
+    delete m_selection;
 }
 
 
@@ -148,10 +151,10 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
             #endif
 
                 bool warned = false;
-                
+
                 // TODO: port warnings to cut & paste (in case remote program manipulates
-                // QImage for e.g.) 
-                
+                // QImage for e.g.)
+
                 if (!warned && image.hasAlphaBuffer ())
                 {
                     // SYNC: remove 1.0 reference after impl transparency
@@ -169,7 +172,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
                         "DoNotAskAgain_OpenLossOfColorAndOpacity") != KMessageBox::Continue);
                     warned = true;
                 }
-                
+
                 if (!warned && image.depth () > QColor::numBitPlanes ())
                 {
                     errorOccurred = (KMessageBox::warningContinueCancel (m_mainWindow,
@@ -186,12 +189,12 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
                         "DoNotAskAgain_OpenLossOfColor") != KMessageBox::Continue);
                     warned = true;
                 }
-                
+
                 if (!errorOccurred)
                 {
                     QPixmap *newPixmap = new QPixmap ();
                     *newPixmap = kpPixmapFX::convertToPixmap (image, true/*pretty*/);
-                    
+
                     if (newPixmap->isNull ())
                     {
                         kdError () << "could not convert from QImage" << endl;
@@ -206,23 +209,23 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
                                    << " hasAlphaChannel=" << newPixmap->hasAlphaChannel ()
                                    << endl;
                     #endif
-                    
+
                         KIO::NetAccess::removeTempFile (tempFile);
-        
+
                         delete m_pixmap;
                         m_pixmap = newPixmap;
-        
+
                         m_url = url;
                         m_mimetype = mimetype;
                         m_modified = false;
-        
+
                         emit documentOpened ();
                         return true;
                     }
                 }
             }
         }
-        
+
         // --- if we are here, the file format was unrecognised --- //
 
         KIO::NetAccess::removeTempFile (tempFile);
@@ -325,6 +328,7 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
 #if DEBUG_KP_DOCUMENT
     kdDebug () << "\tmimetype=" << mimetype << " type=" << type << endl;
 #endif
+    // TODO: define transparent pixels
     if (!pixmapWithSelection ().save (filename, type.latin1 ()))
     {
         KMessageBox::error (m_mainWindow,
@@ -416,9 +420,12 @@ bool kpDocument::isEmpty () const
     return url ().isEmpty () && !isModified ();
 }
 
-int kpDocument::width () const
+int kpDocument::width (bool ofSelection) const
 {
-    return m_pixmap->width ();
+    if (ofSelection && m_selection)
+        return m_selection->width ();
+    else
+        return m_pixmap->width ();
 }
 
 int kpDocument::oldWidth () const
@@ -431,9 +438,12 @@ void kpDocument::setWidth (int w, const QColor &backgroundColor)
     resize (w, height (), backgroundColor);
 }
 
-int kpDocument::height () const
+int kpDocument::height (bool ofSelection) const
 {
-    return m_pixmap->height ();
+    if (ofSelection && m_selection)
+        return m_selection->height ();
+    else
+        return m_pixmap->height ();
 }
 
 int kpDocument::oldHeight () const
@@ -446,9 +456,12 @@ void kpDocument::setHeight (int h, const QColor &backgroundColor)
     resize (width (), h, backgroundColor);
 }
 
-QRect kpDocument::rect () const
+QRect kpDocument::rect (bool ofSelection) const
 {
-    return m_pixmap->rect ();
+    if (ofSelection && m_selection)
+        return m_selection->boundingRect ();
+    else
+        return m_pixmap->rect ();
 }
 
 int kpDocument::colorDepth () const
@@ -507,9 +520,17 @@ void kpDocument::paintPixmapAt (const QPixmap &pixmap, const QPoint &at)
 
 
 // public
-QPixmap *kpDocument::pixmap () const
+QPixmap *kpDocument::pixmap (bool ofSelection) const
 {
-    return m_pixmap;
+    if (ofSelection)
+    {
+        if (m_selection && m_selection->pixmap ())
+            return m_selection->pixmap ();
+        else
+            return 0;
+    }
+    else
+        return m_pixmap;
 }
 
 // public
@@ -525,6 +546,325 @@ void kpDocument::setPixmap (const QPixmap &pixmap)
         slotSizeChanged (width (), height ());
 }
 
+// public
+void kpDocument::setPixmap (bool ofSelection, const QPixmap &pixmap)
+{
+    if (ofSelection)
+    {
+        if (!m_selection)
+        {
+            kdError () << "kpDocument::setPixmap(ofSelection=true) without sel" << endl;
+            return;
+        }
+
+        m_selection->setPixmap (pixmap);
+    }
+    else
+        setPixmap (pixmap);
+}
+
+
+// public
+kpSelection *kpDocument::selection () const
+{
+    return m_selection;
+}
+
+// public
+void kpDocument::setSelection (const kpSelection &selection)
+{
+    kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
+    if (vm)
+        vm->setQueueUpdates ();
+
+    bool hadSelection = (bool) m_selection;
+
+
+    if (m_mainWindow)
+    {
+        // Switch to the appropriately shaped selection tool
+        // _before_ we change the selection
+        // (all selection tool's ::end() functions nuke the current selection)
+        switch (selection.type ())
+        {
+        case kpSelection::Rectangle:
+            m_mainWindow->slotToolRectSelection ();
+            break;
+        case kpSelection::Ellipse:
+            m_mainWindow->slotToolEllipticalSelection ();
+            break;
+        case kpSelection::Points:
+            m_mainWindow->slotToolFreeFormSelection ();
+            break;
+        default:
+            break;
+        }
+    }
+
+
+    if (m_selection)
+    {
+        if (m_selection->pixmap ())
+            slotContentsChanged (m_selection->boundingRect ());
+        else
+            vm->updateViews (m_selection->boundingRect ());
+        delete m_selection;
+    }
+
+    m_selection = new kpSelection (selection);
+    if (m_selection->pixmap ())
+        slotContentsChanged (m_selection->boundingRect ());
+    else
+        vm->updateViews (m_selection->boundingRect ());
+
+    connect (m_selection, SIGNAL (changed (const QRect &)),
+             this, SLOT (slotContentsChanged (const QRect &)));
+
+
+    if (!hadSelection)
+        emit selectionEnabled (true);
+
+    if (vm)
+        vm->restoreQueueUpdates ();
+}
+
+// public
+QPixmap kpDocument::selectionGetMask () const
+{
+    kpSelection *sel = selection ();
+
+    // must have a selection region
+    if (!sel)
+    {
+        kdError () << "kpDocument::selectionGetMask() no sel region" << endl;
+        return QPixmap ();
+    }
+
+    const QRect boundingRect = sel->boundingRect ();
+    if (!boundingRect.isValid ())
+    {
+        kdError () << "kpDocument::selectionGetMask() boundingRect invalid" << endl;
+        return QPixmap ();
+    }
+
+
+    QBitmap maskBitmap (boundingRect.width (), boundingRect.height ());
+    if (sel->type () == kpSelection::Rectangle)
+    {
+        maskBitmap.fill (Qt::color1/*opaque*/);
+        return maskBitmap;
+    }
+
+
+    maskBitmap.fill (Qt::color0/*transparent*/);
+
+    QPainter painter;
+    painter.begin (&maskBitmap);
+    painter.setPen (Qt::color1)/*opaque*/;
+    painter.setBrush (Qt::color1/*opaque*/);
+
+    if (sel->type () == kpSelection::Ellipse)
+        painter.drawEllipse (0, 0, boundingRect.width (), boundingRect.height ());
+    else if (sel->type () == kpSelection::Points)
+    {
+        QPointArray points = sel->points ();
+        points.detach ();
+        points.translate (-boundingRect.x (), -boundingRect.y ());
+
+        painter.drawPolygon (points, false/*even-odd algo*/);
+    }
+
+    painter.end ();
+
+
+    return maskBitmap;
+}
+
+// public
+QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
+{
+    kpSelection *sel = selection ();
+
+    // must have a selection region
+    if (!sel)
+    {
+        kdError () << "kpDocument::getSelectedPixmap() no sel region" << endl;
+        return QPixmap ();
+    }
+
+    // easy if we already have it :)
+    if (sel->pixmap ())
+        return *sel->pixmap ();
+
+
+    const QRect boundingRect = sel->boundingRect ();
+    if (!boundingRect.isValid ())
+    {
+        kdError () << "kpDocument::getSelectedPixmap() boundingRect invalid" << endl;
+        return QPixmap ();
+    }
+
+
+    QBitmap maskBitmap = maskBitmap_;
+    if (sel->type () != kpSelection::Rectangle &&
+        maskBitmap.isNull ())
+    {
+        maskBitmap = selectionGetMask ();
+
+        if (maskBitmap.isNull ())
+        {
+            kdError () << "kpDocument::getSelectedPixmap() could not get mask" << endl;
+            return QPixmap ();
+        }
+    }
+
+
+    QPixmap selPixmap = getPixmapAt (boundingRect);
+
+    if (!maskBitmap.isNull ())
+    {
+        // Src Dest = Result
+        // -----------------
+        //  0   0       0
+        //  0   1       0
+        //  1   0       0
+        //  1   1       1
+        QBitmap selMaskBitmap = kpPixmapFX::getNonNullMask (selPixmap);
+        bitBlt (&selMaskBitmap,
+                QPoint (0, 0),
+                &maskBitmap,
+                QRect (0, 0, maskBitmap.width (), maskBitmap.height ()),
+                Qt::AndROP);
+        selPixmap.setMask (selMaskBitmap);
+    }
+
+    return selPixmap;
+}
+
+// public
+bool kpDocument::selectionPullFromDocument (const QColor &backgroundColor)
+{
+    kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
+
+    kpSelection *sel = selection ();
+
+    // must have a selection region
+    if (!sel)
+    {
+        kdError () << "kpDocument::selectionPullFromDocument() no sel region" << endl;
+        return false;
+    }
+
+    // should not already have a pixmap
+    if (sel->pixmap ())
+    {
+        kdError () << "kpDocument::selectionPullFromDocument() already has pixmap" << endl;
+        return false;
+    }
+
+    const QRect boundingRect = sel->boundingRect ();
+    if (!boundingRect.isValid ())
+    {
+        kdError () << "kpDocument::selectionPullFromDocument() boundingRect invalid" << endl;
+        return false;
+    }
+
+
+    //
+    // Figure out mask for non-rectangular selections
+    //
+
+    QBitmap maskBitmap;
+
+    if (sel->type () == kpSelection::Ellipse || sel->type () == kpSelection::Points)
+        maskBitmap = selectionGetMask ();
+
+
+    //
+    // Get selection pixmap from document
+    //
+
+    QPixmap selPixmap = getSelectedPixmap (maskBitmap);
+
+    if (vm)
+        vm->setQueueUpdates ();
+
+    sel->setPixmap (selPixmap);
+
+
+    //
+    // Fill opaque bits of the hole in the document
+    //
+
+    QPixmap erasePixmap (boundingRect.width (), boundingRect.height ());
+    erasePixmap.fill (backgroundColor);
+
+    if (selPixmap.mask ())
+        erasePixmap.setMask (*selPixmap.mask ());
+
+    paintPixmapAt (erasePixmap, boundingRect.topLeft ());
+
+    if (vm)
+        vm->restoreQueueUpdates ();
+
+    return true;
+}
+
+// public
+bool kpDocument::selectionDelete ()
+{
+    kpSelection *sel = selection ();
+
+    if (!sel)
+        return false;
+
+    const QRect boundingRect = sel->boundingRect ();
+    if (!boundingRect.isValid ())
+        return false;
+
+    bool selectionHadPixmap = m_selection ? (bool) m_selection->pixmap () : false;
+
+    delete m_selection;
+    m_selection = 0;
+
+    // HACK to prevent document from being modified when
+    //      user cancels dragging out a new selection
+    if (selectionHadPixmap)
+        slotContentsChanged (boundingRect);
+    else
+        emit contentsChanged (boundingRect);
+
+    emit selectionEnabled (false);
+
+    return true;
+}
+
+// public
+bool kpDocument::selectionCopyOntoDocument ()
+{
+    kpSelection *sel = selection ();
+
+    // must have a pixmap already
+    if (!sel)
+        return false;
+
+    // hasn't actually been lifted yet
+    if (!sel->pixmap ())
+        return true;
+
+    const QRect boundingRect = sel->boundingRect ();
+    if (!boundingRect.isValid ())
+        return false;
+
+    paintPixmapAt (*sel->pixmap (), boundingRect.topLeft ());
+    return true;
+}
+
+// public
+bool kpDocument::selectionPushOntoDocument ()
+{
+    return (selectionCopyOntoDocument () && selectionDelete ());
+}
 
 // public
 QPixmap kpDocument::pixmapWithSelection () const
@@ -533,19 +873,16 @@ QPixmap kpDocument::pixmapWithSelection () const
     kdDebug () << "kpDocument::pixmapWithSelection()" << endl;
 #endif
 
-    kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
-
-    if (vm && vm->selectionActive ())
+    if (m_selection && m_selection->pixmap ())
     {
     #if DEBUG_KP_DOCUMENT && 1
-        kdDebug () << "\tselection @ " << vm->tempPixmapRect () << endl;
+        kdDebug () << "\tselection @ " << m_selection->boundingRect () << endl;
     #endif
         QPixmap output = *m_pixmap;
-        
-        QPainter painter (&output);
-        painter.drawPixmap (vm->tempPixmapRect (), vm->tempPixmap ());
-        painter.end ();
-        
+
+        kpPixmapFX::paintPixmapAt (&output,
+                                   m_selection->topLeft (),
+                                   *m_selection->pixmap ());
         return output;
     }
     else
@@ -568,16 +905,7 @@ void kpDocument::fill (const QColor &color)
     kdDebug () << "kpDocument::fill ()" << endl;
 #endif
 
-    if (kpTool::isColorOpaque (color))
-    {
-        m_pixmap->setMask (QBitmap ());  // no mask = opaque
-        m_pixmap->fill (color);
-    }
-    else
-    {
-        kpPixmapFX::ensureTransparentAt (m_pixmap, m_pixmap->rect ());
-    }
-
+    kpPixmapFX::fill (m_pixmap, color);
     slotContentsChanged (m_pixmap->rect ());
 }
 
@@ -598,381 +926,9 @@ void kpDocument::resize (int w, int h, const QColor &backgroundColor, bool fillN
     if (w == m_oldWidth && h == m_oldHeight)
         return;
 
-#if DEBUG_KP_DOCUMENT && 1
-    kdDebug () << "\tbefore resize: hasMask=" << (bool) m_pixmap->mask () << endl;
-#endif
-    m_pixmap->resize (w, h);
-#if DEBUG_KP_DOCUMENT && 1
-    kdDebug () << "\tafter resize: hasMask=" << (bool) m_pixmap->mask () << endl;
-#endif
-
-    if (fillNewAreas && (w > m_oldWidth || h > m_oldHeight))
-    {
-    #if DEBUG_KP_DOCUMENT && 1
-        kdDebug () << "\tfilling in new areas" << endl;
-    #endif
-        QBitmap maskBitmap;
-        QPainter painter, maskPainter;
-        
-        if (kpTool::isColorOpaque (backgroundColor))
-        {
-            painter.begin (m_pixmap);
-            painter.setPen (backgroundColor);
-            painter.setBrush (backgroundColor);
-        }
-        
-        if (kpTool::isColorTransparent (backgroundColor) || m_pixmap->mask ())
-        {
-            maskBitmap = kpPixmapFX::getNonNullMask (*m_pixmap);
-            maskPainter.begin (&maskBitmap);
-            if (kpTool::isColorTransparent (backgroundColor))
-            {
-                maskPainter.setPen (Qt::color0/*transparent*/);
-                maskPainter.setBrush (Qt::color0/*transparent*/);
-            }
-            else
-            {
-                maskPainter.setPen (Qt::color1/*opaque*/);
-                maskPainter.setBrush (Qt::color1/*opaque*/);
-            }
-        }
-
-    #define PAINTER_CALL(cmd)         \
-    {                                 \
-        if (painter.isActive ())      \
-            painter . cmd ;           \
-                                      \
-        if (maskPainter.isActive ())  \
-            maskPainter . cmd ;       \
-    }
-        if (w > m_oldWidth)
-            PAINTER_CALL (drawRect (m_oldWidth, 0, w - m_oldWidth, m_oldHeight));
-
-        if (h > m_oldHeight)
-            PAINTER_CALL (drawRect (0, m_oldHeight, w, h - m_oldHeight));
-    #undef PAINTER_CALL
-
-        if (maskPainter.isActive ())
-            maskPainter.end ();
-
-        if (painter.isActive ())
-            painter.end ();
-
-        if (!maskBitmap.isNull ())
-            m_pixmap->setMask (maskBitmap);
-    }
+    kpPixmapFX::resize (m_pixmap, w, h, backgroundColor, fillNewAreas);
 
     slotSizeChanged (width (), height ());
-}
-
-bool kpDocument::scale (int w, int h)
-{
-#if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::scale (" << w << "," << h << ")" << endl;
-#endif
-
-    m_oldWidth = width (), m_oldHeight = height ();
-
-    if (w == m_oldWidth && h == m_oldHeight)
-        return true;
-
-#if 0  // slow but smooth, requiring change to QImage (like QPixmap::xForm()?)
-    QImage image = (kpPixmapFX::convertToImage (*m_pixmap)).smoothScale (w, h);
-
-    if (!kpPixmapFX::convertToPixmap (image, true/*pretty*/))
-    {
-        kdError () << "kpDocument::scale() could not convertToPixmap()" << endl;
-        return false;
-    }
-#else
-    QWMatrix matrix;
-    matrix.scale (double (w) / double (width ()), double (h) / double (height ()));
-    
-    QPixmap newPixmap = m_pixmap->xForm (matrix);
-
-    *m_pixmap = newPixmap;
-#endif
-
-    slotSizeChanged (width (), height ());
-    return true;
-}
-
-bool kpDocument::skew (double hangle, double vangle, const QColor &backgroundColor)
-{
-#if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::skew (" << hangle << "," << vangle << ")" << endl;
-#endif
-
-    if (hangle == 0 && vangle == 0)
-        return true;  // no-op
-
-    // make sure -90 < hangle/vangle < 90 degrees:
-    // if (abs (hangle) >= 90 || abs (vangle) >= 90) {
-    if (90 - fabs (hangle) < KP_EPSILON || 90 - fabs (vangle) < KP_EPSILON)
-    {
-        kdError () << "kpDocument::skew() passed hangle and/or vangle out of range (-90 < x < 90)" << endl;
-        return false;
-    }
-
-    m_oldWidth = width (), m_oldHeight = height ();
-
-    /* Diagram for completeness :)
-     *
-     *       |---------- w ----------|
-     *     (0,0)
-     *  _     _______________________ (w,0)
-     *  |    |\~_ va                 |
-     *  |    | \ ~_                  |
-     *  |    |ha\  ~__               |
-     *       |   \    ~__            | dy
-     *  h    |    \      ~___        |
-     *       |     \         ~___    |
-     *  |    |      \            ~___| (w,w*tan(va)=dy)
-     *  |    |       \         *     \
-     *  _    |________\________|_____|\                                     vertical shear factor
-     *     (0,h) dx   ^~_      |       \                                             |
-     *                |  ~_    \________\________ General Point (x,y)                V
-     *                |    ~__           \        Skewed Point (x + y*tan(ha),y + x*tan(va))
-     *      (h*tan(ha)=dx,h)  ~__         \                             ^
-     *                           ~___      \                            |
-     *                               ~___   \                   horizontal shear factor
-     *   Key:                            ~___\
-     *    ha = hangle                         (w + h*tan(ha)=w+dx,h + w*tan(va)=w+dy)
-     *    va = vangle
-     *
-     * Skewing really just twists a rectangle into a parallelogram.
-     *
-     */
-
-    //QWMatrix matrix (1, tan (KP_DEGREES_TO_RADIANS (vangle)), tan (KP_DEGREES_TO_RADIANS (hangle)), 1, 0, 0);
-    // I think this is clearer than above :)
-    QWMatrix matrix;
-    matrix.shear (tan (KP_DEGREES_TO_RADIANS (hangle)),
-                  tan (KP_DEGREES_TO_RADIANS (vangle)));
-
-    QRect newRect = matrix.mapRect (rect ());
-#if DEBUG_KP_DOCUMENT
-    kdDebug () << "\tnewRect=" << newRect << endl;
-#endif
-
-    QWMatrix translatedMatrix (matrix.m11 (), matrix.m12 (), matrix.m21 (), matrix.m22 (),
-                               -newRect.left (), -newRect.top ());
-
-    QPixmap newPixmap (newRect.width (), newRect.height ());
-    QBitmap newBitmapMask;
-
-    if (kpTool::isColorOpaque (backgroundColor))
-        newPixmap.fill (backgroundColor);
-        
-    if (kpTool::isColorTransparent (backgroundColor) || m_pixmap->mask ())
-    {
-        newBitmapMask.resize (newRect.width (), newRect.height ());
-        newBitmapMask.fill (kpTool::isColorTransparent (backgroundColor)
-                                ?
-                            Qt::color0/*transparent*/
-                                :
-                            Qt::color1/*opaque*/);
-    }
-    
-    QPainter painter (&newPixmap);
-#if DEBUG_KP_DOCUMENT && 1
-    kdDebug () << "\tmatrix: m11=" << matrix.m11 ()
-            << " m12=" << matrix.m12 ()
-            << " m21=" << matrix.m21 ()
-            << " m22=" << matrix.m22 ()
-            << " dx=" << matrix.dx ()
-            << " dy=" << matrix.dy ()
-            << endl;
-#endif
-    painter.setWorldMatrix (translatedMatrix);
-#if DEBUG_KP_DOCUMENT && 1
-    kdDebug () << "\ttranslate top=" << painter.xForm (QPoint (0, 0)) << endl;
-    kdDebug () << "\tmatrix: m11=" << painter.worldMatrix ().m11 ()
-               << " m12=" << painter.worldMatrix ().m12 ()
-               << " m21=" << painter.worldMatrix ().m21 ()
-               << " m22=" << painter.worldMatrix ().m22 ()
-               << " dx=" << painter.worldMatrix ().dx ()
-               << " dy=" << painter.worldMatrix ().dy ()
-               << endl;
-#endif
-    painter.drawPixmap (QPoint (0, 0), *m_pixmap);
-    painter.end ();
-    
-    if (!newBitmapMask.isNull ())
-    {
-        QPainter maskPainter (&newBitmapMask);
-        maskPainter.setWorldMatrix (translatedMatrix);
-        maskPainter.drawPixmap (QPoint (0, 0), kpPixmapFX::getNonNullMask (*m_pixmap));
-        maskPainter.end ();
-        newPixmap.setMask (newBitmapMask);
-    }
-    
-    setPixmap (newPixmap);
-
-    return true;
-}
-
-bool kpDocument::flip (bool horz, bool vert)
-{
-    if (!horz && !vert)
-        return true;
-
-    QImage image = (kpPixmapFX::convertToImage (*m_pixmap)).mirror (horz, vert);
-    *m_pixmap = kpPixmapFX::convertToPixmap (image);
-
-    slotContentsChanged (m_pixmap->rect ());
-    return true;
-}
-
-bool kpDocument::rotate (double angle, const QColor &backgroundColor)
-{
-#if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::rotate (" << angle << ") rect=" << rect () << endl;
-#endif
-
-    if (angle == 0) return true;
-
-    if (angle < 0 || angle >= 360)
-    {
-        kdError () << "kpDocument::rotate() passed angle ! >= 0 && < 360" << endl;
-        return false;
-    }
-
-    if (isLosslessRotation (angle))
-    {
-        QPixmap newPixmap;
-        
-        QWMatrix matrix;
-        matrix.rotate (angle);
-        
-        newPixmap = m_pixmap->xForm (matrix);
-            
-        setPixmap (newPixmap);
-    }
-    else
-    {
-        QWMatrix matrix;
-        matrix.rotate (angle);  //360.0 - angle);  // TODO: not counterclockwise???
-        
-        // calculate size of new pixmap (allowing for rounding error)
-        QRect newRect = matrix.mapRect (rect ());
-        newRect = QRect (0, 0, newRect.width () + 4, newRect.height () + 4);    
-    #if DEBUG_KP_DOCUMENT
-        kdDebug () << "\tnewRect=" << newRect << endl;
-    #endif
-    
-        // recalculate matrix - this time rotating old pixmap centred at the
-        // middle of the new (probably bigger) pixmap
-        matrix.reset ();
-        matrix.translate (newRect.width () / 2, newRect.height () / 2);
-        matrix.rotate (angle);
-        matrix.translate (-newRect.width () / 2, -newRect.height () / 2);
-
-        QRect srcRect ((newRect.width () - m_pixmap->width ()) / 2,
-                       (newRect.height () - m_pixmap->height ()) / 2,
-                       m_pixmap->width (),
-                       m_pixmap->height ());
-        
-        QPixmap newPixmap (newRect.width (), newRect.height ());
-        QBitmap newBitmapMask;
-    
-        if (kpTool::isColorOpaque (backgroundColor))
-            newPixmap.fill (backgroundColor);
-            
-        if (kpTool::isColorTransparent (backgroundColor) || m_pixmap->mask ())
-        {
-            newBitmapMask.resize (newRect.width (), newRect.height ());
-            newBitmapMask.fill (kpTool::isColorTransparent (backgroundColor)
-                                    ?
-                                Qt::color0/*transparent*/
-                                    :
-                                Qt::color1/*opaque*/);
-        }
-    
-        QPoint drawPoint = srcRect.topLeft ();
-    
-        QPainter painter (&newPixmap);
-        painter.setWorldMatrix (matrix);
-    #if DEBUG_KP_DOCUMENT
-        kdDebug () << "\tsrcRect=" << srcRect << endl;
-    #endif
-        QRect destRect = painter.xForm (srcRect);
-    #if DEBUG_KP_DOCUMENT
-        kdDebug () << "\tdestRect=" << destRect << endl;
-    #endif
-
-        painter.drawPixmap (drawPoint, *m_pixmap);
-        painter.end ();
-    
-        if (!newBitmapMask.isNull ())
-        {
-            QPainter maskPainter (&newBitmapMask);
-            maskPainter.setWorldMatrix (matrix);
-            maskPainter.drawPixmap (drawPoint, kpPixmapFX::getNonNullMask (*m_pixmap));
-            maskPainter.end ();
-            newPixmap.setMask (newBitmapMask);
-        }
-    
-        // get rid of extra border (that allowed for rounding errors)
-        setPixmap (kpPixmapFX::getPixmapAt (newPixmap, destRect));
-    }
-
-    return true;
-}
-
-// static
-bool kpDocument::isLosslessRotation (double angle)
-{
-    return (qRound (angle) % 90 == 0);
-}
-
-static QRgb toGray (QRgb rgb)
-{
-    // naive way that doesn't preserve brightness
-    // int gray = (qRed (rgb) + qGreen (rgb) + qBlue (rgb)) / 3;
-            
-    // over-exaggerates red & blue
-    // int gray = qGray (rgb);
-
-    int gray = (212671 * qRed (rgb) + 715160 * qGreen (rgb) + 72169 * qBlue (rgb)) / 1000000;
-    return qRgba (gray, gray, gray, qAlpha (rgb));
-}
-
-bool kpDocument::convertToGrayscale ()
-{
-    QImage image = kpPixmapFX::convertToImage (*m_pixmap);
-
-    if (image.depth () > 8)
-    {
-        // hmm, why not just write to the pixmap directly???
-
-        for (int y = 0; y < image.height (); y++)
-        {
-            for (int x = 0; x < image.width (); x++)
-            {
-                image.setPixel (x, y, toGray (image.pixel (x, y)));
-            }
-        }
-    }
-    else
-    {
-        // 1- & 8- bit images use a color table
-        for (int i = 0; i < image.numColors (); i++)
-            image.setColor (i, toGray (image.color (i)));
-    }
-
-    *m_pixmap = kpPixmapFX::convertToPixmap (image, true/*pretty*/);
-
-    slotContentsChanged (m_pixmap->rect ());
-    return true;
-}
-
-bool kpDocument::invertColors ()
-{
-    kpPixmapFX::invertColors (m_pixmap);
-
-    slotContentsChanged (m_pixmap->rect ());
-    return true;
 }
 
 

@@ -248,7 +248,7 @@ bool kpMainWindow::saveAs (bool localOnly)
     }
 
     KURL url = m_document->url ();
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::saveAs URL=" << url << endl;
 #endif
     KFileDialog fd (url.url (), QString::null, this, "fd", true/*modal*/);
@@ -277,7 +277,7 @@ bool kpMainWindow::saveAs (bool localOnly)
             defaultMimeType = mimeTypes.first ();
     }
 
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "mimeTypes=" << mimeTypes << endl;
 #endif
     fd.setMimeFilter (mimeTypes, defaultMimeType);
@@ -304,7 +304,7 @@ bool kpMainWindow::saveAs (bool localOnly)
     }
     else
     {
-    #if DEBUG_KPMAINWINDOW
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "fd aborted" << endl;
     #endif
         return false;
@@ -351,7 +351,7 @@ bool kpMainWindow::slotReload ()
 
     KURL oldURL = m_document->url ();
 
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotReload() reloading!" << endl;
 #endif
     setDocument (0);  // make sure we don't open in a new window
@@ -514,7 +514,7 @@ void kpMainWindow::setAsWallpaper (bool centered)
     QDataStream dataStream (data, IO_WriteOnly);
 
     // write path
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::setAsWallpaper() path="
                << m_document->url ().path () << endl;
 #endif
@@ -576,7 +576,7 @@ void kpMainWindow::slotClose ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotClose()" << endl;
 #endif
 
@@ -592,7 +592,7 @@ void kpMainWindow::slotQuit ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotQuit()" << endl;
 #endif
 

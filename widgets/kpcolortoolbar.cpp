@@ -813,6 +813,12 @@ kpColorToolBar::kpColorToolBar (kpMainWindow *mainWindow, const char *name)
              m_dualColorButton, SLOT (setBackgroundColor (const QColor &)));
     m_boxLayout->addWidget (m_colorPalette, 0/*stretch*/);
 
+#if 0
+    m_colorSimilarityCube = new kpColorSimilarityCube (mainWindow, base);
+    m_colorSimilarityCube->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+    m_boxLayout->addWidget (m_colorSimilarityCube, 0/*stretch*/);
+#endif
+
     // HACK: couldn't get QSpacerItem to work
     QWidget *fakeSpacer = new QWidget (base);
     m_boxLayout->addWidget (fakeSpacer, 1/*stretch*/);

@@ -44,6 +44,7 @@
 class QGridLayout;
 class KColorButton;
 
+class kpColorSimilarityCube;
 class kpMainWindow;
 
 
@@ -220,6 +221,7 @@ private:
     QBoxLayout *m_boxLayout;
     kpDualColorButton *m_dualColorButton;
     kpColorPalette *m_colorPalette;
+    kpColorSimilarityCube *m_colorSimilarityCube;
 };
 
 #endif  // __kp_color_toolbar_h__

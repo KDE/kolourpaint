@@ -208,15 +208,29 @@ void kpTool::cancelShape ()
 void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRect,
                               bool wantEndShape)
 {
+#if DEBUG_KP_TOOL
+    kdDebug () << "kpTool::endDrawInternal() wantEndShape=" << wantEndShape << endl;
+#endif
+    
     if (wantEndShape && !hasBegunShape ())
         return;
     else if (!wantEndShape && !hasBegunDraw ())
         return;
     
     if (wantEndShape)
+    {
+    #if DEBUG_KP_TOOL
+        kdDebug () << "\tcalling endShape()" << endl;
+    #endif
         endShape (thisPoint, normalizedRect);
+    }
     else
+    {
+    #if DEBUG_KP_TOOL
+        kdDebug () << "\tcalling endDraw()" << endl;
+    #endif
         endDraw (thisPoint, normalizedRect);
+    }
     m_viewUnderStartPoint = 0;
     m_beganDraw = false;
 

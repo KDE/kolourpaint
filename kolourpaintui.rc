@@ -13,6 +13,7 @@
         <Action name="view_show_grid" />
     </Menu>
 
+    <!-- SYNC: menu text with kpMainWindow::slotImageMenuUpdateName() -->
     <Menu name="image"><text>&amp;Image</text>
         <Action name="image_crop" />
         <Action name="image_auto_crop" />

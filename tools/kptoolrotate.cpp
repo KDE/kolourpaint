@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -41,43 +41,128 @@
 
 #include <kpdefs.h>
 #include <kpdocument.h>
+#include <kpmainwindow.h>
+#include <kppixmapfx.h>
+#include <kpselection.h>
 #include <kptoolrotate.h>
+#include <kpviewmanager.h>
 
-kpToolRotateCommand::kpToolRotateCommand (kpDocument *document, kpViewManager *viewManager,
-                                          double angle, const QColor &backgroundColor)
-    : m_document (document), m_viewManager (viewManager),
-      m_angle (angle), m_backgroundColor (backgroundColor)
+
+kpToolRotateCommand::kpToolRotateCommand (bool actOnSelection,
+                                          double angle,
+                                          kpMainWindow *mainWindow)
+    : m_actOnSelection (actOnSelection),
+      m_angle (angle),
+      m_mainWindow (mainWindow),
+      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : Qt::white),
+      m_losslessRotation (kpPixmapFX::isLosslessRotation (angle))
 {
-    m_losslessRotation = kpDocument::isLosslessRotation (angle);
-
-    if (!m_losslessRotation)
-        m_oldPixmap = *document->pixmap ();
 }
 
+// public virtual [base KCommand]
 QString kpToolRotateCommand::name () const
 {
-    return i18n ("Rotate %1 degrees").arg (m_angle);
+    QString opName = i18n ("Rotate");
+
+    if (m_actOnSelection)
+        return i18n ("Selection: %1").arg (opName);
+    else
+        return opName;
 }
 
 kpToolRotateCommand::~kpToolRotateCommand ()
 {
 }
 
-void kpToolRotateCommand::execute ()
+
+// private
+kpDocument *kpToolRotateCommand::document () const
 {
-    m_document->rotate (m_angle, m_backgroundColor);
-    //m_viewManager->resizeViews (m_document->width (), m_document->height ());
-    //m_viewManager->updateViews ();
+    return m_mainWindow ? m_mainWindow->document () : 0;
 }
 
+// private
+kpViewManager *kpToolRotateCommand::viewManager () const
+{
+    return m_mainWindow ? m_mainWindow->viewManager () : 0;
+}
+
+
+// public virtual [base KCommand]
+void kpToolRotateCommand::execute ()
+{
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
+
+
+    if (!m_losslessRotation)
+        m_oldPixmap = *doc->pixmap (m_actOnSelection);
+
+
+    QPixmap newPixmap = kpPixmapFX::rotate (*doc->pixmap (m_actOnSelection),
+                                            m_angle,
+                                            m_backgroundColor);
+
+
+    if (m_actOnSelection)
+    {
+        kpViewManager *vm = viewManager ();
+        vm->setQueueUpdates ();
+
+        kpSelection *sel = doc->selection ();
+
+        m_oldTopLeft = sel->boundingRect ().topLeft ();
+        int oldWidth = sel->width ();
+        int oldHeight = sel->height ();
+        // TODO: with so many "/ 2"'s around, should use floating point
+        QPoint center = m_oldTopLeft + QPoint (oldWidth / 2, oldHeight / 2);
+
+        sel->setPixmap (newPixmap);
+        sel->moveTo (center - QPoint (newPixmap.width () / 2, newPixmap.height () / 2));
+
+        vm->restoreQueueUpdates ();
+    }
+    else
+        doc->setPixmap (newPixmap);
+}
+
+// public virtual [base KCommand]
 void kpToolRotateCommand::unexecute ()
 {
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
+
+    kpSelection *sel = doc->selection ();
+
+    kpViewManager *vm = viewManager ();
+    if (!vm)
+        return;
+
+    vm->setQueueUpdates ();
+
+
     if (!m_losslessRotation)
-        m_document->setPixmap (m_oldPixmap);
+    {
+        doc->setPixmap (m_actOnSelection, m_oldPixmap);
+    }
     else
-        m_document->rotate (360 - m_angle, m_backgroundColor);
-    //m_viewManager->resizeViews (m_document->width (), m_document->height ());
-    //m_viewManager->updateViews ();
+    {
+        QPixmap oldPixmap = kpPixmapFX::rotate (*doc->pixmap (m_actOnSelection),
+                                                360 - m_angle,
+                                                m_backgroundColor);
+        doc->setPixmap (m_actOnSelection, oldPixmap);
+    }
+
+
+    // keep centre of selection
+    if (m_actOnSelection)
+        sel->moveTo (m_oldTopLeft);
+
+
+    vm->restoreQueueUpdates ();
+    m_oldPixmap.resize (0, 0);
 }
 
 

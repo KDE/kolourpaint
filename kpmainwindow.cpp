@@ -29,7 +29,6 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_MAINWINDOW 1
 
 #include <qdragobject.h>
 #include <qpainter.h>
@@ -49,6 +48,7 @@
 #include <kpcolortoolbar.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
+#include <kppixmapfx.h>
 #include <kptool.h>
 #include <kptooltoolbar.h>
 #include <kpmainwindow.h>
@@ -236,14 +236,14 @@ void kpMainWindow::enableDocumentActions (bool enable)
 // private
 void kpMainWindow::setDocument (kpDocument *newDoc)
 {
-#if DEBUG_KP_MAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::setDocument (" << newDoc << ")" << endl;
 #endif
 
     // is it a close operation?
     if (!newDoc)
     {
-    #if DEBUG_KP_MAINWINDOW
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tdisabling actions" << endl;
     #endif
 
@@ -264,14 +264,14 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         m_actionReload->setEnabled (false);
     }
 
-#if DEBUG_KP_MAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tdestroying views" << endl;
 #endif
 
     delete m_mainView; m_mainView = 0;
     delete m_thumbnailView; m_thumbnailView = 0;
 
-#if DEBUG_KP_MAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tdestroying viewManager" << endl;
 #endif
 
@@ -283,7 +283,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 
     delete m_viewManager; m_viewManager = 0;
 
-#if DEBUG_KP_MAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tdestroying document" << endl;
     kdDebug () << "\t\tm_document=" << m_document << endl;
 #endif
@@ -295,33 +295,12 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     // not a close operation?
     if (m_document)
     {
-    #if DEBUG_KP_MAINWINDOW
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () <<"\tcreating viewManager" << endl;
     #endif
         m_viewManager = new kpViewManager (this);
 
-        // Copy/Cut/Deselect/Delete are available only when:
-        //
-        // a) there is an m_document (hence why we're here)
-        // b) the user has selected something
-        //
-        connect (m_viewManager, SIGNAL (selectionEnabled (bool)),
-                 m_actionCut, SLOT (setEnabled (bool)));
-        connect (m_viewManager, SIGNAL (selectionEnabled (bool)),
-                 m_actionCopy, SLOT (setEnabled (bool)));
-        connect (m_viewManager, SIGNAL (selectionEnabled (bool)),
-                 m_actionDelete, SLOT (setEnabled (bool)));
-        connect (m_viewManager, SIGNAL (selectionEnabled (bool)),
-                 m_actionDeselect, SLOT (setEnabled (bool)));
-
-        // this code won't actually enable any actions at this stage
-        // (fresh viewManager) but better safe than sorry
-        m_actionCopy->setEnabled (m_viewManager->selectionActive ());
-        m_actionCut->setEnabled (m_viewManager->selectionActive ());
-        m_actionDeselect->setEnabled (m_viewManager->selectionActive ());
-        m_actionDelete->setEnabled (m_viewManager->selectionActive ());
-
-    #if DEBUG_KP_MAINWINDOW
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tcreating views" << endl;
     #endif
         m_mainView = new kpView (m_scrollView->viewport (), "mainView", this,
@@ -335,7 +314,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 
     #if 0
 
-    #if DEBUG_KP_MAINWINDOW
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tcreating thumbnail view" << endl;
     #endif
 
@@ -352,11 +331,31 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         m_viewManager->registerView (m_thumbnailView);
     #endif
 
-    #if DEBUG_KP_MAINWINDOW
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\thooking up document signals" << endl;
     #endif
 
-        // status bar
+        // Copy/Cut/Deselect/Delete
+        connect (m_document, SIGNAL (selectionEnabled (bool)),
+                 m_actionCut, SLOT (setEnabled (bool)));
+        connect (m_document, SIGNAL (selectionEnabled (bool)),
+                 m_actionCopy, SLOT (setEnabled (bool)));
+        connect (m_document, SIGNAL (selectionEnabled (bool)),
+                 m_actionDelete, SLOT (setEnabled (bool)));
+        connect (m_document, SIGNAL (selectionEnabled (bool)),
+                 m_actionDeselect, SLOT (setEnabled (bool)));
+
+        // this code won't actually enable any actions at this stage
+        // (fresh document) but better safe than sorry
+        m_actionCopy->setEnabled (m_document->selection ());
+        m_actionCut->setEnabled (m_document->selection ());
+        m_actionDeselect->setEnabled (m_document->selection ());
+        m_actionDelete->setEnabled (m_document->selection ());
+
+        connect (m_document, SIGNAL (selectionEnabled (bool)),
+                 this, SLOT (slotImageMenuUpdateName ()));
+
+        // Status bar
         connect (m_document, SIGNAL (documentOpened ()),
                  this, SLOT (slotUpdateStatusBar ()));
         connect (m_document, SIGNAL (sizeChanged (int, int)),
@@ -364,7 +363,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         connect (m_document, SIGNAL (colorDepthChanged (int)),
                  this, SLOT (slotUpdateStatusBar (int)));
 
-        // caption (url, modified)
+        // Caption (url, modified)
         connect (m_document, SIGNAL (documentModified ()),
                  this, SLOT (slotUpdateCaption ()));
         connect (m_document, SIGNAL (documentOpened ()),
@@ -377,7 +376,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
                  this, SLOT (slotEnableReload ()));
         slotEnableReload ();  // will check for non-empty URL
 
-        // command history
+        // Command history
         if (m_commandHistory)
         {
             connect (m_commandHistory, SIGNAL (documentRestored ()),
@@ -391,7 +390,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
                        << endl;
         }
 
-        // sync document -> views
+        // Sync document -> views
         connect (m_document, SIGNAL (contentsChanged (const QRect &)),
                  m_viewManager, SLOT (updateViews (const QRect &)));
         connect (m_document, SIGNAL (sizeChanged (int, int)),
@@ -399,7 +398,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         connect (m_document, SIGNAL (colorDepthChanged (int)),
                  m_viewManager, SLOT (updateViews ()));
 
-    #if DEBUG_KP_MAINWINDOW
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tenabling actions" << endl;
     #endif
 
@@ -418,17 +417,18 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         enableDocumentActions (true);
     }
 
-#if DEBUG_KP_MAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tupdating mainWindow elements" << endl;
 #endif
 
+    slotImageMenuUpdateName ();
     slotUpdateStatusBar ();  // update doc size
     slotUpdateCaption ();  // Untitled to start with
 
     if (m_commandHistory)
         m_commandHistory->clear ();
 
-#if DEBUG_KP_MAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tdocument and views ready to go!" << endl;
 #endif
 }
@@ -468,16 +468,19 @@ void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
 // private virtual [base QWidget]
 void kpMainWindow::dropEvent (QDropEvent *e)
 {
-    QPixmap pixmap;
+    QImage image;
     KURL::List urls;
 
-    if (QImageDrag::decode (e, pixmap))
+    if (QImageDrag::decode (e, image/*ref*/))
     {
-        if (!pixmap.isNull ())
+        if (image.isNull ())
         {
-            m_viewManager->setTempPixmapAt (pixmap, QPoint (0, 0), kpViewManager::SelectionPixmap);
-            slotToolRectSelection ();
+            kdError () << "kpMainWindow::dropEvent() null image" << endl;
+            return;
         }
+
+        // TODO: should it be pretty?
+        paste (kpPixmapFX::convertToPixmap (image, false));
     }
     else if (KURLDrag::decode (e, urls))
     {
@@ -617,7 +620,7 @@ void kpMainWindow::slotUpdateStatusBar (int docColorDepth)
 // private slot
 void kpMainWindow::slotUpdateStatusBar (int docWidth, int docHeight, int docColorDepth)
 {
-#if DEBUG_KP_MAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotUpdateStatusBar ("
                << docWidth << "x" << docHeight << "@" << docColorDepth << endl;
 #endif

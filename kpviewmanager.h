@@ -57,31 +57,20 @@ public:
     void unregisterView (kpView *view);
     void unregisterAllViews ();
 
-    enum SelectionBorderType
-    {
-        NoBorder, Rectangle, Ellipse, FreeForm
-    };
-
-    void setSelectionBorderType (enum SelectionBorderType sb = Rectangle,
-                                 bool update = true);
-    enum SelectionBorderType selectionBorderType () const;
-
     enum TempPixmapType
     {
-        NoPixmap, NormalPixmap, SelectionPixmap, BrushPixmap
+        NoPixmap, NormalPixmap, BrushPixmap
     };
 
     // (you don't need to call invalidateTempPixmap first)
     void setTempPixmapAt (const QPixmap &pixmap, const QPoint &at,
-                          enum TempPixmapType type = NormalPixmap,
-                          enum SelectionBorderType selBorderType = NoBorder);
+                          enum TempPixmapType type = NormalPixmap);
     void invalidateTempPixmap (const bool doUpdate = true);
 
     enum TempPixmapType tempPixmapType () /*const*/;
     bool tempPixmapActive () /*const*/;
 
     bool normalActive () /*const*/;
-    bool selectionActive () /*const*/;
     bool brushActive () /*const*/;
 
     // returns whether a brush is active _and_ whether it should be displayed
@@ -90,6 +79,12 @@ public:
 
     QRect tempPixmapRect () const;
     QPixmap tempPixmap () const;
+
+    bool selectionBorderVisible () const;
+    void setSelectionBorderVisible (bool yes = true);
+
+    bool selectionBorderFinished () const;
+    void setSelectionBorderFinished (bool yes = true);
 
     void setCursor (const QCursor &cursor);
     void unsetCursor ();
@@ -114,9 +109,6 @@ public:
     // it still won't work - just after a fake drag onto the view).
     //
     void setViewUnderCursor (kpView *view);
-
-signals:
-    void selectionEnabled (bool on);
 
 public:
     // Specifies whether KolourPaint will queue _all_ paint events
@@ -159,7 +151,7 @@ public slots:
     void updateView (kpView *v, const QRect &viewRect);
     void updateView (kpView *v, int x, int y, int w, int h);
     void updateView (kpView *v, const QRegion &viewRegion);
-    
+
     void updateViews ();
     void updateViews (const QRect &docRect);
     void updateViews (int x, int y, int w, int h);
@@ -179,7 +171,7 @@ private:
 
     QPixmap m_tempPixmap;
     QRect m_tempPixmapRect;
-    enum SelectionBorderType m_selectionBorder;
+    bool m_selectionBorderVisible, m_selectionBorderFinished;
     enum TempPixmapType m_tempPixmapType;
 };
 

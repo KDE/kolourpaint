@@ -32,7 +32,7 @@
 #ifndef __kpmainwindow_h__
 #define __kpmainwindow_h__
 
-#define DEBUG_KPMAINWINDOW 1
+#define DEBUG_KP_MAIN_WINDOW 1
 
 #include <qptrlist.h>
 #include <qvaluevector.h>
@@ -45,6 +45,7 @@ class QPoint;
 class QRect;
 class QScrollView;
 
+class KCommand;
 class KSelectAction;
 class KToggleAction;
 class KAction;
@@ -261,19 +262,19 @@ private:
             *m_actionCut, *m_actionCopy, *m_actionPaste, *m_actionDelete,
             *m_actionSelectAll, *m_actionDeselect;
 
-private:
-    bool checkHasSelectionActive (const char *funcName) const;
-    bool checkHasDocument (const char *funcName) const;
-    bool checkHasViewManager (const char *funcName) const;
-
 private slots:
     void slotCut ();
     void slotCopy ();
     void slotEnablePaste ();
+private:
+    QRect calcUsefulPasteRect (int pixmapWidth, int pixmapHeight);
+    void paste (const QPixmap &pixmap);
+private slots:
     void slotPaste ();
     void slotDelete ();
 
     void slotSelectAll ();
+public slots:
     void slotDeselect ();
 
  
@@ -333,8 +334,12 @@ private:
             *m_actionConvertToBlackAndWhite, *m_actionConvertToGrayscale,
             *m_actionInvertColors, *m_actionClear;
 
-private:
+private slots:
+    void slotImageMenuUpdateName ();
+
+public:
     QColor backgroundColor () const;
+    void addImageOrSelectionCommand (KCommand *cmd, bool actOnSelectionIfAvail = true);
 
 private slots:
     void slotResizeScale ();

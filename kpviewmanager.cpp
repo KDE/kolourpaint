@@ -36,6 +36,7 @@
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
+#include <kpselection.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
 
@@ -43,6 +44,8 @@
 kpViewManager::kpViewManager (kpMainWindow *mainWindow)
     : m_mainWindow (mainWindow),
       m_viewUnderCursor (0),
+      m_selectionBorderVisible (false),
+      m_selectionBorderFinished (false),
       m_tempPixmapType (NoPixmap)
 {
     m_queueUpdatesCounter = m_fastUpdatesCounter =  0;
@@ -94,21 +97,8 @@ void kpViewManager::unregisterAllViews ()
 }
 
 
-void kpViewManager::setSelectionBorderType (enum kpViewManager::SelectionBorderType sb, bool update)
-{
-    m_selectionBorder = sb;
-    if (selectionActive () && update)
-        updateViews (m_tempPixmapRect);
-}
-
-enum kpViewManager::SelectionBorderType kpViewManager::selectionBorderType () const
-{
-    return m_selectionBorder;
-}
-
 void kpViewManager::setTempPixmapAt (const QPixmap &pixmap, const QPoint &at,
-                                     enum TempPixmapType type,
-                                     enum SelectionBorderType selBorderType)
+                                     enum TempPixmapType type)
 {
 #if DEBUG_KP_VIEW_MANAGER && 0
     kdDebug () << "kpViewManager::setTempPixmapAt (pixmap (w="
@@ -121,7 +111,6 @@ void kpViewManager::setTempPixmapAt (const QPixmap &pixmap, const QPoint &at,
 
     bool oldPixmapActive = tempPixmapActive ();
     QRect oldPixmapRect = m_tempPixmapRect;  // only valid if oldPixmapActive
-    bool tempPixmapWasSelection = selectionActive ();
 
     m_tempPixmap = pixmap;
     m_tempPixmapRect = QRect (at.x (), at.y (), pixmap.width (), pixmap.height ());
@@ -129,32 +118,21 @@ void kpViewManager::setTempPixmapAt (const QPixmap &pixmap, const QPoint &at,
 
     setQueueUpdates ();
 
-    setSelectionBorderType (selBorderType, false/*don't update*/);
-
     if (oldPixmapActive)
         updateViews (oldPixmapRect);
     updateViews (m_tempPixmapRect);
 
     restoreQueueUpdates ();
-
-    if (tempPixmapWasSelection && !selectionActive ())
-        emit selectionEnabled (false);
-    else if (!tempPixmapWasSelection && selectionActive ())
-        emit selectionEnabled (true);
 }
 
 void kpViewManager::invalidateTempPixmap (const bool doUpdate)
 {
     if (!tempPixmapActive ()) return;
 
-    bool tempPixmapWasSelection = selectionActive ();
     m_tempPixmapType = NoPixmap;
 
     if (doUpdate)
         updateViews (m_tempPixmapRect);
-
-    if (tempPixmapWasSelection)
-        emit selectionEnabled (false);
 }
 
 enum kpViewManager::TempPixmapType kpViewManager::tempPixmapType () /*const*/
@@ -172,11 +150,6 @@ bool kpViewManager::normalActive () /*const*/
     return tempPixmapType () == NormalPixmap;
 }
 
-bool kpViewManager::selectionActive () /*const*/
-{
-    return tempPixmapType () == SelectionPixmap;
-}
-
 bool kpViewManager::brushActive () /*const*/
 {
     return tempPixmapType () == BrushPixmap;
@@ -186,7 +159,7 @@ bool kpViewManager::shouldBrushBeDisplayed (kpView * /*view*/) /*const*/
 {
     return brushActive () && viewUnderCursor ();
 }
-    
+
 QRect kpViewManager::tempPixmapRect () const
 {
     return m_tempPixmapRect;
@@ -198,6 +171,44 @@ QPixmap kpViewManager::tempPixmap () const
 }
 
 
+// public
+bool kpViewManager::selectionBorderVisible () const
+{
+    return m_selectionBorderVisible;
+}
+
+// public
+void kpViewManager::setSelectionBorderVisible (bool yes)
+{
+    if (m_selectionBorderVisible == yes)
+        return;
+
+    m_selectionBorderVisible = yes;
+
+    if (document () && document ()->selection ())
+        updateViews (document ()->selection ()->boundingRect ());
+}
+
+
+// public
+bool kpViewManager::selectionBorderFinished () const
+{
+    return m_selectionBorderFinished;
+}
+
+// public
+void kpViewManager::setSelectionBorderFinished (bool yes)
+{
+    if (m_selectionBorderFinished == yes)
+        return;
+
+    m_selectionBorderFinished = yes;
+
+    if (document () && document ()->selection ())
+        updateViews (document ()->selection ()->boundingRect ());
+}
+
+        
 void kpViewManager::setCursor (const QCursor &cursor)
 {
     for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())

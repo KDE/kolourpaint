@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -38,6 +38,9 @@
 
 #include <kpdefs.h>
 #include <kpdocument.h>
+#include <kpmainwindow.h>
+#include <kppixmapfx.h>
+#include <kpselection.h>
 #include <kptoolskew.h>
 #include <kptoolskewdialogwidget.h>
 
@@ -46,57 +49,67 @@
  * kpToolSkewCommand
  */
 
-kpToolSkewCommand::kpToolSkewCommand (kpDocument *document, kpViewManager *viewManager,
+kpToolSkewCommand::kpToolSkewCommand (bool actOnSelection,
                                       double hangle, double vangle,
-                                      const QColor &backgroundColor)
-    : m_document (document), m_viewManager (viewManager),
+                                      kpMainWindow *mainWindow)
+    : m_actOnSelection (actOnSelection),
       m_hangle (hangle), m_vangle (vangle),
-      m_backgroundColor (backgroundColor),
+      m_mainWindow (mainWindow),
+      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : Qt::white),
       m_oldPixmapPtr (0)
 {
 }
 
-// virtual
+// public virtual [base KCommand]
 QString kpToolSkewCommand::name () const
 {
-    if (m_hangle && m_vangle)
-    {
-        return i18n ("Skew %1 degrees horizontally, %2 degrees vertically")
-                    .arg (m_hangle)
-                    .arg (m_vangle);
-    }
-    else if (m_hangle)
-    {
-        return i18n ("Skew %1 degrees horizontally").arg (m_hangle);
-    }
-    else if (m_vangle)
-    {
-        return i18n ("Skew %1 degrees vertically").arg (m_vangle);
-    }
+    QString opName = i18n ("Skew");
+
+    if (m_actOnSelection)
+        return i18n ("Selection: %1").arg (opName);
     else
-    {
-        kdError () << "kpToolSkewCommand::name() for pointless no-op skew" << endl;
-        return i18n ("Pointless Skew");
-    }
+        return opName;
 }
 
 kpToolSkewCommand::~kpToolSkewCommand ()
 {
+    delete m_oldPixmapPtr;
 }
 
-// virtual
+
+// private
+kpDocument *kpToolSkewCommand::document () const
+{
+    return m_mainWindow ? m_mainWindow->document () : 0;
+}
+
+
+// public virtual [base KCommand]
 void kpToolSkewCommand::execute ()
 {
-    // OPT: can be avoided
-    m_oldPixmapPtr = new QPixmap ();
-    *m_oldPixmapPtr = *m_document->pixmap ();
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
 
-    m_document->skew (-m_hangle, -m_vangle, m_backgroundColor);
+    m_oldPixmapPtr = new QPixmap ();
+    *m_oldPixmapPtr = *doc->pixmap (m_actOnSelection);
+
+
+    QPixmap newPixmap = kpPixmapFX::skew (*doc->pixmap (m_actOnSelection),
+                                          -m_hangle, -m_vangle,
+                                          m_backgroundColor);
+    doc->setPixmap (m_actOnSelection, newPixmap);
 }
 
+// public virtual [base KCommand]
 void kpToolSkewCommand::unexecute ()
 {
-    m_document->setPixmap (*m_oldPixmapPtr);
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
+
+    doc->setPixmap (m_actOnSelection, *m_oldPixmapPtr);
+
     delete m_oldPixmapPtr;
     m_oldPixmapPtr = 0;
 }

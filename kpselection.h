@@ -1,6 +1,6 @@
 
 /* This file is part of the KolourPaint project
-   Copyright (c) 2003 Clarence Dang <dang@kde.org>
+   Copyright (c) 2004 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -29,35 +29,74 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef __kptoolconverttograyscale_h__
-#define __kptoolconverttograyscale_h__
+#ifndef __kpselection_h__
+#define __kpselection_h__
 
-#include <kcommand.h>
+#include <qobject.h>
+#include <qpointarray.h>
+#include <qrect.h>
+
 
 class QPixmap;
-class QString;
 
-class kpMainWindow;
 
-class kpToolConvertToGrayscaleCommand : public KCommand
+/*
+ * Holds a selection - will also be used for the clipboard
+ * so that we can retain the border.
+ */
+class kpSelection : public QObject
 {
-public:
-    kpToolConvertToGrayscaleCommand (bool actOnSelection,
-                                     kpMainWindow *mainWindow);
-    virtual QString name () const;
-    virtual ~kpToolConvertToGrayscaleCommand ();
-
-private:
-    kpDocument *document () const;
+Q_OBJECT
 
 public:
-    virtual void execute ();
-    virtual void unexecute ();
+    enum Type
+    {
+        Rectangle,
+        Ellipse,
+        Points
+    };
+
+    kpSelection ();
+    kpSelection (Type type, const QRect &rect, const QPixmap &pixmap = QPixmap ());
+    kpSelection (const QPointArray &points, const QPixmap &pixmap = QPixmap ());
+    kpSelection (const kpSelection &rhs);
+    kpSelection &operator= (const kpSelection &rhs);
+    ~kpSelection ();
+
+    Type type () const;
+
+    // synonyms
+    QPoint topLeft () const;
+    QPoint point () const;
+
+    void moveBy (int dx, int dy);
+    void moveTo (int dx, int dy);
+    void moveTo (const QPoint &topLeftPoint);
+
+    // synonyms
+    // (only valid if type == Points)
+    QPointArray points () const;
+    QPointArray pointArray () const;
+
+    QRect boundingRect () const;
+    int width () const;
+    int height () const;
+
+    bool contains (const QPoint &point) const;
+    bool contains (int x, int y);
+
+    QPixmap *pixmap () const;
+    void setPixmap (const QPixmap &pixmap);
+
+signals:
+    void changed (const QRect &docRect);
 
 private:
-    bool m_actOnSelection;
-    kpMainWindow *m_mainWindow;
-    QPixmap *m_oldPixmapPtr;
+    Type m_type;
+    QRect m_rect;
+    QPointArray m_points;
+    QPixmap *m_pixmap;
 };
 
-#endif  // __kptoolconverttograyscale_h__
+
+#endif  // __kpselection_h__

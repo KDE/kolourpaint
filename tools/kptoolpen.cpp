@@ -297,8 +297,7 @@ void kpToolPen::globalDraw ()
         kdDebug () << "kpToolPen::globalDraw() eraser" << endl;
     #endif
         mainWindow ()->commandHistory ()->addCommand (
-            new kpToolClearCommand (document (), viewManager (),
-                                    backgroundColor ()));
+            new kpToolClearCommand (false/*act on doc, not sel*/, mainWindow ()));
     }
     else if (m_mode == ColorWasher)
     {

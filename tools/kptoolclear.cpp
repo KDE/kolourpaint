@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -31,24 +31,35 @@
 
 #include <qpixmap.h>
 
+#include <kdebug.h>
 #include <klocale.h>
 
 #include <kpdefs.h>
 #include <kpdocument.h>
+#include <kpmainwindow.h>
+#include <kppixmapfx.h>
+#include <kpselection.h>
 #include <kptoolclear.h>
 
-kpToolClearCommand::kpToolClearCommand (kpDocument *document, kpViewManager *viewManager,
-                                        const QColor &color)
-    : m_document (document), m_viewManager (viewManager),
-      m_newColor (color),
+
+kpToolClearCommand::kpToolClearCommand (bool actOnSelection,
+                                        kpMainWindow *mainWindow)
+    : m_actOnSelection (actOnSelection),
+      m_mainWindow (mainWindow),
+      m_newColor (mainWindow ? mainWindow->backgroundColor () : Qt::white),
       m_oldPixmapPtr (0)
 {
 }
 
-// virtual
+// public virtual [base KCommand]
 QString kpToolClearCommand::name () const
 {
-    return i18n ("Clear");
+    QString opName = i18n ("Clear");
+
+    if (m_actOnSelection)
+        return i18n ("Selection: %1").arg (opName);
+    else
+        return opName;
 }
 
 kpToolClearCommand::~kpToolClearCommand ()
@@ -56,21 +67,57 @@ kpToolClearCommand::~kpToolClearCommand ()
     delete m_oldPixmapPtr;
 }
 
-// virtual
-void kpToolClearCommand::execute ()
-{
-    m_oldPixmapPtr = new QPixmap ();
-    *m_oldPixmapPtr = *m_document->pixmap ();
 
-    m_document->fill (m_newColor);
+// private
+kpDocument *kpToolClearCommand::document () const
+{
+    return m_mainWindow ? m_mainWindow->document () : 0;
 }
 
-// virtual
+
+// public virtual [base KCommand]
+void kpToolClearCommand::execute ()
+{
+    kpDocument *doc = document ();
+    if (!doc)
+    {
+        kdError () << "kpToolClearCommand::execute() without doc" << endl;
+        return;
+    }
+
+
+    m_oldPixmapPtr = new QPixmap ();
+    *m_oldPixmapPtr = *doc->pixmap (m_actOnSelection);
+
+
+    if (m_actOnSelection)
+    {
+        // OPT: could just edit pixmap directly and signal change
+        kpSelection *sel = doc->selection ();
+
+        QPixmap newPixmap (sel->width (), sel->height ());
+        kpPixmapFX::fill (&newPixmap, m_newColor);
+
+        sel->setPixmap (newPixmap);
+    }
+    else
+        doc->fill (m_newColor);
+}
+
+// public virtual [base KCommand]
 void kpToolClearCommand::unexecute ()
 {
-    m_document->setPixmapAt (*m_oldPixmapPtr, QPoint (0, 0));
+    kpDocument *doc = document ();
+    if (!doc)
+    {
+        kdError () << "kpToolClearCommand::execute() without doc" << endl;
+        return;
+    }
+
+
+    doc->setPixmap (m_actOnSelection, *m_oldPixmapPtr);
+
 
     delete m_oldPixmapPtr;
     m_oldPixmapPtr = 0;
 }
-

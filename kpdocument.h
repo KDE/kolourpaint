@@ -1,12 +1,12 @@
 
 /* This file is part of the KolourPaint project
-   Copyright (c) 2003 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -32,10 +32,12 @@
 #ifndef __kpdocument_h__
 #define __kpdocument_h__
 
+#include <qbitmap.h>
 #include <qobject.h>
 #include <qstring.h>
 
 #include <kurl.h>
+
 
 class QColor;
 class QPixmap;
@@ -43,6 +45,8 @@ class QPoint;
 class QRect;
 
 class kpMainWindow;
+class kpSelection;
+
 
 class kpDocument : public QObject
 {
@@ -83,15 +87,15 @@ public:
     bool isModified () const;
     bool isEmpty () const;
 
-    int width () const;
+    int width (bool ofSelection = false) const;
     int oldWidth () const;  // only valid in a slot connected to sizeChanged()
     void setWidth (int w, const QColor &backgroundColor);
 
-    int height () const;
+    int height (bool ofSelection = false) const;
     int oldHeight () const;  // only valid in a slot connected to sizeChanged()
     void setHeight (int h, const QColor &backgroundColor);
 
-    QRect rect () const;
+    QRect rect (bool ofSelection = false) const;
 
     int colorDepth () const;
     int oldColorDepth () const;  // only valid in a slot connected to colorDepthChanged()
@@ -111,9 +115,21 @@ public:
     void paintPixmapAt (const QPixmap &pixmap, const QPoint &at);
 
     // (not including the selection)
-    QPixmap *pixmap () const;
+    QPixmap *pixmap (bool ofSelection = false) const;
     void setPixmap (const QPixmap &pixmap);
-    
+    void setPixmap (bool ofSelection, const QPixmap &pixmap);
+
+    kpSelection *selection () const;
+    void setSelection (const kpSelection &selection);
+
+    QPixmap selectionGetMask () const;
+    QPixmap getSelectedPixmap (const QBitmap &maskBitmap = QBitmap ()) const;
+
+    bool selectionPullFromDocument (const QColor &backgroundColor);
+    bool selectionDelete ();
+    bool selectionCopyOntoDocument ();
+    bool selectionPushOntoDocument ();
+
     // same as pixmap() but returns a _copy_ of the current pixmap
     // + any selection pasted on top
     QPixmap pixmapWithSelection () const;
@@ -121,17 +137,12 @@ public:
 
     /*
      * Transformations
+     * (convenience only - you could achieve the same effect (and more) with
+     *  kpPixmapFX: these functions do not affect the selection)
      */
 
     void fill (const QColor &color);
     void resize (int w, int h, const QColor &backgroundColor, bool fillNewAreas = true);
-    bool scale (int w, int h);
-    bool skew (double hangle, double vangle, const QColor &backgroundColor);  // -90 < x < 90
-    bool flip (bool horz, bool vert);
-    bool rotate (double angle, const QColor &backgroundColor);  // 0 <= angle < 360 (clockwise)
-    static bool isLosslessRotation (double angle);
-    bool convertToGrayscale ();
-    bool invertColors ();
 
 
 public slots:
@@ -150,8 +161,11 @@ signals:
     void sizeChanged (int newWidth, int newHeight);  // see oldWidth(), oldHeight()
     void colorDepthChanged (int newDepth);  // see oldColorDepth()
 
+    void selectionEnabled (bool on);
+
 private:
     QPixmap *m_pixmap;
+    kpSelection *m_selection;
     int m_oldWidth, m_oldHeight;
     int m_colorDepth, m_oldColorDepth;
     kpMainWindow *m_mainWindow;

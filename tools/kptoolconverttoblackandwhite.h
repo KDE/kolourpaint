@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -37,23 +37,28 @@
 class QPixmap;
 class QString;
 
-class kpDocument;
-class kpViewManager;
+class kpMainWindow;
+
 
 class kpToolConvertToBlackAndWhiteCommand : public KCommand
 {
 public:
-    kpToolConvertToBlackAndWhiteCommand (kpDocument *document,
-                                         kpViewManager *viewManager);
+    kpToolConvertToBlackAndWhiteCommand (bool actOnSelection,
+                                         kpMainWindow *mainWindow);
     virtual QString name () const;
     virtual ~kpToolConvertToBlackAndWhiteCommand ();
 
+private:
+    kpDocument *document () const;
+
+public:
     virtual void execute ();
     virtual void unexecute ();
 
 private:
-    kpDocument *m_document;
-    kpViewManager *m_viewManager;
+    bool m_actOnSelection;
+    kpMainWindow *m_mainWindow;
+
     QPixmap *m_oldPixmapPtr;
 };
 

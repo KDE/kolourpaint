@@ -113,6 +113,7 @@ protected:
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint,
                         const QRect &normalizedRect);
 
+    // (m_mouseButton will not change from beginDraw())
     virtual void cancelShape ();
 
     virtual void endDraw (const QPoint &thisPoint, const QRect &normalizedRect);

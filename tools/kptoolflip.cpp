@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -38,58 +38,85 @@
 
 #include <kpdefs.h>
 #include <kpdocument.h>
-#include <kpviewmanager.h>
-
+#include <kppixmapfx.h>
+#include <kpselection.h>
 #include <kptoolflip.h>
+#include <kpmainwindow.h>
 
 
 /*
  * kpToolFlipCommand
  */
 
-kpToolFlipCommand::kpToolFlipCommand (kpDocument *document, kpViewManager *viewManager,
-                                      bool horiz, bool vert)
-    : m_document (document), m_viewManager (viewManager),
-      m_horiz (horiz), m_vert (vert)
+kpToolFlipCommand::kpToolFlipCommand (bool actOnSelection,
+                                      bool horiz, bool vert,
+                                      kpMainWindow *mainWindow)
+    : m_actOnSelection (actOnSelection),
+      m_horiz (horiz), m_vert (vert),
+      m_mainWindow (mainWindow)
 {
 }
 
-// virtual
+// public virtual [base KCommand]
 QString kpToolFlipCommand::name () const
 {
+    QString opName;
+
     if (m_horiz && m_vert)
-        return i18n ("Flip horizontally and vertically");
+        opName = i18n ("Flip horizontally and vertically");
     else if (m_horiz)
-        return i18n ("Flip horizontally");
+        opName = i18n ("Flip horizontally");
     else if (m_vert)
-        return i18n ("Flip vertically");
+        opName = i18n ("Flip vertically");
     else
     {
         kdError () << "kpToolFlipCommand::name() not asked to flip" << endl;
         return QString::null;
     }
+
+
+    if (m_actOnSelection)
+        return i18n ("Selection: %1").arg (opName);
+    else
+        return opName;
 }
 
 kpToolFlipCommand::~kpToolFlipCommand ()
 {
 }
 
-// virtual
+
+// private
+kpDocument *kpToolFlipCommand::document () const
+{
+    return m_mainWindow ? m_mainWindow->document () : 0;
+}
+
+
+// public virtual [base KCommand]
 void kpToolFlipCommand::execute ()
 {
     flip ();
 }
 
-// virtual
+// public virtual [base KCommand]
 void kpToolFlipCommand::unexecute ()
 {
     flip ();
 }
 
+
 // private
 void kpToolFlipCommand::flip ()
 {
-    m_document->flip (m_horiz, m_vert);
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
+
+    QPixmap newPixmap = kpPixmapFX::flip (*doc->pixmap (m_actOnSelection),
+                                          m_horiz, m_vert);
+
+    doc->setPixmap (m_actOnSelection, newPixmap);
 }
 
 

@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -44,6 +44,8 @@
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
+#include <kppixmapfx.h>
+#include <kpselection.h>
 #include <kptoolresizescale.h>
 
 
@@ -51,17 +53,20 @@
  * kpToolResizeScaleCommand
  */
 
-kpToolResizeScaleCommand::kpToolResizeScaleCommand (kpDocument *document, kpViewManager *viewManager,
+kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
                                                     int newWidth, int newHeight,
                                                     bool scaleToFit,
-                                                    const QColor &backgroundColor)
-    : m_document (document), m_viewManager (viewManager),
+                                                    kpMainWindow *mainWindow)
+    : m_actOnSelection (actOnSelection),
       m_newWidth (newWidth), m_newHeight (newHeight),
       m_scaleToFit (scaleToFit),
-      m_backgroundColor (backgroundColor)
+      m_mainWindow (mainWindow),
+      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : Qt::white)
 {
-    m_oldWidth = document->width ();
-    m_oldHeight = document->height ();
+    kpDocument *doc = document ();
+
+    m_oldWidth = doc->width (m_actOnSelection);
+    m_oldHeight = doc->height (m_actOnSelection);
 
     m_isLosslessScale = scaleToFit &&
                           (m_newWidth / m_oldWidth * m_oldWidth == m_newWidth) &&
@@ -71,23 +76,32 @@ kpToolResizeScaleCommand::kpToolResizeScaleCommand (kpDocument *document, kpView
 // virtual
 QString kpToolResizeScaleCommand::name () const
 {
-    QString name;
+    QString opName;
 
     if (m_scaleToFit)
-        name = i18n ("Scale");
+        opName = i18n ("Scale");
     else
-        name = i18n ("Resize");
+        opName = i18n ("Resize");
 
-    return i18n ("%1 from %2 x %3 to %4 x %5")
-            .arg (name)
-            .arg (m_oldWidth).arg (m_oldHeight)
-            .arg (m_newWidth).arg (m_newHeight);
+    if (m_actOnSelection)
+        return i18n ("Selection: %1").arg (opName);
+    else
+        return opName;
 }
 
 kpToolResizeScaleCommand::~kpToolResizeScaleCommand ()
 {
 }
 
+
+// private
+kpDocument *kpToolResizeScaleCommand::document () const
+{
+    return m_mainWindow ? m_mainWindow->document () : 0;
+}
+
+
+// public virtual [base KCommand]
 void kpToolResizeScaleCommand::execute ()
 {
     if (m_oldWidth == m_newWidth && m_oldHeight == m_newHeight)
@@ -97,49 +111,86 @@ void kpToolResizeScaleCommand::execute ()
     {
         if (m_newWidth < m_oldWidth)
         {
-            m_oldRightPixmap = m_document->getPixmapAt (
+            m_oldRightPixmap = kpPixmapFX::getPixmapAt (
+                *document ()->pixmap (m_actOnSelection),
                 QRect (m_newWidth, 0,
                        m_oldWidth - m_newWidth, m_oldHeight));
         }
 
         if (m_newHeight < m_oldHeight)
         {
-            m_oldBottomPixmap = m_document->getPixmapAt (
+            m_oldBottomPixmap = kpPixmapFX::getPixmapAt (
+                *document ()->pixmap (m_actOnSelection),
                 QRect (0, m_newHeight,
                        m_newWidth, m_oldHeight - m_newHeight));
         }
 
-        m_document->resize (m_newWidth, m_newHeight, m_backgroundColor);
+        if (m_actOnSelection)
+        {
+            kpSelection *sel = document ()->selection ();
+            sel->setPixmap (kpPixmapFX::resize (*sel->pixmap (),
+                                                m_newWidth, m_newHeight,
+                                                m_backgroundColor));
+        }
+        else
+            document ()->resize (m_newWidth, m_newHeight, m_backgroundColor);
+
     }
     else
     {
         if (!m_isLosslessScale)
-            m_oldPixmap = *m_document->pixmap ();
+            m_oldPixmap = *document ()->pixmap (m_actOnSelection);
 
-        m_document->scale (m_newWidth, m_newHeight);
+        QPixmap newPixmap = kpPixmapFX::scale (m_oldPixmap, m_newWidth, m_newHeight);
+        
+        document ()->setPixmap (m_actOnSelection, newPixmap);
     }
 }
 
+// public virtual [base KCommand]
 void kpToolResizeScaleCommand::unexecute ()
 {
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
+
     if (!m_scaleToFit)
     {
-        m_document->resize (m_oldWidth, m_oldHeight,
-                            m_backgroundColor,
-                            false /* don't paint new areas white */);
+        QPixmap newPixmap (m_oldWidth, m_oldHeight);
+        newPixmap.fill (m_backgroundColor);
+
+        kpPixmapFX::setPixmapAt (&newPixmap, QPoint (0, 0),
+                                 *doc->pixmap (m_actOnSelection));
 
         if (m_newWidth < m_oldWidth)
-            m_document->setPixmapAt (m_oldRightPixmap, QPoint (m_newWidth, 0));
+        {
+            kpPixmapFX::setPixmapAt (&newPixmap,
+                                     QPoint (m_newWidth, 0),
+                                     m_oldRightPixmap);
+        }
 
         if (m_newHeight < m_oldHeight)
-            m_document->setPixmapAt (m_oldBottomPixmap, QPoint (0, m_newHeight));
+        {
+            kpPixmapFX::setPixmapAt (&newPixmap,
+                                     QPoint (0, m_newHeight),
+                                     m_oldBottomPixmap);
+        }
+
+        doc->setPixmap (m_actOnSelection, newPixmap);
     }
     else
     {
         if (!m_isLosslessScale)
-            m_document->setPixmap (m_oldPixmap);
+        {
+            doc->setPixmap (m_actOnSelection, m_oldPixmap);
+        }
         else
-            m_document->scale (m_oldWidth, m_oldHeight);
+        {
+            QPixmap oldPixmap = kpPixmapFX::scale (*doc->pixmap (m_actOnSelection),
+                                                   m_oldWidth, m_oldHeight);
+            
+            doc->setPixmap (m_actOnSelection, oldPixmap);
+        }
     }
 }
 

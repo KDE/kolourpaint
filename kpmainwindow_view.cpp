@@ -156,7 +156,7 @@ QString kpMainWindow::zoomLevelToString (int zoomLevel)
 // private
 void kpMainWindow::zoomTo (int zoomLevel)
 {
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::zoomTo (" << zoomLevel << ")" << endl;
 #endif
 
@@ -200,7 +200,7 @@ void kpMainWindow::zoomTo (int zoomLevel)
 
     if (m_scrollView && m_mainView)
     {
-    #if DEBUG_KPMAINWINDOW && 1
+    #if DEBUG_KP_MAIN_WINDOW && 1
         kdDebug () << "\tscrollView   contentsX=" << m_scrollView->contentsX ()
                    << " contentsY=" << m_scrollView->contentsY ()
                    << " contentsWidth=" << m_scrollView->contentsWidth ()
@@ -229,7 +229,7 @@ void kpMainWindow::zoomTo (int zoomLevel)
 
         m_mainView->setZoomLevel (zoomLevel, zoomLevel);
 
-    #if DEBUG_KPMAINWINDOW && 1
+    #if DEBUG_KP_MAIN_WINDOW && 1
         kdDebug () << "\tvisibleWidth=" << m_scrollView->visibleWidth ()
                     << " visibleHeight=" << m_scrollView->visibleHeight ()
                     << endl;
@@ -239,7 +239,7 @@ void kpMainWindow::zoomTo (int zoomLevel)
 
         m_scrollView->center (newCenterX, newCenterY);
 
-    #if DEBUG_KPMAINWINDOW && 1
+    #if DEBUG_KP_MAIN_WINDOW && 1
         kdDebug () << "\t\tcheck (contentsX=" << m_scrollView->contentsX ()
                     << ",contentsY=" << m_scrollView->contentsY ()
                     << ")" << endl;
@@ -330,7 +330,7 @@ void kpMainWindow::slotFitToHeight ()
 // private slot
 void kpMainWindow::slotZoomIn ()
 {
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotZoomIn ()" << endl;
 #endif
 
@@ -341,7 +341,7 @@ void kpMainWindow::slotZoomIn ()
 // private slot
 void kpMainWindow::slotZoomOut ()
 {
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotZoomOut ()" << endl;
 #endif
 
@@ -352,7 +352,7 @@ void kpMainWindow::slotZoomOut ()
 // private slot
 void kpMainWindow::slotZoom ()
 {
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotZoom () index=" << m_actionZoom->currentItem ()
                << " text='" << m_actionZoom->currentText () << "'" << endl;
 #endif
@@ -363,7 +363,7 @@ void kpMainWindow::slotZoom ()
 // private slot
 void kpMainWindow::slotShowGrid ()
 {
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotShowGrid ()" << endl;
 #endif
 
