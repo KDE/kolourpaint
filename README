@@ -46,7 +46,7 @@ libraries.
 
 * Selections (fully undo- and redo-able)
   - Rectangular, Elliptical, Free-Form shapes
-  - Choice between Opaque and Transparent selections (TODO)
+  - Choice between Opaque and Transparent selections
   - Full Clipboard/Edit Menu support
 
 * Colour Similarity means that you can fill regions in dithered images and
