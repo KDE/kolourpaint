@@ -53,7 +53,6 @@ Luxi Sans 14 draw in green with trans background versus white background (see qu
 7. emulate3buttons cancel
 10. delta drawing of resize line to stop flicker
 11. draw rectangle and land on doc resize handle - wrong status mess
-12. remove dynamic cast
 9. speed up drag scroll
 6. keyboard friendly scrollview
 7. resize doc or sel freehand and usershapepoints have , not x even though is dimen, not point
