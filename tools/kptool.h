@@ -98,7 +98,8 @@ public:
     void setKey (int key);
 
     // Given a single <key>, returns a shortcut with <key>
-    // (disabled when user is editing text) and CTRL+ALT+<key>.
+    // (disabled when the user is editing text) and as an alternate,
+    // <some modifiers>+<key>.
     static KShortcut shortcutForKey (int key);
     KShortcut shortcut () const;
 

@@ -234,9 +234,9 @@ KShortcut kpTool::shortcutForKey (int key)
     if (key)
     {
         shortcut.append (KKeySequence (KKey (key)));
-        // TODO: no matter what modifiers I choose, some <key> has to cause
-        //       a clash with global KDE shortcuts
-        shortcut.append (KKeySequence (KKey (Qt::CTRL + Qt::ALT + key)));
+        // (CTRL+<key>, ALT+<key>, CTRL+ALT+<key>, CTRL+SHIFT+<key>
+        //  all clash with global KDE shortcuts)
+        shortcut.append (KKeySequence (KKey (Qt::ALT + Qt::SHIFT + key)));
     }
 
     return shortcut;
