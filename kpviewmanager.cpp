@@ -208,21 +208,21 @@ void kpViewManager::setSelectionBorderFinished (bool yes)
         
 void kpViewManager::setCursor (const QCursor &cursor)
 {
-    const int numViews = (int) m_views.count ();
-    for (int i = 0; i < numViews; i++)
+    for (QPtrList <kpView>::const_iterator it = m_views.begin ();
+         it != m_views.end ();
+         it++)
     {
-        kpView *v = m_views.at (i);
-        v->setCursor (cursor);
+        (*it)->setCursor (cursor);
     }
 }
 
 void kpViewManager::unsetCursor ()
 {
-    const int numViews = (int) m_views.count ();
-    for (int i = 0; i < numViews; i++)
+    for (QPtrList <kpView>::const_iterator it = m_views.begin ();
+         it != m_views.end ();
+         it++)
     {
-        kpView *v = m_views.at (i);
-        v->unsetCursor ();
+        (*it)->unsetCursor ();
     }
 }
 
@@ -281,11 +281,11 @@ void kpViewManager::restoreQueueUpdates ()
 
     if (m_queueUpdatesCounter <= 0)
     {
-        const int numViews = (int) m_views.count ();
-        for (int i = 0; i < numViews; i++)
+        for (QPtrList <kpView>::const_iterator it = m_views.begin ();
+             it != m_views.end ();
+             it++)
         {
-            kpView *v = m_views.at (i);
-            v->updateQueuedArea ();
+            (*it)->updateQueuedArea ();
         }
     }
 }
@@ -383,10 +383,11 @@ void kpViewManager::updateViews (const QRect &docRect)
     kdDebug () << "KpViewManager::updateViews (" << docRect << ")" << endl;
 #endif
 
-    const int numViews = (int) m_views.count ();
-    for (int i = 0; i < numViews; i++)
+    for (QPtrList <kpView>::const_iterator it = m_views.begin ();
+         it != m_views.end ();
+         it++)
     {
-        kpView *view = m_views.at (i);
+        kpView *view = *it;
 
     #if DEBUG_KP_VIEW_MANAGER && 1
         kdDebug () << "\tupdating view " << view->name () << endl;
@@ -431,10 +432,11 @@ void kpViewManager::resizeViews (int docWidth, int docHeight)
                << " numViews=" << m_views.count ()
                << endl;
 #endif
-    const int numViews = m_views.count ();;
-    for (int i = 0; i < numViews; i++)
+    for (QPtrList <kpView>::const_iterator it = m_views.begin ();
+         it != m_views.end ();
+         it++)
     {
-        kpView *view = m_views.at (i);
+        kpView *view = *it;
         
     #if DEBUG_KP_VIEW_MANAGER && 1
         kdDebug () << "\tresize view: " << view->name ()
