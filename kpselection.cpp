@@ -74,6 +74,9 @@ kpSelection::kpSelection (const kpSelection &rhs)
 
 kpSelection &kpSelection::operator= (const kpSelection &rhs)
 {
+    if (this == &rhs)
+        return *this;
+
     m_type = rhs.m_type;
     m_rect = rhs.m_rect;
     m_points = rhs.m_points;
