@@ -34,11 +34,20 @@ critical" (euphemism for "hard to fix" :)):
    in extreme cases) e.g. an ellipse of height 1 always has a width 1 pixel
    less than it should be.  This is a Qt bug.
 
+8. At zoom levels that aren't multiples of 100%, parts of the image may appear
+   to move when the user interacts with it.  Other minor redraw glitches may
+   also occur at such zoom levels.
+
+9. Keyboard shortcut changes do not propagate to other KolourPaint windows
+   (but will propagate to future windows).
+
+10. "File/Open Recent" entries are not updated interprocess.
+
 
 System Dependent Issues
 =======================
 
-KolourPaint runs best on KDE 3.2 and Qt 3.2.  It will compile and run on
+KolourPaint runs best on KDE 3.2 with Qt 3.2.  It will compile and run on
 earlier KDE and Qt 3.x releases (TODO: I haven't ported it yet) but you may encounter the following problems:
 
 1. The Tool Box buttons are not clearly rendered in early versions of the
