@@ -116,12 +116,14 @@ static QPixmap pixmap (const QPixmap &docPixmap,
     if (cursorOn)
     {
         const int x = fontMetrics.width (textLines [cursorRow].left (cursorCol));
-        const int y = cursorRow * fontMetrics.height ();
+        const int y = cursorRow * fontMetrics.height () + (cursorRow >= 1 ? cursorRow * fontMetrics.leading () : 0);
         const int h = fontMetrics.height ();
     #if DEBUG_KP_TOOL_TEXT
         kdDebug () << "\tcursorRow=" << cursorRow << " cursorCol=" << cursorCol
                    << " fontMetrics: width_of_text=" << fontMetrics.width (textLines [cursorRow].left (cursorCol))
                    << " height=" << fontMetrics.height ()
+                   << " leading=" << fontMetrics.leading ()
+                   << " leftBearing('w')=" << fontMetrics.leftBearing ('w')
                    << " output: x=" << x << " y=" << y << " h=" << h << endl;
     #endif
 
