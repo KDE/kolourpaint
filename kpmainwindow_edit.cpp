@@ -54,9 +54,9 @@
 
 
 // private
-kpPixmapFX::WarnAboutLossInfo kpMainWindow::pasteWarnAboutLossInfo () const
+kpPixmapFX::WarnAboutLossInfo kpMainWindow::pasteWarnAboutLossInfo ()
 {
-    return kpPixmapFX::WarnAboutLossInfo ((QWidget *) const_cast <kpMainWindow *> (this),
+    return kpPixmapFX::WarnAboutLossInfo (this,
         i18n ("image to be pasted"),
         "paste");
 }

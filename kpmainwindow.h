@@ -296,7 +296,7 @@ private slots:
      */
 
 private:
-    kpPixmapFX::WarnAboutLossInfo pasteWarnAboutLossInfo () const;
+    kpPixmapFX::WarnAboutLossInfo pasteWarnAboutLossInfo ();
     void setupEditMenuActions ();
     void enableEditMenuDocumentActions (bool enable = true);
 
