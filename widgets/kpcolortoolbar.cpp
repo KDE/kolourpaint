@@ -327,7 +327,8 @@ void kpColorCells::setOrientation (Qt::Orientation o)
         else
         {
             int y = i % cols;
-            int x = rows - 1 - i / cols;
+            int x = i / cols;
+            // int x = rows - 1 - i / cols;
             pos = y * rows + x;
         }
         
