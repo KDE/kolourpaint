@@ -1,6 +1,6 @@
 
 This file lists known bugs in the 1.0 release that were not considered "release
-critical" (euphemism for "hard to fix"):
+critical" (euphemism for "hard to fix" :)):
 
 
 1. Insane flicker when zooming in/out.
@@ -26,10 +26,14 @@ critical" (euphemism for "hard to fix"):
    manipulate it again, another "Selection: Create" is put into the undo
    history.
 
-6. Certain shapes may have the wrong size (usually only a pixel off and only
+6. The undo history is not updated during the drawing of multi-segment
+   shapes (Polygon, Connected Lines, Curve).  It is however updated after
+   their completion.
+
+7. Certain shapes may have the wrong size (usually only a pixel off and only
    in extreme cases) e.g. an ellipse of height 1 always has a width 1 pixel
    less than it should be.  This is a Qt bug.
 
 
-Please report all bugs to Clarence <dang@kde.org>.
+Please report all bugs to Clarence Dang <dang@kde.org>.
 
