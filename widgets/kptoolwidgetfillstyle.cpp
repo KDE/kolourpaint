@@ -37,6 +37,7 @@
 #include <kpdefs.h>
 #include <kptoolwidgetfillstyle.h>
 
+
 // SYNC: with QT
 static Qt::BrushStyle fillStyles [] =
 {
@@ -102,6 +103,11 @@ kpToolWidgetFillStyle::~kpToolWidgetFillStyle ()
 
 Qt::BrushStyle kpToolWidgetFillStyle::fillStyle () const
 {
+#if 1
+    kdDebug () << "kpToolWidgetFillStyle::fillStyle() selected="
+               << kpToolWidgetBase::selected ()
+               << endl;
+#endif
     return fillStyles [kpToolWidgetBase::selected ()];
 }
 
