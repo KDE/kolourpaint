@@ -1293,42 +1293,24 @@ void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
 }
 
 
-// virtual
-void kpView::paintEvent (QPaintEvent *e)
+void kpView::paintEventDrawRect (const QRect &viewRect)
 {
-#if DEBUG_KP_VIEW_RENDERER && 1
-    QTime timer;
-    timer.start ();
+#if DEBUG_KP_VIEW_RENDERER
+    kdDebug () << "\tkpView::paintEventDrawRect(viewRect=" << viewRect
+               << ")" << endl;
 #endif
 
     kpViewManager *vm = viewManager ();
     const kpDocument *doc = document ();
 
-#if DEBUG_KP_VIEW_RENDERER && 1
-    kdDebug () << "kpView(" << name () << ")::paintEvent() vm=" << (bool) vm
-               << " queueUpdates=" << (vm && vm->queueUpdates ())
-               << " fastUpdates=" << (vm && vm->fastUpdates ())
-               << " viewRect=" << e->rect ()
-               << " erased=" << e->erased ()
-               << " doc=" << doc
-               << endl;
-#endif
-
     if (!vm || !doc)
         return;
 
-    if (vm->queueUpdates ())
-    {
-        // OPT: if this update was due to the document,
-        //      use document coordinates (in case of a zoom change in
-        //      which view coordinates become out of date)
-        addToQueuedArea (e->region ());
-        return;
-    }
 
-    QRect viewRect = e->rect ().intersect (rect ());
     if (viewRect.isEmpty ())
         return;
+
+
     QRect docRect = paintEventGetDocRect (viewRect);
 
 #if DEBUG_KP_VIEW_RENDERER && 1
@@ -1355,6 +1337,9 @@ void kpView::paintEvent (QPaintEvent *e)
     {
         // don't use QPixmap::resize() as that wastes time copying pixels
         // that will be overwritten anyway
+        //
+        // OPT: Should use doubling trick or at least go up in multiples
+        //      to reduce X server pressure.
         delete m_backBuffer;
         m_backBuffer = new QPixmap (viewRect.width (), viewRect.height ());
     }
@@ -1435,12 +1420,18 @@ void kpView::paintEvent (QPaintEvent *e)
         kdDebug () << "\torigin=" << m_origin << endl;
     #endif
         // blit scaled version of docPixmap + tempPixmap onto Back Buffer
+    #if DEBUG_KP_VIEW_RENDERER && 1
+        QTime scaleTimer; scaleTimer.start ();
+    #endif
         backBufferPainter.translate (m_origin.x () - viewRect.x (),
                                     m_origin.y () - viewRect.y ());
         backBufferPainter.scale (double (m_hzoom) / 100.0,
                                 double (m_vzoom) / 100.0);
         backBufferPainter.drawPixmap (docRect, docPixmap);
         backBufferPainter.resetXForm ();  // back to 1-1 scaling
+    #if DEBUG_KP_VIEW_RENDERER && 1
+        kdDebug () << "\tscale time=" << scaleTimer.elapsed () << endl;
+    #endif
 
     }  // if (!docRect.isEmpty ()) {
 
@@ -1450,7 +1441,15 @@ void kpView::paintEvent (QPaintEvent *e)
     //
 
     if (m_showGrid && canShowGrid ())
+    {
+    #if DEBUG_KP_VIEW_RENDERER && 1
+        QTime gridTimer; gridTimer.start ();
+    #endif
         paintEventDrawGridLines (&backBufferPainter, viewRect);
+    #if DEBUG_KP_VIEW_RENDERER && 1
+        kdDebug () << "\tgrid time=" << gridTimer.elapsed () << endl;
+    #endif
+    }
 
 
     if (!docRect.isEmpty ())
@@ -1471,10 +1470,59 @@ void kpView::paintEvent (QPaintEvent *e)
 
     bitBlt (this, viewRect.topLeft (),
             m_backBuffer, QRect (0, 0, viewRect.width (), viewRect.height ()));
+}
+
+
+// virtual
+void kpView::paintEvent (QPaintEvent *e)
+{
+#if DEBUG_KP_VIEW_RENDERER && 1
+    QTime timer;
+    timer.start ();
+#endif
+
+    kpViewManager *vm = viewManager ();
+
+#if DEBUG_KP_VIEW_RENDERER && 1
+    kdDebug () << "kpView(" << name () << ")::paintEvent() vm=" << (bool) vm
+               << " queueUpdates=" << (vm && vm->queueUpdates ())
+               << " fastUpdates=" << (vm && vm->fastUpdates ())
+               << " viewRect=" << e->rect ()
+               << " erased=" << e->erased ()
+               << endl;
+#endif
+
+    if (!vm)
+        return;
+
+    if (vm->queueUpdates ())
+    {
+        // OPT: if this update was due to the document,
+        //      use document coordinates (in case of a zoom change in
+        //      which view coordinates become out of date)
+        addToQueuedArea (e->region ());
+        return;
+    }
+
+
+    QRegion viewRegion = clipRegion ().intersect (e->region ());
+    QMemArray <QRect> rects = viewRegion.rects ();
+#if DEBUG_KP_VIEW_RENDERER && 1
+    kdDebug () << "\t#rects = " << rects.count () << endl;
+#endif
+
+    for (QMemArray <QRect>::ConstIterator it = rects.begin ();
+         it != rects.end ();
+         it++)
+    {
+        paintEventDrawRect (*it);
+    }
+
 
 #if DEBUG_KP_VIEW_RENDERER && 1
     kdDebug () << "\tall done in: " << timer.restart () << "ms" << endl;
 #endif
 }
+
 
 #include <kpview.moc>
