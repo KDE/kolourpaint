@@ -911,6 +911,39 @@ void kpView::dragLeaveEvent (QDragLeaveEvent *)
     setHasMouse (false);
 }
 
+// private virtual
+void kpView::imStartEvent (QIMEvent *e)
+{
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name () << ")::imStartEvent" << endl;
+#endif
+
+    m_mainWindow->tool ()->imStartEvent (e);
+    e->accept();
+}
+
+// private virtual
+void kpView::imComposeEvent (QIMEvent *e)
+{
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name () << ")::imComposeEvent" << endl;
+#endif
+
+    m_mainWindow->tool ()->imComposeEvent (e);
+    e->accept();
+}
+
+// private virtual
+void kpView::imEndEvent (QIMEvent *e)
+{
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name () << ")::imEndEvent" << endl;
+#endif
+
+    m_mainWindow->tool ()->imEndEvent (e);
+    e->accept();
+}
+
 
 //
 // Renderer
