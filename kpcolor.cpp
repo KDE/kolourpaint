@@ -114,7 +114,7 @@ QDataStream &operator>> (QDataStream &stream, kpColor &color)
     stream >> a >> b;
     color.m_rgbaIsValid = a;
     color.m_rgba = b;
-    
+
     color.m_colorCacheIsValid = false;
 
     return stream;
@@ -340,7 +340,7 @@ const QColor &kpColor::toQColor () const
         return Qt::black;
     }
 
-    (const_cast <kpColor *> (this))->m_colorCache = QColor (m_rgba);
+    m_colorCache = QColor (m_rgba);
     if (!m_colorCache.isValid ())
     {
         kdError () << "kpColor::toQColor () internal error - could not return valid QColor"
@@ -348,7 +348,8 @@ const QColor &kpColor::toQColor () const
         return Qt::black;
     }
 
-    (const_cast <kpColor *> (this))->m_colorCacheIsValid = true;
+    m_colorCacheIsValid = true;
+
     return m_colorCache;
 }
 

@@ -93,8 +93,8 @@ private:
     bool m_rgbaIsValid;
     QRgb m_rgba;
 
-    bool m_colorCacheIsValid;
-    QColor m_colorCache;
+    mutable bool m_colorCacheIsValid;
+    mutable QColor m_colorCache;
 };
 
 
