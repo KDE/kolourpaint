@@ -40,7 +40,9 @@
 #include <kurl.h>
 
 class QColor;
+class QPainter;
 class QPoint;
+class QRect;
 class QScrollView;
 
 class KSelectAction;
@@ -111,6 +113,12 @@ private:
     
     virtual void dragEnterEvent (QDragEnterEvent *e);
     virtual void dropEvent (QDropEvent *e);
+
+public:
+    void drawTransparentBackground (QPainter *painter,
+                                    int viewWidth, int viewHeight,
+                                    const QRect &rect,
+                                    bool isPreview = false);
 
 private slots:
     void slotUpdateCaption ();

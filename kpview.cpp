@@ -567,27 +567,7 @@ QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
 // private
 void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRect)
 {
-    const int dimen = QMIN (width (), height ());
-    const int cellSize = QMAX (5, QMIN (20, (dimen / 4) / 5 * 5));
-
-    int starty = viewRect.y ();
-    if (starty % cellSize)
-        starty -= (starty % cellSize);
-
-    int startx = viewRect.x ();
-    if (startx % cellSize)
-        startx -= (startx % cellSize);
-
-    for (int y = starty; y <= viewRect.bottom (); y += cellSize)
-    {
-        for (int x = startx; x <= viewRect.right (); x += cellSize)
-        {
-            QColor col = ((x / cellSize + y / cellSize) % 2) ? Qt::darkGray : Qt::white;
-            painter->setPen (col);
-            painter->setBrush (col);
-            painter->drawRect (x - viewRect.x (), y - viewRect.y (), cellSize, cellSize);
-        }
-    }
+    m_mainWindow->drawTransparentBackground (painter, width (), height (), viewRect);
 }
 
 // private

@@ -32,6 +32,7 @@
 #define DEBUG_KP_MAINWINDOW 1
 
 #include <qdragobject.h>
+#include <qpainter.h>
 #include <qscrollview.h>
 
 #include <kactionclasses.h>
@@ -485,6 +486,66 @@ void kpMainWindow::dropEvent (QDropEvent *e)
             open (*it);
         }
     }
+}
+
+
+// public
+void kpMainWindow::drawTransparentBackground (QPainter *painter,
+                                              int viewWidth, int viewHeight,
+                                              const QRect &rect,
+                                              bool isPreview)
+{
+    const int dimen = QMIN (viewWidth, viewHeight);
+    const int cellSize = QMAX (5, QMIN (20, (dimen / 4) / 5 * 5));
+
+    int starty = rect.y ();
+    if (starty % cellSize)
+        starty -= (starty % cellSize);
+
+    int startx = rect.x ();
+    if (startx % cellSize)
+        startx -= (startx % cellSize);
+
+    painter->save ();
+    for (int y = starty; y <= rect.bottom (); y += cellSize)
+    {
+        for (int x = startx; x <= rect.right (); x += cellSize)
+        {
+            bool parity = (x / cellSize + y / cellSize) % 2;
+            QColor col;
+
+            if (parity)
+            {
+                if (!isPreview)
+                    col = Qt::darkGray;
+                else
+                    col = Qt::lightGray;
+            }
+            else
+                col = Qt::white;
+
+            if (!isPreview || !parity)
+            {
+                painter->fillRect (x - rect.x (), y - rect.y (), cellSize, cellSize,
+                                   col);
+            }
+            else
+            {
+                for (int y2 = 0; y2 < cellSize; y2++)
+                {
+                    for (int x2 = 0; x2 < cellSize; x2++)
+                    {
+                        if ((y2 + x2) % 2)
+                            painter->setPen (Qt::white);
+                        else
+                            painter->setPen (col);
+                        painter->drawPoint (x - rect.x () + x2, y - rect.y () + y2);
+                    }
+                }
+            }
+        }
+    }
+    painter->restore ();
 }
 
 

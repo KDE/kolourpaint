@@ -44,6 +44,8 @@
 class QGridLayout;
 class KColorButton;
 
+class kpMainWindow;
+
 
 //
 // Widget similar to KDualColorButton.
@@ -59,7 +61,8 @@ class kpDualColorButton : public QFrame
 Q_OBJECT
 
 public:
-    kpDualColorButton (QWidget *parent, const char *name = 0);
+    kpDualColorButton (kpMainWindow *mainWindow,
+                       QWidget *parent, const char *name = 0);
     virtual ~kpDualColorButton ();
 
     QColor color (int which) const;
@@ -80,14 +83,21 @@ public:
     
 protected:
     QRect swapPixmapRect () const;
+    QRect foregroundBackgroundRect () const;
     QRect foregroundRect () const;
     QRect backgroundRect () const;
 
-    virtual void resizeEvent (QResizeEvent *e);
+    //virtual void dragEnterEvent (QDragEnterEvent *e);
+    virtual void dragMoveEvent (QDragMoveEvent *e);
+    virtual void dropEvent (QDropEvent *e);
+    
     virtual void mousePressEvent (QMouseEvent *e);
+    virtual void mouseDoubleClickEvent (QMouseEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
+
     virtual void drawContents (QPainter *p);
     
+    kpMainWindow *m_mainWindow;
     QColor m_color [2];
     QPixmap *m_backBuffer;
 };
@@ -182,7 +192,7 @@ class kpColorToolBar : public KToolBar
 Q_OBJECT
 
 public:
-    kpColorToolBar (QWidget *parent, const char *name = 0);
+    kpColorToolBar (kpMainWindow *mainWindow, const char *name = 0);
     virtual ~kpColorToolBar ();
 
     QColor color (int which) const;
@@ -201,6 +211,8 @@ public slots:
     void setBackgroundColor (const QColor &color);
 
 private:
+    kpMainWindow *m_mainWindow;
+
     Qt::Orientation m_lastDockedOrientation;
     bool m_lastDockedOrientationSet;
     virtual void setOrientation (Qt::Orientation o);
