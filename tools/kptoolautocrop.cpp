@@ -72,8 +72,8 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
         
         QRgb rgb = image.pixel (startX, 0);
         for (int x = startX;
-                x >= 0 && x <= maxX;
-                x += dir)
+             x >= 0 && x <= maxX;
+             x += dir)
         {
             int y;
             for (y = 0; y <= maxY; y++)
@@ -102,8 +102,8 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
         
         QRgb rgb = image.pixel (0, startY);
         for (int y = startY;
-                y >= 0 & y <= maxY;
-                y += dir)
+             y >= 0 & y <= maxY;
+             y += dir)
         {
             int x;
             for (x = 0; x <= maxX; x++)
@@ -231,6 +231,11 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
             kdDebug () << "\t2 regions:" << endl;
         #endif
         
+            // in case e.g. the user pastes a solid, coloured-in rectangle,
+            // we favour killing the bottom and right regions
+            // (these regions probably contain the unwanted whitespace due
+            //  to the doc being bigger than the pasted selection to start with)
+
             if (leftBorder.exists () && rightBorder.exists () &&
                 leftBorder.m_rgb != rightBorder.m_rgb)
             {
@@ -271,7 +276,7 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
     else
     {
         KMessageBox::information (mainWindow,
-            i18n ("Autocrop could not find any borders to remove."),
+            i18n ("Autocrop could not find any border to remove."),
             i18n ("Nothing to Autocrop"),
             "DoNotAskAgain_NothingToAutoCrop");
     }
