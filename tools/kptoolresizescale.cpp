@@ -623,7 +623,7 @@ static QIconSet toolButtonIconSet (const QString &iconName)
 
 static void toolButtonSetLook (QToolButton *button,
                                const QString &iconName,
-                                 const QString &name)
+                               const QString &name)
 {
     button->setIconSet (toolButtonIconSet (iconName));
     button->setUsesTextLabel (true);
@@ -659,18 +659,18 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
 
     m_resizeButton = new QToolButton (m_operationGroupBox);
     toolButtonSetLook (m_resizeButton,
-                         QString::fromLatin1 ("resize"),
-                         i18n ("&Resize"));
+                       QString::fromLatin1 ("resize"),
+                       i18n ("&Resize"));
 
     m_scaleButton = new QToolButton (m_operationGroupBox);
     toolButtonSetLook (m_scaleButton,
-                         QString::fromLatin1 ("scale"),
-                         i18n ("&Scale"));
+                       QString::fromLatin1 ("scale"),
+                       i18n ("&Scale"));
 
     m_smoothScaleButton = new QToolButton (m_operationGroupBox);
     toolButtonSetLook (m_smoothScaleButton,
-                         QString::fromLatin1 ("smooth_scale"),
-                         i18n ("S&mooth Scale"));
+                       QString::fromLatin1 ("smooth_scale"),
+                       i18n ("S&mooth Scale"));
 
 
     //m_resizeLabel = new QLabel (i18n ("&Resize"), m_operationGroupBox);
