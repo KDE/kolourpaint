@@ -5,15 +5,24 @@ $Id$
 Currently Underway
 ==================
 
-clean up kpmainwindow
+Zoom zooms into/out of the centre, not the top-left (like a camera)
 
-config dialogs (look into new kconfig generator)
+Image/Autocrop
 
 fix selections; implement free-form selection
 - clean interface
 - drastically improve performance
 - Undo/Redo
 - transparent & opaque selections
+
+
+clean up kpmainwindow
+- statusbar
+- greying out colortoolbar when disabled
+- settings menu
+- propagation of settings thru mainwindows
+
+config dialogs (look into new kconfig generator)
 
 Image menu items as ordinary tools
 honour background colour for Skew, Rotate
@@ -27,8 +36,6 @@ paste text (editable after you paste it)
 Killer Feature: with flow tools (pen, brush, spraycan), holding SHIFT forces horizontal drawing;
                 CTRL forces vertical - so those of us without perfectly steady hands
                 can still draw straight without continually hitting the Undo button :)
-
-Zoom zooms into/out of the centre, not the top-left (like a camera)
 
 
 Before 1.0
@@ -57,6 +64,10 @@ Rethink kpView/kpViewManager design because of:
 - flicker
 - performance
 - difficult selection handling, esp. drawing the selction border
+Ideas:
+- region-based rendering (for performance)
+- blockUpdates() for transaction-based rendering (removes flicker)
+- do something about this horrible tempPixmap hack (it slooooow)
 
 kptoolwidgetbase - spacing between items, make contentsRect() actual size wanted
 
@@ -66,7 +77,7 @@ fill - can optimise mem usage by deleting kpFloodFill object
        when execute() (don't derive object)
      - can optimise mem usage by detecting single colour fills
 
-brush shape in wrong place if zoom smaller
+brush shape in wrong place if zoom smaller (or scroll with wheel)
 
 still some flicker if:
 1. you've used the brush before
@@ -91,13 +102,6 @@ transparent images
 
 tool/curve
 
-network friendly:
-- file dialog authentication - pass around mainwindow widget
-- async save
-
-tool icons - if a more experienced artist doesn't offer to draw new ones,
-I'll be forced to redo them myself once transparency is supported
-
 colour depth audit
 - do 8-bit pixmaps work?
 - are we incorrectly using kpDocument::setPixmap() with mono pixmaps?
@@ -105,6 +109,14 @@ colour depth audit
 rewrite colour eraser
 - faster
 - rwlbuis' test
+
+zoom levels < 100%
+
+Image/Convert Colour Depth (only be able to dither to colour depths lower
+than the current display - limitation of X)
+
+tool icons - if a more experienced artist doesn't offer to draw new ones,
+I'll be forced to redo them myself once transparency is supported
 
 
 After 1.0
@@ -119,7 +131,6 @@ ability to specify measurements in pt,mm,cm,m,in instead of just pixels
 ruler
 
 grid for zoom levels > 200 but % 100 != 0
-zoom levels < 100%
 
 maybe allow editing when a selection is active (selection becomes bounding rect)
 
@@ -136,12 +147,10 @@ philosophy of the app, which seems to be simplicity." -- Tom
 
 offer to save Undo/Redo QPixmap's as PNGs to save memory
 
-colour depth - limitation of X
-
 Edit/Find a particular colour
 
 fullscreen
-allow user to disable Tool Box & Colour Palette if they really insist
+allow user to hide Tool Box & Colour Palette if they really insist
 
 "Open documents in the same window" mode - goes against what most KDE apps do
 but it is convenient sometimes
@@ -153,9 +162,16 @@ colour palette shows frequently used colours for the current image
 
 blur & sharpen
 
+tool/ruler (can even measure length & angle of diagonal lines)
+
 readonly mode
 
-Edit/Paste gives the option of resizing the view to the size of the pasted selection
+network friendly - async save with progress bar
 
-Edit/Paste Screenshot
+Edit/Paste in New Window; if !kpMainWindow::shouldOpenInNewWindow(),
+it should resize the existing view to fit the selection (most useful if
+view is too large since we already enlarge view if too small with
+ordinary Edit/Paste anyway) - maybe we'd have to rename the action in
+this case (but wouldn't an action with 2 names be confusing?).
+
 
