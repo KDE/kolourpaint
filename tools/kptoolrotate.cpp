@@ -311,10 +311,6 @@ void kpToolRotateDialog::createAngleGroupBox ()
     m_angleCustomInput->setMaxValue (+359);
     QLabel *degreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
 
-    QWidget *verticalSpaceWidget = new QWidget (angleGroupBox);
-    verticalSpaceWidget->setMinimumSize (1, spacingHint ());
-    QPushButton *updatePreviewPushButton = new QPushButton (i18n ("Update &Preview"), angleGroupBox);
-
 
     m_angleButtonGroup = new QButtonGroup (angleGroupBox);
     m_angleButtonGroup->hide ();
@@ -340,9 +336,6 @@ void kpToolRotateDialog::createAngleGroupBox ()
     angleLayout->addWidget (m_angleCustomInput, 3, 1);
     angleLayout->addWidget (degreesLabel, 3, 2);
 
-    angleLayout->addMultiCellWidget (verticalSpaceWidget, 4, 4, 0, 2);
-    angleLayout->addMultiCellWidget (updatePreviewPushButton, 5, 5, 0, 2, Qt::AlignRight);
-
     angleLayout->setColStretch (1, 2);  // Stretch Custom Angle Input
 
 
@@ -359,9 +352,6 @@ void kpToolRotateDialog::createAngleGroupBox ()
              this, SLOT (slotUpdate ()));
 
     connect (m_angleCustomInput, SIGNAL (valueChanged (int)),
-             this, SLOT (slotUpdate ()));
-
-    connect (updatePreviewPushButton, SIGNAL (clicked ()),
              this, SLOT (slotUpdate ()));
 }
 

@@ -260,11 +260,6 @@ void kpToolSkewDialog::createAngleGroupBox ()
     QLabel *verticalSkewDegreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
 
 
-    QWidget *verticalSpaceWidget = new QWidget (angleGroupBox);
-    verticalSpaceWidget->setMinimumSize (1, spacingHint ());
-    QPushButton *updatePreviewPushButton = new QPushButton (i18n ("Update &Preview"), angleGroupBox);
-
-
     horizontalSkewLabel->setBuddy (m_horizontalSkewInput);
     verticalSkewLabel->setBuddy (m_verticalSkewInput);
 
@@ -282,16 +277,10 @@ void kpToolSkewDialog::createAngleGroupBox ()
     angleLayout->addWidget (m_verticalSkewInput, 1, 2);
     angleLayout->addWidget (verticalSkewDegreesLabel, 1, 3);
 
-    angleLayout->addMultiCellWidget (verticalSpaceWidget, 2, 2, 0, 3);
-    angleLayout->addMultiCellWidget (updatePreviewPushButton, 3, 3, 0, 3, Qt::AlignRight);
-
 
     connect (m_horizontalSkewInput, SIGNAL (valueChanged (int)),
              this, SLOT (slotUpdate ()));
     connect (m_verticalSkewInput, SIGNAL (valueChanged (int)),
-             this, SLOT (slotUpdate ()));
-
-    connect (updatePreviewPushButton, SIGNAL (clicked ()),
              this, SLOT (slotUpdate ()));
 
     slotUpdate ();

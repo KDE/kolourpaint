@@ -25,13 +25,14 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_TOOL_PREVIEW_DIALOG 1
+#define DEBUG_KP_TOOL_PREVIEW_DIALOG 0
 
 #include <kptoolpreviewdialog.h>
 
 #include <qlayout.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
+#include <qpushbutton.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -205,11 +206,18 @@ void kpToolPreviewDialog::createPreviewGroupBox ()
     connect (m_previewPixmapLabel, SIGNAL (resized ()),
              this, SLOT (updatePreview ()));
 
+    QPushButton *updatePushButton = new QPushButton (i18n ("&Update"),
+                                                     m_previewGroupBox);
+    connect (updatePushButton, SIGNAL (clicked ()),
+             this, SLOT (slotUpdate ()));
+
 
     QVBoxLayout *previewLayout = new QVBoxLayout (m_previewGroupBox,
-                                                  marginHint () * 2, spacingHint ());
+                                                  marginHint () * 2,
+                                                  QMAX (1, spacingHint () / 2));
 
-    previewLayout->addWidget (m_previewPixmapLabel, Qt::AlignCenter);
+    previewLayout->addWidget (m_previewPixmapLabel, 1/*stretch*/);
+    previewLayout->addWidget (updatePushButton, 0/*stretch*/, Qt::AlignHCenter);
 }
 
 
