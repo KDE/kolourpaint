@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -29,12 +29,11 @@
 #ifndef __kpselection_h__
 #define __kpselection_h__
 
+#include <qdatastream.h>
 #include <qobject.h>
+#include <qpixmap.h>
 #include <qpointarray.h>
 #include <qrect.h>
-
-
-class QPixmap;
 
 
 /*
@@ -58,6 +57,8 @@ public:
     kpSelection (const QPointArray &points, const QPixmap &pixmap = QPixmap ());
     kpSelection (const kpSelection &rhs);
     kpSelection &operator= (const kpSelection &rhs);
+    friend QDataStream &operator<< (QDataStream &stream, const kpSelection &selection);
+    friend QDataStream &operator>> (QDataStream &stream, kpSelection &selection);
     ~kpSelection ();
 
     Type type () const;
@@ -94,6 +95,5 @@ private:
     QPointArray m_points;
     QPixmap *m_pixmap;
 };
-
 
 #endif  // __kpselection_h__
