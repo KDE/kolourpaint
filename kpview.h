@@ -178,6 +178,7 @@ private:
     void paintEventDrawTempPixmap (QPixmap *destPixmap, const QRect &docRect);
     void paintEventDrawGridLines (QPainter *painter, const QRect &viewRect);
 
+    void paintEventDrawRect (const QRect &viewRect);
     virtual void paintEvent (QPaintEvent *e);
 
     QPixmap *m_backBuffer;
