@@ -62,6 +62,8 @@ public:
     void setBackgroundColor (const QColor &color);
 
 private:
+    Qt::Orientation m_orientation;
+
     KColorButton *m_colorButton [2];
 };
 
@@ -83,6 +85,8 @@ signals:
     void backgroundColorChanged (const QColor &color);
 
 protected:
+    Qt::Orientation m_orientation;
+
     virtual void paintCell (QPainter *painter, int row, int col);
     virtual void mouseReleaseEvent (QMouseEvent *e);
 
@@ -117,6 +121,8 @@ public slots:
     void setBackgroundColor (const QColor &color);
 
 private:
+    virtual void setOrientation (Qt::Orientation o);
+
     kpDualColorButton *m_dualColorButton;
     kpColorCells *m_colorCells;
 };

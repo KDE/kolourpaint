@@ -349,6 +349,11 @@ kpColorToolBar::kpColorToolBar (QWidget *parent, const char *name)
     KToolBar::insertWidget (0, base->width (), base);
 }
 
+// virtual
+void kpColorToolBar::setOrientation (Qt::Orientation o)
+{
+}
+
 kpColorToolBar::~kpColorToolBar ()
 {
 }
