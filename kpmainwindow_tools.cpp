@@ -330,12 +330,12 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
 
     if (previousTool)
     {
-        disconnect (previousTool, SIGNAL (movedAndAboutToDraw (const QPoint &, const QPoint &, int)),
-                    m_scrollView, SLOT (beginDragScroll (const QPoint &, const QPoint &, int)));
+        disconnect (previousTool, SIGNAL (movedAndAboutToDraw (const QPoint &, const QPoint &, int, bool *)),
+                    this, SLOT (slotDragScroll (const QPoint &, const QPoint &, int, bool *)));
         disconnect (previousTool, SIGNAL (endedDraw (const QPoint &)),
-                    m_scrollView, SLOT (endDragScroll ()));
+                    this, SLOT (slotEndDragScroll ()));
         disconnect (previousTool, SIGNAL (cancelledShape (const QPoint &)),
-                    m_scrollView, SLOT (endDragScroll ()));
+                    this, SLOT (slotEndDragScroll ()));
 
         disconnect (previousTool, SIGNAL (userMessageChanged (const QString &)),
                     this, SLOT (recalculateStatusBarMessage ()));
@@ -356,12 +356,12 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
 
     if (tool)
     {
-        connect (tool, SIGNAL (movedAndAboutToDraw (const QPoint &, const QPoint &, int)),
-                 m_scrollView, SLOT (beginDragScroll (const QPoint &, const QPoint &, int)));
+        connect (tool, SIGNAL (movedAndAboutToDraw (const QPoint &, const QPoint &, int, bool *)),
+                 this, SLOT (slotDragScroll (const QPoint &, const QPoint &, int, bool *)));
         connect (tool, SIGNAL (endedDraw (const QPoint &)),
-                 m_scrollView, SLOT (endDragScroll ()));
+                 this, SLOT (slotEndDragScroll ()));
         connect (tool, SIGNAL (cancelledShape (const QPoint &)),
-                 m_scrollView, SLOT (endDragScroll ()));
+                 this, SLOT (slotEndDragScroll ()));
 
         connect (tool, SIGNAL (userMessageChanged (const QString &)),
                  this, SLOT (recalculateStatusBarMessage ()));
@@ -428,6 +428,43 @@ void kpMainWindow::saveLastTool ()
 
     cfg->writeEntry (kpSettingLastTool, number);
     cfg->sync ();
+}
+
+
+// private
+bool kpMainWindow::maybeDragScrollingMainView () const
+{
+    return (tool () && m_mainView &&
+            tool ()->viewUnderStartPoint () == m_mainView);
+}
+
+// private slot
+bool kpMainWindow::slotDragScroll (const QPoint &docPoint,
+                                   const QPoint &docLastPoint,
+                                   int zoomLevel,
+                                   bool *scrolled)
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotDragScroll() maybeDragScrolling="
+               << maybeDragScrollingMainView ()
+               << endl;
+#endif
+
+    if (maybeDragScrollingMainView ())
+    {
+        return m_scrollView->beginDragScroll (docPoint, docLastPoint, zoomLevel, scrolled);
+    }
+    else
+    {
+        return false;
+    }
+}
+
+// private slot
+bool kpMainWindow::slotEndDragScroll ()
+{
+    // (harmless if haven't started drag scroll)
+    return m_scrollView->endDragScroll ();
 }
 
 

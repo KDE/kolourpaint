@@ -70,7 +70,7 @@ public:
 
 signals:
     void beganDraw ();
-    void continuedDraw (int viewDX, int viewDY);
+    void continuedDraw (int viewDX, int viewDY, bool dueToDragScroll);
     void cancelledDraw ();
     void endedDraw (int viewDX, int viewDY);
 
@@ -92,7 +92,8 @@ protected:
     virtual void keyReleaseEvent (QKeyEvent *e);
     virtual void mousePressEvent (QMouseEvent *e);
 public:
-    void mouseMovedTo (const QPoint &point);
+    QPoint viewDeltaPoint () const;
+    void mouseMovedTo (const QPoint &point, bool dueToDragScroll);
 protected:
     virtual void mouseMoveEvent (QMouseEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
@@ -166,7 +167,7 @@ protected:
 
 protected slots:
     void slotGripBeganDraw ();
-    void slotGripContinuedDraw (int viewDX, int viewDY);
+    void slotGripContinuedDraw (int viewDX, int viewDY, bool dueToScrollView);
     void slotGripCancelledDraw ();
     void slotGripEndedDraw (int viewDX, int viewDY);
 
@@ -197,11 +198,15 @@ public slots:
     // TODO: Why the QPoint's?
     //       Why the need for view's zoomLevel?  We have the view() anyway.
     bool beginDragScroll (const QPoint &, const QPoint &,
+                          int zoomLevel,
+                          bool *didSomething);
+    bool beginDragScroll (const QPoint &, const QPoint &,
                           int zoomLevel);
     bool endDragScroll ();
 
 protected slots:
-    void slotDragScroll ();
+    bool slotDragScroll (bool *didSomething);
+    bool slotDragScroll ();
 
 protected:
     QRect noDragScrollRect () const;

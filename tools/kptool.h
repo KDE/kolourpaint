@@ -181,7 +181,8 @@ signals:
     // The slot should return whether the mouse pos may have changed.
     // Used by drag scrolling.
     bool movedAndAboutToDraw (const QPoint &currentPoint, const QPoint &lastPoint,
-                              int zoomLevel);
+                              int zoomLevel,
+                              bool *scrolled);
 
     // emitted after endDraw() has been called
     void endedDraw (const QPoint &point);

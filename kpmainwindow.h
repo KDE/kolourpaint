@@ -214,6 +214,15 @@ private:
     int toolNumber () const;
     void saveLastTool ();
 
+private:
+    bool maybeDragScrollingMainView () const;
+private slots:
+    bool slotDragScroll (const QPoint &docPoint,
+                         const QPoint &docLastPoint,
+                         int zoomLevel,
+                         bool *didSomething);
+    bool slotEndDragScroll ();
+
 private slots:
     void slotBeganDocResize ();
     void slotContinuedDocResize (const QSize &size);

@@ -1023,14 +1023,28 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
     #if DEBUG_KP_TOOL && 0
         kdDebug () << "\tDraw!" << endl;
     #endif
-        // If the view moved beneath the cursor, update the current point.
-        // Note: If no slot is connected to this signal, m_currentPoint
-        //       may or may not be updated but this ok since the view has
-        //       not moved and currentPoint() "always" returns the correct
-        //       currentPoint (which in this case == m_currentPoint).
-        if (/*signal*/movedAndAboutToDraw (m_currentPoint, m_lastPoint, view->zoomLevelX ()))
+        
+        bool dragScrolled = false;
+        movedAndAboutToDraw (m_currentPoint, m_lastPoint, view->zoomLevelX (), &dragScrolled);
+
+        if (dragScrolled)
+        {
             m_currentPoint = currentPoint ();
+            
+            // Scrollview has scrolled contents and has scheduled an update
+            // for the newly exposed region.  If draw() schedules an update
+            // as well (instead of immediately updating), the scrollview's
+            // update will be executed first and it'll only update part of
+            // the screen resulting in ugly tearing of the viewManager's
+            // tempPixmap.
+            viewManager ()->setFastUpdates ();
+        }
+        
         draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+        
+        if (dragScrolled)
+            viewManager ()->restoreFastUpdates ();
+        
         m_lastPoint = m_currentPoint;
     }
     else
