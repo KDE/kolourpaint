@@ -100,6 +100,7 @@ void kpMainWindow::slotActionShowPathToggled (bool on)
 // private slot
 void kpMainWindow::slotConfigure ()
 {
+    // TODO: parent
     kpConfigDialog *dialog = new kpConfigDialog ();
     dialog->exec ();
     delete dialog;
@@ -108,7 +109,8 @@ void kpMainWindow::slotConfigure ()
 // private slot
 void kpMainWindow::slotKeyBindings ()
 {
-    KKeyDialog::configure (actionCollection ());
+    // TODO: wrong - need propagate to other mainWindows
+    KKeyDialog::configure (actionCollection (), this);
     actionCollection ()->readShortcutSettings ();
 }
 
@@ -116,6 +118,7 @@ void kpMainWindow::slotKeyBindings ()
 void kpMainWindow::slotConfigureToolBars ()
 {
     // TODO: wrong
+    // TODO: parent
     KEditToolbar dialog (actionCollection ());
     if (dialog.exec ())
         createGUI ();
