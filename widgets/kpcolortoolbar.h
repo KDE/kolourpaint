@@ -125,6 +125,7 @@ public slots:
 private:
     virtual void setOrientation (Qt::Orientation o);
 
+    QBoxLayout *m_boxLayout;
     kpDualColorButton *m_dualColorButton;
     kpColorCells *m_colorCells;
 };

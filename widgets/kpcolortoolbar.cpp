@@ -395,17 +395,19 @@ kpColorToolBar::kpColorToolBar (QWidget *parent, const char *name)
     : KToolBar (parent, name)
 {
     QWidget *base = new QWidget (this);
-    QHBoxLayout *lay = new QHBoxLayout (base);
+    m_boxLayout = new QBoxLayout (base, QBoxLayout::LeftToRight);
 
     m_dualColorButton = new kpDualColorButton (base);
-    lay->addWidget (m_dualColorButton);
+    m_boxLayout->addWidget (m_dualColorButton);
 
     m_colorCells = new kpColorCells (base);
     connect (m_colorCells, SIGNAL (foregroundColorChanged (const QColor &)),
              SLOT (setForegroundColor (const QColor &)));
     connect (m_colorCells, SIGNAL (backgroundColorChanged (const QColor &)),
              SLOT (setBackgroundColor (const QColor &)));
-    lay->addWidget (m_colorCells);
+    m_boxLayout->addWidget (m_colorCells);
+
+    setOrientation (orientation ());
 
     KToolBar::insertWidget (0, base->width (), base);
 }
@@ -413,6 +415,26 @@ kpColorToolBar::kpColorToolBar (QWidget *parent, const char *name)
 // virtual
 void kpColorToolBar::setOrientation (Qt::Orientation o)
 {
+    // conveniently, QDockWindow::undock() calls us so that we can force
+    // the toolbar back to Horizontal :)
+    if (place () == QDockWindow::OutsideDock)
+    {
+        //kdDebug () << "\toutside dock, forcing it to be horizontal" << endl;
+        o = Qt::Horizontal;
+    }
+
+    if (o == Qt::Horizontal)
+    {
+        m_dualColorButton->setOrientation (Qt::Vertical);
+        m_boxLayout->setDirection (QBoxLayout::LeftToRight);
+    }
+    else
+    {
+        m_dualColorButton->setOrientation (Qt::Horizontal);
+        m_boxLayout->setDirection (QBoxLayout::TopToBottom);
+    }
+
+    m_colorCells->setOrientation (o);
 }
 
 kpColorToolBar::~kpColorToolBar ()
