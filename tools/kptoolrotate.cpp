@@ -301,9 +301,9 @@ void kpToolRotateDialog::createAngleGroupBox ()
     addCustomWidget (angleGroupBox);
 
 
-    m_angle90RadioButton = new QRadioButton (i18n ("&90 degrees"), angleGroupBox);
-    m_angle180RadioButton = new QRadioButton (i18n ("&180 degrees"), angleGroupBox);
-    m_angle270RadioButton = new QRadioButton (i18n ("&270 degrees"), angleGroupBox);
+    m_angle90RadioButton = new QRadioButton (i18n ("90 &degrees"), angleGroupBox);
+    m_angle180RadioButton = new QRadioButton (i18n ("180 d&egrees"), angleGroupBox);
+    m_angle270RadioButton = new QRadioButton (i18n ("270 de&grees"), angleGroupBox);
 
     m_angleCustomRadioButton = new QRadioButton (i18n ("C&ustom:"), angleGroupBox);
     m_angleCustomInput = new KIntNumInput (s_lastAngleCustom, angleGroupBox);
