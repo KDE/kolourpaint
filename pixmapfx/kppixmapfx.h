@@ -56,12 +56,16 @@ public:
      * If the flag <pretty> is set, it may dither the image making the
      * returned pixmap look better at the expense of exactness of conversion.
      *
-     * This will automatically call ensureNoAlphaChannel().
+     * This will automatically call ensureNoAlphaChannel().  If you pass a
+     * pointer through the <hadAlphaChannel> parameter, it will return
+     * whether or not the pixmap had an Alpha Channel (not just a mask)
+     * before the call to ensureNoAlphaChannel().
      *
      * Never use a foreign QPixmap that is offered to you - always get the
      * foreign QImage and use this function to convert it to a sane QPixmap.
      */
-    static QPixmap convertToPixmap (const QImage &image, bool pretty = false);
+    static QPixmap convertToPixmap (const QImage &image, bool pretty = false,
+                                    bool *hadAlphaChannel = 0);
 
 
     /*
