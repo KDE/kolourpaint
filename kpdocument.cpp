@@ -461,7 +461,7 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
                 i18n ("<qt><p>Saving the image at the low color depth of %1-bit"
                         " may result in the loss of color information."
 
-                        " Any transparency will also be removed."
+                        " Any transparency will also be removed.</p>"
 
                         "<p>Are you sure you want to save at this color depth?</p></qt>")
                     .arg (saveOptions.colorDepth ()),
