@@ -5,7 +5,8 @@ noinst_LTLIBRARIES = libkolourpaintwidgets.la
 libkolourpaintwidgets_la_SOURCES = kpcolortoolbar.cpp kptooltoolbar.cpp \
     kptoolwidgetbase.cpp kptoolwidgetbrush.cpp \
     kptoolwidgeterasersize.cpp kptoolwidgetfillstyle.cpp \
-    kptoolwidgetlinestyle.cpp kptoolwidgetlinewidth.cpp
+    kptoolwidgetlinestyle.cpp kptoolwidgetlinewidth.cpp \
+    kptoolwidgetspraycansize.cpp
 
 METASOURCES = AUTO
 
