@@ -120,7 +120,18 @@ public:
     kpViewScrollableContainer (kpMainWindow *parent, const char *name = 0);
     virtual ~kpViewScrollableContainer ();
 
+    // Same as contentsX() and contentsY() except that after
+    // contentsMovingSoon() is emitted and before the scrollview actually
+    // scrolls, they return the would be values of contentsX() and
+    // contentsY() after scrolling.
+    int contentsXSoon ();
+    int contentsYSoon ();
+
 signals:
+    // connect to this instead of contentsMoving(int,int) so that
+    // contentsXSoon() and contentsYSoon() work
+    void contentsMovingSoon (int contentsX, int contentsY);
+
     void beganDocResize ();
     void continuedDocResize (const QSize &size);
     void cancelledDocResize ();
@@ -128,6 +139,8 @@ signals:
 
     // (string.isEmpty() if kpViewScrollableContainer has nothing to say)
     void statusMessageChanged (const QString &string);
+
+    void resized ();
 
 public:
     QSize newDocSize () const;
@@ -220,9 +233,11 @@ protected:
     virtual bool eventFilter (QObject *watchedObject, QEvent *e);
     virtual void viewportPaintEvent (QPaintEvent *e);
     virtual void paintEvent (QPaintEvent *e);
+    virtual void resizeEvent (QResizeEvent *e);
 
 protected:
     kpMainWindow *m_mainWindow;
+    int m_contentsXSoon, m_contentsYSoon;
     kpView *m_view;
     kpGrip *m_bottomGrip, *m_rightGrip, *m_bottomRightGrip;
     kpGrip *m_docResizingGrip;

@@ -394,6 +394,7 @@ kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent,
                                                       const char *name)
     : QScrollView ((QWidget *) parent, name, Qt::WStaticContents | Qt::WNoAutoErase),
       m_mainWindow (parent),
+      m_contentsXSoon (-1), m_contentsYSoon (-1),
       m_view (0),
       m_bottomGrip (new kpGrip (kpGrip::Bottom, viewport (), "Bottom Grip")),
       m_rightGrip (new kpGrip (kpGrip::Right, viewport (), "Right Grip")),
@@ -432,6 +433,25 @@ kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent,
 
 kpViewScrollableContainer::~kpViewScrollableContainer ()
 {
+}
+
+
+// public
+int kpViewScrollableContainer::contentsXSoon ()
+{
+    if (m_contentsXSoon < 0)
+        return contentsX ();
+    else
+        return m_contentsXSoon;
+}
+
+// public
+int kpViewScrollableContainer::contentsYSoon ()
+{
+    if (m_contentsYSoon < 0)
+        return contentsY ();
+    else
+        return m_contentsYSoon;
 }
 
 
@@ -495,8 +515,8 @@ QSize kpViewScrollableContainer::newDocSize (int viewDX, int viewDY) const
     if (!docResizingGrip ())
         return QSize ();
 
-    const int docX = m_view->zoomViewToDocX (m_view->width () + viewDX);
-    const int docY = m_view->zoomViewToDocY (m_view->height () + viewDY);
+    const int docX = m_view->transformViewToDocX (m_view->width () + viewDX);
+    const int docY = m_view->transformViewToDocY (m_view->height () + viewDY);
 
     return QSize (QMAX (1, docX), QMAX (1, docY));
 }
@@ -719,8 +739,8 @@ void kpViewScrollableContainer::updateResizeLines (int viewX, int viewY,
 
     if (viewX >= 0 && viewY >= 0)
     {
-        m_resizeRoundedLastViewX = m_view->zoomDocToViewX (m_view->zoomViewToDocX (viewX));
-        m_resizeRoundedLastViewY = m_view->zoomDocToViewY (m_view->zoomViewToDocY (viewY));
+        m_resizeRoundedLastViewX = m_view->transformDocToViewX (m_view->transformViewToDocX (viewX));
+        m_resizeRoundedLastViewY = m_view->transformDocToViewY (m_view->transformViewToDocY (viewY));
 
         m_resizeRoundedLastViewDX = viewDX;
         m_resizeRoundedLastViewDY = viewDY;
@@ -796,8 +816,8 @@ void kpViewScrollableContainer::slotGripContinuedDraw (int inViewDX, int inViewD
 
     m_haveMovedFromOriginalDocSize = true;
 
-    updateResizeLines (QMAX (1, QMAX (m_view->width () + viewDX, m_view->zoomDocToViewX (1))),
-                       QMAX (1, QMAX (m_view->height () + viewDY, m_view->zoomDocToViewY (1))),
+    updateResizeLines (QMAX (1, QMAX (m_view->width () + viewDX, m_view->transformDocToViewX (1))),
+                       QMAX (1, QMAX (m_view->height () + viewDY, m_view->transformDocToViewY (1))),
                        viewDX, viewDY);
 
     emit continuedDocResize (newDocSize ());
@@ -921,15 +941,20 @@ void kpViewScrollableContainer::slotContentsMoving (int x, int y)
                << " contentsY=" << contentsY () << endl;
 #endif
 
+    m_contentsXSoon = x, m_contentsYSoon = y;
+    emit contentsMovingSoon (m_contentsXSoon, m_contentsYSoon);
+
     // Reduce flicker - don't let QScrollView scroll to-be-erased lines
     eraseResizeLines ();
 
     QTimer::singleShot (0, this, SLOT (slotContentsMoved ()));
 }
 
-// proteced slot
+// protected slot
 void kpViewScrollableContainer::slotContentsMoved ()
 {
+    m_contentsXSoon = m_contentsYSoon = -1;
+
     kpGrip *grip = docResizingGrip ();
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
     kdDebug () << "kpViewScrollableContainer::slotContentsMoved()"
@@ -1339,6 +1364,14 @@ void kpViewScrollableContainer::paintEvent (QPaintEvent *e)
 #endif
 
     QScrollView::paintEvent (e);
+}
+
+// protected virtual [base QScrollView]
+void kpViewScrollableContainer::resizeEvent (QResizeEvent *e)
+{
+    QScrollView::resizeEvent (e);
+
+    emit resized ();
 }
 
 

@@ -99,6 +99,8 @@
 #define kpSettingsGroupThumbnail QString::fromLatin1 ("Thumbnail Settings")
 #define kpSettingThumbnailShown QString::fromLatin1 ("Shown")
 #define kpSettingThumbnailGeometry QString::fromLatin1 ("Geometry")
+#define kpSettingThumbnailZoomed QString::fromLatin1 ("Zoomed")
+#define kpSettingThumbnailShowRectangle QString::fromLatin1 ("ShowRectangle")
 
 
 #define kpSettingsGroupPreviewSave QString::fromLatin1 ("Save Preview Settings")

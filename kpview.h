@@ -26,84 +26,351 @@
 */
 
 
-#ifndef __kpview_h__
-#define __kpview_h__
+#ifndef KP_VIEW_H
+#define KP_VIEW_H
+
 
 #include <qwidget.h>
-#include <qregion.h>
-#include <qwmatrix.h>
 
 #include <kpdefs.h>
 
 
-class QDragEnterEvent;
-class QDragLeaveEvent;
-class QDropEvent;
-class QFocusEvent;
-class QKeyEvent;
-class QPixmap;
-class QPoint;
-class QRect;
-class QRegion;
-class QSize;
-
 class kpDocument;
 class kpSelection;
 class kpTool;
-class kpMainWindow;
+class kpToolControllerIface;
 class kpViewManager;
+class kpViewScrollableContainer;
 
 
+/**
+ * @short Abstract base class for all views.
+ *
+ * This is the abstract base class for all views.  A view is a widget that
+ * renders a possibly zoomed onscreen representation of a document.
+ *
+ * 1 view corresponds to 1 document.
+ * 1 document corresponds to 0 or more views.
+ *
+ * @see kpViewManager
+ *
+ * @author Clarence Dang <dang@kde.org>
+ */
 class kpView : public QWidget
 {
 Q_OBJECT
 
 public:
-    kpView (QWidget *parent, const char *name,
-                kpMainWindow *mainWindow,
-                int width, int height,
-                bool autoVariableZoom = false);
+    /**
+     * Constructs a view.
+     *
+     * @param document The document this view is representing.
+     * @param toolController The controller for the current tool.
+     * @param viewManager The view manager.
+     * @param buddyView The view this view watches over (e.g. a thumbnail
+     *                  view would watch over the main view).  May be 0.
+     *                  See for example, highlightBuddyViewRectangle().
+     * @param buddyViewScrollView The buddyView's scrollview container.
+     *                            May be 0.
+     *
+     * You must call adjustEnvironment() at the end of your constructor.
+     */
+    kpView (kpDocument *document,
+            kpToolControllerIface *toolController,
+            kpViewManager *viewManager,
+            kpView *buddyView,
+            kpViewScrollableContainer *buddyViewScrollView,
+            QWidget *parent, const char *name);
+
+    /**
+     * Destructs this view.  Informs the viewManager() that the mouse
+     * cursor is no longer above this view.
+     */
     virtual ~kpView ();
 
-private:
-    void setHasMouse (bool yes = true);
+
+    /**
+     * @returns the document.
+     */
+    kpDocument *document () const;
+
+protected:
+    /**
+     * @returns the document's selection.
+     */
+    kpSelection *selection () const;
 
 public:
+    /**
+     * @returns the tool controller.
+     */
+    kpToolControllerIface *toolController () const;
+
+protected:
+    /**
+     * @returns the currently selected tool.
+     */
+    kpTool *tool () const;
+
+public:
+    /**
+     * @returns the view manager.
+     */
     kpViewManager *viewManager () const;
-    kpDocument *document () const;
-    kpSelection *selection () const;
-    bool hasVariableZoom () const;
 
-    // all incompatible with autoVariableZoom
+    /**
+     * @returns the buddy view.
+     */
+    kpView *buddyView () const;
+
+    /**
+     * @returns the buddyView()'s scrollview container.
+     */
+    kpViewScrollableContainer *buddyViewScrollView () const;
+
+
+    /**
+     * @returns the horizontal zoom level (100 is unzoomed).
+     */
     int zoomLevelX (void) const;
+
+    /**
+     * @returns the vertical zoom level (100 is unzoomed).
+     */
     int zoomLevelY (void) const;
-    bool setZoomLevel (int hzoom, int vzoom);
+
+    /**
+     * Sets the horizontal and vertical zoom levels.
+     *
+     * @param hzoom Horizontal zoom level.
+     * @param vzoom Vertical zoom level.
+     *
+     * If reimplementing, you must call this base implementation.
+     */
+    virtual void setZoomLevel (int hzoom, int vzoom);
+
+
+    /**
+     * @returns in views coordinates, where the top-left document() pixel
+     *          will be rendered (default: (0,0)).
+     */
+    QPoint origin () const;
+
+    /**
+     * Sets the origin.
+     *
+     * @param origin New origin.
+     *
+     * If reimplementing, you must call this base implementation.
+     */
+    virtual void setOrigin (const QPoint &origin);
+
+
+    /**
+     * @returns whether at this zoom level, the grid can be enabled.
+     *          This is based on whether the grid can be sensibly rendered.
+     */
+    bool canShowGrid () const;
+
+    /**
+     * @returns whether the grid is currently shown.
+     */
+    bool isGridShown () const;
+
+    /**
+     * Turns on/off the grid.
+     *
+     * @param yes Whether to enable the grid.
+     */
     void showGrid (bool yes = true);
-    bool canShowGrid (int hzoom = -1, int vzoom = -1) const;
 
-    // TODO: rename zoom*To* to transform*To* since we also do origin transformation
-    int zoomViewToDocX (int zoomedCoord) const;
-    int zoomViewToDocY (int zoomedCoord) const;
-    QPoint zoomViewToDoc (const QPoint &zoomedCoord) const;
-    QRect zoomViewToDoc (const QRect &zoomedRect) const;
 
-    int zoomDocToViewX (int doc_coord) const;
-    int zoomDocToViewY (int doc_coord) const;
-    QPoint zoomDocToView (const QPoint &doc_coord) const;
-    QRect zoomDocToView (const QRect &doc_rect) const;
+    /**
+     * @returns whether to draw a rectangle highlighting the area of
+     *          buddyView() visible through buddyViewScrollView().
+     */
+    bool isBuddyViewScrollViewRectangleShown () const;
 
-    virtual void resize (int w, int h);
-    virtual void resizeEvent (QResizeEvent *e);
+    /**
+     * Turns on/off the rectangle highlighting the area of buddyView()
+     * visible through buddyViewScrollView() and redraws.
+     *
+     * @param yes Whether to turn on the rectangle.
+     */
+    void showBuddyViewScrollViewRectangle (bool yes = true);
 
-    // (for kpViewManager)
-    void addToQueuedArea (const QRect &rect);
+protected:
+    /**
+     * @returns the current rectangle highlighting the area of buddyView()
+     *          visible through buddyViewScrollView(), that is being
+     *          rendered by this view.
+     */
+    QRect buddyViewScrollViewRectangle () const;
+
+protected slots:
+    /**
+     * Updates the buddyViewScrollViewRectangle() and redraws
+     * appropriately.
+     *
+     * This is already connected to zoomLevelChanged() and originChanged();
+     * buddyView() and buddyViewScrollView() signals.  There is probably no
+     * need to call this function directly.
+     */
+    void updateBuddyViewScrollViewRectangle ();
+
+
+public:
+
+    /**
+     * @param viewX Horizontal position in view coordinates.
+     *
+     * @returns viewX transformed to document coordinates, based on the
+     *                origin() and zoomLevelX().
+     */
+    int transformViewToDocX (int viewX) const;
+
+    /**
+     * @param viewY Vertical position in view coordinates.
+     *
+     * @returns viewY transformed to document coordinates, based on the
+     *                origin() and zoomLevelY().
+     */
+    int transformViewToDocY (int viewY) const;
+
+    /**
+     * @param viewPoint Position in view coordinates.
+     *
+     * @returns viewPoint transformed to document coordinates, based on the
+     *                    origin(), zoomLevelX() and zoomLevelY().
+     */
+    QPoint transformViewToDoc (const QPoint &viewPoint) const;
+
+    /**
+     * @param viewRect Rectangle in view coordinates.
+     *
+     * @returns viewRect transformed to document coordinates based on the
+     *                   origin(), zoomLevelX() and zoomLevelY().
+     *
+     * For bounding rectangles, you should use this function instead of
+     * transformViewToDocX(), transformViewToDocY() or transformViewToDoc()
+     * which act on coordinates only.
+     */
+    QRect transformViewToDoc (const QRect &viewRect) const;
+
+
+    /**
+     * @param docX Horizontal position in document coordinates.
+     *
+     * @returns docX transformed to view coordinates, based on the origin()
+     *               and zoomLevelX().
+     */
+    int transformDocToViewX (int docX) const;
+
+    /**
+     * @param docY Vertical position in document coordinates.
+     *
+     * @returns docY transformed to view coordinates, based on the origin()
+     *               and zoomLevelY().
+     */
+    int transformDocToViewY (int docY) const;
+
+    /**
+     * @param docPoint Position in document coordinates.
+     *
+     * @returns docPoint transformed to view coordinates, based on the
+     *                   origin(), zoomLevelX(), zoomLevelY().
+     */
+    QPoint transformDocToView (const QPoint &docPoint) const;
+
+    /**
+     * @param docRect Rectangle in document coordinates.
+     *
+     * @return docRect transformed to view coordinates, based on the
+     *                 origin(), zoomLevelX() and zoomLevelY().
+     *
+     * For bounding rectangles, you should use this function instead of
+     * transformDocToViewX(), transformDocToViewY() or transformDocToView()
+     * which act on coordinates only.
+     */
+    QRect transformDocToView (const QRect &docRect) const;
+
+
+    /**
+     * @returns the approximate view width required to display the entire
+     *          document(), based on the zoom level only.
+     */
+    int zoomedDocWidth () const;
+
+    /**
+     * @returns the approximate view height required to display the entire
+     *          document(), based on the zoom level only.
+     */
+    int zoomedDocHeight () const;
+
+
+protected:
+    /**
+     * Updates the viewManager() on whether or not the mouse is directly
+     * above this view.  Among other things, this ensures the brush cursor
+     * is updated.
+     *
+     * This should be called in event handlers.
+     *
+     * @param yes Whether the mouse is directly above this view.
+     */
+    void setHasMouse (bool yes = true);
+
+
+public:
+    /**
+     * Adds a region (in view coordinates) to the dirty area that is
+     * repainted when the parent @ref kpViewManager is set not to queue
+     * updates.
+     *
+     * @param region Region (in view coordinates) that needs repainting.
+     */
     void addToQueuedArea (const QRegion &region);
+
+    /**
+     * Convenience function.  Same as above.
+     *
+     * Adds a rectangle (in view coordinates) to the dirty area that is
+     * repainted when the parent @ref kpViewManager is set not to queue
+     * updates.
+     *
+     * @param rect Rectangle (in view coordinates) that needs repainting.
+     */
+     void addToQueuedArea (const QRect &rect);
+
+    /**
+     * Removes the dirty region that has been queued for updating.
+     * Does not update the view.
+     */
     void invalidateQueuedArea ();
+
+    /**
+     * Updates the part of the view described by dirty region and then
+     * calls invalidateQueuedArea().  Does nothing if @ref kpViewManager
+     * is set to queue updates.
+     */
     void updateQueuedArea ();
 
-signals:
-    void sizeChanged (int width, int height);
-    void sizeChanged (const QSize &size);
+
+public slots:
+    /**
+     * Call this when the "environment" (e.g. document size) changes.  The
+     * environment is defined by the caller and should be based on the type
+     * of view.  For instance, an unzoomed thumbnail view would also
+     * include in its environment the contents position of an associated
+     * scrollview.
+     *
+     * This is never called by the kpView base class.
+     *
+     * Implementors should change whatever state is neccessary for their
+     * type of view.  For instance, an unzoomed view would resize itself;
+     * a zoomed thumbnail would change the zoom level.
+     */
+    virtual void adjustToEnvironment () = 0;
 
 
 public:
@@ -141,36 +408,84 @@ public:
     bool mouseOnSelectionToSelectText (const QPoint &viewPoint = KP_INVALID_POINT) const;
 
 
-public slots:
-    // connect to document resize signal
-    bool slotUpdateVariableZoom ();
+signals:
+    /**
+     * Emitted after all zooming code has been executed.
+     *
+     * @param zoomLevelX New zoomLevelX()
+     * @param zoomLevelY New zoomLevelY()
+     */
+    void zoomLevelChanged (int zoomLevelX, int zoomLevelY);
 
-private:
-    bool updateVariableZoom (int viewWidth, int viewHeight);
+    /**
+     * Emitted after all resizing code has been executed.
+     *
+     * @param size New view size.
+     */
+    void sizeChanged (const QSize &size);
 
-    virtual void mousePressEvent (QMouseEvent *e);
+    /**
+     * Convenience signal - same as above.
+     *
+     * Emitted after all resizing code has been executed.
+     *
+     * @param width New view width.
+     * @param height New view height.
+     */
+    void sizeChanged (int width, int height);
+
+    /**
+     * Emitted after all origin changing code has been executed.
+     *
+     * @param origin The new origin.
+     */
+    void originChanged (const QPoint &origin);
+
+protected:
     virtual void mouseMoveEvent (QMouseEvent *e);
+    virtual void mousePressEvent (QMouseEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
+
     virtual void keyPressEvent (QKeyEvent *e);
     virtual void keyReleaseEvent (QKeyEvent *e);
+
     virtual void focusInEvent (QFocusEvent *e);
     virtual void focusOutEvent (QFocusEvent *e);
+
     virtual void enterEvent (QEvent *e);
     virtual void leaveEvent (QEvent *e);
+
     virtual void dragEnterEvent (QDragEnterEvent *);
     virtual void dragLeaveEvent (QDragLeaveEvent *);
 
-    kpMainWindow *m_mainWindow;
+public:
+    virtual void resize (int w, int h);
+protected:
+    virtual void resizeEvent (QResizeEvent *e);
 
-    bool m_autoVariableZoom;
-    int m_hzoom, m_vzoom;
-    QWMatrix m_docToViewMatrix;
-    bool m_showGrid;
 
-    QRegion m_queuedUpdateArea;
-
-private:
+protected:
     QRect paintEventGetDocRect (const QRect &viewRect) const;
+public:
+    /**
+     * Draws an opaque background representing transparency.  Currently,
+     * it draws a checkerboard.
+     *
+     * @param painter Painter.
+     * @param viewWidth Total width of the view visible to the user.
+     * @param viewHeight Total height of the view visible to the user.
+     * @param rect Rectangle to paint in relative to the painter.  Note
+     *             that this function does not clip and may draw slightly
+     *             more than the requested rectangle.  TODO: why not?
+     * @param isPreview Whether the view is for a preview as opposed to
+     *                  e.g. editing.  If set, this function may render
+     *                  slightly differently.
+     */
+    static void drawTransparentBackground (QPainter *painter,
+                                           int viewWidth, int viewHeight,
+                                           const QRect &rect,
+                                           bool isPreview = false);
+protected:
     void paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRect);
     void paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect);
     bool selectionResizeHandleAtomicSizeCloseToZoomLevel () const;
@@ -181,9 +496,10 @@ private:
     void paintEventDrawRect (const QRect &viewRect);
     virtual void paintEvent (QPaintEvent *e);
 
-    QPixmap *m_backBuffer;
-    QPoint m_origin;
-    bool m_needBorder;
+
+private:
+    struct kpViewPrivate *d;
 };
 
-#endif  // __kpview_h__
+
+#endif  // KP_VIEW_H

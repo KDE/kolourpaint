@@ -53,6 +53,7 @@
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kptool.h>
+#include <kpview.h>
 
 
 /*
@@ -298,10 +299,10 @@ void kpDualColorButton::drawContents (QPainter *p)
 
     if (isEnabled () && m_mainWindow)
     {
-        m_mainWindow->drawTransparentBackground (&backBufferPainter,
-                                                 m_backBuffer->width (), m_backBuffer->height (),
-                                                 m_backBuffer->rect (),
-                                                 true/*preview*/);
+        kpView::drawTransparentBackground (&backBufferPainter,
+                                           m_backBuffer->width (), m_backBuffer->height (),
+                                           m_backBuffer->rect (),
+                                           true/*preview*/);
     }
     else
     {

@@ -222,7 +222,7 @@ void kpToolToolBar::unregisterAllTools ()
 }
 
 
-// public
+// public virtual [base kpToolControllerIface]
 kpTool *kpToolToolBar::tool () const
 {
     return m_currentTool;

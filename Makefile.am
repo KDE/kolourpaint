@@ -1,4 +1,4 @@
-SUBDIRS = cursors pics pixmapfx tools widgets
+SUBDIRS = cursors pics pixmapfx tools views widgets
 
 bin_PROGRAMS = kolourpaint
 
@@ -35,10 +35,14 @@ kolourpaint_LDADD = $(LIB_KDEPRINT) \
     cursors/libkolourpaintcursors.la \
     pixmapfx/libkolourpaintpixmapfx.la \
     tools/libkolourpainttools.la \
+    views/libkolourpaintviews.la \
     widgets/libkolourpaintwidgets.la
 
-AM_CPPFLAGS = -I$(srcdir)/cursors -I$(srcdir)/pixmapfx \
-    -I$(srcdir)/tools -I$(srcdir)/widgets $(all_includes)
+AM_CPPFLAGS = -I$(srcdir)/cursors -I$(srcdir)/interfaces \
+    -I$(srcdir)/pixmapfx \
+    -I$(srcdir)/tools \
+    -I$(srcdir)/views \
+    -I$(srcdir)/widgets $(all_includes)
 
 METASOURCES = AUTO
 

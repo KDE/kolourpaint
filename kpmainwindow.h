@@ -68,7 +68,6 @@ class kpCommandHistory;
 class kpDocument;
 class kpDocumentMetaInfo;
 class kpDocumentSaveOptions;
-class kpView;
 class kpViewManager;
 class kpViewScrollableContainer;
 class kpSelection;
@@ -77,9 +76,11 @@ class kpSingleKeyTriggersAction;
 class kpSqueezedTextLabel;
 class kpTextStyle;
 class kpThumbnail;
+class kpThumbnailView;
 class kpTool;
 class kpToolText;
 class kpToolToolBar;
+class kpZoomedView;
 
 
 class kpMainWindow : public KMainWindow
@@ -111,6 +112,7 @@ private:
 
     bool m_configThumbnailShown;
     QRect m_configThumbnailGeometry;
+    bool m_configZoomedThumbnail;
 
     void readGeneralSettings ();
     void readThumbnailSettings ();
@@ -131,9 +133,9 @@ public:
 
 private:
     kpViewScrollableContainer *m_scrollView;
-    kpView *m_mainView;
+    kpZoomedView *m_mainView;
     kpThumbnail *m_thumbnail;
-    kpView *m_thumbnailView;
+    kpThumbnailView *m_thumbnailView;
     kpDocument *m_document;
     kpViewManager *m_viewManager;
     kpColorToolBar *m_colorToolBar;
@@ -162,12 +164,6 @@ private slots:
 
 private:
     virtual void moveEvent (QMoveEvent *e);
-
-public:
-    void drawTransparentBackground (QPainter *painter,
-                                    int viewWidth, int viewHeight,
-                                    const QRect &rect,
-                                    bool isPreview = false);
 
 private slots:
     void slotUpdateCaption ();
@@ -439,7 +435,8 @@ private:
             *m_actionFitToPage, *m_actionFitToWidth, *m_actionFitToHeight,
             *m_actionZoomIn, *m_actionZoomOut;
     KSelectAction *m_actionZoom;
-    KToggleAction *m_actionShowGrid, *m_actionShowThumbnail;
+    KToggleAction *m_actionShowGrid,
+                  *m_actionShowThumbnail, *m_actionZoomedThumbnail;
 
     QValueVector <int> m_zoomList;
 
@@ -486,7 +483,16 @@ public:
 private slots:
     void slotSaveThumbnailGeometry ();
     void slotShowThumbnailToggled ();
+    void updateThumbnailZoomed ();
+    void slotZoomedThumbnailToggled ();
+    void slotThumbnailShowRectangleToggled ();
+
 private:
+    void enableViewZoomedThumbnail (bool enable = true);
+    void enableViewShowThumbnailRectangle (bool enable = true);
+    void enableThumbnailOptionActions (bool enable = true);
+    void createThumbnailView ();
+    void destroyThumbnailView ();
     void updateThumbnail ();
 
 
@@ -649,6 +655,8 @@ private:
 
 struct kpMainWindowPrivate
 {
+    bool m_configThumbnailShowRectangle;
+    KToggleAction *m_actionShowThumbnailRectangle;
 };
 
 

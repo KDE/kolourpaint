@@ -53,9 +53,9 @@
 #include <kptoolresizescale.h>
 #include <kptoolselection.h>
 #include <kptooltext.h>
-#include <kpview.h>
 #include <kpviewmanager.h>
 #include <kpviewscrollablecontainer.h>
+#include <kpzoomedview.h>
 
 
 // private
@@ -275,7 +275,7 @@ QRect kpMainWindow::calcUsefulPasteRect (int pixmapWidth, int pixmapHeight)
         const QPoint viewTopLeft (m_scrollView->contentsX (),
                                   m_scrollView->contentsY ());
 
-        const QPoint docTopLeft = m_mainView->zoomViewToDoc (viewTopLeft);
+        const QPoint docTopLeft = m_mainView->transformViewToDoc (viewTopLeft);
 
         if ((docTopLeft.x () + pixmapWidth <= m_document->width () &&
              docTopLeft.y () + pixmapHeight <= m_document->height ()) ||

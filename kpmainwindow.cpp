@@ -51,10 +51,11 @@
 #include <kpthumbnail.h>
 #include <kptool.h>
 #include <kptooltoolbar.h>
-#include <kpview.h>
 #include <kpviewmanager.h>
 #include <kpviewscrollablecontainer.h>
 #include <kpwidgetmapper.h>
+#include <kpzoomedthumbnailview.h>
+#include <kpzoomedview.h>
 
 #if DEBUG_KP_MAIN_WINDOW
     #include <qdatetime.h>
@@ -145,10 +146,14 @@ void kpMainWindow::readThumbnailSettings ()
 
     m_configThumbnailShown = cfg->readBoolEntry (kpSettingThumbnailShown, false);
     m_configThumbnailGeometry = cfg->readRectEntry (kpSettingThumbnailGeometry);
+    m_configZoomedThumbnail = cfg->readBoolEntry (kpSettingThumbnailZoomed, true);
+    d->m_configThumbnailShowRectangle = cfg->readBoolEntry (kpSettingThumbnailShowRectangle, true);
 
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\t\tThumbnail Settings: shown=" << m_configThumbnailShown
                << " geometry=" << m_configThumbnailGeometry
+               << " zoomed=" << m_configZoomedThumbnail
+               << " showRectangle=" << d->m_configThumbnailShowRectangle
                << endl;
 #endif
 }
@@ -511,8 +516,9 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tcreating views" << endl;
     #endif
-        m_mainView = new kpView (m_scrollView->viewport (), "mainView", this,
-                                 m_document->width (), m_document->height ());
+        m_mainView = new kpZoomedView (m_document, m_toolToolBar, m_viewManager,
+                                       0/*buddyView*/, 0/*buddyViewScrollView*/,
+                                       m_scrollView->viewport (), "mainView");
         if (m_scrollView)
         {
             m_scrollView->addChild (m_mainView);
@@ -591,7 +597,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         connect (m_document, SIGNAL (contentsChanged (const QRect &)),
                  m_viewManager, SLOT (updateViews (const QRect &)));
         connect (m_document, SIGNAL (sizeChanged (int, int)),
-                 m_viewManager, SLOT (resizeViews (int, int)));
+                 m_viewManager, SLOT (adjustViewsToEnvironment ()));
 
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tenabling actions" << endl;
@@ -784,7 +790,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         {
             const QPoint viewPos = view->mapFromGlobal (globalPos);
 
-            selTopLeft = view->zoomViewToDoc (viewPos);
+            selTopLeft = view->transformViewToDoc (viewPos);
 
             // TODO: In terms of doc pixels, would be inconsistent behaviour
             //       based on zoomLevel of view.
@@ -835,48 +841,6 @@ void kpMainWindow::moveEvent (QMoveEvent * /*e*/)
 
         notifyThumbnailGeometryChanged ();
     }
-}
-
-
-// public
-void kpMainWindow::drawTransparentBackground (QPainter *painter,
-                                              int /*viewWidth*/, int /*viewHeight*/,
-                                              const QRect &rect,
-                                              bool isPreview)
-{
-    const int cellSize = !isPreview ? 16 : 10;
-
-    int starty = rect.y ();
-    if (starty % cellSize)
-        starty -= (starty % cellSize);
-
-    int startx = rect.x ();
-    if (startx % cellSize)
-        startx -= (startx % cellSize);
-
-    painter->save ();
-    for (int y = starty; y <= rect.bottom (); y += cellSize)
-    {
-        for (int x = startx; x <= rect.right (); x += cellSize)
-        {
-            bool parity = (x / cellSize + y / cellSize) % 2;
-            QColor col;
-
-            if (parity)
-            {
-                if (!isPreview)
-                    col = QColor (213, 213, 213);
-                else
-                    col = QColor (224, 224, 224);
-            }
-            else
-                col = Qt::white;
-
-            painter->fillRect (x - rect.x (), y - rect.y (), cellSize, cellSize,
-                               col);
-        }
-    }
-    painter->restore ();
 }
 
 

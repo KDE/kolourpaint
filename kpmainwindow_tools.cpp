@@ -62,6 +62,7 @@
 #include <kptooltoolbar.h>
 #include <kptoolwidgetopaqueortransparent.h>
 #include <kpviewscrollablecontainer.h>
+#include <kpzoomedview.h>
 
 
 // private

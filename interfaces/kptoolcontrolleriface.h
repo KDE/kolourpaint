@@ -26,40 +26,27 @@
 */
 
 
-#ifndef __kp_thumbnail_h__
-#define __kp_thumbnail_h__
-
-#include <qdockwindow.h>
-
-class kpMainWindow;
-class kpThumbnailView;
+#ifndef KP_TOOL_CONTROLLER_IFACE
+#define KP_TOOL_CONTROLLER_IFACE
 
 
-class kpThumbnail : public QDockWindow
+class kpTool;
+
+
+/**
+ * @short Implement this interface if you can return the currently selected
+ *        tool.
+ *
+ * @author Clarence Dang <dang@kde.org>
+ */
+class kpToolControllerIface
 {
-Q_OBJECT
-
 public:
-    kpThumbnail (kpMainWindow *parent, const char *name = 0);
-    virtual ~kpThumbnail ();
-
-public:
-    kpThumbnailView *view () const;
-    void setView (kpThumbnailView *view);
-
-public slots:
-    void updateCaption ();
-
-    virtual void dock ();
-
-protected:
-    virtual void resizeEvent (QResizeEvent *e);
-    virtual void moveEvent (QMoveEvent *e);
-
-private:
-    kpMainWindow *m_mainWindow;
-    kpThumbnailView *m_view;
+    /**
+     * @returns the currently selected tool.
+     */
+    virtual kpTool *tool () const = 0;
 };
 
 
-#endif  // __kp_thumbnail_h__
+#endif  // KP_TOOL_CONTROLLER_IFACE

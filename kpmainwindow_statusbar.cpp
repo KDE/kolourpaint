@@ -41,9 +41,9 @@
 #include <kpdocument.h>
 #include <kpsqueezedtextlabel.h>
 #include <kptool.h>
-#include <kpview.h>
 #include <kpviewmanager.h>
 #include <kpviewscrollablecontainer.h>
+#include <kpzoomedview.h>
 
 
 // private

@@ -26,40 +26,65 @@
 */
 
 
-#ifndef __kp_thumbnail_h__
-#define __kp_thumbnail_h__
-
-#include <qdockwindow.h>
-
-class kpMainWindow;
-class kpThumbnailView;
+#ifndef KP_THUMBNAIL_VIEW
+#define KP_THUMBNAIL_VIEW
 
 
-class kpThumbnail : public QDockWindow
+#include <kpview.h>
+
+
+/**
+ * @short Abstract base class for all thumbnail views.
+ *
+ * @author Clarence Dang <dang@kde.org>
+ */
+class kpThumbnailView : public kpView
 {
 Q_OBJECT
 
 public:
-    kpThumbnail (kpMainWindow *parent, const char *name = 0);
-    virtual ~kpThumbnail ();
+    /**
+     * Constructs a thumbnail view.
+     *
+     * You must call adjustEnvironment() at the end of your constructor.
+     */
+    kpThumbnailView (kpDocument *document,
+                     kpToolControllerIface *toolController,
+                     kpViewManager *viewManager,
+                     kpView *buddyView,
+                     kpViewScrollableContainer *buddyViewScrollView,
+                     QWidget *parent, const char *name);
 
-public:
-    kpThumbnailView *view () const;
-    void setView (kpThumbnailView *view);
+    /**
+     * Destructs this thumbnail view.
+     */
+    virtual ~kpThumbnailView ();
 
-public slots:
-    void updateCaption ();
 
-    virtual void dock ();
+    /**
+     * @returns the caption to display in an enclosing thumbnail window.
+     */
+    virtual QString caption () const = 0;
+
 
 protected:
-    virtual void resizeEvent (QResizeEvent *e);
-    virtual void moveEvent (QMoveEvent *e);
+    /**
+     * Sets the mask to cover the rectangle with top-left, origin() and
+     * dimensions equal to or slightly less than (in case of rounding
+     * error) the size of the document in view coordinates.  This ensures
+     * that all pixels are initialised with either document pixels or the
+     * standard widget background.
+     */
+    void setMaskToCoverDocument ();
 
-private:
-    kpMainWindow *m_mainWindow;
-    kpThumbnailView *m_view;
+
+    /**
+     * Calls adjustToEnvironment() in response to a resize event.
+     *
+     * Extends @ref kpView.
+     */
+    virtual void resizeEvent (QResizeEvent *e);
 };
 
 
-#endif  // __kp_thumbnail_h__
+#endif  // KP_THUMBNAIL_VIEW

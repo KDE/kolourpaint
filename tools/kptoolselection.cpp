@@ -489,13 +489,13 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
         kdDebug () << "\t\tcreateNOPTimer->isActive()="
                    << m_createNOPTimer->isActive ()
                    << " viewManhattanLength from startPoint="
-                   << m_viewUnderStartPoint->zoomDocToViewX ((thisPoint - m_startPoint).manhattanLength ())
+                   << m_viewUnderStartPoint->transformDocToViewX ((thisPoint - m_startPoint).manhattanLength ())
                    << endl;
     #endif
 
         if (m_createNOPTimer->isActive ())
         {
-            if (m_viewUnderStartPoint->zoomDocToViewX ((thisPoint - m_startPoint).manhattanLength ()) <= 6)
+            if (m_viewUnderStartPoint->transformDocToViewX ((thisPoint - m_startPoint).manhattanLength ()) <= 6)
             {
             #if DEBUG_KP_TOOL_SELECTION && 1
                 kdDebug () << "\t\tsuppress accidental movement" << endl;

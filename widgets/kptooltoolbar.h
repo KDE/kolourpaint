@@ -30,7 +30,10 @@
 #define __kp_tool_tool_bar_h__
 
 #include <qvaluevector.h>
+
 #include <ktoolbar.h>
+
+#include <kptoolcontrolleriface.h>
 
 class QBoxLayout;
 class QButton;
@@ -49,7 +52,7 @@ class kpToolWidgetLineWidth;
 class kpToolWidgetOpaqueOrTransparent;
 class kpToolWidgetSpraycanSize;
 
-class kpToolToolBar : public KToolBar
+class kpToolToolBar : public KToolBar, public kpToolControllerIface
 {
 Q_OBJECT
 
@@ -61,7 +64,8 @@ public:
     void unregisterTool (kpTool *tool);
     void unregisterAllTools ();
 
-    kpTool *tool () const;
+    /* kpToolControllerIface */
+    virtual kpTool *tool () const;
     void selectTool (const kpTool *tool, bool reselectIfSameTool = false);
 
     kpTool *previousTool () const;

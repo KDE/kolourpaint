@@ -44,10 +44,13 @@
 #include <kpdocument.h>
 #include <kpthumbnail.h>
 #include <kptool.h>
-#include <kpview.h>
+#include <kptooltoolbar.h>
+#include <kpunzoomedthumbnailview.h>
 #include <kpviewmanager.h>
 #include <kpviewscrollablecontainer.h>
 #include <kpwidgetmapper.h>
+#include <kpzoomedview.h>
+#include <kpzoomedthumbnailview.h>
 
 
 // private
@@ -95,6 +98,21 @@ void kpMainWindow::setupViewMenuActions ()
         this, SLOT (slotShowThumbnailToggled ()), actionCollection (), "view_show_thumbnail");
     m_actionShowThumbnail->setCheckedState (i18n ("Hide T&humbnail"));
 
+    // Please do not use setCheckedState() here - it wouldn't make sense
+    m_actionZoomedThumbnail = new KToggleAction (i18n ("Zoo&med Thumbnail Mode"), 0,
+        this, SLOT (slotZoomedThumbnailToggled ()), actionCollection (), "view_zoomed_thumbnail");
+
+    // For consistency with the above action, don't use setCheckedState()
+    //
+    // Also, don't use "Show Thumbnail Rectangle" because if entire doc
+    // can be seen in scrollView, checking option won't "Show" anything
+    // since rect _surrounds_ entire doc (hence, won't be rendered).
+    d->m_actionShowThumbnailRectangle = new KToggleAction (
+        i18n ("Enable Thumbnail &Rectangle"),
+        0,
+        this, SLOT (slotThumbnailShowRectangleToggled ()),
+        actionCollection (), "view_show_thumbnail_rectangle");
+
 
     enableViewMenuDocumentActions (false);
 }
@@ -122,7 +140,10 @@ void kpMainWindow::enableViewMenuDocumentActions (bool enable)
     m_actionZoom->setEnabled (enable);
 
     actionShowGridUpdate ();
+
     m_actionShowThumbnail->setEnabled (enable);
+    enableThumbnailOptionActions (enable);
+
 
     // TODO: for the time being, assume that we start at zoom 100%
     //       with no grid
@@ -413,6 +434,9 @@ void kpMainWindow::finishZoomTo ()
 }
 #endif
 
+    // TODO: setUpdatesEnabled() should really return to old value
+    //       - not neccessarily "true"
+
     if (m_mainView)
     {
         m_mainView->setUpdatesEnabled (true);
@@ -610,7 +634,7 @@ QRect kpMainWindow::mapFromGlobal (const QRect &rect) const
 void kpMainWindow::slotDestroyThumbnailIfNotVisible (bool tnIsVisible)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "slotDestroyThumbnailIfNotVisible(isVisible="
+    kdDebug () << "kpMainWindow::slotDestroyThumbnailIfNotVisible(isVisible="
                << tnIsVisible
                << ")"
                << endl;
@@ -625,13 +649,22 @@ void kpMainWindow::slotDestroyThumbnailIfNotVisible (bool tnIsVisible)
 // private slot
 void kpMainWindow::slotDestroyThumbnail ()
 {
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotDestroyThumbnail()" << endl;
+#endif
+
     m_actionShowThumbnail->setChecked (false);
+    enableThumbnailOptionActions (false);
     updateThumbnail ();
 }
 
 // private slot
 void kpMainWindow::slotDestroyThumbnailInitatedByUser ()
 {
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotDestroyThumbnailInitiatedByUser()" << endl;
+#endif
+
     m_actionShowThumbnail->setChecked (false);
     slotShowThumbnailToggled ();
 }
@@ -639,7 +672,12 @@ void kpMainWindow::slotDestroyThumbnailInitatedByUser ()
 // private slot
 void kpMainWindow::slotCreateThumbnail ()
 {
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotCreateThumbnail()" << endl;
+#endif
+
     m_actionShowThumbnail->setChecked (true);
+    enableThumbnailOptionActions (true);
     updateThumbnail ();
 }
 
@@ -698,9 +736,6 @@ void kpMainWindow::slotShowThumbnailToggled ()
     kdDebug () << "kpMainWindow::slotShowThumbnailToggled()" << endl;
 #endif
 
-    updateThumbnail ();
-
-
     m_configThumbnailShown = m_actionShowThumbnail->isChecked ();
 
     KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupThumbnail);
@@ -708,7 +743,171 @@ void kpMainWindow::slotShowThumbnailToggled ()
 
     cfg->writeEntry (kpSettingThumbnailShown, m_configThumbnailShown);
     cfg->sync ();
+
+
+    enableThumbnailOptionActions (m_actionShowThumbnail->isChecked ());
+    updateThumbnail ();
 }
+
+// private slot
+void kpMainWindow::updateThumbnailZoomed ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::updateThumbnailZoomed() zoomed="
+               << m_actionZoomedThumbnail->isChecked () << endl;
+#endif
+
+    if (!m_thumbnailView)
+        return;
+
+    destroyThumbnailView ();
+    createThumbnailView ();
+}
+
+// private slot
+void kpMainWindow::slotZoomedThumbnailToggled ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotZoomedThumbnailToggled()" << endl;
+#endif
+
+    m_configZoomedThumbnail = m_actionZoomedThumbnail->isChecked ();
+
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupThumbnail);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    cfg->writeEntry (kpSettingThumbnailZoomed, m_configZoomedThumbnail);
+    cfg->sync ();
+
+
+    updateThumbnailZoomed ();
+}
+
+// private slot
+void kpMainWindow::slotThumbnailShowRectangleToggled ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotThumbnailShowRectangleToggled()" << endl;
+#endif
+
+    d->m_configThumbnailShowRectangle = d->m_actionShowThumbnailRectangle->isChecked ();
+
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupThumbnail);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    cfg->writeEntry (kpSettingThumbnailShowRectangle, d->m_configThumbnailShowRectangle);
+    cfg->sync ();
+
+
+    if (m_thumbnailView)
+    {
+        m_thumbnailView->showBuddyViewScrollViewRectangle (
+            d->m_actionShowThumbnailRectangle->isChecked ());
+    }
+}
+
+// private
+void kpMainWindow::enableViewZoomedThumbnail (bool enable)
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::enableSettingsViewZoomedThumbnail()" << endl;
+#endif
+
+    m_actionZoomedThumbnail->setEnabled (enable &&
+        m_actionShowThumbnail->isChecked ());
+
+    // Note: Don't uncheck if disabled - being able to see the zoomed state
+    //       before turning on the thumbnail can be useful.
+    m_actionZoomedThumbnail->setChecked (m_configZoomedThumbnail);
+}
+
+// private
+void kpMainWindow::enableViewShowThumbnailRectangle (bool enable)
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::enableViewShowThumbnailRectangle()" << endl;
+#endif
+
+    d->m_actionShowThumbnailRectangle->setEnabled (enable &&
+        m_actionShowThumbnail->isChecked ());
+
+    // Note: Don't uncheck if disabled for consistency with
+    //       enableViewZoomedThumbnail()
+    d->m_actionShowThumbnailRectangle->setChecked (
+        d->m_configThumbnailShowRectangle);
+}
+
+// private
+void kpMainWindow::enableThumbnailOptionActions (bool enable)
+{
+    enableViewZoomedThumbnail (enable);
+    enableViewShowThumbnailRectangle (enable);
+}
+
+
+// private
+void kpMainWindow::createThumbnailView ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\t\tcreating new kpView:" << endl;
+#endif
+
+    if (m_thumbnailView)
+    {
+        kdDebug () << "kpMainWindow::createThumbnailView() had to destroy view" << endl;
+        destroyThumbnailView ();
+    }
+
+    if (m_actionZoomedThumbnail->isChecked ())
+    {
+        m_thumbnailView = new kpZoomedThumbnailView (
+            m_document, m_toolToolBar, m_viewManager,
+            m_mainView, m_scrollView,
+            m_thumbnail, "thumbnailView");
+    }
+    else
+    {
+        m_thumbnailView = new kpUnzoomedThumbnailView (
+            m_document, m_toolToolBar, m_viewManager,
+            m_mainView, m_scrollView,
+            m_thumbnail, "thumbnailView");
+
+    }
+
+    m_thumbnailView->showBuddyViewScrollViewRectangle (
+        d->m_actionShowThumbnailRectangle->isChecked ());
+
+
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\t\tgive kpThumbnail the kpView:" << endl;
+#endif
+    if (m_thumbnail)
+        m_thumbnail->setView (m_thumbnailView);
+    else
+        kdError () << "kpMainWindow::createThumbnailView() no thumbnail" << endl;
+
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\t\tregistering the kpView:" << endl;
+#endif
+    if (m_viewManager)
+        m_viewManager->registerView (m_thumbnailView);
+}
+
+// private
+void kpMainWindow::destroyThumbnailView ()
+{
+    if (!m_thumbnailView)
+        return;
+
+    if (m_viewManager)
+        m_viewManager->unregisterView (m_thumbnailView);
+
+    if (m_thumbnail)
+        m_thumbnail->setView (0);
+
+    m_thumbnailView->deleteLater (); m_thumbnailView = 0;
+}
+
 
 // private
 void kpMainWindow::updateThumbnail ()
@@ -716,7 +915,7 @@ void kpMainWindow::updateThumbnail ()
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::updateThumbnail()" << endl;
 #endif
-   bool enable = m_actionShowThumbnail->isChecked ();
+    bool enable = m_actionShowThumbnail->isChecked ();
 
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tthumbnail="
@@ -744,31 +943,7 @@ void kpMainWindow::updateThumbnail ()
 
         m_thumbnail = new kpThumbnail (this, "thumbnail");
 
-    #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\t\tcreating new kpView:" << endl;
-    #endif
-        m_thumbnailView = new kpView (m_thumbnail,
-                                      "thumbnailView", this,
-                                      m_thumbnail->width (), m_thumbnail->height (),
-                                      true /*autoVariableZoom*/);
-    #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\t\tgive kpThumbnail the kpView:" << endl;
-    #endif
-        m_thumbnail->setView (m_thumbnailView);
-    #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\t\tregistering the kpView:" << endl;
-    #endif
-        m_viewManager->registerView (m_thumbnailView);
-
-    #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\t\tconnecting doc::sizeChanged() to thumbnail caption" << endl;
-    #endif
-        if (m_document)
-        {
-            connect (m_document, SIGNAL (sizeChanged (int, int)),
-                     m_thumbnail, SLOT (updateCaption ()));
-        }
-
+        createThumbnailView ();
 
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\t\tmoving thumbnail to right place" << endl;
@@ -832,16 +1007,7 @@ void kpMainWindow::updateThumbnail ()
         }
 
 
-        if (m_document)
-        {
-            disconnect (m_document, SIGNAL (sizeChanged (int, int)),
-                        m_thumbnail, SLOT (updateCaption ()));
-        }
-
-
-        m_viewManager->unregisterView (m_thumbnailView);
-
-        delete m_thumbnailView; m_thumbnailView = 0;
+        destroyThumbnailView ();
 
 
         disconnect (m_thumbnail, SIGNAL (visibilityChanged (bool)),

@@ -40,8 +40,8 @@
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
+#include <kpthumbnailview.h>
 #include <kptool.h>
-#include <kpview.h>
 
 
 // TODO: get out of the Alt+Tab list
@@ -109,80 +109,48 @@ kpThumbnail::~kpThumbnail ()
 
 
 // public
-kpView *kpThumbnail::view () const
+kpThumbnailView *kpThumbnail::view () const
 {
     return m_view;
 }
 
 // public
-void kpThumbnail::setView (kpView *view)
+void kpThumbnail::setView (kpThumbnailView *view)
 {
 #if DEBUG_KP_THUMBNAIL
     kdDebug () << "kpThumbnail::setView(" << view << ")" << endl;
 #endif
 
-    if (!view || m_view == view)
+    if (m_view == view)
         return;
+
+
+    if (m_view)
+    {
+        disconnect (m_view, SIGNAL (zoomLevelChanged (int, int)),
+                    this, SLOT (updateCaption ()));
+
+        boxLayout ()->remove (m_view);
+    }
 
     m_view = view;
 
-    setWidget (m_view);
-    m_view->show ();
+    if (m_view)
+    {
+        connect (m_view, SIGNAL (zoomLevelChanged (int, int)),
+                 this, SLOT (updateCaption ()));
+        updateCaption ();
 
-    updateVariableZoom ();
+        boxLayout ()->addWidget (m_view);
+        m_view->show ();
+    }
 }
 
 
 // public slot
 void kpThumbnail::updateCaption ()
 {
-    kpView *v = view ();
-    if (v)
-    {
-    #if DEBUG_KP_THUMBNAIL
-        kdDebug () << "kpThumbnail::updateCaption() haveView; zoomLevelX="
-                   << v->zoomLevelX () << endl;
-    #endif
-        setCaption (i18n ("%1% - Thumbnail").arg (v->zoomLevelX ()));
-    }
-    else
-    {
-    #if DEBUG_KP_THUMBNAIL
-        kdDebug () << "kpThumbnail::updateCaption() no view" << endl;
-    #endif
-        setCaption (i18n ("Thumbnail"));
-    }
-}
-
-// public slot
-void kpThumbnail::updateVariableZoom ()
-{
-    kpView *v = view ();
-
-#if DEBUG_KP_THUMBNAIL
-    kdDebug () << "kpThumbnail::updateVariableZoom() v=" << v << endl;
-#endif
-
-    if (!v)
-        return;
-
-#if DEBUG_KP_THUMBNAIL
-    kdDebug () << "\tbefore: size=" << v->size ()
-               << " hzoom=" << v->zoomLevelX ()
-               << " vzoom=" << v->zoomLevelY ()
-               << endl;
-#endif
-
-    v->slotUpdateVariableZoom ();
-
-#if DEBUG_KP_THUMBNAIL
-    kdDebug () << "\tafter: size=" << v->size ()
-               << " hzoom=" << v->zoomLevelX ()
-               << " vzoom=" << v->zoomLevelY ()
-               << endl;
-#endif
-
-    updateCaption ();
+    setCaption (view () ? view ()->caption () : i18n ("Thumbnail"));
 }
 
 
@@ -207,7 +175,7 @@ void kpThumbnail::resizeEvent (QResizeEvent *e)
 
     QDockWindow::resizeEvent (e);
 
-    updateVariableZoom ();;
+    // updateVariableZoom ();  TODO: is below a good idea since this commented out
 
     if (m_mainWindow)
     {

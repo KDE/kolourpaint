@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui name="kolourpaint" version="17">
+<gui name="kolourpaint" version="19">
 
 <MenuBar>
     <Menu name="file">
@@ -47,6 +47,11 @@
         <!-- <MergeLocal/> -->
         <Action name="view_show_grid" />
         <Action name="view_show_thumbnail" />
+        
+        <Separator/>
+        
+        <Action name="view_zoomed_thumbnail" />
+        <Action name="view_show_thumbnail_rectangle" />
     </Menu>
 
     <Menu name="image"><text>&amp;Image</text>

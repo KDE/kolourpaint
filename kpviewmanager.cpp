@@ -497,6 +497,21 @@ void kpViewManager::setViewUnderCursor (kpView *view)
 
 
 // public
+kpView *kpViewManager::activeView () const
+{
+    for (QPtrList <kpView>::const_iterator it = m_views.begin ();
+         it != m_views.end ();
+         it++)
+    {
+        if ((*it)->isActiveWindow ())
+            return (*it);
+    }
+
+    return 0;
+}
+
+
+// public
 bool kpViewManager::queueUpdates () const
 {
     return (m_queueUpdatesCounter > 0);
@@ -606,6 +621,37 @@ void kpViewManager::updateView (kpView *v, const QRegion &viewRegion)
         v->addToQueuedArea (viewRegion);
 }
 
+void kpViewManager::updateViewRectangleEdges (kpView *v, const QRect &viewRect)
+{
+    if (viewRect.height () <= 0 || viewRect.width () <= 0)
+        return;
+
+    // Top line
+    updateView (v, QRect (viewRect.x (), viewRect.y (),
+                          viewRect.width (), 1));
+
+    if (viewRect.height () >= 2)
+    {
+        // Bottom line
+        updateView (v, QRect (viewRect.x (), viewRect.bottom (),
+                              viewRect.width (), 1));
+
+        if (viewRect.height () > 2)
+        {
+            // Left line
+            updateView (v, QRect (viewRect.x (), viewRect.y () + 1,
+                                  1, viewRect.height () - 2));
+
+            if (viewRect.width () >= 2)
+            {
+                // Right line
+                updateView (v, QRect (viewRect.right (), viewRect.y () + 1,
+                                      1, viewRect.height () - 2));
+            }
+        }
+    }
+}
+
 
 void kpViewManager::updateViews ()
 {
@@ -632,13 +678,13 @@ void kpViewManager::updateViews (const QRect &docRect)
         if (view->zoomLevelX () % 100 == 0 && view->zoomLevelY () % 100 == 0)
         {
         #if DEBUG_KP_VIEW_MANAGER && 0
-            kdDebug () << "\t\tviewRect=" << view->zoomDocToView (docRect) << endl;
+            kdDebug () << "\t\tviewRect=" << view->transformDocToView (docRect) << endl;
         #endif
-            updateView (view, view->zoomDocToView (docRect));
+            updateView (view, view->transformDocToView (docRect));
         }
         else
         {
-            QRect viewRect = view->zoomDocToView (docRect);
+            QRect viewRect = view->transformDocToView (docRect);
 
             int diff = qRound (double (QMAX (view->zoomLevelX (), view->zoomLevelY ())) / 100.0) + 1;
 
@@ -661,11 +707,11 @@ void kpViewManager::updateViews (int x, int y, int w, int h)
     updateViews (QRect (x, y, w, h));
 }
 
-void kpViewManager::resizeViews (int docWidth, int docHeight)
+
+void kpViewManager::adjustViewsToEnvironment ()
 {
 #if DEBUG_KP_VIEW_MANAGER && 1
-    kdDebug () << "kpViewManager::resizeViews(" << docWidth << ","
-               << docHeight << ")"
+    kdDebug () << "kpViewManager::adjustViewsToEnvironment()"
                << " numViews=" << m_views.count ()
                << endl;
 #endif
@@ -676,19 +722,10 @@ void kpViewManager::resizeViews (int docWidth, int docHeight)
         kpView *view = *it;
 
     #if DEBUG_KP_VIEW_MANAGER && 1
-        kdDebug () << "\tresize view: " << view->name ()
-                   << " (variableZoom=" << view->hasVariableZoom () << ")"
+        kdDebug () << "\tview: " << view->name ()
                    << endl;
     #endif
-        if (view->hasVariableZoom ())
-        {
-            view->slotUpdateVariableZoom ();
-        }
-        else
-        {
-            view->resize (view->zoomDocToViewX (docWidth),
-                          view->zoomDocToViewY (docHeight));
-        }
+        view->adjustToEnvironment ();
     }
 }
 

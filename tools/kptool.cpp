@@ -417,7 +417,7 @@ QPoint kpTool::currentPoint (bool zoomToDoc) const
         return viewPos;
 
 
-    const QPoint docPos = v->zoomViewToDoc (viewPos);
+    const QPoint docPos = v->transformViewToDoc (viewPos);
 #if DEBUG_KP_TOOL && 0
     kdDebug () << "\tdocPos=" << docPos << endl;
 #endif
@@ -943,7 +943,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
             if (viewUnderCursor ())
             {
                 m_mainWindow->pasteTextAt (text,
-                    viewUnderCursor ()->zoomViewToDoc (e->pos ()),
+                    viewUnderCursor ()->transformViewToDoc (e->pos ()),
                     true/*adjust topLeft so that cursor isn't
                           on top of resize handle*/);
             }
@@ -975,7 +975,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
             // if we get a mousePressEvent when we're drawing, then the other
             // mouse button must have been pressed
-            m_currentPoint = view ? view->zoomViewToDoc (e->pos ()) : QPoint (-1, -1);
+            m_currentPoint = view ? view->transformViewToDoc (e->pos ()) : QPoint (-1, -1);
             m_currentViewPoint = view ? e->pos () : QPoint (-1, -1);
             cancelShapeInternal ();
         }
@@ -1000,7 +1000,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     m_shiftPressed = (buttonState & Qt::ShiftButton);
     m_controlPressed = (buttonState & Qt::ControlButton);
     m_altPressed = (buttonState & Qt::AltButton);
-    m_startPoint = m_currentPoint = view ? view->zoomViewToDoc (e->pos ()) : QPoint (-1, -1);
+    m_startPoint = m_currentPoint = view ? view->transformViewToDoc (e->pos ()) : QPoint (-1, -1);
     m_currentViewPoint = view ? e->pos () : QPoint (-1, -1);
     m_viewUnderStartPoint = view;
     m_lastPoint = QPoint (-1, -1);
@@ -1044,7 +1044,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
             return;
         }
 
-        m_currentPoint = view->zoomViewToDoc (e->pos ());
+        m_currentPoint = view->transformViewToDoc (e->pos ());
         m_currentViewPoint = e->pos ();
 
     #if DEBUG_KP_TOOL && 0
@@ -1085,7 +1085,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
             return;
         }
 
-        m_currentPoint = view->zoomViewToDoc (e->pos ());
+        m_currentPoint = view->transformViewToDoc (e->pos ());
         m_currentViewPoint = e->pos ();
         hover (m_currentPoint);
     }
@@ -1109,7 +1109,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
             return;
         }
 
-        m_currentPoint = view ? view->zoomViewToDoc (e->pos ()) : QPoint (-1, -1);
+        m_currentPoint = view ? view->transformViewToDoc (e->pos ()) : QPoint (-1, -1);
         m_currentViewPoint = view ? e->pos () : QPoint (-1, -1);
         endDrawInternal (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
     }
@@ -1205,8 +1205,8 @@ void kpTool::keyPressEvent (QKeyEvent *e)
         kdDebug () << "\tnewPoint=" << QPoint (newViewX, newViewY) << endl;
     #endif
 
-        if (view->zoomViewToDoc (QPoint (newViewX, newViewY)) ==
-            view->zoomViewToDoc (oldPoint))
+        if (view->transformViewToDoc (QPoint (newViewX, newViewY)) ==
+            view->transformViewToDoc (oldPoint))
         {
             newViewX += viewIncX, newViewY += viewIncY;
 
