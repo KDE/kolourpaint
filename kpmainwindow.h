@@ -159,7 +159,7 @@ public:
 private slots:
     void slotToolSelected (kpTool *tool);
 
-private slots:
+public slots:
     void slotToolAirSpray ();
     void slotToolBrush ();
     void slotToolColorPicker ();

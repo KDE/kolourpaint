@@ -192,12 +192,15 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
 }
 
 
-// private slots
+// public slots
 
 #define SLOT_TOOL(toolName)                       \
 void kpMainWindow::slotTool##toolName ()          \
 {                                                 \
     if (!m_toolToolBar)                           \
+        return;                                   \
+                                                  \
+    if (tool () == m_tool##toolName)              \
         return;                                   \
                                                   \
     if (toolHasBegunShape ())                     \
