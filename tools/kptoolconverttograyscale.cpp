@@ -29,6 +29,7 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <qapplication.h>
 #include <qpixmap.h>
 
 #include <klocale.h>
@@ -80,12 +81,16 @@ void kpToolConvertToGrayscaleCommand::execute ()
     if (!doc)
         return;
 
+    QApplication::setOverrideCursor (Qt::waitCursor);
+    
     m_oldPixmapPtr = new QPixmap ();
     *m_oldPixmapPtr = *doc->pixmap (m_actOnSelection);
 
     QPixmap newPixmap = kpPixmapFX::convertToGrayscale (*doc->pixmap (m_actOnSelection));
 
     doc->setPixmap (m_actOnSelection, newPixmap);
+
+    QApplication::restoreOverrideCursor ();
 }
 
 // public virtual [base KCommand]

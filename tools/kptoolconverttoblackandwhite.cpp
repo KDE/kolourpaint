@@ -31,6 +31,7 @@
 
 #define DEBUG_KP_TOOL_CONVERT_TO_BLACK_AND_WHITE 1
 
+#include <qapplication.h>
 #include <qpixmap.h>
 #include <qimage.h>
 
@@ -89,6 +90,8 @@ void kpToolConvertToBlackAndWhiteCommand::execute ()
         return;
 
 
+    QApplication::setOverrideCursor (Qt::waitCursor);
+    
     m_oldPixmapPtr = new QPixmap ();
     *m_oldPixmapPtr = *doc->pixmap (m_actOnSelection);
 
@@ -96,6 +99,8 @@ void kpToolConvertToBlackAndWhiteCommand::execute ()
     QPixmap newPixmap = kpPixmapFX::convertToBlackAndWhite (*m_oldPixmapPtr);
 
     doc->setPixmap (m_actOnSelection, newPixmap);
+
+    QApplication::restoreOverrideCursor ();
 }
 
 // public virtual [base KCommand]

@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <qapplication.h>
+
 #include <klocale.h>
 
 #include <kpdefs.h>
@@ -83,7 +85,11 @@ void kpToolInvertColorsCommand::invert ()
     if (!doc)
         return;
 
+    QApplication::setOverrideCursor (Qt::waitCursor);
+    
     QPixmap newPixmap = kpPixmapFX::invertColors (*doc->pixmap (m_actOnSelection));
 
     doc->setPixmap (m_actOnSelection, newPixmap);
+
+    QApplication::restoreOverrideCursor ();
 }
