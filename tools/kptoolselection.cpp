@@ -414,8 +414,9 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
 
 
 // private slot
-void kpToolSelection::selectionTransparencyChanged (const QString &name)
+void kpToolSelection::selectionTransparencyChanged (const QString & /*name*/)
 {
+#if 0
 #if DEBUG_KP_TOOL_SELECTION
     kdDebug () << "kpToolSelection::selectionTransparencyChanged(" << name << ")" << endl;
 #endif
@@ -466,6 +467,14 @@ void kpToolSelection::selectionTransparencyChanged (const QString &name)
                 false/* no exec*/);
         }
     }
+#endif
+
+    // TODO: I've duplicated the code (see below 3x) to make sure
+    //       kpSelectionTransparency(oldST)::transparentColor() is defined
+    //       and not taken from kpDocument (where it may not be defined because
+    //       the transparency may be opaque).
+    //
+    //       That way kpToolSelectionTransparencyCommand can force set colours.
 }
 
 
@@ -475,9 +484,33 @@ void kpToolSelection::slotIsOpaqueChanged ()
 #if DEBUG_KP_TOOL_SELECTION
     kdDebug () << "kpToolSelection::slotIsOpaqueChanged()" << endl;
 #endif
-    bool isTransparent = mainWindow ()->selectionTransparency ().isTransparent ();
-    selectionTransparencyChanged (i18n ("Selection: %1")
-        .arg (isTransparent ? i18n ("Transparent") : i18n ("Opaque")));
+
+    if (mainWindow ()->settingSelectionTransparency ())
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kdDebug () << "\trecursion - abort setting selection transparency: "
+                   << mainWindow ()->settingSelectionTransparency () << endl;
+    #endif
+        return;
+    }
+
+    if (document ()->selection ())
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kdDebug () << "\thave sel - set transparency" << endl;
+    #endif
+
+        kpSelectionTransparency st = mainWindow ()->selectionTransparency ();
+        kpSelectionTransparency oldST = st;
+        oldST.setOpaque (!oldST.isOpaque ());
+
+        document ()->selection ()->setTransparency (st);
+        commandHistory ()->addCommand (new kpToolSelectionTransparencyCommand (
+            i18n ("Selection: Transparency"),
+            st, oldST,
+            mainWindow ()),
+            false/* no exec*/);
+    }
 }
 
 // private slot virtual [base kpTool]
@@ -486,7 +519,33 @@ void kpToolSelection::slotBackgroundColorChanged (const kpColor &)
 #if DEBUG_KP_TOOL_SELECTION
     kdDebug () << "kpToolSelection::slotBackgroundColorChanged()" << endl;
 #endif
-    selectionTransparencyChanged (i18n ("Selection: Transparent Color"));
+
+    if (mainWindow ()->settingSelectionTransparency ())
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kdDebug () << "\trecursion - abort setting selection transparency: "
+                   << mainWindow ()->settingSelectionTransparency () << endl;
+    #endif
+        return;
+    }
+
+    if (document ()->selection ())
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kdDebug () << "\thave sel - set transparency" << endl;
+    #endif
+
+        kpSelectionTransparency st = mainWindow ()->selectionTransparency ();
+        kpSelectionTransparency oldST = st;
+        oldST.setTransparentColor (oldBackgroundColor ());
+
+        document ()->selection ()->setTransparency (st);
+        commandHistory ()->addCommand (new kpToolSelectionTransparencyCommand (
+            i18n ("Selection: Transparency"),
+            st, oldST,
+            mainWindow ()),
+            false/* no exec*/);
+    }
 }
 
 // private slot virtual [base kpTool]
@@ -495,7 +554,33 @@ void kpToolSelection::slotColorSimilarityChanged (double, int)
 #if DEBUG_KP_TOOL_SELECTION
     kdDebug () << "kpToolSelection::slotColorSimilarityChanged()" << endl;
 #endif
-    selectionTransparencyChanged (i18n ("Selection: Transparent Color Similarity"));
+
+    if (mainWindow ()->settingSelectionTransparency ())
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kdDebug () << "\trecursion - abort setting selection transparency: "
+                   << mainWindow ()->settingSelectionTransparency () << endl;
+    #endif
+        return;
+    }
+
+    if (document ()->selection ())
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kdDebug () << "\thave sel - set transparency" << endl;
+    #endif
+
+        kpSelectionTransparency st = mainWindow ()->selectionTransparency ();
+        kpSelectionTransparency oldST = st;
+        oldST.setColorSimilarity (oldColorSimilarity ());
+
+        document ()->selection ()->setTransparency (st);
+        commandHistory ()->addCommand (new kpToolSelectionTransparencyCommand (
+            i18n ("Selection: Transparency"),
+            st, oldST,
+            mainWindow ()),
+            false/* no exec*/);
+    }
 }
 
 
@@ -746,7 +831,7 @@ void kpToolSelectionTransparencyCommand::execute ()
     if (!doc)
         return;
 
-    m_mainWindow->setSelectionTransparency (m_st);
+    m_mainWindow->setSelectionTransparency (m_st, true/*force colour change*/);
 
     if (doc->selection ())
         doc->selection ()->setTransparency (m_st);
@@ -763,7 +848,7 @@ void kpToolSelectionTransparencyCommand::unexecute ()
     if (!doc)
         return;
 
-    m_mainWindow->setSelectionTransparency (m_oldST);
+    m_mainWindow->setSelectionTransparency (m_oldST, true/*force colour change*/);
 
     if (doc->selection ())
         doc->selection ()->setTransparency (m_oldST);

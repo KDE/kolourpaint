@@ -181,11 +181,12 @@ kpSelectionTransparency kpMainWindow::selectionTransparency () const
 }
 
 // public
-void kpMainWindow::setSelectionTransparency (const kpSelectionTransparency &transparency)
+void kpMainWindow::setSelectionTransparency (const kpSelectionTransparency &transparency, bool forceColorChange)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
     kdDebug () << "kpMainWindow::setSelectionTransparency() isOpaque=" << transparency.isOpaque ()
                << " color=" << (transparency.transparentColor ().isValid () ? (int *) transparency.transparentColor ().toQRgb () : 0)
+               << " forceColorChange=" << forceColorChange
                << endl;
 #endif
     
@@ -199,7 +200,7 @@ void kpMainWindow::setSelectionTransparency (const kpSelectionTransparency &tran
     d->m_settingSelectionTransparency++;
     
     oot->setOpaque (transparency.isOpaque ());
-    if (transparency.isTransparent ())
+    if (transparency.isTransparent () || forceColorChange)
     {
         m_colorToolBar->setColor (1, transparency.transparentColor ());
         m_colorToolBar->setColorSimilarity (transparency.colorSimilarity ());

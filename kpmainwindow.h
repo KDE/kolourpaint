@@ -185,7 +185,7 @@ public:
     bool toolIsTextTool () const;
 
     kpSelectionTransparency selectionTransparency () const;
-    void setSelectionTransparency (const kpSelectionTransparency &transparency);
+    void setSelectionTransparency (const kpSelectionTransparency &transparency, bool forceColorChange = false);
     int settingSelectionTransparency () const;
 
 private slots:
