@@ -45,12 +45,23 @@
 #include <kppixmapfx.h>
 
 
+static QString nameForType (kpEffectBlurSharpenCommand::Type type)
+{
+    if (type == kpEffectBlurSharpenCommand::Blur)
+        return i18n ("Soften");
+    else if (type == kpEffectBlurSharpenCommand::Sharpen)
+        return i18n ("Sharpen");
+    else
+        return QString::null;
+}
+
+
 kpEffectBlurSharpenCommand::kpEffectBlurSharpenCommand (Type type,
                                                         double radius, double sigma,
                                                         int repeat,
                                                         bool actOnSelection,
                                                         kpMainWindow *mainWindow)
-    : kpColorEffectCommand (i18n ("Soften && Sharpen"), actOnSelection, mainWindow),
+    : kpColorEffectCommand (::nameForType (type), actOnSelection, mainWindow),
       m_type (type),
       m_radius (radius), m_sigma (sigma),
       m_repeat (repeat)
@@ -182,12 +193,7 @@ kpColorEffectCommand *kpEffectBlurSharpenWidget::createCommand () const
 // protected slot
 void kpEffectBlurSharpenWidget::slotUpdateTypeLabel ()
 {
-    QString text;
-
-    if (type () == kpEffectBlurSharpenCommand::Blur)
-        text = i18n ("Soften");
-    else if (type () == kpEffectBlurSharpenCommand::Sharpen)
-        text = i18n ("Sharpen");
+    QString text = ::nameForType (type ());
 
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
     kdDebug () << "kpEffectBlurSharpenWidget::slotUpdateTypeLabel() text="
