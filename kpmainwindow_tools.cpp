@@ -97,8 +97,12 @@ void kpMainWindow::setupTools ()
     connect (m_toolToolBar, SIGNAL (sigToolSelected (kpTool *)),
              this, SLOT (slotToolSelected (kpTool *)));
     
-    for (kpTool *tool = m_tools.first (); m_tools.current (); tool = m_tools.next ())
+    const int numTools = (int) m_tools.count ();
+    for (int i = 0; i < numTools; i++)
+    {
+        kpTool *tool = m_tools.at (i);
         m_toolToolBar->registerTool (tool);
+    }
 
 
     enableToolsDocumentActions (false);
