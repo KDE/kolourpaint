@@ -274,7 +274,13 @@ void kpMainWindow::setStatusBarZoom (int zoom)
 
 void kpMainWindow::recalculateStatusBarMessage ()
 {
+#if DEBUG_STATUS_BAR && 1
+    kdDebug () << "kpMainWindow::recalculateStatusBarMessage()" << endl;
+#endif
     QString scrollViewMessage = m_scrollView->statusMessage ();
+#if DEBUG_STATUS_BAR && 1
+    kdDebug () << "\tscrollViewMessage=" << scrollViewMessage << endl;
+#endif
     if (!scrollViewMessage.isEmpty ())
     {
         setStatusBarMessage (scrollViewMessage);
