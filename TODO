@@ -5,7 +5,7 @@ Before each release of KolourPaint and/or KDE, grep sources for
 Look in BUGS, patches/, grep sources for "OPT" & "TODO" and look here:
 
 
-KolourPaint 1.2 (3-10 days)
+KolourPaint 1.2 (10 days)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 use of QPoint () or QPoint (-1, -1) as a sentinel is worrying since it's a
@@ -20,38 +20,48 @@ Bug: dragging a line extending outside of doc makes it transparent (RGB_A_ for P
 Hypothesis: kpPixmapFX::getPixmapAt() defines undefined pixels as transparent
 
 
-Luxi Sans 14 draw in green with trans background versus white background (see quality difference - black marks)
-
-
 1. creating new text selection sucks a lot of CPU
-2. when switching to a tool with a fake cursor, it uses a previous mouse position
 6. resizing doc flickers
 7. emulate3buttons cancel
-10. delta drawing of resize line to stop flicker
 11. draw rectangle and land on doc resize handle - wrong status mess
 9. speed up drag scroll
-6. keyboard friendly scrollview
 7. resize doc or sel freehand and usershapepoints have , not x even though is dimen, not point
-13. check kpcommandhistory INT_MAX overflow protection
-14. edit/paste slow QImageDrag::canDecode check
-15. edit/paste may disappear due to klipper - file bug report
-16. check kpcommandhistory all sizes are correct
 17. delayed kpcommand popupmenu creation
 20. setup.bmp monochrome open and save loses a lot of info
 mosfet's image effects don't respect alpha - hack around it
 verify gamma, check contrast,brightness,gamma order
-21. use KSaveFile for atomic writes
-22. crash on close after playing with eps preview in save dialog
 
 option to dither image on open if not enough colors else that season jpg
 looks bad on 8-bit screen
 - it seems that AvoidDither means only do colour match/dithering if need to
   while PreferDither means try to _always_ smooth out (even in a single colour
   darkgreen document)
-
+QColor::enterAllocContext () looks interesting
+ 
 --------
+
+
+Low Priority
+------------
+
+15. edit/paste may disappear due to klipper - file bug report
+10. delta drawing of resize line to stop flicker
+21. use KSaveFile for atomic writes - if the temp is put in the same place as
+    dest, what about small media like floppy?
+6. keyboard friendly scrollview
+
+
+AUDITS
+------
+
 8-bit audit e.g. setPixel; looks like contrast effect has some sort of
 rounding error causing e.g. a jump in colour range from 49 to 50
+
+13. check kpcommandhistory INT_MAX overflow protection
+
+16. check kpcommandhistory all sizes are correct
+
+22. crash on close after playing with eps preview in save dialog
 
 
 KolourPaint 1.4
@@ -72,6 +82,13 @@ text tool could autoresize if font size changes or paste text
   to allow e.g. auto increase box size for new font size, but then user changes
   mind and reverts to previous font size and the box snaps back
 
+kpMainWindow::slotEnablePaste() is slow due to kpSelection::canDecode()
+- QMimeSource::provides() sucks up most of the CPU (sometimes 4s),
+  while QImageDrag::canDecode() usually takes up to 250ms.
+- Trigger this by holding down CTRL+Printscreen
+- best we can do is execute this check once per process (instead of per
+  mainwWindow) and update all the mainWindows
+
 Rethink kpView/kpViewManager design because of:
 - performance
 - problems with the image "sparkling" at zoom levels % 100 != 0
@@ -91,6 +108,8 @@ tool box icons should have same background color as the other controls
   backfires:
   - implicit sharing means that (most of the time), this isn't true
   - it forces kpSelection::calculateTransparencyMask() sloooowing things down
+
+  - but then what about kpCommand::size()?
 
 * kpsqueezedtextlabel could use (or be replaced by) KStringHandler::rPixelSqueeze()
 
