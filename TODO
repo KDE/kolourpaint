@@ -151,6 +151,9 @@ backfires:
 - implicit sharing means that (most of the time), this isn't true
 - it forces kpSelection::calculateTransparencyMask() sloooowing things down
 
+bug: draw rectangle, drag out selection, undo - kills rect but not selection
+is this a feature?
+
 documentation (assigned to Thurston)
 
 
