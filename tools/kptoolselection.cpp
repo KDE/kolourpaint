@@ -815,6 +815,9 @@ void kpToolSelection::slotIsOpaqueChanged ()
         kdDebug () << "\thave sel - set transparency" << endl;
     #endif
 
+        if (hasBegunShape ())
+            endShapeInternal ();
+
         kpSelectionTransparency st = mainWindow ()->selectionTransparency ();
         kpSelectionTransparency oldST = st;
         oldST.setOpaque (!oldST.isOpaque ());
