@@ -53,6 +53,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
                                   kpMainWindow *parent,
                                   const char *name)
     : kpToolPreviewDialog (kpToolPreviewDialog::Preview,
+                           true/*reserve top row*/,
                            QString::null/*actionName*/,
                            actOnSelection,
                            parent,

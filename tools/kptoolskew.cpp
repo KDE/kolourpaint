@@ -215,6 +215,7 @@ int kpToolSkewDialog::s_lastHorizontalAngle = 0,
 kpToolSkewDialog::kpToolSkewDialog (bool actOnSelection, kpMainWindow *parent,
                                     const char *name)
     : kpToolPreviewDialog (kpToolPreviewDialog::AllFeatures,
+                           false/*don't reserve top row*/,
                            i18n ("Skew"), actOnSelection, parent, name)
 {
     // Too confusing - disable for now

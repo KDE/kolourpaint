@@ -72,6 +72,7 @@ public:
 
     // You must call slotUpdate() in your constructor
     kpToolPreviewDialog (Features features,
+                         bool reserveTopRow,
                          const QString &actionName,  // e.g. "Skew"
                          bool actOnSelection,
                          kpMainWindow *parent,
@@ -90,7 +91,7 @@ protected:
     kpDocument *document () const;
 
     // All widgets must have mainWidget() as their parent
-    void addCustomWidgetToFront (QWidget *w);  // Note: can only add one
+    void addCustomWidgetToFront (QWidget *w);  // see <reserveTopRow> in ctor
     void addCustomWidget (QWidget *w);
     void addCustomWidgetToBack (QWidget *w)
     {

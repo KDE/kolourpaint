@@ -234,6 +234,7 @@ kpToolRotateDialog::kpToolRotateDialog (bool actOnSelection,
                                         kpMainWindow *mainWindow,
                                         const char *name)
     : kpToolPreviewDialog (kpToolPreviewDialog::AllFeatures,
+                           false/*don't reserve top row*/,
                            i18n ("Rotate"), actOnSelection, mainWindow, name)
 {
     // Too confusing - disable for now
