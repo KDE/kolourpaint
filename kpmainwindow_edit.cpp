@@ -25,6 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <kpmainwindow.h>
 
 #include <qapplication.h>
 #include <qclipboard.h>
@@ -41,7 +42,6 @@
 
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
-#include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kpselectiondrag.h>

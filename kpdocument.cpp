@@ -28,6 +28,9 @@
 
 #define DEBUG_KP_DOCUMENT 0
 
+
+#include <kpdocument.h>
+
 #include <math.h>
 
 #include <qcolor.h>
@@ -51,7 +54,6 @@
 #include <kpcolor.h>
 #include <kpcolortoolbar.h>
 #include <kpdefs.h>
-#include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>

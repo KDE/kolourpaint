@@ -28,6 +28,9 @@
 
 #define DEBUG_KP_TOOL_TOOL_BAR 0
 
+
+#include <kptooltoolbar.h>
+
 #include <qbuttongroup.h>
 #include <qlayout.h>
 #include <qtoolbutton.h>
@@ -40,7 +43,6 @@
 
 #include <kpdefs.h>
 #include <kptool.h>
-#include <kptooltoolbar.h>
 
 #include <kptoolwidgetbrush.h>
 #include <kptoolwidgeterasersize.h>

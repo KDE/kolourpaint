@@ -28,6 +28,9 @@
 
 #define DEBUG_KP_TOOL_WIDGET_BASE 0
 
+
+#include <kptoolwidgetbase.h>
+
 #include <qbitmap.h>
 #include <qcolor.h>
 #include <qimage.h>
@@ -40,7 +43,6 @@
 
 #include <kpdefs.h>
 #include <kppixmapfx.h>
-#include <kptoolwidgetbase.h>
 
 
 kpToolWidgetBase::kpToolWidgetBase (QWidget *parent, const char *name)
