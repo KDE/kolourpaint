@@ -177,10 +177,10 @@ signals:
     // emitted after beginDraw() has been called
     void beganDraw (const QPoint &point);
 
-    // emitted just before draw() is about to be called in mouseMoveEvent()
-    // The slot should return whether the mouse pos may have changed.
-    // Used by drag scrolling.
-    bool movedAndAboutToDraw (const QPoint &currentPoint, const QPoint &lastPoint,
+    // Emitted just before draw() is called in mouseMoveEvent().  Slots
+    // connected to this signal should return in <scrolled> whether the
+    // mouse pos may have changed.  Used by drag scrolling.
+    void movedAndAboutToDraw (const QPoint &currentPoint, const QPoint &lastPoint,
                               int zoomLevel,
                               bool *scrolled);
 
