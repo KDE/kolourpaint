@@ -1,9 +1,8 @@
 
-KolourPaint Version 0.8 (Beta Quality Development Version)
-http://sourceforge.net/projects/kolourpaint/
+KolourPaint Version 1.0 (Release 2004/02/29)
+http://kolourpaint.sf.net/
 
 Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
-$Date$
 
 
 For licensing and warranty information, read COPYING.
@@ -27,8 +26,8 @@ tasks like:
 * Icon Editing - drawing clipart and logos with transparency
 
 It's not an unusable and monolithic program where simple tasks like drawing
-lines become near impossible.  Nor is it so simple that it lacks Undo/Redo,
-printing and reliable saving.
+lines become near impossible.  Nor is it so simple that it lacks essential
+features like Undo/Redo.
 
 KolourPaint is opensource software written in C++ using the Qt and KDE
 libraries.
@@ -42,7 +41,7 @@ libraries.
 * Tools
   - Brush, Color Eraser, Color Picker, Connected Lines a.k.a. Polyline
   - Curve, Ellipse, Eraser, Flood Fill, Line, Pen, Polygon, Rectangle
-  - Rounded Rectangle, Spraycan, Text (TODO)
+  - Rounded Rectangle, Spraycan, Text
 
 * Selections (fully undo- and redo-able)
   - Rectangular, Elliptical, Free-Form shapes
