@@ -18,8 +18,8 @@ fix selections; implement free-form selection
 Image menu items as ordinary tools
 honour background colour for Skew, Rotate
 
-Color Washer as part of the Image Menu;
-dbl-click on Color Washer does whole image?
+Colour Eraser as part of the Image Menu;
+dbl-click on Colour Eraser does whole image?
 
 tool/text
 paste text (editable after you paste it)
@@ -37,7 +37,7 @@ Before 1.0
 if you undock a vertical toolbar and right click --> Orientation --> Bottom,
     it stays vertically oriented
 
-random pixels in the view showing up with the Color Washer Tool and Zoom over a remote display
+random pixels in the view showing up with the Colour Eraser Tool and Zoom over a remote display
 
 tool widget colours hard (i.e. impossible) to see on an 8-bit display
 
@@ -102,7 +102,7 @@ colour depth audit
 - do 8-bit pixmaps work?
 - are we incorrectly using kpDocument::setPixmap() with mono pixmaps?
 
-rewrite color washer/eraser
+rewrite colour eraser
 - faster
 - rwlbuis' test
 
