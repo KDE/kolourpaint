@@ -14,32 +14,14 @@ Feature Plan for 1.0
 Now
 ---
 
+- tool/text; paste text (editable after you paste it)
+- which would reasonably allow text as selections (freehand resize-able)
+
 selections - transparent & opaque selections
 
-- tool/text; paste text (editable after you paste it)
+selections - cursor should know whats happening beneath it - e.g. has selection been deleted?
 
-Update docs
-
-
------- KolourPaint 1.0 Preview released ------
-
-
-1.5 weeks
----------
-
-brush shape in wrong place if zoom smaller (or scroll with wheel)
-Reason: the mouse isn't moving relative to the view (as the view is moving
-relative to the mouse instead) so its position stays the same
-(relative to the document).
-if brush, close, move cursor, new; brush in wrong place
-shift+ctrl+alt modifiers can go out of sync
-
-clean up kpmainwindow
 - statusbar
-- settings menu
-- propagation of settings thru mainwindows
-
-config dialogs (look into new kconfig generator)
 
 
 ------ KolourPaint 1.0 released ------
@@ -48,6 +30,9 @@ config dialogs (look into new kconfig generator)
 Feature Plan for 1.1
 ====================
 
+
+There's a lot of stuff here so it's likely that most of it will be pushed
+to post 1.1:
 
 Open 800x600 image, Skew, set horizontal to 60, vertical to 30 and play with
 vertical and the image flips over!  I'm sure that's not supposed to happen.
@@ -67,7 +52,6 @@ Image menu items as ordinary tools - e.g. freehand rotate would be nice
 
 selections
 - ability to freehand stretch selections
-- which would reasonably allow text as selections (freehand resize-able)
 - maybe always have 1 width display of border - try editing a B&W icon to see what I mean
 
 freehand resize document
@@ -134,7 +118,19 @@ Edit/Redo as Resize
 
 kptoolpreviewdialog shows checkerboard
 
-configurable transparency background
+config flaws:
+- interprocess config propagation (grep for PROPAGATE) - surely this can be
+  done easily without KUniqueApplication or DCOP?
+  
+config dialogs (look into new kconfig generator)
+- open documents in same window mode
+- recent files history length
+- undo limit
+- grid tiling
+- visual transparency background
+- saving transparency background
+  (for formats like BMP which don't suport transparency)
+- Un-DoNotAskAgain
 
 kpDocument::selectionGetMask()
 * return existing selection pixmap mask if available
@@ -147,6 +143,10 @@ looks bad on 8-bit screen
 - it seems that AvoidDither means only do colour match/dithering if need to
   while PreferDither means try to _always_ smooth out (even in a single colour
   darkgreen document)
+
+warn when about to exceed KP_BIG_IMAGE_WIDTH or KP_BIG_IMAGE_HEIGHT
+
+Settings/Show Path should only be there when there is a path (i.e. not Untitled)
 
 documentation (assigned to Thurston)
 
@@ -166,8 +166,8 @@ Look at KPixmapIO for QPixmap <-> QImage conversion optimisation
 Update: qt-copy/patches/0005-qpixmap_mitshm.patch: "this obsoletes KPixmapIO"
 
 
-Cool Ideas
-==========
+Other Ideas
+===========
 
 KolourPaint at >= 1.0 should be very usable.  So the following are just nice
 ideas (or things I should really do :)) that may or may not ever get
