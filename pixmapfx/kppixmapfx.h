@@ -51,6 +51,15 @@ class kpSelection;
 class kpPixmapFX
 {
 public:
+
+    //
+    // Overflow Resistant Arithmetic:
+    //
+    // Returns INT_MAX if <lhs> or <rhs> < 0 or if would overflow.
+    static int addDimensions (int lhs, int rhs);
+    static int multiplyDimensions (int lhs, int rhs);
+
+
     //
     // QPixmap Statistics
     //

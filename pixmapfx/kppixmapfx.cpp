@@ -54,6 +54,35 @@
 
 
 //
+// Overflow Resistant Arithmetic:
+//
+
+// public static
+int kpPixmapFX::addDimensions (int lhs, int rhs)
+{
+    if (lhs < 0 || rhs < 0 ||
+        lhs > INT_MAX - rhs)
+    {
+        return INT_MAX;
+    }
+
+    return lhs + rhs;
+}
+
+// public static
+int kpPixmapFX::multiplyDimensions (int lhs, int rhs)
+{
+    if (lhs < 0 || rhs < 0 ||
+        lhs > INT_MAX / rhs)
+    {
+        return INT_MAX;
+    }
+
+    return lhs * rhs;
+}
+
+
+//
 // QPixmap Statistics
 //
 
@@ -72,7 +101,7 @@ int kpPixmapFX::pixmapArea (const QPixmap *pixmap)
 // public static
 int kpPixmapFX::pixmapArea (int width, int height)
 {
-    return width * height;
+    return multiplyDimensions (width, height);
 }
 
 
@@ -100,10 +129,11 @@ int kpPixmapFX::pixmapSize (int width, int height, int depth)
                << " h=" << height
                << " d=" << depth
                << " roundedDepth=" << roundedDepth
-               << " ret=" << (kpPixmapFX::pixmapArea (width, height) * roundedDepth / 8)
+               << " ret="
+               << multiplyDimensions (kpPixmapFX::pixmapArea (width, height), roundedDepth / 8)
                << endl;
 #endif
-    return (kpPixmapFX::pixmapArea (width, height) * roundedDepth / 8);
+    return multiplyDimensions (kpPixmapFX::pixmapArea (width, height), roundedDepth / 8);
 }
 
 
@@ -130,11 +160,12 @@ int kpPixmapFX::imageSize (int width, int height, int depth)
                << " h=" << height
                << " d=" << depth
                << " roundedDepth=" << roundedDepth
-               << " ret=" << (width * height * roundedDepth / 8)
+               << " ret="
+               << multiplyDimensions (multiplyDimensions (width, height), roundedDepth / 8)
                << endl;
 #endif
 
-    return (width * height * roundedDepth / 8);
+    return multiplyDimensions (multiplyDimensions (width, height), roundedDepth / 8);
 }
 
 

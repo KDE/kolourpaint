@@ -1560,7 +1560,7 @@ bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
                << endl;
 #endif
 
-    // Only got smaller - don't complain
+    // Only got smaller or unchanged - don't complain
     if (!(newWidth > oldWidth || newHeight > oldHeight))
     {
         return true;
