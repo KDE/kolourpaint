@@ -525,6 +525,7 @@ private slots:
 
 public:
     KToolBar *textToolBar ();
+    bool isTextStyleBackgroundOpaque () const;
     kpTextStyle textStyle () const;
     void setTextStyle (const kpTextStyle &textStyle_);
     int settingTextStyle () const;

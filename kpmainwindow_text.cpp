@@ -39,6 +39,8 @@
 #include <kpdefs.h>
 #include <kptextstyle.h>
 #include <kptooltext.h>
+#include <kptooltoolbar.h>
+#include <kptoolwidgetopaqueortransparent.h>
 #include <kpview.h>
 
 
@@ -279,6 +281,22 @@ KToolBar *kpMainWindow::textToolBar ()
     return toolBar ("textToolBar");
 }
 
+bool kpMainWindow::isTextStyleBackgroundOpaque () const
+{
+    if (m_toolToolBar)
+    {
+        kpToolWidgetOpaqueOrTransparent *oot =
+            m_toolToolBar->toolWidgetOpaqueOrTransparent ();
+
+        if (oot)
+        {
+            return oot->isOpaque ();
+        }
+    }
+
+    return true;
+}
+
 // public
 kpTextStyle kpMainWindow::textStyle () const
 {
@@ -289,7 +307,8 @@ kpTextStyle kpMainWindow::textStyle () const
                         m_actionTextUnderline->isChecked (),
                         m_actionTextStrikeThru->isChecked (),
                         m_colorToolBar ? m_colorToolBar->foregroundColor () : kpColor::invalid,
-                        m_colorToolBar ? m_colorToolBar->backgroundColor () : kpColor::invalid);
+                        m_colorToolBar ? m_colorToolBar->backgroundColor () : kpColor::invalid,
+                        isTextStyleBackgroundOpaque ());
 }
 
 // public
@@ -300,6 +319,7 @@ void kpMainWindow::setTextStyle (const kpTextStyle &textStyle_)
 #endif
 
     m_settingTextStyle++;
+
 
     if (textStyle_.fontFamily () != m_actionTextFontFamily->font ())
     {
@@ -347,6 +367,22 @@ void kpMainWindow::setTextStyle (const kpTextStyle &textStyle_)
     {
         m_colorToolBar->setBackgroundColor (textStyle_.backgroundColor ());
     }
+
+
+    if (textStyle_.isBackgroundOpaque () != isTextStyleBackgroundOpaque ())
+    {
+        if (m_toolToolBar)
+        {
+            kpToolWidgetOpaqueOrTransparent *oot =
+                m_toolToolBar->toolWidgetOpaqueOrTransparent ();
+
+            if (oot)
+            {
+                oot->setOpaque (textStyle_.isBackgroundOpaque ());
+            }
+        }
+    }
+
 
     m_settingTextStyle--;
 }

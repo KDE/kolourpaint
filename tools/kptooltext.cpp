@@ -39,6 +39,7 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kpselection.h>
+#include <kptoolwidgetopaqueortransparent.h>
 #include <kpviewmanager.h>
 
 
@@ -574,8 +575,22 @@ void kpToolText::changeTextStyle (const QString &name,
 // protected slot virtual [base kpToolSelection]
 void kpToolText::slotIsOpaqueChanged ()
 {
-    // --- don't pass on event to kpToolSelection which would have set the
-    //     SelectionTransparency - not relevant to the Text Tool ---
+#if DEBUG_KP_TOOL_TEXT
+    kdDebug () << "kpToolText::slotIsOpaqueChanged()" << endl;
+#endif
+
+    if (!shouldChangeTextStyle ())
+        return;
+
+    kpTextStyle newTextStyle = mainWindow ()->textStyle ();
+    kpTextStyle oldTextStyle = newTextStyle;
+    oldTextStyle.setBackgroundOpaque (!m_toolWidgetOpaqueOrTransparent->isOpaque ());
+
+    changeTextStyle (newTextStyle.isBackgroundOpaque () ?
+                         i18n ("Text: Opaque Background") :
+                         i18n ("Text: Transparent Background"),
+                     newTextStyle,
+                     oldTextStyle);
 }
 
 // protected slot virtual [base kpTool]

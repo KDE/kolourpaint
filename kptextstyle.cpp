@@ -36,7 +36,8 @@
 kpTextStyle::kpTextStyle ()
     : m_fontSize (0),
       m_isBold (false), m_isItalic (false),
-      m_isUnderline (false), m_isStrikeThru (false)
+      m_isUnderline (false), m_isStrikeThru (false),
+      m_isBackgroundOpaque (true)
 {
 }
 
@@ -44,25 +45,34 @@ kpTextStyle::kpTextStyle (const QString &fontFamily,
                           int fontSize,
                           bool isBold, bool isItalic,
                           bool isUnderline, bool isStrikeThru,
-                          const kpColor &fcolor, const kpColor &bcolor)
+                          const kpColor &fcolor, const kpColor &bcolor,
+                          bool isBackgroundOpaque)
     : m_fontFamily (fontFamily),
       m_fontSize (fontSize),
       m_isBold (isBold), m_isItalic (isItalic),
       m_isUnderline (isUnderline), m_isStrikeThru (isStrikeThru),
-      m_foregroundColor (fcolor), m_backgroundColor (bcolor)
+      m_foregroundColor (fcolor), m_backgroundColor (bcolor),
+      m_isBackgroundOpaque (isBackgroundOpaque)
 {
 }
+
+kpTextStyle::~kpTextStyle ()
+{
+}
+
 
 // friend
 QDataStream &operator<< (QDataStream &stream, const kpTextStyle &textStyle)
 {
     stream << textStyle.m_fontFamily;
     stream << textStyle.m_fontSize;
-    
+
     stream << int (textStyle.m_isBold) << int (textStyle.m_isItalic)
            << int (textStyle.m_isUnderline) << int (textStyle.m_isStrikeThru);
-    
+
     stream << textStyle.m_foregroundColor << textStyle.m_backgroundColor;
+
+    stream << int (textStyle.m_isBackgroundOpaque);
 
     return stream;
 }
@@ -82,6 +92,10 @@ QDataStream &operator>> (QDataStream &stream, kpTextStyle &textStyle)
 
     stream >> textStyle.m_foregroundColor >> textStyle.m_backgroundColor;
 
+    int e;
+    stream >> e;
+    textStyle.m_isBackgroundOpaque = e;
+
     return stream;
 }
 
@@ -95,17 +109,14 @@ bool kpTextStyle::operator== (const kpTextStyle &rhs) const
             m_isUnderline == rhs.m_isUnderline &&
             m_isStrikeThru == rhs.m_isStrikeThru &&
             m_foregroundColor == rhs.m_foregroundColor &&
-            m_backgroundColor == rhs.m_backgroundColor);
+            m_backgroundColor == rhs.m_backgroundColor &&
+            m_isBackgroundOpaque == rhs.m_isBackgroundOpaque);
 }
 
 // public
 bool kpTextStyle::operator!= (const kpTextStyle &rhs) const
 {
     return !(*this == rhs);
-}
-        
-kpTextStyle::~kpTextStyle ()
-{
 }
 
 
@@ -210,6 +221,42 @@ kpColor kpTextStyle::backgroundColor () const
 void kpTextStyle::setBackgroundColor (const kpColor &bcolor)
 {
     m_backgroundColor = bcolor;
+}
+
+
+// public
+bool kpTextStyle::isBackgroundOpaque () const
+{
+    return m_isBackgroundOpaque;
+}
+
+// public
+void kpTextStyle::setBackgroundOpaque (bool yes)
+{
+    m_isBackgroundOpaque = yes;
+}
+
+
+// public
+bool kpTextStyle::isBackgroundTransparent () const
+{
+    return !m_isBackgroundOpaque;
+}
+
+// public
+void kpTextStyle::setBackgroundTransparent (bool yes)
+{
+    m_isBackgroundOpaque = !yes;
+}
+
+
+// public
+kpColor kpTextStyle::effectiveBackgroundColor () const
+{
+    if (isBackgroundOpaque ())
+        return backgroundColor ();
+    else
+        return kpColor::transparent;
 }
 
 

@@ -45,12 +45,16 @@ public:
                  bool isBold, bool isItalic,
                  bool isUnderline, bool isStrikeThru,
                  const kpColor &fcolor,
-                 const kpColor &bcolor);
+                 const kpColor &bcolor,
+                 bool isBackgroundOpaque);
+    ~kpTextStyle ();
+
+
     friend QDataStream &operator<< (QDataStream &stream, const kpTextStyle &textStyle);
     friend QDataStream &operator>> (QDataStream &stream, kpTextStyle &textStyle);
     bool operator== (const kpTextStyle &rhs) const;
     bool operator!= (const kpTextStyle &rhs) const;
-    ~kpTextStyle ();
+
 
     QString fontFamily () const;
     void setFontFamily (const QString &f);
@@ -73,8 +77,22 @@ public:
     kpColor foregroundColor () const;
     void setForegroundColor (const kpColor &fcolor);
 
+    // Note: This is the _input_ backgroundColor without applying any
+    //       isBackground(Opaque|Transparent)() transformation.
+    //       See effectiveBackgroundColor().
     kpColor backgroundColor () const;
     void setBackgroundColor (const kpColor &bcolor);
+
+    bool isBackgroundOpaque () const;
+    void setBackgroundOpaque (bool yes = true);
+
+    bool isBackgroundTransparent () const;
+    void setBackgroundTransparent (bool yes = true);
+
+
+    // If isBackgroundOpaque(), returns backgroundColor().
+    // Else, returns kpColor::transparent.
+    kpColor effectiveBackgroundColor () const;
 
     QFont font () const;
     QFontMetrics fontMetrics () const;
@@ -84,6 +102,7 @@ private:
     int m_fontSize;
     bool m_isBold, m_isItalic, m_isUnderline, m_isStrikeThru;
     kpColor m_foregroundColor, m_backgroundColor;
+    bool m_isBackgroundOpaque;
 };
 
 #endif  // __kp_text_style_h__

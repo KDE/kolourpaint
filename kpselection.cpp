@@ -592,7 +592,7 @@ void kpSelection::calculateTextPixmap ()
     kdDebug () << "kpSelection::calculateTextPixmap() textStyle: fcol="
                << (int *) m_textStyle.foregroundColor ().toQRgb ()
                << " bcol="
-               << (int *) m_textStyle.backgroundColor ().toQRgb ()
+               << (int *) m_textStyle.effectiveBackgroundColor ().toQRgb ()
                << endl;
 #endif
 
@@ -603,7 +603,7 @@ void kpSelection::calculateTextPixmap ()
 
     // Iron out stupid case first
     if (m_textStyle.foregroundColor ().isTransparent () &&
-        m_textStyle.backgroundColor ().isTransparent ())
+        m_textStyle.effectiveBackgroundColor ().isTransparent ())
     {
         pixmapMask.resize (m_pixmap->width (), m_pixmap->height ());
         pixmapMask.fill (Qt::color0/*transparent*/);
@@ -620,10 +620,10 @@ void kpSelection::calculateTextPixmap ()
     QPainter pixmapPainter, pixmapMaskPainter;
 
     if (m_textStyle.foregroundColor ().isOpaque () ||
-        m_textStyle.backgroundColor ().isOpaque ())
+        m_textStyle.effectiveBackgroundColor ().isOpaque ())
     {
-        if (m_textStyle.backgroundColor ().isOpaque ())
-            m_pixmap->fill (m_textStyle.backgroundColor ().toQColor ());
+        if (m_textStyle.effectiveBackgroundColor ().isOpaque ())
+            m_pixmap->fill (m_textStyle.effectiveBackgroundColor ().toQColor ());
         else
             m_pixmap->fill (Qt::black);  // see hack below
 
@@ -640,19 +640,20 @@ void kpSelection::calculateTextPixmap ()
             // So we draw in a contrasting color to the background so that
             // we can identify the transparent pixels for manually creating
             // the mask.
-            if (m_textStyle.backgroundColor ().isTransparent ())
+            if (m_textStyle.effectiveBackgroundColor ().isTransparent ())
                 pixmapPainter.setPen (Qt::white);
             else
-                pixmapPainter.setPen (QColor ((m_textStyle.backgroundColor ().toQRgb () & RGB_MASK) ^ 0xFFFFFF));
+                pixmapPainter.setPen (
+                    QColor ((m_textStyle.effectiveBackgroundColor ().toQRgb () & RGB_MASK) ^ 0xFFFFFF));
         }
         pixmapPainter.setFont (font);
     }
 
     if (m_textStyle.foregroundColor ().isTransparent () ||
-        m_textStyle.backgroundColor ().isTransparent ())
+        m_textStyle.effectiveBackgroundColor ().isTransparent ())
     {
         pixmapMask.resize (m_rect.width (), m_rect.height ());
-        pixmapMask.fill (m_textStyle.backgroundColor ().maskColor ());
+        pixmapMask.fill (m_textStyle.effectiveBackgroundColor ().maskColor ());
 
         pixmapMaskPainter.begin (&pixmapMask);
     #if DEBUG_KP_SELECTION

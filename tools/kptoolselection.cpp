@@ -117,7 +117,7 @@ void kpToolSelection::begin ()
 
     kpToolToolBar *tb = toolToolBar ();
 
-    if (tb && m_mode != Text)
+    if (tb)
     {
         m_toolWidgetOpaqueOrTransparent = tb->toolWidgetOpaqueOrTransparent ();
 
