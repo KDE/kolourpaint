@@ -5,7 +5,9 @@ INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../pixmapfx \
 noinst_LTLIBRARIES = libkolourpaintwidgets.la
 libkolourpaintwidgets_la_SOURCES = kpcolorsimilaritycube.cpp \
     kpcolorsimilaritydialog.cpp \
-    kpcolortoolbar.cpp kptooltoolbar.cpp \
+    kpcolortoolbar.cpp \
+    kpsqueezedtextlabel.cpp \
+    kptooltoolbar.cpp \
     kptoolwidgetbase.cpp kptoolwidgetbrush.cpp \
     kptoolwidgeterasersize.cpp kptoolwidgetfillstyle.cpp \
     kptoolwidgetlinewidth.cpp \

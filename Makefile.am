@@ -19,7 +19,6 @@ kolourpaint_SOURCES = kolourpaint.cpp kpdocument.cpp kpview.cpp \
     kpmainwindow_text.cpp \
     kpmainwindow_view.cpp \
     kpselection.cpp kpselectiondrag.cpp \
-    kpsqueezedtextlabel.cpp \
     kptemppixmap.cpp kpthumbnail.cpp \
     kpviewmanager.cpp
 kolourpaint_LDFLAGS = $(all_libraries) $(KDE_RPATH)
