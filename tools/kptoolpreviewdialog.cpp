@@ -38,6 +38,7 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
+#include <kpselection.h>
 #include <kptoolpreviewdialog.h>
 
 
@@ -242,8 +243,23 @@ void kpToolPreviewDialog::updateShrukenDocumentPixmap ()
                                                m_oldWidth,
                                                m_oldHeight);
 
+        QPixmap pixmap;
+
+        if (m_actOnSelection)
+        {
+            kpSelection sel = *doc->selection ();
+            if (!sel.pixmap ())
+                sel.setPixmap (doc->getSelectedPixmap ());
+
+            pixmap = sel.transparentPixmap ();
+        }
+        else
+        {
+            pixmap = *doc->pixmap ();
+        }
+
         m_shrunkenDocumentPixmap = kpPixmapFX::scale (
-            m_actOnSelection ? doc->getSelectedPixmap () : *doc->pixmap (),
+            pixmap,
             scaleDimension (m_oldWidth,
                             keepsAspectScale,
                             1, m_previewPixmapLabel->width ()),

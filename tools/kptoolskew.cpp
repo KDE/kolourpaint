@@ -113,7 +113,6 @@ void kpToolSkewCommand::execute ()
 
         // Save old selection
         m_oldSelection = *sel;
-        m_oldSelection.setPixmap (QPixmap ());
 
 
         // Calculate skewed points
@@ -132,7 +131,8 @@ void kpToolSkewCommand::execute ()
         if (currentPoints.boundingRect ().width () == newPixmap.width () &&
             currentPoints.boundingRect ().height () == newPixmap.height ())
         {
-            doc->setSelection (kpSelection (currentPoints, newPixmap));
+            doc->setSelection (kpSelection (currentPoints, newPixmap,
+                                            m_oldSelection.transparency ()));
         }
         else
         {
@@ -150,7 +150,8 @@ void kpToolSkewCommand::execute ()
                                                    currentPoints.boundingRect ().y (),
                                                    newPixmap.width (),
                                                    newPixmap.height ()),
-                                            newPixmap));
+                                            newPixmap,
+                                            m_oldSelection.transparency ()));
         }
     }
     else
@@ -182,7 +183,6 @@ void kpToolSkewCommand::unexecute ()
     else
     {
         kpSelection oldSelection = m_oldSelection;
-        oldSelection.setPixmap (oldPixmap);
         doc->setSelection (oldSelection);
     }
 

@@ -636,7 +636,22 @@ void kpDocument::setSelection (const kpSelection &selection)
     }
 
     m_selection = new kpSelection (selection);
-#if DEBUG_KP_DOCUMENT
+
+    // TODO: this coupling is bad, careless and lazy
+    if (m_mainWindow &&
+        m_selection->transparency () != m_mainWindow->selectionTransparency ())
+    {
+        kdDebug () << "kpDocument::setSelection() sel's transparency differs "
+                      "from mainWindow's transparency - setting sel's transparency "
+                      "to mainWindow"
+                   << endl;
+        kdDebug () << "\tisOpaque: sel=" << m_selection->transparency ().isOpaque ()
+                   << " mainWindow=" << m_mainWindow->selectionTransparency ().isOpaque ()
+                   << endl;
+        m_selection->setTransparency (m_mainWindow->selectionTransparency ());
+    }
+
+#if DEBUG_KP_DOCUMENT && 0
     kdDebug () << "\tcheck sel " << (int *) m_selection
                << " boundingRect=" << m_selection->boundingRect ()
                << endl;
@@ -884,7 +899,7 @@ bool kpDocument::selectionDelete ()
 }
 
 // public
-bool kpDocument::selectionCopyOntoDocument ()
+bool kpDocument::selectionCopyOntoDocument (bool useTransparentPixmap)
 {
     kpSelection *sel = selection ();
 
@@ -900,14 +915,15 @@ bool kpDocument::selectionCopyOntoDocument ()
     if (!boundingRect.isValid ())
         return false;
 
-    paintPixmapAt (*sel->pixmap (), boundingRect.topLeft ());
+    paintPixmapAt (useTransparentPixmap ? sel->transparentPixmap () : sel->opaquePixmap (),
+                   boundingRect.topLeft ());
     return true;
 }
 
 // public
-bool kpDocument::selectionPushOntoDocument ()
+bool kpDocument::selectionPushOntoDocument (bool useTransparentPixmap)
 {
-    return (selectionCopyOntoDocument () && selectionDelete ());
+    return (selectionCopyOntoDocument (useTransparentPixmap) && selectionDelete ());
 }
 
 // public

@@ -38,12 +38,14 @@
 #include <kcommand.h>
 
 #include <kpcolor.h>
+#include <kpselectiontransparency.h>
 #include <kptool.h>
 
 class QPoint;
 class QRect;
 class kpMainWindow;
 class kpSelection;
+class kpToolWidgetOpaqueOrTransparent;
 
 class kpToolSelection : public kpTool
 {
@@ -73,6 +75,14 @@ public:
     virtual void endDraw (const QPoint &thisPoint, const QRect &normalizedRect);
 
 private:
+    void selectionTransparencyChanged (const QString &name);
+
+private slots:
+    void slotIsOpaqueChanged ();
+    virtual void slotBackgroundColorChanged (const kpColor &color);
+    virtual void slotColorSimilarityChanged (double similarity, int);
+
+private:
     Mode m_mode;
 
     QPoint m_startDragFromSelectionTopLeft;
@@ -82,6 +92,7 @@ private:
     class kpToolSelectionPullFromDocumentCommand *m_currentPullFromDocumentCommand;
     class kpToolSelectionMoveCommand *m_currentMoveCommand;
     bool m_currentMoveCommandIsSmear;
+    kpToolWidgetOpaqueOrTransparent *m_toolWidgetOpaqueOrTransparent;
 };
 
 class kpToolSelectionCreateCommand : public KCommand
@@ -126,6 +137,29 @@ private:
     kpMainWindow *m_mainWindow;
     kpColor m_backgroundColor;
     kpSelection *m_originalSelectionRegion;
+};
+
+class kpToolSelectionTransparencyCommand : public KCommand
+{
+public:
+    kpToolSelectionTransparencyCommand (const QString &name,
+        const kpSelectionTransparency &st,
+        const kpSelectionTransparency &oldST,
+        kpMainWindow *mainWindow);
+    virtual QString name () const;
+    virtual ~kpToolSelectionTransparencyCommand ();
+
+private:
+    kpDocument *document () const;
+
+public:
+    virtual void execute ();
+    virtual void unexecute ();
+
+private:
+    QString m_name;
+    kpSelectionTransparency m_st, m_oldST;
+    kpMainWindow *m_mainWindow;
 };
 
 class kpToolSelectionMoveCommand : public KCommand

@@ -601,7 +601,8 @@ void kpToolAutoCropCommand::execute ()
 
         kpSelection sel (kpSelection::Rectangle,
                          rect,
-                         pixmapWithoutBorder);
+                         pixmapWithoutBorder,
+                         m_oldSelection.transparency ());
 
         doc->setSelection (sel);
     }
@@ -711,7 +712,7 @@ void kpToolAutoCropCommand::unexecute ()
 // private
 QRect kpToolAutoCropCommand::contentsRect () const
 {
-    QPixmap *pixmap = document ()->pixmap (m_actOnSelection);
+    const QPixmap *pixmap = document ()->pixmap (m_actOnSelection);
 
     QPoint topLeft (m_leftBorder.exists () ?
                         m_leftBorder.rect ().right () + 1 :

@@ -29,32 +29,50 @@
 #define DEBUG_KP_SELECTION 1
 
 #include <qimage.h>
+#include <qpainter.h>
 #include <qwmatrix.h>
 
 #include <kdebug.h>
 
+#include <kpcolorsimilaritydialog.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kptool.h>
 
 
-kpSelection::kpSelection ()
+kpSelection::kpSelection (const kpSelectionTransparency &transparency)
     : QObject (),
       m_type (kpSelection::Rectangle),
       m_pixmap (0)
 {
+    setTransparency (transparency);
 }
 
-kpSelection::kpSelection (Type type, const QRect &rect, const QPixmap &pixmap)
+kpSelection::kpSelection (Type type, const QRect &rect, const QPixmap &pixmap,
+                          const kpSelectionTransparency &transparency)
     : QObject (),
       m_type (type),
       m_rect (rect)
 {
     calculatePoints ();
     m_pixmap = pixmap.isNull () ? 0 : new QPixmap (pixmap);
+
+    setTransparency (transparency);
 }
 
-kpSelection::kpSelection (const QPointArray &points, const QPixmap &pixmap)
+kpSelection::kpSelection (Type type, const QRect &rect, const kpSelectionTransparency &transparency)
+    : QObject (),
+      m_type (type),
+      m_rect (rect),
+      m_pixmap (0)
+{
+    calculatePoints ();
+
+    setTransparency (transparency);
+}
+
+kpSelection::kpSelection (const QPointArray &points, const QPixmap &pixmap,
+                          const kpSelectionTransparency &transparency)
     : QObject (),
       m_type (Points),
       m_rect (points.boundingRect ()),
@@ -62,6 +80,20 @@ kpSelection::kpSelection (const QPointArray &points, const QPixmap &pixmap)
 {
     m_pixmap = pixmap.isNull () ? 0 : new QPixmap (pixmap);
     m_points.detach ();
+
+    setTransparency (transparency);
+}
+
+kpSelection::kpSelection (const QPointArray &points, const kpSelectionTransparency &transparency)
+    : QObject (),
+      m_type (Points),
+      m_rect (points.boundingRect ()),
+      m_points (points),
+      m_pixmap (0)
+{
+    m_points.detach ();
+
+    setTransparency (transparency);
 }
 
 kpSelection::kpSelection (const kpSelection &rhs)
@@ -69,7 +101,11 @@ kpSelection::kpSelection (const kpSelection &rhs)
       m_type (rhs.m_type),
       m_rect (rhs.m_rect),
       m_points (rhs.m_points),
-      m_pixmap (rhs.m_pixmap ? new QPixmap (*rhs.m_pixmap) : 0)
+      m_pixmap (rhs.m_pixmap ? new QPixmap (*rhs.m_pixmap) : 0),
+      m_textLines (rhs.m_textLines),
+      m_textStyle (rhs.m_textStyle),
+      m_transparency (rhs.m_transparency),
+      m_transparencyMask (rhs.m_transparencyMask)
 {
     m_points.detach ();
 }
@@ -86,6 +122,12 @@ kpSelection &kpSelection::operator= (const kpSelection &rhs)
 
     delete m_pixmap;
     m_pixmap = rhs.m_pixmap ? new QPixmap (*rhs.m_pixmap) : 0;
+
+    m_textLines = rhs.m_textLines;
+    m_textStyle = rhs.m_textStyle;
+
+    m_transparency = rhs.m_transparency;
+    m_transparencyMask = rhs.m_transparencyMask;
 
     return *this;
 }
@@ -350,6 +392,167 @@ void kpSelection::setPixmap (const QPixmap &pixmap)
 
         emit changed (boundingRect ());
     }
+
+    calculateTransparencyMask ();
+}
+
+
+// public
+QPixmap kpSelection::opaquePixmap () const
+{
+    if (pixmap ())
+    {
+        return *pixmap ();
+    }
+    else
+    {
+        return QPixmap ();
+    }
+}
+
+// private
+void kpSelection::calculateTransparencyMask ()
+{
+#if DEBUG_KP_SELECTION
+    kdDebug () << "kpSelection::calculateTransparencyMask()" << endl;
+#endif
+
+
+    if (!m_pixmap)
+    {
+    #if DEBUG_KP_SELECTION
+        kdDebug () << "\tno pixmap - no need for transparency mask" << endl;
+    #endif
+        m_transparencyMask.resize (0, 0);
+        return;
+    }
+
+    if (m_transparency.isOpaque ())
+    {
+    #if DEBUG_KP_SELECTION
+        kdDebug () << "\topaque - no need for transparency mask" << endl;
+    #endif
+        m_transparencyMask.resize (0, 0);
+        return;
+    }
+
+    m_transparencyMask.resize (m_pixmap->width (), m_pixmap->height ());
+
+    QImage image = kpPixmapFX::convertToImage (*m_pixmap);
+    QPainter transparencyMaskPainter (&m_transparencyMask);
+
+    bool hasTransparent = false;
+    for (int y = 0; y < m_pixmap->height (); y++)
+    {
+        for (int x = 0; x < m_pixmap->width (); x++)
+        {
+            if (kpPixmapFX::getColorAtPixel (image, x, y).isSimilarTo (m_transparency.transparentColor (),
+                                                                       m_transparency.processedColorSimilarity ()))
+            {
+                transparencyMaskPainter.setPen (Qt::color1/*make it transparent*/);
+                hasTransparent = true;
+            }
+            else
+            {
+                transparencyMaskPainter.setPen (Qt::color0/*keep pixel as is*/);
+            }
+
+            transparencyMaskPainter.drawPoint (x, y);
+        }
+    }
+
+    transparencyMaskPainter.end ();
+
+    if (!hasTransparent)
+    {
+    #if DEBUG_KP_SELECTION
+        kdDebug () << "\tcolour useless - completely opaque" << endl;
+    #endif
+        m_transparencyMask.resize (0, 0);
+        return;
+    }
+}
+
+// public
+QPixmap kpSelection::transparentPixmap () const
+{
+    QPixmap pixmap = opaquePixmap ();
+
+    if (!m_transparencyMask.isNull ())
+    {
+        kpPixmapFX::paintMaskTransparentWithBrush (&pixmap, QPoint (0, 0),
+                                                   m_transparencyMask);
+    }
+
+    return pixmap;
+}
+
+// public
+kpSelectionTransparency kpSelection::transparency () const
+{
+    return m_transparency;
+}
+
+// public
+bool kpSelection::setTransparency (const kpSelectionTransparency &transparency,
+                                   bool checkTransparentPixmapChanged)
+{
+    if (m_transparency == transparency)
+        return false;
+
+    m_transparency = transparency;
+
+    bool haveChanged = true;
+
+    QBitmap oldTransparencyMask = m_transparencyMask;
+    calculateTransparencyMask ();
+
+
+    if (oldTransparencyMask.width () == m_transparencyMask.width () &&
+        oldTransparencyMask.height () == m_transparencyMask.height ())
+    {
+        if (m_transparencyMask.isNull ())
+        {
+        #if DEBUG_KP_SELECTION
+            kdDebug () << "\tboth old and new pixmaps are null - nothing changed" << endl;
+        #endif
+            haveChanged = false;
+        }
+        else if (checkTransparentPixmapChanged)
+        {
+            QImage oldTransparencyMaskImage = kpPixmapFX::convertToImage (oldTransparencyMask);
+            QImage newTransparencyMaskImage = kpPixmapFX::convertToImage (m_transparencyMask);
+
+            bool changed = false;
+            for (int y = 0; y < oldTransparencyMaskImage.height () && !changed; y++)
+            {
+                for (int x = 0; x < oldTransparencyMaskImage.width () && !changed; x++)
+                {
+                    if (kpPixmapFX::getColorAtPixel (oldTransparencyMaskImage, x, y) !=
+                        kpPixmapFX::getColorAtPixel (newTransparencyMaskImage, x, y))
+                    {
+                    #if DEBUG_KP_SELECTION
+                        kdDebug () << "\tdiffer at " << QPoint (x, y)
+                                   << " old=" << (int *) kpPixmapFX::getColorAtPixel (oldTransparencyMaskImage, x, y).toQRgb ()
+                                   << " new=" << (int *) kpPixmapFX::getColorAtPixel (newTransparencyMaskImage, x, y).toQRgb ()
+                                   << endl;
+                    #endif
+                        changed = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!changed)
+                haveChanged = false;
+        }
+    }
+
+
+    if (haveChanged)
+        emit changed (boundingRect ());
+
+    return haveChanged;
 }
 
 
@@ -371,11 +574,29 @@ void kpSelection::flipPoints (bool horiz, bool vert)
 // public
 void kpSelection::flip (bool horiz, bool vert)
 {
+#if DEBUG_KP_SELECTION && 1
+    kdDebug () << "kpSelection::flip(horiz=" << horiz
+               << ",vert=" << vert << ")" << endl;
+#endif
+
     flipPoints (horiz, vert);
 
 
     if (m_pixmap)
+    {
+    #if DEBUG_KP_SELECTION && 1
+        kdDebug () << "\thave pixmap - flipping that" << endl;
+    #endif
         kpPixmapFX::flip (m_pixmap, horiz, vert);
+    }
+
+    if (!m_transparencyMask.isNull ())
+    {
+    #if DEBUG_KP_SELECTION && 1
+        kdDebug () << "\thave transparency mask - flipping that" << endl;
+    #endif
+        kpPixmapFX::flip (&m_transparencyMask, horiz, vert);
+    }
 
 
     emit changed (boundingRect ());

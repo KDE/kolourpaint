@@ -41,13 +41,16 @@
 #include <kpmainwindow.h>
 #include <kpselection.h>
 #include <kptoolselection.h>
+#include <kptooltoolbar.h>
+#include <kptoolwidgetopaqueortransparent.h>
 #include <kpviewmanager.h>
 
 
 kpToolSelection::kpToolSelection (kpMainWindow *mainWindow)
     : kpTool (QString::null, QString::null, mainWindow, "tool_selection_base_class"),
       m_currentPullFromDocumentCommand (0),
-      m_currentMoveCommand (0)
+      m_currentMoveCommand (0),
+      m_toolWidgetOpaqueOrTransparent (0)
 {
     setMode (kpToolSelection::Rectangle);
 }
@@ -70,6 +73,24 @@ void kpToolSelection::pushOntoDocument ()
 // virtual
 void kpToolSelection::begin ()
 {
+    kpToolToolBar *tb = toolToolBar ();
+
+    if (tb)
+    {
+        m_toolWidgetOpaqueOrTransparent = tb->toolWidgetOpaqueOrTransparent ();
+
+        if (m_toolWidgetOpaqueOrTransparent)
+        {
+            connect (m_toolWidgetOpaqueOrTransparent, SIGNAL (isOpaqueChanged (bool)),
+                     this, SLOT (slotIsOpaqueChanged ()));
+            m_toolWidgetOpaqueOrTransparent->show ();
+        }
+    }
+    else
+    {
+        m_toolWidgetOpaqueOrTransparent = 0;
+    }
+
     viewManager ()->setSelectionBorderVisible (true);
     viewManager ()->setSelectionBorderFinished (true);
 
@@ -86,6 +107,13 @@ void kpToolSelection::end ()
 {
     if (document ()->selection ())
         pushOntoDocument ();
+
+    if (m_toolWidgetOpaqueOrTransparent)
+    {
+        disconnect (m_toolWidgetOpaqueOrTransparent, SIGNAL (isOpaqueChanged (bool)),
+                    this, SLOT (slotIsOpaqueChanged ()));
+        m_toolWidgetOpaqueOrTransparent = 0;
+    }
 }
 
 
@@ -156,7 +184,7 @@ void kpToolSelection::hover (const QPoint &point)
 void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*/,
                             const QRect &normalizedRect)
 {
-#if DEBUG_KP_TOOL_SELECTION
+#if DEBUG_KP_TOOL_SELECTION && 0
     kdDebug () << "kpToolSelection::draw() CALLED" << endl;
 #endif
 
@@ -174,7 +202,7 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
 
     if (!m_dragIsMove)
     {
-    #if DEBUG_KP_TOOL_SELECTION
+    #if DEBUG_KP_TOOL_SELECTION && 0
         kdDebug () << "\tnot moving - resizing rect to" << normalizedRect
                    << endl;
     #endif
@@ -184,11 +212,13 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
         case kpToolSelection::Rectangle:
         {
             const QRect usefulRect = normalizedRect.intersect (document ()->rect ());
-            document ()->setSelection (kpSelection (kpSelection::Rectangle, usefulRect));
+            document ()->setSelection (kpSelection (kpSelection::Rectangle, usefulRect,
+                                                    mainWindow ()->selectionTransparency ()));
             break;
         }
         case kpToolSelection::Ellipse:
-            document ()->setSelection (kpSelection (kpSelection::Ellipse, normalizedRect));
+            document ()->setSelection (kpSelection (kpSelection::Ellipse, normalizedRect,
+                                                    mainWindow ()->selectionTransparency ()));
             break;
         case kpToolSelection::FreeForm:
             QPointArray points;
@@ -213,8 +243,8 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
             points.putPoints (points.count (), 1, thisPoint.x (), thisPoint.y ());
 
 
-            document ()->setSelection (kpSelection (points));
-        #if DEBUG_KP_TOOL_SELECTION
+            document ()->setSelection (kpSelection (points, mainWindow ()->selectionTransparency ()));
+        #if DEBUG_KP_TOOL_SELECTION && 0
             kdDebug () << "\t\tfreeform; #points=" << document ()->selection ()->points ().count () << endl;
         #endif
             break;
@@ -383,6 +413,76 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
 }
 
 
+// private slot
+void kpToolSelection::selectionTransparencyChanged (const QString &name)
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kdDebug () << "kpToolSelection::selectionTransparencyChanged(" << name << ")" << endl;
+#endif
+
+    if (mainWindow ()->settingSelectionTransparency ())
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kdDebug () << "\trecursion - abort setting selection transparency: "
+                   << mainWindow ()->settingSelectionTransparency () << endl;
+    #endif
+        return;
+    }
+
+    if (document ()->selection ())
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kdDebug () << "\thave sel - set transparency" << endl;
+    #endif
+
+        kpSelectionTransparency oldST = document ()->selection ()->transparency ();
+        kpSelectionTransparency st = mainWindow ()->selectionTransparency ();
+
+        if (document ()->selection ()->setTransparency (st, true/*check harder for no change in mask*/))
+        {
+        #if DEBUG_KP_TOOL_SELECTION
+            kdDebug () << "\t\twhich changed the pixmap" << endl;
+        #endif
+
+            commandHistory ()->addCommand (new kpToolSelectionTransparencyCommand (
+                name,
+                st, oldST,
+                mainWindow ()),
+                false/* no exec*/);
+        }
+    }
+}
+
+
+// private slot
+void kpToolSelection::slotIsOpaqueChanged ()
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kdDebug () << "kpToolSelection::slotIsOpaqueChanged()" << endl;
+#endif
+    bool isTransparent = mainWindow ()->selectionTransparency ().isTransparent ();
+    selectionTransparencyChanged (i18n ("Selection: %1")
+        .arg (isTransparent ? i18n ("Transparent") : i18n ("Opaque")));
+}
+
+// private slot virtual [base kpTool]
+void kpToolSelection::slotBackgroundColorChanged (const kpColor &)
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kdDebug () << "kpToolSelection::slotBackgroundColorChanged()" << endl;
+#endif
+    selectionTransparencyChanged (i18n ("Selection: Transparent Color"));
+}
+
+// private slot virtual [base kpTool]
+void kpToolSelection::slotColorSimilarityChanged (double, int)
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kdDebug () << "kpToolSelection::slotColorSimilarityChanged()" << endl;
+#endif
+    selectionTransparencyChanged (i18n ("Selection: Transparent Color Similarity"));
+}
+
 
 /*
  * kpToolSelectionCreateCommand
@@ -438,6 +538,8 @@ void kpToolSelectionCreateCommand::execute ()
                    << " pixmap=" << (doc->selection () ? doc->selection ()->pixmap () : 0)
                    << endl;
     #endif
+        if (m_fromSelection->transparency () != m_mainWindow->selectionTransparency ())
+            m_mainWindow->setSelectionTransparency (m_fromSelection->transparency ());
         doc->setSelection (*m_fromSelection);
     }
 }
@@ -535,7 +637,12 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
     // and then CTRL+Shift+Z'ed putting us here.  Make sure we pull from the
     // originally requested region - not the random one.
     if (m_originalSelectionRegion)
+    {
+        if (m_originalSelectionRegion->transparency () != m_mainWindow->selectionTransparency ())
+            m_mainWindow->setSelectionTransparency (m_originalSelectionRegion->transparency ());
+
         doc->setSelection (*m_originalSelectionRegion);
+    }
 
     doc->selectionPullFromDocument (m_backgroundColor);
 
@@ -574,11 +681,76 @@ void kpToolSelectionPullFromDocumentCommand::unexecute ()
     // execute(), rather than after the user tried to throw us off by
     // simply selecting another region as to do that, a destroy command
     // must have been used.
-    doc->selectionCopyOntoDocument ();
+    doc->selectionCopyOntoDocument (false/*use opaque pixmap*/);
     doc->selection ()->setPixmap (QPixmap ());
 
     delete m_originalSelectionRegion;
     m_originalSelectionRegion = new kpSelection (*doc->selection ());
+}
+
+
+/*
+ * kpToolSelectionTransparencyCommand
+ */
+
+kpToolSelectionTransparencyCommand::kpToolSelectionTransparencyCommand (const QString &name,
+    const kpSelectionTransparency &st,
+    const kpSelectionTransparency &oldST,
+    kpMainWindow *mainWindow)
+    : m_name (name),
+      m_st (st),
+      m_oldST (oldST),
+      m_mainWindow (mainWindow)
+{
+}
+
+// public virtual [base KCommand]
+QString kpToolSelectionTransparencyCommand::name () const
+{
+    return m_name;
+}
+
+kpToolSelectionTransparencyCommand::~kpToolSelectionTransparencyCommand ()
+{
+}
+
+// private
+kpDocument *kpToolSelectionTransparencyCommand::document () const
+{
+    return m_mainWindow ? m_mainWindow->document () : 0;
+}
+
+// public virtual [base KCommand]
+void kpToolSelectionTransparencyCommand::execute ()
+{
+#if DEBUG_KP_TOOL_SELECTION && 1
+    kdDebug () << "kpToolSelectionTransparencyCommand::execute()" << endl;
+#endif
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
+
+    m_mainWindow->setSelectionTransparency (m_st);
+
+    if (doc->selection ())
+        doc->selection ()->setTransparency (m_st);
+}
+
+// public virtual [base KCommand]
+void kpToolSelectionTransparencyCommand::unexecute ()
+{
+#if DEBUG_KP_TOOL_SELECTION && 1
+    kdDebug () << "kpToolSelectionTransparencyCommand::unexecute()" << endl;
+#endif
+
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
+
+    m_mainWindow->setSelectionTransparency (m_oldST);
+
+    if (doc->selection ())
+        doc->selection ()->setTransparency (m_oldST);
 }
 
 
@@ -927,6 +1099,9 @@ void kpToolSelectionDestroyCommand::unexecute ()
                                           true)
                << endl;
 #endif
+    if (m_oldSelection->transparency () != m_mainWindow->selectionTransparency ())
+        m_mainWindow->setSelectionTransparency (m_oldSelection->transparency ());
+
     doc->setSelection (*m_oldSelection);
 
     delete m_oldSelection;

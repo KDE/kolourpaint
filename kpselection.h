@@ -29,13 +29,18 @@
 #ifndef __kpselection_h__
 #define __kpselection_h__
 
+#include <qbitmap.h>
 #include <qdatastream.h>
 #include <qobject.h>
 #include <qpixmap.h>
 #include <qpointarray.h>
+#include <qvaluevector.h>
 #include <qrect.h>
 
+#include <kpcolor.h>
 #include <kppixmapfx.h>
+#include <kpselectiontransparency.h>
+#include <kptooltext.h>
 
 
 /*
@@ -54,9 +59,13 @@ public:
         Points
     };
 
-    kpSelection ();
-    kpSelection (Type type, const QRect &rect, const QPixmap &pixmap = QPixmap ());
-    kpSelection (const QPointArray &points, const QPixmap &pixmap = QPixmap ());
+    kpSelection (const kpSelectionTransparency &transparency = kpSelectionTransparency ());
+    kpSelection (Type type, const QRect &rect, const QPixmap &pixmap = QPixmap (),
+                 const kpSelectionTransparency &transparency = kpSelectionTransparency ());
+    kpSelection (Type type, const QRect &rect, const kpSelectionTransparency &transparency);
+    kpSelection (const QPointArray &points, const QPixmap &pixmap = QPixmap (),
+                 const kpSelectionTransparency &transparency = kpSelectionTransparency ());
+    kpSelection (const QPointArray &points, const kpSelectionTransparency &transparency);
     kpSelection (const kpSelection &rhs);
     kpSelection &operator= (const kpSelection &rhs);
     friend QDataStream &operator<< (QDataStream &stream, const kpSelection &selection);
@@ -98,6 +107,25 @@ public:
     QPixmap *pixmap () const;
     void setPixmap (const QPixmap &pixmap);
 
+    // TODO: ret val inconstent with pixmap()
+    //       - fix when merge with kpTempPixmap
+    QPixmap opaquePixmap () const;  // same as pixmap()
+
+private:
+    void calculateTransparencyMask ();
+
+public:
+    // Returns opaquePixmap() after applying kpSelectionTransparency
+    QPixmap transparentPixmap () const;
+
+    kpSelectionTransparency transparency () const;
+    // Returns whether or not the selection changed due to setting the
+    // transparency info.  If <checkTransparentPixmapChanged> is set,
+    // it will try harder to return false (although the check is
+    // expensive).
+    bool setTransparency (const kpSelectionTransparency &transparency,
+                          bool checkTransparentPixmapChanged = false);
+
 private:
     void flipPoints (bool horiz, bool vert);
 
@@ -108,10 +136,26 @@ signals:
     void changed (const QRect &docRect);
 
 private:
+    // OPT: use implicit sharing
+
     Type m_type;
     QRect m_rect;
     QPointArray m_points;
     QPixmap *m_pixmap;
+
+    // TODO: (unused / reserved)
+    QValueVector <QString> m_textLines;
+    kpTextStyle m_textStyle;
+
+    kpSelectionTransparency m_transparency;
+    bool BIC_HACK;
+    QBitmap m_transparencyMask;
+
+private:
+    // There is no need to maintain binary compatibility at this stage.
+    // The d-pointer is just so that you can experiment without recompiling
+    // the kitchen sink.
+    class kpSelectionPrivate *d;
 };
 
 #endif  // __kpselection_h__

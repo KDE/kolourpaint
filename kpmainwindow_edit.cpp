@@ -294,6 +294,7 @@ void kpMainWindow::slotPaste ()
     }
 
 
+    sel.setTransparency (selectionTransparency ());
     paste (sel);
 
 
@@ -337,7 +338,7 @@ void kpMainWindow::slotSelectAll ()
         slotDeselect ();
 
     // just the border - don't actually pull pixmap from doc yet
-    m_document->setSelection (kpSelection (kpSelection::Rectangle, m_document->rect ()));
+    m_document->setSelection (kpSelection (kpSelection::Rectangle, m_document->rect (), selectionTransparency ()));
 }
 
 

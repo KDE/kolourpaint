@@ -140,7 +140,8 @@ void kpToolRotateCommand::execute ()
         if (currentPoints.boundingRect ().width () == newPixmap.width () &&
             currentPoints.boundingRect ().height () == newPixmap.height ())
         {
-            doc->setSelection (kpSelection (currentPoints, newPixmap));
+            doc->setSelection (kpSelection (currentPoints, newPixmap,
+                                            m_oldSelection.transparency ()));
         }
         else
         {
@@ -156,7 +157,8 @@ void kpToolRotateCommand::execute ()
             doc->setSelection (kpSelection (kpSelection::Rectangle,
                                             QRect (newTopLeft.x (), newTopLeft.y (),
                                                    newPixmap.width (), newPixmap.height ()),
-                                            newPixmap));
+                                            newPixmap,
+                                            m_oldSelection.transparency ()));
         }
     }
     else

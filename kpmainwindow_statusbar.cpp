@@ -66,8 +66,9 @@ void kpMainWindow::createStatusBar ()
     //sb->insertItem (QString::null, StatusBarItemMessage, 1/*stretch*/);
     //sb->setItemAlignment (StatusBarItemMessage, Qt::AlignLeft | Qt::AlignVCenter);
 
-    d->m_statusBarMessageLabel = new kpSqueezedTextLabel (sb);
-    sb->addWidget (d->m_statusBarMessageLabel, 1/*stretch*/);
+    m_statusBarMessageLabel = new kpSqueezedTextLabel (sb);
+    //m_statusBarMessageLabel->setShowEllipsis (false);
+    sb->addWidget (m_statusBarMessageLabel, 1/*stretch*/);
 
     addPermanentStatusBarItem (StatusBarItemShapePoints,
                                (maxDimenLength + 1/*,*/ + maxDimenLength) * 2 + 3/* - */);
@@ -82,7 +83,7 @@ void kpMainWindow::createStatusBar ()
     addPermanentStatusBarItem (StatusBarItemZoom,
                                5/*1600%*/);
 
-    d->m_statusBarCreated = true;
+    m_statusBarCreated = true;
 }
 
 
@@ -93,15 +94,15 @@ void kpMainWindow::slotUpdateStatusBarMessage (const QString &message)
 #if DEBUG_STATUS_BAR && 1
     kdDebug () << "kpMainWindow::slotUpdateStatusBarMessage("
                << message
-               << ") ok=" << d->m_statusBarCreated
+               << ") ok=" << m_statusBarCreated
                << endl;
 #endif
 
-    if (!d->m_statusBarCreated)
+    if (!m_statusBarCreated)
         return;
 
     //statusBar ()->changeItem (message, StatusBarItemMessage);
-    d->m_statusBarMessageLabel->setText (message);
+    m_statusBarMessageLabel->setText (message);
 }
 
 // private slot
@@ -111,11 +112,11 @@ void kpMainWindow::slotUpdateStatusBarShapePoints (const QPoint &startPoint,
 #if DEBUG_STATUS_BAR && 1
     kdDebug () << "kpMainWindow::slotUpdateStatusBarShapePoints("
                << startPoint << "," << endPoint
-               << ") ok=" << d->m_statusBarCreated
+               << ") ok=" << m_statusBarCreated
                << endl;
 #endif
 
-    if (!d->m_statusBarCreated)
+    if (!m_statusBarCreated)
         return;
 
     if (startPoint == KP_INVALID_POINT)
@@ -146,11 +147,11 @@ void kpMainWindow::slotUpdateStatusBarShapeSize (const QSize &size)
 #if DEBUG_STATUS_BAR && 1
     kdDebug () << "kpMainWindow::slotUpdateStatusBarShapeSize("
                << size
-               << ") ok=" << d->m_statusBarCreated
+               << ") ok=" << m_statusBarCreated
                << endl;
 #endif
 
-    if (!d->m_statusBarCreated)
+    if (!m_statusBarCreated)
         return;
 
     if (size == KP_INVALID_SIZE)
@@ -172,11 +173,11 @@ void kpMainWindow::slotUpdateStatusBarDocSize (const QSize &size)
 #if DEBUG_STATUS_BAR && 1
     kdDebug () << "kpMainWindow::slotUpdateStatusBarDocSize("
                << size
-               << ") ok=" << d->m_statusBarCreated
+               << ") ok=" << m_statusBarCreated
                << endl;
 #endif
 
-    if (!d->m_statusBarCreated)
+    if (!m_statusBarCreated)
         return;
 
     if (size == KP_INVALID_SIZE)
@@ -198,11 +199,11 @@ void kpMainWindow::slotUpdateStatusBarDocDepth (int depth)
 #if DEBUG_STATUS_BAR && 1
     kdDebug () << "kpMainWindow::slotUpdateStatusBarDocDepth("
                << depth
-               << ") ok=" << d->m_statusBarCreated
+               << ") ok=" << m_statusBarCreated
                << endl;
 #endif
 
-    if (!d->m_statusBarCreated)
+    if (!m_statusBarCreated)
         return;
 
     if (depth <= 0)
@@ -222,11 +223,11 @@ void kpMainWindow::slotUpdateStatusBarZoom (int zoom)
 #if DEBUG_STATUS_BAR && 1
     kdDebug () << "kpMainWindow::slotUpdateStatusBarZoom("
                << zoom
-               << ") ok=" << d->m_statusBarCreated
+               << ") ok=" << m_statusBarCreated
                << endl;
 #endif
 
-    if (!d->m_statusBarCreated)
+    if (!m_statusBarCreated)
         return;
 
     if (zoom <= 0)
@@ -246,11 +247,11 @@ void kpMainWindow::slotUpdateStatusBar ()
 {
 #if DEBUG_STATUS_BAR && 1
     kdDebug () << "kpMainWindow::slotUpdateStatusBar() ok="
-               << d->m_statusBarCreated
+               << m_statusBarCreated
                << endl;
 #endif
 
-    if (!d->m_statusBarCreated)
+    if (!m_statusBarCreated)
         return;
 
     const kpTool *t = tool ();

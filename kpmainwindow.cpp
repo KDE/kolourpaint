@@ -171,7 +171,8 @@ void kpMainWindow::init ()
     m_colorToolBar = 0;
     m_toolToolBar = 0;
     m_commandHistory = 0;
-    d->m_statusBarCreated = false;
+    m_statusBarCreated = false;
+    d->m_settingSelectionTransparency = 0;
 
 
     //
@@ -618,6 +619,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 
     if (kpSelectionDrag::decode (e, sel/*ref*/, pasteWarnAboutLossInfo ()))
     {
+        sel.setTransparency (selectionTransparency ());
         paste (sel);
     }
     else if (KURLDrag::decode (e, urls))

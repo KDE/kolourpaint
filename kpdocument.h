@@ -128,8 +128,8 @@ public:
 
     bool selectionPullFromDocument (const kpColor &backgroundColor);
     bool selectionDelete ();
-    bool selectionCopyOntoDocument ();
-    bool selectionPushOntoDocument ();
+    bool selectionCopyOntoDocument (bool useTransparentPixmap = true);
+    bool selectionPushOntoDocument (bool useTransparentPixmap = true);
 
     // same as pixmap() but returns a _copy_ of the current pixmap
     // + any selection pasted on top

@@ -655,7 +655,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
     #endif
         kpPixmapFX::paintPixmapAt (destPixmap,
                                    sel->topLeft () - docRect.topLeft (),
-                                   *sel->pixmap ());
+                                   sel->transparentPixmap ());
     }
 
 

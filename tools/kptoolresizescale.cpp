@@ -179,7 +179,8 @@ void kpToolResizeScaleCommand::execute ()
             // Not possible to retain non-rectangular selection borders on scale
             // (think about e.g. a 45 deg line as part of the border & 2x scale)
             document ()->setSelection (
-                kpSelection (kpSelection::Rectangle, newRect, newPixmap));
+                kpSelection (kpSelection::Rectangle, newRect, newPixmap,
+                             m_oldSelection.transparency ()));
         }
         else
         {

@@ -64,6 +64,8 @@ class kpDocument;
 class kpView;
 class kpViewManager;
 class kpSelection;
+class kpSelectionTransparency;
+class kpSqueezedTextLabel;
 class kpTextStyle;
 class kpThumbnail;
 class kpTool;
@@ -179,8 +181,12 @@ private:
 public:
     kpTool *tool () const;
     bool toolHasBegunShape () const;
-    bool toolIsASelectionTool () const;
+    bool toolIsASelectionTool (bool includingTextTool = true) const;
     bool toolIsTextTool () const;
+
+    kpSelectionTransparency selectionTransparency () const;
+    void setSelectionTransparency (const kpSelectionTransparency &transparency);
+    int settingSelectionTransparency () const;
 
 private slots:
     void slotToolSelected (kpTool *tool);
@@ -428,6 +434,9 @@ private slots:
      */
 
 private:
+    bool m_statusBarCreated;
+    kpSqueezedTextLabel *m_statusBarMessageLabel;
+
     enum
     {
         StatusBarItemMessage,
@@ -488,9 +497,6 @@ private:
     class kpMainWindowPrivate *d;
 };
 
-class QLabel;
-class kpSqueezedTextLabel;
-
 class kpMainWindowPrivate
 {
 public:
@@ -502,8 +508,7 @@ public:
     {
     }
 
-    bool m_statusBarCreated;
-    kpSqueezedTextLabel *m_statusBarMessageLabel;
+    int m_settingSelectionTransparency;
 };
 
 #endif  // __kpmainwindow_h__

@@ -30,6 +30,7 @@
 
 #include <kpcolortoolbar.h>
 #include <kpmainwindow.h>
+#include <kpselectiontransparency.h>
 #include <kptool.h>
 #include <kptoolairspray.h>
 #include <kptoolbrush.h>
@@ -50,6 +51,7 @@
 #include <kptoolroundedrectangle.h>
 #include <kptooltext.h>
 #include <kptooltoolbar.h>
+#include <kptoolwidgetopaqueortransparent.h>
 
 
 // private
@@ -148,13 +150,14 @@ bool kpMainWindow::toolHasBegunShape () const
 }
 
 // public
-bool kpMainWindow::toolIsASelectionTool () const
+bool kpMainWindow::toolIsASelectionTool (bool includingTextTool) const
 {
     kpTool *currentTool = tool ();
 
     return ((currentTool == m_toolFreeFormSelection) ||
             (currentTool == m_toolRectSelection) ||
-            (currentTool == m_toolEllipticalSelection));
+            (currentTool == m_toolEllipticalSelection) ||
+            (currentTool == m_toolText && includingTextTool));
 }
 
 // public
@@ -163,6 +166,54 @@ bool kpMainWindow::toolIsTextTool () const
     return (tool () == m_toolText);
 }
 
+
+// public
+kpSelectionTransparency kpMainWindow::selectionTransparency () const
+{
+    kpToolWidgetOpaqueOrTransparent *oot = m_toolToolBar->toolWidgetOpaqueOrTransparent ();
+    if (!oot)
+    {
+        kdError () << "kpMainWindow::selectionTransparency() without opaqueOrTransparent widget" << endl;
+        return kpSelectionTransparency ();
+    }
+
+    return kpSelectionTransparency (oot->isOpaque (), backgroundColor (), m_colorToolBar->colorSimilarity ());
+}
+
+// public
+void kpMainWindow::setSelectionTransparency (const kpSelectionTransparency &transparency)
+{
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kdDebug () << "kpMainWindow::setSelectionTransparency() isOpaque=" << transparency.isOpaque ()
+               << " color=" << (transparency.transparentColor ().isValid () ? (int *) transparency.transparentColor ().toQRgb () : 0)
+               << endl;
+#endif
+    
+    kpToolWidgetOpaqueOrTransparent *oot = m_toolToolBar->toolWidgetOpaqueOrTransparent ();
+    if (!oot)
+    {
+        kdError () << "kpMainWindow::setSelectionTransparency() without opaqueOrTransparent widget" << endl;
+        return;
+    }
+
+    d->m_settingSelectionTransparency++;
+    
+    oot->setOpaque (transparency.isOpaque ());
+    if (transparency.isTransparent ())
+    {
+        m_colorToolBar->setColor (1, transparency.transparentColor ());
+        m_colorToolBar->setColorSimilarity (transparency.colorSimilarity ());
+    }
+
+    d->m_settingSelectionTransparency--;
+}
+
+// public
+int kpMainWindow::settingSelectionTransparency () const
+{
+    return d->m_settingSelectionTransparency;
+}
+    
 
 // private slot
 void kpMainWindow::slotToolSelected (kpTool *tool)
