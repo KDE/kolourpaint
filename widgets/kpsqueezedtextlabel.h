@@ -29,6 +29,8 @@
 #define __kp_squeezed_text_label_h__
 
 #include <qlabel.h>
+#include <qstring.h>
+
 
 // KSqueezedTextLabel done properly - squeeze at the end of the string,
 // not the middle.
@@ -45,14 +47,19 @@ public:
     // TODO: maybe text() should return the full text?
     QString fullText () const;
 
+    bool showEllipsis () const;
+    void setShowEllipsis (bool yes = true);
+    
 public slots:
     virtual void setText (const QString &text);
 
 protected:
     virtual void resizeEvent (QResizeEvent *);
+    QString ellipsisText () const;
     void squeezeText ();
 
     QString m_fullText;
+    bool m_showEllipsis;
 };
 
 #endif  // __kp_squeezed_text_label_h__

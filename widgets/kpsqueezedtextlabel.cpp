@@ -38,12 +38,14 @@
 
 
 kpSqueezedTextLabel::kpSqueezedTextLabel (QWidget *parent, const char *name)
-    : QLabel (parent, name)
+    : QLabel (parent, name),
+      m_showEllipsis (true)
 {
 }
 
 kpSqueezedTextLabel::kpSqueezedTextLabel (const QString &text, QWidget *parent, const char *name)
-    : QLabel (parent, name)
+    : QLabel (parent, name),
+      m_showEllipsis (true)
 {
     setText (text);
 }
@@ -67,6 +69,24 @@ QString kpSqueezedTextLabel::fullText () const
 }
 
 
+// public
+bool kpSqueezedTextLabel::showEllipsis () const
+{
+    return m_showEllipsis;
+}
+
+// public
+void kpSqueezedTextLabel::setShowEllipsis (bool yes)
+{
+    if (m_showEllipsis == yes)
+        return;
+
+    m_showEllipsis = yes;
+    
+    squeezeText ();
+}
+
+
 // public slots virtual [base QLabel]
 void kpSqueezedTextLabel::setText (const QString &text)
 {
@@ -87,6 +107,12 @@ void kpSqueezedTextLabel::resizeEvent (QResizeEvent *e)
 }
 
 
+// protected
+QString kpSqueezedTextLabel::ellipsisText () const
+{
+    return m_showEllipsis ? i18n ("...") : QString::null;
+}
+    
 // protected
 void kpSqueezedTextLabel::squeezeText ()
 {
@@ -115,11 +141,11 @@ void kpSqueezedTextLabel::squeezeText ()
     #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
         kdDebug () << "\tfullText won't fit :( - squeeze" << endl;
         kdDebug () << "\t\twidth of \"...\"="
-                   << fontMetrics.width (i18n ("..."))
+                   << fontMetrics.width (ellipsisText ())
                    << endl;
 
     #endif
-        if (fontMetrics.width (i18n ("...")) > width ())
+        if (fontMetrics.width (ellipsisText ()) > width ())
         {
         #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
             kdDebug () << "\t\t\tcan't even fit \"...\" - forget it" << endl;
@@ -136,7 +162,7 @@ void kpSqueezedTextLabel::squeezeText ()
         while (numLettersToUseLo <= numLettersToUseHi)
         {
             int numLettersToUseMid = (numLettersToUseLo + numLettersToUseHi) / 2;
-            int squeezedWidth = fontMetrics.width (m_fullText.left (numLettersToUseMid) + i18n ("..."));
+            int squeezedWidth = fontMetrics.width (m_fullText.left (numLettersToUseMid) + ellipsisText ());
         #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
             kdDebug () << "\tbsearch: lo=" << numLettersToUseLo
                        << " hi=" << numLettersToUseHi
@@ -181,7 +207,7 @@ void kpSqueezedTextLabel::squeezeText ()
             }
         }
 
-        QLabel::setText (m_fullText.left (numLettersToUse) + i18n ("..."));
+        QLabel::setText (m_fullText.left (numLettersToUse) + ellipsisText ());
     }
 }
 
