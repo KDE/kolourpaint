@@ -40,6 +40,7 @@
 #include <qwhatsthis.h>
 
 #include <kdebug.h>
+#include <kicontheme.h>
 
 #include <kpdefs.h>
 #include <kptool.h>
@@ -170,7 +171,7 @@ void kpToolToolBar::registerTool (kpTool *tool)
     b->setToggleButton (true);
 
     b->setText (tool->text ());
-    b->setIconSet (tool->iconSet (16/*force size*/));
+    b->setIconSet (tool->iconSet (KIcon::SizeSmall/*16x16*/));
     QToolTip::add (b, tool->toolTip ());
     QWhatsThis::add (b, tool->description ());
 
