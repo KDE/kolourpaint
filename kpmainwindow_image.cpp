@@ -78,9 +78,7 @@ bool kpMainWindow::isTextSelection () const
 // private
 QString kpMainWindow::autoCropText () const
 {
-    const bool wouldActOnSelection = (isSelectionActive () &&
-                                      !isTextSelection ());
-    return kpToolAutoCropCommand::name (wouldActOnSelection,
+    return kpToolAutoCropCommand::name (isSelectionActive (),
                                         kpToolAutoCropCommand::ShowAccel);
 }
 
@@ -177,8 +175,7 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
 
     m_actionResizeScale->setEnabled (m_imageMenuDocumentActionsEnabled);
     m_actionCrop->setEnabled (m_imageMenuDocumentActionsEnabled &&
-                              isSelectionActive () &&
-                              !isTextSelection ());
+                              isSelectionActive ());
 
     const bool enable = (m_imageMenuDocumentActionsEnabled && !isTextSelection ());
     m_actionAutoCrop->setText (autoCropText ());
