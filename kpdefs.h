@@ -82,7 +82,7 @@
 #define kpSettingForcedDither QString::fromLatin1 ("Forced Dither")
 #define kpSettingForcedQuality QString::fromLatin1 ("Forced Quality")
 
-#define kpSettingsGroupMimeTypeProperties QString::fromLatin1 ("MimeType Properties Version 1.2")
+#define kpSettingsGroupMimeTypeProperties QString::fromLatin1 ("MimeType Properties Version 1.2-1")
 #define kpSettingMimeTypeMaximumColorDepth QString::fromLatin1 ("Maximum Color Depth")
 #define kpSettingMimeTypeHasConfigurableColorDepth QString::fromLatin1 ("Configurable Color Depth")
 #define kpSettingMimeTypeHasConfigurableQuality QString::fromLatin1 ("Configurable Quality Setting")
