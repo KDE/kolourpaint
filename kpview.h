@@ -38,13 +38,14 @@
 #include <qrect.h>
 
 class QDragEnterEvent;
+class QDragLeaveEvent;
 class QDropEvent;
 class QFocusEvent;
 class QKeyEvent;
 class QRect;
 class kpTool;
 class kpMainWindow;
-
+    
 class kpView : public QWidget
 {
 Q_OBJECT
@@ -56,6 +57,10 @@ public:
                 bool autoVariableZoom = false);
     virtual ~kpView ();
 
+private:
+    void setHasMouse (bool yes = true);
+
+public:
     bool hasVariableZoom () const;
 
     // all incompatible with autoVariableZoom
@@ -92,6 +97,8 @@ private:
     virtual void focusOutEvent (QFocusEvent *e);
     virtual void enterEvent (QEvent *e);
     virtual void leaveEvent (QEvent *e);
+    virtual void dragEnterEvent (QDragEnterEvent *);
+    virtual void dragLeaveEvent (QDragLeaveEvent *);
     virtual void paintEvent (QPaintEvent *e);
 
     void paint (const QPixmap &pixmap, const QRect &viewRect, const QRect &docRect);

@@ -90,13 +90,31 @@ public:
     void setCursor (const QCursor &cursor);
     void unsetCursor ();
 
-    kpView *viewUnderCursor () const;
-
+    kpView *viewUnderCursor () /*const*/;
+    
+    //
+    // QWidget::hasMouse() is unreliable:
+    //
+    // "bool QWidget::hasMouse () const
+    //  ... See the "underMouse" property for details.
+    //         .
+    //         .
+    //         .
+    //  bool underMouse
+    //  ... This value is not updated properly during drag and drop operations."
+    //
+    // i.e. it's possible that hasMouse() returns false in a mousePressEvent()!
+    //
+    // This hack needs to be called from kpView so that viewUnderCursor() works
+    // as a reasonable replacement (although there is at least one case where
+    // it still won't work - just after a fake drag onto the view).
+    //
+    void setViewUnderCursor (kpView *view);
+    
 signals:
     void selectionEnabled (bool on);
 
 public slots:
-    // kpView's should call this on Leave- & Enter- Notify
     void repaintBrushPixmap ();
 
     // updating views
@@ -114,6 +132,8 @@ private:
 
     kpMainWindow *m_mainWindow;
     QPtrList <kpView> m_views;
+    
+    kpView *m_viewUnderCursor;
 
     QPixmap m_tempPixmap;
     QRect m_tempPixmapRect;

@@ -74,8 +74,22 @@ kpView::kpView (QWidget *parent, const char *name,
     setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
 }
 
+void kpView::setHasMouse (bool yes)
+{
+    kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
+    
+    if (vm)
+    {
+        if (yes && vm->viewUnderCursor () != this)
+            vm->setViewUnderCursor (this);
+        else if (!yes && vm->viewUnderCursor () == this)
+            vm->setViewUnderCursor (0);
+    }
+}
+
 kpView::~kpView ()
 {
+    setHasMouse (false);
 }
 
 
@@ -253,6 +267,7 @@ void kpView::mousePressEvent (QMouseEvent *e)
     kdDebug () << "kpView::mousePressEvent (" << e->x () << "," << e->y () << ")" << endl;
 #endif
 
+    setHasMouse (true);
     m_mainWindow->tool ()->mousePressEvent (e);
 
     e->accept ();
@@ -265,6 +280,7 @@ void kpView::mouseMoveEvent (QMouseEvent *e)
     kdDebug () << "kpView::mouseMoveEvent (" << e->x () << "," << e->y () << ")" << endl;
 #endif
 
+    setHasMouse (true);
     m_mainWindow->tool ()->mouseMoveEvent (e);
 
     e->accept ();
@@ -316,7 +332,7 @@ void kpView::enterEvent (QEvent *e)
     kdDebug () << "kpView::enterEvent" << endl;
 #endif
 
-    m_mainWindow->viewManager ()->repaintBrushPixmap ();
+    setHasMouse (true);
     m_mainWindow->tool ()->enterEvent (e);
 }
 
@@ -327,8 +343,28 @@ void kpView::leaveEvent (QEvent *e)
     kdDebug () << "kpView::leaveEvent" << endl;
 #endif
 
-    m_mainWindow->viewManager ()->repaintBrushPixmap ();
+    setHasMouse (false);
     m_mainWindow->tool ()->leaveEvent (e);
+}
+
+// private virtual
+void kpView::dragEnterEvent (QDragEnterEvent *)
+{
+#if DEBUG_KPVIEW
+    kdDebug () << "kpView::dragEnterEvent" << endl;
+#endif
+
+    setHasMouse (true);
+}
+
+// private virtual
+void kpView::dragLeaveEvent (QDragLeaveEvent *)
+{
+#if DEBUG_KPVIEW
+    kdDebug () << "kpView::dragLeaveEvent" << endl;
+#endif
+
+    setHasMouse (false);
 }
 
 // virtual
@@ -337,7 +373,7 @@ void kpView::paintEvent (QPaintEvent *e)
     QRect rect = e->rect ();
     QRect docRect = zoomViewToDoc (rect);
 
-#if DEBUG_KPVIEW
+#if DEBUG_KPVIEW && 0
     kdDebug () << "kpView::paintEvent (" << rect.x () << "," << rect.y () << ")"
                << " (w=" << rect.width () << ",h=" << rect.height () << ")"
                << endl;

@@ -40,6 +40,7 @@
 
 kpViewManager::kpViewManager (kpMainWindow *mainWindow)
     : m_mainWindow (mainWindow),
+      m_viewUnderCursor (0),
       m_tempPixmapType (NoPixmap),
       m_hideTempPixmap (false)
 {
@@ -198,34 +199,21 @@ void kpViewManager::unsetCursor ()
 }
 
 
-kpView *kpViewManager::viewUnderCursor () const
+kpView *kpViewManager::viewUnderCursor () /*const*/
 {
-#if 0
-    kdDebug () << "kpViewManager::viewUnderCursor () m_views.count=" << m_views.count () << endl;
-#endif
-
-    QPtrListIterator <kpView> it (m_views);
-
-    while (*it)
+    if (m_viewUnderCursor && m_views.findRef (m_viewUnderCursor) < 0)
     {
-    #if 0
-        kdDebug () << "\tchecking " << (*it) << " for mouse" << endl;
-    #endif
-        if ((*it)->hasMouse ())
-        {
-        #if 0
-            kdDebug () << "\t\treturning " << (*it) << endl;
-        #endif
-            return (*it);
-        }
-
-        ++it;
+        kdError () << "kpViewManager::viewUnderCursor(): invalid view" << endl;
+        m_viewUnderCursor = 0;
     }
+        
+    return m_viewUnderCursor;
+}
 
-#if 0
-    kdDebug () << "\t\tno view under cursor!" << endl;
-#endif
-    return 0;
+void kpViewManager::setViewUnderCursor (kpView *view)
+{
+    m_viewUnderCursor = view;
+    repaintBrushPixmap ();
 }
 
 
