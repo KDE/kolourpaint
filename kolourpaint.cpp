@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003,2004,2005 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -63,7 +63,7 @@ int main (int argc, char *argv [])
         "1.3_UNSTABLE",  // SYNC: with VERSION
         I18N_NOOP("Paint Program for KDE"),
         KAboutData::License_Custom,
-        "Copyright (c) 2003-2004 Clarence Dang",
+        "Copyright (c) 2003,2004,2005 Clarence Dang",
         0,
         "http://kolourpaint.sourceforge.net/"
     );
