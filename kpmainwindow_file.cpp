@@ -85,7 +85,7 @@ void kpMainWindow::setupFileMenuActions ()
 
     m_actionSetAsWallpaperCentered = new KAction (i18n ("Set as Wa&llpaper (Centered)"), 0,
         this, SLOT (slotSetAsWallpaperCentered ()), ac, "file_set_as_wallpaper_centered");
-    m_actionSetAsWallpaperTiled = new KAction (i18n ("Set as &Wallpaper (Tiled)"), 0,
+    m_actionSetAsWallpaperTiled = new KAction (i18n ("Set as Wallpaper (&Tiled)"), 0,
         this, SLOT (slotSetAsWallpaperTiled ()), ac, "file_set_as_wallpaper_tiled");
 
     m_actionClose = KStdAction::close (this, SLOT (slotClose ()), ac);
