@@ -210,7 +210,7 @@ public slots:
 signals:
     void colorSimilarityChanged (double similarity, int processedSimilarity);
 
-protected:
+private:
     virtual void mousePressEvent (QMouseEvent *e);
     virtual void mouseDoubleClickEvent (QMouseEvent *e);
 

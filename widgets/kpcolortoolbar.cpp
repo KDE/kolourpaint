@@ -810,7 +810,7 @@ void kpColorSimilarityToolBarItem::setColorSimilarity (double similarity)
         QToolTip::add (this, i18n ("Color Similarity: %1%").arg (qRound (similarity * 100)));
     else
         QToolTip::add (this, i18n ("Color Similarity: Exact"));
-    
+
     m_processedColorSimilarity = kpColor::processSimilarity (colorSimilarity ());
 
     KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
@@ -823,13 +823,13 @@ void kpColorSimilarityToolBarItem::setColorSimilarity (double similarity)
 }
 
 
-// protected virtual [base QWidget]
+// private virtual [base QWidget]
 void kpColorSimilarityToolBarItem::mousePressEvent (QMouseEvent * /*e*/)
 {
     // eat right-mouse click to prevent it from getting to the toolbar
 }
 
-// protected virtual [base QWidget]
+// private virtual [base QWidget]
 void kpColorSimilarityToolBarItem::mouseDoubleClickEvent (QMouseEvent * /*e*/)
 {
     kpColorSimilarityDialog dialog (m_mainWindow, this);
