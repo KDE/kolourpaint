@@ -32,6 +32,7 @@
 
 class QBitmap;
 class QColor;
+class QImage;
 class QPixmap;
 class QPoint;
 class QRect;
@@ -160,9 +161,11 @@ public:
      * Sets the mask of <*destPixmapPtr> at the rectangle, with the
      * top-left <destAt> and dimensions <srcMaskBitmap.rect()>,
      * to transparent where <brushBitmap> is opaque.
+     *
+     * <brushPixmap> must be a QPixmap of depth 1 (or a QBitmap).
      */
     static void paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QPoint &destAt,
-                                               const QBitmap &brushBitmap);
+                                               const QPixmap &brushBitmap);
 
     /*
      * Ensures that <*destPixmapPtr> is opaque at <rect>.

@@ -416,10 +416,16 @@ void kpPixmapFX::ensureTransparentAt (QPixmap *destPixmapPtr, const QRect &destR
 
 // public static
 void kpPixmapFX::paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QPoint &destAt,
-                                                const QBitmap &brushBitmap)
+                                                const QPixmap &brushBitmap)
 {
     if (!destPixmapPtr)
         return;
+
+    if (brushBitmap.depth () > 1)
+    {
+        kdError () << "kpPixmapFX::paintMaskTransparentWidthBrush() passed brushPixmap with depth > 1" << endl;
+        return;
+    }
 
     QBitmap destMaskBitmap = kpPixmapFX::getNonNullMask (*destPixmapPtr);
 
