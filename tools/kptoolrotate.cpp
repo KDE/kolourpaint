@@ -265,7 +265,7 @@ void kpToolRotateDialog::createDirectionGroupBox ()
     clockwisePixmapLabel->setPixmap (UserIcon ("image_rotate_clockwise"));
 
 
-    m_antiClockwiseRadioButton = new QRadioButton (i18n ("&Anticlockwise"), directionGroupBox);
+    m_antiClockwiseRadioButton = new QRadioButton (i18n ("Cou&nterclockwise"), directionGroupBox);
     m_clockwiseRadioButton = new QRadioButton (i18n ("C&lockwise"), directionGroupBox);
 
 
