@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <math.h>
+
 #include <qcheckbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
