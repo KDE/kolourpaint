@@ -68,8 +68,13 @@ This file lists known bugs in the 1.2 release that are not considered
 17. Using KolourPaint on a remote X display may result in redraw errors
     and pixel data corruption.
 
-18. Support for the "Truevision Targa Image" and "Portable Graymap Image"
-    formats is very buggy and should not be considered as working at all.
+18. Support for the formats:
+
+      * Truevision Targa Image
+      * Portable Graymap Image
+      * Portable Pixmap Image
+    
+    is very buggy and should not be considered as working at all.
     This is a KDE bug.
 
 19. Read support for EPS files is extremely slow.  You should not enable
