@@ -64,32 +64,32 @@ void kpMainWindow::setupTools ()
     
     m_tools.setAutoDelete (true);
     
-    m_tools.append (m_toolRectSelection = new kpToolRectSelection (this));
-    m_tools.append (m_toolEllipticalSelection = new kpToolEllipticalSelection (this));
-    
     m_tools.append (m_toolFreeFormSelection = new kpToolFreeFormSelection (this));
-    m_tools.append (m_toolColorPicker = new kpToolColorPicker (this));
+    m_tools.append (m_toolRectSelection = new kpToolRectSelection (this));
     
-    m_tools.append (m_toolPen = new kpToolPen (this));
+    m_tools.append (m_toolEllipticalSelection = new kpToolEllipticalSelection (this));
+    m_tools.append (m_toolText = new kpToolText (this));
+    
     m_tools.append (m_toolLine = new kpToolLine (this));
+    m_tools.append (m_toolPen = new kpToolPen (this));
 
-    m_tools.append (m_toolBrush = new kpToolBrush (this));
     m_tools.append (m_toolEraser = new kpToolEraser (this));
-    
-    m_tools.append (m_toolAirSpray = new kpToolAirSpray (this));
-    m_tools.append (m_toolColorWasher = new kpToolColorWasher (this));
-    
-    m_tools.append (m_toolRectangle = new kpToolRectangle (this));
-    m_tools.append (m_toolRoundedRectangle = new kpToolRoundedRectangle (this));
-    
-    m_tools.append (m_toolEllipse = new kpToolEllipse (this));
-    m_tools.append (m_toolFloodFill = new kpToolFloodFill (this));
+    m_tools.append (m_toolBrush = new kpToolBrush (this));
 
-    // TODO: insert in a meaningful place
+    m_tools.append (m_toolFloodFill = new kpToolFloodFill (this));
+    m_tools.append (m_toolColorPicker = new kpToolColorPicker (this));
+      
+    m_tools.append (m_toolColorWasher = new kpToolColorWasher (this));
+    m_tools.append (m_toolAirSpray = new kpToolAirSpray (this));
+    
+    m_tools.append (m_toolRoundedRectangle = new kpToolRoundedRectangle (this));
+    m_tools.append (m_toolRectangle = new kpToolRectangle (this));
+    
     m_tools.append (m_toolPolygon = new kpToolPolygon (this));
+    m_tools.append (m_toolEllipse = new kpToolEllipse (this));
+
     m_tools.append (m_toolPolyline = new kpToolPolyline (this));
     m_tools.append (m_toolCurve = new kpToolCurve (this));
-    m_tools.append (m_toolText = new kpToolText (this));
 
     
     //
@@ -119,7 +119,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
         if (previousTool)
             m_toolToolBar->selectPreviousTool ();
         else
-            m_toolToolBar->selectTool (m_toolBrush);  // CONFIG: last used
+            m_toolToolBar->selectTool (m_toolPen);  // CONFIG: last used
     }
     else if (!enable && m_toolToolBar->isEnabled ())
     {
