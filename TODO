@@ -4,6 +4,8 @@ $Id$
 Before 1.0
 ===========
 
+Makefile.am
+
 why does the toolsToolBar get arranged differently if run under valgrind???
 
 spraycan sizes
@@ -74,6 +76,7 @@ transparent images
 color depth
 tool/polygon
 tool/curve
+tool/text
 
 
 After 1.0
