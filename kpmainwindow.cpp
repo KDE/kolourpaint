@@ -525,8 +525,6 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 
         connect (m_document, SIGNAL (sizeChanged (const QSize &)),
                  this, SLOT (setStatusBarDocSize (const QSize &)));
-        connect (m_document, SIGNAL (colorDepthChanged (int)),
-                 this, SLOT (setStatusBarDocDepth (int)));
 
         // Caption (url, modified)
         connect (m_document, SIGNAL (documentModified ()),
@@ -562,8 +560,6 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
                  m_viewManager, SLOT (updateViews (const QRect &)));
         connect (m_document, SIGNAL (sizeChanged (int, int)),
                  m_viewManager, SLOT (resizeViews (int, int)));
-        connect (m_document, SIGNAL (colorDepthChanged (int)),
-                 m_viewManager, SLOT (updateViews ()));
 
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tenabling actions" << endl;
