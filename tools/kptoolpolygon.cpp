@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_POLYGON 1
+#define DEBUG_KP_TOOL_POLYGON 0
 
 #include <float.h>
 #include <math.h>
@@ -437,8 +437,18 @@ void kpToolPolygon::applyModifiers ()
     m_toolLineStartPoint = m_startPoint;  /* also correct for poly* tool (see beginDraw()) */
     m_toolLineEndPoint = m_currentPoint;
 
+#if DEBUG_KP_TOOL_POLYGON && 1
+    kdDebug () << "kpToolPolygon::applyModifiers() #pts=" << count
+               << "   line: startPt=" << m_toolLineStartPoint
+               << " endPt=" << m_toolLineEndPoint
+               << "   modifiers: shift=" << m_shiftPressed
+               << "   alt=" << m_altPressed
+               << "   ctrl=" << m_controlPressed
+               << endl;
+#endif
+
     // angles
-    if (m_shiftPressed || m_altPressed)
+    if (m_shiftPressed || m_controlPressed)
     {
         int diffx = m_toolLineEndPoint.x () - m_toolLineStartPoint.x ();
         int diffy = m_toolLineEndPoint.y () - m_toolLineStartPoint.y ();
@@ -448,6 +458,11 @@ void kpToolPolygon::applyModifiers ()
             ratio = DBL_MAX;
         else
             ratio = fabs (double (diffy) / double (diffx));
+    #if DEBUG_KP_TOOL_POLYGON && 1
+        kdDebug () << "\tdiffx=" << diffx << " diffy=" << diffy
+                   << " ratio=" << ratio
+                   << endl;
+    #endif
 
         // Shift        = 0, 45, 90
         // Alt          = 0, 30, 60, 90
@@ -455,11 +470,11 @@ void kpToolPolygon::applyModifiers ()
         double angles [10];  // "ought to be enough for anybody"
         int numAngles = 0;
         angles [numAngles++] = 0;
-        if (m_altPressed)
+        if (m_controlPressed)
             angles [numAngles++] = KP_PI / 6;
         if (m_shiftPressed)
             angles [numAngles++] = KP_PI / 4;
-        if (m_altPressed)
+        if (m_controlPressed)
             angles [numAngles++] = KP_PI / 3;
         angles [numAngles++] = KP_PI / 2;
 
@@ -483,19 +498,29 @@ void kpToolPolygon::applyModifiers ()
         // diagonal (dist from start maintained)
         else
         {
-            double dist = sqrt (diffx * diffx + diffy * diffy);
+            const double dist = sqrt (diffx * diffx + diffy * diffy);
 
             #define sgn(a) ((a)<0?-1:1)
-            int dx = int (m_toolLineStartPoint.x () + dist * cos (angle) * sgn (diffx));
-            int dy = int (m_toolLineStartPoint.y () + dist * sin (angle) * sgn (diffy));
+            // Round distances _before_ adding to any coordinate
+            // (ensures consistent rounding behaviour in x & y directions)
+            const int newdx = qRound (dist * cos (angle) * sgn (diffx));
+            const int newdy = qRound (dist * sin (angle) * sgn (diffy));
             #undef sgn
 
-            m_toolLineEndPoint = QPoint (dx, dy);
+            m_toolLineEndPoint = QPoint (m_toolLineStartPoint.x () + newdx,
+                                         m_toolLineStartPoint.y () + newdy);
+
+        #if DEBUG_KP_TOOL_POLYGON && 1
+            kdDebug () << "\t\tdiagonal line: dist=" << dist
+                       << " angle=" << (angle * 180 / KP_PI)
+                       << " endPoint=" << m_toolLineEndPoint
+                       << endl;
+        #endif
         }
-    }    // if (m_shiftPressed || m_altPressed) {
+    }    // if (m_shiftPressed || m_controlPressed) {
 
     // centring
-    if (m_controlPressed)
+    if (m_altPressed && 0/*ALT is unreliable*/)
     {
         // start = start - diff
         //       = start - (end - start)
@@ -505,7 +530,7 @@ void kpToolPolygon::applyModifiers ()
             m_toolLineStartPoint += (m_toolLineStartPoint - m_toolLineEndPoint);
         else
             m_toolLineEndPoint += (m_toolLineEndPoint - m_toolLineStartPoint);
-    }    // if (m_controlPressed) {
+    }    // if (m_altPressed) {
 
     m_points [count - 2] = m_toolLineStartPoint;
     m_points [count - 1] = m_toolLineEndPoint;
