@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -53,7 +53,7 @@
  }
 
  // public static
- QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty)
+ QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty, bool *hadAlphaChannel)
  {
      QPixmap destPixmap;
 
@@ -74,6 +74,9 @@
                                       Qt::PreferDither/*(dither even if <256 colours???)*/);
      }
 
+     if (hadAlphaChannel)
+         *hadAlphaChannel = destPixmap.hasAlphaChannel ();
+
      kpPixmapFX::ensureNoAlphaChannel (&destPixmap);
      return destPixmap;
  }
@@ -89,7 +92,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
 {
     QPixmap retPixmap (rect.width (), rect.height ());
 
-#if DEBUG_KP_PIXMAP_FX && 0
+#if DEBUG_KP_PIXMAP_FX && 1
     kdDebug () << "kpPixmapFX::getPixmapAt(pm.hasMask="
                << (pm.mask () ? 1 : 0)
                << ",rect="
@@ -98,14 +101,48 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
                << endl;
 #endif
 
+    const QRect validSrcRect = pm.rect ().intersect (rect);
+    const bool wouldHaveUndefinedPixels = (validSrcRect != rect);
+
+    if (wouldHaveUndefinedPixels)
+    {
+    #if DEBUG_KP_PIXMAP_FX && 1
+        kdDebug () << "\tret would contain undefined pixels - setting them to transparent" << endl;
+    #endif
+        QBitmap transparentMask (rect.width (), rect.height ());
+        transparentMask.fill (Qt::color0/*transparent*/);
+        retPixmap.setMask (transparentMask);
+    }
+
+    if (validSrcRect.isEmpty ())
+    {
+    #if DEBUG_KP_PIXMAP_FX && 1
+        kdDebug () << "\tsilly case - completely invalid rect - ret transparent pixmap" << endl;
+    #endif
+        return retPixmap;
+    }
+
+
+    const QPoint destTopLeft = validSrcRect.topLeft () - rect.topLeft ();
+
     // copy data _and_ mask (if avail)
     copyBlt (&retPixmap, /* dest */
-             0, 0, /* dest pt */
+             destTopLeft.x (), destTopLeft.y (), /* dest pt */
              &pm, /* src */
-             rect.x (), rect.y (), /* src pt */
-             rect.width (), rect.height ());
+             validSrcRect.x (), validSrcRect.y (), /* src pt */
+             validSrcRect.width (), validSrcRect.height ());
 
-#if DEBUG_KP_PIXMAP_FX && 0
+    if (wouldHaveUndefinedPixels && retPixmap.mask () && !pm.mask ())
+    {
+    #if DEBUG_KP_PIXMAP_FX && 1
+        kdDebug () << "\tensure opaque in valid region" << endl;
+    #endif
+        kpPixmapFX::ensureOpaqueAt (&retPixmap,
+                                    QRect (destTopLeft.x (), destTopLeft.y (),
+                                           validSrcRect.width (), validSrcRect.height ()));
+    }
+
+#if DEBUG_KP_PIXMAP_FX && 1
     kdDebug () << "\tretPixmap.hasMask="
                << (retPixmap.mask () ? 1 : 0)
                << endl;
