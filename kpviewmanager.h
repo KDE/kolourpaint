@@ -143,6 +143,8 @@ public:
 
 
     // Returns a pointer to the view that has keyboard focus or else, 0
+    // TODO: rename to "anActiveView()" or "aViewIsActive()" as more than
+    //       1 view can be active at the same time?
     kpView *activeView () const;
 
 
