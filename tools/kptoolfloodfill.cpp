@@ -26,6 +26,8 @@
 */
 
 
+#define DEBUG_KP_TOOL_FLOOD_FILL 0
+
 #include <qapplication.h>
 #include <qcursor.h>
 #include <qpainter.h>
@@ -71,7 +73,9 @@ void kpToolFloodFill::begin ()
 // virtual
 void kpToolFloodFill::beginDraw ()
 {
+#if DEBUG_KP_TOOL_FLOOD_FILL && 1
     kdDebug () << "kpToolFloodFill::beginDraw()" << endl;
+#endif
 
     QApplication::setOverrideCursor (Qt::waitCursor);
 
@@ -83,7 +87,9 @@ void kpToolFloodFill::beginDraw ()
 
     if (m_currentCommand->prepareColorToChange ())
     {
+    #if DEBUG_KP_TOOL_FLOOD_FILL && 1
         kdDebug () << "\tperforming new-doc-corner-case check" << endl;
+    #endif
         if (document ()->url ().isEmpty () && !document ()->isModified ())
         {
             m_currentCommand->setFillEntirePixmap ();
@@ -180,7 +186,9 @@ void kpToolFloodFillCommand::setFillEntirePixmap (bool yes)
 // virtual
 void kpToolFloodFillCommand::execute ()
 {
+#if DEBUG_KP_TOOL_FLOOD_FILL && 1
     kdDebug () << "kpToolFloodFillCommand::execute() m_fillEntirePixmap=" << m_fillEntirePixmap << endl;
+#endif
 
     if (m_fillEntirePixmap)
     {
@@ -202,7 +210,9 @@ void kpToolFloodFillCommand::execute ()
         }
         else
         {
+        #if DEBUG_KP_TOOL_FLOOD_FILL && 1
             kdDebug () << "\tinvalid boundingRect - must be NOP case" << endl;
+        #endif
         }
     }
 }
