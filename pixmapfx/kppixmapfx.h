@@ -94,6 +94,8 @@ public:
      */
     static void setPixmapAt (QPixmap *destPixmapPtr, const QPoint &destAt,
                              const QPixmap &srcPixmap);
+    static void setPixmapAt (QPixmap *destPixmapPtr, int destX, int destY,
+                             const QPixmap &srcPixmap);
 
     /*
      * Draws <srcPixmap> on top of <*destPixmapPtr> at <destAt>.
@@ -101,6 +103,8 @@ public:
      * pixels in <srcPixmap> will be opaque in <*destPixmapPtr>.
      */
     static void paintPixmapAt (QPixmap *destPixmapPtr, const QPoint &destAt,
+                               const QPixmap &srcPixmap);
+    static void paintPixmapAt (QPixmap *destPixmapPtr, int destX, int destY,
                                const QPixmap &srcPixmap);
 
     /*
@@ -152,6 +156,8 @@ public:
      */
     static void setMaskAt (QPixmap *destPixmapPtr, const QPoint &destAt,
                            const QBitmap &srcMaskBitmap);
+    static void setMaskAt (QPixmap *destPixmapPtr, int destX, int destY,
+                           const QBitmap &srcMaskBitmap);
 
     /*
      * Ensures that <*destPixmapPtr> is transparent at <rect>.
@@ -167,6 +173,8 @@ public:
      */
     static void paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QPoint &destAt,
                                                const QPixmap &brushBitmap);
+    static void paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, int destX, int destY,
+                                               const QPixmap &brushBitmap);
 
     /*
      * Ensures that <*destPixmapPtr> is opaque at <rect>.
@@ -178,6 +186,8 @@ public:
      * painted onto <*destPixmapPtr> at <destAt>.
      */
     static void ensureOpaqueAt (QPixmap *destPixmapPtr, const QPoint &destAt,
+                                const QPixmap &srcPixmap);
+    static void ensureOpaqueAt (QPixmap *destPixmapPtr, int destX, int destY,
                                 const QPixmap &srcPixmap);
 
 
@@ -242,27 +252,51 @@ public:
      * <hangle>             horizontal angle clockwise (-90 < x < 90)
      * <vangle>             vertical angle clockwise (-90 < x < 90)
      * <backgroundColor>    color to fill new areas with
+     * <targetWidth>        if > 0, the desired width of the resultant pixmap
+     * <targetHeight>       if > 0, the desired height of the resultant pixmap
+     *
+     * Using <targetWidth> & <targetHeight> to generate preview pixmaps is
+     * significantly more efficient than skewing and then scaling yourself.
      */
+    static QWMatrix skewMatrix (int width, int height, double hangle, double vangle);
+    static QWMatrix skewMatrix (const QPixmap &pixmap, double hangle, double vangle);
+
     static void skew (QPixmap *destPixmapPtr, double hangle, double vangle,
-                      const kpColor &backgroundColor);
+                      const kpColor &backgroundColor,
+                      int targetWidth = -1, int targetHeight = -1);
     static QPixmap skew (const QPixmap &pm, double hangle, double vangle,
-                         const kpColor &backgroundColor);
+                         const kpColor &backgroundColor,
+                         int targetWidth = -1, int targetHeight = -1);
 
     /*
      * Rotates an image.
      *
      * <angle>              clockwise angle to rotate by
      * <backgroundColor>    color to fill new areas with
+     * <targetWidth>        if > 0, the desired width of the resultant pixmap
+     * <targetHeight>       if > 0, the desired height of the resultant pixmap
+     *
+     * Using <targetWidth> & <targetHeight> to generate preview pixmaps is
+     * significantly more efficient than rotating and then scaling yourself.
      */
+    static QWMatrix rotateMatrix (int width, int height, double angle);
+    static QWMatrix rotateMatrix (const QPixmap &pixmap, double angle);
+
     static bool isLosslessRotation (double angle);
+
     static void rotate (QPixmap *destPixmapPtr, double angle,
-                        const kpColor &backgroundColor);
+                        const kpColor &backgroundColor,
+                        int targetWidth = -1, int targetHeight = -1);
     static QPixmap rotate (const QPixmap &pm, double angle,
-                           const kpColor &backgroundColor);
+                           const kpColor &backgroundColor,
+                           int targetWidth = -1, int targetHeight = -1);
 
     /*
      * Flips an image in the given directions.
      */
+    static QWMatrix flipMatrix (int width, int height, bool horz, bool vert);
+    static QWMatrix flipMatrix (const QPixmap &pixmap, bool horz, bool vert);
+
     static void flip (QPixmap *destPixmapPtr, bool horz, bool vert);
     static QPixmap flip (const QPixmap &pm, bool horz, bool vert);
     static void flip (QImage *destImagePtr, bool horz, bool vert);
