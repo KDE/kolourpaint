@@ -4,6 +4,9 @@ $Id$
 Before 1.0
 ===========
 
+if you undock a vertical toolbar and right click --> Orientation --> Bottom,
+    it stays vertically oriented
+
 why does the toolsToolBar get arranged differently if run under valgrind???
 
 random pixels in the view showing up with the Color Washer Tool and Zoom over a remote display
@@ -77,6 +80,7 @@ transparent images
 
 color depth
 tool/polygon
+tool/polyline
 tool/curve
 tool/text
 
