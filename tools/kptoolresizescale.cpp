@@ -460,13 +460,13 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
     m_operationGroupBox = new QGroupBox (i18n ("Operation"), baseWidget);
 
     QLabel *resizePixmapLabel = new QLabel (m_operationGroupBox);
-    resizePixmapLabel->setPixmap (UserIcon ("resize_scale_apple_resize"));
+    resizePixmapLabel->setPixmap (UserIcon ("resize"));
 
     QLabel *scalePixmapLabel = new QLabel (m_operationGroupBox);
-    scalePixmapLabel->setPixmap (UserIcon ("resize_scale_apple_scale"));
+    scalePixmapLabel->setPixmap (UserIcon ("scale"));
 
     QLabel *smoothScalePixmapLabel = new QLabel (m_operationGroupBox);
-    smoothScalePixmapLabel->setPixmap (UserIcon ("resize_scale_apple_smooth_scale"));
+    smoothScalePixmapLabel->setPixmap (UserIcon ("smooth_scale"));
 
 
     m_resizeRadioButton = new QRadioButton (i18n ("&Resize"), m_operationGroupBox);
