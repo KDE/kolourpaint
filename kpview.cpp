@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_VIEW 1
+
 #include <math.h>
 
 #include <qbitmap.h>
@@ -50,8 +52,6 @@
 #include <kpview.h>
 #include <kpviewmanager.h>
 
-
-#define DEBUG_KPVIEW 1
 
 kpView::kpView (QWidget *parent, const char *name,
                     kpMainWindow *mainWindow,
@@ -111,7 +111,7 @@ bool kpView::slotUpdateVariableZoom ()
 
 bool kpView::updateVariableZoom (int viewWidth, int viewHeight)
 {
-#if DEBUG_KPVIEW
+#if DEBUG_KP_VIEW
     kdDebug () << "kpView::updateVariableZoom (" << viewWidth << "," << viewHeight << ")" << endl;
 #endif
 
@@ -284,7 +284,7 @@ void kpView::resize (int w, int h)
 // virtual
 void kpView::mousePressEvent (QMouseEvent *e)
 {
-#if DEBUG_KPVIEW && 0
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView::mousePressEvent (" << e->x () << "," << e->y () << ")" << endl;
 #endif
 
@@ -297,7 +297,7 @@ void kpView::mousePressEvent (QMouseEvent *e)
 // virtual
 void kpView::mouseMoveEvent (QMouseEvent *e)
 {
-#if DEBUG_KPVIEW && 0
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView::mouseMoveEvent (" << e->x () << "," << e->y () << ")" << endl;
 #endif
 
@@ -310,7 +310,7 @@ void kpView::mouseMoveEvent (QMouseEvent *e)
 // virtual
 void kpView::mouseReleaseEvent (QMouseEvent *e)
 {
-#if DEBUG_KPVIEW && 0
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView::mouseReleaseEvent (" << e->x () << "," << e->y () << ")" << endl;
 #endif
 
@@ -336,7 +336,9 @@ void kpView::keyReleaseEvent (QKeyEvent *e)
 // virtual
 void kpView::focusInEvent (QFocusEvent *e)
 {
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView::focusInEvent()" << endl;
+#endif
     m_mainWindow->tool ()->focusInEvent (e);
 }
 
@@ -349,7 +351,7 @@ void kpView::focusOutEvent (QFocusEvent *e)
 // virtual
 void kpView::enterEvent (QEvent *e)
 {
-#if DEBUG_KPVIEW
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView::enterEvent" << endl;
 #endif
 
@@ -360,7 +362,7 @@ void kpView::enterEvent (QEvent *e)
 // virtual
 void kpView::leaveEvent (QEvent *e)
 {
-#if DEBUG_KPVIEW
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView::leaveEvent" << endl;
 #endif
 
@@ -371,7 +373,7 @@ void kpView::leaveEvent (QEvent *e)
 // private virtual
 void kpView::dragEnterEvent (QDragEnterEvent *)
 {
-#if DEBUG_KPVIEW
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView::dragEnterEvent" << endl;
 #endif
     
@@ -381,7 +383,7 @@ void kpView::dragEnterEvent (QDragEnterEvent *)
 // private virtual
 void kpView::dragLeaveEvent (QDragLeaveEvent *)
 {
-#if DEBUG_KPVIEW
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView::dragLeaveEvent" << endl;
 #endif
 
@@ -415,7 +417,7 @@ void kpView::paintEvent (QPaintEvent *e)
         docRect.setBottomRight (docRect.bottomRight () + QPoint (2, 2));
     }
     
-#if DEBUG_KPVIEW && 1
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView::paintEvent() viewRect=" << rect
                << " docRect=" << docRect << endl;
 #endif
@@ -427,7 +429,7 @@ void kpView::paintEvent (QPaintEvent *e)
     QPixmap m_tempPixmap = m_mainWindow->viewManager ()->tempPixmap ();
     bool selActive = m_mainWindow->viewManager ()->selectionActive ();
 
-#if DEBUG_KPVIEW && 1
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "\ttempPixmap: active=" << m_tempPixmapActive
                << " rect=" << m_tempPixmapRect
                << " sel=" << selActive
@@ -437,7 +439,7 @@ void kpView::paintEvent (QPaintEvent *e)
     if (m_tempPixmapActive && m_mainWindow->viewManager ()->brushActive () &&
         !m_mainWindow->viewManager ()->viewUnderCursor ())
     {
-    #if DEBUG_KPVIEW && 1
+    #if DEBUG_KP_VIEW && 0
         kdDebug () << "\t\tturn off hidden brush" << endl;
     #endif
         m_tempPixmapActive = false;
@@ -465,12 +467,12 @@ void kpView::paintEvent (QPaintEvent *e)
 
                 if (type == kpViewManager::Rectangle)
                 {
-                #if DEBUG_KPVIEW
+                #if DEBUG_KP_VIEW
                     kdDebug () << "\tselection border = rectangle" << endl;
                 #endif
                     painter.setRasterOp (Qt::XorROP);
                     painter.setPen (QPen (Qt::white, 1, Qt::DotLine));
-                #if DEBUG_KPVIEW && 1
+                #if DEBUG_KP_VIEW && 1
                     kdDebug () << "\t\tx=" << m_tempPixmapRect.x () - docRect.x ()
                                << " y=" << m_tempPixmapRect.y () - docRect.y ()
                                << " w=" << m_tempPixmapRect.width ()
@@ -484,7 +486,7 @@ void kpView::paintEvent (QPaintEvent *e)
                 }
                 else if (type == kpViewManager::Ellipse)
                 {
-                #if DEBUG_KPVIEW
+                #if DEBUG_KP_VIEW
                     kdDebug () << "\tselection border = ellipse" << endl;
                 #endif
                     painter.setRasterOp (Qt::XorROP);
@@ -496,13 +498,13 @@ void kpView::paintEvent (QPaintEvent *e)
                 }
                 else if (type == kpViewManager::FreeForm)
                 {
-                #if DEBUG_KPVIEW
+                #if DEBUG_KP_VIEW
                     kdDebug () << "\tselection border = freeForm" << endl;
                 #endif
                 }
                 else
                 {
-                #if DEBUG_KPVIEW
+                #if DEBUG_KP_VIEW
                     kdDebug () << "\tselection border = none" << endl;
                 #endif
                 }
