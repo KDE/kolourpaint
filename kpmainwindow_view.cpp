@@ -740,13 +740,25 @@ void kpMainWindow::updateThumbnail ()
 
         m_thumbnail = new kpThumbnail (this, "thumbnail");
 
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\t\tcreating new kpView:" << endl;
+    #endif
         m_thumbnailView = new kpView (m_thumbnail,
                                       "thumbnailView", this,
                                       m_thumbnail->width (), m_thumbnail->height (),
                                       true /*autoVariableZoom*/);
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\t\tgive kpThumbnail the kpView:" << endl;
+    #endif
         m_thumbnail->setView (m_thumbnailView);
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\t\tregistering the kpView:" << endl;
+    #endif
         m_viewManager->registerView (m_thumbnailView);
 
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\t\tconnecting doc::sizeChanged() to thumbnail caption" << endl;
+    #endif
         if (m_document)
         {
             connect (m_document, SIGNAL (sizeChanged (int, int)),
@@ -754,6 +766,9 @@ void kpMainWindow::updateThumbnail ()
         }
 
 
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\t\tmoving thumbnail to right place" << endl;
+    #endif
         if (!thumbnailGeometry.isEmpty () &&
             QRect (0, 0, width (), height ()).intersects (thumbnailGeometry))
         {
@@ -783,10 +798,19 @@ void kpMainWindow::updateThumbnail ()
             }
         }
 
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\t\tshowing thumbnail" << endl;
+    #endif
         m_thumbnail->show ();
 
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\t\tconnecting thumbnail::visibilityChange to destroy slot" << endl;
+    #endif
         connect (m_thumbnail, SIGNAL (visibilityChanged (bool)),
                  this, SLOT (slotDestroyThumbnailIfNotVisible (bool)));
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\t\tDONE" << endl;
+    #endif
     }
     else
     {
