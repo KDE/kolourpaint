@@ -72,6 +72,9 @@ int kpPixmapFX::addDimensions (int lhs, int rhs)
 // public static
 int kpPixmapFX::multiplyDimensions (int lhs, int rhs)
 {
+    if (rhs == 0)
+        return 0;
+    
     if (lhs < 0 || rhs < 0 ||
         lhs > INT_MAX / rhs)
     {
