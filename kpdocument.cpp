@@ -1295,6 +1295,7 @@ QPixmap kpDocument::pixmapWithSelection () const
     kdDebug () << "kpDocument::pixmapWithSelection()" << endl;
 #endif
 
+    // Have floating selection?
     if (m_selection && m_selection->pixmap ())
     {
     #if DEBUG_KP_DOCUMENT && 1
@@ -1304,7 +1305,7 @@ QPixmap kpDocument::pixmapWithSelection () const
 
         kpPixmapFX::paintPixmapAt (&output,
                                    m_selection->topLeft (),
-                                   *m_selection->pixmap ());
+                                   m_selection->transparentPixmap ());
         return output;
     }
     else
