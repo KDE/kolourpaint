@@ -30,6 +30,10 @@
 #define __kp_defs_h__
 
 
+#include <qstring.h>
+
+
+// TODO: actually use these
 #define KP_BIG_IMAGE_WIDTH 4000
 #define KP_BIG_IMAGE_HEIGHT 4000
 
@@ -40,12 +44,17 @@
 #define KP_DEGREES_TO_RADIANS(deg) ((deg) * KP_PI / 180.0)
 #define KP_RADIANS_TO_DEGREES(rad) ((rad) * 180.0 / KP_PI)
 
-// settings
-#define kpSettingsGroupGeneral QString ("General")
-#define kpSettingFirstTime QString ("First Time")
-#define kpSettingShowGrid QString ("Show Grid")
-#define kpSettingShowPath QString ("Show Path")
-#define kpSettingDefaultOutputMimetype QString ("Default Output Mimetype")
+
+//
+// Settings
+//
+
+#define kpSettingsGroupGeneral QString::fromLatin1 ("General")
+#define kpSettingFirstTime QString::fromLatin1 ("First Time")
+#define kpSettingShowGrid QString::fromLatin1 ("Show Grid")
+#define kpSettingShowPath QString::fromLatin1 ("Show Path")
+#define kpSettingDefaultOutputMimetype QString::fromLatin1 ("Default Output Mimetype")
+#define kpSettingColorSimilarity QString::fromLatin1 ("Color Similarity")
 
 
 #endif  // __kp_defs_h__
