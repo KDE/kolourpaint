@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_DOCUMENT 1
+
 #include <math.h>
 
 #include <qcolor.h>
@@ -52,8 +54,6 @@
 #include <kpmainwindow.h>
 #include <kpviewmanager.h>
 
-#define DEBUG_KPDOCUMENT 1
-
 
 kpDocument::kpDocument (int w, int h, int colorDepth, kpMainWindow *mainWindow)
     : m_oldWidth (-1), m_oldHeight (-1),
@@ -61,7 +61,7 @@ kpDocument::kpDocument (int w, int h, int colorDepth, kpMainWindow *mainWindow)
       m_mainWindow (mainWindow),
       m_modified (false)
 {
-#if DEBUG_KPDOCUMENT
+#if DEBUG_KP_DOCUMENT && 0
     kdDebug () << "kpDocument::kpDocument (" << w << "," << h << "," << colorDepth << ")" << endl;
 #endif
 
@@ -81,7 +81,7 @@ kpDocument::~kpDocument ()
 
 void kpDocument::openNew (const KURL &url)
 {
-#if DEBUG_KPDOCUMENT
+#if DEBUG_KP_DOCUMENT
     kdDebug () << "KpDocument::openNew (" << url << ")" << endl;
 #endif
 
@@ -96,7 +96,7 @@ void kpDocument::openNew (const KURL &url)
 
 bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
 {
-#if DEBUG_KPDOCUMENT
+#if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::open (" << url << ")" << endl;
 #endif
 
@@ -109,7 +109,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
 
         QString mimetype = KImageIO::mimeType (tempFile);
 
-    #if DEBUG_KPDOCUMENT
+    #if DEBUG_KP_DOCUMENT
         kdDebug () << "\ttempFile=" << tempFile << endl;
         kdDebug () << "\tmimetype=" << mimetype << endl;
         kdDebug () << "\tsrc=" << url.path () << endl;
@@ -136,7 +136,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
             }
             else
             {
-            #if DEBUG_KPDOCUMENT
+            #if DEBUG_KP_DOCUMENT
                 kdDebug () << "\timage: depth=" << image.depth ()
                            << " (X display=" << QColor::numBitPlanes () << ")"
                            << " hasAlphaBuffer=" << image.hasAlphaBuffer ()
@@ -196,7 +196,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
                     }
                     else
                     {
-                    #if DEBUG_KPDOCUMENT
+                    #if DEBUG_KP_DOCUMENT
                         kdDebug () << "\tpixmap: depth=" << newPixmap->depth ()
                                    << " hasAlphaChannelOrMask=" << newPixmap->hasAlpha ()
                                    << " hasAlphaChannel=" << newPixmap->hasAlphaChannel ()
@@ -255,7 +255,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
 
 bool kpDocument::save ()
 {
-#if DEBUG_KPDOCUMENT
+#if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::save [" << m_url << "," << m_mimetype << "]" << endl;
 #endif
 
@@ -276,7 +276,7 @@ bool kpDocument::save ()
 
 bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwritePrompt)
 {
-#if DEBUG_KPDOCUMENT
+#if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::saveAs (" << url << "," << mimetype << ")" << endl;
 #endif
 
@@ -291,7 +291,7 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
 
         if (result != KMessageBox::Continue)
         {
-        #if DEBUG_KPDOCUMENT
+        #if DEBUG_KP_DOCUMENT
             kdDebug () << "\tuser doesn't want to overwrite" << endl;
         #endif
 
@@ -318,7 +318,7 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
         filename = url.path ();
 
     QString type = KImageIO::typeForMime (mimetype);
-#if DEBUG_KPDOCUMENT
+#if DEBUG_KP_DOCUMENT
     kdDebug () << "\tmimetype=" << mimetype << " type=" << type << endl;
 #endif
     if (!pixmapWithSelection ().save (filename, type.latin1 ()))
@@ -504,15 +504,18 @@ QPixmap kpDocument::getPixmapAt (const QRect &rect) const
 // public
 void kpDocument::setPixmapAt (const QPixmap &pixmap, const QPoint &at)
 {
+#if DEBUG_KP_DOCUMENT && 0
     kdDebug () << "kpDocument::setPixmapAt (pixmap (w="
                << pixmap.width ()
                << ",h=" << pixmap.height ()
                << "), x=" << at.x ()
                << ",y=" << at.y ()
                << endl;
+#endif
 
     QPainter painter (m_pixmap);
     painter.drawPixmap (at, pixmap);
+    painter.end ();
 
     slotContentsChanged (QRect (at.x (), at.y (), pixmap.width (), pixmap.height ()));
 }
@@ -566,7 +569,7 @@ QPixmap kpDocument::pixmapWithSelection () const
 
 void kpDocument::fill (const QColor &color)
 {
-#if DEBUG_KPDOCUMENT
+#if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::fill ()" << endl;
 #endif
 
@@ -577,7 +580,7 @@ void kpDocument::fill (const QColor &color)
 
 void kpDocument::resize (int w, int h, bool fillNewAreas)
 {
-#if DEBUG_KPDOCUMENT
+#if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::resize (" << w << "," << h << "," << fillNewAreas << ")" << endl;
 #endif
 
@@ -605,7 +608,7 @@ void kpDocument::resize (int w, int h, bool fillNewAreas)
 
 bool kpDocument::scale (int w, int h)
 {
-#if DEBUG_KPDOCUMENT
+#if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::scale (" << w << "," << h << ")" << endl;
 #endif
 
@@ -641,7 +644,7 @@ bool kpDocument::scale (int w, int h)
 
 bool kpDocument::skew (double hangle, double vangle)
 {
-#if DEBUG_KPDOCUMENT
+#if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::skew (" << hangle << "," << vangle << ")" << endl;
 #endif
 
@@ -719,7 +722,7 @@ bool kpDocument::flip (bool horz, bool vert)
 
 bool kpDocument::rotate (double angle)
 {
-#if DEBUG_KPDOCUMENT
+#if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::rotate (" << angle << ")" << endl;
 #endif
 
