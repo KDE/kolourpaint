@@ -19,7 +19,8 @@ kolourpaint_SOURCES = kolourpaint.cpp kpdocument.cpp kpview.cpp \
     kpmainwindow_text.cpp \
     kpmainwindow_view.cpp \
     kpselection.cpp kpselectiondrag.cpp kpselectiontransparency.cpp \
-    kptemppixmap.cpp kpthumbnail.cpp \
+    kptemppixmap.cpp kptextstyle.cpp \
+    kpthumbnail.cpp \
     kpviewmanager.cpp
 kolourpaint_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kolourpaint_LDADD = $(LIB_KDECORE) $(LIB_KDEUI) $(LIB_KIO) $(LIB_KDEPRINT) \
