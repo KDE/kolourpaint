@@ -276,8 +276,10 @@ bool kpSelectionDrag::decode (const QMimeSource *e, kpSelection &sel,
         }
         else
         {
-            kdError () << "kpSelectionDrag::decode(kpSelection) mimeSource had no sel "
+        #if DEBUG_KP_SELECTION_DRAG
+            kdDebug () << "kpSelectionDrag::decode(kpSelection) mimeSource had no sel "
                           "and could not decode to image" << endl;
+        #endif
             return false;
         }
     }
