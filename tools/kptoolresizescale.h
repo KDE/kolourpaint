@@ -40,6 +40,7 @@
 class QCheckBox;
 class QGroupBox;
 class QRadioButton;
+class QSize;
 class QString;
 
 class KDoubleNumInput;
@@ -64,14 +65,24 @@ public:
     virtual QString name () const;
     virtual ~kpToolResizeScaleCommand ();
 
-private:
+public:
+    int newWidth () const;
+    void setNewWidth (int width);
+
+    int newHeight () const;
+    void setNewHeight (int height);
+
+    QSize newSize () const;
+    virtual void resize (int width, int height);
+
+protected:
     kpDocument *document () const;
 
 public:
     virtual void execute ();
     virtual void unexecute ();
 
-private:
+protected:
     bool m_actOnSelection;
     int m_newWidth, m_newHeight;
     Type m_type;

@@ -43,7 +43,7 @@
 #include <qpoint.h>
 #include <qradiobutton.h>
 #include <qrect.h>
-
+#include <qsize.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <knuminput.h>
@@ -65,7 +65,6 @@ kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
                                                     Type type,
                                                     kpMainWindow *mainWindow)
     : m_actOnSelection (actOnSelection),
-      m_newWidth (newWidth), m_newHeight (newHeight),
       m_type (type),
       m_mainWindow (mainWindow),
       m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid)
@@ -79,9 +78,7 @@ kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
                             doc && doc->selection () &&
                             doc->selection ()->isText ());
 
-    m_isLosslessScale = ((m_type == Scale) &&
-                         (m_newWidth / m_oldWidth * m_oldWidth == m_newWidth) &&
-                         (m_newHeight / m_oldHeight * m_oldHeight == m_newHeight));
+    resize (newWidth, newHeight);
 }
 
 // virtual
@@ -118,7 +115,51 @@ kpToolResizeScaleCommand::~kpToolResizeScaleCommand ()
 }
 
 
-// private
+// public
+int kpToolResizeScaleCommand::newWidth () const
+{
+    return m_newWidth;
+}
+
+// public
+void kpToolResizeScaleCommand::setNewWidth (int width)
+{
+    resize (width, newHeight ());
+}
+
+
+// public
+int kpToolResizeScaleCommand::newHeight () const
+{
+    return m_newHeight;
+}
+
+// public
+void kpToolResizeScaleCommand::setNewHeight (int height)
+{
+    resize (newWidth (), height);
+}
+
+
+// public
+QSize kpToolResizeScaleCommand::newSize () const
+{
+    return QSize (newWidth (), newHeight ());
+}
+
+// public virtual
+void kpToolResizeScaleCommand::resize (int width, int height)
+{
+    m_newWidth = width;
+    m_newHeight = height;
+
+    m_isLosslessScale = ((m_type == Scale) &&
+                         (m_newWidth / m_oldWidth * m_oldWidth == m_newWidth) &&
+                         (m_newHeight / m_oldHeight * m_oldHeight == m_newHeight));
+}
+
+
+// protected
 kpDocument *kpToolResizeScaleCommand::document () const
 {
     return m_mainWindow ? m_mainWindow->document () : 0;
@@ -376,7 +417,7 @@ kpToolResizeScaleDialog::kpToolResizeScaleDialog (bool actOnSelection,
                             document && document->selection () &&
                             document->selection ()->isText ());
 
-    
+
     if (m_actOnSelection)
     {
         if (m_actOnTextSelection)
