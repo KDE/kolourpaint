@@ -68,8 +68,12 @@ int main (int argc, char *argv [])
         "http://kolourpaint.sourceforge.net/"
     );
 
+    
     // this is _not_ the same as KAboutData::License_BSD
     aboutData.setLicenseText (kpLicenseText);
+
+    
+    // SYNC: with AUTHORS
 
     aboutData.addAuthor ("Clarence Dang", I18N_NOOP ("Maintainer"), "dang@kde.org");
     aboutData.addAuthor ("Thurston Dang", I18N_NOOP ("Chief Investigator"),
@@ -80,6 +84,7 @@ int main (int argc, char *argv [])
     aboutData.addCredit ("Toyohiro Asukai");
     aboutData.addCredit ("Bela-Andreas Bargel");
     aboutData.addCredit ("Waldo Bastian");
+    aboutData.addCredit ("Ismail Belhachmi");
     aboutData.addCredit ("Sashmit Bhaduri");
     aboutData.addCredit ("Stephan Binner");
     aboutData.addCredit ("Markus Brueffer");
@@ -122,6 +127,7 @@ int main (int argc, char *argv [])
     aboutData.addCredit ("Bart Symons");
     aboutData.addCredit ("Hogne Titlestad");
     aboutData.addCredit ("Brandon Mark Turner");
+    aboutData.addCredit ("Lauri Watts");
 
 
     KCmdLineArgs::init (argc, argv, &aboutData);
