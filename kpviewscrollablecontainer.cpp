@@ -326,7 +326,7 @@ void kpGrip::leaveEvent (QEvent * /*e*/)
 // protected virtual [base QWidget]
 void kpGrip::paintEvent (QPaintEvent *e)
 {
-#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
     kdDebug () << "kpGrip::paintEvent(" << e->rect () << ")" << endl;
 #endif
     QWidget::paintEvent (e);
@@ -1133,7 +1133,7 @@ void kpViewScrollableContainer::viewportPaintEvent (QPaintEvent *e)
 // protected virtual [base QFrame]
 void kpViewScrollableContainer::paintEvent (QPaintEvent *e)
 {
-#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
     kdDebug () << "kpViewScrollableContainer::paintEvent("
                << e->rect ()
                << ")" << endl;
