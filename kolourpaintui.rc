@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui name="kolourpaint" version="3">
+<gui name="kolourpaint" version="4">
 
 <MenuBar>
     <Menu name="file">
@@ -15,6 +15,8 @@
 
     <Menu name="image"><text>&amp;Image</text>
         <Action name="image_resize_scale" />
+        <Action name="image_auto_crop" />
+        <Separator />
         <Action name="image_flip" />
         <Action name="image_rotate" />
         <Action name="image_skew" />

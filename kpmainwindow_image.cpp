@@ -36,6 +36,7 @@
 #include <kpcolortoolbar.h>
 #include <kpmainwindow.h>
 #include <kptool.h>
+#include <kptoolautocrop.h>
 #include <kptoolclear.h>
 #include <kptoolconverttograyscale.h>
 #include <kptoolconverttoblackandwhite.h>
@@ -53,6 +54,9 @@ void kpMainWindow::setupImageMenuActions ()
 
     m_actionResizeScale = new KAction (i18n ("&Resize / Scale..."), CTRL + Key_R,
         this, SLOT (slotResizeScale ()), ac, "image_resize_scale");
+
+    m_actionAutoCrop = new KAction (i18n ("A&utocrop"), CTRL + Key_U,
+        this, SLOT (slotAutoCrop ()), ac, "image_auto_crop");
 
     m_actionFlip = new KAction (i18n ("&Flip..."), CTRL + Key_F,
         this, SLOT (slotFlip ()), ac, "image_flip");
@@ -82,6 +86,7 @@ void kpMainWindow::setupImageMenuActions ()
 void kpMainWindow::enableImageMenuDocumentActions (bool enable)
 {
     m_actionResizeScale->setEnabled (enable);
+    m_actionAutoCrop->setEnabled (enable);
     m_actionFlip->setEnabled (enable);
     m_actionRotate->setEnabled (enable);
     m_actionSkew->setEnabled (enable);
@@ -107,6 +112,15 @@ void kpMainWindow::slotResizeScale ()
                                           dialog->imageWidth (), dialog->imageHeight (),
                                           dialog->scaleToFit ()));
     }
+}
+
+// private slot
+void kpMainWindow::slotAutoCrop ()
+{
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+        
+    kpToolAutoCrop (this);
 }
 
 // private slot

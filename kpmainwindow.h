@@ -299,12 +299,14 @@ private:
     void setupImageMenuActions ();
     void enableImageMenuDocumentActions (bool enable = true);
     
-    KAction *m_actionResizeScale, *m_actionFlip, *m_actionRotate, *m_actionSkew,
+    KAction *m_actionResizeScale, *m_actionAutoCrop,
+            *m_actionFlip, *m_actionRotate, *m_actionSkew,
             *m_actionConvertToBlackAndWhite, *m_actionConvertToGrayscale,
             *m_actionInvertColors, *m_actionClear;
 
 private slots:
     void slotResizeScale ();
+    void slotAutoCrop ();
     void slotFlip ();
     void slotRotate ();
     void slotSkew ();
