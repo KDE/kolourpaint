@@ -44,6 +44,8 @@ kptoolwidgetbase - spacing between items, make contentsRect() actual size wanted
 
 kpcolortoolbar setOrientation
 
+kpcolortoolbar - open/save palette
+
 fill - can optimise mem usage by deleting kpFloodFill object
        when execute() (don't derive object)
      - can optimise mem usage by detecting single colour fills
