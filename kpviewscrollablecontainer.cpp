@@ -351,14 +351,17 @@ kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent,
 
 {
     m_bottomGrip->setFixedHeight (GripSize);
+    m_bottomGrip->hide ();
     addChild (m_bottomGrip);
     connectGripSignals (m_bottomGrip);
 
     m_rightGrip->setFixedWidth (GripSize);
+    m_rightGrip->hide ();
     addChild (m_rightGrip);
     connectGripSignals (m_rightGrip);
 
     m_bottomRightGrip->setFixedSize (GripSize, GripSize);
+    m_bottomRightGrip->hide ();
     addChild (m_bottomRightGrip);
     connectGripSignals (m_bottomRightGrip);
 
