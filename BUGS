@@ -1,5 +1,9 @@
 
-This file lists known bugs in the 1.??? release that are not considered
+Please send bug reports and feature requests to http://bugs.kde.org/ or
+Clarence Dang <dang@kde.org>.
+
+
+This file lists known bugs in the 1.2 release that are not considered
 "release critical" and are difficult to fix:
 
 
@@ -70,38 +74,20 @@ future backport branches of KolourPaint.
 ---------------------------------------------------------------------------
 
 
-Issues with Early Versions of KDE 3.x
-=====================================
+Issues with Early Versions of KDE 3.x and Qt 3.x
+================================================
 
-KolourPaint 1.??? runs best on KDE 3.3 and Qt 3.3.  It will compile and
-run on earlier KDE and Qt 3.x releases but you may encounter the following
+KolourPaint 1.2 runs best on KDE 3.3 and Qt 3.3.  It will compile and run
+on earlier KDE and Qt 3.x releases but you may encounter the following
 problems:
 
-TODO: mention thumbnail flicker fixed with Qt 3.3 ("2. Flicker when the thumbnail makes its appearance.");
- 
-Common to KDE 3.0 and KDE 3.1
------------------------------
 
-1. It is not always possible to copy and paste between 2 instances of
-   KolourPaint running different Qt versions.  See QDataStream::setVersion().
-
-2. The "Settings / Show Statusbar" menu is not available.
-
-3. The filedialog filter combobox is editable as part of a workaround for a
-   Qt bug (which normally causes a filedialog destruction crash).
-
-4. Alpha channel checks will be performed when opening and pasting images
-   even if the appropriate "Do not show this message again" checkbox has
-   been ticked (i.e. slower).  Unwanted notifications of low screen depth
-   and alpha channel may also be given.
-
-
-KDE 3.0 specific
-----------------
+KDE = 3.0
+---------
 
 1. Due to the lack of KImageIO::typeForMime(), KolourPaint can only support
    a limited number of output formats (you'll only notice this if you've
-   installed more KImageIO formats).
+   installed more KImageIO formats, which is highly unlikely).
 
 2. The Resize / Scale Dialog's percentage input fields are missing the
    spinbox arrows.
@@ -109,14 +95,14 @@ KDE 3.0 specific
 3. The keyboard modifiers may get out of sync with reality in certain
    corner cases.
 
-4. The "Settings / Toolbars" menu is not available.
+4. The "Settings / Toolbars" submenu is not available.
 
 5. The "Settings / Configure Toolbars..." dialog does not allow you to
    configure the Main Toolbar.
 
 
-KDE 3.1 specific
-----------------
+KDE = 3.1
+---------
 
 1. The Tool Box buttons are not clearly rendered in early versions of the
    Keramik style (such as the one included in KDE 3.1).  It may be hard to
@@ -124,5 +110,30 @@ KDE 3.1 specific
    use another style such as HighColor Classic or Plastik.
 
 
-Please report all bugs to Clarence Dang <dang@kde.org>.
+KDE <= 3.1
+----------
 
+1. The "Settings / Show Statusbar" menu is not available.
+
+2. The filedialog filter combobox is editable as part of a workaround for a
+   Qt bug (which normally causes a filedialog destruction crash).
+
+3. Alpha channel checks will be performed when opening and pasting images
+   even if the appropriate "Do not show this message again" checkbox has
+   been ticked (i.e. slower).  Unwanted notifications of low screen depth
+   and alpha channel may also be given.
+
+
+Qt <= 3.2
+---------
+
+1. The thumbnail will flicker near or above the toolbars before appearing
+   in its rightful place.
+
+
+All versions of Qt
+------------------
+
+1. It is not always possible to copy and paste between 2 instances of
+   KolourPaint running different Qt versions.  See
+   QDataStream::setVersion().
