@@ -341,10 +341,30 @@ void kpColorCells::setOrientation (Qt::Orientation o)
 // virtual protected
 void kpColorCells::paintCell (QPainter *painter, int row, int col)
 {
+    QColor oldColor;
+    int cellNo;
+        
+    if (!isEnabled ())
+    {
+        cellNo = row * numCols () + col;
+        
+        // make all cells 3D (so that disabled palette doesn't look flat)
+        setShading (true);
+
+        oldColor = KColorCells::color (cellNo);
+        KColorCells::colors [cellNo] = backgroundColor ();
+    }
+    
     // no focus rect as it doesn't make sense
     // since 2 colors (foreground & background) can be selected
     KColorCells::selected = -1;
     KColorCells::paintCell (painter, row, col);
+    
+    if (!isEnabled ())
+    {
+        KColorCells::colors [cellNo] = oldColor;
+        setShading (false);
+    }
 }
 
 // virtual protected
