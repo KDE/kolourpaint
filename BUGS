@@ -66,7 +66,7 @@ This file lists known bugs in the 1.??? release that are not considered
 
 ---------------------------------------------------------------------------
 The following info does _not_ apply to CVS HEAD.  HEAD won't even compile
-on KDE < 3.2.  It's only here so that I won't forget to include it in
+on KDE < 3.3.  It's only here so that I won't forget to include it in
 future backport branches of KolourPaint.
 ---------------------------------------------------------------------------
 
@@ -74,7 +74,7 @@ future backport branches of KolourPaint.
 Issues with Early Versions of KDE 3.x
 =====================================
 
-KolourPaint 1.??? runs best on KDE 3.2 and Qt 3.2.  It will compile and
+KolourPaint 1.??? runs best on KDE 3.3 and Qt 3.3.  It will compile and
 run on earlier KDE and Qt 3.x releases but you may encounter the following
 problems:
 
@@ -120,8 +120,8 @@ KDE 3.1 specific
 
 1. The Tool Box buttons are not clearly rendered in early versions of the
    Keramik style (such as the one included in KDE 3.1).  It may be hard to
-   see what tool is currently selected.  Either upgrade to KDE 3.2 or use
-   another style such as HighColor Classic or Plastik.
+   see what tool is currently selected.  Either upgrade to KDE >= 3.2 or
+   use another style such as HighColor Classic or Plastik.
 
 
 Please report all bugs to Clarence Dang <dang@kde.org>.
