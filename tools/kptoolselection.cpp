@@ -1297,19 +1297,6 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
     if (vm)
         vm->setQueueUpdates ();
 
-    // must have selection region but not pixmap
-    if (!doc->selection () || doc->selection ()->pixmap ())
-    {
-        kdError () << "kpToolSelectionPullFromDocumentCommand::execute() sel="
-                   << doc->selection ()
-                   << " pixmap="
-                   << (doc->selection () ? doc->selection ()->pixmap () : 0)
-                   << endl;
-        if (vm)
-            vm->restoreQueueUpdates ();
-        return;
-    }
-
     // In case the user CTRL+Z'ed, selected a random region to throw us off
     // and then CTRL+Shift+Z'ed putting us here.  Make sure we pull from the
     // originally requested region - not the random one.
@@ -1319,6 +1306,21 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
             m_mainWindow->setSelectionTransparency (m_originalSelectionRegion->transparency ());
 
         doc->setSelection (*m_originalSelectionRegion);
+    }
+    else
+    {
+        // must have selection region but not pixmap
+        if (!doc->selection () || doc->selection ()->pixmap ())
+        {
+            kdError () << "kpToolSelectionPullFromDocumentCommand::execute() sel="
+                       << doc->selection ()
+                       << " pixmap="
+                       << (doc->selection () ? doc->selection ()->pixmap () : 0)
+                       << endl;
+            if (vm)
+                vm->restoreQueueUpdates ();
+            return;
+        }
     }
 
     doc->selectionPullFromDocument (m_backgroundColor);
