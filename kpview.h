@@ -124,7 +124,7 @@ public:
     int selectionResizeHandleAtomicSize () const;
     bool selectionLargeEnoughToHaveResizeHandles () const;
 
-    QRegion selectionResizeHandlesViewRegion () const;
+    QRegion selectionResizeHandlesViewRegion (bool forRenderer = false) const;
 
     enum SelectionResizeType
     {

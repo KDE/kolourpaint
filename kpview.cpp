@@ -570,7 +570,7 @@ bool kpView::selectionLargeEnoughToHaveResizeHandles () const
 }
 
 // public
-QRegion kpView::selectionResizeHandlesViewRegion () const
+QRegion kpView::selectionResizeHandlesViewRegion (bool forRenderer) const
 {
     QRegion ret;
 
@@ -578,22 +578,71 @@ QRegion kpView::selectionResizeHandlesViewRegion () const
     if (atomicLength <= 0)
         return QRegion ();
 
+
+    // HACK: At low zoom (e.g. 100%), resize handles will probably be too
+    //       big and overlap text / cursor / too much of selection.
+    //
+    //       So limit the _visual_ size of handles at low zoom.  The
+    //       handles' grab area remains the same for usability; so yes,
+    //       there are a few pixels that don't look grabable but they are.
+    //
+    //       The real solution is to be able to partially render the
+    //       handles outside of the selection view rect.  If not possible,
+    //       at least for text boxes, render text on top of handles.
+    int normalAtomicLength = atomicLength;
+    int vertEdgeAtomicLength = atomicLength;
+    if (forRenderer && selection ())
+    {
+        if (zoomLevelX () <= 150)
+        {
+            if (normalAtomicLength > 1)
+                normalAtomicLength--;
+
+            if (vertEdgeAtomicLength > 1)
+                vertEdgeAtomicLength--;
+        }
+
+        // 1 line of text?
+        if (selection ()->isText () && selection ()->textLines ().size () == 1)
+        {
+            if (zoomLevelX () <= 150)
+                vertEdgeAtomicLength = QMIN (vertEdgeAtomicLength, QMAX (2, zoomLevelX () / 100));
+            else if (zoomLevelX () <= 250)
+                vertEdgeAtomicLength = QMIN (vertEdgeAtomicLength, QMAX (3, zoomLevelX () / 100));
+        }
+    }
+
+
     const QRect selViewRect = selectionViewRect ();
 
-#define ADD_BOX_RELATIVE_TO_SELECTION(x,y)    \
-    ret += QRect ((x), (y), atomicLength, atomicLength)
+#define ADD_BOX_RELATIVE_TO_SELECTION(type,x,y)    \
+    ret += QRect ((x), (y), type##AtomicLength, type##AtomicLength)
 
-    ADD_BOX_RELATIVE_TO_SELECTION (selViewRect.width () - atomicLength,
-                                   selViewRect.height () - atomicLength);
-    ADD_BOX_RELATIVE_TO_SELECTION (selViewRect.width () - atomicLength, 0);
-    ADD_BOX_RELATIVE_TO_SELECTION (0, selViewRect.height () - atomicLength);
-    ADD_BOX_RELATIVE_TO_SELECTION (0, 0);
-    ADD_BOX_RELATIVE_TO_SELECTION (selViewRect.width () - atomicLength,
-                                   (selViewRect.height () - atomicLength) / 2);
-    ADD_BOX_RELATIVE_TO_SELECTION ((selViewRect.width () - atomicLength) / 2,
-                                   selViewRect.height () - atomicLength);
-    ADD_BOX_RELATIVE_TO_SELECTION ((selViewRect.width () - atomicLength) / 2, 0);
-    ADD_BOX_RELATIVE_TO_SELECTION (0, (selViewRect.height () - atomicLength) / 2);
+    ADD_BOX_RELATIVE_TO_SELECTION (normal,
+                                   selViewRect.width () - normalAtomicLength,
+                                   selViewRect.height () - normalAtomicLength);
+    ADD_BOX_RELATIVE_TO_SELECTION (normal,
+                                   selViewRect.width () - normalAtomicLength,
+                                   0);
+    ADD_BOX_RELATIVE_TO_SELECTION (normal,
+                                   0,
+                                   selViewRect.height () - normalAtomicLength);
+    ADD_BOX_RELATIVE_TO_SELECTION (normal,
+                                   0,
+                                   0);
+
+    ADD_BOX_RELATIVE_TO_SELECTION (vertEdge,
+                                   selViewRect.width () - vertEdgeAtomicLength,
+                                   (selViewRect.height () - vertEdgeAtomicLength) / 2);
+    ADD_BOX_RELATIVE_TO_SELECTION (normal,
+                                   (selViewRect.width () - normalAtomicLength) / 2,
+                                   selViewRect.height () - normalAtomicLength);
+    ADD_BOX_RELATIVE_TO_SELECTION (normal,
+                                   (selViewRect.width () - normalAtomicLength) / 2,
+                                   0);
+    ADD_BOX_RELATIVE_TO_SELECTION (vertEdge,
+                                   0,
+                                   (selViewRect.height () - vertEdgeAtomicLength) / 2);
 
 #undef ADD_BOX_RELATIVE_TO_SELECTION
 
@@ -1182,7 +1231,7 @@ void kpView::paintEventDrawSelectionResizeHandles (QPainter *painter, const QRec
         return;
     }
 
-    QRegion selResizeHandlesRegion = selectionResizeHandlesViewRegion ();
+    QRegion selResizeHandlesRegion = selectionResizeHandlesViewRegion (true/*for renderer*/);
 #if DEBUG_KP_VIEW_RENDERER && 1
     kdDebug () << "\tsel resize handles view region="
                << selResizeHandlesRegion << endl;

@@ -8,6 +8,12 @@ its changes.
 
 
 
+   * Smaller selection and text box resize handles (visually not
+     actually) - covers up fewer selected pixels, doesn't cover up text
+
+
+
+
 
    * Fix crash due to text box when scaling image behind it
 
