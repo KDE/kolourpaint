@@ -471,7 +471,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
 // protected slot
 void kpDocumentSaveOptionsWidget::hidePreview ()
 {
-    if (m_previwButton->isToggled ())
+    //if (m_previewButton->isToggled ())
         m_previewButton->toggle ();
 }
 
