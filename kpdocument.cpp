@@ -112,7 +112,10 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
         QString mimetype = KImageIO::mimeType (tempFile);
 
     #if DEBUG_KPDOCUMENT
+        kdDebug () << "\ttempFile=" << tempFile << endl;
         kdDebug () << "\tmimetype=" << mimetype << endl;
+        kdDebug () << "\tsrc=" << url.path () << endl;
+        kdDebug () << "\tmimetype of src=" << KImageIO::mimeType (url.path ()) << endl;
     #endif
 
         if (mimetype.isEmpty ())
@@ -122,6 +125,8 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
             return false;
         }
 
+// TODO: why are all non-absolute URLs detected as "inode/directory"???
+#if 0
         if (!KImageIO::isSupported (mimetype, KImageIO::Reading))
         {
             KMessageBox::sorry (0, i18n ("Could not open \"%1\" - unsupported image format \"%2\".")
@@ -129,11 +134,12 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
                                         .arg (mimetype));
             return false;
         }
+#endif
 
         QPixmap *newPixmap = new QPixmap (tempFile);
         if (newPixmap->isNull ())
         {
-            KMessageBox::sorry (0, i18n ("Could not open \"%1\".\n"
+            KMessageBox::sorry (0, i18n ("Could not open \"%1\" - unsupported image format.\n"
                                          "The file may be corrupt.")
                                        .arg (kpDocument::filenameForURL (url)));
             delete newPixmap;
