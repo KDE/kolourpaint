@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -39,13 +39,13 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstatusbar.h>
-#include <ktoolbar.h>  // DEP thumbnail
 #include <kurldrag.h>
 
 #include <kpcolortoolbar.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kppixmapfx.h>
+#include <kpthumbnail.h>
 #include <kptool.h>
 #include <kptooltoolbar.h>
 #include <kpmainwindow.h>
@@ -84,7 +84,9 @@ kpMainWindow::kpMainWindow (kpDocument *newDoc)
 void kpMainWindow::initGUI ()
 {
     m_scrollView = 0;
-    m_mainView = 0; m_thumbnailView = 0;
+    m_mainView = 0;
+    m_thumbnail = 0;
+    m_thumbnailView = 0;
     m_document = 0;
     m_viewManager = 0;
     m_colorToolBar = 0;
@@ -156,10 +158,6 @@ void kpMainWindow::initGUI ()
     if (m_configFirstTime)
     {
         m_toolToolBar->setBarPos (KToolBar::Left);
-    #if 0
-        toolBar ("toolbar_thumbnaila")->setBarPos (KToolBar::Right);
-        toolBar ("toolbar_thumbnaila")->hide ();  // it doesn't work well yet
-    #endif
         m_colorToolBar->setBarPos (KToolBar::Bottom);
     }
 }
@@ -266,7 +264,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 #endif
 
     delete m_mainView; m_mainView = 0;
-    delete m_thumbnailView; m_thumbnailView = 0;
+    slotDestroyThumbnail ();
 
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tdestroying viewManager" << endl;
@@ -309,24 +307,11 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         m_viewManager->registerView (m_mainView);
         m_mainView->show ();
 
-    #if 0
-
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tcreating thumbnail view" << endl;
     #endif
 
-        // TODO: change to a child window
-        toolBar ("toolbar_thumbnaila")->setFullSize ();
-        m_thumbnailView = new kpView (toolBar ("toolbar_thumbnaila"),
-                                      "thumbnailView", this,
-                                      200, 200, true /* autoVariableZoom */);
-        toolBar ("toolbar_thumbnaila")->insertWidget (2000,
-            toolBar ("toolbar_thumbnaila")->width (), m_thumbnailView);
-
-        toolBar ("toolbar_thumbnaila")->setFullSize ();
-
-        m_viewManager->registerView (m_thumbnailView);
-    #endif
+        slotShowThumbnail ();
 
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\thooking up document signals" << endl;
@@ -350,7 +335,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         m_actionDelete->setEnabled (m_document->selection ());
 
         connect (m_document, SIGNAL (selectionEnabled (bool)),
-                 this, SLOT (slotImageMenuUpdateName ()));
+                 this, SLOT (slotImageMenuUpdateDueToSelection ()));
 
         // Status bar
         connect (m_document, SIGNAL (documentOpened ()),
@@ -418,7 +403,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     kdDebug () << "\tupdating mainWindow elements" << endl;
 #endif
 
-    slotImageMenuUpdateName ();
+    slotImageMenuUpdateDueToSelection ();
     slotUpdateStatusBar ();  // update doc size
     slotUpdateCaption ();  // Untitled to start with
 
@@ -486,6 +471,13 @@ void kpMainWindow::dropEvent (QDropEvent *e)
             open (*it);
         }
     }
+}
+
+
+// protected virtual [base QWidget]
+void kpMainWindow::moveEvent (QMoveEvent * /*e*/)
+{
+    notifyThumbnailGeometryChanged ();
 }
 
 

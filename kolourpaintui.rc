@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui name="kolourpaint" version="6">
+<gui name="kolourpaint" version="7">
 
 <MenuBar>
     <Menu name="file">
@@ -11,9 +11,10 @@
 
     <Menu name="view">
         <Action name="view_show_grid" />
+        <Action name="view_show_thumbnail" />
     </Menu>
 
-    <!-- SYNC: menu text with kpMainWindow::slotImageMenuUpdateName() -->
+    <!-- SYNC: menu text with kpMainWindow::slotImageMenuUpdateDueToSelection() -->
     <Menu name="image"><text>&amp;Image</text>
         <Action name="image_crop" />
         <Action name="image_auto_crop" />

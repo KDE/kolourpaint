@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -26,6 +26,7 @@
 */
 
 
+#include <qdockarea.h>
 #include <qscrollview.h>
 #include <qtimer.h>
 
@@ -40,6 +41,7 @@
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
+#include <kpthumbnail.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
 
@@ -81,6 +83,11 @@ void kpMainWindow::setupViewMenuActions ()
     m_actionShowGrid->setChecked (m_configShowGrid);
     connect (m_actionShowGrid, SIGNAL (toggled (bool)), this, SLOT (slotActionShowGridToggled (bool)));
 
+
+    m_actionShowThumbnail = new KToggleAction (i18n ("Show &Thumbnail"), CTRL + Key_T,
+        this, SLOT (slotShowThumbnail ()), actionCollection (), "view_show_thumbnail");
+
+
     enableViewMenuDocumentActions (false);
 }
 
@@ -98,6 +105,7 @@ void kpMainWindow::enableViewMenuDocumentActions (bool enable)
     m_actionZoom->setEnabled (enable);
 
     m_actionShowGrid->setEnabled (enable);
+    m_actionShowThumbnail->setEnabled (enable);
 
     // TODO: for the time being, assume that we start at zoom 100%
     //       with no grid
@@ -123,7 +131,11 @@ void kpMainWindow::sendZoomListToActionZoom ()
         items << zoomLevelToString (*it);
     }
 
+    // SYNC: work around a KDE bug - KSelectAction::setItems() enables the action
+    bool e = m_actionZoom->isEnabled ();
     m_actionZoom->setItems (items);
+    if (e != m_actionZoom->isEnabled ())
+        m_actionZoom->setEnabled (e);
 }
 
 // private
@@ -187,10 +199,16 @@ void kpMainWindow::zoomTo (int zoomLevel)
     m_actionZoom->setCurrentItem (index);
 
 
-    m_actionActualSize->setEnabled (zoomLevel != 100);
+    bool viewMenuDocumentActionsEnabled = m_actionShowThumbnail->isEnabled ();
 
-    m_actionZoomIn->setEnabled (m_actionZoom->currentItem () < (int) m_zoomList.count () - 1);
-    m_actionZoomOut->setEnabled (m_actionZoom->currentItem () > 0);
+    if (viewMenuDocumentActionsEnabled)
+    {
+        m_actionActualSize->setEnabled (zoomLevel != 100);
+
+        m_actionZoomIn->setEnabled (m_actionZoom->currentItem () < (int) m_zoomList.count () - 1);
+        m_actionZoomOut->setEnabled (m_actionZoom->currentItem () > 0);
+    }
+
 
     if (m_viewManager)
         m_viewManager->setQueueUpdates ();
@@ -377,3 +395,175 @@ void kpMainWindow::slotActionShowGridToggled (bool on)
     configGroupSaver.config ()->writeEntry (kpSettingShowGrid, m_configShowGrid);
     configGroupSaver.config ()->sync ();
 }
+
+
+// private
+QRect kpMainWindow::mapToGlobal (const QRect &rect) const
+{
+    QPoint topLeft = KMainWindow::mapToGlobal (rect.topLeft ());
+    return QRect (topLeft.x (), topLeft.y (), rect.width (), rect.height ());
+}
+
+// private
+QRect kpMainWindow::mapFromGlobal (const QRect &rect) const
+{
+    QPoint topLeft = KMainWindow::mapFromGlobal (rect.topLeft ());
+    return QRect (topLeft.x (), topLeft.y (), rect.width (), rect.height ());
+}
+
+
+// public slot
+void kpMainWindow::slotDestroyThumbnailIfNotVisible (bool tnIsVisible)
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "destroyThumbnailIfClosed(isVisible=" << tnIsVisible << ")" << endl;
+#endif
+
+    if (!tnIsVisible)
+    {
+        // The thumbnail is probably still closing itself so don't
+        // destroy it until after it's finished its work
+        QTimer::singleShot (0, this, SLOT (slotDestroyThumbnail ()));
+    }
+}
+
+// public slot
+void kpMainWindow::slotDestroyThumbnail ()
+{
+    m_actionShowThumbnail->setChecked (false);
+    slotShowThumbnail ();
+}
+
+// public
+void kpMainWindow::notifyThumbnailGeometryChanged ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::notifyThumbnailGeometryChanged()" << endl;
+#endif
+
+    if (m_thumbnail)
+    {
+        QRect rect (m_thumbnail->x (), m_thumbnail->y (),
+                    m_thumbnail->width (), m_thumbnail->height ());
+
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\tsaving geometry "
+                   << mapFromGlobal (rect)
+                   << endl;
+    #endif
+
+        KConfigGroupSaver configGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+        configGroupSaver.config ()->writeEntry ("Thumbnail Geometry",
+                                                mapFromGlobal (rect));
+        configGroupSaver.config ()->sync ();
+    }
+}
+
+// private slot
+void kpMainWindow::slotShowThumbnail ()
+{
+    bool enable = m_actionShowThumbnail->isChecked ();
+
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotShowThumbnail() thumbnail="
+               << bool (m_thumbnail)
+               << " action_isChecked="
+               << enable
+               << endl;
+#endif
+
+    if (bool (m_thumbnail) == enable)
+        return;
+
+    if (!m_thumbnail)
+    {
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\tcreating thumbnail" << endl;
+    #endif
+
+        KConfigGroupSaver configGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+        // Read last saved geometry before creating thumbnail & friends
+        // in case they call notifyThumbnailGeometryChanged()
+        QRect thumbnailGeometry = configGroupSaver.config ()->readRectEntry ("Thumbnail Geometry");
+
+
+        m_thumbnail = new kpThumbnail (this, "thumbnail");
+        m_thumbnail->hide ();
+
+        moveDockWindow (m_thumbnail, Qt::DockTornOff);
+
+        // Prevent thumbnail from docking - it's _really_ irritating otherwise
+        leftDock ()->setAcceptDockWindow (m_thumbnail, false);
+        rightDock ()->setAcceptDockWindow (m_thumbnail, false);
+        topDock ()->setAcceptDockWindow (m_thumbnail, false);
+        bottomDock ()->setAcceptDockWindow (m_thumbnail, false);
+
+        m_thumbnailView = new kpView (m_thumbnail,
+                                      "thumbnailView", this,
+                                      m_thumbnail->width (), m_thumbnail->height (),
+                                      true /*autoVariableZoom*/);
+        m_thumbnail->setView (m_thumbnailView);
+        m_viewManager->registerView (m_thumbnailView);
+
+        if (m_document)
+        {
+            connect (m_document, SIGNAL (sizeChanged (int, int)),
+                     m_thumbnail, SLOT (updateCaption ()));
+        }
+
+
+        if (thumbnailGeometry.isValid ())
+        {
+        #if DEBUG_KP_MAIN_WINDOW
+            kdDebug () << "\t\tlast used geometry=" << thumbnailGeometry << endl;
+        #endif
+            thumbnailGeometry = mapToGlobal (thumbnailGeometry);
+            m_thumbnail->resize (thumbnailGeometry.size ());
+            m_thumbnail->move (thumbnailGeometry.topLeft ());
+        }
+        else
+        {
+            if (m_scrollView)
+            {
+                const int margin = 20;
+                const int initialWidth = 160, initialHeight = 120;
+
+                QRect geometryRect (width () - initialWidth - margin * 2,
+                                    m_scrollView->y () + margin,
+                                    initialWidth,
+                                    initialHeight);
+
+            #if DEBUG_KP_MAIN_WINDOW
+                kdDebug () << "\t\tcreating geometry=" << geometryRect << endl;
+            #endif
+
+                geometryRect = mapToGlobal (geometryRect);
+                m_thumbnail->resize (geometryRect.size ());
+                m_thumbnail->move (geometryRect.topLeft ());
+            }
+        }
+
+        m_thumbnail->show ();
+
+        connect (m_thumbnail, SIGNAL (visibilityChanged (bool)),
+                 this, SLOT (slotDestroyThumbnailIfNotVisible (bool)));
+    }
+    else
+    {
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\tdestroying thumbnail" << endl;
+    #endif
+
+        if (m_document)
+        {
+            disconnect (m_document, SIGNAL (sizeChanged (int, int)),
+                        m_thumbnail, SLOT (updateCaption ()));
+        }
+
+        m_viewManager->unregisterView (m_thumbnailView);
+
+        delete m_thumbnailView; m_thumbnailView = 0;
+        delete m_thumbnail; m_thumbnail = 0;
+    }
+}
+

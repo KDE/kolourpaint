@@ -54,6 +54,7 @@ class kpCommandHistory;
 class kpDocument;
 class kpView;
 class kpViewManager;
+class kpThumbnail;
 class kpTool;
 class kpToolToolBar;
 
@@ -94,7 +95,9 @@ public:
 
 private:
     QScrollView *m_scrollView;
-    kpView *m_mainView, *m_thumbnailView;
+    kpView *m_mainView;
+    kpThumbnail *m_thumbnail;
+    kpView *m_thumbnailView;
     kpDocument *m_document;
     kpViewManager *m_viewManager;
     kpColorToolBar *m_colorToolBar;
@@ -111,6 +114,9 @@ private:
     
     virtual void dragEnterEvent (QDragEnterEvent *e);
     virtual void dropEvent (QDropEvent *e);
+
+protected:
+    virtual void moveEvent (QMoveEvent *e);
 
 public:
     void drawTransparentBackground (QPainter *painter,
@@ -289,7 +295,7 @@ private:
             *m_actionFitToPage, *m_actionFitToWidth, *m_actionFitToHeight,
             *m_actionZoomIn, *m_actionZoomOut;
     KSelectAction *m_actionZoom;
-    KToggleAction *m_actionShowGrid;
+    KToggleAction *m_actionShowGrid, *m_actionShowThumbnail;
     
     QValueVector <int> m_zoomList;
     bool m_configShowGrid;
@@ -316,6 +322,20 @@ private slots:
     
     void slotShowGrid ();
     void slotActionShowGridToggled (bool on);
+
+private:
+    QRect mapToGlobal (const QRect &rect) const;
+    QRect mapFromGlobal (const QRect &rect) const;
+
+private slots:
+    void slotDestroyThumbnailIfNotVisible (bool tnIsVisible);
+    void slotDestroyThumbnail ();
+
+public:
+    void notifyThumbnailGeometryChanged ();
+    
+private slots:
+    void slotShowThumbnail ();
     
     
     /*
@@ -333,7 +353,7 @@ private:
             *m_actionInvertColors, *m_actionClear;
 
 private slots:
-    void slotImageMenuUpdateName ();
+    void slotImageMenuUpdateDueToSelection ();
 
 public:
     QColor backgroundColor () const;

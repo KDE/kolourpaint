@@ -106,7 +106,7 @@ void kpMainWindow::enableImageMenuDocumentActions (bool enable)
 
 
 // private slot
-void kpMainWindow::slotImageMenuUpdateName ()
+void kpMainWindow::slotImageMenuUpdateDueToSelection ()
 {
     bool isSelectionEnabled = m_document ? m_document->selection () : false;
 
