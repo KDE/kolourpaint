@@ -100,7 +100,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
     kdDebug () << "kpDocument::open (" << url << ")" << endl;
 #endif
 
-    bool formatErrorOccurred = false;
+    bool errorOccurred = false;
 
     QString tempFile;
     if (!url.isEmpty () && KIO::NetAccess::download (url, tempFile, m_mainWindow))
@@ -121,33 +121,101 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
             KMessageBox::sorry (m_mainWindow,
                                 i18n ("Could not open \"%1\" - unknown mimetype.")
                                     .arg (kpDocument::prettyFilenameForURL (url)));
-            formatErrorOccurred = true;
+            errorOccurred = true;
         }
         else
         {
-            QPixmap *newPixmap = new QPixmap (tempFile);
-            if (newPixmap->isNull ())
+            QImage image (tempFile);
+            if (image.isNull ())
             {
                 KMessageBox::sorry (m_mainWindow,
                                     i18n ("Could not open \"%1\" - unsupported image format.\n"
                                           "The file may be corrupt.")
                                         .arg (kpDocument::prettyFilenameForURL (url)));
-                delete newPixmap;
-                formatErrorOccurred = true;
+                errorOccurred = true;
             }
             else
             {
-                KIO::NetAccess::removeTempFile (tempFile);
+            #if DEBUG_KPDOCUMENT
+                kdDebug () << "\timage: depth=" << image.depth ()
+                           << " (X display=" << QColor::numBitPlanes () << ")"
+                           << " hasAlphaBuffer=" << image.hasAlphaBuffer ()
+                           << endl;
+            #endif
 
-                delete m_pixmap;
-                m_pixmap = newPixmap;
-
-                m_url = url;
-                m_mimetype = mimetype;
-                m_modified = false;
-
-                emit documentOpened ();
-                return true;
+                bool warned = false;
+                
+                // TODO: port warnings to cut & paste (in case remote program manipulates
+                // QImage for e.g.) 
+                
+                if (!warned && image.hasAlphaBuffer ())
+                {
+                    // SYNC: remove 1.0 reference after impl transparency
+                    errorOccurred = (KMessageBox::warningContinueCancel (m_mainWindow,
+                        i18n ("The image \"%1\" has an Alpha Channel.\n"
+                              "This is not fully supported by KolourPaint "
+                              "(1-bit transparency will be supported by 1.0). "
+                              "If you open this file, some of its colors and opacity "
+                              "may be incorrect "
+                              "and this will also adversely affect future save operations.\n"
+                              "Do you really want to open this file?")
+                            .arg (kpDocument::prettyFilenameForURL (url)),
+                        i18n ("Loss of Color and/or Opacity Information"),
+                        KStdGuiItem::open (),
+                        "DoNotAskAgain_OpenLossOfColorAndOpacity") != KMessageBox::Continue);
+                    warned = true;
+                }
+                
+                if (!warned && image.depth () > QColor::numBitPlanes ())
+                {
+                    errorOccurred = (KMessageBox::warningContinueCancel (m_mainWindow,
+                        i18n ("The image \"%1\" has a higher color depth (%2-bit) "
+                              "than the display (%3-bit).\n"
+                              "If you open this file, some of its colors may be incorrect "
+                              "and this will also adversely affect future save operations.\n"
+                              "Do you really want to open this file?")
+                            .arg (kpDocument::prettyFilenameForURL (url))
+                            .arg (image.depth ())
+                            .arg (QColor::numBitPlanes ()),
+                        i18n ("Loss of Color Information"),
+                        KStdGuiItem::open (),
+                        "DoNotAskAgain_OpenLossOfColor") != KMessageBox::Continue);
+                    warned = true;
+                }
+                
+                if (!errorOccurred)
+                {
+                    QPixmap *newPixmap = new QPixmap ();
+                    newPixmap->convertFromImage (image);
+                    
+                    if (newPixmap->isNull ())
+                    {
+                        kdError () << "could not convert from QImage" << endl;
+                        delete newPixmap;
+                        errorOccurred = true;
+                    }
+                    else
+                    {
+                    #if DEBUG_KPDOCUMENT
+                        kdDebug () << "\tpixmap: depth=" << newPixmap->depth ()
+                                   << " hasAlphaChannelOrMask=" << newPixmap->hasAlpha ()
+                                   << " hasAlphaChannel=" << newPixmap->hasAlphaChannel ()
+                                   << endl;
+                    #endif
+                
+                        KIO::NetAccess::removeTempFile (tempFile);
+        
+                        delete m_pixmap;
+                        m_pixmap = newPixmap;
+        
+                        m_url = url;
+                        m_mimetype = mimetype;
+                        m_modified = false;
+        
+                        emit documentOpened ();
+                        return true;
+                    }
+                }
             }
         }
         
@@ -158,7 +226,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
 
     if (newDocSameNameIfNotExist)
     {
-        if (formatErrorOccurred ||
+        if (errorOccurred ||
             url.isEmpty () ||
             // maybe it was a permission error?
             KIO::NetAccess::exists (url, true/*open*/, m_mainWindow))
@@ -174,7 +242,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
     }
     else
     {
-        if (!formatErrorOccurred)
+        if (!errorOccurred)
         {
             KMessageBox::sorry (m_mainWindow,
                                 i18n ("Could not open \"%1\".")
