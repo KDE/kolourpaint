@@ -28,8 +28,13 @@ shift+ctrl+alt modifiers can go out of sync
 
 rewrite colour eraser
 - faster
-- rwlbuis' test
-double click on colour eraser
+
+clean up kpmainwindow
+- statusbar
+- settings menu
+- propagation of settings thru mainwindows
+
+config dialogs (look into new kconfig generator)
 
 
 Medium Term (2-4 weeks)
@@ -48,19 +53,8 @@ honour background colour for Skew, Rotate
 icons for some of the Image dialogs (if I decide to keep the dialogs around)
 Colour Eraser as part of the Image Menu;
 
-clean up kpmainwindow
-- statusbar
-- settings menu
-- propagation of settings thru mainwindows
-
-config dialogs (look into new kconfig generator)
-
 tool/text
 paste text (editable after you paste it)
-
-Killer Feature: with flow tools (pen, brush, spraycan), holding SHIFT forces horizontal drawing;
-                CTRL forces vertical - so those of us without perfectly steady hands
-                can still draw straight without continually hitting the Undo button :)
 
 
 Long-Term (approx 1-2 months)
@@ -80,6 +74,7 @@ make sure session restore actually works
 colour depth audit
 - do 8-bit pixmaps work?
 - are we incorrectly using kpDocument::setPixmap() with mono pixmaps?
+- are we dithering when converting from QImage -> QPixmap when we shouldn't be?
 
 random pixels in the view showing up with the Colour Eraser Tool and Zoom over 8-bit VNC
 
@@ -91,6 +86,10 @@ documentation (assigned to Thurston)
 
 Can be delayed till after 1.0
 -----------------------------
+
+Killer Feature: with flow tools (pen, brush, spraycan), holding SHIFT forces horizontal drawing;
+                CTRL forces vertical - so those of us without perfectly steady hands
+                can still draw straight without continually hitting the Undo button :)
 
 intersect bounding rect with document rect when saving undo info
 - e.g. if you drag a large rect bigger than the view, waste a lot of memory
@@ -120,6 +119,8 @@ After 1.0
 KolourPaint at 1.0 should be very usable.  So the following are just nice
 ideas that may or may not ever get implemented:
 
+
+Look at KPixmapIO for QPixmap <-> QImage conversion optimisation
 
 Image/Convert Colour Depth (only be able to dither to colour depths lower
 than the current display - limitation of X).  Hmmm, I could understand
