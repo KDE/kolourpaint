@@ -206,9 +206,9 @@ void kpMainWindow::zoomTo (int zoomLevel)
     else if (m_mainView && m_mainView->zoomLevelX () % 100 == 0 && zoomLevel % 100)
     {
         if (KMessageBox::warningContinueCancel (this,
-            i18n ("Setting the Zoom Level to a value that is not a multiple of 100% "
+            i18n ("Setting the zoom level to a value that is not a multiple of 100% "
                   "results in imprecise editing and redraw glitches.\n"
-                  "Do you really want to set to Zoom Level to %1%?")
+                  "Do you really want to set to zoom level to %1%?")
                 .arg (zoomLevel),
             QString::null/*caption*/,
             i18n ("Set Zoom Level to %1%").arg (zoomLevel),

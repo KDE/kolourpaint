@@ -81,7 +81,7 @@ kpEffectSwirlWidget::kpEffectSwirlWidget (bool actOnSelection,
     QGridLayout *lay = new QGridLayout (this, 1, 2, marginHint (), spacingHint ());
 
 
-    QLabel *label = new QLabel (i18n ("Swirl &Angle:"), this);
+    QLabel *label = new QLabel (i18n ("Swirl &angle:"), this);
     m_swirlDegreesInput = new KIntNumInput (this);
     m_swirlDegreesInput->setRange (-720, 720, 10/*step*/, true/*slider*/);
 
