@@ -325,7 +325,7 @@ void kpMainWindow::pasteText (const QString &text, bool forceNewTextSelection)
 
     if (!forceNewTextSelection &&
         m_document && m_document->selection () &&
-        m_document->selection ()->type () == kpSelection::Text &&
+        m_document->selection ()->isText () &&
         m_commandHistory && m_viewManager)
     {
     #if DEBUG_KP_MAIN_WINDOW && 1
@@ -403,7 +403,7 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point)
 
     if (m_document &&
         m_document->selection () &&
-        m_document->selection ()->type () == kpSelection::Text &&
+        m_document->selection ()->isText () &&
         m_document->selection ()->pointIsInTextArea (point))
     {
         kpSelection *sel = m_document->selection ();
