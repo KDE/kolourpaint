@@ -148,6 +148,8 @@ warn when about to exceed KP_BIG_IMAGE_WIDTH or KP_BIG_IMAGE_HEIGHT
 
 Settings/Show Path should only be there when there is a path (i.e. not Untitled)
 
+kpsqueezedtextlabel could use (or be replaced by) KStringHandler::rPixelSqueeze()
+
 documentation (assigned to Thurston)
 
 
