@@ -1,0 +1,33 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<gui name="kolourpaint" version="1">
+
+<MenuBar>
+    <Menu name="file">
+        <Action name="file_new_window" append="new_merge" />
+        <Action name="file_set_as_wallpaper_centered" />
+        <Action name="file_set_as_wallpaper_tiled" />
+    </Menu>
+
+    <Menu name="view">
+        <Action name="view_show_grid" />
+    </Menu>
+
+    <Menu name="image"><text>&amp;Image</text>
+        <Action name="image_properties" />
+        <Separator />
+        <Action name="image_resize_scale" />
+        <Action name="image_flip" />
+        <Action name="image_rotate" />
+        <Action name="image_skew" />
+        <Separator />
+        <Action name="image_convert_to_grayscale" />
+        <Action name="image_invert_colors" />
+        <Action name="image_clear" />
+    </Menu>
+
+    <Menu name="settings">
+        <Action name="settings_show_path" append="show_merge" />
+    </Menu>
+</MenuBar>
+
+</gui>

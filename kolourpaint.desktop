@@ -1,0 +1,19 @@
+[Desktop Entry]
+Encoding=UTF-8
+
+Name=KolourPaint
+GenericName=Paint Program
+Icon=kolourpaint
+
+Type=Application
+Exec=kolourpaint
+DocPath=kolourpaint/index.html
+
+MimeType=image/x-bmp,image/x-eps,image/gif,image/x-ico,image/jpeg,image/x-pcx,image/png,image/x-portable-bitmap,image/x-portable-pixmap,image/x-targa,image/tiff,image/x-xbm,image/x-xpm
+InitialPreference=6
+
+Categories=Qt;KDE;Graphics
+Terminal=0
+X-KDE-StartupNotify=true
+X-DCOP-ServiceType=Multi
+

@@ -1,0 +1,100 @@
+
+For licensing and warranty information, read LICENCE.
+For installation instructions, read INSTALL.
+For information on what features are planned or unfinished, read TODO.
+For general information, read this file (README):
+
+
+1. What is KolourPaint?
+=======================
+
+KolourPaint is a free paint program for the K Desktop Environment
+(http://www.kde.org), the most popular GUI for Unix-based systems
+(e.g. Linux, FreeBSD).
+
+It aims to be conceptually simple to use, while still providing a
+reasonable level of functionality for the average user who just wants
+to crop screenshots, draw diagrams and perform simple image editing
+tasks.
+
+KolourPaint is written in C++ using the QT and KDE libraries.  Essentially,
+this means that any X11-based Unix system will be able to run it.
+
+This is a Development Version of KolourPaint.  It has KNOWN BUGS.  Read
+Section 4 for details.
+
+
+2. Features (Planned)
+=====================
+
+Features include:
+
+- Tools: Color Picker, Pen, Line, Brush, Eraser, Spraycan, Color Eraser,
+         Rectangle, Rounded Rectangle, Ellipse, Fill, Curve, Polygon
+
+- Basic image transformations: Resize, Scale, Flip, Rotate, Skew,
+                               Convert to Greyscale, Invert Colours
+
+- Selections: Rectangular, Elliptical, Free Form
+
+- Undo/Redo support
+
+- Zoom/Grid/Thumbnail support
+
+- Screenshot/Edit/Save/Set as Wallpaper workflow optimisation
+
+- Transparent Image support
+
+- Support for all file formats provided by KImageIO (BMP, JPEG, PNG, TIFF,....)
+
+The intention of the KolourPaint Project is not provide a monolithic,
+unusable Image Editor with support for layers, alpha-blending, obscure
+filters, plugins and the like.  Instead, the project aims to provide a
+simple, usable and "bug-free" paint program for the masses.
+
+
+3. Why Another Paint Program?
+=============================
+
+One particular paint program cannot reliably save, cannot print at all and
+has tool options labelled "Not Yet".  Another cannot reliably handle images
+the size of a small screenshot.
+
+Another program is notoriously complex and difficult to use, to point
+where simple tasks - such as drawing lines - become impossible for the
+ordinary user.
+
+With Linux becoming more widespread, there is a growing demand for quality
+applications that supersede commercial alternatives in both usability and
+functionality.  KolourPaint aims to fill this void in the area of free
+paint programs.
+
+
+4. Why then is KolourPaint so buggy and incomplete - isn't this HYPOCRISY?
+==========================================================================
+
+If you are reading this you are using a CVS/Development version of
+KolourPaint that has not even reached the 1.0 mark.  This is NOT an official
+release, nor is it intended for production purposes.
+
+It is anticipated that a _polished_ 1.0 release will be available within
+6 months.  It won't be yet another paint program that can't Undo/Redo.
+
+Until then, please consider helping out with code, documentation and/or
+donations.  The file TODO contains a list of planned and unfinished tasks.
+
+
+5. Contact
+==========
+
+Feel free to email me <dang@kde.org> about anything related to
+KolourPaint.  I will endeavour to respond to your email within 2 days, but
+sometimes, during busy periods, I may take up to 10 days.  In general, I do
+not rudely ignore email so if you don't get a response within 10 days, your
+mail has probably been eaten by a blackhole/mail server misconfiguration/
+overly-aggressive spam filter.
+
+
+Clarence Dang <dang@kde.org>
+$Date$
+

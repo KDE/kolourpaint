@@ -1,0 +1,92 @@
+
+$Id$
+
+Before 1.0
+===========
+
+why does the toolsToolBar get arranged differently if run under valgrind???
+
+spraycan sizes
+
+make fill style GUI clearer
+
+fix viewUnderMouseCursor() - drags apparently don't gen Enter events
+
+split up massive kpmainwindow class
+
+documentation
+
+working thumbnail view; also maybe shouldn't be a toolbar
+
+icons for some of the Image dialogs
+
+Image menu items as ordinary tools
+honour background colour for Skew, Rotate
+
+print preview
+
+config dialogs
+
+add image/x-krl mimetype to kdelibs to fix the save-as-unknown-type problem
+
+session restore
+
+Rethink kpView/kpViewManager design because of:
+- flicker
+- performance
+- difficult selection handling, esp. drawing the selction border
+
+fix selections; implement free-form selection
+
+kptoolwidgetbase - spacing between items, make contentsRect() actual size wanted
+
+kpcolortoolbar setOrientation
+
+fill - can optimise mem usage by deleting kpFloodFill object
+       when execute() (don't derive object)
+     - can optimise mem usage by detecting single colour fills
+
+brush shape in wrong place if zoom smaller
+
+make ToolToolBar have _flat_, not 3D buttons
+
+still some flicker if:
+1. you've used the brush before
+2. switch to the rect
+3. switch back to brush and move brush onto view
+   and old brush momentarily appears in old pos
+
+line: shift + alt doesn't work but alt+shift does
+
+shape selections should support CTRL, ALT, SHIFT
+
+intersect bounding rect with document rect when saving undo info
+- e.g. if you drag a large rect bigger than the view, waste a lot of memory
+ditto for setTempPixmapAt et. al.
+
+guard all ptr derefs with if (ptr) ptr->whatever
+kdError -> KP_PANIC or KMessageBox
+wait cursor for slow ops - should it be in kpDocument or in the commands???
+
+transparent images
+- will also require an additional colour in the kpColorToolBar
+
+color depth
+tool/polygon
+tool/curve
+
+
+After 1.0
+==========
+
+ability to specify measurements in pt,mm,cm,m,in instead of just pixels
+
+ruler
+
+grid for zoom levels > 200 but % 100 != 0
+zoom levels < 100%
+
+maybe allow editing when a selection is active (selection becomes bounding rect)
+
+DCOP scriptable
+
