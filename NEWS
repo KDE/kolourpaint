@@ -2,6 +2,9 @@
 KolourPaint 1.2 Series (KDE_3_3_BRANCH)
 ======================
 
+   * When changing between colour depth and quality widgets in the save
+     filedialog, make sure "Convert to:" and "Quality:" are correctly
+     rendered (hacking around a Qt redraw glitch)
    * Fix selection regressions introduced in 1.2:
      - Make selection dragging with CTRL work again (copies selection onto
        document)

@@ -158,6 +158,9 @@ protected:
     Mode mode () const;
     void setMode (Mode mode);
 
+protected slots:
+    void repaintLabels ();
+
 
 protected slots:
     void showPreview (bool yes = true);

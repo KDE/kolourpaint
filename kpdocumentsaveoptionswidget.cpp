@@ -698,6 +698,22 @@ void kpDocumentSaveOptionsWidget::setMode (Mode mode)
 
     m_qualityLabel->setEnabled (mode == Quality);
     m_qualityInput->setEnabled (mode == Quality);
+
+
+    // SYNC: HACK: When changing between color depth and quality widgets,
+    //       we change the height of "this", causing the text on the labels
+    //       to move but the first instance of the text doesn't get erased.
+    //       Qt bug.
+    QTimer::singleShot (0, this, SLOT (repaintLabels ()));
+}
+
+// protected slot
+void kpDocumentSaveOptionsWidget::repaintLabels ()
+{
+    if (mode () != Quality)
+        m_colorDepthLabel->repaint ();
+    if (mode () == Quality)
+        m_qualityLabel->repaint ();
 }
 
 
