@@ -246,6 +246,7 @@ void kpSelection::readFromStream (QDataStream &stream,
 
 kpSelection::~kpSelection ()
 {
+    delete m_pixmap; m_pixmap = 0;
 }
 
 

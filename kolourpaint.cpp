@@ -78,6 +78,7 @@ int main (int argc, char *argv [])
     aboutData.addCredit ("Stephan Binner");
     aboutData.addCredit ("Rob Buis");
     aboutData.addCredit ("Lucijan Busch");
+    aboutData.addCredit ("Albert Astals Cid");
     aboutData.addCredit ("Christoph Eckert");
     aboutData.addCredit ("David Faure");
     aboutData.addCredit ("Wilco Greven");
