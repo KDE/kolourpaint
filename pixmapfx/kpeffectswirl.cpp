@@ -83,7 +83,7 @@ kpEffectSwirlWidget::kpEffectSwirlWidget (bool actOnSelection,
 
     QLabel *label = new QLabel (i18n ("Swirl &Angle:"), this);
     m_swirlDegreesInput = new KIntNumInput (this);
-    m_swirlDegreesInput->setRange (-720, 720, 1/*step*/, true/*slider*/);
+    m_swirlDegreesInput->setRange (-720, 720, 10/*step*/, true/*slider*/);
 
 
     label->setBuddy (m_swirlDegreesInput);
