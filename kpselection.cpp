@@ -492,9 +492,10 @@ bool kpSelection::contains (const QPoint &point) const
 {
     QRect rect = boundingRect ();
 
-#if DEBUG_KP_SELECTION && 0
+#if DEBUG_KP_SELECTION && 1
     kdDebug () << "kpSelection::contains(" << point
                << ") rect==" << rect
+               << " #points=" << m_points.size ()
                << endl;
 #endif
 
