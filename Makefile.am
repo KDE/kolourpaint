@@ -22,7 +22,8 @@ kolourpaint_SOURCES = kolourpaint.cpp kpdocument.cpp kpview.cpp \
     kpsinglekeytriggersaction.cpp \
     kptemppixmap.cpp kptextstyle.cpp \
     kpthumbnail.cpp \
-    kpviewmanager.cpp
+    kpviewmanager.cpp \
+    kpwidgetmapper.cpp
 kolourpaint_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kolourpaint_LDADD = $(LIB_KDEPRINT) \
     cursors/libkolourpaintcursors.la \
