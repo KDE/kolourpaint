@@ -338,11 +338,11 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
                     m_scrollView, SLOT (endDragScroll ()));
 
         disconnect (previousTool, SIGNAL (userMessageChanged (const QString &)),
-                   this, SLOT (recalculateStatusBarMessage ()));
+                    this, SLOT (recalculateStatusBarMessage ()));
         disconnect (previousTool, SIGNAL (userShapePointsChanged (const QPoint &, const QPoint &)),
-                   this, SLOT (recalculateStatusBarShape ()));
+                    this, SLOT (recalculateStatusBarShape ()));
         disconnect (previousTool, SIGNAL (userShapeSizeChanged (const QSize &)),
-                   this, SLOT (recalculateStatusBarShape ()));
+                    this, SLOT (recalculateStatusBarShape ()));
 
         disconnect (m_colorToolBar, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
                     previousTool, SLOT (slotColorsSwappedInternal (const kpColor &, const kpColor &)));
@@ -379,6 +379,7 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
                  tool, SLOT (slotBackgroundColorChangedInternal (const kpColor &)));
         connect (m_colorToolBar, SIGNAL (colorSimilarityChanged (double, int)),
                  tool, SLOT (slotColorSimilarityChangedInternal (double, int)));
+
 
         saveLastTool ();
     }
