@@ -110,10 +110,13 @@ int main (int argc, char *argv [])
     aboutData.addCredit ("Hubert Grininger");
     aboutData.addCredit ("Adriaan de Groot");
     aboutData.addCredit ("Esben Mose Hansen");
+    aboutData.addCredit ("Nadeem Hasan");
     aboutData.addCredit ("Simon Hausmann");
+    aboutData.addCredit ("Michael Hoehne");
     aboutData.addCredit ("Andrew J");
     aboutData.addCredit ("Werner Joss");
     aboutData.addCredit ("Derek Kite");
+    aboutData.addCredit ("Tobias Koenig");
     aboutData.addCredit ("Dmitry Kolesnikov");
     aboutData.addCredit ("Stephan Kulow");
     aboutData.addCredit ("Eric Laffoon");
@@ -125,6 +128,7 @@ int main (int argc, char *argv [])
     aboutData.addCredit ("Jacek Masiulaniec");
     aboutData.addCredit ("Benjamin Meyer");
     aboutData.addCredit ("Amir Michail");
+    aboutData.addCredit ("Robert Moszczynski");
     aboutData.addCredit ("Dirk Mueller");
     aboutData.addCredit ("Ruivaldo Neto");
     aboutData.addCredit ("Ralf Nolden");
@@ -136,6 +140,7 @@ int main (int argc, char *argv [])
     aboutData.addCredit ("Boudewijn Rempt");
     aboutData.addCredit ("Marcos Rodriguez");
     aboutData.addCredit ("Matt Rogers");
+    aboutData.addCredit ("Francisco Jose Canizares Santofimia");
     aboutData.addCredit ("Bram Schoenmakers");
     aboutData.addCredit ("Dirk Schönberger");
     aboutData.addCredit ("Lutz Schweizer");
@@ -156,6 +161,8 @@ int main (int argc, char *argv [])
     aboutData.addCredit ("Lauri Watts");
     aboutData.addCredit ("Mark Wege");
     aboutData.addCredit ("Christoph Wiesen");
+    aboutData.addCredit ("Andre Wobbeking");
+    aboutData.addCredit ("Luke-Jr");
     aboutData.addCredit ("Maxim_86ualb2");
     aboutData.addCredit ("Michele");
 
