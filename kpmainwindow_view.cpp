@@ -44,6 +44,7 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kpthumbnail.h>
+#include <kptool.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
 
@@ -324,6 +325,12 @@ void kpMainWindow::zoomTo (int zoomLevel)
         m_mainView->setFocus ();
     }
 
+
+    // The view magnified and moved beneath the cursor
+    if (tool ())
+        tool ()->somethingBelowTheCursorChanged ();
+
+    
     // HACK: make sure all of Qt's update() calls trigger
     //       kpView::paintEvent() _now_ so that they can be queued by us
     //       (until kpViewManager::restoreQueueUpdates()) to reduce flicker
