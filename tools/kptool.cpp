@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_TOOL 1
+
 #include <qcursor.h>
 #include <qevent.h>
 #include <qlayout.h>
@@ -45,7 +47,6 @@
 #include <kpdefs.h>
 #include <kptool.h>
 
-#define DEBUG_KPTOOL 1
 
 //
 // kpTool
@@ -141,7 +142,7 @@ void kpTool::endInternal ()
 // virtual
 void kpTool::begin ()
 {
-#if DEBUG_KPTOOL
+#if DEBUG_KP_TOOL
     kdDebug () << "kpTool::begin() base implementation" << endl;
 #endif
 }
@@ -149,7 +150,7 @@ void kpTool::begin ()
 // virtual
 void kpTool::end ()
 {
-#if DEBUG_KPTOOL
+#if DEBUG_KP_TOOL
     kdDebug () << "kpTool::end() base implementation" << endl;
 #endif
 }
@@ -312,7 +313,7 @@ kpCommandHistory *kpTool::commandHistory () const
 
 void kpTool::mousePressEvent (QMouseEvent *e)
 {
-#if DEBUG_KPTOOL
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool::mousePressEvent pos=" << e->pos ()
                << " btnStateAfter=" << (int) e->stateAfter ()
                << " beganDraw=" << m_beganDraw << endl;
@@ -328,7 +329,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     {
         if (mb == -1 || mb != m_mouseButton)
         {
-        #if DEBUG_KPTOOL
+        #if DEBUG_KP_TOOL
             kdDebug () << "\tCancelling operation as " << mb << " == -1 or != " << m_mouseButton << endl;
         #endif
 
@@ -353,7 +354,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
         kdError () << "kpTool::mousePressEvent() without a view under the cursor!" << endl;
     }
 
-#if DEBUG_KPTOOL
+#if DEBUG_KP_TOOL && 0
     if (view)
         kdDebug () << "\tview=" << view->name () << endl;
 #endif
@@ -366,7 +367,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     m_viewUnderStartPoint = view;
     m_lastPoint = QPoint (-1, -1);
 
-#if DEBUG_KPTOOL
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "\tBeginning draw @ " << m_currentPoint << endl;
 #endif
 
@@ -378,7 +379,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
 void kpTool::mouseMoveEvent (QMouseEvent *e)
 {
-#if DEBUG_KPTOOL
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool::mouseMoveEvent pos=" << e->pos ()
                << " btnStateAfter=" << (int) e->stateAfter () << endl;
 #endif
@@ -393,7 +394,9 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 
         m_currentPoint = view->zoomViewToDoc (e->pos ());
 
+    #if DEBUG_KP_TOOL && 0
         kdDebug () << "\tDraw!" << endl;
+    #endif
         draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
         m_lastPoint = m_currentPoint;
     }
@@ -410,7 +413,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 
 void kpTool::mouseReleaseEvent (QMouseEvent *e)
 {
-#if DEBUG_KPTOOL
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool::mouseReleaseEvent pos=" << e->pos ()
                << " btnStateAfter=" << (int) e->stateAfter () << endl;
 #endif
@@ -560,7 +563,7 @@ void kpTool::focusInEvent (QFocusEvent *)
 
 void kpTool::focusOutEvent (QFocusEvent *)
 {
-#if DEBUG_KPTOOL
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool::focusOutEvent() beganDraw=" << m_beganDraw << endl;
 #endif
 
