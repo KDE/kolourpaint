@@ -49,7 +49,7 @@ public:
      * You must call adjustEnvironment() at the end of your constructor.
      */
     kpThumbnailView (kpDocument *document,
-                     kpToolControllerIface *toolController,
+                     kpToolToolBar *toolToolBar,
                      kpViewManager *viewManager,
                      kpView *buddyView,
                      kpViewScrollableContainer *buddyViewScrollView,

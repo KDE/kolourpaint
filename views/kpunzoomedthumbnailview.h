@@ -61,7 +61,7 @@ public:
      * Constructs an unzoomed thumbnail view.
      */
     kpUnzoomedThumbnailView (kpDocument *document,
-            kpToolControllerIface *toolController,
+            kpToolToolBar *toolToolBar,
             kpViewManager *viewManager,
             kpView *buddyView,
             kpViewScrollableContainer *buddyViewScrollView,

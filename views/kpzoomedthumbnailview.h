@@ -56,7 +56,7 @@ public:
      * Constructs a zoomed thumbnail view.
      */
     kpZoomedThumbnailView (kpDocument *document,
-            kpToolControllerIface *toolController,
+            kpToolToolBar *toolToolBar,
             kpViewManager *viewManager,
             kpView *buddyView,
             kpViewScrollableContainer *buddyViewScrollView,

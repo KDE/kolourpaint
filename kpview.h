@@ -38,7 +38,7 @@
 class kpDocument;
 class kpSelection;
 class kpTool;
-class kpToolControllerIface;
+class kpToolToolBar;
 class kpViewManager;
 class kpViewScrollableContainer;
 
@@ -65,7 +65,7 @@ public:
      * Constructs a view.
      *
      * @param document The document this view is representing.
-     * @param toolController The controller for the current tool.
+     * @param toolToolBar The tool tool bar.
      * @param viewManager The view manager.
      * @param buddyView The view this view watches over (e.g. a thumbnail
      *                  view would watch over the main view).  May be 0.
@@ -76,7 +76,7 @@ public:
      * You must call adjustEnvironment() at the end of your constructor.
      */
     kpView (kpDocument *document,
-            kpToolControllerIface *toolController,
+            kpToolToolBar *toolToolBar,
             kpViewManager *viewManager,
             kpView *buddyView,
             kpViewScrollableContainer *buddyViewScrollView,
@@ -102,9 +102,9 @@ protected:
 
 public:
     /**
-     * @returns the tool controller.
+     * @returns the tool tool bar.
      */
-    kpToolControllerIface *toolController () const;
+    kpToolToolBar *toolToolBar () const;
 
 protected:
     /**

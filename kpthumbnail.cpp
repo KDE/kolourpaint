@@ -127,6 +127,8 @@ void kpThumbnail::setView (kpThumbnailView *view)
 
     if (m_view)
     {
+        disconnect (m_view, SIGNAL (destroyed ()),
+                    this, SLOT (slotViewDestroyed ()));
         disconnect (m_view, SIGNAL (zoomLevelChanged (int, int)),
                     this, SLOT (updateCaption ()));
 
@@ -137,6 +139,8 @@ void kpThumbnail::setView (kpThumbnailView *view)
 
     if (m_view)
     {
+        connect (m_view, SIGNAL (destroyed ()),
+                 this, SLOT (slotViewDestroyed ()));
         connect (m_view, SIGNAL (zoomLevelChanged (int, int)),
                  this, SLOT (updateCaption ()));
         updateCaption ();
@@ -162,6 +166,18 @@ void kpThumbnail::dock ()
 #endif
 
     // --- ignore all requests to dock ---
+}
+
+
+// protected slot
+void kpThumbnail::slotViewDestroyed ()
+{
+#if DEBUG_KP_THUMBNAIL
+    kdDebug () << "kpThumbnail::slotViewDestroyed()" << endl;
+#endif
+
+    m_view = 0;
+    updateCaption ();
 }
 
 

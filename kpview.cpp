@@ -38,6 +38,7 @@
 #include <qbitmap.h>
 #include <qcursor.h>
 #include <qdragobject.h>
+#include <qguardedptr.h>
 #include <qimage.h>
 #include <qpainter.h>
 #include <qpixmap.h>
@@ -58,19 +59,19 @@
 #include <kpselection.h>
 #include <kptemppixmap.h>
 #include <kptool.h>
-#include <kptoolcontrolleriface.h>
 #include <kptoolpen.h>
+#include <kptooltoolbar.h>
 #include <kpviewmanager.h>
 #include <kpviewscrollablecontainer.h>
 
 
 struct kpViewPrivate
 {
-    kpDocument *m_document;
-    kpToolControllerIface *m_toolController;
-    kpViewManager *m_viewManager;
-    kpView *m_buddyView;
-    kpViewScrollableContainer *m_buddyViewScrollView;
+    QGuardedPtr <kpDocument> m_document;
+    QGuardedPtr <kpToolToolBar> m_toolToolBar;
+    QGuardedPtr <kpViewManager> m_viewManager;
+    QGuardedPtr <kpView> m_buddyView;
+    QGuardedPtr <kpViewScrollableContainer> m_buddyViewScrollView;
 
     int m_hzoom, m_vzoom;
     QPoint m_origin;
@@ -84,7 +85,7 @@ struct kpViewPrivate
 
 
 kpView::kpView (kpDocument *document,
-        kpToolControllerIface *toolController,
+        kpToolToolBar *toolToolBar,
         kpViewManager *viewManager,
         kpView *buddyView,
         kpViewScrollableContainer *buddyViewScrollView,
@@ -94,7 +95,7 @@ kpView::kpView (kpDocument *document,
       d (new kpViewPrivate ())
 {
     d->m_document = document;
-    d->m_toolController = toolController;
+    d->m_toolToolBar = toolToolBar;
     d->m_viewManager = viewManager;
     d->m_buddyView = buddyView;
     d->m_buddyViewScrollView = buddyViewScrollView;
@@ -135,15 +136,15 @@ kpSelection *kpView::selection () const
 }
 
 // public
-kpToolControllerIface *kpView::toolController () const
+kpToolToolBar *kpView::toolToolBar () const
 {
-    return d->m_toolController;
+    return d->m_toolToolBar;
 }
 
 // protected
 kpTool *kpView::tool () const
 {
-    return toolController () ? toolController ()->tool () : 0;
+    return toolToolBar () ? toolToolBar ()->tool () : 0;
 }
 
 // public
@@ -247,7 +248,7 @@ void kpView::showGrid (bool yes)
     if (d->m_showGrid == yes)
         return;
 
-    if (!canShowGrid ())
+    if (yes && !canShowGrid ())
         return;
 
     d->m_showGrid = yes;

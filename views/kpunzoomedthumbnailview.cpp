@@ -46,13 +46,13 @@ struct kpUnzoomedThumbnailViewPrivate
 
 kpUnzoomedThumbnailView::kpUnzoomedThumbnailView (
         kpDocument *document,
-        kpToolControllerIface *toolController,
+        kpToolToolBar *toolToolBar,
         kpViewManager *viewManager,
         kpView *buddyView,
         kpViewScrollableContainer *buddyViewScrollView,
         QWidget *parent, const char *name)
 
-    : kpThumbnailView (document, toolController, viewManager,
+    : kpThumbnailView (document, toolToolBar, viewManager,
                        buddyView, buddyViewScrollView,
                        parent, name),
       d (new kpUnzoomedThumbnailViewPrivate ())

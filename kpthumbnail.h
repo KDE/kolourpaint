@@ -52,6 +52,9 @@ public slots:
 
     virtual void dock ();
 
+protected slots:
+    void slotViewDestroyed ();
+
 protected:
     virtual void resizeEvent (QResizeEvent *e);
     virtual void moveEvent (QMoveEvent *e);

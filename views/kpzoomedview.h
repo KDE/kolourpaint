@@ -57,7 +57,7 @@ public:
      * Constructs a zoomed view.
      */
     kpZoomedView (kpDocument *document,
-                  kpToolControllerIface *toolController,
+                  kpToolToolBar *toolToolBar,
                   kpViewManager *viewManager,
                   kpView *buddyView,
                   kpViewScrollableContainer *buddyViewScrollView,
