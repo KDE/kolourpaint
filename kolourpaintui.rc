@@ -30,13 +30,13 @@
 
         <!-- <MergeLocal name="view_zoom_merge"/> -->
         <Action name="view_zoom_in"/>
-        <Action name="view_zoom_out"/>
 
         <!-- Changed from "view_zoom" to allow custom ordering of zoom
              actions in "mainToolBar" (which has a hardcoded position for
              "view_zoom").
           -->
         <Action name="view_zoom_to"/>
+        <Action name="view_zoom_out"/>
 
         <WeakSeparator/>
 
