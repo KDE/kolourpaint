@@ -1042,6 +1042,10 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
 
 void kpTool::keyPressEvent (QKeyEvent *e)
 {
+#if DEBUG_KP_TOOL
+    kdDebug () << "kpTool::keyPressEvent()" << endl;
+#endif
+
     int dx = 0, dy = 0;
 
     e->ignore ();
