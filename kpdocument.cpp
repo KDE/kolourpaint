@@ -115,7 +115,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
         kdDebug () << "\tmimetype=" << mimetype << endl;
     #endif
 
-        if (mimetype.isNull ())
+        if (mimetype.isEmpty ())
         {
             KMessageBox::sorry (0, i18n ("Could not open \"%1\" - unknown mimetype.")
                                         .arg (kpDocument::filenameForURL (url)));
