@@ -816,9 +816,11 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
 
     case Qt::Key_Escape:
         if (hasBegunDraw ())
+        {
             cancelShapeInternal ();
-
             e->accept ();
+        }
+        
         break;
 
     case Qt::Key_Enter:
