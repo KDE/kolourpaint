@@ -53,6 +53,7 @@
 
 kpToolFloodFill::kpToolFloodFill (kpMainWindow *mainWindow)
     : kpTool (i18n ("Flood Fill"), i18n ("Fills regions in the image"),
+              Qt::Key_F,
               mainWindow, "tool_flood_fill"),
       m_currentCommand (0)
 {

@@ -30,14 +30,12 @@
 #include <kptoolroundedrectangle.h>
 
 kpToolRoundedRectangle::kpToolRoundedRectangle (kpMainWindow *mainWindow)
-    : kpToolRectangle (mainWindow)
+    : kpToolRectangle (RoundedRectangle,
+                       i18n ("Rounded Rectangle"),
+                       i18n ("Draws rectangles and squares with rounded corners"),
+                       Qt::Key_U,
+                       mainWindow, "tool_rounded_rectangle")
 {
-    // TODO: don't be lazy and don't break all the rules of inheritance!
-    setMode (kpToolRectangle::RoundedRectangle);
-
-    setText (i18n ("Rounded Rectangle"));
-    setDescription ("Draws rectangles and squares with rounded corners");
-    setName ("tool_rounded_rectangle");
 }
 
 kpToolRoundedRectangle::~kpToolRoundedRectangle ()

@@ -144,6 +144,10 @@ public:
     void setPixmap (const QPixmap &pixmap);
     void setPixmap (bool ofSelection, const QPixmap &pixmap);
 
+private:
+    void updateToolsSingleKeyTriggersEnabled ();
+
+public:
     kpSelection *selection () const;
     void setSelection (const kpSelection &selection);
 

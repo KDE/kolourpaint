@@ -32,14 +32,12 @@
 
 
 kpToolRectSelection::kpToolRectSelection (kpMainWindow *mainWindow)
-    : kpToolSelection (mainWindow)
+    : kpToolSelection (Rectangle,
+                       i18n ("Selection (Rectangular)"),
+                       i18n ("Makes a rectangular selection"),
+                       Qt::Key_S,
+                       mainWindow, "tool_rect_selection")			 
 {
-    // TODO: don't be lazy and don't break all the rules of inheritance!
-    setMode (kpToolSelection::Rectangle);
-
-    setText (i18n ("Selection (Rectangular)"));
-    setDescription ("Makes a rectangular selection");
-    setName ("tool_rect_selection");				 
 }
 
 kpToolRectSelection::~kpToolRectSelection ()

@@ -156,9 +156,23 @@ static QPixmap pixmap (const kpToolRectangle::Mode mode,
  * kpToolRectangle
  */
 
+kpToolRectangle::kpToolRectangle (Mode mode,
+                                  const QString &text,
+                                  const QString &description,
+                                  int key,
+                                  kpMainWindow *mainWindow,
+                                  const char *name)
+    : kpTool (text, description, key, mainWindow, name),
+      m_mode (mode),
+      m_toolWidgetLineWidth (0),
+      m_toolWidgetFillStyle (0)
+{
+}
+
 kpToolRectangle::kpToolRectangle (kpMainWindow *mainWindow)
     : kpTool (i18n ("Rectangle"), i18n ("Draws rectangles and squares"),
-      mainWindow, "tool_rectangle"),
+              Qt::Key_R,
+              mainWindow, "tool_rectangle"),
       m_mode (Rectangle),
       m_toolWidgetLineWidth (0),
       m_toolWidgetFillStyle (0)

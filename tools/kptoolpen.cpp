@@ -59,8 +59,22 @@
  * kpToolPen
  */
 
+kpToolPen::kpToolPen (Mode mode,
+                      const QString &text, const QString &description,
+                      int key,
+                      kpMainWindow *mainWindow, const char *name)
+    : kpTool (text, description, key, mainWindow, name),
+      m_mode (mode),
+      m_toolWidgetBrush (0),
+      m_toolWidgetEraserSize (0),
+      m_currentCommand (0)
+{
+}
+
 kpToolPen::kpToolPen (kpMainWindow *mainWindow)
-    : kpTool (i18n ("Pen"), i18n ("Draws dots and freehand strokes"), mainWindow, "tool_pen"),
+    : kpTool (i18n ("Pen"), i18n ("Draws dots and freehand strokes"),
+              Qt::Key_P,
+              mainWindow, "tool_pen"),
       m_mode (Pen),
       m_toolWidgetBrush (0),
       m_toolWidgetEraserSize (0),

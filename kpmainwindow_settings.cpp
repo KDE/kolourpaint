@@ -40,6 +40,7 @@
 
 #include <kpdefs.h>
 #include <kpdocument.h>
+#include <kptooltoolbar.h>
 
 
 // private
@@ -129,12 +130,21 @@ void kpMainWindow::slotKeyBindings ()
     kdDebug () << "kpMainWindow::slotKeyBindings()" << endl;
 #endif
 
+    bool singleKeyTriggersDisabled = !actionsSingleKeyTriggersEnabled ();
+
+    if (singleKeyTriggersDisabled)
+        enableActionsSingleKeyTriggers (true);
+
+    
     if (KKeyDialog::configure (actionCollection (), this))
     {
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tdialog accepted" << endl;
     #endif
         // TODO: PROPAGATE: thru mainWindow's and interprocess
+
+        if (singleKeyTriggersDisabled)
+            enableActionsSingleKeyTriggers (false);
     }
 }
 

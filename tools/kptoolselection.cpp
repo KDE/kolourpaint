@@ -48,14 +48,19 @@
 #include <kpviewmanager.h>
 
 
-kpToolSelection::kpToolSelection (kpMainWindow *mainWindow)
-    : kpTool (QString::null, QString::null, mainWindow, "tool_selection_base_class"),
+kpToolSelection::kpToolSelection (Mode mode,
+                                  const QString &text,
+                                  const QString &description,
+                                  int key,
+                                  kpMainWindow *mainWindow,
+                                  const char *name)
+    : kpTool (text, description, key, mainWindow, name),
+      m_mode (mode),
       m_currentPullFromDocumentCommand (0),
       m_currentMoveCommand (0),
       m_toolWidgetOpaqueOrTransparent (0),
       m_currentCreateTextCommand (0)
 {
-    setMode (kpToolSelection::Rectangle);
 }
 
 kpToolSelection::~kpToolSelection ()

@@ -52,6 +52,7 @@
 
 kpToolColorPicker::kpToolColorPicker (kpMainWindow *mainWindow)
     : kpTool (i18n ("Color Picker"), i18n ("Lets you select a color from the image"),
+              Qt::Key_C,
               mainWindow, "tool_color_picker")
 {
 }

@@ -32,14 +32,12 @@
 
 
 kpToolFreeFormSelection::kpToolFreeFormSelection (kpMainWindow *mainWindow)
-    : kpToolSelection (mainWindow)
+    : kpToolSelection (kpToolSelection::FreeForm,
+                       i18n ("Selection (Free-Form)"),
+                       i18n ("Makes a free-form selection"),
+                       Qt::Key_M,
+                       mainWindow, "tool_free_form_selection")
 {
-    // TODO: don't be lazy and don't break all the rules of inheritance!
-    setMode (kpToolSelection::FreeForm);
-
-    setText (i18n ("Selection (Free-Form)"));
-    setDescription ("Makes a free-form selection");
-    setName ("tool_free_form_selection");				 
 }
 
 kpToolFreeFormSelection::~kpToolFreeFormSelection ()

@@ -31,10 +31,13 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <klocale.h>
 
 #include <kpcolortoolbar.h>
 #include <kpselectiontransparency.h>
+#include <kpsinglekeytriggersaction.h>
 #include <kptool.h>
+#include <kptoolaction.h>
 #include <kptoolairspray.h>
 #include <kptoolbrush.h>
 #include <kptoolcolorpicker.h>
@@ -58,12 +61,8 @@
 
 
 // private
-void kpMainWindow::setupTools ()
+void kpMainWindow::setupToolActions ()
 {
-    //
-    // create tools
-    //
-
     m_tools.setAutoDelete (true);
 
     m_tools.append (m_toolFreeFormSelection = new kpToolFreeFormSelection (this));
@@ -94,13 +93,39 @@ void kpMainWindow::setupTools ()
     m_tools.append (m_toolCurve = new kpToolCurve (this));
 
 
-    //
-    // create Toolbox
-    //
+    KActionCollection *ac = actionCollection ();
 
+    d->m_actionPrevToolOptionGroup1 = new kpSingleKeyTriggersAction (
+        i18n ("Previous Tool Option (Group #1)"),
+        kpTool::shortcutForKey (Qt::Key_1),
+        this, SLOT (slotActionPrevToolOptionGroup1 ()),
+        ac, "prev_tool_option_group_1");
+    d->m_actionNextToolOptionGroup1 = new kpSingleKeyTriggersAction (
+        i18n ("Next Tool Option (Group #1)"),
+        kpTool::shortcutForKey (Qt::Key_2),
+        this, SLOT (slotActionNextToolOptionGroup1 ()),
+        ac, "next_tool_option_group_1");
+
+    d->m_actionPrevToolOptionGroup2 = new kpSingleKeyTriggersAction (
+        i18n ("Previous Tool Option (Group #2)"),
+        kpTool::shortcutForKey (Qt::Key_3),
+        this, SLOT (slotActionPrevToolOptionGroup2 ()),
+        ac, "prev_tool_option_group_2");
+    d->m_actionNextToolOptionGroup2 = new kpSingleKeyTriggersAction (
+        i18n ("Next Tool Option (Group #2)"),
+        kpTool::shortcutForKey (Qt::Key_4),
+        this, SLOT (slotActionNextToolOptionGroup2 ()),
+        ac, "next_tool_option_group_2");
+}
+
+// private
+void kpMainWindow::createToolBox ()
+{
     m_toolToolBar = new kpToolToolBar (this, 2/*columns/rows*/, "Tool Box");
     connect (m_toolToolBar, SIGNAL (sigToolSelected (kpTool *)),
              this, SLOT (slotToolSelected (kpTool *)));
+    connect (m_toolToolBar, SIGNAL (toolWidgetOptionSelected ()),
+             this, SLOT (updateToolOptionPrevNextActionsEnabled ()));
 
     for (QPtrList <kpTool>::const_iterator it = m_tools.begin ();
          it != m_tools.end ();
@@ -120,6 +145,13 @@ void kpMainWindow::setupTools ()
 // private
 void kpMainWindow::enableToolsDocumentActions (bool enable)
 {
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kdDebug () << "kpMainWindow::enableToolsDocumentsAction(" << enable << ")" << endl;
+#endif
+
+    d->m_toolActionsEnabled = enable;
+
+
     if (enable && !m_toolToolBar->isEnabled ())
     {
         kpTool *previousTool = m_toolToolBar->previousTool ();
@@ -143,8 +175,63 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
     }
 
 
-    // not using actions for tools - so can just disable toolbar
     m_toolToolBar->setEnabled (enable);
+
+
+    for (QPtrList <kpTool>::const_iterator it = m_tools.begin ();
+         it != m_tools.end ();
+         it++)
+    {
+        kpToolAction *action = (*it)->action ();
+        if (action)
+        {
+        #if DEBUG_KP_MAIN_WINDOW || 1
+            kdDebug () << "\tchanging enabled state of " << (*it)->name () << endl;
+        #endif
+
+            if (!enable && action->isChecked ())
+                action->setChecked (false);
+
+            action->setEnabled (enable);
+        }
+        else
+        {
+        #if DEBUG_KP_MAIN_WINDOW || 1
+            kdDebug () << "\tno action for " << (*it)->name () << endl;
+        #endif
+        }
+    }
+
+
+    updateToolOptionPrevNextActionsEnabled ();
+}
+
+// private slot
+void kpMainWindow::updateToolOptionPrevNextActionsEnabled ()
+{
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kdDebug () << "kpMainWindow::updateToolOptionPrevNextActionsEnabled()"
+               << " numShownToolWidgets="
+               << m_toolToolBar->numShownToolWidgets ()
+               << endl;
+#endif
+
+    const bool enable = d->m_toolActionsEnabled;
+
+
+    d->m_actionPrevToolOptionGroup1->setEnabled (enable &&
+        m_toolToolBar->shownToolWidget (0) &&
+        m_toolToolBar->shownToolWidget (0)->hasPreviousOption ());
+    d->m_actionNextToolOptionGroup1->setEnabled (enable &&
+        m_toolToolBar->shownToolWidget (0) &&
+        m_toolToolBar->shownToolWidget (0)->hasNextOption ());
+
+    d->m_actionPrevToolOptionGroup2->setEnabled (enable &&
+        m_toolToolBar->shownToolWidget (1) &&
+        m_toolToolBar->shownToolWidget (1)->hasPreviousOption ());
+    d->m_actionNextToolOptionGroup2->setEnabled (enable &&
+        m_toolToolBar->shownToolWidget (1) &&
+        m_toolToolBar->shownToolWidget (1)->hasNextOption ());
 }
 
 
@@ -277,6 +364,8 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
 
         saveLastTool ();
     }
+
+    updateToolOptionPrevNextActionsEnabled ();
 }
 
 
@@ -320,6 +409,48 @@ void kpMainWindow::saveLastTool ()
 
     cfg->writeEntry (kpSettingLastTool, number);
     cfg->sync ();
+}
+
+
+// private slot
+void kpMainWindow::slotActionPrevToolOptionGroup1 ()
+{
+    if (!m_toolToolBar->shownToolWidget (0))
+        return;
+
+    m_toolToolBar->shownToolWidget (0)->selectPreviousOption ();
+    updateToolOptionPrevNextActionsEnabled ();
+}
+
+// private slot
+void kpMainWindow::slotActionNextToolOptionGroup1 ()
+{
+    if (!m_toolToolBar->shownToolWidget (0))
+        return;
+
+    m_toolToolBar->shownToolWidget (0)->selectNextOption ();
+    updateToolOptionPrevNextActionsEnabled ();
+}
+
+
+// private slot
+void kpMainWindow::slotActionPrevToolOptionGroup2 ()
+{
+    if (!m_toolToolBar->shownToolWidget (1))
+        return;
+
+    m_toolToolBar->shownToolWidget (1)->selectPreviousOption ();
+    updateToolOptionPrevNextActionsEnabled ();
+}
+
+// private slot
+void kpMainWindow::slotActionNextToolOptionGroup2 ()
+{
+    if (!m_toolToolBar->shownToolWidget (1))
+        return;
+
+    m_toolToolBar->shownToolWidget (1)->selectNextOption ();
+    updateToolOptionPrevNextActionsEnabled ();
 }
 
 

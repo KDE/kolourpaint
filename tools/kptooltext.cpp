@@ -44,14 +44,11 @@
 
 
 kpToolText::kpToolText (kpMainWindow *mainWindow)
-    : kpToolSelection (mainWindow)
+    : kpToolSelection (Text,
+                       i18n ("Text"), i18n ("Writes text"),
+                       Qt::Key_T,
+                       mainWindow, "tool_text")
 {
-    // TODO: don't be lazy and don't break all the rules of inheritance!
-    setMode (kpToolSelection::Text);
-
-    setText (i18n ("Text"));
-    setDescription ("Writes text");
-    setName ("tool_text");
 }
 
 kpToolText::~kpToolText ()

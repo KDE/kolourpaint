@@ -302,8 +302,21 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
  * kpToolPolygon
  */
 
+kpToolPolygon::kpToolPolygon (Mode mode,
+                              const QString &text, const QString &description,
+                              int key,
+                              kpMainWindow *mainWindow, const char *name)
+    : kpTool (text, description, key, mainWindow, name),
+      m_mode (mode),
+      m_toolWidgetFillStyle (0),
+      m_toolWidgetLineWidth (0)
+{
+}
+
 kpToolPolygon::kpToolPolygon (kpMainWindow *mainWindow)
-    : kpTool (i18n ("Polygon"), i18n ("Draws polygons"), mainWindow, "tool_polygon"),
+    : kpTool (i18n ("Polygon"), i18n ("Draws polygons"),
+              Qt::Key_G,
+              mainWindow, "tool_polygon"),
       m_mode (Polygon),
       m_toolWidgetFillStyle (0),
       m_toolWidgetLineWidth (0)

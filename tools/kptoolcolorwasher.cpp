@@ -30,14 +30,12 @@
 #include <kptoolcolorwasher.h>
 
 kpToolColorWasher::kpToolColorWasher (kpMainWindow *mainWindow)
-    : kpToolPen (mainWindow)
+    : kpToolPen (kpToolPen::ColorWasher,
+                 i18n ("Color Eraser"),
+                 i18n ("Replaces pixels of the foreground color with the background color"),
+                 Qt::Key_O,
+                 mainWindow, "tool_color_washer")
 {
-    // TODO: don't be lazy and don't break all the rules of inheritance!
-    setMode (kpToolPen::ColorWasher);
-
-    setText (i18n ("Color Eraser"));
-    setDescription (i18n ("Replaces pixels of the foreground color with the background color"));
-    setName ("tool_color_washer");
 }
 
 kpToolColorWasher::~kpToolColorWasher ()

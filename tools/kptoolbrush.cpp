@@ -30,14 +30,12 @@
 #include <kptoolbrush.h>
 
 kpToolBrush::kpToolBrush (kpMainWindow *mainWindow)
-    : kpToolPen (mainWindow)
+    : kpToolPen (kpToolPen::Brush,
+                 i18n ("Brush"),
+                 i18n ("Draw using brushes of different shapes and sizes"),
+                 Qt::Key_B,
+                 mainWindow, "tool_brush")
 {
-    // TODO: don't be lazy and don't break all the rules of inheritance!
-    setMode (kpToolPen::Brush);
-    
-    setText (i18n ("Brush"));
-    setDescription (i18n ("Draw using brushes of different shapes and sizes"));
-    setName ("tool_brush");
 }
 
 kpToolBrush::~kpToolBrush ()

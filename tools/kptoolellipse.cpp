@@ -30,14 +30,12 @@
 #include <kptoolellipse.h>
 
 kpToolEllipse::kpToolEllipse (kpMainWindow *mainWindow)
-    : kpToolRectangle (mainWindow)
+    : kpToolRectangle (Ellipse,
+                       i18n ("Ellipse"),
+                       i18n ("Draws ellipses and circles"),
+                       Qt::Key_E,
+                       mainWindow, "tool_ellipse")
 {
-    // TODO: don't be lazy and don't break all the rules of inheritance!
-    setMode (kpToolRectangle::Ellipse);
-
-    setText (i18n ("Ellipse"));
-    setDescription (i18n ("Draws ellipses and circles"));
-    setName ("tool_ellipse");
 }
 
 kpToolEllipse::~kpToolEllipse ()

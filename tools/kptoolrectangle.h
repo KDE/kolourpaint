@@ -52,13 +52,19 @@ class kpToolRectangle : public kpTool
 Q_OBJECT
 
 public:
-    kpToolRectangle (kpMainWindow *);
-    virtual ~kpToolRectangle ();
-
     // it turns out that these shapes are all really the same thing
     // (same options, same feel) - the only real difference is the
     // drawing functions (a one line change)
     enum Mode {Rectangle, RoundedRectangle, Ellipse};
+
+    kpToolRectangle (Mode mode,
+                     const QString &text, const QString &description,
+                     int key,
+                     kpMainWindow *mainWindow,
+                     const char *name);
+    kpToolRectangle (kpMainWindow *);
+    virtual ~kpToolRectangle ();
+
     void setMode (Mode mode);
 
     virtual bool careAboutModifierState () const { return true; }

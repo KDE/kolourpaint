@@ -58,6 +58,7 @@
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kptool.h>
+#include <kptooltoolbar.h>
 #include <kpviewmanager.h>
 
 
@@ -679,6 +680,17 @@ void kpDocument::setPixmap (bool ofSelection, const QPixmap &pixmap)
 }
 
 
+// private
+void kpDocument::updateToolsSingleKeyTriggersEnabled ()
+{
+    if (m_mainWindow)
+    {
+        // Disable single key shortcuts when the user is editing text
+        m_mainWindow->enableActionsSingleKeyTriggers (!m_selection || !m_selection->isText ());
+    }
+}
+
+
 // public
 kpSelection *kpDocument::selection () const
 {
@@ -775,6 +787,8 @@ void kpDocument::setSelection (const kpSelection &selection)
             }
         }
     }
+
+    updateToolsSingleKeyTriggersEnabled ();
 
 #if DEBUG_KP_DOCUMENT && 0
     kdDebug () << "\tcheck sel " << (int *) m_selection
@@ -957,6 +971,7 @@ bool kpDocument::selectionDelete ()
     delete m_selection;
     m_selection = 0;
 
+
     // HACK to prevent document from being modified when
     //      user cancels dragging out a new selection
     if (selectionHadPixmap)
@@ -965,6 +980,9 @@ bool kpDocument::selectionDelete ()
         emit contentsChanged (boundingRect);
 
     emit selectionEnabled (false);
+
+
+    updateToolsSingleKeyTriggersEnabled ();
 
     return true;
 }

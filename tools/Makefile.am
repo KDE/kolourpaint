@@ -4,6 +4,7 @@ INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../pixmapfx \
 
 noinst_LTLIBRARIES = libkolourpainttools.la
 libkolourpainttools_la_SOURCES = kptool.cpp \
+    kptoolaction.cpp \
     kptoolairspray.cpp \
     kptoolautocrop.cpp \
     kptoolbrush.cpp kptoolclear.cpp \
@@ -27,6 +28,7 @@ libkolourpainttools_la_SOURCES = kptool.cpp \
 libkolourpainttools_la_LIBADD = ../pixmapfx/libkolourpaintpixmapfx.la ../cursors/libkolourpaintcursors.la
 
 METASOURCES = kptool.moc \
+    kptoolaction.moc \
     kptoolairspray.moc \
     kptoolbrush.moc \
     kptoolcolorpicker.moc \

@@ -50,9 +50,6 @@ class kpToolPen : public kpTool
 Q_OBJECT
 
 public:
-    kpToolPen (kpMainWindow *mainWindow);
-    virtual ~kpToolPen ();
-
     enum Mode
     {
         // tool properties
@@ -73,6 +70,12 @@ public:
         Eraser = DrawsPixmaps | SquareBrushes | SwappedColors,
         ColorWasher = WashesPixmaps | SquareBrushes | SwappedColors
     };
+
+    kpToolPen (Mode mode, const QString &text, const QString &description,
+               int key,
+               kpMainWindow *mainWindow, const char *name);
+    kpToolPen (kpMainWindow *mainWindow);
+    virtual ~kpToolPen ();
 
     void setMode (Mode mode);
 

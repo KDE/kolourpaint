@@ -62,13 +62,16 @@ class kpToolPolygon : public kpTool
 Q_OBJECT
 
 public:
-    kpToolPolygon (kpMainWindow *);
-    virtual ~kpToolPolygon ();
-
     enum Mode
     {
         Polygon, Polyline, Line, Curve
     };
+
+    kpToolPolygon (Mode mode, const QString &text, const QString &description,
+                   int key,
+                   kpMainWindow *mainWindow, const char *name);
+    kpToolPolygon (kpMainWindow *mainWindow);
+    virtual ~kpToolPolygon ();
 
     void setMode (Mode mode);
 

@@ -365,6 +365,92 @@ int kpToolWidgetBase::selected () const
 }
 
 
+// public
+bool kpToolWidgetBase::hasPreviousOption (int *row, int *col) const
+{
+#if DEBUG_KP_TOOL_WIDGET_BASE || 1
+    kdDebug () << "kpToolWidgetBase" << name ()
+               << "::hasPreviousOption() current row=" << m_selectedRow
+               << " col=" << m_selectedCol
+               << endl;
+#endif
+    if (row)
+        *row = -1;
+    if (col)
+        *col = -1;
+
+
+    if (m_selectedRow < 0 || m_selectedCol < 0)
+        return false;
+
+    int newRow = m_selectedRow,
+        newCol = m_selectedCol;
+
+    newCol--;
+    if (newCol < 0)
+    {
+        newRow--;
+        if (newRow < 0)
+            return false;
+
+        newCol = m_pixmaps [newRow].count () - 1;
+        if (newCol < 0)
+            return false;
+    }
+
+
+    if (row)
+        *row = newRow;
+    if (col)
+        *col = newCol;
+
+    return true;
+}
+
+// public
+bool kpToolWidgetBase::hasNextOption (int *row, int *col) const
+{
+#if DEBUG_KP_TOOL_WIDGET_BASE || 1
+    kdDebug () << "kpToolWidgetBase" << name ()
+               << "::hasNextOption() current row=" << m_selectedRow
+               << " col=" << m_selectedCol
+               << endl;
+#endif
+
+    if (row)
+        *row = -1;
+    if (col)
+        *col = -1;
+
+
+    if (m_selectedRow < 0 || m_selectedCol < 0)
+        return false;
+
+    int newRow = m_selectedRow,
+        newCol = m_selectedCol;
+
+    newCol++;
+    if (newCol >= (int) m_pixmaps [newRow].count ())
+    {
+        newRow++;
+        if (newRow >= (int) m_pixmaps.count ())
+            return false;
+
+        newCol = 0;
+        if (newCol >= (int) m_pixmaps [newRow].count ())
+            return false;
+    }
+
+
+    if (row)
+        *row = newRow;
+    if (col)
+        *col = newCol;
+
+    return true;
+}
+
+
 // public slot virtual
 bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
 {
@@ -426,6 +512,27 @@ bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
 bool kpToolWidgetBase::setSelected (int row, int col)
 {
     return setSelected (row, col, true/*set as default*/);
+}
+
+
+// public slot
+bool kpToolWidgetBase::selectPreviousOption ()
+{
+    int newRow, newCol;
+    if (!hasPreviousOption (&newRow, &newCol))
+        return false;
+
+    return setSelected (newRow, newCol);
+}
+
+// public slot
+bool kpToolWidgetBase::selectNextOption ()
+{
+    int newRow, newCol;
+    if (!hasNextOption (&newRow, &newCol))
+        return false;
+
+    return setSelected (newRow, newCol);
 }
 
 

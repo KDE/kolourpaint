@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -26,23 +26,24 @@
 */
 
 
-#define DEBUG_KP_TOOL_TOOL_BAR 0
+#define DEBUG_KP_TOOL_TOOL_BAR 1
 
 
 #include <kptooltoolbar.h>
 
 #include <qbuttongroup.h>
 #include <qlayout.h>
+#include <qdatetime.h>
 #include <qtoolbutton.h>
 #include <qtooltip.h>
 #include <qwidget.h>
 #include <qwhatsthis.h>
 
 #include <kdebug.h>
-#include <kiconloader.h>
 
 #include <kpdefs.h>
 #include <kptool.h>
+#include <kptoolaction.h>
 
 #include <kptoolwidgetbrush.h>
 #include <kptoolwidgeterasersize.h>
@@ -60,11 +61,11 @@ public:
           m_tool (tool)
     {
     }
-    
+
     virtual ~kpToolButton ()
     {
     }
-    
+
 protected:
     // virtual [base QWidget]
     void mouseDoubleClickEvent (QMouseEvent *e)
@@ -91,20 +92,54 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
 
     m_baseWidget = new QWidget (this);
 
-    m_toolWidgetBrush = new kpToolWidgetBrush (m_baseWidget, "Tool Widget Brush");
-    m_toolWidgetEraserSize = new kpToolWidgetEraserSize (m_baseWidget, "Tool Widget Eraser Size");
-    m_toolWidgetFillStyle = new kpToolWidgetFillStyle (m_baseWidget, "Tool Widget Fill Style");
-    m_toolWidgetLineWidth = new kpToolWidgetLineWidth (m_baseWidget, "Tool Widget Line Width");
-    m_toolWidgetOpaqueOrTransparent = new kpToolWidgetOpaqueOrTransparent (m_baseWidget, "Tool Widget Opaque/Transparent");
-    m_toolWidgetSpraycanSize = new kpToolWidgetSpraycanSize (m_baseWidget, "Tool Widget Spraycan Size");
-    
+#if DEBUG_KP_TOOL_TOOL_BAR || 1
+    QTime timer;
+    timer.start ();
+#endif
+
+    m_toolWidgets.append (m_toolWidgetBrush =
+        new kpToolWidgetBrush (m_baseWidget, "Tool Widget Brush"));
+    m_toolWidgets.append (m_toolWidgetEraserSize =
+        new kpToolWidgetEraserSize (m_baseWidget, "Tool Widget Eraser Size"));
+    m_toolWidgets.append (m_toolWidgetFillStyle =
+        new kpToolWidgetFillStyle (m_baseWidget, "Tool Widget Fill Style"));
+    m_toolWidgets.append (m_toolWidgetLineWidth =
+        new kpToolWidgetLineWidth (m_baseWidget, "Tool Widget Line Width"));
+    m_toolWidgets.append (m_toolWidgetOpaqueOrTransparent =
+        new kpToolWidgetOpaqueOrTransparent (m_baseWidget, "Tool Widget Opaque/Transparent"));
+    m_toolWidgets.append (m_toolWidgetSpraycanSize =
+        new kpToolWidgetSpraycanSize (m_baseWidget, "Tool Widget Spraycan Size"));
+
+#if DEBUG_KP_TOOL_TOOL_BAR || 1
+    kdDebug () << "kpToolToolBar::<ctor> create tool widgets msec="
+               << timer.restart () << endl;
+#endif
+
+    for (QValueVector <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
+         it != m_toolWidgets.end ();
+         it++)
+    {
+        connect (*it, SIGNAL (optionSelected (int, int)),
+                 this, SIGNAL (toolWidgetOptionSelected ()));
+    }
+
+#if DEBUG_KP_TOOL_TOOL_BAR || 1
+    kdDebug () << "kpToolToolBar::<ctor> connect widgets msec="
+               << timer.restart () << endl;
+#endif
+
     m_lastDockedOrientationSet = false;
     setOrientation (orientation ());
+
+#if DEBUG_KP_TOOL_TOOL_BAR || 1
+    kdDebug () << "kpToolToolBar::<ctor> layout tool widgets msec="
+               << timer.elapsed () << endl;
+#endif
 
     m_buttonGroup = new QButtonGroup ();  // invisible
     m_buttonGroup->setExclusive (true);
 
-    connect (m_buttonGroup, SIGNAL (clicked (int)), SLOT (slotToolSelected ()));
+    connect (m_buttonGroup, SIGNAL (clicked (int)), SLOT (slotToolButtonClicked ()));
 
     hideAllToolWidgets ();
 }
@@ -119,8 +154,8 @@ kpToolToolBar::~kpToolToolBar ()
 // public
 void kpToolToolBar::registerTool (kpTool *tool)
 {
-    for (QValueVector <kpButtonToolPair>::ConstIterator it = m_buttonToolPairs.constBegin ();
-         it != m_buttonToolPairs.constEnd ();
+    for (QValueVector <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
+         it != m_buttonToolPairs.end ();
          it++)
     {
         if ((*it).m_tool == tool)
@@ -135,20 +170,26 @@ void kpToolToolBar::registerTool (kpTool *tool)
     b->setToggleButton (true);
 
     b->setText (tool->text ());
-    b->setIconSet (BarIconSet (tool->name (), 16/*force size*/));
-    QToolTip::add (b, tool->text ());
+    b->setIconSet (tool->iconSet (16/*force size*/));
+    QToolTip::add (b, tool->toolTip ());
     QWhatsThis::add (b, tool->description ());
 
     m_buttonGroup->insert (b);
     addButton (b, orientation (), num);
 
     m_buttonToolPairs.append (kpButtonToolPair (b, tool));
+
+
+    connect (tool, SIGNAL (actionActivated ()),
+             this, SLOT (slotToolActionActivated ()));
+    connect (tool, SIGNAL (actionToolTipChanged (const QString &)),
+             this, SLOT (slotToolActionToolTipChanged ()));
 }
 
 // public
 void kpToolToolBar::unregisterTool (kpTool *tool)
 {
-    for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
+    for (QValueVector <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
          it != m_buttonToolPairs.end ();
          it++)
     {
@@ -156,6 +197,11 @@ void kpToolToolBar::unregisterTool (kpTool *tool)
         {
             delete ((*it).m_button);
             m_buttonToolPairs.erase (it);
+
+            disconnect (tool, SIGNAL (actionActivated ()),
+                        this, SLOT (slotToolActionActivated ()));
+            disconnect (tool, SIGNAL (actionToolTipChanged (const QString &)),
+                        this, SLOT (slotToolActionToolTipChanged ()));
             break;
         }
     }
@@ -164,7 +210,7 @@ void kpToolToolBar::unregisterTool (kpTool *tool)
 // public
 void kpToolToolBar::unregisterAllTools ()
 {
-    for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
+    for (QValueVector <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
          it != m_buttonToolPairs.end ();
          it++)
     {
@@ -182,7 +228,7 @@ kpTool *kpToolToolBar::tool () const
 }
 
 // public
-void kpToolToolBar::selectTool (kpTool *tool)
+void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
 {
 #if DEBUG_KP_TOOL_TOOL_BAR
     kdDebug () << "kpToolToolBar::selectTool (tool=" << tool
@@ -190,19 +236,19 @@ void kpToolToolBar::selectTool (kpTool *tool)
                << endl;
 #endif
 
-    if (tool == m_currentTool)
+    if (!reselectIfSameTool && tool == m_currentTool)
         return;
 
     if (tool)
     {
-        for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
+        for (QValueVector <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
             it != m_buttonToolPairs.end ();
             it++)
         {
             if ((*it).m_tool == tool)
             {
                 m_buttonGroup->setButton (m_buttonGroup->id ((*it).m_button));
-                slotToolSelected ();
+                slotToolButtonClicked ();
                 break;
             }
         }
@@ -216,7 +262,7 @@ void kpToolToolBar::selectTool (kpTool *tool)
         if (b)
         {
             b->toggle ();
-            slotToolSelected ();
+            slotToolButtonClicked ();
         }
     }
 }
@@ -238,28 +284,102 @@ void kpToolToolBar::selectPreviousTool ()
 // public
 void kpToolToolBar::hideAllToolWidgets ()
 {
-#define HIDE_WIDGET(w) if (w) w->hide ()
-    HIDE_WIDGET (m_toolWidgetBrush);
-    HIDE_WIDGET (m_toolWidgetEraserSize);
-    HIDE_WIDGET (m_toolWidgetFillStyle);
-    HIDE_WIDGET (m_toolWidgetLineWidth);
-    HIDE_WIDGET (m_toolWidgetOpaqueOrTransparent);
-    HIDE_WIDGET (m_toolWidgetSpraycanSize);
-#undef HIDE_WIDGET
+    for (QValueVector <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
+         it != m_toolWidgets.end ();
+         it++)
+    {
+        (*it)->hide ();
+    }
+}
+
+// public
+int kpToolToolBar::numShownToolWidgets () const
+{
+#if DEBUG_KP_TOOL_TOOL_BAR || 1
+    kdDebug () << "kpToolToolBar::numShownToolWidgets()" << endl;
+#endif
+
+    int ret = 0;
+
+    for (QValueVector <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
+         it != m_toolWidgets.end ();
+         it++)
+    {
+    #if DEBUG_KP_TOOL_TOOL_BAR || 1
+        kdDebug () << "\t" << (*it)->name ()
+                   << " isShown=" << (*it)->isShown ()
+                   << endl;
+    #endif
+        if ((*it)->isShown ())
+            ret++;
+    }
+
+    return ret;
+}
+
+// public
+kpToolWidgetBase *kpToolToolBar::shownToolWidget (int which) const
+{
+    int uptoVisibleWidget = 0;
+
+    for (QValueVector <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
+         it != m_toolWidgets.end ();
+         it++)
+    {
+        if ((*it)->isShown ())
+        {
+            if (which == uptoVisibleWidget)
+                return *it;
+
+            uptoVisibleWidget++;
+        }
+    }
+
+    return 0;
+}
+
+
+// public
+bool kpToolToolBar::toolsSingleKeyTriggersEnabled () const
+{
+    for (QValueVector <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
+         it != m_buttonToolPairs.end ();
+         it++)
+    {
+        if (!(*it).m_tool->singleKeyTriggersEnabled ())
+            return false;
+    }
+
+    return true;
+}
+
+// public
+void kpToolToolBar::enableToolsSingleKeyTriggers (bool enable)
+{
+#if DEBUG_KP_TOOL_TOOL_BAR || 1
+    kdDebug () << "kpToolToolBar::enableToolsSingleKeyTriggers(" << enable << ")" << endl;
+#endif
+
+    for (QValueVector <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
+        it != m_buttonToolPairs.end ();
+        it++)
+    {
+        (*it).m_tool->enableSingleKeyTriggers (enable);
+    }
 }
 
 
 // private slot
-void kpToolToolBar::slotToolSelected ()
+void kpToolToolBar::slotToolButtonClicked ()
 {
     QButton *b = m_buttonGroup->selected ();
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "kpToolToolBar::slotToolSelected() button=" << b << endl;
+    kdDebug () << "kpToolToolBar::slotToolButtonClicked() button=" << b << endl;
 #endif
 
     kpTool *tool = 0;
-    for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
+    for (QValueVector <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
          it != m_buttonToolPairs.end ();
          it++)
     {
@@ -269,7 +389,7 @@ void kpToolToolBar::slotToolSelected ()
             break;
         }
     }
-    
+
 #if DEBUG_KP_TOOL_TOOL_BAR
     kdDebug () << "\ttool=" << tool
                << " currentTool=" << m_currentTool
@@ -287,13 +407,76 @@ void kpToolToolBar::slotToolSelected ()
     if (m_currentTool)
         m_currentTool->endInternal ();
 
-    m_previousTool = m_currentTool;        
+    m_previousTool = m_currentTool;
     m_currentTool = tool;
-    
+
     if (m_currentTool)
+    {
+        kpToolAction *action = m_currentTool->action ();
+        if (action)
+        {
+            action->setChecked (true);
+        }
+
         m_currentTool->beginInternal ();
+    }
 
     emit sigToolSelected (m_currentTool);
+}
+
+
+#define CONST_KP_TOOL_SENDER() (dynamic_cast <const kpTool *> (sender ()))
+
+// private slot
+void kpToolToolBar::slotToolActionActivated ()
+{
+    const kpTool *tool = CONST_KP_TOOL_SENDER ();
+
+#if DEBUG_KP_TOOL_TOOL_BAR
+    kdDebug () << "kpToolToolBar::slotToolActionActivated() tool="
+               << (tool ? tool->name () : "null")
+               << endl;
+#endif
+
+    if (m_currentTool)
+    {
+        // If the user clicks on the same KToggleAction, it unchecks it
+        // - this is inconsistent with the Tool Box so always make sure it's
+        // checked.
+        kpToolAction *action = m_currentTool->action ();
+        if (action)
+        {
+            action->setChecked (true);
+        }
+    }
+
+    selectTool (tool, true/*reselect if same tool*/);
+}
+
+// private slot
+void kpToolToolBar::slotToolActionToolTipChanged ()
+{
+    const kpTool *tool = CONST_KP_TOOL_SENDER ();
+
+#if DEBUG_KP_TOOL_TOOL_BAR
+    kdDebug () << "kpToolToolBar::slotToolActionActivated() tool="
+               << (tool ? tool->name () : "null")
+               << endl;
+#endif
+
+    if (!tool)
+        return;
+
+    for (QValueVector <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
+        it != m_buttonToolPairs.end ();
+        it++)
+    {
+        if (tool == (*it).m_tool)
+        {
+            QToolTip::add ((*it).m_button, tool->toolTip ());
+            return;
+        }
+    }
 }
 
 
@@ -314,7 +497,7 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
         m_lastDockedOrientation = o;
         m_lastDockedOrientationSet = true;
     }
-    
+
     if (isOutsideDock)
     {
     #if DEBUG_KP_TOOL_TOOL_BAR
@@ -349,8 +532,8 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
     }
 
     int num = 0;
-    
-    for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
+
+    for (QValueVector <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
          it != m_buttonToolPairs.end ();
          it++)
     {
@@ -358,22 +541,17 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
         num++;
     }
 
-#define ADD_WIDGET(w)   \
-{                       \
-    if (w)              \
-    {                   \
-        m_baseLayout->addWidget (w, \
-                                 0/*stretch*/,  \
-                                 o == Qt::Vertical ? Qt::AlignHCenter : Qt::AlignVCenter);  \
-    }                   \
-}
-    ADD_WIDGET (m_toolWidgetFillStyle);
-    ADD_WIDGET (m_toolWidgetLineWidth);
-    ADD_WIDGET (m_toolWidgetOpaqueOrTransparent);
-    ADD_WIDGET (m_toolWidgetBrush);
-    ADD_WIDGET (m_toolWidgetEraserSize);
-    ADD_WIDGET (m_toolWidgetSpraycanSize);
-#undef ADD_WIDGET
+    for (QValueVector <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
+         it != m_toolWidgets.end ();
+         it++)
+    {
+        if (*it)
+        {
+            m_baseLayout->addWidget (*it,
+                0/*stretch*/,
+                o == Qt::Vertical ? Qt::AlignHCenter : Qt::AlignVCenter);
+        }
+    }
 
     KToolBar::setOrientation (o);
 }
@@ -390,5 +568,6 @@ void kpToolToolBar::addButton (QButton *button, Qt::Orientation o, int num)
         m_toolLayout->addWidget (button, row, num / m_vertCols);
     }
 }
+
 
 #include <kptooltoolbar.moc>

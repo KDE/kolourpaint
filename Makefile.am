@@ -19,6 +19,7 @@ kolourpaint_SOURCES = kolourpaint.cpp kpdocument.cpp kpview.cpp \
     kpmainwindow_text.cpp \
     kpmainwindow_view.cpp \
     kpselection.cpp kpselectiondrag.cpp kpselectiontransparency.cpp \
+    kpsinglekeytriggersaction.cpp \
     kptemppixmap.cpp kptextstyle.cpp \
     kpthumbnail.cpp \
     kpviewmanager.cpp

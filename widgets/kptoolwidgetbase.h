@@ -49,6 +49,7 @@ public:
     kpToolWidgetBase (QWidget *parent, const char *name);  // must provide a name for config to work
     virtual ~kpToolWidgetBase ();
 
+public:
     void addOption (const QPixmap &pixmap, const QString &toolTip = QString::null);
     void startNewOptionRow ();
 
@@ -65,7 +66,7 @@ public:  // (only have to use these if you don't use finishConstruction())
     QPair <int, int> defaultSelectedRowAndCol () const;
     int defaultSelectedRow () const;
     int defaultSelectedCol () const;
-    
+
     void saveSelectedAsDefault () const;
 
     void relayoutOptions ();
@@ -76,10 +77,16 @@ public:
 
     int selected () const;
 
+    bool hasPreviousOption (int *row = 0, int *col = 0) const;
+    bool hasNextOption (int *row = 0, int *col = 0) const;
+
 public slots:
     // (returns whether <row> and <col> were in range)
     virtual bool setSelected (int row, int col, bool saveAsDefault);
     bool setSelected (int row, int col);
+
+    bool selectPreviousOption ();
+    bool selectNextOption ();
 
 signals:
     void optionSelected (int row, int col);

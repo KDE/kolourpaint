@@ -37,7 +37,11 @@
 #include <kpdefs.h>
 
 
+class QIconSet;
 class QPixmap;
+
+class KKeySequence;
+class KShortcut;
 
 class kpColor;
 class kpColorToolBar;
@@ -46,6 +50,7 @@ class kpDocument;
 class kpView;
 class kpViewManager;
 class kpMainWindow;
+class kpToolAction;
 class kpToolToolBar;
 
 
@@ -55,17 +60,58 @@ class kpTool : public QObject
 Q_OBJECT
 
 public:
-    kpTool (const QString &text, const QString &description, kpMainWindow *, const char *name);
+    kpTool (const QString &text, const QString &description,
+            int key,
+            kpMainWindow *mainWindow, const char *name);
     virtual ~kpTool ();
 
-    void setText (const QString &text) { m_text = text; }
-    QString text () const { return m_text; }
+private:
+    void init (const QString &text, const QString &description,
+               int key,
+               kpMainWindow *mainWindow, const char *name);
 
-    void setDescription (const QString &description) { m_description = description; }
-    QString description () const { return m_description; }
 
-    void setName (const char *name) { m_name = name; }
-    const char *name () const { return m_name; }
+protected:
+    void createAction ();
+
+    int m_key;
+    kpToolAction *m_action;
+
+signals:
+    void actionToolTipChanged (const QString &string);
+
+protected slots:
+    void slotActionToolTipChanged (const QString &string);
+
+public:
+    QString text () const;
+    void setText (const QString &text);
+
+    static QString toolTipForTextAndShortcut (const QString &text,
+        const KShortcut &shortcut);
+    QString toolTip () const;
+
+    QString description () const;
+    void setDescription (const QString &description);
+
+    int key () const;
+    void setKey (int key);
+
+    // Given a single <key>, returns a shortcut with <key>
+    // (disabled when user is editing text) and CTRL+ALT+<key>.
+    static KShortcut shortcutForKey (int key);
+    KShortcut shortcut () const;
+
+    static bool keyIsText (int key);
+    static bool containsSingleKeyTrigger (const KKeySequence &seq);
+    static bool containsSingleKeyTrigger (const KShortcut &shortcut,
+        KShortcut *shortcutWithoutSingleKeyTriggers);
+
+    bool singleKeyTriggersEnabled () const;
+    void enableSingleKeyTriggers (bool enable = true);
+
+    const char *name () const;
+
 
     static QRect neededRect (const QRect &rect, int lineWidth);
     static QPixmap neededPixmap (const QPixmap &pixmap, const QRect &boundingRect);
@@ -132,6 +178,19 @@ signals:
 
     // emitted after endDraw() has been called
     void endedDraw (const QPoint &point);
+
+
+public:
+    QIconSet iconSet (int forceSize = 0) const;
+    kpToolAction *action ();
+
+signals:
+    // User clicked on the tool's action - i.e. select this tool
+    void actionActivated ();
+
+protected slots:
+    void slotActionActivated ();
+
 
 protected:
     virtual bool returnToPreviousToolAfterEndDraw () const { return false; }
@@ -300,7 +359,7 @@ protected:
     // There is no need to maintain binary compatibility at this stage.
     // The d-pointer is just so that you can experiment without recompiling
     // the kitchen sink.
-    class kpMainWindowPrivate *d;
+    class kpToolPrivate *d;
 };
 
 #endif  // __kp_tool_h__

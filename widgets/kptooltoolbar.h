@@ -41,6 +41,7 @@ class QGridLayout;
 class kpMainWindow;
 class kpTool;
 
+class kpToolWidgetBase;
 class kpToolWidgetBrush;
 class kpToolWidgetEraserSize;
 class kpToolWidgetFillStyle;
@@ -61,7 +62,7 @@ public:
     void unregisterAllTools ();
 
     kpTool *tool () const;
-    void selectTool (kpTool *tool);
+    void selectTool (const kpTool *tool, bool reselectIfSameTool = false);
 
     kpTool *previousTool () const;
     void selectPreviousTool ();
@@ -75,11 +76,22 @@ public:
     kpToolWidgetOpaqueOrTransparent *toolWidgetOpaqueOrTransparent () const { return m_toolWidgetOpaqueOrTransparent; }
     kpToolWidgetSpraycanSize *toolWidgetSpraycanSize () const { return m_toolWidgetSpraycanSize; }
 
+public:
+    int numShownToolWidgets () const;
+    kpToolWidgetBase *shownToolWidget (int which) const;
+
+    bool toolsSingleKeyTriggersEnabled () const;
+    void enableToolsSingleKeyTriggers (bool enable);
+
 signals:
     void sigToolSelected (kpTool *tool);  // tool may be 0
+    void toolWidgetOptionSelected ();
 
 private slots:
-    void slotToolSelected ();
+    void slotToolButtonClicked ();
+
+    void slotToolActionActivated ();
+    void slotToolActionToolTipChanged ();
 
 public slots:
     virtual void setOrientation (Qt::Orientation o);
@@ -103,6 +115,9 @@ private:
     kpToolWidgetOpaqueOrTransparent *m_toolWidgetOpaqueOrTransparent;
     kpToolWidgetSpraycanSize *m_toolWidgetSpraycanSize;
 
+    QValueVector <kpToolWidgetBase *> m_toolWidgets;
+
+private:
     struct kpButtonToolPair
     {
         kpButtonToolPair (QButton *button, kpTool *tool)
@@ -122,6 +137,12 @@ private:
     QValueVector <kpButtonToolPair> m_buttonToolPairs;
 
     kpTool *m_previousTool, *m_currentTool;
+
+private:
+    // There is no need to maintain binary compatibility at this stage.
+    // The d-pointer is just so that you can experiment without recompiling
+    // the kitchen sink.
+    class kpToolToolBarPrivate *d;
 };
 
 #endif  // __kp_tool_tool_bar_h__

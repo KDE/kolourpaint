@@ -30,14 +30,11 @@
 #include <kptooleraser.h>
 
 kpToolEraser::kpToolEraser (kpMainWindow *mainWindow)
-    : kpToolPen (mainWindow)
+    : kpToolPen (kpToolPen::Eraser,
+                 i18n ("Eraser"), i18n ("Lets you rub out mistakes"),
+                 Qt::Key_A,
+                 mainWindow, "tool_eraser")
 {
-    // TODO: don't be lazy and don't break all the rules of inheritance!
-    setMode (kpToolPen::Eraser);
-
-    setText (i18n ("Eraser"));
-    setDescription ("Lets you rub out mistakes");
-    setName ("tool_eraser");
 }
 
 kpToolEraser::~kpToolEraser ()

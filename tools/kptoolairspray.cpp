@@ -59,7 +59,9 @@
  */
 
 kpToolAirSpray::kpToolAirSpray (kpMainWindow *mainWindow)
-    : kpTool (i18n ("Spraycan"), i18n ("Sprays graffiti"), mainWindow, "tool_spraycan"),
+    : kpTool (i18n ("Spraycan"), i18n ("Sprays graffiti"),
+              Qt::Key_Y,
+              mainWindow, "tool_spraycan"),
       m_currentCommand (0)
 {
     m_timer = new QTimer (this);

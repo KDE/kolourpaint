@@ -52,10 +52,14 @@ class kpToolSelection : public kpTool
 Q_OBJECT
 
 public:
-    kpToolSelection (kpMainWindow *mainWindow);
+    enum Mode {Rectangle, Ellipse, FreeForm, Text};
+
+    kpToolSelection (Mode mode,
+                     const QString &text, const QString &description,
+                     int key,
+                     kpMainWindow *mainWindow, const char *name);
     virtual ~kpToolSelection ();
 
-    enum Mode {Rectangle, Ellipse, FreeForm, Text};
     void setMode (Mode mode) { m_mode = mode; }
 
 private:

@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL 0
+#define DEBUG_KP_TOOL 1
 
 
 #include <kptool.h>
@@ -43,6 +43,7 @@
 
 #include <kapplication.h>
 #include <kdebug.h>
+#include <kiconloader.h>
 #include <klocale.h>
 
 #include <kpcolor.h>
@@ -50,24 +51,27 @@
 #include <kpdefs.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
+#include <kpsinglekeytriggersaction.h>
+#include <kptoolaction.h>
 #include <kptooltoolbar.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
 
 
-kpTool::kpTool (const QString &text, const QString &description,
-                kpMainWindow *mainWindow, const char *name)
-    : m_ignoreColorSignals (0),
-      m_shiftPressed (false), m_controlPressed (false), m_altPressed (false),  // set in beginInternal()
-      m_beganDraw (false),
-      m_text (text), m_description (description), m_name (name),
-      m_mainWindow (mainWindow),
-      m_began (false),
-      m_viewUnderStartPoint (0),
-      m_userShapeStartPoint (KP_INVALID_POINT),
-      m_userShapeEndPoint (KP_INVALID_POINT),
-      m_userShapeSize (KP_INVALID_SIZE)
+//
+// kpTool
+//
+
+struct kpToolPrivate
 {
+};
+
+
+kpTool::kpTool (const QString &text, const QString &description,
+                int key,
+                kpMainWindow *mainWindow, const char *name)
+{
+    init (text, description, key, mainWindow, name);
 }
 
 kpTool::~kpTool ()
@@ -75,7 +79,279 @@ kpTool::~kpTool ()
     // before destructing, stop using the tool
     if (m_began)
         endInternal ();
+
+    if (m_action)
+    {
+        if (m_mainWindow && m_mainWindow->actionCollection ())
+            m_mainWindow->actionCollection ()->remove (m_action);
+        else
+            delete m_action;
+    }
+
+    delete d;
 }
+
+
+// private
+void kpTool::init (const QString &text, const QString &description,
+                   int key,
+                   kpMainWindow *mainWindow, const char *name)
+{
+    d = new kpToolPrivate ();
+
+    m_key = key;
+    m_action = 0;
+    m_ignoreColorSignals = 0;
+    m_shiftPressed = false, m_controlPressed = false, m_altPressed = false;  // set in beginInternal()
+    m_beganDraw = false;
+    m_text = text, m_description = description, m_name = name;
+    m_mainWindow = mainWindow;
+    m_began = false;
+    m_viewUnderStartPoint = 0;
+    m_userShapeStartPoint = KP_INVALID_POINT;
+    m_userShapeEndPoint = KP_INVALID_POINT;
+    m_userShapeSize = KP_INVALID_SIZE;
+
+    createAction ();
+}
+
+
+// private
+void kpTool::createAction ()
+{
+#if DEBUG_KP_TOOL
+    kdDebug () << "kpTool(" << name () << "::createAction()" << endl;
+#endif
+
+    if (!m_mainWindow)
+    {
+        kdError () << "kpTool::createAction() without mw" << endl;
+        return;
+    }
+
+    KActionCollection *ac = m_mainWindow->actionCollection ();
+    if (!ac)
+    {
+        kdError () << "kpTool::createAction() without ac" << endl;
+        return;
+    }
+
+
+    if (m_action)
+    {
+    #if DEBUG_KP_TOOL
+        kdDebug () << "\tdeleting existing" << endl;
+    #endif
+        ac->remove (m_action);
+        m_action = 0;
+    }
+
+
+    m_action = new kpToolAction (text (), iconSet (), shortcutForKey (m_key),
+                                 this, SLOT (slotActionActivated ()),
+                                 m_mainWindow->actionCollection (), name ());
+    m_action->setExclusiveGroup (QString::fromLatin1 ("Tool Box Actions"));
+    m_action->setWhatsThis (description ());
+
+    connect (m_action, SIGNAL (toolTipChanged (const QString &)),
+             this, SLOT (slotActionToolTipChanged (const QString &)));
+}
+
+
+// protected slot
+void kpTool::slotActionToolTipChanged (const QString &string)
+{
+    emit actionToolTipChanged (string);
+}
+
+
+// public
+QString kpTool::text () const
+{
+    return m_text;
+}
+
+// public
+void kpTool::setText (const QString &text)
+{
+    m_text = text;
+
+    if (m_action)
+        m_action->setText (m_text);
+    else
+        createAction ();
+}
+
+
+// public static
+QString kpTool::toolTipForTextAndShortcut (const QString &text,
+                                           const KShortcut &shortcut)
+{
+    for (int i = 0; i < (int) shortcut.count (); i++)
+    {
+        const KKeySequence seq = shortcut.seq (i);
+        if (seq.count () == 1 && containsSingleKeyTrigger (seq))
+        {
+            return i18n ("<Tool Name> (<Single Accel Key>)",
+                         "%1 (%2)")
+                       .arg (text, seq.toString ());
+        }
+    }
+
+    return text;
+}
+
+// public static
+QString kpTool::toolTip () const
+{
+    return toolTipForTextAndShortcut (text (), shortcut ());
+}
+
+
+// public
+int kpTool::key () const
+{
+    return m_key;
+}
+
+// public
+void kpTool::setKey (int key)
+{
+    m_key = key;
+
+    if (m_action)
+        // TODO: this probably not wise since it nukes the user's settings
+        m_action->setShortcut (shortcutForKey (m_key));
+    else
+        createAction ();
+}
+
+// public static
+KShortcut kpTool::shortcutForKey (int key)
+{
+    KShortcut shortcut;
+
+    if (key)
+    {
+        shortcut.append (KKeySequence (KKey (key)));
+        // TODO: no matter what modifiers I choose, some <key> has to cause
+        //       a clash with global KDE shortcuts
+        shortcut.append (KKeySequence (KKey (Qt::CTRL + Qt::ALT + key)));
+    }
+
+    return shortcut;
+}
+
+// public
+KShortcut kpTool::shortcut () const
+{
+    return m_action ? m_action->shortcut () : KShortcut ();
+}
+
+
+// public static
+bool kpTool::keyIsText (int key)
+{
+    // TODO: should work like !QKeyEvent::text().isEmpty()
+    return !(key & (Qt::MODIFIER_MASK ^ Qt::SHIFT));
+}
+
+// public static
+bool kpTool::containsSingleKeyTrigger (const KKeySequence &seq)
+{
+    for (int i = 0; i < (int) seq.count (); i++)
+    {
+        const KKey key = seq.key (i);
+        if (keyIsText (key.keyCodeQt ()))
+            return true;
+    }
+
+    return false;
+}
+
+// public static
+bool kpTool::containsSingleKeyTrigger (const KShortcut &shortcut,
+    KShortcut *shortcutWithoutSingleKeyTriggers)
+{
+    if (shortcutWithoutSingleKeyTriggers)
+        *shortcutWithoutSingleKeyTriggers = shortcut;
+
+
+    KShortcut newShortcut;
+    bool needNewShortcut = false;
+
+    for (int i = 0; i < (int) shortcut.count (); i++)
+    {
+        const KKeySequence seq = shortcut.seq (i);
+
+        if (containsSingleKeyTrigger (seq))
+        {
+            needNewShortcut = true;
+        }
+        else
+        {
+            newShortcut.append (seq);
+        }
+    }
+
+
+    if (needNewShortcut && shortcutWithoutSingleKeyTriggers)
+        *shortcutWithoutSingleKeyTriggers = newShortcut;
+
+    return needNewShortcut;
+}
+
+
+// public
+bool kpTool::singleKeyTriggersEnabled () const
+{
+    return (m_action ? m_action->singleKeyTriggersEnabled () : true);
+}
+
+// public
+void kpTool::enableSingleKeyTriggers (bool enable)
+{
+#if DEBUG_KP_TOOL
+    kdDebug () << "kpTool(" << name () << ")::enableSingleKeyTriggers("
+               << enable << ")" << endl;
+#endif
+
+    if (!m_action)
+    {
+    #if DEBUG_KP_TOOL
+        kdDebug () << "\tno action" << endl;
+    #endif
+        return;
+    }
+
+    m_action->enableSingleKeyTriggers (enable);
+}
+
+
+// public
+QString kpTool::description () const
+{
+    return m_description;
+}
+
+// public
+void kpTool::setDescription (const QString &description)
+{
+    m_description = description;
+
+    if (m_action)
+        m_action->setWhatsThis (m_description);
+    else
+        createAction ();
+}
+
+
+// public
+const char *kpTool::name () const
+{
+    return m_name;
+}
+
 
 // static
 QRect kpTool::neededRect (const QRect &rect, int lineWidth)
@@ -301,6 +577,37 @@ void kpTool::reselect ()
     kdDebug () << "kpTool::reselect() base implementation" << endl;
 #endif
 }
+
+
+// public
+QIconSet kpTool::iconSet (int forceSize) const
+{
+#if DEBUG_KP_TOOL
+    kdDebug () << "kpTool(" << name () << ")::iconSet(forceSize=" << forceSize << ")" << endl;
+#endif
+    // (robust in case BarIcon() default arg changes)
+    if (forceSize > 0)
+        return BarIcon (name (), forceSize);
+    else
+        return BarIcon (name ());
+}
+
+// public
+kpToolAction *kpTool::action ()
+{
+    if (!m_action)
+        createAction ();
+
+    return m_action;
+}
+
+
+// protected slots
+void kpTool::slotActionActivated ()
+{
+    emit actionActivated ();
+}
+
 
 // virtual
 void kpTool::draw (const QPoint &, const QPoint &, const QRect &)

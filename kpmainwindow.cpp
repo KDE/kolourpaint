@@ -49,6 +49,7 @@
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kpselectiondrag.h>
+#include <kpsinglekeytriggersaction.h>
 #include <kpthumbnail.h>
 #include <kptool.h>
 #include <kptooltoolbar.h>
@@ -239,9 +240,9 @@ void kpMainWindow::init ()
     kdDebug () << "\tTIME: new kpColorToolBar = " << time.restart () << "msec" << endl;
 #endif
 
-    setupTools ();
+    createToolBox ();
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tTIME: setupTools = " << time.restart () << "msec" << endl;
+    kdDebug () << "\tTIME: createToolBox = " << time.restart () << "msec" << endl;
 #endif
 
     m_scrollView = new QScrollView (this, "scrollView", Qt::WStaticContents | Qt::WNoAutoErase);
@@ -338,6 +339,7 @@ void kpMainWindow::setupActions ()
     setupImageMenuActions ();
     setupSettingsMenuActions ();
     setupTextToolBarActions ();
+    setupToolActions ();
 }
 
 // private
@@ -348,6 +350,31 @@ void kpMainWindow::enableDocumentActions (bool enable)
     enableViewMenuDocumentActions (enable);
     enableImageMenuDocumentActions (enable);
     enableSettingsMenuDocumentActions (enable);
+}
+
+
+// public
+bool kpMainWindow::actionsSingleKeyTriggersEnabled () const
+{
+    if (m_toolToolBar)
+        return m_toolToolBar->toolsSingleKeyTriggersEnabled ();
+
+    return (d->m_actionPrevToolOptionGroup1->singleKeyTriggersEnabled () ||
+            d->m_actionNextToolOptionGroup1->singleKeyTriggersEnabled () ||
+            d->m_actionPrevToolOptionGroup2->singleKeyTriggersEnabled () ||
+            d->m_actionNextToolOptionGroup2->singleKeyTriggersEnabled ());
+}
+
+// public
+void kpMainWindow::enableActionsSingleKeyTriggers (bool enable)
+{
+    if (m_toolToolBar)
+        m_toolToolBar->enableToolsSingleKeyTriggers (enable);
+
+    d->m_actionPrevToolOptionGroup1->enableSingleKeyTriggers (enable);
+    d->m_actionNextToolOptionGroup1->enableSingleKeyTriggers (enable);
+    d->m_actionPrevToolOptionGroup2->enableSingleKeyTriggers (enable);
+    d->m_actionNextToolOptionGroup2->enableSingleKeyTriggers (enable);
 }
 
 

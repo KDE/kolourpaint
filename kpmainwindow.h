@@ -65,6 +65,7 @@ class kpView;
 class kpViewManager;
 class kpSelection;
 class kpSelectionTransparency;
+class kpSingleKeyTriggersAction;
 class kpSqueezedTextLabel;
 class kpTextStyle;
 class kpThumbnail;
@@ -136,6 +137,11 @@ private:
     void setupActions ();
     void enableDocumentActions (bool enable = true);
 
+public:
+    bool actionsSingleKeyTriggersEnabled () const;
+    void enableActionsSingleKeyTriggers (bool enable = true);
+
+private:
     void setDocument (kpDocument *newDoc);
 
     virtual bool queryClose ();
@@ -165,9 +171,14 @@ private slots:
      */
 
 private:
-    void setupTools ();
+    void setupToolActions ();
+    void createToolBox ();
     void enableToolsDocumentActions (bool enable = true);
 
+private slots:
+    void updateToolOptionPrevNextActionsEnabled ();
+
+private:
     kpTool *m_toolAirSpray, *m_toolBrush, *m_toolColorPicker,
            *m_toolColorWasher, *m_toolCurve, *m_toolEllipse,
            *m_toolEllipticalSelection, *m_toolEraser,
@@ -198,7 +209,13 @@ private:
     void readLastTool ();
     int toolNumber () const;
     void saveLastTool ();
-    
+
+private slots:
+    void slotActionPrevToolOptionGroup1 ();
+    void slotActionNextToolOptionGroup1 ();
+    void slotActionPrevToolOptionGroup2 ();
+    void slotActionNextToolOptionGroup2 ();
+
 public slots:
     void slotToolAirSpray ();
     void slotToolBrush ();
@@ -560,6 +577,12 @@ struct kpMainWindowPrivate
     QString m_lastExportMimeType;
     int m_lastToolNumber;
     KAction *m_actionMoreEffects;
+
+    bool m_toolActionsEnabled;
+    kpSingleKeyTriggersAction *m_actionPrevToolOptionGroup2,
+                              *m_actionNextToolOptionGroup2,
+                              *m_actionPrevToolOptionGroup2,
+                              *m_actionNextToolOptionGroup2;
 };
 
 #endif  // __kp_main_window_h__
