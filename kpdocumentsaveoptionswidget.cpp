@@ -743,7 +743,7 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
 
     // TODO: merge with kpDocument::getPixmapFromFile()
     m_previewDialog->setFilePixmapAndSize (
-        kpPixmapFX::convertToPixmap (image, false/*no dither*/),
+        kpPixmapFX::convertToPixmapAsLosslessAsPossible (image),
         data.size ());
 
     QApplication::restoreOverrideCursor ();

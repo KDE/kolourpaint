@@ -39,6 +39,9 @@ class QImage;
 class kpMainWindow;
 
 
+QImage convertImageDepth (const QImage &image, int depth, bool dither);
+
+
 class kpEffectReduceColorsCommand : public kpColorEffectCommand
 {
 public:

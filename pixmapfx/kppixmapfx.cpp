@@ -43,6 +43,7 @@
 #include <qpointarray.h>
 #include <qrect.h>
 
+#include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -74,7 +75,7 @@ int kpPixmapFX::multiplyDimensions (int lhs, int rhs)
 {
     if (rhs == 0)
         return 0;
-    
+
     if (lhs < 0 || rhs < 0 ||
         lhs > INT_MAX / rhs)
     {
@@ -247,22 +248,22 @@ static bool imageHasAlphaChannel (const QImage &image)
     return false;
 }
 
-// Accurate but too slow
-#if 0
-static int imageNumColors (const QImage &image)
+static int imageNumColorsUpTo (const QImage &image, int max)
 {
     QMap <QRgb, bool> rgbMap;
 
     if (image.depth () <= 8)
     {
-        for (int i = 0; i < image.numColors () && rgbMap.size () < (1 << 16); i++)
+        for (int i = 0; i < image.numColors () && (int) rgbMap.size () < max; i++)
+        {
             rgbMap.insert (image.color (i), true);
+        }
     }
     else
     {
-        for (int y = 0; y < image.height () && rgbMap.size () < (1 << 16); y++)
+        for (int y = 0; y < image.height () && (int) rgbMap.size () < max; y++)
         {
-            for (int x = 0; x < image.width () && rgbMap.size () < (1 << 16); x++)
+            for (int x = 0; x < image.width () && (int) rgbMap.size () < max; x++)
             {
                 rgbMap.insert (image.pixel (x, y), true);
             }
@@ -271,7 +272,6 @@ static int imageNumColors (const QImage &image)
 
     return rgbMap.size ();
 }
-#endif
 
 static void convertToPixmapWarnAboutLoss (const QImage &image,
                                           const kpPixmapFX::WarnAboutLossInfo &wali)
@@ -424,8 +424,144 @@ QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty,
                                      Qt::ColorOnly/*always display depth*/ |
                                      Qt::DiffuseDither/*hi quality dither*/ |
                                      Qt::ThresholdAlphaDither/*no dither alpha*/ |
-                                     Qt::PreferDither/*(dither even if <256 colours???)*/);
+                                     Qt::PreferDither/*(dither even if <256 colours)*/);
     }
+
+#if DEBUG_KP_PIXMAP_FX && 1
+    kdDebug () << "\tconversion took " << timer.elapsed () << "msec" << endl;
+#endif
+
+    kpPixmapFX::ensureNoAlphaChannel (&destPixmap);
+
+
+    if (wali.isValid ())
+        convertToPixmapWarnAboutLoss (image, wali);
+
+
+    return destPixmap;
+}
+
+// TODO: don't dup convertToPixmap() code
+// public static
+QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
+    const WarnAboutLossInfo &wali)
+{
+#if DEBUG_KP_PIXMAP_FX && 1 || 1
+    kdDebug () << "kpPixmapFX::convertToPixmapAsLosslessAsPossible(image depth="
+               << image.depth ()
+               << ",warnAboutLossInfo.isValid=" << wali.isValid ()
+               << ") screenDepth=" << QPixmap::defaultDepth ()
+               << " imageNumColorsUpTo257=" << imageNumColorsUpTo (image, 257)
+               << endl;
+    QTime timer;
+    timer.start ();
+#endif
+
+    if (image.isNull ())
+        return QPixmap ();
+
+
+    const int screenDepth = (QPixmap::defaultDepth () >= 24 ?
+                                 32 :
+                                 QPixmap::defaultDepth ());
+
+    QPixmap destPixmap;
+    int ditherFlags = 0;
+
+    if (image.depth () <= screenDepth)
+    {
+    #if DEBUG_KP_PIXMAP_FX && 1 || 1
+        kdDebug () << "\timage depth <= screen depth - don't dither"
+                   << " (AvoidDither | ThresholdDither)" << endl;
+    #endif
+
+        ditherFlags = (Qt::AvoidDither | Qt::ThresholdDither);
+    }
+    // PRE: image.depth() > screenDepth
+    // ASSERT: screenDepth < 32
+    else if (screenDepth <= 8)
+    {
+        const int screenNumColors = (1 << screenDepth);
+
+    #if DEBUG_KP_PIXMAP_FX && 1 || 1
+        kdDebug () << "\tscreen depth <= 8; imageNumColorsUpTo"
+                   << (screenNumColors + 1)
+                   << "=" << imageNumColorsUpTo (image, screenNumColors + 1)
+                   << endl;
+    #endif
+
+        if (imageNumColorsUpTo (image, screenNumColors + 1) <= screenNumColors)
+        {
+        #if DEBUG_KP_PIXMAP_FX && 1 || 1
+            kdDebug () << "\t\tcolors fit on screen - don't dither"
+                       << " (AvoidDither | ThresholdDither)" << endl;
+        #endif
+            ditherFlags = (Qt::AvoidDither | Qt::ThresholdDither);
+        }
+        else
+        {
+        #if DEBUG_KP_PIXMAP_FX && 1 || 1
+            kdDebug () << "\t\tcolors don't fit on screen - dither"
+                       << " (PreferDither | DiffuseDither)" << endl;
+        #endif
+            ditherFlags = (Qt::PreferDither | Qt::DiffuseDither);
+        }
+    }
+    // PRE: image.depth() > screenDepth &&
+    //      screenDepth > 8
+    // ASSERT: screenDepth < 32
+    else
+    {
+    #if DEBUG_KP_PIXMAP_FX && 1 || 1
+        kdDebug () << "\tscreen depth > 8 - read config" << endl;
+    #endif
+
+        int configDitherIfNumColorsGreaterThan = 323;
+
+        KConfigGroupSaver cfgGroupSaver (KGlobal::config (),
+                                         kpSettingsGroupGeneral);
+        KConfigBase *cfg = cfgGroupSaver.config ();
+
+        if (cfg->hasKey (kpSettingDitherOnOpen))
+        {
+            configDitherIfNumColorsGreaterThan = cfg->readNumEntry (kpSettingDitherOnOpen);
+        }
+        else
+        {
+            cfg->writeEntry (kpSettingDitherOnOpen, configDitherIfNumColorsGreaterThan);
+            cfg->sync ();
+        }
+
+    #if DEBUG_KP_PIXMAP_FX && 1 || 1
+        kdDebug () << "\t\tcfg=" << configDitherIfNumColorsGreaterThan
+                   << " image=" << imageNumColorsUpTo (image, configDitherIfNumColorsGreaterThan + 1)
+                   << endl;
+    #endif
+
+        if (imageNumColorsUpTo (image, configDitherIfNumColorsGreaterThan + 1) >
+            configDitherIfNumColorsGreaterThan)
+        {
+        #if DEBUG_KP_PIXMAP_FX && 1 || 1
+            kdDebug () << "\t\t\talways dither (PreferDither | DiffuseDither)"
+                        << endl;
+        #endif
+            ditherFlags = (Qt::PreferDither | Qt::DiffuseDither);
+        }
+        else
+        {
+        #if DEBUG_KP_PIXMAP_FX && 1 || 1
+            kdDebug () << "\t\t\tdon't dither (AvoidDither | ThresholdDither)"
+                       << endl;
+        #endif
+            ditherFlags = (Qt::AvoidDither | Qt::ThresholdDither);
+        }
+    }
+
+
+    destPixmap.convertFromImage (image,
+                                 Qt::ColorOnly/*always display depth*/ |
+                                 Qt::ThresholdAlphaDither/*no dither alpha*/ |
+                                 ditherFlags);
 
 #if DEBUG_KP_PIXMAP_FX && 1
     kdDebug () << "\tconversion took " << timer.elapsed () << "msec" << endl;
@@ -714,7 +850,7 @@ kpColor kpPixmapFX::getColorAtPixel (const QImage &img, const QPoint &at)
 {
     if (!img.valid (at.x (), at.y ()))
         return kpColor::invalid;
-    
+
     QRgb rgba = img.pixel (at.x (), at.y ());
     return kpColor (rgba);
 }

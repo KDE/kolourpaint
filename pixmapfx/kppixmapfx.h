@@ -145,8 +145,10 @@ public:
     // Converts <image> to a QPixmap of the current display's depth and
     // returns it.
     //
-    // If the flag <pretty> is set, it may dither the image making the
-    // returned pixmap look better at the expense of exactness of conversion.
+    // If the flag <pretty> is set, it will dither the image making the
+    // returned pixmap look better but if the image has few colours
+    // (less than the screen can handle), this will be at the expense of
+    // exactness of conversion.
     //
     // This will automatically call ensureNoAlphaChannel().
     //
@@ -159,6 +161,18 @@ public:
     //
     static QPixmap convertToPixmap (const QImage &image, bool pretty = false,
                                     const WarnAboutLossInfo &wali = WarnAboutLossInfo ());
+
+    // Same as convertToPixmap() but tries as hard as possible to make the
+    // pixmap look like the original <image> - when in doubt, reads the
+    // config to see whether or not to dither (default: on).
+    //
+    // If you know for sure that <image> can be displayed losslessly on
+    // the screen, you should call convertToPixmap() with <pretty> = false
+    // instead.  If you know for sure that <image> cannot be displayed
+    // losslessly, then call convertToPixmap() with <pretty> = true.
+    //
+    static QPixmap convertToPixmapAsLosslessAsPossible (const QImage &image,
+        const WarnAboutLossInfo &wali = WarnAboutLossInfo ());
 
 
     // Sets the RGB values of the pixels where <pixmap> is transparent to

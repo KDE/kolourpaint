@@ -184,7 +184,7 @@ QByteArray kpSelectionDrag::encodedData (const char *mimeType) const
                            << endl;
             #endif
 
-                QPixmap pixmap = kpPixmapFX::convertToPixmap (image);
+                QPixmap pixmap = kpPixmapFX::convertToPixmapAsLosslessAsPossible (image);
 
                 stream << kpSelection (kpSelection::Rectangle,
                                        QRect (0, 0, pixmap.width (), pixmap.height ()),
@@ -276,7 +276,7 @@ bool kpSelectionDrag::decode (const QMimeSource *e, kpSelection &sel,
 
             sel = kpSelection (kpSelection::Rectangle,
                                QRect (0, 0, image.width (), image.height ()),
-                               kpPixmapFX::convertToPixmap (image, false/*no dither*/, wali));
+                               kpPixmapFX::convertToPixmapAsLosslessAsPossible (image, wali));
         }
         else
         {

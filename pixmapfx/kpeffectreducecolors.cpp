@@ -43,6 +43,137 @@
 #include <kppixmapfx.h>
 
 
+QImage convertImageDepth (const QImage &image, int depth, bool dither)
+{
+#if DEBUG_KP_EFFECT_REDUCE_COLORS
+    kdDebug () << "::convertImageDepth() changing image (w=" << image.width ()
+               << ",h=" << image.height ()
+               << ") depth from " << image.depth ()
+                << " to " << depth
+                << " (dither=" << dither << ")"
+                << endl;
+#endif
+
+    if (image.isNull ())
+        return image;
+
+    if (depth == image.depth ())
+        return image;
+
+
+#if DEBUG_KP_EFFECT_REDUCE_COLORS && 0
+    for (int y = 0; y < image.height (); y++)
+    {
+        for (int x = 0; x < image.width (); x++)
+        {
+            fprintf (stderr, " %08X", image.pixel (x, y));
+        }
+        fprintf (stderr, "\n");
+    }
+#endif
+
+
+    // Hack around Qt's braindead QImage::convertDepth(1, ...) which produces
+    // pathetic results (black & white with random dithering) with an image
+    // that only has 2 colours (we preserve the 2 colours and avoid dithering
+    // completely).  One use case is resaving a "colour monochrome" image
+    // (<= 2 colours but not necessarily black & white).
+    if (depth == 1)
+    {
+    #if DEBUG_KP_EFFECT_REDUCE_COLORS
+        kdDebug () << "\tinvoking convert-to-depth 1 hack" << endl;
+    #endif
+        QRgb color0, color1;
+        bool color0Valid = false, color1Valid = false;
+
+        bool moreThan2Colors = false;
+
+        QImage monoImage (image.width (), image.height (),
+                          1/*depth*/, 2/*numColors*/, QImage::LittleEndian);
+    #if DEBUG_KP_EFFECT_REDUCE_COLORS
+        kdDebug () << "\t\tinitialising output image w=" << monoImage.width ()
+                   << ",h=" << monoImage.height ()
+                   << ",d=" << monoImage.depth ()
+                   << endl;
+    #endif
+        for (int y = 0; y < image.height (); y++)
+        {
+            for (int x = 0; x < image.width (); x++)
+            {
+                QRgb imagePixel = image.pixel (x, y);
+
+                if (color0Valid && imagePixel == color0)
+                    monoImage.setPixel (x, y, 0);
+                else if (color1Valid && imagePixel == color1)
+                    monoImage.setPixel (x, y, 1);
+                else if (!color0Valid)
+                {
+                    color0 = imagePixel;
+                    color0Valid = true;
+                    monoImage.setPixel (x, y, 0);
+                #if DEBUG_KP_EFFECT_REDUCE_COLORS
+                    kdDebug () << "\t\t\tcolor0=" << (int *) color0
+                               << " at x=" << x << ",y=" << y << endl;
+                #endif
+                }
+                else if (!color1Valid)
+                {
+                    color1 = imagePixel;
+                    color1Valid = true;
+                    monoImage.setPixel (x, y, 1);
+                #if DEBUG_KP_EFFECT_REDUCE_COLORS
+                    kdDebug () << "\t\t\tcolor1=" << (int *) color1
+                               << " at x=" << x << ",y=" << y << endl;
+                #endif
+                }
+                else
+                {
+                #if DEBUG_KP_EFFECT_REDUCE_COLORS
+                    kdDebug () << "\t\t\timagePixel=" << (int *) imagePixel
+                               << " at x=" << x << ",y=" << y
+                               << " moreThan2Colors - abort hack" << endl;
+                #endif
+                    moreThan2Colors = true;
+
+                    // Dijkstra, this is clearer than double break'ing or
+                    // a check in both loops
+                    goto exit_loop;
+                }
+            }
+        }
+    exit_loop:
+
+        if (!moreThan2Colors)
+        {
+            monoImage.setColor (0, color0Valid ? color0 : 0xFFFFFF);
+            monoImage.setColor (1, color1Valid ? color1 : 0x000000);
+            return monoImage;
+        }
+    }
+
+
+    QImage retImage = image.convertDepth (depth,
+        Qt::AutoColor |
+        (dither ? Qt::DiffuseDither : Qt::ThresholdDither) |
+        Qt::ThresholdAlphaDither |
+        (dither ? Qt::PreferDither : Qt::AvoidDither));
+
+#if DEBUG_KP_EFFECT_REDUCE_COLORS && 0
+    kdDebug () << "After colour reduction:" << endl;
+    for (int y = 0; y < image.height (); y++)
+    {
+        for (int x = 0; x < image.width (); x++)
+        {
+            fprintf (stderr, " %08X", image.pixel (x, y));
+        }
+        fprintf (stderr, "\n");
+    }
+#endif
+
+    return retImage;
+}
+
+
 //
 // kpEffectReduceColorsCommand
 //
@@ -93,45 +224,18 @@ void kpEffectReduceColorsCommand::apply (QPixmap *destPixmapPtr, int depth, bool
     if (depth != 1 && depth != 8)
         return;
 
+
     QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
-    if (image.isNull ())
-        return;
 
 
-#if DEBUG_KP_EFFECT_REDUCE_COLORS && 0
-    for (int y = 0; y < image.height (); y++)
-    {
-        for (int x = 0; x < image.width (); x++)
-        {
-            fprintf (stderr, " %08X", image.pixel (x, y));
-        }
-        fprintf (stderr, "\n");
-    }
-#endif
-
-    image = image.convertDepth (depth,
-                                Qt::AutoColor |
-                                (dither ? Qt::DiffuseDither : Qt::ThresholdDither) |
-                                Qt::ThresholdAlphaDither |
-                                (dither ? Qt::PreferDither : Qt::AvoidDither));
-
-#if DEBUG_KP_EFFECT_REDUCE_COLORS && 0
-    kdDebug () << "After colour reduction:" << endl;
-    for (int y = 0; y < image.height (); y++)
-    {
-        for (int x = 0; x < image.width (); x++)
-        {
-            fprintf (stderr, " %08X", image.pixel (x, y));
-        }
-        fprintf (stderr, "\n");
-    }
-#endif
+    image = ::convertImageDepth (image, depth, dither);
 
     if (image.isNull ())
         return;
 
 
-    QPixmap pixmap = kpPixmapFX::convertToPixmap (image, true/*dither*/);
+    QPixmap pixmap = kpPixmapFX::convertToPixmap (image, false/*no dither*/);
+
 
     // HACK: The above "image.convertDepth()" erases the Alpha Channel
     //       (at least for monochrome).

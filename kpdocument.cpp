@@ -59,6 +59,7 @@
 #include <kpdefs.h>
 #include <kpdocumentsaveoptions.h>
 #include <kpdocumentmetainfo.h>
+#include <kpeffectreducecolors.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
@@ -222,27 +223,65 @@ QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExist
     #endif
     }
 
-#if DEBUG_KP_DOCUMENT && 0
-    kdDebug () << "Image dump:" << endl;
-
-    for (int y = 0; y < image.height (); y++)
+#if DEBUG_KP_DOCUMENT && 1
+{
+    if (image.width () <= 16 && image.height () <= 16)
     {
-        for (int x = 0; x < image.width (); x++)
+        kdDebug () << "Image dump:" << endl;
+
+        for (int y = 0; y < image.height (); y++)
         {
-            const QRgb rgb = image.pixel (x, y);
-            //fprintf (stderr, " %08X", rgb);
+            for (int x = 0; x < image.width (); x++)
+            {
+                const QRgb rgb = image.pixel (x, y);
+                fprintf (stderr, " %08X", rgb);
+            }
+            fprintf (stderr, "\n");
         }
-        //fprintf (stderr, "\n");
     }
+}
 #endif
 
 
-    QPixmap newPixmap;
-    newPixmap = kpPixmapFX::convertToPixmap (image,
-        false/*no dither*/,
+    QPixmap newPixmap = kpPixmapFX::convertToPixmapAsLosslessAsPossible (image,
         kpPixmapFX::WarnAboutLossInfo (parent,
             i18n ("image \"%1\"").arg (prettyFilenameForURL (url)),
             "docOpen"));
+
+
+#if DEBUG_KP_DOCUMENT && 1
+{
+    const QImage image2 = kpPixmapFX::convertToImage (newPixmap);
+    kdDebug () << "(Converted to pixmap) Image dump:" << endl;
+
+    bool differsFromOrgImage = false;
+    unsigned long hash = 0;
+    int numDiff = 0;
+    for (int y = 0; y < image2.height (); y++)
+    {
+        for (int x = 0; x < image2.width (); x++)
+        {
+            const QRgb rgb = image2.pixel (x, y);
+            hash += ((x % 2) + 1) * rgb;
+            if (rgb != image.pixel (x, y))
+            {
+                differsFromOrgImage = true;
+                numDiff++;
+            }
+            if (image2.width () <= 16 && image2.height () <= 16)
+                fprintf (stderr, " %08X", rgb);
+        }
+        if (image2.width () <= 16 && image2.height () <= 16)
+            fprintf (stderr, "\n");
+    }
+
+    kdDebug () << "\tdiffersFromOrgImage="
+               << differsFromOrgImage
+               << " numDiff="
+               << numDiff
+               << " hash=" << hash << endl;
+}
+#endif
 
     if (newPixmap.isNull ())
     {
@@ -468,19 +507,9 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     if (useSaveOptionsColorDepth &&
         imageToSave.depth () != saveOptions.colorDepth ())
     {
-    #if DEBUG_KP_DOCUMENT
-        kdDebug () << "\tchanging depth from " << imageToSave.depth ()
-                   << " to " << saveOptions.colorDepth ()
-                   << " (dither=" << saveOptions.dither () << ")"
-                   << endl;
-    #endif
-        // TODO: don't dup kpEffectReduceColorsCommand::apply()
-        //       - fix after merging
-        imageToSave = imageToSave.convertDepth (saveOptions.colorDepth (),
-            Qt::AutoColor |
-            (saveOptions.dither () ? Qt::DiffuseDither : Qt::ThresholdDither) |
-            Qt::ThresholdAlphaDither |
-            (saveOptions.dither () ? Qt::PreferDither : Qt::AvoidDither));
+        imageToSave = ::convertImageDepth (imageToSave,
+                                           saveOptions.colorDepth (),
+                                           saveOptions.dither ());
     }
 
 
