@@ -165,15 +165,6 @@ bool kpMainWindow::open (const KURL &url, bool newDocSameNameIfNotExist)
 }
 
 // private slot
-bool kpMainWindow::open (const QString &str, bool newDocSameNameIfNotExist)
-{
-    KURL url;
-    url.setPath (str);
-
-    return open (url, newDocSameNameIfNotExist);
-}
-
-// private slot
 bool kpMainWindow::slotOpen ()
 {
     if (toolHasBegunShape ())

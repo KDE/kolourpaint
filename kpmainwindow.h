@@ -204,10 +204,9 @@ private:
 private slots:
     void slotNew (const KURL &url = KURL ());
     
-    bool open (const QString &, bool newDocSameNameIfNotExist = false);
-    bool open (const KURL &, bool newDocSameNameIfNotExist = false);
+    bool open (const KURL &url, bool newDocSameNameIfNotExist = false);
     bool slotOpen ();
-    bool slotOpenRecent (const KURL &);
+    bool slotOpenRecent (const KURL &url);
     
     bool save (bool localOnly = false);
     bool slotSave ();
