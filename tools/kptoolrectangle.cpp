@@ -236,7 +236,7 @@ void kpToolRectangle::end ()
 
     if (m_toolWidgetFillStyle)
     {
-        disconnect (m_toolWidgetFillStyle, SIGNAL (fillStyleChanged (Qt::BrushStyle)),
+        disconnect (m_toolWidgetFillStyle, SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
                    this, SLOT (updateBrushes ()));
         m_toolWidgetFillStyle = 0;
     }
