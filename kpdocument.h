@@ -151,7 +151,8 @@ signals:
     void documentOpened ();
     void documentSaved ();
 
-    // this is the _only_ signal that may be emitted in addition to the others
+    // Emitted whenever the isModified() flag changes from false to true.
+    // This is the _only_ signal that may be emitted in addition to the others.
     void documentModified ();
 
     void contentsChanged (const QRect &rect);

@@ -422,7 +422,11 @@ QString kpDocument::mimetype () const
 
 void kpDocument::setModified (bool yes)
 {
+    if (yes == m_modified)
+        return;
+    
     m_modified = yes;
+
     if (yes)
         emit documentModified ();
 }
