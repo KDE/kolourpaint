@@ -1,5 +1,5 @@
 
-KolourPaint Version 1.1 (unstable)
+KolourPaint Version 1.1.99.0 UNSTABLE (CVS 2004/07/11)
 http://kolourpaint.sourceforge.net/
 
 Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
@@ -9,6 +9,7 @@ For licensing and warranty information, read COPYING.
 For installation instructions, read INSTALL.
 For known problems with this release of KolourPaint, read BUGS.
 For what changes have been made, read ChangeLog.
+For information on what features are planned or unfinished, read TODO.
 For general information, read this file (README):
 
 
@@ -72,3 +73,8 @@ libraries.
   - Mail
   - Set as Wallpaper
 
+
+3. Support
+==========
+
+TODO
