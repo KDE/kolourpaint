@@ -23,8 +23,6 @@ relative to the mouse instead) so its position stays the same
 (relative to the document).
 if brush, close, move cursor, new; brush in wrong place
 
-spraycan icons
-
 zoom levels < 100%
 
 line: shift + alt doesn't work but alt+shift does
