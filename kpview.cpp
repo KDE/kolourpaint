@@ -219,6 +219,10 @@ bool kpView::updateVariableZoom (int viewWidth, int viewHeight)
     if (viewManager ())
         viewManager ()->updateView (this);
 
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "\tupdateVariableZoom done" << endl;
+#endif
+
     return true;
 }
 
