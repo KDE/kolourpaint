@@ -2,8 +2,10 @@
 Encoding=UTF-8
 
 Name=KolourPaint
+Name[nb]=KPaint
 Name[sv]=Kolourpaint
 Name[ta]=நிற பெயின்ட் 
+Name[tg]=KРангиРасм
 GenericName=Paint Program
 GenericName[af]=Verf Program
 GenericName[ar]=برنامج تلوين
@@ -50,7 +52,7 @@ GenericName[sr@Latn]=Program za slikanje
 GenericName[ss]=Luhlelo lwependi
 GenericName[sv]=Ritprogram
 GenericName[ta]=பெயிண்ட் நிரலி
-GenericName[tg]=Муҳаррири графикӣ
+GenericName[tg]=Барномаи графикӣ
 GenericName[th]=โปรแกรมวาดภาพธรรมดาๆ
 GenericName[tr]=Boyama Programı
 GenericName[uk]=Програма для малювання
