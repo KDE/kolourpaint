@@ -68,7 +68,7 @@ kpColorSimilarityCube::kpColorSimilarityCube (bool isDepressed,
                                  "you can work more effectively with dithered "
                                  "images and photos.</p>"
 
-                                 "<p>This feature applies to "
+                                 "<p>This feature applies to transparent selections, as well as "
                                  "the Flood Fill, Color Eraser and Autocrop "
                                  "tools.</p></qt>"));
 }
