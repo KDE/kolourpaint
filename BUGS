@@ -96,24 +96,26 @@ This file lists known bugs in the 1.2 release that are not considered
 
 22. The Emboss, Blur and Sharpen effects give different results depending
     on _both_:
-    
+
     a) The KDE version KolourPaint was compiled with
        (due to KImageEffect not supporting strength settings for these
         effects in KDE 3.0, KolourPaint repeats these effects in order to
         simulate strength)
-        
+
     b) The KDE version KolourPaint is running under
        (e.g. for the same function calls, KDE 3.2's effects are slower but
         give better results than those in KDE 3.0)
 
 23. Changing tool options while in the middle of a drawing option may
     confuse KolourPaint.  For instance:
-    
+
     a) With the brush tools, the cursor incorrectly appears.
 
     b) With the rectangle-based tools, the temporary pixmap does not resize
        when the line width increases.
-       
+
+24. In transparent background mode, the Text Tool does not antialias.
+
 
 Issue with XFree86 <= 3.3.6 with the "Emulate3Buttons" Option
 =============================================================
