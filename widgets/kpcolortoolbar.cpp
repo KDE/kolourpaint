@@ -410,15 +410,15 @@ static QColor add (const QColor &a, const QColor &b)
 
 //
 // make our own colors in case weird ones like "Qt::cyan"
-// (turquoise) get changed by QT
+// (turquoise) get changed by Qt
 //
 
 // primary colors + B&W
-static const QColor kpRed (255, 0, 0);
-static const QColor kpGreen (0, 255, 0);
-static const QColor kpBlue (0, 0, 255);
-static const QColor kpBlack (0, 0, 0);
-static const QColor kpWhite (255, 255, 255);
+static QColor kpRed;
+static QColor kpGreen;
+static QColor kpBlue;
+static QColor kpBlack;
+static QColor kpWhite;
 
 // intentionally _not_ an HSV darkener
 static QColor dark (const QColor &color)
@@ -427,20 +427,22 @@ static QColor dark (const QColor &color)
 }
 
 // full-brightness colors
-static const QColor kpYellow = add (kpRed, kpGreen);
-static const QColor kpPurple = add (kpRed, kpBlue);
-static const QColor kpAqua = add (kpGreen, kpBlue);
+static QColor kpYellow;
+static QColor kpPurple;
+static QColor kpAqua;
 
 // mixed colors
-static const QColor kpGrey = blend (kpBlack, kpWhite);
-static const QColor kpLightGrey = blend (kpGrey, kpWhite);
-static const QColor kpOrange = blend (kpRed, kpYellow);
+static QColor kpGrey;
+static QColor kpLightGrey;
+static QColor kpOrange;
 
 // pastel colors
-static const QColor kpPink = blend (kpRed, kpWhite);
-static const QColor kpLightGreen = blend (kpGreen, kpWhite);
-static const QColor kpLightBlue = blend (kpBlue, kpWhite);
-static const QColor kpTan = blend (kpYellow, kpWhite);
+static QColor kpPink;
+static QColor kpLightGreen;
+static QColor kpLightBlue;
+static QColor kpTan;
+
+static bool ownColorsInitialised = false;
 
 /* TODO: clean up this code!!!
  *       (probably when adding palette load/save)
@@ -462,6 +464,34 @@ kpColorCells::kpColorCells (QWidget *parent,
 
     connect (this, SIGNAL (colorDoubleClicked (int)),
              SLOT (slotColorDoubleClicked (int)));
+
+    if (!ownColorsInitialised)
+    {
+        // Don't initialise globally when we probably don't have a colour
+        // allocation context.  This way, the colours aren't invalid
+        // sometimes.
+
+        kpRed = QColor (255, 0, 0);
+        kpGreen = QColor (0, 255, 0);
+        kpBlue = QColor (0, 0, 255);
+        kpBlack = QColor (0, 0, 0);
+        kpWhite = QColor (255, 255, 255);
+
+        kpYellow = add (kpRed, kpGreen);
+        kpPurple = add (kpRed, kpBlue);
+        kpAqua = add (kpGreen, kpBlue);
+
+        kpGrey = blend (kpBlack, kpWhite);
+        kpLightGrey = blend (kpGrey, kpWhite);
+        kpOrange = blend (kpRed, kpYellow);
+
+        kpPink = blend (kpRed, kpWhite);
+        kpLightGreen = blend (kpGreen, kpWhite);
+        kpLightBlue = blend (kpBlue, kpWhite);
+        kpTan = blend (kpYellow, kpWhite);
+
+        ownColorsInitialised = true;
+    }
 
     setOrientation (o);
 }
@@ -578,10 +608,12 @@ void kpColorCells::paintCell (QPainter *painter, int row, int col)
         KColorCells::colors [cellNo] = backgroundColor ();
     }
 
+
     // no focus rect as it doesn't make sense
     // since 2 colors (foreground & background) can be selected
     KColorCells::selected = -1;
     KColorCells::paintCell (painter, row, col);
+
 
     if (!isEnabled ())
     {
