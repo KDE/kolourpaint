@@ -62,8 +62,7 @@ libraries.
   - Balance (Brightness, Contrast, Gamma)
   - Clear, Emboss, Flatten, Flip, Invert (with choice of channels)
   - Reduce Colours, Reduce to Greyscale, Resize, Rotate
-  - Scale, Set as Image (Crop), Skew (with preview), Smooth Scale
-  - Soften & Sharpen
+  - Scale, Set as Image (Crop), Skew, Smooth Scale, Soften & Sharpen
 
 * Close-up Editing
   - Zoom (from 0.01x to 16x)
@@ -91,7 +90,7 @@ Email: <kolourpaint-support@lists.sourceforge.net>
 
 If you have any questions about compiling, installing or using KolourPaint,
 don't be afraid to contact us using the above email address.  Email sent
-to this address is not publically archived.  We try to support all versions
+to this address is not publicly archived.  We try to support all versions
 of KolourPaint and even issues with 3rd party binary packages.
 
 

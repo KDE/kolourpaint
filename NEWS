@@ -7,14 +7,42 @@ tagged on the mainline up to (and including) the forkpoint and of course,
 its changes.
 
 
-KolourPaint 1.2 Series (KDE_3_3_BRANCH, kolourpaint_1_2_kde_3_0_branch)
+KolourPaint 1.2-kde3 Series (kolourpaint_1_2_kde3_branch)
+===========================
+
+This is strictly a KDE 3.0 backport fork of KDE_3_3_BRANCH i.e.
+"cvs diff -r KDE_3_3_BRANCH -r kolourpaint_1_2_kde3_branch" will only give
+the changes required for backporting and nothing else.  However,
+non-backporting changes can be applied as long as they are applied to
+KDE_3_3_BRANCH first.
+
+Version 1.2-kde3 "ByFiat Everytime" (2004/08/18)
+   * Backport to KDE 3.0 by merging kolourpaint_1_0_branch
+     - 1.2-kde3 should be functionally the same as 1.2, if compiled under
+       KDE 3.3
+     - For Qt <3.2, kpMainWindow::slotPaste(): correctly restore selection
+       mode of clipboard to old QClipboard::selectionModeEnabled() value,
+       not QClipboard::supportsSelection() (which is always true)
+     - For KDE 3.0, when saving, check that we can actually save in the
+       current mimeType (i.e. myTypeForMime() has a type for it) and pop
+       up the file dialog to force the user to choose mimeType if we can't
+     - Separate Qt version test from KDE version test
+       (previously, tested for KDE >= 3.x instead of Qt >= 3.x;
+        this worked because Qt ver >= KDE ver);
+       this change only benefits people who run Qt Ver > KDE ver
+
+
+KolourPaint 1.2 Series (KDE_3_3_BRANCH)
 ======================
 
-Version 1.0.2 (2004/08/18)  [changes compared to 1.0.2]
+Version 1.2 "ByFiat Everytime" (2004/08/18)
    * Add up to 500 levels of Undo/Redo (minimum of 10 levels, maximum of
      500 as long as the total history size < 16MB)
    * Add freehand resizing of image
    * Add freehand smooth scaling of selections
+   * [also in 1.0 branch] New icons (Kristof Borrey)
+   * [also in 1.0 branch] Prefer Crystal SVG text icons over KolourPaint's
+   * [also in 1.0 branch] Add documentation in the KDE Help Centre
    * Add drag scrolling
    * Add "More Effects" dialog:
      - Balance (Brightness, Contrast, Gamma)
@@ -40,6 +68,12 @@ Version 1.0.2 (2004/08/18)  [changes compared to 1.0.2]
      - Allow redoing of selection operation if border deselected (Bug #5b)
      - Don't print to STDERR when undoing a selection border create
        operation and border has already been deselected
+     - [also in 1.0 branch] When pulling a selection from the document,
+       only set the bits of the document to the background colour where the
+       transparent selection is opaque in the same place (this is only
+       noticeable with colour similarity turned on).  Now moving a
+       selection away and then back to its original place is always a NOP
+       as it should be.
    * Selections can be deselected using Esc or clicking on icon in Tool Box
    * Accidental drag detection when deselecting selections or text boxes
    * Prevent selection from being moved completely offscreen (at least 1
@@ -48,7 +82,8 @@ Version 1.0.2 (2004/08/18)  [changes compared to 1.0.2]
    * Improve Text Tool usability:
      - Allow single click creation of text box with a sane default size
      - Allow freehand resizing of text boxes
-     - Add Opaque/Transparent widget to be consistent with selection
+     - Add Opaque/Transparent selector for greater usability and
+       consistency with selections
      - Minimum size is now 7x7 document pixels (1x1 - not 4x4 - border)
      - Text cursor doesn't overlap border anymore
      - When dropping text, paste at drop point
@@ -71,10 +106,13 @@ Version 1.0.2 (2004/08/18)  [changes compared to 1.0.2]
    * Thumbnail fixes:
      - Reduce flicker when appearing (Bug #2)
      - More reasonable minimum size (actually enforce it)
+     - [also in 1.0 branch] Use deleteLater()
+     - [also in 1.0 branch] Save geometry even if it's closed very quickly
+       after a geometry change
    * Restore last used tool and tool options on startup
-   * Add Zoom In/Out buttons to main toolbar
    * Add Export, Copy To File, Paste From File, Paste in New Window,
      Full Screen Mode
+   * Add Zoom In/Out buttons to main toolbar
    * Rename Crop options in an attempt to reduce confusion:
      - "Autocrop" --> "Remove Internal Border" when selection active
      - "Crop Outside Selection" --> "Set as Image (Crop)"
@@ -97,16 +135,32 @@ Version 1.0.2 (2004/08/18)  [changes compared to 1.0.2]
      regarding spinboxes and enter key
    * Colour Picker disallows trying to pick colour outside of image
    * Make sure colour palette contains valid and visible colours at 8-bit
+   * [also in 1.0 branch] Fix (big) memory leak on kpSelection destruction
+     (Albert Astals Cid)
+   * Don't leak image dialogs' memory
+   * [also in 1.0 branch] Don't let C++ destruct the mask bitmap before its
+     painter when dbl-clicking the color eraser does NOP (avoids
+     QPaintDevice and X error)
+   * [also in 1.0 branch] Check for QImageDrag::canDecode() before calling
+     QImageDrag::decode() (prevents X and valgrind errors)
+   * [also in 1.0 branch] Fix compilation problem with QT_NO_ASCII_CAST
+     (Waldo Bastian)
+   * [also in 1.0 branch] Decrease application preference to below that of
+     a viewer (Stephan Kulow)
    * Remember dialog dimensions
    * Remove double dialog margins
-   * Don't leak image dialogs' memory
+   * Fix missing i18n()'s
+   * Fix some untranslatable strings
+   * [also in 1.0 branch] Corrected several strings
    * Remove unused icons
 
 
 KolourPaint 1.0 Series (kolourpaint_1_0_branch)
 ======================
 
-Version 1.0.3 - coming soon (expected release date: 2004/08/18)
+No more releases are expected from the 1.0 branch.  There are some annoying
+bugs due to architectural problems that cannot be solved without
+backporting large amounts of code from the 1.2 branch.
 
 Version 1.0.2 (2004/04/29)
    * New icons (Kristof Borrey)
