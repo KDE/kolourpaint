@@ -90,6 +90,17 @@ void kpDualColorButton::setOrientation (Qt::Orientation o)
         for (int i = 0; i < 2; i++)
             m_boxLayout->addWidget (m_colorButton [i]);
     }
+
+    if (o == Qt::Horizontal)
+    {
+        for (int i = 0; i < 2; i++)
+            m_colorButton [i]->setFixedSize (26, 26 * 2);
+    }
+    else
+    {
+        for (int i = 0; i < 2; i++)
+            m_colorButton [i]->setFixedSize (26 * 2, 26);
+    }
 }
     
 QColor kpDualColorButton::color (int which) const
