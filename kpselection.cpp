@@ -60,6 +60,7 @@ kpSelection::kpSelection (const QPointArray &points, const QPixmap &pixmap)
       m_points (points)
 {
     m_pixmap = pixmap.isNull () ? 0 : new QPixmap (pixmap);
+    m_points.detach ();
 }
 
 kpSelection::kpSelection (const kpSelection &rhs)
@@ -81,6 +82,8 @@ kpSelection &kpSelection::operator= (const kpSelection &rhs)
     m_rect = rhs.m_rect;
     m_points = rhs.m_points;
     m_points.detach ();
+
+    delete m_pixmap;
     m_pixmap = rhs.m_pixmap ? new QPixmap (*rhs.m_pixmap) : 0;
 
     return *this;
@@ -110,9 +113,11 @@ QDataStream &operator>> (QDataStream &stream, kpSelection &selection)
 
     stream >> selection.m_rect;
     stream >> selection.m_points;
+    selection.m_points.detach ();
 
     QImage image;
     stream >> image;
+    delete selection.m_pixmap;
     if (!image.isNull ())
         selection.m_pixmap = new QPixmap (kpPixmapFX::convertToPixmap (image));
     else
