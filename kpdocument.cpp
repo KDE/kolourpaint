@@ -324,9 +324,8 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
     if (!pixmapWithSelection ().save (filename, type.latin1 ()))
     {
         KMessageBox::error (m_mainWindow,
-                            i18n ("Could not save image as type <b>%1 (%2)</b>.")
-                                .arg (mimetype)
-                                .arg (type));
+                            i18n ("Could not save as \"%1\".")
+                                .arg (kpDocument::prettyFilenameForURL (url)));
         return false;
     }
 
