@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -58,15 +58,15 @@ void kpMainWindow::setupTools ()
     //
     // create tools
     //
-    
+
     m_tools.setAutoDelete (true);
-    
+
     m_tools.append (m_toolFreeFormSelection = new kpToolFreeFormSelection (this));
     m_tools.append (m_toolRectSelection = new kpToolRectSelection (this));
-    
+
     m_tools.append (m_toolEllipticalSelection = new kpToolEllipticalSelection (this));
     m_tools.append (m_toolText = new kpToolText (this));
-    
+
     m_tools.append (m_toolLine = new kpToolLine (this));
     m_tools.append (m_toolPen = new kpToolPen (this));
 
@@ -75,28 +75,28 @@ void kpMainWindow::setupTools ()
 
     m_tools.append (m_toolFloodFill = new kpToolFloodFill (this));
     m_tools.append (m_toolColorPicker = new kpToolColorPicker (this));
-      
+
     m_tools.append (m_toolColorWasher = new kpToolColorWasher (this));
     m_tools.append (m_toolAirSpray = new kpToolAirSpray (this));
-    
+
     m_tools.append (m_toolRoundedRectangle = new kpToolRoundedRectangle (this));
     m_tools.append (m_toolRectangle = new kpToolRectangle (this));
-    
+
     m_tools.append (m_toolPolygon = new kpToolPolygon (this));
     m_tools.append (m_toolEllipse = new kpToolEllipse (this));
 
     m_tools.append (m_toolPolyline = new kpToolPolyline (this));
     m_tools.append (m_toolCurve = new kpToolCurve (this));
 
-    
+
     //
     // create Toolbox
     //
-    
+
     m_toolToolBar = new kpToolToolBar (this, 2/*columns/rows*/, "Tool Box");
     connect (m_toolToolBar, SIGNAL (sigToolSelected (kpTool *)),
              this, SLOT (slotToolSelected (kpTool *)));
-    
+
     for (QPtrList <kpTool>::const_iterator it = m_tools.begin ();
          it != m_tools.end ();
          it++)
@@ -127,7 +127,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
         // don't have a disabled Tool Box with an enabled Tool
         m_toolToolBar->selectTool (0);
     }
-    
+
 
     // not using actions for tools - so can just disable toolbar
     m_toolToolBar->setEnabled (enable);
@@ -175,14 +175,12 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
 
     if (previousTool)
     {
-        disconnect (previousTool, SIGNAL (beganDraw (const QPoint &)),
-                    this, SLOT (slotUpdateStatusBar (const QPoint &)));
-        disconnect (previousTool, SIGNAL (endedDraw (const QPoint &)),
-                    this, SLOT (slotUpdateStatusBar (const QPoint &)));
-        disconnect (previousTool, SIGNAL (mouseMoved (const QPoint &)),
-                    this, SLOT (slotUpdateStatusBar (const QPoint &)));
-        disconnect (previousTool, SIGNAL (mouseDragged (const QRect &)),
-                    this, SLOT (slotUpdateStatusBar (const QRect &)));
+        disconnect (previousTool, SIGNAL (userMessageChanged (const QString &)),
+                   this, SLOT (slotUpdateStatusBarMessage (const QString &)));
+        disconnect (previousTool, SIGNAL (userShapePointsChanged (const QPoint &, const QPoint &)),
+                   this, SLOT (slotUpdateStatusBarShapePoints (const QPoint &, const QPoint &)));
+        disconnect (previousTool, SIGNAL (userShapeSizeChanged (const QSize &)),
+                   this, SLOT (slotUpdateStatusBarShapeSize (const QSize &)));
 
         disconnect (m_colorToolBar, SIGNAL (foregroundColorChanged (const kpColor &)),
                     previousTool, SLOT (slotForegroundColorChanged (const kpColor &)));
@@ -194,14 +192,13 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
 
     if (tool)
     {
-        connect (tool, SIGNAL (beganDraw (const QPoint &)),
-                 SLOT (slotUpdateStatusBar (const QPoint &)));
-        connect (tool, SIGNAL (endedDraw (const QPoint &)),
-                 SLOT (slotUpdateStatusBar (const QPoint &)));
-        connect (tool, SIGNAL (mouseMoved (const QPoint &)),
-                 SLOT (slotUpdateStatusBar (const QPoint &)));
-        connect (tool, SIGNAL (mouseDragged (const QRect &)),
-                 SLOT (slotUpdateStatusBar (const QRect &)));
+        connect (tool, SIGNAL (userMessageChanged (const QString &)),
+                 this, SLOT (slotUpdateStatusBarMessage (const QString &)));
+        connect (tool, SIGNAL (userShapePointsChanged (const QPoint &, const QPoint &)),
+                 this, SLOT (slotUpdateStatusBarShapePoints (const QPoint &, const QPoint &)));
+        connect (tool, SIGNAL (userShapeSizeChanged (const QSize &)),
+                 this, SLOT (slotUpdateStatusBarShapeSize (const QSize &)));
+        slotUpdateStatusBar ();
 
         connect (m_colorToolBar, SIGNAL (foregroundColorChanged (const kpColor &)),
                  tool, SLOT (slotForegroundColorChanged (const kpColor &)));

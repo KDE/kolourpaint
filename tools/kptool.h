@@ -25,14 +25,16 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #ifndef __kptool_h__
 #define __kptool_h__
 
 #include <qobject.h>
 #include <qpoint.h>
 #include <qrect.h>
+#include <qsize.h>
 #include <qstring.h>
+
+#include <kpdefs.h>
 
 
 class QPixmap;
@@ -73,7 +75,7 @@ public:
     // the current view (viewUnderStartPoint() or viewUnderCursor() otherwise).
     //
     // If neither viewUnderStartPoint() nor viewUnderCursor()
-    // (i.e. !hasCurrentPoint()), then it returns QPoint (INT_MIN, INT_MIN).
+    // (i.e. !hasCurrentPoint()), then it returns KP_INVALID_POINT.
     //
     // If <zoomToDoc> is set (default), then it returns the position in the
     // document.  This theoretically == m_currentPoint (when m_currentPoint
@@ -127,11 +129,6 @@ signals:
     // emitted after endDraw() has been called
     void endedDraw (const QPoint &point);
 
-    // emit these signals as appropriate
-    // (if you emit mouseDragged, don't emit mouseMoved)
-    void mouseMoved (const QPoint &point);
-    void mouseDragged (const QRect &docRect);  // can have negative width/height
-
 protected:
     virtual bool returnToPreviousToolAfterEndDraw () const { return false; }
     virtual bool careAboutModifierState () const { return false; }
@@ -148,6 +145,7 @@ protected:
 
     // (m_mouseButton will not change from beginDraw())
     virtual void cancelShape ();
+    virtual void releasedAllButtons ();
 
     virtual void endDraw (const QPoint &thisPoint, const QRect &normalizedRect);
 
@@ -234,6 +232,53 @@ protected:
     bool m_began;
 
     kpView *m_viewUnderStartPoint;
+
+
+    /*
+     * User Notifications (Status Bar)
+     */
+
+private:
+    int calcMouseButton (bool otherMouseButton = false) const;
+
+public:
+    QString mouseButtonText (bool otherMouseButton = false, bool sentenceStart = false) const;
+    QString mouseClickText (bool otherMouseButton = false, bool sentenceStart = false) const;
+    QString mouseDragText (bool otherMouseButton = false, bool sentenceStart = false) const;
+
+    QString userMessage () const;
+    void setUserMessage (const QString &userMessage = QString::null);
+
+    QPoint userShapeStartPoint () const;
+    QPoint userShapeEndPoint () const;
+    static int calculateLength (int start, int end);
+    void setUserShapePoints (const QPoint &startPoint = KP_INVALID_POINT,
+                             const QPoint &endPoint = KP_INVALID_POINT,
+                             bool setSize = true);
+
+    QSize userShapeSize () const;
+    int userShapeWidth () const;
+    int userShapeHeight () const;
+    void setUserShapeSize (const QSize &size = KP_INVALID_SIZE);
+    void setUserShapeSize (int width, int height);
+
+signals:
+    void userMessageChanged (const QString &userMessage);
+    void userShapePointsChanged (const QPoint &startPoint = KP_INVALID_POINT,
+                                 const QPoint &endPoint = KP_INVALID_POINT);
+    void userShapeSizeChanged (const QSize &size);
+    void userShapeSizeChanged (int width, int height);
+
+protected:
+    QString m_userMessage;
+    QPoint m_userShapeStartPoint, m_userShapeEndPoint;
+    QSize m_userShapeSize;
+
+protected:
+    // There is no need to maintain binary compatibility at this stage.
+    // The d-pointer is just so that you can experiment without recompiling
+    // the kitchen sink.
+    class kpMainWindowPrivate *d;
 };
 
 #endif  // __kptool_h__

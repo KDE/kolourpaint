@@ -47,6 +47,7 @@ class QMouseEvent;
 class QPen;
 class QPoint;
 class QRect;
+class QString;
 
 class kpView;
 class kpDocument;
@@ -73,12 +74,17 @@ public:
 
     virtual bool careAboutModifierState () const { return true; }
 
+private:
+    QString haventBegunShapeUserMessage () const;
+
+public:
     virtual void begin ();
     virtual void end ();
 
     virtual void beginDraw ();
     virtual void draw (const QPoint &, const QPoint &, const QRect &);
     virtual void cancelShape ();
+    virtual void releasedAllButtons ();
     virtual void endDraw (const QPoint &, const QRect &);
     virtual void endShape (const QPoint & = QPoint (), const QRect & = QRect ());
 

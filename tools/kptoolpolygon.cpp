@@ -145,7 +145,7 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
     pointsInRect.detach ();
     pointsInRect.translate (-rect.x (), -rect.y ());
 
-#if DEBUG_KP_TOOL_POLYGON
+#if DEBUG_KP_TOOL_POLYGON && 0
     kdDebug () << "kptoolpolygon.cpp: pixmap(): points=" << pointArrayToString (points) << endl;
 #endif
 
@@ -174,7 +174,7 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
         maskPainter.setPen (maskPen);
         maskPainter.setBrush (maskBrush);
 
-    #if DEBUG_KP_TOOL_POLYGON
+    #if DEBUG_KP_TOOL_POLYGON && 0
         kdDebug () << "\tmaskPainter begin because:" << endl
                    << "\t\tpixmap.mask=" << pixmap.mask () << endl
                    << "\t\t(maskPenStyle!=NoPen)=" << (maskPen.style () != Qt::NoPen) << endl
@@ -191,7 +191,7 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
         painter.setPen (pen);
         painter.setBrush (brush);
 
-    #if DEBUG_KP_TOOL_POLYGON
+    #if DEBUG_KP_TOOL_POLYGON && 0
         kdDebug () << "\tpainter begin pen.rgb="
                    << (int *) painter.pen ().color ().rgb ()
                    << endl;
@@ -319,6 +319,23 @@ void kpToolPolygon::setMode (Mode m)
 }
 
 
+// private
+QString kpToolPolygon::haventBegunShapeUserMessage () const
+{
+    switch (m_mode)
+    {
+    case Line:
+        return i18n ("Drag to draw.");
+    case Polygon:
+    case Polyline:
+        return i18n ("Drag to draw the first line.");
+    case Curve:
+        return i18n ("Drag out the start and end points.");
+    default:
+        return QString::null;
+    }
+}
+
 // virtual
 void kpToolPolygon::begin ()
 {
@@ -360,6 +377,8 @@ void kpToolPolygon::begin ()
     viewManager ()->setCursor (QCursor (CrossCursor));
 
     m_originatingMouseButton = -1;
+
+    setUserMessage (haventBegunShapeUserMessage ());
 }
 
 // virtual
@@ -392,6 +411,8 @@ void kpToolPolygon::beginDraw ()
                << ", startPoint=" << m_startPoint << endl;
 #endif
 
+    bool endedShape = false;
+
     // starting with a line...
     if (m_points.count () == 0)
     {
@@ -407,6 +428,7 @@ void kpToolPolygon::beginDraw ()
         {
             m_mouseButton = m_originatingMouseButton;
             endShape ();
+            endedShape = true;
         }
         else
         {
@@ -428,6 +450,53 @@ void kpToolPolygon::beginDraw ()
 #if DEBUG_KP_TOOL_POLYGON
     kdDebug () << "\tafterwards, m_points=" << pointArrayToString (m_points) << endl;
 #endif
+
+    if (!endedShape)
+    {
+        const QString mct = mouseClickText (true/*other mouse button*/,
+                                            true/*start sentence*/);
+        switch (m_mode)
+        {
+        case Line:
+            setUserMessage (i18n ("%1 to cancel.").arg (mct));
+            break;
+
+        case Curve:
+            /*if (m_points.size () == 2)
+            {*/
+                setUserMessage (i18n ("%1 to cancel.").arg (mct));
+            /*}
+            else if (m_points.size () == 3)
+            {
+                setUserMessage (i18n ("Dragging first control point. %1 to cancel.")
+                                    .arg (mct));
+            }
+            else if (m_points.size () == 4)
+            {
+                setUserMessage (i18n ("Dragging last control point. %1 to cancel.")
+                                    .arg (mct));
+            }
+            else
+            {
+                kdError () << "kpToolPolygon::beginDraw() #points" << endl;
+                setUserMessage ();
+            }*/
+
+            break;
+
+        case Polygon:
+            setUserMessage (i18n ("%1 to cancel.").arg (mct));
+            break;
+
+        case Polyline:
+            setUserMessage (i18n ("%1 to cancel.").arg (mct));
+            break;
+
+        default:
+            kdError () << "kpToolPolygon::beginDraw() shape" << endl;
+            break;
+        }
+    }
 }
 
 // private
@@ -566,7 +635,9 @@ void kpToolPolygon::draw (const QPoint &, const QPoint &, const QRect &)
     updateShape ();
 
     if (drawingALine)
-        emit mouseDragged (QRect (m_toolLineStartPoint, m_toolLineEndPoint));
+        setUserShapePoints (m_toolLineStartPoint, m_toolLineEndPoint);
+    else
+        setUserShapePoints (m_currentPoint);
 }
 
 // private slot
@@ -611,6 +682,16 @@ void kpToolPolygon::cancelShape ()
     viewManager ()->invalidateTempPixmap ();
 #endif
     m_points.resize (0);
+
+    setUserMessage (i18n ("Let go of all the mouse buttons."));
+}
+
+void kpToolPolygon::releasedAllButtons ()
+{
+    if (!hasBegunShape ())
+        setUserMessage (haventBegunShapeUserMessage ());
+
+    // --- else case already handled by endDraw() ---
 }
 
 // virtual
@@ -628,6 +709,61 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
         m_points.count () >= 50)
     {
         endShape ();
+    }
+    else
+    {
+        switch (m_mode)
+        {
+        case Line:
+            kdError () << "kpToolPolygon::endDraw() - line not ended" << endl;
+            setUserMessage ();
+            break;
+
+        case Polygon:
+        case Polyline:
+            if (m_points.isEmpty ())
+            {
+                kdError () << "kpToolPolygon::endDraw() exception - poly without points" << endl;
+                setUserMessage ();
+            }
+            else
+            {
+                setUserMessage (i18n ("%1 another line or %2 to finish.")
+                                    .arg (mouseDragText (false/*this mouse button*/,
+                                                         true/*start sentence*/),
+                                          mouseClickText (true/*other mouse button*/)));
+            }
+
+            break;
+
+        case Curve:
+            if (m_points.size () == 2)
+            {
+                setUserMessage (i18n ("%1 to set the first control point or %2 to finish.")
+                                    .arg (mouseDragText (false/*this mouse button*/,
+                                                         true/*start sentence*/),
+                                          mouseClickText (true/*other mouse button*/)));
+            }
+            else if (m_points.size () == 3)
+            {
+                setUserMessage (i18n ("%1 to set the last control point or %2 to finish.")
+                                    .arg (mouseDragText (false/*this mouse button*/,
+                                                         true/*start sentence*/),
+                                          mouseClickText (true/*other mouse button*/)));
+            }
+            else
+            {
+                kdError () << "kpToolPolygon::endDraw() exception - points" << endl;
+                setUserMessage ();
+            }
+
+            break;
+
+        default:
+            kdError () << "kpToolPolygon::endDraw() - clueless" << endl;
+            setUserMessage ();
+            break;
+        }
     }
 }
 
@@ -658,6 +794,8 @@ void kpToolPolygon::endShape (const QPoint &, const QRect &)
     commandHistory ()->addCommand (lineCommand);
 
     m_points.resize (0);
+    setUserMessage (haventBegunShapeUserMessage ());
+
 }
 
 // public virtual

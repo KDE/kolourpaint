@@ -53,6 +53,7 @@
 void kpMainWindow::setupViewMenuActions ()
 {
     m_viewMenuDocumentActionsEnabled = false;
+    m_thumbnailSaveConfigTimer = 0;
 
 
     KActionCollection *ac = actionCollection ();
@@ -395,6 +396,8 @@ void kpMainWindow::finishZoomTo ()
     if (m_viewManager && m_viewManager->queueUpdates ()/*just in case*/)
         m_viewManager->restoreQueueUpdates ();
 
+    slotUpdateStatusBarZoom (m_mainView ? m_mainView->zoomLevelX () : 0);
+    
 #if DEBUG_KP_MAIN_WINDOW && 1
     kdDebug () << "\tkpMainWindow::finishZoomTo done" << endl;
 #endif
@@ -578,14 +581,14 @@ void kpMainWindow::notifyThumbnailGeometryChanged ()
     kdDebug () << "kpMainWindow::notifyThumbnailGeometryChanged()" << endl;
 #endif
 
-    if (!d->m_timer)
+    if (!m_thumbnailSaveConfigTimer)
     {
-        d->m_timer = new QTimer (this);
-        connect (d->m_timer, SIGNAL (timeout ()),
+        m_thumbnailSaveConfigTimer = new QTimer (this);
+        connect (m_thumbnailSaveConfigTimer, SIGNAL (timeout ()),
                  this, SLOT (slotSaveThumbnailGeometry ()));
     }
 
-    d->m_timer->start (500/*msec*/, true/*single shot*/);
+    m_thumbnailSaveConfigTimer->start (500/*msec*/, true/*single shot*/);
 }
 
 // private slot
@@ -601,18 +604,18 @@ void kpMainWindow::slotSaveThumbnailGeometry ()
     QRect rect (m_thumbnail->x (), m_thumbnail->y (),
                 m_thumbnail->width (), m_thumbnail->height ());
 
-    d->m_configThumbnailGeometry = mapFromGlobal (rect);
+    m_configThumbnailGeometry = mapFromGlobal (rect);
 
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tCONFIG: saving thumbnail geometry "
-                << d->m_configThumbnailGeometry
+                << m_configThumbnailGeometry
                 << endl;
 #endif
 
     KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupThumbnail);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
-    cfg->writeEntry (kpSettingThumbnailGeometry, d->m_configThumbnailGeometry);
+    cfg->writeEntry (kpSettingThumbnailGeometry, m_configThumbnailGeometry);
     cfg->sync ();
 }
 
@@ -626,12 +629,12 @@ void kpMainWindow::slotShowThumbnailToggled ()
     updateThumbnail ();
 
 
-    d->m_configThumbnailShown = m_actionShowThumbnail->isChecked ();
+    m_configThumbnailShown = m_actionShowThumbnail->isChecked ();
 
     KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupThumbnail);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
-    cfg->writeEntry (kpSettingThumbnailShown, d->m_configThumbnailShown);
+    cfg->writeEntry (kpSettingThumbnailShown, m_configThumbnailShown);
     cfg->sync ();
 }
 
@@ -662,7 +665,7 @@ void kpMainWindow::updateThumbnail ()
 
         // Read last saved geometry before creating thumbnail & friends
         // in case they call notifyThumbnailGeometryChanged()
-        QRect thumbnailGeometry = d->m_configThumbnailGeometry;
+        QRect thumbnailGeometry = m_configThumbnailGeometry;
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\t\tlast used geometry=" << thumbnailGeometry << endl;
     #endif

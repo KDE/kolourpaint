@@ -36,6 +36,7 @@
 #include <kptool.h>
 
 class QPoint;
+class QString;
 
 class kpColor;
 class kpMainWindow;
@@ -75,6 +76,10 @@ public:
 
     void setMode (Mode mode);
 
+private:
+    QString haventBegunDrawUserMessage () const;
+    
+public:
     virtual void begin ();
     virtual void end ();
 
@@ -83,6 +88,7 @@ public:
     virtual void globalDraw ();
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &);
     virtual void cancelShape ();
+    virtual void releasedAllButtons ();
     virtual void endDraw (const QPoint &, const QRect &);
 
 private slots:

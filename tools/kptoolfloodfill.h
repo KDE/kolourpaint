@@ -36,6 +36,8 @@
 #include <kpfloodfill.h>
 #include <kptool.h>
 
+class QString;
+
 class kpColor;
 
 class kpDocument;
@@ -51,9 +53,15 @@ public:
     kpToolFloodFill (kpMainWindow *);
     virtual ~kpToolFloodFill ();
 
+private:
+    QString haventBegunDrawUserMessage () const;
+
+public:
+    virtual void begin ();
     virtual void beginDraw ();
     virtual void draw (const QPoint &thisPoint, const QPoint &, const QRect &);
     virtual void cancelShape ();
+    virtual void releasedAllButtons ();
     virtual void endDraw (const QPoint &, const QRect &);
 
 private:

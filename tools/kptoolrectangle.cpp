@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_RECTANGLE 1
+#define DEBUG_KP_TOOL_RECTANGLE 0
 
 #include <qbitmap.h>
 #include <qcursor.h>
@@ -266,6 +266,12 @@ void kpToolRectangle::updateBrush (int mouseButton)
 }
 
 
+// private
+QString kpToolRectangle::haventBegunDrawUserMessage () const
+{
+    return i18n ("Drag to draw.");
+}
+
 // virtual
 void kpToolRectangle::begin ()
 {
@@ -302,6 +308,8 @@ void kpToolRectangle::begin ()
 #endif
 
     viewManager ()->setCursor (QCursor (CrossCursor));
+
+    setUserMessage (haventBegunDrawUserMessage ());
 }
 
 // virtual
@@ -392,12 +400,17 @@ void kpToolRectangle::applyModifiers ()
     m_toolRectangleStartPoint = rect.topLeft ();
     m_toolRectangleEndPoint = rect.bottomRight ();
 
+    m_toolRectangleRectWithoutLineWidth = rect;
     m_toolRectangleRect = kpTool::neededRect (rect, QMAX (m_pen [m_mouseButton].width (),
                                                           m_maskPen [m_mouseButton].width ()));
 }
 
 void kpToolRectangle::beginDraw ()
 {
+    setUserMessage (i18n ("%1 to cancel.")
+                        .arg (mouseClickText (true/*other mouse button*/,
+                                              true/*start of sentence*/)));
+
 }
 
 void kpToolRectangle::draw (const QPoint &, const QPoint &, const QRect &)
@@ -420,8 +433,39 @@ void kpToolRectangle::draw (const QPoint &, const QPoint &, const QRect &)
     viewManager ()->restoreFastUpdates ();
 
 
-    // TODO: for thick rect's, this'll be wrong...
-    emit mouseDragged (QRect (m_startPoint, m_currentPoint));
+    // Recover the start and end points from the transformed & normalized m_toolRectangleRect
+
+    // S. or S or SC or S == C
+    // .C    C
+    if (m_currentPoint.x () >= m_startPoint.x () &&
+        m_currentPoint.y () >= m_startPoint.y ())
+    {
+        setUserShapePoints (m_toolRectangleRectWithoutLineWidth.topLeft (),
+                            m_toolRectangleRectWithoutLineWidth.bottomRight ());
+    }
+    // .C or C
+    // S.    S
+    else if (m_currentPoint.x () >= m_startPoint.x () &&
+             m_currentPoint.y () < m_startPoint.y ())
+    {
+        setUserShapePoints (m_toolRectangleRectWithoutLineWidth.bottomLeft (),
+                            m_toolRectangleRectWithoutLineWidth.topRight ());
+    }
+    // .S or CS
+    // C.
+    else if (m_currentPoint.x () < m_startPoint.x () &&
+             m_currentPoint.y () >= m_startPoint.y ())
+    {
+        setUserShapePoints (m_toolRectangleRectWithoutLineWidth.topRight (),
+                            m_toolRectangleRectWithoutLineWidth.bottomLeft ());
+    }
+    // C.
+    // .S
+    else
+    {
+        setUserShapePoints (m_toolRectangleRectWithoutLineWidth.bottomRight (),
+                            m_toolRectangleRectWithoutLineWidth.topLeft ());
+    }
 }
 
 void kpToolRectangle::cancelShape ()
@@ -432,6 +476,13 @@ void kpToolRectangle::cancelShape ()
 #else
     viewManager ()->invalidateTempPixmap ();
 #endif
+
+    setUserMessage (i18n ("Let go of all the mouse buttons."));
+}
+
+void kpToolRectangle::releasedAllButtons ()
+{
+    setUserMessage (haventBegunDrawUserMessage ());
 }
 
 void kpToolRectangle::endDraw (const QPoint &, const QRect &)
@@ -446,6 +497,8 @@ void kpToolRectangle::endDraw (const QPoint &, const QRect &)
         m_pen [m_mouseButton], m_maskPen [m_mouseButton],
         m_brush [m_mouseButton], m_maskBrush [m_mouseButton],
         m_toolRectangleRect, m_toolRectangleStartPoint, m_toolRectangleEndPoint));
+
+    setUserMessage (haventBegunDrawUserMessage ());
 }
 
 

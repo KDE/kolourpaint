@@ -38,6 +38,7 @@
 
 #include <kapplication.h>
 #include <kdebug.h>
+#include <klocale.h>
 
 #include <kpcolor.h>
 #include <kpcolortoolbar.h>
@@ -50,10 +51,6 @@
 #include <kpviewmanager.h>
 
 
-//
-// kpTool
-//
-
 kpTool::kpTool (const QString &text, const QString &description,
                 kpMainWindow *mainWindow, const char *name)
     : m_shiftPressed (false), m_controlPressed (false), m_altPressed (false),  // set in beginInternal()
@@ -61,7 +58,10 @@ kpTool::kpTool (const QString &text, const QString &description,
       m_text (text), m_description (description), m_name (name),
       m_mainWindow (mainWindow),
       m_began (false),
-      m_viewUnderStartPoint (0)
+      m_viewUnderStartPoint (0),
+      m_userShapeStartPoint (KP_INVALID_POINT),
+      m_userShapeEndPoint (KP_INVALID_POINT),
+      m_userShapeSize (KP_INVALID_SIZE)
 {
 }
 
@@ -119,7 +119,7 @@ QPoint kpTool::currentPoint (bool zoomToDoc) const
         #if DEBUG_KP_TOOL && 1
             kdDebug () << "\tno view - returning sentinel" << endl;
         #endif
-            return QPoint (INT_MIN, INT_MIN);
+            return KP_INVALID_POINT;
         }
     }
 
@@ -184,6 +184,10 @@ void kpTool::beginInternal ()
 
     if (!m_began)
     {
+        // clear leftover statusbar messages
+        setUserMessage ();
+        setUserShapePoints (currentPoint ());
+
         // call user virtual func
         begin ();
 
@@ -215,6 +219,10 @@ void kpTool::endInternal ()
 
         // call user virtual func
         end ();
+
+        // clear leftover statusbar messages
+        setUserMessage ();
+        setUserShapePoints (currentPoint ());
 
         // we've stopped using the tool...
         m_began = false;
@@ -269,7 +277,7 @@ void kpTool::beginDraw ()
 // virtual
 void kpTool::hover (const QPoint &point)
 {
-    emit mouseMoved (point);
+    setUserShapePoints (point);
 }
 
 // virtual
@@ -290,6 +298,10 @@ void kpTool::cancelShapeInternal ()
         cancelShape ();
         m_viewUnderStartPoint = 0;
         m_beganDraw = false;
+        if (viewUnderCursor ())
+            hover (m_currentPoint);
+        else
+            setUserShapePoints ();
 
         if (returnToPreviousToolAfterEndDraw ())
         {
@@ -304,6 +316,10 @@ void kpTool::cancelShapeInternal ()
 void kpTool::cancelShape ()
 {
     kdWarning () << "Tool cannot cancel operation!" << endl;
+}
+
+void kpTool::releasedAllButtons ()
+{
 }
 
 void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRect,
@@ -336,6 +352,10 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
     m_beganDraw = false;
 
     emit endedDraw (m_currentPoint);
+    if (viewUnderCursor ())
+        hover (m_currentPoint);
+    else
+        setUserShapePoints ();
 
     if (returnToPreviousToolAfterEndDraw ())
     {
@@ -588,6 +608,11 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
         m_currentPoint = view ? view->zoomViewToDoc (e->pos ()) : QPoint (-1, -1);
         endDrawInternal (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
     }
+    
+    if ((e->stateAfter () & Qt::MouseButtonMask) == 0)
+    {
+        releasedAllButtons ();
+    }
 }
 
 void kpTool::keyPressEvent (QKeyEvent *e)
@@ -801,7 +826,7 @@ void kpTool::leaveEvent (QEvent *)
 {
     // if we haven't started drawing (e.g. dragging a rectangle)...
     if (!m_beganDraw)
-        emit mouseMoved (QPoint (-1, -1));
+        setUserShapePoints ();
 }
 
 // static
@@ -822,6 +847,184 @@ int kpTool::mouseButton (const Qt::ButtonState &buttonState)
         return 1;
     else
         return -1;
+}
+
+
+/*
+ * User Notifications
+ */
+
+// private
+int kpTool::calcMouseButton (bool otherMouseButton) const
+{
+    if (!otherMouseButton)
+        return m_mouseButton;
+    else
+        return 1 - m_mouseButton;
+}
+
+// public
+QString kpTool::mouseButtonText (bool otherMouseButton, bool sentenceStart) const
+{
+    int mb = calcMouseButton (otherMouseButton);
+
+    if (mb == 0)
+    {
+        if (sentenceStart)
+            return i18n ("Left");
+        else
+            return i18n ("left");
+    }
+    else
+    {
+        if (sentenceStart)
+            return i18n ("Right");
+        else
+            return i18n ("right");
+    }
+}
+
+// public
+QString kpTool::mouseClickText (bool otherMouseButton, bool sentenceStart) const
+{
+    int mb = calcMouseButton (otherMouseButton);
+
+    if (mb == 0)
+    {
+        if (sentenceStart)
+            return i18n ("Left click");
+        else
+            return i18n ("left click");
+    }
+    else
+    {
+        if (sentenceStart)
+            return i18n ("Right click");
+        else
+            return i18n ("right click");
+    }
+}
+
+// public
+QString kpTool::mouseDragText (bool otherMouseButton, bool sentenceStart) const
+{
+    int mb = calcMouseButton (otherMouseButton);
+
+    if (mb == 0)
+    {
+        if (sentenceStart)
+            return i18n ("Left drag");
+        else
+            return i18n ("left drag");
+    }
+    else
+    {
+        if (sentenceStart)
+            return i18n ("Right drag");
+        else
+            return i18n ("right drag");
+    }
+}
+
+
+// public
+QString kpTool::userMessage () const
+{
+    return m_userMessage;
+}
+
+// public
+void kpTool::setUserMessage (const QString &userMessage)
+{
+    m_userMessage = userMessage;
+    if (!m_userMessage.isEmpty ())
+        m_userMessage.prepend (i18n ("%1: ").arg (text ()));
+    emit userMessageChanged (m_userMessage);
+}
+
+
+// public
+QPoint kpTool::userShapeStartPoint () const
+{
+    return m_userShapeStartPoint;
+}
+
+// public
+QPoint kpTool::userShapeEndPoint () const
+{
+    return m_userShapeEndPoint;
+}
+
+// public static
+int kpTool::calculateLength (int start, int end)
+{
+    if (start <= end)
+    {
+        return end - start + 1;
+    }
+    else
+    {
+        return end - start - 1;
+    }
+}
+
+// public
+void kpTool::setUserShapePoints (const QPoint &startPoint,
+                                 const QPoint &endPoint,
+                                 bool setSize)
+{
+    m_userShapeStartPoint = startPoint;
+    m_userShapeEndPoint = endPoint;
+    emit userShapePointsChanged (m_userShapeStartPoint, m_userShapeEndPoint);
+
+    if (setSize)
+    {
+        if (startPoint != KP_INVALID_POINT &&
+            endPoint != KP_INVALID_POINT)
+        {
+            setUserShapeSize (calculateLength (startPoint.x (), endPoint.x ()),
+                              calculateLength (startPoint.y (), endPoint.y ()));
+        }
+        else
+        {
+            setUserShapeSize ();
+        }
+    }
+}
+
+
+// public
+QSize kpTool::userShapeSize () const
+{
+    return m_userShapeSize;
+}
+
+// public
+int kpTool::userShapeWidth () const
+{
+    return m_userShapeSize.width ();
+}
+
+// public
+int kpTool::userShapeHeight () const
+{
+    return m_userShapeSize.height ();
+}
+
+// public
+void kpTool::setUserShapeSize (const QSize &size)
+{
+    m_userShapeSize = size;
+
+    emit userShapeSizeChanged (m_userShapeSize);
+    emit userShapeSizeChanged (m_userShapeSize.width (),
+                               m_userShapeSize.height ());
+}
+
+// public
+void kpTool::setUserShapeSize (int width, int height)
+{
+    setUserShapeSize (QSize (width, height));
 }
 
 #include <kptool.moc>

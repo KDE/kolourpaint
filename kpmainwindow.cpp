@@ -38,7 +38,6 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kstatusbar.h>
 #include <kurldrag.h>
 
 #include <kpcolortoolbar.h>
@@ -142,12 +141,12 @@ void kpMainWindow::readThumbnailSettings ()
     KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupThumbnail);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
-    d->m_configThumbnailShown = cfg->readBoolEntry (kpSettingThumbnailShown, false);
-    d->m_configThumbnailGeometry = cfg->readRectEntry (kpSettingThumbnailGeometry);
+    m_configThumbnailShown = cfg->readBoolEntry (kpSettingThumbnailShown, false);
+    m_configThumbnailGeometry = cfg->readRectEntry (kpSettingThumbnailGeometry);
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\t\tThumbnail Settings: shown=" << d->m_configThumbnailShown
-               << " geometry=" << d->m_configThumbnailGeometry
+    kdDebug () << "\t\tThumbnail Settings: shown=" << m_configThumbnailShown
+               << " geometry=" << m_configThumbnailGeometry
                << endl;
 #endif
 }
@@ -172,6 +171,7 @@ void kpMainWindow::init ()
     m_colorToolBar = 0;
     m_toolToolBar = 0;
     m_commandHistory = 0;
+    d->m_statusBarCreated = false;
 
 
     //
@@ -216,6 +216,11 @@ void kpMainWindow::init ()
     kdDebug () << "\tTIME: setupActions = " << time.restart () << "msec" << endl;
 #endif
 
+    createStatusBar ();
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tTIME: createStatusBar = " << time.restart () << "msec" << endl;
+#endif
+
     createGUI ();
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tTIME: createGUI = " << time.restart () << "msec" << endl;
@@ -243,10 +248,6 @@ void kpMainWindow::init ()
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tTIME: m_scrollView = " << time.restart () << "msec" << endl;
 #endif
-
-    statusBar ()->insertItem (QString::null, StatusBarItemDocInfo, 2/*stretch*/);
-    statusBar ()->insertItem (QString::null, StatusBarItemShapeEndPoints, 1/*stretch*/);
-    statusBar ()->insertItem (QString::null, StatusBarItemShapeSize, 1/*stretch*/);
 
 
     //
@@ -473,10 +474,11 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         // Status bar
         connect (m_document, SIGNAL (documentOpened ()),
                  this, SLOT (slotUpdateStatusBar ()));
-        connect (m_document, SIGNAL (sizeChanged (int, int)),
-                 this, SLOT (slotUpdateStatusBar (int, int)));
+
+        connect (m_document, SIGNAL (sizeChanged (const QSize &)),
+                 this, SLOT (slotUpdateStatusBarDocSize (const QSize &)));
         connect (m_document, SIGNAL (colorDepthChanged (int)),
-                 this, SLOT (slotUpdateStatusBar (int)));
+                 this, SLOT (slotUpdateStatusBarDocDepth (int)));
 
         // Caption (url, modified)
         connect (m_document, SIGNAL (documentModified ()),
@@ -565,7 +567,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 #endif
 
     slotImageMenuUpdateDueToSelection ();
-    slotUpdateStatusBar ();  // update doc size
+    slotUpdateStatusBar ();
     slotUpdateCaption ();  // Untitled to start with
 
     if (m_commandHistory)
@@ -694,11 +696,6 @@ void kpMainWindow::drawTransparentBackground (QPainter *painter,
 }
 
 
-/*
- * Status Bar
- */
-// TODO: clean up
-
 // private slot
 void kpMainWindow::slotUpdateCaption ()
 {
@@ -722,98 +719,5 @@ void kpMainWindow::slotDocumentRestored ()
     slotUpdateCaption ();
 }
 
-
-// private
-// this prevents coords like "-2,400" from being shown
-bool kpMainWindow::legalDocPoint (const QPoint &point) const
-{
-   return (m_document &&
-           point.x () >= 0 && point.x () < m_document->width () &&
-           point.y () >= 0 && point.y () < m_document->height ());
-}
-
-// private slot
-void kpMainWindow::slotUpdateStatusBar ()
-{
-    if (m_document)
-        slotUpdateStatusBar (m_document->width (), m_document->height (), m_document->colorDepth ());
-    else
-        statusBar ()->changeItem (QString::null, StatusBarItemDocInfo);
-}
-
-// private slot
-void kpMainWindow::slotUpdateStatusBar (int docWidth, int docHeight)
-{
-    if (m_document && docWidth > 0 && docHeight > 0)
-        slotUpdateStatusBar (docWidth, docHeight, m_document->colorDepth ());
-    else
-        statusBar ()->changeItem (QString::null, StatusBarItemDocInfo);
-}
-
-// private slot
-void kpMainWindow::slotUpdateStatusBar (int docColorDepth)
-{
-    if (m_document && docColorDepth > 0)
-        slotUpdateStatusBar (m_document->width (), m_document->height (), docColorDepth);
-    else
-        statusBar ()->changeItem (QString::null, StatusBarItemDocInfo);
-}
-
-// private slot
-void kpMainWindow::slotUpdateStatusBar (int docWidth, int docHeight, int docColorDepth)
-{
-#if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotUpdateStatusBar ("
-               << docWidth << "x" << docHeight << "@" << docColorDepth << endl;
-#endif
-
-    if (m_document && docWidth > 0 && docHeight > 0 && docColorDepth > 0)
-    {
-        statusBar ()->changeItem (i18n ("%1 x %2  (%3-bit)")
-                                    .arg (docWidth).arg (docHeight)
-                                    .arg (docColorDepth),
-                                  StatusBarItemDocInfo);
-    }
-    else
-        statusBar ()->changeItem (QString::null, StatusBarItemDocInfo);
-}
-
-// private slot
-void kpMainWindow::slotUpdateStatusBar (const QPoint &point)
-{
-    QString string;
-
-    // we just don't display illegal points full stop
-    if (legalDocPoint (point))
-        string = i18n ("%1,%2").arg (point.x ()).arg (point.y ());
-
-    statusBar ()->changeItem (string, StatusBarItemShapeEndPoints);
-    statusBar ()->changeItem (QString::null, StatusBarItemShapeSize);
-}
-
-// private slot
-void kpMainWindow::slotUpdateStatusBar (const QRect &srect)
-{
-    int x1 = srect.left (), y1 = srect.top (), x2 = srect.right (), y2 = srect.bottom ();
-
-    // we clip illegal points when dragging
-    x1 = QMIN (QMAX (x1, 0), m_document->width () - 1);
-    x2 = QMIN (QMAX (x2, 0), m_document->width () - 1);
-    y1 = QMIN (QMAX (y1, 0), m_document->height () - 1);
-    y2 = QMIN (QMAX (y2, 0), m_document->height () - 1);
-
-    QRect rect = QRect (QPoint (x1, y1), QPoint (x2, y2));
-
-    statusBar ()->changeItem (i18n ("%1,%2 - %3,%4")
-                                    .arg (rect.left ())
-                                    .arg (rect.top ())
-                                    .arg (rect.right ())
-                                    .arg (rect.bottom ()),
-                                StatusBarItemShapeEndPoints);
-    statusBar ()->changeItem (i18n ("%1x%2")
-                                    .arg (rect.width ())
-                                    .arg (rect.height ()),
-                                StatusBarItemShapeSize);
-}
 
 #include <kpmainwindow.moc>

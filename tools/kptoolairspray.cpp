@@ -72,6 +72,12 @@ kpToolAirSpray::~kpToolAirSpray ()
 }
 
 
+// private
+QString kpToolAirSpray::haventBegunDrawUserMessage () const
+{
+    return i18n ("Click or drag to spray graffiti.");
+}
+
 // public virtual
 void kpToolAirSpray::begin ()
 {
@@ -93,6 +99,8 @@ void kpToolAirSpray::begin ()
             m_toolWidgetSpraycanSize->show ();
         }
     }
+
+    setUserMessage (haventBegunDrawUserMessage ());
 }
 
 // public virtual
@@ -104,6 +112,8 @@ void kpToolAirSpray::end ()
                     this, SLOT (slotSpraycanSizeChanged (int)));
         m_toolWidgetSpraycanSize = 0;
     }
+
+    setUserMessage (haventBegunDrawUserMessage ());
 }
 
 // private slot
@@ -125,6 +135,11 @@ void kpToolAirSpray::beginDraw ()
 
     // use a timer instead of reimplementing draw() (we don't draw all the time)
     m_timer->start (25);
+    
+    setUserMessage (i18n ("%1 to cancel.")
+                        .arg (mouseClickText (true/*other mouse button*/,
+                                              true/*start of sentence*/)));
+    
 }
 
 void kpToolAirSpray::draw (const QPoint &thisPoint, const QPoint &, const QRect &)
@@ -136,7 +151,7 @@ void kpToolAirSpray::draw (const QPoint &thisPoint, const QPoint &, const QRect 
         actuallyDraw ();
     }
 
-    emit mouseMoved (thisPoint);
+    setUserShapePoints (thisPoint);
 }
 
 void kpToolAirSpray::actuallyDraw ()
@@ -191,6 +206,13 @@ void kpToolAirSpray::cancelShape ()
     delete m_currentCommand;
     m_currentCommand = 0;
 #endif
+
+    setUserMessage (i18n ("Let go of all the mouse buttons."));
+}
+
+void kpToolAirSpray::releasedAllButtons ()
+{
+    setUserMessage (haventBegunDrawUserMessage ());
 }
 
 // virtual
@@ -203,6 +225,8 @@ void kpToolAirSpray::endDraw (const QPoint &, const QRect &)
 
     // don't delete - it's up to the commandHistory
     m_currentCommand = 0;
+    
+    setUserMessage (haventBegunDrawUserMessage ());
 }
 
 

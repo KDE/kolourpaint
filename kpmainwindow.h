@@ -37,6 +37,7 @@
 #include <kmainwindow.h>
 #include <kurl.h>
 
+#include <kpdefs.h>
 #include <kppixmapfx.h>
 
 
@@ -97,6 +98,9 @@ private:
     bool m_configShowPath;
     double m_configColorSimilarity;
 
+    bool m_configThumbnailShown;
+    QRect m_configThumbnailGeometry;
+
     void readGeneralSettings ();
     void readThumbnailSettings ();
     void init ();
@@ -151,24 +155,6 @@ public:
 private slots:
     void slotUpdateCaption ();
     void slotDocumentRestored ();
-
-private:
-    bool legalDocPoint (const QPoint &point) const;
-
-    enum
-    {
-        StatusBarItemDocInfo,
-        StatusBarItemShapeEndPoints,
-        StatusBarItemShapeSize
-    };
-
-private slots:
-    void slotUpdateStatusBar ();
-    void slotUpdateStatusBar (int docWidth, int docHeight);
-    void slotUpdateStatusBar (int docColorDepth);
-    void slotUpdateStatusBar (int docWidth, int docHeight, int docColorDepth);
-    void slotUpdateStatusBar (const QPoint &point);
-    void slotUpdateStatusBar (const QRect &srect);
 
 
     /*
@@ -365,6 +351,9 @@ private slots:
     void slotDestroyThumbnailInitatedByUser ();
     void slotCreateThumbnail ();
 
+private:
+    QTimer *m_thumbnailSaveConfigTimer;
+
 public:
     void notifyThumbnailGeometryChanged ();
 
@@ -435,6 +424,35 @@ private slots:
 
 
     /*
+     * Status Bar
+     */
+
+private:
+    enum
+    {
+        StatusBarItemMessage,
+        StatusBarItemShapePoints,
+        StatusBarItemShapeSize,
+        StatusBarItemDocSize,
+        StatusBarItemDocDepth,
+        StatusBarItemZoom
+    };
+
+    void addPermanentStatusBarItem (int id, int maxTextLen);
+    void createStatusBar ();
+
+private slots:
+    void slotUpdateStatusBarMessage (const QString &message = QString::null);
+    void slotUpdateStatusBarShapePoints (const QPoint &startPoint = KP_INVALID_POINT,
+                                         const QPoint &endPoint = KP_INVALID_POINT);
+    void slotUpdateStatusBarShapeSize (const QSize &size = KP_INVALID_SIZE);
+    void slotUpdateStatusBarDocSize (const QSize &size = KP_INVALID_SIZE);
+    void slotUpdateStatusBarDocDepth (int depth = 0);
+    void slotUpdateStatusBarZoom (int zoom = 0);
+    void slotUpdateStatusBar ();
+
+
+    /*
      * Text ToolBar
      */
 
@@ -465,28 +483,27 @@ private:
 
 private:
     // There is no need to maintain binary compatibility at this stage.
-    // The d-pointer is just so that you can experiment without recompiling.
+    // The d-pointer is just so that you can experiment without recompiling
+    // the kitchen sink.
     class kpMainWindowPrivate *d;
 };
 
-#include <qrect.h>
-class QTimer;
+class QLabel;
+class kpSqueezedTextLabel;
 
 class kpMainWindowPrivate
 {
 public:
     kpMainWindowPrivate ()
-        : m_timer (0)
     {
     }
-    
+
     ~kpMainWindowPrivate ()
     {
     }
 
-    bool m_configThumbnailShown;    
-    QRect m_configThumbnailGeometry;
-    QTimer *m_timer;
+    bool m_statusBarCreated;
+    kpSqueezedTextLabel *m_statusBarMessageLabel;
 };
 
 #endif  // __kpmainwindow_h__

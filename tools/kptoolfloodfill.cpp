@@ -58,6 +58,16 @@ kpToolFloodFill::~kpToolFloodFill ()
 {
 }
 
+QString kpToolFloodFill::haventBegunDrawUserMessage () const
+{
+    return i18n ("Click to fill a region.");
+}
+
+void kpToolFloodFill::begin ()
+{
+    setUserMessage (haventBegunDrawUserMessage ());
+}
+
 // virtual
 void kpToolFloodFill::beginDraw ()
 {
@@ -94,12 +104,16 @@ void kpToolFloodFill::beginDraw ()
     }
 
     QApplication::restoreOverrideCursor ();
+
+    setUserMessage (i18n ("%1 to cancel.")
+                        .arg (mouseClickText (true/*other mouse button*/,
+                                              true/*start of sentence*/)));
 }
 
 // virtual
 void kpToolFloodFill::draw (const QPoint &thisPoint, const QPoint &, const QRect &)
 {
-    emit mouseMoved (thisPoint);
+    setUserShapePoints (thisPoint);
 }
 
 // virtual
@@ -114,6 +128,13 @@ void kpToolFloodFill::cancelShape ()
     delete m_currentCommand;
     m_currentCommand = 0;
 #endif
+
+    setUserMessage (i18n ("Let go of all the mouse buttons."));
+}
+
+void kpToolFloodFill::releasedAllButtons ()
+{
+    setUserMessage (haventBegunDrawUserMessage ());
 }
 
 // virtual
@@ -124,6 +145,7 @@ void kpToolFloodFill::endDraw (const QPoint &, const QRect &)
 
     // don't delete
     m_currentCommand = 0;
+    setUserMessage (haventBegunDrawUserMessage ());
 }
 
 

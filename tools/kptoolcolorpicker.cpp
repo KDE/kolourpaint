@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -67,17 +67,31 @@ kpColor kpToolColorPicker::colorAtPixel (const QPoint &p)
     return kpPixmapFX::getColorAtPixel (*document ()->pixmap (), p);
 }
 
+
+QString kpToolColorPicker::haventBegunDrawUserMessage () const
+{
+    return i18n ("Click to select a color.");
+}
+
+void kpToolColorPicker::begin ()
+{
+    setUserMessage (haventBegunDrawUserMessage ());
+}
+
 // virtual
 void kpToolColorPicker::beginDraw ()
 {
     m_oldColor = color (m_mouseButton);
+    setUserMessage (i18n ("%1 to cancel.")
+                        .arg (mouseClickText (true/*other mouse button*/,
+                                              true/*start of sentence*/)));
 }
 
 // virtual
 void kpToolColorPicker::draw (const QPoint &thisPoint, const QPoint &, const QRect &)
 {
     mainWindow ()->colorToolBar ()->setColor (m_mouseButton, colorAtPixel (thisPoint));
-    emit mouseMoved (thisPoint);
+    setUserShapePoints (thisPoint);
 }
 
 // virtual
@@ -89,6 +103,14 @@ void kpToolColorPicker::cancelShape ()
 #else
     mainWindow ()->colorToolBar ()->setColor (m_mouseButton, m_oldColor);
 #endif
+
+    setUserMessage (i18n ("Let go of all the mouse buttons."));
+}
+
+void kpToolColorPicker::releasedAllButtons ()
+{
+    setUserMessage (haventBegunDrawUserMessage ());
+
 }
 
 // virtual
@@ -100,6 +122,7 @@ void kpToolColorPicker::endDraw (const QPoint &thisPoint, const QRect &)
                                             colorAtPixel (thisPoint), m_oldColor);
 
     mainWindow ()->commandHistory ()->addCommand (cmd, false /* no exec */);
+    setUserMessage (haventBegunDrawUserMessage ());
 }
 
 /*

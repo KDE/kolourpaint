@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -39,6 +39,8 @@
 
 #include <kptool.h>
 
+class QString;
+
 class kpColor;
 class kpMainWindow;
 class kpToolWidgetFillStyle;
@@ -61,12 +63,17 @@ public:
 
     virtual bool careAboutModifierState () const { return true; }
 
+private:
+    QString haventBegunDrawUserMessage () const;
+
+public:
     virtual void begin ();
     virtual void end ();
 
     virtual void beginDraw ();
     virtual void draw (const QPoint &, const QPoint &, const QRect &);
     virtual void cancelShape ();
+    virtual void releasedAllButtons ();
     virtual void endDraw (const QPoint &, const QRect &);
 
 private slots:
@@ -75,22 +82,22 @@ private slots:
 
     virtual void slotForegroundColorChanged (const kpColor &);
     virtual void slotBackgroundColorChanged (const kpColor &);
-    
+
 private:
     Mode m_mode;
-    
+
     kpToolWidgetLineWidth *m_toolWidgetLineWidth;
     kpToolWidgetFillStyle *m_toolWidgetFillStyle;
 
     void updatePen (int mouseButton);
     QPen m_pen [2], m_maskPen [2];
-    
+
     void updateBrush (int mouseButton);
     QBrush m_brush [2], m_maskBrush [2];
-    
+
     void applyModifiers ();
     QPoint m_toolRectangleStartPoint, m_toolRectangleEndPoint;
-    QRect m_toolRectangleRect;
+    QRect m_toolRectangleRectWithoutLineWidth, m_toolRectangleRect;
 };
 
 class kpToolRectangleCommand : public KCommand

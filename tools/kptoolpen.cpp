@@ -88,6 +88,24 @@ kpToolPen::~kpToolPen ()
 }
 
 
+// private
+QString kpToolPen::haventBegunDrawUserMessage () const
+{
+    switch (m_mode)
+    {
+    case Pen:
+    case Brush:
+        return i18n ("Click to draw dots or drag to draw strokes.");
+        return i18n ("Click to draw dots or drag to draw strokes.");
+    case Eraser:
+        return i18n ("Click or drag to erase.");
+    case ColorWasher:
+        return i18n ("Click or drag to erase pixels of the foreground color.");
+    default:
+        return QString::null;
+    }
+}
+
 // virtual
 void kpToolPen::begin ()
 {
@@ -122,6 +140,8 @@ void kpToolPen::begin ()
 
         viewManager ()->setCursor (kpCursorProvider::lightCross ());
     }
+
+    setUserMessage (haventBegunDrawUserMessage ());
 }
 
 // virtual
@@ -185,12 +205,16 @@ void kpToolPen::beginDraw ()
     // the cursor in the foreground colour -- just hide it in all cases
     // to avoid confusion
     viewManager ()->invalidateTempPixmap ();
+
+    setUserMessage (i18n ("%1 to cancel.")
+                        .arg (mouseClickText (true/*other mouse button*/,
+                                              true/*start of sentence*/)));
 }
 
 // virtual
 void kpToolPen::hover (const QPoint &point)
 {
-    if (!m_cursorPixmap.isNull ())
+    if (point != KP_INVALID_POINT && !m_cursorPixmap.isNull ())
     {
         m_mouseButton = 0;
 
@@ -235,7 +259,7 @@ void kpToolPen::hover (const QPoint &point)
     }
 #endif
 
-    emit mouseMoved (point);
+    setUserShapePoints (point);
 }
 
 bool kpToolPen::wash (QPainter *painter, QPainter *maskPainter,
@@ -815,7 +839,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
     }
 
     viewManager ()->restoreFastUpdates ();
-    emit mouseMoved (thisPoint);
+    setUserShapePoints (thisPoint);
 }
 
 // virtual
@@ -828,6 +852,13 @@ void kpToolPen::cancelShape ()
     m_currentCommand = 0;
 
     updateBrushCursor (false/*no recalc*/);
+
+    setUserMessage (i18n ("Let go of all the mouse buttons."));
+}
+
+void kpToolPen::releasedAllButtons ()
+{
+    setUserMessage (haventBegunDrawUserMessage ());
 }
 
 // virtual
@@ -840,6 +871,8 @@ void kpToolPen::endDraw (const QPoint &, const QRect &)
     m_currentCommand = 0;
 
     updateBrushCursor (false/*no recalc*/);
+    
+    setUserMessage (haventBegunDrawUserMessage ());
 }
 
 
@@ -977,7 +1010,7 @@ void kpToolPen::updateBrushCursor (bool recalc)
             m_cursorPixmap = m_brushPixmap [0];
     }
 
-    hover (m_currentPoint);
+    hover (hasBegun () ? m_currentPoint : currentPoint ());
 }
 
 

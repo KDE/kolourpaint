@@ -36,6 +36,7 @@
 class QPixmap;
 class QPoint;
 class QRect;
+class QString;
 class QTimer;
 
 class kpMainWindow;
@@ -51,6 +52,10 @@ public:
     kpToolAirSpray (kpMainWindow *);
     virtual ~kpToolAirSpray ();
 
+private:
+    QString haventBegunDrawUserMessage () const;
+
+public:
     virtual void begin ();
     virtual void end ();
 
@@ -61,6 +66,7 @@ public:
     virtual void beginDraw ();
     virtual void draw (const QPoint &thisPoint, const QPoint &, const QRect &);
     virtual void cancelShape ();
+    virtual void releasedAllButtons ();
     virtual void endDraw (const QPoint &, const QRect &);
 
 public slots:
