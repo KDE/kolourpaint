@@ -73,8 +73,8 @@ void kpToolSelection::begin ()
     viewManager ()->setSelectionBorderFinished (true);
 
     m_startDragFromSelectionTopLeft = QPoint ();
-    m_dragMoving = false;
-    m_haventDraggedYet = true;
+    m_dragIsMove = false;
+    m_dragHasBegun = false;
 
     m_currentPullFromDocumentCommand = 0;
     m_currentMoveCommand = 0;
@@ -100,7 +100,8 @@ void kpToolSelection::beginDraw ()
     if (m_mouseButton != 0/*left*/)
         return;
 
-    m_dragMoving = false;
+    m_dragIsMove = false;
+    m_dragHasBegun = false;
 
     if (document ()->selection ())
     {
@@ -116,8 +117,7 @@ void kpToolSelection::beginDraw ()
         #endif
 
             m_startDragFromSelectionTopLeft = m_currentPoint - selectionRect.topLeft ();
-            m_dragMoving = true;
-            m_haventDraggedYet = true;
+            m_dragIsMove = true;
 
             // don't show border while moving (or when we start to move)
             viewManager ()->setSelectionBorderVisible (false);
@@ -134,7 +134,7 @@ void kpToolSelection::beginDraw ()
     }
 
     // creating new selection?
-    if (!m_dragMoving)
+    if (!m_dragIsMove)
     {
         viewManager ()->setSelectionBorderVisible (true);
         viewManager ()->setSelectionBorderFinished (false);
@@ -164,7 +164,14 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
     if (m_mouseButton != 0/*left*/)
         return;
 
-    if (!m_dragMoving)
+    // Prevent both NOP drag-moves and unintentional 1-pixel selections
+    const bool beganOperation = (m_dragHasBegun ||
+                                 (!m_dragHasBegun && thisPoint != m_startPoint));
+    if (!beganOperation)
+        return;
+
+
+    if (!m_dragIsMove)
     {
     #if DEBUG_KP_TOOL_SELECTION
         kdDebug () << "\tnot moving - resizing rect to" << normalizedRect
@@ -205,7 +212,7 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
 
         viewManager ()->setSelectionBorderVisible (true);
     }
-    else if (!m_haventDraggedYet || (m_haventDraggedYet && thisPoint != m_startPoint))
+    else
     {
     #if DEBUG_KP_TOOL_SELECTION && 0
        kdDebug () << "\tmoving selection" << endl;
@@ -230,7 +237,7 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
         //viewManager ()->setQueueUpdates ();
         //viewManager ()->setFastUpdates ();
 
-        if (m_haventDraggedYet && (m_controlPressed || m_shiftPressed))
+        if (!m_dragHasBegun && (m_controlPressed || m_shiftPressed))
             m_currentMoveCommand->copyOntoDocument ();
 
     #if DEBUG_KP_TOOL_SELECTION && 0
@@ -250,10 +257,9 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
 
         //viewManager ()->restoreFastUpdates ();
         //viewManager ()->restoreQueueUpdates ();
-
-
-        m_haventDraggedYet = false;
     }
+
+    m_dragHasBegun = true;
 }
 
 // virtual
@@ -271,7 +277,7 @@ void kpToolSelection::cancelShape ()
         return;
     }
 
-    if (m_dragMoving)
+    if (m_dragIsMove)
     {
     #if DEBUG_KP_TOOL_SELECTION
         kdDebug () << "\twas drag moving - undo drag and undo acquire" << endl;
