@@ -77,7 +77,7 @@ QString kpMainWindow::actionResizeScaleText () const
     {
         if (isTextSelection ())
         {
-            return i18n ("R&esize");
+            return i18n ("R&esize...");
         }
         else
         {
