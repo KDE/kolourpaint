@@ -2,6 +2,16 @@
 KolourPaint 1.2 Series (KDE_3_3_BRANCH)
 ======================
 
+   * Fix selection regressions introduced in 1.2:
+     - Make selection dragging with CTRL work again (copies selection onto
+       document)
+     - When creating freeform selections, include the starting point; also
+       avoids a QRegion crash with constructing 1-point regions
+   * Fix other selection bugs:
+     - When the user drags very quickly on a resize handle, resize the
+       selection instead of moving it
+     - Draw resize handles above the grid lines - not below - so that the
+       handles are always visible if they are supposed to be there
    * Update image format associations to all formats supported by KDE 3.3
    * Fix remaining untranslatable strings (closing KDE Bug #85785)
    * Update docs (README, NEWS, ...)

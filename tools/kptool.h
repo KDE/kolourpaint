@@ -149,8 +149,10 @@ public slots:
     // line.  The statubar gets correct coordinates.  etc. etc.
     void somethingBelowTheCursorChanged ();
 
+private:
     // Same as above except that you claim you know better than currentPoint()
-    void somethingBelowTheCursorChanged (const QPoint &currentPoint_);
+    void somethingBelowTheCursorChanged (const QPoint &currentPoint_,
+                                         const QPoint &currentViewPoint_);
 
 public:
     // called when the tool is selected
@@ -211,7 +213,7 @@ protected:
     virtual void beginDraw ();
 
     // mouse move without button pressed
-    // (only m_currentPoint is defined)
+    // (only m_currentPoint & m_currentViewPoint is defined)
     virtual void hover (const QPoint &point);
 
     // this is useful for "instant" tools like the Pen & Eraser
@@ -277,7 +279,9 @@ protected:
     int m_mouseButton;  /* 0 = left, 1 = right */
     bool m_shiftPressed, m_controlPressed, m_altPressed;  // m_altPressed is unreliable
     bool m_beganDraw;  // set after beginDraw() is called, unset before endDraw() is called
-    QPoint m_startPoint, m_currentPoint, m_lastPoint;
+    QPoint m_startPoint,
+           m_currentPoint, m_currentViewPoint,
+           m_lastPoint;
 
 protected:
     friend class kpCommandHistory;

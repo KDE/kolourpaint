@@ -92,7 +92,7 @@ bool kpToolSelection::onSelectionToMove () const
     if (!v)
         return 0;
 
-    return v->mouseOnSelectionToMove ();
+    return v->mouseOnSelectionToMove (m_currentViewPoint);
 }
 
 // protected
@@ -102,7 +102,7 @@ int kpToolSelection::onSelectionResizeHandle () const
     if (!v)
         return 0;
 
-    return v->mouseOnSelectionResizeHandle ();
+    return v->mouseOnSelectionResizeHandle (m_currentViewPoint);
 }
 
 // protected
@@ -112,7 +112,7 @@ bool kpToolSelection::onSelectionToSelectText () const
     if (!v)
         return 0;
 
-    return v->mouseOnSelectionToSelectText ();
+    return v->mouseOnSelectionToSelectText (m_currentViewPoint);
 }
 
 
@@ -239,7 +239,11 @@ void kpToolSelection::reselect ()
 void kpToolSelection::beginDraw ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelection::beginDraw() CALLED" << endl;
+    kdDebug () << "kpToolSelection::beginDraw() m_startPoint="
+               << m_startPoint
+               << " QCursor::pos() view startPoint="
+               << m_viewUnderStartPoint->mapFromGlobal (QCursor::pos ())
+               << endl;
 #endif
 
     m_createNOPTimer->stop ();
@@ -267,7 +271,7 @@ void kpToolSelection::beginDraw ()
     if (sel)
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "\thas sel region" << endl;
+        kdDebug () << "\thas sel region rect=" << sel->boundingRect () << endl;
     #endif
         QRect selectionRect = sel->boundingRect ();
 
@@ -345,6 +349,11 @@ const QCursor &kpToolSelection::cursor () const
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
     kdDebug () << "kpToolSelection::cursor()"
+               << " m_currentPoint=" << m_currentPoint
+               << " QCursor::pos() view under cursor="
+               << (viewUnderCursor () ?
+                    viewUnderCursor ()->mapFromGlobal (QCursor::pos ()) :
+                    KP_INVALID_POINT)
                << " controlOrShiftPressed=" << controlOrShiftPressed ()
                << endl;
 #endif
@@ -462,6 +471,14 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
     }
 
 
+    // OPT: return when thisPoint == m_lastPoint so that e.g. when creating
+    //      Points sel, press modifiers doesn't add multiple points in same
+    //      place
+
+
+    bool nextDragHasBegun = true;
+
+
     if (m_dragType == Create)
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
@@ -498,6 +515,9 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
         {
             if (m_mode != kpToolSelection::Text)
             {
+            #if DEBUG_KP_TOOL_SELECTION && 1
+                kdDebug () << "\tnon-text NOP - return" << endl;
+            #endif
                 setUserShapePoints (thisPoint);
                 return;
             }
@@ -506,15 +526,26 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
                 // Attempt to deselect text box by clicking?
                 if (m_hadSelectionBeforeDrag)
                 {
+                #if DEBUG_KP_TOOL_SELECTION && 1
+                    kdDebug () << "\ttext box deselect - NOP - return" << endl;
+                #endif
                     setUserShapePoints (thisPoint);
                     return;
                 }
 
-                // User is creating a text box using a single click
+                // Drag-wise, this is a NOP so we'd normally return (hence
+                // m_dragHasBegun would not change).  However, as a special
+                // case, allow user to create a text box using a single
+                // click.  But don't set m_dragHasBegun for next iteration
+                // since it would be untrue.
+                //
+                // This makes sure that a single click creation of text box
+                // works even if draw() is invoked more than once at the
+                // same position (esp. with accidental drag suppression
+                // (above)).
+                nextDragHasBegun = false;
             }
         }
-        else
-            m_dragHasBegun = true;
 
 
         switch (m_mode)
@@ -539,6 +570,9 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             // Just a click?
             if (!m_dragHasBegun && thisPoint == m_startPoint)
             {
+            #if DEBUG_KP_TOOL_SELECTION && 1
+                kdDebug () << "\tclick creating text box" << endl;
+            #endif
                 minimumWidth = kpSelection::preferredMinimumWidthForTextStyle (textStyle);
                 if (thisPoint.x () >= m_startPoint.x ())
                 {
@@ -577,6 +611,9 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             }
             else
             {
+            #if DEBUG_KP_TOOL_SELECTION && 1
+                kdDebug () << "\tdrag creating text box" << endl;
+            #endif
                 minimumWidth = kpSelection::minimumWidthForTextStyle (textStyle);
                 minimumHeight = kpSelection::minimumHeightForTextStyle (textStyle);
             }
@@ -662,7 +699,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
 
 
             document ()->setSelection (kpSelection (points, mainWindow ()->selectionTransparency ()));
-        #if DEBUG_KP_TOOL_SELECTION && 0
+        #if DEBUG_KP_TOOL_SELECTION && 1
             kdDebug () << "\t\tfreeform; #points=" << document ()->selection ()->points ().count () << endl;
         #endif
 
@@ -723,8 +760,6 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             return;
         }
 
-        m_dragHasBegun = true;
-
 
         if (!sel->pixmap () && !m_currentPullFromDocumentCommand)
         {
@@ -783,8 +818,6 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             return;
         }
 
-        m_dragHasBegun = true;
-
 
         if (!sel->pixmap () && !m_currentPullFromDocumentCommand)
         {
@@ -830,6 +863,14 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
                               newHeight + (thisPoint.y () - m_startPoint.y ()));
         }
 
+    #if DEBUG_KP_TOOL_SELECTION && 1
+        kdDebug () << "\t\tnewX=" << newX
+                   << " newY=" << newY
+                   << " newWidth=" << newWidth
+                   << " newHeight=" << newHeight
+                   << endl;
+    #endif
+
 
         viewManager ()->setFastUpdates ();
         m_currentResizeScaleCommand->resizeAndMoveTo (newWidth, newHeight,
@@ -845,6 +886,9 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
         setUserShapeSize (newWidth - originalSelection.width (),
                           newHeight - originalSelection.height ());
     }
+
+
+    m_dragHasBegun = nextDragHasBegun;
 }
 
 // virtual
