@@ -43,6 +43,7 @@ class QTimer;
 
 class kpMainWindow;
 class kpToolAirSprayCommand;
+class kpToolWidgetSpraycanSize;
 class kpViewManager;
 
 class kpToolAirSpray : public kpTool
@@ -53,6 +54,13 @@ public:
     kpToolAirSpray (kpMainWindow *);
     virtual ~kpToolAirSpray ();
 
+    virtual void begin ();
+    virtual void end ();
+
+private slots:
+    void slotSpraycanSizeChanged (int size);
+    
+public:
     virtual void beginDraw ();
     virtual void draw (const QPoint &thisPoint, const QPoint &, const QRect &);
     virtual void cancelShape ();
@@ -62,15 +70,17 @@ public slots:
     void actuallyDraw ();
 
 private:
+    kpToolWidgetSpraycanSize *m_toolWidgetSpraycanSize;
     kpToolAirSprayCommand *m_currentCommand;
     QTimer *m_timer;
-    int m_radius;
+    int m_size;
 };
 
 class kpToolAirSprayCommand : public KCommand
 {
 public:
-    kpToolAirSprayCommand (kpDocument *document, kpViewManager *viewManager, const QPen &pen);
+    kpToolAirSprayCommand (const QPen &pen, int size,
+                           kpDocument *document, kpViewManager *viewManager);
     virtual ~kpToolAirSprayCommand ();
 
     virtual void execute ();
@@ -79,15 +89,16 @@ public:
     virtual QString name () const;
 
     // interface for KToolAirSpray
-    void addPoints (const QRect &docRect, const QPointArray &points);
+    void addPoints (const QPointArray &points);
     void finalize ();
     void cancel ();
 
 private:
+    QPen m_pen;
+    int m_size;
+
     kpDocument *m_document;
     kpViewManager *m_viewManager;
-
-    QPen m_pen;
 
     QPixmap *m_newPixmapPtr;
     QPixmap m_oldPixmap;

@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_TOOL_SPRAYCAN 1
+
 #include <stdlib.h>
 
 #include <qpainter.h>
@@ -46,6 +48,8 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kptoolairspray.h>
+#include <kptooltoolbar.h>
+#include <kptoolwidgetspraycansize.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
 
@@ -56,8 +60,7 @@
 
 kpToolAirSpray::kpToolAirSpray (kpMainWindow *mainWindow)
     : kpTool (i18n ("Spraycan"), i18n ("Sprays graffiti"), mainWindow, "tool_spraycan"),
-      m_currentCommand (0),
-      m_radius (5)
+      m_currentCommand (0)
 {
     m_timer = new QTimer (this);
     connect (m_timer, SIGNAL (timeout ()), this, SLOT (actuallyDraw ()));
@@ -69,10 +72,53 @@ kpToolAirSpray::~kpToolAirSpray ()
 }
 
 
+// public virtual
+void kpToolAirSpray::begin ()
+{
+    kpToolToolBar *tb = toolToolBar ();
+
+    m_toolWidgetSpraycanSize = 0;
+    m_size = 10;
+    
+    if (tb)
+    {
+        m_toolWidgetSpraycanSize = tb->toolWidgetSpraycanSize ();
+        
+        if (m_toolWidgetSpraycanSize)
+        {
+            m_size = m_toolWidgetSpraycanSize->spraycanSize ();
+            connect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged (int)),
+                     this, SLOT (slotSpraycanSizeChanged (int)));
+            
+            m_toolWidgetSpraycanSize->show ();
+        }
+    }
+}
+
+// public virtual
+void kpToolAirSpray::end ()
+{
+    if (m_toolWidgetSpraycanSize)
+    {
+        disconnect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged (int)),
+                    this, SLOT (slotSpraycanSizeChanged (int)));
+        m_toolWidgetSpraycanSize = 0;
+    }
+}
+
+// private slot    
+void kpToolAirSpray::slotSpraycanSizeChanged (int size)
+{
+    m_size = size;
+}
+
+
 void kpToolAirSpray::beginDraw ()
 {
-    m_currentCommand = new kpToolAirSprayCommand (document (), viewManager (),
-                                                  QPen (color (m_mouseButton)));
+    m_currentCommand = new kpToolAirSprayCommand (
+        QPen (color (m_mouseButton)),
+        m_size,
+        document (), viewManager ());
 
     // without delay
     actuallyDraw ();
@@ -83,30 +129,51 @@ void kpToolAirSpray::beginDraw ()
 
 void kpToolAirSpray::draw (const QPoint &thisPoint, const QPoint &, const QRect &)
 {
+    // if the user is moving the spray, make the spray line continuous
+    if (thisPoint != m_lastPoint)
+    {
+        // without delay
+        actuallyDraw ();
+    }
+
     emit mouseMoved (thisPoint);
 }
 
 void kpToolAirSpray::actuallyDraw ()
 {
     QPointArray pArray (10);
+    int numPoints = 0;
+
     QPoint p = m_currentPoint;
+
+#if DEBUG_KP_TOOL_SPRAYCAN
+    kdDebug () << "kpToolAirSpray::actuallyDraw() currentPoint=" << p
+               << " size=" << m_size
+               << endl;
+#endif
+
+    int radius = m_size / 2;
+
     for (int i = 0; i < 10; i++)
     {
         int dx, dy;
 
-        dx = (rand () % (2 * m_radius)) - m_radius;
-        dy = (rand () % (2 * m_radius)) - m_radius;
+        dx = (rand () % m_size) - radius;
+        dy = (rand () % m_size) - radius;
 
         // make it look circular
         // OPT: can be done better
-        if (dx * dx + dy * dy <= m_radius * m_radius)
-            pArray.setPoint (i, p.x () + dx, p.y () + dy);
+        if (dx * dx + dy * dy <= radius * radius)
+            pArray [numPoints++] = QPoint (p.x () + dx, p.y () + dy);
     }
 
-    // leave the command to draw
-    // TODO: I bet you have a one-off error there
-    m_currentCommand->addPoints (QRect (p.x () - m_radius, p.y () - m_radius,
-                                        2 * m_radius, 2 * m_radius), pArray);
+    pArray.resize (numPoints);
+
+    if (numPoints > 0)
+    {
+        // leave the command to draw
+        m_currentCommand->addPoints (pArray);
+    }
 }
 
 // virtual
@@ -142,11 +209,12 @@ void kpToolAirSpray::endDraw (const QPoint &, const QRect &)
  * kpToolAirSprayCommand
  */
 
-kpToolAirSprayCommand::kpToolAirSprayCommand (kpDocument *document, kpViewManager *viewManager,
-                                              const QPen &pen)
-    : m_document (document),
+kpToolAirSprayCommand::kpToolAirSprayCommand (const QPen &pen, int size,
+                                              kpDocument *document, kpViewManager *viewManager)
+    : m_pen (pen),
+      m_size (size),
+      m_document (document),
       m_viewManager (viewManager),
-      m_pen (pen),
       m_newPixmapPtr (0)
 {
     m_oldPixmap = *document->pixmap ();
@@ -191,14 +259,24 @@ void kpToolAirSprayCommand::unexecute ()
     m_document->setPixmapAt (m_oldPixmap, m_boundingRect.topLeft ());
 }
 
-// virtual
+// public virtual [base KCommand]
 QString kpToolAirSprayCommand::name () const
 {
     return i18n ("Air Spray");
 }
 
-void kpToolAirSprayCommand::addPoints (const QRect &docRect, const QPointArray &points)
+// public
+void kpToolAirSprayCommand::addPoints (const QPointArray &points)
 {
+    QRect docRect = points.boundingRect ();
+
+#if DEBUG_KP_TOOL_SPRAYCAN
+    kdDebug () << "kpToolAirSprayCommand::addPoints() docRect=" << docRect
+               << " numPoints=" << points.count () << endl;
+    for (int i = 0; i < (int) points.count (); i++)
+        kdDebug () << "\t" << i << ": " << points [i] << endl;
+#endif
+
     QPixmap pixmap = m_document->getPixmapAt (docRect);
     QPainter painter;
 
