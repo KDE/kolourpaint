@@ -7,22 +7,21 @@ tagged on the mainline up to (and including) the forkpoint and of course,
 its changes.
 
 
-   * Fix crash after using the Colour Picker if it was the first used tool
-     [kolourpaint-1.2.2_kde3-color_picker_crash.diff]
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
-   * Fix crash due to text box when scaling image behind it
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
-   * Empty text clipboard fixes:
-     - Don't get stuck on a wait cursor after attempting to paste empty
-       text into a text box
-     - Prevent pasting text from creating a new text box if text is empty
-     - Prevent copying of empty text box
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
-   * Smaller selection and text box resize handles (visually not
-     actually) - covers up fewer selected pixels, doesn't cover up text
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
-   * Restore mouse cursor after deselecting selection/text tools
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+KolourPaint 1.4_light Series (KDE_3_4_BRANCH)
+============================
+
+KolourPaint 1.4_light (Frozen 2005-02-03)
+   * Antialias text when the text box has a transparent background
+   * Add Unzoomed Thumbnail Mode and Thumbnail Rectangle
+   * Add RMB context menu for when a selection tool is active (closing KDE
+     Bug #92882)
+   * More intuitive "Set as Image" behaviour (esp. with selection borders).
+     Thanks to Michael Lake for the feedback.
+   * InputMethod support
+   * Save "More Effects" dialog's last effect to config file
+   * Save "Resize / Scale" dialog's last "Keep aspect ratio" setting to
+     config file
+   * Add "Help / Acquiring Screenshots"
    * Fix selection regressions introduced in 1.2:
      - Make selection dragging with CTRL work again (copies selection onto
        document)
@@ -35,6 +34,17 @@ its changes.
      - Draw resize handles above the grid lines - not below - so that the
        handles are always visible if they are supposed to be there
      [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+   * Smaller selection and text box resize handles (visually not
+     actually) - covers up fewer selected pixels, doesn't cover up text
+     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+   * Restore mouse cursor after deselecting selection/text tools
+     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+   * Empty text clipboard fixes:
+     - Don't get stuck on a wait cursor after attempting to paste empty
+       text into a text box
+     - Prevent pasting text from creating a new text box if text is empty
+     - Prevent copying of empty text box
+     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
    * Speed up renderer (most noticeable with diagonal drag-scrolling at
      high zoom)
      - Don't paint anything outside of the view's visible region
@@ -46,10 +56,20 @@ its changes.
      filedialog, make sure "Convert to:" and "Quality:" are correctly
      rendered (hacking around a Qt redraw glitch)
      [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
-   * Update image format associations to all formats supported by KDE 3.3
+   * Fix crash after using the Colour Picker if it was the first used tool
+     [kolourpaint-1.2.2_kde3-color_picker_crash.diff]
      [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+   * Fix crash due to text box when scaling image behind it
+     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+   * Even when the thumbnail has focus (and not the main window), blink the
+     text cursor in all views
+     [kolourpaint-1.2.2_kde3-thumbnail_blink_text_cursor.diff]
+     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+   * Correct "Soften" and "Sharpen" commands' command history names
+   * Correct invert commands' command history names
    * Fix remaining untranslatable strings (closing KDE Bug #85785)
      [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+   * Update image format associations to all formats supported by KDE 3.4
    * Remove unused images in doc directory
      [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
    * Correct kolourpaint.desktop "Terminal=" and "Categories=" syntax
