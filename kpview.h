@@ -64,6 +64,8 @@ public:
     bool hasVariableZoom () const;
 
     // all incompatible with autoVariableZoom
+    int zoomLevelX (void) const;
+    int zoomLevelY (void) const;
     bool setZoomLevel (int hzoom, int vzoom);
     void showGrid (bool yes = true);
     bool canShowGrid (int hzoom = -1, int vzoom = -1) const;

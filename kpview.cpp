@@ -139,6 +139,16 @@ bool kpView::updateVariableZoom (int viewWidth, int viewHeight)
     return true;
 }
 
+int kpView::zoomLevelX (void) const
+{
+    return m_hzoom;
+}
+
+int kpView::zoomLevelY (void) const
+{
+    return m_vzoom;
+}
+
 bool kpView::setZoomLevel (int hzoom, int vzoom)
 {
     if (hasVariableZoom ())
