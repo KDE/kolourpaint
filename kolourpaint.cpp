@@ -59,9 +59,9 @@ int main (int argc, char *argv [])
     KAboutData aboutData
     (
         "kolourpaint",
-        I18N_NOOP("KolourPaint"),
-        "1.3_UNSTABLE",  // SYNC: with VERSION
-        I18N_NOOP("Paint Program for KDE"),
+        I18N_NOOP ("KolourPaint"),
+        "1.4_lite",  // SYNC: with VERSION
+        I18N_NOOP ("Paint Program for KDE"),
         KAboutData::License_Custom,
         "Copyright (c) 2003,2004,2005 Clarence Dang",
         0,
