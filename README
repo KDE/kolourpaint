@@ -77,7 +77,7 @@ KolourPaint that has not even reached the 1.0 mark.  This is NOT an official
 release, nor is it intended for production purposes.
 
 It is anticipated that a _polished_ 1.0 release will be available within
-3 months.  It won't be yet another paint program that can't Undo/Redo.
+1 month.  It won't be yet another paint program that can't Undo/Redo.
 
 Until then, please consider helping out with code, documentation and/or
 donations.  The file TODO contains a list of planned and unfinished tasks.
