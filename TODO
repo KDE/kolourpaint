@@ -99,3 +99,9 @@ maybe allow editing when a selection is active (selection becomes bounding rect)
 
 DCOP scriptable
 
+"a simple plugins framework that allows plugins to be written in various
+languages (C, Python and Perl being the obvious choices) to allow people to
+extend it into the realms of PaintShop Pro without impacting on the core
+philosophy of the app, which seems to be simplicity." -- Tom
+
+
