@@ -87,8 +87,17 @@ double kpColorSimilarityCube::colorSimilarity () const
 // public
 void kpColorSimilarityCube::setColorSimilarity (double similarity)
 {
+#if DEBUG_KP_COLOR_SIMILARITY_CUBE
+    kdDebug () << "kpColorSimilarityCube::setColorSimilarity(" << similarity << ")" << endl;
+#endif
+    
     if (m_colorSimilarity == similarity)
         return;
+
+    if (similarity < 0)
+        similarity = 0;
+    else if (similarity > kpColorSimilarityDialog::maximumColorSimilarity)
+        similarity = kpColorSimilarityDialog::maximumColorSimilarity;
 
     m_colorSimilarity = similarity;
 
