@@ -371,7 +371,7 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
                 i18n ("<qt><p>The <b>%1</b> format may not be able"
                       " to preserve all of the image's color information.</p>"
 
-                      "<p>Are you sure you want to save in this format?</p></qt")
+                      "<p>Are you sure you want to save in this format?</p></qt>")
                     .arg (KMimeType::mimeType (saveOptions.mimeType ())->comment ()),
                 i18n ("Lossy File Format"),
                 KStdGuiItem::save (),
