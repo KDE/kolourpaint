@@ -112,6 +112,7 @@ void kpDualColorButton::setColor (int which, const kpColor &color)
     if (m_color [which] == color)
         return;
 
+    m_oldColor [which] = m_color [which];
     m_color [which] = color;
     update ();
 
@@ -129,6 +130,19 @@ void kpDualColorButton::setForegroundColor (const kpColor &color)
 void kpDualColorButton::setBackgroundColor (const kpColor &color)
 {
     setColor (1, color);
+}
+
+
+// public
+kpColor kpDualColorButton::oldForegroundColor () const
+{
+    return m_oldColor [0];
+}
+
+// public
+kpColor kpDualColorButton::oldBackgroundColor () const
+{
+    return m_oldColor [1];
 }
 
 
@@ -244,6 +258,9 @@ void kpDualColorButton::mouseReleaseEvent (QMouseEvent *e)
     #if DEBUG_KP_COLOR_TOOL_BAR && 1
         kdDebug () << "kpDualColorButton::mouseReleaseEvent() swap colors:" << endl;
     #endif
+        m_oldColor [0] = m_color [0];
+        m_oldColor [1] = m_color [1];
+
         kpColor temp = m_color [0];
         m_color [0] = m_color [1];
         m_color [1] = temp;
@@ -812,6 +829,8 @@ int kpColorSimilarityToolBarItem::processedColorSimilarity () const
 // public slot
 void kpColorSimilarityToolBarItem::setColorSimilarity (double similarity)
 {
+    m_oldColorSimilarity = colorSimilarity ();
+
     kpColorSimilarityCube::setColorSimilarity (similarity);
     if (similarity > 0)
         QToolTip::add (this, i18n ("Color Similarity: %1%").arg (qRound (similarity * 100)));
@@ -823,6 +842,12 @@ void kpColorSimilarityToolBarItem::setColorSimilarity (double similarity)
     m_mainWindow->configSetColorSimilarity (colorSimilarity ());
 
     emit colorSimilarityChanged (colorSimilarity (), m_processedColorSimilarity);
+}
+
+// public
+double kpColorSimilarityToolBarItem::oldColorSimilarity () const
+{
+    return m_oldColorSimilarity;
 }
 
 
@@ -965,6 +990,22 @@ kpColor kpColorToolBar::backgroundColor () const
 void kpColorToolBar::setBackgroundColor (const kpColor &color)
 {
     m_dualColorButton->setBackgroundColor (color);
+}
+
+
+kpColor kpColorToolBar::oldForegroundColor () const
+{
+    return m_dualColorButton->oldForegroundColor ();
+}
+
+kpColor kpColorToolBar::oldBackgroundColor () const
+{
+    return m_dualColorButton->oldBackgroundColor ();
+}
+
+double kpColorToolBar::oldColorSimilarity () const
+{
+    return m_colorSimilarityToolBarItem->oldColorSimilarity ();
 }
 
 

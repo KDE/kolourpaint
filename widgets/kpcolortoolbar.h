@@ -79,6 +79,12 @@ signals:
     void backgroundColorChanged (const kpColor &color);
 
 public:
+    // (only valid in slots connected to foregroundColorChanged())
+    kpColor oldForegroundColor () const;
+    // (only valid in slots connected to backgroundColorChanged())
+    kpColor oldBackgroundColor () const;
+
+public:
     virtual QSize sizeHint () const;
 
 protected:
@@ -99,6 +105,7 @@ protected:
 
     kpMainWindow *m_mainWindow;
     kpColor m_color [2];
+    kpColor m_oldColor [2];
     QPixmap *m_backBuffer;
 };
 
@@ -210,6 +217,10 @@ public slots:
 signals:
     void colorSimilarityChanged (double similarity, int processedSimilarity);
 
+public:
+    // (only valid in slots connected to colorSimilarityChanged());
+    double oldColorSimilarity () const;
+
 private:
     virtual void mousePressEvent (QMouseEvent *e);
     virtual void mouseDoubleClickEvent (QMouseEvent *e);
@@ -217,6 +228,7 @@ private:
 private:
     kpMainWindow *m_mainWindow;
 
+    double m_oldColorSimilarity;
     int m_processedColorSimilarity;
 };
 
@@ -243,6 +255,15 @@ signals:
     void foregroundColorChanged (const kpColor &color);
     void backgroundColorChanged (const kpColor &color);
     void colorSimilarityChanged (double similarity, int processedSimilarity);
+
+public:
+    // (only valid in slots connected to foregroundColorChanged())
+    kpColor oldForegroundColor () const;
+    // (only valid in slots connected to backgroundColorChanged())
+    kpColor oldBackgroundColor () const;
+
+    // (only valid in slots connected to colorSimilarityChanged())
+    double oldColorSimilarity () const;
 
 public slots:
     void setForegroundColor (const kpColor &color);
