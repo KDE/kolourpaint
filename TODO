@@ -11,6 +11,17 @@ here:
 
 Update kolourpaint.desktop MimeType= line
 
+Dries Verachtert:
+"
+Please note that the make install of kolourpaint places the desktop file 
+in /usr/share/applications/kde/ and not in /usr/share/applications which 
+should be used following the freedesktop standard (so it works in freedesktop 
+compatible windowmanagers like kde and gnome). Now it only works in kde i 
+think.
+Please also note that the Categories should contain 'Application' within the 
+desktop file to be freedesktop compatible.
+"
+
 
 KolourPaint 1.2
 ~~~~~~~~~~~~~~~
