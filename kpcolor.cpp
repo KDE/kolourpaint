@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_COLOR 1
+#define DEBUG_KP_COLOR 0
 
 
 #include <kdebug.h>
@@ -95,6 +95,27 @@ kpColor::kpColor (const kpColor &rhs)
        m_colorCacheIsValid (rhs.m_colorCacheIsValid),
        m_colorCache (rhs.m_colorCache)
 {
+}
+
+// friend
+QDataStream &operator<< (QDataStream &stream, const kpColor &color)
+{
+    stream << int (color.m_rgbaIsValid) << int (color.m_rgba);
+
+    return stream;
+}
+
+// friend
+QDataStream &operator>> (QDataStream &stream, kpColor &color)
+{
+    int a, b;
+    stream >> a >> b;
+    color.m_rgbaIsValid = a;
+    color.m_rgba = b;
+    
+    color.m_colorCacheIsValid = false;
+
+    return stream;
 }
 
 kpColor &kpColor::operator= (const kpColor &rhs)
@@ -170,7 +191,7 @@ bool kpColor::isSimilarTo (const kpColor &rhs, int processedSimilarity) const
     if (m_rgba == rhs.m_rgba)
         return true;
 
-    
+
     if (processedSimilarity == kpColor::Exact)
         return false;
     else

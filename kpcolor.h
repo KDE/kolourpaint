@@ -32,6 +32,8 @@
 
 #include <qcolor.h>
 
+class QDataStream;
+
 
 //
 // kpColor is an object-oriented abstraction of QRgb, with the additional
@@ -52,6 +54,8 @@ public:
     kpColor (int red, int green, int blue, bool isTransparent = false);
     kpColor (const QRgb &rgba);
     kpColor (const kpColor &rhs);
+    friend QDataStream &operator<< (QDataStream &stream, const kpColor &color);
+    friend QDataStream &operator>> (QDataStream &stream, kpColor &color);
     kpColor &operator= (const kpColor &rhs);
     bool operator== (const kpColor &rhs) const;
     bool operator!= (const kpColor &rhs) const;
