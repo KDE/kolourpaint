@@ -23,12 +23,10 @@ Hypothesis: kpPixmapFX::getPixmapAt() defines undefined pixels as transparent
 1. creating new text selection sucks a lot of CPU
 6. resizing doc flickers
 7. emulate3buttons cancel
-11. draw rectangle and land on doc resize handle - wrong status mess
 9. speed up drag scroll
 7. resize doc or sel freehand and usershapepoints have , not x even though is dimen, not point
 17. delayed kpcommand popupmenu creation
 20. setup.bmp monochrome open and save loses a lot of info
-mosfet's image effects don't respect alpha - hack around it
 verify gamma, check contrast,brightness,gamma order
 
 option to dither image on open if not enough colors else that season jpg
@@ -38,13 +36,16 @@ looks bad on 8-bit screen
   darkgreen document)
 QColor::enterAllocContext () looks interesting
  
+my unfinished patches in changes/ local
+
+
 --------
 
 
 Low Priority
 ------------
 
-15. edit/paste may disappear due to klipper - file bug report
+15. fix edit/paste may disappear due to klipper - Bug #85456
 10. delta drawing of resize line to stop flicker
 21. use KSaveFile for atomic writes - if the temp is put in the same place as
     dest, what about small media like floppy?
@@ -97,6 +98,11 @@ Ideas:
 - do something about this horrible tempPixmap hack (so slooooow)
 Bug #6: modified states incorrectly set
 
+draw rectangle and land on doc resize handle - wrong status mess
+- that's a problem with Qt not giving EnterEvents when the mouse move is
+  initiated from another object (see kpViewManager::viewUnderCursor() for
+  the same problem)
+  
 allow user to hide Tool Box & Colour Palette if they really insist (it is possible to ALT+F4 them and can't get them back!)
 
 sel border should not be xored against uninitialised rgb values (transparent pixels)
