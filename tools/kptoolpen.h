@@ -80,7 +80,7 @@ public:
     virtual void beginDraw ();
     virtual void hover (const QPoint &point);
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &);
-    virtual void cancelDraw ();
+    virtual void cancelShape ();
     virtual void endDraw (const QPoint &, const QRect &);
 
 private slots:

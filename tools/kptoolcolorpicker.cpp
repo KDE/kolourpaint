@@ -84,7 +84,7 @@ void kpToolColorPicker::draw (const QPoint &thisPoint, const QPoint &, const QRe
 }
 
 // virtual
-void kpToolColorPicker::cancelDraw ()
+void kpToolColorPicker::cancelShape ()
 {
 #if 0
     endDraw (m_currentPoint, QRect ());

@@ -182,11 +182,11 @@ void kpTool::draw (const QPoint &, const QPoint &, const QRect &)
 }
 
 // also called by kpView
-void kpTool::cancelDrawInternal ()
+void kpTool::cancelShapeInternal ()
 {
-    if (m_beganDraw)
+    if (hasBegunShape ())
     {
-        cancelDraw ();
+        cancelShape ();
         m_viewUnderStartPoint = 0;
         m_beganDraw = false;
 
@@ -194,34 +194,46 @@ void kpTool::cancelDrawInternal ()
         {
             // endInternal() will be called by kpMainWindow (thanks to this line)
             // so we won't have the view anymore
-            mainWindow ()->switchToPreviousTool ();
+            mainWindow ()->toolToolBar ()->selectPreviousTool ();
         }
     }
 }
 
 // virtual
-void kpTool::cancelDraw ()
+void kpTool::cancelShape ()
 {
     kdWarning () << "Tool cannot cancel operation!" << endl;
 }
 
-void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRect)
+void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRect,
+                              bool wantEndShape)
 {
-    if (m_beganDraw)
-    {
+    if (wantEndShape && !hasBegunShape ())
+        return;
+    else if (!wantEndShape && !hasBegunDraw ())
+        return;
+    
+    if (wantEndShape)
+        endShape (thisPoint, normalizedRect);
+    else
         endDraw (thisPoint, normalizedRect);
-        m_viewUnderStartPoint = 0;
-        m_beganDraw = false;
+    m_viewUnderStartPoint = 0;
+    m_beganDraw = false;
 
-        emit endedDraw (m_currentPoint);
+    emit endedDraw (m_currentPoint);
 
-        if (returnToPreviousToolAfterEndDraw ())
-        {
-            // endInternal() will be called by kpMainWindow (thanks to this line)
-            // so we won't have the view anymore
-            mainWindow ()->switchToPreviousTool ();
-        }
+    if (returnToPreviousToolAfterEndDraw ())
+    {
+        // endInternal() will be called by kpMainWindow (thanks to this line)
+        // so we won't have the view anymore
+        mainWindow ()->toolToolBar ()->selectPreviousTool ();
     }
+}
+
+// private
+void kpTool::endShapeInternal (const QPoint &thisPoint, const QRect &normalizedRect)
+{
+    endDrawInternal (thisPoint, normalizedRect, true/*end shape*/);
 }
 
 // virtual
@@ -288,7 +300,7 @@ bool kpTool::currentPointCardinallyNextToLast () const
     return (dx + dy <= 1);
 }
 
-KCommandHistory *kpTool::commandHistory () const
+kpCommandHistory *kpTool::commandHistory () const
 {
     return m_mainWindow ? m_mainWindow->commandHistory () : 0;
 }
@@ -324,7 +336,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
             // if we get a mousePressEvent when we're drawing, then the other
             // mouse button must have been pressed
             m_currentPoint = view ? view->zoomViewToDoc (e->pos ()) : QPoint (-1, -1);
-            cancelDrawInternal ();
+            cancelShapeInternal ();
         }
 
         return;
@@ -383,7 +395,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
     else
     {
         kpView *view = viewUnderCursor ();
-        if (!view)  // possible if cancelDraw()'ed but still holding down initial mousebtn
+        if (!view)  // possible if cancelShape()'ed but still holding down initial mousebtn
             return;
 
         m_currentPoint = view->zoomViewToDoc (e->pos ());
@@ -398,7 +410,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
                << " btnStateAfter=" << (int) e->stateAfter () << endl;
 #endif
 
-    if (m_beganDraw)  // didn't cancelDraw()
+    if (m_beganDraw)  // didn't cancelShape()
     {
         kpView *view = viewUnderStartPoint ();
         if (!view)
@@ -493,7 +505,7 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
 
     case Qt::Key_Escape:
         if (hasBegunDraw ())
-            cancelDrawInternal ();
+            cancelShapeInternal ();
 
         e->accept ();
         break;

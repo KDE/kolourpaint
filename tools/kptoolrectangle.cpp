@@ -318,7 +318,7 @@ void kpToolRectangle::draw (const QPoint &, const QPoint &, const QRect &)
     emit mouseDragged (QRect (m_startPoint, m_currentPoint));
 }
 
-void kpToolRectangle::cancelDraw ()
+void kpToolRectangle::cancelShape ()
 {
 #if 0
     endDraw (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());

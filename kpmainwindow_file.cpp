@@ -45,11 +45,13 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprinter.h>
+#include <kstdaccel.h>
 #include <kstdaction.h>
 
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
+#include <kptool.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
 
@@ -67,7 +69,9 @@ void kpMainWindow::setupFileMenuActions ()
 
     m_actionSave = KStdAction::save (this, SLOT (slotSave ()), ac);
     m_actionSaveAs = KStdAction::saveAs (this, SLOT (slotSaveAs ()), ac);
-    m_actionRevert = KStdAction::revert (this, SLOT (slotRevert ()), ac);
+    //m_actionRevert = KStdAction::revert (this, SLOT (slotRevert ()), ac);
+    m_actionReload = new KAction (i18n ("Reloa&d"), KStdAccel::reload (),
+        this, SLOT (slotReload ()), ac, "file_revert");
 
     m_actionPrint = KStdAction::print (this, SLOT (slotPrint ()), ac);
     m_actionPrintPreview = KStdAction::printPreview (this, SLOT (slotPrintPreview ()), ac);
@@ -80,108 +84,83 @@ void kpMainWindow::setupFileMenuActions ()
     m_actionClose = KStdAction::close (this, SLOT (slotClose ()), ac);
     m_actionQuit = KStdAction::quit (this, SLOT (slotQuit ()), ac);
 
-    m_actionSave->setEnabled (false);
-    m_actionSaveAs->setEnabled (false);
-    m_actionSaveAs->setEnabled (false);
-    m_actionRevert->setEnabled (false);
-    m_actionPrint->setEnabled (false);
-    m_actionPrintPreview->setEnabled (false);
-    m_actionClose->setEnabled (false);
+    enableFileMenuDocumentActions (false);
+}
+ 
+// private
+void kpMainWindow::enableFileMenuDocumentActions (bool enable)
+{
+    // m_actionNew
+    // m_actionOpen
+
+    // m_actionOpenRecent
+
+    m_actionSave->setEnabled (enable);
+    m_actionSaveAs->setEnabled (enable);
+    m_actionReload->setEnabled (enable);
+
+    m_actionPrint->setEnabled (enable);
+    m_actionPrintPreview->setEnabled (enable);
+
+    m_actionSetAsWallpaperCentered->setEnabled (enable);
+    m_actionSetAsWallpaperTiled->setEnabled (enable);
+
+    m_actionClose->setEnabled (enable);
+    // m_actionQuit->setEnabled (enable);
+}
+
+
+// private
+bool kpMainWindow::shouldOpenInNewWindow () const
+{
+    return (m_document && !m_document->isEmpty ());
+}
+
+// private
+void kpMainWindow::addRecentURL (const KURL &url)
+{
+    m_actionOpenRecent->addURL (url);
 }
 
 
 // private slot
 void kpMainWindow::slotNew (const KURL &url)
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
-/*    if (!queryClose ())
-        return;*/
-
-    if (m_document && !m_document->isEmpty ())
-    {
-        // TODO: who is going to destruct it?
-        kpMainWindow *win = new kpMainWindow (url);
-        win->show ();
-        return;
-    }
-
-    delete m_document;
-
-    m_document = new kpDocument (400, 300, 32, this);
-    if (!url.isEmpty ())
-    {
-        m_document->open (url, true /*create an empty doc with the same url if url !exist*/);
-    }
-
-    // status bar
-    connect (m_document, SIGNAL (documentOpened ()), this, SLOT (slotUpdateStatusBar ()));
-    connect (m_document, SIGNAL (sizeChanged (int, int)), this, SLOT (slotUpdateStatusBar (int, int)));
-    connect (m_document, SIGNAL (colorDepthChanged (int)), this, SLOT (slotUpdateStatusBar (int)));
-
-    // caption (url, modified)
-    connect (m_document, SIGNAL (documentModified ()), this, SLOT (slotUpdateCaption ()));
-    connect (m_document, SIGNAL (documentOpened ()), this, SLOT (slotUpdateCaption ()));
-    connect (m_document, SIGNAL (documentSaved ()), this, SLOT (slotUpdateCaption ()));
-
-    // command history
-    connect (m_commandHistory, SIGNAL (documentRestored ()), this, SLOT (slotDocumentRestored ()));  // caption "!modified"
-    connect (m_document, SIGNAL (documentSaved ()), m_commandHistory, SLOT (documentSaved ()));
-
-    // sync document -> views
-    connect (m_document, SIGNAL (contentsChanged (const QRect &)),
-             m_viewManager, SLOT (updateViews (const QRect &)));
-    connect (m_document, SIGNAL (sizeChanged (int, int)),
-             m_viewManager, SLOT (resizeViews (int, int)));
-    connect (m_document, SIGNAL (colorDepthChanged (int)),
-             m_viewManager, SLOT (updateViews ()));
-
-    setMainView (new kpView (m_scrollView->viewport (), "mainView", this,
-                             m_document->width (), m_document->height ()));
-    m_viewManager->resizeViews (m_document->width (), m_document->height ());
-
-    slotUpdateStatusBar ();  // update doc size
-    slotUpdateCaption ();  // Untitled to start with
-    m_commandHistory->clear ();
+    open (url, true/*create an empty doc with the same url if url !exist*/);
 }
-
-// private slot
-void kpMainWindow::slotDocumentRestored ()
-{
-    m_document->setModified (false);
-    slotUpdateCaption ();
-}
-
 
 // private slot
 bool kpMainWindow::open (const KURL &url, bool newDocSameNameIfNotExist)
 {
-    if (m_document && !m_document->isEmpty ())
+    // create doc
+    kpDocument *newDoc = new kpDocument (400, 300, 32, this);
+    if (!url.isEmpty ())
     {
-        // TODO: who is going to destruct it?
-        // TODO: what if it can't open
-        kpMainWindow *win = new kpMainWindow (url);
+        if (newDoc->open (url, newDocSameNameIfNotExist))
+            addRecentURL (url);
+        else
+        {
+            delete newDoc;
+            return false;
+        }
+    }
+
+    // need new window?
+    if (shouldOpenInNewWindow ())
+    {
+        // send doc to new window
+        kpMainWindow *win = new kpMainWindow (newDoc);
         win->show ();
-        return true;
     }
-
-    if (!m_document)
+    else
     {
-        slotNew (url);
-        return true;
+        // set up views, doc signals
+        setDocument (newDoc);
     }
 
-    if (!m_document->open (url, newDocSameNameIfNotExist))
-        return false;
-
-    if (KIO::NetAccess::exists (url))
-        m_actionOpenRecent->addURL (url);
-
-    setMainView (new kpView (m_scrollView->viewport (), "kpView", this,
-                             m_document->width (), m_document->height ()));
-    m_viewManager->resizeViews (m_document->width (), m_document->height ());
-
-    m_commandHistory->clear();
     return true;
 }
 
@@ -197,10 +176,8 @@ bool kpMainWindow::open (const QString &str, bool newDocSameNameIfNotExist)
 // private slot
 bool kpMainWindow::slotOpen ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE false;
-
-    /*if (!queryClose ())
-        return false;*/
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
     KURL url = KFileDialog::getImageOpenURL (":kolourpaint", this, i18n ("Open Image"));
     if (url.isEmpty ())
@@ -212,10 +189,8 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE false;
 // private slot
 bool kpMainWindow::slotOpenRecent (const KURL &url)
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE false;
-
-    /*if (!queryClose ())
-        return false;*/
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
     return open (url);
 }
@@ -225,7 +200,7 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE false;
 bool kpMainWindow::save (bool localOnly)
 {
     if (m_document->url ().isEmpty () ||
-        KImageIO::mimeTypes (KImageIO::Writing).findIndex (m_document->mimetype ()) == -1 ||
+        KImageIO::mimeTypes (KImageIO::Writing).findIndex (m_document->mimetype ()) < 0 ||
         (localOnly && !m_document->url ().isLocalFile ()))
     {
         return saveAs (localOnly);
@@ -234,7 +209,7 @@ bool kpMainWindow::save (bool localOnly)
     {
         if (m_document->save ())
         {
-            m_actionOpenRecent->addURL (m_document->url ());
+            addRecentURL (m_document->url ());
             return true;
         }
         else
@@ -245,7 +220,8 @@ bool kpMainWindow::save (bool localOnly)
 // private slot
 bool kpMainWindow::slotSave ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE false;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
     return save ();
 }
@@ -303,7 +279,7 @@ bool kpMainWindow::saveAs (bool localOnly)
         }
         else
         {
-            m_actionOpenRecent->addURL (fd->selectedURL ());
+            addRecentURL (fd->selectedURL ());
 
             // user forced a mimetype (as opposed to selecting the same type as the current doc)
             // - probably wants to use it in the future
@@ -331,31 +307,31 @@ bool kpMainWindow::saveAs (bool localOnly)
 // private slot
 bool kpMainWindow::slotSaveAs ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE false;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
     return saveAs ();
 }
 
 
 // private slot
-bool kpMainWindow::slotRevert ()
+bool kpMainWindow::slotReload ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE false;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
+    // TODO: fix stupid question - why would we offer to Save?
     if (!queryClose ())
         return false;
 
+    KURL oldURL = m_document->url ();
+
 #if DEBUG_KPMAINWINDOW
-    kdDebug () << "kpMainWindow::slotRevert() reverting!" << endl;
+    kdDebug () << "kpMainWindow::slotReload() reloading!" << endl;
 #endif
+    setDocument (0);  // make sure we don't open in a new window
 
-    if (!m_document->open (m_document->url ()))
-        return false;
-
-    m_viewManager->resizeViews (m_document->width (), m_document->height ());
-    m_commandHistory->clear();
-
-    return true;
+    return open (oldURL);
 }
 
 
@@ -398,8 +374,9 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer)
 // private slot
 void kpMainWindow::slotPrint ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
-
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+        
     KPrinter printer;
 
     sendFilenameToPrinter (&printer);
@@ -412,7 +389,8 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 // private slots
 void kpMainWindow::slotPrintPreview ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
     // TODO: get it to reflect default printer's settings
     KPrinter printer (false/*separate settings from ordinary printer*/);
@@ -427,16 +405,24 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 // private
 void kpMainWindow::setAsWallpaper (bool centered)
 {
-    if (!m_document->url ().isLocalFile () || m_document->url ().isEmpty () || m_document->isModified ())
+    if (!m_document->url ().isLocalFile () ||  // remote file
+        m_document->url ().isEmpty ()      ||  // no name
+        m_document->isModified ())             // hasn't been saved
     {
         QString question;
 
         if (!m_document->url ().isLocalFile ())
-            question = i18n ("Before this image can be set as the wallpaper, you must save it as a local file.\n"
+        {
+            question = i18n ("Before this image can be set as the wallpaper, "
+                             "you must save it as a local file.\n"
                              "Do you want to save it?");
+        }
         else
-            question = i18n ("Before this image can be set as the wallpaper, you must save it.\n"
+        {
+            question = i18n ("Before this image can be set as the wallpaper, "
+                             "you must save it.\n"
                              "Do you want to save it?");
+        }
 
         int result = KMessageBox::questionYesNo (this,
                          question, QString::null,
@@ -465,7 +451,8 @@ void kpMainWindow::setAsWallpaper (bool centered)
 
     // write path
 #if DEBUG_KPMAINWINDOW
-    kdDebug () << "kpMainWindow::setAsWallpaper() path=" << m_document->url ().path () << endl;
+    kdDebug () << "kpMainWindow::setAsWallpaper() path="
+               << m_document->url ().path () << endl;
 #endif
     dataStream << QString (m_document->url ().path ());
 
@@ -503,15 +490,17 @@ void kpMainWindow::setAsWallpaper (bool centered)
 // private slot
 void kpMainWindow::slotSetAsWallpaperCentered ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
-
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+    
     setAsWallpaper (true/*centered*/);
 }
 
 // private slot
 void kpMainWindow::slotSetAsWallpaperTiled ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
     setAsWallpaper (false/*tiled*/);
 }
@@ -520,7 +509,8 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 // private slot
 void kpMainWindow::slotClose ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
 #if DEBUG_KPMAINWINDOW
     kdDebug () << "kpMainWindow::slotClose()" << endl;
@@ -529,14 +519,14 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
     if (!queryClose ())
         return;
 
-    setMainView (0);
-    delete m_document; m_document = 0;
+    setDocument (0);
 }
 
 // private slot
 void kpMainWindow::slotQuit ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
 #if DEBUG_KPMAINWINDOW
     kdDebug () << "kpMainWindow::slotQuit()" << endl;

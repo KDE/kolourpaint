@@ -174,7 +174,7 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint &lastPoint,
 }
 
 // virtual
-void kpToolSelection::cancelDraw ()
+void kpToolSelection::cancelShape ()
 {
 }
 

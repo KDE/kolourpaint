@@ -35,8 +35,10 @@
 
 #include <kpcolortoolbar.h>
 #include <kpmainwindow.h>
+#include <kptool.h>
 #include <kptoolclear.h>
 #include <kptoolconverttograyscale.h>
+#include <kptoolconverttoblackandwhite.h>
 #include <kptoolflip.h>
 #include <kptoolinvertcolors.h>
 #include <kptoolresizescale.h>
@@ -61,6 +63,9 @@ void kpMainWindow::setupImageMenuActions ()
     m_actionSkew = new KAction (i18n ("&Skew..."), 0,
         this, SLOT (slotSkew ()), ac, "image_skew");
 
+    m_actionConvertToBlackAndWhite = new KAction (i18n ("Convert to &Black && White"), 0,
+        this, SLOT (slotConvertToBlackAndWhite ()), ac, "image_convert_to_black_and_white");
+
     m_actionConvertToGrayscale = new KAction (i18n ("Convert to &Grayscale"), 0,
         this, SLOT (slotConvertToGrayscale ()), ac, "image_convert_to_grayscale");
 
@@ -69,13 +74,29 @@ void kpMainWindow::setupImageMenuActions ()
 
     m_actionClear = new KAction (i18n ("&Clear"), CTRL + SHIFT + Key_N,
         this, SLOT (slotClear ()), ac, "image_clear");
+
+    enableImageMenuDocumentActions (false);
+}
+
+// private
+void kpMainWindow::enableImageMenuDocumentActions (bool enable)
+{
+    m_actionResizeScale->setEnabled (enable);
+    m_actionFlip->setEnabled (enable);
+    m_actionRotate->setEnabled (enable);
+    m_actionSkew->setEnabled (enable);
+    m_actionConvertToBlackAndWhite->setEnabled (enable);
+    m_actionConvertToGrayscale->setEnabled (enable);
+    m_actionInvertColors->setEnabled (enable);
+    m_actionClear->setEnabled (enable);
 }
 
 
 // private slot
 void kpMainWindow::slotResizeScale ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
     kpToolResizeScaleDialog *dialog = new kpToolResizeScaleDialog (this);
 
@@ -91,8 +112,9 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 // private slot
 void kpMainWindow::slotFlip ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
-
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+    
     kpToolFlipDialog *dialog = new kpToolFlipDialog (this);
 
     if (dialog->exec () && !dialog->isNoopFlip ())
@@ -106,7 +128,8 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 // private slot
 void kpMainWindow::slotRotate ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
     kpToolRotateDialog *dialog = new kpToolRotateDialog (this);
 
@@ -120,7 +143,8 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 // private slot
 void kpMainWindow::slotSkew ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
     kpToolSkewDialog *dialog = new kpToolSkewDialog (this);
 
@@ -133,33 +157,52 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 }
 
 // private slot
+void kpMainWindow::slotConvertToBlackAndWhite ()
+{
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+    m_commandHistory->addCommand (
+        new kpToolConvertToBlackAndWhiteCommand (m_document, m_viewManager));
+}
+
+// private slot
 void kpMainWindow::slotConvertToGrayscale ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
-   m_commandHistory->addCommand (
+    m_commandHistory->addCommand (
         new kpToolConvertToGrayscaleCommand (m_document, m_viewManager));
 }
 
 // private slot
 void kpMainWindow::slotInvertColors ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
-   m_commandHistory->addCommand (
+    m_commandHistory->addCommand (
         new kpToolInvertColorsCommand (m_document, m_viewManager));
 }
 
 // private slot
 void kpMainWindow::slotClear ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
+#if DEBUG_KPMAINWINDOW && 1
+    kdDebug () << "toolHasBegunShape: " << toolHasBegunShape () << endl;
+#endif
+    
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
 #if DEBUG_KPMAINWINDOW
     kdDebug () << "kpMainWindow::slotClear ()" << endl;
+    kdDebug () << "\ttoolHasBegunShape now: " << toolHasBegunShape () << endl;
 #endif
 
     m_commandHistory->addCommand (
         new kpToolClearCommand (m_document, m_viewManager,
                                 colorToolBar ()->backgroundColor ()));
 }
+

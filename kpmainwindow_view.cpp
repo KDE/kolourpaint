@@ -54,8 +54,10 @@ void kpMainWindow::setupViewMenuActions ()
 
     m_actionZoom = new KSelectAction (i18n ("&Zoom"), 0,
         this, SLOT (slotZoom ()), actionCollection (), "view_zoom");
-    m_zoomList << "100%" << "200%" << "300%" << "400%" << "500%" << "600%" << "700%"
-               << "800%" << "900%" << "1000%";
+
+    for (int multiple = 1; multiple <= 32; multiple++)
+        m_zoomList << QString::number (multiple) + QString ("00%");
+
     m_actionZoom->setItems (m_zoomList);
     m_actionZoom->setCurrentItem (0);
 
@@ -64,18 +66,22 @@ void kpMainWindow::setupViewMenuActions ()
     m_actionShowGrid->setChecked (m_configShowGrid);
     connect (m_actionShowGrid, SIGNAL (toggled (bool)), this, SLOT (slotActionShowGridToggled (bool)));
 
-    m_actionZoomIn->setEnabled (false);
-    m_actionZoomOut->setEnabled (false);
-    m_actionZoom->setEnabled (false);
-    m_actionShowGrid->setEnabled (false);
+    enableViewMenuDocumentActions (false);
+}
+
+// private
+void kpMainWindow::enableViewMenuDocumentActions (bool enable)
+{
+    m_actionZoomIn->setEnabled (enable);
+    m_actionZoomOut->setEnabled (enable);
+    m_actionZoom->setEnabled (enable);
+    m_actionShowGrid->setEnabled (enable);
 }
 
 
 // private slot
 void kpMainWindow::slotZoomIn ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
-
 #if DEBUG_KPMAINWINDOW
     kdDebug () << "kpMainWindow::slotZoomIn ()" << endl;
 #endif
@@ -87,8 +93,6 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 // private slot
 void kpMainWindow::slotZoomOut ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
-
 #if DEBUG_KPMAINWINDOW
     kdDebug () << "kpMainWindow::slotZoomOut ()" << endl;
 #endif
@@ -100,8 +104,6 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 // private slot
 void kpMainWindow::slotZoom ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
-
 #if DEBUG_KPMAINWINDOW
     kdDebug () << "kpMainWindow::slotZoom ()" << endl;
 #endif
@@ -134,8 +136,6 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 // private slot
 void kpMainWindow::slotShowGrid ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
-
 #if DEBUG_KPMAINWINDOW
     kdDebug () << "kpMainWindow::slotShowGrid ()" << endl;
 #endif
@@ -147,7 +147,6 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 // private slot
 void kpMainWindow::slotActionShowGridToggled (bool on)
 {
-// TODO: KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE
     m_configShowGrid = on;
 
     KConfigGroupSaver configGroupSaver (kapp->config (), kpSettingsGroupGeneral);

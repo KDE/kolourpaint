@@ -408,7 +408,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
 }
 
 // virtual
-void kpToolPen::cancelDraw ()
+void kpToolPen::cancelShape ()
 {
 #if 0
     endDraw (QPoint (), QRect ());

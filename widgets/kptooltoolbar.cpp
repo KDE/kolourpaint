@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_TOOL_TOOL_BAR 1
+
 #include <qbuttongroup.h>
 #include <qlayout.h>
 #include <qtoolbutton.h>
@@ -49,15 +51,14 @@
 #include <kptoolwidgetlinestyle.h>
 #include <kptoolwidgetlinewidth.h>
 
-#define DEBUG_KPTOOLTOOLBAR 1
-
 kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const char *name)
     : KToolBar ((QWidget *) mainWindow, name, false/*don't use global toolBar settings*/, true/*readConfig*/),
       m_vertCols (colsOrRows),
       m_buttonGroup (0),
       m_baseWidget (0),
       m_baseLayout (0),
-      m_toolLayout (0)
+      m_toolLayout (0),
+      m_previousTool (0), m_currentTool (0)
 {
     setHorizontallyStretchable (false);
     setVerticallyStretchable (false);
@@ -87,6 +88,8 @@ kpToolToolBar::~kpToolToolBar ()
     delete m_buttonGroup;
 }
 
+
+// public
 void kpToolToolBar::registerTool (kpTool *tool)
 {
     for (QValueVector <kpButtonToolPair>::ConstIterator it = m_buttonToolPairs.constBegin ();
@@ -115,6 +118,7 @@ void kpToolToolBar::registerTool (kpTool *tool)
     m_buttonToolPairs.append (kpButtonToolPair (b, tool));
 }
 
+// public
 void kpToolToolBar::unregisterTool (kpTool *tool)
 {
     for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
@@ -130,6 +134,7 @@ void kpToolToolBar::unregisterTool (kpTool *tool)
     }
 }
 
+// public
 void kpToolToolBar::unregisterAllTools ()
 {
     for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
@@ -142,21 +147,68 @@ void kpToolToolBar::unregisterAllTools ()
     m_buttonToolPairs.clear ();
 }
 
+
+// public
+kpTool *kpToolToolBar::tool () const
+{
+    return m_currentTool;
+}
+
+// public
 void kpToolToolBar::selectTool (kpTool *tool)
 {
-    for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
-         it != m_buttonToolPairs.end ();
-         it++)
+#if DEBUG_KP_TOOL_TOOL_BAR
+    kdDebug () << "kpToolToolBar::selectTool (tool=" << tool
+               << ") currentTool=" << m_currentTool
+               << endl;
+#endif
+
+    if (tool == m_currentTool)
+        return;
+
+    if (tool)
     {
-        if ((*it).m_tool == tool)
+        for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
+            it != m_buttonToolPairs.end ();
+            it++)
         {
-            m_buttonGroup->setButton (m_buttonGroup->id ((*it).m_button));
+            if ((*it).m_tool == tool)
+            {
+                m_buttonGroup->setButton (m_buttonGroup->id ((*it).m_button));
+                slotToolSelected ();
+                break;
+            }
+        }
+    }
+    else
+    {
+        QButton *b = m_buttonGroup->selected ();
+    #if DEBUG_KP_TOOL_TOOL_BAR
+        kdDebug () << "\twant to select no tool - button selected=" << b << endl;
+    #endif
+        if (b)
+        {
+            b->toggle ();
             slotToolSelected ();
-            break;
         }
     }
 }
 
+
+// public
+kpTool *kpToolToolBar::previousTool () const
+{
+    return m_previousTool;
+}
+
+// public
+void kpToolToolBar::selectPreviousTool ()
+{
+    selectTool (m_previousTool);
+}
+
+
+// public
 void kpToolToolBar::hideAllToolWidgets ()
 {
     m_toolWidgetBrush->hide ();
@@ -166,10 +218,15 @@ void kpToolToolBar::hideAllToolWidgets ()
     m_toolWidgetLineWidth->hide ();
 }
 
+
 // private slot
 void kpToolToolBar::slotToolSelected ()
 {
     QButton *b = m_buttonGroup->selected ();
+
+#if DEBUG_KP_TOOL_TOOL_BAR
+    kdDebug () << "kpToolToolBar::slotToolSelected() button=" << b << endl;
+#endif
 
     kpTool *tool = 0;
     for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
@@ -182,15 +239,30 @@ void kpToolToolBar::slotToolSelected ()
             break;
         }
     }
-
-    kdDebug () << "kpToolToolBar::slotToolSelected() button=" << b
-               << " tool=" << tool << endl;
     
-    if (tool)
-        emit toolSelected (tool);
+#if DEBUG_KP_TOOL_TOOL_BAR
+    kdDebug () << "\ttool=" << tool
+               << " currentTool=" << m_currentTool
+               << endl;
+#endif
+
+    if (tool == m_currentTool)
+        return;
+
+    if (m_currentTool)
+        m_currentTool->endInternal ();
+
+    m_previousTool = m_currentTool;        
+    m_currentTool = tool;
+    
+    if (m_currentTool)
+        m_currentTool->beginInternal ();
+
+    emit sigToolSelected (m_currentTool);
 }
 
-// virtual
+
+// public slot virtual [base QDockWindow]
 void kpToolToolBar::setOrientation (Qt::Orientation o)
 {
     kdDebug () << "kpToolToolBar::setOrientation("
@@ -256,6 +328,7 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
     KToolBar::setOrientation (o);
 }
 
+// private
 void kpToolToolBar::addButton (QButton *button, Qt::Orientation o, int num)
 {
     if (o == Qt::Vertical)

@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_MAINWINDOW 1
+
 #include <qdragobject.h>
 #include <qscrollview.h>
 
@@ -52,21 +54,52 @@
 #include <kpview.h>
 #include <kpviewmanager.h>
 
-// TODO: clean up kpMainWindow class
-
-#define KP_STATUSBAR_ITEM_DOC 1111
-#define KP_STATUSBAR_ITEM_POS 1234
-#define KP_STATUSBAR_ITEM_SIZE 4321
-
+    
+kpMainWindow::kpMainWindow ()
+    : KMainWindow (0/*parent*/, "mainWindow")
+{
+    initGUI ();
+    slotNew ();
+}
 
 kpMainWindow::kpMainWindow (const KURL &url)
-    : KMainWindow (0, "kpMainWindow"),
-      m_mainView (0), m_document (0), m_viewManager (0)
+    : KMainWindow (0/*parent*/, "mainWindow")
 {
-    setMinimumSize (80, 60);
+    initGUI ();
+    slotNew (url);
+}
+
+kpMainWindow::kpMainWindow (kpDocument *newDoc)
+    : KMainWindow (0/*parent*/, "mainWindow")
+{
+    initGUI ();
+    setDocument (newDoc);
+}
+
+// private
+void kpMainWindow::initGUI ()
+{
+    m_scrollView = 0;
+    m_mainView = 0; m_thumbnailView = 0;
+    m_document = 0;
+    m_viewManager = 0;
+    m_colorToolBar = 0;
+    m_toolToolBar = 0;
+    m_commandHistory = 0;
+
+
+    //
+    // set mainwindow properties
+    //
+
+    setMinimumSize (320, 260);
     setAcceptDrops (true);
 
-    // read config
+    
+    //
+    // read config (TODO: clean config code, put in right place)
+    //
+
     KConfigGroupSaver configGroupSaver (kapp->config (), kpSettingsGroupGeneral);
     m_configFirstTime = configGroupSaver.config ()->readBoolEntry (kpSettingFirstTime, true);
     m_configShowGrid = configGroupSaver.config ()->readBoolEntry (kpSettingShowGrid, false);
@@ -83,35 +116,35 @@ kpMainWindow::kpMainWindow (const KURL &url)
                << " outputMimeType=" << m_configDefaultOutputMimetype
                << endl;
 
+    
+    //
+    // create GUI
+    //
+
     setupActions ();
 
     createGUI ();
 
+    
+    //
+    // create more GUI
+    //
+    
     m_colorToolBar = new kpColorToolBar (this, "Color Palette");
 
+    setupTools ();
+    
     m_scrollView = new QScrollView (this);
     setCentralWidget (m_scrollView);
 
+    statusBar ()->insertItem (QString::null, StatusBarItemDocInfo, 2/*stretch*/);
+    statusBar ()->insertItem (QString::null, StatusBarItemShapeEndPoints, 1/*stretch*/);
+    statusBar ()->insertItem (QString::null, StatusBarItemShapeSize, 1/*stretch*/);
 
-    m_viewManager = new kpViewManager (this);
-    connect (m_viewManager, SIGNAL (selectionEnabled (bool)), m_actionCopy, SLOT (setEnabled (bool)));
-    connect (m_viewManager, SIGNAL (selectionEnabled (bool)), m_actionCut, SLOT (setEnabled (bool)));
-    connect (m_viewManager, SIGNAL (selectionEnabled (bool)), m_actionDeselect, SLOT (setEnabled (bool)));
-
-    setupTools ();
-    // create initial document
-    slotNew (url);
-
-    // TODO: change to a child window
-    toolBar ("toolbar_thumbnaila")->setFullSize ();
-    m_thumbnailView = new kpView (toolBar ("toolbar_thumbnaila"), "thumbnailView", this, 200, 200, true /* autoVariableZoom */);
-    m_viewManager->registerView (m_thumbnailView);    // TODO: unregister
-    toolBar ("toolbar_thumbnaila")->insertWidget (2000, toolBar ("toolbar_thumbnaila")->width (), m_thumbnailView);
-    toolBar ("toolbar_thumbnaila")->setFullSize ();
-
-    statusBar ()->insertItem (QString::null, KP_STATUSBAR_ITEM_DOC, 0/*stretch*/);
-    statusBar ()->insertItem (QString::null, KP_STATUSBAR_ITEM_POS, 1/*stretch*/, true/*permanent*/);
-    statusBar ()->insertItem (QString::null, KP_STATUSBAR_ITEM_SIZE, 1/*stretch*/, true/*permanent*/);
+    
+    //
+    // set initial pos/size of GUI
+    //
 
     setAutoSaveSettings ("kpmainwindow", true);
  
@@ -119,8 +152,8 @@ kpMainWindow::kpMainWindow (const KURL &url)
     if (m_configFirstTime)
     {
         m_toolToolBar->setBarPos (KToolBar::Left);
-        toolBar ("toolbar_thumbnaila")->setBarPos (KToolBar::Right);
-        toolBar ("toolbar_thumbnaila")->hide ();  // it doesn't work well yet
+        //toolBar ("toolbar_thumbnaila")->setBarPos (KToolBar::Right);
+        //toolBar ("toolbar_thumbnaila")->hide ();  // it doesn't work well yet
         m_colorToolBar->setBarPos (KToolBar::Bottom);
     }
 }
@@ -129,13 +162,11 @@ kpMainWindow::~kpMainWindow ()
 {
     m_actionOpenRecent->saveEntries (kapp->config ());
 
-    delete m_commandHistory;
+    // delete document & views
+    setDocument (0);
 
-    delete m_thumbnailView;
-    delete m_mainView;
-    delete m_document;
-    delete m_scrollView;
-    delete m_viewManager;
+    delete m_commandHistory; m_commandHistory = 0;
+    delete m_scrollView; m_scrollView = 0;
 }
 
 
@@ -164,7 +195,7 @@ kpToolToolBar *kpMainWindow::toolToolBar () const
 }
 
 // public
-KCommandHistory *kpMainWindow::commandHistory () const
+kpCommandHistory *kpMainWindow::commandHistory () const
 {
     return m_commandHistory;
 }
@@ -180,52 +211,208 @@ void kpMainWindow::setupActions ()
     setupSettingsMenuActions ();
 }
 
+// private
+void kpMainWindow::enableDocumentActions (bool enable)
+{
+    enableFileMenuDocumentActions (enable);
+    enableEditMenuDocumentActions (enable);
+    enableViewMenuDocumentActions (enable);
+    enableImageMenuDocumentActions (enable);
+    enableSettingsMenuDocumentActions (enable);
+}
+
 
 // private
-void kpMainWindow::setMainView (kpView *view)
+void kpMainWindow::setDocument (kpDocument *newDoc)
 {
-#if DEBUG_KPMAINWINDOW
-    kdDebug () << "kpMainWindow::setMainView (" << (int) view << ")" << endl;
+#if DEBUG_KP_MAINWINDOW
+    kdDebug () << "kpMainWindow::setDocument (" << newDoc << ")" << endl;
 #endif
 
-    m_viewManager->unregisterView (m_mainView);
-    delete m_mainView;
-
-    m_mainView = view;
-    if (m_mainView)
+    // is it a close operation?
+    if (!newDoc)
     {
-        m_scrollView->addChild (m_mainView);
+    #if DEBUG_KP_MAINWINDOW
+        kdDebug () << "\tdisabling actions" << endl;
+    #endif
+    
+        // sync with the bit marked "sync" below
+        
+        if (m_colorToolBar)
+            m_colorToolBar->setEnabled (false);
+        else
+        {
+            kdError () << "kpMainWindow::setDocument() without colorToolBar"
+                       << endl;
+        }
+
+        enableToolsDocumentActions (false);
+        
+        enableDocumentActions (false);
+    }
+    
+#if DEBUG_KP_MAINWINDOW
+    kdDebug () << "\tdestroying views" << endl;
+#endif
+    
+    delete m_mainView; m_mainView = 0;
+    delete m_thumbnailView; m_thumbnailView = 0;
+
+#if DEBUG_KP_MAINWINDOW
+    kdDebug () << "\tdestroying viewManager" << endl;
+#endif
+
+    // viewManager will die and so will the selection
+    m_actionCopy->setEnabled (false);
+    m_actionCut->setEnabled (false);
+    m_actionDeselect->setEnabled (false);
+    m_actionDelete->setEnabled (false);
+
+    delete m_viewManager; m_viewManager = 0;
+    
+#if DEBUG_KP_MAINWINDOW
+    kdDebug () << "\tdestroying document" << endl;
+    kdDebug () << "\t\tm_document=" << m_document << endl;
+#endif
+    // destroy current document
+    delete m_document;
+    m_document = newDoc;
+    
+
+    // not a close operation?
+    if (m_document)
+    {
+    #if DEBUG_KP_MAINWINDOW
+        kdDebug () <<"\tcreating viewManager" << endl;
+    #endif
+        m_viewManager = new kpViewManager (this);
+
+        // Copy/Cut/Deselect/Delete are available only when:
+        //
+        // a) there is an m_document (hence why we're here)
+        // b) the user has selected something
+        //
+        connect (m_viewManager, SIGNAL (selectionEnabled (bool)),
+                 m_actionCut, SLOT (setEnabled (bool)));
+        connect (m_viewManager, SIGNAL (selectionEnabled (bool)),
+                 m_actionCopy, SLOT (setEnabled (bool)));
+        connect (m_viewManager, SIGNAL (selectionEnabled (bool)),
+                 m_actionDelete, SLOT (setEnabled (bool)));
+        connect (m_viewManager, SIGNAL (selectionEnabled (bool)),
+                 m_actionDeselect, SLOT (setEnabled (bool)));
+
+        // this code won't actually enable any actions at this stage
+        // (fresh viewManager) but better safe than sorry
+        m_actionCopy->setEnabled (m_viewManager->selectionActive ());
+        m_actionCut->setEnabled (m_viewManager->selectionActive ());
+        m_actionDeselect->setEnabled (m_viewManager->selectionActive ());
+        m_actionDelete->setEnabled (m_viewManager->selectionActive ());
+
+    #if DEBUG_KP_MAINWINDOW
+        kdDebug () << "\tcreating views" << endl;
+    #endif
+        m_mainView = new kpView (m_scrollView->viewport (), "mainView", this,
+                                 m_document->width (), m_document->height ());
+        if (m_scrollView)
+            m_scrollView->addChild (m_mainView);
+        else
+            kdError () << "kpMainWindow::setDocument() without scrollView" << endl;
         m_viewManager->registerView (m_mainView);
         m_mainView->show ();
+        
+    #if 0
+    
+    #if DEBUG_KP_MAINWINDOW
+        kdDebug () << "\tcreating thumbnail view" << endl;
+    #endif
+    
+        // TODO: change to a child window
+        toolBar ("toolbar_thumbnaila")->setFullSize ();
+        m_thumbnailView = new kpView (toolBar ("toolbar_thumbnaila"),
+                                      "thumbnailView", this,
+                                      200, 200, true /* autoVariableZoom */);
+        toolBar ("toolbar_thumbnaila")->insertWidget (2000,
+            toolBar ("toolbar_thumbnaila")->width (), m_thumbnailView);
+        
+        toolBar ("toolbar_thumbnaila")->setFullSize ();
 
-        m_actionSave->setEnabled (true);
-        m_actionSaveAs->setEnabled (true);
-        m_actionSaveAs->setEnabled (true);
-        m_actionRevert->setEnabled (true);
-        m_actionPrint->setEnabled (true);
-        m_actionPrintPreview->setEnabled (true);
-        m_actionClose->setEnabled (true);
+        m_viewManager->registerView (m_thumbnailView);
+    #endif
+     
+    #if DEBUG_KP_MAINWINDOW
+        kdDebug () << "\thooking up document signals" << endl;
+    #endif
+    
+        // status bar
+        connect (m_document, SIGNAL (documentOpened ()),
+                 this, SLOT (slotUpdateStatusBar ()));
+        connect (m_document, SIGNAL (sizeChanged (int, int)),
+                 this, SLOT (slotUpdateStatusBar (int, int)));
+        connect (m_document, SIGNAL (colorDepthChanged (int)),
+                 this, SLOT (slotUpdateStatusBar (int)));
 
-        m_actionZoomIn->setEnabled (true);
-        m_actionZoomOut->setEnabled (false);
-        m_actionZoom->setEnabled (true);
-        m_actionShowGrid->setEnabled (false);
+        // caption (url, modified)
+        connect (m_document, SIGNAL (documentModified ()),
+                 this, SLOT (slotUpdateCaption ()));
+        connect (m_document, SIGNAL (documentOpened ()),
+                 this, SLOT (slotUpdateCaption ()));
+        connect (m_document, SIGNAL (documentSaved ()),
+                 this, SLOT (slotUpdateCaption ()));
+
+        // command history
+        if (m_commandHistory)
+        {
+            connect (m_commandHistory, SIGNAL (documentRestored ()),
+                     this, SLOT (slotDocumentRestored ()));  // caption "!modified"
+            connect (m_document, SIGNAL (documentSaved ()),
+                     m_commandHistory, SLOT (documentSaved ()));
+        }
+        else
+        {
+            kdError () << "kpMainWindow::setDocument() without commandHistory"
+                       << endl;
+        }
+
+        // sync document -> views
+        connect (m_document, SIGNAL (contentsChanged (const QRect &)),
+                 m_viewManager, SLOT (updateViews (const QRect &)));
+        connect (m_document, SIGNAL (sizeChanged (int, int)),
+                 m_viewManager, SLOT (resizeViews (int, int)));
+        connect (m_document, SIGNAL (colorDepthChanged (int)),
+                 m_viewManager, SLOT (updateViews ()));
+   
+    #if DEBUG_KP_MAINWINDOW
+        kdDebug () << "\tenabling actions" << endl;
+    #endif
+    
+        // sync with the bit marked "sync" above
+        
+        if (m_colorToolBar)
+            m_colorToolBar->setEnabled (true);
+        else
+        {
+            kdError () << "kpMainWindow::setDocument() without colorToolBar"
+                       << endl;
+        }
+                       
+        enableToolsDocumentActions (true);
+        
+        enableDocumentActions (true);
     }
-    else
-    {
-        m_actionSave->setEnabled (false);
-        m_actionSaveAs->setEnabled (false);
-        m_actionSaveAs->setEnabled (false);
-        m_actionRevert->setEnabled (false);
-        m_actionPrint->setEnabled (false);
-        m_actionPrintPreview->setEnabled (false);
-        m_actionClose->setEnabled (false);
 
-        m_actionZoomIn->setEnabled (false);
-        m_actionZoomOut->setEnabled (false);
-        m_actionZoom->setEnabled (false);
-        m_actionShowGrid->setEnabled (false);
-    }
+#if DEBUG_KP_MAINWINDOW
+    kdDebug () << "\tupdating mainWindow elements" << endl;
+#endif
+
+    slotUpdateStatusBar ();  // update doc size
+    slotUpdateCaption ();  // Untitled to start with
+   
+    if (m_commandHistory)
+        m_commandHistory->clear ();
+
+#if DEBUG_KP_MAINWINDOW
+    kdDebug () << "\tdocument and views ready to go!" << endl;
+#endif        
 }
 
 
@@ -284,11 +471,32 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 }
 
 
+/*
+ * Status Bar
+ */
+// TODO: clean up
+
 // private slot
 void kpMainWindow::slotUpdateCaption ()
 {
-    setCaption (m_configShowPath ? m_document->prettyURL () : m_document->filename (),
-                m_document->isModified ());
+    if (m_document)
+    {
+        setCaption (m_configShowPath ? m_document->prettyURL ()
+                                     : m_document->filename (),
+                    m_document->isModified ());
+    }
+    else
+    {
+        setCaption (QString::null, false);
+    }
+}
+
+// private slot
+void kpMainWindow::slotDocumentRestored ()
+{
+    if (m_document)
+        m_document->setModified (false);
+    slotUpdateCaption ();
 }
 
 
@@ -296,7 +504,8 @@ void kpMainWindow::slotUpdateCaption ()
 // this prevents coords like "-2,400" from being shown
 bool kpMainWindow::legalDocPoint (const QPoint &point) const
 {
-   return (point.x () >= 0 && point.x () < m_document->width () &&
+   return (m_document &&
+           point.x () >= 0 && point.x () < m_document->width () &&
            point.y () >= 0 && point.y () < m_document->height ());
 }
 
@@ -306,7 +515,7 @@ void kpMainWindow::slotUpdateStatusBar ()
     if (m_document)
         slotUpdateStatusBar (m_document->width (), m_document->height (), m_document->colorDepth ());
     else
-        statusBar ()->changeItem (QString::null, KP_STATUSBAR_ITEM_DOC);
+        statusBar ()->changeItem (QString::null, StatusBarItemDocInfo);
 }
 
 // private slot
@@ -315,7 +524,7 @@ void kpMainWindow::slotUpdateStatusBar (int docWidth, int docHeight)
     if (m_document && docWidth > 0 && docHeight > 0)
         slotUpdateStatusBar (docWidth, docHeight, m_document->colorDepth ());
     else
-        statusBar ()->changeItem (QString::null, KP_STATUSBAR_ITEM_DOC);
+        statusBar ()->changeItem (QString::null, StatusBarItemDocInfo);
 }
 
 // private slot
@@ -324,24 +533,26 @@ void kpMainWindow::slotUpdateStatusBar (int docColorDepth)
     if (m_document && docColorDepth > 0)
         slotUpdateStatusBar (m_document->width (), m_document->height (), docColorDepth);
     else
-        statusBar ()->changeItem (QString::null, KP_STATUSBAR_ITEM_DOC);
+        statusBar ()->changeItem (QString::null, StatusBarItemDocInfo);
 }
 
 // private slot
 void kpMainWindow::slotUpdateStatusBar (int docWidth, int docHeight, int docColorDepth)
 {
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAINWINDOW
     kdDebug () << "kpMainWindow::slotUpdateStatusBar ("
                << docWidth << "x" << docHeight << "@" << docColorDepth << endl;
 #endif
 
     if (m_document && docWidth > 0 && docHeight > 0 && docColorDepth > 0)
+    {
         statusBar ()->changeItem (i18n ("%1 x %2  (%3-bit)")
                                     .arg (docWidth).arg (docHeight)
                                     .arg (docColorDepth),
-                                  KP_STATUSBAR_ITEM_DOC);
+                                  StatusBarItemDocInfo);
+    }
     else
-        statusBar ()->changeItem (QString::null, KP_STATUSBAR_ITEM_DOC);
+        statusBar ()->changeItem (QString::null, StatusBarItemDocInfo);
 }
 
 // private slot
@@ -353,8 +564,8 @@ void kpMainWindow::slotUpdateStatusBar (const QPoint &point)
     if (legalDocPoint (point))
         string = i18n ("%1,%2").arg (point.x ()).arg (point.y ());
 
-    statusBar ()->changeItem (string, KP_STATUSBAR_ITEM_POS);
-    statusBar ()->changeItem (QString::null, KP_STATUSBAR_ITEM_SIZE);
+    statusBar ()->changeItem (string, StatusBarItemShapeEndPoints);
+    statusBar ()->changeItem (QString::null, StatusBarItemShapeSize);
 }
 
 // private slot
@@ -375,11 +586,11 @@ void kpMainWindow::slotUpdateStatusBar (const QRect &srect)
                                     .arg (rect.top ())
                                     .arg (rect.right ())
                                     .arg (rect.bottom ()),
-                                KP_STATUSBAR_ITEM_POS);
+                                StatusBarItemShapeEndPoints);
     statusBar ()->changeItem (i18n ("%1x%2")
                                     .arg (rect.width ())
                                     .arg (rect.height ()),
-                                KP_STATUSBAR_ITEM_SIZE);
+                                StatusBarItemShapeSize);
 }
 
 #include <kpmainwindow.moc>

@@ -393,7 +393,7 @@ void kpToolPolygon::updateShape ()
 }
 
 // virtual
-void kpToolPolygon::cancelDraw ()
+void kpToolPolygon::cancelShape ()
 {
 #if 0
     endDraw (QPoint (), QRect ());
@@ -407,6 +407,10 @@ void kpToolPolygon::cancelDraw ()
 // virtual
 void kpToolPolygon::endDraw (const QPoint &, const QRect &)
 {
+#if DEBUG_KPTOOL_LINE
+    kdDebug () << "kpToolPolygon::endDraw()  m_points=" << pointArrayToString (m_points) << endl;
+#endif
+
     if (m_points.count () == 0)
         return;
 
@@ -414,13 +418,14 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
         endShape ();
 }
 
-void kpToolPolygon::endShape ()
+// public virtual
+void kpToolPolygon::endShape (const QPoint &, const QRect &)
 {
 #if DEBUG_KPTOOL_LINE
     kdDebug () << "kpToolPolygon::endShape()  m_points=" << pointArrayToString (m_points) << endl;
 #endif
 
-    if (m_points.count () == 0)
+    if (!hasBegunShape ())
         return;
         
     viewManager ()->invalidateTempPixmap (true);
@@ -439,6 +444,13 @@ void kpToolPolygon::endShape ()
     
     m_points.resize (0);
 }
+
+// public virtual
+bool kpToolPolygon::hasBegunShape () const
+{
+    return (m_points.count () > 0);
+}
+
 
 // public slot
 void kpToolPolygon::slotLineStyleChanged (Qt::PenStyle lineStyle)

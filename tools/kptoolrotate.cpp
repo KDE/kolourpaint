@@ -213,7 +213,7 @@ void kpToolRotate::draw ()
 }
 
 // virtual
-void kpToolRotate::cancelDraw ()
+void kpToolRotate::cancelShape ()
 {
     document ()->setPixmapAt (m_oldPixmap, QPoint (0, 0));
 }

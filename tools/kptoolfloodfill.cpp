@@ -105,7 +105,7 @@ void kpToolFloodFill::draw (const QPoint &thisPoint, const QPoint &, const QRect
 }
 
 // virtual
-void kpToolFloodFill::cancelDraw ()
+void kpToolFloodFill::cancelShape ()
 {
 #if 0
     endDraw (QPoint (), QRect ());

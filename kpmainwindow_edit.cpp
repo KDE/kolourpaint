@@ -31,6 +31,7 @@
 
 #include <qapplication.h>
 #include <qclipboard.h>
+#include <qimage.h>
 #include <qpixmap.h>
 
 #include <kaction.h>
@@ -39,8 +40,10 @@
 #include <klocale.h>
 #include <kstdaction.h>
 
+#include <kpcommandhistory.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
+#include <kptool.h>
 #include <kpviewmanager.h>
 
 
@@ -50,69 +53,128 @@ void kpMainWindow::setupEditMenuActions ()
     KActionCollection *ac = actionCollection ();
 
     // Undo/Redo
-    m_commandHistory = new KCommandHistory (ac, true);
+    m_commandHistory = new kpCommandHistory (this);
     m_commandHistory->setUndoLimit (5);  // CONFIG
-    
-    /*m_actionUndo = new KStdAction::undo (this, SLOT (slotUndo ()), ac);
-    m_actionRedo = new KStdAction::redo (this, SLOT (slotRedo ()), ac);*/
     
     m_actionCut = KStdAction::cut (this, SLOT (slotCut ()), ac);
     m_actionCopy = KStdAction::copy (this, SLOT (slotCopy ()), ac);
     m_actionPaste = KStdAction::paste (this, SLOT (slotPaste ()), ac);
-    m_actionDelete = KStdAction::clear (this, SLOT (slotDelete ()), ac);
-    /*new KAction (i18n ("&Delete"), Key_Delete,
-        this, SLOT (slotDelete ()), ac, "edit_delete");*/
+    
+    //m_actionDelete = KStdAction::clear (this, SLOT (slotDelete ()), ac);
+    m_actionDelete = new KAction (i18n ("Clear &Selection"), Key_Delete,
+        this, SLOT (slotDelete ()), ac, "edit_clear");
 
     m_actionSelectAll = KStdAction::selectAll (this, SLOT (slotSelectAll ()), ac);
     m_actionDeselect = KStdAction::deselect (this, SLOT (slotDeselect ()), ac);
 
-    m_actionCut->setEnabled (false);
-    m_actionCopy->setEnabled (false);
+    m_editMenuDocumentActionsEnabled = false;
+    enableEditMenuDocumentActions (false);
+
+    // Paste should always be enabled, as long as there is something paste
+    // (independent of whether we have a document or not)
+    connect (QApplication::clipboard (), SIGNAL (dataChanged ()),
+             this, SLOT (slotEnablePaste ()));
+    slotEnablePaste ();
+}
+
+// private
+void kpMainWindow::enableEditMenuDocumentActions (bool enable)
+{
+    // m_actionCut
+    // m_actionCopy
+    // m_actionPaste
+    
+    // m_actionDelete
+    
+    m_actionSelectAll->setEnabled (enable);
+    // m_actionDeselect
+    
+    m_editMenuDocumentActionsEnabled = enable;
 }
 
 
-// private slot
-void kpMainWindow::slotUndo ()
+// private
+bool kpMainWindow::checkHasSelectionActive (const char *funcName) const
 {
+    if (m_viewManager && m_viewManager->selectionActive ())
+        return true;
+        
+    kdError () << "kpMainWindow::checkHasSelectionActive("
+               << "funcName=" << funcName
+               << ") vm="
+               << m_viewManager
+               << endl;
+
+    return false;
 }
 
-// private slot
-void kpMainWindow::slotRedo ()
+// private
+bool kpMainWindow::checkHasDocument (const char *funcName) const
 {
+    if (m_document)
+        return true;
+        
+    kdError () << "kpMainWindow::checkHasDocument("
+               << "funcName=" << funcName
+               << ") no doc"
+               << endl;
+
+    return false;
+}
+
+// private
+bool kpMainWindow::checkHasViewManager (const char *funcName) const
+{
+    if (m_viewManager)
+        return true;
+    
+    kdError () << "kpMainWindow::checkHasViewManager("
+               << "funcName=" << funcName
+               << ") no vm"
+               << endl;
+    
+    return false;
 }
 
 
 // private slot
 void kpMainWindow::slotCut ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
-
-    if (m_viewManager->selectionActive ())
-    {
-        QApplication::setOverrideCursor (Qt::waitCursor);
-        QApplication::clipboard ()->setPixmap (m_viewManager->tempPixmap (), QClipboard::Clipboard);
-        m_viewManager->invalidateTempPixmap ();
-        QApplication::restoreOverrideCursor ();
-    }
+    if (!checkHasSelectionActive ("slotCut"))
+        return;
+        
+    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::clipboard ()->setPixmap (m_viewManager->tempPixmap (),
+                                           QClipboard::Clipboard);
+    m_viewManager->invalidateTempPixmap ();
+    QApplication::restoreOverrideCursor ();
 }
 
 // private slot
 void kpMainWindow::slotCopy ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
+    if (!checkHasSelectionActive ("slotCopy"))
+        return;
+        
+    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::clipboard ()->setPixmap (m_viewManager->tempPixmap (), QClipboard::Clipboard);
+    QApplication::restoreOverrideCursor ();
+}
 
-    if (m_viewManager->selectionActive ())
-    {
-        QApplication::setOverrideCursor (Qt::waitCursor);
-        QApplication::clipboard ()->setPixmap (m_viewManager->tempPixmap (), QClipboard::Clipboard);
-        QApplication::restoreOverrideCursor ();
-    }
+// private slot
+void kpMainWindow::slotEnablePaste ()
+{
+    // no need to convert the clipboard to a pixmap
+    // - just need to know if an image is there
+    QImage image = QApplication::clipboard ()->image (QClipboard::Clipboard);
+    m_actionPaste->setEnabled (!image.isNull ());
 }
 
 // private slot
 void kpMainWindow::slotPaste ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
     QApplication::setOverrideCursor (Qt::waitCursor);
 
@@ -120,8 +182,24 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
     if (!pixmap.isNull ())
     {
-        m_viewManager->setTempPixmapAt (pixmap, QPoint (0, 0), kpViewManager::SelectionPixmap);
-        slotToolRectSelection ();
+        if (!m_document)
+        {
+            kpDocument *newDoc = new kpDocument (
+                pixmap.width (), pixmap.height (), 32, this);
+                
+            // will also create viewManager
+            setDocument (newDoc);
+        }
+            
+        if (checkHasViewManager ("slotPaste"))
+        {
+            m_viewManager->setTempPixmapAt (pixmap, QPoint (0, 0), kpViewManager::SelectionPixmap);
+            slotToolRectSelection ();
+        }
+    }
+    else
+    {
+        kdError () << "kpMainWindow::slotPaste() null pixmap" << endl;
     }
 
     QApplication::restoreOverrideCursor ();
@@ -130,23 +208,34 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 // private slot
 void kpMainWindow::slotDelete ()
 {
+    if (!checkHasSelectionActive ("slotDelete"))
+        return;
 }
 
 
 // private slot
 void kpMainWindow::slotSelectAll ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
-    m_viewManager->setTempPixmapAt (*m_document->pixmap (), QPoint (0, 0), kpViewManager::SelectionPixmap);
+    if (!checkHasViewManager ("slotSelectAll") ||
+        !checkHasDocument ("slotSelectAll"))
+    {
+        return;
+    }
+
+    m_viewManager->setTempPixmapAt (*m_document->pixmap (),
+                                    QPoint (0, 0),
+                                    kpViewManager::SelectionPixmap);
     slotToolRectSelection ();
 }
 
 // private slot
 void kpMainWindow::slotDeselect ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
-
-    if (m_viewManager->selectionActive ())
-        m_viewManager->invalidateTempPixmap ();
+    if (!checkHasSelectionActive ("slotDeselect"))
+        return;
+        
+    m_viewManager->invalidateTempPixmap ();
 }

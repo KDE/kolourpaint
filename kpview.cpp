@@ -173,11 +173,11 @@ bool kpView::canShowGrid (int hzoom, int vzoom) const
     if (hzoom == -1) hzoom = m_hzoom;
     if (vzoom == -1) vzoom = m_vzoom;
 
-    // minimum zoom level >= 200 would probably be reported as a bug by users
-    // who think that the grid is part of the image!
+    // minimum zoom level < 600% would probably be reported as a bug by users
+    // who thought that the grid was a part of the image!
     return (!hasVariableZoom ()) &&
-           (hzoom >= 400 && hzoom % 100 == 0) &&
-           (vzoom >= 400 && vzoom % 100 == 0);
+           (hzoom >= 600 && hzoom % 100 == 0) &&
+           (vzoom >= 600 && vzoom % 100 == 0);
 }
 
 // view -> doc
@@ -486,12 +486,18 @@ void kpView::paint (const QPixmap &pixmap, const QRect &viewRect, const QRect &d
         for (int y = starty; y <= viewRect.bottom (); y += vzoomMultiple)
         {
             if (tileHeight > 0 && y % tileHeight == 0)
+            {
                 painter.setPen (tileBoundaryPen);
+                //painter.setRasterOp (Qt::XorROP);
+            }
 
             painter.drawLine (viewRect.left (), y, viewRect.right (), y);
 
             if (tileHeight > 0 && y % tileHeight == 0)
+            {
                 painter.setPen (ordinaryPen);
+                //painter.setRasterOp (Qt::CopyROP);
+            }
         }
 
         // vertical lines
@@ -502,12 +508,18 @@ void kpView::paint (const QPixmap &pixmap, const QRect &viewRect, const QRect &d
         for (int x = startx; x <= viewRect.right (); x += hzoomMultiple)
         {
             if (tileWidth > 0 && x % tileWidth == 0)
+            {
                 painter.setPen (tileBoundaryPen);
+                //painter.setRasterOp (Qt::XorROP);
+            }
 
             painter.drawLine (x, viewRect.top (), x, viewRect.bottom ());
 
             if (tileWidth > 0 && x % tileWidth == 0)
+            {
                 painter.setPen (ordinaryPen);
+                //painter.setRasterOp (Qt::CopyROP);
+            }
         }
     }
 

@@ -110,7 +110,7 @@ void kpToolAirSpray::actuallyDraw ()
 }
 
 // virtual
-void kpToolAirSpray::cancelDraw ()
+void kpToolAirSpray::cancelShape ()
 {
 #if 0
     endDraw (QPoint (), QRect ());

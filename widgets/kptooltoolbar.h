@@ -62,8 +62,12 @@ public:
     void unregisterTool (kpTool *tool);
     void unregisterAllTools ();
 
+    kpTool *tool () const;
     void selectTool (kpTool *tool);
-
+    
+    kpTool *previousTool () const;
+    void selectPreviousTool ();
+    
     void hideAllToolWidgets ();
     // could this be cleaner (the tools have to access them individually somehow)?
     kpToolWidgetBrush *toolWidgetBrush () const { return m_toolWidgetBrush; }
@@ -72,14 +76,14 @@ public:
     kpToolWidgetLineStyle *toolWidgetLineStyle () const { return m_toolWidgetLineStyle; }
     kpToolWidgetLineWidth *toolWidgetLineWidth () const { return m_toolWidgetLineWidth; }
 
-public slots:
-    virtual void setOrientation (Qt::Orientation o);
-
 signals:
-    void toolSelected (kpTool *tool);
+    void sigToolSelected (kpTool *tool);  // tool may be 0
 
 private slots:
     void slotToolSelected ();
+
+public slots:
+    virtual void setOrientation (Qt::Orientation o);
 
 private:
     void addButton (QButton *button, Qt::Orientation o, int num);
@@ -116,6 +120,8 @@ private:
     };
 
     QValueVector <kpButtonToolPair> m_buttonToolPairs;
+    
+    kpTool *m_previousTool, *m_currentTool;
 };
 
 #endif  // __kptooltoolbar_h__

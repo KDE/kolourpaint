@@ -36,12 +36,12 @@
 #include <qobject.h>
 #include <qpixmap.h>
 #include <qpoint.h>
+#include <qrect.h>
+
+#include <kpcommandhistory.h>
 
 class QKeyEvent;
 class QMouseEvent;
-class QRect;
-
-class KCommandHistory;
 
 class kpColorToolBar;
 class kpDocument;
@@ -82,6 +82,8 @@ public:
 
     bool hasBegunDraw () const { return m_beganDraw; }
 
+    virtual bool hasBegunShape () const { return hasBegunDraw (); }
+
 signals:
     // emitted after beginDraw() has been called
     void beganDraw (const QPoint &point);
@@ -107,10 +109,16 @@ protected:
     // this is useful for "instant" tools like the Pen & Eraser
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint,
                         const QRect &normalizedRect);
-    // aborts the draw
-    virtual void cancelDraw ();
+
+    virtual void cancelShape ();
 
     virtual void endDraw (const QPoint &thisPoint, const QRect &normalizedRect);
+    
+    virtual void endShape (const QPoint &thisPoint = QPoint (),
+                           const QRect &normalizedRect = QRect ())
+    {
+        endDraw (thisPoint, normalizedRect);
+    }
 
     kpMainWindow *mainWindow () const;
     kpDocument *document () const;
@@ -118,7 +126,7 @@ protected:
     kpToolToolBar *toolToolBar () const;
     kpView *viewUnderStartPoint () const { return m_viewUnderStartPoint; }
     kpView *viewUnderCursor () const;
-    KCommandHistory *commandHistory () const;
+    kpCommandHistory *commandHistory () const;
 
     QColor color (int which) const;
     
@@ -141,12 +149,18 @@ protected:
     QPoint m_startPoint, m_currentPoint, m_lastPoint;
 
 private:
+    friend class kpCommandHistory;
     friend class kpMainWindow;
+    friend class kpToolToolBar;
     void beginInternal ();
     void endInternal ();
 
     void beginDrawInternal ();
-    void endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRect);
+    void endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRect,
+                          bool wantEndShape = false);
+    void cancelShapeInternal ();
+    void endShapeInternal (const QPoint &thisPoint = QPoint (),
+                           const QRect &normalizedRect = QRect ());
 
     friend class kpView;
     void mousePressEvent (QMouseEvent *e);
@@ -161,7 +175,6 @@ private:
     void focusOutEvent (QFocusEvent *e);
     void enterEvent (QEvent *e);
     void leaveEvent (QEvent *e);
-    void cancelDrawInternal ();
 
     // 0 = left, 1 = right, -1 = other (none, left+right, mid)
     static int mouseButton (const Qt::ButtonState &buttonState);

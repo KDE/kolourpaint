@@ -43,6 +43,7 @@
 #include <kpmainwindow.h>
 
 
+// private
 void kpMainWindow::setupSettingsMenuActions ()
 {
     KActionCollection *ac = actionCollection ();
@@ -63,6 +64,14 @@ void kpMainWindow::setupSettingsMenuActions ()
     m_actionKeyBindings = KStdAction::keyBindings (this, SLOT (slotKeyBindings ()), ac);
     m_actionConfigureToolbars = KStdAction::configureToolbars (this, SLOT (slotConfigureToolBars ()), ac);
     m_actionConfigure = KStdAction::preferences (this, SLOT (slotConfigure ()), ac);
+    
+    enableSettingsMenuDocumentActions (false);
+}
+
+// private
+void kpMainWindow::enableSettingsMenuDocumentActions (bool enable)
+{
+    m_actionShowPath->setEnabled (enable);
 }
 
 
@@ -91,8 +100,6 @@ void kpMainWindow::slotActionShowPathToggled (bool on)
 // private slot
 void kpMainWindow::slotConfigure ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
-
     kpConfigDialog *dialog = new kpConfigDialog ();
     dialog->exec ();
     delete dialog;
@@ -101,8 +108,6 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 // private slot
 void kpMainWindow::slotKeyBindings ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
-
     KKeyDialog::configure (actionCollection ());
     actionCollection ()->readShortcutSettings ();
 }
@@ -110,8 +115,6 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 // private slot
 void kpMainWindow::slotConfigureToolBars ()
 {
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
-
     // TODO: wrong
     KEditToolbar dialog (actionCollection ());
     if (dialog.exec ())

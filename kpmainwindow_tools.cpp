@@ -97,102 +97,113 @@ void kpMainWindow::setupTools ()
     //
     
     m_toolToolBar = new kpToolToolBar (this, 2/*columns/rows*/, "Tool Box");
-    connect (m_toolToolBar, SIGNAL (toolSelected (kpTool *)), SLOT (switchToTool (kpTool *)));
+    connect (m_toolToolBar, SIGNAL (sigToolSelected (kpTool *)),
+             this, SLOT (slotToolSelected (kpTool *)));
     
     for (kpTool *tool = m_tools.first (); m_tools.current (); tool = m_tools.next ())
         m_toolToolBar->registerTool (tool);
 
 
-    //
-    // select initial tool
-    //
+    enableToolsDocumentActions (false);
+}
+
+// private
+void kpMainWindow::enableToolsDocumentActions (bool enable)
+{
+    if (enable && !m_toolToolBar->isEnabled ())
+    {
+        kpTool *previousTool = m_toolToolBar->previousTool ();
+
+        // select tool for enabled Tool Box
+
+        if (previousTool)
+            m_toolToolBar->selectPreviousTool ();
+        else
+            m_toolToolBar->selectTool (m_toolBrush);  // CONFIG: last used
+    }
+    else if (!enable && m_toolToolBar->isEnabled ())
+    {
+        // don't have a disabled Tool Box with an enabled Tool
+        m_toolToolBar->selectTool (0);
+    }
     
-    m_currentTool = m_previousTool = NULL;
-    m_toolToolBar->selectTool (m_toolBrush);  // CONFIG: last used
+
+    // not using actions for tools - so can just disable toolbar
+    m_toolToolBar->setEnabled (enable);
 }
 
 
 // public
 kpTool *kpMainWindow::tool () const
 {
-    return m_currentTool;
+    return m_toolToolBar ? m_toolToolBar->tool () : 0;
 }
 
 // public
-bool kpMainWindow::toolHasBegunDraw () const
+bool kpMainWindow::toolHasBegunShape () const
 {
-    return (m_currentTool && m_currentTool->hasBegunDraw ());
+    kpTool *currentTool = tool ();
+    return (currentTool && currentTool->hasBegunShape ());
 }
 
 
-// public slot
-// TODO: belongs to the tooltoolbar
-void kpMainWindow::switchToTool (kpTool *tool)
+// private slot
+void kpMainWindow::slotToolSelected (kpTool *tool)
 {
 #if DEBUG_KPMAINWINDOW
-    kdDebug () << "kpMainWindow::switchToTool (" << tool << ")" << endl;
+    kdDebug () << "kpMainWindow::slotToolSelected (" << tool << ")" << endl;
 #endif
 
-    if (tool == m_currentTool)
-        return;
+    kpTool *previousTool = m_toolToolBar ? m_toolToolBar->previousTool () : 0;
 
-    if (m_currentTool)
+    if (previousTool)
     {
-        m_currentTool->endInternal ();
-
-        disconnect (m_currentTool, SIGNAL (beganDraw (const QPoint &)),
+        disconnect (previousTool, SIGNAL (beganDraw (const QPoint &)),
                     this, SLOT (slotUpdateStatusBar (const QPoint &)));
-        disconnect (m_currentTool, SIGNAL (endedDraw (const QPoint &)),
+        disconnect (previousTool, SIGNAL (endedDraw (const QPoint &)),
                     this, SLOT (slotUpdateStatusBar (const QPoint &)));
-        disconnect (m_currentTool, SIGNAL (mouseMoved (const QPoint &)),
+        disconnect (previousTool, SIGNAL (mouseMoved (const QPoint &)),
                     this, SLOT (slotUpdateStatusBar (const QPoint &)));
-        disconnect (m_currentTool, SIGNAL (mouseDragged (const QRect &)),
+        disconnect (previousTool, SIGNAL (mouseDragged (const QRect &)),
                     this, SLOT (slotUpdateStatusBar (const QRect &)));
 
         disconnect (m_colorToolBar, SIGNAL (foregroundColorChanged (const QColor &)),
-                    m_currentTool, SLOT (slotForegroundColorChanged (const QColor &)));
+                    previousTool, SLOT (slotForegroundColorChanged (const QColor &)));
         disconnect (m_colorToolBar, SIGNAL (backgroundColorChanged (const QColor &)),
-                    m_currentTool, SLOT (slotBackgroundColorChanged (const QColor &)));
+                    previousTool, SLOT (slotBackgroundColorChanged (const QColor &)));
     }
-
-    m_previousTool = m_currentTool;
 
     if (tool)
     {
-        m_currentTool = tool;
-        m_currentTool->beginInternal ();
-
-        connect (m_currentTool, SIGNAL (beganDraw (const QPoint &)),
+        connect (tool, SIGNAL (beganDraw (const QPoint &)),
                  SLOT (slotUpdateStatusBar (const QPoint &)));
-        connect (m_currentTool, SIGNAL (endedDraw (const QPoint &)),
+        connect (tool, SIGNAL (endedDraw (const QPoint &)),
                  SLOT (slotUpdateStatusBar (const QPoint &)));
-        connect (m_currentTool, SIGNAL (mouseMoved (const QPoint &)),
+        connect (tool, SIGNAL (mouseMoved (const QPoint &)),
                  SLOT (slotUpdateStatusBar (const QPoint &)));
-        connect (m_currentTool, SIGNAL (mouseDragged (const QRect &)),
+        connect (tool, SIGNAL (mouseDragged (const QRect &)),
                  SLOT (slotUpdateStatusBar (const QRect &)));
 
         connect (m_colorToolBar, SIGNAL (foregroundColorChanged (const QColor &)),
-                 m_currentTool, SLOT (slotForegroundColorChanged (const QColor &)));
+                 tool, SLOT (slotForegroundColorChanged (const QColor &)));
         connect (m_colorToolBar, SIGNAL (backgroundColorChanged (const QColor &)),
-                 m_currentTool, SLOT (slotBackgroundColorChanged (const QColor &)));
+                 tool, SLOT (slotBackgroundColorChanged (const QColor &)));
     }
-    else
-        m_currentTool = 0;
-}
-
-// public slot
-void kpMainWindow::switchToPreviousTool ()
-{
-    if (m_previousTool)
-        switchToTool (m_previousTool);
 }
 
 
-#define SLOT_TOOL(toolName)              \
-void kpMainWindow::slotTool##toolName () \
-{                                        \
-KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;      \
-    switchToTool (m_tool##toolName);     \
+// private slots
+
+#define SLOT_TOOL(toolName)                       \
+void kpMainWindow::slotTool##toolName ()          \
+{                                                 \
+    if (!m_toolToolBar)                           \
+        return;                                   \
+                                                  \
+    if (toolHasBegunShape ())                     \
+        tool ()->endShapeInternal ();             \
+                                                  \
+    m_toolToolBar->selectTool (m_tool##toolName); \
 }
 
 SLOT_TOOL (AirSpray)

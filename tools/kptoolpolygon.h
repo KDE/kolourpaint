@@ -38,6 +38,7 @@
 #include <qpixmap.h>
 #include <qpoint.h>
 #include <qpointarray.h>
+#include <qrect.h>
 
 #include <kcommand.h>
 
@@ -79,9 +80,11 @@ public:
 
     virtual void beginDraw ();
     virtual void draw (const QPoint &, const QPoint &, const QRect &);
-    virtual void cancelDraw ();
+    virtual void cancelShape ();
     virtual void endDraw (const QPoint &, const QRect &);
-    void endShape ();
+    virtual void endShape (const QPoint & = QPoint (), const QRect & = QRect ());
+
+    virtual bool hasBegunShape () const;
 
 public slots:
     void slotLineStyleChanged (Qt::PenStyle lineStyle);
