@@ -318,7 +318,6 @@ QString kpEffectReduceColorsWidget::caption () const
 // public virtual [base kpColorEffectWidget]
 bool kpEffectReduceColorsWidget::isNoOp () const
 {
-    // TODO: this is wrong if the screen depth doesn't perfectly match the checkbox
     return (!m_defaultRadioButton || m_defaultRadioButton->isChecked ());
 }
 
