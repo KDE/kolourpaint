@@ -188,6 +188,7 @@ void kpToolPen::hover (const QPoint &point)
     if (!m_cursorPixmap.isNull ())
     {
         m_mouseButton = 0;
+        // TODO: m_currentPoint/hotPoint() is uninitialised when ::begin() is called
         viewManager ()->setTempPixmapAt (m_cursorPixmap, hotPoint (), kpViewManager::BrushPixmap);
     }
 

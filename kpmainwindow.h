@@ -35,7 +35,7 @@
 #define DEBUG_KPMAINWINDOW 1
 
 #include <qptrlist.h>
-#include <qstringlist.h>
+#include <qvaluevector.h>
 #include <kmainwindow.h>
 #include <kurl.h>
 
@@ -277,16 +277,30 @@ private:
     void enableViewMenuDocumentActions (bool enable = true);
     
     KAction *m_actionFullScreen,
+            *m_actionActualSize,
+            *m_actionFitToPage, *m_actionFitToWidth, *m_actionFitToHeight,
             *m_actionZoomIn, *m_actionZoomOut;
     KSelectAction *m_actionZoom;
     KToggleAction *m_actionShowGrid;
     
-    QStringList m_zoomList;
+    QValueVector <int> m_zoomList;
     bool m_configShowGrid;
 
+private:
+    void sendZoomListToActionZoom ();
+    int zoomLevelFromString (const QString &string);
+    QString zoomLevelToString (int zoomLevel);
+    void zoomTo (int zoomLevel);
+
 private slots:
+    void slotActualSize ();
+    void slotFitToPage ();
+    void slotFitToWidth ();
+    void slotFitToHeight ();
+
     void slotZoomIn ();
     void slotZoomOut ();
+
     void slotZoom ();
     
     void slotShowGrid ();

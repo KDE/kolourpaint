@@ -41,8 +41,7 @@
 kpViewManager::kpViewManager (kpMainWindow *mainWindow)
     : m_mainWindow (mainWindow),
       m_viewUnderCursor (0),
-      m_tempPixmapType (NoPixmap),
-      m_hideTempPixmap (false)
+      m_tempPixmapType (NoPixmap)
 {
 }
 
@@ -146,27 +145,27 @@ void kpViewManager::invalidateTempPixmap (const bool doUpdate)
         emit selectionEnabled (false);
 }
 
-enum kpViewManager::TempPixmapType kpViewManager::tempPixmapType () const
+enum kpViewManager::TempPixmapType kpViewManager::tempPixmapType () /*const*/
 {
-    return m_hideTempPixmap ? NoPixmap : m_tempPixmapType;
+    return m_tempPixmapType;
 }
 
-bool kpViewManager::tempPixmapActive () const
+bool kpViewManager::tempPixmapActive () /*const*/
 {
     return tempPixmapType () != NoPixmap;
 }
 
-bool kpViewManager::normalActive () const
+bool kpViewManager::normalActive () /*const*/
 {
     return tempPixmapType () == NormalPixmap;
 }
 
-bool kpViewManager::selectionActive () const
+bool kpViewManager::selectionActive () /*const*/
 {
     return tempPixmapType () == SelectionPixmap;
 }
 
-bool kpViewManager::brushActive () const
+bool kpViewManager::brushActive () /*const*/
 {
     return tempPixmapType () == BrushPixmap;
 }
@@ -212,30 +211,23 @@ kpView *kpViewManager::viewUnderCursor () /*const*/
 
 void kpViewManager::setViewUnderCursor (kpView *view)
 {
+    kdDebug () << "kpViewManager::setViewUnderCursor (" << view << ")" << endl;
     m_viewUnderCursor = view;
+
     repaintBrushPixmap ();
 }
 
 
 void kpViewManager::repaintBrushPixmap ()
 {
-    if (!brushActive ()) return;
-
-    kpView *activeView = viewUnderCursor ();
-    m_hideTempPixmap = !activeView;  // SYNC: with kpToolPen::updateBrushCursor()
-
-    kdDebug () << "kpViewManager::repaintBrushPixmap (viewUnderCursor=" << activeView
-               << ", brushActive=" << brushActive ()
-               << ", hideTempPixmap=" << m_hideTempPixmap
-               << endl;
+    kdDebug () << "kpViewManager::repaintBrushPixmap () viewUnderCursor="
+               << viewUnderCursor () << endl;
 
     // sync with updateViews()
     for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())
     {
-        //m_hideTempPixmap = (view == activeView);
         view->repaint (view->zoomDocToView (tempPixmapRect ()), false /* don't erase */);
     }
-    m_hideTempPixmap = false;
 }
 
 
@@ -253,9 +245,26 @@ void kpViewManager::updateViews (const QRect &docRect)
     // sync with repaintBrushPixmap()
     for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())
     {
-        //view->update (view->zoomDocToView (docRect));
-        // HACK: make it _feel_ more responsive
-        view->repaint (view->zoomDocToView (docRect), false /* don't erase */);
+        // HACK: use repaint to get instant feedback so that it _feels_
+        //       more responsive
+        if (view->zoomLevelX () % 100 == 0 && view->zoomLevelY () % 100 == 0)
+        {
+            view->repaint (view->zoomDocToView (docRect), false/*no erase*/);
+        }
+        else
+        {
+            QRect viewRect = view->zoomDocToView (docRect);
+        
+            int diff = qRound (double (QMAX (view->zoomLevelX (), view->zoomLevelY ())) / 100.0) + 1;
+            
+            QRect newRect = QRect (viewRect.x () - diff,
+                                   viewRect.y () - diff,
+                                   viewRect.width () + 2 * diff,
+                                   viewRect.height () + 2 * diff)
+                                .intersect (QRect (0, 0, view->width (), view->height ()));
+        
+            view->repaint (newRect, false/*no erase*/);
+        }
     }
 }
 

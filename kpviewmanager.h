@@ -77,12 +77,12 @@ public:
                           enum SelectionBorderType selBorderType = NoBorder);
     void invalidateTempPixmap (const bool doUpdate = true);
 
-    enum TempPixmapType tempPixmapType () const;
-    bool tempPixmapActive () const;
+    enum TempPixmapType tempPixmapType () /*const*/;
+    bool tempPixmapActive () /*const*/;
 
-    bool normalActive () const;
-    bool selectionActive () const;
-    bool brushActive () const;
+    bool normalActive () /*const*/;
+    bool selectionActive () /*const*/;
+    bool brushActive () /*const*/;
 
     QRect tempPixmapRect () const;
     QPixmap tempPixmap () const;
@@ -139,8 +139,6 @@ private:
     QRect m_tempPixmapRect;
     enum SelectionBorderType m_selectionBorder;
     enum TempPixmapType m_tempPixmapType;
-
-    bool m_hideTempPixmap;
 };
 
 #endif  // __kpviewmanager_h__

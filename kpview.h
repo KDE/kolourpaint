@@ -36,6 +36,7 @@
 #include <qpixmap.h>
 #include <qpoint.h>
 #include <qrect.h>
+#include <qwmatrix.h>
 
 class QDragEnterEvent;
 class QDragLeaveEvent;
@@ -109,6 +110,7 @@ private:
 
     bool m_autoVariableZoom;
     int m_hzoom, m_vzoom;
+    QWMatrix m_docToViewMatrix;
     bool m_showGrid;
 };
 
