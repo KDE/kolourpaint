@@ -759,6 +759,22 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
                 kdError () << "kpView::paintEventDrawSelection() unknown sel border type" << endl;
                 break;
             }
+
+
+            if (vm->selectionBorderFinished () &&
+                (sel->type () == kpSelection::Ellipse ||
+                 sel->type () == kpSelection::Points))
+            {
+                destPixmapPainter.save ();
+
+                destPixmapPainter.setRasterOp (Qt::NotROP);
+                PAINTER_CMD (drawRect (boundingRect.x () - docRect.x (),
+                                       boundingRect.y () - docRect.y (),
+                                       boundingRect.width (),
+                                       boundingRect.height ()));
+
+                destPixmapPainter.restore ();
+            }
         }
         else
         {
