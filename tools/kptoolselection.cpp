@@ -1404,6 +1404,10 @@ void kpToolSelectionCreateCommand::unexecute ()
 
     if (!doc->selection ())
     {
+        // Was just a border that got deselected?
+        if (m_fromSelection && !m_fromSelection->pixmap ())
+            return;
+
         kdError () << "kpToolSelectionCreateCommand::unexecute() without sel region" << endl;
         return;
     }
