@@ -68,7 +68,7 @@ kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent)
         
         pixmap.setMask (maskBitmap);
 
-        addOption (pixmap, i18n (QString::number (lineWidths [i])));
+        addOption (pixmap, QString::number(lineWidths [i]));
         startNewOptionRow ();
     }
 
