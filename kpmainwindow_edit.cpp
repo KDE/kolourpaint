@@ -184,6 +184,10 @@ void kpMainWindow::slotCopy ()
         tool ()->endShapeInternal ();
 
     kpSelection sel = *m_document->selection ();
+    // Transparency doesn't get sent across the aether so nuke it now
+    // so that transparency mask doesn't get needlessly recalculated
+    // if we ever call sel.setPixmap().
+    sel.setTransparency (kpSelectionTransparency ());
 
     if (sel.isText ())
     {
