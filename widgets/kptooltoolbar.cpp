@@ -89,12 +89,14 @@ kpToolToolBar::~kpToolToolBar ()
 
 void kpToolToolBar::registerTool (kpTool *tool)
 {
-    for (QMap <QButton *, kpTool *>::ConstIterator it = m_tools.constBegin (); it != m_tools.constEnd (); it++)
+    for (QValueVector <kpButtonToolPair>::ConstIterator it = m_buttonToolPairs.constBegin ();
+         it != m_buttonToolPairs.constEnd ();
+         it++)
     {
-        if ((*it) == tool)
+        if ((*it).m_tool == tool)
             return;
     }
-    int num = m_tools.count ();
+    int num = m_buttonToolPairs.count ();
 
     QToolButton *b = new QToolButton (m_baseWidget);
     b->setAutoRaise (true);
@@ -110,17 +112,19 @@ void kpToolToolBar::registerTool (kpTool *tool)
     m_buttonGroup->insert (b);
     addButton (b, orientation (), num);
 
-    m_tools.insert (b, tool);
+    m_buttonToolPairs.append (kpButtonToolPair (b, tool));
 }
 
 void kpToolToolBar::unregisterTool (kpTool *tool)
 {
-    for (QMap <QButton *, kpTool *>::Iterator it = m_tools.begin (); it != m_tools.end (); it++)
+    for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
+         it != m_buttonToolPairs.end ();
+         it++)
     {
-        if ((*it) == tool)
+        if ((*it).m_tool == tool)
         {
-            delete (it.key ());  // button
-            m_tools.remove (it);
+            delete ((*it).m_button);
+            m_buttonToolPairs.erase (it);
             break;
         }
     }
@@ -128,21 +132,25 @@ void kpToolToolBar::unregisterTool (kpTool *tool)
 
 void kpToolToolBar::unregisterAllTools ()
 {
-   for (QMap <QButton *, kpTool *>::Iterator it = m_tools.begin (); it != m_tools.end (); it++)
-   {
-       delete (it.key ());  // button
-   }
+    for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
+         it != m_buttonToolPairs.end ();
+         it++)
+    {
+       delete ((*it).m_button);
+    }
 
-   m_tools.clear ();
+    m_buttonToolPairs.clear ();
 }
 
 void kpToolToolBar::selectTool (kpTool *tool)
 {
-    for (QMap <QButton *, kpTool *>::Iterator it = m_tools.begin (); it != m_tools.end (); it++)
+    for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
+         it != m_buttonToolPairs.end ();
+         it++)
     {
-        if ((*it) == tool)
+        if ((*it).m_tool == tool)
         {
-            m_buttonGroup->setButton (m_buttonGroup->id (it.key ()));
+            m_buttonGroup->setButton (m_buttonGroup->id ((*it).m_button));
             slotToolSelected ();
             break;
         }
@@ -163,10 +171,23 @@ void kpToolToolBar::slotToolSelected ()
 {
     QButton *b = m_buttonGroup->selected ();
 
+    kpTool *tool = 0;
+    for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
+         it != m_buttonToolPairs.end ();
+         it++)
+    {
+        if ((*it).m_button == b)
+        {
+            tool = (*it).m_tool;
+            break;
+        }
+    }
+
     kdDebug () << "kpToolToolBar::slotToolSelection() button=" << b
-               << " tool=" << m_tools [b]
-               << endl;
-    emit toolSelected (m_tools [b]);
+               << " tool=" << tool << endl;
+    
+    if (tool)
+        emit toolSelected (tool);
 }
 
 // virtual
@@ -217,11 +238,12 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
     }
 
     int num = 0;
-    for (QMap <QButton *, kpTool *>::Iterator it = m_tools.begin ();
-         it != m_tools.end ();
+    
+    for (QValueVector <kpButtonToolPair>::Iterator it = m_buttonToolPairs.begin ();
+         it != m_buttonToolPairs.end ();
          it++)
     {
-        addButton (it.key (), o, num);
+        addButton ((*it).m_button, o, num);
         num++;
     }
 

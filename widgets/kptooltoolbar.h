@@ -32,7 +32,7 @@
 #ifndef __kptooltoolbar_h__
 #define __kptooltoolbar_h__
 
-#include <qmap.h>
+#include <qvaluevector.h>
 #include <ktoolbar.h>
 
 class QBoxLayout;
@@ -99,7 +99,23 @@ private:
     kpToolWidgetLineStyle *m_toolWidgetLineStyle;
     kpToolWidgetLineWidth *m_toolWidgetLineWidth;
 
-    QMap <QButton *, kpTool *> m_tools;
+    struct kpButtonToolPair
+    {
+        kpButtonToolPair (QButton *button, kpTool *tool)
+            : m_button (button), m_tool (tool)
+        {
+        }
+        
+        kpButtonToolPair ()
+            : m_button (0), m_tool (0)
+        {
+        }
+        
+        QButton *m_button;
+        kpTool *m_tool;
+    };
+
+    QValueVector <kpButtonToolPair> m_buttonToolPairs;
 };
 
 #endif  // __kptooltoolbar_h__
