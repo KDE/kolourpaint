@@ -17,7 +17,7 @@ pulsating transparent brush cursor (not black)
 
 kptoolwidgetbase - spacing between items, make contentsRect() actual size wanted
 
-- additional colour in the kpColorToolBar for transparent images
+introduce kpColor class to avoid using undefined QColor::isValid() behaviour for transparency
 
 working thumbnail view; also maybe shouldn't be a toolbar
 
