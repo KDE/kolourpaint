@@ -9,7 +9,7 @@ libkolourpainttools_la_SOURCES = kptool.cpp kptoolairspray.cpp \
     kptoolellipticalselection.cpp kptooleraser.cpp \
     kptoolflip.cpp kptoolfloodfill.cpp \
     kptoolfreeformselection.cpp kptoolinvertcolors.cpp \
-    kptoolline.cpp kptoolpen.cpp \
+    kptoolline.cpp kptoolpen.cpp kptoolpolygon.cpp \
     kptoolrectangle.cpp kptoolrectselection.cpp \
     kptoolresizescale.cpp kptoolrotate.cpp \
     kptoolroundedrectangle.cpp kptoolselection.cpp \
@@ -26,6 +26,7 @@ libkolourpainttools_la_METASOURCES = kptool.moc \
     kptoolfloodfill.moc \
     kptoolline.moc \
     kptoolpen.moc \
+    kptoolpolygon.moc \
     kptoolrectangle.moc \
     kptoolresizescale.moc \
     kptoolrotate.moc \
