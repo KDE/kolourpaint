@@ -30,6 +30,8 @@
 
 #include <kpeffectbalance.h>
 
+#include <math.h>
+
 #include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -81,7 +83,6 @@ static inline int brightness (int base, int strength)
     return between0And255 (base + strength * 255 / 50);
 }
 
-#include <math.h>
 static inline int gamma (int base, int strength)
 {
     return between0And255 (int (255.0 * pow (base / 255.0, 1.0 - 2.2 * strength / 50.0)));
@@ -96,6 +97,26 @@ static inline int contrastBrightnessGamma (int base,
     return gamma (contrast (brightness (base, newBrightness),
                             newContrast),
                   newGamma);
+}
+
+static inline QRgb contrastBrightnessGammaForRGB (QRgb rgb,
+    int channels,
+    int contrast, int brightness, int gamma)
+{
+    int red = qRed (rgb);
+    int blue = qBlue (rgb);
+    int green = qGreen (rgb);
+
+
+    if (channels & kpEffectBalanceCommand::Red)
+        red = contrastBrightnessGamma (red, contrast, brightness, gamma);
+    if (channels & kpEffectBalanceCommand::Green)
+        green = contrastBrightnessGamma (green, contrast, brightness, gamma);
+    if (channels & kpEffectBalanceCommand::Blue)
+        blue = contrastBrightnessGamma (blue, contrast, brightness, gamma);
+
+
+    return qRgba (red, green, blue, qAlpha (rgb));
 }
 
 
@@ -115,28 +136,29 @@ QPixmap kpEffectBalanceCommand::applyColorEffect (const QPixmap &pixmap,
 
     QImage image = kpPixmapFX::convertToImage (pixmap);
 
-    for (int y = 0; y < image.height (); y++)
+    if (image.depth () > 8)
     {
-        for (int x = 0; x < image.width (); x++)
+        for (int y = 0; y < image.height (); y++)
         {
-            QRgb rgb = image.pixel (x, y);
-
-            int red = qRed (rgb);
-            int blue = qBlue (rgb);
-            int green = qGreen (rgb);
-
-
-            if (channels & Red)
-                red = contrastBrightnessGamma (red, contrast, brightness, gamma);
-            if (channels & Green)
-                green = contrastBrightnessGamma (green, contrast, brightness, gamma);
-            if (channels & Blue)
-                blue = contrastBrightnessGamma (blue, contrast, brightness, gamma);
-
-
-            // Gamma
-            image.setPixel (x, y, qRgba (red, green, blue, qAlpha (rgb)));
+            for (int x = 0; x < image.width (); x++)
+            {
+                image.setPixel (x, y,
+                    contrastBrightnessGammaForRGB (image.pixel (x, y),
+                        channels,
+                        contrast, brightness, gamma));
+            }
         }
+    }
+    else
+    {
+        for (int i = 0; i < image.numColors (); i++)
+        {
+            image.setColor (i,
+                contrastBrightnessGammaForRGB (image.color (i),
+                    channels,
+                    contrast, brightness, gamma));
+        }
+
     }
 
     return kpPixmapFX::convertToPixmap (image);
