@@ -562,7 +562,7 @@ bool kpMainWindow::slotReload ()
     {
         int result = KMessageBox::Cancel;
 
-        if (m_document->isFromURL () && !oldURL.isEmpty ())
+        if (m_document->isFromURL (false/*don't bother checking exists*/) && !oldURL.isEmpty ())
         {
             result = KMessageBox::warningContinueCancel (this,
                          i18n ("The document \"%1\" has been modified.\n"
