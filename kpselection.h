@@ -142,6 +142,19 @@ public:
     bool pointIsInTextBorderArea (const QPoint &globalPoint) const;
     bool pointIsInTextArea (const QPoint &globalPoint) const;
 
+    enum ResizeType
+    {
+        None = 0,
+        Left = 1,
+        Right = 2,
+        Top = 4,
+        Bottom = 8
+    };
+
+    // Returns the ResizeType
+    int pointOnResizeHandle (const QPoint &globalPoint) const;
+
+
     void textResize (int width, int height);
 
     // TODO: Enforce in kpSelection, not just in kpToolSelection & when pasting

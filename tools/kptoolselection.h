@@ -38,14 +38,24 @@
 #include <kcommand.h>
 
 #include <kpcolor.h>
+#include <kpselection.h>
 #include <kpselectiontransparency.h>
 #include <kptool.h>
 
+
 class QPoint;
 class QRect;
+class QTimer;
+
 class kpMainWindow;
 class kpSelection;
+
+class kpToolSelectionCreateCommand;
+class kpToolSelectionMoveCommand;
+class kpToolSelectionPullFromDocumentCommand;
+class kpToolSelectionResizeScaleCommand;
 class kpToolWidgetOpaqueOrTransparent;
+
 
 class kpToolSelection : public kpTool
 {
@@ -75,6 +85,9 @@ public:
     virtual bool careAboutModifierState () const { return true; }
 
     virtual void beginDraw ();
+protected:
+    const QCursor &cursorForPoint (const QPoint &point) const;
+public:
     virtual void hover (const QPoint &point);
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint,
                        const QRect &normalizedRect);
@@ -99,18 +112,20 @@ protected:
     QPoint m_startDragFromSelectionTopLeft;
     enum DragType
     {
-        Unknown, Create, Move, SelectText
+        Unknown, Create, Move, SelectText, ResizeScale
     };
     DragType m_dragType;
     bool m_dragHasBegun;
     bool m_hadSelectionBeforeDrag;
+    int m_resizeScaleType;
 
-    class kpToolSelectionPullFromDocumentCommand *m_currentPullFromDocumentCommand;
-    class kpToolSelectionMoveCommand *m_currentMoveCommand;
+    kpToolSelectionPullFromDocumentCommand *m_currentPullFromDocumentCommand;
+    kpToolSelectionMoveCommand *m_currentMoveCommand;
     bool m_currentMoveCommandIsSmear;
+    kpToolSelectionResizeScaleCommand *m_currentResizeScaleCommand;
     kpToolWidgetOpaqueOrTransparent *m_toolWidgetOpaqueOrTransparent;
 
-    class kpToolSelectionCreateCommand *m_currentCreateTextCommand;
+    kpToolSelectionCreateCommand *m_currentCreateTextCommand;
     bool m_cancelledShapeButStillHoldingButtons;
 };
 
@@ -217,6 +232,66 @@ private:
     QRect m_documentBoundingRect;
 
     QPointArray m_copyOntoDocumentPoints;
+};
+
+// You could subclass kpToolResizeScaleCommand and/or
+// kpToolSelectionMoveCommand instead if want a disaster.
+// This is different to kpToolResizeScaleCommand in that:
+//
+// 1. This only works for selections.
+// 2. This is designed for the size and position to change several times
+//    before execute().
+//
+class kpToolSelectionResizeScaleCommand : public QObject,
+                                          public KNamedCommand
+{
+Q_OBJECT
+
+public:
+    kpToolSelectionResizeScaleCommand (kpMainWindow *mainWindow);
+    virtual ~kpToolSelectionResizeScaleCommand ();
+
+protected:
+    kpSelection *selection () const;
+
+public:
+    kpSelection originalSelection () const;
+
+    QPoint topLeft () const;
+    void moveTo (const QPoint &point);
+
+    int width () const;
+    int height () const;
+    void resize (int width, int height, bool delayed = false);
+
+    // (equivalent to resize() followed by moveTo() but faster)
+    void resizeAndMoveTo (int width, int height, const QPoint &point,
+                          bool delayed = false);
+
+protected:
+    void killSmoothScaleTimer ();
+
+    // If <delayed>, does a fast, low-quality scale and then calls itself
+    // with <delayed> unset for a smooth scale, a short time later.
+    // If acting on a text box, <delayed> is ignored.
+    void resizeScaleAndMove (bool delayed);
+
+protected slots:
+    void resizeScaleAndMove (/*delayed = false*/);
+
+public:
+    virtual void execute ();
+    virtual void unexecute ();
+
+protected:
+    kpMainWindow *m_mainWindow;
+
+    kpSelection m_originalSelection;
+
+    QPoint m_newTopLeft;
+    int m_newWidth, m_newHeight;
+
+    QTimer *m_smoothScaleTimer;
 };
 
 class kpToolSelectionDestroyCommand : public KCommand

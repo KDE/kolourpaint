@@ -26,14 +26,16 @@
 */
 
 
-#define DEBUG_KP_TOOL_SELECTION 0
+#define DEBUG_KP_TOOL_SELECTION 1
 
 
 #include <kptoolselection.h>
 
+#include <qapplication.h>
 #include <qbitmap.h>
 #include <qcursor.h>
 #include <qpainter.h>
+#include <qtimer.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -58,6 +60,7 @@ kpToolSelection::kpToolSelection (Mode mode,
       m_mode (mode),
       m_currentPullFromDocumentCommand (0),
       m_currentMoveCommand (0),
+      m_currentResizeScaleCommand (0),
       m_toolWidgetOpaqueOrTransparent (0),
       m_currentCreateTextCommand (0)
 {
@@ -97,11 +100,18 @@ QString kpToolSelection::haventBegunDrawUserMessage () const
         {
             if (document ()->selection ()->pointIsInTextArea (m_currentPoint))
                 return i18n ("Left click to change cursor position.");
+            else if (document ()->selection ()->pointOnResizeHandle (m_currentPoint))
+                return i18n ("Left drag to resize text box.");
             else
                 return i18n ("Left drag to move text box.");
         }
         else
-            return i18n ("Left drag to move selection.");
+        {
+            if (document ()->selection ()->pointOnResizeHandle (m_currentPoint))
+                return i18n ("Left drag to scale selection.");
+            else
+                return i18n ("Left drag to move selection.");
+        }
     }
     else
     {
@@ -145,9 +155,11 @@ void kpToolSelection::begin ()
     m_dragType = Unknown;
     m_dragHasBegun = false;
     m_hadSelectionBeforeDrag = false;  // arbitrary
+    m_resizeScaleType = 0;
 
     m_currentPullFromDocumentCommand = 0;
     m_currentMoveCommand = 0;
+    m_currentResizeScaleCommand = 0;
     m_currentCreateTextCommand = 0;
 
     m_cancelledShapeButStillHoldingButtons = false;
@@ -232,6 +244,20 @@ void kpToolSelection::beginDraw ()
                 viewManager ()->setTextCursorPosition (sel->textRowForPoint (m_currentPoint),
                                                        sel->textColForPoint (m_currentPoint));
             }
+            else if (document ()->selection ()->pointOnResizeHandle (m_currentPoint))
+            {
+            #if DEBUG_KP_TOOL_SELECTION
+                kdDebug () << "\t\tis resize/scale" << endl;
+            #endif
+
+                m_startDragFromSelectionTopLeft = m_currentPoint - selectionRect.topLeft ();
+                m_dragType = ResizeScale;
+                m_resizeScaleType = document ()->selection ()->pointOnResizeHandle (m_currentPoint);
+
+                viewManager ()->setSelectionBorderVisible (true);
+                viewManager ()->setSelectionBorderFinished (true);
+                viewManager ()->setTextCursorEnabled (false);
+            }
             else
             {
             #if DEBUG_KP_TOOL_SELECTION
@@ -273,20 +299,50 @@ void kpToolSelection::beginDraw ()
     }
 }
 
-// virtual
-void kpToolSelection::hover (const QPoint &point)
+
+// protected
+const QCursor &kpToolSelection::cursorForPoint (const QPoint &point) const
 {
     if (document () && document ()->selection () && document ()->selection ()->contains (point))
     {
         if (m_mode == Text && document ()->selection ()->pointIsInTextArea (point))
-            viewManager ()->setCursor (Qt::ibeamCursor);
+            return Qt::ibeamCursor;
         else
-            viewManager ()->setCursor (Qt::sizeAllCursor);
+        {
+            switch (document ()->selection ()->pointOnResizeHandle (point))
+            {
+            case 0:
+            default:
+                return Qt::sizeAllCursor;
+
+            case (kpSelection::Top | kpSelection::Left):
+            case (kpSelection::Bottom | kpSelection::Right):
+                return Qt::sizeFDiagCursor;
+
+            case (kpSelection::Bottom | kpSelection::Left):
+            case (kpSelection::Top | kpSelection::Right):
+                return Qt::sizeBDiagCursor;
+
+            case kpSelection::Top:
+            case kpSelection::Bottom:
+                return Qt::sizeVerCursor;
+
+            case kpSelection::Left:
+            case kpSelection::Right:
+                return Qt::sizeHorCursor;
+            }
+        }
     }
     else
     {
-        viewManager ()->setCursor (Qt::crossCursor);
+        return Qt::crossCursor;
     }
+}
+
+// virtual
+void kpToolSelection::hover (const QPoint &point)
+{
+    viewManager ()->setCursor (cursorForPoint (point));
 
     setUserShapePoints (point, KP_INVALID_POINT, false/*don't set size*/);
     if (document () && document ()->selection ())
@@ -577,6 +633,86 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
         setUserShapePoints (start, end, false/*don't set size*/);
         setUserShapeSize (end.x () - start.x (), end.y () - start.y ());
     }
+    else if (m_dragType == ResizeScale)
+    {
+    #if DEBUG_KP_TOOL_SELECTION && 1
+        kdDebug () << "\tresize/scale" << endl;
+    #endif
+
+        kpSelection *sel = document ()->selection ();
+
+        if (!m_dragHasBegun && thisPoint == m_startPoint)
+        {
+        #if DEBUG_KP_TOOL_SELECTION && 1
+            kdDebug () << "\t\tnop" << endl;
+        #endif
+
+            setUserShapePoints (QPoint (sel->width (), sel->height ()));
+            return;
+        }
+
+        if (!sel->pixmap () && !m_currentPullFromDocumentCommand)
+        {
+            m_currentPullFromDocumentCommand = new kpToolSelectionPullFromDocumentCommand (
+                QString::null/*uninteresting child of macro cmd*/,
+                mainWindow ());
+            m_currentPullFromDocumentCommand->execute ();
+        }
+
+        if (!m_currentResizeScaleCommand)
+        {
+            m_currentResizeScaleCommand = new kpToolSelectionResizeScaleCommand (mainWindow ());
+        }
+
+        kpSelection originalSelection = m_currentResizeScaleCommand->originalSelection ();
+        int newWidth = originalSelection.width ();
+        int newHeight = originalSelection.height ();
+        int newX = originalSelection.x ();
+        int newY = originalSelection.y ();
+
+        if (m_resizeScaleType & kpSelection::Left)
+        {
+            newWidth = QMAX (1, newWidth - (thisPoint.x () - m_startPoint.x ()));
+            newX -= (newWidth - originalSelection.width ());
+        }
+        else if (m_resizeScaleType & kpSelection::Right)
+        {
+            newWidth = QMAX (1, newWidth + (thisPoint.x () - m_startPoint.x ()));
+        }
+
+        if (m_resizeScaleType & kpSelection::Top)
+        {
+            newHeight = QMAX (1, newHeight - (thisPoint.y () - m_startPoint.y ()));
+            newY -= (newHeight - originalSelection.height ());
+        }
+        else if (m_resizeScaleType & kpSelection::Bottom)
+        {
+            newHeight = QMAX (1, newHeight + (thisPoint.y () - m_startPoint.y ()));
+        }
+
+        if (sel->isText ())
+        {
+            // TODO: feels wrong - what about newX & newY
+            newWidth = QMAX (sel->minimumWidthForTextStyle (sel->textStyle ()),
+                             newWidth);
+            newHeight = QMAX (sel->minimumHeightForTextStyle (sel->textStyle ()),
+                              newHeight);
+        }
+
+        viewManager ()->setFastUpdates ();
+        m_currentResizeScaleCommand->resizeAndMoveTo (newWidth, newHeight,
+                                                      QPoint (newX, newY),
+                                                      true/*smooth scale delayed*/);
+        viewManager ()->restoreFastUpdates ();
+
+        setUserShapePoints (QPoint (originalSelection.width (),
+                                    originalSelection.height ()),
+                            QPoint (newWidth,
+                                    newHeight),
+                            false/*don't set size*/);
+        setUserShapeSize (newWidth - originalSelection.width (),
+                          newHeight - originalSelection.height ());
+    }
 
     m_dragHasBegun = true;
 }
@@ -609,16 +745,6 @@ void kpToolSelection::cancelShape ()
                 if (document ()->selection ()->isText ())
                     viewManager ()->setTextCursorBlinkState (true);
             }
-
-            if (m_currentPullFromDocumentCommand)
-            {
-            #if DEBUG_KP_TOOL_SELECTION
-                kdDebug () << "\t\tundo pullFromDocumentCommand" << endl;
-            #endif
-                m_currentPullFromDocumentCommand->unexecute ();
-                delete m_currentPullFromDocumentCommand;
-                m_currentPullFromDocumentCommand = 0;
-            }
         }
         else if (m_dragType == Create)
         {
@@ -635,6 +761,37 @@ void kpToolSelection::cancelShape ()
                 m_currentCreateTextCommand = 0;
             }
         }
+        else if (m_dragType == ResizeScale)
+        {
+        #if DEBUG_KP_TOOL_SELECTION
+            kdDebug () << "\twas resize/scale sel - kill" << endl;
+        #endif
+
+            if (m_currentResizeScaleCommand)
+            {
+            #if DEBUG_KP_TOOL_SELECTION
+                kdDebug () << "\t\tundo currentResizeScaleCommand" << endl;
+            #endif
+                m_currentResizeScaleCommand->unexecute ();
+                delete m_currentResizeScaleCommand;
+                m_currentResizeScaleCommand = 0;
+
+                if (document ()->selection ()->isText ())
+                    viewManager ()->setTextCursorBlinkState (true);
+            }
+        }
+
+
+        if (m_currentPullFromDocumentCommand)
+        {
+        #if DEBUG_KP_TOOL_SELECTION
+            kdDebug () << "\t\tundo pullFromDocumentCommand" << endl;
+        #endif
+            m_currentPullFromDocumentCommand->unexecute ();
+            delete m_currentPullFromDocumentCommand;
+            m_currentPullFromDocumentCommand = 0;
+        }
+
 
         viewManager ()->setSelectionBorderVisible (true);
         viewManager ()->setSelectionBorderFinished (true);
@@ -689,18 +846,30 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
         if (document ()->selection ()->isText ())
             viewManager ()->setTextCursorBlinkState (true);
     }
+    else if (m_currentResizeScaleCommand)
+    {
+        cmd = new KMacroCommand (m_currentResizeScaleCommand->KNamedCommand::name ());
+
+        if (document ()->selection ()->isText ())
+            viewManager ()->setTextCursorBlinkState (true);
+    }
 
     if (m_currentPullFromDocumentCommand)
     {
-        if (!m_currentMoveCommand)
+        if (!m_currentMoveCommand && !m_currentResizeScaleCommand)
         {
-            kdError () << "kpToolSelection::endDraw() pull without move" << endl;
+            kdError () << "kpToolSelection::endDraw() pull without move nor resize/scale" << endl;
             delete m_currentPullFromDocumentCommand;
             m_currentPullFromDocumentCommand = 0;
         }
         else
         {
-            kpSelection selection = m_currentMoveCommand->originalSelection ();
+            kpSelection selection;
+
+            if (m_currentMoveCommand)
+                selection = m_currentMoveCommand->originalSelection ();
+            else if (m_currentResizeScaleCommand)
+                selection = m_currentResizeScaleCommand->originalSelection ();
 
             // just the border
             selection.setPixmap (QPixmap ());
@@ -722,6 +891,15 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
         m_currentMoveCommand->finalize ();
         cmd->addCommand (m_currentMoveCommand);
         m_currentMoveCommand = 0;
+
+        if (document ()->selection ()->isText ())
+            viewManager ()->setTextCursorBlinkState (true);
+    }
+
+    if (m_currentResizeScaleCommand)
+    {
+        cmd->addCommand (m_currentResizeScaleCommand);
+        m_currentResizeScaleCommand = 0;
 
         if (document ()->selection ()->isText ())
             viewManager ()->setTextCursorBlinkState (true);
@@ -1496,6 +1674,195 @@ void kpToolSelectionMoveCommand::finalize ()
         m_oldDocumentPixmap = kpTool::neededPixmap (m_oldDocumentPixmap,
                                                     m_documentBoundingRect);
     }
+}
+
+
+/*
+ * kpToolSelectionResizeScaleCommand
+ */
+
+kpToolSelectionResizeScaleCommand::kpToolSelectionResizeScaleCommand (
+        kpMainWindow *mainWindow)
+    : KNamedCommand (mainWindow->document ()->selection ()->isText () ?
+                         i18n ("Text: Resize Box") :
+                         i18n ("Selection: Smooth Scale")),
+      m_mainWindow (mainWindow),
+      m_smoothScaleTimer (new QTimer (this))
+{
+    m_originalSelection = *selection ();
+
+    m_newTopLeft = selection ()->topLeft ();
+    m_newWidth = selection ()->width ();
+    m_newHeight = selection ()->height ();
+
+    connect (m_smoothScaleTimer, SIGNAL (timeout ()),
+             this, SLOT (resizeScaleAndMove ()));
+}
+
+kpToolSelectionResizeScaleCommand::~kpToolSelectionResizeScaleCommand ()
+{
+}
+
+
+// protected
+kpSelection *kpToolSelectionResizeScaleCommand::selection () const
+{
+    return m_mainWindow->document ()->selection ();
+}
+
+
+// public
+kpSelection kpToolSelectionResizeScaleCommand::originalSelection () const
+{
+    return m_originalSelection;
+}
+
+
+// public
+QPoint kpToolSelectionResizeScaleCommand::topLeft () const
+{
+    return m_newTopLeft;
+}
+
+// public
+void kpToolSelectionResizeScaleCommand::moveTo (const QPoint &point)
+{
+    if (point == m_newTopLeft)
+        return;
+
+    m_newTopLeft = point;
+    selection ()->moveTo (m_newTopLeft);
+}
+
+
+// public
+int kpToolSelectionResizeScaleCommand::width () const
+{
+    return m_newWidth;
+}
+
+// public
+int kpToolSelectionResizeScaleCommand::height () const
+{
+    return m_newHeight;
+}
+
+// public
+void kpToolSelectionResizeScaleCommand::resize (int width, int height,
+                                                bool delayed)
+{
+    if (width == m_newWidth && height == m_newHeight)
+        return;
+
+    m_newWidth = width;
+    m_newHeight = height;
+
+    resizeScaleAndMove (delayed);
+}
+
+
+// public
+void kpToolSelectionResizeScaleCommand::resizeAndMoveTo (int width, int height,
+                                                         const QPoint &point,
+                                                         bool delayed)
+{
+    if (width == m_newWidth && height == m_newHeight && point == m_newTopLeft)
+        return;
+
+    m_newWidth = width;
+    m_newHeight = height;
+    m_newTopLeft = point;
+
+    resizeScaleAndMove (delayed);
+}
+
+
+// protected
+void kpToolSelectionResizeScaleCommand::killSmoothScaleTimer ()
+{
+    m_smoothScaleTimer->stop ();
+}
+
+
+// protected
+void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kdDebug () << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove(delayed="
+               << delayed << ")" << endl;
+#endif
+
+    killSmoothScaleTimer ();
+
+    kpSelection newSel;
+
+    if (selection ()->isText ())
+    {
+        newSel = m_originalSelection;
+        newSel.textResize (m_newWidth, m_newHeight);
+    }
+    else
+    {
+        newSel = kpSelection (kpSelection::Rectangle,
+            QRect (m_originalSelection.x (),
+                   m_originalSelection.y (),
+                   m_newWidth,
+                   m_newHeight),
+            kpPixmapFX::scale (*m_originalSelection.pixmap (),
+                               m_newWidth, m_newHeight,
+                               !delayed/*if not delayed, smooth*/),
+            m_originalSelection.transparency ());
+
+        if (delayed)
+        {
+            // Call self with delayed==false in 200ms
+            m_smoothScaleTimer->start (200/*ms*/, true/*single shot*/);
+        }
+    }
+
+    newSel.moveTo (m_newTopLeft);
+
+    m_mainWindow->document ()->setSelection (newSel);
+}
+
+// protected slots
+void kpToolSelectionResizeScaleCommand::resizeScaleAndMove ()
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kdDebug () << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove()" << endl;
+#endif
+    resizeScaleAndMove (false/*no delay*/);
+}
+
+
+// public virtual [base kpToolResizeScaleCommand]
+void kpToolSelectionResizeScaleCommand::execute ()
+{
+    QApplication::setOverrideCursor (Qt::waitCursor);
+
+    killSmoothScaleTimer ();
+
+    resizeScaleAndMove ();
+
+    if (m_mainWindow->tool ())
+        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+
+    QApplication::restoreOverrideCursor ();
+}
+
+// public virtual [base kpToolResizeScaleCommand]
+void kpToolSelectionResizeScaleCommand::unexecute ()
+{
+    QApplication::setOverrideCursor (Qt::waitCursor);
+
+    killSmoothScaleTimer ();
+
+    m_mainWindow->document ()->setSelection (m_originalSelection);
+
+    if (m_mainWindow->tool ())
+        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+
+    QApplication::restoreOverrideCursor ();
 }
 
 
