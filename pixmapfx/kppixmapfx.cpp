@@ -167,27 +167,27 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
 #endif
 
 
-    const QString moreColorsThanDisplayMessage =
-        i18n ("may have more colors than the current screen mode."
-              " In order to display it, some colors may be changed."
-              " Try increasing your screen "
-              " depth to at least %1-bit.")
-            .arg (screenDepthNeeded);
-    const QString hasAlphaChannelMessage =
-        i18n ("contains translucency which is not"
-              " fully supported."
-              " The translucency data will be "
-              " approximated with a 1-bit transparency mask.");
-
     QApplication::setOverrideCursor (Qt::arrowCursor);
 
     if (moreColorsThanDisplay && hasAlphaChannel)
     {
         KMessageBox::information (wali.parent (),
-            i18n ("The %1 %2\nIt also %3")
+            i18n ("The %1 "
+                  // sync: moreColorsThanDisplayMessage
+                  "may have more colors than the current screen mode. "
+                  "In order to display it, some colors may be changed. "
+                  "Try increasing your screen "
+                  "depth to at least %2bpp."
+
+                  "\nIt also "
+
+                  // sync: hasAlphaChannelMessage
+                  "contains translucency which is not "
+                  "fully supported. "
+                  "The translucency data will be "
+                  "approximated with a 1-bit transparency mask.")
                 .arg (wali.itemName ())
-                .arg (moreColorsThanDisplayMessage)
-                .arg (hasAlphaChannelMessage),
+                .arg (screenDepthNeeded),
             QString::null,  // or would you prefer "Low Screen Depth and Image Contains Transparency"? :)
             colorDepthTranslucencyDontAskAgain);
 
@@ -200,18 +200,27 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
     else if (moreColorsThanDisplay)
     {
         KMessageBox::information (wali.parent (),
-            i18n ("The %1 %2")
+            i18n ("The %1 "
+                  // sync: moreColorsThanDisplayMessage
+                  "may have more colors than the current screen mode. "
+                  "In order to display it, some colors may be changed. "
+                  "Try increasing your screen "
+                  "depth to at least %2bpp.")
                 .arg (wali.itemName ())
-                .arg (moreColorsThanDisplayMessage),
+                .arg (screenDepthNeeded),
             i18n ("Low Screen Depth"),
             colorDepthDontAskAgain);
     }
     else if (hasAlphaChannel)
     {
         KMessageBox::information (wali.parent (),
-            i18n ("The %1 %2")
-                .arg (wali.itemName ())
-                .arg (hasAlphaChannelMessage),
+            i18n ("The %1 "
+                  // sync: hasAlphaChannelMessage
+                  "contains translucency which is not "
+                  "fully supported. "
+                  "The translucency data will be "
+                  "approximated with a 1-bit transparency mask.")
+                .arg (wali.itemName ()),
             i18n ("Image Contains Translucency"),
             translucencyDontAskAgain);
     }
