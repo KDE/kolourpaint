@@ -373,9 +373,11 @@ void kpMainWindow::pasteText (const QString &text, bool forceNewTextSelection)
         }
 
 
-        kpSelection sel (QRect (0, 0,
-                                width + kpSelection::textBorderSize () * 2,
-                                height + kpSelection::textBorderSize () * 2),
+        const int selWidth = QMAX (kpSelection::minimumWidthForTextStyle (ts),
+                                   width + kpSelection::textBorderSize () * 2);
+        const int selHeight = QMAX (kpSelection::minimumHeightForTextStyle (ts),
+                                    height + kpSelection::textBorderSize () * 2);
+        kpSelection sel (QRect (0, 0, selWidth, selHeight),
                          textLines,
                          ts);
 

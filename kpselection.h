@@ -144,10 +144,16 @@ public:
 
     void textResize (int width, int height);
 
-    // (only for text selections)
-    static int minimumWidth ();
-    static int minimumHeight ();
-    static QSize minimumSize ();
+    // TODO: Enforce in kpSelection, not just in kpToolSelection & when pasting
+    //       (in kpMainWindow).
+    //       Be more robust when external enforcement fails.
+    static int minimumWidthForTextStyle (const kpTextStyle &);
+    static int minimumHeightForTextStyle (const kpTextStyle &);
+    static QSize minimumSizeForTextStyle (const kpTextStyle &);
+
+    static int preferredMinimumWidthForTextStyle (const kpTextStyle &textStyle);
+    static int preferredMinimumHeightForTextStyle (const kpTextStyle &textStyle);
+    static QSize preferredMinimumSizeForTextStyle (const kpTextStyle &textStyle);
 
     int textRowForPoint (const QPoint &globalPoint) const;
     int textColForPoint (const QPoint &globalPoint) const;

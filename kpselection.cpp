@@ -842,23 +842,59 @@ void kpSelection::textResize (int width, int height)
     emit changed (m_rect.unite (oldRect));
 }
 
+
 // public static
-int kpSelection::minimumWidth ()
+int kpSelection::minimumWidthForTextStyle (const kpTextStyle &)
 {
     return (kpSelection::textBorderSize () * 2 + 1);
 }
 
 // public static
-int kpSelection::minimumHeight ()
+int kpSelection::minimumHeightForTextStyle (const kpTextStyle &)
 {
     return (kpSelection::textBorderSize () * 2 + 1);
 }
 
 // public static
-QSize kpSelection::minimumSize ()
+QSize kpSelection::minimumSizeForTextStyle (const kpTextStyle &textStyle)
 {
-    return QSize (minimumWidth (), minimumHeight ());
+    return QSize (minimumWidthForTextStyle (textStyle),
+                  minimumHeightForTextStyle (textStyle));
 }
+
+
+// public static
+int kpSelection::preferredMinimumWidthForTextStyle (const kpTextStyle &textStyle)
+{
+    const int about15CharsWidth =
+        textStyle.fontMetrics ().width (
+            QString::fromLatin1 ("1234567890abcde"));
+
+    const int preferredMinWidth =
+        QMAX (150,
+              textBorderSize () * 2 + about15CharsWidth);
+
+    return QMAX (minimumWidthForTextStyle (textStyle),
+                 QMIN (400, preferredMinWidth));
+}
+
+// public static
+int kpSelection::preferredMinimumHeightForTextStyle (const kpTextStyle &textStyle)
+{
+    const int preferredMinHeight =
+        textBorderSize () * 2 + textStyle.fontMetrics ().height ();
+
+    return QMAX (minimumHeightForTextStyle (textStyle),
+                 QMIN (150, preferredMinHeight));
+}
+
+// public static
+QSize kpSelection::preferredMinimumSizeForTextStyle (const kpTextStyle &textStyle)
+{
+    return QSize (preferredMinimumWidthForTextStyle (textStyle),
+                  preferredMinimumHeightForTextStyle (textStyle));
+}
+
 
 // public
 int kpSelection::textRowForPoint (const QPoint &globalPoint) const

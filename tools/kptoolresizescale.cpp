@@ -552,10 +552,14 @@ void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
 
     QLabel *newLabel = new QLabel (i18n ("&New:"), m_dimensionsGroupBox);
     m_newWidthInput = new KIntNumInput (m_dimensionsGroupBox);
-    m_newWidthInput->setMinValue (!m_actOnTextSelection ? 1 : kpSelection::minimumWidth ());
+    m_newWidthInput->setMinValue (!m_actOnTextSelection ?
+        1 :
+        kpSelection::minimumWidthForTextStyle (((kpMainWindow *) parent ())->textStyle ()));
     QLabel *xLabel1 = new QLabel (i18n ("x"), m_dimensionsGroupBox);
     m_newHeightInput = new KIntNumInput (m_dimensionsGroupBox);
-    m_newHeightInput->setMinValue (!m_actOnTextSelection ? 1 : kpSelection::minimumHeight ());
+    m_newHeightInput->setMinValue (!m_actOnTextSelection ?
+        1 :
+        kpSelection::minimumHeightForTextStyle (((kpMainWindow *) parent ())->textStyle ()));
 
     QLabel *percentLabel = new QLabel (i18n ("&Percent:"), m_dimensionsGroupBox);
     m_percentWidthInput = new KDoubleNumInput (0.01/*lower*/, 1000000/*upper*/,

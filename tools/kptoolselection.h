@@ -103,6 +103,7 @@ protected:
     };
     DragType m_dragType;
     bool m_dragHasBegun;
+    bool m_hadSelectionBeforeDrag;
 
     class kpToolSelectionPullFromDocumentCommand *m_currentPullFromDocumentCommand;
     class kpToolSelectionMoveCommand *m_currentMoveCommand;
