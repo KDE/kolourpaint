@@ -78,14 +78,16 @@ int main (int argc, char *argv [])
     aboutData.setLicenseText (kpLicenseText);
 
     aboutData.addAuthor ("Clarence Dang", I18N_NOOP ("Maintainer"), "dang@kde.org");
-    aboutData.addAuthor ("Thurston Dang");
+    aboutData.addAuthor ("Thurston Dang", I18N_NOOP ("Chief Investigator"));
 
     aboutData.addCredit ("Stephan Binner");
     aboutData.addCredit ("Rob Buis");
     aboutData.addCredit ("Lucijan Busch");
     aboutData.addCredit ("David Faure");
     aboutData.addCredit ("Wilco Greven");
+    aboutData.addCredit ("Werner Joss");
     aboutData.addCredit ("Stephan Kulow");
+    aboutData.addCredit ("Anders Lund");
     aboutData.addCredit ("Dirk Mueller");
     aboutData.addCredit ("Ralf Nolden");
     aboutData.addCredit ("Boudewijn Rempt");
