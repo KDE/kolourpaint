@@ -30,17 +30,10 @@
 #define KP_TOOL_CROP_H
 
 
-#include <kpcommandhistory.h>
-
 class kpMainWindow;
 
 
-class kpToolCropCommand : public kpMacroCommand
-{
-public:
-    kpToolCropCommand (kpMainWindow *mainWindow);
-    virtual ~kpToolCropCommand ();
-};
+void kpToolCrop (kpMainWindow *mainWindow);
 
 
 #endif  // KP_TOOL_CROP_H

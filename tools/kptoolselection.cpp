@@ -432,6 +432,10 @@ const QCursor &kpToolSelection::cursor () const
 // virtual
 void kpToolSelection::hover (const QPoint &point)
 {
+#if DEBUG_KP_TOOL_SELECTION && 1
+    kdDebug () << "kpToolSelection::hover" << point << endl;
+#endif
+
     viewManager ()->setCursor (cursor ());
 
     setUserShapePoints (point, KP_INVALID_POINT, false/*don't set size*/);

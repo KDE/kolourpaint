@@ -41,6 +41,16 @@
 
 
 kpToolClearCommand::kpToolClearCommand (bool actOnSelection,
+                                        const kpColor &newColor,
+                                        kpMainWindow *mainWindow)
+    : kpCommand (mainWindow),
+      m_actOnSelection (actOnSelection),
+      m_newColor (newColor),
+      m_oldPixmapPtr (0)
+{
+}
+
+kpToolClearCommand::kpToolClearCommand (bool actOnSelection,
                                         kpMainWindow *mainWindow)
     : kpCommand (mainWindow),
       m_actOnSelection (actOnSelection),

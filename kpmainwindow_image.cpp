@@ -340,7 +340,8 @@ void kpMainWindow::slotCrop ()
         return;
     }
 
-    addImageOrSelectionCommand (new kpToolCropCommand (this));
+
+    ::kpToolCrop (this);
 }
 
 // private slot

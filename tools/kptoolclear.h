@@ -43,13 +43,17 @@ class kpMainWindow;
 class kpToolClearCommand : public kpCommand
 {
 public:
-    kpToolClearCommand (bool actOnSelection, kpMainWindow *mainWindow);
+    kpToolClearCommand (bool actOnSelection,
+        const kpColor &newColor,
+        kpMainWindow *mainWindow);
+    kpToolClearCommand (bool actOnSelection,
+        kpMainWindow *mainWindow);
     virtual ~kpToolClearCommand ();
 
     virtual QString name () const;
 
     virtual int size () const;
-    
+
     virtual void execute ();
     virtual void unexecute ();
 
