@@ -34,7 +34,7 @@ messages: rc.cpp
 	$(EXTRACTRC) *.rc *.ui \
 		pixmapfx/*.rc pixmapfx/*.ui \
 		tools/*.rc tools/*.ui \
-		widgets/*.rc widgets/*.ui
+		widgets/*.rc widgets/*.ui \
 		>> rc.cpp
 	$(XGETTEXT) *.cpp *.h \
 		pixmapfx/*.cpp pixmapfx/*.h \
