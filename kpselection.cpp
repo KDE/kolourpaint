@@ -615,6 +615,9 @@ void kpSelection::calculateTextPixmap ()
 // public static
 QString kpSelection::textForTextLines (const QValueVector <QString> &textLines_)
 {
+    if (textLines_.isEmpty ())
+        return QString::null;
+
     QString bigString = textLines_ [0];
 
     for (QValueVector <QString>::const_iterator it = textLines_.begin () + 1;
