@@ -150,6 +150,7 @@ void kpMainWindow::enableImageMenuDocumentActions (bool enable)
     m_actionConvertToGrayscale->setEnabled (enable);
     m_actionInvertColors->setEnabled (enable);
     m_actionClear->setEnabled (enable);
+    d->m_actionMoreEffects->setEnabled (enable);
 
     m_imageMenuDocumentActionsEnabled = enable;
 }
@@ -203,6 +204,7 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
     m_actionConvertToGrayscale->setEnabled (enable);
     m_actionInvertColors->setEnabled (enable);
     m_actionClear->setEnabled (enable);
+    d->m_actionMoreEffects->setEnabled (enable);
 }
 
 
