@@ -289,6 +289,7 @@ void kpMainWindow::zoomTo (int zoomLevel)
         //       space taken by the would-be scrollbars) until it updates the
         //       scrollview; hence the centring is off by about 5-10 pixels.
 
+        // TODO: use visibleRect() for greater accuracy?
         int newCenterX = (m_scrollView->contentsX ()
                          + QMIN (m_mainView->width (), m_scrollView->visibleWidth ()) / 2)
                          * zoomLevel / m_mainView->zoomLevelX ();
