@@ -29,6 +29,7 @@
 
 #include <qapplication.h>
 #include <qclipboard.h>
+#include <qdatetime.h>
 #include <qfontmetrics.h>
 #include <qimage.h>
 #include <qpixmap.h>
@@ -202,6 +203,12 @@ void kpMainWindow::slotCopy ()
 // private slot
 void kpMainWindow::slotEnablePaste ()
 {
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow(" << name () << ")::slotEnablePaste()" << endl;
+    QTime timer;
+    timer.start ();
+#endif
+
     bool shouldEnable = false;
 
     QMimeSource *ms = QApplication::clipboard ()->data (QClipboard::Clipboard);
@@ -209,6 +216,9 @@ void kpMainWindow::slotEnablePaste ()
     {
         shouldEnable = (kpSelectionDrag::canDecode (ms) ||
                         QTextDrag::canDecode (ms));
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\t" << name () << "***canDecode=" << timer.restart () << endl;
+    #endif
     }
 
     d->m_actionPasteInNewWindow->setEnabled (shouldEnable);
