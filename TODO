@@ -14,13 +14,9 @@ Feature Plan for 1.0
 Now
 ---
 
-colour similarity option for Fill and Colour Eraser and AutoCrop
+selections - transparent & opaque selections
 
-selections:
-- transparent & opaque selections
 - tool/text; paste text (editable after you paste it)
-- bug (something along the lines of): drag out a selection, move
-       undo, move - there's 2 "Selection/Create" Undo entries
 
 Update docs
 
@@ -59,11 +55,19 @@ Needs investigating.
 
 flexible kpCommandHistory - would virtually solve all the Undo/Redo annoyances
 (such as very limited Undo/Redo even though you're making 1 pixel changes)
+- drag out a selection, move, undo, move
+  - there's 2 "Selection/Create" Undo entries (Bug #5)
+- merge neighbouring move commands
+
+fix flicker when zooming in/out (Bug #1)
+
+scrollview scrolls during drag operations
 
 Image menu items as ordinary tools - e.g. freehand rotate would be nice
 
 selections
 - ability to freehand stretch selections
+- which would reasonably allow text as selections (freehand resize-able)
 - maybe always have 1 width display of border - try editing a B&W icon to see what I mean
 
 freehand resize document
@@ -120,7 +124,6 @@ Ideas:
 - region-based rendering (for performance)
 - do something about this horrible tempPixmap hack (so slooooow)
 
-fix flicker when zooming in/out (Bug #1)
 tool to select rectangular area to zoom into
 
 thumbnail doesn't flicker heaps when appearing (Bug #2)

@@ -37,12 +37,15 @@
 #include <qtooltip.h>
 #include <qwidget.h>
 
+#include <kapplication.h>
 #include <kcolordialog.h>
 #include <kcolordrag.h>
+#include <kconfig.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <klocale.h>
 
+#include <kpcolorsimilaritydialog.h>
 #include <kpcolortoolbar.h>
 #include <kpdefs.h>
 #include <kpmainwindow.h>
@@ -770,6 +773,73 @@ void kpColorPalette::setOrientation (Qt::Orientation o)
 }
 
 
+/*
+ * kpColorSimilarityToolBarItem
+ */
+
+kpColorSimilarityToolBarItem::kpColorSimilarityToolBarItem (kpMainWindow *mainWindow,
+                                                            QWidget *parent,
+                                                            const char *name)
+    : kpColorSimilarityCube (true/*depressed*/, mainWindow, parent, name),
+      m_mainWindow (mainWindow),
+      m_processedColorSimilarity (kpColor::Exact)
+{
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    setColorSimilarity (cfg->readDoubleNumEntry (kpSettingColorSimilarity, 0));
+}
+
+kpColorSimilarityToolBarItem::~kpColorSimilarityToolBarItem ()
+{
+}
+
+
+// public
+int kpColorSimilarityToolBarItem::processedColorSimilarity () const
+{
+    return m_processedColorSimilarity;
+}
+
+
+// public slot
+void kpColorSimilarityToolBarItem::setColorSimilarity (double similarity)
+{
+    kpColorSimilarityCube::setColorSimilarity (similarity);
+    if (similarity > 0)
+        QToolTip::add (this, i18n ("Color Similarity: %1%").arg (qRound (similarity * 100)));
+    else
+        QToolTip::add (this, i18n ("Color Similarity: Exact"));
+    
+    m_processedColorSimilarity = kpColor::processSimilarity (colorSimilarity ());
+
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    cfg->writeEntry (kpSettingColorSimilarity, colorSimilarity ());
+    cfg->sync ();
+
+    emit colorSimilarityChanged (colorSimilarity (), m_processedColorSimilarity);
+}
+
+
+// protected virtual [base QWidget]
+void kpColorSimilarityToolBarItem::mousePressEvent (QMouseEvent * /*e*/)
+{
+    // eat right-mouse click to prevent it from getting to the toolbar
+}
+
+// protected virtual [base QWidget]
+void kpColorSimilarityToolBarItem::mouseDoubleClickEvent (QMouseEvent * /*e*/)
+{
+    kpColorSimilarityDialog dialog (m_mainWindow, this);
+    dialog.setColorSimilarity (colorSimilarity ());
+    if (dialog.exec ())
+    {
+        setColorSimilarity (dialog.colorSimilarity ());
+    }
+}
+
 
 /*
  * kpColorToolBar
@@ -798,11 +868,11 @@ kpColorToolBar::kpColorToolBar (kpMainWindow *mainWindow, const char *name)
              m_dualColorButton, SLOT (setBackgroundColor (const kpColor &)));
     m_boxLayout->addWidget (m_colorPalette, 0/*stretch*/);
 
-#if 0
-    m_colorSimilarityCube = new kpColorSimilarityCube (mainWindow, base);
-    m_colorSimilarityCube->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
-    m_boxLayout->addWidget (m_colorSimilarityCube, 0/*stretch*/);
-#endif
+    m_colorSimilarityToolBarItem = new kpColorSimilarityToolBarItem (mainWindow, base);
+    m_colorSimilarityToolBarItem->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+    connect (m_colorSimilarityToolBarItem, SIGNAL (colorSimilarityChanged (double, int)),
+             this, SIGNAL (colorSimilarityChanged (double, int)));
+    m_boxLayout->addWidget (m_colorSimilarityToolBarItem, 0/*stretch*/);
 
     // HACK: couldn't get QSpacerItem to work
     QWidget *fakeSpacer = new QWidget (base);
@@ -893,5 +963,22 @@ void kpColorToolBar::setBackgroundColor (const kpColor &color)
 {
     m_dualColorButton->setBackgroundColor (color);
 }
+
+
+double kpColorToolBar::colorSimilarity () const
+{
+    return m_colorSimilarityToolBarItem->colorSimilarity ();
+}
+
+void kpColorToolBar::setColorSimilarity (double similarity)
+{
+    m_colorSimilarityToolBarItem->setColorSimilarity (similarity);
+}
+
+int kpColorToolBar::processedColorSimilarity () const
+{
+    return m_colorSimilarityToolBarItem->processedColorSimilarity ();
+}
+
 
 #include <kpcolortoolbar.moc>

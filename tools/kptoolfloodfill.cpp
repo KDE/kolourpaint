@@ -68,7 +68,7 @@ void kpToolFloodFill::beginDraw ()
     // mouse click (beginDraw ()), not on mouse move (virtually draw())
     m_currentCommand = new kpToolFloodFillCommand (document (), viewManager (),
                                                    m_currentPoint.x (), m_currentPoint.y (),
-                                                   color (m_mouseButton));
+                                                   color (m_mouseButton), processedColorSimilarity ());
 
     if (m_currentCommand->prepareColorToChange ())
     {
@@ -132,8 +132,8 @@ void kpToolFloodFill::endDraw (const QPoint &, const QRect &)
 
 kpToolFloodFillCommand::kpToolFloodFillCommand (kpDocument *document, kpViewManager *viewManager,
                                                 int x, int y,
-                                                const kpColor &color)
-    : kpFloodFill (document->pixmap (), x, y, color),
+                                                const kpColor &color, int processedColorSimilarity)
+    : kpFloodFill (document->pixmap (), x, y, color, processedColorSimilarity),
       m_document (document), m_viewManager (viewManager),
       m_fillEntirePixmap (false)
 {

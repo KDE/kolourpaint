@@ -37,6 +37,7 @@
 #include <ktoolbar.h>
 
 #include <kpcolor.h>
+#include <kpcolorsimilaritycube.h>
 
 
 class QGridLayout;
@@ -190,6 +191,36 @@ protected:
 };
 
 
+class kpColorSimilarityToolBarItem : public kpColorSimilarityCube
+{
+Q_OBJECT
+
+public:
+    kpColorSimilarityToolBarItem (kpMainWindow *mainWindow,
+                                  QWidget *parent,
+                                  const char *name = 0);
+    virtual ~kpColorSimilarityToolBarItem ();
+
+public:
+    int processedColorSimilarity () const;
+
+public slots:
+    void setColorSimilarity (double similarity);
+
+signals:
+    void colorSimilarityChanged (double similarity, int processedSimilarity);
+
+protected:
+    virtual void mousePressEvent (QMouseEvent *e);
+    virtual void mouseDoubleClickEvent (QMouseEvent *e);
+
+private:
+    kpMainWindow *m_mainWindow;
+
+    int m_processedColorSimilarity;
+};
+
+
 class kpColorToolBar : public KToolBar
 {
 Q_OBJECT
@@ -202,12 +233,16 @@ public:
     void setColor (int which, const kpColor &color);
 
     kpColor foregroundColor () const;
-
     kpColor backgroundColor () const;
+
+    double colorSimilarity () const;
+    void setColorSimilarity (double similarity);
+    int processedColorSimilarity () const;
 
 signals:
     void foregroundColorChanged (const kpColor &color);
     void backgroundColorChanged (const kpColor &color);
+    void colorSimilarityChanged (double similarity, int processedSimilarity);
 
 public slots:
     void setForegroundColor (const kpColor &color);
@@ -223,7 +258,7 @@ private:
     QBoxLayout *m_boxLayout;
     kpDualColorButton *m_dualColorButton;
     kpColorPalette *m_colorPalette;
-    kpColorSimilarityCube *m_colorSimilarityCube;
+    kpColorSimilarityToolBarItem *m_colorSimilarityToolBarItem;
 };
 
 #endif  // __kp_color_toolbar_h__

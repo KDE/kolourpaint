@@ -65,7 +65,8 @@ class kpToolFloodFillCommand : public KCommand, public kpFloodFill
 {
 public:
     kpToolFloodFillCommand (kpDocument *document, kpViewManager *viewManager,
-                            int x, int y, const kpColor &color);
+                            int x, int y,
+                            const kpColor &color, int processedColorSimilarity);
     virtual QString name () const;
     virtual ~kpToolFloodFillCommand ();
 

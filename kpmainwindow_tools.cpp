@@ -182,6 +182,8 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
                     previousTool, SLOT (slotForegroundColorChanged (const kpColor &)));
         disconnect (m_colorToolBar, SIGNAL (backgroundColorChanged (const kpColor &)),
                     previousTool, SLOT (slotBackgroundColorChanged (const kpColor &)));
+        disconnect (m_colorToolBar, SIGNAL (colorSimilarityChanged (double, int)),
+                    previousTool, SLOT (slotColorSimilarityChanged (double, int)));
     }
 
     if (tool)
@@ -199,6 +201,8 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
                  tool, SLOT (slotForegroundColorChanged (const kpColor &)));
         connect (m_colorToolBar, SIGNAL (backgroundColorChanged (const kpColor &)),
                  tool, SLOT (slotBackgroundColorChanged (const kpColor &)));
+        connect (m_colorToolBar, SIGNAL (colorSimilarityChanged (double, int)),
+                 tool, SLOT (slotColorSimilarityChanged (double, int)));
     }
 }
 

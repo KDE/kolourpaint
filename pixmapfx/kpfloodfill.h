@@ -40,10 +40,13 @@ class QPixmap;
 class kpFloodFill
 {
 public:
-    kpFloodFill (QPixmap *pixmap, int x, int y, const kpColor &color);
+    kpFloodFill (QPixmap *pixmap, int x, int y,
+                 const kpColor &color,
+                 int processedColorSimilarity);
     ~kpFloodFill ();
 
     kpColor color () const { return m_color; }
+    int processedColorSimilarity () const { return m_processedColorSimilarity; }
 
     // you should call [prepareColorToChange(),[prepare(),[fill()]]]
     bool prepareColorToChange ();
@@ -60,6 +63,7 @@ private:
     QPixmap *m_pixmapPtr;
     int m_x, m_y;
     kpColor m_color;
+    int m_processedColorSimilarity;
 
     int m_initState;
 
@@ -76,10 +80,11 @@ private:
     };
 
     void addLine (int y, int x1, int x2);
-    kpColor pixelColor (int x, int y);
+    kpColor pixelColor (int x, int y, bool *beenHere = 0) const;
+    bool shouldGoTo (int x, int y) const;
     void findAndAddLines (const FillLine &fillLine, int dy);
-    int findMinX (int y, int x);
-    int findMaxX (int y, int x);
+    int findMinX (int y, int x) const;
+    int findMaxX (int y, int x) const;
 
     QValueList <FillLine> m_fillLines;
 

@@ -34,8 +34,12 @@
 #include <kpcolor.h>
 
 
-kpColor kpColor::invalid;  // TODO: what's wrong with explicitly specifying () constructor?
-kpColor kpColor::transparent (0, 0, 0, true/*isTransparent*/);
+// public static
+const int kpColor::Exact = 0;
+
+// public static
+const kpColor kpColor::invalid;  // TODO: what's wrong with explicitly specifying () constructor?
+const kpColor kpColor::transparent (0, 0, 0, true/*isTransparent*/);
 
 
 kpColor::kpColor ()
@@ -109,7 +113,33 @@ kpColor &kpColor::operator= (const kpColor &rhs)
     return *this;
 }
 
-bool kpColor::operator== (const kpColor &rhs)
+bool kpColor::operator== (const kpColor &rhs) const
+{
+    return isSimilarTo (rhs, kpColor::Exact);
+}
+
+bool kpColor::operator!= (const kpColor &rhs) const
+{
+    return !(*this == rhs);
+}
+
+
+template <class dtype>
+inline dtype square (dtype val)
+{
+    return val * val;
+}
+
+// public static
+int kpColor::processSimilarity (double colorSimilarity)
+{
+    // sqrt (dr ^ 2 + dg ^ 2 + db ^ 2) <= colorSimilarity       * sqrt (255 ^ 2 * 3)
+    //       dr ^ 2 + dg ^ 2 + db ^ 2  <= (colorSimilarity ^ 2) * (255 ^ 2 * 3)
+
+    return int (square (colorSimilarity) * (square (255) * 3));
+}
+
+bool kpColor::isSimilarTo (const kpColor &rhs, int processedSimilarity) const
 {
     // Are we the same?
     if (this == &rhs)
@@ -137,18 +167,19 @@ bool kpColor::operator== (const kpColor &rhs)
     // --- both are now valid and opaque ---
 
 
-    return toQRgb () == rhs.toQRgb ();
-}
+    if (m_rgba == rhs.m_rgba)
+        return true;
 
-bool kpColor::operator!= (const kpColor &rhs)
-{
-    return !(*this == rhs);
-}
-
-bool kpColor::isSimilarTo (const kpColor &rhs)
-{
-    // implementation will be changed later
-    return (*this == rhs);
+    
+    if (processedSimilarity == kpColor::Exact)
+        return false;
+    else
+    {
+        return (square (qRed (m_rgba) - qRed (rhs.m_rgba)) +
+                square (qGreen (m_rgba) - qGreen (rhs.m_rgba)) +
+                square (qBlue (m_rgba) - qBlue (rhs.m_rgba))
+                <= processedSimilarity);
+    }
 }
 
 kpColor::~kpColor ()

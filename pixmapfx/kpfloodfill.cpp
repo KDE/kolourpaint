@@ -26,7 +26,7 @@
 */
 
 
-#include <qapplication.h>  // DEP: for setOverrideCursor
+#include <qapplication.h>
 #include <qbitmap.h>
 #include <qpainter.h>
 #include <qpixmap.h>
@@ -39,8 +39,10 @@
 #include <kptool.h>
 
 
-kpFloodFill::kpFloodFill (QPixmap *pixmap, int x, int y, const kpColor &color)
-    : m_pixmapPtr (pixmap), m_x (x), m_y (y), m_color (color),
+kpFloodFill::kpFloodFill (QPixmap *pixmap, int x, int y,
+                         const kpColor &color, int processedColorSimilarity)
+    : m_pixmapPtr (pixmap), m_x (x), m_y (y),
+      m_color (color), m_processedColorSimilarity (processedColorSimilarity),
       m_initState (0)
 {
 }
@@ -153,7 +155,7 @@ bool kpFloodFill::prepare ()
     kdDebug () << "\tperforming NOP check" << endl;
 
     // get the color we need to replace
-    if (m_colorToChange.isSimilarTo (m_color))
+    if (m_processedColorSimilarity == 0 && m_color == m_colorToChange)
     {
         // need to do absolutely nothing (this is a significant optimisation
         // for people who randomly click a lot over already-filled areas)
@@ -218,8 +220,11 @@ void kpFloodFill::addLine (int y, int x1, int x2)
     m_boundingRect = m_boundingRect.unite (QRect (QPoint (x1, y), QPoint (x2, y)));
 }
 
-kpColor kpFloodFill::pixelColor (int x, int y)
+kpColor kpFloodFill::pixelColor (int x, int y, bool *beenHere) const
 {
+    if (beenHere)
+        *beenHere = false;
+
     if (y >= (int) m_fillLinesCache.count ())
     {
         kdError () << "kpFloodFill::pixelColor("
@@ -234,10 +239,22 @@ kpColor kpFloodFill::pixelColor (int x, int y)
          it++)
     {
         if (x >= (*it).m_x1 && x <= (*it).m_x2)
+        {
+            if (beenHere)
+                *beenHere = true;
             return m_color;
+        }
     }
 
     return kpPixmapFX::getColorAtPixel (m_image, QPoint (x, y));
+}
+
+bool kpFloodFill::shouldGoTo (int x, int y) const
+{
+    bool beenThere;
+    const kpColor col = pixelColor (x, y, &beenThere);
+
+    return (!beenThere && col.isSimilarTo (m_colorToChange, m_processedColorSimilarity));
 }
 
 void kpFloodFill::findAndAddLines (const FillLine &fillLine, int dy)
@@ -249,7 +266,7 @@ void kpFloodFill::findAndAddLines (const FillLine &fillLine, int dy)
     for (int xnow = fillLine.m_x1; xnow <= fillLine.m_x2; xnow++)
     {
         // At current position, right colour?
-        if (pixelColor (xnow, fillLine.m_y + dy).isSimilarTo (m_colorToChange))
+        if (shouldGoTo (xnow, fillLine.m_y + dy))
         {
             // Find minimum and maximum x values
             int minxnow = findMinX (fillLine.m_y + dy, xnow);
@@ -265,14 +282,14 @@ void kpFloodFill::findAndAddLines (const FillLine &fillLine, int dy)
 }
 
 // finds the minimum x value at a certain line to be filled
-int kpFloodFill::findMinX (int y, int x)
+int kpFloodFill::findMinX (int y, int x) const
 {
     for (;;)
     {
         if (x < 0)
             return 0;
 
-        if (pixelColor (x, y).isSimilarTo (m_colorToChange))
+        if (shouldGoTo (x, y))
             x--;
         else
             return x + 1;
@@ -280,14 +297,14 @@ int kpFloodFill::findMinX (int y, int x)
 }
 
 // finds the maximum x value at a certain line to be filled
-int kpFloodFill::findMaxX (int y, int x)
+int kpFloodFill::findMaxX (int y, int x) const
 {
     for (;;)
     {
         if (x > m_pixmapPtr->width () - 1)
             return m_pixmapPtr->width () - 1;
 
-        if (pixelColor (x, y).isSimilarTo (m_colorToChange))
+        if (shouldGoTo (x, y))
             x++;
         else
             return x - 1;

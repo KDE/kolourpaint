@@ -135,9 +135,13 @@ protected:
     kpColor foregroundColor () const;
     kpColor backgroundColor () const;
 
+    double colorSimilarity () const;
+    int processedColorSimilarity () const;
+    
 protected slots:
     virtual void slotForegroundColorChanged (const kpColor & /*color*/) {}
     virtual void slotBackgroundColorChanged (const kpColor & /*color*/) {}
+    virtual void slotColorSimilarityChanged (double /*similarity*/, int /*processedSimilarity*/) {};
 
 protected:
     // returns true if m_currentPoint <= 1 pixel away from m_lastPoint

@@ -290,7 +290,7 @@ bool kpToolPen::wash (QPainter *painter, QPainter *maskPainter,
                      kpPixmapFX::getColorAtPixel (image, QPoint (x, y)).toQRgb (),
                      colorToReplace.toQRgb ());
         #endif
-            if (kpPixmapFX::getColorAtPixel (image, QPoint (x, y)).isSimilarTo (colorToReplace))
+            if (kpPixmapFX::getColorAtPixel (image, QPoint (x, y)).isSimilarTo (colorToReplace, processedColorSimilarity ()))
             {
             #if DEBUG_KP_TOOL_PEN && 0
                 fprintf (stderr, "similar\n");
@@ -336,7 +336,7 @@ void kpToolPen::globalDraw ()
     #if DEBUG_KP_TOOL_PEN
         kdDebug () << "kpToolPen::globalDraw() colour eraser" << endl;
     #endif
-        if (foregroundColor () == backgroundColor ())
+        if (foregroundColor () == backgroundColor () && processedColorSimilarity () == 0)
             return;
 
         QApplication::setOverrideCursor (Qt::waitCursor);
@@ -408,7 +408,7 @@ void kpToolPen::globalDraw ()
 // TODO: refactor!
 void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &)
 {
-    if ((m_mode & WashesPixmaps) && (foregroundColor () == backgroundColor ()))
+    if ((m_mode & WashesPixmaps) && (foregroundColor () == backgroundColor ()) && processedColorSimilarity () == 0)
         return;
 
     // sync: remember to restoreFastUpdates() in all exit paths

@@ -53,13 +53,18 @@ public:
     kpColor (const QRgb &rgba);
     kpColor (const kpColor &rhs);
     kpColor &operator= (const kpColor &rhs);
-    bool operator== (const kpColor &rhs);
-    bool operator!= (const kpColor &rhs);
-    bool isSimilarTo (const kpColor &rhs);
+    bool operator== (const kpColor &rhs) const;
+    bool operator!= (const kpColor &rhs) const;
+
+    static int processSimilarity (double colorSimilarity);
+    static const int Exact;  // "isSimilarTo (rhs, kpColor::Exact)" == "== rhs"
+    // Usage: isSimilarTo (rhs, kpColor::processSimilarity (.1)) checks for
+    //        Color Similarity within 10%
+    bool isSimilarTo (const kpColor &rhs, int processedSimilarity) const;
     ~kpColor ();
 
-    static kpColor invalid;
-    static kpColor transparent;
+    static const kpColor invalid;
+    static const kpColor transparent;
 
     bool isValid () const;
 

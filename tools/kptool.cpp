@@ -288,7 +288,7 @@ kpColor kpTool::color (int which) const
         return m_mainWindow->colorToolBar ()->color (which);
     else
     {
-        kdError () << "kpTool::color () called without mainWindow" << endl;
+        kdError () << "kpTool::color () without mainWindow" << endl;
         return kpColor::invalid;
     }
 }
@@ -303,6 +303,29 @@ kpColor kpTool::backgroundColor () const
     return color (1);
 }
         
+
+double kpTool::colorSimilarity () const
+{
+    if (m_mainWindow)
+        return m_mainWindow->colorToolBar ()->colorSimilarity ();
+    else
+    {
+        kdError () << "kpTool::colorSimilarity() without mainWindow" << endl;
+        return 0;
+    }
+}
+
+int kpTool::processedColorSimilarity () const
+{
+    if (m_mainWindow)
+        return m_mainWindow->colorToolBar ()->processedColorSimilarity ();
+    else
+    {
+        kdError () << "kpTool::processedColorSimilarity() without mainWindow" << endl;
+        return kpColor::Exact;
+    }
+}
+
 
 bool kpTool::currentPointNextToLast () const
 {

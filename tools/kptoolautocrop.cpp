@@ -25,6 +25,21 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+// TODO: Color Similarity is obviously useful in Autocrop but it isn't
+//       obvious as to how to implement it.  The current heuristic,
+//       for each side, chooses an arbitrary reference color for which
+//       all other candidate pixels in that side are tested against
+//       for similarity.  But if the reference color happens to be at
+//       one extreme of the range of colors in that side, then pixels
+//       at the other extreme would not be deemed similar enough.  The
+//       key is to find the median color as the reference but how do
+//       you do this if you don't know which pixels to sample in the first
+//       place (that's what you're trying to find)?  Chicken and egg situation.
+//
+//       The other heuristic that is in doubt is the use of the average
+//       color in determining the similarity of sides (it is possible
+//       to get vastly differently colors in both sides yet they will be
+//       considered similar).
 
 #define DEBUG_KP_TOOL_AUTO_CROP 1
 
@@ -37,6 +52,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
+#include <kpcolortoolbar.h>
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
@@ -47,11 +63,95 @@
 #include <kpviewmanager.h>
 
 
-kpToolAutoCropBorder::kpToolAutoCropBorder (const QPixmap *pixmapPtr)
-    : m_pixmapPtr (pixmapPtr)
+kpToolAutoCropBorder::kpToolAutoCropBorder (const QPixmap *pixmapPtr,
+                                            int processedColorSimilarity)
+    : m_pixmapPtr (pixmapPtr),
+      m_processedColorSimilarity (processedColorSimilarity)
 {
+    invalidate ();
 }
 
+
+// public
+const QPixmap *kpToolAutoCropBorder::pixmap () const
+{
+    return m_pixmapPtr;
+}
+
+// public
+int kpToolAutoCropBorder::processedColorSimilarity () const
+{
+    return m_processedColorSimilarity;
+}
+
+// public
+QRect kpToolAutoCropBorder::rect () const
+{
+    return m_rect;
+}
+
+// public
+int kpToolAutoCropBorder::left () const
+{
+    return m_rect.left ();
+}
+
+// public
+int kpToolAutoCropBorder::right () const
+{
+    return m_rect.right ();
+}
+
+// public
+int kpToolAutoCropBorder::top () const
+{
+    return m_rect.top ();
+}
+
+// public
+int kpToolAutoCropBorder::bottom () const
+{
+    return m_rect.bottom ();
+}
+
+// public
+kpColor kpToolAutoCropBorder::referenceColor () const
+{
+    return m_referenceColor;
+}
+
+// public
+kpColor kpToolAutoCropBorder::averageColor () const
+{
+    if (!m_rect.isValid ())
+        return kpColor::invalid;
+
+    if (m_referenceColor.isTransparent ())
+        return kpColor::transparent;
+    else if (m_processedColorSimilarity == 0)
+        return m_referenceColor;
+    else
+    {
+        int numPixels = (m_rect.width () * m_rect.height ());
+        if (numPixels <= 0)
+        {
+            kdError () << "kpToolAutoCropBorder::averageColor() rect=" << m_rect << endl;
+            return kpColor::invalid;
+        }
+
+        return kpColor (m_redSum / numPixels,
+                        m_greenSum / numPixels,
+                        m_blueSum / numPixels);
+    }
+}
+
+bool kpToolAutoCropBorder::isSingleColor () const
+{
+    return m_isSingleColor;
+}
+
+
+// public
 bool kpToolAutoCropBorder::calculate (int isX, int dir)
 {
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
@@ -67,9 +167,6 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
         return false;
     }
 
-    // TODO: I doubt colour similarity checks make sense here
-    //       - we're just using an arbitrary baseline pixel after all
-
     // (sync both branches)
     if (isX)
     {
@@ -84,7 +181,7 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
             int y;
             for (y = 0; y <= maxY; y++)
             {
-                if (!kpPixmapFX::getColorAtPixel (image, x, y).isSimilarTo (col))
+                if (!kpPixmapFX::getColorAtPixel (image, x, y).isSimilarTo (col, m_processedColorSimilarity))
                     break;
             }
 
@@ -98,7 +195,7 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
         {
             m_rect = QRect (QPoint (startX, 0),
                             QPoint (startX + (numCols - 1) * dir, maxY)).normalize ();
-            m_color = col;
+            m_referenceColor = col;
         }
     }
     else
@@ -114,7 +211,7 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
             int x;
             for (x = 0; x <= maxX; x++)
             {
-                if (!kpPixmapFX::getColorAtPixel (image, x, y).isSimilarTo (col))
+                if (!kpPixmapFX::getColorAtPixel (image, x, y).isSimilarTo (col, m_processedColorSimilarity))
                     break;
             }
 
@@ -128,38 +225,92 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
         {
             m_rect = QRect (QPoint (0, startY),
                             QPoint (maxX, startY + (numRows - 1) * dir)).normalize ();
-            m_color = col;
+            m_referenceColor = col;
         }
     }
+
+
+    if (m_rect.isValid ())
+    {
+        m_isSingleColor = true;
+
+        if (m_referenceColor.isOpaque () && m_processedColorSimilarity != 0)
+        {
+            for (int y = m_rect.top (); y <= m_rect.bottom (); y++)
+            {
+                for (int x = m_rect.left (); x <= m_rect.right (); x++)
+                {
+                    kpColor colAtPixel = kpPixmapFX::getColorAtPixel (image, x, y);
+
+                    if (m_isSingleColor && colAtPixel != m_referenceColor)
+                        m_isSingleColor = false;
+
+                    m_redSum += colAtPixel.red ();
+                    m_greenSum += colAtPixel.green ();
+                    m_blueSum += colAtPixel.blue ();
+                }
+            }
+        }
+    }
+
 
     return true;
 }
 
+// public
 bool kpToolAutoCropBorder::fillsEntirePixmap () const
 {
-    return m_rect == m_pixmapPtr->rect ();
+    return (m_rect == m_pixmapPtr->rect ());
 }
 
+// public
 bool kpToolAutoCropBorder::exists () const
 {
     // (will use in an addition so make sure returns 1 or 0)
-    return m_rect.isValid () ? 1 : 0;
+    return (m_rect.isValid () ? 1 : 0);
 }
 
+// public
 void kpToolAutoCropBorder::invalidate ()
 {
     m_rect = QRect ();
-    m_color = kpColor::invalid;
+    m_referenceColor = kpColor::invalid;
+    m_redSum = m_greenSum = m_blueSum = 0;
+    m_isSingleColor = false;
 }
 
+
+class kpSetOverrideCursorSaver
+{
+public:
+    kpSetOverrideCursorSaver (const QCursor &cursor)
+    {
+        QApplication::setOverrideCursor (cursor);
+    }
+
+    ~kpSetOverrideCursorSaver ()
+    {
+        QApplication::restoreOverrideCursor ();
+    }
+};
+
+
+void showNothingToAutocropMessage (kpMainWindow *mainWindow, bool actOnSelection)
+{
+    kpSetOverrideCursorSaver cursorSaver (Qt::arrowCursor);
+
+    KMessageBox::information (mainWindow,
+        i18n ("Autocrop could not find the %1 border so could not crop it.")
+            .arg (actOnSelection ? i18n ("selection's") : i18n ("image's")),
+        i18n ("Nothing to Autocrop"),
+        "NothingToAutoCrop");
+}
 
 bool kpToolAutoCrop (kpMainWindow *mainWindow)
 {
 #if DEBUG_KP_TOOL_AUTO_CROP
     kdDebug () << "kpToolAutoCrop() CALLED!" << endl;
 #endif
-
-    bool nothingToCrop = false;
 
     if (!mainWindow)
     {
@@ -189,108 +340,112 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
         return false;
     }
 
-    kpToolAutoCropBorder leftBorder (&pixmap), rightBorder (&pixmap),
-                         topBorder (&pixmap), botBorder (&pixmap);
+    int processedColorSimilarity = mainWindow->colorToolBar ()->processedColorSimilarity ();
+    kpToolAutoCropBorder leftBorder (&pixmap, processedColorSimilarity),
+                         rightBorder (&pixmap, processedColorSimilarity),
+                         topBorder (&pixmap, processedColorSimilarity),
+                         botBorder (&pixmap, processedColorSimilarity);
 
-    // sync: restoreOverrideCursor() for all exit paths
-    QApplication::setOverrideCursor (Qt::waitCursor);
 
-    if (!leftBorder.calculate (true/*x*/, +1/*going right*/))
+    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+
+    // TODO: With Colour Similarity, a lot of weird (and wonderful) things can
+    //       happen resulting in a huge number of code paths.  Needs refactoring
+    //       and regression testing.
+    //
+    // TODO: e.g. When the top fills entire rect but bot doesn't we could
+    //       invalidate top and continue autocrop.
+    int numRegions = 0;
+    if (!leftBorder.calculate (true/*x*/, +1/*going right*/) ||
+        leftBorder.fillsEntirePixmap () ||
+        !rightBorder.calculate (true/*x*/, -1/*going left*/) ||
+        rightBorder.fillsEntirePixmap () ||
+        !topBorder.calculate (false/*y*/, +1/*going down*/) ||
+        topBorder.fillsEntirePixmap () ||
+        !botBorder.calculate (false/*y*/, -1/*going up*/) ||
+        botBorder.fillsEntirePixmap () ||
+        ((numRegions = leftBorder.exists () +
+                       rightBorder.exists () +
+                       topBorder.exists () +
+                       botBorder.exists ()) == 0))
     {
-        QApplication::restoreOverrideCursor ();
+    #if DEBUG_KP_TOOL_AUTO_CROP
+        kdDebug () << "\tcan't find border; leftBorder.rect=" << leftBorder.rect ()
+                   << " rightBorder.rect=" << rightBorder.rect ()
+                   << " topBorder.rect=" << topBorder.rect ()
+                   << " botBorder.rect=" << botBorder.rect ()
+                   << endl;
+    #endif
+        ::showNothingToAutocropMessage (mainWindow, (bool) doc->selection ());
         return false;
     }
 
-    nothingToCrop = leftBorder.fillsEntirePixmap ();
-
 #if DEBUG_KP_TOOL_AUTO_CROP
-    if (nothingToCrop)
-        kdDebug () << "\tleft border filled entire pixmap - nothing to crop" << endl;
+    kdDebug () << "\tnumRegions=" << numRegions << endl;
+    kdDebug () << "\t\tleft=" << leftBorder.rect ()
+               << " refCol=" << (leftBorder.exists () ? (int *) leftBorder.referenceColor ().toQRgb () : 0)
+               << " avgCol=" << (leftBorder.exists () ? (int *) leftBorder.averageColor ().toQRgb () : 0)
+               << endl;
+    kdDebug () << "\t\tright=" << rightBorder.rect ()
+               << " refCol=" << (rightBorder.exists () ? (int *) rightBorder.referenceColor ().toQRgb () : 0)
+               << " avgCol=" << (rightBorder.exists () ? (int *) rightBorder.averageColor ().toQRgb () : 0)
+               << endl;
+    kdDebug () << "\t\ttop=" << topBorder.rect ()
+               << " refCol=" << (topBorder.exists () ? (int *) topBorder.referenceColor ().toQRgb () : 0)
+               << " avgCol=" << (topBorder.exists () ? (int *) topBorder.averageColor ().toQRgb () : 0)
+               << endl;
+    kdDebug () << "\t\tbot=" << botBorder.rect ()
+               << " refCol=" << (botBorder.exists () ? (int *) botBorder.referenceColor ().toQRgb () : 0)
+               << " avgCol=" << (botBorder.exists () ? (int *) botBorder.averageColor ().toQRgb () : 0)
+               << endl;
 #endif
 
-    if (!nothingToCrop)
+
+    // In case e.g. the user pastes a solid, coloured-in rectangle,
+    // we favour killing the bottom and right regions
+    // (these regions probably contain the unwanted whitespace due
+    //  to the doc being bigger than the pasted selection to start with).
+    //
+    // We also kill if they kiss or even overlap.
+
+    if (leftBorder.exists () && rightBorder.exists ())
     {
-        if (!rightBorder.calculate (true/*x*/, -1/*going left*/) ||
-            !topBorder.calculate (false/*y*/, +1/*going down*/) ||
-            !botBorder.calculate (false/*y*/, -1/*going up*/))
-        {
-            QApplication::restoreOverrideCursor ();
-            return false;
-        }
+        const kpColor leftCol = leftBorder.averageColor ();
+        const kpColor rightCol = rightBorder.averageColor ();
 
-        int numRegions = leftBorder.exists () +
-                         rightBorder.exists () +
-                         topBorder.exists () +
-                         botBorder.exists ();
-        nothingToCrop = !numRegions;
-
-    #if DEBUG_KP_TOOL_AUTO_CROP
-        kdDebug () << "\tnumRegions=" << numRegions << endl;
-        kdDebug () << "\t\tleft=" << leftBorder.m_rect << endl;
-        kdDebug () << "\t\tright=" << rightBorder.m_rect << endl;
-        kdDebug () << "\t\ttop=" << topBorder.m_rect << endl;
-        kdDebug () << "\t\tbot=" << botBorder.m_rect << endl;
-    #endif
-
-        if (numRegions == 2)
+        if ((numRegions == 2 && !leftCol.isSimilarTo (rightCol, processedColorSimilarity)) ||
+            leftBorder.right () >= rightBorder.left () - 1)  // kissing or overlapping
         {
         #if DEBUG_KP_TOOL_AUTO_CROP
-            kdDebug () << "\t2 regions:" << endl;
+            kdDebug () << "\tignoring left border" << endl;
         #endif
-
-            // in case e.g. the user pastes a solid, coloured-in rectangle,
-            // we favour killing the bottom and right regions
-            // (these regions probably contain the unwanted whitespace due
-            //  to the doc being bigger than the pasted selection to start with)
-
-            if (leftBorder.exists () && rightBorder.exists () &&
-                !leftBorder.m_color.isSimilarTo (rightBorder.m_color))
-            {
-            #if DEBUG_KP_TOOL_AUTO_CROP
-                kdDebug () << "\t\tignoring left border" << endl;
-            #endif
-                leftBorder.invalidate ();
-            }
-            else if (topBorder.exists () && botBorder.exists () &&
-                     !topBorder.m_color.isSimilarTo (botBorder.m_color))
-            {
-            #if DEBUG_KP_TOOL_AUTO_CROP
-                kdDebug () << "\t\tignoring top border" << endl;
-            #endif
-                topBorder.invalidate ();
-            }
-        #if DEBUG_KP_TOOL_AUTO_CROP
-            else
-            {
-                kdDebug () << "\t\tok" << endl;
-            }
-        #endif
+            leftBorder.invalidate ();
         }
     }
 
-#if DEBUG_KP_TOOL_AUTO_CROP
-    kdDebug () << "\tnothingToCrop=" << nothingToCrop << endl;
-#endif
-
-    if (!nothingToCrop)
+    if (topBorder.exists () && botBorder.exists ())
     {
-        mainWindow->addImageOrSelectionCommand (
-            new kpToolAutoCropCommand (
-                (bool) doc->selection (),
-                leftBorder, rightBorder,
-                topBorder, botBorder,
-                mainWindow));
+        const kpColor topCol = topBorder.averageColor ();
+        const kpColor botCol = botBorder.averageColor ();
+
+        if ((numRegions == 2 && !topCol.isSimilarTo (botCol, processedColorSimilarity)) ||
+            topBorder.bottom () >= botBorder.top () - 1)  // kissing or overlapping
+        {
+        #if DEBUG_KP_TOOL_AUTO_CROP
+            kdDebug () << "\tignoring top border" << endl;
+        #endif
+            topBorder.invalidate ();
+        }
     }
 
-    QApplication::restoreOverrideCursor ();
 
-    if (nothingToCrop)
-    {
-        KMessageBox::information (mainWindow,
-            i18n ("Autocrop could not find any border to remove."),
-            i18n ("Nothing to Autocrop"),
-            "DoNotAskAgain_NothingToAutoCrop");
-    }
+    mainWindow->addImageOrSelectionCommand (
+        new kpToolAutoCropCommand (
+            (bool) doc->selection (),
+            leftBorder, rightBorder,
+            topBorder, botBorder,
+            mainWindow));
+
 
     return true;
 }
@@ -307,6 +462,10 @@ kpToolAutoCropCommand::kpToolAutoCropCommand (bool actOnSelection,
       m_rightBorder (rightBorder),
       m_topBorder (topBorder),
       m_botBorder (botBorder),
+      m_leftPixmap (0),
+      m_rightPixmap (0),
+      m_topPixmap (0),
+      m_botPixmap (0),
       m_mainWindow (mainWindow)
 {
     kpDocument *doc = document ();
@@ -325,11 +484,17 @@ kpToolAutoCropCommand::kpToolAutoCropCommand (bool actOnSelection,
 // public virtual [base KCommand]
 QString kpToolAutoCropCommand::name () const
 {
-    return i18n ("Autocrop");
+    const QString opName = i18n ("Autocrop");
+
+    if (m_actOnSelection)
+        return i18n ("Selection: %1").arg (opName);
+    else
+        return opName;
 }
 
 kpToolAutoCropCommand::~kpToolAutoCropCommand ()
 {
+    deleteUndoPixmaps ();
 }
 
 
@@ -346,37 +511,100 @@ kpViewManager *kpToolAutoCropCommand::viewManager () const
 }
 
 
+// private
+void kpToolAutoCropCommand::getUndoPixmap (const kpToolAutoCropBorder &border, QPixmap **pixmap)
+{
+    kpDocument *doc = document ();
+
+#if DEBUG_KP_TOOL_AUTO_CROP && 1
+    kdDebug () << "kpToolAutoCropCommand::getUndoPixmap()" << endl;
+    kdDebug () << "\tpixmap=" << pixmap
+               << " border: rect=" << border.rect ()
+               << " isSingleColor=" << border.isSingleColor ()
+               << endl;
+#endif
+
+    if (!doc)
+        return;
+
+    if (pixmap && border.exists () && !border.isSingleColor ())
+    {
+        if (*pixmap)
+        {
+        #if DEBUG_KP_TOOL_AUTO_CROP && 1
+            kdDebug () << "\talready have *pixmap - delete it" << endl;
+        #endif
+            delete *pixmap;
+        }
+
+        *pixmap = new QPixmap (
+            kpPixmapFX::getPixmapAt (*doc->pixmap (m_actOnSelection),
+                                     border.rect ()));
+    }
+}
+
+
+// private
+void kpToolAutoCropCommand::getUndoPixmaps ()
+{
+    getUndoPixmap (m_leftBorder, &m_leftPixmap);
+    getUndoPixmap (m_rightBorder, &m_rightPixmap);
+    getUndoPixmap (m_topBorder, &m_topPixmap);
+    getUndoPixmap (m_botBorder, &m_botPixmap);
+}
+
+// private
+void kpToolAutoCropCommand::deleteUndoPixmaps ()
+{
+#if DEBUG_KP_TOOL_AUTO_CROP && 1
+    kdDebug () << "kpToolAutoCropCommand::deleteUndoPixmaps()" << endl;
+#endif
+
+    delete m_leftPixmap; m_leftPixmap = 0;
+    delete m_rightPixmap; m_rightPixmap = 0;
+    delete m_topPixmap; m_topPixmap = 0;
+    delete m_botPixmap; m_botPixmap = 0;
+}
+
+
 // public virtual [base KCommand]
 void kpToolAutoCropCommand::execute ()
 {
     if (!m_contentsRect.isValid ())
         m_contentsRect = contentsRect ();
 
+
+    getUndoPixmaps ();
+
+
     kpDocument *doc = document ();
     if (!doc)
         return;
+
 
     QPixmap pixmapWithoutBorder =
         kpTool::neededPixmap (*doc->pixmap (m_actOnSelection),
                               m_contentsRect);
 
-    kpViewManager *vm = viewManager ();
-    if (vm)
-        vm->setQueueUpdates ();
 
-    doc->setPixmap (m_actOnSelection, pixmapWithoutBorder);
-
-    if (m_actOnSelection)
+    if (!m_actOnSelection)
+        doc->setPixmap (pixmapWithoutBorder);
+    else
     {
-        kpSelection *sel = doc->selection ();
-        if (!sel)
-            return;
+        m_oldSelection = *doc->selection ();
+        m_oldSelection.setPixmap (QPixmap ());
 
-        sel->moveBy (m_contentsRect.x (), m_contentsRect.y ());
+        // m_contentsRect is relative to the top of the sel
+        // while sel is relative to the top of the doc
+        QRect rect = m_contentsRect;
+        rect.moveBy (m_oldSelection.x (), m_oldSelection.y ());
+
+        kpSelection sel (kpSelection::Rectangle,
+                         rect,
+                         pixmapWithoutBorder);
+
+        doc->setSelection (sel);
     }
-
-    if (vm)
-        vm->restoreQueueUpdates ();
 }
 
 // public virtual [base KCommand]
@@ -409,19 +637,30 @@ void kpToolAutoCropCommand::unexecute ()
         0
     };
 
-    for (const kpToolAutoCropBorder **b = borders; *b; b++)
+    const QPixmap *pixmaps [] =
     {
-        if ((*b)->exists ())
+        m_leftPixmap, m_rightPixmap,
+        m_topPixmap, m_botPixmap,
+        0
+    };
+
+    const QPixmap **p = pixmaps;
+    for (const kpToolAutoCropBorder **b = borders; *b; b++, p++)
+    {
+        if (!(*b)->exists ())
+            continue;
+
+        if ((*b)->isSingleColor ())
         {
-            kpColor col = (*b)->m_color;
+            kpColor col = (*b)->referenceColor ();
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
-            kdDebug () << "\tdrawing border " << (*b)->m_rect
+            kdDebug () << "\tdrawing border " << (*b)->rect ()
                        << " rgb=" << (int *) col.toQRgb () /* %X hack */ << endl;
         #endif
 
             if (col.isOpaque ())
             {
-                painter.fillRect ((*b)->m_rect, col.toQColor ());
+                painter.fillRect ((*b)->rect (), col.toQColor ());
             }
             else
             {
@@ -432,8 +671,16 @@ void kpToolAutoCropCommand::unexecute ()
                     maskPainter.begin (&maskBitmap);
                 }
 
-                maskPainter.fillRect ((*b)->m_rect, Qt::color0/*transparent*/);
+                maskPainter.fillRect ((*b)->rect (), Qt::color0/*transparent*/);
             }
+        }
+        else
+        {
+        #if DEBUG_KP_TOOL_AUTO_CROP && 1
+            kdDebug () << "\trestoring border pixmap " << (*b)->rect () << endl;
+        #endif
+            if (*p)
+                painter.drawPixmap ((*b)->rect (), **p);
         }
     }
 
@@ -446,23 +693,18 @@ void kpToolAutoCropCommand::unexecute ()
         pixmap.setMask (maskBitmap);
 
 
-    kpViewManager *vm = viewManager ();
-    if (vm)
-        vm->setQueueUpdates ();
-
-    if (m_actOnSelection)
+    if (!m_actOnSelection)
+        doc->setPixmap (pixmap);
+    else
     {
-        kpSelection *sel = doc->selection ();
-        if (!sel)
-            return;
+        kpSelection sel = m_oldSelection;
+        sel.setPixmap (pixmap);
 
-        sel->moveBy (-m_contentsRect.x (), -m_contentsRect.y ());
+        doc->setSelection (sel);
     }
 
-    doc->setPixmap (m_actOnSelection, pixmap);
 
-    if (vm)
-        vm->restoreQueueUpdates ();
+    deleteUndoPixmaps ();
 }
 
 
@@ -472,16 +714,16 @@ QRect kpToolAutoCropCommand::contentsRect () const
     QPixmap *pixmap = document ()->pixmap (m_actOnSelection);
 
     QPoint topLeft (m_leftBorder.exists () ?
-                        m_leftBorder.m_rect.right () + 1 :
+                        m_leftBorder.rect ().right () + 1 :
                         0,
                     m_topBorder.exists () ?
-                        m_topBorder.m_rect.bottom () + 1 :
+                        m_topBorder.rect ().bottom () + 1 :
                         0);
     QPoint botRight (m_rightBorder.exists () ?
-                         m_rightBorder.m_rect.left () - 1 :
+                         m_rightBorder.rect ().left () - 1 :
                          pixmap->width () - 1,
                      m_botBorder.exists () ?
-                         m_botBorder.m_rect.top () - 1 :
+                         m_botBorder.rect ().top () - 1 :
                          pixmap->height () - 1);
 
     return QRect (topLeft, botRight);

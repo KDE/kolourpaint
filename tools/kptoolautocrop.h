@@ -34,6 +34,7 @@
 #include <kcommand.h>
 
 #include <kpcolor.h>
+#include <kpselection.h>
 
 class QPixmap;
 class kpDocument;
@@ -45,9 +46,21 @@ class kpViewManager;
 bool kpToolAutoCrop (kpMainWindow *mainWindow);
 
 
-struct kpToolAutoCropBorder
+class kpToolAutoCropBorder
 {
-    kpToolAutoCropBorder (const QPixmap *pixmapPtr);
+public:
+    kpToolAutoCropBorder (const QPixmap *pixmapPtr, int processedColorSimilarity);
+
+    const QPixmap *pixmap () const;
+    int processedColorSimilarity () const;
+    QRect rect () const;
+    int left () const;
+    int right () const;
+    int top () const;
+    int bottom () const;
+    kpColor referenceColor () const;
+    kpColor averageColor () const;
+    bool isSingleColor () const;
 
     // (returns true on success (even if no rect) or false on error)
     bool calculate (int isX, int dir);
@@ -56,9 +69,14 @@ struct kpToolAutoCropBorder
     bool exists () const;
     void invalidate ();
 
+private:
     const QPixmap *m_pixmapPtr;
+    int m_processedColorSimilarity;
+
     QRect m_rect;
-    kpColor m_color;
+    kpColor m_referenceColor;
+    int m_redSum, m_greenSum, m_blueSum;
+    bool m_isSingleColor;
 };
 
 
@@ -78,6 +96,11 @@ private:
     kpDocument *document () const;
     kpViewManager *viewManager () const;
 
+private:
+    void getUndoPixmap (const kpToolAutoCropBorder &border, QPixmap **pixmap);
+    void getUndoPixmaps ();
+    void deleteUndoPixmaps ();
+
 public:
     virtual void execute ();
     virtual void unexecute ();
@@ -86,14 +109,13 @@ private:
     QRect contentsRect () const;
 
     bool m_actOnSelection;
-    kpToolAutoCropBorder m_leftBorder;
-    kpToolAutoCropBorder m_rightBorder;
-    kpToolAutoCropBorder m_topBorder;
-    kpToolAutoCropBorder m_botBorder;
+    kpToolAutoCropBorder m_leftBorder, m_rightBorder, m_topBorder, m_botBorder;
+    QPixmap *m_leftPixmap, *m_rightPixmap, *m_topPixmap, *m_botPixmap;
     kpMainWindow *m_mainWindow;
 
     QRect m_contentsRect;
     int m_oldWidth, m_oldHeight;
+    kpSelection m_oldSelection;
 };
 
 #endif  // __kptoolautocrop_h__
