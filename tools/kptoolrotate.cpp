@@ -25,6 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_TOOL_ROTATE 0
 
 #include <qapplication.h>
 #include <qbuttongroup.h>
@@ -45,6 +46,7 @@
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
+#include <kptool.h>
 #include <kptoolrotate.h>
 #include <kpviewmanager.h>
 
@@ -148,18 +150,23 @@ void kpToolRotateCommand::execute ()
             // TODO: fix the latter "victim of" problem in kpSelection by
             //       allowing the border width & height != pixmap width & height
             //       Or maybe autocrop?
+        #if DEBUG_KP_TOOL_ROTATE
             kdDebug () << "kpToolRotateCommand::execute() currentPoints.boundingRect="
                        << currentPoints.boundingRect ()
                        << " newPixmap: w=" << newPixmap.width ()
                        << " h=" << newPixmap.height ()
                        << " (victim of rounding error and/or rotated-a-(rectangular)-pixmap-that-was-transparent-in-the-corners-making-sel-uselessly-bigger-than-needs-be)"
                        << endl;
+        #endif
             doc->setSelection (kpSelection (kpSelection::Rectangle,
                                             QRect (newTopLeft.x (), newTopLeft.y (),
                                                    newPixmap.width (), newPixmap.height ()),
                                             newPixmap,
                                             m_oldSelection.transparency ()));
         }
+
+        if (m_mainWindow->tool ())
+            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
     }
     else
         doc->setPixmap (newPixmap);
@@ -201,6 +208,9 @@ void kpToolRotateCommand::unexecute ()
         kpSelection oldSelection = m_oldSelection;
         oldSelection.setPixmap (oldPixmap);
         doc->setSelection (oldSelection);
+
+        if (m_mainWindow->tool ())
+            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
     }
 
 
