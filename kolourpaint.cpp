@@ -82,7 +82,7 @@ int main (int argc, char *argv [])
     // mainly for changing wallpaper :)
     DCOPClient *client = app.dcopClient ();
     if (!client->attach ())
-        kdError (KP_AREA) << "Could not contact DCOP server" << endl;
+        kdError () << "Could not contact DCOP server" << endl;
 
     // mainly for the Air Spray Tool
     srand ((unsigned int) (getpid () + getppid ()));

@@ -63,7 +63,7 @@ QColor kpToolColorPicker::colorAtPixel (const QPoint &p)
     QImage image = pixmap.convertToImage ();
     if (image.isNull ())
     {
-        kdError (KP_AREA) << "kpToolColorPicker::colorAtPixel() could not convert to QImage" << endl;
+        kdError () << "kpToolColorPicker::colorAtPixel() could not convert to QImage" << endl;
         return Qt::black;
     }
 

@@ -70,7 +70,7 @@ void kpToolPen::setMode (Mode mode)
     if ((usesPixmaps && !usesBrushes) ||
         (usesBrushes && !usesPixmaps))
     {
-        kdError (KP_AREA) << "kpToolPen::setMode() passed invalid mode" << endl;
+        kdError () << "kpToolPen::setMode() passed invalid mode" << endl;
         return;
     }
     
@@ -198,7 +198,7 @@ void kpToolPen::wash (QImage *image, const QRect &imageRect, int plotx, int plot
 void kpToolPen::wash (QImage *image, const QRect &imageRect, const QRect &drawRect)
 {
 #if DEBUG_KPTOOLPEN && 1
-    kdDebug (KP_AREA) << "kpToolPen::wash(imageRect=" << imageRect
+    kdDebug () << "kpToolPen::wash(imageRect=" << imageRect
                       << ",drawRect=" << drawRect
                       << ")" << endl;
 #endif
@@ -246,32 +246,32 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
         else if (m_mode & WashesPixmaps)
         {
         #if DEBUG_KPTOOLPEN
-            kdDebug (KP_AREA) << "Washing pixmap" << endl;
+            kdDebug () << "Washing pixmap" << endl;
         #endif
             QRect rect = hotRect ();
             QPixmap pixmap = document ()->getPixmapAt (rect);
         #if DEBUG_KPTOOLPEN
-            kdDebug (KP_AREA) << "\tconverting to QImage" << endl;
+            kdDebug () << "\tconverting to QImage" << endl;
         #endif
             QImage image = pixmap.convertToImage ();
         #if DEBUG_KPTOOLPEN
-            kdDebug (KP_AREA) << "\twashing" << endl;
+            kdDebug () << "\twashing" << endl;
         #endif
             wash (&image, rect, rect);
         #if DEBUG_KPTOOLPEN
-            kdDebug (KP_AREA) << "\tconverting to image" << endl;
+            kdDebug () << "\tconverting to image" << endl;
         #endif
             pixmap.convertFromImage (image);
         #if DEBUG_KPTOOLPEN
-            kdDebug (KP_AREA) << "\tsetting" << endl;
+            kdDebug () << "\tsetting" << endl;
         #endif
             document ()->setPixmapAt (pixmap, hotPoint ());
         #if DEBUG_KPTOOLPEN
-            kdDebug (KP_AREA) << "\tupdating bounding rect" << endl;
+            kdDebug () << "\tupdating bounding rect" << endl;
         #endif
             m_currentCommand->updateBoundingRect (hotRect ());
         #if DEBUG_KPTOOLPEN
-            kdDebug (KP_AREA) << "\tdone" << endl;
+            kdDebug () << "\tdone" << endl;
         #endif
         }
     }
@@ -439,7 +439,7 @@ void kpToolPen::endDraw (const QPoint &, const QRect &)
 QColor kpToolPen::color (int which)
 {
 #if DEBUG_KPTOOLPEN && 0
-    kdDebug (KP_AREA) << "kpToolPen::color (" << which << ")" << endl;
+    kdDebug () << "kpToolPen::color (" << which << ")" << endl;
 #endif
 
     // Pen & Brush
@@ -454,7 +454,7 @@ QColor kpToolPen::color (int which)
 void kpToolPen::slotForegroundColorChanged (const QColor &col)
 {
 #if DEBUG_KPTOOLPEN
-    kdDebug (KP_AREA) << "kpToolPen::slotForegroundColorChanged()" << endl;
+    kdDebug () << "kpToolPen::slotForegroundColorChanged()" << endl;
 #endif
     m_brushPixmap [(m_mode & SwappedColors) ? 1 : 0].fill (col);
 
@@ -465,7 +465,7 @@ void kpToolPen::slotForegroundColorChanged (const QColor &col)
 void kpToolPen::slotBackgroundColorChanged (const QColor &col)
 {
 #if DEBUG_KPTOOLPEN
-    kdDebug (KP_AREA) << "kpToolPen::slotBackgroundColorChanged()" << endl;
+    kdDebug () << "kpToolPen::slotBackgroundColorChanged()" << endl;
 #endif
     m_brushPixmap [(m_mode & SwappedColors) ? 0 : 1].fill (col);
     
@@ -476,7 +476,7 @@ void kpToolPen::slotBackgroundColorChanged (const QColor &col)
 void kpToolPen::slotBrushChanged (const QPixmap &pixmap, bool isDiagonalLine)
 {
 #if DEBUG_KPTOOLPEN
-    kdDebug (KP_AREA) << "kpToolPen::slotBrushChanged()" << endl;
+    kdDebug () << "kpToolPen::slotBrushChanged()" << endl;
 #endif
     for (int i = 0; i < 2; i++)
     {
@@ -493,7 +493,7 @@ void kpToolPen::slotBrushChanged (const QPixmap &pixmap, bool isDiagonalLine)
 void kpToolPen::slotEraserSizeChanged (int size)
 {
 #if DEBUG_KPTOOLPEN
-    kdDebug (KP_AREA) << "KpToolPen::slotEraserSizeChanged(size=" << size << ")" << endl;
+    kdDebug () << "KpToolPen::slotEraserSizeChanged(size=" << size << ")" << endl;
 #endif
 
     for (int i = 0; i < 2; i++)

@@ -67,7 +67,7 @@ kpDocument::kpDocument (int w, int h, int colorDepth)
       m_modified (false)
 {
 #if DEBUG_KPDOCUMENT
-    kdDebug (KP_AREA) << "kpDocument::kpDocument (" << w << "," << h << "," << colorDepth << ")" << endl;
+    kdDebug () << "kpDocument::kpDocument (" << w << "," << h << "," << colorDepth << ")" << endl;
 #endif
 
     m_pixmap = new QPixmap (w, h);
@@ -87,7 +87,7 @@ kpDocument::~kpDocument ()
 void kpDocument::openNew (const KURL &url)
 {
 #if DEBUG_KPDOCUMENT
-    kdDebug (KP_AREA) << "KpDocument::openNew (" << url << ")" << endl;
+    kdDebug () << "KpDocument::openNew (" << url << ")" << endl;
 #endif
 
     m_pixmap->fill (KP_BLANK_DOCUMENT_COLOR);
@@ -102,7 +102,7 @@ void kpDocument::openNew (const KURL &url)
 bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
 {
 #if DEBUG_KPDOCUMENT
-    kdDebug (KP_AREA) << "kpDocument::open (" << url << ")" << endl;
+    kdDebug () << "kpDocument::open (" << url << ")" << endl;
 #endif
 
     if (url.isEmpty ())
@@ -117,7 +117,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
         QString mimetype = KImageIO::mimeType (tempFile);
 
     #if DEBUG_KPDOCUMENT
-        kdDebug (KP_AREA) << "\tmimetype=" << mimetype << endl;
+        kdDebug () << "\tmimetype=" << mimetype << endl;
     #endif
 
         if (mimetype.isNull ())
@@ -167,7 +167,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
 bool kpDocument::save ()
 {
 #if DEBUG_KPDOCUMENT
-    kdDebug (KP_AREA) << "kpDocument::save [" << m_url << "," << m_mimetype << "]" << endl;
+    kdDebug () << "kpDocument::save [" << m_url << "," << m_mimetype << "]" << endl;
 #endif
 
     if (m_url.isEmpty () || m_mimetype.isEmpty ())
@@ -187,7 +187,7 @@ bool kpDocument::save ()
 bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwritePrompt)
 {
 #if DEBUG_KPDOCUMENT
-    kdDebug (KP_AREA) << "kpDocument::saveAs (" << url << "," << mimetype << ")" << endl;
+    kdDebug () << "kpDocument::saveAs (" << url << "," << mimetype << ")" << endl;
 #endif
 
     if (overwritePrompt && KIO::NetAccess::exists (url))
@@ -202,7 +202,7 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
         if (result != KMessageBox::Continue)
         {
         #if DEBUG_KPDOCUMENT
-            kdDebug (KP_AREA) << "\tuser doesn't want to overwrite" << endl;
+            kdDebug () << "\tuser doesn't want to overwrite" << endl;
         #endif
 
             return false;
@@ -228,7 +228,7 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
 
     QString type = KImageIO::typeForMime (mimetype);
 #if DEBUG_KPDOCUMENT
-    kdDebug (KP_AREA) << "\tmimetype=" << mimetype << " type=" << type << endl;
+    kdDebug () << "\tmimetype=" << mimetype << " type=" << type << endl;
 #endif
     if (!m_pixmap->save (filename, type))
     {
@@ -374,7 +374,7 @@ bool kpDocument::setColorDepth (int)
     QImage imageNewDepth = image.convertDepth (depth);
     if (imageNewDepth.isNull ())
     {
-        kdWarning (KP_AREA) << "Could not convert depth from "
+        kdWarning () << "Could not convert depth from "
                             << oldDepth << " to " << depth << endl;
         return false;
     }
@@ -382,7 +382,7 @@ bool kpDocument::setColorDepth (int)
     // image --> pixmap
     if (!m_pixmap->convertFromImage (imageNewDepth))
     {
-        kdWarning (KP_AREA) << "Could not convert image back to pixmap" << endl;
+        kdWarning () << "Could not convert image back to pixmap" << endl;
         return false;
     }
 #endif
@@ -408,7 +408,7 @@ QPixmap kpDocument::getPixmapAt (const QRect &rect) const
 
 void kpDocument::setPixmapAt (const QPixmap &pixmap, const QPoint &at)
 {
-    kdDebug (KP_AREA) << "kpDocument::setPixmapAt (pixmap (w="
+    kdDebug () << "kpDocument::setPixmapAt (pixmap (w="
                       << pixmap.width ()
                       << ",h=" << pixmap.height ()
                       << "), x=" << at.x ()
@@ -446,7 +446,7 @@ void kpDocument::setPixmap (const QPixmap &pixmap)
 void kpDocument::fill (const QColor &color)
 {
 #if DEBUG_KPDOCUMENT
-    kdDebug (KP_AREA) << "kpDocument::fill ()" << endl;
+    kdDebug () << "kpDocument::fill ()" << endl;
 #endif
 
     m_pixmap->fill (color);
@@ -457,7 +457,7 @@ void kpDocument::fill (const QColor &color)
 void kpDocument::resize (int w, int h, bool fillNewAreas)
 {
 #if DEBUG_KPDOCUMENT
-    kdDebug (KP_AREA) << "kpDocument::resize (" << w << "," << h << "," << fillNewAreas << ")" << endl;
+    kdDebug () << "kpDocument::resize (" << w << "," << h << "," << fillNewAreas << ")" << endl;
 #endif
 
     m_oldWidth = width (), m_oldHeight = height ();
@@ -485,7 +485,7 @@ void kpDocument::resize (int w, int h, bool fillNewAreas)
 bool kpDocument::scale (int w, int h)
 {
 #if DEBUG_KPDOCUMENT
-    kdDebug (KP_AREA) << "kpDocument::scale (" << w << "," << h << ")" << endl;
+    kdDebug () << "kpDocument::scale (" << w << "," << h << ")" << endl;
 #endif
 
     m_oldWidth = width (), m_oldHeight = height ();
@@ -498,7 +498,7 @@ bool kpDocument::scale (int w, int h)
 
     if (!m_pixmap->convertFromImage (image))
     {
-        kdError (KP_AREA) << "kpDocument::scale() could not convertFromImage()" << endl;
+        kdError () << "kpDocument::scale() could not convertFromImage()" << endl;
         return false;
     }
 #else
@@ -521,7 +521,7 @@ bool kpDocument::scale (int w, int h)
 bool kpDocument::skew (double hangle, double vangle)
 {
 #if DEBUG_KPDOCUMENT
-    kdDebug (KP_AREA) << "kpDocument::skew (" << hangle << "," << vangle << ")" << endl;
+    kdDebug () << "kpDocument::skew (" << hangle << "," << vangle << ")" << endl;
 #endif
 
     if (hangle == 0 && vangle == 0)
@@ -531,7 +531,7 @@ bool kpDocument::skew (double hangle, double vangle)
     // if (abs (hangle) >= 90 || abs (vangle) >= 90) {
     if (90 - fabs (hangle) < KP_EPSILON || 90 - fabs (vangle) < KP_EPSILON)
     {
-        kdError (KP_AREA) << "kpDocument::skew() passed hangle and/or vangle out of range (-90 < x < 90)" << endl;
+        kdError () << "kpDocument::skew() passed hangle and/or vangle out of range (-90 < x < 90)" << endl;
         return false;
     }
 
@@ -588,7 +588,7 @@ bool kpDocument::flip (bool horz, bool vert)
 
     if (!m_pixmap->convertFromImage (image))
     {
-        kdError (KP_AREA) << "kpDocument::flip() could not convertFromImage()" << endl;
+        kdError () << "kpDocument::flip() could not convertFromImage()" << endl;
         return false;
     }
 
@@ -599,14 +599,14 @@ bool kpDocument::flip (bool horz, bool vert)
 bool kpDocument::rotate (double angle)
 {
 #if DEBUG_KPDOCUMENT
-    kdDebug (KP_AREA) << "kpDocument::rotate (" << angle << ")" << endl;
+    kdDebug () << "kpDocument::rotate (" << angle << ")" << endl;
 #endif
 
     if (angle == 0) return true;
 
     if (angle < 0 || angle >= 360)
     {
-        kdError (KP_AREA) << "kpDocument::rotate() passed angle ! >= 0 && < 360" << endl;
+        kdError () << "kpDocument::rotate() passed angle ! >= 0 && < 360" << endl;
         return false;
     }
 
@@ -666,7 +666,7 @@ bool kpDocument::convertToGrayscale ()
 
     if (!m_pixmap->convertFromImage (image))
     {
-        kdError (KP_AREA) << "kpDocument::convertToGrayscale() could not convertFromImage()" << endl;
+        kdError () << "kpDocument::convertToGrayscale() could not convertFromImage()" << endl;
         return false;
     }
 
@@ -682,7 +682,7 @@ bool kpDocument::invertColors ()
 
      if (!m_pixmap->convertFromImage (image))
      {
-         kdError (KP_AREA) << "kpDocument::invertColors() could not convertFromImage()" << endl;
+         kdError () << "kpDocument::invertColors() could not convertFromImage()" << endl;
          return false;
      }
 

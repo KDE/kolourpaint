@@ -65,7 +65,7 @@ QString kpToolFlipCommand::name () const
         return i18n ("Flip vertically");
     else
     {
-        kdError (KP_AREA) << "kpToolFlipCommand::name() not asked to flip" << endl;
+        kdError () << "kpToolFlipCommand::name() not asked to flip" << endl;
         return QString::null;
     }
 }
@@ -105,7 +105,7 @@ kpToolFlipDialog::kpToolFlipDialog (QWidget *parent)
 
     if (!vbox)
     {
-        kdError (KP_AREA) << "kpToolFlipDialog::kpToolFlipDialog() received NULL vbox" << endl;
+        kdError () << "kpToolFlipDialog::kpToolFlipDialog() received NULL vbox" << endl;
     }
     else
     {

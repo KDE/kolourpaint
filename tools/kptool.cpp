@@ -93,7 +93,7 @@ QPixmap kpTool::neededPixmap (const QPixmap &pixmap, const QRect &boundingRect)
 
 void kpTool::beginInternal ()
 {
-    kdDebug (KP_AREA) << "kpTool::beginInternal()" << endl;
+    kdDebug () << "kpTool::beginInternal()" << endl;
 
     if (!m_began)
     {
@@ -140,7 +140,7 @@ void kpTool::endInternal ()
 void kpTool::begin ()
 {
 #if DEBUG_KPTOOL
-    kdDebug (KP_AREA) << "kpTool::begin() base implementation" << endl;
+    kdDebug () << "kpTool::begin() base implementation" << endl;
 #endif
 }
 
@@ -148,7 +148,7 @@ void kpTool::begin ()
 void kpTool::end ()
 {
 #if DEBUG_KPTOOL
-    kdDebug (KP_AREA) << "kpTool::end() base implementation" << endl;
+    kdDebug () << "kpTool::end() base implementation" << endl;
 #endif
 }
 
@@ -200,7 +200,7 @@ void kpTool::cancelDrawInternal ()
 // virtual
 void kpTool::cancelDraw ()
 {
-    kdWarning (KP_AREA) << "Tool cannot cancel operation!" << endl;
+    kdWarning () << "Tool cannot cancel operation!" << endl;
 }
 
 void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRect)
@@ -258,7 +258,7 @@ QColor kpTool::color (int which) const
         return m_mainWindow->color (which);
     else
     {
-        kdError (KP_AREA) << "kpTool::color () called without mainWindow" << endl;
+        kdError () << "kpTool::color () called without mainWindow" << endl;
         return Qt::black;
     }
 }
@@ -293,7 +293,7 @@ KCommandHistory *kpTool::commandHistory () const
 void kpTool::mousePressEvent (QMouseEvent *e)
 {
 #if DEBUG_KPTOOL
-    kdDebug (KP_AREA) << "kpTool::mousePressEvent pos=" << e->pos ()
+    kdDebug () << "kpTool::mousePressEvent pos=" << e->pos ()
                       << " btnStateAfter=" << (int) e->stateAfter ()
                       << " beganDraw=" << m_beganDraw << endl;
 #endif
@@ -309,13 +309,13 @@ void kpTool::mousePressEvent (QMouseEvent *e)
         if (mb == -1 || mb != m_mouseButton)
         {
         #if DEBUG_KPTOOL
-            kdDebug (KP_AREA) << "\tCancelling operation as " << mb << " == -1 or != " << m_mouseButton << endl;
+            kdDebug () << "\tCancelling operation as " << mb << " == -1 or != " << m_mouseButton << endl;
         #endif
 
             kpView *view = viewUnderStartPoint ();
             if (!view)
             {
-                kdError (KP_AREA) << "kpTool::mousePressEvent() cancel without a view under the start point!" << endl;
+                kdError () << "kpTool::mousePressEvent() cancel without a view under the start point!" << endl;
             }
 
             // if we get a mousePressEvent when we're drawing, then the other
@@ -330,7 +330,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     kpView *view = viewUnderCursor ();
     if (!view)
     {
-        kdError (KP_AREA) << "kpTool::mousePressEvent() without a view under the cursor!" << endl;
+        kdError () << "kpTool::mousePressEvent() without a view under the cursor!" << endl;
     }
 
 
@@ -342,7 +342,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     m_lastPoint = QPoint (-1, -1);
 
 #if DEBUG_KPTOOL
-    kdDebug (KP_AREA) << "\tBeginning draw @ " << m_currentPoint << endl;
+    kdDebug () << "\tBeginning draw @ " << m_currentPoint << endl;
 #endif
 
     beginDrawInternal ();
@@ -354,7 +354,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 void kpTool::mouseMoveEvent (QMouseEvent *e)
 {
 #if DEBUG_KPTOOL
-    kdDebug (KP_AREA) << "kpTool::mouseMoveEvent pos=" << e->pos ()
+    kdDebug () << "kpTool::mouseMoveEvent pos=" << e->pos ()
                       << " btnStateAfter=" << (int) e->stateAfter () << endl;
 #endif
     if (m_beganDraw)
@@ -362,13 +362,13 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
         kpView *view = viewUnderStartPoint ();
         if (!view)
         {
-            kdError (KP_AREA) << "kpTool::mouseMoveEvent() without a view under the start point!" << endl;
+            kdError () << "kpTool::mouseMoveEvent() without a view under the start point!" << endl;
             return;
         }
 
         m_currentPoint = view->zoomViewToDoc (e->pos ());
 
-        kdDebug (KP_AREA) << "\tDraw!" << endl;
+        kdDebug () << "\tDraw!" << endl;
         draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
         m_lastPoint = m_currentPoint;
     }
@@ -386,7 +386,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 void kpTool::mouseReleaseEvent (QMouseEvent *e)
 {
 #if DEBUG_KPTOOL
-    kdDebug (KP_AREA) << "kpTool::mouseReleaseEvent pos=" << e->pos ()
+    kdDebug () << "kpTool::mouseReleaseEvent pos=" << e->pos ()
                       << " btnStateAfter=" << (int) e->stateAfter () << endl;
 #endif
 
@@ -395,7 +395,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
         kpView *view = viewUnderStartPoint ();
         if (!view)
         {
-            kdError (KP_AREA) << "kpTool::mouseReleaseEvent() without a view under the start point!" << endl;
+            kdError () << "kpTool::mouseReleaseEvent() without a view under the start point!" << endl;
             return;
         }
 
@@ -536,7 +536,7 @@ void kpTool::focusInEvent (QFocusEvent *)
 void kpTool::focusOutEvent (QFocusEvent *)
 {
 #if DEBUG_KPTOOL
-    kdDebug (KP_AREA) << "kpTool::focusOutEvent() beganDraw=" << m_beganDraw << endl;
+    kdDebug () << "kpTool::focusOutEvent() beganDraw=" << m_beganDraw << endl;
 #endif
 
     if (m_beganDraw)

@@ -72,7 +72,7 @@ QString kpToolSkewCommand::name () const
     }
     else
     {
-        kdError (KP_AREA) << "kpToolSkewCommand::name() for pointless no-op skew" << endl;
+        kdError () << "kpToolSkewCommand::name() for pointless no-op skew" << endl;
         return i18n ("Pointless Skew");
     }
 }

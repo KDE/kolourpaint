@@ -65,7 +65,7 @@ int kpToolWidgetBase::addOption (const QPixmap &pixmap, bool center, bool doUpda
     
     m_pixmapRects.append (QRect (m_x, m_y, pixmap.width (), pixmap.height ()));
 
-    kdDebug (KP_AREA) << "kpToolWidgetBase::addOption(): m_x=" << m_x
+    kdDebug () << "kpToolWidgetBase::addOption(): m_x=" << m_x
                       << " m_y=" << m_y
                       << " width=" << pixmap.width ()
                       << " height=" << pixmap.height ()
@@ -130,7 +130,7 @@ void kpToolWidgetBase::mousePressEvent (QMouseEvent *e)
 // virtual protected
 void kpToolWidgetBase::drawContents (QPainter *painter)
 {
-    kdDebug (KP_AREA) << "kpToolWidgetBase::drawContents(): rect=" << contentsRect () << endl;
+    kdDebug () << "kpToolWidgetBase::drawContents(): rect=" << contentsRect () << endl;
 
     const int numPixmaps = m_pixmaps.count ();
     for (int i = 0; i < numPixmaps; i++)

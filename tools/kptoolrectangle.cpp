@@ -72,7 +72,7 @@ static QPixmap pixmap (const kpToolRectangle::Mode mode,
         painter.drawEllipse (QRect (startPoint - rect.topLeft (), endPoint - rect.topLeft ()));
         break;
     default:
-        kdError (KP_AREA) << "kptoolrectangle.cpp::pixmap() passed unknown mode: " << int (mode) << endl;
+        kdError () << "kptoolrectangle.cpp::pixmap() passed unknown mode: " << int (mode) << endl;
         break;
     }
 
@@ -121,7 +121,7 @@ void kpToolRectangle::updateBrushes ()
 void kpToolRectangle::slotForegroundColorChanged (const QColor &)
 {
 #if DEBUG_KPTOOLRECTANGLE
-    kdDebug (KP_AREA) << "kpToolRectangle::slotForegroundColorChanged()" << endl;
+    kdDebug () << "kpToolRectangle::slotForegroundColorChanged()" << endl;
 #endif
     m_pen [0] = pen (0);
     m_brush [0] = brush (0);
@@ -131,7 +131,7 @@ void kpToolRectangle::slotForegroundColorChanged (const QColor &)
 void kpToolRectangle::slotBackgroundColorChanged (const QColor &)
 {
 #if DEBUG_KPTOOLRECTANGLE
-    kdDebug (KP_AREA) << "kpToolRectangle::slotBackgroundColorChanged()" << endl;
+    kdDebug () << "kpToolRectangle::slotBackgroundColorChanged()" << endl;
 #endif
     m_pen [1] = pen (1);
     m_brush [1] = brush (1);
@@ -159,7 +159,7 @@ QBrush kpToolRectangle::brush (int mouseButton) const
 void kpToolRectangle::begin ()
 {
 #if DEBUG_KPTOOLRECTANGLE
-    kdDebug (KP_AREA) << "kpToolRectangle::begin ()" << endl;
+    kdDebug () << "kpToolRectangle::begin ()" << endl;
 #endif
     kpToolToolBar *tb = toolToolBar ();
     if (tb)
@@ -192,7 +192,7 @@ void kpToolRectangle::begin ()
 void kpToolRectangle::end ()
 {
 #if DEBUG_KPTOOLRECTANGLE
-    kdDebug (KP_AREA) << "kpToolRectangle::end ()" << endl;
+    kdDebug () << "kpToolRectangle::end ()" << endl;
 #endif
 
     if (m_toolWidgetLineStyle)
@@ -224,7 +224,7 @@ void kpToolRectangle::applyModifiers ()
     QRect rect = QRect (m_startPoint, m_currentPoint).normalize ();
 
 #if DEBUG_KPTOOLRECTANGLE
-    kdDebug (KP_AREA) << "kpToolRectangle::applyModifiers(" << rect
+    kdDebug () << "kpToolRectangle::applyModifiers(" << rect
                       << ") shift=" << m_shiftPressed
                       << " ctrl=" << m_controlPressed
                       << endl;
@@ -360,7 +360,7 @@ void kpToolRectangleCommand::execute ()
         *m_oldPixmapPtr = m_document->getPixmapAt (m_rect);
     }
     else
-        kdError (KP_AREA) << "kpToolRectangleCommand::execute() m_oldPixmapPtr not null" << endl;
+        kdError () << "kpToolRectangleCommand::execute() m_oldPixmapPtr not null" << endl;
 
     m_document->setPixmapAt (pixmap (m_mode, m_document,
                                      m_rect, m_startPoint, m_endPoint,
@@ -379,7 +379,7 @@ void kpToolRectangleCommand::unexecute ()
         m_oldPixmapPtr = 0;
     }
     else
-        kdError (KP_AREA) << "kpToolRectangleCommand::unexecute() m_oldPixmapPtr null" << endl;
+        kdError () << "kpToolRectangleCommand::unexecute() m_oldPixmapPtr null" << endl;
 }
 
 QString kpToolRectangleCommand::name () const
@@ -393,7 +393,7 @@ QString kpToolRectangleCommand::name () const
     case kpToolRectangle::Ellipse:
         return i18n ("Ellipse");
     default:
-        kdError (KP_AREA) << "kpToolRectangleCommand::name() passed unknown mode: " << int (m_mode) << endl;
+        kdError () << "kpToolRectangleCommand::name() passed unknown mode: " << int (m_mode) << endl;
         return QString::null;
     }
 }

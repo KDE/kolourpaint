@@ -117,7 +117,7 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint &lastPoint,
     if (!viewManager ()->selectionActive ())
     {
     #if DEBUG_KPTOOLSELECTION
-        kdDebug (KP_AREA) << "kpToolSelection::draw() starting selection at " << normalizedRect.topLeft () << endl;
+        kdDebug () << "kpToolSelection::draw() starting selection at " << normalizedRect.topLeft () << endl;
     #endif
         QPixmap pixmap = document ()->getPixmapAt (normalizedRect);
 
@@ -140,7 +140,7 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint &lastPoint,
         if (m_dragMoving)
         {
         #if DEBUG_KPTOOLSELECTION
-            kdDebug (KP_AREA) << "kpToolSelection::draw() moving selection" << endl;
+            kdDebug () << "kpToolSelection::draw() moving selection" << endl;
         #endif
             if (m_shiftPressed && lastPoint != QPoint (-1, -1))
                 document ()->setPixmapAt (viewManager ()->tempPixmap (), lastPoint - m_startDragFromSelectionTopLeft);
@@ -152,7 +152,7 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint &lastPoint,
         else
         {
         #if DEBUG_KPTOOLSELECTION
-            kdDebug (KP_AREA) << "kpToolSelection::draw () resizing selection to " << normalizedRect << endl;
+            kdDebug () << "kpToolSelection::draw () resizing selection to " << normalizedRect << endl;
         #endif
             QPixmap pixmap = document ()->getPixmapAt (normalizedRect);
 

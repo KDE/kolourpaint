@@ -58,14 +58,14 @@ kpViewManager::~kpViewManager ()
 
 void kpViewManager::registerView (kpView *view)
 {
-    kdDebug (KP_AREA) << "kpViewManager::registerView (" << view << ")" << endl;
+    kdDebug () << "kpViewManager::registerView (" << view << ")" << endl;
     if (view && m_views.findRef (view) < 0)
     {
-        kdDebug (KP_AREA) << "\tadded view" << endl;
+        kdDebug () << "\tadded view" << endl;
         m_views.append (view);
     }
     else
-        kdDebug (KP_AREA) << "\tignored register view attempt" << endl;
+        kdDebug () << "\tignored register view attempt" << endl;
 }
 
 void kpViewManager::unregisterView (kpView *view)
@@ -99,7 +99,7 @@ void kpViewManager::setTempPixmapAt (const QPixmap &pixmap, const QPoint &at,
                                      enum TempPixmapType type,
                                      enum SelectionBorderType selBorderType)
 {
-    kdDebug (KP_AREA) << "kpViewManager::setTempPixmapAt (pixmap (w="
+    kdDebug () << "kpViewManager::setTempPixmapAt (pixmap (w="
                       << pixmap.width ()
                       << ",h=" << pixmap.height ()
                       << "), x=" << at.x ()
@@ -201,7 +201,7 @@ void kpViewManager::unsetCursor ()
 kpView *kpViewManager::viewUnderCursor () const
 {
 #if 0
-    kdDebug (KP_AREA) << "kpViewManager::viewUnderCursor () m_views.count=" << m_views.count () << endl;
+    kdDebug () << "kpViewManager::viewUnderCursor () m_views.count=" << m_views.count () << endl;
 #endif
 
     QPtrListIterator <kpView> it (m_views);
@@ -209,12 +209,12 @@ kpView *kpViewManager::viewUnderCursor () const
     while (*it)
     {
     #if 0
-        kdDebug (KP_AREA) << "\tchecking " << (*it) << " for mouse" << endl;
+        kdDebug () << "\tchecking " << (*it) << " for mouse" << endl;
     #endif
         if ((*it)->hasMouse ())
         {
         #if 0
-            kdDebug (KP_AREA) << "\t\treturning " << (*it) << endl;
+            kdDebug () << "\t\treturning " << (*it) << endl;
         #endif
             return (*it);
         }
@@ -223,7 +223,7 @@ kpView *kpViewManager::viewUnderCursor () const
     }
 
 #if 0
-    kdDebug (KP_AREA) << "\t\tno view under cursor!" << endl;
+    kdDebug () << "\t\tno view under cursor!" << endl;
 #endif
     return 0;
 }
@@ -236,7 +236,7 @@ void kpViewManager::repaintBrushPixmap ()
     kpView *activeView = viewUnderCursor ();
     m_hideTempPixmap = !activeView;  // SYNC: with kpToolPen::updateBrushCursor()
 
-    kdDebug (KP_AREA) << "kpViewManager::repaintBrushPixmap (viewUnderCursor=" << activeView
+    kdDebug () << "kpViewManager::repaintBrushPixmap (viewUnderCursor=" << activeView
                             << ", brushActive=" << brushActive ()
                             << ", hideTempPixmap=" << m_hideTempPixmap
                             << endl;
@@ -260,7 +260,7 @@ void kpViewManager::updateViews ()
 
 void kpViewManager::updateViews (const QRect &docRect)
 {
-    kdDebug (KP_AREA) << "KpViewManager::updateViews (" << docRect << ")" << endl;
+    kdDebug () << "KpViewManager::updateViews (" << docRect << ")" << endl;
 
     // sync with repaintBrushPixmap()
     for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())

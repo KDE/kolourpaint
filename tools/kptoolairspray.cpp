@@ -173,7 +173,7 @@ void kpToolAirSprayCommand::execute ()
         m_newPixmapPtr = 0;
     }
     else
-        kdError (KP_AREA) << "kpToolAirSprayCommand::execute() has null m_newPixmapPtr" << endl;
+        kdError () << "kpToolAirSprayCommand::execute() has null m_newPixmapPtr" << endl;
 }
 
 // Undo:
@@ -186,7 +186,7 @@ void kpToolAirSprayCommand::unexecute ()
         *m_newPixmapPtr = m_document->getPixmapAt (m_boundingRect);
     }
     else
-        kdError (KP_AREA) << "kpToolAirSprayCommand::unexecute() has non-null newPixmapPtr" << endl;
+        kdError () << "kpToolAirSprayCommand::unexecute() has non-null newPixmapPtr" << endl;
 
     m_document->setPixmapAt (m_oldPixmap, m_boundingRect.topLeft ());
 }

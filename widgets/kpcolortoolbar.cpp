@@ -64,7 +64,7 @@ QColor kpDualColorButton::color (int which) const
 {
     if (which < 0 || which > 1)
     {
-        kdWarning (KP_AREA) << "kpDualColorButton::color (" << which
+        kdWarning () << "kpDualColorButton::color (" << which
                             << ") - out of range" << endl;
         which = 0;
     }
@@ -76,7 +76,7 @@ void kpDualColorButton::setColor (int which, const QColor &color)
 {
     if (which < 0 || which > 1)
     {
-        kdWarning (KP_AREA) << "kpDualColorButton::setColor (" << which
+        kdWarning () << "kpDualColorButton::setColor (" << which
                             << ") - out of range" << endl;
         which = 0;
     }
@@ -252,7 +252,7 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
     m_mouseButton = -1;
 
     Qt::ButtonState button = e->button ();
-    kdDebug (KP_AREA) << "kpColorCells::mouseReleaseEvent(left="
+    kdDebug () << "kpColorCells::mouseReleaseEvent(left="
                       << (button & Qt::LeftButton)
                       << ",right="
                       << (button & Qt::RightButton)
@@ -270,14 +270,14 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
     KColorCells::mouseReleaseEvent (e);
     disconnect (this, SIGNAL (colorSelected (int)), this, SLOT (slotColorSelected (int)));
 
-    kdDebug (KP_AREA) << "kpColorCells::mouseReleaseEvent() setting m_mouseButton back to -1" << endl;
+    kdDebug () << "kpColorCells::mouseReleaseEvent() setting m_mouseButton back to -1" << endl;
     m_mouseButton = -1;
 }
 
 // protected slot
 void kpColorCells::slotColorSelected (int cell)
 {
-    kdDebug (KP_AREA) << "kpColorCells::slotColorSelected(cell=" << cell
+    kdDebug () << "kpColorCells::slotColorSelected(cell=" << cell
                       << ") mouseButton = " << m_mouseButton << endl;
     QColor c = KColorCells::color (cell);
 
@@ -292,7 +292,7 @@ void kpColorCells::slotColorSelected (int cell)
 // protected slot
 void kpColorCells::slotColorDoubleClicked (int cell)
 {
-    kdDebug (KP_AREA) << "kpColorCells::slotColorDoubleClicked(cell="
+    kdDebug () << "kpColorCells::slotColorDoubleClicked(cell="
                       << cell << ")" << endl;
 
     QColor color = KColorCells::color (cell);
@@ -333,7 +333,7 @@ QColor kpColorToolBar::color (int which) const
 {
     if (which < 0 || which > 1)
     {
-        kdWarning (KP_AREA) << "kpColorToolBar::color (" << which
+        kdWarning () << "kpColorToolBar::color (" << which
                             << ") - out of range" << endl;
         which = 0;
     }
@@ -345,7 +345,7 @@ void kpColorToolBar::setColor (int which, const QColor &color)
 {
     if (which < 0 || which > 1)
     {
-        kdWarning (KP_AREA) << "kpColorToolBar::setColor (" << which
+        kdWarning () << "kpColorToolBar::setColor (" << which
                             << ") - out of range" << endl;
         which = 0;
     }

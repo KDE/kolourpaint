@@ -36,8 +36,6 @@ class kpViewManager;
 class QRect;
 
 
-#define KP_AREA 30509  // TODO: get own area
-
 #define KP_BLANK_DOCUMENT_COLOR Qt::white
 
 #define KP_DOCUMENT_MAX_WIDTH 4000

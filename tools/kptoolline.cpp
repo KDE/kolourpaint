@@ -70,7 +70,7 @@ void kpToolLine::begin ()
 {
     kpToolToolBar *tb = toolToolBar ();
 
-    kdDebug (KP_AREA) << "kpToolLine::begin() tb=" << tb << endl;
+    kdDebug () << "kpToolLine::begin() tb=" << tb << endl;
 
     if (tb)
     {

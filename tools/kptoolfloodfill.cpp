@@ -63,7 +63,7 @@ kpToolFloodFill::~kpToolFloodFill ()
 // virtual
 void kpToolFloodFill::beginDraw ()
 {
-    kdDebug (KP_AREA) << "kpToolFloodFill::beginDraw()" << endl;
+    kdDebug () << "kpToolFloodFill::beginDraw()" << endl;
 
     QApplication::setOverrideCursor (Qt::waitCursor);
 
@@ -75,7 +75,7 @@ void kpToolFloodFill::beginDraw ()
 
     if (m_currentCommand->prepareColorToChange ())
     {
-        kdDebug (KP_AREA) << "\tperforming new-doc-corner-case check" << endl;
+        kdDebug () << "\tperforming new-doc-corner-case check" << endl;
         if (document ()->url ().isEmpty () && !document ()->isModified ())
         {
             m_currentCommand->setFillEntirePixmap ();
@@ -87,12 +87,12 @@ void kpToolFloodFill::beginDraw ()
         }
         else
         {
-            kdError (KP_AREA) << "kpToolFloodFill::beginDraw() could not fill!" << endl;
+            kdError () << "kpToolFloodFill::beginDraw() could not fill!" << endl;
         }
     }
     else
     {
-        kdError (KP_AREA) << "kpToolFloodFill::beginDraw() could not prepareColorToChange!" << endl;
+        kdError () << "kpToolFloodFill::beginDraw() could not prepareColorToChange!" << endl;
     }
 
     QApplication::restoreOverrideCursor ();
@@ -160,7 +160,7 @@ void kpToolFloodFillCommand::setFillEntirePixmap (bool yes)
 // virtual
 void kpToolFloodFillCommand::execute ()
 {
-    kdDebug (KP_AREA) << "kpToolFloodFillCommand::execute() m_fillEntirePixmap=" << m_fillEntirePixmap << endl;
+    kdDebug () << "kpToolFloodFillCommand::execute() m_fillEntirePixmap=" << m_fillEntirePixmap << endl;
 
     if (m_fillEntirePixmap)
     {
@@ -187,7 +187,7 @@ void kpToolFloodFillCommand::execute ()
         }
         else
         {
-            kdDebug (KP_AREA) << "\tinvalid boundingRect - must be NOP case" << endl;
+            kdDebug () << "\tinvalid boundingRect - must be NOP case" << endl;
         }
     }
 }

@@ -127,7 +127,7 @@ kpMainWindow::kpMainWindow (const KURL &url)
         configGroupSaver.config ()->writeEntry (kpSettingFirstTime, false);
         configGroupSaver.config ()->sync ();
     }
-    kdDebug (KP_AREA) << "read config: firstTime=" << m_configFirstTime
+    kdDebug () << "read config: firstTime=" << m_configFirstTime
                       << " showGrid=" << m_configShowGrid
                       << " showPath=" << m_configShowPath
                       << " outputMimeType=" << m_configDefaultOutputMimetype
@@ -353,7 +353,7 @@ void kpMainWindow::setupSettingsMenuActions ()
     m_actionShowPath = new KToggleAction (i18n ("Sho&w Path"), 0,
         this, SLOT (slotShowPath ()), ac, "settings_show_path");
     m_actionShowPath->setChecked (m_configShowPath);
-    kdDebug (KP_AREA) << "BLAH: m_configShowPath=" << m_configShowPath << " isCheck=" << m_actionShowPath->isChecked () << endl;
+    kdDebug () << "BLAH: m_configShowPath=" << m_configShowPath << " isCheck=" << m_actionShowPath->isChecked () << endl;
     connect (m_actionShowPath, SIGNAL (toggled (bool)),
              this, SLOT (slotActionShowPathToggled (bool)));
 
@@ -443,7 +443,7 @@ KCommandHistory *kpMainWindow::commandHistory ()
 QColor kpMainWindow::color (int which) const
 {
 #if DEBUG_KPMAINWINDOW && 0
-    kdDebug (KP_AREA) << "kpMainWindow::color (" << which << ")" << endl;
+    kdDebug () << "kpMainWindow::color (" << which << ")" << endl;
 #endif
     return m_colorToolBar->color (which);
 }
@@ -459,7 +459,7 @@ QColor kpMainWindow::color (const ButtonState &buttonState) const
 kpTool *kpMainWindow::tool ()
 {
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::tool() m_toolNum=" << m_toolNum
+    kdDebug () << "kpMainWindow::tool() m_toolNum=" << m_toolNum
                       << " ptr=" << (m_toolNum >= 0 ? m_tools [m_toolNum] : 0) << endl;
 #endif
     return m_toolNum >= 0 ? m_tools [m_toolNum] : 0;
@@ -557,7 +557,7 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 void kpMainWindow::setMainView (kpView *view)
 {
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::setMainView (" << (int) view << ")" << endl;
+    kdDebug () << "kpMainWindow::setMainView (" << (int) view << ")" << endl;
 #endif
 
     m_viewManager->unregisterView (m_mainView);
@@ -702,12 +702,12 @@ bool kpMainWindow::saveAs (bool localOnly)
     QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Writing);
     if (mimeTypes.isEmpty ())
     {
-        kdError (KP_AREA) << "No KImageIO output mimetypes!" << endl;
+        kdError () << "No KImageIO output mimetypes!" << endl;
         return false;
     }
 
     QString path = m_document->url ().path ();
-    kdDebug (KP_AREA) << "kpMainWindow::slotSaveAs currentPath=" << path << endl;
+    kdDebug () << "kpMainWindow::slotSaveAs currentPath=" << path << endl;
     KFileDialog *fd = new KFileDialog (path.isEmpty () ? ":kolourpaint" : path,
                                        QString::null, this, "fd", true);
     fd->setOperationMode (KFileDialog::Saving);
@@ -735,7 +735,7 @@ bool kpMainWindow::saveAs (bool localOnly)
     }
 
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "mimeTypes=" << mimeTypes << endl;
+    kdDebug () << "mimeTypes=" << mimeTypes << endl;
 #endif
     fd->setMimeFilter (mimeTypes, defaultMimeType);
     if (fd->exec ())
@@ -763,7 +763,7 @@ bool kpMainWindow::saveAs (bool localOnly)
     else
     {
     #if DEBUG_KPMAINWINDOW
-        kdDebug (KP_AREA) << "fd aborted" << endl;
+        kdDebug () << "fd aborted" << endl;
     #endif
         delete fd;
         return false;
@@ -781,7 +781,7 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE false;
         return false;
 
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::slotRevert() reverting!" << endl;
+    kdDebug () << "kpMainWindow::slotRevert() reverting!" << endl;
 #endif
 
     if (!m_document->open (m_document->url ()))
@@ -817,7 +817,7 @@ void kpMainWindow::slotClose ()
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::slotClose()" << endl;
+    kdDebug () << "kpMainWindow::slotClose()" << endl;
 #endif
 
     if (!queryClose ())
@@ -832,7 +832,7 @@ void kpMainWindow::slotQuit ()
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::slotQuit()" << endl;
+    kdDebug () << "kpMainWindow::slotQuit()" << endl;
 #endif
 
     close ();  // will call queryClose()
@@ -930,7 +930,7 @@ void kpMainWindow::slotZoomIn ()
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::slotZoomIn ()" << endl;
+    kdDebug () << "kpMainWindow::slotZoomIn ()" << endl;
 #endif
 
     m_actionZoom->setCurrentItem (m_actionZoom->currentItem () + 1);
@@ -942,7 +942,7 @@ void kpMainWindow::slotZoomOut ()
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::slotZoomOut ()" << endl;
+    kdDebug () << "kpMainWindow::slotZoomOut ()" << endl;
 #endif
 
     m_actionZoom->setCurrentItem (m_actionZoom->currentItem () - 1);
@@ -954,7 +954,7 @@ void kpMainWindow::slotZoom ()
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::slotZoom ()" << endl;
+    kdDebug () << "kpMainWindow::slotZoom ()" << endl;
 #endif
 
     QString text = m_actionZoom->currentText ();
@@ -962,7 +962,7 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
     int zoomLevel = text.toInt ();
 
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "\tzoomText=" << text << " zoomLevel=" << zoomLevel << "%" << endl;
+    kdDebug () << "\tzoomText=" << text << " zoomLevel=" << zoomLevel << "%" << endl;
 #endif
 
     m_actionZoomIn->setEnabled (m_actionZoom->currentItem () < (int) m_zoomList.count () - 1);
@@ -986,7 +986,7 @@ void kpMainWindow::slotShowGrid ()
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::slotShowGrid ()" << endl;
+    kdDebug () << "kpMainWindow::slotShowGrid ()" << endl;
 #endif
 
     m_configShowGrid = m_actionShowGrid->isChecked ();
@@ -996,7 +996,7 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 void kpMainWindow::slotShowPath ()
 {
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::slotShowPath ()" << endl;
+    kdDebug () << "kpMainWindow::slotShowPath ()" << endl;
 #endif
 
     m_configShowPath = m_actionShowPath->isChecked ();
@@ -1033,13 +1033,13 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 void kpMainWindow::switchToTool (kpTool *tool)
 {
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::switchToTool (" << tool << ")" << endl;
+    kdDebug () << "kpMainWindow::switchToTool (" << tool << ")" << endl;
 #endif
 
     for (int i = 0; i < m_numTools; i++)
     {
     #if DEBUG_KPMAINWINDOW && 0
-        kdDebug (KP_AREA) << "\tComparing with tool #" << i << ": ptr=" << m_tools [i] << endl;
+        kdDebug () << "\tComparing with tool #" << i << ": ptr=" << m_tools [i] << endl;
     #endif
         if (m_tools [i] == tool)
         {
@@ -1052,7 +1052,7 @@ void kpMainWindow::switchToTool (kpTool *tool)
 void kpMainWindow::switchToTool (int which)
 {
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::switchToTool (" << which << ")" << endl;
+    kdDebug () << "kpMainWindow::switchToTool (" << which << ")" << endl;
 #endif
 
     if (which != -1 && m_toolNum == which)
@@ -1118,7 +1118,7 @@ void kpMainWindow::slotToolPen ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolPen()" << endl;
+    kdDebug () << "slotToolPen()" << endl;
     switchToTool (0);
 }
 
@@ -1126,7 +1126,7 @@ void kpMainWindow::slotToolLine ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolLine()" << endl;
+    kdDebug () << "slotToolLine()" << endl;
     switchToTool (1);
 }
 
@@ -1134,7 +1134,7 @@ void kpMainWindow::slotToolEllipse ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolEllipse()" << endl;
+    kdDebug () << "slotToolEllipse()" << endl;
     switchToTool (2);
 }
 
@@ -1142,7 +1142,7 @@ void kpMainWindow::slotToolColorPicker ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolColorPicker()" << endl;
+    kdDebug () << "slotToolColorPicker()" << endl;
     switchToTool (3);
 }
 
@@ -1150,7 +1150,7 @@ void kpMainWindow::slotToolAirSpray ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolAirSpray()" << endl;
+    kdDebug () << "slotToolAirSpray()" << endl;
     switchToTool (4);
 }
 
@@ -1158,7 +1158,7 @@ void kpMainWindow::slotToolRectangle ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolRectangle()" << endl;
+    kdDebug () << "slotToolRectangle()" << endl;
     switchToTool (5);
 }
 
@@ -1166,7 +1166,7 @@ void kpMainWindow::slotToolRoundedRectangle ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolRoundedRectangle()" << endl;
+    kdDebug () << "slotToolRoundedRectangle()" << endl;
     switchToTool (6);
 }
 
@@ -1174,7 +1174,7 @@ void kpMainWindow::slotToolPolygon ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolPolygon ()" << endl;
+    kdDebug () << "slotToolPolygon ()" << endl;
     switchToTool (7);
 }
 
@@ -1182,7 +1182,7 @@ void kpMainWindow::slotToolFloodFill ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolFloodFill()" << endl;
+    kdDebug () << "slotToolFloodFill()" << endl;
     switchToTool (8);
 }
 
@@ -1190,7 +1190,7 @@ void kpMainWindow::slotToolRotate ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolRotate()" << endl;
+    kdDebug () << "slotToolRotate()" << endl;
     switchToTool (9);
 }
 
@@ -1198,7 +1198,7 @@ void kpMainWindow::slotToolBrush ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolBrush()" << endl;
+    kdDebug () << "slotToolBrush()" << endl;
     switchToTool (10);
 }
 
@@ -1206,7 +1206,7 @@ void kpMainWindow::slotToolEraser ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolEraser()" << endl;
+    kdDebug () << "slotToolEraser()" << endl;
     switchToTool (11);
 }
 
@@ -1214,7 +1214,7 @@ void kpMainWindow::slotToolRectSelection ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolRectSelection()" << endl;
+    kdDebug () << "slotToolRectSelection()" << endl;
     switchToTool (12);
 }
 
@@ -1222,7 +1222,7 @@ void kpMainWindow::slotToolEllipticalSelection ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolEllipticalSelection()" << endl;
+    kdDebug () << "slotToolEllipticalSelection()" << endl;
     switchToTool (14);
 }
 
@@ -1230,7 +1230,7 @@ void kpMainWindow::slotToolFreeFormSelection ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolFreeFormSelection()" << endl;
+    kdDebug () << "slotToolFreeFormSelection()" << endl;
     switchToTool (15);
 }
 
@@ -1238,7 +1238,7 @@ void kpMainWindow::slotToolColorWasher ()
 {
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
-    kdDebug (KP_AREA) << "slotToolColorWasher()" << endl;
+    kdDebug () << "slotToolColorWasher()" << endl;
     switchToTool (13);
 }
 
@@ -1329,7 +1329,7 @@ void kpMainWindow::slotClear ()
 KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::slotClear ()" << endl;
+    kdDebug () << "kpMainWindow::slotClear ()" << endl;
 #endif
 
     m_commandHistory->addCommand (
@@ -1364,7 +1364,7 @@ void kpMainWindow::slotUpdateStatusBar (int docColorDepth)
 void kpMainWindow::slotUpdateStatusBar (int docWidth, int docHeight, int docColorDepth)
 {
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::slotUpdateStatusBar ("
+    kdDebug () << "kpMainWindow::slotUpdateStatusBar ("
                       << docWidth << "x" << docHeight << "@" << docColorDepth << endl;
 #endif
 
@@ -1493,7 +1493,7 @@ void kpMainWindow::setAsWallpaper (bool centered)
 
     // write path
 #if DEBUG_KPMAINWINDOW
-    kdDebug (KP_AREA) << "kpMainWindow::setAsWallpaper() path=" << m_document->url ().path () << endl;
+    kdDebug () << "kpMainWindow::setAsWallpaper() path=" << m_document->url ().path () << endl;
 #endif
     dataStream << QString (m_document->url ().path ());
 

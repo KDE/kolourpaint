@@ -56,7 +56,7 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent)
                                       s,
                                       s);
 
-            kdDebug (KP_AREA) << "kpToolWidgetBrush::kpToolWidgetBrush() rect=" << rect << endl;
+            kdDebug () << "kpToolWidgetBrush::kpToolWidgetBrush() rect=" << rect << endl;
 
             pixmap->fill (Qt::white);
             painter.begin (pixmap);
