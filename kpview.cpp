@@ -92,7 +92,7 @@ void kpView::setHasMouse (bool yes)
 
     if (vm)
     {
-    #if DEBUG_KP_VIEW
+    #if DEBUG_KP_VIEW && 0
         kdDebug () << "kpView(" << name ()
                    << ")::setHasMouse(" << yes
                    << ") existing viewUnderCursor="
@@ -376,10 +376,12 @@ void kpView::resize (int w, int h)
 
 void kpView::resizeEvent (QResizeEvent *e)
 {
+#if DEBUG_KP_VIEW && 1
     kdDebug () << "kpView(" << name() << ")::resizeEvent("
                << e->size ()
                << " vs actual=" << size ()
                << ") old=" << e->oldSize () << endl;
+#endif
 
     QWidget::resizeEvent (e);
 
@@ -451,7 +453,7 @@ void kpView::updateQueuedArea ()
 // virtual
 void kpView::mousePressEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView(" << name () << ")::mousePressEvent ("
                << e->x () << "," << e->y () << ")"
                << endl;
@@ -466,7 +468,7 @@ void kpView::mousePressEvent (QMouseEvent *e)
 // virtual
 void kpView::mouseMoveEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView(" << name () << ")::mouseMoveEvent ("
                << e->x () << "," << e->y () << ")"
                << endl;
@@ -484,7 +486,7 @@ void kpView::mouseMoveEvent (QMouseEvent *e)
 // virtual
 void kpView::mouseReleaseEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView(" << name () << ")::mouseReleaseEvent ("
                << e->x () << "," << e->y () << ")"
                << endl;
@@ -536,7 +538,7 @@ void kpView::focusOutEvent (QFocusEvent *e)
 // virtual
 void kpView::enterEvent (QEvent *e)
 {
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView(" << name () << ")::enterEvent()" << endl;
 #endif
 
@@ -547,7 +549,7 @@ void kpView::enterEvent (QEvent *e)
 // virtual
 void kpView::leaveEvent (QEvent *e)
 {
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView(" << name () << ")::leaveEvent()" << endl;
 #endif
 
