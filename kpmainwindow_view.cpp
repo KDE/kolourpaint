@@ -59,7 +59,6 @@ void kpMainWindow::setupViewMenuActions ()
         m_zoomList << QString::number (multiple) + QString ("00%");
 
     m_actionZoom->setItems (m_zoomList);
-    m_actionZoom->setCurrentItem (0);
 
     m_actionShowGrid = new KToggleAction (i18n ("Show &Grid"), CTRL + Key_G,
         this, SLOT (slotShowGrid ()), actionCollection (), "view_show_grid");
@@ -76,6 +75,17 @@ void kpMainWindow::enableViewMenuDocumentActions (bool enable)
     m_actionZoomOut->setEnabled (enable);
     m_actionZoom->setEnabled (enable);
     m_actionShowGrid->setEnabled (enable);
+
+    // TODO: for the time being, assume that we start at zoom 100%
+    //       with no grid
+    
+    // This function is only called when a new document is created
+    // or an existing document is closed.  So the following will
+    // always be correct:
+
+    m_actionZoom->setCurrentItem (0);
+    m_actionZoomOut->setEnabled (false);
+    m_actionShowGrid->setEnabled (false);
 }
 
 
