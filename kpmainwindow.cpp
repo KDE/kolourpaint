@@ -357,6 +357,8 @@ void kpMainWindow::setupActions ()
     setupViewMenuActions ();
     setupImageMenuActions ();
     setupSettingsMenuActions ();
+    setupHelpMenuActions ();
+
     setupTextToolBarActions ();
     setupToolActions ();
 }
@@ -369,6 +371,7 @@ void kpMainWindow::enableDocumentActions (bool enable)
     enableViewMenuDocumentActions (enable);
     enableImageMenuDocumentActions (enable);
     enableSettingsMenuDocumentActions (enable);
+    enableHelpMenuDocumentActions (enable);
 }
 
 

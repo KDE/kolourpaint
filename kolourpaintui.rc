@@ -1,5 +1,11 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui name="kolourpaint" version="19">
+<gui name="kolourpaint" version="20">
+
+<!-- 
+SYNC: Check for duplicate actions in menus caused by some of our actions
+      being added to ui_standards.rc.  Makes me wonder why we are using
+      merging in the first place.
+-->
 
 <MenuBar>
     <Menu name="file">
@@ -75,6 +81,11 @@
         <Action name="settings_show_path" append="show_merge" />
         <Separator append="show_merge" />
     </Menu>
+
+    <Menu name="help">
+        <Action name="help_taking_screenshots" />
+    </Menu>
+ 
 </MenuBar>
 
 <ToolBar name="mainToolBar">

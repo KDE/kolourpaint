@@ -646,6 +646,19 @@ private:
     QString m_textOldFontFamily;
     int m_textOldFontSize;
 
+
+    /*
+     * Help Menu
+     */
+private:
+    void setupHelpMenuActions ();
+    void enableHelpMenuDocumentActions (bool enable = true);
+
+private slots:
+    void slotHelpTakingScreenshots ();
+    void slotHelpTakingScreenshotsFollowLink (const QString &link);
+
+
 private:
     // There is no need to maintain binary compatibility at this stage.
     // The d-pointer is just so that you can experiment without recompiling
@@ -657,6 +670,8 @@ struct kpMainWindowPrivate
 {
     bool m_configThumbnailShowRectangle;
     KToggleAction *m_actionShowThumbnailRectangle;
+
+    KAction *m_actionHelpTakingScreenshots;
 };
 
 
