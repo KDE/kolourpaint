@@ -5,7 +5,8 @@ noinst_LTLIBRARIES = libkolourpainttools.la
 libkolourpainttools_la_SOURCES = kptool.cpp kptoolairspray.cpp \
     kptoolbrush.cpp kptoolclear.cpp \
     kptoolcolorpicker.cpp kptoolcolorwasher.cpp \
-    kptoolconverttograyscale.cpp kptoolcurve.cpp \
+    kptoolconverttograyscale.cpp kptoolconverttoblackandwhite.cpp \
+    kptoolcurve.cpp \
     kptoolellipse.cpp \
     kptoolellipticalselection.cpp kptooleraser.cpp \
     kptoolflip.cpp kptoolfloodfill.cpp \
