@@ -1004,6 +1004,12 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
                << endl;
     kdDebug () << "\tfocusWidget=" << kapp->focusWidget () << endl;
 #endif
+
+    Qt::ButtonState buttonState = e->stateAfter ();
+    m_shiftPressed = (buttonState & Qt::ShiftButton);
+    m_controlPressed = (buttonState & Qt::ControlButton);
+    m_altPressed = (buttonState & Qt::AltButton);
+
     if (m_beganDraw)
     {
         kpView *view = viewUnderStartPoint ();
@@ -1015,22 +1021,17 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 
         m_currentPoint = view->zoomViewToDoc (e->pos ());
 
-        Qt::ButtonState buttonState = e->stateAfter ();
-        m_shiftPressed = (buttonState & Qt::ShiftButton);
-        m_controlPressed = (buttonState & Qt::ControlButton);
-        m_altPressed = (buttonState & Qt::AltButton);
-
     #if DEBUG_KP_TOOL && 0
         kdDebug () << "\tDraw!" << endl;
     #endif
-        
+
         bool dragScrolled = false;
         movedAndAboutToDraw (m_currentPoint, m_lastPoint, view->zoomLevelX (), &dragScrolled);
 
         if (dragScrolled)
         {
             m_currentPoint = currentPoint ();
-            
+
             // Scrollview has scrolled contents and has scheduled an update
             // for the newly exposed region.  If draw() schedules an update
             // as well (instead of immediately updating), the scrollview's
@@ -1039,12 +1040,12 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
             // tempPixmap.
             viewManager ()->setFastUpdates ();
         }
-        
+
         draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
-        
+
         if (dragScrolled)
             viewManager ()->restoreFastUpdates ();
-        
+
         m_lastPoint = m_currentPoint;
     }
     else
@@ -1342,10 +1343,17 @@ void kpTool::focusOutEvent (QFocusEvent *)
 
 void kpTool::enterEvent (QEvent *)
 {
+#if DEBUG_KP_TOOL && 1
+    kdDebug () << "kpTool::enterEvent() beganDraw=" << m_beganDraw << endl;
+#endif
 }
 
 void kpTool::leaveEvent (QEvent *)
 {
+#if DEBUG_KP_TOOL && 1
+    kdDebug () << "kpTool::leaveEvent() beganDraw=" << m_beganDraw << endl;
+#endif
+
     // if we haven't started drawing (e.g. dragging a rectangle)...
     if (!m_beganDraw)
         hover (m_currentPoint = KP_INVALID_POINT);
