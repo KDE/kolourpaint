@@ -2,6 +2,7 @@
 Encoding=UTF-8
 
 Name=KolourPaint
+Name[nb]=KPaint
 Name[pa]=ਕੇ-ਰੰਗ-ਪੇਂਟ
 Name[sv]=Kolourpaint
 Name[ta]=நிற பெயின்ட் 
@@ -45,6 +46,7 @@ GenericName[pt]=Programa de Pintura
 GenericName[pt_BR]=Programa de Pintura
 GenericName[ro]=Program de desenare
 GenericName[ru]=Графический редактор
+GenericName[se]=Málenprográmma
 GenericName[sk]=Kreslenie
 GenericName[sl]=Slikarski program
 GenericName[sr]=Програм за сликање
@@ -69,7 +71,7 @@ Type=Application
 Exec=kolourpaint %u
 DocPath=kolourpaint/index.html
 
-MimeType=image/fax-g3;image/gif;image/jp2;image/jpeg;image/png;image/tiff;image/x-bmp;image/x-dds;image/x-eps;image/x-exr;image/x-ico;image/x-pcx;image/x-portable-bitmap;image/x-portable-greymap;image/x-portable-pixmap;image/x-rgb;image/x-targa;image/x-xbm;image/x-xpm
+MimeType=image/fax-g3;image/gif;image/jp2;image/jpeg;image/png;image/tiff;image/x-bmp;image/x-dds;image/x-eps;image/x-exr;image/x-ico;image/x-pcx;image/x-portable-bitmap;image/x-portable-greymap;image/x-portable-pixmap;image/x-psd;image/x-rgb;image/x-targa;image/x-xbm;image/x-xcf-gimp;image/x-xpm
 
 Categories=Qt;KDE;Graphics;
 Terminal=false
