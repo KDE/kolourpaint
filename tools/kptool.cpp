@@ -587,9 +587,9 @@ QIconSet kpTool::iconSet (int forceSize) const
 #endif
     // (robust in case BarIcon() default arg changes)
     if (forceSize > 0)
-        return BarIcon (name (), forceSize);
+        return BarIconSet (name (), forceSize);
     else
-        return BarIcon (name ());
+        return BarIconSet (name ());
 }
 
 // public
