@@ -69,6 +69,7 @@
 #include <kptoolcolorpicker.h>
 #include <kptoolcolorwasher.h>
 #include <kptoolconverttograyscale.h>
+#include <kptoolcurve.h>
 #include <kptoolinvertcolors.h>
 #include <kptoolpen.h>
 #include <kptoolline.h>
@@ -79,12 +80,14 @@
 #include <kptoolfloodfill.h>
 #include <kptoolfreeformselection.h>
 #include <kptoolpolygon.h>
+#include <kptoolpolyline.h>
 #include <kptoolrectangle.h>
 #include <kptoolrectselection.h>
 #include <kptoolresizescale.h>
 #include <kptoolrotate.h>
 #include <kptoolroundedrectangle.h>
 #include <kptoolskew.h>
+#include <kptooltext.h>
 #include <kptooltoolbar.h>
 #include <kpmainwindow.h>
 #include <kpview.h>
@@ -393,6 +396,9 @@ void kpMainWindow::setupTools ()
     // TODO: insert in a meaningful place - probably wait until the
     //       Curve & Text tools are added
     m_tools [m_numTools++] = new kpToolPolygon (this);
+    m_tools [m_numTools++] = new kpToolPolyline (this);
+    m_tools [m_numTools++] = new kpToolCurve (this);
+    m_tools [m_numTools++] = new kpToolText (this);
 
     m_toolToolBar = new kpToolToolBar (this, 2/*columns/rows*/, "Tool Box");
     connect (m_toolToolBar, SIGNAL (toolSelected (kpTool *)), SLOT (switchToTool (kpTool *)));
