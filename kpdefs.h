@@ -49,12 +49,20 @@
 // Settings
 //
 
-#define kpSettingsGroupGeneral QString::fromLatin1 ("General")
+#define kpSettingsGroupGeneral QString::fromLatin1 ("General Settings")
 #define kpSettingFirstTime QString::fromLatin1 ("First Time")
 #define kpSettingShowGrid QString::fromLatin1 ("Show Grid")
 #define kpSettingShowPath QString::fromLatin1 ("Show Path")
 #define kpSettingDefaultOutputMimetype QString::fromLatin1 ("Default Output Mimetype")
 #define kpSettingColorSimilarity QString::fromLatin1 ("Color Similarity")
+
+#define kpSettingsGroupText QString::fromLatin1 ("Text Settings")
+#define kpSettingFontFamily QString::fromLatin1 ("Font Family")
+#define kpSettingFontSize QString::fromLatin1 ("Font Size")
+#define kpSettingBold QString::fromLatin1 ("Bold")
+#define kpSettingItalic QString::fromLatin1 ("Italic")
+#define kpSettingUnderline QString::fromLatin1 ("Underline")
+#define kpSettingStrikeThru QString::fromLatin1 ("Strike Thru")
 
 
 #endif  // __kp_defs_h__
