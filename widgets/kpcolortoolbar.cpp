@@ -267,6 +267,7 @@ void kpDualColorButton::mouseReleaseEvent (QMouseEvent *e)
 
         update ();
 
+        emit colorsSwapped (m_color [0], m_color [1]);
         emit foregroundColorChanged (m_color [0]);
         emit backgroundColorChanged (m_color [1]);
     }
@@ -883,6 +884,8 @@ kpColorToolBar::kpColorToolBar (kpMainWindow *mainWindow, const char *name)
 
     m_dualColorButton = new kpDualColorButton (mainWindow, base);
     m_dualColorButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+    connect (m_dualColorButton, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
+             this, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)));
     connect (m_dualColorButton, SIGNAL (foregroundColorChanged (const kpColor &)),
              this, SIGNAL (foregroundColorChanged (const kpColor &)));
     connect (m_dualColorButton, SIGNAL (backgroundColorChanged (const kpColor &)),

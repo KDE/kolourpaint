@@ -75,6 +75,11 @@ public slots:
     void setBackgroundColor (const kpColor &color);
 
 signals:
+    // If you connect to this signal, ignore the following
+    // foregroundColorChanged() and backgroundColorChanged() signals
+    void colorsSwapped (const kpColor &newForegroundColor,
+                        const kpColor &newBackgroundColor);
+
     void foregroundColorChanged (const kpColor &color);
     void backgroundColorChanged (const kpColor &color);
 
@@ -252,6 +257,11 @@ public:
     int processedColorSimilarity () const;
 
 signals:
+    // If you connect to this signal, ignore the following
+    // foregroundColorChanged() and backgroundColorChanged() signals
+    void colorsSwapped (const kpColor &newForegroundColor,
+                        const kpColor &newBackgroundColor);
+    
     void foregroundColorChanged (const kpColor &color);
     void backgroundColorChanged (const kpColor &color);
     void colorSimilarityChanged (double similarity, int processedSimilarity);
