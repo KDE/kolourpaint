@@ -33,6 +33,7 @@
 #include <qcolor.h>
 #include <qimage.h>
 #include <qpainter.h>
+#include <qtooltip.h>
 
 #include <kdebug.h>
 
@@ -48,7 +49,8 @@ kpToolWidgetBase::kpToolWidgetBase (QWidget *parent)
     setFixedSize (44, 66);
 }
 
-int kpToolWidgetBase::addOption (const QPixmap &pixmap, bool center, bool doUpdate)
+int kpToolWidgetBase::addOption (const QPixmap &pixmap, const QString &toolTip,
+                                 bool center, bool doUpdate)
 {
     int n = m_pixmaps.count ();
 
@@ -64,6 +66,8 @@ int kpToolWidgetBase::addOption (const QPixmap &pixmap, bool center, bool doUpda
     }
     
     m_pixmapRects.append (QRect (m_x, m_y, pixmap.width (), pixmap.height ()));
+    if (!toolTip.isEmpty ())
+        QToolTip::add (this, m_pixmapRects [n], toolTip);
 
     kdDebug () << "kpToolWidgetBase::addOption(): m_x=" << m_x
                << " m_y=" << m_y

@@ -48,7 +48,8 @@ public:
     kpToolWidgetBase (QWidget *parent);
     virtual ~kpToolWidgetBase ();
 
-    int addOption (const QPixmap &pixmap, bool center = false, bool doUpdate = true);
+    int addOption (const QPixmap &pixmap, const QString &toolTip = QString::null,
+                   bool center = false, bool doUpdate = true);
 
     int selected (void) const;
 

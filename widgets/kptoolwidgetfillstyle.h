@@ -55,9 +55,9 @@ public:
 
 private:
     QPixmap fillStylePixmap (FillStyle fs, int width, int height);
+    QString fillStyleName (FillStyle fs) const;
     
 public:
-
     FillStyle fillStyle () const;
     
     static QBrush brushForFillStyle (FillStyle fs,

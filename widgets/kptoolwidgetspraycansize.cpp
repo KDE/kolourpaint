@@ -36,6 +36,7 @@
 
 #include <kdebug.h>
 #include <kiconloader.h>
+#include <klocale.h>
 
 #include <kptoolwidgetspraycansize.h>
 
@@ -65,7 +66,7 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent)
         painter.end ();
 
         pixmap.setMask (pixmap.createHeuristicMask ());
-        kpToolWidgetBase::addOption (pixmap);
+        kpToolWidgetBase::addOption (pixmap, i18n ("%1x%2").arg (s).arg (s)/*tooltip*/);
     }
 
     kpToolWidgetBase::setSelected (0);

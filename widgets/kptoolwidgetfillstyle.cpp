@@ -34,6 +34,7 @@
 #include <qpainter.h>
 
 #include <kdebug.h>
+#include <klocale.h>
 
 #include <kpdefs.h>
 #include <kptoolwidgetfillstyle.h>
@@ -50,7 +51,7 @@ kpToolWidgetFillStyle::kpToolWidgetFillStyle (QWidget *parent)
         int width = 44 / 2, height = width;
         
         pixmap = fillStylePixmap ((FillStyle) i, width, height);
-        kpToolWidgetBase::addOption (pixmap);
+        kpToolWidgetBase::addOption (pixmap, fillStyleName ((FillStyle) i)/*tooltip*/);
     }
 
     kpToolWidgetBase::setSelected (0);
@@ -81,6 +82,32 @@ QPixmap kpToolWidgetFillStyle::fillStylePixmap (FillStyle fs, int width, int hei
     pixmap.setMask (pixmap.createHeuristicMask ());
     
     return pixmap;
+}
+
+// private
+QString kpToolWidgetFillStyle::fillStyleName (FillStyle fs) const
+{
+    // do not complain about the "useless" breaks
+    // as the return statements might not be return statements one day
+
+    switch (fs)
+    {
+    case NoFill:
+        return i18n ("No Fill");
+        break;
+    case FillWithBackground:
+        return i18n ("Fill with Background Color");
+        break;
+    case FillWithForeground:
+        return i18n ("Fill with Foreground Color");
+        break;
+    case FillWithForeground50Percent:
+        return i18n ("50% Fill with Background Color");
+        break;
+    default:
+        return QString::null;
+        break;
+    }
 }
 
 

@@ -32,6 +32,8 @@
 #include <qbitmap.h>
 #include <qpainter.h>
 
+#include <klocale.h>
+
 #include <kptoolwidgetlinewidth.h>
 
 static int lineWidths [] = {1, 2, 3, 4, 6, 8};
@@ -52,7 +54,7 @@ kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent)
                           pixmap.width () - 6, lineWidths [i]);
         painter.end ();
         pixmap.setMask (pixmap.createHeuristicMask ());
-        kpToolWidgetBase::addOption (pixmap);
+        kpToolWidgetBase::addOption (pixmap, i18n (QString::number (lineWidths [i])));
     }
 
     kpToolWidgetBase::setSelected (0);

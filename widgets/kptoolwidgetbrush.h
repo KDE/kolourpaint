@@ -44,6 +44,10 @@ public:
     kpToolWidgetBrush (QWidget *parent);
     virtual ~kpToolWidgetBrush ();
 
+private:
+    QString brushName (int shape, int whichSize);
+    
+public:
     QPixmap brush () const;
     bool brushIsDiagonalLine () const;
 

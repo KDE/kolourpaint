@@ -33,24 +33,37 @@
 #include <qpainter.h>
 
 #include <kdebug.h>
+#include <klocale.h>
 
 #include <kpdefs.h>
 #include <kptoolwidgetbrush.h>
+
+/* sync: <brushes> */
+static int brushSize [][3] =
+{
+    {9, 5, 1/*like Pen*/},
+    {9, 5, 3},
+    {9, 5, 3},
+    {9, 5, 3}
+};
 
 kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent)
     : kpToolWidgetBase (parent)
 {
     QPixmap *pixmap = m_brushPixmaps;
-    int size [4] = {9, 5, 3, 1};
-
+    
     for (int shape = 0; shape < 4; shape++)
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
             QPainter painter;
-            pixmap->resize (11, 11);
+            pixmap->resize (44 / 3, 11);
+            
+            // HACK until layout of widgetbase is fixed
+            if (i == 2)
+                pixmap->resize (44 - 44 / 3 * 2, 11);
 
-            const int s = size [i] + ((shape > 0 && size [i] == 1) ? 1 : 0);
+            const int s = brushSize [shape][i];
             const QRect rect = QRect ((pixmap->width () - s) / 2,
                                       (pixmap->height () - s) / 2,
                                       s,
@@ -62,6 +75,7 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent)
             painter.begin (pixmap);
             painter.setBrush (Qt::black);
 
+            // sync: <brushes>
             switch (shape)
             {
             case 0:
@@ -70,7 +84,6 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent)
             case 1:
                 painter.drawRect (rect);
                 break;
-            // SYNC with kpToolWidgetBrush::brushIsDiagonalLine()
             case 2:
                 painter.drawLine (rect.topRight (), rect.bottomLeft ());
                 break;
@@ -81,7 +94,7 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent)
             painter.end ();
 
             pixmap->setMask (pixmap->createHeuristicMask ());
-            kpToolWidgetBase::addOption (*pixmap);
+            kpToolWidgetBase::addOption (*pixmap, brushName (shape, i)/*tooltip*/);
 
             pixmap++;
         }
@@ -94,6 +107,42 @@ kpToolWidgetBrush::~kpToolWidgetBrush ()
 {
 }
 
+
+// private
+QString kpToolWidgetBrush::brushName (int shape, int whichSize)
+{
+    int s = brushSize [shape][whichSize];
+    
+    if (s == 1)
+        return i18n ("1x1");
+    
+    QString shapeName;
+
+    // sync: <brushes>
+    switch (shape)
+    {
+    case 0:
+        shapeName = i18n ("Ellipse");
+        break;
+    case 1:
+        shapeName = i18n ("Square");
+        break;
+    case 2:
+        // TODO: is this really the name of a shape? :)
+        shapeName = i18n ("Slash");
+        break;
+    case 3:
+        // TODO: is this really the name of a shape? :)
+        shapeName = i18n ("Backslash");
+        break;
+    }
+    
+    if (shapeName.isEmpty ())
+        return QString::null;
+    
+    return i18n ("%1x%2 %3").arg (s).arg (s).arg (shapeName);
+}
+
 QPixmap kpToolWidgetBrush::brush () const
 {
     return m_brushPixmaps [kpToolWidgetBase::selected ()];
@@ -101,8 +150,8 @@ QPixmap kpToolWidgetBrush::brush () const
 
 bool kpToolWidgetBrush::brushIsDiagonalLine () const
 {
-    // SYNC with kpToolWidgetBrush::kpToolWidgetBrush()
-    return kpToolWidgetBase::selected () >= 2 * 4;
+    // sync: <brushes>
+    return kpToolWidgetBase::selected () >= 2 * 3;
 }
 
 // virtual protected slot

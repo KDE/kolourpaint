@@ -32,6 +32,8 @@
 #include <qbitmap.h>
 #include <qpainter.h>
 
+#include <klocale.h>
+
 #include <kptoolwidgeterasersize.h>
 
 static int eraserSizes [] = {8, 16, 32};
@@ -57,7 +59,7 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent)
         painter.drawRect (0, 0, s, s);
         painter.end ();
         
-        kpToolWidgetBase::addOption (*pixmap, true/*centre*/);
+        kpToolWidgetBase::addOption (*pixmap, i18n ("%1x%2").arg (s).arg (s)/*tooltip*/, true/*centre*/);
         pixmap++;
     }
 
