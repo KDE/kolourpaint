@@ -33,7 +33,6 @@
 #include <qcursor.h>
 #include <qimage.h>
 #include <qpainter.h>
-#include <qpixmap.h>
 #if DEBUG_KP_TOOL_PEN
     #include <qdatetime.h>
 #endif

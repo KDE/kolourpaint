@@ -29,7 +29,9 @@
 #ifndef __kptoolpen_h__
 #define __kptoolpen_h__
 
+#include <qpixmap.h>
 #include <qrect.h>
+
 #include <kcommand.h>
 #include <kptool.h>
 
