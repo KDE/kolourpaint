@@ -179,8 +179,8 @@ bool kpMainWindow::slotOpen ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    QString startDir = m_document ? m_document->url ().directory () : QString::null;
-    KURL url = KFileDialog::getImageOpenURL (startDir, this, i18n ("Open Image"));
+    QString startURL = m_document ? m_document->url ().url () : QString::null;
+    KURL url = KFileDialog::getImageOpenURL (startURL, this, i18n ("Open Image"));
     if (url.isEmpty ())
         return false;
 
@@ -240,10 +240,9 @@ bool kpMainWindow::saveAs (bool localOnly)
 
     KURL url = m_document->url ();
 #if DEBUG_KPMAINWINDOW
-    kdDebug () << "kpMainWindow::saveAs URL=" << url
-               << " dir=" << url.directory () << endl;
+    kdDebug () << "kpMainWindow::saveAs URL=" << url << endl;
 #endif
-    KFileDialog *fd = new KFileDialog (url.directory (),
+    KFileDialog *fd = new KFileDialog (url.url (),
                                        QString::null, this, "fd", true);
     fd->setOperationMode (KFileDialog::Saving);
     if (localOnly)
