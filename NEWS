@@ -2,6 +2,7 @@
 KolourPaint 1.2 Series (KDE_3_3_BRANCH)
 ======================
 
+   * Update image format associations to all formats supported by KDE 3.3
    * Fix remaining untranslatable strings (closing KDE Bug #85785)
    * Update docs (README, NEWS, ...)
 
