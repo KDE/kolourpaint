@@ -82,12 +82,20 @@ void kpColorEffectCommand::execute ()
 
     QApplication::setOverrideCursor (Qt::waitCursor);
 
-    m_oldPixmapPtr = new QPixmap ();
-    *m_oldPixmapPtr = *doc->pixmap (m_actOnSelection);
 
-    QPixmap newPixmap = /*pure virtual*/applyColorEffect (*m_oldPixmapPtr);
+    const QPixmap oldPixmap = *doc->pixmap (m_actOnSelection);
+
+    if (!isInvertible ())
+    {
+        m_oldPixmapPtr = new QPixmap ();
+        *m_oldPixmapPtr = oldPixmap;
+    }
+
+
+    QPixmap newPixmap = /*pure virtual*/applyColorEffect (oldPixmap);
 
     doc->setPixmap (m_actOnSelection, newPixmap);
+
 
     QApplication::restoreOverrideCursor ();
 }
@@ -99,9 +107,27 @@ void kpColorEffectCommand::unexecute ()
     if (!doc)
         return;
 
-    doc->setPixmap (m_actOnSelection, *m_oldPixmapPtr);
+    QApplication::setOverrideCursor (Qt::waitCursor);
+
+
+    QPixmap newPixmap;
+
+    if (!isInvertible ())
+    {
+        newPixmap = *m_oldPixmapPtr;
+    }
+    else
+    {
+        newPixmap = /*pure virtual*/applyColorEffect (*doc->pixmap (m_actOnSelection));
+    }
+
+    doc->setPixmap (m_actOnSelection, newPixmap);
+
 
     delete m_oldPixmapPtr; m_oldPixmapPtr = 0;
+
+
+    QApplication::restoreOverrideCursor ();
 }
 
 
@@ -119,15 +145,24 @@ kpColorEffectWidget::~kpColorEffectWidget ()
 }
 
 
+// public
+QString kpColorEffectWidget::caption () const
+{
+    return QString::null;
+}
+
+
 // protected
 int kpColorEffectWidget::marginHint () const
 {
     return 0;
 }
 
+// protected
 int kpColorEffectWidget::spacingHint () const
 {
     return KDialog::spacingHint ();
 }
+
 
 #include <kpcoloreffect.moc>

@@ -55,6 +55,11 @@ public:
     virtual void execute ();
     virtual void unexecute ();
 
+public:
+    // Return true if applyColorEffect(applyColorEffect(pixmap)) == pixmap
+    // to avoid storing the old pixmap, saving memory.
+    virtual bool isInvertible () const { return false; }
+
 protected:
     virtual QPixmap applyColorEffect (const QPixmap &pixmap) = 0;
 
@@ -80,6 +85,8 @@ signals:
     void settingsChanged ();
 
 public:
+    virtual QString caption () const;
+
     virtual bool isNoOp () const = 0;
     virtual QPixmap applyColorEffect (const QPixmap &pixmap) = 0;
 
