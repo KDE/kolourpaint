@@ -25,7 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_EFFECT_REDUCE_COLORS 1
+#define DEBUG_KP_EFFECT_REDUCE_COLORS 0
 
 
 #include <kpeffectreducecolors.h>
@@ -73,12 +73,13 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
 #endif
 
 
-    // Hack around Qt's braindead QImage::convertDepth(1, ...) which produces
-    // pathetic results (black & white with random dithering) with an image
-    // that only has 2 colours (we preserve the 2 colours and avoid dithering
-    // completely).  One use case is resaving a "colour monochrome" image
-    // (<= 2 colours but not necessarily black & white).
-    if (depth == 1)
+    // Hack around Qt's braindead QImage::convertDepth(1, ...) (with
+    // dithering off) which produces pathetic results with an image that
+    // only has 2 colours - sometimes it just gives a completely black
+    // result.  Instead, we simply preserve the 2 colours.  One use case
+    // is resaving a "colour monochrome" image (<= 2 colours but not
+    // necessarily black & white).
+    if (depth == 1 && !dither)
     {
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
         kdDebug () << "\tinvoking convert-to-depth 1 hack" << endl;
