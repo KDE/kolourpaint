@@ -860,62 +860,6 @@ void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, int destX, int destY,
 //
 
 // public static
-void kpPixmapFX::invertColors (QPixmap *destPixmapPtr)
-{
-    QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
-    kpPixmapFX::invertColors (&image);
-    *destPixmapPtr = kpPixmapFX::convertToPixmap (image);
-}
-
-// public static
-QPixmap kpPixmapFX::invertColors (const QPixmap &pm)
-{
-    QImage image = kpPixmapFX::convertToImage (pm);
-    kpPixmapFX::invertColors (&image);
-    return kpPixmapFX::convertToPixmap (image);
-}
-
-// public static
-void kpPixmapFX::invertColors (QImage *destImagePtr)
-{
-    if (destImagePtr->depth () > 8)
-    {
-    #if 0
-        // SYNC: TODO: Qt BUG - invertAlpha argument is inverted!!!
-        destImagePtr->invertPixels (true/*no invert alpha (Qt 3.2)*/);
-    #else
-        // Above version works for Qt 3.2 at least.
-        // But this version will always work (slower, though):
-        for (int y = 0; y < destImagePtr->height (); y++)
-        {
-            for (int x = 0; x < destImagePtr->width (); x++)
-            {
-                // flip RGB bits but not Alpha
-                destImagePtr->setPixel (x, y, destImagePtr->pixel (x, y) ^ 0x00FFFFFF);
-            }
-        }
-    #endif
-    }
-    else
-    {
-        for (int i = 0; i < destImagePtr->numColors (); i++)
-        {
-            // flip RGB bits but not Alpha
-            destImagePtr->setColor (i, destImagePtr->color (i) ^ 0x00FFFFFF);
-        }
-    }
-}
-
-// public static
-QImage kpPixmapFX::invertColors (const QImage &img)
-{
-    QImage retImage = img;
-    kpPixmapFX::invertColors (&retImage);
-    return retImage;
-}
-
-
-// public static
 void kpPixmapFX::convertToGrayscale (QPixmap *destPixmapPtr)
 {
     QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
@@ -972,72 +916,6 @@ QImage kpPixmapFX::convertToGrayscale (const QImage &img)
     QImage retImage = img;
     kpPixmapFX::convertToGrayscale (&retImage);
     return retImage;
-}
-
-
-// public static
-void kpPixmapFX::convertToBlackAndWhite (QPixmap *destPixmapPtr)
-{
-    QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
-    if (!image.isNull ())
-    {
-    #if DEBUG_KP_PIXMAP_FX && 0
-        for (int y = 0; y < image.width (); y++)
-        {
-            for (int x = 0; x < image.width (); x++)
-            {
-                fprintf (stderr, " %08X", image.pixel (x, y));
-            }
-            fprintf (stderr, "\n");
-        }
-    #endif
-
-    #if 1  // dither version
-        image = image.convertDepth (1/*monochrome*/);
-    #else  // below no dither version looks like true B&W but not close to orig
-        image = image.convertDepth (1/*monochrome*/,
-                                    Qt::MonoOnly |
-                                    Qt::ThresholdDither/*no dither*/ |
-                                    Qt::ThresholdAlphaDither/*no dither alpha*/ |
-                                    Qt::AvoidDither);
-    #endif
-
-    #if DEBUG_KP_PIXMAP_FX && 0
-        kdDebug () << "After conversion to B&W:" << endl;
-        for (int y = 0; y < image.width (); y++)
-        {
-            for (int x = 0; x < image.width (); x++)
-            {
-                fprintf (stderr, " %08X", image.pixel (x, y));
-            }
-            fprintf (stderr, "\n");
-        }
-    #endif
-
-        if (!image.isNull ())
-        {
-            QPixmap pixmap = kpPixmapFX::convertToPixmap (image, true/*dither*/);
-
-            // HACK: The above "image.convertDepth (1)" erases the Alpha Channel
-            //       even if Qt::ColorOnly is specified in the conversion flags.
-            //       qpixmap.html says "alpha masks on monochrome images are ignored."
-            //
-            //       Put the mask back.
-            //
-            if (destPixmapPtr->mask ())
-                pixmap.setMask (*destPixmapPtr->mask ());
-
-            *destPixmapPtr = pixmap;
-        }
-    }
-}
-
-// public static
-QPixmap kpPixmapFX::convertToBlackAndWhite (const QPixmap &pm)
-{
-    QPixmap ret = pm;
-    kpPixmapFX::convertToBlackAndWhite (&ret);
-    return ret;
 }
 
 

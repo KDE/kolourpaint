@@ -42,7 +42,7 @@
 #include <kdebug.h>
 
 #include <kpdefs.h>
-#include <kppixmapfx.h>
+#include <kpeffectinvert.h>
 
 
 kpToolWidgetBase::kpToolWidgetBase (QWidget *parent, const char *name)
@@ -582,7 +582,7 @@ void kpToolWidgetBase::drawContents (QPainter *painter)
                 painter->fillRect (rect, Qt::blue/*selection color*/);
 
                 if (m_invertSelectedPixmap)
-                    kpPixmapFX::invertColors (&pixmap);
+                    kpEffectInvertCommand::apply (&pixmap);
             }
 
         #if DEBUG_KP_TOOL_WIDGET_BASE && 1

@@ -44,16 +44,16 @@
 #include <kpcolortoolbar.h>
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
+#include <kpeffectinvert.h>
+#include <kpeffectreducecolors.h>
 #include <kpeffectsdialog.h>
 #include <kpselection.h>
 #include <kptool.h>
 #include <kptoolautocrop.h>
 #include <kptoolclear.h>
 #include <kptoolconverttograyscale.h>
-#include <kptoolconverttoblackandwhite.h>
 #include <kptoolcrop.h>
 #include <kptoolflip.h>
-#include <kptoolinvertcolors.h>
 #include <kptoolresizescale.h>
 #include <kptoolrotate.h>
 #include <kptoolselection.h>
@@ -108,7 +108,7 @@ void kpMainWindow::setupImageMenuActions ()
     m_actionSkew = new KAction (i18n ("S&kew..."), Qt::CTRL + Qt::Key_K,
         this, SLOT (slotSkew ()), ac, "image_skew");
 
-    m_actionConvertToBlackAndWhite = new KAction (i18n ("Convert to &Black && White"), 0,
+    m_actionConvertToBlackAndWhite = new KAction (i18n ("Convert to &Black && White (Dithered)"), 0,
         this, SLOT (slotConvertToBlackAndWhite ()), ac, "image_convert_to_black_and_white");
 
     m_actionConvertToGrayscale = new KAction (i18n ("Convert to &Grayscale"), 0,
@@ -398,7 +398,8 @@ void kpMainWindow::slotConvertToBlackAndWhite ()
         tool ()->endShapeInternal ();
 
     addImageOrSelectionCommand (
-        new kpToolConvertToBlackAndWhiteCommand (m_document->selection (), this));
+        new kpEffectReduceColorsCommand (1/*depth*/, true/*dither*/,
+                                         m_document->selection (), this));
 }
 
 // private slot
@@ -418,7 +419,7 @@ void kpMainWindow::slotInvertColors ()
         tool ()->endShapeInternal ();
 
     addImageOrSelectionCommand (
-        new kpToolInvertColorsCommand (m_document->selection (), this));
+        new kpEffectInvertCommand (m_document->selection (), this));
 }
 
 // private slot

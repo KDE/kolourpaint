@@ -9,13 +9,13 @@ libkolourpainttools_la_SOURCES = kptool.cpp \
     kptoolautocrop.cpp \
     kptoolbrush.cpp kptoolclear.cpp \
     kptoolcolorpicker.cpp kptoolcolorwasher.cpp \
-    kptoolconverttograyscale.cpp kptoolconverttoblackandwhite.cpp \
+    kptoolconverttograyscale.cpp \
     kptoolcrop.cpp \
     kptoolcurve.cpp \
     kptoolellipse.cpp \
     kptoolellipticalselection.cpp kptooleraser.cpp \
     kptoolflip.cpp kptoolfloodfill.cpp \
-    kptoolfreeformselection.cpp kptoolinvertcolors.cpp \
+    kptoolfreeformselection.cpp \
     kptoolline.cpp kptoolpen.cpp \
     kptoolpolygon.cpp kptoolpolyline.cpp \
     kptoolpreviewdialog.cpp \

@@ -277,33 +277,12 @@ public:
 
 
     //
-    // Inverts the colours of each pixel in the given image.
-    // These functions differ from QImage::invertPixels() in the following ways:
-    //
-    // 1. for 8-bit images, it inverts the colours of the Colour Table
-    //    (this means that you would get visually similar results to inversion
-    //     at higher bit depths - rather than a "random-looking" inversion
-    //     depending on the contents of the Colour Table)
-    // 2. never inverts the Alpha Buffer
-    //
-    static void invertColors (QPixmap *destPixmapPtr);
-    static QPixmap invertColors (const QPixmap &pm);
-    static void invertColors (QImage *destImagePtr);
-    static QImage invertColors (const QImage &img);
-
-    //
     // Converts the image to grayscale.
     //
     static void convertToGrayscale (QPixmap *destPixmapPtr);
     static QPixmap convertToGrayscale (const QPixmap &pm);
     static void convertToGrayscale (QImage *destImagePtr);
     static QImage convertToGrayscale (const QImage &img);
-
-    //
-    // Converts the image to monochrome.
-    //
-    static void convertToBlackAndWhite (QPixmap *destPixmapPtr);
-    static QPixmap convertToBlackAndWhite (const QPixmap &pm);
 
     //
     // Fills an image in the given color.

@@ -61,7 +61,8 @@ Luxi Sans 14 draw in green with trans background versus white background (see qu
 16. check kpcommandhistory all sizes are correct
 17. delayed kpcommand popupmenu creation
 18. text tool could autoresize if font size changes or paste text
-
+mosfet's image effects don't respect alpha - hack around it
+verify gamma, check contrast,brightness,gamma order
 
 KolourPaint 1.4
 ===============

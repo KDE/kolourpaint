@@ -40,8 +40,12 @@
 #include <klocale.h>
 
 #include <kpdocument.h>
-#include <kpeffectcontrast.h>
-#include <kpeffectswirl.h>
+#include <kpeffectbalance.h>
+#include <kpeffectblursharpen.h>
+#include <kpeffectemboss.h>
+#include <kpeffectflatten.h>
+#include <kpeffectinvert.h>
+#include <kpeffectreducecolors.h>
 #include <kppixmapfx.h>
 
 
@@ -74,14 +78,19 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 
 
     QHBox *effectContainer = new QHBox (mainWidget ());
-    effectContainer->setSpacing (spacingHint ());
+    effectContainer->setSpacing (spacingHint () * 4
+                                 /*need more space for QGroupBox titles*/);
     effectContainer->setMargin (0);
 
     QLabel *label = new QLabel (i18n ("&Effect:"), effectContainer);
 
     m_effectsComboBox = new KComboBox (effectContainer);
-    m_effectsComboBox->insertItem (i18n ("Contrast"));
-    m_effectsComboBox->insertItem (i18n ("Swirl"));
+    m_effectsComboBox->insertItem (i18n ("Balance"));
+    m_effectsComboBox->insertItem (i18n ("Emboss"));
+    m_effectsComboBox->insertItem (i18n ("Flatten"));
+    m_effectsComboBox->insertItem (i18n ("Invert"));
+    m_effectsComboBox->insertItem (i18n ("Reduce Colors"));
+    m_effectsComboBox->insertItem (i18n ("Soften & Sharpen"));
 
     label->setBuddy (m_effectsComboBox);
     effectContainer->setStretchFactor (m_effectsComboBox, 1);
@@ -89,7 +98,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     addCustomWidgetToFront (effectContainer);
 
 
-    m_settingsGroupBox = new QGroupBox (i18n ("&Settings"), mainWidget ());
+    m_settingsGroupBox = new QGroupBox (mainWidget ());
     m_settingsLayout = new QVBoxLayout (m_settingsGroupBox,
                                         marginHint () * 2,
                                         spacingHint ());
@@ -105,7 +114,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     // TODO: actually work
     setMinimumSize (500, 480);
 
-    resize (500, 480);
+    resize (640, 620);
 
 
 #if DEBUG_KP_EFFECTS_DIALOG
@@ -175,20 +184,39 @@ void kpEffectsDialog::slotEffectSelected (int which)
     m_colorEffectWidget = 0;
 
 
+    m_settingsGroupBox->setCaption (QString::null);
+
+#define CREATE_EFFECT_WIDGET(name)                        \
+    m_colorEffectWidget = new name (m_actOnSelection,     \
+                                    m_mainWindow,         \
+                                    m_settingsGroupBox)
     switch (which)
     {
     case 0:
-        m_colorEffectWidget = new kpEffectContrastWidget (m_actOnSelection,
-                                                          m_mainWindow,
-                                                          m_settingsGroupBox);
+        CREATE_EFFECT_WIDGET (kpEffectBalanceWidget);
         break;
 
     case 1:
-        m_colorEffectWidget = new kpEffectSwirlWidget (m_actOnSelection,
-                                                       m_mainWindow,
-                                                       m_settingsGroupBox);
+        CREATE_EFFECT_WIDGET (kpEffectEmbossWidget);
+        break;
+
+    case 2:
+        CREATE_EFFECT_WIDGET (kpEffectFlattenWidget);
+        break;
+
+    case 3:
+        CREATE_EFFECT_WIDGET (kpEffectInvertWidget);
+        break;
+
+    case 4:
+        CREATE_EFFECT_WIDGET (kpEffectReduceColorsWidget);
+        break;
+
+    case 5:
+        CREATE_EFFECT_WIDGET (kpEffectBlurSharpenWidget);
         break;
     }
+#undef CREATE_EFFECT_WIDGET
 
 
     if (m_colorEffectWidget)
@@ -196,8 +224,19 @@ void kpEffectsDialog::slotEffectSelected (int which)
     #if DEBUG_KP_EFFECTS_DIALOG
         kdDebug () << "\twidget exists for effect #" << endl;
     #endif
+        m_settingsGroupBox->setTitle (m_colorEffectWidget->caption ());
+
+
+        QSize previewGroupBoxMinSize = m_previewGroupBox->minimumSize ();
+        QSize previewGroupBoxMaxSize = m_previewGroupBox->maximumSize ();
+        // TODO: actually work
+        m_previewGroupBox->setFixedSize (m_previewGroupBox->size ());
+
         m_settingsLayout->addWidget (m_colorEffectWidget);
         m_colorEffectWidget->show ();
+
+        m_previewGroupBox->setMinimumSize (previewGroupBoxMinSize);
+        m_previewGroupBox->setMaximumSize (previewGroupBoxMaxSize);
 
 
         connect (m_colorEffectWidget, SIGNAL (settingsChanged ()),
