@@ -1271,6 +1271,17 @@ void kpTool::keyUpdateModifierState (QKeyEvent *e)
 }
 
 
+void kpTool::notifyModifierStateChanged ()
+{
+    if (careAboutModifierState ())
+    {
+        if (m_beganDraw)
+            draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+        else
+            hover (currentPoint ());
+    }
+}
+
 void kpTool::setShiftPressed (bool pressed)
 {
     if (pressed == m_shiftPressed)
@@ -1278,8 +1289,7 @@ void kpTool::setShiftPressed (bool pressed)
 
     m_shiftPressed = pressed;
 
-    if (m_beganDraw && careAboutModifierState ())
-        draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+    notifyModifierStateChanged ();
 }
 
 void kpTool::setControlPressed (bool pressed)
@@ -1289,8 +1299,7 @@ void kpTool::setControlPressed (bool pressed)
 
     m_controlPressed = pressed;
 
-    if (m_beganDraw && careAboutModifierState ())
-        draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+    notifyModifierStateChanged ();
 }
 
 void kpTool::setAltPressed (bool pressed)
@@ -1300,8 +1309,7 @@ void kpTool::setAltPressed (bool pressed)
 
     m_altPressed = pressed;
 
-    if (m_beganDraw && careAboutModifierState ())
-        draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+    notifyModifierStateChanged ();
 }
 
 void kpTool::focusInEvent (QFocusEvent *)

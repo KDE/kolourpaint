@@ -304,6 +304,7 @@ protected:
     virtual void keyReleaseEvent (QKeyEvent *e);
 private:
     void keyUpdateModifierState (QKeyEvent *e);
+    void notifyModifierStateChanged ();
 protected:
     virtual void setShiftPressed (bool pressed);
     virtual void setControlPressed (bool pressed);
