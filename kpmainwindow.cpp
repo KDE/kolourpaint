@@ -78,6 +78,7 @@
 #include <kptoolflip.h>
 #include <kptoolfloodfill.h>
 #include <kptoolfreeformselection.h>
+#include <kptoolpolygon.h>
 #include <kptoolrectangle.h>
 #include <kptoolrectselection.h>
 #include <kptoolresizescale.h>
@@ -388,6 +389,10 @@ void kpMainWindow::setupTools ()
     
     m_tools [m_numTools++] = new kpToolEllipse (this);
     m_tools [m_numTools++] = new kpToolFloodFill (this);
+
+    // TODO: insert in a meaningful place - probably wait until the
+    //       Curve & Text tools are added
+    m_tools [m_numTools++] = new kpToolPolygon (this);
 
     m_toolToolBar = new kpToolToolBar (this, 2/*columns/rows*/, "Tool Box");
     connect (m_toolToolBar, SIGNAL (toolSelected (kpTool *)), SLOT (switchToTool (kpTool *)));
