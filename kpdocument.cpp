@@ -55,14 +55,6 @@
 #define DEBUG_KPDOCUMENT 1
 
 
-/*kpDocument::kpDocument ()
-    : m_oldWidth (-1), m_oldHeight (-1),
-      m_colorDepth (-1), m_oldColorDepth (-1),
-      m_modified (false)
-{
-    m_pixmap = new QPixmap ();
-}
-*/
 kpDocument::kpDocument (int w, int h, int colorDepth, kpMainWindow *mainWindow)
     : m_oldWidth (-1), m_oldHeight (-1),
       m_colorDepth (colorDepth), m_oldColorDepth (-1),
