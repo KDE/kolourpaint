@@ -208,11 +208,17 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
                << endl;
 #endif
 
+    // Note that everything is disabled for a 1-bit screen since there
+    // would be no effect.  I won't support 2-bit or 4-bit screens either :)
     m_blackAndWhiteRadioButton->setEnabled (screenDepth >= 8);
     m_blackAndWhiteDitheredRadioButton->setEnabled (screenDepth >= 8);
     m_8BitRadioButton->setEnabled (screenDepth >= 8);
+    // (not enabled if screenDepth==8 as m_8BitRadioButton already serves
+    //  as NOP default)
     m_8BitDitheredRadioButton->setEnabled (screenDepth > 8);
-    m_24BitRadioButton->setEnabled (screenDepth >= 24);
+    // (not "screenDepth >= 24" as we need a NOP default for 15/16-bit
+    //  screens)
+    m_24BitRadioButton->setEnabled (screenDepth > 8);
 
 
     m_defaultRadioButton = 0;
