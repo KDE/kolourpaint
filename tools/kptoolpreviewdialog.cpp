@@ -235,9 +235,9 @@ void kpToolPreviewDialog::updateDimensions ()
 }
 
 
-// private
+// public static
 double kpToolPreviewDialog::aspectScale (int newWidth, int newHeight,
-                                         int oldWidth, int oldHeight) const
+                                         int oldWidth, int oldHeight)
 {
     double widthScale = double (newWidth) / double (oldWidth);
     double heightScale = double (newHeight) / double (oldHeight);
@@ -246,8 +246,8 @@ double kpToolPreviewDialog::aspectScale (int newWidth, int newHeight,
     return QMIN (widthScale, heightScale);
 }
 
-// private
-int kpToolPreviewDialog::scaleDimension (int dimension, double scale, int min, int max) const
+// public static
+int kpToolPreviewDialog::scaleDimension (int dimension, double scale, int min, int max)
 {
     return QMAX (min,
                  QMIN (max,

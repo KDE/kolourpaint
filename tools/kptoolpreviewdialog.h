@@ -89,9 +89,12 @@ protected:
 private:
     void updateDimensions ();
 
-    double aspectScale (int newWidth, int newHeight,
-                        int oldWidth, int oldHeight) const;
-    int scaleDimension (int dimension, double scale, int min, int max) const;
+public:
+    static double aspectScale (int newWidth, int newHeight,
+                               int oldWidth, int oldHeight);
+    static int scaleDimension (int dimension, double scale, int min, int max);
+
+private:
     void updateShrukenDocumentPixmap ();
 
 protected slots:
