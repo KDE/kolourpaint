@@ -1,0 +1,141 @@
+At 100% zoom: kpMainWindow::drawTransparentBackground() accounts for
+about 75% of kpView::paintEvent()'s time.  Bottleneck is
+QPainter::fillRect().  QPainter::drawPixmap() seems much faster.  For
+800x600, renderer goes from 10ms to 1ms.
+
+--- kpmainwindow.cpp	2004-08-05 02:10:38.000000000 +1000
++++ kpmainwindow.cpp	2004-09-29 11:24:45.000000000 +1000
+@@ -838,12 +838,116 @@
+ }
+ 
+ 
++#if 1
++// (indexed by [isPreview][parity])
++static QPixmap *checkerBoardCache [2][2] = {{0, 0}, {0, 0}};
++
++
++static int checkerBoardCellSize (bool isPreview)
++{
++    return !isPreview ? 16 : 10;
++}
++
++
++// public
++static QPixmap *createCheckerBoardCache (bool isPreview, bool parity)
++{
++    int cellSize = checkerBoardCellSize (isPreview);
++    const int rep = 2;  // must be multiple of 2
++
++    QPixmap *newPixmap = new QPixmap (cellSize * rep, cellSize * rep);
++    QPainter painter (newPixmap);
++
++    int parityAsInt = parity ? 1 : 0;
++    for (int y = 0; y < rep; y++)
++    {
++        for (int x = 0; x < rep; x++)
++        {
++            QColor col;
++
++            if ((parityAsInt + x + y) % 2)
++            {
++                if (!isPreview)
++                    col = QColor (213, 213, 213);
++                else
++                    col = QColor (224, 224, 224);
++            }
++            else
++                col = Qt::white;
++
++            painter.fillRect (x * cellSize, y * cellSize,
++                              cellSize, cellSize,
++                              col);
++        }
++    }
++
++    painter.end ();
++    return newPixmap;
++}
++
++void kpMainWindow::drawTransparentBackground (QPainter *painter,
++                                              int /*viewWidth*/, int /*viewHeight*/,
++                                              const QRect &rect,
++                                              bool isPreview)
++{
++#if DEBUG_KP_MAIN_WINDOW && 1 || 1
++    kdDebug () << "\tkpMainWindow::drawTransparentBackground(rect="
++               << rect << ")" << endl;
++    QTime totalTimer; totalTimer.start ();
++#endif
++
++    int cellSize = checkerBoardCellSize (isPreview);
++
++
++    int starty = rect.y ();
++    if (starty % cellSize)
++        starty -= (starty % cellSize);
++
++    int startx = rect.x ();
++    if (startx % cellSize)
++        startx -= (startx % cellSize);
++
++
++    int parity = ((startx / cellSize + starty / cellSize) % 2) ? 1 : 0;
++
++    if (!checkerBoardCache [isPreview][parity])
++    {
++        checkerBoardCache [isPreview][parity] = createCheckerBoardCache (isPreview, parity);
++    }
++
++    QPixmap *tilePixmap = checkerBoardCache [isPreview][parity];
++    for (int y = starty; y <= rect.bottom (); y += tilePixmap->height ())
++    {
++        for (int x = startx; x <= rect.right (); x += tilePixmap->width ())
++        {
++            painter->drawPixmap (x - rect.x (), y - rect.y (), *tilePixmap);
++        }
++    }
++
++#if DEBUG_KP_MAIN_WINDOW && 1 || 1
++{
++    const int totalTimerElapsed = totalTimer.elapsed ();
++    kdDebug () << "\t\ttotal=" << totalTimerElapsed << endl;
++}
++#endif
++}
++
++
++#else
++
+ // public
+ void kpMainWindow::drawTransparentBackground (QPainter *painter,
+                                               int /*viewWidth*/, int /*viewHeight*/,
+                                               const QRect &rect,
+                                               bool isPreview)
+ {
++#if DEBUG_KP_MAIN_WINDOW && 1
++    kdDebug () << "\tkpMainWindow::drawTransparentBackground(rect="
++               << rect << ")" << endl;
++    QTime totalTimer; totalTimer.start ();
++#endif
++
++
+     const int cellSize = !isPreview ? 16 : 10;
+ 
+     int starty = rect.y ();
+@@ -877,8 +982,15 @@
+         }
+     }
+     painter->restore ();
+-}
+ 
++#if DEBUG_KP_MAIN_WINDOW && 1 || 1
++{
++    const int totalTimerElapsed = totalTimer.elapsed ();
++    kdDebug () << "\t\ttotal=" << totalTimerElapsed << endl;
++}
++#endif
++}
++#endif
+ 
+ // private slot
+ void kpMainWindow::slotUpdateCaption ()
