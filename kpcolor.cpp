@@ -29,6 +29,8 @@
 #define DEBUG_KP_COLOR 0
 
 
+#include <qdatastream.h>
+
 #include <kdebug.h>
 
 #include <kpcolor.h>
