@@ -31,6 +31,7 @@
 
 #include <klocale.h>
 
+#include <kptool.h>
 #include <kptoolwidgeterasersize.h>
 
 static int eraserSizes [] = {5, 9, 17, 29};
@@ -90,9 +91,23 @@ QPixmap kpToolWidgetEraserSize::cursorPixmap (const QColor &color) const
     
     QPainter painter (&pixmap);
     painter.setPen (Qt::black);
-    painter.setBrush (color);
+    if (kpTool::isColorOpaque (color))
+        painter.setBrush (color);
     painter.drawRect (0, 0, pixmap.width (), pixmap.height ());
     painter.end ();
+
+    if (kpTool::isColorTransparent (color))
+    {
+        QBitmap maskBitmap (pixmap.width (), pixmap.height ());
+        maskBitmap.fill (Qt::color1/*opaque*/);
+        
+        QPainter maskBitmapPainter (&maskBitmap);
+        maskBitmapPainter.fillRect (1, 1, pixmap.width () - 2, pixmap.height () - 2,
+                                    Qt::color0/*transparent*/);
+        maskBitmapPainter.end ();
+
+        pixmap.setMask (maskBitmap);
+    }
 
     return pixmap;
 }
