@@ -36,12 +36,15 @@
 #include <kurl.h>
 
 
+class QIODevice;
 class QPixmap;
 class QPoint;
 class QRect;
 class QSize;
 
 class kpColor;
+class kpDocumentSaveOptions;
+class kpDocumentMetaInfo;
 class kpMainWindow;
 class kpSelection;
 
@@ -51,7 +54,7 @@ class kpDocument : public QObject
 Q_OBJECT
 
 public:
-    kpDocument (int w, int h, int colorDepth, kpMainWindow *mainWindow);
+    kpDocument (int w, int h, kpMainWindow *mainWindow);
     ~kpDocument ();
 
     kpMainWindow *mainWindow () const;
@@ -64,17 +67,35 @@ public:
 
     static QPixmap getPixmapFromFile (const KURL &url, bool suppressDoesntExistDialog,
                                       QWidget *parent,
-                                      QString *mimeType = 0);
+                                      kpDocumentSaveOptions *saveOptions = 0,
+                                      kpDocumentMetaInfo *metaInfo = 0);
     // TODO: fix: open*() should only be called once.
     //            Create a new kpDocument() if you want to open again.
     void openNew (const KURL &url);
     bool open (const KURL &url, bool newDocSameNameIfNotExist = false);
 
+    static bool lossyPromptContinue (const QPixmap &pixmap,
+                                     const kpDocumentSaveOptions &saveOptions,
+                                     QWidget *parent);
+    static bool savePixmapToDevice (const QPixmap &pixmap,
+                                    QIODevice *device,
+                                    const kpDocumentSaveOptions &saveOptions,
+                                    const kpDocumentMetaInfo &metaInfo,
+                                    bool lossyPrompt,
+                                    QWidget *parent,
+                                    bool *userCancelled = 0);
     static bool savePixmapToFile (const QPixmap &pixmap,
-                                  const KURL &url, const QString &mimeType,
-                                  bool overwritePrompt, QWidget *parent);
+                                  const KURL &url,
+                                  const kpDocumentSaveOptions &saveOptions,
+                                  const kpDocumentMetaInfo &metaInfo,
+                                  bool overwritePrompt,
+                                  bool lossyPrompt,
+                                  QWidget *parent);
     bool save ();
-    bool saveAs (const KURL &url, const QString &mimetype, bool overwritePrompt = true);
+    bool saveAs (const KURL &url,
+                 const kpDocumentSaveOptions &saveOptions,
+                 bool overwritePrompt = true,
+                 bool lossyPrompt = true);
 
     KURL url () const;
     void setURL (const KURL &url, bool isFromURL);
@@ -98,8 +119,13 @@ public:
     static QString prettyFilenameForURL (const KURL &url);
     QString prettyFilename () const;
 
-    QString mimetype () const;
-    int quality () const;
+    // (guaranteed to return valid pointer)
+
+    const kpDocumentSaveOptions *saveOptions () const;
+    void setSaveOptions (const kpDocumentSaveOptions &saveOptions);
+
+    const kpDocumentMetaInfo *metaInfo () const;
+    void setMetaInfo (const kpDocumentMetaInfo &metaInfo);
 
 
     /*
@@ -121,10 +147,6 @@ public:
     void setHeight (int h, const kpColor &backgroundColor);
 
     QRect rect (bool ofSelection = false) const;
-
-    int colorDepth () const;
-    int oldColorDepth () const;  // only valid in a slot connected to colorDepthChanged()
-    bool setColorDepth (int depth);
 
 
     /*
@@ -190,7 +212,6 @@ signals:
     void contentsChanged (const QRect &rect);
     void sizeChanged (int newWidth, int newHeight);  // see oldWidth(), oldHeight()
     void sizeChanged (const QSize &newSize);
-    void colorDepthChanged (int newDepth);  // see oldColorDepth()
 
     void selectionEnabled (bool on);
 
@@ -198,16 +219,21 @@ signals:
     void selectionIsTextChanged (bool isText);
 
 private:
-    QPixmap *m_pixmap;
-    kpSelection *m_selection;
-    int m_oldWidth, m_oldHeight;
-    int m_colorDepth, m_oldColorDepth;
+    int m_constructorWidth, m_constructorHeight;
     kpMainWindow *m_mainWindow;
+    QPixmap *m_pixmap;
+
     KURL m_url;
     bool m_isFromURL;
-    QString m_mimetype;
-    int m_quality;
+
+    kpDocumentSaveOptions *m_saveOptions;
+    kpDocumentMetaInfo *m_metaInfo;
+
     bool m_modified;
+
+    kpSelection *m_selection;
+
+    int m_oldWidth, m_oldHeight;
 
     // There is no need to maintain binary compatibility at this stage.
     // The d-pointer is just so that you can experiment without recompiling

@@ -5,31 +5,8 @@ Before each release of KolourPaint and/or KDE, grep sources for
 Look in BUGS, patches/, grep sources for "OPT" & "TODO" and look here:
 
 
-KolourPaint 1.2 (7 days)
-========================
-
-Image/Convert Colour Depth (only be able to dither to colour depths lower
-than the current display - limitation of X).  Hmmm, I could understand
-going down to mono (image effect) but why would you want to e.g. convert
-to 8 bit - if you save in an 8-bit format after that, you'll lose colour
-info twice.  Allow saving at different colour depths (else saving a mono BMP
-saves it as full colour 32x bigger).
-warn about lossy saves (e.g. JPEG)
-
-Image/ Contrast, Brightness, ... more image effects, greyscale masks (Bela-Andreas Bargel)
-
-m0ns00n@gmx.net:
-- configurable palette size (up to 256 colours)  + <stephen.sweeney@lehman.com>
-- generate gradient between 2 colours in palette
-
-kpcolortoolbar - open/save palette
-
-
------
-
-warn when about to exceed KP_BIG_IMAGE_WIDTH or KP_BIG_IMAGE_HEIGHT
-
-
+KolourPaint 1.2 (3-10 days)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 use of QPoint () or QPoint (-1, -1) as a sentinel is worrying since it's a
 legal point when dragging out a rectangle
@@ -61,15 +38,24 @@ Luxi Sans 14 draw in green with trans background versus white background (see qu
 16. check kpcommandhistory all sizes are correct
 17. delayed kpcommand popupmenu creation
 18. text tool could autoresize if font size changes or paste text
+19. setPixel doesn't work for 8bit
+20. setup.bmp monochrome open and save loses a lot of info
 mosfet's image effects don't respect alpha - hack around it
 verify gamma, check contrast,brightness,gamma order
 
+
 KolourPaint 1.4
-===============
+~~~~~~~~~~~~~~~
 
 componentisation
 
 DCOP scriptable
+
+m0ns00n@gmx.net:
+- configurable palette size (up to 256 colours)  + <stephen.sweeney@lehman.com>
+- generate gradient between 2 colours in palette
+
+kpcolortoolbar - open/save palette
 
 Rethink kpView/kpViewManager design because of:
 - performance
@@ -155,6 +141,7 @@ Brad.Grant@Glenayre.com's ideas:
 
 Bela-Andreas Bargel:
 - kooka scanning
+- greyscale masks
 
 double click on transparent in colour tablet and press OK - becomes black
 
@@ -195,7 +182,7 @@ make sure session restore actually works
 
 
 KDE 3.4
-=======
+~~~~~~~
 
 re-enable the ICO write support
 
@@ -203,7 +190,7 @@ multicolumn KToolBar's (Bug #3)
 
 
 Other Ideas
-===========
+~~~~~~~~~~~
 
 KolourPaint at >= 1.0 should be very usable.  So the following are just nice
 ideas (or things I should really do :)) that may or may not ever get

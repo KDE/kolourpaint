@@ -42,6 +42,7 @@
 
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
+#include <kpdocumentsaveoptions.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kpselectiondrag.h>
@@ -274,7 +275,7 @@ void kpMainWindow::paste (const kpSelection &sel)
     if (!m_document)
     {
         kpDocument *newDoc = new kpDocument (
-            sel.width (), sel.height (), 32, this);
+            sel.width (), sel.height (), this);
 
         // will also create viewManager
         setDocument (newDoc);
@@ -701,27 +702,32 @@ void kpMainWindow::slotCopyToFile ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
+    // TODO: should we really use the doc's metaInfo when saving just part of
+    //       it - the selection?
 
-    QString chosenMimeType;
+    kpDocumentSaveOptions chosenSaveOptions;
     KURL chosenURL = askForSaveURL (i18n ("Copy to File"),
                                     d->m_lastCopyToURL.url (),
-                                    d->m_lastCopyToMimeType,
-                                    "Edit/Copy To File",
+                                    m_document->getSelectedPixmap (),
+                                    d->m_lastCopyToSaveOptions,
+                                    *m_document->metaInfo (),
+                                    kpSettingsGroupEditCopyTo,
                                     false/*allow remote files*/,
-                                    chosenMimeType/*ref*/);
+                                    &chosenSaveOptions);
 
-    if (chosenURL.isEmpty () || chosenMimeType.isEmpty ())
+    if (chosenURL.isEmpty ())
         return;
 
 
     d->m_lastCopyToURL = chosenURL;
-    d->m_lastCopyToMimeType = chosenMimeType;
-    saveLastOutputMimeType (chosenMimeType, "Edit/Copy To File");
+    d->m_lastCopyToSaveOptions = chosenSaveOptions;
 
 
     if (!kpDocument::savePixmapToFile (m_document->getSelectedPixmap (),
-                                       chosenURL, chosenMimeType,
+                                       chosenURL,
+                                       chosenSaveOptions, *m_document->metaInfo (),
                                        true/*overwrite prompt*/,
+                                       true/*lossy prompt*/,
                                        this))
     {
         return;

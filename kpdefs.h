@@ -74,7 +74,16 @@
 
 // These 2 settings are reread every time they're used, not just on mainWindow
 // creation.
-#define kpSettingLastOutputMimeType QString::fromLatin1 ("Last Forced Output MimeType")
+
+#define kpSettingsGroupFileSaveAs QString::fromLatin1 ("File/Save As")
+#define kpSettingsGroupFileExport QString::fromLatin1 ("File/Export")
+#define kpSettingsGroupEditCopyTo QString::fromLatin1 ("Edit/Copy To")
+
+#define kpSettingForcedMimeType QString::fromLatin1 ("Forced MimeType")
+#define kpSettingForcedColorDepth QString::fromLatin1 ("Forced Color Depth")
+#define kpSettingForcedDither QString::fromLatin1 ("Forced Dither")
+#define kpSettingForcedQuality QString::fromLatin1 ("Forced Quality")
+
 #define kpSettingLastDocSize QString::fromLatin1 ("Last Document Size")
 
 

@@ -55,12 +55,15 @@ class KToggleAction;
 class KToolBar;
 class KPrinter;
 class KRecentFilesAction;
+class KToggleFullScreenAction;
 
 class kpColor;
 class kpColorToolBar;
 class kpCommand;
 class kpCommandHistory;
 class kpDocument;
+class kpDocumentMetaInfo;
+class kpDocumentSaveOptions;
 class kpView;
 class kpViewManager;
 class kpViewScrollableContainer;
@@ -70,7 +73,6 @@ class kpSingleKeyTriggersAction;
 class kpSqueezedTextLabel;
 class kpTextStyle;
 class kpThumbnail;
-class KToggleFullScreenAction;
 class kpTool;
 class kpToolText;
 class kpToolToolBar;
@@ -291,12 +293,12 @@ private slots:
 private:
     KURL askForSaveURL (const QString &caption,
                         const QString &startURL,
-                        const QString &startMimeType,
-                        const char *lastOutputMimeTypeSettingsPrefix,
+                        const QPixmap &pixmapToBeSaved,
+                        const kpDocumentSaveOptions &startSaveOptions,
+                        const kpDocumentMetaInfo &docMetaInfo,
+                        const QString &forcedSaveOptionsGroup,
                         bool localOnly,
-                        QString &chosenMimeType);
-    void saveLastOutputMimeType (const QString &mimeType,
-                                 const char *lastOutputMimeTypeSettingsPrefix);
+                        kpDocumentSaveOptions *chosenSaveOptions);
 
 private slots:
     bool saveAs (bool localOnly = false);
@@ -588,17 +590,22 @@ private:
 #include <qpoint.h>
 #include <qsize.h>
 
+#include <kpdocumentsaveoptions.h>
+
 struct kpMainWindowPrivate
 {
     KToggleFullScreenAction *m_actionFullScreen;
     KAction *m_actionExport;
     KAction *m_actionPasteInNewWindow;
     KAction *m_actionCopyToFile, *m_actionPasteFromFile;
+
     KURL m_lastPasteFromURL;
+
     KURL m_lastCopyToURL;
-    QString m_lastCopyToMimeType;
+    kpDocumentSaveOptions m_lastCopyToSaveOptions;
     KURL m_lastExportURL;
-    QString m_lastExportMimeType;
+    kpDocumentSaveOptions m_lastExportSaveOptions;
+
     int m_lastToolNumber;
 
     bool m_statusBarShapeLastPointsInitialised;

@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_DOCUMENT 0
+#define DEBUG_KP_DOCUMENT 1
 
 
 #include <kpdocument.h>
@@ -36,10 +36,13 @@
 #include <qcolor.h>
 #include <qbitmap.h>
 #include <qbrush.h>
+#include <qfile.h>
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qpainter.h>
 #include <qrect.h>
+#include <qsize.h>
+#include <qvaluelist.h>
 #include <qwmatrix.h>
 
 #include <kdebug.h>
@@ -48,12 +51,14 @@
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <qsize.h>
+#include <kmimetype.h>
 #include <ktempfile.h>
 
 #include <kpcolor.h>
 #include <kpcolortoolbar.h>
 #include <kpdefs.h>
+#include <kpdocumentsaveoptions.h>
+#include <kpdocumentmetainfo.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
@@ -64,25 +69,23 @@
 
 struct kpDocumentPrivate
 {
-    int m_constructorWidth, m_constructorHeight;
 };
 
 
-kpDocument::kpDocument (int w, int h, int colorDepth, kpMainWindow *mainWindow)
-    : m_selection (0),
-      m_oldWidth (-1), m_oldHeight (-1),
-      m_colorDepth (colorDepth), m_oldColorDepth (-1),
+kpDocument::kpDocument (int w, int h, kpMainWindow *mainWindow)
+    : m_constructorWidth (w), m_constructorHeight (h),
       m_mainWindow (mainWindow),
       m_isFromURL (false),
+      m_saveOptions (new kpDocumentSaveOptions ()),
+      m_metaInfo (new kpDocumentMetaInfo ()),
       m_modified (false),
+      m_selection (0),
+      m_oldWidth (-1), m_oldHeight (-1),
       d (new kpDocumentPrivate ())
 {
 #if DEBUG_KP_DOCUMENT && 0
-    kdDebug () << "kpDocument::kpDocument (" << w << "," << h << "," << colorDepth << ")" << endl;
+    kdDebug () << "kpDocument::kpDocument (" << w << "," << h << ")" << endl;
 #endif
-
-    d->m_constructorWidth = w;
-    d->m_constructorHeight = h;
 
     m_pixmap = new QPixmap (w, h);
     m_pixmap->fill (Qt::white);
@@ -93,6 +96,10 @@ kpDocument::~kpDocument ()
     delete d;
 
     delete m_pixmap;
+
+    delete m_saveOptions;
+    delete m_metaInfo;
+
     delete m_selection;
 }
 
@@ -115,14 +122,18 @@ void kpDocument::setMainWindow (kpMainWindow *mainWindow)
 // public static
 QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExistDialog,
                                        QWidget *parent,
-                                       QString *mimeType)
+                                       kpDocumentSaveOptions *saveOptions,
+                                       kpDocumentMetaInfo *metaInfo)
 {
 #if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::getPixmapFromFile(" << url << "," << parent << ")" << endl;
 #endif
 
-    if (mimeType)
-        *mimeType = QString::null;
+    if (saveOptions)
+        *saveOptions = kpDocumentSaveOptions ();
+
+    if (metaInfo)
+        *metaInfo = kpDocumentMetaInfo ();
 
 
     QString tempFile;
@@ -142,12 +153,12 @@ QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExist
     // sync: remember to "KIO::NetAccess::removeTempFile (tempFile)" in all exit paths
 
     QString detectedMimeType = KImageIO::mimeType (tempFile);
-    if (mimeType)
-        *mimeType = detectedMimeType;
+    if (saveOptions)
+        saveOptions->setMimeType (detectedMimeType);
 
 #if DEBUG_KP_DOCUMENT
     kdDebug () << "\ttempFile=" << tempFile << endl;
-    kdDebug () << "\tmimetype=" << mimetype << endl;
+    kdDebug () << "\tmimetype=" << detectedMimeType << endl;
     kdDebug () << "\tsrc=" << url.path () << endl;
     kdDebug () << "\tmimetype of src=" << KImageIO::mimeType (url.path ()) << endl;
 #endif
@@ -178,6 +189,24 @@ QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExist
                 << " (X display=" << QColor::numBitPlanes () << ")"
                 << " hasAlphaBuffer=" << image.hasAlphaBuffer ()
                 << endl;
+#endif
+    saveOptions->setColorDepth (image.depth ());
+    saveOptions->setDither (false);  // avoid double dithering when saving
+
+    metaInfo->setDotsPerMeterX (image.dotsPerMeterX ());
+    metaInfo->setDotsPerMeterY (image.dotsPerMeterY ());
+    metaInfo->setOffset (image.offset ());
+
+    QValueList <QImageTextKeyLang> keyList = image.textList ();
+    for (QValueList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
+         it != keyList.end ();
+         it++)
+    {
+        metaInfo->setText (*it, image.text (*it));
+    }
+
+#if DEBUG_KP_DOCUMENT
+    metaInfo->printDebug ("\tmetaInfo");
 #endif
 
 #if DEBUG_KP_DOCUMENT && 0
@@ -232,7 +261,8 @@ void kpDocument::openNew (const KURL &url)
     m_pixmap->fill (Qt::white);
 
     setURL (url, false/*not from url*/);
-    m_mimetype = QString::null;
+    *m_saveOptions = kpDocumentSaveOptions ();
+    *m_metaInfo = kpDocumentMetaInfo ();
     m_modified = false;
 
     emit documentOpened ();
@@ -244,11 +274,13 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
     kdDebug () << "kpDocument::open (" << url << ")" << endl;
 #endif
 
-    QString newMimeType;
+    kpDocumentSaveOptions newSaveOptions;
+    kpDocumentMetaInfo newMetaInfo;
     QPixmap newPixmap = kpDocument::getPixmapFromFile (url,
         newDocSameNameIfNotExist/*suppress "doesn't exist" dialog*/,
         m_mainWindow,
-        &newMimeType);
+        &newSaveOptions,
+        &newMetaInfo);
 
     if (!newPixmap.isNull ())
     {
@@ -256,7 +288,8 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
         m_pixmap = new QPixmap (newPixmap);
 
         setURL (url, true/*is from url*/);
-        m_mimetype = newMimeType;
+        *m_saveOptions = newSaveOptions;
+        *m_metaInfo = newMetaInfo;
         m_modified = false;
 
         emit documentOpened ();
@@ -287,22 +320,28 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
 bool kpDocument::save ()
 {
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::save [" << m_url << "," << m_mimetype << "]" << endl;
+    kdDebug () << "kpDocument::save() url=" << m_url << endl;
 #endif
 
-    if (m_url.isEmpty () || m_mimetype.isEmpty ())
+    // TODO: check feels weak
+    if (m_url.isEmpty () || m_saveOptions->mimeType ().isEmpty ())
     {
         KMessageBox::detailedError (m_mainWindow,
             i18n ("Could not save image - insufficient information."),
             i18n ("URL: %1\n"
                   "Mimetype: %2")
                 .arg (prettyURL ())
-                .arg (m_mimetype.isEmpty () ? i18n ("<empty>") : m_mimetype),
+                .arg (m_saveOptions->mimeType ().isEmpty () ?
+                          i18n ("<empty>") :
+                          m_saveOptions->mimeType ()),
             i18n ("Internal Error"));
         return false;
     }
 
-    return saveAs (m_url, m_mimetype, false);
+    return saveAs (m_url, *m_saveOptions,
+                   false/*no overwrite prompt*/,
+                   // TODO: bad idea so do what KOffice does
+                   false/*no lossy prompt*/);
 }
 
 static QPixmap pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
@@ -322,16 +361,179 @@ static QPixmap pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
     return retPixmap;
 }
 
+
+// public static
+bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
+                                      const kpDocumentSaveOptions &saveOptions,
+                                      QWidget *parent)
+{
+    const bool useSaveOptionsColorDepth =
+        (saveOptions.mimeTypeSupportsColorDepth () &&
+         !saveOptions.colorDepthIsInvalid ());
+    const bool useSaveOptionsQuality =
+        (saveOptions.mimeTypeSupportsQuality () &&
+         !saveOptions.qualityIsInvalid ());
+
+#define QUIT_IF_CANCEL(messageBoxCommand)            \
+{                                                    \
+    if (messageBoxCommand != KMessageBox::Continue)  \
+    {                                                \
+        return false;                                \
+    }                                                \
+}
+    if (useSaveOptionsQuality)
+    {
+        QUIT_IF_CANCEL (
+            KMessageBox::warningContinueCancel (parent,
+                i18n ("<qt><p>The <b>%1</b> format may not be able"
+                      " to preserve all of the image's color information.</p>"
+
+                      "<p>Are you sure you want to save in this format?</p></qt")
+                    .arg (KMimeType::mimeType (saveOptions.mimeType ())->comment ()),
+                i18n ("Lossy File Format"),
+                KStdGuiItem::save (),
+                QString::fromLatin1 ("SaveInLossyMimeTypeDontAskAgain")));
+    }
+    else if (useSaveOptionsColorDepth)
+    {
+        if (saveOptions.colorDepth () < pixmap.depth () ||
+            pixmap.mask () && saveOptions.colorDepth () < 32)
+        {
+            QUIT_IF_CANCEL (
+                KMessageBox::warningContinueCancel (parent,
+                    i18n ("<qt><p>Saving the image at the low color depth of %1-bit"
+                          " may result in the loss of color information."
+
+                          " Any transparency will also be removed."
+
+                          "<p>Are you sure you want to save at this color depth?</p></qt>")
+                        .arg (saveOptions.colorDepth ()),
+                    i18n ("Low Color Depth"),
+                    KStdGuiItem::save (),
+                    QString::fromLatin1 ("SaveAtLowColorDepthDontAskAgain")));
+        }
+    }
+#undef QUIT_IF_CANCEL
+
+    return true;
+}
+
+// public static
+bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
+                                     QIODevice *device,
+                                     const kpDocumentSaveOptions &saveOptions,
+                                     const kpDocumentMetaInfo &metaInfo,
+                                     bool lossyPrompt,
+                                     QWidget *parent,
+                                     bool *userCancelled)
+{
+    if (userCancelled)
+        *userCancelled = false;
+
+    QString type = KImageIO::typeForMime (saveOptions.mimeType ());
+#if DEBUG_KP_DOCUMENT
+    kdDebug () << "\tmimeType=" << saveOptions.mimeType ()
+               << " type=" << type << endl;
+#endif
+
+    if (lossyPrompt && !lossyPromptContinue (pixmap, saveOptions, parent))
+    {
+        if (userCancelled)
+            *userCancelled = true;
+        return false;
+    }
+
+
+    QPixmap pixmapToSave =
+        pixmapWithDefinedTransparentPixels (pixmap,
+                                            Qt::white);  // CONFIG
+    QImage imageToSave = kpPixmapFX::convertToImage (pixmapToSave);
+
+
+    // TODO: fix dup with lossyPromptContinue()
+    const bool useSaveOptionsColorDepth =
+        (saveOptions.mimeTypeSupportsColorDepth () &&
+         !saveOptions.colorDepthIsInvalid ());
+    const bool useSaveOptionsQuality =
+        (saveOptions.mimeTypeSupportsQuality () &&
+         !saveOptions.qualityIsInvalid ());
+
+
+    //
+    // Reduce colors if required
+    //
+
+    // TODO: what if imageToSave.depth() < saveOptions.colorDepth()?
+    if (useSaveOptionsColorDepth &&
+        imageToSave.depth () != saveOptions.colorDepth ())
+    {
+    #if DEBUG_KP_DOCUMENT
+        kdDebug () << "\treducing from " << imageToSave.depth ()
+                   << " to " << saveOptions.colorDepth ()
+                   << " (dither=" << saveOptions.dither () << ")"
+                   << endl;
+    #endif
+        // TODO: don't dup kpEffectReduceColorsCommand::apply()
+        //       - fix after merging
+        imageToSave = imageToSave.convertDepth (saveOptions.colorDepth (),
+            Qt::AutoColor |
+            (saveOptions.dither () ? Qt::DiffuseDither : Qt::ThresholdDither) |
+            Qt::ThresholdAlphaDither |
+            (saveOptions.dither () ? Qt::PreferDither : Qt::AvoidDither));
+    }
+
+
+    //
+    // Write Meta Info
+    //
+
+    imageToSave.setDotsPerMeterX (metaInfo.dotsPerMeterX ());
+    imageToSave.setDotsPerMeterY (metaInfo.dotsPerMeterY ());
+    imageToSave.setOffset (metaInfo.offset ());
+
+    QValueList <QImageTextKeyLang> keyList = metaInfo.textList ();
+    for (QValueList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
+         it != keyList.end ();
+         it++)
+    {
+        imageToSave.setText ((*it).key, (*it).lang, metaInfo.text (*it));
+    }
+
+
+    //
+    // Save at required quality
+    //
+
+    int quality = -1;  // default
+
+    if (useSaveOptionsQuality)
+        quality = saveOptions.quality ();
+
+    if (!imageToSave.save (device, type.latin1 (), quality))
+    {
+        return false;
+    }
+
+
+    return true;
+}
+
 // public static
 bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
-                                   const KURL &url, const QString &mimeType,
-                                   bool overwritePrompt, QWidget *parent)
+                                   const KURL &url,
+                                   const kpDocumentSaveOptions &saveOptions,
+                                   const kpDocumentMetaInfo &metaInfo,
+                                   bool overwritePrompt,
+                                   bool lossyPrompt,
+                                   QWidget *parent)
 {
 #if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::savePixmapToFile ("
-               << url << "," << mimetype
-               << ",overwritePrompt=" << overWritePrompt << ")"
+               << url
+               << ",overwritePrompt=" << overwritePrompt << ")"
                << endl;
+    saveOptions.printDebug (QString::fromLatin1 ("\tsaveOptions"));
+    metaInfo.printDebug (QString::fromLatin1 ("\tmetaInfo"));
 #endif
 
     if (overwritePrompt && KIO::NetAccess::exists (url, false/*write*/, parent))
@@ -354,6 +556,10 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
     }
 
 
+    if (lossyPrompt && !lossyPromptContinue (pixmap, saveOptions, parent))
+        return false;
+
+
     KTempFile tempFile;
     tempFile.setAutoDelete (true);
 
@@ -373,21 +579,17 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         filename = url.path ();
 
 
-    QString type = KImageIO::typeForMime (mimeType);
-#if DEBUG_KP_DOCUMENT
-    kdDebug () << "\tmimeType=" << mimeType << " type=" << type << endl;
-#endif
-
-
-    QPixmap pixmapToSave =
-        pixmapWithDefinedTransparentPixels (pixmap,
-                                            Qt::white);  // CONFIG
-
-    if (!pixmapToSave.save (filename, type.latin1 ()))
+    QFile file (filename);
+    if (!file.open (IO_WriteOnly) ||
+        !savePixmapToDevice (pixmap, &file,
+                             saveOptions, metaInfo,
+                             false/*no lossy prompt*/,
+                             parent))
     {
         KMessageBox::error (parent,
                             i18n ("Could not save as \"%1\".")
                                 .arg (kpDocument::prettyFilenameForURL (url)));
+
         return false;
     }
 
@@ -406,19 +608,25 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
     return true;
 }
 
-bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwritePrompt)
+bool kpDocument::saveAs (const KURL &url,
+                         const kpDocumentSaveOptions &saveOptions,
+                         bool overwritePrompt,
+                         bool lossyPrompt)
 {
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::saveAs (" << url << "," << mimetype << ")" << endl;
+    kdDebug () << "kpDocument::saveAs (" << url << ","
+               << saveOptions.mimeType () << ")" << endl;
 #endif
 
     if (kpDocument::savePixmapToFile (pixmapWithSelection (),
-                                      url, mimetype,
+                                      url,
+                                      saveOptions, *metaInfo (),
                                       overwritePrompt,
+                                      lossyPrompt,
                                       m_mainWindow))
     {
         setURL (url, true/*is from url*/);
-        m_mimetype = mimetype;
+        *m_saveOptions = saveOptions;
         m_modified = false;
 
         emit documentSaved ();
@@ -489,9 +697,29 @@ QString kpDocument::prettyFilename () const
 }
 
 
-QString kpDocument::mimetype () const
+// public
+const kpDocumentSaveOptions *kpDocument::saveOptions () const
 {
-    return m_mimetype;
+    return m_saveOptions;
+}
+
+// public
+void kpDocument::setSaveOptions (const kpDocumentSaveOptions &saveOptions)
+{
+    *m_saveOptions = saveOptions;
+}
+
+
+// public
+const kpDocumentMetaInfo *kpDocument::metaInfo () const
+{
+    return m_metaInfo;
+}
+
+// public
+void kpDocument::setMetaInfo (const kpDocumentMetaInfo &metaInfo)
+{
+    *m_metaInfo = metaInfo;
 }
 
 
@@ -523,7 +751,7 @@ bool kpDocument::isEmpty () const
 
 int kpDocument::constructorWidth () const
 {
-    return d->m_constructorWidth;
+    return m_constructorWidth;
 }
 
 int kpDocument::width (bool ofSelection) const
@@ -547,7 +775,7 @@ void kpDocument::setWidth (int w, const kpColor &backgroundColor)
 
 int kpDocument::constructorHeight () const
 {
-    return d->m_constructorHeight;
+    return m_constructorHeight;
 }
 
 int kpDocument::height (bool ofSelection) const
@@ -574,30 +802,6 @@ QRect kpDocument::rect (bool ofSelection) const
         return m_selection->boundingRect ();
     else
         return m_pixmap->rect ();
-}
-
-int kpDocument::colorDepth () const
-{
-    return m_pixmap->depth ();
-}
-
-int kpDocument::oldColorDepth () const
-{
-    return m_colorDepth;
-}
-
-bool kpDocument::setColorDepth (int)
-{
-    m_oldColorDepth = colorDepth ();
-
-    // SYNC: Limitation of X/QPixmap - changing colour depth yet to be implemented
-    //
-    //       Not really a major problem though - how could you possibly edit an
-    //       image at a higher depth than what your screen is set at
-    //       (accurately)?
-
-    emit colorDepthChanged (colorDepth ());
-    return true;
 }
 
 
