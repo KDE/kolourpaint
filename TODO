@@ -12,6 +12,13 @@ here:
 KolourPaint 1.4
 ~~~~~~~~~~~~~~~
 
+In the "Notes" section of the Handbook, change the second paragraph to avoid
+using "However ...".  [Thurston]
+
+Rename fill_style.png and line_width.png to use the plural form for consistency
+with brush_shapes, eraser_shapes, spraycan_patterns and
+selections_opaque_transparent.  [Thurston]
+
 add a key to show/hide all panels (toolbar, toolbox, palette box) giving a
 semi fullscreen mode (Antonio Bianco)
 
@@ -24,7 +31,7 @@ snap-grid. If you dont know what I mean, you could have a look
 at XPaint [or PPaint/DPaint on any Amiga ;-) ]: You can give a x and y
 value and get a "magnetic grid" where the brush "snaps in"
 magnetic snap-grid
-it would also be great for tiling an image! 
+it would also be great for tiling an image!
 > have any suggestions on what the UI will be like?
 I always used paint-programs with the same kind of UI: One vertical bar
 with the most used tools on the left (and sometimes on the right) side.
@@ -119,7 +126,7 @@ text tool could autoresize if font size changes or paste text (Bug #11)
   mind and reverts to previous font size and the box snaps back
   (or only allow expand on writing text - no font size tricks etc.)
 
-text box create != cmd 
+text box create != cmd
 => deselecting empty (more accurately, untouched) box = no text box
 
 text toolbar permanently floats to stop view from bobbing up/down
@@ -209,7 +216,7 @@ If you don't save the image:
 3. why wouldn't you want a copy of an image you send to someone?  Yes, it's in your "Sent Items" but...
 Suggestion: Export instead of save.  But what if really want to save?  Would have to prompt, save, then invoke Mail again - a bit round about.
 What do other programs do?
- 
+
 grid at 400% since 2 people on kde-apps have asked already (think grid
 isn't there)
 
@@ -291,8 +298,8 @@ Lutz Schweizer:
 > the cursor currently used for the brush tool.  What you prefer that or the
 > current arrow cursor?
 
-frankly, I would prefer the current arrow cursor for the "pen". If someone 
-prefers a cross (with thin lines), he may even now use the brush with the 
+frankly, I would prefer the current arrow cursor for the "pen". If someone
+prefers a cross (with thin lines), he may even now use the brush with the
 "1x1" option; isn't that practically equivalent?
 "
 
@@ -592,8 +599,8 @@ QColor::enterAllocContext () looks interesting
 can't copy 1600x1200 season.jpg double scaled from one kolourpaint to another
 (Bug #20)
 
-the resulting file doesn't get displayed in 
-Kolourpaint after saving (hey, this is not a complaint), and 
+the resulting file doesn't get displayed in
+Kolourpaint after saving (hey, this is not a complaint), and
 undo is not possible this way. (Christoph Eckert)
 
 menu opt to acquire screen captures since not all know about
