@@ -47,7 +47,11 @@ kpToolText::kpToolText (kpMainWindow *mainWindow)
     : kpToolSelection (Text,
                        i18n ("Text"), i18n ("Writes text"),
                        Qt::Key_T,
-                       mainWindow, "tool_text")
+                       mainWindow, "tool_text"),
+      m_isIMStarted (false),
+      m_IMStartCursorRow (0),
+      m_IMStartCursorCol (0),
+      m_IMPreeditStr (0)
 {
 }
 
@@ -520,6 +524,131 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
 
         kpToolSelection::keyPressEvent (e);
         return;
+    }
+}
+
+void kpToolText::imStartEvent (QIMEvent *e)
+{
+    kpSelection *sel = document ()->selection ();
+    if (hasBegunDraw() || !sel || !sel->isText ())
+    {
+        e->ignore();
+        return;
+    }
+
+    m_IMStartCursorRow = viewManager ()->textCursorRow ();
+    m_IMStartCursorCol = viewManager ()->textCursorCol ();
+    m_IMPreeditStr = QString::null;
+}
+
+void kpToolText::imComposeEvent (QIMEvent *e)
+{
+    kpSelection *sel = document ()->selection ();
+    if (hasBegunDraw() || !sel || !sel->isText ())
+    {
+        e->ignore();
+        return;
+    }
+
+    // remove old preedit
+    if (m_IMPreeditStr.length() > 0 )
+    {
+        // set cursor at the start input point
+        viewManager ()->setTextCursorPosition (m_IMStartCursorRow, m_IMStartCursorCol);
+        for (unsigned int i = 0; i < m_IMPreeditStr.length(); i++)
+        {
+            if (!m_deleteCommand)
+            {
+                if (hasBegunShape ())
+                    endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+                
+                m_deleteCommand = new kpToolTextDeleteCommand (i18n ("Text: Delete"),
+                                                               viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
+                                                               mainWindow ());
+                commandHistory ()->addCommand (m_deleteCommand, false/*no exec*/);
+            }
+            else
+                m_deleteCommand->addDelete ();
+        }
+    }
+    
+    // insert new preedit
+    m_IMPreeditStr = e->text();
+    if (m_IMPreeditStr.length() > 0)
+    {
+        if (!m_insertCommand)
+        {
+            if (hasBegunShape ())
+                endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+            
+            m_insertCommand = new kpToolTextInsertCommand (i18n ("Text: Write"),
+                                                           viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
+                                                           m_IMPreeditStr,
+                                                           mainWindow ());
+            commandHistory ()->addCommand (m_insertCommand, false/*no exec*/);
+        }
+        else
+            m_insertCommand->addText (m_IMPreeditStr);
+    }
+
+    // set cursor pos
+    if (m_IMStartCursorRow >= 0)
+    {
+        int row = m_IMStartCursorRow;
+        int col = m_IMStartCursorCol + e->cursorPos () /* + e->selectionLength()*/;
+        viewManager ()->setTextCursorPosition (row, col, true /* update MicroFocusHint */);
+    }
+}
+
+void kpToolText::imEndEvent (QIMEvent *e)
+{
+    kpSelection *sel = document ()->selection ();
+    if (hasBegunDraw() || !sel || !sel->isText ())
+    {
+        e->ignore();
+        return;
+    }
+
+    // remove old preedit
+    if (m_IMPreeditStr.length() > 0 )
+    {
+        // set cursor at the start input point
+        viewManager ()->setTextCursorPosition (m_IMStartCursorRow, m_IMStartCursorCol);
+        for (unsigned int i = 0; i < m_IMPreeditStr.length(); i++)
+        {
+            if (!m_deleteCommand)
+            {
+                if (hasBegunShape ())
+                    endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+                
+                m_deleteCommand = new kpToolTextDeleteCommand (i18n ("Text: Delete"),
+                                                               viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
+                                                               mainWindow ());
+                commandHistory ()->addCommand (m_deleteCommand, false/*no exec*/);
+            }
+            else
+                m_deleteCommand->addDelete ();
+        }
+    }
+    m_IMPreeditStr = QString::null;
+
+    // commit string
+    QString inputStr = e->text();
+    if (inputStr.length() > 0)
+    {
+        if (!m_insertCommand)
+        {
+            if (hasBegunShape ())
+                endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+            
+            m_insertCommand = new kpToolTextInsertCommand (i18n ("Text: Write"),
+                                                           viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
+                                                           inputStr,
+                                                           mainWindow ());
+            commandHistory ()->addCommand (m_insertCommand, false/*no exec*/);
+        }
+        else
+            m_insertCommand->addText (inputStr);
     }
 }
 

@@ -359,6 +359,8 @@ public:
      * is set to queue updates.
      */
     void updateQueuedArea ();
+    
+    void updateMicroFocusHint (const QRect &microFocusHint);
 
 
 public slots:
@@ -462,6 +464,10 @@ protected:
 
     virtual void dragEnterEvent (QDragEnterEvent *);
     virtual void dragLeaveEvent (QDragLeaveEvent *);
+    
+    virtual void imStartEvent (QIMEvent *e);
+    virtual void imComposeEvent (QIMEvent *e);
+    virtual void imEndEvent (QIMEvent *e);
 
 public:
     virtual void resize (int w, int h);

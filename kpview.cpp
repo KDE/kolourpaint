@@ -112,6 +112,7 @@ kpView::kpView (kpDocument *document,
     setFocusPolicy (QWidget::WheelFocus);
     setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
     setKeyCompression (true);
+    setInputMethodEnabled (true); // ensure using InputMethod
 }
 
 kpView::~kpView ()
@@ -593,6 +594,15 @@ void kpView::updateQueuedArea ()
     invalidateQueuedArea ();
 }
 
+// public
+void kpView::updateMicroFocusHint (const QRect &microFocusHint)
+{
+    int x = microFocusHint.topLeft().x();
+    int y = microFocusHint.topLeft().y();
+    int width = microFocusHint.width();
+    int height = microFocusHint.height();
+    setMicroFocusHint (x, y, width, height);
+}
 
 // public
 QRect kpView::selectionViewRect () const
@@ -1102,6 +1112,39 @@ void kpView::resizeEvent (QResizeEvent *e)
 
     emit sizeChanged (width (), height ());
     emit sizeChanged (size ());
+}
+
+// private virtual
+void kpView::imStartEvent (QIMEvent *e)
+{
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name () << ")::imStartEvent" << endl;
+#endif
+
+    m_mainWindow->tool ()->imStartEvent (e);
+    e->accept();
+}
+
+// private virtual
+void kpView::imComposeEvent (QIMEvent *e)
+{
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name () << ")::imComposeEvent" << endl;
+#endif
+
+    m_mainWindow->tool ()->imComposeEvent (e);
+    e->accept();
+}
+
+// private virtual
+void kpView::imEndEvent (QIMEvent *e)
+{
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name () << ")::imEndEvent" << endl;
+#endif
+
+    m_mainWindow->tool ()->imEndEvent (e);
+    e->accept();
 }
 
 

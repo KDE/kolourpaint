@@ -307,6 +307,9 @@ protected:
     virtual void mouseReleaseEvent (QMouseEvent *e);
     virtual void keyPressEvent (QKeyEvent *e);
     virtual void keyReleaseEvent (QKeyEvent *e);
+    virtual void imStartEvent(QIMEvent *){}
+    virtual void imComposeEvent(QIMEvent *){}
+    virtual void imEndEvent(QIMEvent *){}
 private:
     void keyUpdateModifierState (QKeyEvent *e);
     void notifyModifierStateChanged ();
