@@ -87,11 +87,11 @@ void kpMainWindow::setupViewMenuActions ()
 
     m_actionShowGrid = new KToggleAction (i18n ("Show &Grid"), CTRL + Key_G,
         this, SLOT (slotShowGridToggled ()), actionCollection (), "view_show_grid");
-
+    m_actionShowGrid->setCheckedState(i18n("Hide &Grid"));
 
     m_actionShowThumbnail = new KToggleAction (i18n ("Show T&humbnail"), CTRL + Key_H,
         this, SLOT (slotShowThumbnailToggled ()), actionCollection (), "view_show_thumbnail");
-
+    m_actionShowThumbnail->setCheckedState(i18n("Hide T&humbnail"));
 
     enableViewMenuDocumentActions (false);
 }
@@ -397,7 +397,7 @@ void kpMainWindow::finishZoomTo ()
         m_viewManager->restoreQueueUpdates ();
 
     slotUpdateStatusBarZoom (m_mainView ? m_mainView->zoomLevelX () : 0);
-    
+
 #if DEBUG_KP_MAIN_WINDOW && 1
     kdDebug () << "\tkpMainWindow::finishZoomTo done" << endl;
 #endif
