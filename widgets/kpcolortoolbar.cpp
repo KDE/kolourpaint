@@ -406,7 +406,8 @@ kpColorToolBar::kpColorToolBar (QWidget *parent, const char *name)
     : KToolBar (parent, name)
 {
     QWidget *base = new QWidget (this);
-    m_boxLayout = new QBoxLayout (base, QBoxLayout::LeftToRight);
+    m_boxLayout = new QBoxLayout (base, QBoxLayout::LeftToRight,
+                                  5/*margin*/, 10/*spacing*/);
 
     m_dualColorButton = new kpDualColorButton (base);
     m_boxLayout->addWidget (m_dualColorButton);
