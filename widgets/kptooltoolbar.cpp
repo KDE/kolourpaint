@@ -70,6 +70,7 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
     m_toolWidgetLineStyle = new kpToolWidgetLineStyle (m_baseWidget);
     m_toolWidgetLineWidth = new kpToolWidgetLineWidth (m_baseWidget);
     
+    m_lastDockedOrientationSet = false;
     setOrientation (orientation ());
 
     m_buttonGroup = new QButtonGroup ();  // invisible
@@ -175,12 +176,19 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
                << (o == Qt::Vertical ? "vertical" : "horizontal")
                << ") called!" << endl;
 
-    // conveniently, QDockWindow::undock() calls us so that we can force
-    // the toolbar back to Vertical :)
-    if (place () == QDockWindow::OutsideDock)
+    // (QDockWindow::undock() calls us)
+    bool isOutsideDock = (place () == QDockWindow::OutsideDock);
+
+    if (!m_lastDockedOrientationSet || !isOutsideDock)
     {
-        kdDebug () << "\toutside dock, forcing it to be vertical" << endl;
-        o = Qt::Vertical;
+        m_lastDockedOrientation = o;
+        m_lastDockedOrientationSet = true;
+    }
+    
+    if (isOutsideDock)
+    {
+        kdDebug () << "\toutside dock, forcing orientation to last" << endl;
+        o = m_lastDockedOrientation;
     }
 
     delete m_toolLayout;

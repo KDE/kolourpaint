@@ -84,6 +84,8 @@ private slots:
 private:
     void addButton (QButton *button, Qt::Orientation o, int num);
 
+    Qt::Orientation m_lastDockedOrientation;
+    bool m_lastDockedOrientationSet;
     int m_vertCols;
 
     QButtonGroup *m_buttonGroup;

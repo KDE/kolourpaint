@@ -424,6 +424,7 @@ kpColorToolBar::kpColorToolBar (QWidget *parent, const char *name)
              SLOT (setBackgroundColor (const QColor &)));
     m_boxLayout->addWidget (m_colorCells);
 
+    m_lastDockedOrientationSet = false;
     setOrientation (orientation ());
 
     KToolBar::insertWidget (0, base->width (), base);
@@ -432,12 +433,19 @@ kpColorToolBar::kpColorToolBar (QWidget *parent, const char *name)
 // virtual
 void kpColorToolBar::setOrientation (Qt::Orientation o)
 {
-    // conveniently, QDockWindow::undock() calls us so that we can force
-    // the toolbar back to Horizontal :)
-    if (place () == QDockWindow::OutsideDock)
+    // (QDockWindow::undock() calls us)
+    bool isOutsideDock = (place () == QDockWindow::OutsideDock);
+    
+    if (!m_lastDockedOrientationSet || !isOutsideDock)
     {
-        //kdDebug () << "\toutside dock, forcing it to be horizontal" << endl;
-        o = Qt::Horizontal;
+        m_lastDockedOrientation = o;
+        m_lastDockedOrientationSet = true;
+    }
+    
+    if (isOutsideDock)
+    {
+        //kdDebug () << "\toutside dock, forcing orientation to last" << endl;
+        o = m_lastDockedOrientation;
     }
 
     if (o == Qt::Horizontal)

@@ -123,6 +123,8 @@ public slots:
     void setBackgroundColor (const QColor &color);
 
 private:
+    Qt::Orientation m_lastDockedOrientation;
+    bool m_lastDockedOrientationSet;
     virtual void setOrientation (Qt::Orientation o);
 
     QBoxLayout *m_boxLayout;
