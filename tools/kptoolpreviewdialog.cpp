@@ -88,16 +88,33 @@ kpToolPreviewDialog::kpToolPreviewDialog (Features features,
     m_gridLayout = new QGridLayout (baseWidget, 4, 2,
                                     marginHint (), spacingHint ());
     // --- reserved row 0 ---
-    if (m_dimensionsGroupBox)
-        m_gridLayout->addWidget (m_dimensionsGroupBox, 1, 0);
+    if (m_dimensionsGroupBox || m_previewGroupBox)
+    {
+        if (m_dimensionsGroupBox && m_previewGroupBox)
+        {
+            m_gridLayout->addWidget (m_dimensionsGroupBox, 1, 0);
+            m_gridLayout->addWidget (m_previewGroupBox, 1, 1);
+            
+            m_gridLayout->setColStretch (1, 1);
+        }
+        else if (m_dimensionsGroupBox)
+        {
+            m_gridLayout->addMultiCellWidget (m_dimensionsGroupBox,
+                                              1, 1, 0, 1);
+        }
+        else if (m_previewGroupBox)
+        {
+            m_gridLayout->addMultiCellWidget (m_previewGroupBox,
+                                              1, 1, 0, 1);
+        }
 
-    if (m_previewGroupBox)
-        m_gridLayout->addWidget (m_previewGroupBox, 1, 1);
-
-    m_gridLayout->setRowStretch (1, 1);
-    m_gridLayout->setColStretch (1, 1);
-
-    m_gridNumRows = 2;
+        m_gridLayout->setRowStretch (1, 1);
+        m_gridNumRows = 2;
+    }
+    else
+    {
+        m_gridNumRows = 1;
+    }
 }
 
 kpToolPreviewDialog::~kpToolPreviewDialog ()
