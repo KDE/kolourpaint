@@ -345,15 +345,17 @@ void kpToolSelection::beginDraw ()
 // protected
 const QCursor &kpToolSelection::cursor () const
 {
-#if DEBUG_KP_TOOL_SELECTION && 0
-    kdDebug () << "kpToolSelection::cursor()" << endl;
+#if DEBUG_KP_TOOL_SELECTION && 1
+    kdDebug () << "kpToolSelection::cursor()"
+               << " controlOrShiftPressed=" << controlOrShiftPressed ()
+               << endl;
 #endif
 
     kpSelection *sel = document () ? document ()->selection () : 0;
 
     if (sel && onSelectionResizeHandle () && !controlOrShiftPressed ())
     {
-    #if DEBUG_KP_TOOL_SELECTION && 0
+    #if DEBUG_KP_TOOL_SELECTION && 1
         kdDebug () << "\tonSelectionResizeHandle="
                    << onSelectionResizeHandle () << endl;
     #endif
@@ -380,7 +382,7 @@ const QCursor &kpToolSelection::cursor () const
     }
     else if (sel && sel->contains (m_currentPoint))
     {
-    #if DEBUG_KP_TOOL_SELECTION && 0
+    #if DEBUG_KP_TOOL_SELECTION && 1
         kdDebug () << "\tsel contains currentPoint; selecting text? "
                    << onSelectionToSelectText () << endl;
     #endif
@@ -392,7 +394,7 @@ const QCursor &kpToolSelection::cursor () const
     }
     else
     {
-    #if DEBUG_KP_TOOL_SELECTION && 0
+    #if DEBUG_KP_TOOL_SELECTION && 1
         kdDebug () << "\tnot on sel" << endl;
     #endif
         return Qt::crossCursor;
