@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_PEN 1
+#define DEBUG_KP_TOOL_PEN 0
 
 #include <qapplication.h>
 #include <qbitmap.h>
@@ -228,7 +228,7 @@ void kpToolPen::beginDraw ()
 // virtual
 void kpToolPen::hover (const QPoint &point)
 {
-#if DEBUG_KP_TOOL_PEN && 1
+#if DEBUG_KP_TOOL_PEN && 0
     kdDebug () << "kpToolPen::hover(" << point << ")"
                << " hasBegun=" << hasBegun ()
                << " hasBegunDraw=" << hasBegunDraw ()
