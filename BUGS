@@ -78,7 +78,8 @@ KolourPaint 1.??? runs best on KDE 3.3 and Qt 3.3.  It will compile and
 run on earlier KDE and Qt 3.x releases but you may encounter the following
 problems:
 
-
+TODO: mention thumbnail flicker fixed with Qt 3.3 ("2. Flicker when the thumbnail makes its appearance.");
+ 
 Common to KDE 3.0 and KDE 3.1
 -----------------------------
 
