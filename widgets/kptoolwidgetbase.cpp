@@ -66,10 +66,10 @@ int kpToolWidgetBase::addOption (const QPixmap &pixmap, bool center, bool doUpda
     m_pixmapRects.append (QRect (m_x, m_y, pixmap.width (), pixmap.height ()));
 
     kdDebug () << "kpToolWidgetBase::addOption(): m_x=" << m_x
-                      << " m_y=" << m_y
-                      << " width=" << pixmap.width ()
-                      << " height=" << pixmap.height ()
-                      << endl;
+               << " m_y=" << m_y
+               << " width=" << pixmap.width ()
+               << " height=" << pixmap.height ()
+               << endl;
 
     if (pixmap.height () > m_highest)
         m_highest = pixmap.height ();

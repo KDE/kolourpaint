@@ -100,11 +100,11 @@ void kpViewManager::setTempPixmapAt (const QPixmap &pixmap, const QPoint &at,
                                      enum SelectionBorderType selBorderType)
 {
     kdDebug () << "kpViewManager::setTempPixmapAt (pixmap (w="
-                      << pixmap.width ()
-                      << ",h=" << pixmap.height ()
-                      << "), x=" << at.x ()
-                      << ",y=" << at.y ()
-                      << endl;
+               << pixmap.width ()
+               << ",h=" << pixmap.height ()
+               << "), x=" << at.x ()
+               << ",y=" << at.y ()
+               << endl;
 
     bool oldPixmapActive = tempPixmapActive ();
     QRect oldPixmapRect = m_tempPixmapRect;  // only valid if oldPixmapActive
@@ -237,9 +237,9 @@ void kpViewManager::repaintBrushPixmap ()
     m_hideTempPixmap = !activeView;  // SYNC: with kpToolPen::updateBrushCursor()
 
     kdDebug () << "kpViewManager::repaintBrushPixmap (viewUnderCursor=" << activeView
-                            << ", brushActive=" << brushActive ()
-                            << ", hideTempPixmap=" << m_hideTempPixmap
-                            << endl;
+               << ", brushActive=" << brushActive ()
+               << ", hideTempPixmap=" << m_hideTempPixmap
+               << endl;
 
     // sync with updateViews()
     for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())

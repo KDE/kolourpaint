@@ -128,10 +128,10 @@ kpMainWindow::kpMainWindow (const KURL &url)
         configGroupSaver.config ()->sync ();
     }
     kdDebug () << "read config: firstTime=" << m_configFirstTime
-                      << " showGrid=" << m_configShowGrid
-                      << " showPath=" << m_configShowPath
-                      << " outputMimeType=" << m_configDefaultOutputMimetype
-                      << endl;
+               << " showGrid=" << m_configShowGrid
+               << " showPath=" << m_configShowPath
+               << " outputMimeType=" << m_configDefaultOutputMimetype
+               << endl;
 
     setupActions ();
 
@@ -460,7 +460,7 @@ kpTool *kpMainWindow::tool ()
 {
 #if DEBUG_KPMAINWINDOW
     kdDebug () << "kpMainWindow::tool() m_toolNum=" << m_toolNum
-                      << " ptr=" << (m_toolNum >= 0 ? m_tools [m_toolNum] : 0) << endl;
+               << " ptr=" << (m_toolNum >= 0 ? m_tools [m_toolNum] : 0) << endl;
 #endif
     return m_toolNum >= 0 ? m_tools [m_toolNum] : 0;
 }
@@ -1365,7 +1365,7 @@ void kpMainWindow::slotUpdateStatusBar (int docWidth, int docHeight, int docColo
 {
 #if DEBUG_KPMAINWINDOW
     kdDebug () << "kpMainWindow::slotUpdateStatusBar ("
-                      << docWidth << "x" << docHeight << "@" << docColorDepth << endl;
+               << docWidth << "x" << docHeight << "@" << docColorDepth << endl;
 #endif
 
     if (m_document && docWidth > 0 && docHeight > 0 && docColorDepth > 0)

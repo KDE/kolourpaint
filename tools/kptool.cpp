@@ -294,8 +294,8 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 {
 #if DEBUG_KPTOOL
     kdDebug () << "kpTool::mousePressEvent pos=" << e->pos ()
-                      << " btnStateAfter=" << (int) e->stateAfter ()
-                      << " beganDraw=" << m_beganDraw << endl;
+               << " btnStateAfter=" << (int) e->stateAfter ()
+               << " beganDraw=" << m_beganDraw << endl;
 #endif
 
     // state of all the buttons - not just the one that triggered the event (button())
@@ -355,7 +355,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 {
 #if DEBUG_KPTOOL
     kdDebug () << "kpTool::mouseMoveEvent pos=" << e->pos ()
-                      << " btnStateAfter=" << (int) e->stateAfter () << endl;
+               << " btnStateAfter=" << (int) e->stateAfter () << endl;
 #endif
     if (m_beganDraw)
     {
@@ -387,7 +387,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
 {
 #if DEBUG_KPTOOL
     kdDebug () << "kpTool::mouseReleaseEvent pos=" << e->pos ()
-                      << " btnStateAfter=" << (int) e->stateAfter () << endl;
+               << " btnStateAfter=" << (int) e->stateAfter () << endl;
 #endif
 
     if (m_beganDraw)  // didn't cancelDraw()

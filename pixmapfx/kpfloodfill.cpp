@@ -106,9 +106,9 @@ bool kpFloodFill::prepareColorToChange ()
     m_colorToChange = image.pixel (0, 0);
 
     kdDebug () << "\tcolorToChange: r=" << qRed (m_colorToChange)
-                      << ", b=" << qBlue (m_colorToChange)
-                      << ", g=" << qGreen (m_colorToChange)
-                      << endl;
+               << ", b=" << qBlue (m_colorToChange)
+               << ", g=" << qGreen (m_colorToChange)
+               << endl;
     m_initState = 1;
     return true;
 }
@@ -163,9 +163,9 @@ bool kpFloodFill::prepare ()
     {
     #if 0
         kdDebug () << "Expanding from y=" << (*it).m_y
-                          << " x1=" << (*it).m_x1
-                          << " x2=" << (*it).m_x2
-                          << endl;
+                   << " x1=" << (*it).m_x1
+                   << " x2=" << (*it).m_x2
+                   << endl;
     #endif
 
         // make more lines above and below current line
@@ -199,8 +199,8 @@ QRgb kpFloodFill::pixelColor (int x, int y)
     if (y >= (int) m_fillLinesCache.count ())
     {
         kdError () << "kpFloodFill::pixelColor("
-                          << x << ","
-                          << y << ") y out of range=" << m_pixmapPtr->height () << endl;
+                   << x << ","
+                   << y << ") y out of range=" << m_pixmapPtr->height () << endl;
         return QRgb ();
     }
 

@@ -225,9 +225,9 @@ void kpToolRectangle::applyModifiers ()
 
 #if DEBUG_KPTOOLRECTANGLE
     kdDebug () << "kpToolRectangle::applyModifiers(" << rect
-                      << ") shift=" << m_shiftPressed
-                      << " ctrl=" << m_controlPressed
-                      << endl;
+               << ") shift=" << m_shiftPressed
+               << " ctrl=" << m_controlPressed
+               << endl;
 #endif
 
     // user wants to m_startPoint == centre

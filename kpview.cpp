@@ -339,8 +339,8 @@ void kpView::paintEvent (QPaintEvent *e)
 
 #if DEBUG_KPVIEW
     kdDebug () << "kpView::paintEvent (" << rect.x () << "," << rect.y () << ")"
-                      << " (w=" << rect.width () << ",h=" << rect.height () << ")"
-                      << endl;
+               << " (w=" << rect.width () << ",h=" << rect.height () << ")"
+               << endl;
 #endif
 
     QPainter painter;
@@ -379,10 +379,10 @@ void kpView::paintEvent (QPaintEvent *e)
                     painter.setPen (QPen (Qt::white, 1, Qt::DotLine));
                 #if DEBUG_KPVIEW && 1
                     kdDebug () << "\t\tx=" << m_tempPixmapRect.x () - docRect.x ()
-                                      << " y=" << m_tempPixmapRect.y () - docRect.y ()
-                                      << " w=" << m_tempPixmapRect.width ()
-                                      << " h=" << m_tempPixmapRect.height ()
-                                      << endl;
+                               << " y=" << m_tempPixmapRect.y () - docRect.y ()
+                               << " w=" << m_tempPixmapRect.width ()
+                               << " h=" << m_tempPixmapRect.height ()
+                               << endl;
                 #endif
                     painter.drawRect (m_tempPixmapRect.x () - docRect.x (),
                                       m_tempPixmapRect.y () - docRect.y (),

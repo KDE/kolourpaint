@@ -65,7 +65,7 @@ QColor kpDualColorButton::color (int which) const
     if (which < 0 || which > 1)
     {
         kdWarning () << "kpDualColorButton::color (" << which
-                            << ") - out of range" << endl;
+                     << ") - out of range" << endl;
         which = 0;
     }
 
@@ -77,7 +77,7 @@ void kpDualColorButton::setColor (int which, const QColor &color)
     if (which < 0 || which > 1)
     {
         kdWarning () << "kpDualColorButton::setColor (" << which
-                            << ") - out of range" << endl;
+                     << ") - out of range" << endl;
         which = 0;
     }
 
@@ -253,11 +253,11 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
 
     Qt::ButtonState button = e->button ();
     kdDebug () << "kpColorCells::mouseReleaseEvent(left="
-                      << (button & Qt::LeftButton)
-                      << ",right="
-                      << (button & Qt::RightButton)
-                      << ")"
-                      << endl;
+               << (button & Qt::LeftButton)
+               << ",right="
+               << (button & Qt::RightButton)
+               << ")"
+               << endl;
     if (!((button & Qt::LeftButton) && (button & Qt::RightButton)))
     {
         if (button & Qt::LeftButton)
@@ -278,7 +278,7 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
 void kpColorCells::slotColorSelected (int cell)
 {
     kdDebug () << "kpColorCells::slotColorSelected(cell=" << cell
-                      << ") mouseButton = " << m_mouseButton << endl;
+               << ") mouseButton = " << m_mouseButton << endl;
     QColor c = KColorCells::color (cell);
 
     if (m_mouseButton == 0)
@@ -293,7 +293,7 @@ void kpColorCells::slotColorSelected (int cell)
 void kpColorCells::slotColorDoubleClicked (int cell)
 {
     kdDebug () << "kpColorCells::slotColorDoubleClicked(cell="
-                      << cell << ")" << endl;
+               << cell << ")" << endl;
 
     QColor color = KColorCells::color (cell);
 
@@ -334,7 +334,7 @@ QColor kpColorToolBar::color (int which) const
     if (which < 0 || which > 1)
     {
         kdWarning () << "kpColorToolBar::color (" << which
-                            << ") - out of range" << endl;
+                     << ") - out of range" << endl;
         which = 0;
     }
 
@@ -346,7 +346,7 @@ void kpColorToolBar::setColor (int which, const QColor &color)
     if (which < 0 || which > 1)
     {
         kdWarning () << "kpColorToolBar::setColor (" << which
-                            << ") - out of range" << endl;
+                     << ") - out of range" << endl;
         which = 0;
     }
 

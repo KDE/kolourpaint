@@ -163,8 +163,8 @@ void kpToolToolBar::slotToolSelected ()
     QButton *b = m_buttonGroup->selected ();
 
     kdDebug () << "kpToolToolBar::slotToolSelection() button=" << b
-                      << " tool=" << m_tools [b]
-                      << endl;
+               << " tool=" << m_tools [b]
+               << endl;
     emit toolSelected (m_tools [b]);
 }
 
@@ -172,8 +172,8 @@ void kpToolToolBar::slotToolSelected ()
 void kpToolToolBar::setOrientation (Qt::Orientation o)
 {
     kdDebug () << "kpToolToolBar::setOrientation("
-                      << (o == Qt::Vertical ? "vertical" : "horizontal")
-                      << ") called!" << endl;
+               << (o == Qt::Vertical ? "vertical" : "horizontal")
+               << ") called!" << endl;
 
     // conveniently, QDockWindow::undock() calls us so that we can force
     // the toolbar back to Vertical :)

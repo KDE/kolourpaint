@@ -375,7 +375,7 @@ bool kpDocument::setColorDepth (int)
     if (imageNewDepth.isNull ())
     {
         kdWarning () << "Could not convert depth from "
-                            << oldDepth << " to " << depth << endl;
+                     << oldDepth << " to " << depth << endl;
         return false;
     }
 
@@ -409,11 +409,11 @@ QPixmap kpDocument::getPixmapAt (const QRect &rect) const
 void kpDocument::setPixmapAt (const QPixmap &pixmap, const QPoint &at)
 {
     kdDebug () << "kpDocument::setPixmapAt (pixmap (w="
-                      << pixmap.width ()
-                      << ",h=" << pixmap.height ()
-                      << "), x=" << at.x ()
-                      << ",y=" << at.y ()
-                      << endl;
+               << pixmap.width ()
+               << ",h=" << pixmap.height ()
+               << "), x=" << at.x ()
+               << ",y=" << at.y ()
+               << endl;
 
     QPainter painter (m_pixmap);
     painter.drawPixmap (at, pixmap);

@@ -199,8 +199,8 @@ void kpToolPen::wash (QImage *image, const QRect &imageRect, const QRect &drawRe
 {
 #if DEBUG_KPTOOLPEN && 1
     kdDebug () << "kpToolPen::wash(imageRect=" << imageRect
-                      << ",drawRect=" << drawRect
-                      << ")" << endl;
+               << ",drawRect=" << drawRect
+               << ")" << endl;
 #endif
 
     for (int y = drawRect.top () - imageRect.top ();
