@@ -90,7 +90,7 @@ kpToolPreviewDialog::kpToolPreviewDialog (Features features,
 
 
     m_gridLayout = new QGridLayout (baseWidget, 4, 2,
-                                    marginHint (), spacingHint ());
+                                    0/*margin*/, spacingHint ());
     m_gridNumRows = reserveTopRow ? 1 : 0;
     if (m_dimensionsGroupBox || m_previewGroupBox)
     {

@@ -90,7 +90,7 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (kpMainWindow *mainWindow,
              this, SLOT (slotColorSimilarityValueChanged ()));
 
 
-    QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget, marginHint (), spacingHint () * 2);
+    QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget, 0/*margin*/, spacingHint () * 2);
     baseLayout->addWidget (cubeGroupBox, 1/*stretch*/);
     baseLayout->addWidget (inputGroupBox);
 }
