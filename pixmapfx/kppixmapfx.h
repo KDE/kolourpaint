@@ -35,6 +35,7 @@ class QImage;
 class QPixmap;
 class QPoint;
 class QRect;
+class QWMatrix;
 
 class kpColor;
 
