@@ -573,7 +573,7 @@ kpCommandHistory *kpTool::commandHistory () const
 
 void kpTool::mousePressEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool::mousePressEvent pos=" << e->pos ()
                << " btnStateAfter=" << (int) e->stateAfter ()
                << " beganDraw=" << m_beganDraw << endl;
@@ -585,7 +585,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     if (m_mainWindow && (e->button () & Qt::MidButton) && viewUnderCursor ())
     {
         const QString text = QApplication::clipboard ()->text (QClipboard::Selection);
-    #if DEBUG_KP_TOOL && 1
+    #if DEBUG_KP_TOOL && 0
         kdDebug () << "\tMMB pasteText='" << text << "'" << endl;
     #endif
         if (!text.isEmpty ())
@@ -600,7 +600,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     {
         if (mb == -1 || mb != m_mouseButton)
         {
-        #if DEBUG_KP_TOOL
+        #if DEBUG_KP_TOOL && 0
             kdDebug () << "\tCancelling operation as " << mb << " == -1 or != " << m_mouseButton << endl;
         #endif
 
@@ -625,7 +625,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
         kdError () << "kpTool::mousePressEvent() without a view under the cursor!" << endl;
     }
 
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 0
     if (view)
         kdDebug () << "\tview=" << view->name () << endl;
 #endif
@@ -640,7 +640,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     m_viewUnderStartPoint = view;
     m_lastPoint = QPoint (-1, -1);
 
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "\tBeginning draw @ " << m_currentPoint << endl;
 #endif
 
@@ -652,7 +652,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
 void kpTool::mouseMoveEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool::mouseMoveEvent pos=" << e->pos ()
                << " btnStateAfter=" << (int) e->stateAfter () << endl;
     kpView *v0 = viewUnderCursor (),
@@ -680,7 +680,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
         m_controlPressed = (buttonState & Qt::ControlButton);
         m_altPressed = (buttonState & Qt::AltButton);
 
-    #if DEBUG_KP_TOOL && 1
+    #if DEBUG_KP_TOOL && 0
         kdDebug () << "\tDraw!" << endl;
     #endif
         draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
@@ -699,7 +699,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 
 void kpTool::mouseReleaseEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool::mouseReleaseEvent pos=" << e->pos ()
                << " btnStateAfter=" << (int) e->stateAfter () << endl;
 #endif
@@ -829,7 +829,7 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
             cancelShapeInternal ();
             e->accept ();
         }
-        
+
         break;
 
     case Qt::Key_Enter:
