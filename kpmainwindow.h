@@ -579,8 +579,8 @@ struct kpMainWindowPrivate
     KAction *m_actionMoreEffects;
 
     bool m_toolActionsEnabled;
-    kpSingleKeyTriggersAction *m_actionPrevToolOptionGroup2,
-                              *m_actionNextToolOptionGroup2,
+    kpSingleKeyTriggersAction *m_actionPrevToolOptionGroup1,
+                              *m_actionNextToolOptionGroup1,
                               *m_actionPrevToolOptionGroup2,
                               *m_actionNextToolOptionGroup2;
 };
