@@ -39,6 +39,7 @@ class QPixmap;
 class kpDocument;
 class kpMainWindow;
 
+
 class kpColorEffectCommand : public KCommand
 {
 public:
@@ -72,7 +73,9 @@ class kpColorEffectWidget : public QWidget
 Q_OBJECT
 
 public:
-    kpColorEffectWidget (QWidget *parent, const char *name = 0);
+    kpColorEffectWidget (bool actOnSelection,
+                         kpMainWindow *mainWindow,
+                         QWidget *parent, const char *name = 0);
     virtual ~kpColorEffectWidget ();
 
 signals:
@@ -82,12 +85,15 @@ public:
     virtual bool isNoOp () const = 0;
     virtual QPixmap applyColorEffect (const QPixmap &pixmap) = 0;
 
-    virtual kpColorEffectCommand *createCommand (bool actOnSelection,
-                                                 kpMainWindow *mainWindow) const = 0;
+    virtual kpColorEffectCommand *createCommand () const = 0;
 
 protected:
     int marginHint () const;
     int spacingHint () const;
+
+protected:
+    bool m_actOnSelection;
+    kpMainWindow *m_mainWindow;
 };
 
 

@@ -69,8 +69,10 @@ QPixmap kpEffectContrastCommand::applyColorEffect (const QPixmap &pixmap)
 
 
 
-kpEffectContrastWidget::kpEffectContrastWidget (QWidget *parent, const char *name)
-    : kpColorEffectWidget (parent, name)
+kpEffectContrastWidget::kpEffectContrastWidget (bool actOnSelection,
+                                                kpMainWindow *mainWindow,
+                                                QWidget *parent, const char *name)
+    : kpColorEffectWidget (actOnSelection, mainWindow, parent, name)
 {
     QGridLayout *lay = new QGridLayout (this, 1, 2, marginHint (), spacingHint ());
 
@@ -109,10 +111,9 @@ QPixmap kpEffectContrastWidget::applyColorEffect (const QPixmap &pixmap)
 }
 
 // public virtual [base kpColorEffectWidget]
-kpColorEffectCommand *kpEffectContrastWidget::createCommand (bool actOnSelection,
-                                                             kpMainWindow *mainWindow) const
+kpColorEffectCommand *kpEffectContrastWidget::createCommand () const
 {
     return new kpEffectContrastCommand (m_contrastValueInput->value (),
-                                        actOnSelection,
-                                        mainWindow);
+                                        m_actOnSelection,
+                                        m_mainWindow);
 }

@@ -31,6 +31,8 @@
 #include <kpeffectsdialog.h>
 
 #include <qgroupbox.h>
+#include <qhbox.h>
+#include <qlabel.h>
 #include <qlayout.h>
 
 #include <kcombobox.h>
@@ -39,6 +41,7 @@
 
 #include <kpdocument.h>
 #include <kpeffectcontrast.h>
+#include <kpeffectswirl.h>
 #include <kppixmapfx.h>
 
 
@@ -62,9 +65,20 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
         setCaption (i18n ("More Image Effects"));
 
 
-    m_effectsComboBox = new KComboBox (mainWidget ());
+    QHBox *effectContainer = new QHBox (mainWidget ());
+    effectContainer->setSpacing (spacingHint ());
+    effectContainer->setMargin (0);
+
+    QLabel *label = new QLabel (i18n ("&Effect:"), effectContainer);
+
+    m_effectsComboBox = new KComboBox (effectContainer);
     m_effectsComboBox->insertItem (i18n ("Contrast"));
-    addCustomWidgetToFront (m_effectsComboBox);
+    m_effectsComboBox->insertItem (i18n ("Swirl"));
+
+    label->setBuddy (m_effectsComboBox);
+    effectContainer->setStretchFactor (m_effectsComboBox, 1);
+
+    addCustomWidgetToFront (effectContainer);
 
 
     m_settingsGroupBox = new QGroupBox (i18n ("Settings"), mainWidget ());
@@ -78,6 +92,12 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
              this, SLOT (slotEffectSelected (int)));
     m_effectsComboBox->setCurrentItem (s_lastEffectSelected);
     slotEffectSelected (s_lastEffectSelected);
+
+
+    // TODO: actually work
+    setMinimumSize (500, 480);
+
+    resize (500, 480);
 }
 
 kpEffectsDialog::~kpEffectsDialog ()
@@ -100,7 +120,7 @@ kpColorEffectCommand *kpEffectsDialog::createCommand () const
     if (!m_colorEffectWidget)
         return 0;
 
-    return m_colorEffectWidget->createCommand (m_actOnSelection, m_mainWindow);
+    return m_colorEffectWidget->createCommand ();
 }
 
 
@@ -137,13 +157,22 @@ void kpEffectsDialog::slotEffectSelected (int which)
     kdDebug () << "kpEffectsDialog::slotEffectSelected(" << which << ")" << endl;
 #endif
 
-    delete m_colorEffectWidget;
+    QWidget *oldColorEffectWidget = m_colorEffectWidget;
+
     m_colorEffectWidget = 0;
 
     switch (which)
     {
     case 0:
-        m_colorEffectWidget = new kpEffectContrastWidget (m_settingsGroupBox);
+        m_colorEffectWidget = new kpEffectContrastWidget (m_actOnSelection,
+                                                          m_mainWindow,
+                                                          m_settingsGroupBox);
+        break;
+
+    case 1:
+        m_colorEffectWidget = new kpEffectSwirlWidget (m_actOnSelection,
+                                                       m_mainWindow,
+                                                       m_settingsGroupBox);
         break;
     }
 
@@ -157,9 +186,12 @@ void kpEffectsDialog::slotEffectSelected (int which)
 
         connect (m_colorEffectWidget, SIGNAL (settingsChanged ()),
                  this, SLOT (slotUpdate ()));
+
+
+        s_lastEffectSelected = which;
     }
 
-    s_lastEffectSelected = which;
+    delete oldColorEffectWidget;
 }
 
 

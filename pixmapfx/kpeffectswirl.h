@@ -26,42 +26,49 @@
 */
 
 
-#ifndef KP_EFFECT_CONTRAST_H
-#define KP_EFFECT_CONTRAST_H
+#ifndef KP_EFFECT_SWIRL_H
+#define KP_EFFECT_SWIRL_H
+
+
+#include <kpcolor.h>
 
 #include <kpcoloreffect.h>
 
 
 class KIntNumInput;
 
-class kpMainWindowe;
+class kpMainWindow;
 
 
-class kpEffectContrastCommand : public kpColorEffectCommand
+class kpEffectSwirlCommand : public kpColorEffectCommand
 {
 public:
-    kpEffectContrastCommand (int contrastValue,
-                             bool actOnSelection,
-                             kpMainWindow *mainWindow);
-    virtual ~kpEffectContrastCommand ();
+    kpEffectSwirlCommand (int swirlDegrees,
+                          const kpColor &backgroundColor,
+                          bool actOnSelection,
+                          kpMainWindow *mainWindow);
+    virtual ~kpEffectSwirlCommand ();
 
-    static QPixmap applyColorEffect (const QPixmap &pixmap, int contrastValue);
+    static QPixmap applyColorEffect (const QPixmap &pixmap,
+                                     int swirlDegrees,
+                                     const kpColor &backgroundColor);
 
 protected:
     virtual QPixmap applyColorEffect (const QPixmap &pixmap);
 
 protected:
-    int m_contrastValue;
+    int m_swirlDegrees;
+    kpColor m_backgroundColor;
 };
 
 
-class kpEffectContrastWidget : public kpColorEffectWidget
+class kpEffectSwirlWidget : public kpColorEffectWidget
 {
 public:
-    kpEffectContrastWidget (bool actOnSelection,
-                            kpMainWindow *mainWindow,
-                            QWidget *parent, const char *name = 0);
-    virtual ~kpEffectContrastWidget ();
+    kpEffectSwirlWidget (bool actOnSelection,
+                         kpMainWindow *mainWindow,
+                         QWidget *parent, const char *name = 0);
+    virtual ~kpEffectSwirlWidget ();
 
     virtual bool isNoOp () const;
     virtual QPixmap applyColorEffect (const QPixmap &pixmap);
@@ -69,8 +76,8 @@ public:
     virtual kpColorEffectCommand *createCommand () const;
 
 protected:
-    KIntNumInput *m_contrastValueInput;
+    KIntNumInput *m_swirlDegreesInput;
 };
 
 
-#endif  // KP_EFFECT_CONTRAST_H
+#endif  // KP_EFFECT_SWIRL_H

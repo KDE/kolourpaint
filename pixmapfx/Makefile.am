@@ -6,6 +6,7 @@ noinst_LTLIBRARIES = libkolourpaintpixmapfx.la
 libkolourpaintpixmapfx_la_SOURCES = kpcoloreffect.cpp \
     kpeffectcontrast.cpp \
     kpeffectsdialog.cpp \
+    kpeffectswirl.cpp \
     kpfloodfill.cpp \
     kppixmapfx.cpp
 
