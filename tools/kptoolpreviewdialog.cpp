@@ -41,38 +41,8 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
+#include <kpresizesignallinglabel.h>
 #include <kpselection.h>
-
-
-kpResizeSignallingLabel::kpResizeSignallingLabel (const QString &string,
-                                                  QWidget *parent,
-                                                  const char *name)
-    : QLabel (string, parent, name)
-{
-}
-
-kpResizeSignallingLabel::kpResizeSignallingLabel (QWidget *parent,
-                                                  const char *name)
-    : QLabel (parent, name)
-{
-}
-
-kpResizeSignallingLabel::~kpResizeSignallingLabel ()
-{
-}
-
-
-// protected virtual [base QLabel]
-void kpResizeSignallingLabel::resizeEvent (QResizeEvent *e)
-{
-#if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kdDebug () << "kpResizeSignallingLabel::resizeEvent() newSize=" << e->size ()
-               << " oldSize=" << e->oldSize () << endl;
-#endif
-    QLabel::resizeEvent (e);
-
-    emit resized ();
-}
 
 
 kpToolPreviewDialog::kpToolPreviewDialog (Features features,

@@ -29,34 +29,18 @@
 #define __kp_tool_preview_dialog_h__
 
 
-#include <qlabel.h>
 #include <qpixmap.h>
 
 #include <kdialogbase.h>
 
 
+class QLabel;
 class QGridLayout;
 class QGroupBox;
 
 class kpDocument;
 class kpMainWindow;
-
-
-class kpResizeSignallingLabel : public QLabel
-{
-Q_OBJECT
-
-public:
-    kpResizeSignallingLabel (const QString &string, QWidget *parent, const char *name = 0);
-    kpResizeSignallingLabel (QWidget *parent, const char *name = 0);
-    virtual ~kpResizeSignallingLabel ();
-
-signals:
-    void resized ();
-
-protected:
-    virtual void resizeEvent (QResizeEvent *e);
-};
+class kpResizeSignallingLabel;
 
 
 class kpToolPreviewDialog : public KDialogBase

@@ -6,6 +6,7 @@ noinst_LTLIBRARIES = libkolourpaintwidgets.la
 libkolourpaintwidgets_la_SOURCES = kpcolorsimilaritycube.cpp \
     kpcolorsimilaritydialog.cpp \
     kpcolortoolbar.cpp \
+    kpresizesignallinglabel.cpp \
     kpsqueezedtextlabel.cpp \
     kptooltoolbar.cpp \
     kptoolwidgetbase.cpp kptoolwidgetbrush.cpp \
