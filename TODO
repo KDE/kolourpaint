@@ -17,14 +17,14 @@ make fill style GUI clearer
 
 working thumbnail view; also maybe shouldn't be a toolbar
 
-kpcolortoolbar - open/save palette
-
 brush shape in wrong place if zoom smaller (or scroll with wheel)
 Reason: the mouse isn't moving relative to the view (as the view is moving
 relative to the mouse instead) so its position stays the same
 (relative to the document).
 if brush, close, move cursor, new; brush in wrong place
 shift+ctrl+alt modifiers can go out of sync
+
+kpcolortoolbar - open/save palette
 
 clean up kpmainwindow
 - statusbar
