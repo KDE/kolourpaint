@@ -9,24 +9,15 @@ Look in BUGS, patches/, grep sources for "OPT", "HACK" & "TODO" and look
 here:
 
 
-Update kolourpaint.desktop MimeType= line
-
-Dries Verachtert:
-"
-Please note that the make install of kolourpaint places the desktop file 
-in /usr/share/applications/kde/ and not in /usr/share/applications which 
-should be used following the freedesktop standard (so it works in freedesktop 
-compatible windowmanagers like kde and gnome). Now it only works in kde i 
-think.
-Please also note that the Categories should contain 'Application' within the 
-desktop file to be freedesktop compatible.
-"
-
 kptoolpreviewdialog: wrong if new pixels result in diff selection transparency
 
-next time you do a bin package, use --disable-debug
+DPI when printing?
 
-how do you distribute the translation packs?
+resize handles overlap text at 100% zoom
+
+intuitiveness of "Set as Image" when haven't yet pulled and sel has transparency
+
+userinstinct usability review
 
 
 KolourPaint 1.2
@@ -36,25 +27,16 @@ KolourPaint 1.2
 KolourPaint 1.4
 ~~~~~~~~~~~~~~~
 
-componentisation
-
-DCOP scriptable
-
 better graphics backend
 - screen depth independent (Igor Stepin)
 - supports alpha
 
+componentisation
+
+DCOP scriptable
+
 Hogne Titlestad:
-- http://www.squirreldome.com/
 - configurable palette size (up to 256 colours) + Stephen Sweeney
-- generate gradient between 2 colours in palette
-- animation/film strip
-- "Lighten/Darken tool, even without antialiasing. Works *wonders* when
-   making gfx. Combined with a smooth/blur tool amazing results can be
-   achieved ;)  I don't think this would be hard to implement at all,
-   perhaps as an option for the Pen.  Darkening with the right mouse button
-   and lightening with the left.  Then blurring here and there to make
-   smooth highlights."
 - "Would also be nice to have a keyboard shortcut to traverse through the
    palette. If I say have a palette with 16 greys, 16 reds, 16 blues etc
    then moving to the next/previous palette item with keys would be a
@@ -87,6 +69,73 @@ index 0. From there go one color forward or backward.
 
 kpcolortoolbar - open/save palette
 
+allow user to hide Tool Box & Colour Palette if they really insist (it is
+possible to ALT+F4 them and can't get them back!)
+
+Brad Grant:
+- red-eye removal (see QImage for windows and LPhoto from Lindows (Bela-Andreas))
+
+Bela-Andreas Bargel:
+- add a "info-button" (or menu-entry) which
+  shows all (meta-)data about the image (eg. to set its
+  dpi-resolution, its size, jpg/png-comments, colour
+  mode, used colours, file size,EXIF-data...)
+- kooka scanning
+
+- acquire from kamera
+
+Bart Symons
+- "Image" -> "Properties"
+
+fix Bug #23. Changing tool options while in the middle of a drawing option may
+   confuse KolourPaint.
+    
+use KSaveFile for atomic writes - if the temp is put in the same place as
+dest, what about small media like floppy?
+
+resize doc or sel freehand - usershapepoints should be (after string freeze):
+"oldX x oldY - newX x newY  |||  (+|-)deltaX x (+|-)deltaY"
+instead of
+"oldX , oldY - newX , newY  |||  (-)deltaX x (-)deltaY"
+(the "+" is to show that it's a delta, not a size; on 2nd thoughts, if
+they're both -, it would be ambiguous)
+
+Dialog caption "More Image Effects" --> "More Effects"
+
+"Image / Invert Colors" vs "Image / More Effects / Invert"
+
+"Edit / Paste in New Window" creates a "Set as Image" command -
+name doesn't make sense in that context
+
+AUDIT: X.org has -pixmap24 & -pixmap32 - how will that affect Undo/Redo
+       size calculations
+
+AUDIT: use of QPoint () or QPoint (-1, -1) as a sentinel is worrying since
+       it's a legal point when dragging out a rectangle
+
+"Soften & Sharpen" in cmd history should be either "Soften" or "Sharpen"
+
+scaling image with sel (no pixmap), and then manip sel adds extra "Selection: Create"
+(this is a rather difficult problem to fix since sel has already been used
+ for Image/Scale so would be inapproriate to replace it in cmd history)
+
+
+~~~
+
+
+Hogne Titlestad:
+- http://www.squirreldome.com/
+- generate gradient between 2 colours in palette
+- animation/film strip
+- "Lighten/Darken tool, even without antialiasing. Works *wonders* when
+   making gfx. Combined with a smooth/blur tool amazing results can be
+   achieved ;)  I don't think this would be hard to implement at all,
+   perhaps as an option for the Pen.  Darkening with the right mouse button
+   and lightening with the left.  Then blurring here and there to make
+   smooth highlights."
+
+blur & sharpen tools
+
 improve contrast quality
 
 delta drawing of resize line to stop flicker
@@ -118,9 +167,6 @@ draw rectangle and land on doc resize handle - wrong status mess
 - that's a problem with Qt not giving EnterEvents when the mouse move is
   initiated from another object (see kpViewManager::viewUnderCursor() for
   the same problem)
-
-allow user to hide Tool Box & Colour Palette if they really insist (it is
-possible to ALT+F4 them and can't get them back!)
 
 sel border should not be xored against uninitialised rgb values (transparent pixels)
 e.g. CTRL+A, Crop Outside the Selection
@@ -176,26 +222,15 @@ Image menu items as ordinary tools - e.g. freehand rotate would be nice
 
 kptoolwidgetbase - spacing between items, make contentsRect() actual size wanted
 
-blur & sharpen tools
-
 "a simple plugins framework that allows plugins to be written in various
 languages (C, Python and Perl being the obvious choices) to allow people to
 extend it into the realms of PaintShop Pro without impacting on the core
 philosophy of the app, which seems to be simplicity." -- Tom
 
-Brad Grant:
-- red-eye removal (see QImage for windows and LPhoto from Lindows (Bela-Andreas))
-
 Bela-Andreas Bargel:
-- kooka scanning
 - greyscale masks
-- add a "info-button" (or menu-entry) which
-  shows all (meta-)data about the image (eg. to set its
-  dpi-resolution, its size, jpg/png-comments, colour
-  mode, used colours, file size,EXIF-data...)
 
 Bart Symons
-- "Image" -> "Properties"
 - "Edit" -> "Duplicate current image" (opens up another Kolourpaint instance
 with a duplicate of the current image)
 
@@ -265,34 +300,14 @@ Goto next/prev color in palete
 
 make sure session restore actually works
 
-resize doc or sel freehand - usershapepoints should be (after string freeze):
-"oldX x oldY - newX x newY  |||  (+|-)deltaX x (+|-)deltaY"
-instead of
-"oldX , oldY - newX , newY  |||  (-)deltaX x (-)deltaY"
-(the "+" is to show that it's a delta, not a size; on 2nd thoughts, if
-they're both -, it would be ambiguous)
-
 refactor kpToolConvertToGrayscaleCommand:
 - become kpColorEffect
 - move in kpPixmapFX::convertToGrayscale()
-
-Dialog caption "More Image Effects" --> "More Effects"
-
-"Image / Invert Colors" vs "Image / More Effects / Invert"
-
-"Edit / Paste in New Window" creates a "Set as Image" command -
-name doesn't make sense in that context
 
 with a 2 colour image, save as monochrome - ok
 but then add a colour and then save - it's drastically different -
 all black & white (and just all black if not dither); need better
 monochrome dither than Qt
-
-AUDIT: X.org has -pixmap24 & -pixmap32 - how will that affect Undo/Redo
-       size calculations
-
-use KSaveFile for atomic writes - if the temp is put in the same place as
-dest, what about small media like floppy?
 
 keyboard friendly scrollview
 
@@ -307,19 +322,10 @@ ditto for setTempPixmapAt et. al. (maybe not for selections, still thinking)
 Bug: dragging a line extending outside of doc makes it transparent (RGB_A_ for PNG saves)
 Hypothesis: kpPixmapFX::getPixmapAt() defines undefined pixels as transparent
 
-AUDIT: use of QPoint () or QPoint (-1, -1) as a sentinel is worrying since
-       it's a legal point when dragging out a rectangle
-
 can't copy 1600x1200 season.jpg double scaled from one kolourpaint to another
 (Bug #20)
 
 QColor::enterAllocContext () looks interesting
-
-"Soften & Sharpen" in cmd history should be either "Soften" or "Sharpen"
-
-scaling image with sel (no pixmap), and then manip sel adds extra "Selection: Create"
-(this is a rather difficult problem to fix since sel has already been used
- for Image/Scale so would be inapproriate to replace it in cmd history)
 
 
 KDE
@@ -355,8 +361,6 @@ fill - can optimise mem usage by deleting kpFloodFill object
      - can optimise mem usage by detecting single colour fills
 
 ability to specify measurements in pt,mm,cm,m,in instead of just pixels
-
-ruler
 
 grid for zoom levels > 200 but % 100 != 0
 
@@ -422,7 +426,11 @@ http://dot.kde.org/1078028599/:
 * Anonymous on Sunday 29/Feb/2004, @09:15:
   - Free definable sizes for line thickness/spraycan/color eraser,
     line styles (dashed, dotted, ...),
-    fill patterns, chooseable brushes, rulers
+    fill patterns, chooseable brushes
+
+http://dot.kde.org/1078028599/:
+* Anonymous on Sunday 29/Feb/2004, @09:15 (+Ismail Belhachmi):
+  - GIMP style rulers
 
 kde-apps.org:
 * posthuman  on: 02/28/2004, 15:50
