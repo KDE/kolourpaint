@@ -26,6 +26,9 @@
 */
 
 
+#define DEBUG_KP_FLOOD_FILL 0
+
+
 #include <qapplication.h>
 #include <qbitmap.h>
 #include <qpainter.h>
@@ -112,27 +115,37 @@ bool kpFloodFill::fill ()
         QApplication::restoreOverrideCursor ();
     }
     else
+    {
+    #if DEBUG_KP_FLOOD_FILL && 1
         kdDebug () << "kpFloodFill::fill() performing NOP fill" << endl;
+    #endif
+    }
 
     return true;
 }
 
 bool kpFloodFill::prepareColorToChange ()
 {
+#if DEBUG_KP_FLOOD_FILL && 1
     kdDebug () << "kpFloodFill::prepareColorToChange" << endl;
+#endif
 
     m_colorToChange = kpPixmapFX::getColorAtPixel (*m_pixmapPtr, QPoint (m_x, m_y));
 
     if (m_colorToChange.isOpaque ())
     {
+    #if DEBUG_KP_FLOOD_FILL && 1
         kdDebug () << "\tcolorToChange: r=" << m_colorToChange.red ()
                    << ", b=" << m_colorToChange.blue ()
                    << ", g=" << m_colorToChange.green ()
                    << endl;
+    #endif
     }
     else
     {
+    #if DEBUG_KP_FLOOD_FILL && 1
         kdDebug () << "\tcolorToChange: transparent" << endl;
+    #endif
     }
 
     m_initState = 1;
@@ -143,7 +156,9 @@ bool kpFloodFill::prepareColorToChange ()
 
 bool kpFloodFill::prepare ()
 {
+#if DEBUG_KP_FLOOD_FILL && 1
     kdDebug () << "kpFloodFill::prepare()" << endl;
+#endif
     m_boundingRect = QRect ();
 
     if (m_initState < 1 && !prepareColorToChange ())
@@ -152,7 +167,9 @@ bool kpFloodFill::prepare ()
         return false;
     }
 
+#if DEBUG_KP_FLOOD_FILL && 1
     kdDebug () << "\tperforming NOP check" << endl;
+#endif
 
     // get the color we need to replace
     if (m_processedColorSimilarity == 0 && m_color == m_colorToChange)
@@ -163,7 +180,9 @@ bool kpFloodFill::prepare ()
         return true;
     }
 
+#if DEBUG_KP_FLOOD_FILL && 1
     kdDebug () << "\tconverting to image" << endl;
+#endif
 
     // is this the only way to read pixels?
     m_image = kpPixmapFX::convertToImage (*m_pixmapPtr);
@@ -173,12 +192,16 @@ bool kpFloodFill::prepare ()
         return false;
     }
 
+#if DEBUG_KP_FLOOD_FILL && 1
     kdDebug () << "\tcreating fillLinesCache" << endl;
+#endif
 
     // ready cache
     m_fillLinesCache.resize (m_pixmapPtr->height ());
 
+#if DEBUG_KP_FLOOD_FILL && 1
     kdDebug () << "\tcreating fill lines" << endl;
+#endif
 
     // draw initial line
     addLine (m_y, findMinX (m_y, m_x), findMaxX (m_y, m_x));
@@ -187,7 +210,7 @@ bool kpFloodFill::prepare ()
          it != m_fillLines.end ();
          it++)
     {
-    #if 0
+    #if DEBUG_KP_FLOOD_FILL && 0
         kdDebug () << "Expanding from y=" << (*it).m_y
                    << " x1=" << (*it).m_x1
                    << " x2=" << (*it).m_x2
@@ -199,7 +222,9 @@ bool kpFloodFill::prepare ()
         findAndAddLines (*it, +1);
     }
 
+#if DEBUG_KP_FLOOD_FILL && 1
     kdDebug () << "\tfinalising memory usage" << endl;
+#endif
 
     // finalize memory usage
     m_image.reset ();
@@ -211,7 +236,7 @@ bool kpFloodFill::prepare ()
 
 void kpFloodFill::addLine (int y, int x1, int x2)
 {
-#if 0
+#if DEBUG_KP_FLOOD_FILL && 0
     kdDebug () << "kpFillCommand::fillAddLine (" << y << "," << x1 << "," << x2 << ")" << endl;
 #endif
 
