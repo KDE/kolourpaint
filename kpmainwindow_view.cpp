@@ -38,7 +38,6 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kmessagebox.h>  // DEP
 #include <kstdaction.h>
 
 #include <kpdefs.h>
