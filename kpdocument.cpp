@@ -1300,8 +1300,17 @@ bool kpDocument::selectionCopyOntoDocument (bool useTransparentPixmap)
     if (!boundingRect.isValid ())
         return false;
 
-    paintPixmapAt (useTransparentPixmap ? sel->transparentPixmap () : sel->opaquePixmap (),
-                   boundingRect.topLeft ());
+    if (!sel->isText ())
+    {
+        paintPixmapAt (useTransparentPixmap ? sel->transparentPixmap () : sel->opaquePixmap (),
+                       boundingRect.topLeft ());
+    }
+    else
+    {
+        // (for antialiasing with background)
+        sel->paint (m_pixmap, rect ());
+    }
+
     return true;
 }
 

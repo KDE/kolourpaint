@@ -129,8 +129,22 @@ public:
     bool contains (const QPoint &point) const;
     bool contains (int x, int y);
 
-    QPixmap *pixmap (bool evenIfText = true) const;
+
+    // (Avoid using for text selections since text selection may
+    //  require a background for antialiasing purposes - use paint()
+    //  instead, else no antialising)
+    QPixmap *pixmap () const;
     void setPixmap (const QPixmap &pixmap);
+
+    bool usesBackgroundPixmapToPaint () const;
+
+private:
+    void paintOpaqueText (QPixmap *destPixmap, const QRect &docRect) const;
+    QPixmap transparentForegroundTextPixmap () const;
+
+public:
+    // (<docRect> is the document rectangle that <*destPixmap> represents)
+    void paint (QPixmap *destPixmap, const QRect &docRect) const;
 
 private:
     void calculateTextPixmap ();
@@ -173,14 +187,14 @@ public:
 
     // TODO: ret val inconstent with pixmap()
     //       - fix when merge with kpTempPixmap
-    QPixmap opaquePixmap (bool evenIfText = true) const;  // same as pixmap()
+    QPixmap opaquePixmap () const;  // same as pixmap()
 
 private:
     void calculateTransparencyMask ();
 
 public:
     // Returns opaquePixmap() after applying kpSelectionTransparency
-    QPixmap transparentPixmap (bool evenIfText = true) const;
+    QPixmap transparentPixmap () const;
 
     kpSelectionTransparency transparency () const;
     // Returns whether or not the selection changed due to setting the

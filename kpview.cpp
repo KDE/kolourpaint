@@ -1231,16 +1231,10 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
     //
     // Draw selection pixmap (if there is one)
     //
-
-    if (sel->pixmap () && !sel->pixmap ()->isNull ())
-    {
-    #if DEBUG_KP_VIEW_RENDERER && 1
-        kdDebug () << "\tdraw sel pixmap @ " << sel->topLeft () << endl;
-    #endif
-        kpPixmapFX::paintPixmapAt (destPixmap,
-                                   sel->topLeft () - docRect.topLeft (),
-                                   sel->transparentPixmap ());
-    }
+#if DEBUG_KP_VIEW_RENDERER && 1
+    kdDebug () << "\tdraw sel pixmap @ " << sel->topLeft () << endl;
+#endif
+    sel->paint (destPixmap, docRect);
 
 
     //

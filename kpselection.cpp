@@ -530,17 +530,9 @@ bool kpSelection::contains (int x, int y)
 
 
 // public
-QPixmap *kpSelection::pixmap (bool evenIfText) const
+QPixmap *kpSelection::pixmap () const
 {
-    if (m_type != kpSelection::Text ||
-        (m_type == kpSelection::Text && evenIfText))
-    {
-        return m_pixmap;
-    }
-    else
-    {
-        return 0;
-    }
+    return m_pixmap;
 }
 
 // public
@@ -594,6 +586,16 @@ void kpSelection::setPixmap (const QPixmap &pixmap)
 }
 
 
+// public
+bool kpSelection::usesBackgroundPixmapToPaint () const
+{
+    // Opaque text with transparent background needs to antialias with
+    // doc pixmap below it.
+    return (isText () &&
+            m_textStyle.foregroundColor ().isOpaque () &&
+            m_textStyle.effectiveBackgroundColor ().isTransparent ());
+}
+
 static int mostContrastingValue (int val)
 {
     if (val <= 127)
@@ -611,36 +613,108 @@ static QRgb mostContrastingRGB (QRgb val)
 }
 
 // private
-void kpSelection::calculateTextPixmap ()
+void kpSelection::paintOpaqueText (QPixmap *destPixmap, const QRect &docRect) const
 {
-    if (!isText ())
-    {
-        kdError () << "kpSelection::calculateTextPixmap() not a text selection" << endl;
+    if (!isText () || !m_textStyle.foregroundColor ().isOpaque ())
         return;
+
+
+    const QRect modifyingRect = docRect.intersect (boundingRect ());
+    if (modifyingRect.isEmpty ())
+        return;
+
+
+    QBitmap destPixmapMask;
+    QPainter destPixmapPainter, destPixmapMaskPainter;
+
+    if (destPixmap->mask ())
+    {
+        if (m_textStyle.effectiveBackgroundColor ().isTransparent ())
+        {
+            QRect modifyingRectRelPixmap = modifyingRect;
+            modifyingRectRelPixmap.moveBy (-docRect.x (), -docRect.y ());
+
+            // Set the RGB of transparent pixels to foreground colour to avoid
+            // anti-aliasing the foreground coloured text with undefined RGBs.
+            kpPixmapFX::setPixmapAt (destPixmap,
+                modifyingRectRelPixmap,
+                kpPixmapFX::pixmapWithDefinedTransparentPixels (
+                    kpPixmapFX::getPixmapAt (*destPixmap, modifyingRectRelPixmap),
+                    m_textStyle.foregroundColor ().toQColor ()));
+        }
+
+        destPixmapMask = *destPixmap->mask ();
+        destPixmapMaskPainter.begin (&destPixmapMask);
+        destPixmapMaskPainter.translate (-docRect.x (), -docRect.y ());
+        destPixmapMaskPainter.setPen (Qt::color1/*opaque*/);
+        destPixmapMaskPainter.setFont (m_textStyle.font ());
     }
 
-#if DEBUG_KP_SELECTION
-    kdDebug () << "kpSelection::calculateTextPixmap() textStyle: fcol="
-               << (int *) m_textStyle.foregroundColor ().toQRgb ()
-               << " bcol="
-               << (int *) m_textStyle.effectiveBackgroundColor ().toQRgb ()
-               << endl;
-#endif
+    destPixmapPainter.begin (destPixmap);
+    destPixmapPainter.translate (-docRect.x (), -docRect.y ());
+    destPixmapPainter.setPen (m_textStyle.foregroundColor ().toQColor ());
+    destPixmapPainter.setFont (m_textStyle.font ());
 
-    delete m_pixmap;
-    m_pixmap = new QPixmap (m_rect.width (), m_rect.height ());
-    QBitmap pixmapMask;
+
+    if (m_textStyle.effectiveBackgroundColor ().isOpaque ())
+    {
+        destPixmapPainter.fillRect (
+            boundingRect (),
+            m_textStyle.effectiveBackgroundColor ().toQColor ());
+
+        if (destPixmapMaskPainter.isActive ())
+        {
+            destPixmapMaskPainter.fillRect (
+                boundingRect (),
+                Qt::color1/*opaque*/);
+        }
+    }
+
+
+#define PAINTER_CALL(cmd)                   \
+{                                           \
+    if (destPixmapPainter.isActive ())      \
+        destPixmapPainter . cmd ;           \
+                                            \
+    if (destPixmapMaskPainter.isActive ())  \
+        destPixmapMaskPainter . cmd ;       \
+}
+    PAINTER_CALL (drawText (textAreaRect (), 0/*flags*/, text ()));
+#undef PAINTER_CALL
+
+
+    if (destPixmapPainter.isActive ())
+        destPixmapPainter.end ();
+
+    if (destPixmapMaskPainter.isActive ())
+        destPixmapMaskPainter.end ();
+
+
+    if (!destPixmapMask.isNull ())
+        destPixmap->setMask (destPixmapMask);
+}
+
+// private
+QPixmap kpSelection::transparentForegroundTextPixmap () const
+{
+    if (!isText () || !m_textStyle.foregroundColor ().isTransparent ())
+        return QPixmap ();
+
+
+    QPixmap pixmap (m_rect.width (), m_rect.height ());
+    QBitmap pixmapMask (m_rect.width (), m_rect.height ());
 
 
     // Iron out stupid case first
-    if (m_textStyle.foregroundColor ().isTransparent () &&
-        m_textStyle.effectiveBackgroundColor ().isTransparent ())
+    if (m_textStyle.effectiveBackgroundColor ().isTransparent ())
     {
-        pixmapMask.resize (m_pixmap->width (), m_pixmap->height ());
         pixmapMask.fill (Qt::color0/*transparent*/);
-        m_pixmap->setMask (pixmapMask);
-        return;
+        pixmap.setMask (pixmapMask);
+        return pixmap;
     }
+
+
+    // -- Foreground transparent, background opaque --
 
 
     QFont font = m_textStyle.font ();
@@ -650,53 +724,23 @@ void kpSelection::calculateTextPixmap ()
 
     QPainter pixmapPainter, pixmapMaskPainter;
 
-
-    if (m_textStyle.effectiveBackgroundColor ().isOpaque ())
-    {
-        m_pixmap->fill (m_textStyle.effectiveBackgroundColor ().toQColor ());
-    }
-    else  // background transparent -> foreground opaque
-    {
-        // Set the background colour == foreground colour (independent
-        // of what happens with the mask bitmap) to avoid anti-aliasing the
-        // foreground coloured text with some other arbitrarily chosen colour
-        m_pixmap->fill (m_textStyle.foregroundColor ().toQColor ());
-    }
-
-    pixmapPainter.begin (m_pixmap);
-    if (m_textStyle.foregroundColor ().isOpaque ())
-    {
-        pixmapPainter.setPen (m_textStyle.foregroundColor ().toQColor ());
-    }
-    else  // foreground transparent -> background opaque
-    {
-        // HACK: Transparent foreground colour + antialiased fonts don't
-        // work - they don't seem to be able to draw in
-        // Qt::color0/*transparent*/ (but Qt::color1 seems Ok).
-        // So we draw in a contrasting color to the background so that
-        // we can identify the transparent pixels for manually creating
-        // the mask.
-        pixmapPainter.setPen (
-            QColor (mostContrastingRGB (m_textStyle.effectiveBackgroundColor ().toQRgb () & RGB_MASK)));
-    }
+    pixmap.fill (m_textStyle.effectiveBackgroundColor ().toQColor ());
+    pixmapPainter.begin (&pixmap);
+    // HACK: Transparent foreground colour + antialiased fonts don't
+    // work - they don't seem to be able to draw in
+    // Qt::color0/*transparent*/ (but Qt::color1 seems Ok).
+    // So we draw in a contrasting color to the background so that
+    // we can identify the transparent pixels for manually creating
+    // the mask.
+    pixmapPainter.setPen (
+        QColor (mostContrastingRGB (m_textStyle.effectiveBackgroundColor ().toQRgb () & RGB_MASK)));
     pixmapPainter.setFont (font);
 
 
-    if (m_textStyle.foregroundColor ().isTransparent () ||
-        m_textStyle.effectiveBackgroundColor ().isTransparent ())
-    {
-        pixmapMask.resize (m_rect.width (), m_rect.height ());
-        pixmapMask.fill (m_textStyle.effectiveBackgroundColor ().maskColor ());
-
-        pixmapMaskPainter.begin (&pixmapMask);
-    #if DEBUG_KP_SELECTION
-        kdDebug () << "\tfcol.maskColor="
-                   << (int *) m_textStyle.foregroundColor ().maskColor ().rgb ()
-                   << endl;
-    #endif
-        pixmapMaskPainter.setPen (m_textStyle.foregroundColor ().maskColor ());
-        pixmapMaskPainter.setFont (font);
-    }
+    pixmapMask.fill (Qt::color1/*opaque*/);
+    pixmapMaskPainter.begin (&pixmapMask);
+    pixmapMaskPainter.setPen (Qt::color0/*transparent*/);
+    pixmapMaskPainter.setFont (font);
 
 
 #define PAINTER_CALL(cmd)               \
@@ -720,34 +764,106 @@ void kpSelection::calculateTextPixmap ()
         pixmapMaskPainter.end ();
 
 
-    if (m_textStyle.foregroundColor ().isTransparent ())
+#if DEBUG_KP_SELECTION
+    kdDebug () << "\tinvoking foreground transparency hack" << endl;
+#endif
+    QImage image = kpPixmapFX::convertToImage (pixmap);
+    QRgb backgroundRGB = image.pixel (0, 0);  // on textBorderSize()
+
+    pixmapMaskPainter.begin (&pixmapMask);
+    for (int y = 0; y < image.height (); y++)
     {
-    #if DEBUG_KP_SELECTION
-        kdDebug () << "\tinvoking foreground transparency hack" << endl;
-    #endif
-        QImage image = kpPixmapFX::convertToImage (*m_pixmap);
-        QRgb backgroundRGB = image.pixel (0, 0);  // on textBorderSize()
-
-        pixmapMaskPainter.begin (&pixmapMask);
-        for (int y = 0; y < image.height (); y++)
+        for (int x = 0; x < image.width (); x++)
         {
-            for (int x = 0; x < image.width (); x++)
-            {
-                if (image.pixel (x, y) == backgroundRGB)
-                    pixmapMaskPainter.setPen (Qt::color1/*opaque*/);
-                else
-                    pixmapMaskPainter.setPen (Qt::color0/*transparent*/);
+            if (image.pixel (x, y) == backgroundRGB)
+                pixmapMaskPainter.setPen (Qt::color1/*opaque*/);
+            else
+                pixmapMaskPainter.setPen (Qt::color0/*transparent*/);
 
-                pixmapMaskPainter.drawPoint (x, y);
-            }
+            pixmapMaskPainter.drawPoint (x, y);
         }
-        pixmapMaskPainter.end ();
     }
+    pixmapMaskPainter.end ();
 
 
     if (!pixmapMask.isNull ())
-        m_pixmap->setMask (pixmapMask);
+        pixmap.setMask (pixmapMask);
+
+
+    return pixmap;
 }
+
+// public
+void kpSelection::paint (QPixmap *destPixmap, const QRect &docRect) const
+{
+    if (!isText ())
+    {
+        if (pixmap () && !pixmap ()->isNull ())
+        {
+            kpPixmapFX::paintPixmapAt (destPixmap,
+                                       topLeft () - docRect.topLeft (),
+                                       transparentPixmap ());
+        }
+    }
+    else
+    {
+    #if DEBUG_KP_SELECTION
+        kdDebug () << "kpSelection::paint() textStyle: fcol="
+                << (int *) m_textStyle.foregroundColor ().toQRgb ()
+                << " bcol="
+                << (int *) m_textStyle.effectiveBackgroundColor ().toQRgb ()
+                << endl;
+    #endif
+
+        if (m_textStyle.foregroundColor ().isOpaque ())
+        {
+            // (may have to antialias with background so don't use m_pixmap)
+            paintOpaqueText (destPixmap, docRect);
+        }
+        else
+        {
+            if (!m_pixmap)
+            {
+                kdError () << "kpSelection::paint() without m_pixmap?" << endl;
+                return;
+            }
+
+            // (transparent foreground slow to render, no antialiasing
+            //  so use m_pixmap cache)
+            kpPixmapFX::paintPixmapAt (destPixmap,
+                                       topLeft () - docRect.topLeft (),
+                                       *m_pixmap);
+        }
+    }
+}
+
+// private
+void kpSelection::calculateTextPixmap ()
+{
+    if (!isText ())
+    {
+        kdError () << "kpSelection::calculateTextPixmap() not text sel"
+                   << endl;
+        return;
+    }
+
+    delete m_pixmap;
+
+    if (m_textStyle.foregroundColor().isOpaque ())
+    {
+        m_pixmap = new QPixmap (m_rect.width (), m_rect.height ());
+
+        if (usesBackgroundPixmapToPaint ())
+            kpPixmapFX::fill (m_pixmap, kpColor::transparent);
+
+        paintOpaqueText (m_pixmap, m_rect);
+    }
+    else
+    {
+        m_pixmap = new QPixmap (transparentForegroundTextPixmap ());
+    }
+}
+
 
 // public static
 QString kpSelection::textForTextLines (const QValueVector <QString> &textLines_)
@@ -1062,9 +1178,9 @@ void kpSelection::setTextStyle (const kpTextStyle &textStyle_)
 }
 
 // public
-QPixmap kpSelection::opaquePixmap (bool evenIfText) const
+QPixmap kpSelection::opaquePixmap () const
 {
-    QPixmap *p = pixmap (evenIfText);
+    QPixmap *p = pixmap ();
     if (p)
     {
         return *p;
@@ -1082,7 +1198,7 @@ void kpSelection::calculateTransparencyMask ()
     kdDebug () << "kpSelection::calculateTransparencyMask()" << endl;
 #endif
 
-    if (m_type == Text)
+    if (isText ())
     {
     #if DEBUG_KP_SELECTION
         kdDebug () << "\ttext - no need for transparency mask" << endl;
@@ -1147,9 +1263,9 @@ void kpSelection::calculateTransparencyMask ()
 }
 
 // public
-QPixmap kpSelection::transparentPixmap (bool evenIfText) const
+QPixmap kpSelection::transparentPixmap () const
 {
-    QPixmap pixmap = opaquePixmap (evenIfText);
+    QPixmap pixmap = opaquePixmap ();
 
     if (!m_transparencyMask.isNull ())
     {
