@@ -1,5 +1,14 @@
 
+KolourPaint Version 0.8 (Beta Quality Development Version)
+http://sourceforge.net/projects/kolourpaint/
+
+Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
+$Date$
+
+
 For licensing and warranty information, read COPYING.
+For generic installation instructions, read INSTALL.
+For known problems with this release of KolourPaint, read BUGS.
 For information on what features are planned or unfinished, read TODO.
 For general information, read this file (README):
 
@@ -7,93 +16,60 @@ For general information, read this file (README):
 1. What is KolourPaint?
 =======================
 
-KolourPaint is a free paint program for the K Desktop Environment
-(http://www.kde.org), the most popular opensource GUI for Unix-based
-systems (such as GNU/Linux and FreeBSD).
+KolourPaint is a free, easy-to-use paint program for KDE.
 
-It aims to be conceptually simple to use, while still providing a
-reasonable level of functionality for the average user who just wants
-to crop screenshots, draw diagrams and perform simple image editing
-tasks.
+It aims to be conceptually simple to understand; providing a level of
+functionality targeted towards the average user.  It's designed for daily
+tasks like:
 
-KolourPaint is written in C++ using the Qt and KDE libraries.  Essentially,
-this means that any X11-based Unix system will be able to run it.
+* Painting - drawing diagrams and "finger painting"
+* Image Manipulation - editing screenshots and photos; applying effects
+* Icon Editing - drawing clipart and logos with transparency
 
-This is a Development Version of KolourPaint.  It has KNOWN BUGS.  Read
-Section 4 for details.
+It's not an unusable and monolithic program where simple tasks like drawing
+lines become near impossible.  Nor is it so simple that it lacks Undo/Redo,
+printing and reliable saving.
 
-
-2. Features (Planned)
-=====================
-
-Features include:
-
-- Tools: Color Picker, Pen, Line, Brush, Eraser, Spraycan, Color Eraser,
-         Rectangle, Rounded Rectangle, Ellipse, Fill, Curve, Polygon
-
-- Basic image transformations: Resize, Scale, Flip, Rotate, Skew,
-                               Convert to Greyscale, Invert Colours
-
-- Selections: Rectangular, Elliptical, Free Form
-
-- Undo/Redo support
-
-- Zoom/Grid/Thumbnail support
-
-- Screenshot/Edit/Save/Set as Wallpaper workflow optimisation
-
-- Transparent Image support
-
-- Support for all file formats provided by KImageIO (BMP, JPEG, PNG, TIFF,....)
-
-The intention of the KolourPaint Project is not provide a monolithic,
-unusable Image Editor with support for layers, alpha-blending, obscure
-filters and the like.  Instead, the project aims to provide a simple,
-usable and "bug-free" paint program for the masses.
+KolourPaint is opensource software written in C++ using the Qt and KDE
+libraries.
 
 
-3. Why Another Paint Program?
-=============================
+2. Features
+===========
 
-One particular paint program cannot reliably save, cannot print at all and
-has tool options labelled "Not Yet".  Another cannot reliably handle images
-the size of a small screenshot.
+* Undo/Redo Support (10 levels of history)
 
-Another program is notoriously complex and difficult to use, to point
-where simple tasks - such as drawing lines - become impossible for the
-ordinary user.
+* Tools
+  - Brush, Color Eraser, Color Picker, Connected Lines a.k.a. Polyline
+  - Curve, Ellipse, Eraser, Flood Fill, Line, Pen, Polygon, Rectangle
+  - Rounded Rectangle, Spraycan, Text (TODO)
 
-With Linux becoming more widespread, there is a growing demand for quality
-applications that supersede commercial alternatives in both usability and
-functionality.  KolourPaint aims to fill this void in the area of free
-paint programs.
+* Selections (fully undo- and redo-able)
+  - Rectangular, Elliptical, Free-Form shapes
+  - Choice between Opaque and Transparent selections (TODO)
+  - Full Clipboard/Edit Menu support
 
+* Colour Similarity means that you can fill regions in dithered images and
+  photos
 
-4. Why then is KolourPaint so buggy and incomplete - isn't this HYPOCRISY?
-==========================================================================
+* Transparency
+  - Draw transparent icons and logos on a checkerboard background
+  - All tools can draw in the "Transparent Colour"
 
-If you are reading this you are using a CVS/Development version of
-KolourPaint that has not even reached the 1.0 mark.  This is NOT an official
-release, nor is it intended for production purposes.
+* Image Effects
+  - Autocrop, Clear, Convert to Black & White
+  - Convert to Greyscale, Crop, Flip, Invert Colours, Resize
+  - Rotate (with preview), Scale, Skew (with preview)
 
-It is anticipated that a _polished_ 1.0 release will be available within
-1 month.  It won't be yet another paint program that can't Undo/Redo.
+* Close-up Editing
+  - Zoom (from 0.01x to 16x)
+  - Grid
+  - Thumbnail
 
-Until then, please consider helping out with code, documentation and/or
-donations.  The file TODO contains a list of planned and unfinished tasks.
-
-
-5. Contact
-==========
-
-Feel free to email me - Clarence <dang@kde.org> - about anything related to
-KolourPaint.  I will endeavour to respond to your email within 2 days, but
-sometimes, during busy periods, I may take up to 10 days.  In general, I do
-not rudely ignore email so if you don't get a response within 10 days, your
-mail has probably been eaten by a blackhole/mail server misconfiguration/
-overly-aggressive spam filter.
-
-
-Clarence Dang <dang@kde.org>
-$Date$
+* File Operations
+  - Open/Save in all file formats provided by KImageIO
+    (PNG, JPEG, BMP, ICO, PCX, TIFF,...)
+  - Print, Print Preview
+  - Mail
+  - Set As Wallpaper
 
