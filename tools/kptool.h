@@ -84,6 +84,9 @@ public:
 
     virtual bool hasBegunShape () const { return hasBegunDraw (); }
 
+    // called when user double-left-clicks on Tool Icon (not view)
+    virtual void globalDraw ();
+
 signals:
     // emitted after beginDraw() has been called
     void beganDraw (const QPoint &point);

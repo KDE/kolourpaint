@@ -177,6 +177,11 @@ void kpTool::hover (const QPoint &point)
 }
 
 // virtual
+void kpTool::globalDraw ()
+{
+}
+
+// virtual
 void kpTool::draw (const QPoint &, const QPoint &, const QRect &)
 {
 }
