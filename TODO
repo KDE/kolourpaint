@@ -60,6 +60,12 @@ clean up kpmainwindow
 
 config dialogs (look into new kconfig generator)
 
+"brushes / stamps, hopefully configured from an external source.
+ I.e. not only slanted lines and points of multiple thickness, but
+ arbitrary images." - Dirk Schönberger
+I want to avoid making the widgets too complicated but this sounds
+like a very neat must-have feature.
+
 
 Long-Term (approx 2 months)
 -----------------------------
