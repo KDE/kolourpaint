@@ -47,6 +47,12 @@
 #include <kolourpaintlicense.h>
 
 
+static const QString versionNumber = QString::number
+(
+    #include <VERSION>
+);
+
+
 static const KCmdLineOptions cmdLineOptions [] =
 {
     {"+[file]", I18N_NOOP ("Image file to open"), 0},
@@ -60,7 +66,7 @@ int main (int argc, char *argv [])
     (
         "kolourpaint",
         I18N_NOOP("KolourPaint"),
-        "0.3",
+        versionNumber.latin1 (),
         I18N_NOOP("Paint Program for KDE"),
         KAboutData::License_Custom,
         "Copyright (c) 2003-2004 Clarence Dang",

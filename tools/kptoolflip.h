@@ -66,16 +66,25 @@ private:
 
 class kpToolFlipDialog : public KDialogBase
 {
+Q_OBJECT
+
 public:
-    kpToolFlipDialog (QWidget *parent);
+    kpToolFlipDialog (bool actOnSelection, QWidget *parent);
     ~kpToolFlipDialog ();
 
+private:
+    static bool s_lastIsVerticalFlip;
+
+public slots:
+    void slotIsVerticalFlipChanged ();
+
+public:
     bool getHorizontalFlip () const;
     bool getVerticalFlip () const;
-    bool isNoopFlip () const;
+    bool isNoOp () const;
 
 private:
-    QRadioButton *m_rbHorizFlip, *m_rbVertFlip;
+    QRadioButton *m_horizontalFlipRadioButton, *m_verticalFlipRadioButton;
 };
 
 #endif  // __kptoolflip_h__

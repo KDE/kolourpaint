@@ -127,12 +127,20 @@ void kpMainWindow::addRecentURL (const KURL &url)
 
 
 // private slot
-void kpMainWindow::slotNew (const KURL &url)
+void kpMainWindow::slotNew ()
 {
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    open (url, true/*create an empty doc with the same url if url !exist*/);
+    if (m_document)
+    {
+        kpMainWindow *win = new kpMainWindow ();
+        win->show ();
+    }
+    else
+    {
+        open (KURL (), true/*create an empty doc*/);
+    }
 }
 
 // private slot

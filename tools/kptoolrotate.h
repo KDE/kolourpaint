@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -36,12 +36,15 @@
 #include <kdialogbase.h>
 
 #include <kpcolor.h>
+#include <kpselection.h>
+#include <kptoolpreviewdialog.h>
 
 
+class QButtonGroup;
 class QRadioButton;
 class QString;
 
-class KDoubleNumInput;
+class KIntNumInput;
 
 class kpDocument;
 class kpViewManager;
@@ -74,71 +77,52 @@ private:
 
     bool m_losslessRotation;
     QPixmap m_oldPixmap;
-    QPoint m_oldTopLeft;
+    kpSelection m_oldSelection;
 };
 
 
-class kpToolRotateDialog : public KDialogBase
+class kpToolRotateDialog : public kpToolPreviewDialog
 {
 Q_OBJECT
 
 public:
-    kpToolRotateDialog (QWidget *parent);
+    kpToolRotateDialog (bool actOnSelection,
+                        kpMainWindow *parent,
+                        const char *name = 0);
     virtual ~kpToolRotateDialog ();
 
-public slots:
-    void slotAngleChanged ();
+private:
+    static bool s_lastIsClockwise;
+    static int s_lastAngleRadioButtonID;
+    static int s_lastAngleCustom;
+
+    void createDirectionGroupBox ();
+    void createAngleGroupBox ();
 
 public:
-    double angle () const;  // 0 <= angle < 360 (clockwise)
-    bool isNoopRotate () const;
+    virtual bool isNoOp () const;
+    int angle () const;  // 0 <= angle < 360 (clockwise);
 
 private:
-    QRadioButton *m_rbRotateLeft, *m_rbRotateRight,
-                 *m_rbRotate180,
-                 *m_rbRotateArbitrary;
-    KDoubleNumInput *m_inpAngle;
-};
+    virtual QSize newDimensions () const;
+    virtual QPixmap transformPixmap (const QPixmap &pixmap,
+                                     int targetWidth, int targetHeight) const;
 
-/*#include <qpixmap.h>
-#include <kcommand.h>
-#include <kptool.h>
-
-class QPoint;
-class QRect;
-
-class kpToolRotateCommand;
-class kpDocument;
-class kpViewManager;
-
-class kpToolRotate : public kpTool
-{
-public:
-    kpToolRotate (kpMainWindow *);
-    virtual ~kpToolRotate ();
-
-    virtual bool careAboutModifierState () const { return true; }
-
-    virtual void begin ();
-    virtual void end ();
-
-    virtual void beginDraw ();
-    virtual void draw (const QPoint &thisPoint, const QPoint &, const QRect &);
-    virtual void cancelShape ();
-
-    virtual void endDraw (const QPoint &thisPoint, const QRect &);
-
-    static double radiansToDegrees (const double &rad);
+private slots:
+    void slotAngleCustomRadioButtonToggled (bool isChecked);
+    virtual void slotUpdate ();
 
 private:
-    double angle () const;
-    double angleFromStart () const;
+    QRadioButton *m_antiClockwiseRadioButton,
+                 *m_clockwiseRadioButton;
 
-    QPixmap m_oldPixmap;
-    double m_startAngle;
+    QButtonGroup *m_angleButtonGroup;
+    QRadioButton *m_angle90RadioButton,
+                 *m_angle180RadioButton,
+                 *m_angle270RadioButton,
+                 *m_angleCustomRadioButton;
+    KIntNumInput *m_angleCustomInput;
 };
 
-
-*/
 
 #endif  // __kptoolrotate_h__

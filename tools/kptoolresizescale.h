@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -35,8 +35,11 @@
 #include <kdialogbase.h>
 
 #include <kpcolor.h>
+#include <kpselection.h>
 
 class QCheckBox;
+class QGroupBox;
+class QRadioButton;
 class QString;
 
 class KDoubleNumInput;
@@ -72,6 +75,7 @@ private:
 
     int m_oldWidth, m_oldHeight;
     QPixmap m_oldPixmap, m_oldRightPixmap, m_oldBottomPixmap;
+    kpSelection m_oldSelection;
 };
 
 class kpToolResizeScaleDialog : public KDialogBase
@@ -79,36 +83,53 @@ class kpToolResizeScaleDialog : public KDialogBase
 Q_OBJECT
 
 public:
-    kpToolResizeScaleDialog (kpMainWindow *mainWindow);
+    kpToolResizeScaleDialog (bool actOnSelection,
+                             kpMainWindow *mainWindow);
     virtual ~kpToolResizeScaleDialog ();
 
+private:
+    static bool s_lastIsResize;
+    static double s_lastPercentWidth, s_lastPercentHeight;
+    static bool s_lastKeepAspectRatio;
+
+private:
+    void createOperationGroupBox (QWidget *baseWidget);
+    void createDimensionsGroupBox (QWidget *baseWidget);
+
+    void widthFitHeightToAspectRatio ();
+    void heightFitWidthToAspectRatio ();
+
 public slots:
+    void slotIsResizeChanged ();
+
     void slotWidthChanged (int width);
     void slotHeightChanged (int height);
 
-    void slotWidthPercentChanged (double widthPercent);
-    void slotHeightPercentChanged (double heightPercent);
+    void slotPercentWidthChanged (double percentWidth);
+    void slotPercentHeightChanged (double percentHeight);
 
-    void slotLockAspectRatioToggled (bool on);
-
-private:
-    void widthFitHeightToAspectRatio (int width);
-    void heightFitWidthToAspectRatio (int height);
+    void slotKeepAspectRatioToggled (bool on);
 
 public:
     int imageWidth () const;
     int imageHeight () const;
     bool scaleToFit () const;
 
-    bool isNoop () const;
+    bool isNoOp () const;
 
 private:
+    bool m_actOnSelection;
     int m_oldWidth, m_oldHeight;
-    bool m_dontAdjustAspectRatio;
 
-    KIntNumInput *m_inpWidthVal, *m_inpHeightVal;
-    KDoubleNumInput *m_inpWidthPercentVal, *m_inpHeightPercentVal;
-    QCheckBox *m_cbScaleToFit, *m_cbLockAspectRatio;
+    QGroupBox *m_operationGroupBox;
+    QRadioButton *m_resizeRadioButton, *m_scaleRadioButton;
+
+    QGroupBox *m_dimensionsGroupBox;
+    KIntNumInput *m_newWidthInput, *m_newHeightInput;
+    KDoubleNumInput *m_percentWidthInput, *m_percentHeightInput;
+    QCheckBox *m_keepAspectRatioCheckBox;
+
+    int m_ignoreKeepAspectRatio;
 };
 
 #endif  // __kptoolresizescale_h__

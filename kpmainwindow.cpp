@@ -26,7 +26,6 @@
 */
 
 
-
 #include <qdragobject.h>
 #include <qpainter.h>
 #include <qscrollview.h>
@@ -45,6 +44,8 @@
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kppixmapfx.h>
+#include <kpselection.h>
+#include <kpselectiondrag.h>
 #include <kpthumbnail.h>
 #include <kptool.h>
 #include <kptooltoolbar.h>
@@ -57,7 +58,7 @@ kpMainWindow::kpMainWindow ()
     : KMainWindow (0/*parent*/, "mainWindow")
 {
     initGUI ();
-    slotNew ();
+    open (KURL (), true/*create an empty doc*/);
 
     m_alive = true;
 }
@@ -66,8 +67,8 @@ kpMainWindow::kpMainWindow (const KURL &url)
     : KMainWindow (0/*parent*/, "mainWindow")
 {
     initGUI ();
-    slotNew (url);
-
+    open (url, true/*create an empty doc with the same url if url !exist*/);
+    
     m_alive = true;
 }
 
@@ -301,7 +302,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         #endif
             m_document->setMainWindow (this);
         }
-        
+
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () <<"\tcreating viewManager" << endl;
     #endif
@@ -456,25 +457,18 @@ bool kpMainWindow::queryClose ()
 // private virtual [base QWidget]
 void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
 {
-    e->accept (QImageDrag::canDecode (e) || KURLDrag::canDecode (e));
+    e->accept (kpSelectionDrag::canDecode (e) || KURLDrag::canDecode (e));
 }
 
 // private virtual [base QWidget]
 void kpMainWindow::dropEvent (QDropEvent *e)
 {
-    QImage image;
+    kpSelection sel;
     KURL::List urls;
 
-    if (QImageDrag::decode (e, image/*ref*/))
+    if (kpSelectionDrag::decode (e, sel/*ref*/))
     {
-        if (image.isNull ())
-        {
-            kdError () << "kpMainWindow::dropEvent() null image" << endl;
-            return;
-        }
-
-        // TODO: should it be pretty?
-        paste (kpPixmapFX::convertToPixmap (image, false));
+        paste (sel);
     }
     else if (KURLDrag::decode (e, urls))
     {

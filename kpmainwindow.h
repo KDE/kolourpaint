@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -54,6 +54,7 @@ class kpCommandHistory;
 class kpDocument;
 class kpView;
 class kpViewManager;
+class kpSelection;
 class kpThumbnail;
 class kpTool;
 class kpToolToolBar;
@@ -65,7 +66,7 @@ Q_OBJECT
 public:
     // Opens a new window with a blank document.
     kpMainWindow ();
-    
+
     // Opens a new window with the document specified by <url>
     // or creates a blank document if <url> could not be opened.
     kpMainWindow (const KURL &url);
@@ -109,9 +110,9 @@ private:
     void enableDocumentActions (bool enable = true);
 
     void setDocument (kpDocument *newDoc);
-    
+
     virtual bool queryClose ();
-    
+
     virtual void dragEnterEvent (QDragEnterEvent *e);
     virtual void dropEvent (QDropEvent *e);
 
@@ -137,7 +138,7 @@ private:
         StatusBarItemShapeEndPoints,
         StatusBarItemShapeSize
     };
-    
+
 private slots:
     void slotUpdateStatusBar ();
     void slotUpdateStatusBar (int docWidth, int docHeight);
@@ -146,7 +147,7 @@ private slots:
     void slotUpdateStatusBar (const QPoint &point);
     void slotUpdateStatusBar (const QRect &srect);
 
-    
+
     /*
      * Tools
      */
@@ -154,11 +155,11 @@ private slots:
 private:
     void setupTools ();
     void enableToolsDocumentActions (bool enable = true);
-    
+
     kpTool *m_toolAirSpray, *m_toolBrush, *m_toolColorPicker,
            *m_toolColorWasher, *m_toolCurve, *m_toolEllipse,
            *m_toolEllipticalSelection, *m_toolEraser,
-           *m_toolFloodFill, *m_toolFreeFormSelection, 
+           *m_toolFloodFill, *m_toolFreeFormSelection,
            *m_toolLine, *m_toolPen, *m_toolPolygon,
            *m_toolPolyline, *m_toolRectangle, *m_toolRectSelection,
            *m_toolRoundedRectangle, *m_toolText;
@@ -169,7 +170,7 @@ public:
     kpTool *tool () const;
     bool toolHasBegunShape () const;
     bool toolIsASelectionTool () const;
-    
+
 private slots:
     void slotToolSelected (kpTool *tool);
 
@@ -193,15 +194,15 @@ public slots:
     void slotToolRoundedRectangle ();
     void slotToolText ();
 
-         
+
     /*
      * File Menu
      */
-    
-private: 
+
+private:
     void setupFileMenuActions ();
     void enableFileMenuDocumentActions (bool enable = true);
-    
+
     KAction *m_actionNew, *m_actionOpen;
     KRecentFilesAction *m_actionOpenRecent;
     KAction *m_actionSave, *m_actionSaveAs, *m_actionReload,
@@ -211,35 +212,35 @@ private:
             *m_actionClose, *m_actionQuit;
 
     QString m_configDefaultOutputMimetype;
-    
+
 private:
     bool shouldOpenInNewWindow () const;
     void addRecentURL (const KURL &url);
 
 private slots:
-    void slotNew (const KURL &url = KURL ());
-    
+    void slotNew ();
+
     bool open (const KURL &url, bool newDocSameNameIfNotExist = false);
     void slotOpen ();
     void slotOpenRecent (const KURL &url);
-    
+
     bool save (bool localOnly = false);
     bool slotSave ();
-    
+
     bool saveAs (bool localOnly = false);
     bool slotSaveAs ();
-    
+
     void slotEnableReload ();
     bool slotReload ();
 
-private:       
+private:
     void sendFilenameToPrinter (KPrinter *printer);
     void sendPixmapToPrinter (KPrinter *printer);
 
 private slots:
     void slotPrint ();
     void slotPrintPreview ();
-    
+
     void slotMail ();
 
 private:
@@ -250,16 +251,16 @@ private slots:
 
     void slotClose ();
     void slotQuit ();
-    
+
 
     /*
      * Edit Menu
      */
-     
+
 private:
     void setupEditMenuActions ();
     void enableEditMenuDocumentActions (bool enable = true);
-    
+
     bool m_editMenuDocumentActionsEnabled;
 
     KAction *m_actionUndo, *m_actionRedo,
@@ -272,7 +273,7 @@ private slots:
     void slotEnablePaste ();
 private:
     QRect calcUsefulPasteRect (int pixmapWidth, int pixmapHeight);
-    void paste (const QPixmap &pixmap);
+    void paste (const kpSelection &sel);
 private slots:
     void slotPaste ();
     void slotDelete ();
@@ -281,7 +282,7 @@ private slots:
 public slots:
     void slotDeselect ();
 
- 
+
     /*
      * View Menu
      */
@@ -289,14 +290,14 @@ public slots:
 private:
     void setupViewMenuActions ();
     void enableViewMenuDocumentActions (bool enable = true);
-    
+
     KAction *m_actionFullScreen,
             *m_actionActualSize,
             *m_actionFitToPage, *m_actionFitToWidth, *m_actionFitToHeight,
             *m_actionZoomIn, *m_actionZoomOut;
     KSelectAction *m_actionZoom;
     KToggleAction *m_actionShowGrid, *m_actionShowThumbnail;
-    
+
     QValueVector <int> m_zoomList;
     bool m_configShowGrid;
 
@@ -319,7 +320,7 @@ private slots:
     void slotZoomOut ();
 
     void slotZoom ();
-    
+
     void slotShowGrid ();
     void slotActionShowGridToggled (bool on);
 
@@ -333,19 +334,22 @@ private slots:
 
 public:
     void notifyThumbnailGeometryChanged ();
-    
+
 private slots:
     void slotShowThumbnail ();
-    
-    
+
+
     /*
      * Image Menu
      */
-     
+
 private:
+    bool isSelectionActive () const;
+    QString actionResizeScaleText () const;
+
     void setupImageMenuActions ();
     void enableImageMenuDocumentActions (bool enable = true);
-    
+
     KAction *m_actionResizeScale,
             *m_actionCrop, *m_actionAutoCrop,
             *m_actionFlip, *m_actionRotate, *m_actionSkew,
@@ -356,7 +360,7 @@ private slots:
     void slotImageMenuUpdateDueToSelection ();
 
 public:
-    kpColor backgroundColor () const;
+    kpColor backgroundColor (bool ofSelection = false) const;
     void addImageOrSelectionCommand (KCommand *cmd, bool actOnSelectionIfAvail = true);
 
 private slots:
@@ -379,10 +383,10 @@ private slots:
 private:
     void setupSettingsMenuActions ();
     void enableSettingsMenuDocumentActions (bool enable = true);
-    
+
     KToggleAction *m_actionShowPath;
     KAction *m_actionKeyBindings, *m_actionConfigureToolbars, *m_actionConfigure;
-    
+
     bool m_configShowPath;
 
 private slots:

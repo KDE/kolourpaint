@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -42,6 +42,7 @@
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
+#include <kpselectiondrag.h>
 #include <kptool.h>
 #include <kptoolresizescale.h>
 #include <kptoolselection.h>
@@ -56,7 +57,7 @@ void kpMainWindow::setupEditMenuActions ()
 
     // Undo/Redo
     m_commandHistory = new kpCommandHistory (this);
-    m_commandHistory->setUndoLimit (5);  // CONFIG
+    m_commandHistory->setUndoLimit (10);  // CONFIG
 
     m_actionCut = KStdAction::cut (this, SLOT (slotCut ()), ac);
     m_actionCopy = KStdAction::copy (this, SLOT (slotCopy ()), ac);
@@ -113,9 +114,6 @@ void kpMainWindow::slotCut ()
     QApplication::setOverrideCursor (Qt::waitCursor);
 
     slotCopy ();
-
-    // TODO: correct Undo History name
-    //       ("Delete selection" -> "Cut selection")
     slotDelete ();
 
     QApplication::restoreOverrideCursor ();
@@ -137,18 +135,24 @@ void kpMainWindow::slotCopy ()
     }
 
     QApplication::setOverrideCursor (Qt::waitCursor);
-    QApplication::clipboard ()->setPixmap (m_document->getSelectedPixmap (),
-                                           QClipboard::Clipboard);
+    kpSelection sel = *m_document->selection ();
+    if (!sel.pixmap ())
+        sel.setPixmap (m_document->getSelectedPixmap ());
+    QApplication::clipboard ()->setData (new kpSelectionDrag (sel),
+                                         QClipboard::Clipboard);
     QApplication::restoreOverrideCursor ();
 }
 
 // private slot
 void kpMainWindow::slotEnablePaste ()
 {
-    // no need to convert the clipboard to a pixmap
-    // - just need to know if an image is there
-    QImage image = QApplication::clipboard ()->image (QClipboard::Clipboard);
-    m_actionPaste->setEnabled (!image.isNull ());
+    bool shouldEnable = false;
+
+    QMimeSource *ms = QApplication::clipboard ()->data (QClipboard::Clipboard);
+    if (ms)
+        shouldEnable = kpSelectionDrag::canDecode (ms);
+
+    m_actionPaste->setEnabled (shouldEnable);
 }
 
 
@@ -157,7 +161,7 @@ QRect kpMainWindow::calcUsefulPasteRect (int pixmapWidth, int pixmapHeight)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
     kdDebug () << "kpMainWindow::calcUsefulPasteRect("
-               << pixmapWidth << pixmapHeight
+               << pixmapWidth << "," << pixmapHeight
                << ")"
                << endl;
 #endif
@@ -190,8 +194,14 @@ QRect kpMainWindow::calcUsefulPasteRect (int pixmapWidth, int pixmapHeight)
 }
 
 // private slot
-void kpMainWindow::paste (const QPixmap &pixmap)
+void kpMainWindow::paste (const kpSelection &sel)
 {
+    if (!sel.pixmap ())
+    {
+        kdError () << "kpMainWindow::paste() with sel without pixmap" << endl;
+        return;
+    }
+
     QApplication::setOverrideCursor (Qt::waitCursor);
 
 
@@ -202,7 +212,7 @@ void kpMainWindow::paste (const QPixmap &pixmap)
     if (!m_document)
     {
         kpDocument *newDoc = new kpDocument (
-            pixmap.width (), pixmap.height (), 32, this);
+            sel.width (), sel.height (), 32, this);
 
         // will also create viewManager
         setDocument (newDoc);
@@ -216,11 +226,11 @@ void kpMainWindow::paste (const QPixmap &pixmap)
     // Paste as new selection
     //
 
+    kpSelection selInUsefulPos = sel;
+    selInUsefulPos.moveTo (calcUsefulPasteRect (sel.width (), sel.height ()).topLeft ());
     m_commandHistory->addCommand (new kpToolSelectionCreateCommand (
-        i18n ("Paste"),
-        kpSelection (kpSelection::Rectangle,
-                     calcUsefulPasteRect (pixmap.width (), pixmap.height ()),
-                     pixmap),
+        i18n ("Selection: Create"),
+        selInUsefulPos,
         this));
 
 
@@ -230,14 +240,14 @@ void kpMainWindow::paste (const QPixmap &pixmap)
     //
     // No annoying dialog necessary.
     //
-    if (pixmap.width () > m_document->width () ||
-        pixmap.height () > m_document->height ())
+    if (sel.width () > m_document->width () ||
+        sel.height () > m_document->height ())
     {
         m_commandHistory->addCommand (
             new kpToolResizeScaleCommand (
                 false/*act on doc, not sel*/,
-                QMAX (pixmap.width (), m_document->width ()),
-                QMAX (pixmap.height (), m_document->height ()),
+                QMAX (sel.width (), m_document->width ()),
+                QMAX (sel.height (), m_document->height ()),
                 false/*no scale*/,
                 this));
     }
@@ -261,18 +271,24 @@ void kpMainWindow::slotPaste ()
     // Acquire the pixmap
     //
 
-    // TODO: should this be pretty?
-    QPixmap pixmap = kpPixmapFX::convertToPixmap (QApplication::clipboard ()->image (QClipboard::Clipboard));
-
-    if (pixmap.isNull ())
+    QMimeSource *ms = QApplication::clipboard ()->data (QClipboard::Clipboard);
+    if (!ms)
     {
-        kdError () << "kpMainWindow::slotPaste() null pixmap" << endl;
+        kdError () << "kpMainWindow::slotPaste() without mimeSource" << endl;
+        QApplication::restoreOverrideCursor ();
+        return;
+    }
+
+    kpSelection sel;
+    if (!kpSelectionDrag::decode (ms, sel/*ref*/))
+    {
+        kdError () << "kpMainWindow::slotPaste() could not decode selection" << endl;
         QApplication::restoreOverrideCursor ();
         return;
     }
 
 
-    paste (pixmap);
+    paste (sel);
 
 
     QApplication::restoreOverrideCursor ();
@@ -293,7 +309,7 @@ void kpMainWindow::slotDelete ()
     }
 
     addImageOrSelectionCommand (new kpToolSelectionDestroyCommand (
-        i18n ("Delete selection"),
+        i18n ("Selection: Delete"),
         false/*no push onto doc*/,
         this));
 }
@@ -354,7 +370,7 @@ void kpMainWindow::slotDeselect ()
             kdDebug () << "\treal selection with pixmap - push onto doc cmd" << endl;
         #endif
             m_commandHistory->addCommand (new kpToolSelectionDestroyCommand (
-                i18n ("Deselect"),
+                i18n ("Selection: Deselect"),
                 true/*push onto document*/,
                 this));
         }

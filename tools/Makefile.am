@@ -3,8 +3,7 @@ INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../pixmapfx \
     -I$(srcdir)/../widgets $(all_includes)
 
 noinst_LTLIBRARIES = libkolourpainttools.la
-libkolourpainttools_la_SOURCES = kptoolskewdialogwidget.ui \
-    kptool.cpp kptoolairspray.cpp \
+libkolourpainttools_la_SOURCES = kptool.cpp kptoolairspray.cpp \
     kptoolautocrop.cpp \
     kptoolbrush.cpp kptoolclear.cpp \
     kptoolcolorpicker.cpp kptoolcolorwasher.cpp \
@@ -16,6 +15,7 @@ libkolourpainttools_la_SOURCES = kptoolskewdialogwidget.ui \
     kptoolfreeformselection.cpp kptoolinvertcolors.cpp \
     kptoolline.cpp kptoolpen.cpp \
     kptoolpolygon.cpp kptoolpolyline.cpp \
+    kptoolpreviewdialog.cpp \
     kptoolrectangle.cpp kptoolrectselection.cpp \
     kptoolresizescale.cpp kptoolrotate.cpp \
     kptoolroundedrectangle.cpp kptoolselection.cpp \
@@ -32,15 +32,18 @@ METASOURCES = kptool.moc \
     kptoolcurve.moc \
     kptoolellipse.moc \
     kptooleraser.moc \
+    kptoolflip.moc \
     kptoolfloodfill.moc \
     kptoolline.moc \
     kptoolpen.moc \
     kptoolpolygon.moc \
     kptoolpolyline.moc \
+    kptoolpreviewdialog.moc \
     kptoolrectangle.moc \
     kptoolresizescale.moc \
     kptoolrotate.moc \
     kptoolroundedrectangle.moc \
     kptoolselection.moc \
+    kptoolskew.moc \
     kptooltext.moc
 

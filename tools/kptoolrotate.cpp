@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -26,13 +26,17 @@
 */
 
 
+#include <qapplication.h>
 #include <qbuttongroup.h>
+#include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qgroupbox.h>
+#include <qpushbutton.h>
 #include <qradiobutton.h>
+#include <qwmatrix.h>
 
 #include <kdebug.h>
+#include <kiconloader.h>
 #include <knuminput.h>
 #include <klocale.h>
 
@@ -51,7 +55,7 @@ kpToolRotateCommand::kpToolRotateCommand (bool actOnSelection,
     : m_actOnSelection (actOnSelection),
       m_angle (angle),
       m_mainWindow (mainWindow),
-      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid),
+      m_backgroundColor (mainWindow ? mainWindow->backgroundColor (actOnSelection) : kpColor::invalid),
       m_losslessRotation (kpPixmapFX::isLosslessRotation (angle))
 {
 }
@@ -93,6 +97,9 @@ void kpToolRotateCommand::execute ()
         return;
 
 
+    QApplication::setOverrideCursor (Qt::waitCursor);
+
+
     if (!m_losslessRotation)
         m_oldPixmap = *doc->pixmap (m_actOnSelection);
 
@@ -104,24 +111,59 @@ void kpToolRotateCommand::execute ()
 
     if (m_actOnSelection)
     {
-        kpViewManager *vm = viewManager ();
-        vm->setQueueUpdates ();
-
         kpSelection *sel = doc->selection ();
 
-        m_oldTopLeft = sel->boundingRect ().topLeft ();
-        int oldWidth = sel->width ();
-        int oldHeight = sel->height ();
-        // TODO: with so many "/ 2"'s around, should use floating point
-        QPoint center = m_oldTopLeft + QPoint (oldWidth / 2, oldHeight / 2);
+        // Save old selection
+        m_oldSelection = *sel;
+        m_oldSelection.setPixmap (QPixmap ());
 
-        sel->setPixmap (newPixmap);
-        sel->moveTo (center - QPoint (newPixmap.width () / 2, newPixmap.height () / 2));
 
-        vm->restoreQueueUpdates ();
+        // Calculate new top left (so selection rotates about centre)
+        // (the Times2 trickery is used to reduce integer division error without
+        //  resorting to the troublesome world of floating point)
+        QPoint oldCenterTimes2 (sel->x () * 2 + sel->width (),
+                                sel->y () * 2 + sel->height ());
+        QPoint newTopLeftTimes2 (oldCenterTimes2 - QPoint (newPixmap.width (), newPixmap.height ()));
+        QPoint newTopLeft (newTopLeftTimes2.x () / 2, newTopLeftTimes2.y () / 2);
+
+
+        // Calculate rotated points
+        QPointArray currentPoints = sel->points ();
+        currentPoints.translate (-currentPoints.boundingRect ().x (),
+                                 -currentPoints.boundingRect ().y ());
+        QWMatrix rotateMatrix = kpPixmapFX::rotateMatrix (*doc->pixmap (m_actOnSelection), m_angle);
+        currentPoints = rotateMatrix.map (currentPoints);
+        currentPoints.translate (-currentPoints.boundingRect ().x () + newTopLeft.x (),
+                                 -currentPoints.boundingRect ().y () + newTopLeft.y ());
+
+
+        if (currentPoints.boundingRect ().width () == newPixmap.width () &&
+            currentPoints.boundingRect ().height () == newPixmap.height ())
+        {
+            doc->setSelection (kpSelection (currentPoints, newPixmap));
+        }
+        else
+        {
+            // TODO: fix the latter "victim of" problem in kpSelection by
+            //       allowing the border width & height != pixmap width & height
+            //       Or maybe autocrop?
+            kdDebug () << "kpToolRotateCommand::execute() currentPoints.boundingRect="
+                       << currentPoints.boundingRect ()
+                       << " newPixmap: w=" << newPixmap.width ()
+                       << " h=" << newPixmap.height ()
+                       << " (victim of rounding error and/or rotated-a-(rectangular)-pixmap-that-was-transparent-in-the-corners-making-sel-uselessly-bigger-than-needs-be)"
+                       << endl;
+            doc->setSelection (kpSelection (kpSelection::Rectangle,
+                                            QRect (newTopLeft.x (), newTopLeft.y (),
+                                                   newPixmap.width (), newPixmap.height ()),
+                                            newPixmap));
+        }
     }
     else
         doc->setPixmap (newPixmap);
+
+
+    QApplication::restoreOverrideCursor ();
 }
 
 // public virtual [base KCommand]
@@ -131,190 +173,261 @@ void kpToolRotateCommand::unexecute ()
     if (!doc)
         return;
 
-    kpSelection *sel = doc->selection ();
 
-    kpViewManager *vm = viewManager ();
-    if (!vm)
-        return;
+    QApplication::setOverrideCursor (Qt::waitCursor);
 
-    vm->setQueueUpdates ();
 
+    QPixmap oldPixmap;
 
     if (!m_losslessRotation)
     {
-        doc->setPixmap (m_actOnSelection, m_oldPixmap);
+        oldPixmap = m_oldPixmap;
+        m_oldPixmap.resize (0, 0);
     }
     else
     {
-        QPixmap oldPixmap = kpPixmapFX::rotate (*doc->pixmap (m_actOnSelection),
-                                                360 - m_angle,
-                                                m_backgroundColor);
-        doc->setPixmap (m_actOnSelection, oldPixmap);
+        oldPixmap = kpPixmapFX::rotate (*doc->pixmap (m_actOnSelection),
+                                        360 - m_angle,
+                                        m_backgroundColor);
     }
 
 
-    // keep centre of selection
-    if (m_actOnSelection)
-        sel->moveTo (m_oldTopLeft);
+    if (!m_actOnSelection)
+        doc->setPixmap (oldPixmap);
+    else
+    {
+        kpSelection oldSelection = m_oldSelection;
+        oldSelection.setPixmap (oldPixmap);
+        doc->setSelection (oldSelection);
+    }
 
 
-    vm->restoreQueueUpdates ();
-    m_oldPixmap.resize (0, 0);
+    QApplication::restoreOverrideCursor ();
 }
 
 
-kpToolRotateDialog::kpToolRotateDialog (QWidget *parent)
-    : KDialogBase (parent, 0/*name*/, true/*modal*/, i18n ("Rotate Image"),
-                   KDialogBase::Ok | KDialogBase::Cancel)
+/*
+ * kpToolRotateDialog
+ */
+
+// private static
+bool kpToolRotateDialog::s_lastIsClockwise = true;
+int kpToolRotateDialog::s_lastAngleRadioButtonID = 3;
+int kpToolRotateDialog::s_lastAngleCustom = 0;
+
+
+kpToolRotateDialog::kpToolRotateDialog (bool actOnSelection,
+                                        kpMainWindow *mainWindow,
+                                        const char *name)
+    : kpToolPreviewDialog (i18n ("Rotate"), actOnSelection, mainWindow, name)
 {
-    QGroupBox *page = new QGroupBox (i18n ("Rotate"), this);
-    setMainWidget (page);
+    // Too confusing - disable for now
+    s_lastAngleRadioButtonID = 3;
+    s_lastAngleCustom = 0;
 
-    QGridLayout *lay = new QGridLayout (page, 4, 3, marginHint (), spacingHint ());
 
-    QButtonGroup *buttonGroup = new QButtonGroup (this);
-    buttonGroup->hide ();  // invisible
+    createDirectionGroupBox ();
+    createAngleGroupBox ();
 
-    m_rbRotateLeft = new QRadioButton (i18n ("&Left"), page);
-    buttonGroup->insert (m_rbRotateLeft);
-    lay->addMultiCellWidget (m_rbRotateLeft, 0, 0, 0, 2);
 
-    m_rbRotateRight = new QRadioButton (i18n ("&Right"), page);
-    buttonGroup->insert (m_rbRotateRight);
-    lay->addMultiCellWidget (m_rbRotateRight, 1, 1, 0, 2);
-
-    m_rbRotate180 = new QRadioButton (i18n ("180 &degrees"), page);
-    buttonGroup->insert (m_rbRotate180);
-    lay->addMultiCellWidget (m_rbRotate180, 2, 2, 0, 2);
-
-    m_rbRotateArbitrary = new QRadioButton (i18n ("&Angle: "), page);
-    buttonGroup->insert (m_rbRotateArbitrary);
-    lay->addWidget (m_rbRotateArbitrary, 3, 0);
-
-    m_inpAngle = new KDoubleNumInput (0 /*CONFIG*/, page);
-    m_inpAngle->setRange (-359.99, 359.99, 1/*step*/, false/*no slider*/);
-    m_inpAngle->setPrecision (2);
-    lay->addWidget (m_inpAngle, 3, 1);
-
-    QLabel *lbDegrees = new QLabel (i18n ("degrees"), page);
-    lay->addWidget (lbDegrees, 3, 2);
-
-    m_inpAngle->setEnabled (false);
-    lbDegrees->setEnabled (false);
-
-    connect (m_rbRotateArbitrary, SIGNAL (toggled (bool)),
-             m_inpAngle, SLOT (setEnabled (bool)));
-    connect (m_rbRotateArbitrary, SIGNAL (toggled (bool)),
-             lbDegrees, SLOT (setEnabled (bool)));
-    connect (m_rbRotateArbitrary, SIGNAL (toggled (bool)),
-             SLOT (slotAngleChanged ()));
-    connect (m_inpAngle, SIGNAL (valueChanged (double)),
-             SLOT (slotAngleChanged ()));
-
-    m_rbRotateLeft->setChecked (true);  // CONFIG
+    slotAngleCustomRadioButtonToggled (m_angleCustomRadioButton->isChecked ());
+    slotUpdate ();
 }
 
 kpToolRotateDialog::~kpToolRotateDialog ()
 {
 }
 
-void kpToolRotateDialog::slotAngleChanged ()
+
+// private
+void kpToolRotateDialog::createDirectionGroupBox ()
 {
-    enableButtonOK (m_inpAngle->value () != 0);
+    QGroupBox *directionGroupBox = new QGroupBox (i18n ("Direction"), mainWidget ());
+    addCustomWidget (directionGroupBox);
+
+
+    QLabel *antiClockwisePixmapLabel = new QLabel (directionGroupBox);
+    antiClockwisePixmapLabel->setPixmap (UserIcon ("image_rotate_anticlockwise"));
+
+    QLabel *clockwisePixmapLabel = new QLabel (directionGroupBox);
+    clockwisePixmapLabel->setPixmap (UserIcon ("image_rotate_clockwise"));
+
+
+    m_antiClockwiseRadioButton = new QRadioButton (i18n ("&Anticlockwise"), directionGroupBox);
+    m_clockwiseRadioButton = new QRadioButton (i18n ("C&lockwise"), directionGroupBox);
+
+
+    m_antiClockwiseRadioButton->setChecked (!s_lastIsClockwise);
+    m_clockwiseRadioButton->setChecked (s_lastIsClockwise);
+
+
+    QButtonGroup *buttonGroup = new QButtonGroup (directionGroupBox);
+    buttonGroup->hide ();
+
+    buttonGroup->insert (m_antiClockwiseRadioButton);
+    buttonGroup->insert (m_clockwiseRadioButton);
+
+
+    QGridLayout *directionLayout = new QGridLayout (directionGroupBox,
+                                                    2, 2, marginHint () * 2, spacingHint ());
+    directionLayout->addWidget (antiClockwisePixmapLabel, 0, 0, Qt::AlignCenter);
+    directionLayout->addWidget (clockwisePixmapLabel, 0, 1, Qt::AlignCenter);
+    directionLayout->addWidget (m_antiClockwiseRadioButton, 1, 0, Qt::AlignCenter);
+    directionLayout->addWidget (m_clockwiseRadioButton, 1, 1, Qt::AlignCenter);
+
+
+    connect (m_antiClockwiseRadioButton, SIGNAL (toggled (bool)),
+             this, SLOT (slotUpdate ()));
+    connect (m_clockwiseRadioButton, SIGNAL (toggled (bool)),
+             this, SLOT (slotUpdate ()));
 }
 
-double kpToolRotateDialog::angle () const
+// private
+void kpToolRotateDialog::createAngleGroupBox ()
 {
-    if (m_rbRotateLeft->isChecked ())
-        return 270;
-    else if (m_rbRotateRight->isChecked ())
-        return 90;
-    else if (m_rbRotate180->isChecked ())
-        return 180;
-    else // if (m_rbRotateArbitrary->isChecked ())
-    {
-        double angle = m_inpAngle->value ();
+    QGroupBox *angleGroupBox = new QGroupBox (i18n ("Angle"), mainWidget ());
+    addCustomWidget (angleGroupBox);
 
-        if (angle < 0)
-            angle += ((0 - angle) / 360 + 1) * 360;
 
-        if (angle >= 360)
-            angle -= ((angle - 360) / 360 + 1) * 360;
+    m_angle90RadioButton = new QRadioButton (i18n ("&90 degrees"), angleGroupBox);
+    m_angle180RadioButton = new QRadioButton (i18n ("&180 degrees"), angleGroupBox);
+    m_angle270RadioButton = new QRadioButton (i18n ("&270 degrees"), angleGroupBox);
 
-        return angle;
-    }
+    m_angleCustomRadioButton = new QRadioButton (i18n ("C&ustom:"), angleGroupBox);
+    m_angleCustomInput = new KIntNumInput (s_lastAngleCustom, angleGroupBox);
+    m_angleCustomInput->setMinValue (-359);
+    m_angleCustomInput->setMaxValue (+359);
+    QLabel *degreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
+
+    QWidget *verticalSpaceWidget = new QWidget (angleGroupBox);
+    verticalSpaceWidget->setMinimumSize (1, spacingHint ());
+    QPushButton *updatePreviewPushButton = new QPushButton (i18n ("Update &Preview"), angleGroupBox);
+
+
+    m_angleButtonGroup = new QButtonGroup (angleGroupBox);
+    m_angleButtonGroup->hide ();
+
+    m_angleButtonGroup->insert (m_angle90RadioButton);
+    m_angleButtonGroup->insert (m_angle180RadioButton);
+    m_angleButtonGroup->insert (m_angle270RadioButton);
+
+    m_angleButtonGroup->insert (m_angleCustomRadioButton);
+
+    m_angleButtonGroup->setButton (s_lastAngleRadioButtonID);
+
+
+    QGridLayout *angleLayout = new QGridLayout (angleGroupBox,
+                                                6, 3,
+                                                marginHint () * 2, spacingHint ());
+
+    angleLayout->addMultiCellWidget (m_angle90RadioButton, 0, 0, 0, 2);
+    angleLayout->addMultiCellWidget (m_angle180RadioButton, 1, 1, 0, 2);
+    angleLayout->addMultiCellWidget (m_angle270RadioButton, 2, 2, 0, 2);
+
+    angleLayout->addWidget (m_angleCustomRadioButton, 3, 0);
+    angleLayout->addWidget (m_angleCustomInput, 3, 1);
+    angleLayout->addWidget (degreesLabel, 3, 2);
+
+    angleLayout->addMultiCellWidget (verticalSpaceWidget, 4, 4, 0, 2);
+    angleLayout->addMultiCellWidget (updatePreviewPushButton, 5, 5, 0, 2, Qt::AlignRight);
+
+    angleLayout->setColStretch (1, 2);  // Stretch Custom Angle Input
+
+
+    connect (m_angle90RadioButton, SIGNAL (toggled (bool)),
+             this, SLOT (slotUpdate ()));
+    connect (m_angle180RadioButton, SIGNAL (toggled (bool)),
+             this, SLOT (slotUpdate ()));
+    connect (m_angle270RadioButton, SIGNAL (toggled (bool)),
+             this, SLOT (slotUpdate ()));
+
+    connect (m_angleCustomRadioButton, SIGNAL (toggled (bool)),
+             this, SLOT (slotAngleCustomRadioButtonToggled (bool)));
+    connect (m_angleCustomRadioButton, SIGNAL (toggled (bool)),
+             this, SLOT (slotUpdate ()));
+
+    connect (m_angleCustomInput, SIGNAL (valueChanged (int)),
+             this, SLOT (slotUpdate ()));
+
+    connect (updatePreviewPushButton, SIGNAL (clicked ()),
+             this, SLOT (slotUpdate ()));
 }
 
-bool kpToolRotateDialog::isNoopRotate () const
+
+// public virtual [base kpToolPreviewDialog]
+bool kpToolRotateDialog::isNoOp () const
 {
-    return angle () == 0;
+    return (angle () == 0);
 }
+
+// public
+int kpToolRotateDialog::angle () const
+{
+    int retAngle;
+
+
+    if (m_angle90RadioButton->isChecked ())
+        retAngle = 90;
+    else if (m_angle180RadioButton->isChecked ())
+        retAngle = 180;
+    else if (m_angle270RadioButton->isChecked ())
+        retAngle = 270;
+    else // if (m_angleCustomRadioButton->isChecked ())
+        retAngle = m_angleCustomInput->value ();
+
+
+    if (m_antiClockwiseRadioButton->isChecked ())
+        retAngle *= -1;
+
+
+    if (retAngle < 0)
+        retAngle += ((0 - retAngle) / 360 + 1) * 360;
+
+    if (retAngle >= 360)
+        retAngle -= ((retAngle - 360) / 360 + 1) * 360;
+
+
+    return retAngle;
+}
+
+
+// private virtual [base kpToolPreviewDialog]
+QSize kpToolRotateDialog::newDimensions () const
+{
+    QWMatrix matrix = kpPixmapFX::rotateMatrix (m_oldWidth, m_oldHeight, angle ());
+    QRect rect = matrix.map (QRect (0, 0, m_oldWidth, m_oldHeight));
+    return rect.size ();
+}
+
+// private virtual [base kpToolPreviewDialog]
+QPixmap kpToolRotateDialog::transformPixmap (const QPixmap &pixmap,
+                                             int targetWidth, int targetHeight) const
+{
+    return kpPixmapFX::rotate (pixmap, angle (),
+                               m_mainWindow ? m_mainWindow->backgroundColor (m_actOnSelection) : kpColor::invalid,
+                               targetWidth, targetHeight);
+}
+
+
+// private slot
+void kpToolRotateDialog::slotAngleCustomRadioButtonToggled (bool isChecked)
+{
+    m_angleCustomInput->setEnabled (isChecked);
+
+    // doesn't work
+    //if (isChecked)
+    //    m_angleCustomInput->setFocus ();
+}
+
+// private slot virtual [base kpToolPreviewDialog]
+void kpToolRotateDialog::slotUpdate ()
+{
+    s_lastIsClockwise = m_clockwiseRadioButton->isChecked ();
+    s_lastAngleRadioButtonID = m_angleButtonGroup->selectedId ();
+    s_lastAngleCustom = m_angleCustomInput->value ();
+
+    kpToolPreviewDialog::slotUpdate ();
+}
+
 
 #include <kptoolrotate.moc>
-
-
-/*
-
-
-kpToolRotate::kpToolRotate (kpMainWindow *mainWindow)
-    : kpTool (mainWindow)
-{
-}
-
-kpToolRotate::~kpToolRotate ()
-{
-}
-
-// virtual
-void kpToolRotate::begin ()
-{
-    viewManager ()->setCursor (QCursor (SizeAllCursor));
-    m_startAngle = angle ();
-}
-
-// virtual
-void kpToolRotate::end ()
-{
-    m_oldPixmap.resize (0, 0);
-    viewManager ()->unsetCursor ();
-}
-
-// virtual
-void kpToolRotate::beginDraw ()
-{
-    m_oldPixmap = *document ()->pixmap ();
-}
-
-// virtual
-void kpToolRotate::draw ()
-{
-    double newAngle = angle ();
-
-    document ()->setPixmap (m_oldPixmap);
-    m_lastAngle = newAngle;
-}
-
-// virtual
-void kpToolRotate::cancelShape ()
-{
-    document ()->setPixmapAt (m_oldPixmap, QPoint (0, 0));
-}
-
-// virtual
-void kpToolRotate::endDraw ()
-{
-    mainWindow ()->commandHistory ()->addCommand (
-        new kpToolRotateCommand (document (), viewManager (), angle ()));
-}
-// static
-double kpToolRotate
-
-// returns in degrees
-double kpToolRotate::angle () const
-{
-    int centerX = m_oldPixmap.width () / 2,
-        centerY = m_oldPixmap.height () / 2;
-
-    return
-}
-*/

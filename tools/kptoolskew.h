@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -29,25 +29,30 @@
 #ifndef __kptool_skew_h__
 #define __kptool_skew_h__
 
+#include <qpixmap.h>
+
 #include <kcommand.h>
 #include <kdialogbase.h>
 
 #include <kpcolor.h>
+#include <kpselection.h>
+#include <kptoolpreviewdialog.h>
 
+class QGroupBox;
+class QLabel;
 class QPixmap;
 
 class KIntNumInput;
 
 class kpDocument;
 class kpMainWindow;
-class kpToolSkewDialogWidget;
 
 
 class kpToolSkewCommand : public KCommand
 {
 public:
     kpToolSkewCommand (bool actOnSelection,
-                       double hangle, double vangle,
+                       int hangle, int vangle,
                        kpMainWindow *mainWindow);
     virtual QString name () const;
     virtual ~kpToolSkewCommand ();
@@ -61,27 +66,54 @@ public:
 
 private:
     bool m_actOnSelection;
-    double m_hangle, m_vangle;
+    int m_hangle, m_vangle;
     kpMainWindow *m_mainWindow;
 
     kpColor m_backgroundColor;
     QPixmap *m_oldPixmapPtr;
+    kpSelection m_oldSelection;
 };
 
 
-class kpToolSkewDialog : public KDialogBase
+class kpToolSkewDialog : public kpToolPreviewDialog
 {
+Q_OBJECT
+
 public:
-    kpToolSkewDialog (QWidget *parent);
+    kpToolSkewDialog (bool actOnSelection, kpMainWindow *parent,
+                      const char *name = 0);
     virtual ~kpToolSkewDialog ();
 
-    double horizontalAngle () const;
-    double verticalAngle () const;
+private:
+    static int s_lastHorizontalAngle, s_lastVerticalAngle;
 
-    bool isNoop () const;
+    void createAngleGroupBox ();
+
+    virtual QSize newDimensions () const;
+    virtual QPixmap transformPixmap (const QPixmap &pixmap,
+                                     int targetWidth, int targetHeight) const;
+
+    void updateLastAngles ();
+
+private slots:
+    virtual void slotUpdate ();
+
+public:
+    // These are the angles the users sees in the dialog and...
+    int horizontalAngle () const;
+    int verticalAngle () const;
+
+    // ...these functions translate them for use in kpPixmapFX::skew().
+    static int horizontalAngleForPixmapFX (int hangle);
+    static int verticalAngleForPixmapFX (int vangle);
+
+    int horizontalAngleForPixmapFX () const;
+    int verticalAngleForPixmapFX () const;
+
+    virtual bool isNoOp () const;
 
 private:
-    kpToolSkewDialogWidget *m_mainWidget;
+    KIntNumInput *m_horizontalSkewInput, *m_verticalSkewInput;
 };
 
 #endif  // __kptool_skew_h__

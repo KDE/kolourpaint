@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -53,14 +53,31 @@
 
 
 // private
+bool kpMainWindow::isSelectionActive () const
+{
+    return (m_document ? bool (m_document->selection ()) : false);
+}
+
+// private
+QString kpMainWindow::actionResizeScaleText () const
+{
+    // Resize doesn't make sense when there's a selection
+    if (isSelectionActive ())
+        return i18n ("Scal&e...");
+    else
+        return i18n ("R&esize / Scale...");
+}
+
+
+// private
 void kpMainWindow::setupImageMenuActions ()
 {
     KActionCollection *ac = actionCollection ();
 
-    m_actionResizeScale = new KAction (i18n ("R&esize / Scale..."), CTRL + Key_E,
+    m_actionResizeScale = new KAction (actionResizeScaleText (), CTRL + Key_E,
         this, SLOT (slotResizeScale ()), ac, "image_resize_scale");
 
-    m_actionCrop = new KAction (i18n ("C&rop outside the selection"), CTRL + Key_R,
+    m_actionCrop = new KAction (i18n ("Crop Ou&tside the Selection"), CTRL + Key_T,
         this, SLOT (slotCrop ()), ac, "image_crop");
 
     m_actionAutoCrop = new KAction (i18n ("A&utocrop"), CTRL + Key_U,
@@ -69,10 +86,10 @@ void kpMainWindow::setupImageMenuActions ()
     m_actionFlip = new KAction (i18n ("&Flip..."), CTRL + Key_F,
         this, SLOT (slotFlip ()), ac, "image_flip");
 
-    m_actionRotate = new KAction (i18n ("R&otate..."), 0,
+    m_actionRotate = new KAction (i18n ("&Rotate..."), CTRL + Key_R,
         this, SLOT (slotRotate ()), ac, "image_rotate");
 
-    m_actionSkew = new KAction (i18n ("&Skew..."), 0,
+    m_actionSkew = new KAction (i18n ("S&kew..."), CTRL + Key_K,
         this, SLOT (slotSkew ()), ac, "image_skew");
 
     m_actionConvertToBlackAndWhite = new KAction (i18n ("Convert to &Black && White"), 0,
@@ -109,9 +126,6 @@ void kpMainWindow::enableImageMenuDocumentActions (bool enable)
 // private slot
 void kpMainWindow::slotImageMenuUpdateDueToSelection ()
 {
-    bool isSelectionEnabled = m_document ? m_document->selection () : false;
-
-
     KMenuBar *mBar = menuBar ();
     if (!mBar)  // just in case
         return;
@@ -129,7 +143,7 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
         if (menuBarItemText == menuBarItemTextImage ||
             menuBarItemText == menuBarItemTextSelection)
         {
-            if (isSelectionEnabled)
+            if (isSelectionActive ())
                 mBar->changeItem (id, menuBarItemTextSelection);
             else
                 mBar->changeItem (id, menuBarItemTextImage);
@@ -139,24 +153,33 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
     }
 
 
+    // Resize doesn't make sense when there's a selection
+    m_actionResizeScale->setText (actionResizeScaleText ());
+
+
     // (any action other than Image/Crop will do)
     bool imageMenuDocumentActionsEnabled = m_actionClear->isEnabled ();
 
     // Image/Crop available only with active selection
     m_actionCrop->setEnabled (imageMenuDocumentActionsEnabled &&
-                              isSelectionEnabled);
+                              isSelectionActive ());
 }
 
 
 // public
-kpColor kpMainWindow::backgroundColor () const
+kpColor kpMainWindow::backgroundColor (bool ofSelection) const
 {
-    if (m_colorToolBar)
-        return m_colorToolBar->backgroundColor ();
+    if (ofSelection)
+        return kpColor::transparent;
     else
     {
-        kdError () << "kpMainWindow::backgroundColor() without colorToolBar" << endl;
-        return kpColor::invalid;
+        if (m_colorToolBar)
+            return m_colorToolBar->backgroundColor ();
+        else
+        {
+            kdError () << "kpMainWindow::backgroundColor() without colorToolBar" << endl;
+            return kpColor::invalid;
+        }
     }
 }
 
@@ -195,7 +218,7 @@ void kpMainWindow::addImageOrSelectionCommand (KCommand *cmd, bool actOnSelectio
 
         // create selection region
         m_commandHistory->addCommand (new kpToolSelectionCreateCommand (
-            i18n ("Create selection"),
+            i18n ("Selection: Create"),
             *sel,
             this),
             false/*no exec - user already dragged out sel*/);
@@ -243,9 +266,10 @@ void kpMainWindow::slotResizeScale ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpToolResizeScaleDialog *dialog = new kpToolResizeScaleDialog (this);
+    kpToolResizeScaleDialog *dialog = new kpToolResizeScaleDialog ((bool) m_document->selection (),
+                                                                   this);
 
-    if (dialog->exec () && !dialog->isNoop ())
+    if (dialog->exec () && !dialog->isNoOp ())
     {
         addImageOrSelectionCommand (
             new kpToolResizeScaleCommand (
@@ -273,7 +297,7 @@ void kpMainWindow::slotCrop ()
     kpSelection *sel = m_document->selection ();
 
 
-    KMacroCommand *macroCmd = new KMacroCommand (i18n ("Crop outside the selection"));
+    KMacroCommand *macroCmd = new KMacroCommand (i18n ("Crop Outside the Selection"));
 
     macroCmd->addCommand (
         new kpToolResizeScaleCommand (
@@ -313,9 +337,9 @@ void kpMainWindow::slotFlip ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpToolFlipDialog *dialog = new kpToolFlipDialog (this);
+    kpToolFlipDialog *dialog = new kpToolFlipDialog ((bool) m_document->selection (), this);
 
-    if (dialog->exec () && !dialog->isNoopFlip ())
+    if (dialog->exec () && !dialog->isNoOp ())
     {
         addImageOrSelectionCommand (
             new kpToolFlipCommand (m_document->selection (),
@@ -330,9 +354,9 @@ void kpMainWindow::slotRotate ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpToolRotateDialog *dialog = new kpToolRotateDialog (this);
+    kpToolRotateDialog *dialog = new kpToolRotateDialog ((bool) m_document->selection (), this);
 
-    if (dialog->exec () && !dialog->isNoopRotate ())
+    if (dialog->exec () && !dialog->isNoOp ())
     {
         addImageOrSelectionCommand (
             new kpToolRotateCommand (m_document->selection (),
@@ -347,9 +371,9 @@ void kpMainWindow::slotSkew ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpToolSkewDialog *dialog = new kpToolSkewDialog (this);
+    kpToolSkewDialog *dialog = new kpToolSkewDialog ((bool) m_document->selection (), this);
 
-    if (dialog->exec () && !dialog->isNoop ())
+    if (dialog->exec () && !dialog->isNoOp ())
     {
         addImageOrSelectionCommand (
             new kpToolSkewCommand (m_document->selection (),

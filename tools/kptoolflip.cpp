@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -26,6 +26,7 @@
 */
 
 
+#include <qapplication.h>
 #include <qradiobutton.h>
 #include <qvbox.h>
 #include <qvbuttongroup.h>
@@ -59,6 +60,10 @@ QString kpToolFlipCommand::name () const
 {
     QString opName;
 
+    
+#if 1
+    opName = i18n ("Flip");
+#else  // re-enable when giving full descriptions for all actions
     if (m_horiz && m_vert)
         opName = i18n ("Flip horizontally and vertically");
     else if (m_horiz)
@@ -70,6 +75,7 @@ QString kpToolFlipCommand::name () const
         kdError () << "kpToolFlipCommand::name() not asked to flip" << endl;
         return QString::null;
     }
+#endif
 
 
     if (m_actOnSelection)
@@ -110,10 +116,21 @@ void kpToolFlipCommand::flip ()
     if (!doc)
         return;
 
-    QPixmap newPixmap = kpPixmapFX::flip (*doc->pixmap (m_actOnSelection),
-                                          m_horiz, m_vert);
 
-    doc->setPixmap (m_actOnSelection, newPixmap);
+    QApplication::setOverrideCursor (Qt::waitCursor);
+
+    
+    if (m_actOnSelection)
+        doc->selection ()->flip (m_horiz, m_vert);
+    else
+    {
+        QPixmap newPixmap = kpPixmapFX::flip (*doc->pixmap (), m_horiz, m_vert);
+
+        doc->setPixmap (newPixmap);
+    }
+
+
+    QApplication::restoreOverrideCursor ();
 }
 
 
@@ -121,8 +138,13 @@ void kpToolFlipCommand::flip ()
  * kpToolFlipDialog
  */
 
-kpToolFlipDialog::kpToolFlipDialog (QWidget *parent)
-    : KDialogBase (parent, 0/*name*/, true/*modal*/, i18n ("Flip Image"),
+// private static
+bool kpToolFlipDialog::s_lastIsVerticalFlip = true;
+
+
+kpToolFlipDialog::kpToolFlipDialog (bool actOnSelection, QWidget *parent)
+    : KDialogBase (parent, 0/*name*/, true/*modal*/,
+                   actOnSelection ? i18n ("Flip Selection") : i18n ("Flip Image"),
                    KDialogBase::Ok | KDialogBase::Cancel)
 {
     QVBox *vbox = makeVBoxMainWidget ();
@@ -133,12 +155,19 @@ kpToolFlipDialog::kpToolFlipDialog (QWidget *parent)
     }
     else
     {
-        QVButtonGroup *buttonGroup = new QVButtonGroup (i18n ("Flip"), vbox);
+        QVButtonGroup *buttonGroup = new QVButtonGroup (i18n ("Direction"), vbox);
 
         // I'm sure vert flipping is much more common than horiz flipping so make it come first
-        m_rbVertFlip = new QRadioButton (i18n ("&Vertically (upside-down)"), buttonGroup);
-        m_rbVertFlip->setChecked (true);  // CONFIG
-        m_rbHorizFlip = new QRadioButton (i18n ("&Horizontally"), buttonGroup);
+        m_verticalFlipRadioButton = new QRadioButton (i18n ("&Vertical (upside-down)"), buttonGroup);
+        m_horizontalFlipRadioButton = new QRadioButton (i18n ("&Horizontal"), buttonGroup);
+
+        m_verticalFlipRadioButton->setChecked (s_lastIsVerticalFlip);
+        m_horizontalFlipRadioButton->setChecked (!s_lastIsVerticalFlip);
+
+        connect (m_verticalFlipRadioButton, SIGNAL (toggled (bool)),
+                 this, SLOT (slotIsVerticalFlipChanged ()));
+        connect (m_horizontalFlipRadioButton, SIGNAL (toggled (bool)),
+                 this, SLOT (slotIsVerticalFlipChanged ()));
     }
 }
 
@@ -146,18 +175,32 @@ kpToolFlipDialog::~kpToolFlipDialog ()
 {
 }
 
+
+// public slot
+void kpToolFlipDialog::slotIsVerticalFlipChanged ()
+{
+    s_lastIsVerticalFlip = m_verticalFlipRadioButton->isChecked ();
+}
+
+
+// public
 bool kpToolFlipDialog::getHorizontalFlip () const
 {
-    return m_rbHorizFlip->isChecked ();
+    return m_horizontalFlipRadioButton->isChecked ();
 }
 
+// public
 bool kpToolFlipDialog::getVerticalFlip () const
 {
-    return m_rbVertFlip->isChecked ();
+    return m_verticalFlipRadioButton->isChecked ();
 }
 
-bool kpToolFlipDialog::isNoopFlip () const
+// public
+bool kpToolFlipDialog::isNoOp () const
 {
     return !getHorizontalFlip () && !getVerticalFlip ();
 }
+
+
+#include <kptoolflip.moc>
 
