@@ -1,0 +1,27 @@
+
+This file lists known bugs in the 1.0 release that were not considered "release
+critical" (euphemism for "hard to fix"):
+
+
+1. Insane flicker when zooming in/out.
+
+2. Flicker when the thumbnail makes its appearance.
+
+3. ToolBox & Colour Palette RMB ToolBar Menus do not work.
+
+4. Image dialog spinboxes should accept Enter Key (instead of the dialog's
+   OK button) after the user has typed something.
+   
+      OR
+
+   Spinboxes should signal that their values have changed every time the user
+   changes the text (rather than after pressing Enter or clicking on
+   another spinbox etc.).
+
+   The need for the "Update Preview" button and the difficulty of keeping
+   the percentages and dimensions in sync in the Resize / Scale dialog are
+   manifestations of the current QSpinBox behaviour.
+
+
+Please report all bugs to Clarence <dang@kde.org>.
+
