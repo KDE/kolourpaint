@@ -64,7 +64,7 @@ kpToolSelection::~kpToolSelection ()
 void kpToolSelection::pushOntoDocument ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "kpToolSelection::end() CALLED" << endl;
+    kdDebug () << "kpToolSelection::pushOntoDocument() CALLED" << endl;
 #endif
     mainWindow ()->slotDeselect ();
 }
