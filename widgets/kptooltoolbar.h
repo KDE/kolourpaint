@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -26,8 +26,8 @@
 */
 
 
-#ifndef __kptooltoolbar_h__
-#define __kptooltoolbar_h__
+#ifndef __kp_tool_tool_bar_h__
+#define __kp_tool_tool_bar_h__
 
 #include <qvaluevector.h>
 #include <ktoolbar.h>
@@ -62,10 +62,10 @@ public:
 
     kpTool *tool () const;
     void selectTool (kpTool *tool);
-    
+
     kpTool *previousTool () const;
     void selectPreviousTool ();
-    
+
     void hideAllToolWidgets ();
     // could this be cleaner (the tools have to access them individually somehow)?
     kpToolWidgetBrush *toolWidgetBrush () const { return m_toolWidgetBrush; }
@@ -109,19 +109,19 @@ private:
             : m_button (button), m_tool (tool)
         {
         }
-        
+
         kpButtonToolPair ()
             : m_button (0), m_tool (0)
         {
         }
-        
+
         QButton *m_button;
         kpTool *m_tool;
     };
 
     QValueVector <kpButtonToolPair> m_buttonToolPairs;
-    
+
     kpTool *m_previousTool, *m_currentTool;
 };
 
-#endif  // __kptooltoolbar_h__
+#endif  // __kp_tool_tool_bar_h__
