@@ -170,6 +170,10 @@ public:
     static int preferredMinimumHeightForTextStyle (const kpTextStyle &textStyle);
     static QSize preferredMinimumSizeForTextStyle (const kpTextStyle &textStyle);
 
+    int minimumWidth () const;
+    int minimumHeight () const;
+    QSize minimumSize () const;
+
     int textRowForPoint (const QPoint &globalPoint) const;
     int textColForPoint (const QPoint &globalPoint) const;
     QPoint pointForTextRowCol (int row, int col);

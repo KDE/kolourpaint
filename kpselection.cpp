@@ -967,6 +967,31 @@ QSize kpSelection::preferredMinimumSizeForTextStyle (const kpTextStyle &textStyl
 
 
 // public
+int kpSelection::minimumWidth () const
+{
+    if (isText ())
+        return minimumWidthForTextStyle (textStyle ());
+    else
+        return 1;
+}
+
+// public
+int kpSelection::minimumHeight () const
+{
+    if (isText ())
+        return minimumHeightForTextStyle (textStyle ());
+    else
+        return 1;
+}
+
+// public
+QSize kpSelection::minimumSize () const
+{
+    return QSize (minimumWidth (), minimumHeight ());
+}
+
+
+// public
 int kpSelection::textRowForPoint (const QPoint &globalPoint) const
 {
     if (!isText ())

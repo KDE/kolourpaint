@@ -871,21 +871,12 @@ void kpToolResizeScaleDialog::slotActOnChanged ()
     m_newWidthInput->blockSignals (true);
     m_newHeightInput->blockSignals (true);
 
-    if (actOnSelection () && selection ()->isText ())
-    {
-        m_newWidthInput->setMinValue (
-            kpSelection::minimumWidthForTextStyle (
-                ((kpMainWindow *) parent ())->textStyle ()));
-
-        m_newHeightInput->setMinValue (
-            kpSelection::minimumHeightForTextStyle (
-                ((kpMainWindow *) parent ())->textStyle ()));
-    }
-    else
-    {
-        m_newWidthInput->setMinValue (1);
-        m_newHeightInput->setMinValue (1);
-    }
+    m_newWidthInput->setMinValue (actOnSelection () ?
+                                      selection ()->minimumWidth () :
+                                      1);
+    m_newHeightInput->setMinValue (actOnSelection () ?
+                                       selection ()->minimumHeight () :
+                                       1);
 
     m_newWidthInput->blockSignals (false);
     m_newHeightInput->blockSignals (false);

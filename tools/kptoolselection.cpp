@@ -664,6 +664,7 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
             m_currentResizeScaleCommand = new kpToolSelectionResizeScaleCommand (mainWindow ());
         }
 
+
         kpSelection originalSelection = m_currentResizeScaleCommand->originalSelection ();
         int newWidth = originalSelection.width ();
         int newHeight = originalSelection.height ();
@@ -672,32 +673,28 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
 
         if (m_resizeScaleType & kpSelection::Left)
         {
-            newWidth = QMAX (1, newWidth - (thisPoint.x () - m_startPoint.x ()));
+            newWidth = QMAX (originalSelection.minimumWidth (),
+                             newWidth - (thisPoint.x () - m_startPoint.x ()));
             newX -= (newWidth - originalSelection.width ());
         }
         else if (m_resizeScaleType & kpSelection::Right)
         {
-            newWidth = QMAX (1, newWidth + (thisPoint.x () - m_startPoint.x ()));
+            newWidth = QMAX (originalSelection.minimumWidth (),
+                             newWidth + (thisPoint.x () - m_startPoint.x ()));
         }
 
         if (m_resizeScaleType & kpSelection::Top)
         {
-            newHeight = QMAX (1, newHeight - (thisPoint.y () - m_startPoint.y ()));
+            newHeight = QMAX (originalSelection.minimumHeight (),
+                              newHeight - (thisPoint.y () - m_startPoint.y ()));
             newY -= (newHeight - originalSelection.height ());
         }
         else if (m_resizeScaleType & kpSelection::Bottom)
         {
-            newHeight = QMAX (1, newHeight + (thisPoint.y () - m_startPoint.y ()));
+            newHeight = QMAX (originalSelection.minimumHeight (),
+                              newHeight + (thisPoint.y () - m_startPoint.y ()));
         }
 
-        if (sel->isText ())
-        {
-            // TODO: feels wrong - what about newX & newY
-            newWidth = QMAX (sel->minimumWidthForTextStyle (sel->textStyle ()),
-                             newWidth);
-            newHeight = QMAX (sel->minimumHeightForTextStyle (sel->textStyle ()),
-                              newHeight);
-        }
 
         viewManager ()->setFastUpdates ();
         m_currentResizeScaleCommand->resizeAndMoveTo (newWidth, newHeight,
