@@ -57,10 +57,10 @@ void kpMainWindow::setupTextToolBarActions ()
         "text_italic"/*icon*/, 0/*shortcut*/,
         this, SLOT (slotTextItalicChanged ()), ac, "text_italic");
     m_actionTextUnderline = new KToggleAction (i18n ("Underline"),
-        "text_underline"/*icon*/, 0/*shortcut*/,
+        "text_under"/*icon*/, 0/*shortcut*/,
         this, SLOT (slotTextUnderlineChanged ()), ac, "text_underline");
     m_actionTextStrikeThru = new KToggleAction (i18n ("Strike Through"),
-        "text_strike_thru"/*icon*/, 0/*shortcut*/,
+        "text_strike"/*icon*/, 0/*shortcut*/,
         this, SLOT (slotTextStrikeThruChanged ()), ac, "text_strike_thru");
 
 
