@@ -25,7 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_EFFECT_BALANCE 1
+#define DEBUG_KP_EFFECT_BALANCE 0
 
 
 #include <kpeffectbalance.h>
@@ -256,8 +256,7 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
                                               QWidget *parent, const char *name)
     : kpColorEffectWidget (actOnSelection, mainWindow, parent, name)
 {
-    // TODO: I think you mean 5 cols
-    QGridLayout *lay = new QGridLayout (this, 5, 4, marginHint (), spacingHint ());
+    QGridLayout *lay = new QGridLayout (this, 5, 5, marginHint (), spacingHint ());
 
 
     QLabel *brightnessLabel = new QLabel (i18n ("&Brightness:"), this);
@@ -315,7 +314,7 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
     lay->addWidget (m_gammaLabel, 2, 3);
     lay->addWidget (gammaResetPushButton, 2, 4);
 
-    lay->addMultiCellWidget (spaceWidget, 3, 3, 0, 3);
+    lay->addMultiCellWidget (spaceWidget, 3, 3, 0, 4);
     lay->addMultiCellWidget (resetPushButton, 4, 4, 2, 4, Qt::AlignRight);
 
     lay->addWidget (channelLabel, 4, 0);
