@@ -821,7 +821,9 @@ void kpToolSelection::slotIsOpaqueChanged ()
 
         document ()->selection ()->setTransparency (st);
         commandHistory ()->addCommand (new kpToolSelectionTransparencyCommand (
-            i18n ("Selection: Transparency"),
+            st.isOpaque () ?
+                i18n ("Selection: Opaque") :
+                i18n ("Selection: Transparent"),
             st, oldST,
             mainWindow ()),
             false/* no exec*/);
@@ -856,7 +858,7 @@ void kpToolSelection::slotBackgroundColorChanged (const kpColor &)
 
         document ()->selection ()->setTransparency (st);
         commandHistory ()->addCommand (new kpToolSelectionTransparencyCommand (
-            i18n ("Selection: Transparency"),
+            i18n ("Selection: Transparency Color"),
             st, oldST,
             mainWindow ()),
             false/* no exec*/);
@@ -891,7 +893,7 @@ void kpToolSelection::slotColorSimilarityChanged (double, int)
 
         document ()->selection ()->setTransparency (st);
         commandHistory ()->addCommand (new kpToolSelectionTransparencyCommand (
-            i18n ("Selection: Transparency"),
+            i18n ("Selection: Transparency Color Similarity"),
             st, oldST,
             mainWindow ()),
             false/* no exec*/);
