@@ -37,6 +37,7 @@
 #include <kaction.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <kstdaction.h>
 
 #include <kpcommandhistory.h>
@@ -71,7 +72,7 @@ void kpMainWindow::setupEditMenuActions ()
     // Undo/Redo
     // CONFIG: need GUI
     m_commandHistory = new kpCommandHistory (true/*read config*/, this);
-    
+
     if (m_configFirstTime)
     {
         // (so that cfg-file-editing user can modify in the meantime)
@@ -472,8 +473,51 @@ void kpMainWindow::slotPaste ()
     }
     else
     {
-        kdError () << "kpMainWindow::slotPaste() could not decode selection" << endl;
         QApplication::restoreOverrideCursor ();
+
+        kdDebug () << "kpMainWindow::slotPaste() could not decode selection" << endl;
+        kdDebug () << "\tFormats supported:" << endl;
+        for (int i = 0; ms->format (i); i++)
+        {
+            kdDebug () << "\t\t" << i << ":" << ms->format (i) << endl;
+        }
+
+        // TODO: fix Klipper
+        KMessageBox::sorry (this,
+            i18n ("<qt><p>KolourPaint cannot paste the contents of"
+                  " the clipboard as the data unexpectedly disappeared.</p>"
+
+                  "<p>This usually occurs if the application which was"
+                  " responsible"
+                  " for the clipboard contents has been closed.</p></qt>"),
+            i18n ("Cannot Paste"));
+
+        // TODO: PROPAGATE: interprocess
+        if (KMainWindow::memberList)
+        {
+        #if DEBUG_KP_MAIN_WINDOW
+            kdDebug () << "\thave memberList" << endl;
+        #endif
+
+            for (QPtrList <KMainWindow>::const_iterator it = KMainWindow::memberList->begin ();
+                 it != KMainWindow::memberList->end ();
+                 it++)
+            {
+                kpMainWindow *mw = dynamic_cast <kpMainWindow *> (*it);
+
+                if (!mw)
+                {
+                    kdError () << "kpMainWindow::slotPaste() given fake kpMainWindow: " << (*it) << endl;
+                    continue;
+                }
+            #if DEBUG_KP_MAIN_WINDOW
+                kdDebug () << "\t\tmw=" << mw << endl;
+            #endif
+
+                mw->slotEnablePaste ();
+            }
+        }
+
         return;
     }
 
