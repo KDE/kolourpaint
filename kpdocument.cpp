@@ -96,6 +96,114 @@ void kpDocument::setMainWindow (kpMainWindow *mainWindow)
  * File I/O
  */
 
+// public static
+QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExistDialog,
+                                       QWidget *parent,
+                                       QString &mimeType)
+{
+#if DEBUG_KP_DOCUMENT
+    kdDebug () << "kpDocument::getPixmapFromFile(" << url << "," << parent << ")" << endl;
+#endif
+
+    mimeType = QString::null;
+
+
+    QString tempFile;
+    if (url.isEmpty () || !KIO::NetAccess::download (url, tempFile, parent))
+    {
+        if (!suppressDoesntExistDialog)
+        {
+            KMessageBox::sorry (parent,
+                                i18n ("Could not open \"%1\".")
+                                    .arg (kpDocument::prettyFilenameForURL (url)));
+        }
+
+        return QPixmap ();
+    }
+
+
+    // sync: remember to "KIO::NetAccess::removeTempFile (tempFile)" in all exit paths
+
+    mimeType = KImageIO::mimeType (tempFile);
+
+#if DEBUG_KP_DOCUMENT
+    kdDebug () << "\ttempFile=" << tempFile << endl;
+    kdDebug () << "\tmimetype=" << mimetype << endl;
+    kdDebug () << "\tsrc=" << url.path () << endl;
+    kdDebug () << "\tmimetype of src=" << KImageIO::mimeType (url.path ()) << endl;
+#endif
+
+    if (mimeType.isEmpty ())
+    {
+        KMessageBox::sorry (parent,
+                            i18n ("Could not open \"%1\" - unknown mimetype.")
+                                .arg (kpDocument::prettyFilenameForURL (url)));
+        KIO::NetAccess::removeTempFile (tempFile);
+        return QPixmap ();
+    }
+
+
+    QImage image (tempFile);
+    if (image.isNull ())
+    {
+        KMessageBox::sorry (parent,
+                            i18n ("Could not open \"%1\" - unsupported image format.\n"
+                                  "The file may be corrupt.")
+                                .arg (kpDocument::prettyFilenameForURL (url)));
+        KIO::NetAccess::removeTempFile (tempFile);
+        return QPixmap ();
+    }
+
+#if DEBUG_KP_DOCUMENT
+    kdDebug () << "\timage: depth=" << image.depth ()
+                << " (X display=" << QColor::numBitPlanes () << ")"
+                << " hasAlphaBuffer=" << image.hasAlphaBuffer ()
+                << endl;
+#endif
+
+#if DEBUG_KP_DOCUMENT && 0
+    kdDebug () << "Image dump:" << endl;
+
+    for (int y = 0; y < image.height (); y++)
+    {
+        for (int x = 0; x < image.width (); x++)
+        {
+            const QRgb rgb = image.pixel (x, y);
+            //fprintf (stderr, " %08X", rgb);
+        }
+        //fprintf (stderr, "\n");
+    }
+#endif
+
+
+    QPixmap newPixmap;
+    newPixmap = kpPixmapFX::convertToPixmap (image,
+        false/*no dither*/,
+        kpPixmapFX::WarnAboutLossInfo (parent,
+            i18n ("image \"%1\"").arg (prettyFilenameForURL (url)),
+            "docOpen"));
+
+    if (newPixmap.isNull ())
+    {
+        KMessageBox::sorry (parent,
+                            i18n ("Could not open \"%1\" - out of graphics memory.")
+                                .arg (kpDocument::prettyFilenameForURL (url)));
+        KIO::NetAccess::removeTempFile (tempFile);
+        return QPixmap ();
+    }
+
+#if DEBUG_KP_DOCUMENT
+    kdDebug () << "\tpixmap: depth=" << newPixmap.depth ()
+                << " hasAlphaChannelOrMask=" << newPixmap.hasAlpha ()
+                << " hasAlphaChannel=" << newPixmap.hasAlphaChannel ()
+                << endl;
+#endif
+
+
+    KIO::NetAccess::removeTempFile (tempFile);
+    return newPixmap;
+}
+
 void kpDocument::openNew (const KURL &url)
 {
 #if DEBUG_KP_DOCUMENT
@@ -117,130 +225,42 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
     kdDebug () << "kpDocument::open (" << url << ")" << endl;
 #endif
 
-    bool errorOccurred = false;
+    QString newMimeType;
+    QPixmap newPixmap = kpDocument::getPixmapFromFile (url,
+        newDocSameNameIfNotExist/*suppress "doesn't exist" dialog*/,
+        m_mainWindow,
+        newMimeType/*ref*/);
 
-    QString tempFile;
-    if (!url.isEmpty () && KIO::NetAccess::download (url, tempFile, m_mainWindow))
+    if (!newPixmap.isNull ())
     {
-        // sync: remember to "KIO::NetAccess::removeTempFile (tempFile)" in all exit paths
+        delete m_pixmap;
+        m_pixmap = new QPixmap (newPixmap);
 
-        QString mimetype = KImageIO::mimeType (tempFile);
+        m_url = url;
+        m_mimetype = newMimeType;
+        m_modified = false;
 
-    #if DEBUG_KP_DOCUMENT
-        kdDebug () << "\ttempFile=" << tempFile << endl;
-        kdDebug () << "\tmimetype=" << mimetype << endl;
-        kdDebug () << "\tsrc=" << url.path () << endl;
-        kdDebug () << "\tmimetype of src=" << KImageIO::mimeType (url.path ()) << endl;
-    #endif
-
-        if (mimetype.isEmpty ())
-        {
-            KMessageBox::sorry (m_mainWindow,
-                                i18n ("Could not open \"%1\" - unknown mimetype.")
-                                    .arg (kpDocument::prettyFilenameForURL (url)));
-            errorOccurred = true;
-        }
-        else
-        {
-            QImage image (tempFile);
-            if (image.isNull ())
-            {
-                KMessageBox::sorry (m_mainWindow,
-                                    i18n ("Could not open \"%1\" - unsupported image format.\n"
-                                          "The file may be corrupt.")
-                                        .arg (kpDocument::prettyFilenameForURL (url)));
-                errorOccurred = true;
-            }
-            else
-            {
-            #if DEBUG_KP_DOCUMENT
-                kdDebug () << "\timage: depth=" << image.depth ()
-                           << " (X display=" << QColor::numBitPlanes () << ")"
-                           << " hasAlphaBuffer=" << image.hasAlphaBuffer ()
-                           << endl;
-            #endif
-
-            #if DEBUG_KP_DOCUMENT && 0
-                kdDebug () << "Image dump:" << endl;
-
-                for (int y = 0; y < image.height (); y++)
-                {
-                    for (int x = 0; x < image.width (); x++)
-                    {
-                        const QRgb rgb = image.pixel (x, y);
-                        //fprintf (stderr, " %08X", rgb);
-                    }
-                    //fprintf (stderr, "\n");
-                }
-            #endif
-
-                QPixmap *newPixmap = new QPixmap ();
-                *newPixmap = kpPixmapFX::convertToPixmap (image,
-                    false/*no dither*/,
-                    kpPixmapFX::WarnAboutLossInfo (m_mainWindow,
-                        i18n ("image \"%1\"").arg (prettyFilenameForURL (url)),
-                        "docOpen"));
-
-                if (newPixmap->isNull ())
-                {
-                    kdError () << "could not convert from QImage" << endl;
-                    delete newPixmap;
-                    errorOccurred = true;
-                }
-                else
-                {
-                #if DEBUG_KP_DOCUMENT
-                    kdDebug () << "\tpixmap: depth=" << newPixmap->depth ()
-                                << " hasAlphaChannelOrMask=" << newPixmap->hasAlpha ()
-                                << " hasAlphaChannel=" << newPixmap->hasAlphaChannel ()
-                                << endl;
-                #endif
-
-                    KIO::NetAccess::removeTempFile (tempFile);
-
-                    delete m_pixmap;
-                    m_pixmap = newPixmap;
-
-                    m_url = url;
-                    m_mimetype = mimetype;
-                    m_modified = false;
-
-                    emit documentOpened ();
-                    return true;
-                }
-            }
-        }
-
-        // --- if we are here, the file format was unrecognised --- //
-
-        KIO::NetAccess::removeTempFile (tempFile);
+        emit documentOpened ();
+        return true;
     }
 
     if (newDocSameNameIfNotExist)
     {
-        if (errorOccurred ||
-            url.isEmpty () ||
-            // maybe it was a permission error?
-            KIO::NetAccess::exists (url, true/*open*/, m_mainWindow))
+        if (!url.isEmpty () &&
+            // not just a permission error?
+            !KIO::NetAccess::exists (url, true/*open*/, m_mainWindow))
         {
-            openNew (KURL ());
+            openNew (url);
         }
         else
         {
-            openNew (url);
+            openNew (KURL ());
         }
 
         return true;
     }
     else
     {
-        if (!errorOccurred)
-        {
-            KMessageBox::sorry (m_mainWindow,
-                                i18n ("Could not open \"%1\".")
-                                    .arg (kpDocument::prettyFilenameForURL (url)));
-        }
-
         return false;
     }
 }
@@ -283,15 +303,21 @@ static QPixmap pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
     return retPixmap;
 }
 
-bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwritePrompt)
+// public static
+bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
+                                   const KURL &url, const QString &mimeType,
+                                   bool overwritePrompt, QWidget *parent)
 {
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::saveAs (" << url << "," << mimetype << ")" << endl;
+    kdDebug () << "kpDocument::savePixmapToFile ("
+               << url << "," << mimetype
+               << ",overwritePrompt=" << overWritePrompt << ")"
+               << endl;
 #endif
 
-    if (overwritePrompt && KIO::NetAccess::exists (url, false/*write*/, m_mainWindow))
+    if (overwritePrompt && KIO::NetAccess::exists (url, false/*write*/, parent))
     {
-        int result = KMessageBox::warningContinueCancel (m_mainWindow,
+        int result = KMessageBox::warningContinueCancel (parent,
             i18n ("A document called \"%1\" already exists.\n"
                   "Do you want to overwrite it?")
                 .arg (prettyFilenameForURL (url)),
@@ -308,6 +334,7 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
         }
     }
 
+
     KTempFile tempFile;
     tempFile.setAutoDelete (true);
 
@@ -318,7 +345,7 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
         filename = tempFile.name ();
         if (filename.isEmpty ())
         {
-            KMessageBox::error (m_mainWindow,
+            KMessageBox::error (parent,
                                 i18n ("Could not save image - unable to create temporary file."));
             return false;
         }
@@ -326,38 +353,62 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
     else
         filename = url.path ();
 
-    QString type = KImageIO::typeForMime (mimetype);
+
+    QString type = KImageIO::typeForMime (mimeType);
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "\tmimetype=" << mimetype << " type=" << type << endl;
+    kdDebug () << "\tmimeType=" << mimeType << " type=" << type << endl;
 #endif
+
+
     QPixmap pixmapToSave =
-        pixmapWithDefinedTransparentPixels (pixmapWithSelection (),
+        pixmapWithDefinedTransparentPixels (pixmap,
                                             Qt::white);  // CONFIG
 
     if (!pixmapToSave.save (filename, type.latin1 ()))
     {
-        KMessageBox::error (m_mainWindow,
+        KMessageBox::error (parent,
                             i18n ("Could not save as \"%1\".")
                                 .arg (kpDocument::prettyFilenameForURL (url)));
         return false;
     }
 
+
     if (!url.isLocalFile ())
     {
-        if (!KIO::NetAccess::upload (filename, url, m_mainWindow))
+        if (!KIO::NetAccess::upload (filename, url, parent))
         {
-            KMessageBox::error (m_mainWindow,
+            KMessageBox::error (parent,
                                 i18n ("Could not save image - failed to upload."));
             return false;
         }
     }
 
-    m_url = url;
-    m_mimetype = mimetype;
-    m_modified = false;
 
-    emit documentSaved ();
     return true;
+}
+
+bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwritePrompt)
+{
+#if DEBUG_KP_DOCUMENT
+    kdDebug () << "kpDocument::saveAs (" << url << "," << mimetype << ")" << endl;
+#endif
+
+    if (kpDocument::savePixmapToFile (pixmapWithSelection (),
+                                      url, mimetype,
+                                      overwritePrompt,
+                                      m_mainWindow))
+    {
+        m_url = url;
+        m_mimetype = mimetype;
+        m_modified = false;
+
+        emit documentSaved ();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 KURL kpDocument::url () const

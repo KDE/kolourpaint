@@ -62,8 +62,15 @@ public:
      * File I/O
      */
 
+    static QPixmap getPixmapFromFile (const KURL &url, bool suppressDoesntExistDialog,
+                                      QWidget *parent,
+                                      QString &mimeType);
     void openNew (const KURL &url);
     bool open (const KURL &url, bool newDocSameNameIfNotExist = false);
+
+    static bool savePixmapToFile (const QPixmap &pixmap,
+                                  const KURL &url, const QString &mimeType,
+                                  bool overwritePrompt, QWidget *parent);
     bool save ();
     bool saveAs (const KURL &url, const QString &mimetype, bool overwritePrompt = true);
 
