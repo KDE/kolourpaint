@@ -38,6 +38,7 @@
 #include <kpdocument.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
+#include <kptool.h>
 #include <kptoolflip.h>
 #include <kpmainwindow.h>
 
@@ -121,7 +122,11 @@ void kpToolFlipCommand::flip ()
 
     
     if (m_actOnSelection)
+    {
         doc->selection ()->flip (m_horiz, m_vert);
+        if (m_mainWindow->tool ())
+            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+    }
     else
     {
         QPixmap newPixmap = kpPixmapFX::flip (*doc->pixmap (), m_horiz, m_vert);
