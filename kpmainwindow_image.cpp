@@ -101,22 +101,22 @@ void kpMainWindow::setupImageMenuActions ()
 {
     KActionCollection *ac = actionCollection ();
 
-    m_actionResizeScale = new KAction (actionResizeScaleText (), CTRL + Key_E,
+    m_actionResizeScale = new KAction (actionResizeScaleText (), Qt::CTRL + Qt::Key_E,
         this, SLOT (slotResizeScale ()), ac, "image_resize_scale");
 
-    m_actionCrop = new KAction (i18n ("Crop Ou&tside Selection"), CTRL + Key_T,
+    m_actionCrop = new KAction (i18n ("Crop Ou&tside Selection"), Qt::CTRL + Qt::Key_T,
         this, SLOT (slotCrop ()), ac, "image_crop");
 
-    m_actionAutoCrop = new KAction (i18n ("A&utocrop"), CTRL + Key_U,
+    m_actionAutoCrop = new KAction (i18n ("A&utocrop"), Qt::CTRL + Qt::Key_U,
         this, SLOT (slotAutoCrop ()), ac, "image_auto_crop");
 
-    m_actionFlip = new KAction (i18n ("&Flip..."), CTRL + Key_F,
+    m_actionFlip = new KAction (i18n ("&Flip..."), Qt::CTRL + Qt::Key_F,
         this, SLOT (slotFlip ()), ac, "image_flip");
 
-    m_actionRotate = new KAction (i18n ("&Rotate..."), CTRL + Key_R,
+    m_actionRotate = new KAction (i18n ("&Rotate..."), Qt::CTRL + Qt::Key_R,
         this, SLOT (slotRotate ()), ac, "image_rotate");
 
-    m_actionSkew = new KAction (i18n ("S&kew..."), CTRL + Key_K,
+    m_actionSkew = new KAction (i18n ("S&kew..."), Qt::CTRL + Qt::Key_K,
         this, SLOT (slotSkew ()), ac, "image_skew");
 
     m_actionConvertToBlackAndWhite = new KAction (i18n ("Convert to &Black && White"), 0,
@@ -125,13 +125,13 @@ void kpMainWindow::setupImageMenuActions ()
     m_actionConvertToGrayscale = new KAction (i18n ("Convert to &Grayscale"), 0,
         this, SLOT (slotConvertToGrayscale ()), ac, "image_convert_to_grayscale");
 
-    m_actionInvertColors = new KAction (i18n ("&Invert Colors"), CTRL + Key_I,
+    m_actionInvertColors = new KAction (i18n ("&Invert Colors"), Qt::CTRL + Qt::Key_I,
         this, SLOT (slotInvertColors ()), ac, "image_invert_colors");
 
-    m_actionClear = new KAction (i18n ("C&lear"), CTRL + SHIFT + Key_N,
+    m_actionClear = new KAction (i18n ("C&lear"), Qt::CTRL + Qt::SHIFT + Qt::Key_N,
         this, SLOT (slotClear ()), ac, "image_clear");
 
-    d->m_actionMoreEffects = new KAction (i18n ("&More Effects..."), CTRL + Key_M,
+    d->m_actionMoreEffects = new KAction (i18n ("&More Effects..."), Qt::CTRL + Qt::Key_M,
         this, SLOT (slotMoreEffects ()), ac, "image_more_effects");
 
     enableImageMenuDocumentActions (false);
