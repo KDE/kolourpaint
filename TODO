@@ -7,6 +7,8 @@ Currently Underway
 
 clean up kpmainwindow
 
+config dialogs (look into new kconfig generator)
+
 fix selections; implement free-form selection
 - clean interface
 - drastically improve performance
@@ -16,8 +18,17 @@ fix selections; implement free-form selection
 Image menu items as ordinary tools
 honour background colour for Skew, Rotate
 
+Color Washer as part of the Image Menu;
+dbl-click on Color Washer does whole image?
+
 tool/text
 paste text (editable after you paste it)
+
+Killer Feature: with flow tools (pen, brush, spraycan), holding SHIFT forces horizontal drawing;
+                CTRL forces vertical - so those of us without perfectly steady hands
+                can still draw straight without continually hitting the Undo button :)
+
+Zoom zooms into/out of the centre, not the top-left (like a camera)
 
 
 Before 1.0
@@ -39,8 +50,6 @@ documentation
 working thumbnail view; also maybe shouldn't be a toolbar
 
 icons for some of the Image dialogs
-
-config dialogs (look into new kconfig generator)
 
 session restore
 
@@ -72,6 +81,8 @@ intersect bounding rect with document rect when saving undo info
 ditto for setTempPixmapAt et. al.
 
 guard all ptr derefs with if (ptr) ptr->whatever
+- also don't store ptrs to e.g. kpDocument as they may go out of date
+
 kdError -> KP_PANIC or KMessageBox
 wait cursor for slow ops - should it be in kpDocument or in the commands???
 
@@ -86,6 +97,14 @@ network friendly:
 
 tool icons - if a more experienced artist doesn't offer to draw new ones,
 I'll be forced to redo them myself once transparency is supported
+
+colour depth audit
+- do 8-bit pixmaps work?
+- are we incorrectly using kpDocument::setPixmap() with mono pixmaps?
+
+rewrite color washer/eraser
+- faster
+- rwlbuis' test
 
 
 After 1.0
@@ -117,11 +136,12 @@ philosophy of the app, which seems to be simplicity." -- Tom
 
 offer to save Undo/Redo QPixmap's as PNGs to save memory
 
-color depth - limitation of X
+colour depth - limitation of X
 
-Edit/Find a particular color
+Edit/Find a particular colour
 
 fullscreen
+allow user to disable Tool Box & Colour Palette if they really insist
 
 "Open documents in the same window" mode - goes against what most KDE apps do
 but it is convenient sometimes
@@ -129,5 +149,11 @@ but it is convenient sometimes
 File/Insert as selection
 File/Save selection
 
-convert to B&W
+colour palette shows frequently used colours for the current image
+
+blur & sharpen
+
+readonly mode
+
+Edit/Paste gives the option of resizing the view to the size of the pasted selection
 
