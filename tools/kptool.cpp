@@ -294,6 +294,14 @@ void kpTool::globalDraw ()
 }
 
 // virtual
+void kpTool::reselect ()
+{
+#if DEBUG_KP_TOOL
+    kdDebug () << "kpTool::reselect() base implementation" << endl;
+#endif
+}
+
+// virtual
 void kpTool::draw (const QPoint &, const QPoint &, const QRect &)
 {
 }
