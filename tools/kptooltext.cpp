@@ -512,7 +512,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     #if DEBUG_KP_TOOL_TEXT
         kdDebug () << "\tkey processing did not accept (text was '"
                    << e->text ()
-                   << "') - passing on event to kpTool"
+                   << "') - passing on event to kpToolSelection"
                    << endl;
     #endif
         //if (hasBegunShape ())
