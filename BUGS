@@ -116,6 +116,10 @@ This file lists known bugs in the 1.4_light release that are not considered
 
 24. In transparent background mode, the Text Tool does not antialias.
 
+25. Sometimes when you take a screenshot of a window, and then paste in a
+    new window, it will be greyscale.  When pasting again, it will still be
+    greyscale.  Cannot consistently reproduce.  [Thurston]
+
 
 Issue with XFree86 <= 3.3.6 with the "Emulate3Buttons" Option
 =============================================================
