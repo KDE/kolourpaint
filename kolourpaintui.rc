@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui name="kolourpaint" version="15">
+<gui name="kolourpaint" version="17">
 
 <MenuBar>
     <Menu name="file">
@@ -60,11 +60,10 @@
         <Separator />
         <Action name="image_convert_to_black_and_white" />
         <Action name="image_convert_to_grayscale" />
+        <Action name="image_more_effects" />
         <Separator />
         <Action name="image_invert_colors" />
         <Action name="image_clear" />
-        <Separator />
-        <Action name="image_more_effects" />
     </Menu>
 
     <Menu name="settings">
