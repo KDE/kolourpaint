@@ -13,7 +13,6 @@ CLEANFILES = kolourpaintlicense.h
 
 kolourpaint_SOURCES = kolourpaint.cpp kpdocument.cpp kpview.cpp \
     kpcolor.cpp kpcommandhistory.cpp \
-    kpconfigdialog.cpp \
     kpmainwindow.cpp \
     kpmainwindow_edit.cpp kpmainwindow_image.cpp kpmainwindow_tools.cpp \
     kpmainwindow_file.cpp kpmainwindow_settings.cpp kpmainwindow_view.cpp \
