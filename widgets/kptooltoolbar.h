@@ -45,6 +45,7 @@ class kpToolWidgetBrush;
 class kpToolWidgetEraserSize;
 class kpToolWidgetFillStyle;
 class kpToolWidgetLineWidth;
+class kpToolWidgetOpaqueOrTransparent;
 class kpToolWidgetSpraycanSize;
 
 class kpToolToolBar : public KToolBar
@@ -71,6 +72,7 @@ public:
     kpToolWidgetEraserSize *toolWidgetEraserSize () const { return m_toolWidgetEraserSize; }
     kpToolWidgetFillStyle *toolWidgetFillStyle () const { return m_toolWidgetFillStyle; }
     kpToolWidgetLineWidth *toolWidgetLineWidth () const { return m_toolWidgetLineWidth; }
+    kpToolWidgetOpaqueOrTransparent *toolWidgetOpaqueOrTransparent () const { return m_toolWidgetOpaqueOrTransparent; }
     kpToolWidgetSpraycanSize *toolWidgetSpraycanSize () const { return m_toolWidgetSpraycanSize; }
 
 signals:
@@ -98,6 +100,7 @@ private:
     kpToolWidgetEraserSize *m_toolWidgetEraserSize;
     kpToolWidgetFillStyle *m_toolWidgetFillStyle;
     kpToolWidgetLineWidth *m_toolWidgetLineWidth;
+    kpToolWidgetOpaqueOrTransparent *m_toolWidgetOpaqueOrTransparent;
     kpToolWidgetSpraycanSize *m_toolWidgetSpraycanSize;
 
     struct kpButtonToolPair

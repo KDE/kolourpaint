@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_TOOL_BAR 1
+#define DEBUG_KP_TOOL_TOOL_BAR 0
 
 #include <qbuttongroup.h>
 #include <qlayout.h>
@@ -46,6 +46,7 @@
 #include <kptoolwidgeterasersize.h>
 #include <kptoolwidgetfillstyle.h>
 #include <kptoolwidgetlinewidth.h>
+#include <kptoolwidgetopaqueortransparent.h>
 #include <kptoolwidgetspraycansize.h>
 
 
@@ -92,6 +93,7 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
     m_toolWidgetEraserSize = new kpToolWidgetEraserSize (m_baseWidget);
     m_toolWidgetFillStyle = new kpToolWidgetFillStyle (m_baseWidget);
     m_toolWidgetLineWidth = new kpToolWidgetLineWidth (m_baseWidget);
+    m_toolWidgetOpaqueOrTransparent = new kpToolWidgetOpaqueOrTransparent (m_baseWidget);
     m_toolWidgetSpraycanSize = new kpToolWidgetSpraycanSize (m_baseWidget);
     
     m_lastDockedOrientationSet = false;
@@ -239,6 +241,7 @@ void kpToolToolBar::hideAllToolWidgets ()
     HIDE_WIDGET (m_toolWidgetEraserSize);
     HIDE_WIDGET (m_toolWidgetFillStyle);
     HIDE_WIDGET (m_toolWidgetLineWidth);
+    HIDE_WIDGET (m_toolWidgetOpaqueOrTransparent);
     HIDE_WIDGET (m_toolWidgetSpraycanSize);
 #undef HIDE_WIDGET
 }
@@ -290,9 +293,11 @@ void kpToolToolBar::slotToolSelected ()
 // public slot virtual [base QDockWindow]
 void kpToolToolBar::setOrientation (Qt::Orientation o)
 {
+#if DEBUG_KP_TOOL_TOOL_BAR
     kdDebug () << "kpToolToolBar::setOrientation("
                << (o == Qt::Vertical ? "vertical" : "horizontal")
                << ") called!" << endl;
+#endif
 
     // (QDockWindow::undock() calls us)
     bool isOutsideDock = (place () == QDockWindow::OutsideDock);
@@ -305,7 +310,9 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
     
     if (isOutsideDock)
     {
+    #if DEBUG_KP_TOOL_TOOL_BAR
         kdDebug () << "\toutside dock, forcing orientation to last" << endl;
+    #endif
         o = m_lastDockedOrientation;
     }
 
@@ -355,6 +362,7 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
 }
     ADD_WIDGET (m_toolWidgetFillStyle);
     ADD_WIDGET (m_toolWidgetLineWidth);
+    ADD_WIDGET (m_toolWidgetOpaqueOrTransparent);
     ADD_WIDGET (m_toolWidgetBrush);
     ADD_WIDGET (m_toolWidgetEraserSize);
     ADD_WIDGET (m_toolWidgetSpraycanSize);
