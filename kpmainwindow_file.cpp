@@ -138,15 +138,12 @@ bool kpMainWindow::open (const KURL &url, bool newDocSameNameIfNotExist)
 {
     // create doc
     kpDocument *newDoc = new kpDocument (400, 300, 32, this);
-    if (!url.isEmpty ())
+    if (newDoc->open (url, newDocSameNameIfNotExist))
+        addRecentURL (url);
+    else
     {
-        if (newDoc->open (url, newDocSameNameIfNotExist))
-            addRecentURL (url);
-        else
-        {
-            delete newDoc;
-            return false;
-        }
+        delete newDoc;
+        return false;
     }
 
     // need new window?

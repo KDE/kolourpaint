@@ -100,14 +100,10 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
     kdDebug () << "kpDocument::open (" << url << ")" << endl;
 #endif
 
-    if (url.isEmpty ())
-    {
-        openNew (url);
-        return true;
-    }
+    bool formatErrorOccurred = false;
 
     QString tempFile;
-    if (KIO::NetAccess::download (url, tempFile, m_mainWindow))
+    if (!url.isEmpty () && KIO::NetAccess::download (url, tempFile, m_mainWindow))
     {
         // sync: remember to "KIO::NetAccess::removeTempFile (tempFile)" in all exit paths
 
@@ -125,63 +121,67 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
             KMessageBox::sorry (m_mainWindow,
                                 i18n ("Could not open \"%1\" - unknown mimetype.")
                                     .arg (kpDocument::prettyFilenameForURL (url)));
-            KIO::NetAccess::removeTempFile (tempFile);    
-            return false;
+            formatErrorOccurred = true;
         }
-
-    // Keep the mimetype check disabled in case the mimetype is misdetected
-    // - at least _try_ to open the image
-    #if 0
-        if (!KImageIO::isSupported (mimetype, KImageIO::Reading))
+        else
         {
-            KMessageBox::sorry (m_mainWindow,
-                                i18n ("Could not open \"%1\" - unsupported image format \"%2\".")
-                                    .arg (kpDocument::prettyFilenameForURL (url))
-                                    .arg (mimetype));
-            KIO::NetAccess::removeTempFile (tempFile);    
-            return false;
-        }
-    #endif
+            QPixmap *newPixmap = new QPixmap (tempFile);
+            if (newPixmap->isNull ())
+            {
+                KMessageBox::sorry (m_mainWindow,
+                                    i18n ("Could not open \"%1\" - unsupported image format.\n"
+                                          "The file may be corrupt.")
+                                        .arg (kpDocument::prettyFilenameForURL (url)));
+                delete newPixmap;
+                formatErrorOccurred = true;
+            }
+            else
+            {
+                KIO::NetAccess::removeTempFile (tempFile);
 
-        QPixmap *newPixmap = new QPixmap (tempFile);
-        if (newPixmap->isNull ())
-        {
-            KMessageBox::sorry (m_mainWindow,
-                                i18n ("Could not open \"%1\" - unsupported image format.\n"
-                                      "The file may be corrupt.")
-                                    .arg (kpDocument::prettyFilenameForURL (url)));
-            delete newPixmap;
-            KIO::NetAccess::removeTempFile (tempFile);    
-            return false;
+                delete m_pixmap;
+                m_pixmap = newPixmap;
+
+                m_url = url;
+                m_mimetype = mimetype;
+                m_modified = false;
+
+                emit documentOpened ();
+                return true;
+            }
         }
+        
+        // --- if we are here, the file format was unrecognised --- //
 
         KIO::NetAccess::removeTempFile (tempFile);
+    }
 
-        delete m_pixmap;
-        m_pixmap = newPixmap;
+    if (newDocSameNameIfNotExist)
+    {
+        if (formatErrorOccurred ||
+            url.isEmpty () ||
+            // maybe it was a permission error?
+            KIO::NetAccess::exists (url, true/*open*/, m_mainWindow))
+        {
+            openNew (KURL ());
+        }
+        else
+        {
+            openNew (url);
+        }
 
-        m_url = url;
-        m_mimetype = mimetype;
-        m_modified = false;
-
-        emit documentOpened ();
         return true;
     }
     else
     {
-        if (newDocSameNameIfNotExist &&
-            !KIO::NetAccess::exists (url, true/*open*/, m_mainWindow))
-        {
-            openNew (url);
-            return true;
-        }
-        else
+        if (!formatErrorOccurred)
         {
             KMessageBox::sorry (m_mainWindow,
                                 i18n ("Could not open \"%1\".")
                                     .arg (kpDocument::prettyFilenameForURL (url)));
-            return false;
         }
+
+        return false;
     }
 }
 
