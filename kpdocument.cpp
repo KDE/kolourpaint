@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -69,13 +69,24 @@ kpDocument::kpDocument (int w, int h, int colorDepth, kpMainWindow *mainWindow)
 #endif
 
     m_pixmap = new QPixmap (w, h);
-    m_pixmap->fill (KP_BLANK_DOCUMENT_COLOR);
+    m_pixmap->fill (Qt::white);
 }
 
 kpDocument::~kpDocument ()
 {
     delete m_pixmap;
     delete m_selection;
+}
+
+
+kpMainWindow *kpDocument::mainWindow () const
+{
+    return m_mainWindow;
+}
+
+void kpDocument::setMainWindow (kpMainWindow *mainWindow)
+{
+    m_mainWindow = mainWindow;
 }
 
 
@@ -89,7 +100,7 @@ void kpDocument::openNew (const KURL &url)
     kdDebug () << "KpDocument::openNew (" << url << ")" << endl;
 #endif
 
-    m_pixmap->fill (KP_BLANK_DOCUMENT_COLOR);
+    m_pixmap->fill (Qt::white);
 
     m_url = url;
     m_mimetype = QString::null;
@@ -145,6 +156,27 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
                            << " (X display=" << QColor::numBitPlanes () << ")"
                            << " hasAlphaBuffer=" << image.hasAlphaBuffer ()
                            << endl;
+            #endif
+
+            #if DEBUG_KP_DOCUMENT && 0
+                kdDebug () << "Image dump:" << endl;
+
+                bool debug_hasAlphaChannel = false;
+                for (int y = 0; y < image.height (); y++)
+                {
+                    for (int x = 0; x < image.width (); x++)
+                    {
+                        const QRgb rgb = image.pixel (x, y);
+                        fprintf (stderr, " %08X", rgb);
+
+                        if (!debug_hasAlphaChannel && qAlpha (rgb) > 0 && qAlpha (rgb) < 255)
+                            debug_hasAlphaChannel = true;
+                    }
+                    fprintf (stderr, "\n");
+                }
+
+                kdDebug () << "hasAlphaChannel="
+                           << debug_hasAlphaChannel << endl;
             #endif
 
                 bool warned = false;
@@ -424,7 +456,7 @@ void kpDocument::setModified (bool yes)
 {
     if (yes == m_modified)
         return;
-    
+
     m_modified = yes;
 
     if (yes)
@@ -499,7 +531,11 @@ bool kpDocument::setColorDepth (int)
 {
     m_oldColorDepth = colorDepth ();
 
-    // TODO
+    // SYNC: Limitation of X/QPixmap - changing colour depth yet to be implemented
+    //
+    //       Not really a major problem though - how could you possibly edit an
+    //       image at a higher depth than what your screen is set at
+    //       (accurately)?
 
     emit colorDepthChanged (colorDepth ());
     return true;
@@ -594,6 +630,12 @@ kpSelection *kpDocument::selection () const
 // public
 void kpDocument::setSelection (const kpSelection &selection)
 {
+#if DEBUG_KP_DOCUMENT
+    kdDebug () << "kpDocument::setSelection() sel boundingRect="
+               << selection.boundingRect ()
+               << endl;
+#endif
+
     kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
     if (vm)
         vm->setQueueUpdates ();
@@ -638,6 +680,11 @@ void kpDocument::setSelection (const kpSelection &selection)
     }
 
     m_selection = new kpSelection (selection);
+#if DEBUG_KP_DOCUMENT
+    kdDebug () << "\tcheck sel " << (int *) m_selection
+               << " boundingRect=" << m_selection->boundingRect ()
+               << endl;
+#endif
     if (m_selection->pixmap ())
         slotContentsChanged (m_selection->boundingRect ());
     else

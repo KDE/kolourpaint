@@ -53,6 +53,9 @@ public:
     kpDocument (int w, int h, int colorDepth, kpMainWindow *mainWindow);
     ~kpDocument ();
 
+    kpMainWindow *mainWindow () const;
+    void setMainWindow (kpMainWindow *mainWindow);
+
 
     /*
      * File I/O
