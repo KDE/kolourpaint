@@ -583,6 +583,12 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 // private virtual [base KMainWindow]
 bool kpMainWindow::queryClose ()
 {
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::queryClose()" << endl;
+#endif
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
     if (!m_document || !m_document->isModified ())
         return true;  // ok to close current doc
 
