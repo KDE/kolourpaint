@@ -26,8 +26,8 @@
 */
 
 
-#ifndef __kpdefs_h__
-#define __kpdefs_h__
+#ifndef __kp_defs_h__
+#define __kp_defs_h__
 
 
 #define KP_BIG_IMAGE_WIDTH 4000
@@ -48,5 +48,5 @@
 #define kpSettingDefaultOutputMimetype QString ("Default Output Mimetype")
 
 
-#endif  // __kpdefs_h__
+#endif  // __kp_defs_h__
 
