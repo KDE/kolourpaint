@@ -28,6 +28,8 @@
 #define DEBUG_KP_SELECTION_DRAG 0
 
 
+#include <qdatastream.h>
+
 #include <kdebug.h>
 
 #include <kppixmapfx.h>
@@ -168,10 +170,10 @@ QByteArray kpSelectionDrag::encodedData (const char *mimeType) const
         else
         {
         #if DEBUG_KP_SELECTION_DRAG
-            kdDebug () << "\t\thave image - call QImageDrag::decode()" << endl;
+            kdDebug () << "\t\thave image - call kpSelectionDrag::decode(QImage)" << endl;
         #endif
             QImage image;
-            if (QImageDrag::decode (this, image/*ref*/))
+            if (kpSelectionDrag::decode (this, image/*ref*/))
             {
             #if DEBUG_KP_SELECTION_DRAG
                 kdDebug () << "\t\t\tok - returning sel with image w="
@@ -190,7 +192,7 @@ QByteArray kpSelectionDrag::encodedData (const char *mimeType) const
             else
             {
                 kdError () << "kpSelectionDrag::encodedData(" << mimeType << ")"
-                           << " QImageDrag::decode() could not decode data into QImage"
+                           << " kpSelectionDrag(QImage) could not decode data into QImage"
                            << endl;
                 stream << kpSelection ();
             }
@@ -233,7 +235,8 @@ bool kpSelectionDrag::decode (const QMimeSource *e, QImage &img)
     if (!e)
         return false;
 
-    return QImageDrag::decode (e, img/*ref*/);
+    return (QImageDrag::canDecode (e) &&  // prevents X errors, jumps based on unitialised values...
+            QImageDrag::decode (e, img/*ref*/));
 }
 
 // public static
