@@ -17,11 +17,7 @@ Now
 - tool/text; paste text (editable after you paste it)
 - which would reasonably allow text as selections (freehand resize-able)
 
-selections - transparent & opaque selections
-
 selections - cursor should know whats happening beneath it - e.g. has selection been deleted?
-
-- statusbar
 
 
 ------ KolourPaint 1.0 released ------
