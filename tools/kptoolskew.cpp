@@ -25,7 +25,8 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_TOOL_SKEW_DIALOG 1
+#define DEBUG_KP_TOOL_SKEW 0
+#define DEBUG_KP_TOOL_SKEW_DIALOG 0
 
 
 #include <qapplication.h>
@@ -45,6 +46,7 @@
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
+#include <kptool.h>
 #include <kptoolskew.h>
 
 
@@ -139,12 +141,14 @@ void kpToolSkewCommand::execute ()
             // TODO: fix the latter "victim of" problem in kpSelection by
             //       allowing the border width & height != pixmap width & height
             //       Or maybe autocrop?
+        #if DEBUG_KP_TOOL_SKEW
             kdDebug () << "kpToolSkewCommand::execute() currentPoints.boundingRect="
                        << currentPoints.boundingRect ()
                        << " newPixmap: w=" << newPixmap.width ()
                        << " h=" << newPixmap.height ()
                        << " (victim of rounding error and/or skewed-a-(rectangular)-pixmap-that-was-transparent-in-the-corners-making-sel-uselessly-bigger-than-needs-be))"
                        << endl;
+        #endif
             doc->setSelection (kpSelection (kpSelection::Rectangle,
                                             QRect (currentPoints.boundingRect ().x (),
                                                    currentPoints.boundingRect ().y (),
@@ -153,6 +157,9 @@ void kpToolSkewCommand::execute ()
                                             newPixmap,
                                             m_oldSelection.transparency ()));
         }
+
+        if (m_mainWindow->tool ())
+            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
     }
     else
     {
@@ -184,6 +191,9 @@ void kpToolSkewCommand::unexecute ()
     {
         kpSelection oldSelection = m_oldSelection;
         doc->setSelection (oldSelection);
+
+        if (m_mainWindow->tool ())
+            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
     }
 
 
