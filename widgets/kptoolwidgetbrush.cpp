@@ -144,7 +144,7 @@ QString kpToolWidgetBrush::brushName (int shape, int whichSize)
     switch (shape)
     {
     case 0:
-        shapeName = i18n ("Ellipse");
+        shapeName = i18n ("Circle");
         break;
     case 1:
         shapeName = i18n ("Square");
