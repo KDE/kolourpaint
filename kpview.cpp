@@ -27,7 +27,7 @@
 
 
 #define DEBUG_KP_VIEW 0
-#define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 0) || 1)
+#define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 0) || 0)
 
 #include <math.h>
 
@@ -582,7 +582,14 @@ QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
 // private
 void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRect)
 {
-    m_mainWindow->drawTransparentBackground (painter, width (), height (), viewRect);
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
+    
+    m_mainWindow->drawTransparentBackground (painter,
+                                             doc->width () * m_hzoom / 100,
+                                             doc->height () * m_vzoom / 100,
+                                             viewRect);
 }
 
 // private
