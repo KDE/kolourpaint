@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -36,6 +36,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpcolor.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
@@ -76,16 +77,16 @@ static QPixmap pixmap (const kpToolRectangle::Mode mode,
 
     if (pixmap.mask () ||
         (maskPen.style () != Qt::NoPen &&
-         kpTool::colorEq (maskPen.color (), Qt::color0/*transparent*/)) ||
+         maskPen.color () ==  Qt::color0/*transparent*/) ||
         (maskBrush.style () != Qt::NoBrush &&
-         kpTool::colorEq (maskBrush.color (), Qt::color0/*transparent*/)))
+         maskBrush.color () == Qt::color0/*transparent*/))
     {
         maskBitmap = kpPixmapFX::getNonNullMask (pixmap);
         maskPainter.begin (&maskBitmap);
         maskPainter.setPen (maskPen);
         maskPainter.setBrush (maskBrush);
     }
-    
+
     if (pen.style () != Qt::NoPen ||
         brush.style () != Qt::NoBrush)
     {
@@ -93,7 +94,7 @@ static QPixmap pixmap (const kpToolRectangle::Mode mode,
         painter.setPen (pen);
         painter.setBrush (brush);
     }
-    
+
 #define PAINTER_CALL(cmd)         \
 {                                 \
     if (painter.isActive ())      \
@@ -108,7 +109,7 @@ static QPixmap pixmap (const kpToolRectangle::Mode mode,
     #if DEBUG_KP_TOOL_RECTANGLE && 1
         kdDebug () << "\tdraw shape" << endl;
     #endif
-    
+
         switch (mode)
         {
         case kpToolRectangle::Rectangle:
@@ -139,7 +140,7 @@ static QPixmap pixmap (const kpToolRectangle::Mode mode,
 
     if (painter.isActive ())
         painter.end ();
-        
+
     if (maskPainter.isActive ())
         maskPainter.end ();
 
@@ -188,7 +189,7 @@ void kpToolRectangle::updateBrushes ()
 }
 
 // virtual private slot
-void kpToolRectangle::slotForegroundColorChanged (const QColor &)
+void kpToolRectangle::slotForegroundColorChanged (const kpColor &)
 {
 #if DEBUG_KP_TOOL_RECTANGLE
     kdDebug () << "kpToolRectangle::slotForegroundColorChanged()" << endl;
@@ -199,7 +200,7 @@ void kpToolRectangle::slotForegroundColorChanged (const QColor &)
 }
 
 // virtual private slot
-void kpToolRectangle::slotBackgroundColorChanged (const QColor &)
+void kpToolRectangle::slotBackgroundColorChanged (const kpColor &)
 {
 #if DEBUG_KP_TOOL_RECTANGLE
     kdDebug () << "kpToolRectangle::slotBackgroundColorChanged()" << endl;
@@ -213,23 +214,26 @@ void kpToolRectangle::slotBackgroundColorChanged (const QColor &)
 // private
 void kpToolRectangle::updatePen (int mouseButton)
 {
-    QColor maskPenColor;
-    
-    if (kpTool::isColorOpaque (color (mouseButton)))
-        maskPenColor = Qt::color1/*opaque*/;
-    else
-        maskPenColor = Qt::color0/*transparent*/;
+    QColor maskPenColor = color (mouseButton).maskColor ();
 
     if (!m_toolWidgetLineWidth)
     {
-        m_pen [mouseButton] = QPen (color (mouseButton));
+        if (color (mouseButton).isOpaque ())
+            m_pen [mouseButton] = QPen (color (mouseButton).toQColor ());
+        else
+            m_pen [mouseButton] = Qt::NoPen;
         m_maskPen [mouseButton] = QPen (maskPenColor);
     }
     else
     {
-        m_pen [mouseButton] = QPen (color (mouseButton),
-                                    m_toolWidgetLineWidth->lineWidth (),
-                                    Qt::SolidLine);
+        if (color (mouseButton).isOpaque ())
+        {
+            m_pen [mouseButton] = QPen (color (mouseButton).toQColor (),
+                                        m_toolWidgetLineWidth->lineWidth (),
+                                        Qt::SolidLine);
+        }
+        else
+            m_pen [mouseButton] = Qt::NoPen;
         m_maskPen [mouseButton] = QPen (maskPenColor,
                                         m_toolWidgetLineWidth->lineWidth (),
                                         Qt::SolidLine);
@@ -267,7 +271,7 @@ void kpToolRectangle::begin ()
 #if DEBUG_KP_TOOL_RECTANGLE
     kdDebug () << "kpToolRectangle::begin ()" << endl;
 #endif
-    
+
     kpToolToolBar *tb = toolToolBar ();
 
 #if DEBUG_KP_TOOL_RECTANGLE
@@ -280,10 +284,10 @@ void kpToolRectangle::begin ()
         connect (m_toolWidgetLineWidth, SIGNAL (lineWidthChanged (int)),
                  this, SLOT (updatePens ()));
         m_toolWidgetLineWidth->show ();
-        
+
         updatePens ();
 
-        
+
         m_toolWidgetFillStyle = tb->toolWidgetFillStyle ();
         connect (m_toolWidgetFillStyle, SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
                  this, SLOT (updateBrushes ()));
@@ -291,11 +295,11 @@ void kpToolRectangle::begin ()
 
         updateBrushes ();
     }
-    
+
 #if DEBUG_KP_TOOL_RECTANGLE
     kdDebug () << "\t\tm_toolWidgetFillStyle=" << m_toolWidgetFillStyle << endl;
 #endif
-    
+
     viewManager ()->setCursor (QCursor (CrossCursor));
 }
 
@@ -386,8 +390,9 @@ void kpToolRectangle::applyModifiers ()
 
     m_toolRectangleStartPoint = rect.topLeft ();
     m_toolRectangleEndPoint = rect.bottomRight ();
-   
-    m_toolRectangleRect = kpTool::neededRect (rect, m_pen [m_mouseButton].width ());
+
+    m_toolRectangleRect = kpTool::neededRect (rect, QMAX (m_pen [m_mouseButton].width (),
+                                                          m_maskPen [m_mouseButton].width ()));
 }
 
 void kpToolRectangle::beginDraw ()
@@ -397,10 +402,10 @@ void kpToolRectangle::beginDraw ()
 void kpToolRectangle::draw (const QPoint &, const QPoint &, const QRect &)
 {
     applyModifiers ();
-    
-    
+
+
     viewManager ()->setFastUpdates ();
-    
+
     QPixmap newPixmap = pixmap (m_mode, document (), m_toolRectangleRect,
                                 m_toolRectangleStartPoint, m_toolRectangleEndPoint,
                                 m_pen [m_mouseButton], m_maskPen [m_mouseButton],
@@ -410,10 +415,10 @@ void kpToolRectangle::draw (const QPoint &, const QPoint &, const QRect &)
                                 m_toolRectangleRect.topLeft (),
                                 newPixmap);
     viewManager ()->setTempPixmap (newTempPixmap);
-    
+
     viewManager ()->restoreFastUpdates ();
 
-    
+
     // TODO: for thick rect's, this'll be wrong...
     emit mouseDragged (QRect (m_startPoint, m_currentPoint));
 }
@@ -431,7 +436,7 @@ void kpToolRectangle::cancelShape ()
 void kpToolRectangle::endDraw (const QPoint &, const QRect &)
 {
     applyModifiers ();
-    
+
     // TODO: flicker
     viewManager ()->invalidateTempPixmap ();
 

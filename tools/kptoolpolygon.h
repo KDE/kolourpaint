@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -39,6 +39,7 @@
 
 #include <kcommand.h>
 
+#include <kpcolor.h>
 #include <kptool.h>
 #include <kptoolwidgetfillstyle.h>
 
@@ -67,9 +68,9 @@ public:
     {
         Polygon, Polyline, Line, Curve
     };
-    
+
     void setMode (Mode mode);
-    
+
     virtual bool careAboutModifierState () const { return true; }
 
     virtual void begin ();
@@ -86,19 +87,19 @@ public:
 public slots:
     void slotLineWidthChanged (int width);
     void slotFillStyleChanged (kpToolWidgetFillStyle::FillStyle fillStyle);
-    
+
 protected slots:
-    virtual void slotForegroundColorChanged (const QColor &);
-    virtual void slotBackgroundColorChanged (const QColor &);
+    virtual void slotForegroundColorChanged (const kpColor &);
+    virtual void slotBackgroundColorChanged (const kpColor &);
 
 private slots:
     void updateShape ();
-    
+
 private:
     Mode m_mode;
 
     kpToolWidgetFillStyle *m_toolWidgetFillStyle;
-    
+
     int m_lineWidth;
     kpToolWidgetLineWidth *m_toolWidgetLineWidth;
 
@@ -108,7 +109,7 @@ private:
 
     QPoint m_toolLineStartPoint, m_toolLineEndPoint;
     QRect m_toolLineRect;
-    
+
     QPointArray m_points;
 };
 
@@ -119,7 +120,7 @@ public:
                           const QString &toolText,
                           const QPointArray &points,
                           const QRect &normalizedRect,
-                          const QColor &foregroundColor, const QColor &backgroundColor,
+                          const kpColor &foregroundColor, const kpColor &backgroundColor,
                           int lineWidth, Qt::PenStyle lineStyle,
                           kpToolWidgetFillStyle *toolWidgetFillStyle,
                           const QPixmap &originalArea,
@@ -134,17 +135,17 @@ public:
 private:
     kpViewManager *m_viewManager;
     kpDocument *m_document;
-    
+
     QString m_name;
 
     QPointArray m_points;
     QRect m_normalizedRect;
-    
-    QColor m_foregroundColor, m_backgroundColor;
+
+    kpColor m_foregroundColor, m_backgroundColor;
     int m_lineWidth;
     Qt::PenStyle m_lineStyle;
     kpToolWidgetFillStyle *m_toolWidgetFillStyle;
-    
+
     QPixmap m_originalArea;
     kpToolPolygon::Mode m_mode;
 };

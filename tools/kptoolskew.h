@@ -29,10 +29,10 @@
 #ifndef __kptool_skew_h__
 #define __kptool_skew_h__
 
-#include <qcolor.h>
-
 #include <kcommand.h>
 #include <kdialogbase.h>
+
+#include <kpcolor.h>
 
 class QPixmap;
 
@@ -64,7 +64,7 @@ private:
     double m_hangle, m_vangle;
     kpMainWindow *m_mainWindow;
 
-    QColor m_backgroundColor;
+    kpColor m_backgroundColor;
     QPixmap *m_oldPixmapPtr;
 };
 

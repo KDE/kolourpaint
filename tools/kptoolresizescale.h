@@ -29,10 +29,12 @@
 #ifndef __kptoolresizescale_h__
 #define __kptoolresizescale_h__
 
-#include <qcolor.h>
 #include <qpixmap.h>
+
 #include <kcommand.h>
 #include <kdialogbase.h>
+
+#include <kpcolor.h>
 
 class QCheckBox;
 class QString;
@@ -66,7 +68,7 @@ private:
     int m_newWidth, m_newHeight;
     bool m_scaleToFit, m_isLosslessScale;
     kpMainWindow *m_mainWindow;
-    QColor m_backgroundColor;
+    kpColor m_backgroundColor;
 
     int m_oldWidth, m_oldHeight;
     QPixmap m_oldPixmap, m_oldRightPixmap, m_oldBottomPixmap;

@@ -30,6 +30,7 @@
 #define __kptoolairspray_h__
 
 #include <kcommand.h>
+#include <kpcolor.h>
 #include <kptool.h>
 
 class QPixmap;
@@ -75,7 +76,7 @@ private:
 class kpToolAirSprayCommand : public KCommand
 {
 public:
-    kpToolAirSprayCommand (const QColor &color, int size,
+    kpToolAirSprayCommand (const kpColor &color, int size,
                            kpDocument *document, kpViewManager *viewManager);
     virtual ~kpToolAirSprayCommand ();
 
@@ -90,7 +91,7 @@ public:
     void cancel ();
 
 private:
-    QColor m_color;
+    kpColor m_color;
     int m_size;
 
     kpDocument *m_document;

@@ -20,14 +20,15 @@ selections:
 - ability to freehand stretch selections
 - maybe always have 1 width display of border - try editing a B&W icon to see what I mean
 
-introduce kpRGB class to avoid using undefined QColor::isValid() behaviour for transparency
+colour similarity option for Fill and Colour Eraser and AutoCrop
 
 freehand resize document
 
-colour similarity option for Fill and Colour Eraser
-
 clean up Image dialogs
 
+configurable transparency background
+
+clean document features warning messages
 
 
 Medium Term (2 weeks)
@@ -122,6 +123,9 @@ Ideas:
 tool to select rectangular area to zoom into
 
 thumbnail has a rectangle that shows the visible mainView area
+
+Edit/Redo as Stretch,
+Edit/Redo as Resize
 
 documentation (assigned to Thurston)
 

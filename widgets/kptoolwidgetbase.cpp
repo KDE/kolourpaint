@@ -334,12 +334,7 @@ void kpToolWidgetBase::drawContents (QPainter *painter)
 
             if (i == m_selectedRow && j == m_selectedCol)
             {
-                static const QColor selCol = Qt::blue;
-                
-                painter->setBrush (selCol);
-                painter->setPen (selCol);
-                
-                painter->drawRect (rect);
+                painter->fillRect (rect, Qt::blue/*selection color*/);
              
                 if (m_invertSelectedPixmap)
                     kpPixmapFX::invertColors (&pixmap);

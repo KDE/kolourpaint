@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -62,8 +62,8 @@ kpDualColorButton::kpDualColorButton (kpMainWindow *mainWindow,
 {
     setFrameStyle (QFrame::Panel | QFrame::Sunken);
 
-    m_color [0] = Qt::black;
-    m_color [1] = Qt::white;
+    m_color [0] = kpColor (0, 0, 0);  // black
+    m_color [1] = kpColor (255, 255, 255);  // white
 
     setAcceptDrops (true);
 }
@@ -74,7 +74,7 @@ kpDualColorButton::~kpDualColorButton ()
 }
 
 
-QColor kpDualColorButton::color (int which) const
+kpColor kpDualColorButton::color (int which) const
 {
     if (which < 0 || which > 1)
     {
@@ -86,18 +86,18 @@ QColor kpDualColorButton::color (int which) const
     return m_color [which];
 }
 
-QColor kpDualColorButton::foregroundColor () const
+kpColor kpDualColorButton::foregroundColor () const
 {
     return color (0);
 }
 
-QColor kpDualColorButton::backgroundColor () const
+kpColor kpDualColorButton::backgroundColor () const
 {
     return color (1);
 }
 
 
-void kpDualColorButton::setColor (int which, const QColor &color)
+void kpDualColorButton::setColor (int which, const kpColor &color)
 {
     if (which < 0 || which > 1)
     {
@@ -106,7 +106,7 @@ void kpDualColorButton::setColor (int which, const QColor &color)
         which = 0;
     }
 
-    if (kpTool::colorEq (m_color [which], color))
+    if (m_color [which] == color)
         return;
 
     m_color [which] = color;
@@ -118,12 +118,12 @@ void kpDualColorButton::setColor (int which, const QColor &color)
         emit backgroundColorChanged (color);
 }
 
-void kpDualColorButton::setForegroundColor (const QColor &color)
+void kpDualColorButton::setForegroundColor (const kpColor &color)
 {
     setColor (0, color);
 }
 
-void kpDualColorButton::setBackgroundColor (const QColor &color)
+void kpDualColorButton::setBackgroundColor (const kpColor &color)
 {
     setColor (1, color);
 }
@@ -194,12 +194,12 @@ void kpDualColorButton::dropEvent (QDropEvent *e)
     QColor col;
     KColorDrag::decode (e, col/*ref*/);
 
-    if (kpTool::isColorOpaque (col))
+    if (col.isValid ())
     {
         if (foregroundRect ().contains (e->pos ()))
-            setForegroundColor (col);
+            setForegroundColor (kpColor (col.rgb ()));
         else if (backgroundRect ().contains (e->pos ()))
-            setBackgroundColor (col);
+            setBackgroundColor (kpColor (col.rgb ()));
     }
 }
 
@@ -223,12 +223,12 @@ void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
     if (whichColor == 0 || whichColor == 1)
     {
         QColor col = Qt::black;
-        if (kpTool::isColorOpaque (color (whichColor)))
-            col = color (whichColor);
+        if (color (whichColor).isOpaque ())
+            col = color (whichColor).toQColor ();
 
         // TODO: parent
         if (KColorDialog::getColor (col/*ref*/))
-            setColor (whichColor, col);
+            setColor (whichColor, kpColor (col.rgb ()));
     }
 }
 
@@ -236,30 +236,14 @@ void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
 void kpDualColorButton::mouseReleaseEvent (QMouseEvent *e)
 {
     if (swapPixmapRect ().contains (e->pos ()) &&
-        !kpTool::colorEq (m_color [0], m_color [1]))
+        m_color [0] != m_color [1])
     {
     #if DEBUG_KP_COLOR_TOOL_BAR && 1
         kdDebug () << "kpDualColorButton::mouseReleaseEvent() swap colors:" << endl;
     #endif
-        QColor temp (m_color [0]);
-    #if DEBUG_KP_COLOR_TOOL_BAR && 1
-        kdDebug () << "\tisOpaque: col0=" << (int *) m_color [0].rgb ()
-                                          << "," << kpTool::isColorOpaque (m_color [0])
-                   << " col1=" << (int *) m_color [1].rgb ()
-                               << "," << kpTool::isColorOpaque (m_color [1])
-                   << " tmp=" << (int *) temp.rgb () << ","
-                              << kpTool::isColorOpaque (temp)
-                   << endl;
-    #endif
+        kpColor temp = m_color [0];
         m_color [0] = m_color [1];
         m_color [1] = temp;
-    #if DEBUG_KP_COLOR_TOOL_BAR && 1
-        kdDebug () << "\tisOpaque: col0=" << (int *) m_color [0].rgb ()
-                                          << "," << kpTool::isColorOpaque (m_color [0])
-                   << " col1=" << (int *) m_color [1].rgb ()
-                               << "," << kpTool::isColorOpaque (m_color [1])
-                   << endl;
-    #endif
 
         update ();
 
@@ -318,12 +302,11 @@ void kpDualColorButton::drawContents (QPainter *p)
     if (isEnabled ())
     {
     #if DEBUG_KP_COLOR_TOOL_BAR && 1
-        kdDebug () << "\tbackgroundColor=" << (int *) m_color [1].rgb ()
-                   << "," << kpTool::isColorOpaque (m_color [1])
+        kdDebug () << "\tbackgroundColor=" << (int *) m_color [1].toQRgb ()
                    << endl;
     #endif
-        if (kpTool::isColorOpaque (m_color [1]))
-            backBufferPainter.fillRect (bgRectInside, m_color [1]);
+        if (m_color [1].isOpaque ())
+            backBufferPainter.fillRect (bgRectInside, m_color [1].toQColor ());
         else
             backBufferPainter.drawPixmap (bgRectInside, UserIcon ("color_transparent_26x26"));
     }
@@ -339,12 +322,11 @@ void kpDualColorButton::drawContents (QPainter *p)
     if (isEnabled ())
     {
     #if DEBUG_KP_COLOR_TOOL_BAR && 1
-        kdDebug () << "\tforegroundColor=" << (int *) m_color [0].rgb ()
-                   << "," << kpTool::isColorOpaque (m_color [0])
+        kdDebug () << "\tforegroundColor=" << (int *) m_color [0].toQRgb ()
                    << endl;
     #endif
-        if (kpTool::isColorOpaque (m_color [0]))
-            backBufferPainter.fillRect (fgRectInside, m_color [0]);
+        if (m_color [0].isOpaque ())
+            backBufferPainter.fillRect (fgRectInside, m_color [0].toQColor ());
         else
             backBufferPainter.drawPixmap (fgRectInside, UserIcon ("color_transparent_26x26"));
     }
@@ -619,9 +601,15 @@ void kpColorCells::slotColorSelected (int cell)
     QColor c = KColorCells::color (cell);
 
     if (m_mouseButton == 0)
+    {
         emit foregroundColorChanged (c);
+        emit foregroundColorChanged (kpColor (c.rgb ()));
+    }
     else if (m_mouseButton == 1)
+    {
         emit backgroundColorChanged (c);
+        emit backgroundColorChanged (kpColor (c.rgb ()));
+    }
 
     m_mouseButton = -1;  // just in case
 }
@@ -693,12 +681,12 @@ void kpTransparentColorCell::mouseReleaseEvent (QMouseEvent *e)
         if (e->button () == Qt::LeftButton)
         {
             emit transparentColorSelected (0);
-            emit foregroundColorChanged (QColor ()/*transparent*/);
+            emit foregroundColorChanged (kpColor::transparent);
         }
         else if (e->button () == Qt::RightButton)
         {
             emit transparentColorSelected (1);
-            emit backgroundColorChanged (QColor ()/*transparent*/);
+            emit backgroundColorChanged (kpColor::transparent);
         }
     }
 }
@@ -735,16 +723,16 @@ kpColorPalette::kpColorPalette (QWidget *parent,
 
     m_transparentColorCell = new kpTransparentColorCell (this);
     m_transparentColorCell->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
-    connect (m_transparentColorCell, SIGNAL (foregroundColorChanged (const QColor &)),
-             this, SIGNAL (foregroundColorChanged (const QColor &)));
-    connect (m_transparentColorCell, SIGNAL (backgroundColorChanged (const QColor &)),
-             this, SIGNAL (backgroundColorChanged (const QColor &)));
+    connect (m_transparentColorCell, SIGNAL (foregroundColorChanged (const kpColor &)),
+             this, SIGNAL (foregroundColorChanged (const kpColor &)));
+    connect (m_transparentColorCell, SIGNAL (backgroundColorChanged (const kpColor &)),
+             this, SIGNAL (backgroundColorChanged (const kpColor &)));
 
     m_colorCells = new kpColorCells (this);
-    connect (m_colorCells, SIGNAL (foregroundColorChanged (const QColor &)),
-             this, SIGNAL (foregroundColorChanged (const QColor &)));
-    connect (m_colorCells, SIGNAL (backgroundColorChanged (const QColor &)),
-             this, SIGNAL (backgroundColorChanged (const QColor &)));
+    connect (m_colorCells, SIGNAL (foregroundColorChanged (const kpColor &)),
+             this, SIGNAL (foregroundColorChanged (const kpColor &)));
+    connect (m_colorCells, SIGNAL (backgroundColorChanged (const kpColor &)),
+             this, SIGNAL (backgroundColorChanged (const kpColor &)));
 
     setOrientation (o);
 }
@@ -797,17 +785,17 @@ kpColorToolBar::kpColorToolBar (kpMainWindow *mainWindow, const char *name)
 
     m_dualColorButton = new kpDualColorButton (mainWindow, base);
     m_dualColorButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
-    connect (m_dualColorButton, SIGNAL (foregroundColorChanged (const QColor &)),
-             this, SIGNAL (foregroundColorChanged (const QColor &)));
-    connect (m_dualColorButton, SIGNAL (backgroundColorChanged (const QColor &)),
-             this, SIGNAL (backgroundColorChanged (const QColor &)));
+    connect (m_dualColorButton, SIGNAL (foregroundColorChanged (const kpColor &)),
+             this, SIGNAL (foregroundColorChanged (const kpColor &)));
+    connect (m_dualColorButton, SIGNAL (backgroundColorChanged (const kpColor &)),
+             this, SIGNAL (backgroundColorChanged (const kpColor &)));
     m_boxLayout->addWidget (m_dualColorButton, 0/*stretch*/);
 
     m_colorPalette = new kpColorPalette (base);
-    connect (m_colorPalette, SIGNAL (foregroundColorChanged (const QColor &)),
-             m_dualColorButton, SLOT (setForegroundColor (const QColor &)));
-    connect (m_colorPalette, SIGNAL (backgroundColorChanged (const QColor &)),
-             m_dualColorButton, SLOT (setBackgroundColor (const QColor &)));
+    connect (m_colorPalette, SIGNAL (foregroundColorChanged (const kpColor &)),
+             m_dualColorButton, SLOT (setForegroundColor (const kpColor &)));
+    connect (m_colorPalette, SIGNAL (backgroundColorChanged (const kpColor &)),
+             m_dualColorButton, SLOT (setBackgroundColor (const kpColor &)));
     m_boxLayout->addWidget (m_colorPalette, 0/*stretch*/);
 
 #if 0
@@ -862,7 +850,7 @@ kpColorToolBar::~kpColorToolBar ()
 {
 }
 
-QColor kpColorToolBar::color (int which) const
+kpColor kpColorToolBar::color (int which) const
 {
     if (which < 0 || which > 1)
     {
@@ -874,7 +862,7 @@ QColor kpColorToolBar::color (int which) const
     return m_dualColorButton->color (which);
 }
 
-void kpColorToolBar::setColor (int which, const QColor &color)
+void kpColorToolBar::setColor (int which, const kpColor &color)
 {
     if (which < 0 || which > 1)
     {
@@ -886,22 +874,22 @@ void kpColorToolBar::setColor (int which, const QColor &color)
     m_dualColorButton->setColor (which, color);
 }
 
-QColor kpColorToolBar::foregroundColor () const
+kpColor kpColorToolBar::foregroundColor () const
 {
     return m_dualColorButton->foregroundColor ();
 }
 
-void kpColorToolBar::setForegroundColor (const QColor &color)
+void kpColorToolBar::setForegroundColor (const kpColor &color)
 {
     m_dualColorButton->setForegroundColor (color);
 }
 
-QColor kpColorToolBar::backgroundColor () const
+kpColor kpColorToolBar::backgroundColor () const
 {
     return m_dualColorButton->backgroundColor ();
 }
 
-void kpColorToolBar::setBackgroundColor (const QColor &color)
+void kpColorToolBar::setBackgroundColor (const kpColor &color)
 {
     m_dualColorButton->setBackgroundColor (color);
 }

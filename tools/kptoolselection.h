@@ -37,6 +37,7 @@
 
 #include <kcommand.h>
 
+#include <kpcolor.h>
 #include <kptool.h>
 
 class QPoint;
@@ -122,7 +123,7 @@ public:
 private:
     QString m_name;
     kpMainWindow *m_mainWindow;
-    QColor m_backgroundColor;
+    kpColor m_backgroundColor;
     kpSelection *m_originalSelectionRegion;
 };
 

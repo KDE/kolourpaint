@@ -40,6 +40,7 @@
 class QKeyEvent;
 class QMouseEvent;
 
+class kpColor;
 class kpColorToolBar;
 class kpDocument;
 class kpView;
@@ -129,19 +130,14 @@ protected:
     kpView *viewUnderCursor () const;
     kpCommandHistory *commandHistory () const;
 
-    QColor color (int which) const;
+    kpColor color (int which) const;
     
-    QColor foregroundColor () const { return color (0); }
-    QColor backgroundColor () const { return color (1); }
+    kpColor foregroundColor () const;
+    kpColor backgroundColor () const;
 
 protected slots:
-    virtual void slotForegroundColorChanged (const QColor & /*color*/) {}
-    virtual void slotBackgroundColorChanged (const QColor & /*color*/) {}
-
-public:
-    static bool isColorOpaque (const QColor &color);
-    static bool isColorTransparent (const QColor &color);
-    static bool colorEq (const QColor &c1, const QColor &c2);
+    virtual void slotForegroundColorChanged (const kpColor & /*color*/) {}
+    virtual void slotBackgroundColorChanged (const kpColor & /*color*/) {}
 
 protected:
     // returns true if m_currentPoint <= 1 pixel away from m_lastPoint

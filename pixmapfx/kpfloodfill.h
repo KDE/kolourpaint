@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -29,26 +29,27 @@
 #ifndef __kpfloodfill_h__
 #define __kpfloodfill_h__
 
-#include <qcolor.h>
 #include <qimage.h>
 #include <qvaluelist.h>
 #include <qvaluevector.h>
+
+#include <kpcolor.h>
 
 class QPixmap;
 
 class kpFloodFill
 {
 public:
-    kpFloodFill (QPixmap *pixmap, int x, int y, const QColor &color);
+    kpFloodFill (QPixmap *pixmap, int x, int y, const kpColor &color);
     ~kpFloodFill ();
 
-    QColor color () const { return m_color; }
+    kpColor color () const { return m_color; }
 
     // you should call [prepareColorToChange(),[prepare(),[fill()]]]
     bool prepareColorToChange ();
-      
+
     // (only valid after prepareColorToChange())
-    QColor colorToChange () const { return m_colorToChange; };
+    kpColor colorToChange () const { return m_colorToChange; };
 
     bool prepare ();
     QRect boundingRect () const;  // only valid after prepare()
@@ -58,7 +59,7 @@ public:
 private:
     QPixmap *m_pixmapPtr;
     int m_x, m_y;
-    QColor m_color;
+    kpColor m_color;
 
     int m_initState;
 
@@ -75,7 +76,7 @@ private:
     };
 
     void addLine (int y, int x1, int x2);
-    QColor pixelColor (int x, int y);
+    kpColor pixelColor (int x, int y);
     void findAndAddLines (const FillLine &fillLine, int dy);
     int findMinX (int y, int x);
     int findMaxX (int y, int x);
@@ -85,7 +86,7 @@ private:
     // Init info
     QImage m_image;
     QValueVector < QValueList <FillLine> > m_fillLinesCache;
-    QColor m_colorToChange;
+    kpColor m_colorToChange;
 };
 
 #endif  // __kpfloodfill_h__

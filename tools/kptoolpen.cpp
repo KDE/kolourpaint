@@ -41,6 +41,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpcolor.h>
 #include <kpcursorprovider.h>
 #include <kptoolpen.h>
 #include <kpdefs.h>
@@ -202,7 +203,7 @@ void kpToolPen::hover (const QPoint &point)
             renderMode = kpTempPixmap::SetPixmap;
         else if (m_mode & DiverseBrushes)
         {
-            if (kpTool::isColorOpaque (color (0)))
+            if (color (0).isOpaque ())
                 renderMode = kpTempPixmap::PaintPixmap;
             else
             {
@@ -239,7 +240,7 @@ void kpToolPen::hover (const QPoint &point)
 
 bool kpToolPen::wash (QPainter *painter, QPainter *maskPainter,
                       const QImage &image,
-                      const QColor &colorToReplace,
+                      const kpColor &colorToReplace,
                       const QRect &imageRect, int plotx, int ploty)
 {
     return wash (painter, maskPainter, image, colorToReplace, imageRect, hotRect (plotx, ploty));
@@ -247,7 +248,7 @@ bool kpToolPen::wash (QPainter *painter, QPainter *maskPainter,
 
 bool kpToolPen::wash (QPainter *painter, QPainter *maskPainter,
                       const QImage &image,
-                      const QColor &colorToReplace,
+                      const kpColor &colorToReplace,
                       const QRect &imageRect, const QRect &drawRect)
 {
     bool didSomething = false;
@@ -283,13 +284,25 @@ bool kpToolPen::wash (QPainter *painter, QPainter *maskPainter,
         int x;  // for FLUSH_LINE()
         for (x = minX; x <= maxX; x++)
         {
-            if (kpTool::colorEq (kpPixmapFX::getColorAtPixel (image, QPoint (x, y)), colorToReplace))
+        #if DEBUG_KP_TOOL_PEN && 0
+            fprintf (stderr, "y=%i x=%i colorAtPixel=%08X colorToReplace=%08X ... ",
+                     y, x,
+                     kpPixmapFX::getColorAtPixel (image, QPoint (x, y)).toQRgb (),
+                     colorToReplace.toQRgb ());
+        #endif
+            if (kpPixmapFX::getColorAtPixel (image, QPoint (x, y)).isSimilarTo (colorToReplace))
             {
+            #if DEBUG_KP_TOOL_PEN && 0
+                fprintf (stderr, "similar\n");
+            #endif
                 if (startDrawX < 0)
                     startDrawX = x;
             }
             else
             {
+            #if DEBUG_KP_TOOL_PEN && 0
+                fprintf (stderr, "different\n");
+            #endif
                 if (startDrawX >= 0)
                     FLUSH_LINE ();
             }
@@ -323,7 +336,7 @@ void kpToolPen::globalDraw ()
     #if DEBUG_KP_TOOL_PEN
         kdDebug () << "kpToolPen::globalDraw() colour eraser" << endl;
     #endif
-        if (kpTool::colorEq (foregroundColor (), backgroundColor ()))
+        if (foregroundColor () == backgroundColor ())
             return;
 
         QApplication::setOverrideCursor (Qt::waitCursor);
@@ -334,22 +347,19 @@ void kpToolPen::globalDraw ()
         QPainter painter, maskPainter;
         QBitmap maskBitmap;
 
-        if (kpTool::isColorOpaque (backgroundColor ()))
+        if (backgroundColor ().isOpaque ())
         {
             painter.begin (document ()->pixmap ());
-            painter.setPen (backgroundColor ());
+            painter.setPen (backgroundColor ().toQColor ());
         }
 
-        if (kpTool::isColorTransparent (backgroundColor ()) ||
+        if (backgroundColor ().isTransparent () ||
             document ()->pixmap ()->mask ())
         {
             maskBitmap = kpPixmapFX::getNonNullMask (*document ()->pixmap ());
             maskPainter.begin (&maskBitmap);
 
-            if (kpTool::isColorTransparent (backgroundColor ()))
-                maskPainter.setPen (Qt::color0/*transparent*/);
-            else
-                maskPainter.setPen (Qt::color1/*opaque*/);
+            maskPainter.setPen (backgroundColor ().maskColor ());
         }
 
         const QImage image = kpPixmapFX::convertToImage (*document ()->pixmap ());
@@ -399,7 +409,7 @@ void kpToolPen::globalDraw ()
 // TODO: refactor!
 void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &)
 {
-    if ((m_mode & WashesPixmaps) && (kpTool::colorEq (foregroundColor (), backgroundColor ())))
+    if ((m_mode & WashesPixmaps) && (foregroundColor () == backgroundColor ()))
         return;
 
     // sync: remember to restoreFastUpdates() in all exit paths
@@ -411,12 +421,12 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
         {
             QPixmap pixmap (1, 1);
 
-            const QColor c = color (m_mouseButton);
+            const kpColor c = color (m_mouseButton);
 
             // OPT: this seems hopelessly inefficient
-            if (kpTool::isColorOpaque (c))
+            if (c.isOpaque ())
             {
-                pixmap.fill (c);
+                pixmap.fill (c.toQColor ());
             }
             else
             {
@@ -434,7 +444,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
         // Brush & Eraser
         else if (m_mode & DrawsPixmaps)
         {
-            if (kpTool::isColorOpaque (color (m_mouseButton)))
+            if (color (m_mouseButton).isOpaque ())
                 document ()->paintPixmapAt (m_brushPixmap [m_mouseButton], hotPoint ());
             else
             {
@@ -467,22 +477,18 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
             QPainter painter, maskPainter;
             QBitmap maskBitmap;
 
-            if (kpTool::isColorOpaque (color (m_mouseButton)))
+            if (color (m_mouseButton).isOpaque ())
             {
                 painter.begin (&pixmap);
-                painter.setPen (color (m_mouseButton));
+                painter.setPen (color (m_mouseButton).toQColor ());
             }
 
-            if (kpTool::isColorTransparent (color (m_mouseButton)) ||
+            if (color (m_mouseButton).isTransparent () ||
                 pixmap.mask ())
             {
                 maskBitmap = kpPixmapFX::getNonNullMask (pixmap);
                 maskPainter.begin (&maskBitmap);
-
-                if (kpTool::isColorTransparent (color (m_mouseButton)))
-                    maskPainter.setPen (Qt::color0/*transparent*/);
-                else
-                    maskPainter.setPen (Qt::color1/*opaque*/);
+                maskPainter.setPen (color (m_mouseButton).maskColor ());
             }
 
             bool didSomething = wash (&painter, &maskPainter,
@@ -539,8 +545,8 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
         int convAndWashTime;
     #endif
 
-        const QColor c = color (m_mouseButton);
-        bool transparent = kpTool::isColorTransparent (c);
+        const kpColor c = color (m_mouseButton);
+        bool transparent = c.isTransparent ();
 
         QPixmap pixmap = document ()->getPixmapAt (rect);
         QBitmap maskBitmap;
@@ -552,18 +558,14 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
             if (!transparent)
             {
                 painter.begin (&pixmap);
-                painter.setPen (c);
+                painter.setPen (c.toQColor ());
             }
 
             if (transparent || pixmap.mask ())
             {
                 maskBitmap = kpPixmapFX::getNonNullMask (pixmap);
                 maskPainter.begin (&maskBitmap);
-
-                if (transparent)
-                    maskPainter.setPen (Qt::color0/*transparent*/);
-                else
-                    maskPainter.setPen (Qt::color1/*opaque*/);
+                maskPainter.setPen (c.maskColor ());
             }
         }
 
@@ -596,7 +598,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
         // Brush & Eraser
         else if (m_mode & (DrawsPixmaps | WashesPixmaps))
         {
-            QColor colorToReplace;
+            kpColor colorToReplace;
 
             if (m_mode & WashesPixmaps)
                 colorToReplace = color (1 - m_mouseButton);
@@ -842,7 +844,7 @@ void kpToolPen::endDraw (const QPoint &, const QRect &)
 
 
 // TODO: maybe the base should be virtual?
-QColor kpToolPen::color (int which)
+kpColor kpToolPen::color (int which)
 {
 #if DEBUG_KP_TOOL_PEN && 0
     kdDebug () << "kpToolPen::color (" << which << ")" << endl;
@@ -857,24 +859,26 @@ QColor kpToolPen::color (int which)
 }
 
 // virtual private slot
-void kpToolPen::slotForegroundColorChanged (const QColor &col)
+void kpToolPen::slotForegroundColorChanged (const kpColor &col)
 {
 #if DEBUG_KP_TOOL_PEN
     kdDebug () << "kpToolPen::slotForegroundColorChanged()" << endl;
 #endif
-    m_brushPixmap [(m_mode & SwappedColors) ? 1 : 0].fill (col);
+    if (col.isOpaque ())
+        m_brushPixmap [(m_mode & SwappedColors) ? 1 : 0].fill (col.toQColor ());
 
     updateBrushCursor ();
 }
 
 // virtual private slot
-void kpToolPen::slotBackgroundColorChanged (const QColor &col)
+void kpToolPen::slotBackgroundColorChanged (const kpColor &col)
 {
 #if DEBUG_KP_TOOL_PEN
     kdDebug () << "kpToolPen::slotBackgroundColorChanged()" << endl;
 #endif
 
-    m_brushPixmap [(m_mode & SwappedColors) ? 0 : 1].fill (col);
+    if (col.isOpaque ())
+        m_brushPixmap [(m_mode & SwappedColors) ? 0 : 1].fill (col.toQColor ());
 
     updateBrushCursor ();
 }
@@ -888,7 +892,8 @@ void kpToolPen::slotBrushChanged (const QPixmap &pixmap, bool isDiagonalLine)
     for (int i = 0; i < 2; i++)
     {
         m_brushPixmap [i] = pixmap;
-        m_brushPixmap [i].fill (color (i));
+        if (color (i).isOpaque ())
+            m_brushPixmap [i].fill (color (i).toQColor ());
     }
 
     m_brushIsDiagonalLine = isDiagonalLine;
@@ -906,7 +911,8 @@ void kpToolPen::slotEraserSizeChanged (int size)
     for (int i = 0; i < 2; i++)
     {
         m_brushPixmap [i].resize (size, size);
-        m_brushPixmap [i].fill (color (i));
+        if (color (i).isOpaque ())
+            m_brushPixmap [i].fill (color (i).toQColor ());
     }
 
     updateBrushCursor ();

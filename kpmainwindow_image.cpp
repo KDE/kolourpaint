@@ -33,6 +33,7 @@
 #include <klocale.h>
 #include <kmenubar.h>
 
+#include <kpcolor.h>
 #include <kpcolortoolbar.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
@@ -148,12 +149,15 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
 
 
 // public
-QColor kpMainWindow::backgroundColor () const
+kpColor kpMainWindow::backgroundColor () const
 {
     if (m_colorToolBar)
         return m_colorToolBar->backgroundColor ();
     else
-        return QColor ();  // transparent
+    {
+        kdError () << "kpMainWindow::backgroundColor() without colorToolBar" << endl;
+        return kpColor::invalid;
+    }
 }
 
 

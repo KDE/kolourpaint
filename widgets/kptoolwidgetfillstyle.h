@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -33,6 +33,8 @@
 
 class QBrush;
 
+class kpColor;
+
 class kpToolWidgetFillStyle : public kpToolWidgetBase
 {
 Q_OBJECT
@@ -52,21 +54,21 @@ public:
 private:
     QPixmap fillStylePixmap (FillStyle fs, int width, int height);
     QString fillStyleName (FillStyle fs) const;
-    
+
 public:
     FillStyle fillStyle () const;
 
     static QBrush maskBrushForFillStyle (FillStyle fs,
-                                         const QColor &foregroundColor,
-                                         const QColor &backgroundColor);
-    QBrush maskBrush (const QColor &foregroundColor,
-                      const QColor &backgroundColor);
+                                         const kpColor &foregroundColor,
+                                         const kpColor &backgroundColor);
+    QBrush maskBrush (const kpColor &foregroundColor,
+                      const kpColor &backgroundColor);
 
     static QBrush brushForFillStyle (FillStyle fs,
-                                     const QColor &foregroundColor,
-                                     const QColor &backgroundColor);
-    QBrush brush (const QColor &foregroundColor,
-                  const QColor &backgroundColor);
+                                     const kpColor &foregroundColor,
+                                     const kpColor &backgroundColor);
+    QBrush brush (const kpColor &foregroundColor,
+                  const kpColor &backgroundColor);
 
 signals:
     void fillStyleChanged (kpToolWidgetFillStyle::FillStyle fillStyle);

@@ -29,10 +29,9 @@
 #ifndef __kptoolcolorpicker_h__
 #define __kptoolcolorpicker_h__
 
-#include <qcolor.h>
-
 #include <kcommand.h>
 
+#include <kpcolor.h>
 #include <kptool.h>
 
 class QPoint;
@@ -58,9 +57,9 @@ public:
     virtual void endDraw (const QPoint &thisPoint, const QRect &);
 
 private:
-    QColor colorAtPixel (const QPoint &p);
+    kpColor colorAtPixel (const QPoint &p);
 
-    QColor m_oldColor;
+    kpColor m_oldColor;
 };
 
 class kpToolColorPickerCommand : public KCommand
@@ -68,7 +67,7 @@ class kpToolColorPickerCommand : public KCommand
 public:
     kpToolColorPickerCommand (kpColorToolBar *colorToolBar,
                               int mouseButton,
-                              const QColor &newColor, const QColor &oldColor);
+                              const kpColor &newColor, const kpColor &oldColor);
     virtual ~kpToolColorPickerCommand ();
 
     virtual void execute ();
@@ -79,8 +78,8 @@ public:
 private:
     kpColorToolBar *m_colorToolBar;
     int m_mouseButton;
-    QColor m_newColor;
-    QColor m_oldColor;
+    kpColor m_newColor;
+    kpColor m_oldColor;
 };
 
 #endif  // __kptoolcolorpicker_h__

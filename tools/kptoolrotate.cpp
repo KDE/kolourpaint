@@ -51,7 +51,7 @@ kpToolRotateCommand::kpToolRotateCommand (bool actOnSelection,
     : m_actOnSelection (actOnSelection),
       m_angle (angle),
       m_mainWindow (mainWindow),
-      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : Qt::white),
+      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid),
       m_losslessRotation (kpPixmapFX::isLosslessRotation (angle))
 {
 }

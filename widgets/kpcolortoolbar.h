@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -30,12 +30,13 @@
 #define __kp_color_toolbar_h__
 
 
-#include <qcolor.h>
 #include <qframe.h>
 #include <qwidget.h>
 
 #include <kcolordialog.h>
 #include <ktoolbar.h>
+
+#include <kpcolor.h>
 
 
 class QGridLayout;
@@ -63,22 +64,22 @@ public:
                        QWidget *parent, const char *name = 0);
     virtual ~kpDualColorButton ();
 
-    QColor color (int which) const;
-    QColor foregroundColor () const;
-    QColor backgroundColor () const;
-    
+    kpColor color (int which) const;
+    kpColor foregroundColor () const;
+    kpColor backgroundColor () const;
+
 public slots:
-    void setColor (int which, const QColor &color);
-    void setForegroundColor (const QColor &color);
-    void setBackgroundColor (const QColor &color);
+    void setColor (int which, const kpColor &color);
+    void setForegroundColor (const kpColor &color);
+    void setBackgroundColor (const kpColor &color);
 
 signals:
-    void foregroundColorChanged (const QColor &color);
-    void backgroundColorChanged (const QColor &color);
+    void foregroundColorChanged (const kpColor &color);
+    void backgroundColorChanged (const kpColor &color);
 
 public:
     virtual QSize sizeHint () const;
-    
+
 protected:
     QRect swapPixmapRect () const;
     QRect foregroundBackgroundRect () const;
@@ -88,15 +89,15 @@ protected:
     //virtual void dragEnterEvent (QDragEnterEvent *e);
     virtual void dragMoveEvent (QDragMoveEvent *e);
     virtual void dropEvent (QDropEvent *e);
-    
+
     virtual void mousePressEvent (QMouseEvent *e);
     virtual void mouseDoubleClickEvent (QMouseEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
 
     virtual void drawContents (QPainter *p);
-    
+
     kpMainWindow *m_mainWindow;
-    QColor m_color [2];
+    kpColor m_color [2];
     QPixmap *m_backBuffer;
 };
 
@@ -113,10 +114,14 @@ public:
 
     Qt::Orientation orientation () const;
     void setOrientation (Qt::Orientation o);
-    
+
 signals:
     void foregroundColorChanged (const QColor &color);
     void backgroundColorChanged (const QColor &color);
+
+    // lazy
+    void foregroundColorChanged (const kpColor &color);
+    void backgroundColorChanged (const kpColor &color);
 
 protected:
     Qt::Orientation m_orientation;
@@ -139,22 +144,22 @@ Q_OBJECT
 public:
     kpTransparentColorCell (QWidget *parent, const char *name = 0);
     virtual ~kpTransparentColorCell ();
-    
+
     virtual QSize sizeHint () const;
-    
+
 signals:
     void transparentColorSelected (int mouseButton);
-    
+
     // lazy
-    void foregroundColorChanged (const QColor &color);
-    void backgroundColorChanged (const QColor &color);
+    void foregroundColorChanged (const kpColor &color);
+    void backgroundColorChanged (const kpColor &color);
 
 protected:
     virtual void mousePressEvent (QMouseEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
-    
+
     virtual void drawContents (QPainter *p);
-    
+
     QPixmap m_pixmap;
 };
 
@@ -168,20 +173,20 @@ public:
                     Qt::Orientation o = Qt::Horizontal,
                     const char *name = 0);
     virtual ~kpColorPalette ();
-    
+
     Qt::Orientation orientation () const;
     void setOrientation (Qt::Orientation o);
-    
+
 signals:
-    void foregroundColorChanged (const QColor &color);
-    void backgroundColorChanged (const QColor &color);
-    
+    void foregroundColorChanged (const kpColor &color);
+    void backgroundColorChanged (const kpColor &color);
+
 protected:
     Qt::Orientation m_orientation;
 
     QBoxLayout *m_boxLayout;
     kpTransparentColorCell *m_transparentColorCell;
-    kpColorCells *m_colorCells;    
+    kpColorCells *m_colorCells;
 };
 
 
@@ -193,20 +198,20 @@ public:
     kpColorToolBar (kpMainWindow *mainWindow, const char *name = 0);
     virtual ~kpColorToolBar ();
 
-    QColor color (int which) const;
-    void setColor (int which, const QColor &color);
+    kpColor color (int which) const;
+    void setColor (int which, const kpColor &color);
 
-    QColor foregroundColor () const;
+    kpColor foregroundColor () const;
 
-    QColor backgroundColor () const;
+    kpColor backgroundColor () const;
 
 signals:
-    void foregroundColorChanged (const QColor &color);
-    void backgroundColorChanged (const QColor &color);
+    void foregroundColorChanged (const kpColor &color);
+    void backgroundColorChanged (const kpColor &color);
 
 public slots:
-    void setForegroundColor (const QColor &color);
-    void setBackgroundColor (const QColor &color);
+    void setForegroundColor (const kpColor &color);
+    void setBackgroundColor (const kpColor &color);
 
 private:
     kpMainWindow *m_mainWindow;

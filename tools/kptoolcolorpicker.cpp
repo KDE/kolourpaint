@@ -57,7 +57,7 @@ kpToolColorPicker::~kpToolColorPicker ()
 {
 }
 
-QColor kpToolColorPicker::colorAtPixel (const QPoint &p)
+kpColor kpToolColorPicker::colorAtPixel (const QPoint &p)
 {
 #if DEBUG_KP_TOOL_COLOR_PICKER && 0
     kdDebug () << "kpToolColorPicker::colorAtPixel" << p << endl;
@@ -107,8 +107,8 @@ void kpToolColorPicker::endDraw (const QPoint &thisPoint, const QRect &)
 
 kpToolColorPickerCommand::kpToolColorPickerCommand (kpColorToolBar *colorToolBar,
                                                     int mouseButton,
-                                                    const QColor &newColor,
-                                                    const QColor &oldColor)
+                                                    const kpColor &newColor,
+                                                    const kpColor &oldColor)
     : m_colorToolBar (colorToolBar),
       m_mouseButton (mouseButton),
       m_newColor (newColor),

@@ -33,7 +33,7 @@
 #include <kptoolwidgetbase.h>
 
 
-class QColor;
+class kpColor;
 
 class kpToolWidgetEraserSize : public kpToolWidgetBase
 {
@@ -44,7 +44,7 @@ public:
     virtual ~kpToolWidgetEraserSize ();
 
     int eraserSize () const;
-    QPixmap cursorPixmap (const QColor &color) const;
+    QPixmap cursorPixmap (const kpColor &color) const;
 
 signals:
     void eraserSizeChanged (int size);

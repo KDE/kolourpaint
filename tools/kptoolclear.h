@@ -29,8 +29,9 @@
 #ifndef __kptoolclear_h__
 #define __kptoolclear_h__
 
-#include <qcolor.h>
 #include <kcommand.h>
+
+#include <kpcolor.h>
 
 class QPixmap;
 class QString;
@@ -57,7 +58,7 @@ private:
     bool m_actOnSelection;
     kpMainWindow *m_mainWindow;
 
-    QColor m_newColor;
+    kpColor m_newColor;
     QPixmap *m_oldPixmapPtr;
 };
 

@@ -43,7 +43,7 @@ kpToolClearCommand::kpToolClearCommand (bool actOnSelection,
                                         kpMainWindow *mainWindow)
     : m_actOnSelection (actOnSelection),
       m_mainWindow (mainWindow),
-      m_newColor (mainWindow ? mainWindow->backgroundColor () : Qt::white),
+      m_newColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid),
       m_oldPixmapPtr (0)
 {
 }

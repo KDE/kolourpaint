@@ -36,7 +36,6 @@
 #include <kmainwindow.h>
 #include <kurl.h>
 
-class QColor;
 class QPainter;
 class QPoint;
 class QRect;
@@ -49,6 +48,7 @@ class KAction;
 class KPrinter;
 class KRecentFilesAction;
 
+class kpColor;
 class kpColorToolBar;
 class kpCommandHistory;
 class kpDocument;
@@ -356,7 +356,7 @@ private slots:
     void slotImageMenuUpdateDueToSelection ();
 
 public:
-    QColor backgroundColor () const;
+    kpColor backgroundColor () const;
     void addImageOrSelectionCommand (KCommand *cmd, bool actOnSelectionIfAvail = true);
 
 private slots:

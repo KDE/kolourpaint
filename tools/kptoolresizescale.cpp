@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -58,7 +58,7 @@ kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
       m_newWidth (newWidth), m_newHeight (newHeight),
       m_scaleToFit (scaleToFit),
       m_mainWindow (mainWindow),
-      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : Qt::white)
+      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid)
 {
     kpDocument *doc = document ();
 
@@ -139,7 +139,7 @@ void kpToolResizeScaleCommand::execute ()
             m_oldPixmap = *document ()->pixmap (m_actOnSelection);
 
         QPixmap newPixmap = kpPixmapFX::scale (m_oldPixmap, m_newWidth, m_newHeight);
-        
+
         document ()->setPixmap (m_actOnSelection, newPixmap);
     }
 }
@@ -154,7 +154,6 @@ void kpToolResizeScaleCommand::unexecute ()
     if (!m_scaleToFit)
     {
         QPixmap newPixmap (m_oldWidth, m_oldHeight);
-        newPixmap.fill (m_backgroundColor);
 
         kpPixmapFX::setPixmapAt (&newPixmap, QPoint (0, 0),
                                  *doc->pixmap (m_actOnSelection));
@@ -185,7 +184,7 @@ void kpToolResizeScaleCommand::unexecute ()
         {
             QPixmap oldPixmap = kpPixmapFX::scale (*doc->pixmap (m_actOnSelection),
                                                    m_oldWidth, m_oldHeight);
-            
+
             doc->setPixmap (m_actOnSelection, oldPixmap);
         }
     }

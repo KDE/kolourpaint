@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_PIXMAP_FX 1
+#define DEBUG_KP_PIXMAP_FX 0
 
 #include <qbitmap.h>
 #include <qimage.h>
@@ -37,6 +37,7 @@
 
 #include <kdebug.h>
 
+#include <kpcolor.h>
 #include <kpdefs.h>
 #include <kppixmapfx.h>
 #include <kptool.h>
@@ -284,7 +285,7 @@ void kpPixmapFX::paintPixmapAt (QPixmap *destPixmapPtr, const QPoint &destAt,
 }
 
 // public static
-QColor kpPixmapFX::getColorAtPixel (const QPixmap &pm, const QPoint &at)
+kpColor kpPixmapFX::getColorAtPixel (const QPixmap &pm, const QPoint &at)
 {
 #if DEBUG_KP_PIXMAP_FX && 0
     kdDebug () << "kpToolColorPicker::colorAtPixel" << p << endl;
@@ -295,41 +296,27 @@ QColor kpPixmapFX::getColorAtPixel (const QPixmap &pm, const QPoint &at)
     if (image.isNull ())
     {
         kdError () << "kpPixmapFX::getColorAtPixel(QPixmap) could not convert to QImage" << endl;
-        return QColor ();  // transparent
+        return kpColor::invalid;
     }
 
     return getColorAtPixel (image, QPoint (0, 0));
 }
 
 // public static
-QColor kpPixmapFX::getColorAtPixel (const QPixmap &pm, int x, int y)
+kpColor kpPixmapFX::getColorAtPixel (const QPixmap &pm, int x, int y)
 {
     return kpPixmapFX::getColorAtPixel (pm, QPoint (x, y));
 }
 
 // public static
-QColor kpPixmapFX::getColorAtPixel (const QImage &img, const QPoint &at)
+kpColor kpPixmapFX::getColorAtPixel (const QImage &img, const QPoint &at)
 {
     QRgb rgba = img.pixel (at.x (), at.y ());
-
-    if (qAlpha (rgba) > 0)
-    {
-    #if DEBUG_KP_PIXMAP_FX && 0
-        kdDebug () << "\topaque val=" << qAlpha (rgba)/*hopefully 255*/ << endl;
-    #endif
-        return QColor (rgba & RGB_MASK);
-    }
-    else
-    {
-    #if DEBUG_KP_PIXMAP_FX && 0
-        kdDebug () << "\ttransparent" << endl;
-    #endif
-        return QColor ();  // transparent
-    }
+    return kpColor (rgba);
 }
 
 // public static
-QColor kpPixmapFX::getColorAtPixel (const QImage &img, int x, int y)
+kpColor kpPixmapFX::getColorAtPixel (const QImage &img, int x, int y)
 {
     return kpPixmapFX::getColorAtPixel (img, QPoint (x, y));
 }
@@ -684,7 +671,7 @@ QPixmap kpPixmapFX::convertToBlackAndWhite (const QPixmap &pm)
 
 // public static
 void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
-                         const QColor &backgroundColor, bool fillNewAreas)
+                         const kpColor &backgroundColor, bool fillNewAreas)
 {
 #if DEBUG_KP_PIXMAP_FX && 1
     kdDebug () << "kpPixmapFX::resize()" << endl;
@@ -710,27 +697,19 @@ void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
         QBitmap maskBitmap;
         QPainter painter, maskPainter;
 
-        if (kpTool::isColorOpaque (backgroundColor))
+        if (backgroundColor.isOpaque ())
         {
             painter.begin (destPixmapPtr);
-            painter.setPen (backgroundColor);
-            painter.setBrush (backgroundColor);
+            painter.setPen (backgroundColor.toQColor ());
+            painter.setBrush (backgroundColor.toQColor ());
         }
 
-        if (kpTool::isColorTransparent (backgroundColor) || destPixmapPtr->mask ())
+        if (backgroundColor.isTransparent () || destPixmapPtr->mask ())
         {
             maskBitmap = kpPixmapFX::getNonNullMask (*destPixmapPtr);
             maskPainter.begin (&maskBitmap);
-            if (kpTool::isColorTransparent (backgroundColor))
-            {
-                maskPainter.setPen (Qt::color0/*transparent*/);
-                maskPainter.setBrush (Qt::color0/*transparent*/);
-            }
-            else
-            {
-                maskPainter.setPen (Qt::color1/*opaque*/);
-                maskPainter.setBrush (Qt::color1/*opaque*/);
-            }
+            maskPainter.setPen (backgroundColor.maskColor ());
+            maskPainter.setBrush (backgroundColor.maskColor ());
         }
 
     #define PAINTER_CALL(cmd)         \
@@ -761,7 +740,7 @@ void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
 
 // public static
 QPixmap kpPixmapFX::resize (const QPixmap &pm, int w, int h,
-                            const QColor &backgroundColor, bool fillNewAreas)
+                            const kpColor &backgroundColor, bool fillNewAreas)
 {
     QPixmap ret = pm;
     kpPixmapFX::resize (&ret, w, h, backgroundColor, fillNewAreas);
@@ -805,7 +784,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h)
 
 // public static
 void kpPixmapFX::skew (QPixmap *destPixmapPtr, double hangle, double vangle,
-                       const QColor &backgroundColor)
+                       const kpColor &backgroundColor)
 {
     if (!destPixmapPtr)
         return;
@@ -816,7 +795,7 @@ void kpPixmapFX::skew (QPixmap *destPixmapPtr, double hangle, double vangle,
 
 // public static
 QPixmap kpPixmapFX::skew (const QPixmap &pm, double hangle, double vangle,
-                          const QColor &backgroundColor)
+                          const kpColor &backgroundColor)
 {
 #if DEBUG_KP_PIXMAP_FX
     kdDebug () << "kpPixmapFX::skew() CALLED" << endl;
@@ -880,17 +859,13 @@ QPixmap kpPixmapFX::skew (const QPixmap &pm, double hangle, double vangle,
     QPixmap newPixmap (newRect.width (), newRect.height ());
     QBitmap newBitmapMask;
 
-    if (kpTool::isColorOpaque (backgroundColor))
-        newPixmap.fill (backgroundColor);
+    if (backgroundColor.isOpaque ())
+        newPixmap.fill (backgroundColor.toQColor ());
 
-    if (kpTool::isColorTransparent (backgroundColor) || pm.mask ())
+    if (backgroundColor.isTransparent () || pm.mask ())
     {
         newBitmapMask.resize (newRect.width (), newRect.height ());
-        newBitmapMask.fill (kpTool::isColorTransparent (backgroundColor)
-                                ?
-                            Qt::color0/*transparent*/
-                                :
-                            Qt::color1/*opaque*/);
+        newBitmapMask.fill (backgroundColor.maskColor ());
     }
 
     QPainter painter (&newPixmap);
@@ -940,7 +915,7 @@ bool kpPixmapFX::isLosslessRotation (double angle)
 
 // public static
 void kpPixmapFX::rotate (QPixmap *destPixmapPtr, double angle,
-                         const QColor &backgroundColor)
+                         const kpColor &backgroundColor)
 {
     if (!destPixmapPtr)
         return;
@@ -951,7 +926,7 @@ void kpPixmapFX::rotate (QPixmap *destPixmapPtr, double angle,
 
 // public static
 QPixmap kpPixmapFX::rotate (const QPixmap &pm, double angle,
-                            const QColor &backgroundColor)
+                            const kpColor &backgroundColor)
 {
 #if DEBUG_KP_PIXMAP_FX
     kdDebug () << "kpPixmapFX::rotate() CALLED" << endl;
@@ -1006,17 +981,13 @@ QPixmap kpPixmapFX::rotate (const QPixmap &pm, double angle,
         QPixmap newPixmap (newRect.width (), newRect.height ());
         QBitmap newBitmapMask;
 
-        if (kpTool::isColorOpaque (backgroundColor))
-            newPixmap.fill (backgroundColor);
+        if (backgroundColor.isOpaque ())
+            newPixmap.fill (backgroundColor.toQColor ());
 
-        if (kpTool::isColorTransparent (backgroundColor) || pm.mask ())
+        if (backgroundColor.isTransparent () || pm.mask ())
         {
             newBitmapMask.resize (newRect.width (), newRect.height ());
-            newBitmapMask.fill (kpTool::isColorTransparent (backgroundColor)
-                                    ?
-                                Qt::color0/*transparent*/
-                                    :
-                                Qt::color1/*opaque*/);
+            newBitmapMask.fill (backgroundColor.maskColor ());
         }
 
         QPoint drawPoint = srcRect.topLeft ();
@@ -1050,15 +1021,15 @@ QPixmap kpPixmapFX::rotate (const QPixmap &pm, double angle,
 
 
 // public static
-void kpPixmapFX::fill (QPixmap *destPixmapPtr, const QColor &color)
+void kpPixmapFX::fill (QPixmap *destPixmapPtr, const kpColor &color)
 {
     if (!destPixmapPtr)
         return;
 
-    if (kpTool::isColorOpaque (color))
+    if (color.isOpaque ())
     {
         destPixmapPtr->setMask (QBitmap ());  // no mask = opaque
-        destPixmapPtr->fill (color);
+        destPixmapPtr->fill (color.toQColor ());
     }
     else
     {
@@ -1067,7 +1038,7 @@ void kpPixmapFX::fill (QPixmap *destPixmapPtr, const QColor &color)
 }
 
 // public static
-QPixmap kpPixmapFX::fill (const QPixmap &pm, const QColor &color)
+QPixmap kpPixmapFX::fill (const QPixmap &pm, const kpColor &color)
 {
     QPixmap ret = pm;
     kpPixmapFX::fill (&ret, color);

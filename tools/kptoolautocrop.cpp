@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -67,13 +67,16 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
         return false;
     }
 
+    // TODO: I doubt colour similarity checks make sense here
+    //       - we're just using an arbitrary baseline pixel after all
+
     // (sync both branches)
     if (isX)
     {
         int numCols = 0;
         int startX = (dir > 0) ? 0 : maxX;
 
-        QColor col = kpPixmapFX::getColorAtPixel (image, startX, 0);
+        kpColor col = kpPixmapFX::getColorAtPixel (image, startX, 0);
         for (int x = startX;
              x >= 0 && x <= maxX;
              x += dir)
@@ -81,7 +84,7 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
             int y;
             for (y = 0; y <= maxY; y++)
             {
-                if (!kpTool::colorEq (kpPixmapFX::getColorAtPixel (image, x, y), col))
+                if (!kpPixmapFX::getColorAtPixel (image, x, y).isSimilarTo (col))
                     break;
             }
 
@@ -103,7 +106,7 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
         int numRows = 0;
         int startY = (dir > 0) ? 0 : maxY;
 
-        QColor col = kpPixmapFX::getColorAtPixel (image, 0, startY);
+        kpColor col = kpPixmapFX::getColorAtPixel (image, 0, startY);
         for (int y = startY;
              y >= 0 && y <= maxY;
              y += dir)
@@ -111,7 +114,7 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
             int x;
             for (x = 0; x <= maxX; x++)
             {
-                if (!kpTool::colorEq (kpPixmapFX::getColorAtPixel (image, x, y), col))
+                if (!kpPixmapFX::getColorAtPixel (image, x, y).isSimilarTo (col))
                     break;
             }
 
@@ -146,7 +149,7 @@ bool kpToolAutoCropBorder::exists () const
 void kpToolAutoCropBorder::invalidate ()
 {
     m_rect = QRect ();
-    m_color = QColor ();  // transparent
+    m_color = kpColor::invalid;
 }
 
 
@@ -241,7 +244,7 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
             //  to the doc being bigger than the pasted selection to start with)
 
             if (leftBorder.exists () && rightBorder.exists () &&
-                !kpTool::colorEq (leftBorder.m_color, rightBorder.m_color))
+                !leftBorder.m_color.isSimilarTo (rightBorder.m_color))
             {
             #if DEBUG_KP_TOOL_AUTO_CROP
                 kdDebug () << "\t\tignoring left border" << endl;
@@ -249,7 +252,7 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
                 leftBorder.invalidate ();
             }
             else if (topBorder.exists () && botBorder.exists () &&
-                     !kpTool::colorEq (topBorder.m_color, botBorder.m_color))
+                     !topBorder.m_color.isSimilarTo (botBorder.m_color))
             {
             #if DEBUG_KP_TOOL_AUTO_CROP
                 kdDebug () << "\t\tignoring top border" << endl;
@@ -410,18 +413,15 @@ void kpToolAutoCropCommand::unexecute ()
     {
         if ((*b)->exists ())
         {
-            QColor col = (*b)->m_color;
+            kpColor col = (*b)->m_color;
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
             kdDebug () << "\tdrawing border " << (*b)->m_rect
-                       << " rgb=" << (int *) col.rgb () /* %X hack */ << endl;
+                       << " rgb=" << (int *) col.toQRgb () /* %X hack */ << endl;
         #endif
 
-            if (kpTool::isColorOpaque (col))
+            if (col.isOpaque ())
             {
-                painter.setPen (col);
-                painter.setBrush (col);
-
-                painter.drawRect ((*b)->m_rect);
+                painter.fillRect ((*b)->m_rect, col.toQColor ());
             }
             else
             {
@@ -432,10 +432,7 @@ void kpToolAutoCropCommand::unexecute ()
                     maskPainter.begin (&maskBitmap);
                 }
 
-                maskPainter.setPen (Qt::color0/*transparent*/);
-                maskPainter.setBrush (Qt::color0/*transparent*/);
-
-                maskPainter.drawRect ((*b)->m_rect);
+                maskPainter.fillRect ((*b)->m_rect, Qt::color0/*transparent*/);
             }
         }
     }

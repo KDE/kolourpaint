@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -39,7 +39,7 @@
 #include <kptool.h>
 
 
-kpFloodFill::kpFloodFill (QPixmap *pixmap, int x, int y, const QColor &color)
+kpFloodFill::kpFloodFill (QPixmap *pixmap, int x, int y, const kpColor &color)
     : m_pixmapPtr (pixmap), m_x (x), m_y (y), m_color (color),
       m_initState (0)
 {
@@ -69,23 +69,20 @@ bool kpFloodFill::fill ()
 
         QPainter painter, maskPainter;
         QBitmap maskBitmap;
-        
-        if (m_pixmapPtr->mask () || kpTool::isColorTransparent (m_color))
+
+        if (m_pixmapPtr->mask () || m_color.isTransparent ())
         {
             maskBitmap = kpPixmapFX::getNonNullMask (*m_pixmapPtr);
             maskPainter.begin (&maskBitmap);
-            if (kpTool::isColorTransparent (m_color))
-                maskPainter.setPen (Qt::color0/*transparent*/);
-            else
-                maskPainter.setPen (Qt::color1/*opaque*/);
+            maskPainter.setPen (m_color.maskColor ());
         }
 
-        if (kpTool::isColorOpaque (m_color))
-        {        
+        if (m_color.isOpaque ())
+        {
             painter.begin (m_pixmapPtr);
-            painter.setPen (m_color);
+            painter.setPen (m_color.toQColor ());
         }
-        
+
         const QValueList <FillLine>::ConstIterator fillLinesEnd = m_fillLines.end ();
         for (QValueList <FillLine>::ConstIterator it = m_fillLines.begin ();
              it != fillLinesEnd;
@@ -93,17 +90,17 @@ bool kpFloodFill::fill ()
         {
             QPoint p1 = QPoint ((*it).m_x1, (*it).m_y);
             QPoint p2 = QPoint ((*it).m_x2, (*it).m_y);
-            
+
             if (painter.isActive ())
                 painter.drawLine (p1, p2);
-                
+
             if (maskPainter.isActive ())
                 maskPainter.drawLine (p1, p2);
         }
-        
+
         if (painter.isActive ())
             painter.end ();
-            
+
         if (maskPainter.isActive ())
             maskPainter.end ();
 
@@ -124,7 +121,7 @@ bool kpFloodFill::prepareColorToChange ()
 
     m_colorToChange = kpPixmapFX::getColorAtPixel (*m_pixmapPtr, QPoint (m_x, m_y));
 
-    if (kpTool::isColorOpaque (m_colorToChange))
+    if (m_colorToChange.isOpaque ())
     {
         kdDebug () << "\tcolorToChange: r=" << m_colorToChange.red ()
                    << ", b=" << m_colorToChange.blue ()
@@ -156,7 +153,7 @@ bool kpFloodFill::prepare ()
     kdDebug () << "\tperforming NOP check" << endl;
 
     // get the color we need to replace
-    if (kpTool::colorEq (m_colorToChange, m_color))
+    if (m_colorToChange.isSimilarTo (m_color))
     {
         // need to do absolutely nothing (this is a significant optimisation
         // for people who randomly click a lot over already-filled areas)
@@ -221,14 +218,14 @@ void kpFloodFill::addLine (int y, int x1, int x2)
     m_boundingRect = m_boundingRect.unite (QRect (QPoint (x1, y), QPoint (x2, y)));
 }
 
-QColor kpFloodFill::pixelColor (int x, int y)
+kpColor kpFloodFill::pixelColor (int x, int y)
 {
     if (y >= (int) m_fillLinesCache.count ())
     {
         kdError () << "kpFloodFill::pixelColor("
                    << x << ","
                    << y << ") y out of range=" << m_pixmapPtr->height () << endl;
-        return QColor ();  // transparent
+        return kpColor::invalid;
     }
 
     const QValueList <FillLine>::ConstIterator theEnd = m_fillLinesCache [y].end ();
@@ -252,7 +249,7 @@ void kpFloodFill::findAndAddLines (const FillLine &fillLine, int dy)
     for (int xnow = fillLine.m_x1; xnow <= fillLine.m_x2; xnow++)
     {
         // At current position, right colour?
-        if (kpTool::colorEq (pixelColor (xnow, fillLine.m_y + dy), m_colorToChange))
+        if (pixelColor (xnow, fillLine.m_y + dy).isSimilarTo (m_colorToChange))
         {
             // Find minimum and maximum x values
             int minxnow = findMinX (fillLine.m_y + dy, xnow);
@@ -275,7 +272,7 @@ int kpFloodFill::findMinX (int y, int x)
         if (x < 0)
             return 0;
 
-        if (kpTool::colorEq (pixelColor (x, y), m_colorToChange))
+        if (pixelColor (x, y).isSimilarTo (m_colorToChange))
             x--;
         else
             return x + 1;
@@ -290,7 +287,7 @@ int kpFloodFill::findMaxX (int y, int x)
         if (x > m_pixmapPtr->width () - 1)
             return m_pixmapPtr->width () - 1;
 
-        if (kpTool::colorEq (pixelColor (x, y), m_colorToChange))
+        if (pixelColor (x, y).isSimilarTo (m_colorToChange))
             x++;
         else
             return x - 1;

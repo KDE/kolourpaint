@@ -747,6 +747,14 @@ void kpView::paintEventDrawTempPixmap (QPixmap *destPixmap, const QRect &docRect
         return;
 
     const kpTempPixmap *tpm = vm->tempPixmap ();
+#if DEBUG_KP_VIEW_RENDERER && 1
+    kdDebug () << "kpView::paintEventDrawTempPixmap() tempPixmap="
+               << tpm
+               << " isVisible="
+               << (tpm ? tpm->isVisible (vm) : false)
+               << endl;
+#endif
+    
     if (!tpm || !tpm->isVisible (vm))
         return;
 
@@ -901,6 +909,16 @@ void kpView::paintEvent (QPaintEvent *e)
              vm->tempPixmap () &&
              vm->tempPixmap ()->isVisible (vm) &&
              docRect.intersects (vm->tempPixmap ()->rect ()));
+        
+    #if DEBUG_KP_VIEW_RENDERER && 1
+        kdDebug () << "\ttempPixmapWillBeRendered=" << tempPixmapWillBeRendered
+                   << " (sel=" << doc->selection ()
+                   << " tempPixmap=" << vm->tempPixmap ()
+                   << " tempPixmap.isVisible=" << (vm->tempPixmap () ? vm->tempPixmap ()->isVisible (vm) : false)
+                   << " docRect.intersects(tempPixmap.rect)=" << (vm->tempPixmap () ? docRect.intersects (vm->tempPixmap ()->rect ()) : false)
+                   << ")"
+                   << endl;
+    #endif
     }
 
     if (docPixmap.mask () ||

@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -31,11 +31,12 @@
 
 
 class QBitmap;
-class QColor;
 class QImage;
 class QPixmap;
 class QPoint;
 class QRect;
+
+class kpColor;
 
 
 class kpPixmapFX
@@ -107,16 +108,16 @@ public:
      * If the pixel is transparent, a value is returned such that
      * kpTool::isColorTransparent(<return_value>) will return true.
      */
-    static QColor getColorAtPixel (const QPixmap &pm, const QPoint &at);
-    static QColor getColorAtPixel (const QPixmap &pm, int x, int y);
+    static kpColor getColorAtPixel (const QPixmap &pm, const QPoint &at);
+    static kpColor getColorAtPixel (const QPixmap &pm, int x, int y);
 
     /*
      * Returns the color of the pixel at <at> in <img>.
      * If the pixel is transparent, a value is returned such that
      * kpTool::isColorTransparent(<return_value>) will return true.
      */
-    static QColor getColorAtPixel (const QImage &img, const QPoint &at);
-    static QColor getColorAtPixel (const QImage &img, int x, int y);
+    static kpColor getColorAtPixel (const QImage &img, const QPoint &at);
+    static kpColor getColorAtPixel (const QImage &img, int x, int y);
 
 
     /*
@@ -217,17 +218,17 @@ public:
     /*
      * Fills an image in the given color.
      */
-    static void fill (QPixmap *destPixmapPtr, const QColor &color);
-    static QPixmap fill (const QPixmap &pm, const QColor &color);
+    static void fill (QPixmap *destPixmapPtr, const kpColor &color);
+    static QPixmap fill (const QPixmap &pm, const kpColor &color);
 
     /*
      * Resizes an image to the given width and height,
      * filling any new areas with <backgroundColor> if <fillNewAreas> is set.
      */
     static void resize (QPixmap *destPixmapPtr, int w, int h,
-                        const QColor &backgroundColor, bool fillNewAreas = true);
+                        const kpColor &backgroundColor, bool fillNewAreas = true);
     static QPixmap resize (const QPixmap &pm, int w, int h,
-                           const QColor &backgroundColor, bool fillNewAreas = true);
+                           const kpColor &backgroundColor, bool fillNewAreas = true);
 
     /*
      * Scales an image to the given width and height.
@@ -243,9 +244,9 @@ public:
      * <backgroundColor>    color to fill new areas with
      */
     static void skew (QPixmap *destPixmapPtr, double hangle, double vangle,
-                      const QColor &backgroundColor);
+                      const kpColor &backgroundColor);
     static QPixmap skew (const QPixmap &pm, double hangle, double vangle,
-                         const QColor &backgroundColor);
+                         const kpColor &backgroundColor);
 
     /*
      * Rotates an image.
@@ -255,9 +256,9 @@ public:
      */
     static bool isLosslessRotation (double angle);
     static void rotate (QPixmap *destPixmapPtr, double angle,
-                        const QColor &backgroundColor);
+                        const kpColor &backgroundColor);
     static QPixmap rotate (const QPixmap &pm, double angle,
-                           const QColor &backgroundColor);
+                           const kpColor &backgroundColor);
 
     /*
      * Flips an image in the given directions.

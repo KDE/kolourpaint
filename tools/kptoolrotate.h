@@ -29,12 +29,14 @@
 #ifndef __kptoolrotate_h__
 #define __kptoolrotate_h__
 
-#include <qcolor.h>
 #include <qpixmap.h>
 #include <qpoint.h>
 
 #include <kcommand.h>
 #include <kdialogbase.h>
+
+#include <kpcolor.h>
+
 
 class QRadioButton;
 class QString;
@@ -68,7 +70,7 @@ private:
     double m_angle;
     kpMainWindow *m_mainWindow;
 
-    QColor m_backgroundColor;
+    kpColor m_backgroundColor;
 
     bool m_losslessRotation;
     QPixmap m_oldPixmap;

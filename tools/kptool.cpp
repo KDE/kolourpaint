@@ -35,6 +35,7 @@
 
 #include <kdebug.h>
 
+#include <kpcolor.h>
 #include <kpcolortoolbar.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
@@ -73,6 +74,9 @@ QRect kpTool::neededRect (const QRect &rect, int lineWidth)
 {
     int x1, y1, x2, y2;
     rect.coords (&x1, &y1, &x2, &y2);
+
+    if (lineWidth < 1)
+        lineWidth = 1;
 
     return QRect (QPoint (x1 - lineWidth + 1, y1 - lineWidth + 1),
                   QPoint (x2 + lineWidth - 1, y2 + lineWidth - 1));
@@ -205,7 +209,7 @@ void kpTool::cancelShape ()
 void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRect,
                               bool wantEndShape)
 {
-#if DEBUG_KP_TOOL
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool::endDrawInternal() wantEndShape=" << wantEndShape << endl;
 #endif
     
@@ -216,14 +220,14 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
     
     if (wantEndShape)
     {
-    #if DEBUG_KP_TOOL
+    #if DEBUG_KP_TOOL && 0
         kdDebug () << "\tcalling endShape()" << endl;
     #endif
         endShape (thisPoint, normalizedRect);
     }
     else
     {
-    #if DEBUG_KP_TOOL
+    #if DEBUG_KP_TOOL && 0
         kdDebug () << "\tcalling endDraw()" << endl;
     #endif
         endDraw (thisPoint, normalizedRect);
@@ -278,47 +282,27 @@ kpToolToolBar *kpTool::toolToolBar () const
     return m_mainWindow ? m_mainWindow->toolToolBar () : 0;
 }
 
-QColor kpTool::color (int which) const
+kpColor kpTool::color (int which) const
 {
     if (m_mainWindow)
         return m_mainWindow->colorToolBar ()->color (which);
     else
     {
         kdError () << "kpTool::color () called without mainWindow" << endl;
-        return Qt::black;
+        return kpColor::invalid;
     }
 }
 
-// public static
-bool kpTool::isColorOpaque (const QColor &color)
+kpColor kpTool::foregroundColor () const
 {
-    return color.isValid ();
-}
-    
-// public static
-bool kpTool::isColorTransparent (const QColor &color)
-{
-    return !color.isValid ();
+    return color (0);
 }
 
-// public static
-bool kpTool::colorEq (const QColor &c1, const QColor &c2)
+kpColor kpTool::backgroundColor () const
 {
-    // KolourPaint convention says:
-    //
-    // If color.isValid(), it's fully opaque and only the RGB values matter
-    // (the Alpha value which shouldn't be there - if it weren't for
-    //  Qt's QColor hacks - is ignored).
-    //
-    // If !color.isValid(), it's fully transparent.
-    //
-
-    if (c1.isValid () && c2.isValid ())
-        return ((c1.rgb () & RGB_MASK) == (c2.rgb () & RGB_MASK));
-    else
-        return (c1.isValid () == c2.isValid ());
+    return color (1);
 }
-    
+        
 
 bool kpTool::currentPointNextToLast () const
 {

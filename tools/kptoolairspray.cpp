@@ -208,7 +208,7 @@ void kpToolAirSpray::endDraw (const QPoint &, const QRect &)
  * kpToolAirSprayCommand
  */
 
-kpToolAirSprayCommand::kpToolAirSprayCommand (const QColor &color, int size,
+kpToolAirSprayCommand::kpToolAirSprayCommand (const kpColor &color, int size,
                                               kpDocument *document, kpViewManager *viewManager)
     : m_color (color),
       m_size (size),
@@ -281,17 +281,17 @@ void kpToolAirSprayCommand::addPoints (const QPointArray &points)
 
     QPainter painter, maskPainter;
     
-    if (kpTool::isColorOpaque (m_color))
+    if (m_color.isOpaque ())
     {
         painter.begin (&pixmap);
-        painter.setPen (m_color);
+        painter.setPen (m_color.toQColor ());
     }
     
-    if (pixmap.mask () || kpTool::isColorTransparent (m_color))
+    if (pixmap.mask () || m_color.isTransparent ())
     {
         mask = kpPixmapFX::getNonNullMask (pixmap);
         maskPainter.begin (&mask);
-        maskPainter.setPen (kpTool::isColorTransparent (m_color) ? Qt::color0 : Qt::color1);
+        maskPainter.setPen (m_color.maskColor ());
     }
     
     for (int i = 0; i < (int) points.count (); i++)

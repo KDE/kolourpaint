@@ -34,9 +34,12 @@
 #include <qpixmap.h>
 #include <qpoint.h>
 #include <qrect.h>
+
 #include <kcommand.h>
+
 #include <kptool.h>
 
+class kpColor;
 class kpMainWindow;
 class kpToolWidgetFillStyle;
 class kpToolWidgetLineWidth;
@@ -70,8 +73,8 @@ private slots:
     void updatePens ();
     void updateBrushes ();
 
-    virtual void slotForegroundColorChanged (const QColor &);
-    virtual void slotBackgroundColorChanged (const QColor &);
+    virtual void slotForegroundColorChanged (const kpColor &);
+    virtual void slotBackgroundColorChanged (const kpColor &);
     
 private:
     Mode m_mode;

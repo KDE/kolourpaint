@@ -178,10 +178,10 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
         disconnect (previousTool, SIGNAL (mouseDragged (const QRect &)),
                     this, SLOT (slotUpdateStatusBar (const QRect &)));
 
-        disconnect (m_colorToolBar, SIGNAL (foregroundColorChanged (const QColor &)),
-                    previousTool, SLOT (slotForegroundColorChanged (const QColor &)));
-        disconnect (m_colorToolBar, SIGNAL (backgroundColorChanged (const QColor &)),
-                    previousTool, SLOT (slotBackgroundColorChanged (const QColor &)));
+        disconnect (m_colorToolBar, SIGNAL (foregroundColorChanged (const kpColor &)),
+                    previousTool, SLOT (slotForegroundColorChanged (const kpColor &)));
+        disconnect (m_colorToolBar, SIGNAL (backgroundColorChanged (const kpColor &)),
+                    previousTool, SLOT (slotBackgroundColorChanged (const kpColor &)));
     }
 
     if (tool)
@@ -195,10 +195,10 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
         connect (tool, SIGNAL (mouseDragged (const QRect &)),
                  SLOT (slotUpdateStatusBar (const QRect &)));
 
-        connect (m_colorToolBar, SIGNAL (foregroundColorChanged (const QColor &)),
-                 tool, SLOT (slotForegroundColorChanged (const QColor &)));
-        connect (m_colorToolBar, SIGNAL (backgroundColorChanged (const QColor &)),
-                 tool, SLOT (slotBackgroundColorChanged (const QColor &)));
+        connect (m_colorToolBar, SIGNAL (foregroundColorChanged (const kpColor &)),
+                 tool, SLOT (slotForegroundColorChanged (const kpColor &)));
+        connect (m_colorToolBar, SIGNAL (backgroundColorChanged (const kpColor &)),
+                 tool, SLOT (slotBackgroundColorChanged (const kpColor &)));
     }
 }
 

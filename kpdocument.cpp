@@ -47,6 +47,7 @@
 #include <kmessagebox.h>
 #include <ktempfile.h>
 
+#include <kpcolor.h>
 #include <kpcolortoolbar.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
@@ -486,7 +487,7 @@ int kpDocument::oldWidth () const
     return m_oldWidth;
 }
 
-void kpDocument::setWidth (int w, const QColor &backgroundColor)
+void kpDocument::setWidth (int w, const kpColor &backgroundColor)
 {
     resize (w, height (), backgroundColor);
 }
@@ -504,7 +505,7 @@ int kpDocument::oldHeight () const
     return m_oldHeight;
 }
 
-void kpDocument::setHeight (int h, const QColor &backgroundColor)
+void kpDocument::setHeight (int h, const kpColor &backgroundColor)
 {
     resize (width (), h, backgroundColor);
 }
@@ -815,7 +816,7 @@ QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
 }
 
 // public
-bool kpDocument::selectionPullFromDocument (const QColor &backgroundColor)
+bool kpDocument::selectionPullFromDocument (const kpColor &backgroundColor)
 {
     kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
 
@@ -869,13 +870,23 @@ bool kpDocument::selectionPullFromDocument (const QColor &backgroundColor)
     // Fill opaque bits of the hole in the document
     //
 
-    QPixmap erasePixmap (boundingRect.width (), boundingRect.height ());
-    erasePixmap.fill (backgroundColor);
+    if (backgroundColor.isOpaque ())
+    {
+        QPixmap erasePixmap (boundingRect.width (), boundingRect.height ());
+        erasePixmap.fill (backgroundColor.toQColor ());
 
-    if (selPixmap.mask ())
-        erasePixmap.setMask (*selPixmap.mask ());
+        if (selPixmap.mask ())
+            erasePixmap.setMask (*selPixmap.mask ());
 
-    paintPixmapAt (erasePixmap, boundingRect.topLeft ());
+        paintPixmapAt (erasePixmap, boundingRect.topLeft ());
+    }
+    else
+    {
+        kpPixmapFX::paintMaskTransparentWithBrush (m_pixmap,
+                                                   boundingRect.topLeft (),
+                                                   kpPixmapFX::getNonNullMask (selPixmap));
+        slotContentsChanged (boundingRect);
+    }
 
     if (vm)
         vm->restoreQueueUpdates ();
@@ -972,7 +983,7 @@ QPixmap kpDocument::pixmapWithSelection () const
  * Transformations
  */
 
-void kpDocument::fill (const QColor &color)
+void kpDocument::fill (const kpColor &color)
 {
 #if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::fill ()" << endl;
@@ -982,7 +993,7 @@ void kpDocument::fill (const QColor &color)
     slotContentsChanged (m_pixmap->rect ());
 }
 
-void kpDocument::resize (int w, int h, const QColor &backgroundColor, bool fillNewAreas)
+void kpDocument::resize (int w, int h, const kpColor &backgroundColor, bool fillNewAreas)
 {
 #if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::resize (" << w << "," << h << "," << fillNewAreas << ")" << endl;

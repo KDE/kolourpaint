@@ -447,7 +447,7 @@ kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (
                                                                                 kpMainWindow *mainWindow)
     : m_name (name),
       m_mainWindow (mainWindow),
-      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : Qt::white),
+      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid),
       m_originalSelectionRegion (0)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
