@@ -44,6 +44,7 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kptool.h>
+#include <kptoolresizescale.h>
 #include <kpviewmanager.h>
 
 
@@ -195,6 +196,23 @@ void kpMainWindow::slotPaste ()
         {
             m_viewManager->setTempPixmapAt (pixmap, QPoint (0, 0), kpViewManager::SelectionPixmap);
             slotToolRectSelection ();
+
+            // If the selection is bigger than the document, automatically
+            // resize the document (with the option of Undo'ing) to fit
+            // the selection.
+            // 
+            // No annoying dialog necessary.
+            // 
+            if (pixmap.width () > m_document->width () ||
+                pixmap.height () > m_document->height ())
+            {
+                m_commandHistory->addCommand (
+                    new kpToolResizeScaleCommand (
+                        m_document, m_viewManager,
+                        QMAX (pixmap.width (), m_document->width ()),
+                        QMAX (pixmap.height (), m_document->height ()),
+                        false/*no scale*/));
+            }
         }
     }
     else
