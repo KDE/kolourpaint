@@ -479,7 +479,7 @@ QPen kpToolPolygon::pen () const
 {
     return QPen (color (m_mouseButton),
                  m_lineWidth, m_lineStyle,
-                 Qt::RoundCap, Qt::MiterJoin);
+                 Qt::RoundCap, Qt::RoundJoin);
 }
 
 // private
