@@ -61,7 +61,7 @@ kpView::kpView (QWidget *parent, const char *name,
                 kpMainWindow *mainWindow,
                 int width, int height,
                 bool autoVariableZoom)
-    : QWidget (parent, name, Qt::WStaticContents | Qt::WNoAutoErase /* no flicker */),
+    : QWidget (parent, name, Qt::WStaticContents | Qt::WNoAutoErase/*no flicker*/),
       m_mainWindow (mainWindow),
       m_autoVariableZoom (autoVariableZoom),
       m_hzoom (100), m_vzoom (100),
