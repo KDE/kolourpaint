@@ -80,6 +80,7 @@ kpView::kpView (QWidget *parent, const char *name,
 
     setFocusPolicy (QWidget::WheelFocus);
     setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
+    setKeyCompression (true);
 }
 
 void kpView::setHasMouse (bool yes)
@@ -88,6 +89,13 @@ void kpView::setHasMouse (bool yes)
 
     if (vm)
     {
+    #if DEBUG_KP_VIEW
+        kdDebug () << "kpView(" << name ()
+                   << ")::setHasMouse(" << yes
+                   << ") existing viewUnderCursor="
+                   << (vm->viewUnderCursor () ? vm->viewUnderCursor ()->name () : "(none)")
+                   << endl;
+    #endif
         if (yes && vm->viewUnderCursor () != this)
             vm->setViewUnderCursor (this);
         else if (!yes && vm->viewUnderCursor () == this)
@@ -362,7 +370,7 @@ void kpView::resize (int w, int h)
 
 void kpView::addToQueuedArea (const QRect &rect)
 {
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView(" << name ()
                << ")::addToQueuedArea() already=" << m_queuedUpdateArea
                << " - plus - " << rect
@@ -373,7 +381,7 @@ void kpView::addToQueuedArea (const QRect &rect)
 
 void kpView::addToQueuedArea (const QRegion &region)
 {
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView(" << name ()
                << ")::addToQueuedArea()r already=" << m_queuedUpdateArea
                << " - plus - " << region
@@ -394,7 +402,7 @@ void kpView::invalidateQueuedArea ()
 void kpView::updateQueuedArea ()
 {
     kpViewManager *vm = viewManager ();
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView(" << name ()
                << ")::updateQueuedArea() vm=" << (bool) vm
                << " queueUpdates=" << (vm && vm->queueUpdates ())
@@ -423,8 +431,10 @@ void kpView::updateQueuedArea ()
 // virtual
 void kpView::mousePressEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_VIEW && 0
-    kdDebug () << "kpView::mousePressEvent (" << e->x () << "," << e->y () << ")" << endl;
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name () << ")::mousePressEvent ("
+               << e->x () << "," << e->y () << ")"
+               << endl;
 #endif
 
     setHasMouse (true);
@@ -436,11 +446,16 @@ void kpView::mousePressEvent (QMouseEvent *e)
 // virtual
 void kpView::mouseMoveEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_VIEW && 0
-    kdDebug () << "kpView::mouseMoveEvent (" << e->x () << "," << e->y () << ")" << endl;
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name () << ")::mouseMoveEvent ("
+               << e->x () << "," << e->y () << ")"
+               << endl;
 #endif
 
-    setHasMouse (true);
+    // TODO: This is wrong if you leaveEvent the mainView by mouseMoving on the
+    //       mainView, landing on top of the thumbnailView cleverly put on top
+    //       of the mainView.
+    setHasMouse (rect ().contains (e->pos ()));
     m_mainWindow->tool ()->mouseMoveEvent (e);
 
     e->accept ();
@@ -449,10 +464,13 @@ void kpView::mouseMoveEvent (QMouseEvent *e)
 // virtual
 void kpView::mouseReleaseEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_VIEW && 0
-    kdDebug () << "kpView::mouseReleaseEvent (" << e->x () << "," << e->y () << ")" << endl;
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name () << ")::mouseReleaseEvent ("
+               << e->x () << "," << e->y () << ")"
+               << endl;
 #endif
 
+    setHasMouse (rect ().contains (e->pos ()));
     m_mainWindow->tool ()->mouseReleaseEvent (e);
 
     e->accept ();
@@ -461,6 +479,10 @@ void kpView::mouseReleaseEvent (QMouseEvent *e)
 // virtual
 void kpView::keyPressEvent (QKeyEvent *e)
 {
+#if DEBUG_KP_VIEW && 0
+    kdDebug () << "kpView(" << name () << ")::keyPressEvent()" << endl;
+#endif
+
     m_mainWindow->tool ()->keyPressEvent (e);
     e->accept ();
 }
@@ -468,6 +490,10 @@ void kpView::keyPressEvent (QKeyEvent *e)
 // virtual
 void kpView::keyReleaseEvent (QKeyEvent *e)
 {
+#if DEBUG_KP_VIEW && 0
+    kdDebug () << "kpView(" << name () << ")::keyReleaseEvent()" << endl;
+#endif
+
     m_mainWindow->tool ()->keyReleaseEvent (e);
     e->accept ();
 }
@@ -476,7 +502,7 @@ void kpView::keyReleaseEvent (QKeyEvent *e)
 void kpView::focusInEvent (QFocusEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kdDebug () << "kpView::focusInEvent()" << endl;
+    kdDebug () << "kpView(" << name () << ")::focusInEvent()" << endl;
 #endif
     m_mainWindow->tool ()->focusInEvent (e);
 }
@@ -490,8 +516,8 @@ void kpView::focusOutEvent (QFocusEvent *e)
 // virtual
 void kpView::enterEvent (QEvent *e)
 {
-#if DEBUG_KP_VIEW && 0
-    kdDebug () << "kpView::enterEvent" << endl;
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name () << ")::enterEvent()" << endl;
 #endif
 
     setHasMouse (true);
@@ -501,8 +527,8 @@ void kpView::enterEvent (QEvent *e)
 // virtual
 void kpView::leaveEvent (QEvent *e)
 {
-#if DEBUG_KP_VIEW && 0
-    kdDebug () << "kpView::leaveEvent" << endl;
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name () << ")::leaveEvent()" << endl;
 #endif
 
     setHasMouse (false);
@@ -512,8 +538,8 @@ void kpView::leaveEvent (QEvent *e)
 // private virtual
 void kpView::dragEnterEvent (QDragEnterEvent *)
 {
-#if DEBUG_KP_VIEW && 0
-    kdDebug () << "kpView::dragEnterEvent" << endl;
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name () << ")::dragEnterEvent()" << endl;
 #endif
 
     setHasMouse (true);
@@ -522,8 +548,8 @@ void kpView::dragEnterEvent (QDragEnterEvent *)
 // private virtual
 void kpView::dragLeaveEvent (QDragLeaveEvent *)
 {
-#if DEBUG_KP_VIEW && 0
-    kdDebug () << "kpView::dragLeaveEvent" << endl;
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name () << ")::dragLeaveEvent" << endl;
 #endif
 
     setHasMouse (false);
@@ -585,7 +611,7 @@ void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRec
     kpDocument *doc = document ();
     if (!doc)
         return;
-    
+
     m_mainWindow->drawTransparentBackground (painter,
                                              doc->width () * m_hzoom / 100,
                                              doc->height () * m_vzoom / 100,
@@ -761,7 +787,7 @@ void kpView::paintEventDrawTempPixmap (QPixmap *destPixmap, const QRect &docRect
                << (tpm ? tpm->isVisible (vm) : false)
                << endl;
 #endif
-    
+
     if (!tpm || !tpm->isVisible (vm))
         return;
 
@@ -839,6 +865,7 @@ void kpView::paintEvent (QPaintEvent *e)
 #if DEBUG_KP_VIEW_RENDERER && 1
     kdDebug () << "kpView(" << name () << ")::paintEvent() vm=" << (bool) vm
                << " queueUpdates=" << (vm && vm->queueUpdates ())
+               << " fastUpdates=" << (vm && vm->fastUpdates ())
                << " viewRect=" << e->rect ()
                << " erased=" << e->erased ()
                << " doc=" << doc
@@ -916,7 +943,7 @@ void kpView::paintEvent (QPaintEvent *e)
              vm->tempPixmap () &&
              vm->tempPixmap ()->isVisible (vm) &&
              docRect.intersects (vm->tempPixmap ()->rect ()));
-        
+
     #if DEBUG_KP_VIEW_RENDERER && 1
         kdDebug () << "\ttempPixmapWillBeRendered=" << tempPixmapWillBeRendered
                    << " (sel=" << doc->selection ()
