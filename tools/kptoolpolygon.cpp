@@ -121,7 +121,7 @@ static bool only1PixelInPointArray (const QPointArray &points)
     if (points.count () == 0)
         return false;
 
-    for (int i = 1; i < points.count (); i++)
+    for (int i = 1; i < (int) points.count (); i++)
     {
         if (points [i] != points [0])
             return false;
@@ -174,7 +174,12 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
         maskPainter.setBrush (maskBrush);
 
     #if DEBUG_KP_TOOL_POLYGON
-        kdDebug () << "\tmaskPainter begin" << endl;
+        kdDebug () << "\tmaskPainter begin because:" << endl
+                   << "\t\tpixmap.mask=" << pixmap.mask () << endl
+                   << "\t\t(maskPenStyle!=NoPen)=" << (maskPen.style () != Qt::NoPen) << endl
+                   << "\t\t(maskPenColor==trans)=" << (maskPen.color () == Qt::color0) << endl
+                   << "\t\t(maskBrushStyle!=NoBrush)=" << (maskBrush.style () != Qt::NoBrush) << endl
+                   << "\t\t(maskBrushColor==trans)=" << (maskBrush.color () == Qt::color0) << endl;
     #endif
     }
 
