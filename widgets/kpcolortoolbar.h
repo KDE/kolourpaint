@@ -40,6 +40,8 @@
 class QBoxLayout;
 class KColorButton;
 
+// TODO: provide a pretty way of displaying foreground, background &
+//       transparent colour
 class kpDualColorButton : public QWidget
 {
 Q_OBJECT
