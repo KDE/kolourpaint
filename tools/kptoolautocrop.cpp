@@ -273,7 +273,10 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
                 topBorder, botBorder,
                 mainWindow));
     }
-    else
+    
+    QApplication::restoreOverrideCursor ();
+
+    if (nothingToCrop)
     {
         KMessageBox::information (mainWindow,
             i18n ("Autocrop could not find any border to remove."),
@@ -281,7 +284,6 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
             "DoNotAskAgain_NothingToAutoCrop");
     }
     
-    QApplication::restoreOverrideCursor ();
     return true;
 }
 
