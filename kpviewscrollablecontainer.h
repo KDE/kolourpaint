@@ -179,6 +179,9 @@ protected:
     void connectViewSignals ();
 
 public:
+    // Calls setView(<widget>) after adding <widget> if it's a kpView.
+    virtual void addChild (QWidget *widget, int x = 0, int y = 0);
+
     kpView *view () const;
     void setView (kpView *view);
 

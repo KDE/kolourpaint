@@ -828,6 +828,27 @@ void kpViewScrollableContainer::connectViewSignals ()
 }
 
 
+// public virtual [base QScrollView]
+void kpViewScrollableContainer::addChild (QWidget *widget, int x, int y)
+{
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+    kdDebug () << "kpViewScrollableContainer::addChild(" << widget
+               << "," << x << "," << y << endl;
+#endif
+
+    QScrollView::addChild (widget, x, y);
+
+    kpView *view = dynamic_cast <kpView *> (widget);
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+    kdDebug () << "\tcast to kpView: " << view << endl;
+#endif
+    if (view)
+    {
+        setView (view);
+    }
+}
+
+
 // public
 kpView *kpViewScrollableContainer::view () const
 {

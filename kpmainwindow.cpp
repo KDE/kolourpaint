@@ -484,7 +484,6 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         if (m_scrollView)
         {
             m_scrollView->addChild (m_mainView);
-            m_scrollView->setView (m_mainView);  // TODO: could just combine into addChild()
         }
         else
             kdError () << "kpMainWindow::setDocument() without scrollView" << endl;
