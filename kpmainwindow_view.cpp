@@ -25,8 +25,11 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_ZOOM_FLICKER 0
 
+#include <qdatetime.h>
 #include <qdockarea.h>
+#include <qpainter.h>
 #include <qscrollview.h>
 #include <qtimer.h>
 
@@ -217,6 +220,28 @@ void kpMainWindow::zoomTo (int zoomLevel)
     if (m_viewManager)
         m_viewManager->setQueueUpdates ();
 
+
+    if (m_scrollView)
+    {
+        m_scrollView->setUpdatesEnabled (false);
+        if (m_scrollView->viewport ())
+            m_scrollView->viewport ()->setUpdatesEnabled (false);
+    }
+
+    if (m_mainView)
+    {
+        m_mainView->setUpdatesEnabled (false);
+
+        if (m_scrollView && m_scrollView->viewport ())
+        {
+            // Ordinary flicker is better than the whole view moving
+            QPainter p (m_mainView);
+            p.fillRect (m_mainView->rect (),
+                        m_scrollView->viewport ()->colorGroup ().background ());
+        }
+    }
+
+
     if (m_scrollView && m_mainView)
     {
     #if DEBUG_KP_MAIN_WINDOW && 1
@@ -247,6 +272,14 @@ void kpMainWindow::zoomTo (int zoomLevel)
                          * zoomLevel / m_mainView->zoomLevelY ();
 
         m_mainView->setZoomLevel (zoomLevel, zoomLevel);
+    #if DEBUG_ZOOM_FLICKER
+    {
+        kdDebug () << "FLICKER: just setZoomLevel" << endl;
+        QTime timer; timer.start ();
+        while (timer.elapsed () < 1000)
+            ;
+    }
+    #endif
 
     #if DEBUG_KP_MAIN_WINDOW && 1
         kdDebug () << "\tvisibleWidth=" << m_scrollView->visibleWidth ()
@@ -257,6 +290,14 @@ void kpMainWindow::zoomTo (int zoomLevel)
     #endif
 
         m_scrollView->center (newCenterX, newCenterY);
+    #if DEBUG_ZOOM_FLICKER
+    {
+        kdDebug () << "FLICKER: just centred" << endl;
+        QTime timer; timer.start ();
+        while (timer.elapsed () < 1000)
+            ;
+    }
+    #endif
 
     #if DEBUG_KP_MAIN_WINDOW && 1
         kdDebug () << "\t\tcheck (contentsX=" << m_scrollView->contentsX ()
@@ -286,18 +327,67 @@ void kpMainWindow::zoomTo (int zoomLevel)
 
     // HACK: make sure all of Qt's update() calls trigger
     //       kpView::paintEvent() _now_ so that they can be queued by us
-    //       (until kpviewManager::restoreQueueUpdates()) to reduce flicker
+    //       (until kpViewManager::restoreQueueUpdates()) to reduce flicker
     //       caused mainly by m_scrollView->center()
     //
     // TODO: remove flicker completely
-    QTimer::singleShot (0, this, SLOT (finishZoomTo ()));
+    //QTimer::singleShot (0, this, SLOT (finishZoomTo ()));
+
+    // Later: I don't think there is an update() that needs to be queued
+    //        - let's reduce latency instead.
+    finishZoomTo ();
 }
 
 // private slot
 void kpMainWindow::finishZoomTo ()
 {
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kdDebug () << "\tkpMainWindow::finishZoomTo enter" << endl;
+#endif
+
+#if DEBUG_ZOOM_FLICKER
+{
+    kdDebug () << "FLICKER: inside finishZoomTo" << endl;
+    QTime timer; timer.start ();
+    while (timer.elapsed () < 1000)
+        ;
+}
+#endif
+
+    if (m_mainView)
+    {
+        m_mainView->setUpdatesEnabled (true);
+        m_mainView->update ();
+    }
+
+    if (m_scrollView)
+    {
+        if (m_scrollView->viewport ())
+        {
+            m_scrollView->viewport ()->setUpdatesEnabled (true);
+            m_scrollView->viewport ()->update ();
+        }
+
+        m_scrollView->setUpdatesEnabled (true);
+        m_scrollView->update ();
+    }
+
+
     if (m_viewManager && m_viewManager->queueUpdates ()/*just in case*/)
         m_viewManager->restoreQueueUpdates ();
+
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kdDebug () << "\tkpMainWindow::finishZoomTo done" << endl;
+#endif
+
+#if DEBUG_ZOOM_FLICKER
+{
+    kdDebug () << "FLICKER: finishZoomTo done" << endl;
+    QTime timer; timer.start ();
+    while (timer.elapsed () < 1000)
+        ;
+}
+#endif
 }
 
 
