@@ -593,7 +593,11 @@ void kpToolText::imComposeEvent (QIMEvent *e)
 
     // set cursor pos
     if (m_IMStartCursorRow >= 0)
-        viewManager ()->setTextCursorPosition (m_IMStartCursorRow, m_IMStartCursorCol + e->cursorPos () + e->selectionLength());
+    {
+        int row = m_IMStartCursorRow;
+        int col = m_IMStartCursorCol + e->cursorPos () /* + e->selectionLength()*/;
+        viewManager ()->setTextCursorPosition (row, col, true /* update MicroFocusHint */);
+    }
 }
 
 void kpToolText::imEndEvent (QIMEvent *e)

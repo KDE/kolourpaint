@@ -100,6 +100,7 @@ public:
     void addToQueuedArea (const QRegion &region);
     void invalidateQueuedArea ();
     void updateQueuedArea ();
+    void updateMicroFocusHint (const QRect &microFocusHint);
 
 signals:
     void sizeChanged (int width, int height);

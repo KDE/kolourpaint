@@ -320,7 +320,7 @@ int kpViewManager::textCursorCol () const
     return m_textCursorCol;
 }
 
-void kpViewManager::setTextCursorPosition (int row, int col)
+void kpViewManager::setTextCursorPosition (int row, int col, bool isUpdateMicroFocusHint)
 {
     if (row == m_textCursorRow && col == m_textCursorCol)
         return;
@@ -339,6 +339,18 @@ void kpViewManager::setTextCursorPosition (int row, int col)
 
     restoreQueueUpdates ();
     restoreFastUpdates ();
+
+    if (isUpdateMicroFocusHint)
+    {
+        if (m_viewUnderCursor)
+        {
+            QPoint topLeft = sel->pointForTextRowCol (m_textCursorRow, m_textCursorCol);
+            if (topLeft != KP_INVALID_POINT)
+            {
+                m_viewUnderCursor->updateMicroFocusHint(QRect (topLeft.x (), topLeft.y (), 1, sel->textStyle ().fontMetrics ().height ())); 
+            }
+        }
+    }
 }
 
 

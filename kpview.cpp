@@ -456,6 +456,15 @@ void kpView::updateQueuedArea ()
     invalidateQueuedArea ();
 }
 
+// public
+void kpView::updateMicroFocusHint (const QRect &microFocusHint)
+{
+    int x = microFocusHint.topLeft().x();
+    int y = microFocusHint.topLeft().y();
+    int width = microFocusHint.width();
+    int height = microFocusHint.height();
+    setMicroFocusHint (x, y, width, height);
+}
 
 // public
 QRect kpView::selectionViewRect () const
