@@ -28,6 +28,8 @@
 
 #include <kpmainwindow.h>
 
+#include <qtimer.h>
+
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -455,23 +457,51 @@ void kpMainWindow::slotCancelledDocResize ()
 // private slot
 void kpMainWindow::slotEndedDocResize (const QSize &size)
 {
-    int newWidth = (size.width () > 0 ? size.width () : 1),
-        newHeight = (size.height () > 0 ? size.height () : 1);
+    d->m_docResizeWidth = (size.width () > 0 ? size.width () : 1),
+    d->m_docResizeHeight = (size.height () > 0 ? size.height () : 1);
 
-    if (newWidth != m_document->width () ||
-        newHeight != m_document->height ())
+    // kpGrip has grabbed mouse and keyboard - wait for it to release
+    // them before potentially popping up a dialog.
+    QTimer::singleShot (0, this, SLOT (slotDocResize ()));
+}
+
+// private slot
+void kpMainWindow::slotDocResize ()
+{
+    recalculateStatusBar ();
+
+    if (d->m_docResizeWidth == m_document->width () &&
+        d->m_docResizeHeight == m_document->height ())
+    {
+        return;
+    }
+
+    if (kpTool::warnIfBigImageSize (m_document->width (),
+            m_document->height (),
+            d->m_docResizeWidth, d->m_docResizeHeight,
+            i18n ("<qt><p>Resizing the image to"
+                    " %1x%2 may take a substantial amount of memory."
+                    " This can reduce system"
+                    " responsiveness and cause other application resource"
+                    " problems.</p>"
+
+                    "<p>Are you sure want to resize the"
+                    " image?</p></qt>")
+                .arg (d->m_docResizeWidth)
+                .arg (d->m_docResizeHeight),
+            i18n ("Resize Image?"),
+            i18n ("R&esize Image"),
+            this))
     {
         m_commandHistory->addCommand (
             new kpToolResizeScaleCommand (
                 false/*doc, not sel*/,
-                newWidth, newHeight,
+                d->m_docResizeWidth, d->m_docResizeHeight,
                 kpToolResizeScaleCommand::Resize,
                 this));
 
-        saveDefaultDocSize (QSize (newWidth, newHeight));
+        saveDefaultDocSize (QSize (d->m_docResizeWidth, d->m_docResizeHeight));
     }
-
-    recalculateStatusBar ();
 }
 
 // private slot

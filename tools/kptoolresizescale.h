@@ -162,6 +162,9 @@ public:
 
     bool isNoOp () const;
 
+private slots:
+    virtual void slotOk ();
+
 private:
     kpMainWindow *m_mainWindow;
 

@@ -55,7 +55,7 @@ public:
                        int hangle, int vangle,
                        kpMainWindow *mainWindow);
     virtual ~kpToolSkewCommand ();
-    
+
     virtual QString name () const;
 
     virtual int size () const;
@@ -109,6 +109,9 @@ public:
     int verticalAngleForPixmapFX () const;
 
     virtual bool isNoOp () const;
+
+private slots:
+    virtual void slotOk ();
 
 private:
     KIntNumInput *m_horizontalSkewInput, *m_verticalSkewInput;

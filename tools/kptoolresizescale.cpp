@@ -1030,4 +1030,84 @@ bool kpToolResizeScaleDialog::isNoOp () const
 }
 
 
+// private slot virtual [base KDialogBase]
+void kpToolResizeScaleDialog::slotOk ()
+{
+    QString selOrImageLowerCase, selOrImageTitleCase;
+
+    if (actOnSelection ())
+    {
+        if (selection ()->isText ())
+        {
+            selOrImageLowerCase = i18n ("text box");
+            selOrImageTitleCase = i18n ("Text Box");
+        }
+        else
+        {
+            selOrImageLowerCase = i18n ("selection");
+            selOrImageTitleCase = i18n ("Selection");
+        }
+    }
+    else
+    {
+        selOrImageLowerCase = i18n ("image");
+        selOrImageTitleCase = i18n ("Image");
+    }
+
+
+    QString operationIngTitleCase, operationLowerCase;
+    QString continueButtonText, caption;
+
+    switch (type ())
+    {
+    default:
+    case kpToolResizeScaleCommand::Resize:
+        operationIngTitleCase = i18n ("Resizing");
+        operationLowerCase = i18n ("resize");
+        continueButtonText = i18n ("R&esize %1").arg (selOrImageTitleCase);
+        caption = i18n ("Resize %1?").arg (selOrImageTitleCase);
+        break;
+
+    case kpToolResizeScaleCommand::Scale:
+        operationIngTitleCase = i18n ("Scaling");
+        operationLowerCase = i18n ("scale");
+        continueButtonText = i18n ("Scal&e %1").arg (selOrImageTitleCase);
+        caption = i18n ("Scale %1?").arg (selOrImageTitleCase);
+        break;
+
+    case kpToolResizeScaleCommand::SmoothScale:
+        operationIngTitleCase = i18n ("Smooth scaling");
+        operationLowerCase = i18n ("smooth scale");
+        continueButtonText = i18n ("Smooth Scal&e %1").arg (selOrImageTitleCase);
+        caption = i18n ("Smooth Scale %1?").arg (selOrImageTitleCase);
+        break;
+    }
+
+
+    if (kpTool::warnIfBigImageSize (originalWidth (),
+            originalHeight (),
+            imageWidth (), imageHeight (),
+            i18n ("<qt><p>%1 the %2 to"
+                    " %3x%4 may take a substantial amount of memory."
+                    " This can reduce system"
+                    " responsiveness and cause other application resource"
+                    " problems.</p>"
+
+                    "<p>Are you sure want to %5 the"
+                    " %6?</p></qt>")
+                .arg (operationIngTitleCase)
+                .arg (selOrImageLowerCase)
+                .arg (imageWidth ())
+                .arg (imageHeight ())
+                .arg (operationLowerCase)
+                .arg (selOrImageLowerCase),
+            caption,
+            continueButtonText,
+            this))
+    {
+        KDialogBase::slotOk ();
+    }
+}
+
+
 #include <kptoolresizescale.moc>

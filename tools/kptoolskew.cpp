@@ -386,4 +386,56 @@ bool kpToolSkewDialog::isNoOp () const
     return (horizontalAngle () == 0) && (verticalAngle () == 0);
 }
 
+
+// private slot virtual [base KDialogBase]
+void kpToolSkewDialog::slotOk ()
+{
+    QString selOrImageLowerCase, selOrImageTitleCase;
+
+    if (document ()->selection ())
+    {
+        if (document ()->selection ()->isText ())
+        {
+            selOrImageLowerCase = i18n ("text box");
+            selOrImageTitleCase = i18n ("Text Box");
+        }
+        else
+        {
+            selOrImageLowerCase = i18n ("selection");
+            selOrImageTitleCase = i18n ("Selection");
+        }
+    }
+    else
+    {
+        selOrImageLowerCase = i18n ("image");
+        selOrImageTitleCase = i18n ("Image");
+    }
+
+
+    const int newWidth = newDimensions ().width ();
+    const int newHeight = newDimensions ().height ();
+
+    if (kpTool::warnIfBigImageSize (m_oldWidth,
+            m_oldHeight,
+            newWidth, newHeight,
+            i18n ("<qt><p>Skewing the %1 to"
+                    " %2x%3 may take a substantial amount of memory."
+                    " This can reduce system"
+                    " responsiveness and cause other application resource"
+                    " problems.</p>"
+
+                    "<p>Are you sure want to skew the"
+                    " %4?</p></qt>")
+                .arg (selOrImageLowerCase)
+                .arg (newWidth)
+                .arg (newHeight)
+                .arg (selOrImageLowerCase),
+            i18n ("Skew %1?").arg (selOrImageTitleCase),
+            i18n ("Sk&ew %1").arg (selOrImageTitleCase),
+            this))
+    {
+        KDialogBase::slotOk ();
+    }
+}
+
 #include <kptoolskew.moc>

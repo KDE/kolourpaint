@@ -216,6 +216,7 @@ private slots:
     void slotContinuedDocResize (const QSize &size);
     void slotCancelledDocResize ();
     void slotEndedDocResize (const QSize &size);
+    void slotDocResize ();
 
     void slotDocResizeMessageChanged (const QString &string);
 
@@ -610,6 +611,8 @@ struct kpMainWindowPrivate
                               *m_actionNextToolOptionGroup1,
                               *m_actionPrevToolOptionGroup2,
                               *m_actionNextToolOptionGroup2;
+
+    int m_docResizeWidth, m_docResizeHeight;
 };
 
 #endif  // __kp_main_window_h__

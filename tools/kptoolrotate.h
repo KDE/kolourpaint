@@ -58,11 +58,11 @@ public:
                          double angle,  // 0 <= angle < 360 (clockwise)
                          kpMainWindow *mainWindow);
     virtual ~kpToolRotateCommand ();
-    
+
     virtual QString name () const;
 
     virtual int size () const;
-    
+
     virtual void execute ();
     virtual void unexecute ();
 
@@ -108,6 +108,9 @@ private:
 private slots:
     void slotAngleCustomRadioButtonToggled (bool isChecked);
     virtual void slotUpdate ();
+
+private slots:
+    virtual void slotOk ();
 
 private:
     QRadioButton *m_antiClockwiseRadioButton,
