@@ -22,6 +22,14 @@ critical" (euphemism for "hard to fix"):
    the percentages and dimensions in sync in the Resize / Scale dialog are
    manifestations of the current QSpinBox behaviour.
 
+5. If you drag out a selection, manipulate it (e.g. move), undo and then
+   manipulate it again, another "Selection: Create" is put into the undo
+   history.
+
+6. Certain shapes may have the wrong size (usually only a pixel off and only
+   in extreme cases) e.g. an ellipse of height 1 always has a width 1 pixel
+   less than it should be.  This is a Qt bug.
+
 
 Please report all bugs to Clarence <dang@kde.org>.
 
