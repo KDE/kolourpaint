@@ -433,6 +433,7 @@ private:
 private slots:
     void slotFullScreen ();
 
+    void slotEnableSettingsShowPath ();
     void slotShowPathToggled ();
 
     void slotKeyBindings ();
