@@ -41,14 +41,15 @@
 
 <copyright>
 <year>2004</year>
+<year>2005</year>
 <holder>Thurston Dang</holder>
 </copyright>
 
 <legalnotice>
 &FDLNotice;
 </legalnotice>
-<date>2004-07-25</date>
-<releaseinfo>1.2</releaseinfo>
+<date>2005-02-02</date>
+<releaseinfo>1.4_light</releaseinfo>
 
 <abstract>
 <para>
@@ -96,6 +97,9 @@ capabilities:</para>
 <para><link linkend="working-with-color">Working with Color</link></para>
 </listitem>
 <listitem>
+<para><link linkend="view-options-chapter">View Options</link></para>
+</listitem>
+<listitem>
 <para><link linkend="image-effects-chapter">Image Effects</link></para>
 </listitem>
 </itemizedlist>
@@ -104,7 +108,7 @@ capabilities:</para>
 <chapter id="tools-chapter">
 <title>Tools</title>
 
-<sect1 id="tools-reference">
+<sect1 id="tool-reference">
 <title>Tool Reference</title>
 
 <para>
@@ -666,7 +670,9 @@ click on the center point, and drag until the square is the correct size.</para>
 <para>Use the selection tools to draw out the boundary of a
 selection.</para>
 
-<para>You can click and drag on a selection to move it.</para>
+<para>To move the selection, click and drag on it. The main view will scroll as required to allow you to move the selection to part of the image that is not currently displayed.</para>
+
+<para>You can free-form <link linkend="image-resize-scale">Smooth Scale</link> the selection or image using the handles. The &RMB; invokes a context menu with common <guimenu>Edit</guimenu> commands and <link linkend="image-effects-section">Image Effects</link>.</para>
 
 <tip>
 <para>You can use the cursor keys while drawing out the boundary of the
@@ -760,7 +766,7 @@ handles or by using the <link linkend="image-resize-scale">Resize</link> dialog.
 </para>
 
 <tip>
-<para>If you have deselected a text box you can use Undo to edit the text
+<para>If you have deselected a text box you can use <guimenuitem>Undo</guimenuitem> to edit the text
 again.</para>
 </tip>
 
@@ -899,7 +905,7 @@ on it. The <link linkend="tool-color-picker">Color Picker</link> tool allows
 you to select a color from the image.  </para>
 
 <para>Color Similarity allows you to work more effectively with dithered
-images and photos. It applies to transparent selections, as well as the
+images and photos, in a comparable manner to the <quote>Magic Wand</quote> feature of other paint programs. It applies to transparent selections, as well as the
 <link linkend="tool-flood-fill">Flood Fill</link>, <link
 linkend="tool-eraser-clr">Color Eraser</link> and <link
 linkend="image-autocrop">Autocrop / Remove Internal Border</link> tools. Double-click on the Color
@@ -907,6 +913,65 @@ Similarity Selector to choose how similar colors must be to be considered
 identical. When using selections in Transparent mode, any color in the
 selection that is similar to the background color will also be made
 transparent.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="fill_color_similarity.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+
+<para>
+The pictures show the effect of a flood fill, with Color Similarity settings of Exact, 5%, 15% and 30%.
+</para>
+
+</sect1>
+</chapter>
+
+<chapter id="view-options-chapter">
+<title>View Options</title>
+
+<sect1 id="view-options-section">
+<title>View Options</title>
+
+<sect2 id="view-zoom">
+<title>Zoom (incorporating the Grid)</title>
+<para>Increase the zoom level to edit images with more precision, or reduce it to see more of the image.</para>
+
+<important>
+<para>
+At zoom levels that aren't multiples of 100%, parts of the image may appear to move when the user interacts with it.  Other minor redraw glitches may also occur at such zoom levels.
+</para>
+</important>
+
+<para>At zoom levels of 600% or greater, you can <guimenuitem>Show Grid</guimenuitem> to more accurately edit individual pixels. The first picture shows the <link linkend="tool-text">Text</link> tool icon, while the latter shows it at 600% zoom with the grid on.</para>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="tool_text.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="text_zoom_grid.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+</sect2>
+
+<sect2 id="view-thumbnail">
+<title>Thumbnail</title>
+<para>
+Use the thumbnail to view the image as a whole.
+</para>
+
+<para>
+If <guimenuitem>Zoomed Thumbnail Mode</guimenuitem> is selected, the thumbnail will display the entire image, scaling it as needed to fit, otherwise, it will show as much of the image as possible, unzoomed. You can enable a Thumbnail Rectangle to indicate where the main view is.
+</para>
+</sect2>
 
 </sect1>
 </chapter>
@@ -950,7 +1015,7 @@ Similarity</link>.</para>
 <title>Balance</title>
 
 <para>
-This feature is accessible from the <link linkend="image-more-effects">More Effects</link> dialog..
+This feature is accessible from the <link linkend="image-more-effects">More Effects</link> dialog.
 </para>
 <para>
 <inlinemediaobject>
@@ -988,7 +1053,7 @@ icon to clear the entire image.</para>
 <title>Emboss</title>
 
 <para>
-This feature is accessible from the <link linkend="image-more-effects">More Effects</link> dialog..
+This feature is accessible from the <link linkend="image-more-effects">More Effects</link> dialog.
 </para>
 <para>
 <inlinemediaobject>
@@ -1008,7 +1073,7 @@ image or selection an &quot;engraved look&quot;.
 <title>Flatten</title>
 
 <para>
-This feature is accessible from the <link linkend="image-more-effects">More Effects</link> dialog..
+This feature is accessible from the <link linkend="image-more-effects">More Effects</link> dialog.
 </para>
 <para>
 <inlinemediaobject>
@@ -1043,7 +1108,7 @@ vertically.</para>
 <title>Invert</title>
 
 <para>
-This feature is accessible from the <link linkend="image-more-effects">More Effects</link> dialog..
+This feature is accessible from the <link linkend="image-more-effects">More Effects</link> dialog.
 </para>
 <para>
 <inlinemediaobject>
@@ -1068,7 +1133,7 @@ access the <guimenuitem>Invert Colors</guimenuitem> item in the <guimenu>Image</
 <title>Reduce Colors</title>
 
 <para>
-This feature is accessible from the <link linkend="image-more-effects">More Effects</link> dialog..
+This feature is accessible from the <link linkend="image-more-effects">More Effects</link> dialog.
 </para>
 <para>
 <inlinemediaobject>
@@ -1079,10 +1144,17 @@ This feature is accessible from the <link linkend="image-more-effects">More Effe
 </para>
 
 <para>
-This reduces the number of colors used by the image or selection, with or without dithering. Dithering
-generally provides better quality results, however, you may wish to disable it for artistic effects;
+This reduces the number of colors used by the image or selection, with or without dithering.
+</para>
+
+<para>
+Dithering generally provides better quality results, however, you may wish to disable it for artistic effects;
 <abbrev>e.g.</abbrev> using <guilabel>Monochrome</guilabel> instead of
 <guilabel>Monochrome (Dithered)</guilabel> gives a silhouette effect.
+</para>
+
+<para>
+Another important distinction is that while <guilabel>Monochrome (Dithered)</guilabel> will always reduce the entire image or selection to black and white, <guilabel>Monochrome</guilabel> will do this only if the image or selection contains more than 2 colors.
 </para>
 
 <tip>
@@ -1141,7 +1213,7 @@ width and height will be scaled by the same percentage.</para>
 
 <tip>
 <para>
-You can also resize the image or selection by dragging on the handles.
+You can also <guibutton>Smooth Scale</guibutton> the image or selection by dragging on the handles.
 </para>
 </tip>
 
@@ -1212,7 +1284,7 @@ applying this effect to a selection.</para>
 <title>Soften &amp; Sharpen</title>
 
 <para>
-This feature is accessible from the <link linkend="image-more-effects">More Effects</link> dialog..
+This feature is accessible from the <link linkend="image-more-effects">More Effects</link> dialog.
 </para>
 <para>
 <inlinemediaobject>
@@ -1293,13 +1365,11 @@ honest documentation.
 <para>
 &kolourpaint;
 </para>
-<para>Program Copyright &copy; 2003-2004 &Clarence.Dang; &Clarence.Dang.mail;</para>
+<para>Program Copyright &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
 
+<para>&kolourpaint;-specific icons except The Ghost Copyright &copy; 2004 Kristof Borrey <email>borrey@kde.org</email></para>
 
-<para>&kolourpaint;-specific icons except The Ghost Copyright &copy; 2004
-Kristof Borrey <email>borrey@kde.org</email></para>
-
-<para>Documentation and additional documentation artwork Copyright &copy; 2004
+<para>Documentation and additional documentation artwork Copyright &copy; 2004, 2005
 &Thurston.Dang; &Thurston.Dang.mail;.</para>
 
 <para>Portions reproduced with permission from <ulink
@@ -1309,7 +1379,7 @@ url="http://kolourpaint.sourceforge.net/"></ulink>.</para>
 
 <para>This program is licensed as follows:</para>
 
-<para>Copyright &copy; 2003-2004 Clarence Dang <email>dang@kde.org</email></para>
+<para>Copyright &copy; 2003, 2004, 2005 Clarence Dang <email>dang@kde.org</email></para>
 
 <literallayout>
 All rights reserved.
