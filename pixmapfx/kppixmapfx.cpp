@@ -408,6 +408,25 @@ QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty,
 }
 
 
+// public static
+QPixmap kpPixmapFX::pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
+                                                        const QColor &transparentColor)
+{
+    if (!pixmap.mask ())
+        return pixmap;
+
+    QPixmap retPixmap (pixmap.width (), pixmap.height ());
+    retPixmap.fill (transparentColor);
+
+    QPainter p (&retPixmap);
+    p.drawPixmap (QPoint (0, 0), pixmap);
+    p.end ();
+
+    retPixmap.setMask (*pixmap.mask ());
+    return retPixmap;
+}
+
+
 //
 // Get/Set Parts of Pixmap
 //

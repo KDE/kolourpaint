@@ -344,23 +344,6 @@ bool kpDocument::save ()
                    false/*no lossy prompt*/);
 }
 
-static QPixmap pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
-                                                   const QColor &transparentColor)
-{
-    if (!pixmap.mask ())
-        return pixmap;
-
-    QPixmap retPixmap (pixmap.width (), pixmap.height ());
-    retPixmap.fill (transparentColor);
-
-    QPainter p (&retPixmap);
-    p.drawPixmap (QPoint (0, 0), pixmap);
-    p.end ();
-
-    retPixmap.setMask (*pixmap.mask ());
-    return retPixmap;
-}
-
 
 // public static
 bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
@@ -445,8 +428,8 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
 
 
     QPixmap pixmapToSave =
-        pixmapWithDefinedTransparentPixels (pixmap,
-                                            Qt::white);  // CONFIG
+        kpPixmapFX::pixmapWithDefinedTransparentPixels (pixmap,
+            Qt::white);  // CONFIG
     QImage imageToSave = kpPixmapFX::convertToImage (pixmapToSave);
 
 

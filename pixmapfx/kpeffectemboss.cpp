@@ -75,14 +75,28 @@ QPixmap kpEffectEmbossCommand::apply (const QPixmap &pixmap,
                << endl;
 #endif
 
-    QImage image = kpPixmapFX::convertToImage (pixmap);
+    // (KImageEffect::emboss() ignores mask)
+    QPixmap usePixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (
+        pixmap,
+        Qt::white/*arbitrarily chosen*/);
+
+
+    QImage image = kpPixmapFX::convertToImage (usePixmap);
 
     for (int i = 0; i < repeat; i++)
     {
         image = KImageEffect::emboss (image, radius, sigma);
     }
 
-    return kpPixmapFX::convertToPixmap (image);
+    QPixmap retPixmap = kpPixmapFX::convertToPixmap (image);
+
+
+    // KImageEffect::emboss() nukes mask - restore it
+    if (usePixmap.mask ())
+        retPixmap.setMask (*usePixmap.mask ());
+
+
+    return retPixmap;
 }
 
 // protected virtual [base kpColorEffectCommand]

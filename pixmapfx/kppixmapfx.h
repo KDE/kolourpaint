@@ -32,7 +32,9 @@
 
 #include <qstring.h>
 
+
 class QBitmap;
+class QColor;
 class QImage;
 class QPointArray;
 class QPixmap;
@@ -148,6 +150,13 @@ public:
     //
     static QPixmap convertToPixmap (const QImage &image, bool pretty = false,
                                     const WarnAboutLossInfo &wali = WarnAboutLossInfo ());
+
+
+    // Sets the RGB values of the pixels where <pixmap> is transparent to
+    // <transparentColor>.  This has visually no effect on the <pixmap>
+    // unless the mask is lost.
+    static QPixmap pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
+        const QColor &transparentColor);
 
 
     //
