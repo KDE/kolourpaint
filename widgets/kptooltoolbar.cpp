@@ -108,7 +108,7 @@ void kpToolToolBar::registerTool (kpTool *tool)
     b->setToggleButton (true);
 
     b->setText (tool->text ());
-    b->setIconSet (BarIconSet (tool->name ()));
+    b->setIconSet (BarIconSet (tool->name (), 16/*force size*/));
     QToolTip::add (b, tool->text ());
     QWhatsThis::add (b, tool->description ());
 
