@@ -141,7 +141,7 @@ void kpMainWindow::initGUI ()
 
     setupTools ();
 
-    m_scrollView = new QScrollView (this);
+    m_scrollView = new QScrollView (this, "scrollView", Qt::WStaticContents | Qt::WNoAutoErase);
     setCentralWidget (m_scrollView);
 
     statusBar ()->insertItem (QString::null, StatusBarItemDocInfo, 2/*stretch*/);
