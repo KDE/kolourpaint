@@ -9,6 +9,7 @@ libkolourpaintwidgets_la_SOURCES = kpcolorsimilaritycube.cpp \
     kptoolwidgetbase.cpp kptoolwidgetbrush.cpp \
     kptoolwidgeterasersize.cpp kptoolwidgetfillstyle.cpp \
     kptoolwidgetlinewidth.cpp \
+    kptoolwidgetopaqueortransparent.cpp \
     kptoolwidgetspraycansize.cpp
 
 METASOURCES = AUTO
