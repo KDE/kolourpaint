@@ -622,6 +622,9 @@ void kpTool::cancelShapeInternal ()
         m_beganDraw = false;
         cancelShape ();
         m_viewUnderStartPoint = 0;
+
+        emit cancelledShape (viewUnderCursor () ? m_currentPoint : KP_INVALID_POINT);
+
         if (viewUnderCursor ())
             hover (m_currentPoint);
         else
@@ -990,6 +993,13 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
     #if DEBUG_KP_TOOL && 0
         kdDebug () << "\tDraw!" << endl;
     #endif
+        // If the view moved beneath the cursor, update the current point.
+        // Note: If no slot is connected to this signal, m_currentPoint
+        //       may or may not be updated but this ok since the view has
+        //       not moved and currentPoint() "always" returns the correct
+        //       currentPoint (which in this case == m_currentPoint).
+        if (/*signal*/movedAndAboutToDraw (m_currentPoint, m_lastPoint, view->zoomLevelX ()))
+            m_currentPoint = currentPoint ();
         draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
         m_lastPoint = m_currentPoint;
     }

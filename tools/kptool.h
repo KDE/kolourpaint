@@ -176,10 +176,19 @@ signals:
     // emitted after beginDraw() has been called
     void beganDraw (const QPoint &point);
 
+    // emitted just before draw() is about to be called in mouseMoveEvent()
+    // The slot should return whether the mouse pos may have changed.
+    // Used by drag scrolling.
+    bool movedAndAboutToDraw (const QPoint &currentPoint, const QPoint &lastPoint,
+                              int zoomLevel);
+
     // emitted after endDraw() has been called
     void endedDraw (const QPoint &point);
 
+    // emitted after cancelShape() has been called
+    void cancelledShape (const QPoint &point);
 
+    
 public:
     QIconSet iconSet (int forceSize = 0) const;
     kpToolAction *action ();
