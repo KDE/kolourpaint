@@ -4,8 +4,6 @@ $Id$
 Before 1.0
 ===========
 
-Makefile.am
-
 why does the toolsToolBar get arranged differently if run under valgrind???
 
 spraycan sizes
