@@ -27,6 +27,7 @@
 
 
 #include <kpmainwindow.h>
+#include <kpmainwindow_p.h>
 
 #include <qcolor.h>
 #include <qsize.h>
@@ -47,7 +48,6 @@
 #include <kpeffectinvert.h>
 #include <kpeffectreducecolors.h>
 #include <kpeffectsdialog.h>
-#include <kpmainwindow_p.h>
 #include <kpselection.h>
 #include <kptool.h>
 #include <kptoolautocrop.h>

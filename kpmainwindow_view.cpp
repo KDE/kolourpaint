@@ -28,6 +28,7 @@
 #define DEBUG_ZOOM_FLICKER 0
 
 #include <kpmainwindow.h>
+#include <kpmainwindow_p.h>
 
 #include <qdatetime.h>
 #include <qpainter.h>

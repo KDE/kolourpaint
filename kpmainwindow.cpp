@@ -27,6 +27,7 @@
 
 
 #include <kpmainwindow.h>
+#include <kpmainwindow_p.h>
 
 #include <qdragobject.h>
 #include <qpainter.h>
@@ -44,7 +45,6 @@
 #include <kpcommandhistory.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
-#include <kpmainwindow_p.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kpselectiondrag.h>
