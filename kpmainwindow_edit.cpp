@@ -210,8 +210,11 @@ void kpMainWindow::slotCopy ()
 
     if (sel.isText ())
     {
-        QApplication::clipboard ()->setData (new QTextDrag (sel.text ()),
-                                             QClipboard::Clipboard);
+        if (!sel.text ().isEmpty ())
+        {
+            QApplication::clipboard ()->setData (new QTextDrag (sel.text ()),
+                                                 QClipboard::Clipboard);
+        }
     }
     else
     {
@@ -365,6 +368,7 @@ void kpMainWindow::pasteText (const QString &text,
                << ")" << endl;
 #endif
 
+    // sync: restoreOverrideCursor() in all exit paths
     QApplication::setOverrideCursor (Qt::waitCursor);
 
     if (toolHasBegunShape ())
@@ -381,6 +385,12 @@ void kpMainWindow::pasteText (const QString &text,
             textLines [textLines.size () - 1].append (text [i]);
     }
 
+    if (textLines.size () == 1 && textLines [0].isEmpty ())
+    {
+        QApplication::restoreOverrideCursor ();
+        return;
+    }
+
 
     if (!forceNewTextSelection &&
         m_document && m_document->selection () &&
@@ -390,8 +400,6 @@ void kpMainWindow::pasteText (const QString &text,
     #if DEBUG_KP_MAIN_WINDOW && 1
         kdDebug () << "\treusing existing Text Selection" << endl;
     #endif
-        if (textLines.size () == 1 && textLines [0].isEmpty ())
-            return;
 
         kpMacroCommand *macroCmd = new kpMacroCommand (i18n ("Text: Paste"),
             this);

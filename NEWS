@@ -2,6 +2,12 @@
 KolourPaint 1.2 Series (KDE_3_3_BRANCH)
 ======================
 
+   * Empty text clipboard fixes:
+     - Don't get stuck on a wait cursor after attempting to paste empty
+       text into a text box
+     - Prevent pasting text from creating a new text box if text is empty
+     - Prevent copying of empty text box
+
 Version 1.2.1 (2004/10/02)
    * Fix selection regressions introduced in 1.2:
      - Make selection dragging with CTRL work again (copies selection onto
