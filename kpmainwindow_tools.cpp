@@ -327,11 +327,11 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
     if (previousTool)
     {
         disconnect (previousTool, SIGNAL (userMessageChanged (const QString &)),
-                   this, SLOT (slotUpdateStatusBarMessage (const QString &)));
+                   this, SLOT (recalculateStatusBarMessage ()));
         disconnect (previousTool, SIGNAL (userShapePointsChanged (const QPoint &, const QPoint &)),
-                   this, SLOT (slotUpdateStatusBarShapePoints (const QPoint &, const QPoint &)));
+                   this, SLOT (recalculateStatusBarShape ()));
         disconnect (previousTool, SIGNAL (userShapeSizeChanged (const QSize &)),
-                   this, SLOT (slotUpdateStatusBarShapeSize (const QSize &)));
+                   this, SLOT (recalculateStatusBarShape ()));
 
         disconnect (m_colorToolBar, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
                     previousTool, SLOT (slotColorsSwappedInternal (const kpColor &, const kpColor &)));
@@ -346,12 +346,12 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
     if (tool)
     {
         connect (tool, SIGNAL (userMessageChanged (const QString &)),
-                 this, SLOT (slotUpdateStatusBarMessage (const QString &)));
+                 this, SLOT (recalculateStatusBarMessage ()));
         connect (tool, SIGNAL (userShapePointsChanged (const QPoint &, const QPoint &)),
-                 this, SLOT (slotUpdateStatusBarShapePoints (const QPoint &, const QPoint &)));
+                 this, SLOT (recalculateStatusBarShape ()));
         connect (tool, SIGNAL (userShapeSizeChanged (const QSize &)),
-                 this, SLOT (slotUpdateStatusBarShapeSize (const QSize &)));
-        slotUpdateStatusBar ();
+                 this, SLOT (recalculateStatusBarShape ()));
+        recalculateStatusBar ();
 
         connect (m_colorToolBar, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
                  tool, SLOT (slotColorsSwappedInternal (const kpColor &, const kpColor &)));

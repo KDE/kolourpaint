@@ -468,7 +468,7 @@ void kpMainWindow::finishZoomTo ()
 }
 #endif
 
-    slotUpdateStatusBarZoom (m_mainView ? m_mainView->zoomLevelX () : 0);
+    setStatusBarZoom (m_mainView ? m_mainView->zoomLevelX () : 0);
 
 #if DEBUG_KP_MAIN_WINDOW && 1
     kdDebug () << "\tkpMainWindow::finishZoomTo done" << endl;

@@ -515,14 +515,18 @@ private:
     void createStatusBar ();
 
 private slots:
-    void slotUpdateStatusBarMessage (const QString &message = QString::null);
-    void slotUpdateStatusBarShapePoints (const QPoint &startPoint = KP_INVALID_POINT,
+    void setStatusBarMessage (const QString &message = QString::null);
+    void setStatusBarShapePoints (const QPoint &startPoint = KP_INVALID_POINT,
                                          const QPoint &endPoint = KP_INVALID_POINT);
-    void slotUpdateStatusBarShapeSize (const QSize &size = KP_INVALID_SIZE);
-    void slotUpdateStatusBarDocSize (const QSize &size = KP_INVALID_SIZE);
-    void slotUpdateStatusBarDocDepth (int depth = 0);
-    void slotUpdateStatusBarZoom (int zoom = 0);
-    void slotUpdateStatusBar ();
+    void setStatusBarShapeSize (const QSize &size = KP_INVALID_SIZE);
+    void setStatusBarDocSize (const QSize &size = KP_INVALID_SIZE);
+    void setStatusBarDocDepth (int depth = 0);
+    void setStatusBarZoom (int zoom = 0);
+
+    void recalculateStatusBarMessage ();
+    void recalculateStatusBarShape ();
+
+    void recalculateStatusBar ();
 
 
     /*
@@ -568,6 +572,9 @@ private:
     class kpMainWindowPrivate *d;
 };
 
+#include <qpoint.h>
+#include <qsize.h>
+
 struct kpMainWindowPrivate
 {
     KToggleFullScreenAction *m_actionFullScreen;
@@ -580,6 +587,12 @@ struct kpMainWindowPrivate
     KURL m_lastExportURL;
     QString m_lastExportMimeType;
     int m_lastToolNumber;
+
+    bool m_statusBarShapeLastPointsInitialised;
+    QPoint m_statusBarShapeLastStartPoint, m_statusBarShapeLastEndPoint;
+    bool m_statusBarShapeLastSizeInitialised;
+    QSize m_statusBarShapeLastSize;
+
     KAction *m_actionMoreEffects;
 
     bool m_toolActionsEnabled;

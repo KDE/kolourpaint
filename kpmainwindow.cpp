@@ -508,12 +508,12 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 
         // Status bar
         connect (m_document, SIGNAL (documentOpened ()),
-                 this, SLOT (slotUpdateStatusBar ()));
+                 this, SLOT (recalculateStatusBar ()));
 
         connect (m_document, SIGNAL (sizeChanged (const QSize &)),
-                 this, SLOT (slotUpdateStatusBarDocSize (const QSize &)));
+                 this, SLOT (setStatusBarDocSize (const QSize &)));
         connect (m_document, SIGNAL (colorDepthChanged (int)),
-                 this, SLOT (slotUpdateStatusBarDocDepth (int)));
+                 this, SLOT (setStatusBarDocDepth (int)));
 
         // Caption (url, modified)
         connect (m_document, SIGNAL (documentModified ()),
@@ -604,7 +604,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 #endif
 
     slotImageMenuUpdateDueToSelection ();
-    slotUpdateStatusBar ();
+    recalculateStatusBar ();
     slotUpdateCaption ();  // Untitled to start with
     slotEnableReload ();
     slotEnableSettingsShowPath ();

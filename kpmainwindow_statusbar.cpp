@@ -85,16 +85,18 @@ void kpMainWindow::createStatusBar ()
     addPermanentStatusBarItem (StatusBarItemZoom,
                                5/*1600%*/);
 
+    d->m_statusBarShapeLastPointsInitialised = false;
+    d->m_statusBarShapeLastSizeInitialised = false;
     m_statusBarCreated = true;
 }
 
 
 
 // private slot
-void kpMainWindow::slotUpdateStatusBarMessage (const QString &message)
+void kpMainWindow::setStatusBarMessage (const QString &message)
 {
 #if DEBUG_STATUS_BAR && 1
-    kdDebug () << "kpMainWindow::slotUpdateStatusBarMessage("
+    kdDebug () << "kpMainWindow::setStatusBarMessage("
                << message
                << ") ok=" << m_statusBarCreated
                << endl;
@@ -108,11 +110,11 @@ void kpMainWindow::slotUpdateStatusBarMessage (const QString &message)
 }
 
 // private slot
-void kpMainWindow::slotUpdateStatusBarShapePoints (const QPoint &startPoint,
-                                                   const QPoint &endPoint)
+void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
+                                            const QPoint &endPoint)
 {
 #if DEBUG_STATUS_BAR && 1
-    kdDebug () << "kpMainWindow::slotUpdateStatusBarShapePoints("
+    kdDebug () << "kpMainWindow::setStatusBarShapePoints("
                << startPoint << "," << endPoint
                << ") ok=" << m_statusBarCreated
                << endl;
@@ -120,6 +122,16 @@ void kpMainWindow::slotUpdateStatusBarShapePoints (const QPoint &startPoint,
 
     if (!m_statusBarCreated)
         return;
+
+    if (d->m_statusBarShapeLastPointsInitialised &&
+        startPoint == d->m_statusBarShapeLastStartPoint &&
+        endPoint == d->m_statusBarShapeLastEndPoint)
+    {
+    #if DEBUG_STATUS_BAR && 1
+        kdDebug () << "\tNOP" << endl;
+    #endif
+        return;
+    }
 
     if (startPoint == KP_INVALID_POINT)
     {
@@ -141,13 +153,17 @@ void kpMainWindow::slotUpdateStatusBarShapePoints (const QPoint &startPoint,
                                     .arg (endPoint.y ()),
                                   StatusBarItemShapePoints);
     }
+
+    d->m_statusBarShapeLastStartPoint = startPoint;
+    d->m_statusBarShapeLastEndPoint = endPoint;
+    d->m_statusBarShapeLastPointsInitialised = true;
 }
 
 // private slot
-void kpMainWindow::slotUpdateStatusBarShapeSize (const QSize &size)
+void kpMainWindow::setStatusBarShapeSize (const QSize &size)
 {
 #if DEBUG_STATUS_BAR && 1
-    kdDebug () << "kpMainWindow::slotUpdateStatusBarShapeSize("
+    kdDebug () << "kpMainWindow::setStatusBarShapeSize("
                << size
                << ") ok=" << m_statusBarCreated
                << endl;
@@ -155,6 +171,15 @@ void kpMainWindow::slotUpdateStatusBarShapeSize (const QSize &size)
 
     if (!m_statusBarCreated)
         return;
+
+    if (d->m_statusBarShapeLastSizeInitialised &&
+        size == d->m_statusBarShapeLastSize)
+    {
+    #if DEBUG_STATUS_BAR && 1
+        kdDebug () << "\tNOP" << endl;
+    #endif
+        return;
+    }
 
     if (size == KP_INVALID_SIZE)
     {
@@ -167,13 +192,16 @@ void kpMainWindow::slotUpdateStatusBarShapeSize (const QSize &size)
                                     .arg (size.height ()),
                                   StatusBarItemShapeSize);
     }
+
+    d->m_statusBarShapeLastSize = size;
+    d->m_statusBarShapeLastSizeInitialised = true;
 }
 
 // private slot
-void kpMainWindow::slotUpdateStatusBarDocSize (const QSize &size)
+void kpMainWindow::setStatusBarDocSize (const QSize &size)
 {
 #if DEBUG_STATUS_BAR && 1
-    kdDebug () << "kpMainWindow::slotUpdateStatusBarDocSize("
+    kdDebug () << "kpMainWindow::setStatusBarDocSize("
                << size
                << ") ok=" << m_statusBarCreated
                << endl;
@@ -196,10 +224,10 @@ void kpMainWindow::slotUpdateStatusBarDocSize (const QSize &size)
 }
 
 // private slot
-void kpMainWindow::slotUpdateStatusBarDocDepth (int depth)
+void kpMainWindow::setStatusBarDocDepth (int depth)
 {
 #if DEBUG_STATUS_BAR && 1
-    kdDebug () << "kpMainWindow::slotUpdateStatusBarDocDepth("
+    kdDebug () << "kpMainWindow::setStatusBarDocDepth("
                << depth
                << ") ok=" << m_statusBarCreated
                << endl;
@@ -220,10 +248,10 @@ void kpMainWindow::slotUpdateStatusBarDocDepth (int depth)
 }
 
 // private slot
-void kpMainWindow::slotUpdateStatusBarZoom (int zoom)
+void kpMainWindow::setStatusBarZoom (int zoom)
 {
 #if DEBUG_STATUS_BAR && 1
-    kdDebug () << "kpMainWindow::slotUpdateStatusBarZoom("
+    kdDebug () << "kpMainWindow::setStatusBarZoom("
                << zoom
                << ") ok=" << m_statusBarCreated
                << endl;
@@ -243,12 +271,41 @@ void kpMainWindow::slotUpdateStatusBarZoom (int zoom)
     }
 }
 
+void kpMainWindow::recalculateStatusBarMessage ()
+{
+    const kpTool *t = tool ();
+    if (t)
+    {
+        setStatusBarMessage (t->userMessage ());
+    }
+    else
+    {
+        setStatusBarMessage ();
+    }
+}
 
 // private slot
-void kpMainWindow::slotUpdateStatusBar ()
+void kpMainWindow::recalculateStatusBarShape ()
+{
+    const kpTool *t = tool ();
+    if (t)
+    {
+        setStatusBarShapePoints (t->userShapeStartPoint (),
+                                t->userShapeEndPoint ());
+        setStatusBarShapeSize (t->userShapeSize ());
+    }
+    else
+    {
+        setStatusBarShapePoints ();
+        setStatusBarShapeSize ();
+    }
+}
+
+// private slot
+void kpMainWindow::recalculateStatusBar ()
 {
 #if DEBUG_STATUS_BAR && 1
-    kdDebug () << "kpMainWindow::slotUpdateStatusBar() ok="
+    kdDebug () << "kpMainWindow::recalculateStatusBar() ok="
                << m_statusBarCreated
                << endl;
 #endif
@@ -256,38 +313,26 @@ void kpMainWindow::slotUpdateStatusBar ()
     if (!m_statusBarCreated)
         return;
 
-    const kpTool *t = tool ();
-    if (t)
-    {
-        slotUpdateStatusBarMessage (t->userMessage ());
-        slotUpdateStatusBarShapePoints (t->userShapeStartPoint (),
-                                        t->userShapeEndPoint ());
-        slotUpdateStatusBarShapeSize (t->userShapeSize ());
-    }
-    else
-    {
-        slotUpdateStatusBarMessage ();
-        slotUpdateStatusBarShapePoints ();
-        slotUpdateStatusBarShapeSize ();
-    }
+    recalculateStatusBarMessage ();
+    recalculateStatusBarShape ();
 
     if (m_document)
     {
-        slotUpdateStatusBarDocSize (QSize (m_document->width (), m_document->height ()));
-        slotUpdateStatusBarDocDepth (m_document->colorDepth ());
+        setStatusBarDocSize (QSize (m_document->width (), m_document->height ()));
+        setStatusBarDocDepth (m_document->colorDepth ());
     }
     else
     {
-        slotUpdateStatusBarDocSize ();
-        slotUpdateStatusBarDocDepth ();
+        setStatusBarDocSize ();
+        setStatusBarDocDepth ();
     }
 
     if (m_mainView)
     {
-        slotUpdateStatusBarZoom (m_mainView->zoomLevelX ());
+        setStatusBarZoom (m_mainView->zoomLevelX ());
     }
     else
     {
-        slotUpdateStatusBarZoom ();
+        setStatusBarZoom ();
     }
 }
