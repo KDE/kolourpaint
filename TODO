@@ -5,12 +5,12 @@ $Id$
 Currently Underway
 ==================
 
-tool/polygon
-tool/polyline
+make ToolToolBar have _flat_, not 3D buttons
+
+
+split up massive kpmainwindow class
 
 fix selections; implement free-form selection
-
-make ToolToolBar have _flat_, not 3D buttons
 
 
 Before 1.0
@@ -29,8 +29,6 @@ make fill style GUI clearer
 
 fix viewUnderMouseCursor() - drags apparently don't gen Enter events
 
-split up massive kpmainwindow class
-
 documentation
 
 working thumbnail view; also maybe shouldn't be a toolbar
@@ -43,8 +41,6 @@ honour background colour for Skew, Rotate
 print preview
 
 config dialogs (look into new kconfig generator)
-
-add image/x-krl mimetype to kdelibs to fix the save-as-unknown-type problem
 
 session restore
 
