@@ -57,6 +57,9 @@ critical" (euphemism for "hard to fix" :)):
 
 15. Flicker when scrolling.
 
+16. The Edit/Paste option is not disabled when the clipboard data is lost
+    due to the owner terminating (no QClipboard::dataChanged() signal).
+
 
 Please report all bugs to Clarence Dang <dang@kde.org>.
 
