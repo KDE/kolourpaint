@@ -7,6 +7,9 @@ tagged on the mainline up to (and including) the forkpoint and of course,
 its changes.
 
 
+   * When changing between colour depth and quality widgets in the save
+     filedialog, make sure "Convert to:" and "Quality:" are correctly
+     rendered (hacking around a Qt redraw glitch)
    * Update image format associations to all formats supported by KDE 3.3
    * [also in 1.2 branch] Remove unused images in doc directory
    * Fix selection regressions introduced in 1.2:
