@@ -546,44 +546,47 @@ QPixmap *kpSelection::pixmap (bool evenIfText) const
 void kpSelection::setPixmap (const QPixmap &pixmap)
 {
     delete m_pixmap;
+    // TODO: If isText(), setting pixmap() to 0 is unexpected (implies
+    //       it's a border, not a text box) but saves memory when using
+    //       that kpSelection::setPixmap (QPixmap ()) hack.
     m_pixmap = pixmap.isNull () ? 0 : new QPixmap (pixmap);
 
     QRect oldRect = boundingRect ();
     emit changed (oldRect);
 
-    const bool changedSize = (m_pixmap &&
-                              (m_pixmap->width () != oldRect.width () ||
-                               m_pixmap->height () != oldRect.height ()));
-    const bool changedFromText = (m_type == Text);
-    if (changedSize || changedFromText)
+    if (m_pixmap)
     {
-        if (changedSize)
+        const bool changedSize = (m_pixmap->width () != oldRect.width () ||
+                                  m_pixmap->height () != oldRect.height ());
+        const bool changedFromText = (m_type == Text);
+        if (changedSize || changedFromText)
         {
-            kdError () << "kpSelection::setPixmap() changes the size of the selection!"
-                       << "   old:"
-                       << " w=" << oldRect.width ()
-                       << " h=" << oldRect.height ()
-                       << "   new:"
-                       << " w=" << m_pixmap->width ()
-                       << " h=" << m_pixmap->height ()
-                       << endl;
+            if (changedSize)
+            {
+                kdError () << "kpSelection::setPixmap() changes the size of the selection!"
+                        << "   old:"
+                        << " w=" << oldRect.width ()
+                        << " h=" << oldRect.height ()
+                        << "   new:"
+                        << " w=" << m_pixmap->width ()
+                        << " h=" << m_pixmap->height ()
+                        << endl;
+            }
+
+            if (changedFromText)
+            {
+                kdError () << "kpSelection::setPixmap() changed from text" << endl;
+            }
+
+            m_type = kpSelection::Rectangle;
+            m_rect = QRect (m_rect.x (), m_rect.y (),
+                            m_pixmap->width (), m_pixmap->height ());
+            calculatePoints ();
+
+            m_textLines = QValueVector <QString> ();
+
+            emit changed (boundingRect ());
         }
-
-    #if DEBUG_KP_SELECTION && 1
-        if (changedFromText)
-        {
-            kdDebug () << "kpSelection::setPixmap() changed from text" << endl;
-        }
-    #endif
-
-        m_type = kpSelection::Rectangle;
-        m_rect = QRect (m_rect.x (), m_rect.y (),
-                        m_pixmap->width (), m_pixmap->height ());
-        calculatePoints ();
-
-        m_textLines = QValueVector <QString> ();
-
-        emit changed (boundingRect ());
     }
 
     calculateTransparencyMask ();

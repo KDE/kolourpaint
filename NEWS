@@ -2,6 +2,13 @@
 KolourPaint 1.2 Series (KDE_3_3_BRANCH)
 ======================
 
+
+
+   * Fix crash due to text box when scaling image behind it
+
+
+
+
    * Empty text clipboard fixes:
      - Don't get stuck on a wait cursor after attempting to paste empty
        text into a text box
