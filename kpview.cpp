@@ -370,6 +370,19 @@ void kpView::resize (int w, int h)
     QWidget::resize (w, h);
 }
 
+void kpView::resizeEvent (QResizeEvent *e)
+{
+    kdDebug () << "kpView(" << name() << ")::resizeEvent("
+               << e->size ()
+               << " vs actual=" << size ()
+               << ") old=" << e->oldSize () << endl;
+
+    QWidget::resizeEvent (e);
+
+    emit sizeChanged (width (), height ());
+    emit sizeChanged (size ());
+}
+
 
 void kpView::addToQueuedArea (const QRect &rect)
 {
