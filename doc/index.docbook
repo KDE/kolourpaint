@@ -48,7 +48,7 @@
 <legalnotice>
 &FDLNotice;
 </legalnotice>
-<date>2005-02-02</date>
+<date>2005-02-03</date>
 <releaseinfo>1.4_light</releaseinfo>
 
 <abstract>
@@ -672,7 +672,7 @@ selection.</para>
 
 <para>To move the selection, click and drag on it. The main view will scroll as required to allow you to move the selection to part of the image that is not currently displayed.</para>
 
-<para>You can free-form <link linkend="image-resize-scale">Smooth Scale</link> the selection or image using the handles. The &RMB; invokes a context menu with common <guimenu>Edit</guimenu> commands and <link linkend="image-effects-section">Image Effects</link>.</para>
+<para>You can free-form <link linkend="image-resize-scale">Smooth Scale</link> the selection or <link linkend="image-resize-scale">Resize</link> the image using the handles. The &RMB; invokes a context menu with common <guimenu>Edit</guimenu> commands and <link linkend="image-effects-section">Image Effects</link>.</para>
 
 <tip>
 <para>You can use the cursor keys while drawing out the boundary of the
@@ -923,7 +923,7 @@ transparent.</para>
 </para>
 
 <para>
-The pictures show the effect of a flood fill, with Color Similarity settings of Exact, 5%, 15% and 30%.
+The left picture shows the example image. The right pictures demonstrate the use of a flood fill, with Color Similarity settings of 5%, 15% and 30%. In this example, with a Color Similarity setting of <guilabel>Exact</guilabel>, a flood fill at (80, 100) would only fill one pixel, as the surrounding pixels are similar but not identical. As Color Similarity is increased, more pixels that are similar in color are considered identical, hence the fill extends further.
 </para>
 
 </sect1>
@@ -933,10 +933,15 @@ The pictures show the effect of a flood fill, with Color Similarity settings of 
 <title>View Options</title>
 
 <sect1 id="view-options-section">
-<title>View Options</title>
+<title>View Options Reference</title>
 
-<sect2 id="view-zoom">
-<title>Zoom (incorporating the Grid)</title>
+<para><link linkend="view-zoom">Zoom incorporating the Grid</link></para>
+<para><link linkend="view-thumbnail">Thumbnail</link></para>
+
+</sect1>
+
+<sect1 id="view-zoom">
+<title>Zoom incorporating the Grid</title>
 <para>Increase the zoom level to edit images with more precision, or reduce it to see more of the image.</para>
 
 <important>
@@ -945,7 +950,7 @@ At zoom levels that aren't multiples of 100%, parts of the image may appear to m
 </para>
 </important>
 
-<para>At zoom levels of 600% or greater, you can <guimenuitem>Show Grid</guimenuitem> to more accurately edit individual pixels. The first picture shows the <link linkend="tool-text">Text</link> tool icon, while the latter shows it at 600% zoom with the grid on.</para>
+<para>At zoom levels of 600% or greater that are also multiples of 100%, you can <guimenuitem>Show Grid</guimenuitem> to more accurately edit individual pixels.</para>
 
 <para>
 <inlinemediaobject>
@@ -960,20 +965,21 @@ At zoom levels that aren't multiples of 100%, parts of the image may appear to m
 </imageobject>
 </inlinemediaobject>
 </para>
-</sect2>
 
-<sect2 id="view-thumbnail">
+<para>The first picture shows the <link linkend="tool-text">Text</link> tool icon, while the latter shows it at 600% zoom with the grid on.</para>
+</sect1>
+
+<sect1 id="view-thumbnail">
 <title>Thumbnail</title>
 <para>
 Use the thumbnail to view the image as a whole.
 </para>
 
 <para>
-If <guimenuitem>Zoomed Thumbnail Mode</guimenuitem> is selected, the thumbnail will display the entire image, scaling it as needed to fit, otherwise, it will show as much of the image as possible, unzoomed. You can enable a Thumbnail Rectangle to indicate where the main view is.
+If <guimenuitem>Zoomed Thumbnail Mode</guimenuitem> is selected, the thumbnail will display the entire image, scaling it as needed to fit, otherwise, it will show as much of the image as possible, unzoomed. To see what portion of the image the main view shows, enable the Thumbnail Rectangle.
 </para>
-</sect2>
-
 </sect1>
+
 </chapter>
 
 <chapter id="image-effects-chapter">
@@ -1213,7 +1219,7 @@ width and height will be scaled by the same percentage.</para>
 
 <tip>
 <para>
-You can also <guibutton>Smooth Scale</guibutton> the image or selection by dragging on the handles.
+You can free-form <guibutton>Smooth Scale</guibutton> the selection or <guibutton>Resize</guibutton> the image using the handles.
 </para>
 </tip>
 
@@ -1426,10 +1432,7 @@ url="http://kolourpaint.sourceforge.net/">http://kolourpaint.sourceforge.net/</u
 <sect1 id="requirements">
 <title>Requirements</title>
 
-<para> &kolourpaint; 1.2 requires &kde; 3.x.</para>
-
-<para> For release and change log information, visit <ulink
-url="http://kolourpaint.sourceforge.net/"></ulink>.</para>
+<para> &kolourpaint; 1.4_light requires &kde; 3.4.</para>
 </sect1>
 
 <sect1 id="compilation">
