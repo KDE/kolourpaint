@@ -46,6 +46,14 @@ class kpMainWindow;
 //
 // TODO: This is wrong.  It won't work if the Undo action is disabled,
 //       for instance.
+//
+//       Maybe the real solution is to call KCommandHistory::addCommand()
+//       as _soon_ as the shape starts - not after it ends.  But the
+//       trouble with this solution is that if the user Undoes/cancels
+//       the shape s/he's currently drawing, it would replace a Redo
+//       slot in the history.  Arguably you shouldn't be able to Redo
+//       something you never finished drawing.
+//
 class kpCommandHistory : public KCommandHistory
 {
 public:
