@@ -695,10 +695,27 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 // private slot
 void kpMainWindow::slotScrollViewAboutToScroll ()
 {
+#if DEBUG_KP_MAIN_WINDOW && 0
+    kdDebug () << "kpMainWindow::slotScrollViewAboutToScroll()" << endl;
+    kdDebug () << "\tfastUpdates=" << viewManager ()->fastUpdates ()
+               << " queueUpdates=" << viewManager ()->queueUpdates ()
+               << endl;
+#endif
+
+    QTimer::singleShot (0, this, SLOT (slotScrollViewAfterScroll ()));
+}
+
+// private slot
+void kpMainWindow::slotScrollViewAfterScroll ()
+{
+#if DEBUG_KP_MAIN_WINDOW && 0
+    kdDebug () << "kpMainWindow::slotScrollViewAfterScroll() tool="
+               << tool () << endl;
+#endif
+
     if (tool ())
     {
-        // TODO: can tool() become 0 after the event loop?
-        QTimer::singleShot (0, tool (), SLOT (somethingBelowTheCursorChanged ()));
+        tool ()->somethingBelowTheCursorChanged ();
     }
 }
 

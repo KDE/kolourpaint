@@ -154,6 +154,7 @@ private:
 
 private slots:
     void slotScrollViewAboutToScroll ();
+    void slotScrollViewAfterScroll ();
 
 private:
     virtual void moveEvent (QMoveEvent *e);
