@@ -63,7 +63,7 @@ kpView::kpView (QWidget *parent, const char *name,
                 kpMainWindow *mainWindow,
                 int width, int height,
                 bool autoVariableZoom)
-    : QWidget (parent, name, Qt::WStaticContents | Qt::WNoAutoErase/*no flicker*/),
+    : QWidget (parent, name, Qt::WNoAutoErase/*no flicker*/),
       m_mainWindow (mainWindow),
       m_autoVariableZoom (autoVariableZoom),
       m_hzoom (100), m_vzoom (100),
@@ -368,13 +368,6 @@ void kpView::resize (int w, int h)
 #endif
 
     QWidget::resize (w, h);
-
-    // TODO: The QWidget::resizeEvent() description says that this isn't needed
-    //       but appears to be needed when resizing the view to a smaller size.
-    //
-    //       Anyway, we should update a smaller area in some cases.
-    if (viewManager ())
-        viewManager ()->updateView (this);
 }
 
 
