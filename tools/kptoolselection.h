@@ -44,7 +44,6 @@
 
 class QPoint;
 class QRect;
-class QTimer;
 
 class kpMainWindow;
 class kpSelection;
@@ -88,6 +87,9 @@ protected:
     const QCursor &cursorForPoint (const QPoint &point) const;
 public:
     virtual void hover (const QPoint &point);
+protected slots:
+    void delayedDraw ();
+public:
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint,
                        const QRect &normalizedRect);
     virtual void cancelShape ();
@@ -126,6 +128,8 @@ protected:
 
     kpToolSelectionCreateCommand *m_currentCreateTextCommand;
     bool m_cancelledShapeButStillHoldingButtons;
+
+    QTimer *m_createNOPTimer;
 };
 
 class kpToolSelectionCreateCommand : public kpNamedCommand

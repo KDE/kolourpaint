@@ -47,6 +47,7 @@
 #include <kpselection.h>
 #include <kptooltoolbar.h>
 #include <kptoolwidgetopaqueortransparent.h>
+#include <kpview.h>
 #include <kpviewmanager.h>
 
 
@@ -62,8 +63,11 @@ kpToolSelection::kpToolSelection (Mode mode,
       m_currentMoveCommand (0),
       m_currentResizeScaleCommand (0),
       m_toolWidgetOpaqueOrTransparent (0),
-      m_currentCreateTextCommand (0)
+      m_currentCreateTextCommand (0),
+      m_createNOPTimer (new QTimer (this))
 {
+    connect (m_createNOPTimer, SIGNAL (timeout ()),
+             this, SLOT (delayedDraw ()));
 }
 
 kpToolSelection::~kpToolSelection ()
@@ -204,6 +208,8 @@ void kpToolSelection::beginDraw ()
     kdDebug () << "kpToolSelection::beginDraw() CALLED" << endl;
 #endif
 
+    m_createNOPTimer->stop ();
+
     // In case the cursor was wrong to start with
     // (forgot to call kpTool::somethingBelowTheCursorChanged()),
     // make sure it is correct during this operation.
@@ -289,6 +295,8 @@ void kpToolSelection::beginDraw ()
         viewManager ()->setSelectionBorderVisible (true);
         viewManager ()->setSelectionBorderFinished (false);
         viewManager ()->setTextCursorEnabled (false);
+
+        m_createNOPTimer->start (200, true/*single shot*/);
     }
 
     if (m_dragType != SelectText)
@@ -360,19 +368,43 @@ void kpToolSelection::hover (const QPoint &point)
         setUserMessage (mess);
 }
 
-// virtual
-void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*/,
-                            const QRect &normalizedRect)
+// protected slot
+void kpToolSelection::delayedDraw ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "kpToolSelection::draw() CALLED" << endl;
+    kdDebug () << "kpToolSelection::delayedDraw() hasBegunDraw="
+               << hasBegunDraw ()
+               << " currentPoint=" << m_currentPoint
+               << " lastPoint=" << m_lastPoint
+               << " startPoint=" << m_startPoint
+               << endl;
+#endif
+
+    if (hasBegunDraw ())
+    {
+        draw (m_currentPoint, m_lastPoint,
+              QRect (m_startPoint, m_currentPoint).normalize ());
+    }
+}
+
+// virtual
+void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoint*/,
+                            const QRect &inNormalizedRect)
+{
+    QPoint thisPoint = inThisPoint;
+    QRect normalizedRect = inNormalizedRect;
+
+#if DEBUG_KP_TOOL_SELECTION && 1
+    kdDebug () << "kpToolSelection::draw" << thisPoint
+               << " startPoint=" << m_startPoint
+               << " normalizedRect=" << normalizedRect << endl;
 #endif
 
     // Dragging with the RMB would make no sense
     // TODO: RMB click brings up Image popupmenu
     if (m_mouseButton != 0/*left*/)
     {
-        setUserShapePoints (thisPoint, KP_INVALID_POINT, false/*don't set size*/);
+        setUserShapePoints (inThisPoint, KP_INVALID_POINT, false/*don't set size*/);
         setUserMessage (i18n ("Let go of all the mouse buttons."));
         return;
     }
@@ -383,17 +415,54 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
     #if DEBUG_KP_TOOL_SELECTION && 1
         kdDebug () << "\tnot moving - resizing rect to" << normalizedRect
                    << endl;
+        kdDebug () << "\t\tcreateNOPTimer->isActive()="
+                   << m_createNOPTimer->isActive ()
+                   << " viewManhattanLength from startPoint="
+                   << m_viewUnderStartPoint->zoomDocToViewX ((thisPoint - m_startPoint).manhattanLength ())
+                   << endl;
     #endif
 
-        // Prevent unintentional 1-pixel selections
-        if (!m_dragHasBegun && thisPoint == m_startPoint &&
-            // However, with a forced minimum size, a single click to create
-            // a text box is ok (as long as it wasn't an attempt to deselect).
-            !(m_mode == kpToolSelection::Text && !m_hadSelectionBeforeDrag))
+        if (m_createNOPTimer->isActive ())
         {
-            setUserShapePoints (thisPoint);
-            return;
+            if (m_viewUnderStartPoint->zoomDocToViewX ((thisPoint - m_startPoint).manhattanLength ()) <= 6)
+            {
+            #if DEBUG_KP_TOOL_SELECTION && 1
+                kdDebug () << "\t\tsuppress accidental movement" << endl;
+            #endif
+                thisPoint = m_startPoint;
+            }
+            else
+            {
+            #if DEBUG_KP_TOOL_SELECTION && 1
+                kdDebug () << "\t\tit's a \"big\" intended move - stop timer" << endl;
+            #endif
+                m_createNOPTimer->stop ();
+            }
         }
+
+
+        // Prevent unintentional 1-pixel selections
+        if (!m_dragHasBegun && thisPoint == m_startPoint)
+        {
+            if (m_mode != kpToolSelection::Text)
+            {
+                setUserShapePoints (thisPoint);
+                return;
+            }
+            else  // m_mode == kpToolSelection::Text
+            {
+                // Attempt to deselect text box by clicking?
+                if (m_hadSelectionBeforeDrag)
+                {
+                    setUserShapePoints (thisPoint);
+                    return;
+                }
+
+                // User is creating a text box using a single click
+            }
+        }
+        else
+            m_dragHasBegun = true;
 
 
         switch (m_mode)
@@ -411,71 +480,80 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
         }
         case kpToolSelection::Text:
         {
-            QRect usefulRect = normalizedRect;
-
             const kpTextStyle textStyle = mainWindow ()->textStyle ();
 
-            int minimumWidth = kpSelection::preferredMinimumWidthForTextStyle (textStyle);
-            if (thisPoint.x () >= m_startPoint.x ())
+            int minimumWidth, minimumHeight;
+
+            // Just a click?
+            if (!m_dragHasBegun && thisPoint == m_startPoint)
             {
-                if (m_startPoint.x () + minimumWidth - 1 >= document ()->width ())
+                minimumWidth = kpSelection::preferredMinimumWidthForTextStyle (textStyle);
+                if (thisPoint.x () >= m_startPoint.x ())
                 {
-                    minimumWidth = QMAX (kpSelection::minimumWidthForTextStyle (textStyle),
-                                         document ()->width () - m_startPoint.x ());
+                    if (m_startPoint.x () + minimumWidth - 1 >= document ()->width ())
+                    {
+                        minimumWidth = QMAX (kpSelection::minimumWidthForTextStyle (textStyle),
+                                             document ()->width () - m_startPoint.x ());
+                    }
+                }
+                else
+                {
+                    if (m_startPoint.x () - minimumWidth + 1 < 0)
+                    {
+                        minimumWidth = QMAX (kpSelection::minimumWidthForTextStyle (textStyle),
+                                             m_startPoint.x () + 1);
+                    }
+                }
+
+                minimumHeight = kpSelection::preferredMinimumHeightForTextStyle (textStyle);
+                if (thisPoint.y () >= m_startPoint.y ())
+                {
+                    if (m_startPoint.y () + minimumHeight - 1 >= document ()->height ())
+                    {
+                        minimumHeight = QMAX (kpSelection::minimumHeightForTextStyle (textStyle),
+                                            document ()->height () - m_startPoint.y ());
+                    }
+                }
+                else
+                {
+                    if (m_startPoint.y () - minimumHeight + 1 < 0)
+                    {
+                        minimumHeight = QMAX (kpSelection::minimumHeightForTextStyle (textStyle),
+                                            m_startPoint.y () + 1);
+                    }
                 }
             }
             else
             {
-                if (m_startPoint.x () - minimumWidth + 1 < 0)
-                {
-                    minimumWidth = QMAX (kpSelection::minimumWidthForTextStyle (textStyle),
-                                         m_startPoint.x () + 1);
-                }
+                minimumWidth = kpSelection::minimumWidthForTextStyle (textStyle);
+                minimumHeight = kpSelection::minimumHeightForTextStyle (textStyle);
             }
 
-            int minimumHeight = kpSelection::preferredMinimumHeightForTextStyle (textStyle);
-            if (thisPoint.y () >= m_startPoint.y ())
-            {
-                if (m_startPoint.y () + minimumHeight - 1 >= document ()->height ())
-                {
-                    minimumHeight = QMAX (kpSelection::minimumHeightForTextStyle (textStyle),
-                                          document ()->height () - m_startPoint.y ());
-                }
-            }
-            else
-            {
-                if (m_startPoint.y () - minimumHeight + 1 < 0)
-                {
-                    minimumHeight = QMAX (kpSelection::minimumHeightForTextStyle (textStyle),
-                                          m_startPoint.y () + 1);
-                }
-            }
 
-            if (usefulRect.width () < minimumWidth)
+            if (normalizedRect.width () < minimumWidth)
             {
                 if (thisPoint.x () >= m_startPoint.x ())
-                    usefulRect.setWidth (minimumWidth);
+                    normalizedRect.setWidth (minimumWidth);
                 else
-                    usefulRect.setX (usefulRect.right () - minimumWidth + 1);
+                    normalizedRect.setX (normalizedRect.right () - minimumWidth + 1);
             }
 
-            if (usefulRect.height () < minimumHeight)
+            if (normalizedRect.height () < minimumHeight)
             {
                 if (thisPoint.y () >= m_startPoint.y ())
-                    usefulRect.setHeight (minimumHeight);
+                    normalizedRect.setHeight (minimumHeight);
                 else
-                    usefulRect.setY (usefulRect.bottom () - minimumHeight + 1);
+                    normalizedRect.setY (normalizedRect.bottom () - minimumHeight + 1);
             }
         #if DEBUG_KP_TOOL_SELECTION && 1
             kdDebug () << "\t\tnormalizedRect=" << normalizedRect
-                       << " usedRect=" << usefulRect
                        << " kpSelection::preferredMinimumSize="
                            << QSize (minimumWidth, minimumHeight)
                        << endl;
         #endif
 
             QValueVector <QString> textLines (1, QString ());
-            kpSelection sel (usefulRect, textLines, textStyle);
+            kpSelection sel (normalizedRect, textLines, textStyle);
 
             if (!m_currentCreateTextCommand)
             {
@@ -491,14 +569,14 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
             document ()->setSelection (sel);
 
             QPoint actualEndPoint = KP_INVALID_POINT;
-            if (m_startPoint == usefulRect.topLeft ())
-                actualEndPoint = usefulRect.bottomRight ();
-            else if (m_startPoint == usefulRect.bottomRight ())
-                actualEndPoint = usefulRect.topLeft ();
-            else if (m_startPoint == usefulRect.topRight ())
-                actualEndPoint = usefulRect.bottomLeft ();
-            else if (m_startPoint == usefulRect.bottomLeft ())
-                actualEndPoint = usefulRect.topRight ();
+            if (m_startPoint == normalizedRect.topLeft ())
+                actualEndPoint = normalizedRect.bottomRight ();
+            else if (m_startPoint == normalizedRect.bottomRight ())
+                actualEndPoint = normalizedRect.topLeft ();
+            else if (m_startPoint == normalizedRect.topRight ())
+                actualEndPoint = normalizedRect.bottomLeft ();
+            else if (m_startPoint == normalizedRect.bottomLeft ())
+                actualEndPoint = normalizedRect.topRight ();
 
             setUserShapePoints (m_startPoint, actualEndPoint);
             break;
@@ -593,6 +671,8 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
             return;
         }
 
+        m_dragHasBegun = true;
+
 
         if (!sel->pixmap () && !m_currentPullFromDocumentCommand)
         {
@@ -650,6 +730,9 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
             setUserShapePoints (QPoint (sel->width (), sel->height ()));
             return;
         }
+
+        m_dragHasBegun = true;
+
 
         if (!sel->pixmap () && !m_currentPullFromDocumentCommand)
         {
@@ -710,8 +793,6 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
         setUserShapeSize (newWidth - originalSelection.width (),
                           newHeight - originalSelection.height ());
     }
-
-    m_dragHasBegun = true;
 }
 
 // virtual
@@ -720,6 +801,8 @@ void kpToolSelection::cancelShape ()
 #if DEBUG_KP_TOOL_SELECTION
     kdDebug () << "kpToolSelection::cancelShape() mouseButton=" << m_mouseButton << endl;
 #endif
+
+    m_createNOPTimer->stop ();
 
     if (m_mouseButton == 0/*left*/)
     {
@@ -818,6 +901,8 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
 {
     if (m_mouseButton != 0/*left*/)
         return;
+
+    m_createNOPTimer->stop ();
 
     if (m_currentCreateTextCommand)
     {
