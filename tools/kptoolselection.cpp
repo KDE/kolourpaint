@@ -165,6 +165,17 @@ void kpToolSelection::end ()
     }
 }
 
+// virtual
+void kpToolSelection::reselect ()
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kdDebug () << "kpToolSelection::reselect()" << endl;
+#endif
+
+    if (document ()->selection ())
+        pushOntoDocument ();
+}
+
 
 // virtual
 void kpToolSelection::beginDraw ()
@@ -521,7 +532,7 @@ void kpToolSelection::cancelShape ()
                 m_currentMoveCommand->unexecute ();
                 delete m_currentMoveCommand;
                 m_currentMoveCommand = 0;
-        
+
                 if (document ()->selection ()->isText ())
                     viewManager ()->setTextCursorBlinkState (true);
             }
@@ -652,6 +663,45 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
 
     m_dragType = Unknown;
     setUserMessage (haventBegunDrawUserMessage ());
+}
+
+
+// protected virtual [base kpTool]
+void kpToolSelection::keyPressEvent (QKeyEvent *e)
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kdDebug () << "kpToolSelection::keyPressEvent(e->text='" << e->text () << "')" << endl;
+#endif
+
+
+    e->ignore ();
+
+
+    if (document ()->selection () &&
+        !hasBegunDraw () &&
+         e->key () == Qt::Key_Escape)
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kdDebug () << "\tescape pressed with sel when not begun draw - deselecting" << endl;
+    #endif
+
+        pushOntoDocument ();
+        e->accept ();
+    }
+
+
+    if (!e->isAccepted ())
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kdDebug () << "\tkey processing did not accept (text was '"
+                   << e->text ()
+                   << "') - passing on event to kpTool"
+                   << endl;
+    #endif
+
+        kpTool::keyPressEvent (e);
+        return;
+    }
 }
 
 

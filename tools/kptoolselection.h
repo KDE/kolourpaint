@@ -26,8 +26,8 @@
 */
 
 
-#ifndef __kptoolselection_h__
-#define __kptoolselection_h__
+#ifndef __kp_tool_selection_h__
+#define __kp_tool_selection_h__
 
 
 #include <qpixmap.h>
@@ -66,6 +66,7 @@ public:
 
     virtual void begin ();
     virtual void end ();
+    virtual void reselect ();
 
     virtual bool careAboutModifierState () const { return true; }
 
@@ -76,6 +77,9 @@ public:
     virtual void cancelShape ();
     virtual void releasedAllButtons ();
     virtual void endDraw (const QPoint &thisPoint, const QRect &normalizedRect);
+
+protected:
+    virtual void keyPressEvent (QKeyEvent *e);
 
 protected:
     void selectionTransparencyChanged (const QString &name);
@@ -235,4 +239,4 @@ private:
     int m_textRow, m_textCol;
 };
 
-#endif  // __kptoolselection_h__
+#endif  // __kp_tool_selection_h__

@@ -275,7 +275,12 @@ void kpToolToolBar::slotToolSelected ()
 #endif
 
     if (tool == m_currentTool)
+    {
+        if (m_currentTool)
+            m_currentTool->reselect ();
+
         return;
+    }
 
     if (m_currentTool)
         m_currentTool->endInternal ();

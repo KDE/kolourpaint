@@ -25,8 +25,8 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef __kptool_h__
-#define __kptool_h__
+#ifndef __kp_tool_h__
+#define __kp_tool_h__
 
 #include <qobject.h>
 #include <qpoint.h>
@@ -122,6 +122,10 @@ public:
     // called when user double-left-clicks on Tool Icon (not view)
     virtual void globalDraw ();
 
+    // called when the user clicks on the Tool Icon even though it's already
+    // the current tool (used by the selection tools to deselect)
+    virtual void reselect ();
+
 signals:
     // emitted after beginDraw() has been called
     void beganDraw (const QPoint &point);
@@ -174,14 +178,14 @@ protected:
 
 protected:
     int m_ignoreColorSignals;
-    
+
 protected slots:
     void slotColorsSwappedInternal (const kpColor &newForegroundColor,
                                     const kpColor &newBackgroundColor);
     void slotForegroundColorChangedInternal (const kpColor &color);
     void slotBackgroundColorChangedInternal (const kpColor &color);
     void slotColorSimilarityChangedInternal (double similarity, int processedSimilarity);
-        
+
 protected slots:  // TODO: there is no reason why these should be slots
     virtual void slotColorsSwapped (const kpColor & /*newForegroundColor*/, const kpColor & /*newBackgroundColor*/) {}
     virtual void slotForegroundColorChanged (const kpColor & /*color*/) {}
@@ -299,4 +303,4 @@ protected:
     class kpMainWindowPrivate *d;
 };
 
-#endif  // __kptool_h__
+#endif  // __kp_tool_h__
