@@ -2,6 +2,16 @@ SUBDIRS = pics pixmapfx tools widgets
 
 bin_PROGRAMS = kolourpaint
 
+kolourpaint_COMPILE_FIRST = kolourpaintlicense.h
+
+kolourpaintlicense.h : LICENCE
+	echo "#include <klocale.h>" > kolourpaintlicense.h
+	echo "const char *kpLicenseText = I18N_NOOP (" >> kolourpaintlicense.h
+	cat LICENCE | sed -e 's/"/\\"/g' -e 's/$$/\\n"/g' -e 's/^/    "/g' >> kolourpaintlicense.h
+	echo ");  // I18N_NOOP" >> kolourpaintlicense.h
+
+CLEANFILES = kolourpaintlicense.h
+
 kolourpaint_SOURCES = kolourpaint.cpp kpdocument.cpp kpview.cpp \
     kpconfigdialog.cpp kpmainwindow.cpp kpviewmanager.cpp
 kolourpaint_LDFLAGS = $(all_libraries) $(KDE_RPATH)
