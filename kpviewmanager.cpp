@@ -56,7 +56,6 @@ kpViewManager::kpViewManager (kpMainWindow *mainWindow)
       m_selectionBorderVisible (false),
       m_selectionBorderFinished (false)
 {
-
     m_queueUpdatesCounter = m_fastUpdatesCounter =  0;
 }
 

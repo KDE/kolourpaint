@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_THUMBNAIL_VIEW 1
+#define DEBUG_KP_THUMBNAIL_VIEW 0
 
 
 #include <kpthumbnailview.h>

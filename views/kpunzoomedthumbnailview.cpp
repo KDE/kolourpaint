@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW 1
+#define DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW 0
 
 
 #include <kpunzoomedthumbnailview.h>
@@ -59,8 +59,8 @@ kpUnzoomedThumbnailView::kpUnzoomedThumbnailView (
 {
     if (buddyViewScrollView)
     {
-        connect (buddyViewScrollView, SIGNAL (contentsMoving (int, int)),
-                this, SLOT (adjustToEnvironment (int, int)));
+        connect (buddyViewScrollView, SIGNAL (contentsMovingSoon (int, int)),
+                this, SLOT (adjustToEnvironment ()));
     }
 
     // Call to virtual function - this is why the class is sealed
@@ -81,10 +81,17 @@ QString kpUnzoomedThumbnailView::caption () const
 }
 
 
-// public slot
-void kpUnzoomedThumbnailView::adjustToEnvironment (int scrollViewContentsX,
-    int scrollViewContentsY)
+// public slot virtual [base kpView]
+void kpUnzoomedThumbnailView::adjustToEnvironment ()
 {
+    if (!buddyView () || !buddyViewScrollView () || !document ())
+        return;
+
+    const int scrollViewContentsX =
+        buddyViewScrollView ()->contentsXSoon ();
+    const int scrollViewContentsY =
+        buddyViewScrollView ()->contentsYSoon ();
+
 #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
     kdDebug () << "kpUnzoomedThumbnailView(" << name ()
                << ")::adjustToEnvironment("
@@ -95,10 +102,6 @@ void kpUnzoomedThumbnailView::adjustToEnvironment (int scrollViewContentsX,
                << " height=" << height ()
                << endl;
 #endif
-
-
-    if (!buddyView () || !document ())
-        return;
 
 
 #if 1
@@ -121,7 +124,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment (int scrollViewContentsX,
     {
         // Centre X (rather than flush left to be consistent with
         //           kpZoomedThumbnailView)
-        x = -(width () - zoomedDocWidth ()) / 2;
+        x = -(width () - document ()->width ()) / 2;
     }
 
 
@@ -144,7 +147,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment (int scrollViewContentsX,
     {
         // Centre Y (rather than flush top to be consistent with
         //           kpZoomedThumbnailView)
-        y = -(height () - zoomedDocHeight ()) / 2;
+        y = -(height () - document ()->height ()) / 2;
     }
 // Prefer to keep visible area centred in thumbnail instead of flushed left.
 // Gives more editing context to the left and top.
@@ -156,9 +159,9 @@ void kpUnzoomedThumbnailView::adjustToEnvironment (int scrollViewContentsX,
 
     QRect docRect = buddyView ()->transformViewToDoc (
         QRect (buddyViewScrollView ()->contentsXSoon (),
-                buddyViewScrollView ()->contentsYSoon (),
-                QMIN (buddyView ()->width (), buddyViewScrollView ()->visibleWidth ()),
-                QMIN (buddyView ()->height (), buddyViewScrollView ()->visibleHeight ())));
+               buddyViewScrollView ()->contentsYSoon (),
+               QMIN (buddyView ()->width (), buddyViewScrollView ()->visibleWidth ()),
+               QMIN (buddyView ()->height (), buddyViewScrollView ()->visibleHeight ())));
 
     x = docRect.x () - (width () - docRect.width ()) / 2;
     kdDebug () << "\tnew suggest x=" << x << endl;
@@ -196,20 +199,10 @@ void kpUnzoomedThumbnailView::adjustToEnvironment (int scrollViewContentsX,
     }
 
     if (viewManager ())
-`   {
+    {
         viewManager ()->restoreQueueUpdates ();
         viewManager ()->restoreFastUpdates ();
     }
-}
-
-// public slot virtual [base kpView]
-void kpUnzoomedThumbnailView::adjustToEnvironment ()
-{
-    if (!buddyViewScrollView ())
-        return;
-
-    adjustToEnvironment (buddyViewScrollView ()->contentsX (),
-        buddyViewScrollView ()->contentsY ());
 }
 
 

@@ -88,24 +88,10 @@ public slots:
      * It tries to maximise the used area of this view.  Unused areas will
      * be set to the widget background thanks to the mask.
      *
-     * @param scrollViewContentsX Claimed X coordinate of
-     *                            buddyViewScrollView()'s contents.
-     * @param scrollViewContentsY Claimed Y coordinate of
-     *                            buddyViewScrollView()'s contents.
-     *
      * Call this if the size of the document changes.
-     * Already connected to buddyViewScrollView()'s contentsMoving(int,int)
-     * signal (note that the int parameters contain the scrollView's
-     * _future_ contents position (set after re-entering the event loop),
-     * _not_ what is reported by buddyViewScrollView()->[XY]() - hence the
-     * need for this overload).
+     * Already connected to buddyViewScrollView()'s
+     * contentsMovingSoon(int,int) signal.
      * Already called by @ref kpThumbnailView resizeEvent().
-     */
-    void adjustToEnvironment (int scrollViewContentsX,
-        int scrollViewContentsY);
-
-    /**
-     * Calls above overload.
      *
      * Implements @ref kpView.
      */

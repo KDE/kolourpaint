@@ -1657,13 +1657,11 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
     }
 
     if (docPixmap.mask () ||
-        (tempPixmapWillBeRendered && vm->tempPixmap ()->mayChangeDocumentMask ()) ||
-        0/*m_needBorder*/)
+        (tempPixmapWillBeRendered && vm->tempPixmap ()->mayChangeDocumentMask ()))
     {
     #if DEBUG_KP_VIEW_RENDERER && 1
         kdDebug () << "\tmask=" << (bool) docPixmap.mask ()
-//                << " needBorder=" << m_needBorder
-                << endl;
+                   << endl;
     #endif
         paintEventDrawCheckerBoard (&backBufferPainter, viewRect);
     }

@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_ZOOMED_VIEW 1
+#define DEBUG_KP_ZOOMED_VIEW 0
 
 
 #include <kpzoomedview.h>
@@ -44,6 +44,7 @@ kpZoomedView::kpZoomedView (kpDocument *document,
         kpView *buddyView,
         kpViewScrollableContainer *buddyViewScrollView,
         QWidget *parent, const char *name)
+
     : kpView (document, toolController, viewManager,
               buddyView, buddyViewScrollView,
               parent, name)
@@ -90,7 +91,8 @@ void kpZoomedView::adjustToEnvironment ()
 #endif
 
     if (document ())
-    {  // TODO: use zoomedDocWidth() & zoomedDocHeight()
+    {
+        // TODO: use zoomedDocWidth() & zoomedDocHeight()?
         resize (transformDocToViewX (document ()->width ()),
                 transformDocToViewY (document ()->height ()));
     }

@@ -252,8 +252,8 @@ public:
      *                   origin(), zoomLevelX() and zoomLevelY().
      *
      * For bounding rectangles, you should use this function instead of
-     * transformViewToDocX(), transformViewToDocY() or transformViewToDoc()
-     * which act on coordinates only.
+     * transformViewToDocX(), transformViewToDocY() or
+     * transformViewToDoc(const QPoint &) which act on coordinates only.
      */
     QRect transformViewToDoc (const QRect &viewRect) const;
 
@@ -289,8 +289,8 @@ public:
      *                 origin(), zoomLevelX() and zoomLevelY().
      *
      * For bounding rectangles, you should use this function instead of
-     * transformDocToViewX(), transformDocToViewY() or transformDocToView()
-     * which act on coordinates only.
+     * transformDocToViewX(), transformDocToViewY() or
+     * transformDocToView(const QPoint &) which act on coordinates only.
      */
     QRect transformDocToView (const QRect &docRect) const;
 
