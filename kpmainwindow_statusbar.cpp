@@ -296,11 +296,21 @@ void kpMainWindow::recalculateStatusBarMessage ()
 // private slot
 void kpMainWindow::recalculateStatusBarShape ()
 {
+#if DEBUG_STATUS_BAR && 1
+    kdDebug () << "kpMainWindow::recalculateStatusBarShape()" << endl;
+#endif
+
     QSize docResizeTo = m_scrollView->newDocSize ();
+#if DEBUG_STATUS_BAR && 1
+    kdDebug () << "\tdocResizeTo=" << docResizeTo << endl;
+#endif
     if (docResizeTo.isValid ())
     {
         const QPoint startPoint (m_document->width (), m_document->height ());
-
+    #if DEBUG_STATUS_BAR && 1
+        kdDebug () << "\thavedMovedFromOrgSize="
+                   << m_scrollView->haveMovedFromOriginalDocSize () << endl;
+    #endif
         if (!m_scrollView->haveMovedFromOriginalDocSize ())
         {
             setStatusBarShapePoints (startPoint);
@@ -319,10 +329,13 @@ void kpMainWindow::recalculateStatusBarShape ()
     else
     {
         const kpTool *t = tool ();
+    #if DEBUG_STATUS_BAR && 1
+        kdDebug () << "\ttool=" << t << endl;
+    #endif
         if (t)
         {
             setStatusBarShapePoints (t->userShapeStartPoint (),
-                                    t->userShapeEndPoint ());
+                                     t->userShapeEndPoint ());
             setStatusBarShapeSize (t->userShapeSize ());
         }
         else
