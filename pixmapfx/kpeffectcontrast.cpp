@@ -79,7 +79,7 @@ kpEffectContrastWidget::kpEffectContrastWidget (bool actOnSelection,
 
     QLabel *label = new QLabel (i18n ("Co&ntrast:"), this);
     m_contrastValueInput = new KIntNumInput (0/*value*/, this);
-    m_contrastValueInput->setRange (-255, 255, 10/*step*/, true/*slider*/);
+    m_contrastValueInput->setRange (-255, 255, 1/*step*/, true/*slider*/);
 
 
     label->setBuddy (m_contrastValueInput);
@@ -91,6 +91,8 @@ kpEffectContrastWidget::kpEffectContrastWidget (bool actOnSelection,
 
     lay->addWidget (label, 0, 0);
     lay->addWidget (m_contrastValueInput, 0, 1);
+
+    lay->setColStretch (1, 1);
 }
 
 kpEffectContrastWidget::~kpEffectContrastWidget ()
