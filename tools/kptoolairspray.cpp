@@ -48,6 +48,7 @@
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
+#include <kppixmapfx.h>
 #include <kptoolairspray.h>
 #include <kptooltoolbar.h>
 #include <kptoolwidgetspraycansize.h>
@@ -291,7 +292,7 @@ void kpToolAirSprayCommand::addPoints (const QPointArray &points)
     
     if (pixmap.mask () || kpTool::isColorTransparent (m_color))
     {
-        mask = *pixmap.mask ();
+        mask = kpPixmapFX::getNonNullMask (pixmap);
         maskPainter.begin (&mask);
         maskPainter.setPen (kpTool::isColorTransparent (m_color) ? Qt::color0 : Qt::color1);
     }
