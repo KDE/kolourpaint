@@ -199,6 +199,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     #endif
         if (!m_enterCommand)
         {
+            // TODO: why not endShapeInternal(); ditto for everywhere else in this file?
             if (hasBegunShape ())
                 endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
 
