@@ -946,7 +946,7 @@ kpSelection *kpDocument::selection () const
 // public
 void kpDocument::setSelection (const kpSelection &selection)
 {
-#if DEBUG_KP_DOCUMENT
+#if DEBUG_KP_DOCUMENT && 0
     kdDebug () << "kpDocument::setSelection() sel boundingRect="
                << selection.boundingRect ()
                << endl;
