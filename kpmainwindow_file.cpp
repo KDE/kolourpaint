@@ -76,6 +76,8 @@ void kpMainWindow::setupFileMenuActions ()
     m_actionPrint = KStdAction::print (this, SLOT (slotPrint ()), ac);
     m_actionPrintPreview = KStdAction::printPreview (this, SLOT (slotPrintPreview ()), ac);
 
+    m_actionMail = KStdAction::mail (this, SLOT (slotMail ()), ac);
+
     m_actionSetAsWallpaperCentered = new KAction (i18n ("Set As Wa&llpaper (Centered)"), 0,
         this, SLOT (slotSetAsWallpaperCentered ()), ac, "file_set_as_wallpaper_centered");
     m_actionSetAsWallpaperTiled = new KAction (i18n ("Set As &Wallpaper (Tiled)"), 0,
@@ -101,6 +103,8 @@ void kpMainWindow::enableFileMenuDocumentActions (bool enable)
 
     m_actionPrint->setEnabled (enable);
     m_actionPrintPreview->setEnabled (enable);
+
+    m_actionMail->setEnabled (enable);
 
     m_actionSetAsWallpaperCentered->setEnabled (enable);
     m_actionSetAsWallpaperTiled->setEnabled (enable);
@@ -394,7 +398,7 @@ void kpMainWindow::slotPrint ()
     sendPixmapToPrinter (&printer);
 }
 
-// private slots
+// private slot
 void kpMainWindow::slotPrintPreview ()
 {
     if (toolHasBegunShape ())
@@ -408,6 +412,44 @@ void kpMainWindow::slotPrintPreview ()
     sendFilenameToPrinter (&printer);
     
     sendPixmapToPrinter (&printer);
+}
+
+
+// private slot
+void kpMainWindow::slotMail ()
+{
+    if (m_document->url ().isEmpty () ||  // no name
+        m_document->isModified ())        // hasn't been saved
+    {
+        int result = KMessageBox::questionYesNo (this,
+                        i18n ("You must save this image before sending it.\n"
+                              "Do you want to save it?"),
+                        QString::null,
+                        KStdGuiItem::save (), KStdGuiItem::cancel ());
+
+        if (result == KMessageBox::Yes)
+        {
+            if (!save ())
+            {
+                // save failed or aborted - don't email
+                return;
+            }
+        }
+        else
+        {
+            // don't want to save - don't email
+            return;
+        }
+    }
+
+    kapp->invokeMailer (
+        QString::null/*to*/,
+        QString::null/*cc*/,
+        QString::null/*bcc*/,
+        m_document->prettyFilename()/*subject*/,
+        QString::null/*body*/,
+        QString::null/*messageFile*/,
+        QStringList (m_document->url ().url ())/*attachments*/);
 }
 
 

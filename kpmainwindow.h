@@ -192,6 +192,7 @@ private:
     KRecentFilesAction *m_actionOpenRecent;
     KAction *m_actionSave, *m_actionSaveAs, *m_actionReload,
             *m_actionPrint, *m_actionPrintPreview,
+            *m_actionMail,
             *m_actionSetAsWallpaperTiled, *m_actionSetAsWallpaperCentered,
             *m_actionClose, *m_actionQuit;
 
@@ -225,6 +226,8 @@ private slots:
     void slotPrint ();
     void slotPrintPreview ();
     
+    void slotMail ();
+
 private:
     void setAsWallpaper (bool centered);
 private slots:
