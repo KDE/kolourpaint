@@ -1069,53 +1069,127 @@ bool kpToolResizeScaleDialog::isNoOp () const
 // private slot virtual [base KDialogBase]
 void kpToolResizeScaleDialog::slotOk ()
 {
-    QString selOrImageLowerCase, selOrImageTitleCase;
+    enum { eText, eSelection, eImage } actionTarget = eText;
 
     if (actOnSelection ())
     {
         if (selection ()->isText ())
         {
-            selOrImageLowerCase = i18n ("text box");
-            selOrImageTitleCase = i18n ("Text Box");
+            actionTarget = eText;
         }
         else
         {
-            selOrImageLowerCase = i18n ("selection");
-            selOrImageTitleCase = i18n ("Selection");
+            actionTarget = eSelection;
         }
     }
     else
     {
-        selOrImageLowerCase = i18n ("image");
-        selOrImageTitleCase = i18n ("Image");
+        actionTarget = eImage;
     }
 
 
-    QString operationIngTitleCase, operationLowerCase;
-    QString continueButtonText, caption;
+    QString message, caption, continueButtonText;
+
+    // Note: If eText, can't Scale nor SmoothScale.
+    //       If eSelection, can't Resize.
 
     switch (type ())
     {
     default:
     case kpToolResizeScaleCommand::Resize:
-        operationIngTitleCase = i18n ("Resizing");
-        operationLowerCase = i18n ("resize");
-        continueButtonText = i18n ("R&esize %1").arg (selOrImageTitleCase);
-        caption = i18n ("Resize %1?").arg (selOrImageTitleCase);
+        if (actionTarget == eText)
+        {
+            message =
+                i18n ("<qt><p>Resizing the text box to %1x%2"
+                      " may take a substantial amount of memory."
+                      " This can reduce system"
+                      " responsiveness and cause other application resource"
+                      " problems.</p>"
+
+                      "<p>Are you sure you want to resize the text box?</p></qt>");
+
+            caption = i18n ("Resize Text Box?");
+            continueButtonText = i18n ("R&esize Text Box");
+        }
+        else if (actionTarget == eImage)
+        {
+            message =
+                i18n ("<qt><p>Resizing the image to %1x%2"
+                      " may take a substantial amount of memory."
+                      " This can reduce system"
+                      " responsiveness and cause other application resource"
+                      " problems.</p>"
+
+                      "<p>Are you sure you want to resize the image?</p></qt>");
+
+            caption = i18n ("Resize Image?");
+            continueButtonText = i18n ("R&esize Image");
+        }
+
         break;
 
     case kpToolResizeScaleCommand::Scale:
-        operationIngTitleCase = i18n ("Scaling");
-        operationLowerCase = i18n ("scale");
-        continueButtonText = i18n ("Scal&e %1").arg (selOrImageTitleCase);
-        caption = i18n ("Scale %1?").arg (selOrImageTitleCase);
+        if (actionTarget == eImage)
+        {
+            message =
+                i18n ("<qt><p>Scaling the image to %1x%2"
+                      " may take a substantial amount of memory."
+                      " This can reduce system"
+                      " responsiveness and cause other application resource"
+                      " problems.</p>"
+
+                      "<p>Are you sure you want to scale the image?</p></qt>");
+
+            caption = i18n ("Scale Image?");
+            continueButtonText = i18n ("Scal&e Image");
+        }
+        else if (actionTarget == eSelection)
+        {
+            message =
+                i18n ("<qt><p>Scaling the selection to %1x%2"
+                      " may take a substantial amount of memory."
+                      " This can reduce system"
+                      " responsiveness and cause other application resource"
+                      " problems.</p>"
+
+                      "<p>Are you sure you want to scale the selection?</p></qt>");
+
+            caption = i18n ("Scale Selection?");
+            continueButtonText = i18n ("Scal&e Selection");
+        }
+
         break;
 
     case kpToolResizeScaleCommand::SmoothScale:
-        operationIngTitleCase = i18n ("Smooth Scaling");
-        operationLowerCase = i18n ("smooth scale");
-        continueButtonText = i18n ("Smooth Scal&e %1").arg (selOrImageTitleCase);
-        caption = i18n ("Smooth Scale %1?").arg (selOrImageTitleCase);
+        if (actionTarget == eImage)
+        {
+            message =
+                i18n ("<qt><p>Smooth Scaling the image to %1x%2"
+                      " may take a substantial amount of memory."
+                      " This can reduce system"
+                      " responsiveness and cause other application resource"
+                      " problems.</p>"
+
+                      "<p>Are you sure you want to smooth scale the image?</p></qt>");
+
+            caption = i18n ("Smooth Scale Image?");
+            continueButtonText = i18n ("Smooth Scal&e Image");
+        }
+        else if (actionTarget == eSelection)
+        {
+            message =
+                i18n ("<qt><p>Smooth Scaling the selection to %1x%2"
+                      " may take a substantial amount of memory."
+                      " This can reduce system"
+                      " responsiveness and cause other application resource"
+                      " problems.</p>"
+
+                      "<p>Are you sure you want to smooth scale the selection?</p></qt>");
+
+            caption = i18n ("Smooth Scale Selection?");
+            continueButtonText = i18n ("Smooth Scal&e Selection");
+        }
+
         break;
     }
 
@@ -1123,20 +1197,7 @@ void kpToolResizeScaleDialog::slotOk ()
     if (kpTool::warnIfBigImageSize (originalWidth (),
             originalHeight (),
             imageWidth (), imageHeight (),
-            i18n ("<qt><p>%1 the %2 to"
-                    " %3x%4 may take a substantial amount of memory."
-                    " This can reduce system"
-                    " responsiveness and cause other application resource"
-                    " problems.</p>"
-
-                    "<p>Are you sure want to %5 the"
-                    " %6?</p></qt>")
-                .arg (operationIngTitleCase)
-                .arg (selOrImageLowerCase)
-                .arg (imageWidth ())
-                .arg (imageHeight ())
-                .arg (operationLowerCase)
-                .arg (selOrImageLowerCase),
+            message.arg (imageWidth ()).arg (imageHeight ()),
             caption,
             continueButtonText,
             this))

@@ -379,25 +379,38 @@ bool kpToolSkewDialog::isNoOp () const
 // private slot virtual [base KDialogBase]
 void kpToolSkewDialog::slotOk ()
 {
-    QString selOrImageLowerCase, selOrImageTitleCase;
+    QString message, caption, continueButtonText;
 
     if (document ()->selection ())
     {
-        if (document ()->selection ()->isText ())
+        if (!document ()->selection ()->isText ())
         {
-            selOrImageLowerCase = i18n ("text box");
-            selOrImageTitleCase = i18n ("Text Box");
-        }
-        else
-        {
-            selOrImageLowerCase = i18n ("selection");
-            selOrImageTitleCase = i18n ("Selection");
+            message =
+                i18n ("<qt><p>Skewing the selection to %1x%2"
+                      " may take a substantial amount of memory."
+                      " This can reduce system"
+                      " responsiveness and cause other application resource"
+                      " problems.</p>"
+
+                      "<p>Are you sure want to skew the selection?</p></qt>");
+
+            caption = i18n ("Skew Selection?");
+            continueButtonText = i18n ("Sk&ew Selection");
         }
     }
     else
     {
-        selOrImageLowerCase = i18n ("image");
-        selOrImageTitleCase = i18n ("Image");
+        message =
+            i18n ("<qt><p>Skewing the image to %1x%2"
+                  " may take a substantial amount of memory."
+                  " This can reduce system"
+                  " responsiveness and cause other application resource"
+                  " problems.</p>"
+
+                  "<p>Are you sure want to skew the image?</p></qt>");
+
+        caption = i18n ("Skew Image?");
+        continueButtonText = i18n ("Sk&ew Image");
     }
 
 
@@ -407,20 +420,9 @@ void kpToolSkewDialog::slotOk ()
     if (kpTool::warnIfBigImageSize (m_oldWidth,
             m_oldHeight,
             newWidth, newHeight,
-            i18n ("<qt><p>Skewing the %1 to"
-                    " %2x%3 may take a substantial amount of memory."
-                    " This can reduce system"
-                    " responsiveness and cause other application resource"
-                    " problems.</p>"
-
-                    "<p>Are you sure want to skew the"
-                    " %4?</p></qt>")
-                .arg (selOrImageLowerCase)
-                .arg (newWidth)
-                .arg (newHeight)
-                .arg (selOrImageLowerCase),
-            i18n ("Skew %1?").arg (selOrImageTitleCase),
-            i18n ("Sk&ew %1").arg (selOrImageTitleCase),
+            message.arg (newWidth).arg (newHeight),
+            caption,
+            continueButtonText,
             this))
     {
         KDialogBase::slotOk ();

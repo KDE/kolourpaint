@@ -435,25 +435,38 @@ void kpToolRotateDialog::slotUpdate ()
 // private slot virtual [base KDialogBase]
 void kpToolRotateDialog::slotOk ()
 {
-    QString selOrImageLowerCase, selOrImageTitleCase;
+    QString message, caption, continueButtonText;
 
     if (document ()->selection ())
     {
-        if (document ()->selection ()->isText ())
+        if (!document ()->selection ()->isText ())
         {
-            selOrImageLowerCase = i18n ("text box");
-            selOrImageTitleCase = i18n ("Text Box");
-        }
-        else
-        {
-            selOrImageLowerCase = i18n ("selection");
-            selOrImageTitleCase = i18n ("Selection");
+            message =
+                i18n ("<qt><p>Rotating the selection to %1x%2"
+                      " may take a substantial amount of memory."
+                      " This can reduce system"
+                      " responsiveness and cause other application resource"
+                      " problems.</p>"
+
+                      "<p>Are you sure want to rotate the selection?</p></qt>");
+
+            caption = i18n ("Rotate Selection?");
+            continueButtonText = i18n ("Rotat&e Selection");
         }
     }
     else
     {
-        selOrImageLowerCase = i18n ("image");
-        selOrImageTitleCase = i18n ("Image");
+        message =
+            i18n ("<qt><p>Rotating the image to %1x%2"
+                  " may take a substantial amount of memory."
+                  " This can reduce system"
+                  " responsiveness and cause other application resource"
+                  " problems.</p>"
+
+                  "<p>Are you sure want to rotate the image?</p></qt>");
+
+        caption = i18n ("Rotate Image?");
+        continueButtonText = i18n ("Rotat&e Image");
     }
 
 
@@ -463,25 +476,13 @@ void kpToolRotateDialog::slotOk ()
     if (kpTool::warnIfBigImageSize (m_oldWidth,
             m_oldHeight,
             newWidth, newHeight,
-            i18n ("<qt><p>Rotating the %1 to"
-                    " %2x%3 may take a substantial amount of memory."
-                    " This can reduce system"
-                    " responsiveness and cause other application resource"
-                    " problems.</p>"
-
-                    "<p>Are you sure want to rotate the"
-                    " %4?</p></qt>")
-                .arg (selOrImageLowerCase)
-                .arg (newWidth)
-                .arg (newHeight)
-                .arg (selOrImageLowerCase),
-            i18n ("Rotate %1?").arg (selOrImageTitleCase),
-            i18n ("Rotat&e %1").arg (selOrImageTitleCase),
+            message.arg (newWidth).arg (newHeight),
+            caption,
+            continueButtonText,
             this))
     {
         KDialogBase::slotOk ();
     }
 }
-
 
 #include <kptoolrotate.moc>
