@@ -51,9 +51,9 @@
 #include <kptool.h>
 
 
-/*
- * QPixmap/QImage Conversion Functions
- */
+//
+// QPixmap/QImage Conversion Functions
+//
 
 // public static
 QImage kpPixmapFX::convertToImage (const QPixmap &pixmap)
@@ -274,9 +274,9 @@ QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty,
 }
 
 
-/*
- * Get/Set Parts of Pixmap
- */
+//
+// Get/Set Parts of Pixmap
+//
 
 
 // public static
@@ -530,9 +530,9 @@ kpColor kpPixmapFX::getColorAtPixel (const QImage &img, int x, int y)
 }
 
 
-/*
- * Mask Operations
- */
+//
+// Mask Operations
+//
 
 
 // public static
@@ -728,9 +728,9 @@ void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, int destX, int destY,
 }
 
 
-/*
- * Effects
- */
+//
+// Effects
+//
 
 // public static
 void kpPixmapFX::invertColors (QPixmap *destPixmapPtr)
@@ -1261,6 +1261,7 @@ QWMatrix kpPixmapFX::skewMatrix (int width, int height, double hangle, double va
      * Skewing really just twists a rectangle into a parallelogram.
      *
      */
+
     //QWMatrix matrix (1, tan (KP_DEGREES_TO_RADIANS (vangle)), tan (KP_DEGREES_TO_RADIANS (hangle)), 1, 0, 0);
     // I think this is clearer than above :)
     QWMatrix matrix;
