@@ -53,6 +53,8 @@ critical" (euphemism for "hard to fix" :)):
     colour and then set the foreground colour to transparent after you've
     finished typing to avoid this issue.
 
+14. The text cursor may be momentarily misrendered when scrolling the view.
+
 
 Please report all bugs to Clarence Dang <dang@kde.org>.
 

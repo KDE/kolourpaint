@@ -5,7 +5,17 @@ Before each release of KolourPaint and/or KDE, grep sources for
 Look in BUGS, patches/, grep sources for "OPT" & "TODO" and look here:
 
 
-add credits
+1.0 Branch
+==========
+
+
+These issues are not release critical:
+
+kpViewManager::setTextCursorBlinkState() needs to restart timer
+kpToolText: cursor doesn't immediately appear after creating or moving
+            a text box
+
+When scrolling, text cursor is not fully repainted until next blink (Bug #14)
 
 
 Feature Plan for 1.1
