@@ -126,7 +126,7 @@ void kpMainWindow::slotHelpTakingScreenshots ()
         (
             "<p>"
             "To acquire a screenshot, press <b>%1</b>."
-            " The screenshot will be placed into the clipboard"
+            "  The screenshot will be placed into the clipboard"
             " and you will be able to paste it in KolourPaint."
             "</p>"
 
@@ -136,7 +136,7 @@ void kpMainWindow::slotHelpTakingScreenshots ()
             " module <a href=\"configure kde shortcuts\">Keyboard Shortcuts</a>."
             "</p>"
 
-            "<p>Alternatively, you may use the application"
+            "<p>Alternatively, you may try the application"
             " <a href=\"run ksnapshot\">KSnapshot</a>."
             "</p>"
         );
@@ -146,11 +146,21 @@ void kpMainWindow::slotHelpTakingScreenshots ()
         message = i18n
         (
             "<p>"
-            "KDE supports acquiring screenshots with the <b>%1</b> shortcut."
-            "  However, you do not appear to be running KDE."
+            "You do not appear to be running KDE."
             "</p>"
 
-            "<p>You may, instead, use the application"
+            // We tell them this much even though they aren't running KDE
+            // to entice them to use KDE since it's so easy.
+            "<p>"
+            "Once you have loaded KDE:<br>"
+            "<blockquote>"
+            "To acquire a screenshot, press <b>%1</b>."
+            "  The screenshot will be placed into the clipboard"
+            " and you will be able to paste it in KolourPaint."
+            "</blockquote>"
+            "</p>"
+
+            "<p>Alternatively, you may try the application"
             " <a href=\"run ksnapshot\">KSnapshot</a>."
             "</p>"
         );
