@@ -80,8 +80,19 @@ kpThumbnail::kpThumbnail (kpMainWindow *parent, const char *name)
     }
 
 
-    // TODO: actually work
-    setMinimumSize (100, 100);
+    QSize layoutMinimumSize = layout () ? layout ()->minimumSize () : QSize ();
+#if DEBUG_KP_THUMBNAIL
+    kdDebug () << "\tlayout=" << layout ()
+               << " minSize=" << (layout () ? layout ()->minimumSize () : QSize ()) << endl;
+    kdDebug () << "\tboxLayout=" << boxLayout ()
+               << " minSize=" << (boxLayout () ? boxLayout ()->minimumSize () : QSize ())
+               << endl;
+#endif
+    if (layout ())
+        layout ()->setResizeMode (QLayout::FreeResize);
+    setMinimumSize (QMAX (layoutMinimumSize.width (), 64),
+                    QMAX (layoutMinimumSize.height (), 64));
+
 
     // Enable "X" Close Button
     setCloseMode (QDockWindow::Always);
