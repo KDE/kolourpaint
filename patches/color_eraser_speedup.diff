@@ -1,3 +1,5 @@
+[probably no longer applies without modification]
+
 Attempts to improve the performance of the Color Eraser & Eraser
 by drawing only _unique_ rectangles across interpolation lines
 and by not drawing pixmaps when the user has a solid rectangular
