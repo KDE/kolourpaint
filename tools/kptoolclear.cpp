@@ -94,6 +94,9 @@ void kpToolClearCommand::execute ()
 
         QPixmap newPixmap (sel->width (), sel->height ());
         kpPixmapFX::fill (&newPixmap, m_newColor);
+        // TODO: maybe disable Image/Clear if transparent colour
+        if (m_newColor.isOpaque ())
+            newPixmap.setMask (doc->selectionGetMask ());
 
         sel->setPixmap (newPixmap);
     }
