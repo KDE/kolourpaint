@@ -36,6 +36,7 @@
 #include <klocale.h>
 
 #include <kpcolortoolbar.h>
+#include <kpcommandhistory.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
