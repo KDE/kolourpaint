@@ -10,7 +10,7 @@ its changes.
 KolourPaint 1.4_light Series (KDE_3_4_BRANCH)
 ============================
 
-KolourPaint 1.4_light (Frozen 2005-02-03)
+KolourPaint 1.4_light (Frozen 2005-02-08)
    * Antialias text when the text box has a transparent background
    * Add Unzoomed Thumbnail Mode and Thumbnail Rectangle
    * Add RMB context menu for when a selection tool is active (closing KDE
@@ -84,9 +84,6 @@ This is strictly a KDE 3.0 backport fork of KDE_3_3_BRANCH i.e.
 the changes required for backporting and nothing else.  However,
 non-backporting changes can be applied as long as they are applied to
 KDE_3_3_BRANCH first.
-
-   * Guarantee the display of the current tool's options widget on startup
-     under Qt 3.0 [kolourpaint-1.2.2_kde3-qt3.0_tool_options.diff]
 
 Version 1.2.2_kde3 (Frozen 2004-11-29)
    * Try to work around Qt 3.0.x integer scaling bug (incorrect extra row
