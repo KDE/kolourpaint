@@ -922,13 +922,16 @@ bool kpDocument::selectionPullFromDocument (const kpColor &backgroundColor)
     // Fill opaque bits of the hole in the document
     //
 
+    // TODO: this assumes backgroundColor == sel->transparency ().transparentColor()
+    const QPixmap selTransparentPixmap = sel->transparentPixmap ();
+
     if (backgroundColor.isOpaque ())
     {
         QPixmap erasePixmap (boundingRect.width (), boundingRect.height ());
         erasePixmap.fill (backgroundColor.toQColor ());
 
-        if (selPixmap.mask ())
-            erasePixmap.setMask (*selPixmap.mask ());
+        if (selTransparentPixmap.mask ())
+            erasePixmap.setMask (*selTransparentPixmap.mask ());
 
         paintPixmapAt (erasePixmap, boundingRect.topLeft ());
     }
@@ -936,7 +939,7 @@ bool kpDocument::selectionPullFromDocument (const kpColor &backgroundColor)
     {
         kpPixmapFX::paintMaskTransparentWithBrush (m_pixmap,
                                                    boundingRect.topLeft (),
-                                                   kpPixmapFX::getNonNullMask (selPixmap));
+                                                   kpPixmapFX::getNonNullMask (selTransparentPixmap));
         slotContentsChanged (boundingRect);
     }
 
