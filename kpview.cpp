@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_VIEW 0
+#define DEBUG_KP_VIEW 1
 
 #include <math.h>
 
@@ -73,7 +73,6 @@ kpView::kpView (QWidget *parent, const char *name,
     if (autoVariableZoom)
     {
         updateVariableZoom (width, height);
-        setMinimumSize (width, height);
     }
     resize (width, height);
 
@@ -155,8 +154,8 @@ bool kpView::updateVariableZoom (int viewWidth, int viewHeight)
                << endl;
 #endif
 
-    m_hzoom = viewWidth * 100 / doc->width ();
-    m_vzoom = viewHeight * 100 / doc->height ();
+    m_hzoom = QMAX (1, viewWidth * 100 / doc->width ());
+    m_vzoom = QMAX (1, viewHeight * 100 / doc->height ());
 
     // keep aspect ratio
     if (m_hzoom < m_vzoom)
@@ -278,7 +277,12 @@ QPoint kpView::zoomViewToDoc (const QPoint &zoomedCoord) const
 QRect kpView::zoomViewToDoc (const QRect &zoomedRect) const
 {
     if (m_hzoom == 100 && m_vzoom == 100)
-        return zoomedRect;
+    {
+        return QRect (zoomedRect.x () - m_origin.x (),
+                      zoomedRect.y () - m_origin.y (),
+                      zoomedRect.width (),
+                      zoomedRect.height ());
+    }
     else
     {
         QPoint topLeft = zoomViewToDoc (zoomedRect.topLeft ());
@@ -315,7 +319,12 @@ QPoint kpView::zoomDocToView (const QPoint &doc_coord) const
 QRect kpView::zoomDocToView (const QRect &doc_rect) const
 {
     if (m_hzoom == 100 && m_vzoom == 100)
-        return doc_rect;
+    {
+        return QRect (doc_rect.x () + m_origin.x (),
+                      doc_rect.y () + m_origin.y (),
+                      doc_rect.width (),
+                      doc_rect.height ());
+    }
     else
     {
         QPoint topLeft = zoomDocToView (doc_rect.topLeft ());
@@ -332,6 +341,12 @@ QRect kpView::zoomDocToView (const QRect &doc_rect) const
 // virtual
 void kpView::resize (int w, int h)
 {
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name ()
+               << ")::resize(" << w << "," << h << ")"
+               << endl;
+#endif
+    
     QWidget::resize (w, h);
 
     // TODO: The QWidget::resizeEvent() description says that this isn't needed
@@ -339,7 +354,7 @@ void kpView::resize (int w, int h)
     //
     //       Anyway, we should update a smaller area in some cases.
     if (viewManager ())
-        viewManager ()->updateViews ();
+        viewManager ()->updateView (this);
 }
 
 
@@ -517,10 +532,12 @@ void kpView::dragLeaveEvent (QDragLeaveEvent *)
 // Renderer
 //
 
+#define DEBUG_KP_VIEW_RENDERER (DEBUG_KP_VIEW && 0)
+
 // private
 QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
 {
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW_RENDERER && 1
     kdDebug () << "kpView::paintEventGetDocRect(" << viewRect << ")" << endl;
 #endif
 
@@ -547,14 +564,14 @@ QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
         docRect.setBottomRight (docRect.bottomRight () + QPoint (2, 2));
     }
 
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW_RENDERER && 1
     kdDebug () << "\tdocRect=" << docRect << endl;
 #endif
     kpDocument *doc = document ();
     if (doc)
     {
         docRect = docRect.intersect (doc->rect ());
-    #if DEBUG_KP_VIEW && 1
+    #if DEBUG_KP_VIEW_RENDERER && 1
         kdDebug () << "\tintersect with doc=" << docRect << endl;
     #endif
     }
@@ -571,14 +588,14 @@ void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRec
 // private
 void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
 {
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW_RENDERER && 1
     kdDebug () << "kpView::paintEventDrawSelection() docRect=" << docRect << endl;
 #endif
 
     kpDocument *doc = document ();
     if (!doc)
     {
-    #if DEBUG_KP_VIEW && 1
+    #if DEBUG_KP_VIEW_RENDERER && 1
         kdDebug () << "\tno doc - abort" << endl;
     #endif
         return;
@@ -587,7 +604,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
     kpSelection *sel = doc->selection ();
     if (!sel)
     {
-    #if DEBUG_KP_VIEW && 1
+    #if DEBUG_KP_VIEW_RENDERER && 1
         kdDebug () << "\tno sel - abort" << endl;
     #endif
         return;
@@ -600,7 +617,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
 
     if (sel->pixmap () && !sel->pixmap ()->isNull ())
     {
-    #if DEBUG_KP_VIEW && 1
+    #if DEBUG_KP_VIEW_RENDERER && 1
         kdDebug () << "\tdraw sel pixmap @ " << sel->topLeft () << endl;
     #endif
         kpPixmapFX::paintPixmapAt (destPixmap,
@@ -643,7 +660,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
             switch (sel->type ())
             {
             case kpSelection::Rectangle:
-            #if DEBUG_KP_VIEW && 1
+            #if DEBUG_KP_VIEW_RENDERER && 1
                 kdDebug () << "\tselection border = rectangle" << endl;
                 kdDebug () << "\t\tx=" << boundingRect.x () - docRect.x ()
                            << " y=" << boundingRect.y () - docRect.y ()
@@ -658,7 +675,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
                 break;
 
             case kpSelection::Ellipse:
-            #if DEBUG_KP_VIEW && 1
+            #if DEBUG_KP_VIEW_RENDERER && 1
                 kdDebug () << "\tselection border = ellipse" << endl;
             #endif
                 PAINTER_CMD (drawEllipse (boundingRect.x () - docRect.x (),
@@ -669,7 +686,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
 
             case kpSelection::Points:
             {
-            #if DEBUG_KP_VIEW
+            #if DEBUG_KP_VIEW_RENDERER
                 kdDebug () << "\tselection border = freeForm" << endl;
             #endif
                 QPointArray points = sel->points ();
@@ -790,7 +807,7 @@ void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
 // virtual
 void kpView::paintEvent (QPaintEvent *e)
 {
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW_RENDERER && 1
     QTime timer;
     timer.start ();
 #endif
@@ -798,7 +815,7 @@ void kpView::paintEvent (QPaintEvent *e)
     kpViewManager *vm = viewManager ();
     const kpDocument *doc = document ();
 
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW_RENDERER && 1
     kdDebug () << "kpView(" << name () << ")::paintEvent() vm=" << (bool) vm
                << " queueUpdates=" << (vm && vm->queueUpdates ())
                << " viewRect=" << e->rect ()
@@ -824,12 +841,12 @@ void kpView::paintEvent (QPaintEvent *e)
         return;
     QRect docRect = paintEventGetDocRect (viewRect);
 
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW_RENDERER && 1
     kdDebug () << "\tdocRect=" << docRect << endl;
 #endif
 
 // uncomment to cause deliberate flicker (identifies needless updates)
-#if DEBUG_KP_VIEW && 0
+#if DEBUG_KP_VIEW_RENDERER && 0
     QPainter flickerPainter (this);
     flickerPainter.fillRect (viewRect, Qt::red);
     flickerPainter.end ();
@@ -872,7 +889,7 @@ void kpView::paintEvent (QPaintEvent *e)
 
     if (docPixmap.mask () || m_needBorder)
     {
-    #if DEBUG_KP_VIEW && 1
+    #if DEBUG_KP_VIEW_RENDERER && 1
         kdDebug () << "\tmask=" << (bool) docPixmap.mask ()
                 << " needBorder=" << m_needBorder
                 << endl;
@@ -881,7 +898,7 @@ void kpView::paintEvent (QPaintEvent *e)
     }
     else
     {
-    #if DEBUG_KP_VIEW && 1
+    #if DEBUG_KP_VIEW_RENDERER && 1
         kdDebug () << "\tno mask" << endl;
     #endif
     }
@@ -901,7 +918,7 @@ void kpView::paintEvent (QPaintEvent *e)
             (!vm->brushActive () || vm->shouldBrushBeDisplayed (this)) &&
             docRect.intersects (vm->tempPixmapRect ()))
         {
-        #if DEBUG_KP_VIEW && 1
+        #if DEBUG_KP_VIEW_RENDERER && 1
             kdDebug () << "\ttempPixmap: active"
                     << " rect=" << vm->tempPixmapRect ()
                     << " brush=" << vm->brushActive ()
@@ -910,7 +927,7 @@ void kpView::paintEvent (QPaintEvent *e)
             paintEventDrawTempPixmap (&docPixmap, docRect);
         }
 
-    #if DEBUG_KP_VIEW && 1
+    #if DEBUG_KP_VIEW_RENDERER && 1
         kdDebug () << "\torigin=" << m_origin << endl;
     #endif
         // blit scaled version of docPixmap + tempPixmap onto Back Buffer
@@ -940,7 +957,7 @@ void kpView::paintEvent (QPaintEvent *e)
     bitBlt (this, viewRect.topLeft (),
             m_backBuffer, QRect (0, 0, viewRect.width (), viewRect.height ()));
 
-#if DEBUG_KP_VIEW && 1
+#if DEBUG_KP_VIEW_RENDERER && 1
     kdDebug () << "\tall done in: " << timer.restart () << "ms" << endl;
 #endif
 }
