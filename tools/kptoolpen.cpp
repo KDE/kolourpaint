@@ -389,17 +389,19 @@ void kpToolPen::globalDraw ()
         const QImage image = kpPixmapFX::convertToImage (*document ()->pixmap ());
         QRect rect = document ()->rect ();
 
-        if (wash (&painter, &maskPainter, image,
-                  foregroundColor ()/*replace foreground*/,
-                  rect, rect))
+        const bool didSomething = wash (&painter, &maskPainter, image,
+                                        foregroundColor ()/*replace foreground*/,
+                                        rect, rect);
+
+        // flush
+        if (painter.isActive ())
+            painter.end ();
+
+        if (maskPainter.isActive ())
+            maskPainter.end ();
+
+        if (didSomething)
         {
-            // flush
-            if (painter.isActive ())
-                painter.end ();
-
-            if (maskPainter.isActive ())
-                maskPainter.end ();
-
             if (!maskBitmap.isNull ())
                 document ()->pixmap ()->setMask (maskBitmap);
 
