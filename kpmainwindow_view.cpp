@@ -27,8 +27,9 @@
 
 #define DEBUG_ZOOM_FLICKER 0
 
+#include <kpmainwindow.h>
+
 #include <qdatetime.h>
-#include <qdockarea.h>
 #include <qpainter.h>
 #include <qscrollview.h>
 #include <qtimer.h>
@@ -42,7 +43,6 @@
 
 #include <kpdefs.h>
 #include <kpdocument.h>
-#include <kpmainwindow.h>
 #include <kpthumbnail.h>
 #include <kptool.h>
 #include <kpview.h>
@@ -547,9 +547,7 @@ void kpMainWindow::slotDestroyThumbnailIfNotVisible (bool tnIsVisible)
 
     if (!tnIsVisible)
     {
-        // The thumbnail is probably still closing itself so don't
-        // destroy it until after it's finished its work
-        QTimer::singleShot (0, this, SLOT (slotDestroyThumbnailInitatedByUser ()));
+        slotDestroyThumbnailInitatedByUser ();
     }
 }
 
@@ -671,15 +669,6 @@ void kpMainWindow::updateThumbnail ()
     #endif
 
         m_thumbnail = new kpThumbnail (this, "thumbnail");
-        m_thumbnail->hide ();
-
-        moveDockWindow (m_thumbnail, Qt::DockTornOff);
-
-        // Prevent thumbnail from docking - it's _really_ irritating otherwise
-        leftDock ()->setAcceptDockWindow (m_thumbnail, false);
-        rightDock ()->setAcceptDockWindow (m_thumbnail, false);
-        topDock ()->setAcceptDockWindow (m_thumbnail, false);
-        bottomDock ()->setAcceptDockWindow (m_thumbnail, false);
 
         m_thumbnailView = new kpView (m_thumbnail,
                                       "thumbnailView", this,
@@ -735,15 +724,28 @@ void kpMainWindow::updateThumbnail ()
         kdDebug () << "\tdestroying thumbnail" << endl;
     #endif
 
+        if (m_thumbnailSaveConfigTimer && m_thumbnailSaveConfigTimer->isActive ())
+        {
+            m_thumbnailSaveConfigTimer->stop ();
+            slotSaveThumbnailGeometry ();
+        }
+
+
         if (m_document)
         {
             disconnect (m_document, SIGNAL (sizeChanged (int, int)),
                         m_thumbnail, SLOT (updateCaption ()));
         }
 
+
         m_viewManager->unregisterView (m_thumbnailView);
 
         delete m_thumbnailView; m_thumbnailView = 0;
-        delete m_thumbnail; m_thumbnail = 0;
+
+
+        disconnect (m_thumbnail, SIGNAL (visibilityChanged (bool)),
+                    this, SLOT (slotDestroyThumbnailIfNotVisible (bool)));
+
+        m_thumbnail->deleteLater (); m_thumbnail = 0;
     }
 }

@@ -28,13 +28,17 @@
 
 #define DEBUG_KP_THUMBNAIL 0
 
+#include <kpthumbnail.h>
+
+#include <qdockarea.h>
+#include <qdockwindow.h>
 #include <qtimer.h>
 
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpdefs.h>
 #include <kpdocument.h>
-#include <kpthumbnail.h>
 #include <kpmainwindow.h>
 #include <kptool.h>
 #include <kpview.h>
@@ -42,10 +46,40 @@
 
 // TODO: get out of the Alt+Tab list
 kpThumbnail::kpThumbnail (kpMainWindow *parent, const char *name)
+#if KP_IS_QT_3_3
+    : QDockWindow (QDockWindow::OutsideDock, parent, name),
+#else  // With Qt <3.3, OutsideDock requires parent = 0,
+       // sync: make sure outside of dock
     : QDockWindow (QDockWindow::InDock, parent, name),
+    #warning "Using Qt <3.3: the thumbnail will flicker more when appearing"
+#endif
       m_mainWindow (parent),
       m_view (0)
 {
+    if (!parent)
+        kdError () << "kpThumbnail::kpThumbnail() requires parent" << endl;
+
+
+#if !KP_IS_QT_3_3
+    if (parent)
+    {
+        // sync: make sure outside of dock
+        parent->moveDockWindow (this, Qt::DockTornOff);
+        hide ();
+    }
+#endif
+
+
+    if (parent)
+    {
+        // Prevent thumbnail from docking - it's _really_ irritating otherwise
+        parent->leftDock ()->setAcceptDockWindow (this, false);
+        parent->rightDock ()->setAcceptDockWindow (this, false);
+        parent->topDock ()->setAcceptDockWindow (this, false);
+        parent->bottomDock ()->setAcceptDockWindow (this, false);
+    }
+
+
     // TODO: actually work
     setMinimumSize (100, 100);
 
