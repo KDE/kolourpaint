@@ -32,9 +32,17 @@
 
 #include <limits.h>
 
+#include <qglobal.h>
 #include <qpoint.h>
 #include <qsize.h>
 #include <qstring.h>
+
+#include <kdeversion.h>
+
+
+#define KP_IS_QT_3_3 (QT_VERSION >= 0x030300 && 1)
+#define KP_IS_KDE_3_3 ((KDE_VERSION_MAJOR >= 3 && KDE_VERSION_MINOR >= 3) && 1)
+
 
 
 // TODO: actually use these
