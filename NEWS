@@ -7,7 +7,7 @@ tagged on the mainline up to (and including) the forkpoint and of course,
 its changes.
 
 
-KolourPaint 1.2-kde3 Series (kolourpaint_1_2_kde3_branch)
+KolourPaint 1.2_kde3 Series (kolourpaint_1_2_kde3_branch)
 ===========================
 
 This is strictly a KDE 3.0 backport fork of KDE_3_3_BRANCH i.e.
@@ -16,9 +16,9 @@ the changes required for backporting and nothing else.  However,
 non-backporting changes can be applied as long as they are applied to
 KDE_3_3_BRANCH first.
 
-Version 1.2-kde3 "ByFiat Everytime" (2004/08/18)
+Version 1.2_kde3 "ByFiat Everytime" (2004/08/18)
    * Backport to KDE 3.0 by merging kolourpaint_1_0_branch
-     - 1.2-kde3 should be functionally the same as 1.2, if compiled under
+     - 1.2_kde3 should be functionally the same as 1.2, if compiled under
        KDE 3.3
      - For Qt <3.2, kpMainWindow::slotPaste(): correctly restore selection
        mode of clipboard to old QClipboard::selectionModeEnabled() value,
