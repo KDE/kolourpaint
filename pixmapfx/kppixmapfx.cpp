@@ -134,10 +134,10 @@ int kpPixmapFX::pixmapSize (int width, int height, int depth)
                << " d=" << depth
                << " roundedDepth=" << roundedDepth
                << " ret="
-               << multiplyDimensions (kpPixmapFX::pixmapArea (width, height), roundedDepth / 8)
+               << multiplyDimensions (kpPixmapFX::pixmapArea (width, height), roundedDepth) / 8
                << endl;
 #endif
-    return multiplyDimensions (kpPixmapFX::pixmapArea (width, height), roundedDepth / 8);
+    return multiplyDimensions (kpPixmapFX::pixmapArea (width, height), roundedDepth) / 8;
 }
 
 
@@ -165,11 +165,11 @@ int kpPixmapFX::imageSize (int width, int height, int depth)
                << " d=" << depth
                << " roundedDepth=" << roundedDepth
                << " ret="
-               << multiplyDimensions (multiplyDimensions (width, height), roundedDepth / 8)
+               << multiplyDimensions (multiplyDimensions (width, height), roundedDepth) / 8
                << endl;
 #endif
 
-    return multiplyDimensions (multiplyDimensions (width, height), roundedDepth / 8);
+    return multiplyDimensions (multiplyDimensions (width, height), roundedDepth) / 8;
 }
 
 
@@ -446,7 +446,7 @@ QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty,
 QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
     const WarnAboutLossInfo &wali)
 {
-#if DEBUG_KP_PIXMAP_FX && 1 || 1
+#if DEBUG_KP_PIXMAP_FX && 1
     kdDebug () << "kpPixmapFX::convertToPixmapAsLosslessAsPossible(image depth="
                << image.depth ()
                << ",warnAboutLossInfo.isValid=" << wali.isValid ()
@@ -470,7 +470,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
 
     if (image.depth () <= screenDepth)
     {
-    #if DEBUG_KP_PIXMAP_FX && 1 || 1
+    #if DEBUG_KP_PIXMAP_FX && 1
         kdDebug () << "\timage depth <= screen depth - don't dither"
                    << " (AvoidDither | ThresholdDither)" << endl;
     #endif
@@ -483,7 +483,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
     {
         const int screenNumColors = (1 << screenDepth);
 
-    #if DEBUG_KP_PIXMAP_FX && 1 || 1
+    #if DEBUG_KP_PIXMAP_FX && 1
         kdDebug () << "\tscreen depth <= 8; imageNumColorsUpTo"
                    << (screenNumColors + 1)
                    << "=" << imageNumColorsUpTo (image, screenNumColors + 1)
@@ -492,7 +492,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
 
         if (imageNumColorsUpTo (image, screenNumColors + 1) <= screenNumColors)
         {
-        #if DEBUG_KP_PIXMAP_FX && 1 || 1
+        #if DEBUG_KP_PIXMAP_FX && 1
             kdDebug () << "\t\tcolors fit on screen - don't dither"
                        << " (AvoidDither | ThresholdDither)" << endl;
         #endif
@@ -500,7 +500,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
         }
         else
         {
-        #if DEBUG_KP_PIXMAP_FX && 1 || 1
+        #if DEBUG_KP_PIXMAP_FX && 1
             kdDebug () << "\t\tcolors don't fit on screen - dither"
                        << " (PreferDither | DiffuseDither)" << endl;
         #endif
@@ -512,7 +512,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
     // ASSERT: screenDepth < 32
     else
     {
-    #if DEBUG_KP_PIXMAP_FX && 1 || 1
+    #if DEBUG_KP_PIXMAP_FX && 1
         kdDebug () << "\tscreen depth > 8 - read config" << endl;
     #endif
 
@@ -532,7 +532,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
             cfg->sync ();
         }
 
-    #if DEBUG_KP_PIXMAP_FX && 1 || 1
+    #if DEBUG_KP_PIXMAP_FX && 1
         kdDebug () << "\t\tcfg=" << configDitherIfNumColorsGreaterThan
                    << " image=" << imageNumColorsUpTo (image, configDitherIfNumColorsGreaterThan + 1)
                    << endl;
@@ -541,7 +541,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
         if (imageNumColorsUpTo (image, configDitherIfNumColorsGreaterThan + 1) >
             configDitherIfNumColorsGreaterThan)
         {
-        #if DEBUG_KP_PIXMAP_FX && 1 || 1
+        #if DEBUG_KP_PIXMAP_FX && 1
             kdDebug () << "\t\t\talways dither (PreferDither | DiffuseDither)"
                         << endl;
         #endif
@@ -549,7 +549,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
         }
         else
         {
-        #if DEBUG_KP_PIXMAP_FX && 1 || 1
+        #if DEBUG_KP_PIXMAP_FX && 1
             kdDebug () << "\t\t\tdon't dither (AvoidDither | ThresholdDither)"
                        << endl;
         #endif
