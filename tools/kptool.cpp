@@ -120,7 +120,7 @@ void kpTool::init (const QString &text, const QString &description,
 // private
 void kpTool::createAction ()
 {
-#if DEBUG_KP_TOOL
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool(" << name () << "::createAction()" << endl;
 #endif
 
@@ -383,7 +383,7 @@ bool kpTool::hasCurrentPoint () const
 // public
 QPoint kpTool::currentPoint (bool zoomToDoc) const
 {
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool::currentPoint(zoomToDoc=" << zoomToDoc << ")" << endl;
     kdDebug () << "\tviewUnderStartPoint="
                << (viewUnderStartPoint () ? viewUnderStartPoint ()->name () : "(none)")
@@ -435,7 +435,7 @@ void kpTool::somethingBelowTheCursorChanged ()
 // TODO: don't dup code from mouseMoveEvent()
 void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_)
 {
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool::somethingBelowTheCursorChanged" << currentPoint_ << endl;
     kdDebug () << "\tviewUnderStartPoint="
                << (viewUnderStartPoint () ? viewUnderStartPoint ()->name () : "(none)")
@@ -583,7 +583,7 @@ void kpTool::reselect ()
 // public
 QIconSet kpTool::iconSet (int forceSize) const
 {
-#if DEBUG_KP_TOOL
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool(" << name () << ")::iconSet(forceSize=" << forceSize << ")" << endl;
 #endif
     // (robust in case BarIcon() default arg changes)
@@ -1044,7 +1044,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
 
 void kpTool::keyPressEvent (QKeyEvent *e)
 {
-#if DEBUG_KP_TOOL
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool::keyPressEvent()" << endl;
 #endif
 
@@ -1056,7 +1056,7 @@ void kpTool::keyPressEvent (QKeyEvent *e)
     {
     case 0:
     case Qt::Key_unknown:
-    #if DEBUG_KP_TOOL
+    #if DEBUG_KP_TOOL && 0
         kdDebug () << "kpTool::keyPressEvent() picked up unknown key!" << endl;
     #endif
         // --- fall thru and update all modifiers ---

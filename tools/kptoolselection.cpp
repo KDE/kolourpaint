@@ -84,7 +84,7 @@ void kpToolSelection::pushOntoDocument ()
 // public
 QString kpToolSelection::haventBegunDrawUserMessage () const
 {
-#if DEBUG_KP_TOOL_SELECTION && 1
+#if DEBUG_KP_TOOL_SELECTION && 0
     kdDebug () << "kpToolSelection::haventBegunDrawUserMessage()"
                   " cancelledShapeButStillHoldingButtons="
                << m_cancelledShapeButStillHoldingButtons
