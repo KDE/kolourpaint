@@ -79,6 +79,8 @@ signals:
     void releasedAllButtons ();
 
 public:
+    QString haventBegunDrawUserMessage () const;
+
     QString userMessage () const;
     void setUserMessage (const QString &message);
 
@@ -96,6 +98,7 @@ protected:
     virtual void mouseReleaseEvent (QMouseEvent *e);
     virtual void resizeEvent (QResizeEvent *e);
 
+    virtual void enterEvent (QEvent *e);
     virtual void leaveEvent (QEvent *e);
 
     virtual void paintEvent (QPaintEvent *e);
@@ -169,7 +172,7 @@ protected slots:
 
     void slotGripStatusMessageChanged (const QString &string);
 
-    void slotGripReleasedAllButtons ();
+    void recalculateGripStatusMessage ();
 
     void slotContentsMoving (int x, int y);
     void slotContentsMoved ();
