@@ -165,6 +165,7 @@ private:
 public:
     kpTool *tool () const;
     bool toolHasBegunShape () const;
+    bool toolIsASelectionTool () const;
     
 private slots:
     void slotToolSelected (kpTool *tool);

@@ -146,6 +146,16 @@ bool kpMainWindow::toolHasBegunShape () const
     return (currentTool && currentTool->hasBegunShape ());
 }
 
+// public
+bool kpMainWindow::toolIsASelectionTool () const
+{
+    kpTool *currentTool = tool ();
+
+    return ((currentTool == m_toolFreeFormSelection) ||
+            (currentTool == m_toolRectSelection) ||
+            (currentTool == m_toolEllipticalSelection));
+}
+
 
 // private slot
 void kpMainWindow::slotToolSelected (kpTool *tool)

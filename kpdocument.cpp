@@ -600,7 +600,12 @@ void kpDocument::setSelection (const kpSelection &selection)
     bool hadSelection = (bool) m_selection;
 
 
-    if (m_mainWindow)
+    // (we don't change the Selection Tool if the new selection's
+    //  shape is different to the tool's because all the Selection
+    //  Tools act the same, except for what would be really irritating
+    //  if it kept changing whenever you paste an image - drawing the
+    //  selection region)
+    if (m_mainWindow && !m_mainWindow->toolIsASelectionTool ())
     {
         // Switch to the appropriately shaped selection tool
         // _before_ we change the selection
