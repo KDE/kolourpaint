@@ -7,7 +7,11 @@ Currently Underway
 
 split up massive kpmainwindow class
 
+fix viewUnderMouseCursor() - drags apparently don't gen Enter events
+
 fix selections; implement free-form selection
+
+tool/text
 
 
 Before 1.0
@@ -23,8 +27,6 @@ tool widget colours hard (i.e. impossible) to see on an 8-bit display
 spraycan sizes
 
 make fill style GUI clearer
-
-fix viewUnderMouseCursor() - drags apparently don't gen Enter events
 
 documentation
 
@@ -64,8 +66,6 @@ still some flicker if:
 
 line: shift + alt doesn't work but alt+shift does
 
-shape selections should support CTRL, ALT, SHIFT
-
 intersect bounding rect with document rect when saving undo info
 - e.g. if you drag a large rect bigger than the view, waste a lot of memory
 ditto for setTempPixmapAt et. al.
@@ -79,7 +79,6 @@ transparent images
 
 color depth
 tool/curve
-tool/text
 
 tool icons - if a more experienced artist doesn't offer to draw new ones,
 I'll be forced to redo them myself once transparency is supported
@@ -96,6 +95,10 @@ grid for zoom levels > 200 but % 100 != 0
 zoom levels < 100%
 
 maybe allow editing when a selection is active (selection becomes bounding rect)
+
+shape selections should support CTRL, ALT, SHIFT to alter shape but
+ATM, CTRL means copy, SHIFT means sweep.  Maybe have a "Selection Mode" and a
+"Drawing Mode"?
 
 DCOP scriptable
 
