@@ -3,7 +3,8 @@ INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../pixmapfx \
     -I$(srcdir)/../widgets $(all_includes)
 
 noinst_LTLIBRARIES = libkolourpainttools.la
-libkolourpainttools_la_SOURCES = kptool.cpp kptoolairspray.cpp \
+libkolourpainttools_la_SOURCES = kptool.cpp \
+    kptoolairspray.cpp \
     kptoolautocrop.cpp \
     kptoolbrush.cpp kptoolclear.cpp \
     kptoolcolorpicker.cpp kptoolcolorwasher.cpp \
