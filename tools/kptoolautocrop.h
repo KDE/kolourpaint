@@ -52,7 +52,7 @@ public:
     kpToolAutoCropBorder (const QPixmap *pixmapPtr, int processedColorSimilarity);
 
     int size () const;
-    
+
     const QPixmap *pixmap () const;
     int processedColorSimilarity () const;
     QRect rect () const;
@@ -82,7 +82,7 @@ private:
 };
 
 
-class kpToolAutoCropCommand : public kpCommand
+class kpToolAutoCropCommand : public kpNamedCommand
 {
 public:
     kpToolAutoCropCommand (bool actOnSelection,
@@ -92,11 +92,17 @@ public:
                            const kpToolAutoCropBorder &botBorder,
                            kpMainWindow *mainWindow);
     virtual ~kpToolAutoCropCommand ();
-    
-    virtual QString name () const;
+
+    enum NameOptions
+    {
+        DontShowAccel = 0,
+        ShowAccel = 1
+    };
+
+    static QString name (bool actOnSelection, int options);
 
     virtual int size () const;
-    
+
 private:
     void getUndoPixmap (const kpToolAutoCropBorder &border, QPixmap **pixmap);
     void getUndoPixmaps ();

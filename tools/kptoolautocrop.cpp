@@ -308,11 +308,22 @@ void showNothingToAutocropMessage (kpMainWindow *mainWindow, bool actOnSelection
 {
     kpSetOverrideCursorSaver cursorSaver (Qt::arrowCursor);
 
-    KMessageBox::information (mainWindow,
-        i18n ("Autocrop could not find the %1 border so could not crop it.")
-            .arg (actOnSelection ? i18n ("selection's") : i18n ("image's")),
-        i18n ("Nothing to Autocrop"),
-        "NothingToAutoCrop");
+    if (actOnSelection)
+    {
+        KMessageBox::information (mainWindow,
+            i18n ("KolourPaint cannot remove the selection's internal border as it"
+                  " could not be located."),
+            i18n ("Cannot Remove Internal Border"),
+            "NothingToAutoCrop");
+    }
+    else
+    {
+        KMessageBox::information (mainWindow,
+            i18n ("KolourPaint cannot automatically crop the image as its"
+                  " border could not be located."),
+            i18n ("Cannot Autocrop"),
+            "NothingToAutoCrop");
+    }
 }
 
 bool kpToolAutoCrop (kpMainWindow *mainWindow)
@@ -466,7 +477,7 @@ kpToolAutoCropCommand::kpToolAutoCropCommand (bool actOnSelection,
                                               const kpToolAutoCropBorder &topBorder,
                                               const kpToolAutoCropBorder &botBorder,
                                               kpMainWindow *mainWindow)
-    : kpCommand (mainWindow),
+    : kpNamedCommand (name (actOnSelection, DontShowAccel), mainWindow),
       m_actOnSelection (actOnSelection),
       m_leftBorder (leftBorder),
       m_rightBorder (rightBorder),
@@ -496,15 +507,23 @@ kpToolAutoCropCommand::~kpToolAutoCropCommand ()
 }
 
 
-// public virtual [base kpCommand]
-QString kpToolAutoCropCommand::name () const
+// public static
+QString kpToolAutoCropCommand::name (bool actOnSelection, int options)
 {
-    const QString opName = i18n ("Autocrop");
-
-    if (m_actOnSelection)
-        return i18n ("Selection: %1").arg (opName);
+    if (actOnSelection)
+    {
+        if (options & ShowAccel)
+            return i18n ("Remove Internal B&order");
+        else
+            return i18n ("Remove Internal Border");
+    }
     else
-        return opName;
+    {
+        if (options & ShowAccel)
+            return i18n ("Autocr&op");
+        else
+            return i18n ("Autocrop");
+    }
 }
 
 

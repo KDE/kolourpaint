@@ -71,7 +71,17 @@ bool kpMainWindow::isSelectionActive () const
 bool kpMainWindow::isTextSelection () const
 {
     return (m_document && m_document->selection () &&
-            m_document->selection ()->type () == kpSelection::Text);
+            m_document->selection ()->isText ());
+}
+
+
+// private
+QString kpMainWindow::autoCropText () const
+{
+    const bool wouldActOnSelection = (isSelectionActive () &&
+                                      !isTextSelection ());
+    return kpToolAutoCropCommand::name (wouldActOnSelection,
+                                        kpToolAutoCropCommand::ShowAccel);
 }
 
 
@@ -83,10 +93,10 @@ void kpMainWindow::setupImageMenuActions ()
     m_actionResizeScale = new KAction (i18n ("R&esize / Scale..."), Qt::CTRL + Qt::Key_E,
         this, SLOT (slotResizeScale ()), ac, "image_resize_scale");
 
-    m_actionCrop = new KAction (i18n ("Crop Ou&tside Selection"), Qt::CTRL + Qt::Key_T,
+    m_actionCrop = new KAction (i18n ("Se&t as Image (Crop)"), Qt::CTRL + Qt::Key_T,
         this, SLOT (slotCrop ()), ac, "image_crop");
 
-    m_actionAutoCrop = new KAction (i18n ("A&utocrop"), Qt::CTRL + Qt::Key_U,
+    m_actionAutoCrop = new KAction (autoCropText (), Qt::CTRL + Qt::Key_U,
         this, SLOT (slotAutoCrop ()), ac, "image_auto_crop");
 
     m_actionFlip = new KAction (i18n ("&Flip..."), Qt::CTRL + Qt::Key_F,
@@ -171,6 +181,7 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
                               !isTextSelection ());
 
     const bool enable = (m_imageMenuDocumentActionsEnabled && !isTextSelection ());
+    m_actionAutoCrop->setText (autoCropText ());
     m_actionAutoCrop->setEnabled (enable);
     m_actionFlip->setEnabled (enable);
     m_actionRotate->setEnabled (enable);

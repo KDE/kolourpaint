@@ -29,7 +29,6 @@ kpcolortoolbar - open/save palette
 
 warn when about to exceed KP_BIG_IMAGE_WIDTH or KP_BIG_IMAGE_HEIGHT
 
-rename crop options
 
 
 use of QPoint () or QPoint (-1, -1) as a sentinel is worrying since it's a
@@ -58,7 +57,7 @@ Luxi Sans 14 draw in green with trans background versus white background (see qu
 7. resize doc or sel freehand and usershapepoints have , not x even though is dimen, not point
 13. check kpcommandhistory INT_MAX overflow protection
 14. edit/paste slow QImageDrag::canDecode check
-15. edit/paste may disappear due to klipper
+15. edit/paste may disappear due to klipper - file bug report
 16. check kpcommandhistory all sizes are correct
 17. delayed kpcommand popupmenu creation
 18. text tool could autoresize if font size changes or paste text

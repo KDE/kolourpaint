@@ -445,6 +445,8 @@ private:
     bool isSelectionActive () const;
     bool isTextSelection () const;
 
+    QString autoCropText () const;
+
     void setupImageMenuActions ();
     void enableImageMenuDocumentActions (bool enable = true);
 
