@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_SELECTION 1
+#define DEBUG_KP_TOOL_SELECTION 0
 
 
 #include <kptoolselection.h>
@@ -345,7 +345,7 @@ void kpToolSelection::beginDraw ()
 // protected
 const QCursor &kpToolSelection::cursor () const
 {
-#if DEBUG_KP_TOOL_SELECTION || 1
+#if DEBUG_KP_TOOL_SELECTION && 0
     kdDebug () << "kpToolSelection::cursor()" << endl;
 #endif
 
@@ -353,7 +353,7 @@ const QCursor &kpToolSelection::cursor () const
 
     if (sel && onSelectionResizeHandle () && !controlOrShiftPressed ())
     {
-    #if DEBUG_KP_TOOL_SELECTION || 1
+    #if DEBUG_KP_TOOL_SELECTION && 0
         kdDebug () << "\tonSelectionResizeHandle="
                    << onSelectionResizeHandle () << endl;
     #endif
@@ -380,7 +380,7 @@ const QCursor &kpToolSelection::cursor () const
     }
     else if (sel && sel->contains (m_currentPoint))
     {
-    #if DEBUG_KP_TOOL_SELECTION || 1
+    #if DEBUG_KP_TOOL_SELECTION && 0
         kdDebug () << "\tsel contains currentPoint; selecting text? "
                    << onSelectionToSelectText () << endl;
     #endif
@@ -392,7 +392,7 @@ const QCursor &kpToolSelection::cursor () const
     }
     else
     {
-    #if DEBUG_KP_TOOL_SELECTION || 1
+    #if DEBUG_KP_TOOL_SELECTION && 0
         kdDebug () << "\tnot on sel" << endl;
     #endif
         return Qt::crossCursor;
@@ -1062,7 +1062,7 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
 // protected virtual [base kpTool]
 void kpToolSelection::keyPressEvent (QKeyEvent *e)
 {
-#if DEBUG_KP_TOOL_SELECTION
+#if DEBUG_KP_TOOL_SELECTION && 0
     kdDebug () << "kpToolSelection::keyPressEvent(e->text='" << e->text () << "')" << endl;
 #endif
 
@@ -1074,7 +1074,7 @@ void kpToolSelection::keyPressEvent (QKeyEvent *e)
         !hasBegunDraw () &&
          e->key () == Qt::Key_Escape)
     {
-    #if DEBUG_KP_TOOL_SELECTION
+    #if DEBUG_KP_TOOL_SELECTION && 0
         kdDebug () << "\tescape pressed with sel when not begun draw - deselecting" << endl;
     #endif
 
@@ -1085,7 +1085,7 @@ void kpToolSelection::keyPressEvent (QKeyEvent *e)
 
     if (!e->isAccepted ())
     {
-    #if DEBUG_KP_TOOL_SELECTION
+    #if DEBUG_KP_TOOL_SELECTION && 0
         kdDebug () << "\tkey processing did not accept (text was '"
                    << e->text ()
                    << "') - passing on event to kpTool"
@@ -1185,6 +1185,8 @@ void kpToolSelection::slotIsOpaqueChanged ()
         kdDebug () << "\thave sel - set transparency" << endl;
     #endif
 
+        QApplication::setOverrideCursor (Qt::waitCursor);
+
         if (hasBegunShape ())
             endShapeInternal ();
 
@@ -1200,6 +1202,8 @@ void kpToolSelection::slotIsOpaqueChanged ()
             st, oldST,
             mainWindow ()),
             false/* no exec*/);
+
+        QApplication::restoreOverrideCursor ();
     }
 }
 
@@ -1225,6 +1229,8 @@ void kpToolSelection::slotBackgroundColorChanged (const kpColor &)
         kdDebug () << "\thave sel - set transparency" << endl;
     #endif
 
+        QApplication::setOverrideCursor (Qt::waitCursor);
+
         kpSelectionTransparency st = mainWindow ()->selectionTransparency ();
         kpSelectionTransparency oldST = st;
         oldST.setTransparentColor (oldBackgroundColor ());
@@ -1235,6 +1241,8 @@ void kpToolSelection::slotBackgroundColorChanged (const kpColor &)
             st, oldST,
             mainWindow ()),
             false/* no exec*/);
+
+        QApplication::restoreOverrideCursor ();
     }
 }
 
@@ -1260,6 +1268,8 @@ void kpToolSelection::slotColorSimilarityChanged (double, int)
         kdDebug () << "\thave sel - set transparency" << endl;
     #endif
 
+        QApplication::setOverrideCursor (Qt::waitCursor);
+
         kpSelectionTransparency st = mainWindow ()->selectionTransparency ();
         kpSelectionTransparency oldST = st;
         oldST.setColorSimilarity (oldColorSimilarity ());
@@ -1270,6 +1280,8 @@ void kpToolSelection::slotColorSimilarityChanged (double, int)
             st, oldST,
             mainWindow ()),
             false/* no exec*/);
+
+        QApplication::restoreOverrideCursor ();
     }
 }
 
@@ -1560,10 +1572,14 @@ void kpToolSelectionTransparencyCommand::execute ()
     if (!doc)
         return;
 
+    QApplication::setOverrideCursor (Qt::waitCursor);
+
     m_mainWindow->setSelectionTransparency (m_st, true/*force colour change*/);
 
     if (doc->selection ())
         doc->selection ()->setTransparency (m_st);
+
+    QApplication::restoreOverrideCursor ();
 }
 
 // public virtual [base kpCommand]
@@ -1577,10 +1593,14 @@ void kpToolSelectionTransparencyCommand::unexecute ()
     if (!doc)
         return;
 
+    QApplication::setOverrideCursor (Qt::waitCursor);
+
     m_mainWindow->setSelectionTransparency (m_oldST, true/*force colour change*/);
 
     if (doc->selection ())
         doc->selection ()->setTransparency (m_oldST);
+
+    QApplication::restoreOverrideCursor ();
 }
 
 
