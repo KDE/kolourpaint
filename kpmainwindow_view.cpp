@@ -319,7 +319,7 @@ void kpMainWindow::zoomTo (int zoomLevel)
     {
         kdDebug () << "FLICKER: just centred" << endl;
         QTime timer; timer.start ();
-        while (timer.elapsed () < 1000)
+        while (timer.elapsed () < 2000)
             ;
     }
     #endif
