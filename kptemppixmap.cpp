@@ -94,7 +94,7 @@ QPixmap kpTempPixmap::pixmap () const
 
 
 // public
-bool kpTempPixmap::isVisible (/*const*/ kpViewManager *vm) const
+bool kpTempPixmap::isVisible (const kpViewManager *vm) const
 {
     return m_isBrush ? (bool) vm->viewUnderCursor () : true;
 }

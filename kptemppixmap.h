@@ -63,7 +63,7 @@ public:
     QPoint topLeft () const;
     QPixmap pixmap () const;
 
-    bool isVisible (/*const*/ kpViewManager *vm) const;
+    bool isVisible (const kpViewManager *vm) const;
     QRect rect () const;
     int width () const;
     int height () const;
