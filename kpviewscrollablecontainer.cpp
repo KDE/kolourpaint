@@ -25,7 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_VIEW_SCROLLABLE_CONTAINER 1
+#define DEBUG_KP_VIEW_SCROLLABLE_CONTAINER 0
 
 #include <kpviewscrollablecontainer.h>
 
@@ -815,7 +815,7 @@ void kpViewScrollableContainer::slotGripStatusMessageChanged (const QString &str
 // protected slot
 void kpViewScrollableContainer::recalculateGripStatusMessage ()
 {
-#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER || 1
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
     kdDebug () << "kpViewScrollabelContainer::recalculateGripStatusMessage()" << endl;
     kdDebug () << "\tQCursor::pos=" << QCursor::pos ()
                << " brGrip.hotRect=" << m_bottomRightGrip->hotRect (true)

@@ -149,7 +149,7 @@ void kpMainWindow::createToolBox ()
 // private
 void kpMainWindow::enableToolsDocumentActions (bool enable)
 {
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::enableToolsDocumentsAction(" << enable << ")" << endl;
 #endif
 
@@ -189,7 +189,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
         kpToolAction *action = (*it)->action ();
         if (action)
         {
-        #if DEBUG_KP_MAIN_WINDOW || 1
+        #if DEBUG_KP_MAIN_WINDOW
             kdDebug () << "\tchanging enabled state of " << (*it)->name () << endl;
         #endif
 
@@ -200,7 +200,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
         }
         else
         {
-        #if DEBUG_KP_MAIN_WINDOW || 1
+        #if DEBUG_KP_MAIN_WINDOW
             kdDebug () << "\tno action for " << (*it)->name () << endl;
         #endif
         }
@@ -213,7 +213,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
 // private slot
 void kpMainWindow::updateToolOptionPrevNextActionsEnabled ()
 {
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::updateToolOptionPrevNextActionsEnabled()"
                << " numShownToolWidgets="
                << m_toolToolBar->numShownToolWidgets ()
@@ -517,7 +517,7 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
 // private slot
 void kpMainWindow::slotDocResizeMessageChanged (const QString &string)
 {
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotDocResizeMessageChanged(" << string
                << ") docResizeToBeCompleted=" << d->m_docResizeToBeCompleted
                << endl;
