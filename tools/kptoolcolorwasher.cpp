@@ -36,8 +36,8 @@ kpToolColorWasher::kpToolColorWasher (kpMainWindow *mainWindow)
     : kpToolPen (mainWindow)
 {
     setMode (kpToolPen::ColorWasher);
-    setText (i18n ("Color Washer"));
-    setDescription (i18n ("Replaces pixels of the background color with the foreground color"));
+    setText (i18n ("Color Eraser"));
+    setDescription (i18n ("Replaces pixels of the foreground color with the background color"));
     setName ("tool_color_washer");
 }
 
