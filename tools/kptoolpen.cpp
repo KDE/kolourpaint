@@ -229,7 +229,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
 
             // OPT: this seems hopelessly inefficient
             QPainter painter (&pixmap);
-            painter.setPen (mainWindow ()->color (m_mouseButton));
+            painter.setPen (color (m_mouseButton));
             painter.drawPoint (0, 0);
 
             // draw onto doc
@@ -294,7 +294,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
 
         if (m_mode & DrawsPixels)
         {
-            painter.setPen (mainWindow ()->color (m_mouseButton));
+            painter.setPen (color (m_mouseButton));
             painter.drawLine (lastPoint - rect.topLeft (), thisPoint - rect.topLeft ());
         }
         // Brush & Eraser
