@@ -66,7 +66,7 @@ GenericName[zu]=Elila Iprogremu Kapende
 Icon=kolourpaint
 
 Type=Application
-Exec=kolourpaint
+Exec=kolourpaint %u
 DocPath=kolourpaint/index.html
 
 MimeType=image/x-bmp;image/x-eps;image/gif;image/x-ico;image/jpeg;image/x-pcx;image/png;image/x-portable-bitmap;image/x-portable-pixmap;image/x-targa;image/tiff;image/x-xbm;image/x-xpm
