@@ -187,11 +187,11 @@ void kpDocumentSaveOptionsWidget::init ()
 
     m_colorDepthLabel->setBuddy (m_colorDepthCombo);
 
-    m_colorDepthCombo->insertItem (i18n ("Black & White (Silhouette)"));
-    m_colorDepthCombo->insertItem (i18n ("Black & White (Dithered)"));
-    m_colorDepthCombo->insertItem (i18n ("256 Colors"));
-    m_colorDepthCombo->insertItem (i18n ("256 Colors (Dithered)"));
-    m_colorDepthCombo->insertItem (i18n ("16 Million Colors"));
+    m_colorDepthCombo->insertItem (i18n ("Monochrome"));
+    m_colorDepthCombo->insertItem (i18n ("Monochrome (Dithered)"));
+    m_colorDepthCombo->insertItem (i18n ("256 Color"));
+    m_colorDepthCombo->insertItem (i18n ("256 Color (Dithered)"));
+    m_colorDepthCombo->insertItem (i18n ("24-bit Color"));
 
     m_qualityLabel->setBuddy (m_qualityInput);
 

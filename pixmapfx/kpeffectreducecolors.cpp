@@ -66,16 +66,16 @@ QString kpEffectReduceColorsCommand::commandName (int depth, int dither) const
     if (depth == 1)
     {
         if (dither)
-            return i18n ("Convert to Black && White (Dithered)");
+            return i18n ("Reduce to Monochrome (Dithered)");
         else
-            return i18n ("Convert to Black && White (Silhouette)");
+            return i18n ("Reduce to Monochrome");
     }
     else if (depth == 8)
     {
         if (dither)
-            return i18n ("Reduce to 256 Colors (Dithered)");
+            return i18n ("Reduce to 256 Color (Dithered)");
         else
-            return i18n ("Reduce to 256 Colors");
+            return i18n ("Reduce to 256 Color");
     }
     else
     {
@@ -179,16 +179,16 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
 
 
     m_blackAndWhiteRadioButton =
-        new QRadioButton (i18n ("Black && White (&Silhouette)"), this);
+        new QRadioButton (i18n ("&Monochrome"), this);
 
     m_blackAndWhiteDitheredRadioButton =
-        new QRadioButton (i18n ("&Black && White (Dithered)"), this);
+        new QRadioButton (i18n ("Mo&nochrome (Dithered)"), this);
 
-    m_8BitRadioButton = new QRadioButton (i18n ("256 Co&lors"), this);
+    m_8BitRadioButton = new QRadioButton (i18n ("256 Co&lor"), this);
 
-    m_8BitDitheredRadioButton = new QRadioButton (i18n ("256 Colo&rs (Dithered)"), this);
+    m_8BitDitheredRadioButton = new QRadioButton (i18n ("256 Colo&r (Dithered)"), this);
 
-    m_24BitRadioButton = new QRadioButton (i18n ("16 &Million Colors"), this);
+    m_24BitRadioButton = new QRadioButton (i18n ("24-&bit Color"), this);
 
 
     QButtonGroup *buttonGroup = new QButtonGroup (this);
@@ -312,6 +312,7 @@ QString kpEffectReduceColorsWidget::caption () const
 // public virtual [base kpColorEffectWidget]
 bool kpEffectReduceColorsWidget::isNoOp () const
 {
+    // TODO: this is wrong if the screen depth doesn't perfectly match the checkbox
     return (!m_defaultRadioButton || m_defaultRadioButton->isChecked ());
 }
 

@@ -108,10 +108,10 @@ void kpMainWindow::setupImageMenuActions ()
     m_actionSkew = new KAction (i18n ("S&kew..."), Qt::CTRL + Qt::Key_K,
         this, SLOT (slotSkew ()), ac, "image_skew");
 
-    m_actionConvertToBlackAndWhite = new KAction (i18n ("Convert to &Black && White (Dithered)"), 0,
+    m_actionConvertToBlackAndWhite = new KAction (i18n ("Reduce to Mo&nochrome (Dithered)"), 0,
         this, SLOT (slotConvertToBlackAndWhite ()), ac, "image_convert_to_black_and_white");
 
-    m_actionConvertToGrayscale = new KAction (i18n ("Convert to &Grayscale"), 0,
+    m_actionConvertToGrayscale = new KAction (i18n ("Reduce to &Grayscale"), 0,
         this, SLOT (slotConvertToGrayscale ()), ac, "image_convert_to_grayscale");
 
     m_actionInvertColors = new KAction (i18n ("&Invert Colors"), Qt::CTRL + Qt::Key_I,
