@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_VIEW 1
+#define DEBUG_KP_VIEW 0
 
 #include <math.h>
 
