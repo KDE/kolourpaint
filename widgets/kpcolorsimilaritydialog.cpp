@@ -61,8 +61,16 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (kpMainWindow *mainWindow,
                                                        mainWindow, cubeGroupBox);
     m_colorSimilarityCube->setMinimumSize (240, 180);
 
+    QPushButton *updatePushButton = new QPushButton (i18n ("&Update"), cubeGroupBox);
+
+
     QVBoxLayout *cubeLayout = new QVBoxLayout (cubeGroupBox, marginHint () * 2, spacingHint ());
-    cubeLayout->addWidget (m_colorSimilarityCube);
+    cubeLayout->addWidget (m_colorSimilarityCube, 1/*stretch*/);
+    cubeLayout->addWidget (updatePushButton, 0/*stretch*/, Qt::AlignHCenter);
+
+
+    connect (updatePushButton, SIGNAL (clicked ()),
+             this, SLOT (slotColorSimilarityValueChanged ()));
 
 
     QGroupBox *inputGroupBox = new QGroupBox (i18n ("RGB Color Cube Distance"), baseWidget);
@@ -74,20 +82,11 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (kpMainWindow *mainWindow,
     m_colorSimilarityInput->setSpecialValueText (i18n ("Exact Match"));
 
 
-    QWidget *verticalSpaceWidget = new QWidget (inputGroupBox);
-    verticalSpaceWidget->setMinimumSize (1, spacingHint ());
-    QPushButton *updatePreviewPushButton = new QPushButton (i18n ("Update &Preview"), inputGroupBox);
-
-
     QVBoxLayout *inputLayout = new QVBoxLayout (inputGroupBox, marginHint () * 2, spacingHint ());
     inputLayout->addWidget (m_colorSimilarityInput);
-    inputLayout->addWidget (verticalSpaceWidget);
-    inputLayout->addWidget (updatePreviewPushButton, 0/*stretch*/, Qt::AlignRight);
 
 
     connect (m_colorSimilarityInput, SIGNAL (valueChanged (int)),
-             this, SLOT (slotColorSimilarityValueChanged ()));
-    connect (updatePreviewPushButton, SIGNAL (clicked ()),
              this, SLOT (slotColorSimilarityValueChanged ()));
 
 
