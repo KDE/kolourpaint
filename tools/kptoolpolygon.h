@@ -32,18 +32,124 @@
 #ifndef __kptoolpolygon_h__
 #define __kptoolpolygon_h__
 
-#include <kptoolline.h>
+#include <qbrush.h>
+#include <qpen.h>
+#include <qobject.h>
+#include <qpixmap.h>
+#include <qpoint.h>
+#include <qpointarray.h>
 
+#include <kcommand.h>
+
+#include <kptool.h>
+
+class QMouseEvent;
+class QPen;
+class QPoint;
+class QRect;
+
+class kpView;
+class kpDocument;
 class kpMainWindow;
 
-class kpToolPolygon : public kpToolLine
+class kpToolWidgetFillStyle;
+class kpToolWidgetLineStyle;
+class kpToolWidgetLineWidth;
+class kpViewManager;
+
+class kpToolPolygon : public kpTool
 {
 Q_OBJECT
 
 public:
     kpToolPolygon (kpMainWindow *);
     virtual ~kpToolPolygon ();
+
+    enum Mode
+    {
+        Polygon, Polyline, Line
+    };
+    
+    void setMode (Mode mode);
+    
+    virtual bool careAboutModifierState () const { return true; }
+
+    virtual void begin ();
+    virtual void end ();
+
+    virtual void beginDraw ();
+    virtual void draw (const QPoint &, const QPoint &, const QRect &);
+    virtual void cancelDraw ();
+    virtual void endDraw (const QPoint &, const QRect &);
+    void endShape ();
+
+public slots:
+    void slotLineStyleChanged (Qt::PenStyle lineStyle);
+    void slotLineWidthChanged (int width);
+    void slotFillStyleChanged (Qt::BrushStyle fillStyle);
+    
+protected slots:
+    virtual void slotForegroundColorChanged (const QColor &);
+    virtual void slotBackgroundColorChanged (const QColor &);
+
+private slots:
+    void updateShape ();
+    
+private:
+    Mode m_mode;
+
+    Qt::BrushStyle m_fillStyle;
+    kpToolWidgetFillStyle *m_toolWidgetFillStyle;
+    
+    Qt::PenStyle m_lineStyle;
+    kpToolWidgetLineStyle *m_toolWidgetLineStyle;
+
+    int m_lineWidth;
+    kpToolWidgetLineWidth *m_toolWidgetLineWidth;
+
+    int m_originatingMouseButton;
+    
+    QPen pen () const;
+    QBrush brush () const;
+
+    void applyModifiers ();
+
+    QPoint m_toolLineStartPoint, m_toolLineEndPoint;
+    QRect m_toolLineRect;
+    
+    QPointArray m_points;
+};
+
+class kpToolPolygonCommand : public KCommand
+{
+public:
+    kpToolPolygonCommand (kpViewManager *m_viewManager, kpDocument *m_document,
+                          const QString &toolText,
+                          const QPointArray &points,
+                          const QRect &normalizedRect,
+                          const QPen &pen, const QBrush &brush,
+                          const QPixmap &originalArea,
+                          kpToolPolygon::Mode mode);
+    virtual ~kpToolPolygonCommand ();
+
+    virtual void execute ();
+    virtual void unexecute ();
+
+    virtual QString name () const;
+
+private:
+    kpViewManager *m_viewManager;
+    kpDocument *m_document;
+    
+    QString m_name;
+
+    QPointArray m_points;
+    QRect m_normalizedRect;
+    QPen m_pen;
+    QBrush m_brush;
+
+    QPixmap m_originalArea;
+    kpToolPolygon::Mode m_mode;
 };
 
 #endif  // __kptoolpolygon_h__
-

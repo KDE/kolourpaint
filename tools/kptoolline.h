@@ -32,89 +32,17 @@
 #ifndef __kptoolline_h__
 #define __kptoolline_h__
 
-#include <qpen.h>
-#include <qobject.h>
-#include <qpixmap.h>
-#include <qpoint.h>
+#include <kptoolpolygon.h>
 
-#include <kcommand.h>
-
-#include <kptool.h>
-
-class QMouseEvent;
-class QPen;
-class QPoint;
-class QRect;
-
-class kpView;
-class kpDocument;
 class kpMainWindow;
 
-class kpToolWidgetLineStyle;
-class kpToolWidgetLineWidth;
-class kpViewManager;
-
-class kpToolLine : public kpTool
+class kpToolLine : public kpToolPolygon
 {
 Q_OBJECT
 
 public:
     kpToolLine (kpMainWindow *);
     virtual ~kpToolLine ();
-
-    virtual bool careAboutModifierState () const { return true; }
-
-    virtual void begin ();
-    virtual void end ();
-
-    virtual void beginDraw ();
-    virtual void draw (const QPoint &, const QPoint &, const QRect &);
-    virtual void cancelDraw ();
-    virtual void endDraw (const QPoint &, const QRect &);
-
-public slots:
-    void slotLineStyleChanged (Qt::PenStyle lineStyle);
-    void slotLineWidthChanged (int width);
-
-private:
-    Qt::PenStyle m_lineStyle;
-    kpToolWidgetLineStyle *m_toolWidgetLineStyle;
-
-    int m_lineWidth;
-    kpToolWidgetLineWidth *m_toolWidgetLineWidth;
-
-    QPen pen () const;
-
-    void applyModifiers ();
-
-    QPoint m_toolLineStartPoint, m_toolLineEndPoint;
-    QRect m_toolLineRect;
-};
-
-class kpToolLineCommand : public KCommand
-{
-public:
-    kpToolLineCommand (kpViewManager *m_viewManager, kpDocument *m_document,
-                        const QPoint &startPoint, const QPoint &m_endPoint,
-                        const QRect &normalizedRect,
-                        const QPen &pen,
-                        const QPixmap &originalArea);
-    virtual ~kpToolLineCommand ();
-
-    virtual void execute ();
-    virtual void unexecute ();
-
-    virtual QString name () const;
-
-private:
-    kpViewManager *m_viewManager;
-    kpDocument *m_document;
-
-    QPoint m_startPoint, m_endPoint;
-    QRect m_normalizedRect;
-    QPen m_pen;
-
-    QPixmap m_originalArea;
 };
 
 #endif  // __kptoolline_h__

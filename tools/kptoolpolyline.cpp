@@ -33,9 +33,11 @@
 #include <kptoolpolyline.h>
 
 kpToolPolyline::kpToolPolyline (kpMainWindow *mainWindow)
-    : kpToolLine (mainWindow)
+    : kpToolPolygon (mainWindow)
 {
-    setText (i18n ("Polyline"));
+    setMode (Polyline);
+
+    setText (i18n ("Connected Lines"));
     setDescription (i18n ("Draws connected lines"));
     setName ("tool_polyline");
 }
@@ -45,4 +47,3 @@ kpToolPolyline::~kpToolPolyline ()
 }
 
 #include <kptoolpolyline.moc>
-

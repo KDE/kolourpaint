@@ -32,11 +32,11 @@
 #ifndef __kptoolpolyline_h__
 #define __kptoolpolyline_h__
 
-#include <kptoolline.h>
+#include <kptoolpolygon.h>
 
 class kpMainWindow;
 
-class kpToolPolyline : public kpToolLine
+class kpToolPolyline : public kpToolPolygon
 {
 Q_OBJECT
 
