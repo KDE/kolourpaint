@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_PIXMAP_FX 1
+#define DEBUG_KP_PIXMAP_FX 0
 
 #include <qbitmap.h>
 #include <qimage.h>
