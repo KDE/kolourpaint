@@ -69,6 +69,8 @@ int main (int argc, char *argv [])
         "Copyright (c) 2003 Clarence Dang",
         0
     );
+
+    // this is _not_ the same as KAboutData::License_BSD
     aboutData.setLicenseText (kpLicenseText);
 
     aboutData.addAuthor ("Clarence Dang", I18N_NOOP ("Maintainer"), "dang@kde.org");

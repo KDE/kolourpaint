@@ -5,10 +5,9 @@ bin_PROGRAMS = kolourpaint
 kolourpaint.o: kolourpaintlicense.h
 
 kolourpaintlicense.h : $(srcdir)/LICENCE
-	echo "#include <klocale.h>" > kolourpaintlicense.h
-	echo "const char *kpLicenseText = I18N_NOOP (" >> kolourpaintlicense.h
+	echo "const char *kpLicenseText =" > kolourpaintlicense.h
 	cat $(srcdir)/LICENCE | sed -e 's/"/\\"/g' -e 's/$$/\\n"/g' -e 's/^/    "/g' >> kolourpaintlicense.h
-	echo ");  // I18N_NOOP" >> kolourpaintlicense.h
+	echo ";" >> kolourpaintlicense.h
 
 CLEANFILES = kolourpaintlicense.h
 
