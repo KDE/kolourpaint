@@ -493,8 +493,7 @@ void kpMainWindow::drawTransparentBackground (QPainter *painter,
                                               const QRect &rect,
                                               bool isPreview)
 {
-    const int dimen = QMIN (viewWidth, viewHeight);
-    const int cellSize = QMAX (5, QMIN (20, (dimen / 4) / 5 * 5));
+    const int cellSize = !isPreview ? 16 : 10;
 
     int starty = rect.y ();
     if (starty % cellSize)
@@ -515,32 +514,15 @@ void kpMainWindow::drawTransparentBackground (QPainter *painter,
             if (parity)
             {
                 if (!isPreview)
-                    col = Qt::darkGray;
+                    col = QColor (213, 213, 213);
                 else
-                    col = Qt::lightGray;
+                    col = QColor (224, 224, 224);
             }
             else
                 col = Qt::white;
 
-            if (!isPreview || !parity)
-            {
-                painter->fillRect (x - rect.x (), y - rect.y (), cellSize, cellSize,
-                                   col);
-            }
-            else
-            {
-                for (int y2 = 0; y2 < cellSize; y2++)
-                {
-                    for (int x2 = 0; x2 < cellSize; x2++)
-                    {
-                        if ((y2 + x2) % 2)
-                            painter->setPen (Qt::white);
-                        else
-                            painter->setPen (col);
-                        painter->drawPoint (x - rect.x () + x2, y - rect.y () + y2);
-                    }
-                }
-            }
+            painter->fillRect (x - rect.x (), y - rect.y (), cellSize, cellSize,
+                               col);
         }
     }
     painter->restore ();
