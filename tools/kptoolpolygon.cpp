@@ -469,43 +469,13 @@ void kpToolPolygon::beginDraw ()
 
     if (!endedShape)
     {
-        const QString mct = mouseClickText (true/*other mouse button*/,
-                                            true/*start sentence*/);
         switch (m_mode)
         {
         case Line:
-            setUserMessage (i18n ("%1 to cancel.").arg (mct));
-            break;
-
         case Curve:
-            /*if (m_points.size () == 2)
-            {*/
-                setUserMessage (i18n ("%1 to cancel.").arg (mct));
-            /*}
-            else if (m_points.size () == 3)
-            {
-                setUserMessage (i18n ("Dragging first control point. %1 to cancel.")
-                                    .arg (mct));
-            }
-            else if (m_points.size () == 4)
-            {
-                setUserMessage (i18n ("Dragging last control point. %1 to cancel.")
-                                    .arg (mct));
-            }
-            else
-            {
-                kdError () << "kpToolPolygon::beginDraw() #points" << endl;
-                setUserMessage ();
-            }*/
-
-            break;
-
         case Polygon:
-            setUserMessage (i18n ("%1 to cancel.").arg (mct));
-            break;
-
         case Polyline:
-            setUserMessage (i18n ("%1 to cancel.").arg (mct));
+            setUserMessage (cancelUserMessage ());
             break;
 
         default:
@@ -744,10 +714,14 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
             }
             else
             {
-                setUserMessage (i18n ("%1 another line or %2 to finish.")
-                                    .arg (mouseDragText (false/*this mouse button*/,
-                                                         true/*start sentence*/),
-                                          mouseClickText (true/*other mouse button*/)));
+                if (m_mouseButton == 0)
+                {
+                    setUserMessage (i18n ("Left drag another line or right click to finish."));
+                }
+                else
+                {
+                    setUserMessage (i18n ("Right drag another line or left click to finish."));
+                }
             }
 
             break;
@@ -755,17 +729,25 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
         case Curve:
             if (m_points.size () == 2)
             {
-                setUserMessage (i18n ("%1 to set the first control point or %2 to finish.")
-                                    .arg (mouseDragText (false/*this mouse button*/,
-                                                         true/*start sentence*/),
-                                          mouseClickText (true/*other mouse button*/)));
+                if (m_mouseButton == 0)
+                {
+                    setUserMessage (i18n ("Left drag to set the first control point or right click to finish."));
+                }
+                else
+                {
+                    setUserMessage (i18n ("Right drag to set the first control point or left click to finish."));
+                }
             }
             else if (m_points.size () == 3)
             {
-                setUserMessage (i18n ("%1 to set the last control point or %2 to finish.")
-                                    .arg (mouseDragText (false/*this mouse button*/,
-                                                         true/*start sentence*/),
-                                          mouseClickText (true/*other mouse button*/)));
+                if (m_mouseButton == 0)
+                {
+                    setUserMessage (i18n ("Left drag to set the last control point or right click to finish."));
+                }
+                else
+                {
+                    setUserMessage (i18n ("Right drag to set the last control point or left click to finish."));
+                }
             }
             else
             {

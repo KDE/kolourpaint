@@ -98,30 +98,63 @@ public:
     //
     // Dialog info for warning about data loss with convertToPixmap().
     //
-    class WarnAboutLossInfo
+    struct WarnAboutLossInfo
     {
-    public:
-        WarnAboutLossInfo ()
-            : m_isValid (false),
-              m_parent (0)
+        // <moreColorsThanDisplayAndHasAlphaChannelMessage>:
+        //
+        //     i18n ("The (image \"example.jpg\"|image from the clipboard)"
+        //           " may have more colors than the current screen mode."
+        //           " In order to display it, some colors may be changed."
+        //           " Try increasing your screen depth to at least %1bpp."
+        //
+        //           "\nIt also"
+        //
+        //           " contains translucency which is not fully"
+        //           " supported. The translucency data will be"
+        //           " approximated with a 1-bit transparency mask.")
+        //
+        // <moreColorsThanDisplayMessage>:
+        //     i18n ("The (image \"example.jpg\"|image from the clipboard)"
+        //           " may have more colors than the current screen mode."
+        //           " In order to display it, some colors may be changed."
+        //           " Try increasing your screen depth to at least %1bpp.")
+        //
+        // <hasAlphaChannelMessage>:
+        //     i18n ("The (image \"example.jpg\"|image from the clipboard)"
+        //           " contains translucency which is not fully"
+        //           " supported. The translucency data will be"
+        //           " approximated with a 1-bit transparency mask.")
+        //
+        // <dontAskAgainPrefix>:
+        //
+        //     Don'tAskAgain ID for dialog.
+        //
+        // <parent>:
+        //
+        //     Dialog parent
+        //
+        WarnAboutLossInfo (const QString &moreColorsThanDisplayAndHasAlphaChannelMessage,
+                const QString &moreColorsThanDisplayMessage,
+                const QString &hasAlphaChannelMessage,
+                const QString &dontAskAgainPrefix,
+                QWidget *parent)
+            :
+                m_moreColorsThanDisplayAndHasAlphaChannelMessage (
+                    moreColorsThanDisplayAndHasAlphaChannelMessage),
+                m_moreColorsThanDisplayMessage (
+                    moreColorsThanDisplayMessage),
+                m_hasAlphaChannelMessage (
+                    hasAlphaChannelMessage),
+                m_dontAskAgainPrefix (
+                    dontAskAgainPrefix),
+                m_parent (parent),
+                m_isValid (true)
         {
         }
 
-
-       /*
-        * <parent>                 dialog parent
-        * <itemName>               source of the original image e.g.
-        *                          i18n ("image \"example.jpg\"") or
-        *                          i18n ("image from the clipboard")
-        * <dontAskAgainPrefix>     e.g. "docOpen" or "clipboardPaste"
-        */
-        WarnAboutLossInfo (QWidget *parent,
-                           const QString &itemName,
-                           const QString &dontAskAgainPrefix)
-            : m_isValid (true),
-              m_parent (parent),
-              m_itemName (itemName),
-              m_dontAskAgainPrefix (dontAskAgainPrefix)
+        WarnAboutLossInfo ()
+            : m_parent (0),
+              m_isValid (false)
         {
         }
 
@@ -131,14 +164,14 @@ public:
 
 
         bool isValid () const { return m_isValid; }
-        QWidget *parent () const { return m_parent; }
-        QString itemName () const { return m_itemName; }
-        QString dontAskAgainPrefix () const { return m_dontAskAgainPrefix; }
 
-    private:
-        bool m_isValid;
+
+        QString m_moreColorsThanDisplayAndHasAlphaChannelMessage,
+                m_moreColorsThanDisplayMessage,
+                m_hasAlphaChannelMessage;
+        QString m_dontAskAgainPrefix;
         QWidget *m_parent;
-        QString m_itemName, m_dontAskAgainPrefix;
+        bool m_isValid;
     };
 
     //

@@ -16,6 +16,9 @@ the changes required for backporting and nothing else.  However,
 non-backporting changes can be applied as long as they are applied to
 KDE_3_3_BRANCH first.
 
+   * [also in KDE 3.3 branch] Fix remaining untranslatable strings (closing
+     KDE Bug #85785)
+
 Version 1.2_kde3 "ByFiat Everytime" (2004/08/18)
    * Backport to KDE 3.0 by merging kolourpaint_1_0_branch
      - 1.2_kde3 should be functionally the same as 1.2, if compiled under
@@ -34,6 +37,9 @@ Version 1.2_kde3 "ByFiat Everytime" (2004/08/18)
 
 KolourPaint 1.2 Series (KDE_3_3_BRANCH)
 ======================
+
+   * Fix remaining untranslatable strings (closing KDE Bug #85785)
+   * Update docs (README, NEWS, ...)
 
 Version 1.2 "ByFiat Everytime" (2004/08/18)
    * Add up to 500 levels of Undo/Redo (minimum of 10 levels, maximum of

@@ -48,14 +48,15 @@
 
 kpToolPreviewDialog::kpToolPreviewDialog (Features features,
                                           bool reserveTopRow,
-                                          const QString &actionName,
+                                          const QString &caption,
+                                          const QString &afterActionText,
                                           bool actOnSelection,
                                           kpMainWindow *parent,
                                           const char *name)
     : KDialogBase (parent, name, true/*modal*/,
-                   QString::null,
+                   caption,
                    KDialogBase::Ok | KDialogBase::Cancel),
-      m_actionName (actionName),
+      m_afterActionText (afterActionText),
       m_actOnSelection (actOnSelection),
       m_mainWindow (parent),
       m_dimensionsGroupBox (0),
@@ -64,9 +65,6 @@ kpToolPreviewDialog::kpToolPreviewDialog (Features features,
       m_previewPixmapLabel (0),
       m_gridLayout (0)
 {
-    setCaption (captionFromActionName ());
-
-
     QWidget *baseWidget = new QWidget (this);
     setMainWidget (baseWidget);
 
@@ -123,15 +121,6 @@ kpToolPreviewDialog::~kpToolPreviewDialog ()
 
 
 // private
-QString kpToolPreviewDialog::captionFromActionName () const
-{
-    if (m_actOnSelection)
-        return i18n ("%1 Selection").arg (m_actionName);
-    else
-        return i18n ("%1 Image").arg (m_actionName);
-}
-
-// private
 void kpToolPreviewDialog::createDimensionsGroupBox ()
 {
     m_dimensionsGroupBox = new QGroupBox (i18n ("Dimensions"), mainWidget ());
@@ -152,8 +141,7 @@ void kpToolPreviewDialog::createDimensionsGroupBox ()
     }
     QLabel *originalDimensionsLabel = new QLabel (originalDimensions, m_dimensionsGroupBox);
 
-    QLabel *afterTransformLabel = new QLabel (i18n ("After %1:").arg (m_actionName),
-                                              m_dimensionsGroupBox);
+    QLabel *afterTransformLabel = new QLabel (m_afterActionText, m_dimensionsGroupBox);
     m_afterTransformDimensionsLabel = new QLabel (m_dimensionsGroupBox);
 
 

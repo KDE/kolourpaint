@@ -85,9 +85,8 @@ void kpToolColorPicker::begin ()
 void kpToolColorPicker::beginDraw ()
 {
     m_oldColor = color (m_mouseButton);
-    setUserMessage (i18n ("%1 to cancel.")
-                        .arg (mouseClickText (true/*other mouse button*/,
-                                              true/*start of sentence*/)));
+
+    setUserMessage (cancelUserMessage ());
 }
 
 // virtual

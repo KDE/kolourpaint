@@ -57,14 +57,16 @@ public:
     // You must call slotUpdate() in your constructor
     kpToolPreviewDialog (Features features,
                          bool reserveTopRow,
-                         const QString &actionName,  // e.g. "Skew"
+                         // e.g. "Skew (Image|Selection)"
+                         const QString &caption,
+                         // (in the Dimensions Group Box) e.g. "After Skew:"
+                         const QString &afterActionText,
                          bool actOnSelection,
                          kpMainWindow *parent,
                          const char *name = 0);
     virtual ~kpToolPreviewDialog ();
 
 private:
-    QString captionFromActionName () const;
     void createDimensionsGroupBox ();
     void createPreviewGroupBox ();
 
@@ -107,7 +109,7 @@ protected slots:
     virtual void slotUpdateWithWaitCursor ();
 
 protected:
-    QString m_actionName;
+    QString m_afterActionText;
     bool m_actOnSelection;
     kpMainWindow *m_mainWindow;
 

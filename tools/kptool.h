@@ -331,13 +331,11 @@ protected:
      * User Notifications (Status Bar)
      */
 
-private:
-    int calcMouseButton (bool otherMouseButton = false) const;
-
 public:
-    QString mouseButtonText (bool otherMouseButton = false, bool sentenceStart = false) const;
-    QString mouseClickText (bool otherMouseButton = false, bool sentenceStart = false) const;
-    QString mouseDragText (bool otherMouseButton = false, bool sentenceStart = false) const;
+    // Returns "(Left|Right) click to cancel." where Left or Right is chosen
+    // depending on which one is the _opposite_ of <mouseButton>
+    static QString cancelUserMessage (int mouseButton);
+    QString cancelUserMessage () const;
 
     QString userMessage () const;
     void setUserMessage (const QString &userMessage = QString::null);

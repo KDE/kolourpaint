@@ -22,11 +22,15 @@ Please also note that the Categories should contain 'Application' within the
 desktop file to be freedesktop compatible.
 "
 
+kptoolpreviewdialog: wrong if new pixels result in diff selection transparency
+
+next time you do a bin package, use --disable-debug
+
+how do you distribute the translation packs?
+
 
 KolourPaint 1.2
 ~~~~~~~~~~~~~~~
-
-Apply i18n fixes in HEAD & KDE_3_3_BRANCH after KDE 3.3 releases
 
 
 KolourPaint 1.4

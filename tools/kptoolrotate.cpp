@@ -236,7 +236,9 @@ kpToolRotateDialog::kpToolRotateDialog (bool actOnSelection,
                                         const char *name)
     : kpToolPreviewDialog (kpToolPreviewDialog::AllFeatures,
                            false/*don't reserve top row*/,
-                           i18n ("Rotate"), actOnSelection, mainWindow, name)
+                           actOnSelection ? i18n ("Rotate Selection") : i18n ("Rotate Image"),
+                           i18n ("After Rotate:"),
+                           actOnSelection, mainWindow, name)
 {
     // Too confusing - disable for now
     s_lastAngleRadioButtonID = 3;

@@ -242,9 +242,30 @@ QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExist
 
 
     QPixmap newPixmap = kpPixmapFX::convertToPixmapAsLosslessAsPossible (image,
-        kpPixmapFX::WarnAboutLossInfo (parent,
-            i18n ("image \"%1\"").arg (prettyFilenameForURL (url)),
-            "docOpen"));
+        kpPixmapFX::WarnAboutLossInfo (
+             i18n ("The image \"%1\""
+                   " may have more colors than the current screen mode."
+                   " In order to display it, some colors may be changed."
+                   " Try increasing your screen depth to at least %2bpp."
+
+                   "\nIt also"
+
+                   " contains translucency which is not fully"
+                   " supported. The translucency data will be"
+                   " approximated with a 1-bit transparency mask.")
+                 .arg (prettyFilenameForURL (url)),
+             i18n ("The image \"%1\""
+                   " may have more colors than the current screen mode."
+                   " In order to display it, some colors may be changed."
+                   " Try increasing your screen depth to at least %2bpp.")
+                 .arg (prettyFilenameForURL (url)),
+             i18n ("The image \"%1\""
+                   " contains translucency which is not fully"
+                   " supported. The translucency data will be"
+                   " approximated with a 1-bit transparency mask.")
+                .arg (prettyFilenameForURL (url)),
+            "docOpen",
+            parent));
 
 
 #if DEBUG_KP_DOCUMENT && 1
