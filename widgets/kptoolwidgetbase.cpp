@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_TOOL_WIDGET_BASE 1
+
 #include <qbitmap.h>
 #include <qcolor.h>
 #include <qimage.h>
@@ -69,11 +71,13 @@ int kpToolWidgetBase::addOption (const QPixmap &pixmap, const QString &toolTip,
     if (!toolTip.isEmpty ())
         QToolTip::add (this, m_pixmapRects [n], toolTip);
 
+#if DEBUG_KP_TOOL_WIDGET_BASE && 0
     kdDebug () << "kpToolWidgetBase::addOption(): m_x=" << m_x
                << " m_y=" << m_y
                << " width=" << pixmap.width ()
                << " height=" << pixmap.height ()
                << endl;
+#endif
 
     if (pixmap.height () > m_highest)
         m_highest = pixmap.height ();
@@ -134,7 +138,9 @@ void kpToolWidgetBase::mousePressEvent (QMouseEvent *e)
 // virtual protected
 void kpToolWidgetBase::drawContents (QPainter *painter)
 {
+#if DEBUG_KP_TOOL_WIDGET_BASE && 0
     kdDebug () << "kpToolWidgetBase::drawContents(): rect=" << contentsRect () << endl;
+#endif
 
     const int numPixmaps = m_pixmaps.count ();
     for (int i = 0; i < numPixmaps; i++)
