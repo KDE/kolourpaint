@@ -29,9 +29,8 @@ kolourpaint_LDADD = $(LIB_KDEPRINT) \
     tools/libkolourpainttools.la \
     widgets/libkolourpaintwidgets.la
 
-INCLUDES = -I$(srcdir)/cursors -I$(srcdir)/pixmapfx \
-    -I$(srcdir)/tools -I$(srcdir)/widgets \
-    $(all_includes)
+AM_CPPFLAGS = -I$(srcdir)/cursors -I$(srcdir)/pixmapfx \
+    -I$(srcdir)/tools -I$(srcdir)/widgets $(all_includes)
 
 METASOURCES = AUTO
 
