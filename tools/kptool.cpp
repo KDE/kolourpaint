@@ -581,7 +581,7 @@ void kpTool::hover (const QPoint &point)
                << " base implementation"
                << endl;
 #endif
-    
+
     setUserShapePoints (point);
 }
 

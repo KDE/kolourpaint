@@ -38,11 +38,12 @@ kpThumbnailView::kpThumbnailView (kpDocument *document,
         kpToolToolBar *toolToolBar,
         kpViewManager *viewManager,
         kpView *buddyView,
-        kpViewScrollableContainer *buddyViewScrollView,
+        kpViewScrollableContainer *scrollableContainer,
         QWidget *parent, const char *name)
 
     : kpView (document, toolToolBar, viewManager,
-              buddyView, buddyViewScrollView,
+              buddyView,
+              scrollableContainer,
               parent, name)
 {
 }

@@ -802,7 +802,7 @@ void kpMainWindow::slotThumbnailShowRectangleToggled ()
 
     if (m_thumbnailView)
     {
-        m_thumbnailView->showBuddyViewScrollViewRectangle (
+        m_thumbnailView->showBuddyViewScrollableContainerRectangle (
             d->m_actionShowThumbnailRectangle->isChecked ());
     }
 }
@@ -863,19 +863,21 @@ void kpMainWindow::createThumbnailView ()
     {
         m_thumbnailView = new kpZoomedThumbnailView (
             m_document, m_toolToolBar, m_viewManager,
-            m_mainView, m_scrollView,
+            m_mainView,
+            0/*scrollableContainer*/,
             m_thumbnail, "thumbnailView");
     }
     else
     {
         m_thumbnailView = new kpUnzoomedThumbnailView (
             m_document, m_toolToolBar, m_viewManager,
-            m_mainView, m_scrollView,
+            m_mainView,
+            0/*scrollableContainer*/,
             m_thumbnail, "thumbnailView");
 
     }
 
-    m_thumbnailView->showBuddyViewScrollViewRectangle (
+    m_thumbnailView->showBuddyViewScrollableContainerRectangle (
         d->m_actionShowThumbnailRectangle->isChecked ());
 
 

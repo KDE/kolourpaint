@@ -49,18 +49,21 @@ kpUnzoomedThumbnailView::kpUnzoomedThumbnailView (
         kpToolToolBar *toolToolBar,
         kpViewManager *viewManager,
         kpView *buddyView,
-        kpViewScrollableContainer *buddyViewScrollView,
+        kpViewScrollableContainer *scrollableContainer,
         QWidget *parent, const char *name)
 
     : kpThumbnailView (document, toolToolBar, viewManager,
-                       buddyView, buddyViewScrollView,
+                       buddyView,
+                       scrollableContainer,
                        parent, name),
       d (new kpUnzoomedThumbnailViewPrivate ())
 {
-    if (buddyViewScrollView)
+    if (buddyViewScrollableContainer ())
     {
-        connect (buddyViewScrollView, SIGNAL (contentsMovingSoon (int, int)),
-                this, SLOT (adjustToEnvironment ()));
+        connect (buddyViewScrollableContainer (),
+                SIGNAL (contentsMovingSoon (int, int)),
+                this,
+                SLOT (adjustToEnvironment ()));
     }
 
     // Call to virtual function - this is why the class is sealed
@@ -84,13 +87,13 @@ QString kpUnzoomedThumbnailView::caption () const
 // public slot virtual [base kpView]
 void kpUnzoomedThumbnailView::adjustToEnvironment ()
 {
-    if (!buddyView () || !buddyViewScrollView () || !document ())
+    if (!buddyView () || !buddyViewScrollableContainer () || !document ())
         return;
 
     const int scrollViewContentsX =
-        buddyViewScrollView ()->contentsXSoon ();
+        buddyViewScrollableContainer ()->contentsXSoon ();
     const int scrollViewContentsY =
-        buddyViewScrollView ()->contentsYSoon ();
+        buddyViewScrollableContainer ()->contentsYSoon ();
 
 #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
     kdDebug () << "kpUnzoomedThumbnailView(" << name ()
@@ -154,14 +157,14 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
 // But feels awkward for left-to-right users.  So disabled for now.
 // Not totally tested.
 #else
-    if (!buddyViewScrollView ())
+    if (!buddyViewScrollableContainer ())
         return;
 
     QRect docRect = buddyView ()->transformViewToDoc (
-        QRect (buddyViewScrollView ()->contentsXSoon (),
-               buddyViewScrollView ()->contentsYSoon (),
-               QMIN (buddyView ()->width (), buddyViewScrollView ()->visibleWidth ()),
-               QMIN (buddyView ()->height (), buddyViewScrollView ()->visibleHeight ())));
+        QRect (buddyViewScrollableContainer ()->contentsXSoon (),
+               buddyViewScrollableContainer ()->contentsYSoon (),
+               QMIN (buddyView ()->width (), buddyViewScrollableContainer ()->visibleWidth ()),
+               QMIN (buddyView ()->height (), buddyViewScrollableContainer ()->visibleHeight ())));
 
     x = docRect.x () - (width () - docRect.width ()) / 2;
     kdDebug () << "\tnew suggest x=" << x << endl;

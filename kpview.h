@@ -70,7 +70,7 @@ public:
      * @param buddyView The view this view watches over (e.g. a thumbnail
      *                  view would watch over the main view).  May be 0.
      *                  See for example, highlightBuddyViewRectangle().
-     * @param buddyViewScrollView The buddyView's scrollview container.
+     * @param scrollableContainer This view's scrollable container.
      *                            May be 0.
      *
      * You must call adjustEnvironment() at the end of your constructor.
@@ -79,7 +79,7 @@ public:
             kpToolToolBar *toolToolBar,
             kpViewManager *viewManager,
             kpView *buddyView,
-            kpViewScrollableContainer *buddyViewScrollView,
+            kpViewScrollableContainer *scrollableContainer,
             QWidget *parent, const char *name);
 
     /**
@@ -124,9 +124,14 @@ public:
     kpView *buddyView () const;
 
     /**
-     * @returns the buddyView()'s scrollview container.
+     * @returns the buddyView()'s scrollable container.
      */
-    kpViewScrollableContainer *buddyViewScrollView () const;
+    kpViewScrollableContainer *buddyViewScrollableContainer () const;
+
+    /**
+     * @returns this view's scrollable container.
+     */
+    kpViewScrollableContainer *scrollableContainer () const;
 
 
     /**
@@ -187,36 +192,36 @@ public:
 
     /**
      * @returns whether to draw a rectangle highlighting the area of
-     *          buddyView() visible through buddyViewScrollView().
+     *          buddyView() visible through buddyViewScrollableContainer().
      */
-    bool isBuddyViewScrollViewRectangleShown () const;
+    bool isBuddyViewScrollableContainerRectangleShown () const;
 
     /**
      * Turns on/off the rectangle highlighting the area of buddyView()
-     * visible through buddyViewScrollView() and redraws.
+     * visible through buddyViewScrollableContainer() and redraws.
      *
      * @param yes Whether to turn on the rectangle.
      */
-    void showBuddyViewScrollViewRectangle (bool yes = true);
+    void showBuddyViewScrollableContainerRectangle (bool yes = true);
 
 protected:
     /**
      * @returns the current rectangle highlighting the area of buddyView()
-     *          visible through buddyViewScrollView(), that is being
+     *          visible through buddyViewScrollableContainer(), that is being
      *          rendered by this view.
      */
-    QRect buddyViewScrollViewRectangle () const;
+    QRect buddyViewScrollableContainerRectangle () const;
 
 protected slots:
     /**
-     * Updates the buddyViewScrollViewRectangle() and redraws
+     * Updates the buddyViewScrollableContainerRectangle() and redraws
      * appropriately.
      *
      * This is already connected to zoomLevelChanged() and originChanged();
-     * buddyView() and buddyViewScrollView() signals.  There is probably no
+     * buddyView() and buddyViewScrollableContainer() signals.  There is probably no
      * need to call this function directly.
      */
-    void updateBuddyViewScrollViewRectangle ();
+    void updateBuddyViewScrollableContainerRectangle ();
 
 
 public:
@@ -362,7 +367,7 @@ public slots:
      * environment is defined by the caller and should be based on the type
      * of view.  For instance, an unzoomed thumbnail view would also
      * include in its environment the contents position of an associated
-     * scrollview.
+     * scrollable container.
      *
      * This is never called by the kpView base class.
      *

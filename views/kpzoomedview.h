@@ -60,7 +60,7 @@ public:
                   kpToolToolBar *toolToolBar,
                   kpViewManager *viewManager,
                   kpView *buddyView,
-                  kpViewScrollableContainer *buddyViewScrollView,
+                  kpViewScrollableContainer *scrollableContainer,
                   QWidget *parent, const char *name);
 
     /**

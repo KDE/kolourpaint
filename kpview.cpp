@@ -71,13 +71,13 @@ struct kpViewPrivate
     QGuardedPtr <kpToolToolBar> m_toolToolBar;
     QGuardedPtr <kpViewManager> m_viewManager;
     QGuardedPtr <kpView> m_buddyView;
-    QGuardedPtr <kpViewScrollableContainer> m_buddyViewScrollView;
+    QGuardedPtr <kpViewScrollableContainer> m_scrollableContainer;
 
     int m_hzoom, m_vzoom;
     QPoint m_origin;
     bool m_showGrid;
-    bool m_isBuddyViewScrollViewRectangleShown;
-    QRect m_buddyViewScrollViewRectangle;
+    bool m_isBuddyViewScrollableContainerRectangleShown;
+    QRect m_buddyViewScrollableContainerRectangle;
 
     QRegion m_queuedUpdateArea;
     QPixmap *m_backBuffer;
@@ -88,7 +88,7 @@ kpView::kpView (kpDocument *document,
         kpToolToolBar *toolToolBar,
         kpViewManager *viewManager,
         kpView *buddyView,
-        kpViewScrollableContainer *buddyViewScrollView,
+        kpViewScrollableContainer *scrollableContainer,
         QWidget *parent, const char *name)
 
     : QWidget (parent, name, Qt::WNoAutoErase/*no flicker*/),
@@ -98,12 +98,12 @@ kpView::kpView (kpDocument *document,
     d->m_toolToolBar = toolToolBar;
     d->m_viewManager = viewManager;
     d->m_buddyView = buddyView;
-    d->m_buddyViewScrollView = buddyViewScrollView;
+    d->m_scrollableContainer = scrollableContainer;
 
     d->m_hzoom = 100, d->m_vzoom = 100;
     d->m_origin = QPoint (0, 0);
     d->m_showGrid = false;
-    d->m_isBuddyViewScrollViewRectangleShown = false;
+    d->m_isBuddyViewScrollableContainerRectangleShown = false;
 
     d->m_backBuffer = 0;
 
@@ -160,9 +160,15 @@ kpView *kpView::buddyView () const
 }
 
 // public
-kpViewScrollableContainer *kpView::buddyViewScrollView () const
+kpViewScrollableContainer *kpView::buddyViewScrollableContainer () const
 {
-    return d->m_buddyViewScrollView;
+    return (buddyView () ? buddyView ()->scrollableContainer () : 0);
+}
+
+// public
+kpViewScrollableContainer *kpView::scrollableContainer () const
+{
+    return d->m_scrollableContainer;
 }
 
 
@@ -259,116 +265,116 @@ void kpView::showGrid (bool yes)
 
 
 // public
-bool kpView::isBuddyViewScrollViewRectangleShown () const
+bool kpView::isBuddyViewScrollableContainerRectangleShown () const
 {
-    return d->m_isBuddyViewScrollViewRectangleShown;
+    return d->m_isBuddyViewScrollableContainerRectangleShown;
 }
 
 // public
-void kpView::showBuddyViewScrollViewRectangle (bool yes)
+void kpView::showBuddyViewScrollableContainerRectangle (bool yes)
 {
-    if (yes == d->m_isBuddyViewScrollViewRectangleShown)
+    if (yes == d->m_isBuddyViewScrollableContainerRectangleShown)
         return;
 
-    d->m_isBuddyViewScrollViewRectangleShown = yes;
+    d->m_isBuddyViewScrollableContainerRectangleShown = yes;
 
-    if (d->m_isBuddyViewScrollViewRectangleShown)
+    if (d->m_isBuddyViewScrollableContainerRectangleShown)
     {
         // Got these connect statements by analysing deps of
-        // updateBuddyViewScrollViewRectangle() rect update code.
+        // updateBuddyViewScrollableContainerRectangle() rect update code.
 
         connect (this, SIGNAL (zoomLevelChanged (int, int)),
-                 this, SLOT (updateBuddyViewScrollViewRectangle ()));
+                 this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
         connect (this, SIGNAL (originChanged (const QPoint &)),
-                 this, SLOT (updateBuddyViewScrollViewRectangle ()));
+                 this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
 
-        if (buddyViewScrollView ())
+        if (buddyViewScrollableContainer ())
         {
-            connect (buddyViewScrollView (), SIGNAL (contentsMovingSoon (int, int)),
-                     this, SLOT (updateBuddyViewScrollViewRectangle ()));
-            connect (buddyViewScrollView (), SIGNAL (resized ()),
-                     this, SLOT (updateBuddyViewScrollViewRectangle ()));
+            connect (buddyViewScrollableContainer (), SIGNAL (contentsMovingSoon (int, int)),
+                     this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
+            connect (buddyViewScrollableContainer (), SIGNAL (resized ()),
+                     this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
         }
 
         if (buddyView ())
         {
             connect (buddyView (), SIGNAL (zoomLevelChanged (int, int)),
-                     this, SLOT (updateBuddyViewScrollViewRectangle ()));
+                     this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
             connect (buddyView (), SIGNAL (originChanged (const QPoint &)),
-                     this, SLOT (updateBuddyViewScrollViewRectangle ()));
+                     this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
 
             connect (buddyView (), SIGNAL (sizeChanged (int, int)),
-                     this, SLOT (updateBuddyViewScrollViewRectangle ()));
+                     this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
         }
 
     }
     else
     {
         disconnect (this, SIGNAL (zoomLevelChanged (int, int)),
-                    this, SLOT (updateBuddyViewScrollViewRectangle ()));
+                    this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
         disconnect (this, SIGNAL (originChanged (const QPoint &)),
-                    this, SLOT (updateBuddyViewScrollViewRectangle ()));
+                    this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
 
-        if (buddyViewScrollView ())
+        if (buddyViewScrollableContainer ())
         {
-            disconnect (buddyViewScrollView (), SIGNAL (contentsMovingSoon (int, int)),
-                        this, SLOT (updateBuddyViewScrollViewRectangle ()));
-            disconnect (buddyViewScrollView (), SIGNAL (resized ()),
-                        this, SLOT (updateBuddyViewScrollViewRectangle ()));
+            disconnect (buddyViewScrollableContainer (), SIGNAL (contentsMovingSoon (int, int)),
+                        this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
+            disconnect (buddyViewScrollableContainer (), SIGNAL (resized ()),
+                        this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
         }
 
         if (buddyView ())
         {
             disconnect (buddyView (), SIGNAL (zoomLevelChanged (int, int)),
-                        this, SLOT (updateBuddyViewScrollViewRectangle ()));
+                        this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
             disconnect (buddyView (), SIGNAL (originChanged (const QPoint &)),
-                        this, SLOT (updateBuddyViewScrollViewRectangle ()));
+                        this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
 
             disconnect (buddyView (), SIGNAL (sizeChanged (int, int)),
-                        this, SLOT (updateBuddyViewScrollViewRectangle ()));
+                        this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
         }
 
     }
 
-    updateBuddyViewScrollViewRectangle ();
+    updateBuddyViewScrollableContainerRectangle ();
 }
 
 
 // protected
-QRect kpView::buddyViewScrollViewRectangle () const
+QRect kpView::buddyViewScrollableContainerRectangle () const
 {
-    return d->m_buddyViewScrollViewRectangle;
+    return d->m_buddyViewScrollableContainerRectangle;
 }
 
 // protected slot
-void kpView::updateBuddyViewScrollViewRectangle ()
+void kpView::updateBuddyViewScrollableContainerRectangle ()
 {
     if (viewManager ())
         viewManager ()->setQueueUpdates ();
 
     {
-        if (d->m_buddyViewScrollViewRectangle.isValid ())
+        if (d->m_buddyViewScrollableContainerRectangle.isValid ())
         {
             if (viewManager ())
             {
                 // Erase last
                 viewManager ()->updateViewRectangleEdges (this,
-                    d->m_buddyViewScrollViewRectangle);
+                    d->m_buddyViewScrollableContainerRectangle);
             }
         }
 
 
         QRect newRect;
-        if (isBuddyViewScrollViewRectangleShown () &&
-            buddyViewScrollView () && buddyView ())
+        if (isBuddyViewScrollableContainerRectangleShown () &&
+            buddyViewScrollableContainer () && buddyView ())
         {
             QRect docRect = buddyView ()->transformViewToDoc (
-                QRect (buddyViewScrollView ()->contentsXSoon (),
-                       buddyViewScrollView ()->contentsYSoon (),
+                QRect (buddyViewScrollableContainer ()->contentsXSoon (),
+                       buddyViewScrollableContainer ()->contentsYSoon (),
                        QMIN (buddyView ()->width (),
-                             buddyViewScrollView ()->visibleWidth ()),
+                             buddyViewScrollableContainer ()->visibleWidth ()),
                        QMIN (buddyView ()->height (),
-                             buddyViewScrollView ()->visibleHeight ())));
+                             buddyViewScrollableContainer ()->visibleHeight ())));
 
 
             QRect viewRect = this->transformDocToView (docRect);
@@ -386,18 +392,18 @@ void kpView::updateBuddyViewScrollViewRectangle ()
             newRect = QRect ();
         }
 
-        if (newRect != d->m_buddyViewScrollViewRectangle)
+        if (newRect != d->m_buddyViewScrollableContainerRectangle)
         {
             // (must set before updateView() for paintEvent() to see new
             //  rect)
-            d->m_buddyViewScrollViewRectangle = newRect;
+            d->m_buddyViewScrollableContainerRectangle = newRect;
 
             if (newRect.isValid ())
             {
                 if (viewManager ())
                 {
                     viewManager ()->updateViewRectangleEdges (this,
-                        d->m_buddyViewScrollViewRectangle);
+                        d->m_buddyViewScrollableContainerRectangle);
                 }
             }
         }
@@ -1027,11 +1033,11 @@ void kpView::enterEvent (QEvent *e)
     // We're already covered by MouseMoveEvent anyway.
     //
     // But disabling this causes a more serious problem: RMB on a text
-    // box and Esc.  We have no other reliable way to determine if the 
+    // box and Esc.  We have no other reliable way to determine if the
     // mouse is still above the view (user could have moved mouse out
     // while RMB menu was up) and hence the cursor is not updated.
     setHasMouse (true);
-    
+
     if (tool ())
         tool ()->enterEvent (e);
 }
@@ -1725,7 +1731,7 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
     }
 
 
-    const QRect bvsvRect = buddyViewScrollViewRectangle ();
+    const QRect bvsvRect = buddyViewScrollableContainerRectangle ();
     if (!bvsvRect.isEmpty ())
     {
         backBufferPainter.save ();

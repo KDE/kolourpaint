@@ -42,9 +42,9 @@ class kpViewScrollableContainer;
  * This is an unzoomed thumbnail view of a document.  Unlike
  * @ref kpZoomedThumbnailView, it never changes the zoom level.  And unlike
  * @ref kpZoomedView, it never resizes itself.  Instead, it changes its
- * origin according to the main view's scrollview container so that the
- * top-left most document pixel displayed in the scrollview will be
- * visible.
+ * origin according to the main view's scrollable container so that the
+ * top-left most document pixel displayed in the scrollable container will
+ * be visible.
  *
  * Do not call setZoomLevel() nor setOrigin().
  *
@@ -64,7 +64,7 @@ public:
             kpToolToolBar *toolToolBar,
             kpViewManager *viewManager,
             kpView *buddyView,
-            kpViewScrollableContainer *buddyViewScrollView,
+            kpViewScrollableContainer *scrollableContainer,
             QWidget *parent, const char *name);
 
     /**
@@ -81,15 +81,15 @@ public:
 
 public slots:
     /**
-     * Changes its origin according to the main view's scrollview container
-     * so that the top-left most document pixel displayed in the scrollview
-     * will be visible.
+     * Changes its origin according to the main view's scrollable container
+     * so that the top-left most document pixel displayed in the scrollable
+     * container will be visible.
      *
      * It tries to maximise the used area of this view.  Unused areas will
      * be set to the widget background thanks to the mask.
      *
      * Call this if the size of the document changes.
-     * Already connected to buddyViewScrollView()'s
+     * Already connected to buddyViewScrollableContainer()'s
      * contentsMovingSoon(int,int) signal.
      * Already called by @ref kpThumbnailView resizeEvent().
      *

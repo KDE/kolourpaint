@@ -526,7 +526,8 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         kdDebug () << "\tcreating views" << endl;
     #endif
         m_mainView = new kpZoomedView (m_document, m_toolToolBar, m_viewManager,
-                                       0/*buddyView*/, 0/*buddyViewScrollView*/,
+                                       0/*buddyView*/,
+                                       m_scrollView,
                                        m_scrollView->viewport (), "mainView");
         if (m_scrollView)
         {

@@ -42,11 +42,12 @@ kpZoomedThumbnailView::kpZoomedThumbnailView (kpDocument *document,
         kpToolToolBar *toolToolBar,
         kpViewManager *viewManager,
         kpView *buddyView,
-        kpViewScrollableContainer *buddyViewScrollView,
+        kpViewScrollableContainer *scrollableContainer,
         QWidget *parent, const char *name)
 
     : kpThumbnailView (document, toolToolBar, viewManager,
-                       buddyView, buddyViewScrollView,
+                       buddyView,
+                       scrollableContainer,
                        parent, name)
 {
     // Call to virtual function - this is why the class is sealed
