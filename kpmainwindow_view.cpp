@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <qscrollview.h>
+
 #include <kactionclasses.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -129,7 +131,44 @@ void kpMainWindow::slotZoom ()
     m_actionZoomIn->setEnabled (m_actionZoom->currentItem () < (int) m_zoomList.count () - 1);
     m_actionZoomOut->setEnabled (m_actionZoom->currentItem () > 0);
 
+#if 1
+    #if DEBUG_KPMAINWINDOW
+        kdDebug () << "\tscrollView   contentsX=" << m_scrollView->contentsX ()
+                   << " contentsY=" << m_scrollView->contentsY ()
+                   << " contentsWidth=" << m_scrollView->contentsWidth ()
+                   << " contentsHeight=" << m_scrollView->contentsHeight ()
+                   << " visibleWidth=" << m_scrollView->visibleWidth ()
+                   << " visibleHeight=" << m_scrollView->visibleHeight ()
+                   << " oldZoomX=" << m_mainView->zoomLevelX ()
+                   << " oldZoomY=" << m_mainView->zoomLevelY ()
+                   << " newZoom=" << zoomLevel
+                   << " mainViewX=" << m_scrollView->childX (m_mainView)
+                   << " mainViewY=" << m_scrollView->childY (m_mainView)
+                   << endl;
+    #endif
+        int newPosY = m_scrollView->contentsY () * zoomLevel / m_mainView->zoomLevelY ();
+        int newPosX = m_scrollView->contentsX () * zoomLevel / m_mainView->zoomLevelX ();
+#endif
+
     m_mainView->setZoomLevel (zoomLevel, zoomLevel);
+
+#if 1
+    #if DEBUG_KPMAINWINDOW && 1
+        kdDebug () << "\tcurrently at (x=" << m_scrollView->contentsX ()
+                   << ",y=" << m_scrollView->contentsY ()
+                   << ") scrolling to (x=" << newPosX
+                   << ",y=" << newPosY << ")" << endl;
+    #endif
+    
+        m_scrollView->setContentsPos (newPosX, newPosY);
+
+    #if DEBUG_KPMAINWINDOW && 1
+        kdDebug () << "\t\tcheck (contentsX=" << m_scrollView->contentsX ()
+                   << ",contentsY=" << m_scrollView->contentsY ()
+                   << ")" << endl;
+    #endif
+#endif
+    
     m_actionShowGrid->setEnabled (m_mainView->canShowGrid ());
     if (m_actionShowGrid->isEnabled ())
     {
