@@ -36,7 +36,7 @@ kpToolFreeFormSelection::kpToolFreeFormSelection (kpMainWindow *mainWindow)
     : kpToolSelection (mainWindow)
 {
     setMode (kpToolSelection::FreeForm);
-    setText (i18n ("Selection (Free Form)"));
+    setText (i18n ("Selection (Free-Form)"));
     setDescription ("Makes a free-form selection");
     setName ("tool_free_form_selection");				 
 }

@@ -38,7 +38,7 @@ kpToolRoundedRectangle::kpToolRoundedRectangle (kpMainWindow *mainWindow)
     setMode (kpToolRectangle::RoundedRectangle);
 
     setText (i18n ("Rounded Rectangle"));
-    setDescription ("Draws squares and rectangles with rounded corners");
+    setDescription ("Draws rectangles and squares with rounded corners");
     setName ("tool_rounded_rectangle");
 }
 

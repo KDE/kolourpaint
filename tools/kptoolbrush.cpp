@@ -37,7 +37,7 @@ kpToolBrush::kpToolBrush (kpMainWindow *mainWindow)
 {
     setMode (kpToolPen::Brush);
     setText (i18n ("Brush"));
-    setDescription (i18n ("Draw using brushes of different shapes"));
+    setDescription (i18n ("Draw using brushes of different shapes and sizes"));
     setName ("tool_brush");
 }
 

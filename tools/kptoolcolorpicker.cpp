@@ -48,7 +48,7 @@
  */
 
 kpToolColorPicker::kpToolColorPicker (kpMainWindow *mainWindow)
-    : kpTool (i18n ("Color Picker"), i18n ("Allows you to selects a color from your image"),
+    : kpTool (i18n ("Color Picker"), i18n ("Lets you select a color from the image"),
               mainWindow, "tool_color_picker")
 {
 }

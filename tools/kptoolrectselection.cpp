@@ -36,8 +36,8 @@ kpToolRectSelection::kpToolRectSelection (kpMainWindow *mainWindow)
     : kpToolSelection (mainWindow)
 {
     setMode (kpToolSelection::Rectangle);
-    setText (i18n ("Selection (Rectangle)"));
-    setDescription ("Makes a rectangle selection");
+    setText (i18n ("Selection (Rectangular)"));
+    setDescription ("Makes a rectangular selection");
     setName ("tool_rect_selection");				 
 }
 
