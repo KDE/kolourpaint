@@ -52,7 +52,7 @@ kpDocumentSaveOptionsPreviewDialog::kpDocumentSaveOptionsPreviewDialog (
         QWidget *parent,
         const char *name)
     : KDialogBase (parent, name, false/*non-modal*/,
-                   i18n ("Preview Save"),
+                   i18n ("Save Preview"),
                    0/*no buttons*/),
       m_filePixmap (0),
       m_fileSize (0)
@@ -181,7 +181,7 @@ void kpDocumentSaveOptionsWidget::init ()
     // according to QImage::save().
     m_qualityInput->setRange (1, 100, 1/*step*/, true/*slider*/);
 
-    m_previewButton = new KPushButton (i18n ("&Preview..."), this);
+    m_previewButton = new KPushButton (i18n ("&Preview"), this);
     m_previewButton->setToggleButton (true);
 
 

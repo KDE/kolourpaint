@@ -1076,7 +1076,7 @@ void kpToolResizeScaleDialog::slotOk ()
         break;
 
     case kpToolResizeScaleCommand::SmoothScale:
-        operationIngTitleCase = i18n ("Smooth scaling");
+        operationIngTitleCase = i18n ("Smooth Scaling");
         operationLowerCase = i18n ("smooth scale");
         continueButtonText = i18n ("Smooth Scal&e %1").arg (selOrImageTitleCase);
         caption = i18n ("Smooth Scale %1?").arg (selOrImageTitleCase);
