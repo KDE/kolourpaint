@@ -225,7 +225,7 @@ void kpToolToolBar::hideAllToolWidgets ()
     HIDE_WIDGET (m_toolWidgetLineStyle);
     HIDE_WIDGET (m_toolWidgetLineWidth);
     HIDE_WIDGET (m_toolWidgetSpraycanSize);
-#undef HIDE_WIDGET(w)
+#undef HIDE_WIDGET
 }
 
 
@@ -336,7 +336,7 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
     ADD_WIDGET (m_toolWidgetBrush);
     ADD_WIDGET (m_toolWidgetEraserSize);
     ADD_WIDGET (m_toolWidgetSpraycanSize);
-#undef ADD_WIDGET(w)
+#undef ADD_WIDGET
 
     KToolBar::setOrientation (o);
 }
