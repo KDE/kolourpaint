@@ -126,7 +126,6 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
             return false;
         }
 
-// TODO: why are all non-absolute URLs detected as "inode/directory"???
 #if 0
         if (!KImageIO::isSupported (mimetype, KImageIO::Reading))
         {

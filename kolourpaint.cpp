@@ -107,9 +107,7 @@ int main (int argc, char *argv [])
         {
             for (int i = 0; i < args->count (); i++)
             {
-                KURL url;
-                url.setPath (QFile::decodeName (args->arg (i)));
-                mainWindow = new kpMainWindow (url);
+                mainWindow = new kpMainWindow (args->url (i));
                 mainWindow->show ();
             }
         }
