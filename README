@@ -16,7 +16,7 @@ reasonable level of functionality for the average user who just wants
 to crop screenshots, draw diagrams and perform simple image editing
 tasks.
 
-KolourPaint is written in C++ using the QT and KDE libraries.  Essentially,
+KolourPaint is written in C++ using the Qt and KDE libraries.  Essentially,
 this means that any X11-based Unix system will be able to run it.
 
 This is a Development Version of KolourPaint.  It has KNOWN BUGS.  Read

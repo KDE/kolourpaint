@@ -91,7 +91,7 @@ int main (int argc, char *argv [])
     KImageIO::registerFormats ();
 
 
-    // QT says this is necessary but I don't think it is...
+    // Qt says this is necessary but I don't think it is...
     QObject::connect (&app, SIGNAL (lastWindowClosed ()),
                       &app, SLOT (quit ()));
 
