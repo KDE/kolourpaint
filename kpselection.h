@@ -121,6 +121,7 @@ public:
     int width () const;
     int height () const;
 
+
     bool contains (const QPoint &point) const;
     bool contains (int x, int y);
 
