@@ -26,65 +26,24 @@
 */
 
 
-#ifndef KP_EFFECTS_DIALOG_H
-#define KP_EFFECTS_DIALOG_H
+#ifndef KP_MAIN_WINDOW_P_H
+#define KP_MAIN_WINDOW_P_H
 
 
-#include <kptoolpreviewdialog.h>
+class KAction;
+class KToggleAction;
 
 
-class QGroupBox;
-class QStringList;
-class QTimer;
-class QVBoxLayout;
-
-class KComboBox;
-
-class kpColorEffectCommand;
-class kpColorEffectWidget;
-class kpMainWindow;
-
-
-class kpEffectsDialog : public kpToolPreviewDialog
+struct kpMainWindowPrivate
 {
-Q_OBJECT
+    bool m_configThumbnailShowRectangle;
+    KToggleAction *m_actionShowThumbnailRectangle;
 
-public:
-    kpEffectsDialog (bool actOnSelection,
-                     kpMainWindow *parent,
-                     const char *name = 0);
-    virtual ~kpEffectsDialog ();
+    KAction *m_actionHelpTakingScreenshots;
 
-    virtual bool isNoOp () const;
-    kpColorEffectCommand *createCommand () const;
-
-protected:
-    virtual QSize newDimensions () const;
-    virtual QPixmap transformPixmap (const QPixmap &pixmap,
-                                     int targetWidth, int targetHeight) const;
-
-public:
-    int selectedEffect () const;
-public slots:
-    void selectEffect (int which);
-
-protected slots:
-    virtual void slotUpdate ();
-    virtual void slotUpdateWithWaitCursor ();
-
-    void slotDelayedUpdate ();
-
-protected:
-    static int s_lastWidth, s_lastHeight;
-
-    QTimer *m_delayedUpdateTimer;
-
-    KComboBox *m_effectsComboBox;
-    QGroupBox *m_settingsGroupBox;
-    QVBoxLayout *m_settingsLayout;
-
-    kpColorEffectWidget *m_colorEffectWidget;
+    int m_moreEffectsDialogLastEffect;
+    bool m_resizeScaleDialogLastKeepAspect;
 };
 
 
-#endif  // KP_EFFECTS_DIALOG_H
+#endif  // KP_MAIN_WINDOW_P_H

@@ -120,7 +120,6 @@ public:
 private:
     static kpToolResizeScaleCommand::Type s_lastType;
     static double s_lastPercentWidth, s_lastPercentHeight;
-    static bool s_lastKeepAspectRatio;
 
 private:
     kpDocument *document () const;
@@ -148,7 +147,12 @@ public slots:
     void slotPercentWidthChanged (double percentWidth);
     void slotPercentHeightChanged (double percentHeight);
 
-    void slotKeepAspectRatioToggled (bool on);
+public:
+    // (refers only to the state of the checkbox - user of dialog does
+    //  not have to do extra calculations)
+    bool keepAspectRatio () const;
+public slots:
+    void setKeepAspectRatio (bool on);
 
 private:
     int originalWidth () const;

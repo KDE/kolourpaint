@@ -670,13 +670,5 @@ private:
     class kpMainWindowPrivate *d;
 };
 
-struct kpMainWindowPrivate
-{
-    bool m_configThumbnailShowRectangle;
-    KToggleAction *m_actionShowThumbnailRectangle;
-
-    KAction *m_actionHelpTakingScreenshots;
-};
-
 
 #endif  // KP_MAIN_WINDOW_H

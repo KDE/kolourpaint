@@ -82,12 +82,17 @@
 #define kpSettingForcedDither QString::fromLatin1 ("Forced Dither")
 #define kpSettingForcedQuality QString::fromLatin1 ("Forced Quality")
 
+#define kpSettingLastDocSize QString::fromLatin1 ("Last Document Size")
+
+#define kpSettingMoreEffectsLastEffect QString::fromLatin1 ("More Effects - Last Effect")
+
+#define kpSettingResizeScaleLastKeepAspect QString::fromLatin1 ("Resize Scale - Last Keep Aspect")
+
+
 #define kpSettingsGroupMimeTypeProperties QString::fromLatin1 ("MimeType Properties Version 1.2-1")
 #define kpSettingMimeTypeMaximumColorDepth QString::fromLatin1 ("Maximum Color Depth")
 #define kpSettingMimeTypeHasConfigurableColorDepth QString::fromLatin1 ("Configurable Color Depth")
 #define kpSettingMimeTypeHasConfigurableQuality QString::fromLatin1 ("Configurable Quality Setting")
-
-#define kpSettingLastDocSize QString::fromLatin1 ("Last Document Size")
 
 
 #define kpSettingsGroupUndoRedo QString::fromLatin1 ("Undo/Redo Settings")

@@ -50,7 +50,9 @@
 #include <qwhatsthis.h>
 #include <qwmatrix.h>
 
+#include <kapplication.h>
 #include <kcombobox.h>
+#include <kconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kiconeffect.h>
@@ -500,9 +502,6 @@ kpToolResizeScaleCommand::Type kpToolResizeScaleDialog::s_lastType =
 double kpToolResizeScaleDialog::s_lastPercentWidth = 100,
        kpToolResizeScaleDialog::s_lastPercentHeight = 100;
 
-// private static
-bool kpToolResizeScaleDialog::s_lastKeepAspectRatio = false;
-
 
 kpToolResizeScaleDialog::kpToolResizeScaleDialog (kpMainWindow *mainWindow)
     : KDialogBase ((QWidget *) mainWindow,
@@ -768,7 +767,6 @@ void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
     m_percentWidthInput->setValue (s_lastPercentWidth);
     m_percentHeightInput->setValue (s_lastPercentHeight);
     percentLabel->setBuddy (m_percentWidthInput);
-    m_keepAspectRatioCheckBox->setChecked (s_lastKeepAspectRatio);
 
 
     QGridLayout *dimensionsLayout = new QGridLayout (m_dimensionsGroupBox,
@@ -811,7 +809,7 @@ void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
              this, SLOT (slotPercentHeightChanged (double)));
 
     connect (m_keepAspectRatioCheckBox, SIGNAL (toggled (bool)),
-             this, SLOT (slotKeepAspectRatioToggled (bool)));
+             this, SLOT (setKeepAspectRatio (bool)));
 }
 
 
@@ -926,7 +924,7 @@ void kpToolResizeScaleDialog::slotActOnChanged ()
     IGNORE_KEEP_ASPECT_RATIO (slotPercentWidthChanged (m_percentWidthInput->value ()));
     IGNORE_KEEP_ASPECT_RATIO (slotPercentHeightChanged (m_percentHeightInput->value ()));
 
-    slotKeepAspectRatioToggled (m_keepAspectRatioCheckBox->isChecked ());
+    setKeepAspectRatio (m_keepAspectRatioCheckBox->isChecked ());
 }
 
 
@@ -1004,17 +1002,24 @@ void kpToolResizeScaleDialog::slotPercentHeightChanged (double percentHeight)
     s_lastPercentHeight = percentHeight;
 }
 
+// public
+bool kpToolResizeScaleDialog::keepAspectRatio () const
+{
+    return m_keepAspectRatioCheckBox->isChecked ();
+}
+
 // public slot
-void kpToolResizeScaleDialog::slotKeepAspectRatioToggled (bool on)
+void kpToolResizeScaleDialog::setKeepAspectRatio (bool on)
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
-    kdDebug () << "kpToolResizeScaleDialog::slotKeepAspectRatioToggled("
+    kdDebug () << "kpToolResizeScaleDialog::setKeepAspectRatio("
                << on << ")" << endl;
 #endif
+    if (on != m_keepAspectRatioCheckBox->isChecked ())
+        m_keepAspectRatioCheckBox->setChecked (on);
+
     if (on)
         widthFitHeightToAspectRatio ();
-
-    s_lastKeepAspectRatio = on;
 }
 
 #undef IGNORE_KEEP_ASPECT_RATIO

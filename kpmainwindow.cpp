@@ -44,6 +44,7 @@
 #include <kpcommandhistory.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
+#include <kpmainwindow_p.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kpselectiondrag.h>
@@ -124,12 +125,17 @@ void kpMainWindow::readGeneralSettings ()
     m_configShowGrid = cfg->readBoolEntry (kpSettingShowGrid, false);
     m_configShowPath = cfg->readBoolEntry (kpSettingShowPath, false);
     m_configColorSimilarity = cfg->readDoubleNumEntry (kpSettingColorSimilarity, 0);
+    d->m_moreEffectsDialogLastEffect = cfg->readNumEntry (kpSettingMoreEffectsLastEffect);
+    d->m_resizeScaleDialogLastKeepAspect = cfg->readBoolEntry (kpSettingResizeScaleLastKeepAspect, false);
+
 
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\t\tGeneral Settings: firstTime=" << m_configFirstTime
                << " showGrid=" << m_configShowGrid
                << " showPath=" << m_configShowPath
                << " colorSimilarity=" << m_configColorSimilarity
+               << " moreEffectsDialogLastEffect=" << d->m_moreEffectsDialogLastEffect
+               << " resizeScaleDialogLastKeepAspect=" << d->m_resizeScaleDialogLastKeepAspect
                << endl;
 #endif
 }

@@ -36,10 +36,13 @@
 #include <qlayout.h>
 #include <qtimer.h>
 
+#include <kapplication.h>
 #include <kcombobox.h>
+#include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpeffectbalance.h>
 #include <kpeffectblursharpen.h>
@@ -51,7 +54,6 @@
 
 
 // protected static
-int kpEffectsDialog::s_lastEffectSelected = 0;
 int kpEffectsDialog::s_lastWidth = 640;
 int kpEffectsDialog::s_lastHeight = 620;
 
@@ -115,9 +117,8 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 
 
     connect (m_effectsComboBox, SIGNAL (activated (int)),
-             this, SLOT (slotEffectSelected (int)));
-    m_effectsComboBox->setCurrentItem (s_lastEffectSelected);
-    slotEffectSelected (s_lastEffectSelected);
+             this, SLOT (selectEffect (int)));
+    selectEffect (0);
 
 
     resize (s_lastWidth, s_lastHeight);
@@ -181,12 +182,28 @@ QPixmap kpEffectsDialog::transformPixmap (const QPixmap &pixmap,
 }
 
 
-// protected slot
-void kpEffectsDialog::slotEffectSelected (int which)
+// public
+int kpEffectsDialog::selectedEffect () const
+{
+    return m_effectsComboBox->currentItem ();
+}
+
+// public slot
+void kpEffectsDialog::selectEffect (int which)
 {
 #if DEBUG_KP_EFFECTS_DIALOG
-    kdDebug () << "kpEffectsDialog::slotEffectSelected(" << which << ")" << endl;
+    kdDebug () << "kpEffectsDialog::selectEffect(" << which << ")" << endl;
 #endif
+
+    if (which < 0 ||
+        which >= m_effectsComboBox->count ())
+    {
+        return;
+    }
+
+    if (which != m_effectsComboBox->currentItem ())
+        m_effectsComboBox->setCurrentItem (which);
+
 
     delete m_colorEffectWidget;
     m_colorEffectWidget = 0;
@@ -302,9 +319,6 @@ void kpEffectsDialog::slotEffectSelected (int which)
         kdDebug () << "\tafter slotUpdateWithWaitCursor, previewGroupBox.size="
                    << m_previewGroupBox->size () << endl;
     #endif
-
-
-        s_lastEffectSelected = which;
     }
 }
 

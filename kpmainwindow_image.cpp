@@ -47,6 +47,7 @@
 #include <kpeffectinvert.h>
 #include <kpeffectreducecolors.h>
 #include <kpeffectsdialog.h>
+#include <kpmainwindow_p.h>
 #include <kpselection.h>
 #include <kptool.h>
 #include <kptoolautocrop.h>
@@ -283,6 +284,7 @@ void kpMainWindow::slotResizeScale ()
         tool ()->endShapeInternal ();
 
     kpToolResizeScaleDialog dialog (this);
+    dialog.setKeepAspectRatio (d->m_resizeScaleDialogLastKeepAspect);
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
@@ -308,6 +310,19 @@ void kpMainWindow::slotResizeScale ()
             // TODO: this should be the responsibility of kpDocument
             saveDefaultDocSize (QSize (dialog.imageWidth (), dialog.imageHeight ()));
         }
+    }
+
+
+    if (d->m_resizeScaleDialogLastKeepAspect != dialog.keepAspectRatio ())
+    {
+        d->m_resizeScaleDialogLastKeepAspect = dialog.keepAspectRatio ();
+
+        KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+        KConfigBase *cfg = cfgGroupSaver.config ();
+
+        cfg->writeEntry (kpSettingResizeScaleLastKeepAspect,
+                         d->m_resizeScaleDialogLastKeepAspect);
+        cfg->sync ();
     }
 }
 
@@ -436,9 +451,23 @@ void kpMainWindow::slotMoreEffects ()
         tool ()->endShapeInternal ();
 
     kpEffectsDialog dialog ((bool) m_document->selection (), this);
+    dialog.selectEffect (d->m_moreEffectsDialogLastEffect);
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
         addImageOrSelectionCommand (dialog.createCommand ());
+    }
+
+
+    if (d->m_moreEffectsDialogLastEffect != dialog.selectedEffect ())
+    {
+        d->m_moreEffectsDialogLastEffect = dialog.selectedEffect ();
+
+        KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+        KConfigBase *cfg = cfgGroupSaver.config ();
+
+        cfg->writeEntry (kpSettingMoreEffectsLastEffect,
+                         d->m_moreEffectsDialogLastEffect);
+        cfg->sync ();
     }
 }
