@@ -257,7 +257,7 @@ bool kpSelectionDrag::decode (const QMimeSource *e, kpSelection &sel,
     #endif
         QByteArray data = e->encodedData (kpSelectionDrag::selectionMimeType);
         QDataStream stream (data, IO_ReadOnly);
-        
+
         // (no need for wali as kpSelection's by definition only support QPixmap's)
         stream >> sel;
     }
