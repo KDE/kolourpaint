@@ -32,9 +32,10 @@
 #ifndef __kpdefs_h__
 #define __kpdefs_h__
 
-class kpViewManager;
-class QRect;
 
+// set to 1 for extra, obscure features
+// SYNC: set to 0 for release
+#define KP_BLOATWARE 1
 
 #define KP_BLANK_DOCUMENT_COLOR Qt::white
 
@@ -54,6 +55,7 @@ class QRect;
 #define kpSettingShowGrid QString ("Show Grid")
 #define kpSettingShowPath QString ("Show Path")
 #define kpSettingDefaultOutputMimetype QString ("Default Output Mimetype")
+
 
 #endif  // __kpdefs_h__
 

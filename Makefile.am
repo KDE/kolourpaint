@@ -13,7 +13,11 @@ kolourpaintlicense.h : $(srcdir)/LICENCE
 CLEANFILES = kolourpaintlicense.h
 
 kolourpaint_SOURCES = kolourpaint.cpp kpdocument.cpp kpview.cpp \
-    kpconfigdialog.cpp kpmainwindow.cpp kpviewmanager.cpp
+    kpconfigdialog.cpp \
+    kpmainwindow.cpp \
+    kpmainwindow_edit.cpp kpmainwindow_image.cpp kpmainwindow_tools.cpp \
+    kpmainwindow_file.cpp kpmainwindow_settings.cpp kpmainwindow_view.cpp \
+    kpviewmanager.cpp
 kolourpaint_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kolourpaint_LDADD = $(LIB_KDECORE) $(LIB_KDEUI) $(LIB_KIO) $(LIB_KDEPRINT) \
     pixmapfx/libkolourpaintpixmapfx.la tools/libkolourpainttools.la \

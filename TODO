@@ -5,11 +5,12 @@ $Id$
 Currently Underway
 ==================
 
-split up massive kpmainwindow class
-
-fix viewUnderMouseCursor() - drags apparently don't gen Enter events
+clean up kpmainwindow
 
 fix selections; implement free-form selection
+
+Image menu items as ordinary tools
+honour background colour for Skew, Rotate
 
 tool/text
 
@@ -33,11 +34,6 @@ documentation
 working thumbnail view; also maybe shouldn't be a toolbar
 
 icons for some of the Image dialogs
-
-Image menu items as ordinary tools
-honour background colour for Skew, Rotate
-
-print preview
 
 config dialogs (look into new kconfig generator)
 
@@ -77,8 +73,11 @@ wait cursor for slow ops - should it be in kpDocument or in the commands???
 transparent images
 - will also require an additional colour in the kpColorToolBar
 
-color depth
 tool/curve
+
+network friendly:
+- file dialog authentication - pass around mainwindow widget
+- async save
 
 tool icons - if a more experienced artist doesn't offer to draw new ones,
 I'll be forced to redo them myself once transparency is supported
@@ -108,4 +107,18 @@ extend it into the realms of PaintShop Pro without impacting on the core
 philosophy of the app, which seems to be simplicity." -- Tom
 
 offer to save Undo/Redo QPixmap's as PNGs to save memory
+
+color depth - limitation of X
+
+Edit/Find a particular color
+
+fullscreen
+
+"Open documents in the same window" mode - goes against what most KDE apps do
+but it is convenient sometimes
+
+File/Insert as selection
+File/Save selection
+
+convert to B&W
 

@@ -36,6 +36,7 @@
 
 #include <kdebug.h>
 
+#include <kpcolortoolbar.h>
 #include <kpmainwindow.h>
 #include <kptooltoolbar.h>
 #include <kpview.h>
@@ -255,13 +256,14 @@ kpToolToolBar *kpTool::toolToolBar () const
 QColor kpTool::color (int which) const
 {
     if (m_mainWindow)
-        return m_mainWindow->color (which);
+        return m_mainWindow->colorToolBar ()->color (which);
     else
     {
         kdError () << "kpTool::color () called without mainWindow" << endl;
         return Qt::black;
     }
 }
+
 
 bool kpTool::currentPointNextToLast () const
 {
@@ -332,6 +334,11 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     {
         kdError () << "kpTool::mousePressEvent() without a view under the cursor!" << endl;
     }
+
+#if DEBUG_KPTOOL
+    if (view)
+        kdDebug () << "\tview=" << view->name () << endl;
+#endif
 
 
     // let user know what mouse button is being used for entire draw
