@@ -361,7 +361,7 @@ kpToolResizeScaleDialog::kpToolResizeScaleDialog (bool actOnSelection,
     : KDialogBase ((QWidget *) mainWindow,
                    0/*name*/,
                    true/*modal*/,
-                   actOnSelection ? i18n ("Scale Selection") : i18n ("Resize / Scale Image"),
+                   QString::null/*caption*/,
                    KDialogBase::Ok | KDialogBase::Cancel),
       m_actOnSelection (actOnSelection),
       m_ignoreKeepAspectRatio (0)
@@ -373,6 +373,17 @@ kpToolResizeScaleDialog::kpToolResizeScaleDialog (bool actOnSelection,
     m_actOnTextSelection = (m_actOnSelection &&
                             document && document->selection () &&
                             document->selection ()->isText ());
+
+    
+    if (m_actOnSelection)
+    {
+        if (m_actOnTextSelection)
+            setCaption (i18n ("Resize Text Box"));
+        else
+            setCaption (i18n ("Scale Selection"));
+    }
+    else
+        setCaption (i18n ("Resize / Scale Image"));
 
 
     // Using the percentage from last time become too confusing so disable for now
