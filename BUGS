@@ -55,6 +55,8 @@ critical" (euphemism for "hard to fix" :)):
 
 14. The text cursor may be momentarily misrendered when scrolling the view.
 
+15. Flicker when scrolling.
+
 
 Please report all bugs to Clarence Dang <dang@kde.org>.
 
