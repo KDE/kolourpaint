@@ -9,14 +9,53 @@ Look in BUGS, patches/, grep sources for "OPT", "HACK" & "TODO" and look
 here:
 
 
-Parse First
-~~~~~~~~~~~
-
-Antonio Bianco's long email with the RTF still needs parsing.
-
-
 KolourPaint 1.4
 ~~~~~~~~~~~~~~~
+
+add a key to show/hide all panels (toolbar, toolbox, palette box) giving a
+semi fullscreen mode (Antonio Bianco)
+
+when in the palette editor window, clicking on the image selects the color
+and show it in the palette editor, as active one : changing it, results in
+a real time changing to the image - non-modal
+(Antonio Bianco)
+
+snap-grid. If you dont know what I mean, you could have a look
+at XPaint [or PPaint/DPaint on any Amiga ;-) ]: You can give a x and y
+value and get a "magnetic grid" where the brush "snaps in"
+magnetic snap-grid
+it would also be great for tiling an image! 
+> have any suggestions on what the UI will be like?
+I always used paint-programs with the same kind of UI: One vertical bar
+with the most used tools on the left (and sometimes on the right) side.
+Left Click for using the tool and right click for configuring. This
+leaves much place on the screen for the picture (another reason why I
+like kolourpaint). If you would use the "right click" on a tool the
+same way even the palette would fit on this bar.
+(Michael Hoehne)
+
+"QPrinter/KPrinter default resolution" thread on kde-core-devel
+- low resolution when printing
+- also have to consider DPI of image
+
+I noticed a bug in the text tool. I have the subpixel hinting
+turned on but I suppose this should not be used in kolourpaint since
+it only works on LCD displays. never use subpixel hinting even if
+it is enabled globally. If you draw text in KolourPaint on a subpixel
+hinting KDE on LCD, save the file and then view it on a CRT, bad.
+(Amir Michail)
+
+
+hold SHIFT while pen does straight lines
+
+With flow tools (pen, brush, spraycan), holding SHIFT forces horizontal drawing;
+CTRL forces vertical - so those of us without perfectly steady hands
+can still draw straight without continually hitting the Undo button :)
+
+
+checkerboard static in thumbnail but moves with doc in mainview - make it
+static in all places so that it's clear it's not part of the doc
+
 
 componentisation (Eric Laffoon, Sebastian Laout/BasKet)
 
@@ -80,37 +119,40 @@ text tool could autoresize if font size changes or paste text (Bug #11)
   mind and reverts to previous font size and the box snaps back
   (or only allow expand on writing text - no font size tricks etc.)
 
-Bug 92882: Right-Click Needed on Image
+text box create != cmd 
+=> deselecting empty (more accurately, untouched) box = no text box
+
+text toolbar permanently floats to stop view from bobbing up/down
+
+CTRL+Backspace deletes word
 
 
 Rethink kpView/kpViewManager design because of:
 - performance
 - problems with the image "sparkling" at zoom levels % 100 != 0
 Ideas:
-- region-based rendering (for performance)
 - time-based renderer (like game)
 - do something about this horrible tempPixmap hack (so slooooow)
 - resize handles overlap text at 100% zoom; overlapping selected doesn't
   help; could show selection border outside of view in scrollview empty
   area (if selection is really to right and/or bottom); solid 1-width
   border in thumbnail for selection
-- text antialising
 Bug #6: modified states incorrectly set
 - what undo/redo should do in middle of polyline?
 - what about being unable to redo since did another op?
+- when deselect empty text box, delete it --> create text box is not op until write in it for e.g.
 
 kolourcircles.cpp; rendering glitches at 37% with rect sel tool
 
 Bug 89594: inserted text not anti-aliased
 
-concept of text pixmap is flawed since it doesn't allow for antialiasing
-  selections
 - maybe always have 1 width display of border - try editing a B&W icon to see what I mean
 
 eraser cursor border should not get magnified
 
 
 Image menu items as ordinary tools - e.g. freehand rotate would be nice
+realtime "clock" that shows angle and direction for rotate
 kptoolpreviewdialog shows checkerboard
 
 kptoolpreviewdialog: wrong if new pixels result in diff selection transparency
@@ -124,11 +166,6 @@ kptoolpreviewdialog: wrong if new pixels result in diff selection transparency
    smooth highlights." (Hogne Titlestad)
 
 blur & sharpen tools
-
-
-100% thumbnail mode
-
-thumbnail has a rectangle that shows the visible mainView area
 
 
 arbitrary tool sizes (Mikhail Capone)
@@ -159,29 +196,20 @@ dashed lines (David Ling)
 kptoolwidgetbase - spacing between items, make contentsRect() actual size wanted
 
 
-Antonio Bianco
-- other programs DeluxePaint, grafx2, promotion, artgem
-
 rotate floating point (Christoph Eckert)
 
-menu opt to acquire screen captures since not all know about
-CTRL+Ptrscreen. (Mikhail Capone)
-- add ksnapshot mode to paste grabbed thing directly into kolourpaint so
-  that kolourpaint gets a "Take screenshot" menu item
-(Bela-Andreas Bargel)
-
-When scaling pics, I often wondered if «Keep aspect
-ration» could be true per default. (Christoph Eckert)
-> Would remembering the last setting be good enough?
-> > If it would be persistent (e.g. saved in kolourpaintrc) it
-sounds really great!
-
-intuitiveness of "Set as Image" when haven't yet pulled and sel has transparency
 
 Jonathan Turner - userinstinct:
 - "Tried to email image
   Had to save first, did not like that"
-
+Had a discussion with the Chief Investigator:
+If you don't save the image:
+1. what format will it be in (a huge BMP?  Or arbitrarily chosen JPG?)
+2. what name will it have?  0045_temp-user.png?
+3. why wouldn't you want a copy of an image you send to someone?  Yes, it's in your "Sent Items" but...
+Suggestion: Export instead of save.  But what if really want to save?  Would have to prompt, save, then invoke Mail again - a bit round about.
+What do other programs do?
+ 
 grid at 400% since 2 people on kde-apps have asked already (think grid
 isn't there)
 
@@ -202,15 +230,6 @@ instead of
 "oldX , oldY - newX , newY  |||  (-)deltaX x (-)deltaY"
 (the "+" is to show that it's a delta, not a size; on 2nd thoughts, if
 they're both -, it would be ambiguous)
-
-Dialog caption "More Image Effects" --> "More Effects"
-
-"Image / Invert Colors" vs "Image / More Effects / Invert"
-
-"Edit / Paste in New Window" creates a "Set as Image" command -
-name doesn't make sense in that context
-
-"Soften & Sharpen" in cmd history should be either "Soften" or "Sharpen"
 
 scaling image with sel (no pixmap), and then manip sel adds extra "Selection: Create"
 (this is a rather difficult problem to fix since sel has already been used
@@ -266,6 +285,17 @@ tool box icons should have same background color as the other controls
 a better set of cursors that don't obscure the pixel you're drawing at
 (e.g. compare the excellent Brush cursor to the Line Tool's cursor)
 
+Lutz Schweizer:
+"
+> On a related note, I'm planning a new cursor for the pen: it will be like
+> the cursor currently used for the brush tool.  What you prefer that or the
+> current arrow cursor?
+
+frankly, I would prefer the current arrow cursor for the "pen". If someone 
+prefers a cross (with thin lines), he may even now use the brush with the 
+"1x1" option; isn't that practically equivalent?
+"
+
 config dialogs (look into new kconfig generator)
 - visual transparency background
 checkerboard + grid doesn't mix at certain zoom levels
@@ -288,11 +318,21 @@ KolourPaint 1.6
 better graphics backend
 - screen depth independent (Bug 85280)
   + 8-bit palette images (Antonio Bianco)
-- supports alpha (Hogne Titlestad)
-- option for antialising tools (Stefan Taferner, Mikhail Capone, Antonio Bianco)
+- supports alpha (Hogne Titlestad, Luke-Jr:Bug94607)
+- option for antialiasing tools (Stefan Taferner, Mikhail Capone, Antonio Bianco)
 AUDIT: X.org has -pixmap24 & -pixmap32 - how will that affect Undo/Redo
        size calculations
 creating new text selection sucks a lot of CPU
+
+
+in the "more effects" windows add "saturation", "highlights" and "shadows"
+(Antonio Bianco)
+
+in the "image" menu add a "fade latest effect" voice, that if selected
+brings up a slider that fades the image before with the image after the
+effect : this allows fine adjustements, and it's really useful;
+(Antonio Bianco)
+
 
 intersect bounding rect with document rect when saving undo info
 - e.g. if you drag a large rect bigger than the view, waste a lot of memory
@@ -402,7 +442,7 @@ Emmeran Seehuber:
   after old sel deselected) every time a new text selection is being drawn
   out
 
-make sure session restore actually works
+make sure session restore actually works (Luke-Jr:Bug94651)
 
 keyboard friendly scrollview
 
@@ -434,10 +474,6 @@ guard all ptr derefs with if (ptr) ptr->whatever
 
 kdError -> KP_PANIC or KMessageBox
 wait cursor for slow ops - should it be in kpDocument or in the commands???
-
-With flow tools (pen, brush, spraycan), holding SHIFT forces horizontal drawing;
-CTRL forces vertical - so those of us without perfectly steady hands
-can still draw straight without continually hitting the Undo button :)
 
 ability to specify measurements in pt,mm,cm,m,in instead of just pixels
 
@@ -502,6 +538,12 @@ Dirk Schönberger
 >
 > http://www.simugraph.com/drops/
 
+Antonio Bianco
+- other programs DeluxePaint, grafx2, promotion, artgem, photofiltre
+
+Hogne Titlestad:
+- http://www.squirreldome.com/
+
 Enrico Ceppi:
 - add a Selection working as Polygon
 - add a "Paste inte selection" or a "Paste into color" (to overwrite an
@@ -512,9 +554,6 @@ mracek who is at the domain xko period or dot cz:
 Example: win app fotocanvas 1.1 trial (acdseesystems) - it
 is good, but no transparent, no paint, only changing photo
 (picture).
-
-Hogne Titlestad:
-- http://www.squirreldome.com/
 
 delta drawing of resize line to stop flicker
 
@@ -552,3 +591,14 @@ QColor::enterAllocContext () looks interesting
 
 can't copy 1600x1200 season.jpg double scaled from one kolourpaint to another
 (Bug #20)
+
+the resulting file doesn't get displayed in 
+Kolourpaint after saving (hey, this is not a complaint), and 
+undo is not possible this way. (Christoph Eckert)
+
+menu opt to acquire screen captures since not all know about
+CTRL+Ptrscreen. (Mikhail Capone)
+- add ksnapshot mode to paste grabbed thing directly into kolourpaint so
+  that kolourpaint gets a "Take screenshot" menu item
+(Bela-Andreas Bargel)
+
