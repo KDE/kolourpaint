@@ -252,6 +252,14 @@ void kpMainWindow::slotEnablePaste ()
                         QTextDrag::canDecode (ms));
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\t" << name () << "***canDecode=" << timer.restart () << endl;
+        for (int i = 0; ; i++)
+        {
+            const char *fmt = ms->format (i);
+            if (!fmt)
+                break;
+
+            kdDebug () << "\t'" << fmt << "'" << endl;
+        }
     #endif
     }
 
