@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE 1
+#define DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE 0
 
 #include <qbitmap.h>
 #include <qimage.h>
@@ -45,9 +45,9 @@ static int spraycanSizes [] = {9, 17, 29};
 kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent)
     : kpToolWidgetBase (parent)
 {
-    #if DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE
-        kdDebug () << "kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize() CALLED!" << endl;
-    #endif
+#if DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE
+    kdDebug () << "kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize() CALLED!" << endl;
+#endif
 
     for (int i = 0; i < int (sizeof (spraycanSizes) / sizeof (spraycanSizes [0])); i++)
     {

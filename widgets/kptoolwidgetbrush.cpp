@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_WIDGET_BRUSH 1
+#define DEBUG_KP_TOOL_WIDGET_BRUSH 0
 
 #include <qbitmap.h>
 #include <qpainter.h>

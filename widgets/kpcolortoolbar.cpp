@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_COLOR_TOOL_BAR 1
+#define DEBUG_KP_COLOR_TOOL_BAR 0
 
 #include <qbitmap.h>
 #include <qdrawutil.h>
@@ -470,7 +470,9 @@ void kpColorCells::setOrientation (Qt::Orientation o)
         r = cols;
     }
 
+#if DEBUG_KP_COLOR_TOOL_BAR
     kdDebug () << "kpColorCells::setOrientation(): r=" << r << " c=" << c << endl;
+#endif
 
     setNumRows (r);
     setNumCols (c);
@@ -574,12 +576,14 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
     m_mouseButton = -1;
 
     Qt::ButtonState button = e->button ();
+#if DEBUG_KP_COLOR_TOOL_BAR
     kdDebug () << "kpColorCells::mouseReleaseEvent(left="
                << (button & Qt::LeftButton)
                << ",right="
                << (button & Qt::RightButton)
                << ")"
                << endl;
+#endif
     if (!((button & Qt::LeftButton) && (button & Qt::RightButton)))
     {
         if (button & Qt::LeftButton)
@@ -592,15 +596,19 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
     KColorCells::mouseReleaseEvent (e);
     disconnect (this, SIGNAL (colorSelected (int)), this, SLOT (slotColorSelected (int)));
 
+#if DEBUG_KP_COLOR_TOOL_BAR
     kdDebug () << "kpColorCells::mouseReleaseEvent() setting m_mouseButton back to -1" << endl;
+#endif
     m_mouseButton = -1;
 }
 
 // protected slot
 void kpColorCells::slotColorSelected (int cell)
 {
+#if DEBUG_KP_COLOR_TOOL_BAR
     kdDebug () << "kpColorCells::slotColorSelected(cell=" << cell
                << ") mouseButton = " << m_mouseButton << endl;
+#endif
     QColor c = KColorCells::color (cell);
 
     if (m_mouseButton == 0)
@@ -620,8 +628,10 @@ void kpColorCells::slotColorSelected (int cell)
 // protected slot
 void kpColorCells::slotColorDoubleClicked (int cell)
 {
+#if DEBUG_KP_COLOR_TOOL_BAR
     kdDebug () << "kpColorCells::slotColorDoubleClicked(cell="
                << cell << ")" << endl;
+#endif
 
     QColor color = KColorCells::color (cell);
 
