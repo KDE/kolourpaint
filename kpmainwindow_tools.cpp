@@ -26,10 +26,13 @@
 */
 
 
+#include <kpmainwindow.h>
+
+#include <kapplication.h>
+#include <kconfig.h>
 #include <kdebug.h>
 
 #include <kpcolortoolbar.h>
-#include <kpmainwindow.h>
 #include <kpselectiontransparency.h>
 #include <kptool.h>
 #include <kptoolairspray.h>
@@ -107,6 +110,10 @@ void kpMainWindow::setupTools ()
     }
 
 
+    // (from config file)
+    readLastTool ();
+
+
     enableToolsDocumentActions (false);
 }
 
@@ -122,7 +129,12 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
         if (previousTool)
             m_toolToolBar->selectPreviousTool ();
         else
-            m_toolToolBar->selectTool (m_toolPen);  // CONFIG: last used
+        {
+            if (d->m_lastToolNumber >= 0 && d->m_lastToolNumber < (int) m_tools.count ())
+                m_toolToolBar->selectTool (m_tools.at (d->m_lastToolNumber));
+            else
+                m_toolToolBar->selectTool (m_toolPen);
+        }
     }
     else if (!enable && m_toolToolBar->isEnabled ())
     {
@@ -189,7 +201,7 @@ void kpMainWindow::setSelectionTransparency (const kpSelectionTransparency &tran
                << " forceColorChange=" << forceColorChange
                << endl;
 #endif
-    
+
     kpToolWidgetOpaqueOrTransparent *oot = m_toolToolBar->toolWidgetOpaqueOrTransparent ();
     if (!oot)
     {
@@ -198,7 +210,7 @@ void kpMainWindow::setSelectionTransparency (const kpSelectionTransparency &tran
     }
 
     m_settingSelectionTransparency++;
-    
+
     oot->setOpaque (transparency.isOpaque ());
     if (transparency.isTransparent () || forceColorChange)
     {
@@ -214,7 +226,7 @@ int kpMainWindow::settingSelectionTransparency () const
 {
     return m_settingSelectionTransparency;
 }
-    
+
 
 // private slot
 void kpMainWindow::slotToolSelected (kpTool *tool)
@@ -262,7 +274,52 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
                  tool, SLOT (slotBackgroundColorChangedInternal (const kpColor &)));
         connect (m_colorToolBar, SIGNAL (colorSimilarityChanged (double, int)),
                  tool, SLOT (slotColorSimilarityChangedInternal (double, int)));
+
+        saveLastTool ();
     }
+}
+
+
+// private
+void kpMainWindow::readLastTool ()
+{
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupTools);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    d->m_lastToolNumber = cfg->readNumEntry (kpSettingLastTool, -1);
+}
+
+
+// private
+int kpMainWindow::toolNumber () const
+{
+    int number = 0;
+    for (QPtrList <kpTool>::const_iterator it = m_tools.begin ();
+         it != m_tools.end ();
+         it++)
+    {
+        if (*it == tool ())
+            return number;
+
+        number++;
+    }
+
+    return -1;
+}
+
+// private
+void kpMainWindow::saveLastTool ()
+{
+    int number = toolNumber ();
+    if (number < 0 || number >= (int) m_tools.count ())
+        return;
+
+
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupTools);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    cfg->writeEntry (kpSettingLastTool, number);
+    cfg->sync ();
 }
 
 

@@ -194,6 +194,11 @@ public:
 private slots:
     void slotToolSelected (kpTool *tool);
 
+private:
+    void readLastTool ();
+    int toolNumber () const;
+    void saveLastTool ();
+    
 public slots:
     void slotToolAirSpray ();
     void slotToolBrush ();
@@ -551,6 +556,7 @@ struct kpMainWindowPrivate
     QString m_lastCopyToMimeType;
     KURL m_lastExportURL;
     QString m_lastExportMimeType;
+    int m_lastToolNumber;
 };
 
 #endif  // __kp_main_window_h__
