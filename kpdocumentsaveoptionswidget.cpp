@@ -25,7 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET 1
+#define DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET 0
 
 
 #include <kpdocumentsaveoptionswidget.h>
@@ -38,22 +38,27 @@
 #include <qtimer.h>
 
 #include <kcombobox.h>
+#include <kconfig.h>
 #include <kdebug.h>
 #include <kdialog.h>
+#include <kdialogbase.h>
+#include <kglobal.h>
 #include <kimageio.h>
 #include <klocale.h>
 #include <knuminput.h>
 #include <kpushbutton.h>
 
+#include <kpdefs.h>
 #include <kpdocument.h>
 #include <kppixmapfx.h>
 #include <kpresizesignallinglabel.h>
 #include <kpselection.h>
+#include <kptoolpreviewdialog.h>
 #include <kpwidgetmapper.h>
 
 
 // protected static
-const QSize kpDocumentSaveOptionsPreviewDialog::s_pixmapLabelMinimumSize (120, 120);
+const QSize kpDocumentSaveOptionsPreviewDialog::s_pixmapLabelMinimumSize (25, 25);
 
 
 kpDocumentSaveOptionsPreviewDialog::kpDocumentSaveOptionsPreviewDialog (
@@ -108,24 +113,28 @@ kpDocumentSaveOptionsPreviewDialog::~kpDocumentSaveOptionsPreviewDialog ()
 // public
 QSize kpDocumentSaveOptionsPreviewDialog::preferredMinimumSize () const
 {
-    const int w = 225 + 2 * KDialog::marginHint ();
-    return QSize (w, w / 4 * 3);
+    const int contentsWidth = 180;
+    const int totalMarginsWidth = 2 * KDialog::marginHint ();
+
+    return QSize (contentsWidth + totalMarginsWidth,
+                  contentsWidth * 3 / 4 + totalMarginsWidth);
 }
 
 
 // public slot
 void kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize (const QPixmap &pixmap,
-                                                               int fileSize)
+                                                              int fileSize)
 {
     delete m_filePixmap;
     m_filePixmap = new QPixmap (pixmap);
+
     updatePixmapPreview ();
 
     m_fileSize = fileSize;
 
     const int pixmapSize = kpPixmapFX::pixmapSize (pixmap);
     const int percent = pixmapSize ?
-                            QMAX (1, QMIN (100, fileSize * 100 / pixmapSize)) :
+                            QMAX (1, fileSize * 100 / pixmapSize) :
                             0;
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
     kdDebug () << "kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize()"
@@ -158,15 +167,60 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
     kdDebug () << "kpDocumentSaveOptionsPreviewDialog::updatePreviewPixmap()"
                << " filePixmapLabel.size=" << m_filePixmapLabel->size ()
+               << " filePixmap.size=" << m_filePixmap->size ()
                << endl;
 #endif
 
     if (m_filePixmap)
     {
-        m_filePixmapLabel->setPixmap (
+        int maxNewWidth = QMIN (m_filePixmap->width (),
+                                m_filePixmapLabel->width ()),
+            maxNewHeight = QMIN (m_filePixmap->height (),
+                                 m_filePixmapLabel->height ());
+
+        double keepsAspect = kpToolPreviewDialog::aspectScale (
+            maxNewWidth, maxNewHeight,
+            m_filePixmap->width (), m_filePixmap->height ());
+    #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+        kdDebug () << "\tmaxNewWidth=" << maxNewWidth
+                   << " maxNewHeight=" << maxNewHeight
+                   << " keepsAspect=" << keepsAspect
+                   << endl;
+    #endif
+
+
+        const int newWidth = kpToolPreviewDialog::scaleDimension (
+            m_filePixmap->width (),
+            keepsAspect,
+            1,
+            maxNewWidth);
+        const int newHeight = kpToolPreviewDialog::scaleDimension (
+            m_filePixmap->height (),
+            keepsAspect,
+            1,
+            maxNewHeight);
+    #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+        kdDebug () << "\tnewWidth=" << newWidth
+                   << " newHeight=" << newHeight
+                   << endl;
+    #endif
+
+
+        QPixmap transformedPixmap =
             kpPixmapFX::scale (*m_filePixmap,
-                               m_filePixmapLabel->width (),
-                               m_filePixmapLabel->height ()));
+                               newWidth, newHeight);
+
+
+        QPixmap labelPixmap (m_filePixmapLabel->width (),
+                             m_filePixmapLabel->height ());
+        kpPixmapFX::fill (&labelPixmap, kpColor::transparent);
+        kpPixmapFX::setPixmapAt (&labelPixmap,
+            (labelPixmap.width () - transformedPixmap.width ()) / 2,
+            (labelPixmap.height () - transformedPixmap.height ()) / 2,
+            transformedPixmap);
+
+
+        m_filePixmapLabel->setPixmap (labelPixmap);
     }
     else
     {
@@ -187,9 +241,29 @@ void kpDocumentSaveOptionsPreviewDialog::closeEvent (QCloseEvent *e)
     emit finished ();
 }
 
+// protected virtual [base QWidget]
+void kpDocumentSaveOptionsPreviewDialog::moveEvent (QMoveEvent *e)
+{
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+    kdDebug () << "kpDocumentSaveOptionsPreviewDialog::moveEvent()" << endl;
+#endif
 
-// protected static
-QRect kpDocumentSaveOptionsWidget::s_previewDialogLastRelativeGeometry;
+    QWidget::moveEvent (e);
+
+    emit moved ();
+}
+
+// protected virtual [base QWidget]
+void kpDocumentSaveOptionsPreviewDialog::resizeEvent (QResizeEvent *e)
+{
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+    kdDebug () << "kpDocumentSaveOptionsPreviewDialog::resizeEvent()" << endl;
+#endif
+
+    QWidget::resizeEvent (e);
+
+    emit resized ();
+}
 
 
 kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
@@ -268,9 +342,15 @@ void kpDocumentSaveOptionsWidget::init ()
              this, SLOT (showPreview (bool)));
 
 
+    m_updatePreviewDelay = 200/*ms*/;
+
     m_updatePreviewTimer = new QTimer (this);
     connect (m_updatePreviewTimer, SIGNAL (timeout ()),
              this, SLOT (updatePreview ()));
+
+    m_updatePreviewDialogLastRelativeGeometryTimer = new QTimer (this);
+    connect (m_updatePreviewDialogLastRelativeGeometryTimer, SIGNAL (timeout ()),
+             this, SLOT (updatePreviewDialogLastRelativeGeometry ()));
 
 
     setMode (None);
@@ -280,6 +360,9 @@ void kpDocumentSaveOptionsWidget::init ()
 
 kpDocumentSaveOptionsWidget::~kpDocumentSaveOptionsWidget ()
 {
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+    kdDebug () << "kpDocumentSaveOptionsWidget::<dtor>()" << endl;
+#endif
     hidePreview ();
 
     delete m_documentPixmap;
@@ -289,6 +372,11 @@ kpDocumentSaveOptionsWidget::~kpDocumentSaveOptionsWidget ()
 // public
 void kpDocumentSaveOptionsWidget::setVisualParent (QWidget *visualParent)
 {
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+    kdDebug () << "kpDocumentSaveOptionsWidget::setVisualParent("
+               << visualParent << ")" << endl;
+#endif
+
     m_visualParent = visualParent;
 }
 
@@ -637,21 +725,55 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
                  this, SLOT (hidePreview ()));
 
 
+        KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupPreviewSave);
+        KConfigBase *cfg = cfgGroupSaver.config ();
+
+        if (cfg->hasKey (kpSettingPreviewSaveUpdateDelay))
+        {
+            m_updatePreviewDelay = cfg->readNumEntry (kpSettingPreviewSaveUpdateDelay);
+        }
+        else
+        {
+            cfg->writeEntry (kpSettingPreviewSaveUpdateDelay, m_updatePreviewDelay);
+            cfg->sync ();
+        }
+
+        if (m_updatePreviewDelay < 0)
+            m_updatePreviewDelay = 0;
+    #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+        kdDebug () << "\tread cfg preview dialog update delay="
+                   << m_updatePreviewDelay
+                   << endl;
+    #endif
+
+
+        if (m_previewDialogLastRelativeGeometry.isEmpty ())
+        {
+        #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+            kdDebug () << "\tread cfg preview dialog last rel geometry" << endl;
+        #endif
+            KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupPreviewSave);
+            KConfigBase *cfg = cfgGroupSaver.config ();
+
+            m_previewDialogLastRelativeGeometry = cfg->readRectEntry (
+                kpSettingPreviewSaveGeometry);
+        }
+
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
         kdDebug () << "\tpreviewDialogLastRelativeGeometry="
-                   << s_previewDialogLastRelativeGeometry
+                   << m_previewDialogLastRelativeGeometry
                    << " visualParent->rect()=" << m_visualParent->rect ()
                    << endl;
     #endif
 
         QRect relativeGeometry;
-        if (!s_previewDialogLastRelativeGeometry.isEmpty () &&
-            m_visualParent->rect ().intersects (s_previewDialogLastRelativeGeometry))
+        if (!m_previewDialogLastRelativeGeometry.isEmpty () &&
+            m_visualParent->rect ().intersects (m_previewDialogLastRelativeGeometry))
         {
         #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
             kdDebug () << "\tok" << endl;
         #endif
-            relativeGeometry = s_previewDialogLastRelativeGeometry;
+            relativeGeometry = m_previewDialogLastRelativeGeometry;
         }
         else
         {
@@ -664,7 +786,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
                 QRect (m_visualParent->width () -
                            m_previewDialog->preferredMinimumSize ().width () -
                                margin,
-                       margin * 3,  // Avoid folder combo
+                       margin * 2,  // Avoid folder combo
                        m_previewDialog->preferredMinimumSize ().width (),
                        m_previewDialog->preferredMinimumSize ().height ());
         }
@@ -684,14 +806,44 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
 
 
         m_previewDialog->show ();
+
+
+    #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+        kdDebug () << "\tgeometry after show="
+                   << QRect (m_previewDialog->x (), m_previewDialog->y (),
+                              m_previewDialog->width (), m_previewDialog->height ())
+                   << endl;
+    #endif
+
+        updatePreviewDialogLastRelativeGeometry ();
+
+        connect (m_previewDialog, SIGNAL (moved ()),
+                 this, SLOT (updatePreviewDialogLastRelativeGeometry ()));
+        connect (m_previewDialog, SIGNAL (resized ()),
+                 this, SLOT (updatePreviewDialogLastRelativeGeometry ()));
+
+        m_updatePreviewDialogLastRelativeGeometryTimer->start (200/*ms*/);
     }
     else
     {
-        s_previewDialogLastRelativeGeometry =
-            kpWidgetMapper::fromGlobal (m_visualParent,
-                QRect (m_previewDialog->x (), m_previewDialog->y (),
-                       m_previewDialog->width (), m_previewDialog->height ()));
+        m_updatePreviewDialogLastRelativeGeometryTimer->stop ();
 
+        KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupPreviewSave);
+        KConfigBase *cfg = cfgGroupSaver.config ();
+
+        cfg->writeEntry (kpSettingPreviewSaveGeometry, m_previewDialogLastRelativeGeometry);
+        cfg->sync ();
+
+    #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+        kdDebug () << "\tsaving preview geometry "
+                   << m_previewDialogLastRelativeGeometry
+                   << " (Qt would have us believe "
+                   << kpWidgetMapper::fromGlobal (m_visualParent,
+                          QRect (m_previewDialog->x (), m_previewDialog->y (),
+                                 m_previewDialog->width (), m_previewDialog->height ()))
+                   << ")"
+                   << endl;
+    #endif
 
         m_previewDialog->deleteLater ();
         m_previewDialog = 0;
@@ -709,7 +861,7 @@ void kpDocumentSaveOptionsWidget::hidePreview ()
 // protected slot
 void kpDocumentSaveOptionsWidget::updatePreviewDelayed ()
 {
-    m_updatePreviewTimer->start (200/*msec*/, true/*single shot*/);
+    m_updatePreviewTimer->start (m_updatePreviewDelay, true/*single shot*/);
 }
 
 // protected slot
@@ -747,6 +899,35 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
         data.size ());
 
     QApplication::restoreOverrideCursor ();
+}
+
+// protected slot
+void kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry ()
+{
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+    kdDebug () << "kpDocumentSaveOptionsWidget::"
+               << "updatePreviewDialogLastRelativeGeometry()"
+               << endl;
+#endif
+
+    if (m_previewDialog && m_previewDialog->isVisible ())
+    {
+        m_previewDialogLastRelativeGeometry =
+            kpWidgetMapper::fromGlobal (m_visualParent,
+                QRect (m_previewDialog->x (), m_previewDialog->y (),
+                       m_previewDialog->width (), m_previewDialog->height ()));
+    #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+        kdDebug () << "\tcaching pos = "
+                   << m_previewDialogLastRelativeGeometry
+                   << endl;
+    #endif
+    }
+    else
+    {
+    #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+        kdDebug () << "\tnot visible - ignoring geometry" << endl;
+    #endif
+    }
 }
 
 

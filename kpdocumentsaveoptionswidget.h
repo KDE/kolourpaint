@@ -55,6 +55,8 @@ protected:
     static const QSize s_pixmapLabelMinimumSize;
 
 signals:
+    void moved ();
+    void resized ();
     void finished ();
 
 public slots:
@@ -63,6 +65,8 @@ public slots:
 
 protected:
     virtual void closeEvent (QCloseEvent *e);
+    virtual void moveEvent (QMoveEvent *e);
+    virtual void resizeEvent (QResizeEvent *e);
 
 protected:
     QPixmap *m_filePixmap;
@@ -160,6 +164,7 @@ protected slots:
     void hidePreview ();
     void updatePreviewDelayed ();
     void updatePreview ();
+    void updatePreviewDialogLastRelativeGeometry ();
 
 
 protected:
@@ -182,8 +187,10 @@ protected:
 
     KPushButton *m_previewButton;
     kpDocumentSaveOptionsPreviewDialog *m_previewDialog;
-    static QRect s_previewDialogLastRelativeGeometry;
+    QRect m_previewDialogLastRelativeGeometry;
     QTimer *m_updatePreviewTimer;
+    int m_updatePreviewDelay;
+    QTimer *m_updatePreviewDialogLastRelativeGeometryTimer;
 };
 
 
