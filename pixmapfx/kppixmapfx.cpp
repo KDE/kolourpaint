@@ -28,6 +28,7 @@
 
 #define DEBUG_KP_PIXMAP_FX 1
 
+#include <math.h>
 #include <qapplication.h>
 #include <qbitmap.h>
 #include <qdatetime.h>
