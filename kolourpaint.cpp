@@ -79,6 +79,7 @@ int main (int argc, char *argv [])
     aboutData.addAuthor ("Thurston Dang", I18N_NOOP ("Chief Investigator"),
                          "thurston_dang@users.sourceforge.net");
     aboutData.addAuthor ("Kristof Borrey", I18N_NOOP ("Icons"), "borrey@kde.org");
+    aboutData.addAuthor ("Kazuki Ohta", I18N_NOOP ("SCIM Support"), "mover@hct.zaq.ne.jp");
 
 
     aboutData.addCredit ("Rashid N. Achilov");
