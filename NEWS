@@ -10,7 +10,7 @@ its changes.
 KolourPaint 1.4_light Series (KDE_3_4_BRANCH)
 ============================
 
-KolourPaint 1.4_light (Frozen 2005-02-08)
+KolourPaint 1.4_light (Frozen 2005-02-22)
    * Antialias text when the text box has a transparent background
    * Add Unzoomed Thumbnail Mode and Thumbnail Rectangle
    * Add RMB context menu for when a selection tool is active (closing KDE
