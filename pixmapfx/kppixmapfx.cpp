@@ -185,6 +185,9 @@ int kpPixmapFX::pointArraySize (const QPointArray &points)
 // public static
 QImage kpPixmapFX::convertToImage (const QPixmap &pixmap)
 {
+    if (pixmap.isNull ())
+        return QImage ();
+
     return pixmap.convertToImage ();
 }
 
@@ -366,6 +369,10 @@ QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty,
     QTime timer;
     timer.start ();
 #endif
+
+    if (image.isNull ())
+        return QPixmap ();
+
 
     QPixmap destPixmap;
 
