@@ -16,13 +16,9 @@ Short-Term
 
 selections:
 - transparent & opaque selections
-- maintain selection border during cut & paste, rotate, skew
-- ability to freehand stretch selections
-- maybe always have 1 width display of border - try editing a B&W icon to see what I mean
+- maintain selection border during rotate, skew as much as possible
 
 colour similarity option for Fill and Colour Eraser and AutoCrop
-
-freehand resize document
 
 clean up Image dialogs
 
@@ -69,10 +65,16 @@ Feature Plan for 1.1
 ====================
 
 
-Image menu items as ordinary tools - e.g. freehand rotate would be nice
-
 flexible kpCommandHistory - would virtually solve all the Undo/Redo annoyances
 (such as very limited Undo/Redo even though you're making 1 pixel changes)
+
+Image menu items as ordinary tools - e.g. freehand rotate would be nice
+
+selections
+- ability to freehand stretch selections
+- maybe always have 1 width display of border - try editing a B&W icon to see what I mean
+
+freehand resize document
 
 intersect bounding rect with document rect when saving undo info
 - e.g. if you drag a large rect bigger than the view, waste a lot of memory
@@ -133,9 +135,9 @@ documentation (assigned to Thurston)
 Feature Plan for KDE > 3.2
 ==========================
 
-multicolumn KToolBar's
-
 re-enable the ICO write support
+
+multicolumn KToolBar's
 
 if you undock a vertical toolbar and right click --> Orientation --> Bottom,
 it stays vertically oriented
