@@ -71,6 +71,7 @@ void kpMainWindow::setupFileMenuActions ()
     //m_actionRevert = KStdAction::revert (this, SLOT (slotRevert ()), ac);
     m_actionReload = new KAction (i18n ("Reloa&d"), KStdAccel::reload (),
         this, SLOT (slotReload ()), ac, "file_revert");
+    slotEnableReload ();
 
     m_actionPrint = KStdAction::print (this, SLOT (slotPrint ()), ac);
     m_actionPrintPreview = KStdAction::printPreview (this, SLOT (slotPrintPreview ()), ac);

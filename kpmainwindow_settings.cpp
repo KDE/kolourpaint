@@ -37,6 +37,7 @@
 #include <kstdaction.h>
 
 #include <kpdefs.h>
+#include <kpdocument.h>
 #include <kpmainwindow.h>
 
 
@@ -59,7 +60,7 @@ void kpMainWindow::setupSettingsMenuActions ()
 
     m_actionShowPath = new KToggleAction (i18n ("Sho&w Path"), 0,
         this, SLOT (slotShowPathToggled ()), ac, "settings_show_path");
-    m_actionShowPath->setChecked (m_configShowPath);
+    slotEnableSettingsShowPath ();
 
 
     m_actionKeyBindings = KStdAction::keyBindings (this, SLOT (slotKeyBindings ()), ac);
@@ -71,10 +72,8 @@ void kpMainWindow::setupSettingsMenuActions ()
 }
 
 // private
-void kpMainWindow::enableSettingsMenuDocumentActions (bool enable)
+void kpMainWindow::enableSettingsMenuDocumentActions (bool /*enable*/)
 {
-    m_actionShowPath->setEnabled (enable);
-    m_actionShowPath->setChecked (enable && m_configShowPath);
 }
 
 
@@ -87,6 +86,19 @@ void kpMainWindow::slotFullScreen ()
         showNormal ();
 }
 
+
+// private slot
+void kpMainWindow::slotEnableSettingsShowPath ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotEnableSettingsShowPath()" << endl;
+#endif
+
+    const bool enable = (m_document && !m_document->url ().isEmpty ());
+
+    m_actionShowPath->setEnabled (enable);
+    m_actionShowPath->setChecked (enable && m_configShowPath);
+}
 
 // private slot
 void kpMainWindow::slotShowPathToggled ()

@@ -385,8 +385,6 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     if (!newDoc)
     {
         enableDocumentActions (false);
-
-        m_actionReload->setEnabled (false);
     }
 
 #if DEBUG_KP_MAIN_WINDOW
@@ -495,7 +493,9 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         // File/Reload action only available with non-empty URL
         connect (m_document, SIGNAL (documentSaved ()),
                  this, SLOT (slotEnableReload ()));
-        slotEnableReload ();  // will check for non-empty URL
+
+        connect (m_document, SIGNAL (documentSaved ()),
+                 this, SLOT (slotEnableSettingsShowPath ()));
 
         // Command history
         if (m_commandHistory)
@@ -573,6 +573,8 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     slotImageMenuUpdateDueToSelection ();
     slotUpdateStatusBar ();
     slotUpdateCaption ();  // Untitled to start with
+    slotEnableReload ();
+    slotEnableSettingsShowPath ();
 
     if (m_commandHistory)
         m_commandHistory->clear ();
