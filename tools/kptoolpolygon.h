@@ -32,7 +32,7 @@
 #ifndef __kptoolpolygon_h__
 #define __kptoolpolygon_h__
 
-#include <kptooline.h>
+#include <kptoolline.h>
 
 class kpMainWindow;
 
