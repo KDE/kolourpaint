@@ -510,7 +510,7 @@ void kpToolPolygon::applyModifiers ()
         int diffy = m_toolLineEndPoint.y () - m_toolLineStartPoint.y ();
 
         double ratio;
-        if (fabs (diffx - 0) < KP_EPSILON)
+        if (diffx == 0)
             ratio = DBL_MAX;
         else
             ratio = fabs (double (diffy) / double (diffx));
@@ -546,11 +546,17 @@ void kpToolPolygon::applyModifiers ()
         }
 
         // horizontal (dist from start !maintained)
-        if (fabs (angle - 0) < KP_EPSILON)
+        if (fabs (KP_RADIANS_TO_DEGREES (angle) - 0)
+            < kpPixmapFX::AngleInDegreesEpsilon)
+        {
             m_toolLineEndPoint = QPoint (m_toolLineEndPoint.x (), m_toolLineStartPoint.y ());
+        }
         // vertical (dist from start !maintained)
-        else if (fabs (angle - KP_PI / 2) < KP_EPSILON)
+        else if (fabs (KP_RADIANS_TO_DEGREES (angle) - 90)
+                 < kpPixmapFX::AngleInDegreesEpsilon)
+        {
             m_toolLineEndPoint = QPoint (m_toolLineStartPoint.x (), m_toolLineEndPoint.y ());
+        }
         // diagonal (dist from start maintained)
         else
         {

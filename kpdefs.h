@@ -49,7 +49,6 @@
 
 
 #define KP_PI 3.141592653589793238462
-#define KP_EPSILON 0.0001
 
 
 #define KP_DEGREES_TO_RADIANS(deg) ((deg) * KP_PI / 180.0)

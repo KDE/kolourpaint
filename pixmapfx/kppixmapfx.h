@@ -371,6 +371,16 @@ public:
     static void scale (QPixmap *destPixmapPtr, int w, int h, bool pretty = false);
     static QPixmap scale (const QPixmap &pm, int w, int h, bool pretty = false);
 
+
+    // The minimum difference between 2 angles (in degrees) such that they are
+    // considered different.  This gives you at least enough precision to
+    // rotate an image whose width <= 10000 such that its height increases
+    // by just 1 (and similarly with height <= 10000 and width).
+    //
+    // Currently used for skew & rotate operations.
+    static double AngleInDegreesEpsilon;
+
+
     //
     // Skews an image.
     //
@@ -415,6 +425,7 @@ public:
     static QPixmap rotate (const QPixmap &pm, double angle,
                            const kpColor &backgroundColor,
                            int targetWidth = -1, int targetHeight = -1);
+
 
     //
     // Flips an image in the given directions.

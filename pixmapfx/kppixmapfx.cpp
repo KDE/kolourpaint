@@ -1099,6 +1099,32 @@ QImage kpPixmapFX::convertToGrayscale (const QImage &img)
 
 
 // public static
+void kpPixmapFX::fill (QPixmap *destPixmapPtr, const kpColor &color)
+{
+    if (!destPixmapPtr)
+        return;
+
+    if (color.isOpaque ())
+    {
+        destPixmapPtr->setMask (QBitmap ());  // no mask = opaque
+        destPixmapPtr->fill (color.toQColor ());
+    }
+    else
+    {
+        kpPixmapFX::ensureTransparentAt (destPixmapPtr, destPixmapPtr->rect ());
+    }
+}
+
+// public static
+QPixmap kpPixmapFX::fill (const QPixmap &pm, const kpColor &color)
+{
+    QPixmap ret = pm;
+    kpPixmapFX::fill (&ret, color);
+    return ret;
+}
+
+
+// public static
 void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
                          const kpColor &backgroundColor, bool fillNewAreas)
 {
@@ -1243,6 +1269,12 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
         return pm.xForm (matrix);
     }
 }
+
+
+// public static
+double kpPixmapFX::AngleInDegreesEpsilon =
+    KP_RADIANS_TO_DEGREES (atan (1.0 / 10000.0))
+        / (2.0/*max error allowed*/ * 2.0/*for good measure*/);
 
 
 static QWMatrix matrixWithZeroOrigin (const QWMatrix &matrix, int width, int height)
@@ -1414,8 +1446,11 @@ static QPixmap xForm (const QPixmap &pm, const QWMatrix &transformMatrix_,
 // public static
 QWMatrix kpPixmapFX::skewMatrix (int width, int height, double hangle, double vangle)
 {
-    if (hangle == 0 && vangle == 0)
+    if (fabs (hangle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
+        fabs (vangle - 0) < kpPixmapFX::AngleInDegreesEpsilon)
+    {
         return QWMatrix ();
+    }
 
 
     /* Diagram for completeness :)
@@ -1490,13 +1525,15 @@ QPixmap kpPixmapFX::skew (const QPixmap &pm, double hangle, double vangle,
                << endl;
 #endif
 
-    if (hangle == 0 && vangle == 0 && targetWidth <= 0 && targetHeight <= 0)
+    if (fabs (hangle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
+        fabs (vangle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
+        (targetWidth <= 0 && targetHeight <= 0)/*don't want to scale?*/)
+    {
         return pm;
+    }
 
-    // make sure -90 < hangle/vangle < 90 degrees:
-    // if (abs (hangle) >= 90 || abs (vangle) >= 90) {
-    // TODO: inconsistent
-    if (90 - fabs (hangle) < KP_EPSILON || 90 - fabs (vangle) < KP_EPSILON)
+    if (fabs (hangle) > 90 - kpPixmapFX::AngleInDegreesEpsilon ||
+        fabs (vangle) > 90 - kpPixmapFX::AngleInDegreesEpsilon)
     {
         kdError () << "kpPixmapFX::skew() passed hangle and/or vangle out of range (-90 < x < 90)" << endl;
         return pm;
@@ -1512,6 +1549,11 @@ QPixmap kpPixmapFX::skew (const QPixmap &pm, double hangle, double vangle,
 // public static
 QWMatrix kpPixmapFX::rotateMatrix (int width, int height, double angle)
 {
+    if (fabs (angle - 0) < kpPixmapFX::AngleInDegreesEpsilon)
+    {
+        return QWMatrix ();
+    }
+
     QWMatrix matrix;
     matrix.translate (width / 2, height / 2);
     matrix.rotate (angle);
@@ -1529,8 +1571,33 @@ QWMatrix kpPixmapFX::rotateMatrix (const QPixmap &pixmap, double angle)
 // public static
 bool kpPixmapFX::isLosslessRotation (double angle)
 {
-    // TODO: we shouldn't round to int
-    return (qRound (angle) % 90 == 0);
+    const double angleIn = angle;
+
+    // Reflect angle into positive if negative
+    if (angle < 0)
+        angle = -angle;
+
+    // Remove multiples of 90 to make sure 0 <= angle <= 90
+    angle -= ((int) angle) / 90 * 90;
+
+    // "Impossible" situation?
+    if (angle < 0 || angle > 90)
+    {
+        kdError () << "kpPixmapFX::isLosslessRotation(" << angleIn
+                   << ") result=" << angle
+                   << endl;
+        return false;  // better safe than sorry
+    }
+
+    const bool ret = (angle < kpPixmapFX::AngleInDegreesEpsilon ||
+                      90 - angle < kpPixmapFX::AngleInDegreesEpsilon);
+#if DEBUG_KP_PIXMAP_FX || 1
+    kdDebug () << "kpPixmapFX::isLosslessRotation(" << angleIn << ")"
+               << "  residual angle=" << angle
+               << "  returning " << ret
+               << endl;
+#endif
+    return ret;
 }
 
 
@@ -1552,40 +1619,16 @@ QPixmap kpPixmapFX::rotate (const QPixmap &pm, double angle,
                             const kpColor &backgroundColor,
                             int targetWidth, int targetHeight)
 {
-    // TODO: epsilon
-    if (angle == 0)
+    if (fabs (angle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
+        (targetWidth <= 0 && targetHeight <= 0)/*don't want to scale?*/)
+    {
         return pm;
+    }
 
 
     QWMatrix matrix = rotateMatrix (pm, angle);
 
     return ::xForm (pm, matrix, backgroundColor, targetWidth, targetHeight);
-}
-
-
-// public static
-void kpPixmapFX::fill (QPixmap *destPixmapPtr, const kpColor &color)
-{
-    if (!destPixmapPtr)
-        return;
-
-    if (color.isOpaque ())
-    {
-        destPixmapPtr->setMask (QBitmap ());  // no mask = opaque
-        destPixmapPtr->fill (color.toQColor ());
-    }
-    else
-    {
-        kpPixmapFX::ensureTransparentAt (destPixmapPtr, destPixmapPtr->rect ());
-    }
-}
-
-// public static
-QPixmap kpPixmapFX::fill (const QPixmap &pm, const kpColor &color)
-{
-    QPixmap ret = pm;
-    kpPixmapFX::fill (&ret, color);
-    return ret;
 }
 
 
