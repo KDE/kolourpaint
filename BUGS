@@ -5,7 +5,7 @@ This file lists known bugs in the 1.??? release that are not considered
 
 1. Flicker when zooming in/out.
 
-3. ToolBox & Colour Palette RMB ToolBar Menus do not work.
+3. Tool Box & Colour Box RMB ToolBar Menus do not work.
 
 4. Image dialog spinboxes should accept Enter Key (instead of the dialog's
    OK button) after the user has typed something.
