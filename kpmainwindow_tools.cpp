@@ -150,7 +150,7 @@ bool kpMainWindow::toolHasBegunShape () const
 // private slot
 void kpMainWindow::slotToolSelected (kpTool *tool)
 {
-#if DEBUG_KPMAINWINDOW
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotToolSelected (" << tool << ")" << endl;
 #endif
 
@@ -202,9 +202,6 @@ void kpMainWindow::slotTool##toolName ()          \
                                                   \
     if (tool () == m_tool##toolName)              \
         return;                                   \
-                                                  \
-    if (toolHasBegunShape ())                     \
-        tool ()->endShapeInternal ();             \
                                                   \
     m_toolToolBar->selectTool (m_tool##toolName); \
 }
