@@ -53,7 +53,7 @@ void kpMainWindow::setupHelpMenuActions ()
     // "Acquiring" is more appropriate.
     // -- Thurston
     d->m_actionHelpTakingScreenshots = new KAction (
-        i18n ("Acquiring &Screenshots..."), 0,
+        i18n ("Acquiring &Screenshots"), 0,
         this, SLOT (slotHelpTakingScreenshots ()),
         ac, "help_taking_screenshots");
 
@@ -147,7 +147,7 @@ void kpMainWindow::slotHelpTakingScreenshots ()
         (
             "<p>"
             "KDE supports acquiring screenshots with the <b>%1</b> shortcut."
-            "  However, you are not running KDE."
+            "  However, you do not appear to be running KDE."
             "</p>"
 
             "<p>You may, instead, use the application"
