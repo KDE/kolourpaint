@@ -1012,7 +1012,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
 
     #if DEBUG_KP_PIXMAP_FX && 1 || 1
         kdDebug () << "\tBefore smooth scale:" << endl;
-        for (int y = 0; y < image.width (); y++)
+        for (int y = 0; y < image.height (); y++)
         {
             for (int x = 0; x < image.width (); x++)
             {
@@ -1026,7 +1026,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
 
     #if DEBUG_KP_PIXMAP_FX && 1 || 1
         kdDebug () << "\tAfter smooth scale:" << endl;
-        for (int y = 0; y < image.width (); y++)
+        for (int y = 0; y < image.height (); y++)
         {
             for (int x = 0; x < image.width (); x++)
             {
