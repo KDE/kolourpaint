@@ -228,7 +228,16 @@ QSize kpMainWindow::defaultDocSize () const
     QSize docSize = cfg->readSizeEntry (kpSettingLastDocSize);
 
     if (docSize.isEmpty ())
+    {
         docSize = QSize (400, 300);
+    }
+    else
+    {
+        // Don't get too big or you'll thrash (or even lock up) the computer
+        // just by opening a window
+        docSize = QSize (QMIN (2048, docSize.width ()),
+                         QMIN (2048, docSize.height ()));
+    }
 
     return docSize;
 }
