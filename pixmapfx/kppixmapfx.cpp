@@ -683,6 +683,12 @@ kpColor kpPixmapFX::getColorAtPixel (const QPixmap &pm, const QPoint &at)
     kdDebug () << "kpToolColorPicker::colorAtPixel" << p << endl;
 #endif
 
+    if (at.x () < 0 || at.x () >= pm.width () ||
+        at.y () < 0 || at.y () >= pm.height ())
+    {
+        return kpColor::invalid;
+    }
+
     QPixmap pixmap = getPixmapAt (pm, QRect (at, at));
     QImage image = kpPixmapFX::convertToImage (pixmap);
     if (image.isNull ())
@@ -703,6 +709,9 @@ kpColor kpPixmapFX::getColorAtPixel (const QPixmap &pm, int x, int y)
 // public static
 kpColor kpPixmapFX::getColorAtPixel (const QImage &img, const QPoint &at)
 {
+    if (!img.valid (at.x (), at.y ()))
+        return kpColor::invalid;
+    
     QRgb rgba = img.pixel (at.x (), at.y ());
     return kpColor (rgba);
 }

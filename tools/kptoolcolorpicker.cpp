@@ -93,19 +93,24 @@ void kpToolColorPicker::beginDraw ()
 // virtual
 void kpToolColorPicker::draw (const QPoint &thisPoint, const QPoint &, const QRect &)
 {
-    mainWindow ()->colorToolBar ()->setColor (m_mouseButton, colorAtPixel (thisPoint));
-    setUserShapePoints (thisPoint);
+    const kpColor color = colorAtPixel (thisPoint);
+    
+    if (color.isValid ())
+    {
+        mainWindow ()->colorToolBar ()->setColor (m_mouseButton, color);
+        setUserShapePoints (thisPoint);
+    }
+    else
+    {
+        mainWindow ()->colorToolBar ()->setColor (m_mouseButton, m_oldColor);
+        setUserShapePoints ();
+    }
 }
 
 // virtual
 void kpToolColorPicker::cancelShape ()
 {
-#if 0
-    endDraw (m_currentPoint, QRect ());
-    mainWindow ()->commandHistory ()->undo ();
-#else
     mainWindow ()->colorToolBar ()->setColor (m_mouseButton, m_oldColor);
-#endif
 
     setUserMessage (i18n ("Let go of all the mouse buttons."));
 }
@@ -119,13 +124,22 @@ void kpToolColorPicker::releasedAllButtons ()
 // virtual
 void kpToolColorPicker::endDraw (const QPoint &thisPoint, const QRect &)
 {
-    kpToolColorPickerCommand *cmd = new kpToolColorPickerCommand (
-                                            m_mouseButton,
-                                            colorAtPixel (thisPoint), m_oldColor,
-                                            mainWindow ());
+    const kpColor color = colorAtPixel (thisPoint);
 
-    mainWindow ()->commandHistory ()->addCommand (cmd, false /* no exec */);
-    setUserMessage (haventBegunDrawUserMessage ());
+    if (color.isValid ())
+    {
+        kpToolColorPickerCommand *cmd = new kpToolColorPickerCommand (
+                                                m_mouseButton,
+                                                color, m_oldColor,
+                                                mainWindow ());
+
+        mainWindow ()->commandHistory ()->addCommand (cmd, false /* no exec */);
+        setUserMessage (haventBegunDrawUserMessage ());
+    }
+    else
+    {
+        cancelShape ();
+    }
 }
 
 /*
