@@ -84,7 +84,7 @@ void kpMainWindow::setupViewMenuActions ()
     connect (m_actionShowGrid, SIGNAL (toggled (bool)), this, SLOT (slotActionShowGridToggled (bool)));
 
 
-    m_actionShowThumbnail = new KToggleAction (i18n ("Show &Thumbnail"), CTRL + Key_T,
+    m_actionShowThumbnail = new KToggleAction (i18n ("Show T&humbnail"), CTRL + Key_H,
         this, SLOT (slotShowThumbnail ()), actionCollection (), "view_show_thumbnail");
 
 
