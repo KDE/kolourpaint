@@ -3,13 +3,35 @@ Encoding=UTF-8
 
 Name=KolourPaint
 GenericName=Paint Program
+GenericName[bg]=Програма за Цветовете
+GenericName[bs]=Jednostavni program za crtanje
+GenericName[cs]=Kreslící program
+GenericName[et]=Joonistusprogramm
+GenericName[eu]=Margoketa Programa
+GenericName[fi]=Piirto-ohjelma
+GenericName[hr]=Program za slikanje
+GenericName[it]=Programma di disegno
+GenericName[ja]=ペイントプログラム
+GenericName[lt]=Piešimo programa
+GenericName[lv]=Krāsošanas Programma
+GenericName[mt]=Programm sempliċi tat-tpinġija
+GenericName[pl]=Program Paint
+GenericName[ro]=Un program de desenare
+GenericName[sk]=Kreslenie
+GenericName[sv]=Ritprogram
+GenericName[ta]=¾£üÚ ¿¢Ãø
+GenericName[th]=โปรแกรมวาดภาพธรรมดาๆ
+GenericName[uk]=Програма для малювання
+GenericName[ven]=Mbekanyamushumo ya Pennde
+GenericName[xh]=Udweliso lwenkqubo lwepeyinti
+GenericName[zu]=Elila Iprogremu Kapende
 Icon=kolourpaint
 
 Type=Application
 Exec=kolourpaint
 DocPath=kolourpaint/index.html
 
-MimeType=image/x-bmp,image/x-eps,image/gif,image/x-ico,image/jpeg,image/x-pcx,image/png,image/x-portable-bitmap,image/x-portable-pixmap,image/x-targa,image/tiff,image/x-xbm,image/x-xpm
+MimeType=image/x-bmp;image/x-eps;image/gif;image/x-ico;image/jpeg;image/x-pcx;image/png;image/x-portable-bitmap;image/x-portable-pixmap;image/x-targa;image/tiff;image/x-xbm;image/x-xpm
 InitialPreference=6
 
 Categories=Qt;KDE;Graphics
