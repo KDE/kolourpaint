@@ -83,6 +83,7 @@ public:
 
 private:
     bool m_configFirstTime;
+    bool m_alive;
 
 public:
     kpDocument *document () const;
@@ -206,8 +207,8 @@ private slots:
     void slotNew (const KURL &url = KURL ());
     
     bool open (const KURL &url, bool newDocSameNameIfNotExist = false);
-    bool slotOpen ();
-    bool slotOpenRecent (const KURL &url);
+    void slotOpen ();
+    void slotOpenRecent (const KURL &url);
     
     bool save (bool localOnly = false);
     bool slotSave ();
@@ -293,6 +294,9 @@ private:
     void zoomTo (int zoomLevel);
 
 private slots:
+    void finishZoomTo ();
+
+private slots:
     void slotActualSize ();
     void slotFitToPage ();
     void slotFitToWidth ();
@@ -315,13 +319,18 @@ private:
     void setupImageMenuActions ();
     void enableImageMenuDocumentActions (bool enable = true);
     
-    KAction *m_actionResizeScale, *m_actionAutoCrop,
+    KAction *m_actionResizeScale,
+            *m_actionCrop, *m_actionAutoCrop,
             *m_actionFlip, *m_actionRotate, *m_actionSkew,
             *m_actionConvertToBlackAndWhite, *m_actionConvertToGrayscale,
             *m_actionInvertColors, *m_actionClear;
 
+private:
+    QColor backgroundColor () const;
+
 private slots:
     void slotResizeScale ();
+    void slotCrop ();
     void slotAutoCrop ();
     void slotFlip ();
     void slotRotate ();

@@ -39,6 +39,7 @@
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kptoolskew.h>
+#include <kptoolskewdialogwidget.h>
 
 
 /*
@@ -46,9 +47,11 @@
  */
 
 kpToolSkewCommand::kpToolSkewCommand (kpDocument *document, kpViewManager *viewManager,
-                                      double hangle, double vangle)
+                                      double hangle, double vangle,
+                                      const QColor &backgroundColor)
     : m_document (document), m_viewManager (viewManager),
       m_hangle (hangle), m_vangle (vangle),
+      m_backgroundColor (backgroundColor),
       m_oldPixmapPtr (0)
 {
 }
@@ -88,8 +91,7 @@ void kpToolSkewCommand::execute ()
     m_oldPixmapPtr = new QPixmap ();
     *m_oldPixmapPtr = *m_document->pixmap ();
 
-    // (kpDocument skews horizontally in a convenient but unexpected way for positive hangle's)
-    m_document->skew (-m_hangle, m_vangle);
+    m_document->skew (-m_hangle, -m_vangle, m_backgroundColor);
 }
 
 void kpToolSkewCommand::unexecute ()
@@ -106,24 +108,12 @@ void kpToolSkewCommand::unexecute ()
 
 kpToolSkewDialog::kpToolSkewDialog (QWidget *parent)
     : KDialogBase (parent, 0/*name*/, true/*modal*/, i18n ("Skew"),
-                   KDialogBase::Ok | KDialogBase::Cancel)
+                   KDialogBase::Ok | KDialogBase::Cancel),
+      m_mainWidget (new kpToolSkewDialogWidget (this))
+
 {
-    QWidget *page = new QWidget (this);
-    setMainWidget (page);
-
-    QGridLayout *lay = new QGridLayout (page, 4, 3, marginHint (), spacingHint ());
-
-    m_inpHorizontalAngle = new KIntNumInput (page);
-    lay->addWidget (m_inpHorizontalAngle, 0, 1);
-
-    QLabel *lbHPixels = new QLabel (i18n ("degrees"), page);
-    lay->addWidget (lbHPixels, 0, 2);
-
-    m_inpVerticalAngle = new KIntNumInput (page);
-    lay->addWidget (m_inpVerticalAngle, 2, 1);
-
-    QLabel *lbVPixels = new QLabel (i18n ("degrees"), page);
-    lay->addWidget (lbVPixels, 2, 2);
+    resize (size ());
+    setMainWidget (m_mainWidget);
 }
 
 kpToolSkewDialog::~kpToolSkewDialog ()
@@ -133,16 +123,15 @@ kpToolSkewDialog::~kpToolSkewDialog ()
 
 double kpToolSkewDialog::horizontalAngle () const
 {
-    return m_inpHorizontalAngle->value ();
+    return m_mainWidget->horizontalSkewInput->value ();
 }
 
 double kpToolSkewDialog::verticalAngle () const
 {
-    return m_inpVerticalAngle->value ();
+    return m_mainWidget->verticalSkewInput->value ();
 }
 
 bool kpToolSkewDialog::isNoop () const
 {
     return (horizontalAngle () == 0) && (verticalAngle () == 0);
 }
-

@@ -37,24 +37,29 @@
 #include <klocale.h>
 
 #include <kpdefs.h>
+#include <kptool.h>
 #include <kptoolwidgetfillstyle.h>
 
 
 kpToolWidgetFillStyle::kpToolWidgetFillStyle (QWidget *parent)
     : kpToolWidgetBase (parent)
 {
-    kpToolWidgetBase::setInvertSelectedPixmap (false);
+    setInvertSelectedPixmap ();
 
     for (int i = 0; i < (int) FillStyleNum; i++)
     {
         QPixmap pixmap;
-        int width = 44 / 2, height = width;
         
-        pixmap = fillStylePixmap ((FillStyle) i, width, height);
-        kpToolWidgetBase::addOption (pixmap, fillStyleName ((FillStyle) i)/*tooltip*/);
+        pixmap = fillStylePixmap ((FillStyle) i,
+                                  (width () - 2/*margin*/) * 3 / 4,
+                                  (height () - 2/*margin*/ - 2/*spacing*/) * 3 / (3 * 4));
+        addOption (pixmap, fillStyleName ((FillStyle) i)/*tooltip*/);
+        
+        startNewOptionRow ();
     }
 
-    kpToolWidgetBase::setSelected (0);
+    relayoutOptions ();
+    setSelected (0, 0);
 }
 
 kpToolWidgetFillStyle::~kpToolWidgetFillStyle ()
@@ -63,23 +68,35 @@ kpToolWidgetFillStyle::~kpToolWidgetFillStyle ()
 
 
 // private
-QPixmap kpToolWidgetFillStyle::fillStylePixmap (FillStyle fs, int width, int height)
+QPixmap kpToolWidgetFillStyle::fillStylePixmap (FillStyle fs, int w, int h)
 {
-    QPixmap pixmap (width, height);
-    QPainter painter;
-    
+    QPixmap pixmap ((w <= 0 ? width () : w), (h <= 0 ? height () : h));
     pixmap.fill (Qt::white);
 
-    painter.begin (&pixmap);
+    QPainter painter (&pixmap);
     
     painter.setPen (QPen (Qt::black, 2));
-    painter.setBrush (brushForFillStyle (fs, Qt::black/*foreground*/, Qt::red/*background*/));
+    painter.setBrush (brushForFillStyle (fs, Qt::black/*foreground*/, Qt::gray/*background*/));
     
-    painter.drawRect (3, 3, width - 6, height - 6);
+    painter.drawRect (2, 2, w - 3, h - 3);
     
     painter.end ();
 
-    pixmap.setMask (pixmap.createHeuristicMask ());
+    
+    QBitmap mask (pixmap.width (), pixmap.height ());
+    mask.fill (Qt::color0);
+    
+    painter.begin (&mask);
+    painter.setPen (QPen (Qt::color1, 2));
+
+    if (fs == FillWithBackground || fs == FillWithForeground)
+        painter.setBrush (Qt::color1);
+
+    painter.drawRect (2, 2, w - 3, h - 3);
+    
+    painter.end ();
+
+    pixmap.setMask (mask);
     
     return pixmap;
 }
@@ -101,9 +118,6 @@ QString kpToolWidgetFillStyle::fillStyleName (FillStyle fs) const
     case FillWithForeground:
         return i18n ("Fill with Foreground Color");
         break;
-    case FillWithForeground50Percent:
-        return i18n ("50% Fill with Background Color");
-        break;
     default:
         return QString::null;
         break;
@@ -116,16 +130,16 @@ kpToolWidgetFillStyle::FillStyle kpToolWidgetFillStyle::fillStyle () const
 {
 #if 1
     kdDebug () << "kpToolWidgetFillStyle::fillStyle() selected="
-               << kpToolWidgetBase::selected ()
+               << selectedRow ()
                << endl;
 #endif
-    return (FillStyle) kpToolWidgetBase::selected ();
+    return (FillStyle) selectedRow ();
 }
 
 // public static
-QBrush kpToolWidgetFillStyle::brushForFillStyle (FillStyle fs,
-                                                 const QColor &foregroundColor,
-                                                 const QColor &backgroundColor)
+QBrush kpToolWidgetFillStyle::maskBrushForFillStyle (FillStyle fs,
+                                                     const QColor &foregroundColor,
+                                                     const QColor &backgroundColor)
 {
     // do not complain about the "useless" breaks
     // as the return statements might not be return statements one day
@@ -136,13 +150,55 @@ QBrush kpToolWidgetFillStyle::brushForFillStyle (FillStyle fs,
         return Qt::NoBrush;
         break;
     case FillWithBackground:
-        return QBrush (backgroundColor);
+        if (kpTool::isColorTransparent (backgroundColor))
+            return QBrush (Qt::color0/*transparent*/);
+        else
+            return QBrush (Qt::color1/*opaque*/);
         break;
     case FillWithForeground:
-        return QBrush (foregroundColor);
+        if (kpTool::isColorTransparent (foregroundColor))
+            return QBrush (Qt::color0/*transparent*/);
+        else
+            return QBrush (Qt::color1/*opaque*/);
         break;
-    case FillWithForeground50Percent:
-        return QBrush (backgroundColor, Qt::Dense4Pattern);
+    default:
+        return Qt::NoBrush;
+        break;
+    }
+}
+
+QBrush kpToolWidgetFillStyle::maskBrush (const QColor &foregroundColor,
+                                         const QColor &backgroundColor)
+{
+    return maskBrushForFillStyle (fillStyle (), foregroundColor, backgroundColor);
+}
+
+// public static
+QBrush kpToolWidgetFillStyle::brushForFillStyle (FillStyle fs,
+                                                 const QColor &foregroundColor,
+                                                 const QColor &backgroundColor)
+{
+    // do not complain about the "useless" breaks
+    // as the return statements might not be return statements one day
+
+    // sync: kptoolpolygon.cpp pixmap()
+
+    switch (fs)
+    {
+    case NoFill:
+        return Qt::NoBrush;
+        break;
+    case FillWithBackground:
+        if (kpTool::isColorOpaque (backgroundColor))
+            return QBrush (backgroundColor);
+        else
+            return Qt::NoBrush;
+        break;
+    case FillWithForeground:
+        if (kpTool::isColorOpaque (foregroundColor))
+            return QBrush (foregroundColor);
+        else
+            return Qt::NoBrush;
         break;
     default:
         return Qt::NoBrush;
@@ -159,9 +215,9 @@ QBrush kpToolWidgetFillStyle::brush (const QColor &foregroundColor,
 
 
 // virtual protected slot [base kpToolWidgetBase]
-void kpToolWidgetFillStyle::setSelected (int which)
+void kpToolWidgetFillStyle::setSelected (int row, int col)
 {
-    kpToolWidgetBase::setSelected (which);
+    kpToolWidgetBase::setSelected (row, col);
     emit fillStyleChanged (fillStyle ());
 };
 

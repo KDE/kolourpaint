@@ -1,0 +1,201 @@
+
+/* This file is part of the KolourPaint project
+   Copyright (c) 2003 Clarence Dang <dang@kde.org>
+   All rights reserved.
+   
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions
+   are met:
+   
+   1. Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+   2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+   3. Neither the names of the copyright holders nor the names of
+      contributors may be used to endorse or promote products derived from
+      this software without specific prior written permission.
+   
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+   PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+   HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+#ifndef __kppixmapfx_h__
+#define __kppixmapfx_h__
+
+
+class QBitmap;
+class QColor;
+class QPixmap;
+class QPoint;
+class QRect;
+
+
+class kpPixmapFX
+{
+public:
+    /*
+     * QPixmap/QImage Conversion Functions
+     */
+
+    /*
+     * Converts <pixmap> to a QImage and returns it.
+     */
+    static QImage convertToImage (const QPixmap &pixmap);
+
+    /*
+     * Converts <image> to a QPixmap of the current display's depth and
+     * returns it.
+     *
+     * If the flag <pretty> is set, it may dither the image making the
+     * returned pixmap look better at the expense of exactness of conversion.
+     *
+     * This will automatically call ensureNoAlphaChannel().
+     *
+     * Never use a foreign QPixmap that is offered to you - always get the
+     * foreign QImage and use this function to convert it to a sane QPixmap.
+     */
+    static QPixmap convertToPixmap (const QImage &image, bool pretty = false);
+
+    
+    /*
+     * Get/Set Parts of Pixmap
+     */
+     
+
+    /*
+     * Returns the pixel and mask data found at the <rect> in <pm>.
+     */
+    static QPixmap getPixmapAt (const QPixmap &pm, const QRect &rect);
+
+    /*
+     * Sets the pixel and mask data at <destRect> in <*destPixmapPtr>
+     * to <srcPixmap>.
+     */    
+    static void setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
+                             const QPixmap &srcPixmap);
+
+    /*
+     * Sets the pixel and mask data at the rectangle in <*destPixmapPtr>,
+     * with the top-left <destAt> and dimensions <srcPixmap.rect()>,
+     * to <srcPixmap>.
+     */
+    static void setPixmapAt (QPixmap *destPixmapPtr, const QPoint &destAt,
+                             const QPixmap &srcPixmap);
+
+    /*
+     * Draws <srcPixmap> on top of <*destPixmapPtr> at <destAt>.
+     * The mask of <*destPixmapPtr> is adjusted so that all opaque
+     * pixels in <srcPixmap> will be opaque in <*destPixmapPtr>.
+     */
+    static void paintPixmapAt (QPixmap *destPixmapPtr, const QPoint &destAt,
+                               const QPixmap &srcPixmap);
+
+    /*
+     * Returns the colour of the pixel at <at> in <pm>.
+     * If the pixel is transparent, a value is returned such that
+     * kpTool::isColorTransparent(<return_value>) will return true.
+     */
+    static QColor getColorAtPixel (const QPixmap &pm, const QPoint &at);
+    static QColor getColorAtPixel (const QPixmap &pm, int x, int y);
+
+    /*
+     * Returns the color of the pixel at <at> in <img>.
+     * If the pixel is transparent, a value is returned such that
+     * kpTool::isColorTransparent(<return_value>) will return true.
+     */
+    static QColor getColorAtPixel (const QImage &img, const QPoint &at);
+    static QColor getColorAtPixel (const QImage &img, int x, int y);
+    
+
+    /*
+     * Mask Operations
+     */
+
+
+    /*
+     * Removes <*destPixmapPtr>'s Alpha Channel and attempts to convert it
+     * to a mask.  KolourPaint - and QPixmap to a great extent - does not
+     * support Alpha Channels - only masks.  Call this whenever you get
+     * a pixmap from a foreign source; else all KolourPaint code will
+     * exhibit "undefined behaviour".
+     */
+    static void ensureNoAlphaChannel (QPixmap *destPixmapPtr);
+
+    /*
+     * Returns <pm>'s mask or a fully opaque mask (with <pm>'s dimensions)
+     * if <pm> does not have a mask.
+     */
+    static QBitmap getNonNullMask (const QPixmap &pm);
+    
+    /*
+     * Returns the mask data found at the <rect> in <pm>.
+     */
+    static QBitmap getNonNullMaskAt (const QPixmap &pm, const QRect &rect);
+
+    /*
+     * Sets the mask of <*destPixmapPtr> at the rectangle, with the
+     * top-left <destAt> and dimensions <srcMaskBitmap.rect()>,
+     * to <srcMaskBitmap>.
+     */
+    static void setMaskAt (QPixmap *destPixmapPtr, const QPoint &destAt,
+                           const QBitmap &srcMaskBitmap);
+
+    /*
+     * Ensures that <*destPixmapPtr> is transparent at <rect>.
+     */
+    static void ensureTransparentAt (QPixmap *destPixmapPtr, const QRect &destRect);
+
+    /*
+     * Sets the mask of <*destPixmapPtr> at the rectangle, with the
+     * top-left <destAt> and dimensions <srcMaskBitmap.rect()>,
+     * to transparent where <brushBitmap> is opaque.
+     */
+    static void paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QPoint &destAt,
+                                               const QBitmap &brushBitmap);
+
+    /*
+     * Ensures that <*destPixmapPtr> is opaque at <rect>.
+     */
+    static void ensureOpaqueAt (QPixmap *destPixmapPtr, const QRect &destRect);
+    
+    /*
+     * Ensures that <srcPixmap>'s opaque pixels will be opaque if
+     * painted onto <*destPixmapPtr> at <destAt>.
+     */
+    static void ensureOpaqueAt (QPixmap *destPixmapPtr, const QPoint &destAt,
+                                const QPixmap &srcPixmap);
+                  
+
+    /*
+     * Effects
+     */
+
+
+    /*
+     * Inverts the colours of each pixel in the given image.
+     * These functions differ from QImage::invertPixels() in the following ways:
+     *
+     * 1. for 8-bit images, it inverts the colours of the Colour Table
+     *    (this means that you would get visually similar results to inversion
+     *     at higher bit depths - rather than a "random-looking" inversion
+     *     depending on the contents of the Colour Table)
+     * 2. never inverts the Alpha Buffer
+     */
+    static void invertColors (QPixmap *destPixmapPtr);
+    static QPixmap invertColors (const QPixmap &pm);
+    static void invertColors (QImage *destImagePtr);
+    static QImage invertColors (const QImage &img);
+};
+
+
+#endif  // __kppixmapfx_h__

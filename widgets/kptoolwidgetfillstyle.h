@@ -49,7 +49,6 @@ public:
         NoFill,
         FillWithBackground,
         FillWithForeground,
-        FillWithForeground50Percent,
         FillStyleNum  /* not (a valid FillStyle) */
     };
 
@@ -59,7 +58,13 @@ private:
     
 public:
     FillStyle fillStyle () const;
-    
+
+    static QBrush maskBrushForFillStyle (FillStyle fs,
+                                         const QColor &foregroundColor,
+                                         const QColor &backgroundColor);
+    QBrush maskBrush (const QColor &foregroundColor,
+                      const QColor &backgroundColor);
+
     static QBrush brushForFillStyle (FillStyle fs,
                                      const QColor &foregroundColor,
                                      const QColor &backgroundColor);
@@ -70,7 +75,7 @@ signals:
     void fillStyleChanged (kpToolWidgetFillStyle::FillStyle fillStyle);
 
 protected slots:
-    virtual void setSelected (int which);
+    virtual void setSelected (int row, int col);
 };
 
 #endif  // __kptoolwidgetfillstyle_h__

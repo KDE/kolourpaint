@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -29,7 +29,7 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_VIEW_MANAGER 1
+#define DEBUG_KP_VIEW_MANAGER 0
 
 #include <kdebug.h>
 
@@ -45,6 +45,7 @@ kpViewManager::kpViewManager (kpMainWindow *mainWindow)
       m_viewUnderCursor (0),
       m_tempPixmapType (NoPixmap)
 {
+    m_queueUpdatesCounter = m_fastUpdatesCounter =  0;
 }
 
 kpDocument *kpViewManager::document ()
@@ -124,18 +125,17 @@ void kpViewManager::setTempPixmapAt (const QPixmap &pixmap, const QPoint &at,
 
     m_tempPixmap = pixmap;
     m_tempPixmapRect = QRect (at.x (), at.y (), pixmap.width (), pixmap.height ());
-
-    // OPT: don't need bounding rect - could just update 2 rects
-    QRect updateRect;
-    if (oldPixmapActive)
-        updateRect = m_tempPixmapRect.unite (oldPixmapRect);
-    else
-        updateRect = m_tempPixmapRect;
-
     m_tempPixmapType = type;
+
+    setQueueUpdates ();
+
     setSelectionBorderType (selBorderType, false/*don't update*/);
 
-    updateViews (updateRect);
+    if (oldPixmapActive)
+        updateViews (oldPixmapRect);
+    updateViews (m_tempPixmapRect);
+
+    restoreQueueUpdates ();
 
     if (tempPixmapWasSelection && !selectionActive ())
         emit selectionEnabled (false);
@@ -182,6 +182,11 @@ bool kpViewManager::brushActive () /*const*/
     return tempPixmapType () == BrushPixmap;
 }
 
+bool kpViewManager::shouldBrushBeDisplayed (kpView * /*view*/) /*const*/
+{
+    return brushActive () && viewUnderCursor ();
+}
+    
 QRect kpViewManager::tempPixmapRect () const
 {
     return m_tempPixmapRect;
@@ -217,7 +222,7 @@ kpView *kpViewManager::viewUnderCursor () /*const*/
         kdError () << "kpViewManager::viewUnderCursor(): invalid view" << endl;
         m_viewUnderCursor = 0;
     }
-        
+
     return m_viewUnderCursor;
 }
 
@@ -228,22 +233,124 @@ void kpViewManager::setViewUnderCursor (kpView *view)
 #endif
     m_viewUnderCursor = view;
 
-    repaintBrushPixmap ();
+    updateBrushPixmap ();
 }
 
 
-void kpViewManager::repaintBrushPixmap ()
+// public
+bool kpViewManager::queueUpdates () const
+{
+    return (m_queueUpdatesCounter > 0);
+}
+
+// public
+void kpViewManager::setQueueUpdates ()
+{
+    m_queueUpdatesCounter++;
+#if DEBUG_KP_VIEW_MANAGER && 1
+    kdDebug () << "kpViewManager::setQueueUpdates() counter="
+               << m_queueUpdatesCounter << endl;
+#endif
+}
+
+// public
+void kpViewManager::restoreQueueUpdates ()
+{
+    m_queueUpdatesCounter--;
+#if DEBUG_KP_VIEW_MANAGER && 1
+    kdDebug () << "kpViewManager::restoreQueueUpdates() counter="
+               << m_queueUpdatesCounter << endl;
+#endif
+    if (m_queueUpdatesCounter < 0)
+    {
+        kdError () << "kpViewManager::restoreQueueUpdates() counter="
+                   << m_queueUpdatesCounter;
+    }
+
+    if (m_queueUpdatesCounter <= 0)
+    {
+        for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())
+            view->updateQueuedArea ();
+    }
+}
+
+
+// public
+bool kpViewManager::fastUpdates () const
+{
+    return (m_fastUpdatesCounter > 0);
+}
+
+// public
+void kpViewManager::setFastUpdates ()
+{
+    m_fastUpdatesCounter++;
+#if DEBUG_KP_VIEW_MANAGER && 1
+    kdDebug () << "kpViewManager::setFastUpdates() counter="
+               << m_fastUpdatesCounter << endl;
+#endif
+}
+
+// public
+void kpViewManager::restoreFastUpdates ()
+{
+    m_fastUpdatesCounter--;
+#if DEBUG_KP_VIEW_MANAGER && 1
+    kdDebug () << "kpViewManager::restoreFastUpdates() counter="
+               << m_fastUpdatesCounter << endl;
+#endif
+    if (m_fastUpdatesCounter < 0)
+    {
+        kdError () << "kpViewManager::restoreFastUpdates() counter="
+                   << m_fastUpdatesCounter;
+    }
+}
+
+
+void kpViewManager::updateBrushPixmap ()
 {
 #if DEBUG_KP_VIEW_MANAGER && 0
-    kdDebug () << "kpViewManager::repaintBrushPixmap () viewUnderCursor="
+    kdDebug () << "kpViewManager::updateBrushPixmap () viewUnderCursor="
                << viewUnderCursor () << endl;
 #endif
+    updateViews (tempPixmapRect ());
+}
 
-    // sync with updateViews()
-    for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())
+
+void kpViewManager::updateView (kpView *v)
+{
+    updateView (v, QRect (0, 0, v->width (), v->height ()));
+}
+
+void kpViewManager::updateView (kpView *v, const QRect &viewRect)
+{
+    if (!queueUpdates ())
     {
-        view->repaint (view->zoomDocToView (tempPixmapRect ()), false /* don't erase */);
+        if (fastUpdates ())
+            v->repaint (viewRect, false/*no erase*/);
+        else
+            v->update (viewRect);
     }
+    else
+        v->addToQueuedArea (viewRect);
+}
+
+void kpViewManager::updateView (kpView *v, int x, int y, int w, int h)
+{
+    updateView (v, QRect (x, y, w, h));
+}
+
+void kpViewManager::updateView (kpView *v, const QRegion &viewRegion)
+{
+    if (!queueUpdates ())
+    {
+        if (fastUpdates ())
+            v->repaint (viewRegion, false/*no erase*/);
+        else
+            v->update (viewRegion.boundingRect ());
+    }
+    else
+        v->addToQueuedArea (viewRegion);
 }
 
 
@@ -256,32 +363,32 @@ void kpViewManager::updateViews ()
 
 void kpViewManager::updateViews (const QRect &docRect)
 {
-#if DEBUG_KP_VIEW_MANAGER && 0
+#if DEBUG_KP_VIEW_MANAGER && 1
     kdDebug () << "KpViewManager::updateViews (" << docRect << ")" << endl;
 #endif
 
-    // sync with repaintBrushPixmap()
     for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())
     {
-        // HACK: use repaint to get instant feedback so that it _feels_
-        //       more responsive
+    #if DEBUG_KP_VIEW_MANAGER && 1
+        kdDebug () << "\tupdating view " << view->name () << endl;
+    #endif
         if (view->zoomLevelX () % 100 == 0 && view->zoomLevelY () % 100 == 0)
         {
-            view->repaint (view->zoomDocToView (docRect), false/*no erase*/);
+            updateView (view, view->zoomDocToView (docRect));
         }
         else
         {
             QRect viewRect = view->zoomDocToView (docRect);
-        
+
             int diff = qRound (double (QMAX (view->zoomLevelX (), view->zoomLevelY ())) / 100.0) + 1;
-            
+
             QRect newRect = QRect (viewRect.x () - diff,
                                    viewRect.y () - diff,
                                    viewRect.width () + 2 * diff,
                                    viewRect.height () + 2 * diff)
                                 .intersect (QRect (0, 0, view->width (), view->height ()));
-        
-            view->repaint (newRect, false/*no erase*/);
+
+            updateView (view, newRect);
         }
     }
 }

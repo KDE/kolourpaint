@@ -57,7 +57,7 @@ struct kpToolAutoCropBorder
     
     const QPixmap *m_pixmapPtr;
     QRect m_rect;
-    QRgb m_rgb;
+    QColor m_color;
 };
 
 

@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -33,9 +33,7 @@
 #define __kpview_h__
 
 #include <qwidget.h>
-#include <qpixmap.h>
-#include <qpoint.h>
-#include <qrect.h>
+#include <qregion.h>
 #include <qwmatrix.h>
 
 class QDragEnterEvent;
@@ -43,10 +41,14 @@ class QDragLeaveEvent;
 class QDropEvent;
 class QFocusEvent;
 class QKeyEvent;
+class QPixmap;
+class QPoint;
 class QRect;
+class kpDocument;
 class kpTool;
 class kpMainWindow;
-    
+class kpViewManager;
+
 class kpView : public QWidget
 {
 Q_OBJECT
@@ -62,6 +64,8 @@ private:
     void setHasMouse (bool yes = true);
 
 public:
+    kpViewManager *viewManager () const;
+    kpDocument *document () const;
     bool hasVariableZoom () const;
 
     // all incompatible with autoVariableZoom
@@ -71,6 +75,7 @@ public:
     void showGrid (bool yes = true);
     bool canShowGrid (int hzoom = -1, int vzoom = -1) const;
 
+    // TODO: rename zoom*To* to transform*To* since we also do origin transformation
     int zoomViewToDocX (int zoomedCoord) const;
     int zoomViewToDocY (int zoomedCoord) const;
     QPoint zoomViewToDoc (const QPoint &zoomedCoord) const;
@@ -83,6 +88,12 @@ public:
 
     virtual void resize (int w, int h);
 
+    // (for kpViewManager)
+    void addToQueuedArea (const QRect &rect);
+    void addToQueuedArea (const QRegion &region);
+    void invalidateQueuedArea ();
+    void updateQueuedArea ();
+
 public slots:
     // connect to document resize signal
     bool slotUpdateVariableZoom ();
@@ -90,7 +101,6 @@ public slots:
 private:
     bool updateVariableZoom (int viewWidth, int viewHeight);
 
-    // event handlers;
     virtual void mousePressEvent (QMouseEvent *e);
     virtual void mouseMoveEvent (QMouseEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
@@ -102,16 +112,27 @@ private:
     virtual void leaveEvent (QEvent *e);
     virtual void dragEnterEvent (QDragEnterEvent *);
     virtual void dragLeaveEvent (QDragLeaveEvent *);
-    virtual void paintEvent (QPaintEvent *e);
-
-    void paint (const QPixmap &pixmap, const QRect &viewRect, const QRect &docRect);
-
+    
     kpMainWindow *m_mainWindow;
 
     bool m_autoVariableZoom;
     int m_hzoom, m_vzoom;
     QWMatrix m_docToViewMatrix;
     bool m_showGrid;
+
+    QRegion m_queuedUpdateArea;
+
+private:
+    QRect paintEventGetDocRect (const QRect &viewRect) const;
+    void paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRect);
+    void paintEventDrawTempPixmap (QPixmap *destPixmap, const QRect &docRect);
+    void paintEventDrawGridLines (QPainter *painter, const QRect &viewRect);
+
+    virtual void paintEvent (QPaintEvent *e);
+
+    QPixmap *m_backBuffer;
+    QPoint m_origin;
+    bool m_needBorder;
 };
 
 #endif  // __kpview_h__

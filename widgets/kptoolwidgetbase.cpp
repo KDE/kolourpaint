@@ -40,144 +40,328 @@
 #include <kdebug.h>
 
 #include <kpdefs.h>
+#include <kppixmapfx.h>
 #include <kptoolwidgetbase.h>
+
 
 kpToolWidgetBase::kpToolWidgetBase (QWidget *parent)
     : QFrame (parent),
       m_invertSelectedPixmap (true),
-      m_y (0), m_x (0), m_highest (0), m_selected (-1)
+      m_selectedRow (-1), m_selectedCol (-1)
 {
     setFrameStyle (QFrame::Panel | QFrame::Sunken);
     setFixedSize (44, 66);
 }
 
-int kpToolWidgetBase::addOption (const QPixmap &pixmap, const QString &toolTip,
-                                 bool center, bool doUpdate)
+kpToolWidgetBase::~kpToolWidgetBase ()
 {
-    int n = m_pixmaps.count ();
+}
 
-    m_pixmaps.append (pixmap);
+
+// public
+void kpToolWidgetBase::addOption (const QPixmap &pixmap, const QString &toolTip)
+{
+    if (m_pixmaps.isEmpty ())
+        startNewOptionRow ();
     
-    if (center)
+    m_pixmaps.last ().append (pixmap);
+    m_pixmapRects.last ().append (QRect ());
+    m_toolTips.last ().append (toolTip);
+}
+
+// public
+void kpToolWidgetBase::startNewOptionRow ()
+{
+    m_pixmaps.resize (m_pixmaps.count () + 1);
+    m_pixmapRects.resize (m_pixmapRects.count () + 1);
+    m_toolTips.resize (m_toolTips.count () + 1);
+}
+
+
+// private
+QValueVector <int> kpToolWidgetBase::spreadOutElements (const QValueVector <int> &sizes, int max)
+{
+    if (sizes.count () == 0)
+        return QValueVector <int> ();
+    else if (sizes.count () == 1)
+        return QValueVector <int> (1, sizes.first () > max ? 0 : 1/*margin*/);
+        
+    QValueVector <int> retOffsets (sizes.count ());
+    
+    int totalSize = 0;
+    for (int i = 0; i < (int) sizes.count (); i++)
+        totalSize += sizes [i];
+        
+    int margin = 1;
+    
+    // if don't fit with margin, then just return elements
+    // packed right next to each other
+    if (totalSize + margin * 2 > max)
     {
-        m_x = (width () - pixmap.width ()) / 2;
-        if (m_x < 0)
-            m_x = 0;
-        m_y += m_highest;
-        m_highest = 0;
+        retOffsets [0] = 0;
+        for (int i = 1; i < (int) sizes.count (); i++)
+            retOffsets [i] = retOffsets [i - 1] + sizes [i - 1];
+
+        return retOffsets;
+    }
+
+    int maxLeftOver = max - (totalSize + margin * 2);
+    
+    int startCompensating = -1;
+    int numCompensate = 0;
+    
+    int spacing = 0;
+    
+    spacing = maxLeftOver / (sizes.count () - 1);
+    if (spacing * int (sizes.count () - 1) < maxLeftOver)
+    {
+        numCompensate = maxLeftOver - spacing * (sizes.count () - 1);
+        startCompensating = ((sizes.count () - 1) - numCompensate) / 2;
     }
     
-    m_pixmapRects.append (QRect (m_x, m_y, pixmap.width (), pixmap.height ()));
-    if (!toolTip.isEmpty ())
-        QToolTip::add (this, m_pixmapRects [n], toolTip);
+    retOffsets [0] = margin;
+    for (int i = 1; i < (int) sizes.count (); i++)
+    {
+        retOffsets [i] += retOffsets [i - 1] +
+                          sizes [i - 1] +
+                          spacing +
+                          ((numCompensate &&
+                           i >= startCompensating &&
+                           i < startCompensating + numCompensate) ? 1 : 0);
+    }
+        
+    return retOffsets;
+}
 
-#if DEBUG_KP_TOOL_WIDGET_BASE && 0
-    kdDebug () << "kpToolWidgetBase::addOption(): m_x=" << m_x
-               << " m_y=" << m_y
-               << " width=" << pixmap.width ()
-               << " height=" << pixmap.height ()
-               << endl;
+// public
+void kpToolWidgetBase::relayoutOptions ()
+{
+#if DEBUG_KP_TOOL_WIDGET_BASE
+    kdDebug () << "kpToolWidgetBase::relayoutOptions()" << endl;
 #endif
 
-    if (pixmap.height () > m_highest)
-        m_highest = pixmap.height ();
-    
-    m_x += pixmap.width ();
-    if (m_x >= width ())
+    while (!m_pixmaps.isEmpty () && m_pixmaps.last ().count () == 0)
     {
-        m_x = 0;
-        m_y += m_highest;
-        m_highest = 0;
+    #if DEBUG_KP_TOOL_WIDGET_BASE
+        kdDebug () << "\tkilling #" << m_pixmaps.count () - 1 << endl;
+    #endif
+        m_pixmaps.resize (m_pixmaps.count () - 1);
+        m_pixmapRects.resize (m_pixmapRects.count () - 1);
+        m_toolTips.resize (m_toolTips.count () - 1);
     }
 
-    if (doUpdate)
-        update (m_pixmapRects [n]);
-
-    return n;
-}
-
-int kpToolWidgetBase::selected (void) const
-{
-    return m_selected;
-}
-
-// protected slot
-void kpToolWidgetBase::setSelected (int which)
-{
-    if (which == m_selected)
+    if (m_pixmaps.isEmpty ())
         return;
 
-    const int wasSelected = m_selected;
+#if DEBUG_KP_TOOL_WIDGET_BASE
+    kdDebug () << "\tsurvived killing of empty rows" << endl;
+    kdDebug () << "\tfinding heights of rows:" << endl;
+#endif
+    
+    QValueVector <int> maxHeightOfRow (m_pixmaps.count ());
+    
+    for (int r = 0; r < (int) m_pixmaps.count (); r++)
+    {
+        for (int c = 0; c < (int) m_pixmaps [r].count (); c++)
+        {
+            if (c == 0 || m_pixmaps [r][c].height () > maxHeightOfRow [r])
+                maxHeightOfRow [r] = m_pixmaps [r][c].height ();
+        }
+    #if DEBUG_KP_TOOL_WIDGET_BASE
+        kdDebug () << "\t\t" << r << ": " << maxHeightOfRow [r] << endl;
+    #endif
+    }
+    
+    QValueVector <int> rowYOffset = spreadOutElements (maxHeightOfRow, height ());
+#if DEBUG_KP_TOOL_WIDGET_BASE
+    kdDebug () << "\tspread out offsets of rows:" << endl;
+    for (int r = 0; r < (int) rowYOffset.count (); r++)
+        kdDebug () << "\t\t" << r << ": " << rowYOffset [r] << endl;
+#endif
 
-    m_selected = which;
+    for (int r = 0; r < (int) m_pixmaps.count (); r++)
+    {
+        kdDebug () << "\tlaying out row " << r << ":" << endl;
+        
+        QValueVector <int> widths (m_pixmaps [r].count ());
+        for (int c = 0; c < (int) m_pixmaps [r].count (); c++)
+            widths [c] = m_pixmaps [r][c].width ();
+    #if DEBUG_KP_TOOL_WIDGET_BASE
+        kdDebug () << "\t\twidths of cols:" << endl;
+        for (int c = 0; c < (int) m_pixmaps [r].count (); c++)
+            kdDebug () << "\t\t\t" << c << ": " << widths [c] << endl;
+    #endif
+        
+        QValueVector <int> colXOffset = spreadOutElements (widths, width ());
+    #if DEBUG_KP_TOOL_WIDGET_BASE
+        kdDebug () << "\t\tspread out offsets of cols:" << endl;
+        for (int c = 0; c < (int) colXOffset.count (); c++)
+            kdDebug () << "\t\t\t" << c << ": " << colXOffset [c] << endl;
+    #endif
 
-    if (wasSelected >= 0)
-        update (m_pixmapRects [wasSelected]);
-    update (m_pixmapRects [which]);
-
-    emit optionSelected (which);
+        for (int c = 0; c < (int) colXOffset.count (); c++)
+        {
+            int x = colXOffset [c];
+            int y = rowYOffset [r];
+            int w, h;
+             
+            if (c == (int) colXOffset.count () - 1)
+            {
+                if (x + m_pixmaps [r][c].width () >= width ())
+                    w = m_pixmaps [r][c].width ();
+                else
+                    w = width () - 1 - x;
+            }
+            else
+                w = colXOffset [c + 1] - x;
+                 
+            if (r == (int) m_pixmaps.count () - 1)
+            {
+                if (y + m_pixmaps [r][c].height () >= height ())
+                    h = m_pixmaps [r][c].height ();
+                else
+                    h = height () - 1 - y;
+            }
+            else
+                h = rowYOffset [r + 1] - y;
+            
+            m_pixmapRects [r][c] = QRect (x, y, w, h);
+            
+            if (!m_toolTips [r][c].isEmpty ())
+                QToolTip::add (this, m_pixmapRects [r][c], m_toolTips [r][c]);
+        }
+    }
+    
+    update ();
 }
 
-// virtual protected
+
+// public
+int kpToolWidgetBase::selectedRow () const
+{
+    return m_selectedRow;
+}
+
+// public
+int kpToolWidgetBase::selectedCol () const
+{
+    return m_selectedCol;
+}
+
+// public
+int kpToolWidgetBase::selected () const
+{
+    if (m_selectedRow < 0 ||
+        m_selectedRow >= (int) m_pixmaps.count () ||
+        m_selectedCol < 0)
+    {
+        return -1;
+    }
+
+    int upto = 0;
+    for (int y = 0; y < m_selectedRow; y++)
+        upto += m_pixmaps [y].count ();
+
+    if (m_selectedCol >= (int) m_pixmaps [m_selectedRow].count ())
+        return -1;
+
+    upto += m_selectedCol;
+
+    return upto;
+}
+
+// public slot
+void kpToolWidgetBase::setSelected (int row, int col)
+{
+    if (row == m_selectedRow && col == m_selectedCol)
+        return;
+
+    const int wasSelectedRow = m_selectedRow;
+    const int wasSelectedCol = m_selectedCol;
+
+    m_selectedRow = row, m_selectedCol = col;
+
+    if (wasSelectedRow >= 0 && wasSelectedCol >= 0)
+    {
+        // unhighlight old option    
+        update (m_pixmapRects [wasSelectedRow][wasSelectedCol]);
+    }
+
+    // highlight new option
+    update (m_pixmapRects [row][col]);
+
+    emit optionSelected (row, col);
+}
+
+
+// protected virtual [base QWidget]
 void kpToolWidgetBase::mousePressEvent (QMouseEvent *e)
 {
-    const int numPixmaps = m_pixmapRects.count ();
-    for (int i = 0; i < numPixmaps; i++)
+    for (int i = 0; i < (int) m_pixmapRects.count (); i++)
     {
-        if (m_pixmapRects [i].contains (e->pos ()))
+        for (int j = 0; j < (int) m_pixmapRects [i].count (); j++)
         {
-            setSelected (i);
-            e->accept ();
-            return;
+            if (m_pixmapRects [i][j].contains (e->pos ()))
+            {
+                setSelected (i, j);
+                e->accept ();
+                return;
+            }
         }
     }
 
     e->ignore ();
 }
 
-// virtual protected
+// protected virtual [base QFrame]
 void kpToolWidgetBase::drawContents (QPainter *painter)
 {
-#if DEBUG_KP_TOOL_WIDGET_BASE && 0
+#if DEBUG_KP_TOOL_WIDGET_BASE && 1
     kdDebug () << "kpToolWidgetBase::drawContents(): rect=" << contentsRect () << endl;
 #endif
 
-    const int numPixmaps = m_pixmaps.count ();
-    for (int i = 0; i < numPixmaps; i++)
+    for (int i = 0; i < (int) m_pixmaps.count (); i++)
     {
-        if (i != m_selected)
+        #if DEBUG_KP_TOOL_WIDGET_BASE && 1
+            kdDebug () << "\tRow: " << i << endl;
+        #endif
+        
+        for (int j = 0; j < (int) m_pixmaps [i].count (); j++)
         {
-            painter->drawPixmap (m_pixmapRects [i].topLeft (), m_pixmaps [i]);
-        }
-        else
-        {
-            painter->setBrush (QColor (0, 128, 255));  // 96, 192 also looks good
-            /*for (int y2 = y; y2 < y + (*it).height (); y2++)
-            {
-                for (int x2 = x + (y2 % 2);
-                     x2 < x + ((*it).width ());
-                     x2 += 2)
-                    painter->drawPoint (x2, y2);
-            }*/
-            
-            painter->drawRect (m_pixmapRects [i]);
+            QRect rect = m_pixmapRects [i][j];
+            QPixmap pixmap = m_pixmaps [i][j];
 
-            QPixmap pixmap = m_pixmaps [i];
-                
-            if (m_invertSelectedPixmap)
+        #if DEBUG_KP_TOOL_WIDGET_BASE && 1
+            kdDebug () << "\t\tCol: " << j << " rect=" << rect << endl;
+        #endif        
+
+            if (i == m_selectedRow && j == m_selectedCol)
             {
-                QImage image = pixmap.convertToImage ();
-                image.invertPixels ();
-                pixmap.convertFromImage (image);
+                static const QColor selCol = Qt::blue;
+                
+                painter->setBrush (selCol);
+                painter->setPen (selCol);
+                
+                painter->drawRect (rect);
+             
+                if (m_invertSelectedPixmap)
+                    kpPixmapFX::invertColors (&pixmap);
             }
-            
-            painter->drawPixmap (m_pixmapRects [i].topLeft (), pixmap);
+
+        #if DEBUG_KP_TOOL_WIDGET_BASE && 1
+            kdDebug () << "\t\t\tdraw pixmap @ x="
+                       << rect.x () + (rect.width () - pixmap.width ()) / 2
+                       << " y="
+                       << rect.y () + (rect.height () - pixmap.height ()) / 2
+                       << endl;
+                       
+        #endif
+
+            painter->drawPixmap (QPoint (rect.x () + (rect.width () - pixmap.width ()) / 2,
+                                         rect.y () + (rect.height () - pixmap.height ()) / 2),
+                                 pixmap);
         }
     }
-}
-
-kpToolWidgetBase::~kpToolWidgetBase ()
-{
 }
 
 #include <kptoolwidgetbase.moc>

@@ -32,6 +32,8 @@
 #ifndef __kptool_skew_h__
 #define __kptool_skew_h__
 
+#include <qcolor.h>
+
 #include <kcommand.h>
 #include <kdialogbase.h>
 
@@ -40,13 +42,14 @@ class QPixmap;
 class KIntNumInput;
 
 class kpDocument;
+class kpToolSkewDialogWidget;
 class kpViewManager;
 
 class kpToolSkewCommand : public KCommand
 {
 public:
     kpToolSkewCommand (kpDocument *document, kpViewManager *m_viewManager,
-                       double hangle, double vangle);
+                       double hangle, double vangle, const QColor &backgroundColor);
     virtual QString name () const;
     virtual ~kpToolSkewCommand ();
 
@@ -57,6 +60,7 @@ private:
     kpDocument *m_document;
     kpViewManager *m_viewManager;
     double m_hangle, m_vangle;
+    QColor m_backgroundColor;
     QPixmap *m_oldPixmapPtr;
 };
 
@@ -72,7 +76,7 @@ public:
     bool isNoop () const;
 
 private:
-    KIntNumInput *m_inpHorizontalAngle, *m_inpVerticalAngle;
+    kpToolSkewDialogWidget *m_mainWidget;
 };
 
 #endif  // __kptool_skew_h__

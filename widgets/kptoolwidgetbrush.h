@@ -55,10 +55,10 @@ signals:
     void brushChanged (const QPixmap &pixmap, bool isDiagonalLine);
 
 protected slots:
-    virtual void setSelected (int which);
+    virtual void setSelected (int row, int col);
 
 private:
-    QPixmap m_brushPixmaps [16];
+    QPixmap m_brushBitmaps [16];
 };
 
 #endif  // __kptoolwidgetbrush_h__

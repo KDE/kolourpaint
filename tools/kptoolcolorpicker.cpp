@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_TOOL_COLOR_PICKER 1
+
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qpoint.h>
@@ -40,6 +42,7 @@
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
+#include <kppixmapfx.h>
 #include <kptoolcolorpicker.h>
 
 
@@ -59,15 +62,11 @@ kpToolColorPicker::~kpToolColorPicker ()
 
 QColor kpToolColorPicker::colorAtPixel (const QPoint &p)
 {
-    QPixmap pixmap = document ()->getPixmapAt (QRect (QPoint (p), QPoint (p)));
-    QImage image = pixmap.convertToImage ();
-    if (image.isNull ())
-    {
-        kdError () << "kpToolColorPicker::colorAtPixel() could not convert to QImage" << endl;
-        return Qt::black;
-    }
+#if DEBUG_KP_TOOL_COLOR_PICKER && 0
+    kdDebug () << "kpToolColorPicker::colorAtPixel" << p << endl;
+#endif
 
-    return QColor (image.pixel (0, 0));
+    return kpPixmapFX::getColorAtPixel (*document ()->pixmap (), p);
 }
 
 // virtual

@@ -36,6 +36,8 @@
 #include <qpixmap.h>
 #include <qrect.h>
 #include <qvaluevector.h>
+#include <qwidget.h>
+
 
 class QPainter;
 
@@ -48,29 +50,42 @@ public:
     kpToolWidgetBase (QWidget *parent);
     virtual ~kpToolWidgetBase ();
 
-    int addOption (const QPixmap &pixmap, const QString &toolTip = QString::null,
-                   bool center = false, bool doUpdate = true);
+    void addOption (const QPixmap &pixmap, const QString &toolTip = QString::null);
+    void startNewOptionRow ();
 
-    int selected (void) const;
+private:
+    QValueVector <int> spreadOutElements (const QValueVector <int> &sizes, int maxSize);
+
+public:
+    void relayoutOptions ();
+
+    int selectedRow () const;
+    int selectedCol () const;
+
+    int selected () const;
+
+public slots:
+    virtual void setSelected (int row, int col);
 
 signals:
-    void optionSelected (int which);
-
-protected slots:
-    virtual void setSelected (int which);
+    void optionSelected (int row, int col);
 
 protected:
     virtual void mousePressEvent (QMouseEvent *e);
     virtual void drawContents (QPainter *painter);
-
+    
     void setInvertSelectedPixmap (bool yes = true) { m_invertSelectedPixmap = yes; }
     bool m_invertSelectedPixmap;
-    
-    QValueVector <QPixmap> m_pixmaps;
-    QValueVector <QRect> m_pixmapRects;
-    int m_y, m_x, m_highest;
 
-    int m_selected;
+    // coulbe be a QFrame or a ComboBox
+    QWidget *m_baseWidget;
+
+    QValueVector < QValueVector <QPixmap> > m_pixmaps;
+    QValueVector < QValueVector <QString> > m_toolTips;
+    
+    QValueVector < QValueVector <QRect> > m_pixmapRects;
+
+    int m_selectedRow, m_selectedCol;
 };
 
 #endif  // __kptoolwidgetbase_h__

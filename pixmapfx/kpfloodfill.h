@@ -49,7 +49,9 @@ public:
 
     // you should call [prepareColorToChange(),[prepare(),[fill()]]]
     bool prepareColorToChange ();
-    QColor colorToChange () const { return QColor (m_colorToChange); };  // only valid after prepareColorToChange()
+      
+    // (only valid after prepareColorToChange())
+    QColor colorToChange () const { return m_colorToChange; };
 
     bool prepare ();
     QRect boundingRect () const;  // only valid after prepare()
@@ -76,7 +78,7 @@ private:
     };
 
     void addLine (int y, int x1, int x2);
-    QRgb pixelColor (int x, int y);
+    QColor pixelColor (int x, int y);
     void findAndAddLines (const FillLine &fillLine, int dy);
     int findMinX (int y, int x);
     int findMaxX (int y, int x);
@@ -86,7 +88,7 @@ private:
     // Init info
     QImage m_image;
     QValueVector < QValueList <FillLine> > m_fillLinesCache;
-    QRgb m_colorToChange;
+    QColor m_colorToChange;
 };
 
 #endif  // __kpfloodfill_h__

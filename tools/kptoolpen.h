@@ -92,11 +92,13 @@ private slots:
     void slotEraserSizeChanged (int size);
 
 private:
-    bool wash (QPainter *painter, const QImage &image,
-               QRgb colorToReplace,
+    bool wash (QPainter *painter, QPainter *maskPainter,
+               const QImage &image,
+               const QColor &colorToReplace,
                const QRect &imageRect, int plotx, int ploty);
-    bool wash (QPainter *painter, const QImage &image,
-               QRgb colorToReplace,
+    bool wash (QPainter *painter, QPainter *maskPainter,
+               const QImage &image,
+               const QColor &colorToReplace,
                const QRect &imageRect, const QRect &drawRect);
 
     QColor color (int which);

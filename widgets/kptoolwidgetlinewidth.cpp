@@ -41,23 +41,42 @@ static int lineWidths [] = {1, 2, 3, 4, 6, 8};
 kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent)
     : kpToolWidgetBase (parent)
 {
-    QPixmap pixmap (44, 11);
+    setInvertSelectedPixmap ();
 
-    for (int i = 0; i < int (sizeof (lineWidths) / sizeof (lineWidths [0])); i++)
+    int numLineWidths = sizeof (lineWidths) / sizeof (lineWidths [0]);
+
+    int w = (width () - 2/*margin*/) * 3 / 4;
+    int h = (height () - 2/*margin*/ - (numLineWidths - 1)/*spacing*/) * 3 / (numLineWidths * 4);
+
+    for (int i = 0; i < numLineWidths; i++)
     {
-        QPainter painter;
-
+        QPixmap pixmap ((w <= 0 ? width () : w),
+                        (h <= 0 ? height () : h));
         pixmap.fill (Qt::white);
-        painter.begin (&pixmap);
-        painter.setBrush (Qt::black);
-        painter.drawRect (3, (pixmap.height () - lineWidths [i]) / 2,
-                          pixmap.width () - 6, lineWidths [i]);
-        painter.end ();
-        pixmap.setMask (pixmap.createHeuristicMask ());
-        kpToolWidgetBase::addOption (pixmap, i18n (QString::number (lineWidths [i])));
+
+        QBitmap maskBitmap (pixmap.width (), pixmap.height ());
+        maskBitmap.fill (Qt::color0/*transparent*/);
+        
+        
+        QPainter painter (&pixmap), maskPainter (&maskBitmap);
+        painter.setPen (Qt::black), maskPainter.setPen (Qt::color1/*opaque*/);
+        painter.setBrush (Qt::black), maskPainter.setBrush (Qt::color1/*opaque*/);
+
+        QRect rect = QRect (0, (pixmap.height () - lineWidths [i]) / 2,
+                            pixmap.width (), lineWidths [i]);
+        painter.drawRect (rect), maskPainter.drawRect (rect);
+
+        painter.end (), maskPainter.end ();
+        
+        
+        pixmap.setMask (maskBitmap);
+
+        addOption (pixmap, i18n (QString::number (lineWidths [i])));
+        startNewOptionRow ();
     }
 
-    kpToolWidgetBase::setSelected (0);
+    relayoutOptions ();
+    setSelected (0, 0);
 }
 
 kpToolWidgetLineWidth::~kpToolWidgetLineWidth ()
@@ -66,13 +85,13 @@ kpToolWidgetLineWidth::~kpToolWidgetLineWidth ()
 
 int kpToolWidgetLineWidth::lineWidth () const
 {
-    return lineWidths [kpToolWidgetBase::selected ()];
+    return lineWidths [selectedRow ()];
 }
 
 // virtual protected slot
-void kpToolWidgetLineWidth::setSelected (int which)
+void kpToolWidgetLineWidth::setSelected (int row, int col)
 {
-    kpToolWidgetBase::setSelected (which);
+    kpToolWidgetBase::setSelected (row, col);
     emit lineWidthChanged (lineWidth ());
 };
 

@@ -43,6 +43,7 @@
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
+#include <kppixmapfx.h>
 #include <kptool.h>
 #include <kptoolresizescale.h>
 #include <kpviewmanager.h>
@@ -179,7 +180,8 @@ void kpMainWindow::slotPaste ()
 
     QApplication::setOverrideCursor (Qt::waitCursor);
 
-    QPixmap pixmap = QApplication::clipboard ()->pixmap (QClipboard::Clipboard);
+    // TODO: should this be pretty?
+    QPixmap pixmap = kpPixmapFX::convertToPixmap (QApplication::clipboard ()->image (QClipboard::Clipboard));
 
     if (!pixmap.isNull ())
     {
@@ -211,7 +213,8 @@ void kpMainWindow::slotPaste ()
                         m_document, m_viewManager,
                         QMAX (pixmap.width (), m_document->width ()),
                         QMAX (pixmap.height (), m_document->height ()),
-                        false/*no scale*/));
+                        false/*no scale*/,
+                        backgroundColor ()));
             }
         }
     }

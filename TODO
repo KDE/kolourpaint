@@ -11,9 +11,13 @@ Before 1.0
 Short-Term
 ----------
 
+Image/Crop
+
+pulsating transparent brush cursor (not black)
+
 kptoolwidgetbase - spacing between items, make contentsRect() actual size wanted
-tool widget colours hard (i.e. impossible) to see on an 8-bit display
-make fill style GUI clearer
+
+- additional colour in the kpColorToolBar for transparent images
 
 working thumbnail view; also maybe shouldn't be a toolbar
 
@@ -37,18 +41,13 @@ config dialogs (look into new kconfig generator)
 Medium Term (2-4 weeks)
 ---------------------
 
-transparent images
-- will also require an additional colour in the kpColorToolBar
-
 fix selections; implement free-form selection
 - clean interface
 - drastically improve performance
 - Undo/Redo
 - transparent & opaque selections
 Image menu items as ordinary tools
-honour background colour for Skew, Rotate
-icons for some of the Image dialogs (if I decide to keep the dialogs around)
-Colour Eraser as part of the Image Menu;
+icons for some of the Image dialogs
 
 tool/text
 paste text (editable after you paste it)
@@ -57,28 +56,13 @@ paste text (editable after you paste it)
 Long-Term (approx 1-2 months)
 -----------------------------
 
-Rethink kpView/kpViewManager design because of:
-- flicker
-- performance
-- difficult selection handling, esp. drawing the selction border
-Ideas:
-- region-based rendering (for performance)
-- blockUpdates() for transaction-based rendering (removes flicker)
-- do something about this horrible tempPixmap hack (so slooooow)
-
-make sure session restore actually works
-
 colour depth audit
+- do 1-bit pixmaps work? [DONE, I think]
+- are we incorrectly using kpDocument::setPixmap() with mono pixmaps? [DONE]
+- remember to nuke pixmap alpha channel from foreign sources [DONE]
 - do 8-bit pixmaps work?
-- are we incorrectly using kpDocument::setPixmap() with mono pixmaps?
+- use of QImage::setPixel() instead of QImage::setColor() with <= 8-bit pixmaps [DONE]
 - are we dithering when converting from QImage -> QPixmap when we shouldn't be?
-
-random pixels in the view showing up with the Colour Eraser Tool and Zoom over 8-bit VNC
-
-tool icons - if a more experienced artist doesn't offer to draw new ones,
-I'll be forced to redo them myself once transparency is supported
-
-documentation (assigned to Thurston)
 
 
 Can be delayed till after 1.0
@@ -91,8 +75,6 @@ Killer Feature: with flow tools (pen, brush, spraycan), holding SHIFT forces hor
 intersect bounding rect with document rect when saving undo info
 - e.g. if you drag a large rect bigger than the view, waste a lot of memory
 ditto for setTempPixmapAt et. al. (maybe not for selections, still thinking)
-
-Zoom zooms into/out of the centre, not the top-left (like a camera)
 
 if you undock a vertical toolbar and right click --> Orientation --> Bottom,
 it stays vertically oriented
@@ -109,6 +91,20 @@ warn about lossy saves (e.g. JPEG)
 use of QPoint () or QPoint (-1, -1) as a sentinel is worrying since it's a
 legal point when dragging out a rectangle
 
+random pixels in the view showing up with the Colour Eraser Tool and Zoom over 8-bit VNC
+
+Rethink kpView/kpViewManager design because of:
+- performance
+- difficult selection handling, esp. drawing the selction border
+- problems with the image "sparkling" at zoom levels % 100 != 0
+Ideas:
+- region-based rendering (for performance)
+- do something about this horrible tempPixmap hack (so slooooow)
+
+make sure session restore actually works
+
+documentation (assigned to Thurston)
+
 
 After 1.0
 ==========
@@ -118,12 +114,13 @@ ideas that may or may not ever get implemented:
 
 
 Look at KPixmapIO for QPixmap <-> QImage conversion optimisation
+Update: qt-copy/patches/0005-qpixmap_mitshm.patch: "this obsoletes KPixmapIO"
 
 Image/Convert Colour Depth (only be able to dither to colour depths lower
 than the current display - limitation of X).  Hmmm, I could understand
 going down to mono (image effect) but why would you want to e.g. convert
 to 8 bit - if you save in an 8-bit format after that, you'll lose colour
-info twice.
+info twice.  Allow saving at different colour depths?
 
 fill - can optimise mem usage by deleting kpFloodFill object
        when execute() (don't derive object)
@@ -184,3 +181,8 @@ line: shift+alt doesn't work but alt+shift does
 - alt alone is backfiring anyway (conflicts with kwin)
   so I'll just leave 30deg & 60deg lines as hidden functionality for now
   (until I can think up a better key combo/way to activate it)
+
+not KolourPaint's fault but I want it anyway: re-enable the ICO write support
+
+Colour Eraser as part of the Image Menu? You can dbl-click on the tool after all.
+

@@ -33,6 +33,7 @@
 
 #include <stdlib.h>
 
+#include <qbitmap.h>
 #include <qpainter.h>
 #include <qpen.h>
 #include <qpixmap.h>
@@ -116,7 +117,7 @@ void kpToolAirSpray::slotSpraycanSizeChanged (int size)
 void kpToolAirSpray::beginDraw ()
 {
     m_currentCommand = new kpToolAirSprayCommand (
-        QPen (color (m_mouseButton)),
+        color (m_mouseButton),
         m_size,
         document (), viewManager ());
 
@@ -209,9 +210,9 @@ void kpToolAirSpray::endDraw (const QPoint &, const QRect &)
  * kpToolAirSprayCommand
  */
 
-kpToolAirSprayCommand::kpToolAirSprayCommand (const QPen &pen, int size,
+kpToolAirSprayCommand::kpToolAirSprayCommand (const QColor &color, int size,
                                               kpDocument *document, kpViewManager *viewManager)
-    : m_pen (pen),
+    : m_color (color),
       m_size (size),
       m_document (document),
       m_viewManager (viewManager),
@@ -278,18 +279,47 @@ void kpToolAirSprayCommand::addPoints (const QPointArray &points)
 #endif
 
     QPixmap pixmap = m_document->getPixmapAt (docRect);
-    QPainter painter;
+    QBitmap mask;
 
-    painter.begin (&pixmap);
-    painter.setPen (m_pen);
+    QPainter painter, maskPainter;
+    
+    if (kpTool::isColorOpaque (m_color))
+    {
+        painter.begin (&pixmap);
+        painter.setPen (m_color);
+    }
+    
+    if (pixmap.mask () || kpTool::isColorTransparent (m_color))
+    {
+        mask = *pixmap.mask ();
+        maskPainter.begin (&mask);
+        maskPainter.setPen (kpTool::isColorTransparent (m_color) ? Qt::color0 : Qt::color1);
+    }
+    
     for (int i = 0; i < (int) points.count (); i++)
     {
-        painter.drawPoint (points [i].x () - docRect.x (),
-                           points [i].y () - docRect.y ());
+        QPoint pt (points [i].x () - docRect.x (),
+                   points [i].y () - docRect.y ());
+        
+        if (painter.isActive ())
+            painter.drawPoint (pt);
+        
+        if (maskPainter.isActive ())
+            maskPainter.drawPoint (pt);
     }
-    painter.end ();
+    
+    if (maskPainter.isActive ())
+        maskPainter.end ();
+        
+    if (painter.isActive ())
+        painter.end ();
+        
+    if (!mask.isNull ())
+        pixmap.setMask (mask);
 
+    m_viewManager->setFastUpdates ();
     m_document->setPixmapAt (pixmap, docRect.topLeft ());
+    m_viewManager->restoreFastUpdates ();
 
     m_boundingRect = m_boundingRect.unite (docRect);
 }

@@ -140,6 +140,11 @@ protected slots:
     virtual void slotForegroundColorChanged (const QColor & /*color*/) {}
     virtual void slotBackgroundColorChanged (const QColor & /*color*/) {}
 
+public:
+    static bool isColorOpaque (const QColor &color);
+    static bool isColorTransparent (const QColor &color);
+    static bool colorEq (const QColor &c1, const QColor &c2);
+
 protected:
     // returns true if m_currentPoint <= 1 pixel away from m_lastPoint
     // or if there was no lastPoint

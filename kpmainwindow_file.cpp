@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -40,6 +40,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
+#include <kimagefilepreview.h>
 #include <kimageio.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
@@ -88,7 +89,7 @@ void kpMainWindow::setupFileMenuActions ()
 
     enableFileMenuDocumentActions (false);
 }
- 
+
 // private
 void kpMainWindow::enableFileMenuDocumentActions (bool enable)
 {
@@ -167,26 +168,41 @@ bool kpMainWindow::open (const KURL &url, bool newDocSameNameIfNotExist)
 }
 
 // private slot
-bool kpMainWindow::slotOpen ()
+void kpMainWindow::slotOpen ()
 {
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
     QString startURL = m_document ? m_document->url ().url () : QString::null;
-    KURL url = KFileDialog::getImageOpenURL (startURL, this, i18n ("Open Image"));
-    if (url.isEmpty ())
-        return false;
+    QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
+    QString filter = mimeTypes.join (" ");
 
-    return open (url);
+    KFileDialog fd (startURL, filter, this, "fd", true/*modal*/);
+    fd.setCaption (i18n ("Open Image"));
+    fd.setOperationMode (KFileDialog::Opening);
+    fd.setMode (KFile::Files);
+    fd.setPreviewWidget (new KImageFilePreview (&fd));
+
+    if (fd.exec ())
+    {
+        KURL::List urls = fd.selectedURLs ();
+
+        for (KURL::List::ConstIterator it = urls.begin ();
+             it != urls.end ();
+             it++)
+        {
+            open (*it);
+        }
+    }
 }
 
 // private slot
-bool kpMainWindow::slotOpenRecent (const KURL &url)
+void kpMainWindow::slotOpenRecent (const KURL &url)
 {
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    return open (url);
+    open (url);
 }
 
 
@@ -235,11 +251,11 @@ bool kpMainWindow::saveAs (bool localOnly)
 #if DEBUG_KPMAINWINDOW
     kdDebug () << "kpMainWindow::saveAs URL=" << url << endl;
 #endif
-    KFileDialog *fd = new KFileDialog (url.url (),
-                                       QString::null, this, "fd", true);
-    fd->setOperationMode (KFileDialog::Saving);
+    KFileDialog fd (url.url (), QString::null, this, "fd", true/*modal*/);
+    fd.setCaption (i18n ("Save Image As"));
+    fd.setOperationMode (KFileDialog::Saving);
     if (localOnly)
-        fd->setMode (KFile::File | KFile::LocalOnly);
+        fd.setMode (KFile::File | KFile::LocalOnly);
 
     QString defaultMimeType;
 
@@ -264,18 +280,17 @@ bool kpMainWindow::saveAs (bool localOnly)
 #if DEBUG_KPMAINWINDOW
     kdDebug () << "mimeTypes=" << mimeTypes << endl;
 #endif
-    fd->setMimeFilter (mimeTypes, defaultMimeType);
-    if (fd->exec ())
+    fd.setMimeFilter (mimeTypes, defaultMimeType);
+    if (fd.exec ())
     {
-        QString mimetype = fd->currentMimeFilter ();
-        if (!m_document->saveAs (fd->selectedURL (), mimetype))
+        QString mimetype = fd.currentMimeFilter ();
+        if (!m_document->saveAs (fd.selectedURL (), mimetype))
         {
-            delete fd;
             return false;
         }
         else
         {
-            addRecentURL (fd->selectedURL ());
+            addRecentURL (fd.selectedURL ());
 
             // user forced a mimetype (as opposed to selecting the same type as the current doc)
             // - probably wants to use it in the future
@@ -292,11 +307,9 @@ bool kpMainWindow::saveAs (bool localOnly)
     #if DEBUG_KPMAINWINDOW
         kdDebug () << "fd aborted" << endl;
     #endif
-        delete fd;
         return false;
     }
 
-    delete fd;
     return true;
 }
 
@@ -354,10 +367,10 @@ void kpMainWindow::sendFilenameToPrinter (KPrinter *printer)
     if (!url.isEmpty ())
     {
         int dot;
-        
+
         QString fileName = url.fileName ();
         dot = fileName.findRev ('.');
-        
+
         // file.ext but not .hidden-file?
         if (dot > 0)
             fileName.truncate (dot);
@@ -367,7 +380,7 @@ void kpMainWindow::sendFilenameToPrinter (KPrinter *printer)
                    << " dir="
                    << url.directory ()
                    << endl;
-        printer->setDocName (fileName);            
+        printer->setDocName (fileName);
         printer->setDocFileName (fileName);  // TODO: wrong if filename has space!
         printer->setDocDirectory (url.directory ());
     }
@@ -388,7 +401,7 @@ void kpMainWindow::slotPrint ()
 {
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
-        
+
     KPrinter printer;
 
     sendFilenameToPrinter (&printer);
@@ -406,11 +419,11 @@ void kpMainWindow::slotPrintPreview ()
 
     // TODO: get it to reflect default printer's settings
     KPrinter printer (false/*separate settings from ordinary printer*/);
-    
+
     // TODO: pass "this" as parent
     printer.setPreviewOnly (true);
     sendFilenameToPrinter (&printer);
-    
+
     sendPixmapToPrinter (&printer);
 }
 
@@ -543,7 +556,7 @@ void kpMainWindow::slotSetAsWallpaperCentered ()
 {
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
-    
+
     setAsWallpaper (true/*centered*/);
 }
 

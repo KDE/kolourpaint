@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -29,7 +29,7 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_VIEW 1
+#define DEBUG_KP_VIEW 0
 
 #include <math.h>
 
@@ -41,12 +41,16 @@
 #include <qpixmap.h>
 #include <qpoint.h>
 #include <qrect.h>
+#if DEBUG_KP_VIEW
+    #include <qdatetime.h>
+#endif
 
 #include <kdebug.h>
 
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
+#include <kppixmapfx.h>
 #include <kptool.h>
 #include <kptoolpen.h>
 #include <kpview.h>
@@ -54,14 +58,17 @@
 
 
 kpView::kpView (QWidget *parent, const char *name,
-                    kpMainWindow *mainWindow,
-                    int width, int height,
-                    bool autoVariableZoom)
+                kpMainWindow *mainWindow,
+                int width, int height,
+                bool autoVariableZoom)
     : QWidget (parent, name, Qt::WStaticContents | Qt::WNoAutoErase /* no flicker */),
       m_mainWindow (mainWindow),
       m_autoVariableZoom (autoVariableZoom),
       m_hzoom (100), m_vzoom (100),
-      m_showGrid (false)
+      m_showGrid (false),
+      m_backBuffer (0),
+      m_origin (QPoint (0, 0)),
+      m_needBorder (false)
 {
     m_docToViewMatrix.setTransformationMode (QWMatrix::Areas);
 
@@ -78,8 +85,8 @@ kpView::kpView (QWidget *parent, const char *name,
 
 void kpView::setHasMouse (bool yes)
 {
-    kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
-    
+    kpViewManager *vm = viewManager ();
+
     if (vm)
     {
         if (yes && vm->viewUnderCursor () != this)
@@ -92,12 +99,23 @@ void kpView::setHasMouse (bool yes)
 kpView::~kpView ()
 {
     setHasMouse (false);
+    delete m_backBuffer; m_backBuffer = 0;
 }
 
 
 /*
  * Zoom/Grid
  */
+
+kpViewManager *kpView::viewManager () const
+{
+    return m_mainWindow ? m_mainWindow->viewManager () : 0;
+}
+
+kpDocument *kpView::document () const
+{
+    return m_mainWindow ? m_mainWindow->document () : 0;
+}
 
 bool kpView::hasVariableZoom () const
 {
@@ -118,18 +136,29 @@ bool kpView::updateVariableZoom (int viewWidth, int viewHeight)
     if (!hasVariableZoom ())
     {
         kdError () << "kpView::slotUupdateVariableZoom() called with !hasVariableZoom" << endl;
+        m_hzoom = m_vzoom = 100;
+        m_origin = QPoint (0, 0);
+        m_needBorder = false;
         return false;
     }
 
-    if (m_mainWindow->document ()->width () > viewWidth)
-        m_hzoom = viewWidth * 100 / m_mainWindow->document ()->width ();
-    else
-        m_hzoom = 100;
+    kpDocument *doc = document ();
+    if (!doc)
+    {
+        m_hzoom = m_vzoom = 100;
+        m_origin = QPoint (0, 0);
+        m_needBorder = false;
+        return false;
+    }
 
-    if (m_mainWindow->document ()->height () > viewHeight)
-        m_vzoom = viewHeight * 100 / m_mainWindow->document ()->height ();
-    else
-        m_vzoom = 100;
+#if DEBUG_KP_VIEW
+    kdDebug () << "\tdoc: width=" << doc->width ()
+               << " height=" << doc->height ()
+               << endl;
+#endif
+
+    m_hzoom = viewWidth * 100 / doc->width ();
+    m_vzoom = viewHeight * 100 / doc->height ();
 
     // keep aspect ratio
     if (m_hzoom < m_vzoom)
@@ -137,10 +166,42 @@ bool kpView::updateVariableZoom (int viewWidth, int viewHeight)
     else
         m_hzoom = m_vzoom;
 
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "\tproposed zoom=" << m_hzoom << endl;
+#endif
+    if (m_hzoom > 100 || m_vzoom > 100)
+    {
+    #if DEBUG_KP_VIEW && 1
+        kdDebug () << "\twon't magnify - setting zoom to 100%" << endl;
+    #endif
+        m_hzoom = 100, m_vzoom = 100;
+    }
+
+    int zoomedDocWidth = doc->width () * m_hzoom / 100;
+    int zoomedDocHeight = doc->height () * m_vzoom / 100;
+
+    m_origin = QPoint ((viewWidth - zoomedDocWidth) / 2,
+                        (viewHeight - zoomedDocHeight) / 2);
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "\torigin=" << m_origin << endl;
+#endif
+
+    m_needBorder = ((zoomedDocWidth != viewWidth) ||
+                    (zoomedDocHeight != viewHeight));
+
+    setMask (QRegion (QRect (m_origin.x (), m_origin.y (),
+                      zoomedDocWidth, zoomedDocHeight)));
+
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "\tneedBorder=" << m_needBorder << endl;
+#endif
+
     m_docToViewMatrix.reset ();
     m_docToViewMatrix.scale (m_hzoom / 100.0, m_vzoom / 100.0);
-    
-    update ();
+
+    if (viewManager ())
+        viewManager ()->updateView (this);
+
     return true;
 }
 
@@ -170,7 +231,7 @@ bool kpView::setZoomLevel (int hzoom, int vzoom)
 
     m_docToViewMatrix.reset ();
     m_docToViewMatrix.scale (m_hzoom / 100.0, m_vzoom / 100.0);
-    
+
     resize (zoomDocToViewX (m_mainWindow->document ()->width ()),
             zoomDocToViewY (m_mainWindow->document ()->height ()));
 
@@ -183,7 +244,8 @@ void kpView::showGrid (bool yes)
         return;
 
     m_showGrid = yes;
-    update ();
+    if (viewManager ())
+        viewManager ()->updateView (this);
 }
 
 bool kpView::canShowGrid (int hzoom, int vzoom) const
@@ -201,12 +263,12 @@ bool kpView::canShowGrid (int hzoom, int vzoom) const
 // view -> doc
 int kpView::zoomViewToDocX (int zoomedCoord) const
 {
-    return zoomedCoord * 100 / m_hzoom;
+    return (zoomedCoord - m_origin.x ()) * 100 / m_hzoom;
 }
 
 int kpView::zoomViewToDocY (int zoomedCoord) const
 {
-    return zoomedCoord * 100 / m_vzoom;
+    return (zoomedCoord - m_origin.y ()) * 100 / m_vzoom;
 }
 
 QPoint kpView::zoomViewToDoc (const QPoint &zoomedCoord) const
@@ -222,7 +284,7 @@ QRect kpView::zoomViewToDoc (const QRect &zoomedRect) const
     else
     {
         QPoint topLeft = zoomViewToDoc (zoomedRect.topLeft ());
-        
+
         // don't call zoomViewToDoc[XY]() - need to round up dimensions
         int width = qRound (double (zoomedRect.width ()) * 100.0 / double (m_hzoom));
         int height = qRound (double (zoomedRect.height ()) * 100.0 / double (m_vzoom));
@@ -238,12 +300,12 @@ QRect kpView::zoomViewToDoc (const QRect &zoomedRect) const
 
 int kpView::zoomDocToViewX (int doc_coord) const
 {
-    return doc_coord * m_hzoom / 100;
+    return (doc_coord * m_hzoom / 100) + m_origin.x ();
 }
 
 int kpView::zoomDocToViewY (int doc_coord) const
 {
-    return doc_coord * m_vzoom / 100;
+    return (doc_coord * m_vzoom / 100) + m_origin.y ();
 }
 
 QPoint kpView::zoomDocToView (const QPoint &doc_coord) const
@@ -273,7 +335,69 @@ QRect kpView::zoomDocToView (const QRect &doc_rect) const
 void kpView::resize (int w, int h)
 {
     QWidget::resize (w, h);
-    update ();  // OPT
+
+    // TODO: The QWidget::resizeEvent() description says that this isn't needed
+    //       but appears to be needed when resizing the view to a smaller size.
+    //
+    //       Anyway, we should update a smaller area in some cases.
+    if (viewManager ())
+        viewManager ()->updateViews ();
+}
+
+
+void kpView::addToQueuedArea (const QRect &rect)
+{
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name ()
+               << ")::addToQueuedArea() already=" << m_queuedUpdateArea
+               << " - plus - " << rect
+               << endl;
+#endif
+    m_queuedUpdateArea += rect;
+}
+
+void kpView::addToQueuedArea (const QRegion &region)
+{
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name ()
+               << ")::addToQueuedArea()r already=" << m_queuedUpdateArea
+               << " - plus - " << region
+               << endl;
+#endif
+    m_queuedUpdateArea += region;
+}
+
+void kpView::invalidateQueuedArea ()
+{
+#if DEBUG_KP_VIEW && 0
+    kdDebug () << "kpView::invalidateQueuedArea()" << endl;
+#endif
+
+    m_queuedUpdateArea = QRegion ();
+}
+
+void kpView::updateQueuedArea ()
+{
+    kpViewManager *vm = viewManager ();
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name ()
+               << ")::updateQueuedArea() vm=" << (bool) vm
+               << " queueUpdates=" << (vm && vm->queueUpdates ())
+               << " fastUpdates=" << (vm && vm->fastUpdates ())
+               << " area=" << m_queuedUpdateArea
+               << endl;
+#endif
+
+    if (!vm)
+        return;
+
+    if (vm->queueUpdates ())
+        return;
+
+    if (!m_queuedUpdateArea.isNull ())
+        vm->updateView (this, m_queuedUpdateArea);
+
+    invalidateQueuedArea ();
 }
 
 
@@ -376,7 +500,7 @@ void kpView::dragEnterEvent (QDragEnterEvent *)
 #if DEBUG_KP_VIEW && 0
     kdDebug () << "kpView::dragEnterEvent" << endl;
 #endif
-    
+
     setHasMouse (true);
 }
 
@@ -390,24 +514,32 @@ void kpView::dragLeaveEvent (QDragLeaveEvent *)
     setHasMouse (false);
 }
 
-// virtual
-void kpView::paintEvent (QPaintEvent *e)
+
+//
+// Renderer
+//
+
+// private
+QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
 {
-    QRect rect = e->rect ();
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView::paintEventGetDocRect(" << viewRect << ")" << endl;
+#endif
+
     QRect docRect;
-        
+
     // From the "we aren't sure whether to round up or round down" department:
-     
+
     if (m_hzoom < 100 || m_vzoom < 100)
-        docRect = zoomViewToDoc (rect);
+        docRect = zoomViewToDoc (viewRect);
     else
     {
         // think of a grid - you need to fully cover the zoomed-in pixels
         // when docRect is zoomed back to the view later
-        docRect = QRect (zoomViewToDoc (rect.topLeft ()),  // round down
-                         zoomViewToDoc (rect.bottomRight ()));  // round down
+        docRect = QRect (zoomViewToDoc (viewRect.topLeft ()),  // round down
+                         zoomViewToDoc (viewRect.bottomRight ()));  // round down
     }
-    
+
     if (m_hzoom % 100 || m_vzoom % 100)
     {
         // at least round up the bottom-right point and deal with matrix weirdness:
@@ -416,173 +548,331 @@ void kpView::paintEvent (QPaintEvent *e)
         // - harmless since Qt clips for us anyway
         docRect.setBottomRight (docRect.bottomRight () + QPoint (2, 2));
     }
-    
-#if DEBUG_KP_VIEW && 0
-    kdDebug () << "kpView::paintEvent() viewRect=" << rect
-               << " docRect=" << docRect << endl;
+
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "\tdocRect=" << docRect << endl;
 #endif
-
-    QPainter painter;
-
-    bool m_tempPixmapActive = m_mainWindow->viewManager ()->tempPixmapActive ();
-    QRect m_tempPixmapRect = m_mainWindow->viewManager ()->tempPixmapRect ();
-    QPixmap m_tempPixmap = m_mainWindow->viewManager ()->tempPixmap ();
-    bool selActive = m_mainWindow->viewManager ()->selectionActive ();
-
-#if DEBUG_KP_VIEW && 0
-    kdDebug () << "\ttempPixmap: active=" << m_tempPixmapActive
-               << " rect=" << m_tempPixmapRect
-               << " sel=" << selActive
-               << endl;
-#endif
-
-    if (m_tempPixmapActive && m_mainWindow->viewManager ()->brushActive () &&
-        !m_mainWindow->viewManager ()->viewUnderCursor ())
+    kpDocument *doc = document ();
+    if (doc)
     {
-    #if DEBUG_KP_VIEW && 0
-        kdDebug () << "\t\tturn off hidden brush" << endl;
+        docRect = docRect.intersect (doc->rect ());
+    #if DEBUG_KP_VIEW && 1
+        kdDebug () << "\tintersect with doc=" << docRect << endl;
     #endif
-        m_tempPixmapActive = false;
     }
 
-    if (m_tempPixmapActive && docRect == m_tempPixmapRect && !selActive)
-    {
-        paint (m_tempPixmap, rect, m_tempPixmapRect);
-    }
-    else
-    {
-        // get doc image
-        kpDocument *doc = m_mainWindow->document ();
-        QPixmap pixmap = doc->getPixmapAt (docRect);
+    return docRect;
+}
 
-        // add temp image
-        if (m_tempPixmapActive && docRect.intersects (m_tempPixmapRect))
+// private
+void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRect)
+{
+    const int dimen = QMIN (width (), height ());
+    const int cellSize = QMAX (5, QMIN (20, (dimen / 4) / 5 * 5));
+
+    int starty = viewRect.y ();
+    if (starty % cellSize)
+        starty -= (starty % cellSize);
+
+    int startx = viewRect.x ();
+    if (startx % cellSize)
+        startx -= (startx % cellSize);
+
+    for (int y = starty; y <= viewRect.bottom (); y += cellSize)
+    {
+        for (int x = startx; x <= viewRect.right (); x += cellSize)
         {
-            QPainter painter (&pixmap);
-            painter.drawPixmap (m_tempPixmapRect.topLeft () - docRect.topLeft (), m_tempPixmap);
-            
-            if (selActive)
-            {
-                enum kpViewManager::SelectionBorderType type = m_mainWindow->viewManager ()->selectionBorderType ();
-
-                if (type == kpViewManager::Rectangle)
-                {
-                #if DEBUG_KP_VIEW
-                    kdDebug () << "\tselection border = rectangle" << endl;
-                #endif
-                    painter.setRasterOp (Qt::XorROP);
-                    painter.setPen (QPen (Qt::white, 1, Qt::DotLine));
-                #if DEBUG_KP_VIEW && 1
-                    kdDebug () << "\t\tx=" << m_tempPixmapRect.x () - docRect.x ()
-                               << " y=" << m_tempPixmapRect.y () - docRect.y ()
-                               << " w=" << m_tempPixmapRect.width ()
-                               << " h=" << m_tempPixmapRect.height ()
-                               << endl;
-                #endif
-                    painter.drawRect (m_tempPixmapRect.x () - docRect.x (),
-                                      m_tempPixmapRect.y () - docRect.y (),
-                                      m_tempPixmapRect.width (), m_tempPixmap.height ());
-                    painter.end ();
-                }
-                else if (type == kpViewManager::Ellipse)
-                {
-                #if DEBUG_KP_VIEW
-                    kdDebug () << "\tselection border = ellipse" << endl;
-                #endif
-                    painter.setRasterOp (Qt::XorROP);
-                    painter.setPen (QPen (Qt::white, 1, Qt::DotLine));
-                    painter.drawEllipse (m_tempPixmapRect.x () - docRect.x (),
-                                         m_tempPixmapRect.y () - docRect.y (),
-                                         m_tempPixmapRect.width (), m_tempPixmap.height ());
-                    painter.end ();
-                }
-                else if (type == kpViewManager::FreeForm)
-                {
-                #if DEBUG_KP_VIEW
-                    kdDebug () << "\tselection border = freeForm" << endl;
-                #endif
-                }
-                else
-                {
-                #if DEBUG_KP_VIEW
-                    kdDebug () << "\tselection border = none" << endl;
-                #endif
-                }
-            }
+            QColor col = ((x / cellSize + y / cellSize) % 2) ? Qt::darkGray : Qt::white;
+            painter->setPen (col);
+            painter->setBrush (col);
+            painter->drawRect (x - viewRect.x (), y - viewRect.y (), cellSize, cellSize);
         }
-
-        paint (pixmap, rect, docRect);
     }
 }
 
 // private
-void kpView::paint (const QPixmap &pixmap, const QRect &viewRect, const QRect &docRect)
+void kpView::paintEventDrawTempPixmap (QPixmap *destPixmap, const QRect &docRect)
 {
-    QPainter painter (this);
+    kpViewManager *vm = viewManager ();
+    if (!vm) return;
 
-    // blt the pixmap
-    painter.scale (double (m_hzoom) / 100.0, double (m_vzoom) / 100.0);
-    painter.drawPixmap (docRect, pixmap);
+    QRect tempPixmapRect = vm->tempPixmapRect ();
+    QPixmap tempPixmap = vm->tempPixmap ();
 
-    // display grid
-    // TODO: flicker - dbl-buffer too slow
-    if (m_showGrid && canShowGrid ())
+
+    //
+    // Draw tempPixmap on top of destPixmap
+    //
+
+#define PARAMS destPixmap, tempPixmapRect.topLeft () - docRect.topLeft (), tempPixmap
+    if (vm->shouldBrushBeDisplayed (this))
+        kpPixmapFX::paintPixmapAt (PARAMS);
+    else
+        kpPixmapFX::setPixmapAt (PARAMS);
+#undef PARAMS
+
+
+    //
+    // Draw selection border
+    //
+
+    if (vm->selectionActive ())
     {
-        int hzoomMultiple = m_hzoom / 100;
-        int vzoomMultiple = m_vzoom / 100;
+        QPainter destPixmapPainter (destPixmap);
 
-        painter.resetXForm ();  // back to 1-1 scaling
+        destPixmapPainter.setRasterOp (Qt::XorROP);
+        destPixmapPainter.setPen (QPen (Qt::white, 1, Qt::DotLine));
 
-        QPen ordinaryPen (Qt::gray), tileBoundaryPen (Qt::lightGray);
-
-        painter.setPen (ordinaryPen);
-
-        // horizontal lines
-        int starty = viewRect.top ();
-        if (starty % vzoomMultiple)
-            starty = (starty + vzoomMultiple) / vzoomMultiple * vzoomMultiple;
-        int tileHeight = 16 * vzoomMultiple;  // CONFIG
-        for (int y = starty; y <= viewRect.bottom (); y += vzoomMultiple)
+        switch (vm->selectionBorderType ())
         {
-            if (0 && tileHeight > 0 && y % tileHeight == 0)
-            {
-                painter.setPen (tileBoundaryPen);
-                //painter.setRasterOp (Qt::XorROP);
-            }
+        case kpViewManager::Rectangle:
+        #if DEBUG_KP_VIEW && 1
+            kdDebug () << "\tselection border = rectangle" << endl;
+            kdDebug () << "\t\tx=" << tempPixmapRect.x () - docRect.x ()
+                       << " y=" << tempPixmapRect.y () - docRect.y ()
+                       << " w=" << tempPixmapRect.width ()
+                       << " h=" << tempPixmapRect.height ()
+                       << endl;
+        #endif
+            destPixmapPainter.drawRect (tempPixmapRect.x () - docRect.x (),
+                                        tempPixmapRect.y () - docRect.y (),
+                                        tempPixmapRect.width (),
+                                        tempPixmap.height ());
+            break;
 
-            painter.drawLine (viewRect.left (), y, viewRect.right (), y);
+        case kpViewManager::Ellipse:
+        #if DEBUG_KP_VIEW && 1
+            kdDebug () << "\tselection border = ellipse" << endl;
+        #endif
+            destPixmapPainter.drawEllipse (tempPixmapRect.x () - docRect.x (),
+                                           tempPixmapRect.y () - docRect.y (),
+                                           tempPixmapRect.width (),
+                                           tempPixmap.height ());
+            break;
 
-            if (0 && tileHeight > 0 && y % tileHeight == 0)
-            {
-                painter.setPen (ordinaryPen);
-                //painter.setRasterOp (Qt::CopyROP);
-            }
+        case kpViewManager::FreeForm:
+        #if DEBUG_KP_VIEW
+            kdDebug () << "\tselection border = freeForm" << endl;
+        #endif
+            break;
+
+        default:
+            break;
         }
 
-        // vertical lines
-        int startx = viewRect.left ();
-        if (startx % hzoomMultiple)
-            startx = (startx + hzoomMultiple) / hzoomMultiple * hzoomMultiple;
-        int tileWidth = 16 * hzoomMultiple;  // CONFIG
-        for (int x = startx; x <= viewRect.right (); x += hzoomMultiple)
+        destPixmapPainter.end ();
+    }
+}
+
+// private
+void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
+{
+    int hzoomMultiple = m_hzoom / 100;
+    int vzoomMultiple = m_vzoom / 100;
+
+    QPen ordinaryPen (Qt::gray);
+    QPen tileBoundaryPen (Qt::lightGray);
+
+    painter->setPen (ordinaryPen);
+
+    // horizontal lines
+    int starty = viewRect.top ();
+    if (starty % vzoomMultiple)
+        starty = (starty + vzoomMultiple) / vzoomMultiple * vzoomMultiple;
+    int tileHeight = 16 * vzoomMultiple;  // CONFIG
+    for (int y = starty - viewRect.y (); y <= viewRect.bottom () - viewRect.y (); y += vzoomMultiple)
+    {
+        if (0 && tileHeight > 0 && y % tileHeight == 0)
         {
-            if (0 && tileWidth > 0 && x % tileWidth == 0)
-            {
-                painter.setPen (tileBoundaryPen);
-                //painter.setRasterOp (Qt::XorROP);
-            }
+            painter->setPen (tileBoundaryPen);
+            //painter.setRasterOp (Qt::XorROP);
+        }
 
-            painter.drawLine (x, viewRect.top (), x, viewRect.bottom ());
+        painter->drawLine (0, y, viewRect.right () - viewRect.left (), y);
 
-            if (0 && tileWidth > 0 && x % tileWidth == 0)
-            {
-                painter.setPen (ordinaryPen);
-                //painter.setRasterOp (Qt::CopyROP);
-            }
+        if (0 && tileHeight > 0 && y % tileHeight == 0)
+        {
+            painter->setPen (ordinaryPen);
+            //painter.setRasterOp (Qt::CopyROP);
         }
     }
 
-    painter.end ();
+    // vertical lines
+    int startx = viewRect.left ();
+    if (startx % hzoomMultiple)
+        startx = (startx + hzoomMultiple) / hzoomMultiple * hzoomMultiple;
+    int tileWidth = 16 * hzoomMultiple;  // CONFIG
+    for (int x = startx - viewRect.x (); x <= viewRect.right () - viewRect.x (); x += hzoomMultiple)
+    {
+        if (0 && tileWidth > 0 && x % tileWidth == 0)
+        {
+            painter->setPen (tileBoundaryPen);
+            //painter.setRasterOp (Qt::XorROP);
+        }
+
+        painter->drawLine (x, 0, x, viewRect.bottom () - viewRect.top ());
+
+        if (0 && tileWidth > 0 && x % tileWidth == 0)
+        {
+            painter->setPen (ordinaryPen);
+            //painter.setRasterOp (Qt::CopyROP);
+        }
+    }
+}
+
+
+// virtual
+void kpView::paintEvent (QPaintEvent *e)
+{
+#if DEBUG_KP_VIEW && 1
+    QTime timer;
+    timer.start ();
+#endif
+
+    kpViewManager *vm = viewManager ();
+    const kpDocument *doc = document ();
+
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "kpView(" << name () << ")::paintEvent() vm=" << (bool) vm
+               << " queueUpdates=" << (vm && vm->queueUpdates ())
+               << " viewRect=" << e->rect ()
+               << " erased=" << e->erased ()
+               << " doc=" << doc
+               << endl;
+#endif
+
+    if (!vm || !doc)
+        return;
+
+    if (vm->queueUpdates ())
+    {
+        // OPT: if this update was due to the document,
+        //      use document coordinates (in case of a zoom change in
+        //      which view coordinates become out of date)
+        addToQueuedArea (e->region ());
+        return;
+    }
+
+    QRect viewRect = e->rect ().intersect (rect ());
+    if (viewRect.isEmpty ())
+        return;
+    QRect docRect = paintEventGetDocRect (viewRect);
+
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "\tdocRect=" << docRect << endl;
+#endif
+
+// uncomment to cause deliberate flicker (identifies needless updates)
+#if DEBUG_KP_VIEW && 0
+    QPainter flickerPainter (this);
+    flickerPainter.fillRect (viewRect, Qt::red);
+    flickerPainter.end ();
+#endif
+
+
+    //
+    // Prepare Back Buffer
+    //
+
+    if (!m_backBuffer ||
+        m_backBuffer->width () < viewRect.width () ||
+        m_backBuffer->height () < viewRect.height () ||
+        m_backBuffer->width () > width () ||
+        m_backBuffer->height () > height ())
+    {
+        // don't use QPixmap::resize() as that wastes time copying pixels
+        // that will be overwritten anyway
+        delete m_backBuffer;
+        m_backBuffer = new QPixmap (viewRect.width (), viewRect.height ());
+    }
+
+// uncomment to catch bits of the view that the renderer forgot to update
+#if 0
+    m_backBuffer->fill (Qt::green);
+#endif
+
+    QPainter backBufferPainter;
+    backBufferPainter.begin (m_backBuffer);
+
+
+    //
+    // Draw checkboard for transparent images and/or views with borders
+    //
+
+    QPixmap docPixmap;
+
+    if (!docRect.isEmpty ())
+        docPixmap = doc->getPixmapAt (docRect);
+
+    if (docPixmap.mask () || m_needBorder)
+    {
+    #if DEBUG_KP_VIEW && 1
+        kdDebug () << "\tmask=" << (bool) docPixmap.mask ()
+                << " needBorder=" << m_needBorder
+                << endl;
+    #endif
+        paintEventDrawCheckerBoard (&backBufferPainter, viewRect);
+    }
+    else
+    {
+    #if DEBUG_KP_VIEW && 1
+        kdDebug () << "\tno mask" << endl;
+    #endif
+    }
+
+
+    if (!docRect.isEmpty ())
+    {
+        //
+        // Draw docPixmap + tempPixmap
+        //
+
+        if (vm->tempPixmapActive () &&
+            (!vm->brushActive () || vm->shouldBrushBeDisplayed (this)) &&
+            docRect.intersects (vm->tempPixmapRect ()))
+        {
+        #if DEBUG_KP_VIEW && 1
+            kdDebug () << "\ttempPixmap: active"
+                    << " rect=" << vm->tempPixmapRect ()
+                    << " sel=" << vm->selectionActive ()
+                    << endl;
+        #endif
+            paintEventDrawTempPixmap (&docPixmap, docRect);
+        }
+
+    #if DEBUG_KP_VIEW && 1
+        kdDebug () << "\torigin=" << m_origin << endl;
+    #endif
+        // blit scaled version of docPixmap + tempPixmap onto Back Buffer
+        backBufferPainter.translate (m_origin.x () - viewRect.x (),
+                                    m_origin.y () - viewRect.y ());
+        backBufferPainter.scale (double (m_hzoom) / 100.0,
+                                double (m_vzoom) / 100.0);
+        backBufferPainter.drawPixmap (docRect, docPixmap);
+        backBufferPainter.resetXForm ();  // back to 1-1 scaling
+    }  // if (!docRect.isEmpty ()) {
+
+
+    //
+    // Draw Grid Lines
+    //
+
+    if (m_showGrid && canShowGrid ())
+        paintEventDrawGridLines (&backBufferPainter, viewRect);
+
+
+    //
+    // Blit Back Buffer to View
+    //
+
+    backBufferPainter.end ();
+
+    bitBlt (this, viewRect.topLeft (),
+            m_backBuffer, QRect (0, 0, viewRect.width (), viewRect.height ()));
+
+#if DEBUG_KP_VIEW && 1
+    kdDebug () << "\tall done in: " << timer.restart () << "ms" << endl;
+#endif
 }
 
 #include <kpview.moc>

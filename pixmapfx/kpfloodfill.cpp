@@ -30,6 +30,7 @@
 */
 
 #include <qapplication.h>  // DEP: for setOverrideCursor
+#include <qbitmap.h>
 #include <qpainter.h>
 #include <qpixmap.h>
 
@@ -37,6 +38,8 @@
 #include <kpdefs.h>
 
 #include <kpfloodfill.h>
+#include <kppixmapfx.h>
+#include <kptool.h>
 
 
 kpFloodFill::kpFloodFill (QPixmap *pixmap, int x, int y, const QColor &color)
@@ -67,17 +70,48 @@ bool kpFloodFill::fill ()
     {
         QApplication::setOverrideCursor (Qt::waitCursor);
 
-        QPainter painter;
-        painter.begin (m_pixmapPtr);
-        painter.setPen (m_color);
+        QPainter painter, maskPainter;
+        QBitmap maskBitmap;
+        
+        if (m_pixmapPtr->mask () || kpTool::isColorTransparent (m_color))
+        {
+            maskBitmap = kpPixmapFX::getNonNullMask (*m_pixmapPtr);
+            maskPainter.begin (&maskBitmap);
+            if (kpTool::isColorTransparent (m_color))
+                maskPainter.setPen (Qt::color0/*transparent*/);
+            else
+                maskPainter.setPen (Qt::color1/*opaque*/);
+        }
+
+        if (kpTool::isColorOpaque (m_color))
+        {        
+            painter.begin (m_pixmapPtr);
+            painter.setPen (m_color);
+        }
+        
+        const QValueList <FillLine>::ConstIterator fillLinesEnd = m_fillLines.end ();
         for (QValueList <FillLine>::ConstIterator it = m_fillLines.begin ();
-             it != m_fillLines.end ();
+             it != fillLinesEnd;
              it++)
         {
-            painter.drawLine (QPoint ((*it).m_x1, (*it).m_y),
-                              QPoint ((*it).m_x2, (*it).m_y));
+            QPoint p1 = QPoint ((*it).m_x1, (*it).m_y);
+            QPoint p2 = QPoint ((*it).m_x2, (*it).m_y);
+            
+            if (painter.isActive ())
+                painter.drawLine (p1, p2);
+                
+            if (maskPainter.isActive ())
+                maskPainter.drawLine (p1, p2);
         }
-        painter.end ();
+        
+        if (painter.isActive ())
+            painter.end ();
+            
+        if (maskPainter.isActive ())
+            maskPainter.end ();
+
+        if (!maskBitmap.isNull ())
+            m_pixmapPtr->setMask (maskBitmap);
 
         QApplication::restoreOverrideCursor ();
     }
@@ -91,24 +125,20 @@ bool kpFloodFill::prepareColorToChange ()
 {
     kdDebug () << "kpFloodFill::prepareColorToChange" << endl;
 
-    QPixmap pixmap (1, 1);
-    QPainter painter;
-    painter.begin (&pixmap);
-    painter.drawPixmap (QPoint (0, 0), *m_pixmapPtr, QRect (m_x, m_y, 1, 1));
-    painter.end ();
-    QImage image = pixmap.convertToImage ();
-    if (image.isNull ())
+    m_colorToChange = kpPixmapFX::getColorAtPixel (*m_pixmapPtr, QPoint (m_x, m_y));
+
+    if (kpTool::isColorOpaque (m_colorToChange))
     {
-        kdError () << "kpFloodFill::prepare() could not convert to QImage" << endl;
-        return false;
+        kdDebug () << "\tcolorToChange: r=" << m_colorToChange.red ()
+                   << ", b=" << m_colorToChange.blue ()
+                   << ", g=" << m_colorToChange.green ()
+                   << endl;
+    }
+    else
+    {
+        kdDebug () << "\tcolorToChange: transparent" << endl;
     }
 
-    m_colorToChange = image.pixel (0, 0);
-
-    kdDebug () << "\tcolorToChange: r=" << qRed (m_colorToChange)
-               << ", b=" << qBlue (m_colorToChange)
-               << ", g=" << qGreen (m_colorToChange)
-               << endl;
     m_initState = 1;
     return true;
 }
@@ -129,7 +159,7 @@ bool kpFloodFill::prepare ()
     kdDebug () << "\tperforming NOP check" << endl;
 
     // get the color we need to replace
-    if (m_colorToChange == m_color.rgb ())
+    if (kpTool::colorEq (m_colorToChange, m_color))
     {
         // need to do absolutely nothing (this is a significant optimisation
         // for people who randomly click a lot over already-filled areas)
@@ -140,7 +170,7 @@ bool kpFloodFill::prepare ()
     kdDebug () << "\tconverting to image" << endl;
 
     // is this the only way to read pixels?
-    m_image = m_pixmapPtr->convertToImage ();
+    m_image = kpPixmapFX::convertToImage (*m_pixmapPtr);
     if (m_image.isNull ())
     {
         kdError () << "kpFloodFill::prepare() could not convert to QImage" << endl;
@@ -194,25 +224,26 @@ void kpFloodFill::addLine (int y, int x1, int x2)
     m_boundingRect = m_boundingRect.unite (QRect (QPoint (x1, y), QPoint (x2, y)));
 }
 
-QRgb kpFloodFill::pixelColor (int x, int y)
+QColor kpFloodFill::pixelColor (int x, int y)
 {
     if (y >= (int) m_fillLinesCache.count ())
     {
         kdError () << "kpFloodFill::pixelColor("
                    << x << ","
                    << y << ") y out of range=" << m_pixmapPtr->height () << endl;
-        return QRgb ();
+        return QColor ();  // transparent
     }
 
+    const QValueList <FillLine>::ConstIterator theEnd = m_fillLinesCache [y].end ();
     for (QValueList <FillLine>::ConstIterator it = m_fillLinesCache [y].begin ();
-         it != m_fillLinesCache [y].end ();
+         it != theEnd;
          it++)
     {
         if (x >= (*it).m_x1 && x <= (*it).m_x2)
-            return m_color.rgb ();
+            return m_color;
     }
 
-    return m_image.pixel (x, y);
+    return kpPixmapFX::getColorAtPixel (m_image, QPoint (x, y));
 }
 
 void kpFloodFill::findAndAddLines (const FillLine &fillLine, int dy)
@@ -224,7 +255,7 @@ void kpFloodFill::findAndAddLines (const FillLine &fillLine, int dy)
     for (int xnow = fillLine.m_x1; xnow <= fillLine.m_x2; xnow++)
     {
         // At current position, right colour?
-        if (pixelColor (xnow, fillLine.m_y + dy) == m_colorToChange)
+        if (kpTool::colorEq (pixelColor (xnow, fillLine.m_y + dy), m_colorToChange))
         {
             // Find minimum and maximum x values
             int minxnow = findMinX (fillLine.m_y + dy, xnow);
@@ -247,7 +278,7 @@ int kpFloodFill::findMinX (int y, int x)
         if (x < 0)
             return 0;
 
-        if (pixelColor (x, y) == m_colorToChange)
+        if (kpTool::colorEq (pixelColor (x, y), m_colorToChange))
             x--;
         else
             return x + 1;
@@ -262,7 +293,7 @@ int kpFloodFill::findMaxX (int y, int x)
         if (x > m_pixmapPtr->width () - 1)
             return m_pixmapPtr->width () - 1;
 
-        if (pixelColor (x, y) == m_colorToChange)
+        if (kpTool::colorEq (pixelColor (x, y), m_colorToChange))
             x++;
         else
             return x - 1;

@@ -111,9 +111,6 @@ private:
     kpToolWidgetLineWidth *m_toolWidgetLineWidth;
 
     int m_originatingMouseButton;
-    
-    QPen pen () const;
-    QBrush brush () const;
 
     void applyModifiers ();
 
@@ -130,7 +127,9 @@ public:
                           const QString &toolText,
                           const QPointArray &points,
                           const QRect &normalizedRect,
-                          const QPen &pen, const QBrush &brush,
+                          const QColor &foregroundColor, const QColor &backgroundColor,
+                          int lineWidth, Qt::PenStyle lineStyle,
+                          kpToolWidgetFillStyle *toolWidgetFillStyle,
                           const QPixmap &originalArea,
                           kpToolPolygon::Mode mode);
     virtual ~kpToolPolygonCommand ();
@@ -148,9 +147,12 @@ private:
 
     QPointArray m_points;
     QRect m_normalizedRect;
-    QPen m_pen;
-    QBrush m_brush;
-
+    
+    QColor m_foregroundColor, m_backgroundColor;
+    int m_lineWidth;
+    Qt::PenStyle m_lineStyle;
+    kpToolWidgetFillStyle *m_toolWidgetFillStyle;
+    
     QPixmap m_originalArea;
     kpToolPolygon::Mode m_mode;
 };

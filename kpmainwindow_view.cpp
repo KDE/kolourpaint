@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -30,6 +30,7 @@
 */
 
 #include <qscrollview.h>
+#include <qtimer.h>
 
 #include <kactionclasses.h>
 #include <kapplication.h>
@@ -43,6 +44,7 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kpview.h>
+#include <kpviewmanager.h>
 
 
 // private
@@ -84,7 +86,7 @@ void kpMainWindow::setupViewMenuActions ()
 
     enableViewMenuDocumentActions (false);
 }
-    
+
 // private
 void kpMainWindow::enableViewMenuDocumentActions (bool enable)
 {
@@ -92,21 +94,21 @@ void kpMainWindow::enableViewMenuDocumentActions (bool enable)
     /*m_actionFitToPage->setEnabled (enable);
     m_actionFitToWidth->setEnabled (enable);
     m_actionFitToHeight->setEnabled (enable);*/
-    
+
     m_actionZoomIn->setEnabled (enable);
     m_actionZoomOut->setEnabled (enable);
-    
+
     m_actionZoom->setEnabled (enable);
-    
+
     m_actionShowGrid->setEnabled (enable);
 
     // TODO: for the time being, assume that we start at zoom 100%
     //       with no grid
-    
+
     // This function is only called when a new document is created
     // or an existing document is closed.  So the following will
     // always be correct:
-    
+
     zoomTo (100);
 }
 
@@ -115,7 +117,7 @@ void kpMainWindow::enableViewMenuDocumentActions (bool enable)
 void kpMainWindow::sendZoomListToActionZoom ()
 {
     QStringList items;
-    
+
     const QValueVector <int>::ConstIterator zoomListEnd (m_zoomList.end ());
     for (QValueVector <int>::ConstIterator it = m_zoomList.begin ();
          it != zoomListEnd;
@@ -134,14 +136,14 @@ int kpMainWindow::zoomLevelFromString (const QString &string)
     int i;
     for (i = 0; i < (int) string.length () && string.at (i).isDigit (); i++)
         ;
-    
+
     // convert zoom level to number
     bool ok = false;
     int zoomLevel = string.left (i).toInt (&ok);
 
     if (!ok || zoomLevel <= 0 || zoomLevel > 3200)
         return 0;  // error
-    else    
+    else
         return zoomLevel;
 }
 
@@ -157,7 +159,7 @@ void kpMainWindow::zoomTo (int zoomLevel)
 #if DEBUG_KPMAINWINDOW
     kdDebug () << "kpMainWindow::zoomTo (" << zoomLevel << ")" << endl;
 #endif
-    
+
     if (zoomLevel <= 0)
         zoomLevel = m_mainView ? m_mainView->zoomLevelX () : 100;
     else if (m_mainView && m_mainView->zoomLevelX () % 100 == 0 && zoomLevel % 100)
@@ -177,10 +179,10 @@ void kpMainWindow::zoomTo (int zoomLevel)
 
     int index = 0;
     QValueVector <int>::Iterator it = m_zoomList.begin ();
-    
+
     while (index < (int) m_zoomList.count () && zoomLevel > *it)
         it++, index++;
-        
+
     if (zoomLevel != *it)
         m_zoomList.insert (it, zoomLevel);
 
@@ -193,49 +195,59 @@ void kpMainWindow::zoomTo (int zoomLevel)
     m_actionZoomIn->setEnabled (m_actionZoom->currentItem () < (int) m_zoomList.count () - 1);
     m_actionZoomOut->setEnabled (m_actionZoom->currentItem () > 0);
 
+    if (m_viewManager)
+        m_viewManager->setQueueUpdates ();
+
     if (m_scrollView && m_mainView)
     {
-    #if 1
-        #if DEBUG_KPMAINWINDOW
-            kdDebug () << "\tscrollView   contentsX=" << m_scrollView->contentsX ()
-                    << " contentsY=" << m_scrollView->contentsY ()
-                    << " contentsWidth=" << m_scrollView->contentsWidth ()
-                    << " contentsHeight=" << m_scrollView->contentsHeight ()
-                    << " visibleWidth=" << m_scrollView->visibleWidth ()
-                    << " visibleHeight=" << m_scrollView->visibleHeight ()
-                    << " oldZoomX=" << m_mainView->zoomLevelX ()
-                    << " oldZoomY=" << m_mainView->zoomLevelY ()
-                    << " newZoom=" << zoomLevel
-                    << " mainViewX=" << m_scrollView->childX (m_mainView)
-                    << " mainViewY=" << m_scrollView->childY (m_mainView)
-                    << endl;
-        #endif
-            int newPosY = m_scrollView->contentsY () * zoomLevel / m_mainView->zoomLevelY ();
-            int newPosX = m_scrollView->contentsX () * zoomLevel / m_mainView->zoomLevelX ();
+    #if DEBUG_KPMAINWINDOW && 1
+        kdDebug () << "\tscrollView   contentsX=" << m_scrollView->contentsX ()
+                   << " contentsY=" << m_scrollView->contentsY ()
+                   << " contentsWidth=" << m_scrollView->contentsWidth ()
+                   << " contentsHeight=" << m_scrollView->contentsHeight ()
+                   << " visibleWidth=" << m_scrollView->visibleWidth ()
+                   << " visibleHeight=" << m_scrollView->visibleHeight ()
+                   << " oldZoomX=" << m_mainView->zoomLevelX ()
+                   << " oldZoomY=" << m_mainView->zoomLevelY ()
+                   << " newZoom=" << zoomLevel
+                   << " mainViewX=" << m_scrollView->childX (m_mainView)
+                   << " mainViewY=" << m_scrollView->childY (m_mainView)
+                  << endl;
     #endif
-    
+
+        // TODO: when changing from no scrollbars to scrollbars, Qt lies about
+        //       visibleWidth() & visibleHeight() (doesn't take into account the
+        //       space taken by the would-be scrollbars) until it updates the
+        //       scrollview; hence the centring is off by about 5-10 pixels.
+
+        int newCenterX = (m_scrollView->contentsX ()
+                         + QMIN (m_mainView->width (), m_scrollView->visibleWidth ()) / 2)
+                         * zoomLevel / m_mainView->zoomLevelX ();
+        int newCenterY = (m_scrollView->contentsY ()
+                         + QMIN (m_mainView->height (), m_scrollView->visibleHeight ()) / 2)
+                         * zoomLevel / m_mainView->zoomLevelY ();
+
         m_mainView->setZoomLevel (zoomLevel, zoomLevel);
-    
-    #if 1
-        #if DEBUG_KPMAINWINDOW && 1
-            kdDebug () << "\tcurrently at (x=" << m_scrollView->contentsX ()
-                    << ",y=" << m_scrollView->contentsY ()
-                    << ") scrolling to (x=" << newPosX
-                    << ",y=" << newPosY << ")" << endl;
-        #endif
-        
-            m_scrollView->setContentsPos (newPosX, newPosY);
-    
-        #if DEBUG_KPMAINWINDOW && 1
-            kdDebug () << "\t\tcheck (contentsX=" << m_scrollView->contentsX ()
+
+    #if DEBUG_KPMAINWINDOW && 1
+        kdDebug () << "\tvisibleWidth=" << m_scrollView->visibleWidth ()
+                    << " visibleHeight=" << m_scrollView->visibleHeight ()
+                    << endl;
+        kdDebug () << "\tnewCenterX=" << newCenterX
+                    << " newCenterY=" << newCenterY << endl;
+    #endif
+
+        m_scrollView->center (newCenterX, newCenterY);
+
+    #if DEBUG_KPMAINWINDOW && 1
+        kdDebug () << "\t\tcheck (contentsX=" << m_scrollView->contentsX ()
                     << ",contentsY=" << m_scrollView->contentsY ()
                     << ")" << endl;
-        #endif
     #endif
     }
 
     if (m_mainView)
-    {    
+    {
         m_actionShowGrid->setEnabled (m_mainView->canShowGrid ());
         if (m_actionShowGrid->isEnabled ())
         {
@@ -252,6 +264,21 @@ void kpMainWindow::zoomTo (int zoomLevel)
         // TODO: back to the last view
         m_mainView->setFocus ();
     }
+
+    // HACK: make sure all of Qt's update() calls trigger
+    //       kpView::paintEvent() _now_ so that they can be queued by us
+    //       (until kpviewManager::restoreQueueUpdates()) to reduce flicker
+    //       caused mainly by m_scrollView->center()
+    //
+    // TODO: remove flicker completely
+    QTimer::singleShot (0, this, SLOT (finishZoomTo ()));
+}
+
+// private slot
+void kpMainWindow::finishZoomTo ()
+{
+    if (m_viewManager && m_viewManager->queueUpdates ()/*just in case*/)
+        m_viewManager->restoreQueueUpdates ();
 }
 
 
@@ -270,7 +297,7 @@ void kpMainWindow::slotFitToPage ()
     // doc_width * zoom / 100 <= view_width &&
     // doc_height * zoom / 100 <= view_height &&
     // 1 <= zoom <= 3200
-    
+
     zoomTo (QMIN (3200, QMAX (1, QMIN (m_scrollView->visibleWidth () * 100 / m_document->width (),
                               m_scrollView->visibleHeight () * 100 / m_document->height ()))));
 }
@@ -283,7 +310,7 @@ void kpMainWindow::slotFitToWidth ()
 
     // doc_width * zoom / 100 <= view_width &&
     // 1 <= zoom <= 3200
-    
+
     zoomTo (QMIN (3200, QMAX (1, m_scrollView->visibleWidth () * 100 / m_document->width ())));
 }
 
@@ -295,7 +322,7 @@ void kpMainWindow::slotFitToHeight ()
 
     // doc_height * zoom / 100 <= view_height &&
     // 1 <= zoom <= 3200
-    
+
     zoomTo (QMIN (3200, QMAX (1, m_scrollView->visibleHeight () * 100 / m_document->height ())));
 }
 

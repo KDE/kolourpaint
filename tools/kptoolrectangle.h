@@ -84,11 +84,11 @@ private:
     kpToolWidgetLineWidth *m_toolWidgetLineWidth;
     kpToolWidgetFillStyle *m_toolWidgetFillStyle;
 
-    QPen pen (int mouseButton) const;
-    QPen m_pen [2];
+    void updatePen (int mouseButton);
+    QPen m_pen [2], m_maskPen [2];
     
-    QBrush brush (int mouseButton) const;
-    QBrush m_brush [2];
+    void updateBrush (int mouseButton);
+    QBrush m_brush [2], m_maskBrush [2];
     
     void applyModifiers ();
     QPoint m_toolRectangleStartPoint, m_toolRectangleEndPoint;
@@ -100,7 +100,8 @@ class kpToolRectangleCommand : public KCommand
 public:
     kpToolRectangleCommand (kpDocument *document, kpViewManager *viewManager,
                             kpToolRectangle::Mode mode,
-                            const QPen &pen, const QBrush &brush,
+                            const QPen &pen, const QPen &maskPen,
+                            const QBrush &brush, const QBrush &maskBrush,
                             const QRect &rect,
                             const QPoint &startPoint, const QPoint &endPoint);
     virtual ~kpToolRectangleCommand ();
@@ -114,8 +115,8 @@ private:
     kpDocument *m_document;
     kpViewManager *m_viewManager;
     kpToolRectangle::Mode m_mode;
-    QPen m_pen;
-    QBrush m_brush;
+    QPen m_pen, m_maskPen;
+    QBrush m_brush, m_maskBrush;
     QRect m_rect;
     QPoint m_startPoint, m_endPoint;
     QPixmap *m_oldPixmapPtr;

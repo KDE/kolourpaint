@@ -44,9 +44,9 @@
 #include <kptoolrotate.h>
 
 kpToolRotateCommand::kpToolRotateCommand (kpDocument *document, kpViewManager *viewManager,
-                                          double angle)
+                                          double angle, const QColor &backgroundColor)
     : m_document (document), m_viewManager (viewManager),
-      m_angle (angle)
+      m_angle (angle), m_backgroundColor (backgroundColor)
 {
     m_losslessRotation = kpDocument::isLosslessRotation (angle);
 
@@ -65,7 +65,7 @@ kpToolRotateCommand::~kpToolRotateCommand ()
 
 void kpToolRotateCommand::execute ()
 {
-    m_document->rotate (m_angle);
+    m_document->rotate (m_angle, m_backgroundColor);
     //m_viewManager->resizeViews (m_document->width (), m_document->height ());
     //m_viewManager->updateViews ();
 }
@@ -75,7 +75,7 @@ void kpToolRotateCommand::unexecute ()
     if (!m_losslessRotation)
         m_document->setPixmap (m_oldPixmap);
     else
-        m_document->rotate (360 - m_angle);
+        m_document->rotate (360 - m_angle, m_backgroundColor);
     //m_viewManager->resizeViews (m_document->width (), m_document->height ());
     //m_viewManager->updateViews ();
 }

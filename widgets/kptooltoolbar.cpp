@@ -354,7 +354,15 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
         num++;
     }
 
-#define ADD_WIDGET(w) if (w) m_baseLayout->addWidget (w)
+#define ADD_WIDGET(w)   \
+{                       \
+    if (w)              \
+    {                   \
+        m_baseLayout->addWidget (w, \
+                                 0/*stretch*/,  \
+                                 o == Qt::Vertical ? Qt::AlignHCenter : Qt::AlignVCenter);  \
+    }                   \
+}
     ADD_WIDGET (m_toolWidgetFillStyle);
     ADD_WIDGET (m_toolWidgetLineWidth);
     ADD_WIDGET (m_toolWidgetLineStyle);

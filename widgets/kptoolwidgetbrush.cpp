@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_TOOL_WIDGET_BRUSH 1
+
 #include <qbitmap.h>
 #include <qpainter.h>
 
@@ -42,37 +44,48 @@
 static int brushSize [][3] =
 {
     {9, 5, 1/*like Pen*/},
-    {9, 5, 3},
-    {9, 5, 3},
-    {9, 5, 3}
+    {9, 5, 2},
+    {9, 5, 2},
+    {9, 5, 2}
 };
 
 kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent)
     : kpToolWidgetBase (parent)
 {
-    QPixmap *pixmap = m_brushPixmaps;
+    setInvertSelectedPixmap ();
+
+    QPixmap *pm = m_brushBitmaps;
     
     for (int shape = 0; shape < 4; shape++)
     {
         for (int i = 0; i < 3; i++)
         {
-            QPainter painter;
-            pixmap->resize (44 / 3, 11);
-            
-            // HACK until layout of widgetbase is fixed
-            if (i == 2)
-                pixmap->resize (44 - 44 / 3 * 2, 11);
+            int w = (width () - 2/*margin*/ - 2/*spacing*/) / 3;
+            int h = (height () - 2/*margin*/ - 3/*spacing*/) / 4;
+            pm->resize ((w <= 0 ? width () : w),
+                        (h <= 0 ? height () : h));
 
             const int s = brushSize [shape][i];
-            const QRect rect = QRect ((pixmap->width () - s) / 2,
-                                      (pixmap->height () - s) / 2,
-                                      s,
-                                      s);
+            QRect rect;
+            
+            if (s >= pm->width () || s >= pm->height ())
+                rect = QRect (0, 0, pm->width (), pm->height ());
+            else
+            {
+                rect = QRect ((pm->width () - s) / 2,
+                              (pm->height () - s) / 2,
+                              s,
+                              s);
+            }
 
+        #if DEBUG_KP_TOOL_WIDGET_BRUSH
             kdDebug () << "kpToolWidgetBrush::kpToolWidgetBrush() rect=" << rect << endl;
+        #endif
 
-            pixmap->fill (Qt::white);
-            painter.begin (pixmap);
+            pm->fill (Qt::white);
+            
+            QPainter painter (pm);
+            painter.setPen (Qt::black);
             painter.setBrush (Qt::black);
 
             // sync: <brushes>
@@ -93,14 +106,26 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent)
             }
             painter.end ();
 
-            pixmap->setMask (pixmap->createHeuristicMask ());
-            kpToolWidgetBase::addOption (*pixmap, brushName (shape, i)/*tooltip*/);
+            pm->setMask (pm->createHeuristicMask ());
+            addOption (*pm, brushName (shape, i)/*tooltip*/);
 
-            pixmap++;
+            pm++;
         }
+        
+        startNewOptionRow ();
     }
 
-    kpToolWidgetBase::setSelected (0);
+#if DEBUG_KP_TOOL_WIDGET_BRUSH && 1
+    kdDebug () << "get ready to relayoutOptions()" << endl;
+#endif
+    relayoutOptions ();
+#if DEBUG_KP_TOOL_WIDGET_BRUSH && 1
+    kdDebug () << "get ready to setSelected(0,0)" << endl;
+#endif
+    setSelected (0, 0);
+#if DEBUG_KP_TOOL_WIDGET_BRUSH && 1
+    kdDebug () << "done widget brush" << endl;
+#endif
 }
 
 kpToolWidgetBrush::~kpToolWidgetBrush ()
@@ -145,19 +170,20 @@ QString kpToolWidgetBrush::brushName (int shape, int whichSize)
 
 QPixmap kpToolWidgetBrush::brush () const
 {
-    return m_brushPixmaps [kpToolWidgetBase::selected ()];
+    // sync: <brushes>
+    return m_brushBitmaps [selectedRow () * 3 + selectedCol ()];
 }
 
 bool kpToolWidgetBrush::brushIsDiagonalLine () const
 {
     // sync: <brushes>
-    return kpToolWidgetBase::selected () >= 2 * 3;
+    return (selectedRow () >= 2);
 }
 
 // virtual protected slot
-void kpToolWidgetBrush::setSelected (int which)
+void kpToolWidgetBrush::setSelected (int row, int col)
 {
-    kpToolWidgetBase::setSelected (which);
+    kpToolWidgetBase::setSelected (row, col);
     emit brushChanged (brush (), brushIsDiagonalLine ());
 };
 

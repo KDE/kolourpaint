@@ -32,6 +32,7 @@
 #ifndef __kptoolresizescale_h__
 #define __kptoolresizescale_h__
 
+#include <qcolor.h>
 #include <qpixmap.h>
 #include <kcommand.h>
 #include <kdialogbase.h>
@@ -51,7 +52,7 @@ class kpToolResizeScaleCommand : public KCommand
 public:
     kpToolResizeScaleCommand (kpDocument *document, kpViewManager *viewManager,
                                 int newWidth, int newHeight,
-                                bool scaleToFit);
+                                bool scaleToFit, const QColor &backgroundColor);
     virtual QString name () const;
     virtual ~kpToolResizeScaleCommand ();
 
@@ -63,6 +64,7 @@ private:
     kpViewManager *m_viewManager;
     int m_newWidth, m_newHeight;
     bool m_scaleToFit, m_isLosslessScale;
+    QColor m_backgroundColor;
 
     int m_oldWidth, m_oldHeight;
     QPixmap m_oldPixmap, m_oldRightPixmap, m_oldBottomPixmap;

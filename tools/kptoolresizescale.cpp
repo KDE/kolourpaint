@@ -53,10 +53,12 @@
 
 kpToolResizeScaleCommand::kpToolResizeScaleCommand (kpDocument *document, kpViewManager *viewManager,
                                                     int newWidth, int newHeight,
-                                                    bool scaleToFit)
+                                                    bool scaleToFit,
+                                                    const QColor &backgroundColor)
     : m_document (document), m_viewManager (viewManager),
       m_newWidth (newWidth), m_newHeight (newHeight),
-      m_scaleToFit (scaleToFit)
+      m_scaleToFit (scaleToFit),
+      m_backgroundColor (backgroundColor)
 {
     m_oldWidth = document->width ();
     m_oldHeight = document->height ();
@@ -107,7 +109,7 @@ void kpToolResizeScaleCommand::execute ()
                        m_newWidth, m_oldHeight - m_newHeight));
         }
 
-        m_document->resize (m_newWidth, m_newHeight);
+        m_document->resize (m_newWidth, m_newHeight, m_backgroundColor);
     }
     else
     {
@@ -123,6 +125,7 @@ void kpToolResizeScaleCommand::unexecute ()
     if (!m_scaleToFit)
     {
         m_document->resize (m_oldWidth, m_oldHeight,
+                            m_backgroundColor,
                             false /* don't paint new areas white */);
 
         if (m_newWidth < m_oldWidth)

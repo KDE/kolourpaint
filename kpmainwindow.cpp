@@ -2,11 +2,11 @@
 /* This file is part of the KolourPaint project
    Copyright (c) 2003 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
@@ -15,7 +15,7 @@
    3. Neither the names of the copyright holders nor the names of
       contributors may be used to endorse or promote products derived from
       this software without specific prior written permission.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -54,12 +54,14 @@
 #include <kpview.h>
 #include <kpviewmanager.h>
 
-    
+
 kpMainWindow::kpMainWindow ()
     : KMainWindow (0/*parent*/, "mainWindow")
 {
     initGUI ();
     slotNew ();
+
+    m_alive = true;
 }
 
 kpMainWindow::kpMainWindow (const KURL &url)
@@ -67,6 +69,8 @@ kpMainWindow::kpMainWindow (const KURL &url)
 {
     initGUI ();
     slotNew (url);
+
+    m_alive = true;
 }
 
 kpMainWindow::kpMainWindow (kpDocument *newDoc)
@@ -74,6 +78,8 @@ kpMainWindow::kpMainWindow (kpDocument *newDoc)
 {
     initGUI ();
     setDocument (newDoc);
+
+    m_alive = true;
 }
 
 // private
@@ -95,7 +101,7 @@ void kpMainWindow::initGUI ()
     setMinimumSize (320, 260);
     setAcceptDrops (true);
 
-    
+
     //
     // read config (TODO: clean config code, put in right place)
     //
@@ -116,7 +122,7 @@ void kpMainWindow::initGUI ()
                << " outputMimeType=" << m_configDefaultOutputMimetype
                << endl;
 
-    
+
     //
     // create GUI
     //
@@ -125,15 +131,15 @@ void kpMainWindow::initGUI ()
 
     createGUI ();
 
-    
+
     //
     // create more GUI
     //
-    
+
     m_colorToolBar = new kpColorToolBar (this, "Color Palette");
 
     setupTools ();
-    
+
     m_scrollView = new QScrollView (this);
     setCentralWidget (m_scrollView);
 
@@ -141,25 +147,29 @@ void kpMainWindow::initGUI ()
     statusBar ()->insertItem (QString::null, StatusBarItemShapeEndPoints, 1/*stretch*/);
     statusBar ()->insertItem (QString::null, StatusBarItemShapeSize, 1/*stretch*/);
 
-    
+
     //
     // set initial pos/size of GUI
     //
 
     setAutoSaveSettings ("kpmainwindow", true);
- 
+
     // put our non-XMLGUI toolbars in a sane place, the first time around
     if (m_configFirstTime)
     {
         m_toolToolBar->setBarPos (KToolBar::Left);
-        //toolBar ("toolbar_thumbnaila")->setBarPos (KToolBar::Right);
-        //toolBar ("toolbar_thumbnaila")->hide ();  // it doesn't work well yet
+    #if 0
+        toolBar ("toolbar_thumbnaila")->setBarPos (KToolBar::Right);
+        toolBar ("toolbar_thumbnaila")->hide ();  // it doesn't work well yet
+    #endif
         m_colorToolBar->setBarPos (KToolBar::Bottom);
     }
 }
 
 kpMainWindow::~kpMainWindow ()
 {
+    m_alive = false;
+
     m_actionOpenRecent->saveEntries (kapp->config ());
 
     // delete document & views
@@ -235,9 +245,9 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     #if DEBUG_KP_MAINWINDOW
         kdDebug () << "\tdisabling actions" << endl;
     #endif
-    
+
         // sync with the bit marked "sync" below
-        
+
         if (m_colorToolBar)
             m_colorToolBar->setEnabled (false);
         else
@@ -247,16 +257,16 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         }
 
         enableToolsDocumentActions (false);
-        
+
         enableDocumentActions (false);
 
         m_actionReload->setEnabled (false);
     }
-    
+
 #if DEBUG_KP_MAINWINDOW
     kdDebug () << "\tdestroying views" << endl;
 #endif
-    
+
     delete m_mainView; m_mainView = 0;
     delete m_thumbnailView; m_thumbnailView = 0;
 
@@ -271,7 +281,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     m_actionDelete->setEnabled (false);
 
     delete m_viewManager; m_viewManager = 0;
-    
+
 #if DEBUG_KP_MAINWINDOW
     kdDebug () << "\tdestroying document" << endl;
     kdDebug () << "\t\tm_document=" << m_document << endl;
@@ -279,7 +289,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     // destroy current document
     delete m_document;
     m_document = newDoc;
-    
+
 
     // not a close operation?
     if (m_document)
@@ -321,13 +331,13 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
             kdError () << "kpMainWindow::setDocument() without scrollView" << endl;
         m_viewManager->registerView (m_mainView);
         m_mainView->show ();
-        
+
     #if 0
-    
+
     #if DEBUG_KP_MAINWINDOW
         kdDebug () << "\tcreating thumbnail view" << endl;
     #endif
-    
+
         // TODO: change to a child window
         toolBar ("toolbar_thumbnaila")->setFullSize ();
         m_thumbnailView = new kpView (toolBar ("toolbar_thumbnaila"),
@@ -335,16 +345,16 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
                                       200, 200, true /* autoVariableZoom */);
         toolBar ("toolbar_thumbnaila")->insertWidget (2000,
             toolBar ("toolbar_thumbnaila")->width (), m_thumbnailView);
-        
+
         toolBar ("toolbar_thumbnaila")->setFullSize ();
 
         m_viewManager->registerView (m_thumbnailView);
     #endif
-     
+
     #if DEBUG_KP_MAINWINDOW
         kdDebug () << "\thooking up document signals" << endl;
     #endif
-    
+
         // status bar
         connect (m_document, SIGNAL (documentOpened ()),
                  this, SLOT (slotUpdateStatusBar ()));
@@ -387,13 +397,13 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
                  m_viewManager, SLOT (resizeViews (int, int)));
         connect (m_document, SIGNAL (colorDepthChanged (int)),
                  m_viewManager, SLOT (updateViews ()));
-   
+
     #if DEBUG_KP_MAINWINDOW
         kdDebug () << "\tenabling actions" << endl;
     #endif
-    
+
         // sync with the bit marked "sync" above
-        
+
         if (m_colorToolBar)
             m_colorToolBar->setEnabled (true);
         else
@@ -401,9 +411,9 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
             kdError () << "kpMainWindow::setDocument() without colorToolBar"
                        << endl;
         }
-                       
+
         enableToolsDocumentActions (true);
-        
+
         enableDocumentActions (true);
     }
 
@@ -413,13 +423,13 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 
     slotUpdateStatusBar ();  // update doc size
     slotUpdateCaption ();  // Untitled to start with
-   
+
     if (m_commandHistory)
         m_commandHistory->clear ();
 
 #if DEBUG_KP_MAINWINDOW
     kdDebug () << "\tdocument and views ready to go!" << endl;
-#endif        
+#endif
 }
 
 
@@ -459,7 +469,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 {
     QPixmap pixmap;
     KURL::List urls;
-    
+
     if (QImageDrag::decode (e, pixmap))
     {
         if (!pixmap.isNull ())

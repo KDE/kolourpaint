@@ -48,7 +48,7 @@ signals:
     void spraycanSizeChanged (int size);
 
 protected slots:
-    virtual void setSelected (int which);
+    virtual void setSelected (int row, int col);
 };
 
 #endif  // __kptoolwidgetspraycansize_h__

@@ -29,6 +29,8 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <qcolor.h>
+
 #include <kaction.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -52,8 +54,11 @@ void kpMainWindow::setupImageMenuActions ()
 {
     KActionCollection *ac = actionCollection ();
 
-    m_actionResizeScale = new KAction (i18n ("&Resize / Scale..."), CTRL + Key_R,
+    m_actionResizeScale = new KAction (i18n ("R&esize / Scale..."), CTRL + Key_E,
         this, SLOT (slotResizeScale ()), ac, "image_resize_scale");
+
+    m_actionCrop = new KAction (i18n ("C&rop"), CTRL + Key_R,
+        this, SLOT (slotCrop ()), ac, "image_crop");
 
     m_actionAutoCrop = new KAction (i18n ("A&utocrop"), CTRL + Key_U,
         this, SLOT (slotAutoCrop ()), ac, "image_auto_crop");
@@ -76,7 +81,7 @@ void kpMainWindow::setupImageMenuActions ()
     m_actionInvertColors = new KAction (i18n ("&Invert Colors"), CTRL + Key_I,
         this, SLOT (slotInvertColors ()), ac, "image_invert_colors");
 
-    m_actionClear = new KAction (i18n ("&Clear"), CTRL + SHIFT + Key_N,
+    m_actionClear = new KAction (i18n ("C&lear"), CTRL + SHIFT + Key_N,
         this, SLOT (slotClear ()), ac, "image_clear");
 
     enableImageMenuDocumentActions (false);
@@ -97,6 +102,15 @@ void kpMainWindow::enableImageMenuDocumentActions (bool enable)
 }
 
 
+// private
+QColor kpMainWindow::backgroundColor () const
+{
+    if (m_colorToolBar)
+        return m_colorToolBar->backgroundColor ();
+    else
+        return QColor ();  // transparent
+}
+
 // private slot
 void kpMainWindow::slotResizeScale ()
 {
@@ -110,8 +124,16 @@ void kpMainWindow::slotResizeScale ()
         m_commandHistory->addCommand (
             new kpToolResizeScaleCommand (m_document, m_viewManager,
                                           dialog->imageWidth (), dialog->imageHeight (),
-                                          dialog->scaleToFit ()));
+                                          dialog->scaleToFit (),
+                                          backgroundColor ()));
     }
+}
+
+// private slot
+void kpMainWindow::slotCrop ()
+{
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 }
 
 // private slot
@@ -150,7 +172,9 @@ void kpMainWindow::slotRotate ()
     if (dialog->exec () && !dialog->isNoopRotate ())
     {
         m_commandHistory->addCommand (
-            new kpToolRotateCommand (m_document, m_viewManager, dialog->angle ()));
+            new kpToolRotateCommand (m_document, m_viewManager,
+                                     dialog->angle (),
+                                     backgroundColor ()));
     }
 }
 
@@ -166,7 +190,8 @@ void kpMainWindow::slotSkew ()
     {
         m_commandHistory->addCommand (
             new kpToolSkewCommand (m_document, m_viewManager,
-                                   dialog->horizontalAngle (), dialog->verticalAngle ()));
+                                   dialog->horizontalAngle (), dialog->verticalAngle (),
+                                   backgroundColor ()));
     }
 }
 
@@ -217,6 +242,6 @@ void kpMainWindow::slotClear ()
 
     m_commandHistory->addCommand (
         new kpToolClearCommand (m_document, m_viewManager,
-                                colorToolBar ()->backgroundColor ()));
+                                backgroundColor ()));
 }
 

@@ -51,7 +51,7 @@
 
 kpToolFloodFill::kpToolFloodFill (kpMainWindow *mainWindow)
     : kpTool (i18n ("Flood Fill"), i18n ("Fills regions in the image"),
-      mainWindow, "tool_flood_fill"),
+              mainWindow, "tool_flood_fill"),
       m_currentCommand (0)
 {
 }
@@ -173,12 +173,7 @@ void kpToolFloodFillCommand::execute ()
         {
             QApplication::setOverrideCursor (QCursor::waitCursor);
 
-            // save Undo pixmap
-            m_oldPixmap.resize (rect.width (), rect.height ());
-            QPainter painter;
-            painter.begin (&m_oldPixmap);
-            painter.drawPixmap (QPoint (0, 0), *m_document->pixmap (), rect);
-            painter.end ();
+            m_oldPixmap = m_document->getPixmapAt (rect);
 
             kpFloodFill::fill ();
             m_document->slotContentsChanged (rect);
@@ -204,12 +199,10 @@ void kpToolFloodFillCommand::unexecute ()
         QRect rect = kpFloodFill::boundingRect ();
         if (rect.isValid ())
         {
-            QPainter painter;
-            painter.begin (m_document->pixmap ());
-            painter.drawPixmap (rect, m_oldPixmap);
-            painter.end ();
+            m_document->setPixmapAt (m_oldPixmap, rect.topLeft ());
 
             m_oldPixmap.resize (0, 0);
+
             m_document->slotContentsChanged (rect);
         }
     }

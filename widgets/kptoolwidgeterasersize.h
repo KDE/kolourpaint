@@ -53,7 +53,7 @@ signals:
     void eraserSizeChanged (int size);
 
 protected slots:
-    virtual void setSelected (int which);
+    virtual void setSelected (int row, int col);
 
 private:
     QPixmap *m_cursorPixmaps;

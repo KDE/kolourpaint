@@ -32,6 +32,7 @@
 #ifndef __kptoolrotate_h__
 #define __kptoolrotate_h__
 
+#include <qcolor.h>
 #include <qpixmap.h>
 #include <kcommand.h>
 #include <kdialogbase.h>
@@ -48,7 +49,8 @@ class kpToolRotateCommand : public KCommand
 {
 public:
     kpToolRotateCommand (kpDocument *document, kpViewManager *m_viewManager,
-                         double angle);  // 0 <= angle < 360 (clockwise)
+                         double angle,  // 0 <= angle < 360 (clockwise)
+                         const QColor &backgroundColor);
     virtual QString name () const;
     virtual ~kpToolRotateCommand ();
 
@@ -59,6 +61,7 @@ private:
     kpDocument *m_document;
     kpViewManager *m_viewManager;
     double m_angle;
+    QColor m_backgroundColor;
 
     bool m_losslessRotation;
     QPixmap m_oldPixmap;

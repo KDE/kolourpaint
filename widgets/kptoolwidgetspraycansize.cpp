@@ -32,15 +32,18 @@
 #define DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE 1
 
 #include <qbitmap.h>
+#include <qimage.h>
 #include <qpainter.h>
 
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <klocale.h>
 
+#include <kppixmapfx.h>
 #include <kptoolwidgetspraycansize.h>
 
-static int spraycanSizes [] = {10, 20, 30};
+
+static int spraycanSizes [] = {9, 17, 29};
 
 kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent)
     : kpToolWidgetBase (parent)
@@ -58,18 +61,41 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent)
         kdDebug () << "\ticonName=" << iconName << endl;
     #endif
 
-        QPixmap pixmap (s + 2, s + 2);
+        QPixmap pixmap (s, s);
         pixmap.fill (Qt::white);
         
         QPainter painter (&pixmap);
-        painter.drawPixmap (1, 1, UserIcon (iconName));
+        painter.drawPixmap (0, 0, UserIcon (iconName));
         painter.end ();
 
-        pixmap.setMask (pixmap.createHeuristicMask ());
-        kpToolWidgetBase::addOption (pixmap, i18n ("%1x%2").arg (s).arg (s)/*tooltip*/);
+        QImage image = kpPixmapFX::convertToImage (pixmap);
+
+        QBitmap mask (pixmap.width (), pixmap.height ());
+        mask.fill (Qt::color0);
+
+        painter.begin (&mask);
+        painter.setPen (Qt::color1);
+        
+        for (int y = 0; y < image.height (); y++)
+        {
+            for (int x = 0; x < image.width (); x++)
+            {
+                if ((image.pixel (x, y) & RGB_MASK) == 0/*black*/)
+                    painter.drawPoint (x, y);  // mark as opaque
+            }
+        }
+
+        painter.end ();
+
+        pixmap.setMask (mask);
+        
+        addOption (pixmap, i18n ("%1x%2").arg (s).arg (s)/*tooltip*/);
+        if (i == 1)
+            startNewOptionRow ();
     }
 
-    kpToolWidgetBase::setSelected (0);
+    relayoutOptions ();
+    setSelected (0, 0);
 }
 
 kpToolWidgetSpraycanSize::~kpToolWidgetSpraycanSize ()
@@ -80,13 +106,13 @@ kpToolWidgetSpraycanSize::~kpToolWidgetSpraycanSize ()
 // public
 int kpToolWidgetSpraycanSize::spraycanSize () const
 {
-    return spraycanSizes [kpToolWidgetBase::selected ()];
+    return spraycanSizes [selected ()];
 }
 
 // protected slot virtual [base kpToolWidgetBase]
-void kpToolWidgetSpraycanSize::setSelected (int which)
+void kpToolWidgetSpraycanSize::setSelected (int row, int col)
 {
-    kpToolWidgetBase::setSelected (which);
+    kpToolWidgetBase::setSelected (row, col);
     emit spraycanSizeChanged (spraycanSize ());
 };
 

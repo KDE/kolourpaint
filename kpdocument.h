@@ -85,11 +85,11 @@ public:
 
     int width () const;
     int oldWidth () const;  // only valid in a slot connected to sizeChanged()
-    void setWidth (int w);
+    void setWidth (int w, const QColor &backgroundColor);
 
     int height () const;
     int oldHeight () const;  // only valid in a slot connected to sizeChanged()
-    void setHeight (int h);
+    void setHeight (int h, const QColor &backgroundColor);
 
     QRect rect () const;
 
@@ -106,8 +106,9 @@ public:
     // (not including the selection)
     QPixmap getPixmapAt (const QRect &rect) const;
 
-    // blt the given pixmap on the doc's pixmap
     void setPixmapAt (const QPixmap &pixmap, const QPoint &at);
+
+    void paintPixmapAt (const QPixmap &pixmap, const QPoint &at);
 
     // (not including the selection)
     QPixmap *pixmap () const;
@@ -123,11 +124,11 @@ public:
      */
 
     void fill (const QColor &color);
-    void resize (int w, int h, bool fillNewAreas = true);
+    void resize (int w, int h, const QColor &backgroundColor, bool fillNewAreas = true);
     bool scale (int w, int h);
-    bool skew (double hangle, double vangle);  // -90 < x < 90
+    bool skew (double hangle, double vangle, const QColor &backgroundColor);  // -90 < x < 90
     bool flip (bool horz, bool vert);
-    bool rotate (double angle);  // 0 <= angle < 360 (clockwise)
+    bool rotate (double angle, const QColor &backgroundColor);  // 0 <= angle < 360 (clockwise)
     static bool isLosslessRotation (double angle);
     bool convertToGrayscale ();
     bool invertColors ();

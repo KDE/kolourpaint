@@ -48,7 +48,7 @@ signals:
     void lineWidthChanged (int width);
 
 protected slots:
-    virtual void setSelected (int which);
+    virtual void setSelected (int row, int col);
 };
 
 #endif  // __kptoolwidgetlinewidth_h__

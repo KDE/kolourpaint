@@ -36,12 +36,14 @@
 
 #include <kptoolwidgeterasersize.h>
 
-static int eraserSizes [] = {8, 16, 32};
+static int eraserSizes [] = {5, 9, 17, 29};
 static const int numEraserSizes = int (sizeof (eraserSizes) / sizeof (eraserSizes [0]));
 
 kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent)
     : kpToolWidgetBase (parent)
 {
+    setInvertSelectedPixmap ();
+
     m_cursorPixmaps = new QPixmap [numEraserSizes];
     QPixmap *pixmap = m_cursorPixmaps;
     
@@ -56,14 +58,23 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent)
 
         painter.begin (pixmap);
         painter.setPen (Qt::black);
+        painter.setBrush (Qt::black);
         painter.drawRect (0, 0, s, s);
         painter.end ();
         
-        kpToolWidgetBase::addOption (*pixmap, i18n ("%1x%2").arg (s).arg (s)/*tooltip*/, true/*centre*/);
+        QBitmap mask (pixmap->width (), pixmap->height ());
+        mask.fill (Qt::color1);
+        pixmap->setMask (mask);
+
+        addOption (*pixmap, i18n ("%1x%2").arg (s).arg (s)/*tooltip*/);
+        if (i >= 2)
+            startNewOptionRow ();
+        
         pixmap++;
     }
 
-    kpToolWidgetBase::setSelected (0);
+    relayoutOptions ();
+    setSelected (0, 0);
 }
 
 kpToolWidgetEraserSize::~kpToolWidgetEraserSize ()
@@ -73,26 +84,26 @@ kpToolWidgetEraserSize::~kpToolWidgetEraserSize ()
 
 int kpToolWidgetEraserSize::eraserSize () const
 {
-    return eraserSizes [kpToolWidgetBase::selected ()];
+    return eraserSizes [selected ()];
 }
 
 QPixmap kpToolWidgetEraserSize::cursorPixmap (const QColor &color) const
 {
-    QPixmap pixmap = m_cursorPixmaps [kpToolWidgetBase::selected ()];
+    QPixmap pixmap = m_cursorPixmaps [selected ()];
     
     QPainter painter (&pixmap);
-    painter.setPen (color);
+    painter.setPen (Qt::black);
     painter.setBrush (color);
-    painter.drawRect (1, 1, pixmap.width () - 2, pixmap.height () - 2);
+    painter.drawRect (0, 0, pixmap.width (), pixmap.height ());
     painter.end ();
 
     return pixmap;
 }
 
 // virtual protected slot
-void kpToolWidgetEraserSize::setSelected (int which)
+void kpToolWidgetEraserSize::setSelected (int row, int col)
 {
-    kpToolWidgetBase::setSelected (which);
+    kpToolWidgetBase::setSelected (row, col);
     emit eraserSizeChanged (eraserSize ());
 };
 

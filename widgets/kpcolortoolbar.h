@@ -32,42 +32,66 @@
 #ifndef __kp_color_toolbar_h__
 #define __kp_color_toolbar_h__
 
+
 #include <qcolor.h>
+#include <qframe.h>
+#include <qwidget.h>
 
 #include <kcolordialog.h>
 #include <ktoolbar.h>
 
-class QBoxLayout;
+
+class QGridLayout;
 class KColorButton;
 
-// TODO: provide a pretty way of displaying foreground, background &
-//       transparent colour
-class kpDualColorButton : public QWidget
+
+//
+// Widget similar to KDualColorButton.
+// Main differences:
+// - more consistent feel with other KolourPaint widgets
+//   (esp. kpColorPalette)
+// - displays the transparent colour using the special pixmap
+//   used by kpTransparentColorCell
+// - no obscure "current" colour
+//
+class kpDualColorButton : public QFrame
 {
 Q_OBJECT
 
 public:
-    kpDualColorButton (QWidget *parent,
-                       Qt::Orientation o = Qt::Vertical,
-                       const char *name = 0);
+    kpDualColorButton (QWidget *parent, const char *name = 0);
     virtual ~kpDualColorButton ();
 
-    Qt::Orientation orientation () const;
-    void setOrientation (Qt::Orientation o);
-    
     QColor color (int which) const;
-    void setColor (int which, const QColor &color);
-
     QColor foregroundColor () const;
-    void setForegroundColor (const QColor &color);
-
     QColor backgroundColor () const;
+    
+public slots:
+    void setColor (int which, const QColor &color);
+    void setForegroundColor (const QColor &color);
     void setBackgroundColor (const QColor &color);
 
-private:
-    KColorButton *m_colorButton [2];
-    QBoxLayout *m_boxLayout;
+signals:
+    void foregroundColorChanged (const QColor &color);
+    void backgroundColorChanged (const QColor &color);
+
+public:
+    virtual QSize sizeHint () const;
+    
+protected:
+    QRect swapPixmapRect () const;
+    QRect foregroundRect () const;
+    QRect backgroundRect () const;
+
+    virtual void resizeEvent (QResizeEvent *e);
+    virtual void mousePressEvent (QMouseEvent *e);
+    virtual void mouseReleaseEvent (QMouseEvent *e);
+    virtual void drawContents (QPainter *p);
+    
+    QColor m_color [2];
+    QPixmap *m_backBuffer;
 };
+
 
 class kpColorCells : public KColorCells
 {
@@ -99,6 +123,60 @@ protected slots:
     void slotColorDoubleClicked (int cell);
 };
 
+
+class kpTransparentColorCell : public QFrame
+{
+Q_OBJECT
+
+public:
+    kpTransparentColorCell (QWidget *parent, const char *name = 0);
+    virtual ~kpTransparentColorCell ();
+    
+    virtual QSize sizeHint () const;
+    
+signals:
+    void transparentColorSelected (int mouseButton);
+    
+    // lazy
+    void foregroundColorChanged (const QColor &color);
+    void backgroundColorChanged (const QColor &color);
+
+protected:
+    virtual void mousePressEvent (QMouseEvent *e);
+    virtual void mouseReleaseEvent (QMouseEvent *e);
+    
+    virtual void drawContents (QPainter *p);
+    
+    QPixmap m_pixmap;
+};
+
+
+class kpColorPalette : public QWidget
+{
+Q_OBJECT
+
+public:
+    kpColorPalette (QWidget *parent,
+                    Qt::Orientation o = Qt::Horizontal,
+                    const char *name = 0);
+    virtual ~kpColorPalette ();
+    
+    Qt::Orientation orientation () const;
+    void setOrientation (Qt::Orientation o);
+    
+signals:
+    void foregroundColorChanged (const QColor &color);
+    void backgroundColorChanged (const QColor &color);
+    
+protected:
+    Qt::Orientation m_orientation;
+
+    QBoxLayout *m_boxLayout;
+    kpTransparentColorCell *m_transparentColorCell;
+    kpColorCells *m_colorCells;    
+};
+
+
 class kpColorToolBar : public KToolBar
 {
 Q_OBJECT
@@ -129,7 +207,7 @@ private:
 
     QBoxLayout *m_boxLayout;
     kpDualColorButton *m_dualColorButton;
-    kpColorCells *m_colorCells;
+    kpColorPalette *m_colorPalette;
 };
 
 #endif  // __kp_color_toolbar_h__

@@ -32,6 +32,7 @@
 #define DEBUG_KP_TOOL_AUTO_CROP 1
 
 #include <qapplication.h>
+#include <qbitmap.h>
 #include <qimage.h>
 #include <qpainter.h>
 
@@ -42,22 +43,26 @@
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
+#include <kppixmapfx.h>
 #include <kptool.h>
 #include <kptoolautocrop.h>
 #include <kpviewmanager.h>
 
 
 kpToolAutoCropBorder::kpToolAutoCropBorder (const QPixmap *pixmapPtr)
+    : m_pixmapPtr (pixmapPtr)
 {
-    m_pixmapPtr = pixmapPtr;
 }
 
 bool kpToolAutoCropBorder::calculate (int isX, int dir)
 {
+#if DEBUG_KP_TOOL_AUTO_CROP && 1
+    kdDebug () << "kpToolAutoCropBorder::calculate() CALLED!" << endl;
+#endif
     int maxX = m_pixmapPtr->width () - 1;
     int maxY = m_pixmapPtr->height () - 1;
     
-    QImage image = m_pixmapPtr->convertToImage ();
+    QImage image = kpPixmapFX::convertToImage (*m_pixmapPtr);
     if (image.isNull ())
     {
         kdError () << "Border::calculate() could not convert to QImage" << endl;
@@ -70,7 +75,7 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
         int numCols = 0;
         int startX = (dir > 0) ? 0 : maxX;
         
-        QRgb rgb = image.pixel (startX, 0);
+        QColor col = kpPixmapFX::getColorAtPixel (image, startX, 0);
         for (int x = startX;
              x >= 0 && x <= maxX;
              x += dir)
@@ -78,7 +83,7 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
             int y;
             for (y = 0; y <= maxY; y++)
             {
-                if (image.pixel (x, y) != rgb)
+                if (!kpTool::colorEq (kpPixmapFX::getColorAtPixel (image, x, y), col))
                     break;
             }
             
@@ -92,7 +97,7 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
         {
             m_rect = QRect (QPoint (startX, 0),
                             QPoint (startX + (numCols - 1) * dir, maxY)).normalize ();
-            m_rgb = rgb;
+            m_color = col;
         }
     }
     else
@@ -100,15 +105,15 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
         int numRows = 0;
         int startY = (dir > 0) ? 0 : maxY;
         
-        QRgb rgb = image.pixel (0, startY);
+        QColor col = kpPixmapFX::getColorAtPixel (image, 0, startY);
         for (int y = startY;
-             y >= 0 & y <= maxY;
+             y >= 0 && y <= maxY;
              y += dir)
         {
             int x;
             for (x = 0; x <= maxX; x++)
             {
-                if (image.pixel (x, y) != rgb)
+                if (!kpTool::colorEq (kpPixmapFX::getColorAtPixel (image, x, y), col))
                     break;
             }
             
@@ -122,7 +127,7 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
         {
             m_rect = QRect (QPoint (0, startY),
                             QPoint (maxX, startY + (numRows - 1) * dir)).normalize ();
-            m_rgb = rgb;
+            m_color = col;
         }
     }
     
@@ -143,7 +148,7 @@ bool kpToolAutoCropBorder::exists () const
 void kpToolAutoCropBorder::invalidate ()
 {
     m_rect = QRect ();
-    m_rgb = QRgb ();
+    m_color = QColor ();  // transparent
 }
 
 
@@ -237,7 +242,7 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
             //  to the doc being bigger than the pasted selection to start with)
 
             if (leftBorder.exists () && rightBorder.exists () &&
-                leftBorder.m_rgb != rightBorder.m_rgb)
+                !kpTool::colorEq (leftBorder.m_color, rightBorder.m_color))
             {
             #if DEBUG_KP_TOOL_AUTO_CROP
                 kdDebug () << "\t\tignoring left border" << endl;
@@ -245,7 +250,7 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
                 leftBorder.invalidate ();
             }
             else if (topBorder.exists () && botBorder.exists () &&
-                     topBorder.m_rgb != botBorder.m_rgb)
+                     !kpTool::colorEq (topBorder.m_color, botBorder.m_color))
             {
             #if DEBUG_KP_TOOL_AUTO_CROP
                 kdDebug () << "\t\tignoring right border" << endl;
@@ -325,16 +330,23 @@ void kpToolAutoCropCommand::execute ()
 // public virtual [base KCommand]
 void kpToolAutoCropCommand::unexecute ()
 {
+#if DEBUG_KP_TOOL_AUTO_CROP && 1
+    kdDebug () << "kpToolAutoCropCommand::unexecute()" << endl;
+#endif
+
     kpDocument *doc = m_mainWindow->document ();
     
     QPixmap pixmap (m_oldWidth, m_oldHeight);
+    QBitmap maskBitmap;
     
     // restore the position of the centre image
-    QPainter painter (&pixmap);
-    painter.drawPixmap (m_contentsRect, *doc->pixmap());
+    kpPixmapFX::setPixmapAt (&pixmap, m_contentsRect, *doc->pixmap ());
     
     // draw the borders
-    
+
+    QPainter painter (&pixmap);
+    QPainter maskPainter;
+
     const kpToolAutoCropBorder *borders [] =
     {
         &m_leftBorder, &m_rightBorder,
@@ -346,14 +358,43 @@ void kpToolAutoCropCommand::unexecute ()
     {
         if ((*b)->exists ())
         {
-            painter.setPen (QColor ((*b)->m_rgb));
-            painter.setBrush (QColor ((*b)->m_rgb));
+            QColor col = (*b)->m_color;
+        #if DEBUG_KP_TOOL_AUTO_CROP && 1
+            kdDebug () << "\tdrawing border " << (*b)->m_rect
+                       << " rgb=" << (int *) col.rgb () /* %X hack */ << endl;
+        #endif
+
+            if (kpTool::isColorOpaque (col))
+            {
+                painter.setPen (col);
+                painter.setBrush (col);
         
-            painter.drawRect ((*b)->m_rect);
+                painter.drawRect ((*b)->m_rect);
+            }
+            else
+            {
+                if (maskBitmap.isNull ())
+                {
+                    // TODO: dangerous when a painter is active on pixmap?
+                    maskBitmap = kpPixmapFX::getNonNullMask (pixmap);
+                    maskPainter.begin (&maskBitmap);
+                }
+                
+                maskPainter.setPen (Qt::color0/*transparent*/);
+                maskPainter.setBrush (Qt::color0/*transparent*/);
+                
+                maskPainter.drawRect ((*b)->m_rect);
+            }
         }
     }
     
+    if (maskPainter.isActive ())
+        maskPainter.end ();
+
     painter.end ();
+
+    if (!maskBitmap.isNull ())    
+        pixmap.setMask (maskBitmap);
     
     doc->setPixmap (pixmap);
 }

@@ -32,7 +32,6 @@
 #ifndef __kptoolairspray_h__
 #define __kptoolairspray_h__
 
-#include <qpen.h>
 #include <kcommand.h>
 #include <kptool.h>
 
@@ -79,7 +78,7 @@ private:
 class kpToolAirSprayCommand : public KCommand
 {
 public:
-    kpToolAirSprayCommand (const QPen &pen, int size,
+    kpToolAirSprayCommand (const QColor &color, int size,
                            kpDocument *document, kpViewManager *viewManager);
     virtual ~kpToolAirSprayCommand ();
 
@@ -94,7 +93,7 @@ public:
     void cancel ();
 
 private:
-    QPen m_pen;
+    QColor m_color;
     int m_size;
 
     kpDocument *m_document;

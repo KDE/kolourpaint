@@ -29,13 +29,19 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <qpixmap.h>
+#define DEBUG_KP_TOOL_CONVERT_TO_BLACK_AND_WHITE 1
 
+#include <qpixmap.h>
+#include <qimage.h>
+
+#include <kdebug.h>
 #include <klocale.h>
 
 #include <kpdefs.h>
 #include <kpdocument.h>
+#include <kppixmapfx.h>
 #include <kptoolconverttoblackandwhite.h>
+
 
 kpToolConvertToBlackAndWhiteCommand::kpToolConvertToBlackAndWhiteCommand
     (kpDocument *document, kpViewManager *viewManager)
@@ -55,21 +61,57 @@ kpToolConvertToBlackAndWhiteCommand::~kpToolConvertToBlackAndWhiteCommand ()
     delete m_oldPixmapPtr;
 }
 
-#include <qimage.h>
-
 // virtual
 void kpToolConvertToBlackAndWhiteCommand::execute ()
 {
+#if DEBUG_KP_TOOL_CONVERT_TO_BLACK_AND_WHITE && 0
+    kdDebug () << "kpToolConvertToBlackAndWhiteCommand::execute()" << endl;
+#endif
+
     m_oldPixmapPtr = new QPixmap ();
     *m_oldPixmapPtr = *m_document->pixmap ();
 
-    QImage image = m_document->pixmap ()->convertToImage ();
+    QImage image = kpPixmapFX::convertToImage (*m_document->pixmap ());
     if (!image.isNull ())
     {
-        image = image.convertDepth (1/*monochrome*/, 0/*no conv flags*/);
+    #if DEBUG_KP_TOOL_CONVERT_TO_BLACK_AND_WHITE && 0
+        for (int y = 0; y < image.width (); y++)
+        {
+            for (int x = 0; x < image.width (); x++)
+            {
+                fprintf (stderr, " %08X", image.pixel (x, y));
+            }
+            fprintf (stderr, "\n");
+        }
+    #endif
+
+        image = image.convertDepth (1/*monochrome*/);
+
+    #if DEBUG_KP_TOOL_CONVERT_TO_BLACK_AND_WHITE && 0
+        kdDebug () << "After conversion to B&W:" << endl;
+        for (int y = 0; y < image.width (); y++)
+        {
+            for (int x = 0; x < image.width (); x++)
+            {
+                fprintf (stderr, " %08X", image.pixel (x, y));
+            }
+            fprintf (stderr, "\n");
+        }
+    #endif
+
         if (!image.isNull ())
         {
-            QPixmap pixmap (image);
+            QPixmap pixmap = kpPixmapFX::convertToPixmap (image, true/*pretty*/);
+
+            // HACK: The above "image.convertDepth (1)" erases the Alpha Channel
+            //       even if Qt::ColorOnly is specified in the conversion flags.
+            //       qpixmap.html says "alpha masks on monochrome images are ignored."
+            //
+            //       Put the mask back.
+            //
+            if (m_oldPixmapPtr->mask ())
+                pixmap.setMask (*m_oldPixmapPtr->mask ());
+
             m_document->setPixmapAt (pixmap, QPoint (0, 0));
         }
     }

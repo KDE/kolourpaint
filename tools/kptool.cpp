@@ -40,6 +40,7 @@
 
 #include <kpcolortoolbar.h>
 #include <kpmainwindow.h>
+#include <kppixmapfx.h>
 #include <kptooltoolbar.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
@@ -83,14 +84,7 @@ QRect kpTool::neededRect (const QRect &rect, int lineWidth)
 // static
 QPixmap kpTool::neededPixmap (const QPixmap &pixmap, const QRect &boundingRect)
 {
-    QPixmap newPixmap (boundingRect.width (), boundingRect.height ());
-    QPainter painter;
-
-    painter.begin (&newPixmap);
-    painter.drawPixmap (QPoint (0, 0), pixmap, boundingRect);
-    painter.end ();
-
-    return newPixmap;
+    return kpPixmapFX::getPixmapAt (pixmap, boundingRect);
 }
 
 void kpTool::beginInternal ()
@@ -284,6 +278,36 @@ QColor kpTool::color (int which) const
     }
 }
 
+// public static
+bool kpTool::isColorOpaque (const QColor &color)
+{
+    return color.isValid ();
+}
+    
+// public static
+bool kpTool::isColorTransparent (const QColor &color)
+{
+    return !color.isValid ();
+}
+
+// public static
+bool kpTool::colorEq (const QColor &c1, const QColor &c2)
+{
+    // KolourPaint convention says:
+    //
+    // If color.isValid(), it's fully opaque and only the RGB values matter
+    // (the Alpha value which shouldn't be there - if it weren't for
+    //  Qt's QColor hacks - is ignored).
+    //
+    // If !color.isValid(), it's fully transparent.
+    //
+
+    if (c1.isValid () && c2.isValid ())
+        return ((c1.rgb () & RGB_MASK) == (c2.rgb () & RGB_MASK));
+    else
+        return (c1.isValid () == c2.isValid ());
+}
+    
 
 bool kpTool::currentPointNextToLast () const
 {
