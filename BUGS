@@ -1,6 +1,8 @@
 
 Please send bug reports and feature requests to http://bugs.kde.org/ or
-Clarence Dang <dang@kde.org>.
+Clarence Dang <dang@kde.org>.  Don't hesistate to report bugs - it
+provides valuable feedback that will help to improve future versions of
+KolourPaint and you will not receive flames for reporting duplicates.
 
 
 This file lists known bugs in the 1.2 release that are not considered
@@ -66,6 +68,41 @@ This file lists known bugs in the 1.2 release that are not considered
 17. Using KolourPaint on a remote X display may result in redraw errors
     and pixel data corruption.
 
+18. Support for the "Truevision Targa Image" and "Portable Graymap Image"
+    formats is very buggy and should not be considered as working at all.
+    This is a KDE bug.
+
+19. Read support for EPS files is extremely slow.  You should not enable
+    the "Save Preview" dialog when saving to EPS.  This is an issue with
+    KDE.
+
+
+Issue with XFree86 <= 3.3.6 with the "Emulate3Buttons" Option
+=============================================================
+
+When drawing, clicking the left or right mouse button that did not
+initiate the current operation will, in this order:
+
+1. finalise the current drawing operation
+2. attempt to paste the contents of the middle-mouse-button clipboard
+
+instead of cancelling the current drawing operation.
+
+This is due to XFree86 sending a release notification for the button that
+initiated the drawing operation, followed by a press notification for the
+emulated 3rd button; instead of just a single press notification for the
+button that is intended to cancel the operation.  This works correctly in
+XFree86 4.x with "Emulate3Buttons" on because it is harder to trigger the
+emulation for the 3rd button as it is only invoked if the left and right
+buttons are pressed at almost the same time.
+
+Possible solutions:
+
+a) Use XFree86 4.x or an X server from another vendor (e.g. X.org).
+b) Press Escape in KolourPaint to cancel the current drawing operation
+   instead of using the problematic click method described above.
+c) Disable "Emulate3Buttons".
+
 
 ---------------------------------------------------------------------------
 The following info does _not_ apply to CVS HEAD.  HEAD won't even compile
@@ -122,6 +159,13 @@ KDE <= 3.1
    even if the appropriate "Do not show this message again" checkbox has
    been ticked (i.e. slower).  Unwanted notifications of low screen depth
    and alpha channel may also be given.
+
+
+KDE <= 3.2
+----------
+
+1. Some images (usually small ones) are incorrectly positioned and may be
+   cut off when saving in the EPS format.
 
 
 Qt <= 3.2
