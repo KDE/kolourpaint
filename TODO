@@ -26,9 +26,6 @@ relative to the mouse instead) so its position stays the same
 if brush, close, move cursor, new; brush in wrong place
 shift+ctrl+alt modifiers can go out of sync
 
-rewrite colour eraser
-- faster
-
 clean up kpmainwindow
 - statusbar
 - settings menu
