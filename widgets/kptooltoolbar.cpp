@@ -89,12 +89,12 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
 
     m_baseWidget = new QWidget (this);
 
-    m_toolWidgetBrush = new kpToolWidgetBrush (m_baseWidget);
-    m_toolWidgetEraserSize = new kpToolWidgetEraserSize (m_baseWidget);
-    m_toolWidgetFillStyle = new kpToolWidgetFillStyle (m_baseWidget);
-    m_toolWidgetLineWidth = new kpToolWidgetLineWidth (m_baseWidget);
-    m_toolWidgetOpaqueOrTransparent = new kpToolWidgetOpaqueOrTransparent (m_baseWidget);
-    m_toolWidgetSpraycanSize = new kpToolWidgetSpraycanSize (m_baseWidget);
+    m_toolWidgetBrush = new kpToolWidgetBrush (m_baseWidget, "Tool Widget Brush");
+    m_toolWidgetEraserSize = new kpToolWidgetEraserSize (m_baseWidget, "Tool Widget Eraser Size");
+    m_toolWidgetFillStyle = new kpToolWidgetFillStyle (m_baseWidget, "Tool Widget Fill Style");
+    m_toolWidgetLineWidth = new kpToolWidgetLineWidth (m_baseWidget, "Tool Widget Line Width");
+    m_toolWidgetOpaqueOrTransparent = new kpToolWidgetOpaqueOrTransparent (m_baseWidget, "Tool Widget Opaque/Transparent");
+    m_toolWidgetSpraycanSize = new kpToolWidgetSpraycanSize (m_baseWidget, "Tool Widget Spraycan Size");
     
     m_lastDockedOrientationSet = false;
     setOrientation (orientation ());

@@ -35,8 +35,8 @@
 #include <klocale.h>
 
 
-kpToolWidgetOpaqueOrTransparent::kpToolWidgetOpaqueOrTransparent (QWidget *parent)
-    : kpToolWidgetBase (parent)
+kpToolWidgetOpaqueOrTransparent::kpToolWidgetOpaqueOrTransparent (QWidget *parent, const char *name)
+    : kpToolWidgetBase (parent, name)
 {
     setInvertSelectedPixmap (false);
 
@@ -44,8 +44,7 @@ kpToolWidgetOpaqueOrTransparent::kpToolWidgetOpaqueOrTransparent (QWidget *paren
     startNewOptionRow ();
     addOption (UserIcon ("option_transparent"), i18n ("Transparent")/*tooltip*/);
 
-    relayoutOptions ();
-    setSelected (0, 0);
+    finishConstruction (0, 0);
 }
 
 kpToolWidgetOpaqueOrTransparent::~kpToolWidgetOpaqueOrTransparent ()
@@ -71,7 +70,7 @@ void kpToolWidgetOpaqueOrTransparent::setOpaque (bool yes)
 #if DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT && 1
     kdDebug () << "kpToolWidgetOpaqueOrTransparent::setOpaque(" << yes << ")" << endl;
 #endif
-    setSelected (yes ? 0 : 1, 0);
+    setSelected (yes ? 0 : 1, 0, false/*don't save*/);
 }
 
 // public
@@ -80,22 +79,21 @@ void kpToolWidgetOpaqueOrTransparent::setTransparent (bool yes)
 #if DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT && 1
     kdDebug () << "kpToolWidgetOpaqueOrTransparent::setTransparent(" << yes << ")" << endl;
 #endif
-    setSelected (yes ? 1 : 0, 0);
+    setSelected (yes ? 1 : 0, 0, false/*don't save*/);
 }
 
 
 // protected slot virtual [base kpToolWidgetBase]
-void kpToolWidgetOpaqueOrTransparent::setSelected (int row, int col)
+bool kpToolWidgetOpaqueOrTransparent::setSelected (int row, int col, bool saveAsDefault)
 {
 #if DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT && 1
     kdDebug () << "kpToolWidgetOpaqueOrTransparent::setSelected("
                << row << "," << col << ")" << endl;
 #endif
-    if (row == selectedRow () && col == selectedCol ())
-        return;
-
-    kpToolWidgetBase::setSelected (row, col);
-    emit isOpaqueChanged (isOpaque ());
+    const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
+    if (ret)
+        emit isOpaqueChanged (isOpaque ());
+    return ret;
 }
 
 

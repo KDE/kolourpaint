@@ -40,7 +40,7 @@ class kpToolWidgetFillStyle : public kpToolWidgetBase
 Q_OBJECT
 
 public:
-    kpToolWidgetFillStyle (QWidget *parent);
+    kpToolWidgetFillStyle (QWidget *parent, const char *name);
     virtual ~kpToolWidgetFillStyle ();
 
     enum FillStyle
@@ -74,7 +74,7 @@ signals:
     void fillStyleChanged (kpToolWidgetFillStyle::FillStyle fillStyle);
 
 protected slots:
-    virtual void setSelected (int row, int col);
+    virtual bool setSelected (int row, int col, bool saveAsDefault);
 };
 
 #endif  // __kptoolwidgetfillstyle_h__

@@ -52,8 +52,8 @@ static int brushSize [][3] =
 #define BRUSH_SIZE_NUM_COLS (int (sizeof (brushSize [0]) / sizeof (brushSize [0][0])))
 #define BRUSH_SIZE_NUM_ROWS (int (sizeof (brushSize) / sizeof (brushSize [0])))
 
-kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent)
-    : kpToolWidgetBase (parent)
+kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const char *name)
+    : kpToolWidgetBase (parent, name)
 {
     setInvertSelectedPixmap ();
 
@@ -118,17 +118,7 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent)
         startNewOptionRow ();
     }
 
-#if DEBUG_KP_TOOL_WIDGET_BRUSH && 1
-    kdDebug () << "get ready to relayoutOptions()" << endl;
-#endif
-    relayoutOptions ();
-#if DEBUG_KP_TOOL_WIDGET_BRUSH && 1
-    kdDebug () << "get ready to setSelected(0,0)" << endl;
-#endif
-    setSelected (0, 0);
-#if DEBUG_KP_TOOL_WIDGET_BRUSH && 1
-    kdDebug () << "done widget brush" << endl;
-#endif
+    finishConstruction (0, 0);
 }
 
 kpToolWidgetBrush::~kpToolWidgetBrush ()
@@ -182,11 +172,13 @@ bool kpToolWidgetBrush::brushIsDiagonalLine () const
     return (selectedRow () >= 2);
 }
 
-// virtual protected slot
-void kpToolWidgetBrush::setSelected (int row, int col)
+// virtual protected slot [base kpToolWidgetBase]
+bool kpToolWidgetBrush::setSelected (int row, int col, bool saveAsDefault)
 {
-    kpToolWidgetBase::setSelected (row, col);
-    emit brushChanged (brush (), brushIsDiagonalLine ());
+    const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
+    if (ret)
+        emit brushChanged (brush (), brushIsDiagonalLine ());
+    return ret;
 };
 
 #include <kptoolwidgetbrush.moc>

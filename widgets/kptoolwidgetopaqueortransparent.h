@@ -37,7 +37,7 @@ class kpToolWidgetOpaqueOrTransparent : public kpToolWidgetBase
 Q_OBJECT
 
 public:
-    kpToolWidgetOpaqueOrTransparent (QWidget *parent);
+    kpToolWidgetOpaqueOrTransparent (QWidget *parent, const char *name);
     virtual ~kpToolWidgetOpaqueOrTransparent ();
 
     bool isOpaque () const;
@@ -49,7 +49,7 @@ signals:
     void isOpaqueChanged (bool isOpaque_);
 
 protected slots:
-    virtual void setSelected (int row, int col);
+    virtual bool setSelected (int row, int col, bool saveAsDefault);
 };
 
 

@@ -36,8 +36,8 @@
 
 static int lineWidths [] = {1, 2, 3, 5, 8};
 
-kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent)
-    : kpToolWidgetBase (parent)
+kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent, const char *name)
+    : kpToolWidgetBase (parent, name)
 {
     setInvertSelectedPixmap ();
 
@@ -69,12 +69,11 @@ kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent)
         
         pixmap.setMask (maskBitmap);
 
-        addOption (pixmap, QString::number(lineWidths [i]));
+        addOption (pixmap, QString::number (lineWidths [i]));
         startNewOptionRow ();
     }
 
-    relayoutOptions ();
-    setSelected (0, 0);
+    finishConstruction (0, 0);
 }
 
 kpToolWidgetLineWidth::~kpToolWidgetLineWidth ()
@@ -86,11 +85,13 @@ int kpToolWidgetLineWidth::lineWidth () const
     return lineWidths [selectedRow ()];
 }
 
-// virtual protected slot
-void kpToolWidgetLineWidth::setSelected (int row, int col)
+// virtual protected slot [base kpToolWidgetBase]
+bool kpToolWidgetLineWidth::setSelected (int row, int col, bool saveAsDefault)
 {
-    kpToolWidgetBase::setSelected (row, col);
-    emit lineWidthChanged (lineWidth ());
+    const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
+    if (ret)
+        emit lineWidthChanged (lineWidth ());
+    return ret;
 };
 
 #include <kptoolwidgetlinewidth.moc>

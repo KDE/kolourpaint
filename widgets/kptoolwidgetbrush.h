@@ -38,7 +38,7 @@ class kpToolWidgetBrush : public kpToolWidgetBase
 Q_OBJECT
 
 public:
-    kpToolWidgetBrush (QWidget *parent);
+    kpToolWidgetBrush (QWidget *parent, const char *name);
     virtual ~kpToolWidgetBrush ();
 
 private:
@@ -52,7 +52,7 @@ signals:
     void brushChanged (const QPixmap &pixmap, bool isDiagonalLine);
 
 protected slots:
-    virtual void setSelected (int row, int col);
+    virtual bool setSelected (int row, int col, bool saveAsDefault);
 
 private:
     QPixmap m_brushBitmaps [16];

@@ -42,8 +42,8 @@
 #include <kptool.h>
 
 
-kpToolWidgetFillStyle::kpToolWidgetFillStyle (QWidget *parent)
-    : kpToolWidgetBase (parent)
+kpToolWidgetFillStyle::kpToolWidgetFillStyle (QWidget *parent, const char *name)
+    : kpToolWidgetBase (parent, name)
 {
     setInvertSelectedPixmap ();
 
@@ -59,8 +59,7 @@ kpToolWidgetFillStyle::kpToolWidgetFillStyle (QWidget *parent)
         startNewOptionRow ();
     }
 
-    relayoutOptions ();
-    setSelected (0, 0);
+    finishConstruction (0, 0);
 }
 
 kpToolWidgetFillStyle::~kpToolWidgetFillStyle ()
@@ -212,10 +211,12 @@ QBrush kpToolWidgetFillStyle::brush (const kpColor &foregroundColor,
 
 
 // virtual protected slot [base kpToolWidgetBase]
-void kpToolWidgetFillStyle::setSelected (int row, int col)
+bool kpToolWidgetFillStyle::setSelected (int row, int col, bool saveAsDefault)
 {
-    kpToolWidgetBase::setSelected (row, col);
-    emit fillStyleChanged (fillStyle ());
+    const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
+    if (ret)
+        emit fillStyleChanged (fillStyle ());
+    return ret;
 };
 
 #include <kptoolwidgetfillstyle.moc>

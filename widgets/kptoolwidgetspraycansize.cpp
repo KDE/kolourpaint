@@ -44,8 +44,8 @@
 
 static int spraycanSizes [] = {9, 17, 29};
 
-kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent)
-    : kpToolWidgetBase (parent)
+kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const char *name)
+    : kpToolWidgetBase (parent, name)
 {
 #if DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE
     kdDebug () << "kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize() CALLED!" << endl;
@@ -93,8 +93,7 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent)
             startNewOptionRow ();
     }
 
-    relayoutOptions ();
-    setSelected (0, 0);
+    finishConstruction (0, 0);
 }
 
 kpToolWidgetSpraycanSize::~kpToolWidgetSpraycanSize ()
@@ -109,10 +108,12 @@ int kpToolWidgetSpraycanSize::spraycanSize () const
 }
 
 // protected slot virtual [base kpToolWidgetBase]
-void kpToolWidgetSpraycanSize::setSelected (int row, int col)
+bool kpToolWidgetSpraycanSize::setSelected (int row, int col, bool saveAsDefault)
 {
-    kpToolWidgetBase::setSelected (row, col);
-    emit spraycanSizeChanged (spraycanSize ());
+    const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
+    if (ret)
+        emit spraycanSizeChanged (spraycanSize ());
+    return ret;
 };
 
 #include <kptoolwidgetspraycansize.moc>

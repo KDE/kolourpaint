@@ -261,7 +261,7 @@ signals:
     // foregroundColorChanged() and backgroundColorChanged() signals
     void colorsSwapped (const kpColor &newForegroundColor,
                         const kpColor &newBackgroundColor);
-    
+
     void foregroundColorChanged (const kpColor &color);
     void backgroundColorChanged (const kpColor &color);
     void colorSimilarityChanged (double similarity, int processedSimilarity);

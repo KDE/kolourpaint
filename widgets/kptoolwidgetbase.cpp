@@ -34,6 +34,8 @@
 #include <qpainter.h>
 #include <qtooltip.h>
 
+#include <kapplication.h>
+#include <kconfig.h>
 #include <kdebug.h>
 
 #include <kpdefs.h>
@@ -41,11 +43,14 @@
 #include <kptoolwidgetbase.h>
 
 
-kpToolWidgetBase::kpToolWidgetBase (QWidget *parent)
-    : QFrame (parent),
+kpToolWidgetBase::kpToolWidgetBase (QWidget *parent, const char *name)
+    : QFrame (parent, name),
       m_invertSelectedPixmap (true),
       m_selectedRow (-1), m_selectedCol (-1)
 {
+    if (!name)
+        kdError () << "kpToolWidgetBase::kpToolWidgetBase() without name" << endl;
+
     setFrameStyle (QFrame::Panel | QFrame::Sunken);
     setFixedSize (44, 66);
 }
@@ -72,6 +77,33 @@ void kpToolWidgetBase::startNewOptionRow ()
     m_pixmaps.resize (m_pixmaps.count () + 1);
     m_pixmapRects.resize (m_pixmapRects.count () + 1);
     m_toolTips.resize (m_toolTips.count () + 1);
+}
+
+// public
+void kpToolWidgetBase::finishConstruction (int fallBackRow, int fallBackCol)
+{
+#if DEBUG_KP_TOOL_WIDGET_BASE
+    kdDebug () << "kpToolWidgetBase(" << name ()
+               << ")::kpToolWidgetBase(fallBack:row=" << fallBackRow
+               << ",col=" << fallBackCol
+               << ")"
+               << endl;
+#endif
+
+    relayoutOptions ();
+
+    const QPair <int, int> rowColPair = defaultSelectedRowAndCol ();
+    if (!setSelected (rowColPair.first, rowColPair.second, false/*don't save*/))
+    {
+        if (!setSelected (fallBackRow, fallBackCol))
+        {
+            if (!setSelected (0, 0))
+            {
+                kdError () << "kpToolWidgetBase::finishConstruction() "
+                              "can't even fall back to setSelected(row=0,col=0)" << endl;
+            }
+        }
+    }
 }
 
 
@@ -129,6 +161,67 @@ QValueVector <int> kpToolWidgetBase::spreadOutElements (const QValueVector <int>
 
     return retOffsets;
 }
+
+
+// public
+QPair <int, int> kpToolWidgetBase::defaultSelectedRowAndCol () const
+{
+    int row = -1, col = -1;
+
+    if (name ())
+    {
+        KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupTools);
+        KConfigBase *cfg = cfgGroupSaver.config ();
+
+        QString nameString = QString::fromLatin1 (name ());
+
+        row = cfg->readNumEntry (nameString + QString::fromLatin1 (" Row"), -1);
+        col = cfg->readNumEntry (nameString + QString::fromLatin1 (" Col"), -1);
+    }
+
+#if DEBUG_KP_TOOL_WIDGET_BASE
+    kdDebug () << "kpToolWidgetBase(" << name ()
+               << ")::defaultSelectedRowAndCol() returning row=" << row
+               << " col=" << col
+               << endl;
+#endif
+
+    return qMakePair (row, col);
+}
+
+// public
+int kpToolWidgetBase::defaultSelectedRow () const
+{
+    return defaultSelectedRowAndCol ().first;
+}
+
+// public
+int kpToolWidgetBase::defaultSelectedCol () const
+{
+    return defaultSelectedRowAndCol ().second;
+}
+
+// public
+void kpToolWidgetBase::saveSelectedAsDefault () const
+{
+#if DEBUG_KP_TOOL_WIDGET_BASE
+    kdDebug () << "kpToolWidgetBase(" << name ()
+               << ")::saveSelectedAsDefault() row=" << m_selectedRow
+               << " col=" << m_selectedCol << endl;
+#endif
+
+    if (!name ())
+        return;
+
+    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupTools);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    QString nameString = QString::fromLatin1 (name ());
+    cfg->writeEntry (nameString + QString::fromLatin1 (" Row"), m_selectedRow);
+    cfg->writeEntry (nameString + QString::fromLatin1 (" Col"), m_selectedCol);
+    cfg->sync ();
+}
+
 
 // public
 void kpToolWidgetBase::relayoutOptions ()
@@ -269,11 +362,38 @@ int kpToolWidgetBase::selected () const
     return upto;
 }
 
-// public slot
-void kpToolWidgetBase::setSelected (int row, int col)
+
+// public slot virtual
+bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
 {
+#if DEBUG_KP_TOOL_WIDGET_BASE
+    kdDebug () << "kpToolWidgetBase::setSelected(row=" << row
+               << ",col=" << col
+               << ",saveAsDefault=" << saveAsDefault
+               << ")"
+               << endl;
+#endif
+
+    if (row < 0 || col < 0 ||
+        row >= (int) m_pixmapRects.count () || col >= (int) m_pixmapRects [row].count ())
+    {
+    #if DEBUG_KP_TOOL_WIDGET_BASE
+        kdDebug () << "\tout of range" << endl;
+    #endif
+        return false;
+    }
+
     if (row == m_selectedRow && col == m_selectedCol)
-        return;
+    {
+    #if DEBUG_KP_TOOL_WIDGET_BASE
+        kdDebug () << "\tNOP" << endl;
+    #endif
+
+        if (saveAsDefault)
+            saveSelectedAsDefault ();
+
+        return true;
+    }
 
     const int wasSelectedRow = m_selectedRow;
     const int wasSelectedCol = m_selectedCol;
@@ -289,7 +409,21 @@ void kpToolWidgetBase::setSelected (int row, int col)
     // highlight new option
     update (m_pixmapRects [row][col]);
 
+#if DEBUG_KP_TOOL_WIDGET_BASE
+    kdDebug () << "\tOK" << endl;
+#endif
+
+    if (saveAsDefault)
+        saveSelectedAsDefault ();
+
     emit optionSelected (row, col);
+    return true;
+}
+
+// public slot
+bool kpToolWidgetBase::setSelected (int row, int col)
+{
+    return setSelected (row, col, true/*set as default*/);
 }
 
 
