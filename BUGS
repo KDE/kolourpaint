@@ -35,5 +35,17 @@ critical" (euphemism for "hard to fix" :)):
    less than it should be.  This is a Qt bug.
 
 
+System Dependent Issues
+=======================
+
+KolourPaint runs best on KDE 3.2 and Qt 3.2.  It will compile and run on
+earlier KDE and Qt 3.x releases (TODO: I haven't ported it yet) but you may encounter the following problems:
+
+1. The Tool Box buttons are not clearly rendered in early versions of the
+   Keramik style (such as the one included in KDE 3.1).  It may be hard to
+   see what tool is currently selected.  Either upgrade to KDE 3.2 or use
+   another style such as HighColor Classic or Plastik.
+
+
 Please report all bugs to Clarence Dang <dang@kde.org>.
 
