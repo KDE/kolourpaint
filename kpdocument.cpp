@@ -194,7 +194,7 @@ bool kpDocument::save ()
     if (m_url.isEmpty () || m_mimetype.isEmpty ())
     {
         KMessageBox::detailedError (m_mainWindow,
-                                    i18n ("Could not save image - insufficient information."),
+            i18n ("Could not save image - insufficient information."),
             i18n ("URL: %1\n"
                   "Mimetype: %2")
                 .arg (prettyURL ())
