@@ -37,7 +37,6 @@ Luxi Sans 14 draw in green with trans background versus white background (see qu
 15. edit/paste may disappear due to klipper - file bug report
 16. check kpcommandhistory all sizes are correct
 17. delayed kpcommand popupmenu creation
-19. setPixel doesn't work for 8bit
 20. setup.bmp monochrome open and save loses a lot of info
 mosfet's image effects don't respect alpha - hack around it
 verify gamma, check contrast,brightness,gamma order
