@@ -126,7 +126,9 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
             return false;
         }
 
-#if 0
+    // Keep the mimetype check disabled in case the mimetype is misdetected
+    // - at least _try_ to open the image
+    #if 0
         if (!KImageIO::isSupported (mimetype, KImageIO::Reading))
         {
             KMessageBox::sorry (m_mainWindow,
@@ -135,7 +137,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
                                     .arg (mimetype));
             return false;
         }
-#endif
+    #endif
 
         QPixmap *newPixmap = new QPixmap (tempFile);
         if (newPixmap->isNull ())
