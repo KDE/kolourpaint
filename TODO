@@ -77,12 +77,6 @@ fill - can optimise mem usage by deleting kpFloodFill object
 
 brush shape in wrong place if zoom smaller (or scroll with wheel)
 
-still some flicker if:
-1. you've used the brush before
-2. switch to the rect
-3. switch back to brush and move brush onto view
-   and old brush momentarily appears in old pos
-
 line: shift + alt doesn't work but alt+shift does
 
 intersect bounding rect with document rect when saving undo info
