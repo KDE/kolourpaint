@@ -348,6 +348,11 @@ public:
     static QWMatrix flipMatrix (int width, int height, bool horz, bool vert);
     static QWMatrix flipMatrix (const QPixmap &pixmap, bool horz, bool vert);
 
+    // TODO: this kind of overloading is error prone
+    //       e.g. QPixmap pixmap;
+    //            kpPixmapFX::flip (pixmap, false, true);
+    //       looks like it will flip vertically but does absolutely nothing!
+    //       (should be &pixmap)
     static void flip (QPixmap *destPixmapPtr, bool horz, bool vert);
     static QPixmap flip (const QPixmap &pm, bool horz, bool vert);
     static void flip (QImage *destImagePtr, bool horz, bool vert);
