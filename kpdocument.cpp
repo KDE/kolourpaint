@@ -49,21 +49,24 @@
 
 #include <kpdefs.h>
 #include <kpdocument.h>
+#include <kpmainwindow.h>
+#include <kpviewmanager.h>
 
 #define DEBUG_KPDOCUMENT 1
 
 
-kpDocument::kpDocument ()
+/*kpDocument::kpDocument ()
     : m_oldWidth (-1), m_oldHeight (-1),
       m_colorDepth (-1), m_oldColorDepth (-1),
       m_modified (false)
 {
     m_pixmap = new QPixmap ();
 }
-
-kpDocument::kpDocument (int w, int h, int colorDepth)
+*/
+kpDocument::kpDocument (int w, int h, int colorDepth, kpMainWindow *mainWindow)
     : m_oldWidth (-1), m_oldHeight (-1),
       m_colorDepth (colorDepth), m_oldColorDepth (-1),
+      m_mainWindow (mainWindow),
       m_modified (false)
 {
 #if DEBUG_KPDOCUMENT
@@ -230,7 +233,7 @@ bool kpDocument::saveAs (const KURL &url, const QString &mimetype, bool overwrit
 #if DEBUG_KPDOCUMENT
     kdDebug () << "\tmimetype=" << mimetype << " type=" << type << endl;
 #endif
-    if (!m_pixmap->save (filename, type.latin1 ()))
+    if (!pixmapWithSelection ().save (filename, type.latin1 ()))
     {
         KMessageBox::error (0, i18n ("Could not save image as type <b>%1 (%2)</b>.").arg (mimetype).arg (type));
         return false;
@@ -396,6 +399,7 @@ bool kpDocument::setColorDepth (int)
  * Pixmap access
  */
 
+// public
 QPixmap kpDocument::getPixmapAt (const QRect &rect) const
 {
     QPixmap pixmap (rect.width (), rect.height ());
@@ -406,6 +410,7 @@ QPixmap kpDocument::getPixmapAt (const QRect &rect) const
     return pixmap;
 }
 
+// public
 void kpDocument::setPixmapAt (const QPixmap &pixmap, const QPoint &at)
 {
     kdDebug () << "kpDocument::setPixmapAt (pixmap (w="
@@ -421,11 +426,14 @@ void kpDocument::setPixmapAt (const QPixmap &pixmap, const QPoint &at)
     slotContentsChanged (QRect (at.x (), at.y (), pixmap.width (), pixmap.height ()));
 }
 
+
+// public
 QPixmap *kpDocument::pixmap () const
 {
     return m_pixmap;
 }
 
+// public
 void kpDocument::setPixmap (const QPixmap &pixmap)
 {
     m_oldWidth = width (), m_oldHeight = height ();
@@ -436,6 +444,28 @@ void kpDocument::setPixmap (const QPixmap &pixmap)
         slotContentsChanged (pixmap.rect ());
     else
         slotSizeChanged (width (), height ());
+}
+
+
+// public
+QPixmap kpDocument::pixmapWithSelection () const
+{
+    kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
+
+    if (vm && vm->selectionActive ())
+    {
+        QPixmap output = *m_pixmap;
+        
+        QPainter painter (&output);
+        painter.drawPixmap (vm->tempPixmapRect (), vm->tempPixmap ());
+        painter.end ();
+        
+        return output;
+    }
+    else
+    {
+        return *m_pixmap;
+    }
 }
 
 

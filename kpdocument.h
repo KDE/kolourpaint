@@ -42,13 +42,14 @@ class QPixmap;
 class QPoint;
 class QRect;
 
+class kpMainWindow;
+
 class kpDocument : public QObject
 {
 Q_OBJECT
 
 public:
-    kpDocument ();
-    kpDocument (int w, int h, int colorDepth);
+    kpDocument (int w, int h, int colorDepth, kpMainWindow *mainWindow);
     ~kpDocument ();
 
 
@@ -101,14 +102,19 @@ public:
      */
 
     // get a copy of a bit of the doc's pixmap
+    // (not including the selection)
     QPixmap getPixmapAt (const QRect &rect) const;
 
     // blt the given pixmap on the doc's pixmap
     void setPixmapAt (const QPixmap &pixmap, const QPoint &at);
 
-    // you better know what you're doing
+    // (not including the selection)
     QPixmap *pixmap () const;
     void setPixmap (const QPixmap &pixmap);
+    
+    // same as pixmap() but returns a _copy_ of the current pixmap
+    // + any selection pasted on top
+    QPixmap pixmapWithSelection () const;
 
 
     /*
@@ -127,10 +133,10 @@ public:
 
 
 public slots:
-	 // these will emit signals!
+    // these will emit signals!
     void slotContentsChanged (const QRect &rect);
     void slotSizeChanged (int newWidth, int newHeight);
-	 
+
 signals:
     void documentOpened ();
     void documentSaved ();
@@ -146,6 +152,7 @@ private:
     QPixmap *m_pixmap;
     int m_oldWidth, m_oldHeight;
     int m_colorDepth, m_oldColorDepth;
+    kpMainWindow *m_mainWindow;
     KURL m_url;
     QString m_mimetype;
     bool m_modified;

@@ -108,7 +108,7 @@ KP_IGNORE_SLOT_CALL_IF_TOOL_ACTIVE;
 
     delete m_document;
 
-    m_document = new kpDocument (400, 300, 32);
+    m_document = new kpDocument (400, 300, 32, this);
     if (!url.isEmpty ())
     {
         m_document->open (url, true /*create an empty doc with the same url if url !exist*/);
@@ -390,7 +390,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer)
 {
     QPainter painter;
     painter.begin (printer);
-    painter.drawPixmap (0, 0, *m_document->pixmap ());
+    painter.drawPixmap (0, 0, m_document->pixmapWithSelection ());
     painter.end ();
 }
 
