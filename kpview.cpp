@@ -684,6 +684,9 @@ int kpView::mouseOnSelectionResizeHandle () const
     }
     else
     {
+    #if DEBUG_KP_VIEW
+        kdDebug () << "\tnot on sel resize handle" << endl;
+    #endif
         return 0;
     }
 #undef LOCAL_POINT_IN_BOX_AT
