@@ -394,6 +394,7 @@ private:
     void paste (const kpSelection &sel,
                 bool forceTopLeft = false);
 public:
+    // (<forceNewTextSelection> is ignored if <text> is empty)
     void pasteText (const QString &text,
                     bool forceNewTextSelection = false,
                     const QPoint &newTextSelectionTopLeft = KP_INVALID_POINT);
