@@ -40,6 +40,7 @@
 
 #include <kpcolor.h>
 #include <kpdefs.h>
+#include <kpcoloreffect.h>
 #include <kpcolortoolbar.h>
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
@@ -463,10 +464,6 @@ void kpMainWindow::slotMoreEffects ()
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
-        /*addImageOrSelectionCommand (
-            new kpToolSkewCommand (m_document->selection (),
-                                   dialog->horizontalAngle (), dialog->verticalAngle (),
-                                   this));*/
+        addImageOrSelectionCommand (dialog.createCommand ());
     }
-
 }

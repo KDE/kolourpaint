@@ -31,6 +31,7 @@
 #include <qapplication.h>
 #include <qpixmap.h>
 
+#include <kdialog.h>
 #include <klocale.h>
 
 #include <kpdefs.h>
@@ -102,3 +103,26 @@ void kpColorEffectCommand::unexecute ()
     delete m_oldPixmapPtr; m_oldPixmapPtr = 0;
 }
 
+
+kpColorEffectWidget::kpColorEffectWidget (QWidget *parent, const char *name)
+    : QWidget (parent, name)
+{
+}
+
+kpColorEffectWidget::~kpColorEffectWidget ()
+{
+}
+
+
+// protected
+int kpColorEffectWidget::marginHint () const
+{
+    return 0;
+}
+
+int kpColorEffectWidget::spacingHint () const
+{
+    return KDialog::spacingHint ();
+}
+
+#include <kpcoloreffect.moc>

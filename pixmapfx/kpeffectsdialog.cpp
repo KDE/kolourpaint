@@ -25,13 +25,25 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_EFFECTS_DIALOG 1
+
 
 #include <kpeffectsdialog.h>
 
+#include <qgroupbox.h>
+#include <qlayout.h>
+
+#include <kcombobox.h>
+#include <kdebug.h>
 #include <klocale.h>
 
 #include <kpdocument.h>
+#include <kpeffectcontrast.h>
 #include <kppixmapfx.h>
+
+
+// protected static
+int kpEffectsDialog::s_lastEffectSelected = 0;
 
 
 kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
@@ -41,12 +53,31 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
                            QString::null/*actionName*/,
                            actOnSelection,
                            parent,
-                           name)
+                           name),
+      m_colorEffectWidget (0)
 {
     if (actOnSelection)
         setCaption (i18n ("More Image Effects (Selection)"));
     else
         setCaption (i18n ("More Image Effects"));
+
+
+    m_effectsComboBox = new KComboBox (mainWidget ());
+    m_effectsComboBox->insertItem (i18n ("Contrast"));
+    addCustomWidgetToFront (m_effectsComboBox);
+
+
+    m_settingsGroupBox = new QGroupBox (i18n ("Settings"), mainWidget ());
+    m_settingsLayout = new QVBoxLayout (m_settingsGroupBox,
+                                        marginHint () * 2,
+                                        spacingHint ());
+    addCustomWidgetToBack (m_settingsGroupBox);
+
+
+    connect (m_effectsComboBox, SIGNAL (activated (int)),
+             this, SLOT (slotEffectSelected (int)));
+    m_effectsComboBox->setCurrentItem (s_lastEffectSelected);
+    slotEffectSelected (s_lastEffectSelected);
 }
 
 kpEffectsDialog::~kpEffectsDialog ()
@@ -57,7 +88,19 @@ kpEffectsDialog::~kpEffectsDialog ()
 // public virtual [base kpToolPreviewDialog]
 bool kpEffectsDialog::isNoOp () const
 {
-    return true;  // TODO
+    if (!m_colorEffectWidget)
+        return true;
+
+    return m_colorEffectWidget->isNoOp ();
+}
+
+// public
+kpColorEffectCommand *kpEffectsDialog::createCommand () const
+{
+    if (!m_colorEffectWidget)
+        return 0;
+
+    return m_colorEffectWidget->createCommand (m_actOnSelection, m_mainWindow);
 }
 
 
@@ -74,10 +117,49 @@ QSize kpEffectsDialog::newDimensions () const
 
 // protected virtual [base kpToolPreviewDialog]
 QPixmap kpEffectsDialog::transformPixmap (const QPixmap &pixmap,
-                                               int targetWidth, int targetHeight) const
+                                          int targetWidth, int targetHeight) const
 {
-    QPixmap pixmapWithEffect = pixmap;
+    QPixmap pixmapWithEffect;
+
+    if (m_colorEffectWidget)
+        pixmapWithEffect = m_colorEffectWidget->applyColorEffect (pixmap);
+    else
+        pixmapWithEffect = pixmap;
+
     return kpPixmapFX::scale (pixmapWithEffect, targetWidth, targetHeight);
+}
+
+
+// protected slot
+void kpEffectsDialog::slotEffectSelected (int which)
+{
+#if DEBUG_KP_EFFECTS_DIALOG
+    kdDebug () << "kpEffectsDialog::slotEffectSelected(" << which << ")" << endl;
+#endif
+
+    delete m_colorEffectWidget;
+    m_colorEffectWidget = 0;
+
+    switch (which)
+    {
+    case 0:
+        m_colorEffectWidget = new kpEffectContrastWidget (m_settingsGroupBox);
+        break;
+    }
+
+    if (m_colorEffectWidget)
+    {
+    #if DEBUG_KP_EFFECTS_DIALOG
+        kdDebug () << "\twidget exists for effect #" << endl;
+    #endif
+
+        m_settingsLayout->addWidget (m_colorEffectWidget);
+
+        connect (m_colorEffectWidget, SIGNAL (settingsChanged ()),
+                 this, SLOT (slotUpdate ()));
+    }
+
+    s_lastEffectSelected = which;
 }
 
 

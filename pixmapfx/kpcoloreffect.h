@@ -29,8 +29,10 @@
 #ifndef KP_COLOR_EFFECT_H
 #define KP_COLOR_EFFECT_H
 
-#include <kcommand.h>
 #include <qstring.h>
+#include <qwidget.h>
+
+#include <kcommand.h>
 
 class QPixmap;
 
@@ -63,5 +65,30 @@ private:
 
     QPixmap *m_oldPixmapPtr;
 };
+
+
+class kpColorEffectWidget : public QWidget
+{
+Q_OBJECT
+
+public:
+    kpColorEffectWidget (QWidget *parent, const char *name = 0);
+    virtual ~kpColorEffectWidget ();
+
+signals:
+    void settingsChanged ();
+
+public:
+    virtual bool isNoOp () const = 0;
+    virtual QPixmap applyColorEffect (const QPixmap &pixmap) = 0;
+
+    virtual kpColorEffectCommand *createCommand (bool actOnSelection,
+                                                 kpMainWindow *mainWindow) const = 0;
+
+protected:
+    int marginHint () const;
+    int spacingHint () const;
+};
+
 
 #endif  // KP_COLOR_EFFECT_H

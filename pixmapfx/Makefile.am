@@ -4,6 +4,7 @@ INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../pixmapfx \
 
 noinst_LTLIBRARIES = libkolourpaintpixmapfx.la
 libkolourpaintpixmapfx_la_SOURCES = kpcoloreffect.cpp \
+    kpeffectcontrast.cpp \
     kpeffectsdialog.cpp \
     kpfloodfill.cpp \
     kppixmapfx.cpp

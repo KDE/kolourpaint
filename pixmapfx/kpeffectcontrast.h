@@ -26,54 +26,50 @@
 */
 
 
-#ifndef KP_EFFECTS_DIALOG_H
-#define KP_EFFECTS_DIALOG_H
+#ifndef KP_EFFECT_CONTRAST_H
+#define KP_EFFECT_CONTRAST_H
+
+#include <kpcoloreffect.h>
 
 
-#include <kptoolpreviewdialog.h>
+class KIntNumInput;
+
+class kpMainWindowe;
 
 
-class QGroupBox;
-class QStringList;
-class QVBoxLayout;
-
-class KComboBox;
-
-class kpColorEffectCommand;
-class kpColorEffectWidget;
-class kpMainWindow;
-
-
-class kpEffectsDialog : public kpToolPreviewDialog
+class kpEffectContrastCommand : public kpColorEffectCommand
 {
-Q_OBJECT
-
 public:
-    kpEffectsDialog (bool actOnSelection,
-                          kpMainWindow *parent,
-                          const char *name = 0);
-    virtual ~kpEffectsDialog ();
+    kpEffectContrastCommand (int contrastValue,
+                             bool actOnSelection,
+                             kpMainWindow *mainWindow);
+    virtual ~kpEffectContrastCommand ();
 
-    virtual bool isNoOp () const;
-    kpColorEffectCommand *createCommand () const;
-
-protected:
-    virtual QSize newDimensions () const;
-    virtual QPixmap transformPixmap (const QPixmap &pixmap,
-                                     int targetWidth, int targetHeight) const;
-
-protected slots:
-    void slotEffectSelected (int which);
+    static QPixmap applyColorEffect (const QPixmap &pixmap, int contrastValue);
 
 protected:
-    static int s_lastEffectSelected;
+    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
 
-    KComboBox *m_effectsComboBox;
-    QGroupBox *m_settingsGroupBox;
-    QVBoxLayout *m_settingsLayout;
-
-    kpColorEffectWidget *m_colorEffectWidget;
+protected:
+    int m_contrastValue;
 };
 
 
-#endif  // KP_EFFECTS_DIALOG_H
+class kpEffectContrastWidget : public kpColorEffectWidget
+{
+public:
+    kpEffectContrastWidget (QWidget *parent, const char *name = 0);
+    virtual ~kpEffectContrastWidget ();
+
+    virtual bool isNoOp () const;
+    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
+
+    virtual kpColorEffectCommand *createCommand (bool actOnSelection,
+                                                 kpMainWindow *mainWindow) const;
+
+protected:
+    KIntNumInput *m_contrastValueInput;
+};
+
+
+#endif  // KP_EFFECT_CONTRAST_H
