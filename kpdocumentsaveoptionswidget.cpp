@@ -181,7 +181,7 @@ void kpDocumentSaveOptionsWidget::init ()
     // according to QImage::save().
     m_qualityInput->setRange (1, 100, 1/*step*/, true/*slider*/);
 
-    m_previewButton = new KPushButton (i18n ("Preview.."), this);
+    m_previewButton = new KPushButton (i18n ("Preview..."), this);
     m_previewButton->setToggleButton (true);
 
 
