@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_CONVERT_TO_BLACK_AND_WHITE 1
+#define DEBUG_KP_TOOL_CONVERT_TO_BLACK_AND_WHITE 0
 
 #include <qapplication.h>
 #include <qpixmap.h>

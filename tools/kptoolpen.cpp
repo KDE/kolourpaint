@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_PEN 1
+#define DEBUG_KP_TOOL_PEN 0
 
 #include <qapplication.h>
 #include <qbitmap.h>

@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_SPRAYCAN 1
+#define DEBUG_KP_TOOL_SPRAYCAN 0
 
 #include <stdlib.h>
 

@@ -25,7 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_TOOL_PREVIEW_DIALOG 1
+#define DEBUG_KP_TOOL_PREVIEW_DIALOG 0
 
 #include <qlayout.h>
 #include <qgroupbox.h>

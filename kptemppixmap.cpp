@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TEMP_PIXMAP 1
+#define DEBUG_KP_TEMP_PIXMAP 0
 
 #include <kppixmapfx.h>
 #include <kptemppixmap.h>

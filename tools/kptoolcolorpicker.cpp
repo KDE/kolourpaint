@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_COLOR_PICKER 1
+#define DEBUG_KP_TOOL_COLOR_PICKER 0
 
 #include <qimage.h>
 #include <qpixmap.h>
