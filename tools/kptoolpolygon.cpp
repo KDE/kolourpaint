@@ -116,6 +116,20 @@ static QBrush makeBrush (const kpColor &foregroundColor,
         return QBrush (backgroundColor.toQColor ());
 }
 
+static bool only1PixelInPointArray (const QPointArray &points)
+{
+    if (points.count () == 0)
+        return false;
+
+    for (int i = 1; i < points.count (); i++)
+    {
+        if (points [i] != points [0])
+            return false;
+    }
+
+    return true;
+}
+
 static QPixmap pixmap (const QPixmap &oldPixmap,
                        const QPointArray &points, const QRect &rect,
                        const kpColor &foregroundColor, kpColor backgroundColor,
@@ -187,72 +201,80 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
         maskPainter . cmd ;       \
 }
 
-    switch (mode)
+    // SYNC: Qt bug
+    if (only1PixelInPointArray (pointsInRect))
     {
-    case kpToolPolygon::Line:
-    case kpToolPolygon::Polyline:
-        PAINTER_CALL (drawPolyline (pointsInRect));
-        break;
-    case kpToolPolygon::Polygon:
-        // TODO: why aren't the ends rounded?
-        PAINTER_CALL (drawPolygon (pointsInRect));
-
-        if (!final && 0/*HACK for TODO*/)
+        PAINTER_CALL (drawPoint (pointsInRect [0]));
+    }
+    else
+    {
+        switch (mode)
         {
-            int count = pointsInRect.count ();
+        case kpToolPolygon::Line:
+        case kpToolPolygon::Polyline:
+            PAINTER_CALL (drawPolyline (pointsInRect));
+            break;
+        case kpToolPolygon::Polygon:
+            // TODO: why aren't the ends rounded?
+            PAINTER_CALL (drawPolygon (pointsInRect));
 
-            if (count > 2)
+            if (!final && 0/*HACK for TODO*/)
             {
-                if (painter.isActive ())
+                int count = pointsInRect.count ();
+
+                if (count > 2)
                 {
-                    QPen XORpen = painter.pen ();
-                    XORpen.setColor (Qt::white);
+                    if (painter.isActive ())
+                    {
+                        QPen XORpen = painter.pen ();
+                        XORpen.setColor (Qt::white);
 
-                    painter.setPen (XORpen);
-                    painter.setRasterOp (Qt::XorROP);
+                        painter.setPen (XORpen);
+                        painter.setRasterOp (Qt::XorROP);
+                    }
+
+                    if (maskPainter.isActive ())
+                    {
+                        QPen XORpen = maskPainter.pen ();
+
+                        // TODO???
+                        #if 0
+                        if (kpTool::isColorTransparent (foregroundColor))
+                            XORpen.setColor (Qt::color1/*opaque*/);
+                        else
+                            XORpen.setColor (Qt::color0/*transparent*/);
+                        #endif
+
+                        maskPainter.setPen (XORpen);
+                    }
+
+                    PAINTER_CALL (drawLine (pointsInRect [0], pointsInRect [count - 1]));
                 }
-
-                if (maskPainter.isActive ())
-                {
-                    QPen XORpen = maskPainter.pen ();
-
-                    // TODO???
-                    #if 0
-                    if (kpTool::isColorTransparent (foregroundColor))
-                        XORpen.setColor (Qt::color1/*opaque*/);
-                    else
-                        XORpen.setColor (Qt::color0/*transparent*/);
-                    #endif
-
-                    maskPainter.setPen (XORpen);
-                }
-
-                PAINTER_CALL (drawLine (pointsInRect [0], pointsInRect [count - 1]));
             }
-        }
-        break;
-    case kpToolPolygon::Curve:
-        int numPoints = pointsInRect.count ();
-        QPointArray pa (4);
-
-        pa [0] = pointsInRect [0];
-        pa [3] = pointsInRect [1];
-
-        switch (numPoints)
-        {
-        case 2:
-            pa [1] = pointsInRect [0];
-            pa [2] = pointsInRect [1];
             break;
-        case 3:
-            pa [1] = pa [2] = pointsInRect [2];
-            break;
-        case 4:
-            pa [1] = pointsInRect [2];
-            pa [2] = pointsInRect [3];
-        }
+        case kpToolPolygon::Curve:
+            int numPoints = pointsInRect.count ();
+            QPointArray pa (4);
 
-        PAINTER_CALL (drawCubicBezier (pa));
+            pa [0] = pointsInRect [0];
+            pa [3] = pointsInRect [1];
+
+            switch (numPoints)
+            {
+            case 2:
+                pa [1] = pointsInRect [0];
+                pa [2] = pointsInRect [1];
+                break;
+            case 3:
+                pa [1] = pa [2] = pointsInRect [2];
+                break;
+            case 4:
+                pa [1] = pointsInRect [2];
+                pa [2] = pointsInRect [3];
+            }
+
+            PAINTER_CALL (drawCubicBezier (pa));
+        }
     }
 #undef PAINTER_CALL
 
