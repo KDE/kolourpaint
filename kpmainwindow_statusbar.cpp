@@ -42,6 +42,7 @@
 #include <kpsqueezedtextlabel.h>
 #include <kptool.h>
 #include <kpview.h>
+#include <kpviewmanager.h>
 #include <kpviewscrollablecontainer.h>
 
 
@@ -86,8 +87,8 @@ void kpMainWindow::createStatusBar ()
     addPermanentStatusBarItem (StatusBarItemZoom,
                                5/*1600%*/);
 
-    d->m_statusBarShapeLastPointsInitialised = false;
-    d->m_statusBarShapeLastSizeInitialised = false;
+    m_statusBarShapeLastPointsInitialised = false;
+    m_statusBarShapeLastSizeInitialised = false;
     m_statusBarCreated = true;
 }
 
@@ -114,7 +115,7 @@ void kpMainWindow::setStatusBarMessage (const QString &message)
 void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
                                             const QPoint &endPoint)
 {
-#if DEBUG_STATUS_BAR && 1
+#if DEBUG_STATUS_BAR && 0
     kdDebug () << "kpMainWindow::setStatusBarShapePoints("
                << startPoint << "," << endPoint
                << ") ok=" << m_statusBarCreated
@@ -124,11 +125,11 @@ void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
     if (!m_statusBarCreated)
         return;
 
-    if (d->m_statusBarShapeLastPointsInitialised &&
-        startPoint == d->m_statusBarShapeLastStartPoint &&
-        endPoint == d->m_statusBarShapeLastEndPoint)
+    if (m_statusBarShapeLastPointsInitialised &&
+        startPoint == m_statusBarShapeLastStartPoint &&
+        endPoint == m_statusBarShapeLastEndPoint)
     {
-    #if DEBUG_STATUS_BAR && 1
+    #if DEBUG_STATUS_BAR && 0
         kdDebug () << "\tNOP" << endl;
     #endif
         return;
@@ -155,15 +156,15 @@ void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
                                   StatusBarItemShapePoints);
     }
 
-    d->m_statusBarShapeLastStartPoint = startPoint;
-    d->m_statusBarShapeLastEndPoint = endPoint;
-    d->m_statusBarShapeLastPointsInitialised = true;
+    m_statusBarShapeLastStartPoint = startPoint;
+    m_statusBarShapeLastEndPoint = endPoint;
+    m_statusBarShapeLastPointsInitialised = true;
 }
 
 // private slot
 void kpMainWindow::setStatusBarShapeSize (const QSize &size)
 {
-#if DEBUG_STATUS_BAR && 1
+#if DEBUG_STATUS_BAR && 0
     kdDebug () << "kpMainWindow::setStatusBarShapeSize("
                << size
                << ") ok=" << m_statusBarCreated
@@ -173,10 +174,10 @@ void kpMainWindow::setStatusBarShapeSize (const QSize &size)
     if (!m_statusBarCreated)
         return;
 
-    if (d->m_statusBarShapeLastSizeInitialised &&
-        size == d->m_statusBarShapeLastSize)
+    if (m_statusBarShapeLastSizeInitialised &&
+        size == m_statusBarShapeLastSize)
     {
-    #if DEBUG_STATUS_BAR && 1
+    #if DEBUG_STATUS_BAR && 0
         kdDebug () << "\tNOP" << endl;
     #endif
         return;
@@ -194,14 +195,14 @@ void kpMainWindow::setStatusBarShapeSize (const QSize &size)
                                   StatusBarItemShapeSize);
     }
 
-    d->m_statusBarShapeLastSize = size;
-    d->m_statusBarShapeLastSizeInitialised = true;
+    m_statusBarShapeLastSize = size;
+    m_statusBarShapeLastSizeInitialised = true;
 }
 
 // private slot
 void kpMainWindow::setStatusBarDocSize (const QSize &size)
 {
-#if DEBUG_STATUS_BAR && 1
+#if DEBUG_STATUS_BAR && 0
     kdDebug () << "kpMainWindow::setStatusBarDocSize("
                << size
                << ") ok=" << m_statusBarCreated
@@ -227,7 +228,7 @@ void kpMainWindow::setStatusBarDocSize (const QSize &size)
 // private slot
 void kpMainWindow::setStatusBarDocDepth (int depth)
 {
-#if DEBUG_STATUS_BAR && 1
+#if DEBUG_STATUS_BAR && 0
     kdDebug () << "kpMainWindow::setStatusBarDocDepth("
                << depth
                << ") ok=" << m_statusBarCreated
@@ -251,7 +252,7 @@ void kpMainWindow::setStatusBarDocDepth (int depth)
 // private slot
 void kpMainWindow::setStatusBarZoom (int zoom)
 {
-#if DEBUG_STATUS_BAR && 1
+#if DEBUG_STATUS_BAR && 0
     kdDebug () << "kpMainWindow::setStatusBarZoom("
                << zoom
                << ") ok=" << m_statusBarCreated
@@ -280,7 +281,34 @@ void kpMainWindow::recalculateStatusBarMessage ()
     QString scrollViewMessage = m_scrollView->statusMessage ();
 #if DEBUG_STATUS_BAR && 1
     kdDebug () << "\tscrollViewMessage=" << scrollViewMessage << endl;
+    kdDebug () << "\tresizing doc? " << !m_scrollView->newDocSize ().isEmpty ()
+               << endl;
+    kdDebug () << "\tviewUnderCursor? "
+               << (m_viewManager && m_viewManager->viewUnderCursor ())
+               << endl;
 #endif
+
+    // HACK: To work around kpViewScrollableContainer's unreliable
+    //       status messages (which in turn is due to Qt not updating
+    //       QWidget::hasMouse() on drags and we needing to hack around it)
+    if (!scrollViewMessage.isEmpty () &&
+        m_scrollView->newDocSize ().isEmpty () &&
+        m_viewManager && m_viewManager->viewUnderCursor ())
+    {
+    #if DEBUG_STATUS_BAR && 1
+        kdDebug () << "\t\tnot resizing & viewUnderCursor - message is wrong - clearing"
+                   << endl;
+    #endif
+        m_scrollView->blockSignals (true);
+        m_scrollView->clearStatusMessage ();
+        m_scrollView->blockSignals (false);
+
+        scrollViewMessage = QString::null;
+    #if DEBUG_STATUS_BAR && 1
+        kdDebug () << "\t\t\tdone" << endl;
+    #endif
+    }
+
     if (!scrollViewMessage.isEmpty ())
     {
         setStatusBarMessage (scrollViewMessage);
@@ -302,18 +330,18 @@ void kpMainWindow::recalculateStatusBarMessage ()
 // private slot
 void kpMainWindow::recalculateStatusBarShape ()
 {
-#if DEBUG_STATUS_BAR && 1
+#if DEBUG_STATUS_BAR && 0
     kdDebug () << "kpMainWindow::recalculateStatusBarShape()" << endl;
 #endif
 
     QSize docResizeTo = m_scrollView->newDocSize ();
-#if DEBUG_STATUS_BAR && 1
+#if DEBUG_STATUS_BAR && 0
     kdDebug () << "\tdocResizeTo=" << docResizeTo << endl;
 #endif
     if (docResizeTo.isValid ())
     {
         const QPoint startPoint (m_document->width (), m_document->height ());
-    #if DEBUG_STATUS_BAR && 1
+    #if DEBUG_STATUS_BAR && 0
         kdDebug () << "\thavedMovedFromOrgSize="
                    << m_scrollView->haveMovedFromOriginalDocSize () << endl;
     #endif
@@ -335,7 +363,7 @@ void kpMainWindow::recalculateStatusBarShape ()
     else
     {
         const kpTool *t = tool ();
-    #if DEBUG_STATUS_BAR && 1
+    #if DEBUG_STATUS_BAR && 0
         kdDebug () << "\ttool=" << t << endl;
     #endif
         if (t)

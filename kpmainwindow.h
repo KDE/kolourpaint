@@ -26,18 +26,22 @@
 */
 
 
-#ifndef __kp_main_window_h__
-#define __kp_main_window_h__
+#ifndef KP_MAIN_WINDOW_H
+#define KP_MAIN_WINDOW_H
+
 
 #define DEBUG_KP_MAIN_WINDOW 0
 
+#include <qpoint.h>
 #include <qptrlist.h>
+#include <qsize.h>
 #include <qvaluevector.h>
 
 #include <kmainwindow.h>
 #include <kurl.h>
 
 #include <kpdefs.h>
+#include <kpdocumentsaveoptions.h>
 #include <kppixmapfx.h>
 
 
@@ -193,8 +197,18 @@ private:
     kpToolText *m_toolText;
 
     QPtrList <kpTool> m_tools;
+    int m_lastToolNumber;
+
+    bool m_toolActionsEnabled;
+    kpSingleKeyTriggersAction *m_actionPrevToolOptionGroup1,
+                              *m_actionNextToolOptionGroup1,
+                              *m_actionPrevToolOptionGroup2,
+                              *m_actionNextToolOptionGroup2;
 
     int m_settingSelectionTransparency;
+
+    int m_docResizeWidth, m_docResizeHeight;
+    bool m_docResizeToBeCompleted;
 
 public:
     kpTool *tool () const;
@@ -203,7 +217,8 @@ public:
     bool toolIsTextTool () const;
 
     kpSelectionTransparency selectionTransparency () const;
-    void setSelectionTransparency (const kpSelectionTransparency &transparency, bool forceColorChange = false);
+    void setSelectionTransparency (const kpSelectionTransparency &transparency,
+                                   bool forceColorChange = false);
     int settingSelectionTransparency () const;
 
 private slots:
@@ -268,11 +283,16 @@ private:
 
     KAction *m_actionNew, *m_actionOpen;
     KRecentFilesAction *m_actionOpenRecent;
-    KAction *m_actionSave, *m_actionSaveAs, *m_actionReload,
+    KAction *m_actionSave, *m_actionSaveAs, *m_actionExport,
+            *m_actionReload,
             *m_actionPrint, *m_actionPrintPreview,
             *m_actionMail,
             *m_actionSetAsWallpaperTiled, *m_actionSetAsWallpaperCentered,
             *m_actionClose, *m_actionQuit;
+
+    KURL m_lastExportURL;
+    kpDocumentSaveOptions m_lastExportSaveOptions;
+    bool m_exportFirstTime;
 
 private:
     bool shouldOpenInNewWindow () const;
@@ -353,8 +373,17 @@ private:
     bool m_editMenuDocumentActionsEnabled;
 
     KAction *m_actionUndo, *m_actionRedo,
-            *m_actionCut, *m_actionCopy, *m_actionPaste, *m_actionDelete,
-            *m_actionSelectAll, *m_actionDeselect;
+            *m_actionCut, *m_actionCopy,
+            *m_actionPaste, *m_actionPasteInNewWindow,
+            *m_actionDelete,
+            *m_actionSelectAll, *m_actionDeselect,
+            *m_actionCopyToFile, *m_actionPasteFromFile;
+
+    KURL m_lastPasteFromURL;
+
+    KURL m_lastCopyToURL;
+    kpDocumentSaveOptions m_lastCopyToSaveOptions;
+    bool m_copyToFirstTime;
 
 private slots:
     void slotCut ();
@@ -479,6 +508,7 @@ private:
             *m_actionCrop, *m_actionAutoCrop,
             *m_actionFlip, *m_actionRotate, *m_actionSkew,
             *m_actionConvertToBlackAndWhite, *m_actionConvertToGrayscale,
+            *m_actionMoreEffects,
             *m_actionInvertColors, *m_actionClear;
 
 private slots:
@@ -516,6 +546,7 @@ private:
 
     KToggleAction *m_actionShowPath;
     KAction *m_actionKeyBindings, *m_actionConfigureToolbars, *m_actionConfigure;
+    KToggleFullScreenAction *m_actionFullScreen;
 
 private slots:
     void slotFullScreen ();
@@ -538,6 +569,11 @@ private slots:
 private:
     bool m_statusBarCreated;
     kpSqueezedTextLabel *m_statusBarMessageLabel;
+
+    bool m_statusBarShapeLastPointsInitialised;
+    QPoint m_statusBarShapeLastStartPoint, m_statusBarShapeLastEndPoint;
+    bool m_statusBarShapeLastSizeInitialised;
+    QSize m_statusBarShapeLastSize;
 
     enum
     {
@@ -610,45 +646,9 @@ private:
     class kpMainWindowPrivate *d;
 };
 
-#include <qpoint.h>
-#include <qsize.h>
-
-#include <kpdocumentsaveoptions.h>
-
 struct kpMainWindowPrivate
 {
-    KToggleFullScreenAction *m_actionFullScreen;
-    KAction *m_actionExport;
-    KAction *m_actionPasteInNewWindow;
-    KAction *m_actionCopyToFile, *m_actionPasteFromFile;
-
-    KURL m_lastPasteFromURL;
-
-    KURL m_lastCopyToURL;
-    kpDocumentSaveOptions m_lastCopyToSaveOptions;
-    bool m_copyToFirstTime;
-
-    KURL m_lastExportURL;
-    kpDocumentSaveOptions m_lastExportSaveOptions;
-    bool m_exportFirstTime;
-
-    int m_lastToolNumber;
-
-    bool m_statusBarShapeLastPointsInitialised;
-    QPoint m_statusBarShapeLastStartPoint, m_statusBarShapeLastEndPoint;
-    bool m_statusBarShapeLastSizeInitialised;
-    QSize m_statusBarShapeLastSize;
-
-    KAction *m_actionMoreEffects;
-
-    bool m_toolActionsEnabled;
-    kpSingleKeyTriggersAction *m_actionPrevToolOptionGroup1,
-                              *m_actionNextToolOptionGroup1,
-                              *m_actionPrevToolOptionGroup2,
-                              *m_actionNextToolOptionGroup2;
-
-    int m_docResizeWidth, m_docResizeHeight;
-    bool m_docResizeToBeCompleted;
 };
 
-#endif  // __kp_main_window_h__
+
+#endif  // KP_MAIN_WINDOW_H

@@ -99,23 +99,23 @@ void kpMainWindow::setupToolActions ()
 
     KActionCollection *ac = actionCollection ();
 
-    d->m_actionPrevToolOptionGroup1 = new kpSingleKeyTriggersAction (
+    m_actionPrevToolOptionGroup1 = new kpSingleKeyTriggersAction (
         i18n ("Previous Tool Option (Group #1)"),
         kpTool::shortcutForKey (Qt::Key_1),
         this, SLOT (slotActionPrevToolOptionGroup1 ()),
         ac, "prev_tool_option_group_1");
-    d->m_actionNextToolOptionGroup1 = new kpSingleKeyTriggersAction (
+    m_actionNextToolOptionGroup1 = new kpSingleKeyTriggersAction (
         i18n ("Next Tool Option (Group #1)"),
         kpTool::shortcutForKey (Qt::Key_2),
         this, SLOT (slotActionNextToolOptionGroup1 ()),
         ac, "next_tool_option_group_1");
 
-    d->m_actionPrevToolOptionGroup2 = new kpSingleKeyTriggersAction (
+    m_actionPrevToolOptionGroup2 = new kpSingleKeyTriggersAction (
         i18n ("Previous Tool Option (Group #2)"),
         kpTool::shortcutForKey (Qt::Key_3),
         this, SLOT (slotActionPrevToolOptionGroup2 ()),
         ac, "prev_tool_option_group_2");
-    d->m_actionNextToolOptionGroup2 = new kpSingleKeyTriggersAction (
+    m_actionNextToolOptionGroup2 = new kpSingleKeyTriggersAction (
         i18n ("Next Tool Option (Group #2)"),
         kpTool::shortcutForKey (Qt::Key_4),
         this, SLOT (slotActionNextToolOptionGroup2 ()),
@@ -153,7 +153,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
     kdDebug () << "kpMainWindow::enableToolsDocumentsAction(" << enable << ")" << endl;
 #endif
 
-    d->m_toolActionsEnabled = enable;
+    m_toolActionsEnabled = enable;
 
 
     if (enable && !m_toolToolBar->isEnabled ())
@@ -166,8 +166,8 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
             m_toolToolBar->selectPreviousTool ();
         else
         {
-            if (d->m_lastToolNumber >= 0 && d->m_lastToolNumber < (int) m_tools.count ())
-                m_toolToolBar->selectTool (m_tools.at (d->m_lastToolNumber));
+            if (m_lastToolNumber >= 0 && m_lastToolNumber < (int) m_tools.count ())
+                m_toolToolBar->selectTool (m_tools.at (m_lastToolNumber));
             else
                 m_toolToolBar->selectTool (m_toolPen);
         }
@@ -220,20 +220,20 @@ void kpMainWindow::updateToolOptionPrevNextActionsEnabled ()
                << endl;
 #endif
 
-    const bool enable = d->m_toolActionsEnabled;
+    const bool enable = m_toolActionsEnabled;
 
 
-    d->m_actionPrevToolOptionGroup1->setEnabled (enable &&
+    m_actionPrevToolOptionGroup1->setEnabled (enable &&
         m_toolToolBar->shownToolWidget (0) &&
         m_toolToolBar->shownToolWidget (0)->hasPreviousOption ());
-    d->m_actionNextToolOptionGroup1->setEnabled (enable &&
+    m_actionNextToolOptionGroup1->setEnabled (enable &&
         m_toolToolBar->shownToolWidget (0) &&
         m_toolToolBar->shownToolWidget (0)->hasNextOption ());
 
-    d->m_actionPrevToolOptionGroup2->setEnabled (enable &&
+    m_actionPrevToolOptionGroup2->setEnabled (enable &&
         m_toolToolBar->shownToolWidget (1) &&
         m_toolToolBar->shownToolWidget (1)->hasPreviousOption ());
-    d->m_actionNextToolOptionGroup2->setEnabled (enable &&
+    m_actionNextToolOptionGroup2->setEnabled (enable &&
         m_toolToolBar->shownToolWidget (1) &&
         m_toolToolBar->shownToolWidget (1)->hasNextOption ());
 }
@@ -394,7 +394,7 @@ void kpMainWindow::readLastTool ()
     KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupTools);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
-    d->m_lastToolNumber = cfg->readNumEntry (kpSettingLastTool, -1);
+    m_lastToolNumber = cfg->readNumEntry (kpSettingLastTool, -1);
 }
 
 
@@ -494,18 +494,18 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
 {
 #define DOC_RESIZE_COMPLETED()           \
 {                                        \
-    d->m_docResizeToBeCompleted = false; \
+    m_docResizeToBeCompleted = false;    \
     recalculateStatusBar ();             \
 }
 
     // Prevent statusbar updates
-    d->m_docResizeToBeCompleted = true;
+    m_docResizeToBeCompleted = true;
 
-    d->m_docResizeWidth = (size.width () > 0 ? size.width () : 1),
-    d->m_docResizeHeight = (size.height () > 0 ? size.height () : 1);
+    m_docResizeWidth = (size.width () > 0 ? size.width () : 1),
+    m_docResizeHeight = (size.height () > 0 ? size.height () : 1);
 
-    if (d->m_docResizeWidth == m_document->width () &&
-        d->m_docResizeHeight == m_document->height ())
+    if (m_docResizeWidth == m_document->width () &&
+        m_docResizeHeight == m_document->height ())
     {
         DOC_RESIZE_COMPLETED ();
         return;
@@ -520,7 +520,7 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
 
     if (kpTool::warnIfBigImageSize (m_document->width (),
             m_document->height (),
-            d->m_docResizeWidth, d->m_docResizeHeight,
+            m_docResizeWidth, m_docResizeHeight,
             i18n ("<qt><p>Resizing the image to"
                     " %1x%2 may take a substantial amount of memory."
                     " This can reduce system"
@@ -529,8 +529,8 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
 
                     "<p>Are you sure want to resize the"
                     " image?</p></qt>")
-                .arg (d->m_docResizeWidth)
-                .arg (d->m_docResizeHeight),
+                .arg (m_docResizeWidth)
+                .arg (m_docResizeHeight),
             i18n ("Resize Image?"),
             i18n ("R&esize Image"),
             this))
@@ -538,11 +538,11 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
         m_commandHistory->addCommand (
             new kpToolResizeScaleCommand (
                 false/*doc, not sel*/,
-                d->m_docResizeWidth, d->m_docResizeHeight,
+                m_docResizeWidth, m_docResizeHeight,
                 kpToolResizeScaleCommand::Resize,
                 this));
 
-        saveDefaultDocSize (QSize (d->m_docResizeWidth, d->m_docResizeHeight));
+        saveDefaultDocSize (QSize (m_docResizeWidth, m_docResizeHeight));
     }
 
 
@@ -556,11 +556,11 @@ void kpMainWindow::slotDocResizeMessageChanged (const QString &string)
 {
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotDocResizeMessageChanged(" << string
-               << ") docResizeToBeCompleted=" << d->m_docResizeToBeCompleted
+               << ") docResizeToBeCompleted=" << m_docResizeToBeCompleted
                << endl;
 #endif
 
-    if (d->m_docResizeToBeCompleted)
+    if (m_docResizeToBeCompleted)
         return;
 
     recalculateStatusBarMessage ();

@@ -118,7 +118,7 @@ void kpMainWindow::setupImageMenuActions ()
     m_actionClear = new KAction (i18n ("C&lear"), Qt::CTRL + Qt::SHIFT + Qt::Key_N,
         this, SLOT (slotClear ()), ac, "image_clear");
 
-    d->m_actionMoreEffects = new KAction (i18n ("&More Effects..."), Qt::CTRL + Qt::Key_M,
+    m_actionMoreEffects = new KAction (i18n ("&More Effects..."), Qt::CTRL + Qt::Key_M,
         this, SLOT (slotMoreEffects ()), ac, "image_more_effects");
 
     enableImageMenuDocumentActions (false);
@@ -137,7 +137,7 @@ void kpMainWindow::enableImageMenuDocumentActions (bool enable)
     m_actionConvertToGrayscale->setEnabled (enable);
     m_actionInvertColors->setEnabled (enable);
     m_actionClear->setEnabled (enable);
-    d->m_actionMoreEffects->setEnabled (enable);
+    m_actionMoreEffects->setEnabled (enable);
 
     m_imageMenuDocumentActionsEnabled = enable;
 }
@@ -187,7 +187,7 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
     m_actionConvertToGrayscale->setEnabled (enable);
     m_actionInvertColors->setEnabled (enable);
     m_actionClear->setEnabled (enable);
-    d->m_actionMoreEffects->setEnabled (enable);
+    m_actionMoreEffects->setEnabled (enable);
 }
 
 

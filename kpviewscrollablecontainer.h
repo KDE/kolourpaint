@@ -133,6 +133,7 @@ public:
     QSize newDocSize () const;
     bool haveMovedFromOriginalDocSize () const;
     QString statusMessage () const;
+    void clearStatusMessage ();
 
 protected:
     void connectGripSignals (kpGrip *grip);
@@ -173,8 +174,10 @@ protected slots:
 
     void slotGripStatusMessageChanged (const QString &string);
 
-    void recalculateGripStatusMessage ();
+public slots:
+    void recalculateStatusMessage ();
 
+protected slots:
     void slotContentsMoving (int x, int y);
     void slotContentsMoved ();
 

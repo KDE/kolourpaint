@@ -70,7 +70,7 @@ void kpMainWindow::setupFileMenuActions ()
     m_actionSave = KStdAction::save (this, SLOT (slotSave ()), ac);
     m_actionSaveAs = KStdAction::saveAs (this, SLOT (slotSaveAs ()), ac);
 
-    d->m_actionExport = new KAction (i18n ("E&xport..."), 0,
+    m_actionExport = new KAction (i18n ("E&xport..."), 0,
         this, SLOT (slotExport ()), ac, "file_export");
 
     //m_actionRevert = KStdAction::revert (this, SLOT (slotRevert ()), ac);
@@ -105,7 +105,7 @@ void kpMainWindow::enableFileMenuDocumentActions (bool enable)
     m_actionSave->setEnabled (enable);
     m_actionSaveAs->setEnabled (enable);
 
-    d->m_actionExport->setEnabled (enable);
+    m_actionExport->setEnabled (enable);
 
     // m_actionReload
 
@@ -299,7 +299,7 @@ KURL::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &
                                          bool allowMultipleURLs)
 {
     QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::askForURLs(allowMultiple="
                << allowMultipleURLs
                << ") mimeTypes=" << mimeTypes << endl;
@@ -400,7 +400,7 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
                                   bool *allowOverwritePrompt,
                                   bool *allowLossyPrompt)
 {
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::askForURL() startURL=" << startURL << endl;
     startSaveOptions.printDebug ("\tstartSaveOptions");
 #endif
@@ -444,7 +444,7 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
                               mimeTypes.findIndex (fdSaveOptions.mimeType ()) >= 0)
     if (!MIME_TYPE_IS_VALID ())
     {
-    #if DEBUG_KP_MAIN_WINDOW || 1
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tmimeType=" << fdSaveOptions.mimeType ()
                    << " not valid, get default" << endl;
     #endif
@@ -456,7 +456,7 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
 
         if (!MIME_TYPE_IS_VALID ())
         {
-        #if DEBUG_KP_MAIN_WINDOW || 1
+        #if DEBUG_KP_MAIN_WINDOW
             kdDebug () << "\tmimeType=" << fdSaveOptions.mimeType ()
                        << " not valid, get hardcoded" << endl;
         #endif
@@ -484,7 +484,7 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
 
         fdSaveOptions.setQuality (kpDocumentSaveOptions::defaultQuality (cfg));
     }
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     fdSaveOptions.printDebug ("\tcorrected saveOptions passed to fileDialog");
 #endif
 
@@ -499,7 +499,7 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
     saveOptionsWidget->setVisualParent (&fd);
     fd.setCaption (caption);
     fd.setOperationMode (KFileDialog::Saving);
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tmimeTypes=" << mimeTypes << endl;
 #endif
     fd.setMimeFilter (mimeTypes, fdSaveOptions.mimeType ());
@@ -513,16 +513,14 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
     if (fd.exec ())
     {
         kpDocumentSaveOptions newSaveOptions = saveOptionsWidget->documentSaveOptions ();
-    #if DEBUG_KP_MAIN_WINDOW || 1
+    #if DEBUG_KP_MAIN_WINDOW
         newSaveOptions.printDebug ("\tnewSaveOptions");
     #endif
 
         KConfigGroupSaver cfgGroupSaver (kapp->config (), forcedSaveOptionsGroup);
         KConfigBase *cfg = cfgGroupSaver.config ();
 
-        // TODO: correct comment
-        // user forced a mimetype (as opposed to selecting the same type as the current doc)
-        // - probably wants to use it in the future
+        // Save options user forced - probably want to use them in future
         kpDocumentSaveOptions::saveDefaultDifferences (cfg,
             fdSaveOptions, newSaveOptions);
         cfg->sync ();
@@ -538,7 +536,7 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
         if (allowOverwritePrompt)
         {
             *allowOverwritePrompt = shouldAllowOverwritePrompt;
-        #if DEBUG_KP_MAIN_WINDOW || 1
+        #if DEBUG_KP_MAIN_WINDOW
             kdDebug () << "\tallowOverwritePrompt=" << *allowOverwritePrompt << endl;
         #endif
         }
@@ -554,13 +552,13 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
                  newSaveOptions.mimeType () != startSaveOptions.mimeType () ||
                  newSaveOptions.colorDepth () != startSaveOptions.colorDepth () ||
                  newSaveOptions.dither () != startSaveOptions.dither ());
-        #if DEBUG_KP_MAIN_WINDOW || 1
+        #if DEBUG_KP_MAIN_WINDOW
             kdDebug () << "\tallowLossyPrompt=" << *allowLossyPrompt << endl;
         #endif
         }
 
 
-    #if DEBUG_KP_MAIN_WINDOW || 1
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tselectedURL=" << fd.selectedURL () << endl;
     #endif
         return fd.selectedURL ();
@@ -633,14 +631,14 @@ bool kpMainWindow::slotExport ()
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
     KURL chosenURL = askForSaveURL (i18n ("Export"),
-                                    d->m_lastExportURL.url (),
+                                    m_lastExportURL.url (),
                                     m_document->pixmapWithSelection (),
-                                    d->m_lastExportSaveOptions,
+                                    m_lastExportSaveOptions,
                                     *m_document->metaInfo (),
                                     kpSettingsGroupFileExport,
                                     false/*allow remote files*/,
                                     &chosenSaveOptions,
-                                    d->m_exportFirstTime,
+                                    m_exportFirstTime,
                                     &allowOverwritePrompt,
                                     &allowLossyPrompt);
 
@@ -663,10 +661,10 @@ bool kpMainWindow::slotExport ()
     addRecentURL (chosenURL);
 
 
-    d->m_lastExportURL = chosenURL;
-    d->m_lastExportSaveOptions = chosenSaveOptions;
+    m_lastExportURL = chosenURL;
+    m_lastExportSaveOptions = chosenSaveOptions;
 
-    d->m_exportFirstTime = false;
+    m_exportFirstTime = false;
 
     return true;
 }

@@ -177,7 +177,7 @@ void kpMainWindow::init ()
     m_settingSelectionTransparency = 0;
     m_settingTextStyle = 0;
 
-    d->m_docResizeToBeCompleted = false;
+    m_docResizeToBeCompleted = false;
 
 
     //
@@ -383,10 +383,10 @@ bool kpMainWindow::actionsSingleKeyTriggersEnabled () const
         return m_toolToolBar->toolsSingleKeyTriggersEnabled ();
     }
 
-    return (d->m_actionPrevToolOptionGroup1->singleKeyTriggersEnabled () ||
-            d->m_actionNextToolOptionGroup1->singleKeyTriggersEnabled () ||
-            d->m_actionPrevToolOptionGroup2->singleKeyTriggersEnabled () ||
-            d->m_actionNextToolOptionGroup2->singleKeyTriggersEnabled ());
+    return (m_actionPrevToolOptionGroup1->singleKeyTriggersEnabled () ||
+            m_actionNextToolOptionGroup1->singleKeyTriggersEnabled () ||
+            m_actionPrevToolOptionGroup2->singleKeyTriggersEnabled () ||
+            m_actionNextToolOptionGroup2->singleKeyTriggersEnabled ());
 }
 
 // public
@@ -401,10 +401,10 @@ void kpMainWindow::enableActionsSingleKeyTriggers (bool enable)
     if (m_toolToolBar)
         m_toolToolBar->enableToolsSingleKeyTriggers (enable);
 
-    d->m_actionPrevToolOptionGroup1->enableSingleKeyTriggers (enable);
-    d->m_actionNextToolOptionGroup1->enableSingleKeyTriggers (enable);
-    d->m_actionPrevToolOptionGroup2->enableSingleKeyTriggers (enable);
-    d->m_actionNextToolOptionGroup2->enableSingleKeyTriggers (enable);
+    m_actionPrevToolOptionGroup1->enableSingleKeyTriggers (enable);
+    m_actionNextToolOptionGroup1->enableSingleKeyTriggers (enable);
+    m_actionPrevToolOptionGroup2->enableSingleKeyTriggers (enable);
+    m_actionNextToolOptionGroup2->enableSingleKeyTriggers (enable);
 
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\ttime=" << timer.restart () << endl;
@@ -466,7 +466,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     m_actionCut->setEnabled (false);
     m_actionDelete->setEnabled (false);
     m_actionDeselect->setEnabled (false);
-    d->m_actionCopyToFile->setEnabled (false);
+    m_actionCopyToFile->setEnabled (false);
 
     delete m_viewManager; m_viewManager = 0;
 
@@ -479,13 +479,13 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     m_document = newDoc;
 
 
-    if (!d->m_lastCopyToURL.isEmpty ())
-        d->m_lastCopyToURL.setFileName (QString::null);
-    d->m_copyToFirstTime = true;
+    if (!m_lastCopyToURL.isEmpty ())
+        m_lastCopyToURL.setFileName (QString::null);
+    m_copyToFirstTime = true;
 
-    if (!d->m_lastExportURL.isEmpty ())
-        d->m_lastExportURL.setFileName (QString::null);
-    d->m_exportFirstTime = true;
+    if (!m_lastExportURL.isEmpty ())
+        m_lastExportURL.setFileName (QString::null);
+    m_exportFirstTime = true;
 
 
     // not a close operation?
@@ -536,7 +536,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         connect (m_document, SIGNAL (selectionEnabled (bool)),
                  m_actionDeselect, SLOT (setEnabled (bool)));
         connect (m_document, SIGNAL (selectionEnabled (bool)),
-                 d->m_actionCopyToFile, SLOT (setEnabled (bool)));
+                 m_actionCopyToFile, SLOT (setEnabled (bool)));
 
         // this code won't actually enable any actions at this stage
         // (fresh document) but better safe than sorry
@@ -544,7 +544,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         m_actionCut->setEnabled (m_document->selection ());
         m_actionDeselect->setEnabled (m_document->selection ());
         m_actionDelete->setEnabled (m_document->selection ());
-        d->m_actionCopyToFile->setEnabled (m_document->selection ());
+        m_actionCopyToFile->setEnabled (m_document->selection ());
 
         connect (m_document, SIGNAL (selectionEnabled (bool)),
                  this, SLOT (slotImageMenuUpdateDueToSelection ()));

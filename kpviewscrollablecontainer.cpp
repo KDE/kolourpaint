@@ -451,7 +451,7 @@ void kpViewScrollableContainer::connectGripSignals (kpGrip *grip)
              this, SLOT (slotGripStatusMessageChanged (const QString &)));
 
     connect (grip, SIGNAL (releasedAllButtons ()),
-             this, SLOT (recalculateGripStatusMessage ()));
+             this, SLOT (recalculateStatusMessage ()));
 }
 
 
@@ -472,6 +472,17 @@ bool kpViewScrollableContainer::haveMovedFromOriginalDocSize () const
 QString kpViewScrollableContainer::statusMessage () const
 {
     return m_gripStatusMessage;
+}
+
+// public
+void kpViewScrollableContainer::clearStatusMessage ()
+{
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 1
+    kdDebug () << "kpViewScrollableContainer::clearStatusMessage()" << endl;
+#endif
+    m_bottomRightGrip->setUserMessage (QString::null);
+    m_bottomGrip->setUserMessage (QString::null);
+    m_rightGrip->setUserMessage (QString::null);
 }
 
 
@@ -845,12 +856,15 @@ void kpViewScrollableContainer::slotGripStatusMessageChanged (const QString &str
 }
 
 
-// protected slot
-void kpViewScrollableContainer::recalculateGripStatusMessage ()
+// public slot
+void kpViewScrollableContainer::recalculateStatusMessage ()
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollabelContainer::recalculateGripStatusMessage()" << endl;
+    kdDebug () << "kpViewScrollabelContainer::recalculateStatusMessage()" << endl;
     kdDebug () << "\tQCursor::pos=" << QCursor::pos ()
+               << " global visibleRect="
+               << kpWidgetMapper::toGlobal (this,
+                      QRect (0, 0, visibleWidth (), visibleHeight ()))
                << " brGrip.hotRect=" << m_bottomRightGrip->hotRect (true)
                << " bGrip.hotRect=" << m_bottomGrip->hotRect (true)
                << " rGrip.hotRect=" << m_rightGrip->hotRect (true)
@@ -863,23 +877,36 @@ void kpViewScrollableContainer::recalculateGripStatusMessage ()
     //       grip.
     //
     // TODO: "Left drag..." to be consistent
-    if (m_bottomRightGrip->isShown () &&
-        m_bottomRightGrip->hotRect (true/*to global*/)
+    if (kpWidgetMapper::toGlobal (this,
+                                  QRect (0, 0, visibleWidth (), visibleHeight ()))
             .contains (QCursor::pos ()))
     {
-        m_bottomRightGrip->setUserMessage (i18n ("Drag the handle to resize the image."));
+        if (m_bottomRightGrip->isShown () &&
+            m_bottomRightGrip->hotRect (true/*to global*/)
+                .contains (QCursor::pos ()))
+        {
+            m_bottomRightGrip->setUserMessage (i18n ("Drag the handle to resize the image."));
+        }
+        else if (m_bottomGrip->isShown () &&
+                m_bottomGrip->hotRect (true/*to global*/)
+                    .contains (QCursor::pos ()))
+        {
+            m_bottomGrip->setUserMessage (i18n ("Drag the handle to resize the image."));
+        }
+        else if (m_rightGrip->isShown () &&
+                m_rightGrip->hotRect (true/*to global*/)
+                    .contains (QCursor::pos ()))
+        {
+            m_rightGrip->setUserMessage (i18n ("Drag the handle to resize the image."));
+        }
+        else
+        {
+            clearStatusMessage ();
+        }
     }
-    else if (m_bottomGrip->isShown () &&
-             m_bottomGrip->hotRect (true/*to global*/)
-                 .contains (QCursor::pos ()))
+    else
     {
-        m_bottomGrip->setUserMessage (i18n ("Drag the handle to resize the image."));
-    }
-    else if (m_rightGrip->isShown () &&
-             m_rightGrip->hotRect (true/*to global*/)
-                 .contains (QCursor::pos ()))
-    {
-        m_rightGrip->setUserMessage (i18n ("Drag the handle to resize the image."));
+        clearStatusMessage ();
     }
 }
 
@@ -1030,7 +1057,7 @@ void kpViewScrollableContainer::updateGrips ()
         resizeContents (0, 0);
     }
 
-    recalculateGripStatusMessage ();
+    recalculateStatusMessage ();
 }
 
 // protected slot

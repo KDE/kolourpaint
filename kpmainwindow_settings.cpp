@@ -56,8 +56,8 @@ void kpMainWindow::setupSettingsMenuActions ()
     createStandardStatusBarAction ();
 
 
-    d->m_actionFullScreen = KStdAction::fullScreen (this, SLOT (slotFullScreen ()), ac,
-                                                    this/*window*/);
+    m_actionFullScreen = KStdAction::fullScreen (this, SLOT (slotFullScreen ()), ac,
+                                                 this/*window*/);
 
 
     m_actionShowPath = new KToggleAction (i18n ("Show &Path"), 0,
@@ -83,7 +83,7 @@ void kpMainWindow::enableSettingsMenuDocumentActions (bool /*enable*/)
 // private slot
 void kpMainWindow::slotFullScreen ()
 {
-    if (d->m_actionFullScreen->isChecked ())
+    if (m_actionFullScreen->isChecked ())
         showFullScreen ();
     else
         showNormal ();
@@ -135,7 +135,7 @@ void kpMainWindow::slotKeyBindings ()
     if (singleKeyTriggersDisabled)
         enableActionsSingleKeyTriggers (true);
 
-    
+
     if (KKeyDialog::configure (actionCollection (), this))
     {
     #if DEBUG_KP_MAIN_WINDOW

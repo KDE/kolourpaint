@@ -43,6 +43,7 @@
 
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
+#include <kpdocumentmetainfo.h>
 #include <kpdocumentsaveoptions.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
@@ -86,7 +87,7 @@ void kpMainWindow::setupEditMenuActions ()
     m_actionCut = KStdAction::cut (this, SLOT (slotCut ()), ac);
     m_actionCopy = KStdAction::copy (this, SLOT (slotCopy ()), ac);
     m_actionPaste = KStdAction::paste (this, SLOT (slotPaste ()), ac);
-    d->m_actionPasteInNewWindow = new KAction (i18n ("Paste in &New Window"),
+    m_actionPasteInNewWindow = new KAction (i18n ("Paste in &New Window"),
         Qt::CTRL + Qt::SHIFT + Qt::Key_V,
         this, SLOT (slotPasteInNewWindow ()), ac, "edit_paste_in_new_window");
 
@@ -98,9 +99,9 @@ void kpMainWindow::setupEditMenuActions ()
     m_actionDeselect = KStdAction::deselect (this, SLOT (slotDeselect ()), ac);
 
 
-    d->m_actionCopyToFile = new KAction (i18n ("C&opy to File..."), 0,
+    m_actionCopyToFile = new KAction (i18n ("C&opy to File..."), 0,
         this, SLOT (slotCopyToFile ()), ac, "edit_copy_to_file");
-    d->m_actionPasteFromFile = new KAction (i18n ("Paste &From File..."), 0,
+    m_actionPasteFromFile = new KAction (i18n ("Paste &From File..."), 0,
         this, SLOT (slotPasteFromFile ()), ac, "edit_paste_from_file");
 
 
@@ -130,7 +131,7 @@ void kpMainWindow::enableEditMenuDocumentActions (bool enable)
     m_editMenuDocumentActionsEnabled = enable;
 
     // m_actionCopyToFile
-    d->m_actionPasteFromFile->setEnabled (enable);
+    m_actionPasteFromFile->setEnabled (enable);
 }
 
 
@@ -226,7 +227,7 @@ void kpMainWindow::slotEnablePaste ()
     #endif
     }
 
-    d->m_actionPasteInNewWindow->setEnabled (shouldEnable);
+    m_actionPasteInNewWindow->setEnabled (shouldEnable);
     m_actionPaste->setEnabled (shouldEnable);
 }
 
@@ -765,20 +766,37 @@ void kpMainWindow::slotCopyToFile ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    // TODO: should we really use the doc's metaInfo when saving just part of
-    //       it - the selection?
+
+    if (!m_document->selection ())
+        return;
+
+    kpSelection sel = *m_document->selection ();
+
+    QPixmap pixmapToSave;
+
+    if (!sel.pixmap ())
+    {
+        // Not a floating selection - user has just selected a region;
+        // haven't pulled it off yet so probably don't expect and can't
+        // visualise selection transparency so give opaque, not transparent
+        // pixmap.
+        pixmapToSave = m_document->getSelectedPixmap ();
+    }
+    else
+        pixmapToSave = sel.transparentPixmap ();
+
 
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
     KURL chosenURL = askForSaveURL (i18n ("Copy to File"),
-                                    d->m_lastCopyToURL.url (),
-                                    m_document->getSelectedPixmap (),
-                                    d->m_lastCopyToSaveOptions,
-                                    *m_document->metaInfo (),
+                                    m_lastCopyToURL.url (),
+                                    pixmapToSave,
+                                    m_lastCopyToSaveOptions,
+                                    kpDocumentMetaInfo (),
                                     kpSettingsGroupEditCopyTo,
                                     false/*allow remote files*/,
                                     &chosenSaveOptions,
-                                    d->m_copyToFirstTime,
+                                    m_copyToFirstTime,
                                     &allowOverwritePrompt,
                                     &allowLossyPrompt);
 
@@ -786,9 +804,9 @@ void kpMainWindow::slotCopyToFile ()
         return;
 
 
-    if (!kpDocument::savePixmapToFile (m_document->getSelectedPixmap (),
+    if (!kpDocument::savePixmapToFile (pixmapToSave,
                                        chosenURL,
-                                       chosenSaveOptions, *m_document->metaInfo (),
+                                       chosenSaveOptions, kpDocumentMetaInfo (),
                                        allowOverwritePrompt,
                                        allowLossyPrompt,
                                        this))
@@ -800,10 +818,10 @@ void kpMainWindow::slotCopyToFile ()
     addRecentURL (chosenURL);
 
 
-    d->m_lastCopyToURL = chosenURL;
-    d->m_lastCopyToSaveOptions = chosenSaveOptions;
+    m_lastCopyToURL = chosenURL;
+    m_lastCopyToSaveOptions = chosenSaveOptions;
 
-    d->m_copyToFirstTime = false;
+    m_copyToFirstTime = false;
 }
 
 // private slot
@@ -818,14 +836,14 @@ void kpMainWindow::slotPasteFromFile ()
 
 
     KURL::List urls = askForOpenURLs (i18n ("Paste From File"),
-                                      d->m_lastPasteFromURL.url (),
+                                      m_lastPasteFromURL.url (),
                                       false/*only 1 URL*/);
 
     if (urls.count () != 1)
         return;
 
     KURL url = urls.first ();
-    d->m_lastPasteFromURL = url;
+    m_lastPasteFromURL = url;
 
 
     QPixmap pixmap = kpDocument::getPixmapFromFile (url,
