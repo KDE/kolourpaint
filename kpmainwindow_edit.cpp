@@ -74,7 +74,8 @@ void kpMainWindow::setupEditMenuActions ()
     m_actionCut = KStdAction::cut (this, SLOT (slotCut ()), ac);
     m_actionCopy = KStdAction::copy (this, SLOT (slotCopy ()), ac);
     m_actionPaste = KStdAction::paste (this, SLOT (slotPaste ()), ac);
-    d->m_actionPasteInNewWindow = new KAction (i18n ("Paste in &New Window"), 0,
+    d->m_actionPasteInNewWindow = new KAction (i18n ("Paste in &New Window"),
+        Qt::CTRL + Qt::SHIFT + Qt::Key_V,
         this, SLOT (slotPasteInNewWindow ()), ac, "edit_paste_in_new_window");
 
     //m_actionDelete = KStdAction::clear (this, SLOT (slotDelete ()), ac);
