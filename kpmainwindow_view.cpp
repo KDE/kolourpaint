@@ -73,7 +73,7 @@ void kpMainWindow::setupViewMenuActions ()
 
 
     m_actionZoom = new KSelectAction (i18n ("&Zoom"), 0,
-        this, SLOT (slotZoom ()), actionCollection (), "view_zoom");
+        this, SLOT (slotZoom ()), actionCollection (), "view_zoom_to");
     m_actionZoom->setEditable (true);
 
     // create the zoom list for the 1st call to zoomTo() below

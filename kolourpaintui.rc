@@ -1,30 +1,54 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui name="kolourpaint" version="13">
+<gui name="kolourpaint" version="14">
 
 <MenuBar>
     <Menu name="file">
         <!-- <Action name="file_new_window" append="new_merge" /> -->
-        
+
         <Action name="file_export" append="save_merge" />
         <Separator append="save_merge" />
-        
+
         <Action name="file_set_as_wallpaper_centered" />
         <Action name="file_set_as_wallpaper_tiled" />
     </Menu>
 
     <Menu name="edit">
         <Action name="edit_paste_in_new_window" append="edit_paste_merge" />
-        
+
         <Action name="edit_copy_to_file" />
         <Action name="edit_paste_from_file" />
     </Menu>
-    
-    <Menu name="view">
+
+    <!-- SRC: ui_standards.rc v10 (KDE 3.3) -->
+    <Menu name="view" noMerge="1"><text>&amp;View</text>
+        <Action name="view_actual_size"/>
+        <Action name="view_fit_to_page"/>
+        <Action name="view_fit_to_width"/>
+        <Action name="view_fit_to_height"/>
+
+        <Separator />
+
+        <!-- <MergeLocal name="view_zoom_merge"/> -->
+        <Action name="view_zoom_in"/>
+        <Action name="view_zoom_out"/>
+
+        <!-- Changed from "view_zoom" to allow custom ordering of zoom
+             actions in "mainToolBar" (which has a hardcoded position for
+             "view_zoom").
+          -->
+        <Action name="view_zoom_to"/>
+
+        <WeakSeparator/>
+
+        <Action name="view_redisplay"/>
+
+        <Separator/>
+
+        <!-- <MergeLocal/> -->
         <Action name="view_show_grid" />
         <Action name="view_show_thumbnail" />
     </Menu>
 
-    <!-- SYNC: menu text with kpMainWindow::slotImageMenuUpdateDueToSelection() -->
     <Menu name="image"><text>&amp;Image</text>
         <Action name="image_crop" />
         <Action name="image_auto_crop" />
@@ -48,6 +72,12 @@
         <Action name="fullscreen" append="show_merge" />
     </Menu>
 </MenuBar>
+
+<ToolBar name="mainToolBar">
+    <Action name="view_zoom_in" />
+    <Action name="view_zoom_out" />
+    <Action name="view_zoom_to" />
+</ToolBar>
 
 <ToolBar name="textToolBar" fullWidth="false" position="top" hidden="true"><text>Text Toolbar</text>
     <Action name="text_font_family" />
