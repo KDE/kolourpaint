@@ -44,7 +44,6 @@
 #include <kpdefs.h>
 
 
-// TODO: 255 --> 256?
 const double kpColorSimilarityCube::colorCubeDiagonalDistance =
     sqrt (255 * 255 * 3);
 
