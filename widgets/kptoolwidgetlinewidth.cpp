@@ -33,7 +33,7 @@
 
 #include <kptoolwidgetlinewidth.h>
 
-static int lineWidths [] = {1, 2, 3, 4, 6, 8};
+static int lineWidths [] = {1, 2, 3, 5, 8};
 
 kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent)
     : kpToolWidgetBase (parent)
