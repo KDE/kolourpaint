@@ -201,6 +201,8 @@ kpColorCells::kpColorCells (QWidget *parent,
     : KColorCells (parent, rows, cols),
       m_mouseButton (-1)
 {
+    setName (name);
+
     setFixedSize (cols * 26, rows * 26);
     KColorCells::setShading (false);  // no 3D look
 
