@@ -25,7 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND 0
+#define DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND 1
 #define DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG 0
 
 
@@ -33,18 +33,26 @@
 
 #include <math.h>
 
+#include <qaccel.h>
 #include <qapplication.h>
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
 #include <qgroupbox.h>
-#include <kiconloader.h>
+#include <qhbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpoint.h>
-#include <qradiobutton.h>
+#include <qpointarray.h>
+#include <qpushbutton.h>
 #include <qrect.h>
 #include <qsize.h>
+#include <qtoolbutton.h>
+#include <qwhatsthis.h>
+#include <qwmatrix.h>
+
+#include <kcombobox.h>
 #include <kdebug.h>
+#include <kiconloader.h>
 #include <klocale.h>
 #include <knuminput.h>
 
@@ -67,7 +75,8 @@ kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
     : m_actOnSelection (actOnSelection),
       m_type (type),
       m_mainWindow (mainWindow),
-      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid)
+      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid),
+      m_oldSelection (0)
 {
     kpDocument *doc = document ();
 
@@ -79,6 +88,13 @@ kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
                             doc->selection ()->isText ());
 
     resize (newWidth, newHeight);
+
+    // If we have a selection _border_ (but not a floating selection),
+    // then scale the selection with the document
+    m_scaleSelectionWithImage = (!m_actOnSelection &&
+                                 (m_type == Scale || m_type == SmoothScale) &&
+                                 document ()->selection () &&
+                                 !document ()->selection ()->pixmap ());
 }
 
 // virtual
@@ -112,6 +128,7 @@ QString kpToolResizeScaleCommand::name () const
 
 kpToolResizeScaleCommand::~kpToolResizeScaleCommand ()
 {
+    delete m_oldSelection;
 }
 
 
@@ -163,6 +180,66 @@ void kpToolResizeScaleCommand::resize (int width, int height)
 kpDocument *kpToolResizeScaleCommand::document () const
 {
     return m_mainWindow ? m_mainWindow->document () : 0;
+}
+
+
+// public
+bool kpToolResizeScaleCommand::scaleSelectionWithImage () const
+{
+    return m_scaleSelectionWithImage;
+}
+
+
+// private
+void kpToolResizeScaleCommand::scaleSelectionRegionWithDocument ()
+{
+#if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
+    kdDebug () << "kpToolResizeScaleCommand::scaleSelectionRegionWithDocument"
+               << endl;
+#endif
+
+    if (!m_oldSelection)
+    {
+        kdError () << "kpToolResizeScaleCommand::scaleSelectionRegionWithDocument()"
+                   << " without old sel" << endl;
+    }
+
+    if (m_oldSelection->pixmap ())
+    {
+        kdError () << "kpToolResizeScaleCommand::scaleSelectionRegionWithDocument()"
+                   << " old sel has pixmap" << endl;
+        return;
+    }
+
+
+    const double horizScale = double (m_newWidth) / double (m_oldWidth);
+    const double vertScale = double (m_newHeight) / double (m_oldHeight);
+
+    const int newX = (int) (m_oldSelection->x () * horizScale);
+    const int newY = (int) (m_oldSelection->y () * vertScale);
+
+
+    QPointArray currentPoints = m_oldSelection->points ();
+    currentPoints.detach ();
+
+    currentPoints.translate (-currentPoints.boundingRect ().x (),
+                             -currentPoints.boundingRect ().y ());
+
+    // TODO: refactor into kpPixmapFX
+    QWMatrix scaleMatrix;
+    scaleMatrix.scale (horizScale, vertScale);
+    currentPoints = scaleMatrix.map (currentPoints);
+
+    currentPoints.translate (
+        -currentPoints.boundingRect ().x () + newX,
+        -currentPoints.boundingRect ().y () + newY);
+
+    document ()->setSelection (kpSelection (currentPoints, QPixmap (),
+                                            m_oldSelection->transparency ()));
+
+
+    if (m_mainWindow->tool ())
+        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
 }
 
 
@@ -243,20 +320,23 @@ void kpToolResizeScaleCommand::execute ()
                                                m_type == SmoothScale);
 
 
-        if (m_actOnSelection)
+        if (!m_oldSelection && document ()->selection ())
         {
             // Save sel border
-            m_oldSelection = *document ()->selection ();
-            m_oldSelection.setPixmap (QPixmap ());
+            m_oldSelection = new kpSelection (*document ()->selection ());
+            m_oldSelection->setPixmap (QPixmap ());
+        }
 
-            QRect newRect = QRect (m_oldSelection.x (), m_oldSelection.y (),
+        if (m_actOnSelection)
+        {
+            QRect newRect = QRect (m_oldSelection->x (), m_oldSelection->y (),
                                    newPixmap.width (), newPixmap.height ());
 
             // Not possible to retain non-rectangular selection borders on scale
             // (think about e.g. a 45 deg line as part of the border & 2x scale)
             document ()->setSelection (
                 kpSelection (kpSelection::Rectangle, newRect, newPixmap,
-                             m_oldSelection.transparency ()));
+                             m_oldSelection->transparency ()));
 
             if (m_mainWindow->tool ())
                 m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
@@ -264,6 +344,11 @@ void kpToolResizeScaleCommand::execute ()
         else
         {
             document ()->setPixmap (newPixmap);
+
+            if (m_scaleSelectionWithImage)
+            {
+                scaleSelectionRegionWithDocument ();
+            }
         }
 
 
@@ -352,7 +437,7 @@ void kpToolResizeScaleCommand::unexecute ()
 
         if (m_actOnSelection)
         {
-            kpSelection oldSelection = m_oldSelection;
+            kpSelection oldSelection = *m_oldSelection;
             oldSelection.setPixmap (oldPixmap);
             doc->setSelection (oldSelection);
 
@@ -360,7 +445,17 @@ void kpToolResizeScaleCommand::unexecute ()
                 m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
         }
         else
+        {
             doc->setPixmap (oldPixmap);
+
+            if (m_scaleSelectionWithImage)
+            {
+                doc->setSelection (*m_oldSelection);
+
+                if (m_mainWindow->tool ())
+                    m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+            }
+        }
 
 
         QApplication::restoreOverrideCursor ();
@@ -399,36 +494,15 @@ double kpToolResizeScaleDialog::s_lastPercentWidth = 100,
 bool kpToolResizeScaleDialog::s_lastKeepAspectRatio = false;
 
 
-kpToolResizeScaleDialog::kpToolResizeScaleDialog (bool actOnSelection,
-                                                  kpMainWindow *mainWindow)
+kpToolResizeScaleDialog::kpToolResizeScaleDialog (kpMainWindow *mainWindow)
     : KDialogBase ((QWidget *) mainWindow,
                    0/*name*/,
                    true/*modal*/,
-                   QString::null/*caption*/,
+                   i18n ("Resize / Scale")/*caption*/,
                    KDialogBase::Ok | KDialogBase::Cancel),
-      m_actOnSelection (actOnSelection),
+      m_mainWindow (mainWindow),
       m_ignoreKeepAspectRatio (0)
 {
-    kpDocument *document = mainWindow->document ();
-    m_oldWidth = document->width (actOnSelection);
-    m_oldHeight = document->height (actOnSelection);
-
-    m_actOnTextSelection = (m_actOnSelection &&
-                            document && document->selection () &&
-                            document->selection ()->isText ());
-
-
-    if (m_actOnSelection)
-    {
-        if (m_actOnTextSelection)
-            setCaption (i18n ("Resize Text Box"));
-        else
-            setCaption (i18n ("Scale Selection"));
-    }
-    else
-        setCaption (i18n ("Resize / Scale Image"));
-
-
     // Using the percentage from last time become too confusing so disable for now
     s_lastPercentWidth = 100, s_lastPercentHeight = 100;
 
@@ -437,14 +511,18 @@ kpToolResizeScaleDialog::kpToolResizeScaleDialog (bool actOnSelection,
     setMainWidget (baseWidget);
 
 
+    createActOnBox (baseWidget);
     createOperationGroupBox (baseWidget);
     createDimensionsGroupBox (baseWidget);
 
 
     QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget, marginHint (), spacingHint ());
+    baseLayout->addWidget (m_actOnBox);
     baseLayout->addWidget (m_operationGroupBox);
     baseLayout->addWidget (m_dimensionsGroupBox);
 
+
+    slotActOnChanged ();
 
     //enableButtonOK (!isNoOp ());
 }
@@ -455,83 +533,146 @@ kpToolResizeScaleDialog::~kpToolResizeScaleDialog ()
 
 
 // private
-void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
+kpDocument *kpToolResizeScaleDialog::document () const
 {
-    m_operationGroupBox = new QGroupBox (i18n ("Operation"), baseWidget);
+    return m_mainWindow ? m_mainWindow->document () : 0;
+}
 
-    QLabel *resizePixmapLabel = new QLabel (m_operationGroupBox);
-    resizePixmapLabel->setPixmap (UserIcon ("resize"));
-
-    QLabel *scalePixmapLabel = new QLabel (m_operationGroupBox);
-    scalePixmapLabel->setPixmap (UserIcon ("scale"));
-
-    QLabel *smoothScalePixmapLabel = new QLabel (m_operationGroupBox);
-    smoothScalePixmapLabel->setPixmap (UserIcon ("smooth_scale"));
+// private
+kpSelection *kpToolResizeScaleDialog::selection () const
+{
+    return document () ? document ()->selection () : 0;
+}
 
 
-    m_resizeRadioButton = new QRadioButton (i18n ("&Resize"), m_operationGroupBox);
-    m_scaleRadioButton = new QRadioButton (i18n ("&Scale"), m_operationGroupBox);
-    m_smoothScaleRadioButton = new QRadioButton (i18n ("S&mooth scale"), m_operationGroupBox);
+// private
+void kpToolResizeScaleDialog::createActOnBox (QWidget *baseWidget)
+{
+    m_actOnBox = new QHBox (baseWidget);
+    m_actOnBox->setSpacing (spacingHint () * 2);
 
-    if (m_actOnSelection)
+
+    m_actOnLabel = new QLabel (i18n ("Ac&t on:"), m_actOnBox);
+    m_actOnCombo = new KComboBox (m_actOnBox);
+
+
+    m_actOnLabel->setBuddy (m_actOnCombo);
+
+    m_actOnCombo->insertItem (i18n ("Entire Image"), Image);
+    if (selection ())
     {
-        if (m_actOnTextSelection)
-        {
-            m_resizeRadioButton->setChecked (true);
+        QString selName = i18n ("Selection");
 
-            m_operationGroupBox->setEnabled (!m_actOnSelection);
-        }
-        else
-        {
-            if (s_lastType == kpToolResizeScaleCommand::Scale)
-                m_scaleRadioButton->setChecked (true);
-            else
-                m_smoothScaleRadioButton->setChecked (true);
+        if (selection ()->isText ())
+            selName = i18n ("Text Box");
 
-            resizePixmapLabel->setEnabled (false);
-            m_resizeRadioButton->setEnabled (false);
-        }
+        m_actOnCombo->insertItem (selName, Selection);
+        m_actOnCombo->setCurrentItem (Selection);
     }
     else
     {
-        if (s_lastType == kpToolResizeScaleCommand::Resize)
-            m_resizeRadioButton->setChecked (true);
-        else if (s_lastType == kpToolResizeScaleCommand::Scale)
-            m_scaleRadioButton->setChecked (true);
-        else
-            m_smoothScaleRadioButton->setChecked (true);
+        m_actOnLabel->setEnabled (false);
+        m_actOnCombo->setEnabled (false);
     }
 
 
+    m_actOnBox->setStretchFactor (m_actOnCombo, 1);
+
+
+    connect (m_actOnCombo, SIGNAL (activated (int)),
+             this, SLOT (slotActOnChanged ()));
+}
+
+static void toolButtonSetPixmap (QToolButton *button,
+                                 const QString &iconSet,
+                                 const QString &name)
+{
+    button->setIconSet (UserIconSet (iconSet));
+    button->setUsesTextLabel (true);
+    button->setTextLabel (name, false/*no tooltip*/);
+    button->setAccel (QAccel::shortcutKey (name));
+    button->setFocusPolicy (QWidget::StrongFocus);
+    button->setToggleButton (true);
+}
+
+// private
+void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
+{
+    m_operationGroupBox = new QGroupBox (i18n ("Operation"), baseWidget);
+    QWhatsThis::add (m_operationGroupBox,
+        i18n ("<qt>"
+              "<ul>"
+                  "<li><b>Resize</b>: The picture's size will be"
+                  " increased"
+                  " by creating new areas to the right and/or the bottom"
+                  " (filled in with the background color) or"
+                  " decreased by cutting"
+                  " it at the right and/or the bottom."
+
+                  "<li><b>Scale</b>: The picture will be expanded"
+                  " by duplicating pixels or squashed by dropping pixels."
+
+                  "<li><b>Smooth Scale</b>: This is the same as"
+                  " <i>Scale</i> except that it blends neighbouring"
+                  " pixels to produce a smoother looking picture.</li>"
+              "</ul>"
+              "</qt>"));
+
+    m_resizeButton = new QToolButton (m_operationGroupBox);
+    toolButtonSetPixmap (m_resizeButton,
+                         QString::fromLatin1 ("resize"),
+                         i18n ("&Resize"));
+
+    m_scaleButton = new QToolButton (m_operationGroupBox);
+    toolButtonSetPixmap (m_scaleButton,
+                         QString::fromLatin1 ("scale"),
+                         i18n ("&Scale"));
+
+    m_smoothScaleButton = new QToolButton (m_operationGroupBox);
+    toolButtonSetPixmap (m_smoothScaleButton,
+                         QString::fromLatin1 ("smooth_scale"),
+                         i18n ("S&mooth scale"));
+
+
+    //m_resizeLabel = new QLabel (i18n ("&Resize"), m_operationGroupBox);
+    //m_scaleLabel = new QLabel (i18n ("&Scale"), m_operationGroupBox);
+    //m_smoothScaleLabel = new QLabel (i18n ("S&mooth scale"), m_operationGroupBox);
+
+
+    //m_resizeLabel->setAlignment (m_resizeLabel->alignment () | Qt::ShowPrefix);
+    //m_scaleLabel->setAlignment (m_scaleLabel->alignment () | Qt::ShowPrefix);
+    //m_smoothScaleLabel->setAlignment (m_smoothScaleLabel->alignment () | Qt::ShowPrefix);
+
 
     QButtonGroup *resizeScaleButtonGroup = new QButtonGroup (baseWidget);
+    resizeScaleButtonGroup->setExclusive (true);
     resizeScaleButtonGroup->hide ();
 
-    resizeScaleButtonGroup->insert (m_resizeRadioButton);
-    resizeScaleButtonGroup->insert (m_scaleRadioButton);
-    resizeScaleButtonGroup->insert (m_smoothScaleRadioButton);
+    resizeScaleButtonGroup->insert (m_resizeButton);
+    resizeScaleButtonGroup->insert (m_scaleButton);
+    resizeScaleButtonGroup->insert (m_smoothScaleButton);
 
 
     QGridLayout *operationLayout = new QGridLayout (m_operationGroupBox,
-                                                    2, 2,
+                                                    1, 2,
                                                     marginHint () * 2/*don't overlap groupbox title*/,
-                                                    spacingHint () * 4/*more spacing between pics*/);
+                                                    spacingHint ());
 
-    operationLayout->addWidget (resizePixmapLabel, 0, 0, Qt::AlignCenter);
-    operationLayout->addWidget (m_resizeRadioButton, 1, 0, Qt::AlignCenter);
+    operationLayout->addWidget (m_resizeButton, 0, 0, Qt::AlignCenter);
+    //operationLayout->addWidget (m_resizeLabel, 1, 0, Qt::AlignCenter);
 
-    operationLayout->addWidget (scalePixmapLabel, 0, 1, Qt::AlignCenter);
-    operationLayout->addWidget (m_scaleRadioButton, 1, 1, Qt::AlignCenter);
+    operationLayout->addWidget (m_scaleButton, 0, 1, Qt::AlignCenter);
+    //operationLayout->addWidget (m_scaleLabel, 1, 1, Qt::AlignCenter);
 
-    operationLayout->addWidget (smoothScalePixmapLabel, 0, 2, Qt::AlignCenter);
-    operationLayout->addWidget (m_smoothScaleRadioButton, 1, 2, Qt::AlignCenter);
+    operationLayout->addWidget (m_smoothScaleButton, 0, 2, Qt::AlignCenter);
+    //operationLayout->addWidget (m_smoothScaleLabel, 1, 2, Qt::AlignCenter);
 
 
-    connect (m_resizeRadioButton, SIGNAL (toggled (bool)),
+    connect (m_resizeButton, SIGNAL (toggled (bool)),
              this, SLOT (slotTypeChanged ()));
-    connect (m_scaleRadioButton, SIGNAL (toggled (bool)),
+    connect (m_scaleButton, SIGNAL (toggled (bool)),
              this, SLOT (slotTypeChanged ()));
-    connect (m_smoothScaleRadioButton, SIGNAL (toggled (bool)),
+    connect (m_smoothScaleButton, SIGNAL (toggled (bool)),
              this, SLOT (slotTypeChanged ()));
 }
 
@@ -546,20 +687,18 @@ void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
     heightLabel->setAlignment (heightLabel->alignment () | Qt::AlignHCenter);
 
     QLabel *originalLabel = new QLabel (i18n ("Original:"), m_dimensionsGroupBox);
-    KIntNumInput *originalWidthInput = new KIntNumInput (m_oldWidth, m_dimensionsGroupBox);
+    m_originalWidthInput = new KIntNumInput (
+        document ()->width ((bool) selection ()),
+        m_dimensionsGroupBox);
     QLabel *xLabel0 = new QLabel (i18n ("x"), m_dimensionsGroupBox);
-    KIntNumInput *originalHeightInput = new KIntNumInput (m_oldHeight, m_dimensionsGroupBox);
+    m_originalHeightInput = new KIntNumInput (
+        document ()->height ((bool) selection ()),
+        m_dimensionsGroupBox);
 
     QLabel *newLabel = new QLabel (i18n ("&New:"), m_dimensionsGroupBox);
     m_newWidthInput = new KIntNumInput (m_dimensionsGroupBox);
-    m_newWidthInput->setMinValue (!m_actOnTextSelection ?
-        1 :
-        kpSelection::minimumWidthForTextStyle (((kpMainWindow *) parent ())->textStyle ()));
     QLabel *xLabel1 = new QLabel (i18n ("x"), m_dimensionsGroupBox);
     m_newHeightInput = new KIntNumInput (m_dimensionsGroupBox);
-    m_newHeightInput->setMinValue (!m_actOnTextSelection ?
-        1 :
-        kpSelection::minimumHeightForTextStyle (((kpMainWindow *) parent ())->textStyle ()));
 
     QLabel *percentLabel = new QLabel (i18n ("&Percent:"), m_dimensionsGroupBox);
     m_percentWidthInput = new KDoubleNumInput (0.01/*lower*/, 1000000/*upper*/,
@@ -578,9 +717,9 @@ void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
                                                m_dimensionsGroupBox);
 
 
-    originalWidthInput->setEnabled (false);
-    originalHeightInput->setEnabled (false);
-    originalLabel->setBuddy (originalWidthInput);
+    m_originalWidthInput->setEnabled (false);
+    m_originalHeightInput->setEnabled (false);
+    originalLabel->setBuddy (m_originalWidthInput);
     newLabel->setBuddy (m_newWidthInput);
     m_percentWidthInput->setValue (s_lastPercentWidth);
     m_percentHeightInput->setValue (s_lastPercentHeight);
@@ -598,9 +737,9 @@ void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
     dimensionsLayout->addWidget (heightLabel, 0, 3);
 
     dimensionsLayout->addWidget (originalLabel, 1, 0);
-    dimensionsLayout->addWidget (originalWidthInput, 1, 1);
+    dimensionsLayout->addWidget (m_originalWidthInput, 1, 1);
     dimensionsLayout->addWidget (xLabel0, 1, 2);
-    dimensionsLayout->addWidget (originalHeightInput, 1, 3);
+    dimensionsLayout->addWidget (m_originalHeightInput, 1, 3);
 
     dimensionsLayout->addWidget (newLabel, 2, 0);
     dimensionsLayout->addWidget (m_newWidthInput, 2, 1);
@@ -627,13 +766,8 @@ void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
     connect (m_percentHeightInput, SIGNAL (valueChanged (double)),
              this, SLOT (slotPercentHeightChanged (double)));
 
-    IGNORE_KEEP_ASPECT_RATIO (slotPercentWidthChanged (m_percentWidthInput->value ()));
-    IGNORE_KEEP_ASPECT_RATIO (slotPercentHeightChanged (m_percentHeightInput->value ()));
-
     connect (m_keepAspectRatioCheckBox, SIGNAL (toggled (bool)),
              this, SLOT (slotKeepAspectRatioToggled (bool)));
-
-    slotKeepAspectRatioToggled (m_keepAspectRatioCheckBox->isChecked ());
 }
 
 
@@ -642,10 +776,10 @@ void kpToolResizeScaleDialog::widthFitHeightToAspectRatio ()
 {
     if (m_keepAspectRatioCheckBox->isChecked () && !m_ignoreKeepAspectRatio)
     {
-        // width / height = m_oldWidth / m_oldHeight
-        // height = width * m_oldHeight / m_oldWidth
-        const int newHeight = qRound (double (imageWidth ()) * double (m_oldHeight)
-                                      / double (m_oldWidth));
+        // width / height = oldWidth / oldHeight
+        // height = width * oldHeight / oldWidth
+        const int newHeight = qRound (double (imageWidth ()) * double (originalHeight ())
+                                      / double (originalWidth ()));
         IGNORE_KEEP_ASPECT_RATIO (m_newHeightInput->setValue (newHeight));
     }
 }
@@ -655,12 +789,109 @@ void kpToolResizeScaleDialog::heightFitWidthToAspectRatio ()
 {
     if (m_keepAspectRatioCheckBox->isChecked () && !m_ignoreKeepAspectRatio)
     {
-        // width / height = m_oldWidth / m_oldHeight
-        // width = height * m_oldWidth / m_oldHeight
-        const int newWidth = qRound (double (imageHeight ()) * double (m_oldWidth)
-                                     / double (m_oldHeight));
+        // width / height = oldWidth / oldHeight
+        // width = height * oldWidth / oldHeight
+        const int newWidth = qRound (double (imageHeight ()) * double (originalWidth ())
+                                     / double (originalHeight ()));
         IGNORE_KEEP_ASPECT_RATIO (m_newWidthInput->setValue (newWidth));
     }
+}
+
+
+// private
+bool kpToolResizeScaleDialog::resizeEnabled () const
+{
+    return (!actOnSelection () ||
+            (actOnSelection () && selection ()->isText ()));
+}
+
+// private
+bool kpToolResizeScaleDialog::scaleEnabled () const
+{
+    return (!(actOnSelection () && selection ()->isText ()));
+}
+
+// private
+bool kpToolResizeScaleDialog::smoothScaleEnabled () const
+{
+    return scaleEnabled ();
+}
+
+
+// public slot
+void kpToolResizeScaleDialog::slotActOnChanged ()
+{
+#if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
+    kdDebug () << "kpToolResizeScaleDialog::slotActOnChanged()" << endl;
+#endif
+
+    m_resizeButton->setEnabled (resizeEnabled ());
+    //m_resizeLabel->setEnabled (resizeEnabled ());
+
+    m_scaleButton->setEnabled (scaleEnabled ());
+    //m_scaleLabel->setEnabled (scaleEnabled ());
+
+    m_smoothScaleButton->setEnabled (smoothScaleEnabled ());
+    //m_smoothScaleLabel->setEnabled (smoothScaleEnabled ());
+
+
+    // TODO: somehow share logic with (resize|*scale)Enabled()
+    if (actOnSelection ())
+    {
+        if (selection ()->isText ())
+        {
+            m_resizeButton->setOn (true);
+        }
+        else
+        {
+            if (s_lastType == kpToolResizeScaleCommand::Scale)
+                m_scaleButton->setOn (true);
+            else
+                m_smoothScaleButton->setOn (true);
+        }
+    }
+    else
+    {
+        if (s_lastType == kpToolResizeScaleCommand::Resize)
+            m_resizeButton->setOn (true);
+        else if (s_lastType == kpToolResizeScaleCommand::Scale)
+            m_scaleButton->setOn (true);
+        else
+            m_smoothScaleButton->setOn (true);
+    }
+
+
+    m_originalWidthInput->setValue (originalWidth ());
+    m_originalHeightInput->setValue (originalHeight ());
+
+
+    m_newWidthInput->blockSignals (true);
+    m_newHeightInput->blockSignals (true);
+
+    if (actOnSelection () && selection ()->isText ())
+    {
+        m_newWidthInput->setMinValue (
+            kpSelection::minimumWidthForTextStyle (
+                ((kpMainWindow *) parent ())->textStyle ()));
+
+        m_newHeightInput->setMinValue (
+            kpSelection::minimumHeightForTextStyle (
+                ((kpMainWindow *) parent ())->textStyle ())));
+    }
+    else
+    {
+        m_newWidthInput->setMinValue (1);
+        m_newHeightInput->setMinValue (1);
+    }
+
+    m_newWidthInput->blockSignals (false);
+    m_newHeightInput->blockSignals (false);
+
+
+    IGNORE_KEEP_ASPECT_RATIO (slotPercentWidthChanged (m_percentWidthInput->value ()));
+    IGNORE_KEEP_ASPECT_RATIO (slotPercentHeightChanged (m_percentHeightInput->value ()));
+
+    slotKeepAspectRatioToggled (m_keepAspectRatioCheckBox->isChecked ());
 }
 
 
@@ -677,7 +908,7 @@ void kpToolResizeScaleDialog::slotWidthChanged (int width)
     kdDebug () << "kpToolResizeScaleDialog::slotWidthChanged("
                << width << ")" << endl;
 #endif
-    const double newPercentWidth = double (width) * 100 / double (m_oldWidth);
+    const double newPercentWidth = double (width) * 100 / double (originalWidth ());
 
     SET_VALUE_WITHOUT_SIGNAL_EMISSION (m_percentWidthInput, newPercentWidth);
 
@@ -694,7 +925,7 @@ void kpToolResizeScaleDialog::slotHeightChanged (int height)
     kdDebug () << "kpToolResizeScaleDialog::slotHeightChanged("
                << height << ")" << endl;
 #endif
-    const double newPercentHeight = double (height) * 100 / double (m_oldHeight);
+    const double newPercentHeight = double (height) * 100 / double (originalHeight ());
 
     SET_VALUE_WITHOUT_SIGNAL_EMISSION (m_percentHeightInput, newPercentHeight);
 
@@ -713,7 +944,7 @@ void kpToolResizeScaleDialog::slotPercentWidthChanged (double percentWidth)
 #endif
 
     SET_VALUE_WITHOUT_SIGNAL_EMISSION (m_newWidthInput,
-                                       qRound (percentWidth * m_oldWidth / 100.0));
+                                       qRound (percentWidth * originalWidth () / 100.0));
 
     widthFitHeightToAspectRatio ();
 
@@ -730,7 +961,7 @@ void kpToolResizeScaleDialog::slotPercentHeightChanged (double percentHeight)
 #endif
 
     SET_VALUE_WITHOUT_SIGNAL_EMISSION (m_newHeightInput,
-                                       qRound (percentHeight * m_oldHeight / 100.0));
+                                       qRound (percentHeight * originalHeight () / 100.0));
 
     heightFitWidthToAspectRatio ();
 
@@ -755,6 +986,19 @@ void kpToolResizeScaleDialog::slotKeepAspectRatioToggled (bool on)
 #undef SET_VALUE_WITHOUT_SIGNAL_EMISSION
 
 
+// private
+int kpToolResizeScaleDialog::originalWidth () const
+{
+    return document ()->width (actOnSelection ());
+}
+
+// private
+int kpToolResizeScaleDialog::originalHeight () const
+{
+    return document ()->height (actOnSelection ());
+}
+
+
 // public
 int kpToolResizeScaleDialog::imageWidth () const
 {
@@ -768,11 +1012,17 @@ int kpToolResizeScaleDialog::imageHeight () const
 }
 
 // public
+bool kpToolResizeScaleDialog::actOnSelection () const
+{
+    return (m_actOnCombo->currentItem () == Selection);
+}
+
+// public
 kpToolResizeScaleCommand::Type kpToolResizeScaleDialog::type () const
 {
-    if (m_resizeRadioButton->isChecked ())
+    if (m_resizeButton->isOn ())
         return kpToolResizeScaleCommand::Resize;
-    else if (m_scaleRadioButton->isChecked ())
+    else if (m_scaleButton->isOn ())
         return kpToolResizeScaleCommand::Scale;
     else
         return kpToolResizeScaleCommand::SmoothScale;
@@ -781,7 +1031,8 @@ kpToolResizeScaleCommand::Type kpToolResizeScaleDialog::type () const
 // public
 bool kpToolResizeScaleDialog::isNoOp () const
 {
-    return (imageWidth () == m_oldWidth && imageHeight () == m_oldHeight);
+    return (imageWidth () == originalWidth () &&
+            imageHeight () == originalHeight ());
 }
 
 

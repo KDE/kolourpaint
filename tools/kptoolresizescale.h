@@ -39,10 +39,13 @@
 
 class QCheckBox;
 class QGroupBox;
+class QHBox;
 class QRadioButton;
 class QSize;
 class QString;
+class QToolButton;
 
+class KComboBox;
 class KDoubleNumInput;
 class KIntNumInput;
 
@@ -75,8 +78,14 @@ public:
     QSize newSize () const;
     virtual void resize (int width, int height);
 
+public:
+    bool scaleSelectionWithImage () const;
+
 protected:
     kpDocument *document () const;
+
+private:
+    void scaleSelectionRegionWithDocument ();
 
 public:
     virtual void execute ();
@@ -87,13 +96,14 @@ protected:
     int m_newWidth, m_newHeight;
     Type m_type;
     bool m_isLosslessScale;
+    bool m_scaleSelectionWithImage;
     kpMainWindow *m_mainWindow;
     kpColor m_backgroundColor;
 
     int m_oldWidth, m_oldHeight;
     bool m_actOnTextSelection;
     QPixmap m_oldPixmap, m_oldRightPixmap, m_oldBottomPixmap;
-    kpSelection m_oldSelection;
+    kpSelection *m_oldSelection;
 };
 
 class kpToolResizeScaleDialog : public KDialogBase
@@ -101,9 +111,13 @@ class kpToolResizeScaleDialog : public KDialogBase
 Q_OBJECT
 
 public:
-    kpToolResizeScaleDialog (bool actOnSelection,
-                             kpMainWindow *mainWindow);
+    kpToolResizeScaleDialog (kpMainWindow *mainWindow);
     virtual ~kpToolResizeScaleDialog ();
+
+    enum ActOn
+    {
+        Image, Selection
+    };
 
 private:
     static kpToolResizeScaleCommand::Type s_lastType;
@@ -111,13 +125,23 @@ private:
     static bool s_lastKeepAspectRatio;
 
 private:
+    kpDocument *document () const;
+    kpSelection *selection () const;
+
+    void createActOnBox (QWidget *baseWidget);
     void createOperationGroupBox (QWidget *baseWidget);
     void createDimensionsGroupBox (QWidget *baseWidget);
 
     void widthFitHeightToAspectRatio ();
     void heightFitWidthToAspectRatio ();
 
+private:
+    bool resizeEnabled () const;
+    bool scaleEnabled () const;
+    bool smoothScaleEnabled () const;
+
 public slots:
+    void slotActOnChanged ();
     void slotTypeChanged ();
 
     void slotWidthChanged (int width);
@@ -128,25 +152,36 @@ public slots:
 
     void slotKeepAspectRatioToggled (bool on);
 
+private:
+    int originalWidth () const;
+    int originalHeight () const;
+
 public:
     int imageWidth () const;
     int imageHeight () const;
+    bool actOnSelection () const;
     kpToolResizeScaleCommand::Type type () const;
 
     bool isNoOp () const;
 
 private:
-    bool m_actOnSelection;
-    bool m_actOnTextSelection;
-    int m_oldWidth, m_oldHeight;
+    kpMainWindow *m_mainWindow;
+
+    QHBox *m_actOnBox;
+    QLabel *m_actOnLabel;
+    KComboBox *m_actOnCombo;
 
     QGroupBox *m_operationGroupBox;
-    QRadioButton *m_resizeRadioButton,
-                 *m_scaleRadioButton,
-                 *m_smoothScaleRadioButton;
+    QToolButton *m_resizeButton,
+                *m_scaleButton,
+                *m_smoothScaleButton;
+    QLabel *m_resizeLabel,
+                 *m_scaleLabel,
+                 *m_smoothScaleLabel;
 
     QGroupBox *m_dimensionsGroupBox;
-    KIntNumInput *m_newWidthInput, *m_newHeightInput;
+    KIntNumInput *m_originalWidthInput, *m_originalHeightInput,
+                 *m_newWidthInput, *m_newHeightInput;
     KDoubleNumInput *m_percentWidthInput, *m_percentHeightInput;
     QCheckBox *m_keepAspectRatioCheckBox;
 

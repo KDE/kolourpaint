@@ -443,7 +443,6 @@ private:
 private:
     bool isSelectionActive () const;
     bool isTextSelection () const;
-    QString actionResizeScaleText () const;
 
     void setupImageMenuActions ();
     void enableImageMenuDocumentActions (bool enable = true);
@@ -461,7 +460,9 @@ private slots:
 
 public:
     kpColor backgroundColor (bool ofSelection = false) const;
-    void addImageOrSelectionCommand (KCommand *cmd, bool actOnSelectionIfAvail = true);
+    void addImageOrSelectionCommand (KCommand *cmd,
+                                     bool addSelCreateCmdIfSelAvail = true,
+                                     bool addSelPullCmdIfSelAvail = true);
 
 private slots:
     void slotResizeScale ();

@@ -74,34 +74,13 @@ bool kpMainWindow::isTextSelection () const
             m_document->selection ()->type () == kpSelection::Text);
 }
 
-// private
-QString kpMainWindow::actionResizeScaleText () const
-{
-    if (isSelectionActive ())
-    {
-        if (isTextSelection ())
-        {
-            return i18n ("R&esize...");
-        }
-        else
-        {
-            // Resize doesn't make sense when there's an ordinary selection
-            return i18n ("Scal&e...");
-        }
-    }
-    else
-    {
-        return i18n ("R&esize / Scale...");
-    }
-}
-
 
 // private
 void kpMainWindow::setupImageMenuActions ()
 {
     KActionCollection *ac = actionCollection ();
 
-    m_actionResizeScale = new KAction (actionResizeScaleText (), Qt::CTRL + Qt::Key_E,
+    m_actionResizeScale = new KAction (i18n ("R&esize / Scale..."), Qt::CTRL + Qt::Key_E,
         this, SLOT (slotResizeScale ()), ac, "image_resize_scale");
 
     m_actionCrop = new KAction (i18n ("Crop Ou&tside Selection"), Qt::CTRL + Qt::Key_T,
@@ -186,10 +165,6 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
     }
 
 
-    // "Resize", "Scale" or "Resize/Scale"
-    m_actionResizeScale->setText (actionResizeScaleText ());
-
-
     m_actionResizeScale->setEnabled (m_imageMenuDocumentActionsEnabled);
     m_actionCrop->setEnabled (m_imageMenuDocumentActionsEnabled &&
                               isSelectionActive () &&
@@ -227,11 +202,14 @@ kpColor kpMainWindow::backgroundColor (bool ofSelection) const
 
 
 // public
-void kpMainWindow::addImageOrSelectionCommand (KCommand *cmd, bool actOnSelectionIfAvail)
+void kpMainWindow::addImageOrSelectionCommand (KCommand *cmd,
+    bool addSelCreateCmdIfSelAvail,
+    bool addSelPullCmdIfSelAvail)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kdDebug () << "kpMainWindow::addImageOrSelectionCommand() actOnSelectionIfAvail="
-               << actOnSelectionIfAvail
+    kdDebug () << "kpMainWindow::addImageOrSelectionCommand()"
+               << " addSelCreateCmdIfSelAvail=" << addSelCreateCmdIfSelAvail
+               << " addSelPullCmdIfSelAvail=" << addSelPullCmdIfSelAvail
                << endl;
 #endif
 
@@ -252,26 +230,19 @@ void kpMainWindow::addImageOrSelectionCommand (KCommand *cmd, bool actOnSelectio
                << " sel->pixmap=" << (sel ? sel->pixmap () : 0)
                << endl;
 #endif
-    if (actOnSelectionIfAvail && sel && !sel->pixmap ())
+    if (addSelCreateCmdIfSelAvail && sel && !sel->pixmap ())
     {
-    #if DEBUG_KP_MAIN_WINDOW && 1
-        kdDebug () << "\tmust pull selection from doc" << endl;
-    #endif
-
         // create selection region
         m_commandHistory->addCommand (new kpToolSelectionCreateCommand (
             i18n ("Selection: Create"),
             *sel,
             this),
             false/*no exec - user already dragged out sel*/);
-
-    #if DEBUG_KP_MAIN_WINDOW && 1
-        kdDebug () << "\t\tsel=" << sel
-                << " sel->pixmap=" << (sel ? sel->pixmap () : 0)
-                << endl;
-    #endif
+    }
 
 
+    if (addSelPullCmdIfSelAvail && sel && !sel->pixmap ())
+    {
         KMacroCommand *macroCmd = new KMacroCommand (cmd->name ());
 
         macroCmd->addCommand (new kpToolSelectionPullFromDocumentCommand (
@@ -281,19 +252,9 @@ void kpMainWindow::addImageOrSelectionCommand (KCommand *cmd, bool actOnSelectio
         macroCmd->addCommand (cmd);
 
         m_commandHistory->addCommand (macroCmd);
-
-    #if DEBUG_KP_MAIN_WINDOW && 1
-        kdDebug () << "\t\tsel=" << sel
-               << " sel->pixmap=" << (sel ? sel->pixmap () : 0)
-               << endl;
-    #endif
     }
     else
     {
-    #if DEBUG_KP_MAIN_WINDOW && 1
-        kdDebug () << "\tjust add cmd" << endl;
-    #endif
-
         m_commandHistory->addCommand (cmd);
     }
 
@@ -308,20 +269,27 @@ void kpMainWindow::slotResizeScale ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpToolResizeScaleDialog dialog ((bool) m_document->selection (),
-                                    this);
+    kpToolResizeScaleDialog dialog (this);
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
+        kpToolResizeScaleCommand *cmd = new kpToolResizeScaleCommand (
+            dialog.actOnSelection (),
+            dialog.imageWidth (), dialog.imageHeight (),
+            dialog.type (),
+            this);
+
+        bool addSelCreateCommand = (dialog.actOnSelection () ||
+                                    cmd->scaleSelectionWithImage ());
+        bool addSelPullCommand = dialog.actOnSelection ();
+
         addImageOrSelectionCommand (
-            new kpToolResizeScaleCommand (
-                (bool) m_document->selection (),
-                dialog.imageWidth (), dialog.imageHeight (),
-                dialog.type (),
-                this));
+            cmd,
+            addSelCreateCommand,
+            addSelPullCommand);
 
         // Resized document?
-        if (!m_document->selection () &&
+        if (!dialog.actOnSelection () &&
             dialog.type () == kpToolResizeScaleCommand::Resize)
         {
             // TODO: this should be the responsibility of kpDocument
