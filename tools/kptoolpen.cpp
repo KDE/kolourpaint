@@ -410,6 +410,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
     // so we "interpolate" the missing points :)
     else
     {
+        // find bounding rectangle
         QRect rect = QRect (thisPoint, lastPoint).normalize ();
         if (m_mode != DrawsPixels)
             rect = neededRect (rect, m_brushPixmap [m_mouseButton].width ());
