@@ -50,6 +50,7 @@ kpSelection::kpSelection (Type type, const QRect &rect, const QPixmap &pixmap)
       m_type (type),
       m_rect (rect)
 {
+    calculatePoints ();
     m_pixmap = pixmap.isNull () ? 0 : new QPixmap (pixmap);
 }
 
@@ -131,6 +132,50 @@ kpSelection::~kpSelection ()
 }
 
 
+// private
+void kpSelection::calculatePoints ()
+{
+    if (m_type == kpSelection::Points)
+        return;
+
+    if (m_type == kpSelection::Ellipse)
+    {
+        m_points.makeEllipse (m_rect.x (), m_rect.y (),
+                              m_rect.width (), m_rect.height ());
+        return;
+    }
+
+    if (m_type == kpSelection::Rectangle)
+    {
+        // OPT: not space optimal - redoes corners
+        m_points.resize (m_rect.width () * 2 + m_rect.height () * 2);
+
+        int pointsUpto = 0;
+
+        // top
+        for (int x = 0; x < m_rect.width (); x++)
+            m_points [pointsUpto++] = QPoint (m_rect.x () + x, m_rect.top ());
+
+        // right
+        for (int y = 0; y < m_rect.height (); y++)
+            m_points [pointsUpto++] = QPoint (m_rect.right (), m_rect.y () + y);
+
+        // bottom
+        for (int x = m_rect.width () - 1; x >= 0; x--)
+            m_points [pointsUpto++] = QPoint (m_rect.x () + x, m_rect.bottom ());
+
+        // left
+        for (int y = m_rect.height () - 1; y >= 0; y--)
+            m_points [pointsUpto++] = QPoint (m_rect.left (), m_rect.y () + y);
+
+        return;
+    }
+
+    kdError () << "kpSelection::calculatePoints() with unknown type" << endl;
+    return;
+}
+
+
 // public
 kpSelection::Type kpSelection::type () const
 {
@@ -151,6 +196,19 @@ QPoint kpSelection::point () const
 
 
 // public
+int kpSelection::x () const
+{
+    return m_rect.x ();
+}
+
+// public
+int kpSelection::y () const
+{
+    return m_rect.y ();
+}
+
+
+// public
 void kpSelection::moveBy (int dx, int dy)
 {
     if (dx == 0 && dy == 0)
@@ -158,13 +216,8 @@ void kpSelection::moveBy (int dx, int dy)
 
     QRect oldRect = boundingRect ();
 
-    if (m_type == Points)
-    {
-        m_points.translate (dx, dy);
-        m_rect = m_points.boundingRect ();
-    }
-    else
-        m_rect.moveBy (dx, dy);
+    m_rect.moveBy (dx, dy);
+    m_points.translate (dx, dy);
 
     emit changed (oldRect);
     emit changed (boundingRect ());
@@ -269,29 +322,56 @@ void kpSelection::setPixmap (const QPixmap &pixmap)
     m_pixmap = pixmap.isNull () ? 0 : new QPixmap (pixmap);
 
     QRect oldRect = boundingRect ();
+    emit changed (oldRect);
+
     if (m_pixmap &&
         (m_pixmap->width () != oldRect.width () ||
          m_pixmap->height () != oldRect.height ()))
     {
-        if (m_type == kpSelection::Points)
-        {
-            QWMatrix matrix;
-            matrix.scale (double (m_pixmap->width ()) / double (oldRect.width ()),
-                          double (m_pixmap->height ()) / double (oldRect.height ()));
+        kdError () << "kpSelection::setPixmap() changes the size of the selection!"
+                   << "   old:"
+                   << " w=" << oldRect.width ()
+                   << " h=" << oldRect.height ()
+                   << "   new:"
+                   << " w=" << m_pixmap->width ()
+                   << " h=" << m_pixmap->height ()
+                   << endl;
 
-            m_points.translate (-oldRect.x (), -oldRect.y ());
-            m_points = matrix.map (m_points);
-            m_points.translate (oldRect.x (), oldRect.y ());
-            m_rect = m_points.boundingRect ();
-        }
-        else
-        {
-            m_rect = QRect (m_rect.x (), m_rect.y (),
-                            m_pixmap->width (), m_pixmap->height ());
-        }
+        m_type = kpSelection::Rectangle;
+        m_rect = QRect (m_rect.x (), m_rect.y (),
+                        m_pixmap->width (), m_pixmap->height ());
+        calculatePoints ();
+
+        emit changed (boundingRect ());
     }
+}
 
-    emit changed (oldRect);
+
+// private
+void kpSelection::flipPoints (bool horiz, bool vert)
+{
+    QRect oldRect = boundingRect ();
+
+    m_points.translate (-oldRect.x (), -oldRect.y ());
+
+    const QWMatrix matrix = kpPixmapFX::flipMatrix (oldRect.width (), oldRect.height (),
+                                                    horiz, vert);
+    m_points = matrix.map (m_points);
+
+    m_points.translate (oldRect.x (), oldRect.y ());
+}
+
+
+// public
+void kpSelection::flip (bool horiz, bool vert)
+{
+    flipPoints (horiz, vert);
+
+
+    if (m_pixmap)
+        kpPixmapFX::flip (m_pixmap, horiz, vert);
+
+
     emit changed (boundingRect ());
 }
 

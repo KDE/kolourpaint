@@ -61,18 +61,25 @@ public:
     friend QDataStream &operator>> (QDataStream &stream, kpSelection &selection);
     ~kpSelection ();
 
+private:
+    void calculatePoints ();
+
+public:
+
     Type type () const;
 
     // synonyms
     QPoint topLeft () const;
     QPoint point () const;
 
+    int x () const;
+    int y () const;
+
     void moveBy (int dx, int dy);
     void moveTo (int dx, int dy);
     void moveTo (const QPoint &topLeftPoint);
 
     // synonyms
-    // (only valid if type == Points)
     QPointArray points () const;
     QPointArray pointArray () const;
 
@@ -85,6 +92,12 @@ public:
 
     QPixmap *pixmap () const;
     void setPixmap (const QPixmap &pixmap);
+
+private:
+    void flipPoints (bool horiz, bool vert);
+
+public:
+    void flip (bool horiz, bool vert);
 
 signals:
     void changed (const QRect &docRect);
