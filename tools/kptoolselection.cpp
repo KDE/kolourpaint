@@ -204,7 +204,7 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
     }
     else if (!m_haventDraggedYet || (m_haventDraggedYet && thisPoint != m_startPoint))
     {
-    #if DEBUG_KP_TOOL_SELECTION
+    #if DEBUG_KP_TOOL_SELECTION && 0
        kdDebug () << "\tmoving selection" << endl;
     #endif
 
@@ -230,7 +230,7 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
         if (m_haventDraggedYet && (m_controlPressed || m_shiftPressed))
             m_currentMoveCommand->copyOntoDocument ();
 
-    #if DEBUG_KP_TOOL_SELECTION
+    #if DEBUG_KP_TOOL_SELECTION && 0
         kdDebug () << "\t\ttopLeft=" << normalizedRect.topLeft ()
                    << " startPoint=" << m_startPoint
                    << " startDragFromSel=" << m_startDragFromSelectionTopLeft
@@ -617,9 +617,7 @@ void kpToolSelectionMoveCommand::execute ()
     kpDocument *doc = document ();
     if (!doc)
     {
-    #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "kpToolSelectionMoveCommand::execute() no doc" << endl;
-    #endif
+        kdError () << "kpToolSelectionMoveCommand::execute() no doc" << endl;
         return;
     }
 
@@ -628,11 +626,9 @@ void kpToolSelectionMoveCommand::execute ()
     // have to have pulled pixmap by now
     if (!sel || !sel->pixmap ())
     {
-    #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "kpToolSelectionMoveCommand::execute() but haven't pulled pixmap yet: "
-                   << "sel=" << sel << " sel->pixmap=" << sel->pixmap ()
+        kdError () << "kpToolSelectionMoveCommand::execute() but haven't pulled pixmap yet: "
+                   << "sel=" << sel << " sel->pixmap=" << (sel ? sel->pixmap () : 0)
                    << endl;
-    #endif
         return;
     }
 
@@ -662,9 +658,7 @@ void kpToolSelectionMoveCommand::unexecute ()
     kpDocument *doc = document ();
     if (!doc)
     {
-    #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "kpToolSelectionMoveCommand::unexecute() no doc" << endl;
-    #endif
+        kdError () << "kpToolSelectionMoveCommand::unexecute() no doc" << endl;
         return;
     }
 
@@ -673,11 +667,9 @@ void kpToolSelectionMoveCommand::unexecute ()
     // have to have pulled pixmap by now
     if (!sel || !sel->pixmap ())
     {
-    #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "kpToolSelectionMoveCommand::unexecute() but haven't pulled pixmap yet: "
-                   << "sel=" << sel << " sel->pixmap=" << sel->pixmap ()
+        kdError () << "kpToolSelectionMoveCommand::unexecute() but haven't pulled pixmap yet: "
+                   << "sel=" << sel << " sel->pixmap=" << (sel ? sel->pixmap () : 0)
                    << endl;
-    #endif
         return;
     }
 
@@ -697,7 +689,7 @@ void kpToolSelectionMoveCommand::unexecute ()
 // public
 void kpToolSelectionMoveCommand::moveTo (const QPoint &point, bool moveLater)
 {
-#if DEBUG_KP_TOOL_SELECTION
+#if DEBUG_KP_TOOL_SELECTION && 0
     kdDebug () << "kpToolSelectionMoveCommand::moveTo" << point
                << " moveLater=" << moveLater
                <<endl;
