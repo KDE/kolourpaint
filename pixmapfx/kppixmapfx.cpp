@@ -994,7 +994,7 @@ void kpPixmapFX::scale (QPixmap *destPixmapPtr, int w, int h, bool pretty)
 // public static
 QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
 {
-#if DEBUG_KP_PIXMAP_FX && 1 || 1
+#if DEBUG_KP_PIXMAP_FX && 0
     kdDebug () << "kpPixmapFX::scale(oldRect=" << pm.rect ()
                << ",w=" << w
                << ",h=" << h
@@ -1010,7 +1010,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
     {
         QImage image = kpPixmapFX::convertToImage (pm);
 
-    #if DEBUG_KP_PIXMAP_FX && 1 || 1
+    #if DEBUG_KP_PIXMAP_FX && 0
         kdDebug () << "\tBefore smooth scale:" << endl;
         for (int y = 0; y < image.height (); y++)
         {
@@ -1024,7 +1024,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
 
         image = image.smoothScale (w, h);
 
-    #if DEBUG_KP_PIXMAP_FX && 1 || 1
+    #if DEBUG_KP_PIXMAP_FX && 0
         kdDebug () << "\tAfter smooth scale:" << endl;
         for (int y = 0; y < image.height (); y++)
         {
