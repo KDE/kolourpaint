@@ -71,6 +71,9 @@ public:
     virtual void end ();
 
     virtual void beginDraw ();
+private:
+    void updateShape ();
+public:
     virtual void draw (const QPoint &, const QPoint &, const QRect &);
     virtual void cancelShape ();
     virtual void releasedAllButtons ();
@@ -82,6 +85,9 @@ private slots:
 
     virtual void slotForegroundColorChanged (const kpColor &);
     virtual void slotBackgroundColorChanged (const kpColor &);
+
+    virtual void slotLineWidthChanged ();
+    virtual void slotFillStyleChanged ();
 
 private:
     Mode m_mode;

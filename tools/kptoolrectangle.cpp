@@ -266,6 +266,25 @@ void kpToolRectangle::updateBrush (int mouseButton)
 }
 
 
+// private slot virtual
+void kpToolRectangle::slotLineWidthChanged ()
+{
+    updatePens ();
+
+    if (hasBegunDraw ())
+        updateShape ();
+}
+
+// private slot virtual
+void kpToolRectangle::slotFillStyleChanged ()
+{
+    updateBrushes ();
+
+    if (hasBegunDraw ())
+        updateShape ();
+}
+
+
 // private
 QString kpToolRectangle::haventBegunDrawUserMessage () const
 {
@@ -289,7 +308,7 @@ void kpToolRectangle::begin ()
     {
         m_toolWidgetLineWidth = tb->toolWidgetLineWidth ();
         connect (m_toolWidgetLineWidth, SIGNAL (lineWidthChanged (int)),
-                 this, SLOT (updatePens ()));
+                 this, SLOT (slotLineWidthChanged ()));
         m_toolWidgetLineWidth->show ();
 
         updatePens ();
@@ -297,7 +316,7 @@ void kpToolRectangle::begin ()
 
         m_toolWidgetFillStyle = tb->toolWidgetFillStyle ();
         connect (m_toolWidgetFillStyle, SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
-                 this, SLOT (updateBrushes ()));
+                 this, SLOT (slotFillStyleChanged ()));
         m_toolWidgetFillStyle->show ();
 
         updateBrushes ();
@@ -322,14 +341,14 @@ void kpToolRectangle::end ()
     if (m_toolWidgetLineWidth)
     {
         disconnect (m_toolWidgetLineWidth, SIGNAL (lineWidthChanged (int)),
-                    this, SLOT (updatePens ()));
+                    this, SLOT (slotLineWidthChanged ()));
         m_toolWidgetLineWidth = 0;
     }
 
     if (m_toolWidgetFillStyle)
     {
         disconnect (m_toolWidgetFillStyle, SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
-                   this, SLOT (updateBrushes ()));
+                   this, SLOT (slotFillStyleChanged ()));
         m_toolWidgetFillStyle = 0;
     }
 
@@ -413,11 +432,8 @@ void kpToolRectangle::beginDraw ()
 
 }
 
-void kpToolRectangle::draw (const QPoint &, const QPoint &, const QRect &)
+void kpToolRectangle::updateShape ()
 {
-    applyModifiers ();
-
-
     viewManager ()->setFastUpdates ();
 
     QPixmap newPixmap = pixmap (m_mode, document (), m_toolRectangleRect,
@@ -431,6 +447,14 @@ void kpToolRectangle::draw (const QPoint &, const QPoint &, const QRect &)
     viewManager ()->setTempPixmap (newTempPixmap);
 
     viewManager ()->restoreFastUpdates ();
+}
+
+void kpToolRectangle::draw (const QPoint &, const QPoint &, const QRect &)
+{
+    applyModifiers ();
+
+
+    updateShape ();
 
 
     // Recover the start and end points from the transformed & normalized m_toolRectangleRect
