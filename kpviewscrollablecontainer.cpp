@@ -1243,7 +1243,7 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
             region -= QRect (oldContentsX, oldContentsY,
                              visibleWidth (), visibleHeight ());
 
-            // Repaint newly expose region immediately to reduce tearing
+            // Repaint newly exposed region immediately to reduce tearing
             // of scrollView.
             m_view->repaint (region, false/*no erase*/);
         }
