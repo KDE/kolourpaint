@@ -368,7 +368,7 @@ int kpToolWidgetBase::selected () const
 // public
 bool kpToolWidgetBase::hasPreviousOption (int *row, int *col) const
 {
-#if DEBUG_KP_TOOL_WIDGET_BASE || 1
+#if DEBUG_KP_TOOL_WIDGET_BASE
     kdDebug () << "kpToolWidgetBase" << name ()
                << "::hasPreviousOption() current row=" << m_selectedRow
                << " col=" << m_selectedCol
@@ -410,7 +410,7 @@ bool kpToolWidgetBase::hasPreviousOption (int *row, int *col) const
 // public
 bool kpToolWidgetBase::hasNextOption (int *row, int *col) const
 {
-#if DEBUG_KP_TOOL_WIDGET_BASE || 1
+#if DEBUG_KP_TOOL_WIDGET_BASE
     kdDebug () << "kpToolWidgetBase" << name ()
                << "::hasNextOption() current row=" << m_selectedRow
                << " col=" << m_selectedCol
