@@ -761,7 +761,7 @@ void kpToolText::slotStrikeThruChanged (bool isStrikeThru)
 
     kpTextStyle newTextStyle = mainWindow ()->textStyle ();
     kpTextStyle oldTextStyle = newTextStyle;
-    oldTextStyle.setBold (!isStrikeThru);
+    oldTextStyle.setStrikeThru (!isStrikeThru);
 
     changeTextStyle (i18n ("Text: Strike Through"),
                      newTextStyle,
