@@ -149,7 +149,7 @@ void kpToolCropSetImageCommand::unexecute ()
  */
 
 kpToolCropCommand::kpToolCropCommand (kpMainWindow *mainWindow)
-    : KMacroCommand (i18n ("Crop Outside the Selection"))
+    : KMacroCommand (i18n ("Crop Outside Selection"))
 {
     if (!mainWindow ||
         !mainWindow->document () ||

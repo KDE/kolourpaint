@@ -102,7 +102,7 @@ void kpMainWindow::setupImageMenuActions ()
     m_actionResizeScale = new KAction (actionResizeScaleText (), CTRL + Key_E,
         this, SLOT (slotResizeScale ()), ac, "image_resize_scale");
 
-    m_actionCrop = new KAction (i18n ("Crop Ou&tside the Selection"), CTRL + Key_T,
+    m_actionCrop = new KAction (i18n ("Crop Ou&tside Selection"), CTRL + Key_T,
         this, SLOT (slotCrop ()), ac, "image_crop");
 
     m_actionAutoCrop = new KAction (i18n ("A&utocrop"), CTRL + Key_U,

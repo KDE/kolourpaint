@@ -85,7 +85,7 @@ void kpMainWindow::setupEditMenuActions ()
     m_actionDeselect = KStdAction::deselect (this, SLOT (slotDeselect ()), ac);
 
 
-    d->m_actionCopyToFile = new KAction (i18n ("C&opy To File..."), 0,
+    d->m_actionCopyToFile = new KAction (i18n ("C&opy to File..."), 0,
         this, SLOT (slotCopyToFile ()), ac, "edit_copy_to_file");
     d->m_actionPasteFromFile = new KAction (i18n ("Paste &From File..."), 0,
         this, SLOT (slotPasteFromFile ()), ac, "edit_paste_from_file");

@@ -430,7 +430,7 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
 
     m_resizeRadioButton = new QRadioButton (i18n ("&Resize"), m_operationGroupBox);
     m_scaleRadioButton = new QRadioButton (i18n ("&Scale"), m_operationGroupBox);
-    m_smoothScaleRadioButton = new QRadioButton (i18n ("S&mooth Scale"), m_operationGroupBox);
+    m_smoothScaleRadioButton = new QRadioButton (i18n ("S&mooth scale"), m_operationGroupBox);
 
     if (m_actOnSelection)
     {
