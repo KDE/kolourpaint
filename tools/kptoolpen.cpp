@@ -136,11 +136,15 @@ void kpToolPen::end ()
         m_toolWidgetBrush = 0;
     }
 
-    if (viewManager ()->brushActive ())
-        viewManager ()->invalidateTempPixmap ();
+    kpViewManager *vm = viewManager ();
+    if (vm)
+    {
+        if (vm->brushActive ())
+            vm->invalidateTempPixmap ();
         
-    if (m_mode & (SquareBrushes | DiverseBrushes))
-        viewManager ()->unsetCursor ();
+        if (m_mode & (SquareBrushes | DiverseBrushes))
+            vm->unsetCursor ();
+    }
     
     // save memory
     for (int i = 0; i < 2; i++)
@@ -163,7 +167,7 @@ void kpToolPen::beginDraw ()
         m_currentCommand = new kpToolPenCommand (i18n ("Eraser"), document (), viewManager ());
         break;
     case ColorWasher:
-        m_currentCommand = new kpToolPenCommand (i18n ("Color Washer"), document (), viewManager ());
+        m_currentCommand = new kpToolPenCommand (i18n ("Color Eraser"), document (), viewManager ());
         break;
 
     default:
@@ -445,7 +449,7 @@ QColor kpToolPen::color (int which)
     // Pen & Brush
     if ((m_mode & SwappedColors) == 0)
         return kpTool::color (which);
-    // only the Eraser uses the opposite color
+    // only the (Color) Eraser uses the opposite color
     else
         return kpTool::color (which ? 0 : 1);  // don't trust !0 == 1
 }

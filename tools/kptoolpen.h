@@ -63,13 +63,13 @@ public:
         // Pen = draws pixels, "interpolates" by "sweeping" pixels along a line (no brushes)
         // Brush = draws pixmaps, "interpolates" by "sweeping" pixmaps along a line (interesting brushes)
         // Eraser = Brush but with foreground & background colors swapped (a few square brushes)
-        // Color Washer = Brush that replaces/washes the background color with the foreground color
+        // Color Washer = Brush that replaces/washes the foreground color with the background color
         //
         // (note the capitalization of "brush" here :))
         Pen = DrawsPixels | NoBrushes | NormalColors,
         Brush = DrawsPixmaps | DiverseBrushes | NormalColors,
         Eraser = DrawsPixmaps | SquareBrushes | SwappedColors,
-        ColorWasher = WashesPixmaps | SquareBrushes | NormalColors
+        ColorWasher = WashesPixmaps | SquareBrushes | SwappedColors
     };
 
     void setMode (Mode mode);
