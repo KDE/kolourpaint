@@ -45,6 +45,7 @@
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 
 #include <kpcolor.h>
 #include <kpcolortoolbar.h>
@@ -1499,5 +1500,57 @@ void kpTool::setUserShapeSize (int width, int height)
 {
     setUserShapeSize (QSize (width, height));
 }
+
+
+// public static
+bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
+                                 int newWidth, int newHeight,
+                                 const QString &text,
+                                 const QString &caption,
+                                 const QString &continueButtonText,
+                                 QWidget *parent)
+{
+#if DEBUG_KP_TOOL || 1
+    kdDebug () << "kpTool::warnIfBigImageSize()"
+               << " old: w=" << oldWidth << " h=" << oldWidth
+               << " new: w=" << newWidth << " h=" << newHeight
+               << " pixmapSize="
+               << kpPixmapFX::pixmapSize (newWidth,
+                                          newHeight,
+                                          QPixmap::defaultDepth ())
+               << " vs BigImageSize=" << KP_BIG_IMAGE_SIZE
+               << endl;
+#endif
+
+    // Only got smaller - don't complain
+    if (!(newWidth > oldWidth || newHeight > oldHeight))
+    {
+        return true;
+    }
+
+    // Was already large - user was warned before, don't annoy him/her again
+    if (kpPixmapFX::pixmapSize (oldWidth, oldHeight, QPixmap::defaultDepth ()) >=
+        KP_BIG_IMAGE_SIZE)
+    {
+        return true;
+    }
+
+    if (kpPixmapFX::pixmapSize (newWidth, newHeight, QPixmap::defaultDepth ()) >=
+        KP_BIG_IMAGE_SIZE)
+    {
+        int accept = KMessageBox::warningContinueCancel (parent,
+            text,
+            caption,
+            continueButtonText,
+            QString::fromLatin1 ("BigImageDontAskAgain"));
+
+        return (accept == KMessageBox::Continue);
+    }
+    else
+    {
+        return true;
+    }
+}
+
 
 #include <kptool.moc>

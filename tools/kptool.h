@@ -189,7 +189,7 @@ signals:
     // emitted after cancelShape() has been called
     void cancelledShape (const QPoint &point);
 
-    
+
 public:
     QIconSet iconSet (int forceSize = 0) const;
     kpToolAction *action ();
@@ -364,6 +364,41 @@ protected:
     QString m_userMessage;
     QPoint m_userShapeStartPoint, m_userShapeEndPoint;
     QSize m_userShapeSize;
+
+
+public:
+    // Call this before the user tries to cause the document or selection
+    // to resize from <oldWidth>x<oldHeight> to <newWidth>x<newHeight>.
+    // If at least one dimension increases, the new dimensions will take a
+    // large amount of memory (which causes thrashing, instability) and
+    // the old dimensions did not take a large amount of memory, ask the
+    // user if s/he really wants to perform the operation.
+    //
+    // Returns true if the operation should proceed, false otherwise.
+    //
+    // In order to make the translators' lives possible, this function cannot
+    // generate the <text>,<caption> nor <continueButtonText> (without
+    // concantenating sentences and words with tense).  However, it is
+    // recommended that you give them the following values:
+    //
+    // e.g.:
+    // text = i18n ("<qt><p>(Rotating|Skewing) the (image|selection) to"
+    //              " %1x%2 may take a substantial amount of memory."
+    //              " This can reduce system"
+    //              " responsiveness and cause other application resource"
+    //              " problems.</p>").arg (newWidth, newHeight)
+    //
+    //              "<p>Are you sure want to (rotate|skew) the"
+    //              " (image|selection)?</p></qt>");
+    // caption = i18n ("Rotate (Image|Selection)?");
+    // continueButtonText = i18n ("Rotat&e (Image|Selection)");
+    static bool warnIfBigImageSize (int oldWidth, int oldHeight,
+                                    int newWidth, int newHeight,
+                                    const QString &text,
+                                    const QString &caption,
+                                    const QString &continueButtonText,
+                                    QWidget *parent);
+
 
 protected:
     // There is no need to maintain binary compatibility at this stage.

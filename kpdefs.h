@@ -44,10 +44,9 @@
 #define KP_IS_KDE_3_3 ((KDE_VERSION_MAJOR >= 3 && KDE_VERSION_MINOR >= 3) && 1)
 
 
+// approx. 2896x2896x32bpp or 3344x3344x24bpp (TODO: 24==32?) or 4096*4096x16bpp
+#define KP_BIG_IMAGE_SIZE (32 * 1048576)
 
-// TODO: actually use these
-#define KP_BIG_IMAGE_WIDTH 4000
-#define KP_BIG_IMAGE_HEIGHT 4000
 
 #define KP_PI 3.141592653589793238462
 #define KP_EPSILON 0.0001
