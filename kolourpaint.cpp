@@ -137,6 +137,7 @@ int main (int argc, char *argv [])
     aboutData.addCredit ("Matt Rogers");
     aboutData.addCredit ("Bram Schoenmakers");
     aboutData.addCredit ("Dirk Schönberger");
+    aboutData.addCredit ("Lutz Schweizer");
     aboutData.addCredit ("Emmeran Seehuber");
     aboutData.addCredit ("Peter Simonsson");
     aboutData.addCredit ("Andrew Simpson");
