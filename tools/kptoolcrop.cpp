@@ -53,7 +53,7 @@ public:
 
     /* (uninteresting child of macro cmd) */
     virtual QString name () const { return QString::null; }
-    
+
     virtual int size () const { return kpPixmapFX::pixmapSize (m_oldPixmap); }
 
     virtual void execute ();

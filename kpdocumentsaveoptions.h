@@ -30,6 +30,7 @@
 #define KP_DOCUMENT_SAVE_OPTIONS_H
 
 
+class QPixmap;
 class QString;
 
 class KConfigBase;
@@ -106,11 +107,36 @@ public:
 
 
 public:
-    static bool mimeTypeSupportsColorDepth (const QString &mimeType);
-    bool mimeTypeSupportsColorDepth () const;
+    // (purely for informational purposes - not enforced by this class)
+    static int mimeTypeMaximumColorDepth (const QString &mimeType);
+    int mimeTypeMaximumColorDepth () const;
 
-    static bool mimeTypeSupportsQuality (const QString &mimeType);
-    bool mimeTypeSupportsQuality () const;
+
+    static bool mimeTypeHasConfigurableColorDepth (const QString &mimeType);
+    bool mimeTypeHasConfigurableColorDepth () const;
+
+    static bool mimeTypeHasConfigurableQuality (const QString &mimeType);
+    bool mimeTypeHasConfigurableQuality () const;
+
+
+    // TODO: checking for mask loss due to format e.g. BMP
+    enum LossyType
+    {
+        LossLess = 0,
+
+        // mimeTypeMaximumColorDepth() < <pixmap>.depth()
+        MimeTypeMaximumColorDepthLow = 1,
+        // i.e. colorDepth() < <pixmap>.depth() ||
+        //      colorDepth() < 32 && <pixmap>.mask()
+        ColorDepthLow = 2,
+        // i.e. mimeTypeHasConfigurableQuality()
+        Quality = 4
+    };
+
+    // Returns whether saving <pixmap> with these options will result in
+    // loss of information.  Returned value is the bitwise OR of
+    // LossType enum possiblities.
+    int isLossyForSaving (const QPixmap &pixmap) const;
 
 
 private:

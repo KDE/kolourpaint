@@ -796,6 +796,9 @@ void kpMainWindow::updateThumbnail ()
             #endif
 
                 geometryRect = mapToGlobal (geometryRect);
+            #if DEBUG_KP_MAIN_WINDOW
+                kdDebug () << "\t\tmap to global=" << geometryRect << endl;
+            #endif
                 m_thumbnail->resize (geometryRect.size ());
                 m_thumbnail->move (geometryRect.topLeft ());
             }

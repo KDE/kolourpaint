@@ -72,9 +72,6 @@
 #define kpSettingShowPath QString::fromLatin1 ("Show Path")
 #define kpSettingColorSimilarity QString::fromLatin1 ("Color Similarity")
 
-// These 2 settings are reread every time they're used, not just on mainWindow
-// creation.
-
 #define kpSettingsGroupFileSaveAs QString::fromLatin1 ("File/Save As")
 #define kpSettingsGroupFileExport QString::fromLatin1 ("File/Export")
 #define kpSettingsGroupEditCopyTo QString::fromLatin1 ("Edit/Copy To")
@@ -83,6 +80,11 @@
 #define kpSettingForcedColorDepth QString::fromLatin1 ("Forced Color Depth")
 #define kpSettingForcedDither QString::fromLatin1 ("Forced Dither")
 #define kpSettingForcedQuality QString::fromLatin1 ("Forced Quality")
+
+#define kpSettingsGroupMimeTypeProperties QString::fromLatin1 ("MimeType Properties Version 1.2")
+#define kpSettingMimeTypeMaximumColorDepth QString::fromLatin1 ("Maximum Color Depth")
+#define kpSettingMimeTypeHasConfigurableColorDepth QString::fromLatin1 ("Configurable Color Depth")
+#define kpSettingMimeTypeHasConfigurableQuality QString::fromLatin1 ("Configurable Quality Setting")
 
 #define kpSettingLastDocSize QString::fromLatin1 ("Last Document Size")
 

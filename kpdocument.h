@@ -91,11 +91,14 @@ public:
                                   bool overwritePrompt,
                                   bool lossyPrompt,
                                   QWidget *parent);
-    bool save ();
+    bool save (bool overwritePrompt = false, bool lossyPrompt = false);
     bool saveAs (const KURL &url,
                  const kpDocumentSaveOptions &saveOptions,
                  bool overwritePrompt = true,
                  bool lossyPrompt = true);
+
+    // Returns whether save() or saveAs() have ever been called and returned true
+    bool savedAtLeastOnceBefore () const;
 
     KURL url () const;
     void setURL (const KURL &url, bool isFromURL);

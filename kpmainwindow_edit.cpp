@@ -48,6 +48,7 @@
 #include <kpselection.h>
 #include <kpselectiondrag.h>
 #include <kptool.h>
+#include <kptoolcrop.h>
 #include <kptoolresizescale.h>
 #include <kptoolselection.h>
 #include <kptooltext.h>
@@ -264,7 +265,7 @@ QRect kpMainWindow::calcUsefulPasteRect (int pixmapWidth, int pixmapHeight)
 }
 
 // private
-void kpMainWindow::paste (const kpSelection &sel)
+void kpMainWindow::paste (const kpSelection &sel, bool forceTopLeft)
 {
     if (!sel.pixmap ())
     {
@@ -297,7 +298,8 @@ void kpMainWindow::paste (const kpSelection &sel)
     //
 
     kpSelection selInUsefulPos = sel;
-    selInUsefulPos.moveTo (calcUsefulPasteRect (sel.width (), sel.height ()).topLeft ());
+    if (!forceTopLeft)
+        selInUsefulPos.moveTo (calcUsefulPasteRect (sel.width (), sel.height ()).topLeft ());
     addDeselectFirstCommand (new kpToolSelectionCreateCommand (
         selInUsefulPos.isText () ?
             i18n ("Text: Create Box") :
@@ -329,11 +331,14 @@ void kpMainWindow::paste (const kpSelection &sel)
 }
 
 // public
-void kpMainWindow::pasteText (const QString &text, bool forceNewTextSelection)
+void kpMainWindow::pasteText (const QString &text,
+                              bool forceNewTextSelection,
+                              const QPoint &newTextSelectionTopLeft)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
     kdDebug () << "kpMainWindow::pasteText(" << text
                << ",forceNewTextSelection=" << forceNewTextSelection
+               << ",newTextSelectionTopLeft=" << newTextSelectionTopLeft
                << ")" << endl;
 #endif
 
@@ -341,6 +346,17 @@ void kpMainWindow::pasteText (const QString &text, bool forceNewTextSelection)
 
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
+
+
+    QValueVector <QString> textLines (1, QString::null);
+
+    for (int i = 0; i < (int) text.length (); i++)
+    {
+        if (text [i] == '\n')
+            textLines.push_back (QString::null);
+        else
+            textLines [textLines.size () - 1].append (text [i]);
+    }
 
 
     if (!forceNewTextSelection &&
@@ -351,29 +367,40 @@ void kpMainWindow::pasteText (const QString &text, bool forceNewTextSelection)
     #if DEBUG_KP_MAIN_WINDOW && 1
         kdDebug () << "\treusing existing Text Selection" << endl;
     #endif
-        m_commandHistory->addCommand (new kpToolTextInsertCommand (
-            i18n ("Text: Paste"),
-            m_viewManager->textCursorRow (), m_viewManager->textCursorCol (),
-            text,
-            this),
-            false/*no exec*/);
+        if (textLines.size () == 1 && textLines [0].isEmpty ())
+            return;
+
+        kpMacroCommand *macroCmd = new kpMacroCommand (i18n ("Text: Paste"),
+            this);
+
+        for (int i = 0; i < (int) textLines.size (); i++)
+        {
+            if (i > 0)
+            {
+                macroCmd->addCommand (
+                    new kpToolTextEnterCommand (
+                        QString::null/*uninteresting child of macroCmd*/,
+                        m_viewManager->textCursorRow (),
+                        m_viewManager->textCursorCol (),
+                        this));
+            }
+
+            macroCmd->addCommand (
+                new kpToolTextInsertCommand (
+                    QString::null/*uninteresting child of macroCmd*/,
+                    m_viewManager->textCursorRow (),
+                    m_viewManager->textCursorCol (),
+                    textLines [i],
+                    this));
+        }
+
+        m_commandHistory->addCommand (macroCmd, false/*no exec*/);
     }
     else
     {
     #if DEBUG_KP_MAIN_WINDOW && 1
         kdDebug () << "\tcreating Text Selection" << endl;
     #endif
-
-        QValueVector <QString> textLines (1, QString::null);
-
-        for (int i = 0; i < (int) text.length (); i++)
-        {
-            if (text [i] == '\n')
-                textLines.push_back (QString::null);
-            else
-                textLines [textLines.size () - 1].append (text [i]);
-        }
-
 
         const kpTextStyle ts = textStyle ();
         const QFontMetrics fontMetrics = ts.fontMetrics ();
@@ -401,7 +428,15 @@ void kpMainWindow::pasteText (const QString &text, bool forceNewTextSelection)
                          textLines,
                          ts);
 
-        paste (sel);
+        if (newTextSelectionTopLeft != KP_INVALID_POINT)
+        {
+            sel.moveTo (newTextSelectionTopLeft);
+            paste (sel, true/*force topLeft*/);
+        }
+        else
+        {
+            paste (sel);
+        }
     }
 
 
@@ -409,11 +444,14 @@ void kpMainWindow::pasteText (const QString &text, bool forceNewTextSelection)
 }
 
 // public
-void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point)
+void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
+                                bool allowNewTextSelectionPointShift)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
     kdDebug () << "kpMainWindow::pasteTextAt(" << text
                << ",point=" << point
+               << ",allowNewTextSelectionPointShift="
+               << allowNewTextSelectionPointShift
                << ")" << endl;
 #endif
 
@@ -439,7 +477,16 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point)
     }
     else
     {
-        pasteText (text, true/*force new text selection*/);
+        QPoint pointToUse = point;
+
+        if (allowNewTextSelectionPointShift)
+        {
+            // HACK: wrong
+            pointToUse -= QPoint (kpSelection::textBorderSize (),
+                                  kpSelection::textBorderSize ());
+        }
+
+        pasteText (text, true/*force new text selection*/, pointToUse);
     }
 
     QApplication::restoreOverrideCursor ();
@@ -552,6 +599,7 @@ void kpMainWindow::slotPasteInNewWindow ()
     win->show ();
 
     win->slotPaste ();
+    win->slotCrop ();
 
 
     QApplication::restoreOverrideCursor ();
@@ -716,6 +764,7 @@ void kpMainWindow::slotCopyToFile ()
     //       it - the selection?
 
     kpDocumentSaveOptions chosenSaveOptions;
+    bool allowOverwritePrompt, allowLossyPrompt;
     KURL chosenURL = askForSaveURL (i18n ("Copy to File"),
                                     d->m_lastCopyToURL.url (),
                                     m_document->getSelectedPixmap (),
@@ -723,21 +772,20 @@ void kpMainWindow::slotCopyToFile ()
                                     *m_document->metaInfo (),
                                     kpSettingsGroupEditCopyTo,
                                     false/*allow remote files*/,
-                                    &chosenSaveOptions);
+                                    &chosenSaveOptions,
+                                    d->m_copyToFirstTime,
+                                    &allowOverwritePrompt,
+                                    &allowLossyPrompt);
 
     if (chosenURL.isEmpty ())
         return;
 
 
-    d->m_lastCopyToURL = chosenURL;
-    d->m_lastCopyToSaveOptions = chosenSaveOptions;
-
-
     if (!kpDocument::savePixmapToFile (m_document->getSelectedPixmap (),
                                        chosenURL,
                                        chosenSaveOptions, *m_document->metaInfo (),
-                                       true/*overwrite prompt*/,
-                                       true/*lossy prompt*/,
+                                       allowOverwritePrompt,
+                                       allowLossyPrompt,
                                        this))
     {
         return;
@@ -745,6 +793,12 @@ void kpMainWindow::slotCopyToFile ()
 
 
     addRecentURL (chosenURL);
+
+
+    d->m_lastCopyToURL = chosenURL;
+    d->m_lastCopyToSaveOptions = chosenSaveOptions;
+
+    d->m_copyToFirstTime = false;
 }
 
 // private slot

@@ -30,10 +30,12 @@
 
 #include <kpdocumentsaveoptionswidget.h>
 
+#include <qapplication.h>
 #include <qbuffer.h>
 #include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qtimer.h>
 
 #include <kcombobox.h>
 #include <kdebug.h>
@@ -41,43 +43,53 @@
 #include <kimageio.h>
 #include <klocale.h>
 #include <knuminput.h>
-#include <kpdocument.h>
 #include <kpushbutton.h>
 
+#include <kpdocument.h>
 #include <kppixmapfx.h>
 #include <kpresizesignallinglabel.h>
+#include <kpselection.h>
+#include <kpwidgetmapper.h>
+
+
+// protected static
+const QSize kpDocumentSaveOptionsPreviewDialog::s_pixmapLabelMinimumSize (120, 120);
 
 
 kpDocumentSaveOptionsPreviewDialog::kpDocumentSaveOptionsPreviewDialog (
         QWidget *parent,
         const char *name)
-    : KDialogBase (parent, name, false/*non-modal*/,
-                   i18n ("Save Preview"),
-                   0/*no buttons*/),
+    : QWidget (parent, name,
+               Qt::WType_TopLevel |
+               Qt::WStyle_Customize |
+                   Qt::WStyle_DialogBorder |
+                   Qt::WStyle_Title),
       m_filePixmap (0),
       m_fileSize (0)
 {
-    QWidget *baseWidget = new QWidget (this);
-    setMainWidget (baseWidget);
+    setCaption (i18n ("Save Preview"));
+
+    QWidget *baseWidget = this;//new QWidget (this);
+    //setMainWidget (baseWidget);
 
 
     QGridLayout *lay = new QGridLayout (baseWidget, 2, 1,
-                                        marginHint (), spacingHint ());
+                                        KDialog::marginHint (), KDialog::spacingHint ());
 
     m_filePixmapLabel = new kpResizeSignallingLabel (baseWidget);
-    m_filePixmapLabel->setMinimumSize (320, 320)
-    ;
     m_fileSizeLabel = new QLabel (baseWidget);
 
 
-    lay->addWidget (m_filePixmapLabel, 0, 0, Qt::AlignCenter);
-    lay->addWidget (m_fileSizeLabel, 1, 0, Qt::AlignCenter);
+    m_filePixmapLabel->setMinimumSize (s_pixmapLabelMinimumSize);
+
+
+    lay->addWidget (m_filePixmapLabel, 0, 0);
+    lay->addWidget (m_fileSizeLabel, 1, 0, Qt::AlignHCenter);
 
 
     lay->setRowStretch (0, 1);
 
 
-    // TODO: doesn't work
     connect (m_filePixmapLabel, SIGNAL (resized ()),
              this, SLOT (updatePixmapPreview ()));
 }
@@ -85,6 +97,14 @@ kpDocumentSaveOptionsPreviewDialog::kpDocumentSaveOptionsPreviewDialog (
 kpDocumentSaveOptionsPreviewDialog::~kpDocumentSaveOptionsPreviewDialog ()
 {
     delete m_filePixmap;
+}
+
+
+// public
+QSize kpDocumentSaveOptionsPreviewDialog::preferredMinimumSize () const
+{
+    const int w = 225 + 2 * KDialog::marginHint ();
+    return QSize (w, w / 4 * 3);
 }
 
 
@@ -102,6 +122,15 @@ void kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize (const QPixmap &pi
     const int percent = pixmapSize ?
                             QMAX (1, QMIN (100, fileSize * 100 / pixmapSize)) :
                             0;
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+    kdDebug () << "kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize()"
+               << " pixmapSize=" << pixmapSize
+               << " fileSize=" << fileSize
+               << " raw fileSize/pixmapSize%="
+               << (pixmapSize ? fileSize * 100 / pixmapSize : 0)
+               << endl;
+#endif
+
     // HACK: I don't know if the percentage thing will work well and we're
     //       really close to the message freeze so provide alt. texts to choose
     //       from during the message freeze :)
@@ -141,13 +170,30 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
 }
 
 
+// protected virtual [base QWidget]
+void kpDocumentSaveOptionsPreviewDialog::closeEvent (QCloseEvent *e)
+{
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+    kdDebug () << "kpDocumentSaveOptionsPreviewDialog::closeEvent()" << endl;
+#endif
+
+    QWidget::closeEvent (e);
+
+    emit finished ();
+}
+
+
+// protected static
+QRect kpDocumentSaveOptionsWidget::s_previewDialogLastRelativeGeometry;
+
 
 kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
         const QPixmap &docPixmap,
         const kpDocumentSaveOptions &saveOptions,
         const kpDocumentMetaInfo &metaInfo,
         QWidget *parent, const char *name)
-    : QWidget (parent, name)
+    : QWidget (parent, name),
+      m_visualParent (parent)
 {
     init ();
     setDocumentSaveOptions (saveOptions);
@@ -157,7 +203,8 @@ kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
 
 kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
         QWidget *parent, const char *name)
-    : QWidget (parent, name)
+    : QWidget (parent, name),
+      m_visualParent (parent)
 {
     init ();
 }
@@ -167,6 +214,7 @@ void kpDocumentSaveOptionsWidget::init ()
 {
     m_documentPixmap = 0;
     m_previewDialog = 0;
+    m_visualParent = 0;
 
 
     m_colorDepthLabel = new QLabel (i18n ("Convert &to:"), this);
@@ -187,12 +235,6 @@ void kpDocumentSaveOptionsWidget::init ()
 
     m_colorDepthLabel->setBuddy (m_colorDepthCombo);
 
-    m_colorDepthCombo->insertItem (i18n ("Monochrome"));
-    m_colorDepthCombo->insertItem (i18n ("Monochrome (Dithered)"));
-    m_colorDepthCombo->insertItem (i18n ("256 Color"));
-    m_colorDepthCombo->insertItem (i18n ("256 Color (Dithered)"));
-    m_colorDepthCombo->insertItem (i18n ("24-bit Color"));
-
     m_qualityLabel->setBuddy (m_qualityInput);
 
 
@@ -210,35 +252,52 @@ void kpDocumentSaveOptionsWidget::init ()
 
 
     connect (m_colorDepthCombo, SIGNAL (activated (int)),
+             this, SLOT (slotColorDepthSelected ()));
+    connect (m_colorDepthCombo, SIGNAL (activated (int)),
              this, SLOT (updatePreview ()));
+
     connect (m_qualityInput, SIGNAL (valueChanged (int)),
-             this, SLOT (updatePreview ()));
+             this, SLOT (updatePreviewDelayed ()));
 
     connect (m_previewButton, SIGNAL (toggled (bool)),
              this, SLOT (showPreview (bool)));
 
 
+    m_updatePreviewTimer = new QTimer (this);
+    connect (m_updatePreviewTimer, SIGNAL (timeout ()),
+             this, SLOT (updatePreview ()));
+
+
     setMode (None);
+
+    slotColorDepthSelected ();
 }
 
 kpDocumentSaveOptionsWidget::~kpDocumentSaveOptionsWidget ()
 {
-    kdDebug () << "kpDocumentSaveOptionsWidget::<dtor>()" << endl;
+    hidePreview ();
+
     delete m_documentPixmap;
-    delete m_previewDialog;  // just in case
+}
+
+
+// public
+void kpDocumentSaveOptionsWidget::setVisualParent (QWidget *visualParent)
+{
+    m_visualParent = visualParent;
 }
 
 
 // protected
-bool kpDocumentSaveOptionsWidget::mimeTypeSupportsColorDepth () const
+bool kpDocumentSaveOptionsWidget::mimeTypeHasConfigurableColorDepth () const
 {
-    return kpDocumentSaveOptions::mimeTypeSupportsColorDepth (mimeType ());
+    return kpDocumentSaveOptions::mimeTypeHasConfigurableColorDepth (mimeType ());
 }
 
 // protected
-bool kpDocumentSaveOptionsWidget::mimeTypeSupportsQuality () const
+bool kpDocumentSaveOptionsWidget::mimeTypeHasConfigurableQuality () const
 {
-    return kpDocumentSaveOptions::mimeTypeSupportsQuality (mimeType ());
+    return kpDocumentSaveOptions::mimeTypeHasConfigurableQuality (mimeType ());
 }
 
 
@@ -252,17 +311,72 @@ QString kpDocumentSaveOptionsWidget::mimeType () const
 void kpDocumentSaveOptionsWidget::setMimeType (const QString &string)
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kdDebug () << "kpDocumentSaveOptionsWidget::setMimeType(" << string << ")" << endl;
+    kdDebug () << "kpDocumentSaveOptionsWidget::setMimeType(" << string
+               << ") maxColorDepth="
+               << kpDocumentSaveOptions::mimeTypeMaximumColorDepth (string)
+               << endl;
 #endif
 
-    if (string == mimeType ())
-        return;
+    const int newMimeTypeMaxDepth =
+        kpDocumentSaveOptions::mimeTypeMaximumColorDepth (string);
+
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+    kdDebug () << "\toldMimeType=" << mimeType ()
+               << " maxColorDepth="
+               << kpDocumentSaveOptions::mimeTypeMaximumColorDepth (
+                      mimeType ())
+               << endl;
+#endif
+
+    if (mimeType ().isEmpty () ||
+        kpDocumentSaveOptions::mimeTypeMaximumColorDepth (mimeType ()) !=
+        newMimeTypeMaxDepth)
+    {
+        m_colorDepthCombo->clear ();
+
+        m_colorDepthCombo->insertItem (i18n ("Monochrome"), 0);
+        m_colorDepthCombo->insertItem (i18n ("Monochrome (Dithered)"), 1);
+
+        if (newMimeTypeMaxDepth >= 8)
+        {
+            m_colorDepthCombo->insertItem (i18n ("256 Color"), 2);
+            m_colorDepthCombo->insertItem (i18n ("256 Color (Dithered)"), 3);
+        }
+
+        if (newMimeTypeMaxDepth >= 24)
+        {
+            m_colorDepthCombo->insertItem (i18n ("24-bit Color"), 4);
+        }
+
+        if (m_colorDepthComboLastSelectedItem >= 0 &&
+            m_colorDepthComboLastSelectedItem < m_colorDepthCombo->count ())
+        {
+        #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+            kdDebug () << "\tsetting colorDepthCombo to "
+                       << m_colorDepthComboLastSelectedItem << endl;
+        #endif
+
+            m_colorDepthCombo->setCurrentItem (m_colorDepthComboLastSelectedItem);
+        }
+        else
+        {
+        #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+            kdDebug () << "\tsetting colorDepthCombo to max item since"
+                       << " m_colorDepthComboLastSelectedItem="
+                       << m_colorDepthComboLastSelectedItem
+                       << " out of range" << endl;
+        #endif
+
+            m_colorDepthCombo->setCurrentItem (m_colorDepthCombo->count () - 1);
+        }
+    }
+
 
     m_baseDocumentSaveOptions.setMimeType (string);
 
-    if (mimeTypeSupportsColorDepth ())
+    if (mimeTypeHasConfigurableColorDepth ())
         setMode (ColorDepth);
-    else if (mimeTypeSupportsQuality ())
+    else if (mimeTypeHasConfigurableQuality ())
         setMode (Quality);
     else
         setMode (None);
@@ -313,6 +427,42 @@ bool kpDocumentSaveOptionsWidget::dither () const
     }
 }
 
+// protected static
+int kpDocumentSaveOptionsWidget::colorDepthComboItemFromColorDepthAndDither (
+    int depth, bool dither)
+{
+    if (depth == 1)
+    {
+        if (!dither)
+        {
+            return 0;
+        }
+        else
+        {
+            return 1;
+        }
+    }
+    else if (depth == 8)
+    {
+        if (!dither)
+        {
+            return 2;
+        }
+        else
+        {
+            return 3;
+        }
+    }
+    else if (depth == 32)
+    {
+        return 4;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
 // public slots
 void kpDocumentSaveOptionsWidget::setColorDepthDither (int newDepth, bool newDither)
 {
@@ -326,24 +476,43 @@ void kpDocumentSaveOptionsWidget::setColorDepthDither (int newDepth, bool newDit
     m_baseDocumentSaveOptions.setColorDepth (newDepth);
     m_baseDocumentSaveOptions.setDither (newDither);
 
-    if (newDepth == 1)
+
+    const int comboItem = colorDepthComboItemFromColorDepthAndDither (
+                              newDepth, newDither);
+    // TODO: Ignoring when comboItem >= m_colorDepthCombo->count() is wrong.
+    //       This happens if this mimeType has configurable colour depth
+    //       and an incorrect maximum colour depth (less than a QImage of
+    //       this mimeType, opened by kpDocument).
+    if (comboItem >= 0 && comboItem < m_colorDepthCombo->count ())
+        m_colorDepthCombo->setCurrentItem (comboItem);
+
+
+    slotColorDepthSelected ();
+}
+
+
+// protected slot
+void kpDocumentSaveOptionsWidget::slotColorDepthSelected ()
+{
+    if (mode () & ColorDepth)
     {
-        if (!newDither)
-            m_colorDepthCombo->setCurrentItem (0);
-        else
-            m_colorDepthCombo->setCurrentItem (1);
+        m_colorDepthComboLastSelectedItem = m_colorDepthCombo->currentItem ();
     }
-    else if (newDepth == 8)
+    else
     {
-        if (!newDither)
-            m_colorDepthCombo->setCurrentItem (2);
-        else
-            m_colorDepthCombo->setCurrentItem (3);
+        m_colorDepthComboLastSelectedItem =
+            colorDepthComboItemFromColorDepthAndDither (
+                m_baseDocumentSaveOptions.colorDepth (),
+                m_baseDocumentSaveOptions.dither ());
     }
-    else if (newDepth == 32)
-    {
-        m_colorDepthCombo->setCurrentItem (4);
-    }
+
+#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+    kdDebug () << "kpDocumentSaveOptionsWidget::slotColorDepthSelected()"
+               << " mode&ColorDepth=" << (mode () & ColorDepth)
+               << " colorDepthComboLastSelectedItem="
+               << m_colorDepthComboLastSelectedItem
+               << endl;
+#endif
 }
 
 
@@ -451,18 +620,74 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
     if (yes == bool (m_previewDialog))
         return;
 
+    if (!m_visualParent)
+        return;
+
     if (yes)
     {
-        m_previewDialog = new kpDocumentSaveOptionsPreviewDialog (dynamic_cast <QWidget *> (parent ()));
+        m_previewDialog = new kpDocumentSaveOptionsPreviewDialog (m_visualParent, "previewSaveDialog");
         updatePreview ();
 
         connect (m_previewDialog, SIGNAL (finished ()),
                  this, SLOT (hidePreview ()));
-        // TODO: position is braindead
+
+
+    #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+        kdDebug () << "\tpreviewDialogLastRelativeGeometry="
+                   << s_previewDialogLastRelativeGeometry
+                   << " visualParent->rect()=" << m_visualParent->rect ()
+                   << endl;
+    #endif
+
+        QRect relativeGeometry;
+        if (!s_previewDialogLastRelativeGeometry.isEmpty () &&
+            m_visualParent->rect ().intersects (s_previewDialogLastRelativeGeometry))
+        {
+        #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+            kdDebug () << "\tok" << endl;
+        #endif
+            relativeGeometry = s_previewDialogLastRelativeGeometry;
+        }
+        else
+        {
+        #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+            kdDebug () << "\t\tinvalid" << endl;
+        #endif
+            const int margin = 20;
+
+            relativeGeometry =
+                QRect (m_visualParent->width () -
+                           m_previewDialog->preferredMinimumSize ().width () -
+                               margin,
+                       margin * 3,  // Avoid folder combo
+                       m_previewDialog->preferredMinimumSize ().width (),
+                       m_previewDialog->preferredMinimumSize ().height ());
+        }
+
+
+        const QRect globalGeometry =
+            kpWidgetMapper::toGlobal (m_visualParent,
+                                      relativeGeometry);
+    #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
+        kdDebug () << "\trelativeGeometry=" << relativeGeometry
+                   << " globalGeometry=" << globalGeometry
+                   << endl;
+    #endif
+
+        m_previewDialog->resize (globalGeometry.size ());
+        m_previewDialog->move (globalGeometry.topLeft ());
+
+
         m_previewDialog->show ();
     }
     else
     {
+        s_previewDialogLastRelativeGeometry =
+            kpWidgetMapper::fromGlobal (m_visualParent,
+                QRect (m_previewDialog->x (), m_previewDialog->y (),
+                       m_previewDialog->width (), m_previewDialog->height ()));
+
+
         m_previewDialog->deleteLater ();
         m_previewDialog = 0;
     }
@@ -475,12 +700,24 @@ void kpDocumentSaveOptionsWidget::hidePreview ()
         m_previewButton->toggle ();
 }
 
+
+// protected slot
+void kpDocumentSaveOptionsWidget::updatePreviewDelayed ()
+{
+    m_updatePreviewTimer->start (200/*msec*/, true/*single shot*/);
+}
+
 // protected slot
 void kpDocumentSaveOptionsWidget::updatePreview ()
 {
     if (!m_previewDialog || !m_documentPixmap)
         return;
 
+
+    m_updatePreviewTimer->stop ();
+
+
+    QApplication::setOverrideCursor (Qt::waitCursor);
 
     QByteArray data;
 
@@ -503,6 +740,8 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
     m_previewDialog->setFilePixmapAndSize (
         kpPixmapFX::convertToPixmap (image, false/*no dither*/),
         data.size ());
+
+    QApplication::restoreOverrideCursor ();
 }
 
 

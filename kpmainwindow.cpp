@@ -54,6 +54,7 @@
 #include <kpview.h>
 #include <kpviewmanager.h>
 #include <kpviewscrollablecontainer.h>
+#include <kpwidgetmapper.h>
 
 #if DEBUG_KP_MAIN_WINDOW
     #include <qdatetime.h>
@@ -369,8 +370,18 @@ void kpMainWindow::enableDocumentActions (bool enable)
 // public
 bool kpMainWindow::actionsSingleKeyTriggersEnabled () const
 {
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kdDebug () << "kpMainWindow::actionsSingleKeyTriggersEnabled()" << endl;
+    QTime timer; timer.start ();
+#endif
+
     if (m_toolToolBar)
+    {
+    #if DEBUG_KP_MAIN_WINDOW || 1
+        kdDebug () << "\ttime=" << timer.restart () << endl;
+    #endif
         return m_toolToolBar->toolsSingleKeyTriggersEnabled ();
+    }
 
     return (d->m_actionPrevToolOptionGroup1->singleKeyTriggersEnabled () ||
             d->m_actionNextToolOptionGroup1->singleKeyTriggersEnabled () ||
@@ -381,6 +392,12 @@ bool kpMainWindow::actionsSingleKeyTriggersEnabled () const
 // public
 void kpMainWindow::enableActionsSingleKeyTriggers (bool enable)
 {
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kdDebug () << "kpMainWindow::enableActionsSingleKeyTriggers("
+               << enable << ")" << endl;
+    QTime timer; timer.start ();
+#endif
+
     if (m_toolToolBar)
         m_toolToolBar->enableToolsSingleKeyTriggers (enable);
 
@@ -388,6 +405,10 @@ void kpMainWindow::enableActionsSingleKeyTriggers (bool enable)
     d->m_actionNextToolOptionGroup1->enableSingleKeyTriggers (enable);
     d->m_actionPrevToolOptionGroup2->enableSingleKeyTriggers (enable);
     d->m_actionNextToolOptionGroup2->enableSingleKeyTriggers (enable);
+
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kdDebug () << "\ttime=" << timer.restart () << endl;
+#endif
 }
 
 
@@ -456,6 +477,15 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     // destroy current document
     delete m_document;
     m_document = newDoc;
+
+
+    if (!d->m_lastCopyToURL.isEmpty ())
+        d->m_lastCopyToURL.setFileName (QString::null);
+    d->m_copyToFirstTime = true;
+
+    if (!d->m_lastExportURL.isEmpty ())
+        d->m_lastExportURL.setFileName (QString::null);
+    d->m_exportFirstTime = true;
 
 
     // not a close operation?
@@ -671,6 +701,10 @@ void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
 // private virtual [base QWidget]
 void kpMainWindow::dropEvent (QDropEvent *e)
 {
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kdDebug () << "kpMainWindow::dropEvent" << e->pos () << endl;
+#endif
+
     kpSelection sel;
     KURL::List urls;
     QString text;
@@ -689,7 +723,74 @@ void kpMainWindow::dropEvent (QDropEvent *e)
     }
     else if (QTextDrag::decode (e, text/*ref*/))
     {
-        pasteText (text, true/*force new text selection*/);
+        QPoint selTopLeft = KP_INVALID_POINT;
+        const QPoint globalPos = QWidget::mapToGlobal (e->pos ());
+    #if DEBUG_KP_MAIN_WINDOW || 1
+        kdDebug () << "\tpos toGlobal=" << globalPos << endl;
+    #endif
+
+        kpView *view = 0;
+
+        if (m_viewManager)
+        {
+            view = m_viewManager->viewUnderCursor ();
+        #if DEBUG_KP_MAIN_WINDOW || 1
+            kdDebug () << "\t\tviewUnderCursor=" << view << endl;
+        #endif
+            if (!view)
+            {
+                // HACK: see kpViewManager::setViewUnderCursor() to see why
+                //       it's not reliable
+            #if DEBUG_KP_MAIN_WINDOW || 1
+                kdDebug () << "\t\tattempting to discover view" << endl;
+
+                if (m_mainView && m_scrollView)
+                {
+                    kdDebug () << "\t\t\tmainView->globalRect="
+                            << kpWidgetMapper::toGlobal (m_mainView, m_mainView->rect ())
+                            << " scrollView->globalRect="
+                            << kpWidgetMapper::toGlobal (m_scrollView,
+                                    QRect (0, 0,
+                                            m_scrollView->visibleWidth (),
+                                            m_scrollView->visibleHeight ()))
+                            << endl;
+                }
+            #endif
+                if (m_thumbnailView &&
+                    kpWidgetMapper::toGlobal (m_thumbnailView, m_thumbnailView->rect ())
+                        .contains (globalPos))
+                {
+                    // TODO: Code will never get executed.
+                    //       Thumbnail doesn't accept drops.
+                    view = m_thumbnailView;
+                }
+                else if (m_mainView &&
+                         kpWidgetMapper::toGlobal (m_mainView, m_mainView->rect ())
+                             .contains (globalPos) &&
+                         m_scrollView &&
+                         kpWidgetMapper::toGlobal (m_scrollView,
+                             QRect (0, 0,
+                                    m_scrollView->visibleWidth (),
+                                    m_scrollView->visibleHeight ()))
+                             .contains (globalPos))
+                {
+                    view = m_mainView;
+                }
+            }
+        }
+
+        if (view)
+        {
+            const QPoint viewPos = view->mapFromGlobal (globalPos);
+
+            selTopLeft = view->zoomViewToDoc (viewPos);
+
+            // HACK: wrong
+            selTopLeft -= QPoint (kpSelection::textBorderSize (),
+                                  kpSelection::textBorderSize ());
+        }
+
+        pasteText (text, true/*force new text selection*/, selTopLeft);
     }
 }
 

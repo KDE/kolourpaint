@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL 1
+#define DEBUG_KP_TOOL 0
 
 
 #include <kptool.h>
@@ -312,14 +312,14 @@ bool kpTool::singleKeyTriggersEnabled () const
 // public
 void kpTool::enableSingleKeyTriggers (bool enable)
 {
-#if DEBUG_KP_TOOL
+#if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool(" << name () << ")::enableSingleKeyTriggers("
                << enable << ")" << endl;
 #endif
 
     if (!m_action)
     {
-    #if DEBUG_KP_TOOL
+    #if DEBUG_KP_TOOL && 0
         kdDebug () << "\tno action" << endl;
     #endif
         return;
@@ -889,26 +889,50 @@ kpCommandHistory *kpTool::commandHistory () const
 
 void kpTool::mousePressEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 1
     kdDebug () << "kpTool::mousePressEvent pos=" << e->pos ()
+               << " btnStateBefore=" << (int) e->state ()
                << " btnStateAfter=" << (int) e->stateAfter ()
+               << " button=" << (int) e->button ()
                << " beganDraw=" << m_beganDraw << endl;
 #endif
 
     // state of all the buttons - not just the one that triggered the event (button())
     Qt::ButtonState buttonState = e->stateAfter ();
 
-    if (m_mainWindow && (e->button () & Qt::MidButton) && viewUnderCursor ())
+    if (m_mainWindow && e->button () == Qt::MidButton)
     {
         const QString text = QApplication::clipboard ()->text (QClipboard::Selection);
-    #if DEBUG_KP_TOOL && 0
+    #if DEBUG_KP_TOOL && 1
         kdDebug () << "\tMMB pasteText='" << text << "'" << endl;
     #endif
         if (!text.isEmpty ())
-            m_mainWindow->pasteTextAt (text, viewUnderCursor ()->zoomViewToDoc (e->pos ()));
+        {
+            if (hasBegunShape ())
+            {
+            #if DEBUG_KP_TOOL && 1
+                kdDebug () << "\t\thasBegunShape - end" << endl;
+            #endif
+                endShapeInternal (m_currentPoint,
+                                  QRect (m_startPoint, m_currentPoint).normalize ());
+            }
+
+            if (viewUnderCursor ())
+            {
+                m_mainWindow->pasteTextAt (text,
+                    viewUnderCursor ()->zoomViewToDoc (e->pos ()),
+                    true/*adjust topLeft so that cursor isn't
+                          on top of resize handle*/);
+            }
+
+            return;
+        }
     }
 
     int mb = mouseButton (buttonState);
+#if DEBUG_KP_TOOL && 1
+    kdDebug () << "\tmb=" << mb << " m_beganDraw=" << m_beganDraw << endl;
+#endif
 
     if (mb == -1 && !m_beganDraw) return; // ignore
 
@@ -916,7 +940,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     {
         if (mb == -1 || mb != m_mouseButton)
         {
-        #if DEBUG_KP_TOOL && 0
+        #if DEBUG_KP_TOOL && 1
             kdDebug () << "\tCancelling operation as " << mb << " == -1 or != " << m_mouseButton << endl;
         #endif
 
@@ -941,7 +965,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
         kdError () << "kpTool::mousePressEvent() without a view under the cursor!" << endl;
     }
 
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 1
     if (view)
         kdDebug () << "\tview=" << view->name () << endl;
 #endif
@@ -956,7 +980,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     m_viewUnderStartPoint = view;
     m_lastPoint = QPoint (-1, -1);
 
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 1
     kdDebug () << "\tBeginning draw @ " << m_currentPoint << endl;
 #endif
 
@@ -1022,9 +1046,11 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 
 void kpTool::mouseReleaseEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 1
     kdDebug () << "kpTool::mouseReleaseEvent pos=" << e->pos ()
-               << " btnStateAfter=" << (int) e->stateAfter () << endl;
+               << " btnStateBefore=" << (int) e->state ()
+               << " btnStateAfter=" << (int) e->stateAfter ()
+               << " button=" << (int) e->button () << endl;
 #endif
 
     if (m_beganDraw)  // didn't cancelShape()
@@ -1514,7 +1540,7 @@ bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
                                  const QString &continueButtonText,
                                  QWidget *parent)
 {
-#if DEBUG_KP_TOOL || 1
+#if DEBUG_KP_TOOL
     kdDebug () << "kpTool::warnIfBigImageSize()"
                << " old: w=" << oldWidth << " h=" << oldWidth
                << " new: w=" << newWidth << " h=" << newHeight

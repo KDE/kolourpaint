@@ -69,6 +69,12 @@
 
 struct kpDocumentPrivate
 {
+    kpDocumentPrivate ()
+        : m_savedAtLeastOnceBefore (false)
+    {
+    }
+
+    bool m_savedAtLeastOnceBefore;
 };
 
 
@@ -190,24 +196,31 @@ QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExist
                 << " hasAlphaBuffer=" << image.hasAlphaBuffer ()
                 << endl;
 #endif
-    saveOptions->setColorDepth (image.depth ());
-    saveOptions->setDither (false);  // avoid double dithering when saving
 
-    metaInfo->setDotsPerMeterX (image.dotsPerMeterX ());
-    metaInfo->setDotsPerMeterY (image.dotsPerMeterY ());
-    metaInfo->setOffset (image.offset ());
-
-    QValueList <QImageTextKeyLang> keyList = image.textList ();
-    for (QValueList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
-         it != keyList.end ();
-         it++)
+    if (saveOptions)
     {
-        metaInfo->setText (*it, image.text (*it));
+        saveOptions->setColorDepth (image.depth ());
+        saveOptions->setDither (false);  // avoid double dithering when saving
     }
 
-#if DEBUG_KP_DOCUMENT
-    metaInfo->printDebug ("\tmetaInfo");
-#endif
+    if (metaInfo)
+    {
+        metaInfo->setDotsPerMeterX (image.dotsPerMeterX ());
+        metaInfo->setDotsPerMeterY (image.dotsPerMeterY ());
+        metaInfo->setOffset (image.offset ());
+
+        QValueList <QImageTextKeyLang> keyList = image.textList ();
+        for (QValueList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
+             it != keyList.end ();
+             it++)
+        {
+            metaInfo->setText (*it, image.text (*it));
+        }
+
+    #if DEBUG_KP_DOCUMENT
+        metaInfo->printDebug ("\tmetaInfo");
+    #endif
+    }
 
 #if DEBUG_KP_DOCUMENT && 0
     kdDebug () << "Image dump:" << endl;
@@ -317,10 +330,15 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
     }
 }
 
-bool kpDocument::save ()
+bool kpDocument::save (bool overwritePrompt, bool lossyPrompt)
 {
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::save() url=" << m_url << endl;
+    kdDebug () << "kpDocument::save("
+               << "overwritePrompt=" << overwritePrompt
+               << ",lossyPrompt=" << lossyPrompt
+               << ") url=" << m_url
+               << " savedAtLeastOnceBefore=" << savedAtLeastOnceBefore ()
+               << endl;
 #endif
 
     // TODO: check feels weak
@@ -339,9 +357,8 @@ bool kpDocument::save ()
     }
 
     return saveAs (m_url, *m_saveOptions,
-                   false/*no overwrite prompt*/,
-                   // TODO: bad idea so do what KOffice does
-                   false/*no lossy prompt*/);
+                   overwritePrompt,
+                   lossyPrompt);
 }
 
 
@@ -350,12 +367,9 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
                                       const kpDocumentSaveOptions &saveOptions,
                                       QWidget *parent)
 {
-    const bool useSaveOptionsColorDepth =
-        (saveOptions.mimeTypeSupportsColorDepth () &&
-         !saveOptions.colorDepthIsInvalid ());
-    const bool useSaveOptionsQuality =
-        (saveOptions.mimeTypeSupportsQuality () &&
-         !saveOptions.qualityIsInvalid ());
+#if DEBUG_KP_DOCUMENT
+    kdDebug () << "kpDocument::lossyPromptContinue()" << endl;
+#endif
 
 #define QUIT_IF_CANCEL(messageBoxCommand)            \
 {                                                    \
@@ -364,7 +378,10 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
         return false;                                \
     }                                                \
 }
-    if (useSaveOptionsQuality)
+
+    const int lossyType = saveOptions.isLossyForSaving (pixmap);
+    if (lossyType & (kpDocumentSaveOptions::MimeTypeMaximumColorDepthLow |
+                     kpDocumentSaveOptions::Quality))
     {
         QUIT_IF_CANCEL (
             KMessageBox::warningContinueCancel (parent,
@@ -373,28 +390,26 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
 
                       "<p>Are you sure you want to save in this format?</p></qt>")
                     .arg (KMimeType::mimeType (saveOptions.mimeType ())->comment ()),
+                // TODO: caption misleading for lossless formats that have
+                //       low maximum colour depth
                 i18n ("Lossy File Format"),
                 KStdGuiItem::save (),
                 QString::fromLatin1 ("SaveInLossyMimeTypeDontAskAgain")));
     }
-    else if (useSaveOptionsColorDepth)
+    else if (lossyType & kpDocumentSaveOptions::ColorDepthLow)
     {
-        if (saveOptions.colorDepth () < pixmap.depth () ||
-            pixmap.mask () && saveOptions.colorDepth () < 32)
-        {
-            QUIT_IF_CANCEL (
-                KMessageBox::warningContinueCancel (parent,
-                    i18n ("<qt><p>Saving the image at the low color depth of %1-bit"
-                          " may result in the loss of color information."
+        QUIT_IF_CANCEL (
+            KMessageBox::warningContinueCancel (parent,
+                i18n ("<qt><p>Saving the image at the low color depth of %1-bit"
+                        " may result in the loss of color information."
 
-                          " Any transparency will also be removed."
+                        " Any transparency will also be removed."
 
-                          "<p>Are you sure you want to save at this color depth?</p></qt>")
-                        .arg (saveOptions.colorDepth ()),
-                    i18n ("Low Color Depth"),
-                    KStdGuiItem::save (),
-                    QString::fromLatin1 ("SaveAtLowColorDepthDontAskAgain")));
-        }
+                        "<p>Are you sure you want to save at this color depth?</p></qt>")
+                    .arg (saveOptions.colorDepth ()),
+                i18n ("Low Color Depth"),
+                KStdGuiItem::save (),
+                QString::fromLatin1 ("SaveAtLowColorDepthDontAskAgain")));
     }
 #undef QUIT_IF_CANCEL
 
@@ -423,6 +438,10 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     {
         if (userCancelled)
             *userCancelled = true;
+
+    #if DEBUG_KP_DOCUMENT
+        kdDebug () << "\treturning false because of lossyPrompt" << endl;
+    #endif
         return false;
     }
 
@@ -433,12 +452,12 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     QImage imageToSave = kpPixmapFX::convertToImage (pixmapToSave);
 
 
-    // TODO: fix dup with lossyPromptContinue()
+    // TODO: fix dup with kpDocumentSaveOptions::isLossyForSaving()
     const bool useSaveOptionsColorDepth =
-        (saveOptions.mimeTypeSupportsColorDepth () &&
+        (saveOptions.mimeTypeHasConfigurableColorDepth () &&
          !saveOptions.colorDepthIsInvalid ());
     const bool useSaveOptionsQuality =
-        (saveOptions.mimeTypeSupportsQuality () &&
+        (saveOptions.mimeTypeHasConfigurableQuality () &&
          !saveOptions.qualityIsInvalid ());
 
 
@@ -446,12 +465,11 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     // Reduce colors if required
     //
 
-    // TODO: what if imageToSave.depth() < saveOptions.colorDepth()?
     if (useSaveOptionsColorDepth &&
         imageToSave.depth () != saveOptions.colorDepth ())
     {
     #if DEBUG_KP_DOCUMENT
-        kdDebug () << "\treducing from " << imageToSave.depth ()
+        kdDebug () << "\tchanging depth from " << imageToSave.depth ()
                    << " to " << saveOptions.colorDepth ()
                    << " (dither=" << saveOptions.dither () << ")"
                    << endl;
@@ -494,10 +512,16 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
 
     if (!imageToSave.save (device, type.latin1 (), quality))
     {
+    #if DEBUG_KP_DOCUMENT
+        kdDebug () << "\tQImage::save() returned false" << endl;
+    #endif
         return false;
     }
 
 
+#if DEBUG_KP_DOCUMENT
+    kdDebug () << "\tsave OK" << endl;
+#endif
     return true;
 }
 
@@ -513,8 +537,9 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
 #if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::savePixmapToFile ("
                << url
-               << ",overwritePrompt=" << overwritePrompt << ")"
-               << endl;
+               << ",overwritePrompt=" << overwritePrompt
+               << ",lossyPrompt=" << lossyPrompt
+               << ")" << endl;
     saveOptions.printDebug (QString::fromLatin1 ("\tsaveOptions"));
     metaInfo.printDebug (QString::fromLatin1 ("\tmetaInfo"));
 #endif
@@ -540,7 +565,12 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
 
 
     if (lossyPrompt && !lossyPromptContinue (pixmap, saveOptions, parent))
+    {
+    #if DEBUG_KP_DOCUMENT
+        kdDebug () << "\treturning false because of lossyPrompt" << endl;
+    #endif
         return false;
+    }
 
 
     KTempFile tempFile;
@@ -553,6 +583,9 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         filename = tempFile.name ();
         if (filename.isEmpty ())
         {
+        #if DEBUG_KP_DOCUMENT
+            kdDebug () << "\treturning false because tempFile empty" << endl;
+        #endif
             KMessageBox::error (parent,
                                 i18n ("Could not save image - unable to create temporary file."));
             return false;
@@ -563,12 +596,27 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
 
 
     QFile file (filename);
-    if (!file.open (IO_WriteOnly) ||
+    bool fileOpenOK = false;
+    if (!(fileOpenOK = file.open (IO_WriteOnly)) ||
         !savePixmapToDevice (pixmap, &file,
                              saveOptions, metaInfo,
                              false/*no lossy prompt*/,
                              parent))
     {
+    #if DEBUG_KP_DOCUMENT
+        if (!fileOpenOK)
+        {
+            kdDebug () << "\treturning false because fileOpenOK=false"
+                       << " errorString=" << file.errorString () << endl;
+        }
+        else
+        {
+            kdDebug () << "\treturning false because could not save pixmap to device"
+                       << endl;
+        }
+    #endif
+
+        // TODO: use file.errorString()
         KMessageBox::error (parent,
                             i18n ("Could not save as \"%1\".")
                                 .arg (kpDocument::prettyFilenameForURL (url)));
@@ -581,6 +629,9 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
     {
         if (!KIO::NetAccess::upload (filename, url, parent))
         {
+        #if DEBUG_KP_DOCUMENT
+            kdDebug () << "\treturning false because could not upload" << endl;
+        #endif
             KMessageBox::error (parent,
                                 i18n ("Could not save image - failed to upload."));
             return false;
@@ -612,6 +663,8 @@ bool kpDocument::saveAs (const KURL &url,
         *m_saveOptions = saveOptions;
         m_modified = false;
 
+        d->m_savedAtLeastOnceBefore = true;
+
         emit documentSaved ();
         return true;
     }
@@ -619,6 +672,12 @@ bool kpDocument::saveAs (const KURL &url,
     {
         return false;
     }
+}
+
+// public
+bool kpDocument::savedAtLeastOnceBefore () const
+{
+    return d->m_savedAtLeastOnceBefore;
 }
 
 // public

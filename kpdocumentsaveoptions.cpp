@@ -35,6 +35,7 @@
 
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kglobal.h>
 
 #include <kpdefs.h>
 
@@ -365,31 +366,142 @@ bool kpDocumentSaveOptions::saveDefaultDifferences (KConfigBase *config,
 }
 
 
-// TODO: hidden config option
+static QStringList mimeTypesSupportingProperty (const QString &property,
+    const QStringList &defaultMimeTypesWithPropertyList)
+{
+    QStringList mimeTypeList;
+
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (),
+                                     kpSettingsGroupMimeTypeProperties);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    if (cfg->hasKey (property))
+    {
+        mimeTypeList = cfg->readListEntry (property);
+    }
+    else
+    {
+        mimeTypeList = defaultMimeTypesWithPropertyList;
+
+        cfg->writeEntry (property, mimeTypeList);
+        cfg->sync ();
+    }
+
+    return mimeTypeList;
+}
+
+static bool mimeTypeSupportsProperty (const QString &mimeType,
+    const QString &property, const QStringList &defaultMimeTypesWithPropertyList)
+{
+    const QStringList mimeTypeList = mimeTypesSupportingProperty (
+        property, defaultMimeTypesWithPropertyList);
+
+    return mimeTypeList.contains (mimeType);
+}
 
 
 // public static
-bool kpDocumentSaveOptions::mimeTypeSupportsColorDepth (const QString &mimeType)
+int kpDocumentSaveOptions::mimeTypeMaximumColorDepth (const QString &mimeType)
 {
-    return (mimeType == QString::fromLatin1 ("image/x-bmp") ||
-            mimeType == QString::fromLatin1 ("image/png"));
+    QStringList defaultList;
+
+    defaultList << QString::fromLatin1 ("image/x-eps:1");  // well, greyscale actually
+    defaultList << QString::fromLatin1 ("image/x-portable-bitmap:1");
+    defaultList << QString::fromLatin1 ("image/x-xbm:1");
+
+    const QStringList mimeTypeList = mimeTypesSupportingProperty (
+        kpSettingMimeTypeMaximumColorDepth, defaultList);
+
+    const QString mimeTypeColon = mimeType + QString::fromLatin1 (":");
+    for (QStringList::const_iterator it = mimeTypeList.begin ();
+         it != mimeTypeList.end ();
+         it++)
+    {
+        if ((*it).startsWith (mimeTypeColon))
+        {
+            int number = (*it).mid (mimeTypeColon.length ()).toInt ();
+            if (!colorDepthIsInvalid (number))
+            {
+                return number;
+            }
+        }
+    }
+
+    return 32;
 }
 
 // public
-bool kpDocumentSaveOptions::mimeTypeSupportsColorDepth () const
+int kpDocumentSaveOptions::mimeTypeMaximumColorDepth () const
 {
-    return mimeTypeSupportsColorDepth (mimeType ());
+    return mimeTypeMaximumColorDepth (mimeType ());
 }
 
 
 // public static
-bool kpDocumentSaveOptions::mimeTypeSupportsQuality (const QString &mimeType)
+bool kpDocumentSaveOptions::mimeTypeHasConfigurableColorDepth (const QString &mimeType)
 {
-    return (mimeType == QString::fromLatin1 ("image/jpeg"));
+    QStringList defaultMimeTypes;
+
+    defaultMimeTypes << QString::fromLatin1 ("image/x-bmp");
+    defaultMimeTypes << QString::fromLatin1 ("image/x-pcx");
+    defaultMimeTypes << QString::fromLatin1 ("image/png");
+    defaultMimeTypes << QString::fromLatin1 ("image/x-rgb");  // TODO: only 1, 24 not 8
+
+    return mimeTypeSupportsProperty (mimeType,
+        kpSettingMimeTypeHasConfigurableColorDepth,
+        defaultMimeTypes);
 }
 
 // public
-bool kpDocumentSaveOptions::mimeTypeSupportsQuality () const
+bool kpDocumentSaveOptions::mimeTypeHasConfigurableColorDepth () const
 {
-    return mimeTypeSupportsQuality (mimeType ());
+    return mimeTypeHasConfigurableColorDepth (mimeType ());
 }
+
+
+// public static
+bool kpDocumentSaveOptions::mimeTypeHasConfigurableQuality (const QString &mimeType)
+{
+    QStringList defaultMimeTypes;
+
+    defaultMimeTypes << QString::fromLatin1 ("image/jpeg");
+
+    return mimeTypeSupportsProperty (mimeType,
+        kpSettingMimeTypeHasConfigurableQuality,
+        defaultMimeTypes);
+}
+
+// public
+bool kpDocumentSaveOptions::mimeTypeHasConfigurableQuality () const
+{
+    return mimeTypeHasConfigurableQuality (mimeType ());
+}
+
+
+// public
+int kpDocumentSaveOptions::isLossyForSaving (const QPixmap &pixmap) const
+{
+    int ret = 0;
+
+    if (mimeTypeMaximumColorDepth () < pixmap.depth ())
+    {
+        ret |= MimeTypeMaximumColorDepthLow;
+    }
+
+    if (mimeTypeHasConfigurableColorDepth () &&
+        !colorDepthIsInvalid () /*TODO: prevent*/ &&
+        (colorDepth () < pixmap.depth () ||
+         colorDepth () < 32 && pixmap.mask ()))
+    {
+        ret |= ColorDepthLow;
+    }
+
+    if (mimeTypeHasConfigurableQuality () &&
+        !qualityIsInvalid ())
+    {
+        ret |= Quality;
+    }
+
+    return ret;
+}
+

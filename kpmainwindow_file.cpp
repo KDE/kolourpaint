@@ -352,13 +352,18 @@ bool kpMainWindow::save (bool localOnly)
     if (m_document->url ().isEmpty () ||
         KImageIO::mimeTypes (KImageIO::Writing)
             .findIndex (m_document->saveOptions ()->mimeType ()) < 0 ||
+        // SYNC: kpDocument::getPixmapFromFile() can't determine quality
+        //       from file
+        (m_document->saveOptions ()->mimeTypeHasConfigurableQuality () &&
+            m_document->saveOptions ()->qualityIsInvalid ()) ||
         (localOnly && !m_document->url ().isLocalFile ()))
     {
         return saveAs (localOnly);
     }
     else
     {
-        if (m_document->save ())
+        if (m_document->save (false/*no overwrite prompt*/,
+                              !m_document->savedAtLeastOnceBefore ()/*lossy prompt*/))
         {
             addRecentURL (m_document->url ());
             return true;
@@ -385,7 +390,10 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
                                   const kpDocumentMetaInfo &docMetaInfo,
                                   const QString &forcedSaveOptionsGroup,
                                   bool localOnly,
-                                  kpDocumentSaveOptions *chosenSaveOptions)
+                                  kpDocumentSaveOptions *chosenSaveOptions,
+                                  bool isSavingForFirstTime,
+                                  bool *allowOverwritePrompt,
+                                  bool *allowLossyPrompt)
 {
 #if DEBUG_KP_MAIN_WINDOW || 1
     kdDebug () << "kpMainWindow::askForURL() startURL=" << startURL << endl;
@@ -410,6 +418,12 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
 
     if (chosenSaveOptions)
         *chosenSaveOptions = kpDocumentSaveOptions ();
+
+    if (allowOverwritePrompt)
+        *allowOverwritePrompt = true;  // play it safe for now
+
+    if (allowLossyPrompt)
+        *allowLossyPrompt = true;  // play it safe for now
 
 
     kpDocumentSaveOptions fdSaveOptions = startSaveOptions;
@@ -477,10 +491,11 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
 
     KFileDialog fd (startURL, QString::null, this, "fd", true/*modal*/,
                     saveOptionsWidget);
+    saveOptionsWidget->setVisualParent (&fd);
     fd.setCaption (caption);
     fd.setOperationMode (KFileDialog::Saving);
-#if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "mimeTypes=" << mimeTypes << endl;
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kdDebug () << "\tmimeTypes=" << mimeTypes << endl;
 #endif
     fd.setMimeFilter (mimeTypes, fdSaveOptions.mimeType ());
     if (localOnly)
@@ -511,6 +526,38 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
         if (chosenSaveOptions)
             *chosenSaveOptions = newSaveOptions;
 
+
+        bool shouldAllowOverwritePrompt =
+                (fd.selectedURL () != startURL ||
+                 newSaveOptions.mimeType () != startSaveOptions.mimeType ());
+        if (allowOverwritePrompt)
+        {
+            *allowOverwritePrompt = shouldAllowOverwritePrompt;
+        #if DEBUG_KP_MAIN_WINDOW || 1
+            kdDebug () << "\tallowOverwritePrompt=" << *allowOverwritePrompt << endl;
+        #endif
+        }
+
+        if (allowLossyPrompt)
+        {
+            // SYNC: kpDocumentSaveOptions elements - everything except quality
+            //       (one quality setting is "just as lossy" as another so no
+            //        need to continually warn due to quality change)
+            *allowLossyPrompt =
+                (isSavingForFirstTime ||
+                 shouldAllowOverwritePrompt ||
+                 newSaveOptions.mimeType () != startSaveOptions.mimeType () ||
+                 newSaveOptions.colorDepth () != startSaveOptions.colorDepth () ||
+                 newSaveOptions.dither () != startSaveOptions.dither ());
+        #if DEBUG_KP_MAIN_WINDOW || 1
+            kdDebug () << "\tallowLossyPrompt=" << *allowLossyPrompt << endl;
+        #endif
+        }
+
+
+    #if DEBUG_KP_MAIN_WINDOW || 1
+        kdDebug () << "\tselectedURL=" << fd.selectedURL () << endl;
+    #endif
         return fd.selectedURL ();
     }
     else
@@ -527,6 +574,7 @@ bool kpMainWindow::saveAs (bool localOnly)
 #endif
 
     kpDocumentSaveOptions chosenSaveOptions;
+    bool allowOverwritePrompt, allowLossyPrompt;
     KURL chosenURL = askForSaveURL (i18n ("Save Image As"),
                                     m_document->url ().url (),
                                     m_document->pixmapWithSelection (),
@@ -534,15 +582,22 @@ bool kpMainWindow::saveAs (bool localOnly)
                                     *m_document->metaInfo (),
                                     kpSettingsGroupFileSaveAs,
                                     localOnly,
-                                    &chosenSaveOptions);
+                                    &chosenSaveOptions,
+                                    !m_document->savedAtLeastOnceBefore (),
+                                    &allowOverwritePrompt,
+                                    &allowLossyPrompt);
 
 
     if (chosenURL.isEmpty ())
         return false;
 
 
-    if (!m_document->saveAs (chosenURL, chosenSaveOptions))
+    if (!m_document->saveAs (chosenURL, chosenSaveOptions,
+                             allowOverwritePrompt,
+                             allowLossyPrompt))
+    {
         return false;
+    }
 
 
     addRecentURL (chosenURL);
@@ -571,6 +626,7 @@ bool kpMainWindow::slotExport ()
 
 
     kpDocumentSaveOptions chosenSaveOptions;
+    bool allowOverwritePrompt, allowLossyPrompt;
     KURL chosenURL = askForSaveURL (i18n ("Export"),
                                     d->m_lastExportURL.url (),
                                     m_document->pixmapWithSelection (),
@@ -578,22 +634,21 @@ bool kpMainWindow::slotExport ()
                                     *m_document->metaInfo (),
                                     kpSettingsGroupFileExport,
                                     false/*allow remote files*/,
-                                    &chosenSaveOptions);
+                                    &chosenSaveOptions,
+                                    d->m_exportFirstTime,
+                                    &allowOverwritePrompt,
+                                    &allowLossyPrompt);
 
 
     if (chosenURL.isEmpty ())
         return false;
 
 
-    d->m_lastExportURL = chosenURL;
-    d->m_lastExportSaveOptions = chosenSaveOptions;
-
-
     if (!kpDocument::savePixmapToFile (m_document->pixmapWithSelection (),
                                        chosenURL,
                                        chosenSaveOptions, *m_document->metaInfo (),
-                                       true/*overwrite prompt*/,
-                                       true/*lossy prompt*/,
+                                       allowOverwritePrompt,
+                                       allowLossyPrompt,
                                        this))
     {
         return false;
@@ -601,6 +656,12 @@ bool kpMainWindow::slotExport ()
 
 
     addRecentURL (chosenURL);
+
+
+    d->m_lastExportURL = chosenURL;
+    d->m_lastExportSaveOptions = chosenSaveOptions;
+
+    d->m_exportFirstTime = false;
 
     return true;
 }

@@ -298,7 +298,10 @@ private:
                         const kpDocumentMetaInfo &docMetaInfo,
                         const QString &forcedSaveOptionsGroup,
                         bool localOnly,
-                        kpDocumentSaveOptions *chosenSaveOptions);
+                        kpDocumentSaveOptions *chosenSaveOptions,
+                        bool isSavingForFirstTime,
+                        bool *allowOverwritePrompt,
+                        bool *allowLossyPrompt);
 
 private slots:
     bool saveAs (bool localOnly = false);
@@ -350,10 +353,19 @@ private slots:
     void slotEnablePaste ();
 private:
     QRect calcUsefulPasteRect (int pixmapWidth, int pixmapHeight);
-    void paste (const kpSelection &sel);
+    void paste (const kpSelection &sel,
+                bool forceTopLeft = false);
 public:
-    void pasteText (const QString &text, bool forceNewTextSelection = false);
-    void pasteTextAt (const QString &text, const QPoint &point);
+    void pasteText (const QString &text,
+                    bool forceNewTextSelection = false,
+                    const QPoint &newTextSelectionTopLeft = KP_INVALID_POINT);
+    void pasteTextAt (const QString &text, const QPoint &point,
+                      // Allow tiny adjustment of <point> so that mouse
+                      // pointer is not exactly on top of the topLeft of
+                      // any new text selection (so that it doesn't look
+                      // weird by being on top of a resize handle just after
+                      // a paste).
+                      bool allowNewTextSelectionPointShift = false);
 public slots:
     void slotPaste ();
 private slots:
@@ -471,7 +483,9 @@ public:
 
 private slots:
     void slotResizeScale ();
+public slots:
     void slotCrop ();
+private slots:
     void slotAutoCrop ();
     void slotFlip ();
     void slotRotate ();
@@ -603,8 +617,11 @@ struct kpMainWindowPrivate
 
     KURL m_lastCopyToURL;
     kpDocumentSaveOptions m_lastCopyToSaveOptions;
+    bool m_copyToFirstTime;
+
     KURL m_lastExportURL;
     kpDocumentSaveOptions m_lastExportSaveOptions;
+    bool m_exportFirstTime;
 
     int m_lastToolNumber;
 

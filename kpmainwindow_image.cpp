@@ -311,7 +311,7 @@ void kpMainWindow::slotResizeScale ()
     }
 }
 
-// private slot
+// public slot
 void kpMainWindow::slotCrop ()
 {
     if (toolHasBegunShape ())

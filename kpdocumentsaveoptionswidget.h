@@ -30,15 +30,18 @@
 #define KP_DOCUMENT_SAVE_OPTIONS_WIDGET_H
 
 
-#include <kdialogbase.h>
+#include <qsize.h>
+
+#include <qwidget.h>
 
 
 class QPixmap;
+class QLabel;
 
 class kpResizeSignallingLabel;
 
 
-class kpDocumentSaveOptionsPreviewDialog : public KDialogBase
+class kpDocumentSaveOptionsPreviewDialog : public QWidget
 {
 Q_OBJECT
 
@@ -46,9 +49,20 @@ public:
     kpDocumentSaveOptionsPreviewDialog (QWidget *parent, const char *name = 0);
     virtual ~kpDocumentSaveOptionsPreviewDialog ();
 
+    QSize preferredMinimumSize () const;
+
+protected:
+    static const QSize s_pixmapLabelMinimumSize;
+
+signals:
+    void finished ();
+
 public slots:
     void setFilePixmapAndSize (const QPixmap &filePixmap, int fileSize);
     void updatePixmapPreview ();
+
+protected:
+    virtual void closeEvent (QCloseEvent *e);
 
 protected:
     QPixmap *m_filePixmap;
@@ -59,6 +73,7 @@ protected:
 };
 
 
+#include <qrect.h>
 #include <qwidget.h>
 
 #include <kpdocumentmetainfo.h>
@@ -66,6 +81,7 @@ protected:
 
 
 class QLabel;
+class QTimer;
 
 class KComboBox;
 class KIntNumInput;
@@ -88,9 +104,13 @@ public:
     virtual ~kpDocumentSaveOptionsWidget ();
 
 
+    // <visualParent> is usually the filedialog
+    void setVisualParent (QWidget *visualParent);
+
+
 protected:
-    bool mimeTypeSupportsColorDepth () const;
-    bool mimeTypeSupportsQuality () const;
+    bool mimeTypeHasConfigurableColorDepth () const;
+    bool mimeTypeHasConfigurableQuality () const;
 
 public:
     QString mimeType () const;
@@ -100,9 +120,13 @@ public slots:
 public:
     int colorDepth () const;
     bool dither () const;
+protected:
+    static int colorDepthComboItemFromColorDepthAndDither (int depth, bool dither);
 public slots:
     void setColorDepthDither (int depth,
                               bool dither = kpDocumentSaveOptions::initialDither ());
+protected slots:
+    void slotColorDepthSelected ();
 
 public:
     int quality () const;
@@ -134,10 +158,13 @@ protected:
 protected slots:
     void showPreview (bool yes = true);
     void hidePreview ();
+    void updatePreviewDelayed ();
     void updatePreview ();
 
 
 protected:
+    QWidget *m_visualParent;
+
     Mode m_mode;
 
     QPixmap *m_documentPixmap;
@@ -147,6 +174,7 @@ protected:
 
     QLabel *m_colorDepthLabel;
     KComboBox *m_colorDepthCombo;
+    int m_colorDepthComboLastSelectedItem;
     QWidget *m_colorDepthSpaceWidget;
 
     QLabel *m_qualityLabel;
@@ -154,6 +182,8 @@ protected:
 
     KPushButton *m_previewButton;
     kpDocumentSaveOptionsPreviewDialog *m_previewDialog;
+    static QRect s_previewDialogLastRelativeGeometry;
+    QTimer *m_updatePreviewTimer;
 };
 
 
