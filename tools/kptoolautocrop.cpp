@@ -41,7 +41,7 @@
 //       to get vastly differently colors in both sides yet they will be
 //       considered similar).
 
-#define DEBUG_KP_TOOL_AUTO_CROP 1
+#define DEBUG_KP_TOOL_AUTO_CROP 0
 
 #include <qapplication.h>
 #include <qbitmap.h>
@@ -605,6 +605,9 @@ void kpToolAutoCropCommand::execute ()
                          m_oldSelection.transparency ());
 
         doc->setSelection (sel);
+
+        if (m_mainWindow->tool ())
+            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
     }
 }
 
@@ -702,6 +705,9 @@ void kpToolAutoCropCommand::unexecute ()
         sel.setPixmap (pixmap);
 
         doc->setSelection (sel);
+
+        if (m_mainWindow->tool ())
+            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
     }
 
 
