@@ -61,19 +61,19 @@ kpViewManager::~kpViewManager ()
 
 void kpViewManager::registerView (kpView *view)
 {
-#if DEBUG_KP_VIEW_MANAGER && 0
+#if DEBUG_KP_VIEW_MANAGER && 1
     kdDebug () << "kpViewManager::registerView (" << view << ")" << endl;
 #endif
     if (view && m_views.findRef (view) < 0)
     {
-    #if DEBUG_KP_VIEW_MANAGER && 0
+    #if DEBUG_KP_VIEW_MANAGER && 1
         kdDebug () << "\tadded view" << endl;
     #endif
         m_views.append (view);
     }
     else
     {
-    #if DEBUG_KP_VIEW_MANAGER && 0
+    #if DEBUG_KP_VIEW_MANAGER && 1
         kdDebug () << "\tignored register view attempt" << endl;
     #endif
     }
@@ -208,17 +208,21 @@ void kpViewManager::setSelectionBorderFinished (bool yes)
         
 void kpViewManager::setCursor (const QCursor &cursor)
 {
-    for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())
+    const int numViews = (int) m_views.count ();
+    for (int i = 0; i < numViews; i++)
     {
-        view->setCursor (cursor);
+        kpView *v = m_views.at (i);
+        v->setCursor (cursor);
     }
 }
 
 void kpViewManager::unsetCursor ()
 {
-    for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())
+    const int numViews = (int) m_views.count ();
+    for (int i = 0; i < numViews; i++)
     {
-        view->unsetCursor ();
+        kpView *v = m_views.at (i);
+        v->unsetCursor ();
     }
 }
 
@@ -277,8 +281,12 @@ void kpViewManager::restoreQueueUpdates ()
 
     if (m_queueUpdatesCounter <= 0)
     {
-        for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())
-            view->updateQueuedArea ();
+        const int numViews = (int) m_views.count ();
+        for (int i = 0; i < numViews; i++)
+        {
+            kpView *v = m_views.at (i);
+            v->updateQueuedArea ();
+        }
     }
 }
 
@@ -375,13 +383,19 @@ void kpViewManager::updateViews (const QRect &docRect)
     kdDebug () << "KpViewManager::updateViews (" << docRect << ")" << endl;
 #endif
 
-    for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())
+    const int numViews = (int) m_views.count ();
+    for (int i = 0; i < numViews; i++)
     {
+        kpView *view = m_views.at (i);
+
     #if DEBUG_KP_VIEW_MANAGER && 1
         kdDebug () << "\tupdating view " << view->name () << endl;
     #endif
         if (view->zoomLevelX () % 100 == 0 && view->zoomLevelY () % 100 == 0)
         {
+        #if DEBUG_KP_VIEW_MANAGER && 1
+            kdDebug () << "\t\tviewRect=" << view->zoomDocToView (docRect) << endl;
+        #endif
             updateView (view, view->zoomDocToView (docRect));
         }
         else
@@ -396,6 +410,9 @@ void kpViewManager::updateViews (const QRect &docRect)
                                    viewRect.height () + 2 * diff)
                                 .intersect (QRect (0, 0, view->width (), view->height ()));
 
+        #if DEBUG_KP_VIEW_MANAGER && 1
+            kdDebug () << "\t\tviewRect (+compensate)=" << newRect << endl;
+        #endif
             updateView (view, newRect);
         }
     }
@@ -408,8 +425,22 @@ void kpViewManager::updateViews (int x, int y, int w, int h)
 
 void kpViewManager::resizeViews (int docWidth, int docHeight)
 {
-    for (kpView *view = m_views.first (); m_views.current (); view = m_views.next ())
+#if DEBUG_KP_VIEW_MANAGER && 1
+    kdDebug () << "kpViewManager::resizeViews(" << docWidth << ","
+               << docHeight << ")"
+               << " numViews=" << m_views.count ()
+               << endl;
+#endif
+    const int numViews = m_views.count ();;
+    for (int i = 0; i < numViews; i++)
     {
+        kpView *view = m_views.at (i);
+        
+    #if DEBUG_KP_VIEW_MANAGER && 1
+        kdDebug () << "\tresize view: " << view->name ()
+                   << " (variableZoom=" << view->hasVariableZoom () << ")"
+                   << endl;
+    #endif
         if (view->hasVariableZoom ())
         {
             view->slotUpdateVariableZoom ();
