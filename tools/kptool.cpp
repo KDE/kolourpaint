@@ -114,8 +114,8 @@ void kpTool::endInternal ()
     if (m_began)
     {
         // before we can stop using the tool, we must stop the current drawing operation (if any)
-        if (m_beganDraw)
-            endDrawInternal (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+        if (hasBegunShape ())
+            endShapeInternal (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
 
         // call user virtual func
         end ();
