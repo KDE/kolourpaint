@@ -25,18 +25,23 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_TOOL_WIDGET_ERASER_SIZE 1
+
 
 #include <qbitmap.h>
 #include <qpainter.h>
 
+#include <kdebug.h>
 #include <klocale.h>
 
 #include <kpcolor.h>
 #include <kptool.h>
 #include <kptoolwidgeterasersize.h>
 
-static int eraserSizes [] = {5, 9, 17, 29};
+
+static int eraserSizes [] = {2, 3, 5, 9, 17, 29};
 static const int numEraserSizes = int (sizeof (eraserSizes) / sizeof (eraserSizes [0]));
+
 
 kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent)
     : kpToolWidgetBase (parent)
@@ -44,36 +49,49 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent)
     setInvertSelectedPixmap ();
 
     m_cursorPixmaps = new QPixmap [numEraserSizes];
-    QPixmap *pixmap = m_cursorPixmaps;
+    QPixmap *cursorPixmap = m_cursorPixmaps;
     
     for (int i = 0; i < numEraserSizes; i++)
     {
-        int s = eraserSizes [i];
-        
-        pixmap->resize (s, s);
-        pixmap->fill (Qt::white);
-        
-        QPainter painter;
-
-        painter.begin (pixmap);
-        painter.setPen (Qt::black);
-        painter.setBrush (Qt::black);
-        painter.drawRect (0, 0, s, s);
-        painter.end ();
-        
-        QBitmap mask (pixmap->width (), pixmap->height ());
-        mask.fill (Qt::color1);
-        pixmap->setMask (mask);
-
-        addOption (*pixmap, i18n ("%1x%2").arg (s).arg (s)/*tooltip*/);
-        if (i >= 2)
+        if (i == 3 || i == 5)
             startNewOptionRow ();
         
-        pixmap++;
+        int s = eraserSizes [i];
+ 
+        cursorPixmap->resize (s, s);
+        cursorPixmap->fill (Qt::black);
+
+        
+        QPixmap previewPixmap (s, s);
+        if (i < 3)
+        {
+            // HACK: kpToolWidgetBase's layout code sucks and gives uneven spacing
+            previewPixmap.resize ((width () - 4) / 3, 9);
+        }
+        
+        QPainter painter (&previewPixmap);
+        QRect rect ((previewPixmap.width () - s) / 2, (previewPixmap.height () - s) / 2, s, s);
+        painter.fillRect (rect, Qt::black);
+        painter.end ();
+
+        QBitmap mask (previewPixmap.width (), previewPixmap.height ());
+        mask.fill (Qt::color0/*transparent*/);
+
+        QPainter maskPainter (&mask);
+        maskPainter.fillRect (rect, Qt::color1/*opaque*/);
+        maskPainter.end ();
+        
+        previewPixmap.setMask (mask);
+
+        
+        addOption (previewPixmap, i18n ("%1x%2").arg (s).arg (s)/*tooltip*/);
+        
+        
+        cursorPixmap++;
     }
 
     relayoutOptions ();
-    setSelected (0, 0);
+    setSelected (1, 0);
 }
 
 kpToolWidgetEraserSize::~kpToolWidgetEraserSize ()
@@ -88,28 +106,46 @@ int kpToolWidgetEraserSize::eraserSize () const
 
 QPixmap kpToolWidgetEraserSize::cursorPixmap (const kpColor &color) const
 {
-    QPixmap pixmap = m_cursorPixmaps [selected ()];
+#if DEBUG_KP_TOOL_WIDGET_ERASER_SIZE
+    kdDebug () << "kpToolWidgetEraseSize::cursorPixmap() selected=" << selected ()
+               << " numEraserSizes=" << numEraserSizes
+               << endl;
+#endif
     
-    QPainter painter (&pixmap);
-    painter.setPen (Qt::black);
+    // TODO: why are we even storing m_cursorPixmaps?
+    QPixmap pixmap = m_cursorPixmaps [selected ()];
     if (color.isOpaque ())
-        painter.setBrush (QBrush (color.toQColor ()));
-    painter.drawRect (0, 0, pixmap.width (), pixmap.height ());
-    painter.end ();
+        pixmap.fill (color.toQColor ());
+    
+    
+    bool showBorder = (pixmap.width () > 2 && pixmap.height () > 2);
+
+    if (showBorder)
+    {
+        QPainter painter (&pixmap);
+        painter.setPen (Qt::black);
+        painter.drawRect (pixmap.rect ());
+    }
+    
 
     if (color.isTransparent ())
     {
         QBitmap maskBitmap (pixmap.width (), pixmap.height ());
-        maskBitmap.fill (Qt::color1/*opaque*/);
-        
-        QPainter maskBitmapPainter (&maskBitmap);
-        maskBitmapPainter.fillRect (1, 1, pixmap.width () - 2, pixmap.height () - 2,
-                                    Qt::color0/*transparent*/);
-        maskBitmapPainter.end ();
+        maskBitmap.fill (Qt::color0/*transparent*/);
 
+        
+        if (showBorder)
+        {
+            QPainter maskBitmapPainter (&maskBitmap);
+            maskBitmapPainter.setPen (Qt::color1/*opaque*/);
+            maskBitmapPainter.drawRect (maskBitmap.rect ());
+        }
+
+        
         pixmap.setMask (maskBitmap);
     }
 
+    
     return pixmap;
 }
 
