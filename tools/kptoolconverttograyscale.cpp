@@ -72,4 +72,3 @@ void kpToolConvertToGrayscaleCommand::unexecute ()
     m_oldPixmapPtr = 0;
 }
 
-#include <kptoolconverttograyscale.moc>

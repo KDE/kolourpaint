@@ -74,4 +74,3 @@ void kpToolClearCommand::unexecute ()
     m_oldPixmapPtr = 0;
 }
 
-#include <kptoolclear.moc>

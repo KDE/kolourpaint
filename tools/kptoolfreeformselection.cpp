@@ -45,4 +45,3 @@ kpToolFreeFormSelection::~kpToolFreeFormSelection ()
 {
 }
 
-#include <kptoolfreeformselection.moc>

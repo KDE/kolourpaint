@@ -146,4 +146,3 @@ bool kpToolSkewDialog::isNoop () const
     return (horizontalAngle () == 0) && (verticalAngle () == 0);
 }
 
-#include <kptoolskew.moc>

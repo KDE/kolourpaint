@@ -68,4 +68,3 @@ void kpToolInvertColorsCommand::invert ()
     m_document->invertColors ();
 }
 
-#include <kptoolinvertcolors.moc>

@@ -45,4 +45,3 @@ kpToolEllipticalSelection::~kpToolEllipticalSelection ()
 {
 }
 
-#include <kptoolellipticalselection.moc>

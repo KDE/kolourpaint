@@ -137,4 +137,3 @@ bool kpToolFlipDialog::isNoopFlip () const
     return !getHorizontalFlip () && !getVerticalFlip ();
 }
 
-#include <kptoolflip.moc>

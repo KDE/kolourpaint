@@ -45,4 +45,3 @@ kpToolRectSelection::~kpToolRectSelection ()
 {
 }
 
-#include <kptoolrectselection.moc>
