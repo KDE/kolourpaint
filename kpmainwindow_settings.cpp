@@ -53,6 +53,10 @@ void kpMainWindow::setupSettingsMenuActions ()
     createStandardStatusBarAction ();
 
 
+    d->m_actionFullScreen = KStdAction::fullScreen (this, SLOT (slotFullScreen ()), ac,
+                                                    this/*window*/);
+
+
     m_actionShowPath = new KToggleAction (i18n ("Sho&w Path"), 0,
         this, SLOT (slotShowPathToggled ()), ac, "settings_show_path");
     m_actionShowPath->setChecked (m_configShowPath);
@@ -71,6 +75,16 @@ void kpMainWindow::enableSettingsMenuDocumentActions (bool enable)
 {
     m_actionShowPath->setEnabled (enable);
     m_actionShowPath->setChecked (enable && m_configShowPath);
+}
+
+
+// private slot
+void kpMainWindow::slotFullScreen ()
+{
+    if (d->m_actionFullScreen->isChecked ())
+        showFullScreen ();
+    else
+        showNormal ();
 }
 
 

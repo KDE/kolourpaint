@@ -160,6 +160,8 @@ void kpMainWindow::init ()
     QTime time; time.start ();
 #endif
 
+    d = new kpMainWindowPrivate;
+
     m_scrollView = 0;
     m_mainView = 0;
     m_thumbnail = 0;
@@ -289,6 +291,8 @@ kpMainWindow::~kpMainWindow ()
 
     delete m_commandHistory; m_commandHistory = 0;
     delete m_scrollView; m_scrollView = 0;
+
+    delete d; d = 0;
 }
 
 

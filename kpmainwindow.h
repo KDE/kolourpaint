@@ -68,6 +68,7 @@ class kpSelectionTransparency;
 class kpSqueezedTextLabel;
 class kpTextStyle;
 class kpThumbnail;
+class KToggleFullScreenAction;
 class kpTool;
 class kpToolText;
 class kpToolToolBar;
@@ -296,8 +297,10 @@ private:
 public:
     void pasteText (const QString &text, bool forceNewTextSelection = false);
     void pasteTextAt (const QString &text, const QPoint &point);
-private slots:
+public slots:
     void slotPaste ();
+private slots:
+    void slotPasteInNewWindow ();
 public slots:
     void slotDelete ();
 
@@ -320,7 +323,7 @@ private:
     void enableViewMenuDocumentActions (bool enable = true);
     void actionShowGridUpdate ();
 
-    KAction *m_actionFullScreen,
+    KAction *m_actionFullScreenBIC,
             *m_actionActualSize,
             *m_actionFitToPage, *m_actionFitToWidth, *m_actionFitToHeight,
             *m_actionZoomIn, *m_actionZoomOut;
@@ -428,6 +431,8 @@ private:
     KAction *m_actionKeyBindings, *m_actionConfigureToolbars, *m_actionConfigure;
 
 private slots:
+    void slotFullScreen ();
+
     void slotShowPathToggled ();
 
     void slotKeyBindings ();
@@ -510,6 +515,12 @@ private:
     // The d-pointer is just so that you can experiment without recompiling
     // the kitchen sink.
     class kpMainWindowPrivate *d;
+};
+
+struct kpMainWindowPrivate
+{
+    KToggleFullScreenAction *m_actionFullScreen;
+    KAction *m_actionPasteInNewWindow;
 };
 
 #endif  // __kp_main_window_h__

@@ -74,6 +74,8 @@ void kpMainWindow::setupEditMenuActions ()
     m_actionCut = KStdAction::cut (this, SLOT (slotCut ()), ac);
     m_actionCopy = KStdAction::copy (this, SLOT (slotCopy ()), ac);
     m_actionPaste = KStdAction::paste (this, SLOT (slotPaste ()), ac);
+    d->m_actionPasteInNewWindow = new KAction (i18n ("Paste in &New Window"), 0,
+        this, SLOT (slotPasteInNewWindow ()), ac, "edit_paste_in_new_window");
 
     //m_actionDelete = KStdAction::clear (this, SLOT (slotDelete ()), ac);
     m_actionDelete = new KAction (i18n ("&Delete Selection"), 0,
@@ -98,6 +100,7 @@ void kpMainWindow::enableEditMenuDocumentActions (bool enable)
     // m_actionCut
     // m_actionCopy
     // m_actionPaste
+    // m_actionPasteInNewWindow
 
     // m_actionDelete
 
@@ -188,6 +191,7 @@ void kpMainWindow::slotEnablePaste ()
     }
 
     m_actionPaste->setEnabled (shouldEnable);
+    d->m_actionPasteInNewWindow->setEnabled (shouldEnable);
 }
 
 
@@ -285,7 +289,7 @@ void kpMainWindow::paste (const kpSelection &sel)
                 false/*act on doc, not sel*/,
                 QMAX (sel.width (), m_document->width ()),
                 QMAX (sel.height (), m_document->height ()),
-                false/*no scale*/,
+                kpToolResizeScaleCommand::Resize,
                 this));
     }
 
@@ -408,7 +412,7 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point)
     QApplication::restoreOverrideCursor ();
 }
 
-// private slot
+// public slot
 void kpMainWindow::slotPaste ()
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
@@ -451,6 +455,28 @@ void kpMainWindow::slotPaste ()
         QApplication::restoreOverrideCursor ();
         return;
     }
+
+    QApplication::restoreOverrideCursor ();
+}
+
+// private slot
+void kpMainWindow::slotPasteInNewWindow ()
+{
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kdDebug () << "kpMainWindow::slotPasteInNewWindow() CALLED" << endl;
+#endif
+
+    QApplication::setOverrideCursor (Qt::waitCursor);
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+
+    kpMainWindow *win = new kpMainWindow (0/*no document*/);
+    win->show ();
+
+    win->slotPaste ();
+
 
     QApplication::restoreOverrideCursor ();
 }

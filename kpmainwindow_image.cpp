@@ -308,11 +308,11 @@ void kpMainWindow::slotResizeScale ()
             new kpToolResizeScaleCommand (
                 (bool) m_document->selection (),
                 dialog->imageWidth (), dialog->imageHeight (),
-                dialog->scaleToFit (),
+                dialog->type (),
                 this));
 
         // Resized document?
-        if (!m_document->selection () && !dialog->scaleToFit ())
+        if (!m_document->selection () && dialog->type () == kpToolResizeScaleCommand::Resize)
         {
         #if DEBUG_KP_MAIN_WINDOW
             kdDebug () << "\tCONFIG: saving Last Doc Size = "
@@ -353,7 +353,7 @@ void kpMainWindow::slotCrop ()
         new kpToolResizeScaleCommand (
             false/*act on doc, not sel*/,
             sel->width (), sel->height (),
-            false/*resize, not scale*/,
+            kpToolResizeScaleCommand::Resize,
             this));
 
     macroCmd->addCommand (

@@ -286,6 +286,10 @@ void kpMainWindow::slotOpen ()
 // private slot
 void kpMainWindow::slotOpenRecent (const KURL &url)
 {
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::slotOpenRecent(" << url << ")" << endl;
+#endif
+
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 

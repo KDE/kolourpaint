@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui name="kolourpaint" version="9">
+<gui name="kolourpaint" version="11">
 
 <MenuBar>
     <Menu name="file">
@@ -9,6 +9,10 @@
         <Action name="file_set_as_wallpaper_tiled" />
     </Menu>
 
+    <Menu name="edit">
+        <Action name="edit_paste_in_new_window" append="edit_paste_merge" />
+    </Menu>
+    
     <Menu name="view">
         <Action name="view_show_grid" />
         <Action name="view_show_thumbnail" />
@@ -33,6 +37,9 @@
 
     <Menu name="settings">
         <Action name="settings_show_path" append="show_merge" />
+        <Separator append="show_merge" />
+        <!-- TODO: who is giving the fullscreen action that name? -->
+        <Action name="fullscreen" append="show_merge" />
     </Menu>
 </MenuBar>
 

@@ -293,9 +293,10 @@ public:
 
     /*
      * Scales an image to the given width and height.
+     * If <pretty> is true, a smooth scale will be used.
      */
-    static void scale (QPixmap *destPixmapPtr, int w, int h);
-    static QPixmap scale (const QPixmap &pm, int w, int h);
+    static void scale (QPixmap *destPixmapPtr, int w, int h, bool pretty = false);
+    static QPixmap scale (const QPixmap &pm, int w, int h, bool pretty = false);
 
     /*
      * Skews an image.

@@ -983,36 +983,70 @@ QPixmap kpPixmapFX::resize (const QPixmap &pm, int w, int h,
 
 
 // public static
-void kpPixmapFX::scale (QPixmap *destPixmapPtr, int w, int h)
+void kpPixmapFX::scale (QPixmap *destPixmapPtr, int w, int h, bool pretty)
 {
     if (!destPixmapPtr)
         return;
 
-    *destPixmapPtr = kpPixmapFX::scale (*destPixmapPtr, w, h);
+    *destPixmapPtr = kpPixmapFX::scale (*destPixmapPtr, w, h, pretty);
 }
 
 // public static
-QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h)
+QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
 {
+#if DEBUG_KP_PIXMAP_FX && 1 || 1
+    kdDebug () << "kpPixmapFX::scale(oldRect=" << pm.rect ()
+               << ",w=" << w
+               << ",h=" << h
+               << ",pretty=" << pretty
+               << ")"
+               << endl;
+#endif
+
     if (w == pm.width () && h == pm.height ())
         return pm;
 
-#if 0  // slow but smooth, requiring change to QImage (like QPixmap::xForm()?)
-    QImage image = (kpPixmapFX::convertToImage (*m_pixmap)).smoothScale (w, h);
-
-    if (!kpPixmapFX::convertToPixmap (image, true/*pretty*/))
+    if (pretty)
     {
-        kdError () << "kpDocument::scale() could not convertToPixmap()" << endl;
-        return false;
+        QImage image = kpPixmapFX::convertToImage (pm);
+
+    #if DEBUG_KP_PIXMAP_FX && 1 || 1
+        kdDebug () << "\tBefore smooth scale:" << endl;
+        for (int y = 0; y < image.width (); y++)
+        {
+            for (int x = 0; x < image.width (); x++)
+            {
+                fprintf (stderr, " %08X", image.pixel (x, y));
+            }
+            fprintf (stderr, "\n");
+        }
+    #endif
+
+        image = image.smoothScale (w, h);
+
+    #if DEBUG_KP_PIXMAP_FX && 1 || 1
+        kdDebug () << "\tAfter smooth scale:" << endl;
+        for (int y = 0; y < image.width (); y++)
+        {
+            for (int x = 0; x < image.width (); x++)
+            {
+                fprintf (stderr, " %08X", image.pixel (x, y));
+            }
+            fprintf (stderr, "\n");
+        }
+    #endif
+
+        return kpPixmapFX::convertToPixmap (image, false/*let's not smooth it again*/);
     }
-#else
-    QWMatrix matrix;
+    else
+    {
+        QWMatrix matrix;
 
-    matrix.scale (double (w) / double (pm.width ()),
-                  double (h) / double (pm.height ()));
+        matrix.scale (double (w) / double (pm.width ()),
+                      double (h) / double (pm.height ()));
 
-    return pm.xForm (matrix);
-#endif
+        return pm.xForm (matrix);
+    }
 }
 
 

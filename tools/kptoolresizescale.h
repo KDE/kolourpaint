@@ -52,9 +52,14 @@ class kpViewManager;
 class kpToolResizeScaleCommand : public KCommand
 {
 public:
+    enum Type
+    {
+        Resize, Scale, SmoothScale
+    };
+
     kpToolResizeScaleCommand (bool actOnSelection,
                               int newWidth, int newHeight,
-                              bool scaleToFit,
+                              Type type,
                               kpMainWindow *mainWindow);
     virtual QString name () const;
     virtual ~kpToolResizeScaleCommand ();
@@ -69,7 +74,8 @@ public:
 private:
     bool m_actOnSelection;
     int m_newWidth, m_newHeight;
-    bool m_scaleToFit, m_isLosslessScale;
+    Type m_type;
+    bool m_isLosslessScale;
     kpMainWindow *m_mainWindow;
     kpColor m_backgroundColor;
 
@@ -89,7 +95,7 @@ public:
     virtual ~kpToolResizeScaleDialog ();
 
 private:
-    static bool s_lastIsResize;
+    static kpToolResizeScaleCommand::Type s_lastType;
     static double s_lastPercentWidth, s_lastPercentHeight;
     static bool s_lastKeepAspectRatio;
 
@@ -101,7 +107,7 @@ private:
     void heightFitWidthToAspectRatio ();
 
 public slots:
-    void slotIsResizeChanged ();
+    void slotTypeChanged ();
 
     void slotWidthChanged (int width);
     void slotHeightChanged (int height);
@@ -114,7 +120,7 @@ public slots:
 public:
     int imageWidth () const;
     int imageHeight () const;
-    bool scaleToFit () const;
+    kpToolResizeScaleCommand::Type type () const;
 
     bool isNoOp () const;
 
@@ -124,7 +130,9 @@ private:
     int m_oldWidth, m_oldHeight;
 
     QGroupBox *m_operationGroupBox;
-    QRadioButton *m_resizeRadioButton, *m_scaleRadioButton;
+    QRadioButton *m_resizeRadioButton,
+                 *m_scaleRadioButton,
+                 *m_smoothScaleRadioButton;
 
     QGroupBox *m_dimensionsGroupBox;
     KIntNumInput *m_newWidthInput, *m_newHeightInput;

@@ -60,11 +60,11 @@
 
 kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
                                                     int newWidth, int newHeight,
-                                                    bool scaleToFit,
+                                                    Type type,
                                                     kpMainWindow *mainWindow)
     : m_actOnSelection (actOnSelection),
       m_newWidth (newWidth), m_newHeight (newHeight),
-      m_scaleToFit (scaleToFit),
+      m_type (type),
       m_mainWindow (mainWindow),
       m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid)
 {
@@ -77,7 +77,7 @@ kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
                             doc && doc->selection () &&
                             doc->selection ()->isText ());
 
-    m_isLosslessScale = (scaleToFit &&
+    m_isLosslessScale = ((m_type == Scale) &&
                          (m_newWidth / m_oldWidth * m_oldWidth == m_newWidth) &&
                          (m_newHeight / m_oldHeight * m_oldHeight == m_newHeight));
 }
@@ -87,10 +87,18 @@ QString kpToolResizeScaleCommand::name () const
 {
     QString opName;
 
-    if (m_scaleToFit)
-        opName = i18n ("Scale");
-    else
+    switch (m_type)
+    {
+    case Resize:
         opName = i18n ("Resize");
+        break;
+    case Scale:
+        opName = i18n ("Scale");
+        break;
+    case SmoothScale:
+        opName = i18n ("Smooth Scale");
+        break;
+    }
 
     if (m_actOnSelection)
     {
@@ -119,8 +127,8 @@ kpDocument *kpToolResizeScaleCommand::document () const
 void kpToolResizeScaleCommand::execute ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
-    kdDebug () << "kpToolResizeScaleCommand::execute() scaleToFit="
-               << m_scaleToFit
+    kdDebug () << "kpToolResizeScaleCommand::execute() type="
+               << (int) m_type
                << " oldWidth=" << m_oldWidth
                << " oldHeight=" << m_oldHeight
                << " newWidth=" << m_newWidth
@@ -131,7 +139,7 @@ void kpToolResizeScaleCommand::execute ()
     if (m_oldWidth == m_newWidth && m_oldHeight == m_newHeight)
         return;
 
-    if (!m_scaleToFit)
+    if (m_type == Resize)
     {
         if (m_actOnSelection)
         {
@@ -188,7 +196,8 @@ void kpToolResizeScaleCommand::execute ()
         if (!m_isLosslessScale)
             m_oldPixmap = oldPixmap;
 
-        QPixmap newPixmap = kpPixmapFX::scale (oldPixmap, m_newWidth, m_newHeight);
+        QPixmap newPixmap = kpPixmapFX::scale (oldPixmap, m_newWidth, m_newHeight,
+                                               m_type == SmoothScale);
 
 
         if (m_actOnSelection)
@@ -223,8 +232,8 @@ void kpToolResizeScaleCommand::execute ()
 void kpToolResizeScaleCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
-    kdDebug () << "kpToolResizeScaleCommand::unexecute() scaleToFit="
-               << m_scaleToFit << endl;
+    kdDebug () << "kpToolResizeScaleCommand::unexecute() type="
+               << m_type << endl;
 #endif
 
     if (m_oldWidth == m_newWidth && m_oldHeight == m_newHeight)
@@ -234,7 +243,7 @@ void kpToolResizeScaleCommand::unexecute ()
     if (!doc)
         return;
 
-    if (!m_scaleToFit)
+    if (m_type == Resize)
     {
         if (m_actOnSelection)
         {
@@ -336,7 +345,8 @@ void kpToolResizeScaleCommand::unexecute ()
 
 
 // private static
-bool kpToolResizeScaleDialog::s_lastIsResize = true;
+kpToolResizeScaleCommand::Type kpToolResizeScaleDialog::s_lastType =
+    kpToolResizeScaleCommand::Resize;
 
 // private static
 double kpToolResizeScaleDialog::s_lastPercentWidth = 100,
@@ -396,20 +406,48 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
     m_operationGroupBox = new QGroupBox (i18n ("Operation"), baseWidget);
 
     QLabel *resizePixmapLabel = new QLabel (m_operationGroupBox);
-    resizePixmapLabel->setPixmap (UserIcon ("resize_scale_apple_resize_110x46"));
+    resizePixmapLabel->setPixmap (UserIcon ("resize_scale_apple_resize"));
 
     QLabel *scalePixmapLabel = new QLabel (m_operationGroupBox);
-    scalePixmapLabel->setPixmap (UserIcon ("resize_scale_apple_scale_110x46"));
+    scalePixmapLabel->setPixmap (UserIcon ("resize_scale_apple_scale"));
+
+    QLabel *smoothScalePixmapLabel = new QLabel (m_operationGroupBox);
+    smoothScalePixmapLabel->setPixmap (UserIcon ("resize_scale_apple_smooth_scale"));
 
 
     m_resizeRadioButton = new QRadioButton (i18n ("&Resize"), m_operationGroupBox);
     m_scaleRadioButton = new QRadioButton (i18n ("&Scale"), m_operationGroupBox);
+    m_smoothScaleRadioButton = new QRadioButton (i18n ("S&mooth Scale"), m_operationGroupBox);
 
-    m_scaleRadioButton->setChecked (!m_actOnTextSelection &&
-                                    (!s_lastIsResize || m_actOnSelection));
-    m_resizeRadioButton->setChecked (!m_scaleRadioButton->isChecked ());
+    if (m_actOnSelection)
+    {
+        if (m_actOnTextSelection)
+        {
+            m_resizeRadioButton->setChecked (true);
 
-    m_operationGroupBox->setEnabled (!m_actOnSelection);
+            m_operationGroupBox->setEnabled (!m_actOnSelection);
+        }
+        else
+        {
+            if (s_lastType == kpToolResizeScaleCommand::Scale)
+                m_scaleRadioButton->setChecked (true);
+            else
+                m_smoothScaleRadioButton->setChecked (true);
+
+            resizePixmapLabel->setEnabled (false);
+            m_resizeRadioButton->setEnabled (false);
+        }
+    }
+    else
+    {
+        if (s_lastType == kpToolResizeScaleCommand::Resize)
+            m_resizeRadioButton->setChecked (true);
+        else if (s_lastType == kpToolResizeScaleCommand::Scale)
+            m_scaleRadioButton->setChecked (true);
+        else
+            m_smoothScaleRadioButton->setChecked (true);
+    }
+
 
 
     QButtonGroup *resizeScaleButtonGroup = new QButtonGroup (baseWidget);
@@ -417,21 +455,30 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
 
     resizeScaleButtonGroup->insert (m_resizeRadioButton);
     resizeScaleButtonGroup->insert (m_scaleRadioButton);
+    resizeScaleButtonGroup->insert (m_smoothScaleRadioButton);
 
 
     QGridLayout *operationLayout = new QGridLayout (m_operationGroupBox,
-                                                    2, 2, marginHint () * 2, spacingHint ());
+                                                    2, 2,
+                                                    marginHint () * 2/*don't overlap groupbox title*/,
+                                                    spacingHint () * 4/*more spacing between pics*/);
 
     operationLayout->addWidget (resizePixmapLabel, 0, 0, Qt::AlignCenter);
-    operationLayout->addWidget (scalePixmapLabel, 0, 1, Qt::AlignCenter);
     operationLayout->addWidget (m_resizeRadioButton, 1, 0, Qt::AlignCenter);
+
+    operationLayout->addWidget (scalePixmapLabel, 0, 1, Qt::AlignCenter);
     operationLayout->addWidget (m_scaleRadioButton, 1, 1, Qt::AlignCenter);
+
+    operationLayout->addWidget (smoothScalePixmapLabel, 0, 2, Qt::AlignCenter);
+    operationLayout->addWidget (m_smoothScaleRadioButton, 1, 2, Qt::AlignCenter);
 
 
     connect (m_resizeRadioButton, SIGNAL (toggled (bool)),
-             this, SLOT (slotIsResizeChanged ()));
+             this, SLOT (slotTypeChanged ()));
     connect (m_scaleRadioButton, SIGNAL (toggled (bool)),
-             this, SLOT (slotIsResizeChanged ()));
+             this, SLOT (slotTypeChanged ()));
+    connect (m_smoothScaleRadioButton, SIGNAL (toggled (bool)),
+             this, SLOT (slotTypeChanged ()));
 }
 
 // private
@@ -560,9 +607,9 @@ void kpToolResizeScaleDialog::heightFitWidthToAspectRatio ()
 
 
 // public slot
-void kpToolResizeScaleDialog::slotIsResizeChanged ()
+void kpToolResizeScaleDialog::slotTypeChanged ()
 {
-    s_lastIsResize = m_resizeRadioButton->isChecked ();
+    s_lastType = type ();
 }
 
 // public slot
@@ -663,9 +710,14 @@ int kpToolResizeScaleDialog::imageHeight () const
 }
 
 // public
-bool kpToolResizeScaleDialog::scaleToFit () const
+kpToolResizeScaleCommand::Type kpToolResizeScaleDialog::type () const
 {
-    return m_scaleRadioButton->isChecked ();
+    if (m_resizeRadioButton->isChecked ())
+        return kpToolResizeScaleCommand::Resize;
+    else if (m_scaleRadioButton->isChecked ())
+        return kpToolResizeScaleCommand::Scale;
+    else
+        return kpToolResizeScaleCommand::SmoothScale;
 }
 
 // public
