@@ -53,6 +53,31 @@
 #include <kptoolwidgetspraycansize.h>
 
 
+class kpToolButton : public QToolButton
+{
+public:
+    kpToolButton (kpTool *tool, QWidget *parent)
+        : QToolButton (parent),
+          m_tool (tool)
+    {
+    }
+    
+    virtual ~kpToolButton ()
+    {
+    }
+    
+protected:
+    // virtual [base QWidget]
+    void mouseDoubleClickEvent (QMouseEvent *e)
+    {
+        if (e->button () == Qt::LeftButton && m_tool)
+            m_tool->globalDraw ();
+    }
+
+    kpTool *m_tool;
+};
+
+
 kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const char *name)
     : KToolBar ((QWidget *) mainWindow, name, false/*don't use global toolBar settings*/, true/*readConfig*/),
       m_vertCols (colsOrRows),
@@ -108,7 +133,7 @@ void kpToolToolBar::registerTool (kpTool *tool)
     }
     int num = m_buttonToolPairs.count ();
 
-    QToolButton *b = new QToolButton (m_baseWidget);
+    QToolButton *b = new kpToolButton (tool, m_baseWidget);
     b->setAutoRaise (true);
     b->setUsesBigPixmap (false);
     b->setUsesTextLabel (false);
