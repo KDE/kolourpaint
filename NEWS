@@ -51,7 +51,7 @@ its changes.
      [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
    * Correct kolourpaint.desktop "Terminal=" and "Categories=" syntax
      (Benjamin Meyer)
-   
+
 
 KolourPaint 1.2_kde3 Series (kolourpaint_1_2_kde3_branch)
 ===========================
@@ -62,6 +62,41 @@ the changes required for backporting and nothing else.  However,
 non-backporting changes can be applied as long as they are applied to
 KDE_3_3_BRANCH first.
 
+   * Guarantee the display of the current tool's options widget on startup
+     under Qt 3.0 [kolourpaint-1.2.2_kde3-qt3.0_tool_options.diff]
+
+Version 1.2.2_kde3 (Frozen 2004-11-29)
+   * Try to work around Qt 3.0.x integer scaling bug (incorrect extra row
+     and/or column when scaling e.g. 3x)
+     - Fixes scaling operation; at the expense of storing the old image,
+       ensure undoing scaling works even if couldn't work around bug
+     - Fixes rendering errors at certain zoom levels, hidden by the grid
+   * Fix crash due to text box when scaling image behind it
+     [also in KDE_3_3_BRANCH]
+   * Empty text clipboard fixes:
+     - Don't get stuck on a wait cursor after attempting to paste empty
+       text into a text box
+     - Prevent pasting text from creating a new text box if text is empty
+     - Prevent copying of empty text box
+     [also in KDE_3_3_BRANCH]
+   * Smaller selection and text box resize handles (visually not
+     actually) - covers up fewer selected pixels, doesn't cover up text
+     [also in KDE_3_3_BRANCH]
+   * Restore mouse cursor after deselecting selection/text tools
+     [also in KDE_3_3_BRANCH]
+   * Enable automatic filename extension handling in save dialog based on
+     hacky runtime - rather than compiletime - check for KDE 3.2 (this is
+     all needed due to memory bugs with the save dialog in KDE 3.1)
+   * Include KDE 3.3.2 translations (with KDE_3_3_BRANCH .pot)
+   * Include KDE 3.3.2 kde-default.css stylesheet so that documentation
+     is laid out properly in earlier versions of KDE
+   * Include KDE 3.3.2 fdl-license.html so that share/doc/HTML/en/common/
+     symlink is not needed (useful in binary distribution)
+   * Use KDE 3.3.2 admin/ and kdegraphics/ folders (not from HEAD unlike
+     previous versions)
+   * Provide xdelta's and bsdiff's
+
+Version 1.2.1_kde3 (Unreleased 2004-10-02)
    * Fix selection regressions introduced in 1.2:
      - Make selection dragging with CTRL work again (copies selection onto
        document)
@@ -81,9 +116,9 @@ KDE_3_3_BRANCH first.
      - Region-aware: paint component rectangles of the update region,
        rather than the bounding rectangle
      [also in KDE_3_3_BRANCH]
-   * Fix missing Tool Box icons under some linux distributions by working
-     around broken iconthemes that don't inherit from "hicolor" - duplicate
-     icons so that they install in both hicolor/ and crystalsvg/.
+   * Fix missing Tool Box icons under some GNU/Linux distributions by
+     working around broken iconthemes that don't inherit from "hicolor" -
+     duplicate icons so that they install in both hicolor/ and crystalsvg/.
      Thanks to Christoph Eckert for the fix.
    * Update image format associations to all formats supported by KDE 3.3
      [also in KDE_3_3_BRANCH]
@@ -95,7 +130,7 @@ KDE_3_3_BRANCH first.
    * Remove unused images in doc directory
      [also in KDE_3_3_BRANCH]
 
-Version 1.2_kde3 "ByFiat Everytime" (2004/08/18)
+Version 1.2_kde3 "ByFiat Everytime" (2004-08-18)
    * Backport to KDE 3.0 by merging kolourpaint_1_0_branch
      - 1.2_kde3 should be functionally the same as 1.2, if compiled under
        KDE 3.3
@@ -112,12 +147,28 @@ Version 1.2_kde3 "ByFiat Everytime" (2004/08/18)
    * When changing between colour depth and quality widgets in the save
      filedialog, make sure "Convert to:" and "Quality:" are correctly
      rendered (hacking around a Qt redraw glitch)
- 
+   * Include Makefile.cvs in case user wants to recreate build system
+   * Include TODO because Linux Magazine liked it (was removed in 1.0.2)
+   * Fix build on FreeBSD 4.9:
+     Updated autoconf 2.53/automake 1.6.3/libtool 1.4.2 (MDK 9.0) to
+             autoconf 2.59/automake 1.8.3/libtool 1.5.6 (FC 2)
+
 
 KolourPaint 1.2 Series (KDE_3_3_BRANCH)
 ======================
 
-Version 1.2.1 (2004/10/02)
+Version 1.2.2 (Frozen 2004-11-27)
+   * Fix crash due to text box when scaling image behind it
+   * Empty text clipboard fixes:
+     - Don't get stuck on a wait cursor after attempting to paste empty
+       text into a text box
+     - Prevent pasting text from creating a new text box if text is empty
+     - Prevent copying of empty text box
+   * Smaller selection and text box resize handles (visually not
+     actually) - covers up fewer selected pixels, doesn't cover up text
+   * Restore mouse cursor after deselecting selection/text tools
+
+Version 1.2.1 (2004-10-02)
    * Fix selection regressions introduced in 1.2:
      - Make selection dragging with CTRL work again (copies selection onto
        document)
@@ -143,7 +194,7 @@ Version 1.2.1 (2004/10/02)
    * Remove unused images in doc directory
    * Update docs (README, NEWS, ...)
 
-Version 1.2 "ByFiat Everytime" (2004/08/18)
+Version 1.2 "ByFiat Everytime" (2004-08-18)
    * Add up to 500 levels of Undo/Redo (minimum of 10 levels, maximum of
      500 as long as the total history size < 16MB)
    * Add freehand resizing of image
@@ -270,7 +321,7 @@ No more releases are expected from the 1.0 branch.  There are some annoying
 bugs due to architectural problems that cannot be solved without
 backporting large amounts of code from the 1.2 branch.
 
-Version 1.0.2 (2004/04/29)
+Version 1.0.2 (2004-04-29)
    * New icons (Kristof Borrey)
    * Added documentation in the KDE Help Centre
    * Make the brush tool draw something at size 1x1;
@@ -298,13 +349,13 @@ Version 1.0.2 (2004/04/29)
    * Decrease application preference to below that of a viewer (Stephan
      Kulow)
 
-Version 1.0.1 (2004/03/06)
+Version 1.0.1 (2004-03-06)
    * Backport to KDE 3.0 & 3.1; KolourPaint 1.0.1 should be functionally
      the same as KolourPaint 1.0 if compiled under KDE 3.2
    * Check for QImageDrag::canDecode() before calling QImageDrag::decode()
      (prevents X and valgrind errors)
    * Prefer Crystal SVG text icons over KolourPaint's ones
 
-Version 1.0 "Seagull" (2004/02/29)
+Version 1.0 "Seagull" (2004-02-29)
    * First stable release
 
