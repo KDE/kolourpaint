@@ -247,6 +247,7 @@ void kpMainWindow::init ()
     connect (m_scrollView, SIGNAL (contentsMoving (int, int)),
              this, SLOT (slotScrollViewAboutToScroll ()));
     setCentralWidget (m_scrollView);
+    m_scrollView->show ();
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tTIME: m_scrollView = " << time.restart () << "msec" << endl;
 #endif
