@@ -11,15 +11,38 @@ Before 1.0
 Short-Term
 ----------
 
-Image/Crop
+fix selections; implement free-form selection
+- clean interface
+- drastically improve performance
+- Undo/Redo
+- transparent & opaque selections
+Image menu items as ordinary tools
 
-pulsating transparent brush cursor (not black)
+Image/Crop
 
 kptoolwidgetbase - spacing between items, make contentsRect() actual size wanted
 
-introduce kpColor class to avoid using undefined QColor::isValid() behaviour for transparency
+colour similarity option for Fill and Colour Eraser
+
+get rid of Line Style Widget?
+
+restore Ghost to his former glory
 
 working thumbnail view; also maybe shouldn't be a toolbar
+
+clean up Image dialogs
+
+
+
+Medium Term (1-2 months)
+------------------------
+
+tool/text
+paste text (editable after you paste it)
+
+pulsating transparent brush cursor (not black)
+
+introduce kpColor class to avoid using undefined QColor::isValid() behaviour for transparency
 
 brush shape in wrong place if zoom smaller (or scroll with wheel)
 Reason: the mouse isn't moving relative to the view (as the view is moving
@@ -38,22 +61,7 @@ clean up kpmainwindow
 config dialogs (look into new kconfig generator)
 
 
-Medium Term (2-4 weeks)
----------------------
-
-fix selections; implement free-form selection
-- clean interface
-- drastically improve performance
-- Undo/Redo
-- transparent & opaque selections
-Image menu items as ordinary tools
-icons for some of the Image dialogs
-
-tool/text
-paste text (editable after you paste it)
-
-
-Long-Term (approx 1-2 months)
+Long-Term (approx 2 months)
 -----------------------------
 
 colour depth audit
