@@ -318,16 +318,20 @@ void kpColorCells::setOrientation (Qt::Orientation o)
          i < r * c;
          i++)
     {
-        int y = i / c;
-        int x = i % c;
+        int pos;
         
-        if (o == Qt::Vertical)
-            x = (c - 1) - (i % c);
-
-        int arrayIndex = y * c + x;
+        if (o == Qt::Horizontal)
+        {
+            pos = i;
+        }
+        else
+        {
+            int y = i % cols;
+            int x = rows - 1 - i / cols;
+            pos = y * rows + x;
+        }
         
-        kdDebug () << "\tadding array index" << arrayIndex << " to colorcell " << i << endl;
-        KColorCells::setColor (i, colors [arrayIndex]);
+        KColorCells::setColor (pos, colors [i]);
     }
     
     m_orientation = o;
