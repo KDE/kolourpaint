@@ -59,8 +59,6 @@ This file lists known bugs in the 1.??? release that are not considered
 
 14. The text cursor may be momentarily misrendered when scrolling the view.
 
-15. Flicker when scrolling.
-
 16. The Edit/Paste option is not disabled when the clipboard data is lost
     due to the owner terminating (no QClipboard::dataChanged() signal).
 

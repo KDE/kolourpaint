@@ -80,6 +80,7 @@ kpView::kpView (QWidget *parent, const char *name,
     }
     resize (width, height);
 
+    setBackgroundMode (Qt::NoBackground);  // no flicker
     setFocusPolicy (QWidget::WheelFocus);
     setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
     setKeyCompression (true);
