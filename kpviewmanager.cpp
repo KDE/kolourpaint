@@ -342,6 +342,14 @@ void kpViewManager::setTextCursorPosition (int row, int col, bool isUpdateMicroF
 
     if (isUpdateMicroFocusHint)
     {
+        kpDocument *doc = m_mainWindow->document ();
+        if (!doc)
+            return;
+        
+        kpSelection *sel = doc->selection ();
+        if (!sel || !sel->isText ())
+            return;
+
         if (m_viewUnderCursor)
         {
             QPoint topLeft = sel->pointForTextRowCol (m_textCursorRow, m_textCursorCol);
