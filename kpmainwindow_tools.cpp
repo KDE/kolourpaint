@@ -97,11 +97,11 @@ void kpMainWindow::setupTools ()
     connect (m_toolToolBar, SIGNAL (sigToolSelected (kpTool *)),
              this, SLOT (slotToolSelected (kpTool *)));
     
-    const int numTools = (int) m_tools.count ();
-    for (int i = 0; i < numTools; i++)
+    for (QPtrList <kpTool>::const_iterator it = m_tools.begin ();
+         it != m_tools.end ();
+         it++)
     {
-        kpTool *tool = m_tools.at (i);
-        m_toolToolBar->registerTool (tool);
+        m_toolToolBar->registerTool (*it);
     }
 
 
