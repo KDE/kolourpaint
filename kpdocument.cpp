@@ -642,13 +642,13 @@ void kpDocument::setSelection (const kpSelection &selection)
         m_selection->transparency () != m_mainWindow->selectionTransparency ())
     {
         kdDebug () << "kpDocument::setSelection() sel's transparency differs "
-                      "from mainWindow's transparency - setting sel's transparency "
-                      "to mainWindow"
+                      "from mainWindow's transparency - setting mainWindow's transparency "
+                      "to sel"
                    << endl;
         kdDebug () << "\tisOpaque: sel=" << m_selection->transparency ().isOpaque ()
                    << " mainWindow=" << m_mainWindow->selectionTransparency ().isOpaque ()
                    << endl;
-        m_selection->setTransparency (m_mainWindow->selectionTransparency ());
+        m_mainWindow->setSelectionTransparency (m_selection->transparency ());
     }
 
 #if DEBUG_KP_DOCUMENT && 0
