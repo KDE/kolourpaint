@@ -53,8 +53,7 @@
 // private
 kpPixmapFX::WarnAboutLossInfo kpMainWindow::pasteWarnAboutLossInfo () const
 {
-    // TODO: since when was "this" a "const kpMainWindow *"???
-    return kpPixmapFX::WarnAboutLossInfo ((QWidget *) (this),
+    return kpPixmapFX::WarnAboutLossInfo ((QWidget *) const_cast <kpMainWindow *> (this),
         i18n ("image to be pasted"),
         "paste");
 }
