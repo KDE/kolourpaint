@@ -810,7 +810,9 @@ void kpColorPalette::setOrientation (Qt::Orientation o)
 kpColorSimilarityToolBarItem::kpColorSimilarityToolBarItem (kpMainWindow *mainWindow,
                                                             QWidget *parent,
                                                             const char *name)
-    : kpColorSimilarityCube (true/*depressed*/, mainWindow, parent, name),
+    : kpColorSimilarityCube (kpColorSimilarityCube::Depressed |
+                             kpColorSimilarityCube::DoubleClickInstructions,
+                             mainWindow, parent, name),
       m_mainWindow (mainWindow),
       m_processedColorSimilarity (kpColor::Exact)
 {

@@ -51,7 +51,7 @@ public:
     static const double maximumColorSimilarity;
 
 private slots:
-    void slotColorSimilarityValueChanged (int percent);
+    void slotColorSimilarityValueChanged ();
 
 private:
     kpMainWindow *m_mainWindow;

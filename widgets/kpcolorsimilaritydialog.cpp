@@ -31,6 +31,7 @@
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qpushbutton.h>
 
 #include <klocale.h>
 #include <knuminput.h>
@@ -41,7 +42,7 @@
 // public static
 const double kpColorSimilarityDialog::maximumColorSimilarity = .30;
 
-    
+
 kpColorSimilarityDialog::kpColorSimilarityDialog (kpMainWindow *mainWindow,
                                                   QWidget *parent,
                                                   const char *name)
@@ -54,9 +55,9 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (kpMainWindow *mainWindow,
     setMainWidget (baseWidget);
 
 
-    QGroupBox *cubeGroupBox = new QGroupBox (baseWidget);
+    QGroupBox *cubeGroupBox = new QGroupBox (i18n ("Preview"), baseWidget);
 
-    m_colorSimilarityCube = new kpColorSimilarityCube (false/*not depressed*/,
+    m_colorSimilarityCube = new kpColorSimilarityCube (kpColorSimilarityCube::Plain,
                                                        mainWindow, cubeGroupBox);
     m_colorSimilarityCube->setMinimumSize (240, 180);
 
@@ -67,15 +68,27 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (kpMainWindow *mainWindow,
     QGroupBox *inputGroupBox = new QGroupBox (i18n ("RGB Color Cube Distance"), baseWidget);
 
     m_colorSimilarityInput = new KIntNumInput (inputGroupBox);
-    m_colorSimilarityInput->setRange (0, int (kpColorSimilarityDialog::maximumColorSimilarity * 100), 5, true/*slider*/);
+    m_colorSimilarityInput->setRange (0, int (kpColorSimilarityDialog::maximumColorSimilarity * 100),
+                                      5/*step*/, true/*slider*/);
     m_colorSimilarityInput->setSuffix (i18n ("%"));
     m_colorSimilarityInput->setSpecialValueText (i18n ("Exact Match"));
 
+
+    QWidget *verticalSpaceWidget = new QWidget (inputGroupBox);
+    verticalSpaceWidget->setMinimumSize (1, spacingHint ());
+    QPushButton *updatePreviewPushButton = new QPushButton (i18n ("Update &Preview"), inputGroupBox);
+
+
     QVBoxLayout *inputLayout = new QVBoxLayout (inputGroupBox, marginHint () * 2, spacingHint ());
     inputLayout->addWidget (m_colorSimilarityInput);
+    inputLayout->addWidget (verticalSpaceWidget);
+    inputLayout->addWidget (updatePreviewPushButton, 0/*stretch*/, Qt::AlignRight);
+
 
     connect (m_colorSimilarityInput, SIGNAL (valueChanged (int)),
-             this, SLOT (slotColorSimilarityValueChanged (int)));
+             this, SLOT (slotColorSimilarityValueChanged ()));
+    connect (updatePreviewPushButton, SIGNAL (clicked ()),
+             this, SLOT (slotColorSimilarityValueChanged ()));
 
 
     QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget, marginHint (), spacingHint () * 2);
@@ -102,9 +115,9 @@ void kpColorSimilarityDialog::setColorSimilarity (double similarity)
 
 
 // private slot
-void kpColorSimilarityDialog::slotColorSimilarityValueChanged (int percent)
+void kpColorSimilarityDialog::slotColorSimilarityValueChanged ()
 {
-    m_colorSimilarityCube->setColorSimilarity (double (percent) / 100);
+    m_colorSimilarityCube->setColorSimilarity (double (m_colorSimilarityInput->value ()) / 100);
 }
 
 

@@ -37,7 +37,14 @@ class kpMainWindow;
 class kpColorSimilarityCube : public QFrame
 {
 public:
-    kpColorSimilarityCube (bool isDepressed,
+    enum Look
+    {
+        Plain = 0,
+        Depressed = 1,
+        DoubleClickInstructions = 2
+    };
+
+    kpColorSimilarityCube (int look,
                            kpMainWindow *mainWindow,
                            QWidget *parent,
                            const char *name = 0);

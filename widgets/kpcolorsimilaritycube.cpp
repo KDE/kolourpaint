@@ -44,10 +44,11 @@
 #include <kpdefs.h>
 
 
+// TODO: 255 --> 256?
 const double kpColorSimilarityCube::colorCubeDiagonalDistance =
     sqrt (255 * 255 * 3);
 
-kpColorSimilarityCube::kpColorSimilarityCube (bool isDepressed,
+kpColorSimilarityCube::kpColorSimilarityCube (int look,
                                               kpMainWindow *mainWindow,
                                               QWidget *parent,
                                               const char *name)
@@ -55,23 +56,54 @@ kpColorSimilarityCube::kpColorSimilarityCube (bool isDepressed,
       m_mainWindow (mainWindow),
       m_colorSimilarity (-1)
 {
-    if (isDepressed)
+    if (look & Depressed)
         setFrameStyle (QFrame::Panel | QFrame::Sunken);
 
     setColorSimilarity (0);
 
-    QWhatsThis::add (this, i18n ("<qt><p><b>Color Similarity</b> is how close "
-                                 "colors must be in the RGB Color Cube "
-                                 "to be considered the same.</p>"
 
-                                 "<p>If you set it to something "
-                                 "other than <b>Exact</b>, "
-                                 "you can work more effectively with dithered "
-                                 "images and photos.</p>"
+    // Don't cause the translators grief by appending strings
+    // - duplicate text with 2 cases
 
-                                 "<p>This feature applies to transparent selections, as well as "
-                                 "the Flood Fill, Color Eraser and Autocrop "
-                                 "tools.</p></qt>"));
+    if (look & DoubleClickInstructions)
+    {
+        QWhatsThis::add (this,
+            i18n ("<qt><p><b>Color Similarity</b> is how close "
+                  "colors must be in the RGB Color Cube "
+                  "to be considered the same.</p>"
+
+                  "<p>If you set it to something "
+                  "other than <b>Exact</b>, "
+                  "you can work more effectively with dithered "
+                  "images and photos.</p>"
+
+                  "<p>This feature applies to transparent selections, as well as "
+                  "the Flood Fill, Color Eraser and Autocrop "
+                  "tools.</p>"
+
+                  // sync: different to else case
+                  "<p>To configure it, double click on the cube.</p>"
+
+                  "</qt>"));
+    }
+    else
+    {
+        QWhatsThis::add (this,
+            i18n ("<qt><p><b>Color Similarity</b> is how close "
+                  "colors must be in the RGB Color Cube "
+                  "to be considered the same.</p>"
+
+                  "<p>If you set it to something "
+                  "other than <b>Exact</b>, "
+                  "you can work more effectively with dithered "
+                  "images and photos.</p>"
+
+                  "<p>This feature applies to transparent selections, as well as "
+                  "the Flood Fill, Color Eraser and Autocrop "
+                  "tools.</p>"
+
+                  "</qt>"));
+    }
 }
 
 kpColorSimilarityCube::~kpColorSimilarityCube ()
