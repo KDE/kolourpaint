@@ -44,9 +44,14 @@ class kpDualColorButton : public QWidget
 Q_OBJECT
 
 public:
-    kpDualColorButton (QWidget *parent, const char *name = 0);
+    kpDualColorButton (QWidget *parent,
+                       Qt::Orientation o = Qt::Horizontal,
+                       const char *name = 0);
     virtual ~kpDualColorButton ();
 
+    Qt::Orientation orientation () const;
+    void setOrientation (Qt::Orientation o);
+    
     QColor color (int which) const;
     void setColor (int which, const QColor &color);
 
@@ -65,9 +70,14 @@ class kpColorCells : public KColorCells
 Q_OBJECT
 
 public:
-    kpColorCells (QWidget *parent);
+    kpColorCells (QWidget *parent,
+                  Qt::Orientation o = Qt::Horizontal,
+                  const char *name = 0);
     virtual ~kpColorCells ();
 
+    Qt::Orientation orientation () const;
+    void setOrientation (Qt::Orientation o);
+    
 signals:
     void foregroundColorChanged (const QColor &color);
     void backgroundColorChanged (const QColor &color);

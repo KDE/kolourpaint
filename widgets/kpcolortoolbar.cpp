@@ -41,7 +41,9 @@
  * kpDualColorButton
  */
 
-kpDualColorButton::kpDualColorButton (QWidget *parent, const char *name)
+kpDualColorButton::kpDualColorButton (QWidget *parent,
+                                      Qt::Orientation o,
+                                      const char *name)
     : QWidget (parent, name)
 {
     QVBoxLayout *lay = new QVBoxLayout (this);
@@ -60,6 +62,15 @@ kpDualColorButton::~kpDualColorButton ()
 {
 }
 
+Qt::Orientation kpDualColorButton::orientation () const
+{
+    return Qt::Horizontal;
+}
+
+void kpDualColorButton::setOrientation (Qt::Orientation o)
+{
+}
+    
 QColor kpDualColorButton::color (int which) const
 {
     if (which < 0 || which > 1)
@@ -184,7 +195,9 @@ static const QColor kpTan = blend (kpYellow, kpWhite);
 
 #define rows 2
 #define cols 11
-kpColorCells::kpColorCells (QWidget *parent)
+kpColorCells::kpColorCells (QWidget *parent,
+                            Qt::Orientation o,
+                            const char *name)
     : KColorCells (parent, rows, cols),
       m_mouseButton (-1)
 {
@@ -237,6 +250,15 @@ kpColorCells::~kpColorCells ()
 {
 }
 
+Qt::Orientation kpColorCells::orientation () const
+{
+    return Qt::Horizontal;
+}
+
+void setOrientation (Qt::Orientation o)
+{
+}
+    
 // virtual protected
 void kpColorCells::paintCell (QPainter *painter, int row, int col)
 {
