@@ -101,6 +101,11 @@
 #define kpSettingThumbnailGeometry QString::fromLatin1 ("Geometry")
 
 
+#define kpSettingsGroupPreviewSave QString::fromLatin1 ("Save Preview Settings")
+#define kpSettingPreviewSaveGeometry QString::fromLatin1 ("Geometry")
+#define kpSettingPreviewSaveUpdateDelay QString::fromLatin1 ("Update Delay")
+
+
 #define kpSettingsGroupTools QString::fromLatin1 ("Tool Settings")
 #define kpSettingLastTool QString::fromLatin1 ("Last Used Tool")
 
@@ -112,6 +117,11 @@
 #define kpSettingItalic QString::fromLatin1 ("Italic")
 #define kpSettingUnderline QString::fromLatin1 ("Underline")
 #define kpSettingStrikeThru QString::fromLatin1 ("Strike Thru")
+
+
+#define kpSettingsGroupFlattenEffect QString::fromLatin1 ("Flatten Effect Settings")
+#define kpSettingFlattenEffectColor1 QString::fromLatin1 ("Color1")
+#define kpSettingFlattenEffectColor2 QString::fromLatin1 ("Color2")
 
 
 #endif  // __kp_defs_h__
