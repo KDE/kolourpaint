@@ -48,12 +48,12 @@ Q_OBJECT
 
 public:
     kpDualColorButton (QWidget *parent,
-                       QBoxLayout::Direction dir = QBoxLayout::TopToBottom,
+                       Qt::Orientation o = Qt::Vertical,
                        const char *name = 0);
     virtual ~kpDualColorButton ();
 
-    QBoxLayout::Direction direction () const;
-    void setDirection (QBoxLayout::Direction dir);
+    Qt::Orientation orientation () const;
+    void setOrientation (Qt::Orientation o);
     
     QColor color (int which) const;
     void setColor (int which, const QColor &color);

@@ -42,7 +42,7 @@
  */
 
 kpDualColorButton::kpDualColorButton (QWidget *parent,
-                                      QBoxLayout::Direction dir,
+                                      Qt::Orientation o,
                                       const char *name)
     : QWidget (parent, name),
       m_boxLayout (0)
@@ -53,20 +53,35 @@ kpDualColorButton::kpDualColorButton (QWidget *parent,
     setForegroundColor (Qt::black);
     setBackgroundColor (Qt::white);
 
-    setDirection (dir);
+    setOrientation (o);
 }
 
 kpDualColorButton::~kpDualColorButton ()
 {
 }
 
-QBoxLayout::Direction kpDualColorButton::direction () const
+Qt::Orientation kpDualColorButton::orientation () const
 {
-    return m_boxLayout ? m_boxLayout->direction () : QBoxLayout::TopToBottom;
+    QBoxLayout::Direction dir = QBoxLayout::TopToBottom;
+
+    if (m_boxLayout)
+        dir = m_boxLayout->direction ();
+
+    if (dir == QBoxLayout::LeftToRight || dir == QBoxLayout::RightToLeft)
+        return Qt::Horizontal;
+    else
+        return Qt::Vertical;
 }
 
-void kpDualColorButton::setDirection (QBoxLayout::Direction dir)
+void kpDualColorButton::setOrientation (Qt::Orientation o)
 {
+    QBoxLayout::Direction dir;
+    
+    if (o == Qt::Horizontal)
+        dir = QBoxLayout::LeftToRight;
+    else
+        dir = QBoxLayout::TopToBottom;
+    
     if (m_boxLayout)
         m_boxLayout->setDirection (dir);
     else
