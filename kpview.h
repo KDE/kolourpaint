@@ -33,6 +33,8 @@
 #include <qregion.h>
 #include <qwmatrix.h>
 
+#include <kpdefs.h>
+
 
 class QDragEnterEvent;
 class QDragLeaveEvent;
@@ -107,12 +109,14 @@ signals:
 public:
     QRect selectionViewRect () const;
 
-    QPoint mouseViewPoint () const;
-    QPoint mouseViewPointRelativeToSelection () const;
-    bool mouseOnSelection () const;
+    // (if <viewPoint> is KP_INVALID_POINT, it uses QCursor::pos())
+
+    QPoint mouseViewPoint (const QPoint &returnViewPoint = KP_INVALID_POINT) const;
+    QPoint mouseViewPointRelativeToSelection (const QPoint &viewPoint = KP_INVALID_POINT) const;
+    bool mouseOnSelection (const QPoint &viewPoint = KP_INVALID_POINT) const;
 
     int textSelectionMoveBorderAtomicSize () const;
-    bool mouseOnSelectionToMove () const;
+    bool mouseOnSelectionToMove (const QPoint &viewPoint = KP_INVALID_POINT) const;
 
 protected:
     bool selectionLargeEnoughToHaveResizeHandlesIfAtomicSize (int atomicSize) const;
@@ -132,9 +136,9 @@ public:
     };
 
     // Returns a bitwise OR of the SelectionResizeType's
-    int mouseOnSelectionResizeHandle () const;
+    int mouseOnSelectionResizeHandle (const QPoint &viewPoint = KP_INVALID_POINT) const;
 
-    bool mouseOnSelectionToSelectText () const;
+    bool mouseOnSelectionToSelectText (const QPoint &viewPoint = KP_INVALID_POINT) const;
 
 
 public slots:

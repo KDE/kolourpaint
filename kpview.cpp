@@ -467,28 +467,31 @@ QRect kpView::selectionViewRect () const
 
 
 // public
-QPoint kpView::mouseViewPoint () const
+QPoint kpView::mouseViewPoint (const QPoint &returnViewPoint) const
 {
-    return mapFromGlobal (QCursor::pos ());
+    if (returnViewPoint != KP_INVALID_POINT)
+        return returnViewPoint;
+    else
+        return mapFromGlobal (QCursor::pos ());
 }
 
 // public
-QPoint kpView::mouseViewPointRelativeToSelection () const
+QPoint kpView::mouseViewPointRelativeToSelection (const QPoint &viewPoint) const
 {
     if (!selection ())
         return KP_INVALID_POINT;
 
-    return mouseViewPoint () - zoomDocToView (selection ()->topLeft ());
+    return mouseViewPoint (viewPoint) - zoomDocToView (selection ()->topLeft ());
 }
 
 // public
-bool kpView::mouseOnSelection () const
+bool kpView::mouseOnSelection (const QPoint &viewPoint) const
 {
     const QRect selViewRect = selectionViewRect ();
     if (!selViewRect.isValid ())
         return false;
 
-    return selViewRect.contains (mouseViewPoint ());
+    return selViewRect.contains (mouseViewPoint (viewPoint));
 }
 
 
@@ -502,19 +505,19 @@ int kpView::textSelectionMoveBorderAtomicSize () const
 }
 
 // public
-bool kpView::mouseOnSelectionToMove () const
+bool kpView::mouseOnSelectionToMove (const QPoint &viewPoint) const
 {
-    if (!mouseOnSelection ())
+    if (!mouseOnSelection (viewPoint))
         return false;
 
     if (!selection ()->isText ())
         return true;
 
-    if (mouseOnSelectionResizeHandle ())
+    if (mouseOnSelectionResizeHandle (viewPoint))
         return false;
 
 
-    const QPoint viewPointRelSel = mouseViewPointRelativeToSelection ();
+    const QPoint viewPointRelSel = mouseViewPointRelativeToSelection (viewPoint);
 
     // Middle point should always be selectable
     const QPoint selCenterDocPoint = selection ()->boundingRect ().center ();
@@ -601,13 +604,14 @@ QRegion kpView::selectionResizeHandlesViewRegion () const
 }
 
 // public
-int kpView::mouseOnSelectionResizeHandle () const
+int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
 {
 #if DEBUG_KP_VIEW
-    kdDebug () << "kpView::mouseOnSelectionResizeHandle()" << endl;
+    kdDebug () << "kpView::mouseOnSelectionResizeHandle(viewPoint="
+               << viewPoint << ")" << endl;
 #endif
 
-    if (!mouseOnSelection ())
+    if (!mouseOnSelection (viewPoint))
     {
     #if DEBUG_KP_VIEW
         kdDebug () << "\tmouse not on sel" << endl;
@@ -637,7 +641,7 @@ int kpView::mouseOnSelectionResizeHandle () const
     }
 
 
-    const QPoint viewPointRelSel = mouseViewPointRelativeToSelection ();
+    const QPoint viewPointRelSel = mouseViewPointRelativeToSelection (viewPoint);
 #if DEBUG_KP_VIEW
     kdDebug () << "\tviewPointRelSel=" << viewPointRelSel << endl;
 #endif
@@ -693,13 +697,14 @@ int kpView::mouseOnSelectionResizeHandle () const
 }
 
 // public
-bool kpView::mouseOnSelectionToSelectText () const
+bool kpView::mouseOnSelectionToSelectText (const QPoint &viewPoint) const
 {
 #if DEBUG_KP_VIEW
-    kdDebug () << "kpView::mouseOnSelectionToSelectText()" << endl;
+    kdDebug () << "kpView::mouseOnSelectionToSelectText(viewPoint="
+               << viewPoint << ")" << endl;
 #endif
 
-    if (!mouseOnSelection ())
+    if (!mouseOnSelection (viewPoint))
     {
     #if DEBUG_KP_VIEW
         kdDebug () << "\tmouse non on sel" << endl;
@@ -721,7 +726,8 @@ bool kpView::mouseOnSelectionToSelectText () const
                << endl;
 #endif
 
-    return (!mouseOnSelectionToMove () && !mouseOnSelectionResizeHandle ());
+    return (!mouseOnSelectionToMove (viewPoint) &&
+            !mouseOnSelectionResizeHandle (viewPoint));
 }
 
 
@@ -1436,11 +1442,6 @@ void kpView::paintEvent (QPaintEvent *e)
         backBufferPainter.drawPixmap (docRect, docPixmap);
         backBufferPainter.resetXForm ();  // back to 1-1 scaling
 
-        if (doc->selection ())
-        {
-            paintEventDrawSelectionResizeHandles (&backBufferPainter, viewRect);
-        }
-
     }  // if (!docRect.isEmpty ()) {
 
 
@@ -1450,6 +1451,16 @@ void kpView::paintEvent (QPaintEvent *e)
 
     if (m_showGrid && canShowGrid ())
         paintEventDrawGridLines (&backBufferPainter, viewRect);
+
+
+    if (!docRect.isEmpty ())
+    {
+        if (doc->selection ())
+        {
+            // Draw resize handles on top of possible grid lines
+            paintEventDrawSelectionResizeHandles (&backBufferPainter, viewRect);
+        }
+    }
 
 
     //

@@ -428,15 +428,21 @@ QPoint kpTool::currentPoint (bool zoomToDoc) const
 // public slot
 void kpTool::somethingBelowTheCursorChanged ()
 {
-    somethingBelowTheCursorChanged (currentPoint ());
+    somethingBelowTheCursorChanged (currentPoint (),
+        currentPoint (false/*view point*/));
 }
 
-// public slot
+// private
 // TODO: don't dup code from mouseMoveEvent()
-void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_)
+void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_,
+        const QPoint &currentViewPoint_)
 {
 #if DEBUG_KP_TOOL && 0
-    kdDebug () << "kpTool::somethingBelowTheCursorChanged" << currentPoint_ << endl;
+    kdDebug () << "kpTool::somethingBelowTheCursorChanged(docPoint="
+               << currentPoint_
+               << " viewPoint="
+               << currentViewPoint_
+               << ")" << endl;
     kdDebug () << "\tviewUnderStartPoint="
                << (viewUnderStartPoint () ? viewUnderStartPoint ()->name () : "(none)")
                << " viewUnderCursor="
@@ -446,6 +452,7 @@ void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_)
 #endif
 
     m_currentPoint = currentPoint_;
+    m_currentViewPoint = currentViewPoint_;
 
     if (m_beganDraw)
     {
@@ -472,7 +479,9 @@ void kpTool::beginInternal ()
     {
         // clear leftover statusbar messages
         setUserMessage ();
-        setUserShapePoints (m_currentPoint = currentPoint ());
+        m_currentPoint = currentPoint ();
+        m_currentViewPoint = currentPoint (false/*view point*/);
+        setUserShapePoints (m_currentPoint);
 
         // TODO: Audit all the code in this file - states like "m_began" &
         //       "m_beganDraw" should be set before calling user func.
@@ -567,6 +576,12 @@ void kpTool::beginDraw ()
 // virtual
 void kpTool::hover (const QPoint &point)
 {
+#if DEBUG_KP_TOOL
+    kdDebug () << "kpTool::hover" << point
+               << " base implementation"
+               << endl;
+#endif
+    
     setUserShapePoints (point);
 }
 
@@ -634,7 +649,11 @@ void kpTool::cancelShapeInternal ()
         if (viewUnderCursor ())
             hover (m_currentPoint);
         else
-            hover (m_currentPoint = KP_INVALID_POINT);
+        {
+            m_currentPoint = KP_INVALID_POINT;
+            m_currentViewPoint = KP_INVALID_POINT;
+            hover (m_currentPoint);
+        }
 
         if (returnToPreviousToolAfterEndDraw ())
         {
@@ -689,7 +708,11 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
     if (viewUnderCursor ())
         hover (m_currentPoint);
     else
-        hover (m_currentPoint = KP_INVALID_POINT);
+    {
+        m_currentPoint = KP_INVALID_POINT;
+        m_currentViewPoint = KP_INVALID_POINT;
+        hover (m_currentPoint);
+    }
 
     if (returnToPreviousToolAfterEndDraw ())
     {
@@ -953,6 +976,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
             // if we get a mousePressEvent when we're drawing, then the other
             // mouse button must have been pressed
             m_currentPoint = view ? view->zoomViewToDoc (e->pos ()) : QPoint (-1, -1);
+            m_currentViewPoint = view ? e->pos () : QPoint (-1, -1);
             cancelShapeInternal ();
         }
 
@@ -977,6 +1001,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     m_controlPressed = (buttonState & Qt::ControlButton);
     m_altPressed = (buttonState & Qt::AltButton);
     m_startPoint = m_currentPoint = view ? view->zoomViewToDoc (e->pos ()) : QPoint (-1, -1);
+    m_currentViewPoint = view ? e->pos () : QPoint (-1, -1);
     m_viewUnderStartPoint = view;
     m_lastPoint = QPoint (-1, -1);
 
@@ -1020,6 +1045,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
         }
 
         m_currentPoint = view->zoomViewToDoc (e->pos ());
+        m_currentViewPoint = e->pos ();
 
     #if DEBUG_KP_TOOL && 0
         kdDebug () << "\tDraw!" << endl;
@@ -1031,6 +1057,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
         if (dragScrolled)
         {
             m_currentPoint = currentPoint ();
+            m_currentViewPoint = currentPoint (false/*view point*/);
 
             // Scrollview has scrolled contents and has scheduled an update
             // for the newly exposed region.  If draw() schedules an update
@@ -1052,9 +1079,14 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
     {
         kpView *view = viewUnderCursor ();
         if (!view)  // possible if cancelShape()'ed but still holding down initial mousebtn
+        {
+            m_currentPoint = KP_INVALID_POINT;
+            m_currentViewPoint = KP_INVALID_POINT;
             return;
+        }
 
         m_currentPoint = view->zoomViewToDoc (e->pos ());
+        m_currentViewPoint = e->pos ();
         hover (m_currentPoint);
     }
 }
@@ -1078,6 +1110,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
         }
 
         m_currentPoint = view ? view->zoomViewToDoc (e->pos ()) : QPoint (-1, -1);
+        m_currentViewPoint = view ? e->pos () : QPoint (-1, -1);
         endDrawInternal (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
     }
 
@@ -1293,7 +1326,11 @@ void kpTool::notifyModifierStateChanged ()
         if (m_beganDraw)
             draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
         else
-            hover (currentPoint ());
+        {
+            m_currentPoint = currentPoint ();
+            m_currentViewPoint = currentPoint (false/*view point*/);
+            hover (m_currentPoint);
+        }
     }
 }
 
@@ -1356,7 +1393,11 @@ void kpTool::leaveEvent (QEvent *)
 
     // if we haven't started drawing (e.g. dragging a rectangle)...
     if (!m_beganDraw)
-        hover (m_currentPoint = KP_INVALID_POINT);
+    {
+        m_currentPoint = KP_INVALID_POINT;
+        m_currentViewPoint = KP_INVALID_POINT;
+        hover (m_currentPoint);
+    }
 }
 
 // static
