@@ -233,7 +233,8 @@ int kpToolRotateDialog::s_lastAngleCustom = 0;
 kpToolRotateDialog::kpToolRotateDialog (bool actOnSelection,
                                         kpMainWindow *mainWindow,
                                         const char *name)
-    : kpToolPreviewDialog (i18n ("Rotate"), actOnSelection, mainWindow, name)
+    : kpToolPreviewDialog (kpToolPreviewDialog::AllFeatures,
+                           i18n ("Rotate"), actOnSelection, mainWindow, name)
 {
     // Too confusing - disable for now
     s_lastAngleRadioButtonID = 3;

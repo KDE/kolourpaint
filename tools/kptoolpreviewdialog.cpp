@@ -43,7 +43,8 @@
 #include <kpselection.h>
 
 
-kpToolPreviewDialog::kpToolPreviewDialog (const QString &actionName,
+kpToolPreviewDialog::kpToolPreviewDialog (Features features,
+                                          const QString &actionName,
                                           bool actOnSelection,
                                           kpMainWindow *parent,
                                           const char *name)
@@ -52,8 +53,12 @@ kpToolPreviewDialog::kpToolPreviewDialog (const QString &actionName,
                    KDialogBase::Ok | KDialogBase::Cancel),
       m_actionName (actionName),
       m_actOnSelection (actOnSelection),
-      m_mainWindow (parent)
-
+      m_mainWindow (parent),
+      m_dimensionsGroupBox (0),
+      m_afterTransformDimensionsLabel (0),
+      m_previewGroupBox (0),
+      m_previewPixmapLabel (0),
+      m_gridLayout (0)
 {
     setCaption (captionFromActionName ());
 
@@ -73,19 +78,26 @@ kpToolPreviewDialog::kpToolPreviewDialog (const QString &actionName,
     }
 
 
-    createDimensionsGroupBox ();
-    createPreviewGroupBox ();
+    if (features & Dimensions)
+        createDimensionsGroupBox ();
+
+    if (features & Preview)
+        createPreviewGroupBox ();
 
 
     m_gridLayout = new QGridLayout (baseWidget, 4, 2,
                                     marginHint (), spacingHint ());
-    m_gridLayout->addWidget (m_dimensionsGroupBox, 0, 0);
-    m_gridLayout->addWidget (m_previewGroupBox, 0, 1);
+    // --- reserved row 0 ---
+    if (m_dimensionsGroupBox)
+        m_gridLayout->addWidget (m_dimensionsGroupBox, 1, 0);
 
-    m_gridLayout->setRowStretch (0, 1);
+    if (m_previewGroupBox)
+        m_gridLayout->addWidget (m_previewGroupBox, 1, 1);
+
+    m_gridLayout->setRowStretch (1, 1);
     m_gridLayout->setColStretch (1, 1);
 
-    m_gridNumRows = 1;
+    m_gridNumRows = 2;
 }
 
 kpToolPreviewDialog::~kpToolPreviewDialog ()
@@ -101,7 +113,6 @@ QString kpToolPreviewDialog::captionFromActionName () const
     else
         return i18n ("%1 Image").arg (m_actionName);
 }
-
 
 // private
 void kpToolPreviewDialog::createDimensionsGroupBox ()
@@ -161,6 +172,13 @@ kpDocument *kpToolPreviewDialog::document () const
     return m_mainWindow ? m_mainWindow->document () : 0;
 }
 
+
+// protected
+void kpToolPreviewDialog::addCustomWidgetToFront (QWidget *w)
+{
+    m_gridLayout->addMultiCellWidget (w, 0, 0, 0, 1);
+}
+
 // protected
 void kpToolPreviewDialog::addCustomWidget (QWidget *w)
 {
@@ -172,6 +190,9 @@ void kpToolPreviewDialog::addCustomWidget (QWidget *w)
 // private
 void kpToolPreviewDialog::updateDimensions ()
 {
+    if (!m_dimensionsGroupBox)
+        return;
+
     kpDocument *doc = document ();
     if (!doc)
         return;
@@ -221,6 +242,10 @@ void kpToolPreviewDialog::updateShrukenDocumentPixmap ()
                << m_previewPixmapLabel->size ()
                << endl;
 #endif
+
+    if (!m_previewGroupBox)
+        return;
+
 
     kpDocument *doc = document ();
     if (!doc || !doc->pixmap ())
@@ -285,6 +310,10 @@ void kpToolPreviewDialog::updatePreview ()
 #if DEBUG_KP_TOOL_PREVIEW_DIALOG
     kdDebug () << "kpToolPreviewDialog::updatePreview()" << endl;
 #endif
+
+    if (!m_previewGroupBox)
+        return;
+
 
     kpDocument *doc = document ();
     if (!doc)

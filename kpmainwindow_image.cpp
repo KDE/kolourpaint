@@ -43,6 +43,7 @@
 #include <kpcolortoolbar.h>
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
+#include <kpeffectsdialog.h>
 #include <kpselection.h>
 #include <kptool.h>
 #include <kptoolautocrop.h>
@@ -128,6 +129,9 @@ void kpMainWindow::setupImageMenuActions ()
 
     m_actionClear = new KAction (i18n ("C&lear"), CTRL + SHIFT + Key_N,
         this, SLOT (slotClear ()), ac, "image_clear");
+
+    d->m_actionMoreEffects = new KAction (i18n ("&More Effects..."), CTRL + Key_M,
+        this, SLOT (slotMoreEffects ()), ac, "image_more_effects");
 
     enableImageMenuDocumentActions (false);
 }
@@ -442,19 +446,27 @@ void kpMainWindow::slotInvertColors ()
 // private slot
 void kpMainWindow::slotClear ()
 {
-#if DEBUG_KP_MAIN_WINDOW && 1
-    kdDebug () << "toolHasBegunShape: " << toolHasBegunShape () << endl;
-#endif
-
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
-
-#if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotClear ()" << endl;
-#endif
 
     addImageOrSelectionCommand (
         new kpToolClearCommand (m_document->selection (), this));
 }
 
+// private slot
+void kpMainWindow::slotMoreEffects ()
+{
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
+    kpEffectsDialog dialog ((bool) m_document->selection (), this);
+
+    if (dialog.exec () && !dialog.isNoOp ())
+    {
+        /*addImageOrSelectionCommand (
+            new kpToolSkewCommand (m_document->selection (),
+                                   dialog->horizontalAngle (), dialog->verticalAngle (),
+                                   this));*/
+    }
+
+}

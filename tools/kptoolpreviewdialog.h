@@ -47,8 +47,15 @@ class kpToolPreviewDialog : public KDialogBase
 Q_OBJECT
 
 public:
+    enum Features
+    {
+        Dimensions = 1, Preview = 2,
+        AllFeatures = Dimensions | Preview
+    };
+
     // You must call slotUpdate() in your constructor
-    kpToolPreviewDialog (const QString &actionName,  // e.g. "Skew"
+    kpToolPreviewDialog (Features features,
+                         const QString &actionName,  // e.g. "Skew"
                          bool actOnSelection,
                          kpMainWindow *parent,
                          const char *name = 0);
@@ -64,7 +71,14 @@ public:
 
 protected:
     kpDocument *document () const;
-    void addCustomWidget (QWidget *w);  // all widgets must have mainWidget() as their parent
+
+    // All widgets must have mainWidget() as their parent
+    void addCustomWidgetToFront (QWidget *w);  // Note: can only add one
+    void addCustomWidget (QWidget *w);
+    void addCustomWidgetToBack (QWidget *w)
+    {
+        addCustomWidget (w);
+    }
 
     virtual QSize newDimensions () const = 0;
     virtual QPixmap transformPixmap (const QPixmap &pixmap,

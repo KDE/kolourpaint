@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui name="kolourpaint" version="14">
+<gui name="kolourpaint" version="15">
 
 <MenuBar>
     <Menu name="file">
@@ -63,6 +63,8 @@
         <Separator />
         <Action name="image_invert_colors" />
         <Action name="image_clear" />
+        <Separator />
+        <Action name="image_more_effects" />
     </Menu>
 
     <Menu name="settings">

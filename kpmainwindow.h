@@ -444,6 +444,7 @@ private slots:
     void slotConvertToGrayscale ();
     void slotInvertColors ();
     void slotClear ();
+    void slotMoreEffects ();
 
 
     /*
@@ -557,6 +558,7 @@ struct kpMainWindowPrivate
     KURL m_lastExportURL;
     QString m_lastExportMimeType;
     int m_lastToolNumber;
+    KAction *m_actionMoreEffects;
 };
 
 #endif  // __kp_main_window_h__

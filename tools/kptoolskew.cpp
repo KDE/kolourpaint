@@ -214,7 +214,8 @@ int kpToolSkewDialog::s_lastHorizontalAngle = 0,
 
 kpToolSkewDialog::kpToolSkewDialog (bool actOnSelection, kpMainWindow *parent,
                                     const char *name)
-    : kpToolPreviewDialog (i18n ("Skew"), actOnSelection, parent, name)
+    : kpToolPreviewDialog (kpToolPreviewDialog::AllFeatures,
+                           i18n ("Skew"), actOnSelection, parent, name)
 {
     // Too confusing - disable for now
     s_lastHorizontalAngle = s_lastVerticalAngle = 0;
