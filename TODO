@@ -150,6 +150,11 @@ Settings/Show Path should only be there when there is a path (i.e. not Untitled)
 
 kpsqueezedtextlabel could use (or be replaced by) KStringHandler::rPixelSqueeze()
 
+kpSelection::setPixmap (QPixmap ()) hack allegedly for saving memory in commands
+backfires:
+- implicit sharing means that (most of the time), this isn't true
+- it forces kpSelection::calculateTransparencyMask() sloooowing things down
+
 documentation (assigned to Thurston)
 
 
