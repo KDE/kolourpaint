@@ -8,11 +8,16 @@ Currently Underway
 clean up kpmainwindow
 
 fix selections; implement free-form selection
+- clean interface
+- drastically improve performance
+- Undo/Redo
+- transparent & opaque selections
 
 Image menu items as ordinary tools
 honour background colour for Skew, Rotate
 
 tool/text
+paste text (editable after you paste it)
 
 
 Before 1.0
@@ -85,6 +90,10 @@ I'll be forced to redo them myself once transparency is supported
 
 After 1.0
 ==========
+
+KolourPaint at 1.0 should be very usable.  So the following are just nice
+ideas that may or may not ever get implemented:
+
 
 ability to specify measurements in pt,mm,cm,m,in instead of just pixels
 
