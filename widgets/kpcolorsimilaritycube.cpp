@@ -123,7 +123,7 @@ void kpColorSimilarityCube::setColorSimilarity (double similarity)
 #if DEBUG_KP_COLOR_SIMILARITY_CUBE
     kdDebug () << "kpColorSimilarityCube::setColorSimilarity(" << similarity << ")" << endl;
 #endif
-    
+
     if (m_colorSimilarity == similarity)
         return;
 
