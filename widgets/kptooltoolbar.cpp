@@ -183,7 +183,7 @@ void kpToolToolBar::slotToolSelected ()
         }
     }
 
-    kdDebug () << "kpToolToolBar::slotToolSelection() button=" << b
+    kdDebug () << "kpToolToolBar::slotToolSelected() button=" << b
                << " tool=" << tool << endl;
     
     if (tool)
