@@ -123,6 +123,14 @@ const kpTempPixmap *kpViewManager::tempPixmap () const
 // public
 void kpViewManager::setTempPixmap (const kpTempPixmap &tempPixmap)
 {
+#if DEBUG_KP_VIEW_MANAGER || 1
+    kdDebug () << "kpViewManager::setTempPixmap(isBrush="
+               << tempPixmap.isBrush ()
+               << ",topLeft=" << tempPixmap.topLeft ()
+               << ",pixmap.rect=" << tempPixmap.pixmap ().rect ()
+               << ")" << endl;
+#endif
+
     QRect oldRect;
 
     if (m_tempPixmap)

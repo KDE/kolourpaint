@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_PEN 0
+#define DEBUG_KP_TOOL_PEN 1
 
 #include <qapplication.h>
 #include <qbitmap.h>
@@ -228,6 +228,13 @@ void kpToolPen::beginDraw ()
 // virtual
 void kpToolPen::hover (const QPoint &point)
 {
+#if DEBUG_KP_TOOL_PEN && 1
+    kdDebug () << "kpToolPen::hover(" << point << ")"
+               << " hasBegun=" << hasBegun ()
+               << " hasBegunDraw=" << hasBegunDraw ()
+               << " cursorPixmap.isNull=" << m_cursorPixmap.isNull ()
+               << endl;
+#endif
     if (point != KP_INVALID_POINT && !m_cursorPixmap.isNull ())
     {
         m_mouseButton = 0;
@@ -887,7 +894,7 @@ void kpToolPen::endDraw (const QPoint &, const QRect &)
     m_currentCommand = 0;
 
     updateBrushCursor (false/*no recalc*/);
-    
+
     setUserMessage (haventBegunDrawUserMessage ());
 }
 

@@ -383,7 +383,7 @@ bool kpTool::hasCurrentPoint () const
 // public
 QPoint kpTool::currentPoint (bool zoomToDoc) const
 {
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 1
     kdDebug () << "kpTool::currentPoint(zoomToDoc=" << zoomToDoc << ")" << endl;
     kdDebug () << "\tviewUnderStartPoint="
                << (viewUnderStartPoint () ? viewUnderStartPoint ()->name () : "(none)")
@@ -964,7 +964,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
 void kpTool::mouseMoveEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 1
     kdDebug () << "kpTool::mouseMoveEvent pos=" << e->pos ()
                << " btnStateAfter=" << (int) e->stateAfter () << endl;
     kpView *v0 = viewUnderCursor (),
@@ -992,7 +992,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
         m_controlPressed = (buttonState & Qt::ControlButton);
         m_altPressed = (buttonState & Qt::AltButton);
 
-    #if DEBUG_KP_TOOL && 0
+    #if DEBUG_KP_TOOL && 1
         kdDebug () << "\tDraw!" << endl;
     #endif
         // If the view moved beneath the cursor, update the current point.
