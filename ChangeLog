@@ -1,0 +1,40 @@
+
+This is the master ChangeLog kept in CVS _HEAD_ only.  It contains change
+information for _all_ past and present branches.
+
+In contrast, ChangeLog in branches only contains the changes between
+releases tagged on the mainline up to (and including) the forkpoint and of
+course, its changes.
+
+
+---------------------------------------------------------------------------
+
+
+>->->  KolourPaint 1.1 / 1.2 series (HEAD)  <-<-<-
+
+TODO missing entries
+
+
+---------------------------------------------------------------------------
+
+
+>->->  KolourPaint 1.0 series (kolourpaint_1_0_branch)  <-<-<-
+
+There will probably be no more releases from this branch.
+
+TODO missing entries
+
+2004/03/06    KolourPaint 1.0.1
+
+- backport to KDE 3.0 & 3.1; KolourPaint 1.0.1 should be functionally the
+  same as KolourPaint 1.0 if compiled under KDE 3.2
+- check for QImageDrag::canDecode() before calling QImageDrag::decode()
+  (prevents X and valgrind errors)
+- prefer Crystal SVG text icons over KolourPaint's ones
+
+
+2004/02/29    KolourPaint 1.0
+
+
+---------------------------------------------------------------------------
+
