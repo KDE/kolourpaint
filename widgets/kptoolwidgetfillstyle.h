@@ -32,9 +32,9 @@
 #ifndef __kptoolwidgetfillstyle_h__
 #define __kptoolwidgetfillstyle_h__
 
-#include <qpixmap.h>
-
 #include <kptoolwidgetbase.h>
+
+class QBrush;
 
 class kpToolWidgetFillStyle : public kpToolWidgetBase
 {
@@ -44,10 +44,30 @@ public:
     kpToolWidgetFillStyle (QWidget *parent);
     virtual ~kpToolWidgetFillStyle ();
 
-    Qt::BrushStyle fillStyle () const;
+    enum FillStyle
+    {
+        NoFill,
+        FillWithBackground,
+        FillWithForeground,
+        FillWithForeground50Percent,
+        FillStyleNum  /* not (a valid FillStyle) */
+    };
+
+private:
+    QPixmap fillStylePixmap (FillStyle fs, int width, int height);
+    
+public:
+
+    FillStyle fillStyle () const;
+    
+    static QBrush brushForFillStyle (FillStyle fs,
+                                     const QColor &foregroundColor,
+                                     const QColor &backgroundColor);
+    QBrush brush (const QColor &foregroundColor,
+                  const QColor &backgroundColor);
 
 signals:
-    void fillStyleChanged (Qt::BrushStyle fillStyle);
+    void fillStyleChanged (kpToolWidgetFillStyle::FillStyle fillStyle);
 
 protected slots:
     virtual void setSelected (int which);

@@ -41,9 +41,9 @@
 #include <kpmainwindow.h>
 #include <kptoolrectangle.h>
 #include <kptooltoolbar.h>
+#include <kptoolwidgetfillstyle.h>
 #include <kptoolwidgetlinestyle.h>
 #include <kptoolwidgetlinewidth.h>
-#include <kptoolwidgetfillstyle.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
 
@@ -89,7 +89,8 @@ kpToolRectangle::kpToolRectangle (kpMainWindow *mainWindow)
       mainWindow, "tool_rectangle"),
       m_mode (Rectangle),
       m_toolWidgetLineStyle (0),
-      m_toolWidgetLineWidth (0)
+      m_toolWidgetLineWidth (0),
+      m_toolWidgetFillStyle (0)
 {
 }
 
@@ -124,6 +125,7 @@ void kpToolRectangle::slotForegroundColorChanged (const QColor &)
     kdDebug () << "kpToolRectangle::slotForegroundColorChanged()" << endl;
 #endif
     m_pen [0] = pen (0);
+    m_brush [0] = brush (0);  // brush may be in foreground color
     m_brush [1] = brush (1);
 }
 
@@ -136,6 +138,7 @@ void kpToolRectangle::slotBackgroundColorChanged (const QColor &)
 #endif
     m_pen [1] = pen (1);
     m_brush [0] = brush (0);
+    m_brush [1] = brush (1);  // brush may be in background color
 }
 
 // private
@@ -156,8 +159,14 @@ QBrush kpToolRectangle::brush (int mouseButton) const
                << " m_toolWidgetFillStyle=" << m_toolWidgetFillStyle
                << endl;
 #endif
-    return QBrush (color (1 - mouseButton),
-                   m_toolWidgetFillStyle->fillStyle ());
+    if (m_toolWidgetFillStyle)
+    {
+        return m_toolWidgetFillStyle->brush (
+                   color (mouseButton)/*foreground colour*/,
+                   color (1 - mouseButton)/*background colour*/);
+    }
+    else
+        return QBrush (color (1 - mouseButton));
 }
 
 
@@ -190,7 +199,7 @@ void kpToolRectangle::begin ()
 
         
         m_toolWidgetFillStyle = tb->toolWidgetFillStyle ();
-        connect (m_toolWidgetFillStyle, SIGNAL (fillStyleChanged (Qt::BrushStyle)),
+        connect (m_toolWidgetFillStyle, SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
                  this, SLOT (updateBrushes ()));
         m_toolWidgetFillStyle->show ();
 

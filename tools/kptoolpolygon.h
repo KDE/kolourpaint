@@ -43,6 +43,7 @@
 #include <kcommand.h>
 
 #include <kptool.h>
+#include <kptoolwidgetfillstyle.h>
 
 class QMouseEvent;
 class QPen;
@@ -68,7 +69,7 @@ public:
 
     enum Mode
     {
-        Polygon, Polyline, Line
+        Polygon, Polyline, Line, Curve
     };
     
     void setMode (Mode mode);
@@ -89,7 +90,7 @@ public:
 public slots:
     void slotLineStyleChanged (Qt::PenStyle lineStyle);
     void slotLineWidthChanged (int width);
-    void slotFillStyleChanged (Qt::BrushStyle fillStyle);
+    void slotFillStyleChanged (kpToolWidgetFillStyle::FillStyle fillStyle);
     
 protected slots:
     virtual void slotForegroundColorChanged (const QColor &);
@@ -101,7 +102,6 @@ private slots:
 private:
     Mode m_mode;
 
-    Qt::BrushStyle m_fillStyle;
     kpToolWidgetFillStyle *m_toolWidgetFillStyle;
     
     Qt::PenStyle m_lineStyle;

@@ -30,6 +30,7 @@
 */
 
 #include <qbitmap.h>
+#include <qbrush.h>
 #include <qpainter.h>
 
 #include <kdebug.h>
@@ -38,59 +39,17 @@
 #include <kptoolwidgetfillstyle.h>
 
 
-// SYNC: with QT
-static Qt::BrushStyle fillStyles [] =
-{
-    Qt::NoBrush,
-    Qt::SolidPattern,
-    // TODO
-    /*Qt::Dense1Pattern, 
-    Qt::Dense2Pattern,
-    Qt::Dense3Pattern,
-    Qt::Dense4Pattern,
-    Qt::Dense5Pattern,
-    Qt::Dense6Pattern,
-    Qt::Dense7Pattern,
-    Qt::HorPattern,
-    Qt::VerPattern,
-    Qt::CrossPattern,
-    Qt::BDiagPattern,
-    Qt::FDiagPattern,
-    Qt::DiagCrossPattern*/
-};
-
-static QPixmap fillStylePixmap (Qt::BrushStyle fillStyle, int width, int height)
-{
-    QPixmap pixmap (width, height);
-    QPainter painter;
-    
-    pixmap.fill (Qt::white);
-
-    painter.begin (&pixmap);
-    
-    painter.setPen (Qt::black);
-    painter.setBrush (QBrush (Qt::gray, fillStyle));
-    
-    painter.drawRect (3, 3, width - 6, height - 6);
-    
-    painter.end ();
-
-    pixmap.setMask (pixmap.createHeuristicMask ());
-    
-    return pixmap;
-}
-
 kpToolWidgetFillStyle::kpToolWidgetFillStyle (QWidget *parent)
     : kpToolWidgetBase (parent)
 {
     kpToolWidgetBase::setInvertSelectedPixmap (false);
 
-    for (int i = 0; i < int (sizeof (fillStyles) / sizeof (fillStyles [0])); i++)
+    for (int i = 0; i < (int) FillStyleNum; i++)
     {
         QPixmap pixmap;
-        int width = 44, height = 22;
+        int width = 44 / 2, height = width;
         
-        pixmap = fillStylePixmap (fillStyles [i], width, height);
+        pixmap = fillStylePixmap ((FillStyle) i, width, height);
         kpToolWidgetBase::addOption (pixmap);
     }
 
@@ -101,17 +60,78 @@ kpToolWidgetFillStyle::~kpToolWidgetFillStyle ()
 {
 }
 
-Qt::BrushStyle kpToolWidgetFillStyle::fillStyle () const
+
+// private
+QPixmap kpToolWidgetFillStyle::fillStylePixmap (FillStyle fs, int width, int height)
+{
+    QPixmap pixmap (width, height);
+    QPainter painter;
+    
+    pixmap.fill (Qt::white);
+
+    painter.begin (&pixmap);
+    
+    painter.setPen (QPen (Qt::black, 2));
+    painter.setBrush (brushForFillStyle (fs, Qt::black/*foreground*/, Qt::red/*background*/));
+    
+    painter.drawRect (3, 3, width - 6, height - 6);
+    
+    painter.end ();
+
+    pixmap.setMask (pixmap.createHeuristicMask ());
+    
+    return pixmap;
+}
+
+
+// public
+kpToolWidgetFillStyle::FillStyle kpToolWidgetFillStyle::fillStyle () const
 {
 #if 1
     kdDebug () << "kpToolWidgetFillStyle::fillStyle() selected="
                << kpToolWidgetBase::selected ()
                << endl;
 #endif
-    return fillStyles [kpToolWidgetBase::selected ()];
+    return (FillStyle) kpToolWidgetBase::selected ();
 }
 
-// virtual protected slot
+// public static
+QBrush kpToolWidgetFillStyle::brushForFillStyle (FillStyle fs,
+                                                 const QColor &foregroundColor,
+                                                 const QColor &backgroundColor)
+{
+    // do not complain about the "useless" breaks
+    // as the return statements might not be return statements one day
+
+    switch (fs)
+    {
+    case NoFill:
+        return Qt::NoBrush;
+        break;
+    case FillWithBackground:
+        return QBrush (backgroundColor);
+        break;
+    case FillWithForeground:
+        return QBrush (foregroundColor);
+        break;
+    case FillWithForeground50Percent:
+        return QBrush (backgroundColor, Qt::Dense4Pattern);
+        break;
+    default:
+        return Qt::NoBrush;
+        break;
+    }
+}
+
+// public
+QBrush kpToolWidgetFillStyle::brush (const QColor &foregroundColor,
+                                     const QColor &backgroundColor)
+{
+    return brushForFillStyle (fillStyle (), foregroundColor, backgroundColor);
+}
+
+
+// virtual protected slot [base kpToolWidgetBase]
 void kpToolWidgetFillStyle::setSelected (int which)
 {
     kpToolWidgetBase::setSelected (which);

@@ -48,7 +48,6 @@
 #include <kpmainwindow.h>
 #include <kptoolpolygon.h>
 #include <kptooltoolbar.h>
-#include <kptoolwidgetfillstyle.h>
 #include <kptoolwidgetlinestyle.h>
 #include <kptoolwidgetlinewidth.h>
 #include <kpviewmanager.h>
@@ -92,10 +91,14 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
     QPainter painter (&pixmap);
     painter.setPen (pen);
     painter.setBrush (brush);
-    if (mode != kpToolPolygon::Polygon)
-        painter.drawPolyline (pointsInRect);
-    else
+    
+    switch (mode)
     {
+    case kpToolPolygon::Line:
+    case kpToolPolygon::Polyline:
+        painter.drawPolyline (pointsInRect);
+        break;
+    case kpToolPolygon::Polygon:
         // TODO: why aren't the ends rounded?
         painter.drawPolygon (pointsInRect);
         if (!final)
@@ -113,6 +116,29 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
                 painter.drawLine (pointsInRect [0], pointsInRect [count - 1]);
             }
         }
+        break;
+    case kpToolPolygon::Curve:
+        int numPoints = pointsInRect.count ();
+        QPointArray pa (4);
+        
+        pa [0] = pointsInRect [0];
+        pa [3] = pointsInRect [1];
+        
+        switch (numPoints)
+        {
+        case 2:
+            pa [1] = pointsInRect [0];
+            pa [2] = pointsInRect [1];
+            break;
+        case 3:
+            pa [1] = pa [2] = pointsInRect [2];
+            break;
+        case 4:
+            pa [1] = pointsInRect [2];
+            pa [2] = pointsInRect [3];
+        }
+        
+        painter.drawCubicBezier (pa);
     }
     painter.end ();
 
@@ -127,7 +153,9 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
 kpToolPolygon::kpToolPolygon (kpMainWindow *mainWindow)
     : kpTool (i18n ("Polygon"), i18n ("Draws polygons"), mainWindow, "tool_polygon"),
       m_mode (Polygon),
-      m_toolWidgetFillStyle (0), m_toolWidgetLineStyle (0), m_toolWidgetLineWidth (0)
+      m_toolWidgetFillStyle (0),
+      m_toolWidgetLineStyle (0),
+      m_toolWidgetLineWidth (0)
 {
 }
 
@@ -160,8 +188,8 @@ void kpToolPolygon::begin ()
 
         if (m_toolWidgetFillStyle)
         {
-            connect (m_toolWidgetFillStyle, SIGNAL (fillStyleChanged (Qt::BrushStyle)),
-                     this, SLOT (slotFillStyleChanged (Qt::BrushStyle)));
+            connect (m_toolWidgetFillStyle, SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
+                     this, SLOT (slotFillStyleChanged (kpToolWidgetFillStyle::FillStyle)));
         }
         connect (m_toolWidgetLineStyle, SIGNAL (lineStyleChanged (Qt::PenStyle)),
                  this, SLOT (slotLineStyleChanged (Qt::PenStyle)));
@@ -173,10 +201,6 @@ void kpToolPolygon::begin ()
         m_toolWidgetLineStyle->show ();
         m_toolWidgetLineWidth->show ();
 
-        if (m_toolWidgetFillStyle)
-            m_fillStyle = m_toolWidgetFillStyle->fillStyle ();
-        else
-            m_fillStyle = Qt::NoBrush;
         m_lineStyle = m_toolWidgetLineStyle->lineStyle ();
         m_lineWidth = m_toolWidgetLineWidth->lineWidth ();
     }
@@ -186,7 +210,6 @@ void kpToolPolygon::begin ()
         m_toolWidgetLineStyle = 0;
         m_toolWidgetLineWidth = 0;
 
-        m_fillStyle = Qt::NoBrush;
         m_lineStyle = Qt::SolidLine;
         m_lineWidth = 1;
     }
@@ -203,8 +226,8 @@ void kpToolPolygon::end ()
 
     if (m_toolWidgetFillStyle)
     {
-        disconnect (m_toolWidgetFillStyle, SIGNAL (fillStyleChanged (Qt::BrushStyle)),
-                    this, SLOT (slotFillStyleChanged (Qt::BrushStyle)));
+        disconnect (m_toolWidgetFillStyle, SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
+                    this, SLOT (slotFillStyleChanged (kpToolWidgetFillStyle::FillStyle)));
         m_toolWidgetFillStyle = 0;
     }
     
@@ -259,6 +282,9 @@ void kpToolPolygon::beginDraw ()
             // _not_ the new/current start point
             // (which is disregarded in a poly* as only the end points count
             //  after the initial line)
+            //
+            // Curve Tool ignores m_startPoint (doesn't call applyModifiers())
+            // after the initial has been defined.
             m_startPoint = m_points [count - 1];
         }
     }
@@ -364,7 +390,13 @@ void kpToolPolygon::draw (const QPoint &, const QPoint &, const QRect &)
                << ", endPoint=" << m_currentPoint << endl;
 #endif    
 
-    applyModifiers ();
+    bool drawingALine = (m_mode != Curve) ||
+                        (m_mode == Curve && m_points.count () == 2);
+    
+    if (drawingALine)
+        applyModifiers ();
+    else
+        m_points [m_points.count () - 1] = m_currentPoint;
 
 #if DEBUG_KPTOOL_LINE
     kdDebug () << "\tafterwards, m_points=" << pointArrayToString (m_points) << endl;
@@ -372,7 +404,8 @@ void kpToolPolygon::draw (const QPoint &, const QPoint &, const QRect &)
 
     updateShape ();
     
-    emit mouseDragged (QRect (m_toolLineStartPoint, m_toolLineEndPoint));
+    if (drawingALine)
+        emit mouseDragged (QRect (m_toolLineStartPoint, m_toolLineEndPoint));
 }
 
 // private slot
@@ -414,8 +447,12 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
     if (m_points.count () == 0)
         return;
 
-    if (m_mode == Line || m_points.count () >= 50)
+    if (m_mode == Line ||
+        (m_mode == Curve && m_points.count () >= 4) ||
+        m_points.count () >= 50)
+    {
         endShape ();
+    }
 }
 
 // public virtual
@@ -467,9 +504,8 @@ void kpToolPolygon::slotLineWidthChanged (int width)
 }
 
 // public slot
-void kpToolPolygon::slotFillStyleChanged (Qt::BrushStyle fillStyle)
+void kpToolPolygon::slotFillStyleChanged (kpToolWidgetFillStyle::FillStyle /*fillStyle*/)
 {
-    m_fillStyle = fillStyle;
     updateShape ();
 }
 
@@ -497,7 +533,14 @@ QPen kpToolPolygon::pen () const
 // private
 QBrush kpToolPolygon::brush () const
 {
-    return QBrush (color (1 - m_mouseButton), m_fillStyle);
+    if (m_toolWidgetFillStyle)
+    {
+        return m_toolWidgetFillStyle->brush (
+                   color (m_mouseButton)/*foreground colour*/,
+                   color (1 - m_mouseButton)/*background colour*/);
+    }
+    else
+        return QBrush (color (1 - m_mouseButton));
 }
 
 

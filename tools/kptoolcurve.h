@@ -32,18 +32,17 @@
 #ifndef __kptoolcurve_h__
 #define __kptoolcurve_h__
 
-#include <kptool.h>
+#include <kptoolpolygon.h>
 
 class kpMainWindow;
 
-class kpToolCurve : public kpTool
+class kpToolCurve : public kpToolPolygon
 {
 Q_OBJECT
 
 public:
-    kpToolCurve (kpMainWindow *);
+    kpToolCurve (kpMainWindow *mainWindow);
     virtual ~kpToolCurve ();
 };
 
 #endif  // __kptoolcurve_h__
-

@@ -33,8 +33,13 @@
 #include <kptoolcurve.h>
 
 kpToolCurve::kpToolCurve (kpMainWindow *mainWindow)
-    : kpTool (i18n ("Curve"), i18n ("Draws curves"), mainWindow, "tool_curve")
+    : kpToolPolygon (mainWindow)
 {
+    setMode (Curve);
+
+    setText (i18n ("Curve"));
+    setDescription (i18n ("Draws curves"));
+    setName ("tool_curve");
 }
 
 kpToolCurve::~kpToolCurve ()
@@ -42,4 +47,3 @@ kpToolCurve::~kpToolCurve ()
 }
 
 #include <kptoolcurve.moc>
-
