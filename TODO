@@ -1,13 +1,23 @@
 
 $Id$
 
+
+Currently Underway
+==================
+
+tool/polygon
+tool/polyline
+
+fix selections; implement free-form selection
+
+make ToolToolBar have _flat_, not 3D buttons
+
+
 Before 1.0
 ===========
 
 if you undock a vertical toolbar and right click --> Orientation --> Bottom,
     it stays vertically oriented
-
-why does the toolsToolBar get arranged differently if run under valgrind or on a different computer???
 
 random pixels in the view showing up with the Color Washer Tool and Zoom over a remote display
 
@@ -32,7 +42,7 @@ honour background colour for Skew, Rotate
 
 print preview
 
-config dialogs
+config dialogs (look into new kconfig generator)
 
 add image/x-krl mimetype to kdelibs to fix the save-as-unknown-type problem
 
@@ -43,8 +53,6 @@ Rethink kpView/kpViewManager design because of:
 - performance
 - difficult selection handling, esp. drawing the selction border
 
-fix selections; implement free-form selection
-
 kptoolwidgetbase - spacing between items, make contentsRect() actual size wanted
 
 kpcolortoolbar - open/save palette
@@ -54,8 +62,6 @@ fill - can optimise mem usage by deleting kpFloodFill object
      - can optimise mem usage by detecting single colour fills
 
 brush shape in wrong place if zoom smaller
-
-make ToolToolBar have _flat_, not 3D buttons
 
 still some flicker if:
 1. you've used the brush before
@@ -79,10 +85,11 @@ transparent images
 - will also require an additional colour in the kpColorToolBar
 
 color depth
-tool/polygon
-tool/polyline
 tool/curve
 tool/text
+
+tool icons - if a more experienced artist doesn't offer to draw new ones,
+I'll be forced to redo them myself once transparency is supported
 
 
 After 1.0
@@ -104,4 +111,5 @@ languages (C, Python and Perl being the obvious choices) to allow people to
 extend it into the realms of PaintShop Pro without impacting on the core
 philosophy of the app, which seems to be simplicity." -- Tom
 
+offer to save Undo/Redo QPixmap's as PNGs to save memory
 
