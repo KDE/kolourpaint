@@ -12,7 +12,7 @@ kolourpaintlicense.h : $(srcdir)/COPYING
 CLEANFILES = kolourpaintlicense.h
 
 kolourpaint_SOURCES = kolourpaint.cpp kpdocument.cpp kpview.cpp \
-    kpcommandhistory.cpp \
+    kpcolor.cpp kpcommandhistory.cpp \
     kpconfigdialog.cpp \
     kpmainwindow.cpp \
     kpmainwindow_edit.cpp kpmainwindow_image.cpp kpmainwindow_tools.cpp \
