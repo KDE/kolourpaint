@@ -44,6 +44,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpcommandhistory.h>
 #include <kpdocument.h>
 #include <kpdefs.h>
 #include <kpmainwindow.h>

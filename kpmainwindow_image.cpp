@@ -35,6 +35,7 @@
 
 #include <kpcolor.h>
 #include <kpcolortoolbar.h>
+#include <kpcommandhistory.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kpselection.h>
