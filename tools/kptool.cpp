@@ -28,6 +28,8 @@
 
 #define DEBUG_KP_TOOL 0
 
+#include <kptool.h>
+
 #include <limits.h>
 
 #include <qapplication.h>
@@ -47,7 +49,6 @@
 #include <kpdefs.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
-#include <kptool.h>
 #include <kptooltoolbar.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
@@ -817,7 +818,7 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
         if (hasBegunDraw ())
             cancelShapeInternal ();
 
-        e->accept ();
+            e->accept ();
         break;
 
     case Qt::Key_Enter:
