@@ -84,6 +84,10 @@
 #define kpSettingThumbnailGeometry QString::fromLatin1 ("Geometry")
 
 
+#define kpSettingsGroupTools QString::fromLatin1 ("Tool Settings")
+#define kpSettingLastTool QString::fromLatin1 ("Last Used Tool")
+
+
 #define kpSettingsGroupText QString::fromLatin1 ("Text Settings")
 #define kpSettingFontFamily QString::fromLatin1 ("Font Family")
 #define kpSettingFontSize QString::fromLatin1 ("Font Size")
