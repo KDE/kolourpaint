@@ -1,4 +1,5 @@
-INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../pixmapfx -I$(srcdir)/../tools \
+INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../pixmapfx \
+    -I$(srcdir)/../tools \
     -I$(srcdir)/../widgets $(all_includes)
 
 noinst_LTLIBRARIES = libkolourpaintwidgets.la

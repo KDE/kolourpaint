@@ -1,4 +1,5 @@
-INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../pixmapfx -I$(srcdir)/../tools \
+INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../pixmapfx \
+    -I$(srcdir)/../tools \
     -I$(srcdir)/../widgets $(all_includes)
 
 noinst_LTLIBRARIES = libkolourpainttools.la
@@ -19,7 +20,9 @@ libkolourpainttools_la_SOURCES = kptoolskewdialogwidget.ui \
     kptoolresizescale.cpp kptoolrotate.cpp \
     kptoolroundedrectangle.cpp kptoolselection.cpp \
     kptoolskew.cpp kptooltext.cpp
-libkolourpainttools_la_LIBADD = ../pixmapfx/libkolourpaintpixmapfx.la
+
+# TODO: Why is this needed?  Isn't linking at the toplevel enough?
+libkolourpainttools_la_LIBADD = ../pixmapfx/libkolourpaintpixmapfx.la ../cursors/libkolourpaintcursors.la
 
 libkolourpainttools_la_METASOURCES = kptool.moc \
     kptoolairspray.moc \
