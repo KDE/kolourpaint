@@ -2,6 +2,9 @@
 Before each release of KolourPaint and/or KDE, grep sources for
 "SYNC" & "sync:" and check that those assumptions still hold.
 
+Before each KDE 3.0 backport release of KolourPaint, grep sources for
+"COMPAT".
+
 Look in BUGS, patches/, grep sources for "OPT", "HACK" & "TODO" and look
 here:
 
@@ -307,8 +310,6 @@ KDE
 re-enable the ICO write support
 
 multicolumn KToolBar's (Bug #3)
-
-Report KImageIO bugs: targa and PNM don't work at all
 
 fix edit/paste may disappear due to klipper - Bug #85456
 
