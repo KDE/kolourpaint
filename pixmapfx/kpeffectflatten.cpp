@@ -25,7 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_EFFECT_FLATTEN 1
+#define DEBUG_KP_EFFECT_FLATTEN 0
 
 
 #include <kpeffectflatten.h>
@@ -37,11 +37,14 @@
 #include <qvbox.h>
 
 #include <kcolorbutton.h>
+#include <kconfig.h>
 #include <kdialog.h>
 #include <kdebug.h>
+#include <kglobal.h>
 #include <kimageeffect.h>
 #include <klocale.h>
 
+#include <kpdefs.h>
 #include <kppixmapfx.h>
 
 
@@ -120,8 +123,11 @@ QPixmap kpEffectFlattenCommand::applyColorEffect (const QPixmap &pixmap)
 //
 
 // public static
-QColor kpEffectFlattenWidget::s_lastColor1 (Qt::red);
-QColor kpEffectFlattenWidget::s_lastColor2 (Qt::blue);
+// Don't initialise globally when we probably don't have a colour
+// allocation context.  This way, the colours aren't sometimes invalid
+// (e.g. at 8-bit).
+QColor kpEffectFlattenWidget::s_lastColor1;
+QColor kpEffectFlattenWidget::s_lastColor2;
 
 kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
                                               kpMainWindow *mainWindow,
@@ -129,6 +135,21 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
                                               const char *name)
     : kpColorEffectWidget (actOnSelection, mainWindow, parent, name)
 {
+    if (!s_lastColor1.isValid () || !s_lastColor2.isValid ())
+    {
+        KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupFlattenEffect);
+        KConfigBase *cfg = cfgGroupSaver.config ();
+
+        s_lastColor1 = cfg->readColorEntry (kpSettingFlattenEffectColor1);
+        if (!s_lastColor1.isValid ())
+            s_lastColor1 = Qt::red;
+
+        s_lastColor2 = cfg->readColorEntry (kpSettingFlattenEffectColor2);
+        if (!s_lastColor2.isValid ())
+            s_lastColor2 = Qt::blue;
+    }
+
+
     m_enableCheckBox = new QCheckBox (i18n ("E&nable"), this);
 
     QVBox *colorButtonContainer = new QVBox (this);
@@ -160,6 +181,14 @@ kpEffectFlattenWidget::~kpEffectFlattenWidget ()
 {
     s_lastColor1 = color1 ();
     s_lastColor2 = color2 ();
+
+
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupFlattenEffect);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    cfg->writeEntry (kpSettingFlattenEffectColor1, s_lastColor1);
+    cfg->writeEntry (kpSettingFlattenEffectColor2, s_lastColor2);
+    cfg->sync ();
 }
 
 
