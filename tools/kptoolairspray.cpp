@@ -261,7 +261,7 @@ void kpToolAirSprayCommand::unexecute ()
 // public virtual [base KCommand]
 QString kpToolAirSprayCommand::name () const
 {
-    return i18n ("Air Spray");
+    return i18n ("Spraycan");
 }
 
 // public
