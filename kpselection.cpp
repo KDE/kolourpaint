@@ -781,7 +781,7 @@ void kpSelection::setTextLines (const QValueVector <QString> &textLines_)
 // public static
 int kpSelection::textBorderSize ()
 {
-    return 5;
+    return 4;
 }
 
 // public
