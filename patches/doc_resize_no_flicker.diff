@@ -1,0 +1,614 @@
+Eliminates flicker when moving document resize lines / dragging resize
+handles by:
+
+1. Not erasing areas that will be subsequently painted over with resize
+   lines
+2. Erasing the old areas and painting the new ones atomicly by using
+   clever NOT'ing of pixels
+
+Additionally, recover the resize lines after a window pops up momentarily
+over KolourPaint (kpViewScrollableContainer::windowActivationChange()).
+
+Critical bugs with this code and scrollbars:
+
+1. Drag scrolling leaves trails of resize lines.
+2. Moving the mouse cursor above the start of the document does not result
+   in a resize line at document y = 1.
+
+Because I'm still debugging, there are a few hacks in the code such as
+"m_resizeLinesDontPaintClever".
+
+Index: kpviewscrollablecontainer.cpp
+===================================================================
+RCS file: /home/kde/kdegraphics/kolourpaint/kpviewscrollablecontainer.cpp,v
+retrieving revision 1.7
+diff -u -p -r1.7 kpviewscrollablecontainer.cpp
+--- kpviewscrollablecontainer.cpp	29 Jul 2004 12:47:15 -0000	1.7
++++ kpviewscrollablecontainer.cpp	30 Jul 2004 11:37:20 -0000
+@@ -1,4 +1,4 @@
+-
++static bool inScroll = false;
+ /*
+    Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
+    All rights reserved.
+@@ -33,6 +33,7 @@
+ #include <qpainter.h>
+ #include <qpen.h>
+ #include <qpixmap.h>
++#include <qregion.h>
+ #include <qtimer.h>
+ 
+ #include <kdebug.h>
+@@ -240,7 +241,7 @@ void kpGrip::mousePressEvent (QMouseEven
+         m_startPoint = e->pos ();
+         m_currentPoint = e->pos ();
+         emit beganDraw ();
+-        grabKeyboard ();
++        //grabKeyboard ();  HACK
+ 
+         setUserMessage (i18n ("Resize Image: Right click to cancel."));
+         setCursor (cursorForType (m_type));
+@@ -387,6 +388,7 @@ kpViewScrollableContainer::kpViewScrolla
+       m_scrollTimerRunOnce (false),
+       m_resizeRoundedLastViewX (-1), m_resizeRoundedLastViewY (-1),
+       m_resizeRoundedLastViewDX (0), m_resizeRoundedLastViewDY (0),
++      m_resizeLinesDontPaintClever (0),
+       m_haveMovedFromOriginalDocSize (false)
+ 
+ {
+@@ -561,6 +563,18 @@ QRect kpViewScrollableContainer::bottomR
+                           m_resizeRoundedLastViewY + bottomResizeLineWidth () - 1));
+ }
+ 
++// protected
++QRegion kpViewScrollableContainer::resizeLinesRegion () const
++{
++    QRegion ret;
++
++    ret += rightResizeLineRect ();
++    ret += bottomResizeLineRect ();
++    ret += bottomRightResizeLineRect ();
++
++    return ret;
++}
++
+ 
+ // TODO: are these 2 correct?  Remember that viewport()->x() == 1, viewport()->y() == 1
+ 
+@@ -581,6 +595,17 @@ QRect kpViewScrollableContainer::mapView
+     return ret;
+ }
+ 
++// protected
++QRegion kpViewScrollableContainer::mapViewToViewport (const QRegion &viewRegion)
++{
++    if (viewRegion.isEmpty ())
++        return viewRegion;
++
++    QRegion ret = viewRegion;
++    ret.translate (-contentsX (), -contentsY ());
++    return ret;
++}
++
+ 
+ // protected
+ QRect kpViewScrollableContainer::mapViewportToGlobal (const QRect &viewportRect)
+@@ -589,89 +614,108 @@ QRect kpViewScrollableContainer::mapView
+ }
+ 
+ // protected
++QRegion kpViewScrollableContainer::mapViewportToGlobal (const QRegion &viewportRegion)
++{
++    return kpWidgetMapper::toGlobal (viewport (), viewportRegion);
++}
++
++
++// protected
+ QRect kpViewScrollableContainer::mapViewToGlobal (const QRect &viewRect)
+ {
+     return mapViewportToGlobal (mapViewToViewport (viewRect));
+ }
+ 
++// protected
++QRegion kpViewScrollableContainer::mapViewToGlobal (const QRegion &viewRegion)
++{
++    return mapViewportToGlobal (mapViewToViewport (viewRegion));
++}
++
+ 
+ // protected
+-void kpViewScrollableContainer::repaintWidgetAtResizeLineViewRect (
+-    QWidget *widget, const QRect &resizeLineViewRect)
++void kpViewScrollableContainer::repaintWidgetRegion (
++    QWidget *widget,
++    const QRegion &viewRegion)
+ {
+-    const QRect resizeLineGlobalRect = mapViewToGlobal (resizeLineViewRect);
++    const QRegion globalRegion = mapViewToGlobal (viewRegion);
++
+     const QRect widgetGlobalRect = kpWidgetMapper::toGlobal (widget,
+                                                              widget->rect ());
+ 
+-    const QRect redrawGlobalRect =
+-        resizeLineGlobalRect.intersect (widgetGlobalRect);
+ 
+-    const QRect redrawWidgetRect =
+-        kpWidgetMapper::fromGlobal (widget, redrawGlobalRect);
++    const QRegion redrawGlobalRegion =
++        globalRegion.intersect (widgetGlobalRect);
+ 
++    const QRegion redrawWidgetRegion =
++        kpWidgetMapper::fromGlobal (widget, redrawGlobalRegion);
+ 
+-    if (redrawWidgetRect.isValid ())
++
++    if (!redrawWidgetRegion.isEmpty ())
+     {
+         // TODO: should be "!widget->testWFlags (Qt::WRepaintNoErase)"
+         //       but for some reason, doesn't work for viewport().
+         const bool erase = !dynamic_cast <kpView *> (widget);
+-        widget->repaint (redrawWidgetRect, erase);
++        widget->repaint (redrawWidgetRegion, erase);
+     }
+ }
+ 
+ // protected
+-void kpViewScrollableContainer::repaintWidgetAtResizeLines (QWidget *widget)
++void kpViewScrollableContainer::eraseResizeLines (const QRegion &viewRegion)
+ {
+-    repaintWidgetAtResizeLineViewRect (widget, rightResizeLineRect ());
+-    repaintWidgetAtResizeLineViewRect (widget, bottomResizeLineRect ());
+-    repaintWidgetAtResizeLineViewRect (widget, bottomRightResizeLineRect ());
+-}
++    if (viewRegion.isEmpty ())
++        return;
+ 
+-// protected
+-void kpViewScrollableContainer::eraseResizeLines ()
+-{
+-    if (m_resizeRoundedLastViewX >= 0 && m_resizeRoundedLastViewY >= 0)
+-    {
+-        repaintWidgetAtResizeLines (viewport ());
+-        repaintWidgetAtResizeLines (m_view);
+ 
+-        repaintWidgetAtResizeLines (m_bottomGrip);
+-        repaintWidgetAtResizeLines (m_rightGrip);
+-        repaintWidgetAtResizeLines (m_bottomRightGrip);
+-    }
++    repaintWidgetRegion (viewport (), viewRegion);
++    repaintWidgetRegion (m_view, viewRegion);
++
++    repaintWidgetRegion (m_bottomGrip, viewRegion);
++    repaintWidgetRegion (m_rightGrip, viewRegion);
++    repaintWidgetRegion (m_bottomRightGrip, viewRegion);
+ }
+ 
+ 
+ // protected
+-void kpViewScrollableContainer::drawResizeLines ()
++void kpViewScrollableContainer::drawResizeLines (const QRegion &viewRegion)
+ {
+ #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+-    kdDebug () << "kpViewScrollableContainer::drawResizeLines()"
++    kdDebug () << "kpViewScrollableContainer::drawResizeLines("
++               << viewRegion <<")"
+                << " lastViewX=" << m_resizeRoundedLastViewX
+                << " lastViewY=" << m_resizeRoundedLastViewY
+                << endl;
+ #endif
+ 
++    if (viewRegion.isEmpty ())
++        return;
++
+ 
+     QPainter p (viewport (), true/*unclipped*/);
+     p.setRasterOp (Qt::NotROP);
+ 
+-    const QRect rightRect = rightResizeLineRect ();
+-    if (rightRect.isValid ())
+-        p.fillRect (mapViewToViewport (rightRect), Qt::white);
+-
+-    const QRect bottomRect = bottomResizeLineRect ();
+-    if (bottomRect.isValid ())
+-        p.fillRect (mapViewToViewport (bottomRect), Qt::white);
+-
+-    const QRect bottomRightRect = bottomRightResizeLineRect ();
+-    if (bottomRightRect.isValid ())
+-        p.fillRect (mapViewToViewport (bottomRightRect), Qt::white);
++    const QMemArray <QRect> rects = mapViewToViewport (viewRegion).rects ();
++    for (QMemArray <QRect>::ConstIterator it = rects.begin ();
++         it != rects.end ();
++         it++)
++    {
++        p.fillRect (*it, Qt::white);
++    }
+ 
+     p.end ();
+ }
+ 
+ 
++template <typename T>
++static inline void swap (T &a, T &b)
++{
++    T temp = a;
++
++    a = b;
++    b = temp;
++}
++
++
+ // protected
+ void kpViewScrollableContainer::updateResizeLines (int viewX, int viewY,
+                                                    int viewDX, int viewDY)
+@@ -686,36 +730,71 @@ void kpViewScrollableContainer::updateRe
+                << endl;
+ #endif
+ 
+-    eraseResizeLines ();
+-
++    int newResizeRoundedLastViewX = -1,
++        newResizeRoundedLastViewY = -1;
++    int newResizeRoundedLastViewDX = 0,
++        newResizeRoundedLastViewDY = 0;
+ 
+     if (viewX >= 0 && viewY >= 0)
+     {
+-        m_resizeRoundedLastViewX = m_view->zoomDocToViewX (m_view->zoomViewToDocX (viewX));
+-        m_resizeRoundedLastViewY = m_view->zoomDocToViewY (m_view->zoomViewToDocY (viewY));
++        newResizeRoundedLastViewX = m_view->zoomDocToViewX (m_view->zoomViewToDocX (viewX));
++        newResizeRoundedLastViewY = m_view->zoomDocToViewY (m_view->zoomViewToDocY (viewY));
+ 
+-        m_resizeRoundedLastViewDX = viewDX;
+-        m_resizeRoundedLastViewDY = viewDY;
++        newResizeRoundedLastViewDX = viewDX;
++        newResizeRoundedLastViewDY = viewDY;
+     }
+-    else
+-    {
+-        m_resizeRoundedLastViewX = -1;
+-        m_resizeRoundedLastViewY = -1;
+ 
+-        m_resizeRoundedLastViewDX = 0;
+-        m_resizeRoundedLastViewDY = 0;
+-    }
+ 
+-    // TODO: This is suboptimal since if another window pops up on top of
+-    //       KolourPaint then disappears, the lines are not redrawn
+-    //       (although this doesn't happen very frequently since we grab the
+-    //       keyboard and mouse when resizing):
+-    //
+-    //         e.g. sleep 5 && gedit & sleep 10 && killall gedit
++    QRegion oldLinesRegion = resizeLinesRegion ();
++#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
++    kdDebug () << "\toldLinesRegion=" << oldLinesRegion << endl;
++#endif
++
++
++// (macro instead of writing out code to permit experimentation)
++#define SWAP_LAST_VIEW_STATS()                                     \
++{                                                                  \
++    swap (m_resizeRoundedLastViewX, newResizeRoundedLastViewX);    \
++    swap (m_resizeRoundedLastViewY, newResizeRoundedLastViewY);    \
++                                                                   \
++    swap (m_resizeRoundedLastViewDX, newResizeRoundedLastViewDX);  \
++    swap (m_resizeRoundedLastViewDY, newResizeRoundedLastViewDY);  \
++}
++    SWAP_LAST_VIEW_STATS ();
++#undef SWAP_LAST_VIEW_STATS
++
++
++    QRegion newLinesRegion = resizeLinesRegion ();
++#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
++    kdDebug () << "\tnewLinesRegion=" << newLinesRegion << endl;
++#endif
++
++
++    // TODO: This is suboptimal - we will get redraw errors sooner or later.
++    //       But I've tried hard to avoid them (e.g. windowActivationChange()).
+     //
+     //       Should be done in the paintEvent's of every child of the
+     //       scrollview.
+-    drawResizeLines ();
++
++    if (m_resizeLinesDontPaintClever)
++    {
++        // (drawResizeLines() NOT's the pixels - so we can erase old and draw
++        //  new at the same time)
++        drawResizeLines (newLinesRegion.eor (oldLinesRegion));
++    #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
++        kdDebug () << "\tNOTRregion="
++                   << newLinesRegion.eor (oldLinesRegion) << endl;
++    #endif
++    }
++    else
++    {
++        eraseResizeLines (oldLinesRegion);
++        drawResizeLines (newLinesRegion);
++    #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
++        kdDebug () << "\tnot erasing old lines; NOTRregion="
++                   << newLinesRegion << endl;
++    #endif
++    }
+ }
+ 
+ 
+@@ -729,6 +808,8 @@ void kpViewScrollableContainer::slotGrip
+ 
+     m_haveMovedFromOriginalDocSize = false;
+ 
++    m_resizeLinesDontPaintClever = true;
++
+     updateResizeLines (m_view->width (), m_view->height (),
+                        0/*viewDX*/, 0/*viewDY*/);
+ 
+@@ -750,12 +831,28 @@ void kpViewScrollableContainer::slotGrip
+ 
+     m_haveMovedFromOriginalDocSize = true;
+ 
++#if 0
++    if (inScroll != !m_resizeLinesNeedErase)
++    {
++        kdError () << "slotGripContDraw EXCEPTION 0: inScroll=" << inScroll << endl;
++        memset (0, 42, 1048576);
++    }
++#endif
++
+     updateResizeLines (QMAX (1, QMAX (m_view->width () + viewDX, m_view->zoomDocToViewX (1))),
+                        QMAX (1, QMAX (m_view->height () + viewDY, m_view->zoomDocToViewY (1))),
+                        viewDX, viewDY);
+ 
+     emit continuedDocResize (newDocSize ());
+ 
++#if 0
++    if (!m_resizeLinesNeedErase)
++    {
++        kdError () << "slotGripContDraw EXCEPTION 1" << endl;
++        memset (0, 42, 1048576);
++    }
++#endif
++
+     beginDragScroll (QPoint (), QPoint (), m_view->zoomLevelX ());
+ }
+ 
+@@ -859,8 +956,19 @@ void kpViewScrollableContainer::slotCont
+                << x << "," << y << ")" << endl;
+ #endif
+ 
++    m_resizeLinesDontPaintClever++;
++
++    if (inScroll && 0)
++    {
++        kdError () << "slotContentsMovING EXCEPTION" << endl;
++        memset (0, 42, 1048576);
++    }
++
++    inScroll = true;
+     // Reduce flicker - don't let QScrollView scroll to-be-erased lines
+-    eraseResizeLines ();
++    //eraseResizeLines (resizeLinesRegion ());
++    //m_resizeLinesNeedErase = false;
++
+ 
+     QTimer::singleShot (0, this, SLOT (slotContentsMoved ()));
+ }
+@@ -874,9 +982,27 @@ void kpViewScrollableContainer::slotCont
+                << " grip=" << grip << endl;
+ #endif
+     if (!grip)
++    {
++        inScroll = false;
+         return;
++    }
+ 
++    if (!inScroll && 0)
++    {
++        kdError () << "slotContentsMoved EXCEPTION" << endl;
++        memset (0, 42, 1048576);
++    }
+     grip->mouseMovedTo (grip->mapFromGlobal (QCursor::pos ()));
++#if 0
++    if (!m_resizeLinesNeedErase)
++    {
++        kdError () << "slotContentsMoved EXCEPTION 2" << endl;
++        memset (0, 42, 1048576);
++    }
++#endif
++    inScroll = false;
++
++    m_resizeLinesDontPaintClever--;
+ }
+ 
+ 
+@@ -1191,7 +1317,7 @@ bool kpViewScrollableContainer::eventFil
+ // protected virtual [base QScrollView]
+ void kpViewScrollableContainer::viewportPaintEvent (QPaintEvent *e)
+ {
+-#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
++#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
+     kdDebug () << "kpViewScrollableContainer::viewportPaintEvent("
+                << e->rect ()
+                << ")" << endl;
+@@ -1213,4 +1339,42 @@ void kpViewScrollableContainer::paintEve
+ }
+ 
+ 
++// protected slot
++void kpViewScrollableContainer::windowActivationChanged ()
++{
++    if (isActiveWindow () &&
++        m_resizeRoundedLastViewX >= 0 && m_resizeRoundedLastViewY >= 0)
++    {
++        // We were obscured by a window that popped up monmentarily and
++        // this clobbered the resize lines (since the scrollView's child
++        // widgets don't draw them).  This doesn't happen very frequently
++        // since we grab the keyboard and mouse when resizing but:
++        //
++        //     e.g. sleep 5 && gedit & sleep 10 && killall gedit
++        //
++
++        // Repaint child widgets at the resize lines to make sure any
++        // remains of the resize lines are gone.
++        eraseResizeLines (resizeLinesRegion ());
++
++        // Draw the resize lines by NOT-ing the child widget pixels.
++        drawResizeLines (resizeLinesRegion ());
++    }
++}
++
++// protected virtual [base QWidget]
++void kpViewScrollableContainer::windowActivationChange (bool wasActive)
++{
++#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 1
++    kdDebug () << "kpViewScrollableContainer::windowActivationChange("
++               << wasActive << ")" << endl;
++#endif
++
++    QScrollView::windowActivationChange (wasActive);
++
++    // Wait for m_view to update
++    QTimer::singleShot (0, this, SLOT (windowActivationChanged ()));
++}
++
++
+ #include <kpviewscrollablecontainer.moc>
+Index: kpviewscrollablecontainer.h
+===================================================================
+RCS file: /home/kde/kdegraphics/kolourpaint/kpviewscrollablecontainer.h,v
+retrieving revision 1.3
+diff -u -p -r1.3 kpviewscrollablecontainer.h
+--- kpviewscrollablecontainer.h	19 Jul 2004 05:00:47 -0000	1.3
++++ kpviewscrollablecontainer.h	30 Jul 2004 11:37:21 -0000
+@@ -31,6 +31,7 @@
+ 
+ 
+ #include <qpoint.h>
++#include <qregion.h>
+ #include <qscrollview.h>
+ #include <qsize.h>
+ 
+@@ -147,19 +148,23 @@ protected:
+     QRect bottomResizeLineRect () const;
+     QRect rightResizeLineRect () const;
+     QRect bottomRightResizeLineRect () const;
++    QRegion resizeLinesRegion () const;
+ 
+     QPoint mapViewToViewport (const QPoint &viewPoint);
+     QRect mapViewToViewport (const QRect &viewRect);
++    QRegion mapViewToViewport (const QRegion &viewRegion);
+ 
+     QRect mapViewportToGlobal (const QRect &viewportRect);
++    QRegion mapViewportToGlobal (const QRegion &viewportRegion);
++
+     QRect mapViewToGlobal (const QRect &viewRect);
++    QRegion mapViewToGlobal (const QRegion &viewRegion);
+ 
+-    void repaintWidgetAtResizeLineViewRect (QWidget *widget,
+-                                            const QRect &resizeLineViewRect);
+-    void repaintWidgetAtResizeLines (QWidget *widget);
+-    void eraseResizeLines ();
++    void repaintWidgetRegion (QWidget *widget,
++        const QRegion &viewRegion);
++    void eraseResizeLines (const QRegion &viewRegion);
+ 
+-    void drawResizeLines ();
++    void drawResizeLines (const QRegion &viewRegion);
+ 
+     void updateResizeLines (int viewX, int viewY,
+                             int viewDX, int viewDY);
+@@ -213,6 +218,12 @@ protected:
+     virtual void viewportPaintEvent (QPaintEvent *e);
+     virtual void paintEvent (QPaintEvent *e);
+ 
++protected slots:
++    void windowActivationChanged ();
++protected:
++    virtual void windowActivationChange (bool wasActive);
++
++
+ protected:
+     kpMainWindow *m_mainWindow;
+     kpView *m_view;
+@@ -223,6 +234,7 @@ protected:
+     bool m_scrollTimerRunOnce;
+     int m_resizeRoundedLastViewX, m_resizeRoundedLastViewY;
+     int m_resizeRoundedLastViewDX, m_resizeRoundedLastViewDY;
++    int m_resizeLinesDontPaintClever;
+     bool m_haveMovedFromOriginalDocSize;
+     QString m_gripStatusMessage;
+ };
+Index: kpwidgetmapper.cpp
+===================================================================
+RCS file: /home/kde/kdegraphics/kolourpaint/kpwidgetmapper.cpp,v
+retrieving revision 1.1
+diff -u -p -r1.1 kpwidgetmapper.cpp
+--- kpwidgetmapper.cpp	10 Jul 2004 11:38:09 -0000	1.1
++++ kpwidgetmapper.cpp	30 Jul 2004 11:37:21 -0000
+@@ -30,6 +30,7 @@
+ 
+ #include <qpoint.h>
+ #include <qrect.h>
++#include <qregion.h>
+ #include <qwidget.h>
+ 
+ 
+@@ -54,6 +55,17 @@ QRect fromGlobal (const QWidget *widget,
+     return QRect (topLeft.x (), topLeft.y (), rect.width (), rect.height ());
+ }
+ 
++QRegion fromGlobal (const QWidget *widget, const QRegion &region)
++{
++    if (!widget || region.isEmpty ())
++        return region;
++
++    const QPoint widgetGlobalTopLeft = toGlobal (widget, QPoint (0, 0));
++    QRegion ret = region;
++    ret.translate (-widgetGlobalTopLeft.x (), -widgetGlobalTopLeft.y ());
++    return ret;
++}
++
+ 
+ QPoint toGlobal (const QWidget *widget, const QPoint &point)
+ {
+@@ -72,5 +84,16 @@ QRect toGlobal (const QWidget *widget, c
+     return QRect (topLeft.x (), topLeft.y (), rect.width (), rect.height ());
+ }
+ 
++QRegion toGlobal (const QWidget *widget, const QRegion &region)
++{
++    if (!widget || region.isEmpty ())
++        return region;
++
++    const QPoint widgetGlobalTopLeft = toGlobal (widget, QPoint (0, 0));
++    QRegion ret = region;
++    ret.translate (widgetGlobalTopLeft.x (), widgetGlobalTopLeft.y ());
++    return ret;
++}
++
+ 
+ }  // namespace kpWidgetMapper {
+Index: kpwidgetmapper.h
+===================================================================
+RCS file: /home/kde/kdegraphics/kolourpaint/kpwidgetmapper.h,v
+retrieving revision 1.1
+diff -u -p -r1.1 kpwidgetmapper.h
+--- kpwidgetmapper.h	10 Jul 2004 11:38:09 -0000	1.1
++++ kpwidgetmapper.h	30 Jul 2004 11:37:21 -0000
+@@ -32,15 +32,18 @@
+ class QWidget;
+ class QPoint;
+ class QRect;
++class QRegion;
+ 
+ 
+ namespace kpWidgetMapper
+ {
+     QPoint fromGlobal (const QWidget *widget, const QPoint &point);
+     QRect fromGlobal (const QWidget *widget, const QRect &rect);
++    QRegion fromGlobal (const QWidget *widget, const QRegion &region);
+ 
+     QPoint toGlobal (const QWidget *widget, const QPoint &point);
+     QRect toGlobal (const QWidget *widget, const QRect &rect);
++    QRegion toGlobal (const QWidget *widget, const QRegion &region);
+ }
+ 
+ 
