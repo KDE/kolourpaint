@@ -37,7 +37,6 @@ Luxi Sans 14 draw in green with trans background versus white background (see qu
 15. edit/paste may disappear due to klipper - file bug report
 16. check kpcommandhistory all sizes are correct
 17. delayed kpcommand popupmenu creation
-18. text tool could autoresize if font size changes or paste text
 19. setPixel doesn't work for 8bit
 20. setup.bmp monochrome open and save loses a lot of info
 mosfet's image effects don't respect alpha - hack around it
@@ -50,6 +49,10 @@ looks bad on 8-bit screen
 - it seems that AvoidDither means only do colour match/dithering if need to
   while PreferDither means try to _always_ smooth out (even in a single colour
   darkgreen document)
+
+--------
+8-bit audit e.g. setPixel; looks like contrast effect has some sort of
+rounding error causing e.g. a jump in colour range from 49 to 50
 
 
 KolourPaint 1.4
@@ -64,6 +67,11 @@ m0ns00n@gmx.net:
 - generate gradient between 2 colours in palette
 
 kpcolortoolbar - open/save palette
+
+text tool could autoresize if font size changes or paste text
+- maybe text selection could hold "userSetSize" as distinct from current size
+  to allow e.g. auto increase box size for new font size, but then user changes
+  mind and reverts to previous font size and the box snaps back
 
 Rethink kpView/kpViewManager design because of:
 - performance
