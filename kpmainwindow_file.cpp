@@ -119,7 +119,8 @@ bool kpMainWindow::shouldOpenInNewWindow () const
 // private
 void kpMainWindow::addRecentURL (const KURL &url)
 {
-    m_actionOpenRecent->addURL (url);
+    if (!url.isEmpty ())
+        m_actionOpenRecent->addURL (url);
 }
 
 
