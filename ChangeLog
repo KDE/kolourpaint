@@ -1,78 +1,9 @@
 
-This is the master ChangeLog kept in CVS _HEAD_ only.  It contains change
-information for _all_ past and present branches.
+For a list of _every_ single change made to KolourPaint between any date or
+revision, visit:
 
-In contrast, ChangeLog in branches only contains the changes between
-releases tagged on the mainline up to (and including) the forkpoint and of
-course, its changes.
+  http://webcvs.kde.org/cgi-bin/cvsweb.cgi/kdegraphics/kolourpaint?sortby=date#dirlist
 
 
----------------------------------------------------------------------------
-
-
->->->  KolourPaint 1.1 / 1.2 series (HEAD)  <-<-<-
-
-TODO missing entries
-
-
----------------------------------------------------------------------------
-
-
->->->  KolourPaint 1.0 series (kolourpaint_1_0_branch)  <-<-<-
-
-The 1.0.2.1 bugfix release will probably appear shortly after the release
-of 1.2.
-
-
-2004/04/29    KolourPaint 1.0.2
-
-- New icons (Kristof Borrey)
-
-- Added documentation in the KDE Help Centre
-
-- Make the brush tool draw something at size 1x1;
-  works around Qt <3.2 bug: drawing 1x1 ellipses does not work
-  (brush_1x1_kolourpaint-1.0.1.diff)
-
-- Fix thumbnail-related crashes with Qt/KDE 3.0
-  - Crash on thumbnail close with accelerator (pending events in event loop)
-  - Crash on mainwindow close if the thumbnail was ever closed
-    (QDockWindow didn't remove itself from QMainWindow::dockWindows() list)
-
-- Save thumbnail geometry even if it's closed very quickly after a geometry
-  change
-
-- When pulling a selection from the document, only set the bits of the
-  document to the background colour where the transparent selection is
-  opaque in the same place (this is only noticeable with colour similarity
-  turned on).  Now moving a selection away and then back to its original
-  place is always a NOP as it should be.
-
-- Fix (big) memory leak on kpSelection destruction (Albert Astals Cid)
-
-- Don't let C++ destruct the mask bitmap before its painter when
-  dbl-clicking the color eraser does NOP (avoids QPaintDevice and X error)
-
-- Corrected several strings
-
-- Fix compilation problem with QT_NO_ASCII_CAST (Waldo Bastian)
-
-- Decrease application preference to below that of a viewer (Stephan Coolo)
-
-
-2004/03/06    KolourPaint 1.0.1
-
-- Backport to KDE 3.0 & 3.1; KolourPaint 1.0.1 should be functionally the
-  same as KolourPaint 1.0 if compiled under KDE 3.2
-
-- Check for QImageDrag::canDecode() before calling QImageDrag::decode()
-  (prevents X and valgrind errors)
-
-- Prefer Crystal SVG text icons over KolourPaint's ones
-
-
-2004/02/29    KolourPaint 1.0 "Seagull"
-
-
----------------------------------------------------------------------------
+For a summary of user-visible changes between each release, read NEWS.
 

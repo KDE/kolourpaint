@@ -1,8 +1,9 @@
 
 Please send bug reports and feature requests to http://bugs.kde.org/ or
-Clarence Dang <dang@kde.org>.  Don't hesistate to report bugs - it
-provides valuable feedback that will help to improve future versions of
-KolourPaint and you will not receive flames for reporting duplicates.
+<kolourpaint-support@lists.sourceforge.net>.  Don't hesitate to report bugs
+nor hesitate to send us your wishes - it provides valuable feedback that
+will help to improve future versions of KolourPaint and you will not
+receive flames for reporting duplicates.
 
 
 This file lists known bugs in the 1.2 release that are not considered
@@ -65,21 +66,29 @@ This file lists known bugs in the 1.2 release that are not considered
 16. The Edit/Paste option is not disabled when the clipboard data is lost
     due to the owner terminating (no QClipboard::dataChanged() signal).
 
-17. Using KolourPaint on a remote X display may result in redraw errors
-    and pixel data corruption.
+17. a) Using KolourPaint on a remote X display may result in redraw errors
+       and pixel data corruption.
 
-18. Support for the formats:
-
-      * Truevision Targa Image
-      * Portable Graymap Image
-      * Portable Pixmap Image
-    
-    is very buggy and should not be considered as working at all.
-    This is a KDE bug.
+    b) KolourPaint is screen depth dependent.  Opening an image with a
+       an alpha channel and/or a depth higher than the screen and then
+       saving it will likely result in loss of colour information.  To
+       reduce data loss, run your screen at 24-bit.  This bug will be
+       addressed in a future version of KolourPaint.
 
 19. Read support for EPS files is extremely slow.  You should not enable
     the "Save Preview" dialog when saving to EPS.  This is an issue with
     KDE.
+
+20. Pasting a large image (esp. one that doesn't compress well as PNG)
+    into an image editor (not necessarily KolourPaint) running as
+    different process from the KolourPaint which was the source of the
+    image, on a sufficiently slow computer, may fail with the following
+    output to STDERR:
+
+      "kolourpaint: ERROR: kpMainWindow::paste() with sel without pixmap
+       QClipboard: timed out while sending data"
+
+    This is a Qt bug.
 
 
 Issue with XFree86 <= 3.3.6 with the "Emulate3Buttons" Option
@@ -91,7 +100,7 @@ initiate the current operation will, in this order:
 1. finalise the current drawing operation
 2. attempt to paste the contents of the middle-mouse-button clipboard
 
-instead of cancelling the current drawing operation.
+instead of canceling the current drawing operation.
 
 This is due to XFree86 sending a release notification for the button that
 initiated the drawing operation, followed by a press notification for the
@@ -110,9 +119,9 @@ c) Disable "Emulate3Buttons".
 
 
 ---------------------------------------------------------------------------
-The following info does _not_ apply to CVS HEAD.  HEAD won't even compile
-on KDE < 3.3.  It's only here so that I won't forget to include it in
-future backport branches of KolourPaint.
+The following info does _not_ apply to CVS HEAD nor KDE 3.3.  This version
+of KolourPaint won't even compile on KDE < 3.3.  This info is only here so
+that I won't forget to include it in backport branches of KolourPaint.
 ---------------------------------------------------------------------------
 
 
@@ -171,6 +180,17 @@ KDE <= 3.2
 
 1. Some images (usually small ones) are incorrectly positioned and may be
    cut off when saving in the EPS format.
+
+2. Support for the formats:
+
+      * Truevision Targa Image
+      * Portable Graymap Image
+      * Portable Pixmap Image
+
+   is very buggy and should not be considered as working at all.
+
+3. Moving the mouse over the drawing area takes an unnecessarily large
+   amount of CPU due to unneeded status bar updates.
 
 
 Qt <= 3.2

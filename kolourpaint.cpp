@@ -76,25 +76,52 @@ int main (int argc, char *argv [])
                          "thurston_dang@users.sourceforge.net");
     aboutData.addAuthor ("Kristof Borrey", I18N_NOOP ("Icons"), "borrey@kde.org");
 
+    aboutData.addCredit ("Rashid N. Achilov");
+    aboutData.addCredit ("Toyohiro Asukai");
+    aboutData.addCredit ("Bela-Andreas Bargel");
     aboutData.addCredit ("Waldo Bastian");
+    aboutData.addCredit ("Sashmit Bhaduri");
     aboutData.addCredit ("Stephan Binner");
+    aboutData.addCredit ("Markus Brueffer");
     aboutData.addCredit ("Rob Buis");
     aboutData.addCredit ("Lucijan Busch");
+    aboutData.addCredit ("Tom Chance");
     aboutData.addCredit ("Albert Astals Cid");
     aboutData.addCredit ("Jennifer Dang");
+    aboutData.addCredit ("Lawrence Dang");
     aboutData.addCredit ("Christoph Eckert");
     aboutData.addCredit ("David Faure");
     aboutData.addCredit ("P. Fisher");
+    aboutData.addCredit ("Nicolas Goutte");
+    aboutData.addCredit ("Brad Grant");
+    aboutData.addCredit ("David Greenaway");
     aboutData.addCredit ("Wilco Greven");
+    aboutData.addCredit ("Adriaan de Groot");
+    aboutData.addCredit ("Simon Hausmann");
     aboutData.addCredit ("Werner Joss");
+    aboutData.addCredit ("Derek Kite");
     aboutData.addCredit ("Stephan Kulow");
+    aboutData.addCredit ("Eric Laffoon");
+    aboutData.addCredit ("Michael Lake");
+    aboutData.addCredit ("Sebastien Laout");
     aboutData.addCredit ("Anders Lund");
     aboutData.addCredit ("Amir Michail");
     aboutData.addCredit ("Dirk Mueller");
+    aboutData.addCredit ("Ruivaldo Neto");
     aboutData.addCredit ("Ralf Nolden");
+    aboutData.addCredit ("Cédric Pasteur");
+    aboutData.addCredit ("Erik K. Pedersen");
     aboutData.addCredit ("Boudewijn Rempt");
+    aboutData.addCredit ("Bram Schoenmakers");
     aboutData.addCredit ("Dirk Schönberger");
+    aboutData.addCredit ("Emmeran Seehuber");
     aboutData.addCredit ("Peter Simonsson");
+    aboutData.addCredit ("Andrew Simpson");
+    aboutData.addCredit ("Igor Stepin");
+    aboutData.addCredit ("Stephen Sweeney");
+    aboutData.addCredit ("Bart Symons");
+    aboutData.addCredit ("Hogne Titlestad");
+    aboutData.addCredit ("Brandon Mark Turner");
 
 
     KCmdLineArgs::init (argc, argv, &aboutData);
@@ -144,6 +171,6 @@ int main (int argc, char *argv [])
         args->clear ();
     }
 
-    
+
     return app.exec ();
 }

@@ -1,68 +1,15 @@
 
 Before each release of KolourPaint and/or KDE, grep sources for
-"SYNC" and check that those assumptions still hold.
+"SYNC" & "sync:" and check that those assumptions still hold.
 
-Look in BUGS, patches/, grep sources for "OPT" & "TODO" and look here:
-
-
-KolourPaint 1.2 (10 days)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-use of QPoint () or QPoint (-1, -1) as a sentinel is worrying since it's a
-legal point when dragging out a rectangle
+Look in BUGS, patches/, grep sources for "OPT", "HACK" & "TODO" and look
+here:
 
 
-intersect bounding rect with document rect when saving undo info
-- e.g. if you drag a large rect bigger than the view, waste a lot of memory
-ditto for setTempPixmapAt et. al. (maybe not for selections, still thinking)
+KolourPaint 1.2
+~~~~~~~~~~~~~~~
 
-Bug: dragging a line extending outside of doc makes it transparent (RGB_A_ for PNG saves)
-Hypothesis: kpPixmapFX::getPixmapAt() defines undefined pixels as transparent
-
-
-1. creating new text selection sucks a lot of CPU
-6. resizing doc flickers
-7. emulate3buttons cancel
-9. speed up drag scroll
-7. resize doc or sel freehand and usershapepoints have , not x even though is dimen, not point
-17. delayed kpcommand popupmenu creation
-20. setup.bmp monochrome open and save loses a lot of info
-verify gamma, check contrast,brightness,gamma order
-
-option to dither image on open if not enough colors else that season jpg
-looks bad on 8-bit screen
-- it seems that AvoidDither means only do colour match/dithering if need to
-  while PreferDither means try to _always_ smooth out (even in a single colour
-  darkgreen document)
-QColor::enterAllocContext () looks interesting
- 
-my unfinished patches in changes/ local
-
-
---------
-
-
-Low Priority
-------------
-
-15. fix edit/paste may disappear due to klipper - Bug #85456
-10. delta drawing of resize line to stop flicker
-21. use KSaveFile for atomic writes - if the temp is put in the same place as
-    dest, what about small media like floppy?
-6. keyboard friendly scrollview
-
-
-AUDITS
-------
-
-8-bit audit e.g. setPixel; looks like contrast effect has some sort of
-rounding error causing e.g. a jump in colour range from 49 to 50
-
-13. check kpcommandhistory INT_MAX overflow protection
-
-16. check kpcommandhistory all sizes are correct
-
-22. crash on close after playing with eps preview in save dialog
+Apply i18n fixes in HEAD & KDE_3_3_BRANCH after KDE 3.3 releases
 
 
 KolourPaint 1.4
@@ -72,11 +19,59 @@ componentisation
 
 DCOP scriptable
 
-m0ns00n@gmx.net:
-- configurable palette size (up to 256 colours)  + <stephen.sweeney@lehman.com>
+better graphics backend
+- screen depth independent (Igor Stepin)
+- supports alpha
+
+Hogne Titlestad:
+- http://www.squirreldome.com/
+- configurable palette size (up to 256 colours) + Stephen Sweeney
 - generate gradient between 2 colours in palette
+- animation/film strip
+- "Lighten/Darken tool, even without antialiasing. Works *wonders* when
+   making gfx. Combined with a smooth/blur tool amazing results can be
+   achieved ;)  I don't think this would be hard to implement at all,
+   perhaps as an option for the Pen.  Darkening with the right mouse button
+   and lightening with the left.  Then blurring here and there to make
+   smooth highlights."
+- "Would also be nice to have a keyboard shortcut to traverse through the
+   palette. If I say have a palette with 16 greys, 16 reds, 16 blues etc
+   then moving to the next/previous palette item with keys would be a
+   great help, when thinking about pixelling techniques. When painting
+   grey, then wanting to shade manually, clicking CRTL+UPKEY or DOWNKEY or
+   another combo to go to the next/prev grey color ( lighter/darker ). ( In
+   this scenario, the palette is ordered so the colours are stacked by
+   shade, from black to white etc, black to red to white etc, then the
+   currently selected color would have a red box around it, and that red
+   box could be moved with a keyboard shortcut, up and down, left and
+   right? )."
+
+Emmeran Seehuber (relevant to above impl):
+"
+> Problem is: there is no concept of a "current colour" in mspaint (relative
+> to the palette) but rather "foreground" and "background" colours.  So I
+> don't know how this would work exactly?
+
+  You could apply the following strategie:
+- You have current background and a current forground color. The following is
+for the foreground color, but for thebackground colors it would be the same,
+just other shortcuts.
+- If the current foreground color matches a color of the palette, then you
+know your position in the palette. From there go one color forward or
+backward.
+- If the current foreground color doesn't match a color, then just use the
+last selected color in the palette. If no color is selected, then start at
+index 0. From there go one color forward or backward.
+"
 
 kpcolortoolbar - open/save palette
+
+improve contrast quality
+
+delta drawing of resize line to stop flicker
+
+kpCommand::size() additions can overflow INT_MAX; protect against - but then
+user would have already run out of memory...
 
 text tool could autoresize if font size changes or paste text
 - maybe text selection could hold "userSetSize" as distinct from current size
@@ -102,8 +97,9 @@ draw rectangle and land on doc resize handle - wrong status mess
 - that's a problem with Qt not giving EnterEvents when the mouse move is
   initiated from another object (see kpViewManager::viewUnderCursor() for
   the same problem)
-  
-allow user to hide Tool Box & Colour Palette if they really insist (it is possible to ALT+F4 them and can't get them back!)
+
+allow user to hide Tool Box & Colour Palette if they really insist (it is
+possible to ALT+F4 them and can't get them back!)
 
 sel border should not be xored against uninitialised rgb values (transparent pixels)
 e.g. CTRL+A, Crop Outside the Selection
@@ -123,10 +119,6 @@ tool box icons should have same background color as the other controls
 
 spraycan should be continuous - merge with kpToolBrush base?
 * [cleanup] remove all instances of kpTool*::setMode() - use proper class hierarchy
-
-fix flicker when zooming in/out (Bug #1)
-
-autocrop (moves top & left or just top; keep autocropping and undoing - nondeterministic???)
 
 a better set of cursors that don't obscure the pixel you're drawing at
 (e.g. compare the excellent Brush cursor to the Line Tool's cursor)
@@ -163,19 +155,28 @@ Image menu items as ordinary tools - e.g. freehand rotate would be nice
 
 kptoolwidgetbase - spacing between items, make contentsRect() actual size wanted
 
-blur & sharpen
+blur & sharpen tools
 
 "a simple plugins framework that allows plugins to be written in various
 languages (C, Python and Perl being the obvious choices) to allow people to
 extend it into the realms of PaintShop Pro without impacting on the core
 philosophy of the app, which seems to be simplicity." -- Tom
 
-Brad.Grant@Glenayre.com's ideas:
+Brad Grant:
 - red-eye removal (see QImage for windows and LPhoto from Lindows (Bela-Andreas))
 
 Bela-Andreas Bargel:
 - kooka scanning
 - greyscale masks
+- add a "info-button" (or menu-entry) which
+  shows all (meta-)data about the image (eg. to set its
+  dpi-resolution, its size, jpg/png-comments, colour
+  mode, used colours, file size,EXIF-data...)
+
+Bart Symons
+- "Image" -> "Properties"
+- "Edit" -> "Duplicate current image" (opens up another Kolourpaint instance
+with a duplicate of the current image)
 
 double click on transparent in colour tablet and press OK - becomes black
 
@@ -207,20 +208,109 @@ thumbnail has a rectangle that shows the visible mainView area
     I know that most people hate GIF but as a web developer PNGs aren't a
     solution yet because of their awful buggy support in IE.
 
-Emmeran Seehuber <rototor@rototor.de>
+creating new text selection sucks a lot of CPU
+
+Emmeran Seehuber:
+"
+P.S.: Kolourpaint feels a little bit Deluxe Paint / Personal Paint (both are
+Amiga programs) like. A toolbar option/checkbox like "Instant float
+selection" would make this perfect. When activated, performing a selection
+would instant copy the selection as "brush" and would float the brush under
+the mouse pointer. When you press left mouse the brush would just be painted
+into the picture at the given position. This is very usefull to retouch
+pictures.
+"
+
+Emmeran Seehuber:
+"
 > The Escape-key
 > could exit the input text mode, so that the other tools would be available
 > again.
+"
+- also only disable single key triggers when the text sel border is complete
+  to avoid 100ms hit (after 100ms hit required to enable single key triggers
+  after old sel deselected) every time a new text selection is being drawn
+  out
+
+Emmeran Seehuber:
+"
+Shortcut Key to move within the content if the scrollbar is visible (like KWin
+ALT+LeftMouse to move windows) (e.g. holding the alreay taken M shortcut
+would set the mouse cursor to a move cursor. Now pressing left mouse and
+moving the mouse cursor would scroll the content of the window)
+Up/Left/Down/Right to move within window content
+Goto next/prev color in palete
+"
 
 make sure session restore actually works
 
+resize doc or sel freehand - usershapepoints should be (after string freeze):
+"oldX x oldY - newX x newY  |||  (+|-)deltaX x (+|-)deltaY"
+instead of
+"oldX , oldY - newX , newY  |||  (-)deltaX x (-)deltaY"
+(the "+" is to show that it's a delta, not a size; on 2nd thoughts, if
+they're both -, it would be ambiguous)
 
-KDE 3.4
-~~~~~~~
+refactor kpToolConvertToGrayscaleCommand:
+- become kpColorEffect
+- move in kpPixmapFX::convertToGrayscale()
+
+Dialog caption "More Image Effects" --> "More Effects"
+
+"Image / Invert Colors" vs "Image / More Effects / Invert"
+
+"Edit / Paste in New Window" creates a "Set as Image" command -
+name doesn't make sense in that context
+
+with a 2 colour image, save as monochrome - ok
+but then add a colour and then save - it's drastically different -
+all black & white (and just all black if not dither); need better
+monochrome dither than Qt
+
+AUDIT: X.org has -pixmap24 & -pixmap32 - how will that affect Undo/Redo
+       size calculations
+
+use KSaveFile for atomic writes - if the temp is put in the same place as
+dest, what about small media like floppy?
+
+keyboard friendly scrollview
+
+fix flicker when zooming in/out (Bug #1)
+- maybe don't allow QScrollview to do own logic - would also eliminate
+  tearing when scrolling with wheel (and of course, drag scrolling)
+
+intersect bounding rect with document rect when saving undo info
+- e.g. if you drag a large rect bigger than the view, waste a lot of memory
+ditto for setTempPixmapAt et. al. (maybe not for selections, still thinking)
+
+Bug: dragging a line extending outside of doc makes it transparent (RGB_A_ for PNG saves)
+Hypothesis: kpPixmapFX::getPixmapAt() defines undefined pixels as transparent
+
+AUDIT: use of QPoint () or QPoint (-1, -1) as a sentinel is worrying since
+       it's a legal point when dragging out a rectangle
+
+can't copy 1600x1200 season.jpg double scaled from one kolourpaint to another
+(Bug #20)
+
+QColor::enterAllocContext () looks interesting
+
+"Soften & Sharpen" in cmd history should be either "Soften" or "Sharpen"
+
+scaling image with sel (no pixmap), and then manip sel adds extra "Selection: Create"
+(this is a rather difficult problem to fix since sel has already been used
+ for Image/Scale so would be inapproriate to replace it in cmd history)
+
+
+KDE
+~~~
 
 re-enable the ICO write support
 
 multicolumn KToolBar's (Bug #3)
+
+Report KImageIO bugs: targa and PNM don't work at all
+
+fix edit/paste may disappear due to klipper - Bug #85456
 
 
 Other Ideas
@@ -275,14 +365,14 @@ Open 800x600 image, Skew, set horizontal to 60, vertical to 30 and play with
 vertical and the image flips over!  I'm sure that's not supposed to happen.
 Needs investigating.
 
-Brad.Grant@Glenayre.com's ideas:
+Brad Grant:
 - rotating a JPG losslessly
 - resampling a picture to enlarge it with quality choices (bilinear,
   bicubic, lanczos, ...)
 
 view/preview OR view/fullscreen (not the same as settings/fullscreen)
 
-mchristoph.eckert@t-online.de (Christoph Eckert):
+Christoph Eckert:
 shape selections should support CTRL, ALT, SHIFT to alter shape but
 ATM, CTRL means copy, SHIFT means sweep.
 
@@ -295,10 +385,6 @@ Update: qt-copy/patches/0005-qpixmap_mitshm.patch: "this obsoletes KPixmapIO"
 Bela-Andreas Bargel:
 - extra toolbar with slideshow and other image viewing options
 - "CTRL-mousewheel" to zoom in/out of the window
-- add a "info-button" (or menu-entry) which
-  shows all (meta-)data about the image (eg. to set its
-  dpi-resolution, its size, jpg/png-comments, colour
-  mode, used colours, file size,EXIF-data...)
 - add ksnapshot mode to paste grabbed thing directly into kolourpaint so
   that kolourpaint gets a "Take screenshot" menu item
 - (LPhoto from Lindows): red-eye removal, enhance image
@@ -309,7 +395,7 @@ Bela-Andreas Bargel:
 I want to avoid making the widgets too complicated but this sounds
 like a very neat feature.
 
-mchristoph.eckert@t-online.de (Christoph Eckert):
+Christoph Eckert:
 - Icons could be rearranged; drawing and editing tools should
   be grouped together instead of being spread over the toolbox
 
@@ -322,3 +408,12 @@ http://dot.kde.org/1078028599/:
 kde-apps.org:
 * posthuman  on: 02/28/2004, 15:50
   - GIMP stuff like Crop Images and the intelligent scissor and a couple of more stuff.
+
+Dirk Schönberger
+> I stumbled about yet another (end user) paint program. I cannot stand its
+> GUI, but its user manual seems to fit on on HTML page.
+> Perhaps you can find some ideas for features for future KolourPaint
+> versions.
+>
+> http://www.simugraph.com/drops/
+
