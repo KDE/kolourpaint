@@ -179,6 +179,6 @@ bool kpToolWidgetBrush::setSelected (int row, int col, bool saveAsDefault)
     if (ret)
         emit brushChanged (brush (), brushIsDiagonalLine ());
     return ret;
-};
+}
 
 #include <kptoolwidgetbrush.moc>
