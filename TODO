@@ -5,9 +5,6 @@ $Id$
 Currently Underway
 ==================
 
-make ToolToolBar have _flat_, not 3D buttons
-
-
 split up massive kpmainwindow class
 
 fix selections; implement free-form selection
