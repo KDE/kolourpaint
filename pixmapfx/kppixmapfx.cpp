@@ -26,9 +26,11 @@
 */
 
 
-#define DEBUG_KP_PIXMAP_FX 0
+#define DEBUG_KP_PIXMAP_FX 1
 
+#include <qapplication.h>
 #include <qbitmap.h>
+#include <qdatetime.h>
 #include <qimage.h>
 #include <qpainter.h>
 #include <qpixmap.h>
@@ -36,6 +38,8 @@
 #include <qrect.h>
 
 #include <kdebug.h>
+#include <klocale.h>
+#include <kmessagebox.h>
 
 #include <kpcolor.h>
 #include <kpdefs.h>
@@ -53,9 +57,176 @@ QImage kpPixmapFX::convertToImage (const QPixmap &pixmap)
     return pixmap.convertToImage ();
 }
 
-// public static
-QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty, bool *hadAlphaChannel)
+
+// Returns true if <image> contains translucency (rather than just transparency)
+// QPixmap::hasAlphaChannel() appears to give incorrect results
+static bool imageHasAlphaChannel (const QImage &image)
 {
+    if (image.depth () < 32)
+        return false;
+
+    for (int y = 0; y < image.height (); y++)
+    {
+        for (int x = 0; x < image.width (); x++)
+        {
+            const QRgb rgb = image.pixel (x, y);
+
+            if (qAlpha (rgb) > 0 && qAlpha (rgb) < 255)
+                return true;
+        }
+    }
+
+    return false;
+}
+
+// Accurate but too slow
+#if 0
+static int imageNumColors (const QImage &image)
+{
+    QMap <QRgb, bool> rgbMap;
+
+    if (image.depth () <= 8)
+    {
+        for (int i = 0; i < image.numColors () && rgbMap.size () < (1 << 16); i++)
+            rgbMap.insert (image.color (i), true);
+    }
+    else
+    {
+        for (int y = 0; y < image.height () && rgbMap.size () < (1 << 16); y++)
+        {
+            for (int x = 0; x < image.width () && rgbMap.size () < (1 << 16); x++)
+            {
+                rgbMap.insert (image.pixel (x, y), true);
+            }
+        }
+    }
+
+    return rgbMap.size ();
+}
+#endif
+
+static void convertToPixmapWarnAboutLoss (const QImage &image,
+                                          const kpPixmapFX::WarnAboutLossInfo &wali)
+{
+    if (!wali.isValid ())
+        return;
+
+
+    const QString colorDepthTranslucencyDontAskAgain =
+        wali.dontAskAgainPrefix () + "_ColorDepthTranslucency";
+    const QString colorDepthDontAskAgain =
+        wali.dontAskAgainPrefix () + "_ColorDepth";
+    const QString translucencyDontAskAgain =
+        wali.dontAskAgainPrefix () + "_Translucency";
+
+#if DEBUG_KP_PIXMAP_FX && 1
+    QTime timer;
+    timer.start ();
+#endif
+
+    bool hasAlphaChannel =
+        (KMessageBox::shouldBeShownContinue (translucencyDontAskAgain) &&
+         imageHasAlphaChannel (image));
+
+#if DEBUG_KP_PIXMAP_FX && 1
+    kdDebug () << "\twarnAboutLoss - check hasAlphaChannel took "
+               << timer.restart () << "msec" << endl;
+#endif
+
+    bool moreColorsThanDisplay =
+        (KMessageBox::shouldBeShownContinue (colorDepthDontAskAgain) &&
+         image.depth () > QColor::numBitPlanes () &&
+         QColor::numBitPlanes () < 24);  // 32 indicates alpha channel
+
+    int screenDepthNeeded = 0;
+
+    if (moreColorsThanDisplay)
+        screenDepthNeeded = QMIN (24, image.depth ());
+
+#if DEBUG_KP_PIXMAP_FX && 1
+    kdDebug () << "\ttranslucencyShouldBeShown="
+                << KMessageBox::shouldBeShownContinue (translucencyDontAskAgain)
+                << endl
+                << "\thasAlphaChannel=" << hasAlphaChannel
+                << endl
+                << "\tcolorDepthShownBeShown="
+                << KMessageBox::shouldBeShownContinue (colorDepthDontAskAgain)
+                << endl
+                << "\timage.depth()=" << image.depth ()
+                << endl
+                << "\tscreenDepth=" << QColor::numBitPlanes ()
+                << endl
+                << "\tmoreColorsThanDisplay=" << moreColorsThanDisplay
+                << endl
+                << "\tneedDepth=" << screenDepthNeeded
+                << endl;
+#endif
+
+
+    const QString moreColorsThanDisplayMessage =
+        i18n ("may have more colors than the current screen mode."
+              " In order to display it, some colors may be changed."
+              " Try increasing your screen "
+              " depth to at least %1-bit.")
+            .arg (screenDepthNeeded);
+    const QString hasAlphaChannelMessage =
+        i18n ("contains translucency which is not"
+              " fully supported."
+              " The translucency data will be "
+              " approximated with a 1-bit transparency mask.");
+
+    QApplication::setOverrideCursor (Qt::arrowCursor);
+
+    if (moreColorsThanDisplay && hasAlphaChannel)
+    {
+        KMessageBox::information (wali.parent (),
+            i18n ("The %1 %2\nIt also %3")
+                .arg (wali.itemName ())
+                .arg (moreColorsThanDisplayMessage)
+                .arg (hasAlphaChannelMessage),
+            QString::null,  // or would you prefer "Low Screen Depth and Image Contains Transparency"? :)
+            colorDepthTranslucencyDontAskAgain);
+
+        if (!KMessageBox::shouldBeShownContinue (colorDepthTranslucencyDontAskAgain))
+        {
+            KMessageBox::saveDontShowAgainContinue (colorDepthDontAskAgain);
+            KMessageBox::saveDontShowAgainContinue (translucencyDontAskAgain);
+        }
+    }
+    else if (moreColorsThanDisplay)
+    {
+        KMessageBox::information (wali.parent (),
+            i18n ("The %1 %2")
+                .arg (wali.itemName ())
+                .arg (moreColorsThanDisplayMessage),
+            i18n ("Low Screen Depth"),
+            colorDepthDontAskAgain);
+    }
+    else if (hasAlphaChannel)
+    {
+        KMessageBox::information (wali.parent (),
+            i18n ("The %1 %2")
+                .arg (wali.itemName ())
+                .arg (hasAlphaChannelMessage),
+            i18n ("Image Contains Translucency"),
+            translucencyDontAskAgain);
+    }
+
+    QApplication::restoreOverrideCursor ();
+}
+
+// public static
+QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty,
+                                     const WarnAboutLossInfo &wali)
+{
+#if DEBUG_KP_PIXMAP_FX && 1
+    kdDebug () << "kpPixmapFX::convertToPixmap(image,pretty=" << pretty
+               << ",warnAboutLossInfo.isValid=" << wali.isValid ()
+               << ")" << endl;
+    QTime timer;
+    timer.start ();
+#endif
+
     QPixmap destPixmap;
 
     if (!pretty)
@@ -75,10 +246,17 @@ QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty, bool *had
                                      Qt::PreferDither/*(dither even if <256 colours???)*/);
     }
 
-    if (hadAlphaChannel)
-        *hadAlphaChannel = destPixmap.hasAlphaChannel ();
+#if DEBUG_KP_PIXMAP_FX && 1
+    kdDebug () << "\tconversion took " << timer.elapsed () << "msec" << endl;
+#endif
 
     kpPixmapFX::ensureNoAlphaChannel (&destPixmap);
+
+
+    if (wali.isValid ())
+        convertToPixmapWarnAboutLoss (image, wali);
+
+
     return destPixmap;
 }
 
@@ -93,7 +271,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
 {
     QPixmap retPixmap (rect.width (), rect.height ());
 
-#if DEBUG_KP_PIXMAP_FX && 1
+#if DEBUG_KP_PIXMAP_FX && 0
     kdDebug () << "kpPixmapFX::getPixmapAt(pm.hasMask="
                << (pm.mask () ? 1 : 0)
                << ",rect="
@@ -107,7 +285,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
 
     if (wouldHaveUndefinedPixels)
     {
-    #if DEBUG_KP_PIXMAP_FX && 1
+    #if DEBUG_KP_PIXMAP_FX && 0
         kdDebug () << "\tret would contain undefined pixels - setting them to transparent" << endl;
     #endif
         QBitmap transparentMask (rect.width (), rect.height ());
@@ -117,7 +295,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
 
     if (validSrcRect.isEmpty ())
     {
-    #if DEBUG_KP_PIXMAP_FX && 1
+    #if DEBUG_KP_PIXMAP_FX && 0
         kdDebug () << "\tsilly case - completely invalid rect - ret transparent pixmap" << endl;
     #endif
         return retPixmap;
@@ -135,7 +313,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
 
     if (wouldHaveUndefinedPixels && retPixmap.mask () && !pm.mask ())
     {
-    #if DEBUG_KP_PIXMAP_FX && 1
+    #if DEBUG_KP_PIXMAP_FX && 0
         kdDebug () << "\tensure opaque in valid region" << endl;
     #endif
         kpPixmapFX::ensureOpaqueAt (&retPixmap,
@@ -143,7 +321,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
                                            validSrcRect.width (), validSrcRect.height ()));
     }
 
-#if DEBUG_KP_PIXMAP_FX && 1
+#if DEBUG_KP_PIXMAP_FX && 0
     kdDebug () << "\tretPixmap.hasMask="
                << (retPixmap.mask () ? 1 : 0)
                << endl;
@@ -674,7 +852,15 @@ void kpPixmapFX::convertToBlackAndWhite (QPixmap *destPixmapPtr)
         }
     #endif
 
+    #if 1  // dither version
         image = image.convertDepth (1/*monochrome*/);
+    #else  // below no dither version looks like true B&W but not close to orig
+        image = image.convertDepth (1/*monochrome*/,
+                                    Qt::MonoOnly |
+                                    Qt::ThresholdDither/*no dither*/ |
+                                    Qt::ThresholdAlphaDither/*no dither alpha*/ |
+                                    Qt::AvoidDither);
+    #endif
 
     #if DEBUG_KP_PIXMAP_FX && 0
         kdDebug () << "After conversion to B&W:" << endl;
@@ -690,7 +876,7 @@ void kpPixmapFX::convertToBlackAndWhite (QPixmap *destPixmapPtr)
 
         if (!image.isNull ())
         {
-            QPixmap pixmap = kpPixmapFX::convertToPixmap (image, true/*pretty*/);
+            QPixmap pixmap = kpPixmapFX::convertToPixmap (image, true/*dither*/);
 
             // HACK: The above "image.convertDepth (1)" erases the Alpha Channel
             //       even if Qt::ColorOnly is specified in the conversion flags.

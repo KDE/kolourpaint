@@ -51,6 +51,16 @@
 
 
 // private
+kpPixmapFX::WarnAboutLossInfo kpMainWindow::pasteWarnAboutLossInfo () const
+{
+    // TODO: since when was "this" a "const kpMainWindow *"???
+    return kpPixmapFX::WarnAboutLossInfo ((QWidget *) (this),
+        i18n ("image to be pasted"),
+        "paste");
+}
+
+
+// private
 void kpMainWindow::setupEditMenuActions ()
 {
     KActionCollection *ac = actionCollection ();
@@ -277,7 +287,7 @@ void kpMainWindow::slotPaste ()
     }
 
     kpSelection sel;
-    if (!kpSelectionDrag::decode (ms, sel/*ref*/))
+    if (!kpSelectionDrag::decode (ms, sel/*ref*/, pasteWarnAboutLossInfo ()))
     {
         kdError () << "kpMainWindow::slotPaste() could not decode selection" << endl;
         QApplication::restoreOverrideCursor ();

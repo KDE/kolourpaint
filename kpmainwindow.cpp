@@ -466,7 +466,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
     kpSelection sel;
     KURL::List urls;
 
-    if (kpSelectionDrag::decode (e, sel/*ref*/))
+    if (kpSelectionDrag::decode (e, sel/*ref*/, pasteWarnAboutLossInfo ()))
     {
         paste (sel);
     }
@@ -489,7 +489,7 @@ void kpMainWindow::moveEvent (QMoveEvent * /*e*/)
 
 // public
 void kpMainWindow::drawTransparentBackground (QPainter *painter,
-                                              int viewWidth, int viewHeight,
+                                              int /*viewWidth*/, int /*viewHeight*/,
                                               const QRect &rect,
                                               bool isPreview)
 {

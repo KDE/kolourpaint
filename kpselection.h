@@ -35,6 +35,8 @@
 #include <qpointarray.h>
 #include <qrect.h>
 
+#include <kppixmapfx.h>
+
 
 /*
  * Holds a selection - will also be used for the clipboard
@@ -59,6 +61,9 @@ public:
     kpSelection &operator= (const kpSelection &rhs);
     friend QDataStream &operator<< (QDataStream &stream, const kpSelection &selection);
     friend QDataStream &operator>> (QDataStream &stream, kpSelection &selection);
+    void readFromStream (QDataStream &stream,
+                         const kpPixmapFX::WarnAboutLossInfo &wali =
+                             kpPixmapFX::WarnAboutLossInfo ());
     ~kpSelection ();
 
 private:

@@ -33,8 +33,12 @@
 
 #include <qptrlist.h>
 #include <qvaluevector.h>
+
 #include <kmainwindow.h>
 #include <kurl.h>
+
+#include <kppixmapfx.h>
+
 
 class QPainter;
 class QPoint;
@@ -258,6 +262,7 @@ private slots:
      */
 
 private:
+    kpPixmapFX::WarnAboutLossInfo pasteWarnAboutLossInfo () const;
     void setupEditMenuActions ();
     void enableEditMenuDocumentActions (bool enable = true);
 

@@ -108,23 +108,29 @@ QDataStream &operator<< (QDataStream &stream, const kpSelection &selection)
 // friend
 QDataStream &operator>> (QDataStream &stream, kpSelection &selection)
 {
+    selection.readFromStream (stream);
+    return stream;
+}
+
+// public
+void kpSelection::readFromStream (QDataStream &stream,
+                                  const kpPixmapFX::WarnAboutLossInfo &wali)
+{
     int typeAsInt;
     stream >> typeAsInt;
-    selection.m_type = kpSelection::Type (typeAsInt);
+    m_type = kpSelection::Type (typeAsInt);
 
-    stream >> selection.m_rect;
-    stream >> selection.m_points;
-    selection.m_points.detach ();
+    stream >> m_rect;
+    stream >> m_points;
+    m_points.detach ();
 
     QImage image;
     stream >> image;
-    delete selection.m_pixmap;
+    delete m_pixmap;
     if (!image.isNull ())
-        selection.m_pixmap = new QPixmap (kpPixmapFX::convertToPixmap (image));
+        m_pixmap = new QPixmap (kpPixmapFX::convertToPixmap (image, false/*no dither*/, wali));
     else
-        selection.m_pixmap = 0;
-
-    return stream;
+        m_pixmap = 0;
 }
 
 kpSelection::~kpSelection ()

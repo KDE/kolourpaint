@@ -162,96 +162,50 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
             #if DEBUG_KP_DOCUMENT && 0
                 kdDebug () << "Image dump:" << endl;
 
-                bool debug_hasAlphaChannel = false;
                 for (int y = 0; y < image.height (); y++)
                 {
                     for (int x = 0; x < image.width (); x++)
                     {
                         const QRgb rgb = image.pixel (x, y);
-                        fprintf (stderr, " %08X", rgb);
-
-                        if (!debug_hasAlphaChannel && qAlpha (rgb) > 0 && qAlpha (rgb) < 255)
-                            debug_hasAlphaChannel = true;
+                        //fprintf (stderr, " %08X", rgb);
                     }
-                    fprintf (stderr, "\n");
+                    //fprintf (stderr, "\n");
                 }
-
-                kdDebug () << "hasAlphaChannel="
-                           << debug_hasAlphaChannel << endl;
             #endif
 
-                bool warned = false;
+                QPixmap *newPixmap = new QPixmap ();
+                *newPixmap = kpPixmapFX::convertToPixmap (image,
+                    false/*no dither*/,
+                    kpPixmapFX::WarnAboutLossInfo (m_mainWindow,
+                        i18n ("image \"%1\"").arg (prettyFilenameForURL (url)),
+                        "docOpen"));
 
-                // TODO: port warnings to cut & paste (in case remote program manipulates
-                // QImage for e.g.)
-
-                if (!warned && image.hasAlphaBuffer ())
+                if (newPixmap->isNull ())
                 {
-                    // SYNC: remove 1.0 reference after impl transparency
-                    errorOccurred = (KMessageBox::warningContinueCancel (m_mainWindow,
-                        i18n ("The image \"%1\" has an Alpha Channel.\n"
-                              "This is not fully supported by KolourPaint "
-                              "(1-bit transparency will be supported by 1.0). "
-                              "If you open this file, some of its colors and opacity "
-                              "may be incorrect "
-                              "and this will also adversely affect future save operations.\n"
-                              "Do you really want to open this file?")
-                            .arg (kpDocument::prettyFilenameForURL (url)),
-                        i18n ("Loss of Color and/or Opacity Information"),
-                        KStdGuiItem::open (),
-                        "DoNotAskAgain_OpenLossOfColorAndOpacity") != KMessageBox::Continue);
-                    warned = true;
+                    kdError () << "could not convert from QImage" << endl;
+                    delete newPixmap;
+                    errorOccurred = true;
                 }
-
-                if (!warned && image.depth () > QColor::numBitPlanes ())
+                else
                 {
-                    errorOccurred = (KMessageBox::warningContinueCancel (m_mainWindow,
-                        i18n ("The image \"%1\" has a higher color depth (%2-bit) "
-                              "than the display (%3-bit).\n"
-                              "If you open this file, some of its colors may be incorrect "
-                              "and this will also adversely affect future save operations.\n"
-                              "Do you really want to open this file?")
-                            .arg (kpDocument::prettyFilenameForURL (url))
-                            .arg (image.depth ())
-                            .arg (QColor::numBitPlanes ()),
-                        i18n ("Loss of Color Information"),
-                        KStdGuiItem::open (),
-                        "DoNotAskAgain_OpenLossOfColor") != KMessageBox::Continue);
-                    warned = true;
-                }
+                #if DEBUG_KP_DOCUMENT
+                    kdDebug () << "\tpixmap: depth=" << newPixmap->depth ()
+                                << " hasAlphaChannelOrMask=" << newPixmap->hasAlpha ()
+                                << " hasAlphaChannel=" << newPixmap->hasAlphaChannel ()
+                                << endl;
+                #endif
 
-                if (!errorOccurred)
-                {
-                    QPixmap *newPixmap = new QPixmap ();
-                    *newPixmap = kpPixmapFX::convertToPixmap (image, true/*pretty*/);
+                    KIO::NetAccess::removeTempFile (tempFile);
 
-                    if (newPixmap->isNull ())
-                    {
-                        kdError () << "could not convert from QImage" << endl;
-                        delete newPixmap;
-                        errorOccurred = true;
-                    }
-                    else
-                    {
-                    #if DEBUG_KP_DOCUMENT
-                        kdDebug () << "\tpixmap: depth=" << newPixmap->depth ()
-                                   << " hasAlphaChannelOrMask=" << newPixmap->hasAlpha ()
-                                   << " hasAlphaChannel=" << newPixmap->hasAlphaChannel ()
-                                   << endl;
-                    #endif
+                    delete m_pixmap;
+                    m_pixmap = newPixmap;
 
-                        KIO::NetAccess::removeTempFile (tempFile);
+                    m_url = url;
+                    m_mimetype = mimetype;
+                    m_modified = false;
 
-                        delete m_pixmap;
-                        m_pixmap = newPixmap;
-
-                        m_url = url;
-                        m_mimetype = mimetype;
-                        m_modified = false;
-
-                        emit documentOpened ();
-                        return true;
-                    }
+                    emit documentOpened ();
+                    return true;
                 }
             }
         }
@@ -717,7 +671,7 @@ QBitmap kpDocument::selectionGetMask () const
     // easy if we already have it :)
     if (sel->pixmap ())
         return kpPixmapFX::getNonNullMask (*sel->pixmap ());
-    
+
 
     const QRect boundingRect = sel->boundingRect ();
     if (!boundingRect.isValid ())

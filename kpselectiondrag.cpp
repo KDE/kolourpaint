@@ -237,7 +237,8 @@ bool kpSelectionDrag::decode (const QMimeSource *e, QImage &img)
 }
 
 // public static
-bool kpSelectionDrag::decode (const QMimeSource *e, kpSelection &sel)
+bool kpSelectionDrag::decode (const QMimeSource *e, kpSelection &sel,
+                              const kpPixmapFX::WarnAboutLossInfo &wali)
 {
 #if DEBUG_KP_SELECTION_DRAG
     kdDebug () << "kpSelectionDrag::decode(kpSelection)" << endl;
@@ -252,6 +253,8 @@ bool kpSelectionDrag::decode (const QMimeSource *e, kpSelection &sel)
     #endif
         QByteArray data = e->encodedData (kpSelectionDrag::selectionMimeType);
         QDataStream stream (data, IO_ReadOnly);
+        
+        // (no need for wali as kpSelection's by definition only support QPixmap's)
         stream >> sel;
     }
     else
@@ -269,7 +272,7 @@ bool kpSelectionDrag::decode (const QMimeSource *e, kpSelection &sel)
 
             sel = kpSelection (kpSelection::Rectangle,
                                QRect (0, 0, image.width (), image.height ()),
-                               kpPixmapFX::convertToPixmap (image));
+                               kpPixmapFX::convertToPixmap (image, false/*no dither*/, wali));
         }
         else
         {

@@ -30,11 +30,14 @@
 #define __kppixmapfx_h__
 
 
+#include <qstring.h>
+
 class QBitmap;
 class QImage;
 class QPixmap;
 class QPoint;
 class QRect;
+class QWidget;
 class QWMatrix;
 
 class kpColor;
@@ -53,22 +56,69 @@ public:
     static QImage convertToImage (const QPixmap &pixmap);
 
     /*
+     * Dialog info for warning about data loss with convertToPixmap().
+     */
+    class WarnAboutLossInfo
+    {
+    public:
+        WarnAboutLossInfo ()
+            : m_isValid (false),
+              m_parent (0)
+        {
+        }
+
+
+       /*
+        * <parent>                 dialog parent
+        * <itemName>               source of the original image e.g.
+        *                          i18n ("image \"example.jpg\"") or
+        *                          i18n ("image from the clipboard")
+        * <dontAskAgainPrefix>     e.g. "docOpen" or "clipboardPaste"
+        */
+        WarnAboutLossInfo (QWidget *parent,
+                           const QString &itemName,
+                           const QString &dontAskAgainPrefix)
+            : m_isValid (true),
+              m_parent (parent),
+              m_itemName (itemName),
+              m_dontAskAgainPrefix (dontAskAgainPrefix)
+        {
+        }
+
+        ~WarnAboutLossInfo ()
+        {
+        }
+
+
+        bool isValid () const { return m_isValid; }
+        QWidget *parent () const { return m_parent; }
+        QString itemName () const { return m_itemName; }
+        QString dontAskAgainPrefix () const { return m_dontAskAgainPrefix; }
+
+    private:
+        bool m_isValid;
+        QWidget *m_parent;
+        QString m_itemName, m_dontAskAgainPrefix;
+    };
+
+    /*
      * Converts <image> to a QPixmap of the current display's depth and
      * returns it.
      *
      * If the flag <pretty> is set, it may dither the image making the
      * returned pixmap look better at the expense of exactness of conversion.
      *
-     * This will automatically call ensureNoAlphaChannel().  If you pass a
-     * pointer through the <hadAlphaChannel> parameter, it will return
-     * whether or not the pixmap had an Alpha Channel (not just a mask)
-     * before the call to ensureNoAlphaChannel().
+     * This will automatically call ensureNoAlphaChannel().
      *
      * Never use a foreign QPixmap that is offered to you - always get the
      * foreign QImage and use this function to convert it to a sane QPixmap.
+     *
+     * <wali>, if specified, describes parameters for the dialog that comes
+     * up warning the user of data loss if the <image> contains translucency
+     * and/or more colors than the current display.
      */
     static QPixmap convertToPixmap (const QImage &image, bool pretty = false,
-                                    bool *hadAlphaChannel = 0);
+                                    const WarnAboutLossInfo &wali = WarnAboutLossInfo ());
 
 
     /*

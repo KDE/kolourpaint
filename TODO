@@ -11,29 +11,25 @@ Look in BUGS, patches/, grep sources for "OPT" & "TODO" and look here:
 Feature Plan for 1.0
 ====================
 
-Short-Term
-----------
-
-selections:
-- transparent & opaque selections
-- tool/text
-- paste text (editable after you paste it)
+Now
+---
 
 colour similarity option for Fill and Colour Eraser and AutoCrop
 
-lighter checkerboard transparency background in lieu of configurability
+selections:
+- transparent & opaque selections
+- tool/text; paste text (editable after you paste it)
+- bug (something along the lines of): drag out a selection, move
+       undo, move - there's 2 "Selection/Create" Undo entries
 
-clean document features warning messages
-
-bug (something along the lines of): drag out a selection, smear
-   undo, move - there's 2 "Selection/Create" Undo entries
-
-
------- KolourPaint 1.0 Alpha released ------
+Update docs
 
 
-Medium Term (2 weeks)
-------------------------
+------ KolourPaint 1.0 Preview released ------
+
+
+1.5 weeks
+---------
 
 brush shape in wrong place if zoom smaller (or scroll with wheel)
 Reason: the mouse isn't moving relative to the view (as the view is moving
@@ -48,19 +44,6 @@ clean up kpmainwindow
 - propagation of settings thru mainwindows
 
 config dialogs (look into new kconfig generator)
-
-
-Long-Term (approx 4 weeks)
------------------------------
-
-colour depth audit
-- do 1-bit pixmaps work? [DONE, I think]
-- are we incorrectly using kpDocument::setPixmap() with mono pixmaps? [DONE]
-- remember to nuke pixmap alpha channel from foreign sources [DONE]
-- use of QImage::setPixel() instead of QImage::setColor() with <= 8-bit pixmaps [DONE]
-- do 8-bit pixmaps work?
-- are we dithering when converting from QImage -> QPixmap when we shouldn't be?
-  esp. when saving
 
 
 ------ KolourPaint 1.0 released ------
@@ -91,6 +74,9 @@ intersect bounding rect with document rect when saving undo info
 - e.g. if you drag a large rect bigger than the view, waste a lot of memory
 ditto for setTempPixmapAt et. al. (maybe not for selections, still thinking)
 
+Bug: dragging a line extending outside of doc makes it transparent (RGB_A_ for PNG saves)
+Hypothesis: kpPixmapFX::getPixmapAt() defines undefined pixels as transparent
+
 a better set of cursors that don't obscure the pixel you're drawing at
 (e.g. compare the excellent Brush cursor to the Line Tool's cursor)
 
@@ -110,7 +96,8 @@ Image/Convert Colour Depth (only be able to dither to colour depths lower
 than the current display - limitation of X).  Hmmm, I could understand
 going down to mono (image effect) but why would you want to e.g. convert
 to 8 bit - if you save in an 8-bit format after that, you'll lose colour
-info twice.  Allow saving at different colour depths.
+info twice.  Allow saving at different colour depths (else saving a mono BMP
+saves it as full colour 32x bigger).
 
 fullscreen
 
@@ -149,7 +136,15 @@ configurable transparency background
 kpDocument::selectionGetMask()
 * return existing selection pixmap mask if available
    (TODO: actually, I think this is inconsistent)
-   
+
+check -> "The QImage class uses explicit sharing, similar to that used by QMemArray."
+
+option to dither image on open if not enough colors else that season jpg
+looks bad on 8-bit screen
+- it seems that AvoidDither means only do colour match/dithering if need to
+  while PreferDither means try to _always_ smooth out (even in a single colour
+  darkgreen document)
+
 documentation (assigned to Thurston)
 
 

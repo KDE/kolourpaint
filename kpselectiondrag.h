@@ -31,6 +31,9 @@
 
 #include <qdragobject.h>
 
+#include <kppixmapfx.h>
+
+
 class kpSelection;
 
 
@@ -58,7 +61,9 @@ public:
 
     static bool canDecode (const QMimeSource *e);
     static bool decode (const QMimeSource *e, QImage &img);
-    static bool decode (const QMimeSource *e, kpSelection &sel);
+    static bool decode (const QMimeSource *e, kpSelection &sel,
+                        const kpPixmapFX::WarnAboutLossInfo &wali =
+                            kpPixmapFX::WarnAboutLossInfo ());
 
 protected:
     kpSelection m_selection;
