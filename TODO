@@ -5,7 +5,7 @@ $Id$
 Before each release of KolourPaint and/or KDE, grep sources for
 "SYNC" and check that those assumptions still hold.
 
-Look in patches/, grep sources for "OPT" & "TODO" and look here:
+Look in BUGS, patches/, grep sources for "OPT" & "TODO" and look here:
 
 
 Feature Plan for 1.0
@@ -16,22 +16,24 @@ Short-Term
 
 selections:
 - transparent & opaque selections
-- maintain selection border during rotate, skew as much as possible
+- tool/text
+- paste text (editable after you paste it)
 
 colour similarity option for Fill and Colour Eraser and AutoCrop
 
-clean up Image dialogs
-
-configurable transparency background
+lighter checkerboard transparency background in lieu of configurability
 
 clean document features warning messages
+
+bug (something along the lines of): drag out a selection, smear
+   undo, move - there's 2 "Selection/Create" Undo entries
+
+
+------ KolourPaint 1.0 Alpha released ------
 
 
 Medium Term (2 weeks)
 ------------------------
-
-tool/text
-paste text (editable after you paste it)
 
 brush shape in wrong place if zoom smaller (or scroll with wheel)
 Reason: the mouse isn't moving relative to the view (as the view is moving
@@ -48,7 +50,7 @@ clean up kpmainwindow
 config dialogs (look into new kconfig generator)
 
 
-Long-Term (approx 6 weeks)
+Long-Term (approx 4 weeks)
 -----------------------------
 
 colour depth audit
@@ -61,9 +63,16 @@ colour depth audit
   esp. when saving
 
 
+------ KolourPaint 1.0 released ------
+
+
 Feature Plan for 1.1
 ====================
 
+
+Open 800x600 image, Skew, set horizontal to 60, vertical to 30 and play with
+vertical and the image flips over!  I'm sure that's not supposed to happen.
+Needs investigating.
 
 flexible kpCommandHistory - would virtually solve all the Undo/Redo annoyances
 (such as very limited Undo/Redo even though you're making 1 pixel changes)
@@ -75,6 +84,8 @@ selections
 - maybe always have 1 width display of border - try editing a B&W icon to see what I mean
 
 freehand resize document
+
+eraser cursor border should not get magnified
 
 intersect bounding rect with document rect when saving undo info
 - e.g. if you drag a large rect bigger than the view, waste a lot of memory
@@ -122,22 +133,33 @@ Ideas:
 - region-based rendering (for performance)
 - do something about this horrible tempPixmap hack (so slooooow)
 
+fix flicker when zooming in/out (Bug #1)
 tool to select rectangular area to zoom into
 
+thumbnail doesn't flicker heaps when appearing (Bug #2)
 thumbnail has a rectangle that shows the visible mainView area
 
 Edit/Redo as Stretch,
 Edit/Redo as Resize
 
+kptoolpreviewdialog shows checkerboard
+
+configurable transparency background
+
+kpDocument::selectionGetMask()
+* return existing selection pixmap mask if available
+   (TODO: actually, I think this is inconsistent)
+   
 documentation (assigned to Thurston)
 
 
-Feature Plan for KDE > 3.2
-==========================
+Feature Plan for KDE 3.3
+========================
 
 re-enable the ICO write support
 
-multicolumn KToolBar's
+multicolumn KToolBar's (Bug #3)
+
 
 if you undock a vertical toolbar and right click --> Orientation --> Bottom,
 it stays vertically oriented
