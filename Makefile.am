@@ -4,9 +4,9 @@ bin_PROGRAMS = kolourpaint
 
 kolourpaint.o: kolourpaintlicense.h
 
-kolourpaintlicense.h : $(srcdir)/LICENCE
+kolourpaintlicense.h : $(srcdir)/COPYING
 	echo "const char *kpLicenseText =" > kolourpaintlicense.h
-	cat $(srcdir)/LICENCE | sed -e 's/"/\\"/g' -e 's/$$/\\n"/g' -e 's/^/    "/g' >> kolourpaintlicense.h
+	cat $(srcdir)/COPYING | sed -e 's/"/\\"/g' -e 's/$$/\\n"/g' -e 's/^/    "/g' >> kolourpaintlicense.h
 	echo ";" >> kolourpaintlicense.h
 
 CLEANFILES = kolourpaintlicense.h
