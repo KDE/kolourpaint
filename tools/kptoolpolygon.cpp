@@ -114,7 +114,7 @@ static QBrush makeBrush (const kpColor &foregroundColor,
     if (toolWidgetFillStyle)
         return toolWidgetFillStyle->brush (foregroundColor, backgroundColor);
     else
-        return QBrush (backgroundColor.toQColor ());
+        return Qt::NoBrush;
 }
 
 static bool only1PixelInPointArray (const QPointArray &points)
@@ -341,7 +341,9 @@ void kpToolPolygon::begin ()
 {
     kpToolToolBar *tb = toolToolBar ();
 
+#if DEBUG_KP_TOOL_POLYGON
     kdDebug () << "kpToolPolygon::begin() tb=" << tb << endl;
+#endif
 
     if (tb)
     {
