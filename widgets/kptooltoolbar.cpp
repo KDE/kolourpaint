@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_TOOL_BAR 1
+#define DEBUG_KP_TOOL_TOOL_BAR 0
 
 
 #include <kptooltoolbar.h>
@@ -93,7 +93,7 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
 
     m_baseWidget = new QWidget (this);
 
-#if DEBUG_KP_TOOL_TOOL_BAR || 1
+#if DEBUG_KP_TOOL_TOOL_BAR
     QTime timer;
     timer.start ();
 #endif
@@ -111,7 +111,7 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
     m_toolWidgets.append (m_toolWidgetSpraycanSize =
         new kpToolWidgetSpraycanSize (m_baseWidget, "Tool Widget Spraycan Size"));
 
-#if DEBUG_KP_TOOL_TOOL_BAR || 1
+#if DEBUG_KP_TOOL_TOOL_BAR
     kdDebug () << "kpToolToolBar::<ctor> create tool widgets msec="
                << timer.restart () << endl;
 #endif
@@ -124,7 +124,7 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
                  this, SIGNAL (toolWidgetOptionSelected ()));
     }
 
-#if DEBUG_KP_TOOL_TOOL_BAR || 1
+#if DEBUG_KP_TOOL_TOOL_BAR
     kdDebug () << "kpToolToolBar::<ctor> connect widgets msec="
                << timer.restart () << endl;
 #endif
@@ -132,7 +132,7 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
     m_lastDockedOrientationSet = false;
     setOrientation (orientation ());
 
-#if DEBUG_KP_TOOL_TOOL_BAR || 1
+#if DEBUG_KP_TOOL_TOOL_BAR
     kdDebug () << "kpToolToolBar::<ctor> layout tool widgets msec="
                << timer.elapsed () << endl;
 #endif
@@ -296,7 +296,7 @@ void kpToolToolBar::hideAllToolWidgets ()
 // public
 int kpToolToolBar::numShownToolWidgets () const
 {
-#if DEBUG_KP_TOOL_TOOL_BAR || 1
+#if DEBUG_KP_TOOL_TOOL_BAR
     kdDebug () << "kpToolToolBar::numShownToolWidgets()" << endl;
 #endif
 
@@ -306,7 +306,7 @@ int kpToolToolBar::numShownToolWidgets () const
          it != m_toolWidgets.end ();
          it++)
     {
-    #if DEBUG_KP_TOOL_TOOL_BAR || 1
+    #if DEBUG_KP_TOOL_TOOL_BAR
         kdDebug () << "\t" << (*it)->name ()
                    << " isShown=" << (*it)->isShown ()
                    << endl;
@@ -357,7 +357,7 @@ bool kpToolToolBar::toolsSingleKeyTriggersEnabled () const
 // public
 void kpToolToolBar::enableToolsSingleKeyTriggers (bool enable)
 {
-#if DEBUG_KP_TOOL_TOOL_BAR || 1
+#if DEBUG_KP_TOOL_TOOL_BAR
     kdDebug () << "kpToolToolBar::enableToolsSingleKeyTriggers(" << enable << ")" << endl;
 #endif
 
@@ -460,7 +460,7 @@ void kpToolToolBar::slotToolActionToolTipChanged ()
     const kpTool *tool = CONST_KP_TOOL_SENDER ();
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "kpToolToolBar::slotToolActionActivated() tool="
+    kdDebug () << "kpToolToolBar::slotToolActionToolTipChanged() tool="
                << (tool ? tool->name () : "null")
                << endl;
 #endif
