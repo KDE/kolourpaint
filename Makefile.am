@@ -27,7 +27,7 @@ messages: rc.cpp
 		widgets/*.rc widgets/*.ui
 		>> rc.cpp
 	$(XGETTEXT) *.cpp *.h \
-		pixmapfx/*.cpp pixmapfs/*.h \
+		pixmapfx/*.cpp pixmapfx/*.h \
 		tools/*.cpp tools/*.h \
 		widgets/*.cpp widgets/*.h \
 		-o $(podir)/kolourpaint.pot
