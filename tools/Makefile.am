@@ -24,7 +24,7 @@ libkolourpainttools_la_SOURCES = kptoolskewdialogwidget.ui \
 # TODO: Why is this needed?  Isn't linking at the toplevel enough?
 libkolourpainttools_la_LIBADD = ../pixmapfx/libkolourpaintpixmapfx.la ../cursors/libkolourpaintcursors.la
 
-libkolourpainttools_la_METASOURCES = kptool.moc \
+METASOURCES = kptool.moc \
     kptoolairspray.moc \
     kptoolbrush.moc \
     kptoolcolorpicker.moc \
