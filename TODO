@@ -1,26 +1,11 @@
 
-$Id$
-
-
 Before each release of KolourPaint and/or KDE, grep sources for
 "SYNC" and check that those assumptions still hold.
 
 Look in BUGS, patches/, grep sources for "OPT" & "TODO" and look here:
 
 
-Feature Plan for 1.0
-====================
-
-Now
----
-
-- tool/text; paste text (editable after you paste it)
-- which would reasonably allow text as selections (freehand resize-able)
-
-selections - cursor should know whats happening beneath it - e.g. has selection been deleted?
-
-
------- KolourPaint 1.0 released ------
+add credits
 
 
 Feature Plan for 1.1
@@ -49,6 +34,7 @@ Image menu items as ordinary tools - e.g. freehand rotate would be nice
 selections
 - ability to freehand stretch selections
 - maybe always have 1 width display of border - try editing a B&W icon to see what I mean
+- should be able to use selection/image commands on text box
 
 freehand resize document
 
