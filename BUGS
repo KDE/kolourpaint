@@ -6,8 +6,8 @@ will help to improve future versions of KolourPaint and you will not
 receive flames for reporting duplicates.
 
 
-This file lists known bugs in the 1.4_light release that are not considered
-"release critical" and are difficult to fix:
+This file lists known bugs in the 1.4.1_light release that are not
+considered "release critical" and are difficult to fix:
 
 
 1. Flicker when zooming in/out.
@@ -158,9 +158,9 @@ that I won't forget to include it in backport branches of KolourPaint.
 Issues with Early Versions of KDE 3.x and Qt 3.x
 ================================================
 
-KolourPaint 1.4_light runs best on KDE 3.4 and Qt 3.3.  It will compile and
-run on earlier KDE and Qt 3.x releases but you may encounter the problems
-listed below.
+KolourPaint 1.4.1_light runs best on KDE 3.4 and Qt 3.3.  It will compile
+and run on earlier KDE and Qt 3.x releases but you may encounter the
+problems listed below.
 
 
 [COMPILE-TIME] - Means that this problem will be caused by compiling

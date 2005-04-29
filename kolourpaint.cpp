@@ -60,7 +60,7 @@ int main (int argc, char *argv [])
     (
         "kolourpaint",
         I18N_NOOP ("KolourPaint"),
-        "1.4_light",  // SYNC: with VERSION
+        "1.4.1_light",  // SYNC: with VERSION
         I18N_NOOP ("Paint Program for KDE"),
         KAboutData::License_Custom,
         "Copyright (c) 2003,2004,2005 Clarence Dang",
