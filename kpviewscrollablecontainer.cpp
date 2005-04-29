@@ -152,8 +152,7 @@ bool kpGrip::isDrawing () const
 // public
 QString kpGrip::haventBegunDrawUserMessage () const
 {
-    // TODO: "Left drag..." to be consistent
-    return i18n ("Drag the handle to resize the image.");
+    return i18n ("Left drag the handle to resize the image.");
 }
 
 
@@ -896,7 +895,6 @@ void kpViewScrollableContainer::recalculateStatusMessage ()
     //       any grip.  This also handles the case of cancelling over any
     //       grip.
     //
-    // TODO: "Left drag..." to be consistent
     if (kpWidgetMapper::toGlobal (this,
                                   QRect (0, 0, visibleWidth (), visibleHeight ()))
             .contains (QCursor::pos ()))
@@ -905,19 +903,19 @@ void kpViewScrollableContainer::recalculateStatusMessage ()
             m_bottomRightGrip->hotRect (true/*to global*/)
                 .contains (QCursor::pos ()))
         {
-            m_bottomRightGrip->setUserMessage (i18n ("Drag the handle to resize the image."));
+            m_bottomRightGrip->setUserMessage (i18n ("Left drag the handle to resize the image."));
         }
         else if (m_bottomGrip->isShown () &&
                 m_bottomGrip->hotRect (true/*to global*/)
                     .contains (QCursor::pos ()))
         {
-            m_bottomGrip->setUserMessage (i18n ("Drag the handle to resize the image."));
+            m_bottomGrip->setUserMessage (i18n ("Left drag the handle to resize the image."));
         }
         else if (m_rightGrip->isShown () &&
                 m_rightGrip->hotRect (true/*to global*/)
                     .contains (QCursor::pos ()))
         {
-            m_rightGrip->setUserMessage (i18n ("Drag the handle to resize the image."));
+            m_rightGrip->setUserMessage (i18n ("Left drag the handle to resize the image."));
         }
         else
         {
