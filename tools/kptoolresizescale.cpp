@@ -645,18 +645,18 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
     QWhatsThis::add (m_operationGroupBox,
         i18n ("<qt>"
               "<ul>"
-                  "<li><b>Resize</b>: The size of the picture will be"
+                  "<li><b>Resize</b>: The picture's size will be"
                   " increased"
-                  " by creating new areas to the right and/or bottom"
+                  " by creating new areas to the right and/or the bottom"
                   " (filled in with the background color) or"
                   " decreased by cutting"
-                  " it at the right and/or bottom.</li>"
+                  " it at the right and/or the bottom.</li>"
 
                   "<li><b>Scale</b>: The picture will be expanded"
                   " by duplicating pixels or squashed by dropping pixels.</li>"
 
                   "<li><b>Smooth Scale</b>: This is the same as"
-                  " <i>Scale</i> except that it blends neighboring"
+                  " <i>Scale</i> except that it blends neighbouring"
                   " pixels to produce a smoother looking picture.</li>"
               "</ul>"
               "</qt>"));
