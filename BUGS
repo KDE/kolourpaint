@@ -149,7 +149,7 @@ c) Disable "Emulate3Buttons".
 
 
 ---------------------------------------------------------------------------
-The following info does _not_ apply to CVS HEAD nor KDE 3.3.  This version
+The following info does _not_ apply to CVS HEAD nor KDE 3.4.  This version
 of KolourPaint won't even compile on KDE < 3.3.  This info is only here so
 that I won't forget to include it in backport branches of KolourPaint.
 ---------------------------------------------------------------------------
