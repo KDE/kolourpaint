@@ -148,7 +148,7 @@ void kpTool::createAction ()
     }
 
 
-    m_action = new kpToolAction (text (), iconSet (), shortcutForKey (m_key),
+    m_action = new kpToolAction (text (), iconName (), shortcutForKey (m_key),
                                  this, SLOT (slotActionActivated ()),
                                  m_mainWindow->actionCollection (), name ());
     m_action->setExclusiveGroup (QString::fromLatin1 ("Tool Box Actions"));
@@ -611,6 +611,12 @@ QIconSet kpTool::iconSet (int forceSize) const
         return BarIcon (name (), forceSize);
     else
         return BarIcon (name ());
+}
+
+// public
+QString kpTool::iconName () const
+{
+    return name ();
 }
 
 // public

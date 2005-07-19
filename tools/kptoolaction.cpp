@@ -32,11 +32,11 @@
 
 
 kpToolAction::kpToolAction (const QString &text,
-                            const QIconSet &iconSet, const KShortcut &shortcut,
+                            const QString &pic, const KShortcut &shortcut,
                             const QObject *receiver, const char *slot,
                             QObject *parent, const char *name)
     : KToggleAction (text,
-                     iconSet, shortcut,
+                     pic, shortcut,
                      receiver, slot,
                      parent, name)
 {
