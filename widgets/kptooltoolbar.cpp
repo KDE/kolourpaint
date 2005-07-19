@@ -88,8 +88,14 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
       m_toolLayout (0),
       m_previousTool (0), m_currentTool (0)
 {
-    setHorizontallyStretchable (false);
-    setVerticallyStretchable (false);
+    // With these lines enabled, mousePressEvent's weren't being generated
+    // when right clicking in empty part of the toolbar (each call affects
+    // the toolbar in its respective orientation).  They don't seem to be
+    // needed anyway since !isResizeEnabled().
+
+    //setHorizontallyStretchable (false);
+    //setVerticallyStretchable (false);
+
 
     m_baseWidget = new QWidget (this);
 
