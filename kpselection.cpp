@@ -1109,14 +1109,21 @@ int kpSelection::textColForPoint (const QPoint &globalPoint) const
 
     const QFontMetrics fontMetrics (m_textStyle.fontMetrics ());
 
+    // (should be 0 but call just in case)
+    int charLocalLeft = fontMetrics.width (m_textLines [row], 0);
+    
     // OPT: binary search or guess location then move
-    for (int col = (int) m_textLines [row].length (); col >= 0; col--)
+    for (int col = 0; col < (int) m_textLines [row].length (); col++)
     {
-        if (localX >= fontMetrics.width (m_textLines [row], col))
+        // OPT: fontMetrics::charWidth() might be faster
+        const int nextCharLocalLeft = fontMetrics.width (m_textLines [row], col + 1);
+        if (localX <= (charLocalLeft + nextCharLocalLeft) / 2)
             return col;
+        
+        charLocalLeft = nextCharLocalLeft;
     }
 
-    return 0;
+    return m_textLines [row].length ()/*past end of line*/;
 }
 
 // public
