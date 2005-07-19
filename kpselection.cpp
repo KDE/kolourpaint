@@ -613,6 +613,62 @@ static QRgb mostContrastingRGB (QRgb val)
 }
 
 // private
+static void drawTextLines (QPainter *painter, QPainter *maskPainter,
+                           const QRect &rect,
+                           const QValueVector <QString> &textLines)
+{
+    if (!painter->clipRegion ().isEmpty () || !maskPainter->clipRegion ().isEmpty ())
+    {
+        // TODO: fix esp. before making method public
+        kdError () << "kpselection.cpp:drawTextLines() can't deal with existing painter clip regions" << endl;
+        return;
+    }
+
+
+#define PAINTER_CALL(cmd)          \
+{                                  \
+    if (painter->isActive ())      \
+        painter->cmd;              \
+                                   \
+    if (maskPainter->isActive ())  \
+        maskPainter->cmd;          \
+}
+
+
+    // Can't do this because the line heights become
+    // >QFontMetrics::height() if you type Chinese characters (!) and then
+    // the cursor gets out of sync.
+    // PAINTER_CALL (drawText (rect, 0/*flags*/, text ()));
+
+    
+#if 0
+    const QFontMetrics fontMetrics (painter->fontMetrics ());
+
+    kdDebug () << "height=" << fontMetrics.height ()
+               << " leading=" << fontMetrics.leading ()
+               << " ascent=" << fontMetrics.ascent ()
+               << " descent=" << fontMetrics.descent ()
+               << " lineSpacing=" << fontMetrics.lineSpacing ()
+               << endl;
+#endif
+
+
+    PAINTER_CALL (setClipRect (rect, QPainter::CoordPainter/*transform*/));
+
+    int baseLine = rect.y () + painter->fontMetrics ().ascent ();
+    for (QValueVector <QString>::const_iterator it = textLines.begin ();
+         it != textLines.end ();
+         it++)
+    {
+        PAINTER_CALL (drawText (rect.x (), baseLine, *it));
+        baseLine += painter->fontMetrics ().lineSpacing ();
+    }
+
+
+#undef PAINTER_CALL
+}
+
+// private
 void kpSelection::paintOpaqueText (QPixmap *destPixmap, const QRect &docRect) const
 {
     if (!isText () || !m_textStyle.foregroundColor ().isOpaque ())
@@ -671,16 +727,9 @@ void kpSelection::paintOpaqueText (QPixmap *destPixmap, const QRect &docRect) co
     }
 
 
-#define PAINTER_CALL(cmd)                   \
-{                                           \
-    if (destPixmapPainter.isActive ())      \
-        destPixmapPainter . cmd ;           \
-                                            \
-    if (destPixmapMaskPainter.isActive ())  \
-        destPixmapMaskPainter . cmd ;       \
-}
-    PAINTER_CALL (drawText (textAreaRect (), 0/*flags*/, text ()));
-#undef PAINTER_CALL
+    ::drawTextLines (&destPixmapPainter, &destPixmapMaskPainter,
+                      textAreaRect (),
+                      textLines ());
 
 
     if (destPixmapPainter.isActive ())
@@ -743,18 +792,11 @@ QPixmap kpSelection::transparentForegroundTextPixmap () const
     pixmapMaskPainter.setFont (font);
 
 
-#define PAINTER_CALL(cmd)               \
-{                                       \
-    if (pixmapPainter.isActive ())      \
-        pixmapPainter . cmd ;           \
-                                        \
-    if (pixmapMaskPainter.isActive ())  \
-        pixmapMaskPainter . cmd ;       \
-}
     QRect rect (textAreaRect ());
     rect.moveBy (-m_rect.x (), -m_rect.y ());
-    PAINTER_CALL (drawText (rect, 0/*flags*/, text ()));
-#undef PAINTER_CAL
+    ::drawTextLines (&pixmapPainter, &pixmapMaskPainter,
+                     rect,
+                     textLines ());
 
 
     if (pixmapPainter.isActive ())
@@ -1085,7 +1127,7 @@ int kpSelection::textRowForPoint (const QPoint &globalPoint) const
     const QFontMetrics fontMetrics (m_textStyle.fontMetrics ());
 
     int row = (globalPoint.y () - textAreaRect ().y ()) /
-               (fontMetrics.height () + fontMetrics.leading ());
+               fontMetrics.lineSpacing ();
     if (row >= (int) m_textLines.size ())
         row = m_textLines.size () - 1;
 
