@@ -529,6 +529,13 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
 
 void kpToolText::imStartEvent (QIMEvent *e)
 {
+#if DEBUG_KP_TOOL_TEXT && 1
+    kdDebug () << "kpToolText::imStartEvent() text='" << e->text ()
+               << " cursorPos=" << e->cursorPos ()
+               << " selectionLength=" << e->selectionLength ()
+               << endl;
+#endif
+
     kpSelection *sel = document ()->selection ();
     if (hasBegunDraw() || !sel || !sel->isText ())
     {
@@ -543,6 +550,13 @@ void kpToolText::imStartEvent (QIMEvent *e)
 
 void kpToolText::imComposeEvent (QIMEvent *e)
 {
+#if DEBUG_KP_TOOL_TEXT && 1
+    kdDebug () << "kpToolText::imComposeEvent() text='" << e->text ()
+               << " cursorPos=" << e->cursorPos ()
+               << " selectionLength=" << e->selectionLength ()
+               << endl;
+#endif
+
     kpSelection *sel = document ()->selection ();
     if (hasBegunDraw() || !sel || !sel->isText ())
     {
@@ -602,6 +616,13 @@ void kpToolText::imComposeEvent (QIMEvent *e)
 
 void kpToolText::imEndEvent (QIMEvent *e)
 {
+#if DEBUG_KP_TOOL_TEXT && 1
+    kdDebug () << "kpToolText::imEndEvent() text='" << e->text ()
+               << " cursorPos=" << e->cursorPos ()
+               << " selectionLength=" << e->selectionLength ()
+               << endl;
+#endif
+
     kpSelection *sel = document ()->selection ();
     if (hasBegunDraw() || !sel || !sel->isText ())
     {
