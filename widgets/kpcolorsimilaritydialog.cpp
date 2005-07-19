@@ -76,7 +76,7 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (kpMainWindow *mainWindow,
     QGroupBox *inputGroupBox = new QGroupBox (i18n ("RGB Color Cube Distance"), baseWidget);
 
     m_colorSimilarityInput = new KIntNumInput (inputGroupBox);
-    m_colorSimilarityInput->setRange (0, int (kpColorSimilarityDialog::maximumColorSimilarity * 100),
+    m_colorSimilarityInput->setRange (0, int (kpColorSimilarityDialog::maximumColorSimilarity * 100 + .1/*don't floor below target int*/),
                                       5/*step*/, true/*slider*/);
     m_colorSimilarityInput->setSuffix (i18n ("%"));
     m_colorSimilarityInput->setSpecialValueText (i18n ("Exact Match"));
