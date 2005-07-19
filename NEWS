@@ -1,18 +1,46 @@
 
-KolourPaint 1.4_light Series (KDE_3_4_BRANCH)
+KolourPaint 1.4_light Series (branches/KDE/3.4/)
 ============================
 
+KolourPaint 1.4.2_light (Frozen 2005-07-20)
+
+   * Enforce text box font height to prevent e.g. Chinese characters in
+     buggy fonts from enlarging the text box and making the cursor out of
+     sync with the text
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
+
+   * Clicking in a text box selects a character based on its midpoint -
+     not leftmost point - to be consistent with all text editors
+     (esp. noticeable with big fonts)
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
+
+   * Return and Numpad 5 Key now draw
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
+
+   * Tool Actions placed outside the Tool Box resize with their toolbars
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
+
+   * Ensure Color Similarity maximum is 30, not 29 due to gcc4
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
+
+   * Tool Box traps right clicks (for the RMB Menu) on top of tool options
+     widgets and the empty part of the Tool Box
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
+
 KolourPaint 1.4.1_light (Frozen 2005-04-29)
-   * String fixes (Stefan Winter, Malcolm Hunter)
+   * String fixes (Stefan Winter)
 
 KolourPaint 1.4_light (Frozen 2005-02-22)
-   * Antialias text when the text box has a transparent background
+   * Antialias text when the text box has a transparent background (Bug #24)
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * Add Unzoomed Thumbnail Mode and Thumbnail Rectangle
    * Add RMB context menu for when a selection tool is active (closing KDE
      Bug #92882)
    * More intuitive "Set as Image" behaviour (esp. with selection borders).
      Thanks to Michael Lake for the feedback.
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * InputMethod support
+     [also in branches/kolourpaint/1.2_kde3/]
    * Save "More Effects" dialog's last effect to config file
    * Save "Resize / Scale" dialog's last "Keep aspect ratio" setting to
      config file
@@ -22,57 +50,56 @@ KolourPaint 1.4_light (Frozen 2005-02-22)
        document)
      - When creating freeform selections, include the starting point; also
        avoids a QRegion crash with constructing 1-point regions
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * Fix other selection bugs:
      - When the user drags very quickly on a resize handle, resize the
        selection instead of moving it
      - Draw resize handles above the grid lines - not below - so that the
        handles are always visible if they are supposed to be there
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * Smaller selection and text box resize handles (visually not
      actually) - covers up fewer selected pixels, doesn't cover up text
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * Restore mouse cursor after deselecting selection/text tools
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * Empty text clipboard fixes:
      - Don't get stuck on a wait cursor after attempting to paste empty
        text into a text box
      - Prevent pasting text from creating a new text box if text is empty
      - Prevent copying of empty text box
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * Speed up renderer (most noticeable with diagonal drag-scrolling at
      high zoom)
      - Don't paint anything outside of the view's visible region
        (previously, clipped only on view _widget_ region)
      - Region-aware: paint component rectangles of the update region,
        rather than the bounding rectangle
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * When changing between colour depth and quality widgets in the save
      filedialog, make sure "Convert to:" and "Quality:" are correctly
      rendered (hacking around a Qt redraw glitch)
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * Fix crash after using the Colour Picker if it was the first used tool
      [kolourpaint-1.2.2_kde3-color_picker_crash.diff]
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * Fix crash due to text box when scaling image behind it
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * Even when the thumbnail has focus (and not the main window), blink the
      text cursor in all views
      [kolourpaint-1.2.2_kde3-thumbnail_blink_text_cursor.diff]
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * Correct "Soften" and "Sharpen" commands' command history names
    * Correct invert commands' command history names
    * Fix remaining untranslatable strings (closing KDE Bug #85785)
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * Update image format associations to all formats supported by KDE 3.4
    * Remove unused images in doc directory
-     [also in KDE_3_3_BRANCH, kolourpaint_1_2_kde3_branch]
+     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * Correct kolourpaint.desktop "Terminal=" and "Categories=" syntax
      (Benjamin Meyer)
 
 
-
-KolourPaint 1.2 Series (KDE_3_3_BRANCH)
+KolourPaint 1.2 Series (branches/KDE/3.3/)
 ======================
 
 Version 1.2 "ByFiat Everytime" (2004-08-18)
@@ -195,7 +222,7 @@ Version 1.2 "ByFiat Everytime" (2004-08-18)
    * Remove unused icons
 
 
-KolourPaint 1.0 Series (kolourpaint_1_0_branch)
+KolourPaint 1.0 Series (branches/kolourpaint/1.0/)
 ======================
 
 Version 1.0 "Seagull" (2004-02-29)
