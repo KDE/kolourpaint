@@ -1,0 +1,15 @@
+
+For logs of _every_ single change made to KolourPaint between any date or
+revision, visit:
+
+  http://websvn.kde.org/trunk/KDE/kdegraphics/kolourpaint
+
+  http://websvn.kde.org/branches/KDE/<version>/kdegraphics/kolourpaint
+  http://websvn.kde.org/tags/KDE/<version>/kdegraphics/kolourpaint
+
+  http://websvn.kde.org/branches/kolourpaint
+  http://websvn.kde.org/tags/kolourpaint
+
+
+For a summary of user-visible changes between each release, read NEWS.
+
