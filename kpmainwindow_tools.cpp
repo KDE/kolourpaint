@@ -559,6 +559,8 @@ void kpMainWindow::slotDocResizeMessageChanged (const QString &string)
     kdDebug () << "kpMainWindow::slotDocResizeMessageChanged(" << string
                << ") docResizeToBeCompleted=" << m_docResizeToBeCompleted
                << endl;
+#else
+    (void) string;
 #endif
 
     if (m_docResizeToBeCompleted)
