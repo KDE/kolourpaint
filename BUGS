@@ -6,8 +6,8 @@ will help to improve future versions of KolourPaint and you will not
 receive flames for reporting duplicates.
 
 
-This file lists known bugs in the 1.4.1_light release that are not
-considered "release critical" and are difficult to fix:
+This file lists known bugs in this version that are not considered
+"release critical" and are difficult to fix:
 
 
 1. Flicker when zooming in/out.
@@ -114,11 +114,14 @@ considered "release critical" and are difficult to fix:
     b) With the rectangle-based tools, the temporary pixmap does not resize
        when the line width increases.
 
-24. In transparent background mode, the Text Tool does not antialias.
-
 25. Sometimes when you take a screenshot of a window, and then paste in a
     new window, it will be greyscale.  When pasting again, it will still be
     greyscale.  Cannot consistently reproduce.  [Thurston]
+
+26. Drawing with the keyboard is unreliable.  Depending on the X server,
+    either holding down Enter may continually switch between drawing and
+    not drawing or KolourPaint may fail to detect the release of the Enter
+    key.
 
 
 Issue with XFree86 <= 3.3.6 with the "Emulate3Buttons" Option
@@ -147,113 +150,3 @@ b) Press Escape in KolourPaint to cancel the current drawing operation
    instead of using the problematic click method described above.
 c) Disable "Emulate3Buttons".
 
-
----------------------------------------------------------------------------
-The following info does _not_ apply to CVS HEAD nor KDE 3.4.  This version
-of KolourPaint won't even compile on KDE < 3.3.  This info is only here so
-that I won't forget to include it in backport branches of KolourPaint.
----------------------------------------------------------------------------
-
-
-Issues with Early Versions of KDE 3.x and Qt 3.x
-================================================
-
-KolourPaint 1.4.1_light runs best on KDE 3.4 and Qt 3.3.  It will compile
-and run on earlier KDE and Qt 3.x releases but you may encounter the
-problems listed below.
-
-
-[COMPILE-TIME] - Means that this problem will be caused by compiling
-                 against an early Qt and/or KDE.  Recompiling KolourPaint
-                 against newer libraries is the solution.
-[RUNTIME] - Means that this problem will be caused by running under an
-            early Qt and/or KDE.  Upgrading those libraries will solve this
-            problem.  There is no need to recompile KolourPaint.
-
-
-KDE = 3.0
----------
-
-1. [COMPILE-TIME]
-   Due to the lack of KImageIO::typeForMime(), KolourPaint can only support
-   a limited number of output formats (you'll only notice this if you have
-   more KImageIO formats than a standard KDE 3._3_ install).
-
-3. [COMPILE-TIME]
-   The keyboard modifiers may get out of sync with reality in certain
-   corner cases.
-
-4. [COMPILE-TIME]
-   The "Settings / Toolbars" submenu is not available.
-
-6. [COMPILE-TIME] (yes, the number is out of order)
-   The widget for selecting saving options in the file dialog does not line
-   up with the "Location" and "Filter" combo boxes.
-
-5. [COMPILE-TIME]
-   The "Settings / Configure Toolbars..." menu item is not available.  This
-   is to protect you from destroying all the standard actions in the Main
-   Toolbar due to action merging not working for toolbars.
-
-2. [RUNTIME] (yes, the number is out of order)
-   The Resize / Scale Dialog's percentage input fields are missing the
-   spinbox arrows.
-
-
-KDE = 3.1
----------
-
-1. [RUNTIME]
-   The Tool Box buttons are not clearly rendered in early versions of the
-   Keramik style (such as the one included in KDE 3.1).  It may be hard to
-   see what tool is currently selected.  Either upgrade to KDE >= 3.2 or
-   use another style such as HighColor Classic or Plastik.
-
-
-KDE <= 3.1
-----------
-
-2. [COMPILE-TIME]
-   The "Settings / Show Statusbar" menu item is not available.
-
-3. [COMPILE-TIME]
-   The filedialog filter combobox is editable as part of a workaround for a
-   Qt bug (which normally causes a filedialog destruction crash).
-
-4. [COMPILE-TIME]
-   Alpha channel checks will be performed when opening and pasting images
-   even if the appropriate "Do not show this message again" checkbox has
-   been ticked (i.e. slower).  Unwanted notifications of low screen depth
-   and alpha channel may also be given.
-
-5. [COMPILE-TIME]
-   The "Settings / Full Screen Mode" menu item is not available.
-
-
-KDE <= 3.2
-----------
-
-1. [RUNTIME]
-   Some images (usually small ones) are incorrectly positioned and may be
-   cut off when saving in the EPS format.
-
-2. [RUNTIME]
-   Support for the formats:
-
-      * Truevision Targa Image
-      * Portable Graymap Image
-      * Portable Pixmap Image
-
-   is very buggy and should not be considered as working at all.
-
-3. [RUNTIME]
-   Moving the mouse over the drawing area takes an unnecessarily large
-   amount of CPU due to unneeded status bar updates.
-
-
-Qt <= 3.2
----------
-
-1. [COMPILE-TIME]
-   The thumbnail will flicker near or above the toolbars before appearing
-   in its rightful place.
