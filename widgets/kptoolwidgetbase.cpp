@@ -539,6 +539,12 @@ bool kpToolWidgetBase::selectNextOption ()
 // protected virtual [base QWidget]
 void kpToolWidgetBase::mousePressEvent (QMouseEvent *e)
 {
+    e->ignore ();
+
+    if (e->button () != Qt::LeftButton)
+        return;
+
+
     for (int i = 0; i < (int) m_pixmapRects.count (); i++)
     {
         for (int j = 0; j < (int) m_pixmapRects [i].count (); j++)
@@ -551,8 +557,6 @@ void kpToolWidgetBase::mousePressEvent (QMouseEvent *e)
             }
         }
     }
-
-    e->ignore ();
 }
 
 // protected virtual [base QFrame]
