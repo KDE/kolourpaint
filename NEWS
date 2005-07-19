@@ -5,7 +5,7 @@ KolourPaint 1.4_light Series (branches/KDE/3.4/)
 KolourPaint 1.4.2_light (Frozen 2005-07-20)
 
    * Enforce text box font height to prevent e.g. Chinese characters in
-     buggy fonts from enlarging the text box and making the cursor out of
+     buggy fonts from enlarging the text box and putting the cursor out of
      sync with the text
      [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
 
