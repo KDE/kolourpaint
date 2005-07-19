@@ -1154,7 +1154,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
 void kpTool::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL && 0
-    kdDebug () << "kpTool::keyPressEvent()" << endl;
+    kdDebug () << "kpTool::keyPressEvent() e->key=" << e->key () << endl;
 #endif
 
     int dx = 0, dy = 0;
@@ -1197,10 +1197,11 @@ void kpTool::keyPressEvent (QKeyEvent *e)
     case Qt::Key_PageDown: dx = +1, dy = +1;    break;
 
     case Qt::Key_Enter:
+    case Qt::Key_Return:
     case Qt::Key_Insert:
+    case Qt::Key_Clear:
     {
         kpView *view = viewUnderCursor (); // TODO: wrong for dragging lines outside of view (for e.g.)
-    // TODO: what's the 5 key called?
         if (view)
         {
             // TODO: what about the modifiers
@@ -1294,10 +1295,11 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
         break;
 
     case Qt::Key_Enter:
+    case Qt::Key_Return:
     case Qt::Key_Insert:
+    case Qt::Key_Clear:
     {
         kpView *view = viewUnderCursor ();
-    // TODO: what's the 5 key called?
         if (view)
         {
             QMouseEvent me (QEvent::MouseButtonRelease,
