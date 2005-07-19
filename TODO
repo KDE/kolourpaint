@@ -19,6 +19,12 @@ Rename fill_style.png and line_width.png to use the plural form for consistency
 with brush_shapes, eraser_shapes, spraycan_patterns and
 selections_opaque_transparent.  [Thurston]
 
+
+CTRL+PgUp/Down scrolls (statusbar on PgUp/Down)
+
+Geiser is right - if mainView->setzoom, mainWindow should know about it
+
+
 add a key to show/hide all panels (toolbar, toolbox, palette box) giving a
 semi fullscreen mode (Antonio Bianco)
 
