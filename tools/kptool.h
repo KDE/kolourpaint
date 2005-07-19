@@ -195,6 +195,7 @@ signals:
 
 public:
     QIconSet iconSet (int forceSize = 0) const;
+    QString iconName () const;
     kpToolAction *action ();
 
 signals:
