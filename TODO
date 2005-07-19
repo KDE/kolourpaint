@@ -9,6 +9,35 @@ Look in BUGS, patches/, grep sources for "OPT", "HACK" & "TODO" and look
 here:
 
 
+KolourPaint 1.2
+~~~~~~~~~~~~~~~
+
+Integer scaling bug workaround when one dimension is not scaled by int
+
+ALT+Shift+V brings up View menu instead of Curve tool in KDE 3.0
+(but not KDE 3.3)
+
+Is this related to:?
+~~~~
+line: shift+alt doesn't work but alt+shift does
+- doesn't look like Bug #64019
+- alt alone is backfiring anyway (conflicts with kwin)
+  so I'll just leave 30deg & 60deg lines as hidden functionality for now
+    (until I can think up a better key combo/way to activate it)
+~~~~
+
+KolourPaint bin:
+- help fails as soon as quit kolourpaint
+- install in menu (Lutz Schweizer)
+- install_systemwide script as sent to: (Lutz Schweizer)
+- "By the way, to run the program I need only a single click on the script
+   file" (Lutz Schweizer)
+- plus KDE 3.4 does not mix:
+  if have kolourpaintui.rc in KDEDIR and run bin, bin .rc gets moved to .rc.backup
+- fullscreen action already in ui_standards.rc in KDE 3.4;
+  use noMerge for compat with all versions of KDE
+
+
 KolourPaint 1.4
 ~~~~~~~~~~~~~~~
 
