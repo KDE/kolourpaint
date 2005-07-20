@@ -59,7 +59,6 @@
 #include <kpselection.h>
 #include <kptemppixmap.h>
 #include <kptool.h>
-#include <kptoolpen.h>
 #include <kptooltoolbar.h>
 #include <kpviewmanager.h>
 #include <kpviewscrollablecontainer.h>
@@ -112,7 +111,7 @@ kpView::kpView (kpDocument *document,
     setFocusPolicy (QWidget::WheelFocus);
     setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
     setKeyCompression (true);
-    setInputMethodEnabled (true); // ensure using InputMethod
+    setInputMethodEnabled (true);  // ensure using InputMethod
 }
 
 kpView::~kpView ()
