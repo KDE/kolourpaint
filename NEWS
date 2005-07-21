@@ -32,15 +32,15 @@ KolourPaint 1.4.1_light (Frozen 2005-04-29)
 
 KolourPaint 1.4_light (Frozen 2005-02-22)
    * Antialias text when the text box has a transparent background (Bug #24)
-     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
+     [later backported to branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * Add Unzoomed Thumbnail Mode and Thumbnail Rectangle
    * Add RMB context menu for when a selection tool is active (closing KDE
      Bug #92882)
    * More intuitive "Set as Image" behaviour (esp. with selection borders).
      Thanks to Michael Lake for the feedback.
-     [also in branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
+     [later backported to branches/KDE/3.3/, branches/kolourpaint/1.2_kde3/]
    * InputMethod support
-     [also in branches/kolourpaint/1.2_kde3/]
+     [later backported to branches/kolourpaint/1.2_kde3/]
    * Save "More Effects" dialog's last effect to config file
    * Save "Resize / Scale" dialog's last "Keep aspect ratio" setting to
      config file
