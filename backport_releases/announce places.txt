@@ -1,0 +1,10 @@
+sourceforge                             [1.0] [1.0.1]               [brush.diff]     [1.0.2]                     [1.2]         [1.2.2]
+freshmeat                               [1.0] [1.0.1]               [N/A]            [1.0.2 pending for .deb]    [1.2]         [1.2.2]
+kde-apps.org                            [1.0] [1.0.1]               [brush.diff]     [1.0.2]                     [1.2]         [1.2.2]
+kde-announce, kolourpaint-announce      [1.0] [1.0.1]               [N/A]            [1.0.2]                     [1.2]         [1.2.2]
+CVS digest - Derek Kite <dkite@shaw.ca> [1.0] [N/A]                 [N/A]            [N/A]                       [N/A]
+kde-dot                                 [1.0] [1.0.1 private email] [N/A]            [1.0.2]                     [N/A]
+PCLinuxOnline                                                                        [1.0.2]                     [pending]
+NewsForge
+Slashdot
+OSNews            

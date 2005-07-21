@@ -1,0 +1,60 @@
+
+                kolourpaint.cpp
+                       |
+                       |
+          +------------+------------+
+          |            |            |
+          |            |      kpMainWindow
+    kpMainWindow       |
+                       |
+                       |
+                  kpMainWindow[0]
+                       |
+                       |
+           +-----------+-----+-------++------------------+---------+
+           |                 |       | \_                |         |
+           |                 | [2]   |   \__             |         |
+      kpDocument[1]    kpViewManager |      \__     kpToolToolBar  |
+           |                 |       |         \        [6]        |
+           |                 |   m_scrollView  |         |         |
+    +------+------+          |       |         |         |   kpColorToolBar
+    |             |          |       |         |         |        [7]
+    |             |          +-------+---m_mainView[3]   |         |
+  pixmap[4]   kpSelection[5]                             |         |
+                   ______________________________________+         |
+                  /                  /                             |
+                 /          +-------+-------+                      |
+                /           |       |       |           +____+____/
+               /            |       |       |          /     |
+              +          kpTool  kpTool[9] kpTool      |     |
+              |                                        |     |
+              |                          kpDualColorButton   |
+              |                                          kpColorPalette
+              |                                              |
+       kpToolWidgetBase                                      |
+       derived objects                               +-------+-------+
+                                                     |               |
+                                                     |          kpColorCells
+                                         kpTransparentColorCell
+
+
+0. kpMainWindow
+===============
+
+5. kpSelection
+==============
+
+Constructor "pixmap" arg acts same as setPixmap().
+If you pass it a null pixmap, m_pixmap = 0;
+This means that the user has dragged out a selection border/region but hasn't
+manipulated it yet (the document remains unmodified).
+As soon as you need to modify the contents of the selection, you have to
+pull it from the document (modifying the document) and m_pixmap becomes
+nonzero.
+
+support Undo/Redo and
+Keeping in mind Undo/Redo and accurately reporting whether the document has
+been modified Manipulating selections hard TODO
+
+
+Clarence Dang <dang@kde.org>

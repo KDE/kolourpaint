@@ -1,0 +1,50 @@
+
+QT_HAVE_MAX_IMAGE_SIZE // An extension made by SUSE to Qt :-(((
+QImage::maxImageSize(); defaults to 4096 as max width and height could cause trouble
+
+
+1.2.1 specific
+~~~~~~~~~~~~~~
+
+how about make bin first, then RPM that to fix KDE /usr or /opt/kde3 issues
+
+docs for bin dist not work on debian - suspect different path and need better use of kde-config --docprefix or something
+
+audit docs for refer to common:/ e.g. kde-defualt.css
+
+[LO] fix antialising e.g. Courier [Adobe] antialiases in KWrite but not KolourPaint but Luxi Mono works in KolourPaint so it's probably the font selection i.e. that KFontSelect box that's wrong
+
+
+Always
+~~~~~~
+
+add people (ideas, packagers) into credits
+
+Update kolourpaint.desktop
+- translations from branch
+- MimeType= line
+
+update templates/kdegraphics/kolourpaint.pot
+update i18n
+
+update dist/doc (check kde-default.css hasn't changed in CVS etc. in KDE_3_3_BRANCH)
+
+get kde-common from branch
+
+make sure tux & celery clocks are in sync to prevent build issues
+
+export APBUILD_DEBUG=1    # to see what link against
+export CXX=/usr/local/bin/apg++
+export CC=/usr/local/bin/apgcc
+next time you do a bin package, use --disable-debug, --disable-rpath; maybe --enable-final
+
+Note that a "RPATH       ${ORIGIN}/../lib" is OK even though I asked for no
+-rpath at all (actually it's desirable if I need to dynamically link Krita lib
+in future :)).  Just as long as RPATH doesn't contain an abs path like
+/usr/lib/qt3
+
+check static links for security fixes -lXinerama
+
+do .lsm and figure out sending to KDE FTP
+
+Continue on to packaging with checkinstall.txt

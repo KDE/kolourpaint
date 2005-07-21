@@ -1,0 +1,5 @@
+blackbox test all capabilities (remember mask & no mask document cases)
+with and without valgrind; doc all tests
+
+test SYNC
+
