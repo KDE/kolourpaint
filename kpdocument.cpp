@@ -441,8 +441,7 @@ QString myTypeForMime (const QString &mimeType)
     #if DEBUG_KP_DOCUMENT
         kdDebug () << "\tmap is empty - filling" << endl;
     #endif
-        /* SYNC: Use KDE from CVS HEAD and when you're in kdelibs/kimgio,
-                 type:
+        /* SYNC: In trunk/kdelibs/kimgio/, type:
 
           for f in *.kimgio
           do
@@ -468,15 +467,19 @@ QString myTypeForMime (const QString &mimeType)
         typeForMimeMap.insert ("image/x-dds", "DDS");
         typeForMimeMap.insert ("image/x-eps", "EPS");
         typeForMimeMap.insert ("image/x-exr", "EXR");
+        typeForMimeMap.insert ("image/x-hdr", "HDR");
         typeForMimeMap.insert ("image/x-ico", "ICO");
         typeForMimeMap.insert ("image/x-pcx", "PCX");
         typeForMimeMap.insert ("image/x-portable-bitmap", "PBM");
         typeForMimeMap.insert ("image/x-portable-greymap", "PGM");
         typeForMimeMap.insert ("image/x-portable-pixmap", "PPM");
+        typeForMimeMap.insert ("image/x-psd", "PSD");
         typeForMimeMap.insert ("image/x-rgb", "RGB");
         typeForMimeMap.insert ("image/x-targa", "TGA");
         typeForMimeMap.insert ("image/x-xbm", "XBM");
+        typeForMimeMap.insert ("image/x-xcf-gimp", "XCF");
         typeForMimeMap.insert ("image/x-xpm", "XPM");
+        typeForMimeMap.insert ("video/x-mng", "MNG");
     }
 
 #if DEBUG_KP_DOCUMENT
