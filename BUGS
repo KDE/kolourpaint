@@ -1,0 +1,255 @@
+
+Please send bug reports and feature requests to http://bugs.kde.org/ or
+<kolourpaint-support@lists.sourceforge.net>.  Don't hesitate to report bugs
+nor hesitate to send us your wishes - it provides valuable feedback that
+will help to improve future versions of KolourPaint and you will not
+receive flames for reporting duplicates.
+
+
+This file lists known bugs in this version that are not considered
+"release critical" and are difficult to fix:
+
+
+1. Flicker when zooming in/out.
+
+3. Tool Box & Colour Box RMB ToolBar Menus do not work.
+
+4. Image dialog spinboxes should accept Enter Key (instead of the dialog's
+   OK button) after the user has typed something.
+
+      OR
+
+   Spinboxes should signal that their values have changed every time the
+   user changes the text (rather than after pressing Enter or clicking on
+   another spinbox etc.).
+
+   The need for the "Update Preview" button and the difficulty of keeping
+   the percentages and dimensions in sync in the Resize / Scale dialog are
+   manifestations of the current QSpinBox behaviour.
+
+6. a) The undo history and document modified state are not updated during
+      the drawing of multi-segment shapes (Polygon, Connected Lines,
+      Curve).  They are however updated after shapes' completion.
+
+   b) The text and brush-like tools set the document modified flag even if
+      user cancels the draw operation.
+
+   c) Select a region, manipulate it (e.g. move), undo - the document is
+      still marked as modified (because 2 commands - the create selection
+      and the move - were added but only one was undone).
+
+7. Certain shapes may have the wrong size (usually only a pixel off and
+   only in extreme cases) e.g. an ellipse of height 1 always has a width 1
+   pixel less than it should be.  This is a Qt bug.
+
+8. At zoom levels that aren't multiples of 100%, parts of the image may
+   appear to move when the user interacts with it.  Other minor redraw
+   glitches may also occur at such zoom levels.
+
+9. Keyboard shortcut changes do not propagate to other KolourPaint windows
+   (but will propagate to future windows).
+
+10. "File/Open Recent" entries are not updated interprocess.
+
+11. The blinking text cursor will "disappear" if you type more text than
+    you can fit in a text box.
+
+12. You cannot select only parts of the text you write.
+
+13. Due to a workaround for a Qt bug, writing text with the foreground
+    colour set to transparent is incredibly slow.  Write your text in
+    another colour and then set the foreground colour to transparent after
+    you've finished typing to avoid this issue.
+
+14. The text cursor may be momentarily misrendered when scrolling the view.
+
+16. The Edit/Paste option is not disabled when the clipboard data is lost
+    due to the owner terminating (no QClipboard::dataChanged() signal).
+
+17. a) Using KolourPaint on a remote X display may result in redraw errors
+       and pixel data corruption.
+
+    b) KolourPaint is screen depth dependent.  Opening an image with a
+       an alpha channel and/or a depth higher than the screen and then
+       saving it will likely result in loss of colour information.  To
+       reduce data loss, run your screen at 24-bit.  This bug will be
+       addressed in a future version of KolourPaint.
+
+19. Read support for EPS files is extremely slow.  You should not enable
+    the "Save Preview" dialog when saving to EPS.  This is an issue with
+    KDE.
+
+20. Pasting a large image (esp. one that doesn't compress well as PNG)
+    into an image editor (not necessarily KolourPaint) running as
+    different process from the KolourPaint which was the source of the
+    image, on a sufficiently slow computer, may fail with the following
+    output to STDERR:
+
+      "kolourpaint: ERROR: kpMainWindow::paste() with sel without pixmap
+       QClipboard: timed out while sending data"
+
+    This is a Qt bug.
+
+21. It is not always possible to copy and paste between 2 instances of
+    KolourPaint running different Qt versions.  See
+    QDataStream::setVersion().
+
+22. The Emboss, Blur and Sharpen effects give different results depending
+    on _both_:
+
+    a) The KDE version KolourPaint was compiled with
+       (due to KImageEffect not supporting strength settings for these
+        effects in KDE 3.0, KolourPaint repeats these effects in order to
+        simulate strength)
+
+    b) The KDE version KolourPaint is running under
+       (e.g. for the same function calls, KDE 3.2's effects are slower but
+        give better results than those in KDE 3.0)
+
+23. Changing tool options while in the middle of a drawing option may
+    confuse KolourPaint.  For instance:
+
+    a) With the brush tools, the cursor incorrectly appears.
+
+    b) With the rectangle-based tools, the temporary pixmap does not resize
+       when the line width increases.
+
+25. Sometimes when you take a screenshot of a window, and then paste in a
+    new window, it will be greyscale.  When pasting again, it will still be
+    greyscale.  Cannot consistently reproduce.  [Thurston]
+
+26. Drawing with the keyboard is unreliable.  Depending on the X server,
+    either holding down Enter may continually switch between drawing and
+    not drawing or KolourPaint may fail to detect the release of the Enter
+    key.
+
+
+Issue with XFree86 <= 3.3.6 with the "Emulate3Buttons" Option
+=============================================================
+
+When drawing, clicking the left or right mouse button that did not
+initiate the current operation will, in this order:
+
+1. finalise the current drawing operation
+2. attempt to paste the contents of the middle-mouse-button clipboard
+
+instead of canceling the current drawing operation.
+
+This is due to XFree86 sending a release notification for the button that
+initiated the drawing operation, followed by a press notification for the
+emulated 3rd button; instead of just a single press notification for the
+button that is intended to cancel the operation.  This works correctly in
+XFree86 4.x with "Emulate3Buttons" on because it is harder to trigger the
+emulation for the 3rd button as it is only invoked if the left and right
+buttons are pressed at almost the same time.
+
+Possible solutions:
+
+a) Use XFree86 4.x or an X server from another vendor (e.g. X.org).
+b) Press Escape in KolourPaint to cancel the current drawing operation
+   instead of using the problematic click method described above.
+c) Disable "Emulate3Buttons".
+
+
+Issues with Early Versions of KDE 3.x and Qt 3.x
+================================================
+
+This version of KolourPaint runs best on KDE 3.4 and Qt 3.3.  It will
+compile and run on earlier KDE and Qt 3.x releases but you may encounter
+the problems listed below.
+
+
+[COMPILE-TIME] - Means that this problem will be caused by compiling
+                 against an early Qt and/or KDE.  Recompiling KolourPaint
+                 against newer libraries is the solution.
+[RUNTIME] - Means that this problem will be caused by running under an
+            early Qt and/or KDE.  Upgrading those libraries will solve this
+            problem.  There is no need to recompile KolourPaint.
+
+
+KDE = 3.0
+---------
+
+1. [COMPILE-TIME]
+   Due to the lack of KImageIO::typeForMime(), KolourPaint can only support
+   a limited number of output formats (you'll only notice this if you have
+   more KImageIO formats than a standard KDE 3._3_ install).
+
+3. [COMPILE-TIME]
+   The keyboard modifiers may get out of sync with reality in certain
+   corner cases.
+
+4. [COMPILE-TIME]
+   The "Settings / Toolbars" submenu is not available.
+
+6. [COMPILE-TIME] (yes, the number is out of order)
+   The widget for selecting saving options in the file dialog does not line
+   up with the "Location" and "Filter" combo boxes.
+
+5. [COMPILE-TIME]
+   The "Settings / Configure Toolbars..." menu item is not available.  This
+   is to protect you from destroying all the standard actions in the Main
+   Toolbar due to action merging not working for toolbars.
+
+2. [RUNTIME] (yes, the number is out of order)
+   The Resize / Scale Dialog's percentage input fields are missing the
+   spinbox arrows.
+
+
+KDE = 3.1
+---------
+
+1. [RUNTIME]
+   The Tool Box buttons are not clearly rendered in early versions of the
+   Keramik style (such as the one included in KDE 3.1).  It may be hard to
+   see what tool is currently selected.  Either upgrade to KDE >= 3.2 or
+   use another style such as HighColor Classic or Plastik.
+
+
+KDE <= 3.1
+----------
+
+2. [COMPILE-TIME]
+   The "Settings / Show Statusbar" menu item is not available.
+
+3. [COMPILE-TIME]
+   The filedialog filter combobox is editable as part of a workaround for a
+   Qt bug (which normally causes a filedialog destruction crash).
+
+4. [COMPILE-TIME]
+   Alpha channel checks will be performed when opening and pasting images
+   even if the appropriate "Do not show this message again" checkbox has
+   been ticked (i.e. slower).  Unwanted notifications of low screen depth
+   and alpha channel may also be given.
+
+5. [COMPILE-TIME]
+   The "Settings / Full Screen Mode" menu item is not available.
+
+
+KDE <= 3.2
+----------
+
+1. [RUNTIME]
+   Some images (usually small ones) are incorrectly positioned and may be
+   cut off when saving in the EPS format.
+
+2. [RUNTIME]
+   Support for the formats:
+
+      * Truevision Targa Image
+      * Portable Graymap Image
+      * Portable Pixmap Image
+
+   is very buggy and should not be considered as working at all.
+
+3. [RUNTIME]
+   Moving the mouse over the drawing area takes an unnecessarily large
+   amount of CPU due to unneeded status bar updates.
+
+
+Qt <= 3.2
+---------
+
+1. [COMPILE-TIME]
+   The thumbnail will flicker near or above the toolbars before appearing
+   in its rightful place.
