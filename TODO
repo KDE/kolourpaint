@@ -53,6 +53,9 @@ CTRL+PgUp/Down scrolls (statusbar on PgUp/Down)
 
 Geiser is right - if mainView->setzoom, mainWindow should know about it
 
+Edit / Paste changes to Edit / Paste Text when text since CTRL+PrintScreen
+seems to be so unreliable
+
 
 add a key to show/hide all panels (toolbar, toolbox, palette box) giving a
 semi fullscreen mode (Antonio Bianco)
