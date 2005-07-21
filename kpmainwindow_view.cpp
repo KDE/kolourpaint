@@ -183,7 +183,9 @@ void kpMainWindow::sendZoomListToActionZoom ()
         items << zoomLevelToString (*it);
     }
 
-    // SYNC: work around a KDE bug - KSelectAction::setItems() enables the action
+    // Work around a KDE bug - KSelectAction::setItems() enables the action.
+    // David Faure said it won't be fixed because it's a feature used by
+    // KRecentFilesAction.
     bool e = m_actionZoom->isEnabled ();
     m_actionZoom->setItems (items);
     if (e != m_actionZoom->isEnabled ())
