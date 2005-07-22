@@ -1,0 +1,279 @@
+
+This is strictly a KDE 3.0 backport fork of branches/KDE/3.3/ i.e.
+"svn diff branches/KDE/3.3/ branches/kolourpaint/1.2_kde3/" will only give
+the changes required for backporting and nothing else.  However,
+non-backporting changes can be applied as long as they are applied to
+branches/KDE/3.3/ first.
+
+The sole exception is the InputMethod support, which was not put in
+branches/KDE/3.3/ to avoiding breaking the permanent KDE 3.3 feature
+freeze.  Eventually, it might be put in KDE 3.3 as it probably can't break
+anything and would make KolourPaint a lot more useful for CJK users.
+
+
+KolourPaint 1.2_kde3 Series (branches/kolourpaint/1.2_kde3/)
+===========================
+
+Version 1.2.4_kde3 (Frozen 2005-07-24)
+   * InputMethod support
+     [FEATURE backport from branches/KDE/3.4/; not in branches/KDE/3.3/]
+
+   * Antialias text when the text box has a transparent background (Bug #24)
+     [also in branches/KDE/3.4/, branches/KDE/3.3/]
+
+   * Enforce text box font height to prevent e.g. Chinese characters in
+     buggy fonts from enlarging the text box and putting the cursor out of
+     sync with the text
+     [also in branches/KDE/3.4/, branches/KDE/3.3/]
+
+   * Clicking in a text box selects a character based on its midpoint -
+     not leftmost point - to be consistent with all text editors
+     (esp. noticeable with big fonts)
+     [also in branches/KDE/3.4/, branches/KDE/3.3/]
+
+   * More intuitive "Set as Image" behaviour (esp. with selection borders).
+     Thanks to Michael Lake for the feedback.
+     [also in branches/KDE/3.4/, branches/KDE/3.3/]
+
+   * Return and Numpad 5 Key now draw
+     [also in branches/KDE/3.4/, branches/KDE/3.3/]
+
+   * Tool Actions placed outside the Tool Box resize with their toolbars
+     [also in branches/KDE/3.4/, branches/KDE/3.3/]
+
+   * Ensure Color Similarity maximum is 30, not 29 due to gcc4
+     [also in branches/KDE/3.4/, branches/KDE/3.3/]
+
+   * Tool Box traps right clicks (for the RMB Menu) on top of tool options
+     widgets and the empty part of the Tool Box
+     [also in branches/KDE/3.4/, branches/KDE/3.3/]
+
+Version 1.2.3_kde3 (Unreleased Frozen 2005-02-08)
+   * Guarantee the display of the current tool's options widget on startup
+     under Qt 3.0 [kolourpaint-1.2.2_kde3-qt3.0_tool_options.diff]
+   * Fix crash after using the Colour Picker if it was the first used tool
+     [kolourpaint-1.2.2_kde3-color_picker_crash.diff]
+     [also in branches/KDE/3.3/]
+   * Even when the thumbnail has focus (and not the main window), blink the
+     text cursor in all views
+     [kolourpaint-1.2.2_kde3-thumbnail_blink_text_cursor.diff]
+     [also in branches/KDE/3.3/]
+
+Version 1.2.2_kde3 (Frozen 2004-11-29)
+   * Try to work around Qt 3.0.x integer scaling bug (incorrect extra row
+     and/or column when scaling e.g. 3x)
+     - Fixes scaling operation; at the expense of storing the old image,
+       ensure undoing scaling works even if couldn't work around bug
+     - Fixes rendering errors at certain zoom levels, hidden by the grid
+   * Fix crash due to text box when scaling image behind it
+     [also in branches/KDE/3.3/]
+   * Empty text clipboard fixes:
+     - Don't get stuck on a wait cursor after attempting to paste empty
+       text into a text box
+     - Prevent pasting text from creating a new text box if text is empty
+     - Prevent copying of empty text box
+     [also in branches/KDE/3.3/]
+   * Smaller selection and text box resize handles (visually not
+     actually) - covers up fewer selected pixels, doesn't cover up text
+     [also in branches/KDE/3.3/]
+   * Restore mouse cursor after deselecting selection/text tools
+     [also in branches/KDE/3.3/]
+   * Enable automatic filename extension handling in save dialog based on
+     hacky runtime - rather than compiletime - check for KDE 3.2 (this is
+     all needed due to memory bugs with the save dialog in KDE 3.1)
+   * Include KDE 3.3.2 translations (with branches/KDE/3.3/ .pot)
+   * Include KDE 3.3.2 kde-default.css stylesheet so that documentation
+     is laid out properly in earlier versions of KDE
+   * Include KDE 3.3.2 fdl-license.html so that share/doc/HTML/en/common/
+     symlink is not needed (useful in binary distribution)
+   * Use KDE 3.3.2 admin/ and kdegraphics/ folders (not from HEAD unlike
+     previous versions)
+   * Provide xdelta's and bsdiff's
+
+Version 1.2.1_kde3 (Unreleased 2004-10-02)
+   * Fix selection regressions introduced in 1.2:
+     - Make selection dragging with CTRL work again (copies selection onto
+       document)
+     - When creating freeform selections, include the starting point; also
+       avoids a QRegion crash with constructing 1-point regions
+     [also in branches/KDE/3.3/]
+   * Fix other selection bugs:
+     - When the user drags very quickly on a resize handle, resize the
+       selection instead of moving it
+     - Draw resize handles above the grid lines - not below - so that the
+       handles are always visible if they are supposed to be there
+     [also in branches/KDE/3.3/]
+   * Speed up renderer (most noticeable with diagonal drag-scrolling at
+     high zoom)
+     - Don't paint anything outside of the view's visible region
+       (previously, clipped only on view _widget_ region)
+     - Region-aware: paint component rectangles of the update region,
+       rather than the bounding rectangle
+     [also in branches/KDE/3.3/]
+   * Fix missing Tool Box icons under some GNU/Linux distributions by
+     working around broken iconthemes that don't inherit from "hicolor" -
+     duplicate icons so that they install in both hicolor/ and crystalsvg/.
+     Thanks to Christoph Eckert for the fix.
+   * Update image format associations to all formats supported by KDE 3.3
+     [also in branches/KDE/3.3/]
+   * Ensure caption is correct (not always just "kolourpaint" in lowercase)
+     when running a KolourPaint linked against KDE 3.0 under KDE >= 3.1 by
+     working around a binary incompatibility in KDE.
+   * Fix remaining untranslatable strings (closing KDE Bug #85785)
+     [also in branches/KDE/3.3/]
+   * Remove unused images in doc directory
+     [also in branches/KDE/3.3/]
+
+Version 1.2_kde3 "ByFiat Everytime" (2004-08-18)
+   * Backport to KDE 3.0 by merging branches/kolourpaint/1.0/
+     - 1.2_kde3 should be functionally the same as 1.2, if compiled under
+       KDE 3.3
+     - For Qt <3.2, kpMainWindow::slotPaste(): correctly restore selection
+       mode of clipboard to old QClipboard::selectionModeEnabled() value,
+       not QClipboard::supportsSelection() (which is always true)
+     - For KDE 3.0, when saving, check that we can actually save in the
+       current mimeType (i.e. myTypeForMime() has a type for it) and pop
+       up the file dialog to force the user to choose mimeType if we can't
+     - Separate Qt version test from KDE version test
+       (previously, tested for KDE >= 3.x instead of Qt >= 3.x;
+        this worked because Qt ver >= KDE ver);
+       this change only benefits people who run Qt Ver > KDE ver
+   * When changing between colour depth and quality widgets in the save
+     filedialog, make sure "Convert to:" and "Quality:" are correctly
+     rendered (hacking around a Qt redraw glitch)
+   * Include Makefile.cvs in case user wants to recreate build system
+   * Include TODO because Linux Magazine liked it (was removed in 1.0.2)
+   * Fix build on FreeBSD 4.9:
+     Updated autoconf 2.53/automake 1.6.3/libtool 1.4.2 (MDK 9.0) to
+             autoconf 2.59/automake 1.8.3/libtool 1.5.6 (FC 2)
+
+
+KolourPaint 1.2 Series (branches/KDE/3.3/)
+======================
+
+Version 1.2 "ByFiat Everytime" (2004-08-18)
+   * Add up to 500 levels of Undo/Redo (minimum of 10 levels, maximum of
+     500 as long as the total history size < 16MB)
+   * Add freehand resizing of image
+   * Add freehand smooth scaling of selections
+   * [also in 1.0 branch] New icons (Kristof Borrey)
+   * [also in 1.0 branch] Prefer Crystal SVG text icons over KolourPaint's
+   * [also in 1.0 branch] Add documentation in the KDE Help Centre
+   * Add drag scrolling
+   * Add "More Effects" dialog:
+     - Balance (Brightness, Contrast, Gamma)
+     - Emboss
+     - Flatten
+     - Invert (with choice of channels)
+     - Reduce Colours
+     - Soften & Sharpen
+   * File saving improvements:
+     - Support colour depths (optional dithering) and "colour monochrome"
+     - Support JPEG quality
+     - Realtime file dialog preview with estimated file size
+     - Retain PNG metadata
+     - Prompt when attempting lossy save
+     - Correctly save transparent selections (not as opaque)
+   * Dither more often when loading (and pasting) images for better quality
+   * Single key shortcuts for all tools and tool options (automatically
+     turned off when editing text but can then use Alt+Shift+<key>)
+   * Arrow keys now move one document pixel - not view pixel - at a time
+     (more usable when zoomed in)
+   * Fix selection bugs:
+     - Fix duplicate "Selection: Create" undo entries (Bug #5a)
+     - Allow redoing of selection operation if border deselected (Bug #5b)
+     - Don't print to STDERR when undoing a selection border create
+       operation and border has already been deselected
+     - [also in 1.0 branch] When pulling a selection from the document,
+       only set the bits of the document to the background colour where the
+       transparent selection is opaque in the same place (this is only
+       noticeable with colour similarity turned on).  Now moving a
+       selection away and then back to its original place is always a NOP
+       as it should be.
+   * Selections can be deselected using Esc or clicking on icon in Tool Box
+   * Accidental drag detection when deselecting selections or text boxes
+   * Prevent selection from being moved completely offscreen (at least 1
+     pixel of the selection will stay within the view)
+   * Speed up copying selection when transparency is on
+   * Improve Text Tool usability:
+     - Allow single click creation of text box with a sane default size
+     - Allow freehand resizing of text boxes
+     - Add Opaque/Transparent selector for greater usability and
+       consistency with selections
+     - Minimum size is now 7x7 document pixels (1x1 - not 4x4 - border)
+     - Text cursor doesn't overlap border anymore
+     - When dropping text, paste at drop point
+     - When MMB pasting creates a new text box, do so at mouse position
+   * When MMB pasting text in an existing box, correctly paste multiline
+     clipboard contents
+   * Improve text quality:
+     - With a transparent background, don't antialias foreground opaque
+       text with arbitrarily chosen black
+     - Make sure transparent text shows up on opaque (usually, grey was
+       problematic) background
+   * Improve Resize/Scale dialog usability:
+     - Add Smooth Scale (useful for creating screenshot thumbnails)
+     - Allow manipulating image when selection is active
+     - Operation choices stand out as massive, easily clickable buttons
+     - Default focus on operation choices
+   * Warn if Resize/Scale, Rotate or Skew will take lots of memory
+   * Limit startup image size to 2048x2048
+   * Eliminate flicker when scrolling
+   * Thumbnail fixes:
+     - Reduce flicker when appearing (Bug #2)
+     - More reasonable minimum size (actually enforce it)
+     - [also in 1.0 branch] Use deleteLater()
+     - [also in 1.0 branch] Save geometry even if it's closed very quickly
+       after a geometry change
+   * Restore last used tool and tool options on startup
+   * Add Export, Copy To File, Paste From File, Paste in New Window,
+     Full Screen Mode
+   * Add Zoom In/Out buttons to main toolbar
+   * Rename Crop options in an attempt to reduce confusion:
+     - "Autocrop" --> "Remove Internal Border" when selection active
+     - "Crop Outside Selection" --> "Set as Image (Crop)"
+   * "Set as Image" changes:
+     - Enable for text boxes
+     - Underneath transparent bits of selection, fill image with
+       transparent rather than with background colour
+   * Permit "reloading" of an empty document
+   * Fixes when the current URL doesn't exist:
+     - Don't reload if underlying file disappeared
+     - Don't add non-existent file to Recent Files history
+     - Ask to save before mailing or setting as wallpaper
+   * Only enable Show Path when there is a URL
+   * Pop up dialog (instead of printing to STDERR) and disable Edit/Paste
+     on CTRL+V if the clipboard contents disappeared due to the source
+     application quitting (and Klipper didn't retain clipboard contents)
+   * Image/Clear now always sets _everything_ within the selection boundary
+     to the background colour - including transparent pixels
+   * Add Preview button to Colour Similarity Dialog to work around Bug #4
+     regarding spinboxes and enter key
+   * Colour Picker disallows trying to pick colour outside of image
+   * Make sure colour palette contains valid and visible colours at 8-bit
+   * [also in 1.0 branch] Fix (big) memory leak on kpSelection destruction
+     (Albert Astals Cid)
+   * Don't leak image dialogs' memory
+   * [also in 1.0 branch] Don't let C++ destruct the mask bitmap before its
+     painter when dbl-clicking the color eraser does NOP (avoids
+     QPaintDevice and X error)
+   * [also in 1.0 branch] Check for QImageDrag::canDecode() before calling
+     QImageDrag::decode() (prevents X and valgrind errors)
+   * [also in 1.0 branch] Fix compilation problem with QT_NO_ASCII_CAST
+     (Waldo Bastian)
+   * [also in 1.0 branch] Decrease application preference to below that of
+     a viewer (Stephan Kulow)
+   * Remember dialog dimensions
+   * Remove double dialog margins
+   * Fix missing i18n()'s
+   * Fix some untranslatable strings
+   * [also in 1.0 branch] Corrected several strings
+   * Remove unused icons
+
+
+KolourPaint 1.0 Series (branches/kolourpaint/1.0/)
+======================
+
+Version 1.0 "Seagull" (2004-02-29)
+   * First stable release
+
