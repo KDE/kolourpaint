@@ -28,6 +28,7 @@ kolourpaint_SOURCES = kolourpaint.cpp \
     kpsinglekeytriggersaction.cpp \
     kptemppixmap.cpp kptextstyle.cpp \
     kpthumbnail.cpp \
+    kptool.cpp \
     kpviewmanager.cpp \
     kpviewscrollablecontainer.cpp \
     kpwidgetmapper.cpp

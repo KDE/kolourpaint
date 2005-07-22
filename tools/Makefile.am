@@ -5,8 +5,7 @@ INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../interfaces \
     -I$(srcdir)/../widgets $(all_includes)
 
 noinst_LTLIBRARIES = libkolourpainttools.la
-libkolourpainttools_la_SOURCES = kptool.cpp \
-    kptoolaction.cpp \
+libkolourpainttools_la_SOURCES = kptoolaction.cpp \
     kptoolairspray.cpp \
     kptoolautocrop.cpp \
     kptoolbrush.cpp kptoolclear.cpp \
@@ -29,8 +28,7 @@ libkolourpainttools_la_SOURCES = kptool.cpp \
 # TODO: Why is this needed?  Isn't linking at the toplevel enough?
 libkolourpainttools_la_LIBADD = ../pixmapfx/libkolourpaintpixmapfx.la ../cursors/libkolourpaintcursors.la
 
-METASOURCES = kptool.moc \
-    kptoolaction.moc \
+METASOURCES = kptoolaction.moc \
     kptoolairspray.moc \
     kptoolbrush.moc \
     kptoolcolorpicker.moc \
