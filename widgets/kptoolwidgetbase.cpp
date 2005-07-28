@@ -36,6 +36,10 @@
 #include <qimage.h>
 #include <qpainter.h>
 #include <qtooltip.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QMouseEvent>
+#include <Q3Frame>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -46,14 +50,14 @@
 
 
 kpToolWidgetBase::kpToolWidgetBase (QWidget *parent, const char *name)
-    : QFrame (parent, name),
+    : Q3Frame (parent, name),
       m_invertSelectedPixmap (true),
       m_selectedRow (-1), m_selectedCol (-1)
 {
     if (!name)
         kdError () << "kpToolWidgetBase::kpToolWidgetBase() without name" << endl;
 
-    setFrameStyle (QFrame::Panel | QFrame::Sunken);
+    setFrameStyle (Q3Frame::Panel | Q3Frame::Sunken);
     setFixedSize (44, 66);
 }
 
@@ -110,14 +114,14 @@ void kpToolWidgetBase::finishConstruction (int fallBackRow, int fallBackCol)
 
 
 // private
-QValueVector <int> kpToolWidgetBase::spreadOutElements (const QValueVector <int> &sizes, int max)
+Q3ValueVector <int> kpToolWidgetBase::spreadOutElements (const Q3ValueVector <int> &sizes, int max)
 {
     if (sizes.count () == 0)
-        return QValueVector <int> ();
+        return Q3ValueVector <int> ();
     else if (sizes.count () == 1)
-        return QValueVector <int> (1, sizes.first () > max ? 0 : 1/*margin*/);
+        return Q3ValueVector <int> (1, sizes.first () > max ? 0 : 1/*margin*/);
 
-    QValueVector <int> retOffsets (sizes.count ());
+    Q3ValueVector <int> retOffsets (sizes.count ());
 
     int totalSize = 0;
     for (int i = 0; i < (int) sizes.count (); i++)
@@ -250,7 +254,7 @@ void kpToolWidgetBase::relayoutOptions ()
     kdDebug () << "\tfinding heights of rows:" << endl;
 #endif
 
-    QValueVector <int> maxHeightOfRow (m_pixmaps.count ());
+    Q3ValueVector <int> maxHeightOfRow (m_pixmaps.count ());
 
     for (int r = 0; r < (int) m_pixmaps.count (); r++)
     {
@@ -264,7 +268,7 @@ void kpToolWidgetBase::relayoutOptions ()
     #endif
     }
 
-    QValueVector <int> rowYOffset = spreadOutElements (maxHeightOfRow, height ());
+    Q3ValueVector <int> rowYOffset = spreadOutElements (maxHeightOfRow, height ());
 #if DEBUG_KP_TOOL_WIDGET_BASE
     kdDebug () << "\tspread out offsets of rows:" << endl;
     for (int r = 0; r < (int) rowYOffset.count (); r++)
@@ -277,7 +281,7 @@ void kpToolWidgetBase::relayoutOptions ()
         kdDebug () << "\tlaying out row " << r << ":" << endl;
     #endif
 
-        QValueVector <int> widths (m_pixmaps [r].count ());
+        Q3ValueVector <int> widths (m_pixmaps [r].count ());
         for (int c = 0; c < (int) m_pixmaps [r].count (); c++)
             widths [c] = m_pixmaps [r][c].width ();
     #if DEBUG_KP_TOOL_WIDGET_BASE
@@ -286,7 +290,7 @@ void kpToolWidgetBase::relayoutOptions ()
             kdDebug () << "\t\t\t" << c << ": " << widths [c] << endl;
     #endif
 
-        QValueVector <int> colXOffset = spreadOutElements (widths, width ());
+        Q3ValueVector <int> colXOffset = spreadOutElements (widths, width ());
     #if DEBUG_KP_TOOL_WIDGET_BASE
         kdDebug () << "\t\tspread out offsets of cols:" << endl;
         for (int c = 0; c < (int) colXOffset.count (); c++)

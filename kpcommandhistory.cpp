@@ -34,6 +34,8 @@
 #include <limits.h>
 
 #include <qdatetime.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 #include <kactionclasses.h>
 #include <kapplication.h>
@@ -51,12 +53,12 @@
 
 
 //template <typename T>
-static void clearPointerList (QValueList <kpCommand *> *listPtr)
+static void clearPointerList (Q3ValueList <kpCommand *> *listPtr)
 {
     if (!listPtr)
         return;
 
-    for (QValueList <kpCommand *>::iterator it = listPtr->begin ();
+    for (Q3ValueList <kpCommand *>::iterator it = listPtr->begin ();
          it != listPtr->end ();
          it++)
     {
@@ -168,7 +170,7 @@ int kpMacroCommand::size () const
 #if DEBUG_KP_COMMAND_HISTORY && 0
     kdDebug () << "\tcalculating:" << endl;
 #endif
-    for (QValueList <kpCommand *>::const_iterator it = m_commandList.begin ();
+    for (Q3ValueList <kpCommand *>::const_iterator it = m_commandList.begin ();
          it != m_commandList.end ();
          it++)
     {
@@ -204,7 +206,7 @@ void kpMacroCommand::execute ()
 #if DEBUG_KP_COMMAND_HISTORY
     kdDebug () << "kpMacroCommand::execute()" << endl;
 #endif
-    for (QValueList <kpCommand *>::const_iterator it = m_commandList.begin ();
+    for (Q3ValueList <kpCommand *>::const_iterator it = m_commandList.begin ();
          it != m_commandList.end ();
          it++)
     {
@@ -221,7 +223,7 @@ void kpMacroCommand::unexecute ()
 #if DEBUG_KP_COMMAND_HISTORY
     kdDebug () << "kpMacroCommand::unexecute()" << endl;
 #endif
-    QValueList <kpCommand *>::const_iterator it = m_commandList.end ();
+    Q3ValueList <kpCommand *>::const_iterator it = m_commandList.end ();
     it--;
 
     while (it != m_commandList.end ())
@@ -654,7 +656,7 @@ void kpCommandHistoryBase::trimCommandListsUpdateActions ()
 }
 
 // protected
-void kpCommandHistoryBase::trimCommandList (QValueList <kpCommand *> *commandList)
+void kpCommandHistoryBase::trimCommandList (Q3ValueList <kpCommand *> *commandList)
 {
 #if DEBUG_KP_COMMAND_HISTORY
     kdDebug () << "kpCommandHistoryBase::trimCommandList()" << endl;
@@ -689,7 +691,7 @@ void kpCommandHistoryBase::trimCommandList (QValueList <kpCommand *> *commandLis
     kdDebug () << "\tsize over undoMinLimit - iterating thru cmds:" << endl;
 #endif
 
-    QValueList <kpCommand *>::iterator it = commandList->begin ();
+    Q3ValueList <kpCommand *>::iterator it = commandList->begin ();
     int upto = 0;
 
     int sizeSoFar = 0;
@@ -773,14 +775,14 @@ void kpCommandHistoryBase::trimCommandLists ()
 
 static void populatePopupMenu (KPopupMenu *popupMenu,
                                const QString &undoOrRedo,
-                               const QValueList <kpCommand *> &commandList)
+                               const Q3ValueList <kpCommand *> &commandList)
 {
     if (!popupMenu)
         return;
 
     popupMenu->clear ();
 
-    QValueList <kpCommand *>::const_iterator it = commandList.begin ();
+    Q3ValueList <kpCommand *>::const_iterator it = commandList.begin ();
     int i = 0;
     while (i < 10 && it != commandList.end ())
     {

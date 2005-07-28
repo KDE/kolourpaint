@@ -32,6 +32,8 @@
 #include <kpcommandhistory.h>
 
 #include <kpcolor.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 class QPixmap;
 class QString;

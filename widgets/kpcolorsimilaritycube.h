@@ -29,12 +29,12 @@
 #ifndef __kp_color_similarity_cube_h__
 #define __kp_color_similarity_cube_h__
 
-#include <qframe.h>
+#include <q3frame.h>
 
 class kpColor;
 class kpMainWindow;
 
-class kpColorSimilarityCube : public QFrame
+class kpColorSimilarityCube : public Q3Frame
 {
 public:
     enum Look

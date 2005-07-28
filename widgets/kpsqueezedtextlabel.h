@@ -30,6 +30,8 @@
 
 #include <qlabel.h>
 #include <qstring.h>
+//Added by qt3to4:
+#include <QResizeEvent>
 
 
 // KSqueezedTextLabel done properly - squeeze at the end of the string,

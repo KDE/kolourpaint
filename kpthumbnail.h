@@ -29,13 +29,16 @@
 #ifndef __kp_thumbnail_h__
 #define __kp_thumbnail_h__
 
-#include <qdockwindow.h>
+#include <q3dockwindow.h>
+//Added by qt3to4:
+#include <QMoveEvent>
+#include <QResizeEvent>
 
 class kpMainWindow;
 class kpThumbnailView;
 
 
-class kpThumbnail : public QDockWindow
+class kpThumbnail : public Q3DockWindow
 {
 Q_OBJECT
 

@@ -30,6 +30,8 @@
 #define __kp_tool_text_h__
 
 #include <qstring.h>
+//Added by qt3to4:
+#include <QKeyEvent>
 
 #include <kpcommandhistory.h>
 

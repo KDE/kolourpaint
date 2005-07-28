@@ -35,7 +35,9 @@
 #include <qlayout.h>
 #include <qpixmap.h>
 #include <qpushbutton.h>
-
+//Added by qt3to4:
+#include <QGridLayout>
+#include <QBitmap>
 #include <kdebug.h>
 #include <kimageeffect.h>
 #include <klocale.h>
@@ -108,8 +110,8 @@ QPixmap kpEffectBlurSharpenCommand::apply (const QPixmap &pixmap,
 
 
     // KImageEffect::(blur|sharpen)() nukes mask - restore it
-    if (usePixmap.mask ())
-        retPixmap.setMask (*usePixmap.mask ());
+    if (!usePixmap.mask ().isNull())
+        retPixmap.setMask (usePixmap.mask ());
 
 
     return retPixmap;

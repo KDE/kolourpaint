@@ -31,6 +31,8 @@
 
 
 #include <qcolor.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 #include <kpcoloreffect.h>
 

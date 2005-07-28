@@ -28,10 +28,13 @@
 
 #include <kpmainwindow.h>
 
-#include <qcstring.h>
+#include <q3cstring.h>
 #include <qdatastream.h>
 #include <qpainter.h>
 #include <qsize.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3PtrList>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -165,7 +168,7 @@ void kpMainWindow::addRecentURL (const KURL &url)
         kdDebug () << "\thave memberList" << endl;
     #endif
 
-        for (QPtrList <KMainWindow>::const_iterator it = KMainWindow::memberList->begin ();
+        for (Q3PtrList <KMainWindow>::const_iterator it = KMainWindow::memberList->begin ();
              it != KMainWindow::memberList->end ();
              it++)
         {
@@ -912,7 +915,7 @@ void kpMainWindow::setAsWallpaper (bool centered)
 
 
     QByteArray data;
-    QDataStream dataStream (data, IO_WriteOnly);
+    QDataStream dataStream (data, QIODevice::WriteOnly);
 
     // write path
 #if DEBUG_KP_MAIN_WINDOW

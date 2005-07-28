@@ -50,6 +50,8 @@
 #include <qbitmap.h>
 #include <qimage.h>
 #include <qpainter.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -306,7 +308,7 @@ public:
 
 void showNothingToAutocropMessage (kpMainWindow *mainWindow, bool actOnSelection)
 {
-    kpSetOverrideCursorSaver cursorSaver (Qt::arrowCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::ArrowCursor);
 
     if (actOnSelection)
     {
@@ -367,7 +369,7 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
                          botBorder (&pixmap, processedColorSimilarity);
 
 
-    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
     // TODO: With Colour Similarity, a lot of weird (and wonderful) things can
     //       happen resulting in a huge number of code paths.  Needs refactoring

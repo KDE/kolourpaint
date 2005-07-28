@@ -1,3 +1,5 @@
+//Added by qt3to4:
+#include <QPixmap>
 
 /*
    Copyright (c) 2003,2004,2005 Clarence Dang <dang@kde.org>

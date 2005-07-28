@@ -31,8 +31,10 @@
 
 #include <qcursor.h>
 #include <qobject.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #include <qrect.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 
 class QPixmap;
@@ -202,7 +204,7 @@ private:
     kpDocument *document () const;
 
     kpMainWindow *m_mainWindow;
-    QPtrList <kpView> m_views;
+    Q3PtrList <kpView> m_views;
     QCursor m_cursor;
 
     kpTempPixmap *m_tempPixmap;

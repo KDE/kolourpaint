@@ -32,8 +32,10 @@
 
 #include <qpixmap.h>
 #include <qpoint.h>
-#include <qpointarray.h>
+#include <q3pointarray.h>
 #include <qrect.h>
+//Added by qt3to4:
+#include <QKeyEvent>
 
 #include <kpcolor.h>
 #include <kpcommandhistory.h>
@@ -227,7 +229,7 @@ private:
     // area of document affected (not the bounding rect of the sel)
     QRect m_documentBoundingRect;
 
-    QPointArray m_copyOntoDocumentPoints;
+    Q3PointArray m_copyOntoDocumentPoints;
 };
 
 // You could subclass kpToolResizeScaleCommand and/or

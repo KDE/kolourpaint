@@ -33,6 +33,8 @@
 
 #include <qapplication.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 #include <kdebug.h>
 
@@ -426,7 +428,7 @@ void kpViewManager::slotTextCursorBlink ()
 
 void kpViewManager::setCursor (const QCursor &cursor)
 {
-    for (QPtrList <kpView>::const_iterator it = m_views.begin ();
+    for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
          it != m_views.end ();
          it++)
     {
@@ -438,7 +440,7 @@ void kpViewManager::setCursor (const QCursor &cursor)
 
 void kpViewManager::unsetCursor ()
 {
-    for (QPtrList <kpView>::const_iterator it = m_views.begin ();
+    for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
          it != m_views.end ();
          it++)
     {
@@ -466,7 +468,7 @@ kpView *kpViewManager::viewUnderCursor (bool usingQt) const
     }
     else
     {
-        for (QPtrList <kpView>::const_iterator it = m_views.begin ();
+        for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
              it != m_views.end ();
              it++)
         {
@@ -518,7 +520,7 @@ void kpViewManager::setViewUnderCursor (kpView *view)
 // public
 kpView *kpViewManager::activeView () const
 {
-    for (QPtrList <kpView>::const_iterator it = m_views.begin ();
+    for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
          it != m_views.end ();
          it++)
     {
@@ -562,7 +564,7 @@ void kpViewManager::restoreQueueUpdates ()
 
     if (m_queueUpdatesCounter <= 0)
     {
-        for (QPtrList <kpView>::const_iterator it = m_views.begin ();
+        for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
              it != m_views.end ();
              it++)
         {
@@ -685,7 +687,7 @@ void kpViewManager::updateViews (const QRect &docRect)
     kdDebug () << "kpViewManager::updateViews (" << docRect << ")" << endl;
 #endif
 
-    for (QPtrList <kpView>::const_iterator it = m_views.begin ();
+    for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
          it != m_views.end ();
          it++)
     {
@@ -734,7 +736,7 @@ void kpViewManager::adjustViewsToEnvironment ()
                << " numViews=" << m_views.count ()
                << endl;
 #endif
-    for (QPtrList <kpView>::const_iterator it = m_views.begin ();
+    for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
          it != m_views.end ();
          it++)
     {

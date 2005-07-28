@@ -31,6 +31,8 @@
 #include <kpselectiondrag.h>
 
 #include <qdatastream.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 #include <kdebug.h>
 
@@ -43,17 +45,17 @@ const char * const kpSelectionDrag::selectionMimeType = "application/x-kolourpai
 
 
 kpSelectionDrag::kpSelectionDrag (QWidget *dragSource, const char *name)
-    : QImageDrag (dragSource, name)
+    : Q3ImageDrag (dragSource, name)
 {
 }
 
 kpSelectionDrag::kpSelectionDrag (const QImage &image, QWidget *dragSource, const char *name)
-    : QImageDrag (image, dragSource, name)
+    : Q3ImageDrag (image, dragSource, name)
 {
 }
 
 kpSelectionDrag::kpSelectionDrag (const kpSelection &sel, QWidget *dragSource, const char *name)
-    : QImageDrag (dragSource, name)
+    : Q3ImageDrag (dragSource, name)
 {
     setSelection (sel);
 }
@@ -93,7 +95,7 @@ const char *kpSelectionDrag::format (int which) const
 #if DEBUG_KP_SELECTION_DRAG && 0
     kdDebug () << "kpSelectionDrag::format(" << which << ")" << endl;
 #endif
-    const char *ret = QImageDrag::format (which);
+    const char *ret = Q3ImageDrag::format (which);
     if (ret)
     {
     #if DEBUG_KP_SELECTION_DRAG && 0
@@ -103,7 +105,7 @@ const char *kpSelectionDrag::format (int which) const
     }
 
     int i;
-    for (i = 0; QImageDrag::format (i); i++)
+    for (i = 0; Q3ImageDrag::format (i); i++)
         ;
 
 #if DEBUG_KP_SELECTION_DRAG && 0
@@ -139,7 +141,7 @@ bool kpSelectionDrag::provides (const char *mimeType) const
         return false;
 
     return (!strcmp (mimeType, kpSelectionDrag::selectionMimeType) ||
-            QImageDrag::provides (mimeType));
+            Q3ImageDrag::provides (mimeType));
 }
 
 // public virtual [base QMimeSource]
@@ -155,7 +157,7 @@ QByteArray kpSelectionDrag::encodedData (const char *mimeType) const
     if (!strcmp (mimeType, kpSelectionDrag::selectionMimeType))
     {
         QByteArray ba;
-        QDataStream stream (ba, IO_WriteOnly);
+        QDataStream stream (ba, QIODevice::WriteOnly);
 
     #if DEBUG_KP_SELECTION_DRAG
         kdDebug () << "\twant it as kpSelection in QByteArray" << endl;
@@ -207,7 +209,7 @@ QByteArray kpSelectionDrag::encodedData (const char *mimeType) const
         kdDebug () << "\twant it as QImage in QByteArray" << endl;
     #endif
 
-        return QImageDrag::encodedData (mimeType);
+        return Q3ImageDrag::encodedData (mimeType);
     }
 }
 
@@ -223,7 +225,7 @@ bool kpSelectionDrag::canDecode (const QMimeSource *e)
         return false;
 
     return (e->provides (kpSelectionDrag::selectionMimeType) ||
-            QImageDrag::canDecode (e));
+            Q3ImageDrag::canDecode (e));
 }
 
 
@@ -236,8 +238,8 @@ bool kpSelectionDrag::decode (const QMimeSource *e, QImage &img)
     if (!e)
         return false;
 
-    return (QImageDrag::canDecode (e) &&  // prevents X errors, jumps based on unitialised values...
-            QImageDrag::decode (e, img/*ref*/));
+    return (Q3ImageDrag::canDecode (e) &&  // prevents X errors, jumps based on unitialised values...
+            Q3ImageDrag::decode (e, img/*ref*/));
 }
 
 // public static
@@ -256,7 +258,7 @@ bool kpSelectionDrag::decode (const QMimeSource *e, kpSelection &sel,
         kdDebug () << "\tmimeSource provides selection - just return it in QByteArray" << endl;
     #endif
         QByteArray data = e->encodedData (kpSelectionDrag::selectionMimeType);
-        QDataStream stream (data, IO_ReadOnly);
+        QDataStream stream (data, QIODevice::ReadOnly);
 
         // (no need for wali as kpSelection's by definition only support QPixmap's)
         stream >> sel;

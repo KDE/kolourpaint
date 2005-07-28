@@ -32,6 +32,8 @@
 #include <qcursor.h>
 #include <qevent.h>
 #include <qpainter.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -76,7 +78,7 @@ static QPixmap pixmap (const kpToolRectangle::Mode mode,
                << endl;
 #endif
 
-    if (pixmap.mask () ||
+    if (!pixmap.mask ().isNull() ||
         (maskPen.style () != Qt::NoPen &&
          maskPen.color () ==  Qt::color0/*transparent*/) ||
         (maskBrush.style () != Qt::NoBrush &&
@@ -340,7 +342,7 @@ void kpToolRectangle::begin ()
     kdDebug () << "\t\tm_toolWidgetFillStyle=" << m_toolWidgetFillStyle << endl;
 #endif
 
-    viewManager ()->setCursor (QCursor (CrossCursor));
+    viewManager ()->setCursor (QCursor (Qt::CrossCursor));
 
     setUserMessage (haventBegunDrawUserMessage ());
 }

@@ -80,7 +80,7 @@ void kpToolFloodFill::beginDraw ()
     kdDebug () << "kpToolFloodFill::beginDraw()" << endl;
 #endif
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     // Flood Fill is an expensive CPU operation so we only fill at a
     // mouse click (beginDraw ()), not on mouse move (virtually draw())
@@ -214,7 +214,7 @@ void kpToolFloodFillCommand::execute ()
         QRect rect = kpFloodFill::boundingRect ();
         if (rect.isValid ())
         {
-            QApplication::setOverrideCursor (QCursor::waitCursor);
+            QApplication::setOverrideCursor (Qt::WaitCursor);
 
             m_oldPixmap = doc->getPixmapAt (rect);
 

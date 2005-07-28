@@ -31,18 +31,21 @@
 
 
 #include <qstring.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3PointArray>
 
 
 class QBitmap;
 class QColor;
 class QImage;
-class QPointArray;
+class Q3PointArray;
 class QPixmap;
 class QPoint;
 class QRect;
 class QString;
 class QWidget;
-class QWMatrix;
+class QMatrix;
 
 class kpColor;
 class kpSelection;
@@ -83,7 +86,7 @@ public:
 
     static int stringSize (const QString &string);
 
-    static int pointArraySize (const QPointArray &points);
+    static int pointArraySize (const Q3PointArray &points);
 
 
     //
@@ -393,8 +396,8 @@ public:
     // Using <targetWidth> & <targetHeight> to generate preview pixmaps is
     // significantly more efficient than skewing and then scaling yourself.
     //
-    static QWMatrix skewMatrix (int width, int height, double hangle, double vangle);
-    static QWMatrix skewMatrix (const QPixmap &pixmap, double hangle, double vangle);
+    static QMatrix skewMatrix (int width, int height, double hangle, double vangle);
+    static QMatrix skewMatrix (const QPixmap &pixmap, double hangle, double vangle);
 
     static void skew (QPixmap *destPixmapPtr, double hangle, double vangle,
                       const kpColor &backgroundColor,
@@ -414,8 +417,8 @@ public:
     // Using <targetWidth> & <targetHeight> to generate preview pixmaps is
     // significantly more efficient than rotating and then scaling yourself.
     //
-    static QWMatrix rotateMatrix (int width, int height, double angle);
-    static QWMatrix rotateMatrix (const QPixmap &pixmap, double angle);
+    static QMatrix rotateMatrix (int width, int height, double angle);
+    static QMatrix rotateMatrix (const QPixmap &pixmap, double angle);
 
     static bool isLosslessRotation (double angle);
 
@@ -430,8 +433,8 @@ public:
     //
     // Flips an image in the given directions.
     //
-    static QWMatrix flipMatrix (int width, int height, bool horz, bool vert);
-    static QWMatrix flipMatrix (const QPixmap &pixmap, bool horz, bool vert);
+    static QMatrix flipMatrix (int width, int height, bool horz, bool vert);
+    static QMatrix flipMatrix (const QPixmap &pixmap, bool horz, bool vert);
 
     // TODO: this kind of overloading is error prone
     //       e.g. QPixmap pixmap;

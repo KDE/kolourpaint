@@ -30,8 +30,10 @@
 #define __kpfloodfill_h__
 
 #include <qimage.h>
-#include <qvaluelist.h>
-#include <qvaluevector.h>
+#include <q3valuelist.h>
+#include <q3valuevector.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 #include <kpcolor.h>
 
@@ -86,7 +88,7 @@ private:
         int m_y, m_x1, m_x2;
     };
 
-    int fillLinesListSize (const QValueList <kpFloodFill::FillLine> &fillLines) const;
+    int fillLinesListSize (const Q3ValueList <kpFloodFill::FillLine> &fillLines) const;
     
     void addLine (int y, int x1, int x2);
     kpColor pixelColor (int x, int y, bool *beenHere = 0) const;
@@ -95,11 +97,11 @@ private:
     int findMinX (int y, int x) const;
     int findMaxX (int y, int x) const;
 
-    QValueList <FillLine> m_fillLines;
+    Q3ValueList <FillLine> m_fillLines;
 
     // Init info
     QImage m_image;
-    QValueVector < QValueList <FillLine> > m_fillLinesCache;
+    Q3ValueVector < Q3ValueList <FillLine> > m_fillLinesCache;
     kpColor m_colorToChange;
 };
 

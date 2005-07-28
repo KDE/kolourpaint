@@ -30,6 +30,8 @@
 #define __kptoolresizescale_h__
 
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <QLabel>
 
 #include <kpcommandhistory.h>
 #include <kdialogbase.h>
@@ -38,8 +40,8 @@
 #include <kpselection.h>
 
 class QCheckBox;
-class QGroupBox;
-class QHBox;
+class Q3GroupBox;
+class Q3HBox;
 class QRadioButton;
 class QSize;
 class QString;
@@ -172,11 +174,11 @@ private slots:
 private:
     kpMainWindow *m_mainWindow;
 
-    QHBox *m_actOnBox;
+    Q3HBox *m_actOnBox;
     QLabel *m_actOnLabel;
     KComboBox *m_actOnCombo;
 
-    QGroupBox *m_operationGroupBox;
+    Q3GroupBox *m_operationGroupBox;
     QToolButton *m_resizeButton,
                 *m_scaleButton,
                 *m_smoothScaleButton;
@@ -184,7 +186,7 @@ private:
                  *m_scaleLabel,
                  *m_smoothScaleLabel;
 
-    QGroupBox *m_dimensionsGroupBox;
+    Q3GroupBox *m_dimensionsGroupBox;
     KIntNumInput *m_originalWidthInput, *m_originalHeightInput,
                  *m_newWidthInput, *m_newHeightInput;
     KDoubleNumInput *m_percentWidthInput, *m_percentHeightInput;

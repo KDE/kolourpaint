@@ -42,8 +42,8 @@
 #include <qpainter.h>
 #include <qrect.h>
 #include <qsize.h>
-#include <qvaluelist.h>
-#include <qwmatrix.h>
+#include <q3valuelist.h>
+#include <qmatrix.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -208,8 +208,8 @@ QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExist
         metaInfo->setDotsPerMeterY (image.dotsPerMeterY ());
         metaInfo->setOffset (image.offset ());
 
-        QValueList <QImageTextKeyLang> keyList = image.textList ();
-        for (QValueList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
+        Q3ValueList <QImageTextKeyLang> keyList = image.textList ();
+        for (Q3ValueList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
              it != keyList.end ();
              it++)
         {
@@ -540,8 +540,8 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     imageToSave.setDotsPerMeterY (metaInfo.dotsPerMeterY ());
     imageToSave.setOffset (metaInfo.offset ());
 
-    QValueList <QImageTextKeyLang> keyList = metaInfo.textList ();
-    for (QValueList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
+    Q3ValueList <QImageTextKeyLang> keyList = metaInfo.textList ();
+    for (Q3ValueList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
          it != keyList.end ();
          it++)
     {
@@ -645,7 +645,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
 
     QFile file (filename);
     bool fileOpenOK = false;
-    if (!(fileOpenOK = file.open (IO_WriteOnly)) ||
+    if (!(fileOpenOK = file.open (QIODevice::WriteOnly)) ||
         !savePixmapToDevice (pixmap, &file,
                              saveOptions, metaInfo,
                              false/*no lossy prompt*/,

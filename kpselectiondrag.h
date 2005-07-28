@@ -29,13 +29,13 @@
 #ifndef __kp_selection_drag_h__
 #define __kp_selection_drag_h__
 
-#include <qdragobject.h>
+#include <q3dragobject.h>
 
 #include <kppixmapfx.h>
 #include <kpselection.h>
 
 
-class kpSelectionDrag : public QImageDrag
+class kpSelectionDrag : public Q3ImageDrag
 {
 Q_OBJECT
 

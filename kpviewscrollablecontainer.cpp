@@ -34,6 +34,13 @@
 #include <qpen.h>
 #include <qpixmap.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QPaintEvent>
+#include <QKeyEvent>
+#include <QEvent>
+#include <QDragMoveEvent>
+#include <QResizeEvent>
+#include <QMouseEvent>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -89,20 +96,20 @@ const QCursor &kpGrip::cursorForType (GripType type)
 {
     switch (type)
     {
-    case Bottom:
-        return Qt::sizeVerCursor;
+    case Qt::DockBottom:
+        return Qt::SizeVerCursor;
         break;  // one day you'll forget
 
-    case Right:
-        return Qt::sizeHorCursor;
+    case Qt::DockRight:
+        return Qt::SizeHorCursor;
         break;  // one day you'll forget
 
-    case BottomRight:
-        return Qt::sizeFDiagCursor;
+    case Qt::BottomRightCorner:
+        return Qt::SizeFDiagCursor;
         break;  // one day you'll forget
     }
 
-    return Qt::arrowCursor;
+    return Qt::ArrowCursor;
 }
 
 
@@ -113,21 +120,21 @@ QRect kpGrip::hotRect (bool toGlobal) const
 
     switch (m_type)
     {
-    case Bottom:
+    case Qt::DockBottom:
     {
         const int handleX = (width () - GripHandleSize) / 2;
         ret = QRect (handleX, 0,
                      GripHandleSize, height ());
         break;
     }
-    case Right:
+    case Qt::DockRight:
     {
         const int handleY = (height () - GripHandleSize) / 2;
         ret = QRect (0, handleY,
                      width (), GripHandleSize);
         break;
     }
-    case BottomRight:
+    case Qt::BottomRightCorner:
         // pixmap all opaque
         ret = rect ();
         break;
@@ -212,7 +219,7 @@ void kpGrip::cancel ()
     m_currentPoint = KP_INVALID_POINT;
 
     setUserMessage (i18n ("Resize Image: Let go of all the mouse buttons."));
-    setCursor (Qt::arrowCursor);
+    setCursor (Qt::ArrowCursor);
     m_shouldReleaseMouseButtons = true;
 
     releaseKeyboard ();
@@ -261,8 +268,8 @@ QPoint kpGrip::viewDeltaPoint () const
 
     // TODO: this is getting out of sync with m_currentPoint
 
-    return QPoint (((m_type & Right) ? point.x () - m_startPoint.x () : 0),
-                   ((m_type & Bottom) ? point.y () - m_startPoint.y () : 0));
+    return QPoint (((m_type & Qt::DockRight) ? point.x () - m_startPoint.x () : 0),
+                   ((m_type & Qt::DockBottom) ? point.y () - m_startPoint.y () : 0));
 
 }
 
@@ -274,8 +281,8 @@ void kpGrip::mouseMovedTo (const QPoint &point, bool dueToDragScroll)
 
     m_currentPoint = point;
 
-    emit continuedDraw (((m_type & Right) ? point.x () - m_startPoint.x () : 0),
-                        ((m_type & Bottom) ? point.y () - m_startPoint.y () : 0),
+    emit continuedDraw (((m_type & Qt::DockRight) ? point.x () - m_startPoint.x () : 0),
+                        ((m_type & Qt::DockBottom) ? point.y () - m_startPoint.y () : 0),
                         dueToDragScroll);
 }
 
@@ -316,8 +323,8 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
         m_startPoint = KP_INVALID_POINT;
 
         releaseKeyboard ();
-        emit endedDraw ((m_type & Right) ? dx : 0,
-                        (m_type & Bottom) ? dy : 0);
+        emit endedDraw ((m_type & Qt::DockRight) ? dx : 0,
+                        (m_type & Qt::DockBottom) ? dy : 0);
     }
 
     if ((e->stateAfter () & Qt::MouseButtonMask) == 0)
@@ -391,7 +398,7 @@ void kpGrip::paintEvent (QPaintEvent *e)
 
 kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent,
                                                       const char *name)
-    : QScrollView ((QWidget *) parent, name, Qt::WStaticContents | Qt::WNoAutoErase),
+    : Q3ScrollView ((QWidget *) parent, name, Qt::WStaticContents | Qt::WNoAutoErase),
       m_mainWindow (parent),
       m_contentsXSoon (-1), m_contentsYSoon (-1),
       m_view (0),
@@ -995,7 +1002,7 @@ void kpViewScrollableContainer::addChild (QWidget *widget, int x, int y)
                << "," << x << "," << y << endl;
 #endif
 
-    QScrollView::addChild (widget, x, y);
+    Q3ScrollView::addChild (widget, x, y);
 
     kpView *view = dynamic_cast <kpView *> (widget);
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
@@ -1292,7 +1299,7 @@ void kpViewScrollableContainer::contentsDragMoveEvent (QDragMoveEvent *e)
                << endl;
 #endif
 
-    QScrollView::contentsDragMoveEvent (e);
+    Q3ScrollView::contentsDragMoveEvent (e);
 }
 
 // protected slot
@@ -1311,7 +1318,7 @@ void kpViewScrollableContainer::contentsMouseMoveEvent (QMouseEvent *e)
                << endl;
 #endif
 
-    QScrollView::contentsMouseMoveEvent (e);
+    Q3ScrollView::contentsMouseMoveEvent (e);
 }
 
 // protected virtual [base QScrollView]
@@ -1323,7 +1330,7 @@ void kpViewScrollableContainer::mouseMoveEvent (QMouseEvent *e)
                << endl;
 #endif
 
-    QScrollView::mouseMoveEvent (e);
+    Q3ScrollView::mouseMoveEvent (e);
 }
 
 
@@ -1337,7 +1344,7 @@ QRect kpViewScrollableContainer::noDragScrollRect () const
 // protected virtual [base QScrollView]
 bool kpViewScrollableContainer::eventFilter (QObject *watchedObject, QEvent *event)
 {
-    return QScrollView::eventFilter (watchedObject, event);
+    return Q3ScrollView::eventFilter (watchedObject, event);
 }
 
 // protected virtual [base QScrollView]
@@ -1349,7 +1356,7 @@ void kpViewScrollableContainer::viewportPaintEvent (QPaintEvent *e)
                << ")" << endl;
 #endif
 
-    QScrollView::viewportPaintEvent (e);
+    Q3ScrollView::viewportPaintEvent (e);
 }
 
 // protected virtual [base QFrame]
@@ -1361,13 +1368,13 @@ void kpViewScrollableContainer::paintEvent (QPaintEvent *e)
                << ")" << endl;
 #endif
 
-    QScrollView::paintEvent (e);
+    Q3ScrollView::paintEvent (e);
 }
 
 // protected virtual [base QScrollView]
 void kpViewScrollableContainer::resizeEvent (QResizeEvent *e)
 {
-    QScrollView::resizeEvent (e);
+    Q3ScrollView::resizeEvent (e);
 
     emit resized ();
 }

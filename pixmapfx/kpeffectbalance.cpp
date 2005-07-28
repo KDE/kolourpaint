@@ -38,6 +38,8 @@
 #include <qlayout.h>
 #include <qpixmap.h>
 #include <qpushbutton.h>
+//Added by qt3to4:
+#include <QGridLayout>
 
 #include <kcombobox.h>
 #include <kdebug.h>

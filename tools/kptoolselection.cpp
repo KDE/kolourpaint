@@ -35,8 +35,12 @@
 #include <qbitmap.h>
 #include <qcursor.h>
 #include <qpainter.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3PointArray>
+#include <QKeyEvent>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -391,22 +395,22 @@ const QCursor &kpToolSelection::cursor () const
         {
         case (kpView::Top | kpView::Left):
         case (kpView::Bottom | kpView::Right):
-            return Qt::sizeFDiagCursor;
+            return Qt::SizeFDiagCursor;
 
         case (kpView::Bottom | kpView::Left):
         case (kpView::Top | kpView::Right):
-            return Qt::sizeBDiagCursor;
+            return Qt::SizeBDiagCursor;
 
         case kpView::Top:
         case kpView::Bottom:
-            return Qt::sizeVerCursor;
+            return Qt::SizeVerCursor;
 
         case kpView::Left:
         case kpView::Right:
-            return Qt::sizeHorCursor;
+            return Qt::SizeHorCursor;
         }
 
-        return Qt::arrowCursor;
+        return Qt::ArrowCursor;
     }
     else if (sel && sel->contains (m_currentPoint))
     {
@@ -416,16 +420,16 @@ const QCursor &kpToolSelection::cursor () const
     #endif
 
         if (m_mode == Text && onSelectionToSelectText () && !controlOrShiftPressed ())
-            return Qt::ibeamCursor;
+            return Qt::IBeamCursor;
         else
-            return Qt::sizeAllCursor;
+            return Qt::SizeAllCursor;
     }
     else
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
         kdDebug () << "\tnot on sel" << endl;
     #endif
-        return Qt::crossCursor;
+        return Qt::CrossCursor;
     }
 }
 
@@ -457,7 +461,7 @@ void kpToolSelection::hover (const QPoint &point)
 // protected
 void kpToolSelection::popupRMBMenu ()
 {
-    QPopupMenu *pop = mainWindow () ? mainWindow ()->selectionToolRMBMenu () : 0;
+    Q3PopupMenu *pop = mainWindow () ? mainWindow ()->selectionToolRMBMenu () : 0;
     if (!pop)
         return;
 
@@ -709,7 +713,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
                        << endl;
         #endif
 
-            QValueVector <QString> textLines (1, QString ());
+            Q3ValueVector <QString> textLines (1, QString ());
             kpSelection sel (normalizedRect, textLines, textStyle);
 
             if (!m_currentCreateTextCommand)
@@ -744,7 +748,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             setUserShapePoints (m_startPoint, m_currentPoint);
             break;
         case kpToolSelection::FreeForm:
-            QPointArray points;
+            Q3PointArray points;
 
             if (document ()->selection ())
                 points = document ()->selection ()->points ();
@@ -1316,7 +1320,7 @@ void kpToolSelection::slotIsOpaqueChanged ()
         kdDebug () << "\thave sel - set transparency" << endl;
     #endif
 
-        QApplication::setOverrideCursor (Qt::waitCursor);
+        QApplication::setOverrideCursor (Qt::WaitCursor);
 
         if (hasBegunShape ())
             endShapeInternal ();
@@ -1360,7 +1364,7 @@ void kpToolSelection::slotBackgroundColorChanged (const kpColor &)
         kdDebug () << "\thave sel - set transparency" << endl;
     #endif
 
-        QApplication::setOverrideCursor (Qt::waitCursor);
+        QApplication::setOverrideCursor (Qt::WaitCursor);
 
         kpSelectionTransparency st = mainWindow ()->selectionTransparency ();
         kpSelectionTransparency oldST = st;
@@ -1399,7 +1403,7 @@ void kpToolSelection::slotColorSimilarityChanged (double, int)
         kdDebug () << "\thave sel - set transparency" << endl;
     #endif
 
-        QApplication::setOverrideCursor (Qt::waitCursor);
+        QApplication::setOverrideCursor (Qt::WaitCursor);
 
         kpSelectionTransparency st = mainWindow ()->selectionTransparency ();
         kpSelectionTransparency oldST = st;
@@ -1707,7 +1711,7 @@ void kpToolSelectionTransparencyCommand::execute ()
     if (!doc)
         return;
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     m_mainWindow->setSelectionTransparency (m_st, true/*force colour change*/);
 
@@ -1728,7 +1732,7 @@ void kpToolSelectionTransparencyCommand::unexecute ()
     if (!doc)
         return;
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     m_mainWindow->setSelectionTransparency (m_oldST, true/*force colour change*/);
 
@@ -1818,8 +1822,8 @@ void kpToolSelectionMoveCommand::execute ()
     if (vm)
         vm->setQueueUpdates ();
 
-    QPointArray::ConstIterator copyOntoDocumentPointsEnd = m_copyOntoDocumentPoints.end ();
-    for (QPointArray::ConstIterator it = m_copyOntoDocumentPoints.begin ();
+    Q3PointArray::ConstIterator copyOntoDocumentPointsEnd = m_copyOntoDocumentPoints.end ();
+    for (Q3PointArray::ConstIterator it = m_copyOntoDocumentPoints.begin ();
          it != copyOntoDocumentPointsEnd;
          it++)
     {
@@ -2143,7 +2147,7 @@ void kpToolSelectionResizeScaleCommand::resizeScaleAndMove ()
 // public virtual [base kpToolResizeScaleCommand]
 void kpToolSelectionResizeScaleCommand::execute ()
 {
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     killSmoothScaleTimer ();
 
@@ -2158,7 +2162,7 @@ void kpToolSelectionResizeScaleCommand::execute ()
 // public virtual [base kpToolResizeScaleCommand]
 void kpToolSelectionResizeScaleCommand::unexecute ()
 {
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     killSmoothScaleTimer ();
 

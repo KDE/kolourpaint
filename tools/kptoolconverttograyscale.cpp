@@ -79,7 +79,7 @@ void kpToolConvertToGrayscaleCommand::execute ()
     if (!doc)
         return;
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     m_oldPixmapPtr = new QPixmap ();
     *m_oldPixmapPtr = *doc->pixmap (m_actOnSelection);

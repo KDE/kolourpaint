@@ -31,9 +31,12 @@
 
 
 #include <kptoolpreviewdialog.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QVBoxLayout>
 
 
-class QGroupBox;
+class Q3GroupBox;
 class QStringList;
 class QTimer;
 class QVBoxLayout;
@@ -80,7 +83,7 @@ protected:
     QTimer *m_delayedUpdateTimer;
 
     KComboBox *m_effectsComboBox;
-    QGroupBox *m_settingsGroupBox;
+    Q3GroupBox *m_settingsGroupBox;
     QVBoxLayout *m_settingsLayout;
 
     kpColorEffectWidget *m_colorEffectWidget;

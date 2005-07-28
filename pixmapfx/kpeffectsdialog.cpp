@@ -30,11 +30,14 @@
 
 #include <kpeffectsdialog.h>
 
-#include <qgroupbox.h>
-#include <qhbox.h>
+#include <q3groupbox.h>
+#include <q3hbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QVBoxLayout>
 
 #include <kapplication.h>
 #include <kcombobox.h>
@@ -88,7 +91,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
              this, SLOT (slotUpdateWithWaitCursor ()));
 
 
-    QHBox *effectContainer = new QHBox (mainWidget ());
+    Q3HBox *effectContainer = new Q3HBox (mainWidget ());
     effectContainer->setSpacing (spacingHint () * 4
                                  /*need more space for QGroupBox titles*/);
     effectContainer->setMargin (0);
@@ -109,7 +112,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     addCustomWidgetToFront (effectContainer);
 
 
-    m_settingsGroupBox = new QGroupBox (mainWidget ());
+    m_settingsGroupBox = new Q3GroupBox (mainWidget ());
     m_settingsLayout = new QVBoxLayout (m_settingsGroupBox,
                                         marginHint () * 2,
                                         spacingHint ());
@@ -257,10 +260,10 @@ void kpEffectsDialog::selectEffect (int which)
 
         QSize previewGroupBoxMinSize = m_previewGroupBox->minimumSize ();
         QSize previewGroupBoxMaxSize = m_previewGroupBox->maximumSize ();
-        QLayout::ResizeMode previewGroupBoxResizeMode =
+        QLayout::SizeConstraint previewGroupBoxResizeMode =
             m_previewGroupBox->layout () ?
                 m_previewGroupBox->layout ()->resizeMode () :
-                QLayout::Auto;
+                QLayout::SetDefaultConstraint;
     #if DEBUG_KP_EFFECTS_DIALOG
         kdDebug () << "\tpreviewGroupBox: minSize=" << previewGroupBoxMinSize
                    << " maxSize=" << previewGroupBoxMaxSize
@@ -271,7 +274,7 @@ void kpEffectsDialog::selectEffect (int which)
     #endif
 
         if (m_previewGroupBox->layout ())
-            m_previewGroupBox->layout ()->setResizeMode (QLayout::FreeResize);
+            m_previewGroupBox->layout ()->setResizeMode (QLayout::SetNoConstraint);
     #if DEBUG_KP_EFFECTS_DIALOG
         kdDebug () << "\tafter set resizeMode, previewGroupBox.size="
                    << m_previewGroupBox->size () << endl;

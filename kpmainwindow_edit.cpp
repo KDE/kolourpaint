@@ -33,7 +33,10 @@
 #include <qfontmetrics.h>
 #include <qimage.h>
 #include <qpixmap.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
+//Added by qt3to4:
+#include <Q3PopupMenu>
+#include <Q3PtrList>
 
 #include <kaction.h>
 #include <kdebug.h>
@@ -154,9 +157,9 @@ void kpMainWindow::enableEditMenuDocumentActions (bool enable)
 
 
 // public
-QPopupMenu *kpMainWindow::selectionToolRMBMenu ()
+Q3PopupMenu *kpMainWindow::selectionToolRMBMenu ()
 {
-    return (QPopupMenu *) guiFactory ()->container ("selectionToolRMBMenu", this);
+    return (Q3PopupMenu *) guiFactory ()->container ("selectionToolRMBMenu", this);
 }
 
 
@@ -176,7 +179,7 @@ void kpMainWindow::slotCut ()
     }
 
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
@@ -204,7 +207,7 @@ void kpMainWindow::slotCopy ()
     }
 
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
@@ -219,7 +222,7 @@ void kpMainWindow::slotCopy ()
     {
         if (!sel.text ().isEmpty ())
         {
-            QApplication::clipboard ()->setData (new QTextDrag (sel.text ()),
+            QApplication::clipboard ()->setData (new Q3TextDrag (sel.text ()),
                                                  QClipboard::Clipboard);
         }
     }
@@ -249,7 +252,7 @@ void kpMainWindow::slotEnablePaste ()
     if (ms)
     {
         shouldEnable = (kpSelectionDrag::canDecode (ms) ||
-                        QTextDrag::canDecode (ms));
+                        Q3TextDrag::canDecode (ms));
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\t" << name () << "***canDecode=" << timer.restart () << endl;
         for (int i = 0; ; i++)
@@ -314,7 +317,7 @@ void kpMainWindow::paste (const kpSelection &sel, bool forceTopLeft)
         return;
     }
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
@@ -388,13 +391,13 @@ void kpMainWindow::pasteText (const QString &text,
 
 
     // sync: restoreOverrideCursor() in all exit paths
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
 
-    QValueVector <QString> textLines (1, QString::null);
+    Q3ValueVector <QString> textLines (1, QString::null);
 
     for (int i = 0; i < (int) text.length (); i++)
     {
@@ -454,7 +457,7 @@ void kpMainWindow::pasteText (const QString &text,
             height += (textLines.size () - 1) * fontMetrics.leading ();
 
         int width = 0;
-        for (QValueVector <QString>::const_iterator it = textLines.begin ();
+        for (Q3ValueVector <QString>::const_iterator it = textLines.begin ();
              it != textLines.end ();
              it++)
         {
@@ -499,7 +502,7 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
                << ")" << endl;
 #endif
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
@@ -545,7 +548,7 @@ void kpMainWindow::slotPaste ()
 #endif
 
     // sync: restoreOverrideCursor() in all exit paths
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
@@ -570,7 +573,7 @@ void kpMainWindow::slotPaste ()
         sel.setTransparency (selectionTransparency ());
         paste (sel);
     }
-    else if (QTextDrag::decode (ms, text/*ref*/))
+    else if (Q3TextDrag::decode (ms, text/*ref*/))
     {
         pasteText (text);
     }
@@ -602,7 +605,7 @@ void kpMainWindow::slotPaste ()
             kdDebug () << "\thave memberList" << endl;
         #endif
 
-            for (QPtrList <KMainWindow>::const_iterator it = KMainWindow::memberList->begin ();
+            for (Q3PtrList <KMainWindow>::const_iterator it = KMainWindow::memberList->begin ();
                  it != KMainWindow::memberList->end ();
                  it++)
             {
@@ -634,7 +637,7 @@ void kpMainWindow::slotPasteInNewWindow ()
     kdDebug () << "kpMainWindow::slotPasteInNewWindow() CALLED" << endl;
 #endif
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();

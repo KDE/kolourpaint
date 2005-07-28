@@ -34,7 +34,10 @@
 #include <qfont.h>
 #include <qimage.h>
 #include <qpainter.h>
-#include <qwmatrix.h>
+#include <qmatrix.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3PointArray>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -77,7 +80,7 @@ kpSelection::kpSelection (Type type, const QRect &rect, const kpSelectionTranspa
 }
 
 kpSelection::kpSelection (const QRect &rect,
-                          const QValueVector <QString> &textLines_,
+                          const Q3ValueVector <QString> &textLines_,
                           const kpTextStyle &textStyle_)
     : QObject (),
       m_type (Text),
@@ -90,7 +93,7 @@ kpSelection::kpSelection (const QRect &rect,
     setTextLines (textLines_);
 }
 
-kpSelection::kpSelection (const QPointArray &points, const QPixmap &pixmap,
+kpSelection::kpSelection (const Q3PointArray &points, const QPixmap &pixmap,
                           const kpSelectionTransparency &transparency)
     : QObject (),
       m_type (Points),
@@ -103,7 +106,7 @@ kpSelection::kpSelection (const QPointArray &points, const QPixmap &pixmap,
     setTransparency (transparency);
 }
 
-kpSelection::kpSelection (const QPointArray &points, const kpSelectionTransparency &transparency)
+kpSelection::kpSelection (const Q3PointArray &points, const kpSelectionTransparency &transparency)
     : QObject (),
       m_type (Points),
       m_rect (points.boundingRect ()),
@@ -367,7 +370,7 @@ QBitmap kpSelection::maskForOwnType (bool nullForRectangular) const
         painter.drawEllipse (0, 0, m_rect.width (), m_rect.height ());
     else if (m_type == kpSelection::Points)
     {
-        QPointArray points = m_points;
+        Q3PointArray points = m_points;
         points.detach ();
         points.translate (-m_rect.x (), -m_rect.y ());
 
@@ -458,13 +461,13 @@ void kpSelection::moveTo (const QPoint &topLeftPoint)
 
 
 // public
-QPointArray kpSelection::points () const
+Q3PointArray kpSelection::points () const
 {
     return m_points;
 }
 
 // public
-QPointArray kpSelection::pointArray () const
+Q3PointArray kpSelection::pointArray () const
 {
     return m_points;
 }
@@ -576,7 +579,7 @@ void kpSelection::setPixmap (const QPixmap &pixmap)
                             m_pixmap->width (), m_pixmap->height ());
             calculatePoints ();
 
-            m_textLines = QValueVector <QString> ();
+            m_textLines = Q3ValueVector <QString> ();
 
             emit changed (boundingRect ());
         }
@@ -908,14 +911,14 @@ void kpSelection::calculateTextPixmap ()
 
 
 // public static
-QString kpSelection::textForTextLines (const QValueVector <QString> &textLines_)
+QString kpSelection::textForTextLines (const Q3ValueVector <QString> &textLines_)
 {
     if (textLines_.isEmpty ())
         return QString::null;
 
     QString bigString = textLines_ [0];
 
-    for (QValueVector <QString>::const_iterator it = textLines_.begin () + 1;
+    for (Q3ValueVector <QString>::const_iterator it = textLines_.begin () + 1;
          it != textLines_.end ();
          it++)
     {
@@ -938,19 +941,19 @@ QString kpSelection::text () const
 }
 
 // public
-QValueVector <QString> kpSelection::textLines () const
+Q3ValueVector <QString> kpSelection::textLines () const
 {
     if (!isText ())
     {
         kdError () << "kpSelection::textLines() not a text selection" << endl;
-        return QValueVector <QString> ();
+        return Q3ValueVector <QString> ();
     }
 
     return m_textLines;
 }
 
 // public
-void kpSelection::setTextLines (const QValueVector <QString> &textLines_)
+void kpSelection::setTextLines (const Q3ValueVector <QString> &textLines_)
 {
     if (!isText ())
     {
@@ -1401,7 +1404,7 @@ void kpSelection::flipPoints (bool horiz, bool vert)
 
     m_points.translate (-oldRect.x (), -oldRect.y ());
 
-    const QWMatrix matrix = kpPixmapFX::flipMatrix (oldRect.width (), oldRect.height (),
+    const QMatrix matrix = kpPixmapFX::flipMatrix (oldRect.width (), oldRect.height (),
                                                     horiz, vert);
     m_points = matrix.map (m_points);
 

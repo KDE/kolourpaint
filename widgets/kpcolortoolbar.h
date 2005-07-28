@@ -30,8 +30,15 @@
 #define __kp_color_toolbar_h__
 
 
-#include <qframe.h>
+#include <q3frame.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <QMouseEvent>
+#include <QPixmap>
+#include <QDragMoveEvent>
+#include <QGridLayout>
+#include <QDropEvent>
+#include <QBoxLayout>
 
 #include <kcolordialog.h>
 #include <ktoolbar.h>
@@ -56,7 +63,7 @@ class kpMainWindow;
 //   used by kpTransparentColorCell
 // - no obscure "current" colour
 //
-class kpDualColorButton : public QFrame
+class kpDualColorButton : public Q3Frame
 {
 Q_OBJECT
 
@@ -150,7 +157,7 @@ protected slots:
 };
 
 
-class kpTransparentColorCell : public QFrame
+class kpTransparentColorCell : public Q3Frame
 {
 Q_OBJECT
 

@@ -33,9 +33,15 @@
 #define DEBUG_KP_MAIN_WINDOW 0
 
 #include <qpoint.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #include <qsize.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
+//Added by qt3to4:
+#include <QDragEnterEvent>
+#include <QPixmap>
+#include <QMoveEvent>
+#include <Q3PopupMenu>
+#include <QDropEvent>
 
 #include <kmainwindow.h>
 #include <kurl.h>
@@ -47,7 +53,7 @@
 
 class QPainter;
 class QPoint;
-class QPopupMenu;
+class Q3PopupMenu;
 class QRect;
 class QSize;
 class QStringList;
@@ -193,7 +199,7 @@ private:
            *m_toolRoundedRectangle;
     kpToolText *m_toolText;
 
-    QPtrList <kpTool> m_tools;
+    Q3PtrList <kpTool> m_tools;
     int m_lastToolNumber;
 
     bool m_toolActionsEnabled;
@@ -383,7 +389,7 @@ private:
     bool m_copyToFirstTime;
 
 public:
-    QPopupMenu *selectionToolRMBMenu ();
+    Q3PopupMenu *selectionToolRMBMenu ();
 
 private slots:
     void slotCut ();
@@ -442,7 +448,7 @@ private:
     KToggleAction *m_actionShowGrid,
                   *m_actionShowThumbnail, *m_actionZoomedThumbnail;
 
-    QValueVector <int> m_zoomList;
+    Q3ValueVector <int> m_zoomList;
 
 private:
     void sendZoomListToActionZoom ();

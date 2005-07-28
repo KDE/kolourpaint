@@ -29,9 +29,13 @@
 #include <kpmainwindow.h>
 #include <kpmainwindow_p.h>
 
-#include <qdragobject.h>
+#include <q3dragobject.h>
 #include <qpainter.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QDragEnterEvent>
+#include <QMoveEvent>
+#include <QDropEvent>
 
 #include <kactionclasses.h>
 #include <kapplication.h>
@@ -711,7 +715,7 @@ void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
 {
     e->accept (kpSelectionDrag::canDecode (e) ||
                KURLDrag::canDecode (e) ||
-               QTextDrag::canDecode (e));
+               Q3TextDrag::canDecode (e));
 }
 
 // private virtual [base QWidget]
@@ -738,7 +742,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
             open (*it);
         }
     }
-    else if (QTextDrag::decode (e, text/*ref*/))
+    else if (Q3TextDrag::decode (e, text/*ref*/))
     {
         QPoint selTopLeft = KP_INVALID_POINT;
         const QPoint globalPos = QWidget::mapToGlobal (e->pos ());

@@ -31,13 +31,17 @@
 #include <kptoolrotate.h>
 
 #include <qapplication.h>
-#include <qbuttongroup.h>
-#include <qgroupbox.h>
+#include <q3buttongroup.h>
+#include <q3groupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
-#include <qwmatrix.h>
+#include <qmatrix.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3PointArray>
+#include <QGridLayout>
 
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -97,7 +101,7 @@ void kpToolRotateCommand::execute ()
         return;
 
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
 
     if (!m_losslessRotation)
@@ -128,10 +132,10 @@ void kpToolRotateCommand::execute ()
 
 
         // Calculate rotated points
-        QPointArray currentPoints = sel->points ();
+        Q3PointArray currentPoints = sel->points ();
         currentPoints.translate (-currentPoints.boundingRect ().x (),
                                  -currentPoints.boundingRect ().y ());
-        QWMatrix rotateMatrix = kpPixmapFX::rotateMatrix (*doc->pixmap (m_actOnSelection), m_angle);
+        QMatrix rotateMatrix = kpPixmapFX::rotateMatrix (*doc->pixmap (m_actOnSelection), m_angle);
         currentPoints = rotateMatrix.map (currentPoints);
         currentPoints.translate (-currentPoints.boundingRect ().x () + newTopLeft.x (),
                                  -currentPoints.boundingRect ().y () + newTopLeft.y ());
@@ -181,7 +185,7 @@ void kpToolRotateCommand::unexecute ()
         return;
 
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
 
     QPixmap oldPixmap;
@@ -266,7 +270,7 @@ kpToolRotateDialog::~kpToolRotateDialog ()
 // private
 void kpToolRotateDialog::createDirectionGroupBox ()
 {
-    QGroupBox *directionGroupBox = new QGroupBox (i18n ("Direction"), mainWidget ());
+    Q3GroupBox *directionGroupBox = new Q3GroupBox (i18n ("Direction"), mainWidget ());
     addCustomWidget (directionGroupBox);
 
 
@@ -285,7 +289,7 @@ void kpToolRotateDialog::createDirectionGroupBox ()
     m_clockwiseRadioButton->setChecked (s_lastIsClockwise);
 
 
-    QButtonGroup *buttonGroup = new QButtonGroup (directionGroupBox);
+    Q3ButtonGroup *buttonGroup = new Q3ButtonGroup (directionGroupBox);
     buttonGroup->hide ();
 
     buttonGroup->insert (m_antiClockwiseRadioButton);
@@ -309,7 +313,7 @@ void kpToolRotateDialog::createDirectionGroupBox ()
 // private
 void kpToolRotateDialog::createAngleGroupBox ()
 {
-    QGroupBox *angleGroupBox = new QGroupBox (i18n ("Angle"), mainWidget ());
+    Q3GroupBox *angleGroupBox = new Q3GroupBox (i18n ("Angle"), mainWidget ());
     addCustomWidget (angleGroupBox);
 
 
@@ -324,7 +328,7 @@ void kpToolRotateDialog::createAngleGroupBox ()
     QLabel *degreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
 
 
-    m_angleButtonGroup = new QButtonGroup (angleGroupBox);
+    m_angleButtonGroup = new Q3ButtonGroup (angleGroupBox);
     m_angleButtonGroup->hide ();
 
     m_angleButtonGroup->insert (m_angle90RadioButton);
@@ -408,7 +412,7 @@ int kpToolRotateDialog::angle () const
 // private virtual [base kpToolPreviewDialog]
 QSize kpToolRotateDialog::newDimensions () const
 {
-    QWMatrix matrix = kpPixmapFX::rotateMatrix (m_oldWidth, m_oldHeight, angle ());
+    QMatrix matrix = kpPixmapFX::rotateMatrix (m_oldWidth, m_oldHeight, angle ());
     QRect rect = matrix.map (QRect (0, 0, m_oldWidth, m_oldHeight));
     return rect.size ();
 }

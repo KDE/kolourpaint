@@ -32,11 +32,15 @@
 #include <kptoolskew.h>
 
 #include <qapplication.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
-#include <qwmatrix.h>
+#include <qmatrix.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3PointArray>
+#include <QGridLayout>
 
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -100,7 +104,7 @@ void kpToolSkewCommand::execute ()
         return;
 
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
 
     m_oldPixmapPtr = new QPixmap ();
@@ -121,10 +125,10 @@ void kpToolSkewCommand::execute ()
 
 
         // Calculate skewed points
-        QPointArray currentPoints = sel->points ();
+        Q3PointArray currentPoints = sel->points ();
         currentPoints.translate (-currentPoints.boundingRect ().x (),
                                  -currentPoints.boundingRect ().y ());
-        QWMatrix skewMatrix = kpPixmapFX::skewMatrix (
+        QMatrix skewMatrix = kpPixmapFX::skewMatrix (
             *doc->pixmap (m_actOnSelection),
             kpToolSkewDialog::horizontalAngleForPixmapFX (m_hangle),
             kpToolSkewDialog::verticalAngleForPixmapFX (m_vangle));
@@ -181,7 +185,7 @@ void kpToolSkewCommand::unexecute ()
         return;
 
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
 
     QPixmap oldPixmap = *m_oldPixmapPtr;
@@ -249,7 +253,7 @@ kpToolSkewDialog::~kpToolSkewDialog ()
 // private
 void kpToolSkewDialog::createAngleGroupBox ()
 {
-    QGroupBox *angleGroupBox = new QGroupBox (i18n ("Angle"), mainWidget ());
+    Q3GroupBox *angleGroupBox = new Q3GroupBox (i18n ("Angle"), mainWidget ());
     addCustomWidget (angleGroupBox);
 
 
@@ -307,7 +311,7 @@ QSize kpToolSkewDialog::newDimensions () const
     if (!doc)
         return QSize ();
 
-    QWMatrix skewMatrix = kpPixmapFX::skewMatrix (*doc->pixmap (),
+    QMatrix skewMatrix = kpPixmapFX::skewMatrix (*doc->pixmap (),
                                                   horizontalAngleForPixmapFX (),
                                                   verticalAngleForPixmapFX ());
     QRect skewRect = skewMatrix.mapRect (doc->rect (m_actOnSelection));

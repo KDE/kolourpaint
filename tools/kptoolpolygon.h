@@ -34,8 +34,10 @@
 #include <qobject.h>
 #include <qpixmap.h>
 #include <qpoint.h>
-#include <qpointarray.h>
+#include <q3pointarray.h>
 #include <qrect.h>
+//Added by qt3to4:
+#include <QMouseEvent>
 
 #include <kpcommandhistory.h>
 
@@ -119,14 +121,14 @@ private:
     QPoint m_toolLineStartPoint, m_toolLineEndPoint;
     QRect m_toolLineRect;
 
-    QPointArray m_points;
+    Q3PointArray m_points;
 };
 
 class kpToolPolygonCommand : public kpNamedCommand
 {
 public:
     kpToolPolygonCommand (const QString &name,
-                          const QPointArray &points,
+                          const Q3PointArray &points,
                           const QRect &normalizedRect,
                           const kpColor &foregroundColor, const kpColor &backgroundColor,
                           int lineWidth, Qt::PenStyle lineStyle,
@@ -142,7 +144,7 @@ public:
     virtual void unexecute ();
 
 private:
-    QPointArray m_points;
+    Q3PointArray m_points;
     QRect m_normalizedRect;
 
     kpColor m_foregroundColor, m_backgroundColor;

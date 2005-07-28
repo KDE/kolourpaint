@@ -34,8 +34,8 @@
 #include <qobject.h>
 #include <qpixmap.h>
 #include <qpoint.h>
-#include <qpointarray.h>
-#include <qvaluevector.h>
+#include <q3pointarray.h>
+#include <q3valuevector.h>
 #include <qrect.h>
 #include <qstring.h>
 
@@ -74,12 +74,12 @@ public:
     kpSelection (Type type, const QRect &rect, const kpSelectionTransparency &transparency);
 
     // (for Text)
-    kpSelection (const QRect &rect, const QValueVector <QString> &textLines_, const kpTextStyle &textStyle_);
+    kpSelection (const QRect &rect, const Q3ValueVector <QString> &textLines_, const kpTextStyle &textStyle_);
 
     // (for Points)
-    kpSelection (const QPointArray &points, const QPixmap &pixmap = QPixmap (),
+    kpSelection (const Q3PointArray &points, const QPixmap &pixmap = QPixmap (),
                  const kpSelectionTransparency &transparency = kpSelectionTransparency ());
-    kpSelection (const QPointArray &points, const kpSelectionTransparency &transparency);
+    kpSelection (const Q3PointArray &points, const kpSelectionTransparency &transparency);
 
     kpSelection (const kpSelection &rhs);
     kpSelection &operator= (const kpSelection &rhs);
@@ -116,8 +116,8 @@ public:
     void moveTo (const QPoint &topLeftPoint);
 
     // synonyms
-    QPointArray points () const;
-    QPointArray pointArray () const;
+    Q3PointArray points () const;
+    Q3PointArray pointArray () const;
 
     QRect boundingRect () const;
     int width () const;
@@ -150,10 +150,10 @@ private:
     void calculateTextPixmap ();
 
 public:
-    static QString textForTextLines (const QValueVector <QString> &textLines_);
+    static QString textForTextLines (const Q3ValueVector <QString> &textLines_);
     QString text () const;  // textLines() as one long string
-    QValueVector <QString> textLines () const;
-    void setTextLines (const QValueVector <QString> &textLines_);
+    Q3ValueVector <QString> textLines () const;
+    void setTextLines (const Q3ValueVector <QString> &textLines_);
 
     static int textBorderSize ();
     QRect textAreaRect () const;
@@ -218,10 +218,10 @@ private:
 
     Type m_type;
     QRect m_rect;
-    QPointArray m_points;
+    Q3PointArray m_points;
     QPixmap *m_pixmap;
 
-    QValueVector <QString> m_textLines;
+    Q3ValueVector <QString> m_textLines;
     kpTextStyle m_textStyle;
 
     kpSelectionTransparency m_transparency;

@@ -30,13 +30,16 @@
 
 
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <QLabel>
+#include <QGridLayout>
 
 #include <kdialogbase.h>
 
 
 class QLabel;
 class QGridLayout;
-class QGroupBox;
+class Q3GroupBox;
 
 class kpDocument;
 class kpMainWindow;
@@ -115,10 +118,10 @@ protected:
 
     int m_oldWidth, m_oldHeight;
 
-    QGroupBox *m_dimensionsGroupBox;
+    Q3GroupBox *m_dimensionsGroupBox;
     QLabel *m_afterTransformDimensionsLabel;
 
-    QGroupBox *m_previewGroupBox;
+    Q3GroupBox *m_previewGroupBox;
     kpResizeSignallingLabel *m_previewPixmapLabel;
     QSize m_previewPixmapLabelSizeWhenUpdatedPixmap;
     QPixmap m_shrunkenDocumentPixmap;

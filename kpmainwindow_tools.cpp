@@ -63,6 +63,8 @@
 #include <kptoolwidgetopaqueortransparent.h>
 #include <kpviewscrollablecontainer.h>
 #include <kpzoomedview.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 
 // private
@@ -132,7 +134,7 @@ void kpMainWindow::createToolBox ()
     connect (m_toolToolBar, SIGNAL (toolWidgetOptionSelected ()),
              this, SLOT (updateToolOptionPrevNextActionsEnabled ()));
 
-    for (QPtrList <kpTool>::const_iterator it = m_tools.begin ();
+    for (Q3PtrList <kpTool>::const_iterator it = m_tools.begin ();
          it != m_tools.end ();
          it++)
     {
@@ -183,7 +185,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
     m_toolToolBar->setEnabled (enable);
 
 
-    for (QPtrList <kpTool>::const_iterator it = m_tools.begin ();
+    for (Q3PtrList <kpTool>::const_iterator it = m_tools.begin ();
          it != m_tools.end ();
          it++)
     {
@@ -403,7 +405,7 @@ void kpMainWindow::readLastTool ()
 int kpMainWindow::toolNumber () const
 {
     int number = 0;
-    for (QPtrList <kpTool>::const_iterator it = m_tools.begin ();
+    for (Q3PtrList <kpTool>::const_iterator it = m_tools.begin ();
          it != m_tools.end ();
          it++)
     {

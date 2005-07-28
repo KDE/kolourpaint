@@ -40,7 +40,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qpoint.h>
-#include <qpointarray.h>
+#include <q3pointarray.h>
 #include <qrect.h>
 
 #include <kconfig.h>
@@ -200,7 +200,7 @@ int kpPixmapFX::stringSize (const QString &string)
 
 
 // public static
-int kpPixmapFX::pointArraySize (const QPointArray &points)
+int kpPixmapFX::pointArraySize (const Q3PointArray &points)
 {
 #if DEBUG_KP_PIXMAP_FX && 1
     kdDebug () << "kpPixmapFX::pointArraySize() points.size="
@@ -303,9 +303,9 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
 
     bool moreColorsThanDisplay =
         (KMessageBox::shouldBeShownContinue (colorDepthDontAskAgain) &&
-         image.depth () > QColor::numBitPlanes () &&
-         QColor::numBitPlanes () < 24);  // 32 indicates alpha channel
-
+         image.depth () > QPixmap::defaultDepth() &&
+         QPixmap::defaultDepth() < 24);  // 32 indicates alpha channel
+	
     int screenDepthNeeded = 0;
 
     if (moreColorsThanDisplay)
@@ -566,7 +566,7 @@ QPixmap kpPixmapFX::pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
     p.drawPixmap (QPoint (0, 0), pixmap);
     p.end ();
 
-    retPixmap.setMask (*pixmap.mask ());
+    retPixmap.setMask (pixmap.mask ());
     return retPixmap;
 }
 
@@ -621,7 +621,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
              validSrcRect.x (), validSrcRect.y (), /* src pt */
              validSrcRect.width (), validSrcRect.height ());
 
-    if (wouldHaveUndefinedPixels && retPixmap.mask () && !pm.mask ())
+    if (wouldHaveUndefinedPixels && !retPixmap.mask ().isNull() && !pm.mask ().isNull())
     {
     #if DEBUG_KP_PIXMAP_FX && 0
         kdDebug () << "\tensure opaque in valid region" << endl;
@@ -698,25 +698,22 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
             destRect.x (), destRect.y (),
             &srcPixmap,
             0, 0,
-            destRect.width (), destRect.height (),
-            Qt::CopyROP,
-            true/*ignore mask*/);
+            destRect.width (), destRect.height ()
+            );
 
-    if (srcPixmap.mask ())
+    if (!srcPixmap.mask ().isNull())
     {
         QBitmap mask = getNonNullMask (*destPixmapPtr);
         bitBlt (&mask,
                 destRect.x (), destRect.y (),
                 srcPixmap.mask (),
                 0, 0,
-                destRect.width (), destRect.height (),
-                Qt::CopyROP,
-                true/*ignore mask*/);
+                destRect.width (), destRect.height ());
         destPixmapPtr->setMask (mask);
     }
 #endif
 
-    if (destPixmapPtr->mask () && !srcPixmap.mask ())
+    if (!destPixmapPtr->mask ().isNull() && !srcPixmap.mask ().isNull())
     {
     #if DEBUG_KP_PIXMAP_FX && 0
         kdDebug () << "\t\topaque'ing dest rect" << endl;
@@ -852,8 +849,8 @@ void kpPixmapFX::ensureNoAlphaChannel (QPixmap *destPixmapPtr)
 // public static
 QBitmap kpPixmapFX::getNonNullMask (const QPixmap &pm)
 {
-    if (pm.mask ())
-        return *pm.mask ();
+    if (!pm.mask ().isNull())
+        return pm.mask ();
     else
     {
         QBitmap maskBitmap (pm.width (), pm.height ());
@@ -869,7 +866,7 @@ QBitmap kpPixmapFX::getNonNullMaskAt (const QPixmap &pm, const QRect &rect)
 {
     QBitmap destMaskBitmap (rect.width (), rect.height ());
 
-    if (pm.mask ())
+    if (!pm.mask ().isNull())
     {
         copyBlt (&destMaskBitmap, 0, 0,
                  &pm, rect.x (), rect.y (), rect.width (), rect.height ());
@@ -979,7 +976,7 @@ void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, const QRect &destRect)
     if (!destPixmapPtr || !destPixmapPtr->mask ()/*already opaque*/)
         return;
 
-    QBitmap maskBitmap = *destPixmapPtr->mask ();
+    QBitmap maskBitmap = destPixmapPtr->mask ();
 
     QPainter p (&maskBitmap);
 
@@ -997,12 +994,12 @@ void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, const QRect &destRect)
 void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, const QPoint &destAt,
                                  const QPixmap &srcPixmap)
 {
-    if (!destPixmapPtr || !destPixmapPtr->mask ()/*already opaque*/)
+    if (!destPixmapPtr || !destPixmapPtr->mask ().isNull()/*already opaque*/)
         return;
 
-    QBitmap destMask = *destPixmapPtr->mask ();
+    QBitmap destMask = destPixmapPtr->mask ();
 
-    if (srcPixmap.mask ())
+    if (!srcPixmap.mask ().isNull())
     {
         bitBlt (&destMask, /* dest */
                 destAt, /* dest pt */
@@ -1159,7 +1156,7 @@ void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
             painter.setBrush (backgroundColor.toQColor ());
         }
 
-        if (backgroundColor.isTransparent () || destPixmapPtr->mask ())
+        if (backgroundColor.isTransparent () || !destPixmapPtr->mask ().isNull())
         {
             maskBitmap = kpPixmapFX::getNonNullMask (*destPixmapPtr);
             maskPainter.begin (&maskBitmap);
@@ -1261,7 +1258,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
     }
     else
     {
-        QWMatrix matrix;
+        QMatrix matrix;
 
         matrix.scale (double (w) / double (pm.width ()),
                       double (h) / double (pm.height ()));
@@ -1277,21 +1274,21 @@ double kpPixmapFX::AngleInDegreesEpsilon =
         / (2.0/*max error allowed*/ * 2.0/*for good measure*/);
 
 
-static QWMatrix matrixWithZeroOrigin (const QWMatrix &matrix, int width, int height)
+static QMatrix matrixWithZeroOrigin (const QMatrix &matrix, int width, int height)
 {
     QRect newRect = matrix.mapRect (QRect (0, 0, width, height));
 
-    QWMatrix translatedMatrix (matrix.m11 (), matrix.m12 (), matrix.m21 (), matrix.m22 (),
+    QMatrix translatedMatrix (matrix.m11 (), matrix.m12 (), matrix.m21 (), matrix.m22 (),
                                matrix.dx () - newRect.left (), matrix.dy () - newRect.top ());
 
     return translatedMatrix;
 }
 
-static QPixmap xForm (const QPixmap &pm, const QWMatrix &transformMatrix_,
+static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
                       const kpColor &backgroundColor,
                       int targetWidth, int targetHeight)
 {
-    QWMatrix transformMatrix = transformMatrix_;
+    QMatrix transformMatrix = transformMatrix_;
 
 #if DEBUG_KP_PIXMAP_FX && 1
     kdDebug () << "kppixmapfx.cpp: xForm(pm.size=" << pm.size ()
@@ -1306,7 +1303,7 @@ static QPixmap xForm (const QPixmap &pm, const QWMatrix &transformMatrix_,
 
 #endif
 
-    QWMatrix scaleMatrix;
+    QMatrix scaleMatrix;
     if (targetWidth > 0 && targetWidth != newRect.width ())
     {
     #if DEBUG_KP_PIXMAP_FX && 1
@@ -1327,16 +1324,16 @@ static QPixmap xForm (const QPixmap &pm, const QWMatrix &transformMatrix_,
     {
     #if DEBUG_KP_PIXMAP_FX && 1
         // TODO: What is going on here???  Why isn't matrix * working properly?
-        QWMatrix wrongMatrix = transformMatrix * scaleMatrix;
-        QWMatrix oldHat = transformMatrix;
+        QMatrix wrongMatrix = transformMatrix * scaleMatrix;
+        QMatrix oldHat = transformMatrix;
         if (targetWidth > 0 && targetWidth != newRect.width ())
             oldHat.scale (double (targetWidth) / double (newRect.width ()), 1);
         if (targetHeight > 0 && targetHeight != newRect.height ())
             oldHat.scale (1, double (targetHeight) / double (newRect.height ()));
-        QWMatrix altHat = transformMatrix;
+        QMatrix altHat = transformMatrix;
         altHat.scale ((targetWidth > 0 && targetWidth != newRect.width ()) ? double (targetWidth) / double (newRect.width ()) : 1,
                       (targetHeight > 0 && targetHeight != newRect.height ()) ? double (targetHeight) / double (newRect.height ()) : 1);
-        QWMatrix correctMatrix = scaleMatrix * transformMatrix;
+        QMatrix correctMatrix = scaleMatrix * transformMatrix;
 
         kdDebug () << "\tsupposedlyWrongMatrix: m11=" << wrongMatrix.m11 ()  // <<<---- this is the correct matrix???
                    << " m12=" << wrongMatrix.m12 ()
@@ -1401,7 +1398,7 @@ static QPixmap xForm (const QPixmap &pm, const QWMatrix &transformMatrix_,
     if (backgroundColor.isOpaque ())
         newPixmap.fill (backgroundColor.toQColor ());
 
-    if (backgroundColor.isTransparent () || pm.mask ())
+    if (backgroundColor.isTransparent () || !pm.mask ().isNull())
     {
         newBitmapMask.resize (newPixmap.width (), newPixmap.height ());
         newBitmapMask.fill (backgroundColor.maskColor ());
@@ -1444,12 +1441,12 @@ static QPixmap xForm (const QPixmap &pm, const QWMatrix &transformMatrix_,
 }
 
 // public static
-QWMatrix kpPixmapFX::skewMatrix (int width, int height, double hangle, double vangle)
+QMatrix kpPixmapFX::skewMatrix (int width, int height, double hangle, double vangle)
 {
     if (fabs (hangle - 0) < kpPixmapFX::AngleInDegreesEpsilon &&
         fabs (vangle - 0) < kpPixmapFX::AngleInDegreesEpsilon)
     {
-        return QWMatrix ();
+        return QMatrix ();
     }
 
 
@@ -1483,7 +1480,7 @@ QWMatrix kpPixmapFX::skewMatrix (int width, int height, double hangle, double va
 
     //QWMatrix matrix (1, tan (KP_DEGREES_TO_RADIANS (vangle)), tan (KP_DEGREES_TO_RADIANS (hangle)), 1, 0, 0);
     // I think this is clearer than above :)
-    QWMatrix matrix;
+    QMatrix matrix;
     matrix.shear (tan (KP_DEGREES_TO_RADIANS (hangle)),
                   tan (KP_DEGREES_TO_RADIANS (vangle)));
 
@@ -1491,7 +1488,7 @@ QWMatrix kpPixmapFX::skewMatrix (int width, int height, double hangle, double va
 }
 
 // public static
-QWMatrix kpPixmapFX::skewMatrix (const QPixmap &pixmap, double hangle, double vangle)
+QMatrix kpPixmapFX::skewMatrix (const QPixmap &pixmap, double hangle, double vangle)
 {
     return kpPixmapFX::skewMatrix (pixmap.width (), pixmap.height (), hangle, vangle);
 }
@@ -1540,21 +1537,21 @@ QPixmap kpPixmapFX::skew (const QPixmap &pm, double hangle, double vangle,
     }
 
 
-    QWMatrix matrix = skewMatrix (pm, hangle, vangle);
+    QMatrix matrix = skewMatrix (pm, hangle, vangle);
 
     return ::xForm (pm, matrix, backgroundColor, targetWidth, targetHeight);
 }
 
 
 // public static
-QWMatrix kpPixmapFX::rotateMatrix (int width, int height, double angle)
+QMatrix kpPixmapFX::rotateMatrix (int width, int height, double angle)
 {
     if (fabs (angle - 0) < kpPixmapFX::AngleInDegreesEpsilon)
     {
-        return QWMatrix ();
+        return QMatrix ();
     }
 
-    QWMatrix matrix;
+    QMatrix matrix;
     matrix.translate (width / 2, height / 2);
     matrix.rotate (angle);
 
@@ -1562,7 +1559,7 @@ QWMatrix kpPixmapFX::rotateMatrix (int width, int height, double angle)
 }
 
 // public static
-QWMatrix kpPixmapFX::rotateMatrix (const QPixmap &pixmap, double angle)
+QMatrix kpPixmapFX::rotateMatrix (const QPixmap &pixmap, double angle)
 {
     return kpPixmapFX::rotateMatrix (pixmap.width (), pixmap.height (), angle);
 }
@@ -1626,22 +1623,22 @@ QPixmap kpPixmapFX::rotate (const QPixmap &pm, double angle,
     }
 
 
-    QWMatrix matrix = rotateMatrix (pm, angle);
+    QMatrix matrix = rotateMatrix (pm, angle);
 
     return ::xForm (pm, matrix, backgroundColor, targetWidth, targetHeight);
 }
 
 
 // public static
-QWMatrix kpPixmapFX::flipMatrix (int width, int height, bool horz, bool vert)
+QMatrix kpPixmapFX::flipMatrix (int width, int height, bool horz, bool vert)
 {
     if (width <= 0 || height <= 0)
     {
         kdError () << "kpPixmapFX::flipMatrix() passed invalid dimensions" << endl;
-        return QWMatrix ();
+        return QMatrix ();
     }
 
-    return QWMatrix (horz ? -1 : +1,  // m11
+    return QMatrix (horz ? -1 : +1,  // m11
                      0,  // m12
                      0,  // m21
                      vert ? -1 : +1,  // m22
@@ -1650,7 +1647,7 @@ QWMatrix kpPixmapFX::flipMatrix (int width, int height, bool horz, bool vert)
 }
 
 // public static
-QWMatrix kpPixmapFX::flipMatrix (const QPixmap &pixmap, bool horz, bool vert)
+QMatrix kpPixmapFX::flipMatrix (const QPixmap &pixmap, bool horz, bool vert)
 {
     return kpPixmapFX::flipMatrix (pixmap.width (), pixmap.height (),
                                    horz, vert);

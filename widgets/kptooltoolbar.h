@@ -29,14 +29,17 @@
 #ifndef __kp_tool_tool_bar_h__
 #define __kp_tool_tool_bar_h__
 
-#include <qvaluevector.h>
+#include <q3valuevector.h>
+//Added by qt3to4:
+#include <QGridLayout>
+#include <QBoxLayout>
 
 #include <ktoolbar.h>
 
 
 class QBoxLayout;
-class QButton;
-class QButtonGroup;
+class Q3Button;
+class Q3ButtonGroup;
 class QWidget;
 class QGridLayout;
 
@@ -99,13 +102,13 @@ public slots:
     virtual void setOrientation (Qt::Orientation o);
 
 private:
-    void addButton (QButton *button, Qt::Orientation o, int num);
+    void addButton (Q3Button *button, Qt::Orientation o, int num);
 
     Qt::Orientation m_lastDockedOrientation;
     bool m_lastDockedOrientationSet;
     int m_vertCols;
 
-    QButtonGroup *m_buttonGroup;
+    Q3ButtonGroup *m_buttonGroup;
     QWidget *m_baseWidget;
     QBoxLayout *m_baseLayout;
     QGridLayout *m_toolLayout;
@@ -117,12 +120,12 @@ private:
     kpToolWidgetOpaqueOrTransparent *m_toolWidgetOpaqueOrTransparent;
     kpToolWidgetSpraycanSize *m_toolWidgetSpraycanSize;
 
-    QValueVector <kpToolWidgetBase *> m_toolWidgets;
+    Q3ValueVector <kpToolWidgetBase *> m_toolWidgets;
 
 private:
     struct kpButtonToolPair
     {
-        kpButtonToolPair (QButton *button, kpTool *tool)
+        kpButtonToolPair (Q3Button *button, kpTool *tool)
             : m_button (button), m_tool (tool)
         {
         }
@@ -132,11 +135,11 @@ private:
         {
         }
 
-        QButton *m_button;
+        Q3Button *m_button;
         kpTool *m_tool;
     };
 
-    QValueVector <kpButtonToolPair> m_buttonToolPairs;
+    Q3ValueVector <kpButtonToolPair> m_buttonToolPairs;
 
     kpTool *m_previousTool, *m_currentTool;
 

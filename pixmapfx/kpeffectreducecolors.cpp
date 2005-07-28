@@ -30,13 +30,15 @@
 
 #include <kpeffectreducecolors.h>
 
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qcheckbox.h>
 #include <qimage.h>
 #include <qlayout.h>
 #include <qpixmap.h>
 #include <qradiobutton.h>
-
+//Added by qt3to4:
+#include <QVBoxLayout>
+#include <QBitmap>
 #include <kdebug.h>
 #include <klocale.h>
 
@@ -113,7 +115,7 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
                     color0Valid = true;
                     monoImage.setPixel (x, y, 0);
                 #if DEBUG_KP_EFFECT_REDUCE_COLORS
-                    kdDebug () << "\t\t\tcolor0=" << (int *) color0
+                    kdDebug () << "\t\t\tcolor0=" << (int *) Qt::color0
                                << " at x=" << x << ",y=" << y << endl;
                 #endif
                 }
@@ -123,7 +125,7 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
                     color1Valid = true;
                     monoImage.setPixel (x, y, 1);
                 #if DEBUG_KP_EFFECT_REDUCE_COLORS
-                    kdDebug () << "\t\t\tcolor1=" << (int *) color1
+                    kdDebug () << "\t\t\tcolor1=" << (int *) Qt::color1
                                << " at x=" << x << ",y=" << y << endl;
                 #endif
                 }
@@ -244,8 +246,8 @@ void kpEffectReduceColorsCommand::apply (QPixmap *destPixmapPtr, int depth, bool
     //
     //       Put the mask back.
     //
-    if (destPixmapPtr->mask ())
-        pixmap.setMask (*destPixmapPtr->mask ());
+    if (!destPixmapPtr->mask ().isNull())
+        pixmap.setMask (destPixmapPtr->mask ());
 
     *destPixmapPtr = pixmap;
 }
@@ -296,7 +298,7 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
     m_24BitRadioButton = new QRadioButton (i18n ("24-&bit Color"), this);
 
 
-    QButtonGroup *buttonGroup = new QButtonGroup (this);
+    Q3ButtonGroup *buttonGroup = new Q3ButtonGroup (this);
     buttonGroup->hide ();
 
     buttonGroup->insert (m_blackAndWhiteRadioButton);

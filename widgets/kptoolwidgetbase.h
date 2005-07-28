@@ -29,19 +29,21 @@
 #ifndef __kp_tool_widget_base_h__
 #define __kp_tool_widget_base_h__
 
-#include <qframe.h>
+#include <q3frame.h>
 #include <qpair.h>
 #include <qpixmap.h>
 #include <qrect.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <QMouseEvent>
 
 
 class QPainter;
 
 
 // TODO: frame becomes a combobox when its parent kpToolToolBar becomes too small
-class kpToolWidgetBase : public QFrame
+class kpToolWidgetBase : public Q3Frame
 {
 Q_OBJECT
 
@@ -59,7 +61,7 @@ public:
     void finishConstruction (int fallBackRow, int fallBackCol);
 
 private:
-    QValueVector <int> spreadOutElements (const QValueVector <int> &sizes, int maxSize);
+    Q3ValueVector <int> spreadOutElements (const Q3ValueVector <int> &sizes, int maxSize);
 
 public:  // (only have to use these if you don't use finishConstruction())
     // (rereads from config file)
@@ -101,10 +103,10 @@ protected:
     // coulbe be a QFrame or a ComboBox
     QWidget *m_baseWidget;
 
-    QValueVector < QValueVector <QPixmap> > m_pixmaps;
-    QValueVector < QValueVector <QString> > m_toolTips;
+    Q3ValueVector < Q3ValueVector <QPixmap> > m_pixmaps;
+    Q3ValueVector < Q3ValueVector <QString> > m_toolTips;
 
-    QValueVector < QValueVector <QRect> > m_pixmapRects;
+    Q3ValueVector < Q3ValueVector <QRect> > m_pixmapRects;
 
     int m_selectedRow, m_selectedCol;
 };

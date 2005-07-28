@@ -35,6 +35,8 @@
 #include <qbitmap.h>
 #include <qpainter.h>
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 #include <kdebug.h>
 #include <kpdefs.h>
@@ -57,7 +59,7 @@ kpFloodFill::~kpFloodFill ()
 
 
 // private
-int kpFloodFill::fillLinesListSize (const QValueList <kpFloodFill::FillLine> &fillLines) const
+int kpFloodFill::fillLinesListSize (const Q3ValueList <kpFloodFill::FillLine> &fillLines) const
 {
     return (fillLines.size () * kpFloodFill::FillLine::size ());
 }
@@ -66,7 +68,7 @@ int kpFloodFill::fillLinesListSize (const QValueList <kpFloodFill::FillLine> &fi
 int kpFloodFill::size () const
 {
     int fillLinesCacheSize = 0;
-    for (QValueVector < QValueList <kpFloodFill::FillLine > >::const_iterator it = m_fillLinesCache.begin ();
+    for (Q3ValueVector < Q3ValueList <kpFloodFill::FillLine > >::const_iterator it = m_fillLinesCache.begin ();
          it != m_fillLinesCache.end ();
          it++)
     {
@@ -95,12 +97,12 @@ bool kpFloodFill::fill ()
     // not trying to do a NOP fill
     if (m_boundingRect.isValid ())
     {
-        QApplication::setOverrideCursor (Qt::waitCursor);
+        QApplication::setOverrideCursor (Qt::WaitCursor);
 
         QPainter painter, maskPainter;
         QBitmap maskBitmap;
 
-        if (m_pixmapPtr->mask () || m_color.isTransparent ())
+        if (!m_pixmapPtr->mask ().isNull() || m_color.isTransparent ())
         {
             maskBitmap = kpPixmapFX::getNonNullMask (*m_pixmapPtr);
             maskPainter.begin (&maskBitmap);
@@ -113,8 +115,8 @@ bool kpFloodFill::fill ()
             painter.setPen (m_color.toQColor ());
         }
 
-        const QValueList <FillLine>::ConstIterator fillLinesEnd = m_fillLines.end ();
-        for (QValueList <FillLine>::ConstIterator it = m_fillLines.begin ();
+        const Q3ValueList <FillLine>::ConstIterator fillLinesEnd = m_fillLines.end ();
+        for (Q3ValueList <FillLine>::ConstIterator it = m_fillLines.begin ();
              it != fillLinesEnd;
              it++)
         {
@@ -231,7 +233,7 @@ bool kpFloodFill::prepare ()
     // draw initial line
     addLine (m_y, findMinX (m_y, m_x), findMaxX (m_y, m_x));
 
-    for (QValueList <FillLine>::ConstIterator it = m_fillLines.begin ();
+    for (Q3ValueList <FillLine>::ConstIterator it = m_fillLines.begin ();
          it != m_fillLines.end ();
          it++)
     {
@@ -283,8 +285,8 @@ kpColor kpFloodFill::pixelColor (int x, int y, bool *beenHere) const
         return kpColor::invalid;
     }
 
-    const QValueList <FillLine>::ConstIterator theEnd = m_fillLinesCache [y].end ();
-    for (QValueList <FillLine>::ConstIterator it = m_fillLinesCache [y].begin ();
+    const Q3ValueList <FillLine>::ConstIterator theEnd = m_fillLinesCache [y].end ();
+    for (Q3ValueList <FillLine>::ConstIterator it = m_fillLinesCache [y].begin ();
          it != theEnd;
          it++)
     {

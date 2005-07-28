@@ -28,6 +28,8 @@
 #include <kpdocumentmetainfo.h>
 
 #include <qpoint.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 #include <kdebug.h>
 
@@ -91,8 +93,8 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
                << " Y=" << dotsPerMeterY ()
                << " offset=" << offset () << endl;
 
-    QValueList <QImageTextKeyLang> keyList = textList ();
-    for (QValueList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
+    Q3ValueList <QImageTextKeyLang> keyList = textList ();
+    for (Q3ValueList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
          it != keyList.end ();
          it++)
     {
@@ -152,7 +154,7 @@ QMap <QImageTextKeyLang, QString> kpDocumentMetaInfo::textMap () const
 }
 
 // public
-QValueList <QImageTextKeyLang> kpDocumentMetaInfo::textList () const
+Q3ValueList <QImageTextKeyLang> kpDocumentMetaInfo::textList () const
 {
     return d->m_textMap.keys ();
 }

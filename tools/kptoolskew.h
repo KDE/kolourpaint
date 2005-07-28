@@ -30,6 +30,8 @@
 #define __kptool_skew_h__
 
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <QLabel>
 
 #include <kpcommandhistory.h>
 #include <kdialogbase.h>
@@ -38,7 +40,7 @@
 #include <kpselection.h>
 #include <kptoolpreviewdialog.h>
 
-class QGroupBox;
+class Q3GroupBox;
 class QLabel;
 class QPixmap;
 

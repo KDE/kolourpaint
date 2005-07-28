@@ -31,9 +31,13 @@
 
 #include <qapplication.h>
 #include <qlayout.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QVBoxLayout>
+#include <QGridLayout>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -123,7 +127,7 @@ kpToolPreviewDialog::~kpToolPreviewDialog ()
 // private
 void kpToolPreviewDialog::createDimensionsGroupBox ()
 {
-    m_dimensionsGroupBox = new QGroupBox (i18n ("Dimensions"), mainWidget ());
+    m_dimensionsGroupBox = new Q3GroupBox (i18n ("Dimensions"), mainWidget ());
 
     QLabel *originalLabel = new QLabel (i18n ("Original:"), m_dimensionsGroupBox);
     QString originalDimensions;
@@ -158,7 +162,7 @@ void kpToolPreviewDialog::createDimensionsGroupBox ()
 // private
 void kpToolPreviewDialog::createPreviewGroupBox ()
 {
-    m_previewGroupBox = new QGroupBox (i18n ("Preview"), mainWidget ());
+    m_previewGroupBox = new Q3GroupBox (i18n ("Preview"), mainWidget ());
 
     m_previewPixmapLabel = new kpResizeSignallingLabel (m_previewGroupBox);
     m_previewPixmapLabel->setMinimumSize (150, 110);
@@ -420,7 +424,7 @@ void kpToolPreviewDialog::slotUpdateWithWaitCursor ()
                << endl;
 #endif
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     slotUpdate ();
 

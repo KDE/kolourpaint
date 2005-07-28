@@ -30,6 +30,8 @@
 #define __kptoolautocrop_h__
 
 #include <qrect.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 #include <kpcommandhistory.h>
 

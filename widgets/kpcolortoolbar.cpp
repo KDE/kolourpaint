@@ -33,12 +33,18 @@
 
 #include <qbitmap.h>
 #include <qdrawutil.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlayout.h>
 #include <qpainter.h>
 #include <qsize.h>
 #include <qtooltip.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QMouseEvent>
+#include <QDragMoveEvent>
+#include <QDropEvent>
+#include <QBoxLayout>
 
 #include <kapplication.h>
 #include <kcolordialog.h>
@@ -62,11 +68,11 @@
 
 kpDualColorButton::kpDualColorButton (kpMainWindow *mainWindow,
                                       QWidget *parent, const char *name)
-    : QFrame (parent, name, Qt::WNoAutoErase/*no flicker*/),
+    : Q3Frame (parent, name, Qt::WNoAutoErase/*no flicker*/),
       m_mainWindow (mainWindow),
       m_backBuffer (0)
 {
-    setFrameStyle (QFrame::Panel | QFrame::Sunken);
+    setFrameStyle (Q3Frame::Panel | Q3Frame::Sunken);
 
     m_color [0] = kpColor (0, 0, 0);  // black
     m_color [1] = kpColor (255, 255, 255);  // white
@@ -699,13 +705,13 @@ void kpColorCells::slotColorDoubleClicked (int cell)
  */
 
 kpTransparentColorCell::kpTransparentColorCell (QWidget *parent, const char *name)
-    : QFrame (parent, name)
+    : Q3Frame (parent, name)
 {
 #if DEBUG_KP_COLOR_TOOL_BAR
     kdDebug () << "kpTransparentColorCell::kpTransparentColorCell()" << endl;
 #endif
 
-    setFrameStyle (QFrame::Panel | QFrame::Sunken);
+    setFrameStyle (Q3Frame::Panel | Q3Frame::Sunken);
 #if DEBUG_KP_COLOR_TOOL_BAR && 0
     kdDebug () << "\tdefault line width=" << lineWidth ()
                << " frame width=" << frameWidth () << endl;
@@ -760,7 +766,7 @@ void kpTransparentColorCell::mouseReleaseEvent (QMouseEvent *e)
 // protected virtual [base QFrame]
 void kpTransparentColorCell::drawContents (QPainter *p)
 {
-    QFrame::drawContents (p);
+    Q3Frame::drawContents (p);
     if (isEnabled ())
     {
     #if DEBUG_KP_COLOR_TOOL_BAR
@@ -956,7 +962,7 @@ kpColorToolBar::kpColorToolBar (kpMainWindow *mainWindow, const char *name)
 void kpColorToolBar::setOrientation (Qt::Orientation o)
 {
     // (QDockWindow::undock() calls us)
-    bool isOutsideDock = (place () == QDockWindow::OutsideDock);
+    bool isOutsideDock = (place () == Q3DockWindow::OutsideDock);
 
     if (!m_lastDockedOrientationSet || !isOutsideDock)
     {

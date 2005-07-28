@@ -35,7 +35,7 @@
 #include <qpen.h>
 #include <qpixmap.h>
 #include <qpoint.h>
-#include <qpointarray.h>
+#include <q3pointarray.h>
 #include <qrect.h>
 #include <qtimer.h>
 
@@ -155,7 +155,7 @@ void kpToolAirSpray::draw (const QPoint &thisPoint, const QPoint &, const QRect 
 
 void kpToolAirSpray::actuallyDraw ()
 {
-    QPointArray pArray (10);
+    Q3PointArray pArray (10);
     int numPoints = 0;
 
     QPoint p = m_currentPoint;
@@ -300,7 +300,7 @@ void kpToolAirSprayCommand::unexecute ()
 
 
 // public
-void kpToolAirSprayCommand::addPoints (const QPointArray &points)
+void kpToolAirSprayCommand::addPoints (const Q3PointArray &points)
 {
     QRect docRect = points.boundingRect ();
 
@@ -322,7 +322,7 @@ void kpToolAirSprayCommand::addPoints (const QPointArray &points)
         painter.setPen (m_color.toQColor ());
     }
 
-    if (pixmap.mask () || m_color.isTransparent ())
+    if (!pixmap.mask ().isNull() || m_color.isTransparent ())
     {
         mask = kpPixmapFX::getNonNullMask (pixmap);
         maskPainter.begin (&mask);

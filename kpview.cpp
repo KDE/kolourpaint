@@ -37,18 +37,28 @@
 
 #include <qbitmap.h>
 #include <qcursor.h>
-#include <qdragobject.h>
-#include <qguardedptr.h>
+#include <q3dragobject.h>
+#include <qpointer.h>
 #include <qimage.h>
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qpoint.h>
 #include <qrect.h>
 #include <qregion.h>
-#include <qmemarray.h>
+#include <q3memarray.h>
 
 #if DEBUG_KP_VIEW || DEBUG_KP_VIEW_RENDERER
     #include <qdatetime.h>
+//Added by qt3to4:
+#include <QDragLeaveEvent>
+#include <QFocusEvent>
+#include <QPaintEvent>
+#include <Q3PointArray>
+#include <QKeyEvent>
+#include <QEvent>
+#include <QResizeEvent>
+#include <QDragEnterEvent>
+#include <QMouseEvent>
 #endif
 
 #include <kdebug.h>
@@ -66,11 +76,11 @@
 
 struct kpViewPrivate
 {
-    QGuardedPtr <kpDocument> m_document;
-    QGuardedPtr <kpToolToolBar> m_toolToolBar;
-    QGuardedPtr <kpViewManager> m_viewManager;
-    QGuardedPtr <kpView> m_buddyView;
-    QGuardedPtr <kpViewScrollableContainer> m_scrollableContainer;
+    QPointer <kpDocument> m_document;
+    QPointer <kpToolToolBar> m_toolToolBar;
+    QPointer <kpViewManager> m_viewManager;
+    QPointer <kpView> m_buddyView;
+    QPointer <kpViewScrollableContainer> m_scrollableContainer;
 
     int m_hzoom, m_vzoom;
     QPoint m_origin;
@@ -108,7 +118,7 @@ kpView::kpView (kpDocument *document,
 
 
     setBackgroundMode (Qt::NoBackground);  // no flicker
-    setFocusPolicy (QWidget::WheelFocus);
+    setFocusPolicy (Qt::WheelFocus);
     setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
     setKeyCompression (true);
     setInputMethodEnabled (true);  // ensure using InputMethod
@@ -849,37 +859,37 @@ int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
     if (LOCAL_POINT_IN_BOX_AT (selViewRect.width () - atomicLength,
                                selViewRect.height () - atomicLength))
     {
-        return Bottom | Right;
+        return Qt::DockBottom | Qt::DockRight;
     }
     else if (LOCAL_POINT_IN_BOX_AT (selViewRect.width () - atomicLength, 0))
     {
-        return Top | Right;
+        return Qt::DockTop | Qt::DockRight;
     }
     else if (LOCAL_POINT_IN_BOX_AT (0, selViewRect.height () - atomicLength))
     {
-        return Bottom | Left;
+        return Qt::DockBottom | Qt::DockLeft;
     }
     else if (LOCAL_POINT_IN_BOX_AT (0, 0))
     {
-        return Top | Left;
+        return Qt::DockTop | Qt::DockLeft;
     }
     else if (LOCAL_POINT_IN_BOX_AT (selViewRect.width () - atomicLength,
                                     (selViewRect.height () - atomicLength) / 2))
     {
-        return Right;
+        return Qt::DockRight;
     }
     else if (LOCAL_POINT_IN_BOX_AT ((selViewRect.width () - atomicLength) / 2,
                                     selViewRect.height () - atomicLength))
     {
-        return Bottom;
+        return Qt::DockBottom;
     }
     else if (LOCAL_POINT_IN_BOX_AT ((selViewRect.width () - atomicLength) / 2, 0))
     {
-        return Top;
+        return Qt::DockTop;
     }
     else if (LOCAL_POINT_IN_BOX_AT (0, (selViewRect.height () - atomicLength) / 2))
     {
-        return Left;
+        return Qt::DockLeft;
     }
     else
     {
@@ -1304,7 +1314,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
         destPixmapPainter.setRasterOp (Qt::XorROP);
         destPixmapPainter.setPen (QPen (Qt::white, 1, Qt::DotLine));
 
-        destPixmapPainter.setBackgroundMode (QPainter::OpaqueMode);
+        destPixmapPainter.setBackgroundMode (Qt::OpaqueMode);
         destPixmapPainter.setBackgroundColor (Qt::blue);
 
         QBitmap maskBitmap;
@@ -1366,7 +1376,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
             #if DEBUG_KP_VIEW_RENDERER
                 kdDebug () << "\tselection border = freeForm" << endl;
             #endif
-                QPointArray points = sel->points ();
+                Q3PointArray points = sel->points ();
                 points.detach ();
                 points.translate (-docRect.x (), -docRect.y ());
                 if (vm->selectionBorderFinished ())
@@ -1529,8 +1539,8 @@ void kpView::paintEventDrawSelectionResizeHandles (QPainter *painter, const QRec
         painter->setRasterOp (Qt::XorROP);
     }
 
-    QMemArray <QRect> rects = selResizeHandlesRegion.rects ();
-    for (QMemArray <QRect>::ConstIterator it = rects.begin ();
+    Q3MemArray <QRect> rects = selResizeHandlesRegion.rects ();
+    for (Q3MemArray <QRect>::ConstIterator it = rects.begin ();
          it != rects.end ();
          it++)
     {
@@ -1845,12 +1855,12 @@ void kpView::paintEvent (QPaintEvent *e)
 
 
     QRegion viewRegion = clipRegion ().intersect (e->region ());
-    QMemArray <QRect> rects = viewRegion.rects ();
+    Q3MemArray <QRect> rects = viewRegion.rects ();
 #if DEBUG_KP_VIEW_RENDERER && 1
     kdDebug () << "\t#rects = " << rects.count () << endl;
 #endif
 
-    for (QMemArray <QRect>::ConstIterator it = rects.begin ();
+    for (Q3MemArray <QRect>::ConstIterator it = rects.begin ();
          it != rects.end ();
          it++)
     {

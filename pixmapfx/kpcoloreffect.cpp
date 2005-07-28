@@ -80,7 +80,7 @@ void kpColorEffectCommand::execute ()
     if (!doc)
         return;
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
 
     const QPixmap oldPixmap = *doc->pixmap (m_actOnSelection);
@@ -107,7 +107,7 @@ void kpColorEffectCommand::unexecute ()
     if (!doc)
         return;
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
 
     QPixmap newPixmap;

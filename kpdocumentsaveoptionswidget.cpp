@@ -36,6 +36,13 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QGridLayout>
+#include <QCloseEvent>
+#include <QMoveEvent>
+#include <QHBoxLayout>
+#include <QResizeEvent>
 
 #include <kcombobox.h>
 #include <kconfig.h>
@@ -890,12 +897,12 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
     m_updatePreviewTimer->stop ();
 
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     QByteArray data;
 
     QBuffer buffer (data);
-    buffer.open (IO_WriteOnly);
+    buffer.open (QIODevice::WriteOnly);
     kpDocument::savePixmapToDevice (*m_documentPixmap,
                                     &buffer,
                                     documentSaveOptions (),

@@ -90,12 +90,12 @@ void kpMainWindow::setupViewMenuActions ()
     m_zoomList.append (1000); m_zoomList.append (1200); m_zoomList.append (1600);
 
 
-    m_actionShowGrid = new KToggleAction (i18n ("Show &Grid"), CTRL + Key_G,
+    m_actionShowGrid = new KToggleAction (i18n ("Show &Grid"), Qt::CTRL + Qt::Key_G,
         this, SLOT (slotShowGridToggled ()), actionCollection (), "view_show_grid");
     m_actionShowGrid->setCheckedState (i18n ("Hide &Grid"));
 
 
-    m_actionShowThumbnail = new KToggleAction (i18n ("Show T&humbnail"), CTRL + Key_H,
+    m_actionShowThumbnail = new KToggleAction (i18n ("Show T&humbnail"), Qt::CTRL + Qt::Key_H,
         this, SLOT (slotShowThumbnailToggled ()), actionCollection (), "view_show_thumbnail");
     m_actionShowThumbnail->setCheckedState (i18n ("Hide T&humbnail"));
 
@@ -175,8 +175,8 @@ void kpMainWindow::sendZoomListToActionZoom ()
 {
     QStringList items;
 
-    const QValueVector <int>::ConstIterator zoomListEnd (m_zoomList.end ());
-    for (QValueVector <int>::ConstIterator it = m_zoomList.begin ();
+    const Q3ValueVector <int>::ConstIterator zoomListEnd (m_zoomList.end ());
+    for (Q3ValueVector <int>::ConstIterator it = m_zoomList.begin ();
          it != zoomListEnd;
          it++)
     {
@@ -245,7 +245,7 @@ void kpMainWindow::zoomTo (int zoomLevel)
 #endif
 
     int index = 0;
-    QValueVector <int>::Iterator it = m_zoomList.begin ();
+    Q3ValueVector <int>::Iterator it = m_zoomList.begin ();
 
     while (index < (int) m_zoomList.count () && zoomLevel > *it)
         it++, index++;

@@ -30,6 +30,8 @@
 #define __kptoolconverttograyscale_h__
 
 #include <kpcommandhistory.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 class QPixmap;
 class QString;

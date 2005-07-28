@@ -41,7 +41,9 @@
 #include <qpushbutton.h>
 #include <qrect.h>
 #include <qtooltip.h>
-#include <qvbuttongroup.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3PointArray>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -58,12 +60,12 @@
 
 
 #if DEBUG_KP_TOOL_POLYGON
-static const char *pointArrayToString (const QPointArray &pointArray)
+static const char *pointArrayToString (const Q3PointArray &pointArray)
 {
     static char string [1000];
     string [0] = '\0';
 
-    for (QPointArray::ConstIterator it = pointArray.begin ();
+    for (Q3PointArray::ConstIterator it = pointArray.begin ();
          it != pointArray.end ();
          it++)
     {
@@ -118,7 +120,7 @@ static QBrush makeBrush (const kpColor &foregroundColor,
         return Qt::NoBrush;
 }
 
-static bool only1PixelInPointArray (const QPointArray &points)
+static bool only1PixelInPointArray (const Q3PointArray &points)
 {
     if (points.count () == 0)
         return false;
@@ -133,7 +135,7 @@ static bool only1PixelInPointArray (const QPointArray &points)
 }
 
 static QPixmap pixmap (const QPixmap &oldPixmap,
-                       const QPointArray &points, const QRect &rect,
+                       const Q3PointArray &points, const QRect &rect,
                        const kpColor &foregroundColor, kpColor backgroundColor,
                        int lineWidth, Qt::PenStyle lineStyle,
                        kpToolWidgetFillStyle *toolWidgetFillStyle,
@@ -142,7 +144,7 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
     //
     // figure out points to draw relative to topLeft of oldPixmap
 
-    QPointArray pointsInRect = points;
+    Q3PointArray pointsInRect = points;
     pointsInRect.detach ();
     pointsInRect.translate (-rect.x (), -rect.y ());
 
@@ -164,7 +166,7 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
 
     QPainter painter, maskPainter;
 
-    if (pixmap.mask () ||
+    if (!pixmap.mask ().isNull() ||
         (maskPen.style () != Qt::NoPen &&
          maskPen.color () == Qt::color0/*transparent*/) ||
         (maskBrush.style () != Qt::NoBrush &&
@@ -237,7 +239,8 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
                         XORpen.setColor (Qt::white);
 
                         painter.setPen (XORpen);
-                        painter.setRasterOp (Qt::XorROP);
+#warning "QT4 fix it "
+                        //painter.setRasterOp (Qt::XorROP);
                     }
 
                     if (maskPainter.isActive ())
@@ -261,7 +264,7 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
             break;
         case kpToolPolygon::Curve:
             int numPoints = pointsInRect.count ();
-            QPointArray pa (4);
+            Q3PointArray pa (4);
 
             pa [0] = pointsInRect [0];
             pa [3] = pointsInRect [1];
@@ -390,7 +393,7 @@ void kpToolPolygon::begin ()
         m_lineWidth = 1;
     }
 
-    viewManager ()->setCursor (QCursor (CrossCursor));
+    viewManager ()->setCursor (QCursor (Qt::CrossCursor));
 
     m_originatingMouseButton = -1;
 
@@ -841,7 +844,7 @@ void kpToolPolygon::slotBackgroundColorChanged (const kpColor &)
  */
 
 kpToolPolygonCommand::kpToolPolygonCommand (const QString &name,
-                                            const QPointArray &points,
+                                            const Q3PointArray &points,
                                             const QRect &normalizedRect,
                                             const kpColor &foregroundColor, const kpColor &backgroundColor,
                                             int lineWidth, Qt::PenStyle lineStyle,

@@ -35,6 +35,8 @@
 #include <qpainter.h>
 #if DEBUG_KP_TOOL_PEN
     #include <qdatetime.h>
+//Added by qt3to4:
+#include <QPixmap>
 #endif
 
 #include <kdebug.h>
@@ -382,7 +384,7 @@ void kpToolPen::globalDraw ()
         if (foregroundColor () == backgroundColor () && processedColorSimilarity () == 0)
             return;
 
-        QApplication::setOverrideCursor (Qt::waitCursor);
+        QApplication::setOverrideCursor (Qt::WaitCursor);
 
         kpToolPenCommand *cmd = new kpToolPenCommand (
             i18n ("Color Eraser"), mainWindow ());
@@ -397,7 +399,7 @@ void kpToolPen::globalDraw ()
         }
 
         if (backgroundColor ().isTransparent () ||
-            document ()->pixmap ()->mask ())
+            !document ()->pixmap ()->mask ().isNull() )
         {
             maskBitmap = kpPixmapFX::getNonNullMask (*document ()->pixmap ());
             maskPainter.begin (&maskBitmap);
@@ -528,7 +530,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
             }
 
             if (color (m_mouseButton).isTransparent () ||
-                pixmap.mask ())
+                !pixmap.mask ().isNull())
             {
                 maskBitmap = kpPixmapFX::getNonNullMask (pixmap);
                 maskPainter.begin (&maskBitmap);
@@ -605,7 +607,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
                 painter.setPen (c.toQColor ());
             }
 
-            if (transparent || pixmap.mask ())
+            if (transparent || !pixmap.mask ().isNull())
             {
                 maskBitmap = kpPixmapFX::getNonNullMask (pixmap);
                 maskPainter.begin (&maskBitmap);

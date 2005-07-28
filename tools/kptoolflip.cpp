@@ -30,9 +30,10 @@
 
 #include <qapplication.h>
 #include <qradiobutton.h>
-#include <qvbox.h>
-#include <qvbuttongroup.h>
-
+#include <q3vbox.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3VButtonGroup>
 #include <kdebug.h>
 #include <klocale.h>
 
@@ -120,7 +121,7 @@ void kpToolFlipCommand::flip ()
         return;
 
 
-    QApplication::setOverrideCursor (Qt::waitCursor);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     
     if (m_actOnSelection)
@@ -154,7 +155,7 @@ kpToolFlipDialog::kpToolFlipDialog (bool actOnSelection, QWidget *parent)
                    actOnSelection ? i18n ("Flip Selection") : i18n ("Flip Image"),
                    KDialogBase::Ok | KDialogBase::Cancel)
 {
-    QVBox *vbox = makeVBoxMainWidget ();
+    Q3VBox *vbox = makeVBoxMainWidget ();
 
     if (!vbox)
     {
@@ -162,7 +163,7 @@ kpToolFlipDialog::kpToolFlipDialog (bool actOnSelection, QWidget *parent)
     }
     else
     {
-        QVButtonGroup *buttonGroup = new QVButtonGroup (i18n ("Direction"), vbox);
+        Q3VButtonGroup *buttonGroup = new Q3VButtonGroup (i18n ("Direction"), vbox);
 
         // I'm sure vert flipping is much more common than horiz flipping so make it come first
         m_verticalFlipRadioButton = new QRadioButton (i18n ("&Vertical (upside-down)"), buttonGroup);

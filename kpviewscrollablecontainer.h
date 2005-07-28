@@ -31,8 +31,15 @@
 
 
 #include <qpoint.h>
-#include <qscrollview.h>
+#include <q3scrollview.h>
 #include <qsize.h>
+//Added by qt3to4:
+#include <QPaintEvent>
+#include <QDragMoveEvent>
+#include <QKeyEvent>
+#include <QEvent>
+#include <QResizeEvent>
+#include <QMouseEvent>
 
 
 class QCursor;
@@ -53,7 +60,7 @@ public:
     enum GripType
     {
         Right = 1, Bottom = 2,
-        BottomRight = Right | Bottom
+        BottomRight = Qt::DockRight | Qt::DockBottom
     };
 
     kpGrip (GripType type,
@@ -112,7 +119,7 @@ protected:
 };
 
 
-class kpViewScrollableContainer : public QScrollView
+class kpViewScrollableContainer : public Q3ScrollView
 {
 Q_OBJECT
 

@@ -34,7 +34,10 @@
 
 #include <qpainter.h>
 #include <qpixmap.h>
-#include <qwhatsthis.h>
+
+//Added by qt3to4:
+#include <Q3PointArray>
+#include <Q3Frame>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -51,12 +54,12 @@ kpColorSimilarityCube::kpColorSimilarityCube (int look,
                                               kpMainWindow *mainWindow,
                                               QWidget *parent,
                                               const char *name)
-    : QFrame (parent, name, Qt::WNoAutoErase/*no flicker*/),
+    : Q3Frame (parent, name, Qt::WNoAutoErase/*no flicker*/),
       m_mainWindow (mainWindow),
       m_colorSimilarity (-1)
 {
     if (look & Depressed)
-        setFrameStyle (QFrame::Panel | QFrame::Sunken);
+        setFrameStyle (Q3Frame::Panel | Q3Frame::Sunken);
 
     setColorSimilarity (0);
 
@@ -66,7 +69,7 @@ kpColorSimilarityCube::kpColorSimilarityCube (int look,
 
     if (look & DoubleClickInstructions)
     {
-        QWhatsThis::add (this,
+        this->setWhatsThis(
             i18n ("<qt><p><b>Color Similarity</b> is how close "
                   "colors must be in the RGB Color Cube "
                   "to be considered the same.</p>"
@@ -87,7 +90,7 @@ kpColorSimilarityCube::kpColorSimilarityCube (int look,
     }
     else
     {
-        QWhatsThis::add (this,
+        this->setWhatsThis(
             i18n ("<qt><p><b>Color Similarity</b> is how close "
                   "colors must be in the RGB Color Cube "
                   "to be considered the same.</p>"
@@ -180,7 +183,7 @@ static void drawQuadrant (QPainter *p,
     p->save ();
 
 
-    QPointArray points (4);
+    Q3PointArray points (4);
     points [0] = p1;
     points [1] = p2;
     points [2] = p3;

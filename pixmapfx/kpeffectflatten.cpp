@@ -34,7 +34,9 @@
 #include <qimage.h>
 #include <qlayout.h>
 #include <qpixmap.h>
-#include <qvbox.h>
+#include <q3vbox.h>
+//Added by qt3to4:
+#include <QVBoxLayout>
 
 #include <kcolorbutton.h>
 #include <kconfig.h>
@@ -152,7 +154,7 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
 
     m_enableCheckBox = new QCheckBox (i18n ("E&nable"), this);
 
-    QVBox *colorButtonContainer = new QVBox (this);
+    Q3VBox *colorButtonContainer = new Q3VBox (this);
     colorButtonContainer->setMargin (KDialog::marginHint () / 2);
     colorButtonContainer->setSpacing (spacingHint ());
     m_color1Button = new KColorButton (s_lastColor1, colorButtonContainer);

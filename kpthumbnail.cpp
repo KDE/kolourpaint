@@ -30,9 +30,12 @@
 
 #include <kpthumbnail.h>
 
-#include <qdockarea.h>
-#include <qdockwindow.h>
+#include <q3dockarea.h>
+#include <q3dockwindow.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QMoveEvent>
+#include <QResizeEvent>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -47,10 +50,10 @@
 // TODO: get out of the Alt+Tab list
 kpThumbnail::kpThumbnail (kpMainWindow *parent, const char *name)
 #if KP_IS_QT_3_3
-    : QDockWindow (QDockWindow::OutsideDock, parent, name),
+    : Q3DockWindow (Q3DockWindow::OutsideDock, parent, name),
 #else  // With Qt <3.3, OutsideDock requires parent = 0,
        // sync: make sure outside of dock
-    : QDockWindow (QDockWindow::InDock, parent, name),
+    : Q3DockWindow (Q3DockWindow::InDock, parent, name),
     #warning "Using Qt <3.3: the thumbnail will flicker more when appearing"
 #endif
       m_mainWindow (parent),
@@ -90,13 +93,13 @@ kpThumbnail::kpThumbnail (kpMainWindow *parent, const char *name)
                << endl;
 #endif
     if (layout ())
-        layout ()->setResizeMode (QLayout::FreeResize);
+        layout ()->setResizeMode (QLayout::SetNoConstraint);
     setMinimumSize (QMAX (layoutMinimumSize.width (), 64),
                     QMAX (layoutMinimumSize.height (), 64));
 
 
     // Enable "X" Close Button
-    setCloseMode (QDockWindow::Always);
+    setCloseMode (Q3DockWindow::Always);
 
     setResizeEnabled (true);
 
@@ -189,7 +192,7 @@ void kpThumbnail::resizeEvent (QResizeEvent *e)
                << "," << height () << ")" << endl;
 #endif
 
-    QDockWindow::resizeEvent (e);
+    Q3DockWindow::resizeEvent (e);
 
     // updateVariableZoom ();  TODO: is below a good idea since this commented out
 

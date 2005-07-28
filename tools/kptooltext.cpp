@@ -30,7 +30,9 @@
 
 #include <kptooltext.h>
 
-#include <qvaluevector.h>
+#include <q3valuevector.h>
+//Added by qt3to4:
+#include <QKeyEvent>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -187,7 +189,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     }
 
 
-    const QValueVector <QString> textLines = sel->textLines ();
+    const Q3ValueVector <QString> textLines = sel->textLines ();
     int cursorRow = viewManager ()->textCursorRow ();
     int cursorCol = viewManager ()->textCursorCol ();
 
@@ -318,7 +320,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         if (hasBegunShape ())
             endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
 
-        if ((e->state () & Qt::ControlButton) == 0)
+        if ((e->state () & Qt::ControlModifier) == 0)
         {
         #if DEBUG_KP_TOOL_TEXT
             kdDebug () << "\tmove single char" << endl;
@@ -393,7 +395,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         if (hasBegunShape ())
             endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
 
-        if ((e->state () & Qt::ControlButton) == 0)
+        if ((e->state () & Qt::ControlModifier) == 0)
         {
         #if DEBUG_KP_TOOL_TEXT
             kdDebug () << "\tmove single char" << endl;
@@ -447,7 +449,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         if (hasBegunShape ())
             endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
 
-        if (e->state () & Qt::ControlButton)
+        if (e->state () & Qt::ControlModifier)
             cursorRow = 0;
 
         cursorCol = 0;
@@ -465,7 +467,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         if (hasBegunShape ())
             endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
 
-        if (e->state () & Qt::ControlButton)
+        if (e->state () & Qt::ControlModifier)
             cursorRow = textLines.size () - 1;
 
         cursorCol = textLines [cursorRow].length ();
@@ -1026,7 +1028,7 @@ void kpToolTextInsertCommand::addText (const QString &moreText)
     if (moreText.isEmpty ())
         return;
 
-    QValueVector <QString> textLines = selection ()->textLines ();
+    Q3ValueVector <QString> textLines = selection ()->textLines ();
     const QString leftHalf = textLines [m_row].left (m_col);
     const QString rightHalf = textLines [m_row].mid (m_col);
     textLines [m_row] = leftHalf + moreText + rightHalf;
@@ -1061,7 +1063,7 @@ void kpToolTextInsertCommand::unexecute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
-    QValueVector <QString> textLines = selection ()->textLines ();
+    Q3ValueVector <QString> textLines = selection ()->textLines ();
     const QString leftHalf = textLines [m_row].left (m_col - m_newText.length ());
     const QString rightHalf = textLines [m_row].mid (m_col);
     textLines [m_row] = leftHalf + rightHalf;
@@ -1096,7 +1098,7 @@ kpToolTextEnterCommand::~kpToolTextEnterCommand ()
 // public
 void kpToolTextEnterCommand::addEnter ()
 {
-    QValueVector <QString> textLines = selection ()->textLines ();
+    Q3ValueVector <QString> textLines = selection ()->textLines ();
 
     const QString rightHalf = textLines [m_row].mid (m_col);
 
@@ -1137,7 +1139,7 @@ void kpToolTextEnterCommand::unexecute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
-    QValueVector <QString> textLines = selection ()->textLines ();
+    Q3ValueVector <QString> textLines = selection ()->textLines ();
 
     for (int i = 0; i < m_numEnters; i++)
     {
@@ -1190,7 +1192,7 @@ kpToolTextBackspaceCommand::~kpToolTextBackspaceCommand ()
 // public
 void kpToolTextBackspaceCommand::addBackspace ()
 {
-    QValueVector <QString> textLines = selection ()->textLines ();
+    Q3ValueVector <QString> textLines = selection ()->textLines ();
 
     if (m_col > 0)
     {
@@ -1251,7 +1253,7 @@ void kpToolTextBackspaceCommand::unexecute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
-    QValueVector <QString> textLines = selection ()->textLines ();
+    Q3ValueVector <QString> textLines = selection ()->textLines ();
 
     for (int i = 0; i < (int) m_deletedText.length (); i++)
     {
@@ -1306,7 +1308,7 @@ kpToolTextDeleteCommand::~kpToolTextDeleteCommand ()
 // public
 void kpToolTextDeleteCommand::addDelete ()
 {
-    QValueVector <QString> textLines = selection ()->textLines ();
+    Q3ValueVector <QString> textLines = selection ()->textLines ();
 
     if (m_col < (int) textLines [m_row].length ())
     {
@@ -1359,7 +1361,7 @@ void kpToolTextDeleteCommand::unexecute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
-    QValueVector <QString> textLines = selection ()->textLines ();
+    Q3ValueVector <QString> textLines = selection ()->textLines ();
 
     for (int i = 0; i < (int) m_deletedText.length (); i++)
     {

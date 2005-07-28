@@ -32,6 +32,9 @@
 #include <kpcommandhistory.h>
 #include <kpcolor.h>
 #include <kptool.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3PointArray>
 
 class QPixmap;
 class QPoint;
@@ -94,7 +97,7 @@ public:
     virtual void unexecute ();
 
     // interface for KToolAirSpray
-    void addPoints (const QPointArray &points);
+    void addPoints (const Q3PointArray &points);
     void finalize ();
     void cancel ();
 
