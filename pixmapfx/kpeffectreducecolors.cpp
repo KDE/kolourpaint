@@ -287,13 +287,13 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
         new QRadioButton (i18n ("&Monochrome"), this);
 
     m_blackAndWhiteDitheredRadioButton =
-        new QRadioButton (i18n ("Mo&nochrome (Dithered)"), this);
+        new QRadioButton (i18n ("Mo&nochrome (dithered)"), this);
 
-    m_8BitRadioButton = new QRadioButton (i18n ("256 Co&lor"), this);
+    m_8BitRadioButton = new QRadioButton (i18n ("256 co&lor"), this);
 
-    m_8BitDitheredRadioButton = new QRadioButton (i18n ("256 Colo&r (Dithered)"), this);
+    m_8BitDitheredRadioButton = new QRadioButton (i18n ("256 colo&r (dithered)"), this);
 
-    m_24BitRadioButton = new QRadioButton (i18n ("24-&bit Color"), this);
+    m_24BitRadioButton = new QRadioButton (i18n ("24-&bit color"), this);
 
 
     QButtonGroup *buttonGroup = new QButtonGroup (this);
