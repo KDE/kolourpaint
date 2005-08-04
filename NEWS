@@ -48,6 +48,14 @@ Version 1.2.4_kde3 (Frozen 2005-07-24)
      widgets and the empty part of the Tool Box
      [also in branches/KDE/3.4/, branches/KDE/3.3/]
 
+   * Correct and update image format associations to all formats supported
+     by KDE 3.5pre (kdelibs/kimgio/:r437289)
+
+   * Fix duplicate (standardised) "Settings / Full Screen Mode" option in
+     KDE >= 3.4
+     
+   
+
 Version 1.2.3_kde3 (Unreleased Frozen 2005-02-08)
    * Guarantee the display of the current tool's options widget on startup
      under Qt 3.0 [kolourpaint-1.2.2_kde3-qt3.0_tool_options.diff]
