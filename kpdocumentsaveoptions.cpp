@@ -401,6 +401,38 @@ static bool mimeTypeSupportsProperty (const QString &mimeType,
 
 
 // SYNC: update mime info
+//
+// Only care about writable mimetypes.
+//
+// Run "branches/kolourpaint/control/scripts/gen_mimetype_line.sh Write" in
+// trunk/KDE/kdelibs/kimgio to check for any new mimetypes to add info for.
+//
+// Update the below list also and bump up "kpSettingsGroupMimeTypeProperties"
+// in kpdefs.h.
+//
+// Currently, Depth and Quality settings are mutually exclusive with
+// Depth overriding Quality.  I've currently favoured Quality with the
+// below mimetypes (i.e. all lossy mimetypes are only given Quality settings,
+// no Depth settings).
+//
+// Mimetypes done:
+//  image/jp2 [UNTESTED]
+//  image/jpeg
+//  image/png
+//  image/x-bmp
+//  image/x-eps
+//  image/x-pcx
+//  image/x-portable-bitmap
+//  image/x-portable-greymap
+//  image/x-portable-pixmap
+//  image/x-rgb
+//  image/x-targa
+//  image/x-xbm
+//  image/x-xpm
+//
+// To test whether depth is configurable, write an image in the new
+// mimetype with all depths and read each one back.  See what
+// kpDocument thinks the depth is when it gets QImage to read it.
 
 
 // public static
@@ -408,9 +440,16 @@ int kpDocumentSaveOptions::mimeTypeMaximumColorDepth (const QString &mimeType)
 {
     QStringList defaultList;
 
-    defaultList << QString::fromLatin1 ("image/x-eps:1");  // well, greyscale actually
+    // SYNC: update mime info here
+    
+    // Greyscale actually (unenforced since depth not set to configurable)
+    defaultList << QString::fromLatin1 ("image/x-eps:32");
+    
     defaultList << QString::fromLatin1 ("image/x-portable-bitmap:1");
-    defaultList << QString::fromLatin1 ("image/x-portable-greymap:1");  // well, greyscale actually
+    
+    // Greyscale actually (unenforced since depth not set to configurable)
+    defaultList << QString::fromLatin1 ("image/x-portable-greymap:8");
+    
     defaultList << QString::fromLatin1 ("image/x-xbm:1");
 
     const QStringList mimeTypeList = mimeTypesSupportingProperty (
@@ -446,10 +485,17 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableColorDepth (const QString &mi
 {
     QStringList defaultMimeTypes;
 
+    // SYNC: update mime info here
+    defaultMimeTypes << QString::fromLatin1 ("image/png");
     defaultMimeTypes << QString::fromLatin1 ("image/x-bmp");
     defaultMimeTypes << QString::fromLatin1 ("image/x-pcx");
-    defaultMimeTypes << QString::fromLatin1 ("image/png");
-    defaultMimeTypes << QString::fromLatin1 ("image/x-rgb");  // TODO: only 1, 24 not 8
+    
+    // TODO: Only 1, 24 not 8; Qt only sees 32 but "file" cmd realises
+    //       it's either 1 or 24.
+    defaultMimeTypes << QString::fromLatin1 ("image/x-rgb");
+  
+    // TODO: Only 8 and 24 - no 1.
+    defaultMimeTypes << QString::fromLatin1 ("image/x-xpm");
 
     return mimeTypeSupportsProperty (mimeType,
         kpSettingMimeTypeHasConfigurableColorDepth,
@@ -468,6 +514,8 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableQuality (const QString &mimeT
 {
     QStringList defaultMimeTypes;
 
+    // SYNC: update mime info here
+    defaultMimeTypes << QString::fromLatin1 ("image/jp2");
     defaultMimeTypes << QString::fromLatin1 ("image/jpeg");
 
     return mimeTypeSupportsProperty (mimeType,
