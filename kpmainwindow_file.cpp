@@ -300,9 +300,13 @@ KURL::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &
 {
     QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
 #if DEBUG_KP_MAIN_WINDOW
+    QStringList sortedMimeTypes = mimeTypes;
+    sortedMimeTypes.sort ();
     kdDebug () << "kpMainWindow::askForURLs(allowMultiple="
                << allowMultipleURLs
-               << ") mimeTypes=" << mimeTypes << endl;
+               << ")" << endl
+               << "\tmimeTypes=" << mimeTypes << endl
+               << "\tsortedMimeTypes=" << sortedMimeTypes << endl;
 #endif
     QString filter = mimeTypes.join (" ");
 
@@ -434,6 +438,12 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
     kpDocumentSaveOptions fdSaveOptions = startSaveOptions;
 
     QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Writing);
+#if DEBUG_KP_MAIN_WINDOW
+    QStringList sortedMimeTypes = mimeTypes;
+    sortedMimeTypes.sort ();
+    kdDebug () << "\tmimeTypes=" << mimeTypes << endl
+               << "\tsortedMimeTypes=" << sortedMimeTypes << endl;
+#endif
     if (mimeTypes.isEmpty ())
     {
         kdError () << "No KImageIO output mimetypes!" << endl;
