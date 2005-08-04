@@ -35,11 +35,14 @@ KolourPaint 1.4_light2 (Frozen ???)
    * Clone KolourPaint application icon as SVG (Jonathan Riddell)
 
    * Add 22x22 KolourPaint application icon (Jonathan Riddell)
+   
+   * Correct and update image format associations to all formats supported
+     by KDE 3.5pre (kdelibs/kimgio/:r437289)
 
    * String fixes (Stefan Winter)
      [also in branches/KDE/3.4/]
 
-   * String fixes (Malcolm Hunter, Clarence Dang)
+   * Other string fixes (Malcolm Hunter, Clarence Dang, Stephan Binner)
 
 
 KolourPaint 1.4_light Series (branches/KDE/3.4/)
