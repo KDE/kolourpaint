@@ -133,7 +133,7 @@ void kpToolText::cancelShape ()
 // public virtual [base kpTool]
 void kpToolText::endShape (const QPoint &thisPoint, const QRect &normalizedRect)
 {
-#if DEBUG_KP_TOOL_TEXT
+#if DEBUG_KP_TOOL_TEXT && 1
     kdDebug () << "kpToolText::endShape()" << endl;
 #endif
 
