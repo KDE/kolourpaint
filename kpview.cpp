@@ -96,7 +96,9 @@ kpView::kpView (QWidget *parent, const char *name,
     setFocusPolicy (QWidget::WheelFocus);
     setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
     setKeyCompression (true);
+#if KP_IS_QT_3_2  // COMPAT: disabling this is not good for the binary! - use autopackage.org's relaytool instead
     setInputMethodEnabled (true); // ensure using InputMethod
+#endif
 }
 
 void kpView::setHasMouse (bool yes)

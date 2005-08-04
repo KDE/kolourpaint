@@ -1199,7 +1199,7 @@ void kpTool::keyPressEvent (QKeyEvent *e)
     case Qt::Key_Enter:
     case Qt::Key_Return:
     case Qt::Key_Insert:
-    case Qt::Key_Clear:
+    case 0x100b/*Qt::Key_Clear - COMPAT: only in >=Qt3.1*/:
     {
         kpView *view = viewUnderCursor (); // TODO: wrong for dragging lines outside of view (for e.g.)
         if (view)
@@ -1297,7 +1297,7 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
     case Qt::Key_Enter:
     case Qt::Key_Return:
     case Qt::Key_Insert:
-    case Qt::Key_Clear:
+    case 0x100b/*Qt::Key_Clear - COMPAT: only in >=Qt3.1*/:
     {
         kpView *view = viewUnderCursor ();
         if (view)

@@ -542,6 +542,7 @@ void kpViewManager::setViewUnderCursor (kpView *view)
 // public
 kpView *kpViewManager::activeView () const
 {
+#if KP_IS_QT_3_2
     for (QPtrList <kpView>::const_iterator it = m_views.begin ();
          it != m_views.end ();
          it++)
@@ -549,6 +550,14 @@ kpView *kpViewManager::activeView () const
         if ((*it)->isActiveWindow ())
             return (*it);
     }
+#else
+    kpViewManager *nonConstThis = const_cast <kpViewManager *> (this);
+    for (int i = 0; i < (int) m_views.count (); i++)
+    {
+        if (nonConstThis->m_views.at (i)->isActiveWindow ())
+            return nonConstThis->m_views.at (i);
+    }
+#endif
 
     return 0;
 }
