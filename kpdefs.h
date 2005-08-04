@@ -88,7 +88,7 @@
 #define kpSettingResizeScaleLastKeepAspect QString::fromLatin1 ("Resize Scale - Last Keep Aspect")
 
 
-#define kpSettingsGroupMimeTypeProperties QString::fromLatin1 ("MimeType Properties Version 1.2-1")
+#define kpSettingsGroupMimeTypeProperties QString::fromLatin1 ("MimeType Properties Version 1.2-2")
 #define kpSettingMimeTypeMaximumColorDepth QString::fromLatin1 ("Maximum Color Depth")
 #define kpSettingMimeTypeHasConfigurableColorDepth QString::fromLatin1 ("Configurable Color Depth")
 #define kpSettingMimeTypeHasConfigurableQuality QString::fromLatin1 ("Configurable Quality Setting")
