@@ -85,7 +85,7 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
 
     <!-- SRC: ui_standards.rc v11 (KDE 3.4) -->
     <!-- COMPAT: "fullscreen" is missing from earlier KDE 3.x versions -->
-    <Menu name="settings" noMerge="1"><text>&amp;Settings</text>  <!-- String introduced but is also def'ed in kdelibs - let's hope i18n works -->
+    <Menu name="settings" noMerge="1"><text>&amp;Settings</text>  <!-- COMPAT: String introduced but is also def'ed in kdelibs - let's hope i18n works -->
         <Action name="options_show_toolbar"/>
         <!-- This makes XMLGUI merge its toolbar submenu here rather
              than at the bottom of the Settings menu - it seems. -->
