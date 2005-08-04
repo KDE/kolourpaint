@@ -2,6 +2,11 @@
 KolourPaint 1.4_light Series (branches/KDE/3.4/)
 ============================
 
+KolourPaint 1.4.3_light (Frozen ???)
+
+   * Correct and update image format associations to all formats supported
+     by KDE 3.4.2 (kdelibs/kimgio/:r436163)
+
 KolourPaint 1.4.2_light (Frozen 2005-07-20)
 
    * Enforce text box font height to prevent e.g. Chinese characters in
