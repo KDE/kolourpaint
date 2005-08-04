@@ -441,7 +441,7 @@ QString myTypeForMime (const QString &mimeType)
     #if DEBUG_KP_DOCUMENT
         kdDebug () << "\tmap is empty - filling" << endl;
     #endif
-        /* SYNC: In trunk/kdelibs/kimgio/, type:
+        /* SYNC: In trunk/KDE/kdelibs/kimgio/, type:
 
           for f in *.kimgio
           do
@@ -455,8 +455,10 @@ QString myTypeForMime (const QString &mimeType)
           In case some formats have been deleted in newer versions of KDE,
           don't replace the code below with the generated output
           - only add new ones.
+    
+          Then add all these MimeType='s to kolourpaint.desktop.
         */
-
+    
         typeForMimeMap.insert ("image/fax-g3", "G3");
         typeForMimeMap.insert ("image/gif", "GIF");
         typeForMimeMap.insert ("image/jp2", "jp2");
