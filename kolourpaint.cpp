@@ -165,6 +165,8 @@ int main (int argc, char *argv [])
     aboutData.addCredit ("Luke-Jr");
     aboutData.addCredit ("Maxim_86ualb2");
     aboutData.addCredit ("Michele");
+    aboutData.addCredit ("Nuno Pinheiro");
+    aboutData.addCredit ("Danny Allen");
 
 
     KCmdLineArgs::init (argc, argv, &aboutData);
