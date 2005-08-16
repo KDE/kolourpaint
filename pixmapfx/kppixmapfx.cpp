@@ -1591,7 +1591,7 @@ bool kpPixmapFX::isLosslessRotation (double angle)
 
     const bool ret = (angle < kpPixmapFX::AngleInDegreesEpsilon ||
                       90 - angle < kpPixmapFX::AngleInDegreesEpsilon);
-#if DEBUG_KP_PIXMAP_FX || 1
+#if DEBUG_KP_PIXMAP_FX
     kdDebug () << "kpPixmapFX::isLosslessRotation(" << angleIn << ")"
                << "  residual angle=" << angle
                << "  returning " << ret

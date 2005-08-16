@@ -385,7 +385,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         {
             kpView *const vuc = m_viewManager->viewUnderCursor ();
             
-        #if DEBUG_KP_MAIN_WINDOW || 1
+        #if DEBUG_KP_MAIN_WINDOW
             kdDebug () << "\tcenterUnderCursor: reposition cursor; viewUnderCursor="
                        << vuc->name () << endl;
         #endif
@@ -395,7 +395,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
             // Rounding error from zooming in and out :(
             // TODO: do everything in terms of tool doc points in type "double".
             const QPoint viewPoint ((int) viewX, (int) viewY);
-        #if DEBUG_KP_MAIN_WINDOW || 1
+        #if DEBUG_KP_MAIN_WINDOW
             kdDebug () << "\t\tdoc: (" << targetDocX << "," << targetDocY << ")"
                        << " viewUnderCursor: (" << viewX << "," << viewY << ")"
                        << endl; 
@@ -405,7 +405,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
             {
                 const QPoint globalPoint =
                     kpWidgetMapper::toGlobal (vuc, viewPoint);
-            #if DEBUG_KP_MAIN_WINDOW || 1
+            #if DEBUG_KP_MAIN_WINDOW
                 kdDebug () << "\t\tglobalPoint=" << globalPoint << endl;
             #endif
                 
@@ -433,7 +433,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
             // on top of.
             else
             {
-            #if DEBUG_KP_MAIN_WINDOW || 1
+            #if DEBUG_KP_MAIN_WINDOW
                 kdDebug () << "\t\twon't move cursor - would get outside view"
                            << endl;
             #endif
