@@ -229,6 +229,7 @@ protected:
 
     virtual void contentsDragMoveEvent (QDragMoveEvent *e);
     virtual void contentsMouseMoveEvent (QMouseEvent *e);
+    virtual void contentsWheelEvent (QWheelEvent *e);
     virtual void mouseMoveEvent (QMouseEvent *e);
     virtual bool eventFilter (QObject *watchedObject, QEvent *e);
     virtual void viewportPaintEvent (QPaintEvent *e);

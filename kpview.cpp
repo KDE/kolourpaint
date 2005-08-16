@@ -415,22 +415,22 @@ void kpView::updateBuddyViewScrollableContainerRectangle ()
 
 
 // public
-int kpView::transformViewToDocX (int viewX) const
+double kpView::transformViewToDocX (double viewX) const
 {
-    return (viewX - origin ().x ()) * 100 / zoomLevelX ();
+    return (viewX - origin ().x ()) * 100.0 / zoomLevelX ();
 }
 
 // public
-int kpView::transformViewToDocY (int viewY) const
+double kpView::transformViewToDocY (double viewY) const
 {
-    return (viewY - origin ().y ()) * 100 / zoomLevelY ();
+    return (viewY - origin ().y ()) * 100.0 / zoomLevelY ();
 }
 
 // public
 QPoint kpView::transformViewToDoc (const QPoint &viewPoint) const
 {
-    return QPoint (transformViewToDocX (viewPoint.x ()),
-                   transformViewToDocY (viewPoint.y ()));
+    return QPoint ((int) transformViewToDocX (viewPoint.x ()),
+                   (int) transformViewToDocY (viewPoint.y ()));
 }
 
 // public
@@ -458,22 +458,22 @@ QRect kpView::transformViewToDoc (const QRect &viewRect) const
 
 
 // public
-int kpView::transformDocToViewX (int docX) const
+double kpView::transformDocToViewX (double docX) const
 {
-    return (docX * zoomLevelX () / 100) + origin ().x ();
+    return (docX * zoomLevelX () / 100.0) + origin ().x ();
 }
 
 // public
-int kpView::transformDocToViewY (int docY) const
+double kpView::transformDocToViewY (double docY) const
 {
-    return (docY * zoomLevelY () / 100) + origin ().y ();
+    return (docY * zoomLevelY () / 100.0) + origin ().y ();
 }
 
 // public
 QPoint kpView::transformDocToView (const QPoint &docPoint) const
 {
-    return QPoint (transformDocToViewX (docPoint.x ()),
-                   transformDocToViewY (docPoint.y ()));
+    return QPoint ((int) transformDocToViewX (docPoint.x ()),
+                   (int) transformDocToViewY (docPoint.y ()));
 }
 
 // public
@@ -497,6 +497,23 @@ QRect kpView::transformDocToView (const QRect &docRect) const
         // (like QWMatrix::Areas)
         return QRect (viewTopLeft.x (), viewTopLeft.y (), viewWidth, viewHeight);
     }
+}
+
+
+// public
+QPoint kpView::transformViewToOtherView (const QPoint &viewPoint,
+                                         const kpView *otherView)
+{
+    if (this == otherView)
+        return viewPoint;
+        
+    const double docX = transformViewToDocX (viewPoint.x ());
+    const double docY = transformViewToDocY (viewPoint.y ());
+    
+    const double otherViewX = otherView->transformDocToViewX (docX);
+    const double otherViewY = otherView->transformDocToViewY (docY);
+                   
+    return QPoint ((int) otherViewX, (int) otherViewY);
 }
 
 
@@ -980,6 +997,13 @@ void kpView::mouseReleaseEvent (QMouseEvent *e)
     e->accept ();
 }
 
+// public virtual [base QWidget]
+void kpView::wheelEvent (QWheelEvent *e)
+{
+    if (tool ())
+        tool ()->wheelEvent (e);
+}
+
 
 // protected virtual [base QWidget]
 void kpView::keyPressEvent (QKeyEvent *e)
@@ -1112,6 +1136,7 @@ void kpView::resizeEvent (QResizeEvent *e)
     emit sizeChanged (width (), height ());
     emit sizeChanged (size ());
 }
+
 
 // private virtual
 void kpView::imStartEvent (QIMEvent *e)

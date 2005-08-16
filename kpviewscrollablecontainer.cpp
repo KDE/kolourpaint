@@ -514,8 +514,8 @@ QSize kpViewScrollableContainer::newDocSize (int viewDX, int viewDY) const
     if (!docResizingGrip ())
         return QSize ();
 
-    const int docX = m_view->transformViewToDocX (m_view->width () + viewDX);
-    const int docY = m_view->transformViewToDocY (m_view->height () + viewDY);
+    const int docX = (int) m_view->transformViewToDocX (m_view->width () + viewDX);
+    const int docY = (int) m_view->transformViewToDocY (m_view->height () + viewDY);
 
     return QSize (QMAX (1, docX), QMAX (1, docY));
 }
@@ -738,8 +738,8 @@ void kpViewScrollableContainer::updateResizeLines (int viewX, int viewY,
 
     if (viewX >= 0 && viewY >= 0)
     {
-        m_resizeRoundedLastViewX = m_view->transformDocToViewX (m_view->transformViewToDocX (viewX));
-        m_resizeRoundedLastViewY = m_view->transformDocToViewY (m_view->transformViewToDocY (viewY));
+        m_resizeRoundedLastViewX = (int) m_view->transformDocToViewX ((int) m_view->transformViewToDocX (viewX));
+        m_resizeRoundedLastViewY = (int) m_view->transformDocToViewY ((int) m_view->transformViewToDocY (viewY));
 
         m_resizeRoundedLastViewDX = viewDX;
         m_resizeRoundedLastViewDY = viewDY;
@@ -815,8 +815,8 @@ void kpViewScrollableContainer::slotGripContinuedDraw (int inViewDX, int inViewD
 
     m_haveMovedFromOriginalDocSize = true;
 
-    updateResizeLines (QMAX (1, QMAX (m_view->width () + viewDX, m_view->transformDocToViewX (1))),
-                       QMAX (1, QMAX (m_view->height () + viewDY, m_view->transformDocToViewY (1))),
+    updateResizeLines (QMAX (1, QMAX (m_view->width () + viewDX, (int) m_view->transformDocToViewX (1))),
+                       QMAX (1, QMAX (m_view->height () + viewDY, (int) m_view->transformDocToViewY (1))),
                        viewDX, viewDY);
 
     emit continuedDocResize (newDocSize ());
@@ -1324,6 +1324,19 @@ void kpViewScrollableContainer::mouseMoveEvent (QMouseEvent *e)
 #endif
 
     QScrollView::mouseMoveEvent (e);
+}
+
+
+// protected virtual [base QScrollView]
+void kpViewScrollableContainer::contentsWheelEvent (QWheelEvent *e)
+{
+    e->ignore ();
+    
+    if (m_view)
+        m_view->wheelEvent (e);
+        
+    if (!e->isAccepted ())
+        QScrollView::contentsWheelEvent (e);
 }
 
 

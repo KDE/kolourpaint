@@ -1137,6 +1137,50 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
     }
 }
 
+void kpTool::wheelEvent (QWheelEvent *e)
+{
+#if DEBUG_KP_TOOL
+    kdDebug () << "kpTool::wheelEvent() state=" << e->state ()
+               << " hasBegunDraw=" << hasBegunDraw ()
+               << " delta=" << e->delta ()
+               << endl;
+#endif
+
+    e->ignore ();
+    
+    // If CTRL not pressed, bye.
+    if ((e->state () & Qt::ControlButton) == 0)
+        return;
+    
+    // If drawing, bye; don't care if a shape in progress though.
+    if (hasBegunDraw ())
+        return;
+        
+        
+    // Zoom in/out depending on wheel direction.
+    
+    // Moved wheel away from user?
+    if (e->delta () > 0)
+    {
+        m_mainWindow->zoomIn (true/*center under cursor*/);
+        e->accept ();
+    }
+    // Moved wheel towards user?
+    else if (e->delta () < 0)
+    {
+    #if 1
+        m_mainWindow->zoomOut (true/*center under cursor - make zoom in/out
+                                     stay under same doc pos*/);
+    #else
+        m_mainWindow->zoomOut (false/*don't center under cursor - as is
+                                      confusing behaviour when zooming
+                                      out*/);
+    #endif
+        e->accept ();
+    }
+}
+
+
 void kpTool::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL && 0
