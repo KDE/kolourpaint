@@ -45,6 +45,7 @@
 #include <kpmainwindow.h>
 
 #include <kolourpaintlicense.h>
+#include <kolourpaintversion.h>
 
 
 static const KCmdLineOptions cmdLineOptions [] =
@@ -60,7 +61,7 @@ int main (int argc, char *argv [])
     (
         "kolourpaint",
         I18N_NOOP ("KolourPaint"),
-        "1.4_light2-pre",  // SYNC: with VERSION
+        kpVersionText,
         I18N_NOOP ("Paint Program for KDE"),
         KAboutData::License_Custom,
         0/*copyright statement - see licence instead*/,

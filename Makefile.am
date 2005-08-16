@@ -2,14 +2,21 @@ SUBDIRS = cursors pics pixmapfx tools views widgets
 
 bin_PROGRAMS = kolourpaint
 
-kolourpaint.o: kolourpaintlicense.h
+
+kolourpaint.o: kolourpaintlicense.h kolourpaintversion.h
 
 kolourpaintlicense.h : $(srcdir)/COPYING
-	echo "const char *kpLicenseText =" > kolourpaintlicense.h
+	echo "static const char * const kpLicenseText =" > kolourpaintlicense.h
 	cat $(srcdir)/COPYING | sed -e 's/"/\\"/g' -e 's/$$/\\n"/g' -e 's/^/    "/g' >> kolourpaintlicense.h
 	echo ";" >> kolourpaintlicense.h
 
-CLEANFILES = kolourpaintlicense.h
+kolourpaintversion.h : $(srcdir)/VERSION
+	echo "static const char * const kpVersionText =" > kolourpaintversion.h
+	cat $(srcdir)/VERSION | sed -e 's/"/\\"/g' -e 's/$$/"/g' -e 's/^/    "/g' >> kolourpaintversion.h
+	echo ";" >> kolourpaintversion.h
+
+CLEANFILES = kolourpaintlicense.h kolourpaintversion.h
+
 
 kolourpaint_SOURCES = kolourpaint.cpp \
     kpdocument.cpp \
