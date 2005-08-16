@@ -5,7 +5,7 @@ KolourPaint 1.4_light2 Series (branches/KDE/3.5/)
 KolourPaint 1.4_light2 (Frozen ???)
 
    * New icons (Danny Allen, Nuno Pinheiro)
-   
+
    * Tool Box icon size is 22x22, not 16x16, at screen resolution >= 1024x768
 
    * CTRL + Mouse Wheel = Zoom
