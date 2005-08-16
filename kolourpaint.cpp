@@ -63,14 +63,42 @@ int main (int argc, char *argv [])
         "1.4_light2-pre",  // SYNC: with VERSION
         I18N_NOOP ("Paint Program for KDE"),
         KAboutData::License_Custom,
-        "Copyright (c) 2003,2004,2005 Clarence Dang",
-        0,
+        0/*copyright statement - see licence instead*/,
+        0/*free form text*/,
         "http://kolourpaint.sourceforge.net/"
     );
 
 
     // this is _not_ the same as KAboutData::License_BSD
     aboutData.setLicenseText (kpLicenseText);
+
+
+    aboutData.setCustomAuthorText (
+        I18N_NOOP
+        (
+            "\n"
+            "For support, or to report bugs and feature requests, please email\n"
+            "<kolourpaint-support@lists.sourceforge.net>"
+            " - the free and friendly\n"
+            "KolourPaint support service.\n"
+            "\n"
+            "Alternatively, you can submit bug reports and feature requests at\n"
+            "[http://bugs.kde.org].\n"
+            "\n"
+        ),
+        I18N_NOOP
+        (
+            "<qt>"
+            "For support, or to report bugs and feature requests, please email<br>"
+            "<a href=\"mailto:kolourpaint-support@lists.sourceforge.net\">kolourpaint-support@lists.sourceforge.net</a>"
+            " - the free and friendly<br>"
+            "KolourPaint support service.<br>"
+            "<br>"
+            "Alternatively, you can submit bug reports and feature requests at<br>"
+            "<a href=\"http://bugs.kde.org\">http://bugs.kde.org</a>.<br>"
+            "<br>"
+            "</qt>"
+        ));
 
 
     // SYNC: with AUTHORS
@@ -82,6 +110,7 @@ int main (int argc, char *argv [])
     aboutData.addAuthor ("Kazuki Ohta", I18N_NOOP ("InputMethod Support"), "mover@hct.zaq.ne.jp");
     aboutData.addAuthor ("Nuno Pinheiro", I18N_NOOP ("Icons"), "nf.pinheiro@gmail.com");
     aboutData.addAuthor ("Danny Allen", I18N_NOOP ("Icons"), "dannya40uk@yahoo.co.uk");
+
 
     aboutData.addCredit ("Rashid N. Achilov");
     aboutData.addCredit ("Toyohiro Asukai");
