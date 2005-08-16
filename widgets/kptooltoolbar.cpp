@@ -39,13 +39,14 @@
 #include <qwidget.h>
 #include <qwhatsthis.h>
 
+#include <kconfig.h>
 #include <kdebug.h>
+#include <kglobalsettings.h>
 #include <kicontheme.h>
 
 #include <kpdefs.h>
 #include <kptool.h>
 #include <kptoolaction.h>
-
 #include <kptoolwidgetbrush.h>
 #include <kptoolwidgeterasersize.h>
 #include <kptoolwidgetfillstyle.h>
@@ -86,7 +87,8 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
       m_baseWidget (0),
       m_baseLayout (0),
       m_toolLayout (0),
-      m_previousTool (0), m_currentTool (0)
+      m_previousTool (0), m_currentTool (0),
+      m_defaultIconSize (0)
 {
     // With these lines enabled, mousePressEvent's weren't being generated
     // when right clicking in empty part of the toolbar (each call affects
@@ -158,6 +160,61 @@ kpToolToolBar::~kpToolToolBar ()
 }
 
 
+// private
+int kpToolToolBar::defaultIconSize ()
+{
+    // Cached?
+    if (m_defaultIconSize > 0)
+        return m_defaultIconSize;
+
+#if DEBUG_KP_TOOL_TOOL_BAR
+    kdDebug () << "kpToolToolBar::defaultIconSize()" << endl;
+#endif
+
+
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (),
+                                     kpSettingsGroupTools);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    if (cfg->hasKey (kpSettingToolBoxIconSize))
+    {
+        m_defaultIconSize = cfg->readNumEntry (kpSettingToolBoxIconSize);
+    #if DEBUG_KP_TOOL_TOOL_BAR
+        kdDebug () << "\tread: " << m_defaultIconSize << endl;
+    #endif
+    }
+    else
+    {
+        m_defaultIconSize = -1;
+#if DEBUG_KP_TOOL_TOOL_BAR
+        kdDebug () << "\tfirst time - writing default: " << m_defaultIconSize << endl;
+#endif
+        cfg->writeEntry (kpSettingToolBoxIconSize, m_defaultIconSize);
+        cfg->sync ();
+    }
+
+
+    if (m_defaultIconSize <= 0)
+    {
+        // Adapt according to screen geometry
+        const QRect desktopSize = KGlobalSettings::desktopGeometry (this);
+    #if DEBUG_KP_TOOL_TOOL_BAR
+        kdDebug () << "\tadapting to screen size=" << desktopSize << endl;
+    #endif
+
+        if (desktopSize.width () >= 1024 && desktopSize.height () >= 768)
+            m_defaultIconSize = KIcon::SizeSmallMedium/*22x22*/;
+        else
+            m_defaultIconSize = KIcon::SizeSmall/*16x16*/;
+    }
+
+
+#if DEBUG_KP_TOOL_TOOL_BAR
+        kdDebug () << "\treturning " << m_defaultIconSize << endl;
+#endif
+    return m_defaultIconSize;
+}
+
 // public
 void kpToolToolBar::registerTool (kpTool *tool)
 {
@@ -177,7 +234,7 @@ void kpToolToolBar::registerTool (kpTool *tool)
     b->setToggleButton (true);
 
     b->setText (tool->text ());
-    b->setIconSet (tool->iconSet (KIcon::SizeSmall/*16x16*/));
+    b->setIconSet (tool->iconSet (defaultIconSize ()));
     QToolTip::add (b, tool->toolTip ());
     QWhatsThis::add (b, tool->description ());
 

@@ -606,11 +606,10 @@ QIconSet kpTool::iconSet (int forceSize) const
     kdDebug () << "kpTool(" << name () << ")::iconSet(forceSize=" << forceSize << ")" << endl;
 #endif
     // (robust in case BarIcon() default arg changes)
-    // TODO: I would use BarIconSet but tool icons placed in mainToolBar don't show up!?
     if (forceSize > 0)
-        return BarIcon (name (), forceSize);
+        return BarIconSet (name (), forceSize);
     else
-        return BarIcon (name ());
+        return BarIconSet (name ());
 }
 
 // public

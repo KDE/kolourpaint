@@ -114,6 +114,7 @@
 
 #define kpSettingsGroupTools QString::fromLatin1 ("Tool Settings")
 #define kpSettingLastTool QString::fromLatin1 ("Last Used Tool")
+#define kpSettingToolBoxIconSize QString::fromLatin1 ("Tool Box Icon Size")
 
 
 #define kpSettingsGroupText QString::fromLatin1 ("Text Settings")
