@@ -80,7 +80,8 @@ int main (int argc, char *argv [])
                          "thurston_dang@users.sourceforge.net");
     aboutData.addAuthor ("Kristof Borrey", I18N_NOOP ("Icons"), "borrey@kde.org");
     aboutData.addAuthor ("Kazuki Ohta", I18N_NOOP ("InputMethod Support"), "mover@hct.zaq.ne.jp");
-
+    aboutData.addAuthor ("Nuno Pinheiro", I18N_NOOP ("Icons"), "nf.pinheiro@gmail.com");
+    aboutData.addAuthor ("Danny Allen", I18N_NOOP ("Icons"), "dannya40uk@yahoo.co.uk");
 
     aboutData.addCredit ("Rashid N. Achilov");
     aboutData.addCredit ("Toyohiro Asukai");
@@ -165,8 +166,6 @@ int main (int argc, char *argv [])
     aboutData.addCredit ("Luke-Jr");
     aboutData.addCredit ("Maxim_86ualb2");
     aboutData.addCredit ("Michele");
-    aboutData.addCredit ("Nuno Pinheiro");
-    aboutData.addCredit ("Danny Allen");
 
 
     KCmdLineArgs::init (argc, argv, &aboutData);
