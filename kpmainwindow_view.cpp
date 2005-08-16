@@ -401,19 +401,46 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
                        << endl; 
         #endif
         
-            const QPoint globalPoint =
-                kpWidgetMapper::toGlobal (vuc, viewPoint);
-        #if DEBUG_KP_MAIN_WINDOW || 1
-            kdDebug () << "\t\tglobalPoint=" << globalPoint << endl;
-        #endif
-              
-            // TODO: Determine some sane cursor flashing indication.
+            if (vuc->clipRegion ().contains (viewPoint))
+            {
+                const QPoint globalPoint =
+                    kpWidgetMapper::toGlobal (vuc, viewPoint);
+            #if DEBUG_KP_MAIN_WINDOW || 1
+                kdDebug () << "\t\tglobalPoint=" << globalPoint << endl;
+            #endif
+                
+                // TODO: Determine some sane cursor flashing indication -
+                //       cursor movement is convenient but not conventional.
+                //
+                //       Major problem: if using QApplication::setOverrideCursor()
+                //           and in some stage of flash and window quits.
+                //
+                //           Or if using kpView::setCursor() and change tool.
+                QCursor::setPos (globalPoint);
+            }
+            // e.g. Zoom to 200%, scroll mainView to bottom-right.
+            // Unzoomed Thumbnail shows top-left portion of bottom-right of
+            // mainView.
             //
-            //       Major problem: if using QApplication::setOverrideCursor()
-            //           and in some stage of flash and window quits.
+            // Aim cursor at bottom-right of thumbnail and zoom out with
+            // CTRL+Wheel.
             //
-            //           Or if using kpView::setCursor() and change tool.
-            QCursor::setPos (globalPoint);
+            // If mainView is now small enough to largely not need scrollbars,
+            // Unzoomed Thumbnail scrolls to show _top-left_ portion
+            // _of top-left_ of mainView.
+            //
+            // Unzoomed Thumbnail no longer contains the point we zoomed out
+            // on top of.
+            else
+            {
+            #if DEBUG_KP_MAIN_WINDOW || 1
+                kdDebug () << "\t\twon't move cursor - would get outside view"
+                           << endl;
+            #endif
+            
+                // TODO: Sane cursor flashing indication that indicates
+                //       that the normal cursor movement didn't happen.
+            }
         }
         
     #if DEBUG_KP_MAIN_WINDOW && 1
