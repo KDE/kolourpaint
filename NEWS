@@ -4,6 +4,17 @@ KolourPaint 1.4_light2 Series (branches/KDE/3.5/)
 
 KolourPaint 1.4_light2 (Frozen ???)
 
+   * New icons (Danny Allen, Nuno Pinheiro)
+   
+   * Tool Box icon size is 22x22, not 16x16, at screen resolution >= 1024x768
+
+   * CTRL + Mouse Wheel = Zoom
+
+   * While freehand selection scaling, holding Shift maintains aspect ratio
+
+   * Rename icons from "hi" to "cr" - back to the state of 1.0 (Danny Allen)
+     but leave application icons as "hi" (Jonathan Riddell)
+
    * Enforce text box font height to prevent e.g. Chinese characters in
      buggy fonts from enlarging the text box and putting the cursor out of
      sync with the text
@@ -27,15 +38,6 @@ KolourPaint 1.4_light2 (Frozen ???)
      widgets and the empty part of the Tool Box
      [also in branches/KDE/3.[34]/, branches/kolourpaint/1.2_kde3/]
 
-   * New selection icons (Danny Allen)
-
-   * Rename icons from "hi" to "cr" - back to the state of 1.0 (Danny Allen)
-     but leave application icons as "hi" (Jonathan Riddell)
-
-   * Clone KolourPaint application icon as SVG (Jonathan Riddell)
-
-   * Add 22x22 KolourPaint application icon (Jonathan Riddell)
-   
    * Correct and update image format associations to all formats supported
      by KDE 3.5pre (kdelibs/kimgio/:r437289)
 
