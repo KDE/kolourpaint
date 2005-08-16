@@ -210,7 +210,7 @@ int kpToolToolBar::defaultIconSize ()
 
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-        kdDebug () << "\treturning " << m_defaultIconSize << endl;
+    kdDebug () << "\treturning " << m_defaultIconSize << endl;
 #endif
     return m_defaultIconSize;
 }
