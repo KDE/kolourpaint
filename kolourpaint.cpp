@@ -65,7 +65,8 @@ int main (int argc, char *argv [])
         I18N_NOOP ("Paint Program for KDE"),
         KAboutData::License_Custom,
         0/*copyright statement - see licence instead*/,
-        0/*free form text*/,
+        I18N_NOOP ("Support / Feedback:\n"
+                   "kolourpaint-support@lists.sourceforge.net\n"),
         "http://kolourpaint.sourceforge.net/"
     );
 
@@ -83,9 +84,6 @@ int main (int argc, char *argv [])
             " - the free and friendly\n"
             "KolourPaint support service.\n"
             "\n"
-            "Alternatively, you can submit bug reports and feature requests at\n"
-            "[http://bugs.kde.org].\n"
-            "\n"
         ),
         I18N_NOOP
         (
@@ -94,9 +92,6 @@ int main (int argc, char *argv [])
             "<a href=\"mailto:kolourpaint-support@lists.sourceforge.net\">kolourpaint-support@lists.sourceforge.net</a>"
             " - the free and friendly<br>"
             "KolourPaint support service.<br>"
-            "<br>"
-            "Alternatively, you can submit bug reports and feature requests at<br>"
-            "<a href=\"http://bugs.kde.org\">http://bugs.kde.org</a>.<br>"
             "<br>"
             "</qt>"
         ));
