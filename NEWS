@@ -12,6 +12,18 @@ KolourPaint 1.4_light2 (Frozen ???)
 
    * While freehand selection scaling, holding Shift maintains aspect ratio
 
+   * Prevent accidental drags in the Colour Palette from pasting text
+     containing the colour code
+     [also in branches/KDE/3.[34]/, branches/kolourpaint/1.2_kde3/]
+
+   * Cells in the bottom row and cells in the rightmost column of the Colour
+     Palette are now the same size as the other cells
+     [also in branches/KDE/3.[34]/, branches/kolourpaint/1.2_kde3/]
+
+   * Text drops to the empty part of the scrollview will not be placed
+     outside the document
+     [also in branches/KDE/3.[34]/, branches/kolourpaint/1.2_kde3/]
+
    * Rename icons from "hi" to "cr" - back to the state of 1.0 (Danny Allen)
      but leave application icons as "hi" (Jonathan Riddell)
 
