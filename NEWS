@@ -7,6 +7,18 @@ KolourPaint 1.4.3_light (Frozen ???)
    * Correct and update image format associations to all formats supported
      by KDE 3.4.2 (kdelibs/kimgio/:r436163)
 
+   * Prevent accidental drags in the Colour Palette from pasting text
+     containing the colour code
+     [also in branches/KDE/3.[35]/, branches/kolourpaint/1.2_kde3/]
+
+   * Cells in the bottom row and cells in the rightmost column of the Colour
+     Palette are now the same size as the other cells
+     [also in branches/KDE/3.[35]/, branches/kolourpaint/1.2_kde3/]
+
+   * Text drops to the empty part of the scrollview will not be placed
+     outside the document
+     [also in branches/KDE/3.[35]/, branches/kolourpaint/1.2_kde3/]
+
 KolourPaint 1.4.2_light (Frozen 2005-07-20)
 
    * Enforce text box font height to prevent e.g. Chinese characters in
