@@ -799,13 +799,19 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         if (view)
         {
             const QPoint viewPos = view->mapFromGlobal (globalPos);
+            const QPoint docPoint = view->transformViewToDoc (viewPos);
 
-            selTopLeft = view->transformViewToDoc (viewPos);
+            // viewUnderCursor() is hacky and can return a view when we aren't
+            // over one thanks to drags.
+            if (m_document && m_document->rect ().contains (docPoint))
+            {
+                selTopLeft = docPoint;
 
-            // TODO: In terms of doc pixels, would be inconsistent behaviour
-            //       based on zoomLevel of view.
-            // selTopLeft -= QPoint (-view->selectionResizeHandleAtomicSize (),
-            //                       -view->selectionResizeHandleAtomicSize ());
+                // TODO: In terms of doc pixels, would be inconsistent behaviour
+                //       based on zoomLevel of view.
+                // selTopLeft -= QPoint (-view->selectionResizeHandleAtomicSize (),
+                //                       -view->selectionResizeHandleAtomicSize ());
+            }
         }
 
         pasteText (text, true/*force new text selection*/, selTopLeft);
@@ -879,3 +885,4 @@ void kpMainWindow::slotDocumentRestored ()
 
 
 #include <kpmainwindow.moc>
+
