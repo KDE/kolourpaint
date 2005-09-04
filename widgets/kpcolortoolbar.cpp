@@ -458,11 +458,13 @@ kpColorCells::kpColorCells (QWidget *parent,
 {
     setName (name);
 
-    KColorCells::setShading (false);  // no 3D look
-
-    // don't let the user clobber the palette too easily
-    KColorCells::setAcceptDrops (false);
-
+    setShading (false);  // no 3D look
+    
+    // Trap KColorDrag so that kpMainWindow does not trap it.
+    // See our impl of dropEvent().
+    setAcceptDrops (true);
+    setAcceptDrags (true);
+    
     connect (this, SIGNAL (colorDoubleClicked (int)),
              SLOT (slotColorDoubleClicked (int)));
 
@@ -528,7 +530,11 @@ void kpColorCells::setOrientation (Qt::Orientation o)
     setNumRows (r);
     setNumCols (c);
 
-    setFixedSize (c * 26, r * 26);
+    setCellWidth (26);
+    setCellHeight (26);
+    
+    setFixedSize (numCols () * cellWidth () + frameWidth () * 2,
+                  numRows () * cellHeight () + frameWidth () * 2);
 
 /*
     kdDebug () << "\tlimits: array=" << sizeof (colors) / sizeof (colors [0])
@@ -592,6 +598,18 @@ void kpColorCells::setOrientation (Qt::Orientation o)
     m_orientation = o;
 }
 
+// virtual protected [base KColorCells]
+void kpColorCells::dropEvent (QDropEvent *e)
+{
+    // Eat event so that:
+    //
+    // 1. User doesn't clobber the palette (until we support reconfigurable
+    //    palettes)
+    // 2. kpMainWindow::dropEvent() doesn't try to paste colour code as text
+    //    (when the user slips and drags colour cell a little instead of clicking)
+    e->accept ();
+}
+
 // virtual protected
 void kpColorCells::paintCell (QPainter *painter, int row, int col)
 {
@@ -653,6 +671,18 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
     kdDebug () << "kpColorCells::mouseReleaseEvent() setting m_mouseButton back to -1" << endl;
 #endif
     m_mouseButton = -1;
+}
+
+// protected virtual [base KColorCells]
+void kpColorCells::resizeEvent (QResizeEvent *e)
+{
+    // KColorCells::resizeEvent() tries to adjust the cellWidth and cellHeight
+    // to the current dimensions but doesn't take into account
+    // frame{Width,Height}().
+    //
+    // In any case, we already set the cell{Width,Height} and a fixed
+    // widget size and don't want any of it changed.  Eat the resize event.
+    (void) e;
 }
 
 // protected slot
