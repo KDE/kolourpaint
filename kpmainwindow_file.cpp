@@ -162,14 +162,14 @@ void kpMainWindow::addRecentURL (const KURL &url)
 
 
     // TODO: PROPAGATE: interprocess
-    if (KMainWindow::memberList)
+    if (KMainWindow::memberList())
     {
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\thave memberList" << endl;
     #endif
 
-        for (Q3PtrList <KMainWindow>::const_iterator it = KMainWindow::memberList->begin ();
-             it != KMainWindow::memberList->end ();
+        for (Q3PtrList <KMainWindow>::const_iterator it = KMainWindow::memberList()->begin ();
+             it != KMainWindow::memberList()->end ();
              it++)
         {
             kpMainWindow *mw = dynamic_cast <kpMainWindow *> (*it);
