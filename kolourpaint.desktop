@@ -77,7 +77,9 @@ DocPath=kolourpaint/index.html
 #       branches/kolourpaint/control/scripts/gen_mimetype_line.sh.
 #
 #       Read kpdocument.cpp:myTypeForMime() comments instead.
-MimeType=image/fax-g3;image/gif;image/jp2;image/jpeg;image/png;image/tiff;image/x-bmp;image/x-dds;image/x-eps;image/x-exr;image/x-hdr;image/x-ico;image/x-pcx;image/x-portable-bitmap;image/x-portable-greymap;image/x-portable-pixmap;image/x-psd;image/x-rgb;image/x-targa;image/x-xbm;image/x-xcf-gimp;image/x-xpm;video/x-mng
+#
+#       Don't add any image types that can't be opened for reading.
+MimeType=image/fax-g3;image/gif;image/jp2;image/jpeg;image/png;image/tiff;image/x-bmp;image/x-dds;image/x-eps;image/x-exr;image/x-hdr;image/x-ico;image/x-pcx;image/x-portable-bitmap;image/x-portable-greymap;image/x-portable-pixmap;image/x-psd;image/x-rgb;image/x-targa;image/x-vnd.adobe.photoshop;image/x-xbm;image/x-xcf-gimp;image/x-xpm;video/x-mng
 
 Categories=Qt;KDE;Graphics
 Terminal=0
