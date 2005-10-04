@@ -405,7 +405,8 @@ static bool mimeTypeSupportsProperty (const QString &mimeType,
 // Only care about writable mimetypes.
 //
 // Run "branches/kolourpaint/control/scripts/gen_mimetype_line.sh Write" in
-// trunk/KDE/kdelibs/kimgio to check for any new mimetypes to add info for.
+// the version of kdelibs/kimgio/ (e.g. KDE 3.5) KolourPaint is shipped with,
+// to check for any new mimetypes to add info for.
 //
 // Update the below list also and bump up "kpSettingsGroupMimeTypeProperties"
 // in kpdefs.h.
