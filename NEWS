@@ -17,7 +17,7 @@ KolourPaint 1.4.3_light (Frozen 2005-10-05)
      [also in branches/KDE/3.[35]/, branches/kolourpaint/1.2_kde3/]
 
    * Correct and update image format associations to all formats supported
-     by KDE 3.4.2 (kdelibs/kimgio/:r436163)
+     by KDE 3.4.3 (kdelibs/kimgio/:r436163)
 
 KolourPaint 1.4.2_light (Frozen 2005-07-20)
 
