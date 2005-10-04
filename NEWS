@@ -1,8 +1,8 @@
 
-KolourPaint 1.4_light2 Series (branches/KDE/3.5/)
-=============================
+KolourPaint 1.4_relight Series (branches/KDE/3.5/)
+===============================
 
-KolourPaint 1.4_light2 (Frozen ???)
+KolourPaint 1.4_relight (Frozen 2005-10-05)
 
    * New icons (Danny Allen, Nuno Pinheiro)
 
@@ -51,7 +51,7 @@ KolourPaint 1.4_light2 (Frozen ???)
      [also in branches/KDE/3.[34]/, branches/kolourpaint/1.2_kde3/]
 
    * Correct and update image format associations to all formats supported
-     by KDE 3.5pre (kdelibs/kimgio/:r437289)
+     by KDE 3.5 (kdelibs/kimgio/:r466654)
 
    * String fixes (Stefan Winter)
      [also in branches/KDE/3.4/]
