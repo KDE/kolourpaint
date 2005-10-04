@@ -441,14 +441,14 @@ QString myTypeForMime (const QString &mimeType)
     #if DEBUG_KP_DOCUMENT
         kdDebug () << "\tmap is empty - filling" << endl;
     #endif
-        /* SYNC: In trunk/KDE/kdelibs/kimgio/, type:
+        /* SYNC: In branches/KDE/3.latest/kdelibs/kimgio/, type:
 
           for f in *.kimgio
           do
             echo typeForMimeMap.insert \(\"`grep Mimetype= $f |
                  sed -e s/Mimetype=//`\", \"`grep Type= $f |
-                 sed -e s/Type=//`\"\)\; ; done | sort
-          done
+                 sed -e s/Type=//`\"\)\;
+          done | sort
 
           Remove any that don't have an associated mimeType.
 
@@ -478,6 +478,7 @@ QString myTypeForMime (const QString &mimeType)
         typeForMimeMap.insert ("image/x-psd", "PSD");
         typeForMimeMap.insert ("image/x-rgb", "RGB");
         typeForMimeMap.insert ("image/x-targa", "TGA");
+        typeForMimeMap.insert ("image/x-vnd.adobe.photoshop", "PSD");
         typeForMimeMap.insert ("image/x-xbm", "XBM");
         typeForMimeMap.insert ("image/x-xcf-gimp", "XCF");
         typeForMimeMap.insert ("image/x-xpm", "XPM");
