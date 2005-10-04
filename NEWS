@@ -2,10 +2,7 @@
 KolourPaint 1.4_light Series (branches/KDE/3.4/)
 ============================
 
-KolourPaint 1.4.3_light (Frozen ???)
-
-   * Correct and update image format associations to all formats supported
-     by KDE 3.4.2 (kdelibs/kimgio/:r436163)
+KolourPaint 1.4.3_light (Frozen 2005-10-05)
 
    * Prevent accidental drags in the Colour Palette from pasting text
      containing the colour code
@@ -18,6 +15,9 @@ KolourPaint 1.4.3_light (Frozen ???)
    * Text drops to the empty part of the scrollview will not be placed
      outside the document
      [also in branches/KDE/3.[35]/, branches/kolourpaint/1.2_kde3/]
+
+   * Correct and update image format associations to all formats supported
+     by KDE 3.4.2 (kdelibs/kimgio/:r436163)
 
 KolourPaint 1.4.2_light (Frozen 2005-07-20)
 
