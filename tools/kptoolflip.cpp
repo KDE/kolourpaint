@@ -155,7 +155,7 @@ kpToolFlipDialog::kpToolFlipDialog (bool actOnSelection, QWidget *parent)
                    actOnSelection ? i18n ("Flip Selection") : i18n ("Flip Image"),
                    KDialogBase::Ok | KDialogBase::Cancel)
 {
-    Q3VBox *vbox = makeVBoxMainWidget ();
+    KVBox *vbox = makeVBoxMainWidget ();
 
     if (!vbox)
     {

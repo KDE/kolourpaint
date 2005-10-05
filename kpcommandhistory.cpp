@@ -42,7 +42,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kstdaccel.h>
 #include <kstdaction.h>
 
@@ -773,7 +773,7 @@ void kpCommandHistoryBase::trimCommandLists ()
 }
 
 
-static void populatePopupMenu (KPopupMenu *popupMenu,
+static void populatePopupMenu (KMenu *popupMenu,
                                const QString &undoOrRedo,
                                const Q3ValueList <kpCommand *> &commandList)
 {

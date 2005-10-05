@@ -48,7 +48,7 @@
 
 #include <kapplication.h>
 #include <kcolordialog.h>
-#include <kcolordrag.h>
+#include <k3colordrag.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -211,14 +211,14 @@ void kpDualColorButton::dragMoveEvent (QDragMoveEvent *e)
 {
     e->accept ((foregroundRect ().contains (e->pos ()) ||
                 backgroundRect ().contains (e->pos ())) &&
-               KColorDrag::canDecode (e));
+               K3ColorDrag::canDecode (e));
 }
 
 // protected virtual [base QWidget]
 void kpDualColorButton::dropEvent (QDropEvent *e)
 {
     QColor col;
-    KColorDrag::decode (e, col/*ref*/);
+    K3ColorDrag::decode (e, col/*ref*/);
 
     if (col.isValid ())
     {
