@@ -57,6 +57,7 @@
 #include <kptool.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
+#include <ktoolinvocation.h>
 
 
 // private
@@ -858,7 +859,7 @@ void kpMainWindow::slotMail ()
         }
     }
 
-    kapp->invokeMailer (
+    KToolInvocation::invokeMailer (
         QString::null/*to*/,
         QString::null/*cc*/,
         QString::null/*bcc*/,
