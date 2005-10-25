@@ -190,7 +190,7 @@ int main (int argc, char *argv [])
                       &app, SLOT (quit ()));
 
 
-    if (app.isRestored ())
+    if (app.isSessionRestored ())
         RESTORE (kpMainWindow)
     else
     {
