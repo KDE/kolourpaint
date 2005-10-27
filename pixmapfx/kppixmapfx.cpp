@@ -331,7 +331,7 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
 #endif
 
 
-    QApplication::setOverrideCursor (Qt::arrowCursor);
+    QApplication::setOverrideCursor (Qt::ArrowCursor);
 
     if (moreColorsThanDisplay && hasAlphaChannel)
     {

@@ -686,9 +686,9 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
     //m_smoothScaleLabel = new QLabel (i18n ("S&mooth scale"), m_operationGroupBox);
 
 
-    //m_resizeLabel->setAlignment (m_resizeLabel->alignment () | Qt::ShowPrefix);
-    //m_scaleLabel->setAlignment (m_scaleLabel->alignment () | Qt::ShowPrefix);
-    //m_smoothScaleLabel->setAlignment (m_smoothScaleLabel->alignment () | Qt::ShowPrefix);
+    //m_resizeLabel->setAlignment (m_resizeLabel->alignment () | Qt::TextShowMnemonic);
+    //m_scaleLabel->setAlignment (m_scaleLabel->alignment () | Qt::TextShowMnemonic);
+    //m_smoothScaleLabel->setAlignment (m_smoothScaleLabel->alignment () | Qt::TextShowMnemonic);
 
 
     Q3ButtonGroup *resizeScaleButtonGroup = new Q3ButtonGroup (baseWidget);
