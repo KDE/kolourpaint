@@ -52,6 +52,7 @@
 #include <kpwidgetmapper.h>
 #include <kpzoomedview.h>
 #include <kpzoomedthumbnailview.h>
+#include <kglobal.h>
 
 
 // private
@@ -601,7 +602,7 @@ void kpMainWindow::slotShowGridToggled ()
     updateMainViewGrid ();
 
 
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupGeneral);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     cfg->writeEntry (kpSettingShowGrid, m_configShowGrid = m_actionShowGrid->isChecked ());
@@ -725,7 +726,7 @@ void kpMainWindow::slotSaveThumbnailGeometry ()
                 << endl;
 #endif
 
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupThumbnail);
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupThumbnail);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     cfg->writeEntry (kpSettingThumbnailGeometry, m_configThumbnailGeometry);
@@ -741,7 +742,7 @@ void kpMainWindow::slotShowThumbnailToggled ()
 
     m_configThumbnailShown = m_actionShowThumbnail->isChecked ();
 
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupThumbnail);
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupThumbnail);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     cfg->writeEntry (kpSettingThumbnailShown, m_configThumbnailShown);
@@ -776,7 +777,7 @@ void kpMainWindow::slotZoomedThumbnailToggled ()
 
     m_configZoomedThumbnail = m_actionZoomedThumbnail->isChecked ();
 
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupThumbnail);
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupThumbnail);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     cfg->writeEntry (kpSettingThumbnailZoomed, m_configZoomedThumbnail);
@@ -795,7 +796,7 @@ void kpMainWindow::slotThumbnailShowRectangleToggled ()
 
     d->m_configThumbnailShowRectangle = d->m_actionShowThumbnailRectangle->isChecked ();
 
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupThumbnail);
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupThumbnail);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     cfg->writeEntry (kpSettingThumbnailShowRectangle, d->m_configThumbnailShowRectangle);

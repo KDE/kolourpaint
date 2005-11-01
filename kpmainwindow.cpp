@@ -107,7 +107,7 @@ double kpMainWindow::configColorSimilarity () const
 // public
 void kpMainWindow::configSetColorSimilarity (double val)
 {
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupGeneral);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     cfg->writeEntry (kpSettingColorSimilarity, m_configColorSimilarity = val);
@@ -122,7 +122,7 @@ void kpMainWindow::readGeneralSettings ()
     kdDebug () << "\tkpMainWindow(" << name () << ")::readGeneralSettings()" << endl;
 #endif
 
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupGeneral);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     m_configFirstTime = cfg->readBoolEntry (kpSettingFirstTime, true);
@@ -151,7 +151,7 @@ void kpMainWindow::readThumbnailSettings ()
     kdDebug () << "\tkpMainWindow(" << name () << ")::readThumbnailSettings()" << endl;
 #endif
 
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupThumbnail);
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupThumbnail);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     m_configThumbnailShown = cfg->readBoolEntry (kpSettingThumbnailShown, false);
@@ -212,7 +212,7 @@ void kpMainWindow::init ()
 
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
     // realise what other processes have done e.g. Settings / Show Path
-    kapp->config ()->reparseConfiguration ();
+    KGlobal::config ()->reparseConfiguration ();
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tTIME: reparseConfig = " << time.restart () << "msec" << endl;
 #endif
@@ -302,7 +302,7 @@ void kpMainWindow::init ()
         m_toolToolBar->setBarPos (KToolBar::Left);
         m_colorToolBar->setBarPos (KToolBar::Bottom);
 
-        KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+        KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupGeneral);
         KConfigBase *cfg = cfgGroupSaver.config ();
 
         cfg->writeEntry (kpSettingFirstTime, m_configFirstTime = false);
@@ -883,3 +883,4 @@ void kpMainWindow::slotDocumentRestored ()
 
 
 #include <kpmainwindow.moc>
+#include <kglobal.h>

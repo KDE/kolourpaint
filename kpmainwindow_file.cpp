@@ -58,6 +58,7 @@
 #include <kpview.h>
 #include <kpviewmanager.h>
 #include <ktoolinvocation.h>
+#include <kglobal.h>
 
 
 // private
@@ -69,7 +70,7 @@ void kpMainWindow::setupFileMenuActions ()
     m_actionOpen = KStdAction::open (this, SLOT (slotOpen ()), ac);
 
     m_actionOpenRecent = KStdAction::openRecent (this, SLOT (slotOpenRecent (const KURL &)), ac);
-    m_actionOpenRecent->loadEntries (kapp->config ());
+    m_actionOpenRecent->loadEntries (KGlobal::config ());
 
     m_actionSave = KStdAction::save (this, SLOT (slotSave ()), ac);
     m_actionSaveAs = KStdAction::saveAs (this, SLOT (slotSaveAs ()), ac);
@@ -142,7 +143,7 @@ void kpMainWindow::addRecentURL (const KURL &url)
         return;
 
 
-    KConfig *cfg = kapp->config ();
+    KConfig *cfg = KGlobal::config ();
 
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
     // realise what other processes have done e.g. Settings / Show Path
@@ -225,9 +226,9 @@ QSize kpMainWindow::defaultDocSize () const
 {
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
     // realise what other processes have done e.g. Settings / Show Path
-    kapp->config ()->reparseConfiguration ();
+    KGlobal::config ()->reparseConfiguration ();
 
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupGeneral);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     QSize docSize = cfg->readSizeEntry (kpSettingLastDocSize);
@@ -256,7 +257,7 @@ void kpMainWindow::saveDefaultDocSize (const QSize &size)
                << endl;
 #endif
 
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupGeneral);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     cfg->writeEntry (kpSettingLastDocSize, size);
@@ -417,11 +418,11 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
 #define SETUP_READ_CFG()                                                          \
     if (!reparsedConfiguration)                                                   \
     {                                                                             \
-        kapp->config ()->reparseConfiguration ();                                 \
+        KGlobal::config ()->reparseConfiguration ();                                 \
         reparsedConfiguration = true;                                             \
     }                                                                             \
                                                                                   \
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), forcedSaveOptionsGroup);    \
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), forcedSaveOptionsGroup);    \
     KConfigBase *cfg = cfgGroupSaver.config ();
 
 
@@ -521,7 +522,7 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
         newSaveOptions.printDebug ("\tnewSaveOptions");
     #endif
 
-        KConfigGroupSaver cfgGroupSaver (kapp->config (), forcedSaveOptionsGroup);
+        KConfigGroupSaver cfgGroupSaver (KGlobal::config (), forcedSaveOptionsGroup);
         KConfigBase *cfg = cfgGroupSaver.config ();
 
         // Save options user forced - probably want to use them in future

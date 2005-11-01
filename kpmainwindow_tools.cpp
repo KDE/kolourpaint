@@ -65,6 +65,7 @@
 #include <kpzoomedview.h>
 //Added by qt3to4:
 #include <Q3PtrList>
+#include <kglobal.h>
 
 
 // private
@@ -394,7 +395,7 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
 // private
 void kpMainWindow::readLastTool ()
 {
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupTools);
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupTools);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     m_lastToolNumber = cfg->readNumEntry (kpSettingLastTool, -1);
@@ -426,7 +427,7 @@ void kpMainWindow::saveLastTool ()
         return;
 
 
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupTools);
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupTools);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     cfg->writeEntry (kpSettingLastTool, number);

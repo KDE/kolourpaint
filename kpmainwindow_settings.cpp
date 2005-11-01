@@ -41,6 +41,7 @@
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kptooltoolbar.h>
+#include <kglobal.h>
 
 
 // private
@@ -115,7 +116,7 @@ void kpMainWindow::slotShowPathToggled ()
     slotUpdateCaption ();
 
 
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupGeneral);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     cfg->writeEntry (kpSettingShowPath, m_configShowPath);
@@ -156,7 +157,7 @@ void kpMainWindow::slotConfigureToolBars ()
     kdDebug () << "kpMainWindow::slotConfigureToolBars()" << endl;
 #endif
 
-    //saveMainWindowSettings (kapp->config (), autoSaveGroup ());
+    //saveMainWindowSettings (KGlobal::config (), autoSaveGroup ());
 
     KEditToolbar dialog (actionCollection (),
                          QString::null/*default ui.rc file*/,
@@ -189,7 +190,7 @@ void kpMainWindow::slotNewToolBarConfig ()
         QString::fromLatin1 ("ToolBarSettingsChanged"));
 
     //createGUI();
-    //applyMainWindowSettings (kapp->config (), autoSaveGroup ());
+    //applyMainWindowSettings (KGlobal::config (), autoSaveGroup ());
 }
 
 

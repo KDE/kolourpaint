@@ -60,6 +60,7 @@
 #include <kptoolselection.h>
 #include <kptoolskew.h>
 #include <kpviewmanager.h>
+#include <kglobal.h>
 
 
 // private
@@ -317,7 +318,7 @@ void kpMainWindow::slotResizeScale ()
     {
         d->m_resizeScaleDialogLastKeepAspect = dialog.keepAspectRatio ();
 
-        KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+        KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupGeneral);
         KConfigBase *cfg = cfgGroupSaver.config ();
 
         cfg->writeEntry (kpSettingResizeScaleLastKeepAspect,
@@ -464,7 +465,7 @@ void kpMainWindow::slotMoreEffects ()
     {
         d->m_moreEffectsDialogLastEffect = dialog.selectedEffect ();
 
-        KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+        KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupGeneral);
         KConfigBase *cfg = cfgGroupSaver.config ();
 
         cfg->writeEntry (kpSettingMoreEffectsLastEffect,

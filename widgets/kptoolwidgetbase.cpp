@@ -176,7 +176,7 @@ QPair <int, int> kpToolWidgetBase::defaultSelectedRowAndCol () const
 
     if (name ())
     {
-        KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupTools);
+        KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupTools);
         KConfigBase *cfg = cfgGroupSaver.config ();
 
         QString nameString = QString::fromLatin1 (name ());
@@ -219,7 +219,7 @@ void kpToolWidgetBase::saveSelectedAsDefault () const
     if (!name ())
         return;
 
-    KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupTools);
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupTools);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     QString nameString = QString::fromLatin1 (name ());
@@ -610,3 +610,4 @@ void kpToolWidgetBase::drawContents (QPainter *painter)
 }
 
 #include <kptoolwidgetbase.moc>
+#include <kglobal.h>
