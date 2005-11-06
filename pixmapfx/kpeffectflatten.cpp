@@ -34,7 +34,7 @@
 #include <qimage.h>
 #include <qlayout.h>
 #include <qpixmap.h>
-#include <q3vbox.h>
+#include <kvbox.h>
 //Added by qt3to4:
 #include <QVBoxLayout>
 
@@ -139,14 +139,13 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
 {
     if (!s_lastColor1.isValid () || !s_lastColor2.isValid ())
     {
-        KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupFlattenEffect);
-        KConfigBase *cfg = cfgGroupSaver.config ();
+        KConfigGroup cfgGroupSaver (KGlobal::config (), kpSettingsGroupFlattenEffect);
 
-        s_lastColor1 = cfg->readColorEntry (kpSettingFlattenEffectColor1);
+        s_lastColor1 = cfgGroupSaver.readColorEntry (kpSettingFlattenEffectColor1);
         if (!s_lastColor1.isValid ())
             s_lastColor1 = Qt::red;
 
-        s_lastColor2 = cfg->readColorEntry (kpSettingFlattenEffectColor2);
+        s_lastColor2 = cfgGroupSaver.readColorEntry (kpSettingFlattenEffectColor2);
         if (!s_lastColor2.isValid ())
             s_lastColor2 = Qt::blue;
     }
@@ -154,7 +153,7 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
 
     m_enableCheckBox = new QCheckBox (i18n ("E&nable"), this);
 
-    Q3VBox *colorButtonContainer = new Q3VBox (this);
+    KVBox *colorButtonContainer = new KVBox (this);
     colorButtonContainer->setMargin (KDialog::marginHint () / 2);
     colorButtonContainer->setSpacing (spacingHint ());
     m_color1Button = new KColorButton (s_lastColor1, colorButtonContainer);
@@ -185,12 +184,11 @@ kpEffectFlattenWidget::~kpEffectFlattenWidget ()
     s_lastColor2 = color2 ();
 
 
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupFlattenEffect);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfgGroupSaver (KGlobal::config (), kpSettingsGroupFlattenEffect);
 
-    cfg->writeEntry (kpSettingFlattenEffectColor1, s_lastColor1);
-    cfg->writeEntry (kpSettingFlattenEffectColor2, s_lastColor2);
-    cfg->sync ();
+    cfgGroupSaver.writeEntry (kpSettingFlattenEffectColor1, s_lastColor1);
+    cfgGroupSaver.writeEntry (kpSettingFlattenEffectColor2, s_lastColor2);
+	KGlobal::config ()->sync ();
 }
 
 
