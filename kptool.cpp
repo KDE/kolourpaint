@@ -1015,9 +1015,9 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
     // let user know what mouse button is being used for entire draw
     m_mouseButton = mouseButton (buttonState);
-    m_shiftPressed = (buttonState & Qt::ShiftButton);
-    m_controlPressed = (buttonState & Qt::ControlButton);
-    m_altPressed = (buttonState & Qt::AltButton);
+    m_shiftPressed = (buttonState & Qt::ShiftModifier);
+    m_controlPressed = (buttonState & Qt::ControlModifier);
+    m_altPressed = (buttonState & Qt::AltModifier);
     m_startPoint = m_currentPoint = view ? view->transformViewToDoc (e->pos ()) : QPoint (-1, -1);
     m_currentViewPoint = view ? e->pos () : QPoint (-1, -1);
     m_viewUnderStartPoint = view;
@@ -1049,9 +1049,9 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 #endif
 
     Qt::ButtonState buttonState = e->stateAfter ();
-    m_shiftPressed = (buttonState & Qt::ShiftButton);
-    m_controlPressed = (buttonState & Qt::ControlButton);
-    m_altPressed = (buttonState & Qt::AltButton);
+    m_shiftPressed = (buttonState & Qt::ShiftModifier);
+    m_controlPressed = (buttonState & Qt::ControlModifier);
+    m_altPressed = (buttonState & Qt::AltModifier);
 
     if (m_beganDraw)
     {
@@ -1306,11 +1306,11 @@ void kpTool::keyUpdateModifierState (QKeyEvent *e)
 #if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool::updateModifierState() e->key=" << e->key () << endl;
     kdDebug () << "\tshift="
-               << (e->stateAfter () & Qt::ShiftButton)
+               << (e->stateAfter () & Qt::ShiftModifier)
                << " control="
-               << (e->stateAfter () & Qt::ControlButton)
+               << (e->stateAfter () & Qt::ControlModifier)
                << " alt="
-               << (e->stateAfter () & Qt::AltButton)
+               << (e->stateAfter () & Qt::AltModifier)
                << endl;
 #endif
     if (e->key () & (Qt::Key_Alt | Qt::Key_Shift | Qt::Key_Control))
@@ -1318,9 +1318,9 @@ void kpTool::keyUpdateModifierState (QKeyEvent *e)
     #if DEBUG_KP_TOOL && 0
         kdDebug () << "\t\tmodifier changed - use e's claims" << endl;
     #endif
-        setShiftPressed (e->stateAfter () & Qt::ShiftButton);
-        setControlPressed (e->stateAfter () & Qt::ControlButton);
-        setAltPressed (e->stateAfter () & Qt::AltButton);
+        setShiftPressed (e->stateAfter () & Qt::ShiftModifier);
+        setControlPressed (e->stateAfter () & Qt::ControlModifier);
+        setAltPressed (e->stateAfter () & Qt::AltModifier);
     }
     else
     {
@@ -1334,7 +1334,7 @@ void kpTool::keyUpdateModifierState (QKeyEvent *e)
 
         // TODO: Can't do much about ALT - unless it's always KApplication::Modifier1?
         //       Ditto for everywhere else where I set SHIFT & CTRL but not alt.
-        setAltPressed (e->stateAfter () & Qt::AltButton);
+        setAltPressed (e->stateAfter () & Qt::AltModifier);
     }
 }
 

@@ -1280,7 +1280,7 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
     }
 
 
-    m_dragScrollTimer->changeInterval (DragScrollInterval);
+    m_dragScrollTimer->start (DragScrollInterval);
     m_scrollTimerRunOnce = true;
 
 
