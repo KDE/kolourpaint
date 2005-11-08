@@ -941,10 +941,13 @@ void kpColorSimilarityToolBarItem::mouseDoubleClickEvent (QMouseEvent * /*e*/)
  * kpColorToolBar
  */
 
-kpColorToolBar::kpColorToolBar (kpMainWindow *mainWindow, const char *name)
+kpColorToolBar::kpColorToolBar (const QString &label, kpMainWindow *mainWindow, const char *name)
     : KToolBar (mainWindow, name),
       m_mainWindow (mainWindow)
 {
+    setText (label);
+
+
     QWidget *base = new QWidget (this);
     m_boxLayout = new QBoxLayout (base, QBoxLayout::LeftToRight,
                                   5/*margin*/, (10 * 4)/*spacing*/);

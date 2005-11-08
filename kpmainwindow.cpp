@@ -248,7 +248,7 @@ void kpMainWindow::init ()
     // create more GUI
     //
 
-    m_colorToolBar = new kpColorToolBar (this, "Color Box");
+    m_colorToolBar = new kpColorToolBar (i18n ("Color Box"), this, "Color Box");
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tTIME: new kpColorToolBar = " << time.restart () << "msec" << endl;
 #endif

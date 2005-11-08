@@ -80,7 +80,7 @@ protected:
 };
 
 
-kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const char *name)
+kpToolToolBar::kpToolToolBar (const QString &label, kpMainWindow *mainWindow, int colsOrRows, const char *name)
     : KToolBar ((QWidget *) mainWindow, name, false/*don't use global toolBar settings*/, true/*readConfig*/),
       m_vertCols (colsOrRows),
       m_buttonGroup (0),
@@ -90,6 +90,9 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
       m_previousTool (0), m_currentTool (0),
       m_defaultIconSize (0)
 {
+    setText (label);
+
+
     // With these lines enabled, mousePressEvent's weren't being generated
     // when right clicking in empty part of the toolbar (each call affects
     // the toolbar in its respective orientation).  They don't seem to be

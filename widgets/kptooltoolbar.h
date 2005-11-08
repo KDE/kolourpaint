@@ -56,7 +56,7 @@ class kpToolToolBar : public KToolBar
 Q_OBJECT
 
 public:
-    kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows = 2, const char *name = 0);
+    kpToolToolBar (const QString &label, kpMainWindow *mainWindow, int colsOrRows = 2, const char *name = 0);
     virtual ~kpToolToolBar ();
 
 private:

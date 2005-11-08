@@ -245,7 +245,7 @@ class kpColorToolBar : public KToolBar
 Q_OBJECT
 
 public:
-    kpColorToolBar (kpMainWindow *mainWindow, const char *name = 0);
+    kpColorToolBar (const QString &label, kpMainWindow *mainWindow, const char *name = 0);
     virtual ~kpColorToolBar ();
 
     kpColor color (int which) const;
