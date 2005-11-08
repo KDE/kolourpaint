@@ -37,7 +37,7 @@
 #include <kpdefs.h>
 
 
-class QIconSet;
+class QIcon;
 class QPixmap;
 
 class KKeySequence;
@@ -194,7 +194,7 @@ signals:
 
 
 public:
-    QIconSet iconSet (int forceSize = 0) const;
+    QIcon iconSet (int forceSize = 0) const;
     QString iconName () const;
     kpToolAction *action ();
 

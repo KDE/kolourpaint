@@ -600,7 +600,7 @@ void kpTool::reselect ()
 
 
 // public
-QIconSet kpTool::iconSet (int forceSize) const
+QIcon kpTool::iconSet (int forceSize) const
 {
 #if DEBUG_KP_TOOL && 0
     kdDebug () << "kpTool(" << name () << ")::iconSet(forceSize=" << forceSize << ")" << endl;
