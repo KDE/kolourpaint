@@ -616,7 +616,7 @@ static QIcon toolButtonIconSet (const QString &iconName)
 
     // I bet past or future versions of KIconEffect::apply() resize the
     // disabled icon if we claim it's in group KIcon::Toolbar.  So resize
-    // it to match the QIconSet::Normal icon, just in case.
+    // it to match the QIcon::Normal icon, just in case.
     disabledIcon = kpPixmapFX::scale (disabledIcon,
                                       iconSetNormalIcon.width (),
                                       iconSetNormalIcon.height (),
