@@ -48,8 +48,8 @@
 <legalnotice>
 &FDLNotice;
 </legalnotice>
-<date>2005-02-03</date>
-<releaseinfo>1.4_light</releaseinfo>
+<date>2005-12-29</date>
+<releaseinfo>1.4_relight</releaseinfo>
 
 <abstract>
 <para>
@@ -475,6 +475,8 @@ size.</para>
 </sect1>
 
 <sect1 id="tool-erasers">
+<!-- This title does not contain the eraser icons because they are present in the
+sections; c.f. Connected Lines and Polygon, Rectangles and Selections. -->
 <title>Erasers</title>
 
 <sect2 id="tool-eraser-std">
@@ -672,16 +674,22 @@ selection.</para>
 
 <para>To move the selection, click and drag on it. The main view will scroll as required to allow you to move the selection to part of the image that is not currently displayed.</para>
 
-<para>You can free-form <link linkend="image-resize-scale">Smooth Scale</link> the selection or <link linkend="image-resize-scale">Resize</link> the image using the handles. The &RMB; invokes a context menu with common <guimenu>Edit</guimenu> commands and <link linkend="image-effects-section">Image Effects</link>.</para>
+<para>
+You can free-form <link linkend="image-resize-scale">Resize</link> the entire image or
+<link linkend="image-resize-scale">Smooth Scale</link> the selection using the corresponding handles.
+Hold &Shift; while free-form scaling the selection to maintain aspect ratio.
+The &RMB; invokes a context menu with common <guimenu>Edit</guimenu> commands and <link linkend="image-effects-section">Image Effects</link>.
+</para>
 
 <tip>
 <para>You can use the cursor keys while drawing out the boundary of the
 selection or while moving it.</para>
 </tip>
 
-<para>If you hold &Ctrl; before moving the selection, then you will move a
-copy of it. If you hold &Shift; before moving the selection, you will smear
-it.</para>
+<para>
+If you hold &Ctrl; before moving the selection, then you will move a
+copy of it. The selection will be smeared when moving it while &Shift; is held.
+</para>
 
 <informaltable>
 <tgroup cols="2">
@@ -792,8 +800,8 @@ with opaque foreground and background colors.
 </inlinemediaobject>
 </para>
 
-<para>The left picture shows the addition of text with an opaque foreground
-color and transparent background color.  The right picture shows the
+<para>The left picture shows the addition of text with opaque foreground
+colors and a transparent background color.  The right picture shows the
 addition of text with a transparent foreground color and opaque background
 color.</para>
 </sect2>
@@ -967,16 +975,29 @@ At zoom levels that aren't multiples of 100%, parts of the image may appear to m
 </para>
 
 <para>The first picture shows the <link linkend="tool-text">Text</link> tool icon, while the latter shows it at 600% zoom with the grid on.</para>
+
+<tip>
+<para>
+Another way of zooming when not drawing is to scroll the <mousebutton>wheel</mousebutton> while holding &Ctrl;.
+</para>
+</tip>
+
 </sect1>
 
 <sect1 id="view-thumbnail">
 <title>Thumbnail</title>
 <para>
-Use the thumbnail to view the image as a whole.
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="view_thumbnails.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
 </para>
-
 <para>
-If <guimenuitem>Zoomed Thumbnail Mode</guimenuitem> is selected, the thumbnail will display the entire image, scaling it as needed to fit, otherwise, it will show as much of the image as possible, unzoomed. To see what portion of the image the main view shows, enable the Thumbnail Rectangle.
+If <guimenuitem>Zoomed Thumbnail Mode</guimenuitem> is selected, the entire image is displayed, scaled as required to fit the thumbnail window (top-right picture).
+</para>
+<para>
+Otherwise, the thumbnail displays as much of the image as possible, starting from the top-left of the main view (bottom-right picture).
 </para>
 </sect1>
 
@@ -1219,7 +1240,7 @@ width and height will be scaled by the same percentage.</para>
 
 <tip>
 <para>
-You can free-form <guibutton>Smooth Scale</guibutton> the selection or <guibutton>Resize</guibutton> the image using the handles.
+You can free-form <guibutton>Resize</guibutton> the entire image or <guibutton>Smooth Scale</guibutton> the selection using the corresponding handles.
 </para>
 </tip>
 
@@ -1306,6 +1327,8 @@ Use this effect to soften or sharpen the image.
 </sect1>
 
 <sect1 id="image-more-effects">
+<!-- More Effects is left at the end because it is not part of the Image Effects Reference - if a
+user selects the next page, the next page should be Autocrop / Remove Internal Border. -->
 <title>More Effects</title>
 
 <para>
@@ -1373,10 +1396,15 @@ honest documentation.
 </para>
 <para>Program Copyright &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
 
-<para>&kolourpaint;-specific icons except The Ghost Copyright &copy; 2004 Kristof Borrey <email>borrey@kde.org</email></para>
+<para>
+&kolourpaint;-specific icons Copyright &copy; 2004, 2005
+Kristof Borrey <email>borrey@kde.org</email>,
+Nuno Pinheiro <email>nf.pinheiro@gmail.com</email>,
+Danny Allen <email>dannya40uk@yahoo.co.uk</email>
+</para>
 
 <para>Documentation and additional documentation artwork Copyright &copy; 2004, 2005
-&Thurston.Dang; &Thurston.Dang.mail;.</para>
+&Thurston.Dang; &Thurston.Dang.mail;</para>
 
 <para>Portions reproduced with permission from <ulink
 url="http://kolourpaint.sourceforge.net/"></ulink>.</para>
@@ -1385,7 +1413,7 @@ url="http://kolourpaint.sourceforge.net/"></ulink>.</para>
 
 <para>This program is licensed as follows:</para>
 
-<para>Copyright &copy; 2003, 2004, 2005 Clarence Dang <email>dang@kde.org</email></para>
+<para>Copyright &copy; 2003, 2004, 2005 &Clarence.Dang; &Clarence.Dang.mail;</para>
 
 <literallayout>
 All rights reserved.
@@ -1432,7 +1460,7 @@ url="http://kolourpaint.sourceforge.net/">http://kolourpaint.sourceforge.net/</u
 <sect1 id="requirements">
 <title>Requirements</title>
 
-<para> &kolourpaint; 1.4_light requires &kde; 3.4.</para>
+<para> &kolourpaint; 1.4_relight requires &kde; 3.5.</para>
 </sect1>
 
 <sect1 id="compilation">
