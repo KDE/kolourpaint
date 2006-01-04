@@ -1,12 +1,28 @@
 
-Before each release of KolourPaint and/or KDE, grep sources for
-"SYNC" & "sync:" and check that those assumptions still hold.
+1. Look in BUGS
+2. Look in patches/
+3. grep sources for:
+   "OPT" - something that could be optimised
+   "HACK" - something that should be done better
+   "TODO" - something that should be done
+4. See below:
 
-Before each KDE 3.0 backport release of KolourPaint, grep sources for
-"COMPAT".
 
-Look in BUGS, patches/, grep sources for "OPT", "HACK" & "TODO" and look
-here:
+KolourPaint bindist
+~~~~~~~~~~~~~~~~~~~
+
+KolourPaint bin:
+- install in menu (Lutz Schweizer)
+- install_systemwide script as sent to: (Lutz Schweizer)
+- "By the way, to run the program I need only a single click on the script
+   file" (Lutz Schweizer)
+- how about make bin first, then RPM that to fix KDE /usr or /opt/kde3 issues
+- docs for bin dist not work on debian - suspect different path and need better use of kde-config --docprefix or something
+
+audit docs for refer to common:/ e.g. kde-default.css
+
+QT_HAVE_MAX_IMAGE_SIZE // An extension made by SUSE to Qt :-(((
+QImage::maxImageSize(); defaults to 4096 as max width and height could cause trouble
 
 
 KolourPaint 1.2
@@ -26,20 +42,17 @@ line: shift+alt doesn't work but alt+shift does
     (until I can think up a better key combo/way to activate it)
 ~~~~
 
-KolourPaint bin:
-- help fails as soon as quit kolourpaint
-- install in menu (Lutz Schweizer)
-- install_systemwide script as sent to: (Lutz Schweizer)
-- "By the way, to run the program I need only a single click on the script
-   file" (Lutz Schweizer)
-- plus KDE 3.4 does not mix:
-  if have kolourpaintui.rc in KDEDIR and run bin, bin .rc gets moved to .rc.backup
-- fullscreen action already in ui_standards.rc in KDE 3.4;
-  use noMerge for compat with all versions of KDE
+[LO] fix antialising e.g. Courier [Adobe] antialiases in KWrite but not KolourPaint but Luxi Mono works in KolourPaint so it's probably the font selection i.e. that KFontSelect box that's wrong
 
 
 KolourPaint 1.4
 ~~~~~~~~~~~~~~~
+
+kolourpaint not associated with .bmp
+
+
+Paste Into New Window when sel transparency is set to Transparent changes all white to transparent, sel transparency selector after pasting doesn't work because of Set as Image behaviour - unintuitive.
+
 
 In the "Notes" section of the Handbook, change the second paragraph to avoid
 using "However ...".  [Thurston]
