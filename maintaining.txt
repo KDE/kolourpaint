@@ -1,0 +1,77 @@
+
+Welcome Maintainer (or Forker and it also depends how you pronounce it :P)!
+This is probably the first file you should read.  You must read this before
+every release.
+
+The idea as maintainer is that you have a _complete_ idea of the state of
+KolourPaint every so often (mandatory before a release) in every active
+branch:
+
+trunk/KDE/kdegraphics/{doc/,}kolourpaint
+* In an unknown state ATM
+
+branches/KDE/3.5/kdegraphics/{doc/,}kolourpaint
+* Releaseable except for version number change, used for any future KDE 3.5
+  releases
+
+branches/KDE/3.4/kdegraphics/{doc/,}kolourpaint
+* Releaseable except for version number change, used for any future KDE 3.4
+  releases
+
+branches/KDE/3.3/kdegraphics/{doc/,}kolourpaint
+* Releaseable, used for any future KDE 3.3 (unlikely)
+
+branches/kolourpaint/1.2_kde3/
+* Releaseable
+
+To reduce your workload, stop supporting a branch.  Add a file
+"BRANCH_STATUS" to the dead branch explaining the situation.  Dead
+branches:
+
+branches/kolourpaint/1.0/
+
+Note: Debian currently uses the 3.3 branch so you had better support it
+until the next release!
+
+
+For each release (whether tagged by KDE or as a standalone release),
+for each active branch (even if the branch is not going to be released
+soon):
+
+1. "svn log -v" to find out what has happened since you last knew the
+   state of the branch (branches/kolourpaint/control/stamp helps here).
+
+   Review every commit after the last known good state.  Reject, change
+   and/or port the change to other relevant branches.  You must be
+   paranoid else an unwanted change will slip through or a wanted change
+   will not be backported.
+
+   Act on TODO.
+
+   To help keep track of this, use the KDE Commit Filter (google it) and
+   watch all active branches.
+
+2. Grep sources for "SYNC" (assumptions on compilation and run environment)
+   & "sync:" (assumptions between >= 2 bits of code) and check that those
+   assumptions still hold.
+
+3. Go through your inbox, kde-apps.org, sf.net/projects/kolourpaint and the
+   KDE buglist collecting feedback into TODO and credits into AUTHORS.
+
+   The KolourPaint policy is: anyone who contributes an idea or reports a
+   bug deserves a mention in the credits even if the idea/bug has been
+   suggested by someone before and/or even if the idea appears ridiculous.
+
+   You will not believe the lengths some people go to, to get into the
+   credits.  KolourPaint will make it easy for those people, encourage
+   feedback and keep everyone happy :)
+
+   Update AUTHORS if this is trunk/KDE/ (not in branches as it would be
+   too painful and might encounter message freeze issues).
+
+4. Update all docs (README, NEWS, BUGS etc.).
+   Increment version number unless there are _absolutely_ no changes
+   (including text files, docs etc.).
+
+Loop until this reaches a stable state.
+

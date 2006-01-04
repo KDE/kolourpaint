@@ -1,4 +1,6 @@
 
+OBSOLETE
+
 How to make a checkinstall package of KolourPaint.
 --------------------------------------------------
 
