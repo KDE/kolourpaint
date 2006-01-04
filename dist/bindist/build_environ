@@ -1,0 +1,41 @@
+#!/bin/bash
+
+
+echo 'KolourPaint Build Environment (2005-07-31)'
+echo 'Copyright (c) Clarence Dang 2004,2005'
+echo
+echo NOTE: This script should be run as \'. $0\' to have any effect.
+echo
+
+
+function setVar
+{
+    echo $1=$2
+    export "$1"="$2"
+}
+
+
+echo apbuild from autopackage.org:
+setVar APBUILD_DEBUG 1  # to see static links
+setVar CXX /usr/local/bin/apg++
+setVar CC /usr/local/bin/apgcc
+echo
+
+
+echo distcc:
+setVar PATH "/usr/lib/distcc/bin:$PATH"
+setVar DISTCC_HOSTS "celery/4"
+echo
+
+
+echo NOTE: You should make sure your g++ symlink/alias is selecting the right
+echo       g++ and therefore ABI \(\$APBUILD_CC does not seem to work even when
+echo       given an absolute path\).
+echo
+echo Currently, apbuild will use:
+g++ --version
+echo g++3.2/3.3 = 1st ABI
+echo g++3.4/4.0 = 2nd ABI
+echo
+echo Press any key to continue.
+read

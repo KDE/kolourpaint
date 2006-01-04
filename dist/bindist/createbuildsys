@@ -1,0 +1,95 @@
+#!/bin/bash
+
+
+echo 'KolourPaint make -f Makefile.cvs 1.1 (2005-07-31)'
+echo 'Copyright (c) Clarence Dang 2004, 2005'
+echo
+
+
+if [ $# -ne 1 ]
+then
+    echo Syntax: $0 kolourpaint-x.x[.x[_kde3]]-before-Makefile.cvs/
+    echo
+    exit 1
+fi
+
+
+BEFORE_DIR="$1"
+if [ ! -f "$BEFORE_DIR/Makefile.cvs" ]
+then
+    echo $BEFORE_DIR/Makefile.cvs does not exist
+    echo
+    exit 1
+fi
+
+
+AFTER_DIR="`echo $BEFORE_DIR | cut -d- -f1-2`"
+if [ -z "$AFTER_DIR" ] ||
+    ! echo $AFTER_DIR | egrep '^kolourpaint-[0-9]+\.[0-9]+(|\.[0-9]+)(|_kde3)$' > /dev/null
+then
+    echo "$AFTER_DIR doesn't look like it's a KolourPaint package."
+    echo
+    exit 1
+fi
+
+
+if [ -e "$AFTER_DIR" ]
+then
+    while true
+    do
+        echo -n "$AFTER_DIR already exists.  Delete [Y/N]? "
+        read
+        if [ "$REPLY" = y ]
+        then
+            rm -rf "$AFTER_DIR"
+            break
+        elif [ "$REPLY" = n ]
+        then
+            exit 1
+        fi
+    done
+fi
+echo
+
+
+echo autoconf --version:
+echo "~~~~"
+autoconf --version
+echo "~~~~"
+echo
+echo automake --version:
+echo "~~~~"
+automake --version
+echo "~~~~"
+echo
+while true
+do
+    echo 'Make sure you have at least autoconf 2.57 to avoid errors on FreeBSD.'
+    echo -n 'Are autoconf/automake new enough [Y/N]? '
+    read
+    if [ "$REPLY" = "y" ]
+    then
+        break
+    elif [ "$REPLY" = "n" ]
+    then
+        exit 1
+    fi
+done
+
+
+cp -a "$BEFORE_DIR" "$AFTER_DIR" || exit 1
+cd "$AFTER_DIR" || exit 1
+make -f Makefile.cvs || exit 1
+rm -rf auto*.cache/
+
+
+echo
+echo All Done.
+echo
+
+echo Now run in this order:
+echo 1. \'nosillyperms $AFTER_DIR\'
+echo 2. \'developerdiff '<prev_version.tar[.gz|.bz2]>' $AFTER_DIR \| tee diff\'
+echo '   (yes, please do this again to make sure there are no unintended changes)'
+echo 3. \'pack $AFTER_DIR '<prev_version.tar[.gz|.bz2]>'\'.
+echo

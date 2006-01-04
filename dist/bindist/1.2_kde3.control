@@ -1,0 +1,30 @@
+# Pass this script as the arg to "collectsrc"
+
+#
+# Make sure all of these are _clean_ checkouts
+#
+
+# Convenience var - you don't have to use it
+SRC_ROOT=/mnt/test/svn
+
+
+# kde-i18n
+KDE_I18N_SVN_DIR=$SRC_ROOT/branches/KDE/3.3/kde-i18n-pseudo
+
+# kde-common/admin
+KDE_ADMIN_SVN_DIR=$SRC_ROOT/branches/KDE/3.3/kde-common/admin
+
+# kdegraphics (KDE)
+KDE_KDEGRAPHICS_SVN_DIR=$SRC_ROOT/branches/KDE/3.3/kdegraphics
+
+
+# kdegraphics (KolourPaint) - different to above since might be using
+# symlinks to $KDE_KDEGRAPHICS_SVN_DIR for build sys.
+KP_KDEGRAPHICS_SVN_DIR=$SRC_ROOT/branches/kolourpaint/kdegraphics-svn-pris
+
+# kdegraphics/doc (KolourPaint)
+KP_DOC_SVN_DIR=$SRC_ROOT/branches/kolourpaint/1.2_kde3/kdegraphics/doc
+
+# branches/kolourpaint/control
+KP_CONTROL_SVN_DIR=$SRC_ROOT/branches/kolourpaint/control
+

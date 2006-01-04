@@ -1,0 +1,443 @@
+#!/bin/bash
+
+
+# Check for required, non-"standard" binaries.
+#
+# (Hide stdout since don't care if exist but don't hide stderr for
+#  diagnosing lack of binary)
+which xdelta >/dev/null || exit 1
+which bsdiff >/dev/null || exit 1
+
+
+SELF_ROOT="`dirname $0`"
+if [ -z "`echo "$SELF_ROOT" | egrep '^/'`" ]
+then
+    SELF_ROOT="$PWD/$SELF_ROOT"
+fi
+export PATH="$SELF_ROOT:$PATH"
+
+
+echo 'KolourPaint Pack (2005-07-31)'
+echo 'Copyright (c) Clarence Dang 2004,2005'
+echo
+
+
+function absPath
+{
+    if [ -z "`echo "$1" | egrep '^/'`" ]
+    then
+        echo "$PWD/$1"
+    else
+        echo "$1"
+    fi
+}
+
+
+if [ $# -eq 0 ] || [ $# -gt 2 ]
+then
+    echo Syntax: $0 '<new version directory> [<old version .tar[.gz|.bz2]>]'
+    echo
+    exit 1
+fi
+
+
+NEW_VER_DIR="$1"
+if [ -n "`echo $1 | grep /`" ]
+then
+    echo $NEW_VER_DIR cannot have a / to make things easier for the script.
+    echo
+    exit 1
+fi
+if [ ! -d "$NEW_VER_DIR" ]
+then
+    echo $NEW_VER_DIR does not exist.
+    echo
+    exit 1
+fi
+
+OLD_VER_TARBALL="$2"
+if [ -n "$OLD_VER_TARBALL" ]
+then
+    OLD_VER_TARBALL="`absPath "$OLD_VER_TARBALL"`"
+else
+    echo "WARNING: You did not specify the previous version's .tar[.gz|.bz2] as"
+    echo "         the 2nd argument.  This will not create bsdiff's and xdelta's."
+    echo
+    echo "Press CTRL+C to abort."
+    read
+fi
+
+if [ -n "$OLD_VER_TARBALL" ] && [ ! -e "$OLD_VER_TARBALL" ]
+then
+    echo $OLD_VER_TARBALL does not exist.
+    echo
+    exit 1
+fi
+
+
+PACKAGE="$NEW_VER_DIR"
+TAR="$PACKAGE.tar"
+TAR_GZ="$PACKAGE.tar.gz"
+TAR_BZ2="$PACKAGE.tar.bz2"
+
+
+function promptDeleteIfExist
+{
+    if [ -e "$1" ]
+    then
+        while true
+        do
+            echo -n $1 already exists.'  'Delete [Y/N]'? '
+            read
+
+            if [ "$REPLY" = y ]
+            then
+                rm -rf "$1" || exit 1
+                break
+            elif [ "$REPLY" = n ]
+            then
+                echo ABORTING
+                echo
+                exit 1
+            fi
+        done
+    fi
+}
+
+
+#if false
+#then
+promptDeleteIfExist "$TAR"
+
+echo -n Creating $TAR ...' '
+if tar --owner=root --group=root -cf "$TAR" "$PACKAGE"
+then
+    echo OK
+else
+    echo FAIL
+    echo
+    exit 1
+fi
+#fi
+
+
+promptDeleteIfExist pack-temp-backups
+mkdir pack-temp-backups || exit 1
+
+# Paranoid that bzip2/gzip/xdelta/bsdiff will nuke original
+echo -n Backing up $TAR ...' '
+if cp "$TAR" pack-temp-backups
+then
+    echo OK
+else
+    echo FAIL
+    echo
+
+    exit 1
+fi
+
+
+#if false
+#then
+promptDeleteIfExist "$TAR_GZ"
+
+echo -n Creating $TAR_GZ ...' '
+if gzip -9 -c "$TAR" > "$TAR_GZ"
+then
+    echo OK
+else
+    echo FAIL
+    echo
+    exit 1
+fi
+#fi
+
+
+#if false
+#then
+promptDeleteIfExist "$TAR_BZ2"
+
+echo -n Creating $TAR_BZ2 ...' '
+if bzip2 -9 -c "$TAR" > "$TAR_BZ2"
+then
+    echo OK
+else
+    echo FAIL
+    echo
+    exit 1
+fi
+#fi
+
+    
+if [ -n "$OLD_VER_TARBALL" ]
+then
+    echo
+    
+    if echo $OLD_VER_TARBALL | egrep "\.tar\.gz$" > /dev/null
+    then
+        OLD_VER_TARBALL_TAR="`basename "$OLD_VER_TARBALL" | sed -e s/\.gz$//`"
+        promptDeleteIfExist "$OLD_VER_TARBALL_TAR"
+        echo -n Turning $OLD_VER_TARBALL into a .tar ...' '
+        DELETE_OLD_VER_TARBALL_TAR=1
+        if gunzip -c "$OLD_VER_TARBALL" > "$OLD_VER_TARBALL_TAR"
+        then
+            echo GZ ... OK
+        else
+            echo FAIL
+            echo
+            exit 1
+        fi
+    elif echo $OLD_VER_TARBALL | egrep "\.tar.bz2$" > /dev/null
+    then
+        OLD_VER_TARBALL_TAR="`basename "$OLD_VER_TARBALL" | sed -e s/\.bz2$//`"
+        promptDeleteIfExist "$OLD_VER_TARBALL_TAR"
+        echo -n Turning $OLD_VER_TARBALL into a .tar ...' '
+        DELETE_OLD_VER_TARBALL_TAR=1
+        if bunzip2 -c "$OLD_VER_TARBALL" > "$OLD_VER_TARBALL_TAR"
+        then
+            echo BZ2 ... OK
+        else
+            echo FAIL
+            echo
+            exit 1
+        fi
+    elif echo $OLD_VER_TARBALL | egrep "\.tar$" > /dev/null
+    then
+        # TODO: if copying over self, don't delete - don't do anything actually
+        OLD_VER_TARBALL_TAR="`basename "$OLD_VER_TARBALL"`"
+        promptDeleteIfExist "$OLD_VER_TARBALL_TAR"
+        echo -n Copying over $OLD_VER_TARBALL_TAR ...' '
+        DELETE_OLD_VER_TARBALL_TAR=1
+        if cp "$OLD_VER_TARBALL" "$OLD_VER_TARBALL_TAR"
+        then
+            echo OK
+        else
+            echo FAIL
+            echo
+            exit 1
+        fi
+    else
+        echo -n Turning $OLD_VER_TARBALL into a .tar ...' '
+        echo FAIL
+        echo
+        echo "Don't know how to decompress."
+        echo
+
+        exit 1
+    fi
+
+
+    # Paranoid that xdelta/bsdiff will nuke original
+    echo -n Backing up $OLD_VER_TARBALL_TAR ...' '
+    if cp "$OLD_VER_TARBALL_TAR" pack-temp-backups
+    then
+        echo OK
+    else
+        echo FAIL
+        echo
+
+        exit 1
+    fi
+    
+    
+    OLD_VER="`echo $OLD_VER_TARBALL_TAR | cut -d- -f2- | sed -e 's/\.tar$//'`"
+    NEW_VER="`echo $PACKAGE | cut -d- -f2-`"
+    if [ -z "$OLD_VER" ] || [ -z "$NEW_VER" ]
+    then
+        echo Something is wrong with the version numbers $OLD_VER and $NEW_VER
+        echo
+
+        exit 1
+    fi
+
+    XDELTA="`echo $PACKAGE | cut -d- -f1`-$OLD_VER-$NEW_VER.tar.xdelta"
+    #if false
+    #then
+    promptDeleteIfExist "$XDELTA"
+    echo -n Generating $XDELTA ...' '
+    # xdelta return value is useless
+    if xdelta delta -p -9 "$OLD_VER_TARBALL_TAR" "$TAR" "$XDELTA" || true
+    then
+        echo OK
+    else
+        echo FAIL
+        echo
+
+        exit 1
+    fi
+    #fi
+
+    BSDIFF="`echo $PACKAGE | cut -d- -f1`-$OLD_VER-$NEW_VER.tar.bsdiff"
+    #if false
+    #then
+    promptDeleteIfExist "$BSDIFF"
+    echo -n Generating $BSDIFF ...' '
+    if bsdiff "$OLD_VER_TARBALL_TAR" "$TAR" "$BSDIFF"
+    then
+        echo OK
+    else
+        echo FAIL
+        echo
+
+        exit 1
+    fi
+    #fi
+fi
+
+
+# Paranoid that gunzip/bunzip2/xdelta/bsdiff will nuke originals:
+echo
+
+for f in "$TAR_GZ" "$TAR_BZ2" "$XDELTA" "$BSDIFF"
+do
+    if [ -n "$f" ]
+    then
+        echo -n Backing up $f ...' '
+        if cp "$f" pack-temp-backups
+        then
+            echo OK
+        else
+            echo FAIL
+            echo
+
+            exit 1
+        fi
+    fi
+done
+
+
+echo
+
+promptDeleteIfExist pack-temp
+mkdir pack-temp || exit 1
+cd pack-temp || exit 1
+
+echo -n Verifying $TAR contents matches original directory ...' '
+if tar xf ../"$TAR" &&
+    diff -ur "$PACKAGE" ../"$PACKAGE" &&
+    rm -rf "$PACKAGE"
+then
+    echo OK
+else
+    echo FAIL
+    echo
+    
+    exit 1
+fi
+
+echo -n Verifying decompressed $TAR_GZ matches $TAR ...' '
+if gunzip -c ../"$TAR_GZ" > decompressedTarGZ.tar &&
+    diff decompressedTarGZ.tar ../"$TAR" &&
+    rm decompressedTarGZ.tar
+then
+    echo OK
+else
+    echo FAIL
+    echo
+    exit 1
+fi
+
+echo -n Verifying decompressed $TAR_BZ2 matches $TAR ...' '
+if bunzip2 -c ../"$TAR_BZ2" > decompressedTarBZ2.tar &&
+    diff decompressedTarBZ2.tar ../"$TAR" &&
+    rm decompressedTarBZ2.tar
+then
+    echo OK
+else
+    echo FAIL
+    echo
+    exit 1
+fi
+
+if [ -n "$XDELTA" ]
+then
+    echo -n Verifying $XDELTA ...' '
+    if xdelta patch ../"$XDELTA" ../"$OLD_VER_TARBALL_TAR" &&
+        diff "$TAR" ../"$TAR" &&
+        rm "$TAR"
+    then
+        echo OK
+    else
+        echo FAIL
+        echo
+        exit 1
+    fi
+fi
+
+if [ -n "$BSDIFF" ]
+then
+    echo -n Verifying $BSDIFF ...' '
+    if bspatch ../"$OLD_VER_TARBALL_TAR" bsdiff.tar ../"$BSDIFF" &&
+        diff bsdiff.tar ../"$TAR" &&
+        rm bsdiff.tar
+    then
+        echo OK
+    else
+        echo FAIL
+        echo
+        exit 1
+    fi
+fi
+
+cd .. || exit 1
+rm -rf pack-temp || exit 1
+
+
+for f in "$TAR" "$TAR_GZ" "$TAR_BZ2" "$XDELTA" "$BSDIFF"
+do
+    if [ -n "$f" ]
+    then
+        md5sum "$f"
+    fi
+done
+
+for f in "$TAR" "$TAR_GZ" "$TAR_BZ2" "$XDELTA" "$BSDIFF"
+do
+    if [ -n "$f" ]
+    then
+        filesize "$f"
+    fi
+done
+
+
+echo
+
+for f in "$OLD_VER_TARBALL_TAR" "$TAR" "$TAR_GZ" "$TAR_BZ2" "$XDELTA" "$BSDIFF"
+do
+    if [ -n "$f" ]
+    then
+        echo -n Checking backup of $f ...' '
+        if diff "$f" pack-temp-backups/"$f"
+        then
+            echo OK
+        else
+            echo FAIL
+            echo
+
+            exit 1
+        fi
+    fi
+done
+
+rm -rf pack-temp-backups || exit 1
+
+
+if [ "$DELETE_OLD_VER_TARBALL_TAR" ]
+then
+    rm "$OLD_VER_TARBALL_TAR" || exit 1
+fi
+
+
+# Finish
+
+echo
+echo All Done.
+echo
+
+echo Now, in this order:
+echo 1. developerdiff
+echo 2. Note the MD5SUMS and file sizes somewhere.
+echo "3. if that was the source distribution, test build it with branches/KDE/3.5/kdelibs"
+echo "   and then with KDE 3.0 (both using \'build\')."
+echo
+

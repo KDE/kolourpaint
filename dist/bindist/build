@@ -1,0 +1,29 @@
+#!/bin/bash
+
+
+echo 'KolourPaint Build (2005-07-31)'
+echo 'Copyright (c) Clarence Dang 2004,2005'
+echo
+
+
+SELF_ROOT=`dirname $0`
+if [ -z "`echo "$SELF_ROOT" | egrep '^/'`" ]
+then
+    SELF_ROOT="$PWD/$SELF_ROOT"
+fi
+
+
+source "$SELF_ROOT/build_environ"
+
+
+echo ./configure --disable-debug --disable-rpath --enable-final
+./configure --disable-debug --disable-rpath --enable-final
+if [ "$DISTCC_HOSTS" ]
+then
+    echo With distcc: make -j4:
+    make -j4
+else
+    echo Without distcc: make -j2:
+    make -j2
+fi
+

@@ -1,0 +1,193 @@
+
+KolourPaint Version 1.2.2_kde3 (Binary Release #3 Frozen 2004/12/11)
+http://kolourpaint.sourceforge.net/
+
+Copyright (c) 2003-2004 Clarence Dang <dang@kde.org>
+
+
+For licensing and warranty information, read COPYING.
+For known problems with this release of KolourPaint, read BUGS.
+For what changes have been made, read NEWS.
+For information on what features are planned or unfinished, read TODO.
+For general information, read this file (README):
+
+
+0. Binary Release
+=================
+
+This package is a portable binary release of KolourPaint for GNU/Linux/x86.
+
+0.1 How to Run
+--------------
+
+To run it, double click on the script "kolourpaint" in your file manager.
+
+0.2 Requirements
+----------------
+
+As a rule, this package will work in most GNU/Linux/x86 distributions
+released after August 2002 but not too many years after 2004 (due to
+frequent ABI changes in the GNU/Linux world).  Specifically, your system
+must meet the following requirements:
+
+* Linux/x86
+
+* KDE 3.x
+
+* Qt 3 (>= 3.0.5) with threading
+
+* X
+
+* glibc 2.2 compatibility
+
+* gcc 3.2 compatible ABI
+  (this does _not_ mean you have to compile anything nor have gcc)
+
+If your system doesn't meet these requirements, try locating another binary
+package for KolourPaint from either your operating system distributor or
+http://kolourpaint.sourceforge.net/download.html.  Alternatively, you can
+compile from source (also downloadable from the KolourPaint website).
+
+0.3 Feedback
+------------
+
+We are very interested to know whether this package works for you - please
+send feedback to <kolourpaint-support@lists.sourceforge.net>.  We would
+appreciate the following information:
+
+* what binary release you are running (2nd line in this file)
+* what GNU/Linux distribution you are using
+* whether or not this package works for you
+
+0.4 History
+-----------
+
+This is mainly a list of binary release packaging changes only.  For other
+changes, refer to NEWS.
+
+1.2.4_kde3 Binary Release #1 (Frozen 2005-08-07)
+   
+* Put instructions in wrapper script for actually running KolourPaint in case
+  user accidently opened script in text editor.
+
+* Support running kolourpaint from a symlink to the wrapper, stored in a
+  different dir to the wrapper.
+
+* Only delete docs symlink when number of running instances of KolourPaint
+  bin reaches 0.
+
+
+1.2.2_kde3 Binary Release #3 (Frozen 2004/12/11)
+   * Guarantee the display of the current tool's options widget on startup
+     under Qt 3.0 [kolourpaint-1.2.2_kde3-qt3.0_tool_options.diff]
+   * Rebuild with apbuild-1.6 (previous releases used apbuild-1.5)
+
+1.2.2_kde3 Binary Release #1 (Frozen 2004/11/29)
+   * Fix missing Tool Box icons under some GNU/Linux distributions
+   * Include KDE 3.3.2 translations
+   * Ensure caption is correct (not always just "kolourpaint" in lowercase)
+     when running KDE >= 3.1
+   * Enable automatic filename extension handling in save dialog when
+     running KDE >= 3.2
+   * Open relative filenames (given as arguments)
+   * Allow package path to contain spaces
+   * Make the HTML docs actually work
+   * Remove absolute RPATH's that were inadvertently forcing Qt/KDE libs
+     installed in particular places to be used
+   * Reduce startup time by not calling kde-config
+   * Rename bin/ to bin-do_not_enter/
+
+1.2_kde3 Binary Release #1 (2004/08/18)
+   * First release
+
+
+1. What is KolourPaint?
+=======================
+
+KolourPaint is a free, easy-to-use paint program for KDE.
+
+It aims to be conceptually simple to understand; providing a level of
+functionality targeted towards the average user.  It's designed for daily
+tasks like:
+
+* Painting - drawing diagrams and "finger painting"
+* Image Manipulation - editing screenshots and photos; applying effects
+* Icon Editing - drawing clipart and logos with transparency
+
+It's not an unusable and monolithic program where simple tasks like drawing
+lines become near impossible.  Nor is it so simple that it lacks essential
+features like Undo/Redo.
+
+KolourPaint is opensource software written in C++ using the Qt and KDE
+libraries.
+
+
+2. Features
+===========
+
+* Undo/Redo Support (10-500 levels of history depending on memory usage)
+
+* Tools (single key shortcuts available for all tools)
+  - Brush, Color Eraser, Color Picker, Connected Lines a.k.a. Polyline
+  - Curve, Ellipse, Eraser, Flood Fill, Line, Pen, Polygon, Rectangle
+  - Rounded Rectangle, Spraycan, Text
+
+* Selections (fully undo- and redo-able)
+  - Rectangular, Elliptical, Free-Form shapes
+  - Choice between Opaque and Transparent selections
+  - Full Clipboard/Edit Menu support
+  - Freehand resizeable
+
+* Colour Similarity means that you can fill regions in dithered images and
+  photos
+
+* Transparency
+  - Draw transparent icons and logos on a checkerboard background
+  - All tools can draw in the "Transparent Colour"
+
+* Image Effects
+  - Autocrop / Remove Internal Border
+  - Balance (Brightness, Contrast, Gamma)
+  - Clear, Emboss, Flatten, Flip, Invert (with choice of channels)
+  - Reduce Colours, Reduce to Greyscale, Resize, Rotate
+  - Scale, Set as Image (Crop), Skew, Smooth Scale, Soften & Sharpen
+
+* Close-up Editing
+  - Zoom (from 0.01x to 16x)
+  - Grid
+  - Thumbnail
+
+* File Operations
+  - Open/Save in all file formats provided by KImageIO
+    (PNG, JPEG, BMP, ICO, PCX, TIFF,...) with preview
+  - Print, Print Preview
+  - Mail
+  - Set as Wallpaper
+
+
+3. Updates & More Information
+=============================
+
+Visit: http://kolourpaint.sourceforge.net/
+
+
+4. Support
+==========
+
+Email: <kolourpaint-support@lists.sourceforge.net>
+
+If you have any questions about compiling, installing or using KolourPaint,
+don't be afraid to contact us using the above email address.  Email sent
+to this address is not publicly archived.  We try to support all versions
+of KolourPaint and even issues with 3rd party binary packages.
+
+
+5. Feedback
+===========
+
+Please send bug reports and feature requests to http://bugs.kde.org/ or
+<kolourpaint-support@lists.sourceforge.net>.  Don't hesitate to report bugs
+nor hesitate to send us your wishes - it provides valuable feedback that
+will help to improve future versions of KolourPaint and you will not
+receive flames for reporting duplicates.
+
