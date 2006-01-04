@@ -76,6 +76,14 @@ changes, refer to NEWS.
 * Only delete docs symlink when number of running instances of KolourPaint
   bin reaches 0.
 
+* kolourpaintui.rc hack
+
+* Debian docs
+
+* C++ ABI selection
+
+* Abort diagnostics
+
 
 1.2.2_kde3 Binary Release #3 (Frozen 2004/12/11)
    * Guarantee the display of the current tool's options widget on startup
