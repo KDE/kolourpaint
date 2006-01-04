@@ -3,6 +3,8 @@
 # Clarence Dang
 # 2005-02-03
 
+# OBSOLETE - port to SVN, or use my "svn-commit-changes" script
+
 # Note: Only accepts patches made with -p1 + description must be between "BEGIN" and "END" lines
 
 if [ $# -ne 1 ]
