@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# svn checkout -N svn://anonsvn.kde.org/home/kde/branches/KDE/3.3/kde-i18n
+# cd kde-i18n
+
+svn up -N templates
+svn up -N templates/kdegraphics
+svn up -N templates/docs
+svn up -N templates/docs/kdegraphics
+svn up templates/kdegraphics/kolourpaint.pot templates/docs/kdegraphics/kolourpaint.pot
+
+for f in `<subdirs`
+do
+    echo Language $f:
+
+    svn up -N $f
+    svn up -N $f/messages
+    # SVN does not support _versioned_ checkout of a single file :(
+    svn up -N $f/messages/kdegraphics
+    svn up -N $f/docs
+    svn up -N $f/docs/kdegraphics
+    svn up $f/docs/kdegraphics/kolourpaint
+done
