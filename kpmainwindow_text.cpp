@@ -78,7 +78,7 @@ void kpMainWindow::setupTextToolBarActions ()
 // private
 void kpMainWindow::readAndApplyTextSettings ()
 {
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupText);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     m_actionTextFontFamily->setFont (cfg->readEntry (kpSettingFontFamily, QString::fromLatin1 ("Times")));
@@ -142,7 +142,7 @@ void kpMainWindow::slotTextFontFamilyChanged ()
     if (m_mainView)
         m_mainView->setFocus ();
 
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupText);
     KConfigBase *cfg = cfgGroupSaver.config ();
     cfg->writeEntry (kpSettingFontFamily, m_actionTextFontFamily->font ());
     cfg->sync ();
@@ -175,7 +175,7 @@ void kpMainWindow::slotTextFontSizeChanged ()
     if (m_mainView)
         m_mainView->setFocus ();
 
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupText);
     KConfigBase *cfg = cfgGroupSaver.config ();
     cfg->writeEntry (kpSettingFontSize, m_actionTextFontSize->fontSize ());
     cfg->sync ();
@@ -200,7 +200,7 @@ void kpMainWindow::slotTextBoldChanged ()
     if (m_toolText && m_toolText->hasBegun ())
         m_toolText->slotBoldChanged (m_actionTextBold->isChecked ());
 
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupText);
     KConfigBase *cfg = cfgGroupSaver.config ();
     cfg->writeEntry (kpSettingBold, m_actionTextBold->isChecked ());
     cfg->sync ();
@@ -223,7 +223,7 @@ void kpMainWindow::slotTextItalicChanged ()
     if (m_toolText && m_toolText->hasBegun ())
         m_toolText->slotItalicChanged (m_actionTextItalic->isChecked ());
 
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupText);
     KConfigBase *cfg = cfgGroupSaver.config ();
     cfg->writeEntry (kpSettingItalic, m_actionTextItalic->isChecked ());
     cfg->sync ();
@@ -246,7 +246,7 @@ void kpMainWindow::slotTextUnderlineChanged ()
     if (m_toolText && m_toolText->hasBegun ())
         m_toolText->slotUnderlineChanged (m_actionTextUnderline->isChecked ());
 
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupText);
     KConfigBase *cfg = cfgGroupSaver.config ();
     cfg->writeEntry (kpSettingUnderline, m_actionTextUnderline->isChecked ());
     cfg->sync ();
@@ -269,7 +269,7 @@ void kpMainWindow::slotTextStrikeThruChanged ()
     if (m_toolText && m_toolText->hasBegun ())
         m_toolText->slotStrikeThruChanged (m_actionTextStrikeThru->isChecked ());
 
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupText);
     KConfigBase *cfg = cfgGroupSaver.config ();
     cfg->writeEntry (kpSettingStrikeThru, m_actionTextStrikeThru->isChecked ());
     cfg->sync ();

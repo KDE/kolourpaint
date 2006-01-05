@@ -395,7 +395,7 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
 // private
 void kpMainWindow::readLastTool ()
 {
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupTools);
+    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupTools);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     m_lastToolNumber = cfg->readNumEntry (kpSettingLastTool, -1);
@@ -427,7 +427,7 @@ void kpMainWindow::saveLastTool ()
         return;
 
 
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupTools);
+    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupTools);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     cfg->writeEntry (kpSettingLastTool, number);

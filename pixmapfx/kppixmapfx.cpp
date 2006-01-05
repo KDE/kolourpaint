@@ -492,18 +492,18 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
 
         int configDitherIfNumColorsGreaterThan = 323;
 
-        KConfigGroupSaver cfgGroupSaver (KGlobal::config (),
+        KConfigGroup cfg (KGlobal::config (),
                                          kpSettingsGroupGeneral);
-        KConfigBase *cfg = cfgGroupSaver.config ();
+        //KConfigBase *cfg = cfgGroupSaver.config ();
 
-        if (cfg->hasKey (kpSettingDitherOnOpen))
+        if (cfg.hasKey (kpSettingDitherOnOpen))
         {
-            configDitherIfNumColorsGreaterThan = cfg->readNumEntry (kpSettingDitherOnOpen);
+            configDitherIfNumColorsGreaterThan = cfg.readNumEntry (kpSettingDitherOnOpen);
         }
         else
         {
-            cfg->writeEntry (kpSettingDitherOnOpen, configDitherIfNumColorsGreaterThan);
-            cfg->sync ();
+            cfg.writeEntry (kpSettingDitherOnOpen, configDitherIfNumColorsGreaterThan);
+            cfg.sync ();
         }
 
     #if DEBUG_KP_PIXMAP_FX && 1

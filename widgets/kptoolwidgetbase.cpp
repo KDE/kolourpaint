@@ -176,7 +176,7 @@ QPair <int, int> kpToolWidgetBase::defaultSelectedRowAndCol () const
 
     if (name ())
     {
-        KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupTools);
+        KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupTools);
         KConfigBase *cfg = cfgGroupSaver.config ();
 
         QString nameString = QString::fromLatin1 (name ());
@@ -219,7 +219,7 @@ void kpToolWidgetBase::saveSelectedAsDefault () const
     if (!name ())
         return;
 
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupTools);
+    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupTools);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     QString nameString = QString::fromLatin1 (name ());

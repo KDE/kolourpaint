@@ -228,7 +228,7 @@ QSize kpMainWindow::defaultDocSize () const
     // realise what other processes have done e.g. Settings / Show Path
     KGlobal::config ()->reparseConfiguration ();
 
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupGeneral);
+    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupGeneral);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     QSize docSize = cfg->readSizeEntry (kpSettingLastDocSize);
@@ -257,7 +257,7 @@ void kpMainWindow::saveDefaultDocSize (const QSize &size)
                << endl;
 #endif
 
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), kpSettingsGroupGeneral);
+    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupGeneral);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     cfg->writeEntry (kpSettingLastDocSize, size);
@@ -522,7 +522,7 @@ KURL kpMainWindow::askForSaveURL (const QString &caption,
         newSaveOptions.printDebug ("\tnewSaveOptions");
     #endif
 
-        KConfigGroupSaver cfgGroupSaver (KGlobal::config (), forcedSaveOptionsGroup);
+        KConfigGroup cfgGroupGroup (KGlobal::config (), forcedSaveOptionsGroup);
         KConfigBase *cfg = cfgGroupSaver.config ();
 
         // Save options user forced - probably want to use them in future

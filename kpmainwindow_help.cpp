@@ -71,7 +71,7 @@ void kpMainWindow::enableHelpMenuDocumentActions (bool /*enable*/)
 // SYNC: kdebase/kwin/kwinbindings.cpp
 static QString printScreenShortcutString ()
 {
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), "Global Shortcuts");
+    KConfigGroup cfgGroupGroup (KGlobal::config (), "Global Shortcuts");
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     // TODO: i18n() entry name?  kwinbindings.cpp seems to but it doesn't
