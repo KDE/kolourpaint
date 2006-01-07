@@ -51,6 +51,12 @@ KolourPaint 1.4
 kolourpaint not associated with .bmp
 
 
+"I did discover the color picker applet, which I think is dead handy
+(over kcolorchooser or kolourpaint's picker which is constrained to
+the kolourpaint window"
+(Adriaan de Groot - http://people.fruitsalad.org/adridg/bobulate/)
+
+
 Paste Into New Window when sel transparency is set to Transparent changes all white to transparent, sel transparency selector after pasting doesn't work because of Set as Image behaviour - unintuitive.
 
 
