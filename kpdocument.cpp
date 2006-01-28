@@ -125,7 +125,7 @@ void kpDocument::setMainWindow (kpMainWindow *mainWindow)
  */
 
 // public static
-QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExistDialog,
+QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExistDialog,
                                        QWidget *parent,
                                        kpDocumentSaveOptions *saveOptions,
                                        kpDocumentMetaInfo *metaInfo)
@@ -323,7 +323,7 @@ QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExist
     return newPixmap;
 }
 
-void kpDocument::openNew (const KURL &url)
+void kpDocument::openNew (const KUrl &url)
 {
 #if DEBUG_KP_DOCUMENT
     kdDebug () << "KpDocument::openNew (" << url << ")" << endl;
@@ -339,7 +339,7 @@ void kpDocument::openNew (const KURL &url)
     emit documentOpened ();
 }
 
-bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
+bool kpDocument::open (const KUrl &url, bool newDocSameNameIfNotExist)
 {
 #if DEBUG_KP_DOCUMENT
     kdDebug () << "kpDocument::open (" << url << ")" << endl;
@@ -377,7 +377,7 @@ bool kpDocument::open (const KURL &url, bool newDocSameNameIfNotExist)
         }
         else
         {
-            openNew (KURL ());
+            openNew (KUrl ());
         }
 
         return true;
@@ -575,7 +575,7 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
 
 // public static
 bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
-                                   const KURL &url,
+                                   const KUrl &url,
                                    const kpDocumentSaveOptions &saveOptions,
                                    const kpDocumentMetaInfo &metaInfo,
                                    bool overwritePrompt,
@@ -692,7 +692,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
     return true;
 }
 
-bool kpDocument::saveAs (const KURL &url,
+bool kpDocument::saveAs (const KUrl &url,
                          const kpDocumentSaveOptions &saveOptions,
                          bool overwritePrompt,
                          bool lossyPrompt)
@@ -731,13 +731,13 @@ bool kpDocument::savedAtLeastOnceBefore () const
 }
 
 // public
-KURL kpDocument::url () const
+KUrl kpDocument::url () const
 {
     return m_url;
 }
 
 // public
-void kpDocument::setURL (const KURL &url, bool isFromURL)
+void kpDocument::setURL (const KUrl &url, bool isFromURL)
 {
     m_url = url;
     m_isFromURL = isFromURL;
@@ -758,12 +758,12 @@ bool kpDocument::isFromURL (bool checkURLStillExists) const
 
 
 // static
-QString kpDocument::prettyURLForURL (const KURL &url)
+QString kpDocument::prettyURLForURL (const KUrl &url)
 {
     if (url.isEmpty ())
         return i18n ("Untitled");
     else
-        return url.prettyURL (0, KURL::StripFileProtocol);
+        return url.prettyURL (0, KUrl::StripFileProtocol);
 }
 
 QString kpDocument::prettyURL () const
@@ -773,7 +773,7 @@ QString kpDocument::prettyURL () const
 
 
 // static
-QString kpDocument::prettyFilenameForURL (const KURL &url)
+QString kpDocument::prettyFilenameForURL (const KUrl &url)
 {
     if (url.isEmpty ())
         return i18n ("Untitled");

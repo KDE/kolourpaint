@@ -67,14 +67,14 @@ public:
      * File I/O
      */
 
-    static QPixmap getPixmapFromFile (const KURL &url, bool suppressDoesntExistDialog,
+    static QPixmap getPixmapFromFile (const KUrl &url, bool suppressDoesntExistDialog,
                                       QWidget *parent,
                                       kpDocumentSaveOptions *saveOptions = 0,
                                       kpDocumentMetaInfo *metaInfo = 0);
     // TODO: fix: open*() should only be called once.
     //            Create a new kpDocument() if you want to open again.
-    void openNew (const KURL &url);
-    bool open (const KURL &url, bool newDocSameNameIfNotExist = false);
+    void openNew (const KUrl &url);
+    bool open (const KUrl &url, bool newDocSameNameIfNotExist = false);
 
     static bool lossyPromptContinue (const QPixmap &pixmap,
                                      const kpDocumentSaveOptions &saveOptions,
@@ -87,14 +87,14 @@ public:
                                     QWidget *parent,
                                     bool *userCancelled = 0);
     static bool savePixmapToFile (const QPixmap &pixmap,
-                                  const KURL &url,
+                                  const KUrl &url,
                                   const kpDocumentSaveOptions &saveOptions,
                                   const kpDocumentMetaInfo &metaInfo,
                                   bool overwritePrompt,
                                   bool lossyPrompt,
                                   QWidget *parent);
     bool save (bool overwritePrompt = false, bool lossyPrompt = false);
-    bool saveAs (const KURL &url,
+    bool saveAs (const KUrl &url,
                  const kpDocumentSaveOptions &saveOptions,
                  bool overwritePrompt = true,
                  bool lossyPrompt = true);
@@ -102,8 +102,8 @@ public:
     // Returns whether save() or saveAs() have ever been called and returned true
     bool savedAtLeastOnceBefore () const;
 
-    KURL url () const;
-    void setURL (const KURL &url, bool isFromURL);
+    KUrl url () const;
+    void setURL (const KUrl &url, bool isFromURL);
 
     // Returns whether the document's pixmap was successfully opened from
     // or saved to the URL returned by url().  This is not true for a
@@ -117,11 +117,11 @@ public:
     bool isFromURL (bool checkURLStillExists = true) const;
 
     // (will convert: empty URL --> "Untitled")
-    static QString prettyURLForURL (const KURL &url);
+    static QString prettyURLForURL (const KUrl &url);
     QString prettyURL () const;
 
     // (will convert: empty URL --> "Untitled")
-    static QString prettyFilenameForURL (const KURL &url);
+    static QString prettyFilenameForURL (const KUrl &url);
     QString prettyFilename () const;
 
     // (guaranteed to return valid pointer)
@@ -229,7 +229,7 @@ private:
     kpMainWindow *m_mainWindow;
     QPixmap *m_pixmap;
 
-    KURL m_url;
+    KUrl m_url;
     bool m_isFromURL;
     bool m_savedAtLeastOnceBefore;
 

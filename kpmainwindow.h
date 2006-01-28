@@ -100,7 +100,7 @@ public:
 
     // Opens a new window with the document specified by <url>
     // or creates a blank document if <url> could not be opened.
-    kpMainWindow (const KURL &url);
+    kpMainWindow (const KUrl &url);
 
     // Opens a new window with the document <newDoc>
     // (<newDoc> can be 0 although this would result in a new
@@ -293,13 +293,13 @@ private:
             *m_actionSetAsWallpaperTiled, *m_actionSetAsWallpaperCentered,
             *m_actionClose, *m_actionQuit;
 
-    KURL m_lastExportURL;
+    KUrl m_lastExportURL;
     kpDocumentSaveOptions m_lastExportSaveOptions;
     bool m_exportFirstTime;
 
 private:
     bool shouldOpenInNewWindow () const;
-    void addRecentURL (const KURL &url);
+    void addRecentURL (const KUrl &url);
     void setRecentURLs (const QStringList &items);
 
 private slots:
@@ -310,20 +310,20 @@ private:
     void saveDefaultDocSize (const QSize &size);
 
 private:
-    bool open (const KURL &url, bool newDocSameNameIfNotExist = false);
-    KURL::List askForOpenURLs (const QString &caption,
+    bool open (const KUrl &url, bool newDocSameNameIfNotExist = false);
+    KUrl::List askForOpenURLs (const QString &caption,
                                const QString &startURL,
                                bool allowMultipleURLs = true);
 
 private slots:
     void slotOpen ();
-    void slotOpenRecent (const KURL &url);
+    void slotOpenRecent (const KUrl &url);
 
     bool save (bool localOnly = false);
     bool slotSave ();
 
 private:
-    KURL askForSaveURL (const QString &caption,
+    KUrl askForSaveURL (const QString &caption,
                         const QString &startURL,
                         const QPixmap &pixmapToBeSaved,
                         const kpDocumentSaveOptions &startSaveOptions,
@@ -382,9 +382,9 @@ private:
             *m_actionSelectAll, *m_actionDeselect,
             *m_actionCopyToFile, *m_actionPasteFromFile;
 
-    KURL m_lastPasteFromURL;
+    KUrl m_lastPasteFromURL;
 
-    KURL m_lastCopyToURL;
+    KUrl m_lastCopyToURL;
     kpDocumentSaveOptions m_lastCopyToSaveOptions;
     bool m_copyToFirstTime;
 

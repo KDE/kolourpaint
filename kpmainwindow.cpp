@@ -72,12 +72,12 @@ kpMainWindow::kpMainWindow ()
       m_isFullyConstructed (false)
 {
     init ();
-    open (KURL (), true/*create an empty doc*/);
+    open (KUrl (), true/*create an empty doc*/);
 
     m_isFullyConstructed = true;
 }
 
-kpMainWindow::kpMainWindow (const KURL &url)
+kpMainWindow::kpMainWindow (const KUrl &url)
     : KMainWindow (0/*parent*/, "mainWindow"),
       m_isFullyConstructed (false)
 {
@@ -726,7 +726,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 #endif
 
     kpSelection sel;
-    KURL::List urls;
+    KUrl::List urls;
     QString text;
 
     if (kpSelectionDrag::decode (e, sel/*ref*/, pasteWarnAboutLossInfo ()))
@@ -737,7 +737,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
     }
     else if (KURLDrag::decode (e, urls/*ref*/))
     {
-        for (KURL::List::ConstIterator it = urls.begin (); it != urls.end (); it++)
+        for (KUrl::List::ConstIterator it = urls.begin (); it != urls.end (); it++)
         {
             open (*it);
         }

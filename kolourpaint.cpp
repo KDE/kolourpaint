@@ -182,7 +182,7 @@ int main (int argc, char *argv [])
     srand ((unsigned int) (getpid () + getppid ()));
 
     // access more formats
-    KImageIO::registerFormats ();
+    
 
 
     // Qt says this is necessary but I don't think it is...
