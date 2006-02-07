@@ -71,7 +71,7 @@ QString kpZoomedThumbnailView::caption () const
 void kpZoomedThumbnailView::adjustToEnvironment ()
 {
 #if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW
-    kdDebug () << "kpZoomedThumbnailView(" << name ()
+    kDebug () << "kpZoomedThumbnailView(" << name ()
                << ")::adjustToEnvironment()"
                << " width=" << width ()
                << " height=" << height ()
@@ -82,14 +82,14 @@ void kpZoomedThumbnailView::adjustToEnvironment ()
         return;
 
 #if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW
-    kdDebug () << "\tdoc: width=" << document ()->width ()
+    kDebug () << "\tdoc: width=" << document ()->width ()
                << " height=" << document ()->height ()
                << endl;
 #endif
 
     if (document ()->width () <= 0 || document ()->height () <= 0)
     {
-        kdError () << "kpZoomedThumbnailView::adjustToEnvironment() doc:"
+        kError () << "kpZoomedThumbnailView::adjustToEnvironment() doc:"
                    << " width=" << document ()->width ()
                    << " height=" << document ()->height ()
                    << endl;
@@ -107,12 +107,12 @@ void kpZoomedThumbnailView::adjustToEnvironment ()
         hzoom = vzoom;
 
 #if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW && 1
-    kdDebug () << "\tproposed zoom=" << hzoom << endl;
+    kDebug () << "\tproposed zoom=" << hzoom << endl;
 #endif
     if (hzoom > 100 || vzoom > 100)
     {
     #if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW && 1
-        kdDebug () << "\twon't magnify - setting zoom to 100%" << endl;
+        kDebug () << "\twon't magnify - setting zoom to 100%" << endl;
     #endif
         hzoom = 100, vzoom = 100;
     }

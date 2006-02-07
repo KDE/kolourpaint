@@ -121,19 +121,19 @@ void kpTool::init (const QString &text, const QString &description,
 void kpTool::createAction ()
 {
 #if DEBUG_KP_TOOL && 0
-    kdDebug () << "kpTool(" << name () << "::createAction()" << endl;
+    kDebug () << "kpTool(" << name () << "::createAction()" << endl;
 #endif
 
     if (!m_mainWindow)
     {
-        kdError () << "kpTool::createAction() without mw" << endl;
+        kError () << "kpTool::createAction() without mw" << endl;
         return;
     }
 
     KActionCollection *ac = m_mainWindow->actionCollection ();
     if (!ac)
     {
-        kdError () << "kpTool::createAction() without ac" << endl;
+        kError () << "kpTool::createAction() without ac" << endl;
         return;
     }
 
@@ -141,7 +141,7 @@ void kpTool::createAction ()
     if (m_action)
     {
     #if DEBUG_KP_TOOL
-        kdDebug () << "\tdeleting existing" << endl;
+        kDebug () << "\tdeleting existing" << endl;
     #endif
         ac->remove (m_action);
         m_action = 0;
@@ -313,14 +313,14 @@ bool kpTool::singleKeyTriggersEnabled () const
 void kpTool::enableSingleKeyTriggers (bool enable)
 {
 #if DEBUG_KP_TOOL && 0
-    kdDebug () << "kpTool(" << name () << ")::enableSingleKeyTriggers("
+    kDebug () << "kpTool(" << name () << ")::enableSingleKeyTriggers("
                << enable << ")" << endl;
 #endif
 
     if (!m_action)
     {
     #if DEBUG_KP_TOOL && 0
-        kdDebug () << "\tno action" << endl;
+        kDebug () << "\tno action" << endl;
     #endif
         return;
     }
@@ -384,8 +384,8 @@ bool kpTool::hasCurrentPoint () const
 QPoint kpTool::currentPoint (bool zoomToDoc) const
 {
 #if DEBUG_KP_TOOL && 0
-    kdDebug () << "kpTool::currentPoint(zoomToDoc=" << zoomToDoc << ")" << endl;
-    kdDebug () << "\tviewUnderStartPoint="
+    kDebug () << "kpTool::currentPoint(zoomToDoc=" << zoomToDoc << ")" << endl;
+    kDebug () << "\tviewUnderStartPoint="
                << (viewUnderStartPoint () ? viewUnderStartPoint ()->name () : "(none)")
                << " viewUnderCursor="
                << (viewUnderCursor () ? viewUnderCursor ()->name () : "(none)")
@@ -399,7 +399,7 @@ QPoint kpTool::currentPoint (bool zoomToDoc) const
         if (!v)
         {
         #if DEBUG_KP_TOOL && 0
-            kdDebug () << "\tno view - returning sentinel" << endl;
+            kDebug () << "\tno view - returning sentinel" << endl;
         #endif
             return KP_INVALID_POINT;
         }
@@ -409,7 +409,7 @@ QPoint kpTool::currentPoint (bool zoomToDoc) const
     const QPoint globalPos = QCursor::pos ();
     const QPoint viewPos = v->mapFromGlobal (globalPos);
 #if DEBUG_KP_TOOL && 0
-    kdDebug () << "\tglobalPos=" << globalPos
+    kDebug () << "\tglobalPos=" << globalPos
                << " viewPos=" << viewPos
                << endl;
 #endif
@@ -419,7 +419,7 @@ QPoint kpTool::currentPoint (bool zoomToDoc) const
 
     const QPoint docPos = v->transformViewToDoc (viewPos);
 #if DEBUG_KP_TOOL && 0
-    kdDebug () << "\tdocPos=" << docPos << endl;
+    kDebug () << "\tdocPos=" << docPos << endl;
 #endif
     return docPos;
 }
@@ -438,17 +438,17 @@ void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_,
         const QPoint &currentViewPoint_)
 {
 #if DEBUG_KP_TOOL && 0
-    kdDebug () << "kpTool::somethingBelowTheCursorChanged(docPoint="
+    kDebug () << "kpTool::somethingBelowTheCursorChanged(docPoint="
                << currentPoint_
                << " viewPoint="
                << currentViewPoint_
                << ")" << endl;
-    kdDebug () << "\tviewUnderStartPoint="
+    kDebug () << "\tviewUnderStartPoint="
                << (viewUnderStartPoint () ? viewUnderStartPoint ()->name () : "(none)")
                << " viewUnderCursor="
                << (viewUnderCursor () ? viewUnderCursor ()->name () : "(none)")
                << endl;
-    kdDebug () << "\tbegan draw=" << m_beganDraw << endl;
+    kDebug () << "\tbegan draw=" << m_beganDraw << endl;
 #endif
 
     m_currentPoint = currentPoint_;
@@ -472,7 +472,7 @@ void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_,
 void kpTool::beginInternal ()
 {
 #if DEBUG_KP_TOOL
-    kdDebug () << "kpTool::beginInternal()" << endl;
+    kDebug () << "kpTool::beginInternal()" << endl;
 #endif
 
     if (!m_began)
@@ -545,7 +545,7 @@ void kpTool::endInternal ()
 void kpTool::begin ()
 {
 #if DEBUG_KP_TOOL
-    kdDebug () << "kpTool::begin() base implementation" << endl;
+    kDebug () << "kpTool::begin() base implementation" << endl;
 #endif
 }
 
@@ -553,7 +553,7 @@ void kpTool::begin ()
 void kpTool::end ()
 {
 #if DEBUG_KP_TOOL
-    kdDebug () << "kpTool::end() base implementation" << endl;
+    kDebug () << "kpTool::end() base implementation" << endl;
 #endif
 }
 
@@ -577,7 +577,7 @@ void kpTool::beginDraw ()
 void kpTool::hover (const QPoint &point)
 {
 #if DEBUG_KP_TOOL
-    kdDebug () << "kpTool::hover" << point
+    kDebug () << "kpTool::hover" << point
                << " base implementation"
                << endl;
 #endif
@@ -594,7 +594,7 @@ void kpTool::globalDraw ()
 void kpTool::reselect ()
 {
 #if DEBUG_KP_TOOL
-    kdDebug () << "kpTool::reselect() base implementation" << endl;
+    kDebug () << "kpTool::reselect() base implementation" << endl;
 #endif
 }
 
@@ -603,7 +603,7 @@ void kpTool::reselect ()
 QIcon kpTool::iconSet (int forceSize) const
 {
 #if DEBUG_KP_TOOL && 0
-    kdDebug () << "kpTool(" << name () << ")::iconSet(forceSize=" << forceSize << ")" << endl;
+    kDebug () << "kpTool(" << name () << ")::iconSet(forceSize=" << forceSize << ")" << endl;
 #endif
     // (robust in case BarIcon() default arg changes)
     // TODO: I would use BarIconSet but tool icons placed in mainToolBar don't show up!?
@@ -679,7 +679,7 @@ void kpTool::cancelShapeInternal ()
 // virtual
 void kpTool::cancelShape ()
 {
-    kdWarning () << "Tool cannot cancel operation!" << endl;
+    kWarning () << "Tool cannot cancel operation!" << endl;
 }
 
 void kpTool::releasedAllButtons ()
@@ -690,7 +690,7 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
                               bool wantEndShape)
 {
 #if DEBUG_KP_TOOL && 1
-    kdDebug () << "kpTool::endDrawInternal() wantEndShape=" << wantEndShape << endl;
+    kDebug () << "kpTool::endDrawInternal() wantEndShape=" << wantEndShape << endl;
 #endif
 
     if (wantEndShape && !hasBegunShape ())
@@ -703,14 +703,14 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
     if (wantEndShape)
     {
     #if DEBUG_KP_TOOL && 0
-        kdDebug () << "\tcalling endShape()" << endl;
+        kDebug () << "\tcalling endShape()" << endl;
     #endif
         endShape (thisPoint, normalizedRect);
     }
     else
     {
     #if DEBUG_KP_TOOL && 0
-        kdDebug () << "\tcalling endDraw()" << endl;
+        kDebug () << "\tcalling endDraw()" << endl;
     #endif
         endDraw (thisPoint, normalizedRect);
     }
@@ -783,7 +783,7 @@ kpColor kpTool::color (int which) const
         return m_mainWindow->colorToolBar ()->color (which);
     else
     {
-        kdError () << "kpTool::color () without mainWindow" << endl;
+        kError () << "kpTool::color () without mainWindow" << endl;
         return kpColor::invalid;
     }
 }
@@ -805,7 +805,7 @@ double kpTool::colorSimilarity () const
         return m_mainWindow->colorToolBar ()->colorSimilarity ();
     else
     {
-        kdError () << "kpTool::colorSimilarity() without mainWindow" << endl;
+        kError () << "kpTool::colorSimilarity() without mainWindow" << endl;
         return 0;
     }
 }
@@ -816,7 +816,7 @@ int kpTool::processedColorSimilarity () const
         return m_mainWindow->colorToolBar ()->processedColorSimilarity ();
     else
     {
-        kdError () << "kpTool::processedColorSimilarity() without mainWindow" << endl;
+        kError () << "kpTool::processedColorSimilarity() without mainWindow" << endl;
         return kpColor::Exact;
     }
 }
@@ -828,7 +828,7 @@ kpColor kpTool::oldForegroundColor () const
         return m_mainWindow->colorToolBar ()->oldForegroundColor ();
     else
     {
-        kdError () << "kpTool::oldForegroundColor() without mainWindow" << endl;
+        kError () << "kpTool::oldForegroundColor() without mainWindow" << endl;
         return kpColor::invalid;
     }
 }
@@ -839,7 +839,7 @@ kpColor kpTool::oldBackgroundColor () const
         return m_mainWindow->colorToolBar ()->oldBackgroundColor ();
     else
     {
-        kdError () << "kpTool::oldBackgroundColor() without mainWindow" << endl;
+        kError () << "kpTool::oldBackgroundColor() without mainWindow" << endl;
         return kpColor::invalid;
     }
 }
@@ -850,7 +850,7 @@ double kpTool::oldColorSimilarity () const
         return m_mainWindow->colorToolBar ()->oldColorSimilarity ();
     else
     {
-        kdError () << "kpTool::oldColorSimilarity() without mainWindow" << endl;
+        kError () << "kpTool::oldColorSimilarity() without mainWindow" << endl;
         return 0;
     }
 }
@@ -873,7 +873,7 @@ void kpTool::slotForegroundColorChangedInternal (const kpColor &color)
     if (m_ignoreColorSignals > 0)
     {
     #if DEBUG_KP_TOOL && 1
-        kdDebug () << "kpTool::slotForegroundColorChangedInternal() ignoreColorSignals=" << m_ignoreColorSignals << endl;
+        kDebug () << "kpTool::slotForegroundColorChangedInternal() ignoreColorSignals=" << m_ignoreColorSignals << endl;
     #endif
         m_ignoreColorSignals--;
         return;
@@ -887,7 +887,7 @@ void kpTool::slotBackgroundColorChangedInternal (const kpColor &color)
     if (m_ignoreColorSignals > 0)
     {
     #if DEBUG_KP_TOOL && 1
-        kdDebug () << "kpTool::slotBackgroundColorChangedInternal() ignoreColorSignals=" << m_ignoreColorSignals << endl;
+        kDebug () << "kpTool::slotBackgroundColorChangedInternal() ignoreColorSignals=" << m_ignoreColorSignals << endl;
     #endif
         m_ignoreColorSignals--;
         return;
@@ -931,7 +931,7 @@ kpCommandHistory *kpTool::commandHistory () const
 void kpTool::mousePressEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_TOOL && 1
-    kdDebug () << "kpTool::mousePressEvent pos=" << e->pos ()
+    kDebug () << "kpTool::mousePressEvent pos=" << e->pos ()
                << " btnStateBefore=" << (int) e->state ()
                << " btnStateAfter=" << (int) e->stateAfter ()
                << " button=" << (int) e->button ()
@@ -945,14 +945,14 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     {
         const QString text = QApplication::clipboard ()->text (QClipboard::Selection);
     #if DEBUG_KP_TOOL && 1
-        kdDebug () << "\tMMB pasteText='" << text << "'" << endl;
+        kDebug () << "\tMMB pasteText='" << text << "'" << endl;
     #endif
         if (!text.isEmpty ())
         {
             if (hasBegunShape ())
             {
             #if DEBUG_KP_TOOL && 1
-                kdDebug () << "\t\thasBegunShape - end" << endl;
+                kDebug () << "\t\thasBegunShape - end" << endl;
             #endif
                 endShapeInternal (m_currentPoint,
                                   QRect (m_startPoint, m_currentPoint).normalize ());
@@ -972,7 +972,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
     int mb = mouseButton (buttonState);
 #if DEBUG_KP_TOOL && 1
-    kdDebug () << "\tmb=" << mb << " m_beganDraw=" << m_beganDraw << endl;
+    kDebug () << "\tmb=" << mb << " m_beganDraw=" << m_beganDraw << endl;
 #endif
 
     if (mb == -1 && !m_beganDraw) return; // ignore
@@ -982,13 +982,13 @@ void kpTool::mousePressEvent (QMouseEvent *e)
         if (mb == -1 || mb != m_mouseButton)
         {
         #if DEBUG_KP_TOOL && 1
-            kdDebug () << "\tCancelling operation as " << mb << " == -1 or != " << m_mouseButton << endl;
+            kDebug () << "\tCancelling operation as " << mb << " == -1 or != " << m_mouseButton << endl;
         #endif
 
             kpView *view = viewUnderStartPoint ();
             if (!view)
             {
-                kdError () << "kpTool::mousePressEvent() cancel without a view under the start point!" << endl;
+                kError () << "kpTool::mousePressEvent() cancel without a view under the start point!" << endl;
             }
 
             // if we get a mousePressEvent when we're drawing, then the other
@@ -1004,12 +1004,12 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     kpView *view = viewUnderCursor ();
     if (!view)
     {
-        kdError () << "kpTool::mousePressEvent() without a view under the cursor!" << endl;
+        kError () << "kpTool::mousePressEvent() without a view under the cursor!" << endl;
     }
 
 #if DEBUG_KP_TOOL && 1
     if (view)
-        kdDebug () << "\tview=" << view->name () << endl;
+        kDebug () << "\tview=" << view->name () << endl;
 #endif
 
 
@@ -1024,7 +1024,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     m_lastPoint = QPoint (-1, -1);
 
 #if DEBUG_KP_TOOL && 1
-    kdDebug () << "\tBeginning draw @ " << m_currentPoint << endl;
+    kDebug () << "\tBeginning draw @ " << m_currentPoint << endl;
 #endif
 
     beginDrawInternal ();
@@ -1036,16 +1036,16 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 void kpTool::mouseMoveEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_TOOL && 0
-    kdDebug () << "kpTool::mouseMoveEvent pos=" << e->pos ()
+    kDebug () << "kpTool::mouseMoveEvent pos=" << e->pos ()
                << " btnStateAfter=" << (int) e->stateAfter () << endl;
     kpView *v0 = viewUnderCursor (),
            *v1 = viewManager ()->viewUnderCursor (true/*use Qt*/),
            *v2 = viewUnderStartPoint ();
-    kdDebug () << "\tviewUnderCursor=" << (v0 ? v0->name () : "(none)")
+    kDebug () << "\tviewUnderCursor=" << (v0 ? v0->name () : "(none)")
                << " viewUnderCursorQt=" << (v1 ? v1->name () : "(none)")
                << " viewUnderStartPoint=" << (v2 ? v2->name () : "(none)")
                << endl;
-    kdDebug () << "\tfocusWidget=" << kapp->focusWidget () << endl;
+    kDebug () << "\tfocusWidget=" << kapp->focusWidget () << endl;
 #endif
 
     Qt::ButtonState buttonState = e->stateAfter ();
@@ -1058,7 +1058,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
         kpView *view = viewUnderStartPoint ();
         if (!view)
         {
-            kdError () << "kpTool::mouseMoveEvent() without a view under the start point!" << endl;
+            kError () << "kpTool::mouseMoveEvent() without a view under the start point!" << endl;
             return;
         }
 
@@ -1066,7 +1066,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
         m_currentViewPoint = e->pos ();
 
     #if DEBUG_KP_TOOL && 0
-        kdDebug () << "\tDraw!" << endl;
+        kDebug () << "\tDraw!" << endl;
     #endif
 
         bool dragScrolled = false;
@@ -1112,7 +1112,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 void kpTool::mouseReleaseEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_TOOL && 1
-    kdDebug () << "kpTool::mouseReleaseEvent pos=" << e->pos ()
+    kDebug () << "kpTool::mouseReleaseEvent pos=" << e->pos ()
                << " btnStateBefore=" << (int) e->state ()
                << " btnStateAfter=" << (int) e->stateAfter ()
                << " button=" << (int) e->button () << endl;
@@ -1123,7 +1123,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
         kpView *view = viewUnderStartPoint ();
         if (!view)
         {
-            kdError () << "kpTool::mouseReleaseEvent() without a view under the start point!" << endl;
+            kError () << "kpTool::mouseReleaseEvent() without a view under the start point!" << endl;
             return;
         }
 
@@ -1141,7 +1141,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
 void kpTool::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL && 0
-    kdDebug () << "kpTool::keyPressEvent() e->key=" << e->key () << endl;
+    kDebug () << "kpTool::keyPressEvent() e->key=" << e->key () << endl;
 #endif
 
     int dx = 0, dy = 0;
@@ -1153,7 +1153,7 @@ void kpTool::keyPressEvent (QKeyEvent *e)
     case 0:
     case Qt::Key_unknown:
     #if DEBUG_KP_TOOL && 0
-        kdDebug () << "kpTool::keyPressEvent() picked up unknown key!" << endl;
+        kDebug () << "kpTool::keyPressEvent() picked up unknown key!" << endl;
     #endif
         // --- fall thru and update all modifiers ---
     case Qt::Key_Alt:
@@ -1208,7 +1208,7 @@ void kpTool::keyPressEvent (QKeyEvent *e)
     {
         QPoint oldPoint = view->mapFromGlobal (QCursor::pos ());
     #if DEBUG_KP_TOOL && 0
-        kdDebug () << "\toldPoint=" << oldPoint
+        kDebug () << "\toldPoint=" << oldPoint
                    << " dx=" << dx << " dy=" << dy << endl;
     #endif
 
@@ -1221,7 +1221,7 @@ void kpTool::keyPressEvent (QKeyEvent *e)
 
 
     #if DEBUG_KP_TOOL && 0
-        kdDebug () << "\tnewPoint=" << QPoint (newViewX, newViewY) << endl;
+        kDebug () << "\tnewPoint=" << QPoint (newViewX, newViewY) << endl;
     #endif
 
         if (view->transformViewToDoc (QPoint (newViewX, newViewY)) ==
@@ -1230,7 +1230,7 @@ void kpTool::keyPressEvent (QKeyEvent *e)
             newViewX += viewIncX, newViewY += viewIncY;
 
         #if DEBUG_KP_TOOL && 0
-            kdDebug () << "\tneed adjust for doc - newPoint="
+            kDebug () << "\tneed adjust for doc - newPoint="
                        << QPoint (newViewX, newViewY) << endl;
         #endif
         }
@@ -1248,7 +1248,7 @@ void kpTool::keyPressEvent (QKeyEvent *e)
 void kpTool::keyReleaseEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL && 0
-    kdDebug () << "kpTool::keyReleaseEvent() e->key=" << e->key () << endl;
+    kDebug () << "kpTool::keyReleaseEvent() e->key=" << e->key () << endl;
 #endif
 
     e->ignore ();
@@ -1258,7 +1258,7 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
     case 0:
     case Qt::Key_unknown:
     #if DEBUG_KP_TOOL
-        kdDebug () << "kpTool::keyReleaseEvent() picked up unknown key!" << endl;
+        kDebug () << "kpTool::keyReleaseEvent() picked up unknown key!" << endl;
     #endif
         // HACK: around Qt bug: if you hold a modifier before you start the
         //                      program and then release it over the view,
@@ -1304,8 +1304,8 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
 void kpTool::keyUpdateModifierState (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL && 0
-    kdDebug () << "kpTool::updateModifierState() e->key=" << e->key () << endl;
-    kdDebug () << "\tshift="
+    kDebug () << "kpTool::updateModifierState() e->key=" << e->key () << endl;
+    kDebug () << "\tshift="
                << (e->stateAfter () & Qt::ShiftModifier)
                << " control="
                << (e->stateAfter () & Qt::ControlModifier)
@@ -1316,7 +1316,7 @@ void kpTool::keyUpdateModifierState (QKeyEvent *e)
     if (e->key () & (Qt::Key_Alt | Qt::Key_Shift | Qt::Key_Control))
     {
     #if DEBUG_KP_TOOL && 0
-        kdDebug () << "\t\tmodifier changed - use e's claims" << endl;
+        kDebug () << "\t\tmodifier changed - use e's claims" << endl;
     #endif
         setShiftPressed (e->stateAfter () & Qt::ShiftModifier);
         setControlPressed (e->stateAfter () & Qt::ControlModifier);
@@ -1325,7 +1325,7 @@ void kpTool::keyUpdateModifierState (QKeyEvent *e)
     else
     {
     #if DEBUG_KP_TOOL && 0
-        kdDebug () << "\t\tmodifiers not changed - figure out the truth" << endl;
+        kDebug () << "\t\tmodifiers not changed - figure out the truth" << endl;
     #endif
         uint keyState = KApplication::keyboardModifiers ();
 
@@ -1391,7 +1391,7 @@ void kpTool::focusInEvent (QFocusEvent *)
 void kpTool::focusOutEvent (QFocusEvent *)
 {
 #if DEBUG_KP_TOOL && 0
-    kdDebug () << "kpTool::focusOutEvent() beganDraw=" << m_beganDraw << endl;
+    kDebug () << "kpTool::focusOutEvent() beganDraw=" << m_beganDraw << endl;
 #endif
 
     if (m_beganDraw)
@@ -1401,14 +1401,14 @@ void kpTool::focusOutEvent (QFocusEvent *)
 void kpTool::enterEvent (QEvent *)
 {
 #if DEBUG_KP_TOOL && 1
-    kdDebug () << "kpTool::enterEvent() beganDraw=" << m_beganDraw << endl;
+    kDebug () << "kpTool::enterEvent() beganDraw=" << m_beganDraw << endl;
 #endif
 }
 
 void kpTool::leaveEvent (QEvent *)
 {
 #if DEBUG_KP_TOOL && 1
-    kdDebug () << "kpTool::leaveEvent() beganDraw=" << m_beganDraw << endl;
+    kDebug () << "kpTool::leaveEvent() beganDraw=" << m_beganDraw << endl;
 #endif
 
     // if we haven't started drawing (e.g. dragging a rectangle)...
@@ -1576,7 +1576,7 @@ bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
                                  QWidget *parent)
 {
 #if DEBUG_KP_TOOL
-    kdDebug () << "kpTool::warnIfBigImageSize()"
+    kDebug () << "kpTool::warnIfBigImageSize()"
                << " old: w=" << oldWidth << " h=" << oldWidth
                << " new: w=" << newWidth << " h=" << newHeight
                << " pixmapSize="

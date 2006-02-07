@@ -87,9 +87,9 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
                                    prefix + QString::fromLatin1 (":") :
                                    QString::null;
 
-    kdDebug () << usedPrefix << endl;
+    kDebug () << usedPrefix << endl;
 
-    kdDebug () << "dotsPerMeter X=" << dotsPerMeterX ()
+    kDebug () << "dotsPerMeter X=" << dotsPerMeterX ()
                << " Y=" << dotsPerMeterY ()
                << " offset=" << offset () << endl;
 
@@ -98,13 +98,13 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
          it != keyList.end ();
          it++)
     {
-        kdDebug () << "key=" << (*it).key
+        kDebug () << "key=" << (*it).key
                    << " lang=" << (*it).lang
                    << " text=" << text (*it)
                    << endl;
     }
 
-    kdDebug () << usedPrefix << "ENDS" << endl;
+    kDebug () << usedPrefix << "ENDS" << endl;
 }
 
 

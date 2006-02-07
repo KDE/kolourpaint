@@ -60,7 +60,7 @@ kpThumbnail::kpThumbnail (kpMainWindow *parent, const char *name)
       m_view (0)
 {
     if (!parent)
-        kdError () << "kpThumbnail::kpThumbnail() requires parent" << endl;
+        kError () << "kpThumbnail::kpThumbnail() requires parent" << endl;
 
 
 #if !KP_IS_QT_3_3
@@ -86,9 +86,9 @@ kpThumbnail::kpThumbnail (kpMainWindow *parent, const char *name)
 
     QSize layoutMinimumSize = layout () ? layout ()->minimumSize () : QSize ();
 #if DEBUG_KP_THUMBNAIL
-    kdDebug () << "\tlayout=" << layout ()
+    kDebug () << "\tlayout=" << layout ()
                << " minSize=" << (layout () ? layout ()->minimumSize () : QSize ()) << endl;
-    kdDebug () << "\tboxLayout=" << boxLayout ()
+    kDebug () << "\tboxLayout=" << boxLayout ()
                << " minSize=" << (boxLayout () ? boxLayout ()->minimumSize () : QSize ())
                << endl;
 #endif
@@ -121,7 +121,7 @@ kpThumbnailView *kpThumbnail::view () const
 void kpThumbnail::setView (kpThumbnailView *view)
 {
 #if DEBUG_KP_THUMBNAIL
-    kdDebug () << "kpThumbnail::setView(" << view << ")" << endl;
+    kDebug () << "kpThumbnail::setView(" << view << ")" << endl;
 #endif
 
     if (m_view == view)
@@ -165,7 +165,7 @@ void kpThumbnail::updateCaption ()
 void kpThumbnail::dock ()
 {
 #if DEBUG_KP_THUMBNAIL
-    kdDebug () << "kpThumbnail::dock() CALLED - ignoring request" << endl;
+    kDebug () << "kpThumbnail::dock() CALLED - ignoring request" << endl;
 #endif
 
     // --- ignore all requests to dock ---
@@ -176,7 +176,7 @@ void kpThumbnail::dock ()
 void kpThumbnail::slotViewDestroyed ()
 {
 #if DEBUG_KP_THUMBNAIL
-    kdDebug () << "kpThumbnail::slotViewDestroyed()" << endl;
+    kDebug () << "kpThumbnail::slotViewDestroyed()" << endl;
 #endif
 
     m_view = 0;
@@ -188,7 +188,7 @@ void kpThumbnail::slotViewDestroyed ()
 void kpThumbnail::resizeEvent (QResizeEvent *e)
 {
 #if DEBUG_KP_THUMBNAIL
-    kdDebug () << "kpThumbnail::resizeEvent(" << width ()
+    kDebug () << "kpThumbnail::resizeEvent(" << width ()
                << "," << height () << ")" << endl;
 #endif
 

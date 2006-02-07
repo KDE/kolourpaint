@@ -226,7 +226,7 @@ bool kpEffectFlattenWidget::isNoOp () const
 QPixmap kpEffectFlattenWidget::applyColorEffect (const QPixmap &pixmap)
 {
 #if DEBUG_KP_EFFECT_FLATTEN
-    kdDebug () << "kpEffectFlattenWidget::applyColorEffect() nop="
+    kDebug () << "kpEffectFlattenWidget::applyColorEffect() nop="
                << isNoOp () << endl;
 #endif
 
@@ -250,7 +250,7 @@ kpColorEffectCommand *kpEffectFlattenWidget::createCommand () const
 void kpEffectFlattenWidget::slotEnableChanged (bool enable)
 {
 #if DEBUG_KP_EFFECT_FLATTEN
-    kdDebug () << "kpEffectFlattenWidget::slotEnableChanged(" << enable
+    kDebug () << "kpEffectFlattenWidget::slotEnableChanged(" << enable
                << ") enableButton=" << m_enableCheckBox->isChecked ()
                << endl;
 #endif

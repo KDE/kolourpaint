@@ -90,7 +90,7 @@ bool kpFloodFill::fill ()
 {
     if (m_initState < 2 && !prepare ())
     {
-        kdError () << "kpFloodFill:fill() could not prepare()!" << endl;
+        kError () << "kpFloodFill:fill() could not prepare()!" << endl;
         return false;
     }
 
@@ -144,7 +144,7 @@ bool kpFloodFill::fill ()
     else
     {
     #if DEBUG_KP_FLOOD_FILL && 1
-        kdDebug () << "kpFloodFill::fill() performing NOP fill" << endl;
+        kDebug () << "kpFloodFill::fill() performing NOP fill" << endl;
     #endif
     }
 
@@ -154,7 +154,7 @@ bool kpFloodFill::fill ()
 bool kpFloodFill::prepareColorToChange ()
 {
 #if DEBUG_KP_FLOOD_FILL && 1
-    kdDebug () << "kpFloodFill::prepareColorToChange" << endl;
+    kDebug () << "kpFloodFill::prepareColorToChange" << endl;
 #endif
 
     m_colorToChange = kpPixmapFX::getColorAtPixel (*m_pixmapPtr, QPoint (m_x, m_y));
@@ -162,7 +162,7 @@ bool kpFloodFill::prepareColorToChange ()
     if (m_colorToChange.isOpaque ())
     {
     #if DEBUG_KP_FLOOD_FILL && 1
-        kdDebug () << "\tcolorToChange: r=" << m_colorToChange.red ()
+        kDebug () << "\tcolorToChange: r=" << m_colorToChange.red ()
                    << ", b=" << m_colorToChange.blue ()
                    << ", g=" << m_colorToChange.green ()
                    << endl;
@@ -171,7 +171,7 @@ bool kpFloodFill::prepareColorToChange ()
     else
     {
     #if DEBUG_KP_FLOOD_FILL && 1
-        kdDebug () << "\tcolorToChange: transparent" << endl;
+        kDebug () << "\tcolorToChange: transparent" << endl;
     #endif
     }
 
@@ -184,18 +184,18 @@ bool kpFloodFill::prepareColorToChange ()
 bool kpFloodFill::prepare ()
 {
 #if DEBUG_KP_FLOOD_FILL && 1
-    kdDebug () << "kpFloodFill::prepare()" << endl;
+    kDebug () << "kpFloodFill::prepare()" << endl;
 #endif
     m_boundingRect = QRect ();
 
     if (m_initState < 1 && !prepareColorToChange ())
     {
-        kdError () << "kpFloodFill:prepare() could not prepareColorToChange()!" << endl;
+        kError () << "kpFloodFill:prepare() could not prepareColorToChange()!" << endl;
         return false;
     }
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kdDebug () << "\tperforming NOP check" << endl;
+    kDebug () << "\tperforming NOP check" << endl;
 #endif
 
     // get the color we need to replace
@@ -208,26 +208,26 @@ bool kpFloodFill::prepare ()
     }
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kdDebug () << "\tconverting to image" << endl;
+    kDebug () << "\tconverting to image" << endl;
 #endif
 
     // is this the only way to read pixels?
     m_image = kpPixmapFX::convertToImage (*m_pixmapPtr);
     if (m_image.isNull ())
     {
-        kdError () << "kpFloodFill::prepare() could not convert to QImage" << endl;
+        kError () << "kpFloodFill::prepare() could not convert to QImage" << endl;
         return false;
     }
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kdDebug () << "\tcreating fillLinesCache" << endl;
+    kDebug () << "\tcreating fillLinesCache" << endl;
 #endif
 
     // ready cache
     m_fillLinesCache.resize (m_pixmapPtr->height ());
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kdDebug () << "\tcreating fill lines" << endl;
+    kDebug () << "\tcreating fill lines" << endl;
 #endif
 
     // draw initial line
@@ -238,7 +238,7 @@ bool kpFloodFill::prepare ()
          it++)
     {
     #if DEBUG_KP_FLOOD_FILL && 0
-        kdDebug () << "Expanding from y=" << (*it).m_y
+        kDebug () << "Expanding from y=" << (*it).m_y
                    << " x1=" << (*it).m_x1
                    << " x2=" << (*it).m_x2
                    << endl;
@@ -250,7 +250,7 @@ bool kpFloodFill::prepare ()
     }
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kdDebug () << "\tfinalising memory usage" << endl;
+    kDebug () << "\tfinalising memory usage" << endl;
 #endif
 
     // finalize memory usage
@@ -264,7 +264,7 @@ bool kpFloodFill::prepare ()
 void kpFloodFill::addLine (int y, int x1, int x2)
 {
 #if DEBUG_KP_FLOOD_FILL && 0
-    kdDebug () << "kpFillCommand::fillAddLine (" << y << "," << x1 << "," << x2 << ")" << endl;
+    kDebug () << "kpFillCommand::fillAddLine (" << y << "," << x1 << "," << x2 << ")" << endl;
 #endif
 
     m_fillLines.append (FillLine (y, x1, x2));
@@ -279,7 +279,7 @@ kpColor kpFloodFill::pixelColor (int x, int y, bool *beenHere) const
 
     if (y >= (int) m_fillLinesCache.count ())
     {
-        kdError () << "kpFloodFill::pixelColor("
+        kError () << "kpFloodFill::pixelColor("
                    << x << ","
                    << y << ") y out of range=" << m_pixmapPtr->height () << endl;
         return kpColor::invalid;

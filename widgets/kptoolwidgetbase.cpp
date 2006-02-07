@@ -55,7 +55,7 @@ kpToolWidgetBase::kpToolWidgetBase (QWidget *parent, const char *name)
       m_selectedRow (-1), m_selectedCol (-1)
 {
     if (!name)
-        kdError () << "kpToolWidgetBase::kpToolWidgetBase() without name" << endl;
+        kError () << "kpToolWidgetBase::kpToolWidgetBase() without name" << endl;
 
     setFrameStyle (Q3Frame::Panel | Q3Frame::Sunken);
     setFixedSize (44, 66);
@@ -89,7 +89,7 @@ void kpToolWidgetBase::startNewOptionRow ()
 void kpToolWidgetBase::finishConstruction (int fallBackRow, int fallBackCol)
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kdDebug () << "kpToolWidgetBase(" << name ()
+    kDebug () << "kpToolWidgetBase(" << name ()
                << ")::kpToolWidgetBase(fallBack:row=" << fallBackRow
                << ",col=" << fallBackCol
                << ")"
@@ -105,7 +105,7 @@ void kpToolWidgetBase::finishConstruction (int fallBackRow, int fallBackCol)
         {
             if (!setSelected (0, 0))
             {
-                kdError () << "kpToolWidgetBase::finishConstruction() "
+                kError () << "kpToolWidgetBase::finishConstruction() "
                               "can't even fall back to setSelected(row=0,col=0)" << endl;
             }
         }
@@ -186,7 +186,7 @@ QPair <int, int> kpToolWidgetBase::defaultSelectedRowAndCol () const
     }
 
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kdDebug () << "kpToolWidgetBase(" << name ()
+    kDebug () << "kpToolWidgetBase(" << name ()
                << ")::defaultSelectedRowAndCol() returning row=" << row
                << " col=" << col
                << endl;
@@ -211,7 +211,7 @@ int kpToolWidgetBase::defaultSelectedCol () const
 void kpToolWidgetBase::saveSelectedAsDefault () const
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kdDebug () << "kpToolWidgetBase(" << name ()
+    kDebug () << "kpToolWidgetBase(" << name ()
                << ")::saveSelectedAsDefault() row=" << m_selectedRow
                << " col=" << m_selectedCol << endl;
 #endif
@@ -233,13 +233,13 @@ void kpToolWidgetBase::saveSelectedAsDefault () const
 void kpToolWidgetBase::relayoutOptions ()
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kdDebug () << "kpToolWidgetBase::relayoutOptions()" << endl;
+    kDebug () << "kpToolWidgetBase::relayoutOptions()" << endl;
 #endif
 
     while (!m_pixmaps.isEmpty () && m_pixmaps.last ().count () == 0)
     {
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kdDebug () << "\tkilling #" << m_pixmaps.count () - 1 << endl;
+        kDebug () << "\tkilling #" << m_pixmaps.count () - 1 << endl;
     #endif
         m_pixmaps.resize (m_pixmaps.count () - 1);
         m_pixmapRects.resize (m_pixmapRects.count () - 1);
@@ -250,8 +250,8 @@ void kpToolWidgetBase::relayoutOptions ()
         return;
 
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kdDebug () << "\tsurvived killing of empty rows" << endl;
-    kdDebug () << "\tfinding heights of rows:" << endl;
+    kDebug () << "\tsurvived killing of empty rows" << endl;
+    kDebug () << "\tfinding heights of rows:" << endl;
 #endif
 
     Q3ValueVector <int> maxHeightOfRow (m_pixmaps.count ());
@@ -264,37 +264,37 @@ void kpToolWidgetBase::relayoutOptions ()
                 maxHeightOfRow [r] = m_pixmaps [r][c].height ();
         }
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kdDebug () << "\t\t" << r << ": " << maxHeightOfRow [r] << endl;
+        kDebug () << "\t\t" << r << ": " << maxHeightOfRow [r] << endl;
     #endif
     }
 
     Q3ValueVector <int> rowYOffset = spreadOutElements (maxHeightOfRow, height ());
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kdDebug () << "\tspread out offsets of rows:" << endl;
+    kDebug () << "\tspread out offsets of rows:" << endl;
     for (int r = 0; r < (int) rowYOffset.count (); r++)
-        kdDebug () << "\t\t" << r << ": " << rowYOffset [r] << endl;
+        kDebug () << "\t\t" << r << ": " << rowYOffset [r] << endl;
 #endif
 
     for (int r = 0; r < (int) m_pixmaps.count (); r++)
     {
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kdDebug () << "\tlaying out row " << r << ":" << endl;
+        kDebug () << "\tlaying out row " << r << ":" << endl;
     #endif
 
         Q3ValueVector <int> widths (m_pixmaps [r].count ());
         for (int c = 0; c < (int) m_pixmaps [r].count (); c++)
             widths [c] = m_pixmaps [r][c].width ();
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kdDebug () << "\t\twidths of cols:" << endl;
+        kDebug () << "\t\twidths of cols:" << endl;
         for (int c = 0; c < (int) m_pixmaps [r].count (); c++)
-            kdDebug () << "\t\t\t" << c << ": " << widths [c] << endl;
+            kDebug () << "\t\t\t" << c << ": " << widths [c] << endl;
     #endif
 
         Q3ValueVector <int> colXOffset = spreadOutElements (widths, width ());
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kdDebug () << "\t\tspread out offsets of cols:" << endl;
+        kDebug () << "\t\tspread out offsets of cols:" << endl;
         for (int c = 0; c < (int) colXOffset.count (); c++)
-            kdDebug () << "\t\t\t" << c << ": " << colXOffset [c] << endl;
+            kDebug () << "\t\t\t" << c << ": " << colXOffset [c] << endl;
     #endif
 
         for (int c = 0; c < (int) colXOffset.count (); c++)
@@ -373,7 +373,7 @@ int kpToolWidgetBase::selected () const
 bool kpToolWidgetBase::hasPreviousOption (int *row, int *col) const
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kdDebug () << "kpToolWidgetBase" << name ()
+    kDebug () << "kpToolWidgetBase" << name ()
                << "::hasPreviousOption() current row=" << m_selectedRow
                << " col=" << m_selectedCol
                << endl;
@@ -415,7 +415,7 @@ bool kpToolWidgetBase::hasPreviousOption (int *row, int *col) const
 bool kpToolWidgetBase::hasNextOption (int *row, int *col) const
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kdDebug () << "kpToolWidgetBase" << name ()
+    kDebug () << "kpToolWidgetBase" << name ()
                << "::hasNextOption() current row=" << m_selectedRow
                << " col=" << m_selectedCol
                << endl;
@@ -459,7 +459,7 @@ bool kpToolWidgetBase::hasNextOption (int *row, int *col) const
 bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kdDebug () << "kpToolWidgetBase::setSelected(row=" << row
+    kDebug () << "kpToolWidgetBase::setSelected(row=" << row
                << ",col=" << col
                << ",saveAsDefault=" << saveAsDefault
                << ")"
@@ -470,7 +470,7 @@ bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
         row >= (int) m_pixmapRects.count () || col >= (int) m_pixmapRects [row].count ())
     {
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kdDebug () << "\tout of range" << endl;
+        kDebug () << "\tout of range" << endl;
     #endif
         return false;
     }
@@ -478,7 +478,7 @@ bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
     if (row == m_selectedRow && col == m_selectedCol)
     {
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kdDebug () << "\tNOP" << endl;
+        kDebug () << "\tNOP" << endl;
     #endif
 
         if (saveAsDefault)
@@ -502,7 +502,7 @@ bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
     update (m_pixmapRects [row][col]);
 
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kdDebug () << "\tOK" << endl;
+    kDebug () << "\tOK" << endl;
 #endif
 
     if (saveAsDefault)
@@ -567,13 +567,13 @@ void kpToolWidgetBase::mousePressEvent (QMouseEvent *e)
 void kpToolWidgetBase::drawContents (QPainter *painter)
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE && 1
-    kdDebug () << "kpToolWidgetBase::drawContents(): rect=" << contentsRect () << endl;
+    kDebug () << "kpToolWidgetBase::drawContents(): rect=" << contentsRect () << endl;
 #endif
 
     for (int i = 0; i < (int) m_pixmaps.count (); i++)
     {
         #if DEBUG_KP_TOOL_WIDGET_BASE && 1
-            kdDebug () << "\tRow: " << i << endl;
+            kDebug () << "\tRow: " << i << endl;
         #endif
 
         for (int j = 0; j < (int) m_pixmaps [i].count (); j++)
@@ -582,7 +582,7 @@ void kpToolWidgetBase::drawContents (QPainter *painter)
             QPixmap pixmap = m_pixmaps [i][j];
 
         #if DEBUG_KP_TOOL_WIDGET_BASE && 1
-            kdDebug () << "\t\tCol: " << j << " rect=" << rect << endl;
+            kDebug () << "\t\tCol: " << j << " rect=" << rect << endl;
         #endif
 
             if (i == m_selectedRow && j == m_selectedCol)
@@ -594,7 +594,7 @@ void kpToolWidgetBase::drawContents (QPainter *painter)
             }
 
         #if DEBUG_KP_TOOL_WIDGET_BASE && 1
-            kdDebug () << "\t\t\tdraw pixmap @ x="
+            kDebug () << "\t\t\tdraw pixmap @ x="
                        << rect.x () + (rect.width () - pixmap.width ()) / 2
                        << " y="
                        << rect.y () + (rect.height () - pixmap.height ()) / 2

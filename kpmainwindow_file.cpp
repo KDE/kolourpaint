@@ -137,7 +137,7 @@ bool kpMainWindow::shouldOpenInNewWindow () const
 void kpMainWindow::addRecentURL (const KUrl &url)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::addRecentURL(" << url << ")" << endl;
+    kDebug () << "kpMainWindow::addRecentURL(" << url << ")" << endl;
 #endif
     if (url.isEmpty ())
         return;
@@ -159,7 +159,7 @@ void kpMainWindow::addRecentURL (const KUrl &url)
     cfg->sync ();
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tnew recent URLs=" << m_actionOpenRecent->items () << endl;
+    kDebug () << "\tnew recent URLs=" << m_actionOpenRecent->items () << endl;
 #endif
 
 
@@ -167,7 +167,7 @@ void kpMainWindow::addRecentURL (const KUrl &url)
     if (KMainWindow::memberList())
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\thave memberList" << endl;
+        kDebug () << "\thave memberList" << endl;
     #endif
 
         for (Q3PtrList <KMainWindow>::const_iterator it = KMainWindow::memberList()->begin ();
@@ -178,11 +178,11 @@ void kpMainWindow::addRecentURL (const KUrl &url)
 
             if (!mw)
             {
-                kdError () << "kpMainWindow::addRecentURL() given fake kpMainWindow: " << (*it) << endl;
+                kError () << "kpMainWindow::addRecentURL() given fake kpMainWindow: " << (*it) << endl;
                 continue;
             }
         #if DEBUG_KP_MAIN_WINDOW
-            kdDebug () << "\t\tmw=" << mw << endl;
+            kDebug () << "\t\tmw=" << mw << endl;
         #endif
 
             if (mw != this)
@@ -195,8 +195,8 @@ void kpMainWindow::addRecentURL (const KUrl &url)
 void kpMainWindow::setRecentURLs (const QStringList &items)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow(" << name () << ")::setRecentURLs()" << endl;
-    kdDebug () << "\titems=" << items << endl;
+    kDebug () << "kpMainWindow(" << name () << ")::setRecentURLs()" << endl;
+    kDebug () << "\titems=" << items << endl;
 #endif
     m_actionOpenRecent->setItems (items);
 }
@@ -252,7 +252,7 @@ QSize kpMainWindow::defaultDocSize () const
 void kpMainWindow::saveDefaultDocSize (const QSize &size)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tCONFIG: saving Last Doc Size = "
+    kDebug () << "\tCONFIG: saving Last Doc Size = "
                << QSize (dialog.imageWidth (), dialog.imageHeight ())
                << endl;
 #endif
@@ -305,7 +305,7 @@ KUrl::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &
 {
     QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::askForURLs(allowMultiple="
+    kDebug () << "kpMainWindow::askForURLs(allowMultiple="
                << allowMultipleURLs
                << ") mimeTypes=" << mimeTypes << endl;
 #endif
@@ -346,7 +346,7 @@ void kpMainWindow::slotOpen ()
 void kpMainWindow::slotOpenRecent (const KUrl &url)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotOpenRecent(" << url << ")" << endl;
+    kDebug () << "kpMainWindow::slotOpenRecent(" << url << ")" << endl;
 #endif
 
     if (toolHasBegunShape ())
@@ -406,7 +406,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
                                   bool *allowLossyPrompt)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::askForURL() startURL=" << startURL << endl;
+    kDebug () << "kpMainWindow::askForURL() startURL=" << startURL << endl;
     startSaveOptions.printDebug ("\tstartSaveOptions");
 #endif
 
@@ -441,7 +441,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
     QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Writing);
     if (mimeTypes.isEmpty ())
     {
-        kdError () << "No KImageIO output mimetypes!" << endl;
+        kError () << "No KImageIO output mimetypes!" << endl;
         return KUrl ();
     }
 
@@ -450,7 +450,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
     if (!MIME_TYPE_IS_VALID ())
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tmimeType=" << fdSaveOptions.mimeType ()
+        kDebug () << "\tmimeType=" << fdSaveOptions.mimeType ()
                    << " not valid, get default" << endl;
     #endif
 
@@ -462,7 +462,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
         if (!MIME_TYPE_IS_VALID ())
         {
         #if DEBUG_KP_MAIN_WINDOW
-            kdDebug () << "\tmimeType=" << fdSaveOptions.mimeType ()
+            kDebug () << "\tmimeType=" << fdSaveOptions.mimeType ()
                        << " not valid, get hardcoded" << endl;
         #endif
             if (mimeTypes.findIndex ("image/png") > -1)
@@ -505,7 +505,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
     fd.setCaption (caption);
     fd.setOperationMode (KFileDialog::Saving);
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tmimeTypes=" << mimeTypes << endl;
+    kDebug () << "\tmimeTypes=" << mimeTypes << endl;
 #endif
     fd.setMimeFilter (mimeTypes, fdSaveOptions.mimeType ());
     if (localOnly)
@@ -542,7 +542,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
         {
             *allowOverwritePrompt = shouldAllowOverwritePrompt;
         #if DEBUG_KP_MAIN_WINDOW
-            kdDebug () << "\tallowOverwritePrompt=" << *allowOverwritePrompt << endl;
+            kDebug () << "\tallowOverwritePrompt=" << *allowOverwritePrompt << endl;
         #endif
         }
 
@@ -558,13 +558,13 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
                  newSaveOptions.colorDepth () != startSaveOptions.colorDepth () ||
                  newSaveOptions.dither () != startSaveOptions.dither ());
         #if DEBUG_KP_MAIN_WINDOW
-            kdDebug () << "\tallowLossyPrompt=" << *allowLossyPrompt << endl;
+            kDebug () << "\tallowLossyPrompt=" << *allowLossyPrompt << endl;
         #endif
         }
 
 
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tselectedURL=" << fd.selectedURL () << endl;
+        kDebug () << "\tselectedURL=" << fd.selectedURL () << endl;
     #endif
         return fd.selectedURL ();
     }
@@ -578,7 +578,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 bool kpMainWindow::saveAs (bool localOnly)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::saveAs URL=" << m_document->url () << endl;
+    kDebug () << "kpMainWindow::saveAs URL=" << m_document->url () << endl;
 #endif
 
     kpDocumentSaveOptions chosenSaveOptions;
@@ -626,7 +626,7 @@ bool kpMainWindow::slotSaveAs ()
 bool kpMainWindow::slotExport ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotExport()" << endl;
+    kDebug () << "kpMainWindow::slotExport()" << endl;
 #endif
 
     if (toolHasBegunShape ())
@@ -731,7 +731,7 @@ bool kpMainWindow::slotReload ()
         (!oldURL.isEmpty () && KIO::NetAccess::exists (oldURL, true/*open*/, this)))
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "kpMainWindow::slotReload() reloading from disk!" << endl;
+        kDebug () << "kpMainWindow::slotReload() reloading from disk!" << endl;
     #endif
 
         doc = new kpDocument (1, 1, this);
@@ -746,7 +746,7 @@ bool kpMainWindow::slotReload ()
     else
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "kpMainWindow::slotReload() create doc" << endl;
+        kDebug () << "kpMainWindow::slotReload() create doc" << endl;
     #endif
 
         doc = new kpDocument (m_document->constructorWidth (),
@@ -778,7 +778,7 @@ void kpMainWindow::sendFilenameToPrinter (KPrinter *printer)
             fileName.truncate (dot);
 
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "kpMainWindow::sendFilenameToPrinter() fileName="
+        kDebug () << "kpMainWindow::sendFilenameToPrinter() fileName="
                    << fileName
                    << " dir="
                    << url.directory ()
@@ -921,7 +921,7 @@ void kpMainWindow::setAsWallpaper (bool centered)
 
     // write path
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::setAsWallpaper() path="
+    kDebug () << "kpMainWindow::setAsWallpaper() path="
                << m_document->url ().path () << endl;
 #endif
     dataStream << QString (m_document->url ().path ());
@@ -983,7 +983,7 @@ void kpMainWindow::slotClose ()
         tool ()->endShapeInternal ();
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotClose()" << endl;
+    kDebug () << "kpMainWindow::slotClose()" << endl;
 #endif
 
     if (!queryClose ())
@@ -999,7 +999,7 @@ void kpMainWindow::slotQuit ()
         tool ()->endShapeInternal ();
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotQuit()" << endl;
+    kDebug () << "kpMainWindow::slotQuit()" << endl;
 #endif
 
     close ();  // will call queryClose()

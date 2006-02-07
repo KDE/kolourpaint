@@ -69,7 +69,7 @@ QPixmap kpEffectEmbossCommand::apply (const QPixmap &pixmap,
                                       int repeat)
 {
 #if DEBUG_KP_EFFECT_EMBOSS
-    kdDebug () << "kpEffectEmbossCommand::apply()"
+    kDebug () << "kpEffectEmbossCommand::apply()"
                << " radius=" << radius
                << " sigma=" << sigma
                << " repeat=" << repeat

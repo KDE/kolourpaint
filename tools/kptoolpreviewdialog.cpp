@@ -217,7 +217,7 @@ void kpToolPreviewDialog::updateDimensions ()
 
     QSize newDim = newDimensions ();
 #if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kdDebug () << "kpToolPreviewDialog::updateDimensions(): newDim=" << newDim << endl;
+    kDebug () << "kpToolPreviewDialog::updateDimensions(): newDim=" << newDim << endl;
 #endif
 
     QString newDimString = i18n ("%1 x %2")
@@ -251,7 +251,7 @@ int kpToolPreviewDialog::scaleDimension (int dimension, double scale, int min, i
 void kpToolPreviewDialog::updateShrukenDocumentPixmap ()
 {
 #if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kdDebug () << "kpToolPreviewDialog::updateShrukenDocumentPixmap()"
+    kDebug () << "kpToolPreviewDialog::updateShrukenDocumentPixmap()"
                << " shrunkenDocPixmap.size="
                << m_shrunkenDocumentPixmap.size ()
                << " previewPixmapLabelSizeWhenUpdatedPixmap="
@@ -268,7 +268,7 @@ void kpToolPreviewDialog::updateShrukenDocumentPixmap ()
     kpDocument *doc = document ();
     if (!doc || !doc->pixmap ())
     {
-        kdError () << "kpToolPreviewDialog::updateShrunkenDocumentPixmap() doc="
+        kError () << "kpToolPreviewDialog::updateShrunkenDocumentPixmap() doc="
                    << doc << endl;
         return;
     }
@@ -277,7 +277,7 @@ void kpToolPreviewDialog::updateShrukenDocumentPixmap ()
         m_previewPixmapLabel->size () != m_previewPixmapLabelSizeWhenUpdatedPixmap)
     {
     #if DEBUG_KP_TOOL_PREVIEW_DIALOG
-        kdDebug () << "\tupdating shrunkenDocPixmap" << endl;
+        kDebug () << "\tupdating shrunkenDocPixmap" << endl;
     #endif
 
         // TODO: Why the need to keep aspect ratio here?
@@ -326,7 +326,7 @@ void kpToolPreviewDialog::updateShrukenDocumentPixmap ()
 void kpToolPreviewDialog::updatePreview ()
 {
 #if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kdDebug () << "kpToolPreviewDialog::updatePreview()" << endl;
+    kDebug () << "kpToolPreviewDialog::updatePreview()" << endl;
 #endif
 
     if (!m_previewGroupBox)
@@ -370,7 +370,7 @@ void kpToolPreviewDialog::updatePreview ()
                                  transformedShrunkenDocumentPixmap);
 
 #if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kdDebug () << "kpToolPreviewDialog::updatePreview ():"
+    kDebug () << "kpToolPreviewDialog::updatePreview ():"
                << "   shrunkenDocumentPixmap: w="
                << m_shrunkenDocumentPixmap.width ()
                << " h="
@@ -396,7 +396,7 @@ void kpToolPreviewDialog::updatePreview ()
         m_previewPixmapLabel->repaint (false/*no erase*/);
 
 #if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kdDebug () << "\tafter QLabel::setPixmap() previewPixmapLabel: w="
+    kDebug () << "\tafter QLabel::setPixmap() previewPixmapLabel: w="
                << m_previewPixmapLabel->width ()
                << " h="
                << m_previewPixmapLabel->height ()
@@ -410,7 +410,7 @@ void kpToolPreviewDialog::updatePreview ()
 void kpToolPreviewDialog::slotUpdate ()
 {
 #if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kdDebug () << "kpToolPreviewDialog::slotUpdate()" << endl;
+    kDebug () << "kpToolPreviewDialog::slotUpdate()" << endl;
 #endif
     updateDimensions ();
     updatePreview ();
@@ -420,7 +420,7 @@ void kpToolPreviewDialog::slotUpdate ()
 void kpToolPreviewDialog::slotUpdateWithWaitCursor ()
 {
 #if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kdDebug () << "kpToolPreviewDialog::slotUpdateWithWaitCursor()"
+    kDebug () << "kpToolPreviewDialog::slotUpdateWithWaitCursor()"
                << endl;
 #endif
 

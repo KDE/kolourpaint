@@ -78,7 +78,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
       m_colorEffectWidget (0)
 {
 #if DEBUG_KP_EFFECTS_DIALOG
-    kdDebug () << "kpEffectsDialog::kpEffectsDialog()" << endl;
+    kDebug () << "kpEffectsDialog::kpEffectsDialog()" << endl;
 #endif
 
     if (actOnSelection)
@@ -128,7 +128,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 
 
 #if DEBUG_KP_EFFECTS_DIALOG
-    kdDebug () << "\tabout to slotUpdate()" << endl;
+    kDebug () << "\tabout to slotUpdate()" << endl;
 #endif
     slotUpdate ();
 }
@@ -195,7 +195,7 @@ int kpEffectsDialog::selectedEffect () const
 void kpEffectsDialog::selectEffect (int which)
 {
 #if DEBUG_KP_EFFECTS_DIALOG
-    kdDebug () << "kpEffectsDialog::selectEffect(" << which << ")" << endl;
+    kDebug () << "kpEffectsDialog::selectEffect(" << which << ")" << endl;
 #endif
 
     if (which < 0 ||
@@ -250,7 +250,7 @@ void kpEffectsDialog::selectEffect (int which)
     if (m_colorEffectWidget)
     {
     #if DEBUG_KP_EFFECTS_DIALOG
-        kdDebug () << "\twidget exists for effect #" << endl;
+        kDebug () << "\twidget exists for effect #" << endl;
     #endif
         m_settingsGroupBox->setTitle (m_colorEffectWidget->caption ());
 
@@ -265,7 +265,7 @@ void kpEffectsDialog::selectEffect (int which)
                 m_previewGroupBox->layout ()->resizeMode () :
                 QLayout::SetDefaultConstraint;
     #if DEBUG_KP_EFFECTS_DIALOG
-        kdDebug () << "\tpreviewGroupBox: minSize=" << previewGroupBoxMinSize
+        kDebug () << "\tpreviewGroupBox: minSize=" << previewGroupBoxMinSize
                    << " maxSize=" << previewGroupBoxMaxSize
                    << " size=" << m_previewGroupBox->size ()
                    << " layout=" << m_previewGroupBox->layout ()
@@ -276,37 +276,37 @@ void kpEffectsDialog::selectEffect (int which)
         if (m_previewGroupBox->layout ())
             m_previewGroupBox->layout ()->setResizeMode (QLayout::SetNoConstraint);
     #if DEBUG_KP_EFFECTS_DIALOG
-        kdDebug () << "\tafter set resizeMode, previewGroupBox.size="
+        kDebug () << "\tafter set resizeMode, previewGroupBox.size="
                    << m_previewGroupBox->size () << endl;
     #endif
         m_previewGroupBox->setFixedSize (m_previewGroupBox->size ());
     #if DEBUG_KP_EFFECTS_DIALOG
-        kdDebug () << "\tafter set fixedSize, previewGroupBox.size="
+        kDebug () << "\tafter set fixedSize, previewGroupBox.size="
                    << m_previewGroupBox->size () << endl;
     #endif
 
         // Show widget
         m_settingsLayout->addWidget (m_colorEffectWidget);
     #if DEBUG_KP_EFFECTS_DIALOG
-        kdDebug () << "\tafter addWidget, previewGroupBox.size="
+        kDebug () << "\tafter addWidget, previewGroupBox.size="
                    << m_previewGroupBox->size () << endl;
     #endif
         m_colorEffectWidget->show ();
     #if DEBUG_KP_EFFECTS_DIALOG
-        kdDebug () << "\tafter addWidget show, previewGroupBox.size="
+        kDebug () << "\tafter addWidget show, previewGroupBox.size="
                    << m_previewGroupBox->size () << endl;
     #endif
 
         m_previewGroupBox->setMinimumSize (previewGroupBoxMinSize);
         m_previewGroupBox->setMaximumSize (previewGroupBoxMaxSize);
     #if DEBUG_KP_EFFECTS_DIALOG
-        kdDebug () << "\tafter set fixedSize, previewGroupBox.size="
+        kDebug () << "\tafter set fixedSize, previewGroupBox.size="
                    << m_previewGroupBox->size () << endl;
     #endif
         if (m_previewGroupBox->layout ())
             m_previewGroupBox->layout ()->setResizeMode (previewGroupBoxResizeMode);
     #if DEBUG_KP_EFFECTS_DIALOG
-        kdDebug () << "\tafter restore resizeMode, previewGroupBox.size="
+        kDebug () << "\tafter restore resizeMode, previewGroupBox.size="
                    << m_previewGroupBox->size () << endl;
     #endif
 
@@ -319,7 +319,7 @@ void kpEffectsDialog::selectEffect (int which)
                  this, SLOT (slotDelayedUpdate ()));
         slotUpdateWithWaitCursor ();
     #if DEBUG_KP_EFFECTS_DIALOG
-        kdDebug () << "\tafter slotUpdateWithWaitCursor, previewGroupBox.size="
+        kDebug () << "\tafter slotUpdateWithWaitCursor, previewGroupBox.size="
                    << m_previewGroupBox->size () << endl;
     #endif
     }
@@ -330,7 +330,7 @@ void kpEffectsDialog::selectEffect (int which)
 void kpEffectsDialog::slotUpdate ()
 {
 #if DEBUG_KP_EFFECTS_DIALOG
-    kdDebug () << "kpEffectsDialog::slotUpdate()"
+    kDebug () << "kpEffectsDialog::slotUpdate()"
                << " timerActive=" << m_delayedUpdateTimer->isActive ()
                << endl;
 #endif
@@ -344,7 +344,7 @@ void kpEffectsDialog::slotUpdate ()
 void kpEffectsDialog::slotUpdateWithWaitCursor ()
 {
 #if DEBUG_KP_EFFECTS_DIALOG
-    kdDebug () << "kpEffectsDialog::slotUpdateWithWaitCursor()"
+    kDebug () << "kpEffectsDialog::slotUpdateWithWaitCursor()"
                << " timerActive=" << m_delayedUpdateTimer->isActive ()
                << endl;
 #endif
@@ -359,7 +359,7 @@ void kpEffectsDialog::slotUpdateWithWaitCursor ()
 void kpEffectsDialog::slotDelayedUpdate ()
 {
 #if DEBUG_KP_EFFECTS_DIALOG
-    kdDebug () << "kpEffectsDialog::slotDelayedUpdate()"
+    kDebug () << "kpEffectsDialog::slotDelayedUpdate()"
                << " timerActive=" << m_delayedUpdateTimer->isActive ()
                << endl;
 #endif

@@ -159,7 +159,7 @@ kpSelection &kpSelection::operator= (const kpSelection &rhs)
 QDataStream &operator<< (QDataStream &stream, const kpSelection &selection)
 {
 #if DEBUG_KP_SELECTION && 1
-    kdDebug () << "kpSelection::operator<<(sel: rect=" << selection.boundingRect ()
+    kDebug () << "kpSelection::operator<<(sel: rect=" << selection.boundingRect ()
                << " pixmap rect=" << (selection.pixmap () ? selection.pixmap ()->rect () : QRect ())
                << endl;
 #endif
@@ -167,7 +167,7 @@ QDataStream &operator<< (QDataStream &stream, const kpSelection &selection)
     stream << selection.m_rect;
     stream << selection.m_points;
 #if DEBUG_KP_SELECTION && 1
-    kdDebug () << "\twrote type=" << int (selection.m_type) << " rect=" << selection.m_rect
+    kDebug () << "\twrote type=" << int (selection.m_type) << " rect=" << selection.m_rect
                << " and points" << endl;
 #endif
 
@@ -177,14 +177,14 @@ QDataStream &operator<< (QDataStream &stream, const kpSelection &selection)
     {
         const QImage image = kpPixmapFX::convertToImage (*selection.m_pixmap);
     #if DEBUG_KP_SELECTION && 1
-        kdDebug () << "\twrote image rect=" << image.rect () << endl;
+        kDebug () << "\twrote image rect=" << image.rect () << endl;
     #endif
         stream << image;
     }
     else
     {
     #if DEBUG_KP_SELECTION && 1
-        kdDebug () << "\twrote no image because no pixmap" << endl;
+        kDebug () << "\twrote no image because no pixmap" << endl;
     #endif
         stream << QImage ();
     }
@@ -207,21 +207,21 @@ void kpSelection::readFromStream (QDataStream &stream,
                                   const kpPixmapFX::WarnAboutLossInfo &wali)
 {
 #if DEBUG_KP_SELECTION && 1
-    kdDebug () << "kpSelection::readFromStream()" << endl;
+    kDebug () << "kpSelection::readFromStream()" << endl;
 #endif
     int typeAsInt;
     stream >> typeAsInt;
     m_type = kpSelection::Type (typeAsInt);
 #if DEBUG_KP_SELECTION && 1
-    kdDebug () << "\ttype=" << typeAsInt << endl;
+    kDebug () << "\ttype=" << typeAsInt << endl;
 #endif
 
     stream >> m_rect;
     stream >> m_points;
     m_points.detach ();
 #if DEBUG_KP_SELECTION && 1
-    kdDebug () << "\trect=" << m_rect << endl;
-    //kdDebug () << "\tpoints=" << m_points << endl;
+    kDebug () << "\trect=" << m_rect << endl;
+    //kDebug () << "\tpoints=" << m_points << endl;
 #endif
 
     QImage image;
@@ -232,16 +232,16 @@ void kpSelection::readFromStream (QDataStream &stream,
     else
         m_pixmap = 0;
 #if DEBUG_KP_SELECTION && 1
-    kdDebug () << "\timage: w=" << image.width () << " h=" << image.height ()
+    kDebug () << "\timage: w=" << image.width () << " h=" << image.height ()
                << " depth=" << image.depth () << endl;
     if (m_pixmap)
     {
-        kdDebug () << "\tpixmap: w=" << m_pixmap->width () << " h=" << m_pixmap->height ()
+        kDebug () << "\tpixmap: w=" << m_pixmap->width () << " h=" << m_pixmap->height ()
                    << endl;
     }
     else
     {
-        kdDebug () << "\tpixmap: none" << endl;
+        kDebug () << "\tpixmap: none" << endl;
     }
 #endif
 
@@ -294,7 +294,7 @@ void kpSelection::calculatePoints ()
         return;
     }
 
-    kdError () << "kpSelection::calculatePoints() with unknown type" << endl;
+    kError () << "kpSelection::calculatePoints() with unknown type" << endl;
     return;
 }
 
@@ -342,7 +342,7 @@ QBitmap kpSelection::maskForOwnType (bool nullForRectangular) const
 {
     if (!m_rect.isValid ())
     {
-        kdError () << "kpSelection::maskForOwnType() boundingRect invalid" << endl;
+        kError () << "kpSelection::maskForOwnType() boundingRect invalid" << endl;
         return QBitmap ();
     }
 
@@ -414,7 +414,7 @@ int kpSelection::y () const
 void kpSelection::moveBy (int dx, int dy)
 {
 #if DEBUG_KP_SELECTION && 1
-    kdDebug () << "kpSelection::moveBy(" << dx << "," << dy << ")" << endl;
+    kDebug () << "kpSelection::moveBy(" << dx << "," << dy << ")" << endl;
 #endif
 
     if (dx == 0 && dy == 0)
@@ -423,13 +423,13 @@ void kpSelection::moveBy (int dx, int dy)
     QRect oldRect = boundingRect ();
 
 #if DEBUG_KP_SELECTION && 1
-    kdDebug () << "\toldRect=" << oldRect << endl;
+    kDebug () << "\toldRect=" << oldRect << endl;
 #endif
 
     m_rect.moveBy (dx, dy);
     m_points.translate (dx, dy);
 #if DEBUG_KP_SELECTION && 1
-    kdDebug () << "\tnewRect=" << m_rect << endl;
+    kDebug () << "\tnewRect=" << m_rect << endl;
 #endif
 
     emit changed (oldRect);
@@ -446,11 +446,11 @@ void kpSelection::moveTo (int dx, int dy)
 void kpSelection::moveTo (const QPoint &topLeftPoint)
 {
 #if DEBUG_KP_SELECTION && 1
-    kdDebug () << "kpSelection::moveTo(" << topLeftPoint << ")" << endl;
+    kDebug () << "kpSelection::moveTo(" << topLeftPoint << ")" << endl;
 #endif
     QRect oldBoundingRect = boundingRect ();
 #if DEBUG_KP_SELECTION && 1
-    kdDebug () << "\toldBoundingRect=" << oldBoundingRect << endl;
+    kDebug () << "\toldBoundingRect=" << oldBoundingRect << endl;
 #endif
     if (topLeftPoint == oldBoundingRect.topLeft ())
         return;
@@ -496,7 +496,7 @@ bool kpSelection::contains (const QPoint &point) const
     QRect rect = boundingRect ();
 
 #if DEBUG_KP_SELECTION && 1
-    kdDebug () << "kpSelection::contains(" << point
+    kDebug () << "kpSelection::contains(" << point
                << ") rect==" << rect
                << " #points=" << m_points.size ()
                << endl;
@@ -559,7 +559,7 @@ void kpSelection::setPixmap (const QPixmap &pixmap)
         {
             if (changedSize)
             {
-                kdError () << "kpSelection::setPixmap() changes the size of the selection!"
+                kError () << "kpSelection::setPixmap() changes the size of the selection!"
                         << "   old:"
                         << " w=" << oldRect.width ()
                         << " h=" << oldRect.height ()
@@ -571,7 +571,7 @@ void kpSelection::setPixmap (const QPixmap &pixmap)
 
             if (changedFromText)
             {
-                kdError () << "kpSelection::setPixmap() changed from text" << endl;
+                kError () << "kpSelection::setPixmap() changed from text" << endl;
             }
 
             m_type = kpSelection::Rectangle;
@@ -623,7 +623,7 @@ static void drawTextLines (QPainter *painter, QPainter *maskPainter,
     if (!painter->clipRegion ().isEmpty () || !maskPainter->clipRegion ().isEmpty ())
     {
         // TODO: fix esp. before making method public
-        kdError () << "kpselection.cpp:drawTextLines() can't deal with existing painter clip regions" << endl;
+        kError () << "kpselection.cpp:drawTextLines() can't deal with existing painter clip regions" << endl;
         return;
     }
 
@@ -647,7 +647,7 @@ static void drawTextLines (QPainter *painter, QPainter *maskPainter,
 #if 0
     const QFontMetrics fontMetrics (painter->fontMetrics ());
 
-    kdDebug () << "height=" << fontMetrics.height ()
+    kDebug () << "height=" << fontMetrics.height ()
                << " leading=" << fontMetrics.leading ()
                << " ascent=" << fontMetrics.ascent ()
                << " descent=" << fontMetrics.descent ()
@@ -810,7 +810,7 @@ QPixmap kpSelection::transparentForegroundTextPixmap () const
 
 
 #if DEBUG_KP_SELECTION
-    kdDebug () << "\tinvoking foreground transparency hack" << endl;
+    kDebug () << "\tinvoking foreground transparency hack" << endl;
 #endif
     QImage image = kpPixmapFX::convertToImage (pixmap);
     QRgb backgroundRGB = image.pixel (0, 0);  // on textBorderSize()
@@ -853,7 +853,7 @@ void kpSelection::paint (QPixmap *destPixmap, const QRect &docRect) const
     else
     {
     #if DEBUG_KP_SELECTION
-        kdDebug () << "kpSelection::paint() textStyle: fcol="
+        kDebug () << "kpSelection::paint() textStyle: fcol="
                 << (int *) m_textStyle.foregroundColor ().toQRgb ()
                 << " bcol="
                 << (int *) m_textStyle.effectiveBackgroundColor ().toQRgb ()
@@ -869,7 +869,7 @@ void kpSelection::paint (QPixmap *destPixmap, const QRect &docRect) const
         {
             if (!m_pixmap)
             {
-                kdError () << "kpSelection::paint() without m_pixmap?" << endl;
+                kError () << "kpSelection::paint() without m_pixmap?" << endl;
                 return;
             }
 
@@ -887,7 +887,7 @@ void kpSelection::calculateTextPixmap ()
 {
     if (!isText ())
     {
-        kdError () << "kpSelection::calculateTextPixmap() not text sel"
+        kError () << "kpSelection::calculateTextPixmap() not text sel"
                    << endl;
         return;
     }
@@ -945,7 +945,7 @@ Q3ValueVector <QString> kpSelection::textLines () const
 {
     if (!isText ())
     {
-        kdError () << "kpSelection::textLines() not a text selection" << endl;
+        kError () << "kpSelection::textLines() not a text selection" << endl;
         return Q3ValueVector <QString> ();
     }
 
@@ -957,14 +957,14 @@ void kpSelection::setTextLines (const Q3ValueVector <QString> &textLines_)
 {
     if (!isText ())
     {
-        kdError () << "kpSelection::setTextLines() not a text selection" << endl;
+        kError () << "kpSelection::setTextLines() not a text selection" << endl;
         return;
     }
 
     m_textLines = textLines_;
     if (m_textLines.isEmpty ())
     {
-        kdError () << "kpSelection::setTextLines() passed no lines" << endl;
+        kError () << "kpSelection::setTextLines() passed no lines" << endl;
         m_textLines.push_back (QString::null);
     }
     calculateTextPixmap ();
@@ -982,7 +982,7 @@ QRect kpSelection::textAreaRect () const
 {
     if (!isText ())
     {
-        kdError () << "kpSelection::textAreaRect() not a text selection" << endl;
+        kError () << "kpSelection::textAreaRect() not a text selection" << endl;
         return QRect ();
     }
 
@@ -997,7 +997,7 @@ bool kpSelection::pointIsInTextBorderArea (const QPoint &globalPoint) const
 {
     if (!isText ())
     {
-        kdError () << "kpSelection::pointIsInTextBorderArea() not a text selection" << endl;
+        kError () << "kpSelection::pointIsInTextBorderArea() not a text selection" << endl;
         return false;
     }
 
@@ -1009,7 +1009,7 @@ bool kpSelection::pointIsInTextArea (const QPoint &globalPoint) const
 {
     if (!isText ())
     {
-        kdError () << "kpSelection::pointIsInTextArea() not a text selection" << endl;
+        kError () << "kpSelection::pointIsInTextArea() not a text selection" << endl;
         return false;
     }
 
@@ -1022,7 +1022,7 @@ void kpSelection::textResize (int width, int height)
 {
     if (!isText ())
     {
-        kdError () << "kpSelection::textResize() not a text selection" << endl;
+        kError () << "kpSelection::textResize() not a text selection" << endl;
         return;
     }
 
@@ -1120,7 +1120,7 @@ int kpSelection::textRowForPoint (const QPoint &globalPoint) const
 {
     if (!isText ())
     {
-        kdError () << "kpSelection::textRowForPoint() not a text selection" << endl;
+        kError () << "kpSelection::textRowForPoint() not a text selection" << endl;
         return -1;
     }
 
@@ -1142,7 +1142,7 @@ int kpSelection::textColForPoint (const QPoint &globalPoint) const
 {
     if (!isText ())
     {
-        kdError () << "kpSelection::textColForPoint() not a text selection" << endl;
+        kError () << "kpSelection::textColForPoint() not a text selection" << endl;
         return -1;
     }
 
@@ -1176,7 +1176,7 @@ QPoint kpSelection::pointForTextRowCol (int row, int col)
 {
     if (!isText ())
     {
-        kdError () << "kpSelection::pointForTextRowCol() not a text selection" << endl;
+        kError () << "kpSelection::pointForTextRowCol() not a text selection" << endl;
         return KP_INVALID_POINT;
     }
 
@@ -1184,7 +1184,7 @@ QPoint kpSelection::pointForTextRowCol (int row, int col)
         col < 0 || col > (int) m_textLines [row].length ())
     {
     #if DEBUG_KP_SELECTION && 1
-        kdDebug () << "kpSelection::pointForTextRowCol("
+        kDebug () << "kpSelection::pointForTextRowCol("
                    << row << ","
                    << col << ") out of range"
                    << " textLines='"
@@ -1209,7 +1209,7 @@ kpTextStyle kpSelection::textStyle () const
 {
     if (!isText ())
     {
-        kdError () << "kpSelection::textStyle() not a text selection" << endl;
+        kError () << "kpSelection::textStyle() not a text selection" << endl;
     }
 
     return m_textStyle;
@@ -1220,7 +1220,7 @@ void kpSelection::setTextStyle (const kpTextStyle &textStyle_)
 {
     if (!isText ())
     {
-        kdError () << "kpSelection::setTextStyle() not a text selection" << endl;
+        kError () << "kpSelection::setTextStyle() not a text selection" << endl;
         return;
     }
 
@@ -1247,13 +1247,13 @@ QPixmap kpSelection::opaquePixmap () const
 void kpSelection::calculateTransparencyMask ()
 {
 #if DEBUG_KP_SELECTION
-    kdDebug () << "kpSelection::calculateTransparencyMask()" << endl;
+    kDebug () << "kpSelection::calculateTransparencyMask()" << endl;
 #endif
 
     if (isText ())
     {
     #if DEBUG_KP_SELECTION
-        kdDebug () << "\ttext - no need for transparency mask" << endl;
+        kDebug () << "\ttext - no need for transparency mask" << endl;
     #endif
         m_transparencyMask.resize (0, 0);
         return;
@@ -1262,7 +1262,7 @@ void kpSelection::calculateTransparencyMask ()
     if (!m_pixmap)
     {
     #if DEBUG_KP_SELECTION
-        kdDebug () << "\tno pixmap - no need for transparency mask" << endl;
+        kDebug () << "\tno pixmap - no need for transparency mask" << endl;
     #endif
         m_transparencyMask.resize (0, 0);
         return;
@@ -1271,7 +1271,7 @@ void kpSelection::calculateTransparencyMask ()
     if (m_transparency.isOpaque ())
     {
     #if DEBUG_KP_SELECTION
-        kdDebug () << "\topaque - no need for transparency mask" << endl;
+        kDebug () << "\topaque - no need for transparency mask" << endl;
     #endif
         m_transparencyMask.resize (0, 0);
         return;
@@ -1307,7 +1307,7 @@ void kpSelection::calculateTransparencyMask ()
     if (!hasTransparent)
     {
     #if DEBUG_KP_SELECTION
-        kdDebug () << "\tcolour useless - completely opaque" << endl;
+        kDebug () << "\tcolour useless - completely opaque" << endl;
     #endif
         m_transparencyMask.resize (0, 0);
         return;
@@ -1355,7 +1355,7 @@ bool kpSelection::setTransparency (const kpSelectionTransparency &transparency,
         if (m_transparencyMask.isNull ())
         {
         #if DEBUG_KP_SELECTION
-            kdDebug () << "\tboth old and new pixmaps are null - nothing changed" << endl;
+            kDebug () << "\tboth old and new pixmaps are null - nothing changed" << endl;
         #endif
             haveChanged = false;
         }
@@ -1373,7 +1373,7 @@ bool kpSelection::setTransparency (const kpSelectionTransparency &transparency,
                         kpPixmapFX::getColorAtPixel (newTransparencyMaskImage, x, y))
                     {
                     #if DEBUG_KP_SELECTION
-                        kdDebug () << "\tdiffer at " << QPoint (x, y)
+                        kDebug () << "\tdiffer at " << QPoint (x, y)
                                    << " old=" << (int *) kpPixmapFX::getColorAtPixel (oldTransparencyMaskImage, x, y).toQRgb ()
                                    << " new=" << (int *) kpPixmapFX::getColorAtPixel (newTransparencyMaskImage, x, y).toQRgb ()
                                    << endl;
@@ -1416,7 +1416,7 @@ void kpSelection::flipPoints (bool horiz, bool vert)
 void kpSelection::flip (bool horiz, bool vert)
 {
 #if DEBUG_KP_SELECTION && 1
-    kdDebug () << "kpSelection::flip(horiz=" << horiz
+    kDebug () << "kpSelection::flip(horiz=" << horiz
                << ",vert=" << vert << ")" << endl;
 #endif
 
@@ -1426,7 +1426,7 @@ void kpSelection::flip (bool horiz, bool vert)
     if (m_pixmap)
     {
     #if DEBUG_KP_SELECTION && 1
-        kdDebug () << "\thave pixmap - flipping that" << endl;
+        kDebug () << "\thave pixmap - flipping that" << endl;
     #endif
         kpPixmapFX::flip (m_pixmap, horiz, vert);
     }
@@ -1434,7 +1434,7 @@ void kpSelection::flip (bool horiz, bool vert)
     if (!m_transparencyMask.isNull ())
     {
     #if DEBUG_KP_SELECTION && 1
-        kdDebug () << "\thave transparency mask - flipping that" << endl;
+        kDebug () << "\thave transparency mask - flipping that" << endl;
     #endif
         kpPixmapFX::flip (&m_transparencyMask, horiz, vert);
     }

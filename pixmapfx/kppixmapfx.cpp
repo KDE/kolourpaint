@@ -129,7 +129,7 @@ int kpPixmapFX::pixmapSize (int width, int height, int depth)
     int roundedDepth = (depth > 8 ? (depth + 7) / 8 * 8 : depth);
 
 #if DEBUG_KP_PIXMAP_FX && 0
-    kdDebug () << "kpPixmapFX::pixmapSize() w=" << width
+    kDebug () << "kpPixmapFX::pixmapSize() w=" << width
                << " h=" << height
                << " d=" << depth
                << " roundedDepth=" << roundedDepth
@@ -160,7 +160,7 @@ int kpPixmapFX::imageSize (int width, int height, int depth)
     int roundedDepth = (depth > 8 ? (depth + 7) / 8 * 8 : depth);
 
 #if DEBUG_KP_PIXMAP_FX && 0
-    kdDebug () << "kpPixmapFX::imageSize() w=" << width
+    kDebug () << "kpPixmapFX::imageSize() w=" << width
                << " h=" << height
                << " d=" << depth
                << " roundedDepth=" << roundedDepth
@@ -190,7 +190,7 @@ int kpPixmapFX::selectionSize (const kpSelection *sel)
 int kpPixmapFX::stringSize (const QString &string)
 {
 #if DEBUG_KP_PIXMAP_FX && 1
-    kdDebug () << "kpPixmapFX::stringSize(" << string << ")"
+    kDebug () << "kpPixmapFX::stringSize(" << string << ")"
                << " len=" << string.length ()
                << " sizeof(QChar)=" << sizeof (QChar)
                << endl;
@@ -203,7 +203,7 @@ int kpPixmapFX::stringSize (const QString &string)
 int kpPixmapFX::pointArraySize (const Q3PointArray &points)
 {
 #if DEBUG_KP_PIXMAP_FX && 1
-    kdDebug () << "kpPixmapFX::pointArraySize() points.size="
+    kDebug () << "kpPixmapFX::pointArraySize() points.size="
                << points.size ()
                << " sizeof(QPoint)=" << sizeof (QPoint)
                << endl;
@@ -297,7 +297,7 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
          imageHasAlphaChannel (image));
 
 #if DEBUG_KP_PIXMAP_FX && 1
-    kdDebug () << "\twarnAboutLoss - check hasAlphaChannel took "
+    kDebug () << "\twarnAboutLoss - check hasAlphaChannel took "
                << timer.restart () << "msec" << endl;
 #endif
 
@@ -312,7 +312,7 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
         screenDepthNeeded = QMIN (24, image.depth ());
 
 #if DEBUG_KP_PIXMAP_FX && 1
-    kdDebug () << "\ttranslucencyShouldBeShown="
+    kDebug () << "\ttranslucencyShouldBeShown="
                 << KMessageBox::shouldBeShownContinue (translucencyDontAskAgain)
                 << endl
                 << "\thasAlphaChannel=" << hasAlphaChannel
@@ -371,7 +371,7 @@ QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty,
                                      const WarnAboutLossInfo &wali)
 {
 #if DEBUG_KP_PIXMAP_FX && 1
-    kdDebug () << "kpPixmapFX::convertToPixmap(image,pretty=" << pretty
+    kDebug () << "kpPixmapFX::convertToPixmap(image,pretty=" << pretty
                << ",warnAboutLossInfo.isValid=" << wali.isValid ()
                << ")" << endl;
     QTime timer;
@@ -402,7 +402,7 @@ QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty,
     }
 
 #if DEBUG_KP_PIXMAP_FX && 1
-    kdDebug () << "\tconversion took " << timer.elapsed () << "msec" << endl;
+    kDebug () << "\tconversion took " << timer.elapsed () << "msec" << endl;
 #endif
 
     kpPixmapFX::ensureNoAlphaChannel (&destPixmap);
@@ -421,7 +421,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
     const WarnAboutLossInfo &wali)
 {
 #if DEBUG_KP_PIXMAP_FX && 1
-    kdDebug () << "kpPixmapFX::convertToPixmapAsLosslessAsPossible(image depth="
+    kDebug () << "kpPixmapFX::convertToPixmapAsLosslessAsPossible(image depth="
                << image.depth ()
                << ",warnAboutLossInfo.isValid=" << wali.isValid ()
                << ") screenDepth=" << QPixmap::defaultDepth ()
@@ -445,7 +445,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
     if (image.depth () <= screenDepth)
     {
     #if DEBUG_KP_PIXMAP_FX && 1
-        kdDebug () << "\timage depth <= screen depth - don't dither"
+        kDebug () << "\timage depth <= screen depth - don't dither"
                    << " (AvoidDither | ThresholdDither)" << endl;
     #endif
 
@@ -458,7 +458,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
         const int screenNumColors = (1 << screenDepth);
 
     #if DEBUG_KP_PIXMAP_FX && 1
-        kdDebug () << "\tscreen depth <= 8; imageNumColorsUpTo"
+        kDebug () << "\tscreen depth <= 8; imageNumColorsUpTo"
                    << (screenNumColors + 1)
                    << "=" << imageNumColorsUpTo (image, screenNumColors + 1)
                    << endl;
@@ -467,7 +467,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
         if (imageNumColorsUpTo (image, screenNumColors + 1) <= screenNumColors)
         {
         #if DEBUG_KP_PIXMAP_FX && 1
-            kdDebug () << "\t\tcolors fit on screen - don't dither"
+            kDebug () << "\t\tcolors fit on screen - don't dither"
                        << " (AvoidDither | ThresholdDither)" << endl;
         #endif
             ditherFlags = (Qt::AvoidDither | Qt::ThresholdDither);
@@ -475,7 +475,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
         else
         {
         #if DEBUG_KP_PIXMAP_FX && 1
-            kdDebug () << "\t\tcolors don't fit on screen - dither"
+            kDebug () << "\t\tcolors don't fit on screen - dither"
                        << " (PreferDither | DiffuseDither)" << endl;
         #endif
             ditherFlags = (Qt::PreferDither | Qt::DiffuseDither);
@@ -487,7 +487,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
     else
     {
     #if DEBUG_KP_PIXMAP_FX && 1
-        kdDebug () << "\tscreen depth > 8 - read config" << endl;
+        kDebug () << "\tscreen depth > 8 - read config" << endl;
     #endif
 
         int configDitherIfNumColorsGreaterThan = 323;
@@ -507,7 +507,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
         }
 
     #if DEBUG_KP_PIXMAP_FX && 1
-        kdDebug () << "\t\tcfg=" << configDitherIfNumColorsGreaterThan
+        kDebug () << "\t\tcfg=" << configDitherIfNumColorsGreaterThan
                    << " image=" << imageNumColorsUpTo (image, configDitherIfNumColorsGreaterThan + 1)
                    << endl;
     #endif
@@ -516,7 +516,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
             configDitherIfNumColorsGreaterThan)
         {
         #if DEBUG_KP_PIXMAP_FX && 1
-            kdDebug () << "\t\t\talways dither (PreferDither | DiffuseDither)"
+            kDebug () << "\t\t\talways dither (PreferDither | DiffuseDither)"
                         << endl;
         #endif
             ditherFlags = (Qt::PreferDither | Qt::DiffuseDither);
@@ -524,7 +524,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
         else
         {
         #if DEBUG_KP_PIXMAP_FX && 1
-            kdDebug () << "\t\t\tdon't dither (AvoidDither | ThresholdDither)"
+            kDebug () << "\t\t\tdon't dither (AvoidDither | ThresholdDither)"
                        << endl;
         #endif
             ditherFlags = (Qt::AvoidDither | Qt::ThresholdDither);
@@ -538,7 +538,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
                                  ditherFlags);
 
 #if DEBUG_KP_PIXMAP_FX && 1
-    kdDebug () << "\tconversion took " << timer.elapsed () << "msec" << endl;
+    kDebug () << "\tconversion took " << timer.elapsed () << "msec" << endl;
 #endif
 
     kpPixmapFX::ensureNoAlphaChannel (&destPixmap);
@@ -582,7 +582,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
     QPixmap retPixmap (rect.width (), rect.height ());
 
 #if DEBUG_KP_PIXMAP_FX && 0
-    kdDebug () << "kpPixmapFX::getPixmapAt(pm.hasMask="
+    kDebug () << "kpPixmapFX::getPixmapAt(pm.hasMask="
                << (pm.mask () ? 1 : 0)
                << ",rect="
                << rect
@@ -596,7 +596,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
     if (wouldHaveUndefinedPixels)
     {
     #if DEBUG_KP_PIXMAP_FX && 0
-        kdDebug () << "\tret would contain undefined pixels - setting them to transparent" << endl;
+        kDebug () << "\tret would contain undefined pixels - setting them to transparent" << endl;
     #endif
         QBitmap transparentMask (rect.width (), rect.height ());
         transparentMask.fill (Qt::color0/*transparent*/);
@@ -606,7 +606,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
     if (validSrcRect.isEmpty ())
     {
     #if DEBUG_KP_PIXMAP_FX && 0
-        kdDebug () << "\tsilly case - completely invalid rect - ret transparent pixmap" << endl;
+        kDebug () << "\tsilly case - completely invalid rect - ret transparent pixmap" << endl;
     #endif
         return retPixmap;
     }
@@ -624,7 +624,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
     if (wouldHaveUndefinedPixels && !retPixmap.mask ().isNull() && !pm.mask ().isNull())
     {
     #if DEBUG_KP_PIXMAP_FX && 0
-        kdDebug () << "\tensure opaque in valid region" << endl;
+        kDebug () << "\tensure opaque in valid region" << endl;
     #endif
         kpPixmapFX::ensureOpaqueAt (&retPixmap,
                                     QRect (destTopLeft.x (), destTopLeft.y (),
@@ -632,7 +632,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
     }
 
 #if DEBUG_KP_PIXMAP_FX && 0
-    kdDebug () << "\tretPixmap.hasMask="
+    kDebug () << "\tretPixmap.hasMask="
                << (retPixmap.mask () ? 1 : 0)
                << endl;
 #endif
@@ -649,7 +649,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
         return;
 
 #if DEBUG_KP_PIXMAP_FX && 0
-    kdDebug () << "kpPixmapFX::setPixmapAt(destPixmap->rect="
+    kDebug () << "kpPixmapFX::setPixmapAt(destPixmap->rect="
                << destPixmapPtr->rect ()
                << ",destPixmap->hasMask="
                << (destPixmapPtr->mask () ? 1 : 0)
@@ -678,7 +678,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
             }
         }
 
-        kdDebug () << "\tdestPixmapPtr numTrans=" << numTrans << endl;
+        kDebug () << "\tdestPixmapPtr numTrans=" << numTrans << endl;
     }
 #endif
 
@@ -716,13 +716,13 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
     if (!destPixmapPtr->mask ().isNull() && !srcPixmap.mask ().isNull())
     {
     #if DEBUG_KP_PIXMAP_FX && 0
-        kdDebug () << "\t\topaque'ing dest rect" << endl;
+        kDebug () << "\t\topaque'ing dest rect" << endl;
     #endif
         kpPixmapFX::ensureOpaqueAt (destPixmapPtr, destRect);
     }
 
 #if DEBUG_KP_PIXMAP_FX && 0
-    kdDebug () << "\tdestPixmap->hasMask="
+    kDebug () << "\tdestPixmap->hasMask="
                << (destPixmapPtr->mask () ? 1 : 0)
                << endl;
     if (destPixmapPtr->mask ())
@@ -739,7 +739,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
             }
         }
 
-        kdDebug () << "\tdestPixmapPtr numTrans=" << numTrans << endl;
+        kDebug () << "\tdestPixmapPtr numTrans=" << numTrans << endl;
     }
 #endif
 }
@@ -790,7 +790,7 @@ void kpPixmapFX::paintPixmapAt (QPixmap *destPixmapPtr, int destX, int destY,
 kpColor kpPixmapFX::getColorAtPixel (const QPixmap &pm, const QPoint &at)
 {
 #if DEBUG_KP_PIXMAP_FX && 0
-    kdDebug () << "kpToolColorPicker::colorAtPixel" << p << endl;
+    kDebug () << "kpToolColorPicker::colorAtPixel" << p << endl;
 #endif
 
     if (at.x () < 0 || at.x () >= pm.width () ||
@@ -803,7 +803,7 @@ kpColor kpPixmapFX::getColorAtPixel (const QPixmap &pm, const QPoint &at)
     QImage image = kpPixmapFX::convertToImage (pixmap);
     if (image.isNull ())
     {
-        kdError () << "kpPixmapFX::getColorAtPixel(QPixmap) could not convert to QImage" << endl;
+        kError () << "kpPixmapFX::getColorAtPixel(QPixmap) could not convert to QImage" << endl;
         return kpColor::invalid;
     }
 
@@ -933,7 +933,7 @@ void kpPixmapFX::paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QP
 
     if (brushBitmap.depth () > 1)
     {
-        kdError () << "kpPixmapFX::paintMaskTransparentWidthBrush() passed brushPixmap with depth > 1" << endl;
+        kError () << "kpPixmapFX::paintMaskTransparentWidthBrush() passed brushPixmap with depth > 1" << endl;
         return;
     }
 
@@ -1126,7 +1126,7 @@ void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
                          const kpColor &backgroundColor, bool fillNewAreas)
 {
 #if DEBUG_KP_PIXMAP_FX && 1
-    kdDebug () << "kpPixmapFX::resize()" << endl;
+    kDebug () << "kpPixmapFX::resize()" << endl;
 #endif
 
     if (!destPixmapPtr)
@@ -1144,7 +1144,7 @@ void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
     if (fillNewAreas && (w > oldWidth || h > oldHeight))
     {
     #if DEBUG_KP_PIXMAP_FX && 1
-        kdDebug () << "\tfilling in new areas" << endl;
+        kDebug () << "\tfilling in new areas" << endl;
     #endif
         QBitmap maskBitmap;
         QPainter painter, maskPainter;
@@ -1213,7 +1213,7 @@ void kpPixmapFX::scale (QPixmap *destPixmapPtr, int w, int h, bool pretty)
 QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
 {
 #if DEBUG_KP_PIXMAP_FX && 0
-    kdDebug () << "kpPixmapFX::scale(oldRect=" << pm.rect ()
+    kDebug () << "kpPixmapFX::scale(oldRect=" << pm.rect ()
                << ",w=" << w
                << ",h=" << h
                << ",pretty=" << pretty
@@ -1229,7 +1229,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
         QImage image = kpPixmapFX::convertToImage (pm);
 
     #if DEBUG_KP_PIXMAP_FX && 0
-        kdDebug () << "\tBefore smooth scale:" << endl;
+        kDebug () << "\tBefore smooth scale:" << endl;
         for (int y = 0; y < image.height (); y++)
         {
             for (int x = 0; x < image.width (); x++)
@@ -1243,7 +1243,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
         image = image.smoothScale (w, h);
 
     #if DEBUG_KP_PIXMAP_FX && 0
-        kdDebug () << "\tAfter smooth scale:" << endl;
+        kDebug () << "\tAfter smooth scale:" << endl;
         for (int y = 0; y < image.height (); y++)
         {
             for (int x = 0; x < image.width (); x++)
@@ -1291,7 +1291,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
     QMatrix transformMatrix = transformMatrix_;
 
 #if DEBUG_KP_PIXMAP_FX && 1
-    kdDebug () << "kppixmapfx.cpp: xForm(pm.size=" << pm.size ()
+    kDebug () << "kppixmapfx.cpp: xForm(pm.size=" << pm.size ()
                << ",targetWidth=" << targetWidth
                << ",targetHeight=" << targetHeight
                << ")"
@@ -1299,7 +1299,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
 #endif
     QRect newRect = transformMatrix.map (pm.rect ());
 #if DEBUG_KP_PIXMAP_FX && 1
-    kdDebug () << "\tmappedRect=" << newRect << endl;
+    kDebug () << "\tmappedRect=" << newRect << endl;
 
 #endif
 
@@ -1307,7 +1307,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
     if (targetWidth > 0 && targetWidth != newRect.width ())
     {
     #if DEBUG_KP_PIXMAP_FX && 1
-        kdDebug () << "\tadjusting for targetWidth" << endl;
+        kDebug () << "\tadjusting for targetWidth" << endl;
     #endif
         scaleMatrix.scale (double (targetWidth) / double (newRect.width ()), 1);
     }
@@ -1315,7 +1315,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
     if (targetHeight > 0 && targetHeight != newRect.height ())
     {
     #if DEBUG_KP_PIXMAP_FX && 1
-        kdDebug () << "\tadjusting for targetHeight" << endl;
+        kDebug () << "\tadjusting for targetHeight" << endl;
     #endif
         scaleMatrix.scale (1, double (targetHeight) / double (newRect.height ()));
     }
@@ -1335,7 +1335,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
                       (targetHeight > 0 && targetHeight != newRect.height ()) ? double (targetHeight) / double (newRect.height ()) : 1);
         QMatrix correctMatrix = scaleMatrix * transformMatrix;
 
-        kdDebug () << "\tsupposedlyWrongMatrix: m11=" << wrongMatrix.m11 ()  // <<<---- this is the correct matrix???
+        kDebug () << "\tsupposedlyWrongMatrix: m11=" << wrongMatrix.m11 ()  // <<<---- this is the correct matrix???
                    << " m12=" << wrongMatrix.m12 ()
                    << " m21=" << wrongMatrix.m21 ()
                    << " m22=" << wrongMatrix.m22 ()
@@ -1373,7 +1373,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
 
         newRect = transformMatrix.map (pm.rect ());
     #if DEBUG_KP_PIXMAP_FX && 1
-        kdDebug () << "\tnewRect after targetWidth,targetHeight adjust=" << newRect << endl;
+        kDebug () << "\tnewRect after targetWidth,targetHeight adjust=" << newRect << endl;
     #endif
     }
 
@@ -1384,7 +1384,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
         (targetHeight > 0 && targetHeight != newRect.height ()))
     {
     #if DEBUG_KP_PIXMAP_FX && 1
-        kdDebug () << "kppixmapfx.cpp: xForm(pm.size=" << pm.size ()
+        kDebug () << "kppixmapfx.cpp: xForm(pm.size=" << pm.size ()
                    << ",targetWidth=" << targetWidth
                    << ",targetHeight=" << targetHeight
                    << ") newRect=" << newRect
@@ -1406,7 +1406,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
 
     QPainter painter (&newPixmap);
 #if DEBUG_KP_PIXMAP_FX && 0
-    kdDebug () << "\tmatrix: m11=" << transformMatrix.m11 ()
+    kDebug () << "\tmatrix: m11=" << transformMatrix.m11 ()
             << " m12=" << transformMatrix.m12 ()
             << " m21=" << transformMatrix.m21 ()
             << " m22=" << transformMatrix.m22 ()
@@ -1416,8 +1416,8 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
 #endif
     painter.setWorldMatrix (transformMatrix);
 #if DEBUG_KP_PIXMAP_FX && 0
-    kdDebug () << "\ttranslate top=" << painter.xForm (QPoint (0, 0)) << endl;
-    kdDebug () << "\tmatrix: m11=" << painter.worldMatrix ().m11 ()
+    kDebug () << "\ttranslate top=" << painter.xForm (QPoint (0, 0)) << endl;
+    kDebug () << "\tmatrix: m11=" << painter.worldMatrix ().m11 ()
                << " m12=" << painter.worldMatrix ().m12 ()
                << " m21=" << painter.worldMatrix ().m21 ()
                << " m22=" << painter.worldMatrix ().m22 ()
@@ -1513,7 +1513,7 @@ QPixmap kpPixmapFX::skew (const QPixmap &pm, double hangle, double vangle,
                           int targetWidth, int targetHeight)
 {
 #if DEBUG_KP_PIXMAP_FX
-    kdDebug () << "kpPixmapFX::skew() pm.width=" << pm.width ()
+    kDebug () << "kpPixmapFX::skew() pm.width=" << pm.width ()
                << " pm.height=" << pm.height ()
                << " hangle=" << hangle
                << " vangle=" << vangle
@@ -1532,7 +1532,7 @@ QPixmap kpPixmapFX::skew (const QPixmap &pm, double hangle, double vangle,
     if (fabs (hangle) > 90 - kpPixmapFX::AngleInDegreesEpsilon ||
         fabs (vangle) > 90 - kpPixmapFX::AngleInDegreesEpsilon)
     {
-        kdError () << "kpPixmapFX::skew() passed hangle and/or vangle out of range (-90 < x < 90)" << endl;
+        kError () << "kpPixmapFX::skew() passed hangle and/or vangle out of range (-90 < x < 90)" << endl;
         return pm;
     }
 
@@ -1580,7 +1580,7 @@ bool kpPixmapFX::isLosslessRotation (double angle)
     // "Impossible" situation?
     if (angle < 0 || angle > 90)
     {
-        kdError () << "kpPixmapFX::isLosslessRotation(" << angleIn
+        kError () << "kpPixmapFX::isLosslessRotation(" << angleIn
                    << ") result=" << angle
                    << endl;
         return false;  // better safe than sorry
@@ -1589,7 +1589,7 @@ bool kpPixmapFX::isLosslessRotation (double angle)
     const bool ret = (angle < kpPixmapFX::AngleInDegreesEpsilon ||
                       90 - angle < kpPixmapFX::AngleInDegreesEpsilon);
 #if DEBUG_KP_PIXMAP_FX || 1
-    kdDebug () << "kpPixmapFX::isLosslessRotation(" << angleIn << ")"
+    kDebug () << "kpPixmapFX::isLosslessRotation(" << angleIn << ")"
                << "  residual angle=" << angle
                << "  returning " << ret
                << endl;
@@ -1634,7 +1634,7 @@ QMatrix kpPixmapFX::flipMatrix (int width, int height, bool horz, bool vert)
 {
     if (width <= 0 || height <= 0)
     {
-        kdError () << "kpPixmapFX::flipMatrix() passed invalid dimensions" << endl;
+        kError () << "kpPixmapFX::flipMatrix() passed invalid dimensions" << endl;
         return QMatrix ();
     }
 

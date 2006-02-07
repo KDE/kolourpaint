@@ -77,7 +77,7 @@ kpCommand::kpCommand (kpMainWindow *mainWindow)
     : m_mainWindow (mainWindow)
 {
     if (!mainWindow)
-        kdError () << "kpCommand::kpCommand() passed 0 mainWindow" << endl;
+        kError () << "kpCommand::kpCommand() passed 0 mainWindow" << endl;
 }
 
 kpCommand::~kpCommand ()
@@ -163,26 +163,26 @@ kpMacroCommand::~kpMacroCommand ()
 int kpMacroCommand::size () const
 {
 #if DEBUG_KP_COMMAND_HISTORY && 0
-    kdDebug () << "kpMacroCommand::size()" << endl;
+    kDebug () << "kpMacroCommand::size()" << endl;
 #endif
     int s = 0;
 
 #if DEBUG_KP_COMMAND_HISTORY && 0
-    kdDebug () << "\tcalculating:" << endl;
+    kDebug () << "\tcalculating:" << endl;
 #endif
     for (Q3ValueList <kpCommand *>::const_iterator it = m_commandList.begin ();
          it != m_commandList.end ();
          it++)
     {
     #if DEBUG_KP_COMMAND_HISTORY && 0
-        kdDebug () << "\t\tcurrentSize=" << s << " + "
+        kDebug () << "\t\tcurrentSize=" << s << " + "
                    << (*it)->name () << ".size=" << (*it)->size ()
                    << endl;
     #endif
         if (s > INT_MAX - (*it)->size ())
         {
         #if DEBUG_KP_COMMAND_HISTORY && 0
-            kdDebug () << "\t\t\toverflow" << endl;
+            kDebug () << "\t\t\toverflow" << endl;
         #endif
             s = INT_MAX;
             break;
@@ -194,7 +194,7 @@ int kpMacroCommand::size () const
     }
 
 #if DEBUG_KP_COMMAND_HISTORY && 0
-    kdDebug () << "\treturning " << s << endl;
+    kDebug () << "\treturning " << s << endl;
 #endif
     return s;
 }
@@ -204,14 +204,14 @@ int kpMacroCommand::size () const
 void kpMacroCommand::execute ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpMacroCommand::execute()" << endl;
+    kDebug () << "kpMacroCommand::execute()" << endl;
 #endif
     for (Q3ValueList <kpCommand *>::const_iterator it = m_commandList.begin ();
          it != m_commandList.end ();
          it++)
     {
     #if DEBUG_KP_COMMAND_HISTORY
-        kdDebug () << "\texecuting " << (*it)->name () << endl;
+        kDebug () << "\texecuting " << (*it)->name () << endl;
     #endif
         (*it)->execute ();
     }
@@ -221,7 +221,7 @@ void kpMacroCommand::execute ()
 void kpMacroCommand::unexecute ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpMacroCommand::unexecute()" << endl;
+    kDebug () << "kpMacroCommand::unexecute()" << endl;
 #endif
     Q3ValueList <kpCommand *>::const_iterator it = m_commandList.end ();
     it--;
@@ -229,7 +229,7 @@ void kpMacroCommand::unexecute ()
     while (it != m_commandList.end ())
     {
     #if DEBUG_KP_COMMAND_HISTORY
-        kdDebug () << "\tunexecuting " << (*it)->name () << endl;
+        kDebug () << "\tunexecuting " << (*it)->name () << endl;
     #endif
         (*it)->unexecute ();
 
@@ -325,14 +325,14 @@ int kpCommandHistoryBase::undoMinLimit () const
 void kpCommandHistoryBase::setUndoMinLimit (int limit)
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::setUndoMinLimit("
+    kDebug () << "kpCommandHistoryBase::setUndoMinLimit("
                << limit << ")"
                << endl;
 #endif
 
     if (limit < 1 || limit > 5000/*"ought to be enough for anybody"*/)
     {
-        kdError () << "kpCommandHistoryBase::setUndoMinLimit("
+        kError () << "kpCommandHistoryBase::setUndoMinLimit("
                    << limit << ")"
                    << endl;
         return;
@@ -356,14 +356,14 @@ int kpCommandHistoryBase::undoMaxLimit () const
 void kpCommandHistoryBase::setUndoMaxLimit (int limit)
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::setUndoMaxLimit("
+    kDebug () << "kpCommandHistoryBase::setUndoMaxLimit("
                << limit << ")"
                << endl;
 #endif
 
     if (limit < 1 || limit > 5000/*"ought to be enough for anybody"*/)
     {
-        kdError () << "kpCommandHistoryBase::setUndoMaxLimit("
+        kError () << "kpCommandHistoryBase::setUndoMaxLimit("
                    << limit << ")"
                    << endl;
         return;
@@ -387,7 +387,7 @@ int kpCommandHistoryBase::undoMaxLimitSizeLimit () const
 void kpCommandHistoryBase::setUndoMaxLimitSizeLimit (int sizeLimit)
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::setUndoMaxLimitSizeLimit("
+    kDebug () << "kpCommandHistoryBase::setUndoMaxLimitSizeLimit("
                << sizeLimit << ")"
                << endl;
 #endif
@@ -395,7 +395,7 @@ void kpCommandHistoryBase::setUndoMaxLimitSizeLimit (int sizeLimit)
     if (sizeLimit < 0 ||
         sizeLimit > (500 * 1048576)/*"ought to be enough for anybody"*/)
     {
-        kdError () << "kpCommandHistoryBase::setUndoMaxLimitSizeLimit("
+        kError () << "kpCommandHistoryBase::setUndoMaxLimitSizeLimit("
                    << sizeLimit << ")"
                    << endl;
         return;
@@ -413,7 +413,7 @@ void kpCommandHistoryBase::setUndoMaxLimitSizeLimit (int sizeLimit)
 void kpCommandHistoryBase::readConfig ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::readConfig()" << endl;
+    kDebug () << "kpCommandHistoryBase::readConfig()" << endl;
 #endif
     KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupUndoRedo);
     KConfigBase *cfg = cfgGroupSaver.config ();
@@ -430,7 +430,7 @@ void kpCommandHistoryBase::readConfig ()
 void kpCommandHistoryBase::writeConfig ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::writeConfig()" << endl;
+    kDebug () << "kpCommandHistoryBase::writeConfig()" << endl;
 #endif
     KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupUndoRedo);
     KConfigBase *cfg = cfgGroupSaver.config ();
@@ -447,7 +447,7 @@ void kpCommandHistoryBase::writeConfig ()
 void kpCommandHistoryBase::addCommand (kpCommand *command, bool execute)
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::addCommand("
+    kDebug () << "kpCommandHistoryBase::addCommand("
                << command
                << ",execute=" << execute << ")"
                << endl;
@@ -460,7 +460,7 @@ void kpCommandHistoryBase::addCommand (kpCommand *command, bool execute)
     clearPointerList (&m_redoCommandList);
 
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "\tdocumentRestoredPosition=" << m_documentRestoredPosition
+    kDebug () << "\tdocumentRestoredPosition=" << m_documentRestoredPosition
                << endl;
 #endif
     if (m_documentRestoredPosition != INT_MAX)
@@ -470,7 +470,7 @@ void kpCommandHistoryBase::addCommand (kpCommand *command, bool execute)
         else
             m_documentRestoredPosition--;
     #if DEBUG_KP_COMMAND_HISTORY
-        kdDebug () << "\t\tdocumentRestoredPosition=" << m_documentRestoredPosition
+        kDebug () << "\t\tdocumentRestoredPosition=" << m_documentRestoredPosition
                 << endl;
     #endif
     }
@@ -482,7 +482,7 @@ void kpCommandHistoryBase::addCommand (kpCommand *command, bool execute)
 void kpCommandHistoryBase::clear ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::clear()" << endl;
+    kDebug () << "kpCommandHistoryBase::clear()" << endl;
 #endif
 
     clearPointerList (&m_undoCommandList);
@@ -498,7 +498,7 @@ void kpCommandHistoryBase::clear ()
 void kpCommandHistoryBase::undoInternal ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::undoInternal()" << endl;
+    kDebug () << "kpCommandHistoryBase::undoInternal()" << endl;
 #endif
 
     kpCommand *undoCommand = nextUndoCommand ();
@@ -513,7 +513,7 @@ void kpCommandHistoryBase::undoInternal ()
 
 
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "\tdocumentRestoredPosition=" << m_documentRestoredPosition
+    kDebug () << "\tdocumentRestoredPosition=" << m_documentRestoredPosition
                << endl;
 #endif
     if (m_documentRestoredPosition != INT_MAX)
@@ -522,7 +522,7 @@ void kpCommandHistoryBase::undoInternal ()
         if (m_documentRestoredPosition == 0)
             emit documentRestored ();
     #if DEBUG_KP_COMMAND_HISTORY
-        kdDebug () << "\t\tdocumentRestoredPosition=" << m_documentRestoredPosition
+        kDebug () << "\t\tdocumentRestoredPosition=" << m_documentRestoredPosition
                    << endl;
     #endif
     }
@@ -532,7 +532,7 @@ void kpCommandHistoryBase::undoInternal ()
 void kpCommandHistoryBase::redoInternal ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::redoInternal()" << endl;
+    kDebug () << "kpCommandHistoryBase::redoInternal()" << endl;
 #endif
 
     kpCommand *redoCommand = nextRedoCommand ();
@@ -547,7 +547,7 @@ void kpCommandHistoryBase::redoInternal ()
 
 
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "\tdocumentRestoredPosition=" << m_documentRestoredPosition
+    kDebug () << "\tdocumentRestoredPosition=" << m_documentRestoredPosition
                << endl;
 #endif
     if (m_documentRestoredPosition != INT_MAX)
@@ -556,7 +556,7 @@ void kpCommandHistoryBase::redoInternal ()
         if (m_documentRestoredPosition == 0)
             emit documentRestored ();
     #if DEBUG_KP_COMMAND_HISTORY
-        kdDebug () << "\t\tdocumentRestoredPosition=" << m_documentRestoredPosition
+        kDebug () << "\t\tdocumentRestoredPosition=" << m_documentRestoredPosition
                    << endl;
     #endif
     }
@@ -567,7 +567,7 @@ void kpCommandHistoryBase::redoInternal ()
 void kpCommandHistoryBase::undo ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::undo()" << endl;
+    kDebug () << "kpCommandHistoryBase::undo()" << endl;
 #endif
 
     undoInternal ();
@@ -578,7 +578,7 @@ void kpCommandHistoryBase::undo ()
 void kpCommandHistoryBase::redo ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::redo()" << endl;
+    kDebug () << "kpCommandHistoryBase::redo()" << endl;
 #endif
 
     redoInternal ();
@@ -590,7 +590,7 @@ void kpCommandHistoryBase::redo ()
 void kpCommandHistoryBase::undoUpToNumber (int which)
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::undoUpToNumber(" << which << ")" << endl;
+    kDebug () << "kpCommandHistoryBase::undoUpToNumber(" << which << ")" << endl;
 #endif
 
     for (int i = 0;
@@ -607,7 +607,7 @@ void kpCommandHistoryBase::undoUpToNumber (int which)
 void kpCommandHistoryBase::redoUpToNumber (int which)
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::redoUpToNumber(" << which << ")" << endl;
+    kDebug () << "kpCommandHistoryBase::redoUpToNumber(" << which << ")" << endl;
 #endif
 
     for (int i = 0;
@@ -648,7 +648,7 @@ QString kpCommandHistoryBase::redoActionText () const
 void kpCommandHistoryBase::trimCommandListsUpdateActions ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::trimCommandListsUpdateActions()" << endl;
+    kDebug () << "kpCommandHistoryBase::trimCommandListsUpdateActions()" << endl;
 #endif
 
     trimCommandLists ();
@@ -659,20 +659,20 @@ void kpCommandHistoryBase::trimCommandListsUpdateActions ()
 void kpCommandHistoryBase::trimCommandList (Q3ValueList <kpCommand *> *commandList)
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::trimCommandList()" << endl;
+    kDebug () << "kpCommandHistoryBase::trimCommandList()" << endl;
     QTime timer; timer.start ();
 #endif
 
     if (!commandList)
     {
-        kdError () << "kpCommandHistoryBase::trimCommandList() passed 0 commandList"
+        kError () << "kpCommandHistoryBase::trimCommandList() passed 0 commandList"
                    << endl;
         return;
     }
 
 
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "\tsize=" << commandList->size ()
+    kDebug () << "\tsize=" << commandList->size ()
                << "    undoMinLimit=" << m_undoMinLimit
                << " undoMaxLimit=" << m_undoMaxLimit
                << " undoMaxLimitSizeLimit=" << m_undoMaxLimitSizeLimit
@@ -681,14 +681,14 @@ void kpCommandHistoryBase::trimCommandList (Q3ValueList <kpCommand *> *commandLi
     if ((int) commandList->size () <= m_undoMinLimit)
     {
     #if DEBUG_KP_COMMAND_HISTORY
-        kdDebug () << "\t\tsize under undoMinLimit - done" << endl;
+        kDebug () << "\t\tsize under undoMinLimit - done" << endl;
     #endif
         return;
     }
 
 
 #if DEBUG_KP_COMMAND_HISTORY && 0
-    kdDebug () << "\tsize over undoMinLimit - iterating thru cmds:" << endl;
+    kDebug () << "\tsize over undoMinLimit - iterating thru cmds:" << endl;
 #endif
 
     Q3ValueList <kpCommand *>::iterator it = commandList->begin ();
@@ -709,7 +709,7 @@ void kpCommandHistoryBase::trimCommandList (Q3ValueList <kpCommand *> *commandLi
         }
 
     #if DEBUG_KP_COMMAND_HISTORY && 0
-        kdDebug () << "\t\t" << upto << ":"
+        kDebug () << "\t\t" << upto << ":"
                    << " name='" << (*it)->name ()
                    << "' size=" << (*it)->size ()
                    << "    sizeSoFar=" << sizeSoFar
@@ -722,7 +722,7 @@ void kpCommandHistoryBase::trimCommandList (Q3ValueList <kpCommand *> *commandLi
                 sizeSoFar > m_undoMaxLimitSizeLimit)
             {
             #if DEBUG_KP_COMMAND_HISTORY && 0
-                kdDebug () << "\t\t\tkill" << endl;
+                kDebug () << "\t\t\tkill" << endl;
             #endif
                 delete (*it);
                 it = m_undoCommandList.erase (it);
@@ -736,7 +736,7 @@ void kpCommandHistoryBase::trimCommandList (Q3ValueList <kpCommand *> *commandLi
     }
 
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "\ttook " << timer.elapsed () << "ms" << endl;
+    kDebug () << "\ttook " << timer.elapsed () << "ms" << endl;
 #endif
 }
 
@@ -744,20 +744,20 @@ void kpCommandHistoryBase::trimCommandList (Q3ValueList <kpCommand *> *commandLi
 void kpCommandHistoryBase::trimCommandLists ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::trimCommandLists()" << endl;
+    kDebug () << "kpCommandHistoryBase::trimCommandLists()" << endl;
 #endif
 
     trimCommandList (&m_undoCommandList);
     trimCommandList (&m_redoCommandList);
 
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "\tdocumentRestoredPosition=" << m_documentRestoredPosition
+    kDebug () << "\tdocumentRestoredPosition=" << m_documentRestoredPosition
                << endl;
 #endif
     if (m_documentRestoredPosition != INT_MAX)
     {
     #if DEBUG_KP_COMMAND_HISTORY
-        kdDebug () << "\t\tundoCmdList.size=" << m_undoCommandList.size ()
+        kDebug () << "\t\tundoCmdList.size=" << m_undoCommandList.size ()
                    << " redoCmdList.size=" << m_redoCommandList.size ()
                    << endl;
     #endif
@@ -765,7 +765,7 @@ void kpCommandHistoryBase::trimCommandLists ()
             -m_documentRestoredPosition > (int) m_undoCommandList.size ())
         {
         #if DEBUG_KP_COMMAND_HISTORY
-            kdDebug () << "\t\t\tinvalidate documentRestoredPosition" << endl;
+            kDebug () << "\t\t\tinvalidate documentRestoredPosition" << endl;
         #endif
             m_documentRestoredPosition = INT_MAX;
         }
@@ -806,7 +806,7 @@ static void populatePopupMenu (KMenu *popupMenu,
 void kpCommandHistoryBase::updateActions ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::updateActions()" << endl;
+    kDebug () << "kpCommandHistoryBase::updateActions()" << endl;
 #endif
 
     m_actionUndo->setEnabled ((bool) nextUndoCommand ());
@@ -818,7 +818,7 @@ void kpCommandHistoryBase::updateActions ()
                        i18n ("Undo"),
                        m_undoCommandList);
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "\tpopuplatePopupMenu undo=" << timer.elapsed ()
+    kDebug () << "\tpopuplatePopupMenu undo=" << timer.elapsed ()
                << "ms" << endl;;
 #endif
 
@@ -831,7 +831,7 @@ void kpCommandHistoryBase::updateActions ()
                        i18n ("Redo"),
                        m_redoCommandList);
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "\tpopuplatePopupMenu redo=" << timer.elapsed ()
+    kDebug () << "\tpopuplatePopupMenu redo=" << timer.elapsed ()
                << "ms" << endl;
 #endif
 }
@@ -860,7 +860,7 @@ kpCommand *kpCommandHistoryBase::nextRedoCommand () const
 void kpCommandHistoryBase::setNextUndoCommand (kpCommand *command)
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::setNextUndoCommand("
+    kDebug () << "kpCommandHistoryBase::setNextUndoCommand("
                << command
                << ")"
                << endl;
@@ -882,7 +882,7 @@ void kpCommandHistoryBase::setNextUndoCommand (kpCommand *command)
 void kpCommandHistoryBase::documentSaved ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistoryBase::documentSaved()" << endl;
+    kDebug () << "kpCommandHistoryBase::documentSaved()" << endl;
 #endif
 
     m_documentRestoredPosition = 0;
@@ -908,12 +908,12 @@ kpCommandHistory::~kpCommandHistory ()
 void kpCommandHistory::undo ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kdDebug () << "kpCommandHistory::undo() CALLED!" << endl;
+    kDebug () << "kpCommandHistory::undo() CALLED!" << endl;
 #endif
     if (m_mainWindow && m_mainWindow->toolHasBegunShape ())
     {
     #if DEBUG_KP_COMMAND_HISTORY
-        kdDebug () << "\thas begun shape - cancel draw" << endl;
+        kDebug () << "\thas begun shape - cancel draw" << endl;
     #endif
         m_mainWindow->tool ()->cancelShapeInternal ();
     }

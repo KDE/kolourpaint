@@ -210,19 +210,19 @@ bool kpToolResizeScaleCommand::scaleSelectionWithImage () const
 void kpToolResizeScaleCommand::scaleSelectionRegionWithDocument ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
-    kdDebug () << "kpToolResizeScaleCommand::scaleSelectionRegionWithDocument"
+    kDebug () << "kpToolResizeScaleCommand::scaleSelectionRegionWithDocument"
                << endl;
 #endif
 
     if (!m_oldSelection)
     {
-        kdError () << "kpToolResizeScaleCommand::scaleSelectionRegionWithDocument()"
+        kError () << "kpToolResizeScaleCommand::scaleSelectionRegionWithDocument()"
                    << " without old sel" << endl;
     }
 
     if (m_oldSelection->pixmap ())
     {
-        kdError () << "kpToolResizeScaleCommand::scaleSelectionRegionWithDocument()"
+        kError () << "kpToolResizeScaleCommand::scaleSelectionRegionWithDocument()"
                    << " old sel has pixmap" << endl;
         return;
     }
@@ -263,7 +263,7 @@ void kpToolResizeScaleCommand::scaleSelectionRegionWithDocument ()
 void kpToolResizeScaleCommand::execute ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
-    kdDebug () << "kpToolResizeScaleCommand::execute() type="
+    kDebug () << "kpToolResizeScaleCommand::execute() type="
                << (int) m_type
                << " oldWidth=" << m_oldWidth
                << " oldHeight=" << m_oldHeight
@@ -281,7 +281,7 @@ void kpToolResizeScaleCommand::execute ()
         {
             if (!m_actOnTextSelection)
             {
-                kdError () << "kpToolResizeScaleCommand::execute() resizing sel doesn't make sense" << endl;
+                kError () << "kpToolResizeScaleCommand::execute() resizing sel doesn't make sense" << endl;
                 return;
             }
             else
@@ -376,7 +376,7 @@ void kpToolResizeScaleCommand::execute ()
 void kpToolResizeScaleCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
-    kdDebug () << "kpToolResizeScaleCommand::unexecute() type="
+    kDebug () << "kpToolResizeScaleCommand::unexecute() type="
                << m_type << endl;
 #endif
 
@@ -393,7 +393,7 @@ void kpToolResizeScaleCommand::unexecute ()
         {
             if (!m_actOnTextSelection)
             {
-                kdError () << "kpToolResizeScaleCommand::unexecute() resizing sel doesn't make sense" << endl;
+                kError () << "kpToolResizeScaleCommand::unexecute() resizing sel doesn't make sense" << endl;
                 return;
             }
             else
@@ -868,7 +868,7 @@ bool kpToolResizeScaleDialog::smoothScaleEnabled () const
 void kpToolResizeScaleDialog::slotActOnChanged ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
-    kdDebug () << "kpToolResizeScaleDialog::slotActOnChanged()" << endl;
+    kDebug () << "kpToolResizeScaleDialog::slotActOnChanged()" << endl;
 #endif
 
     m_resizeButton->setEnabled (resizeEnabled ());
@@ -942,7 +942,7 @@ void kpToolResizeScaleDialog::slotTypeChanged ()
 void kpToolResizeScaleDialog::slotWidthChanged (int width)
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
-    kdDebug () << "kpToolResizeScaleDialog::slotWidthChanged("
+    kDebug () << "kpToolResizeScaleDialog::slotWidthChanged("
                << width << ")" << endl;
 #endif
     const double newPercentWidth = double (width) * 100 / double (originalWidth ());
@@ -959,7 +959,7 @@ void kpToolResizeScaleDialog::slotWidthChanged (int width)
 void kpToolResizeScaleDialog::slotHeightChanged (int height)
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
-    kdDebug () << "kpToolResizeScaleDialog::slotHeightChanged("
+    kDebug () << "kpToolResizeScaleDialog::slotHeightChanged("
                << height << ")" << endl;
 #endif
     const double newPercentHeight = double (height) * 100 / double (originalHeight ());
@@ -976,7 +976,7 @@ void kpToolResizeScaleDialog::slotHeightChanged (int height)
 void kpToolResizeScaleDialog::slotPercentWidthChanged (double percentWidth)
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
-    kdDebug () << "kpToolResizeScaleDialog::slotPercentWidthChanged("
+    kDebug () << "kpToolResizeScaleDialog::slotPercentWidthChanged("
                << percentWidth << ")" << endl;
 #endif
 
@@ -993,7 +993,7 @@ void kpToolResizeScaleDialog::slotPercentWidthChanged (double percentWidth)
 void kpToolResizeScaleDialog::slotPercentHeightChanged (double percentHeight)
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
-    kdDebug () << "kpToolResizeScaleDialog::slotPercentHeightChanged("
+    kDebug () << "kpToolResizeScaleDialog::slotPercentHeightChanged("
                << percentHeight << ")" << endl;
 #endif
 
@@ -1016,7 +1016,7 @@ bool kpToolResizeScaleDialog::keepAspectRatio () const
 void kpToolResizeScaleDialog::setKeepAspectRatio (bool on)
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
-    kdDebug () << "kpToolResizeScaleDialog::setKeepAspectRatio("
+    kDebug () << "kpToolResizeScaleDialog::setKeepAspectRatio("
                << on << ")" << endl;
 #endif
     if (on != m_keepAspectRatioCheckBox->isChecked ())

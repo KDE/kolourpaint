@@ -122,7 +122,7 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
         new kpToolWidgetSpraycanSize (m_baseWidget, "Tool Widget Spraycan Size"));
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "kpToolToolBar::<ctor> create tool widgets msec="
+    kDebug () << "kpToolToolBar::<ctor> create tool widgets msec="
                << timer.restart () << endl;
 #endif
 
@@ -135,7 +135,7 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
     }
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "kpToolToolBar::<ctor> connect widgets msec="
+    kDebug () << "kpToolToolBar::<ctor> connect widgets msec="
                << timer.restart () << endl;
 #endif
 
@@ -143,7 +143,7 @@ kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const ch
     setOrientation (orientation ());
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "kpToolToolBar::<ctor> layout tool widgets msec="
+    kDebug () << "kpToolToolBar::<ctor> layout tool widgets msec="
                << timer.elapsed () << endl;
 #endif
 
@@ -242,7 +242,7 @@ kpTool *kpToolToolBar::tool () const
 void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
 {
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "kpToolToolBar::selectTool (tool=" << tool
+    kDebug () << "kpToolToolBar::selectTool (tool=" << tool
                << ") currentTool=" << m_currentTool
                << endl;
 #endif
@@ -268,7 +268,7 @@ void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
     {
         Q3Button *b = m_buttonGroup->selected ();
     #if DEBUG_KP_TOOL_TOOL_BAR
-        kdDebug () << "\twant to select no tool - button selected=" << b << endl;
+        kDebug () << "\twant to select no tool - button selected=" << b << endl;
     #endif
         if (b)
         {
@@ -307,7 +307,7 @@ void kpToolToolBar::hideAllToolWidgets ()
 int kpToolToolBar::numShownToolWidgets () const
 {
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "kpToolToolBar::numShownToolWidgets()" << endl;
+    kDebug () << "kpToolToolBar::numShownToolWidgets()" << endl;
 #endif
 
     int ret = 0;
@@ -317,7 +317,7 @@ int kpToolToolBar::numShownToolWidgets () const
          it++)
     {
     #if DEBUG_KP_TOOL_TOOL_BAR
-        kdDebug () << "\t" << (*it)->name ()
+        kDebug () << "\t" << (*it)->name ()
                    << " isShown=" << (*it)->isShown ()
                    << endl;
     #endif
@@ -368,7 +368,7 @@ bool kpToolToolBar::toolsSingleKeyTriggersEnabled () const
 void kpToolToolBar::enableToolsSingleKeyTriggers (bool enable)
 {
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "kpToolToolBar::enableToolsSingleKeyTriggers(" << enable << ")" << endl;
+    kDebug () << "kpToolToolBar::enableToolsSingleKeyTriggers(" << enable << ")" << endl;
 #endif
 
     for (Q3ValueVector <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
@@ -386,7 +386,7 @@ void kpToolToolBar::slotToolButtonClicked ()
     Q3Button *b = m_buttonGroup->selected ();
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "kpToolToolBar::slotToolButtonClicked() button=" << b << endl;
+    kDebug () << "kpToolToolBar::slotToolButtonClicked() button=" << b << endl;
 #endif
 
     kpTool *tool = 0;
@@ -402,7 +402,7 @@ void kpToolToolBar::slotToolButtonClicked ()
     }
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "\ttool=" << tool
+    kDebug () << "\ttool=" << tool
                << " currentTool=" << m_currentTool
                << endl;
 #endif
@@ -444,7 +444,7 @@ void kpToolToolBar::slotToolActionActivated ()
     const kpTool *tool = CONST_KP_TOOL_SENDER ();
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "kpToolToolBar::slotToolActionActivated() tool="
+    kDebug () << "kpToolToolBar::slotToolActionActivated() tool="
                << (tool ? tool->name () : "null")
                << endl;
 #endif
@@ -470,7 +470,7 @@ void kpToolToolBar::slotToolActionToolTipChanged ()
     const kpTool *tool = CONST_KP_TOOL_SENDER ();
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "kpToolToolBar::slotToolActionToolTipChanged() tool="
+    kDebug () << "kpToolToolBar::slotToolActionToolTipChanged() tool="
                << (tool ? tool->name () : "null")
                << endl;
 #endif
@@ -496,7 +496,7 @@ void kpToolToolBar::slotToolActionToolTipChanged ()
 void kpToolToolBar::setOrientation (Qt::Orientation o)
 {
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "kpToolToolBar::setOrientation("
+    kDebug () << "kpToolToolBar::setOrientation("
                << (o == Qt::Vertical ? "vertical" : "horizontal")
                << ") called!" << endl;
 #endif
@@ -513,7 +513,7 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
     if (isOutsideDock)
     {
     #if DEBUG_KP_TOOL_TOOL_BAR
-        kdDebug () << "\toutside dock, forcing orientation to last" << endl;
+        kDebug () << "\toutside dock, forcing orientation to last" << endl;
     #endif
         o = m_lastDockedOrientation;
     }

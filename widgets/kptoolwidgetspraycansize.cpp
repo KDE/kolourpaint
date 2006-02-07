@@ -50,7 +50,7 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const char 
     : kpToolWidgetBase (parent, name)
 {
 #if DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE
-    kdDebug () << "kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize() CALLED!" << endl;
+    kDebug () << "kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize() CALLED!" << endl;
 #endif
 
     for (int i = 0; i < int (sizeof (spraycanSizes) / sizeof (spraycanSizes [0])); i++)
@@ -59,7 +59,7 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const char 
         QString iconName = QString ("tool_spraycan_%1x%1").arg (s).arg(s);
         
     #if DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE
-        kdDebug () << "\ticonName=" << iconName << endl;
+        kDebug () << "\ticonName=" << iconName << endl;
     #endif
 
         QPixmap pixmap (s, s);

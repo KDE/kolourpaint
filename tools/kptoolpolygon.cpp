@@ -149,7 +149,7 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
     pointsInRect.translate (-rect.x (), -rect.y ());
 
 #if DEBUG_KP_TOOL_POLYGON && 0
-    kdDebug () << "kptoolpolygon.cpp: pixmap(): points=" << pointArrayToString (points) << endl;
+    kDebug () << "kptoolpolygon.cpp: pixmap(): points=" << pointArrayToString (points) << endl;
 #endif
 
 
@@ -178,7 +178,7 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
         maskPainter.setBrush (maskBrush);
 
     #if DEBUG_KP_TOOL_POLYGON && 0
-        kdDebug () << "\tmaskPainter begin because:" << endl
+        kDebug () << "\tmaskPainter begin because:" << endl
                    << "\t\tpixmap.mask=" << pixmap.mask () << endl
                    << "\t\t(maskPenStyle!=NoPen)=" << (maskPen.style () != Qt::NoPen) << endl
                    << "\t\t(maskPenColor==trans)=" << (maskPen.color () == Qt::color0) << endl
@@ -195,7 +195,7 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
         painter.setBrush (brush);
 
     #if DEBUG_KP_TOOL_POLYGON && 0
-        kdDebug () << "\tpainter begin pen.rgb="
+        kDebug () << "\tpainter begin pen.rgb="
                    << (int *) painter.pen ().color ().rgb ()
                    << endl;
     #endif
@@ -359,7 +359,7 @@ void kpToolPolygon::begin ()
     kpToolToolBar *tb = toolToolBar ();
 
 #if DEBUG_KP_TOOL_POLYGON
-    kdDebug () << "kpToolPolygon::begin() tb=" << tb << endl;
+    kDebug () << "kpToolPolygon::begin() tb=" << tb << endl;
 #endif
 
     if (tb)
@@ -426,7 +426,7 @@ void kpToolPolygon::end ()
 void kpToolPolygon::beginDraw ()
 {
 #if DEBUG_KP_TOOL_POLYGON
-    kdDebug () << "kpToolPolygon::beginDraw()  m_points=" << pointArrayToString (m_points)
+    kDebug () << "kpToolPolygon::beginDraw()  m_points=" << pointArrayToString (m_points)
                << ", startPoint=" << m_startPoint << endl;
 #endif
 
@@ -467,7 +467,7 @@ void kpToolPolygon::beginDraw ()
     }
 
 #if DEBUG_KP_TOOL_POLYGON
-    kdDebug () << "\tafterwards, m_points=" << pointArrayToString (m_points) << endl;
+    kDebug () << "\tafterwards, m_points=" << pointArrayToString (m_points) << endl;
 #endif
 
     if (!endedShape)
@@ -482,7 +482,7 @@ void kpToolPolygon::beginDraw ()
             break;
 
         default:
-            kdError () << "kpToolPolygon::beginDraw() shape" << endl;
+            kError () << "kpToolPolygon::beginDraw() shape" << endl;
             break;
         }
     }
@@ -497,7 +497,7 @@ void kpToolPolygon::applyModifiers ()
     m_toolLineEndPoint = m_currentPoint;
 
 #if DEBUG_KP_TOOL_POLYGON && 1
-    kdDebug () << "kpToolPolygon::applyModifiers() #pts=" << count
+    kDebug () << "kpToolPolygon::applyModifiers() #pts=" << count
                << "   line: startPt=" << m_toolLineStartPoint
                << " endPt=" << m_toolLineEndPoint
                << "   modifiers: shift=" << m_shiftPressed
@@ -518,7 +518,7 @@ void kpToolPolygon::applyModifiers ()
         else
             ratio = fabs (double (diffy) / double (diffx));
     #if DEBUG_KP_TOOL_POLYGON && 1
-        kdDebug () << "\tdiffx=" << diffx << " diffy=" << diffy
+        kDebug () << "\tdiffx=" << diffx << " diffy=" << diffy
                    << " ratio=" << ratio
                    << endl;
     #endif
@@ -576,7 +576,7 @@ void kpToolPolygon::applyModifiers ()
                                          m_toolLineStartPoint.y () + newdy);
 
         #if DEBUG_KP_TOOL_POLYGON && 1
-            kdDebug () << "\t\tdiagonal line: dist=" << dist
+            kDebug () << "\t\tdiagonal line: dist=" << dist
                        << " angle=" << (angle * 180 / KP_PI)
                        << " endPoint=" << m_toolLineEndPoint
                        << endl;
@@ -611,7 +611,7 @@ void kpToolPolygon::draw (const QPoint &, const QPoint &, const QRect &)
         return;
 
 #if DEBUG_KP_TOOL_POLYGON
-    kdDebug () << "kpToolPolygon::draw()  m_points=" << pointArrayToString (m_points)
+    kDebug () << "kpToolPolygon::draw()  m_points=" << pointArrayToString (m_points)
                << ", endPoint=" << m_currentPoint << endl;
 #endif
 
@@ -624,7 +624,7 @@ void kpToolPolygon::draw (const QPoint &, const QPoint &, const QRect &)
         m_points [m_points.count () - 1] = m_currentPoint;
 
 #if DEBUG_KP_TOOL_POLYGON
-    kdDebug () << "\tafterwards, m_points=" << pointArrayToString (m_points) << endl;
+    kDebug () << "\tafterwards, m_points=" << pointArrayToString (m_points) << endl;
 #endif
 
     updateShape ();
@@ -644,7 +644,7 @@ void kpToolPolygon::updateShape ()
     QRect boundingRect = kpTool::neededRect (m_points.boundingRect (), m_lineWidth);
 
 #if DEBUG_KP_TOOL_POLYGON
-    kdDebug () << "kpToolPolygon::updateShape() boundingRect="
+    kDebug () << "kpToolPolygon::updateShape() boundingRect="
                << boundingRect
                << " lineWidth="
                << m_lineWidth
@@ -693,7 +693,7 @@ void kpToolPolygon::releasedAllButtons ()
 void kpToolPolygon::endDraw (const QPoint &, const QRect &)
 {
 #if DEBUG_KP_TOOL_POLYGON
-    kdDebug () << "kpToolPolygon::endDraw()  m_points=" << pointArrayToString (m_points) << endl;
+    kDebug () << "kpToolPolygon::endDraw()  m_points=" << pointArrayToString (m_points) << endl;
 #endif
 
     if (m_points.count () == 0)
@@ -710,7 +710,7 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
         switch (m_mode)
         {
         case Line:
-            kdError () << "kpToolPolygon::endDraw() - line not ended" << endl;
+            kError () << "kpToolPolygon::endDraw() - line not ended" << endl;
             setUserMessage ();
             break;
 
@@ -718,7 +718,7 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
         case Polyline:
             if (m_points.isEmpty ())
             {
-                kdError () << "kpToolPolygon::endDraw() exception - poly without points" << endl;
+                kError () << "kpToolPolygon::endDraw() exception - poly without points" << endl;
                 setUserMessage ();
             }
             else
@@ -760,14 +760,14 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
             }
             else
             {
-                kdError () << "kpToolPolygon::endDraw() exception - points" << endl;
+                kError () << "kpToolPolygon::endDraw() exception - points" << endl;
                 setUserMessage ();
             }
 
             break;
 
         default:
-            kdError () << "kpToolPolygon::endDraw() - clueless" << endl;
+            kError () << "kpToolPolygon::endDraw() - clueless" << endl;
             setUserMessage ();
             break;
         }
@@ -778,7 +778,7 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
 void kpToolPolygon::endShape (const QPoint &, const QRect &)
 {
 #if DEBUG_KP_TOOL_POLYGON
-    kdDebug () << "kpToolPolygon::endShape()  m_points=" << pointArrayToString (m_points) << endl;
+    kDebug () << "kpToolPolygon::endShape()  m_points=" << pointArrayToString (m_points) << endl;
 #endif
 
     if (!hasBegunShape ())

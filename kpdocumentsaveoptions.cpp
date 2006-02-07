@@ -117,7 +117,7 @@ void kpDocumentSaveOptions::printDebug (const QString &prefix) const
                                    prefix + QString::fromLatin1 (": ") :
                                    QString::null;
 
-    kdDebug () << usedPrefix
+    kDebug () << usedPrefix
                << "mimeType=" << mimeType ()
                << " colorDepth=" << colorDepth ()
                << " dither=" << dither ()
@@ -333,7 +333,7 @@ bool kpDocumentSaveOptions::saveDefaultDifferences (KConfigBase *config,
     bool savedSomething = false;
 
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS
-    kdDebug () << "kpDocumentSaveOptions::saveDefaultDifferences()" << endl;
+    kDebug () << "kpDocumentSaveOptions::saveDefaultDifferences()" << endl;
     oldDocInfo.printDebug ("\told");
     newDocInfo.printDebug ("\tnew");
 #endif

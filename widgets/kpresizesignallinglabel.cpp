@@ -58,7 +58,7 @@ kpResizeSignallingLabel::~kpResizeSignallingLabel ()
 void kpResizeSignallingLabel::resizeEvent (QResizeEvent *e)
 {
 #if DEBUG_KP_RESIZE_SIGNALLING_LABEL
-    kdDebug () << "kpResizeSignallingLabel::resizeEvent() newSize=" << e->size ()
+    kDebug () << "kpResizeSignallingLabel::resizeEvent() newSize=" << e->size ()
                << " oldSize=" << e->oldSize () << endl;
 #endif
     QLabel::resizeEvent (e);

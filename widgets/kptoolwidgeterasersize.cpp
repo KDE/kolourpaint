@@ -109,7 +109,7 @@ int kpToolWidgetEraserSize::eraserSize () const
 QPixmap kpToolWidgetEraserSize::cursorPixmap (const kpColor &color) const
 {
 #if DEBUG_KP_TOOL_WIDGET_ERASER_SIZE
-    kdDebug () << "kpToolWidgetEraseSize::cursorPixmap() selected=" << selected ()
+    kDebug () << "kpToolWidgetEraseSize::cursorPixmap() selected=" << selected ()
                << " numEraserSizes=" << numEraserSizes
                << endl;
 #endif

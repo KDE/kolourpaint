@@ -63,7 +63,7 @@ kpZoomedView::~kpZoomedView ()
 void kpZoomedView::setZoomLevel (int hzoom, int vzoom)
 {
 #if DEBUG_KP_ZOOMED_VIEW
-    kdDebug () << "kpZoomedView(" << name () << ")::setZoomLevel("
+    kDebug () << "kpZoomedView(" << name () << ")::setZoomLevel("
                << hzoom << "," << vzoom << ")" << endl;
 #endif
 
@@ -85,7 +85,7 @@ void kpZoomedView::setZoomLevel (int hzoom, int vzoom)
 void kpZoomedView::adjustToEnvironment ()
 {
 #if DEBUG_KP_ZOOMED_VIEW
-    kdDebug () << "kpZoomedView(" << name () << ")::adjustToEnvironment()"
+    kDebug () << "kpZoomedView(" << name () << ")::adjustToEnvironment()"
                << " doc: width=" << document ()->width ()
                << " height=" << document ()->height ()
                << endl;

@@ -153,7 +153,7 @@ void kpToolRotateCommand::execute ()
             //       allowing the border width & height != pixmap width & height
             //       Or maybe autocrop?
         #if DEBUG_KP_TOOL_ROTATE
-            kdDebug () << "kpToolRotateCommand::execute() currentPoints.boundingRect="
+            kDebug () << "kpToolRotateCommand::execute() currentPoints.boundingRect="
                        << currentPoints.boundingRect ()
                        << " newPixmap: w=" << newPixmap.width ()
                        << " h=" << newPixmap.height ()

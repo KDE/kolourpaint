@@ -64,16 +64,16 @@ static QPixmap pixmap (const kpToolRectangle::Mode mode,
     QPainter painter, maskPainter;
 
 #if DEBUG_KP_TOOL_RECTANGLE && 1
-    kdDebug () << "pixmap: rect=" << rect
+    kDebug () << "pixmap: rect=" << rect
                << " startPoint=" << startPoint
                << " endPoint=" << endPoint
                << endl;
-    kdDebug () << "\tm: p=" << (maskPen.style () != Qt::NoPen)
+    kDebug () << "\tm: p=" << (maskPen.style () != Qt::NoPen)
                << " b=" << (maskBrush.style () != Qt::NoBrush)
                << " o: p=" << (pen.style () != Qt::NoPen)
                << " b=" << (brush.style () != Qt::NoBrush)
                << endl;
-    kdDebug () << "\tmaskPen.color()=" << (int *) maskPen.color ().rgb ()
+    kDebug () << "\tmaskPen.color()=" << (int *) maskPen.color ().rgb ()
                << " transparent=" << (int *) Qt::color0.rgb ()/*transparent*/
                << endl;
 #endif
@@ -110,7 +110,7 @@ static QPixmap pixmap (const kpToolRectangle::Mode mode,
     if (startPoint != endPoint)
     {
     #if DEBUG_KP_TOOL_RECTANGLE && 1
-        kdDebug () << "\tdraw shape" << endl;
+        kDebug () << "\tdraw shape" << endl;
     #endif
 
         switch (mode)
@@ -125,14 +125,14 @@ static QPixmap pixmap (const kpToolRectangle::Mode mode,
             PAINTER_CALL (drawEllipse (QRect (startPoint - rect.topLeft (), endPoint - rect.topLeft ())));
             break;
         default:
-            kdError () << "kptoolrectangle.cpp::pixmap() passed unknown mode: " << int (mode) << endl;
+            kError () << "kptoolrectangle.cpp::pixmap() passed unknown mode: " << int (mode) << endl;
             break;
         }
     }
     else
     {
     #if DEBUG_KP_TOOL_RECTANGLE && 1
-        kdDebug () << "\tstartPoint == endPoint" << endl;
+        kDebug () << "\tstartPoint == endPoint" << endl;
     #endif
         // SYNC: Work around Qt bug: can't draw 1x1 rectangle
         // Not strictly correct for border width > 1
@@ -209,7 +209,7 @@ void kpToolRectangle::updateBrushes ()
 void kpToolRectangle::slotForegroundColorChanged (const kpColor &)
 {
 #if DEBUG_KP_TOOL_RECTANGLE
-    kdDebug () << "kpToolRectangle::slotForegroundColorChanged()" << endl;
+    kDebug () << "kpToolRectangle::slotForegroundColorChanged()" << endl;
 #endif
     updatePen (0);
     updateBrush (0);  // brush may be in foreground color
@@ -220,8 +220,8 @@ void kpToolRectangle::slotForegroundColorChanged (const kpColor &)
 void kpToolRectangle::slotBackgroundColorChanged (const kpColor &)
 {
 #if DEBUG_KP_TOOL_RECTANGLE
-    kdDebug () << "kpToolRectangle::slotBackgroundColorChanged()" << endl;
-    kdDebug () << "\tm_toolWidgetFillStyle=" << m_toolWidgetFillStyle << endl;
+    kDebug () << "kpToolRectangle::slotBackgroundColorChanged()" << endl;
+    kDebug () << "\tm_toolWidgetFillStyle=" << m_toolWidgetFillStyle << endl;
 #endif
     updatePen (1);
     updateBrush (0);
@@ -260,7 +260,7 @@ void kpToolRectangle::updatePen (int mouseButton)
 void kpToolRectangle::updateBrush (int mouseButton)
 {
 #if DEBUG_KP_TOOL_RECTANGLE
-    kdDebug () << "kpToolRectangle::brush ()  mouseButton=" << mouseButton
+    kDebug () << "kpToolRectangle::brush ()  mouseButton=" << mouseButton
                << " m_toolWidgetFillStyle=" << m_toolWidgetFillStyle
                << endl;
 #endif
@@ -311,13 +311,13 @@ QString kpToolRectangle::haventBegunDrawUserMessage () const
 void kpToolRectangle::begin ()
 {
 #if DEBUG_KP_TOOL_RECTANGLE
-    kdDebug () << "kpToolRectangle::begin ()" << endl;
+    kDebug () << "kpToolRectangle::begin ()" << endl;
 #endif
 
     kpToolToolBar *tb = toolToolBar ();
 
 #if DEBUG_KP_TOOL_RECTANGLE
-    kdDebug () << "\ttoolToolBar=" << tb << endl;
+    kDebug () << "\ttoolToolBar=" << tb << endl;
 #endif
 
     if (tb)
@@ -339,7 +339,7 @@ void kpToolRectangle::begin ()
     }
 
 #if DEBUG_KP_TOOL_RECTANGLE
-    kdDebug () << "\t\tm_toolWidgetFillStyle=" << m_toolWidgetFillStyle << endl;
+    kDebug () << "\t\tm_toolWidgetFillStyle=" << m_toolWidgetFillStyle << endl;
 #endif
 
     viewManager ()->setCursor (QCursor (Qt::CrossCursor));
@@ -351,7 +351,7 @@ void kpToolRectangle::begin ()
 void kpToolRectangle::end ()
 {
 #if DEBUG_KP_TOOL_RECTANGLE
-    kdDebug () << "kpToolRectangle::end ()" << endl;
+    kDebug () << "kpToolRectangle::end ()" << endl;
 #endif
 
     if (m_toolWidgetLineWidth)
@@ -376,7 +376,7 @@ void kpToolRectangle::applyModifiers ()
     QRect rect = QRect (m_startPoint, m_currentPoint).normalize ();
 
 #if DEBUG_KP_TOOL_RECTANGLE
-    kdDebug () << "kpToolRectangle::applyModifiers(" << rect
+    kDebug () << "kpToolRectangle::applyModifiers(" << rect
                << ") shift=" << m_shiftPressed
                << " ctrl=" << m_controlPressed
                << endl;
@@ -580,7 +580,7 @@ QString kpToolRectangleCommand::name () const
     case kpToolRectangle::Ellipse:
         return i18n ("Ellipse");
     default:
-        kdError () << "kpToolRectangleCommand::name() passed unknown mode: " << int (m_mode) << endl;
+        kError () << "kpToolRectangleCommand::name() passed unknown mode: " << int (m_mode) << endl;
         return QString::null;
     }
 }
@@ -608,7 +608,7 @@ void kpToolRectangleCommand::execute ()
         *m_oldPixmapPtr = doc->getPixmapAt (m_rect);
     }
     else
-        kdError () << "kpToolRectangleCommand::execute() m_oldPixmapPtr not null" << endl;
+        kError () << "kpToolRectangleCommand::execute() m_oldPixmapPtr not null" << endl;
 
     doc->setPixmapAt (pixmap (m_mode, doc,
                               m_rect, m_startPoint, m_endPoint,
@@ -632,7 +632,7 @@ void kpToolRectangleCommand::unexecute ()
         m_oldPixmapPtr = 0;
     }
     else
-        kdError () << "kpToolRectangleCommand::unexecute() m_oldPixmapPtr null" << endl;
+        kError () << "kpToolRectangleCommand::unexecute() m_oldPixmapPtr null" << endl;
 }
 
 #include <kptoolrectangle.moc>

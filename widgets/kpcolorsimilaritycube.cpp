@@ -123,7 +123,7 @@ double kpColorSimilarityCube::colorSimilarity () const
 void kpColorSimilarityCube::setColorSimilarity (double similarity)
 {
 #if DEBUG_KP_COLOR_SIMILARITY_CUBE
-    kdDebug () << "kpColorSimilarityCube::setColorSimilarity(" << similarity << ")" << endl;
+    kDebug () << "kpColorSimilarityCube::setColorSimilarity(" << similarity << ")" << endl;
 #endif
 
     if (m_colorSimilarity == similarity)
@@ -211,7 +211,7 @@ void kpColorSimilarityCube::drawFace (QPainter *p,
                                       const QPoint &bl, const QPoint &br)
 {
 #if DEBUG_KP_COLOR_SIMILARITY_CUBE
-    kdDebug () << "kpColorSimilarityCube(RorGorB=" << redOrGreenOrBlue
+    kDebug () << "kpColorSimilarityCube(RorGorB=" << redOrGreenOrBlue
                << ",tl=" << tl
                << ",tr=" << tr
                << ",bl=" << bl
@@ -248,14 +248,14 @@ void kpColorSimilarityCube::drawFace (QPainter *p,
     if (!isEnabled ())
     {
     #if DEBUG_KP_COLOR_SIMILARITY_CUBE
-        kdDebug () << "\tnot enabled - making us grey" << endl;
+        kDebug () << "\tnot enabled - making us grey" << endl;
     #endif
         colors [0] = colorGroup ().background ();
         colors [1] = colorGroup ().background ();
     }
 
 #if DEBUG_KP_COLOR_SIMILARITY_CUBE
-    kdDebug () << "\tmaxColorSimilarity=" << kpColorSimilarityDialog::maximumColorSimilarity
+    kDebug () << "\tmaxColorSimilarity=" << kpColorSimilarityDialog::maximumColorSimilarity
                << " colorCubeDiagDist=" << kpColorSimilarityCube::colorCubeDiagonalDistance
                << endl
                << "\tbaseBrightness=" << baseBrightness

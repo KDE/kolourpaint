@@ -41,10 +41,10 @@ diff -u -p -r1.9 kptoolpen.cpp
      #if DEBUG_KP_TOOL_PEN
 -        if (m_mode & WashesPixmaps)
 -        {
--            kdDebug () << "Washing pixmap (w=" << rect.width ()
+-            kDebug () << "Washing pixmap (w=" << rect.width ()
 -                       << ",h=" << rect.height () << ")" << endl;
 -        }
-+        kdDebug () << "kpToolPen::draw() interpolate: area (w=" << rect.width ()
++        kDebug () << "kpToolPen::draw() interpolate: area (w=" << rect.width ()
 +                    << ",h=" << rect.height () << ")" << endl;
          QTime timer;
          int convAndWashTime;
@@ -74,7 +74,7 @@ diff -u -p -r1.9 kptoolpen.cpp
 -            image = pixmap.convertToImage ();
 -        #if DEBUG_KP_TOOL_PEN
 -            convAndWashTime = timer.restart ();
--            kdDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;    
+-            kDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;    
 -        #endif
 -        }
          
@@ -95,7 +95,7 @@ diff -u -p -r1.9 kptoolpen.cpp
 +        
 +            #if DEBUG_KP_TOOL_PEN
 +                convAndWashTime = timer.restart ();
-+                kdDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;    
++                kDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;    
 +            #endif
 +            }
 +
@@ -201,7 +201,7 @@ diff -u -p -r1.9 kptoolpen.cpp
 +                
 +                int numRects = rects.count ();
 +            #if DEBUG_KP_TOOL_PEN
-+                kdDebug () << "\tdelayed draw now happening: numRects="
++                kDebug () << "\tdelayed draw now happening: numRects="
 +                           << numRects << endl;
 +                int convImageMS = 0;
 +                int washMS = 0;
@@ -213,7 +213,7 @@ diff -u -p -r1.9 kptoolpen.cpp
 +                    QRect r = rects [i];
 +                    QPixmap pm = document ()->getPixmapAt (r);
 +                #if DEBUG_KP_TOOL_PEN && 0
-+                    kdDebug () << "\tr=" << r << endl;
++                    kDebug () << "\tr=" << r << endl;
 +                #endif
 +            
 +                    bool drew = false;
@@ -252,7 +252,7 @@ diff -u -p -r1.9 kptoolpen.cpp
                  }
 +                
 +            #if DEBUG_KP_TOOL_PEN
-+                kdDebug () << "convImageMS=" << convImageMS
++                kDebug () << "convImageMS=" << convImageMS
 +                           << " washMS=" << washMS
 +                           << " setDocMS=" << setDocMS
 +                           << endl;

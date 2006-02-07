@@ -95,7 +95,7 @@ void kpMainWindow::slotFullScreen ()
 void kpMainWindow::slotEnableSettingsShowPath ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotEnableSettingsShowPath()" << endl;
+    kDebug () << "kpMainWindow::slotEnableSettingsShowPath()" << endl;
 #endif
 
     const bool enable = (m_document && !m_document->url ().isEmpty ());
@@ -108,7 +108,7 @@ void kpMainWindow::slotEnableSettingsShowPath ()
 void kpMainWindow::slotShowPathToggled ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotShowPathToggled()" << endl;
+    kDebug () << "kpMainWindow::slotShowPathToggled()" << endl;
 #endif
 
     m_configShowPath = m_actionShowPath->isChecked ();
@@ -128,7 +128,7 @@ void kpMainWindow::slotShowPathToggled ()
 void kpMainWindow::slotKeyBindings ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotKeyBindings()" << endl;
+    kDebug () << "kpMainWindow::slotKeyBindings()" << endl;
 #endif
 
     bool singleKeyTriggersDisabled = !actionsSingleKeyTriggersEnabled ();
@@ -140,7 +140,7 @@ void kpMainWindow::slotKeyBindings ()
     if (KKeyDialog::configure (actionCollection (), this))
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tdialog accepted" << endl;
+        kDebug () << "\tdialog accepted" << endl;
     #endif
         // TODO: PROPAGATE: thru mainWindow's and interprocess
 
@@ -154,7 +154,7 @@ void kpMainWindow::slotKeyBindings ()
 void kpMainWindow::slotConfigureToolBars ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotConfigureToolBars()" << endl;
+    kDebug () << "kpMainWindow::slotConfigureToolBars()" << endl;
 #endif
 
     //saveMainWindowSettings (KGlobal::config (), autoSaveGroup ());
@@ -176,7 +176,7 @@ void kpMainWindow::slotConfigureToolBars ()
 void kpMainWindow::slotNewToolBarConfig ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotNewToolBarConfig()" << endl;
+    kDebug () << "kpMainWindow::slotNewToolBarConfig()" << endl;
 #endif
 
     // Wouldn't it be nice if createGUI () didn't nuke all the KToolBar's?

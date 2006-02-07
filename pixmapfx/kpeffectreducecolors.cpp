@@ -48,7 +48,7 @@
 QImage convertImageDepth (const QImage &image, int depth, bool dither)
 {
 #if DEBUG_KP_EFFECT_REDUCE_COLORS
-    kdDebug () << "::convertImageDepth() changing image (w=" << image.width ()
+    kDebug () << "::convertImageDepth() changing image (w=" << image.width ()
                << ",h=" << image.height ()
                << ") depth from " << image.depth ()
                 << " to " << depth
@@ -84,7 +84,7 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
     if (depth == 1 && !dither)
     {
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
-        kdDebug () << "\tinvoking convert-to-depth 1 hack" << endl;
+        kDebug () << "\tinvoking convert-to-depth 1 hack" << endl;
     #endif
         QRgb color0, color1;
         bool color0Valid = false, color1Valid = false;
@@ -94,7 +94,7 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
         QImage monoImage (image.width (), image.height (),
                           1/*depth*/, 2/*numColors*/, QImage::LittleEndian);
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
-        kdDebug () << "\t\tinitialising output image w=" << monoImage.width ()
+        kDebug () << "\t\tinitialising output image w=" << monoImage.width ()
                    << ",h=" << monoImage.height ()
                    << ",d=" << monoImage.depth ()
                    << endl;
@@ -115,7 +115,7 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
                     color0Valid = true;
                     monoImage.setPixel (x, y, 0);
                 #if DEBUG_KP_EFFECT_REDUCE_COLORS
-                    kdDebug () << "\t\t\tcolor0=" << (int *) Qt::color0
+                    kDebug () << "\t\t\tcolor0=" << (int *) Qt::color0
                                << " at x=" << x << ",y=" << y << endl;
                 #endif
                 }
@@ -125,14 +125,14 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
                     color1Valid = true;
                     monoImage.setPixel (x, y, 1);
                 #if DEBUG_KP_EFFECT_REDUCE_COLORS
-                    kdDebug () << "\t\t\tcolor1=" << (int *) Qt::color1
+                    kDebug () << "\t\t\tcolor1=" << (int *) Qt::color1
                                << " at x=" << x << ",y=" << y << endl;
                 #endif
                 }
                 else
                 {
                 #if DEBUG_KP_EFFECT_REDUCE_COLORS
-                    kdDebug () << "\t\t\timagePixel=" << (int *) imagePixel
+                    kDebug () << "\t\t\timagePixel=" << (int *) imagePixel
                                << " at x=" << x << ",y=" << y
                                << " moreThan2Colors - abort hack" << endl;
                 #endif
@@ -162,7 +162,7 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
         (dither ? Qt::PreferDither : Qt::AvoidDither));
 
 #if DEBUG_KP_EFFECT_REDUCE_COLORS && 0
-    kdDebug () << "After colour reduction:" << endl;
+    kDebug () << "After colour reduction:" << endl;
     for (int y = 0; y < image.height (); y++)
     {
         for (int x = 0; x < image.width (); x++)
@@ -310,7 +310,7 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
 
     const int screenDepth = QPixmap::defaultDepth ();
 #if DEBUG_KP_EFFECT_REDUCE_COLORS
-    kdDebug () << "kpEffectReduceColorsWidget::<ctor> screenDepth="
+    kDebug () << "kpEffectReduceColorsWidget::<ctor> screenDepth="
                << screenDepth
                << endl;
 #endif
@@ -333,21 +333,21 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
     if (m_24BitRadioButton->isEnabled ())
     {
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
-        kdDebug () << "\tdefault is 24-bit button" << endl;
+        kDebug () << "\tdefault is 24-bit button" << endl;
     #endif
         m_defaultRadioButton = m_24BitRadioButton;
     }
     else if (m_8BitRadioButton->isEnabled ())
     {
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
-        kdDebug () << "\tdefault is 8-bit button" << endl;
+        kDebug () << "\tdefault is 8-bit button" << endl;
     #endif
         m_defaultRadioButton = m_8BitRadioButton;
     }
     else
     {
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
-        kdDebug () << "\tuser must have a 1-bit screen - no default" << endl;
+        kDebug () << "\tuser must have a 1-bit screen - no default" << endl;
     #endif
     }
 

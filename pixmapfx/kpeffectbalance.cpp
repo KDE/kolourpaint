@@ -134,7 +134,7 @@ QPixmap kpEffectBalanceCommand::applyColorEffect (const QPixmap &pixmap,
     int brightness, int contrast, int gamma)
 {
 #if DEBUG_KP_EFFECT_BALANCE
-    kdDebug () << "kpEffectBalanceCommand::applyColorEffect("
+    kDebug () << "kpEffectBalanceCommand::applyColorEffect("
                << "channels=" << channels
                << ",brightness=" << brightness
                << ",contrast=" << contrast
@@ -145,7 +145,7 @@ QPixmap kpEffectBalanceCommand::applyColorEffect (const QPixmap &pixmap,
 
     QImage image = kpPixmapFX::convertToImage (pixmap);
 #if DEBUG_KP_EFFECT_BALANCE
-    kdDebug () << "\tconvertToImage=" << timer.restart () << endl;
+    kDebug () << "\tconvertToImage=" << timer.restart () << endl;
 #endif
 
 
@@ -174,7 +174,7 @@ QPixmap kpEffectBalanceCommand::applyColorEffect (const QPixmap &pixmap,
     }
 
 #if DEBUG_KP_EFFECT_BALANCE
-    kdDebug () << "\tbuild lookup=" << timer.restart () << endl;
+    kDebug () << "\tbuild lookup=" << timer.restart () << endl;
 #endif
 
 
@@ -233,12 +233,12 @@ QPixmap kpEffectBalanceCommand::applyColorEffect (const QPixmap &pixmap,
 
     }
 #if DEBUG_KP_EFFECT_BALANCE
-    kdDebug () << "\teffect=" << timer.restart () << endl;
+    kDebug () << "\teffect=" << timer.restart () << endl;
 #endif
 
     const QPixmap retPixmap = kpPixmapFX::convertToPixmap (image);
 #if DEBUG_KP_EFFECT_BALANCE
-    kdDebug () << "\tconvertToPixmap=" << timer.restart () << endl;
+    kDebug () << "\tconvertToPixmap=" << timer.restart () << endl;
 #endif
 
     return retPixmap;

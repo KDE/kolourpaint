@@ -154,7 +154,7 @@ void kpMainWindow::createToolBox ()
 void kpMainWindow::enableToolsDocumentActions (bool enable)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::enableToolsDocumentsAction(" << enable << ")" << endl;
+    kDebug () << "kpMainWindow::enableToolsDocumentsAction(" << enable << ")" << endl;
 #endif
 
     m_toolActionsEnabled = enable;
@@ -194,7 +194,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
         if (action)
         {
         #if DEBUG_KP_MAIN_WINDOW
-            kdDebug () << "\tchanging enabled state of " << (*it)->name () << endl;
+            kDebug () << "\tchanging enabled state of " << (*it)->name () << endl;
         #endif
 
             if (!enable && action->isChecked ())
@@ -205,7 +205,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
         else
         {
         #if DEBUG_KP_MAIN_WINDOW
-            kdDebug () << "\tno action for " << (*it)->name () << endl;
+            kDebug () << "\tno action for " << (*it)->name () << endl;
         #endif
         }
     }
@@ -218,7 +218,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
 void kpMainWindow::updateToolOptionPrevNextActionsEnabled ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::updateToolOptionPrevNextActionsEnabled()"
+    kDebug () << "kpMainWindow::updateToolOptionPrevNextActionsEnabled()"
                << " numShownToolWidgets="
                << m_toolToolBar->numShownToolWidgets ()
                << endl;
@@ -280,7 +280,7 @@ kpSelectionTransparency kpMainWindow::selectionTransparency () const
     kpToolWidgetOpaqueOrTransparent *oot = m_toolToolBar->toolWidgetOpaqueOrTransparent ();
     if (!oot)
     {
-        kdError () << "kpMainWindow::selectionTransparency() without opaqueOrTransparent widget" << endl;
+        kError () << "kpMainWindow::selectionTransparency() without opaqueOrTransparent widget" << endl;
         return kpSelectionTransparency ();
     }
 
@@ -291,7 +291,7 @@ kpSelectionTransparency kpMainWindow::selectionTransparency () const
 void kpMainWindow::setSelectionTransparency (const kpSelectionTransparency &transparency, bool forceColorChange)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kdDebug () << "kpMainWindow::setSelectionTransparency() isOpaque=" << transparency.isOpaque ()
+    kDebug () << "kpMainWindow::setSelectionTransparency() isOpaque=" << transparency.isOpaque ()
                << " color=" << (transparency.transparentColor ().isValid () ? (int *) transparency.transparentColor ().toQRgb () : 0)
                << " forceColorChange=" << forceColorChange
                << endl;
@@ -300,7 +300,7 @@ void kpMainWindow::setSelectionTransparency (const kpSelectionTransparency &tran
     kpToolWidgetOpaqueOrTransparent *oot = m_toolToolBar->toolWidgetOpaqueOrTransparent ();
     if (!oot)
     {
-        kdError () << "kpMainWindow::setSelectionTransparency() without opaqueOrTransparent widget" << endl;
+        kError () << "kpMainWindow::setSelectionTransparency() without opaqueOrTransparent widget" << endl;
         return;
     }
 
@@ -327,7 +327,7 @@ int kpMainWindow::settingSelectionTransparency () const
 void kpMainWindow::slotToolSelected (kpTool *tool)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotToolSelected (" << tool << ")" << endl;
+    kDebug () << "kpMainWindow::slotToolSelected (" << tool << ")" << endl;
 #endif
 
     kpTool *previousTool = m_toolToolBar ? m_toolToolBar->previousTool () : 0;
@@ -449,7 +449,7 @@ bool kpMainWindow::slotDragScroll (const QPoint &docPoint,
                                    bool *scrolled)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotDragScroll() maybeDragScrolling="
+    kDebug () << "kpMainWindow::slotDragScroll() maybeDragScrolling="
                << maybeDragScrollingMainView ()
                << endl;
 #endif
@@ -559,7 +559,7 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
 void kpMainWindow::slotDocResizeMessageChanged (const QString &string)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotDocResizeMessageChanged(" << string
+    kDebug () << "kpMainWindow::slotDocResizeMessageChanged(" << string
                << ") docResizeToBeCompleted=" << m_docResizeToBeCompleted
                << endl;
 #else

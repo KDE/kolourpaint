@@ -98,7 +98,7 @@ void kpMainWindow::createStatusBar ()
 void kpMainWindow::setStatusBarMessage (const QString &message)
 {
 #if DEBUG_STATUS_BAR && 1
-    kdDebug () << "kpMainWindow::setStatusBarMessage("
+    kDebug () << "kpMainWindow::setStatusBarMessage("
                << message
                << ") ok=" << m_statusBarCreated
                << endl;
@@ -116,7 +116,7 @@ void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
                                             const QPoint &endPoint)
 {
 #if DEBUG_STATUS_BAR && 0
-    kdDebug () << "kpMainWindow::setStatusBarShapePoints("
+    kDebug () << "kpMainWindow::setStatusBarShapePoints("
                << startPoint << "," << endPoint
                << ") ok=" << m_statusBarCreated
                << endl;
@@ -130,7 +130,7 @@ void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
         endPoint == m_statusBarShapeLastEndPoint)
     {
     #if DEBUG_STATUS_BAR && 0
-        kdDebug () << "\tNOP" << endl;
+        kDebug () << "\tNOP" << endl;
     #endif
         return;
     }
@@ -165,7 +165,7 @@ void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
 void kpMainWindow::setStatusBarShapeSize (const QSize &size)
 {
 #if DEBUG_STATUS_BAR && 0
-    kdDebug () << "kpMainWindow::setStatusBarShapeSize("
+    kDebug () << "kpMainWindow::setStatusBarShapeSize("
                << size
                << ") ok=" << m_statusBarCreated
                << endl;
@@ -178,7 +178,7 @@ void kpMainWindow::setStatusBarShapeSize (const QSize &size)
         size == m_statusBarShapeLastSize)
     {
     #if DEBUG_STATUS_BAR && 0
-        kdDebug () << "\tNOP" << endl;
+        kDebug () << "\tNOP" << endl;
     #endif
         return;
     }
@@ -203,7 +203,7 @@ void kpMainWindow::setStatusBarShapeSize (const QSize &size)
 void kpMainWindow::setStatusBarDocSize (const QSize &size)
 {
 #if DEBUG_STATUS_BAR && 0
-    kdDebug () << "kpMainWindow::setStatusBarDocSize("
+    kDebug () << "kpMainWindow::setStatusBarDocSize("
                << size
                << ") ok=" << m_statusBarCreated
                << endl;
@@ -229,7 +229,7 @@ void kpMainWindow::setStatusBarDocSize (const QSize &size)
 void kpMainWindow::setStatusBarDocDepth (int depth)
 {
 #if DEBUG_STATUS_BAR && 0
-    kdDebug () << "kpMainWindow::setStatusBarDocDepth("
+    kDebug () << "kpMainWindow::setStatusBarDocDepth("
                << depth
                << ") ok=" << m_statusBarCreated
                << endl;
@@ -253,7 +253,7 @@ void kpMainWindow::setStatusBarDocDepth (int depth)
 void kpMainWindow::setStatusBarZoom (int zoom)
 {
 #if DEBUG_STATUS_BAR && 0
-    kdDebug () << "kpMainWindow::setStatusBarZoom("
+    kDebug () << "kpMainWindow::setStatusBarZoom("
                << zoom
                << ") ok=" << m_statusBarCreated
                << endl;
@@ -276,14 +276,14 @@ void kpMainWindow::setStatusBarZoom (int zoom)
 void kpMainWindow::recalculateStatusBarMessage ()
 {
 #if DEBUG_STATUS_BAR && 1
-    kdDebug () << "kpMainWindow::recalculateStatusBarMessage()" << endl;
+    kDebug () << "kpMainWindow::recalculateStatusBarMessage()" << endl;
 #endif
     QString scrollViewMessage = m_scrollView->statusMessage ();
 #if DEBUG_STATUS_BAR && 1
-    kdDebug () << "\tscrollViewMessage=" << scrollViewMessage << endl;
-    kdDebug () << "\tresizing doc? " << !m_scrollView->newDocSize ().isEmpty ()
+    kDebug () << "\tscrollViewMessage=" << scrollViewMessage << endl;
+    kDebug () << "\tresizing doc? " << !m_scrollView->newDocSize ().isEmpty ()
                << endl;
-    kdDebug () << "\tviewUnderCursor? "
+    kDebug () << "\tviewUnderCursor? "
                << (m_viewManager && m_viewManager->viewUnderCursor ())
                << endl;
 #endif
@@ -296,7 +296,7 @@ void kpMainWindow::recalculateStatusBarMessage ()
         m_viewManager && m_viewManager->viewUnderCursor ())
     {
     #if DEBUG_STATUS_BAR && 1
-        kdDebug () << "\t\tnot resizing & viewUnderCursor - message is wrong - clearing"
+        kDebug () << "\t\tnot resizing & viewUnderCursor - message is wrong - clearing"
                    << endl;
     #endif
         m_scrollView->blockSignals (true);
@@ -305,7 +305,7 @@ void kpMainWindow::recalculateStatusBarMessage ()
 
         scrollViewMessage = QString::null;
     #if DEBUG_STATUS_BAR && 1
-        kdDebug () << "\t\t\tdone" << endl;
+        kDebug () << "\t\t\tdone" << endl;
     #endif
     }
 
@@ -331,18 +331,18 @@ void kpMainWindow::recalculateStatusBarMessage ()
 void kpMainWindow::recalculateStatusBarShape ()
 {
 #if DEBUG_STATUS_BAR && 0
-    kdDebug () << "kpMainWindow::recalculateStatusBarShape()" << endl;
+    kDebug () << "kpMainWindow::recalculateStatusBarShape()" << endl;
 #endif
 
     QSize docResizeTo = m_scrollView->newDocSize ();
 #if DEBUG_STATUS_BAR && 0
-    kdDebug () << "\tdocResizeTo=" << docResizeTo << endl;
+    kDebug () << "\tdocResizeTo=" << docResizeTo << endl;
 #endif
     if (docResizeTo.isValid ())
     {
         const QPoint startPoint (m_document->width (), m_document->height ());
     #if DEBUG_STATUS_BAR && 0
-        kdDebug () << "\thavedMovedFromOrgSize="
+        kDebug () << "\thavedMovedFromOrgSize="
                    << m_scrollView->haveMovedFromOriginalDocSize () << endl;
     #endif
         if (!m_scrollView->haveMovedFromOriginalDocSize ())
@@ -364,7 +364,7 @@ void kpMainWindow::recalculateStatusBarShape ()
     {
         const kpTool *t = tool ();
     #if DEBUG_STATUS_BAR && 0
-        kdDebug () << "\ttool=" << t << endl;
+        kDebug () << "\ttool=" << t << endl;
     #endif
         if (t)
         {
@@ -384,7 +384,7 @@ void kpMainWindow::recalculateStatusBarShape ()
 void kpMainWindow::recalculateStatusBar ()
 {
 #if DEBUG_STATUS_BAR && 1
-    kdDebug () << "kpMainWindow::recalculateStatusBar() ok="
+    kDebug () << "kpMainWindow::recalculateStatusBar() ok="
                << m_statusBarCreated
                << endl;
 #endif

@@ -68,7 +68,7 @@ bool kpToolWidgetOpaqueOrTransparent::isTransparent () const
 void kpToolWidgetOpaqueOrTransparent::setOpaque (bool yes)
 {
 #if DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT && 1
-    kdDebug () << "kpToolWidgetOpaqueOrTransparent::setOpaque(" << yes << ")" << endl;
+    kDebug () << "kpToolWidgetOpaqueOrTransparent::setOpaque(" << yes << ")" << endl;
 #endif
     setSelected (yes ? 0 : 1, 0, false/*don't save*/);
 }
@@ -77,7 +77,7 @@ void kpToolWidgetOpaqueOrTransparent::setOpaque (bool yes)
 void kpToolWidgetOpaqueOrTransparent::setTransparent (bool yes)
 {
 #if DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT && 1
-    kdDebug () << "kpToolWidgetOpaqueOrTransparent::setTransparent(" << yes << ")" << endl;
+    kDebug () << "kpToolWidgetOpaqueOrTransparent::setTransparent(" << yes << ")" << endl;
 #endif
     setSelected (yes ? 1 : 0, 0, false/*don't save*/);
 }
@@ -87,7 +87,7 @@ void kpToolWidgetOpaqueOrTransparent::setTransparent (bool yes)
 bool kpToolWidgetOpaqueOrTransparent::setSelected (int row, int col, bool saveAsDefault)
 {
 #if DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT && 1
-    kdDebug () << "kpToolWidgetOpaqueOrTransparent::setSelected("
+    kDebug () << "kpToolWidgetOpaqueOrTransparent::setSelected("
                << row << "," << col << ")" << endl;
 #endif
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);

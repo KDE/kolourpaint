@@ -62,7 +62,7 @@ QPainter::fillRect().  QPainter::drawPixmap() seems much faster.  For
 +                                              bool isPreview)
 +{
 +#if DEBUG_KP_MAIN_WINDOW && 1 || 1
-+    kdDebug () << "\tkpMainWindow::drawTransparentBackground(rect="
++    kDebug () << "\tkpMainWindow::drawTransparentBackground(rect="
 +               << rect << ")" << endl;
 +    QTime totalTimer; totalTimer.start ();
 +#endif
@@ -98,7 +98,7 @@ QPainter::fillRect().  QPainter::drawPixmap() seems much faster.  For
 +#if DEBUG_KP_MAIN_WINDOW && 1 || 1
 +{
 +    const int totalTimerElapsed = totalTimer.elapsed ();
-+    kdDebug () << "\t\ttotal=" << totalTimerElapsed << endl;
++    kDebug () << "\t\ttotal=" << totalTimerElapsed << endl;
 +}
 +#endif
 +}
@@ -113,7 +113,7 @@ QPainter::fillRect().  QPainter::drawPixmap() seems much faster.  For
                                                bool isPreview)
  {
 +#if DEBUG_KP_MAIN_WINDOW && 1
-+    kdDebug () << "\tkpMainWindow::drawTransparentBackground(rect="
++    kDebug () << "\tkpMainWindow::drawTransparentBackground(rect="
 +               << rect << ")" << endl;
 +    QTime totalTimer; totalTimer.start ();
 +#endif
@@ -131,7 +131,7 @@ QPainter::fillRect().  QPainter::drawPixmap() seems much faster.  For
 +#if DEBUG_KP_MAIN_WINDOW && 1 || 1
 +{
 +    const int totalTimerElapsed = totalTimer.elapsed ();
-+    kdDebug () << "\t\ttotal=" << totalTimerElapsed << endl;
++    kDebug () << "\t\ttotal=" << totalTimerElapsed << endl;
 +}
 +#endif
 +}

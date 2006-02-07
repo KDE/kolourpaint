@@ -92,7 +92,7 @@ void kpToolPen::setMode (Mode mode)
     if ((usesPixmaps && !usesBrushes) ||
         (usesBrushes && !usesPixmaps))
     {
-        kdError () << "kpToolPen::setMode() passed invalid mode" << endl;
+        kError () << "kpToolPen::setMode() passed invalid mode" << endl;
         return;
     }
 
@@ -229,7 +229,7 @@ void kpToolPen::beginDraw ()
 void kpToolPen::hover (const QPoint &point)
 {
 #if DEBUG_KP_TOOL_PEN && 0
-    kdDebug () << "kpToolPen::hover(" << point << ")"
+    kDebug () << "kpToolPen::hover(" << point << ")"
                << " hasBegun=" << hasBegun ()
                << " hasBegunDraw=" << hasBegunDraw ()
                << " cursorPixmap.isNull=" << m_cursorPixmap.isNull ()
@@ -272,7 +272,7 @@ void kpToolPen::hover (const QPoint &point)
         QImage image = kpPixmapFX::convertToImage (*document ()->pixmap ());
 
         QRgb v = image.pixel (point.x (), point.y ());
-        kdDebug () << "(" << point << "): r=" << qRed (v)
+        kDebug () << "(" << point << "): r=" << qRed (v)
                     << " g=" << qGreen (v)
                     << " b=" << qBlue (v)
                     << " a=" << qAlpha (v)
@@ -299,7 +299,7 @@ bool kpToolPen::wash (QPainter *painter, QPainter *maskPainter,
     bool didSomething = false;
 
 #if DEBUG_KP_TOOL_PEN && 0
-    kdDebug () << "kpToolPen::wash(imageRect=" << imageRect
+    kDebug () << "kpToolPen::wash(imageRect=" << imageRect
                << ",drawRect=" << drawRect
                << ")" << endl;
 #endif
@@ -371,7 +371,7 @@ void kpToolPen::globalDraw ()
     if (m_mode == Eraser)
     {
     #if DEBUG_KP_TOOL_PEN
-        kdDebug () << "kpToolPen::globalDraw() eraser" << endl;
+        kDebug () << "kpToolPen::globalDraw() eraser" << endl;
     #endif
         mainWindow ()->commandHistory ()->addCommand (
             new kpToolClearCommand (false/*act on doc, not sel*/, mainWindow ()));
@@ -379,7 +379,7 @@ void kpToolPen::globalDraw ()
     else if (m_mode == ColorWasher)
     {
     #if DEBUG_KP_TOOL_PEN
-        kdDebug () << "kpToolPen::globalDraw() colour eraser" << endl;
+        kDebug () << "kpToolPen::globalDraw() colour eraser" << endl;
     #endif
         if (foregroundColor () == backgroundColor () && processedColorSimilarity () == 0)
             return;
@@ -441,7 +441,7 @@ void kpToolPen::globalDraw ()
         else
         {
         #if DEBUG_KP_TOOL_PEN
-            kdDebug () << "\tisNOP" << endl;
+            kDebug () << "\tisNOP" << endl;
         #endif
             delete cmd;
             cmd = 0;
@@ -505,7 +505,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
         else if (m_mode & WashesPixmaps)
         {
         #if DEBUG_KP_TOOL_PEN
-            kdDebug () << "Washing pixmap (immediate)" << endl;
+            kDebug () << "Washing pixmap (immediate)" << endl;
             QTime timer;
         #endif
             QRect rect = hotRect ();
@@ -514,11 +514,11 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
         #endif
             QPixmap pixmap = document ()->getPixmapAt (rect);
         #if DEBUG_KP_TOOL_PEN
-            kdDebug () << "\tget from doc: " << timer.restart () << "ms" << endl;
+            kDebug () << "\tget from doc: " << timer.restart () << "ms" << endl;
         #endif
             const QImage image = kpPixmapFX::convertToImage (pixmap);
         #if DEBUG_KP_TOOL_PEN
-            kdDebug () << "\tconvert to image: " << timer.restart () << "ms" << endl;
+            kDebug () << "\tconvert to image: " << timer.restart () << "ms" << endl;
         #endif
             QPainter painter, maskPainter;
             QBitmap maskBitmap;
@@ -554,21 +554,21 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
                     pixmap.setMask (maskBitmap);
 
             #if DEBUG_KP_TOOL_PEN
-                kdDebug () << "\twashed: " << timer.restart () << "ms" << endl;
+                kDebug () << "\twashed: " << timer.restart () << "ms" << endl;
             #endif
                 document ()->setPixmapAt (pixmap, hotPoint ());
             #if DEBUG_KP_TOOL_PEN
-                kdDebug () << "\tset doc: " << timer.restart () << "ms" << endl;
+                kDebug () << "\tset doc: " << timer.restart () << "ms" << endl;
             #endif
                 m_currentCommand->updateBoundingRect (hotRect ());
             #if DEBUG_KP_TOOL_PEN
-                kdDebug () << "\tupdate boundingRect: " << timer.restart () << "ms" << endl;
-                kdDebug () << "\tdone" << endl;
+                kDebug () << "\tupdate boundingRect: " << timer.restart () << "ms" << endl;
+                kDebug () << "\tdone" << endl;
             #endif
             }
 
         #if DEBUG_KP_TOOL_PEN && 1
-            kdDebug () << endl;
+            kDebug () << endl;
         #endif
         }
     }
@@ -584,7 +584,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
     #if DEBUG_KP_TOOL_PEN
         if (m_mode & WashesPixmaps)
         {
-            kdDebug () << "Washing pixmap (w=" << rect.width ()
+            kDebug () << "Washing pixmap (w=" << rect.width ()
                        << ",h=" << rect.height () << ")" << endl;
         }
         QTime timer;
@@ -624,7 +624,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
             image = kpPixmapFX::convertToImage (pixmap);
         #if DEBUG_KP_TOOL_PEN
             convAndWashTime = timer.restart ();
-            kdDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;
+            kDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;
         #endif
         }
 
@@ -814,7 +814,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
         if (m_mode & WashesPixmaps)
         {
             int ms = timer.restart ();
-            kdDebug () << "\ttried to wash: " << ms << "ms"
+            kDebug () << "\ttried to wash: " << ms << "ms"
                        << " (" << (ms ? (rect.width () * rect.height () / ms) : -1234)
                        << " pixels/ms)"
                        << endl;
@@ -835,7 +835,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
             if (m_mode & WashesPixmaps)
             {
                 int ms = timer.restart ();
-                kdDebug () << "\tset doc: " << ms << "ms" << endl;
+                kDebug () << "\tset doc: " << ms << "ms" << endl;
                 convAndWashTime += ms;
             }
         #endif
@@ -846,9 +846,9 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
             if (m_mode & WashesPixmaps)
             {
                 int ms = timer.restart ();
-                kdDebug () << "\tupdate boundingRect: " << ms << "ms" << endl;
+                kDebug () << "\tupdate boundingRect: " << ms << "ms" << endl;
                 convAndWashTime += ms;
-                kdDebug () << "\tdone (" << (convAndWashTime ? (rect.width () * rect.height () / convAndWashTime) : -1234)
+                kDebug () << "\tdone (" << (convAndWashTime ? (rect.width () * rect.height () / convAndWashTime) : -1234)
                            << " pixels/ms)"
                            << endl;
             }
@@ -857,7 +857,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
 
     #if DEBUG_KP_TOOL_PEN
         if (m_mode & WashesPixmaps)
-            kdDebug () << endl;
+            kDebug () << endl;
     #endif
     }
 
@@ -903,7 +903,7 @@ void kpToolPen::endDraw (const QPoint &, const QRect &)
 kpColor kpToolPen::color (int which)
 {
 #if DEBUG_KP_TOOL_PEN && 0
-    kdDebug () << "kpToolPen::color (" << which << ")" << endl;
+    kDebug () << "kpToolPen::color (" << which << ")" << endl;
 #endif
 
     // Pen & Brush
@@ -918,7 +918,7 @@ kpColor kpToolPen::color (int which)
 void kpToolPen::slotForegroundColorChanged (const kpColor &col)
 {
 #if DEBUG_KP_TOOL_PEN
-    kdDebug () << "kpToolPen::slotForegroundColorChanged()" << endl;
+    kDebug () << "kpToolPen::slotForegroundColorChanged()" << endl;
 #endif
     if (col.isOpaque ())
         m_brushPixmap [(m_mode & SwappedColors) ? 1 : 0].fill (col.toQColor ());
@@ -930,7 +930,7 @@ void kpToolPen::slotForegroundColorChanged (const kpColor &col)
 void kpToolPen::slotBackgroundColorChanged (const kpColor &col)
 {
 #if DEBUG_KP_TOOL_PEN
-    kdDebug () << "kpToolPen::slotBackgroundColorChanged()" << endl;
+    kDebug () << "kpToolPen::slotBackgroundColorChanged()" << endl;
 #endif
 
     if (col.isOpaque ())
@@ -943,7 +943,7 @@ void kpToolPen::slotBackgroundColorChanged (const kpColor &col)
 void kpToolPen::slotBrushChanged (const QPixmap &pixmap, bool isDiagonalLine)
 {
 #if DEBUG_KP_TOOL_PEN
-    kdDebug () << "kpToolPen::slotBrushChanged()" << endl;
+    kDebug () << "kpToolPen::slotBrushChanged()" << endl;
 #endif
     for (int i = 0; i < 2; i++)
     {
@@ -961,7 +961,7 @@ void kpToolPen::slotBrushChanged (const QPixmap &pixmap, bool isDiagonalLine)
 void kpToolPen::slotEraserSizeChanged (int size)
 {
 #if DEBUG_KP_TOOL_PEN
-    kdDebug () << "KpToolPen::slotEraserSizeChanged(size=" << size << ")" << endl;
+    kDebug () << "KpToolPen::slotEraserSizeChanged(size=" << size << ")" << endl;
 #endif
 
     for (int i = 0; i < 2; i++)
@@ -1022,7 +1022,7 @@ QRect kpToolPen::hotRect (const QPoint &point) const
 void kpToolPen::updateBrushCursor (bool recalc)
 {
 #if DEBUG_KP_TOOL_PEN && 1
-    kdDebug () << "kpToolPen::updateBrushCursor(recalc=" << recalc << ")" << endl;
+    kDebug () << "kpToolPen::updateBrushCursor(recalc=" << recalc << ")" << endl;
 #endif
 
     if (recalc)
@@ -1095,7 +1095,7 @@ void kpToolPenCommand::updateBoundingRect (const QPoint &point)
 void kpToolPenCommand::updateBoundingRect (const QRect &rect)
 {
 #if DEBUG_KP_TOOL_PEN & 0
-    kdDebug () << "kpToolPenCommand::updateBoundingRect()  existing="
+    kDebug () << "kpToolPenCommand::updateBoundingRect()  existing="
                << m_boundingRect
                << " plus="
                << rect
@@ -1103,7 +1103,7 @@ void kpToolPenCommand::updateBoundingRect (const QRect &rect)
 #endif
     m_boundingRect = m_boundingRect.unite (rect);
 #if DEBUG_KP_TOOL_PEN & 0
-    kdDebug () << "\tresult=" << m_boundingRect << endl;
+    kDebug () << "\tresult=" << m_boundingRect << endl;
 #endif
 }
 

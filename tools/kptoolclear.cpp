@@ -90,7 +90,7 @@ void kpToolClearCommand::execute ()
     kpDocument *doc = document ();
     if (!doc)
     {
-        kdError () << "kpToolClearCommand::execute() without doc" << endl;
+        kError () << "kpToolClearCommand::execute() without doc" << endl;
         return;
     }
 
@@ -122,7 +122,7 @@ void kpToolClearCommand::unexecute ()
     kpDocument *doc = document ();
     if (!doc)
     {
-        kdError () << "kpToolClearCommand::execute() without doc" << endl;
+        kError () << "kpToolClearCommand::execute() without doc" << endl;
         return;
     }
 

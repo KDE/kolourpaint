@@ -97,7 +97,7 @@ void kpMainWindow::readAndApplyTextSettings ()
 void kpMainWindow::enableTextToolBarActions (bool enable)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::enableTextToolBarActions(" << enable << ")" << endl;
+    kDebug () << "kpMainWindow::enableTextToolBarActions(" << enable << ")" << endl;
 #endif
 
     m_actionTextFontFamily->setEnabled (enable);
@@ -110,7 +110,7 @@ void kpMainWindow::enableTextToolBarActions (bool enable)
     if (textToolBar ())
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\thave toolbar - setShown" << endl;
+        kDebug () << "\thave toolbar - setShown" << endl;
     #endif
         textToolBar ()->setShown (enable);
     }
@@ -121,7 +121,7 @@ void kpMainWindow::enableTextToolBarActions (bool enable)
 void kpMainWindow::slotTextFontFamilyChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotTextFontFamilyChanged() alive="
+    kDebug () << "kpMainWindow::slotTextFontFamilyChanged() alive="
                << m_isFullyConstructed
                << " fontFamily="
                << m_actionTextFontFamily->font ()
@@ -154,7 +154,7 @@ void kpMainWindow::slotTextFontFamilyChanged ()
 void kpMainWindow::slotTextFontSizeChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotTextFontSizeChanged() alive="
+    kDebug () << "kpMainWindow::slotTextFontSizeChanged() alive="
                << m_isFullyConstructed
                << " fontSize="
                << m_actionTextFontSize->fontSize ()
@@ -187,7 +187,7 @@ void kpMainWindow::slotTextFontSizeChanged ()
 void kpMainWindow::slotTextBoldChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotTextFontBoldChanged() alive="
+    kDebug () << "kpMainWindow::slotTextFontBoldChanged() alive="
                << m_isFullyConstructed
                << " bold="
                << m_actionTextBold->isChecked ()
@@ -210,7 +210,7 @@ void kpMainWindow::slotTextBoldChanged ()
 void kpMainWindow::slotTextItalicChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotTextFontItalicChanged() alive="
+    kDebug () << "kpMainWindow::slotTextFontItalicChanged() alive="
                << m_isFullyConstructed
                << " bold="
                << m_actionTextItalic->isChecked ()
@@ -233,7 +233,7 @@ void kpMainWindow::slotTextItalicChanged ()
 void kpMainWindow::slotTextUnderlineChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotTextFontUnderlineChanged() alive="
+    kDebug () << "kpMainWindow::slotTextFontUnderlineChanged() alive="
                << m_isFullyConstructed
                << " underline="
                << m_actionTextUnderline->isChecked ()
@@ -256,7 +256,7 @@ void kpMainWindow::slotTextUnderlineChanged ()
 void kpMainWindow::slotTextStrikeThruChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotTextStrikeThruChanged() alive="
+    kDebug () << "kpMainWindow::slotTextStrikeThruChanged() alive="
                << m_isFullyConstructed
                << " strikeThru="
                << m_actionTextStrikeThru->isChecked ()
@@ -316,7 +316,7 @@ kpTextStyle kpMainWindow::textStyle () const
 void kpMainWindow::setTextStyle (const kpTextStyle &textStyle_)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::setTextStyle()" << endl;
+    kDebug () << "kpMainWindow::setTextStyle()" << endl;
 #endif
 
     m_settingTextStyle++;

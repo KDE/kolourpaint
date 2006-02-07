@@ -89,7 +89,7 @@ kpDocument::kpDocument (int w, int h, kpMainWindow *mainWindow)
       d (new kpDocumentPrivate ())
 {
 #if DEBUG_KP_DOCUMENT && 0
-    kdDebug () << "kpDocument::kpDocument (" << w << "," << h << ")" << endl;
+    kDebug () << "kpDocument::kpDocument (" << w << "," << h << ")" << endl;
 #endif
 
     m_pixmap = new QPixmap (w, h);
@@ -131,7 +131,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
                                        kpDocumentMetaInfo *metaInfo)
 {
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::getPixmapFromFile(" << url << "," << parent << ")" << endl;
+    kDebug () << "kpDocument::getPixmapFromFile(" << url << "," << parent << ")" << endl;
 #endif
 
     if (saveOptions)
@@ -162,10 +162,10 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
         saveOptions->setMimeType (detectedMimeType);
 
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "\ttempFile=" << tempFile << endl;
-    kdDebug () << "\tmimetype=" << detectedMimeType << endl;
-    kdDebug () << "\tsrc=" << url.path () << endl;
-    kdDebug () << "\tmimetype of src=" << KImageIO::mimeType (url.path ()) << endl;
+    kDebug () << "\ttempFile=" << tempFile << endl;
+    kDebug () << "\tmimetype=" << detectedMimeType << endl;
+    kDebug () << "\tsrc=" << url.path () << endl;
+    kDebug () << "\tmimetype of src=" << KImageIO::mimeType (url.path ()) << endl;
 #endif
 
     if (detectedMimeType.isEmpty ())
@@ -190,7 +190,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
     }
 
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "\timage: depth=" << image.depth ()
+    kDebug () << "\timage: depth=" << image.depth ()
                 << " (X display=" << QColor::numBitPlanes () << ")"
                 << " hasAlphaBuffer=" << image.hasAlphaBuffer ()
                 << endl;
@@ -225,7 +225,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
 {
     if (image.width () <= 16 && image.height () <= 16)
     {
-        kdDebug () << "Image dump:" << endl;
+        kDebug () << "Image dump:" << endl;
 
         for (int y = 0; y < image.height (); y++)
         {
@@ -271,7 +271,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
 #if DEBUG_KP_DOCUMENT && 1
 {
     const QImage image2 = kpPixmapFX::convertToImage (newPixmap);
-    kdDebug () << "(Converted to pixmap) Image dump:" << endl;
+    kDebug () << "(Converted to pixmap) Image dump:" << endl;
 
     bool differsFromOrgImage = false;
     unsigned long hash = 0;
@@ -294,7 +294,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
             fprintf (stderr, "\n");
     }
 
-    kdDebug () << "\tdiffersFromOrgImage="
+    kDebug () << "\tdiffersFromOrgImage="
                << differsFromOrgImage
                << " numDiff="
                << numDiff
@@ -312,7 +312,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
     }
 
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "\tpixmap: depth=" << newPixmap.depth ()
+    kDebug () << "\tpixmap: depth=" << newPixmap.depth ()
                 << " hasAlphaChannelOrMask=" << newPixmap.hasAlpha ()
                 << " hasAlphaChannel=" << newPixmap.hasAlphaChannel ()
                 << endl;
@@ -326,7 +326,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
 void kpDocument::openNew (const KUrl &url)
 {
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "KpDocument::openNew (" << url << ")" << endl;
+    kDebug () << "KpDocument::openNew (" << url << ")" << endl;
 #endif
 
     m_pixmap->fill (Qt::white);
@@ -342,7 +342,7 @@ void kpDocument::openNew (const KUrl &url)
 bool kpDocument::open (const KUrl &url, bool newDocSameNameIfNotExist)
 {
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::open (" << url << ")" << endl;
+    kDebug () << "kpDocument::open (" << url << ")" << endl;
 #endif
 
     kpDocumentSaveOptions newSaveOptions;
@@ -391,7 +391,7 @@ bool kpDocument::open (const KUrl &url, bool newDocSameNameIfNotExist)
 bool kpDocument::save (bool overwritePrompt, bool lossyPrompt)
 {
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::save("
+    kDebug () << "kpDocument::save("
                << "overwritePrompt=" << overwritePrompt
                << ",lossyPrompt=" << lossyPrompt
                << ") url=" << m_url
@@ -426,7 +426,7 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
                                       QWidget *parent)
 {
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::lossyPromptContinue()" << endl;
+    kDebug () << "kpDocument::lossyPromptContinue()" << endl;
 #endif
 
 #define QUIT_IF_CANCEL(messageBoxCommand)            \
@@ -488,7 +488,7 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
 
     QString type = KImageIO::typeForMime (saveOptions.mimeType ());
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "\tmimeType=" << saveOptions.mimeType ()
+    kDebug () << "\tmimeType=" << saveOptions.mimeType ()
                << " type=" << type << endl;
 #endif
 
@@ -498,7 +498,7 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
             *userCancelled = true;
 
     #if DEBUG_KP_DOCUMENT
-        kdDebug () << "\treturning false because of lossyPrompt" << endl;
+        kDebug () << "\treturning false because of lossyPrompt" << endl;
     #endif
         return false;
     }
@@ -561,14 +561,14 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     if (!imageToSave.save (device, type.latin1 (), quality))
     {
     #if DEBUG_KP_DOCUMENT
-        kdDebug () << "\tQImage::save() returned false" << endl;
+        kDebug () << "\tQImage::save() returned false" << endl;
     #endif
         return false;
     }
 
 
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "\tsave OK" << endl;
+    kDebug () << "\tsave OK" << endl;
 #endif
     return true;
 }
@@ -583,7 +583,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
                                    QWidget *parent)
 {
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::savePixmapToFile ("
+    kDebug () << "kpDocument::savePixmapToFile ("
                << url
                << ",overwritePrompt=" << overwritePrompt
                << ",lossyPrompt=" << lossyPrompt
@@ -604,7 +604,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         if (result != KMessageBox::Continue)
         {
         #if DEBUG_KP_DOCUMENT
-            kdDebug () << "\tuser doesn't want to overwrite" << endl;
+            kDebug () << "\tuser doesn't want to overwrite" << endl;
         #endif
 
             return false;
@@ -615,7 +615,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
     if (lossyPrompt && !lossyPromptContinue (pixmap, saveOptions, parent))
     {
     #if DEBUG_KP_DOCUMENT
-        kdDebug () << "\treturning false because of lossyPrompt" << endl;
+        kDebug () << "\treturning false because of lossyPrompt" << endl;
     #endif
         return false;
     }
@@ -632,7 +632,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         if (filename.isEmpty ())
         {
         #if DEBUG_KP_DOCUMENT
-            kdDebug () << "\treturning false because tempFile empty" << endl;
+            kDebug () << "\treturning false because tempFile empty" << endl;
         #endif
             KMessageBox::error (parent,
                                 i18n ("Could not save image - unable to create temporary file."));
@@ -656,12 +656,12 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
     #if DEBUG_KP_DOCUMENT
         if (!fileOpenOK)
         {
-            kdDebug () << "\treturning false because fileOpenOK=false"
+            kDebug () << "\treturning false because fileOpenOK=false"
                        << " errorString=" << file.errorString () << endl;
         }
         else
         {
-            kdDebug () << "\treturning false because could not save pixmap to device"
+            kDebug () << "\treturning false because could not save pixmap to device"
                        << endl;
         }
     #endif
@@ -680,7 +680,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         if (!KIO::NetAccess::upload (filename, url, parent))
         {
         #if DEBUG_KP_DOCUMENT
-            kdDebug () << "\treturning false because could not upload" << endl;
+            kDebug () << "\treturning false because could not upload" << endl;
         #endif
             KMessageBox::error (parent,
                                 i18n ("Could not save image - failed to upload."));
@@ -698,7 +698,7 @@ bool kpDocument::saveAs (const KUrl &url,
                          bool lossyPrompt)
 {
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::saveAs (" << url << ","
+    kDebug () << "kpDocument::saveAs (" << url << ","
                << saveOptions.mimeType () << ")" << endl;
 #endif
 
@@ -911,7 +911,7 @@ QPixmap kpDocument::getPixmapAt (const QRect &rect) const
 void kpDocument::setPixmapAt (const QPixmap &pixmap, const QPoint &at)
 {
 #if DEBUG_KP_DOCUMENT && 0
-    kdDebug () << "kpDocument::setPixmapAt (pixmap (w="
+    kDebug () << "kpDocument::setPixmapAt (pixmap (w="
                << pixmap.width ()
                << ",h=" << pixmap.height ()
                << "), x=" << at.x ()
@@ -965,7 +965,7 @@ void kpDocument::setPixmap (bool ofSelection, const QPixmap &pixmap)
     {
         if (!m_selection)
         {
-            kdError () << "kpDocument::setPixmap(ofSelection=true) without sel" << endl;
+            kError () << "kpDocument::setPixmap(ofSelection=true) without sel" << endl;
             return;
         }
 
@@ -997,7 +997,7 @@ kpSelection *kpDocument::selection () const
 void kpDocument::setSelection (const kpSelection &selection)
 {
 #if DEBUG_KP_DOCUMENT && 0
-    kdDebug () << "kpDocument::setSelection() sel boundingRect="
+    kDebug () << "kpDocument::setSelection() sel boundingRect="
                << selection.boundingRect ()
                << endl;
 #endif
@@ -1061,11 +1061,11 @@ void kpDocument::setSelection (const kpSelection &selection)
         {
             if (m_selection->transparency () != m_mainWindow->selectionTransparency ())
             {
-                kdDebug () << "kpDocument::setSelection() sel's transparency differs "
+                kDebug () << "kpDocument::setSelection() sel's transparency differs "
                               "from mainWindow's transparency - setting mainWindow's transparency "
                               "to sel"
                            << endl;
-                kdDebug () << "\tisOpaque: sel=" << m_selection->transparency ().isOpaque ()
+                kDebug () << "\tisOpaque: sel=" << m_selection->transparency ().isOpaque ()
                            << " mainWindow=" << m_mainWindow->selectionTransparency ().isOpaque ()
                            << endl;
                 m_mainWindow->setSelectionTransparency (m_selection->transparency ());
@@ -1075,7 +1075,7 @@ void kpDocument::setSelection (const kpSelection &selection)
         {
             if (m_selection->textStyle () != m_mainWindow->textStyle ())
             {
-                kdDebug () << "kpDocument::setSelection() sel's textStyle differs "
+                kDebug () << "kpDocument::setSelection() sel's textStyle differs "
                               "from mainWindow's textStyle - setting mainWindow's textStyle "
                               "to sel"
                            << endl;
@@ -1087,7 +1087,7 @@ void kpDocument::setSelection (const kpSelection &selection)
     updateToolsSingleKeyTriggersEnabled ();
 
 #if DEBUG_KP_DOCUMENT && 0
-    kdDebug () << "\tcheck sel " << (int *) m_selection
+    kDebug () << "\tcheck sel " << (int *) m_selection
                << " boundingRect=" << m_selection->boundingRect ()
                << endl;
 #endif
@@ -1118,7 +1118,7 @@ QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
     // must have a selection region
     if (!sel)
     {
-        kdError () << "kpDocument::getSelectedPixmap() no sel region" << endl;
+        kError () << "kpDocument::getSelectedPixmap() no sel region" << endl;
         return QPixmap ();
     }
 
@@ -1130,7 +1130,7 @@ QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
     const QRect boundingRect = sel->boundingRect ();
     if (!boundingRect.isValid ())
     {
-        kdError () << "kpDocument::getSelectedPixmap() boundingRect invalid" << endl;
+        kError () << "kpDocument::getSelectedPixmap() boundingRect invalid" << endl;
         return QPixmap ();
     }
 
@@ -1143,7 +1143,7 @@ QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
 
         if (maskBitmap.isNull ())
         {
-            kdError () << "kpDocument::getSelectedPixmap() could not get mask" << endl;
+            kError () << "kpDocument::getSelectedPixmap() could not get mask" << endl;
             return QPixmap ();
         }
     }
@@ -1181,21 +1181,21 @@ bool kpDocument::selectionPullFromDocument (const kpColor &backgroundColor)
     // must have a selection region
     if (!sel)
     {
-        kdError () << "kpDocument::selectionPullFromDocument() no sel region" << endl;
+        kError () << "kpDocument::selectionPullFromDocument() no sel region" << endl;
         return false;
     }
 
     // should not already have a pixmap
     if (sel->pixmap ())
     {
-        kdError () << "kpDocument::selectionPullFromDocument() already has pixmap" << endl;
+        kError () << "kpDocument::selectionPullFromDocument() already has pixmap" << endl;
         return false;
     }
 
     const QRect boundingRect = sel->boundingRect ();
     if (!boundingRect.isValid ())
     {
-        kdError () << "kpDocument::selectionPullFromDocument() boundingRect invalid" << endl;
+        kError () << "kpDocument::selectionPullFromDocument() boundingRect invalid" << endl;
         return false;
     }
 
@@ -1324,14 +1324,14 @@ bool kpDocument::selectionPushOntoDocument (bool useTransparentPixmap)
 QPixmap kpDocument::pixmapWithSelection () const
 {
 #if DEBUG_KP_DOCUMENT && 1
-    kdDebug () << "kpDocument::pixmapWithSelection()" << endl;
+    kDebug () << "kpDocument::pixmapWithSelection()" << endl;
 #endif
 
     // Have floating selection?
     if (m_selection && m_selection->pixmap ())
     {
     #if DEBUG_KP_DOCUMENT && 1
-        kdDebug () << "\tselection @ " << m_selection->boundingRect () << endl;
+        kDebug () << "\tselection @ " << m_selection->boundingRect () << endl;
     #endif
         QPixmap output = *m_pixmap;
 
@@ -1343,7 +1343,7 @@ QPixmap kpDocument::pixmapWithSelection () const
     else
     {
     #if DEBUG_KP_DOCUMENT && 1
-        kdDebug () << "\tno selection" << endl;
+        kDebug () << "\tno selection" << endl;
     #endif
         return *m_pixmap;
     }
@@ -1357,7 +1357,7 @@ QPixmap kpDocument::pixmapWithSelection () const
 void kpDocument::fill (const kpColor &color)
 {
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::fill ()" << endl;
+    kDebug () << "kpDocument::fill ()" << endl;
 #endif
 
     kpPixmapFX::fill (m_pixmap, color);
@@ -1367,13 +1367,13 @@ void kpDocument::fill (const kpColor &color)
 void kpDocument::resize (int w, int h, const kpColor &backgroundColor, bool fillNewAreas)
 {
 #if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::resize (" << w << "," << h << "," << fillNewAreas << ")" << endl;
+    kDebug () << "kpDocument::resize (" << w << "," << h << "," << fillNewAreas << ")" << endl;
 #endif
 
     m_oldWidth = width (), m_oldHeight = height ();
 
 #if DEBUG_KP_DOCUMENT && 1
-    kdDebug () << "\toldWidth=" << m_oldWidth
+    kDebug () << "\toldWidth=" << m_oldWidth
                << " oldHeight=" << m_oldHeight
                << endl;
 #endif

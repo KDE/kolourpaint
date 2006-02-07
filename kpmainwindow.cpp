@@ -119,7 +119,7 @@ void kpMainWindow::configSetColorSimilarity (double val)
 void kpMainWindow::readGeneralSettings ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tkpMainWindow(" << name () << ")::readGeneralSettings()" << endl;
+    kDebug () << "\tkpMainWindow(" << name () << ")::readGeneralSettings()" << endl;
 #endif
 
     KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupGeneral);
@@ -134,7 +134,7 @@ void kpMainWindow::readGeneralSettings ()
 
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\t\tGeneral Settings: firstTime=" << m_configFirstTime
+    kDebug () << "\t\tGeneral Settings: firstTime=" << m_configFirstTime
                << " showGrid=" << m_configShowGrid
                << " showPath=" << m_configShowPath
                << " colorSimilarity=" << m_configColorSimilarity
@@ -148,7 +148,7 @@ void kpMainWindow::readGeneralSettings ()
 void kpMainWindow::readThumbnailSettings ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tkpMainWindow(" << name () << ")::readThumbnailSettings()" << endl;
+    kDebug () << "\tkpMainWindow(" << name () << ")::readThumbnailSettings()" << endl;
 #endif
 
     KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupThumbnail);
@@ -160,7 +160,7 @@ void kpMainWindow::readThumbnailSettings ()
     d->m_configThumbnailShowRectangle = cfg->readBoolEntry (kpSettingThumbnailShowRectangle, true);
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\t\tThumbnail Settings: shown=" << m_configThumbnailShown
+    kDebug () << "\t\tThumbnail Settings: shown=" << m_configThumbnailShown
                << " geometry=" << m_configThumbnailGeometry
                << " zoomed=" << m_configZoomedThumbnail
                << " showRectangle=" << d->m_configThumbnailShowRectangle
@@ -172,7 +172,7 @@ void kpMainWindow::readThumbnailSettings ()
 void kpMainWindow::init ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow(" << name () << ")::init()" << endl;
+    kDebug () << "kpMainWindow(" << name () << ")::init()" << endl;
     QTime totalTime; totalTime.start ();
     QTime time; time.start ();
 #endif
@@ -202,7 +202,7 @@ void kpMainWindow::init ()
     setMinimumSize (320, 260);
     setAcceptDrops (true);
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tTIME: little init = " << time.restart () << "msec" << endl;
+    kDebug () << "\tTIME: little init = " << time.restart () << "msec" << endl;
 #endif
 
 
@@ -214,17 +214,17 @@ void kpMainWindow::init ()
     // realise what other processes have done e.g. Settings / Show Path
     KGlobal::config ()->reparseConfiguration ();
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tTIME: reparseConfig = " << time.restart () << "msec" << endl;
+    kDebug () << "\tTIME: reparseConfig = " << time.restart () << "msec" << endl;
 #endif
 
     readGeneralSettings ();
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tTIME: readGeneralSettings = " << time.restart () << "msec" << endl;
+    kDebug () << "\tTIME: readGeneralSettings = " << time.restart () << "msec" << endl;
 #endif
 
     readThumbnailSettings ();
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tTIME: readThumbnailSettings = " << time.restart () << "msec" << endl;
+    kDebug () << "\tTIME: readThumbnailSettings = " << time.restart () << "msec" << endl;
 #endif
 
 
@@ -234,17 +234,17 @@ void kpMainWindow::init ()
 
     setupActions ();
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tTIME: setupActions = " << time.restart () << "msec" << endl;
+    kDebug () << "\tTIME: setupActions = " << time.restart () << "msec" << endl;
 #endif
 
     createStatusBar ();
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tTIME: createStatusBar = " << time.restart () << "msec" << endl;
+    kDebug () << "\tTIME: createStatusBar = " << time.restart () << "msec" << endl;
 #endif
 
     createGUI ();
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tTIME: createGUI = " << time.restart () << "msec" << endl;
+    kDebug () << "\tTIME: createGUI = " << time.restart () << "msec" << endl;
 #endif
 
 
@@ -254,12 +254,12 @@ void kpMainWindow::init ()
 
     m_colorToolBar = new kpColorToolBar (this, "Color Box");
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tTIME: new kpColorToolBar = " << time.restart () << "msec" << endl;
+    kDebug () << "\tTIME: new kpColorToolBar = " << time.restart () << "msec" << endl;
 #endif
 
     createToolBox ();
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tTIME: createToolBox = " << time.restart () << "msec" << endl;
+    kDebug () << "\tTIME: createToolBox = " << time.restart () << "msec" << endl;
 #endif
 
     m_scrollView = new kpViewScrollableContainer (this, "scrollView");
@@ -280,7 +280,7 @@ void kpMainWindow::init ()
     setCentralWidget (m_scrollView);
     m_scrollView->show ();
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tTIME: m_scrollView = " << time.restart () << "msec" << endl;
+    kDebug () << "\tTIME: m_scrollView = " << time.restart () << "msec" << endl;
 #endif
 
 
@@ -296,7 +296,7 @@ void kpMainWindow::init ()
     if (m_configFirstTime)
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tfirstTime: positioning toolbars" << endl;
+        kDebug () << "\tfirstTime: positioning toolbars" << endl;
     #endif
 
         m_toolToolBar->setBarPos (KToolBar::Left);
@@ -310,7 +310,7 @@ void kpMainWindow::init ()
     }
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tall done in " << totalTime.elapsed () << "msec" << endl;
+    kDebug () << "\tall done in " << totalTime.elapsed () << "msec" << endl;
 #endif
 }
 
@@ -389,14 +389,14 @@ void kpMainWindow::enableDocumentActions (bool enable)
 bool kpMainWindow::actionsSingleKeyTriggersEnabled () const
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::actionsSingleKeyTriggersEnabled()" << endl;
+    kDebug () << "kpMainWindow::actionsSingleKeyTriggersEnabled()" << endl;
     QTime timer; timer.start ();
 #endif
 
     if (m_toolToolBar)
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\ttime=" << timer.restart () << endl;
+        kDebug () << "\ttime=" << timer.restart () << endl;
     #endif
         return m_toolToolBar->toolsSingleKeyTriggersEnabled ();
     }
@@ -411,7 +411,7 @@ bool kpMainWindow::actionsSingleKeyTriggersEnabled () const
 void kpMainWindow::enableActionsSingleKeyTriggers (bool enable)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::enableActionsSingleKeyTriggers("
+    kDebug () << "kpMainWindow::enableActionsSingleKeyTriggers("
                << enable << ")" << endl;
     QTime timer; timer.start ();
 #endif
@@ -425,7 +425,7 @@ void kpMainWindow::enableActionsSingleKeyTriggers (bool enable)
     m_actionNextToolOptionGroup2->enableSingleKeyTriggers (enable);
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\ttime=" << timer.restart () << endl;
+    kDebug () << "\ttime=" << timer.restart () << endl;
 #endif
 }
 
@@ -434,14 +434,14 @@ void kpMainWindow::enableActionsSingleKeyTriggers (bool enable)
 void kpMainWindow::setDocument (kpDocument *newDoc)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::setDocument (" << newDoc << ")" << endl;
+    kDebug () << "kpMainWindow::setDocument (" << newDoc << ")" << endl;
 #endif
 
     // is it a close operation?
     if (!newDoc)
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tdisabling actions" << endl;
+        kDebug () << "\tdisabling actions" << endl;
     #endif
 
         // sync with the bit marked "sync" below
@@ -450,7 +450,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
             m_colorToolBar->setEnabled (false);
         else
         {
-            kdError () << "kpMainWindow::setDocument() without colorToolBar"
+            kError () << "kpMainWindow::setDocument() without colorToolBar"
                        << endl;
         }
 
@@ -469,14 +469,14 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     }
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tdestroying views" << endl;
+    kDebug () << "\tdestroying views" << endl;
 #endif
 
     delete m_mainView; m_mainView = 0;
     slotDestroyThumbnail ();
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tdestroying viewManager" << endl;
+    kDebug () << "\tdestroying viewManager" << endl;
 #endif
 
     // viewManager will die and so will the selection
@@ -489,8 +489,8 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     delete m_viewManager; m_viewManager = 0;
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tdestroying document" << endl;
-    kdDebug () << "\t\tm_document=" << m_document << endl;
+    kDebug () << "\tdestroying document" << endl;
+    kDebug () << "\t\tm_document=" << m_document << endl;
 #endif
     // destroy current document
     delete m_document;
@@ -512,7 +512,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         if (m_document->mainWindow () != this)
         {
         #if DEBUG_KP_MAIN_WINDOW
-            kdDebug () << "\tchanging doc's mainWindow from "
+            kDebug () << "\tchanging doc's mainWindow from "
                        << m_document->mainWindow ()
                        << " to this="
                        << this
@@ -522,12 +522,12 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         }
 
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () <<"\tcreating viewManager" << endl;
+        kDebug () <<"\tcreating viewManager" << endl;
     #endif
         m_viewManager = new kpViewManager (this);
 
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tcreating views" << endl;
+        kDebug () << "\tcreating views" << endl;
     #endif
         m_mainView = new kpZoomedView (m_document, m_toolToolBar, m_viewManager,
                                        0/*buddyView*/,
@@ -538,12 +538,12 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
             m_scrollView->addChild (m_mainView);
         }
         else
-            kdError () << "kpMainWindow::setDocument() without scrollView" << endl;
+            kError () << "kpMainWindow::setDocument() without scrollView" << endl;
         m_viewManager->registerView (m_mainView);
         m_mainView->show ();
 
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\thooking up document signals" << endl;
+        kDebug () << "\thooking up document signals" << endl;
     #endif
 
         // Copy/Cut/Deselect/Delete
@@ -603,7 +603,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         }
         else
         {
-            kdError () << "kpMainWindow::setDocument() without commandHistory"
+            kError () << "kpMainWindow::setDocument() without commandHistory"
                        << endl;
         }
 
@@ -614,7 +614,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
                  m_viewManager, SLOT (adjustViewsToEnvironment ()));
 
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tenabling actions" << endl;
+        kDebug () << "\tenabling actions" << endl;
     #endif
 
         // sync with the bit marked "sync" above
@@ -623,7 +623,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
             m_colorToolBar->setEnabled (true);
         else
         {
-            kdError () << "kpMainWindow::setDocument() without colorToolBar"
+            kError () << "kpMainWindow::setDocument() without colorToolBar"
                        << endl;
         }
 
@@ -644,7 +644,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
             if (isShown ())
             {
             #if DEBUG_KP_MAIN_WINDOW
-                kdDebug () << "\tcreating thumbnail immediately" << endl;
+                kDebug () << "\tcreating thumbnail immediately" << endl;
             #endif
                 slotCreateThumbnail ();
             }
@@ -652,7 +652,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
             else
             {
             #if DEBUG_KP_MAIN_WINDOW
-                kdDebug () << "\tcreating thumbnail LATER" << endl;
+                kDebug () << "\tcreating thumbnail LATER" << endl;
             #endif
                 QTimer::singleShot (0, this, SLOT (slotCreateThumbnail ()));
             }
@@ -661,7 +661,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     }
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tupdating mainWindow elements" << endl;
+    kDebug () << "\tupdating mainWindow elements" << endl;
 #endif
 
     slotImageMenuUpdateDueToSelection ();
@@ -674,7 +674,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         m_commandHistory->clear ();
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tdocument and views ready to go!" << endl;
+    kDebug () << "\tdocument and views ready to go!" << endl;
 #endif
 }
 
@@ -683,7 +683,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 bool kpMainWindow::queryClose ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::queryClose()" << endl;
+    kDebug () << "kpMainWindow::queryClose()" << endl;
 #endif
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
@@ -722,7 +722,7 @@ void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
 void kpMainWindow::dropEvent (QDropEvent *e)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::dropEvent" << e->pos () << endl;
+    kDebug () << "kpMainWindow::dropEvent" << e->pos () << endl;
 #endif
 
     kpSelection sel;
@@ -747,7 +747,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         QPoint selTopLeft = KP_INVALID_POINT;
         const QPoint globalPos = QWidget::mapToGlobal (e->pos ());
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tpos toGlobal=" << globalPos << endl;
+        kDebug () << "\tpos toGlobal=" << globalPos << endl;
     #endif
 
         kpView *view = 0;
@@ -756,18 +756,18 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         {
             view = m_viewManager->viewUnderCursor ();
         #if DEBUG_KP_MAIN_WINDOW
-            kdDebug () << "\t\tviewUnderCursor=" << view << endl;
+            kDebug () << "\t\tviewUnderCursor=" << view << endl;
         #endif
             if (!view)
             {
                 // HACK: see kpViewManager::setViewUnderCursor() to see why
                 //       it's not reliable
             #if DEBUG_KP_MAIN_WINDOW
-                kdDebug () << "\t\tattempting to discover view" << endl;
+                kDebug () << "\t\tattempting to discover view" << endl;
 
                 if (m_mainView && m_scrollView)
                 {
-                    kdDebug () << "\t\t\tmainView->globalRect="
+                    kDebug () << "\t\t\tmainView->globalRect="
                             << kpWidgetMapper::toGlobal (m_mainView, m_mainView->rect ())
                             << " scrollView->globalRect="
                             << kpWidgetMapper::toGlobal (m_scrollView,
@@ -821,8 +821,8 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 void kpMainWindow::slotScrollViewAboutToScroll ()
 {
 #if DEBUG_KP_MAIN_WINDOW && 0
-    kdDebug () << "kpMainWindow::slotScrollViewAboutToScroll()" << endl;
-    kdDebug () << "\tfastUpdates=" << viewManager ()->fastUpdates ()
+    kDebug () << "kpMainWindow::slotScrollViewAboutToScroll()" << endl;
+    kDebug () << "\tfastUpdates=" << viewManager ()->fastUpdates ()
                << " queueUpdates=" << viewManager ()->queueUpdates ()
                << endl;
 #endif
@@ -834,7 +834,7 @@ void kpMainWindow::slotScrollViewAboutToScroll ()
 void kpMainWindow::slotScrollViewAfterScroll ()
 {
 #if DEBUG_KP_MAIN_WINDOW && 0
-    kdDebug () << "kpMainWindow::slotScrollViewAfterScroll() tool="
+    kDebug () << "kpMainWindow::slotScrollViewAfterScroll() tool="
                << tool () << endl;
 #endif
 

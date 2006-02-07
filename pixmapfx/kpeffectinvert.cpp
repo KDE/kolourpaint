@@ -93,7 +93,7 @@ void kpEffectInvertCommand::apply (QImage *destImagePtr, int channels)
                        (channels & Blue) ? 0xFF : 0,
                        0/*don't invert alpha*/);
 #if DEBUG_KP_EFFECT_INVERT
-    kdDebug () << "kpEffectInvertCommand::apply(channels=" << channels
+    kDebug () << "kpEffectInvertCommand::apply(channels=" << channels
                << ") mask=" << (int *) mask
                << endl;
 #endif
@@ -214,7 +214,7 @@ kpEffectInvertWidget::~kpEffectInvertWidget ()
 int kpEffectInvertWidget::channels () const
 {
 #if DEBUG_KP_EFFECT_INVERT
-    kdDebug () << "kpEffectInvertWidget::channels()"
+    kDebug () << "kpEffectInvertWidget::channels()"
                << " isChecked: r=" << m_redCheckBox->isChecked ()
                << " g=" << m_greenCheckBox->isChecked ()
                << " b=" << m_blueCheckBox->isChecked ()
@@ -235,7 +235,7 @@ int kpEffectInvertWidget::channels () const
 
 
 #if DEBUG_KP_EFFECT_INVERT
-    kdDebug () << "\treturning channels=" << (int *) channels << endl;
+    kDebug () << "\treturning channels=" << (int *) channels << endl;
 #endif
     return channels;
 }

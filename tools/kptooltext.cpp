@@ -66,7 +66,7 @@ kpToolText::~kpToolText ()
 void kpToolText::begin ()
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kdDebug () << "kpToolText::begin()" << endl;
+    kDebug () << "kpToolText::begin()" << endl;
 #endif
 
     mainWindow ()->enableTextToolBarActions (true);
@@ -84,7 +84,7 @@ void kpToolText::begin ()
 void kpToolText::end ()
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kdDebug () << "kpToolText::end()" << endl;
+    kDebug () << "kpToolText::end()" << endl;
 #endif
 
     kpToolSelection::end ();
@@ -114,7 +114,7 @@ bool kpToolText::hasBegunShape () const
 void kpToolText::cancelShape ()
 {
 #if DEBUG_KP_TOOL_TEXT
-    kdDebug () << "kpToolText::cancelShape()" << endl;
+    kDebug () << "kpToolText::cancelShape()" << endl;
 #endif
 
     if (m_dragType != Unknown)
@@ -136,7 +136,7 @@ void kpToolText::cancelShape ()
 void kpToolText::endShape (const QPoint &thisPoint, const QRect &normalizedRect)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kdDebug () << "kpToolText::endShape()" << endl;
+    kDebug () << "kpToolText::endShape()" << endl;
 #endif
 
     if (m_dragType != Unknown)
@@ -157,7 +157,7 @@ void kpToolText::endShape (const QPoint &thisPoint, const QRect &normalizedRect)
 void kpToolText::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kdDebug () << "kpToolText::keyPressEvent(e->text='" << e->text () << "')" << endl;
+    kDebug () << "kpToolText::keyPressEvent(e->text='" << e->text () << "')" << endl;
 #endif
 
 
@@ -167,7 +167,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     if (hasBegunDraw ())
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\talready began draw with mouse - passing on event to kpTool" << endl;
+        kDebug () << "\talready began draw with mouse - passing on event to kpTool" << endl;
     #endif
         kpToolSelection::keyPressEvent (e);
         return;
@@ -179,7 +179,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     if (!sel || !sel->isText ())
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\tno text sel - passing on event to kpTool" << endl;
+        kDebug () << "\tno text sel - passing on event to kpTool" << endl;
     #endif
         //if (hasBegunShape ())
         //    endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
@@ -198,7 +198,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     if (e->key () == Qt::Key_Enter || e->key () == Qt::Key_Return)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\tenter pressed" << endl;
+        kDebug () << "\tenter pressed" << endl;
     #endif
         if (!m_enterCommand)
         {
@@ -219,7 +219,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     else if (e->key () == Qt::Key_Backspace)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\tbackspace pressed" << endl;
+        kDebug () << "\tbackspace pressed" << endl;
     #endif
 
         if (!m_backspaceCommand)
@@ -240,7 +240,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     else if (e->key () == Qt::Key_Delete)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\tdelete pressed" << endl;
+        kDebug () << "\tdelete pressed" << endl;
     #endif
 
         if (!m_deleteCommand)
@@ -261,7 +261,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     else if (e->key () == Qt::Key_Up)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\tup pressed" << endl;
+        kDebug () << "\tup pressed" << endl;
     #endif
 
         if (hasBegunShape ())
@@ -279,7 +279,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     else if (e->key () == Qt::Key_Down)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\tdown pressed" << endl;
+        kDebug () << "\tdown pressed" << endl;
     #endif
 
         if (hasBegunShape ())
@@ -297,7 +297,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     else if (e->key () == Qt::Key_Left)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\tleft pressed" << endl;
+        kDebug () << "\tleft pressed" << endl;
     #endif
 
     #define MOVE_CURSOR_LEFT()                                \
@@ -323,7 +323,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         if ((e->state () & Qt::ControlModifier) == 0)
         {
         #if DEBUG_KP_TOOL_TEXT
-            kdDebug () << "\tmove single char" << endl;
+            kDebug () << "\tmove single char" << endl;
         #endif
 
             MOVE_CURSOR_LEFT ();
@@ -332,7 +332,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         else
         {
         #if DEBUG_KP_TOOL_TEXT
-            kdDebug () << "\tmove to start of word" << endl;
+            kDebug () << "\tmove to start of word" << endl;
         #endif
 
             // (these comments will exclude the row=0,col=0 boundary case)
@@ -372,7 +372,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     else if (e->key () == Qt::Key_Right)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\tright pressed" << endl;
+        kDebug () << "\tright pressed" << endl;
     #endif
 
     #define MOVE_CURSOR_RIGHT()                                 \
@@ -398,7 +398,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         if ((e->state () & Qt::ControlModifier) == 0)
         {
         #if DEBUG_KP_TOOL_TEXT
-            kdDebug () << "\tmove single char" << endl;
+            kDebug () << "\tmove single char" << endl;
         #endif
 
             MOVE_CURSOR_RIGHT ();
@@ -407,7 +407,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         else
         {
         #if DEBUG_KP_TOOL_TEXT
-            kdDebug () << "\tmove to start of word" << endl;
+            kDebug () << "\tmove to start of word" << endl;
         #endif
 
             // (these comments will exclude the last row,end col boundary case)
@@ -443,7 +443,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     else if (e->key () == Qt::Key_Home)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\thome pressed" << endl;
+        kDebug () << "\thome pressed" << endl;
     #endif
 
         if (hasBegunShape ())
@@ -461,7 +461,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     else if (e->key () == Qt::Key_End)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\tend pressed" << endl;
+        kDebug () << "\tend pressed" << endl;
     #endif
 
         if (hasBegunShape ())
@@ -479,7 +479,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     else
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\ttext='" << e->text () << "'" << endl;
+        kDebug () << "\ttext='" << e->text () << "'" << endl;
     #endif
         QString usableText;
         for (int i = 0; i < (int) e->text ().length (); i++)
@@ -488,7 +488,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
                 usableText += e->text ().at (i);
         }
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\tusableText='" << usableText << "'" << endl;
+        kDebug () << "\tusableText='" << usableText << "'" << endl;
     #endif
 
         if (usableText.length () > 0)
@@ -516,7 +516,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     if (!e->isAccepted ())
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\tkey processing did not accept (text was '"
+        kDebug () << "\tkey processing did not accept (text was '"
                    << e->text ()
                    << "') - passing on event to kpToolSelection"
                    << endl;
@@ -532,7 +532,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
 void kpToolText::imStartEvent (QIMEvent *e)
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kdDebug () << "kpToolText::imStartEvent() text='" << e->text ()
+    kDebug () << "kpToolText::imStartEvent() text='" << e->text ()
                << " cursorPos=" << e->cursorPos ()
                << " selectionLength=" << e->selectionLength ()
                << endl;
@@ -553,7 +553,7 @@ void kpToolText::imStartEvent (QIMEvent *e)
 void kpToolText::imComposeEvent (QIMEvent *e)
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kdDebug () << "kpToolText::imComposeEvent() text='" << e->text ()
+    kDebug () << "kpToolText::imComposeEvent() text='" << e->text ()
                << " cursorPos=" << e->cursorPos ()
                << " selectionLength=" << e->selectionLength ()
                << endl;
@@ -619,7 +619,7 @@ void kpToolText::imComposeEvent (QIMEvent *e)
 void kpToolText::imEndEvent (QIMEvent *e)
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kdDebug () << "kpToolText::imEndEvent() text='" << e->text ()
+    kDebug () << "kpToolText::imEndEvent() text='" << e->text ()
                << " cursorPos=" << e->cursorPos ()
                << " selectionLength=" << e->selectionLength ()
                << endl;
@@ -682,7 +682,7 @@ bool kpToolText::shouldChangeTextStyle () const
     if (mainWindow ()->settingTextStyle ())
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\trecursion - abort setting text style: "
+        kDebug () << "\trecursion - abort setting text style: "
                    << mainWindow ()->settingTextStyle ()
                    << endl;
     #endif
@@ -693,7 +693,7 @@ bool kpToolText::shouldChangeTextStyle () const
         !document ()->selection ()->isText ())
     {
     #if DEBUG_KP_TOOL_TEXT
-        kdDebug () << "\tno text selection - abort setting text style" << endl;
+        kDebug () << "\tno text selection - abort setting text style" << endl;
     #endif
         return false;
     }
@@ -707,7 +707,7 @@ void kpToolText::changeTextStyle (const QString &name,
                                   const kpTextStyle &oldTextStyle)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kdDebug () << "kpToolText::changeTextStyle(" << name << ")" << endl;
+    kDebug () << "kpToolText::changeTextStyle(" << name << ")" << endl;
 #endif
 
     if (hasBegunShape ())
@@ -726,7 +726,7 @@ void kpToolText::changeTextStyle (const QString &name,
 void kpToolText::slotIsOpaqueChanged ()
 {
 #if DEBUG_KP_TOOL_TEXT
-    kdDebug () << "kpToolText::slotIsOpaqueChanged()" << endl;
+    kDebug () << "kpToolText::slotIsOpaqueChanged()" << endl;
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -748,7 +748,7 @@ void kpToolText::slotColorsSwapped (const kpColor &newForegroundColor,
                                     const kpColor &newBackgroundColor)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kdDebug () << "kpToolText::slotColorsSwapped()" << endl;
+    kDebug () << "kpToolText::slotColorsSwapped()" << endl;
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -768,7 +768,7 @@ void kpToolText::slotColorsSwapped (const kpColor &newForegroundColor,
 void kpToolText::slotForegroundColorChanged (const kpColor & /*color*/)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kdDebug () << "kpToolText::slotForegroundColorChanged()" << endl;
+    kDebug () << "kpToolText::slotForegroundColorChanged()" << endl;
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -787,7 +787,7 @@ void kpToolText::slotForegroundColorChanged (const kpColor & /*color*/)
 void kpToolText::slotBackgroundColorChanged (const kpColor & /*color*/)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kdDebug () << "kpToolText::slotBackgroundColorChanged()" << endl;
+    kDebug () << "kpToolText::slotBackgroundColorChanged()" << endl;
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -815,7 +815,7 @@ void kpToolText::slotFontFamilyChanged (const QString &fontFamily,
                                         const QString &oldFontFamily)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kdDebug () << "kpToolText::slotFontFamilyChanged() new="
+    kDebug () << "kpToolText::slotFontFamilyChanged() new="
                << fontFamily
                << " old="
                << oldFontFamily
@@ -838,7 +838,7 @@ void kpToolText::slotFontFamilyChanged (const QString &fontFamily,
 void kpToolText::slotFontSizeChanged (int fontSize, int oldFontSize)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kdDebug () << "kpToolText::slotFontSizeChanged() new="
+    kDebug () << "kpToolText::slotFontSizeChanged() new="
                << fontSize
                << " old="
                << oldFontSize
@@ -862,7 +862,7 @@ void kpToolText::slotFontSizeChanged (int fontSize, int oldFontSize)
 void kpToolText::slotBoldChanged (bool isBold)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kdDebug () << "kpToolText::slotBoldChanged(" << isBold << ")" << endl;
+    kDebug () << "kpToolText::slotBoldChanged(" << isBold << ")" << endl;
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -881,7 +881,7 @@ void kpToolText::slotBoldChanged (bool isBold)
 void kpToolText::slotItalicChanged (bool isItalic)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kdDebug () << "kpToolText::slotItalicChanged(" << isItalic << ")" << endl;
+    kDebug () << "kpToolText::slotItalicChanged(" << isItalic << ")" << endl;
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -900,7 +900,7 @@ void kpToolText::slotItalicChanged (bool isItalic)
 void kpToolText::slotUnderlineChanged (bool isUnderline)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kdDebug () << "kpToolText::slotUnderlineChanged(" << isUnderline << ")" << endl;
+    kDebug () << "kpToolText::slotUnderlineChanged(" << isUnderline << ")" << endl;
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -919,7 +919,7 @@ void kpToolText::slotUnderlineChanged (bool isUnderline)
 void kpToolText::slotStrikeThruChanged (bool isStrikeThru)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kdDebug () << "kpToolText::slotStrikeThruChanged(" << isStrikeThru << ")" << endl;
+    kDebug () << "kpToolText::slotStrikeThruChanged(" << isStrikeThru << ")" << endl;
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -964,7 +964,7 @@ int kpToolTextChangeStyleCommand::size () const
 void kpToolTextChangeStyleCommand::execute ()
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kdDebug () << "kpToolTextChangeStyleCommand::execute()"
+    kDebug () << "kpToolTextChangeStyleCommand::execute()"
                << " font=" << m_newTextStyle.fontFamily ()
                << " fontSize=" << m_newTextStyle.fontSize ()
                << " isBold=" << m_newTextStyle.isBold ()
@@ -978,14 +978,14 @@ void kpToolTextChangeStyleCommand::execute ()
     if (selection ())
         selection ()->setTextStyle (m_newTextStyle);
     else
-        kdError () << "kpToolTextChangeStyleCommand::execute() without sel" << endl;
+        kError () << "kpToolTextChangeStyleCommand::execute() without sel" << endl;
 }
 
 // public virtual [base kpCommand]
 void kpToolTextChangeStyleCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kdDebug () << "kpToolTextChangeStyleCommand::unexecute()"
+    kDebug () << "kpToolTextChangeStyleCommand::unexecute()"
                << " font=" << m_newTextStyle.fontFamily ()
                << " fontSize=" << m_newTextStyle.fontSize ()
                << " isBold=" << m_newTextStyle.isBold ()
@@ -999,7 +999,7 @@ void kpToolTextChangeStyleCommand::unexecute ()
     if (selection ())
         selection ()->setTextStyle (m_oldTextStyle);
     else
-        kdError () << "kpToolTextChangeStyleCommand::unexecute() without sel" << endl;
+        kError () << "kpToolTextChangeStyleCommand::unexecute() without sel" << endl;
 }
 
 
@@ -1145,7 +1145,7 @@ void kpToolTextEnterCommand::unexecute ()
     {
         if (m_col != 0)
         {
-            kdError () << "kpToolTextEnterCommand::unexecute() col=" << m_col << endl;
+            kError () << "kpToolTextEnterCommand::unexecute() col=" << m_col << endl;
             break;
         }
 

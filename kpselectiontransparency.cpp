@@ -61,13 +61,13 @@ kpSelectionTransparency::kpSelectionTransparency (bool isOpaque, const kpColor &
 bool kpSelectionTransparency::operator== (const kpSelectionTransparency &rhs) const
 {
 #if DEBUG_KP_SELECTION_TRANSPARENCY && 0
-    kdDebug () << "kpSelectionTransparency::operator==()" << endl;
+    kDebug () << "kpSelectionTransparency::operator==()" << endl;
 #endif
     
     if (m_isOpaque != rhs.m_isOpaque)
     {
     #if DEBUG_KP_SELECTION_TRANSPARENCY && 0
-        kdDebug () << "\tdifferent opacity: lhs=" << m_isOpaque
+        kDebug () << "\tdifferent opacity: lhs=" << m_isOpaque
                    << " rhs=" << rhs.m_isOpaque
                    << endl;
     #endif
@@ -77,16 +77,16 @@ bool kpSelectionTransparency::operator== (const kpSelectionTransparency &rhs) co
     if (m_isOpaque)
     {
     #if DEBUG_KP_SELECTION_TRANSPARENCY && 0
-        kdDebug () << "\tboth opaque - eq" << endl;
+        kDebug () << "\tboth opaque - eq" << endl;
     #endif
         return true;
     }
 
 #if DEBUG_KP_SELECTION_TRANSPARENCY && 0
-    kdDebug () << "\tcolours: lhs=" << (int *) m_transparentColor.toQRgb ()
+    kDebug () << "\tcolours: lhs=" << (int *) m_transparentColor.toQRgb ()
                << " rhs=" << (int *) rhs.m_transparentColor.toQRgb ()
                << endl;
-    kdDebug () << "\tcolour similarity: lhs=" << m_colorSimilarity
+    kDebug () << "\tcolour similarity: lhs=" << m_colorSimilarity
                << " rhs=" << rhs.m_colorSimilarity
                << endl;
 #endif
@@ -135,8 +135,8 @@ kpColor kpSelectionTransparency::transparentColor () const
 {
     if (m_isOpaque)
     {
-        // There are legitimate uses for this so no kdError()
-        kdDebug () << "kpSelectionTransparency::transparentColor() "
+        // There are legitimate uses for this so no kError()
+        kDebug () << "kpSelectionTransparency::transparentColor() "
                       "getting transparent color even though opaque" << endl;
     }
 
@@ -156,7 +156,7 @@ double kpSelectionTransparency::colorSimilarity () const
     if (m_colorSimilarity < 0 ||
         m_colorSimilarity > kpColorSimilarityDialog::maximumColorSimilarity)
     {
-        kdError () << "kpSelectionTransparency::colorSimilarity() invalid colorSimilarity" << endl;
+        kError () << "kpSelectionTransparency::colorSimilarity() invalid colorSimilarity" << endl;
         return 0;
     }
 

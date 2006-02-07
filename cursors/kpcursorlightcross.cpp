@@ -83,7 +83,7 @@ static void setPixel (unsigned char *colorBitmap,
 const QCursor *kpMakeCursorLightCross ()
 {
 #if DEBUG_KP_CURSOR_LIGHT_CROSS
-    kdDebug () << "kpMakeCursorLightCross() " << endl;
+    kDebug () << "kpMakeCursorLightCross() " << endl;
 #endif
 
     const int side = 24;

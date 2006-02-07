@@ -96,7 +96,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
         buddyViewScrollableContainer ()->contentsYSoon ();
 
 #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
-    kdDebug () << "kpUnzoomedThumbnailView(" << name ()
+    kDebug () << "kpUnzoomedThumbnailView(" << name ()
                << ")::adjustToEnvironment("
                << scrollViewContentsX
                << ","
@@ -114,7 +114,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
         x = buddyView ()->transformViewToDocX (scrollViewContentsX);
         const int rightMostAllowedX = QMAX (0, document ()->width () - width ());
     #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
-        kdDebug () << "\tdocX=" << x
+        kDebug () << "\tdocX=" << x
                 << " docWidth=" << document ()->width ()
                 << " rightMostAllowedX=" << rightMostAllowedX
                 << endl;
@@ -137,7 +137,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
         y = buddyView ()->transformViewToDocY (scrollViewContentsY);
         const int bottomMostAllowedY = QMAX (0, document ()->height () - height ());
     #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
-        kdDebug () << "\tdocY=" << y
+        kDebug () << "\tdocY=" << y
                     << " docHeight=" << document ()->height ()
                     << " bottomMostAllowedY=" << bottomMostAllowedY
                     << endl;
@@ -167,7 +167,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
                QMIN (buddyView ()->height (), buddyViewScrollableContainer ()->visibleHeight ())));
 
     x = docRect.x () - (width () - docRect.width ()) / 2;
-    kdDebug () << "\tnew suggest x=" << x << endl;
+    kDebug () << "\tnew suggest x=" << x << endl;
     const int rightMostAllowedX = QMAX (0, document ()->width () - width ());
     if (x < 0)
         x = 0;
@@ -175,7 +175,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
         x = rightMostAllowedX;
 
     y = docRect.y () - (height () - docRect.height ()) / 2;
-    kdDebug () << "\tnew suggest y=" << y << endl;
+    kDebug () << "\tnew suggest y=" << y << endl;
     const int bottomMostAllowedY = QMAX (0, document ()->height () - height ());
     if (y < 0)
         y = 0;

@@ -87,7 +87,7 @@ kpToolSelection::~kpToolSelection ()
 void kpToolSelection::pushOntoDocument ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "kpToolSelection::pushOntoDocument() CALLED" << endl;
+    kDebug () << "kpToolSelection::pushOntoDocument() CALLED" << endl;
 #endif
     mainWindow ()->slotDeselect ();
 }
@@ -128,7 +128,7 @@ bool kpToolSelection::onSelectionToSelectText () const
 QString kpToolSelection::haventBegunDrawUserMessage () const
 {
 #if DEBUG_KP_TOOL_SELECTION && 0
-    kdDebug () << "kpToolSelection::haventBegunDrawUserMessage()"
+    kDebug () << "kpToolSelection::haventBegunDrawUserMessage()"
                   " cancelledShapeButStillHoldingButtons="
                << m_cancelledShapeButStillHoldingButtons
                << endl;
@@ -173,7 +173,7 @@ QString kpToolSelection::haventBegunDrawUserMessage () const
 void kpToolSelection::begin ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelection::begin()" << endl;
+    kDebug () << "kpToolSelection::begin()" << endl;
 #endif
 
     kpToolToolBar *tb = toolToolBar ();
@@ -221,7 +221,7 @@ void kpToolSelection::begin ()
 void kpToolSelection::end ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelection::end()" << endl;
+    kDebug () << "kpToolSelection::end()" << endl;
 #endif
 
     if (document ()->selection ())
@@ -241,7 +241,7 @@ void kpToolSelection::end ()
 void kpToolSelection::reselect ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelection::reselect()" << endl;
+    kDebug () << "kpToolSelection::reselect()" << endl;
 #endif
 
     if (document ()->selection ())
@@ -253,7 +253,7 @@ void kpToolSelection::reselect ()
 void kpToolSelection::beginDraw ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelection::beginDraw() m_startPoint="
+    kDebug () << "kpToolSelection::beginDraw() m_startPoint="
                << m_startPoint
                << " QCursor::pos() view startPoint="
                << m_viewUnderStartPoint->mapFromGlobal (QCursor::pos ())
@@ -282,14 +282,14 @@ void kpToolSelection::beginDraw ()
     if (sel)
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "\thas sel region rect=" << sel->boundingRect () << endl;
+        kDebug () << "\thas sel region rect=" << sel->boundingRect () << endl;
     #endif
         QRect selectionRect = sel->boundingRect ();
 
         if (onSelectionResizeHandle () && !controlOrShiftPressed ())
         {
         #if DEBUG_KP_TOOL_SELECTION
-            kdDebug () << "\t\tis resize/scale" << endl;
+            kDebug () << "\t\tis resize/scale" << endl;
         #endif
 
             m_startDragFromSelectionTopLeft = m_currentPoint - selectionRect.topLeft ();
@@ -309,7 +309,7 @@ void kpToolSelection::beginDraw ()
             if (m_mode == Text && onSelectionToSelectText () && !controlOrShiftPressed ())
             {
             #if DEBUG_KP_TOOL_SELECTION
-                kdDebug () << "\t\tis select cursor pos" << endl;
+                kDebug () << "\t\tis select cursor pos" << endl;
             #endif
 
                 m_dragType = SelectText;
@@ -320,7 +320,7 @@ void kpToolSelection::beginDraw ()
             else
             {
             #if DEBUG_KP_TOOL_SELECTION
-                kdDebug () << "\t\tis move" << endl;
+                kDebug () << "\t\tis move" << endl;
             #endif
 
                 m_startDragFromSelectionTopLeft = m_currentPoint - selectionRect.topLeft ();
@@ -341,7 +341,7 @@ void kpToolSelection::beginDraw ()
         else
         {
         #if DEBUG_KP_TOOL_SELECTION
-            kdDebug () << "\t\tis new sel" << endl;
+            kDebug () << "\t\tis new sel" << endl;
         #endif
 
             pushOntoDocument ();
@@ -373,7 +373,7 @@ void kpToolSelection::beginDraw ()
 const QCursor &kpToolSelection::cursor () const
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "kpToolSelection::cursor()"
+    kDebug () << "kpToolSelection::cursor()"
                << " m_currentPoint=" << m_currentPoint
                << " QCursor::pos() view under cursor="
                << (viewUnderCursor () ?
@@ -388,7 +388,7 @@ const QCursor &kpToolSelection::cursor () const
     if (sel && onSelectionResizeHandle () && !controlOrShiftPressed ())
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
-        kdDebug () << "\tonSelectionResizeHandle="
+        kDebug () << "\tonSelectionResizeHandle="
                    << onSelectionResizeHandle () << endl;
     #endif
         switch (onSelectionResizeHandle ())
@@ -415,7 +415,7 @@ const QCursor &kpToolSelection::cursor () const
     else if (sel && sel->contains (m_currentPoint))
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
-        kdDebug () << "\tsel contains currentPoint; selecting text? "
+        kDebug () << "\tsel contains currentPoint; selecting text? "
                    << onSelectionToSelectText () << endl;
     #endif
 
@@ -427,7 +427,7 @@ const QCursor &kpToolSelection::cursor () const
     else
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
-        kdDebug () << "\tnot on sel" << endl;
+        kDebug () << "\tnot on sel" << endl;
     #endif
         return Qt::CrossCursor;
     }
@@ -437,7 +437,7 @@ const QCursor &kpToolSelection::cursor () const
 void kpToolSelection::hover (const QPoint &point)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "kpToolSelection::hover" << point << endl;
+    kDebug () << "kpToolSelection::hover" << point << endl;
 #endif
 
     viewManager ()->setCursor (cursor ());
@@ -503,7 +503,7 @@ void kpToolSelection::slotRMBMoveUpdateGUI ()
 void kpToolSelection::delayedDraw ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "kpToolSelection::delayedDraw() hasBegunDraw="
+    kDebug () << "kpToolSelection::delayedDraw() hasBegunDraw="
                << hasBegunDraw ()
                << " currentPoint=" << m_currentPoint
                << " lastPoint=" << m_lastPoint
@@ -529,7 +529,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
     QRect normalizedRect = inNormalizedRect;
 
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "kpToolSelection::draw" << thisPoint
+    kDebug () << "kpToolSelection::draw" << thisPoint
                << " startPoint=" << m_startPoint
                << " normalizedRect=" << normalizedRect << endl;
 #endif
@@ -546,9 +546,9 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
     if (m_dragType == Create)
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
-        kdDebug () << "\tnot moving - resizing rect to" << normalizedRect
+        kDebug () << "\tnot moving - resizing rect to" << normalizedRect
                    << endl;
-        kdDebug () << "\t\tcreateNOPTimer->isActive()="
+        kDebug () << "\t\tcreateNOPTimer->isActive()="
                    << m_createNOPTimer->isActive ()
                    << " viewManhattanLength from startPoint="
                    << m_viewUnderStartPoint->transformDocToViewX ((thisPoint - m_startPoint).manhattanLength ())
@@ -560,14 +560,14 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             if (m_viewUnderStartPoint->transformDocToViewX ((thisPoint - m_startPoint).manhattanLength ()) <= 6)
             {
             #if DEBUG_KP_TOOL_SELECTION && 1
-                kdDebug () << "\t\tsuppress accidental movement" << endl;
+                kDebug () << "\t\tsuppress accidental movement" << endl;
             #endif
                 thisPoint = m_startPoint;
             }
             else
             {
             #if DEBUG_KP_TOOL_SELECTION && 1
-                kdDebug () << "\t\tit's a \"big\" intended move - stop timer" << endl;
+                kDebug () << "\t\tit's a \"big\" intended move - stop timer" << endl;
             #endif
                 m_createNOPTimer->stop ();
             }
@@ -580,7 +580,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             if (m_mode != kpToolSelection::Text)
             {
             #if DEBUG_KP_TOOL_SELECTION && 1
-                kdDebug () << "\tnon-text NOP - return" << endl;
+                kDebug () << "\tnon-text NOP - return" << endl;
             #endif
                 setUserShapePoints (thisPoint);
                 return;
@@ -591,7 +591,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
                 if (m_hadSelectionBeforeDrag)
                 {
                 #if DEBUG_KP_TOOL_SELECTION && 1
-                    kdDebug () << "\ttext box deselect - NOP - return" << endl;
+                    kDebug () << "\ttext box deselect - NOP - return" << endl;
                 #endif
                     setUserShapePoints (thisPoint);
                     return;
@@ -635,7 +635,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             if (!m_dragHasBegun && thisPoint == m_startPoint)
             {
             #if DEBUG_KP_TOOL_SELECTION && 1
-                kdDebug () << "\tclick creating text box" << endl;
+                kDebug () << "\tclick creating text box" << endl;
             #endif
 
                 // (Click creating text box with RMB would not be obvious
@@ -684,7 +684,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             else
             {
             #if DEBUG_KP_TOOL_SELECTION && 1
-                kdDebug () << "\tdrag creating text box" << endl;
+                kDebug () << "\tdrag creating text box" << endl;
             #endif
                 minimumWidth = kpSelection::minimumWidthForTextStyle (textStyle);
                 minimumHeight = kpSelection::minimumHeightForTextStyle (textStyle);
@@ -707,7 +707,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
                     normalizedRect.setY (normalizedRect.bottom () - minimumHeight + 1);
             }
         #if DEBUG_KP_TOOL_SELECTION && 1
-            kdDebug () << "\t\tnormalizedRect=" << normalizedRect
+            kDebug () << "\t\tnormalizedRect=" << normalizedRect
                        << " kpSelection::preferredMinimumSize="
                            << QSize (minimumWidth, minimumHeight)
                        << endl;
@@ -772,7 +772,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
 
             document ()->setSelection (kpSelection (points, mainWindow ()->selectionTransparency ()));
         #if DEBUG_KP_TOOL_SELECTION && 1
-            kdDebug () << "\t\tfreeform; #points=" << document ()->selection ()->points ().count () << endl;
+            kDebug () << "\t\tfreeform; #points=" << document ()->selection ()->points ().count () << endl;
         #endif
 
             setUserShapePoints (m_currentPoint);
@@ -784,7 +784,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
     else if (m_dragType == Move)
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
-       kdDebug () << "\tmoving selection" << endl;
+       kDebug () << "\tmoving selection" << endl;
     #endif
 
         kpSelection *sel = document ()->selection ();
@@ -795,7 +795,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
                                      sel->height ());
 
     #if DEBUG_KP_TOOL_SELECTION && 1
-        kdDebug () << "\t\tstartPoint=" << m_startPoint
+        kDebug () << "\t\tstartPoint=" << m_startPoint
                    << " thisPoint=" << thisPoint
                    << " startDragFromSel=" << m_startDragFromSelectionTopLeft
                    << " targetSelRect=" << targetSelRect
@@ -816,7 +816,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             targetSelRect.moveBy (0, document ()->height () - targetSelRect.top () - 1);
 
     #if DEBUG_KP_TOOL_SELECTION && 1
-        kdDebug () << "\t\t\tafter ensure sel rect clickable=" << targetSelRect << endl;
+        kDebug () << "\t\t\tafter ensure sel rect clickable=" << targetSelRect << endl;
     #endif
 
 
@@ -824,7 +824,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             targetSelRect.topLeft () + m_startDragFromSelectionTopLeft == m_startPoint)
         {
         #if DEBUG_KP_TOOL_SELECTION && 1
-            kdDebug () << "\t\t\t\tnop" << endl;
+            kDebug () << "\t\t\t\tnop" << endl;
         #endif
 
 
@@ -888,7 +888,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
     else if (m_dragType == ResizeScale)
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
-        kdDebug () << "\tresize/scale" << endl;
+        kDebug () << "\tresize/scale" << endl;
     #endif
 
         kpSelection *sel = document ()->selection ();
@@ -896,7 +896,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
         if (!m_dragHasBegun && thisPoint == m_startPoint)
         {
         #if DEBUG_KP_TOOL_SELECTION && 1
-            kdDebug () << "\t\tnop" << endl;
+            kDebug () << "\t\tnop" << endl;
         #endif
 
             setUserShapePoints (QPoint (sel->width (), sel->height ()));
@@ -949,7 +949,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
         }
 
     #if DEBUG_KP_TOOL_SELECTION && 1
-        kdDebug () << "\t\tnewX=" << newX
+        kDebug () << "\t\tnewX=" << newX
                    << " newY=" << newY
                    << " newWidth=" << newWidth
                    << " newHeight=" << newHeight
@@ -980,7 +980,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
 void kpToolSelection::cancelShape ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelection::cancelShape() mouseButton=" << m_mouseButton << endl;
+    kDebug () << "kpToolSelection::cancelShape() mouseButton=" << m_mouseButton << endl;
 #endif
 
     m_createNOPTimer->stop ();
@@ -992,13 +992,13 @@ void kpToolSelection::cancelShape ()
         if (m_dragType == Move)
         {
         #if DEBUG_KP_TOOL_SELECTION
-            kdDebug () << "\twas drag moving - undo drag and undo acquire" << endl;
+            kDebug () << "\twas drag moving - undo drag and undo acquire" << endl;
         #endif
 
             if (m_currentMoveCommand)
             {
             #if DEBUG_KP_TOOL_SELECTION
-                kdDebug () << "\t\tundo currentMoveCommand" << endl;
+                kDebug () << "\t\tundo currentMoveCommand" << endl;
             #endif
                 m_currentMoveCommand->finalize ();
                 m_currentMoveCommand->unexecute ();
@@ -1012,7 +1012,7 @@ void kpToolSelection::cancelShape ()
         else if (m_dragType == Create)
         {
         #if DEBUG_KP_TOOL_SELECTION
-            kdDebug () << "\twas creating sel - kill" << endl;
+            kDebug () << "\twas creating sel - kill" << endl;
         #endif
 
             // TODO: should we give the user back the selection s/he had before (if any)?
@@ -1027,13 +1027,13 @@ void kpToolSelection::cancelShape ()
         else if (m_dragType == ResizeScale)
         {
         #if DEBUG_KP_TOOL_SELECTION
-            kdDebug () << "\twas resize/scale sel - kill" << endl;
+            kDebug () << "\twas resize/scale sel - kill" << endl;
         #endif
 
             if (m_currentResizeScaleCommand)
             {
             #if DEBUG_KP_TOOL_SELECTION
-                kdDebug () << "\t\tundo currentResizeScaleCommand" << endl;
+                kDebug () << "\t\tundo currentResizeScaleCommand" << endl;
             #endif
                 m_currentResizeScaleCommand->unexecute ();
                 delete m_currentResizeScaleCommand;
@@ -1048,7 +1048,7 @@ void kpToolSelection::cancelShape ()
         if (m_currentPullFromDocumentCommand)
         {
         #if DEBUG_KP_TOOL_SELECTION
-            kdDebug () << "\t\tundo pullFromDocumentCommand" << endl;
+            kDebug () << "\t\tundo pullFromDocumentCommand" << endl;
         #endif
             m_currentPullFromDocumentCommand->unexecute ();
             delete m_currentPullFromDocumentCommand;
@@ -1123,7 +1123,7 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
         {
             if (!m_currentMoveCommand && !m_currentResizeScaleCommand)
             {
-                kdError () << "kpToolSelection::endDraw() pull without move nor resize/scale" << endl;
+                kError () << "kpToolSelection::endDraw() pull without move nor resize/scale" << endl;
                 delete m_currentPullFromDocumentCommand;
                 m_currentPullFromDocumentCommand = 0;
             }
@@ -1198,7 +1198,7 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
 void kpToolSelection::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL_SELECTION && 0
-    kdDebug () << "kpToolSelection::keyPressEvent(e->text='" << e->text () << "')" << endl;
+    kDebug () << "kpToolSelection::keyPressEvent(e->text='" << e->text () << "')" << endl;
 #endif
 
 
@@ -1210,7 +1210,7 @@ void kpToolSelection::keyPressEvent (QKeyEvent *e)
          e->key () == Qt::Key_Escape)
     {
     #if DEBUG_KP_TOOL_SELECTION && 0
-        kdDebug () << "\tescape pressed with sel when not begun draw - deselecting" << endl;
+        kDebug () << "\tescape pressed with sel when not begun draw - deselecting" << endl;
     #endif
 
         pushOntoDocument ();
@@ -1221,7 +1221,7 @@ void kpToolSelection::keyPressEvent (QKeyEvent *e)
     if (!e->isAccepted ())
     {
     #if DEBUG_KP_TOOL_SELECTION && 0
-        kdDebug () << "\tkey processing did not accept (text was '"
+        kDebug () << "\tkey processing did not accept (text was '"
                    << e->text ()
                    << "') - passing on event to kpTool"
                    << endl;
@@ -1238,13 +1238,13 @@ void kpToolSelection::selectionTransparencyChanged (const QString & /*name*/)
 {
 #if 0
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelection::selectionTransparencyChanged(" << name << ")" << endl;
+    kDebug () << "kpToolSelection::selectionTransparencyChanged(" << name << ")" << endl;
 #endif
 
     if (mainWindow ()->settingSelectionTransparency ())
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "\trecursion - abort setting selection transparency: "
+        kDebug () << "\trecursion - abort setting selection transparency: "
                    << mainWindow ()->settingSelectionTransparency () << endl;
     #endif
         return;
@@ -1253,7 +1253,7 @@ void kpToolSelection::selectionTransparencyChanged (const QString & /*name*/)
     if (document ()->selection ())
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "\thave sel - set transparency" << endl;
+        kDebug () << "\thave sel - set transparency" << endl;
     #endif
 
         kpSelectionTransparency oldST = document ()->selection ()->transparency ();
@@ -1277,7 +1277,7 @@ void kpToolSelection::selectionTransparencyChanged (const QString & /*name*/)
         if (true)
         {
         #if DEBUG_KP_TOOL_SELECTION
-            kdDebug () << "\t\twhich changed the pixmap" << endl;
+            kDebug () << "\t\twhich changed the pixmap" << endl;
         #endif
 
             commandHistory ()->addCommand (new kpToolSelectionTransparencyCommand (
@@ -1302,13 +1302,13 @@ void kpToolSelection::selectionTransparencyChanged (const QString & /*name*/)
 void kpToolSelection::slotIsOpaqueChanged ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelection::slotIsOpaqueChanged()" << endl;
+    kDebug () << "kpToolSelection::slotIsOpaqueChanged()" << endl;
 #endif
 
     if (mainWindow ()->settingSelectionTransparency ())
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "\trecursion - abort setting selection transparency: "
+        kDebug () << "\trecursion - abort setting selection transparency: "
                    << mainWindow ()->settingSelectionTransparency () << endl;
     #endif
         return;
@@ -1317,7 +1317,7 @@ void kpToolSelection::slotIsOpaqueChanged ()
     if (document ()->selection ())
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "\thave sel - set transparency" << endl;
+        kDebug () << "\thave sel - set transparency" << endl;
     #endif
 
         QApplication::setOverrideCursor (Qt::WaitCursor);
@@ -1346,13 +1346,13 @@ void kpToolSelection::slotIsOpaqueChanged ()
 void kpToolSelection::slotBackgroundColorChanged (const kpColor &)
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelection::slotBackgroundColorChanged()" << endl;
+    kDebug () << "kpToolSelection::slotBackgroundColorChanged()" << endl;
 #endif
 
     if (mainWindow ()->settingSelectionTransparency ())
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "\trecursion - abort setting selection transparency: "
+        kDebug () << "\trecursion - abort setting selection transparency: "
                    << mainWindow ()->settingSelectionTransparency () << endl;
     #endif
         return;
@@ -1361,7 +1361,7 @@ void kpToolSelection::slotBackgroundColorChanged (const kpColor &)
     if (document ()->selection ())
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "\thave sel - set transparency" << endl;
+        kDebug () << "\thave sel - set transparency" << endl;
     #endif
 
         QApplication::setOverrideCursor (Qt::WaitCursor);
@@ -1385,13 +1385,13 @@ void kpToolSelection::slotBackgroundColorChanged (const kpColor &)
 void kpToolSelection::slotColorSimilarityChanged (double, int)
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelection::slotColorSimilarityChanged()" << endl;
+    kDebug () << "kpToolSelection::slotColorSimilarityChanged()" << endl;
 #endif
 
     if (mainWindow ()->settingSelectionTransparency ())
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "\trecursion - abort setting selection transparency: "
+        kDebug () << "\trecursion - abort setting selection transparency: "
                    << mainWindow ()->settingSelectionTransparency () << endl;
     #endif
         return;
@@ -1400,7 +1400,7 @@ void kpToolSelection::slotColorSimilarityChanged (double, int)
     if (document ()->selection ())
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "\thave sel - set transparency" << endl;
+        kDebug () << "\thave sel - set transparency" << endl;
     #endif
 
         QApplication::setOverrideCursor (Qt::WaitCursor);
@@ -1488,21 +1488,21 @@ void kpToolSelectionCreateCommand::setFromSelection (const kpSelection &fromSele
 void kpToolSelectionCreateCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelectionCreateCommand::execute()" << endl;
+    kDebug () << "kpToolSelectionCreateCommand::execute()" << endl;
 #endif
 
     kpDocument *doc = document ();
     if (!doc)
     {
-        kdError () << "kpToolSelectionCreateCommand::execute() without doc" << endl;
+        kError () << "kpToolSelectionCreateCommand::execute() without doc" << endl;
         return;
     }
 
     if (m_fromSelection)
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "\tusing fromSelection" << endl;
-        kdDebug () << "\t\thave sel=" << doc->selection ()
+        kDebug () << "\tusing fromSelection" << endl;
+        kDebug () << "\t\thave sel=" << doc->selection ()
                    << " pixmap=" << (doc->selection () ? doc->selection ()->pixmap () : 0)
                    << endl;
     #endif
@@ -1531,7 +1531,7 @@ void kpToolSelectionCreateCommand::unexecute ()
     kpDocument *doc = document ();
     if (!doc)
     {
-        kdError () << "kpToolSelectionCreateCommand::unexecute() without doc" << endl;
+        kError () << "kpToolSelectionCreateCommand::unexecute() without doc" << endl;
         return;
     }
 
@@ -1541,7 +1541,7 @@ void kpToolSelectionCreateCommand::unexecute ()
         if (m_fromSelection && !m_fromSelection->pixmap ())
             return;
 
-        kdError () << "kpToolSelectionCreateCommand::unexecute() without sel region" << endl;
+        kError () << "kpToolSelectionCreateCommand::unexecute() without sel region" << endl;
         return;
     }
 
@@ -1566,7 +1566,7 @@ kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (
       m_originalSelectionRegion (0)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "kpToolSelectionPullFromDocumentCommand::<ctor>() mainWindow="
+    kDebug () << "kpToolSelectionPullFromDocumentCommand::<ctor>() mainWindow="
                << m_mainWindow
                << endl;
 #endif
@@ -1589,14 +1589,14 @@ int kpToolSelectionPullFromDocumentCommand::size () const
 void kpToolSelectionPullFromDocumentCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "kpToolSelectionPullFromDocumentCommand::execute()" << endl;
+    kDebug () << "kpToolSelectionPullFromDocumentCommand::execute()" << endl;
 #endif
 
     kpDocument *doc = document ();
 
     if (!doc)
     {
-        kdError () << "kpToolSelectionPullFromDocumentCommand::execute() without doc" << endl;
+        kError () << "kpToolSelectionPullFromDocumentCommand::execute() without doc" << endl;
         return;
     }
 
@@ -1619,7 +1619,7 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
         // must have selection region but not pixmap
         if (!doc->selection () || doc->selection ()->pixmap ())
         {
-            kdError () << "kpToolSelectionPullFromDocumentCommand::execute() sel="
+            kError () << "kpToolSelectionPullFromDocumentCommand::execute() sel="
                        << doc->selection ()
                        << " pixmap="
                        << (doc->selection () ? doc->selection ()->pixmap () : 0)
@@ -1640,21 +1640,21 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
 void kpToolSelectionPullFromDocumentCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "kpToolSelectionPullFromDocumentCommand::unexecute()" << endl;
+    kDebug () << "kpToolSelectionPullFromDocumentCommand::unexecute()" << endl;
 #endif
 
     kpDocument *doc = document ();
 
     if (!doc)
     {
-        kdError () << "kpToolSelectionPullFromDocumentCommand::unexecute() without doc" << endl;
+        kError () << "kpToolSelectionPullFromDocumentCommand::unexecute() without doc" << endl;
         return;
     }
 
     // must have selection pixmap
     if (!doc->selection () || !doc->selection ()->pixmap ())
     {
-        kdError () << "kpToolSelectionPullFromDocumentCommand::unexecute() sel="
+        kError () << "kpToolSelectionPullFromDocumentCommand::unexecute() sel="
                    << doc->selection ()
                    << " pixmap="
                    << (doc->selection () ? doc->selection ()->pixmap () : 0)
@@ -1705,7 +1705,7 @@ int kpToolSelectionTransparencyCommand::size () const
 void kpToolSelectionTransparencyCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "kpToolSelectionTransparencyCommand::execute()" << endl;
+    kDebug () << "kpToolSelectionTransparencyCommand::execute()" << endl;
 #endif
     kpDocument *doc = document ();
     if (!doc)
@@ -1725,7 +1725,7 @@ void kpToolSelectionTransparencyCommand::execute ()
 void kpToolSelectionTransparencyCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "kpToolSelectionTransparencyCommand::unexecute()" << endl;
+    kDebug () << "kpToolSelectionTransparencyCommand::unexecute()" << endl;
 #endif
 
     kpDocument *doc = document ();
@@ -1769,7 +1769,7 @@ kpSelection kpToolSelectionMoveCommand::originalSelection () const
     kpDocument *doc = document ();
     if (!doc || !doc->selection ())
     {
-        kdError () << "kpToolSelectionMoveCommand::originalSelection() doc="
+        kError () << "kpToolSelectionMoveCommand::originalSelection() doc="
                    << doc
                    << " sel="
                    << (doc ? doc->selection () : 0)
@@ -1796,13 +1796,13 @@ int kpToolSelectionMoveCommand::size () const
 void kpToolSelectionMoveCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "kpToolSelectionMoveCommand::execute()" << endl;
+    kDebug () << "kpToolSelectionMoveCommand::execute()" << endl;
 #endif
 
     kpDocument *doc = document ();
     if (!doc)
     {
-        kdError () << "kpToolSelectionMoveCommand::execute() no doc" << endl;
+        kError () << "kpToolSelectionMoveCommand::execute() no doc" << endl;
         return;
     }
 
@@ -1811,7 +1811,7 @@ void kpToolSelectionMoveCommand::execute ()
     // have to have pulled pixmap by now
     if (!sel || !sel->pixmap ())
     {
-        kdError () << "kpToolSelectionMoveCommand::execute() but haven't pulled pixmap yet: "
+        kError () << "kpToolSelectionMoveCommand::execute() but haven't pulled pixmap yet: "
                    << "sel=" << sel << " sel->pixmap=" << (sel ? sel->pixmap () : 0)
                    << endl;
         return;
@@ -1844,13 +1844,13 @@ void kpToolSelectionMoveCommand::execute ()
 void kpToolSelectionMoveCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "kpToolSelectionMoveCommand::unexecute()" << endl;
+    kDebug () << "kpToolSelectionMoveCommand::unexecute()" << endl;
 #endif
 
     kpDocument *doc = document ();
     if (!doc)
     {
-        kdError () << "kpToolSelectionMoveCommand::unexecute() no doc" << endl;
+        kError () << "kpToolSelectionMoveCommand::unexecute() no doc" << endl;
         return;
     }
 
@@ -1859,7 +1859,7 @@ void kpToolSelectionMoveCommand::unexecute ()
     // have to have pulled pixmap by now
     if (!sel || !sel->pixmap ())
     {
-        kdError () << "kpToolSelectionMoveCommand::unexecute() but haven't pulled pixmap yet: "
+        kError () << "kpToolSelectionMoveCommand::unexecute() but haven't pulled pixmap yet: "
                    << "sel=" << sel << " sel->pixmap=" << (sel ? sel->pixmap () : 0)
                    << endl;
         return;
@@ -1873,7 +1873,7 @@ void kpToolSelectionMoveCommand::unexecute ()
     if (!m_oldDocumentPixmap.isNull ())
         doc->setPixmapAt (m_oldDocumentPixmap, m_documentBoundingRect.topLeft ());
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kdDebug () << "\tmove to startPoint=" << m_startPoint << endl;
+    kDebug () << "\tmove to startPoint=" << m_startPoint << endl;
 #endif
     sel->moveTo (m_startPoint);
 
@@ -1888,7 +1888,7 @@ void kpToolSelectionMoveCommand::unexecute ()
 void kpToolSelectionMoveCommand::moveTo (const QPoint &point, bool moveLater)
 {
 #if DEBUG_KP_TOOL_SELECTION && 0
-    kdDebug () << "kpToolSelectionMoveCommand::moveTo" << point
+    kDebug () << "kpToolSelectionMoveCommand::moveTo" << point
                << " moveLater=" << moveLater
                <<endl;
 #endif
@@ -1898,7 +1898,7 @@ void kpToolSelectionMoveCommand::moveTo (const QPoint &point, bool moveLater)
         kpDocument *doc = document ();
         if (!doc)
         {
-            kdError () << "kpToolSelectionMoveCommand::moveTo() without doc" << endl;
+            kError () << "kpToolSelectionMoveCommand::moveTo() without doc" << endl;
             return;
         }
 
@@ -1907,13 +1907,13 @@ void kpToolSelectionMoveCommand::moveTo (const QPoint &point, bool moveLater)
         // have to have pulled pixmap by now
         if (!sel)
         {
-            kdError () << "kpToolSelectionMoveCommand::moveTo() no sel region" << endl;
+            kError () << "kpToolSelectionMoveCommand::moveTo() no sel region" << endl;
             return;
         }
 
         if (!sel->pixmap ())
         {
-            kdError () << "kpToolSelectionMoveCommand::moveTo() no sel pixmap" << endl;
+            kError () << "kpToolSelectionMoveCommand::moveTo() no sel pixmap" << endl;
             return;
         }
 
@@ -1936,7 +1936,7 @@ void kpToolSelectionMoveCommand::moveTo (int x, int y, bool moveLater)
 void kpToolSelectionMoveCommand::copyOntoDocument ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelectionMoveCommand::copyOntoDocument()" << endl;
+    kDebug () << "kpToolSelectionMoveCommand::copyOntoDocument()" << endl;
 #endif
 
     kpDocument *doc = document ();
@@ -1948,13 +1948,13 @@ void kpToolSelectionMoveCommand::copyOntoDocument ()
     // have to have pulled pixmap by now
     if (!sel)
     {
-        kdError () << "\tkpToolSelectionMoveCommand::copyOntoDocument() without sel region" << endl;
+        kError () << "\tkpToolSelectionMoveCommand::copyOntoDocument() without sel region" << endl;
         return;
     }
 
     if (!sel->pixmap ())
     {
-        kdError () << "kpToolSelectionMoveCommand::moveTo() no sel pixmap" << endl;
+        kError () << "kpToolSelectionMoveCommand::moveTo() no sel pixmap" << endl;
         return;
     }
 
@@ -2097,7 +2097,7 @@ void kpToolSelectionResizeScaleCommand::killSmoothScaleTimer ()
 void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove(delayed="
+    kDebug () << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove(delayed="
                << delayed << ")" << endl;
 #endif
 
@@ -2138,7 +2138,7 @@ void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
 void kpToolSelectionResizeScaleCommand::resizeScaleAndMove ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove()" << endl;
+    kDebug () << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove()" << endl;
 #endif
     resizeScaleAndMove (false/*no delay*/);
 }
@@ -2206,19 +2206,19 @@ int kpToolSelectionDestroyCommand::size () const
 void kpToolSelectionDestroyCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelectionDestroyCommand::execute () CALLED" << endl;
+    kDebug () << "kpToolSelectionDestroyCommand::execute () CALLED" << endl;
 #endif
 
     kpDocument *doc = document ();
     if (!doc)
     {
-        kdError () << "kpToolSelectionDestroyCommand::execute() without doc" << endl;
+        kError () << "kpToolSelectionDestroyCommand::execute() without doc" << endl;
         return;
     }
 
     if (!doc->selection ())
     {
-        kdError () << "kpToolSelectionDestroyCommand::execute() without sel region" << endl;
+        kError () << "kpToolSelectionDestroyCommand::execute() without sel region" << endl;
         return;
     }
 
@@ -2242,13 +2242,13 @@ void kpToolSelectionDestroyCommand::execute ()
 void kpToolSelectionDestroyCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "kpToolSelectionDestroyCommand::unexecute () CALLED" << endl;
+    kDebug () << "kpToolSelectionDestroyCommand::unexecute () CALLED" << endl;
 #endif
 
     kpDocument *doc = document ();
     if (!doc)
     {
-        kdError () << "kpToolSelectionDestroyCommand::unexecute() without doc" << endl;
+        kError () << "kpToolSelectionDestroyCommand::unexecute() without doc" << endl;
         return;
     }
 
@@ -2257,32 +2257,32 @@ void kpToolSelectionDestroyCommand::unexecute ()
         // not error because it's possible that the user dragged out a new
         // region (without pulling pixmap), and then CTRL+Z
     #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "kpToolSelectionDestroyCommand::unexecute() already has sel region" << endl;
+        kDebug () << "kpToolSelectionDestroyCommand::unexecute() already has sel region" << endl;
     #endif
 
         if (doc->selection ()->pixmap ())
         {
-            kdError () << "kpToolSelectionDestroyCommand::unexecute() already has sel pixmap" << endl;
+            kError () << "kpToolSelectionDestroyCommand::unexecute() already has sel pixmap" << endl;
             return;
         }
     }
 
     if (!m_oldSelection)
     {
-        kdError () << "kpToolSelectionDestroyCommand::unexecute() without old sel" << endl;
+        kError () << "kpToolSelectionDestroyCommand::unexecute() without old sel" << endl;
         return;
     }
 
     if (m_pushOntoDocument)
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kdDebug () << "\tunpush oldDocPixmap onto doc first" << endl;
+        kDebug () << "\tunpush oldDocPixmap onto doc first" << endl;
     #endif
         doc->setPixmapAt (m_oldDocPixmap, m_oldSelection->topLeft ());
     }
 
 #if DEBUG_KP_TOOL_SELECTION
-    kdDebug () << "\tsetting selection to: rect=" << m_oldSelection->boundingRect ()
+    kDebug () << "\tsetting selection to: rect=" << m_oldSelection->boundingRect ()
                << " pixmap=" << m_oldSelection->pixmap ()
                << " pixmap.isNull()=" << (m_oldSelection->pixmap ()
                                               ?

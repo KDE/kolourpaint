@@ -59,7 +59,7 @@ kpSqueezedTextLabel::kpSqueezedTextLabel (const QString &text, QWidget *parent, 
 QSize kpSqueezedTextLabel::minimumSizeHint () const
 {
 #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-    kdDebug () << "kpSqueezedTextLabel::minimumSizeHint() qLabel prefers"
+    kDebug () << "kpSqueezedTextLabel::minimumSizeHint() qLabel prefers"
                << QLabel::minimumSizeHint () << endl;
 #endif
     return QSize (-1/*no minimum width*/, QLabel::minimumHeight ());
@@ -103,7 +103,7 @@ void kpSqueezedTextLabel::setText (const QString &text)
 void kpSqueezedTextLabel::resizeEvent (QResizeEvent *e)
 {
 #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-    kdDebug () << "kpSqueezedTextLabeL::resizeEvent() size=" << e->size ()
+    kDebug () << "kpSqueezedTextLabeL::resizeEvent() size=" << e->size ()
                << " oldSize=" << e->oldSize ()
                << endl;
 #endif
@@ -121,13 +121,13 @@ QString kpSqueezedTextLabel::ellipsisText () const
 void kpSqueezedTextLabel::squeezeText ()
 {
 #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-    kdDebug () << "kpSqueezedTextLabeL::squeezeText" << endl;
+    kDebug () << "kpSqueezedTextLabeL::squeezeText" << endl;
 #endif
 
     QFontMetrics fontMetrics (font ());
     int fullTextWidth = fontMetrics.width (m_fullText);
 #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-    kdDebug () << "\tfullText=" << m_fullText
+    kDebug () << "\tfullText=" << m_fullText
                << " fullTextWidth=" << fullTextWidth
                << " labelWidth=" << width ()
                << endl;
@@ -136,15 +136,15 @@ void kpSqueezedTextLabel::squeezeText ()
     if (fullTextWidth <= width ())
     {
     #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-        kdDebug () << "\tfullText will fit - display" << endl;
+        kDebug () << "\tfullText will fit - display" << endl;
     #endif
         QLabel::setText (m_fullText);
     }
     else
     {
     #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-        kdDebug () << "\tfullText won't fit :( - squeeze" << endl;
-        kdDebug () << "\t\twidth of \"...\"="
+        kDebug () << "\tfullText won't fit :( - squeeze" << endl;
+        kDebug () << "\t\twidth of \"...\"="
                    << fontMetrics.width (ellipsisText ())
                    << endl;
 
@@ -152,7 +152,7 @@ void kpSqueezedTextLabel::squeezeText ()
         if (fontMetrics.width (ellipsisText ()) > width ())
         {
         #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-            kdDebug () << "\t\t\tcan't even fit \"...\" - forget it" << endl;
+            kDebug () << "\t\t\tcan't even fit \"...\" - forget it" << endl;
         #endif
             QLabel::setText (QString::null);
             return;
@@ -168,7 +168,7 @@ void kpSqueezedTextLabel::squeezeText ()
             int numLettersToUseMid = (numLettersToUseLo + numLettersToUseHi) / 2;
             int squeezedWidth = fontMetrics.width (m_fullText.left (numLettersToUseMid) + ellipsisText ());
         #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-            kdDebug () << "\tbsearch: lo=" << numLettersToUseLo
+            kDebug () << "\tbsearch: lo=" << numLettersToUseLo
                        << " hi=" << numLettersToUseHi
                        << " mid=" << numLettersToUseMid
                        << " acceptable=" << numLettersToUse
@@ -179,7 +179,7 @@ void kpSqueezedTextLabel::squeezeText ()
             if (squeezedWidth == width ())
             {
             #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-                kdDebug () << "\t\tperfect match!" << endl;
+                kDebug () << "\t\tperfect match!" << endl;
             #endif
                 numLettersToUse = numLettersToUseMid;
                 break;
@@ -187,14 +187,14 @@ void kpSqueezedTextLabel::squeezeText ()
             else if (squeezedWidth < width ())
             {
             #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-                kdDebug () << "\t\tsmall enough - numLettersToUse="
+                kDebug () << "\t\tsmall enough - numLettersToUse="
                            << numLettersToUse << endl;
             #endif
                 if (numLettersToUseMid > numLettersToUse)
                 {
                     numLettersToUse = numLettersToUseMid;
                 #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-                    kdDebug () << "\t\t\tset numLettersToUse="
+                    kDebug () << "\t\t\tset numLettersToUse="
                                << numLettersToUse
                                << endl;
                 #endif
@@ -205,7 +205,7 @@ void kpSqueezedTextLabel::squeezeText ()
             else
             {
             #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-                kdDebug () << "\t\ttoo big" << endl;
+                kDebug () << "\t\ttoo big" << endl;
             #endif
                 numLettersToUseHi = numLettersToUseMid - 1;
             }

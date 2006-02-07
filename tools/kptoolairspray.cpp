@@ -161,7 +161,7 @@ void kpToolAirSpray::actuallyDraw ()
     QPoint p = m_currentPoint;
 
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kdDebug () << "kpToolAirSpray::actuallyDraw() currentPoint=" << p
+    kDebug () << "kpToolAirSpray::actuallyDraw() currentPoint=" << p
                << " size=" << m_size
                << endl;
 #endif
@@ -280,7 +280,7 @@ void kpToolAirSprayCommand::execute ()
         m_newPixmapPtr = 0;
     }
     else
-        kdError () << "kpToolAirSprayCommand::execute() has null m_newPixmapPtr" << endl;
+        kError () << "kpToolAirSprayCommand::execute() has null m_newPixmapPtr" << endl;
 }
 
 // Undo:
@@ -293,7 +293,7 @@ void kpToolAirSprayCommand::unexecute ()
         *m_newPixmapPtr = document ()->getPixmapAt (m_boundingRect);
     }
     else
-        kdError () << "kpToolAirSprayCommand::unexecute() has non-null newPixmapPtr" << endl;
+        kError () << "kpToolAirSprayCommand::unexecute() has non-null newPixmapPtr" << endl;
 
     document ()->setPixmapAt (m_oldPixmap, m_boundingRect.topLeft ());
 }
@@ -305,10 +305,10 @@ void kpToolAirSprayCommand::addPoints (const Q3PointArray &points)
     QRect docRect = points.boundingRect ();
 
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kdDebug () << "kpToolAirSprayCommand::addPoints() docRect=" << docRect
+    kDebug () << "kpToolAirSprayCommand::addPoints() docRect=" << docRect
                << " numPoints=" << points.count () << endl;
     for (int i = 0; i < (int) points.count (); i++)
-        kdDebug () << "\t" << i << ": " << points [i] << endl;
+        kDebug () << "\t" << i << ": " << points [i] << endl;
 #endif
 
     QPixmap pixmap = document ()->getPixmapAt (docRect);

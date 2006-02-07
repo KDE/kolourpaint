@@ -78,12 +78,12 @@ kpViewManager::~kpViewManager ()
 void kpViewManager::registerView (kpView *view)
 {
 #if DEBUG_KP_VIEW_MANAGER && 1
-    kdDebug () << "kpViewManager::registerView (" << view << ")" << endl;
+    kDebug () << "kpViewManager::registerView (" << view << ")" << endl;
 #endif
     if (view && m_views.findRef (view) < 0)
     {
     #if DEBUG_KP_VIEW_MANAGER && 1
-        kdDebug () << "\tadded view" << endl;
+        kDebug () << "\tadded view" << endl;
     #endif
         view->setCursor (m_cursor);
         m_views.append (view);
@@ -91,7 +91,7 @@ void kpViewManager::registerView (kpView *view)
     else
     {
     #if DEBUG_KP_VIEW_MANAGER && 1
-        kdDebug () << "\tignored register view attempt" << endl;
+        kDebug () << "\tignored register view attempt" << endl;
     #endif
     }
 }
@@ -125,7 +125,7 @@ const kpTempPixmap *kpViewManager::tempPixmap () const
 void kpViewManager::setTempPixmap (const kpTempPixmap &tempPixmap)
 {
 #if DEBUG_KP_VIEW_MANAGER
-    kdDebug () << "kpViewManager::setTempPixmap(isBrush="
+    kDebug () << "kpViewManager::setTempPixmap(isBrush="
                << tempPixmap.isBrush ()
                << ",topLeft=" << tempPixmap.topLeft ()
                << ",pixmap.rect=" << tempPixmap.pixmap ().rect ()
@@ -214,7 +214,7 @@ bool kpViewManager::textCursorEnabled () const
 void kpViewManager::setTextCursorEnabled (bool yes)
 {
 #if DEBUG_KP_VIEW_MANAGER && 1
-    kdDebug () << "kpViewManager::setTextCursorEnabled(" << yes << ")" << endl;
+    kDebug () << "kpViewManager::setTextCursorEnabled(" << yes << ")" << endl;
 #endif
 
     if (yes == textCursorEnabled ())
@@ -255,7 +255,7 @@ int kpViewManager::textCursorRow () const
                 if (m_textCursorRow >= (int) sel->textLines ().size ())
                 {
                 #if DEBUG_KP_VIEW_MANAGER && 1
-                    kdDebug () << "kpViewManager::textCursorRow() row="
+                    kDebug () << "kpViewManager::textCursorRow() row="
                                << m_textCursorRow
                                << endl;
                 #endif
@@ -271,7 +271,7 @@ int kpViewManager::textCursorRow () const
     if (!handledErrors)
     {
     #if DEBUG_KP_VIEW_MANAGER && 1
-        kdDebug () << "kpViewManager::textCursorRow() no mw, doc or text sel" << endl;
+        kDebug () << "kpViewManager::textCursorRow() no mw, doc or text sel" << endl;
     #endif
         (const_cast <kpViewManager *> (this))->m_textCursorRow = -1;
     }
@@ -297,7 +297,7 @@ int kpViewManager::textCursorCol () const
                 if (m_textCursorCol > (int) sel->textLines () [row].length ())
                 {
                 #if DEBUG_KP_VIEW_MANAGER && 1
-                    kdDebug () << "kpViewManager::textCursorRow() col="
+                    kDebug () << "kpViewManager::textCursorRow() col="
                                << m_textCursorCol
                                << endl;
                 #endif
@@ -313,7 +313,7 @@ int kpViewManager::textCursorCol () const
     if (!handledErrors)
     {
     #if DEBUG_KP_VIEW_MANAGER && 1
-        kdDebug () << "kpViewManager::textCursorCol() no mw, doc or text sel" << endl;
+        kDebug () << "kpViewManager::textCursorCol() no mw, doc or text sel" << endl;
     #endif
         (const_cast <kpViewManager *> (this))->m_textCursorCol = -1;
     }
@@ -383,7 +383,7 @@ void kpViewManager::setTextCursorBlinkState (bool on)
 void kpViewManager::updateTextCursor ()
 {
 #if DEBUG_KP_VIEW_MANAGER && 0
-    kdDebug () << "kpViewManager::updateTextCursor()" << endl;
+    kDebug () << "kpViewManager::updateTextCursor()" << endl;
 #endif
 
     if (!m_mainWindow)
@@ -411,7 +411,7 @@ void kpViewManager::updateTextCursor ()
 void kpViewManager::slotTextCursorBlink ()
 {
 #if DEBUG_KP_VIEW_MANAGER && 0
-    kdDebug () << "kpViewManager::slotTextCursorBlink() cursorBlinkState="
+    kDebug () << "kpViewManager::slotTextCursorBlink() cursorBlinkState="
                << m_textCursorBlinkState << endl;
 #endif
 
@@ -459,7 +459,7 @@ kpView *kpViewManager::viewUnderCursor (bool usingQt) const
 
         if (m_viewUnderCursor && nonConstThis->m_views.findRef (m_viewUnderCursor) < 0)
         {
-            kdError () << "kpViewManager::viewUnderCursor(): invalid view" << endl;
+            kError () << "kpViewManager::viewUnderCursor(): invalid view" << endl;
             nonConstThis->m_viewUnderCursor = 0;
         }
 
@@ -483,7 +483,7 @@ kpView *kpViewManager::viewUnderCursor (bool usingQt) const
 void kpViewManager::setViewUnderCursor (kpView *view)
 {
 #if DEBUG_KP_VIEW_MANAGER && 1
-    kdDebug () << "kpViewManager::setViewUnderCursor ("
+    kDebug () << "kpViewManager::setViewUnderCursor ("
                << (view ? view->name () : "(none)") << ")"
                << "  old=" << (m_viewUnderCursor ? m_viewUnderCursor->name () : "(none)")
                << endl;
@@ -499,7 +499,7 @@ void kpViewManager::setViewUnderCursor (kpView *view)
         if (m_tempPixmap && m_tempPixmap->isBrush ())
         {
         #if DEBUG_KP_VIEW_MANAGER && 1
-            kdDebug () << "\thiding brush pixmap since cursor left view" << endl;
+            kDebug () << "\thiding brush pixmap since cursor left view" << endl;
         #endif
             updateViews (m_tempPixmap->rect ());
         }
@@ -509,7 +509,7 @@ void kpViewManager::setViewUnderCursor (kpView *view)
         if (m_mainWindow && m_mainWindow->tool ())
         {
         #if DEBUG_KP_VIEW_MANAGER && 1
-            kdDebug () << "\tnotify tool that something changed below cursor" << endl;
+            kDebug () << "\tnotify tool that something changed below cursor" << endl;
         #endif
             m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
         }
@@ -543,7 +543,7 @@ void kpViewManager::setQueueUpdates ()
 {
     m_queueUpdatesCounter++;
 #if DEBUG_KP_VIEW_MANAGER && 1
-    kdDebug () << "kpViewManager::setQueueUpdates() counter="
+    kDebug () << "kpViewManager::setQueueUpdates() counter="
                << m_queueUpdatesCounter << endl;
 #endif
 }
@@ -553,12 +553,12 @@ void kpViewManager::restoreQueueUpdates ()
 {
     m_queueUpdatesCounter--;
 #if DEBUG_KP_VIEW_MANAGER && 1
-    kdDebug () << "kpViewManager::restoreQueueUpdates() counter="
+    kDebug () << "kpViewManager::restoreQueueUpdates() counter="
                << m_queueUpdatesCounter << endl;
 #endif
     if (m_queueUpdatesCounter < 0)
     {
-        kdError () << "kpViewManager::restoreQueueUpdates() counter="
+        kError () << "kpViewManager::restoreQueueUpdates() counter="
                    << m_queueUpdatesCounter;
     }
 
@@ -585,7 +585,7 @@ void kpViewManager::setFastUpdates ()
 {
     m_fastUpdatesCounter++;
 #if DEBUG_KP_VIEW_MANAGER && 0
-    kdDebug () << "kpViewManager::setFastUpdates() counter="
+    kDebug () << "kpViewManager::setFastUpdates() counter="
                << m_fastUpdatesCounter << endl;
 #endif
 }
@@ -595,12 +595,12 @@ void kpViewManager::restoreFastUpdates ()
 {
     m_fastUpdatesCounter--;
 #if DEBUG_KP_VIEW_MANAGER && 0
-    kdDebug () << "kpViewManager::restoreFastUpdates() counter="
+    kDebug () << "kpViewManager::restoreFastUpdates() counter="
                << m_fastUpdatesCounter << endl;
 #endif
     if (m_fastUpdatesCounter < 0)
     {
-        kdError () << "kpViewManager::restoreFastUpdates() counter="
+        kError () << "kpViewManager::restoreFastUpdates() counter="
                    << m_fastUpdatesCounter;
     }
 }
@@ -684,7 +684,7 @@ void kpViewManager::updateViews ()
 void kpViewManager::updateViews (const QRect &docRect)
 {
 #if DEBUG_KP_VIEW_MANAGER && 0
-    kdDebug () << "kpViewManager::updateViews (" << docRect << ")" << endl;
+    kDebug () << "kpViewManager::updateViews (" << docRect << ")" << endl;
 #endif
 
     for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
@@ -694,12 +694,12 @@ void kpViewManager::updateViews (const QRect &docRect)
         kpView *view = *it;
 
     #if DEBUG_KP_VIEW_MANAGER && 0
-        kdDebug () << "\tupdating view " << view->name () << endl;
+        kDebug () << "\tupdating view " << view->name () << endl;
     #endif
         if (view->zoomLevelX () % 100 == 0 && view->zoomLevelY () % 100 == 0)
         {
         #if DEBUG_KP_VIEW_MANAGER && 0
-            kdDebug () << "\t\tviewRect=" << view->transformDocToView (docRect) << endl;
+            kDebug () << "\t\tviewRect=" << view->transformDocToView (docRect) << endl;
         #endif
             updateView (view, view->transformDocToView (docRect));
         }
@@ -716,7 +716,7 @@ void kpViewManager::updateViews (const QRect &docRect)
                                 .intersect (QRect (0, 0, view->width (), view->height ()));
 
         #if DEBUG_KP_VIEW_MANAGER && 0
-            kdDebug () << "\t\tviewRect (+compensate)=" << newRect << endl;
+            kDebug () << "\t\tviewRect (+compensate)=" << newRect << endl;
         #endif
             updateView (view, newRect);
         }
@@ -732,7 +732,7 @@ void kpViewManager::updateViews (int x, int y, int w, int h)
 void kpViewManager::adjustViewsToEnvironment ()
 {
 #if DEBUG_KP_VIEW_MANAGER && 1
-    kdDebug () << "kpViewManager::adjustViewsToEnvironment()"
+    kDebug () << "kpViewManager::adjustViewsToEnvironment()"
                << " numViews=" << m_views.count ()
                << endl;
 #endif
@@ -743,7 +743,7 @@ void kpViewManager::adjustViewsToEnvironment ()
         kpView *view = *it;
 
     #if DEBUG_KP_VIEW_MANAGER && 1
-        kdDebug () << "\tview: " << view->name ()
+        kDebug () << "\tview: " << view->name ()
                    << endl;
     #endif
         view->adjustToEnvironment ();

@@ -204,7 +204,7 @@ kpColor kpMainWindow::backgroundColor (bool ofSelection) const
             return m_colorToolBar->backgroundColor ();
         else
         {
-            kdError () << "kpMainWindow::backgroundColor() without colorToolBar" << endl;
+            kError () << "kpMainWindow::backgroundColor() without colorToolBar" << endl;
             return kpColor::invalid;
         }
     }
@@ -217,7 +217,7 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
     bool addSelPullCmdIfSelAvail)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kdDebug () << "kpMainWindow::addImageOrSelectionCommand()"
+    kDebug () << "kpMainWindow::addImageOrSelectionCommand()"
                << " addSelCreateCmdIfSelAvail=" << addSelCreateCmdIfSelAvail
                << " addSelPullCmdIfSelAvail=" << addSelPullCmdIfSelAvail
                << endl;
@@ -225,7 +225,7 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
 
     if (!m_document)
     {
-        kdError () << "kpMainWindow::addImageOrSelectionCommand() without doc" << endl;
+        kError () << "kpMainWindow::addImageOrSelectionCommand() without doc" << endl;
         return;
     }
 
@@ -236,7 +236,7 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
 
     kpSelection *sel = m_document->selection ();
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kdDebug () << "\tsel=" << sel
+    kDebug () << "\tsel=" << sel
                << " sel->pixmap=" << (sel ? sel->pixmap () : 0)
                << endl;
 #endif
@@ -335,7 +335,7 @@ void kpMainWindow::slotCrop ()
 
     if (!m_document || !m_document->selection ())
     {
-        kdError () << "kpMainWindow::slotCrop() doc=" << m_document
+        kError () << "kpMainWindow::slotCrop() doc=" << m_document
                    << " sel=" << (m_document ? m_document->selection () : 0)
                    << endl;
         return;

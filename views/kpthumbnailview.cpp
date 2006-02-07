@@ -57,7 +57,7 @@ kpThumbnailView::~kpThumbnailView ()
 void kpThumbnailView::setMaskToCoverDocument ()
 {
 #if DEBUG_KP_THUMBNAIL_VIEW
-    kdDebug () << "kpThumbnailView::setMaskToCoverDocument()"
+    kDebug () << "kpThumbnailView::setMaskToCoverDocument()"
                << " origin=" << origin ()
                << " zoomedDoc: width=" << zoomedDocWidth ()
                << " height=" << zoomedDocHeight ()
@@ -73,7 +73,7 @@ void kpThumbnailView::setMaskToCoverDocument ()
 void kpThumbnailView::resizeEvent (QResizeEvent *e)
 {
 #if DEBUG_KP_THUMBNAIL_VIEW
-    kdDebug () << "kpThumbnailView(" << name () << ")::resizeEvent()"
+    kDebug () << "kpThumbnailView(" << name () << ")::resizeEvent()"
                << endl;
 #endif
 

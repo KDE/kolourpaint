@@ -80,7 +80,7 @@ QString kpToolFlipCommand::name () const
         opName = i18n ("Flip vertically");
     else
     {
-        kdError () << "kpToolFlipCommand::name() not asked to flip" << endl;
+        kError () << "kpToolFlipCommand::name() not asked to flip" << endl;
         return QString::null;
     }
 #endif
@@ -159,7 +159,7 @@ kpToolFlipDialog::kpToolFlipDialog (bool actOnSelection, QWidget *parent)
 
     if (!vbox)
     {
-        kdError () << "kpToolFlipDialog::kpToolFlipDialog() received NULL vbox" << endl;
+        kError () << "kpToolFlipDialog::kpToolFlipDialog() received NULL vbox" << endl;
     }
     else
     {

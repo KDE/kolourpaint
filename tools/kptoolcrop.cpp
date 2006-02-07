@@ -108,7 +108,7 @@ kpToolCropSetImageCommand::~kpToolCropSetImageCommand ()
 void kpToolCropSetImageCommand::execute ()
 {
 #if DEBUG_KP_TOOL_CROP
-    kdDebug () << "kpToolCropSetImageCommand::execute()" << endl;
+    kDebug () << "kpToolCropSetImageCommand::execute()" << endl;
 #endif
 
     viewManager ()->setQueueUpdates ();
@@ -137,7 +137,7 @@ void kpToolCropSetImageCommand::execute ()
         kpPixmapFX::fill (&newDocPixmap, m_backgroundColor);
 
     #if DEBUG_KP_TOOL_CROP
-        kdDebug () << "\tsel: rect=" << m_fromSelection.boundingRect ()
+        kDebug () << "\tsel: rect=" << m_fromSelection.boundingRect ()
                    << " pm=" << m_fromSelection.pixmap ()
                    << endl;
     #endif
@@ -147,7 +147,7 @@ void kpToolCropSetImageCommand::execute ()
         {
             selTransparentPixmap = m_fromSelection.transparentPixmap ();
         #if DEBUG_KP_TOOL_CROP
-            kdDebug () << "\thave pixmap; rect="
+            kDebug () << "\thave pixmap; rect="
                        << selTransparentPixmap.rect ()
                        << endl;
         #endif
@@ -156,7 +156,7 @@ void kpToolCropSetImageCommand::execute ()
         {
             selTransparentPixmap = m_pixmapIfFromSelectionDoesntHaveOne;
         #if DEBUG_KP_TOOL_CROP
-            kdDebug () << "\tno pixmap in sel - get it; rect="
+            kDebug () << "\tno pixmap in sel - get it; rect="
                        << selTransparentPixmap.rect ()
                        << endl;
         #endif
@@ -185,7 +185,7 @@ void kpToolCropSetImageCommand::execute ()
 void kpToolCropSetImageCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_CROP
-    kdDebug () << "kpToolCropSetImageCommand::unexecute()" << endl;
+    kDebug () << "kpToolCropSetImageCommand::unexecute()" << endl;
 #endif
 
     viewManager ()->setQueueUpdates ();
@@ -194,7 +194,7 @@ void kpToolCropSetImageCommand::unexecute ()
         m_oldPixmap.resize (0, 0);
 
     #if DEBUG_KP_TOOL_CROP
-        kdDebug () << "\tsel: rect=" << m_fromSelection.boundingRect ()
+        kDebug () << "\tsel: rect=" << m_fromSelection.boundingRect ()
                    << " pm=" << m_fromSelection.pixmap ()
                    << endl;
     #endif
@@ -224,14 +224,14 @@ kpToolCropCommand::kpToolCropCommand (kpMainWindow *mainWindow)
     : kpMacroCommand (i18n ("Set as Image"), mainWindow)
 {
 #if DEBUG_KP_TOOL_CROP
-    kdDebug () << "kpToolCropCommand::<ctor>()" << endl;
+    kDebug () << "kpToolCropCommand::<ctor>()" << endl;
 #endif
 
     if (!mainWindow ||
         !mainWindow->document () ||
         !mainWindow->document ()->selection ())
     {
-        kdError () << "kpToolCropCommand::kpToolCropCommand() without sel" << endl;
+        kError () << "kpToolCropCommand::kpToolCropCommand() without sel" << endl;
         return;
     }
 
@@ -239,7 +239,7 @@ kpToolCropCommand::kpToolCropCommand (kpMainWindow *mainWindow)
 
 
 #if DEBUG_KP_TOOL_CROP
-    kdDebug () << "\tsel: w=" << sel->width ()
+    kDebug () << "\tsel: w=" << sel->width ()
                << " h=" << sel->height ()
                << " <- resizing doc to these dimen" << endl;
 #endif
@@ -257,8 +257,8 @@ kpToolCropCommand::kpToolCropCommand (kpMainWindow *mainWindow)
     if (sel->isText ())
     {
     #if DEBUG_KP_TOOL_CROP
-        kdDebug () << "\tisText" << endl;
-        kdDebug () << "\tclearing doc with trans cmd" << endl;
+        kDebug () << "\tisText" << endl;
+        kDebug () << "\tclearing doc with trans cmd" << endl;
     #endif
         addCommand (
             new kpToolClearCommand (
@@ -267,7 +267,7 @@ kpToolCropCommand::kpToolCropCommand (kpMainWindow *mainWindow)
                 mainWindow));
 
     #if DEBUG_KP_TOOL_CROP
-        kdDebug () << "\tmoving sel to (0,0) cmd" << endl;
+        kDebug () << "\tmoving sel to (0,0) cmd" << endl;
     #endif
         kpToolSelectionMoveCommand *moveCmd =
             new kpToolSelectionMoveCommand (
@@ -280,8 +280,8 @@ kpToolCropCommand::kpToolCropCommand (kpMainWindow *mainWindow)
     else
     {
     #if DEBUG_KP_TOOL_CROP
-        kdDebug () << "\tis pixmap sel" << endl;
-        kdDebug () << "\tcreating SetImage cmd" << endl;
+        kDebug () << "\tis pixmap sel" << endl;
+        kDebug () << "\tcreating SetImage cmd" << endl;
     #endif
         addCommand (new kpToolCropSetImageCommand (mainWindow));
 

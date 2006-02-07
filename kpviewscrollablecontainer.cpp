@@ -185,7 +185,7 @@ void kpGrip::setUserMessage (const QString &message)
 void kpGrip::updatePixmap ()
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpGrip::updatePixmap() rect=" << rect () << endl;
+    kDebug () << "kpGrip::updatePixmap() rect=" << rect () << endl;
 #endif
     if (width () <= 0 || height () <= 0)
         return;
@@ -195,7 +195,7 @@ void kpGrip::updatePixmap ()
     kpPixmapFX::ensureTransparentAt (&pixmap, pixmap.rect ());
     const QRect hr = hotRect ();
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "\thotRect=" << hr << endl;
+    kDebug () << "\thotRect=" << hr << endl;
 #endif
     if (hr.isValid ())
         kpPixmapFX::ensureOpaqueAt (&pixmap, hr);
@@ -210,7 +210,7 @@ void kpGrip::updatePixmap ()
 void kpGrip::cancel ()
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpGrip::cancel()" << endl;
+    kDebug () << "kpGrip::cancel()" << endl;
 #endif
     if (m_currentPoint == KP_INVALID_POINT)
         return;
@@ -290,7 +290,7 @@ void kpGrip::mouseMovedTo (const QPoint &point, bool dueToDragScroll)
 void kpGrip::mouseMoveEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpGrip::mouseMoveEvent() m_startPoint=" << m_startPoint
+    kDebug () << "kpGrip::mouseMoveEvent() m_startPoint=" << m_startPoint
                << " stateAfter=" << e->stateAfter ()
                << endl;
 #endif
@@ -309,7 +309,7 @@ void kpGrip::mouseMoveEvent (QMouseEvent *e)
 void kpGrip::mouseReleaseEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpGrip::mouseReleaseEvent() m_startPoint=" << m_startPoint
+    kDebug () << "kpGrip::mouseReleaseEvent() m_startPoint=" << m_startPoint
                << " stateAfter=" << e->stateAfter ()
                << endl;
 #endif
@@ -343,7 +343,7 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
 void kpGrip::resizeEvent (QResizeEvent *)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpGrip::resizeEvent()" << endl;
+    kDebug () << "kpGrip::resizeEvent()" << endl;
 #endif
     updatePixmap ();
 }
@@ -353,7 +353,7 @@ void kpGrip::resizeEvent (QResizeEvent *)
 void kpGrip::enterEvent (QEvent * /*e*/)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpGrip::enterEvent()"
+    kDebug () << "kpGrip::enterEvent()"
                << " m_startPoint=" << m_startPoint
                << " shouldReleaseMouseButtons="
                << m_shouldReleaseMouseButtons << endl;
@@ -363,7 +363,7 @@ void kpGrip::enterEvent (QEvent * /*e*/)
         !m_shouldReleaseMouseButtons)
     {
     #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-        kdDebug () << "\tsending message" << endl;
+        kDebug () << "\tsending message" << endl;
     #endif
         setUserMessage (haventBegunDrawUserMessage ());
     }
@@ -373,7 +373,7 @@ void kpGrip::enterEvent (QEvent * /*e*/)
 void kpGrip::leaveEvent (QEvent * /*e*/)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpGrip::leaveEvent()"
+    kDebug () << "kpGrip::leaveEvent()"
                << " m_startPoint=" << m_startPoint
                << " shouldReleaseMouseButtons="
                << m_shouldReleaseMouseButtons << endl;
@@ -390,7 +390,7 @@ void kpGrip::leaveEvent (QEvent * /*e*/)
 void kpGrip::paintEvent (QPaintEvent *e)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
-    kdDebug () << "kpGrip::paintEvent(" << e->rect () << ")" << endl;
+    kDebug () << "kpGrip::paintEvent(" << e->rect () << ")" << endl;
 #endif
     QWidget::paintEvent (e);
 }
@@ -504,7 +504,7 @@ QString kpViewScrollableContainer::statusMessage () const
 void kpViewScrollableContainer::clearStatusMessage ()
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 1
-    kdDebug () << "kpViewScrollableContainer::clearStatusMessage()" << endl;
+    kDebug () << "kpViewScrollableContainer::clearStatusMessage()" << endl;
 #endif
     m_bottomRightGrip->setUserMessage (QString::null);
     m_bottomGrip->setUserMessage (QString::null);
@@ -700,7 +700,7 @@ void kpViewScrollableContainer::eraseResizeLines ()
 void kpViewScrollableContainer::drawResizeLines ()
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
-    kdDebug () << "kpViewScrollableContainer::drawResizeLines()"
+    kDebug () << "kpViewScrollableContainer::drawResizeLines()"
                << " lastViewX=" << m_resizeRoundedLastViewX
                << " lastViewY=" << m_resizeRoundedLastViewY
                << endl;
@@ -731,7 +731,7 @@ void kpViewScrollableContainer::updateResizeLines (int viewX, int viewY,
                                                    int viewDX, int viewDY)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
-    kdDebug () << "kpViewScrollableContainer::updateResizeLines("
+    kDebug () << "kpViewScrollableContainer::updateResizeLines("
                << viewX << "," << viewY << ")"
                << " oldViewX=" << m_resizeRoundedLastViewX
                << " oldViewY=" << m_resizeRoundedLastViewY
@@ -797,7 +797,7 @@ void kpViewScrollableContainer::slotGripContinuedDraw (int inViewDX, int inViewD
         viewDY = inViewDY;
 
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::slotGripContinuedDraw("
+    kDebug () << "kpViewScrollableContainer::slotGripContinuedDraw("
                << viewDX << "," << viewDY << ") size="
                << newDocSize (viewDX, viewDY)
                << " dueToDragScroll=" << dueToDragScroll
@@ -814,7 +814,7 @@ void kpViewScrollableContainer::slotGripContinuedDraw (int inViewDX, int inViewD
         viewDX = newViewDeltaPoint.x ();
         viewDY = newViewDeltaPoint.y ();
     #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-        kdDebug () << "\tdrag scrolled - new view delta point="
+        kDebug () << "\tdrag scrolled - new view delta point="
                    << newViewDeltaPoint
                    << endl;
     #endif
@@ -847,7 +847,7 @@ void kpViewScrollableContainer::slotGripCancelledDraw ()
 void kpViewScrollableContainer::slotGripEndedDraw (int viewDX, int viewDY)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::slotGripEndedDraw("
+    kDebug () << "kpViewScrollableContainer::slotGripEndedDraw("
                << viewDX << "," << viewDY << ") size="
                << newDocSize (viewDX, viewDY)
                << endl;
@@ -886,8 +886,8 @@ void kpViewScrollableContainer::slotGripStatusMessageChanged (const QString &str
 void kpViewScrollableContainer::recalculateStatusMessage ()
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollabelContainer::recalculateStatusMessage()" << endl;
-    kdDebug () << "\tQCursor::pos=" << QCursor::pos ()
+    kDebug () << "kpViewScrollabelContainer::recalculateStatusMessage()" << endl;
+    kDebug () << "\tQCursor::pos=" << QCursor::pos ()
                << " global visibleRect="
                << kpWidgetMapper::toGlobal (this,
                       QRect (0, 0, visibleWidth (), visibleHeight ()))
@@ -940,7 +940,7 @@ void kpViewScrollableContainer::recalculateStatusMessage ()
 void kpViewScrollableContainer::slotContentsMoving (int x, int y)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::slotContentsMoving("
+    kDebug () << "kpViewScrollableContainer::slotContentsMoving("
                << x << "," << y << ")"
                << " contentsX=" << contentsX ()
                << " contentsY=" << contentsY () << endl;
@@ -962,7 +962,7 @@ void kpViewScrollableContainer::slotContentsMoved ()
 
     kpGrip *grip = docResizingGrip ();
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::slotContentsMoved()"
+    kDebug () << "kpViewScrollableContainer::slotContentsMoved()"
                << " grip=" << grip
                << " contentsX=" << contentsX ()
                << " contentsY=" << contentsY () << endl;
@@ -998,7 +998,7 @@ void kpViewScrollableContainer::connectViewSignals ()
 void kpViewScrollableContainer::addChild (QWidget *widget, int x, int y)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::addChild(" << widget
+    kDebug () << "kpViewScrollableContainer::addChild(" << widget
                << "," << x << "," << y << endl;
 #endif
 
@@ -1006,7 +1006,7 @@ void kpViewScrollableContainer::addChild (QWidget *widget, int x, int y)
 
     kpView *view = dynamic_cast <kpView *> (widget);
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "\tcast to kpView: " << view << endl;
+    kDebug () << "\tcast to kpView: " << view << endl;
 #endif
     if (view)
     {
@@ -1025,7 +1025,7 @@ kpView *kpViewScrollableContainer::view () const
 void kpViewScrollableContainer::setView (kpView *view)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::setView(" << view << ")" << endl;
+    kDebug () << "kpViewScrollableContainer::setView(" << view << ")" << endl;
 #endif
 
     if (m_view == view)
@@ -1051,7 +1051,7 @@ void kpViewScrollableContainer::setView (kpView *view)
 void kpViewScrollableContainer::updateGrips ()
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::updateGrips() m_view="
+    kDebug () << "kpViewScrollableContainer::updateGrips() m_view="
                << m_view << endl;
 #endif
 
@@ -1071,7 +1071,7 @@ void kpViewScrollableContainer::updateGrips ()
     m_bottomRightGrip->setShown (bool (m_view));
 
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "\tcontentsRect=" << contentsRect ()
+    kDebug () << "\tcontentsRect=" << contentsRect ()
                << " visibleRect=" << visibleRect ()
                << " viewportRect=" << viewport ()->rect ()
                << endl;
@@ -1094,7 +1094,7 @@ void kpViewScrollableContainer::updateGrips ()
 void kpViewScrollableContainer::slotViewDestroyed ()
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::slotViewDestroyed() m_view="
+    kDebug () << "kpViewScrollableContainer::slotViewDestroyed() m_view="
                << m_view << endl;
 #endif
 
@@ -1117,7 +1117,7 @@ bool kpViewScrollableContainer::beginDragScroll (const QPoint &/*docPoint*/,
     const QPoint p = mapFromGlobal (QCursor::pos ());
 
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::beginDragScroll() p=" << p
+    kDebug () << "kpViewScrollableContainer::beginDragScroll() p=" << p
                << " dragScrollTimerRunOnce=" << m_scrollTimerRunOnce
                << endl;
 #endif
@@ -1166,7 +1166,7 @@ bool kpViewScrollableContainer::beginDragScroll (const QPoint &docPoint,
 bool kpViewScrollableContainer::endDragScroll ()
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::endDragScroll()" << endl;
+    kDebug () << "kpViewScrollableContainer::endDragScroll()" << endl;
 #endif
 
     if (m_dragScrollTimer->isActive ())
@@ -1207,7 +1207,7 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
     const QPoint pos = mapFromGlobal (QCursor::pos ());
 
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::slotDragScroll()"
+    kDebug () << "kpViewScrollableContainer::slotDragScroll()"
                   << " noDragScrollRect=" << rect
                   << " pos=" << pos
                   << " contentsX=" << contentsX ()
@@ -1240,7 +1240,7 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
     }
 
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
-    kdDebug () << "kpViewScrollableContainer::slotDragScroll()"
+    kDebug () << "kpViewScrollableContainer::slotDragScroll()"
                   << " dx=" << dx << " * " << dxMultiplier
                   << " dy=" << dy << " * " << dyMultiplier
                   << " zoomLevel=" << m_zoomLevel
@@ -1258,7 +1258,7 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
         scrollBy (dx, dy);
 
     #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 1
-        kdDebug () << "\tafter scrollBy():"
+        kDebug () << "\tafter scrollBy():"
                    << " contentsX=" << contentsX ()
                    << " contentsY=" << contentsY () << endl;
     #endif
@@ -1294,7 +1294,7 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
 void kpViewScrollableContainer::contentsDragMoveEvent (QDragMoveEvent *e)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::contentsDragMoveEvent"
+    kDebug () << "kpViewScrollableContainer::contentsDragMoveEvent"
                << e->pos ()
                << endl;
 #endif
@@ -1313,7 +1313,7 @@ bool kpViewScrollableContainer::slotDragScroll ()
 void kpViewScrollableContainer::contentsMouseMoveEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::contentsMouseMoveEvent"
+    kDebug () << "kpViewScrollableContainer::contentsMouseMoveEvent"
                << e->pos ()
                << endl;
 #endif
@@ -1325,7 +1325,7 @@ void kpViewScrollableContainer::contentsMouseMoveEvent (QMouseEvent *e)
 void kpViewScrollableContainer::mouseMoveEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::mouseMoveEvent"
+    kDebug () << "kpViewScrollableContainer::mouseMoveEvent"
                << e->pos ()
                << endl;
 #endif
@@ -1351,7 +1351,7 @@ bool kpViewScrollableContainer::eventFilter (QObject *watchedObject, QEvent *eve
 void kpViewScrollableContainer::viewportPaintEvent (QPaintEvent *e)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kdDebug () << "kpViewScrollableContainer::viewportPaintEvent("
+    kDebug () << "kpViewScrollableContainer::viewportPaintEvent("
                << e->rect ()
                << ")" << endl;
 #endif
@@ -1363,7 +1363,7 @@ void kpViewScrollableContainer::viewportPaintEvent (QPaintEvent *e)
 void kpViewScrollableContainer::paintEvent (QPaintEvent *e)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
-    kdDebug () << "kpViewScrollableContainer::paintEvent("
+    kDebug () << "kpViewScrollableContainer::paintEvent("
                << e->rect ()
                << ")" << endl;
 #endif

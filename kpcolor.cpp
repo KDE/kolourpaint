@@ -57,7 +57,7 @@ kpColor::kpColor (int red, int green, int blue, bool isTransparent)
         green < 0 || green > 255 ||
         blue < 0 || blue > 255)
     {
-        kdError () << "kpColor::<ctor>(r=" << Qt::red
+        kError () << "kpColor::<ctor>(r=" << Qt::red
                    << ",g=" << Qt::green
                    << ",b=" << Qt::blue
                    << ",t=" << isTransparent
@@ -75,7 +75,7 @@ kpColor::kpColor (const QRgb &rgba)
 {
     if (qAlpha (rgba) > 0 && qAlpha (rgba) < 255)
     {
-        kdError () << "kpColor::<ctor>(QRgb) passed translucent alpha "
+        kError () << "kpColor::<ctor>(QRgb) passed translucent alpha "
                    << qAlpha (rgba)
                    << " - trying to recover"
                    << endl;
@@ -222,13 +222,13 @@ int kpColor::red () const
 {
     if (!m_rgbaIsValid)
     {
-        kdError () << "kpColor::red() called with invalid kpColor" << endl;
+        kError () << "kpColor::red() called with invalid kpColor" << endl;
         return 0;
     }
 
     if (isTransparent ())
     {
-        kdError () << "kpColor::red() called with transparent kpColor" << endl;
+        kError () << "kpColor::red() called with transparent kpColor" << endl;
         return 0;
     }
 
@@ -240,13 +240,13 @@ int kpColor::green () const
 {
     if (!m_rgbaIsValid)
     {
-        kdError () << "kpColor::green() called with invalid kpColor" << endl;
+        kError () << "kpColor::green() called with invalid kpColor" << endl;
         return 0;
     }
 
     if (isTransparent ())
     {
-        kdError () << "kpColor::green() called with transparent kpColor" << endl;
+        kError () << "kpColor::green() called with transparent kpColor" << endl;
         return 0;
     }
 
@@ -258,13 +258,13 @@ int kpColor::blue () const
 {
     if (!m_rgbaIsValid)
     {
-        kdError () << "kpColor::blue() called with invalid kpColor" << endl;
+        kError () << "kpColor::blue() called with invalid kpColor" << endl;
         return 0;
     }
 
     if (isTransparent ())
     {
-        kdError () << "kpColor::blue() called with transparent kpColor" << endl;
+        kError () << "kpColor::blue() called with transparent kpColor" << endl;
         return 0;
     }
 
@@ -276,7 +276,7 @@ int kpColor::alpha () const
 {
     if (!m_rgbaIsValid)
     {
-        kdError () << "kpColor::alpha() called with invalid kpColor" << endl;
+        kError () << "kpColor::alpha() called with invalid kpColor" << endl;
         return 0;
     }
 
@@ -284,7 +284,7 @@ int kpColor::alpha () const
 
     if (alpha > 0 && alpha < 255)
     {
-        kdError () << "kpColor::alpha() called with translucent kpColor alpha=" << alpha << endl;
+        kError () << "kpColor::alpha() called with translucent kpColor alpha=" << alpha << endl;
 
         // no translucency
         return alpha ? 255 : 0;
@@ -313,7 +313,7 @@ QRgb kpColor::toQRgb () const
 {
     if (!m_rgbaIsValid)
     {
-        kdError () << "kpColor::toQRgb() called with invalid kpColor" << endl;
+        kError () << "kpColor::toQRgb() called with invalid kpColor" << endl;
         return 0;
     }
 
@@ -325,7 +325,7 @@ const QColor &kpColor::toQColor () const
 {
     if (!m_rgbaIsValid)
     {
-        kdError () << "kpColor::toQColor() called with invalid kpColor" << endl;
+        kError () << "kpColor::toQColor() called with invalid kpColor" << endl;
         return Qt::black;
     }
 
@@ -334,7 +334,7 @@ const QColor &kpColor::toQColor () const
 
     if (qAlpha (m_rgba) < 255)
     {
-        kdError () << "kpColor::toQColor() called with not fully opaque kpColor alpha="
+        kError () << "kpColor::toQColor() called with not fully opaque kpColor alpha="
                    << qAlpha (m_rgba)
                    << endl;
         return Qt::black;
@@ -343,7 +343,7 @@ const QColor &kpColor::toQColor () const
     m_colorCache = QColor (m_rgba);
     if (!m_colorCache.isValid ())
     {
-        kdError () << "kpColor::toQColor () internal error - could not return valid QColor"
+        kError () << "kpColor::toQColor () internal error - could not return valid QColor"
                    << endl;
         return Qt::black;
     }

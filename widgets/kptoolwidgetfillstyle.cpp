@@ -133,7 +133,7 @@ QString kpToolWidgetFillStyle::fillStyleName (FillStyle fs) const
 kpToolWidgetFillStyle::FillStyle kpToolWidgetFillStyle::fillStyle () const
 {
 #if DEBUG_KP_TOOL_WIDGET_FILL_STYLE
-    kdDebug () << "kpToolWidgetFillStyle::fillStyle() selected="
+    kDebug () << "kpToolWidgetFillStyle::fillStyle() selected="
                << selectedRow ()
                << endl;
 #endif

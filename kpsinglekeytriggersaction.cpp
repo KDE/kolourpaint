@@ -60,7 +60,7 @@ bool kpSingleKeyTriggersActionInterface::singleKeyTriggersEnabled () const
 void kpSingleKeyTriggersActionInterface::enableSingleKeyTriggers (bool enable)
 {
 #if DEBUG_KP_SINGLE_KEY_TRIGGERS_ACTION
-    kdDebug () << "kpSingleKeyTriggersActionInterface(" << /*virtual*/actionName ()
+    kDebug () << "kpSingleKeyTriggersActionInterface(" << /*virtual*/actionName ()
                << ")::enableSingleKeyTriggers(" << enable << ")"
                << endl;
 #endif
@@ -68,7 +68,7 @@ void kpSingleKeyTriggersActionInterface::enableSingleKeyTriggers (bool enable)
     if (enable == m_singleKeyTriggersEnabled)
     {
     #if DEBUG_KP_SINGLE_KEY_TRIGGERS_ACTION
-        kdDebug () << "\tnop" << endl;
+        kDebug () << "\tnop" << endl;
     #endif
         return;
     }
@@ -79,7 +79,7 @@ void kpSingleKeyTriggersActionInterface::enableSingleKeyTriggers (bool enable)
     if (enable)
     {
     #if DEBUG_KP_SINGLE_KEY_TRIGGERS_ACTION
-        kdDebug () << "\tre-enabling to " << m_fullShortcut.toString () << endl;
+        kDebug () << "\tre-enabling to " << m_fullShortcut.toString () << endl;
     #endif
         /*pure virtual*/actionSetShortcut (m_fullShortcut);
     }
@@ -91,7 +91,7 @@ void kpSingleKeyTriggersActionInterface::enableSingleKeyTriggers (bool enable)
         if (kpTool::containsSingleKeyTrigger (m_fullShortcut, &newShortcut))
         {
         #if DEBUG_KP_SINGLE_KEY_TRIGGERS_ACTION
-            kdDebug () << "\tchange shortcuts: old="
+            kDebug () << "\tchange shortcuts: old="
                        << m_fullShortcut.toString ()
                        << " new="
                        << newShortcut.toString ()
@@ -102,7 +102,7 @@ void kpSingleKeyTriggersActionInterface::enableSingleKeyTriggers (bool enable)
         else
         {
         #if DEBUG_KP_SINGLE_KEY_TRIGGERS_ACTION
-            kdDebug () << "\tshortcut is untouched "
+            kDebug () << "\tshortcut is untouched "
                        << m_fullShortcut.toString ()
                        << endl;
         #endif

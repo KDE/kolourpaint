@@ -99,7 +99,7 @@ static QString printScreenShortcutString ()
 void kpMainWindow::slotHelpTakingScreenshots ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotHelpTakingScreenshots()" << endl;
+    kDebug () << "kpMainWindow::slotHelpTakingScreenshots()" << endl;
 #endif
 
 
@@ -107,7 +107,7 @@ void kpMainWindow::slotHelpTakingScreenshots ()
     // SYNC: KWin contains PrintScreen key logic
     DCOPCStringList dcopApps = KApplication::dcopClient ()->registeredApplications ();
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tdcopApps=" << dcopApps << endl;
+    kDebug () << "\tdcopApps=" << dcopApps << endl;
 #endif
     bool isRunningKDE = (dcopApps.findIndex ("kwin") >= 0);
 
@@ -194,7 +194,7 @@ void kpMainWindow::slotHelpTakingScreenshots ()
 void kpMainWindow::slotHelpTakingScreenshotsFollowLink (const QString &link)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::slotHelpTakingScreenshotsFollowLink("
+    kDebug () << "kpMainWindow::slotHelpTakingScreenshotsFollowLink("
                << link << ")" << endl;
 #endif
 
@@ -208,7 +208,7 @@ void kpMainWindow::slotHelpTakingScreenshotsFollowLink (const QString &link)
     }
     else
     {
-        kdError () << "kpMainWindow::slotHelpTakingScreenshotsFollowLink("
+        kError () << "kpMainWindow::slotHelpTakingScreenshotsFollowLink("
                    << link << ")" << endl;
     }
 }

@@ -39,7 +39,7 @@ class QDataStream;
 // kpColor is an object-oriented abstraction of QRgb, with the additional
 // restriction of following the KolourPaint convention of only supporting
 // totally transparent and totally opaque colors.  It also provides better
-// error handling, reporting (noisy kdError()'s) and recovery.
+// error handling, reporting (noisy kError()'s) and recovery.
 //
 // In general, you should pass around kpColor objects instead of QRgb
 // and QColor.  Only convert an opaque kpColor to a QColor (using toQColor())

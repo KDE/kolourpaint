@@ -189,8 +189,8 @@ diff -u -p -r1.7 kpviewscrollablecontainer.cpp
 +void kpViewScrollableContainer::drawResizeLines (const QRegion &viewRegion)
  {
  #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
--    kdDebug () << "kpViewScrollableContainer::drawResizeLines()"
-+    kdDebug () << "kpViewScrollableContainer::drawResizeLines("
+-    kDebug () << "kpViewScrollableContainer::drawResizeLines()"
++    kDebug () << "kpViewScrollableContainer::drawResizeLines("
 +               << viewRegion <<")"
                 << " lastViewX=" << m_resizeRoundedLastViewX
                 << " lastViewY=" << m_resizeRoundedLastViewY
@@ -280,7 +280,7 @@ diff -u -p -r1.7 kpviewscrollablecontainer.cpp
 -    //         e.g. sleep 5 && gedit & sleep 10 && killall gedit
 +    QRegion oldLinesRegion = resizeLinesRegion ();
 +#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-+    kdDebug () << "\toldLinesRegion=" << oldLinesRegion << endl;
++    kDebug () << "\toldLinesRegion=" << oldLinesRegion << endl;
 +#endif
 +
 +
@@ -299,7 +299,7 @@ diff -u -p -r1.7 kpviewscrollablecontainer.cpp
 +
 +    QRegion newLinesRegion = resizeLinesRegion ();
 +#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-+    kdDebug () << "\tnewLinesRegion=" << newLinesRegion << endl;
++    kDebug () << "\tnewLinesRegion=" << newLinesRegion << endl;
 +#endif
 +
 +
@@ -316,7 +316,7 @@ diff -u -p -r1.7 kpviewscrollablecontainer.cpp
 +        //  new at the same time)
 +        drawResizeLines (newLinesRegion.eor (oldLinesRegion));
 +    #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-+        kdDebug () << "\tNOTRregion="
++        kDebug () << "\tNOTRregion="
 +                   << newLinesRegion.eor (oldLinesRegion) << endl;
 +    #endif
 +    }
@@ -325,7 +325,7 @@ diff -u -p -r1.7 kpviewscrollablecontainer.cpp
 +        eraseResizeLines (oldLinesRegion);
 +        drawResizeLines (newLinesRegion);
 +    #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-+        kdDebug () << "\tnot erasing old lines; NOTRregion="
++        kDebug () << "\tnot erasing old lines; NOTRregion="
 +                   << newLinesRegion << endl;
 +    #endif
 +    }
@@ -348,7 +348,7 @@ diff -u -p -r1.7 kpviewscrollablecontainer.cpp
 +#if 0
 +    if (inScroll != !m_resizeLinesNeedErase)
 +    {
-+        kdError () << "slotGripContDraw EXCEPTION 0: inScroll=" << inScroll << endl;
++        kError () << "slotGripContDraw EXCEPTION 0: inScroll=" << inScroll << endl;
 +        memset (0, 42, 1048576);
 +    }
 +#endif
@@ -362,7 +362,7 @@ diff -u -p -r1.7 kpviewscrollablecontainer.cpp
 +#if 0
 +    if (!m_resizeLinesNeedErase)
 +    {
-+        kdError () << "slotGripContDraw EXCEPTION 1" << endl;
++        kError () << "slotGripContDraw EXCEPTION 1" << endl;
 +        memset (0, 42, 1048576);
 +    }
 +#endif
@@ -378,7 +378,7 @@ diff -u -p -r1.7 kpviewscrollablecontainer.cpp
 +
 +    if (inScroll && 0)
 +    {
-+        kdError () << "slotContentsMovING EXCEPTION" << endl;
++        kError () << "slotContentsMovING EXCEPTION" << endl;
 +        memset (0, 42, 1048576);
 +    }
 +
@@ -402,14 +402,14 @@ diff -u -p -r1.7 kpviewscrollablecontainer.cpp
  
 +    if (!inScroll && 0)
 +    {
-+        kdError () << "slotContentsMoved EXCEPTION" << endl;
++        kError () << "slotContentsMoved EXCEPTION" << endl;
 +        memset (0, 42, 1048576);
 +    }
      grip->mouseMovedTo (grip->mapFromGlobal (QCursor::pos ()));
 +#if 0
 +    if (!m_resizeLinesNeedErase)
 +    {
-+        kdError () << "slotContentsMoved EXCEPTION 2" << endl;
++        kError () << "slotContentsMoved EXCEPTION 2" << endl;
 +        memset (0, 42, 1048576);
 +    }
 +#endif
@@ -425,7 +425,7 @@ diff -u -p -r1.7 kpviewscrollablecontainer.cpp
  {
 -#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
 +#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
-     kdDebug () << "kpViewScrollableContainer::viewportPaintEvent("
+     kDebug () << "kpViewScrollableContainer::viewportPaintEvent("
                 << e->rect ()
                 << ")" << endl;
 @@ -1213,4 +1339,42 @@ void kpViewScrollableContainer::paintEve
@@ -459,7 +459,7 @@ diff -u -p -r1.7 kpviewscrollablecontainer.cpp
 +void kpViewScrollableContainer::windowActivationChange (bool wasActive)
 +{
 +#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 1
-+    kdDebug () << "kpViewScrollableContainer::windowActivationChange("
++    kDebug () << "kpViewScrollableContainer::windowActivationChange("
 +               << wasActive << ")" << endl;
 +#endif
 +

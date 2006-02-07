@@ -146,7 +146,7 @@ kpColor kpToolAutoCropBorder::averageColor () const
         int numPixels = (m_rect.width () * m_rect.height ());
         if (numPixels <= 0)
         {
-            kdError () << "kpToolAutoCropBorder::averageColor() rect=" << m_rect << endl;
+            kError () << "kpToolAutoCropBorder::averageColor() rect=" << m_rect << endl;
             return kpColor::invalid;
         }
 
@@ -166,7 +166,7 @@ bool kpToolAutoCropBorder::isSingleColor () const
 bool kpToolAutoCropBorder::calculate (int isX, int dir)
 {
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kdDebug () << "kpToolAutoCropBorder::calculate() CALLED!" << endl;
+    kDebug () << "kpToolAutoCropBorder::calculate() CALLED!" << endl;
 #endif
     int maxX = m_pixmapPtr->width () - 1;
     int maxY = m_pixmapPtr->height () - 1;
@@ -174,7 +174,7 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
     QImage image = kpPixmapFX::convertToImage (*m_pixmapPtr);
     if (image.isNull ())
     {
-        kdError () << "Border::calculate() could not convert to QImage" << endl;
+        kError () << "Border::calculate() could not convert to QImage" << endl;
         return false;
     }
 
@@ -331,19 +331,19 @@ void showNothingToAutocropMessage (kpMainWindow *mainWindow, bool actOnSelection
 bool kpToolAutoCrop (kpMainWindow *mainWindow)
 {
 #if DEBUG_KP_TOOL_AUTO_CROP
-    kdDebug () << "kpToolAutoCrop() CALLED!" << endl;
+    kDebug () << "kpToolAutoCrop() CALLED!" << endl;
 #endif
 
     if (!mainWindow)
     {
-        kdError () << "kpToolAutoCrop() passed NULL mainWindow" << endl;
+        kError () << "kpToolAutoCrop() passed NULL mainWindow" << endl;
         return false;
     }
 
     kpDocument *doc = mainWindow->document ();
     if (!doc)
     {
-        kdError () << "kpToolAutoCrop() passed NULL document" << endl;
+        kError () << "kpToolAutoCrop() passed NULL document" << endl;
         return false;
     }
 
@@ -351,14 +351,14 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
     QPixmap pixmap = doc->selection () ? doc->getSelectedPixmap () : *doc->pixmap ();
     if (pixmap.isNull ())
     {
-        kdError () << "kptoolAutoCrop() pased NULL pixmap" << endl;
+        kError () << "kptoolAutoCrop() pased NULL pixmap" << endl;
         return false;
     }
 
     kpViewManager *vm = mainWindow->viewManager ();
     if (!vm)
     {
-        kdError () << "kpToolAutoCrop() passed NULL vm" << endl;
+        kError () << "kpToolAutoCrop() passed NULL vm" << endl;
         return false;
     }
 
@@ -392,7 +392,7 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
                        botBorder.exists ()) == 0))
     {
     #if DEBUG_KP_TOOL_AUTO_CROP
-        kdDebug () << "\tcan't find border; leftBorder.rect=" << leftBorder.rect ()
+        kDebug () << "\tcan't find border; leftBorder.rect=" << leftBorder.rect ()
                    << " rightBorder.rect=" << rightBorder.rect ()
                    << " topBorder.rect=" << topBorder.rect ()
                    << " botBorder.rect=" << botBorder.rect ()
@@ -403,20 +403,20 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
     }
 
 #if DEBUG_KP_TOOL_AUTO_CROP
-    kdDebug () << "\tnumRegions=" << numRegions << endl;
-    kdDebug () << "\t\tleft=" << leftBorder.rect ()
+    kDebug () << "\tnumRegions=" << numRegions << endl;
+    kDebug () << "\t\tleft=" << leftBorder.rect ()
                << " refCol=" << (leftBorder.exists () ? (int *) leftBorder.referenceColor ().toQRgb () : 0)
                << " avgCol=" << (leftBorder.exists () ? (int *) leftBorder.averageColor ().toQRgb () : 0)
                << endl;
-    kdDebug () << "\t\tright=" << rightBorder.rect ()
+    kDebug () << "\t\tright=" << rightBorder.rect ()
                << " refCol=" << (rightBorder.exists () ? (int *) rightBorder.referenceColor ().toQRgb () : 0)
                << " avgCol=" << (rightBorder.exists () ? (int *) rightBorder.averageColor ().toQRgb () : 0)
                << endl;
-    kdDebug () << "\t\ttop=" << topBorder.rect ()
+    kDebug () << "\t\ttop=" << topBorder.rect ()
                << " refCol=" << (topBorder.exists () ? (int *) topBorder.referenceColor ().toQRgb () : 0)
                << " avgCol=" << (topBorder.exists () ? (int *) topBorder.averageColor ().toQRgb () : 0)
                << endl;
-    kdDebug () << "\t\tbot=" << botBorder.rect ()
+    kDebug () << "\t\tbot=" << botBorder.rect ()
                << " refCol=" << (botBorder.exists () ? (int *) botBorder.referenceColor ().toQRgb () : 0)
                << " avgCol=" << (botBorder.exists () ? (int *) botBorder.averageColor ().toQRgb () : 0)
                << endl;
@@ -439,7 +439,7 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
             leftBorder.right () >= rightBorder.left () - 1)  // kissing or overlapping
         {
         #if DEBUG_KP_TOOL_AUTO_CROP
-            kdDebug () << "\tignoring left border" << endl;
+            kDebug () << "\tignoring left border" << endl;
         #endif
             leftBorder.invalidate ();
         }
@@ -454,7 +454,7 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
             topBorder.bottom () >= botBorder.top () - 1)  // kissing or overlapping
         {
         #if DEBUG_KP_TOOL_AUTO_CROP
-            kdDebug () << "\tignoring top border" << endl;
+            kDebug () << "\tignoring top border" << endl;
         #endif
             topBorder.invalidate ();
         }
@@ -493,7 +493,7 @@ kpToolAutoCropCommand::kpToolAutoCropCommand (bool actOnSelection,
     kpDocument *doc = document ();
     if (!doc)
     {
-        kdError () << "kpToolAutoCropCommand::<ctor>() without doc" << endl;
+        kError () << "kpToolAutoCropCommand::<ctor>() without doc" << endl;
         m_oldWidth = 0;
         m_oldHeight = 0;
         return;
@@ -550,8 +550,8 @@ void kpToolAutoCropCommand::getUndoPixmap (const kpToolAutoCropBorder &border, Q
     kpDocument *doc = document ();
 
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kdDebug () << "kpToolAutoCropCommand::getUndoPixmap()" << endl;
-    kdDebug () << "\tpixmap=" << pixmap
+    kDebug () << "kpToolAutoCropCommand::getUndoPixmap()" << endl;
+    kDebug () << "\tpixmap=" << pixmap
                << " border: rect=" << border.rect ()
                << " isSingleColor=" << border.isSingleColor ()
                << endl;
@@ -565,7 +565,7 @@ void kpToolAutoCropCommand::getUndoPixmap (const kpToolAutoCropBorder &border, Q
         if (*pixmap)
         {
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
-            kdDebug () << "\talready have *pixmap - delete it" << endl;
+            kDebug () << "\talready have *pixmap - delete it" << endl;
         #endif
             delete *pixmap;
         }
@@ -590,7 +590,7 @@ void kpToolAutoCropCommand::getUndoPixmaps ()
 void kpToolAutoCropCommand::deleteUndoPixmaps ()
 {
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kdDebug () << "kpToolAutoCropCommand::deleteUndoPixmaps()" << endl;
+    kDebug () << "kpToolAutoCropCommand::deleteUndoPixmaps()" << endl;
 #endif
 
     delete m_leftPixmap; m_leftPixmap = 0;
@@ -648,7 +648,7 @@ void kpToolAutoCropCommand::execute ()
 void kpToolAutoCropCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kdDebug () << "kpToolAutoCropCommand::unexecute()" << endl;
+    kDebug () << "kpToolAutoCropCommand::unexecute()" << endl;
 #endif
 
     kpDocument *doc = document ();
@@ -691,7 +691,7 @@ void kpToolAutoCropCommand::unexecute ()
         {
             kpColor col = (*b)->referenceColor ();
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
-            kdDebug () << "\tdrawing border " << (*b)->rect ()
+            kDebug () << "\tdrawing border " << (*b)->rect ()
                        << " rgb=" << (int *) col.toQRgb () /* %X hack */ << endl;
         #endif
 
@@ -714,7 +714,7 @@ void kpToolAutoCropCommand::unexecute ()
         else
         {
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
-            kdDebug () << "\trestoring border pixmap " << (*b)->rect () << endl;
+            kDebug () << "\trestoring border pixmap " << (*b)->rect () << endl;
         #endif
             if (*p)
                 painter.drawPixmap ((*b)->rect (), **p);

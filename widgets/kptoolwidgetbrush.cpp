@@ -84,7 +84,7 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const char *name)
             }
 
         #if DEBUG_KP_TOOL_WIDGET_BRUSH
-            kdDebug () << "kpToolWidgetBrush::kpToolWidgetBrush() rect=" << rect << endl;
+            kDebug () << "kpToolWidgetBrush::kpToolWidgetBrush() rect=" << rect << endl;
         #endif
 
             pm->fill (Qt::white);

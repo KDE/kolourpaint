@@ -81,7 +81,7 @@ QPixmap kpEffectBlurSharpenCommand::apply (const QPixmap &pixmap,
                                            int repeat)
 {
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    kdDebug () << "kpEffectBlurSharpenCommand::apply(type="
+    kDebug () << "kpEffectBlurSharpenCommand::apply(type="
                << int (type)
                << " radius=" << radius
                << " sigma=" << sigma
@@ -198,7 +198,7 @@ void kpEffectBlurSharpenWidget::slotUpdateTypeLabel ()
     QString text = ::nameForType (type ());
 
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    kdDebug () << "kpEffectBlurSharpenWidget::slotUpdateTypeLabel() text="
+    kDebug () << "kpEffectBlurSharpenWidget::slotUpdateTypeLabel() text="
                << text << endl;
 #endif
     m_typeLabel->setText (text);

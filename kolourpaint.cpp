@@ -176,7 +176,7 @@ int main (int argc, char *argv [])
     // mainly for changing wallpaper :)
     DCOPClient *client = app.dcopClient ();
     if (!client->attach ())
-        kdError () << "Could not contact DCOP server" << endl;
+        kError () << "Could not contact DCOP server" << endl;
 
     // mainly for the Spraycan Tool
     srand ((unsigned int) (getpid () + getppid ()));

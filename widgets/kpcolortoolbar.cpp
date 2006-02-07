@@ -90,7 +90,7 @@ kpColor kpDualColorButton::color (int which) const
 {
     if (which < 0 || which > 1)
     {
-        kdWarning () << "kpDualColorButton::color (" << which
+        kWarning () << "kpDualColorButton::color (" << which
                      << ") - out of range" << endl;
         which = 0;
     }
@@ -113,7 +113,7 @@ void kpDualColorButton::setColor (int which, const kpColor &color)
 {
     if (which < 0 || which > 1)
     {
-        kdWarning () << "kpDualColorButton::setColor (" << which
+        kWarning () << "kpDualColorButton::setColor (" << which
                      << ") - out of range" << endl;
         which = 0;
     }
@@ -265,7 +265,7 @@ void kpDualColorButton::mouseReleaseEvent (QMouseEvent *e)
         m_color [0] != m_color [1])
     {
     #if DEBUG_KP_COLOR_TOOL_BAR && 1
-        kdDebug () << "kpDualColorButton::mouseReleaseEvent() swap colors:" << endl;
+        kDebug () << "kpDualColorButton::mouseReleaseEvent() swap colors:" << endl;
     #endif
         m_oldColor [0] = m_color [0];
         m_oldColor [1] = m_color [1];
@@ -287,7 +287,7 @@ void kpDualColorButton::mouseReleaseEvent (QMouseEvent *e)
 void kpDualColorButton::drawContents (QPainter *p)
 {
 #if DEBUG_KP_COLOR_TOOL_BAR && 1
-    kdDebug () << "kpDualColorButton::draw() rect=" << rect ()
+    kDebug () << "kpDualColorButton::draw() rect=" << rect ()
                << " contentsRect=" << contentsRect ()
                << endl;
 #endif
@@ -332,7 +332,7 @@ void kpDualColorButton::drawContents (QPainter *p)
     if (isEnabled ())
     {
     #if DEBUG_KP_COLOR_TOOL_BAR && 1
-        kdDebug () << "\tbackgroundColor=" << (int *) m_color [1].toQRgb ()
+        kDebug () << "\tbackgroundColor=" << (int *) m_color [1].toQRgb ()
                    << endl;
     #endif
         if (m_color [1].isOpaque ())
@@ -352,7 +352,7 @@ void kpDualColorButton::drawContents (QPainter *p)
     if (isEnabled ())
     {
     #if DEBUG_KP_COLOR_TOOL_BAR && 1
-        kdDebug () << "\tforegroundColor=" << (int *) m_color [0].toQRgb ()
+        kDebug () << "\tforegroundColor=" << (int *) m_color [0].toQRgb ()
                    << endl;
     #endif
         if (m_color [0].isOpaque ())
@@ -528,7 +528,7 @@ void kpColorCells::setOrientation (Qt::Orientation o)
     }
 
 #if DEBUG_KP_COLOR_TOOL_BAR
-    kdDebug () << "kpColorCells::setOrientation(): r=" << r << " c=" << c << endl;
+    kDebug () << "kpColorCells::setOrientation(): r=" << r << " c=" << c << endl;
 #endif
 
     setNumRows (r);
@@ -537,9 +537,9 @@ void kpColorCells::setOrientation (Qt::Orientation o)
     setFixedSize (c * 26, r * 26);
 
 /*
-    kdDebug () << "\tlimits: array=" << sizeof (colors) / sizeof (colors [0])
+    kDebug () << "\tlimits: array=" << sizeof (colors) / sizeof (colors [0])
                << " r*c=" << r * c << endl;
-    kdDebug () << "\tsizeof (colors)=" << sizeof (colors)
+    kDebug () << "\tsizeof (colors)=" << sizeof (colors)
                << " sizeof (colors [0])=" << sizeof (colors [0])
                << endl;*/
     QColor colors [] =
@@ -636,7 +636,7 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
 
     Qt::ButtonState button = e->button ();
 #if DEBUG_KP_COLOR_TOOL_BAR
-    kdDebug () << "kpColorCells::mouseReleaseEvent(left="
+    kDebug () << "kpColorCells::mouseReleaseEvent(left="
                << (button & Qt::LeftButton)
                << ",right="
                << (button & Qt::RightButton)
@@ -656,7 +656,7 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
     disconnect (this, SIGNAL (colorSelected (int)), this, SLOT (slotColorSelected (int)));
 
 #if DEBUG_KP_COLOR_TOOL_BAR
-    kdDebug () << "kpColorCells::mouseReleaseEvent() setting m_mouseButton back to -1" << endl;
+    kDebug () << "kpColorCells::mouseReleaseEvent() setting m_mouseButton back to -1" << endl;
 #endif
     m_mouseButton = -1;
 }
@@ -665,7 +665,7 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
 void kpColorCells::slotColorSelected (int cell)
 {
 #if DEBUG_KP_COLOR_TOOL_BAR
-    kdDebug () << "kpColorCells::slotColorSelected(cell=" << cell
+    kDebug () << "kpColorCells::slotColorSelected(cell=" << cell
                << ") mouseButton = " << m_mouseButton << endl;
 #endif
     QColor c = KColorCells::color (cell);
@@ -688,7 +688,7 @@ void kpColorCells::slotColorSelected (int cell)
 void kpColorCells::slotColorDoubleClicked (int cell)
 {
 #if DEBUG_KP_COLOR_TOOL_BAR
-    kdDebug () << "kpColorCells::slotColorDoubleClicked(cell="
+    kDebug () << "kpColorCells::slotColorDoubleClicked(cell="
                << cell << ")" << endl;
 #endif
 
@@ -708,17 +708,17 @@ kpTransparentColorCell::kpTransparentColorCell (QWidget *parent, const char *nam
     : Q3Frame (parent, name)
 {
 #if DEBUG_KP_COLOR_TOOL_BAR
-    kdDebug () << "kpTransparentColorCell::kpTransparentColorCell()" << endl;
+    kDebug () << "kpTransparentColorCell::kpTransparentColorCell()" << endl;
 #endif
 
     setFrameStyle (Q3Frame::Panel | Q3Frame::Sunken);
 #if DEBUG_KP_COLOR_TOOL_BAR && 0
-    kdDebug () << "\tdefault line width=" << lineWidth ()
+    kDebug () << "\tdefault line width=" << lineWidth ()
                << " frame width=" << frameWidth () << endl;
 #endif
     //setLineWidth (2);
 #if DEBUG_KP_COLOR_TOOL_BAR && 0
-    kdDebug () << "\tline width=" << lineWidth ()
+    kDebug () << "\tline width=" << lineWidth ()
                << " frame width=" << frameWidth () << endl;
 #endif
 
@@ -770,7 +770,7 @@ void kpTransparentColorCell::drawContents (QPainter *p)
     if (isEnabled ())
     {
     #if DEBUG_KP_COLOR_TOOL_BAR
-        kdDebug () << "kpTransparentColorCell::drawContents() contentsRect="
+        kDebug () << "kpTransparentColorCell::drawContents() contentsRect="
                    << contentsRect ()
                    << endl;
     #endif
@@ -790,7 +790,7 @@ kpColorPalette::kpColorPalette (QWidget *parent,
       m_boxLayout (0)
 {
 #if DEBUG_KP_COLOR_TOOL_BAR
-    kdDebug () << "kpColorPalette::kpColorPalette()" << endl;
+    kDebug () << "kpColorPalette::kpColorPalette()" << endl;
 #endif
 
     m_transparentColorCell = new kpTransparentColorCell (this);
@@ -972,7 +972,7 @@ void kpColorToolBar::setOrientation (Qt::Orientation o)
 
     if (isOutsideDock)
     {
-        //kdDebug () << "\toutside dock, forcing orientation to last" << endl;
+        //kDebug () << "\toutside dock, forcing orientation to last" << endl;
         o = m_lastDockedOrientation;
     }
 
@@ -998,7 +998,7 @@ kpColor kpColorToolBar::color (int which) const
 {
     if (which < 0 || which > 1)
     {
-        kdWarning () << "kpColorToolBar::color (" << which
+        kWarning () << "kpColorToolBar::color (" << which
                      << ") - out of range" << endl;
         which = 0;
     }
@@ -1010,7 +1010,7 @@ void kpColorToolBar::setColor (int which, const kpColor &color)
 {
     if (which < 0 || which > 1)
     {
-        kdWarning () << "kpColorToolBar::setColor (" << which
+        kWarning () << "kpColorToolBar::setColor (" << which
                      << ") - out of range" << endl;
         which = 0;
     }
