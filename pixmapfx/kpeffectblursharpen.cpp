@@ -238,7 +238,7 @@ double kpEffectBlurSharpenWidget::radius () const
         return SharpenMin +
                   (m_amountInput->value () - 1) *
                       (SharpenMax - SharpenMin) /
-                          (m_amountInput->maxValue () - 1);
+                          (m_amountInput->maximum() - 1);
     }
 }
 
@@ -256,7 +256,7 @@ double kpEffectBlurSharpenWidget::sigma () const
         return BlurMin +
                    (-m_amountInput->value () - 1) *
                         (BlurMax - BlurMin) /
-                            (-m_amountInput->minValue () - 1);
+                            (-m_amountInput->minimum () - 1);
     }
     else
     {
@@ -266,7 +266,7 @@ double kpEffectBlurSharpenWidget::sigma () const
         return SharpenMin +
                    (m_amountInput->value () - 1) *
                        (SharpenMax - SharpenMin) /
-                           (m_amountInput->maxValue () - 1);
+                           (m_amountInput->maximum() - 1);
     }
 }
 
@@ -286,7 +286,7 @@ int kpEffectBlurSharpenWidget::repeat () const
         return qRound (SharpenMin +
                           (m_amountInput->value () - 1) *
                               (SharpenMax - SharpenMin) /
-                                  (m_amountInput->maxValue () - 1));
+                                  (m_amountInput->maximum () - 1));
     }
 }
 
