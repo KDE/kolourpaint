@@ -398,7 +398,7 @@ void kpMainWindow::readLastTool ()
     KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupTools);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
-    m_lastToolNumber = cfg->readNumEntry (kpSettingLastTool, -1);
+    m_lastToolNumber = cfg->readEntry (kpSettingLastTool, -1);
 }
 
 

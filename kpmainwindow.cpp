@@ -129,7 +129,7 @@ void kpMainWindow::readGeneralSettings ()
     m_configShowGrid = cfg->readBoolEntry (kpSettingShowGrid, false);
     m_configShowPath = cfg->readBoolEntry (kpSettingShowPath, false);
     m_configColorSimilarity = cfg->readDoubleNumEntry (kpSettingColorSimilarity, 0);
-    d->m_moreEffectsDialogLastEffect = cfg->readNumEntry (kpSettingMoreEffectsLastEffect);
+    d->m_moreEffectsDialogLastEffect = cfg->readEntry (kpSettingMoreEffectsLastEffect);
     d->m_resizeScaleDialogLastKeepAspect = cfg->readBoolEntry (kpSettingResizeScaleLastKeepAspect, false);
 
 

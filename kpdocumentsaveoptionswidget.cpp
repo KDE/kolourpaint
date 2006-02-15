@@ -753,7 +753,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
 
         if (cfg->hasKey (kpSettingPreviewSaveUpdateDelay))
         {
-            m_updatePreviewDelay = cfg->readNumEntry (kpSettingPreviewSaveUpdateDelay);
+            m_updatePreviewDelay = cfg->readEntry (kpSettingPreviewSaveUpdateDelay);
         }
         else
         {

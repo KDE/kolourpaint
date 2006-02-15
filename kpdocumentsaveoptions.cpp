@@ -261,7 +261,7 @@ void kpDocumentSaveOptions::saveDefaultMimeType (KConfigBase *config,
 int kpDocumentSaveOptions::defaultColorDepth (KConfigBase *config)
 {
     int colorDepth =
-        config->readNumEntry (kpSettingForcedColorDepth, -1);
+        config->readEntry (kpSettingForcedColorDepth, -1);
 
     if (colorDepthIsInvalid (colorDepth))
     {
@@ -295,7 +295,7 @@ void kpDocumentSaveOptions::saveDefaultDither (KConfigBase *config, bool dither)
 // public static
 int kpDocumentSaveOptions::defaultQuality (KConfigBase *config)
 {
-    int val = config->readNumEntry (kpSettingForcedQuality, -1);
+    int val = config->readEntry (kpSettingForcedQuality, -1);
     if (qualityIsInvalid (val))
         val = -1;
 

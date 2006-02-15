@@ -418,9 +418,9 @@ void kpCommandHistoryBase::readConfig ()
     KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupUndoRedo);
     KConfigBase *cfg = cfgGroupSaver.config ();
 
-    setUndoMinLimit (cfg->readNumEntry (kpSettingUndoMinLimit, undoMinLimit ()));
-    setUndoMaxLimit (cfg->readNumEntry (kpSettingUndoMaxLimit, undoMaxLimit ()));
-    setUndoMaxLimitSizeLimit (cfg->readNumEntry (kpSettingUndoMaxLimitSizeLimit,
+    setUndoMinLimit (cfg->readEntry (kpSettingUndoMinLimit, undoMinLimit ()));
+    setUndoMaxLimit (cfg->readEntry (kpSettingUndoMaxLimit, undoMaxLimit ()));
+    setUndoMaxLimitSizeLimit (cfg->readEntry (kpSettingUndoMaxLimitSizeLimit,
                                                  undoMaxLimitSizeLimit ()));
 
     trimCommandListsUpdateActions ();

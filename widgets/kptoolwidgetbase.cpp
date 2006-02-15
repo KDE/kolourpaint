@@ -181,8 +181,8 @@ QPair <int, int> kpToolWidgetBase::defaultSelectedRowAndCol () const
 
         QString nameString = QString::fromLatin1 (name ());
 
-        row = cfg->readNumEntry (nameString + QString::fromLatin1 (" Row"), -1);
-        col = cfg->readNumEntry (nameString + QString::fromLatin1 (" Col"), -1);
+        row = cfg->readEntry (nameString + QString::fromLatin1 (" Row"), -1);
+        col = cfg->readEntry (nameString + QString::fromLatin1 (" Col"), -1);
     }
 
 #if DEBUG_KP_TOOL_WIDGET_BASE

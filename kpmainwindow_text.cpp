@@ -82,7 +82,7 @@ void kpMainWindow::readAndApplyTextSettings ()
     KConfigBase *cfg = cfgGroupSaver.config ();
 
     m_actionTextFontFamily->setFont (cfg->readEntry (kpSettingFontFamily, QString::fromLatin1 ("Times")));
-    m_actionTextFontSize->setFontSize (cfg->readNumEntry (kpSettingFontSize, 14));
+    m_actionTextFontSize->setFontSize (cfg->readEntry (kpSettingFontSize, 14));
     m_actionTextBold->setChecked (cfg->readBoolEntry (kpSettingBold, false));
     m_actionTextItalic->setChecked (cfg->readBoolEntry (kpSettingItalic, false));
     m_actionTextUnderline->setChecked (cfg->readBoolEntry (kpSettingUnderline, false));
