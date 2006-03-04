@@ -1,8 +1,35 @@
 
-KolourPaint 1.4_light2 Series (branches/KDE/3.5/)
-=============================
+KolourPaint 1.4_relight Series (branches/KDE/3.5/)
+===============================
 
-KolourPaint 1.4_light2 (Frozen ???)
+KolourPaint 1.4.1_relight (Frozen 2006-01-15)
+
+   * Updated documentation (Thurston)
+
+KolourPaint 1.4_relight (Frozen 2005-11-08)
+
+   * New icons (Danny Allen, Nuno Pinheiro)
+
+   * Tool Box icon size is 22x22, not 16x16, at screen resolution >= 1024x768
+
+   * CTRL + Mouse Wheel = Zoom
+
+   * While freehand selection scaling, holding Shift maintains aspect ratio
+
+   * Prevent accidental drags in the Colour Palette from pasting text
+     containing the colour code
+     [also in branches/KDE/3.[34]/, branches/kolourpaint/1.2_kde3/]
+
+   * Cells in the bottom row and cells in the rightmost column of the Colour
+     Palette are now the same size as the other cells
+     [also in branches/KDE/3.[34]/, branches/kolourpaint/1.2_kde3/]
+
+   * Text drops to the empty part of the scrollview will not be placed
+     outside the document
+     [also in branches/KDE/3.[34]/, branches/kolourpaint/1.2_kde3/]
+
+   * Rename icons from "hi" to "cr" - back to the state of 1.0 (Danny Allen)
+     but leave application icons as "hi" (Jonathan Riddell)
 
    * Enforce text box font height to prevent e.g. Chinese characters in
      buggy fonts from enlarging the text box and putting the cursor out of
@@ -27,19 +54,13 @@ KolourPaint 1.4_light2 (Frozen ???)
      widgets and the empty part of the Tool Box
      [also in branches/KDE/3.[34]/, branches/kolourpaint/1.2_kde3/]
 
-   * New selection icons (Danny Allen)
-
-   * Rename icons from "hi" to "cr" - back to the state of 1.0 (Danny Allen)
-     but leave application icons as "hi" (Jonathan Riddell)
-
-   * Clone KolourPaint application icon as SVG (Jonathan Riddell)
-
-   * Add 22x22 KolourPaint application icon (Jonathan Riddell)
+   * Correct and update image format associations to all formats supported
+     by KDE 3.5 (kdelibs/kimgio/:r466654)
 
    * String fixes (Stefan Winter)
      [also in branches/KDE/3.4/]
 
-   * String fixes (Malcolm Hunter, Clarence Dang)
+   * Other string fixes (Malcolm Hunter, Clarence Dang, Stephan Binner)
 
 
 KolourPaint 1.4_light Series (branches/KDE/3.4/)

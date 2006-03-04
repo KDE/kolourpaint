@@ -129,7 +129,7 @@ void kpMainWindow::setupToolActions ()
 // private
 void kpMainWindow::createToolBox ()
 {
-    m_toolToolBar = new kpToolToolBar (this, 2/*columns/rows*/, "Tool Box");
+    m_toolToolBar = new kpToolToolBar (i18n ("Tool Box"), this, 2/*columns/rows*/, "Tool Box");
     connect (m_toolToolBar, SIGNAL (sigToolSelected (kpTool *)),
              this, SLOT (slotToolSelected (kpTool *)));
     connect (m_toolToolBar, SIGNAL (toolWidgetOptionSelected ()),

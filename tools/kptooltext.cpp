@@ -820,6 +820,8 @@ void kpToolText::slotFontFamilyChanged (const QString &fontFamily,
                << " old="
                << oldFontFamily
                << endl;
+#else
+    (void) fontFamily;
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -843,6 +845,8 @@ void kpToolText::slotFontSizeChanged (int fontSize, int oldFontSize)
                << " old="
                << oldFontSize
                << endl;
+#else
+    (void) fontSize;
 #endif
 
     if (!shouldChangeTextStyle ())

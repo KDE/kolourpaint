@@ -606,11 +606,10 @@ QIcon kpTool::iconSet (int forceSize) const
     kDebug () << "kpTool(" << name () << ")::iconSet(forceSize=" << forceSize << ")" << endl;
 #endif
     // (robust in case BarIcon() default arg changes)
-    // TODO: I would use BarIconSet but tool icons placed in mainToolBar don't show up!?
     if (forceSize > 0)
-        return BarIcon (name (), forceSize);
+        return BarIconSet (name (), forceSize);
     else
-        return BarIcon (name ());
+        return BarIconSet (name ());
 }
 
 // public
@@ -1137,6 +1136,50 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
         releasedAllButtons ();
     }
 }
+
+void kpTool::wheelEvent (QWheelEvent *e)
+{
+#if DEBUG_KP_TOOL
+    kdDebug () << "kpTool::wheelEvent() state=" << e->state ()
+               << " hasBegunDraw=" << hasBegunDraw ()
+               << " delta=" << e->delta ()
+               << endl;
+#endif
+
+    e->ignore ();
+    
+    // If CTRL not pressed, bye.
+    if ((e->state () & Qt::ControlButton) == 0)
+        return;
+    
+    // If drawing, bye; don't care if a shape in progress though.
+    if (hasBegunDraw ())
+        return;
+        
+        
+    // Zoom in/out depending on wheel direction.
+    
+    // Moved wheel away from user?
+    if (e->delta () > 0)
+    {
+        m_mainWindow->zoomIn (true/*center under cursor*/);
+        e->accept ();
+    }
+    // Moved wheel towards user?
+    else if (e->delta () < 0)
+    {
+    #if 1
+        m_mainWindow->zoomOut (true/*center under cursor - make zoom in/out
+                                     stay under same doc pos*/);
+    #else
+        m_mainWindow->zoomOut (false/*don't center under cursor - as is
+                                      confusing behaviour when zooming
+                                      out*/);
+    #endif
+        e->accept ();
+    }
+}
+
 
 void kpTool::keyPressEvent (QKeyEvent *e)
 {

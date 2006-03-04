@@ -94,8 +94,8 @@ void kpZoomedView::adjustToEnvironment ()
     if (document ())
     {
         // TODO: use zoomedDocWidth() & zoomedDocHeight()?
-        resize (transformDocToViewX (document ()->width ()),
-                transformDocToViewY (document ()->height ()));
+        resize ((int) transformDocToViewX (document ()->width ()),
+                (int) transformDocToViewY (document ()->height ()));
     }
 }
 

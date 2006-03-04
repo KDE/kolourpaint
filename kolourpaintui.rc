@@ -1,4 +1,8 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<!--
+SYNC: Do not change the number of quotes before the version number
+      - it is parsed by the KolourPaint wrapper script.
+-->
 <gui name="kolourpaint" version="24">
 
 <!--

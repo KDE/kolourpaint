@@ -218,7 +218,7 @@ QString kpMainWindow::zoomLevelToString (int zoomLevel)
 }
 
 // private
-void kpMainWindow::zoomTo (int zoomLevel)
+void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::zoomTo (" << zoomLevel << ")" << endl;
@@ -315,12 +315,42 @@ void kpMainWindow::zoomTo (int zoomLevel)
         //       scrollview; hence the centring is off by about 5-10 pixels.
 
         // TODO: use visibleRect() for greater accuracy?
-        int newCenterX = (m_scrollView->contentsX ()
-                         + QMIN (m_mainView->width (), m_scrollView->visibleWidth ()) / 2)
-                         * zoomLevel / m_mainView->zoomLevelX ();
-        int newCenterY = (m_scrollView->contentsY ()
-                         + QMIN (m_mainView->height (), m_scrollView->visibleHeight ()) / 2)
-                         * zoomLevel / m_mainView->zoomLevelY ();
+        
+        int viewX, viewY;
+        
+        bool targetDocAvail = false;
+        double targetDocX, targetDocY;
+        
+        if (centerUnderCursor &&
+            m_viewManager && m_viewManager->viewUnderCursor ())
+        {
+            kpView *const vuc = m_viewManager->viewUnderCursor ();
+            QPoint viewPoint = vuc->mouseViewPoint ();
+        
+            // vuc->transformViewToDoc() returns QPoint which only has int
+            // accuracy so we do X and Y manually.
+            targetDocX = vuc->transformViewToDocX (viewPoint.x ());
+            targetDocY = vuc->transformViewToDocY (viewPoint.y ());
+            targetDocAvail = true;
+                    
+            if (vuc != m_mainView)
+                viewPoint = vuc->transformViewToOtherView (viewPoint, m_mainView);
+            
+            viewX = viewPoint.x ();
+            viewY = viewPoint.y ();
+        }
+        else
+        {
+            viewX = m_scrollView->contentsX () +
+                        QMIN (m_mainView->width (),
+                              m_scrollView->visibleWidth ()) / 2;
+            viewY = m_scrollView->contentsY () +
+                        QMIN (m_mainView->height (),
+                              m_scrollView->visibleHeight ()) / 2;
+        }
+        
+        int newCenterX = viewX * zoomLevel / m_mainView->zoomLevelX ();
+        int newCenterY = viewY * zoomLevel / m_mainView->zoomLevelY ();
 
         m_mainView->setZoomLevel (zoomLevel, zoomLevel);
     #if DEBUG_ZOOM_FLICKER
@@ -350,6 +380,70 @@ void kpMainWindow::zoomTo (int zoomLevel)
     }
     #endif
 
+        if (centerUnderCursor &&
+            targetDocAvail &&
+            m_viewManager && m_viewManager->viewUnderCursor ())
+        {
+            kpView *const vuc = m_viewManager->viewUnderCursor ();
+            
+        #if DEBUG_KP_MAIN_WINDOW
+            kdDebug () << "\tcenterUnderCursor: reposition cursor; viewUnderCursor="
+                       << vuc->name () << endl;
+        #endif
+        
+            const double viewX = vuc->transformDocToViewX (targetDocX);
+            const double viewY = vuc->transformDocToViewY (targetDocY);
+            // Rounding error from zooming in and out :(
+            // TODO: do everything in terms of tool doc points in type "double".
+            const QPoint viewPoint ((int) viewX, (int) viewY);
+        #if DEBUG_KP_MAIN_WINDOW
+            kdDebug () << "\t\tdoc: (" << targetDocX << "," << targetDocY << ")"
+                       << " viewUnderCursor: (" << viewX << "," << viewY << ")"
+                       << endl; 
+        #endif
+        
+            if (vuc->clipRegion ().contains (viewPoint))
+            {
+                const QPoint globalPoint =
+                    kpWidgetMapper::toGlobal (vuc, viewPoint);
+            #if DEBUG_KP_MAIN_WINDOW
+                kdDebug () << "\t\tglobalPoint=" << globalPoint << endl;
+            #endif
+                
+                // TODO: Determine some sane cursor flashing indication -
+                //       cursor movement is convenient but not conventional.
+                //
+                //       Major problem: if using QApplication::setOverrideCursor()
+                //           and in some stage of flash and window quits.
+                //
+                //           Or if using kpView::setCursor() and change tool.
+                QCursor::setPos (globalPoint);
+            }
+            // e.g. Zoom to 200%, scroll mainView to bottom-right.
+            // Unzoomed Thumbnail shows top-left portion of bottom-right of
+            // mainView.
+            //
+            // Aim cursor at bottom-right of thumbnail and zoom out with
+            // CTRL+Wheel.
+            //
+            // If mainView is now small enough to largely not need scrollbars,
+            // Unzoomed Thumbnail scrolls to show _top-left_ portion
+            // _of top-left_ of mainView.
+            //
+            // Unzoomed Thumbnail no longer contains the point we zoomed out
+            // on top of.
+            else
+            {
+            #if DEBUG_KP_MAIN_WINDOW
+                kdDebug () << "\t\twon't move cursor - would get outside view"
+                           << endl;
+            #endif
+            
+                // TODO: Sane cursor flashing indication that indicates
+                //       that the normal cursor movement didn't happen.
+            }
+        }
+        
     #if DEBUG_KP_MAIN_WINDOW && 1
         kDebug () << "\t\tcheck (contentsX=" << m_scrollView->contentsX ()
                     << ",contentsY=" << m_scrollView->contentsY ()
@@ -559,26 +653,57 @@ void kpMainWindow::slotFitToHeight ()
 }
 
 
-// private slot
+// public
+void kpMainWindow::zoomIn (bool centerUnderCursor)
+{    
+    const int targetItem = m_actionZoom->currentItem () + 1;
+    
+    if (targetItem >= (int) m_zoomList.count ())
+        return;
+        
+    m_actionZoom->setCurrentItem (targetItem);
+    zoomAccordingToZoomAction (centerUnderCursor);
+}
+
+// public
+void kpMainWindow::zoomOut (bool centerUnderCursor)
+{    
+    const int targetItem = m_actionZoom->currentItem () - 1;
+    
+    if (targetItem < 0)
+        return;
+        
+    m_actionZoom->setCurrentItem (targetItem);
+    zoomAccordingToZoomAction (centerUnderCursor);
+}
+
+
+// public slot
 void kpMainWindow::slotZoomIn ()
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotZoomIn ()" << endl;
 #endif
 
-    m_actionZoom->setCurrentItem (m_actionZoom->currentItem () + 1);
-    slotZoom ();
+    zoomIn (false/*don't center under cursor*/);
 }
 
-// private slot
+// public slot
 void kpMainWindow::slotZoomOut ()
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotZoomOut ()" << endl;
 #endif
 
-    m_actionZoom->setCurrentItem (m_actionZoom->currentItem () - 1);
-    slotZoom ();
+    zoomOut (false/*don't center under cursor*/);
+}
+
+
+// public
+void kpMainWindow::zoomAccordingToZoomAction (bool centerUnderCursor)
+{
+    zoomTo (zoomLevelFromString (m_actionZoom->currentText ()),
+                                 centerUnderCursor);
 }
 
 // private slot
@@ -588,7 +713,7 @@ void kpMainWindow::slotZoom ()
     kDebug () << "kpMainWindow::slotZoom () index=" << m_actionZoom->currentItem ()
                << " text='" << m_actionZoom->currentText () << "'" << endl;
 #endif
-    zoomTo (zoomLevelFromString (m_actionZoom->currentText ()));
+    zoomAccordingToZoomAction (false/*don't center under cursor*/);
 }
 
 

@@ -12,7 +12,10 @@ Type=Application
 Exec=kolourpaint %u
 DocPath=kolourpaint/index.html
 
-MimeType=image/fax-g3;image/gif;image/jp2;image/jpeg;image/png;image/tiff;image/x-bmp;image/x-dds;image/x-eps;image/x-exr;image/x-ico;image/x-pcx;image/x-portable-bitmap;image/x-portable-greymap;image/x-portable-pixmap;image/x-psd;image/x-rgb;image/x-targa;image/x-xbm;image/x-xcf-gimp;image/x-xpm
+# SYNC: Run branches/kolourpaint/control/scripts/gen_mimetype_line.sh in
+#       the version of kdelibs/kimgio/ (e.g. KDE 3.5) KolourPaint is
+#       shipped with.
+MimeType=image/fax-g3;image/gif;image/jp2;image/jpeg;image/png;image/tiff;image/x-bmp;image/x-dds;image/x-eps;image/x-exr;image/x-hdr;image/x-ico;image/x-pcx;image/x-portable-bitmap;image/x-portable-greymap;image/x-portable-pixmap;image/x-rgb;image/x-targa;image/x-vnd.adobe.photoshop;image/x-xbm;image/x-xcf-gimp;image/x-xpm;video/x-mng
 
 Categories=Qt;KDE;Graphics;
 Terminal=false

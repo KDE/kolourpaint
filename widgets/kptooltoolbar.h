@@ -59,9 +59,12 @@ class kpToolToolBar : public KToolBar
 Q_OBJECT
 
 public:
-    kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows = 2, const char *name = 0);
+    kpToolToolBar (const QString &label, kpMainWindow *mainWindow, int colsOrRows = 2, const char *name = 0);
     virtual ~kpToolToolBar ();
 
+private:
+    int defaultIconSize ();
+public:
     void registerTool (kpTool *tool);
     void unregisterTool (kpTool *tool);
     void unregisterAllTools ();
@@ -142,6 +145,8 @@ private:
     Q3ValueVector <kpButtonToolPair> m_buttonToolPairs;
 
     kpTool *m_previousTool, *m_currentTool;
+    
+    int m_defaultIconSize;
 
 private:
     // There is no need to maintain binary compatibility at this stage.

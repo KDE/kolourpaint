@@ -45,6 +45,7 @@
 #include <kpmainwindow.h>
 
 #include <kolourpaintlicense.h>
+#include <kolourpaintversion.h>
 
 
 static const KCmdLineOptions cmdLineOptions [] =
@@ -60,17 +61,40 @@ int main (int argc, char *argv [])
     (
         "kolourpaint",
         I18N_NOOP ("KolourPaint"),
-        "1.4_light2-pre",  // SYNC: with VERSION
+        kpVersionText,
         I18N_NOOP ("Paint Program for KDE"),
         KAboutData::License_Custom,
-        "Copyright (c) 2003,2004,2005 Clarence Dang",
-        0,
+        0/*copyright statement - see licence instead*/,
+        I18N_NOOP ("Support / Feedback:\n"
+                   "kolourpaint-support@lists.sourceforge.net\n"),
         "http://kolourpaint.sourceforge.net/"
     );
 
 
     // this is _not_ the same as KAboutData::License_BSD
     aboutData.setLicenseText (kpLicenseText);
+
+
+    aboutData.setCustomAuthorText (
+        I18N_NOOP
+        (
+            "\n"
+            "For support, or to report bugs and feature requests, please email\n"
+            "<kolourpaint-support@lists.sourceforge.net>"
+            " - the free and friendly\n"
+            "KolourPaint support service.\n"
+            "\n"
+        ),
+        I18N_NOOP
+        (
+            "<qt>"
+            "For support, or to report bugs and feature requests, please email<br>"
+            "<a href=\"mailto:kolourpaint-support@lists.sourceforge.net\">kolourpaint-support@lists.sourceforge.net</a>"
+            " - the free and friendly<br>"
+            "KolourPaint support service.<br>"
+            "<br>"
+            "</qt>"
+        ));
 
 
     // SYNC: with AUTHORS
@@ -80,6 +104,8 @@ int main (int argc, char *argv [])
                          "thurston_dang@users.sourceforge.net");
     aboutData.addAuthor ("Kristof Borrey", I18N_NOOP ("Icons"), "borrey@kde.org");
     aboutData.addAuthor ("Kazuki Ohta", I18N_NOOP ("InputMethod Support"), "mover@hct.zaq.ne.jp");
+    aboutData.addAuthor ("Nuno Pinheiro", I18N_NOOP ("Icons"), "nf.pinheiro@gmail.com");
+    aboutData.addAuthor ("Danny Allen", I18N_NOOP ("Icons"), "dannya40uk@yahoo.co.uk");
 
 
     aboutData.addCredit ("Rashid N. Achilov");

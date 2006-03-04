@@ -242,7 +242,7 @@ public:
      * @returns viewX transformed to document coordinates, based on the
      *                origin() and zoomLevelX().
      */
-    int transformViewToDocX (int viewX) const;
+    double transformViewToDocX (double viewX) const;
 
     /**
      * @param viewY Vertical position in view coordinates.
@@ -250,7 +250,7 @@ public:
      * @returns viewY transformed to document coordinates, based on the
      *                origin() and zoomLevelY().
      */
-    int transformViewToDocY (int viewY) const;
+    double transformViewToDocY (double viewY) const;
 
     /**
      * @param viewPoint Position in view coordinates.
@@ -279,7 +279,7 @@ public:
      * @returns docX transformed to view coordinates, based on the origin()
      *               and zoomLevelX().
      */
-    int transformDocToViewX (int docX) const;
+    double transformDocToViewX (double docX) const;
 
     /**
      * @param docY Vertical position in document coordinates.
@@ -287,7 +287,7 @@ public:
      * @returns docY transformed to view coordinates, based on the origin()
      *               and zoomLevelY().
      */
-    int transformDocToViewY (int docY) const;
+    double transformDocToViewY (double docY) const;
 
     /**
      * @param docPoint Position in document coordinates.
@@ -310,6 +310,20 @@ public:
     QRect transformDocToView (const QRect &docRect) const;
 
 
+    /**
+     * @param viewPoint Position in view coordinates.
+     * @param otherView View whose coordinate system the return value will
+     *                  be in.
+     *
+     * @returns viewPoint transformed to the coordinate system of
+     *          @param otherView based on this and otherView's origin(),
+     *          zoomLevelX() and zoomLevelY().  This has less rounding
+     *          error than otherView->transformDocToView (transformViewToDoc (viewPoint)).
+     */
+    QPoint transformViewToOtherView (const QPoint &viewPoint,
+                                     const kpView *otherView);
+    
+                                        
     /**
      * @returns the approximate view width required to display the entire
      *          document(), based on the zoom level only.
@@ -462,7 +476,12 @@ protected:
     virtual void mouseMoveEvent (QMouseEvent *e);
     virtual void mousePressEvent (QMouseEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
+public:
+    // (needs to be public as it may also get event from
+    //  QScrollView::contentsWheelEvent())
+    virtual void wheelEvent (QWheelEvent *e);
 
+protected:
     virtual void keyPressEvent (QKeyEvent *e);
     virtual void keyReleaseEvent (QKeyEvent *e);
 

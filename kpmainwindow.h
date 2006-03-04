@@ -454,7 +454,7 @@ private:
     void sendZoomListToActionZoom ();
     int zoomLevelFromString (const QString &string);
     QString zoomLevelToString (int zoomLevel);
-    void zoomTo (int zoomLevel);
+    void zoomTo (int zoomLevel, bool centerUnderCursor = false);
 
 private slots:
     void finishZoomTo ();
@@ -465,9 +465,18 @@ private slots:
     void slotFitToWidth ();
     void slotFitToHeight ();
 
+public:
+    void zoomIn (bool centerUnderCursor = false);
+    void zoomOut (bool centerUnderCursor = false);
+    
+public slots:
     void slotZoomIn ();
     void slotZoomOut ();
 
+private:
+    void zoomAccordingToZoomAction (bool centerUnderCursor = false);
+    
+private slots:
     void slotZoom ();
 
     void slotShowGridToggled ();

@@ -146,8 +146,10 @@ signals:
 protected:
     Qt::Orientation m_orientation;
 
+    virtual void dropEvent (QDropEvent *e);
     virtual void paintCell (QPainter *painter, int row, int col);
     virtual void mouseReleaseEvent (QMouseEvent *e);
+    virtual void resizeEvent (QResizeEvent *e);
 
     int m_mouseButton;
 
@@ -250,7 +252,7 @@ class kpColorToolBar : public KToolBar
 Q_OBJECT
 
 public:
-    kpColorToolBar (kpMainWindow *mainWindow, const char *name = 0);
+    kpColorToolBar (const QString &label, kpMainWindow *mainWindow, const char *name = 0);
     virtual ~kpColorToolBar ();
 
     kpColor color (int which) const;
