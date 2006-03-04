@@ -106,6 +106,7 @@ int main (int argc, char *argv [])
     aboutData.addAuthor ("Kazuki Ohta", I18N_NOOP ("InputMethod Support"), "mover@hct.zaq.ne.jp");
     aboutData.addAuthor ("Nuno Pinheiro", I18N_NOOP ("Icons"), "nf.pinheiro@gmail.com");
     aboutData.addAuthor ("Danny Allen", I18N_NOOP ("Icons"), "dannya40uk@yahoo.co.uk");
+    aboutData.addAuthor ("Laurent Montel", I18N_NOOP ("KDE 4 Porting"), "montel@kde.org");
 
 
     aboutData.addCredit ("Rashid N. Achilov");
@@ -151,6 +152,7 @@ int main (int argc, char *argv [])
     aboutData.addCredit ("David Ling");
     aboutData.addCredit ("Volker Lochte");
     aboutData.addCredit ("Anders Lund");
+    aboutData.addCredit ("Thiago Macieira");
     aboutData.addCredit ("Jacek Masiulaniec");
     aboutData.addCredit ("Benjamin Meyer");
     aboutData.addCredit ("Amir Michail");
@@ -158,6 +160,7 @@ int main (int argc, char *argv [])
     aboutData.addCredit ("Dirk Mueller");
     aboutData.addCredit ("Ruivaldo Neto");
     aboutData.addCredit ("Ralf Nolden");
+    aboutData.addCredit ("Maks Orlovich");
     aboutData.addCredit ("Steven Pasternak");
     aboutData.addCredit ("Cédric Pasteur");
     aboutData.addCredit ("Erik K. Pedersen");
