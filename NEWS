@@ -2,9 +2,12 @@
 KolourPaint 1.4_relight Series (branches/KDE/3.5/)
 ===============================
 
-KolourPaint 1.4.2_relight (Frozen 2006-03-04)
+KolourPaint 1.4.2_relight (Frozen 2006-03-12)
 
-   * Translation updates
+   * Printing improvements (Bug #108976)
+     - Respect image DPI
+     - Fit image to page if image is too big
+     - Centre image on page
 
 KolourPaint 1.4.1_relight (Frozen 2006-01-15)
 
