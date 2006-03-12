@@ -96,11 +96,11 @@ const QCursor &kpGrip::cursorForType (GripType type)
 {
     switch (type)
     {
-    case Qt::DockBottom:
+    case kpGrip::Bottom:
         return Qt::SizeVerCursor;
         break;  // one day you'll forget
 
-    case Qt::DockRight:
+    case kpGrip::Right:
         return Qt::SizeHorCursor;
         break;  // one day you'll forget
 
@@ -120,14 +120,14 @@ QRect kpGrip::hotRect (bool toGlobal) const
 
     switch (m_type)
     {
-    case Qt::DockBottom:
+    case kpGrip::Bottom:
     {
         const int handleX = (width () - GripHandleSize) / 2;
         ret = QRect (handleX, 0,
                      GripHandleSize, height ());
         break;
     }
-    case Qt::DockRight:
+    case kpGrip::Right:
     {
         const int handleY = (height () - GripHandleSize) / 2;
         ret = QRect (0, handleY,
@@ -268,8 +268,8 @@ QPoint kpGrip::viewDeltaPoint () const
 
     // TODO: this is getting out of sync with m_currentPoint
 
-    return QPoint (((m_type & Qt::DockRight) ? point.x () - m_startPoint.x () : 0),
-                   ((m_type & Qt::DockBottom) ? point.y () - m_startPoint.y () : 0));
+    return QPoint (((m_type & kpGrip::Right) ? point.x () - m_startPoint.x () : 0),
+                   ((m_type & kpGrip::Bottom) ? point.y () - m_startPoint.y () : 0));
 
 }
 
@@ -281,8 +281,8 @@ void kpGrip::mouseMovedTo (const QPoint &point, bool dueToDragScroll)
 
     m_currentPoint = point;
 
-    emit continuedDraw (((m_type & Qt::DockRight) ? point.x () - m_startPoint.x () : 0),
-                        ((m_type & Qt::DockBottom) ? point.y () - m_startPoint.y () : 0),
+    emit continuedDraw (((m_type & kpGrip::Right) ? point.x () - m_startPoint.x () : 0),
+                        ((m_type & kpGrip::Bottom) ? point.y () - m_startPoint.y () : 0),
                         dueToDragScroll);
 }
 
@@ -323,8 +323,8 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
         m_startPoint = KP_INVALID_POINT;
 
         releaseKeyboard ();
-        emit endedDraw ((m_type & Qt::DockRight) ? dx : 0,
-                        (m_type & Qt::DockBottom) ? dy : 0);
+        emit endedDraw ((m_type & kpGrip::Right) ? dx : 0,
+                        (m_type & kpGrip::Bottom) ? dy : 0);
     }
 
     if ((e->stateAfter () & Qt::MouseButtonMask) == 0)
@@ -1280,6 +1280,7 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
     }
 
 
+    // COMPAT: this was ->changeInterval - check
     m_dragScrollTimer->start (DragScrollInterval);
     m_scrollTimerRunOnce = true;
 
