@@ -115,7 +115,7 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
                     color0Valid = true;
                     monoImage.setPixel (x, y, 0);
                 #if DEBUG_KP_EFFECT_REDUCE_COLORS
-                    kDebug () << "\t\t\tcolor0=" << (int *) Qt::color0
+                    kDebug () << "\t\t\tcolor0=" << (int *) color0
                                << " at x=" << x << ",y=" << y << endl;
                 #endif
                 }
@@ -125,7 +125,7 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
                     color1Valid = true;
                     monoImage.setPixel (x, y, 1);
                 #if DEBUG_KP_EFFECT_REDUCE_COLORS
-                    kDebug () << "\t\t\tcolor1=" << (int *) Qt::color1
+                    kDebug () << "\t\t\tcolor1=" << (int *) color1
                                << " at x=" << x << ",y=" << y << endl;
                 #endif
                 }

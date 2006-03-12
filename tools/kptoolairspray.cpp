@@ -322,7 +322,7 @@ void kpToolAirSprayCommand::addPoints (const Q3PointArray &points)
         painter.setPen (m_color.toQColor ());
     }
 
-    if (!pixmap.mask ().isNull() || m_color.isTransparent ())
+    if (!pixmap.mask ().isNull () || m_color.isTransparent ())
     {
         mask = kpPixmapFX::getNonNullMask (pixmap);
         maskPainter.begin (&mask);

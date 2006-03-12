@@ -497,13 +497,13 @@ void kpTool::beginInternal ()
         m_beganDraw = false;
 
 
-        uint keyState = KApplication::keyboardModifiers ();
+        uint keyState = QApplication::keyboardModifiers ();
 
-        m_shiftPressed = (keyState & KApplication::ShiftModifier);
-        m_controlPressed = (keyState & KApplication::ControlModifier);
+        m_shiftPressed = (keyState & Qt::ShiftModifier);
+        m_controlPressed = (keyState & Qt::ControlModifier);
 
         // TODO: Can't do much about ALT - unless it's always KApplication::Modifier1?
-        //       Ditto for everywhere else where I set SHIFT & CTRL but not alt.
+        //       Ditto for everywhere else where I set SHIFT & CTRL but not alt.  COMPAT: supported by Qt
         m_altPressed = false;
     }
 }
@@ -905,8 +905,8 @@ bool kpTool::currentPointNextToLast () const
     if (m_lastPoint == QPoint (-1, -1))
         return true;
 
-    int dx = kAbs (m_currentPoint.x () - m_lastPoint.x ());
-    int dy = kAbs (m_currentPoint.y () - m_lastPoint.y ());
+    int dx = qAbs (m_currentPoint.x () - m_lastPoint.x ());
+    int dy = qAbs (m_currentPoint.y () - m_lastPoint.y ());
 
     return (dx <= 1 && dy <= 1);
 }
@@ -916,8 +916,8 @@ bool kpTool::currentPointCardinallyNextToLast () const
     if (m_lastPoint == QPoint (-1, -1))
         return true;
 
-    int dx = kAbs (m_currentPoint.x () - m_lastPoint.x ());
-    int dy = kAbs (m_currentPoint.y () - m_lastPoint.y ());
+    int dx = qAbs (m_currentPoint.x () - m_lastPoint.x ());
+    int dy = qAbs (m_currentPoint.y () - m_lastPoint.y ());
 
     return (dx + dy <= 1);
 }
@@ -1370,10 +1370,10 @@ void kpTool::keyUpdateModifierState (QKeyEvent *e)
     #if DEBUG_KP_TOOL && 0
         kDebug () << "\t\tmodifiers not changed - figure out the truth" << endl;
     #endif
-        uint keyState = KApplication::keyboardModifiers ();
+        uint keyState = QApplication::keyboardModifiers ();
 
-        setShiftPressed (keyState & KApplication::ShiftModifier);
-        setControlPressed (keyState & KApplication::ControlModifier);
+        setShiftPressed (keyState & Qt::ShiftModifier);
+        setControlPressed (keyState & Qt::ControlModifier);
 
         // TODO: Can't do much about ALT - unless it's always KApplication::Modifier1?
         //       Ditto for everywhere else where I set SHIFT & CTRL but not alt.

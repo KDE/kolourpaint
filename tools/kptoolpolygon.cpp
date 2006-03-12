@@ -166,7 +166,7 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
 
     QPainter painter, maskPainter;
 
-    if (!pixmap.mask ().isNull() ||
+    if (!pixmap.mask ().isNull () ||
         (maskPen.style () != Qt::NoPen &&
          maskPen.color () == Qt::color0/*transparent*/) ||
         (maskBrush.style () != Qt::NoBrush &&
@@ -238,6 +238,7 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
                         QPen XORpen = painter.pen ();
                         XORpen.setColor (Qt::white);
 
+// COMPAT
                         painter.setPen (XORpen);
 #warning "QT4 fix it "
                         //painter.setRasterOp (Qt::XorROP);

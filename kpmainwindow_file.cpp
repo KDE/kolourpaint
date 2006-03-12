@@ -164,6 +164,7 @@ void kpMainWindow::addRecentURL (const KUrl &url)
 
 
     // TODO: PROPAGATE: interprocess
+    // COMPAT: it's not a pointer...
     if (KMainWindow::memberList())
     {
     #if DEBUG_KP_MAIN_WINDOW
@@ -419,13 +420,13 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
     // realise what other processes have done e.g. Settings / Show Path
     // so reparseConfiguration() must be called
-#define SETUP_READ_CFG()                                                          \
-    if (!reparsedConfiguration)                                                   \
-    {                                                                             \
+#define SETUP_READ_CFG()                                                             \
+    if (!reparsedConfiguration)                                                      \
+    {                                                                                \
         KGlobal::config ()->reparseConfiguration ();                                 \
-        reparsedConfiguration = true;                                             \
-    }                                                                             \
-                                                                                  \
+        reparsedConfiguration = true;                                                \
+    }                                                                                \
+                                                                                     \
     KConfigGroupSaver cfgGroupSaver (KGlobal::config (), forcedSaveOptionsGroup);    \
     KConfigBase *cfg = cfgGroupSaver.config ();
 

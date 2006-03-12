@@ -304,7 +304,7 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
     bool moreColorsThanDisplay =
         (KMessageBox::shouldBeShownContinue (colorDepthDontAskAgain) &&
          image.depth () > QPixmap::defaultDepth() &&
-         QPixmap::defaultDepth() < 24);  // 32 indicates alpha channel
+         QPixmap::defaultDepth () < 24);  // 32 indicates alpha channel
 	
     int screenDepthNeeded = 0;
 
@@ -440,7 +440,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
                                  QPixmap::defaultDepth ());
 
     QPixmap destPixmap;
-    int ditherFlags = 0;
+    Qt::ImageConversionFlags ditherFlags = 0;
 
     if (image.depth () <= screenDepth)
     {
@@ -492,13 +492,11 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
 
         int configDitherIfNumColorsGreaterThan = 323;
 
-        KConfigGroup cfg (KGlobal::config (),
-                                         kpSettingsGroupGeneral);
-        //KConfigBase *cfg = cfgGroupSaver.config ();
-
+        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
         if (cfg.hasKey (kpSettingDitherOnOpen))
         {
-            configDitherIfNumColorsGreaterThan = cfg.readEntry (kpSettingDitherOnOpen,0);
+            // COMPAT: the 0?
+            configDitherIfNumColorsGreaterThan = cfg.readEntry (kpSettingDitherOnOpen, 0);
         }
         else
         {
@@ -621,7 +619,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
              validSrcRect.x (), validSrcRect.y (), /* src pt */
              validSrcRect.width (), validSrcRect.height ());
 
-    if (wouldHaveUndefinedPixels && !retPixmap.mask ().isNull() && !pm.mask ().isNull())
+    if (wouldHaveUndefinedPixels && !retPixmap.mask ().isNull() && pm.mask ().isNull ())
     {
     #if DEBUG_KP_PIXMAP_FX && 0
         kDebug () << "\tensure opaque in valid region" << endl;
@@ -694,6 +692,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
              0, 0,
              destRect.width (), destRect.height ());
 #else
+    // COMPAT: supposed to CopyROP & ignore mask.
     bitBlt (destPixmapPtr,
             destRect.x (), destRect.y (),
             &srcPixmap,
@@ -701,19 +700,21 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
             destRect.width (), destRect.height ()
             );
 
-    if (!srcPixmap.mask ().isNull())
+    if (!srcPixmap.mask ().isNull ())
     {
         QBitmap mask = getNonNullMask (*destPixmapPtr);
+        // COMPAT: supposed CopyROP & ignore mask.
+        const QBitmap srcMask = srcPixmap.mask ();
         bitBlt (&mask,
                 destRect.x (), destRect.y (),
-                srcPixmap.mask (),
+                &srcMask
                 0, 0,
                 destRect.width (), destRect.height ());
         destPixmapPtr->setMask (mask);
     }
 #endif
 
-    if (!destPixmapPtr->mask ().isNull() && !srcPixmap.mask ().isNull())
+    if (!destPixmapPtr->mask ().isNull () && srcPixmap.mask ().isNull ())
     {
     #if DEBUG_KP_PIXMAP_FX && 0
         kDebug () << "\t\topaque'ing dest rect" << endl;
@@ -866,7 +867,7 @@ QBitmap kpPixmapFX::getNonNullMaskAt (const QPixmap &pm, const QRect &rect)
 {
     QBitmap destMaskBitmap (rect.width (), rect.height ());
 
-    if (!pm.mask ().isNull())
+    if (!pm.mask ().isNull ())
     {
         copyBlt (&destMaskBitmap, 0, 0,
                  &pm, rect.x (), rect.y (), rect.width (), rect.height ());
@@ -950,12 +951,13 @@ void kpPixmapFX::paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QP
     // Brush Bitmap value of 1 means "make transparent"
     //                       0 means "leave it as it is"
 
-    bitBlt (&destMaskBitmap,
-            destAt.x (), destAt.y (),
-            &brushBitmap,
-            0, 0,
-            brushBitmap.width (), brushBitmap.height (),
-            Qt::NotAndROP);
+    QPixmap brushPixmap (brushBitmap.width (), brushBitmap.height ());
+    brushPixmap.setMask (brushBitmap);
+
+    QPainter painter (&destMaskBitmap);
+    painter.setCompositionMode (QPainter::CompositionMode_DestinationIn);
+    painter.drawPixmap (destAt.x (), destAt.y (), brushPixmap);
+    painter.end ();
 
     destPixmapPtr->setMask (destMaskBitmap);
 }
@@ -994,18 +996,21 @@ void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, const QRect &destRect)
 void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, const QPoint &destAt,
                                  const QPixmap &srcPixmap)
 {
-    if (!destPixmapPtr || !destPixmapPtr->mask ().isNull()/*already opaque*/)
+    if (!destPixmapPtr || destPixmapPtr->mask ().isNull ()/*already opaque*/)
         return;
 
     QBitmap destMask = destPixmapPtr->mask ();
 
-    if (!srcPixmap.mask ().isNull())
+    if (!srcPixmap.mask ().isNull ())
     {
+    // COMPAT: Would have to check Qt4 mask & painting behaviour
+    #if 0
         bitBlt (&destMask, /* dest */
                 destAt, /* dest pt */
                 srcPixmap.mask (), /* src */
                 QRect (0, 0, srcPixmap.width (), srcPixmap.height ()), /* src rect */
                 Qt::OrROP/*if either is opaque, it's opaque*/);
+    #endif
     }
     else
     {
@@ -1156,7 +1161,7 @@ void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
             painter.setBrush (backgroundColor.toQColor ());
         }
 
-        if (backgroundColor.isTransparent () || !destPixmapPtr->mask ().isNull())
+        if (backgroundColor.isTransparent () || !destPixmapPtr->mask ().isNull ())
         {
             maskBitmap = kpPixmapFX::getNonNullMask (*destPixmapPtr);
             maskPainter.begin (&maskBitmap);
@@ -1398,7 +1403,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
     if (backgroundColor.isOpaque ())
         newPixmap.fill (backgroundColor.toQColor ());
 
-    if (backgroundColor.isTransparent () || !pm.mask ().isNull())
+    if (backgroundColor.isTransparent () || !pm.mask ().isNull ())
     {
         newBitmapMask.resize (newPixmap.width (), newPixmap.height ());
         newBitmapMask.fill (backgroundColor.maskColor ());

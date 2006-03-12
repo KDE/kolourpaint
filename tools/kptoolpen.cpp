@@ -399,7 +399,7 @@ void kpToolPen::globalDraw ()
         }
 
         if (backgroundColor ().isTransparent () ||
-            !document ()->pixmap ()->mask ().isNull() )
+            !document ()->pixmap ()->mask ().isNull ())
         {
             maskBitmap = kpPixmapFX::getNonNullMask (*document ()->pixmap ());
             maskPainter.begin (&maskBitmap);
@@ -530,7 +530,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
             }
 
             if (color (m_mouseButton).isTransparent () ||
-                !pixmap.mask ().isNull())
+                !pixmap.mask ().isNull ())
             {
                 maskBitmap = kpPixmapFX::getNonNullMask (pixmap);
                 maskPainter.begin (&maskBitmap);
@@ -607,7 +607,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
                 painter.setPen (c.toQColor ());
             }
 
-            if (transparent || !pixmap.mask ().isNull())
+            if (transparent || !pixmap.mask ().isNull ())
             {
                 maskBitmap = kpPixmapFX::getNonNullMask (pixmap);
                 maskPainter.begin (&maskBitmap);

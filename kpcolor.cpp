@@ -57,9 +57,9 @@ kpColor::kpColor (int red, int green, int blue, bool isTransparent)
         green < 0 || green > 255 ||
         blue < 0 || blue > 255)
     {
-        kError () << "kpColor::<ctor>(r=" << Qt::red
-                   << ",g=" << Qt::green
-                   << ",b=" << Qt::blue
+        kError () << "kpColor::<ctor>(r=" << red
+                   << ",g=" << green
+                   << ",b=" << blue
                    << ",t=" << isTransparent
                    << ") passed out of range values" << endl;
         m_rgbaIsValid = false;

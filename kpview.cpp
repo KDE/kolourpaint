@@ -627,7 +627,9 @@ void kpView::updateMicroFocusHint (const QRect &microFocusHint)
     int y = microFocusHint.topLeft().y();
     int width = microFocusHint.width();
     int height = microFocusHint.height();
-    setMicroFocusHint (x, y, width, height);
+
+    // COMPAT
+    //setMicroFocusHint (x, y, width, height);
 }
 
 // public
@@ -826,6 +828,7 @@ QRegion kpView::selectionResizeHandlesViewRegion (bool forRenderer) const
 }
 
 // public
+// COMPAT: use Qt Flags to be safer
 int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
 {
 #if DEBUG_KP_VIEW
@@ -876,37 +879,37 @@ int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
     if (LOCAL_POINT_IN_BOX_AT (selViewRect.width () - atomicLength,
                                selViewRect.height () - atomicLength))
     {
-        return Qt::DockBottom | Qt::DockRight;
+        return kpView::Bottom | kpView::Right;
     }
     else if (LOCAL_POINT_IN_BOX_AT (selViewRect.width () - atomicLength, 0))
     {
-        return Qt::DockTop | Qt::DockRight;
+        return kpView::Top | kpView::Right;
     }
     else if (LOCAL_POINT_IN_BOX_AT (0, selViewRect.height () - atomicLength))
     {
-        return Qt::DockBottom | Qt::DockLeft;
+        return kpView::Bottom | kpView::Left;
     }
     else if (LOCAL_POINT_IN_BOX_AT (0, 0))
     {
-        return Qt::DockTop | Qt::DockLeft;
+        return kpView::Top | kpView::Left;
     }
     else if (LOCAL_POINT_IN_BOX_AT (selViewRect.width () - atomicLength,
                                     (selViewRect.height () - atomicLength) / 2))
     {
-        return Qt::DockRight;
+        return kpView::Right;
     }
     else if (LOCAL_POINT_IN_BOX_AT ((selViewRect.width () - atomicLength) / 2,
                                     selViewRect.height () - atomicLength))
     {
-        return Qt::DockBottom;
+        return kpView::Bottom;
     }
     else if (LOCAL_POINT_IN_BOX_AT ((selViewRect.width () - atomicLength) / 2, 0))
     {
-        return Qt::DockTop;
+        return kpView::Top;
     }
     else if (LOCAL_POINT_IN_BOX_AT (0, (selViewRect.height () - atomicLength) / 2))
     {
-        return Qt::DockLeft;
+        return kpView::Left;
     }
     else
     {
@@ -1148,6 +1151,8 @@ void kpView::resizeEvent (QResizeEvent *e)
 }
 
 
+// COMPAT
+#if 0
 // private virtual
 void kpView::imStartEvent (QIMEvent *e)
 {
@@ -1183,6 +1188,7 @@ void kpView::imEndEvent (QIMEvent *e)
         tool ()->imEndEvent (e);
     e->accept();
 }
+#endif
 
 
 //

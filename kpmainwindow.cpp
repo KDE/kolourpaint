@@ -889,4 +889,3 @@ void kpMainWindow::slotDocumentRestored ()
 
 
 #include <kpmainwindow.moc>
-#include <kglobal.h>

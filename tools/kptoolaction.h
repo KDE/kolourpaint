@@ -33,6 +33,9 @@
 #include <kpsinglekeytriggersaction.h>
 
 
+class KActionCollection;
+
+
 // Same as KToggleAction but shows the first single key trigger in the tooltip.
 class kpToolAction : public KToggleAction,
                      public kpSingleKeyTriggersActionInterface
@@ -43,7 +46,7 @@ public:
     kpToolAction (const QString &text,
         const QString &pic, const KShortcut &shortcut,
         const QObject *receiver, const char *slot,
-        QObject *parent, const char *name);
+        KActionCollection *ac, const char *name);
     virtual ~kpToolAction ();
 
 

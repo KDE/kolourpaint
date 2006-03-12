@@ -60,7 +60,7 @@ public:
     enum GripType
     {
         Right = 1, Bottom = 2,
-        BottomRight = Qt::DockRight | Qt::DockBottom
+        BottomRight = Right | Bottom
     };
 
     kpGrip (GripType type,

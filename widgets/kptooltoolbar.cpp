@@ -544,6 +544,7 @@ void kpToolToolBar::slotToolActionToolTipChanged ()
     {
         if (tool == (*it).m_tool)
         {
+// COMPAT
 #warning "QT4: port to new QTooltip API"				
             //QToolTip::add ((*it).m_button, tool->toolTip ());
             return;

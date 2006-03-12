@@ -210,9 +210,6 @@ int main (int argc, char *argv [])
     // mainly for the Spraycan Tool
     srand ((unsigned int) (getpid () + getppid ()));
 
-    // access more formats
-    
-
 
     // Qt says this is necessary but I don't think it is...
     QObject::connect (&app, SIGNAL (lastWindowClosed ()),

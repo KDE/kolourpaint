@@ -78,7 +78,7 @@ static QPixmap pixmap (const kpToolRectangle::Mode mode,
                << endl;
 #endif
 
-    if (!pixmap.mask ().isNull() ||
+    if (!pixmap.mask ().isNull () ||
         (maskPen.style () != Qt::NoPen &&
          maskPen.color () ==  Qt::color0/*transparent*/) ||
         (maskBrush.style () != Qt::NoBrush &&

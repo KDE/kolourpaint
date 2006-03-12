@@ -939,4 +939,3 @@ void kpCommandHistory::redo ()
 }
 
 #include <kpcommandhistory.moc>
-#include <kglobal.h>

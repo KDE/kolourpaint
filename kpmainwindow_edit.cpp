@@ -599,6 +599,7 @@ void kpMainWindow::slotPaste ()
             i18n ("Cannot Paste"));
 
         // TODO: PROPAGATE: interprocess
+        // COMPAT: it's not a pointer...
         if (KMainWindow::memberList())
         {
         #if DEBUG_KP_MAIN_WINDOW

@@ -37,7 +37,11 @@
 #include <kpdefs.h>
 
 
+class QFocusEvent;
 class QIcon;
+class QInputMethodEvent;
+class QKeyEvent;
+class QMouseEvent;
 class QPixmap;
 
 class KKeySequence;

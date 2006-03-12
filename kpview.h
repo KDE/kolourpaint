@@ -494,9 +494,10 @@ protected:
     virtual void dragEnterEvent (QDragEnterEvent *);
     virtual void dragLeaveEvent (QDragLeaveEvent *);
     
-    virtual void imStartEvent (QIMEvent *e);
-    virtual void imComposeEvent (QIMEvent *e);
-    virtual void imEndEvent (QIMEvent *e);
+    // COMPAT
+    //virtual void imStartEvent (QIMEvent *e);
+    //virtual void imComposeEvent (QIMEvent *e);
+    //virtual void imEndEvent (QIMEvent *e);
 
 public:
     virtual void resize (int w, int h);

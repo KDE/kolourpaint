@@ -153,6 +153,7 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
 
     m_enableCheckBox = new QCheckBox (i18n ("E&nable"), this);
 
+    // COMPAT: What happened to QVBox?
     KVBox *colorButtonContainer = new KVBox (this);
     colorButtonContainer->setMargin (KDialog::marginHint () / 2);
     colorButtonContainer->setSpacing (spacingHint ());
@@ -188,7 +189,8 @@ kpEffectFlattenWidget::~kpEffectFlattenWidget ()
 
     cfgGroupSaver.writeEntry (kpSettingFlattenEffectColor1, s_lastColor1);
     cfgGroupSaver.writeEntry (kpSettingFlattenEffectColor2, s_lastColor2);
-	KGlobal::config ()->sync ();
+    // COMPAT: cfgGroupSaver.sync ()?
+    KGlobal::config ()->sync ();
 }
 
 

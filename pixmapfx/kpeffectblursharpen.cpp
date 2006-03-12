@@ -238,7 +238,7 @@ double kpEffectBlurSharpenWidget::radius () const
         return SharpenMin +
                   (m_amountInput->value () - 1) *
                       (SharpenMax - SharpenMin) /
-                          (m_amountInput->maximum() - 1);
+                          (m_amountInput->maximum () - 1);
     }
 }
 
@@ -266,7 +266,7 @@ double kpEffectBlurSharpenWidget::sigma () const
         return SharpenMin +
                    (m_amountInput->value () - 1) *
                        (SharpenMax - SharpenMin) /
-                           (m_amountInput->maximum() - 1);
+                           (m_amountInput->maximum () - 1);
     }
 }
 

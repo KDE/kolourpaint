@@ -610,4 +610,3 @@ void kpToolWidgetBase::drawContents (QPainter *painter)
 }
 
 #include <kptoolwidgetbase.moc>
-#include <kglobal.h>
