@@ -6,6 +6,12 @@ KolourPaint 4.0.0 (Frozen ???)
 
    * Port to KDE 4 (Laurent Montel)
 
+   * Printing improvements (Bug #108976)
+     - Respect image DPI
+     - Fit image to page if image is too big
+     - Centre image on page
+     [also in branches/KDE/3.5/]
+
 
 KolourPaint 1.4_relight Series (branches/KDE/3.5/)
 ===============================

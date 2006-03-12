@@ -346,7 +346,7 @@ private slots:
 
 private:
     void sendFilenameToPrinter (KPrinter *printer);
-    void sendPixmapToPrinter (KPrinter *printer);
+    void sendPixmapToPrinter (KPrinter *printer, bool showPrinterSetupDialog);
 
 private slots:
     void slotPrint ();
