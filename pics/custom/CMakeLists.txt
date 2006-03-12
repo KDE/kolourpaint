@@ -1,0 +1,25 @@
+kde4_header()
+
+include_directories( ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}  )
+
+
+########### install files ###############
+
+install_files( ${DATA_INSTALL_DIR}/kolourpaint/pics FILES tool_spraycan_9x9.png tool_spraycan_17x17.png tool_spraycan_29x29.png      color_transparent_26x26.png colorbutton_swap_16x16.png      option_opaque.png option_transparent.png      resize.png scale.png smooth_scale.png      image_skew_horizontal.png image_skew_vertical.png      image_rotate_anticlockwise.png image_rotate_clockwise.png )
+
+kde4_footer()
+
+
+
+#original Makefile.am contents follow:
+
+#customicondir = $(kde_datadir)/kolourpaint/pics
+#customicon_DATA = tool_spraycan_9x9.png tool_spraycan_17x17.png tool_spraycan_29x29.png \
+#    color_transparent_26x26.png colorbutton_swap_16x16.png \
+#    option_opaque.png option_transparent.png \
+#    resize.png scale.png smooth_scale.png \
+#    image_skew_horizontal.png image_skew_vertical.png \
+#    image_rotate_anticlockwise.png image_rotate_clockwise.png
+#
+#EXTRA_DIST = $(customicon_DATA)
+#
