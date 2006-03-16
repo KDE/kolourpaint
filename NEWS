@@ -8,6 +8,7 @@ KolourPaint 1.4.2_relight (Frozen 2006-03-12)
      - Respect image DPI
      - Fit image to page if image is too big
      - Centre image on page
+     [also in branches/KDE/3.[34]/, branches/kolourpaint/1.2_kde3/]
 
 KolourPaint 1.4.1_relight (Frozen 2006-01-15)
 
