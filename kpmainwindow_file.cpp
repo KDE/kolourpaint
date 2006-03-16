@@ -30,6 +30,7 @@
 
 #include <qcstring.h>
 #include <qdatastream.h>
+#include <qpaintdevicemetrics.h>
 #include <qpainter.h>
 #include <qsize.h>
 
@@ -262,9 +263,7 @@ QSize kpMainWindow::defaultDocSize () const
 void kpMainWindow::saveDefaultDocSize (const QSize &size)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tCONFIG: saving Last Doc Size = "
-               << QSize (dialog.imageWidth (), dialog.imageHeight ())
-               << endl;
+    kdDebug () << "\tCONFIG: saving Last Doc Size = " << size << endl;
 #endif
 
     KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
@@ -939,12 +938,223 @@ void kpMainWindow::sendFilenameToPrinter (KPrinter *printer)
     }
 }
 
-// private
-void kpMainWindow::sendPixmapToPrinter (KPrinter *printer)
+
+static const double InchesPerMeter = 100 / 2.54;
+
+
+// TODO: GUI should allow viewing & changing of DPI.
+
+
+static bool shouldPrintImageCenteredOnPage ()
 {
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpmainwindow_file.cpp:shouldPrintImageCenteredOnPage()" << endl;
+#endif
+    bool ret;
+
+    KConfigGroupSaver cfgGroupSaver (KGlobal::config (),
+                                     kpSettingsGroupGeneral);
+    KConfigBase *cfg = cfgGroupSaver.config ();
+
+    if (cfg->hasKey (kpSettingPrintImageCenteredOnPage))
+    {
+        ret = cfg->readBoolEntry (kpSettingPrintImageCenteredOnPage);
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\tread: " << ret << endl;
+    #endif
+    }
+    else
+    {
+        ret = true;
+#if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\tfirst time - writing default: " << ret << endl;
+#endif
+        cfg->writeEntry (kpSettingPrintImageCenteredOnPage, ret);
+        cfg->sync ();
+    }
+
+    return ret;
+}
+
+
+// private
+void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
+        bool showPrinterSetupDialog)
+{
+    // Get image to be printed.
+    QPixmap pixmap = m_document->pixmapWithSelection ();
+
+
+    // Get image DPI.
+    double pixmapDotsPerMeterX =
+        double (m_document->metaInfo ()->dotsPerMeterX ());
+    double pixmapDotsPerMeterY =
+        double (m_document->metaInfo ()->dotsPerMeterY ());
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::sendPixmapToPrinter() pixmap:"
+               << " width=" << pixmap.width ()
+               << " height=" << pixmap.height ()
+               << " dotsPerMeterX=" << pixmapDotsPerMeterX
+               << " dotsPerMeterY=" << pixmapDotsPerMeterY
+               << endl;
+#endif
+
+    // Image DPI invalid (e.g. new image, could not read from file
+    // or Qt3 doesn't implement DPI for JPEG)?
+    if (pixmapDotsPerMeterX < 1 || pixmapDotsPerMeterY < 1)
+    {
+        // Even if just one DPI dimension is invalid, mutate both DPI
+        // dimensions as we have no information about the intended
+        // aspect ratio anyway (and other dimension likely to be invalid).
+
+        // When rendering text onto a document, the fonts are rasterised
+        // according to the screen's DPI.
+        // TODO: I think we should use the image's DPI.  Technically
+        //       possible?
+        //       
+        //       So no matter what computer you draw text on, you get
+        //       the same pixels.
+        //
+        // So we must print at the screen's DPI to get the right text size.
+        //
+        // Unfortunately, this means that moving to a different screen DPI
+        // affects printing.  If you edited the image at a different screen
+        // DPI than when you print, you get incorrect results.  Furthermore,
+        // this is bogus if you don't have text in your image.  Worse still,
+        // what if you have multiple screens connected to the same computer
+        // with different DPIs?
+        // TODO: mysteriously, someone else is setting this to 96dpi always.
+        QPaintDeviceMetrics screenMetrics (&pixmap/*screen element*/);
+        const int dpiX = screenMetrics.logicalDpiX (),
+            dpiY = screenMetrics.logicalDpiY ();
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\tusing screen dpi: x=" << dpiX << " y=" << dpiY << endl;
+    #endif
+
+        pixmapDotsPerMeterX = dpiX * InchesPerMeter;
+        pixmapDotsPerMeterY = dpiY * InchesPerMeter;
+    }
+
+
+    // Get page size (excluding margins).
+    // Coordinate (0,0) is the X here:
+    //     mmmmm
+    //     mX  m
+    //     m   m       m = margin
+    //     m   m
+    //     mmmmm
+    QPaintDeviceMetrics printerMetrics (printer);
+    const int printerWidthMM = printerMetrics.widthMM ();
+    const int printerHeightMM = printerMetrics.heightMM ();
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tprinter: widthMM=" << printerWidthMM
+               << " heightMM=" << printerHeightMM
+               << endl;
+#endif
+
+    
+    double dpiX = pixmapDotsPerMeterX / InchesPerMeter;
+    double dpiY = pixmapDotsPerMeterY / InchesPerMeter;
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\tpixmap: dpiX=" << dpiX << " dpiY=" << dpiY << endl;
+#endif
+
+
+    //
+    // If image doesn't fit on page at intended DPI, change the DPI.
+    //
+
+    const double scaleDpiX = (pixmap.width () / (printerWidthMM / 25.4))
+        / dpiX;
+    const double scaleDpiY = (pixmap.height () / (printerHeightMM / 25.4))
+        / dpiY;
+    const double scaleDpi = QMAX (scaleDpiX, scaleDpiY);
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\t\tscaleDpi: x=" << scaleDpiX << " y=" << scaleDpiY
+               << " --> scale at " << scaleDpi << " to fit?"
+               << endl;
+#endif
+
+    // Need to increase resolution to fit page?
+    if (scaleDpi > 1.0)
+    {
+        dpiX *= scaleDpi;
+        dpiY *= scaleDpi;
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\t\t\tto fit page, scaled to:"
+                   << " dpiX=" << dpiX << " dpiY=" << dpiY << endl;
+    #endif
+    }
+
+
+    // Make sure DPIs are equal as that's all QPrinter::setResolution()
+    // supports.  We do this in such a way that we only ever stretch an
+    // image, to avoid losing information.  Don't antialias as the printer
+    // will do that to translate our DPI to its physical resolution and
+    // double-antialiasing looks bad.
+    if (dpiX > dpiY)
+    {
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\tdpiX > dpiY; stretching pixmap height to equalise DPIs to dpiX="
+                   << dpiX << endl;
+    #endif
+        kpPixmapFX::scale (&pixmap,
+             pixmap.width (),
+             QMAX (1, qRound (pixmap.height () * dpiX / dpiY)),
+             false/*don't antialias*/);
+
+        dpiY = dpiX;
+    }
+    else if (dpiY > dpiX)
+    {
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\tdpiY > dpiX; stretching pixmap width to equalise DPIs to dpiY="
+                   << dpiY << endl;
+    #endif
+        kpPixmapFX::scale (&pixmap,
+             QMAX (1, qRound (pixmap.width () * dpiY / dpiX)),
+             pixmap.height (),
+             false/*don't antialias*/);
+
+        dpiX = dpiY;
+    }
+
+
+    // ASSERT: dpiX == dpiY
+    // QPrinter::setResolution() has to be called before QPrinter::setup().
+    printer->setResolution (QMAX (1, qRound (dpiX)));
+
+
+    double originX = 0, originY = 0;
+
+    // Centre image on page?
+    if (shouldPrintImageCenteredOnPage ())
+    {
+        originX = (printerWidthMM * dpiX / 25.4 - pixmap.width ()) / 2;
+        originY = (printerHeightMM * dpiY / 25.4 - pixmap.height ()) / 2;
+    }
+
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\torigin: x=" << originX << " y=" << originY << endl;
+#endif
+
+
+    sendFilenameToPrinter (printer);
+
+    if (showPrinterSetupDialog)
+    {
+        // The user can mutate margins at their own risk in this dialog.
+        // It doesn't seem to affect the size of the page as reported
+        // by QPaintDeviceMetrics::{width,height}MM().
+        if (!printer->setup (this))
+            return;
+    }
+
+
+    // Send pixmap to printer.
     QPainter painter;
     painter.begin (printer);
-    painter.drawPixmap (0, 0, m_document->pixmapWithSelection ());
+    painter.drawPixmap (qRound (originX), qRound (originY), pixmap);
     painter.end ();
 }
 
@@ -957,11 +1167,7 @@ void kpMainWindow::slotPrint ()
 
     KPrinter printer;
 
-    sendFilenameToPrinter (&printer);
-    if (!printer.setup (this))
-        return;
-
-    sendPixmapToPrinter (&printer);
+    sendPixmapToPrinter (&printer, true/*showPrinterSetupDialog*/);
 }
 
 // private slot
@@ -975,9 +1181,8 @@ void kpMainWindow::slotPrintPreview ()
 
     // TODO: pass "this" as parent
     printer.setPreviewOnly (true);
-    sendFilenameToPrinter (&printer);
 
-    sendPixmapToPrinter (&printer);
+    sendPixmapToPrinter (&printer, false/*don't showPrinterSetupDialog*/);
 }
 
 
@@ -1153,3 +1358,4 @@ void kpMainWindow::slotQuit ()
 
     close ();  // will call queryClose()
 }
+

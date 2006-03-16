@@ -14,6 +14,14 @@ anything and would make KolourPaint a lot more useful for CJK users.
 KolourPaint 1.2_kde3 Series (branches/kolourpaint/1.2_kde3/)
 ===========================
 
+Version 1.2.5_kde3 (Unreleased Frozen 2006-03-15)
+
+   * Printing improvements (Bug #108976)
+     - Respect image DPI
+     - Fit image to page if image is too big
+     - Centre image on page
+     [also in branches/KDE/3.[345]/]
+
 Version 1.2.4_kde3 (Unreleased Frozen 2005-10-05)
 
    * InputMethod support
