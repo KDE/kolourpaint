@@ -2,6 +2,14 @@
 KolourPaint 1.4_light Series (branches/KDE/3.4/)
 ============================
 
+KolourPaint 1.4.4_light (Unreleased Frozen 2006-03-15)
+
+   * Printing improvements (Bug #108976)
+     - Respect image DPI
+     - Fit image to page if image is too big
+     - Centre image on page
+     [also in branches/KDE/3.[35]/, branches/kolourpaint/1.2_kde3/]
+
 KolourPaint 1.4.3_light (Frozen 2005-10-05)
 
    * Prevent accidental drags in the Colour Palette from pasting text
