@@ -1,4 +1,5 @@
 kde4_header()
+project(kolourpaint)
 
 add_subdirectory( cursors ) 
 add_subdirectory( pics ) 
