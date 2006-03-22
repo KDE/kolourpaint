@@ -1140,7 +1140,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
 void kpTool::wheelEvent (QWheelEvent *e)
 {
 #if DEBUG_KP_TOOL
-    kdDebug () << "kpTool::wheelEvent() state=" << e->state ()
+    kDebug () << "kpTool::wheelEvent() state=" << e->state ()
                << " hasBegunDraw=" << hasBegunDraw ()
                << " delta=" << e->delta ()
                << endl;
