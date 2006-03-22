@@ -38,8 +38,8 @@
 class QAbstractButton;
 class QBoxLayout;
 class QButtonGroup;
-class QWidget;
 class QGridLayout;
+class QWidget;
 
 class kpMainWindow;
 class kpTool;
