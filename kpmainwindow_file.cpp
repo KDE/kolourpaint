@@ -251,7 +251,7 @@ QSize kpMainWindow::defaultDocSize () const
 void kpMainWindow::saveDefaultDocSize (const QSize &size)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tCONFIG: saving Last Doc Size = " << size << endl;
+    kDebug () << "\tCONFIG: saving Last Doc Size = " << size << endl;
 #endif
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
@@ -442,7 +442,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 #if DEBUG_KP_MAIN_WINDOW
     QStringList sortedMimeTypes = mimeTypes;
     sortedMimeTypes.sort ();
-    kdDebug () << "\tmimeTypes=" << mimeTypes << endl
+    kDebug () << "\tmimeTypes=" << mimeTypes << endl
                << "\tsortedMimeTypes=" << sortedMimeTypes << endl;
 #endif
     if (mimeTypes.isEmpty ())
@@ -806,7 +806,7 @@ static const double InchesPerMeter = 100 / 2.54;
 static bool shouldPrintImageCenteredOnPage ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpmainwindow_file.cpp:shouldPrintImageCenteredOnPage()" << endl;
+    kDebug () << "kpmainwindow_file.cpp:shouldPrintImageCenteredOnPage()" << endl;
 #endif
     bool ret;
 
@@ -814,16 +814,16 @@ static bool shouldPrintImageCenteredOnPage ()
 
     if (cfg.hasKey (kpSettingPrintImageCenteredOnPage))
     {
-        ret = cfg.readBoolEntry (kpSettingPrintImageCenteredOnPage, true/*COMPAT, silly*/);
+        ret = cfg.readEntry (kpSettingPrintImageCenteredOnPage, true);
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tread: " << ret << endl;
+        kDebug () << "\tread: " << ret << endl;
     #endif
     }
     else
     {
         ret = true;
 #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tfirst time - writing default: " << ret << endl;
+        kDebug () << "\tfirst time - writing default: " << ret << endl;
 #endif
         cfg.writeEntry (kpSettingPrintImageCenteredOnPage, ret);
         cfg.sync ();
@@ -847,7 +847,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
     double pixmapDotsPerMeterY =
         double (m_document->metaInfo ()->dotsPerMeterY ());
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow::sendPixmapToPrinter() pixmap:"
+    kDebug () << "kpMainWindow::sendPixmapToPrinter() pixmap:"
                << " width=" << pixmap.width ()
                << " height=" << pixmap.height ()
                << " dotsPerMeterX=" << pixmapDotsPerMeterX
@@ -884,7 +884,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
         const int dpiX = screenDevice->logicalDpiX (),
             dpiY = screenDevice->logicalDpiY ();
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tusing screen dpi: x=" << dpiX << " y=" << dpiY << endl;
+        kDebug () << "\tusing screen dpi: x=" << dpiX << " y=" << dpiY << endl;
     #endif
 
         pixmapDotsPerMeterX = dpiX * InchesPerMeter;
@@ -902,7 +902,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
     const int printerWidthMM = printer->widthMM ();
     const int printerHeightMM = printer->heightMM ();
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tprinter: widthMM=" << printerWidthMM
+    kDebug () << "\tprinter: widthMM=" << printerWidthMM
                << " heightMM=" << printerHeightMM
                << endl;
 #endif
@@ -911,7 +911,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
     double dpiX = pixmapDotsPerMeterX / InchesPerMeter;
     double dpiY = pixmapDotsPerMeterY / InchesPerMeter;
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\tpixmap: dpiX=" << dpiX << " dpiY=" << dpiY << endl;
+    kDebug () << "\tpixmap: dpiX=" << dpiX << " dpiY=" << dpiY << endl;
 #endif
 
 
@@ -925,7 +925,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
         / dpiY;
     const double scaleDpi = QMAX (scaleDpiX, scaleDpiY);
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\t\tscaleDpi: x=" << scaleDpiX << " y=" << scaleDpiY
+    kDebug () << "\t\tscaleDpi: x=" << scaleDpiX << " y=" << scaleDpiY
                << " --> scale at " << scaleDpi << " to fit?"
                << endl;
 #endif
@@ -936,7 +936,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
         dpiX *= scaleDpi;
         dpiY *= scaleDpi;
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\t\t\tto fit page, scaled to:"
+        kDebug () << "\t\t\tto fit page, scaled to:"
                    << " dpiX=" << dpiX << " dpiY=" << dpiY << endl;
     #endif
     }
@@ -950,7 +950,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
     if (dpiX > dpiY)
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tdpiX > dpiY; stretching pixmap height to equalise DPIs to dpiX="
+        kDebug () << "\tdpiX > dpiY; stretching pixmap height to equalise DPIs to dpiX="
                    << dpiX << endl;
     #endif
         kpPixmapFX::scale (&pixmap,
@@ -963,7 +963,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
     else if (dpiY > dpiX)
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\tdpiY > dpiX; stretching pixmap width to equalise DPIs to dpiY="
+        kDebug () << "\tdpiY > dpiX; stretching pixmap width to equalise DPIs to dpiY="
                    << dpiY << endl;
     #endif
         kpPixmapFX::scale (&pixmap,
@@ -990,7 +990,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
     }
 
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\torigin: x=" << originX << " y=" << originY << endl;
+    kDebug () << "\torigin: x=" << originX << " y=" << originY << endl;
 #endif
 
 
