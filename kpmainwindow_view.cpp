@@ -387,7 +387,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
             kpView *const vuc = m_viewManager->viewUnderCursor ();
             
         #if DEBUG_KP_MAIN_WINDOW
-            kdDebug () << "\tcenterUnderCursor: reposition cursor; viewUnderCursor="
+            kDebug () << "\tcenterUnderCursor: reposition cursor; viewUnderCursor="
                        << vuc->name () << endl;
         #endif
         
@@ -397,7 +397,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
             // TODO: do everything in terms of tool doc points in type "double".
             const QPoint viewPoint ((int) viewX, (int) viewY);
         #if DEBUG_KP_MAIN_WINDOW
-            kdDebug () << "\t\tdoc: (" << targetDocX << "," << targetDocY << ")"
+            kDebug () << "\t\tdoc: (" << targetDocX << "," << targetDocY << ")"
                        << " viewUnderCursor: (" << viewX << "," << viewY << ")"
                        << endl; 
         #endif
@@ -409,7 +409,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
                 const QPoint globalPoint =
                     kpWidgetMapper::toGlobal (vuc, viewPoint);
             #if DEBUG_KP_MAIN_WINDOW
-                kdDebug () << "\t\tglobalPoint=" << globalPoint << endl;
+                kDebug () << "\t\tglobalPoint=" << globalPoint << endl;
             #endif
                 
                 // TODO: Determine some sane cursor flashing indication -
@@ -437,7 +437,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
             else
             {
             #if DEBUG_KP_MAIN_WINDOW
-                kdDebug () << "\t\twon't move cursor - would get outside view"
+                kDebug () << "\t\twon't move cursor - would get outside view"
                            << endl;
             #endif
             
