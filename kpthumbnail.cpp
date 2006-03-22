@@ -49,29 +49,12 @@
 
 // TODO: get out of the Alt+Tab list
 kpThumbnail::kpThumbnail (kpMainWindow *parent, const char *name)
-#if KP_IS_QT_3_3
     : Q3DockWindow (Q3DockWindow::OutsideDock, parent, name),
-#else  // With Qt <3.3, OutsideDock requires parent = 0,
-       // sync: make sure outside of dock
-    : Q3DockWindow (Q3DockWindow::InDock, parent, name),
-    #warning "Using Qt <3.3: the thumbnail will flicker more when appearing"
-#endif
       m_mainWindow (parent),
       m_view (0)
 {
     if (!parent)
         kError () << "kpThumbnail::kpThumbnail() requires parent" << endl;
-
-
-#if !KP_IS_QT_3_3
-    if (parent)
-    {
-        hide ();
-
-        // sync: make sure outside of dock
-        parent->moveDockWindow (this, Qt::DockTornOff);
-    }
-#endif
 
 
     if (parent)
