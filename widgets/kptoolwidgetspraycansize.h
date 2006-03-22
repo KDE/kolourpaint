@@ -26,10 +26,12 @@
 */
 
 
-#ifndef __kptoolwidgetspraycansize_h__
-#define __kptoolwidgetspraycansize_h__
+#ifndef KP_TOOL_WIDGET_SPRAYCAN_SIZE_H
+#define KP_TOOL_WIDGET_SPRAYCAN_SIZE_H
+
 
 #include <kptoolwidgetbase.h>
+
 
 class kpToolWidgetSpraycanSize : public kpToolWidgetBase
 {
@@ -48,4 +50,5 @@ protected slots:
     virtual bool setSelected (int row, int col, bool saveAsDefault);
 };
 
-#endif  // __kptoolwidgetspraycansize_h__
+
+#endif  // KP_TOOL_WIDGET_SPRAYCAN_SIZE_H
