@@ -34,8 +34,7 @@
 #include <qbitmap.h>
 #include <qimage.h>
 #include <qpainter.h>
-//Added by qt3to4:
-#include <QPixmap>
+#include <qpixmap.h>
 
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -56,7 +55,7 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const char 
     for (int i = 0; i < int (sizeof (spraycanSizes) / sizeof (spraycanSizes [0])); i++)
     {
         int s = spraycanSizes [i];
-        QString iconName = QString ("tool_spraycan_%1x%1").arg (s).arg(s);
+        QString iconName = QString ("tool_spraycan_%1x%2").arg (s).arg(s);
         
     #if DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE
         kDebug () << "\ticonName=" << iconName << endl;
