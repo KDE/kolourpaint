@@ -213,9 +213,9 @@ int kpToolToolBar::defaultIconSize ()
     #endif
 
         if (desktopSize.width () >= 1024 && desktopSize.height () >= 768)
-            m_defaultIconSize = KIcon::SizeSmallMedium/*22x22*/;
+            m_defaultIconSize = K3Icon::SizeSmallMedium/*22x22*/;
         else
-            m_defaultIconSize = KIcon::SizeSmall/*16x16*/;
+            m_defaultIconSize = K3Icon::SizeSmall/*16x16*/;
     }
 
 
