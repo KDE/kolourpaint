@@ -122,12 +122,12 @@ void kpMainWindow::readGeneralSettings ()
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
-    m_configFirstTime = cfg.readBoolEntry (kpSettingFirstTime, true);
-    m_configShowGrid = cfg.readBoolEntry (kpSettingShowGrid, false);
-    m_configShowPath = cfg.readBoolEntry (kpSettingShowPath, false);
-    m_configColorSimilarity = cfg.readDoubleNumEntry (kpSettingColorSimilarity, 0);
-    d->m_moreEffectsDialogLastEffect = cfg.readEntry (kpSettingMoreEffectsLastEffect, 0);  // COMPAT: was this -1?
-    d->m_resizeScaleDialogLastKeepAspect = cfg.readBoolEntry (kpSettingResizeScaleLastKeepAspect, false);
+    m_configFirstTime = cfg.readEntry (kpSettingFirstTime, true);
+    m_configShowGrid = cfg.readEntry (kpSettingShowGrid, false);
+    m_configShowPath = cfg.readEntry (kpSettingShowPath, false);
+    m_configColorSimilarity = cfg.readEntry (kpSettingColorSimilarity, 0.0);
+    d->m_moreEffectsDialogLastEffect = cfg.readEntry (kpSettingMoreEffectsLastEffect, 0);
+    d->m_resizeScaleDialogLastKeepAspect = cfg.readEntry (kpSettingResizeScaleLastKeepAspect, false);
 
 
 #if DEBUG_KP_MAIN_WINDOW
@@ -150,10 +150,10 @@ void kpMainWindow::readThumbnailSettings ()
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
 
-    m_configThumbnailShown = cfg.readBoolEntry (kpSettingThumbnailShown, false);
-    m_configThumbnailGeometry = cfg.readRectEntry (kpSettingThumbnailGeometry);
-    m_configZoomedThumbnail = cfg.readBoolEntry (kpSettingThumbnailZoomed, true);
-    d->m_configThumbnailShowRectangle = cfg.readBoolEntry (kpSettingThumbnailShowRectangle, true);
+    m_configThumbnailShown = cfg.readEntry (kpSettingThumbnailShown, false);
+    m_configThumbnailGeometry = cfg.readEntry (kpSettingThumbnailGeometry, QRect ());
+    m_configZoomedThumbnail = cfg.readEntry (kpSettingThumbnailZoomed, true);
+    d->m_configThumbnailShowRectangle = cfg.readEntry (kpSettingThumbnailShowRectangle, true);
 
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\t\tThumbnail Settings: shown=" << m_configThumbnailShown
@@ -887,3 +887,4 @@ void kpMainWindow::slotDocumentRestored ()
 
 
 #include <kpmainwindow.moc>
+
