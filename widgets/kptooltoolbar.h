@@ -26,20 +26,18 @@
 */
 
 
-#ifndef __kp_tool_tool_bar_h__
-#define __kp_tool_tool_bar_h__
+#ifndef KP_TOOL_TOOL_BAR_H
+#define KP_TOOL_TOOL_BAR_H
+
 
 #include <q3valuevector.h>
-//Added by qt3to4:
-#include <QGridLayout>
-#include <QBoxLayout>
 
 #include <ktoolbar.h>
 
 
 class QAbstractButton;
 class QBoxLayout;
-class Q3ButtonGroup;
+class QButtonGroup;
 class QWidget;
 class QGridLayout;
 
@@ -111,7 +109,7 @@ private:
     bool m_lastDockedOrientationSet;
     int m_vertCols;
 
-    Q3ButtonGroup *m_buttonGroup;
+    QButtonGroup *m_buttonGroup;
     QWidget *m_baseWidget;
     QBoxLayout *m_baseLayout;
     QGridLayout *m_toolLayout;
@@ -155,4 +153,6 @@ private:
     class kpToolToolBarPrivate *d;
 };
 
-#endif  // __kp_tool_tool_bar_h__
+
+#endif  // KP_TOOL_TOOL_BAR_H
+

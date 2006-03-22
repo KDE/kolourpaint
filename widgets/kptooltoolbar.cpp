@@ -31,9 +31,9 @@
 
 #include <kptooltoolbar.h>
 
-#include <q3buttongroup.h>
-#include <qlayout.h>
+#include <qbuttongroup.h>
 #include <qdatetime.h>
+#include <qlayout.h>
 #include <qtoolbutton.h>
 #include <qtooltip.h>
 #include <qwidget.h>
@@ -57,6 +57,14 @@
 #include <kptoolwidgetlinewidth.h>
 #include <kptoolwidgetopaqueortransparent.h>
 #include <kptoolwidgetspraycansize.h>
+
+
+// SYNC: Qt 4.1.1 bug
+static QAbstractButton *QButtonGroup_CheckedButton (QButtonGroup *buttonGroup)
+{
+    QAbstractButton *button = buttonGroup->checkedButton ();
+    return (button && button->isChecked () ? button : 0);
+}
 
 
 class kpToolButton : public QToolButton
@@ -152,10 +160,8 @@ kpToolToolBar::kpToolToolBar (const QString &label, kpMainWindow *mainWindow, in
                << timer.elapsed () << endl;
 #endif
 
-    m_buttonGroup = new Q3ButtonGroup ();  // invisible
-    m_buttonGroup->setExclusive (true);
-
-    connect (m_buttonGroup, SIGNAL (clicked (int)), SLOT (slotToolButtonClicked ()));
+    m_buttonGroup = new QButtonGroup (this);
+    connect (m_buttonGroup, SIGNAL (buttonClicked (int)), SLOT (slotToolButtonClicked ()));
 
     hideAllToolWidgets ();
 }
@@ -163,7 +169,6 @@ kpToolToolBar::kpToolToolBar (const QString &label, kpMainWindow *mainWindow, in
 kpToolToolBar::~kpToolToolBar ()
 {
     unregisterAllTools ();
-    delete m_buttonGroup;
 }
 
 
@@ -175,7 +180,7 @@ int kpToolToolBar::defaultIconSize ()
         return m_defaultIconSize;
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "kpToolToolBar::defaultIconSize()" << endl;
+    kDebug () << "kpToolToolBar::defaultIconSize()" << endl;
 #endif
 
 
@@ -183,16 +188,16 @@ int kpToolToolBar::defaultIconSize ()
 
     if (cfg.hasKey (kpSettingToolBoxIconSize))
     {
-        m_defaultIconSize = cfg.readNumEntry (kpSettingToolBoxIconSize);
+        m_defaultIconSize = cfg.readEntry (kpSettingToolBoxIconSize, 0);
     #if DEBUG_KP_TOOL_TOOL_BAR
-        kdDebug () << "\tread: " << m_defaultIconSize << endl;
+        kDebug () << "\tread: " << m_defaultIconSize << endl;
     #endif
     }
     else
     {
         m_defaultIconSize = -1;
 #if DEBUG_KP_TOOL_TOOL_BAR
-        kdDebug () << "\tfirst time - writing default: " << m_defaultIconSize << endl;
+        kDebug () << "\tfirst time - writing default: " << m_defaultIconSize << endl;
 #endif
         cfg.writeEntry (kpSettingToolBoxIconSize, m_defaultIconSize);
         cfg.sync ();
@@ -204,7 +209,7 @@ int kpToolToolBar::defaultIconSize ()
         // Adapt according to screen geometry
         const QRect desktopSize = KGlobalSettings::desktopGeometry (this);
     #if DEBUG_KP_TOOL_TOOL_BAR
-        kdDebug () << "\tadapting to screen size=" << desktopSize << endl;
+        kDebug () << "\tadapting to screen size=" << desktopSize << endl;
     #endif
 
         if (desktopSize.width () >= 1024 && desktopSize.height () >= 768)
@@ -215,7 +220,7 @@ int kpToolToolBar::defaultIconSize ()
 
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kdDebug () << "\treturning " << m_defaultIconSize << endl;
+    kDebug () << "\treturning " << m_defaultIconSize << endl;
 #endif
     return m_defaultIconSize;
 }
@@ -243,7 +248,7 @@ void kpToolToolBar::registerTool (kpTool *tool)
     QToolTip::add (b, tool->toolTip ());
     b->setWhatsThis( tool->description ());
 
-    m_buttonGroup->insert (b);
+    m_buttonGroup->addButton (b);
     addButton (b, orientation (), num);
 
     m_buttonToolPairs.append (kpButtonToolPair (b, tool));
@@ -316,7 +321,7 @@ void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
         {
             if ((*it).m_tool == tool)
             {
-                m_buttonGroup->setButton (m_buttonGroup->id ((*it).m_button));
+                (*it).m_button->setChecked (true);
                 slotToolButtonClicked ();
                 break;
             }
@@ -324,13 +329,21 @@ void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
     }
     else
     {
-        QAbstractButton *b = m_buttonGroup->selected ();
+        QAbstractButton *b = QButtonGroup_CheckedButton (m_buttonGroup);
     #if DEBUG_KP_TOOL_TOOL_BAR
         kDebug () << "\twant to select no tool - button selected=" << b << endl;
     #endif
         if (b)
         {
-            b->toggle ();
+            // HACK: We want no button to be checked but qbuttongroup.html
+            //       says the following about exclusive button groups:
+            //
+            //       "to untoggle a button you must click on another button
+            //        in the group."
+            m_buttonGroup->setExclusive (false);
+            b->setChecked (false);
+            m_buttonGroup->setExclusive (true);
+
             slotToolButtonClicked ();
         }
     }
@@ -441,7 +454,7 @@ void kpToolToolBar::enableToolsSingleKeyTriggers (bool enable)
 // private slot
 void kpToolToolBar::slotToolButtonClicked ()
 {
-    QAbstractButton *b = m_buttonGroup->selected ();
+    QAbstractButton *b = QButtonGroup_CheckedButton (m_buttonGroup);
 
 #if DEBUG_KP_TOOL_TOOL_BAR
     kDebug () << "kpToolToolBar::slotToolButtonClicked() button=" << b << endl;
@@ -642,3 +655,4 @@ void kpToolToolBar::addButton (QAbstractButton *button, Qt::Orientation o, int n
 
 
 #include <kptooltoolbar.moc>
+
