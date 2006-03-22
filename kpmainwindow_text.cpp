@@ -82,10 +82,10 @@ void kpMainWindow::readAndApplyTextSettings ()
 
     m_actionTextFontFamily->setFont (cfg.readEntry (kpSettingFontFamily, QString::fromLatin1 ("Times")));
     m_actionTextFontSize->setFontSize (cfg.readEntry (kpSettingFontSize, 14));
-    m_actionTextBold->setChecked (cfg.readBoolEntry (kpSettingBold, false));
-    m_actionTextItalic->setChecked (cfg.readBoolEntry (kpSettingItalic, false));
-    m_actionTextUnderline->setChecked (cfg.readBoolEntry (kpSettingUnderline, false));
-    m_actionTextStrikeThru->setChecked (cfg.readBoolEntry (kpSettingStrikeThru, false));
+    m_actionTextBold->setChecked (cfg.readEntry (kpSettingBold, false));
+    m_actionTextItalic->setChecked (cfg.readEntry (kpSettingItalic, false));
+    m_actionTextUnderline->setChecked (cfg.readEntry (kpSettingUnderline, false));
+    m_actionTextStrikeThru->setChecked (cfg.readEntry (kpSettingStrikeThru, false));
 
     m_textOldFontFamily = m_actionTextFontFamily->font ();
     m_textOldFontSize = m_actionTextFontSize->fontSize ();
