@@ -48,7 +48,7 @@ kde4_automoc(${kolourpaint_SRCS})
 
 kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
 
-target_link_libraries(kolourpaint  ${QT_AND_KDECORE_LIBS} kdeprint kolourpaintcursors kolourpaintpixmapfx kolourpainttools kolourpaintviews kolourpaintwidgets )
+target_link_libraries(kolourpaint  ${KDE4_KDECORE_LIBS} kdeprint kolourpaintcursors kolourpaintpixmapfx kolourpainttools kolourpaintviews kolourpaintwidgets )
 
 install_targets(/bin kolourpaint )
 
