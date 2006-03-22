@@ -262,8 +262,8 @@ void kpToolSkewDialog::createAngleGroupBox ()
 
     QLabel *horizontalSkewLabel = new QLabel (i18n ("&Horizontal:"), angleGroupBox);
     m_horizontalSkewInput = new KIntNumInput (s_lastHorizontalAngle, angleGroupBox);
-    m_horizontalSkewInput->setMinValue (-89);
-    m_horizontalSkewInput->setMaxValue (+89);
+    m_horizontalSkewInput->setMinimum (-89);
+    m_horizontalSkewInput->setMaximum (+89);
 
     QLabel *horizontalSkewDegreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
 
@@ -273,8 +273,8 @@ void kpToolSkewDialog::createAngleGroupBox ()
 
     QLabel *verticalSkewLabel = new QLabel (i18n ("&Vertical:"), angleGroupBox);
     m_verticalSkewInput = new KIntNumInput (s_lastVerticalAngle, angleGroupBox);
-    m_verticalSkewInput->setMinValue (-89);
-    m_verticalSkewInput->setMaxValue (+89);
+    m_verticalSkewInput->setMinimum (-89);
+    m_verticalSkewInput->setMaximum (+89);
 
     QLabel *verticalSkewDegreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
 

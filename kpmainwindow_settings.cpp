@@ -116,11 +116,10 @@ void kpMainWindow::slotShowPathToggled ()
     slotUpdateCaption ();
 
 
-    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupGeneral);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
-    cfg->writeEntry (kpSettingShowPath, m_configShowPath);
-    cfg->sync ();
+    cfg.writeEntry (kpSettingShowPath, m_configShowPath);
+    cfg.sync ();
 }
 
 

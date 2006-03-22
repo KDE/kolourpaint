@@ -402,6 +402,8 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
                        << endl; 
         #endif
         
+        // COMPAT: no more QWidget::clipRegion()
+        #if 0
             if (vuc->clipRegion ().contains (viewPoint))
             {
                 const QPoint globalPoint =
@@ -442,6 +444,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
                 // TODO: Sane cursor flashing indication that indicates
                 //       that the normal cursor movement didn't happen.
             }
+        #endif
         }
         
     #if DEBUG_KP_MAIN_WINDOW && 1
@@ -727,11 +730,10 @@ void kpMainWindow::slotShowGridToggled ()
     updateMainViewGrid ();
 
 
-    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupGeneral);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
-    cfg->writeEntry (kpSettingShowGrid, m_configShowGrid = m_actionShowGrid->isChecked ());
-    cfg->sync ();
+    cfg.writeEntry (kpSettingShowGrid, m_configShowGrid = m_actionShowGrid->isChecked ());
+    cfg.sync ();
 }
 
 // private
@@ -851,11 +853,10 @@ void kpMainWindow::slotSaveThumbnailGeometry ()
                 << endl;
 #endif
 
-    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupThumbnail);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
 
-    cfg->writeEntry (kpSettingThumbnailGeometry, m_configThumbnailGeometry);
-    cfg->sync ();
+    cfg.writeEntry (kpSettingThumbnailGeometry, m_configThumbnailGeometry);
+    cfg.sync ();
 }
 
 // private slot
@@ -867,11 +868,10 @@ void kpMainWindow::slotShowThumbnailToggled ()
 
     m_configThumbnailShown = m_actionShowThumbnail->isChecked ();
 
-    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupThumbnail);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
 
-    cfg->writeEntry (kpSettingThumbnailShown, m_configThumbnailShown);
-    cfg->sync ();
+    cfg.writeEntry (kpSettingThumbnailShown, m_configThumbnailShown);
+    cfg.sync ();
 
 
     enableThumbnailOptionActions (m_actionShowThumbnail->isChecked ());
@@ -902,11 +902,10 @@ void kpMainWindow::slotZoomedThumbnailToggled ()
 
     m_configZoomedThumbnail = m_actionZoomedThumbnail->isChecked ();
 
-    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupThumbnail);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
 
-    cfg->writeEntry (kpSettingThumbnailZoomed, m_configZoomedThumbnail);
-    cfg->sync ();
+    cfg.writeEntry (kpSettingThumbnailZoomed, m_configZoomedThumbnail);
+    cfg.sync ();
 
 
     updateThumbnailZoomed ();
@@ -921,11 +920,10 @@ void kpMainWindow::slotThumbnailShowRectangleToggled ()
 
     d->m_configThumbnailShowRectangle = d->m_actionShowThumbnailRectangle->isChecked ();
 
-    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupThumbnail);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
 
-    cfg->writeEntry (kpSettingThumbnailShowRectangle, d->m_configThumbnailShowRectangle);
-    cfg->sync ();
+    cfg.writeEntry (kpSettingThumbnailShowRectangle, d->m_configThumbnailShowRectangle);
+    cfg.sync ();
 
 
     if (m_thumbnailView)

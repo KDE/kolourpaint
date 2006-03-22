@@ -529,6 +529,13 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     }
 }
 
+// COMPAT
+#if 1
+void kpToolText::inputMethodEvent (QInputMethodEvent *e)
+{
+    (void) e;
+}
+#else
 void kpToolText::imStartEvent (QIMEvent *e)
 {
 #if DEBUG_KP_TOOL_TEXT && 1
@@ -674,7 +681,7 @@ void kpToolText::imEndEvent (QIMEvent *e)
             m_insertCommand->addText (inputStr);
     }
 }
-
+#endif
 
 // protected
 bool kpToolText::shouldChangeTextStyle () const

@@ -93,7 +93,7 @@ public:
 
     virtual void beginDraw ();
 protected:
-    const QCursor &cursor () const;
+    QCursor cursor () const;
 public:
     virtual void hover (const QPoint &point);
 protected:

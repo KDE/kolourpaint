@@ -43,6 +43,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstdaction.h>
+#include <kxmlguifactory.h>
 
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
@@ -599,15 +600,14 @@ void kpMainWindow::slotPaste ()
             i18n ("Cannot Paste"));
 
         // TODO: PROPAGATE: interprocess
-        // COMPAT: it's not a pointer...
-        if (KMainWindow::memberList())
+        if (!KMainWindow::memberList ().isEmpty ())
         {
         #if DEBUG_KP_MAIN_WINDOW
             kDebug () << "\thave memberList" << endl;
         #endif
 
-            for (Q3PtrList <KMainWindow>::const_iterator it = KMainWindow::memberList()->begin ();
-                 it != KMainWindow::memberList()->end ();
+            for (QList <KMainWindow *>::const_iterator it = KMainWindow::memberList ().begin ();
+                 it != KMainWindow::memberList ().end ();
                  it++)
             {
                 kpMainWindow *mw = dynamic_cast <kpMainWindow *> (*it);

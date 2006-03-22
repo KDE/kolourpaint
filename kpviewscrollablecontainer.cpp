@@ -29,6 +29,7 @@
 
 #include <kpviewscrollablecontainer.h>
 
+#include <qbitmap.h>
 #include <qcursor.h>
 #include <qpainter.h>
 #include <qpen.h>
@@ -92,7 +93,7 @@ kpGrip::GripType kpGrip::type () const
 
 
 // public static
-const QCursor &kpGrip::cursorForType (GripType type)
+QCursor kpGrip::cursorForType (GripType type)
 {
     switch (type)
     {
@@ -201,8 +202,8 @@ void kpGrip::updatePixmap ()
         kpPixmapFX::ensureOpaqueAt (&pixmap, hr);
 
     setBackgroundPixmap (pixmap);
-    if (pixmap.mask ())
-        setMask (*pixmap.mask ());
+    if (!pixmap.mask ().isNull ())
+        setMask (pixmap.mask ());
 }
 
 
@@ -707,8 +708,8 @@ void kpViewScrollableContainer::drawResizeLines ()
 #endif
 
 
-    QPainter p (viewport (), true/*unclipped*/);
-    p.setRasterOp (Qt::NotROP);
+    QPainter p (viewport ()); // COMPAT: , true/*unclipped*/);
+    // COMPAT: p.setRasterOp (Qt::NotROP);
 
     const QRect rightRect = rightResizeLineRect ();
     if (rightRect.isValid ())
@@ -1344,7 +1345,7 @@ void kpViewScrollableContainer::contentsWheelEvent (QWheelEvent *e)
         m_view->wheelEvent (e);
         
     if (!e->isAccepted ())
-        QScrollView::contentsWheelEvent (e);
+        Q3ScrollView::contentsWheelEvent (e);
 }
 
 

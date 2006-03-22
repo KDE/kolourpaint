@@ -43,7 +43,6 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kurldrag.h>
 
 #include <kpcolortoolbar.h>
 #include <kpcommandhistory.h>
@@ -107,11 +106,10 @@ double kpMainWindow::configColorSimilarity () const
 // public
 void kpMainWindow::configSetColorSimilarity (double val)
 {
-    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupGeneral);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
-    cfg->writeEntry (kpSettingColorSimilarity, m_configColorSimilarity = val);
-    cfg->sync ();
+    cfg.writeEntry (kpSettingColorSimilarity, m_configColorSimilarity = val);
+    cfg.sync ();
 }
 
 
@@ -122,15 +120,14 @@ void kpMainWindow::readGeneralSettings ()
     kDebug () << "\tkpMainWindow(" << name () << ")::readGeneralSettings()" << endl;
 #endif
 
-    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupGeneral);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
-    m_configFirstTime = cfg->readBoolEntry (kpSettingFirstTime, true);
-    m_configShowGrid = cfg->readBoolEntry (kpSettingShowGrid, false);
-    m_configShowPath = cfg->readBoolEntry (kpSettingShowPath, false);
-    m_configColorSimilarity = cfg->readDoubleNumEntry (kpSettingColorSimilarity, 0);
-    d->m_moreEffectsDialogLastEffect = cfg->readEntry (kpSettingMoreEffectsLastEffect);
-    d->m_resizeScaleDialogLastKeepAspect = cfg->readBoolEntry (kpSettingResizeScaleLastKeepAspect, false);
+    m_configFirstTime = cfg.readBoolEntry (kpSettingFirstTime, true);
+    m_configShowGrid = cfg.readBoolEntry (kpSettingShowGrid, false);
+    m_configShowPath = cfg.readBoolEntry (kpSettingShowPath, false);
+    m_configColorSimilarity = cfg.readDoubleNumEntry (kpSettingColorSimilarity, 0);
+    d->m_moreEffectsDialogLastEffect = cfg.readEntry (kpSettingMoreEffectsLastEffect, 0);  // COMPAT: was this -1?
+    d->m_resizeScaleDialogLastKeepAspect = cfg.readBoolEntry (kpSettingResizeScaleLastKeepAspect, false);
 
 
 #if DEBUG_KP_MAIN_WINDOW
@@ -151,13 +148,12 @@ void kpMainWindow::readThumbnailSettings ()
     kDebug () << "\tkpMainWindow(" << name () << ")::readThumbnailSettings()" << endl;
 #endif
 
-    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupThumbnail);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
 
-    m_configThumbnailShown = cfg->readBoolEntry (kpSettingThumbnailShown, false);
-    m_configThumbnailGeometry = cfg->readRectEntry (kpSettingThumbnailGeometry);
-    m_configZoomedThumbnail = cfg->readBoolEntry (kpSettingThumbnailZoomed, true);
-    d->m_configThumbnailShowRectangle = cfg->readBoolEntry (kpSettingThumbnailShowRectangle, true);
+    m_configThumbnailShown = cfg.readBoolEntry (kpSettingThumbnailShown, false);
+    m_configThumbnailGeometry = cfg.readRectEntry (kpSettingThumbnailGeometry);
+    m_configZoomedThumbnail = cfg.readBoolEntry (kpSettingThumbnailZoomed, true);
+    d->m_configThumbnailShowRectangle = cfg.readBoolEntry (kpSettingThumbnailShowRectangle, true);
 
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\t\tThumbnail Settings: shown=" << m_configThumbnailShown
@@ -302,11 +298,10 @@ void kpMainWindow::init ()
         m_toolToolBar->setBarPos (KToolBar::Left);
         m_colorToolBar->setBarPos (KToolBar::Bottom);
 
-        KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupGeneral);
-        KConfigBase *cfg = cfgGroupSaver.config ();
+        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
-        cfg->writeEntry (kpSettingFirstTime, m_configFirstTime = false);
-        cfg->sync ();
+        cfg.writeEntry (kpSettingFirstTime, m_configFirstTime = false);
+        cfg.sync ();
     }
 
 #if DEBUG_KP_MAIN_WINDOW
@@ -714,7 +709,7 @@ bool kpMainWindow::queryClose ()
 void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
 {
     e->accept (kpSelectionDrag::canDecode (e) ||
-               KURLDrag::canDecode (e) ||
+               // COMPAT: KURLDrag::canDecode (e) ||
                Q3TextDrag::canDecode (e));
 }
 
@@ -735,6 +730,8 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         // TODO: drop at point like with QTextDrag below?
         paste (sel);
     }
+// COMPAT
+#if 0
     else if (KURLDrag::decode (e, urls/*ref*/))
     {
         for (KUrl::List::ConstIterator it = urls.begin (); it != urls.end (); it++)
@@ -742,6 +739,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
             open (*it);
         }
     }
+#endif
     else if (Q3TextDrag::decode (e, text/*ref*/))
     {
         QPoint selTopLeft = KP_INVALID_POINT;

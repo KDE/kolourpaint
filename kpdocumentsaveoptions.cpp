@@ -30,6 +30,7 @@
 
 #include <kpdocumentsaveoptions.h>
 
+#include <qbitmap.h>
 #include <qpixmap.h>
 #include <qstring.h>
 
@@ -371,20 +372,18 @@ static QStringList mimeTypesSupportingProperty (const QString &property,
 {
     QStringList mimeTypeList;
 
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (),
-                                     kpSettingsGroupMimeTypeProperties);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupMimeTypeProperties);
 
-    if (cfg->hasKey (property))
+    if (cfg.hasKey (property))
     {
-        mimeTypeList = cfg->readListEntry (property);
+        mimeTypeList = cfg.readListEntry (property);
     }
     else
     {
         mimeTypeList = defaultMimeTypesWithPropertyList;
 
-        cfg->writeEntry (property, mimeTypeList);
-        cfg->sync ();
+        cfg.writeEntry (property, mimeTypeList);
+        cfg.sync ();
     }
 
     return mimeTypeList;
@@ -544,7 +543,7 @@ int kpDocumentSaveOptions::isLossyForSaving (const QPixmap &pixmap) const
     if (mimeTypeHasConfigurableColorDepth () &&
         !colorDepthIsInvalid () /*TODO: prevent*/ &&
         (colorDepth () < pixmap.depth () ||
-         colorDepth () < 32 && pixmap.mask ()))
+         colorDepth () < 32 && !pixmap.mask ().isNull ()))
     {
         ret |= ColorDepthLow;
     }

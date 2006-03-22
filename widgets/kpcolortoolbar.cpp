@@ -209,14 +209,19 @@ QRect kpDualColorButton::backgroundRect () const
 // protected virtual [base QWidget]
 void kpDualColorButton::dragMoveEvent (QDragMoveEvent *e)
 {
+// COMPAT: linker errors???
+#if 0
     e->accept ((foregroundRect ().contains (e->pos ()) ||
                 backgroundRect ().contains (e->pos ())) &&
                K3ColorDrag::canDecode (e));
+#endif
 }
 
 // protected virtual [base QWidget]
 void kpDualColorButton::dropEvent (QDropEvent *e)
 {
+// COMPAT: linker errors???
+#if 0
     QColor col;
     K3ColorDrag::decode (e, col/*ref*/);
 
@@ -227,6 +232,7 @@ void kpDualColorButton::dropEvent (QDropEvent *e)
         else if (backgroundRect ().contains (e->pos ()))
             setBackgroundColor (kpColor (col.rgb ()));
     }
+#endif
 }
 
 

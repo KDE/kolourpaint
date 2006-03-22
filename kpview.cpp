@@ -1342,7 +1342,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
     if (vm->selectionBorderVisible ())
     {
         QPainter destPixmapPainter (destPixmap);
-        destPixmapPainter.setRasterOp (Qt::XorROP);
+        // COMPAT: destPixmapPainter.setRasterOp (Qt::XorROP);
         destPixmapPainter.setPen (QPen (Qt::white, 1, Qt::DotLine));
 
         destPixmapPainter.setBackgroundMode (Qt::OpaqueMode);
@@ -1350,9 +1350,9 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
 
         QBitmap maskBitmap;
         QPainter maskBitmapPainter;
-        if (destPixmap->mask ())
+        if (!destPixmap->mask ().isNull ())
         {
-            maskBitmap = *destPixmap->mask ();
+            maskBitmap = destPixmap->mask ();
             maskBitmapPainter.begin (&maskBitmap);
             maskBitmapPainter.setPen (Qt::color1/*opaque*/);
         }
@@ -1434,7 +1434,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
             {
                 destPixmapPainter.save ();
 
-                destPixmapPainter.setRasterOp (Qt::NotROP);
+                // COMPAT: destPixmapPainter.setRasterOp (Qt::NotROP);
                 PAINTER_CMD (drawRect (boundingRect.x () - docRect.x (),
                                        boundingRect.y () - docRect.y (),
                                        boundingRect.width (),
@@ -1485,16 +1485,16 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
                 QBitmap maskBitmap;
                 QPainter destPixmapPainter, maskBitmapPainter;
 
-                if (destPixmap->mask ())
+                if (!destPixmap->mask ().isNull ())
                 {
-                    maskBitmap = *destPixmap->mask ();
+                    maskBitmap = destPixmap->mask ();
                     maskBitmapPainter.begin (&maskBitmap);
                     maskBitmapPainter.fillRect (rect, Qt::color1/*opaque*/);
                     maskBitmapPainter.end ();
                 }
 
                 destPixmapPainter.begin (destPixmap);
-                destPixmapPainter.setRasterOp (Qt::XorROP);
+                // COMPAT: destPixmapPainter.setRasterOp (Qt::XorROP);
                 destPixmapPainter.fillRect (rect, Qt::white);
                 destPixmapPainter.end ();
 
@@ -1562,12 +1562,12 @@ void kpView::paintEventDrawSelectionResizeHandles (QPainter *painter, const QRec
     if (selectionResizeHandleAtomicSizeCloseToZoomLevel ())
     {
         fillColor = Qt::blue;
-        painter->setRasterOp (Qt::CopyROP);
+        // COMPAT: painter->setRasterOp (Qt::CopyROP);
     }
     else
     {
         fillColor = Qt::white;
-        painter->setRasterOp (Qt::XorROP);
+        // COMPAT: painter->setRasterOp (Qt::XorROP);
     }
 
     Q3MemArray <QRect> rects = selResizeHandlesRegion.rects ();
@@ -1749,11 +1749,11 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
     #endif
     }
 
-    if (docPixmap.mask () ||
+    if (!docPixmap.mask ().isNull () ||
         (tempPixmapWillBeRendered && vm->tempPixmap ()->mayChangeDocumentMask ()))
     {
     #if DEBUG_KP_VIEW_RENDERER && 1
-        kDebug () << "\tmask=" << (bool) docPixmap.mask ()
+        kDebug () << "\tmask=" << !docPixmap.mask ().isNull ()
                    << endl;
     #endif
         paintEventDrawCheckerBoard (&backBufferPainter, viewRect);
@@ -1822,7 +1822,7 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
     {
         backBufferPainter.save ();
 
-        backBufferPainter.setRasterOp (Qt::XorROP);
+        // COMPAT: backBufferPainter.setRasterOp (Qt::XorROP);
         backBufferPainter.setPen (Qt::white);
         backBufferPainter.translate (-viewRect.x (), -viewRect.y ());
         backBufferPainter.drawRect (bvsvRect);
@@ -1885,7 +1885,8 @@ void kpView::paintEvent (QPaintEvent *e)
     }
 
 
-    QRegion viewRegion = clipRegion ().intersect (e->region ());
+    // COMPAT: QRegion viewRegion = clipRegion ().intersect (e->region ());
+    QRegion viewRegion = e->region ();
     Q3MemArray <QRect> rects = viewRegion.rects ();
 #if DEBUG_KP_VIEW_RENDERER && 1
     kDebug () << "\t#rects = " << rects.count () << endl;

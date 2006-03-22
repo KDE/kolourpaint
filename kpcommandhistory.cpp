@@ -415,12 +415,11 @@ void kpCommandHistoryBase::readConfig ()
 #if DEBUG_KP_COMMAND_HISTORY
     kDebug () << "kpCommandHistoryBase::readConfig()" << endl;
 #endif
-    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupUndoRedo);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupUndoRedo);
 
-    setUndoMinLimit (cfg->readEntry (kpSettingUndoMinLimit, undoMinLimit ()));
-    setUndoMaxLimit (cfg->readEntry (kpSettingUndoMaxLimit, undoMaxLimit ()));
-    setUndoMaxLimitSizeLimit (cfg->readEntry (kpSettingUndoMaxLimitSizeLimit,
+    setUndoMinLimit (cfg.readEntry (kpSettingUndoMinLimit, undoMinLimit ()));
+    setUndoMaxLimit (cfg.readEntry (kpSettingUndoMaxLimit, undoMaxLimit ()));
+    setUndoMaxLimitSizeLimit (cfg.readEntry (kpSettingUndoMaxLimitSizeLimit,
                                                  undoMaxLimitSizeLimit ()));
 
     trimCommandListsUpdateActions ();
@@ -432,14 +431,13 @@ void kpCommandHistoryBase::writeConfig ()
 #if DEBUG_KP_COMMAND_HISTORY
     kDebug () << "kpCommandHistoryBase::writeConfig()" << endl;
 #endif
-    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupUndoRedo);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupUndoRedo);
 
-    cfg->writeEntry (kpSettingUndoMinLimit, undoMinLimit ());
-    cfg->writeEntry (kpSettingUndoMaxLimit, undoMaxLimit ());
-    cfg->writeEntry (kpSettingUndoMaxLimitSizeLimit, undoMaxLimitSizeLimit ());
+    cfg.writeEntry (kpSettingUndoMinLimit, undoMinLimit ());
+    cfg.writeEntry (kpSettingUndoMaxLimit, undoMaxLimit ());
+    cfg.writeEntry (kpSettingUndoMaxLimitSizeLimit, undoMaxLimitSizeLimit ());
 
-    cfg->sync ();
+    cfg.sync ();
 }
 
 
@@ -790,6 +788,8 @@ static void populatePopupMenu (KMenu *popupMenu,
         i++, it++;
     }
 
+// COMPAT: KPopupTitle gone
+#if 0
     if (it != commandList.end ())
     {
         // TODO: maybe have a scrollview show all the items instead
@@ -799,6 +799,7 @@ static void populatePopupMenu (KMenu *popupMenu,
 
         popupMenu->insertItem (title);
     }
+#endif
 }
 
 

@@ -79,8 +79,8 @@ QPixmap kpToolWidgetFillStyle::fillStylePixmap (FillStyle fs, int w, int h)
 
     painter.setPen (QPen (Qt::black, 2));
     painter.setBrush (brushForFillStyle (fs,
-                                         kpColor (Qt::black.rgb ())/*foreground*/,
-                                         kpColor (Qt::gray.rgb ())/*background*/));
+                                         kpColor (QColor (Qt::black).rgb ())/*foreground*/,
+                                         kpColor (QColor (Qt::gray).rgb ())/*background*/));
 
     painter.drawRect (2, 2, w - 3, h - 3);
 

@@ -69,7 +69,7 @@ public:
 
     GripType type () const;
 
-    static const QCursor &cursorForType (GripType type);
+    static QCursor cursorForType (GripType type);
 
     QRect hotRect (bool toGlobal = false) const;
 

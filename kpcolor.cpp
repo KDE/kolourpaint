@@ -321,7 +321,7 @@ QRgb kpColor::toQRgb () const
 }
 
 // public
-const QColor &kpColor::toQColor () const
+QColor kpColor::toQColor () const
 {
     if (!m_rgbaIsValid)
     {

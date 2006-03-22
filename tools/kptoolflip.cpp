@@ -36,6 +36,7 @@
 #include <Q3VButtonGroup>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kvbox.h>
 
 #include <kpdefs.h>
 #include <kpdocument.h>

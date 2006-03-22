@@ -618,7 +618,7 @@ static QRgb mostContrastingRGB (QRgb val)
 // private
 static void drawTextLines (QPainter *painter, QPainter *maskPainter,
                            const QRect &rect,
-                           const QValueVector <QString> &textLines)
+                           const Q3ValueVector <QString> &textLines)
 {
     if (!painter->clipRegion ().isEmpty () || !maskPainter->clipRegion ().isEmpty ())
     {
@@ -656,10 +656,10 @@ static void drawTextLines (QPainter *painter, QPainter *maskPainter,
 #endif
 
 
-    PAINTER_CALL (setClipRect (rect, QPainter::CoordPainter/*transform*/));
+ // COMPAT: CoordPainter   PAINTER_CALL (setClipRect (rect, QPainter::CoordPainter/*transform*/));
 
     int baseLine = rect.y () + painter->fontMetrics ().ascent ();
-    for (QValueVector <QString>::const_iterator it = textLines.begin ();
+    for (Q3ValueVector <QString>::const_iterator it = textLines.begin ();
          it != textLines.end ();
          it++)
     {
@@ -686,7 +686,7 @@ void kpSelection::paintOpaqueText (QPixmap *destPixmap, const QRect &docRect) co
     QBitmap destPixmapMask;
     QPainter destPixmapPainter, destPixmapMaskPainter;
 
-    if (destPixmap->mask ())
+    if (!destPixmap->mask ().isNull ())
     {
         if (m_textStyle.effectiveBackgroundColor ().isTransparent ())
         {
@@ -702,7 +702,7 @@ void kpSelection::paintOpaqueText (QPixmap *destPixmap, const QRect &docRect) co
                     m_textStyle.foregroundColor ().toQColor ()));
         }
 
-        destPixmapMask = *destPixmap->mask ();
+        destPixmapMask = destPixmap->mask ();
         destPixmapMaskPainter.begin (&destPixmapMask);
         destPixmapMaskPainter.translate (-docRect.x (), -docRect.y ());
         destPixmapMaskPainter.setPen (Qt::color1/*opaque*/);

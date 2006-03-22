@@ -157,7 +157,7 @@ QByteArray kpSelectionDrag::encodedData (const char *mimeType) const
     if (!strcmp (mimeType, kpSelectionDrag::selectionMimeType))
     {
         QByteArray ba;
-        QDataStream stream (ba, QIODevice::WriteOnly);
+        QDataStream stream (&ba, QIODevice::WriteOnly);
 
     #if DEBUG_KP_SELECTION_DRAG
         kDebug () << "\twant it as kpSelection in QByteArray" << endl;
@@ -258,7 +258,7 @@ bool kpSelectionDrag::decode (const QMimeSource *e, kpSelection &sel,
         kDebug () << "\tmimeSource provides selection - just return it in QByteArray" << endl;
     #endif
         QByteArray data = e->encodedData (kpSelectionDrag::selectionMimeType);
-        QDataStream stream (data, QIODevice::ReadOnly);
+        QDataStream stream (&data, QIODevice::ReadOnly);
 
         // (no need for wali as kpSelection's by definition only support QPixmap's)
         stream >> sel;

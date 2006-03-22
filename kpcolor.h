@@ -84,8 +84,7 @@ public:
     QRgb toQRgb () const;
 
     // (only valid if isOpaque())
-    // (const QColor & return results in fewer color reallocations)
-    const QColor &toQColor () const;
+    QColor toQColor () const;
 
     QColor maskColor () const;
 

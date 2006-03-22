@@ -748,17 +748,16 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
                  this, SLOT (hidePreview ()));
 
 
-        KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupPreviewSave);
-        KConfigBase *cfg = cfgGroupSaver.config ();
+        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupPreviewSave);
 
-        if (cfg->hasKey (kpSettingPreviewSaveUpdateDelay))
+        if (cfg.hasKey (kpSettingPreviewSaveUpdateDelay))
         {
-            m_updatePreviewDelay = cfg->readEntry (kpSettingPreviewSaveUpdateDelay);
+            m_updatePreviewDelay = cfg.readEntry (kpSettingPreviewSaveUpdateDelay, 0);
         }
         else
         {
-            cfg->writeEntry (kpSettingPreviewSaveUpdateDelay, m_updatePreviewDelay);
-            cfg->sync ();
+            cfg.writeEntry (kpSettingPreviewSaveUpdateDelay, m_updatePreviewDelay);
+            cfg.sync ();
         }
 
         if (m_updatePreviewDelay < 0)
@@ -775,10 +774,9 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
         #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
             kDebug () << "\tread cfg preview dialog last rel geometry" << endl;
         #endif
-            KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupPreviewSave);
-            KConfigBase *cfg = cfgGroupSaver.config ();
+            KConfigGroup cfg (KGlobal::config (), kpSettingsGroupPreviewSave);
 
-            m_previewDialogLastRelativeGeometry = cfg->readRectEntry (
+            m_previewDialogLastRelativeGeometry = cfg.readRectEntry (
                 kpSettingPreviewSaveGeometry);
         }
 
@@ -851,11 +849,10 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
     {
         m_updatePreviewDialogLastRelativeGeometryTimer->stop ();
 
-        KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupPreviewSave);
-        KConfigBase *cfg = cfgGroupSaver.config ();
+        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupPreviewSave);
 
-        cfg->writeEntry (kpSettingPreviewSaveGeometry, m_previewDialogLastRelativeGeometry);
-        cfg->sync ();
+        cfg.writeEntry (kpSettingPreviewSaveGeometry, m_previewDialogLastRelativeGeometry);
+        cfg.sync ();
 
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
         kDebug () << "\tsaving preview geometry "
@@ -901,7 +898,7 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
 
     QByteArray data;
 
-    QBuffer buffer (data);
+    QBuffer buffer (&data);
     buffer.open (QIODevice::WriteOnly);
     kpDocument::savePixmapToDevice (*m_documentPixmap,
                                     &buffer,
@@ -912,9 +909,10 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
     buffer.close ();
 
 
+    // COMPAT: [0] dangerous
     QImage image;
     image.loadFromData (data,
-        KImageIO::typeForMime (mimeType ()).latin1 ());
+        KImageIO::typeForMime (mimeType ()) [0].latin1 ());
 
     // TODO: merge with kpDocument::getPixmapFromFile()
     m_previewDialog->setFilePixmapAndSize (

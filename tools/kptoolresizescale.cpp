@@ -749,15 +749,17 @@ void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
 
     QLabel *percentLabel = new QLabel (i18n ("&Percent:"), m_dimensionsGroupBox);
     m_percentWidthInput = new KDoubleNumInput (0.01/*lower*/, 1000000/*upper*/,
-                                               100/*value*/, 1/*step*/,
-                                               2/*precision*/,
-                                               m_dimensionsGroupBox);
+                                               100/*value*/,
+                                               m_dimensionsGroupBox,
+                                               1/*step*/,
+                                               2/*precision*/);
     m_percentWidthInput->setSuffix (i18n ("%"));
     QLabel *xLabel2 = new QLabel (i18n ("x"), m_dimensionsGroupBox);
     m_percentHeightInput = new KDoubleNumInput (0.01/*lower*/, 1000000/*upper*/,
-                                                100/*value*/, 1/*step*/,
-                                                2/*precision*/,
-                                                m_dimensionsGroupBox);
+                                                100/*value*/,
+                                                m_dimensionsGroupBox,
+                                                1/*step*/,
+                                                2/*precision*/);
     m_percentHeightInput->setSuffix (i18n ("%"));
 
     m_keepAspectRatioCheckBox = new QCheckBox (i18n ("Keep &aspect ratio"),
@@ -914,10 +916,10 @@ void kpToolResizeScaleDialog::slotActOnChanged ()
     m_newWidthInput->blockSignals (true);
     m_newHeightInput->blockSignals (true);
 
-    m_newWidthInput->setMinValue (actOnSelection () ?
+    m_newWidthInput->setMinimum (actOnSelection () ?
                                       selection ()->minimumWidth () :
                                       1);
-    m_newHeightInput->setMinValue (actOnSelection () ?
+    m_newHeightInput->setMinimum (actOnSelection () ?
                                        selection ()->minimumHeight () :
                                        1);
 

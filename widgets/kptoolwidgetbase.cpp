@@ -44,6 +44,7 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kglobal.h>
 
 #include <kpdefs.h>
 #include <kpeffectinvert.h>
@@ -176,13 +177,12 @@ QPair <int, int> kpToolWidgetBase::defaultSelectedRowAndCol () const
 
     if (name ())
     {
-        KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupTools);
-        KConfigBase *cfg = cfgGroupSaver.config ();
+        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupTools);
 
         QString nameString = QString::fromLatin1 (name ());
 
-        row = cfg->readEntry (nameString + QString::fromLatin1 (" Row"), -1);
-        col = cfg->readEntry (nameString + QString::fromLatin1 (" Col"), -1);
+        row = cfg.readEntry (nameString + QString::fromLatin1 (" Row"), -1);
+        col = cfg.readEntry (nameString + QString::fromLatin1 (" Col"), -1);
     }
 
 #if DEBUG_KP_TOOL_WIDGET_BASE
@@ -219,13 +219,12 @@ void kpToolWidgetBase::saveSelectedAsDefault () const
     if (!name ())
         return;
 
-    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupTools);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupTools);
 
     QString nameString = QString::fromLatin1 (name ());
-    cfg->writeEntry (nameString + QString::fromLatin1 (" Row"), m_selectedRow);
-    cfg->writeEntry (nameString + QString::fromLatin1 (" Col"), m_selectedCol);
-    cfg->sync ();
+    cfg.writeEntry (nameString + QString::fromLatin1 (" Row"), m_selectedRow);
+    cfg.writeEntry (nameString + QString::fromLatin1 (" Col"), m_selectedCol);
+    cfg.sync ();
 }
 
 

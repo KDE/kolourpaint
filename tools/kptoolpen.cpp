@@ -664,8 +664,8 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
             int dy = y2 - y1;
 
             // Absolute values of differences
-            int ix = kAbs (dx);
-            int iy = kAbs (dy);
+            int ix = qAbs (dx);
+            int iy = qAbs (dy);
 
             // Larger of the x and y differences
             int inc = ix > iy ? ix : iy;

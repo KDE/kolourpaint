@@ -55,7 +55,8 @@ void kpMainWindow::addPermanentStatusBarItem (int id, int maxTextLen)
     textWithMaxLen.fill (QString::number (8/*big fat*/).at (0),
                          maxTextLen); //+ 2/*spaces on either side*/);
 
-    sb->insertFixedItem (textWithMaxLen, id, true/*permanent, place on the right*/);
+    // Permanent --> place on the right
+    sb->insertPermanentFixedItem (textWithMaxLen, id);
     sb->changeItem (QString::null, id);
 }
 

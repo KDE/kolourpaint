@@ -71,12 +71,11 @@ void kpMainWindow::enableHelpMenuDocumentActions (bool /*enable*/)
 // SYNC: kdebase/kwin/kwinbindings.cpp
 static QString printScreenShortcutString ()
 {
-    KConfigGroup cfgGroupGroup (KGlobal::config (), "Global Shortcuts");
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), "Global Shortcuts");
 
     // TODO: i18n() entry name?  kwinbindings.cpp seems to but it doesn't
     //       make sense.
-    const QString cfgEntryString = cfg->readEntry ("Desktop Screenshot");
+    const QString cfgEntryString = cfg.readEntry ("Desktop Screenshot");
 
 
     // (only use 1st key sequence, if it exists)

@@ -179,13 +179,11 @@ int kpToolToolBar::defaultIconSize ()
 #endif
 
 
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (),
-                                     kpSettingsGroupTools);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupTools);
 
-    if (cfg->hasKey (kpSettingToolBoxIconSize))
+    if (cfg.hasKey (kpSettingToolBoxIconSize))
     {
-        m_defaultIconSize = cfg->readNumEntry (kpSettingToolBoxIconSize);
+        m_defaultIconSize = cfg.readNumEntry (kpSettingToolBoxIconSize);
     #if DEBUG_KP_TOOL_TOOL_BAR
         kdDebug () << "\tread: " << m_defaultIconSize << endl;
     #endif
@@ -196,8 +194,8 @@ int kpToolToolBar::defaultIconSize ()
 #if DEBUG_KP_TOOL_TOOL_BAR
         kdDebug () << "\tfirst time - writing default: " << m_defaultIconSize << endl;
 #endif
-        cfg->writeEntry (kpSettingToolBoxIconSize, m_defaultIconSize);
-        cfg->sync ();
+        cfg.writeEntry (kpSettingToolBoxIconSize, m_defaultIconSize);
+        cfg.sync ();
     }
 
 
@@ -326,7 +324,7 @@ void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
     }
     else
     {
-        Q3Button *b = m_buttonGroup->selected ();
+        QAbstractButton *b = m_buttonGroup->selected ();
     #if DEBUG_KP_TOOL_TOOL_BAR
         kDebug () << "\twant to select no tool - button selected=" << b << endl;
     #endif
@@ -443,7 +441,7 @@ void kpToolToolBar::enableToolsSingleKeyTriggers (bool enable)
 // private slot
 void kpToolToolBar::slotToolButtonClicked ()
 {
-    Q3Button *b = m_buttonGroup->selected ();
+    QAbstractButton *b = m_buttonGroup->selected ();
 
 #if DEBUG_KP_TOOL_TOOL_BAR
     kDebug () << "kpToolToolBar::slotToolButtonClicked() button=" << b << endl;
@@ -630,7 +628,7 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
 }
 
 // private
-void kpToolToolBar::addButton (Q3Button *button, Qt::Orientation o, int num)
+void kpToolToolBar::addButton (QAbstractButton *button, Qt::Orientation o, int num)
 {
     if (o == Qt::Vertical)
         m_toolLayout->addWidget (button, num / m_vertCols, num % m_vertCols);

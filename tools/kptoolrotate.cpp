@@ -323,8 +323,8 @@ void kpToolRotateDialog::createAngleGroupBox ()
 
     m_angleCustomRadioButton = new QRadioButton (i18n ("C&ustom:"), angleGroupBox);
     m_angleCustomInput = new KIntNumInput (s_lastAngleCustom, angleGroupBox);
-    m_angleCustomInput->setMinValue (-359);
-    m_angleCustomInput->setMaxValue (+359);
+    m_angleCustomInput->setMinimum (-359);
+    m_angleCustomInput->setMaximum (+359);
     QLabel *degreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
 
 

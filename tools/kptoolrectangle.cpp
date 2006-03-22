@@ -385,8 +385,8 @@ void kpToolRectangle::applyModifiers ()
     // user wants to m_startPoint == centre
     if (m_controlPressed)
     {
-        int xdiff = kAbs (m_startPoint.x () - m_currentPoint.x ());
-        int ydiff = kAbs (m_startPoint.y () - m_currentPoint.y ());
+        int xdiff = qAbs (m_startPoint.x () - m_currentPoint.x ());
+        int ydiff = qAbs (m_startPoint.y () - m_currentPoint.y ());
         rect = QRect (m_startPoint.x () - xdiff, m_startPoint.y () - ydiff,
                       xdiff * 2 + 1, ydiff * 2 + 1);
     }

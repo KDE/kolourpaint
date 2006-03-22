@@ -37,8 +37,8 @@
 #include <ktoolbar.h>
 
 
+class QAbstractButton;
 class QBoxLayout;
-class Q3Button;
 class Q3ButtonGroup;
 class QWidget;
 class QGridLayout;
@@ -105,7 +105,7 @@ public slots:
     virtual void setOrientation (Qt::Orientation o);
 
 private:
-    void addButton (Q3Button *button, Qt::Orientation o, int num);
+    void addButton (QAbstractButton *button, Qt::Orientation o, int num);
 
     Qt::Orientation m_lastDockedOrientation;
     bool m_lastDockedOrientationSet;
@@ -128,7 +128,7 @@ private:
 private:
     struct kpButtonToolPair
     {
-        kpButtonToolPair (Q3Button *button, kpTool *tool)
+        kpButtonToolPair (QAbstractButton *button, kpTool *tool)
             : m_button (button), m_tool (tool)
         {
         }
@@ -138,7 +138,7 @@ private:
         {
         }
 
-        Q3Button *m_button;
+        QAbstractButton *m_button;
         kpTool *m_tool;
     };
 

@@ -43,6 +43,7 @@ class QInputMethodEvent;
 class QKeyEvent;
 class QMouseEvent;
 class QPixmap;
+class QWheelEvent;
 
 class KKeySequence;
 class KShortcut;
@@ -315,7 +316,7 @@ protected:
     virtual void keyPressEvent (QKeyEvent *e);
     virtual void keyReleaseEvent (QKeyEvent *e);
 
-    virtual void inputMethodEvent (QInputMethodEvent *e) {}
+    virtual void inputMethodEvent (QInputMethodEvent *) {}
     
 private:
     void keyUpdateModifierState (QKeyEvent *e);

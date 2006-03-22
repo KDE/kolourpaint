@@ -51,7 +51,7 @@
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kmimetype.h>
+#include <kmimetype.h>  // TODO: isn't this in KIO?
 #include <ktempfile.h>
 
 #include <kpcolor.h>
@@ -157,7 +157,15 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
 
     // sync: remember to "KIO::NetAccess::removeTempFile (tempFile)" in all exit paths
 
+#if 0
     QString detectedMimeType = KImageIO::mimeType (tempFile);
+#else  // COMPAT: this is wrong - should be what QImage::QImage() loaded file as
+    KMimeType::Ptr detectedMimeTypePtr = KMimeType::findByFileContent (tempFile);
+    QString detectedMimeType =
+        detectedMimeTypePtr != KMimeType::defaultMimeTypePtr () ?
+            detectedMimeTypePtr->name () :
+            QString::null;
+#endif
     if (saveOptions)
         saveOptions->setMimeType (detectedMimeType);
 
@@ -486,7 +494,7 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     if (userCancelled)
         *userCancelled = false;
 
-    QString type = KImageIO::typeForMime (saveOptions.mimeType ());
+    QString type = KImageIO::typeForMime (saveOptions.mimeType ()) [0];  // COMPAT: dangerous [0]
 #if DEBUG_KP_DOCUMENT
     kDebug () << "\tmimeType=" << saveOptions.mimeType ()
                << " type=" << type << endl;
@@ -763,7 +771,7 @@ QString kpDocument::prettyURLForURL (const KUrl &url)
     if (url.isEmpty ())
         return i18n ("Untitled");
     else
-        return url.prettyURL (0, KUrl::StripFileProtocol);
+        return url.pathOrURL ();
 }
 
 QString kpDocument::prettyURL () const
@@ -1153,6 +1161,8 @@ QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
 
     if (!maskBitmap.isNull ())
     {
+// COMPAT
+#if 0
         // Src Dest = Result
         // -----------------
         //  0   0       0
@@ -1166,6 +1176,7 @@ QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
                 QRect (0, 0, maskBitmap.width (), maskBitmap.height ()),
                 Qt::AndROP);
         selPixmap.setMask (selMaskBitmap);
+#endif
     }
 
     return selPixmap;
@@ -1231,8 +1242,8 @@ bool kpDocument::selectionPullFromDocument (const kpColor &backgroundColor)
         QPixmap erasePixmap (boundingRect.width (), boundingRect.height ());
         erasePixmap.fill (backgroundColor.toQColor ());
 
-        if (selTransparentPixmap.mask ())
-            erasePixmap.setMask (*selTransparentPixmap.mask ());
+        if (!selTransparentPixmap.mask ().isNull ())
+            erasePixmap.setMask (selTransparentPixmap.mask ());
 
         paintPixmapAt (erasePixmap, boundingRect.topLeft ());
     }

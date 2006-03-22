@@ -707,7 +707,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
         const QBitmap srcMask = srcPixmap.mask ();
         bitBlt (&mask,
                 destRect.x (), destRect.y (),
-                &srcMask
+                &srcMask,
                 0, 0,
                 destRect.width (), destRect.height ());
         destPixmapPtr->setMask (mask);

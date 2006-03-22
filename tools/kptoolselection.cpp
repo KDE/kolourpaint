@@ -370,7 +370,7 @@ void kpToolSelection::beginDraw ()
 
 
 // protected
-const QCursor &kpToolSelection::cursor () const
+QCursor kpToolSelection::cursor () const
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "kpToolSelection::cursor()"

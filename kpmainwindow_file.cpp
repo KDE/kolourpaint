@@ -30,7 +30,6 @@
 
 #include <q3cstring.h>
 #include <qdatastream.h>
-#include <qpaintdevicemetrics.h>
 #include <qpainter.h>
 #include <qsize.h>
 //Added by qt3to4:
@@ -165,15 +164,14 @@ void kpMainWindow::addRecentURL (const KUrl &url)
 
 
     // TODO: PROPAGATE: interprocess
-    // COMPAT: it's not a pointer...
-    if (KMainWindow::memberList())
+    if (!KMainWindow::memberList ().isEmpty ())
     {
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\thave memberList" << endl;
     #endif
 
-        for (Q3PtrList <KMainWindow>::const_iterator it = KMainWindow::memberList()->begin ();
-             it != KMainWindow::memberList()->end ();
+        for (QList <KMainWindow *>::const_iterator it = KMainWindow::memberList ().begin ();
+             it != KMainWindow::memberList ().end ();
              it++)
         {
             kpMainWindow *mw = dynamic_cast <kpMainWindow *> (*it);
@@ -230,10 +228,9 @@ QSize kpMainWindow::defaultDocSize () const
     // realise what other processes have done e.g. Settings / Show Path
     KGlobal::config ()->reparseConfiguration ();
 
-    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupGeneral);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
-    QSize docSize = cfg->readSizeEntry (kpSettingLastDocSize);
+    QSize docSize = cfg.readEntry (kpSettingLastDocSize, QSize ());
 
     if (docSize.isEmpty ())
     {
@@ -257,11 +254,10 @@ void kpMainWindow::saveDefaultDocSize (const QSize &size)
     kdDebug () << "\tCONFIG: saving Last Doc Size = " << size << endl;
 #endif
 
-    KConfigGroup cfgGroupGroup (KGlobal::config (), kpSettingsGroupGeneral);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
-    cfg->writeEntry (kpSettingLastDocSize, size);
-    cfg->sync ();
+    cfg.writeEntry (kpSettingLastDocSize, size);
+    cfg.sync ();
 }
 
 
@@ -315,7 +311,8 @@ KUrl::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &
 #endif
     QString filter = mimeTypes.join (" ");
 
-    KFileDialog fd (startURL, filter, this, "fd", true/*modal*/);
+    // COMPAT: , true/*modal*/);
+    KFileDialog fd (startURL, filter, this);
     fd.setCaption (caption);
     fd.setOperationMode (KFileDialog::Opening);
     if (allowMultipleURLs)
@@ -426,8 +423,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
         reparsedConfiguration = true;                                                \
     }                                                                                \
                                                                                      \
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (), forcedSaveOptionsGroup);    \
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), forcedSaveOptionsGroup);    \
 
 
     if (chosenSaveOptions)
@@ -466,7 +462,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 
         SETUP_READ_CFG ();
 
-        fdSaveOptions.setMimeType (kpDocumentSaveOptions::defaultMimeType (cfg));
+        fdSaveOptions.setMimeType (kpDocumentSaveOptions::defaultMimeType (&cfg));
 
 
         if (!MIME_TYPE_IS_VALID ())
@@ -489,15 +485,15 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
     {
         SETUP_READ_CFG ();
 
-        fdSaveOptions.setColorDepth (kpDocumentSaveOptions::defaultColorDepth (cfg));
-        fdSaveOptions.setDither (kpDocumentSaveOptions::defaultDither (cfg));
+        fdSaveOptions.setColorDepth (kpDocumentSaveOptions::defaultColorDepth (&cfg));
+        fdSaveOptions.setDither (kpDocumentSaveOptions::defaultDither (&cfg));
     }
 
     if (fdSaveOptions.qualityIsInvalid ())
     {
         SETUP_READ_CFG ();
 
-        fdSaveOptions.setQuality (kpDocumentSaveOptions::defaultQuality (cfg));
+        fdSaveOptions.setQuality (kpDocumentSaveOptions::defaultQuality (&cfg));
     }
 #if DEBUG_KP_MAIN_WINDOW
     fdSaveOptions.printDebug ("\tcorrected saveOptions passed to fileDialog");
@@ -509,7 +505,8 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
             docMetaInfo,
             this);
 
-    KFileDialog fd (startURL, QString::null, this, "fd", true/*modal*/,
+ // COMPAT: true/*modal*/,
+    KFileDialog fd (startURL, QString::null, this,
                     saveOptionsWidget);
     saveOptionsWidget->setVisualParent (&fd);
     fd.setCaption (caption);
@@ -532,13 +529,12 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
         newSaveOptions.printDebug ("\tnewSaveOptions");
     #endif
 
-        KConfigGroup cfgGroupGroup (KGlobal::config (), forcedSaveOptionsGroup);
-        KConfigBase *cfg = cfgGroupSaver.config ();
+        KConfigGroup cfg (KGlobal::config (), forcedSaveOptionsGroup);
 
         // Save options user forced - probably want to use them in future
-        kpDocumentSaveOptions::saveDefaultDifferences (cfg,
+        kpDocumentSaveOptions::saveDefaultDifferences (&cfg,
             fdSaveOptions, newSaveOptions);
-        cfg->sync ();
+        cfg.sync ();
 
 
         if (chosenSaveOptions)
@@ -814,13 +810,11 @@ static bool shouldPrintImageCenteredOnPage ()
 #endif
     bool ret;
 
-    KConfigGroupSaver cfgGroupSaver (KGlobal::config (),
-                                     kpSettingsGroupGeneral);
-    KConfigBase *cfg = cfgGroupSaver.config ();
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
-    if (cfg->hasKey (kpSettingPrintImageCenteredOnPage))
+    if (cfg.hasKey (kpSettingPrintImageCenteredOnPage))
     {
-        ret = cfg->readBoolEntry (kpSettingPrintImageCenteredOnPage);
+        ret = cfg.readBoolEntry (kpSettingPrintImageCenteredOnPage, true/*COMPAT, silly*/);
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tread: " << ret << endl;
     #endif
@@ -831,8 +825,8 @@ static bool shouldPrintImageCenteredOnPage ()
 #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tfirst time - writing default: " << ret << endl;
 #endif
-        cfg->writeEntry (kpSettingPrintImageCenteredOnPage, ret);
-        cfg->sync ();
+        cfg.writeEntry (kpSettingPrintImageCenteredOnPage, ret);
+        cfg.sync ();
     }
 
     return ret;
@@ -886,9 +880,9 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
         // what if you have multiple screens connected to the same computer
         // with different DPIs?
         // TODO: mysteriously, someone else is setting this to 96dpi always.
-        QPaintDeviceMetrics screenMetrics (&pixmap/*screen element*/);
-        const int dpiX = screenMetrics.logicalDpiX (),
-            dpiY = screenMetrics.logicalDpiY ();
+        const QPaintDevice *screenDevice = &pixmap/*arbitrary screen element*/;
+        const int dpiX = screenDevice->logicalDpiX (),
+            dpiY = screenDevice->logicalDpiY ();
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tusing screen dpi: x=" << dpiX << " y=" << dpiY << endl;
     #endif
@@ -905,9 +899,8 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
     //     m   m       m = margin
     //     m   m
     //     mmmmm
-    QPaintDeviceMetrics printerMetrics (printer);
-    const int printerWidthMM = printerMetrics.widthMM ();
-    const int printerHeightMM = printerMetrics.heightMM ();
+    const int printerWidthMM = printer->widthMM ();
+    const int printerHeightMM = printer->heightMM ();
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tprinter: widthMM=" << printerWidthMM
                << " heightMM=" << printerHeightMM
@@ -1007,7 +1000,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
     {
         // The user can mutate margins at their own risk in this dialog.
         // It doesn't seem to affect the size of the page as reported
-        // by QPaintDeviceMetrics::{width,height}MM().
+        // by QPaintDeviceMetrics::{width,height}MM().  COMPAT: fix comment - no more QPaintDeviceMetrics
         if (!printer->setup (this))
             return;
     }
@@ -1133,7 +1126,7 @@ void kpMainWindow::setAsWallpaper (bool centered)
 
 
     QByteArray data;
-    QDataStream dataStream (data, QIODevice::WriteOnly);
+    QDataStream dataStream (&data, QIODevice::WriteOnly);
 
     // write path
 #if DEBUG_KP_MAIN_WINDOW
