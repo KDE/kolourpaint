@@ -495,7 +495,6 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
         KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
         if (cfg.hasKey (kpSettingDitherOnOpen))
         {
-            // COMPAT: the 0?
             configDitherIfNumColorsGreaterThan = cfg.readEntry (kpSettingDitherOnOpen, 0);
         }
         else
