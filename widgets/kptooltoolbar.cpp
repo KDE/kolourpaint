@@ -335,11 +335,14 @@ void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
     #endif
         if (b)
         {
-            // HACK: We want no button to be checked but qbuttongroup.html
-            //       says the following about exclusive button groups:
+            // HACK: qbuttongroup.html says the following about exclusive
+            //       button groups:
             //
-            //       "to untoggle a button you must click on another button
-            //        in the group."
+            //           "to untoggle a button you must click on another button
+            //            in the group"
+            //
+            //       But we don't want any button to be selected.
+            //       So don't be an exclusive button group temporarily.
             m_buttonGroup->setExclusive (false);
             b->setChecked (false);
             m_buttonGroup->setExclusive (true);
