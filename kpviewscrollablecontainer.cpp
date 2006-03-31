@@ -31,17 +31,11 @@
 
 #include <qbitmap.h>
 #include <qcursor.h>
+#include <qevent.h>
 #include <qpainter.h>
 #include <qpen.h>
 #include <qpixmap.h>
 #include <qtimer.h>
-//Added by qt3to4:
-#include <QPaintEvent>
-#include <QKeyEvent>
-#include <QEvent>
-#include <QDragMoveEvent>
-#include <QResizeEvent>
-#include <QMouseEvent>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -67,12 +61,14 @@ static const int GripHandleSize = 7;
 
 kpGrip::kpGrip (GripType type,
                 QWidget *parent, const char *name)
-    : QWidget (parent, name),
+    : QLabel (parent),
       m_type (type),
       m_startPoint (KP_INVALID_POINT),
       m_currentPoint (KP_INVALID_POINT),
       m_shouldReleaseMouseButtons (false)
 {
+    setObjectName (name);
+
     setCursor (cursorForType (m_type));
 
     setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
@@ -200,8 +196,12 @@ void kpGrip::updatePixmap ()
 #endif
     if (hr.isValid ())
         kpPixmapFX::ensureOpaqueAt (&pixmap, hr);
+ //   QPalette palette;
+   // palette.setBrush(backgroundRole(), QBrush(pixmap));
+    //setPalette(palette);
 
-    setBackgroundPixmap (pixmap);
+    // COMPAT: why didn't leaving kpGrip as QWidget work?
+    setPixmap (pixmap);
     if (!pixmap.mask ().isNull ())
         setMask (pixmap.mask ());
 }
@@ -393,7 +393,7 @@ void kpGrip::paintEvent (QPaintEvent *e)
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
     kDebug () << "kpGrip::paintEvent(" << e->rect () << ")" << endl;
 #endif
-    QWidget::paintEvent (e);
+    QLabel::paintEvent (e);
 }
 
 
@@ -415,6 +415,10 @@ kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent,
       m_haveMovedFromOriginalDocSize (false)
 
 {
+    // COMPAT: remove
+    viewport ()->setAttribute (Qt::WA_PaintOutsidePaintEvent);
+    viewport ()->setAttribute (Qt::WA_PaintUnclipped);
+
     m_bottomGrip->setFixedHeight (GripSize);
     m_bottomGrip->hide ();
     addChild (m_bottomGrip);
@@ -713,15 +717,15 @@ void kpViewScrollableContainer::drawResizeLines ()
 
     const QRect rightRect = rightResizeLineRect ();
     if (rightRect.isValid ())
-        p.fillRect (mapViewToViewport (rightRect), Qt::white);
+        p.fillRect (mapViewToViewport (rightRect), Qt::black);
 
     const QRect bottomRect = bottomResizeLineRect ();
     if (bottomRect.isValid ())
-        p.fillRect (mapViewToViewport (bottomRect), Qt::white);
+        p.fillRect (mapViewToViewport (bottomRect), Qt::black);
 
     const QRect bottomRightRect = bottomRightResizeLineRect ();
     if (bottomRightRect.isValid ())
-        p.fillRect (mapViewToViewport (bottomRightRect), Qt::white);
+        p.fillRect (mapViewToViewport (bottomRightRect), Qt::black/*COMPAT: was white with XOR and above ones too*/);
 
     p.end ();
 }
@@ -1053,7 +1057,9 @@ void kpViewScrollableContainer::updateGrips ()
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
     kDebug () << "kpViewScrollableContainer::updateGrips() m_view="
-               << m_view << endl;
+              << m_view
+              << " (size=" << (m_view ? m_view->size () : QSize ()) << ")"
+              << endl;
 #endif
 
     if (m_view)
@@ -1065,6 +1071,9 @@ void kpViewScrollableContainer::updateGrips ()
         moveChild (m_rightGrip, m_view->width (), 0);
 
         moveChild (m_bottomRightGrip, m_view->width (), m_view->height ());
+    #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+        kDebug () << "\tbottomRightGrip=" << m_bottomRightGrip->pos () << endl;
+    #endif
     }
 
     m_bottomGrip->setShown (bool (m_view));

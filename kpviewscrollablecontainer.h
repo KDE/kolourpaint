@@ -30,20 +30,20 @@
 #define KP_VIEW_SCROLLABLE_CONTAINER_H
 
 
+#include <qlabel.h>
 #include <qpoint.h>
 #include <q3scrollview.h>
 #include <qsize.h>
-//Added by qt3to4:
-#include <QPaintEvent>
-#include <QDragMoveEvent>
-#include <QKeyEvent>
-#include <QEvent>
-#include <QResizeEvent>
-#include <QMouseEvent>
 
 
 class QCursor;
+class QDragMoveEvent;
+class QEvent;
+class QKeyEvent;
+class QMouseEvent;
+class QPaintEvent;
 class QRect;
+class QResizeEvent;
 class QTimer;
 
 class kpGrip;
@@ -52,7 +52,7 @@ class kpMainWindow;
 
 
 // TODO: refactor by sharing iface's with kpTool
-class kpGrip : public QWidget
+class kpGrip : public QLabel
 {
 Q_OBJECT
 
