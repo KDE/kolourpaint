@@ -177,6 +177,7 @@ void kpMainWindow::slotHelpTakingScreenshots ()
     dlg.enableButtonSeparator (true);
 
     KActiveLabel *messageLabel = new KActiveLabel (message, &dlg);
+    // TODO: this is brittle - override KActiveLabel::openLink() instead.
     disconnect (messageLabel, SIGNAL (anchorClicked (const QUrl &)),
              messageLabel, SLOT (openLink (const QUrl &)));
     connect (messageLabel, SIGNAL (anchorClicked (const QUrl &)),
