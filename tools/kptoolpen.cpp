@@ -28,15 +28,15 @@
 
 #define DEBUG_KP_TOOL_PEN 0
 
+
 #include <qapplication.h>
 #include <qbitmap.h>
 #include <qcursor.h>
 #include <qimage.h>
 #include <qpainter.h>
+#include <qpixmap.h>
 #if DEBUG_KP_TOOL_PEN
     #include <qdatetime.h>
-//Added by qt3to4:
-#include <QPixmap>
 #endif
 
 #include <kdebug.h>
@@ -56,6 +56,7 @@
 #include <kptoolwidgetbrush.h>
 #include <kptoolwidgeterasersize.h>
 #include <kpviewmanager.h>
+
 
 /*
  * kpToolPen
@@ -1131,5 +1132,6 @@ void kpToolPenCommand::cancel ()
         viewManager ()->restoreFastUpdates ();
     }
 }
+
 
 #include <kptoolpen.moc>
