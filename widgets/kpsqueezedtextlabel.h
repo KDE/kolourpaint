@@ -25,13 +25,16 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef __kp_squeezed_text_label_h__
-#define __kp_squeezed_text_label_h__
+
+#ifndef KP_SQUEEZED_TEXT_LABEL_H
+#define KP_SQUEEZED_TEXT_LABEL_H
+
 
 #include <qlabel.h>
 #include <qstring.h>
-//Added by qt3to4:
-#include <QResizeEvent>
+
+
+class QResizeEvent;
 
 
 // KSqueezedTextLabel done properly - squeeze at the end of the string,
@@ -64,4 +67,5 @@ protected:
     bool m_showEllipsis;
 };
 
-#endif  // __kp_squeezed_text_label_h__
+
+#endif  // KP_SQUEEZED_TEXT_LABEL_H

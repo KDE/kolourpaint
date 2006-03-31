@@ -26,16 +26,18 @@
 */
 
 
-#ifndef __kptoolwidgetfillstyle_h__
-#define __kptoolwidgetfillstyle_h__
+#ifndef KP_TOOL_WIDGET_FILL_STYLE_H
+#define KP_TOOL_WIDGET_FILL_STYLE_H
+
 
 #include <kptoolwidgetbase.h>
-//Added by qt3to4:
-#include <QPixmap>
+
 
 class QBrush;
+class QPixmap;
 
 class kpColor;
+
 
 class kpToolWidgetFillStyle : public kpToolWidgetBase
 {
@@ -79,4 +81,5 @@ protected slots:
     virtual bool setSelected (int row, int col, bool saveAsDefault);
 };
 
-#endif  // __kptoolwidgetfillstyle_h__
+
+#endif  // KP_TOOL_WIDGET_FILL_STYLE_H

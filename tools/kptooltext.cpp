@@ -30,9 +30,8 @@
 
 #include <kptooltext.h>
 
+#include <qevent.h>
 #include <q3valuevector.h>
-//Added by qt3to4:
-#include <QKeyEvent>
 
 #include <kdebug.h>
 #include <klocale.h>

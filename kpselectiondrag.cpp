@@ -31,8 +31,7 @@
 #include <kpselectiondrag.h>
 
 #include <qdatastream.h>
-//Added by qt3to4:
-#include <QPixmap>
+#include <qpixmap.h>
 
 #include <kdebug.h>
 

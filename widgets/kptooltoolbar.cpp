@@ -31,17 +31,15 @@
 
 #include <kptooltoolbar.h>
 
+#include <qboxlayout.h>
 #include <qbuttongroup.h>
 #include <qdatetime.h>
+#include <qevent.h>
+#include <qgridlayout.h>
 #include <qlayout.h>
 #include <qtoolbutton.h>
 #include <qtooltip.h>
 #include <qwidget.h>
-
-//Added by qt3to4:
-#include <QMouseEvent>
-#include <QGridLayout>
-#include <QBoxLayout>
 
 #include <kconfig.h>
 #include <kdebug.h>

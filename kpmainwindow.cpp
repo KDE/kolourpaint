@@ -30,12 +30,9 @@
 #include <kpmainwindow_p.h>
 
 #include <q3dragobject.h>
+#include <qevent.h>
 #include <qpainter.h>
 #include <qtimer.h>
-//Added by qt3to4:
-#include <QDragEnterEvent>
-#include <QMoveEvent>
-#include <QDropEvent>
 
 #include <kactionclasses.h>
 #include <kapplication.h>

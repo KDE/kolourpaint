@@ -25,20 +25,21 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #define DEBUG_KP_EFFECT_EMBOSS 0
 
 
 #include <kpeffectemboss.h>
 
+#include <qbitmap.h>
 #include <qcheckbox.h>
+#include <qgridlayout.h>
 #include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpixmap.h>
 #include <qpushbutton.h>
-//Added by qt3to4:
-#include <QGridLayout>
-#include <QBitmap>
+
 #include <kdebug.h>
 #include <kimageeffect.h>
 #include <klocale.h>

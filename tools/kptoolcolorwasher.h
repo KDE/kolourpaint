@@ -26,10 +26,12 @@
 */
 
 
-#ifndef __kptoolcolorwasher_h__
-#define __kptoolcolorwasher_h__
+#ifndef KP_TOOL_COLOR_WASHER_H
+#define KP_TOOL_COLOR_WASHER_H
+
 
 #include <kptoolpen.h>
+
 
 class kpToolColorWasher : public kpToolPen
 {
@@ -40,4 +42,5 @@ public:
     virtual ~kpToolColorWasher ();
 };
 
-#endif  // __kptoolcolorwasher_h__
+
+#endif  // KP_TOOL_COLOR_WASHER_H

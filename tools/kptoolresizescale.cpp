@@ -25,6 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #define DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND 0
 #define DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG 0
 
@@ -35,24 +36,23 @@
 
 #include <q3accel.h>
 #include <qapplication.h>
+#include <qboxlayout.h>
 #include <q3buttongroup.h>
 #include <qcheckbox.h>
+#include <qgridlayout.h>
 #include <q3groupbox.h>
 #include <q3hbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qpixmap.h>
 #include <qpoint.h>
 #include <q3pointarray.h>
 #include <qpushbutton.h>
 #include <qrect.h>
 #include <qsize.h>
 #include <qtoolbutton.h>
-#include <q3whatsthis.h>
 #include <qmatrix.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <QGridLayout>
-#include <QVBoxLayout>
+#include <q3whatsthis.h>
 
 #include <kapplication.h>
 #include <kcombobox.h>
@@ -508,11 +508,9 @@ double kpToolResizeScaleDialog::s_lastPercentWidth = 100,
 
 
 kpToolResizeScaleDialog::kpToolResizeScaleDialog (kpMainWindow *mainWindow)
-    : KDialogBase ((QWidget *) mainWindow,
-                   0/*name*/,
-                   true/*modal*/,
-                   i18n ("Resize / Scale")/*caption*/,
-                   KDialogBase::Ok | KDialogBase::Cancel),
+    : KDialog ((QWidget *) mainWindow,
+               i18n ("Resize / Scale")/*caption*/,
+               KDialog::Ok | KDialog::Cancel),
       m_mainWindow (mainWindow),
       m_ignoreKeepAspectRatio (0)
 {
@@ -1082,8 +1080,8 @@ bool kpToolResizeScaleDialog::isNoOp () const
 }
 
 
-// private slot virtual [base KDialogBase]
-void kpToolResizeScaleDialog::slotOk ()
+// private slot virtual [base QDialog]
+void kpToolResizeScaleDialog::accept ()
 {
     enum { eText, eSelection, eImage } actionTarget = eText;
 
@@ -1218,7 +1216,7 @@ void kpToolResizeScaleDialog::slotOk ()
             continueButtonText,
             this))
     {
-        KDialogBase::slotOk ();
+        KDialog::accept ();
     }
 }
 

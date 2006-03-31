@@ -25,6 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #define DEBUG_KP_COLOR_SIMILARITY_CUBE 0
 
 
@@ -34,10 +35,7 @@
 
 #include <qpainter.h>
 #include <qpixmap.h>
-
-//Added by qt3to4:
-#include <Q3PointArray>
-#include <Q3Frame>
+#include <q3pointarray.h>
 
 #include <kdebug.h>
 #include <klocale.h>

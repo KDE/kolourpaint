@@ -26,12 +26,15 @@
 */
 
 
-#ifndef __kptoolroundedrectangle_h__
-#define __kptoolroundedrectangle_h__
+#ifndef KP_TOOL_ROUNDED_RECTANGLE_H
+#define KP_TOOL_ROUNDED_RECTANGLE_H
+
 
 #include <kptoolrectangle.h>
 
+
 class kpMainWindow;
+
 
 class kpToolRoundedRectangle : public kpToolRectangle
 {
@@ -42,4 +45,5 @@ public:
     virtual ~kpToolRoundedRectangle ();
 };
 
-#endif  // __kptoolroundedrectangle_h__
+
+#endif  // KP_TOOL_ROUNDED_RECTANGLE_H

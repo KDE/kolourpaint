@@ -28,12 +28,12 @@
 
 #define DEBUG_KP_TOOL_RECTANGLE 0
 
+
 #include <qbitmap.h>
 #include <qcursor.h>
 #include <qevent.h>
 #include <qpainter.h>
-//Added by qt3to4:
-#include <QPixmap>
+#include <qpixmap.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -51,6 +51,7 @@
 #include <kptoolwidgetlinewidth.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
+
 
 static QPixmap pixmap (const kpToolRectangle::Mode mode,
                        kpDocument *document, const QRect &rect,
@@ -634,5 +635,6 @@ void kpToolRectangleCommand::unexecute ()
     else
         kError () << "kpToolRectangleCommand::unexecute() m_oldPixmapPtr null" << endl;
 }
+
 
 #include <kptoolrectangle.moc>

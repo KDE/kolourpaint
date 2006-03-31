@@ -25,8 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef __kp_selection_transparency_h__
-#define __kp_selection_transparency_h__
+
+#ifndef KP_SELECTION_TRANSPARENCY_H
+#define KP_SELECTION_TRANSPARENCY_H
+
 
 #include <kpcolor.h>
 
@@ -67,4 +69,4 @@ private:
 };
 
 
-#endif  // __kp_selection_transparency_h__
+#endif  // KP_SELECTION_TRANSPARENCY_H

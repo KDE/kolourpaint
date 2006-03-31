@@ -25,6 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #define DEBUG_KP_EFFECT_INVERT 0
 
 
@@ -34,8 +35,6 @@
 #include <qimage.h>
 #include <qlayout.h>
 #include <qpixmap.h>
-//Added by qt3to4:
-#include <QVBoxLayout>
 
 #include <kdebug.h>
 #include <klocale.h>

@@ -38,27 +38,19 @@
 #include <qbitmap.h>
 #include <qcursor.h>
 #include <q3dragobject.h>
+#include <qevent.h>
 #include <qpointer.h>
 #include <qimage.h>
+#include <q3memarray.h>
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qpoint.h>
+#include <q3pointarray.h>
 #include <qrect.h>
 #include <qregion.h>
-#include <q3memarray.h>
 
 #if DEBUG_KP_VIEW || DEBUG_KP_VIEW_RENDERER
     #include <qdatetime.h>
-//Added by qt3to4:
-#include <QDragLeaveEvent>
-#include <QFocusEvent>
-#include <QPaintEvent>
-#include <Q3PointArray>
-#include <QKeyEvent>
-#include <QEvent>
-#include <QResizeEvent>
-#include <QDragEnterEvent>
-#include <QMouseEvent>
 #endif
 
 #include <kdebug.h>
@@ -629,6 +621,7 @@ void kpView::updateMicroFocusHint (const QRect &microFocusHint)
     int height = microFocusHint.height();
 
     // COMPAT
+    (void) x; (void) y; (void) width; (void) height;
     //setMicroFocusHint (x, y, width, height);
 }
 

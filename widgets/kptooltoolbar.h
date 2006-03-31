@@ -52,6 +52,7 @@ class kpToolWidgetLineWidth;
 class kpToolWidgetOpaqueOrTransparent;
 class kpToolWidgetSpraycanSize;
 
+
 class kpToolToolBar : public KToolBar
 {
 Q_OBJECT
@@ -155,4 +156,3 @@ private:
 
 
 #endif  // KP_TOOL_TOOL_BAR_H
-

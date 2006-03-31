@@ -26,8 +26,9 @@
 */
 
 
-#ifndef __kptoolpolygon_h__
-#define __kptoolpolygon_h__
+#ifndef KP_TOOL_POLYGON_H
+#define KP_TOOL_POLYGON_H
+
 
 #include <qbrush.h>
 #include <qpen.h>
@@ -36,14 +37,12 @@
 #include <qpoint.h>
 #include <q3pointarray.h>
 #include <qrect.h>
-//Added by qt3to4:
-#include <QMouseEvent>
-
-#include <kpcommandhistory.h>
 
 #include <kpcolor.h>
+#include <kpcommandhistory.h>
 #include <kptool.h>
 #include <kptoolwidgetfillstyle.h>
+
 
 class QMouseEvent;
 class QPen;
@@ -58,6 +57,7 @@ class kpMainWindow;
 class kpToolWidgetFillStyle;
 class kpToolWidgetLineWidth;
 class kpViewManager;
+
 
 class kpToolPolygon : public kpTool
 {
@@ -156,4 +156,5 @@ private:
     kpToolPolygon::Mode m_mode;
 };
 
-#endif  // __kptoolpolygon_h__
+
+#endif  // KP_TOOL_POLYGON_H

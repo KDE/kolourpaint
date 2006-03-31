@@ -25,8 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef __kp_tool_h__
-#define __kp_tool_h__
+
+#ifndef KP_TOOL_H
+#define KP_TOOL_H
+
 
 #include <qobject.h>
 #include <qpoint.h>
@@ -422,4 +424,5 @@ protected:
     class kpToolPrivate *d;
 };
 
-#endif  // __kp_tool_h__
+
+#endif  // KP_TOOL_H

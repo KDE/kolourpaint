@@ -26,13 +26,12 @@
 */
 
 
-#ifndef __kptoolrotate_h__
-#define __kptoolrotate_h__
+#ifndef KP_TOOL_ROTATE_H
+#define KP_TOOL_ROTATE_H
+
 
 #include <qpixmap.h>
 #include <qpoint.h>
-
-#include <kdialogbase.h>
 
 #include <kpcolor.h>
 #include <kpcommandhistory.h>
@@ -111,7 +110,7 @@ private slots:
     virtual void slotUpdate ();
 
 private slots:
-    virtual void slotOk ();
+    virtual void accept ();
 
 private:
     QRadioButton *m_antiClockwiseRadioButton,
@@ -126,4 +125,4 @@ private:
 };
 
 
-#endif  // __kptoolrotate_h__
+#endif  // KP_TOOL_ROTATE_H

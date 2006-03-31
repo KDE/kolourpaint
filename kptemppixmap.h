@@ -28,12 +28,13 @@
 // TODO: maybe merge with kpSelection?
 
 
-#ifndef __kp_temp_pixmap_h__
-#define __kp_temp_pixmap_h__
+#ifndef KP_TEMP_PIXMAP_H
+#define KP_TEMP_PIXMAP_H
 
 
 #include <qpoint.h>
 #include <qpixmap.h>
+
 
 class kpViewManager;
 
@@ -87,4 +88,4 @@ private:
 };
 
 
-#endif  // __kp_temp_pixmap_h__
+#endif  // KP_TEMP_PIXMAP_H

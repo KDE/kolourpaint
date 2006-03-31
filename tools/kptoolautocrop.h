@@ -26,19 +26,19 @@
 */
 
 
-#ifndef __kptoolautocrop_h__
-#define __kptoolautocrop_h__
+#ifndef KP_TOOL_AUTO_CROP_H
+#define KP_TOOL_AUTO_CROP_H
+
 
 #include <qrect.h>
-//Added by qt3to4:
-#include <QPixmap>
-
-#include <kpcommandhistory.h>
 
 #include <kpcolor.h>
+#include <kpcommandhistory.h>
 #include <kpselection.h>
 
+
 class QPixmap;
+
 class kpDocument;
 class kpMainWindow;
 class kpViewManager;
@@ -126,4 +126,5 @@ private:
     kpSelection m_oldSelection;
 };
 
-#endif  // __kptoolautocrop_h__
+
+#endif  // KP_TOOL_AUTO_CROP_H

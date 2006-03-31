@@ -26,8 +26,9 @@
 */
 
 
-#ifndef __kp_selection_drag_h__
-#define __kp_selection_drag_h__
+#ifndef KP_SELECTION_DRAG_H
+#define KP_SELECTION_DRAG_H
+
 
 #include <q3dragobject.h>
 
@@ -68,4 +69,4 @@ protected:
 };
 
 
-#endif  // __kp_selection_drag_h__
+#endif  // KP_SELECTION_DRAG_H

@@ -25,17 +25,16 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #define DEBUG_KP_SQUEEZED_TEXT_LABEL 0
 
 
 #include <kpsqueezedtextlabel.h>
 
+#include <qevent.h>
 #include <qfont.h>
 #include <qfontmetrics.h>
 #include <qstring.h>
-//Added by qt3to4:
-#include <QLabel>
-#include <QResizeEvent>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -106,6 +105,8 @@ void kpSqueezedTextLabel::resizeEvent (QResizeEvent *e)
     kDebug () << "kpSqueezedTextLabeL::resizeEvent() size=" << e->size ()
                << " oldSize=" << e->oldSize ()
                << endl;
+#else
+    (void) e;
 #endif
     squeezeText ();
 }
@@ -214,5 +215,6 @@ void kpSqueezedTextLabel::squeezeText ()
         QLabel::setText (m_fullText.left (numLettersToUse) + ellipsisText ());
     }
 }
+
 
 #include <kpsqueezedtextlabel.moc>

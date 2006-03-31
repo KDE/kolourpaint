@@ -26,15 +26,14 @@
 */
 
 
-#ifndef __kpviewmanager_h__
-#define __kpviewmanager_h__
+#ifndef KP_VIEW_MANAGER_H
+#define KP_VIEW_MANAGER_H
+
 
 #include <qcursor.h>
 #include <qobject.h>
 #include <q3ptrlist.h>
 #include <qrect.h>
-//Added by qt3to4:
-#include <QPixmap>
 
 
 class QPixmap;
@@ -45,6 +44,7 @@ class kpDocument;
 class kpView;
 class kpMainWindow;
 class kpTempPixmap;
+
 
 class kpViewManager : public QObject
 {
@@ -219,4 +219,5 @@ private:
     class kpViewManagerPrivate *d;
 };
 
-#endif  // __kpviewmanager_h__
+
+#endif  // KP_VIEW_MANAGER_H

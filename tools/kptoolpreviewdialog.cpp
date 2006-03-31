@@ -25,19 +25,20 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #define DEBUG_KP_TOOL_PREVIEW_DIALOG 0
+
 
 #include <kptoolpreviewdialog.h>
 
 #include <qapplication.h>
-#include <qlayout.h>
+#include <qboxlayout.h>
+#include <qgridlayout.h>
 #include <q3groupbox.h>
 #include <qlabel.h>
+#include <qlayout.h>
+#include <qpixmap.h>
 #include <qpushbutton.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <QVBoxLayout>
-#include <QGridLayout>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -57,9 +58,7 @@ kpToolPreviewDialog::kpToolPreviewDialog (Features features,
                                           bool actOnSelection,
                                           kpMainWindow *parent,
                                           const char *name)
-    : KDialogBase (parent, name, true/*modal*/,
-                   caption,
-                   KDialogBase::Ok | KDialogBase::Cancel),
+    : KDialog (parent, caption, KDialog::Ok | KDialog::Cancel),
       m_afterActionText (afterActionText),
       m_actOnSelection (actOnSelection),
       m_mainWindow (parent),
@@ -69,6 +68,8 @@ kpToolPreviewDialog::kpToolPreviewDialog (Features features,
       m_previewPixmapLabel (0),
       m_gridLayout (0)
 {
+    setObjectName (name);
+
     QWidget *baseWidget = new QWidget (this);
     setMainWidget (baseWidget);
 

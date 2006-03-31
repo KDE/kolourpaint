@@ -26,13 +26,14 @@
 */
 
 
-#ifndef __kp_cursor_light_cross_h__
-#define __kp_cursor_light_cross_h__
+#ifndef KP_CURSOR_LIGHT_CROSS_H
+#define KP_CURSOR_LIGHT_CROSS_H
 
 
 class QCursor;
 
+
 const QCursor *kpMakeCursorLightCross ();
 
 
-#endif  // __kp_cursor_light_cross_h__
+#endif  // KP_CURSOR_LIGHT_CROSS_H

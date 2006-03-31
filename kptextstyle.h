@@ -25,16 +25,20 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef __kp_text_style_h__
-#define __kp_text_style_h__
+
+#ifndef KP_TEXT_STYLE_H
+#define KP_TEXT_STYLE_H
+
 
 #include <qstring.h>
 
 #include <kpcolor.h>
 
+
 class QDataStream;
 class QFont;
 class QFontMetrics;
+
 
 class kpTextStyle
 {
@@ -105,4 +109,5 @@ private:
     bool m_isBackgroundOpaque;
 };
 
-#endif  // __kp_text_style_h__
+
+#endif  // KP_TEXT_STYLE_H

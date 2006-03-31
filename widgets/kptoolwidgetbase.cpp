@@ -33,13 +33,12 @@
 
 #include <qbitmap.h>
 #include <qcolor.h>
+#include <q3frame.h>
+#include <qevent.h>
 #include <qimage.h>
 #include <qpainter.h>
+#include <qpixmap.h>
 #include <qtooltip.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <QMouseEvent>
-#include <Q3Frame>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -607,5 +606,6 @@ void kpToolWidgetBase::drawContents (QPainter *painter)
         }
     }
 }
+
 
 #include <kptoolwidgetbase.moc>

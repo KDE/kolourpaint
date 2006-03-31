@@ -25,16 +25,14 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef __kp_tool_preview_dialog_h__
-#define __kp_tool_preview_dialog_h__
+
+#ifndef KP_TOOL_PREVIEW_DIALOG_H
+#define KP_TOOL_PREVIEW_DIALOG_H
 
 
 #include <qpixmap.h>
-//Added by qt3to4:
-#include <QLabel>
-#include <QGridLayout>
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 
 class QLabel;
@@ -46,7 +44,7 @@ class kpMainWindow;
 class kpResizeSignallingLabel;
 
 
-class kpToolPreviewDialog : public KDialogBase
+class kpToolPreviewDialog : public KDialog
 {
 Q_OBJECT
 
@@ -131,4 +129,4 @@ protected:
 };
 
 
-#endif  // __kp_tool_preview_dialog_h__
+#endif  // KP_TOOL_PREVIEW_DIALOG_H

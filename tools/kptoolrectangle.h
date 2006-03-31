@@ -26,8 +26,9 @@
 */
 
 
-#ifndef __kptoolrectangle_h__
-#define __kptoolrectangle_h__
+#ifndef KP_TOOL_RECTANGLE_H
+#define KP_TOOL_RECTANGLE_H
+
 
 #include <qbrush.h>
 #include <qpen.h>
@@ -36,8 +37,8 @@
 #include <qrect.h>
 
 #include <kpcommandhistory.h>
-
 #include <kptool.h>
+
 
 class QString;
 
@@ -46,6 +47,7 @@ class kpMainWindow;
 class kpToolWidgetFillStyle;
 class kpToolWidgetLineWidth;
 class kpViewManager;
+
 
 class kpToolRectangle : public kpTool
 {
@@ -139,4 +141,5 @@ private:
     QPixmap *m_oldPixmapPtr;
 };
 
-#endif  // __kptoolrectangle_h__
+
+#endif  // KP_TOOL_RECTANGLE_H

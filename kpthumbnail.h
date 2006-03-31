@@ -26,13 +26,15 @@
 */
 
 
-#ifndef __kp_thumbnail_h__
-#define __kp_thumbnail_h__
+#ifndef KP_THUMBNAIL_H
+#define KP_THUMBNAIL_H
+
 
 #include <q3dockwindow.h>
-//Added by qt3to4:
-#include <QMoveEvent>
-#include <QResizeEvent>
+
+
+class QMoveEvent;
+class QResizeEvent;
 
 class kpMainWindow;
 class kpThumbnailView;
@@ -68,4 +70,4 @@ private:
 };
 
 
-#endif  // __kp_thumbnail_h__
+#endif  // KP_THUMBNAIL_H

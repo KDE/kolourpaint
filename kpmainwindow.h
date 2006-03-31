@@ -36,12 +36,6 @@
 #include <q3ptrlist.h>
 #include <qsize.h>
 #include <q3valuevector.h>
-//Added by qt3to4:
-#include <QDragEnterEvent>
-#include <QPixmap>
-#include <QMoveEvent>
-#include <Q3PopupMenu>
-#include <QDropEvent>
 
 #include <kmainwindow.h>
 #include <kurl.h>
@@ -51,12 +45,17 @@
 #include <kppixmapfx.h>
 
 
+class QDragEnterEvent;
+class QDropEvent;
+class QMoveEvent;
 class QPainter;
+class QPixmap;
 class QPoint;
 class Q3PopupMenu;
 class QRect;
 class QSize;
 class QStringList;
+class QUrl;
 
 class KAction;
 class KFontAction;
@@ -675,7 +674,7 @@ private:
 
 private slots:
     void slotHelpTakingScreenshots ();
-    void slotHelpTakingScreenshotsFollowLink (const QString &link);
+    void slotHelpTakingScreenshotsFollowLink (const QUrl &url);
 
 
 private:

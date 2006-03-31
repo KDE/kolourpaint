@@ -31,24 +31,20 @@
 #include <kpdocumentsaveoptionswidget.h>
 
 #include <qapplication.h>
+#include <qboxlayout.h>
 #include <qbuffer.h>
+#include <qevent.h>
+#include <qgridlayout.h>
 #include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qpixmap.h>
 #include <qtimer.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <QGridLayout>
-#include <QCloseEvent>
-#include <QMoveEvent>
-#include <QHBoxLayout>
-#include <QResizeEvent>
 
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <kdialogbase.h>
 #include <kglobal.h>
 #include <kimageio.h>
 #include <klocale.h>
@@ -776,8 +772,8 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
         #endif
             KConfigGroup cfg (KGlobal::config (), kpSettingsGroupPreviewSave);
 
-            m_previewDialogLastRelativeGeometry = cfg.readRectEntry (
-                kpSettingPreviewSaveGeometry);
+            m_previewDialogLastRelativeGeometry = cfg.readEntry (
+                kpSettingPreviewSaveGeometry, QRect ());
         }
 
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET

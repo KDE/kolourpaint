@@ -26,10 +26,12 @@
 */
 
 
-#ifndef __kptooleraser_h__
-#define __kptooleraser_h__
+#ifndef KP_TOOL_ERASER_H
+#define KP_TOOL_ERASER_H
+
 
 #include <kptoolpen.h>
+
 
 class kpToolEraser : public kpToolPen
 {
@@ -40,4 +42,5 @@ public:
     virtual ~kpToolEraser ();
 };
 
-#endif  // __kptooleraser_h__
+
+#endif  // KP_TOOL_ERASER_H

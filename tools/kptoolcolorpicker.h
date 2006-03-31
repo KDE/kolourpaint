@@ -26,18 +26,20 @@
 */
 
 
-#ifndef __kptoolcolorpicker_h__
-#define __kptoolcolorpicker_h__
+#ifndef KP_TOOL_COLOR_PICKER_H
+#define KP_TOOL_COLOR_PICKER_H
 
-#include <kpcommandhistory.h>
 
 #include <kpcolor.h>
+#include <kpcommandhistory.h>
 #include <kptool.h>
+
 
 class QPoint;
 class QRect;
 
 class kpColorToolBar;
+
 
 class kpToolColorPicker : public kpTool
 {
@@ -92,4 +94,5 @@ private:
     kpColor m_oldColor;
 };
 
-#endif  // __kptoolcolorpicker_h__
+
+#endif  // KP_TOOL_COLOR_PICKER_H

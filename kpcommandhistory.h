@@ -29,6 +29,7 @@
 #ifndef KP_COMMAND_HISTORY_H
 #define KP_COMMAND_HISTORY_H
 
+
 #include <qobject.h>
 #include <qstring.h>
 #include <q3valuelist.h>

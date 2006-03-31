@@ -29,13 +29,12 @@
 #ifndef KP_EFFECT_BALANCE_H
 #define KP_EFFECT_BALANCE_H
 
+
 #include <kpcoloreffect.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <QLabel>
 
 
 class QLabel;
+class QPixmap;
 
 class KComboBox;
 class KIntNumInput;

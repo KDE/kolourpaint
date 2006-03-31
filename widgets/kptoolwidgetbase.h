@@ -26,8 +26,9 @@
 */
 
 
-#ifndef __kp_tool_widget_base_h__
-#define __kp_tool_widget_base_h__
+#ifndef KP_TOOL_WIDGET_BASE_H
+#define KP_TOOL_WIDGET_BASE_H
+
 
 #include <q3frame.h>
 #include <qpair.h>
@@ -35,10 +36,9 @@
 #include <qrect.h>
 #include <q3valuevector.h>
 #include <qwidget.h>
-//Added by qt3to4:
-#include <QMouseEvent>
 
 
+class QMouseEvent;
 class QPainter;
 
 
@@ -111,4 +111,5 @@ protected:
     int m_selectedRow, m_selectedCol;
 };
 
-#endif  // __kp_tool_widget_base_h__
+
+#endif  // KP_TOOL_WIDGET_BASE_H

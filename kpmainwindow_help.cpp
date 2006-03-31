@@ -34,7 +34,7 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <krun.h>
 #include <klocale.h>
 #include <kshortcut.h>
@@ -173,16 +173,14 @@ void kpMainWindow::slotHelpTakingScreenshots ()
     message += "<p>&nbsp;</p>";
 
 
-    KDialogBase dlg (this, "helpTakingScreenshotsDialog", true/*modal*/,
-        i18n ("Acquiring Screenshots"),
-        KDialogBase::Close, KDialogBase::Close/*default btn*/,
-        true/*separator line*/);
+    KDialog dlg (this, i18n ("Acquiring Screenshots"), KDialog::Close);
+    dlg.enableButtonSeparator (true);
 
     KActiveLabel *messageLabel = new KActiveLabel (message, &dlg);
-    disconnect (messageLabel, SIGNAL (linkClicked (const QString &)),
-                messageLabel, SLOT (openLink (const QString &)));
-    connect (messageLabel, SIGNAL (linkClicked (const QString &)),
-             this, SLOT (slotHelpTakingScreenshotsFollowLink (const QString &)));
+    disconnect (messageLabel, SIGNAL (anchorClicked (const QUrl &)),
+             messageLabel, SLOT (openLink (const QUrl &)));
+    connect (messageLabel, SIGNAL (anchorClicked (const QUrl &)),
+             this, SLOT (slotHelpTakingScreenshotsFollowLink (const QUrl &)));
 
     dlg.setMainWidget (messageLabel);
 
@@ -190,9 +188,11 @@ void kpMainWindow::slotHelpTakingScreenshots ()
 }
 
 // private
-void kpMainWindow::slotHelpTakingScreenshotsFollowLink (const QString &link)
+void kpMainWindow::slotHelpTakingScreenshotsFollowLink (const QUrl &url)
 {
-#if DEBUG_KP_MAIN_WINDOW
+    const QString link = url.toString ();
+
+#if DEBUG_KP_MAIN_WINDOW || 1
     kDebug () << "kpMainWindow::slotHelpTakingScreenshotsFollowLink("
                << link << ")" << endl;
 #endif

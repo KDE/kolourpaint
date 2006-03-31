@@ -26,8 +26,8 @@
 */
 
 
-#ifndef __kp_cursor_provider_h__
-#define __kp_cursor_provider_h__
+#ifndef KP_CURSOR_PROVIDER_H
+#define KP_CURSOR_PROVIDER_H
 
 
 class QCursor;
@@ -40,4 +40,4 @@ public:
 };
 
 
-#endif  // __kp_cursor_provider_h__
+#endif  // KP_CURSOR_PROVIDER_H

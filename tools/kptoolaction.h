@@ -25,8 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #ifndef KP_TOOL_ACTION_H
 #define KP_TOOL_ACTION_H
+
 
 #include <kactionclasses.h>
 

@@ -29,11 +29,10 @@
 #ifndef KP_DOCUMENT_H
 #define KP_DOCUMENT_H
 
+
 #include <qbitmap.h>
 #include <qobject.h>
 #include <qstring.h>
-//Added by qt3to4:
-#include <QPixmap>
 
 #include <kurl.h>
 
@@ -247,5 +246,6 @@ private:
     // the kitchen sink.
     class kpDocumentPrivate *d;
 };
+
 
 #endif  // KP_DOCUMENT_H

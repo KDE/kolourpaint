@@ -26,16 +26,14 @@
 */
 
 
-#ifndef __kp_tool_selection_h__
-#define __kp_tool_selection_h__
+#ifndef KP_TOOL_SELECTION_H
+#define KP_TOOL_SELECTION_H
 
 
 #include <qpixmap.h>
 #include <qpoint.h>
 #include <q3pointarray.h>
 #include <qrect.h>
-//Added by qt3to4:
-#include <QKeyEvent>
 
 #include <kpcolor.h>
 #include <kpcommandhistory.h>
@@ -44,13 +42,13 @@
 #include <kptool.h>
 
 
+class QKeyEvent;
 class QPoint;
 class QRect;
 class QTimer;
 
 class kpMainWindow;
 class kpSelection;
-
 class kpToolSelectionCreateCommand;
 class kpToolSelectionMoveCommand;
 class kpToolSelectionPullFromDocumentCommand;
@@ -309,4 +307,5 @@ private:
     int m_textRow, m_textCol;
 };
 
-#endif  // __kp_tool_selection_h__
+
+#endif  // KP_TOOL_SELECTION_H

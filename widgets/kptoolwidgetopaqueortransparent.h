@@ -26,11 +26,12 @@
 */
 
 
-#ifndef __kp_tool_widget_opaque_or_transparent_h__
-#define __kp_tool_widget_opaque_or_transparent_h__
+#ifndef KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
+#define KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
 
 
 #include <kptoolwidgetbase.h>
+
 
 class kpToolWidgetOpaqueOrTransparent : public kpToolWidgetBase
 {
@@ -53,4 +54,4 @@ protected slots:
 };
 
 
-#endif  // kp_tool_widget_opaque_or_transparent_h__
+#endif  // KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H

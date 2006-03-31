@@ -32,19 +32,16 @@
 #include <kpcolortoolbar.h>
 
 #include <qbitmap.h>
+#include <qboxlayout.h>
 #include <qdrawutil.h>
+#include <qevent.h>
 #include <q3frame.h>
 #include <qlayout.h>
 #include <qpainter.h>
+#include <qpixmap.h>
 #include <qsize.h>
 #include <qtooltip.h>
 #include <qwidget.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <QMouseEvent>
-#include <QDragMoveEvent>
-#include <QDropEvent>
-#include <QBoxLayout>
 
 #include <kapplication.h>
 #include <kcolordialog.h>
@@ -209,6 +206,7 @@ QRect kpDualColorButton::backgroundRect () const
 // protected virtual [base QWidget]
 void kpDualColorButton::dragMoveEvent (QDragMoveEvent *e)
 {
+    (void) e;
 // COMPAT: linker errors???
 #if 0
     e->accept ((foregroundRect ().contains (e->pos ()) ||
@@ -220,6 +218,7 @@ void kpDualColorButton::dragMoveEvent (QDragMoveEvent *e)
 // protected virtual [base QWidget]
 void kpDualColorButton::dropEvent (QDropEvent *e)
 {
+    (void) e;
 // COMPAT: linker errors???
 #if 0
     QColor col;
@@ -626,7 +625,7 @@ void kpColorCells::dropEvent (QDropEvent *e)
 void kpColorCells::paintCell (QPainter *painter, int row, int col)
 {
     QColor oldColor;
-    int cellNo;
+    int cellNo = -1;
 
     if (!isEnabled ())
     {

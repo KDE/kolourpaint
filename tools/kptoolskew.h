@@ -26,19 +26,17 @@
 */
 
 
-#ifndef __kptool_skew_h__
-#define __kptool_skew_h__
+#ifndef KP_TOOL_SKEW_H
+#define KP_TOOL_SKEW_H
+
 
 #include <qpixmap.h>
-//Added by qt3to4:
-#include <QLabel>
-
-#include <kpcommandhistory.h>
-#include <kdialogbase.h>
 
 #include <kpcolor.h>
+#include <kpcommandhistory.h>
 #include <kpselection.h>
 #include <kptoolpreviewdialog.h>
+
 
 class Q3GroupBox;
 class QLabel;
@@ -114,10 +112,11 @@ public:
     virtual bool isNoOp () const;
 
 private slots:
-    virtual void slotOk ();
+    virtual void accept ();
 
 private:
     KIntNumInput *m_horizontalSkewInput, *m_verticalSkewInput;
 };
 
-#endif  // __kptool_skew_h__
+
+#endif  // KP_TOOL_SKEW_H

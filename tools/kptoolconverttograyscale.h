@@ -26,17 +26,18 @@
 */
 
 
-#ifndef __kptoolconverttograyscale_h__
-#define __kptoolconverttograyscale_h__
+#ifndef KP_TOOL_CONVERT_TO_GRAYSCALE_H
+#define KP_TOOL_CONVERT_TO_GRAYSCALE_H
+
 
 #include <kpcommandhistory.h>
-//Added by qt3to4:
-#include <QPixmap>
+
 
 class QPixmap;
 class QString;
 
 class kpMainWindow;
+
 
 class kpToolConvertToGrayscaleCommand : public kpCommand
 {
@@ -56,4 +57,5 @@ private:
     QPixmap *m_oldPixmapPtr;
 };
 
-#endif  // __kptoolconverttograyscale_h__
+
+#endif  // KP_TOOL_CONVERT_TO_GRAYSCALE_H

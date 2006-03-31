@@ -26,10 +26,12 @@
 */
 
 
-#ifndef __kptoolwidgetlinewidth_h__
-#define __kptoolwidgetlinewidth_h__
+#ifndef KP_TOOL_WIDGET_LINE_WIDTH_H
+#define KP_TOOL_WIDGET_LINE_WIDTH_H
+
 
 #include <kptoolwidgetbase.h>
+
 
 class kpToolWidgetLineWidth : public kpToolWidgetBase
 {
@@ -48,4 +50,5 @@ protected slots:
     virtual bool setSelected (int row, int col, bool saveAsDefault);
 };
 
-#endif  // __kptoolwidgetlinewidth_h__
+
+#endif  // KP_TOOL_WIDGET_LINE_WIDTH_H

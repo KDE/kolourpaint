@@ -31,18 +31,14 @@
 
 
 #include <qsize.h>
-
 #include <qwidget.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <QLabel>
-#include <QMoveEvent>
-#include <QResizeEvent>
-#include <QCloseEvent>
 
 
+class QCloseEvent;
 class QPixmap;
 class QLabel;
+class QMoveEvent;
+class QResizeEvent;
 
 class kpResizeSignallingLabel;
 

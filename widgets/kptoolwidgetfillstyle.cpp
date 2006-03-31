@@ -25,6 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #define DEBUG_KP_TOOL_WIDGET_FILL_STYLE 0
 
 
@@ -33,8 +34,7 @@
 #include <qbitmap.h>
 #include <qbrush.h>
 #include <qpainter.h>
-//Added by qt3to4:
-#include <QPixmap>
+#include <qpixmap.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -220,5 +220,6 @@ bool kpToolWidgetFillStyle::setSelected (int row, int col, bool saveAsDefault)
         emit fillStyleChanged (fillStyle ());
     return ret;
 }
+
 
 #include <kptoolwidgetfillstyle.moc>

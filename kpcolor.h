@@ -26,11 +26,12 @@
 */
 
 
-#ifndef __kp_color_h__
-#define __kp_color_h__
+#ifndef KP_COLOR_H
+#define KP_COLOR_H
 
 
 #include <qcolor.h>
+
 
 class QDataStream;
 
@@ -97,4 +98,4 @@ private:
 };
 
 
-#endif  // __kp_color_h__
+#endif  // KP_COLOR_H

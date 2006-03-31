@@ -26,18 +26,19 @@
 */
 
 
-#ifndef __kpfloodfill_h__
-#define __kpfloodfill_h__
+#ifndef KP_FLOOD_FILL_H
+#define KP_FLOOD_FILL_H
+
 
 #include <qimage.h>
 #include <q3valuelist.h>
 #include <q3valuevector.h>
-//Added by qt3to4:
-#include <QPixmap>
 
 #include <kpcolor.h>
 
+
 class QPixmap;
+
 
 class kpFloodFill
 {
@@ -105,4 +106,5 @@ private:
     kpColor m_colorToChange;
 };
 
-#endif  // __kpfloodfill_h__
+
+#endif  // KP_FLOOD_FILL_H

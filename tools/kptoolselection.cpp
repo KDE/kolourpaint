@@ -34,13 +34,12 @@
 #include <qapplication.h>
 #include <qbitmap.h>
 #include <qcursor.h>
+#include <qevent.h>
 #include <qpainter.h>
+#include <qpixmap.h>
+#include <q3pointarray.h>
 #include <q3popupmenu.h>
 #include <qtimer.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <Q3PointArray>
-#include <QKeyEvent>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -2349,5 +2348,6 @@ void kpToolSelectionDestroyCommand::unexecute ()
     delete m_oldSelection;
     m_oldSelection = 0;
 }
+
 
 #include <kptoolselection.moc>

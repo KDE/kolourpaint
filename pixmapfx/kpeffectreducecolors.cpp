@@ -25,20 +25,20 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #define DEBUG_KP_EFFECT_REDUCE_COLORS 0
 
 
 #include <kpeffectreducecolors.h>
 
+#include <qbitmap.h>
 #include <q3buttongroup.h>
 #include <qcheckbox.h>
 #include <qimage.h>
 #include <qlayout.h>
 #include <qpixmap.h>
 #include <qradiobutton.h>
-//Added by qt3to4:
-#include <QVBoxLayout>
-#include <QBitmap>
+
 #include <kdebug.h>
 #include <klocale.h>
 
@@ -86,7 +86,7 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
         kDebug () << "\tinvoking convert-to-depth 1 hack" << endl;
     #endif
-        QRgb color0, color1;
+        QRgb color0 = 0, color1 = 0;
         bool color0Valid = false, color1Valid = false;
 
         bool moreThan2Colors = false;

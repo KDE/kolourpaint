@@ -26,22 +26,24 @@
 */
 
 
-#ifndef __kp_tool_text_h__
-#define __kp_tool_text_h__
+#ifndef KP_TOOL_TEXT_H
+#define KP_TOOL_TEXT_H
+
 
 #include <qstring.h>
-//Added by qt3to4:
-#include <QKeyEvent>
 
 #include <kpcommandhistory.h>
-
 #include <kptextstyle.h>
 #include <kptoolselection.h>
+
+
+class QKeyEvent;
 
 class kpColor;
 class kpMainWindow;
 class kpSelection;
 class kpViewManager;
+
 
 class kpToolText : public kpToolSelection
 {
@@ -199,5 +201,5 @@ protected:
     QString m_deletedText;
 };
 
-#endif  // __kp_tool_text_h__
 
+#endif  // KP_TOOL_TEXT_H

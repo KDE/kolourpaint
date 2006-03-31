@@ -25,17 +25,21 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef __kp_color_similarity_dialog_h__
-#define __kp_color_similarity_dialog_h__
 
-#include <kdialogbase.h>
+#ifndef KP_COLOR_SIMILARITY_DIALOG_H
+#define KP_COLOR_SIMILARITY_DIALOG_H
+
+
+#include <kdialog.h>
+
 
 class KIntNumInput;
 
 class kpColorSimilarityCube;
 class kpMainWindow;
 
-class kpColorSimilarityDialog : public KDialogBase
+
+class kpColorSimilarityDialog : public KDialog
 {
 Q_OBJECT
 
@@ -59,4 +63,5 @@ private:
     KIntNumInput *m_colorSimilarityInput;
 };
 
-#endif  // __kp_color_similarity_dialog_h__
+
+#endif  // KP_COLOR_SIMILARITY_DIALOG_H

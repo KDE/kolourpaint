@@ -26,12 +26,15 @@
 */
 
 
-#ifndef __kptoolellipticalselection_h__
-#define __kptoolellipticalselection_h__
+#ifndef KP_TOOL_ELLIPTICAL_SELECTION_H
+#define KP_TOOL_ELLIPTICAL_SELECTION_H
+
 
 #include <kptoolselection.h>
 
+
 class kpMainWindow;
+
 
 class kpToolEllipticalSelection : public kpToolSelection
 {
@@ -40,4 +43,5 @@ public:
     virtual ~kpToolEllipticalSelection ();
 };
 
-#endif  // __kptoolellipticalselection_h__
+
+#endif  // KP_TOOL_ELLIPTICAL_SELECTION_H

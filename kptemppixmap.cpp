@@ -31,10 +31,10 @@
 
 #include <kptemppixmap.h>
 
+#include <qpixmap.h>
+
 #include <kppixmapfx.h>
 #include <kpviewmanager.h>
-//Added by qt3to4:
-#include <QPixmap>
 
 
 kpTempPixmap::kpTempPixmap (bool isBrush, RenderMode renderMode,

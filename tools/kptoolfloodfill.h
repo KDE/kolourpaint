@@ -26,13 +26,13 @@
 */
 
 
-#ifndef __kptoolfloodfill_h__
-#define __kptoolfloodfill_h__
+#ifndef KP_TOOL_FLOOD_FILL_H
+#define KP_TOOL_FLOOD_FILL_H
+
 
 #include <qpixmap.h>
 
 #include <kpcommandhistory.h>
-
 #include <kpfloodfill.h>
 #include <kptool.h>
 
@@ -91,4 +91,5 @@ private:
     bool m_fillEntirePixmap;
 };
 
-#endif  // __kptoolfloodfill_h__
+
+#endif  // KP_TOOL_FLOOD_FILL_H

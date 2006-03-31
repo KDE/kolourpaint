@@ -26,10 +26,12 @@
 */
 
 
-#ifndef __kptoolbrush_h__
-#define __kptoolbrush_h__
+#ifndef KP_TOOL_BRUSH_H
+#define KP_TOOL_BRUSH_H
+
 
 #include <kptoolpen.h>
+
 
 class kpToolBrush : public kpToolPen
 {
@@ -40,4 +42,5 @@ public:
     virtual ~kpToolBrush ();
 };
 
-#endif  // __kptoolbrush_h__
+
+#endif  // KP_TOOL_BRUSH_H

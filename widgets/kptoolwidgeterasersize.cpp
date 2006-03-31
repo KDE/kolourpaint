@@ -25,6 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #define DEBUG_KP_TOOL_WIDGET_ERASER_SIZE 0
 
 
@@ -32,8 +33,7 @@
 
 #include <qbitmap.h>
 #include <qpainter.h>
-//Added by qt3to4:
-#include <QPixmap>
+#include <qpixmap.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -159,5 +159,6 @@ bool kpToolWidgetEraserSize::setSelected (int row, int col, bool saveAsDefault)
         emit eraserSizeChanged (eraserSize ());
     return ret;
 }
+
 
 #include <kptoolwidgeterasersize.moc>

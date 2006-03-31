@@ -25,6 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #define DEBUG_KP_EFFECT_BALANCE 0
 
 
@@ -33,13 +34,12 @@
 #include <math.h>
 
 #include <qfontmetrics.h>
+#include <qgridlayout.h>
 #include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpixmap.h>
 #include <qpushbutton.h>
-//Added by qt3to4:
-#include <QGridLayout>
 
 #include <kcombobox.h>
 #include <kdebug.h>

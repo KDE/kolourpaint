@@ -26,12 +26,14 @@
 */
 
 
-#ifndef __kptoolwidgetbrush_h__
-#define __kptoolwidgetbrush_h__
+#ifndef KP_TOOL_WIDGET_BRUSH_H
+#define KP_TOOL_WIDGET_BRUSH_H
+
 
 #include <qpixmap.h>
 
 #include <kptoolwidgetbase.h>
+
 
 class kpToolWidgetBrush : public kpToolWidgetBase
 {
@@ -58,4 +60,5 @@ private:
     QPixmap m_brushBitmaps [16];
 };
 
-#endif  // __kptoolwidgetbrush_h__
+
+#endif  // KP_TOOL_WIDGET_BRUSH_H

@@ -26,14 +26,14 @@
 */
 
 
-#ifndef __kptoolclear_h__
-#define __kptoolclear_h__
+#ifndef KP_TOOL_CLEAR_H
+#define KP_TOOL_CLEAR_H
+
 
 #include <kpcommandhistory.h>
 
 #include <kpcolor.h>
-//Added by qt3to4:
-#include <QPixmap>
+
 
 class QPixmap;
 class QString;
@@ -67,4 +67,4 @@ private:
 };
 
 
-#endif  // __kptoolclear_h__
+#endif  // KP_TOOL_CLEAR_H

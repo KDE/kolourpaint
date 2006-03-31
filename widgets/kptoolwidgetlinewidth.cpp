@@ -30,8 +30,7 @@
 
 #include <qbitmap.h>
 #include <qpainter.h>
-//Added by qt3to4:
-#include <QPixmap>
+#include <qpixmap.h>
 
 #include <klocale.h>
 
@@ -95,5 +94,6 @@ bool kpToolWidgetLineWidth::setSelected (int row, int col, bool saveAsDefault)
         emit lineWidthChanged (lineWidth ());
     return ret;
 }
+
 
 #include <kptoolwidgetlinewidth.moc>

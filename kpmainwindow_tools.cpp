@@ -28,9 +28,12 @@
 
 #include <kpmainwindow.h>
 
+#include <q3ptrlist.h>
+
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kglobal.h>
 #include <klocale.h>
 
 #include <kpcolortoolbar.h>
@@ -63,9 +66,6 @@
 #include <kptoolwidgetopaqueortransparent.h>
 #include <kpviewscrollablecontainer.h>
 #include <kpzoomedview.h>
-//Added by qt3to4:
-#include <Q3PtrList>
-#include <kglobal.h>
 
 
 // private

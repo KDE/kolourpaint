@@ -26,22 +26,23 @@
 */
 
 
-#ifndef __kptoolresizescale_h__
-#define __kptoolresizescale_h__
+#ifndef KP_TOOL_RESIZE_SCALE_H
+#define KP_TOOL_RESIZE_SCALE_H
+
 
 #include <qpixmap.h>
-//Added by qt3to4:
-#include <QLabel>
 
-#include <kpcommandhistory.h>
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 #include <kpcolor.h>
+#include <kpcommandhistory.h>
 #include <kpselection.h>
+
 
 class QCheckBox;
 class Q3GroupBox;
 class Q3HBox;
+class QLabel;
 class QRadioButton;
 class QSize;
 class QString;
@@ -54,6 +55,7 @@ class KIntNumInput;
 class kpDocument;
 class kpMainWindow;
 class kpViewManager;
+
 
 class kpToolResizeScaleCommand : public kpCommand
 {
@@ -106,7 +108,7 @@ protected:
     kpSelection *m_oldSelection;
 };
 
-class kpToolResizeScaleDialog : public KDialogBase
+class kpToolResizeScaleDialog : public KDialog
 {
 Q_OBJECT
 
@@ -169,7 +171,7 @@ public:
     bool isNoOp () const;
 
 private slots:
-    virtual void slotOk ();
+    virtual void accept ();
 
 private:
     kpMainWindow *m_mainWindow;
@@ -195,4 +197,5 @@ private:
     int m_ignoreKeepAspectRatio;
 };
 
-#endif  // __kptoolresizescale_h__
+
+#endif  // KP_TOOL_RESIZE_SCALE_H

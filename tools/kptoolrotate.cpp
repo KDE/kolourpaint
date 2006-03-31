@@ -32,16 +32,15 @@
 
 #include <qapplication.h>
 #include <q3buttongroup.h>
+#include <q3gridlayout.h>
 #include <q3groupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qpixmap.h>
+#include <q3pointarray.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <qmatrix.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <Q3PointArray>
-#include <QGridLayout>
 
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -448,8 +447,8 @@ void kpToolRotateDialog::slotUpdate ()
 }
 
 
-// private slot virtual [base KDialogBase]
-void kpToolRotateDialog::slotOk ()
+// private slot virtual [base QDialog]
+void kpToolRotateDialog::accept ()
 {
     QString message, caption, continueButtonText;
 
@@ -497,8 +496,9 @@ void kpToolRotateDialog::slotOk ()
             continueButtonText,
             this))
     {
-        KDialogBase::slotOk ();
+        KDialog::accept ();
     }
 }
+
 
 #include <kptoolrotate.moc>

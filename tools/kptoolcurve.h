@@ -26,12 +26,15 @@
 */
 
 
-#ifndef __kptoolcurve_h__
-#define __kptoolcurve_h__
+#ifndef KP_TOOL_CURVE_H
+#define KP_TOOL_CURVE_H
+
 
 #include <kptoolpolygon.h>
 
+
 class kpMainWindow;
+
 
 class kpToolCurve : public kpToolPolygon
 {
@@ -42,4 +45,5 @@ public:
     virtual ~kpToolCurve ();
 };
 
-#endif  // __kptoolcurve_h__
+
+#endif  // KP_TOOL_CURVE_H

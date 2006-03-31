@@ -33,10 +33,9 @@
 #include <qfontmetrics.h>
 #include <qimage.h>
 #include <qpixmap.h>
+#include <q3popupmenu.h>
+#include <q3ptrlist.h>
 #include <q3valuevector.h>
-//Added by qt3to4:
-#include <Q3PopupMenu>
-#include <Q3PtrList>
 
 #include <kaction.h>
 #include <kdebug.h>

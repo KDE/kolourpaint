@@ -26,12 +26,15 @@
 */
 
 
-#ifndef __kptoolrectselection_h__
-#define __kptoolrectselection_h__
+#ifndef KP_TOOL_RECT_SELECTION_H
+#define KP_TOOL_RECT_SELECTION_H
+
 
 #include <kptoolselection.h>
 
+
 class kpMainWindow;
+
 
 class kpToolRectSelection : public kpToolSelection
 {
@@ -40,4 +43,5 @@ public:
     virtual ~kpToolRectSelection ();
 };
 
-#endif  // __kptoolrectselection_h__
+
+#endif  // KP_TOOL_RECT_SELECTION_H

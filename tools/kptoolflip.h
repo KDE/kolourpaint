@@ -26,11 +26,14 @@
 */
 
 
-#ifndef __kptoolflip_h__
-#define __kptoolflip_h__
+#ifndef KP_TOOL_FLIP_H
+#define KP_TOOL_FLIP_H
+
+
+#include <kdialog.h>
 
 #include <kpcommandhistory.h>
-#include <kdialogbase.h>
+
 
 class QRadioButton;
 class QString;
@@ -62,7 +65,7 @@ private:
 };
 
 
-class kpToolFlipDialog : public KDialogBase
+class kpToolFlipDialog : public KDialog
 {
 Q_OBJECT
 
@@ -85,4 +88,5 @@ private:
     QRadioButton *m_horizontalFlipRadioButton, *m_verticalFlipRadioButton;
 };
 
-#endif  // __kptoolflip_h__
+
+#endif  // KP_TOOL_FLIP_H

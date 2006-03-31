@@ -31,12 +31,11 @@
 
 
 #include <kpcoloreffect.h>
-//Added by qt3to4:
-#include <QPixmap>
 
 
 class QCheckBox;
 class QImage;
+class QPixmap;
 
 class kpMainWindow;
 
@@ -126,7 +125,6 @@ protected:
     // blockSignals() didn't seem to work
     bool m_inSignalHandler;
 };
-
 
 
 #endif  // KP_EFFECT_INVERT_H

@@ -29,12 +29,12 @@
 #ifndef KP_COLOR_EFFECT_H
 #define KP_COLOR_EFFECT_H
 
+
 #include <qstring.h>
 #include <qwidget.h>
-//Added by qt3to4:
-#include <QPixmap>
 
 #include <kpcommandhistory.h>
+
 
 class QPixmap;
 

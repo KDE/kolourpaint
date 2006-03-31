@@ -283,7 +283,7 @@ void kpDocumentSaveOptions::saveDefaultColorDepth (KConfigBase *config, int colo
 // public static
 int kpDocumentSaveOptions::defaultDither (KConfigBase *config)
 {
-    return config->readBoolEntry (kpSettingForcedDither, initialDither ());
+    return config->readEntry (kpSettingForcedDither, initialDither ());
 }
 
 // public static
@@ -376,7 +376,7 @@ static QStringList mimeTypesSupportingProperty (const QString &property,
 
     if (cfg.hasKey (property))
     {
-        mimeTypeList = cfg.readListEntry (property);
+        mimeTypeList = cfg.readEntry (property, QStringList ());
     }
     else
     {

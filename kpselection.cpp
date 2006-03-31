@@ -33,11 +33,10 @@
 
 #include <qfont.h>
 #include <qimage.h>
-#include <qpainter.h>
 #include <qmatrix.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <Q3PointArray>
+#include <qpainter.h>
+#include <qpixmap.h>
+#include <q3pointarray.h>
 
 #include <kdebug.h>
 #include <klocale.h>

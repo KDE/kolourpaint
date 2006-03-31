@@ -31,12 +31,11 @@
 
 
 #include <kpcoloreffect.h>
-//Added by qt3to4:
-#include <QPixmap>
 
 
-class QRadioButton;
 class QImage;
+class QPixmap;
+class QRadioButton;
 
 class kpMainWindow;
 
@@ -106,7 +105,6 @@ protected:
                  *m_24BitRadioButton;
     QRadioButton *m_defaultRadioButton;
 };
-
 
 
 #endif  // KP_EFFECT_REDUCE_COLORS_H

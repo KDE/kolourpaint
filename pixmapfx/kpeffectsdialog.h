@@ -31,12 +31,10 @@
 
 
 #include <kptoolpreviewdialog.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <QVBoxLayout>
 
 
 class Q3GroupBox;
+class QPixmap;
 class QStringList;
 class QTimer;
 class QVBoxLayout;

@@ -28,14 +28,13 @@
 
 #define DEBUG_KP_THUMBNAIL 0
 
+
 #include <kpthumbnail.h>
 
 #include <q3dockarea.h>
 #include <q3dockwindow.h>
+#include <qevent.h>
 #include <qtimer.h>
-//Added by qt3to4:
-#include <QMoveEvent>
-#include <QResizeEvent>
 
 #include <kdebug.h>
 #include <klocale.h>

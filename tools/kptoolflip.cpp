@@ -29,11 +29,11 @@
 #include <kptoolflip.h>
 
 #include <qapplication.h>
+#include <qpixmap.h>
 #include <qradiobutton.h>
 #include <q3vbox.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <Q3VButtonGroup>
+#include <q3buttongroup.h>
+
 #include <kdebug.h>
 #include <klocale.h>
 #include <kvbox.h>
@@ -152,32 +152,27 @@ bool kpToolFlipDialog::s_lastIsVerticalFlip = true;
 
 
 kpToolFlipDialog::kpToolFlipDialog (bool actOnSelection, QWidget *parent)
-    : KDialogBase (parent, 0/*name*/, true/*modal*/,
-                   actOnSelection ? i18n ("Flip Selection") : i18n ("Flip Image"),
-                   KDialogBase::Ok | KDialogBase::Cancel)
+    : KDialog (parent,
+               actOnSelection ? i18n ("Flip Selection") : i18n ("Flip Image"),
+               KDialog::Ok | KDialog::Cancel)
 {
-    KVBox *vbox = makeVBoxMainWidget ();
+    KVBox *vbox = new KVBox (this);
 
-    if (!vbox)
-    {
-        kError () << "kpToolFlipDialog::kpToolFlipDialog() received NULL vbox" << endl;
-    }
-    else
-    {
-        Q3VButtonGroup *buttonGroup = new Q3VButtonGroup (i18n ("Direction"), vbox);
+    Q3VButtonGroup *buttonGroup = new Q3VButtonGroup (i18n ("Direction"), vbox);
 
-        // I'm sure vert flipping is much more common than horiz flipping so make it come first
-        m_verticalFlipRadioButton = new QRadioButton (i18n ("&Vertical (upside-down)"), buttonGroup);
-        m_horizontalFlipRadioButton = new QRadioButton (i18n ("&Horizontal"), buttonGroup);
+    // I'm sure vert flipping is much more common than horiz flipping so make it come first
+    m_verticalFlipRadioButton = new QRadioButton (i18n ("&Vertical (upside-down)"), buttonGroup);
+    m_horizontalFlipRadioButton = new QRadioButton (i18n ("&Horizontal"), buttonGroup);
 
-        m_verticalFlipRadioButton->setChecked (s_lastIsVerticalFlip);
-        m_horizontalFlipRadioButton->setChecked (!s_lastIsVerticalFlip);
+    m_verticalFlipRadioButton->setChecked (s_lastIsVerticalFlip);
+    m_horizontalFlipRadioButton->setChecked (!s_lastIsVerticalFlip);
 
-        connect (m_verticalFlipRadioButton, SIGNAL (toggled (bool)),
-                 this, SLOT (slotIsVerticalFlipChanged ()));
-        connect (m_horizontalFlipRadioButton, SIGNAL (toggled (bool)),
-                 this, SLOT (slotIsVerticalFlipChanged ()));
-    }
+    connect (m_verticalFlipRadioButton, SIGNAL (toggled (bool)),
+             this, SLOT (slotIsVerticalFlipChanged ()));
+    connect (m_horizontalFlipRadioButton, SIGNAL (toggled (bool)),
+             this, SLOT (slotIsVerticalFlipChanged ()));
+    
+    setMainWidget (vbox);
 }
 
 kpToolFlipDialog::~kpToolFlipDialog ()

@@ -26,18 +26,18 @@
 */
 
 
-#ifndef __kptoolairspray_h__
-#define __kptoolairspray_h__
+#ifndef KP_TOOL_AIR_SPRAY_H
+#define KP_TOOL_AIR_SPRAY_H
+
 
 #include <kpcommandhistory.h>
 #include <kpcolor.h>
 #include <kptool.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <Q3PointArray>
+
 
 class QPixmap;
 class QPoint;
+class Q3PointArray;
 class QRect;
 class QString;
 class QTimer;
@@ -46,6 +46,7 @@ class kpMainWindow;
 class kpToolAirSprayCommand;
 class kpToolWidgetSpraycanSize;
 class kpViewManager;
+
 
 class kpToolAirSpray : public kpTool
 {
@@ -110,4 +111,5 @@ private:
     QRect m_boundingRect;
 };
 
-#endif  // __kptoolairspray_h__
+
+#endif  // KP_TOOL_AIR_SPRAY_H

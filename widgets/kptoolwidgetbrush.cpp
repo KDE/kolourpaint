@@ -33,8 +33,7 @@
 
 #include <qbitmap.h>
 #include <qpainter.h>
-//Added by qt3to4:
-#include <QPixmap>
+#include <qpixmap.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -182,5 +181,6 @@ bool kpToolWidgetBrush::setSelected (int row, int col, bool saveAsDefault)
         emit brushChanged (brush (), brushIsDiagonalLine ());
     return ret;
 }
+
 
 #include <kptoolwidgetbrush.moc>

@@ -26,8 +26,9 @@
 */
 
 
-#ifndef __kpselection_h__
-#define __kpselection_h__
+#ifndef KP_SELECTION_H
+#define KP_SELECTION_H
+
 
 #include <qbitmap.h>
 #include <qdatastream.h>
@@ -234,4 +235,5 @@ private:
     class kpSelectionPrivate *d;
 };
 
-#endif  // __kpselection_h__
+
+#endif  // KP_SELECTION_H

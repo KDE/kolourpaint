@@ -26,14 +26,16 @@
 */
 
 
-#ifndef __kptoolpen_h__
-#define __kptoolpen_h__
+#ifndef KP_TOOL_PEN_H
+#define KP_TOOL_PEN_H
+
 
 #include <qpixmap.h>
 #include <qrect.h>
 
 #include <kpcommandhistory.h>
 #include <kptool.h>
+
 
 class QPoint;
 class QString;
@@ -44,6 +46,7 @@ class kpToolPenCommand;
 class kpToolWidgetBrush;
 class kpToolWidgetEraserSize;
 class kpViewManager;
+
 
 class kpToolPen : public kpTool
 {
@@ -157,4 +160,5 @@ private:
     QRect m_boundingRect;
 };
 
-#endif  // __kptoolpen_h__
+
+#endif  // KP_TOOL_PEN_H

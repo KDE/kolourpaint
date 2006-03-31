@@ -26,14 +26,17 @@
 */
 
 
-#ifndef __kptoolwidgeterasersize_h__
-#define __kptoolwidgeterasersize_h__
+#ifndef KP_TOOL_WIDGET_ERASER_SIZE_H
+#define KP_TOOL_WIDGET_ERASER_SIZE_H
+
 
 #include <qpixmap.h>
+
 #include <kptoolwidgetbase.h>
 
 
 class kpColor;
+
 
 class kpToolWidgetEraserSize : public kpToolWidgetBase
 {
@@ -56,4 +59,5 @@ private:
     QPixmap *m_cursorPixmaps;
 };
 
-#endif  // __kptoolwidgeterasersize_h__
+
+#endif  // KP_TOOL_WIDGET_ERASER_SIZE_H

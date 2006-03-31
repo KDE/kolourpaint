@@ -26,19 +26,12 @@
 */
 
 
-#ifndef __kp_color_toolbar_h__
-#define __kp_color_toolbar_h__
+#ifndef KP_COLOR_TOOLBAR_H
+#define KP_COLOR_TOOLBAR_H
 
 
 #include <q3frame.h>
 #include <qwidget.h>
-//Added by qt3to4:
-#include <QMouseEvent>
-#include <QPixmap>
-#include <QDragMoveEvent>
-#include <QGridLayout>
-#include <QDropEvent>
-#include <QBoxLayout>
 
 #include <kcolordialog.h>
 #include <ktoolbar.h>
@@ -47,7 +40,13 @@
 #include <kpcolorsimilaritycube.h>
 
 
+class QBoxLayout;
+class QDragMoveEvent;
+class QDropEvent;
 class QGridLayout;
+class QMouseEvent;
+class QPixmap;
+
 class KColorButton;
 
 class kpColorSimilarityCube;
@@ -301,4 +300,5 @@ private:
     kpColorSimilarityToolBarItem *m_colorSimilarityToolBarItem;
 };
 
-#endif  // __kp_color_toolbar_h__
+
+#endif  // KP_COLOR_TOOLBAR_H

@@ -25,6 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #define DEBUG_KP_TOOL_SKEW 0
 #define DEBUG_KP_TOOL_SKEW_DIALOG 0
 
@@ -32,15 +33,14 @@
 #include <kptoolskew.h>
 
 #include <qapplication.h>
+#include <qgridlayout.h>
 #include <q3groupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
 #include <qmatrix.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <Q3PointArray>
-#include <QGridLayout>
+#include <qpixmap.h>
+#include <q3pointarray.h>
 
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -393,8 +393,8 @@ bool kpToolSkewDialog::isNoOp () const
 }
 
 
-// private slot virtual [base KDialogBase]
-void kpToolSkewDialog::slotOk ()
+// private slot virtual [base QDialog]
+void kpToolSkewDialog::accept ()
 {
     QString message, caption, continueButtonText;
 
@@ -442,8 +442,9 @@ void kpToolSkewDialog::slotOk ()
             continueButtonText,
             this))
     {
-        KDialogBase::slotOk ();
+        KDialog::accept ();
     }
 }
+
 
 #include <kptoolskew.moc>

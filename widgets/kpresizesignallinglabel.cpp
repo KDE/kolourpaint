@@ -25,15 +25,15 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #define DEBUG_KP_RESIZE_SIGNALLING_LABEL 0
 
 
 #include <kpresizesignallinglabel.h>
 
+#include <qevent.h>
+
 #include <kdebug.h>
-//Added by qt3to4:
-#include <QLabel>
-#include <QResizeEvent>
 
 
 kpResizeSignallingLabel::kpResizeSignallingLabel (const QString &string,

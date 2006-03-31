@@ -25,13 +25,15 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef KP_RESIZE_SIGNALLING_LABEL
-#define KP_RESIZE_SIGNALLING_LABEL
+
+#ifndef KP_RESIZE_SIGNALLING_LABEL_H
+#define KP_RESIZE_SIGNALLING_LABEL_H
 
 
 #include <qlabel.h>
-//Added by qt3to4:
-#include <QResizeEvent>
+
+
+class QResizeEvent;
 
 
 class kpResizeSignallingLabel : public QLabel
@@ -51,4 +53,4 @@ protected:
 };
 
 
-#endif  // KP_RESIZE_SIGNALLING_LABEL
+#endif  // KP_RESIZE_SIGNALLING_LABEL_H

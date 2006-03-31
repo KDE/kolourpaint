@@ -26,12 +26,15 @@
 */
 
 
-#ifndef __kptoolline_h__
-#define __kptoolline_h__
+#ifndef KP_TOOL_LINE_H
+#define KP_TOOL_LINE_H
+
 
 #include <kptoolpolygon.h>
 
+
 class kpMainWindow;
+
 
 class kpToolLine : public kpToolPolygon
 {
@@ -42,4 +45,5 @@ public:
     virtual ~kpToolLine ();
 };
 
-#endif  // __kptoolline_h__
+
+#endif  // KP_TOOL_LINE_H

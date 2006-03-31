@@ -26,12 +26,15 @@
 */
 
 
-#ifndef __kptoolellipse_h__
-#define __kptoolellipse_h__
+#ifndef KP_TOOL_ELLIPSE_H
+#define KP_TOOL_ELLIPSE_H
+
 
 #include <kptoolrectangle.h>
 
+
 class kpMainWindow;
+
 
 class kpToolEllipse : public kpToolRectangle
 {
@@ -42,4 +45,5 @@ public:
     virtual ~kpToolEllipse ();
 };
 
-#endif  // __kptoolellipse_h__
+
+#endif  // KP_TOOL_ELLIPSE_H

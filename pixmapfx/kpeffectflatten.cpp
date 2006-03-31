@@ -25,6 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #define DEBUG_KP_EFFECT_FLATTEN 0
 
 
@@ -34,9 +35,6 @@
 #include <qimage.h>
 #include <qlayout.h>
 #include <qpixmap.h>
-#include <kvbox.h>
-//Added by qt3to4:
-#include <QVBoxLayout>
 
 #include <kcolorbutton.h>
 #include <kconfig.h>
@@ -45,6 +43,7 @@
 #include <kglobal.h>
 #include <kimageeffect.h>
 #include <klocale.h>
+#include <kvbox.h>
 
 #include <kpdefs.h>
 #include <kppixmapfx.h>
@@ -141,11 +140,11 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
     {
         KConfigGroup cfgGroupSaver (KGlobal::config (), kpSettingsGroupFlattenEffect);
 
-        s_lastColor1 = cfgGroupSaver.readColorEntry (kpSettingFlattenEffectColor1);
+        s_lastColor1 = cfgGroupSaver.readEntry (kpSettingFlattenEffectColor1, QColor ());
         if (!s_lastColor1.isValid ())
             s_lastColor1 = Qt::red;
 
-        s_lastColor2 = cfgGroupSaver.readColorEntry (kpSettingFlattenEffectColor2);
+        s_lastColor2 = cfgGroupSaver.readEntry (kpSettingFlattenEffectColor2, QColor ());
         if (!s_lastColor2.isValid ())
             s_lastColor2 = Qt::blue;
     }
@@ -153,7 +152,6 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
 
     m_enableCheckBox = new QCheckBox (i18n ("E&nable"), this);
 
-    // COMPAT: What happened to QVBox?
     KVBox *colorButtonContainer = new KVBox (this);
     colorButtonContainer->setMargin (KDialog::marginHint () / 2);
     colorButtonContainer->setSpacing (spacingHint ());
@@ -185,12 +183,11 @@ kpEffectFlattenWidget::~kpEffectFlattenWidget ()
     s_lastColor2 = color2 ();
 
 
-    KConfigGroup cfgGroupSaver (KGlobal::config (), kpSettingsGroupFlattenEffect);
+    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupFlattenEffect);
 
-    cfgGroupSaver.writeEntry (kpSettingFlattenEffectColor1, s_lastColor1);
-    cfgGroupSaver.writeEntry (kpSettingFlattenEffectColor2, s_lastColor2);
-    // COMPAT: cfgGroupSaver.sync ()?
-    KGlobal::config ()->sync ();
+    cfg.writeEntry (kpSettingFlattenEffectColor1, s_lastColor1);
+    cfg.writeEntry (kpSettingFlattenEffectColor2, s_lastColor2);
+    cfg.sync ();
 }
 
 

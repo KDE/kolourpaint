@@ -31,14 +31,13 @@
 
 
 #include <qcolor.h>
-//Added by qt3to4:
-#include <QPixmap>
 
 #include <kpcoloreffect.h>
 
 
 class QCheckBox;
 class QImage;
+class QPixmap;
 
 class KColorButton;
 
@@ -111,7 +110,6 @@ protected:
     QCheckBox *m_enableCheckBox;
     KColorButton *m_color1Button, *m_color2Button;
 };
-
 
 
 #endif  // KP_EFFECT_FLATTEN_H

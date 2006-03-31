@@ -25,8 +25,9 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef KP_WIDGET_MAPPER
-#define KP_WIDGET_MAPPER
+
+#ifndef KP_WIDGET_MAPPER_H
+#define KP_WIDGET_MAPPER_H
 
 
 class QWidget;
@@ -44,4 +45,4 @@ namespace kpWidgetMapper
 }
 
 
-#endif  // KP_WIDGET_MAPPER
+#endif  // KP_WIDGET_MAPPER_H

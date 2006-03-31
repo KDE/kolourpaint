@@ -34,8 +34,7 @@
 #include <limits.h>
 
 #include <qdatetime.h>
-//Added by qt3to4:
-#include <Q3ValueList>
+#include <q3valuelist.h>
 
 #include <kactionclasses.h>
 #include <kapplication.h>

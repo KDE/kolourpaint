@@ -28,6 +28,7 @@
 
 #define DEBUG_KP_TOOL_POLYGON 0
 
+
 #include <kptoolpolygon.h>
 
 #include <float.h>
@@ -37,13 +38,12 @@
 #include <qcursor.h>
 #include <qlayout.h>
 #include <qpainter.h>
+#include <qpixmap.h>
 #include <qpoint.h>
+#include <q3pointarray.h>
 #include <qpushbutton.h>
 #include <qrect.h>
 #include <qtooltip.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <Q3PointArray>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -895,5 +895,6 @@ void kpToolPolygonCommand::unexecute ()
 {
     document ()->setPixmapAt (m_originalArea, m_normalizedRect.topLeft ());
 }
+
 
 #include <kptoolpolygon.moc>

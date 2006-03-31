@@ -26,8 +26,8 @@
 */
 
 
-#ifndef KP_THUMBNAIL_VIEW
-#define KP_THUMBNAIL_VIEW
+#ifndef KP_THUMBNAIL_VIEW_H
+#define KP_THUMBNAIL_VIEW_H
 
 
 #include <kpview.h>
@@ -87,4 +87,4 @@ protected:
 };
 
 
-#endif  // KP_THUMBNAIL_VIEW
+#endif  // KP_THUMBNAIL_VIEW_H

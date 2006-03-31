@@ -28,12 +28,11 @@
 
 #include <kpcolorsimilaritydialog.h>
 
+#include <qboxlayout.h>
 #include <q3groupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
-//Added by qt3to4:
-#include <QVBoxLayout>
 
 #include <klocale.h>
 #include <knuminput.h>
@@ -48,11 +47,12 @@ const double kpColorSimilarityDialog::maximumColorSimilarity = .30;
 kpColorSimilarityDialog::kpColorSimilarityDialog (kpMainWindow *mainWindow,
                                                   QWidget *parent,
                                                   const char *name)
-    : KDialogBase (parent, name, true/*modal*/,
-                   i18n ("Color Similarity"),
-                   KDialogBase::Ok | KDialogBase::Cancel),
+    : KDialog (parent, i18n ("Color Similarity"),
+               KDialog::Ok | KDialog::Cancel),
       m_mainWindow (mainWindow)
 {
+    setObjectName (name);
+
     QWidget *baseWidget = new QWidget (this);
     setMainWidget (baseWidget);
 

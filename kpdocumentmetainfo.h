@@ -26,8 +26,8 @@
 */
 
 
-#ifndef KP_DOCUMENT_META_INFO
-#define KP_DOCUMENT_META_INFO
+#ifndef KP_DOCUMENT_META_INFO_H
+#define KP_DOCUMENT_META_INFO_H
 
 
 #include <qimage.h>
@@ -87,4 +87,4 @@ private:
 };
 
 
-#endif  // KP_DOCUMENT_META_INFO
+#endif  // KP_DOCUMENT_META_INFO_H

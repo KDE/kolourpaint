@@ -31,10 +31,9 @@
 #include <q3cstring.h>
 #include <qdatastream.h>
 #include <qpainter.h>
+#include <qpixmap.h>
+#include <q3ptrlist.h>
 #include <qsize.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <Q3PtrList>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -311,7 +310,6 @@ KUrl::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &
 #endif
     QString filter = mimeTypes.join (" ");
 
-    // COMPAT: , true/*modal*/);
     KFileDialog fd (startURL, filter, this);
     fd.setCaption (caption);
     fd.setOperationMode (KFileDialog::Opening);
@@ -505,7 +503,6 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
             docMetaInfo,
             this);
 
- // COMPAT: true/*modal*/,
     KFileDialog fd (startURL, QString::null, this,
                     saveOptionsWidget);
     saveOptionsWidget->setVisualParent (&fd);

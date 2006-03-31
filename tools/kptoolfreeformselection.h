@@ -26,12 +26,15 @@
 */
 
 
-#ifndef __kptoolfreeformselection_h__
-#define __kptoolfreeformselection_h__
+#ifndef KP_TOOL_FREE_FORM_SELECTION_H
+#define KP_TOOL_FREE_FORM_SELECTION_H
+
 
 #include <kptoolselection.h>
 
+
 class kpMainWindow;
+
 
 class kpToolFreeFormSelection : public kpToolSelection
 {
@@ -40,4 +43,5 @@ public:
     virtual ~kpToolFreeFormSelection ();
 };
 
-#endif  // __kptoolfreeformselection_h__
+
+#endif  // KP_TOOL_FREE_FORM_SELECTION_H

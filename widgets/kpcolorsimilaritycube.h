@@ -26,13 +26,16 @@
 */
 
 
-#ifndef __kp_color_similarity_cube_h__
-#define __kp_color_similarity_cube_h__
+#ifndef KP_COLOR_SIMILARITY_CUBE_H
+#define KP_COLOR_SIMILARITY_CUBE_H
+
 
 #include <q3frame.h>
 
+
 class kpColor;
 class kpMainWindow;
+
 
 class kpColorSimilarityCube : public Q3Frame
 {
@@ -69,4 +72,5 @@ protected:
     double m_colorSimilarity;
 };
 
-#endif  // __kp_color_similarity_cube_h__
+
+#endif  // KP_COLOR_SIMILARITY_CUBE_H

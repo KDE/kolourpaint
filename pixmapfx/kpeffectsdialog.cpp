@@ -25,6 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #define DEBUG_KP_EFFECTS_DIALOG 0
 
 
@@ -34,10 +35,8 @@
 #include <q3hbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qpixmap.h>
 #include <qtimer.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <QVBoxLayout>
 
 #include <kapplication.h>
 #include <kcombobox.h>
