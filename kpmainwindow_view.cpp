@@ -284,10 +284,14 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
 
         if (m_scrollView && m_scrollView->viewport ())
         {
+        // COMPAT: when we use a more flexible scrollView, this flicker problem goes away.
+        //         In the meantime, Qt4 does not let us draw outside paintEvent().
+        #if 0
             // Ordinary flicker is better than the whole view moving
             QPainter p (m_mainView);
             p.fillRect (m_mainView->rect (),
                         m_scrollView->viewport ()->colorGroup ().background ());
+        #endif
         }
     }
 
@@ -319,7 +323,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         int viewX, viewY;
         
         bool targetDocAvail = false;
-        double targetDocX, targetDocY;
+        double targetDocX = -1, targetDocY = -1;
         
         if (centerUnderCursor &&
             m_viewManager && m_viewManager->viewUnderCursor ())
