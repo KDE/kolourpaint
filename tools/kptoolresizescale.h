@@ -41,7 +41,6 @@
 
 class QCheckBox;
 class Q3GroupBox;
-class Q3HBox;
 class QLabel;
 class QRadioButton;
 class QSize;
@@ -50,6 +49,7 @@ class QToolButton;
 
 class KComboBox;
 class KDoubleNumInput;
+class KHBox;
 class KIntNumInput;
 
 class kpDocument;
@@ -176,7 +176,7 @@ private slots:
 private:
     kpMainWindow *m_mainWindow;
 
-    Q3HBox *m_actOnBox;
+    KHBox *m_actOnBox;
     QLabel *m_actOnLabel;
     KComboBox *m_actOnCombo;
 

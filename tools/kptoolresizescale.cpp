@@ -41,7 +41,6 @@
 #include <qcheckbox.h>
 #include <qgridlayout.h>
 #include <q3groupbox.h>
-#include <q3hbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpixmap.h>
@@ -59,6 +58,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
+#include <khbox.h>
 #include <kiconeffect.h>
 #include <kiconloader.h>
 #include <klocale.h>
@@ -561,7 +561,7 @@ kpSelection *kpToolResizeScaleDialog::selection () const
 // private
 void kpToolResizeScaleDialog::createActOnBox (QWidget *baseWidget)
 {
-    m_actOnBox = new Q3HBox (baseWidget);
+    m_actOnBox = new KHBox (baseWidget);
     m_actOnBox->setSpacing (spacingHint () * 2);
 
 

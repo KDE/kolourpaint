@@ -30,7 +30,7 @@
 #define KP_TOOL_TOOL_BAR_H
 
 
-#include <q3valuevector.h>
+#include <qlist.h>
 
 #include <ktoolbar.h>
 
@@ -122,7 +122,7 @@ private:
     kpToolWidgetOpaqueOrTransparent *m_toolWidgetOpaqueOrTransparent;
     kpToolWidgetSpraycanSize *m_toolWidgetSpraycanSize;
 
-    Q3ValueVector <kpToolWidgetBase *> m_toolWidgets;
+    QList <kpToolWidgetBase *> m_toolWidgets;
 
 private:
     struct kpButtonToolPair
@@ -141,7 +141,7 @@ private:
         kpTool *m_tool;
     };
 
-    Q3ValueVector <kpButtonToolPair> m_buttonToolPairs;
+    QList <kpButtonToolPair> m_buttonToolPairs;
 
     kpTool *m_previousTool, *m_currentTool;
     

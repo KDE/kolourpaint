@@ -32,7 +32,7 @@
 
 #include <qobject.h>
 #include <qstring.h>
-#include <q3valuelist.h>
+#include <qlinkedlist.h>
 
 
 class KActionCollection;
@@ -117,7 +117,7 @@ public:
     void addCommand (kpCommand *command);
 
 protected:
-    Q3ValueList <kpCommand *> m_commandList;
+    QLinkedList <kpCommand *> m_commandList;
 
 private:
     class kpMacroCommandPrivate *d;
@@ -181,7 +181,7 @@ protected:
     QString redoActionText () const;
 
     void trimCommandListsUpdateActions ();
-    void trimCommandList (Q3ValueList <kpCommand *> *commandList);
+    void trimCommandList (QLinkedList <kpCommand *> *commandList);
     void trimCommandLists ();
     void updateActions ();
 
@@ -201,8 +201,8 @@ protected:
     KToolBarPopupAction *m_actionUndo, *m_actionRedo;
 
     // (Front element is the next one)
-    Q3ValueList <kpCommand *> m_undoCommandList;
-    Q3ValueList <kpCommand *> m_redoCommandList;
+    QLinkedList <kpCommand *> m_undoCommandList;
+    QLinkedList <kpCommand *> m_redoCommandList;
 
     int m_undoMinLimit, m_undoMaxLimit, m_undoMaxLimitSizeLimit;
 

@@ -176,8 +176,8 @@ void kpMainWindow::sendZoomListToActionZoom ()
 {
     QStringList items;
 
-    const Q3ValueVector <int>::ConstIterator zoomListEnd (m_zoomList.end ());
-    for (Q3ValueVector <int>::ConstIterator it = m_zoomList.begin ();
+    const QList <int>::ConstIterator zoomListEnd (m_zoomList.end ());
+    for (QList <int>::ConstIterator it = m_zoomList.begin ();
          it != zoomListEnd;
          it++)
     {
@@ -246,7 +246,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
 #endif
 
     int index = 0;
-    Q3ValueVector <int>::Iterator it = m_zoomList.begin ();
+    QList <int>::Iterator it = m_zoomList.begin ();
 
     while (index < (int) m_zoomList.count () && zoomLevel > *it)
         it++, index++;

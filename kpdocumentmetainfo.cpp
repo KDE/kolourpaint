@@ -25,10 +25,11 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #include <kpdocumentmetainfo.h>
 
+#include <qlist.h>
 #include <qpoint.h>
-#include <q3valuelist.h>
 
 #include <kdebug.h>
 
@@ -92,8 +93,8 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
                << " Y=" << dotsPerMeterY ()
                << " offset=" << offset () << endl;
 
-    Q3ValueList <QImageTextKeyLang> keyList = textList ();
-    for (Q3ValueList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
+    QList <QImageTextKeyLang> keyList = textList ();
+    for (QList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
          it != keyList.end ();
          it++)
     {
@@ -153,7 +154,7 @@ QMap <QImageTextKeyLang, QString> kpDocumentMetaInfo::textMap () const
 }
 
 // public
-Q3ValueList <QImageTextKeyLang> kpDocumentMetaInfo::textList () const
+QList <QImageTextKeyLang> kpDocumentMetaInfo::textList () const
 {
     return d->m_textMap.keys ();
 }

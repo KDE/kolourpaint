@@ -36,7 +36,7 @@
 #include <qpixmap.h>
 #include <qpoint.h>
 #include <q3pointarray.h>
-#include <q3valuevector.h>
+#include <qlist.h>
 #include <qrect.h>
 #include <qstring.h>
 
@@ -75,7 +75,7 @@ public:
     kpSelection (Type type, const QRect &rect, const kpSelectionTransparency &transparency);
 
     // (for Text)
-    kpSelection (const QRect &rect, const Q3ValueVector <QString> &textLines_, const kpTextStyle &textStyle_);
+    kpSelection (const QRect &rect, const QList <QString> &textLines_, const kpTextStyle &textStyle_);
 
     // (for Points)
     kpSelection (const Q3PointArray &points, const QPixmap &pixmap = QPixmap (),
@@ -151,10 +151,10 @@ private:
     void calculateTextPixmap ();
 
 public:
-    static QString textForTextLines (const Q3ValueVector <QString> &textLines_);
+    static QString textForTextLines (const QList <QString> &textLines_);
     QString text () const;  // textLines() as one long string
-    Q3ValueVector <QString> textLines () const;
-    void setTextLines (const Q3ValueVector <QString> &textLines_);
+    QList <QString> textLines () const;
+    void setTextLines (const QList <QString> &textLines_);
 
     static int textBorderSize ();
     QRect textAreaRect () const;
@@ -222,7 +222,7 @@ private:
     Q3PointArray m_points;
     QPixmap *m_pixmap;
 
-    Q3ValueVector <QString> m_textLines;
+    QList <QString> m_textLines;
     kpTextStyle m_textStyle;
 
     kpSelectionTransparency m_transparency;

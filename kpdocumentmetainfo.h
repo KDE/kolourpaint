@@ -31,9 +31,9 @@
 
 
 #include <qimage.h>
+#include <qlist.h>
 #include <qmap.h>
 #include <qstring.h>
-#include <q3valuelist.h>
 
 
 class QPoint;
@@ -71,7 +71,7 @@ public:
 
 
     QMap <QImageTextKeyLang, QString> textMap () const;
-    Q3ValueList <QImageTextKeyLang> textList () const;
+    QList <QImageTextKeyLang> textList () const;
 
     QString text (const QImageTextKeyLang &itkl) const;
     QString text (const char *key, const char *lang) const;

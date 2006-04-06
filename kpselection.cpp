@@ -79,7 +79,7 @@ kpSelection::kpSelection (Type type, const QRect &rect, const kpSelectionTranspa
 }
 
 kpSelection::kpSelection (const QRect &rect,
-                          const Q3ValueVector <QString> &textLines_,
+                          const QList <QString> &textLines_,
                           const kpTextStyle &textStyle_)
     : QObject (),
       m_type (Text),
@@ -578,7 +578,7 @@ void kpSelection::setPixmap (const QPixmap &pixmap)
                             m_pixmap->width (), m_pixmap->height ());
             calculatePoints ();
 
-            m_textLines = Q3ValueVector <QString> ();
+            m_textLines = QList <QString> ();
 
             emit changed (boundingRect ());
         }
@@ -617,7 +617,7 @@ static QRgb mostContrastingRGB (QRgb val)
 // private
 static void drawTextLines (QPainter *painter, QPainter *maskPainter,
                            const QRect &rect,
-                           const Q3ValueVector <QString> &textLines)
+                           const QList <QString> &textLines)
 {
     if (!painter->clipRegion ().isEmpty () || !maskPainter->clipRegion ().isEmpty ())
     {
@@ -658,7 +658,7 @@ static void drawTextLines (QPainter *painter, QPainter *maskPainter,
  // COMPAT: CoordPainter   PAINTER_CALL (setClipRect (rect, QPainter::CoordPainter/*transform*/));
 
     int baseLine = rect.y () + painter->fontMetrics ().ascent ();
-    for (Q3ValueVector <QString>::const_iterator it = textLines.begin ();
+    for (QList <QString>::const_iterator it = textLines.begin ();
          it != textLines.end ();
          it++)
     {
@@ -910,14 +910,14 @@ void kpSelection::calculateTextPixmap ()
 
 
 // public static
-QString kpSelection::textForTextLines (const Q3ValueVector <QString> &textLines_)
+QString kpSelection::textForTextLines (const QList <QString> &textLines_)
 {
     if (textLines_.isEmpty ())
         return QString::null;
 
     QString bigString = textLines_ [0];
 
-    for (Q3ValueVector <QString>::const_iterator it = textLines_.begin () + 1;
+    for (QList <QString>::const_iterator it = textLines_.begin () + 1;
          it != textLines_.end ();
          it++)
     {
@@ -940,19 +940,19 @@ QString kpSelection::text () const
 }
 
 // public
-Q3ValueVector <QString> kpSelection::textLines () const
+QList <QString> kpSelection::textLines () const
 {
     if (!isText ())
     {
         kError () << "kpSelection::textLines() not a text selection" << endl;
-        return Q3ValueVector <QString> ();
+        return QList <QString> ();
     }
 
     return m_textLines;
 }
 
 // public
-void kpSelection::setTextLines (const Q3ValueVector <QString> &textLines_)
+void kpSelection::setTextLines (const QList <QString> &textLines_)
 {
     if (!isText ())
     {

@@ -34,7 +34,7 @@
 #include <qpair.h>
 #include <qpixmap.h>
 #include <qrect.h>
-#include <q3valuevector.h>
+#include <qlist.h>
 #include <qwidget.h>
 
 
@@ -61,7 +61,7 @@ public:
     void finishConstruction (int fallBackRow, int fallBackCol);
 
 private:
-    Q3ValueVector <int> spreadOutElements (const Q3ValueVector <int> &sizes, int maxSize);
+    QList <int> spreadOutElements (const QList <int> &sizes, int maxSize);
 
 public:  // (only have to use these if you don't use finishConstruction())
     // (rereads from config file)
@@ -103,10 +103,10 @@ protected:
     // coulbe be a QFrame or a ComboBox
     QWidget *m_baseWidget;
 
-    Q3ValueVector < Q3ValueVector <QPixmap> > m_pixmaps;
-    Q3ValueVector < Q3ValueVector <QString> > m_toolTips;
+    QList < QList <QPixmap> > m_pixmaps;
+    QList < QList <QString> > m_toolTips;
 
-    Q3ValueVector < Q3ValueVector <QRect> > m_pixmapRects;
+    QList < QList <QRect> > m_pixmapRects;
 
     int m_selectedRow, m_selectedCol;
 };

@@ -35,7 +35,7 @@
 #include <qpixmap.h>
 #include <q3popupmenu.h>
 #include <q3ptrlist.h>
-#include <q3valuevector.h>
+#include <qlist.h>
 
 #include <kaction.h>
 #include <kdebug.h>
@@ -397,7 +397,8 @@ void kpMainWindow::pasteText (const QString &text,
         tool ()->endShapeInternal ();
 
 
-    Q3ValueVector <QString> textLines (1, QString::null);
+    QList <QString> textLines;
+    textLines.append (QString ());
 
     for (int i = 0; i < (int) text.length (); i++)
     {
@@ -457,7 +458,7 @@ void kpMainWindow::pasteText (const QString &text,
             height += (textLines.size () - 1) * fontMetrics.leading ();
 
         int width = 0;
-        for (Q3ValueVector <QString>::const_iterator it = textLines.begin ();
+        for (QList <QString>::const_iterator it = textLines.begin ();
              it != textLines.end ();
              it++)
         {

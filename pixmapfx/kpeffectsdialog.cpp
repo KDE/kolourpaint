@@ -32,7 +32,6 @@
 #include <kpeffectsdialog.h>
 
 #include <q3groupbox.h>
-#include <q3hbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpixmap.h>
@@ -42,6 +41,7 @@
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <khbox.h>
 #include <klocale.h>
 
 #include <kpdefs.h>
@@ -90,7 +90,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
              this, SLOT (slotUpdateWithWaitCursor ()));
 
 
-    Q3HBox *effectContainer = new Q3HBox (mainWidget ());
+    KHBox *effectContainer = new KHBox (mainWidget ());
     effectContainer->setSpacing (spacingHint () * 4
                                  /*need more space for QGroupBox titles*/);
     effectContainer->setMargin (0);

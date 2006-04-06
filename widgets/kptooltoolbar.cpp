@@ -137,7 +137,7 @@ kpToolToolBar::kpToolToolBar (const QString &label, kpMainWindow *mainWindow, in
                << timer.restart () << endl;
 #endif
 
-    for (Q3ValueVector <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
+    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
          it != m_toolWidgets.end ();
          it++)
     {
@@ -226,7 +226,7 @@ int kpToolToolBar::defaultIconSize ()
 // public
 void kpToolToolBar::registerTool (kpTool *tool)
 {
-    for (Q3ValueVector <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
+    for (QList <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
          it != m_buttonToolPairs.end ();
          it++)
     {
@@ -261,7 +261,7 @@ void kpToolToolBar::registerTool (kpTool *tool)
 // public
 void kpToolToolBar::unregisterTool (kpTool *tool)
 {
-    for (Q3ValueVector <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
+    for (QList <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
          it != m_buttonToolPairs.end ();
          it++)
     {
@@ -282,7 +282,7 @@ void kpToolToolBar::unregisterTool (kpTool *tool)
 // public
 void kpToolToolBar::unregisterAllTools ()
 {
-    for (Q3ValueVector <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
+    for (QList <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
          it != m_buttonToolPairs.end ();
          it++)
     {
@@ -313,7 +313,7 @@ void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
 
     if (tool)
     {
-        for (Q3ValueVector <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
+        for (QList <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
             it != m_buttonToolPairs.end ();
             it++)
         {
@@ -367,7 +367,7 @@ void kpToolToolBar::selectPreviousTool ()
 // public
 void kpToolToolBar::hideAllToolWidgets ()
 {
-    for (Q3ValueVector <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
+    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
          it != m_toolWidgets.end ();
          it++)
     {
@@ -384,7 +384,7 @@ int kpToolToolBar::numShownToolWidgets () const
 
     int ret = 0;
 
-    for (Q3ValueVector <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
+    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
          it != m_toolWidgets.end ();
          it++)
     {
@@ -405,7 +405,7 @@ kpToolWidgetBase *kpToolToolBar::shownToolWidget (int which) const
 {
     int uptoVisibleWidget = 0;
 
-    for (Q3ValueVector <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
+    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
          it != m_toolWidgets.end ();
          it++)
     {
@@ -425,7 +425,7 @@ kpToolWidgetBase *kpToolToolBar::shownToolWidget (int which) const
 // public
 bool kpToolToolBar::toolsSingleKeyTriggersEnabled () const
 {
-    for (Q3ValueVector <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
+    for (QList <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
          it != m_buttonToolPairs.end ();
          it++)
     {
@@ -443,7 +443,7 @@ void kpToolToolBar::enableToolsSingleKeyTriggers (bool enable)
     kDebug () << "kpToolToolBar::enableToolsSingleKeyTriggers(" << enable << ")" << endl;
 #endif
 
-    for (Q3ValueVector <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
+    for (QList <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
         it != m_buttonToolPairs.end ();
         it++)
     {
@@ -462,7 +462,7 @@ void kpToolToolBar::slotToolButtonClicked ()
 #endif
 
     kpTool *tool = 0;
-    for (Q3ValueVector <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
+    for (QList <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
          it != m_buttonToolPairs.end ();
          it++)
     {
@@ -550,7 +550,7 @@ void kpToolToolBar::slotToolActionToolTipChanged ()
     if (!tool)
         return;
 
-    for (Q3ValueVector <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
+    for (QList <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
         it != m_buttonToolPairs.end ();
         it++)
     {
@@ -618,7 +618,7 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
 
     int num = 0;
 
-    for (Q3ValueVector <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
+    for (QList <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
          it != m_buttonToolPairs.end ();
          it++)
     {
@@ -626,7 +626,7 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
         num++;
     }
 
-    for (Q3ValueVector <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
+    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
          it != m_toolWidgets.end ();
          it++)
     {

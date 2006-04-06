@@ -31,8 +31,8 @@
 
 
 #include <qimage.h>
-#include <q3valuelist.h>
-#include <q3valuevector.h>
+#include <qlinkedlist.h>
+#include <qlist.h>
 
 #include <kpcolor.h>
 
@@ -89,7 +89,7 @@ private:
         int m_y, m_x1, m_x2;
     };
 
-    int fillLinesListSize (const Q3ValueList <kpFloodFill::FillLine> &fillLines) const;
+    int fillLinesListSize (const QLinkedList <kpFloodFill::FillLine> &fillLines) const;
     
     void addLine (int y, int x1, int x2);
     kpColor pixelColor (int x, int y, bool *beenHere = 0) const;
@@ -98,13 +98,14 @@ private:
     int findMinX (int y, int x) const;
     int findMaxX (int y, int x) const;
 
-    Q3ValueList <FillLine> m_fillLines;
+    QLinkedList <FillLine> m_fillLines;
 
     // Init info
     QImage m_image;
-    Q3ValueVector < Q3ValueList <FillLine> > m_fillLinesCache;
+    QList < QLinkedList <FillLine> > m_fillLinesCache;
     kpColor m_colorToChange;
 };
 
 
 #endif  // KP_FLOOD_FILL_H
+

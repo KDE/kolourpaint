@@ -712,7 +712,8 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
                        << endl;
         #endif
 
-            Q3ValueVector <QString> textLines (1, QString ());
+            QList <QString> textLines;
+            textLines.append (QString ());
             kpSelection sel (normalizedRect, textLines, textStyle);
 
             if (!m_currentCreateTextCommand)

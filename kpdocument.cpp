@@ -38,11 +38,11 @@
 #include <qbrush.h>
 #include <qfile.h>
 #include <qimage.h>
+#include <qlist.h>
 #include <qpixmap.h>
 #include <qpainter.h>
 #include <qrect.h>
 #include <qsize.h>
-#include <q3valuelist.h>
 #include <qmatrix.h>
 
 #include <kdebug.h>
@@ -216,8 +216,8 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
         metaInfo->setDotsPerMeterY (image.dotsPerMeterY ());
         metaInfo->setOffset (image.offset ());
 
-        Q3ValueList <QImageTextKeyLang> keyList = image.textList ();
-        for (Q3ValueList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
+        QList <QImageTextKeyLang> keyList = image.textList ();
+        for (QList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
              it != keyList.end ();
              it++)
         {
@@ -548,8 +548,8 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     imageToSave.setDotsPerMeterY (metaInfo.dotsPerMeterY ());
     imageToSave.setOffset (metaInfo.offset ());
 
-    Q3ValueList <QImageTextKeyLang> keyList = metaInfo.textList ();
-    for (Q3ValueList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
+    QList <QImageTextKeyLang> keyList = metaInfo.textList ();
+    for (QList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
          it != keyList.end ();
          it++)
     {

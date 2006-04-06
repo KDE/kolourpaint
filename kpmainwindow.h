@@ -35,7 +35,7 @@
 #include <qpoint.h>
 #include <q3ptrlist.h>
 #include <qsize.h>
-#include <q3valuevector.h>
+#include <qlist.h>
 
 #include <kmainwindow.h>
 #include <kurl.h>
@@ -447,7 +447,7 @@ private:
     KToggleAction *m_actionShowGrid,
                   *m_actionShowThumbnail, *m_actionZoomedThumbnail;
 
-    Q3ValueVector <int> m_zoomList;
+    QList <int> m_zoomList;
 
 private:
     void sendZoomListToActionZoom ();
