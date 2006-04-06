@@ -1,4 +1,4 @@
-INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../interfaces \
+INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../compat -I$(srcdir)/../cursors -I$(srcdir)/../interfaces \
     -I$(srcdir)/../pixmapfx \
     -I$(srcdir)/../tools \
     -I$(srcdir)/../views \
@@ -26,7 +26,8 @@ libkolourpainttools_la_SOURCES = kptoolaction.cpp \
     kptoolskew.cpp kptooltext.cpp
 
 # TODO: Why is this needed?  Isn't linking at the toplevel enough?
-libkolourpainttools_la_LIBADD = ../pixmapfx/libkolourpaintpixmapfx.la ../cursors/libkolourpaintcursors.la
+libkolourpainttools_la_LIBADD = ../compat/libkolourpaintcompat.la \
+    ../pixmapfx/libkolourpaintpixmapfx.la ../cursors/libkolourpaintcursors.la
 
 METASOURCES = kptoolaction.moc \
     kptoolairspray.moc \

@@ -47,6 +47,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
+#include <kpbug.h>
 #include <kpcolor.h>
 #include <kpcolortoolbar.h>
 #include <kpdefs.h>
@@ -458,7 +459,7 @@ void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_,
     {
         if (m_currentPoint != KP_INVALID_POINT)
         {
-            draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+            draw (m_currentPoint, m_lastPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
             m_lastPoint = m_currentPoint;
         }
     }
@@ -514,7 +515,7 @@ void kpTool::endInternal ()
     {
         // before we can stop using the tool, we must stop the current drawing operation (if any)
         if (hasBegunShape ())
-            endShapeInternal (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+            endShapeInternal (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
         // call user virtual func
         end ();
@@ -954,7 +955,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
                 kDebug () << "\t\thasBegunShape - end" << endl;
             #endif
                 endShapeInternal (m_currentPoint,
-                                  QRect (m_startPoint, m_currentPoint).normalize ());
+                                  kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
             }
 
             if (viewUnderCursor ())
@@ -1085,7 +1086,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
             viewManager ()->setFastUpdates ();
         }
 
-        draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+        draw (m_currentPoint, m_lastPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
         if (dragScrolled)
             viewManager ()->restoreFastUpdates ();
@@ -1128,7 +1129,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
 
         m_currentPoint = view ? view->transformViewToDoc (e->pos ()) : QPoint (-1, -1);
         m_currentViewPoint = view ? e->pos () : QPoint (-1, -1);
-        endDrawInternal (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+        endDrawInternal (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
     }
 
     if ((e->stateAfter () & Qt::MouseButtonMask) == 0)
@@ -1387,7 +1388,7 @@ void kpTool::notifyModifierStateChanged ()
     if (careAboutModifierState ())
     {
         if (m_beganDraw)
-            draw (m_currentPoint, m_lastPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+            draw (m_currentPoint, m_lastPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
         else
         {
             m_currentPoint = currentPoint ();
@@ -1438,7 +1439,7 @@ void kpTool::focusOutEvent (QFocusEvent *)
 #endif
 
     if (m_beganDraw)
-        endDrawInternal (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+        endDrawInternal (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 }
 
 void kpTool::enterEvent (QEvent *)

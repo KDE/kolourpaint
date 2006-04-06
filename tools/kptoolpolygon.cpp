@@ -48,6 +48,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpbug.h>
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
 #include <kpdefs.h>
@@ -601,7 +602,7 @@ void kpToolPolygon::applyModifiers ()
     m_points [count - 2] = m_toolLineStartPoint;
     m_points [count - 1] = m_toolLineEndPoint;
 
-    m_toolLineRect = kpTool::neededRect (QRect (m_toolLineStartPoint, m_toolLineEndPoint).normalize (),
+    m_toolLineRect = kpTool::neededRect (kpBug::QRect_Normalized (QRect (m_toolLineStartPoint, m_toolLineEndPoint)),
                                          m_lineWidth);
 }
 

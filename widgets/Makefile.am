@@ -1,4 +1,4 @@
-INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../interfaces \
+INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../compat -I$(srcdir)/../cursors -I$(srcdir)/../interfaces \
     -I$(srcdir)/../pixmapfx \
     -I$(srcdir)/../tools \
     -I$(srcdir)/../views \
@@ -16,6 +16,9 @@ libkolourpaintwidgets_la_SOURCES = kpcolorsimilaritycube.cpp \
     kptoolwidgetlinewidth.cpp \
     kptoolwidgetopaqueortransparent.cpp \
     kptoolwidgetspraycansize.cpp
+
+# TODO: Why is this needed?  Isn't linking at the toplevel enough?
+libkolourpaintwidgets_la_LIBADD = ../compat/libkolourpaintcompat.la
 
 METASOURCES = AUTO
 

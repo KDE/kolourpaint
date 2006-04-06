@@ -46,6 +46,7 @@
 #include <kglobalsettings.h>
 #include <kicontheme.h>
 
+#include <kpbug.h>
 #include <kpdefs.h>
 #include <kptool.h>
 #include <kptoolaction.h>
@@ -55,14 +56,6 @@
 #include <kptoolwidgetlinewidth.h>
 #include <kptoolwidgetopaqueortransparent.h>
 #include <kptoolwidgetspraycansize.h>
-
-
-// SYNC: Qt 4.1.1 bug
-static QAbstractButton *QButtonGroup_CheckedButton (QButtonGroup *buttonGroup)
-{
-    QAbstractButton *button = buttonGroup->checkedButton ();
-    return (button && button->isChecked () ? button : 0);
-}
 
 
 class kpToolButton : public QToolButton
@@ -327,7 +320,7 @@ void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
     }
     else
     {
-        QAbstractButton *b = QButtonGroup_CheckedButton (m_buttonGroup);
+        QAbstractButton *b = kpBug::QButtonGroup_CheckedButton (m_buttonGroup);
     #if DEBUG_KP_TOOL_TOOL_BAR
         kDebug () << "\twant to select no tool - button selected=" << b << endl;
     #endif
@@ -455,7 +448,7 @@ void kpToolToolBar::enableToolsSingleKeyTriggers (bool enable)
 // private slot
 void kpToolToolBar::slotToolButtonClicked ()
 {
-    QAbstractButton *b = QButtonGroup_CheckedButton (m_buttonGroup);
+    QAbstractButton *b = kpBug::QButtonGroup_CheckedButton (m_buttonGroup);
 
 #if DEBUG_KP_TOOL_TOOL_BAR
     kDebug () << "kpToolToolBar::slotToolButtonClicked() button=" << b << endl;

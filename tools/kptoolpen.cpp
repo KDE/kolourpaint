@@ -42,6 +42,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpbug.h>
 #include <kpcolor.h>
 #include <kpcommandhistory.h>
 #include <kpcursorprovider.h>
@@ -578,7 +579,7 @@ void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QR
     else
     {
         // find bounding rectangle
-        QRect rect = QRect (thisPoint, lastPoint).normalize ();
+        QRect rect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
         if (m_mode != DrawsPixels)
             rect = neededRect (rect, m_brushPixmap [m_mouseButton].width ());
 

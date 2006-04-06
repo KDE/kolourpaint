@@ -38,6 +38,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpbug.h>
 #include <kpcolor.h>
 #include <kpcommandhistory.h>
 #include <kpdefs.h>
@@ -374,7 +375,7 @@ void kpToolRectangle::end ()
 
 void kpToolRectangle::applyModifiers ()
 {
-    QRect rect = QRect (m_startPoint, m_currentPoint).normalize ();
+    QRect rect = kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint));
 
 #if DEBUG_KP_TOOL_RECTANGLE
     kDebug () << "kpToolRectangle::applyModifiers(" << rect
@@ -509,7 +510,7 @@ void kpToolRectangle::draw (const QPoint &, const QPoint &, const QRect &)
 void kpToolRectangle::cancelShape ()
 {
 #if 0
-    endDraw (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+    endDraw (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
     mainWindow ()->commandHistory ()->undo ();
 #else
     viewManager ()->invalidateTempPixmap ();

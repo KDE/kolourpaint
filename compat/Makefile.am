@@ -4,8 +4,8 @@ INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../compat -I$(srcdir)/../cursors -I$(srcdi
     -I$(srcdir)/../views \
     -I$(srcdir)/../widgets $(all_includes)
 
-noinst_LTLIBRARIES = libkolourpaintcursors.la
-libkolourpaintcursors_la_SOURCES = kpcursorlightcross.cpp kpcursorprovider.cpp
+noinst_LTLIBRARIES = libkolourpaintcompat.la
+libkolourpaintcompat_la_SOURCES = kpbug.cpp
 
 METASOURCES = AUTO
 

@@ -44,6 +44,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpbug.h>
 #include <kpcommandhistory.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
@@ -270,7 +271,7 @@ void kpToolSelection::beginDraw ()
 
     // Currently used only to end the current text
     if (hasBegunShape ())
-        endShape (m_currentPoint, QRect (m_startPoint/* TODO: wrong */, m_currentPoint).normalize ());
+        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint/* TODO: wrong */, m_currentPoint)));
 
     m_dragType = Create;
     m_dragHasBegun = false;
@@ -516,7 +517,7 @@ void kpToolSelection::delayedDraw ()
     if (hasBegunDraw ())
     {
         draw (m_currentPoint, m_lastPoint,
-              QRect (m_startPoint, m_currentPoint).normalize ());
+              kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
     }
 }
 

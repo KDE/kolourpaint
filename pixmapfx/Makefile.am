@@ -1,4 +1,4 @@
-INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../interfaces \
+INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../compat -I$(srcdir)/../cursors -I$(srcdir)/../interfaces \
     -I$(srcdir)/../pixmapfx \
     -I$(srcdir)/../tools \
     -I$(srcdir)/../views \

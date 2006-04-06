@@ -36,6 +36,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpbug.h>
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
@@ -181,7 +182,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         kDebug () << "\tno text sel - passing on event to kpTool" << endl;
     #endif
         //if (hasBegunShape ())
-        //    endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+        //    endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
         kpToolSelection::keyPressEvent (e);
         return;
@@ -203,7 +204,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         {
             // TODO: why not endShapeInternal(); ditto for everywhere else in this file?
             if (hasBegunShape ())
-                endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+                endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
             m_enterCommand = new kpToolTextEnterCommand (i18n ("Text: New Line"),
                 viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
@@ -224,7 +225,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         if (!m_backspaceCommand)
         {
             if (hasBegunShape ())
-                endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+                endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
             m_backspaceCommand = new kpToolTextBackspaceCommand (i18n ("Text: Backspace"),
                 viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
@@ -245,7 +246,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         if (!m_deleteCommand)
         {
             if (hasBegunShape ())
-                endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+                endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
             m_deleteCommand = new kpToolTextDeleteCommand (i18n ("Text: Delete"),
                 viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
@@ -264,7 +265,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     #endif
 
         if (hasBegunShape ())
-            endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+            endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
         if (cursorRow > 0)
         {
@@ -282,7 +283,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     #endif
 
         if (hasBegunShape ())
-            endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+            endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
         if (cursorRow < (int) textLines.size () - 1)
         {
@@ -317,7 +318,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     }
 
         if (hasBegunShape ())
-            endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+            endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
         if ((e->state () & Qt::ControlModifier) == 0)
         {
@@ -392,7 +393,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     }
 
         if (hasBegunShape ())
-            endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+            endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
         if ((e->state () & Qt::ControlModifier) == 0)
         {
@@ -446,7 +447,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     #endif
 
         if (hasBegunShape ())
-            endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+            endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
         if (e->state () & Qt::ControlModifier)
             cursorRow = 0;
@@ -464,7 +465,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     #endif
 
         if (hasBegunShape ())
-            endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+            endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
         if (e->state () & Qt::ControlModifier)
             cursorRow = textLines.size () - 1;
@@ -495,7 +496,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
             if (!m_insertCommand)
             {
                 if (hasBegunShape ())
-                    endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+                    endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
                 m_insertCommand = new kpToolTextInsertCommand (i18n ("Text: Write"),
                     viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
@@ -521,7 +522,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
                    << endl;
     #endif
         //if (hasBegunShape ())
-        //    endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+        //    endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
         kpToolSelection::keyPressEvent (e);
         return;
@@ -582,7 +583,7 @@ void kpToolText::imComposeEvent (QIMEvent *e)
             if (!m_deleteCommand)
             {
                 if (hasBegunShape ())
-                    endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+                    endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
                 
                 m_deleteCommand = new kpToolTextDeleteCommand (i18n ("Text: Delete"),
                                                                viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
@@ -601,7 +602,7 @@ void kpToolText::imComposeEvent (QIMEvent *e)
         if (!m_insertCommand)
         {
             if (hasBegunShape ())
-                endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+                endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
             
             m_insertCommand = new kpToolTextInsertCommand (i18n ("Text: Write"),
                                                            viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
@@ -648,7 +649,7 @@ void kpToolText::imEndEvent (QIMEvent *e)
             if (!m_deleteCommand)
             {
                 if (hasBegunShape ())
-                    endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+                    endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
                 
                 m_deleteCommand = new kpToolTextDeleteCommand (i18n ("Text: Delete"),
                                                                viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
@@ -668,7 +669,7 @@ void kpToolText::imEndEvent (QIMEvent *e)
         if (!m_insertCommand)
         {
             if (hasBegunShape ())
-                endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+                endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
             
             m_insertCommand = new kpToolTextInsertCommand (i18n ("Text: Write"),
                                                            viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
@@ -717,7 +718,7 @@ void kpToolText::changeTextStyle (const QString &name,
 #endif
 
     if (hasBegunShape ())
-        endShape (m_currentPoint, QRect (m_startPoint, m_currentPoint).normalize ());
+        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
     commandHistory ()->addCommand (
         new kpToolTextChangeStyleCommand (

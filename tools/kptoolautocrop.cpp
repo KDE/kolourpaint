@@ -56,6 +56,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
+#include <kpbug.h>
 #include <kpcolortoolbar.h>
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
@@ -203,8 +204,9 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
 
         if (numCols)
         {
-            m_rect = QRect (QPoint (startX, 0),
-                            QPoint (startX + (numCols - 1) * dir, maxY)).normalize ();
+            m_rect = kpBug::QRect_Normalized (
+                QRect (QPoint (startX, 0),
+                       QPoint (startX + (numCols - 1) * dir, maxY)));
             m_referenceColor = col;
         }
     }
@@ -233,8 +235,9 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
 
         if (numRows)
         {
-            m_rect = QRect (QPoint (0, startY),
-                            QPoint (maxX, startY + (numRows - 1) * dir)).normalize ();
+            m_rect = kpBug::QRect_Normalized (
+                QRect (QPoint (0, startY),
+                       QPoint (maxX, startY + (numRows - 1) * dir)));
             m_referenceColor = col;
         }
     }
