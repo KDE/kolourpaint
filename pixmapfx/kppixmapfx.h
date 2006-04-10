@@ -31,7 +31,7 @@
 
 
 #include <qstring.h>
-
+#include <klocalizedstring.h>
 
 class QBitmap;
 class QColor;
@@ -44,7 +44,6 @@ class QString;
 class QWidget;
 class QMatrix;
 
-class KLocalizedString;
 
 class kpColor;
 class kpSelection;
