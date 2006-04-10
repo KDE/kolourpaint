@@ -138,7 +138,9 @@ void kpMainWindow::slotHelpTakingScreenshots ()
 
             "<p>Alternatively, you may try the application"
             " <a href=\"run ksnapshot\">KSnapshot</a>."
-            "</p>"
+            "</p>",
+            // TODO: Totally bogus logic if kwin not running under same user as KolourPaint.
+            ::printScreenShortcutString ()
         );
     }
     else
@@ -162,12 +164,12 @@ void kpMainWindow::slotHelpTakingScreenshots ()
 
             "<p>Alternatively, you may try the application"
             " <a href=\"run ksnapshot\">KSnapshot</a>."
-            "</p>"
+            "</p>",
+            // TODO: Totally bogus logic if kwin not running under same user as KolourPaint.
+            ::printScreenShortcutString ()
         );
     }
 
-    // TODO: Totally bogus logic if kwin not running under same user as KolourPaint.
-    message = message.arg (::printScreenShortcutString ());
 
     // Add extra vertical space
     message += "<p>&nbsp;</p>";

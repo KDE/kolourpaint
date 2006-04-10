@@ -194,9 +194,8 @@ QString kpTool::toolTipForTextAndShortcut (const QString &text,
         const KKeySequence seq = shortcut.seq (i);
         if (seq.count () == 1 && containsSingleKeyTrigger (seq))
         {
-            return i18n ("<Tool Name> (<Single Accel Key>)",
-                         "%1 (%2)")
-                       .arg (text, seq.toString ());
+            return i18nc ("<Tool Name> (<Single Accel Key>)",
+                          "%1 (%2)", text, seq.toString ());
         }
     }
 
@@ -1520,7 +1519,7 @@ void kpTool::setUserMessage (const QString &userMessage)
     if (m_userMessage.isEmpty ())
         m_userMessage = text ();
     else
-        m_userMessage.prepend (i18n ("%1: ").arg (text ()));
+        m_userMessage.prepend (i18n ("%1: ", text ()));
 
     emit userMessageChanged (m_userMessage);
 }

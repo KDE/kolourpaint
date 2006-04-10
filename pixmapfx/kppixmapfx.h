@@ -44,6 +44,8 @@ class QString;
 class QWidget;
 class QMatrix;
 
+class KLocalizedString;
+
 class kpColor;
 class kpSelection;
 
@@ -102,7 +104,7 @@ public:
     {
         // <moreColorsThanDisplayAndHasAlphaChannelMessage>:
         //
-        //     i18n ("The (image \"example.jpg\"|image from the clipboard)"
+        //     ki18n ("The (image \"example.jpg\"|image from the clipboard)"
         //           " may have more colors than the current screen mode."
         //           " In order to display it, some colors may be changed."
         //           " Try increasing your screen depth to at least %1bpp."
@@ -114,7 +116,7 @@ public:
         //           " approximated with a 1-bit transparency mask.")
         //
         // <moreColorsThanDisplayMessage>:
-        //     i18n ("The (image \"example.jpg\"|image from the clipboard)"
+        //     ki18n ("The (image \"example.jpg\"|image from the clipboard)"
         //           " may have more colors than the current screen mode."
         //           " In order to display it, some colors may be changed."
         //           " Try increasing your screen depth to at least %1bpp.")
@@ -133,8 +135,8 @@ public:
         //
         //     Dialog parent
         //
-        WarnAboutLossInfo (const QString &moreColorsThanDisplayAndHasAlphaChannelMessage,
-                const QString &moreColorsThanDisplayMessage,
+        WarnAboutLossInfo (const KLocalizedString &moreColorsThanDisplayAndHasAlphaChannelMessage,
+                const KLocalizedString &moreColorsThanDisplayMessage,
                 const QString &hasAlphaChannelMessage,
                 const QString &dontAskAgainPrefix,
                 QWidget *parent)
@@ -166,9 +168,9 @@ public:
         bool isValid () const { return m_isValid; }
 
 
-        QString m_moreColorsThanDisplayAndHasAlphaChannelMessage,
-                m_moreColorsThanDisplayMessage,
-                m_hasAlphaChannelMessage;
+        KLocalizedString m_moreColorsThanDisplayAndHasAlphaChannelMessage;
+        KLocalizedString m_moreColorsThanDisplayMessage;
+        QString m_hasAlphaChannelMessage;
         QString m_dontAskAgainPrefix;
         QWidget *m_parent;
         bool m_isValid;

@@ -912,7 +912,7 @@ void kpColorSimilarityToolBarItem::setColorSimilarity (double similarity)
 
     kpColorSimilarityCube::setColorSimilarity (similarity);
     if (similarity > 0)
-        QToolTip::add (this, i18n ("Color similarity: %1%").arg (qRound (similarity * 100)));
+        QToolTip::add (this, i18n ("Color similarity: %1%", qRound (similarity * 100)));
     else
         QToolTip::add (this, i18n ("Color similarity: Exact"));
 

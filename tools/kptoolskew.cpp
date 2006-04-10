@@ -82,7 +82,7 @@ QString kpToolSkewCommand::name () const
     QString opName = i18n ("Skew");
 
     if (m_actOnSelection)
-        return i18n ("Selection: %1").arg (opName);
+        return i18n ("Selection: %1", opName);
     else
         return opName;
 }
@@ -396,14 +396,15 @@ bool kpToolSkewDialog::isNoOp () const
 // private slot virtual [base QDialog]
 void kpToolSkewDialog::accept ()
 {
-    QString message, caption, continueButtonText;
+    KLocalizedString message;
+    QString caption, continueButtonText;
 
     if (document ()->selection ())
     {
         if (!document ()->selection ()->isText ())
         {
             message =
-                i18n ("<qt><p>Skewing the selection to %1x%2"
+                ki18n ("<qt><p>Skewing the selection to %1x%2"
                       " may take a substantial amount of memory."
                       " This can reduce system"
                       " responsiveness and cause other application resource"
@@ -418,7 +419,7 @@ void kpToolSkewDialog::accept ()
     else
     {
         message =
-            i18n ("<qt><p>Skewing the image to %1x%2"
+            ki18n ("<qt><p>Skewing the image to %1x%2"
                   " may take a substantial amount of memory."
                   " This can reduce system"
                   " responsiveness and cause other application resource"
@@ -437,7 +438,7 @@ void kpToolSkewDialog::accept ()
     if (kpTool::warnIfBigImageSize (m_oldWidth,
             m_oldHeight,
             newWidth, newHeight,
-            message.arg (newWidth).arg (newHeight),
+            message.subs (newWidth).subs (newHeight).toString (),
             caption,
             continueButtonText,
             this))

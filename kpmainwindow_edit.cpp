@@ -65,7 +65,7 @@
 kpPixmapFX::WarnAboutLossInfo kpMainWindow::pasteWarnAboutLossInfo ()
 {
     return kpPixmapFX::WarnAboutLossInfo (
-               i18n ("The image to be pasted"
+               ki18n ("The image to be pasted"
                      " may have more colors than the current screen mode."
                      " In order to display it, some colors may be changed."
                      " Try increasing your screen depth to at least %1bpp."
@@ -75,7 +75,7 @@ kpPixmapFX::WarnAboutLossInfo kpMainWindow::pasteWarnAboutLossInfo ()
                      " contains translucency which is not fully"
                      " supported. The translucency data will be"
                      " approximated with a 1-bit transparency mask."),
-               i18n ("The image to be pasted"
+               ki18n ("The image to be pasted"
                      " may have more colors than the current screen mode."
                      " In order to display it, some colors may be changed."
                      " Try increasing your screen depth to at least %1bpp."),

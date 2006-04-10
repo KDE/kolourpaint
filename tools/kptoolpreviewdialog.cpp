@@ -134,9 +134,9 @@ void kpToolPreviewDialog::createDimensionsGroupBox ()
     QString originalDimensions;
     if (document ())
     {
-         originalDimensions = i18n ("%1 x %2")
-                                  .arg (m_oldWidth)
-                                  .arg (m_oldHeight);
+         originalDimensions = i18n ("%1 x %2",
+                                    m_oldWidth,
+                                    m_oldHeight);
 
          // Stop the Dimensions Group Box from resizing so often
          const QString minimumLengthString ("100000 x 100000");
@@ -221,9 +221,9 @@ void kpToolPreviewDialog::updateDimensions ()
     kDebug () << "kpToolPreviewDialog::updateDimensions(): newDim=" << newDim << endl;
 #endif
 
-    QString newDimString = i18n ("%1 x %2")
-                               .arg (newDim.width ())
-                               .arg (newDim.height ());
+    QString newDimString = i18n ("%1 x %2",
+                                 newDim.width (),
+                                 newDim.height ());
     m_afterTransformDimensionsLabel->setText (newDimString);
 }
 

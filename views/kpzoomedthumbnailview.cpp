@@ -63,7 +63,7 @@ kpZoomedThumbnailView::~kpZoomedThumbnailView ()
 // public virtual [base kpThumbnailView]
 QString kpZoomedThumbnailView::caption () const
 {
-    return i18n ("%1% - Thumbnail").arg (zoomLevelX ());
+    return i18n ("%1% - Thumbnail", zoomLevelX ());
 }
 
 

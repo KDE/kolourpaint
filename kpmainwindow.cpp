@@ -685,8 +685,8 @@ bool kpMainWindow::queryClose ()
 
     int result = KMessageBox::warningYesNoCancel (this,
                      i18n ("The document \"%1\" has been modified.\n"
-                           "Do you want to save it?")
-                         .arg (m_document->prettyFilename ()),
+                           "Do you want to save it?",
+                           m_document->prettyFilename ()),
                     QString::null/*caption*/,
                     KStdGuiItem::save (), KStdGuiItem::discard ());
 

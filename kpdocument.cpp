@@ -147,8 +147,8 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
         if (!suppressDoesntExistDialog)
         {
             KMessageBox::sorry (parent,
-                                i18n ("Could not open \"%1\".")
-                                    .arg (kpDocument::prettyFilenameForURL (url)));
+                                i18n ("Could not open \"%1\".",
+                                      kpDocument::prettyFilenameForURL (url)));
         }
 
         return QPixmap ();
@@ -179,8 +179,8 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
     if (detectedMimeType.isEmpty ())
     {
         KMessageBox::sorry (parent,
-                            i18n ("Could not open \"%1\" - unknown mimetype.")
-                                .arg (kpDocument::prettyFilenameForURL (url)));
+                            i18n ("Could not open \"%1\" - unknown mimetype.",
+                                  kpDocument::prettyFilenameForURL (url)));
         KIO::NetAccess::removeTempFile (tempFile);
         return QPixmap ();
     }
@@ -191,8 +191,8 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
     {
         KMessageBox::sorry (parent,
                             i18n ("Could not open \"%1\" - unsupported image format.\n"
-                                  "The file may be corrupt.")
-                                .arg (kpDocument::prettyFilenameForURL (url)));
+                                  "The file may be corrupt.",
+                                  kpDocument::prettyFilenameForURL (url)));
         KIO::NetAccess::removeTempFile (tempFile);
         return QPixmap ();
     }
@@ -251,7 +251,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
 
     QPixmap newPixmap = kpPixmapFX::convertToPixmapAsLosslessAsPossible (image,
         kpPixmapFX::WarnAboutLossInfo (
-             i18n ("The image \"%1\""
+             ki18n ("The image \"%1\""
                    " may have more colors than the current screen mode."
                    " In order to display it, some colors may be changed."
                    " Try increasing your screen depth to at least %2bpp."
@@ -260,18 +260,18 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
 
                    " contains translucency which is not fully"
                    " supported. The translucency data will be"
-                   " approximated with a 1-bit transparency mask.")
-                 .arg (prettyFilenameForURL (url)),
-             i18n ("The image \"%1\""
+                   " approximated with a 1-bit transparency mask.",
+                   prettyFilenameForURL (url)),
+             ki18n ("The image \"%1\""
                    " may have more colors than the current screen mode."
                    " In order to display it, some colors may be changed."
-                   " Try increasing your screen depth to at least %2bpp.")
-                 .arg (prettyFilenameForURL (url)),
+                   " Try increasing your screen depth to at least %2bpp.",
+                   prettyFilenameForURL (url)),
              i18n ("The image \"%1\""
                    " contains translucency which is not fully"
                    " supported. The translucency data will be"
-                   " approximated with a 1-bit transparency mask.")
-                .arg (prettyFilenameForURL (url)),
+                   " approximated with a 1-bit transparency mask.",
+                  prettyFilenameForURL (url)),
             "docOpen",
             parent));
 
@@ -313,8 +313,8 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
     if (newPixmap.isNull ())
     {
         KMessageBox::sorry (parent,
-                            i18n ("Could not open \"%1\" - out of graphics memory.")
-                                .arg (kpDocument::prettyFilenameForURL (url)));
+                            i18n ("Could not open \"%1\" - out of graphics memory.",
+                                  kpDocument::prettyFilenameForURL (url)));
         KIO::NetAccess::removeTempFile (tempFile);
         return QPixmap ();
     }
@@ -413,9 +413,9 @@ bool kpDocument::save (bool overwritePrompt, bool lossyPrompt)
         KMessageBox::detailedError (m_mainWindow,
             i18n ("Could not save image - insufficient information."),
             i18n ("URL: %1\n"
-                  "Mimetype: %2")
-                .arg (prettyURL ())
-                .arg (m_saveOptions->mimeType ().isEmpty () ?
+                  "Mimetype: %2",
+                  prettyURL (),
+                  m_saveOptions->mimeType ().isEmpty () ?
                           i18n ("<empty>") :
                           m_saveOptions->mimeType ()),
             i18n ("Internal Error"));
@@ -454,8 +454,8 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
                 i18n ("<qt><p>The <b>%1</b> format may not be able"
                       " to preserve all of the image's color information.</p>"
 
-                      "<p>Are you sure you want to save in this format?</p></qt>")
-                    .arg (KMimeType::mimeType (saveOptions.mimeType ())->comment ()),
+                      "<p>Are you sure you want to save in this format?</p></qt>",
+                      KMimeType::mimeType (saveOptions.mimeType ())->comment ()),
                 // TODO: caption misleading for lossless formats that have
                 //       low maximum colour depth
                 i18n ("Lossy File Format"),
@@ -471,8 +471,8 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
 
                         " Any transparency will also be removed.</p>"
 
-                        "<p>Are you sure you want to save at this color depth?</p></qt>")
-                    .arg (saveOptions.colorDepth ()),
+                        "<p>Are you sure you want to save at this color depth?</p></qt>",
+                      saveOptions.colorDepth ()),
                 i18n ("Low Color Depth"),
                 KStdGuiItem::save (),
                 QString::fromLatin1 ("SaveAtLowColorDepthDontAskAgain")));
@@ -604,8 +604,8 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
     {
         int result = KMessageBox::warningContinueCancel (parent,
             i18n ("A document called \"%1\" already exists.\n"
-                  "Do you want to overwrite it?")
-                .arg (prettyFilenameForURL (url)),
+                  "Do you want to overwrite it?",
+                  prettyFilenameForURL (url)),
             QString::null,
             i18n ("Overwrite"));
 
@@ -676,8 +676,8 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
 
         // TODO: use file.errorString()
         KMessageBox::error (parent,
-                            i18n ("Could not save as \"%1\".")
-                                .arg (kpDocument::prettyFilenameForURL (url)));
+                            i18n ("Could not save as \"%1\".",
+                                  kpDocument::prettyFilenameForURL (url)));
 
         return false;
     }

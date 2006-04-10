@@ -1102,7 +1102,8 @@ void kpToolResizeScaleDialog::accept ()
     }
 
 
-    QString message, caption, continueButtonText;
+    KLocalizedString message;
+    QString caption, continueButtonText;
 
     // Note: If eText, can't Scale nor SmoothScale.
     //       If eSelection, can't Resize.
@@ -1114,7 +1115,7 @@ void kpToolResizeScaleDialog::accept ()
         if (actionTarget == eText)
         {
             message =
-                i18n ("<qt><p>Resizing the text box to %1x%2"
+                ki18n ("<qt><p>Resizing the text box to %1x%2"
                       " may take a substantial amount of memory."
                       " This can reduce system"
                       " responsiveness and cause other application resource"
@@ -1128,7 +1129,7 @@ void kpToolResizeScaleDialog::accept ()
         else if (actionTarget == eImage)
         {
             message =
-                i18n ("<qt><p>Resizing the image to %1x%2"
+                ki18n ("<qt><p>Resizing the image to %1x%2"
                       " may take a substantial amount of memory."
                       " This can reduce system"
                       " responsiveness and cause other application resource"
@@ -1146,7 +1147,7 @@ void kpToolResizeScaleDialog::accept ()
         if (actionTarget == eImage)
         {
             message =
-                i18n ("<qt><p>Scaling the image to %1x%2"
+                ki18n ("<qt><p>Scaling the image to %1x%2"
                       " may take a substantial amount of memory."
                       " This can reduce system"
                       " responsiveness and cause other application resource"
@@ -1160,7 +1161,7 @@ void kpToolResizeScaleDialog::accept ()
         else if (actionTarget == eSelection)
         {
             message =
-                i18n ("<qt><p>Scaling the selection to %1x%2"
+                ki18n ("<qt><p>Scaling the selection to %1x%2"
                       " may take a substantial amount of memory."
                       " This can reduce system"
                       " responsiveness and cause other application resource"
@@ -1178,7 +1179,7 @@ void kpToolResizeScaleDialog::accept ()
         if (actionTarget == eImage)
         {
             message =
-                i18n ("<qt><p>Smooth Scaling the image to %1x%2"
+                ki18n ("<qt><p>Smooth Scaling the image to %1x%2"
                       " may take a substantial amount of memory."
                       " This can reduce system"
                       " responsiveness and cause other application resource"
@@ -1192,7 +1193,7 @@ void kpToolResizeScaleDialog::accept ()
         else if (actionTarget == eSelection)
         {
             message =
-                i18n ("<qt><p>Smooth Scaling the selection to %1x%2"
+                ki18n ("<qt><p>Smooth Scaling the selection to %1x%2"
                       " may take a substantial amount of memory."
                       " This can reduce system"
                       " responsiveness and cause other application resource"
@@ -1211,7 +1212,7 @@ void kpToolResizeScaleDialog::accept ()
     if (kpTool::warnIfBigImageSize (originalWidth (),
             originalHeight (),
             imageWidth (), imageHeight (),
-            message.arg (imageWidth ()).arg (imageHeight ()),
+            message.subs (imageWidth ()).subs (imageHeight ()).toString (),
             caption,
             continueButtonText,
             this))

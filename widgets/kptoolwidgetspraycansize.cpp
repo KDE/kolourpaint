@@ -89,7 +89,7 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const char 
 
         pixmap.setMask (mask);
         
-        addOption (pixmap, i18n ("%1x%2").arg (s).arg (s)/*tooltip*/);
+        addOption (pixmap, i18n ("%1x%2", s, s)/*tooltip*/);
         if (i == 1)
             startNewOptionRow ();
     }

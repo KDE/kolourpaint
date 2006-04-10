@@ -88,7 +88,7 @@ QString kpToolFlipCommand::name () const
 
 
     if (m_actOnSelection)
-        return i18n ("Selection: %1").arg (opName);
+        return i18n ("Selection: %1", opName);
     else
         return opName;
 }

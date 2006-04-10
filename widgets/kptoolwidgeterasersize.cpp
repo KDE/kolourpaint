@@ -87,7 +87,7 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const char *nam
         previewPixmap.setMask (mask);
 
 
-        addOption (previewPixmap, i18n ("%1x%2").arg (s).arg (s)/*tooltip*/);
+        addOption (previewPixmap, i18n ("%1x%2", s, s)/*tooltip*/);
 
 
         cursorPixmap++;

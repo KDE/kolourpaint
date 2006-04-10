@@ -337,7 +337,7 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
     {
         KMessageBox::information (wali.m_parent,
             wali.m_moreColorsThanDisplayAndHasAlphaChannelMessage
-                .arg (screenDepthNeeded),
+                .subs (screenDepthNeeded).toString (),
             QString::null,  // or would you prefer "Low Screen Depth and Image Contains Transparency"? :)
             colorDepthTranslucencyDontAskAgain);
 
@@ -351,7 +351,7 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
     {
         KMessageBox::information (wali.m_parent,
             wali.m_moreColorsThanDisplayMessage
-                .arg (screenDepthNeeded),
+                .subs (screenDepthNeeded).toString (),
             i18n ("Low Screen Depth"),
             colorDepthDontAskAgain);
     }

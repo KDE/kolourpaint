@@ -530,9 +530,9 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
                     " problems.</p>"
 
                     "<p>Are you sure want to resize the"
-                    " image?</p></qt>")
-                .arg (m_docResizeWidth)
-                .arg (m_docResizeHeight),
+                    " image?</p></qt>",
+                  m_docResizeWidth,
+                  m_docResizeHeight),
             i18n ("Resize Image?"),
             i18n ("R&esize Image"),
             this))

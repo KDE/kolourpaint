@@ -159,7 +159,7 @@ QString kpToolWidgetBrush::brushName (int shape, int whichSize)
     if (shapeName.isEmpty ())
         return QString::null;
     
-    return i18n ("%1x%2 %3").arg (s).arg (s).arg (shapeName);
+    return i18n ("%1x%2 %3", s, s, shapeName);
 }
 
 QPixmap kpToolWidgetBrush::brush () const

@@ -148,20 +148,8 @@ void kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize (const QPixmap &pi
                << endl;
 #endif
 
-    // HACK: I don't know if the percentage thing will work well and we're
-    //       really close to the message freeze so provide alt. texts to choose
-    //       from during the message freeze :)
-    const QString alternateText0 = i18n ("%1 bytes");
-    const QString alternateText1 = i18n ("%1 bytes (%2%)");
-    const QString alternateText2 = i18n ("%1 B");
-    const QString alternateText3 = i18n ("%1 B (%2%)");
-    const QString alternateText4 = i18n ("%1 B (approx. %2%)");
-    const QString alternateText5 = i18n ("%1B");
-    const QString alternateText6 = i18n ("%1B (%2%)");
-    const QString alternateText7 = i18n ("%1B (approx. %2%)");
-    m_fileSizeLabel->setText (i18n ("%1 bytes (approx. %2%)")
-                                   .arg (KGlobal::locale ()->formatLong (m_fileSize))
-                                   .arg (percent));
+    m_fileSizeLabel->setText (i18np ("1 byte (approx. %1%)", "%n bytes (approx. %1%)",
+                                     m_fileSize, percent));
 }
 
 // public slot

@@ -60,7 +60,7 @@ kpColorEffectCommand::~kpColorEffectCommand ()
 QString kpColorEffectCommand::name () const
 {
     if (m_actOnSelection)
-        return i18n ("Selection: %1").arg (m_name);
+        return i18n ("Selection: %1", m_name);
     else
         return m_name;
 }

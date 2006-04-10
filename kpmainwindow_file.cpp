@@ -706,8 +706,8 @@ bool kpMainWindow::slotReload ()
             result = KMessageBox::warningContinueCancel (this,
                          i18n ("The document \"%1\" has been modified.\n"
                                "Reloading will lose all changes since you last saved it.\n"
-                               "Are you sure?")
-                             .arg (m_document->prettyFilename ()),
+                               "Are you sure?",
+                               m_document->prettyFilename ()),
                          QString::null/*caption*/,
                          i18n ("&Reload"));
         }
@@ -716,8 +716,8 @@ bool kpMainWindow::slotReload ()
             result = KMessageBox::warningContinueCancel (this,
                          i18n ("The document \"%1\" has been modified.\n"
                                "Reloading will lose all changes.\n"
-                               "Are you sure?")
-                             .arg (m_document->prettyFilename ()),
+                               "Are you sure?",
+                               m_document->prettyFilename ()),
                          QString::null/*caption*/,
                          i18n ("&Reload"));
         }

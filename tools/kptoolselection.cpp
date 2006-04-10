@@ -1134,8 +1134,8 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
         {
             if (m_currentMoveCommandIsSmear)
             {
-                cmd = new kpMacroCommand (i18n ("%1: Smear")
-                                            .arg (document ()->selection ()->name ()),
+                cmd = new kpMacroCommand (i18n ("%1: Smear",
+                                              document ()->selection ()->name ()),
                                         mainWindow ());
             }
             else

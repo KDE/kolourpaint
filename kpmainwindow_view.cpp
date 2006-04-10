@@ -214,7 +214,7 @@ int kpMainWindow::zoomLevelFromString (const QString &string)
 // private
 QString kpMainWindow::zoomLevelToString (int zoomLevel)
 {
-    return i18n ("%1%").arg (zoomLevel);
+    return i18n ("%1%", zoomLevel);
 }
 
 // private
@@ -234,10 +234,10 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         if (KMessageBox::warningContinueCancel (this,
             i18n ("Setting the zoom level to a value that is not a multiple of 100% "
                   "results in imprecise editing and redraw glitches.\n"
-                  "Do you really want to set to zoom level to %1%?")
-                .arg (zoomLevel),
+                  "Do you really want to set to zoom level to %1%?",
+                  zoomLevel),
             QString::null/*caption*/,
-            i18n ("Set Zoom Level to %1%").arg (zoomLevel),
+            i18n ("Set Zoom Level to %1%", zoomLevel),
             "DoNotAskAgain_ZoomLevelNotMultipleOf100") != KMessageBox::Continue)
         {
             zoomLevel = m_mainView->zoomLevelX ();

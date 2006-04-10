@@ -142,18 +142,18 @@ void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
     }
     else if (endPoint == KP_INVALID_POINT)
     {
-        statusBar ()->changeItem (i18n ("%1,%2")
-                                    .arg (startPoint.x ())
-                                    .arg (startPoint.y ()),
+        statusBar ()->changeItem (i18n ("%1,%2",
+                                      startPoint.x (),
+                                      startPoint.y ()),
                                   StatusBarItemShapePoints);
     }
     else
     {
-        statusBar ()->changeItem (i18n  ("%1,%2 - %3,%4")
-                                    .arg (startPoint.x ())
-                                    .arg (startPoint.y ())
-                                    .arg (endPoint.x ())
-                                    .arg (endPoint.y ()),
+        statusBar ()->changeItem (i18n  ("%1,%2 - %3,%4",
+                                      startPoint.x (),
+                                      startPoint.y (),
+                                      endPoint.x (),
+                                      endPoint.y ()),
                                   StatusBarItemShapePoints);
     }
 
@@ -190,9 +190,9 @@ void kpMainWindow::setStatusBarShapeSize (const QSize &size)
     }
     else
     {
-        statusBar ()->changeItem (i18n ("%1x%2")
-                                    .arg (size.width ())
-                                    .arg (size.height ()),
+        statusBar ()->changeItem (i18n ("%1x%2",
+                                      size.width (),
+                                      size.height ()),
                                   StatusBarItemShapeSize);
     }
 
@@ -219,9 +219,9 @@ void kpMainWindow::setStatusBarDocSize (const QSize &size)
     }
     else
     {
-        statusBar ()->changeItem (i18n ("%1x%2")
-                                    .arg (size.width ())
-                                    .arg (size.height ()),
+        statusBar ()->changeItem (i18n ("%1x%2",
+                                      size.width (),
+                                      size.height ()),
                                   StatusBarItemDocSize);
     }
 }
@@ -245,7 +245,7 @@ void kpMainWindow::setStatusBarDocDepth (int depth)
     }
     else
     {
-        statusBar ()->changeItem (i18n ("%1bpp").arg (depth),
+        statusBar ()->changeItem (i18n ("%1bpp", depth),
                                   StatusBarItemDocDepth);
     }
 }
@@ -269,7 +269,7 @@ void kpMainWindow::setStatusBarZoom (int zoom)
     }
     else
     {
-        statusBar ()->changeItem (i18n ("%1%").arg (zoom),
+        statusBar ()->changeItem (i18n ("%1%", zoom),
                                   StatusBarItemZoom);
     }
 }

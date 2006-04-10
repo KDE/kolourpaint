@@ -624,7 +624,7 @@ QString kpCommandHistoryBase::undoActionText () const
     kpCommand *undoCommand = nextUndoCommand ();
 
     if (undoCommand)
-        return i18n ("&Undo: %1").arg (undoCommand->name ());
+        return i18n ("&Undo: %1", undoCommand->name ());
     else
         return i18n ("&Undo");
 }
@@ -635,7 +635,7 @@ QString kpCommandHistoryBase::redoActionText () const
     kpCommand *redoCommand = nextRedoCommand ();
 
     if (redoCommand)
-        return i18n ("&Redo: %1").arg (redoCommand->name ());
+        return i18n ("&Redo: %1", redoCommand->name ());
     else
         return i18n ("&Redo");
 }
@@ -783,7 +783,7 @@ static void populatePopupMenu (KMenu *popupMenu,
     int i = 0;
     while (i < 10 && it != commandList.end ())
     {
-        popupMenu->insertItem (i18n ("%1: %2").arg (undoOrRedo).arg ((*it)->name ()), i/*id*/);
+        popupMenu->insertItem (i18n ("%1: %2", undoOrRedo, (*it)->name ()), i/*id*/);
         i++, it++;
     }
 
@@ -793,7 +793,7 @@ static void populatePopupMenu (KMenu *popupMenu,
     {
         // TODO: maybe have a scrollview show all the items instead
         KPopupTitle *title = new KPopupTitle (popupMenu);
-        title->setTitle (i18n ("%n more item", "%n more items",
+        title->setTitle (i18np ("%n more item", "%n more items",
                                commandList.size () - i));
 
         popupMenu->insertItem (title);
