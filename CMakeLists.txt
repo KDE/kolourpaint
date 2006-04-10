@@ -11,6 +11,31 @@ add_subdirectory( widgets )
 include_directories( ${CMAKE_BINARY_DIR}/kolourpaint/pixmapfx/ ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}  )
 
 ########### next target ###############
+macro(CREATE_VERSION _in_FILE _out_FILE)
+    FILE(READ ${_in_FILE} _contents)
+    FILE(WRITE ${_out_FILE} "static const char * const kpVersionText =")
+    STRING(REGEX REPLACE "\n" "" _contents "${_contents}" )
+	FILE(APPEND ${_out_FILE} "\"${_contents}\"")
+	FILE(APPEND ${_out_FILE} ";")
+endmacro(CREATE_VERSION)
+
+
+macro_additional_clean_files( ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintversion.h )
+
+create_version(${CMAKE_SOURCE_DIR}/kolourpaint/VERSION kolourpaintversion.h)
+
+
+macro(CREATE_LICENSE _in_FILE _out_FILE)
+    FILE(READ ${_in_FILE} _contents)
+    FILE(WRITE ${_out_FILE} "static const char * const kpLicenseText =")
+    #STRING(REGEX REPLACE "\n" "" _contents "${_contents}" )
+    FILE(APPEND ${_out_FILE} "\"${_contents}\"")
+    FILE(APPEND ${_out_FILE} ";")
+endmacro(CREATE_LICENSE)
+
+macro_additional_clean_files( ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintlicense.h )
+
+create_license(${CMAKE_SOURCE_DIR}/kolourpaint/COPYING kolourpaintlicense.h)
 
 set(kolourpaint_SRCS 
    kolourpaint.cpp 
