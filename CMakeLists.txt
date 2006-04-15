@@ -1,6 +1,16 @@
 kde4_header()
 project(kolourpaint)
 
+include_directories(
+    ${CMAKE_SOURCE_DIR}/kolourpaint/cursors/
+    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/
+    ${CMAKE_SOURCE_DIR}/kolourpaint/views/
+    ${KDE4_INCLUDE_DIR}
+    ${QT_INCLUDES}
+    ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}  )
+
 add_subdirectory( cursors ) 
 add_subdirectory( pics ) 
 add_subdirectory( pixmapfx ) 
@@ -8,15 +18,6 @@ add_subdirectory( tools )
 add_subdirectory( views ) 
 add_subdirectory( widgets ) 
 
-include_directories( 
-	${CMAKE_SOURCE_DIR}/kolourpaint/cursors/ 
-	${CMAKE_BINARY_DIR}/kolourpaint/pixmapfx/ 
-	${CMAKE_BINARY_DIR}/kolourpaint/widgets/
-	${CMAKE_SOURCE_DIR}/kolourpaint/tools/
-	${CMAKE_SOURCE_DIR}/kolourpaint/views/
-	${KDE4_INCLUDE_DIR} 
-	${QT_INCLUDES} 
-	${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}  )
 
 ########### next target ###############
 macro(CREATE_VERSION _in_FILE _out_FILE)
