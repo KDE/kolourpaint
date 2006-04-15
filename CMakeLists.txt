@@ -7,6 +7,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/
     ${CMAKE_SOURCE_DIR}/kolourpaint/views/
+	${CMAKE_SOURCE_DIR}/kolourpaint/compat/
     ${KDE4_INCLUDE_DIR}
     ${QT_INCLUDES}
     ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}  )

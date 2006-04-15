@@ -75,9 +75,11 @@ void kpToolAction::setText (const QString &text)
 // public slot virtual [base KAction]
 bool kpToolAction::setShortcut (const KShortcut &shortcut)
 {
-    bool ret = KToggleAction::setShortcut (shortcut);
+#warning "kde4: port it"
+    //bool ret = KToggleAction::setShortcut (shortcut);
     updateToolTip ();
-    return ret;
+    //return ret;
+	return false;
 }
 
 
