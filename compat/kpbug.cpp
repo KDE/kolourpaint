@@ -46,7 +46,7 @@ QAbstractButton *kpBug::QButtonGroup_CheckedButton (const QButtonGroup *buttonGr
     QAbstractButton *ret = (button && button->isChecked () ? button : 0);
 #if DEBUG_KP_BUG
     kDebug () << "kpBug::QButtonGroup_CheckedButton(" << buttonGroup << ")"
-               << " QButtonGroup::checkButton() would return " << button
+               << " QButtonGroup::checkedButton() would return " << button
                << " but we return " << ret
                << endl;
 #endif
