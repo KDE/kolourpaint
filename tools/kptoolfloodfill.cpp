@@ -251,7 +251,7 @@ void kpToolFloodFillCommand::unexecute ()
         {
             doc->setPixmapAt (m_oldPixmap, rect.topLeft ());
 
-            m_oldPixmap.resize (0, 0);
+            m_oldPixmap = QPixmap ();
 
             doc->slotContentsChanged (rect);
         }

@@ -317,6 +317,22 @@ kpMainWindow::~kpMainWindow ()
     delete m_scrollView; m_scrollView = 0;
 
     delete d; d = 0;
+
+
+    // COMPAT: Qt 4.1.1 bug/feature:
+    //
+    //         The QWidget/QObject children deletion mechanism of
+    //         kpMainWindow::~kpMainWindow() will delete all children
+    //         including kpTool.
+    //
+    //         kpTool::~kpTool() carries a QPointer to its kpMainWindow
+    //         pointer.  This will not be 0 in kpTool::~kpTool() (due
+    //         to an inconsistent API/bug: kpMainWindow is a QWidget, not
+    //         just a QObject).  It will then access the deleted
+    //         kpMainWindow.
+    //
+    //         So delete the kpTool's before kpMainWindow is dead.
+    qDeleteAll (m_tools.begin (), m_tools.end ());
 }
 
 
@@ -731,7 +747,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 #if 0
     else if (KURLDrag::decode (e, urls/*ref*/))
     {
-        for (KUrl::List::ConstIterator it = urls.begin (); it != urls.end (); it++)
+        for (KUrl::List::ConstIterator it = urls.begin (); it != urls.end (); ++it)
         {
             open (*it);
         }

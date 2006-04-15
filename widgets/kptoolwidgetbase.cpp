@@ -184,10 +184,10 @@ QPair <int, int> kpToolWidgetBase::defaultSelectedRowAndCol () const
     {
         KConfigGroup cfg (KGlobal::config (), kpSettingsGroupTools);
 
-        QString nameString = QString::fromLatin1 (name ());
+        QString nameString = QLatin1String (name ());
 
-        row = cfg.readEntry (nameString + QString::fromLatin1 (" Row"), -1);
-        col = cfg.readEntry (nameString + QString::fromLatin1 (" Col"), -1);
+        row = cfg.readEntry (nameString + QLatin1String (" Row"), -1);
+        col = cfg.readEntry (nameString + QLatin1String (" Col"), -1);
     }
 
 #if DEBUG_KP_TOOL_WIDGET_BASE
@@ -226,9 +226,9 @@ void kpToolWidgetBase::saveSelectedAsDefault () const
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupTools);
 
-    QString nameString = QString::fromLatin1 (name ());
-    cfg.writeEntry (nameString + QString::fromLatin1 (" Row"), m_selectedRow);
-    cfg.writeEntry (nameString + QString::fromLatin1 (" Col"), m_selectedCol);
+    QString nameString = QLatin1String (name ());
+    cfg.writeEntry (nameString + QLatin1String (" Row"), m_selectedRow);
+    cfg.writeEntry (nameString + QLatin1String (" Col"), m_selectedCol);
     cfg.sync ();
 }
 

@@ -35,7 +35,7 @@
 
 #include <qpainter.h>
 #include <qpixmap.h>
-#include <q3pointarray.h>
+#include <qpolygon.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -67,7 +67,7 @@ kpColorSimilarityCube::kpColorSimilarityCube (int look,
 
     if (look & DoubleClickInstructions)
     {
-        this->setWhatsThis(
+        setWhatsThis (
             i18n ("<qt><p><b>Color Similarity</b> is how close "
                   "colors must be in the RGB Color Cube "
                   "to be considered the same.</p>"
@@ -88,7 +88,7 @@ kpColorSimilarityCube::kpColorSimilarityCube (int look,
     }
     else
     {
-        this->setWhatsThis(
+        setWhatsThis (
             i18n ("<qt><p><b>Color Similarity</b> is how close "
                   "colors must be in the RGB Color Cube "
                   "to be considered the same.</p>"
@@ -181,7 +181,7 @@ static void drawQuadrant (QPainter *p,
     p->save ();
 
 
-    Q3PointArray points (4);
+    QPolygon points (4);
     points [0] = p1;
     points [1] = p2;
     points [2] = p3;
@@ -234,7 +234,7 @@ void kpColorSimilarityCube::drawFace (QPainter *p,
     const QPoint mm (::pointBetween (ml, mr));
 
 
-    const int baseBrightness = QMAX (127,
+    const int baseBrightness = qMax (127,
                                      255 - int (kpColorSimilarityDialog::maximumColorSimilarity *
                                                 kpColorSimilarityCube::colorCubeDiagonalDistance / 2));
     QColor colors [2] =
@@ -279,7 +279,7 @@ void kpColorSimilarityCube::drawContents (QPainter *p)
 
     QPainter backBufferPainter (&backBuffer);
 
-    int cubeRectSize = QMIN (cr.width () * 6 / 8, cr.height () * 6 / 8);
+    int cubeRectSize = qMin (cr.width () * 6 / 8, cr.height () * 6 / 8);
     int dx = (cr.width () - cubeRectSize) / 2,
         dy = (cr.height () - cubeRectSize) / 2;
     backBufferPainter.translate (dx, dy);

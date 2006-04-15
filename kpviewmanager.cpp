@@ -32,7 +32,7 @@
 #include <kpviewmanager.h>
 
 #include <qapplication.h>
-#include <q3ptrlist.h>
+#include <qlist.h>
 #include <qtimer.h>
 
 #include <kdebug.h>
@@ -79,7 +79,7 @@ void kpViewManager::registerView (kpView *view)
 #if DEBUG_KP_VIEW_MANAGER && 1
     kDebug () << "kpViewManager::registerView (" << view << ")" << endl;
 #endif
-    if (view && m_views.findRef (view) < 0)
+    if (view && !m_views.contains (view))
     {
     #if DEBUG_KP_VIEW_MANAGER && 1
         kDebug () << "\tadded view" << endl;
@@ -103,7 +103,7 @@ void kpViewManager::unregisterView (kpView *view)
             m_viewUnderCursor = 0;
 
         view->unsetCursor ();
-        m_views.removeRef (view);
+        m_views.removeAll (view);
     }
 }
 
@@ -427,7 +427,7 @@ void kpViewManager::slotTextCursorBlink ()
 
 void kpViewManager::setCursor (const QCursor &cursor)
 {
-    for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
+    for (QLinkedList <kpView *>::const_iterator it = m_views.begin ();
          it != m_views.end ();
          it++)
     {
@@ -439,7 +439,7 @@ void kpViewManager::setCursor (const QCursor &cursor)
 
 void kpViewManager::unsetCursor ()
 {
-    for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
+    for (QLinkedList <kpView *>::const_iterator it = m_views.begin ();
          it != m_views.end ();
          it++)
     {
@@ -456,7 +456,7 @@ kpView *kpViewManager::viewUnderCursor (bool usingQt) const
     {
         kpViewManager *nonConstThis = const_cast <kpViewManager *> (this);
 
-        if (m_viewUnderCursor && nonConstThis->m_views.findRef (m_viewUnderCursor) < 0)
+        if (m_viewUnderCursor && !nonConstThis->m_views.contains (m_viewUnderCursor))
         {
             kError () << "kpViewManager::viewUnderCursor(): invalid view" << endl;
             nonConstThis->m_viewUnderCursor = 0;
@@ -467,7 +467,7 @@ kpView *kpViewManager::viewUnderCursor (bool usingQt) const
     }
     else
     {
-        for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
+        for (QLinkedList <kpView *>::const_iterator it = m_views.begin ();
              it != m_views.end ();
              it++)
         {
@@ -519,7 +519,7 @@ void kpViewManager::setViewUnderCursor (kpView *view)
 // public
 kpView *kpViewManager::activeView () const
 {
-    for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
+    for (QLinkedList <kpView *>::const_iterator it = m_views.begin ();
          it != m_views.end ();
          it++)
     {
@@ -563,7 +563,7 @@ void kpViewManager::restoreQueueUpdates ()
 
     if (m_queueUpdatesCounter <= 0)
     {
-        for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
+        for (QLinkedList <kpView *>::const_iterator it = m_views.begin ();
              it != m_views.end ();
              it++)
         {
@@ -686,7 +686,7 @@ void kpViewManager::updateViews (const QRect &docRect)
     kDebug () << "kpViewManager::updateViews (" << docRect << ")" << endl;
 #endif
 
-    for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
+    for (QLinkedList <kpView *>::const_iterator it = m_views.begin ();
          it != m_views.end ();
          it++)
     {
@@ -706,7 +706,7 @@ void kpViewManager::updateViews (const QRect &docRect)
         {
             QRect viewRect = view->transformDocToView (docRect);
 
-            int diff = qRound (double (QMAX (view->zoomLevelX (), view->zoomLevelY ())) / 100.0) + 1;
+            int diff = qRound (double (qMax (view->zoomLevelX (), view->zoomLevelY ())) / 100.0) + 1;
 
             QRect newRect = QRect (viewRect.x () - diff,
                                    viewRect.y () - diff,
@@ -735,7 +735,7 @@ void kpViewManager::adjustViewsToEnvironment ()
                << " numViews=" << m_views.count ()
                << endl;
 #endif
-    for (Q3PtrList <kpView>::const_iterator it = m_views.begin ();
+    for (QLinkedList <kpView *>::const_iterator it = m_views.begin ();
          it != m_views.end ();
          it++)
     {

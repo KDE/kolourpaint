@@ -72,6 +72,7 @@ struct kpToolPrivate
 kpTool::kpTool (const QString &text, const QString &description,
                 int key,
                 kpMainWindow *mainWindow, const char *name)
+    : QObject (mainWindow)
 {
     init (text, description, key, mainWindow, name);
 }
@@ -152,7 +153,7 @@ void kpTool::createAction ()
     m_action = new kpToolAction (text (), iconName (), shortcutForKey (m_key),
                                  this, SLOT (slotActionActivated ()),
                                  m_mainWindow->actionCollection (), name ());
-    m_action->setExclusiveGroup (QString::fromLatin1 ("Tool Box Actions"));
+    m_action->setExclusiveGroup (QLatin1String ("Tool Box Actions"));
     m_action->setWhatsThis (description ());
 
     connect (m_action, SIGNAL (toolTipChanged (const QString &)),
@@ -1256,8 +1257,8 @@ void kpTool::keyPressEvent (QKeyEvent *e)
     #endif
 
 
-        const int viewIncX = (dx ? QMAX (1, view->zoomLevelX () / 100) * dx : 0);
-        const int viewIncY = (dy ? QMAX (1, view->zoomLevelY () / 100) * dy : 0);
+        const int viewIncX = (dx ? qMax (1, view->zoomLevelX () / 100) * dx : 0);
+        const int viewIncY = (dy ? qMax (1, view->zoomLevelY () / 100) * dy : 0);
 
         int newViewX = oldPoint.x () + viewIncX;
         int newViewY = oldPoint.y () + viewIncY;
@@ -1280,8 +1281,8 @@ void kpTool::keyPressEvent (QKeyEvent *e)
 
 
         // TODO: visible width/height (e.g. with scrollbars)
-        int x = QMIN (QMAX (newViewX, 0), view->width () - 1);
-        int y = QMIN (QMAX (newViewY, 0), view->height () - 1);
+        int x = qMin (qMax (newViewX, 0), view->width () - 1);
+        int y = qMin (qMax (newViewY, 0), view->height () - 1);
 
         QCursor::setPos (view->mapToGlobal (QPoint (x, y)));
         e->accept ();
@@ -1650,7 +1651,7 @@ bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
             text,
             caption,
             continueButtonText,
-            QString::fromLatin1 ("BigImageDontAskAgain"));
+            QLatin1String ("BigImageDontAskAgain"));
 
         return (accept == KMessageBox::Continue);
     }

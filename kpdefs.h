@@ -65,6 +65,10 @@
 // Settings
 //
 
+// (I would use QLatin1String but that doesn't compile with
+//  KConfigBase::readEntry()'s use of QVariant due to the lack of
+//  QLatin1String::QLatin1String(void))
+
 #define kpSettingsGroupGeneral QString::fromLatin1 ("General Settings")
 #define kpSettingFirstTime QString::fromLatin1 ("First Time")
 #define kpSettingShowGrid QString::fromLatin1 ("Show Grid")

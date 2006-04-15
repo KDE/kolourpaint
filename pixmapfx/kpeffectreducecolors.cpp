@@ -32,7 +32,7 @@
 #include <kpeffectreducecolors.h>
 
 #include <qbitmap.h>
-#include <q3buttongroup.h>
+#include <qbuttongroup.h>
 #include <qcheckbox.h>
 #include <qimage.h>
 #include <qlayout.h>
@@ -298,9 +298,8 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
     m_24BitRadioButton = new QRadioButton (i18n ("24-&bit color"), this);
 
 
-    Q3ButtonGroup *buttonGroup = new Q3ButtonGroup (this);
-    buttonGroup->hide ();
-
+    // COMPAT: don't think this is needed
+    QButtonGroup *buttonGroup = new QButtonGroup (this);
     buttonGroup->insert (m_blackAndWhiteRadioButton);
     buttonGroup->insert (m_blackAndWhiteDitheredRadioButton);
     buttonGroup->insert (m_8BitRadioButton);

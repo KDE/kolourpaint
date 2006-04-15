@@ -40,7 +40,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qpoint.h>
-#include <q3pointarray.h>
+#include <qpolygon.h>
 #include <qpushbutton.h>
 #include <qrect.h>
 #include <qtooltip.h>
@@ -61,17 +61,17 @@
 
 
 #if DEBUG_KP_TOOL_POLYGON
-static const char *pointArrayToString (const Q3PointArray &pointArray)
+static const char *pointArrayToString (const QPolygon &pointArray)
 {
     static char string [1000];
     string [0] = '\0';
 
-    for (Q3PointArray::ConstIterator it = pointArray.begin ();
+    for (QPolygon::ConstIterator it = pointArray.begin ();
          it != pointArray.end ();
          it++)
     {
         QString ps = QString (" (%1, %2)").arg ((*it).x ()).arg ((*it).y ());
-        const char *pss = ps.latin1 ();
+        const char *pss = ps.toLatin1 ();
         if (strlen (string) + strlen (pss) + 1 > sizeof (string) / sizeof (string [0]))
             break;
         strcat (string, pss);
@@ -121,7 +121,7 @@ static QBrush makeBrush (const kpColor &foregroundColor,
         return Qt::NoBrush;
 }
 
-static bool only1PixelInPointArray (const Q3PointArray &points)
+static bool only1PixelInPointArray (const QPolygon &points)
 {
     if (points.count () == 0)
         return false;
@@ -136,7 +136,7 @@ static bool only1PixelInPointArray (const Q3PointArray &points)
 }
 
 static QPixmap pixmap (const QPixmap &oldPixmap,
-                       const Q3PointArray &points, const QRect &rect,
+                       const QPolygon &points, const QRect &rect,
                        const kpColor &foregroundColor, kpColor backgroundColor,
                        int lineWidth, Qt::PenStyle lineStyle,
                        kpToolWidgetFillStyle *toolWidgetFillStyle,
@@ -145,7 +145,7 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
     //
     // figure out points to draw relative to topLeft of oldPixmap
 
-    Q3PointArray pointsInRect = points;
+    QPolygon pointsInRect = points;
     pointsInRect.detach ();
     pointsInRect.translate (-rect.x (), -rect.y ());
 
@@ -266,7 +266,7 @@ static QPixmap pixmap (const QPixmap &oldPixmap,
             break;
         case kpToolPolygon::Curve:
             int numPoints = pointsInRect.count ();
-            Q3PointArray pa (4);
+            QPolygon pa (4);
 
             pa [0] = pointsInRect [0];
             pa [3] = pointsInRect [1];
@@ -846,7 +846,7 @@ void kpToolPolygon::slotBackgroundColorChanged (const kpColor &)
  */
 
 kpToolPolygonCommand::kpToolPolygonCommand (const QString &name,
-                                            const Q3PointArray &points,
+                                            const QPolygon &points,
                                             const QRect &normalizedRect,
                                             const kpColor &foregroundColor, const kpColor &backgroundColor,
                                             int lineWidth, Qt::PenStyle lineStyle,

@@ -35,7 +35,7 @@
 #include <qobject.h>
 #include <qpixmap.h>
 #include <qpoint.h>
-#include <q3pointarray.h>
+#include <qpolygon.h>
 #include <qrect.h>
 
 #include <kpcolor.h>
@@ -121,14 +121,14 @@ private:
     QPoint m_toolLineStartPoint, m_toolLineEndPoint;
     QRect m_toolLineRect;
 
-    Q3PointArray m_points;
+    QPolygon m_points;
 };
 
 class kpToolPolygonCommand : public kpNamedCommand
 {
 public:
     kpToolPolygonCommand (const QString &name,
-                          const Q3PointArray &points,
+                          const QPolygon &points,
                           const QRect &normalizedRect,
                           const kpColor &foregroundColor, const kpColor &backgroundColor,
                           int lineWidth, Qt::PenStyle lineStyle,
@@ -144,7 +144,7 @@ public:
     virtual void unexecute ();
 
 private:
-    Q3PointArray m_points;
+    QPolygon m_points;
     QRect m_normalizedRect;
 
     kpColor m_foregroundColor, m_backgroundColor;

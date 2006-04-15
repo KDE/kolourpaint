@@ -438,7 +438,7 @@ void kpToolRectangle::applyModifiers ()
     m_toolRectangleEndPoint = rect.bottomRight ();
 
     m_toolRectangleRectWithoutLineWidth = rect;
-    m_toolRectangleRect = kpTool::neededRect (rect, QMAX (m_pen [m_mouseButton].width (),
+    m_toolRectangleRect = kpTool::neededRect (rect, qMax (m_pen [m_mouseButton].width (),
                                                           m_maskPen [m_mouseButton].width ()));
 }
 

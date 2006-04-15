@@ -38,7 +38,6 @@
 #include <kptoolpreviewdialog.h>
 
 
-class Q3GroupBox;
 class QLabel;
 class QPixmap;
 

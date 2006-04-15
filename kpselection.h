@@ -35,7 +35,7 @@
 #include <qobject.h>
 #include <qpixmap.h>
 #include <qpoint.h>
-#include <q3pointarray.h>
+#include <qpolygon.h>
 #include <qlist.h>
 #include <qrect.h>
 #include <qstring.h>
@@ -78,9 +78,9 @@ public:
     kpSelection (const QRect &rect, const QList <QString> &textLines_, const kpTextStyle &textStyle_);
 
     // (for Points)
-    kpSelection (const Q3PointArray &points, const QPixmap &pixmap = QPixmap (),
+    kpSelection (const QPolygon &points, const QPixmap &pixmap = QPixmap (),
                  const kpSelectionTransparency &transparency = kpSelectionTransparency ());
-    kpSelection (const Q3PointArray &points, const kpSelectionTransparency &transparency);
+    kpSelection (const QPolygon &points, const kpSelectionTransparency &transparency);
 
     kpSelection (const kpSelection &rhs);
     kpSelection &operator= (const kpSelection &rhs);
@@ -117,8 +117,8 @@ public:
     void moveTo (const QPoint &topLeftPoint);
 
     // synonyms
-    Q3PointArray points () const;
-    Q3PointArray pointArray () const;
+    QPolygon points () const;
+    QPolygon pointArray () const;
 
     QRect boundingRect () const;
     int width () const;
@@ -219,7 +219,7 @@ private:
 
     Type m_type;
     QRect m_rect;
-    Q3PointArray m_points;
+    QPolygon m_points;
     QPixmap *m_pixmap;
 
     QList <QString> m_textLines;

@@ -31,7 +31,7 @@
 
 #include <kpeffectsdialog.h>
 
-#include <q3groupbox.h>
+#include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpixmap.h>
@@ -111,7 +111,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     addCustomWidgetToFront (effectContainer);
 
 
-    m_settingsGroupBox = new Q3GroupBox (mainWidget ());
+    m_settingsGroupBox = new QGroupBox (mainWidget ());
     m_settingsLayout = new QVBoxLayout (m_settingsGroupBox,
                                         marginHint () * 2,
                                         spacingHint ());

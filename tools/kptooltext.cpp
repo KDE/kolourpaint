@@ -52,8 +52,7 @@ kpToolText::kpToolText (kpMainWindow *mainWindow)
                        mainWindow, "tool_text"),
       m_isIMStarted (false),
       m_IMStartCursorRow (0),
-      m_IMStartCursorCol (0),
-      m_IMPreeditStr (0)
+      m_IMStartCursorCol (0)
 {
 }
 
@@ -270,7 +269,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         if (cursorRow > 0)
         {
             cursorRow--;
-            cursorCol = QMIN (cursorCol, (int) textLines [cursorRow].length ());
+            cursorCol = qMin (cursorCol, (int) textLines [cursorRow].length ());
             viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
         }
 
@@ -288,7 +287,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         if (cursorRow < (int) textLines.size () - 1)
         {
             cursorRow++;
-            cursorCol = QMIN (cursorCol, (int) textLines [cursorRow].length ());
+            cursorCol = qMin (cursorCol, (int) textLines [cursorRow].length ());
             viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
         }
 
@@ -554,7 +553,7 @@ void kpToolText::imStartEvent (QIMEvent *e)
 
     m_IMStartCursorRow = viewManager ()->textCursorRow ();
     m_IMStartCursorCol = viewManager ()->textCursorCol ();
-    m_IMPreeditStr = QString::null;
+    m_IMPreeditStr.clear ();
 }
 
 void kpToolText::imComposeEvent (QIMEvent *e)
@@ -660,7 +659,7 @@ void kpToolText::imEndEvent (QIMEvent *e)
                 m_deleteCommand->addDelete ();
         }
     }
-    m_IMPreeditStr = QString::null;
+    m_IMPreeditStr.clear ();
 
     // commit string
     QString inputStr = e->text();
@@ -1065,7 +1064,7 @@ void kpToolTextInsertCommand::execute ()
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
     QString text = m_newText;
-    m_newText = QString::null;
+    m_newText.clear ();
     addText (text);
 }
 
@@ -1251,7 +1250,7 @@ void kpToolTextBackspaceCommand::execute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
-    m_deletedText = QString::null;
+    m_deletedText.clear ();
     int oldNumBackspaces = m_numBackspaces;
     m_numBackspaces = 0;
 
@@ -1288,7 +1287,7 @@ void kpToolTextBackspaceCommand::unexecute ()
         }
     }
 
-    m_deletedText = QString::null;
+    m_deletedText.clear ();
 
     selection ()->setTextLines (textLines);
 
@@ -1359,7 +1358,7 @@ void kpToolTextDeleteCommand::execute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
-    m_deletedText = QString::null;
+    m_deletedText.clear ();
     int oldNumDeletes = m_numDeletes;
     m_numDeletes = 0;
 
@@ -1392,7 +1391,7 @@ void kpToolTextDeleteCommand::unexecute ()
         }
     }
 
-    m_deletedText = QString::null;
+    m_deletedText.clear ();
 
     selection ()->setTextLines (textLines);
 

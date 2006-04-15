@@ -35,7 +35,7 @@
 #include <qpen.h>
 #include <qpixmap.h>
 #include <qpoint.h>
-#include <q3pointarray.h>
+#include <qpolygon.h>
 #include <qrect.h>
 #include <qtimer.h>
 
@@ -155,7 +155,7 @@ void kpToolAirSpray::draw (const QPoint &thisPoint, const QPoint &, const QRect 
 
 void kpToolAirSpray::actuallyDraw ()
 {
-    Q3PointArray pArray (10);
+    QPolygon pArray (10);
     int numPoints = 0;
 
     QPoint p = m_currentPoint;
@@ -300,7 +300,7 @@ void kpToolAirSprayCommand::unexecute ()
 
 
 // public
-void kpToolAirSprayCommand::addPoints (const Q3PointArray &points)
+void kpToolAirSprayCommand::addPoints (const QPolygon &points)
 {
     QRect docRect = points.boundingRect ();
 

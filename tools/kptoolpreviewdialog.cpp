@@ -34,7 +34,7 @@
 #include <qapplication.h>
 #include <qboxlayout.h>
 #include <qgridlayout.h>
-#include <q3groupbox.h>
+#include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpixmap.h>
@@ -128,7 +128,7 @@ kpToolPreviewDialog::~kpToolPreviewDialog ()
 // private
 void kpToolPreviewDialog::createDimensionsGroupBox ()
 {
-    m_dimensionsGroupBox = new Q3GroupBox (i18n ("Dimensions"), mainWidget ());
+    m_dimensionsGroupBox = new QGroupBox (i18n ("Dimensions"), mainWidget ());
 
     QLabel *originalLabel = new QLabel (i18n ("Original:"), m_dimensionsGroupBox);
     QString originalDimensions;
@@ -163,7 +163,7 @@ void kpToolPreviewDialog::createDimensionsGroupBox ()
 // private
 void kpToolPreviewDialog::createPreviewGroupBox ()
 {
-    m_previewGroupBox = new Q3GroupBox (i18n ("Preview"), mainWidget ());
+    m_previewGroupBox = new QGroupBox (i18n ("Preview"), mainWidget ());
 
     m_previewPixmapLabel = new kpResizeSignallingLabel (m_previewGroupBox);
     m_previewPixmapLabel->setMinimumSize (150, 110);
@@ -178,7 +178,7 @@ void kpToolPreviewDialog::createPreviewGroupBox ()
 
     QVBoxLayout *previewLayout = new QVBoxLayout (m_previewGroupBox,
                                                   marginHint () * 2,
-                                                  QMAX (1, spacingHint () / 2));
+                                                  qMax (1, spacingHint () / 2));
 
     previewLayout->addWidget (m_previewPixmapLabel, 1/*stretch*/);
     previewLayout->addWidget (updatePushButton, 0/*stretch*/, Qt::AlignHCenter);
@@ -236,14 +236,14 @@ double kpToolPreviewDialog::aspectScale (int newWidth, int newHeight,
     double heightScale = double (newHeight) / double (oldHeight);
 
     // Keeps aspect ratio
-    return QMIN (widthScale, heightScale);
+    return qMin (widthScale, heightScale);
 }
 
 // public static
 int kpToolPreviewDialog::scaleDimension (int dimension, double scale, int min, int max)
 {
-    return QMAX (min,
-                 QMIN (max,
+    return qMax (min,
+                 qMin (max,
                        qRound (dimension * scale)));
 }
 

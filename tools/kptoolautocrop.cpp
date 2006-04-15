@@ -632,7 +632,7 @@ void kpToolAutoCropCommand::execute ()
         // m_contentsRect is relative to the top of the sel
         // while sel is relative to the top of the doc
         QRect rect = m_contentsRect;
-        rect.moveBy (m_oldSelection.x (), m_oldSelection.y ());
+        rect.translate (m_oldSelection.x (), m_oldSelection.y ());
 
         kpSelection sel (kpSelection::Rectangle,
                          rect,

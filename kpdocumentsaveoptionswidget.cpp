@@ -137,7 +137,7 @@ void kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize (const QPixmap &pi
 
     const int pixmapSize = kpPixmapFX::pixmapSize (pixmap);
     const int percent = pixmapSize ?
-                            QMAX (1, fileSize * 100 / pixmapSize) :
+                            qMax (1, fileSize * 100 / pixmapSize) :
                             0;
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
     kDebug () << "kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize()"
@@ -164,9 +164,9 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
 
     if (m_filePixmap)
     {
-        int maxNewWidth = QMIN (m_filePixmap->width (),
+        int maxNewWidth = qMin (m_filePixmap->width (),
                                 m_filePixmapLabel->width ()),
-            maxNewHeight = QMIN (m_filePixmap->height (),
+            maxNewHeight = qMin (m_filePixmap->height (),
                                  m_filePixmapLabel->height ());
 
         double keepsAspect = kpToolPreviewDialog::aspectScale (
@@ -896,7 +896,7 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
     // COMPAT: [0] dangerous
     QImage image;
     image.loadFromData (data,
-        KImageIO::typeForMime (mimeType ()) [0].latin1 ());
+        KImageIO::typeForMime (mimeType ()) [0].toLatin1 ());
 
     // TODO: merge with kpDocument::getPixmapFromFile()
     m_previewDialog->setFilePixmapAndSize (

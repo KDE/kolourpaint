@@ -40,7 +40,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qpoint.h>
-#include <q3pointarray.h>
+#include <qpolygon.h>
 #include <qrect.h>
 
 #include <kconfig.h>
@@ -200,7 +200,7 @@ int kpPixmapFX::stringSize (const QString &string)
 
 
 // public static
-int kpPixmapFX::pointArraySize (const Q3PointArray &points)
+int kpPixmapFX::pointArraySize (const QPolygon &points)
 {
 #if DEBUG_KP_PIXMAP_FX && 1
     kDebug () << "kpPixmapFX::pointArraySize() points.size="
@@ -281,11 +281,11 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
 
 
     const QString colorDepthTranslucencyDontAskAgain =
-        wali.m_dontAskAgainPrefix + "_ColorDepthTranslucency";
+        wali.m_dontAskAgainPrefix + QLatin1String ("_ColorDepthTranslucency");
     const QString colorDepthDontAskAgain =
-        wali.m_dontAskAgainPrefix + "_ColorDepth";
+        wali.m_dontAskAgainPrefix + QLatin1String ("_ColorDepth");
     const QString translucencyDontAskAgain =
-        wali.m_dontAskAgainPrefix + "_Translucency";
+        wali.m_dontAskAgainPrefix + QLatin1String ("_Translucency");
 
 #if DEBUG_KP_PIXMAP_FX && 1
     QTime timer;
@@ -309,7 +309,7 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
     int screenDepthNeeded = 0;
 
     if (moreColorsThanDisplay)
-        screenDepthNeeded = QMIN (24, image.depth ());
+        screenDepthNeeded = qMin (24, image.depth ());
 
 #if DEBUG_KP_PIXMAP_FX && 1
     kDebug () << "\ttranslucencyShouldBeShown="

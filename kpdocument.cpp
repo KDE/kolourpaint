@@ -460,7 +460,7 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
                 //       low maximum colour depth
                 i18n ("Lossy File Format"),
                 KStdGuiItem::save (),
-                QString::fromLatin1 ("SaveInLossyMimeTypeDontAskAgain")));
+                QLatin1String ("SaveInLossyMimeTypeDontAskAgain")));
     }
     else if (lossyType & kpDocumentSaveOptions::ColorDepthLow)
     {
@@ -475,7 +475,7 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
                       saveOptions.colorDepth ()),
                 i18n ("Low Color Depth"),
                 KStdGuiItem::save (),
-                QString::fromLatin1 ("SaveAtLowColorDepthDontAskAgain")));
+                QLatin1String ("SaveAtLowColorDepthDontAskAgain")));
     }
 #undef QUIT_IF_CANCEL
 
@@ -566,7 +566,7 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     if (useSaveOptionsQuality)
         quality = saveOptions.quality ();
 
-    if (!imageToSave.save (device, type.latin1 (), quality))
+    if (!imageToSave.save (device, type.toLatin1 (), quality))
     {
     #if DEBUG_KP_DOCUMENT
         kDebug () << "\tQImage::save() returned false" << endl;
@@ -596,8 +596,8 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
                << ",overwritePrompt=" << overwritePrompt
                << ",lossyPrompt=" << lossyPrompt
                << ")" << endl;
-    saveOptions.printDebug (QString::fromLatin1 ("\tsaveOptions"));
-    metaInfo.printDebug (QString::fromLatin1 ("\tmetaInfo"));
+    saveOptions.printDebug (QLatin1String ("\tsaveOptions"));
+    metaInfo.printDebug (QLatin1String ("\tmetaInfo"));
 #endif
 
     if (overwritePrompt && KIO::NetAccess::exists (url, false/*write*/, parent))

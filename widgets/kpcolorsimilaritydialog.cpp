@@ -29,7 +29,7 @@
 #include <kpcolorsimilaritydialog.h>
 
 #include <qboxlayout.h>
-#include <q3groupbox.h>
+#include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
@@ -57,7 +57,7 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (kpMainWindow *mainWindow,
     setMainWidget (baseWidget);
 
 
-    Q3GroupBox *cubeGroupBox = new Q3GroupBox (i18n ("Preview"), baseWidget);
+    QGroupBox *cubeGroupBox = new QGroupBox (i18n ("Preview"), baseWidget);
 
     m_colorSimilarityCube = new kpColorSimilarityCube (kpColorSimilarityCube::Plain,
                                                        mainWindow, cubeGroupBox);
@@ -75,7 +75,7 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (kpMainWindow *mainWindow,
              this, SLOT (slotColorSimilarityValueChanged ()));
 
 
-    Q3GroupBox *inputGroupBox = new Q3GroupBox (i18n ("RGB Color Cube Distance"), baseWidget);
+    QGroupBox *inputGroupBox = new QGroupBox (i18n ("RGB Color Cube Distance"), baseWidget);
 
     m_colorSimilarityInput = new KIntNumInput (inputGroupBox);
     m_colorSimilarityInput->setRange (0, int (kpColorSimilarityDialog::maximumColorSimilarity * 100 + .1/*don't floor below target int*/),

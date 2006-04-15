@@ -37,15 +37,15 @@
 #include <q3accel.h>
 #include <qapplication.h>
 #include <qboxlayout.h>
-#include <q3buttongroup.h>
+#include <qbuttongroup.h>
 #include <qcheckbox.h>
 #include <qgridlayout.h>
-#include <q3groupbox.h>
+#include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpixmap.h>
 #include <qpoint.h>
-#include <q3pointarray.h>
+#include <qpolygon.h>
 #include <qpushbutton.h>
 #include <qrect.h>
 #include <qsize.h>
@@ -235,7 +235,7 @@ void kpToolResizeScaleCommand::scaleSelectionRegionWithDocument ()
     const int newY = (int) (m_oldSelection->y () * vertScale);
 
 
-    Q3PointArray currentPoints = m_oldSelection->points ();
+    QPolygon currentPoints = m_oldSelection->points ();
     currentPoints.detach ();
 
     currentPoints.translate (-currentPoints.boundingRect ().x (),
@@ -643,7 +643,7 @@ static void toolButtonSetLook (QToolButton *button,
 // private
 void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
 {
-    m_operationGroupBox = new Q3GroupBox (i18n ("Operation"), baseWidget);
+    m_operationGroupBox = new QGroupBox (i18n ("Operation"), baseWidget);
     Q3WhatsThis::add (m_operationGroupBox,
         i18n ("<qt>"
               "<ul>"
@@ -665,17 +665,17 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
 
     m_resizeButton = new QToolButton (m_operationGroupBox);
     toolButtonSetLook (m_resizeButton,
-                       QString::fromLatin1 ("resize"),
+                       QLatin1String ("resize"),
                        i18n ("&Resize"));
 
     m_scaleButton = new QToolButton (m_operationGroupBox);
     toolButtonSetLook (m_scaleButton,
-                       QString::fromLatin1 ("scale"),
+                       QLatin1String ("scale"),
                        i18n ("&Scale"));
 
     m_smoothScaleButton = new QToolButton (m_operationGroupBox);
     toolButtonSetLook (m_smoothScaleButton,
-                       QString::fromLatin1 ("smooth_scale"),
+                       QLatin1String ("smooth_scale"),
                        i18n ("S&mooth Scale"));
 
 
@@ -689,10 +689,7 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
     //m_smoothScaleLabel->setAlignment (m_smoothScaleLabel->alignment () | Qt::TextShowMnemonic);
 
 
-    Q3ButtonGroup *resizeScaleButtonGroup = new Q3ButtonGroup (baseWidget);
-    resizeScaleButtonGroup->setExclusive (true);
-    resizeScaleButtonGroup->hide ();
-
+    QButtonGroup *resizeScaleButtonGroup = new QButtonGroup (baseWidget);
     resizeScaleButtonGroup->insert (m_resizeButton);
     resizeScaleButtonGroup->insert (m_scaleButton);
     resizeScaleButtonGroup->insert (m_smoothScaleButton);
@@ -724,7 +721,7 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
 // private
 void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
 {
-    m_dimensionsGroupBox = new Q3GroupBox (i18n ("Dimensions"), baseWidget);
+    m_dimensionsGroupBox = new QGroupBox (i18n ("Dimensions"), baseWidget);
 
     QLabel *widthLabel = new QLabel (i18n ("Width:"), m_dimensionsGroupBox);
     widthLabel->setAlignment (widthLabel->alignment () | Qt::AlignHCenter);

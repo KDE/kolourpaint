@@ -97,8 +97,8 @@ void kpZoomedThumbnailView::adjustToEnvironment ()
     }
 
 
-    int hzoom = QMAX (1, width () * 100 / document ()->width ());
-    int vzoom = QMAX (1, height () * 100 / document ()->height ());
+    int hzoom = qMax (1, width () * 100 / document ()->width ());
+    int vzoom = qMax (1, height () * 100 / document ()->height ());
 
     // keep aspect ratio
     if (hzoom < vzoom)

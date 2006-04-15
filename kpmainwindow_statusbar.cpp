@@ -304,7 +304,7 @@ void kpMainWindow::recalculateStatusBarMessage ()
         m_scrollView->clearStatusMessage ();
         m_scrollView->blockSignals (false);
 
-        scrollViewMessage = QString::null;
+        scrollViewMessage.clear ();
     #if DEBUG_STATUS_BAR && 1
         kDebug () << "\t\t\tdone" << endl;
     #endif

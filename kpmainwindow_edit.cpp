@@ -25,6 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #include <kpmainwindow.h>
 
 #include <qapplication.h>
@@ -32,10 +33,9 @@
 #include <qdatetime.h>
 #include <qfontmetrics.h>
 #include <qimage.h>
-#include <qpixmap.h>
-#include <q3popupmenu.h>
-#include <q3ptrlist.h>
 #include <qlist.h>
+#include <qmenu.h>
+#include <qpixmap.h>
 
 #include <kaction.h>
 #include <kdebug.h>
@@ -157,9 +157,9 @@ void kpMainWindow::enableEditMenuDocumentActions (bool enable)
 
 
 // public
-Q3PopupMenu *kpMainWindow::selectionToolRMBMenu ()
+QMenu *kpMainWindow::selectionToolRMBMenu ()
 {
-    return (Q3PopupMenu *) guiFactory ()->container ("selectionToolRMBMenu", this);
+    return qobject_cast <QMenu *> (guiFactory ()->container ("selectionToolRMBMenu", this));
 }
 
 
@@ -364,8 +364,8 @@ void kpMainWindow::paste (const kpSelection &sel, bool forceTopLeft)
         m_commandHistory->addCommand (
             new kpToolResizeScaleCommand (
                 false/*act on doc, not sel*/,
-                QMAX (sel.width (), m_document->width ()),
-                QMAX (sel.height (), m_document->height ()),
+                qMax (sel.width (), m_document->width ()),
+                qMax (sel.height (), m_document->height ()),
                 kpToolResizeScaleCommand::Resize,
                 this));
     }
@@ -468,9 +468,9 @@ void kpMainWindow::pasteText (const QString &text,
         }
 
 
-        const int selWidth = QMAX (kpSelection::minimumWidthForTextStyle (ts),
+        const int selWidth = qMax (kpSelection::minimumWidthForTextStyle (ts),
                                    width + kpSelection::textBorderSize () * 2);
-        const int selHeight = QMAX (kpSelection::minimumHeightForTextStyle (ts),
+        const int selHeight = qMax (kpSelection::minimumHeightForTextStyle (ts),
                                     height + kpSelection::textBorderSize () * 2);
         kpSelection sel (QRect (0, 0, selWidth, selHeight),
                          textLines,

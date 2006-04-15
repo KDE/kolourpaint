@@ -33,7 +33,7 @@
 #include <kptoolpreviewdialog.h>
 
 
-class Q3GroupBox;
+class QGroupBox;
 class QPixmap;
 class QStringList;
 class QTimer;
@@ -81,7 +81,7 @@ protected:
     QTimer *m_delayedUpdateTimer;
 
     KComboBox *m_effectsComboBox;
-    Q3GroupBox *m_settingsGroupBox;
+    QGroupBox *m_settingsGroupBox;
     QVBoxLayout *m_settingsLayout;
 
     kpColorEffectWidget *m_colorEffectWidget;

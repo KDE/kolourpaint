@@ -76,8 +76,8 @@ kpThumbnail::kpThumbnail (kpMainWindow *parent, const char *name)
 #endif
     if (layout ())
         layout ()->setResizeMode (QLayout::SetNoConstraint);
-    setMinimumSize (QMAX (layoutMinimumSize.width (), 64),
-                    QMAX (layoutMinimumSize.height (), 64));
+    setMinimumSize (qMax (layoutMinimumSize.width (), 64),
+                    qMax (layoutMinimumSize.height (), 64));
 
 
     // Enable "X" Close Button

@@ -29,10 +29,10 @@
 #include <kptoolflip.h>
 
 #include <qapplication.h>
+#include <qgroupbox.h>
+#include <qlayout.h>
 #include <qpixmap.h>
 #include <qradiobutton.h>
-#include <q3vbox.h>
-#include <q3buttongroup.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -156,13 +156,11 @@ kpToolFlipDialog::kpToolFlipDialog (bool actOnSelection, QWidget *parent)
                actOnSelection ? i18n ("Flip Selection") : i18n ("Flip Image"),
                KDialog::Ok | KDialog::Cancel)
 {
-    KVBox *vbox = new KVBox (this);
-
-    Q3VButtonGroup *buttonGroup = new Q3VButtonGroup (i18n ("Direction"), vbox);
+    QGroupBox *groupBox = new QGroupBox (i18n ("Direction"), this);
 
     // I'm sure vert flipping is much more common than horiz flipping so make it come first
-    m_verticalFlipRadioButton = new QRadioButton (i18n ("&Vertical (upside-down)"), buttonGroup);
-    m_horizontalFlipRadioButton = new QRadioButton (i18n ("&Horizontal"), buttonGroup);
+    m_verticalFlipRadioButton = new QRadioButton (i18n ("&Vertical (upside-down)"), groupBox);
+    m_horizontalFlipRadioButton = new QRadioButton (i18n ("&Horizontal"), groupBox);
 
     m_verticalFlipRadioButton->setChecked (s_lastIsVerticalFlip);
     m_horizontalFlipRadioButton->setChecked (!s_lastIsVerticalFlip);
@@ -171,8 +169,12 @@ kpToolFlipDialog::kpToolFlipDialog (bool actOnSelection, QWidget *parent)
              this, SLOT (slotIsVerticalFlipChanged ()));
     connect (m_horizontalFlipRadioButton, SIGNAL (toggled (bool)),
              this, SLOT (slotIsVerticalFlipChanged ()));
+
+    QVBoxLayout *groupBoxLayout = new QVBoxLayout (groupBox);
+    groupBoxLayout->addWidget (m_verticalFlipRadioButton);
+    groupBoxLayout->addWidget (m_horizontalFlipRadioButton);
     
-    setMainWidget (vbox);
+    setMainWidget (groupBox);
 }
 
 kpToolFlipDialog::~kpToolFlipDialog ()

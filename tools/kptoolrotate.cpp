@@ -31,13 +31,13 @@
 #include <kptoolrotate.h>
 
 #include <qapplication.h>
-#include <q3buttongroup.h>
+#include <qbuttongroup.h>
 #include <q3gridlayout.h>
-#include <q3groupbox.h>
+#include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpixmap.h>
-#include <q3pointarray.h>
+#include <qpolygon.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <qmatrix.h>
@@ -131,7 +131,7 @@ void kpToolRotateCommand::execute ()
 
 
         // Calculate rotated points
-        Q3PointArray currentPoints = sel->points ();
+        QPolygon currentPoints = sel->points ();
         currentPoints.translate (-currentPoints.boundingRect ().x (),
                                  -currentPoints.boundingRect ().y ());
         QMatrix rotateMatrix = kpPixmapFX::rotateMatrix (*doc->pixmap (m_actOnSelection), m_angle);
@@ -230,7 +230,6 @@ int kpToolRotateDialog::s_lastWidth = -1,
 
 // private static
 bool kpToolRotateDialog::s_lastIsClockwise = true;
-int kpToolRotateDialog::s_lastAngleRadioButtonID = 3;
 int kpToolRotateDialog::s_lastAngleCustom = 0;
 
 
@@ -243,8 +242,6 @@ kpToolRotateDialog::kpToolRotateDialog (bool actOnSelection,
                            i18n ("After Rotate:"),
                            actOnSelection, mainWindow, name)
 {
-    // Too confusing - disable for now
-    s_lastAngleRadioButtonID = 3;
     s_lastAngleCustom = 0;
 
 
@@ -269,7 +266,7 @@ kpToolRotateDialog::~kpToolRotateDialog ()
 // private
 void kpToolRotateDialog::createDirectionGroupBox ()
 {
-    Q3GroupBox *directionGroupBox = new Q3GroupBox (i18n ("Direction"), mainWidget ());
+    QGroupBox *directionGroupBox = new QGroupBox (i18n ("Direction"), mainWidget ());
     addCustomWidget (directionGroupBox);
 
 
@@ -286,13 +283,6 @@ void kpToolRotateDialog::createDirectionGroupBox ()
 
     m_antiClockwiseRadioButton->setChecked (!s_lastIsClockwise);
     m_clockwiseRadioButton->setChecked (s_lastIsClockwise);
-
-
-    Q3ButtonGroup *buttonGroup = new Q3ButtonGroup (directionGroupBox);
-    buttonGroup->hide ();
-
-    buttonGroup->insert (m_antiClockwiseRadioButton);
-    buttonGroup->insert (m_clockwiseRadioButton);
 
 
     QGridLayout *directionLayout = new QGridLayout (directionGroupBox,
@@ -312,7 +302,7 @@ void kpToolRotateDialog::createDirectionGroupBox ()
 // private
 void kpToolRotateDialog::createAngleGroupBox ()
 {
-    Q3GroupBox *angleGroupBox = new Q3GroupBox (i18n ("Angle"), mainWidget ());
+    QGroupBox *angleGroupBox = new QGroupBox (i18n ("Angle"), mainWidget ());
     addCustomWidget (angleGroupBox);
 
 
@@ -327,16 +317,7 @@ void kpToolRotateDialog::createAngleGroupBox ()
     QLabel *degreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
 
 
-    m_angleButtonGroup = new Q3ButtonGroup (angleGroupBox);
-    m_angleButtonGroup->hide ();
-
-    m_angleButtonGroup->insert (m_angle90RadioButton);
-    m_angleButtonGroup->insert (m_angle180RadioButton);
-    m_angleButtonGroup->insert (m_angle270RadioButton);
-
-    m_angleButtonGroup->insert (m_angleCustomRadioButton);
-
-    m_angleButtonGroup->setButton (s_lastAngleRadioButtonID);
+    m_angleCustomRadioButton->setChecked (true);
 
 
     QGridLayout *angleLayout = new QGridLayout (angleGroupBox,
@@ -440,7 +421,6 @@ void kpToolRotateDialog::slotAngleCustomRadioButtonToggled (bool isChecked)
 void kpToolRotateDialog::slotUpdate ()
 {
     s_lastIsClockwise = m_clockwiseRadioButton->isChecked ();
-    s_lastAngleRadioButtonID = m_angleButtonGroup->selectedId ();
     s_lastAngleCustom = m_angleCustomInput->value ();
 
     kpToolPreviewDialog::slotUpdate ();

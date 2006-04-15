@@ -57,12 +57,7 @@ static void clearPointerList (QLinkedList <kpCommand *> *listPtr)
     if (!listPtr)
         return;
 
-    for (QLinkedList <kpCommand *>::iterator it = listPtr->begin ();
-         it != listPtr->end ();
-         it++)
-    {
-        delete (*it);
-    }
+    qDeleteAll (listPtr->begin (), listPtr->end ());
 
     listPtr->clear ();
 }
@@ -258,13 +253,13 @@ kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
     : d (new kpCommandHistoryBasePrivate ())
 {
     m_actionUndo = new KToolBarPopupAction (undoActionText (),
-        QString::fromLatin1 ("undo"),
+        QLatin1String ("undo"),
         KStdAccel::shortcut (KStdAccel::Undo),
         this, SLOT (undo ()),
         ac, KStdAction::name (KStdAction::Undo));
 
     m_actionRedo = new KToolBarPopupAction (redoActionText (),
-        QString::fromLatin1 ("redo"),
+        QLatin1String ("redo"),
         KStdAccel::shortcut (KStdAccel::Redo),
         this, SLOT (redo ()),
         ac, KStdAction::name (KStdAction::Redo));

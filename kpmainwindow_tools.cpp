@@ -28,7 +28,7 @@
 
 #include <kpmainwindow.h>
 
-#include <q3ptrlist.h>
+#include <qlist.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -71,8 +71,6 @@
 // private
 void kpMainWindow::setupToolActions ()
 {
-    m_tools.setAutoDelete (true);
-
     m_tools.append (m_toolFreeFormSelection = new kpToolFreeFormSelection (this));
     m_tools.append (m_toolRectSelection = new kpToolRectSelection (this));
 
@@ -135,7 +133,7 @@ void kpMainWindow::createToolBox ()
     connect (m_toolToolBar, SIGNAL (toolWidgetOptionSelected ()),
              this, SLOT (updateToolOptionPrevNextActionsEnabled ()));
 
-    for (Q3PtrList <kpTool>::const_iterator it = m_tools.begin ();
+    for (QList <kpTool *>::const_iterator it = m_tools.begin ();
          it != m_tools.end ();
          it++)
     {
@@ -186,7 +184,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
     m_toolToolBar->setEnabled (enable);
 
 
-    for (Q3PtrList <kpTool>::const_iterator it = m_tools.begin ();
+    for (QList <kpTool *>::const_iterator it = m_tools.begin ();
          it != m_tools.end ();
          it++)
     {
@@ -405,7 +403,7 @@ void kpMainWindow::readLastTool ()
 int kpMainWindow::toolNumber () const
 {
     int number = 0;
-    for (Q3PtrList <kpTool>::const_iterator it = m_tools.begin ();
+    for (QList <kpTool *>::const_iterator it = m_tools.begin ();
          it != m_tools.end ();
          it++)
     {

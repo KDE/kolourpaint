@@ -37,7 +37,7 @@
 
 class QLabel;
 class QGridLayout;
-class Q3GroupBox;
+class QGroupBox;
 
 class kpDocument;
 class kpMainWindow;
@@ -116,10 +116,10 @@ protected:
 
     int m_oldWidth, m_oldHeight;
 
-    Q3GroupBox *m_dimensionsGroupBox;
+    QGroupBox *m_dimensionsGroupBox;
     QLabel *m_afterTransformDimensionsLabel;
 
-    Q3GroupBox *m_previewGroupBox;
+    QGroupBox *m_previewGroupBox;
     kpResizeSignallingLabel *m_previewPixmapLabel;
     QSize m_previewPixmapLabelSizeWhenUpdatedPixmap;
     QPixmap m_shrunkenDocumentPixmap;

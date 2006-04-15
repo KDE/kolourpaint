@@ -276,7 +276,7 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
     m_gammaInput->setRange (-50, 50, 1/*step*/, true/*slider*/);
     // TODO: This is what should be shown in the m_gammaInput spinbox
     m_gammaLabel = new QLabel (this);
-    m_gammaLabel->setMinimumWidth (m_gammaLabel->fontMetrics ().width (" 10.00 "));
+    m_gammaLabel->setMinimumWidth (m_gammaLabel->fontMetrics ().width (QLatin1String (" 10.00 ")));
     m_gammaLabel->setAlignment (m_gammaLabel->alignment () | Qt::AlignRight);
     QPushButton *gammaResetPushButton = new QPushButton (i18n ("Rese&t"), this);
 
@@ -433,11 +433,11 @@ int kpEffectBalanceWidget::gamma () const
 void kpEffectBalanceWidget::recalculateGammaLabel ()
 {
     m_gammaLabel->setText (
-        " " +
+        QLatin1String (" ") +
         QString::number (pow (10, gamma () / 50.0),
                          'f'/*[-]9.9*/,
                          2/*precision*/) +
-        " ");
+        QLatin1String (" "));
     m_gammaLabel->repaint ();
 }
 

@@ -32,7 +32,7 @@
 
 #include <qpixmap.h>
 #include <qpoint.h>
-#include <q3pointarray.h>
+#include <qpolygon.h>
 #include <qrect.h>
 
 #include <kpcolor.h>
@@ -227,7 +227,7 @@ private:
     // area of document affected (not the bounding rect of the sel)
     QRect m_documentBoundingRect;
 
-    Q3PointArray m_copyOntoDocumentPoints;
+    QPolygon m_copyOntoDocumentPoints;
 };
 
 // You could subclass kpToolResizeScaleCommand and/or

@@ -346,10 +346,10 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         else
         {
             viewX = m_scrollView->contentsX () +
-                        QMIN (m_mainView->width (),
+                        qMin (m_mainView->width (),
                               m_scrollView->visibleWidth ()) / 2;
             viewY = m_scrollView->contentsY () +
-                        QMIN (m_mainView->height (),
+                        qMin (m_mainView->height (),
                               m_scrollView->visibleHeight ()) / 2;
         }
         
@@ -631,7 +631,7 @@ void kpMainWindow::slotFitToPage ()
     // doc_height * zoom / 100 <= view_height &&
     // 1 <= zoom <= 3200
 
-    zoomTo (QMIN (3200, QMAX (1, QMIN (m_scrollView->visibleWidth () * 100 / m_document->width (),
+    zoomTo (qMin (3200, qMax (1, qMin (m_scrollView->visibleWidth () * 100 / m_document->width (),
                               m_scrollView->visibleHeight () * 100 / m_document->height ()))));
 }
 
@@ -644,7 +644,7 @@ void kpMainWindow::slotFitToWidth ()
     // doc_width * zoom / 100 <= view_width &&
     // 1 <= zoom <= 3200
 
-    zoomTo (QMIN (3200, QMAX (1, m_scrollView->visibleWidth () * 100 / m_document->width ())));
+    zoomTo (qMin (3200, qMax (1, m_scrollView->visibleWidth () * 100 / m_document->width ())));
 }
 
 // private slot
@@ -656,7 +656,7 @@ void kpMainWindow::slotFitToHeight ()
     // doc_height * zoom / 100 <= view_height &&
     // 1 <= zoom <= 3200
 
-    zoomTo (QMIN (3200, QMAX (1, m_scrollView->visibleHeight () * 100 / m_document->height ())));
+    zoomTo (qMin (3200, qMax (1, m_scrollView->visibleHeight () * 100 / m_document->height ())));
 }
 
 

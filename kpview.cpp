@@ -41,13 +41,13 @@
 #include <qevent.h>
 #include <qpointer.h>
 #include <qimage.h>
-#include <q3memarray.h>
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qpoint.h>
-#include <q3pointarray.h>
+#include <qpolygon.h>
 #include <qrect.h>
 #include <qregion.h>
+#include <qvector.h>
 
 #if DEBUG_KP_VIEW || DEBUG_KP_VIEW_RENDERER
     #include <qdatetime.h>
@@ -373,9 +373,9 @@ void kpView::updateBuddyViewScrollableContainerRectangle ()
             QRect docRect = buddyView ()->transformViewToDoc (
                 QRect (buddyViewScrollableContainer ()->contentsXSoon (),
                        buddyViewScrollableContainer ()->contentsYSoon (),
-                       QMIN (buddyView ()->width (),
+                       qMin (buddyView ()->width (),
                              buddyViewScrollableContainer ()->visibleWidth ()),
-                       QMIN (buddyView ()->height (),
+                       qMin (buddyView ()->height (),
                              buddyViewScrollableContainer ()->visibleHeight ())));
 
 
@@ -669,7 +669,7 @@ int kpView::textSelectionMoveBorderAtomicSize () const
     if (!selection () || !selection ()->isText ())
         return 0;
 
-    return QMAX (4, zoomLevelX () / 100);
+    return qMax (4, zoomLevelX () / 100);
 }
 
 // public
@@ -721,7 +721,7 @@ bool kpView::selectionLargeEnoughToHaveResizeHandlesIfAtomicSize (int atomicSize
 // public
 int kpView::selectionResizeHandleAtomicSize () const
 {
-    int atomicSize = QMIN (7, QMAX (4, zoomLevelX () / 100));
+    int atomicSize = qMin (7, qMax (4, zoomLevelX () / 100));
     while (atomicSize > 0 &&
            !selectionLargeEnoughToHaveResizeHandlesIfAtomicSize (atomicSize))
     {
@@ -774,9 +774,9 @@ QRegion kpView::selectionResizeHandlesViewRegion (bool forRenderer) const
         if (selection ()->isText () && selection ()->textLines ().size () == 1)
         {
             if (zoomLevelX () <= 150)
-                vertEdgeAtomicLength = QMIN (vertEdgeAtomicLength, QMAX (2, zoomLevelX () / 100));
+                vertEdgeAtomicLength = qMin (vertEdgeAtomicLength, qMax (2, zoomLevelX () / 100));
             else if (zoomLevelX () <= 250)
-                vertEdgeAtomicLength = QMIN (vertEdgeAtomicLength, QMAX (3, zoomLevelX () / 100));
+                vertEdgeAtomicLength = qMin (vertEdgeAtomicLength, qMax (3, zoomLevelX () / 100));
         }
     }
 
@@ -1400,7 +1400,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
             #if DEBUG_KP_VIEW_RENDERER
                 kDebug () << "\tselection border = freeForm" << endl;
             #endif
-                Q3PointArray points = sel->points ();
+                QPolygon points = sel->points ();
                 points.detach ();
                 points.translate (-docRect.x (), -docRect.y ());
                 if (vm->selectionBorderFinished ())
@@ -1563,8 +1563,8 @@ void kpView::paintEventDrawSelectionResizeHandles (QPainter *painter, const QRec
         // COMPAT: painter->setRasterOp (Qt::XorROP);
     }
 
-    Q3MemArray <QRect> rects = selResizeHandlesRegion.rects ();
-    for (Q3MemArray <QRect>::ConstIterator it = rects.begin ();
+    QVector <QRect> rects = selResizeHandlesRegion.rects ();
+    for (QVector <QRect>::ConstIterator it = rects.begin ();
          it != rects.end ();
          it++)
     {
@@ -1880,12 +1880,12 @@ void kpView::paintEvent (QPaintEvent *e)
 
     // COMPAT: QRegion viewRegion = clipRegion ().intersect (e->region ());
     QRegion viewRegion = e->region ();
-    Q3MemArray <QRect> rects = viewRegion.rects ();
+    QVector <QRect> rects = viewRegion.rects ();
 #if DEBUG_KP_VIEW_RENDERER && 1
     kDebug () << "\t#rects = " << rects.count () << endl;
 #endif
 
-    for (Q3MemArray <QRect>::ConstIterator it = rects.begin ();
+    for (QVector <QRect>::ConstIterator it = rects.begin ();
          it != rects.end ();
          it++)
     {

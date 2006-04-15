@@ -34,13 +34,13 @@
 
 #include <qapplication.h>
 #include <qgridlayout.h>
-#include <q3groupbox.h>
+#include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
 #include <qmatrix.h>
 #include <qpixmap.h>
-#include <q3pointarray.h>
+#include <qpolygon.h>
 
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -125,7 +125,7 @@ void kpToolSkewCommand::execute ()
 
 
         // Calculate skewed points
-        Q3PointArray currentPoints = sel->points ();
+        QPolygon currentPoints = sel->points ();
         currentPoints.translate (-currentPoints.boundingRect ().x (),
                                  -currentPoints.boundingRect ().y ());
         QMatrix skewMatrix = kpPixmapFX::skewMatrix (
@@ -253,7 +253,7 @@ kpToolSkewDialog::~kpToolSkewDialog ()
 // private
 void kpToolSkewDialog::createAngleGroupBox ()
 {
-    Q3GroupBox *angleGroupBox = new Q3GroupBox (i18n ("Angle"), mainWidget ());
+    QGroupBox *angleGroupBox = new QGroupBox (i18n ("Angle"), mainWidget ());
     addCustomWidget (angleGroupBox);
 
 

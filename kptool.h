@@ -32,6 +32,7 @@
 
 #include <qobject.h>
 #include <qpoint.h>
+#include <qpointer.h>
 #include <qrect.h>
 #include <qsize.h>
 #include <qstring.h>
@@ -338,7 +339,7 @@ protected:
     QString m_text, m_description;
     const char *m_name;
 
-    kpMainWindow *m_mainWindow;
+    QPointer <kpMainWindow> m_mainWindow;
     bool m_began;
 
     kpView *m_viewUnderStartPoint;

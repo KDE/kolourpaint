@@ -40,7 +40,7 @@
 
 
 class QCheckBox;
-class Q3GroupBox;
+class QGroupBox;
 class QLabel;
 class QRadioButton;
 class QSize;
@@ -180,7 +180,7 @@ private:
     QLabel *m_actOnLabel;
     KComboBox *m_actOnCombo;
 
-    Q3GroupBox *m_operationGroupBox;
+    QGroupBox *m_operationGroupBox;
     QToolButton *m_resizeButton,
                 *m_scaleButton,
                 *m_smoothScaleButton;
@@ -188,7 +188,7 @@ private:
                  *m_scaleLabel,
                  *m_smoothScaleLabel;
 
-    Q3GroupBox *m_dimensionsGroupBox;
+    QGroupBox *m_dimensionsGroupBox;
     KIntNumInput *m_originalWidthInput, *m_originalHeightInput,
                  *m_newWidthInput, *m_newHeightInput;
     KDoubleNumInput *m_percentWidthInput, *m_percentHeightInput;

@@ -36,7 +36,7 @@
 class QBitmap;
 class QColor;
 class QImage;
-class Q3PointArray;
+class QPolygon;
 class QPixmap;
 class QPoint;
 class QRect;
@@ -84,7 +84,7 @@ public:
 
     static int stringSize (const QString &string);
 
-    static int pointArraySize (const Q3PointArray &points);
+    static int pointArraySize (const QPolygon &points);
 
 
     //

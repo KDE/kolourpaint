@@ -33,9 +33,8 @@
 #define DEBUG_KP_MAIN_WINDOW 0
 
 #include <qpoint.h>
-#include <q3ptrlist.h>
-#include <qsize.h>
 #include <qlist.h>
+#include <qsize.h>
 
 #include <kmainwindow.h>
 #include <kurl.h>
@@ -47,11 +46,11 @@
 
 class QDragEnterEvent;
 class QDropEvent;
+class QMenu;
 class QMoveEvent;
 class QPainter;
 class QPixmap;
 class QPoint;
-class Q3PopupMenu;
 class QRect;
 class QSize;
 class QStringList;
@@ -198,7 +197,7 @@ private:
            *m_toolRoundedRectangle;
     kpToolText *m_toolText;
 
-    Q3PtrList <kpTool> m_tools;
+    QList <kpTool *> m_tools;
     int m_lastToolNumber;
 
     bool m_toolActionsEnabled;
@@ -388,7 +387,7 @@ private:
     bool m_copyToFirstTime;
 
 public:
-    Q3PopupMenu *selectionToolRMBMenu ();
+    QMenu *selectionToolRMBMenu ();
 
 private slots:
     void slotCut ();

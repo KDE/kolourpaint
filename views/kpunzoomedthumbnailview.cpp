@@ -112,7 +112,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
     if (document ()->width () > width ())
     {
         x = (int) buddyView ()->transformViewToDocX (scrollViewContentsX);
-        const int rightMostAllowedX = QMAX (0, document ()->width () - width ());
+        const int rightMostAllowedX = qMax (0, document ()->width () - width ());
     #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
         kDebug () << "\tdocX=" << x
                 << " docWidth=" << document ()->width ()
@@ -135,7 +135,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
     if (document ()->height () > height ())
     {
         y = (int) buddyView ()->transformViewToDocY (scrollViewContentsY);
-        const int bottomMostAllowedY = QMAX (0, document ()->height () - height ());
+        const int bottomMostAllowedY = qMax (0, document ()->height () - height ());
     #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
         kDebug () << "\tdocY=" << y
                     << " docHeight=" << document ()->height ()
@@ -163,12 +163,12 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
     QRect docRect = buddyView ()->transformViewToDoc (
         QRect (buddyViewScrollableContainer ()->contentsXSoon (),
                buddyViewScrollableContainer ()->contentsYSoon (),
-               QMIN (buddyView ()->width (), buddyViewScrollableContainer ()->visibleWidth ()),
-               QMIN (buddyView ()->height (), buddyViewScrollableContainer ()->visibleHeight ())));
+               qMin (buddyView ()->width (), buddyViewScrollableContainer ()->visibleWidth ()),
+               qMin (buddyView ()->height (), buddyViewScrollableContainer ()->visibleHeight ())));
 
     x = docRect.x () - (width () - docRect.width ()) / 2;
     kDebug () << "\tnew suggest x=" << x << endl;
-    const int rightMostAllowedX = QMAX (0, document ()->width () - width ());
+    const int rightMostAllowedX = qMax (0, document ()->width () - width ());
     if (x < 0)
         x = 0;
     if (x > rightMostAllowedX)
@@ -176,7 +176,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
 
     y = docRect.y () - (height () - docRect.height ()) / 2;
     kDebug () << "\tnew suggest y=" << y << endl;
-    const int bottomMostAllowedY = QMAX (0, document ()->height () - height ());
+    const int bottomMostAllowedY = qMax (0, document ()->height () - height ());
     if (y < 0)
         y = 0;
     if (y > bottomMostAllowedY)

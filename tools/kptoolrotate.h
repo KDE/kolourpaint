@@ -39,7 +39,7 @@
 #include <kptoolpreviewdialog.h>
 
 
-class Q3ButtonGroup;
+class QButtonGroup;
 class QRadioButton;
 class QString;
 
@@ -90,7 +90,6 @@ public:
 private:
     static int s_lastWidth, s_lastHeight;
     static bool s_lastIsClockwise;
-    static int s_lastAngleRadioButtonID;
     static int s_lastAngleCustom;
 
     void createDirectionGroupBox ();
@@ -116,7 +115,7 @@ private:
     QRadioButton *m_antiClockwiseRadioButton,
                  *m_clockwiseRadioButton;
 
-    Q3ButtonGroup *m_angleButtonGroup;
+    QButtonGroup *m_angleButtonGroup;
     QRadioButton *m_angle90RadioButton,
                  *m_angle180RadioButton,
                  *m_angle270RadioButton,

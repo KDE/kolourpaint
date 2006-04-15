@@ -191,8 +191,8 @@ void kpToolPen::end ()
 
     // save memory
     for (int i = 0; i < 2; i++)
-        m_brushPixmap [i].resize (0, 0);
-    m_cursorPixmap.resize (0, 0);
+        m_brushPixmap [i] = QPixmap ();
+    m_cursorPixmap = QPixmap ();
 }
 
 // virtual
@@ -1119,7 +1119,7 @@ void kpToolPenCommand::finalize ()
     }
     else
     {
-        m_pixmap.resize (0, 0);
+        m_pixmap = QPixmap ();
     }
 }
 

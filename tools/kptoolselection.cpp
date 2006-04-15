@@ -35,10 +35,10 @@
 #include <qbitmap.h>
 #include <qcursor.h>
 #include <qevent.h>
+#include <qmenu.h>
 #include <qpainter.h>
 #include <qpixmap.h>
-#include <q3pointarray.h>
-#include <q3popupmenu.h>
+#include <qpolygon.h>
 #include <qtimer.h>
 
 #include <kdebug.h>
@@ -461,9 +461,12 @@ void kpToolSelection::hover (const QPoint &point)
 // protected
 void kpToolSelection::popupRMBMenu ()
 {
-    Q3PopupMenu *pop = mainWindow () ? mainWindow ()->selectionToolRMBMenu () : 0;
+    QMenu *pop = mainWindow () ? mainWindow ()->selectionToolRMBMenu () : 0;
     if (!pop)
+    {
+        kError () << "kpToolSelection::popupRMBMenu() no QMenu*" << endl;
         return;
+    }
 
     // WARNING: enters event loop - may re-enter view/tool event handlers
     pop->exec (QCursor::pos ());
@@ -621,8 +624,8 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
                                                     mainWindow ()->selectionTransparency ()));
 
             setUserShapePoints (m_startPoint,
-                                QPoint (QMAX (0, QMIN (m_currentPoint.x (), document ()->width () - 1)),
-                                        QMAX (0, QMIN (m_currentPoint.y (), document ()->height () - 1))));
+                                QPoint (qMax (0, qMin (m_currentPoint.x (), document ()->width () - 1)),
+                                        qMax (0, qMin (m_currentPoint.y (), document ()->height () - 1))));
             break;
         }
         case kpToolSelection::Text:
@@ -650,7 +653,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
                 {
                     if (m_startPoint.x () + minimumWidth - 1 >= document ()->width ())
                     {
-                        minimumWidth = QMAX (kpSelection::minimumWidthForTextStyle (textStyle),
+                        minimumWidth = qMax (kpSelection::minimumWidthForTextStyle (textStyle),
                                              document ()->width () - m_startPoint.x ());
                     }
                 }
@@ -658,7 +661,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
                 {
                     if (m_startPoint.x () - minimumWidth + 1 < 0)
                     {
-                        minimumWidth = QMAX (kpSelection::minimumWidthForTextStyle (textStyle),
+                        minimumWidth = qMax (kpSelection::minimumWidthForTextStyle (textStyle),
                                              m_startPoint.x () + 1);
                     }
                 }
@@ -668,7 +671,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
                 {
                     if (m_startPoint.y () + minimumHeight - 1 >= document ()->height ())
                     {
-                        minimumHeight = QMAX (kpSelection::minimumHeightForTextStyle (textStyle),
+                        minimumHeight = qMax (kpSelection::minimumHeightForTextStyle (textStyle),
                                             document ()->height () - m_startPoint.y ());
                     }
                 }
@@ -676,7 +679,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
                 {
                     if (m_startPoint.y () - minimumHeight + 1 < 0)
                     {
-                        minimumHeight = QMAX (kpSelection::minimumHeightForTextStyle (textStyle),
+                        minimumHeight = qMax (kpSelection::minimumHeightForTextStyle (textStyle),
                                             m_startPoint.y () + 1);
                     }
                 }
@@ -749,7 +752,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             setUserShapePoints (m_startPoint, m_currentPoint);
             break;
         case kpToolSelection::FreeForm:
-            Q3PointArray points;
+            QPolygon points;
 
             if (document ()->selection ())
                 points = document ()->selection ()->points ();
@@ -934,7 +937,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             
         int newWidth = oldWidth + userXSign * (thisPoint.x () - m_startPoint.x ());
         
-        newWidth = QMAX (originalSelection.minimumWidth (), newWidth);
+        newWidth = qMax (originalSelection.minimumWidth (), newWidth);
         
         
         // Determine new height.
@@ -947,7 +950,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             
         int newHeight = oldHeight + userYSign * (thisPoint.y () - m_startPoint.y ());
         
-        newHeight = QMAX (originalSelection.minimumHeight (), newHeight);
+        newHeight = qMax (originalSelection.minimumHeight (), newHeight);
 
                 
         // Keep aspect ratio?
@@ -959,7 +962,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
                 (userYSign ? double (newHeight) / oldHeight : 0))
             {
                 newHeight = newWidth * oldHeight / oldWidth;
-                newHeight = QMAX (originalSelection.minimumHeight (),
+                newHeight = qMax (originalSelection.minimumHeight (),
                                   newHeight);
             }
             // Height changed more than width?
@@ -967,7 +970,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
             else
             {
                 newWidth = newHeight * oldWidth / oldHeight;
-                newWidth = QMAX (originalSelection.minimumWidth (), newWidth);
+                newWidth = qMax (originalSelection.minimumWidth (), newWidth);
             }
         }
             
@@ -1861,8 +1864,8 @@ void kpToolSelectionMoveCommand::execute ()
     if (vm)
         vm->setQueueUpdates ();
 
-    Q3PointArray::ConstIterator copyOntoDocumentPointsEnd = m_copyOntoDocumentPoints.end ();
-    for (Q3PointArray::ConstIterator it = m_copyOntoDocumentPoints.begin ();
+    QPolygon::ConstIterator copyOntoDocumentPointsEnd = m_copyOntoDocumentPoints.end ();
+    for (QPolygon::ConstIterator it = m_copyOntoDocumentPoints.begin ();
          it != copyOntoDocumentPointsEnd;
          it++)
     {

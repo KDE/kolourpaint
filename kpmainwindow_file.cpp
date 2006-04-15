@@ -28,11 +28,9 @@
 
 #include <kpmainwindow.h>
 
-#include <q3cstring.h>
 #include <qdatastream.h>
 #include <qpainter.h>
 #include <qpixmap.h>
-#include <q3ptrlist.h>
 #include <qsize.h>
 
 #include <dcopclient.h>
@@ -239,8 +237,8 @@ QSize kpMainWindow::defaultDocSize () const
     {
         // Don't get too big or you'll thrash (or even lock up) the computer
         // just by opening a window
-        docSize = QSize (QMIN (2048, docSize.width ()),
-                         QMIN (2048, docSize.height ()));
+        docSize = QSize (qMin (2048, docSize.width ()),
+                         qMin (2048, docSize.height ()));
     }
 
     return docSize;
@@ -920,7 +918,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
         / dpiX;
     const double scaleDpiY = (pixmap.height () / (printerHeightMM / 25.4))
         / dpiY;
-    const double scaleDpi = QMAX (scaleDpiX, scaleDpiY);
+    const double scaleDpi = qMax (scaleDpiX, scaleDpiY);
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\t\tscaleDpi: x=" << scaleDpiX << " y=" << scaleDpiY
                << " --> scale at " << scaleDpi << " to fit?"
@@ -952,7 +950,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
     #endif
         kpPixmapFX::scale (&pixmap,
              pixmap.width (),
-             QMAX (1, qRound (pixmap.height () * dpiX / dpiY)),
+             qMax (1, qRound (pixmap.height () * dpiX / dpiY)),
              false/*don't antialias*/);
 
         dpiY = dpiX;
@@ -964,7 +962,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
                    << dpiY << endl;
     #endif
         kpPixmapFX::scale (&pixmap,
-             QMAX (1, qRound (pixmap.width () * dpiY / dpiX)),
+             qMax (1, qRound (pixmap.width () * dpiY / dpiX)),
              pixmap.height (),
              false/*don't antialias*/);
 
@@ -974,7 +972,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
 
     // ASSERT: dpiX == dpiY
     // QPrinter::setResolution() has to be called before QPrinter::setup().
-    printer->setResolution (QMAX (1, qRound (dpiX)));
+    printer->setResolution (qMax (1, qRound (dpiX)));
 
 
     double originX = 0, originY = 0;

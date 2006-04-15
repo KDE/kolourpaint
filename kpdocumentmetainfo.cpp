@@ -84,7 +84,7 @@ kpDocumentMetaInfo &kpDocumentMetaInfo::operator= (const kpDocumentMetaInfo &rhs
 void kpDocumentMetaInfo::printDebug (const QString &prefix) const
 {
     const QString usedPrefix = !prefix.isEmpty () ?
-                                   prefix + QString::fromLatin1 (":") :
+                                   prefix + QLatin1String (":") :
                                    QString::null;
 
     kDebug () << usedPrefix << endl;

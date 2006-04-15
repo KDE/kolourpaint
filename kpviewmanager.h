@@ -31,8 +31,8 @@
 
 
 #include <qcursor.h>
+#include <qlinkedlist.h>
 #include <qobject.h>
-#include <q3ptrlist.h>
 #include <qrect.h>
 
 
@@ -204,7 +204,7 @@ private:
     kpDocument *document () const;
 
     kpMainWindow *m_mainWindow;
-    Q3PtrList <kpView> m_views;
+    QLinkedList <kpView *> m_views;
     QCursor m_cursor;
 
     kpTempPixmap *m_tempPixmap;

@@ -35,8 +35,9 @@
 #include <qimage.h>
 #include <qmatrix.h>
 #include <qpainter.h>
+#include <qpainterpath.h>
 #include <qpixmap.h>
-#include <q3pointarray.h>
+#include <qpolygon.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -92,7 +93,7 @@ kpSelection::kpSelection (const QRect &rect,
     setTextLines (textLines_);
 }
 
-kpSelection::kpSelection (const Q3PointArray &points, const QPixmap &pixmap,
+kpSelection::kpSelection (const QPolygon &points, const QPixmap &pixmap,
                           const kpSelectionTransparency &transparency)
     : QObject (),
       m_type (Points),
@@ -105,7 +106,7 @@ kpSelection::kpSelection (const Q3PointArray &points, const QPixmap &pixmap,
     setTransparency (transparency);
 }
 
-kpSelection::kpSelection (const Q3PointArray &points, const kpSelectionTransparency &transparency)
+kpSelection::kpSelection (const QPolygon &points, const kpSelectionTransparency &transparency)
     : QObject (),
       m_type (Points),
       m_rect (points.boundingRect ()),
@@ -262,8 +263,22 @@ void kpSelection::calculatePoints ()
 
     if (m_type == kpSelection::Ellipse)
     {
-        m_points.makeEllipse (m_rect.x (), m_rect.y (),
-                              m_rect.width (), m_rect.height ());
+        QPainterPath path;
+        path.addEllipse (m_rect);
+
+        const QList <QPolygonF> polygons = path.toSubpathPolygons ();
+        if (polygons.size () != 1)
+        {
+            kError () << "kpSelection::calculatePoints() m_rect=" << m_rect
+                      << " did not get exactly 1 polygon (" << polygons.size ()
+                      << ")" << endl;
+        }
+        else
+        {
+            const QPolygonF firstPolygonF = polygons.first ();
+            m_points = firstPolygonF.toPolygon ();
+        }
+
         return;
     }
 
@@ -369,7 +384,7 @@ QBitmap kpSelection::maskForOwnType (bool nullForRectangular) const
         painter.drawEllipse (0, 0, m_rect.width (), m_rect.height ());
     else if (m_type == kpSelection::Points)
     {
-        Q3PointArray points = m_points;
+        QPolygon points = m_points;
         points.detach ();
         points.translate (-m_rect.x (), -m_rect.y ());
 
@@ -460,13 +475,13 @@ void kpSelection::moveTo (const QPoint &topLeftPoint)
 
 
 // public
-Q3PointArray kpSelection::points () const
+QPolygon kpSelection::points () const
 {
     return m_points;
 }
 
 // public
-Q3PointArray kpSelection::pointArray () const
+QPolygon kpSelection::pointArray () const
 {
     return m_points;
 }
@@ -921,7 +936,7 @@ QString kpSelection::textForTextLines (const QList <QString> &textLines_)
          it != textLines_.end ();
          it++)
     {
-        bigString += QString::fromLatin1 ("\n");
+        bigString += QLatin1String ("\n");
         bigString += (*it);
     }
 
@@ -1061,14 +1076,14 @@ int kpSelection::preferredMinimumWidthForTextStyle (const kpTextStyle &textStyle
 {
     const int about15CharsWidth =
         textStyle.fontMetrics ().width (
-            QString::fromLatin1 ("1234567890abcde"));
+            QLatin1String ("1234567890abcde"));
 
     const int preferredMinWidth =
-        QMAX (150,
+        qMax (150,
               textBorderSize () * 2 + about15CharsWidth);
 
-    return QMAX (minimumWidthForTextStyle (textStyle),
-                 QMIN (250, preferredMinWidth));
+    return qMax (minimumWidthForTextStyle (textStyle),
+                 qMin (250, preferredMinWidth));
 }
 
 // public static
@@ -1077,8 +1092,8 @@ int kpSelection::preferredMinimumHeightForTextStyle (const kpTextStyle &textStyl
     const int preferredMinHeight =
         textBorderSize () * 2 + textStyle.fontMetrics ().height ();
 
-    return QMAX (minimumHeightForTextStyle (textStyle),
-                 QMIN (150, preferredMinHeight));
+    return qMax (minimumHeightForTextStyle (textStyle),
+                 qMin (150, preferredMinHeight));
 }
 
 // public static

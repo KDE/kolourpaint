@@ -191,7 +191,7 @@ void kpToolCropSetImageCommand::unexecute ()
     viewManager ()->setQueueUpdates ();
     {
         document ()->setPixmapAt (m_oldPixmap, QPoint (0, 0));
-        m_oldPixmap.resize (0, 0);
+        m_oldPixmap = QPixmap ();
 
     #if DEBUG_KP_TOOL_CROP
         kDebug () << "\tsel: rect=" << m_fromSelection.boundingRect ()

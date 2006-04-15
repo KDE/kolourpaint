@@ -37,7 +37,7 @@
 
 class QPixmap;
 class QPoint;
-class Q3PointArray;
+class QPolygon;
 class QRect;
 class QString;
 class QTimer;
@@ -98,7 +98,7 @@ public:
     virtual void unexecute ();
 
     // interface for KToolAirSpray
-    void addPoints (const Q3PointArray &points);
+    void addPoints (const QPolygon &points);
     void finalize ();
     void cancel ();
 
