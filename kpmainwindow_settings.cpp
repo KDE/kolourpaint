@@ -136,7 +136,7 @@ void kpMainWindow::slotKeyBindings ()
         enableActionsSingleKeyTriggers (true);
 
 
-    if (KKeyDialog::configure (actionCollection (), this))
+    if (KKeyDialog::configure (actionCollection (), KKeyChooser::LetterShortcutsAllowed, this))
     {
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\tdialog accepted" << endl;

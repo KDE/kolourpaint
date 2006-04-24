@@ -59,10 +59,12 @@ kpThumbnail::kpThumbnail (kpMainWindow *parent, const char *name)
     if (parent)
     {
         // Prevent thumbnail from docking - it's _really_ irritating otherwise
+#if 0
         parent->leftDock ()->setAcceptDockWindow (this, false);
         parent->rightDock ()->setAcceptDockWindow (this, false);
         parent->topDock ()->setAcceptDockWindow (this, false);
         parent->bottomDock ()->setAcceptDockWindow (this, false);
+#endif
     }
 
 

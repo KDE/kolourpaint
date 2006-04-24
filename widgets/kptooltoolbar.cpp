@@ -83,8 +83,8 @@ protected:
 };
 
 
-kpToolToolBar::kpToolToolBar (const QString &label, kpMainWindow *mainWindow, int colsOrRows, const char *name)
-    : KToolBar ((QWidget *) mainWindow, name, false/*don't use global toolBar settings*/, true/*readConfig*/),
+kpToolToolBar::kpToolToolBar (const QString &label, kpMainWindow *mainWindow, int colsOrRows)
+    : KToolBar ((QWidget *) mainWindow, false/*don't use global toolBar settings*/, true/*readConfig*/),
       m_vertCols (colsOrRows),
       m_buttonGroup (0),
       m_baseWidget (0),
@@ -93,7 +93,7 @@ kpToolToolBar::kpToolToolBar (const QString &label, kpMainWindow *mainWindow, in
       m_previousTool (0), m_currentTool (0),
       m_defaultIconSize (0)
 {
-    setText (label);
+    //setText (label);
 
 
     // With these lines enabled, mousePressEvent's weren't being generated
@@ -568,7 +568,7 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
 #endif
 
     // (QDockWindow::undock() calls us)
-    bool isOutsideDock = (place () == Q3DockWindow::OutsideDock);
+    bool isOutsideDock = false; //(place () == Q3DockWindow::OutsideDock);
 
     if (!m_lastDockedOrientationSet || !isOutsideDock)
     {

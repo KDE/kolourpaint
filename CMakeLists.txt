@@ -7,7 +7,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/
     ${CMAKE_SOURCE_DIR}/kolourpaint/views/
-	${CMAKE_SOURCE_DIR}/kolourpaint/compat/
+    ${CMAKE_SOURCE_DIR}/kolourpaint/compat/
     ${KDE4_INCLUDE_DIR}
     ${QT_INCLUDES}
     ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}  )
@@ -26,7 +26,7 @@ macro(CREATE_VERSION _in_FILE _out_FILE)
     FILE(WRITE ${_out_FILE} "static const char * const kpVersionText =")
     STRING(REGEX REPLACE "\n" "" _contents "${_contents}" )
 	FILE(APPEND ${_out_FILE} "\"${_contents}\"")
-	FILE(APPEND ${_out_FILE} ";")
+	FILE(APPEND ${_out_FILE} ";\n")
 endmacro(CREATE_VERSION)
 
 
@@ -38,9 +38,9 @@ create_version(${CMAKE_SOURCE_DIR}/kolourpaint/VERSION kolourpaintversion.h)
 macro(CREATE_LICENSE _in_FILE _out_FILE)
     FILE(READ ${_in_FILE} _contents)
     FILE(WRITE ${_out_FILE} "static const char * const kpLicenseText =")
-    #STRING(REGEX REPLACE "\n" "" _contents "${_contents}" )
+    STRING(REGEX REPLACE "\n" "\\\\n\"\n\"" _contents "${_contents}" )
     FILE(APPEND ${_out_FILE} "\"${_contents}\"")
-    FILE(APPEND ${_out_FILE} ";")
+    FILE(APPEND ${_out_FILE} ";\n")
 endmacro(CREATE_LICENSE)
 
 macro_additional_clean_files( ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintlicense.h )
@@ -150,13 +150,14 @@ set(kolourpaint_SRCS ${libkolourpaintcursors_SRCS} ${libkolourpaintpixmapfx_SRCS
    kptool.cpp 
    kpviewmanager.cpp 
    kpviewscrollablecontainer.cpp 
-   kpwidgetmapper.cpp )
+   kpwidgetmapper.cpp 
+   compat/kpbug.cpp )
 
 kde4_automoc(${kolourpaint_SRCS})
 
 kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
 
-target_link_libraries(kolourpaint  ${KDE4_KDECORE_LIBS} kdeprint kolourpaintcursors kolourpaintpixmapfx kolourpainttools kolourpaintviews kolourpaintwidgets )
+target_link_libraries(kolourpaint  ${KDE4_KDECORE_LIBS} kdeprint )
 
 install_targets(/bin kolourpaint )
 

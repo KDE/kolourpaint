@@ -952,11 +952,11 @@ void kpColorSimilarityToolBarItem::mouseDoubleClickEvent (QMouseEvent * /*e*/)
  * kpColorToolBar
  */
 
-kpColorToolBar::kpColorToolBar (const QString &label, kpMainWindow *mainWindow, const char *name)
-    : KToolBar (mainWindow, name),
+kpColorToolBar::kpColorToolBar (const QString &label, kpMainWindow *mainWindow)
+    : KToolBar (mainWindow),
       m_mainWindow (mainWindow)
 {
-    setText (label);
+    //setText (label);
 
 
     QWidget *base = new QWidget (this);
@@ -993,14 +993,14 @@ kpColorToolBar::kpColorToolBar (const QString &label, kpMainWindow *mainWindow, 
     m_lastDockedOrientationSet = false;
     setOrientation (orientation ());
 
-    KToolBar::insertWidget (0, base->width (), base);
+    //KToolBar::insertWidget (0, base->width (), base);
 }
 
 // virtual
 void kpColorToolBar::setOrientation (Qt::Orientation o)
 {
     // (QDockWindow::undock() calls us)
-    bool isOutsideDock = (place () == Q3DockWindow::OutsideDock);
+    bool isOutsideDock =  false; //(place () == Q3DockWindow::OutsideDock);
 
     if (!m_lastDockedOrientationSet || !isOutsideDock)
     {

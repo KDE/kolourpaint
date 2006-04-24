@@ -48,7 +48,6 @@ class QMouseEvent;
 class QPixmap;
 class QWheelEvent;
 
-class KKeySequence;
 class KShortcut;
 
 class kpColor;
@@ -112,7 +111,6 @@ public:
     KShortcut shortcut () const;
 
     static bool keyIsText (int key);
-    static bool containsSingleKeyTrigger (const KKeySequence &seq);
     static bool containsSingleKeyTrigger (const KShortcut &shortcut,
         KShortcut *shortcutWithoutSingleKeyTriggers);
 

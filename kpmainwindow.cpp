@@ -245,7 +245,7 @@ void kpMainWindow::init ()
     // create more GUI
     //
 
-    m_colorToolBar = new kpColorToolBar (i18n ("Color Box"), this, "Color Box");
+    m_colorToolBar = new kpColorToolBar (i18n ("Color Box"), this);
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tTIME: new kpColorToolBar = " << time.restart () << "msec" << endl;
 #endif
@@ -292,8 +292,8 @@ void kpMainWindow::init ()
         kDebug () << "\tfirstTime: positioning toolbars" << endl;
     #endif
 
-        m_toolToolBar->setBarPos (KToolBar::Left);
-        m_colorToolBar->setBarPos (KToolBar::Bottom);
+        //m_toolToolBar->setBarPos (KToolBar::Left);
+        //m_colorToolBar->setBarPos (KToolBar::Bottom);
 
         KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 

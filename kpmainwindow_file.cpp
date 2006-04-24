@@ -150,7 +150,7 @@ void kpMainWindow::addRecentURL (const KUrl &url)
     // If we could PROPAGATE: interprocess, then this wouldn't be required.
     m_actionOpenRecent->loadEntries (cfg);
 
-    m_actionOpenRecent->addURL (url);
+    m_actionOpenRecent->addUrl (url);
 
     m_actionOpenRecent->saveEntries (cfg);
     cfg->sync ();

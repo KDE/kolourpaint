@@ -153,7 +153,7 @@ void kpTool::createAction ()
     m_action = new kpToolAction (text (), iconName (), shortcutForKey (m_key),
                                  this, SLOT (slotActionActivated ()),
                                  m_mainWindow->actionCollection (), name ());
-    m_action->setExclusiveGroup (QLatin1String ("Tool Box Actions"));
+    //m_action->setExclusiveGroup (QLatin1String ("Tool Box Actions"));
     m_action->setWhatsThis (description ());
 
     connect (m_action, SIGNAL (toolTipChanged (const QString &)),
@@ -192,11 +192,13 @@ QString kpTool::toolTipForTextAndShortcut (const QString &text,
 {
     for (int i = 0; i < (int) shortcut.count (); i++)
     {
+#if 0
         const KKeySequence seq = shortcut.seq (i);
         if (seq.count () == 1 && containsSingleKeyTrigger (seq))
+#endif
         {
             return i18nc ("<Tool Name> (<Single Accel Key>)",
-                          "%1 (%2)", text, seq.toString ());
+                          "%1 (%2)", text, shortcut.toString ());
         }
     }
 
@@ -235,10 +237,10 @@ KShortcut kpTool::shortcutForKey (int key)
 
     if (key)
     {
-        shortcut.append (KKeySequence (KKey (key)));
+        shortcut.append (KShortcut (key));
         // (CTRL+<key>, ALT+<key>, CTRL+ALT+<key>, CTRL+SHIFT+<key>
         //  all clash with global KDE shortcuts)
-        shortcut.append (KKeySequence (KKey (Qt::ALT + Qt::SHIFT + key)));
+        shortcut.append (KShortcut (Qt::ALT + Qt::SHIFT + key));
     }
 
     return shortcut;
@@ -259,19 +261,6 @@ bool kpTool::keyIsText (int key)
 }
 
 // public static
-bool kpTool::containsSingleKeyTrigger (const KKeySequence &seq)
-{
-    for (int i = 0; i < (int) seq.count (); i++)
-    {
-        const KKey key = seq.key (i);
-        if (keyIsText (key.keyCodeQt ()))
-            return true;
-    }
-
-    return false;
-}
-
-// public static
 bool kpTool::containsSingleKeyTrigger (const KShortcut &shortcut,
     KShortcut *shortcutWithoutSingleKeyTriggers)
 {
@@ -282,6 +271,7 @@ bool kpTool::containsSingleKeyTrigger (const KShortcut &shortcut,
     KShortcut newShortcut;
     bool needNewShortcut = false;
 
+#if 0
     for (int i = 0; i < (int) shortcut.count (); i++)
     {
         const KKeySequence seq = shortcut.seq (i);
@@ -295,10 +285,11 @@ bool kpTool::containsSingleKeyTrigger (const KShortcut &shortcut,
             newShortcut.append (seq);
         }
     }
+#endif
 
 
     if (needNewShortcut && shortcutWithoutSingleKeyTriggers)
-        *shortcutWithoutSingleKeyTriggers = newShortcut;
+        *shortcutWithoutSingleKeyTriggers = shortcut;
 
     return needNewShortcut;
 }

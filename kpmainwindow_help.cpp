@@ -89,7 +89,7 @@ static QString printScreenShortcutString ()
     else
     {
         // (localised)
-        return KKey (Qt::CTRL + Qt::Key_Print).toString ();
+        return KShortcut (Qt::CTRL + Qt::Key_Print).toString ();
     }
 }
 
