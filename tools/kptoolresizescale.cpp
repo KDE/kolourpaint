@@ -51,7 +51,7 @@
 #include <qsize.h>
 #include <qtoolbutton.h>
 #include <qmatrix.h>
-#include <q3whatsthis.h>
+
 
 #include <kapplication.h>
 #include <kcombobox.h>
@@ -644,7 +644,7 @@ static void toolButtonSetLook (QToolButton *button,
 void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
 {
     m_operationGroupBox = new QGroupBox (i18n ("Operation"), baseWidget);
-    Q3WhatsThis::add (m_operationGroupBox,
+    m_operationGroupBox->setWhatsThis(
         i18n ("<qt>"
               "<ul>"
                   "<li><b>Resize</b>: The size of the picture will be"

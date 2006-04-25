@@ -603,7 +603,7 @@ void kpColorCells::setOrientation (Qt::Orientation o)
         }
 
         KColorCells::setColor (pos, colors [i]);
-        //QToolTip::add (this, cellGeometry (y, x), colors [i].name ());
+        //this->setToolTip( cellGeometry (y, x), colors [i].name ());
     }
 
     m_orientation = o;
@@ -759,7 +759,7 @@ kpTransparentColorCell::kpTransparentColorCell (QWidget *parent, const char *nam
 
     m_pixmap = UserIcon ("color_transparent_26x26");
 
-    QToolTip::add (this, i18n ("Transparent"));
+    this->setToolTip( i18n ("Transparent"));
 }
 
 kpTransparentColorCell::~kpTransparentColorCell ()
@@ -912,9 +912,9 @@ void kpColorSimilarityToolBarItem::setColorSimilarity (double similarity)
 
     kpColorSimilarityCube::setColorSimilarity (similarity);
     if (similarity > 0)
-        QToolTip::add (this, i18n ("Color similarity: %1%", qRound (similarity * 100)));
+        this->setToolTip( i18n ("Color similarity: %1%", qRound (similarity * 100)));
     else
-        QToolTip::add (this, i18n ("Color similarity: Exact"));
+        this->setToolTip( i18n ("Color similarity: Exact"));
 
     m_processedColorSimilarity = kpColor::processSimilarity (colorSimilarity ());
 

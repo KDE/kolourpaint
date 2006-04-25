@@ -236,7 +236,7 @@ void kpToolToolBar::registerTool (kpTool *tool)
 
     b->setText (tool->text ());
     b->setIconSet (tool->iconSet (defaultIconSize ()));
-    QToolTip::add (b, tool->toolTip ());
+    b->setToolTip( tool->toolTip ());
     b->setWhatsThis( tool->description ());
 
     m_buttonGroup->addButton (b);
@@ -551,7 +551,7 @@ void kpToolToolBar::slotToolActionToolTipChanged ()
         {
 // COMPAT
 #warning "QT4: port to new QTooltip API"				
-            //QToolTip::add ((*it).m_button, tool->toolTip ());
+            //(*it).m_button->setToolTip( tool->toolTip ());
             return;
         }
     }
