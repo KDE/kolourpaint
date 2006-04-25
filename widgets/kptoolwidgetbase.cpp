@@ -332,8 +332,9 @@ void kpToolWidgetBase::relayoutOptions ()
             m_pixmapRects [r][c] = QRect (x, y, w, h);
 
             if (!m_toolTips [r][c].isEmpty ())
-                this->setToolTip( m_pixmapRects [r][c], m_toolTips [r][c]);
-        }
+        		QToolTip::add (this, m_pixmapRects [r][c], m_toolTips [r][c]);
+		
+		}
     }
 
     update ();
