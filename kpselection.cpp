@@ -1269,7 +1269,7 @@ void kpSelection::calculateTransparencyMask ()
     #if DEBUG_KP_SELECTION
         kDebug () << "\ttext - no need for transparency mask" << endl;
     #endif
-        m_transparencyMask.resize (0, 0);
+        m_transparencyMask = QPixmap();
         return;
     }
 
@@ -1278,7 +1278,7 @@ void kpSelection::calculateTransparencyMask ()
     #if DEBUG_KP_SELECTION
         kDebug () << "\tno pixmap - no need for transparency mask" << endl;
     #endif
-        m_transparencyMask.resize (0, 0);
+        m_transparencyMask = QPixmap();
         return;
     }
 
@@ -1287,11 +1287,11 @@ void kpSelection::calculateTransparencyMask ()
     #if DEBUG_KP_SELECTION
         kDebug () << "\topaque - no need for transparency mask" << endl;
     #endif
-        m_transparencyMask.resize (0, 0);
+        m_transparencyMask = QPixmap();
         return;
     }
 
-    m_transparencyMask.resize (m_pixmap->width (), m_pixmap->height ());
+    m_transparencyMask = QPixmap (m_pixmap->width (), m_pixmap->height ());
 
     QImage image = kpPixmapFX::convertToImage (*m_pixmap);
     QPainter transparencyMaskPainter (&m_transparencyMask);
@@ -1323,7 +1323,7 @@ void kpSelection::calculateTransparencyMask ()
     #if DEBUG_KP_SELECTION
         kDebug () << "\tcolour useless - completely opaque" << endl;
     #endif
-        m_transparencyMask.resize (0, 0);
+        m_transparencyMask = QPixmap();
         return;
     }
 }

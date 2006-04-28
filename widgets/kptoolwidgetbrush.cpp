@@ -66,8 +66,8 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const char *name)
         {
             int w = (width () - 2/*margin*/ - 2/*spacing*/) / BRUSH_SIZE_NUM_COLS;
             int h = (height () - 2/*margin*/ - 3/*spacing*/) / BRUSH_SIZE_NUM_ROWS;
-            pm->resize ((w <= 0 ? width () : w),
-                        (h <= 0 ? height () : h));
+            *pm = QPixmap ((w <= 0 ? width () : w),
+                           (h <= 0 ? height () : h));
 
             const int s = brushSize [shape][i];
             QRect rect;

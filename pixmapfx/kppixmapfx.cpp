@@ -223,7 +223,7 @@ QImage kpPixmapFX::convertToImage (const QPixmap &pixmap)
     if (pixmap.isNull ())
         return QImage ();
 
-    return pixmap.convertToImage ();
+    return pixmap.toImage ();
 }
 
 
@@ -305,7 +305,7 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
         (KMessageBox::shouldBeShownContinue (colorDepthDontAskAgain) &&
          image.depth () > QPixmap::defaultDepth() &&
          QPixmap::defaultDepth () < 24);  // 32 indicates alpha channel
-	
+
     int screenDepthNeeded = 0;
 
     if (moreColorsThanDisplay)
@@ -386,7 +386,7 @@ QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty,
 
     if (!pretty)
     {
-        destPixmap.convertFromImage (image,
+        destPixmap = QPixmap::fromImage(image,
                                      Qt::ColorOnly/*always display depth*/ |
                                      Qt::ThresholdDither/*no dither*/ |
                                      Qt::ThresholdAlphaDither/*no dither alpha*/|
@@ -394,7 +394,7 @@ QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty,
     }
     else
     {
-        destPixmap.convertFromImage (image,
+        destPixmap = QPixmap::fromImage (image,
                                      Qt::ColorOnly/*always display depth*/ |
                                      Qt::DiffuseDither/*hi quality dither*/ |
                                      Qt::ThresholdAlphaDither/*no dither alpha*/ |
@@ -529,7 +529,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
     }
 
 
-    destPixmap.convertFromImage (image,
+    destPixmap = QPixmap::fromImage (image,
                                  Qt::ColorOnly/*always display depth*/ |
                                  Qt::ThresholdAlphaDither/*no dither alpha*/ |
                                  ditherFlags);
@@ -567,6 +567,16 @@ QPixmap kpPixmapFX::pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
     return retPixmap;
 }
 
+
+static void myCopyBlt(QPixmap *dst, int dx, int dy,
+                    const QPixmap *src, int sx, int sy, int sw, int sh)
+{
+    QImage image = dst->toImage();
+    QPainter p(&image);
+    p.setCompositionMode(QPainter::CompositionMode_Source);
+    p.drawPixmap(dx, dy, *src, sx, sy, sw, sh);
+    *dst = QPixmap::fromImage(image);
+}
 
 //
 // Get/Set Parts of Pixmap
@@ -612,7 +622,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
     const QPoint destTopLeft = validSrcRect.topLeft () - rect.topLeft ();
 
     // copy data _and_ mask (if avail)
-    copyBlt (&retPixmap, /* dest */
+    myCopyBlt (&retPixmap, /* dest */
              destTopLeft.x (), destTopLeft.y (), /* dest pt */
              &pm, /* src */
              validSrcRect.x (), validSrcRect.y (), /* src pt */
@@ -685,7 +695,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
     //       Qt bug on boundary case?
 
     // copy data _and_ mask
-    copyBlt (destPixmapPtr,
+    myCopyBlt (destPixmapPtr,
              destAt.x (), destAt.y (),
              &srcPixmap,
              0, 0,
@@ -860,7 +870,6 @@ QBitmap kpPixmapFX::getNonNullMask (const QPixmap &pm)
     }
 }
 
-
 // public static
 QBitmap kpPixmapFX::getNonNullMaskAt (const QPixmap &pm, const QRect &rect)
 {
@@ -868,7 +877,7 @@ QBitmap kpPixmapFX::getNonNullMaskAt (const QPixmap &pm, const QRect &rect)
 
     if (!pm.mask ().isNull ())
     {
-        copyBlt (&destMaskBitmap, 0, 0,
+        myCopyBlt (&destMaskBitmap, 0, 0,
                  &pm, rect.x (), rect.y (), rect.width (), rect.height ());
     }
     else
@@ -889,8 +898,8 @@ void kpPixmapFX::setMaskAt (QPixmap *destPixmapPtr, const QPoint &destAt,
 
     QBitmap destMaskBitmap (srcMaskBitmap.width (), srcMaskBitmap.height ());
 
-    copyBlt (&destMaskBitmap, destAt.x (), destAt.y (),
-             &srcMaskBitmap);
+    myCopyBlt (&destMaskBitmap, destAt.x (), destAt.y (),
+               &srcMaskBitmap, 0, 0, srcMaskBitmap.width(), srcMaskBitmap.height());
 
     destPixmapPtr->setMask (destMaskBitmap);
 }
@@ -1143,7 +1152,8 @@ void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
         return;
 
 
-    destPixmapPtr->resize (w, h);
+    *destPixmapPtr = QPixmap (w, h);
+#warning please check if the old value of destPixmapPtr needs to be copied
 
     if (fillNewAreas && (w > oldWidth || h > oldHeight))
     {
@@ -1267,7 +1277,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
         matrix.scale (double (w) / double (pm.width ()),
                       double (h) / double (pm.height ()));
 
-        return pm.xForm (matrix);
+        return pm.transformed (matrix);
     }
 }
 
@@ -1404,7 +1414,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
 
     if (backgroundColor.isTransparent () || !pm.mask ().isNull ())
     {
-        newBitmapMask.resize (newPixmap.width (), newPixmap.height ());
+        newBitmapMask = QPixmap (newPixmap.width (), newPixmap.height ());
         newBitmapMask.fill (backgroundColor.maskColor ());
     }
 
@@ -1673,7 +1683,7 @@ QPixmap kpPixmapFX::flip (const QPixmap &pm, bool horz, bool vert)
     if (!horz && !vert)
         return pm;
 
-    return pm.xForm (flipMatrix (pm, horz, vert));
+    return pm.transformed (flipMatrix (pm, horz, vert));
 }
 
 // public static

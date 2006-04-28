@@ -61,7 +61,7 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const char *nam
 
         int s = eraserSizes [i];
 
-        cursorPixmap->resize (s, s);
+        *cursorPixmap = QPixmap(s, s);
         cursorPixmap->fill (Qt::black);
 
 
@@ -69,7 +69,7 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const char *nam
         if (i < 3)
         {
             // HACK: kpToolWidgetBase's layout code sucks and gives uneven spacing
-            previewPixmap.resize ((width () - 4) / 3, 9);
+            previewPixmap = QPixmap ((width () - 4) / 3, 9);
         }
 
         QPainter painter (&previewPixmap);

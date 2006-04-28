@@ -192,7 +192,7 @@ void kpToolRotateCommand::unexecute ()
     if (!m_losslessRotation)
     {
         oldPixmap = m_oldPixmap;
-        m_oldPixmap.resize (0, 0);
+        m_oldPixmap = QPixmap();
     }
     else
     {
