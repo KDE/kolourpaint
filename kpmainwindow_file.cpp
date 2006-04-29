@@ -357,8 +357,8 @@ void kpMainWindow::slotOpenRecent (const KUrl &url)
 bool kpMainWindow::save (bool localOnly)
 {
     if (m_document->url ().isEmpty () ||
-        KImageIO::mimeTypes (KImageIO::Writing)
-            .findIndex (m_document->saveOptions ()->mimeType ()) < 0 ||
+        !KImageIO::mimeTypes (KImageIO::Writing)
+            .contains (m_document->saveOptions ()->mimeType ()) ||
         // SYNC: kpDocument::getPixmapFromFile() can't determine quality
         //       from file
         (m_document->saveOptions ()->mimeTypeHasConfigurableQuality () &&
@@ -448,7 +448,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
     }
 
 #define MIME_TYPE_IS_VALID() (!fdSaveOptions.mimeTypeIsInvalid () &&                 \
-                              mimeTypes.findIndex (fdSaveOptions.mimeType ()) >= 0)
+                              mimeTypes.contains (fdSaveOptions.mimeType ()))
     if (!MIME_TYPE_IS_VALID ())
     {
     #if DEBUG_KP_MAIN_WINDOW
@@ -467,9 +467,9 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
             kDebug () << "\tmimeType=" << fdSaveOptions.mimeType ()
                        << " not valid, get hardcoded" << endl;
         #endif
-            if (mimeTypes.findIndex ("image/png") > -1)
+            if (mimeTypes.contains ("image/png"))
                 fdSaveOptions.setMimeType ("image/png");
-            else if (mimeTypes.findIndex ("image/x-bmp") > -1)
+            else if (mimeTypes.contains ("image/x-bmp"))
                 fdSaveOptions.setMimeType ("image/x-bmp");
             else
                 fdSaveOptions.setMimeType (mimeTypes.first ());
