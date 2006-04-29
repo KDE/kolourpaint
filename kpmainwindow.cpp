@@ -540,7 +540,8 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         m_mainView = new kpZoomedView (m_document, m_toolToolBar, m_viewManager,
                                        0/*buddyView*/,
                                        m_scrollView,
-                                       m_scrollView->viewport (), "mainView");
+                                       m_scrollView->viewport () );
+        m_mainView->setObjectName("mainView");
         if (m_scrollView)
         {
             m_scrollView->addChild (m_mainView);

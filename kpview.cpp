@@ -90,9 +90,9 @@ kpView::kpView (kpDocument *document,
         kpViewManager *viewManager,
         kpView *buddyView,
         kpViewScrollableContainer *scrollableContainer,
-        QWidget *parent, const char *name)
+        QWidget *parent)
 
-    : QWidget (parent, name, Qt::WNoAutoErase/*no flicker*/),
+    : QWidget (parent, Qt::WNoAutoErase/*no flicker*/),
       d (new kpViewPrivate ())
 {
     d->m_document = document;
@@ -108,12 +108,11 @@ kpView::kpView (kpDocument *document,
 
     d->m_backBuffer = 0;
 
-
-    setBackgroundMode (Qt::NoBackground);  // no flicker
+    setAttribute(Qt::WA_NoSystemBackground, true);
     setFocusPolicy (Qt::WheelFocus);
     setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
-    setKeyCompression (true);
-    setInputMethodEnabled (true);  // ensure using InputMethod
+    setAttribute(Qt::WA_KeyCompression, true);
+    setAttribute(Qt::WA_InputMethodEnabled, true); // ensure using InputMethod
 }
 
 kpView::~kpView ()
@@ -508,13 +507,13 @@ QPoint kpView::transformViewToOtherView (const QPoint &viewPoint,
 {
     if (this == otherView)
         return viewPoint;
-        
+
     const double docX = transformViewToDocX (viewPoint.x ());
     const double docY = transformViewToDocY (viewPoint.y ());
-    
+
     const double otherViewX = otherView->transformDocToViewX (docX);
     const double otherViewY = otherView->transformDocToViewY (docY);
-                   
+
     return QPoint ((int) otherViewX, (int) otherViewY);
 }
 

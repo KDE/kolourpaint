@@ -79,7 +79,7 @@ Q_OBJECT
 public:
     kpEffectBlurSharpenWidget (bool actOnSelection,
                                kpMainWindow *mainWindow,
-                               QWidget *parent, const char *name = 0);
+                               QWidget *parent);
     virtual ~kpEffectBlurSharpenWidget ();
 
     virtual QString caption () const;

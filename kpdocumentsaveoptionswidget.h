@@ -48,7 +48,7 @@ class kpDocumentSaveOptionsPreviewDialog : public QWidget
 Q_OBJECT
 
 public:
-    kpDocumentSaveOptionsPreviewDialog (QWidget *parent, const char *name = 0);
+    kpDocumentSaveOptionsPreviewDialog (QWidget *parent);
     virtual ~kpDocumentSaveOptionsPreviewDialog ();
 
     QSize preferredMinimumSize () const;
@@ -102,8 +102,8 @@ public:
     kpDocumentSaveOptionsWidget (const QPixmap &docPixmap,
                                  const kpDocumentSaveOptions &saveOptions,
                                  const kpDocumentMetaInfo &metaInfo,
-                                 QWidget *parent, const char *name = 0);
-    kpDocumentSaveOptionsWidget (QWidget *parent, const char *name = 0);
+                                 QWidget *parent);
+    kpDocumentSaveOptionsWidget (QWidget *parent);
 private:
     void init ();
 public:

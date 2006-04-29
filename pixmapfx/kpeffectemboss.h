@@ -72,7 +72,7 @@ Q_OBJECT
 public:
     kpEffectEmbossWidget (bool actOnSelection,
                           kpMainWindow *mainWindow,
-                          QWidget *parent, const char *name = 0);
+                          QWidget *parent);
     virtual ~kpEffectEmbossWidget ();
 
     virtual QString caption () const;

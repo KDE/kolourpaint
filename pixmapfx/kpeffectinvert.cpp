@@ -150,9 +150,8 @@ QPixmap kpEffectInvertCommand::applyColorEffect (const QPixmap &pixmap)
 
 kpEffectInvertWidget::kpEffectInvertWidget (bool actOnSelection,
                                             kpMainWindow *mainWindow,
-                                            QWidget *parent,
-                                            const char *name)
-    : kpColorEffectWidget (actOnSelection, mainWindow, parent, name)
+                                            QWidget *parent )
+    : kpColorEffectWidget (actOnSelection, mainWindow, parent)
 {
     QVBoxLayout *topLevelLay = new QVBoxLayout (this, marginHint (), spacingHint ());
 

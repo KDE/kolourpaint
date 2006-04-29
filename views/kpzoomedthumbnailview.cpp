@@ -43,12 +43,12 @@ kpZoomedThumbnailView::kpZoomedThumbnailView (kpDocument *document,
         kpViewManager *viewManager,
         kpView *buddyView,
         kpViewScrollableContainer *scrollableContainer,
-        QWidget *parent, const char *name)
+        QWidget *parent )
 
     : kpThumbnailView (document, toolToolBar, viewManager,
                        buddyView,
                        scrollableContainer,
-                       parent, name)
+                       parent)
 {
     // Call to virtual function - this is why the class is sealed
     adjustToEnvironment ();

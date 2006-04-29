@@ -90,7 +90,7 @@ public:
             kpViewManager *viewManager,
             kpView *buddyView,
             kpViewScrollableContainer *scrollableContainer,
-            QWidget *parent, const char *name);
+            QWidget *parent);
 
     /**
      * Destructs this view.  Informs the viewManager() that the mouse
@@ -322,8 +322,8 @@ public:
      */
     QPoint transformViewToOtherView (const QPoint &viewPoint,
                                      const kpView *otherView);
-    
-                                        
+
+
     /**
      * @returns the approximate view width required to display the entire
      *          document(), based on the zoom level only.
@@ -383,7 +383,7 @@ public:
      * is set to queue updates.
      */
     void updateQueuedArea ();
-    
+
     void updateMicroFocusHint (const QRect &microFocusHint);
 
 
@@ -493,7 +493,7 @@ protected:
 
     virtual void dragEnterEvent (QDragEnterEvent *);
     virtual void dragLeaveEvent (QDragLeaveEvent *);
-    
+
     // COMPAT
     //virtual void imStartEvent (QIMEvent *e);
     //virtual void imComposeEvent (QIMEvent *e);

@@ -278,9 +278,8 @@ QPixmap kpEffectReduceColorsCommand::applyColorEffect (const QPixmap &pixmap)
 
 kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
                                                         kpMainWindow *mainWindow,
-                                                        QWidget *parent,
-                                                        const char *name)
-    : kpColorEffectWidget (actOnSelection, mainWindow, parent, name)
+                                                        QWidget *parent )
+    : kpColorEffectWidget (actOnSelection, mainWindow, parent)
 {
     QVBoxLayout *lay = new QVBoxLayout (this, marginHint (), spacingHint ());
 

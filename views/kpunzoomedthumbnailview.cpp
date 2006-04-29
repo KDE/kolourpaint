@@ -50,12 +50,12 @@ kpUnzoomedThumbnailView::kpUnzoomedThumbnailView (
         kpViewManager *viewManager,
         kpView *buddyView,
         kpViewScrollableContainer *scrollableContainer,
-        QWidget *parent, const char *name)
+        QWidget *parent)
 
     : kpThumbnailView (document, toolToolBar, viewManager,
                        buddyView,
                        scrollableContainer,
-                       parent, name),
+                       parent),
       d (new kpUnzoomedThumbnailViewPrivate ())
 {
     if (buddyViewScrollableContainer ())

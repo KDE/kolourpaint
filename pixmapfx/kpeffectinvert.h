@@ -96,7 +96,7 @@ Q_OBJECT
 public:
     kpEffectInvertWidget (bool actOnSelection,
                           kpMainWindow *mainWindow,
-                          QWidget *parent, const char *name = 0);
+                          QWidget *parent);
     virtual ~kpEffectInvertWidget ();
 
 

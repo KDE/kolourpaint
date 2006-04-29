@@ -80,12 +80,12 @@ Q_OBJECT
 public:
     kpColorEffectWidget (bool actOnSelection,
                          kpMainWindow *mainWindow,
-                         QWidget *parent, const char *name = 0);
+                         QWidget *parent);
     virtual ~kpColorEffectWidget ();
 
 signals:
     void settingsChangedNoWaitCursor ();
-    
+
     void settingsChanged ();
 
     // (same as settingsChanged() but preview doesn't update until there

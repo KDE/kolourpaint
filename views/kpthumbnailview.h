@@ -53,7 +53,7 @@ public:
                      kpViewManager *viewManager,
                      kpView *buddyView,
                      kpViewScrollableContainer *scrollableContainer,
-                     QWidget *parent, const char *name);
+                     QWidget *parent);
 
     /**
      * Destructs this thumbnail view.

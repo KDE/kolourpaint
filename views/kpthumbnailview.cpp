@@ -39,12 +39,12 @@ kpThumbnailView::kpThumbnailView (kpDocument *document,
         kpViewManager *viewManager,
         kpView *buddyView,
         kpViewScrollableContainer *scrollableContainer,
-        QWidget *parent, const char *name)
+        QWidget *parent)
 
     : kpView (document, toolToolBar, viewManager,
               buddyView,
               scrollableContainer,
-              parent, name)
+              parent)
 {
 }
 
@@ -81,7 +81,7 @@ void kpThumbnailView::resizeEvent (QResizeEvent *e)
     // the event loop.  So eat useless update() calls that can only slow
     // things down.
     // TODO: this doesn't seem to work.
-    const bool oldIsUpdatesEnabled = isUpdatesEnabled ();
+    const bool oldIsUpdatesEnabled = updatesEnabled ();
     setUpdatesEnabled (false);
 
     {

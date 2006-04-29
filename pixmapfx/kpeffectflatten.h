@@ -81,7 +81,7 @@ Q_OBJECT
 public:
     kpEffectFlattenWidget (bool actOnSelection,
                            kpMainWindow *mainWindow,
-                           QWidget *parent, const char *name = 0);
+                           QWidget *parent);
     virtual ~kpEffectFlattenWidget ();
 
 

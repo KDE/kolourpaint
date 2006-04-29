@@ -319,27 +319,27 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         //       scrollview; hence the centring is off by about 5-10 pixels.
 
         // TODO: use visibleRect() for greater accuracy?
-        
+
         int viewX, viewY;
-        
+
         bool targetDocAvail = false;
         double targetDocX = -1, targetDocY = -1;
-        
+
         if (centerUnderCursor &&
             m_viewManager && m_viewManager->viewUnderCursor ())
         {
             kpView *const vuc = m_viewManager->viewUnderCursor ();
             QPoint viewPoint = vuc->mouseViewPoint ();
-        
+
             // vuc->transformViewToDoc() returns QPoint which only has int
             // accuracy so we do X and Y manually.
             targetDocX = vuc->transformViewToDocX (viewPoint.x ());
             targetDocY = vuc->transformViewToDocY (viewPoint.y ());
             targetDocAvail = true;
-                    
+
             if (vuc != m_mainView)
                 viewPoint = vuc->transformViewToOtherView (viewPoint, m_mainView);
-            
+
             viewX = viewPoint.x ();
             viewY = viewPoint.y ();
         }
@@ -352,7 +352,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
                         qMin (m_mainView->height (),
                               m_scrollView->visibleHeight ()) / 2;
         }
-        
+
         int newCenterX = viewX * zoomLevel / m_mainView->zoomLevelX ();
         int newCenterY = viewY * zoomLevel / m_mainView->zoomLevelY ();
 
@@ -389,12 +389,12 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
             m_viewManager && m_viewManager->viewUnderCursor ())
         {
             kpView *const vuc = m_viewManager->viewUnderCursor ();
-            
+
         #if DEBUG_KP_MAIN_WINDOW
             kDebug () << "\tcenterUnderCursor: reposition cursor; viewUnderCursor="
                        << vuc->name () << endl;
         #endif
-        
+
             const double viewX = vuc->transformDocToViewX (targetDocX);
             const double viewY = vuc->transformDocToViewY (targetDocY);
             // Rounding error from zooming in and out :(
@@ -403,9 +403,9 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         #if DEBUG_KP_MAIN_WINDOW
             kDebug () << "\t\tdoc: (" << targetDocX << "," << targetDocY << ")"
                        << " viewUnderCursor: (" << viewX << "," << viewY << ")"
-                       << endl; 
+                       << endl;
         #endif
-        
+
         // COMPAT: no more QWidget::clipRegion()
         #if 0
             if (vuc->clipRegion ().contains (viewPoint))
@@ -415,7 +415,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
             #if DEBUG_KP_MAIN_WINDOW
                 kDebug () << "\t\tglobalPoint=" << globalPoint << endl;
             #endif
-                
+
                 // TODO: Determine some sane cursor flashing indication -
                 //       cursor movement is convenient but not conventional.
                 //
@@ -444,13 +444,13 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
                 kDebug () << "\t\twon't move cursor - would get outside view"
                            << endl;
             #endif
-            
+
                 // TODO: Sane cursor flashing indication that indicates
                 //       that the normal cursor movement didn't happen.
             }
         #endif
         }
-        
+
     #if DEBUG_KP_MAIN_WINDOW && 1
         kDebug () << "\t\tcheck (contentsX=" << m_scrollView->contentsX ()
                     << ",contentsY=" << m_scrollView->contentsY ()
@@ -662,24 +662,24 @@ void kpMainWindow::slotFitToHeight ()
 
 // public
 void kpMainWindow::zoomIn (bool centerUnderCursor)
-{    
+{
     const int targetItem = m_actionZoom->currentItem () + 1;
-    
+
     if (targetItem >= (int) m_zoomList.count ())
         return;
-        
+
     m_actionZoom->setCurrentItem (targetItem);
     zoomAccordingToZoomAction (centerUnderCursor);
 }
 
 // public
 void kpMainWindow::zoomOut (bool centerUnderCursor)
-{    
+{
     const int targetItem = m_actionZoom->currentItem () - 1;
-    
+
     if (targetItem < 0)
         return;
-        
+
     m_actionZoom->setCurrentItem (targetItem);
     zoomAccordingToZoomAction (centerUnderCursor);
 }
@@ -995,7 +995,8 @@ void kpMainWindow::createThumbnailView ()
             m_document, m_toolToolBar, m_viewManager,
             m_mainView,
             0/*scrollableContainer*/,
-            m_thumbnail, "thumbnailView");
+            m_thumbnail );
+        m_thumbnailView->setObjectName( "thumbnailView" );
     }
     else
     {
@@ -1003,8 +1004,8 @@ void kpMainWindow::createThumbnailView ()
             m_document, m_toolToolBar, m_viewManager,
             m_mainView,
             0/*scrollableContainer*/,
-            m_thumbnail, "thumbnailView");
-
+            m_thumbnail);
+        m_thumbnailView->setObjectName( "thumbnailView" );
     }
 
     m_thumbnailView->showBuddyViewScrollableContainerRectangle (

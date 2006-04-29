@@ -65,13 +65,12 @@ const QSize kpDocumentSaveOptionsPreviewDialog::s_pixmapLabelMinimumSize (25, 25
 
 
 kpDocumentSaveOptionsPreviewDialog::kpDocumentSaveOptionsPreviewDialog (
-        QWidget *parent,
-        const char *name)
-    : QWidget (parent, name,
+    QWidget *parent )
+    : QWidget (parent,
                Qt::WType_TopLevel |
                Qt::WStyle_Customize |
-                   Qt::WStyle_DialogBorder |
-                   Qt::WStyle_Title),
+               Qt::WStyle_DialogBorder |
+               Qt::WStyle_Title),
 #if 0
 KDialogBase (parent, name, false/*non-modal*/,
                    i18n ("Save Preview"),
@@ -80,7 +79,7 @@ KDialogBase (parent, name, false/*non-modal*/,
       m_filePixmap (0),
       m_fileSize (0)
 {
-    setCaption (i18n ("Save Preview"));
+    setWindowTitle (i18n ("Save Preview"));
 
     QWidget *baseWidget = this;//new QWidget (this);
     //setMainWidget (baseWidget);
@@ -261,8 +260,8 @@ kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
         const QPixmap &docPixmap,
         const kpDocumentSaveOptions &saveOptions,
         const kpDocumentMetaInfo &metaInfo,
-        QWidget *parent, const char *name)
-    : QWidget (parent, name),
+        QWidget *parent)
+    : QWidget (parent),
       m_visualParent (parent)
 {
     init ();
@@ -272,8 +271,8 @@ kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
 }
 
 kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
-        QWidget *parent, const char *name)
-    : QWidget (parent, name),
+        QWidget *parent)
+    : QWidget (parent),
       m_visualParent (parent)
 {
     init ();
@@ -725,7 +724,8 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
 
     if (yes)
     {
-        m_previewDialog = new kpDocumentSaveOptionsPreviewDialog (m_visualParent, "previewSaveDialog");
+        m_previewDialog = new kpDocumentSaveOptionsPreviewDialog( m_visualParent );
+        m_previewDialog->setObjectName( "previewSaveDialog" );
         updatePreview ();
 
         connect (m_previewDialog, SIGNAL (finished ()),

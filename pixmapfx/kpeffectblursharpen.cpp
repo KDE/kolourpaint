@@ -128,8 +128,8 @@ QPixmap kpEffectBlurSharpenCommand::applyColorEffect (const QPixmap &pixmap)
 
 kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
                                                       kpMainWindow *mainWindow,
-                                                      QWidget *parent, const char *name)
-    : kpColorEffectWidget (actOnSelection, mainWindow, parent, name)
+                                                      QWidget *parent)
+    : kpColorEffectWidget (actOnSelection, mainWindow, parent)
 {
     QGridLayout *lay = new QGridLayout (this, 4, 2, marginHint (), spacingHint ());
 

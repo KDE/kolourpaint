@@ -255,8 +255,8 @@ QPixmap kpEffectBalanceCommand::applyColorEffect (const QPixmap &pixmap)
 
 kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
                                               kpMainWindow *mainWindow,
-                                              QWidget *parent, const char *name)
-    : kpColorEffectWidget (actOnSelection, mainWindow, parent, name)
+                                              QWidget *parent)
+    : kpColorEffectWidget (actOnSelection, mainWindow, parent)
 {
     QGridLayout *lay = new QGridLayout (this, 5, 5, marginHint (), spacingHint ());
 

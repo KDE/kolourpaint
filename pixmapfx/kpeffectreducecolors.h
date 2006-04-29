@@ -78,7 +78,7 @@ Q_OBJECT
 public:
     kpEffectReduceColorsWidget (bool actOnSelection,
                                 kpMainWindow *mainWindow,
-                                QWidget *parent, const char *name = 0);
+                                QWidget *parent);
     virtual ~kpEffectReduceColorsWidget ();
 
 

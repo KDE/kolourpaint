@@ -65,7 +65,7 @@ public:
             kpViewManager *viewManager,
             kpView *buddyView,
             kpViewScrollableContainer *scrollableContainer,
-            QWidget *parent, const char *name);
+            QWidget *parent);
 
     /**
      * Destructs an unzoomed thumbnail view.
