@@ -659,7 +659,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
                              false/*no lossy prompt*/,
                              parent) ||
         (file.close (),
-         file.status () != IO_Ok))
+         file.error () != QFile::NoError))
     {
     #if DEBUG_KP_DOCUMENT
         if (!fileOpenOK)
