@@ -188,7 +188,7 @@ void kpGrip::updatePixmap ()
         return;
 
     QPixmap pixmap (width (), height ());
-    pixmap.fill (colorGroup ().highlight ());
+    pixmap.fill (palette().color( QPalette::Highlight ) );
     kpPixmapFX::ensureTransparentAt (&pixmap, pixmap.rect ());
     const QRect hr = hotRect ();
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
@@ -1349,10 +1349,10 @@ void kpViewScrollableContainer::mouseMoveEvent (QMouseEvent *e)
 void kpViewScrollableContainer::contentsWheelEvent (QWheelEvent *e)
 {
     e->ignore ();
-    
+
     if (m_view)
         m_view->wheelEvent (e);
-        
+
     if (!e->isAccepted ())
         Q3ScrollView::contentsWheelEvent (e);
 }

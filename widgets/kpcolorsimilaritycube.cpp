@@ -248,8 +248,8 @@ void kpColorSimilarityCube::drawFace (QPainter *p,
     #if DEBUG_KP_COLOR_SIMILARITY_CUBE
         kDebug () << "\tnot enabled - making us grey" << endl;
     #endif
-        colors [0] = colorGroup ().background ();
-        colors [1] = colorGroup ().background ();
+        colors [0] = palette ().color( QPalette::Background );
+        colors [1] = palette ().color( QPalette::Background );
     }
 
 #if DEBUG_KP_COLOR_SIMILARITY_CUBE
@@ -275,7 +275,7 @@ void kpColorSimilarityCube::drawContents (QPainter *p)
     QRect cr (contentsRect ());
 
     QPixmap backBuffer (cr.width (), cr.height ());
-    backBuffer.fill (colorGroup ().background ());
+    backBuffer.fill ( palette().color( QPalette::Background) );
 
     QPainter backBufferPainter (&backBuffer);
 

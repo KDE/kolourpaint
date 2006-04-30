@@ -318,14 +318,14 @@ void kpDualColorButton::drawContents (QPainter *p)
     else
     {
         backBufferPainter.fillRect (m_backBuffer->rect (),
-                                    colorGroup ().color (QColorGroup::Background));
+                                    palette ().color (QPalette::Background));
     }
 
     QPixmap swapPixmap = UserIcon ("colorbutton_swap_16x16");
     if (!isEnabled ())
     {
         // swapPixmap has a mask after all
-        swapPixmap.fill (colorGroup ().color (QColorGroup::Dark));
+        swapPixmap.fill (palette().color (QPalette::Dark));
     }
     backBufferPainter.drawPixmap (swapPixmapRect ().topLeft (), swapPixmap);
 
@@ -346,8 +346,8 @@ void kpDualColorButton::drawContents (QPainter *p)
             backBufferPainter.drawPixmap (bgRectInside, UserIcon ("color_transparent_26x26"));
     }
     else
-        backBufferPainter.fillRect (bgRectInside, colorGroup ().color (QColorGroup::Button));
-    qDrawShadePanel (&backBufferPainter, bgRect, colorGroup (),
+        backBufferPainter.fillRect (bgRectInside, palette().color (QPalette::Button));
+    qDrawShadePanel (&backBufferPainter, bgRect, palette(),
                      false/*not sunken*/, 2/*lineWidth*/,
                      0/*never fill*/);
 
@@ -366,8 +366,8 @@ void kpDualColorButton::drawContents (QPainter *p)
             backBufferPainter.drawPixmap (fgRectInside, UserIcon ("color_transparent_26x26"));
     }
     else
-        backBufferPainter.fillRect (fgRectInside, colorGroup ().color (QColorGroup::Button));
-    qDrawShadePanel (&backBufferPainter, fgRect, colorGroup (),
+        backBufferPainter.fillRect (fgRectInside, palette ().color (QPalette::Button));
+    qDrawShadePanel (&backBufferPainter, fgRect, palette (),
                      false/*not sunken*/, 2/*lineWidth*/,
                      0/*never fill*/);
 
@@ -470,12 +470,12 @@ kpColorCells::kpColorCells (QWidget *parent,
     setName (name);
 
     setShading (false);  // no 3D look
-    
+
     // Trap KColorDrag so that kpMainWindow does not trap it.
     // See our impl of dropEvent().
     setAcceptDrops (true);
     setAcceptDrags (true);
-    
+
     connect (this, SIGNAL (colorDoubleClicked (int)),
              SLOT (slotColorDoubleClicked (int)));
 
@@ -543,7 +543,7 @@ void kpColorCells::setOrientation (Qt::Orientation o)
 
     setCellWidth (26);
     setCellHeight (26);
-    
+
     setFixedSize (numCols () * cellWidth () + frameWidth () * 2,
                   numRows () * cellHeight () + frameWidth () * 2);
 
