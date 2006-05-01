@@ -695,10 +695,9 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
     resizeScaleButtonGroup->insert (m_smoothScaleButton);
 
 
-    QGridLayout *operationLayout = new QGridLayout (m_operationGroupBox,
-                                                    1, 2,
-                                                    marginHint () * 2/*don't overlap groupbox title*/,
-                                                    spacingHint ());
+    QGridLayout *operationLayout = new QGridLayout (m_operationGroupBox );
+    operationLayout->setMargin( marginHint () * 2/*don't overlap groupbox title*/ );
+    operationLayout->setSpacing( spacingHint ());
 
     operationLayout->addWidget (m_resizeButton, 0, 0, Qt::AlignCenter);
     //operationLayout->addWidget (m_resizeLabel, 1, 0, Qt::AlignCenter);
@@ -770,8 +769,9 @@ void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
     percentLabel->setBuddy (m_percentWidthInput);
 
 
-    QGridLayout *dimensionsLayout = new QGridLayout (m_dimensionsGroupBox,
-                                                     5, 4, marginHint () * 2, spacingHint ());
+    QGridLayout *dimensionsLayout = new QGridLayout (m_dimensionsGroupBox );
+    dimensionsLayout->setMargin( marginHint () * 2 );
+    dimensionsLayout->setSpacing( spacingHint ());
     dimensionsLayout->setColStretch (1/*column*/, 1);
     dimensionsLayout->setColStretch (3/*column*/, 1);
 

@@ -41,8 +41,8 @@ class kpResizeSignallingLabel : public QLabel
 Q_OBJECT
 
 public:
-    kpResizeSignallingLabel (const QString &string, QWidget *parent, const char *name = 0);
-    kpResizeSignallingLabel (QWidget *parent, const char *name = 0);
+    kpResizeSignallingLabel (const QString &string, QWidget *parent);
+    kpResizeSignallingLabel (QWidget *parent);
     virtual ~kpResizeSignallingLabel ();
 
 signals:

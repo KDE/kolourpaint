@@ -32,7 +32,6 @@
 
 #include <qapplication.h>
 #include <qbuttongroup.h>
-#include <q3gridlayout.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -285,8 +284,9 @@ void kpToolRotateDialog::createDirectionGroupBox ()
     m_clockwiseRadioButton->setChecked (s_lastIsClockwise);
 
 
-    QGridLayout *directionLayout = new QGridLayout (directionGroupBox,
-                                                    2, 2, marginHint () * 2, spacingHint ());
+    QGridLayout *directionLayout = new QGridLayout (directionGroupBox );
+    directionLayout->setSpacing( spacingHint() );
+    directionLayout->setMargin( marginHint () * 2 );
     directionLayout->addWidget (antiClockwisePixmapLabel, 0, 0, Qt::AlignCenter);
     directionLayout->addWidget (clockwisePixmapLabel, 0, 1, Qt::AlignCenter);
     directionLayout->addWidget (m_antiClockwiseRadioButton, 1, 0, Qt::AlignCenter);
@@ -320,9 +320,9 @@ void kpToolRotateDialog::createAngleGroupBox ()
     m_angleCustomRadioButton->setChecked (true);
 
 
-    QGridLayout *angleLayout = new QGridLayout (angleGroupBox,
-                                                6, 3,
-                                                marginHint () * 2, spacingHint ());
+    QGridLayout *angleLayout = new QGridLayout (angleGroupBox );
+    angleLayout->setMargin( marginHint () * 2 );
+    angleLayout->setSpacing( spacingHint ());
 
     angleLayout->addMultiCellWidget (m_angle90RadioButton, 0, 0, 0, 2);
     angleLayout->addMultiCellWidget (m_angle180RadioButton, 1, 1, 0, 2);

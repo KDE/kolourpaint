@@ -44,8 +44,8 @@ class kpSqueezedTextLabel : public QLabel
 Q_OBJECT
 
 public:
-    kpSqueezedTextLabel (QWidget *parent, const char *name = 0);
-    kpSqueezedTextLabel (const QString &text, QWidget *parent, const char *name = 0);
+    kpSqueezedTextLabel (QWidget *parent);
+    kpSqueezedTextLabel (const QString &text, QWidget *parent);
 
     virtual QSize minimumSizeHint () const;
 
@@ -54,7 +54,7 @@ public:
 
     bool showEllipsis () const;
     void setShowEllipsis (bool yes = true);
-    
+
 public slots:
     virtual void setText (const QString &text);
 

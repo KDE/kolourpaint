@@ -37,15 +37,13 @@
 
 
 kpResizeSignallingLabel::kpResizeSignallingLabel (const QString &string,
-                                                  QWidget *parent,
-                                                  const char *name)
-    : QLabel (string, parent, name)
+                                                  QWidget *parent )
+    : QLabel (string, parent)
 {
 }
 
-kpResizeSignallingLabel::kpResizeSignallingLabel (QWidget *parent,
-                                                  const char *name)
-    : QLabel (parent, name)
+kpResizeSignallingLabel::kpResizeSignallingLabel (QWidget *parent )
+    : QLabel (parent)
 {
 }
 

@@ -40,14 +40,14 @@
 #include <klocale.h>
 
 
-kpSqueezedTextLabel::kpSqueezedTextLabel (QWidget *parent, const char *name)
-    : QLabel (parent, name),
+kpSqueezedTextLabel::kpSqueezedTextLabel (QWidget *parent)
+    : QLabel (parent),
       m_showEllipsis (true)
 {
 }
 
-kpSqueezedTextLabel::kpSqueezedTextLabel (const QString &text, QWidget *parent, const char *name)
-    : QLabel (parent, name),
+kpSqueezedTextLabel::kpSqueezedTextLabel (const QString &text, QWidget *parent)
+    : QLabel (parent),
       m_showEllipsis (true)
 {
     setText (text);
@@ -85,7 +85,7 @@ void kpSqueezedTextLabel::setShowEllipsis (bool yes)
         return;
 
     m_showEllipsis = yes;
-    
+
     squeezeText ();
 }
 
@@ -117,7 +117,7 @@ QString kpSqueezedTextLabel::ellipsisText () const
 {
     return m_showEllipsis ? i18n ("...") : QString::null;
 }
-    
+
 // protected
 void kpSqueezedTextLabel::squeezeText ()
 {

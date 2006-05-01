@@ -85,8 +85,9 @@ KDialogBase (parent, name, false/*non-modal*/,
     //setMainWidget (baseWidget);
 
 
-    QGridLayout *lay = new QGridLayout (baseWidget, 2, 1,
-                                        KDialog::marginHint (), KDialog::spacingHint ());
+    QGridLayout *lay = new QGridLayout ( baseWidget );
+    lay->setMargin( KDialog::marginHint () );
+    lay->setSpacing( KDialog::spacingHint ());
 
     m_filePixmapLabel = new kpResizeSignallingLabel (baseWidget);
     m_fileSizeLabel = new QLabel (baseWidget);

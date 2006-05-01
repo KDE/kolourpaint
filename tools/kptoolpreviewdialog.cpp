@@ -92,8 +92,8 @@ kpToolPreviewDialog::kpToolPreviewDialog (Features features,
         createPreviewGroupBox ();
 
 
-    m_gridLayout = new QGridLayout (baseWidget, 4, 2,
-                                    0/*margin*/, spacingHint ());
+    m_gridLayout = new QGridLayout (baseWidget );
+    m_gridLayout->setSpacing( spacingHint() );
     m_gridNumRows = reserveTopRow ? 1 : 0;
     if (m_dimensionsGroupBox || m_previewGroupBox)
     {
@@ -150,9 +150,9 @@ void kpToolPreviewDialog::createDimensionsGroupBox ()
     m_afterTransformDimensionsLabel = new QLabel (m_dimensionsGroupBox);
 
 
-    QGridLayout *dimensionsLayout = new QGridLayout (m_dimensionsGroupBox,
-                                                     2, 2,
-                                                     marginHint () * 2, spacingHint ());
+    QGridLayout *dimensionsLayout = new QGridLayout (m_dimensionsGroupBox );
+    dimensionsLayout->setMargin( marginHint () * 2 );
+    dimensionsLayout->setSpacing( spacingHint ());
 
     dimensionsLayout->addWidget (originalLabel, 0, 0, Qt::AlignBottom);
     dimensionsLayout->addWidget (originalDimensionsLabel, 0, 1, Qt::AlignBottom);

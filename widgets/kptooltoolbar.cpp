@@ -550,7 +550,7 @@ void kpToolToolBar::slotToolActionToolTipChanged ()
         if (tool == (*it).m_tool)
         {
 // COMPAT
-#warning "QT4: port to new QTooltip API"				
+#warning "QT4: port to new QTooltip API"
             //(*it).m_button->setToolTip( tool->toolTip ());
             return;
         }
@@ -591,23 +591,18 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
         m_baseLayout = new QBoxLayout (m_baseWidget, QBoxLayout::TopToBottom,
                                        5/*margin*/,
                                        10/*spacing*/);
-        m_toolLayout = new QGridLayout (m_baseLayout,
-                                        5/*arbitrary rows since toolBar auto-expands*/,
-                                        m_vertCols,
-                                        0/*margin*/,
-                                        0/*spacing*/);
     }
     else // if (o == Qt::Horizontal)
     {
         m_baseLayout = new QBoxLayout (m_baseWidget, QBoxLayout::LeftToRight,
                                        5/*margin*/,
                                        10/*spacing*/);
-        m_toolLayout = new QGridLayout (m_baseLayout,
-                                        m_vertCols/*rows in this case, since horiz*/,
-                                        5/*arbitrary cols since toolBar auto-expands*/,
-                                        0/*margin*/,
-                                        0/*spacing*/);
     }
+
+    m_toolLayout = new QGridLayout ();
+    m_baseLayout->addItem( m_toolLayout );
+    m_toolLayout->setMargin( 0 );
+    m_toolLayout->setSpacing( 0 );
 
     int num = 0;
 
