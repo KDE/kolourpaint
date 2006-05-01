@@ -61,19 +61,4 @@ rc_DATA = kolourpaintui.rc
 
 xdg_apps_DATA = kolourpaint.desktop
 
-messages: rc.cpp
-	$(EXTRACTRC) *.rc *.ui \
-		compat/*.rc compat/*.ui \
-		cursors/*.rc cursors/*.ui \
-		pixmapfx/*.rc pixmapfx/*.ui \
-		tools/*.rc tools/*.ui \
-		widgets/*.rc widgets/*.ui \
-		>> rc.cpp
-	$(XGETTEXT) *.cpp *.h \
-		compat/*.cpp compat/*.h \
-		cursors/*.cpp cursors/*.h \
-		pixmapfx/*.cpp pixmapfx/*.h \
-		tools/*.cpp tools/*.h \
-		widgets/*.cpp widgets/*.h \
-		-o $(podir)/kolourpaint.pot
 
