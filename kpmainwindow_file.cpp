@@ -772,7 +772,7 @@ void kpMainWindow::sendFilenameToPrinter (KPrinter *printer)
         int dot;
 
         QString fileName = url.fileName ();
-        dot = fileName.findRev ('.');
+        dot = fileName.lastIndexOf ('.');
 
         // file.ext but not .hidden-file?
         if (dot > 0)
@@ -862,7 +862,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
         // according to the screen's DPI.
         // TODO: I think we should use the image's DPI.  Technically
         //       possible?
-        //       
+        //
         //       So no matter what computer you draw text on, you get
         //       the same pixels.
         //
@@ -902,7 +902,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
                << endl;
 #endif
 
-    
+
     double dpiX = pixmapDotsPerMeterX / InchesPerMeter;
     double dpiY = pixmapDotsPerMeterY / InchesPerMeter;
 #if DEBUG_KP_MAIN_WINDOW
