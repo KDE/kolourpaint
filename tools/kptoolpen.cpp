@@ -241,7 +241,7 @@ void kpToolPen::hover (const QPoint &point)
     {
         m_mouseButton = 0;
 
-        kpTempPixmap::RenderMode renderMode;
+        kpTempPixmap::RenderMode renderMode = kpTempPixmap::SetPixmap; // default
         QPixmap cursorPixmapForTempPixmap = m_cursorPixmap;
 
         if (m_mode & SquareBrushes)
