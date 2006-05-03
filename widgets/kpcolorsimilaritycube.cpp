@@ -134,7 +134,7 @@ void kpColorSimilarityCube::setColorSimilarity (double similarity)
 
     m_colorSimilarity = similarity;
 
-    repaint (false/*no erase*/);
+    repaint ();
 }
 
 

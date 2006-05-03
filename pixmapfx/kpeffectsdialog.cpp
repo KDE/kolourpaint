@@ -79,9 +79,9 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 #endif
 
     if (actOnSelection)
-        setCaption (i18n ("More Image Effects (Selection)"));
+        setWindowTitle (i18n ("More Image Effects (Selection)"));
     else
-        setCaption (i18n ("More Image Effects"));
+        setWindowTitle (i18n ("More Image Effects"));
 
 
     m_delayedUpdateTimer->setSingleShot (true);
@@ -210,7 +210,7 @@ void kpEffectsDialog::selectEffect (int which)
     m_colorEffectWidget = 0;
 
 
-    m_settingsGroupBox->setCaption (QString::null);
+    m_settingsGroupBox->setWindowTitle (QString::null);
 
 #define CREATE_EFFECT_WIDGET(name)                        \
     m_colorEffectWidget = new name (m_actOnSelection,     \

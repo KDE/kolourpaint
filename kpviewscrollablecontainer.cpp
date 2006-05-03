@@ -911,19 +911,19 @@ void kpViewScrollableContainer::recalculateStatusMessage ()
                                   QRect (0, 0, visibleWidth (), visibleHeight ()))
             .contains (QCursor::pos ()))
     {
-        if (m_bottomRightGrip->isShown () &&
+        if (!m_bottomRightGrip->isHidden () &&
             m_bottomRightGrip->hotRect (true/*to global*/)
                 .contains (QCursor::pos ()))
         {
             m_bottomRightGrip->setUserMessage (i18n ("Left drag the handle to resize the image."));
         }
-        else if (m_bottomGrip->isShown () &&
+        else if (!m_bottomGrip->isHidden () &&
                 m_bottomGrip->hotRect (true/*to global*/)
                     .contains (QCursor::pos ()))
         {
             m_bottomGrip->setUserMessage (i18n ("Left drag the handle to resize the image."));
         }
-        else if (m_rightGrip->isShown () &&
+        else if (!m_rightGrip->isHidden () &&
                 m_rightGrip->hotRect (true/*to global*/)
                     .contains (QCursor::pos ()))
         {
@@ -1076,9 +1076,9 @@ void kpViewScrollableContainer::updateGrips ()
     #endif
     }
 
-    m_bottomGrip->setShown (bool (m_view));
-    m_rightGrip->setShown (bool (m_view));
-    m_bottomRightGrip->setShown (bool (m_view));
+    m_bottomGrip->setHidden (m_view == 0);
+    m_rightGrip->setHidden (m_view == 0);
+    m_bottomRightGrip->setHidden (m_view == 0);
 
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
     kDebug () << "\tcontentsRect=" << contentsRect ()

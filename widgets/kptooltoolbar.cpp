@@ -389,7 +389,7 @@ int kpToolToolBar::numShownToolWidgets () const
                    << " isShown=" << (*it)->isShown ()
                    << endl;
     #endif
-        if ((*it)->isShown ())
+        if (!(*it)->isHidden ())
             ret++;
     }
 
@@ -405,7 +405,7 @@ kpToolWidgetBase *kpToolToolBar::shownToolWidget (int which) const
          it != m_toolWidgets.end ();
          it++)
     {
-        if ((*it)->isShown ())
+        if (!(*it)->isHidden ())
         {
             if (which == uptoVisibleWidget)
                 return *it;
