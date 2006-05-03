@@ -956,7 +956,7 @@ kpColorToolBar::kpColorToolBar (const QString &label, kpMainWindow *mainWindow)
     : KToolBar (mainWindow),
       m_mainWindow (mainWindow)
 {
-    //setText (label);
+    setLabel (label);
 
 
     QWidget *base = new QWidget (this);
@@ -993,7 +993,7 @@ kpColorToolBar::kpColorToolBar (const QString &label, kpMainWindow *mainWindow)
     m_lastDockedOrientationSet = false;
     setOrientation (orientation ());
 
-    //KToolBar::insertWidget (0, base->width (), base);
+    addWidget (base);
 }
 
 // virtual

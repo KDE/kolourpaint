@@ -93,7 +93,7 @@ kpToolToolBar::kpToolToolBar (const QString &label, kpMainWindow *mainWindow, in
       m_previousTool (0), m_currentTool (0),
       m_defaultIconSize (0)
 {
-    //setText (label);
+    setLabel (label);
 
 
     // With these lines enabled, mousePressEvent's weren't being generated
@@ -155,6 +155,9 @@ kpToolToolBar::kpToolToolBar (const QString &label, kpMainWindow *mainWindow, in
     connect (m_buttonGroup, SIGNAL (buttonClicked (int)), SLOT (slotToolButtonClicked ()));
 
     hideAllToolWidgets ();
+
+
+    addWidget (m_baseWidget);
 }
 
 kpToolToolBar::~kpToolToolBar ()
@@ -549,9 +552,7 @@ void kpToolToolBar::slotToolActionToolTipChanged ()
     {
         if (tool == (*it).m_tool)
         {
-// COMPAT
-#warning "QT4: port to new QTooltip API"
-            //(*it).m_button->setToolTip( tool->toolTip ());
+            (*it).m_button->setToolTip (tool->toolTip ());
             return;
         }
     }
