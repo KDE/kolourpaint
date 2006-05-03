@@ -117,8 +117,10 @@ const QCursor *kpMakeCursorLightCross ()
     #undef X_
     }
 
-    QCursor *cursor = new QCursor (QBitmap (side, side, colorBitmap, true/*little endian bit order*/),
-                                   QBitmap (side, side, maskBitmap, true/*little endian bit order*/));
+    const QSize size (side, side);
+    QCursor *cursor = new QCursor (
+        QBitmap::fromData (size, colorBitmap, QImage::Format_MonoLSB),
+        QBitmap::fromData (size, maskBitmap, QImage::Format_MonoLSB));
 
     delete [] maskBitmap;
     delete [] colorBitmap;
