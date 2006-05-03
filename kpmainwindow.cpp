@@ -246,6 +246,7 @@ void kpMainWindow::init ()
     //
 
     m_colorToolBar = new kpColorToolBar (i18n ("Color Box"), this);
+    m_colorToolBar->setObjectName ("Color Box");  // (needed for QMainWindow::saveState())
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tTIME: new kpColorToolBar = " << time.restart () << "msec" << endl;
 #endif
@@ -255,7 +256,8 @@ void kpMainWindow::init ()
     kDebug () << "\tTIME: createToolBox = " << time.restart () << "msec" << endl;
 #endif
 
-    m_scrollView = new kpViewScrollableContainer (this, "scrollView");
+    m_scrollView = new kpViewScrollableContainer (this);
+    m_scrollView->setObjectName ("scrollView");
     connect (m_scrollView, SIGNAL (beganDocResize ()),
              this, SLOT (slotBeganDocResize ()));
     connect (m_scrollView, SIGNAL (continuedDocResize (const QSize &)),
@@ -292,8 +294,8 @@ void kpMainWindow::init ()
         kDebug () << "\tfirstTime: positioning toolbars" << endl;
     #endif
 
-        //m_toolToolBar->setBarPos (KToolBar::Left);
-        //m_colorToolBar->setBarPos (KToolBar::Bottom);
+        addToolBar (Qt::LeftToolBarArea, m_toolToolBar);
+        addToolBar (Qt::BottomToolBarArea, m_colorToolBar);
 
         KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
@@ -540,8 +542,9 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         m_mainView = new kpZoomedView (m_document, m_toolToolBar, m_viewManager,
                                        0/*buddyView*/,
                                        m_scrollView,
-                                       m_scrollView->viewport () );
-        m_mainView->setObjectName("mainView");
+                                       m_scrollView->viewport ());
+        m_mainView->setObjectName ("mainView");
+
         if (m_scrollView)
         {
             m_scrollView->addChild (m_mainView);
