@@ -571,7 +571,7 @@ void kpToolResizeScaleDialog::createActOnBox (QWidget *baseWidget)
 
     m_actOnLabel->setBuddy (m_actOnCombo);
 
-    m_actOnCombo->insertItem (i18n ("Entire Image"), Image);
+    m_actOnCombo->insertItem (Image, i18n ("Entire Image"));
     if (selection ())
     {
         QString selName = i18n ("Selection");
@@ -579,8 +579,8 @@ void kpToolResizeScaleDialog::createActOnBox (QWidget *baseWidget)
         if (selection ()->isText ())
             selName = i18n ("Text Box");
 
-        m_actOnCombo->insertItem (selName, Selection);
-        m_actOnCombo->setCurrentItem (Selection);
+        m_actOnCombo->insertItem (Selection, selName);
+        m_actOnCombo->setCurrentIndex (Selection);
     }
     else
     {
@@ -690,9 +690,9 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
 
 
     QButtonGroup *resizeScaleButtonGroup = new QButtonGroup (baseWidget);
-    resizeScaleButtonGroup->insert (m_resizeButton);
-    resizeScaleButtonGroup->insert (m_scaleButton);
-    resizeScaleButtonGroup->insert (m_smoothScaleButton);
+    resizeScaleButtonGroup->addButton (m_resizeButton);
+    resizeScaleButtonGroup->addButton (m_scaleButton);
+    resizeScaleButtonGroup->addButton (m_smoothScaleButton);
 
 
     QGridLayout *operationLayout = new QGridLayout (m_operationGroupBox );
@@ -883,24 +883,24 @@ void kpToolResizeScaleDialog::slotActOnChanged ()
     {
         if (selection ()->isText ())
         {
-            m_resizeButton->setOn (true);
+            m_resizeButton->setChecked (true);
         }
         else
         {
             if (s_lastType == kpToolResizeScaleCommand::Scale)
-                m_scaleButton->setOn (true);
+                m_scaleButton->setChecked (true);
             else
-                m_smoothScaleButton->setOn (true);
+                m_smoothScaleButton->setChecked (true);
         }
     }
     else
     {
         if (s_lastType == kpToolResizeScaleCommand::Resize)
-            m_resizeButton->setOn (true);
+            m_resizeButton->setChecked (true);
         else if (s_lastType == kpToolResizeScaleCommand::Scale)
-            m_scaleButton->setOn (true);
+            m_scaleButton->setChecked (true);
         else
-            m_smoothScaleButton->setOn (true);
+            m_smoothScaleButton->setChecked (true);
     }
 
 
@@ -1055,7 +1055,7 @@ int kpToolResizeScaleDialog::imageHeight () const
 // public
 bool kpToolResizeScaleDialog::actOnSelection () const
 {
-    return (m_actOnCombo->currentItem () == Selection);
+    return (m_actOnCombo->currentIndex () == Selection);
 }
 
 // public

@@ -61,15 +61,13 @@ int kpEffectsDialog::s_lastHeight = 620;
 
 
 kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
-                                  kpMainWindow *parent,
-                                  const char *name)
+                                  kpMainWindow *parent)
     : kpToolPreviewDialog (kpToolPreviewDialog::Preview,
                            true/*reserve top row*/,
                            QString::null/*caption*/,
                            QString::null/*afterActionText (no Dimensions Group Box)*/,
                            actOnSelection,
-                           parent,
-                           name),
+                           parent),
       m_delayedUpdateTimer (new QTimer (this)),
       m_effectsComboBox (0),
       m_settingsGroupBox (0),
@@ -86,6 +84,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
         setCaption (i18n ("More Image Effects"));
 
 
+    m_delayedUpdateTimer->setSingleShot (true);
     connect (m_delayedUpdateTimer, SIGNAL (timeout ()),
              this, SLOT (slotUpdateWithWaitCursor ()));
 
@@ -98,12 +97,12 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     QLabel *label = new QLabel (i18n ("&Effect:"), effectContainer);
 
     m_effectsComboBox = new KComboBox (effectContainer);
-    m_effectsComboBox->insertItem (i18n ("Balance"));
-    m_effectsComboBox->insertItem (i18n ("Emboss"));
-    m_effectsComboBox->insertItem (i18n ("Flatten"));
-    m_effectsComboBox->insertItem (i18n ("Invert"));
-    m_effectsComboBox->insertItem (i18n ("Reduce Colors"));
-    m_effectsComboBox->insertItem (i18n ("Soften & Sharpen"));
+    m_effectsComboBox->addItem (i18n ("Balance"));
+    m_effectsComboBox->addItem (i18n ("Emboss"));
+    m_effectsComboBox->addItem (i18n ("Flatten"));
+    m_effectsComboBox->addItem (i18n ("Invert"));
+    m_effectsComboBox->addItem (i18n ("Reduce Colors"));
+    m_effectsComboBox->addItem (i18n ("Soften & Sharpen"));
 
     label->setBuddy (m_effectsComboBox);
     effectContainer->setStretchFactor (m_effectsComboBox, 1);
@@ -187,7 +186,7 @@ QPixmap kpEffectsDialog::transformPixmap (const QPixmap &pixmap,
 // public
 int kpEffectsDialog::selectedEffect () const
 {
-    return m_effectsComboBox->currentItem ();
+    return m_effectsComboBox->currentIndex ();
 }
 
 // public slot
@@ -203,8 +202,8 @@ void kpEffectsDialog::selectEffect (int which)
         return;
     }
 
-    if (which != m_effectsComboBox->currentItem ())
-        m_effectsComboBox->setCurrentItem (which);
+    if (which != m_effectsComboBox->currentIndex ())
+        m_effectsComboBox->setCurrentIndex (which);
 
 
     delete m_colorEffectWidget;
@@ -364,7 +363,8 @@ void kpEffectsDialog::slotDelayedUpdate ()
 #endif
     m_delayedUpdateTimer->stop ();
 
-    m_delayedUpdateTimer->start (400/*ms*/, true/*single shot*/);
+    // (single shot)
+    m_delayedUpdateTimer->start (400/*ms*/);
 }
 
 

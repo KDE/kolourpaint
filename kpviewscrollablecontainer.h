@@ -63,8 +63,7 @@ public:
         BottomRight = Right | Bottom
     };
 
-    kpGrip (GripType type,
-            QWidget *parent, const char *name = 0);
+    kpGrip (GripType type, QWidget *parent);
     virtual ~kpGrip ();
 
     GripType type () const;
@@ -124,7 +123,7 @@ class kpViewScrollableContainer : public Q3ScrollView
 Q_OBJECT
 
 public:
-    kpViewScrollableContainer (kpMainWindow *parent, const char *name = 0);
+    kpViewScrollableContainer (kpMainWindow *parent);
     virtual ~kpViewScrollableContainer ();
 
     // Same as contentsX() and contentsY() except that after

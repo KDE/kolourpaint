@@ -336,6 +336,7 @@ void kpDocumentSaveOptionsWidget::init ()
     m_updatePreviewDelay = 200/*ms*/;
 
     m_updatePreviewTimer = new QTimer (this);
+    m_updatePreviewTimer->setSingleShot (true);
     connect (m_updatePreviewTimer, SIGNAL (timeout ()),
              this, SLOT (updatePreview ()));
 
@@ -418,18 +419,18 @@ void kpDocumentSaveOptionsWidget::setMimeType (const QString &string)
     {
         m_colorDepthCombo->clear ();
 
-        m_colorDepthCombo->insertItem (i18n ("Monochrome"), 0);
-        m_colorDepthCombo->insertItem (i18n ("Monochrome (Dithered)"), 1);
+        m_colorDepthCombo->insertItem (0, i18n ("Monochrome"));
+        m_colorDepthCombo->insertItem (1, i18n ("Monochrome (Dithered)"));
 
         if (newMimeTypeMaxDepth >= 8)
         {
-            m_colorDepthCombo->insertItem (i18n ("256 Color"), 2);
-            m_colorDepthCombo->insertItem (i18n ("256 Color (Dithered)"), 3);
+            m_colorDepthCombo->insertItem (2, i18n ("256 Color"));
+            m_colorDepthCombo->insertItem (3, i18n ("256 Color (Dithered)"));
         }
 
         if (newMimeTypeMaxDepth >= 24)
         {
-            m_colorDepthCombo->insertItem (i18n ("24-bit Color"), 4);
+            m_colorDepthCombo->insertItem (4, i18n ("24-bit Color"));
         }
 
         if (m_colorDepthComboLastSelectedItem >= 0 &&
@@ -440,7 +441,7 @@ void kpDocumentSaveOptionsWidget::setMimeType (const QString &string)
                        << m_colorDepthComboLastSelectedItem << endl;
         #endif
 
-            m_colorDepthCombo->setCurrentItem (m_colorDepthComboLastSelectedItem);
+            m_colorDepthCombo->setCurrentIndex (m_colorDepthComboLastSelectedItem);
         }
         else
         {
@@ -451,7 +452,7 @@ void kpDocumentSaveOptionsWidget::setMimeType (const QString &string)
                        << " out of range" << endl;
         #endif
 
-            m_colorDepthCombo->setCurrentItem (m_colorDepthCombo->count () - 1);
+            m_colorDepthCombo->setCurrentIndex (m_colorDepthCombo->count () - 1);
         }
     }
 
@@ -474,7 +475,7 @@ int kpDocumentSaveOptionsWidget::colorDepth () const
 {
     if (mode () & ColorDepth)
     {
-        switch (m_colorDepthCombo->currentItem ())
+        switch (m_colorDepthCombo->currentIndex ())
         {
         case 0:
         case 1:
@@ -502,8 +503,8 @@ bool kpDocumentSaveOptionsWidget::dither () const
 {
     if (mode () & ColorDepth)
     {
-        return (m_colorDepthCombo->currentItem () == 1 ||
-                m_colorDepthCombo->currentItem () == 3);
+        return (m_colorDepthCombo->currentIndex () == 1 ||
+                m_colorDepthCombo->currentIndex () == 3);
     }
     else
     {
@@ -568,7 +569,7 @@ void kpDocumentSaveOptionsWidget::setColorDepthDither (int newDepth, bool newDit
     //       and an incorrect maximum colour depth (less than a QImage of
     //       this mimeType, opened by kpDocument).
     if (comboItem >= 0 && comboItem < m_colorDepthCombo->count ())
-        m_colorDepthCombo->setCurrentItem (comboItem);
+        m_colorDepthCombo->setCurrentIndex (comboItem);
 
 
     slotColorDepthSelected ();
@@ -580,7 +581,7 @@ void kpDocumentSaveOptionsWidget::slotColorDepthSelected ()
 {
     if (mode () & ColorDepth)
     {
-        m_colorDepthComboLastSelectedItem = m_colorDepthCombo->currentItem ();
+        m_colorDepthComboLastSelectedItem = m_colorDepthCombo->currentIndex ();
     }
     else
     {
@@ -866,7 +867,8 @@ void kpDocumentSaveOptionsWidget::hidePreview ()
 // protected slot
 void kpDocumentSaveOptionsWidget::updatePreviewDelayed ()
 {
-    m_updatePreviewTimer->start (m_updatePreviewDelay, true/*single shot*/);
+    // (single shot)
+    m_updatePreviewTimer->start (m_updatePreviewDelay);
 }
 
 // protected slot

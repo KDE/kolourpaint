@@ -72,8 +72,11 @@ kpToolSelection::kpToolSelection (Mode mode,
       m_createNOPTimer (new QTimer (this)),
       m_RMBMoveUpdateGUITimer (new QTimer (this))
 {
+    m_createNOPTimer->setSingleShot (true);
     connect (m_createNOPTimer, SIGNAL (timeout ()),
              this, SLOT (delayedDraw ()));
+
+    m_RMBMoveUpdateGUITimer->setSingleShot (true);
     connect (m_RMBMoveUpdateGUITimer, SIGNAL (timeout ()),
              this, SLOT (slotRMBMoveUpdateGUI ()));
 }
@@ -333,8 +336,9 @@ void kpToolSelection::beginDraw ()
                 else
                 {
                     // Don't hide sel border momentarily if user is just
-                    // right _clicking_ selection
-                    m_RMBMoveUpdateGUITimer->start (100, true/*single shot*/);
+                    // right _clicking_ selection.
+                    // (single shot timer)
+                    m_RMBMoveUpdateGUITimer->start (100/*ms*/);
                 }
             }
         }
@@ -359,7 +363,8 @@ void kpToolSelection::beginDraw ()
         }
         viewManager ()->restoreQueueUpdates ();
 
-        m_createNOPTimer->start (200, true/*single shot*/);
+        // (single shot)
+        m_createNOPTimer->start (200/*ms*/);
     }
 
     if (m_dragType != SelectText)
@@ -810,14 +815,14 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
         // reachable.
 
         if (targetSelRect.right () < 0)
-            targetSelRect.moveBy (-targetSelRect.right (), 0);
+            targetSelRect.translate (-targetSelRect.right (), 0);
         else if (targetSelRect.left () >= document ()->width ())
-            targetSelRect.moveBy (document ()->width () - targetSelRect.left () - 1, 0);
+            targetSelRect.translate (document ()->width () - targetSelRect.left () - 1, 0);
 
         if (targetSelRect.bottom () < 0)
-            targetSelRect.moveBy (0, -targetSelRect.bottom ());
+            targetSelRect.translate (0, -targetSelRect.bottom ());
         else if (targetSelRect.top () >= document ()->height ())
-            targetSelRect.moveBy (0, document ()->height () - targetSelRect.top () - 1);
+            targetSelRect.translate (0, document ()->height () - targetSelRect.top () - 1);
 
     #if DEBUG_KP_TOOL_SELECTION && 1
         kDebug () << "\t\t\tafter ensure sel rect clickable=" << targetSelRect << endl;
@@ -2043,6 +2048,7 @@ kpToolSelectionResizeScaleCommand::kpToolSelectionResizeScaleCommand (
     m_newWidth = selection ()->width ();
     m_newHeight = selection ()->height ();
 
+    m_smoothScaleTimer->setSingleShot (true);
     connect (m_smoothScaleTimer, SIGNAL (timeout ()),
              this, SLOT (resizeScaleAndMove ()));
 }
@@ -2166,8 +2172,8 @@ void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
 
         if (delayed)
         {
-            // Call self with delayed==false in 200ms
-            m_smoothScaleTimer->start (200/*ms*/, true/*single shot*/);
+            // Call self (once) with delayed==false in 200ms
+            m_smoothScaleTimer->start (200/*ms*/);
         }
     }
 

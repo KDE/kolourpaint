@@ -440,7 +440,7 @@ void kpSelection::moveBy (int dx, int dy)
     kDebug () << "\toldRect=" << oldRect << endl;
 #endif
 
-    m_rect.moveBy (dx, dy);
+    m_rect.translate (dx, dy);
     m_points.translate (dx, dy);
 #if DEBUG_KP_SELECTION && 1
     kDebug () << "\tnewRect=" << m_rect << endl;
@@ -705,7 +705,7 @@ void kpSelection::paintOpaqueText (QPixmap *destPixmap, const QRect &docRect) co
         if (m_textStyle.effectiveBackgroundColor ().isTransparent ())
         {
             QRect modifyingRectRelPixmap = modifyingRect;
-            modifyingRectRelPixmap.moveBy (-docRect.x (), -docRect.y ());
+            modifyingRectRelPixmap.translate (-docRect.x (), -docRect.y ());
 
             // Set the RGB of transparent pixels to foreground colour to avoid
             // anti-aliasing the foreground coloured text with undefined RGBs.
@@ -810,7 +810,7 @@ QPixmap kpSelection::transparentForegroundTextPixmap () const
 
 
     QRect rect (textAreaRect ());
-    rect.moveBy (-m_rect.x (), -m_rect.y ());
+    rect.translate (-m_rect.x (), -m_rect.y ());
     ::drawTextLines (&pixmapPainter, &pixmapMaskPainter,
                      rect,
                      textLines ());
@@ -1269,7 +1269,7 @@ void kpSelection::calculateTransparencyMask ()
     #if DEBUG_KP_SELECTION
         kDebug () << "\ttext - no need for transparency mask" << endl;
     #endif
-        m_transparencyMask = QPixmap();
+        m_transparencyMask = QBitmap ();
         return;
     }
 
@@ -1278,7 +1278,7 @@ void kpSelection::calculateTransparencyMask ()
     #if DEBUG_KP_SELECTION
         kDebug () << "\tno pixmap - no need for transparency mask" << endl;
     #endif
-        m_transparencyMask = QPixmap();
+        m_transparencyMask = QBitmap ();
         return;
     }
 
@@ -1287,11 +1287,11 @@ void kpSelection::calculateTransparencyMask ()
     #if DEBUG_KP_SELECTION
         kDebug () << "\topaque - no need for transparency mask" << endl;
     #endif
-        m_transparencyMask = QPixmap();
+        m_transparencyMask = QBitmap ();
         return;
     }
 
-    m_transparencyMask = QPixmap (m_pixmap->width (), m_pixmap->height ());
+    m_transparencyMask = QBitmap (m_pixmap->width (), m_pixmap->height ());
 
     QImage image = kpPixmapFX::convertToImage (*m_pixmap);
     QPainter transparencyMaskPainter (&m_transparencyMask);
@@ -1323,7 +1323,7 @@ void kpSelection::calculateTransparencyMask ()
     #if DEBUG_KP_SELECTION
         kDebug () << "\tcolour useless - completely opaque" << endl;
     #endif
-        m_transparencyMask = QPixmap();
+        m_transparencyMask = QBitmap ();
         return;
     }
 }

@@ -59,16 +59,13 @@ static const int GripSize = 7;
 static const int GripHandleSize = 7;
 
 
-kpGrip::kpGrip (GripType type,
-                QWidget *parent, const char *name)
+kpGrip::kpGrip (GripType type, QWidget *parent)
     : QLabel (parent),
       m_type (type),
       m_startPoint (KP_INVALID_POINT),
       m_currentPoint (KP_INVALID_POINT),
       m_shouldReleaseMouseButtons (false)
 {
-    setObjectName (name);
-
     setCursor (cursorForType (m_type));
 
     setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
@@ -397,15 +394,14 @@ void kpGrip::paintEvent (QPaintEvent *e)
 }
 
 
-kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent,
-                                                      const char *name)
-    : Q3ScrollView ((QWidget *) parent, name, Qt::WStaticContents | Qt::WNoAutoErase),
+kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent)
+    : Q3ScrollView ((QWidget *) parent, 0/*no name*/, Qt::WStaticContents | Qt::WNoAutoErase),
       m_mainWindow (parent),
       m_contentsXSoon (-1), m_contentsYSoon (-1),
       m_view (0),
-      m_bottomGrip (new kpGrip (kpGrip::Bottom, viewport (), "Bottom Grip")),
-      m_rightGrip (new kpGrip (kpGrip::Right, viewport (), "Right Grip")),
-      m_bottomRightGrip (new kpGrip (kpGrip::BottomRight, viewport (), "BottomRight Grip")),
+      m_bottomGrip (new kpGrip (kpGrip::Bottom, viewport ())),
+      m_rightGrip (new kpGrip (kpGrip::Right, viewport ())),
+      m_bottomRightGrip (new kpGrip (kpGrip::BottomRight, viewport ())),
       m_docResizingGrip (0),
       m_dragScrollTimer (new QTimer (this)),
       m_zoomLevel (100),
@@ -415,6 +411,10 @@ kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent,
       m_haveMovedFromOriginalDocSize (false)
 
 {
+    m_bottomGrip->setObjectName ("Bottom Grip");
+    m_rightGrip->setObjectName ("Right Grip");
+    m_bottomRightGrip->setObjectName ("BottomRight Grip");
+
     // COMPAT: remove
     viewport ()->setAttribute (Qt::WA_PaintOutsidePaintEvent);
     viewport ()->setAttribute (Qt::WA_PaintUnclipped);
@@ -636,7 +636,7 @@ QRect kpViewScrollableContainer::mapViewToViewport (const QRect &viewRect)
         return QRect ();
 
     QRect ret = viewRect;
-    ret.moveBy (-contentsX (), -contentsY ());
+    ret.translate (-contentsX (), -contentsY ());
     return ret;
 }
 

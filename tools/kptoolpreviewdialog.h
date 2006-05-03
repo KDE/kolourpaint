@@ -63,8 +63,7 @@ public:
                          // (in the Dimensions Group Box) e.g. "After Skew:"
                          const QString &afterActionText,
                          bool actOnSelection,
-                         kpMainWindow *parent,
-                         const char *name = 0);
+                         kpMainWindow *parent);
     virtual ~kpToolPreviewDialog ();
 
 private:

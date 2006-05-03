@@ -287,10 +287,10 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
 
     QLabel *channelLabel = new QLabel (i18n ("C&hannels:"), this);
     m_channelsComboBox = new KComboBox (this);
-    m_channelsComboBox->insertItem (i18n ("All"));
-    m_channelsComboBox->insertItem (i18n ("Red"));
-    m_channelsComboBox->insertItem (i18n ("Green"));
-    m_channelsComboBox->insertItem (i18n ("Blue"));
+    m_channelsComboBox->addItem (i18n ("All"));
+    m_channelsComboBox->addItem (i18n ("Red"));
+    m_channelsComboBox->addItem (i18n ("Green"));
+    m_channelsComboBox->addItem (i18n ("Blue"));
 
 
     QPushButton *resetPushButton = new QPushButton (i18n ("Reset &All Values"), this);
@@ -392,7 +392,7 @@ kpColorEffectCommand *kpEffectBalanceWidget::createCommand () const
 // protected
 int kpEffectBalanceWidget::channels () const
 {
-    switch (m_channelsComboBox->currentItem ())
+    switch (m_channelsComboBox->currentIndex ())
     {
     default:
     case 0:

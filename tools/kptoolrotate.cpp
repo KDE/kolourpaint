@@ -233,13 +233,12 @@ int kpToolRotateDialog::s_lastAngleCustom = 0;
 
 
 kpToolRotateDialog::kpToolRotateDialog (bool actOnSelection,
-                                        kpMainWindow *mainWindow,
-                                        const char *name)
+                                        kpMainWindow *mainWindow)
     : kpToolPreviewDialog (kpToolPreviewDialog::AllFeatures,
                            false/*don't reserve top row*/,
                            actOnSelection ? i18n ("Rotate Selection") : i18n ("Rotate Image"),
                            i18n ("After Rotate:"),
-                           actOnSelection, mainWindow, name)
+                           actOnSelection, mainWindow)
 {
     s_lastAngleCustom = 0;
 

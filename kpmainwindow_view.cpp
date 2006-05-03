@@ -826,11 +826,13 @@ void kpMainWindow::notifyThumbnailGeometryChanged ()
     if (!m_thumbnailSaveConfigTimer)
     {
         m_thumbnailSaveConfigTimer = new QTimer (this);
+        m_thumbnailSaveConfigTimer->setSingleShot (true);
         connect (m_thumbnailSaveConfigTimer, SIGNAL (timeout ()),
                  this, SLOT (slotSaveThumbnailGeometry ()));
     }
 
-    m_thumbnailSaveConfigTimer->start (500/*msec*/, true/*single shot*/);
+    // (single shot)
+    m_thumbnailSaveConfigTimer->start (500/*msec*/);
 }
 
 // private slot

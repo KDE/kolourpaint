@@ -45,14 +45,11 @@ const double kpColorSimilarityDialog::maximumColorSimilarity = .30;
 
 
 kpColorSimilarityDialog::kpColorSimilarityDialog (kpMainWindow *mainWindow,
-                                                  QWidget *parent,
-                                                  const char *name)
+                                                  QWidget *parent)
     : KDialog (parent, i18n ("Color Similarity"),
                KDialog::Ok | KDialog::Cancel),
       m_mainWindow (mainWindow)
 {
-    setObjectName (name);
-
     QWidget *baseWidget = new QWidget (this);
     setMainWidget (baseWidget);
 

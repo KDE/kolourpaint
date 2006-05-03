@@ -59,6 +59,7 @@ kpThumbnail::kpThumbnail (kpMainWindow *parent, const char *name)
     if (parent)
     {
         // Prevent thumbnail from docking - it's _really_ irritating otherwise
+        // COMPAT: re-enable after porting to QDockWindow
 #if 0
         parent->leftDock ()->setAcceptDockWindow (this, false);
         parent->rightDock ()->setAcceptDockWindow (this, false);

@@ -77,8 +77,7 @@ class kpToolSkewDialog : public kpToolPreviewDialog
 Q_OBJECT
 
 public:
-    kpToolSkewDialog (bool actOnSelection, kpMainWindow *parent,
-                      const char *name = 0);
+    kpToolSkewDialog (bool actOnSelection, kpMainWindow *parent);
     virtual ~kpToolSkewDialog ();
 
 private:

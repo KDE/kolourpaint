@@ -299,11 +299,11 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
 
     // COMPAT: don't think this is needed
     QButtonGroup *buttonGroup = new QButtonGroup (this);
-    buttonGroup->insert (m_blackAndWhiteRadioButton);
-    buttonGroup->insert (m_blackAndWhiteDitheredRadioButton);
-    buttonGroup->insert (m_8BitRadioButton);
-    buttonGroup->insert (m_8BitDitheredRadioButton);
-    buttonGroup->insert (m_24BitRadioButton);
+    buttonGroup->addButton (m_blackAndWhiteRadioButton);
+    buttonGroup->addButton (m_blackAndWhiteDitheredRadioButton);
+    buttonGroup->addButton (m_8BitRadioButton);
+    buttonGroup->addButton (m_8BitDitheredRadioButton);
+    buttonGroup->addButton (m_24BitRadioButton);
 
 
     const int screenDepth = QPixmap::defaultDepth ();
