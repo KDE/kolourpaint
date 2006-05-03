@@ -111,8 +111,8 @@ kpView::kpView (kpDocument *document,
     setAttribute(Qt::WA_NoSystemBackground, true);
     setFocusPolicy (Qt::WheelFocus);
     setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
-    setAttribute(Qt::WA_KeyCompression, true);
-    setAttribute(Qt::WA_InputMethodEnabled, true); // ensure using InputMethod
+    setAttribute (Qt::WA_KeyCompression, true);
+    setAttribute (Qt::WA_InputMethodEnabled, true);  // ensure using InputMethod
 }
 
 kpView::~kpView ()
@@ -605,7 +605,7 @@ void kpView::updateQueuedArea ()
     if (vm->queueUpdates ())
         return;
 
-    if (!d->m_queuedUpdateArea.isNull ())
+    if (!d->m_queuedUpdateArea.isEmpty ())
         vm->updateView (this, d->m_queuedUpdateArea);
 
     invalidateQueuedArea ();
@@ -1472,7 +1472,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
             rect = rect.intersect (sel->textAreaRect ());
             if (!rect.isEmpty ())
             {
-                rect.moveBy (-docRect.x (), -docRect.y ());
+                rect.translate (-docRect.x (), -docRect.y ());
 
                 QBitmap maskBitmap;
                 QPainter destPixmapPainter, maskBitmapPainter;
@@ -1785,7 +1785,7 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
         backBufferPainter.scale (double (zoomLevelX ()) / 100.0,
                                  double (zoomLevelY ()) / 100.0);
         backBufferPainter.drawPixmap (docRect, docPixmap);
-        backBufferPainter.resetXForm ();  // back to 1-1 scaling
+        backBufferPainter.resetMatrix ();  // back to 1-1 scaling
     #if DEBUG_KP_VIEW_RENDERER && 1
         kDebug () << "\tscale time=" << scaleTimer.elapsed () << endl;
     #endif
