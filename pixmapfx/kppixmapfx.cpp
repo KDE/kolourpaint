@@ -568,16 +568,6 @@ QPixmap kpPixmapFX::pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
 }
 
 
-static void myCopyBlt(QPixmap *dst, int dx, int dy,
-                    const QPixmap *src, int sx, int sy, int sw, int sh)
-{
-    QImage image = dst->toImage();
-    QPainter p(&image);
-    p.setCompositionMode(QPainter::CompositionMode_Source);
-    p.drawPixmap(dx, dy, *src, sx, sy, sw, sh);
-    *dst = QPixmap::fromImage(image);
-}
-
 //
 // Get/Set Parts of Pixmap
 //
@@ -622,7 +612,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
     const QPoint destTopLeft = validSrcRect.topLeft () - rect.topLeft ();
 
     // copy data _and_ mask (if avail)
-    myCopyBlt (&retPixmap, /* dest */
+    copyBlt (&retPixmap, /* dest */
              destTopLeft.x (), destTopLeft.y (), /* dest pt */
              &pm, /* src */
              validSrcRect.x (), validSrcRect.y (), /* src pt */
@@ -695,7 +685,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
     //       Qt bug on boundary case?
 
     // copy data _and_ mask
-    myCopyBlt (destPixmapPtr,
+    copyBlt (destPixmapPtr,
              destAt.x (), destAt.y (),
              &srcPixmap,
              0, 0,
@@ -870,6 +860,7 @@ QBitmap kpPixmapFX::getNonNullMask (const QPixmap &pm)
     }
 }
 
+
 // public static
 QBitmap kpPixmapFX::getNonNullMaskAt (const QPixmap &pm, const QRect &rect)
 {
@@ -877,7 +868,7 @@ QBitmap kpPixmapFX::getNonNullMaskAt (const QPixmap &pm, const QRect &rect)
 
     if (!pm.mask ().isNull ())
     {
-        myCopyBlt (&destMaskBitmap, 0, 0,
+        copyBlt (&destMaskBitmap, 0, 0,
                  &pm, rect.x (), rect.y (), rect.width (), rect.height ());
     }
     else
@@ -898,8 +889,8 @@ void kpPixmapFX::setMaskAt (QPixmap *destPixmapPtr, const QPoint &destAt,
 
     QBitmap destMaskBitmap (srcMaskBitmap.width (), srcMaskBitmap.height ());
 
-    myCopyBlt (&destMaskBitmap, destAt.x (), destAt.y (),
-               &srcMaskBitmap, 0, 0, srcMaskBitmap.width(), srcMaskBitmap.height());
+    copyBlt (&destMaskBitmap, destAt.x (), destAt.y (),
+             &srcMaskBitmap);
 
     destPixmapPtr->setMask (destMaskBitmap);
 }
