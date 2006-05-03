@@ -1839,8 +1839,12 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
 
     backBufferPainter.end ();
 
-    bitBlt (this, viewRect.topLeft (),
-            d->m_backBuffer, QRect (0, 0, viewRect.width (), viewRect.height ()));
+    // COMPAT: Qt4 does double buffering automatically - we're wasting CPU.
+    {
+        QPainter p (this);
+        p.drawPixmap (viewRect.topLeft (),
+            *d->m_backBuffer, QRect (0, 0, viewRect.width (), viewRect.height ()));
+    }
 }
 
 
