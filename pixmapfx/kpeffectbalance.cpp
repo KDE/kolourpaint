@@ -258,7 +258,9 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
                                               QWidget *parent)
     : kpColorEffectWidget (actOnSelection, mainWindow, parent)
 {
-    QGridLayout *lay = new QGridLayout (this, 5, 5, marginHint (), spacingHint ());
+    QGridLayout *lay = new QGridLayout (this);
+    lay->setSpacing(spacingHint ());
+    lay->setMargin(marginHint ());
 
 
     QLabel *brightnessLabel = new QLabel (i18n ("&Brightness:"), this);

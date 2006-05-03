@@ -173,9 +173,9 @@ void kpToolPreviewDialog::createPreviewGroupBox ()
              this, SLOT (slotUpdateWithWaitCursor ()));
 
 
-    QVBoxLayout *previewLayout = new QVBoxLayout (m_previewGroupBox,
-                                                  marginHint () * 2,
-                                                  qMax (1, spacingHint () / 2));
+    QVBoxLayout *previewLayout = new QVBoxLayout (m_previewGroupBox );
+    previewLayout->setMargin( marginHint () * 2 );
+    previewLayout->setSpacing( qMax (1, spacingHint () / 2));
 
     previewLayout->addWidget (m_previewPixmapLabel, 1/*stretch*/);
     previewLayout->addWidget (updatePushButton, 0/*stretch*/, Qt::AlignHCenter);

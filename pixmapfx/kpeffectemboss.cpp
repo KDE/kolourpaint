@@ -115,7 +115,9 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
                                             QWidget *parent)
     : kpColorEffectWidget (actOnSelection, mainWindow, parent)
 {
-    QGridLayout *lay = new QGridLayout (this, 4, 2, marginHint (), spacingHint ());
+    QGridLayout *lay = new QGridLayout (this);
+    lay->setSpacing(spacingHint ());
+    lay->setMargin(marginHint ());
 
 
 #if 0

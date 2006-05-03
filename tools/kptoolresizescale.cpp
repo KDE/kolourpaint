@@ -527,7 +527,9 @@ kpToolResizeScaleDialog::kpToolResizeScaleDialog (kpMainWindow *mainWindow)
     createDimensionsGroupBox (baseWidget);
 
 
-    QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget, 0/*margin*/, spacingHint ());
+    QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget);
+    baseLayout->setSpacing(spacingHint ());
+    baseLayout->setMargin(0/*margin*/);
     baseLayout->addWidget (m_actOnBox);
     baseLayout->addWidget (m_operationGroupBox);
     baseLayout->addWidget (m_dimensionsGroupBox);

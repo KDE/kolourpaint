@@ -153,17 +153,17 @@ kpEffectInvertWidget::kpEffectInvertWidget (bool actOnSelection,
                                             QWidget *parent )
     : kpColorEffectWidget (actOnSelection, mainWindow, parent)
 {
-    QVBoxLayout *topLevelLay = new QVBoxLayout (this, marginHint (), spacingHint ());
+    QVBoxLayout *topLevelLay = new QVBoxLayout (this);
+    topLevelLay->setSpacing(spacingHint ());
+    topLevelLay->setMargin(marginHint ());
 
 
     QWidget *centerWidget = new QWidget (this);
     topLevelLay->addWidget (centerWidget, 0/*stretch*/, Qt::AlignCenter);
 
 
-    QVBoxLayout *centerWidgetLay = new QVBoxLayout (centerWidget,
-                                                    0/*margin*/,
-                                                    spacingHint ());
-
+    QVBoxLayout *centerWidgetLay = new QVBoxLayout (centerWidget );
+    centerWidgetLay->setSpacing( spacingHint() );
 
     m_redCheckBox = new QCheckBox (i18n ("&Red"), centerWidget);
     m_greenCheckBox = new QCheckBox (i18n ("&Green"), centerWidget);

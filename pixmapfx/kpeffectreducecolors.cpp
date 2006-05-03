@@ -281,7 +281,9 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
                                                         QWidget *parent )
     : kpColorEffectWidget (actOnSelection, mainWindow, parent)
 {
-    QVBoxLayout *lay = new QVBoxLayout (this, marginHint (), spacingHint ());
+    QVBoxLayout *lay = new QVBoxLayout (this);
+    lay->setSpacing(spacingHint ());
+    lay->setMargin(marginHint ());
 
 
     m_blackAndWhiteRadioButton =

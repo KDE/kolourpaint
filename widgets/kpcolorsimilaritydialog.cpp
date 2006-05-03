@@ -63,7 +63,9 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (kpMainWindow *mainWindow,
     QPushButton *updatePushButton = new QPushButton (i18n ("&Update"), cubeGroupBox);
 
 
-    QVBoxLayout *cubeLayout = new QVBoxLayout (cubeGroupBox, marginHint () * 2, spacingHint ());
+    QVBoxLayout *cubeLayout = new QVBoxLayout (cubeGroupBox);
+    cubeLayout->setSpacing(spacingHint ());
+    cubeLayout->setMargin(marginHint () * 2);
     cubeLayout->addWidget (m_colorSimilarityCube, 1/*stretch*/);
     cubeLayout->addWidget (updatePushButton, 0/*stretch*/, Qt::AlignHCenter);
 
@@ -81,7 +83,9 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (kpMainWindow *mainWindow,
     m_colorSimilarityInput->setSpecialValueText (i18n ("Exact Match"));
 
 
-    QVBoxLayout *inputLayout = new QVBoxLayout (inputGroupBox, marginHint () * 2, spacingHint ());
+    QVBoxLayout *inputLayout = new QVBoxLayout (inputGroupBox);
+    inputLayout->setSpacing(spacingHint ());
+    inputLayout->setMargin(marginHint () * 2);
     inputLayout->addWidget (m_colorSimilarityInput);
 
 
@@ -89,7 +93,9 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (kpMainWindow *mainWindow,
              this, SLOT (slotColorSimilarityValueChanged ()));
 
 
-    QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget, 0/*margin*/, spacingHint () * 2);
+    QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget);
+    baseLayout->setSpacing(spacingHint () * 2);
+    baseLayout->setMargin(0/*margin*/);
     baseLayout->addWidget (cubeGroupBox, 1/*stretch*/);
     baseLayout->addWidget (inputGroupBox);
 }

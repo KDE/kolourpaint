@@ -131,7 +131,9 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
                                                       QWidget *parent)
     : kpColorEffectWidget (actOnSelection, mainWindow, parent)
 {
-    QGridLayout *lay = new QGridLayout (this, 4, 2, marginHint (), spacingHint ());
+    QGridLayout *lay = new QGridLayout (this);
+    lay->setSpacing(spacingHint ());
+    lay->setMargin(marginHint ());
 
 
     QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);

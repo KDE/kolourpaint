@@ -111,9 +111,9 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 
 
     m_settingsGroupBox = new QGroupBox (mainWidget ());
-    m_settingsLayout = new QVBoxLayout (m_settingsGroupBox,
-                                        marginHint () * 2,
-                                        spacingHint ());
+    m_settingsLayout = new QVBoxLayout ( m_settingsGroupBox );
+    m_settingsLayout->setMargin( marginHint () * 2 );
+    m_settingsLayout->setSpacing( spacingHint () );
     addCustomWidgetToBack (m_settingsGroupBox);
 
 
