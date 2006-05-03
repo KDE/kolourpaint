@@ -61,7 +61,7 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const char *nam
 
         int s = eraserSizes [i];
 
-        *cursorPixmap = QPixmap(s, s);
+        *cursorPixmap = QPixmap (s, s);
         cursorPixmap->fill (Qt::black);
 
 
