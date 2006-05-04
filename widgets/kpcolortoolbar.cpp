@@ -862,16 +862,17 @@ void kpColorPalette::setOrientation (Qt::Orientation o)
 
     if (o == Qt::Horizontal)
     {
-        m_boxLayout = new QBoxLayout (this, QBoxLayout::LeftToRight, 0/*margin*/, 5/*spacing*/);
+        m_boxLayout = new QBoxLayout (QBoxLayout::LeftToRight, this );
         m_boxLayout->addWidget (m_transparentColorCell, 0/*stretch*/, Qt::AlignVCenter);
         m_boxLayout->addWidget (m_colorCells);
     }
     else
     {
-        m_boxLayout = new QBoxLayout (this, QBoxLayout::TopToBottom, 0/*margin*/, 5/*spacing*/);
+        m_boxLayout = new QBoxLayout (QBoxLayout::TopToBottom, this);
         m_boxLayout->addWidget (m_transparentColorCell, 0/*stretch*/, Qt::AlignHCenter);
         m_boxLayout->addWidget (m_colorCells);
     }
+    m_boxLayout->setSpacing( 5 );
 
     m_orientation = o;
 }
@@ -960,8 +961,9 @@ kpColorToolBar::kpColorToolBar (const QString &label, kpMainWindow *mainWindow)
 
 
     QWidget *base = new QWidget (this);
-    m_boxLayout = new QBoxLayout (base, QBoxLayout::LeftToRight,
-                                  5/*margin*/, (10 * 4)/*spacing*/);
+    m_boxLayout = new QBoxLayout (QBoxLayout::LeftToRight, base );
+    m_boxLayout->setMargin( 5 );
+    m_boxLayout->setSpacing( 10 * 4 );
 
     m_dualColorButton = new kpDualColorButton (mainWindow, base);
     m_dualColorButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);

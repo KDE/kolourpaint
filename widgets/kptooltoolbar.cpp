@@ -589,16 +589,14 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
     delete m_baseLayout;
     if (o == Qt::Vertical)
     {
-        m_baseLayout = new QBoxLayout (m_baseWidget, QBoxLayout::TopToBottom,
-                                       5/*margin*/,
-                                       10/*spacing*/);
+        m_baseLayout = new QBoxLayout (QBoxLayout::TopToBottom, m_baseWidget );
     }
     else // if (o == Qt::Horizontal)
     {
-        m_baseLayout = new QBoxLayout (m_baseWidget, QBoxLayout::LeftToRight,
-                                       5/*margin*/,
-                                       10/*spacing*/);
+        m_baseLayout = new QBoxLayout (QBoxLayout::LeftToRight, m_baseWidget );
     }
+    m_baseLayout->setSpacing( 10 );
+    m_baseLayout->setMargin( 5 );
 
     m_toolLayout = new QGridLayout ();
     m_baseLayout->addItem( m_toolLayout );
