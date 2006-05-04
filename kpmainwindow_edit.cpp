@@ -113,17 +113,17 @@ void kpMainWindow::setupEditMenuActions ()
         this, SLOT (slotPasteInNewWindow ()), ac, "edit_paste_in_new_window");
 
     //m_actionDelete = KStdAction::clear (this, SLOT (slotDelete ()), ac);
-    m_actionDelete = new KAction (i18n ("&Delete Selection"), 0,
-        this, SLOT (slotDelete ()), ac, "edit_clear");
+    m_actionDelete = new KAction(i18n ("&Delete Selection"), ac, "edit_clear");
+    connect(m_actionDelete, SIGNAL(triggered(bool) ), SLOT (slotDelete ()));
 
     m_actionSelectAll = KStdAction::selectAll (this, SLOT (slotSelectAll ()), ac);
     m_actionDeselect = KStdAction::deselect (this, SLOT (slotDeselect ()), ac);
 
 
-    m_actionCopyToFile = new KAction (i18n ("C&opy to File..."), 0,
-        this, SLOT (slotCopyToFile ()), ac, "edit_copy_to_file");
-    m_actionPasteFromFile = new KAction (i18n ("Paste &From File..."), 0,
-        this, SLOT (slotPasteFromFile ()), ac, "edit_paste_from_file");
+    m_actionCopyToFile = new KAction(i18n ("C&opy to File..."), ac, "edit_copy_to_file");
+    connect(m_actionCopyToFile, SIGNAL(triggered(bool) ), SLOT (slotCopyToFile ()));
+    m_actionPasteFromFile = new KAction(i18n ("Paste &From File..."), ac, "edit_paste_from_file");
+    connect(m_actionPasteFromFile, SIGNAL(triggered(bool) ), SLOT (slotPasteFromFile ()));
 
 
     m_editMenuDocumentActionsEnabled = false;

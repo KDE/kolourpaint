@@ -90,38 +90,47 @@ void kpMainWindow::setupImageMenuActions ()
 {
     KActionCollection *ac = actionCollection ();
 
-    m_actionResizeScale = new KAction (i18n ("R&esize / Scale..."), Qt::CTRL + Qt::Key_E,
-        this, SLOT (slotResizeScale ()), ac, "image_resize_scale");
+    m_actionResizeScale = new KAction(i18n ("R&esize / Scale..."), ac, "image_resize_scale");
+    connect(m_actionResizeScale, SIGNAL(triggered(bool) ), SLOT (slotResizeScale ()));
+    m_actionResizeScale->setShortcut(Qt::CTRL + Qt::Key_E);
 
-    m_actionCrop = new KAction (i18n ("Se&t as Image (Crop)"), Qt::CTRL + Qt::Key_T,
-        this, SLOT (slotCrop ()), ac, "image_crop");
+    m_actionCrop = new KAction(i18n ("Se&t as Image (Crop)"), ac, "image_crop");
+    connect(m_actionCrop, SIGNAL(triggered(bool) ), SLOT (slotCrop ()));
+    m_actionCrop->setShortcut(Qt::CTRL + Qt::Key_T);
 
-    m_actionAutoCrop = new KAction (autoCropText (), Qt::CTRL + Qt::Key_U,
-        this, SLOT (slotAutoCrop ()), ac, "image_auto_crop");
+    m_actionAutoCrop = new KAction(autoCropText (), ac, "image_auto_crop");
+    connect(m_actionAutoCrop, SIGNAL(triggered(bool) ), SLOT (slotAutoCrop ()));
+    m_actionAutoCrop->setShortcut(Qt::CTRL + Qt::Key_U);
 
-    m_actionFlip = new KAction (i18n ("&Flip..."), Qt::CTRL + Qt::Key_F,
-        this, SLOT (slotFlip ()), ac, "image_flip");
+    m_actionFlip = new KAction(i18n ("&Flip..."), ac, "image_flip");
+    connect(m_actionFlip, SIGNAL(triggered(bool) ), SLOT (slotFlip ()));
+    m_actionFlip->setShortcut(Qt::CTRL + Qt::Key_F);
 
-    m_actionRotate = new KAction (i18n ("&Rotate..."), Qt::CTRL + Qt::Key_R,
-        this, SLOT (slotRotate ()), ac, "image_rotate");
+    m_actionRotate = new KAction(i18n ("&Rotate..."), ac, "image_rotate");
+    connect(m_actionRotate, SIGNAL(triggered(bool) ), SLOT (slotRotate ()));
+    m_actionRotate->setShortcut(Qt::CTRL + Qt::Key_R);
 
-    m_actionSkew = new KAction (i18n ("S&kew..."), Qt::CTRL + Qt::Key_K,
-        this, SLOT (slotSkew ()), ac, "image_skew");
+    m_actionSkew = new KAction(i18n ("S&kew..."), ac, "image_skew");
+    connect(m_actionSkew, SIGNAL(triggered(bool) ), SLOT (slotSkew ()));
+    m_actionSkew->setShortcut(Qt::CTRL + Qt::Key_K);
 
-    m_actionConvertToBlackAndWhite = new KAction (i18n ("Reduce to Mo&nochrome (Dithered)"), 0,
-        this, SLOT (slotConvertToBlackAndWhite ()), ac, "image_convert_to_black_and_white");
+    m_actionConvertToBlackAndWhite = new KAction(i18n ("Reduce to Mo&nochrome (Dithered)"), ac, "image_convert_to_black_and_white");
+    connect(m_actionConvertToBlackAndWhite, SIGNAL(triggered(bool) ), SLOT (slotConvertToBlackAndWhite ()));
 
-    m_actionConvertToGrayscale = new KAction (i18n ("Reduce to &Grayscale"), 0,
-        this, SLOT (slotConvertToGrayscale ()), ac, "image_convert_to_grayscale");
+    m_actionConvertToGrayscale = new KAction(i18n ("Reduce to &Grayscale"), ac, "image_convert_to_grayscale");
+    connect(m_actionConvertToGrayscale, SIGNAL(triggered(bool) ), SLOT (slotConvertToGrayscale ()));
 
-    m_actionInvertColors = new KAction (i18n ("&Invert Colors"), Qt::CTRL + Qt::Key_I,
-        this, SLOT (slotInvertColors ()), ac, "image_invert_colors");
+    m_actionInvertColors = new KAction(i18n ("&Invert Colors"), ac, "image_invert_colors");
+    connect(m_actionInvertColors, SIGNAL(triggered(bool) ), SLOT (slotInvertColors ()));
+    m_actionInvertColors->setShortcut(Qt::CTRL + Qt::Key_I);
 
-    m_actionClear = new KAction (i18n ("C&lear"), Qt::CTRL + Qt::SHIFT + Qt::Key_N,
-        this, SLOT (slotClear ()), ac, "image_clear");
+    m_actionClear = new KAction(i18n ("C&lear"), ac, "image_clear");
+    connect(m_actionClear, SIGNAL(triggered(bool) ), SLOT (slotClear ()));
+    m_actionClear->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
 
-    m_actionMoreEffects = new KAction (i18n ("&More Effects..."), Qt::CTRL + Qt::Key_M,
-        this, SLOT (slotMoreEffects ()), ac, "image_more_effects");
+    m_actionMoreEffects = new KAction(i18n ("&More Effects..."), ac, "image_more_effects");
+    connect(m_actionMoreEffects, SIGNAL(triggered(bool) ), SLOT (slotMoreEffects ()));
+    m_actionMoreEffects->setShortcut(Qt::CTRL + Qt::Key_M);
 
     enableImageMenuDocumentActions (false);
 }

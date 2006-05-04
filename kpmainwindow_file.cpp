@@ -72,12 +72,13 @@ void kpMainWindow::setupFileMenuActions ()
     m_actionSave = KStdAction::save (this, SLOT (slotSave ()), ac);
     m_actionSaveAs = KStdAction::saveAs (this, SLOT (slotSaveAs ()), ac);
 
-    m_actionExport = new KAction (i18n ("E&xport..."), 0,
-        this, SLOT (slotExport ()), ac, "file_export");
+    m_actionExport = new KAction(i18n ("E&xport..."), ac, "file_export");
+    connect(m_actionExport, SIGNAL(triggered(bool) ), SLOT (slotExport ()));
 
     //m_actionRevert = KStdAction::revert (this, SLOT (slotRevert ()), ac);
-    m_actionReload = new KAction (i18n ("Reloa&d"), KStdAccel::reload (),
-        this, SLOT (slotReload ()), ac, "file_revert");
+    m_actionReload = new KAction(i18n ("Reloa&d"), ac, "file_revert");
+    connect(m_actionReload, SIGNAL(triggered(bool) ), SLOT (slotReload ()));
+    m_actionReload->setShortcut(KStdAccel::reload ());
     slotEnableReload ();
 
     m_actionPrint = KStdAction::print (this, SLOT (slotPrint ()), ac);
@@ -85,10 +86,10 @@ void kpMainWindow::setupFileMenuActions ()
 
     m_actionMail = KStdAction::mail (this, SLOT (slotMail ()), ac);
 
-    m_actionSetAsWallpaperCentered = new KAction (i18n ("Set as Wa&llpaper (Centered)"), 0,
-        this, SLOT (slotSetAsWallpaperCentered ()), ac, "file_set_as_wallpaper_centered");
-    m_actionSetAsWallpaperTiled = new KAction (i18n ("Set as Wallpaper (&Tiled)"), 0,
-        this, SLOT (slotSetAsWallpaperTiled ()), ac, "file_set_as_wallpaper_tiled");
+    m_actionSetAsWallpaperCentered = new KAction(i18n ("Set as Wa&llpaper (Centered)"), ac, "file_set_as_wallpaper_centered");
+    connect(m_actionSetAsWallpaperCentered, SIGNAL(triggered(bool) ), SLOT (slotSetAsWallpaperCentered ()));
+    m_actionSetAsWallpaperTiled = new KAction(i18n ("Set as Wallpaper (&Tiled)"), ac, "file_set_as_wallpaper_tiled");
+    connect(m_actionSetAsWallpaperTiled, SIGNAL(triggered(bool) ), SLOT (slotSetAsWallpaperTiled ()));
 
     m_actionClose = KStdAction::close (this, SLOT (slotClose ()), ac);
     m_actionQuit = KStdAction::quit (this, SLOT (slotQuit ()), ac);
