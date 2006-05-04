@@ -1118,8 +1118,8 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
             return;
         }
 
-        m_currentPoint = view ? view->transformViewToDoc (e->pos ()) : QPoint (-1, -1);
-        m_currentViewPoint = view ? e->pos () : QPoint (-1, -1);
+        m_currentPoint = view->transformViewToDoc (e->pos ());
+        m_currentViewPoint = e->pos ();
         endDrawInternal (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
     }
 
