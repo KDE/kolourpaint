@@ -55,8 +55,7 @@ void kpMainWindow::setupHelpMenuActions ()
     // -- Thurston
     d->m_actionHelpTakingScreenshots = new KAction (
         i18n ("Acquiring &Screenshots"), 0,
-        this, SLOT (slotHelpTakingScreenshots ()),
-        ac, "help_taking_screenshots");
+        this, SLOT (slotHelpTakingScreenshots ()), ac, "help_taking_screenshots");
 
 
     enableHelpMenuDocumentActions (false);
