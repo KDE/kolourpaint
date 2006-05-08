@@ -31,7 +31,7 @@
 
 
 #include <kactionclasses.h>
-
+#include <ktoggleaction.h>
 #include <kpsinglekeytriggersaction.h>
 
 
