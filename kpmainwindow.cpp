@@ -40,7 +40,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-
+#include <krecentfilesaction.h>
 #include <kpcolortoolbar.h>
 #include <kpcommandhistory.h>
 #include <kpdefs.h>
