@@ -58,7 +58,7 @@
 #include <kptooltoolbar.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
-
+#include <kactioncollection.h>
 
 //
 // kpTool

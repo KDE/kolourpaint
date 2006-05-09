@@ -164,7 +164,7 @@ void kpMainWindow::slotConfigureToolBars ()
                          this/*parent*/);
     // Clicking on OK after Apply brings up the dialog (below) again.
     // Bug with KEditToolBar.
-    dialog.showButtonApply (false);
+    dialog.showButton( KDialog::Default, false);
     connect (&dialog, SIGNAL (newToolbarConfig ()),
              this, SLOT (slotNewToolBarConfig ()));
 

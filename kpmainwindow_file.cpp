@@ -47,7 +47,7 @@
 #include <kprinter.h>
 #include <kstdaccel.h>
 #include <kstdaction.h>
-
+#include <krecentfilesaction.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpdocumentsaveoptionswidget.h>
