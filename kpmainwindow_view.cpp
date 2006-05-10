@@ -91,18 +91,20 @@ void kpMainWindow::setupViewMenuActions ()
     m_zoomList.append (1000); m_zoomList.append (1200); m_zoomList.append (1600);
 
 
-    m_actionShowGrid = new KToggleAction (i18n ("Show &Grid"), Qt::CTRL + Qt::Key_G,
-        this, SLOT (slotShowGridToggled ()), actionCollection (), "view_show_grid");
+    m_actionShowGrid = new KToggleAction(i18n ("Show &Grid"), actionCollection (), "view_show_grid");
+    connect(m_actionShowGrid, SIGNAL(triggered(bool) ), SLOT (slotShowGridToggled ()));
+    m_actionShowGrid->setShortcut(Qt::CTRL + Qt::Key_G);
     m_actionShowGrid->setCheckedState (i18n ("Hide &Grid"));
 
 
-    m_actionShowThumbnail = new KToggleAction (i18n ("Show T&humbnail"), Qt::CTRL + Qt::Key_H,
-        this, SLOT (slotShowThumbnailToggled ()), actionCollection (), "view_show_thumbnail");
+    m_actionShowThumbnail = new KToggleAction(i18n ("Show T&humbnail"), actionCollection (), "view_show_thumbnail");
+    connect(m_actionShowThumbnail, SIGNAL(triggered(bool) ), SLOT (slotShowThumbnailToggled ()));
+    m_actionShowThumbnail->setShortcut(Qt::CTRL + Qt::Key_H);
     m_actionShowThumbnail->setCheckedState (i18n ("Hide T&humbnail"));
 
     // Please do not use setCheckedState() here - it wouldn't make sense
-    m_actionZoomedThumbnail = new KToggleAction (i18n ("Zoo&med Thumbnail Mode"), 0,
-        this, SLOT (slotZoomedThumbnailToggled ()), actionCollection (), "view_zoomed_thumbnail");
+    m_actionZoomedThumbnail = new KToggleAction(i18n ("Zoo&med Thumbnail Mode"), actionCollection (), "view_zoomed_thumbnail");
+    connect(m_actionZoomedThumbnail, SIGNAL(triggered(bool) ), SLOT (slotZoomedThumbnailToggled ()));
 
     // For consistency with the above action, don't use setCheckedState()
     //
