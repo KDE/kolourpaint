@@ -55,18 +55,18 @@ void kpMainWindow::setupTextToolBarActions ()
     m_actionTextFontSize = new KFontSizeAction (i18n ("Font Size"), 0/*shortcut*/,
         this, SLOT (slotTextFontSizeChanged ()), ac, "text_font_size");
 
-    m_actionTextBold = new KToggleAction (i18n ("Bold"),
-        "text_bold"/*icon*/, 0/*shortcut*/,
-        this, SLOT (slotTextBoldChanged ()), ac, "text_bold");
-    m_actionTextItalic = new KToggleAction (i18n ("Italic"),
-        "text_italic"/*icon*/, 0/*shortcut*/,
-        this, SLOT (slotTextItalicChanged ()), ac, "text_italic");
-    m_actionTextUnderline = new KToggleAction (i18n ("Underline"),
-        "text_under"/*icon*/, 0/*shortcut*/,
-        this, SLOT (slotTextUnderlineChanged ()), ac, "text_underline");
-    m_actionTextStrikeThru = new KToggleAction (i18n ("Strike Through"),
-        "text_strike"/*icon*/, 0/*shortcut*/,
-        this, SLOT (slotTextStrikeThruChanged ()), ac, "text_strike_thru");
+    m_actionTextBold = new KToggleAction(KIcon("text_bold"/*icon*/), i18n ("Bold"), ac, "text_bold");
+    connect(m_actionTextBold, SIGNAL(triggered(bool) ), SLOT (slotTextBoldChanged ()));
+    m_actionTextBold->setShortcut(0/*shortcut*/);
+    m_actionTextItalic = new KToggleAction(KIcon("text_italic"/*icon*/), i18n ("Italic"), ac, "text_italic");
+    connect(m_actionTextItalic, SIGNAL(triggered(bool) ), SLOT (slotTextItalicChanged ()));
+    m_actionTextItalic->setShortcut(0/*shortcut*/);
+    m_actionTextUnderline = new KToggleAction(KIcon("text_under"/*icon*/), i18n ("Underline"), ac, "text_underline");
+    connect(m_actionTextUnderline, SIGNAL(triggered(bool) ), SLOT (slotTextUnderlineChanged ()));
+    m_actionTextUnderline->setShortcut(0/*shortcut*/);
+    m_actionTextStrikeThru = new KToggleAction(KIcon("text_strike"/*icon*/), i18n ("Strike Through"), ac, "text_strike_thru");
+    connect(m_actionTextStrikeThru, SIGNAL(triggered(bool) ), SLOT (slotTextStrikeThruChanged ()));
+    m_actionTextStrikeThru->setShortcut(0/*shortcut*/);
 
 
     readAndApplyTextSettings ();

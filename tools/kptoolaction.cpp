@@ -36,9 +36,7 @@ kpToolAction::kpToolAction (const QString &text,
                             const QObject *receiver, const char *slot,
                             KActionCollection *ac, const char *name)
     : KToggleAction (text,
-                     pic, shortcut,
-                     receiver, slot,
-                     ac, name)
+                     pic, shortcut, receiver, slot, ac, name)
 {
     updateToolTip ();
 }
