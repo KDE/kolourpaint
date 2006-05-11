@@ -10,7 +10,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/kolourpaint/compat/
     ${KDE4_INCLUDE_DIR}
     ${QT_INCLUDES}
-    ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}  )
+    )
 
 add_subdirectory( cursors ) 
 add_subdirectory( pics ) 
