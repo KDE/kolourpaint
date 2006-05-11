@@ -111,11 +111,10 @@ void kpMainWindow::setupViewMenuActions ()
     // Also, don't use "Show Thumbnail Rectangle" because if entire doc
     // can be seen in scrollView, checking option won't "Show" anything
     // since rect _surrounds_ entire doc (hence, won't be rendered).
-    d->m_actionShowThumbnailRectangle = new KToggleAction (
-        i18n ("Enable Thumbnail &Rectangle"),
-        0,
-        this, SLOT (slotThumbnailShowRectangleToggled ()),
+    d->m_actionShowThumbnailRectangle = new KToggleAction ( i18n ("Enable Thumbnail &Rectangle"),
         actionCollection (), "view_show_thumbnail_rectangle");
+    connect(d->m_actionShowThumbnailRectangle, SIGNAL(triggered(bool) ), 
+	    SLOT (slotThumbnailShowRectangleToggled ()));
 
 
     enableViewMenuDocumentActions (false);
