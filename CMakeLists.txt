@@ -1,4 +1,3 @@
-kde4_header()
 project(kolourpaint)
 
 include_directories(
@@ -167,7 +166,6 @@ install_targets(/bin kolourpaint )
 install_files( ${XDG_APPS_DIR} FILES kolourpaint.desktop )
 install_files( ${DATA_INSTALL_DIR}/kolourpaint FILES kolourpaintui.rc )
 
-kde4_footer()
 
 
 
