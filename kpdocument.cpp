@@ -1010,9 +1010,10 @@ void kpDocument::setSelection (const kpSelection &selection)
                << endl;
 #endif
 
-    kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
-    if (vm)
-        vm->setQueueUpdates ();
+    Q_ASSERT (m_mainWindow);
+    kpViewManager *vm = m_mainWindow->viewManager ();
+    Q_ASSERT (vm);
+    vm->setQueueUpdates ();
 
     bool hadSelection = (bool) m_selection;
 
@@ -1025,8 +1026,7 @@ void kpDocument::setSelection (const kpSelection &selection)
     //  Tools act the same, except for what would be really irritating
     //  if it kept changing whenever you paste an image - drawing the
     //  selection region)
-    if (m_mainWindow &&
-        (!m_mainWindow->toolIsASelectionTool () || isTextChanged))
+    if (!m_mainWindow->toolIsASelectionTool () || isTextChanged)
     {
         // Switch to the appropriately shaped selection tool
         // _before_ we change the selection
@@ -1062,33 +1062,30 @@ void kpDocument::setSelection (const kpSelection &selection)
 
     m_selection = new kpSelection (selection);
 
-    // TODO: this coupling is bad, careless and lazy
-    if (m_mainWindow)
+    // TODO: this coupling to m_mainWindow is bad, careless and lazy
+    if (!m_selection->isText ())
     {
-        if (!m_selection->isText ())
+        if (m_selection->transparency () != m_mainWindow->selectionTransparency ())
         {
-            if (m_selection->transparency () != m_mainWindow->selectionTransparency ())
-            {
-                kDebug () << "kpDocument::setSelection() sel's transparency differs "
-                              "from mainWindow's transparency - setting mainWindow's transparency "
-                              "to sel"
-                           << endl;
-                kDebug () << "\tisOpaque: sel=" << m_selection->transparency ().isOpaque ()
-                           << " mainWindow=" << m_mainWindow->selectionTransparency ().isOpaque ()
-                           << endl;
-                m_mainWindow->setSelectionTransparency (m_selection->transparency ());
-            }
+            kDebug () << "kpDocument::setSelection() sel's transparency differs "
+                          "from mainWindow's transparency - setting mainWindow's transparency "
+                          "to sel"
+                       << endl;
+            kDebug () << "\tisOpaque: sel=" << m_selection->transparency ().isOpaque ()
+                       << " mainWindow=" << m_mainWindow->selectionTransparency ().isOpaque ()
+                       << endl;
+            m_mainWindow->setSelectionTransparency (m_selection->transparency ());
         }
-        else
+    }
+    else
+    {
+        if (m_selection->textStyle () != m_mainWindow->textStyle ())
         {
-            if (m_selection->textStyle () != m_mainWindow->textStyle ())
-            {
-                kDebug () << "kpDocument::setSelection() sel's textStyle differs "
-                              "from mainWindow's textStyle - setting mainWindow's textStyle "
-                              "to sel"
-                           << endl;
-                m_mainWindow->setTextStyle (m_selection->textStyle ());
-            }
+            kDebug () << "kpDocument::setSelection() sel's textStyle differs "
+                          "from mainWindow's textStyle - setting mainWindow's textStyle "
+                          "to sel"
+                       << endl;
+            m_mainWindow->setTextStyle (m_selection->textStyle ());
         }
     }
 
