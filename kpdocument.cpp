@@ -1011,9 +1011,12 @@ void kpDocument::setSelection (const kpSelection &selection)
 #endif
 
     Q_ASSERT (m_mainWindow);
+
     kpViewManager *vm = m_mainWindow->viewManager ();
     Q_ASSERT (vm);
+
     vm->setQueueUpdates ();
+
 
     bool hadSelection = (bool) m_selection;
 
