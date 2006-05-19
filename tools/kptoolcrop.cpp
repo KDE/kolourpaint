@@ -90,7 +90,7 @@ protected:
 
 kpToolCropSetImageCommand::kpToolCropSetImageCommand (kpMainWindow *mainWindow)
     : kpCommand (mainWindow),
-      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid),
+      m_backgroundColor (mainWindow->backgroundColor ()),
       m_fromSelection (*mainWindow->document ()->selection ()),
       m_pixmapIfFromSelectionDoesntHaveOne (
         m_fromSelection.pixmap () ?
@@ -303,12 +303,10 @@ kpToolCropCommand::~kpToolCropCommand ()
 void kpToolCrop (kpMainWindow *mainWindow)
 {
     kpDocument *doc = mainWindow->document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
-    kpSelection *sel = doc ? doc->selection () : 0;
-    if (!sel)
-        return;
+    kpSelection *sel = doc->selection ();
+    Q_ASSERT (sel);
 
 
     bool selWasText = sel->isText ();
