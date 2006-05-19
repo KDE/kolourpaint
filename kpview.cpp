@@ -1613,19 +1613,23 @@ void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
     int tileHeight = 16 * vzoomMultiple;  // CONFIG
     for (int y = starty - viewRect.y (); y <= viewRect.bottom () - viewRect.y (); y += vzoomMultiple)
     {
-        if (0 && tileHeight > 0 && y % tileHeight == 0)
+    #if 0
+        if (tileHeight > 0 && y % tileHeight == 0)
         {
             painter->setPen (tileBoundaryPen);
             //painter.setRasterOp (Qt::XorROP);
         }
+    #endif
 
         painter->drawLine (0, y, viewRect.right () - viewRect.left (), y);
 
-        if (0 && tileHeight > 0 && y % tileHeight == 0)
+    #if 0
+        if (tileHeight > 0 && y % tileHeight == 0)
         {
             painter->setPen (ordinaryPen);
             //painter.setRasterOp (Qt::CopyROP);
         }
+    #endif
     }
 
     // vertical lines
@@ -1635,19 +1639,23 @@ void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
     int tileWidth = 16 * hzoomMultiple;  // CONFIG
     for (int x = startx - viewRect.x (); x <= viewRect.right () - viewRect.x (); x += hzoomMultiple)
     {
-        if (0 && tileWidth > 0 && x % tileWidth == 0)
+    #if 0
+        if (tileWidth > 0 && x % tileWidth == 0)
         {
             painter->setPen (tileBoundaryPen);
             //painter.setRasterOp (Qt::XorROP);
         }
+    #endif
 
         painter->drawLine (x, 0, x, viewRect.bottom () - viewRect.top ());
 
-        if (0 && tileWidth > 0 && x % tileWidth == 0)
+    #if 0
+        if (tileWidth > 0 && x % tileWidth == 0)
         {
             painter->setPen (ordinaryPen);
             //painter.setRasterOp (Qt::CopyROP);
         }
+    #endif
     }
 }
 
