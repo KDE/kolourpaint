@@ -1105,7 +1105,7 @@ void kpToolSelection::cancelShape ()
 
         viewManager ()->setSelectionBorderVisible (true);
         viewManager ()->setSelectionBorderFinished (true);
-        viewManager ()->setTextCursorEnabled (m_mode == Text && true);
+        viewManager ()->setTextCursorEnabled (m_mode == Text);
     }
     viewManager ()->restoreQueueUpdates ();
 
@@ -1227,7 +1227,7 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
 
         viewManager ()->setSelectionBorderVisible (true);
         viewManager ()->setSelectionBorderFinished (true);
-        viewManager ()->setTextCursorEnabled (m_mode == Text && true);
+        viewManager ()->setTextCursorEnabled (m_mode == Text);
     }
     viewManager ()->restoreQueueUpdates ();
 
