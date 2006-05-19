@@ -259,8 +259,8 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
     : kpColorEffectWidget (actOnSelection, mainWindow, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
-    lay->setSpacing(spacingHint ());
-    lay->setMargin(marginHint ());
+    lay->setMargin (marginHint ());
+    lay->setSpacing (spacingHint ());
 
 
     QLabel *brightnessLabel = new QLabel (i18n ("&Brightness:"), this);
@@ -306,26 +306,26 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
 
 
     lay->addWidget (brightnessLabel, 0, 0);
-    lay->addMultiCellWidget (m_brightnessInput, 0, 0, 1, 2);
+    lay->addWidget (m_brightnessInput, 0, 1, 1, 2);
     lay->addWidget (brightnessResetPushButton, 0, 4);
 
     lay->addWidget (contrastLabel, 1, 0);
-    lay->addMultiCellWidget (m_contrastInput, 1, 1, 1, 2);
+    lay->addWidget (m_contrastInput, 1, 1, 1, 2);
     lay->addWidget (contrastResetPushButton, 1, 4);
 
     lay->addWidget (gammaLabel, 2, 0);
-    lay->addMultiCellWidget (m_gammaInput, 2, 2, 1, 2);
+    lay->addWidget (m_gammaInput, 2, 1, 1, 2);
     lay->addWidget (m_gammaLabel, 2, 3);
     lay->addWidget (gammaResetPushButton, 2, 4);
 
-    lay->addMultiCellWidget (spaceWidget, 3, 3, 0, 4);
-    lay->addMultiCellWidget (resetPushButton, 4, 4, 2, 4, Qt::AlignRight);
+    lay->addWidget (spaceWidget, 3, 0, 1, 5);
+    lay->addWidget (resetPushButton, 4, 2, 1, 3, Qt::AlignRight);
 
     lay->addWidget (channelLabel, 4, 0);
     lay->addWidget (m_channelsComboBox, 4, 1, Qt::AlignLeft);
     //lay->addWidget (resetPushButton, 4, 2, Qt::AlignRight);
 
-    lay->setColStretch (1, 1);
+    lay->setColumnStretch (1, 1);
 
 
     // (no need for settingsChangedDelayed() since BCG effect is so fast :))
