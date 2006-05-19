@@ -1639,17 +1639,15 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
     kDebug () << "kpToolSelectionPullFromDocumentCommand::execute()" << endl;
 #endif
 
-    kpDocument *doc = document ();
+    Q_ASSERT (m_mainWindow);
 
-    if (!doc)
-    {
-        kError () << "kpToolSelectionPullFromDocumentCommand::execute() without doc" << endl;
-        return;
-    }
+    kpDocument *doc = document ();
+    Q_ASSERT (doc);
 
     kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
-    if (vm)
-        vm->setQueueUpdates ();
+    Q_ASSERT (vm);
+
+    vm->setQueueUpdates ();
 
     // In case the user CTRL+Z'ed, selected a random region to throw us off
     // and then CTRL+Shift+Z'ed putting us here.  Make sure we pull from the
@@ -1671,16 +1669,14 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
                        << " pixmap="
                        << (doc->selection () ? doc->selection ()->pixmap () : 0)
                        << endl;
-            if (vm)
-                vm->restoreQueueUpdates ();
+            vm->restoreQueueUpdates ();
             return;
         }
     }
 
     doc->selectionPullFromDocument (m_backgroundColor);
 
-    if (vm)
-        vm->restoreQueueUpdates ();
+    vm->restoreQueueUpdates ();
 }
 
 // public virtual [base kpCommand]
@@ -1846,12 +1842,10 @@ void kpToolSelectionMoveCommand::execute ()
     kDebug () << "kpToolSelectionMoveCommand::execute()" << endl;
 #endif
 
+    Q_ASSERT (m_mainWindow);
+
     kpDocument *doc = document ();
-    if (!doc)
-    {
-        kError () << "kpToolSelectionMoveCommand::execute() no doc" << endl;
-        return;
-    }
+    Q_ASSERT (doc);
 
     kpSelection *sel = doc->selection ();
 
@@ -1864,10 +1858,10 @@ void kpToolSelectionMoveCommand::execute ()
         return;
     }
 
-    kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
+    kpViewManager *vm = m_mainWindow->viewManager ();
+    Q_ASSERT (vm);
 
-    if (vm)
-        vm->setQueueUpdates ();
+    vm->setQueueUpdates ();
 
     QPolygon::ConstIterator copyOntoDocumentPointsEnd = m_copyOntoDocumentPoints.end ();
     for (QPolygon::ConstIterator it = m_copyOntoDocumentPoints.begin ();
@@ -1883,8 +1877,7 @@ void kpToolSelectionMoveCommand::execute ()
     if (m_mainWindow->tool ())
         m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
 
-    if (vm)
-        vm->restoreQueueUpdates ();
+    vm->restoreQueueUpdates ();
 }
 
 // public virtual [base kpCommand]
@@ -1894,12 +1887,10 @@ void kpToolSelectionMoveCommand::unexecute ()
     kDebug () << "kpToolSelectionMoveCommand::unexecute()" << endl;
 #endif
 
+    Q_ASSERT (m_mainWindow);
+
     kpDocument *doc = document ();
-    if (!doc)
-    {
-        kError () << "kpToolSelectionMoveCommand::unexecute() no doc" << endl;
-        return;
-    }
+    Q_ASSERT (doc);
 
     kpSelection *sel = doc->selection ();
 
@@ -1913,9 +1904,9 @@ void kpToolSelectionMoveCommand::unexecute ()
     }
 
     kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
+    Q_ASSERT (vm);
 
-    if (vm)
-        vm->setQueueUpdates ();
+    vm->setQueueUpdates ();
 
     if (!m_oldDocumentPixmap.isNull ())
         doc->setPixmapAt (m_oldDocumentPixmap, m_documentBoundingRect.topLeft ());
@@ -1927,8 +1918,7 @@ void kpToolSelectionMoveCommand::unexecute ()
     if (m_mainWindow->tool ())
         m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
 
-    if (vm)
-        vm->restoreQueueUpdates ();
+    vm->restoreQueueUpdates ();
 }
 
 // public
