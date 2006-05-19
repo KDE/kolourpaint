@@ -1063,9 +1063,9 @@ bool kpToolResizeScaleDialog::actOnSelection () const
 // public
 kpToolResizeScaleCommand::Type kpToolResizeScaleDialog::type () const
 {
-    if (m_resizeButton->isOn ())
+    if (m_resizeButton->isChecked ())
         return kpToolResizeScaleCommand::Resize;
-    else if (m_scaleButton->isOn ())
+    else if (m_scaleButton->isChecked ())
         return kpToolResizeScaleCommand::Scale;
     else
         return kpToolResizeScaleCommand::SmoothScale;
