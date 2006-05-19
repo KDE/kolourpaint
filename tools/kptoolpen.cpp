@@ -256,6 +256,11 @@ void kpToolPen::hover (const QPoint &point)
                 cursorPixmapForTempPixmap = kpPixmapFX::getNonNullMask (m_cursorPixmap);
             }
         }
+        else
+        {
+            // Never executed.
+            // TODO: restructure code so this is clear and we won't need "renderMode" default above.
+        }
 
         viewManager ()->setFastUpdates ();
 
