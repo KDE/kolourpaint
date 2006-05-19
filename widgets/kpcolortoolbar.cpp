@@ -957,7 +957,7 @@ kpColorToolBar::kpColorToolBar (const QString &label, kpMainWindow *mainWindow)
     : KToolBar (mainWindow),
       m_mainWindow (mainWindow)
 {
-    setLabel (label);
+    setWindowTitle (label);
 
 
     QWidget *base = new QWidget (this);

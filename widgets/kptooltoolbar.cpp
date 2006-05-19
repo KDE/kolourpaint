@@ -93,7 +93,7 @@ kpToolToolBar::kpToolToolBar (const QString &label, kpMainWindow *mainWindow, in
       m_previousTool (0), m_currentTool (0),
       m_defaultIconSize (0)
 {
-    setLabel (label);
+    setWindowTitle (label);
 
 
     // With these lines enabled, mousePressEvent's weren't being generated
