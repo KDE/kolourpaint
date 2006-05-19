@@ -87,12 +87,13 @@ kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
       m_oldSelection (0)
 {
     kpDocument *doc = document ();
+    Q_ASSERT (doc);
 
     m_oldWidth = doc->width (m_actOnSelection);
     m_oldHeight = doc->height (m_actOnSelection);
 
     m_actOnTextSelection = (m_actOnSelection &&
-                            doc && doc->selection () &&
+                            doc->selection () &&
                             doc->selection ()->isText ());
 
     resize (newWidth, newHeight);
@@ -218,6 +219,7 @@ void kpToolResizeScaleCommand::scaleSelectionRegionWithDocument ()
     {
         kError () << "kpToolResizeScaleCommand::scaleSelectionRegionWithDocument()"
                    << " without old sel" << endl;
+        return;
     }
 
     if (m_oldSelection->pixmap ())
@@ -345,6 +347,7 @@ void kpToolResizeScaleCommand::execute ()
 
         if (m_actOnSelection)
         {
+            Q_ASSERT (m_oldSelection);
             QRect newRect = QRect (m_oldSelection->x (), m_oldSelection->y (),
                                    newPixmap.width (), newPixmap.height ());
 
