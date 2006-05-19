@@ -544,6 +544,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
                                        m_scrollView,
                                        m_scrollView->viewport ());
         m_mainView->setObjectName ("mainView");
+
         m_scrollView->addChild (m_mainView);
         m_viewManager->registerView (m_mainView);
         m_mainView->show ();
