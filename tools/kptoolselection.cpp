@@ -1644,7 +1644,7 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
-    kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
+    kpViewManager *vm = m_mainWindow->viewManager ();
     Q_ASSERT (vm);
 
     vm->setQueueUpdates ();
@@ -1903,7 +1903,7 @@ void kpToolSelectionMoveCommand::unexecute ()
         return;
     }
 
-    kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
+    kpViewManager *vm = m_mainWindow->viewManager ();
     Q_ASSERT (vm);
 
     vm->setQueueUpdates ();
