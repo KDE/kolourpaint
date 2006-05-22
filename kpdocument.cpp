@@ -414,7 +414,7 @@ bool kpDocument::save (bool overwritePrompt, bool lossyPrompt)
             i18n ("Could not save image - insufficient information."),
             i18n ("URL: %1\n"
                   "Mimetype: %2",
-                  prettyURL (),
+                  prettyUrl (),
                   m_saveOptions->mimeType ().isEmpty () ?
                           i18n ("<empty>") :
                           m_saveOptions->mimeType ()),
@@ -771,10 +771,10 @@ QString kpDocument::prettyURLForURL (const KUrl &url)
     if (url.isEmpty ())
         return i18n ("Untitled");
     else
-        return url.pathOrURL ();
+        return url.pathOrUrl ();
 }
 
-QString kpDocument::prettyURL () const
+QString kpDocument::prettyUrl () const
 {
     return prettyURLForURL (m_url);
 }

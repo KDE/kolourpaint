@@ -117,7 +117,7 @@ public:
 
     // (will convert: empty URL --> "Untitled")
     static QString prettyURLForURL (const KUrl &url);
-    QString prettyURL () const;
+    QString prettyUrl () const;
 
     // (will convert: empty URL --> "Untitled")
     static QString prettyFilenameForURL (const KUrl &url);

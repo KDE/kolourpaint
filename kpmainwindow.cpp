@@ -879,7 +879,7 @@ void kpMainWindow::slotUpdateCaption ()
 {
     if (m_document)
     {
-        setCaption (m_configShowPath ? m_document->prettyURL ()
+        setCaption (m_configShowPath ? m_document->prettyUrl ()
                                      : m_document->prettyFilename (),
                     m_document->isModified ());
     }
