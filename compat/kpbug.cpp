@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_BUG 1
+#define DEBUG_KP_BUG 0
 
 
 #include <kpbug.h>
