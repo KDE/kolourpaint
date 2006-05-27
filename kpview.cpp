@@ -1610,7 +1610,9 @@ void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
     int starty = viewRect.top ();
     if (starty % vzoomMultiple)
         starty = (starty + vzoomMultiple) / vzoomMultiple * vzoomMultiple;
+#if 0
     int tileHeight = 16 * vzoomMultiple;  // CONFIG
+#endif
     for (int y = starty - viewRect.y (); y <= viewRect.bottom () - viewRect.y (); y += vzoomMultiple)
     {
     #if 0
@@ -1636,7 +1638,9 @@ void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
     int startx = viewRect.left ();
     if (startx % hzoomMultiple)
         startx = (startx + hzoomMultiple) / hzoomMultiple * hzoomMultiple;
+#if 0
     int tileWidth = 16 * hzoomMultiple;  // CONFIG
+#endif
     for (int x = startx - viewRect.x (); x <= viewRect.right () - viewRect.x (); x += hzoomMultiple)
     {
     #if 0
