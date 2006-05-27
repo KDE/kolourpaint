@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_PIXMAP_FX 0
+#define DEBUG_KP_PIXMAP_FX 1
 
 
 #include <kppixmapfx.h>
@@ -322,7 +322,7 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
                 << endl
                 << "\timage.depth()=" << image.depth ()
                 << endl
-                << "\tscreenDepth=" << QColor::numBitPlanes ()
+                << "\tscreenDepth=" << QPixmap::defaultDepth ()
                 << endl
                 << "\tmoreColorsThanDisplay=" << moreColorsThanDisplay
                 << endl
@@ -578,9 +578,9 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
 {
     QPixmap retPixmap (rect.width (), rect.height ());
 
-#if DEBUG_KP_PIXMAP_FX && 0
+#if DEBUG_KP_PIXMAP_FX && 1
     kDebug () << "kpPixmapFX::getPixmapAt(pm.hasMask="
-               << (pm.mask () ? 1 : 0)
+               << !pm.mask ().isNull ()
                << ",rect="
                << rect
                << ")"
@@ -590,9 +590,21 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
     const QRect validSrcRect = pm.rect ().intersect (rect);
     const bool wouldHaveUndefinedPixels = (validSrcRect != rect);
 
+    // ssss ssss
+    // ssss ssss
+    //     +--------+
+    // ssss|SSSS    |
+    // ssss|SSSS    |  <-- "rect"
+    //     |        |
+    //     +--------+
+    //
+    // Let 's' and 'S' be source (pm) pixels.
+    //
+    // If "rect" asks for part of the source (pm) and some more, the "some
+    // more" should be transparent - not undefined.
     if (wouldHaveUndefinedPixels)
     {
-    #if DEBUG_KP_PIXMAP_FX && 0
+    #if DEBUG_KP_PIXMAP_FX && 1
         kDebug () << "\tret would contain undefined pixels - setting them to transparent" << endl;
     #endif
         QBitmap transparentMask (rect.width (), rect.height ());
@@ -602,35 +614,35 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
 
     if (validSrcRect.isEmpty ())
     {
-    #if DEBUG_KP_PIXMAP_FX && 0
+    #if DEBUG_KP_PIXMAP_FX && 1
         kDebug () << "\tsilly case - completely invalid rect - ret transparent pixmap" << endl;
     #endif
         return retPixmap;
     }
 
+    // If dest (retPixmap) has no mask but the source (pm) has a mask,
+    // make sure dest (retPixmap) has a mask so that
+    // QPainter::CompositionMode_Source will copy over source's (pm's)
+    // mask.
+    if (retPixmap.mask ().isNull () && !pm.mask ().isNull ())
+    {
+         QBitmap retPixmapMask (retPixmap.width (), retPixmap.height ());
+         retPixmapMask.fill (Qt::color0/*arbitrary since we're going to be overriden*/);
+         retPixmap.setMask (retPixmapMask);
+    }
 
     const QPoint destTopLeft = validSrcRect.topLeft () - rect.topLeft ();
 
-    // copy data _and_ mask (if avail)
-    copyBlt (&retPixmap, /* dest */
-             destTopLeft.x (), destTopLeft.y (), /* dest pt */
-             &pm, /* src */
-             validSrcRect.x (), validSrcRect.y (), /* src pt */
-             validSrcRect.width (), validSrcRect.height ());
+    // Copy data _and_ mask (if avail).
+    QPainter retPixmapPainter (&retPixmap);
+    retPixmapPainter.setCompositionMode (QPainter::CompositionMode_Source);
+    retPixmapPainter.drawPixmap (destTopLeft, pm, validSrcRect);
+    retPixmapPainter.end ();
 
-    if (wouldHaveUndefinedPixels && !retPixmap.mask ().isNull() && pm.mask ().isNull ())
-    {
-    #if DEBUG_KP_PIXMAP_FX && 0
-        kDebug () << "\tensure opaque in valid region" << endl;
-    #endif
-        kpPixmapFX::ensureOpaqueAt (&retPixmap,
-                                    QRect (destTopLeft.x (), destTopLeft.y (),
-                                           validSrcRect.width (), validSrcRect.height ()));
-    }
 
-#if DEBUG_KP_PIXMAP_FX && 0
+#if DEBUG_KP_PIXMAP_FX && 1
     kDebug () << "\tretPixmap.hasMask="
-               << (retPixmap.mask () ? 1 : 0)
+               << !retPixmap.mask ().isNull ()
                << endl;
 #endif
 
@@ -645,23 +657,23 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
     if (!destPixmapPtr)
         return;
 
-#if DEBUG_KP_PIXMAP_FX && 0
+#if DEBUG_KP_PIXMAP_FX && 1
     kDebug () << "kpPixmapFX::setPixmapAt(destPixmap->rect="
                << destPixmapPtr->rect ()
                << ",destPixmap->hasMask="
-               << (destPixmapPtr->mask () ? 1 : 0)
+               << !destPixmapPtr->mask ().isNull ()
                << ",destRect="
                << destRect
                << ",srcPixmap.rect="
                << srcPixmap.rect ()
                << ",srcPixmap.hasMask="
-               << (srcPixmap.mask () ? 1 : 0)
+               << !srcPixmap.mask ().isNull ()
                << ")"
                << endl;
 #endif
 
 #if DEBUG_KP_PIXMAP_FX && 0
-    if (destPixmapPtr->mask ())
+    if (!destPixmapPtr->mask ().isNull ())
     {
         QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
         int numTrans = 0;
@@ -679,53 +691,34 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
     }
 #endif
 
-#if 0
-    // TODO: why does undo'ing a single pen dot on a transparent pixel,
-    //       result in a opaque image, except for that single transparent pixel???
-    //       Qt bug on boundary case?
-
-    // copy data _and_ mask
-    copyBlt (destPixmapPtr,
-             destAt.x (), destAt.y (),
-             &srcPixmap,
-             0, 0,
-             destRect.width (), destRect.height ());
-#else
-    // COMPAT: supposed to CopyROP & ignore mask.
-    bitBlt (destPixmapPtr,
-            destRect.x (), destRect.y (),
-            &srcPixmap,
-            0, 0,
-            destRect.width (), destRect.height ()
-            );
-
-    if (!srcPixmap.mask ().isNull ())
+    // If dest (*destPixmapPtr) has no mask but the source (srcPixmap) has a mask,
+    // make sure dest (*destPixmapPtr) has a mask so that
+    // QPainter::CompositionMode_Source will copy over source's (srcPixmap's)
+    // mask.
+    if (destPixmapPtr->mask ().isNull () && !srcPixmap.mask ().isNull ())
     {
-        QBitmap mask = getNonNullMask (*destPixmapPtr);
-        // COMPAT: supposed CopyROP & ignore mask.
-        const QBitmap srcMask = srcPixmap.mask ();
-        bitBlt (&mask,
-                destRect.x (), destRect.y (),
-                &srcMask,
-                0, 0,
-                destRect.width (), destRect.height ());
-        destPixmapPtr->setMask (mask);
+         QBitmap destPixmapMask (destPixmapPtr->width (), destPixmapPtr->height ());
+         destPixmapMask.fill (Qt::color0/*arbitrary since we're going to be overriden*/);
+         destPixmapPtr->setMask (destPixmapMask);
     }
-#endif
 
-    if (!destPixmapPtr->mask ().isNull () && srcPixmap.mask ().isNull ())
-    {
-    #if DEBUG_KP_PIXMAP_FX && 0
-        kDebug () << "\t\topaque'ing dest rect" << endl;
-    #endif
-        kpPixmapFX::ensureOpaqueAt (destPixmapPtr, destRect);
-    }
+    // COMPAT: here comes trouble
+    Q_ASSERT (destRect.width () <= srcPixmap.width () &&
+              destRect.height () <= srcPixmap.height ());
+
+    // Copy data _and_ mask (if avail).
+    QPainter destPixmapPainter (destPixmapPtr);
+    destPixmapPainter.setCompositionMode (QPainter::CompositionMode_Source);
+    destPixmapPainter.drawPixmap (destRect.topLeft (),
+        srcPixmap, QRect (0, 0, destRect.width (), destRect.height ()));
+    destPixmapPainter.end ();
+
 
 #if DEBUG_KP_PIXMAP_FX && 0
     kDebug () << "\tdestPixmap->hasMask="
-               << (destPixmapPtr->mask () ? 1 : 0)
+               << !destPixmapPtr->mask ().isNull ()
                << endl;
-    if (destPixmapPtr->mask ())
+    if (!destPixmapPtr->mask ().isNull ())
     {
         QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
         int numTrans = 0;
@@ -769,13 +762,9 @@ void kpPixmapFX::paintPixmapAt (QPixmap *destPixmapPtr, const QPoint &destAt,
     if (!destPixmapPtr)
         return;
 
-    // copy data from dest onto the top of src (masked by src's mask)
-    bitBlt (destPixmapPtr, /* dest */
-            destAt.x (), destAt.y (), /* dest pt */
-            &srcPixmap, /* src */
-            0, 0 /* src pt */);
-
-    kpPixmapFX::ensureOpaqueAt (destPixmapPtr, destAt, srcPixmap);
+    // Copy src (masked by src's mask) on top of dest.
+    QPainter p (destPixmapPtr);
+    p.drawPixmap (destAt, srcPixmap);
 }
 
 // public static
@@ -849,7 +838,7 @@ void kpPixmapFX::ensureNoAlphaChannel (QPixmap *destPixmapPtr)
 // public static
 QBitmap kpPixmapFX::getNonNullMask (const QPixmap &pm)
 {
-    if (!pm.mask ().isNull())
+    if (!pm.mask ().isNull ())
         return pm.mask ();
     else
     {
@@ -862,48 +851,6 @@ QBitmap kpPixmapFX::getNonNullMask (const QPixmap &pm)
 
 
 // public static
-QBitmap kpPixmapFX::getNonNullMaskAt (const QPixmap &pm, const QRect &rect)
-{
-    QBitmap destMaskBitmap (rect.width (), rect.height ());
-
-    if (!pm.mask ().isNull ())
-    {
-        copyBlt (&destMaskBitmap, 0, 0,
-                 &pm, rect.x (), rect.y (), rect.width (), rect.height ());
-    }
-    else
-    {
-        destMaskBitmap.fill (Qt::color1/*opaque*/);
-    }
-
-    return destMaskBitmap;
-}
-
-
-// public static
-void kpPixmapFX::setMaskAt (QPixmap *destPixmapPtr, const QPoint &destAt,
-                            const QBitmap &srcMaskBitmap)
-{
-    if (!destPixmapPtr)
-        return;
-
-    QBitmap destMaskBitmap (srcMaskBitmap.width (), srcMaskBitmap.height ());
-
-    copyBlt (&destMaskBitmap, destAt.x (), destAt.y (),
-             &srcMaskBitmap);
-
-    destPixmapPtr->setMask (destMaskBitmap);
-}
-
-// public static
-void kpPixmapFX::setMaskAt (QPixmap *destPixmapPtr, int destX, int destY,
-                            const QBitmap &srcMaskBitmap)
-{
-    kpPixmapFX::setMaskAt (destPixmapPtr, QPoint (destX, destY), srcMaskBitmap);
-}
-
-
-// public static
 void kpPixmapFX::ensureTransparentAt (QPixmap *destPixmapPtr, const QRect &destRect)
 {
     if (!destPixmapPtr)
@@ -912,12 +859,7 @@ void kpPixmapFX::ensureTransparentAt (QPixmap *destPixmapPtr, const QRect &destR
     QBitmap maskBitmap = getNonNullMask (*destPixmapPtr);
 
     QPainter p (&maskBitmap);
-
-    p.setPen (Qt::color0/*transparent*/);
-    p.setBrush (Qt::color0/*transparent*/);
-
-    p.drawRect (destRect);
-
+    p.fillRect (destRect, Qt::color0/*transparent*/);
     p.end ();
 
     destPixmapPtr->setMask (maskBitmap);
@@ -937,7 +879,8 @@ void kpPixmapFX::paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QP
         return;
     }
 
-    QBitmap destMaskBitmap = kpPixmapFX::getNonNullMask (*destPixmapPtr);
+    if (destPixmapPtr->mask ().isNull ())
+        destPixmapPtr->setMask (kpPixmapFX::getNonNullMask (*destPixmapPtr));
 
     //                  Src
     //  Dest Mask   Brush Bitmap   =   Result
@@ -947,18 +890,19 @@ void kpPixmapFX::paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QP
     //      1            0               1
     //      1            1               0
     //
-    // Brush Bitmap value of 1 means "make transparent"
-    //                       0 means "leave it as it is"
+    // Dest Bitmap / Result value of 1 = opaque
+    //                               0 = transparent
+    // Src Brush Bitmap value of 1 means "make transparent"
+    //                           0 means "leave it as it is"
 
     QPixmap brushPixmap (brushBitmap.width (), brushBitmap.height ());
-    brushPixmap.setMask (brushBitmap);
+    brushPixmap.fill (Qt::yellow/*arbitrary since source pixels ignored*/);
+    brushPixmap.setMask (brushBitmap);  // Mask is not ignored though.
 
-    QPainter painter (&destMaskBitmap);
-    painter.setCompositionMode (QPainter::CompositionMode_DestinationIn);
-    painter.drawPixmap (destAt.x (), destAt.y (), brushPixmap);
+    QPainter painter (destPixmapPtr);
+    painter.setCompositionMode (QPainter::CompositionMode_DestinationOut);
+    painter.drawPixmap (destAt, brushPixmap);
     painter.end ();
-
-    destPixmapPtr->setMask (destMaskBitmap);
 }
 
 // public static
@@ -980,58 +924,10 @@ void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, const QRect &destRect)
     QBitmap maskBitmap = destPixmapPtr->mask ();
 
     QPainter p (&maskBitmap);
-
-    p.setPen (Qt::color1/*opaque*/);
-    p.setBrush (Qt::color1/*opaque*/);
-
-    p.drawRect (destRect);
-
+    p.fillRect (destRect, Qt::color1/*opaque*/);
     p.end ();
 
     destPixmapPtr->setMask (maskBitmap);
-}
-
-// public static
-void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, const QPoint &destAt,
-                                 const QPixmap &srcPixmap)
-{
-    if (!destPixmapPtr || destPixmapPtr->mask ().isNull ()/*already opaque*/)
-        return;
-
-    QBitmap destMask = destPixmapPtr->mask ();
-
-    if (!srcPixmap.mask ().isNull ())
-    {
-    // COMPAT: Would have to check Qt4 mask & painting behaviour
-    #if 0
-        bitBlt (&destMask, /* dest */
-                destAt, /* dest pt */
-                srcPixmap.mask (), /* src */
-                QRect (0, 0, srcPixmap.width (), srcPixmap.height ()), /* src rect */
-                Qt::OrROP/*if either is opaque, it's opaque*/);
-    #endif
-    }
-    else
-    {
-        QPainter p (&destMask);
-
-        p.setPen (Qt::color1/*opaque*/);
-        p.setBrush (Qt::color1/*opaque*/);
-
-        p.drawRect (destAt.x (), destAt.y (),
-                    srcPixmap.width (), srcPixmap.height ());
-
-        p.end ();
-    }
-
-    destPixmapPtr->setMask (destMask);
-}
-
-// public static
-void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, int destX, int destY,
-                                 const QPixmap &srcPixmap)
-{
-    kpPixmapFX::ensureOpaqueAt (destPixmapPtr, QPoint (destX, destY), srcPixmap);
 }
 
 

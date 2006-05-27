@@ -1161,22 +1161,31 @@ QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
 
     if (!maskBitmap.isNull ())
     {
-// COMPAT
-#if 0
-        // Src Dest = Result
+        if (selPixmap.mask ().isNull ())
+            selPixmap.setMask (kpPixmapFX::getNonNullMask (selPixmap));
+
+        // Dest Src = Result
         // -----------------
-        //  0   0       0
-        //  0   1       0
-        //  1   0       0
-        //  1   1       1
-        QBitmap selMaskBitmap = kpPixmapFX::getNonNullMask (selPixmap);
-        bitBlt (&selMaskBitmap,
-                QPoint (0, 0),
-                &maskBitmap,
-                QRect (0, 0, maskBitmap.width (), maskBitmap.height ()),
-                Qt::AndROP);
-        selPixmap.setMask (selMaskBitmap);
-#endif
+        //  0    0      0
+        //  0    1      0
+        //  1    0      0
+        //  1    1      1
+        //
+        // Dest = selMaskBitmap (rectangular pixmap cutout -
+        //        may have transparent pixels so can't blindly opaque
+        //        bits according to selection shape - must use AND)
+        // Src = maskBitmap (selection shape)
+
+        QPixmap maskPixmap (maskBitmap.width (), maskBitmap.height ());
+        maskPixmap.fill (Qt::yellow/*arbitrary since source pixels ignored*/);
+        maskPixmap.setMask (maskBitmap);  // Mask is not ignored though.
+
+//selPixmap.save ("a.png", "PNG");
+        QPainter painter (&selPixmap);
+        painter.setCompositionMode (QPainter::CompositionMode_DestinationIn);
+        painter.drawPixmap (QPoint (0, 0), maskPixmap);
+        painter.end ();
+//selPixmap.save ("b.png", "PNG");
     }
 
     return selPixmap;
