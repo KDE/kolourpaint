@@ -350,7 +350,7 @@ const char *kpTool::name () const
 QRect kpTool::neededRect (const QRect &rect, int lineWidth)
 {
     int x1, y1, x2, y2;
-    rect.coords (&x1, &y1, &x2, &y2);
+    rect.getCoords (&x1, &y1, &x2, &y2);
 
     if (lineWidth < 1)
         lineWidth = 1;

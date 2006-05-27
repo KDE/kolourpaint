@@ -1245,7 +1245,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
         }
     #endif
 
-        image = image.smoothScale (w, h);
+        image = image.scaled (w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
     #if DEBUG_KP_PIXMAP_FX && 0
         kDebug () << "\tAfter smooth scale:" << endl;
@@ -1302,7 +1302,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
                << ")"
                << endl;
 #endif
-    QRect newRect = transformMatrix.map (pm.rect ());
+    QRect newRect = transformMatrix.mapRect (pm.rect ());
 #if DEBUG_KP_PIXMAP_FX && 1
     kDebug () << "\tmappedRect=" << newRect << endl;
 
@@ -1376,7 +1376,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
 
         transformMatrix = transformMatrix * scaleMatrix;
 
-        newRect = transformMatrix.map (pm.rect ());
+        newRect = transformMatrix.mapRect (pm.rect ());
     #if DEBUG_KP_PIXMAP_FX && 1
         kDebug () << "\tnewRect after targetWidth,targetHeight adjust=" << newRect << endl;
     #endif
@@ -1419,7 +1419,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
             << " dy=" << transformMatrix.dy ()
             << endl;
 #endif
-    painter.setWorldMatrix (transformMatrix);
+    painter.setMatrix (transformMatrix);
 #if DEBUG_KP_PIXMAP_FX && 0
     kDebug () << "\ttranslate top=" << painter.xForm (QPoint (0, 0)) << endl;
     kDebug () << "\tmatrix: m11=" << painter.worldMatrix ().m11 ()
@@ -1436,7 +1436,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
     if (!newBitmapMask.isNull ())
     {
         QPainter maskPainter (&newBitmapMask);
-        maskPainter.setWorldMatrix (transformMatrix);
+        maskPainter.setMatrix (transformMatrix);
         maskPainter.drawPixmap (QPoint (0, 0), kpPixmapFX::getNonNullMask (pm));
         maskPainter.end ();
         newPixmap.setMask (newBitmapMask);
@@ -1692,5 +1692,5 @@ QImage kpPixmapFX::flip (const QImage &img, bool horz, bool vert)
     if (!horz && !vert)
         return img;
 
-    return img.mirror (horz, vert);
+    return img.mirrored (horz, vert);
 }

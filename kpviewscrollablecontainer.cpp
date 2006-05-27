@@ -671,10 +671,7 @@ void kpViewScrollableContainer::repaintWidgetAtResizeLineViewRect (
 
     if (redrawWidgetRect.isValid ())
     {
-        // TODO: should be "!widget->testWFlags (Qt::WRepaintNoErase)"
-        //       but for some reason, doesn't work for viewport().
-        const bool erase = !dynamic_cast <kpView *> (widget);
-        widget->repaint (redrawWidgetRect, erase);
+        widget->repaint (redrawWidgetRect);
     }
 }
 
@@ -1285,7 +1282,7 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
 
             // Repaint newly exposed region immediately to reduce tearing
             // of scrollView.
-            m_view->repaint (region, false/*no erase*/);
+            m_view->repaint (region);
         }
     }
 

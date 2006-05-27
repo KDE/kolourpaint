@@ -116,8 +116,8 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
     : kpColorEffectWidget (actOnSelection, mainWindow, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
-    lay->setSpacing(spacingHint ());
-    lay->setMargin(marginHint ());
+    lay->setSpacing (spacingHint ());
+    lay->setMargin (marginHint ());
 
 
 #if 0
@@ -133,7 +133,7 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
     lay->addWidget (amountLabel, 0, 0);
     lay->addWidget (m_amountInput, 0, 1);
 
-    lay->setColStretch (1, 1);
+    lay->setColumnStretch (1, 1);
 
 
     connect (m_amountInput, SIGNAL (valueChanged (int)),
@@ -143,7 +143,7 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
     m_enableCheckBox = new QCheckBox (i18n ("E&nable"), this);
 
 
-    lay->addMultiCellWidget (m_enableCheckBox, 0, 0, 0, 1, Qt::AlignCenter);
+    lay->addWidget (m_enableCheckBox, 0, 0, 1, 2, Qt::AlignCenter);
 
 
     // (settingsChangedDelayed() instead of settingsChanged() so that the

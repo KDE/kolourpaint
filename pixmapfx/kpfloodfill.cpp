@@ -253,7 +253,7 @@ bool kpFloodFill::prepare ()
 #endif
 
     // finalize memory usage
-    m_image.reset ();
+    m_image = QImage ();
     m_fillLinesCache.clear ();
 
     m_initState = 2;  // sync with all "return true"'s

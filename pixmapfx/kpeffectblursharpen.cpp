@@ -132,8 +132,8 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
     : kpColorEffectWidget (actOnSelection, mainWindow, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
-    lay->setSpacing(spacingHint ());
-    lay->setMargin(marginHint ());
+    lay->setSpacing (spacingHint ());
+    lay->setMargin (marginHint ());
 
 
     QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
@@ -149,9 +149,9 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
     lay->addWidget (amountLabel, 0, 0);
     lay->addWidget (m_amountInput, 0, 1);
 
-    lay->addMultiCellWidget (m_typeLabel, 1, 1, 0, 1, Qt::AlignCenter);
+    lay->addWidget (m_typeLabel, 1, 0, 1, 2, Qt::AlignCenter);
 
-    lay->setColStretch (1, 1);
+    lay->setColumnStretch (1, 1);
 
 
     connect (m_amountInput, SIGNAL (valueChanged (int)),

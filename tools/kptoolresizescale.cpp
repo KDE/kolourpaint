@@ -777,8 +777,8 @@ void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
     QGridLayout *dimensionsLayout = new QGridLayout (m_dimensionsGroupBox );
     dimensionsLayout->setMargin( marginHint () * 2 );
     dimensionsLayout->setSpacing( spacingHint ());
-    dimensionsLayout->setColStretch (1/*column*/, 1);
-    dimensionsLayout->setColStretch (3/*column*/, 1);
+    dimensionsLayout->setColumnStretch (1/*column*/, 1);
+    dimensionsLayout->setColumnStretch (3/*column*/, 1);
 
 
     dimensionsLayout->addWidget (widthLabel, 0, 1);
@@ -799,7 +799,7 @@ void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
     dimensionsLayout->addWidget (xLabel2, 3, 2);
     dimensionsLayout->addWidget (m_percentHeightInput, 3, 3);
 
-    dimensionsLayout->addMultiCellWidget (m_keepAspectRatioCheckBox, 4, 4, 0, 3);
+    dimensionsLayout->addWidget (m_keepAspectRatioCheckBox, 4, 0, 1, 4);
     dimensionsLayout->setRowStretch (4/*row*/, 1);
     dimensionsLayout->setRowSpacing (4/*row*/, dimensionsLayout->rowSpacing (4) * 2);
 

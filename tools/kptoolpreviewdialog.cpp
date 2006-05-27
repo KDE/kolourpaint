@@ -99,17 +99,17 @@ kpToolPreviewDialog::kpToolPreviewDialog (Features features,
             m_gridLayout->addWidget (m_dimensionsGroupBox, m_gridNumRows, 0);
             m_gridLayout->addWidget (m_previewGroupBox, m_gridNumRows, 1);
 
-            m_gridLayout->setColStretch (1, 1);
+            m_gridLayout->setColumnStretch (1, 1);
         }
         else if (m_dimensionsGroupBox)
         {
-            m_gridLayout->addMultiCellWidget (m_dimensionsGroupBox,
-                                              m_gridNumRows, m_gridNumRows, 0, 1);
+            m_gridLayout->addWidget (m_dimensionsGroupBox,
+                                     m_gridNumRows, 0, 1, 2);
         }
         else if (m_previewGroupBox)
         {
-            m_gridLayout->addMultiCellWidget (m_previewGroupBox,
-                                              m_gridNumRows, m_gridNumRows, 0, 1);
+            m_gridLayout->addWidget (m_previewGroupBox,
+                                     m_gridNumRows, 0, 1, 2);
         }
 
         m_gridLayout->setRowStretch (m_gridNumRows, 1);
@@ -192,13 +192,13 @@ kpDocument *kpToolPreviewDialog::document () const
 // protected
 void kpToolPreviewDialog::addCustomWidgetToFront (QWidget *w)
 {
-    m_gridLayout->addMultiCellWidget (w, 0, 0, 0, 1);
+    m_gridLayout->addWidget (w, 0, 0, 1, 2);
 }
 
 // protected
 void kpToolPreviewDialog::addCustomWidget (QWidget *w)
 {
-    m_gridLayout->addMultiCellWidget (w, m_gridNumRows, m_gridNumRows, 0, 1);
+    m_gridLayout->addWidget (w, m_gridNumRows, 0, 1, 2);
     m_gridNumRows++;
 }
 

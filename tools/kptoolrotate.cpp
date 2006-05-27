@@ -323,15 +323,15 @@ void kpToolRotateDialog::createAngleGroupBox ()
     angleLayout->setMargin( marginHint () * 2 );
     angleLayout->setSpacing( spacingHint ());
 
-    angleLayout->addMultiCellWidget (m_angle90RadioButton, 0, 0, 0, 2);
-    angleLayout->addMultiCellWidget (m_angle180RadioButton, 1, 1, 0, 2);
-    angleLayout->addMultiCellWidget (m_angle270RadioButton, 2, 2, 0, 2);
+    angleLayout->addWidget (m_angle90RadioButton, 0, 0, 1, 3);
+    angleLayout->addWidget (m_angle180RadioButton, 1, 0, 1, 3);
+    angleLayout->addWidget (m_angle270RadioButton, 2, 0, 1, 3);
 
     angleLayout->addWidget (m_angleCustomRadioButton, 3, 0);
     angleLayout->addWidget (m_angleCustomInput, 3, 1);
     angleLayout->addWidget (degreesLabel, 3, 2);
 
-    angleLayout->setColStretch (1, 2);  // Stretch Custom Angle Input
+    angleLayout->setColumnStretch (1, 2);  // Stretch Custom Angle Input
 
 
     connect (m_angle90RadioButton, SIGNAL (toggled (bool)),
@@ -392,7 +392,7 @@ int kpToolRotateDialog::angle () const
 QSize kpToolRotateDialog::newDimensions () const
 {
     QMatrix matrix = kpPixmapFX::rotateMatrix (m_oldWidth, m_oldHeight, angle ());
-    QRect rect = matrix.map (QRect (0, 0, m_oldWidth, m_oldHeight));
+    QRect rect = matrix.mapRect (QRect (0, 0, m_oldWidth, m_oldHeight));
     return rect.size ();
 }
 
