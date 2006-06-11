@@ -282,8 +282,9 @@ void kpToolSkewDialog::createAngleGroupBox ()
     verticalSkewLabel->setBuddy (m_verticalSkewInput);
 
 
-    QGridLayout *angleLayout = new QGridLayout (angleGroupBox, 4, 4,
-                                                marginHint () * 2, spacingHint ());
+    QGridLayout *angleLayout = new QGridLayout (angleGroupBox);
+    angleLayout->setMargin (marginHint () * 2);
+    angleLayout->setSpacing (spacingHint ());
 
     angleLayout->addWidget (horizontalSkewPixmapLabel, 0, 0);
     angleLayout->addWidget (horizontalSkewLabel, 0, 1);
