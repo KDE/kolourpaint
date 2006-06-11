@@ -78,8 +78,9 @@ void kpMainWindow::setupViewMenuActions ()
     m_actionZoomOut = KStdAction::zoomOut (this, SLOT (slotZoomOut ()), ac);
 
 
-    m_actionZoom = new KSelectAction (i18n ("&Zoom"), 0,
-        this, SLOT (slotZoom ()), actionCollection (), "view_zoom_to");
+    m_actionZoom = new KSelectAction (
+        i18n ("&Zoom"), actionCollection (), "view_zoom_to");
+    connect (m_actionZoom, SIGNAL (triggered (bool)), SLOT (slotZoom ()));
     m_actionZoom->setEditable (true);
 
     // create the zoom list for the 1st call to zoomTo() below
@@ -91,20 +92,27 @@ void kpMainWindow::setupViewMenuActions ()
     m_zoomList.append (1000); m_zoomList.append (1200); m_zoomList.append (1600);
 
 
-    m_actionShowGrid = new KToggleAction(i18n ("Show &Grid"), actionCollection (), "view_show_grid");
-    connect(m_actionShowGrid, SIGNAL(triggered(bool) ), SLOT (slotShowGridToggled ()));
-    m_actionShowGrid->setShortcut(Qt::CTRL + Qt::Key_G);
+    m_actionShowGrid = new KToggleAction (i18n ("Show &Grid"),
+        actionCollection (), "view_show_grid");
+    m_actionShowGrid->setShortcut (Qt::CTRL + Qt::Key_G);
     m_actionShowGrid->setCheckedState (i18n ("Hide &Grid"));
+    connect (m_actionShowGrid, SIGNAL (triggered (bool)),
+        SLOT (slotShowGridToggled ()));
 
 
-    m_actionShowThumbnail = new KToggleAction(i18n ("Show T&humbnail"), actionCollection (), "view_show_thumbnail");
-    connect(m_actionShowThumbnail, SIGNAL(triggered(bool) ), SLOT (slotShowThumbnailToggled ()));
-    m_actionShowThumbnail->setShortcut(Qt::CTRL + Qt::Key_H);
+    m_actionShowThumbnail = new KToggleAction (i18n ("Show T&humbnail"),
+        actionCollection (), "view_show_thumbnail");
+    m_actionShowThumbnail->setShortcut (Qt::CTRL + Qt::Key_H);
     m_actionShowThumbnail->setCheckedState (i18n ("Hide T&humbnail"));
+    connect (m_actionShowThumbnail, SIGNAL (triggered (bool)),
+        SLOT (slotShowThumbnailToggled ()));
 
     // Please do not use setCheckedState() here - it wouldn't make sense
-    m_actionZoomedThumbnail = new KToggleAction(i18n ("Zoo&med Thumbnail Mode"), actionCollection (), "view_zoomed_thumbnail");
-    connect(m_actionZoomedThumbnail, SIGNAL(triggered(bool) ), SLOT (slotZoomedThumbnailToggled ()));
+    m_actionZoomedThumbnail = new KToggleAction (
+        i18n ("Zoo&med Thumbnail Mode"),
+        actionCollection (), "view_zoomed_thumbnail");
+    connect (m_actionZoomedThumbnail, SIGNAL (triggered (bool)),
+        SLOT (slotZoomedThumbnailToggled ()));
 
     // For consistency with the above action, don't use setCheckedState()
     //
@@ -113,8 +121,8 @@ void kpMainWindow::setupViewMenuActions ()
     // since rect _surrounds_ entire doc (hence, won't be rendered).
     d->m_actionShowThumbnailRectangle = new KToggleAction ( i18n ("Enable Thumbnail &Rectangle"),
         actionCollection (), "view_show_thumbnail_rectangle");
-    connect(d->m_actionShowThumbnailRectangle, SIGNAL(triggered(bool) ), 
-	    SLOT (slotThumbnailShowRectangleToggled ()));
+    connect (d->m_actionShowThumbnailRectangle, SIGNAL (triggered (bool)), 
+        SLOT (slotThumbnailShowRectangleToggled ()));
 
 
     enableViewMenuDocumentActions (false);
@@ -393,7 +401,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
 
         #if DEBUG_KP_MAIN_WINDOW
             kDebug () << "\tcenterUnderCursor: reposition cursor; viewUnderCursor="
-                       << vuc->name () << endl;
+                       << vuc->objectName () << endl;
         #endif
 
             const double viewX = vuc->transformDocToViewX (targetDocX);
@@ -766,21 +774,10 @@ QRect kpMainWindow::mapFromGlobal (const QRect &rect) const
 }
 
 
-// public slot
-void kpMainWindow::slotDestroyThumbnailIfNotVisible (bool tnIsVisible)
-{
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotDestroyThumbnailIfNotVisible(isVisible="
-               << tnIsVisible
-               << ")"
-               << endl;
-#endif
+//
+// Thumbnail
+//
 
-    if (!tnIsVisible)
-    {
-        slotDestroyThumbnailInitatedByUser ();
-    }
-}
 
 // private slot
 void kpMainWindow::slotDestroyThumbnail ()
@@ -999,7 +996,7 @@ void kpMainWindow::createThumbnailView ()
             m_mainView,
             0/*scrollableContainer*/,
             m_thumbnail );
-        m_thumbnailView->setObjectName( "thumbnailView" );
+        m_thumbnailView->setObjectName ("thumbnailView");
     }
     else
     {
@@ -1008,7 +1005,7 @@ void kpMainWindow::createThumbnailView ()
             m_mainView,
             0/*scrollableContainer*/,
             m_thumbnail);
-        m_thumbnailView->setObjectName( "thumbnailView" );
+        m_thumbnailView->setObjectName ("thumbnailView");
     }
 
     m_thumbnailView->showBuddyViewScrollableContainerRectangle (
@@ -1078,7 +1075,7 @@ void kpMainWindow::updateThumbnail ()
         kDebug () << "\t\tlast used geometry=" << thumbnailGeometry << endl;
     #endif
 
-        m_thumbnail = new kpThumbnail (this, "thumbnail");
+        m_thumbnail = new kpThumbnail (this);
 
         createThumbnailView ();
 
@@ -1125,8 +1122,8 @@ void kpMainWindow::updateThumbnail ()
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\t\tconnecting thumbnail::visibilityChange to destroy slot" << endl;
     #endif
-        connect (m_thumbnail, SIGNAL (visibilityChanged (bool)),
-                 this, SLOT (slotDestroyThumbnailIfNotVisible (bool)));
+        connect (m_thumbnail, SIGNAL (windowClosed ()),
+                 this, SLOT (slotDestroyThumbnailInitatedByUser ()));
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\t\tDONE" << endl;
     #endif
@@ -1134,7 +1131,8 @@ void kpMainWindow::updateThumbnail ()
     else
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tdestroying thumbnail" << endl;
+        kDebug () << "\tdestroying thumbnail m_thumbnail="
+            << m_thumbnail << endl;
     #endif
 
         if (m_thumbnailSaveConfigTimer && m_thumbnailSaveConfigTimer->isActive ())
@@ -1143,12 +1141,16 @@ void kpMainWindow::updateThumbnail ()
             slotSaveThumbnailGeometry ();
         }
 
+        // Must be done before hiding the thumbnail to avoid triggering
+        // this signal - re-entering this code.
+        disconnect (m_thumbnail, SIGNAL (windowClosed ()),
+                    this, SLOT (slotDestroyThumbnailInitatedByUser ()));
 
+        // Avoid change/flicker of caption due to view delete
+        // (destroyThumbnailView())
+        m_thumbnail->hide ();
+        
         destroyThumbnailView ();
-
-
-        disconnect (m_thumbnail, SIGNAL (visibilityChanged (bool)),
-                    this, SLOT (slotDestroyThumbnailIfNotVisible (bool)));
 
         m_thumbnail->deleteLater (); m_thumbnail = 0;
     }

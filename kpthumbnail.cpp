@@ -31,10 +31,8 @@
 
 #include <kpthumbnail.h>
 
-#include <q3dockarea.h>
-#include <q3dockwindow.h>
-#include <qevent.h>
-#include <qtimer.h>
+#include <QAction>
+#include <QLayout>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -46,60 +44,59 @@
 #include <kptool.h>
 
 
-// TODO: get out of the Alt+Tab list
-kpThumbnail::kpThumbnail (kpMainWindow *parent, const char *name)
-    : Q3DockWindow (Q3DockWindow::OutsideDock, parent, name),
-      m_mainWindow (parent),
-      m_view (0)
+struct kpThumbnailPrivate
 {
-    if (!parent)
-        kError () << "kpThumbnail::kpThumbnail() requires parent" << endl;
+    kpMainWindow *mainWindow;
+    kpThumbnailView *view;
+};
+
+// TODO: get out of the Alt+Tab list
+kpThumbnail::kpThumbnail (kpMainWindow *parent)
+    : QDockWidget (parent),
+      d (new kpThumbnailPrivate ())
+{
+    Q_ASSERT (parent);
+
+    d->mainWindow = parent;
+    d->view = 0;
 
 
-    if (parent)
-    {
-        // Prevent thumbnail from docking - it's _really_ irritating otherwise
-        // COMPAT: re-enable after porting to QDockWindow
-#if 0
-        parent->leftDock ()->setAcceptDockWindow (this, false);
-        parent->rightDock ()->setAcceptDockWindow (this, false);
-        parent->topDock ()->setAcceptDockWindow (this, false);
-        parent->bottomDock ()->setAcceptDockWindow (this, false);
-#endif
-    }
+    setMinimumSize (64, 64);
 
 
-    QSize layoutMinimumSize = layout () ? layout ()->minimumSize () : QSize ();
-#if DEBUG_KP_THUMBNAIL
-    kDebug () << "\tlayout=" << layout ()
-               << " minSize=" << (layout () ? layout ()->minimumSize () : QSize ()) << endl;
-    kDebug () << "\tboxLayout=" << boxLayout ()
-               << " minSize=" << (boxLayout () ? boxLayout ()->minimumSize () : QSize ())
-               << endl;
-#endif
-    if (layout ())
-        layout ()->setResizeMode (QLayout::SetNoConstraint);
-    setMinimumSize (qMax (layoutMinimumSize.width (), 64),
-                    qMax (layoutMinimumSize.height (), 64));
+    // Prevent us from docking to the mainWindow - it's _really_ irritating 
+    // otherwise.
+    setAllowedAreas (0);
+
+    // No "float" button (which looks more like a maximise button)
+    // since we don't allow docking.
+    // TODO: Not specifying QDockWidget::DockWidgetFloatable prevents the
+    //       thumbnail from begin moved.  We would rather have a useless
+    //       float button that duplicates the close button.
+    //setFeatures (QDockWidget::DockWidgetClosable |
+    //    QDockWidget::DockWidgetMovable);
+
+    // Float above mainWindow.
+    setFloating (true);
 
 
-    // Enable "X" Close Button
-    setCloseMode (Q3DockWindow::Always);
+    connect (toggleViewAction (), SIGNAL (toggled (bool)),
+        this, SIGNAL (windowClosed ()));
 
-    setResizeEnabled (true);
 
     updateCaption ();
 }
 
 kpThumbnail::~kpThumbnail ()
 {
+    delete d;
 }
 
 
 // public
 kpThumbnailView *kpThumbnail::view () const
 {
-    return m_view;
+    return d->view;
 }
 
 // public
@@ -109,33 +106,34 @@ void kpThumbnail::setView (kpThumbnailView *view)
     kDebug () << "kpThumbnail::setView(" << view << ")" << endl;
 #endif
 
-    if (m_view == view)
+    if (d->view == view)
         return;
 
 
-    if (m_view)
+    if (d->view)
     {
-        disconnect (m_view, SIGNAL (destroyed ()),
+        disconnect (d->view, SIGNAL (destroyed ()),
                     this, SLOT (slotViewDestroyed ()));
-        disconnect (m_view, SIGNAL (zoomLevelChanged (int, int)),
+        disconnect (d->view, SIGNAL (zoomLevelChanged (int, int)),
                     this, SLOT (updateCaption ()));
 
-        boxLayout ()->remove (m_view);
+        setWidget (0);
     }
 
-    m_view = view;
+    d->view = view;
 
-    if (m_view)
+    if (d->view)
     {
-        connect (m_view, SIGNAL (destroyed ()),
+        connect (d->view, SIGNAL (destroyed ()),
                  this, SLOT (slotViewDestroyed ()));
-        connect (m_view, SIGNAL (zoomLevelChanged (int, int)),
+        connect (d->view, SIGNAL (zoomLevelChanged (int, int)),
                  this, SLOT (updateCaption ()));
-        updateCaption ();
 
-        boxLayout ()->addWidget (m_view);
-        m_view->show ();
+        setWidget (d->view);
+        d->view->show ();
     }
+    
+    updateCaption ();
 }
 
 
@@ -146,17 +144,6 @@ void kpThumbnail::updateCaption ()
 }
 
 
-// public slot virtual [base QDockWindow]
-void kpThumbnail::dock ()
-{
-#if DEBUG_KP_THUMBNAIL
-    kDebug () << "kpThumbnail::dock() CALLED - ignoring request" << endl;
-#endif
-
-    // --- ignore all requests to dock ---
-}
-
-
 // protected slot
 void kpThumbnail::slotViewDestroyed ()
 {
@@ -164,7 +151,7 @@ void kpThumbnail::slotViewDestroyed ()
     kDebug () << "kpThumbnail::slotViewDestroyed()" << endl;
 #endif
 
-    m_view = 0;
+    d->view = 0;
     updateCaption ();
 }
 
@@ -177,24 +164,24 @@ void kpThumbnail::resizeEvent (QResizeEvent *e)
                << "," << height () << ")" << endl;
 #endif
 
-    Q3DockWindow::resizeEvent (e);
+    QDockWidget::resizeEvent (e);
 
-    // updateVariableZoom ();  TODO: is below a good idea since this commented out
+    // updateVariableZoom ();  TODO: is below a good idea since this commented out?
 
-    if (m_mainWindow)
+    if (d->mainWindow)
     {
-        m_mainWindow->notifyThumbnailGeometryChanged ();
+        d->mainWindow->notifyThumbnailGeometryChanged ();
 
-        if (m_mainWindow->tool ())
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+        if (d->mainWindow->tool ())
+            d->mainWindow->tool ()->somethingBelowTheCursorChanged ();
     }
 }
 
 // protected virtual [base QWidget]
 void kpThumbnail::moveEvent (QMoveEvent * /*e*/)
 {
-    if (m_mainWindow)
-        m_mainWindow->notifyThumbnailGeometryChanged ();
+    if (d->mainWindow)
+        d->mainWindow->notifyThumbnailGeometryChanged ();
 }
 
 

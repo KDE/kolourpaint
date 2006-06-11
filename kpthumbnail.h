@@ -30,7 +30,7 @@
 #define KP_THUMBNAIL_H
 
 
-#include <q3dockwindow.h>
+#include <QDockWidget>
 
 
 class QMoveEvent;
@@ -40,12 +40,14 @@ class kpMainWindow;
 class kpThumbnailView;
 
 
-class kpThumbnail : public Q3DockWindow
+struct kpThumbnailPrivate;
+
+class kpThumbnail : public QDockWidget
 {
 Q_OBJECT
 
 public:
-    kpThumbnail (kpMainWindow *parent, const char *name = 0);
+    kpThumbnail (kpMainWindow *parent);
     virtual ~kpThumbnail ();
 
 public:
@@ -55,8 +57,6 @@ public:
 public slots:
     void updateCaption ();
 
-    virtual void dock ();
-
 protected slots:
     void slotViewDestroyed ();
 
@@ -64,9 +64,11 @@ protected:
     virtual void resizeEvent (QResizeEvent *e);
     virtual void moveEvent (QMoveEvent *e);
 
+signals:
+    void windowClosed ();
+
 private:
-    kpMainWindow *m_mainWindow;
-    kpThumbnailView *m_view;
+    kpThumbnailPrivate * const d;
 };
 
 
