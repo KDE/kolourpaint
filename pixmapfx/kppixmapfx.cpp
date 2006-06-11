@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_PIXMAP_FX 1
+#define DEBUG_KP_PIXMAP_FX 0
 
 
 #include <kppixmapfx.h>
@@ -1242,7 +1242,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
                    << " m22=" << wrongMatrix.m22 ()
                    << " dx=" << wrongMatrix.dx ()
                    << " dy=" << wrongMatrix.dy ()
-                   << " rect=" << wrongMatrix.map (pm.rect ())
+                   << " rect=" << wrongMatrix.mapRect (pm.rect ())
                    << endl
                    << "\ti_used_to_use_thisMatrix: m11=" << oldHat.m11 ()
                    << " m12=" << oldHat.m12 ()
@@ -1250,7 +1250,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
                    << " m22=" << oldHat.m22 ()
                    << " dx=" << oldHat.dx ()
                    << " dy=" << oldHat.dy ()
-                   << " rect=" << oldHat.map (pm.rect ())
+                   << " rect=" << oldHat.mapRect (pm.rect ())
                    << endl
                    << "\tabove but scaled at the same time: m11=" << altHat.m11 ()
                    << " m12=" << altHat.m12 ()
@@ -1258,7 +1258,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
                    << " m22=" << altHat.m22 ()
                    << " dx=" << altHat.dx ()
                    << " dy=" << altHat.dy ()
-                   << " rect=" << altHat.map (pm.rect ())
+                   << " rect=" << altHat.mapRect (pm.rect ())
                    << endl
                    << "\tsupposedlyCorrectMatrix: m11=" << correctMatrix.m11 ()
                    << " m12=" << correctMatrix.m12 ()
@@ -1266,7 +1266,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
                    << " m22=" << correctMatrix.m22 ()
                    << " dx=" << correctMatrix.dx ()
                    << " dy=" << correctMatrix.dy ()
-                   << " rect=" << correctMatrix.map (pm.rect ())
+                   << " rect=" << correctMatrix.mapRect (pm.rect ())
                    << endl;
     #endif
 
