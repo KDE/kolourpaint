@@ -320,8 +320,14 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
     QPixmap swapPixmap = UserIcon ("colorbutton_swap_16x16");
     if (!isEnabled ())
     {
-        // swapPixmap has a mask after all
+        // Don't let the fill() touch the mask.
+        QBitmap swapBitmapMask = swapPixmap.mask ();
+        swapPixmap.setMask (QBitmap ());
+
+        // Grey out the opaque parts of "swapPixmap".
         swapPixmap.fill (palette().color (QPalette::Dark));
+
+        swapPixmap.setMask (swapBitmapMask);
     }
     painter.drawPixmap (swapPixmapRect ().topLeft (), swapPixmap);
 
