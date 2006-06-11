@@ -30,7 +30,7 @@
 #define KP_TOOL_WIDGET_BASE_H
 
 
-#include <q3frame.h>
+#include <qframe.h>
 #include <qpair.h>
 #include <qpixmap.h>
 #include <qrect.h>
@@ -43,12 +43,15 @@ class QPainter;
 
 
 // TODO: frame becomes a combobox when its parent kpToolToolBar becomes too small
-class kpToolWidgetBase : public Q3Frame
+// TODO: This is a crazy and overcomplicated class that invents its own (buggy)
+//       layout management.  It should be simplified or removed.
+class kpToolWidgetBase : public QFrame
 {
 Q_OBJECT
 
 public:
-    kpToolWidgetBase (QWidget *parent, const char *name);  // must provide a name for config to work
+    // (must provide a <name> for config to work)
+    kpToolWidgetBase (QWidget *parent, const QString &name);
     virtual ~kpToolWidgetBase ();
 
 public:
@@ -95,7 +98,7 @@ signals:
 
 protected:
     virtual void mousePressEvent (QMouseEvent *e);
-    virtual void drawContents (QPainter *painter);
+    virtual void paintEvent (QPaintEvent *e);
 
     void setInvertSelectedPixmap (bool yes = true) { m_invertSelectedPixmap = yes; }
     bool m_invertSelectedPixmap;

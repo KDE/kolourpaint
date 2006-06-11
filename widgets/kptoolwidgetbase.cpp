@@ -33,7 +33,6 @@
 
 #include <qbitmap.h>
 #include <qcolor.h>
-#include <q3frame.h>
 #include <qevent.h>
 #include <qimage.h>
 #include <qpainter.h>
@@ -49,15 +48,14 @@
 #include <kpeffectinvert.h>
 
 
-kpToolWidgetBase::kpToolWidgetBase (QWidget *parent, const char *name)
-    : Q3Frame (parent, name),
+kpToolWidgetBase::kpToolWidgetBase (QWidget *parent, const QString &name)
+    : QFrame (parent),
       m_invertSelectedPixmap (true),
       m_selectedRow (-1), m_selectedCol (-1)
 {
-    if (!name)
-        kError () << "kpToolWidgetBase::kpToolWidgetBase() without name" << endl;
+    setObjectName (name);
 
-    setFrameStyle (Q3Frame::Panel | Q3Frame::Sunken);
+    setFrameStyle (QFrame::Panel | QFrame::Sunken);
     setFixedSize (44, 66);
 }
 
@@ -89,7 +87,7 @@ void kpToolWidgetBase::startNewOptionRow ()
 void kpToolWidgetBase::finishConstruction (int fallBackRow, int fallBackCol)
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "kpToolWidgetBase(" << name ()
+    kDebug () << "kpToolWidgetBase(" << objectName ()
                << ")::kpToolWidgetBase(fallBack:row=" << fallBackRow
                << ",col=" << fallBackCol
                << ")"
@@ -180,18 +178,16 @@ QPair <int, int> kpToolWidgetBase::defaultSelectedRowAndCol () const
 {
     int row = -1, col = -1;
 
-    if (name ())
+    if (!objectName ().isEmpty ())
     {
         KConfigGroup cfg (KGlobal::config (), kpSettingsGroupTools);
 
-        QString nameString = QLatin1String (name ());
-
-        row = cfg.readEntry (nameString + QLatin1String (" Row"), -1);
-        col = cfg.readEntry (nameString + QLatin1String (" Col"), -1);
+        row = cfg.readEntry (objectName () + QLatin1String (" Row"), -1);
+        col = cfg.readEntry (objectName () + QLatin1String (" Col"), -1);
     }
 
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "kpToolWidgetBase(" << name ()
+    kDebug () << "kpToolWidgetBase(" << objectName ()
                << ")::defaultSelectedRowAndCol() returning row=" << row
                << " col=" << col
                << endl;
@@ -216,19 +212,18 @@ int kpToolWidgetBase::defaultSelectedCol () const
 void kpToolWidgetBase::saveSelectedAsDefault () const
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "kpToolWidgetBase(" << name ()
+    kDebug () << "kpToolWidgetBase(" << objectName ()
                << ")::saveSelectedAsDefault() row=" << m_selectedRow
                << " col=" << m_selectedCol << endl;
 #endif
 
-    if (!name ())
+    if (objectName ().isEmpty ())
         return;
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupTools);
 
-    QString nameString = QLatin1String (name ());
-    cfg.writeEntry (nameString + QLatin1String (" Row"), m_selectedRow);
-    cfg.writeEntry (nameString + QLatin1String (" Col"), m_selectedCol);
+    cfg.writeEntry (objectName () + QLatin1String (" Row"), m_selectedRow);
+    cfg.writeEntry (objectName () + QLatin1String (" Col"), m_selectedCol);
     cfg.sync ();
 }
 
@@ -380,8 +375,8 @@ int kpToolWidgetBase::selected () const
 bool kpToolWidgetBase::hasPreviousOption (int *row, int *col) const
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "kpToolWidgetBase" << name ()
-               << "::hasPreviousOption() current row=" << m_selectedRow
+    kDebug () << "kpToolWidgetBase(" << objectName ()
+               << ")::hasPreviousOption() current row=" << m_selectedRow
                << " col=" << m_selectedCol
                << endl;
 #endif
@@ -422,8 +417,8 @@ bool kpToolWidgetBase::hasPreviousOption (int *row, int *col) const
 bool kpToolWidgetBase::hasNextOption (int *row, int *col) const
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "kpToolWidgetBase" << name ()
-               << "::hasNextOption() current row=" << m_selectedRow
+    kDebug () << "kpToolWidgetBase(" << objectName ()
+               << ")::hasNextOption() current row=" << m_selectedRow
                << " col=" << m_selectedCol
                << endl;
 #endif
@@ -570,12 +565,18 @@ void kpToolWidgetBase::mousePressEvent (QMouseEvent *e)
     }
 }
 
-// protected virtual [base QFrame]
-void kpToolWidgetBase::drawContents (QPainter *painter)
+// protected virtual [base QWidget]
+void kpToolWidgetBase::paintEvent (QPaintEvent *e)
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE && 1
-    kDebug () << "kpToolWidgetBase::drawContents(): rect=" << contentsRect () << endl;
+    kDebug () << "kpToolWidgetBase::paintEvent(): rect=" << contentsRect () << endl;
 #endif
+
+    // Draw frame first.
+    QFrame::paintEvent (e);
+
+
+    QPainter painter (this);
 
     for (int i = 0; i < (int) m_pixmaps.count (); i++)
     {
@@ -594,7 +595,7 @@ void kpToolWidgetBase::drawContents (QPainter *painter)
 
             if (i == m_selectedRow && j == m_selectedCol)
             {
-                painter->fillRect (rect, Qt::blue/*selection color*/);
+                painter.fillRect (rect, Qt::blue/*selection color*/);
 
                 if (m_invertSelectedPixmap)
                     kpEffectInvertCommand::apply (&pixmap);
@@ -609,9 +610,9 @@ void kpToolWidgetBase::drawContents (QPainter *painter)
 
         #endif
 
-            painter->drawPixmap (QPoint (rect.x () + (rect.width () - pixmap.width ()) / 2,
-                                         rect.y () + (rect.height () - pixmap.height ()) / 2),
-                                 pixmap);
+            painter.drawPixmap (QPoint (rect.x () + (rect.width () - pixmap.width ()) / 2,
+                                        rect.y () + (rect.height () - pixmap.height ()) / 2),
+                                pixmap);
         }
     }
 }
