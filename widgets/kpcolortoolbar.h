@@ -108,7 +108,6 @@ protected:
     virtual void dragMoveEvent (QDragMoveEvent *e);
     virtual void dropEvent (QDropEvent *e);
 
-    virtual void mousePressEvent (QMouseEvent *e);
     virtual void mouseDoubleClickEvent (QMouseEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
 
@@ -145,6 +144,7 @@ protected:
 
     virtual void dropEvent (QDropEvent *e);
     virtual void paintCell (QPainter *painter, int row, int col);
+    virtual void contextMenuEvent (QContextMenuEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
     virtual void resizeEvent (QResizeEvent *e);
 
@@ -175,6 +175,7 @@ signals:
 
 protected:
     virtual void mousePressEvent (QMouseEvent *e);
+    virtual void contextMenuEvent (QContextMenuEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
 
     virtual void paintEvent (QPaintEvent *e);
@@ -231,7 +232,6 @@ public:
     double oldColorSimilarity () const;
 
 private:
-    virtual void mousePressEvent (QMouseEvent *e);
     virtual void mouseDoubleClickEvent (QMouseEvent *e);
 
 private:

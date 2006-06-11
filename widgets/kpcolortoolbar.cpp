@@ -233,12 +233,6 @@ void kpDualColorButton::dropEvent (QDropEvent *e)
 
 
 // protected virtual [base QWidget]
-void kpDualColorButton::mousePressEvent (QMouseEvent * /*e*/)
-{
-    // eat right-mouse click to prevent it from getting to the toolbar
-}
-
-// protected virtual [base QWidget]
 void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
 {
     int whichColor = -1;
@@ -650,6 +644,13 @@ void kpColorCells::paintCell (QPainter *painter, int row, int col)
     }
 }
 
+// protected virtual [base QWidget]
+void kpColorCells::contextMenuEvent (QContextMenuEvent *e)
+{
+    // Eat right-mouse press to prevent it from getting to the toolbar.
+    e->accept ();
+}
+
 // virtual protected
 void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
 {
@@ -775,7 +776,17 @@ QSize kpTransparentColorCell::sizeHint () const
 // protected virtual [base QWidget]
 void kpTransparentColorCell::mousePressEvent (QMouseEvent * /*e*/)
 {
-    // eat right-mouse click to prevent it from getting to the toolbar
+    // Eat press so that we own the mouseReleaseEvent().
+    // [http://blogs.qtdeveloper.net/archives/2006/05/27/mouse-event-propagation/]
+    //
+    // However, contrary to that blog, it doesn't seem to be needed?
+}
+
+// protected virtual [base QWidget]
+void kpTransparentColorCell::contextMenuEvent (QContextMenuEvent *e)
+{
+    // Eat right-mouse press to prevent it from getting to the toolbar.
+    e->accept ();
 }
 
 // protected virtual [base QWidget]
@@ -929,12 +940,6 @@ double kpColorSimilarityToolBarItem::oldColorSimilarity () const
     return m_oldColorSimilarity;
 }
 
-
-// private virtual [base QWidget]
-void kpColorSimilarityToolBarItem::mousePressEvent (QMouseEvent * /*e*/)
-{
-    // eat right-mouse click to prevent it from getting to the toolbar
-}
 
 // private virtual [base QWidget]
 void kpColorSimilarityToolBarItem::mouseDoubleClickEvent (QMouseEvent * /*e*/)
