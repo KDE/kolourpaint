@@ -267,17 +267,10 @@ void kpSelection::calculatePoints ()
         path.addEllipse (m_rect);
 
         const QList <QPolygonF> polygons = path.toSubpathPolygons ();
-        if (polygons.size () != 1)
-        {
-            kError () << "kpSelection::calculatePoints() m_rect=" << m_rect
-                      << " did not get exactly 1 polygon (" << polygons.size ()
-                      << ")" << endl;
-        }
-        else
-        {
-            const QPolygonF firstPolygonF = polygons.first ();
-            m_points = firstPolygonF.toPolygon ();
-        }
+        Q_ASSERT (polygons.size () == 1);
+        
+        const QPolygonF firstPolygonF = polygons.first ();
+        m_points = firstPolygonF.toPolygon ();
 
         return;
     }
