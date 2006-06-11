@@ -345,7 +345,8 @@ void kpColorSimilarityCube::paintEvent (QPaintEvent *e)
 #if 0
     backBufferPainter.save ();
     backBufferPainter.setPen (Qt::cyan);
-    backBufferPainter.drawRect (0, 0, cubeRectSize, cubeRectSize);
+    // ("- 1" adjusts for Qt4's 1 pixel higher and wider behaviour)
+    backBufferPainter.drawRect (0, 0, cubeRectSize - 1, cubeRectSize - 1);
     backBufferPainter.restore ();
 #endif
 }
