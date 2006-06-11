@@ -214,6 +214,7 @@ void kpToolResizeScaleCommand::scaleSelectionRegionWithDocument ()
     {
         kdError () << "kpToolResizeScaleCommand::scaleSelectionRegionWithDocument()"
                    << " without old sel" << endl;
+        return;
     }
 
     if (m_oldSelection->pixmap ())
