@@ -49,15 +49,14 @@ const double kpColorSimilarityCube::colorCubeDiagonalDistance =
     sqrt (255 * 255 * 3);
 
 kpColorSimilarityCube::kpColorSimilarityCube (int look,
-                                              kpMainWindow *mainWindow,
-                                              QWidget *parent,
-                                              const char *name)
-    : Q3Frame (parent, name, Qt::WNoAutoErase/*no flicker*/),
+        kpMainWindow *mainWindow,
+        QWidget *parent)
+    : QFrame (parent),
       m_mainWindow (mainWindow),
       m_colorSimilarity (-1)
 {
     if (look & Depressed)
-        setFrameStyle (Q3Frame::Panel | Q3Frame::Sunken);
+        setFrameStyle (QFrame::Panel | QFrame::Sunken);
 
     setColorSimilarity (0);
 
@@ -187,14 +186,17 @@ static void drawQuadrant (QPainter *p,
     points [2] = p3;
     points [3] = pointNotOnOutline;
 
-    p->setPen (col);
+    // Polygon fill.
+    p->setPen (QPen (col, 0/*neat line of width 1*/));
     p->setBrush (col);
     p->drawPolygon (points);
 
 
+    // Drawing black outline.
+    // TODO: what is "pointNotOnOutline" ???
     points.resize (3);
 
-    p->setPen (Qt::black);
+    p->setPen (QPen (Qt::black, 0/*neat line of width 1*/));
     p->setBrush (Qt::NoBrush);
     p->drawPolyline (points);
 
@@ -248,8 +250,8 @@ void kpColorSimilarityCube::drawFace (QPainter *p,
     #if DEBUG_KP_COLOR_SIMILARITY_CUBE
         kDebug () << "\tnot enabled - making us grey" << endl;
     #endif
-        colors [0] = palette ().color( QPalette::Background );
-        colors [1] = palette ().color( QPalette::Background );
+        colors [0] = palette ().color (QPalette::Background);
+        colors [1] = palette ().color (QPalette::Background);
     }
 
 #if DEBUG_KP_COLOR_SIMILARITY_CUBE
@@ -269,20 +271,25 @@ void kpColorSimilarityCube::drawFace (QPainter *p,
     ::drawQuadrant (p, colors [0], bm, br, mr, mm);
 }
 
-// protected virtual [base QFrame]
-void kpColorSimilarityCube::drawContents (QPainter *p)
+// protected virtual [base QWidget]
+void kpColorSimilarityCube::paintEvent (QPaintEvent *e)
 {
-    QRect cr (contentsRect ());
+    // Draw frame first.
+    QFrame::paintEvent (e);
 
-    QPixmap backBuffer (cr.width (), cr.height ());
-    backBuffer.fill ( palette().color( QPalette::Background) );
 
-    QPainter backBufferPainter (&backBuffer);
+    QPainter painter (this);
 
-    int cubeRectSize = qMin (cr.width () * 6 / 8, cr.height () * 6 / 8);
-    int dx = (cr.width () - cubeRectSize) / 2,
-        dy = (cr.height () - cubeRectSize) / 2;
-    backBufferPainter.translate (dx, dy);
+
+    painter.fillRect (contentsRect (), palette().color (QPalette::Background));
+
+
+    int cubeRectSize = qMin (contentsRect ().width () * 6 / 8,
+                             contentsRect ().height () * 6 / 8);
+    int dx = (contentsRect ().width () - cubeRectSize) / 2,
+        dy = (contentsRect ().height () - cubeRectSize) / 2;
+    painter.translate (contentsRect ().x () + dx, contentsRect ().y () + dy);
+
 
     //
     //      P------- Q  ---  ---
@@ -315,21 +322,21 @@ void kpColorSimilarityCube::drawContents (QPainter *p)
 
 
     // Top Face
-    drawFace (&backBufferPainter,
+    drawFace (&painter,
               0/*red*/,
               pointP, pointQ,
               pointR, pointS);
 
 
     // Bottom Face
-    drawFace (&backBufferPainter,
+    drawFace (&painter,
               1/*green*/,
               pointR, pointS,
               pointU, pointV);
 
 
     // Right Face
-    drawFace (&backBufferPainter,
+    drawFace (&painter,
               2/*blue*/,
               pointS, pointQ,
               pointV, pointT);
@@ -341,9 +348,4 @@ void kpColorSimilarityCube::drawContents (QPainter *p)
     backBufferPainter.drawRect (0, 0, cubeRectSize, cubeRectSize);
     backBufferPainter.restore ();
 #endif
-
-
-    backBufferPainter.end ();
-
-    p->drawPixmap (cr, backBuffer);
 }

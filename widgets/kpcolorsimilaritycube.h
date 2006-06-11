@@ -30,14 +30,14 @@
 #define KP_COLOR_SIMILARITY_CUBE_H
 
 
-#include <q3frame.h>
+#include <qframe.h>
 
 
 class kpColor;
 class kpMainWindow;
 
 
-class kpColorSimilarityCube : public Q3Frame
+class kpColorSimilarityCube : public QFrame
 {
 public:
     enum Look
@@ -49,8 +49,7 @@ public:
 
     kpColorSimilarityCube (int look,
                            kpMainWindow *mainWindow,
-                           QWidget *parent,
-                           const char *name = 0);
+                           QWidget *parent);
     virtual ~kpColorSimilarityCube ();
 
     static const double colorCubeDiagonalDistance;
@@ -66,7 +65,7 @@ protected:
                    int redOrGreenOrBlue,
                    const QPoint &tl, const QPoint &tr,
                    const QPoint &bl, const QPoint &br);
-    virtual void drawContents (QPainter *p);
+    virtual void paintEvent (QPaintEvent *e);
 
     kpMainWindow *m_mainWindow;
     double m_colorSimilarity;
