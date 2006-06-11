@@ -51,6 +51,9 @@ KolourPaint 1.4
 kolourpaint not associated with .bmp
 
 
+RMB colour select & draw, holding shift are not discoverable.
+
+
 "I did discover the color picker applet, which I think is dead handy
 (over kcolorchooser or kolourpaint's picker which is constrained to
 the kolourpaint window"
