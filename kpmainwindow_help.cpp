@@ -53,9 +53,10 @@ void kpMainWindow::setupHelpMenuActions ()
     // from a digital camera in future versions of KolourPaint.  Hence
     // "Acquiring" is more appropriate.
     // -- Thurston
-    d->m_actionHelpTakingScreenshots = new KAction (
-        i18n ("Acquiring &Screenshots"), 0,
-        this, SLOT (slotHelpTakingScreenshots ()), ac, "help_taking_screenshots");
+    d->m_actionHelpTakingScreenshots = new KAction (i18n ("Acquiring &Screenshots"),
+        ac, "help_taking_screenshots");
+    connect (d->m_actionHelpTakingScreenshots, SIGNAL (triggered (bool)),
+        SLOT (slotHelpTakingScreenshots ()));
 
 
     enableHelpMenuDocumentActions (false);
@@ -178,11 +179,9 @@ void kpMainWindow::slotHelpTakingScreenshots ()
     dlg.enableButtonSeparator (true);
 
     KActiveLabel *messageLabel = new KActiveLabel (message, &dlg);
-    // TODO: this is brittle - override KActiveLabel::openLink() instead.
-    disconnect (messageLabel, SIGNAL (anchorClicked (const QUrl &)),
-             messageLabel, SLOT (openLink (const QUrl &)));
-    connect (messageLabel, SIGNAL (anchorClicked (const QUrl &)),
-             this, SLOT (slotHelpTakingScreenshotsFollowLink (const QUrl &)));
+    messageLabel->setNotifyClick (true);  // Fire urlClick() signal.
+    connect (messageLabel, SIGNAL (urlClick (const QString &)),
+             this, SLOT (slotHelpTakingScreenshotsFollowLink (const QString &)));
 
     dlg.setMainWidget (messageLabel);
 
@@ -190,10 +189,8 @@ void kpMainWindow::slotHelpTakingScreenshots ()
 }
 
 // private
-void kpMainWindow::slotHelpTakingScreenshotsFollowLink (const QUrl &url)
+void kpMainWindow::slotHelpTakingScreenshotsFollowLink (const QString &link)
 {
-    const QString link = url.toString ();
-
 #if DEBUG_KP_MAIN_WINDOW || 1
     kDebug () << "kpMainWindow::slotHelpTakingScreenshotsFollowLink("
                << link << ")" << endl;
