@@ -772,7 +772,7 @@ void kpPixmapFX::paintPixmapAt (QPixmap *destPixmapPtr, const QPoint &destAt,
     if (!destPixmapPtr)
         return;
 
-    // copy data from dest onto the top of src (masked by src's mask)
+    // Copy src (masked by src's mask) on top of dest.
     bitBlt (destPixmapPtr, /* dest */
             destAt.x (), destAt.y (), /* dest pt */
             &srcPixmap, /* src */
@@ -861,48 +861,6 @@ QBitmap kpPixmapFX::getNonNullMask (const QPixmap &pm)
 
         return maskBitmap;
     }
-}
-
-
-// public static
-QBitmap kpPixmapFX::getNonNullMaskAt (const QPixmap &pm, const QRect &rect)
-{
-    QBitmap destMaskBitmap (rect.width (), rect.height ());
-
-    if (pm.mask ())
-    {
-        copyBlt (&destMaskBitmap, 0, 0,
-                 &pm, rect.x (), rect.y (), rect.width (), rect.height ());
-    }
-    else
-    {
-        destMaskBitmap.fill (Qt::color1/*opaque*/);
-    }
-
-    return destMaskBitmap;
-}
-
-
-// public static
-void kpPixmapFX::setMaskAt (QPixmap *destPixmapPtr, const QPoint &destAt,
-                            const QBitmap &srcMaskBitmap)
-{
-    if (!destPixmapPtr)
-        return;
-
-    QBitmap destMaskBitmap (srcMaskBitmap.width (), srcMaskBitmap.height ());
-
-    copyBlt (&destMaskBitmap, destAt.x (), destAt.y (),
-             &srcMaskBitmap);
-
-    destPixmapPtr->setMask (destMaskBitmap);
-}
-
-// public static
-void kpPixmapFX::setMaskAt (QPixmap *destPixmapPtr, int destX, int destY,
-                            const QBitmap &srcMaskBitmap)
-{
-    kpPixmapFX::setMaskAt (destPixmapPtr, QPoint (destX, destY), srcMaskBitmap);
 }
 
 

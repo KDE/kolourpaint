@@ -290,21 +290,6 @@ public:
     static QBitmap getNonNullMask (const QPixmap &pm);
 
     //
-    // Returns the mask data found at the <rect> in <pm>.
-    //
-    static QBitmap getNonNullMaskAt (const QPixmap &pm, const QRect &rect);
-
-    //
-    // Sets the mask of <*destPixmapPtr> at the rectangle, with the
-    // top-left <destAt> and dimensions <srcMaskBitmap.rect()>,
-    // to <srcMaskBitmap>.
-    //
-    static void setMaskAt (QPixmap *destPixmapPtr, const QPoint &destAt,
-                           const QBitmap &srcMaskBitmap);
-    static void setMaskAt (QPixmap *destPixmapPtr, int destX, int destY,
-                           const QBitmap &srcMaskBitmap);
-
-    //
     // Ensures that <*destPixmapPtr> is transparent at <rect>.
     //
     static void ensureTransparentAt (QPixmap *destPixmapPtr, const QRect &destRect);
