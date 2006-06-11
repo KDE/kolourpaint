@@ -111,7 +111,9 @@ set(libkolourpaintpixmapfx_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kpeffectreducecolors.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kpeffectsdialog.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kpfloodfill.cpp 
+    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kpimage.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kppixmapfx.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kppainter.cpp
 )
 
 set(libkolourpaintcursors_SRCS 

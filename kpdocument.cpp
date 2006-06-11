@@ -1369,10 +1369,10 @@ void kpDocument::fill (const kpColor &color)
     slotContentsChanged (m_pixmap->rect ());
 }
 
-void kpDocument::resize (int w, int h, const kpColor &backgroundColor, bool fillNewAreas)
+void kpDocument::resize (int w, int h, const kpColor &backgroundColor)
 {
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "kpDocument::resize (" << w << "," << h << "," << fillNewAreas << ")" << endl;
+    kDebug () << "kpDocument::resize (" << w << "," << h << ")" << endl;
 #endif
 
     m_oldWidth = width (), m_oldHeight = height ();
@@ -1386,7 +1386,7 @@ void kpDocument::resize (int w, int h, const kpColor &backgroundColor, bool fill
     if (w == m_oldWidth && h == m_oldHeight)
         return;
 
-    kpPixmapFX::resize (m_pixmap, w, h, backgroundColor, fillNewAreas);
+    kpPixmapFX::resize (m_pixmap, w, h, backgroundColor);
 
     slotSizeChanged (width (), height ());
 }

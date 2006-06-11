@@ -6,6 +6,9 @@ KolourPaint 4.0.0 (Frozen ???)
 
    * Port to KDE 4 (Laurent Montel)
 
+   * Rectangles, rounded rectangles and ellipsed are now bounded by
+     the dimensions of the dragged out rectangle
+
    * Printing improvements (Bug #108976)
      - Respect image DPI
      - Fit image to page if image is too big

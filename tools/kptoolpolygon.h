@@ -59,6 +59,8 @@ class kpToolWidgetLineWidth;
 class kpViewManager;
 
 
+struct kpToolPolygonPrivate;
+
 class kpToolPolygon : public kpTool
 {
 Q_OBJECT
@@ -87,7 +89,15 @@ public:
     virtual void end ();
 
     virtual void beginDraw ();
+private:
+    void applyModifiers ();
+public:
     virtual void draw (const QPoint &, const QPoint &, const QRect &);
+private:
+    kpColor drawingForegroundColor () const;
+    kpColor drawingBackgroundColor () const;
+    void updateShape ();
+public:
     virtual void cancelShape ();
     virtual void releasedAllButtons ();
     virtual void endDraw (const QPoint &, const QRect &);
@@ -96,46 +106,31 @@ public:
     virtual bool hasBegunShape () const;
 
 public slots:
-    void slotLineWidthChanged (int width);
-    void slotFillStyleChanged (kpToolWidgetFillStyle::FillStyle fillStyle);
+    void slotLineWidthChanged ();
+    void slotFillStyleChanged ();
 
 protected slots:
     virtual void slotForegroundColorChanged (const kpColor &);
     virtual void slotBackgroundColorChanged (const kpColor &);
 
-private slots:
-    void updateShape ();
-
 private:
-    Mode m_mode;
+    kpToolPolygonPrivate * const d;
 
-    kpToolWidgetFillStyle *m_toolWidgetFillStyle;
-
-    int m_lineWidth;
-    kpToolWidgetLineWidth *m_toolWidgetLineWidth;
-
-    int m_originatingMouseButton;
-
-    void applyModifiers ();
-
-    QPoint m_toolLineStartPoint, m_toolLineEndPoint;
-    QRect m_toolLineRect;
-
-    QPolygon m_points;
 };
+
+struct kpToolPolygonCommandPrivate;
 
 class kpToolPolygonCommand : public kpNamedCommand
 {
 public:
     kpToolPolygonCommand (const QString &name,
-                          const QPolygon &points,
-                          const QRect &normalizedRect,
-                          const kpColor &foregroundColor, const kpColor &backgroundColor,
-                          int lineWidth, Qt::PenStyle lineStyle,
-                          kpToolWidgetFillStyle *toolWidgetFillStyle,
-                          const QPixmap &originalArea,
-                          kpToolPolygon::Mode mode,
-                          kpMainWindow *mainWindow);
+        const QPolygon &points,
+        const QRect &normalizedRect,
+        const kpColor &foregroundColor, int penWidth,
+        const kpColor &backgroundColor,
+        const QPixmap &originalArea,
+        enum kpToolPolygon::Mode mode,
+        kpMainWindow *mainWindow);
     virtual ~kpToolPolygonCommand ();
 
     virtual int size () const;
@@ -144,16 +139,8 @@ public:
     virtual void unexecute ();
 
 private:
-    QPolygon m_points;
-    QRect m_normalizedRect;
-
-    kpColor m_foregroundColor, m_backgroundColor;
-    int m_lineWidth;
-    Qt::PenStyle m_lineStyle;
-    kpToolWidgetFillStyle *m_toolWidgetFillStyle;
-
-    QPixmap m_originalArea;
-    kpToolPolygon::Mode m_mode;
+    kpToolPolygonCommandPrivate * const d;
+    kpToolPolygonCommand &operator= (const kpToolPolygonCommand &) const;
 };
 
 

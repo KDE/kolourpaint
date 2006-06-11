@@ -36,19 +36,28 @@
 class QBitmap;
 class QColor;
 class QImage;
-class QPolygon;
+class QMatrix;
+class QPen;
 class QPixmap;
 class QPoint;
+class QPolygon;
 class QRect;
 class QString;
 class QWidget;
-class QMatrix;
 
 
 class kpColor;
 class kpSelection;
 
 
+//
+// QPixmap (view) Manipulation.
+//
+// Anything that is supposed to be manipulating the document contents
+// (i.e. kpImage), should be moved to kpPainter.
+//
+// kpPainter uses us for its Qt backend but we don't use kpPainter.
+//
 class kpPixmapFX
 {
 public:
@@ -228,7 +237,10 @@ public:
 
     //
     // Sets the pixel and mask data at <destRect> in <*destPixmapPtr>
-    // to <srcPixmap>.
+    // to <srcPixmap>.  Neither <destRect>'s width nor height are allowed
+    // to be bigger than <srcPixmap>'s (you can't copy more than you have).
+    // On the other hand, you can copy less than the size of <srcPixmap>
+    // - no scaling is done.
     //
     static void setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
                              const QPixmap &srcPixmap);
@@ -334,12 +346,12 @@ public:
 
     //
     // Resizes an image to the given width and height,
-    // filling any new areas with <backgroundColor> if <fillNewAreas> is set.
+    // filling any new areas with <backgroundColor>.
     //
     static void resize (QPixmap *destPixmapPtr, int w, int h,
-                        const kpColor &backgroundColor, bool fillNewAreas = true);
+                        const kpColor &backgroundColor);
     static QPixmap resize (const QPixmap &pm, int w, int h,
-                           const kpColor &backgroundColor, bool fillNewAreas = true);
+                           const kpColor &backgroundColor);
 
     //
     // Scales an image to the given width and height.
@@ -419,6 +431,18 @@ public:
     static QPixmap flip (const QPixmap &pm, bool horz, bool vert);
     static void flip (QImage *destImagePtr, bool horz, bool vert);
     static QImage flip (const QImage &img, bool horz, bool vert);
+
+
+    // Returns a pen suitable for drawing a rectangle with 90 degree
+    // corners ("MiterJoin").  This is necessary since Qt4 defaults to
+    // "BevelJoin".  <qtWidth> is passed straight to QPen without modification.
+    static QPen QPainterDrawRectPen (const QColor &color, int qtWidth);
+
+    // Returns a pen suitable for drawing lines / polylines / polygons /
+    // curves with rounded corners.  This is necessary since Qt4 defaults
+    // to square corners ("SquareCap") and "BevelJoin".
+    // <qtWidth> is passed straight to QPen without modification.
+    static QPen QPainterDrawLinePen (const QColor &color, int qtWidth);
 };
 
 

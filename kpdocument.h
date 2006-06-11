@@ -194,7 +194,7 @@ public:
      */
 
     void fill (const kpColor &color);
-    void resize (int w, int h, const kpColor &backgroundColor, bool fillNewAreas = true);
+    void resize (int w, int h, const kpColor &backgroundColor);
 
 
 public slots:

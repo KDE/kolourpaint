@@ -74,6 +74,12 @@ public:
     QBrush brush (const kpColor &foregroundColor,
                   const kpColor &backgroundColor);
 
+    // Returns the actual fill colour.
+    // e.g. "FillWithBackground" fillStyle() -> <backgroundColor>,
+    //      "FillWithForeground" fillStyle() -> <foregroundColor>.
+    kpColor drawingBackgroundColor (
+        const kpColor &foregroundColor, const kpColor &backgroundColor) const;
+
 signals:
     void fillStyleChanged (kpToolWidgetFillStyle::FillStyle fillStyle);
 

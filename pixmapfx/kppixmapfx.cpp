@@ -702,7 +702,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
          destPixmapPtr->setMask (destPixmapMask);
     }
 
-    // COMPAT: here comes trouble
+    // You cannot copy more than what you have.
     Q_ASSERT (destRect.width () <= srcPixmap.width () &&
               destRect.height () <= srcPixmap.height ());
 
@@ -1023,7 +1023,7 @@ QPixmap kpPixmapFX::fill (const QPixmap &pm, const kpColor &color)
 
 // public static
 void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
-                         const kpColor &backgroundColor, bool fillNewAreas)
+                         const kpColor &backgroundColor)
 {
 #if DEBUG_KP_PIXMAP_FX && 1
     kDebug () << "kpPixmapFX::resize()" << endl;
@@ -1032,71 +1032,44 @@ void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
     if (!destPixmapPtr)
         return;
 
-    int oldWidth = destPixmapPtr->width ();
-    int oldHeight = destPixmapPtr->height ();
+    const int oldWidth = destPixmapPtr->width ();
+    const int oldHeight = destPixmapPtr->height ();
 
     if (w == oldWidth && h == oldHeight)
         return;
 
 
-    *destPixmapPtr = QPixmap (w, h);
-#warning please check if the old value of destPixmapPtr needs to be copied
+    QPixmap newPixmap (w, h);
 
-    if (fillNewAreas && (w > oldWidth || h > oldHeight))
+    // Would have new undefined areas?
+    if (w > oldWidth || h > oldHeight)
     {
     #if DEBUG_KP_PIXMAP_FX && 1
-        kDebug () << "\tfilling in new areas" << endl;
+        kDebug () << "\tbacking with fill opqaque="
+                  << backgroundColor.isOpaque () << endl;
     #endif
-        QBitmap maskBitmap;
-        QPainter painter, maskPainter;
-
         if (backgroundColor.isOpaque ())
+            newPixmap.fill (backgroundColor.toQColor ());
+        else
         {
-            painter.begin (destPixmapPtr);
-            painter.setPen (backgroundColor.toQColor ());
-            painter.setBrush (backgroundColor.toQColor ());
+            QBitmap newPixmapMask (w, h);
+            newPixmapMask.fill (Qt::color0/*transparent*/);
         }
-
-        if (backgroundColor.isTransparent () || !destPixmapPtr->mask ().isNull ())
-        {
-            maskBitmap = kpPixmapFX::getNonNullMask (*destPixmapPtr);
-            maskPainter.begin (&maskBitmap);
-            maskPainter.setPen (backgroundColor.maskColor ());
-            maskPainter.setBrush (backgroundColor.maskColor ());
-        }
-
-    #define PAINTER_CALL(cmd)         \
-    {                                 \
-        if (painter.isActive ())      \
-            painter . cmd ;           \
-                                      \
-        if (maskPainter.isActive ())  \
-            maskPainter . cmd ;       \
     }
-        if (w > oldWidth)
-            PAINTER_CALL (drawRect (oldWidth, 0, w - oldWidth, oldHeight));
 
-        if (h > oldHeight)
-            PAINTER_CALL (drawRect (0, oldHeight, w, h - oldHeight));
-    #undef PAINTER_CALL
+    // Copy over old pixmap.
+    setPixmapAt (&newPixmap, 0, 0, *destPixmapPtr);
 
-        if (maskPainter.isActive ())
-            maskPainter.end ();
-
-        if (painter.isActive ())
-            painter.end ();
-
-        if (!maskBitmap.isNull ())
-            destPixmapPtr->setMask (maskBitmap);
-    }
+    // Replace pixmap with new one.
+    *destPixmapPtr = newPixmap;
 }
 
 // public static
 QPixmap kpPixmapFX::resize (const QPixmap &pm, int w, int h,
-                            const kpColor &backgroundColor, bool fillNewAreas)
+                            const kpColor &backgroundColor)
 {
     QPixmap ret = pm;
-    kpPixmapFX::resize (&ret, w, h, backgroundColor, fillNewAreas);
+    kpPixmapFX::resize (&ret, w, h, backgroundColor);
     return ret;
 }
 
@@ -1590,3 +1563,17 @@ QImage kpPixmapFX::flip (const QImage &img, bool horz, bool vert)
 
     return img.mirrored (horz, vert);
 }
+
+
+// public static
+QPen kpPixmapFX::QPainterDrawRectPen (const QColor &color, int qtWidth)
+{
+    return QPen (color, qtWidth, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
+}
+
+// public static
+QPen kpPixmapFX::QPainterDrawLinePen (const QColor &color, int qtWidth)
+{
+    return QPen (color, qtWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+}
+

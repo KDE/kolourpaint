@@ -49,6 +49,8 @@ class kpToolWidgetLineWidth;
 class kpViewManager;
 
 
+struct kpToolRectanglePrivate;
+
 class kpToolRectangle : public kpTool
 {
 Q_OBJECT
@@ -71,6 +73,10 @@ public:
 
     virtual bool careAboutModifierState () const { return true; }
 
+private slots:
+    virtual void slotLineWidthChanged ();
+    virtual void slotFillStyleChanged ();
+
 private:
     QString haventBegunDrawUserMessage () const;
 
@@ -78,8 +84,12 @@ public:
     virtual void begin ();
     virtual void end ();
 
+private:
+    void applyModifiers ();
     virtual void beginDraw ();
 private:
+    kpColor drawingForegroundColor () const;
+    kpColor drawingBackgroundColor () const;
     void updateShape ();
 public:
     virtual void draw (const QPoint &, const QPoint &, const QRect &);
@@ -87,42 +97,21 @@ public:
     virtual void releasedAllButtons ();
     virtual void endDraw (const QPoint &, const QRect &);
 
-private slots:
-    void updatePens ();
-    void updateBrushes ();
-
-    virtual void slotForegroundColorChanged (const kpColor &);
-    virtual void slotBackgroundColorChanged (const kpColor &);
-
-    virtual void slotLineWidthChanged ();
-    virtual void slotFillStyleChanged ();
-
 private:
-    Mode m_mode;
-
-    kpToolWidgetLineWidth *m_toolWidgetLineWidth;
-    kpToolWidgetFillStyle *m_toolWidgetFillStyle;
-
-    void updatePen (int mouseButton);
-    QPen m_pen [2], m_maskPen [2];
-
-    void updateBrush (int mouseButton);
-    QBrush m_brush [2], m_maskBrush [2];
-
-    void applyModifiers ();
-    QPoint m_toolRectangleStartPoint, m_toolRectangleEndPoint;
-    QRect m_toolRectangleRectWithoutLineWidth, m_toolRectangleRect;
+    kpToolRectanglePrivate * const d;
 };
+
+
+struct kpToolRectangleCommandPrivate;
 
 class kpToolRectangleCommand : public kpCommand
 {
 public:
     kpToolRectangleCommand (kpToolRectangle::Mode mode,
-                            const QPen &pen, const QPen &maskPen,
-                            const QBrush &brush, const QBrush &maskBrush,
-                            const QRect &rect,
-                            const QPoint &startPoint, const QPoint &endPoint,
-                            kpMainWindow *mainWindow);
+        const QRect &rect,
+        const kpColor &fcolor, int penWidth,
+        const kpColor &bcolor,
+        kpMainWindow *mainWindow);
     virtual ~kpToolRectangleCommand ();
 
     virtual QString name () const;
@@ -133,12 +122,8 @@ public:
     virtual void unexecute ();
 
 private:
-    kpToolRectangle::Mode m_mode;
-    QPen m_pen, m_maskPen;
-    QBrush m_brush, m_maskBrush;
-    QRect m_rect;
-    QPoint m_startPoint, m_endPoint;
-    QPixmap *m_oldPixmapPtr;
+    kpToolRectangleCommandPrivate * const d;
+    kpToolRectangleCommand &operator= (const kpToolRectangleCommand &) const;
 };
 
 
