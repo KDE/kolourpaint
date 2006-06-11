@@ -666,7 +666,7 @@ private:
 
 private slots:
     void slotHelpTakingScreenshots ();
-    void slotHelpTakingScreenshotsFollowLink (const QUrl &url);
+    void slotHelpTakingScreenshotsFollowLink (const QString &link);
 
 
 private:
