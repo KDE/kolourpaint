@@ -87,9 +87,6 @@ public:
     int numShownToolWidgets () const;
     kpToolWidgetBase *shownToolWidget (int which) const;
 
-    bool toolsSingleKeyTriggersEnabled () const;
-    void enableToolsSingleKeyTriggers (bool enable);
-
 signals:
     void sigToolSelected (kpTool *tool);  // tool may be 0
     void toolWidgetOptionSelected ();

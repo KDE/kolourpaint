@@ -25,8 +25,14 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_TOOL_ACTION 0
+
 
 #include <kptoolaction.h>
+
+#include <kactioncollection.h>
+#include <kdebug.h>
+#include <kicon.h>
 
 #include <kptool.h>
 
@@ -35,9 +41,18 @@ kpToolAction::kpToolAction (const QString &text,
                             const QString &pic, const KShortcut &shortcut,
                             const QObject *receiver, const char *slot,
                             KActionCollection *ac, const char *name)
-    : KToggleAction (text,
-                     pic, shortcut, receiver, slot, ac, name)
+    : KToggleAction (KIcon (pic), text, ac, name)
 {
+#if DEBUG_KP_TOOL_ACTION
+    kDebug () << "kpToolAction<" << name << ">::kpToolAction(shortcut="
+              << shortcut.toString () << ")" << endl;
+#endif
+
+    KToggleAction::setShortcut (shortcut);
+
+    if (receiver && slot)
+        connect (this, SIGNAL (triggered (bool)), receiver, slot);
+
     updateToolTip ();
 }
 
@@ -51,6 +66,12 @@ void kpToolAction::updateToolTip ()
 {
     const QString newToolTip =
         kpTool::toolTipForTextAndShortcut (text (), shortcut ());
+#if DEBUG_KP_TOOL_ACTION
+    kDebug () << "\tkpToolAction<" << objectName () << ">::updateToolTip()"
+              << " text='" << text () << "' shortcut=" << shortcut ().toString ()
+              << " oldToolTip=" << toolTip () << " newToolTip=" << newToolTip
+              << endl;
+#endif
     if (newToolTip == toolTip ())
         return;
 
@@ -59,48 +80,50 @@ void kpToolAction::updateToolTip ()
 }
 
 
+// public static
+void kpToolAction::updateAllActionsToolTips (KActionCollection *ac)
+{
+#if DEBUG_KP_TOOL_ACTION
+    kDebug () << "kpToolAction::updateAllActionsToolTips()" << endl;
+#endif
+
+    foreach (KAction *action, ac->actions ())
+    {
+        kpToolAction *toolAction = qobject_cast <kpToolAction *> (action);
+        if (!toolAction)
+            continue;
+
+        toolAction->updateToolTip ();
+    }
+}
+
+
 //
-// KToggleAction interface
+// KToggleAction overrides
 //
 
-// public slot virtual [base KAction]
+// public
 void kpToolAction::setText (const QString &text)
 {
+#if DEBUG_KP_TOOL_ACTION
+    kDebug () << "kpToolAction<" << objectName ()
+               << ">::setText(" << text << ")" << endl;
+#endif
+
     KToggleAction::setText (text);
     updateToolTip ();
 }
 
-// public slot virtual [base KAction]
-bool kpToolAction::setShortcut (const KShortcut &shortcut)
+// public
+void kpToolAction::setShortcut (const KShortcut &shortcut)
 {
-#warning "kde4: port it"
-    //bool ret = KToggleAction::setShortcut (shortcut);
+#if DEBUG_KP_TOOL_ACTION
+    kDebug () << "kpToolAction<" << objectName ()
+               << ">::setShortcut(" << shortcut.toString () << ")" << endl;
+#endif
+
+    KToggleAction::setShortcut (shortcut);
     updateToolTip ();
-    //return ret;
-	return false;
-}
-
-
-//
-// KToggleAction implements kpSingleKeyTriggersActionInterface
-//
-
-// public virtual [base kpSingleKeyTriggersActionInterface]
-const char *kpToolAction::actionName () const
-{
-    return name ();
-}
-
-// public virtual [base kpSingleKeyTriggersActionInterface]
-KShortcut kpToolAction::actionShortcut () const
-{
-    return shortcut ();
-}
-
-// public virtual [base kpSingleKeyTriggersActionInterface]
-void kpToolAction::actionSetShortcut (const KShortcut &shortcut)
-{
-    setShortcut (shortcut);
 }
 
 

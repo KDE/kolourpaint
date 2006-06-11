@@ -142,7 +142,6 @@ set(kolourpaint_SRCS ${libkolourpaintcursors_SRCS} ${libkolourpaintpixmapfx_SRCS
    kpselection.cpp 
    kpselectiondrag.cpp 
    kpselectiontransparency.cpp 
-   kpsinglekeytriggersaction.cpp 
    kptemppixmap.cpp 
    kptextstyle.cpp 
    kpthumbnail.cpp 

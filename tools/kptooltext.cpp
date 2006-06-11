@@ -152,6 +152,60 @@ void kpToolText::endShape (const QPoint &thisPoint, const QRect &normalizedRect)
 }
 
 
+// protected virtual [base QWidget]
+bool kpToolText::event (QEvent *e)
+{
+    const bool isShortcutOverrideEvent =
+        (e->type () == QEvent::ShortcutOverride);
+    const bool haveTextSelection =
+        (document ()->selection () && document ()->selection ()->isText ());
+
+#if DEBUG_KP_TOOL_TEXT && 0
+    kDebug () << "kpToolText::event() type=" << e->type ()
+              << " isShortcutOverrideEvent=" << isShortcutOverrideEvent
+              << " haveTextSel=" << haveTextSelection
+              << endl;
+#endif
+
+    if (!isShortcutOverrideEvent || !haveTextSelection)
+        return kpToolSelection::event (e);
+
+    QKeyEvent *ke = static_cast <QKeyEvent *> (e);
+#if DEBUG_KP_TOOL_TEXT
+    kDebug () << "kpToolText::event() key=" << ke->key ()
+              << " modifiers=" << ke->modifiers ()
+              << " QChar.isPrint()=" << QChar (ke->key ()).isPrint ()
+              << endl;
+#endif
+
+    // Can't be shortcut?
+    if (ke->key () == 0 && ke->key () == Qt::Key_unknown)
+    {
+    #if DEBUG_KP_TOOL_TEXT
+        kDebug () << "\tcan't be shortcut - safe to not react" << endl;
+    #endif
+    }
+    // Normal letter (w/ or w/o shift, keypad button ok)?
+    // TODO: don't like this check
+    else if ((ke->modifiers () &
+                (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier)) == 0 &&
+            ke->key () < 0x100 /*QChar (ke->key ()).isPrint () - unfortunately F1 is printable too...*/)
+    {
+    #if DEBUG_KP_TOOL_TEXT
+        kDebug () << "\tis text - grab" << endl;
+    #endif
+        e->accept ();
+    }
+    else
+    {
+        // Strickly speaking, we should grab stuff like the arrow keys
+        // and enter.  In any case, should be done down in kpTool (as that
+        // uses arrow keys too).
+    }
+
+    return kpToolSelection::event (e);
+}
+
 // protected virtual [base kpTool]
 void kpToolText::keyPressEvent (QKeyEvent *e)
 {

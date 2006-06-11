@@ -33,6 +33,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kedittoolbar.h>
+#include <kglobal.h>
 #include <kkeydialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -40,8 +41,8 @@
 
 #include <kpdefs.h>
 #include <kpdocument.h>
+#include <kptoolaction.h>
 #include <kptooltoolbar.h>
-#include <kglobal.h>
 
 
 // private
@@ -130,21 +131,16 @@ void kpMainWindow::slotKeyBindings ()
     kDebug () << "kpMainWindow::slotKeyBindings()" << endl;
 #endif
 
-    bool singleKeyTriggersDisabled = !actionsSingleKeyTriggersEnabled ();
-
-    if (singleKeyTriggersDisabled)
-        enableActionsSingleKeyTriggers (true);
-
-
-    if (KKeyDialog::configure (actionCollection (), KKeyChooser::LetterShortcutsAllowed, this))
+    if (KKeyDialog::configure (actionCollection (),
+            KKeyChooser::LetterShortcutsAllowed,
+            this))
     {
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\tdialog accepted" << endl;
     #endif
         // TODO: PROPAGATE: thru mainWindow's and interprocess
 
-        if (singleKeyTriggersDisabled)
-            enableActionsSingleKeyTriggers (false);
+        kpToolAction::updateAllActionsToolTips (actionCollection ());
     }
 }
 

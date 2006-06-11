@@ -64,6 +64,12 @@ public:
     virtual void endShape (const QPoint &thisPoint, const QRect &normalizedRect);
 
 protected:
+    // Prevents actions with single letter/number shortcuts from eating
+    // keystrokes while a text selection is active.  This is important
+    // because the Tool Box actions default to single letter/number
+    // shortcuts.
+    virtual bool event (QEvent *e);
+
     virtual void keyPressEvent (QKeyEvent *e);
     virtual void inputMethodEvent (QInputMethodEvent *e);
 

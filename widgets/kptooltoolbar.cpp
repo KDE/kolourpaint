@@ -418,36 +418,6 @@ kpToolWidgetBase *kpToolToolBar::shownToolWidget (int which) const
 }
 
 
-// public
-bool kpToolToolBar::toolsSingleKeyTriggersEnabled () const
-{
-    for (QList <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
-         it != m_buttonToolPairs.end ();
-         it++)
-    {
-        if (!(*it).m_tool->singleKeyTriggersEnabled ())
-            return false;
-    }
-
-    return true;
-}
-
-// public
-void kpToolToolBar::enableToolsSingleKeyTriggers (bool enable)
-{
-#if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "kpToolToolBar::enableToolsSingleKeyTriggers(" << enable << ")" << endl;
-#endif
-
-    for (QList <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
-        it != m_buttonToolPairs.end ();
-        it++)
-    {
-        (*it).m_tool->enableSingleKeyTriggers (enable);
-    }
-}
-
-
 // private slot
 void kpToolToolBar::slotToolButtonClicked ()
 {

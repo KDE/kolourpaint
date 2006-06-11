@@ -984,17 +984,6 @@ void kpDocument::setPixmap (bool ofSelection, const QPixmap &pixmap)
 }
 
 
-// private
-void kpDocument::updateToolsSingleKeyTriggersEnabled ()
-{
-    if (m_mainWindow)
-    {
-        // Disable single key shortcuts when the user is editing text
-        m_mainWindow->enableActionsSingleKeyTriggers (!m_selection || !m_selection->isText ());
-    }
-}
-
-
 // public
 kpSelection *kpDocument::selection () const
 {
@@ -1091,8 +1080,6 @@ void kpDocument::setSelection (const kpSelection &selection)
             m_mainWindow->setTextStyle (m_selection->textStyle ());
         }
     }
-
-    updateToolsSingleKeyTriggersEnabled ();
 
 #if DEBUG_KP_DOCUMENT && 0
     kDebug () << "\tcheck sel " << (int *) m_selection
@@ -1297,8 +1284,6 @@ bool kpDocument::selectionDelete ()
 
     emit selectionEnabled (false);
 
-
-    updateToolsSingleKeyTriggersEnabled ();
 
     return true;
 }

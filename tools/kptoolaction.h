@@ -30,17 +30,16 @@
 #define KP_TOOL_ACTION_H
 
 
-#include <kactionclasses.h>
 #include <ktoggleaction.h>
-#include <kpsinglekeytriggersaction.h>
 
 
 class KActionCollection;
 
 
 // Same as KToggleAction but shows the first single key trigger in the tooltip.
-class kpToolAction : public KToggleAction,
-                     public kpSingleKeyTriggersActionInterface
+// COMPAT: either push into KDE 4.0 or make setText() and setShortcut() virtual,
+//         to remove updateAllActionsToolTips() hack.
+class kpToolAction : public KToggleAction
 {
 Q_OBJECT
 
@@ -59,24 +58,23 @@ signals:
 protected:
     void updateToolTip ();
 
-
-    //
-    // KToggleAction interface
-    //
-
-public slots:
-    virtual void setText (const QString &text);
-    virtual bool setShortcut (const KShortcut &shortcut);
-
-
-    //
-    // kpSingleKeyTriggersActionInterface
-    //
-
 public:
-    virtual const char *actionName () const;
-    virtual KShortcut actionShortcut () const;
-    virtual void actionSetShortcut (const KShortcut &shortcut);
+    // For all kpToolAction's in <ac>, calls updateToolTip().
+    //
+    // Call this e.g. after shortcuts have been changed but
+    // kpToolAction::setShortcut() did not find out (since it's not
+    // virtual).
+    static void updateAllActionsToolTips (KActionCollection *ac);
+
+
+    //
+    // KToggleAction overrides
+    //
+
+    // WARNING: The KToggleAction base does not have these as virtual.
+public:
+    void setText (const QString &text);
+    void setShortcut (const KShortcut &shortcut);
 };
 
 

@@ -77,7 +77,6 @@ class kpViewManager;
 class kpViewScrollableContainer;
 class kpSelection;
 class kpSelectionTransparency;
-class kpSingleKeyTriggersAction;
 class kpSqueezedTextLabel;
 class kpTextStyle;
 class kpThumbnail;
@@ -151,10 +150,6 @@ private:
     void setupActions ();
     void enableDocumentActions (bool enable = true);
 
-public:
-    bool actionsSingleKeyTriggersEnabled () const;
-    void enableActionsSingleKeyTriggers (bool enable = true);
-
 private:
     void setDocument (kpDocument *newDoc);
 
@@ -201,10 +196,10 @@ private:
     int m_lastToolNumber;
 
     bool m_toolActionsEnabled;
-    kpSingleKeyTriggersAction *m_actionPrevToolOptionGroup1,
-                              *m_actionNextToolOptionGroup1,
-                              *m_actionPrevToolOptionGroup2,
-                              *m_actionNextToolOptionGroup2;
+    KAction *m_actionPrevToolOptionGroup1,
+            *m_actionNextToolOptionGroup1,
+            *m_actionPrevToolOptionGroup2,
+            *m_actionNextToolOptionGroup2;
 
     int m_settingSelectionTransparency;
 
@@ -438,8 +433,7 @@ private:
     void enableViewMenuDocumentActions (bool enable = true);
     void actionShowGridUpdate ();
 
-    KAction *m_actionFullScreenBIC,
-            *m_actionActualSize,
+    KAction *m_actionActualSize,
             *m_actionFitToPage, *m_actionFitToWidth, *m_actionFitToHeight,
             *m_actionZoomIn, *m_actionZoomOut;
     KSelectAction *m_actionZoom;
@@ -486,7 +480,6 @@ private:
     QRect mapFromGlobal (const QRect &rect) const;
 
 private slots:
-    void slotDestroyThumbnailIfNotVisible (bool tnIsVisible);
     void slotDestroyThumbnail ();
     void slotDestroyThumbnailInitatedByUser ();
     void slotCreateThumbnail ();

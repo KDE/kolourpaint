@@ -53,7 +53,6 @@
 #include <kpdefs.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
-#include <kpsinglekeytriggersaction.h>
 #include <kptoolaction.h>
 #include <kptooltoolbar.h>
 #include <kpview.h>
@@ -186,19 +185,23 @@ void kpTool::setText (const QString &text)
 }
 
 
+static bool KeyIsText (int key)
+{
+    // TODO: should work like !QKeyEvent::text().isEmpty()
+    return !(key & (Qt::KeyboardModifierMask ^ Qt::ShiftModifier));
+}
+
 // public static
 QString kpTool::toolTipForTextAndShortcut (const QString &text,
                                            const KShortcut &shortcut)
 {
     for (int i = 0; i < (int) shortcut.count (); i++)
     {
-#if 0
-        const KKeySequence seq = shortcut.seq (i);
-        if (seq.count () == 1 && containsSingleKeyTrigger (seq))
-#endif
+        const QKeySequence seq = shortcut.seq (i);
+        if (seq.count () == 1 && ::KeyIsText (seq [0]))
         {
             return i18nc ("<Tool Name> (<Single Accel Key>)",
-                          "%1 (%2)", text, shortcut.toString ());
+                          "%1 (%2)", text, seq.toString ().toUpper ());
         }
     }
 
@@ -250,74 +253,6 @@ KShortcut kpTool::shortcutForKey (int key)
 KShortcut kpTool::shortcut () const
 {
     return m_action ? m_action->shortcut () : KShortcut ();
-}
-
-
-// public static
-bool kpTool::keyIsText (int key)
-{
-    // TODO: should work like !QKeyEvent::text().isEmpty()
-    return !(key & (Qt::MODIFIER_MASK ^ Qt::SHIFT));
-}
-
-// public static
-bool kpTool::containsSingleKeyTrigger (const KShortcut &shortcut,
-    KShortcut *shortcutWithoutSingleKeyTriggers)
-{
-    if (shortcutWithoutSingleKeyTriggers)
-        *shortcutWithoutSingleKeyTriggers = shortcut;
-
-
-    KShortcut newShortcut;
-    bool needNewShortcut = false;
-
-#if 0
-    for (int i = 0; i < (int) shortcut.count (); i++)
-    {
-        const KKeySequence seq = shortcut.seq (i);
-
-        if (containsSingleKeyTrigger (seq))
-        {
-            needNewShortcut = true;
-        }
-        else
-        {
-            newShortcut.append (seq);
-        }
-    }
-#endif
-
-
-    if (needNewShortcut && shortcutWithoutSingleKeyTriggers)
-        *shortcutWithoutSingleKeyTriggers = shortcut;
-
-    return needNewShortcut;
-}
-
-
-// public
-bool kpTool::singleKeyTriggersEnabled () const
-{
-    return (m_action ? m_action->singleKeyTriggersEnabled () : true);
-}
-
-// public
-void kpTool::enableSingleKeyTriggers (bool enable)
-{
-#if DEBUG_KP_TOOL && 0
-    kDebug () << "kpTool(" << name () << ")::enableSingleKeyTriggers("
-               << enable << ")" << endl;
-#endif
-
-    if (!m_action)
-    {
-    #if DEBUG_KP_TOOL && 0
-        kDebug () << "\tno action" << endl;
-    #endif
-        return;
-    }
-
-    m_action->enableSingleKeyTriggers (enable);
 }
 
 
@@ -1172,6 +1107,15 @@ void kpTool::wheelEvent (QWheelEvent *e)
     }
 }
 
+bool kpTool::event (QEvent *e)
+{
+#if DEBUG_KP_TOOL
+    kdDebug () << "kpTool::event() returning false" << endl;
+#endif
+
+    // Don't handle.
+    return false;
+}
 
 void kpTool::keyPressEvent (QKeyEvent *e)
 {

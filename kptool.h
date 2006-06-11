@@ -110,13 +110,6 @@ public:
     static KShortcut shortcutForKey (int key);
     KShortcut shortcut () const;
 
-    static bool keyIsText (int key);
-    static bool containsSingleKeyTrigger (const KShortcut &shortcut,
-        KShortcut *shortcutWithoutSingleKeyTriggers);
-
-    bool singleKeyTriggersEnabled () const;
-    void enableSingleKeyTriggers (bool enable = true);
-
     const char *name () const;
 
 
@@ -314,6 +307,7 @@ protected:
     virtual void mouseReleaseEvent (QMouseEvent *e);
     virtual void wheelEvent (QWheelEvent *e);
     
+    virtual bool event (QEvent *e);
     virtual void keyPressEvent (QKeyEvent *e);
     virtual void keyReleaseEvent (QKeyEvent *e);
 

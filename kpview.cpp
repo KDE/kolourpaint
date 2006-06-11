@@ -1011,6 +1011,26 @@ void kpView::wheelEvent (QWheelEvent *e)
 
 
 // protected virtual [base QWidget]
+bool kpView::event (QEvent *e)
+{
+#if DEBUG_KP_VIEW
+    kDebug () << "kpView::event() invoking kpTool::event()" << endl;
+#endif
+    if (tool () && tool ()->event (e))
+    {
+    #if DEBUG_KP_VIEW
+        kDebug () << "\tkpView::event() - tool said eat event, ret true" << endl;
+    #endif
+        return true;
+    }
+
+#if DEBUG_KP_VIEW
+    kDebug () << "\tkpView::event() - no tool or said false, call QWidget::event()" << endl;
+#endif
+    return QWidget::event (e);
+}
+
+// protected virtual [base QWidget]
 void kpView::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_VIEW && 0

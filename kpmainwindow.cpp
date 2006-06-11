@@ -48,7 +48,6 @@
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kpselectiondrag.h>
-#include <kpsinglekeytriggersaction.h>
 #include <kpthumbnail.h>
 #include <kptool.h>
 #include <kptooltoolbar.h>
@@ -395,51 +394,6 @@ void kpMainWindow::enableDocumentActions (bool enable)
 }
 
 
-// public
-bool kpMainWindow::actionsSingleKeyTriggersEnabled () const
-{
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::actionsSingleKeyTriggersEnabled()" << endl;
-    QTime timer; timer.start ();
-#endif
-
-    if (m_toolToolBar)
-    {
-    #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\ttime=" << timer.restart () << endl;
-    #endif
-        return m_toolToolBar->toolsSingleKeyTriggersEnabled ();
-    }
-
-    return (m_actionPrevToolOptionGroup1->singleKeyTriggersEnabled () ||
-            m_actionNextToolOptionGroup1->singleKeyTriggersEnabled () ||
-            m_actionPrevToolOptionGroup2->singleKeyTriggersEnabled () ||
-            m_actionNextToolOptionGroup2->singleKeyTriggersEnabled ());
-}
-
-// public
-void kpMainWindow::enableActionsSingleKeyTriggers (bool enable)
-{
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::enableActionsSingleKeyTriggers("
-               << enable << ")" << endl;
-    QTime timer; timer.start ();
-#endif
-
-    if (m_toolToolBar)
-        m_toolToolBar->enableToolsSingleKeyTriggers (enable);
-
-    m_actionPrevToolOptionGroup1->enableSingleKeyTriggers (enable);
-    m_actionNextToolOptionGroup1->enableSingleKeyTriggers (enable);
-    m_actionPrevToolOptionGroup2->enableSingleKeyTriggers (enable);
-    m_actionNextToolOptionGroup2->enableSingleKeyTriggers (enable);
-
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\ttime=" << timer.restart () << endl;
-#endif
-}
-
-
 // private
 void kpMainWindow::setDocument (kpDocument *newDoc)
 {
@@ -720,7 +674,7 @@ bool kpMainWindow::queryClose ()
 // private virtual [base QWidget]
 void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
 {
-    e->accept (kpSelectionDrag::canDecode (e) ||
+    e->setAccepted (kpSelectionDrag::canDecode (e) ||
                // COMPAT: KURLDrag::canDecode (e) ||
                Q3TextDrag::canDecode (e));
 }
