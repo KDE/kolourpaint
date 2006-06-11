@@ -35,7 +35,6 @@
 #include <qboxlayout.h>
 #include <qdrawutil.h>
 #include <qevent.h>
-#include <q3frame.h>
 #include <qlayout.h>
 #include <qpainter.h>
 #include <qpixmap.h>
@@ -64,12 +63,11 @@
  */
 
 kpDualColorButton::kpDualColorButton (kpMainWindow *mainWindow,
-                                      QWidget *parent, const char *name)
-    : Q3Frame (parent, name, Qt::WNoAutoErase/*no flicker*/),
-      m_mainWindow (mainWindow),
-      m_backBuffer (0)
+                                      QWidget *parent)
+    : QFrame (parent),
+      m_mainWindow (mainWindow)
 {
-    setFrameStyle (Q3Frame::Panel | Q3Frame::Sunken);
+    setFrameStyle (QFrame::Panel | QFrame::Sunken);
 
     m_color [0] = kpColor (0, 0, 0);  // black
     m_color [1] = kpColor (255, 255, 255);  // white
@@ -79,7 +77,6 @@ kpDualColorButton::kpDualColorButton (kpMainWindow *mainWindow,
 
 kpDualColorButton::~kpDualColorButton ()
 {
-    delete m_backBuffer; m_backBuffer = 0;
 }
 
 
@@ -288,8 +285,8 @@ void kpDualColorButton::mouseReleaseEvent (QMouseEvent *e)
 }
 
 
-// protected virtual [base QFrame]
-void kpDualColorButton::drawContents (QPainter *p)
+// protected virtual [base QWidget]
+void kpDualColorButton::paintEvent (QPaintEvent *e)
 {
 #if DEBUG_KP_COLOR_TOOL_BAR && 1
     kDebug () << "kpDualColorButton::draw() rect=" << rect ()
@@ -297,40 +294,45 @@ void kpDualColorButton::drawContents (QPainter *p)
                << endl;
 #endif
 
-    if (!m_backBuffer ||
-        m_backBuffer->width () != contentsRect ().width () ||
-        m_backBuffer->height () != contentsRect ().height ())
-    {
-        delete m_backBuffer;
-        m_backBuffer = new QPixmap (contentsRect ().width (), contentsRect ().height ());
-    }
+    // Draw frame first.
+    QFrame::paintEvent (e);
 
 
-    QPainter backBufferPainter (m_backBuffer);
+    QPainter painter (this);
 
+    // kpView::drawTransparentBackground() leaks outside contentsRect()
+    // (and probably some other functions below too).
+    painter.setClipRect (contentsRect ());
+
+    painter.translate (contentsRect ().x (), contentsRect ().y ());
+
+
+    // Fill with background.
     if (isEnabled () && m_mainWindow)
     {
-        kpView::drawTransparentBackground (&backBufferPainter,
-                                           m_backBuffer->width (), m_backBuffer->height (),
-                                           m_backBuffer->rect (),
-                                           true/*preview*/);
+        kpView::drawTransparentBackground (&painter,
+            contentsRect ().width (), contentsRect ().height (),
+            contentsRect ().translated (-contentsRect ().x (), -contentsRect ().y ()),
+            true/*preview*/);
     }
     else
     {
-        backBufferPainter.fillRect (m_backBuffer->rect (),
-                                    palette ().color (QPalette::Background));
+        painter.fillRect (contentsRect (),
+            palette ().color (QPalette::Background));
     }
 
+
+    // Draw "Swap Colours" button (top-right).
     QPixmap swapPixmap = UserIcon ("colorbutton_swap_16x16");
     if (!isEnabled ())
     {
         // swapPixmap has a mask after all
         swapPixmap.fill (palette().color (QPalette::Dark));
     }
-    backBufferPainter.drawPixmap (swapPixmapRect ().topLeft (), swapPixmap);
+    painter.drawPixmap (swapPixmapRect ().topLeft (), swapPixmap);
 
-    // foreground patch must be drawn after background patch
-    // as it overlaps on top of background patch
+
+    // Draw background colour patch.
     QRect bgRect = backgroundRect ();
     QRect bgRectInside = QRect (bgRect.x () + 2, bgRect.y () + 2,
                                 bgRect.width () - 4, bgRect.height () - 4);
@@ -341,16 +343,19 @@ void kpDualColorButton::drawContents (QPainter *p)
                    << endl;
     #endif
         if (m_color [1].isOpaque ())
-            backBufferPainter.fillRect (bgRectInside, m_color [1].toQColor ());
+            painter.fillRect (bgRectInside, m_color [1].toQColor ());
         else
-            backBufferPainter.drawPixmap (bgRectInside, UserIcon ("color_transparent_26x26"));
+            painter.drawPixmap (bgRectInside, UserIcon ("color_transparent_26x26"));
     }
     else
-        backBufferPainter.fillRect (bgRectInside, palette().color (QPalette::Button));
-    qDrawShadePanel (&backBufferPainter, bgRect, palette(),
+        painter.fillRect (bgRectInside, palette().color (QPalette::Button));
+    qDrawShadePanel (&painter, bgRect, palette(),
                      false/*not sunken*/, 2/*lineWidth*/,
                      0/*never fill*/);
 
+
+    // Draw foreground colour patch.
+    // Must be drawn after background patch since we're on top.
     QRect fgRect = foregroundRect ();
     QRect fgRectInside = QRect (fgRect.x () + 2, fgRect.y () + 2,
                                 fgRect.width () - 4, fgRect.height () - 4);
@@ -361,19 +366,15 @@ void kpDualColorButton::drawContents (QPainter *p)
                    << endl;
     #endif
         if (m_color [0].isOpaque ())
-            backBufferPainter.fillRect (fgRectInside, m_color [0].toQColor ());
+            painter.fillRect (fgRectInside, m_color [0].toQColor ());
         else
-            backBufferPainter.drawPixmap (fgRectInside, UserIcon ("color_transparent_26x26"));
+            painter.drawPixmap (fgRectInside, UserIcon ("color_transparent_26x26"));
     }
     else
-        backBufferPainter.fillRect (fgRectInside, palette ().color (QPalette::Button));
-    qDrawShadePanel (&backBufferPainter, fgRect, palette (),
+        painter.fillRect (fgRectInside, palette ().color (QPalette::Button));
+    qDrawShadePanel (&painter, fgRect, palette (),
                      false/*not sunken*/, 2/*lineWidth*/,
                      0/*never fill*/);
-
-    backBufferPainter.end ();
-
-    p->drawPixmap (contentsRect (), *m_backBuffer);
 }
 
 
@@ -462,13 +463,10 @@ static bool ownColorsInitialised = false;
 #define rows 2
 #define cols 11
 kpColorCells::kpColorCells (QWidget *parent,
-                            Qt::Orientation o,
-                            const char *name)
+                            Qt::Orientation o)
     : KColorCells (parent, rows, cols),
       m_mouseButton (-1)
 {
-    setName (name);
-
     setShading (false);  // no 3D look
 
     // Trap KColorDrag so that kpMainWindow does not trap it.
@@ -739,14 +737,14 @@ void kpColorCells::slotColorDoubleClicked (int cell)
  * kpTransparentColorCell
  */
 
-kpTransparentColorCell::kpTransparentColorCell (QWidget *parent, const char *name)
-    : Q3Frame (parent, name)
+kpTransparentColorCell::kpTransparentColorCell (QWidget *parent)
+    : QFrame (parent)
 {
 #if DEBUG_KP_COLOR_TOOL_BAR
     kDebug () << "kpTransparentColorCell::kpTransparentColorCell()" << endl;
 #endif
 
-    setFrameStyle (Q3Frame::Panel | Q3Frame::Sunken);
+    setFrameStyle (QFrame::Panel | QFrame::Sunken);
 #if DEBUG_KP_COLOR_TOOL_BAR && 0
     kDebug () << "\tdefault line width=" << lineWidth ()
                << " frame width=" << frameWidth () << endl;
@@ -798,18 +796,21 @@ void kpTransparentColorCell::mouseReleaseEvent (QMouseEvent *e)
     }
 }
 
-// protected virtual [base QFrame]
-void kpTransparentColorCell::drawContents (QPainter *p)
+// protected virtual [base QWidget]
+void kpTransparentColorCell::paintEvent (QPaintEvent *e)
 {
-    Q3Frame::drawContents (p);
+    // Draw frame first.
+    QFrame::paintEvent (e);
+
     if (isEnabled ())
     {
     #if DEBUG_KP_COLOR_TOOL_BAR
-        kDebug () << "kpTransparentColorCell::drawContents() contentsRect="
+        kDebug () << "kpTransparentColorCell::paintEvent() contentsRect="
                    << contentsRect ()
                    << endl;
     #endif
-        p->drawPixmap (contentsRect (), m_pixmap);
+        QPainter p (this);
+        p.drawPixmap (contentsRect (), m_pixmap);
     }
 }
 
@@ -819,9 +820,8 @@ void kpTransparentColorCell::drawContents (QPainter *p)
  */
 
 kpColorPalette::kpColorPalette (QWidget *parent,
-                                Qt::Orientation o,
-                                const char *name)
-    : QWidget (parent, name),
+                                Qt::Orientation o)
+    : QWidget (parent),
       m_boxLayout (0)
 {
 #if DEBUG_KP_COLOR_TOOL_BAR
@@ -883,11 +883,10 @@ void kpColorPalette::setOrientation (Qt::Orientation o)
  */
 
 kpColorSimilarityToolBarItem::kpColorSimilarityToolBarItem (kpMainWindow *mainWindow,
-                                                            QWidget *parent,
-                                                            const char *name)
+                                                            QWidget *parent)
     : kpColorSimilarityCube (kpColorSimilarityCube::Depressed |
                              kpColorSimilarityCube::DoubleClickInstructions,
-                             mainWindow, parent, name),
+                             mainWindow, parent),
       m_mainWindow (mainWindow),
       m_processedColorSimilarity (kpColor::Exact)
 {

@@ -30,7 +30,7 @@
 #define KP_COLOR_TOOLBAR_H
 
 
-#include <q3frame.h>
+#include <qframe.h>
 #include <qwidget.h>
 
 #include <kcolordialog.h>
@@ -62,13 +62,13 @@ class kpMainWindow;
 //   used by kpTransparentColorCell
 // - no obscure "current" colour
 //
-class kpDualColorButton : public Q3Frame
+class kpDualColorButton : public QFrame
 {
 Q_OBJECT
 
 public:
     kpDualColorButton (kpMainWindow *mainWindow,
-                       QWidget *parent, const char *name = 0);
+                       QWidget *parent);
     virtual ~kpDualColorButton ();
 
     kpColor color (int which) const;
@@ -112,12 +112,11 @@ protected:
     virtual void mouseDoubleClickEvent (QMouseEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
 
-    virtual void drawContents (QPainter *p);
+    virtual void paintEvent (QPaintEvent *e);
 
     kpMainWindow *m_mainWindow;
     kpColor m_color [2];
     kpColor m_oldColor [2];
-    QPixmap *m_backBuffer;
 };
 
 
@@ -127,8 +126,7 @@ Q_OBJECT
 
 public:
     kpColorCells (QWidget *parent,
-                  Qt::Orientation o = Qt::Horizontal,
-                  const char *name = 0);
+                  Qt::Orientation o = Qt::Horizontal);
     virtual ~kpColorCells ();
 
     Qt::Orientation orientation () const;
@@ -158,12 +156,12 @@ protected slots:
 };
 
 
-class kpTransparentColorCell : public Q3Frame
+class kpTransparentColorCell : public QFrame
 {
 Q_OBJECT
 
 public:
-    kpTransparentColorCell (QWidget *parent, const char *name = 0);
+    kpTransparentColorCell (QWidget *parent);
     virtual ~kpTransparentColorCell ();
 
     virtual QSize sizeHint () const;
@@ -179,7 +177,7 @@ protected:
     virtual void mousePressEvent (QMouseEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
 
-    virtual void drawContents (QPainter *p);
+    virtual void paintEvent (QPaintEvent *e);
 
     QPixmap m_pixmap;
 };
@@ -191,8 +189,7 @@ Q_OBJECT
 
 public:
     kpColorPalette (QWidget *parent,
-                    Qt::Orientation o = Qt::Horizontal,
-                    const char *name = 0);
+                    Qt::Orientation o = Qt::Horizontal);
     virtual ~kpColorPalette ();
 
     Qt::Orientation orientation () const;
@@ -217,8 +214,7 @@ Q_OBJECT
 
 public:
     kpColorSimilarityToolBarItem (kpMainWindow *mainWindow,
-                                  QWidget *parent,
-                                  const char *name = 0);
+                                  QWidget *parent);
     virtual ~kpColorSimilarityToolBarItem ();
 
 public:
