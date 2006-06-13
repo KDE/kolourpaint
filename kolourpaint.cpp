@@ -28,7 +28,6 @@
 
 #include <qfile.h>
 
-#include <dcopclient.h>
 #include <kaboutdata.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
@@ -201,12 +200,13 @@ int main (int argc, char *argv [])
 
     KApplication app;
 
-
+#warning "kde4: how test that application is registered ?"
+#if 0
     // mainly for changing wallpaper :)
     DCOPClient *client = app.dcopClient ();
     if (!client->attach ())
         kError () << "Could not contact DCOP server" << endl;
-
+#endif
     // mainly for the Spraycan Tool
     srand ((unsigned int) (getpid () + getppid ()));
 

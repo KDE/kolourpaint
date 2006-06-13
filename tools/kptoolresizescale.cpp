@@ -511,12 +511,12 @@ double kpToolResizeScaleDialog::s_lastPercentWidth = 100,
 
 
 kpToolResizeScaleDialog::kpToolResizeScaleDialog (kpMainWindow *mainWindow)
-    : KDialog ((QWidget *) mainWindow,
-               i18n ("Resize / Scale")/*caption*/,
-               KDialog::Ok | KDialog::Cancel),
+    : KDialog ((QWidget *) mainWindow),
       m_mainWindow (mainWindow),
       m_ignoreKeepAspectRatio (0)
 {
+    setCaption( i18n ("Resize / Scale") );
+    setButtons( KDialog::Ok | KDialog::Cancel);
     // Using the percentage from last time become too confusing so disable for now
     s_lastPercentWidth = 100, s_lastPercentHeight = 100;
 

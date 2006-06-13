@@ -28,7 +28,6 @@
 #include <kpmainwindow.h>
 #include <kpmainwindow_p.h>
 
-#include <dcopclient.h>
 #include <kaction.h>
 #include <kactivelabel.h>
 #include <kapplication.h>

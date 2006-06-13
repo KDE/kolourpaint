@@ -69,7 +69,7 @@ QString kpToolFlipCommand::name () const
 {
     QString opName;
 
-    
+
 #if 1
     opName = i18n ("Flip");
 #else  // re-enable when giving full descriptions for all actions
@@ -124,7 +124,7 @@ void kpToolFlipCommand::flip ()
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
 
-    
+
     if (m_actOnSelection)
     {
         doc->selection ()->flip (m_horiz, m_vert);
@@ -152,10 +152,10 @@ bool kpToolFlipDialog::s_lastIsVerticalFlip = true;
 
 
 kpToolFlipDialog::kpToolFlipDialog (bool actOnSelection, QWidget *parent)
-    : KDialog (parent,
-               actOnSelection ? i18n ("Flip Selection") : i18n ("Flip Image"),
-               KDialog::Ok | KDialog::Cancel)
+    : KDialog (parent)
 {
+    setCaption( actOnSelection ? i18n ("Flip Selection") : i18n ("Flip Image") );
+    setButtons( KDialog::Ok | KDialog::Cancel );
     QGroupBox *groupBox = new QGroupBox (i18n ("Direction"), this);
 
     // I'm sure vert flipping is much more common than horiz flipping so make it come first
@@ -173,7 +173,7 @@ kpToolFlipDialog::kpToolFlipDialog (bool actOnSelection, QWidget *parent)
     QVBoxLayout *groupBoxLayout = new QVBoxLayout (groupBox);
     groupBoxLayout->addWidget (m_verticalFlipRadioButton);
     groupBoxLayout->addWidget (m_horizontalFlipRadioButton);
-    
+
     setMainWidget (groupBox);
 }
 

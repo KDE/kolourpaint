@@ -57,7 +57,7 @@ kpToolPreviewDialog::kpToolPreviewDialog (Features features,
                                           const QString &afterActionText,
                                           bool actOnSelection,
                                           kpMainWindow *parent)
-    : KDialog (parent, caption, KDialog::Ok | KDialog::Cancel),
+    : KDialog (parent),
       m_afterActionText (afterActionText),
       m_actOnSelection (actOnSelection),
       m_mainWindow (parent),
@@ -67,6 +67,8 @@ kpToolPreviewDialog::kpToolPreviewDialog (Features features,
       m_previewPixmapLabel (0),
       m_gridLayout (0)
 {
+    setCaption( caption );
+    setButtons( KDialog::Ok | KDialog::Cancel );
     QWidget *baseWidget = new QWidget (this);
     setMainWidget (baseWidget);
 
