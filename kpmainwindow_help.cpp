@@ -174,7 +174,10 @@ void kpMainWindow::slotHelpTakingScreenshots ()
     message += "<p>&nbsp;</p>";
 
 
-    KDialog dlg (this, i18n ("Acquiring Screenshots"), KDialog::Close);
+    KDialog dlg (this );
+    dlg.setCaption( i18n ("Acquiring Screenshots") );
+    dlg.setButtons( KDialog::Close);
+    dlg.setDefaultButton( KDialog::Close );
     dlg.enableButtonSeparator (true);
 
     KActiveLabel *messageLabel = new KActiveLabel (message, &dlg);
