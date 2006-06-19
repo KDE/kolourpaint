@@ -542,7 +542,7 @@ kpToolResizeScaleDialog::kpToolResizeScaleDialog (kpMainWindow *mainWindow)
 
     m_operationGroupBox->setFocus ();
 
-    //enableButtonOK (!isNoOp ());
+    //enableButtonOk (!isNoOp ());
 }
 
 kpToolResizeScaleDialog::~kpToolResizeScaleDialog ()
@@ -953,7 +953,7 @@ void kpToolResizeScaleDialog::slotWidthChanged (int width)
 
     widthFitHeightToAspectRatio ();
 
-    //enableButtonOK (!isNoOp ());
+    //enableButtonOk (!isNoOp ());
     s_lastPercentWidth = newPercentWidth;
 }
 
@@ -970,7 +970,7 @@ void kpToolResizeScaleDialog::slotHeightChanged (int height)
 
     heightFitWidthToAspectRatio ();
 
-    //enableButtonOK (!isNoOp ());
+    //enableButtonOk (!isNoOp ());
     s_lastPercentHeight = newPercentHeight;
 }
 
@@ -987,7 +987,7 @@ void kpToolResizeScaleDialog::slotPercentWidthChanged (double percentWidth)
 
     widthFitHeightToAspectRatio ();
 
-    //enableButtonOK (!isNoOp ());
+    //enableButtonOk (!isNoOp ());
     s_lastPercentWidth = percentWidth;
 }
 
@@ -1004,7 +1004,7 @@ void kpToolResizeScaleDialog::slotPercentHeightChanged (double percentHeight)
 
     heightFitWidthToAspectRatio ();
 
-    //enableButtonOK (!isNoOp ());
+    //enableButtonOk (!isNoOp ());
     s_lastPercentHeight = percentHeight;
 }
 
