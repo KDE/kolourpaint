@@ -33,7 +33,6 @@
 #include <qpixmap.h>
 #include <qsize.h>
 
-#include <dcopclient.h>
 #include <kapplication.h>
 #include <kaction.h>
 #include <kconfig.h>
@@ -56,7 +55,7 @@
 #include <kpviewmanager.h>
 #include <ktoolinvocation.h>
 #include <kglobal.h>
-
+#include <dbus/qdbus.h>
 
 // private
 void kpMainWindow::setupFileMenuActions ()
@@ -1155,8 +1154,9 @@ void kpMainWindow::setAsWallpaper (bool centered)
     // I'm going to all this trouble because the user might not have kdebase
     // installed so kdebase/kdesktop/KBackgroundIface.h might not be around
     // to be compiled in (where user == developer :))
-    if (!KApplication::dcopClient ()->send ("kdesktop", "KBackgroundIface",
-                                            "setWallpaper(QString,int)", data))
+    QDBusInterfacePtr kdesktop( "org.kde.kdesktop", "/KBackground", "org.kde.kdesktop.KBackground" );
+	QDBusReply<void> retVal = kdesktop->call( "setWallpaper", QString (m_document->url ().path ()), int (centered ? 1 : 2) );
+	if (!retVal.isSuccess())
     {
         KMessageBox::sorry (this, i18n ("Could not change wallpaper."));
     }

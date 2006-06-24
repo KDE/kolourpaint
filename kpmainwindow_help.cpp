@@ -37,7 +37,7 @@
 #include <krun.h>
 #include <klocale.h>
 #include <kshortcut.h>
-
+#include <dbus/qdbus.h>
 
 // private
 void kpMainWindow::setupHelpMenuActions ()
@@ -103,11 +103,10 @@ void kpMainWindow::slotHelpTakingScreenshots ()
 
     // TODO: Totally bogus logic if kwin not running under same user as KolourPaint.
     // SYNC: KWin contains PrintScreen key logic
-    DCOPCStringList dcopApps = KApplication::dcopClient ()->registeredApplications ();
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tdcopApps=" << dcopApps << endl;
+    //kDebug () << "\tdcopApps=" << dcopApps << endl;
 #endif
-    bool isRunningKDE = dcopApps.contains ("kwin");
+    bool isRunningKDE = QDBus::sessionBus().busService()->nameHasOwner("kwin");
 
 #if 0
 {
