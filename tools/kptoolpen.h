@@ -30,135 +30,24 @@
 #define KP_TOOL_PEN_H
 
 
-#include <qpixmap.h>
-#include <qrect.h>
-
-#include <kpcommandhistory.h>
-#include <kptool.h>
+#include <kptoolflowbase.h>
 
 
-class QPoint;
-class QString;
-
-class kpColor;
-class kpMainWindow;
-class kpToolPenCommand;
-class kpToolWidgetBrush;
-class kpToolWidgetEraserSize;
-class kpViewManager;
-
-
-class kpToolPen : public kpTool
+// Pen = draws pixels, "interpolates" by "sweeping" pixels along a line (no brushes)
+class kpToolPen : public kpToolFlowBase
 {
 Q_OBJECT
 
 public:
-    enum Mode
-    {
-        // tool properties
-        DrawsPixels = (1 << 0), DrawsPixmaps = (1 << 1), WashesPixmaps = (1 << 2),
-        NoBrushes = 0, SquareBrushes = (1 << 3), DiverseBrushes = (1 << 4),
-        NormalColors = 0, SwappedColors = (1 << 5),
-
-        // tools:
-        //
-        // Pen = draws pixels, "interpolates" by "sweeping" pixels along a line (no brushes)
-        // Brush = draws pixmaps, "interpolates" by "sweeping" pixmaps along a line (interesting brushes)
-        // Eraser = Brush but with foreground & background colors swapped (a few square brushes)
-        // Color Washer = Brush that replaces/washes the foreground color with the background color
-        //
-        // (note the capitalization of "brush" here :))
-        Pen = DrawsPixels | NoBrushes | NormalColors,
-        Brush = DrawsPixmaps | DiverseBrushes | NormalColors,
-        Eraser = DrawsPixmaps | SquareBrushes | SwappedColors,
-        ColorWasher = WashesPixmaps | SquareBrushes | SwappedColors
-    };
-
-    kpToolPen (Mode mode, const QString &text, const QString &description,
-               int key,
-               kpMainWindow *mainWindow, const char *name);
     kpToolPen (kpMainWindow *mainWindow);
     virtual ~kpToolPen ();
 
-    void setMode (Mode mode);
-
-private:
-    QString haventBegunDrawUserMessage () const;
-    
-public:
-    virtual void begin ();
-    virtual void end ();
-
-    virtual void beginDraw ();
-    virtual void hover (const QPoint &point);
-    virtual void globalDraw ();
-    virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &);
-    virtual void cancelShape ();
-    virtual void releasedAllButtons ();
-    virtual void endDraw (const QPoint &, const QRect &);
-
-private slots:
-    virtual void slotForegroundColorChanged (const kpColor &col);
-    virtual void slotBackgroundColorChanged (const kpColor &col);
-
-    void slotBrushChanged (const QPixmap &pixmap, bool isDiagonalLine);
-    void slotEraserSizeChanged (int size);
-
-private:
-    bool wash (QPainter *painter, QPainter *maskPainter,
-               const QImage &image,
-               const kpColor &colorToReplace,
-               const QRect &imageRect, int plotx, int ploty);
-    bool wash (QPainter *painter, QPainter *maskPainter,
-               const QImage &image,
-               const kpColor &colorToReplace,
-               const QRect &imageRect, const QRect &drawRect);
-
-    kpColor color (int which);
-
-    QPoint hotPoint () const;
-    QPoint hotPoint (int x, int y) const;
-    QPoint hotPoint (const QPoint &point) const;
-    QRect hotRect () const;
-    QRect hotRect (int x, int y) const;
-    QRect hotRect (const QPoint &point) const;
-
-    Mode m_mode;
-
-    void updateBrushCursor (bool recalc = true);
-
-    kpToolWidgetBrush *m_toolWidgetBrush;
-    kpToolWidgetEraserSize *m_toolWidgetEraserSize;
-    QPixmap m_brushPixmap [2];
-    QPixmap m_cursorPixmap;
-    bool m_brushIsDiagonalLine;
-
-    kpToolPenCommand *m_currentCommand;
+protected:
+    virtual QString haventBegunDrawUserMessage () const;
+    virtual void drawPoint (const QPoint &point);
+    virtual bool drawLine (QPixmap *pixmap, const QRect &docRect,
+        const QPoint &thisPoint, const QPoint &lastPoint);
 };
 
-class kpToolPenCommand : public kpNamedCommand
-{
-public:
-    kpToolPenCommand (const QString &name, kpMainWindow *mainWindow);
-    virtual ~kpToolPenCommand ();
-
-    virtual int size () const;
-    
-    virtual void execute ();
-    virtual void unexecute ();
-
-    // interface for KToolPen
-    void updateBoundingRect (const QPoint &point);
-    void updateBoundingRect (const QRect &rect);
-    void finalize ();
-    void cancel ();
-
-private:
-    void swapOldAndNew ();
-
-    QPixmap m_pixmap;
-    QRect m_boundingRect;
-};
-
-
+        
 #endif  // KP_TOOL_PEN_H

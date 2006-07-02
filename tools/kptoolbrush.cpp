@@ -26,20 +26,28 @@
 */
 
 
-#include <klocale.h>
 #include <kptoolbrush.h>
 
+#include <klocale.h>
+
+
 kpToolBrush::kpToolBrush (kpMainWindow *mainWindow)
-    : kpToolPen (kpToolPen::Brush,
-                 i18n ("Brush"),
-                 i18n ("Draw using brushes of different shapes and sizes"),
-                 Qt::Key_B,
-                 mainWindow, "tool_brush")
+    : kpToolFlowPixmapBase (i18n ("Brush"),
+        i18n ("Draw using brushes of different shapes and sizes"),
+        Qt::Key_B,
+        mainWindow, "tool_brush")
 {
 }
 
 kpToolBrush::~kpToolBrush ()
 {
 }
+
+
+QString kpToolBrush::haventBegunDrawUserMessage () const
+{
+    return i18n ("Click to draw dots or drag to draw strokes.");
+}
+
 
 #include <kptoolbrush.moc>

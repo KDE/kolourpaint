@@ -80,6 +80,9 @@ set(libkolourpainttools_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolconverttograyscale.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolcrop.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolcurve.cpp 
+	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolflowbase.cpp
+	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolflowcommand.cpp
+	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolflowpixmapbase.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolellipse.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolellipticalselection.cpp 
 	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptooleraser.cpp 

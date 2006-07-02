@@ -30,16 +30,22 @@
 #define KP_TOOL_BRUSH_H
 
 
-#include <kptoolpen.h>
+#include <kptoolflowpixmapbase.h>
 
 
-class kpToolBrush : public kpToolPen
+// Brush = draws pixmaps, "interpolates" by "sweeping" pixmaps along a line (interesting brushes)
+class kpToolBrush : public kpToolFlowPixmapBase
 {
 Q_OBJECT
 
 public:
     kpToolBrush (kpMainWindow *mainWindow);
     virtual ~kpToolBrush ();
+    
+
+protected:
+    virtual QString haventBegunDrawUserMessage () const;
+    virtual bool haveDiverseBrushes () const { return true; }
 };
 
 

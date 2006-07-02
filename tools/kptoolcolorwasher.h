@@ -30,16 +30,49 @@
 #define KP_TOOL_COLOR_WASHER_H
 
 
-#include <kptoolpen.h>
+#include <kptoolflowbase.h>
 
 
-class kpToolColorWasher : public kpToolPen
+// Color Washer = Brush that replaces/washes the foreground color with the background color
+class kpToolColorWasher : public kpToolFlowBase
 {
 Q_OBJECT
 
 public:
     kpToolColorWasher (kpMainWindow *mainWindow);
     virtual ~kpToolColorWasher ();
+
+
+protected:
+    bool wash (QPainter *painter, QPainter *maskPainter,
+               const QImage &image,
+               const kpColor &colorToReplace,
+               const QRect &imageRect, int plotx, int ploty);
+    bool wash (QPainter *painter, QPainter *maskPainter,
+               const QImage &image,
+               const kpColor &colorToReplace,
+               const QRect &imageRect, const QRect &drawRect);
+
+public:
+    virtual void globalDraw ();
+    
+
+protected:
+    virtual QString haventBegunDrawUserMessage () const;
+    
+    virtual bool drawShouldProceed (const QPoint &thisPoint,
+        const QPoint &lastPoint,
+        const QRect &normalizedRect);
+
+    virtual bool haveSquareBrushes () const { return true; }
+    virtual bool colorsAreSwapped () const { return true; }
+    
+
+
+    virtual void drawPoint (const QPoint &point);
+    virtual bool drawLine (QPixmap *pixmap,
+        const QRect &docRect,
+        const QPoint &thisPoint, const QPoint &lastPoint);
 };
 
 

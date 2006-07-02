@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -26,34 +26,37 @@
 */
 
 
-#ifndef KP_TOOL_ERASER_H
-#define KP_TOOL_ERASER_H
+#ifndef KP_TOOL_FLOW_PIXMAP_BASE_H
+#define KP_TOOL_FLOW_PIXMAP_BASE_H
 
 
-#include <kptoolflowpixmapbase.h>
+#include <kptoolflowbase.h>
 
 
-// Eraser = Brush but with foreground & background colors swapped (a few square brushes)
-class kpToolEraser : public kpToolFlowPixmapBase
+/**
+ * @short Abstract base call for all continuous tools that draw pixmaps
+ * (e.g. Brush, Eraser).
+ *
+ * @author Clarence Dang <dang@kde.org>
+ */
+class kpToolFlowPixmapBase : public kpToolFlowBase
 {
 Q_OBJECT
 
 public:
-    kpToolEraser (kpMainWindow *mainWindow);
-    virtual ~kpToolEraser ();
+    kpToolFlowPixmapBase (const QString &text, const QString &description,
+               int key,
+               kpMainWindow *mainWindow, const char *name);
+    virtual ~kpToolFlowPixmapBase ();
     
-    
-public:
-    virtual void globalDraw ();
-    
-
 protected:
-    virtual QString haventBegunDrawUserMessage () const;
-    
-    virtual bool haveSquareBrushes () const { return true; }
-    virtual bool colorsAreSwapped () const { return true; }
+    virtual void drawPoint (const QPoint &point);
+    virtual bool drawLine (QPixmap *pixmap,
+        const QRect &docRect,
+        const QPoint &thisPoint, const QPoint &lastPoint);
+
 
 };
 
 
-#endif  // KP_TOOL_ERASER_H
+#endif  // KP_TOOL_FLOW_PIXMAP_BASE_H

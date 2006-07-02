@@ -26,19 +26,46 @@
 */
 
 
-#include <klocale.h>
+#define DEBUG_KP_TOOL_ERASER 0
+
+
 #include <kptooleraser.h>
 
+#include <klocale.h>
+
+#include <kpcommandhistory.h>
+#include <kptoolclear.h>
+
+
 kpToolEraser::kpToolEraser (kpMainWindow *mainWindow)
-    : kpToolPen (kpToolPen::Eraser,
-                 i18n ("Eraser"), i18n ("Lets you rub out mistakes"),
-                 Qt::Key_A,
-                 mainWindow, "tool_eraser")
+    : kpToolFlowPixmapBase (i18n ("Eraser"),
+        i18n ("Lets you rub out mistakes"),
+        Qt::Key_A,
+        mainWindow, "tool_eraser")
 {
 }
 
 kpToolEraser::~kpToolEraser ()
 {
 }
+
+
+// public virtual [base kpTool]
+void kpToolEraser::globalDraw ()
+{
+#if DEBUG_KP_TOOL_ERASER
+    kDebug () << "kpToolEraser::globalDraw()" << endl;
+#endif
+
+    commandHistory ()->addCommand (
+        new kpToolClearCommand (false/*act on doc, not sel*/, mainWindow ()));
+}
+
+
+QString kpToolEraser::haventBegunDrawUserMessage () const
+{
+    return i18n ("Click or drag to erase.");
+}
+
 
 #include <kptooleraser.moc>
