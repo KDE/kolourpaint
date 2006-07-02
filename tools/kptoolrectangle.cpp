@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_RECTANGLE 1
+#define DEBUG_KP_TOOL_RECTANGLE 0
 
 
 #include <qbitmap.h>
