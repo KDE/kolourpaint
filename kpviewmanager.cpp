@@ -472,7 +472,7 @@ kpView *kpViewManager::viewUnderCursor (bool usingQt) const
              it != m_views.end ();
              it++)
         {
-            if ((*it)->hasMouse ())
+            if ((*it)->underMouse ())
                 return (*it);
         }
 

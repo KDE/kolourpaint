@@ -291,7 +291,7 @@ void kpMainWindow::recalculateStatusBarMessage ()
 
     // HACK: To work around kpViewScrollableContainer's unreliable
     //       status messages (which in turn is due to Qt not updating
-    //       QWidget::hasMouse() on drags and we needing to hack around it)
+    //       QWidget::underMouse() on drags and we needing to hack around it)
     if (!scrollViewMessage.isEmpty () &&
         m_scrollView->newDocSize ().isEmpty () &&
         m_viewManager && m_viewManager->viewUnderCursor ())
