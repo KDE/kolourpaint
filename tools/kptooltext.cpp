@@ -45,6 +45,10 @@
 #include <kpviewmanager.h>
 
 
+//
+// kpToolText
+//
+
 kpToolText::kpToolText (kpMainWindow *mainWindow)
     : kpToolSelection (Text,
                        i18n ("Text"), i18n ("Writes text"),
@@ -61,6 +65,11 @@ kpToolText::~kpToolText ()
 }
 
 
+//
+// Command Handling
+//
+
+
 // protected
 void kpToolText::setAllCommandPointersToZero ()
 {
@@ -72,6 +81,33 @@ void kpToolText::setAllCommandPointersToZero ()
     
     m_deleteCommand = 0;
     m_deleteWordCommand = 0;
+}
+
+
+// protected
+void kpToolText::addNewBackspaceCommand (kpToolTextBackspaceCommand **cmd)
+{
+    if (hasBegunShape ())
+        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+    
+    *cmd = new kpToolTextBackspaceCommand (i18n ("Text: Backspace"),
+                viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
+                kpToolTextBackspaceCommand::DontAddBackspaceYet,
+                mainWindow ());
+    commandHistory ()->addCommand (*cmd, false/*no exec*/);
+}
+
+// protected
+void kpToolText::addNewDeleteCommand (kpToolTextDeleteCommand **cmd)
+{
+    if (hasBegunShape ())
+        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+
+    *cmd = new kpToolTextDeleteCommand (i18n ("Text: Delete"),
+                viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
+                kpToolTextDeleteCommand::DontAddDeleteYet,
+                mainWindow ());
+    commandHistory ()->addCommand (*cmd, false/*no exec*/);
 }
 
 
@@ -156,7 +192,12 @@ void kpToolText::endShape (const QPoint &thisPoint, const QRect &normalizedRect)
         kpToolSelection::endDraw (thisPoint, normalizedRect);
 }
 
-    
+
+//
+// Text Cursor Calculations (all static, no mutations)
+//
+
+
 // protected static
 bool kpToolText::cursorIsOnWordChar (const QList <QString> &textLines,
     int cursorRow, int cursorCol)
@@ -206,38 +247,38 @@ void kpToolText::moveCursorLeft (const QList <QString> &textLines,
 void kpToolText::moveCursorRight (const QList <QString> &textLines,
     int *cursorRow, int *cursorCol)
 {
-    (*cursorCol)++;                                            
-                                                            
+    (*cursorCol)++;
+
     if (*cursorCol > (int) textLines [*cursorRow].length ())
-    {                                                       
-        (*cursorRow)++;                                        
-        if (*cursorRow > (int) textLines.size () - 1)        
-        {                                                   
-            *cursorRow = textLines.size () - 1;              
-            *cursorCol = textLines [*cursorRow].length ();    
-        }                                                   
-        else                                                
-            *cursorCol = 0;                                  
-    }                                                       
+    {
+        (*cursorRow)++;
+        if (*cursorRow > (int) textLines.size () - 1)
+        {
+            *cursorRow = textLines.size () - 1;
+            *cursorCol = textLines [*cursorRow].length ();
+        }
+        else
+            *cursorCol = 0;
+    }
 }
 
 
 #define IS_ON_SPACE_OR_EOL() !cursorIsOnWordChar (textLines, *cursorRow, *cursorCol)
-        
+
 // protected static
 int kpToolText::moveCursorToWordStart (const QList <QString> &textLines,
     int *cursorRow, int *cursorCol)
 {
     int numMoves = 0;
-    
+
 #define IS_ON_ANCHOR()                                            \
     (cursorIsOnWordChar (textLines, *cursorRow, *cursorCol) &&    \
          (cursorCol == 0 ||                                       \
              !cursorIsOnWordChar (textLines, *cursorRow, *cursorCol - 1)))
 #define MOVE_CURSOR_LEFT()    \
     (moveCursorLeft (textLines, cursorRow, cursorCol), ++numMoves)
-    
-                        
+
+
     // (these comments will exclude the row=0,col=0 boundary case)
 
     if (IS_ON_ANCHOR ())
@@ -306,31 +347,9 @@ int kpToolText::moveCursorToNextWordStart (const QList <QString> &textLines,
 #undef IS_ON_SPACE_OR_EOL
 
 
-// protected
-void kpToolText::addNewBackspaceCommand (kpToolTextBackspaceCommand **cmd)
-{
-    if (hasBegunShape ())
-        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
-    
-    *cmd = new kpToolTextBackspaceCommand (i18n ("Text: Backspace"),
-                viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
-                kpToolTextBackspaceCommand::DontAddBackspaceYet,
-                mainWindow ());
-    commandHistory ()->addCommand (*cmd, false/*no exec*/);
-}
-
-// protected
-void kpToolText::addNewDeleteCommand (kpToolTextDeleteCommand **cmd)
-{
-    if (hasBegunShape ())
-        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
-
-    *cmd = new kpToolTextDeleteCommand (i18n ("Text: Delete"),
-                viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
-                kpToolTextDeleteCommand::DontAddDeleteYet,
-                mainWindow ());
-    commandHistory ()->addCommand (*cmd, false/*no exec*/);
-}
+//
+// Key Press Handling
+//
 
 
 // protected virtual [base QWidget]
@@ -387,6 +406,303 @@ bool kpToolText::event (QEvent *e)
     return kpToolSelection::event (e);
 }
 
+
+// protected
+void kpToolText::handleUpKeyPress (QKeyEvent *e,
+    const QValueVector <QString> &textLines, int cursorRow, int cursorCol)
+{
+#if DEBUG_KP_TOOL_TEXT
+    kDebug () << "\tup pressed" << endl;
+#endif
+
+    if (hasBegunShape ())
+        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+
+    if (cursorRow > 0)
+    {
+        cursorRow--;
+        cursorCol = qMin (cursorCol, (int) textLines [cursorRow].length ());
+        viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
+    }
+
+    e->accept ();
+}
+
+// protected
+void kpToolText::handleDownKeyPress (QKeyEvent *e,
+    const QValueVector <QString> &textLines, int cursorRow, int cursorCol)
+{
+#if DEBUG_KP_TOOL_TEXT
+    kDebug () << "\tdown pressed" << endl;
+#endif
+
+    if (hasBegunShape ())
+        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+
+    if (cursorRow < (int) textLines.size () - 1)
+    {
+        cursorRow++;
+        cursorCol = qMin (cursorCol, (int) textLines [cursorRow].length ());
+        viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
+    }
+
+    e->accept ();
+}
+
+// protected
+void kpToolText::handleLeftKeyPress (QKeyEvent *e,
+    const QValueVector <QString> &textLines, int cursorRow, int cursorCol)
+{
+#if DEBUG_KP_TOOL_TEXT
+    kDebug () << "\tleft pressed" << endl;
+#endif
+
+    if (hasBegunShape ())
+        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+
+    if ((e->state () & Qt::ControlModifier) == 0)
+    {
+    #if DEBUG_KP_TOOL_TEXT
+        kDebug () << "\tmove single char" << endl;
+    #endif
+
+        moveCursorLeft (textLines, &cursorRow, &cursorCol);
+        viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
+    }
+    else
+    {
+    #if DEBUG_KP_TOOL_TEXT
+        kDebug () << "\tmove to start of word" << endl;
+    #endif
+
+        moveCursorToWordStart (textLines, &cursorRow, &cursorCol);
+        viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
+    }
+
+    e->accept ();
+}
+
+// protected
+void kpToolText::handleRightKeyPress (QKeyEvent *e,
+    const QValueVector <QString> &textLines, int cursorRow, int cursorCol)
+{
+#if DEBUG_KP_TOOL_TEXT
+    kDebug () << "\tright pressed" << endl;
+#endif
+
+    if (hasBegunShape ())
+        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+
+    if ((e->state () & Qt::ControlModifier) == 0)
+    {
+    #if DEBUG_KP_TOOL_TEXT
+        kDebug () << "\tmove single char" << endl;
+    #endif
+
+        moveCursorRight (textLines, &cursorRow, &cursorCol);
+        viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
+    }
+    else
+    {
+    #if DEBUG_KP_TOOL_TEXT
+        kDebug () << "\tmove to start of next word" << endl;
+    #endif
+
+        moveCursorToNextWordStart (textLines, &cursorRow, &cursorCol);
+        viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
+    }
+
+    e->accept ();
+}
+
+
+// protected
+void kpToolText::handleHomeKeyPress (QKeyEvent *e,
+    const QValueVector <QString> & /*textLines*/, int cursorRow, int cursorCol)
+{
+#if DEBUG_KP_TOOL_TEXT
+    kDebug () << "\thome pressed" << endl;
+#endif
+
+    if (hasBegunShape ())
+        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+
+    if (e->state () & Qt::ControlModifier)
+        cursorRow = 0;
+
+    cursorCol = 0;
+
+    viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
+
+    e->accept ();
+}
+
+// protected
+void kpToolText::handleEndKeyPress (QKeyEvent *e,
+    const QValueVector <QString> &textLines, int cursorRow, int cursorCol)
+{
+#if DEBUG_KP_TOOL_TEXT
+    kDebug () << "\tend pressed" << endl;
+#endif
+
+    if (hasBegunShape ())
+        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+
+    if (e->state () & Qt::ControlModifier)
+        cursorRow = textLines.size () - 1;
+
+    cursorCol = textLines [cursorRow].length ();
+
+    viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
+
+    e->accept ();
+}
+
+
+// protected
+void kpToolText::handleBackspaceKeyPress (QKeyEvent *e,
+    const QValueVector <QString> &textLines, int cursorRow, int cursorCol)
+{
+#if DEBUG_KP_TOOL_TEXT
+    kDebug () << "\tbackspace pressed" << endl;
+#endif
+
+    if ((e->state () & Qt::ControlModifier) == 0)
+    {
+        if (!m_backspaceCommand)
+            addNewBackspaceCommand (&m_backspaceCommand);
+
+        m_backspaceCommand->addBackspace ();
+    }
+    else
+    {
+        if (!m_backspaceWordCommand)
+            addNewBackspaceCommand (&m_backspaceWordCommand);
+
+        const int numMoves = moveCursorToWordStart (textLines,
+            &cursorRow, &cursorCol);
+
+        viewManager ()->setQueueUpdates ();
+        {
+            for (int i = 0; i < numMoves; i++)
+                m_backspaceWordCommand->addBackspace ();
+        }
+        viewManager ()->restoreQueueUpdates ();
+
+        Q_ASSERT (cursorRow == viewManager ()->textCursorRow ());
+        Q_ASSERT (cursorCol == viewManager ()->textCursorCol ());
+    }
+
+    e->accept ();
+}
+
+// protected
+void kpToolText::handleDeleteKeyPress (QKeyEvent *e,
+    const QValueVector <QString> & textLines, int cursorRow, int cursorCol)
+{
+#if DEBUG_KP_TOOL_TEXT
+    kDebug () << "\tdelete pressed" << endl;
+#endif
+
+    if ((e->state () & Qt::ControlModifier) == 0)
+    {
+        if (!m_deleteCommand)
+            addNewDeleteCommand (&m_deleteCommand);
+
+        m_deleteCommand->addDelete ();
+    }
+    else
+    {
+        if (!m_deleteWordCommand)
+            addNewDeleteCommand (&m_deleteWordCommand);
+
+        // We don't want to know the cursor pos of the next word start
+        // as delete should keep cursor in same pos.
+        int cursorRowThrowAway = cursorRow,
+            cursorColThrowAway = cursorCol;
+        const int numMoves = moveCursorToNextWordStart (textLines,
+            &cursorRowThrowAway, &cursorColThrowAway);
+
+        viewManager ()->setQueueUpdates ();
+        {
+            for (int i = 0; i < numMoves; i++)
+                m_deleteWordCommand->addDelete ();
+        }
+        viewManager ()->restoreQueueUpdates ();
+
+        // Assert unchanged as delete should keep cursor in same pos.
+        Q_ASSERT (cursorRow == viewManager ()->textCursorRow ());
+        Q_ASSERT (cursorCol == viewManager ()->textCursorCol ());
+    }
+
+    e->accept ();
+}
+
+
+// protected
+void kpToolText::handleEnterKeyPress (QKeyEvent *e,
+    const QValueVector <QString> & /*textLines*/, int cursorRow, int cursorCol)
+{
+#if DEBUG_KP_TOOL_TEXT
+    kDebug () << "\tenter pressed" << endl;
+#endif
+    if (!m_enterCommand)
+    {
+        // TODO: why not endShapeInternal(); ditto for everywhere else in this file?
+        if (hasBegunShape ())
+            endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+
+        m_enterCommand = new kpToolTextEnterCommand (i18n ("Text: New Line"),
+            viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
+            kpToolTextEnterCommand::AddEnterNow,
+            mainWindow ());
+        commandHistory ()->addCommand (m_enterCommand, false/*no exec*/);
+    }
+    else
+        m_enterCommand->addEnter ();
+
+    e->accept ();
+}
+
+
+// protected
+void kpToolText::handleTextTyped (QKeyEvent *e,
+    const QValueVector <QString> & /*textLines*/, int cursorRow, int cursorCol)
+{
+#if DEBUG_KP_TOOL_TEXT
+    kDebug () << "\ttext='" << e->text () << "'" << endl;
+#endif
+    QString usableText;
+    for (int i = 0; i < (int) e->text ().length (); i++)
+    {
+        if (e->text ().at (i).isPrint ())
+            usableText += e->text ().at (i);
+    }
+#if DEBUG_KP_TOOL_TEXT
+    kDebug () << "\tusableText='" << usableText << "'" << endl;
+#endif
+
+    if (usableText.length () > 0)
+    {
+        if (!m_insertCommand)
+        {
+            if (hasBegunShape ())
+                endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+
+            m_insertCommand = new kpToolTextInsertCommand (i18n ("Text: Write"),
+                viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
+                usableText,
+                mainWindow ());
+            commandHistory ()->addCommand (m_insertCommand, false/*no exec*/);
+        }
+        else
+            m_insertCommand->addText (usableText);
+
+        e->accept ();
+    }
+}
+
+
 // protected virtual [base kpTool]
 void kpToolText::keyPressEvent (QKeyEvent *e)
 {
@@ -408,7 +724,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     }
 
 
-    kpSelection *sel = document ()->selection ();
+    kpSelection * const sel = document ()->selection ();
 
     if (!sel || !sel->isText ())
     {
@@ -423,279 +739,59 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     }
 
 
+    // (All handle.+()'s require this info)
     const QList <QString> textLines = sel->textLines ();
-    int cursorRow = viewManager ()->textCursorRow ();
-    int cursorCol = viewManager ()->textCursorCol ();
+    const int cursorRow = viewManager ()->textCursorRow ();
+    const int cursorCol = viewManager ()->textCursorCol ();
 
 
-    if (e->key () == Qt::Key_Enter || e->key () == Qt::Key_Return)
+    switch (e->key ())
     {
-    #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tenter pressed" << endl;
-    #endif
-        if (!m_enterCommand)
-        {
-            // TODO: why not endShapeInternal(); ditto for everywhere else in this file?
-            if (hasBegunShape ())
-                endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+    case Qt::Key_Up:
+        handleUpKeyPress (e, textLines, cursorRow, cursorCol);
+        break;
 
-            m_enterCommand = new kpToolTextEnterCommand (i18n ("Text: New Line"),
-                viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
-                kpToolTextEnterCommand::AddEnterNow,
-                mainWindow ());
-            commandHistory ()->addCommand (m_enterCommand, false/*no exec*/);
-        }
-        else
-            m_enterCommand->addEnter ();
+    case Qt::Key_Down:
+        handleDownKeyPress (e, textLines, cursorRow, cursorCol);
+        break;
 
-        e->accept ();
+    case Qt::Key_Left:
+        handleLeftKeyPress (e, textLines, cursorRow, cursorCol);
+        break;
+
+    case Qt::Key_Right:
+        handleRightKeyPress (e, textLines, cursorRow, cursorCol);
+        break;
+
+
+    case Qt::Key_Home:
+        handleHomeKeyPress (e, textLines, cursorRow, cursorCol);
+        break;
+
+    case Qt::Key_End:
+        handleEndKeyPress (e, textLines, cursorRow, cursorCol);
+        break;
+
+
+    case Qt::Key_Backspace:
+        handleBackspaceKeyPress (e, textLines, cursorRow, cursorCol);
+        break;
+
+    case Qt::Key_Delete:
+        handleDeleteKeyPress (e, textLines, cursorRow, cursorCol);
+        break;
+
+
+    case Qt::Key_Enter:
+    case Qt::Key_Return:
+        handleEnterKeyPress (e, textLines, cursorRow, cursorCol);
+        break;
+
+
+    default:
+        handleTextTyped (e, textLines, cursorRow, cursorCol);
+        break;
     }
-    else if (e->key () == Qt::Key_Backspace)
-    {
-    #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tbackspace pressed" << endl;
-    #endif
-
-        if ((e->state () & Qt::ControlModifier) == 0)
-        {
-            if (!m_backspaceCommand)
-                addNewBackspaceCommand (&m_backspaceCommand);
-
-            m_backspaceCommand->addBackspace ();
-        }
-        else
-        {
-            if (!m_backspaceWordCommand)
-                addNewBackspaceCommand (&m_backspaceWordCommand);
-                
-            const int numMoves = moveCursorToWordStart (textLines,
-                &cursorRow, &cursorCol);
-                
-            viewManager ()->setQueueUpdates ();
-            {
-                for (int i = 0; i < numMoves; i++)
-                    m_backspaceWordCommand->addBackspace ();
-            }
-            viewManager ()->restoreQueueUpdates ();
-                
-            Q_ASSERT (cursorRow == viewManager ()->textCursorRow ());
-            Q_ASSERT (cursorCol == viewManager ()->textCursorCol ());
-        }
-
-        e->accept ();
-    }
-    else if (e->key () == Qt::Key_Delete)
-    {
-    #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tdelete pressed" << endl;
-    #endif
-
-        if ((e->state () & Qt::ControlModifier) == 0)
-        {
-            if (!m_deleteCommand)
-                addNewDeleteCommand (&m_deleteCommand);
-                
-            m_deleteCommand->addDelete ();
-        }
-        else
-        {
-            if (!m_deleteWordCommand)
-                addNewDeleteCommand (&m_deleteWordCommand);
-                
-            // We don't want to know the cursor pos of the next word start
-            // as delete should keep cursor in same pos.
-            int cursorRowThrowAway = cursorRow,
-                cursorColThrowAway = cursorCol;
-            const int numMoves = moveCursorToNextWordStart (textLines,
-                &cursorRowThrowAway, &cursorColThrowAway);
-                
-            viewManager ()->setQueueUpdates ();
-            {
-                for (int i = 0; i < numMoves; i++)
-                    m_deleteWordCommand->addDelete ();
-            }
-            viewManager ()->restoreQueueUpdates ();
-                
-            // Assert unchanged as delete should keep cursor in same pos.
-            Q_ASSERT (cursorRow == viewManager ()->textCursorRow ());
-            Q_ASSERT (cursorCol == viewManager ()->textCursorCol ());
-        }
-
-        e->accept ();
-    }
-    else if (e->key () == Qt::Key_Up)
-    {
-    #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tup pressed" << endl;
-    #endif
-
-        if (hasBegunShape ())
-            endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
-
-        if (cursorRow > 0)
-        {
-            cursorRow--;
-            cursorCol = qMin (cursorCol, (int) textLines [cursorRow].length ());
-            viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
-        }
-
-        e->accept ();
-    }
-    else if (e->key () == Qt::Key_Down)
-    {
-    #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tdown pressed" << endl;
-    #endif
-
-        if (hasBegunShape ())
-            endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
-
-        if (cursorRow < (int) textLines.size () - 1)
-        {
-            cursorRow++;
-            cursorCol = qMin (cursorCol, (int) textLines [cursorRow].length ());
-            viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
-        }
-
-        e->accept ();
-    }
-    else if (e->key () == Qt::Key_Left)
-    {
-    #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tleft pressed" << endl;
-    #endif
-
-        if (hasBegunShape ())
-            endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
-
-        if ((e->state () & Qt::ControlModifier) == 0)
-        {
-        #if DEBUG_KP_TOOL_TEXT
-            kDebug () << "\tmove single char" << endl;
-        #endif
-
-            moveCursorLeft (textLines, &cursorRow, &cursorCol);
-            viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
-        }
-        else
-        {
-        #if DEBUG_KP_TOOL_TEXT
-            kDebug () << "\tmove to start of word" << endl;
-        #endif
-
-            moveCursorToWordStart (textLines, &cursorRow, &cursorCol);
-            viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
-        }
-
-    #undef MOVE_CURSOR_LEFT
-
-        e->accept ();
-
-    }
-    else if (e->key () == Qt::Key_Right)
-    {
-    #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tright pressed" << endl;
-    #endif
-
-        if (hasBegunShape ())
-            endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
-
-        if ((e->state () & Qt::ControlModifier) == 0)
-        {
-        #if DEBUG_KP_TOOL_TEXT
-            kDebug () << "\tmove single char" << endl;
-        #endif
-
-            moveCursorRight (textLines, &cursorRow, &cursorCol);
-            viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
-        }
-        else
-        {
-        #if DEBUG_KP_TOOL_TEXT
-            kDebug () << "\tmove to start of next word" << endl;
-        #endif
-
-            moveCursorToNextWordStart (textLines, &cursorRow, &cursorCol);
-            viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
-
-        }
-
-    #undef MOVE_CURSOR_RIGHT
-
-        e->accept ();
-    }
-    else if (e->key () == Qt::Key_Home)
-    {
-    #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\thome pressed" << endl;
-    #endif
-
-        if (hasBegunShape ())
-            endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
-
-        if (e->state () & Qt::ControlModifier)
-            cursorRow = 0;
-
-        cursorCol = 0;
-
-        viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
-
-        e->accept ();
-    }
-    else if (e->key () == Qt::Key_End)
-    {
-    #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tend pressed" << endl;
-    #endif
-
-        if (hasBegunShape ())
-            endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
-
-        if (e->state () & Qt::ControlModifier)
-            cursorRow = textLines.size () - 1;
-
-        cursorCol = textLines [cursorRow].length ();
-
-        viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
-
-        e->accept ();
-    }
-    else
-    {
-    #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\ttext='" << e->text () << "'" << endl;
-    #endif
-        QString usableText;
-        for (int i = 0; i < (int) e->text ().length (); i++)
-        {
-            if (e->text ().at (i).isPrint ())
-                usableText += e->text ().at (i);
-        }
-    #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tusableText='" << usableText << "'" << endl;
-    #endif
-
-        if (usableText.length () > 0)
-        {
-            if (!m_insertCommand)
-            {
-                if (hasBegunShape ())
-                    endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
-
-                m_insertCommand = new kpToolTextInsertCommand (i18n ("Text: Write"),
-                    viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
-                    usableText,
-                    mainWindow ());
-                commandHistory ()->addCommand (m_insertCommand, false/*no exec*/);
-            }
-            else
-                m_insertCommand->addText (usableText);
-
-            e->accept ();
-        }
-    }
-#undef IS_SPACE
 
 
     if (!e->isAccepted ())
@@ -713,6 +809,12 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         return;
     }
 }
+
+
+//
+// Input Method Text Entry
+//
+
 
 // COMPAT
 #if 1
@@ -871,6 +973,12 @@ void kpToolText::imEndEvent (QIMEvent *e)
 }
 #endif
 
+
+//
+// User Changing Text Style Elements
+//
+
+
 // protected
 bool kpToolText::shouldChangeTextStyle () const
 {
@@ -928,6 +1036,7 @@ void kpToolText::slotIsOpaqueChanged ()
         return;
 
     kpTextStyle newTextStyle = mainWindow ()->textStyle ();
+    
     kpTextStyle oldTextStyle = newTextStyle;
     oldTextStyle.setBackgroundOpaque (!m_toolWidgetOpaqueOrTransparent->isOpaque ());
 
@@ -950,6 +1059,7 @@ void kpToolText::slotColorsSwapped (const kpColor &newForegroundColor,
         return;
 
     kpTextStyle newTextStyle = mainWindow ()->textStyle ();
+    
     kpTextStyle oldTextStyle = newTextStyle;
     oldTextStyle.setForegroundColor (newBackgroundColor);
     oldTextStyle.setBackgroundColor (newForegroundColor);
@@ -970,6 +1080,7 @@ void kpToolText::slotForegroundColorChanged (const kpColor & /*color*/)
         return;
 
     kpTextStyle newTextStyle = mainWindow ()->textStyle ();
+    
     kpTextStyle oldTextStyle = newTextStyle;
     oldTextStyle.setForegroundColor (oldForegroundColor ());
 
@@ -989,6 +1100,7 @@ void kpToolText::slotBackgroundColorChanged (const kpColor & /*color*/)
         return;
 
     kpTextStyle newTextStyle = mainWindow ()->textStyle ();
+    
     kpTextStyle oldTextStyle = newTextStyle;
     oldTextStyle.setBackgroundColor (oldBackgroundColor ());
 
@@ -1023,6 +1135,8 @@ void kpToolText::slotFontFamilyChanged (const QString &fontFamily,
         return;
 
     kpTextStyle newTextStyle = mainWindow ()->textStyle ();
+
+    // Figure out old text style.
     kpTextStyle oldTextStyle = newTextStyle;
     oldTextStyle.setFontFamily (oldFontFamily);
 
@@ -1048,6 +1162,8 @@ void kpToolText::slotFontSizeChanged (int fontSize, int oldFontSize)
         return;
 
     kpTextStyle newTextStyle = mainWindow ()->textStyle ();
+
+    // Figure out old text style.
     kpTextStyle oldTextStyle = newTextStyle;
     oldTextStyle.setFontSize (oldFontSize);
 
@@ -1068,6 +1184,8 @@ void kpToolText::slotBoldChanged (bool isBold)
         return;
 
     kpTextStyle newTextStyle = mainWindow ()->textStyle ();
+
+    // Figure out old text style.
     kpTextStyle oldTextStyle = newTextStyle;
     oldTextStyle.setBold (!isBold);
 
@@ -1087,6 +1205,8 @@ void kpToolText::slotItalicChanged (bool isItalic)
         return;
 
     kpTextStyle newTextStyle = mainWindow ()->textStyle ();
+
+    // Figure out old text style.
     kpTextStyle oldTextStyle = newTextStyle;
     oldTextStyle.setItalic (!isItalic);
 
@@ -1106,6 +1226,8 @@ void kpToolText::slotUnderlineChanged (bool isUnderline)
         return;
 
     kpTextStyle newTextStyle = mainWindow ()->textStyle ();
+
+    // Figure out old text style.
     kpTextStyle oldTextStyle = newTextStyle;
     oldTextStyle.setUnderline (!isUnderline);
 
@@ -1125,6 +1247,8 @@ void kpToolText::slotStrikeThruChanged (bool isStrikeThru)
         return;
 
     kpTextStyle newTextStyle = mainWindow ()->textStyle ();
+
+    // Figure out old text style.
     kpTextStyle oldTextStyle = newTextStyle;
     oldTextStyle.setStrikeThru (!isStrikeThru);
 
@@ -1134,9 +1258,9 @@ void kpToolText::slotStrikeThruChanged (bool isStrikeThru)
 }
 
 
-/*
- * kpToolTextChangeStyleCommand
- */
+//
+// kpToolTextChangeStyleCommand
+//
 
 kpToolTextChangeStyleCommand::kpToolTextChangeStyleCommand (const QString &name,
     const kpTextStyle &newTextStyle, const kpTextStyle &oldTextStyle,
@@ -1202,9 +1326,9 @@ void kpToolTextChangeStyleCommand::unexecute ()
 }
 
 
-/*
- * kpToolTextInsertCommand
- */
+//
+// kpToolTextInsertCommand
+//
 
 kpToolTextInsertCommand::kpToolTextInsertCommand (const QString &name,
     int row, int col, QString newText,
@@ -1274,9 +1398,9 @@ void kpToolTextInsertCommand::unexecute ()
 }
 
 
-/*
- * kpToolTextEnterCommand
- */
+//
+// kpToolTextEnterCommand
+//
 
 kpToolTextEnterCommand::kpToolTextEnterCommand (const QString &name,
     int row, int col, Action action,
@@ -1370,9 +1494,9 @@ void kpToolTextEnterCommand::unexecute ()
 }
 
 
-/*
- * kpToolTextBackspaceCommand
- */
+//
+// kpToolTextBackspaceCommand
+//
 
 kpToolTextBackspaceCommand::kpToolTextBackspaceCommand (const QString &name,
     int row, int col, Action action,
@@ -1488,9 +1612,9 @@ void kpToolTextBackspaceCommand::unexecute ()
 }
 
 
-/*
- * kpToolTextDeleteCommand
- */
+//
+// kpToolTextDeleteCommand
+//
 
 kpToolTextDeleteCommand::kpToolTextDeleteCommand (const QString &name,
     int row, int col, Action action,
