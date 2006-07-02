@@ -51,6 +51,9 @@ struct kpThumbnailPrivate
 };
 
 // TODO: get out of the Alt+Tab list
+// TODO: Trolltech suggests using a "tool window" instead of a QDockWidget
+//       that is not allowed to dock :)  Would solve "float" button
+//       problem (below) too.
 kpThumbnail::kpThumbnail (kpMainWindow *parent)
     : QDockWidget (parent),
       d (new kpThumbnailPrivate ())
