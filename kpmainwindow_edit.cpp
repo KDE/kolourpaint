@@ -430,6 +430,7 @@ void kpMainWindow::pasteText (const QString &text,
                         QString::null/*uninteresting child of macroCmd*/,
                         m_viewManager->textCursorRow (),
                         m_viewManager->textCursorCol (),
+                        kpToolTextEnterCommand::AddEnterNow,
                         this));
             }
 
