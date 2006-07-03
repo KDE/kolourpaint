@@ -177,7 +177,7 @@ void kpMainWindow::slotHelpTakingScreenshots ()
     dlg.setCaption( i18n ("Acquiring Screenshots") );
     dlg.setButtons( KDialog::Close);
     dlg.setDefaultButton( KDialog::Close );
-    dlg.enableButtonSeparator (true);
+    dlg.showButtonSeparator (true);
 
     KActiveLabel *messageLabel = new KActiveLabel (message, &dlg);
     messageLabel->setNotifyClick (true);  // Fire urlClick() signal.
