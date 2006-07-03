@@ -298,20 +298,27 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
     // (and probably some other functions below too).
     painter.setClipRect (contentsRect ());
 
+    // sync: painter translated to top-left of contentsRect().
     painter.translate (contentsRect ().x (), contentsRect ().y ());
 
+
+    const QRect contentsRectMovedTo00 (0, 0,
+        contentsRect ().width (), contentsRect ().height ());
 
     // Fill with background.
     if (isEnabled () && m_mainWindow)
     {
+        // sync: ASSUMPTION: painter translated to top-left of contentsRect().
         kpView::drawTransparentBackground (&painter,
             contentsRect ().width (), contentsRect ().height (),
-            contentsRect ().translated (-contentsRect ().x (), -contentsRect ().y ()),
+            contentsRectMovedTo00,
             true/*preview*/);
     }
     else
     {
-        painter.fillRect (contentsRect (),
+        // TODO: Given we are no longer double buffering, is this even required?
+        //       Remember to check everywhere else in KolourPaint.
+        painter.fillRect (contentsRectMovedTo00,
             palette ().color (QPalette::Background));
     }
 
@@ -325,7 +332,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
         swapPixmap.setMask (QBitmap ());
 
         // Grey out the opaque parts of "swapPixmap".
-        swapPixmap.fill (palette().color (QPalette::Dark));
+        swapPixmap.fill (palette ().color (QPalette::Dark));
 
         swapPixmap.setMask (swapBitmapMask);
     }
