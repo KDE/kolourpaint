@@ -55,7 +55,7 @@
 #include <kpviewmanager.h>
 #include <ktoolinvocation.h>
 #include <kglobal.h>
-#include <dbus/qdbus.h>
+#include <QtDBus>
 
 // private
 void kpMainWindow::setupFileMenuActions ()

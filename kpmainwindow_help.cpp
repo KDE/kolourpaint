@@ -37,7 +37,7 @@
 #include <krun.h>
 #include <klocale.h>
 #include <kshortcut.h>
-#include <dbus/qdbus.h>
+#include <QtDBus>
 
 // private
 void kpMainWindow::setupHelpMenuActions ()
