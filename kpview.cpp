@@ -81,7 +81,6 @@ struct kpViewPrivate
     QRect m_buddyViewScrollableContainerRectangle;
 
     QRegion m_queuedUpdateArea;
-    QPixmap *m_backBuffer;
 };
 
 
@@ -91,8 +90,7 @@ kpView::kpView (kpDocument *document,
         kpView *buddyView,
         kpViewScrollableContainer *scrollableContainer,
         QWidget *parent)
-
-    : QWidget (parent, Qt::WNoAutoErase/*no flicker*/),
+    : QWidget (parent),
       d (new kpViewPrivate ())
 {
     d->m_document = document;
@@ -106,9 +104,23 @@ kpView::kpView (kpDocument *document,
     d->m_showGrid = false;
     d->m_isBuddyViewScrollableContainerRectangleShown = false;
 
-    d->m_backBuffer = 0;
-
-    setAttribute(Qt::WA_NoSystemBackground, true);
+    // Don't waste CPU drawing default background since its overridden by
+    // our fully opaque drawing.  In reality, this seems to make no
+    // difference in performance.
+    //
+    // TODO: qt.html says "Setting this flag implicitly disables double
+    //       buffering for the widget" but we don't get flicker...  
+    //       Only WA_PaintOnScreen really seems to disable double buffering.
+    //       Am I confusing that with disabling the backing store? 
+    //
+    //       http://lists.trolltech.com/qt-interest/2005-08/msg00865.html
+    //       suggests that the widget becomes see-through temporarily
+    //       when switching from another desktop (bad) but I can't reproduce
+    //       (maybe because it's not a toplevel widget?).  Making the pixmap
+    //       a brush (and having an empty paintEvent) is suggested for
+    //       speed if you don't mind resize glitches.
+    setAttribute (Qt::WA_NoSystemBackground, true);
+    
     setFocusPolicy (Qt::WheelFocus);
     setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
     setAttribute (Qt::WA_KeyCompression, true);
@@ -119,7 +131,6 @@ kpView::~kpView ()
 {
     setHasMouse (false);
 
-    delete d->m_backBuffer;
     delete d;
 }
 
@@ -1252,9 +1263,8 @@ QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
     return docRect;
 }
 
-// public
+// public static
 void kpView::drawTransparentBackground (QPainter *painter,
-                                        int /*viewWidth*/, int /*viewHeight*/,
                                         const QRect &rect,
                                         bool isPreview)
 {
@@ -1269,6 +1279,10 @@ void kpView::drawTransparentBackground (QPainter *painter,
         startx -= (startx % cellSize);
 
     painter->save ();
+    
+    // Clip to <rect> as we may draw outside it on all sides.
+    painter->setClipRect (rect, Qt::IntersectClip/*honour existing clip*/);
+    
     for (int y = starty; y <= rect.bottom (); y += cellSize)
     {
         for (int x = startx; x <= rect.right (); x += cellSize)
@@ -1286,37 +1300,23 @@ void kpView::drawTransparentBackground (QPainter *painter,
             else
                 col = Qt::white;
 
-            painter->fillRect (x - rect.x (), y - rect.y (), cellSize, cellSize,
-                               col);
+            painter->fillRect (x, y, cellSize, cellSize, col);
         }
     }
     painter->restore ();
 }
 
 // protected
-void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRect)
-{
-    kpDocument *doc = document ();
-    if (!doc)
-        return;
-
-    drawTransparentBackground (painter,
-                               doc->width () * zoomLevelX () / 100,
-                               doc->height () * zoomLevelY () / 100,
-                               viewRect);
-}
-
-// protected
 void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
 {
-#if DEBUG_KP_VIEW_RENDERER && 1
+#if DEBUG_KP_VIEW_RENDERER && 1 || 0
     kDebug () << "kpView::paintEventDrawSelection() docRect=" << docRect << endl;
 #endif
 
     kpDocument *doc = document ();
     if (!doc)
     {
-    #if DEBUG_KP_VIEW_RENDERER && 1
+    #if DEBUG_KP_VIEW_RENDERER && 1 || 0
         kDebug () << "\tno doc - abort" << endl;
     #endif
         return;
@@ -1325,7 +1325,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
     kpSelection *sel = doc->selection ();
     if (!sel)
     {
-    #if DEBUG_KP_VIEW_RENDERER && 1
+    #if DEBUG_KP_VIEW_RENDERER && 1 || 0
         kDebug () << "\tno sel - abort" << endl;
     #endif
         return;
@@ -1335,7 +1335,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
     //
     // Draw selection pixmap (if there is one)
     //
-#if DEBUG_KP_VIEW_RENDERER && 1
+#if DEBUG_KP_VIEW_RENDERER && 1 || 0
     kDebug () << "\tdraw sel pixmap @ " << sel->topLeft () << endl;
 #endif
     sel->paint (destPixmap, docRect);
@@ -1346,7 +1346,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
     //
 
     kpViewManager *vm = viewManager ();
-#if DEBUG_KP_VIEW_RENDERER && 1
+#if DEBUG_KP_VIEW_RENDERER && 1 || 0
     kDebug () << "\tsel border visible="
                << vm->selectionBorderVisible ()
                << endl;
@@ -1358,7 +1358,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
         destPixmapPainter.setPen (QPen (Qt::white, 1, Qt::DotLine));
 
         destPixmapPainter.setBackgroundMode (Qt::OpaqueMode);
-        destPixmapPainter.setBackgroundColor (Qt::blue);
+        destPixmapPainter.setBackground (Qt::blue);
 
         QBitmap maskBitmap;
         QPainter maskBitmapPainter;
@@ -1566,9 +1566,10 @@ void kpView::paintEventDrawSelectionResizeHandles (QPainter *painter, const QRec
     kDebug () << "\tsel resize handles view region="
                << selResizeHandlesRegion << endl;
 #endif
-    selResizeHandlesRegion.translate (-viewRect.x (), -viewRect.y ());
 
     painter->save ();
+
+    painter->setClipRect (viewRect, Qt::IntersectClip/*honour existing clip*/);
 
     QColor fillColor;
     if (selectionResizeHandleAtomicSizeCloseToZoomLevel ())
@@ -1633,20 +1634,20 @@ void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
 #if 0
     int tileHeight = 16 * vzoomMultiple;  // CONFIG
 #endif
-    for (int y = starty - viewRect.y (); y <= viewRect.bottom () - viewRect.y (); y += vzoomMultiple)
+    for (int y = starty; y <= viewRect.bottom (); y += vzoomMultiple)
     {
     #if 0
-        if (tileHeight > 0 && y % tileHeight == 0)
+        if (tileHeight > 0 && (y - viewRect.y ()) % tileHeight == 0)
         {
             painter->setPen (tileBoundaryPen);
             //painter.setRasterOp (Qt::XorROP);
         }
     #endif
 
-        painter->drawLine (0, y, viewRect.right () - viewRect.left (), y);
+        painter->drawLine (viewRect.left (), y, viewRect.right (), y);
 
     #if 0
-        if (tileHeight > 0 && y % tileHeight == 0)
+        if (tileHeight > 0 && (y - viewRect.y ()) % tileHeight == 0)
         {
             painter->setPen (ordinaryPen);
             //painter.setRasterOp (Qt::CopyROP);
@@ -1661,20 +1662,20 @@ void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
 #if 0
     int tileWidth = 16 * hzoomMultiple;  // CONFIG
 #endif
-    for (int x = startx - viewRect.x (); x <= viewRect.right () - viewRect.x (); x += hzoomMultiple)
+    for (int x = startx; x <= viewRect.right (); x += hzoomMultiple)
     {
     #if 0
-        if (tileWidth > 0 && x % tileWidth == 0)
+        if (tileWidth > 0 && (x - viewRect.x ()) % tileWidth == 0)
         {
             painter->setPen (tileBoundaryPen);
             //painter.setRasterOp (Qt::XorROP);
         }
     #endif
 
-        painter->drawLine (x, 0, x, viewRect.bottom () - viewRect.top ());
+        painter->drawLine (x, viewRect.top (), x, viewRect.bottom ());
 
     #if 0
-        if (tileWidth > 0 && x % tileWidth == 0)
+        if (tileWidth > 0 && (x - viewRect.x ()) % tileWidth == 0)
         {
             painter->setPen (ordinaryPen);
             //painter.setRasterOp (Qt::CopyROP);
@@ -1708,41 +1709,12 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
     kDebug () << "\tdocRect=" << docRect << endl;
 #endif
 
-// uncomment to cause deliberate flicker (identifies needless updates)
-#if DEBUG_KP_VIEW_RENDERER && 0
-    QPainter flickerPainter (this);
-    flickerPainter.fillRect (viewRect, Qt::red);
-    flickerPainter.end ();
-#endif
 
+    QPainter painter (this);
 
-    //
-    // Prepare Back Buffer
-    //
-
-    if (!d->m_backBuffer ||
-        d->m_backBuffer->width () < viewRect.width () ||
-        d->m_backBuffer->height () < viewRect.height () ||
-        d->m_backBuffer->width () > width () ||
-        d->m_backBuffer->height () > height ())
-    {
-        // don't use QPixmap::resize() as that wastes time copying pixels
-        // that will be overwritten anyway
-        //
-        // OPT: Should use doubling trick or at least go up in multiples
-        //      to reduce X server pressure.
-        delete d->m_backBuffer;
-        d->m_backBuffer = new QPixmap (viewRect.width (), viewRect.height ());
-    }
-
-// uncomment to catch bits of the view that the renderer forgot to update
-#if 0
-    d->m_backBuffer->fill (Qt::green);
-#endif
-
-    QPainter backBufferPainter;
-    backBufferPainter.begin (d->m_backBuffer);
-
+    // sync: painter clips to viewRect.
+    painter.setClipRect (viewRect);
+    
 
     //
     // Draw checkboard for transparent images and/or views with borders
@@ -1780,7 +1752,7 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
         kDebug () << "\tmask=" << !docPixmap.mask ().isNull ()
                    << endl;
     #endif
-        paintEventDrawCheckerBoard (&backBufferPainter, viewRect);
+        drawTransparentBackground (&painter, viewRect);
     }
     else
     {
@@ -1808,16 +1780,16 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
     #if DEBUG_KP_VIEW_RENDERER && 1
         kDebug () << "\torigin=" << origin () << endl;
     #endif
-        // blit scaled version of docPixmap + tempPixmap onto Back Buffer
+        // Blit scaled version of docPixmap + tempPixmap.
     #if DEBUG_KP_VIEW_RENDERER && 1
         QTime scaleTimer; scaleTimer.start ();
     #endif
-        backBufferPainter.translate (origin ().x () - viewRect.x (),
-                                     origin ().y () - viewRect.y ());
-        backBufferPainter.scale (double (zoomLevelX ()) / 100.0,
-                                 double (zoomLevelY ()) / 100.0);
-        backBufferPainter.drawPixmap (docRect, docPixmap);
-        backBufferPainter.resetMatrix ();  // back to 1-1 scaling
+        // sync: ASSUMPTION: painter clips to viewRect.
+        painter.translate (origin ().x (), origin ().y ());
+        painter.scale (double (zoomLevelX ()) / 100.0,
+                       double (zoomLevelY ()) / 100.0);
+        painter.drawPixmap (docRect, docPixmap);
+        painter.resetMatrix ();  // back to 1-1 scaling
     #if DEBUG_KP_VIEW_RENDERER && 1
         kDebug () << "\tscale time=" << scaleTimer.elapsed () << endl;
     #endif
@@ -1834,7 +1806,7 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
     #if DEBUG_KP_VIEW_RENDERER && 1
         QTime gridTimer; gridTimer.start ();
     #endif
-        paintEventDrawGridLines (&backBufferPainter, viewRect);
+        paintEventDrawGridLines (&painter, viewRect);
     #if DEBUG_KP_VIEW_RENDERER && 1
         kDebug () << "\tgrid time=" << gridTimer.elapsed () << endl;
     #endif
@@ -1844,14 +1816,14 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
     const QRect bvsvRect = buddyViewScrollableContainerRectangle ();
     if (!bvsvRect.isEmpty ())
     {
-        backBufferPainter.save ();
+        // sync: ASSUMPTION: painter clips to viewRect.
+        painter.save ();
 
         // COMPAT: backBufferPainter.setRasterOp (Qt::XorROP);
-        backBufferPainter.setPen (Qt::white);
-        backBufferPainter.translate (-viewRect.x (), -viewRect.y ());
-        backBufferPainter.drawRect (bvsvRect);
+        painter.setPen (Qt::white);
+        painter.drawRect (bvsvRect);
 
-        backBufferPainter.restore ();
+        painter.restore ();
     }
 
 
@@ -1860,22 +1832,8 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
         if (doc->selection ())
         {
             // Draw resize handles on top of possible grid lines
-            paintEventDrawSelectionResizeHandles (&backBufferPainter, viewRect);
+            paintEventDrawSelectionResizeHandles (&painter, viewRect);
         }
-    }
-
-
-    //
-    // Blit Back Buffer to View
-    //
-
-    backBufferPainter.end ();
-
-    // COMPAT: Qt4 does double buffering automatically - we're wasting CPU.
-    {
-        QPainter p (this);
-        p.drawPixmap (viewRect.topLeft (),
-            *d->m_backBuffer, QRect (0, 0, viewRect.width (), viewRect.height ()));
     }
 }
 
@@ -1890,12 +1848,11 @@ void kpView::paintEvent (QPaintEvent *e)
 
     kpViewManager *vm = viewManager ();
 
-#if DEBUG_KP_VIEW_RENDERER && 1
-    kDebug () << "kpView(" << name () << ")::paintEvent() vm=" << (bool) vm
+#if DEBUG_KP_VIEW_RENDERER && 1 || 1
+    kDebug () << "kpView(" << objectName () << ")::paintEvent() vm=" << (bool) vm
                << " queueUpdates=" << (vm && vm->queueUpdates ())
                << " fastUpdates=" << (vm && vm->fastUpdates ())
                << " viewRect=" << e->rect ()
-               << " erased=" << e->erased ()
                << " topLeft=" << QPoint (x (), y ())
                << endl;
 #endif
@@ -1913,7 +1870,8 @@ void kpView::paintEvent (QPaintEvent *e)
     }
 
 
-    // COMPAT: QRegion viewRegion = clipRegion ().intersect (e->region ());
+    // It seems that e->region() is already clipped by Qt to the visible
+    // part of the view (which could be quite small inside a scrollview).
     QRegion viewRegion = e->region ();
     QVector <QRect> rects = viewRegion.rects ();
 #if DEBUG_KP_VIEW_RENDERER && 1

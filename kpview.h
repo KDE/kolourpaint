@@ -507,32 +507,47 @@ protected:
 
 
 protected:
+    // Returns the document rectangle that, when scaled to the view,
+    // is "guaranteed" to at least cover <viewRect> and possibly more
+    // ("guaranteed" in quotes because it doesn't seem so reliable for
+    // zoom levels that aren't multiples of 100%).
     QRect paintEventGetDocRect (const QRect &viewRect) const;
 public:
     /**
-     * Draws an opaque background representing transparency.  Currently,
-     * it draws a checkerboard.
+     * Draws an opaque background representing transparency.
+     *
+     * Currently, it draws a checkerboard which, if it were to be drawn
+     * in its entirety, is tiled from (0,0).  Therefore, if the
+     * checkerboard logically starts from a different point (e.g. if the
+     * view is surrounded by a border on the same paint device), you must
+     * translate the painter (and <rect>) before calling this function.
+     * That way, the top-left of the view is referred to as (0,0).
      *
      * @param painter Painter.
-     * @param viewWidth Total width of the view visible to the user.
-     * @param viewHeight Total height of the view visible to the user.
-     * @param rect Rectangle to paint in relative to the painter.  Note
-     *             that this function does not clip and may draw slightly
-     *             more than the requested rectangle.  TODO: why not?
+     * @param rect Rectangle to paint in relative to the painter.
      * @param isPreview Whether the view is for a preview as opposed to
      *                  e.g. editing.  If set, this function may render
      *                  slightly differently.
      */
     static void drawTransparentBackground (QPainter *painter,
-                                           int viewWidth, int viewHeight,
                                            const QRect &rect,
                                            bool isPreview = false);
 protected:
-    void paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRect);
+    // Draws the selection and its border onto <destPixmap>.
+    // <destPixmap> is the part of the document given by <docRect>.
     void paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect);
+
     bool selectionResizeHandleAtomicSizeCloseToZoomLevel () const;
-    void paintEventDrawSelectionResizeHandles (QPainter *painter, const QRect &viewRect);
-    void paintEventDrawTempPixmap (QPixmap *destPixmap, const QRect &docRect);
+
+    // Draws the parts of the selection's resize handles that are inside
+    // <viewRect> on <painter>.
+    void paintEventDrawSelectionResizeHandles (QPainter *painter,
+            const QRect &viewRect);
+    void paintEventDrawTempPixmap (QPixmap *destPixmap,
+            const QRect &docRect);
+
+    // Draws the parts of the grid lines that are inside <viewRect> on
+    // <painter>.
     void paintEventDrawGridLines (QPainter *painter, const QRect &viewRect);
 
     void paintEventDrawRect (const QRect &viewRect);

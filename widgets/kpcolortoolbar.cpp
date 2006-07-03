@@ -294,10 +294,6 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
 
     QPainter painter (this);
 
-    // kpView::drawTransparentBackground() leaks outside contentsRect()
-    // (and probably some other functions below too).
-    painter.setClipRect (contentsRect ());
-
     // sync: painter translated to top-left of contentsRect().
     painter.translate (contentsRect ().x (), contentsRect ().y ());
 
@@ -309,8 +305,9 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
     if (isEnabled () && m_mainWindow)
     {
         // sync: ASSUMPTION: painter translated to top-left of contentsRect().
+        //             This is where the checkerboard starts - must be (0,0)
+        //             from kpView::drawTransparentBackground's point of view.
         kpView::drawTransparentBackground (&painter,
-            contentsRect ().width (), contentsRect ().height (),
             contentsRectMovedTo00,
             true/*preview*/);
     }
