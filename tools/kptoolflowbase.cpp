@@ -373,6 +373,9 @@ void kpToolFlowBase::draw (const QPoint &thisPoint, const QPoint &lastPoint, con
     else
     {
         QRect rect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
+        // TODO: I think this is wrong for pens due to lack of m_brushPixmap.
+        //       See comment for 011_kptoolpen_draw_push_down_draw_methods.diff
+        //       (part of r557112: approx. 2006-07-02 22:32:37 +10:00 AEST).
         rect = neededRect (rect, m_brushPixmap [m_mouseButton].width ());
     
         QPixmap pixmap = document ()->getPixmapAt (rect);
