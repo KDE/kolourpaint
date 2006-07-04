@@ -69,10 +69,10 @@ bool kpToolFlowPixmapBase::drawLine (QPixmap *pixmap,
     const QRect &docRect,
     const QPoint &thisPoint, const QPoint &lastPoint)
 {
-    QValueVector <QPoint> points = interpolatePoints (docRect,
+    QVector <QPoint> points = interpolatePoints (docRect,
         thisPoint, lastPoint);
         
-    for (QValueVector <QPoint>::const_iterator pit = points.begin ();
+    for (QVector <QPoint>::const_iterator pit = points.begin ();
          pit != points.end ();
          pit++)
     {

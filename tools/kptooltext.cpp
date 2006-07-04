@@ -409,7 +409,7 @@ bool kpToolText::event (QEvent *e)
 
 // protected
 void kpToolText::handleUpKeyPress (QKeyEvent *e,
-    const QValueVector <QString> &textLines, int cursorRow, int cursorCol)
+    const QVector <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
     kDebug () << "\tup pressed" << endl;
@@ -430,7 +430,7 @@ void kpToolText::handleUpKeyPress (QKeyEvent *e,
 
 // protected
 void kpToolText::handleDownKeyPress (QKeyEvent *e,
-    const QValueVector <QString> &textLines, int cursorRow, int cursorCol)
+    const QVector <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
     kDebug () << "\tdown pressed" << endl;
@@ -451,7 +451,7 @@ void kpToolText::handleDownKeyPress (QKeyEvent *e,
 
 // protected
 void kpToolText::handleLeftKeyPress (QKeyEvent *e,
-    const QValueVector <QString> &textLines, int cursorRow, int cursorCol)
+    const QVector <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
     kDebug () << "\tleft pressed" << endl;
@@ -484,7 +484,7 @@ void kpToolText::handleLeftKeyPress (QKeyEvent *e,
 
 // protected
 void kpToolText::handleRightKeyPress (QKeyEvent *e,
-    const QValueVector <QString> &textLines, int cursorRow, int cursorCol)
+    const QVector <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
     kDebug () << "\tright pressed" << endl;
@@ -518,7 +518,7 @@ void kpToolText::handleRightKeyPress (QKeyEvent *e,
 
 // protected
 void kpToolText::handleHomeKeyPress (QKeyEvent *e,
-    const QValueVector <QString> & /*textLines*/, int cursorRow, int cursorCol)
+    const QVector <QString> & /*textLines*/, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
     kDebug () << "\thome pressed" << endl;
@@ -539,7 +539,7 @@ void kpToolText::handleHomeKeyPress (QKeyEvent *e,
 
 // protected
 void kpToolText::handleEndKeyPress (QKeyEvent *e,
-    const QValueVector <QString> &textLines, int cursorRow, int cursorCol)
+    const QVector <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
     kDebug () << "\tend pressed" << endl;
@@ -561,7 +561,7 @@ void kpToolText::handleEndKeyPress (QKeyEvent *e,
 
 // protected
 void kpToolText::handleBackspaceKeyPress (QKeyEvent *e,
-    const QValueVector <QString> &textLines, int cursorRow, int cursorCol)
+    const QVector <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
     kDebug () << "\tbackspace pressed" << endl;
@@ -598,7 +598,7 @@ void kpToolText::handleBackspaceKeyPress (QKeyEvent *e,
 
 // protected
 void kpToolText::handleDeleteKeyPress (QKeyEvent *e,
-    const QValueVector <QString> & textLines, int cursorRow, int cursorCol)
+    const QVector <QString> & textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
     kDebug () << "\tdelete pressed" << endl;
@@ -641,7 +641,7 @@ void kpToolText::handleDeleteKeyPress (QKeyEvent *e,
 
 // protected
 void kpToolText::handleEnterKeyPress (QKeyEvent *e,
-    const QValueVector <QString> & /*textLines*/, int cursorRow, int cursorCol)
+    const QVector <QString> & /*textLines*/, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
     kDebug () << "\tenter pressed" << endl;
@@ -667,7 +667,7 @@ void kpToolText::handleEnterKeyPress (QKeyEvent *e,
 
 // protected
 void kpToolText::handleTextTyped (QKeyEvent *e,
-    const QValueVector <QString> & /*textLines*/, int cursorRow, int cursorCol)
+    const QVector <QString> & /*textLines*/, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
     kDebug () << "\ttext='" << e->text () << "'" << endl;

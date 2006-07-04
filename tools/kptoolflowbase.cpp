@@ -222,10 +222,10 @@ void kpToolFlowBase::hover (const QPoint &point)
     setUserShapePoints (point);
 }
 
-QValueVector <QPoint> kpToolFlowBase::interpolatePoints (const QRect &rect/*TODO:take me away*/,
+QVector <QPoint> kpToolFlowBase::interpolatePoints (const QRect &rect/*TODO:take me away*/,
     const QPoint &thisPoint, const QPoint &lastPoint)
 {
-    QValueVector <QPoint> ret;
+    QVector <QPoint> ret;
     
     // Sweeps a pixmap along a line (modified Bresenham's line algorithm,
     // see MODIFIED comment below).

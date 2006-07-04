@@ -32,7 +32,7 @@
 
 #include <qpixmap.h>
 #include <qrect.h>
-#include <qvaluevector.h>
+#include <qvector.h>
 
 #include <kpcommandhistory.h>
 #include <kptool.h>
@@ -78,7 +78,7 @@ public:
     virtual void beginDraw ();
     virtual void hover (const QPoint &point);
     
-    QValueVector <QPoint> interpolatePoints (const QRect &rect/*TODO:take me away*/,
+    QVector <QPoint> interpolatePoints (const QRect &rect/*TODO:take me away*/,
         const QPoint &thisPoint, const QPoint &lastPoint);
 
     virtual void drawPoint (const QPoint &point) = 0;

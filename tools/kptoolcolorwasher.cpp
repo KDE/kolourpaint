@@ -337,9 +337,9 @@ bool kpToolColorWasher::drawLine (QPixmap *pixmap, const QRect &docRect,
 
     kpColor colorToReplace = color (1 - m_mouseButton);
 
-    QValueVector <QPoint> points = interpolatePoints (docRect,
+    QVector <QPoint> points = interpolatePoints (docRect,
         thisPoint, lastPoint);
-    for (QValueVector <QPoint>::const_iterator pit = points.begin ();
+    for (QVector <QPoint>::const_iterator pit = points.begin ();
             pit != points.end ();
             pit++)
     {
