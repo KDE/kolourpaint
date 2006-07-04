@@ -6,7 +6,7 @@ add_subdirectory( custom )
 
 ########### install files ###############
 
-install_files( ${DATA_INSTALL_DIR}/kolourpaint/icons FILES  )
+install( FILES   DESTINATION  ${DATA_INSTALL_DIR}/kolourpaint/icons )
 
 kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
 

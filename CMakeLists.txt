@@ -167,8 +167,8 @@ install_targets(/bin kolourpaint )
 
 ########### install files ###############
 
-install_files( ${XDG_APPS_DIR} FILES kolourpaint.desktop )
-install_files( ${DATA_INSTALL_DIR}/kolourpaint FILES kolourpaintui.rc )
+install( FILES kolourpaint.desktop  DESTINATION  ${XDG_APPS_DIR} )
+install( FILES kolourpaintui.rc  DESTINATION  ${DATA_INSTALL_DIR}/kolourpaint )
 
 
 
