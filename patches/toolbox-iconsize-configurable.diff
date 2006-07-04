@@ -1,0 +1,2509 @@
+Patch for 1.2.2_kde3 to allow the Tools KToolBar's context menu to change
+icon size, instead of doing nothing.  Needed because the tool actions aren't
+actually being plugged into KToolBar - they are instead sitting on top of a
+widget, to allow for a 2 column toolbar.
+
+Evil but amazingly successful hack.  Forks kdelibs/kdeui/ktoolbarbutton.cpp
+and #define's private as protected to achieve its means.  Maybe too dirty to
+maintain/release but should consider this patch if another _kde3 release is
+ever made.
+
+Other, unrelated minor changes have either already been pushed into
+KolourPaint or are really too minor to notice.
+
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/compat/COPYING.LIB ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/compat/COPYING.LIB
+--- kolourpaint-1.2.2_kde3/kolourpaint/compat/COPYING.LIB	1970-01-01 10:00:00.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/compat/COPYING.LIB	2005-06-03 23:09:29.000000000 +1000
+@@ -0,0 +1,486 @@
++NOTE! The LGPL below is copyrighted by the Free Software Foundation, but 
++the instance of code that it refers to (the kde libraries) are copyrighted 
++by the authors who actually wrote it.
++				   
++---------------------------------------------------------------------------
++		  GNU LIBRARY GENERAL PUBLIC LICENSE
++		       Version 2, June 1991
++
++ Copyright (C) 1991 Free Software Foundation, Inc.
++                    59 Temple Place - Suite 330
++                    Boston, MA 02111-1307, USA.
++ Everyone is permitted to copy and distribute verbatim copies
++ of this license document, but changing it is not allowed.
++
++[This is the first released version of the library GPL.  It is
++ numbered 2 because it goes with version 2 of the ordinary GPL.]
++
++			    Preamble
++
++  The licenses for most software are designed to take away your
++freedom to share and change it.  By contrast, the GNU General Public
++Licenses are intended to guarantee your freedom to share and change
++free software--to make sure the software is free for all its users.
++
++  This license, the Library General Public License, applies to some
++specially designated Free Software Foundation software, and to any
++other libraries whose authors decide to use it.  You can use it for
++your libraries, too.
++
++  When we speak of free software, we are referring to freedom, not
++price.  Our General Public Licenses are designed to make sure that you
++have the freedom to distribute copies of free software (and charge for
++this service if you wish), that you receive source code or can get it
++if you want it, that you can change the software or use pieces of it
++in new free programs; and that you know you can do these things.
++
++  To protect your rights, we need to make restrictions that forbid
++anyone to deny you these rights or to ask you to surrender the rights.
++These restrictions translate to certain responsibilities for you if
++you distribute copies of the library, or if you modify it.
++
++  For example, if you distribute copies of the library, whether gratis
++or for a fee, you must give the recipients all the rights that we gave
++you.  You must make sure that they, too, receive or can get the source
++code.  If you link a program with the library, you must provide
++complete object files to the recipients so that they can relink them
++with the library, after making changes to the library and recompiling
++it.  And you must show them these terms so they know their rights.
++
++  Our method of protecting your rights has two steps: (1) copyright
++the library, and (2) offer you this license which gives you legal
++permission to copy, distribute and/or modify the library.
++
++  Also, for each distributor's protection, we want to make certain
++that everyone understands that there is no warranty for this free
++library.  If the library is modified by someone else and passed on, we
++want its recipients to know that what they have is not the original
++version, so that any problems introduced by others will not reflect on
++the original authors' reputations.
++
++  Finally, any free program is threatened constantly by software
++patents.  We wish to avoid the danger that companies distributing free
++software will individually obtain patent licenses, thus in effect
++transforming the program into proprietary software.  To prevent this,
++we have made it clear that any patent must be licensed for everyone's
++free use or not licensed at all.
++
++  Most GNU software, including some libraries, is covered by the ordinary
++GNU General Public License, which was designed for utility programs.  This
++license, the GNU Library General Public License, applies to certain
++designated libraries.  This license is quite different from the ordinary
++one; be sure to read it in full, and don't assume that anything in it is
++the same as in the ordinary license.
++
++  The reason we have a separate public license for some libraries is that
++they blur the distinction we usually make between modifying or adding to a
++program and simply using it.  Linking a program with a library, without
++changing the library, is in some sense simply using the library, and is
++analogous to running a utility program or application program.  However, in
++a textual and legal sense, the linked executable is a combined work, a
++derivative of the original library, and the ordinary General Public License
++treats it as such.
++
++  Because of this blurred distinction, using the ordinary General
++Public License for libraries did not effectively promote software
++sharing, because most developers did not use the libraries.  We
++concluded that weaker conditions might promote sharing better.
++
++  However, unrestricted linking of non-free programs would deprive the
++users of those programs of all benefit from the free status of the
++libraries themselves.  This Library General Public License is intended to
++permit developers of non-free programs to use free libraries, while
++preserving your freedom as a user of such programs to change the free
++libraries that are incorporated in them.  (We have not seen how to achieve
++this as regards changes in header files, but we have achieved it as regards
++changes in the actual functions of the Library.)  The hope is that this
++will lead to faster development of free libraries.
++
++  The precise terms and conditions for copying, distribution and
++modification follow.  Pay close attention to the difference between a
++"work based on the library" and a "work that uses the library".  The
++former contains code derived from the library, while the latter only
++works together with the library.
++
++  Note that it is possible for a library to be covered by the ordinary
++General Public License rather than by this special one.
++
++		  GNU LIBRARY GENERAL PUBLIC LICENSE
++   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
++
++  0. This License Agreement applies to any software library which
++contains a notice placed by the copyright holder or other authorized
++party saying it may be distributed under the terms of this Library
++General Public License (also called "this License").  Each licensee is
++addressed as "you".
++
++  A "library" means a collection of software functions and/or data
++prepared so as to be conveniently linked with application programs
++(which use some of those functions and data) to form executables.
++
++  The "Library", below, refers to any such software library or work
++which has been distributed under these terms.  A "work based on the
++Library" means either the Library or any derivative work under
++copyright law: that is to say, a work containing the Library or a
++portion of it, either verbatim or with modifications and/or translated
++straightforwardly into another language.  (Hereinafter, translation is
++included without limitation in the term "modification".)
++
++  "Source code" for a work means the preferred form of the work for
++making modifications to it.  For a library, complete source code means
++all the source code for all modules it contains, plus any associated
++interface definition files, plus the scripts used to control compilation
++and installation of the library.
++
++  Activities other than copying, distribution and modification are not
++covered by this License; they are outside its scope.  The act of
++running a program using the Library is not restricted, and output from
++such a program is covered only if its contents constitute a work based
++on the Library (independent of the use of the Library in a tool for
++writing it).  Whether that is true depends on what the Library does
++and what the program that uses the Library does.
++  
++  1. You may copy and distribute verbatim copies of the Library's
++complete source code as you receive it, in any medium, provided that
++you conspicuously and appropriately publish on each copy an
++appropriate copyright notice and disclaimer of warranty; keep intact
++all the notices that refer to this License and to the absence of any
++warranty; and distribute a copy of this License along with the
++Library.
++
++  You may charge a fee for the physical act of transferring a copy,
++and you may at your option offer warranty protection in exchange for a
++fee.
++
++  2. You may modify your copy or copies of the Library or any portion
++of it, thus forming a work based on the Library, and copy and
++distribute such modifications or work under the terms of Section 1
++above, provided that you also meet all of these conditions:
++
++    a) The modified work must itself be a software library.
++
++    b) You must cause the files modified to carry prominent notices
++    stating that you changed the files and the date of any change.
++
++    c) You must cause the whole of the work to be licensed at no
++    charge to all third parties under the terms of this License.
++
++    d) If a facility in the modified Library refers to a function or a
++    table of data to be supplied by an application program that uses
++    the facility, other than as an argument passed when the facility
++    is invoked, then you must make a good faith effort to ensure that,
++    in the event an application does not supply such function or
++    table, the facility still operates, and performs whatever part of
++    its purpose remains meaningful.
++
++    (For example, a function in a library to compute square roots has
++    a purpose that is entirely well-defined independent of the
++    application.  Therefore, Subsection 2d requires that any
++    application-supplied function or table used by this function must
++    be optional: if the application does not supply it, the square
++    root function must still compute square roots.)
++
++These requirements apply to the modified work as a whole.  If
++identifiable sections of that work are not derived from the Library,
++and can be reasonably considered independent and separate works in
++themselves, then this License, and its terms, do not apply to those
++sections when you distribute them as separate works.  But when you
++distribute the same sections as part of a whole which is a work based
++on the Library, the distribution of the whole must be on the terms of
++this License, whose permissions for other licensees extend to the
++entire whole, and thus to each and every part regardless of who wrote
++it.
++
++Thus, it is not the intent of this section to claim rights or contest
++your rights to work written entirely by you; rather, the intent is to
++exercise the right to control the distribution of derivative or
++collective works based on the Library.
++
++In addition, mere aggregation of another work not based on the Library
++with the Library (or with a work based on the Library) on a volume of
++a storage or distribution medium does not bring the other work under
++the scope of this License.
++
++  3. You may opt to apply the terms of the ordinary GNU General Public
++License instead of this License to a given copy of the Library.  To do
++this, you must alter all the notices that refer to this License, so
++that they refer to the ordinary GNU General Public License, version 2,
++instead of to this License.  (If a newer version than version 2 of the
++ordinary GNU General Public License has appeared, then you can specify
++that version instead if you wish.)  Do not make any other change in
++these notices.
++
++  Once this change is made in a given copy, it is irreversible for
++that copy, so the ordinary GNU General Public License applies to all
++subsequent copies and derivative works made from that copy.
++
++  This option is useful when you wish to copy part of the code of
++the Library into a program that is not a library.
++
++  4. You may copy and distribute the Library (or a portion or
++derivative of it, under Section 2) in object code or executable form
++under the terms of Sections 1 and 2 above provided that you accompany
++it with the complete corresponding machine-readable source code, which
++must be distributed under the terms of Sections 1 and 2 above on a
++medium customarily used for software interchange.
++
++  If distribution of object code is made by offering access to copy
++from a designated place, then offering equivalent access to copy the
++source code from the same place satisfies the requirement to
++distribute the source code, even though third parties are not
++compelled to copy the source along with the object code.
++
++  5. A program that contains no derivative of any portion of the
++Library, but is designed to work with the Library by being compiled or
++linked with it, is called a "work that uses the Library".  Such a
++work, in isolation, is not a derivative work of the Library, and
++therefore falls outside the scope of this License.
++
++  However, linking a "work that uses the Library" with the Library
++creates an executable that is a derivative of the Library (because it
++contains portions of the Library), rather than a "work that uses the
++library".  The executable is therefore covered by this License.
++Section 6 states terms for distribution of such executables.
++
++  When a "work that uses the Library" uses material from a header file
++that is part of the Library, the object code for the work may be a
++derivative work of the Library even though the source code is not.
++Whether this is true is especially significant if the work can be
++linked without the Library, or if the work is itself a library.  The
++threshold for this to be true is not precisely defined by law.
++
++  If such an object file uses only numerical parameters, data
++structure layouts and accessors, and small macros and small inline
++functions (ten lines or less in length), then the use of the object
++file is unrestricted, regardless of whether it is legally a derivative
++work.  (Executables containing this object code plus portions of the
++Library will still fall under Section 6.)
++
++  Otherwise, if the work is a derivative of the Library, you may
++distribute the object code for the work under the terms of Section 6.
++Any executables containing that work also fall under Section 6,
++whether or not they are linked directly with the Library itself.
++
++  6. As an exception to the Sections above, you may also compile or
++link a "work that uses the Library" with the Library to produce a
++work containing portions of the Library, and distribute that work
++under terms of your choice, provided that the terms permit
++modification of the work for the customer's own use and reverse
++engineering for debugging such modifications.
++
++  You must give prominent notice with each copy of the work that the
++Library is used in it and that the Library and its use are covered by
++this License.  You must supply a copy of this License.  If the work
++during execution displays copyright notices, you must include the
++copyright notice for the Library among them, as well as a reference
++directing the user to the copy of this License.  Also, you must do one
++of these things:
++
++    a) Accompany the work with the complete corresponding
++    machine-readable source code for the Library including whatever
++    changes were used in the work (which must be distributed under
++    Sections 1 and 2 above); and, if the work is an executable linked
++    with the Library, with the complete machine-readable "work that
++    uses the Library", as object code and/or source code, so that the
++    user can modify the Library and then relink to produce a modified
++    executable containing the modified Library.  (It is understood
++    that the user who changes the contents of definitions files in the
++    Library will not necessarily be able to recompile the application
++    to use the modified definitions.)
++
++    b) Accompany the work with a written offer, valid for at
++    least three years, to give the same user the materials
++    specified in Subsection 6a, above, for a charge no more
++    than the cost of performing this distribution.
++
++    c) If distribution of the work is made by offering access to copy
++    from a designated place, offer equivalent access to copy the above
++    specified materials from the same place.
++
++    d) Verify that the user has already received a copy of these
++    materials or that you have already sent this user a copy.
++
++  For an executable, the required form of the "work that uses the
++Library" must include any data and utility programs needed for
++reproducing the executable from it.  However, as a special exception,
++the source code distributed need not include anything that is normally
++distributed (in either source or binary form) with the major
++components (compiler, kernel, and so on) of the operating system on
++which the executable runs, unless that component itself accompanies
++the executable.
++
++  It may happen that this requirement contradicts the license
++restrictions of other proprietary libraries that do not normally
++accompany the operating system.  Such a contradiction means you cannot
++use both them and the Library together in an executable that you
++distribute.
++
++  7. You may place library facilities that are a work based on the
++Library side-by-side in a single library together with other library
++facilities not covered by this License, and distribute such a combined
++library, provided that the separate distribution of the work based on
++the Library and of the other library facilities is otherwise
++permitted, and provided that you do these two things:
++
++    a) Accompany the combined library with a copy of the same work
++    based on the Library, uncombined with any other library
++    facilities.  This must be distributed under the terms of the
++    Sections above.
++
++    b) Give prominent notice with the combined library of the fact
++    that part of it is a work based on the Library, and explaining
++    where to find the accompanying uncombined form of the same work.
++
++  8. You may not copy, modify, sublicense, link with, or distribute
++the Library except as expressly provided under this License.  Any
++attempt otherwise to copy, modify, sublicense, link with, or
++distribute the Library is void, and will automatically terminate your
++rights under this License.  However, parties who have received copies,
++or rights, from you under this License will not have their licenses
++terminated so long as such parties remain in full compliance.
++
++  9. You are not required to accept this License, since you have not
++signed it.  However, nothing else grants you permission to modify or
++distribute the Library or its derivative works.  These actions are
++prohibited by law if you do not accept this License.  Therefore, by
++modifying or distributing the Library (or any work based on the
++Library), you indicate your acceptance of this License to do so, and
++all its terms and conditions for copying, distributing or modifying
++the Library or works based on it.
++
++  10. Each time you redistribute the Library (or any work based on the
++Library), the recipient automatically receives a license from the
++original licensor to copy, distribute, link with or modify the Library
++subject to these terms and conditions.  You may not impose any further
++restrictions on the recipients' exercise of the rights granted herein.
++You are not responsible for enforcing compliance by third parties to
++this License.
++
++  11. If, as a consequence of a court judgment or allegation of patent
++infringement or for any other reason (not limited to patent issues),
++conditions are imposed on you (whether by court order, agreement or
++otherwise) that contradict the conditions of this License, they do not
++excuse you from the conditions of this License.  If you cannot
++distribute so as to satisfy simultaneously your obligations under this
++License and any other pertinent obligations, then as a consequence you
++may not distribute the Library at all.  For example, if a patent
++license would not permit royalty-free redistribution of the Library by
++all those who receive copies directly or indirectly through you, then
++the only way you could satisfy both it and this License would be to
++refrain entirely from distribution of the Library.
++
++If any portion of this section is held invalid or unenforceable under any
++particular circumstance, the balance of the section is intended to apply,
++and the section as a whole is intended to apply in other circumstances.
++
++It is not the purpose of this section to induce you to infringe any
++patents or other property right claims or to contest validity of any
++such claims; this section has the sole purpose of protecting the
++integrity of the free software distribution system which is
++implemented by public license practices.  Many people have made
++generous contributions to the wide range of software distributed
++through that system in reliance on consistent application of that
++system; it is up to the author/donor to decide if he or she is willing
++to distribute software through any other system and a licensee cannot
++impose that choice.
++
++This section is intended to make thoroughly clear what is believed to
++be a consequence of the rest of this License.
++
++  12. If the distribution and/or use of the Library is restricted in
++certain countries either by patents or by copyrighted interfaces, the
++original copyright holder who places the Library under this License may add
++an explicit geographical distribution limitation excluding those countries,
++so that distribution is permitted only in or among countries not thus
++excluded.  In such case, this License incorporates the limitation as if
++written in the body of this License.
++
++  13. The Free Software Foundation may publish revised and/or new
++versions of the Library General Public License from time to time.
++Such new versions will be similar in spirit to the present version,
++but may differ in detail to address new problems or concerns.
++
++Each version is given a distinguishing version number.  If the Library
++specifies a version number of this License which applies to it and
++"any later version", you have the option of following the terms and
++conditions either of that version or of any later version published by
++the Free Software Foundation.  If the Library does not specify a
++license version number, you may choose any version ever published by
++the Free Software Foundation.
++
++  14. If you wish to incorporate parts of the Library into other free
++programs whose distribution conditions are incompatible with these,
++write to the author to ask for permission.  For software which is
++copyrighted by the Free Software Foundation, write to the Free
++Software Foundation; we sometimes make exceptions for this.  Our
++decision will be guided by the two goals of preserving the free status
++of all derivatives of our free software and of promoting the sharing
++and reuse of software generally.
++
++			    NO WARRANTY
++
++  15. BECAUSE THE LIBRARY IS LICENSED FREE OF CHARGE, THERE IS NO
++WARRANTY FOR THE LIBRARY, TO THE EXTENT PERMITTED BY APPLICABLE LAW.
++EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR
++OTHER PARTIES PROVIDE THE LIBRARY "AS IS" WITHOUT WARRANTY OF ANY
++KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
++IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
++PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
++LIBRARY IS WITH YOU.  SHOULD THE LIBRARY PROVE DEFECTIVE, YOU ASSUME
++THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
++
++  16. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN
++WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY
++AND/OR REDISTRIBUTE THE LIBRARY AS PERMITTED ABOVE, BE LIABLE TO YOU
++FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR
++CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
++LIBRARY (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
++RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
++FAILURE OF THE LIBRARY TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
++SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
++DAMAGES.
++
++		     END OF TERMS AND CONDITIONS
++          How to Apply These Terms to Your New Libraries
++
++  If you develop a new library, and you want it to be of the greatest
++possible use to the public, we recommend making it free software that
++everyone can redistribute and change.  You can do so by permitting
++redistribution under these terms (or, alternatively, under the terms of the
++ordinary General Public License).
++
++  To apply these terms, attach the following notices to the library.  It is
++safest to attach them to the start of each source file to most effectively
++convey the exclusion of warranty; and each file should have at least the
++"copyright" line and a pointer to where the full notice is found.
++
++    <one line to give the library's name and a brief idea of what it does.>
++    Copyright (C) <year>  <name of author>
++
++    This library is free software; you can redistribute it and/or
++    modify it under the terms of the GNU Lesser General Public
++    License as published by the Free Software Foundation; either
++    version 2 of the License, or (at your option) any later version.
++
++    This library is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++    Lesser General Public License for more details.
++
++    You should have received a copy of the GNU Lesser General Public
++    License along with this library; if not, write to the Free Software
++    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++
++Also add information on how to contact you by electronic and paper mail.
++
++You should also get your employer (if you work as a programmer) or your
++school, if any, to sign a "copyright disclaimer" for the library, if
++necessary.  Here is a sample; alter the names:
++
++  Yoyodyne, Inc., hereby disclaims all copyright interest in the
++  library `Frob' (a library for tweaking knobs) written by James Random Hacker.
++
++  <signature of Ty Coon>, 1 April 1990
++  Ty Coon, President of Vice
++
++That's all there is to it!
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/compat/kpcompat_ktoolbarbutton.cpp ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/compat/kpcompat_ktoolbarbutton.cpp
+--- kolourpaint-1.2.2_kde3/kolourpaint/compat/kpcompat_ktoolbarbutton.cpp	1970-01-01 10:00:00.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/compat/kpcompat_ktoolbarbutton.cpp	2005-06-04 00:28:57.000000000 +1000
+@@ -0,0 +1,751 @@
++
++// This is fork of ktoolbarbutton.cpp from KDE 3.2 for KolourPaint.
++//
++// Main differences:
++// 1. Namespacing.
++// 2. Expects KToolBar/kpToolToolBar to be its grandparent instead of its
++//    parent.  This is needed due to kpToolToolBar faking multicolumn
++//    toolbars by placing kpCompat_KToolBarButton's in a container
++//    widget in a KToolBar instead of in a KToolBar directly.
++//
++// Clarence Dang
++// 2005-06-03
++//
++// SYNC: Redo changes to .cpp and .h against HEAD.
++
++
++/* This file is part of the KDE libraries
++    Copyright (C) 1997, 1998 Stephan Kulow (coolo@kde.org)
++              (C) 1997, 1998 Mark Donohoe (donohoe@kde.org)
++              (C) 1997, 1998 Sven Radej (radej@kde.org)
++              (C) 1997, 1998 Matthias Ettrich (ettrich@kde.org)
++              (C) 1999 Chris Schlaeger (cs@kde.org)
++              (C) 1999 Kurt Granroth (granroth@kde.org)
++
++    This library is free software; you can redistribute it and/or
++    modify it under the terms of the GNU Library General Public
++    License version 2 as published by the Free Software Foundation.
++
++    This library is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++    Library General Public License for more details.
++
++    You should have received a copy of the GNU Library General Public License
++    along with this library; see the file COPYING.LIB.  If not, write to
++    the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++    Boston, MA 02111-1307, USA.
++*/
++
++//#include <config.h>
++#include <kpcompat_ktoolbarbutton.h>
++
++#include <string.h>
++#include <ktoolbar.h>
++
++#include <qstyle.h>
++#include <qimage.h>
++#include <qtimer.h>
++#include <qdrawutil.h>
++#include <qtooltip.h>
++#include <qbitmap.h>
++#include <qpopupmenu.h>
++#include <qcursor.h>
++#include <qpainter.h>
++#include <qlayout.h>
++
++#include <kapplication.h>
++#include <kdebug.h>
++#include <kglobal.h>
++#include <kglobalsettings.h>
++#include <kiconeffect.h>
++#include <kiconloader.h>
++
++// needed to get our instance
++#include <kmainwindow.h>
++
++#include <kptooltoolbar.h>
++
++template class QIntDict<kpCompat_KToolBarButton>;
++
++class kpCompat_KToolBarButtonPrivate
++{
++public:
++  kpCompat_KToolBarButtonPrivate()
++  {
++    m_noStyle     = false;
++    m_isSeparator = false;
++    m_isRadio     = false;
++    m_highlight   = false;
++    m_isRaised    = false;
++    m_isActive    = false;
++
++    m_iconName    = QString::null;
++    m_iconText    = KToolBar::IconOnly;
++    m_iconSize    = 0;
++
++    m_parent   = 0;
++    m_instance = KGlobal::instance();
++  }
++  ~kpCompat_KToolBarButtonPrivate()
++  {
++  }
++
++  int     m_id;
++  bool    m_noStyle: 1;
++  bool    m_isSeparator: 1;
++  bool    m_isRadio: 1;
++  bool    m_highlight: 1;
++  bool    m_isRaised: 1;
++  bool    m_isActive: 1;
++
++  QString m_iconName;
++
++  KToolBar *m_parent;
++  KToolBar::IconText m_iconText;
++  int m_iconSize;
++  QSize size;
++  
++  QPoint m_mousePressPos;
++
++  KInstance  *m_instance;
++};
++
++// Returns KToolBar grandparent given an arbitrary QWidget parent.
++static KToolBar *KToolBarGrandParent (QWidget *parent)
++{
++  if (!parent)
++    return 0;
++    
++  KToolBar *ktb = dynamic_cast <KToolBar *> (parent->parent ());
++  return ktb;
++}
++
++// This will construct a separator
++kpCompat_KToolBarButton::kpCompat_KToolBarButton( QWidget *_parent, const char *_name )
++  : QToolButton( _parent , _name)
++{
++  d = new kpCompat_KToolBarButtonPrivate;
++
++  resize(6,6);
++  hide();
++  d->m_isSeparator = true;
++}
++
++kpCompat_KToolBarButton::kpCompat_KToolBarButton( const QString& _icon, int _id,
++                                QWidget *_parent, const char *_name,
++                                const QString &_txt, KInstance *_instance )
++    : QToolButton( _parent, _name ), d( 0 )
++{
++  d = new kpCompat_KToolBarButtonPrivate;
++
++  d->m_id     = _id;
++  QToolButton::setTextLabel(_txt);
++  d->m_instance = _instance;
++
++  d->m_parent = KToolBarGrandParent (_parent);
++  if (d->m_parent) {
++    connect(d->m_parent, SIGNAL( modechange() ),
++            this,         SLOT( modeChange() ));
++  }
++
++  setFocusPolicy( NoFocus );
++
++  // connect all of our slots and start trapping events
++  connect(this, SIGNAL( clicked() ),
++          this, SLOT( slotClicked() ) );
++  connect(this, SIGNAL( pressed() ),
++          this, SLOT( slotPressed() ) );
++  connect(this, SIGNAL( released() ),
++          this, SLOT( slotReleased() ) );
++  installEventFilter(this);
++
++  d->m_iconName = _icon;
++
++  // do our initial setup
++  modeChange();
++}
++
++kpCompat_KToolBarButton::kpCompat_KToolBarButton( const QPixmap& pixmap, int _id,
++                                QWidget *_parent, const char *name,
++                                const QString& txt)
++    : QToolButton( _parent, name ), d( 0 )
++{
++  d = new kpCompat_KToolBarButtonPrivate;
++
++  d->m_id       = _id;
++  QToolButton::setTextLabel(txt);
++
++  d->m_parent = KToolBarGrandParent (_parent);
++  if (d->m_parent) {
++    connect(d->m_parent, SIGNAL( modechange() ),
++            this,         SLOT( modeChange() ));
++  }
++
++  setFocusPolicy( NoFocus );
++
++  // connect all of our slots and start trapping events
++  connect(this, SIGNAL( clicked() ),
++          this, SLOT( slotClicked() ));
++  connect(this, SIGNAL( pressed() ),
++          this, SLOT( slotPressed() ));
++  connect(this, SIGNAL( released() ),
++          this, SLOT( slotReleased() ));
++  installEventFilter(this);
++
++  // set our pixmap and do our initial setup
++  setIconSet( QIconSet( pixmap ));
++  modeChange();
++}
++
++kpCompat_KToolBarButton::~kpCompat_KToolBarButton()
++{
++  delete d; d = 0;
++}
++
++void kpCompat_KToolBarButton::modeChange()
++{
++  QSize mysize;
++
++  // grab a few global variables for use in this function and others
++  if (d->m_parent) {
++    d->m_highlight = d->m_parent->highlight();
++    d->m_iconText  = d->m_parent->iconText();
++
++    d->m_iconSize = d->m_parent->iconSize();
++  }
++
++  if (!d->m_iconName.isNull())
++    setIcon(d->m_iconName);
++
++  // we'll start with the size of our pixmap
++  int pix_width  = d->m_iconSize;
++  if ( d->m_iconSize == 0 ) {
++      if (d->m_parent && !strcmp(d->m_parent->name(), "mainToolBar"))
++          pix_width = IconSize( KIcon::MainToolbar );
++      else
++          pix_width = IconSize( KIcon::Toolbar );
++  }
++  int pix_height = pix_width;
++
++  int text_height = 0;
++  int text_width = 0;
++
++  QToolTip::remove(this);
++  if (d->m_iconText != KToolBar::IconOnly)
++  {
++    // okay, we have to deal with fonts.  let's get our information now
++    QFont tmp_font = KGlobalSettings::toolBarFont();
++
++    // now parse out our font sizes from our chosen font
++    QFontMetrics fm(tmp_font);
++
++    text_height = fm.lineSpacing();
++    text_width  = fm.width(textLabel());
++
++    // none of the other modes want tooltips
++  }
++  else
++  {
++    QToolTip::add(this, textLabel());
++  }
++
++  switch (d->m_iconText)
++  {
++  case KToolBar::IconOnly:
++    mysize = QSize(pix_width, pix_height);
++    break;
++
++  case KToolBar::IconTextRight:
++    mysize = QSize(pix_width + text_width + 4, pix_height);
++    break;
++
++  case KToolBar::TextOnly:
++    mysize = QSize(text_width + 4, text_height);
++    break;
++
++  case KToolBar::IconTextBottom:
++    mysize = QSize((text_width + 4 > pix_width) ? text_width + 4 : pix_width, pix_height + text_height);
++    break;
++
++  default:
++    break;
++  }
++
++  mysize = style().sizeFromContents(QStyle::CT_ToolButton, this, mysize).
++               expandedTo(QApplication::globalStrut());
++
++  // make sure that this isn't taller then it is wide
++  if (mysize.height() > mysize.width())
++    mysize.setWidth(mysize.height());
++
++  d->size = mysize;
++  updateGeometry();
++}
++
++void kpCompat_KToolBarButton::setTextLabel( const QString& text, bool tipToo)
++{
++  if (text.isNull())
++    return;
++
++  QString txt(text);
++  if (txt.endsWith(QString::fromLatin1("...")))
++    txt.truncate(txt.length() - 3);
++
++  QToolButton::setTextLabel(txt, tipToo);
++  update();
++}
++
++void kpCompat_KToolBarButton::setText( const QString& text)
++{
++  setTextLabel(text, true);
++  modeChange();
++}
++
++void kpCompat_KToolBarButton::setIcon( const QString &icon )
++{
++  d->m_iconName = icon;
++  if (d->m_parent)
++    d->m_iconSize = d->m_parent->iconSize();
++  // QObject::name() return "const char *" instead of QString.
++  if (d->m_parent && !strcmp(d->m_parent->name(), "mainToolBar"))
++    QToolButton::setIconSet( d->m_instance->iconLoader()->loadIconSet(
++        d->m_iconName, KIcon::MainToolbar, d->m_iconSize ));
++  else
++    QToolButton::setIconSet( d->m_instance->iconLoader()->loadIconSet(
++        d->m_iconName, KIcon::Toolbar, d->m_iconSize ));
++}
++
++void kpCompat_KToolBarButton::setIconSet( const QIconSet &iconset )
++{
++  QToolButton::setIconSet( iconset );
++}
++
++// remove?
++void kpCompat_KToolBarButton::setPixmap( const QPixmap &pixmap )
++{
++  if( pixmap.isNull()) // called by QToolButton
++  {
++    QToolButton::setPixmap( pixmap );
++    return;
++  }
++  QIconSet set = iconSet();
++  set.setPixmap( pixmap, QIconSet::Automatic, QIconSet::Active );
++  QToolButton::setIconSet( set );
++}
++
++void kpCompat_KToolBarButton::setDefaultPixmap( const QPixmap &pixmap )
++{
++  QIconSet set = iconSet();
++  set.setPixmap( pixmap, QIconSet::Automatic, QIconSet::Normal );
++  QToolButton::setIconSet( set );
++}
++
++void kpCompat_KToolBarButton::setDisabledPixmap( const QPixmap &pixmap )
++{
++  QIconSet set = iconSet();
++  set.setPixmap( pixmap, QIconSet::Automatic, QIconSet::Disabled );
++  QToolButton::setIconSet( set );
++}
++
++void kpCompat_KToolBarButton::setDefaultIcon( const QString& icon )
++{
++  QIconSet set = iconSet();
++  QPixmap pm;
++  if (d->m_parent && !strcmp(d->m_parent->name(), "mainToolBar"))
++    pm = d->m_instance->iconLoader()->loadIcon( icon, KIcon::MainToolbar,
++        d->m_iconSize );
++  else
++    pm = d->m_instance->iconLoader()->loadIcon( icon, KIcon::Toolbar,
++        d->m_iconSize );
++  set.setPixmap( pm, QIconSet::Automatic, QIconSet::Normal );
++  QToolButton::setIconSet( set );
++}
++
++void kpCompat_KToolBarButton::setDisabledIcon( const QString& icon )
++{
++  QIconSet set = iconSet();
++  QPixmap pm;
++  if (d->m_parent && !strcmp(d->m_parent->name(), "mainToolBar"))
++    pm = d->m_instance->iconLoader()->loadIcon( icon, KIcon::MainToolbar,
++        d->m_iconSize );
++  else
++    pm = d->m_instance->iconLoader()->loadIcon( icon, KIcon::Toolbar,
++        d->m_iconSize );
++  set.setPixmap( pm, QIconSet::Automatic, QIconSet::Disabled );
++  QToolButton::setIconSet( set );
++}
++
++QPopupMenu *kpCompat_KToolBarButton::popup()
++{
++  // obsolete
++  // KDE4: remove me
++  return QToolButton::popup();
++}
++
++void kpCompat_KToolBarButton::setPopup(QPopupMenu *p, bool)
++{
++  QToolButton::setPopup(p);
++  QToolButton::setPopupDelay(1);
++}
++
++
++void kpCompat_KToolBarButton::setDelayedPopup (QPopupMenu *p, bool)
++{
++  QToolButton::setPopup(p);
++  QToolButton::setPopupDelay(QApplication::startDragTime());
++}
++
++void kpCompat_KToolBarButton::leaveEvent(QEvent *)
++{
++  if( d->m_isRaised || d->m_isActive )
++  {
++    d->m_isRaised = false;
++    d->m_isActive = false;
++    repaint(false);
++  }
++
++  emit highlighted(d->m_id, false);
++}
++
++void kpCompat_KToolBarButton::enterEvent(QEvent *)
++{
++  if (d->m_highlight)
++  {
++    if (isEnabled())
++    {
++      d->m_isActive = true;
++      if (!isToggleButton())
++        d->m_isRaised = true;
++    }
++    else
++    {
++      d->m_isRaised = false;
++      d->m_isActive = false;
++    }
++
++    repaint(false);
++  }
++  emit highlighted(d->m_id, true);
++}
++
++bool kpCompat_KToolBarButton::eventFilter(QObject *o, QEvent *ev)
++{
++  if ((kpCompat_KToolBarButton *)o == this)
++  {
++
++    // Popup the menu when the left mousebutton is pressed and the mouse
++    // is moved by a small distance.
++    if (QToolButton::popup())
++    {
++      if (ev->type() == QEvent::MouseButtonPress)
++      {
++        QMouseEvent* mev = static_cast<QMouseEvent*>(ev);
++        d->m_mousePressPos = mev->pos();
++      }
++      else if (ev->type() == QEvent::MouseMove)
++      {
++        QMouseEvent* mev = static_cast<QMouseEvent*>(ev);
++        if ((mev->pos() - d->m_mousePressPos).manhattanLength()
++              > KGlobalSettings::dndEventDelay())
++        {
++          openPopup();
++          return true;
++        }
++      }
++    }
++
++    if ((ev->type() == QEvent::MouseButtonPress ||
++         ev->type() == QEvent::MouseButtonRelease ||
++         ev->type() == QEvent::MouseButtonDblClick) && d->m_isRadio && isOn())
++      return true;
++
++    // From Kai-Uwe Sattler <kus@iti.CS.Uni-Magdeburg.De>
++    if (ev->type() == QEvent::MouseButtonDblClick)
++    {
++      emit doubleClicked(d->m_id);
++      return false;
++    }
++  }
++
++  return QToolButton::eventFilter(o, ev);
++}
++
++void kpCompat_KToolBarButton::drawButton( QPainter *_painter )
++{
++  QStyle::SFlags flags   = QStyle::Style_Default;
++  QStyle::SCFlags active = QStyle::SC_None;
++
++  if (isDown()) {
++    flags  |= QStyle::Style_Down;
++    active |= QStyle::SC_ToolButton;
++  }
++  if (isEnabled()) 	flags |= QStyle::Style_Enabled;
++  if (isOn()) 		flags |= QStyle::Style_On;
++  if (isEnabled() && hasMouse())	flags |= QStyle::Style_Raised;
++  if (hasFocus())	flags |= QStyle::Style_HasFocus;
++
++  // Draw a styled toolbutton
++  style().drawComplexControl(QStyle::CC_ToolButton, _painter, this, rect(),
++	colorGroup(), flags, QStyle::SC_ToolButton, active, QStyleOption());
++
++  int dx, dy;
++  QFont tmp_font(KGlobalSettings::toolBarFont());
++  QFontMetrics fm(tmp_font);
++  QRect textRect;
++  int textFlags = 0;
++
++  if (d->m_iconText == KToolBar::IconOnly) // icon only
++  {
++    QPixmap pixmap = iconSet().pixmap( QIconSet::Automatic,
++        isEnabled() ? (d->m_isActive ? QIconSet::Active : QIconSet::Normal) :
++            	QIconSet::Disabled,
++        isOn() ? QIconSet::On : QIconSet::Off );
++    if( !pixmap.isNull())
++    {
++      dx = ( width() - pixmap.width() ) / 2;
++      dy = ( height() - pixmap.height() ) / 2;
++      if ( isDown() && style().styleHint(QStyle::SH_GUIStyle) == WindowsStyle )
++      {
++        ++dx;
++        ++dy;
++      }
++      _painter->drawPixmap( dx, dy, pixmap );
++    }
++  }
++  else if (d->m_iconText == KToolBar::IconTextRight) // icon and text (if any)
++  {
++    QPixmap pixmap = iconSet().pixmap( QIconSet::Automatic,
++        isEnabled() ? (d->m_isActive ? QIconSet::Active : QIconSet::Normal) :
++            	QIconSet::Disabled,
++        isOn() ? QIconSet::On : QIconSet::Off );
++    if( !pixmap.isNull())
++    {
++      dx = 4;
++      dy = ( height() - pixmap.height() ) / 2;
++      if ( isDown() && style().styleHint(QStyle::SH_GUIStyle) == WindowsStyle )
++      {
++        ++dx;
++        ++dy;
++      }
++      _painter->drawPixmap( dx, dy, pixmap );
++    }
++
++    if (!textLabel().isNull())
++    {
++      textFlags = AlignVCenter|AlignLeft;
++      if (!pixmap.isNull())
++        dx = 4 + pixmap.width() + 2;
++      else
++        dx = 4;
++      dy = 0;
++      if ( isDown() && style().styleHint(QStyle::SH_GUIStyle) == WindowsStyle )
++      {
++        ++dx;
++        ++dy;
++      }
++      textRect = QRect(dx, dy, width()-dx, height());
++    }
++  }
++  else if (d->m_iconText == KToolBar::TextOnly)
++  {
++    if (!textLabel().isNull())
++    {
++      textFlags = AlignVCenter|AlignLeft;
++      dx = (width() - fm.width(textLabel())) / 2;
++      dy = (height() - fm.lineSpacing()) / 2;
++      if ( isDown() && style().styleHint(QStyle::SH_GUIStyle) == WindowsStyle )
++      {
++        ++dx;
++        ++dy;
++      }
++      textRect = QRect( dx, dy, fm.width(textLabel()), fm.lineSpacing() );
++    }
++  }
++  else if (d->m_iconText == KToolBar::IconTextBottom)
++  {
++    QPixmap pixmap = iconSet().pixmap( QIconSet::Automatic,
++        isEnabled() ? (d->m_isActive ? QIconSet::Active : QIconSet::Normal) :
++            	QIconSet::Disabled,
++        isOn() ? QIconSet::On : QIconSet::Off );
++    if( !pixmap.isNull())
++    {
++      dx = (width() - pixmap.width()) / 2;
++      dy = (height() - fm.lineSpacing() - pixmap.height()) / 2;
++      if ( isDown() && style().styleHint(QStyle::SH_GUIStyle) == WindowsStyle )
++      {
++        ++dx;
++        ++dy;
++      }
++      _painter->drawPixmap( dx, dy, pixmap );
++    }
++
++    if (!textLabel().isNull())
++    {
++      textFlags = AlignBottom|AlignHCenter;
++      dx = (width() - fm.width(textLabel())) / 2;
++      dy = height() - fm.lineSpacing() - 4;
++
++      if ( isDown() && style().styleHint(QStyle::SH_GUIStyle) == WindowsStyle )
++      {
++        ++dx;
++        ++dy;
++      }
++      textRect = QRect( dx, dy, fm.width(textLabel()), fm.lineSpacing() );
++    }
++  }
++
++  // Draw the text at the position given by textRect, and using textFlags
++  if (!textLabel().isNull() && !textRect.isNull())
++  {
++      _painter->setFont(KGlobalSettings::toolBarFont());
++      if (!isEnabled())
++        _painter->setPen(palette().disabled().dark());
++      else if(d->m_isRaised)
++        _painter->setPen(KGlobalSettings::toolBarHighlightColor());
++      else
++	_painter->setPen( colorGroup().buttonText() );
++      _painter->drawText(textRect, textFlags, textLabel());
++  }
++
++  if (QToolButton::popup())
++  {
++    QStyle::SFlags arrowFlags = QStyle::Style_Default;
++
++    if (isDown())	arrowFlags |= QStyle::Style_Down;
++    if (isEnabled()) 	arrowFlags |= QStyle::Style_Enabled;
++
++      style().drawPrimitive(QStyle::PE_ArrowDown, _painter,
++          QRect(width()-7, height()-7, 7, 7), colorGroup(),
++	  arrowFlags, QStyleOption() );
++  }
++}
++
++void kpCompat_KToolBarButton::paletteChange(const QPalette &)
++{
++  if(!d->m_isSeparator)
++  {
++    modeChange();
++    repaint(false); // no need to delete it first therefore only false
++  }
++}
++
++void kpCompat_KToolBarButton::showMenu()
++{
++  // obsolete
++  // KDE4: remove me
++}
++
++void kpCompat_KToolBarButton::slotDelayTimeout()
++{
++  // obsolete
++  // KDE4: remove me
++}
++
++void kpCompat_KToolBarButton::slotClicked()
++{
++  emit clicked( d->m_id );
++}
++
++void kpCompat_KToolBarButton::slotPressed()
++{
++  emit pressed( d->m_id );
++}
++
++void kpCompat_KToolBarButton::slotReleased()
++{
++  emit released( d->m_id );
++}
++
++void kpCompat_KToolBarButton::slotToggled()
++{
++  emit toggled( d->m_id );
++}
++
++void kpCompat_KToolBarButton::setNoStyle(bool no_style)
++{
++    d->m_noStyle = no_style;
++
++    modeChange();
++    d->m_iconText = KToolBar::IconTextRight;
++    repaint(false);
++}
++
++void kpCompat_KToolBarButton::setRadio (bool f)
++{
++    if ( d )
++	d->m_isRadio = f;
++}
++
++void kpCompat_KToolBarButton::on(bool flag)
++{
++  if(isToggleButton() == true)
++    setOn(flag);
++  else
++  {
++    setDown(flag);
++    leaveEvent((QEvent *) 0);
++  }
++  repaint();
++}
++
++void kpCompat_KToolBarButton::toggle()
++{
++  setOn(!isOn());
++  repaint();
++}
++
++void kpCompat_KToolBarButton::setToggle(bool flag)
++{
++  setToggleButton(flag);
++  if (flag == true)
++    connect(this, SIGNAL(toggled(bool)), this, SLOT(slotToggled()));
++  else
++    disconnect(this, SIGNAL(toggled(bool)), this, SLOT(slotToggled()));
++}
++
++QSize kpCompat_KToolBarButton::sizeHint() const
++{
++   return d->size;
++}
++
++QSize kpCompat_KToolBarButton::minimumSizeHint() const
++{
++   return d->size;
++}
++
++QSize kpCompat_KToolBarButton::minimumSize() const
++{
++   return d->size;
++}
++
++bool kpCompat_KToolBarButton::isRaised() const
++{
++    return d->m_isRaised;
++}
++
++bool kpCompat_KToolBarButton::isActive() const
++{
++    return d->m_isActive;
++}
++
++int kpCompat_KToolBarButton::iconTextMode() const
++{
++    return static_cast<int>( d->m_iconText );
++}
++
++int kpCompat_KToolBarButton::id() const
++{
++    return d->m_id;
++}
++
++// kpCompat_KToolBarButtonList
++kpCompat_KToolBarButtonList::kpCompat_KToolBarButtonList()
++{
++   setAutoDelete(false);
++}
++
++void kpCompat_KToolBarButton::virtual_hook( int, void* )
++{ /*BASE::virtual_hook( id, data );*/ }
++
++#include "kpcompat_ktoolbarbutton.moc"
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/compat/kpcompat_ktoolbarbutton.h ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/compat/kpcompat_ktoolbarbutton.h
+--- kolourpaint-1.2.2_kde3/kolourpaint/compat/kpcompat_ktoolbarbutton.h	1970-01-01 10:00:00.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/compat/kpcompat_ktoolbarbutton.h	2005-06-03 23:12:45.000000000 +1000
+@@ -0,0 +1,330 @@
++
++// This is fork of ktoolbarbutton.cpp from KDE 3.2 for KolourPaint.
++//
++// Main differences:
++// 1. Namespacing.
++// 2. Expects KToolBar/kpToolToolBar to be its grandparent instead of its
++//    parent.  This is needed due to kpToolToolBar faking multicolumn
++//    toolbars by placing kpCompat_KToolBarButton's in a container
++//    widget in a KToolBar instead of in a KToolBar directly.
++//
++// Clarence Dang
++// 2005-06-03
++//
++// SYNC: Redo changes to .cpp and .h against HEAD.
++
++
++/* This file is part of the KDE libraries
++    Copyright (C) 1997, 1998 Stephan Kulow (coolo@kde.org)
++              (C) 1997, 1998 Sven Radej (radej@kde.org)
++              (C) 1997, 1998 Mark Donohoe (donohoe@kde.org)
++              (C) 1997, 1998 Matthias Ettrich (ettrich@kde.org)
++              (C) 2000 Kurt Granroth (granroth@kde.org)
++
++    This library is free software; you can redistribute it and/or
++    modify it under the terms of the GNU Library General Public
++    License version 2 as published by the Free Software Foundation.
++
++    This library is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++    Library General Public License for more details.
++
++    You should have received a copy of the GNU Library General Public License
++    along with this library; see the file COPYING.LIB.  If not, write to
++    the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++    Boston, MA 02111-1307, USA.
++*/
++
++#ifndef KPCOMAT_KTOOLBARBUTTON_H
++#define KPCOMAT_KTOOLBARBUTTON_H
++
++#include <qpixmap.h>
++#include <qtoolbutton.h>
++#include <qintdict.h>
++#include <qstring.h>
++#include <kglobal.h>
++
++class KToolBar;
++class kpCompat_KToolBarButtonPrivate;
++class KInstance;
++class QEvent;
++class QPopupMenu;
++class QPainter;
++
++/**
++ * A toolbar button. This is used internally by KToolBar, use the
++ * KToolBar methods instead.
++ * @internal
++ */
++class kpCompat_KToolBarButton : public QToolButton
++{
++  Q_OBJECT
++
++public:
++  /**
++   * Construct a button with an icon loaded by the button itself.
++   * This will trust the button to load the correct icon with the
++   * correct size.
++   *
++   * @param icon   Name of icon to load (may be absolute or relative)
++   * @param id     Id of this button
++   * @param parent This button's parent
++   * @param name   This button's internal name
++   * @param txt    This button's text (in a tooltip or otherwise)
++   * @param _instance the instance to use for this button
++   */
++  kpCompat_KToolBarButton(const QString& icon, int id, QWidget *parent,
++                 const char *name=0L, const QString &txt=QString::null,
++                 KInstance *_instance = KGlobal::instance());
++
++  /**
++   * Construct a button with an existing pixmap.  It is not
++   * recommended that you use this as the internal icon loading code
++   * will almost always get it "right".
++   *
++   * @param pixmap Name of icon to load (may be absolute or relative)
++   * @param id     Id of this button
++   * @param parent This button's parent
++   * @param name   This button's internal name
++   * @param txt    This button's text (in a tooltip or otherwise)
++   */
++  kpCompat_KToolBarButton(const QPixmap& pixmap, int id, QWidget *parent,
++                 const char *name=0L, const QString &txt=QString::null);
++
++  /**
++   * Construct a separator button
++   *
++   * @param parent This button's parent
++   * @param name   This button's internal name
++   */
++  kpCompat_KToolBarButton(QWidget *parent=0L, const char *name=0L);
++
++  /**
++   * Standard destructor
++   */
++  ~kpCompat_KToolBarButton();
++
++#ifndef KDE_NO_COMPAT
++  /**
++   * @deprecated
++   * Set the pixmap directly for this button.  This pixmap should be
++   * the active one... the dimmed and disabled pixmaps are constructed
++   * based on this one.  However, don't use this function unless you
++   * are positive that you don't want to use setIcon.
++   *
++   * @param pixmap The active pixmap
++   */
++  // this one is from QButton, so #ifdef-ing it out doesn't break BC
++  virtual void setPixmap(const QPixmap &pixmap) KDE_DEPRECATED;
++
++  /**
++   * @deprecated
++   * Force the button to use this pixmap as the default one rather
++   * then generating it using effects.
++   *
++   * @param pixmap The pixmap to use as the default (normal) one
++   */
++  void setDefaultPixmap(const QPixmap& pixmap) KDE_DEPRECATED;
++
++  /**
++   * @deprecated
++   * Force the button to use this pixmap when disabled one rather then
++   * generating it using effects.
++   *
++   * @param pixmap The pixmap to use when disabled
++   */
++  void setDisabledPixmap(const QPixmap& pixmap) KDE_DEPRECATED;
++#endif
++
++  /**
++   * Set the text for this button.  The text will be either used as a
++   * tooltip (IconOnly) or will be along side the icon
++   *
++   * @param text The button (or tooltip) text
++   */
++  virtual void setText(const QString &text);
++
++  /**
++   * Set the icon for this button. The icon will be loaded internally
++   * with the correct size. This function is preferred over setIconSet
++   *
++   * @param icon The name of the icon
++   */
++  virtual void setIcon(const QString &icon);
++
++  /// @since 3.1
++  virtual void setIcon( const QPixmap &pixmap )
++  { QToolButton::setIcon( pixmap ); }
++
++  /**
++   * Set the pixmaps for this toolbar button from a QIconSet.
++   * If you call this you don't need to call any of the other methods
++   * that set icons or pixmaps.
++   * @param iconset  The iconset to use
++   */
++  virtual void setIconSet( const QIconSet &iconset );
++
++#ifndef KDE_NO_COMPAT
++  /**
++   * @deprecated
++   * Set the active icon for this button.  The pixmap itself is loaded
++   * internally based on the icon size...  .. the disabled and default
++   * pixmaps, however will only be constructed if generate is
++   * true.  This function is preferred over setPixmap
++   *
++   * @param icon     The name of the active icon
++   * @param generate If true, then the other icons are automagically
++   *                 generated from this one
++   */
++  KDE_DEPRECATED void setIcon(const QString &icon, bool generate ) { Q_UNUSED(generate); setIcon( icon ); }
++
++  /**
++   * @deprecated
++   * Force the button to use this icon as the default one rather
++   * then generating it using effects.
++   *
++   * @param icon The icon to use as the default (normal) one
++   */
++  void setDefaultIcon(const QString& icon) KDE_DEPRECATED;
++
++  /**
++   * @deprecated
++   * Force the button to use this icon when disabled one rather then
++   * generating it using effects.
++   *
++   * @param icon The icon to use when disabled
++   */
++  void setDisabledIcon(const QString& icon) KDE_DEPRECATED;
++#endif
++
++  /**
++   * Turn this button on or off
++   *
++   * @param flag true or false
++   */
++  void on(bool flag = true);
++
++  /**
++   * Toggle this button
++   */
++  void toggle();
++
++  /**
++   * Turn this button into a toggle button or disable the toggle
++   * aspects of it.  This does not toggle the button itself.
++   * Use toggle() for that.
++   *
++   * @param toggle true or false
++   */
++  void setToggle(bool toggle = true);
++
++  /**
++   * Return a pointer to this button's popup menu (if it exists)
++   */
++  QPopupMenu *popup();
++
++  /**
++   * Returns the button's id.
++   * @since 3.2
++   */
++  int id() const;
++
++  /**
++   * Give this button a popup menu.  There will not be a delay when
++   * you press the button.  Use setDelayedPopup if you want that
++   * behavior.
++   *
++   * @param p The new popup menu
++   * @param unused Has no effect - ignore it.
++   */
++  void setPopup (QPopupMenu *p, bool unused = false);
++
++  /**
++   * Gives this button a delayed popup menu.
++   *
++   * This function allows you to add a delayed popup menu to the button.
++   * The popup menu is then only displayed when the button is pressed and
++   * held down for about half a second.
++   *
++   * @param p the new popup menu
++   * @param unused Has no effect - ignore it.
++   */
++  void setDelayedPopup(QPopupMenu *p, bool unused = false);
++
++  /**
++   * Turn this button into a radio button
++   *
++   * @param f true or false
++   */
++  void setRadio(bool f = true);
++
++  /**
++   * Toolbar buttons naturally will assume the global styles
++   * concerning icons, icons sizes, etc.  You can use this function to
++   * explicitly turn this off, if you like.
++   *
++   * @param no_style Will disable styles if true
++   */
++  void setNoStyle(bool no_style = true);
++
++signals:
++  void clicked(int);
++  void doubleClicked(int);
++  void pressed(int);
++  void released(int);
++  void toggled(int);
++  void highlighted(int, bool);
++
++public slots:
++  /**
++   * This slot should be called whenever the toolbar mode has
++   * potentially changed.  This includes such events as text changing,
++   * orientation changing, etc.
++   */
++   void modeChange();
++   virtual void setTextLabel(const QString&, bool tipToo);
++
++protected:
++  void paletteChange(const QPalette &);
++  void leaveEvent(QEvent *e);
++  void enterEvent(QEvent *e);
++  void drawButton(QPainter *p);
++  bool eventFilter (QObject *o, QEvent *e);
++  void showMenu();
++  QSize sizeHint() const;
++  QSize minimumSizeHint() const;
++  QSize minimumSize() const;
++
++  /// @since 3.1
++  bool isRaised() const;
++  /// @since 3.1
++  bool isActive() const;
++  /// @since 3.1
++  int iconTextMode() const;
++
++protected slots:
++  void slotClicked();
++  void slotPressed();
++  void slotReleased();
++  void slotToggled();
++  void slotDelayTimeout();
++
++protected:
++  virtual void virtual_hook( int id, void* data );
++private:
++  kpCompat_KToolBarButtonPrivate *d;
++};
++
++/**
++* List of kpCompat_KToolBarButton objects.
++* @internal
++* @version $Id: ktoolbarbutton.h,v 1.36 2004/03/18 02:50:16 bmeyer Exp $
++*/
++class kpCompat_KToolBarButtonList : public QIntDict<kpCompat_KToolBarButton>
++{
++public:
++   kpCompat_KToolBarButtonList();
++   ~kpCompat_KToolBarButtonList() {}
++};
++#endif
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/compat/Makefile.am ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/compat/Makefile.am
+--- kolourpaint-1.2.2_kde3/kolourpaint/compat/Makefile.am	1970-01-01 10:00:00.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/compat/Makefile.am	2005-06-03 18:09:54.000000000 +1000
+@@ -0,0 +1,12 @@
++# TODO: spread headers
++INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../compat -I$(srcdir)/../cursors \
++    -I$(srcdir)/../pixmapfx \
++    -I$(srcdir)/../tools \
++    -I$(srcdir)/../widgets $(all_includes)
++
++# TODO: dyn link
++noinst_LTLIBRARIES = libkolourpaintcompat.la
++libkolourpaintcompat_la_SOURCES = kpcompat_ktoolbarbutton.cpp
++
++METASOURCES = AUTO
++
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/cursors/Makefile.am ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/cursors/Makefile.am
+--- kolourpaint-1.2.2_kde3/kolourpaint/cursors/Makefile.am	2004-01-21 21:43:54.000000000 +1100
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/cursors/Makefile.am	2005-06-03 18:04:11.000000000 +1000
+@@ -1,4 +1,5 @@
+-INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../pixmapfx \
++INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../compat -I$(srcdir)/../cursors \
++    -I$(srcdir)/../pixmapfx \
+     -I$(srcdir)/../tools \
+     -I$(srcdir)/../widgets $(all_includes)
+ 
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/kolourpaint.cpp ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/kolourpaint.cpp
+--- kolourpaint-1.2.2_kde3/kolourpaint/kolourpaint.cpp	2004-11-27 12:58:01.000000000 +1100
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/kolourpaint.cpp	2005-06-04 17:29:10.000000000 +1000
+@@ -60,7 +60,7 @@ int main (int argc, char *argv [])
+     (
+         "kolourpaint",
+         I18N_NOOP("KolourPaint"),
+-        "1.2.2_kde3",  // SYNC: with VERSION
++        "1.2.2_kde3 with 1.4 additions",  // SYNC: with VERSION
+         I18N_NOOP("Paint Program for KDE"),
+         KAboutData::License_Custom,
+         "Copyright (c) 2003-2004 Clarence Dang",
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/kpdefs.h ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/kpdefs.h
+--- kolourpaint-1.2.2_kde3/kolourpaint/kpdefs.h	2004-08-14 15:40:07.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/kpdefs.h	2005-06-04 14:35:22.000000000 +1000
+@@ -74,6 +74,7 @@
+ 
+ #define kpSettingsGroupGeneral QString::fromLatin1 ("General Settings")
+ #define kpSettingFirstTime QString::fromLatin1 ("First Time")
++#define kpSettingConfigVersion QString::fromLatin1 ("Config Version")
+ #define kpSettingShowGrid QString::fromLatin1 ("Show Grid")
+ #define kpSettingShowPath QString::fromLatin1 ("Show Path")
+ #define kpSettingColorSimilarity QString::fromLatin1 ("Color Similarity")
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/kpmainwindow.cpp ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/kpmainwindow.cpp
+--- kolourpaint-1.2.2_kde3/kolourpaint/kpmainwindow.cpp	2004-09-23 18:20:55.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/kpmainwindow.cpp	2005-06-04 17:01:39.000000000 +1000
+@@ -129,12 +129,14 @@ void kpMainWindow::readGeneralSettings (
+     KConfigBase *cfg = cfgGroupSaver.config ();
+ 
+     m_configFirstTime = cfg->readBoolEntry (kpSettingFirstTime, true);
++    d->m_configVersion = cfg->readNumEntry (kpSettingConfigVersion, 0);
+     m_configShowGrid = cfg->readBoolEntry (kpSettingShowGrid, false);
+     m_configShowPath = cfg->readBoolEntry (kpSettingShowPath, false);
+     m_configColorSimilarity = cfg->readDoubleNumEntry (kpSettingColorSimilarity, 0);
+ 
+ #if DEBUG_KP_MAIN_WINDOW
+     kdDebug () << "\t\tGeneral Settings: firstTime=" << m_configFirstTime
++               << " configVersion=" << d->m_configVersion
+                << " showGrid=" << m_configShowGrid
+                << " showPath=" << m_configShowPath
+                << " colorSimilarity=" << m_configColorSimilarity
+@@ -256,6 +258,28 @@ void kpMainWindow::init ()
+     kdDebug () << "\tTIME: createToolBox = " << time.restart () << "msec" << endl;
+ #endif
+ 
++
++    // HACK: Force tool tip updates when KToolBarButton rudely ignores
++    //       KAction::toolTip() and sets its own tooltip.
++    //
++    // sync: ktoolbarbutton_tooltip
++    for (QPtrListIterator <KToolBar> it = toolBarIterator ();
++         it.current ();
++         ++it)
++    {
++    #if DEBUG_KP_MAIN_WINDOW
++        kdDebug () << "\tListening to toolbar " << (*it)->name ()
++                   << " for mode changes to force update tool actions'"
++                   << " tooltips"
++                   << endl;
++    #endif
++    
++        // COMPAT: modechange() is internal.
++        connect (*it, SIGNAL (modechange ()),
++                 this, SLOT (toolActionsUpdateToolTips ()));
++    }
++    
++
+     m_scrollView = new kpViewScrollableContainer (this, "scrollView");
+     connect (m_scrollView, SIGNAL (beganDocResize ()),
+              this, SLOT (slotBeganDocResize ()));
+@@ -284,10 +308,17 @@ void kpMainWindow::init ()
+ 
+     setAutoSaveSettings ();
+ 
++    
++    bool changedToolBarSettings = false;
++    
++    
++    // We _could_ use kconf_update...
++
++    
+     // Put our non-XMLGUI toolbars in a sane place, the first time around
+     // (have to do this _after_ setAutoSaveSettings as that applies default
+-    //  (i.e. random) settings to the toolbars)
+-    if (m_configFirstTime)
++    //  (i.e. random) settings to the toolbars).
++    if (m_configFirstTime/*before pre-1.4_light2*/)
+     {
+     #if DEBUG_KP_MAIN_WINDOW
+         kdDebug () << "\tfirstTime: positioning toolbars" << endl;
+@@ -295,6 +326,8 @@ void kpMainWindow::init ()
+ 
+         m_toolToolBar->setBarPos (KToolBar::Left);
+         m_colorToolBar->setBarPos (KToolBar::Bottom);
++        changedToolBarSettings = true;
++
+ 
+         KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
+         KConfigBase *cfg = cfgGroupSaver.config ();
+@@ -303,6 +336,22 @@ void kpMainWindow::init ()
+         cfg->sync ();
+     }
+ 
++    if (d->m_configVersion < 1/*1.4_light2*/)
++    {
++    #if DEBUG_KP_MAIN_WINDOW
++        kdDebug () << "\tconfigVersion < 1: setting toolbox icon size" << endl;
++    #endif
++        m_toolToolBar->setIconSize (m_toolToolBar->defaultIconSize ());
++        changedToolBarSettings = true;
++        
++        
++        KConfigGroupSaver cfgGroupSaver (kapp->config (), kpSettingsGroupGeneral);
++        KConfigBase *cfg = cfgGroupSaver.config ();
++
++        cfg->writeEntry (kpSettingConfigVersion, 1);
++        cfg->sync ();
++    }
++
+ 
+     // From kolourpaint_1_0_branch: revision 1.26.2.2
+     // date: 2004/03/05 11:15:20;  author: dang;  state: Exp;  lines: +11 -1
+@@ -315,12 +364,14 @@ void kpMainWindow::init ()
+     // TODO: Even though KDE 3.2 doesn't seem to have this problem, maybe it should
+     // be forward-ported to HEAD to avoid a race condition (IIRC, mainwindow
+     // settings are only updated every .5s)?
+-    if (m_configFirstTime)
++    if (changedToolBarSettings)
+     {
+         saveMainWindowSettings (kapp->config (),
+                                 QString::fromLatin1 ("MainWindow")/*autoSaveGroup*/);
+         kapp->config ()->sync ();
++        
+         m_configFirstTime = false;
++        d->m_configVersion = 1;
+     }
+ 
+ 
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/kpmainwindow.h ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/kpmainwindow.h
+--- kolourpaint-1.2.2_kde3/kolourpaint/kpmainwindow.h	2004-11-14 17:10:37.000000000 +1100
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/kpmainwindow.h	2004-01-01 00:00:00.000000000 +1100
+@@ -186,6 +186,9 @@ private:
+ private slots:
+     void updateToolOptionPrevNextActionsEnabled ();
+ 
++    void toolActionsUpdateToolTipsActual ();
++    void toolActionsUpdateToolTips ();
++    
+ private:
+     kpTool *m_toolAirSpray, *m_toolBrush, *m_toolColorPicker,
+            *m_toolColorWasher, *m_toolCurve, *m_toolEllipse,
+@@ -649,6 +652,7 @@ private:
+ 
+ struct kpMainWindowPrivate
+ {
++    int m_configVersion;
+ };
+ 
+ 
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/kpmainwindow_settings.cpp ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/kpmainwindow_settings.cpp
+--- kolourpaint-1.2.2_kde3/kolourpaint/kpmainwindow_settings.cpp	2004-08-14 15:40:07.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/kpmainwindow_settings.cpp	2005-06-04 00:40:59.000000000 +1000
+@@ -211,7 +211,9 @@ void kpMainWindow::slotNewToolBarConfig 
+     // (including my non-XMLGUI ones whose states take a _lot_ of effort to
+     //  restore).
+     // TODO: this message is probably unacceptable - so restore the state of
+-    //       my toolbars instead.
++    //       my toolbars instead.  Or really use a KToolBar and have a
++    //       controller object listening to its signals?  Or better yet,
++    //       have KToolBar support multicolumn toolbars.
+     KMessageBox::information (this,
+         i18n ("You have to restart KolourPaint for these changes to take effect."),
+         i18n ("Toolbar Settings Changed"),
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/kpmainwindow_tools.cpp ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/kpmainwindow_tools.cpp
+--- kolourpaint-1.2.2_kde3/kolourpaint/kpmainwindow_tools.cpp	2004-08-14 15:40:07.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/kpmainwindow_tools.cpp	2005-06-04 17:19:07.000000000 +1000
+@@ -28,6 +28,9 @@
+ 
+ #include <kpmainwindow.h>
+ 
++#include <qdatetime.h>
++#include <qtimer.h>
++
+ #include <kapplication.h>
+ #include <kconfig.h>
+ #include <kdebug.h>
+@@ -270,6 +273,39 @@ void kpMainWindow::updateToolOptionPrevN
+ }
+ 
+ 
++// private slot
++// sync: ktoolbarbutton_tooltip
++void kpMainWindow::toolActionsUpdateToolTipsActual ()
++{
++#if DEBUG_KP_MAIN_WINDOW
++    kdDebug () << "kpMainWindow::toolActionsUpdateToolTipsActual()" << endl;
++    QTime timer; timer.start ();
++#endif
++
++    for (int i = 0; i < (int) m_tools.count (); i++)
++    {
++        kpToolAction *action = m_tools.at (i)->action ();
++        if (!action)
++            continue;
++            
++        action->updateToolTip ();
++    }
++    
++#if DEBUG_KP_MAIN_WINDOW
++    kdDebug () << "\telapsed=" << tm.elapsed () << "ms" << endl;
++#endif
++}
++
++// private slot
++// sync: ktoolbarbutton_tooltip
++void kpMainWindow::toolActionsUpdateToolTips ()
++{
++    // Waits for KToolBarButton do stuff up the tooltip.
++    QTimer::singleShot (0, this,
++        SLOT (toolActionsUpdateToolTipsActual ()));
++}
++
++
+ // public
+ kpTool *kpMainWindow::tool () const
+ {
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/kpview.cpp ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/kpview.cpp
+--- kolourpaint-1.2.2_kde3/kolourpaint/kpview.cpp	2004-11-25 19:12:58.000000000 +1100
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/kpview.cpp	2005-05-28 13:12:43.000000000 +1000
+@@ -820,6 +820,7 @@ void kpView::mouseMoveEvent (QMouseEvent
+     //       mainView, landing on top of the thumbnailView cleverly put on top
+     //       of the mainView.
+     setHasMouse (rect ().contains (e->pos ()));
++if (m_mainWindow->tool ())
+     m_mainWindow->tool ()->mouseMoveEvent (e);
+ 
+     e->accept ();
+@@ -835,6 +836,7 @@ void kpView::mouseReleaseEvent (QMouseEv
+ #endif
+ 
+     setHasMouse (rect ().contains (e->pos ()));
++if (m_mainWindow->tool ())
+     m_mainWindow->tool ()->mouseReleaseEvent (e);
+ 
+     e->accept ();
+@@ -847,6 +849,7 @@ void kpView::keyPressEvent (QKeyEvent *e
+     kdDebug () << "kpView(" << name () << ")::keyPressEvent()" << endl;
+ #endif
+ 
++if (m_mainWindow->tool ())
+     m_mainWindow->tool ()->keyPressEvent (e);
+     e->accept ();
+ }
+@@ -858,6 +861,7 @@ void kpView::keyReleaseEvent (QKeyEvent 
+     kdDebug () << "kpView(" << name () << ")::keyReleaseEvent()" << endl;
+ #endif
+ 
++if (m_mainWindow->tool ())
+     m_mainWindow->tool ()->keyReleaseEvent (e);
+     e->accept ();
+ }
+@@ -868,12 +872,14 @@ void kpView::focusInEvent (QFocusEvent *
+ #if DEBUG_KP_VIEW && 0
+     kdDebug () << "kpView(" << name () << ")::focusInEvent()" << endl;
+ #endif
++if (m_mainWindow->tool ())
+     m_mainWindow->tool ()->focusInEvent (e);
+ }
+ 
+ // virtual
+ void kpView::focusOutEvent (QFocusEvent *e)
+ {
++if (m_mainWindow->tool ())
+     m_mainWindow->tool ()->focusOutEvent (e);
+ }
+ 
+@@ -885,6 +891,7 @@ void kpView::enterEvent (QEvent *e)
+ #endif
+ 
+     setHasMouse (true);
++if (m_mainWindow->tool ())
+     m_mainWindow->tool ()->enterEvent (e);
+ }
+ 
+@@ -896,6 +903,7 @@ void kpView::leaveEvent (QEvent *e)
+ #endif
+ 
+     setHasMouse (false);
++if (m_mainWindow->tool ())
+     m_mainWindow->tool ()->leaveEvent (e);
+ }
+ 
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/Makefile.am ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/Makefile.am
+--- kolourpaint-1.2.2_kde3/kolourpaint/Makefile.am	2004-07-15 02:08:23.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/Makefile.am	2005-05-28 13:18:29.000000000 +1000
+@@ -1,4 +1,4 @@
+-SUBDIRS = cursors pics pixmapfx tools widgets
++SUBDIRS = compat cursors pics pixmapfx tools widgets
+ 
+ bin_PROGRAMS = kolourpaint
+ 
+@@ -32,12 +32,13 @@ kolourpaint_SOURCES = kolourpaint.cpp \
+     kpwidgetmapper.cpp
+ kolourpaint_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+ kolourpaint_LDADD = $(LIB_KDEPRINT) \
++    compat/libkolourpaintcompat.la \
+     cursors/libkolourpaintcursors.la \
+     pixmapfx/libkolourpaintpixmapfx.la \
+     tools/libkolourpainttools.la \
+     widgets/libkolourpaintwidgets.la
+ 
+-AM_CPPFLAGS = -I$(srcdir)/cursors -I$(srcdir)/pixmapfx \
++AM_CPPFLAGS = -I$(srcdir)/compat -I$(srcdir)/cursors -I$(srcdir)/pixmapfx \
+     -I$(srcdir)/tools -I$(srcdir)/widgets $(all_includes)
+ 
+ METASOURCES = AUTO
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/pixmapfx/Makefile.am ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/pixmapfx/Makefile.am
+--- kolourpaint-1.2.2_kde3/kolourpaint/pixmapfx/Makefile.am	2004-07-15 00:27:40.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/pixmapfx/Makefile.am	2005-06-03 18:04:48.000000000 +1000
+@@ -1,4 +1,5 @@
+-INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../pixmapfx \
++INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../compat -I$(srcdir)/../cursors \
++    -I$(srcdir)/../pixmapfx \
+     -I$(srcdir)/../tools \
+     -I$(srcdir)/../widgets $(all_includes)
+ 
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/tools/kptoolaction.cpp ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/tools/kptoolaction.cpp
+--- kolourpaint-1.2.2_kde3/kolourpaint/tools/kptoolaction.cpp	2004-07-10 21:17:09.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/tools/kptoolaction.cpp	2005-06-04 17:24:45.000000000 +1000
+@@ -28,15 +28,19 @@
+ 
+ #include <kptoolaction.h>
+ 
++#include <qtooltip.h>
++
++#include <ktoolbar.h>
++
+ #include <kptool.h>
+ 
+ 
+ kpToolAction::kpToolAction (const QString &text,
+-                            const QIconSet &iconSet, const KShortcut &shortcut,
++                            const QString &pic, const KShortcut &shortcut,
+                             const QObject *receiver, const char *slot,
+                             QObject *parent, const char *name)
+     : KToggleAction (text,
+-                     iconSet, shortcut,
++                     pic, shortcut,
+                      receiver, slot,
+                      parent, name)
+ {
+@@ -48,15 +52,51 @@ kpToolAction::~kpToolAction ()
+ }
+ 
+ 
+-// protected
++// public slot virtual [base KAction]
++void kpToolAction::setToolTip (const QString &string)
++{
++    KAction::setToolTip (string);
++   
++    // HACK:
++    // From the school of bitterly broken semantics, KAction::setToolTip()
++    // adds a tooltip even if a toolbar button is showing the text
++    // (KToolBarButton doesn't do this - this is what happens when you have
++    //  code spread between {KAction,KToolBarButton}).  So kill the
++    // tooltip if we detect this.
++    for (int i = 0; i < (int) containerCount (); i++)
++    {
++        KToolBar *tb = dynamic_cast <KToolBar *> (container (i));
++        if (!tb)
++            continue;
++        
++        if (tb->iconText () == KToolBar::IconOnly)
++            continue;
++            
++        
++        QWidget *w = tb->getWidget (itemId (i));
++        if (!w)
++            continue;
++            
++        QToolTip::remove (w);
++    }
++}
++
++// public
+ void kpToolAction::updateToolTip ()
+ {
+     const QString newToolTip =
+         kpTool::toolTipForTextAndShortcut (text (), shortcut ());
+-    if (newToolTip == toolTip ())
+-        return;
++        
++    // HACK: Don't NOP check - we're used to force tool tip updates when
++    //       KToolBarButton rudely ignores KAction::toolTip() and sets its
++    //       own tooltip.
++    // sync: ktoolbarbutton_tooltip
++
++    //if (newToolTip == toolTip ())
++    //    return;
+ 
+     setToolTip (newToolTip);
++    
+     emit toolTipChanged (newToolTip);
+ }
+ 
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/tools/kptoolaction.h ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/tools/kptoolaction.h
+--- kolourpaint-1.2.2_kde3/kolourpaint/tools/kptoolaction.h	2004-08-14 15:40:08.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/tools/kptoolaction.h	2004-01-01 00:00:00.000000000 +1100
+@@ -48,7 +48,7 @@ Q_OBJECT
+ 
+ public:
+     kpToolAction (const QString &text,
+-        const QIconSet &iconSet, const KShortcut &shortcut,
++        const QString &pic, const KShortcut &shortcut,
+         const QObject *receiver, const char *slot,
+         QObject *parent, const char *name);
+     virtual ~kpToolAction ();
+@@ -58,7 +58,10 @@ signals:
+     // Not emitted when toolTip is manually overriden by setToolTip()
+     void toolTipChanged (const QString &string);
+ 
+-protected:
++public slots:
++    virtual void setToolTip (const QString &string);
++
++public:
+     void updateToolTip ();
+ 
+ 
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/tools/kptool.cpp ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/tools/kptool.cpp
+--- kolourpaint-1.2.2_kde3/kolourpaint/tools/kptool.cpp	2004-09-23 22:51:04.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/tools/kptool.cpp	2005-06-04 00:00:52.000000000 +1000
+@@ -148,7 +147,7 @@ void kpTool::createAction ()
+     }
+ 
+ 
+-    m_action = new kpToolAction (text (), iconSet (), shortcutForKey (m_key),
++    m_action = new kpToolAction (text (), iconName (), shortcutForKey (m_key),
+                                  this, SLOT (slotActionActivated ()),
+                                  m_mainWindow->actionCollection (), name ());
+     m_action->setExclusiveGroup (QString::fromLatin1 ("Tool Box Actions"));
+@@ -348,6 +347,22 @@ void kpTool::setDescription (const QStri
+ 
+ 
+ // public
++QString kpTool::whatsThis ()
++{
++// Icon doesn't flow well with text IMO
++#if 0
++    if (!m_action)
++        createAction ();
++        
++    return m_action->whatsThisWithIcon ();
++#else
++    // (We could be a const() function now if we wanted to be)
++    return description ();
++#endif
++}
++
++
++// public
+ const char *kpTool::name () const
+ {
+     return m_name;
+@@ -605,17 +620,9 @@ void kpTool::reselect ()
+ 
+ 
+ // public
+-QIconSet kpTool::iconSet (int forceSize) const
++QString kpTool::iconName () const
+ {
+-#if DEBUG_KP_TOOL && 0
+-    kdDebug () << "kpTool(" << name () << ")::iconSet(forceSize=" << forceSize << ")" << endl;
+-#endif
+-    // (robust in case BarIcon() default arg changes)
+-    // TODO: I would use BarIconSet but tool icons placed in mainToolBar don't show up!?
+-    if (forceSize > 0)
+-        return BarIcon (name (), forceSize);
+-    else
+-        return BarIcon (name ());
++    return name ();
+ }
+ 
+ // public
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/tools/kptool.h ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/tools/kptool.h
+--- kolourpaint-1.2.2_kde3/kolourpaint/tools/kptool.h	2004-09-23 22:51:04.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/tools/kptool.h	2004-01-01 00:00:00.000000000 +1100
+@@ -37,7 +37,6 @@
+ #include <kpdefs.h>
+ 
+ 
+-class QIconSet;
+ class QPixmap;
+ 
+ class KKeySequence;
+@@ -94,6 +93,8 @@ public:
+     QString description () const;
+     void setDescription (const QString &description);
+ 
++    QString whatsThis ();
++
+     int key () const;
+     void setKey (int key);
+ 
+@@ -194,7 +195,7 @@ signals:
+ 
+ 
+ public:
+-    QIconSet iconSet (int forceSize = 0) const;
++    QString iconName () const;
+     kpToolAction *action ();
+ 
+ signals:
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/tools/Makefile.am ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/tools/Makefile.am
+--- kolourpaint-1.2.2_kde3/kolourpaint/tools/Makefile.am	2004-07-15 00:27:40.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/tools/Makefile.am	2005-06-03 18:04:26.000000000 +1000
+@@ -1,4 +1,5 @@
+-INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../pixmapfx \
++INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../compat -I$(srcdir)/../cursors \
++    -I$(srcdir)/../pixmapfx \
+     -I$(srcdir)/../tools \
+     -I$(srcdir)/../widgets $(all_includes)
+ 
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/widgets/kptooltoolbar.cpp ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/widgets/kptooltoolbar.cpp
+--- kolourpaint-1.2.2_kde3/kolourpaint/widgets/kptooltoolbar.cpp	2004-08-14 15:40:09.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/widgets/kptooltoolbar.cpp	2005-06-04 23:40:51.000000000 +1000
+@@ -26,6 +26,11 @@
+ */
+ 
+ 
++// TODO: All the confusing button pushing logic and sync with KAction
++//       could have been avoided by subclassing KAction.  Better yet,
++//       make KToolBar support multicolumn toolbars.
++
++
+ #define DEBUG_KP_TOOL_TOOL_BAR 0
+ 
+ 
+@@ -34,6 +39,7 @@
+ #include <qbuttongroup.h>
+ #include <qlayout.h>
+ #include <qdatetime.h>
++#include <qtimer.h>
+ #include <qtoolbutton.h>
+ #include <qtooltip.h>
+ #include <qwidget.h>
+@@ -41,11 +47,13 @@
+ 
+ #include <kdebug.h>
+ #include <kicontheme.h>
++#include <klocale.h>
++#include <kpopupmenu.h>
+ 
+ #include <kpdefs.h>
++#include <kpmainwindow.h>
+ #include <kptool.h>
+ #include <kptoolaction.h>
+-
+ #include <kptoolwidgetbrush.h>
+ #include <kptoolwidgeterasersize.h>
+ #include <kptoolwidgetfillstyle.h>
+@@ -53,19 +61,28 @@
+ #include <kptoolwidgetopaqueortransparent.h>
+ #include <kptoolwidgetspraycansize.h>
+ 
++#include <kpcompat_ktoolbarbutton.h>
+ 
+-class kpToolButton : public QToolButton
++     
++struct kpToolToolBarPrivate
++{
++    kpMainWindow *m_mainWindow;
++};
++
++
++class kpToolButton : public kpCompat_KToolBarButton
+ {
+ public:
+     kpToolButton (kpTool *tool, QWidget *parent)
+-        : QToolButton (parent),
++        : kpCompat_KToolBarButton (
++              tool ? tool->iconName () : QString::null,
++              nextID++,
++              parent, 0/*name*/,
++              tool ? tool->text () : QString::null),
+           m_tool (tool)
+     {
+     }
+ 
+-    virtual ~kpToolButton ()
+-    {
+-    }
+ 
+ protected:
+     // virtual [base QWidget]
+@@ -75,21 +92,67 @@ protected:
+             m_tool->globalDraw ();
+     }
+ 
++    
+     kpTool *m_tool;
++    static int nextID;
+ };
+ 
+ 
+-kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows, const char *name)
+-    : KToolBar ((QWidget *) mainWindow, name, false/*don't use global toolBar settings*/, true/*readConfig*/),
++// protected static
++int kpToolButton::nextID = 0;
++    
++
++kpToolToolBar::kpToolToolBar (kpMainWindow *mainWindow,
++        int colsOrRows,
++        const char *name)
++    : KToolBar (mainWindow, name,
++                false/*don't use global toolBar settings*/,
++                true/*readConfig*/),
+       m_vertCols (colsOrRows),
+       m_buttonGroup (0),
+       m_baseWidget (0),
+       m_baseLayout (0),
+       m_toolLayout (0),
+-      m_previousTool (0), m_currentTool (0)
++      m_previousTool (0), m_currentTool (0),
++      d (new kpToolToolBarPrivate ())
+ {
+-    setHorizontallyStretchable (false);
+-    setVerticallyStretchable (false);
++    d->m_mainWindow = mainWindow;
++    
++    
++    // With these lines enabled, mousePressEvent's weren't being generated
++    // when right clicking in empty part of the toolbar (each call affects
++    // the toolbar in its respective orientation).  They don't seem to be
++    // needed anyway since !isResizeEnabled().
++    
++    //setHorizontallyStretchable (false);
++    //setVerticallyStretchable (false);
++
++
++    KPopupMenu *menu = iconSizeContextMenu ();
++    if (menu)
++    {
++        // Our default icon size is different to the KToolBar default.  So
++        // hide KToolBar's "Default" popupmenu item.  Add a fake one in its
++        // place that traps into our code.
++        //
++        // The only difference the user may notice is that clicking on
++        // "Default" always results in 16x16 being checked instead of
++        // "Default".
++
++        menu->setItemVisible (menu->idAt (0), false);
++        
++        menu->insertItem (i18n ("Default"),
++            this,
++            SLOT (changeToDefaultIconSize ()),
++            0/*accel*/,
++            49/*id*/, 0/*index*/);
++    }
++    else
++    {
++        kdError () << "kpToolToolBar::<ctor>() no iconSizeContextMenu()"
++                   << endl;
++    }
++    
+ 
+     m_baseWidget = new QWidget (this);
+ 
+@@ -149,6 +212,35 @@ kpToolToolBar::~kpToolToolBar ()
+ {
+     unregisterAllTools ();
+     delete m_buttonGroup;
++    delete d;
++}
++
++
++// public
++int kpToolToolBar::defaultIconSize () const
++{
++    return KIcon::SizeSmall;
++}
++
++
++// protected
++KPopupMenu *kpToolToolBar::findKPopupMenuChild (const char *name)
++{
++    QObject *c = child (name, "KPopupMenu");
++    if (!c)
++        return 0;
++        
++    KPopupMenu *menu = dynamic_cast <KPopupMenu *> (c);
++    return menu;
++}
++
++// protected
++KPopupMenu *kpToolToolBar::iconSizeContextMenu ()
++{
++    // contextMenu on first time
++    (void) contextMenu ();
++    
++    return findKPopupMenuChild ("size");
+ }
+ 
+ 
+@@ -164,17 +256,11 @@ void kpToolToolBar::registerTool (kpTool
+     }
+     int num = m_buttonToolPairs.size ();
+ 
+-    QToolButton *b = new kpToolButton (tool, m_baseWidget);
+-    b->setAutoRaise (true);
+-    b->setUsesBigPixmap (false);
+-    b->setUsesTextLabel (false);
++    kpToolButton *b = new kpToolButton (tool, m_baseWidget);
+     b->setToggleButton (true);
+-
+-    b->setText (tool->text ());
+-    b->setIconSet (tool->iconSet (KIcon::SizeSmall/*16x16*/));
++    if (iconText () == KToolBar::IconOnly)
+     QToolTip::add (b, tool->toolTip ());
+-    QWhatsThis::add (b, tool->description ());
+-
++    QWhatsThis::add (b, tool->whatsThis ());
+     m_buttonGroup->insert (b);
+     addButton (b, orientation (), num);
+ 
+@@ -484,6 +568,7 @@ void kpToolToolBar::slotToolActionToolTi
+     {
+         if (tool == (*it).m_tool)
+         {
++            if (iconText () == KToolBar::IconOnly)
+             QToolTip::add ((*it).m_button, tool->toolTip ());
+             return;
+         }
+@@ -491,6 +576,20 @@ void kpToolToolBar::slotToolActionToolTi
+ }
+ 
+ 
++// private slot
++void kpToolToolBar::changeToDefaultIconSize ()
++{    
++#if DEBUG_KP_TOOL_TOOL_BAR
++    kdDebug () << "kpToolToolBar::changeToDefaultIconSize()" << endl;
++#endif
++
++    setIconSize (defaultIconSize ());
++    
++    if (d->m_mainWindow)
++        d->m_mainWindow->setSettingsDirty ();
++}
++
++
+ // public slot virtual [base QDockWindow]
+ void kpToolToolBar::setOrientation (Qt::Orientation o)
+ {
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/widgets/kptooltoolbar.h ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/widgets/kptooltoolbar.h
+--- kolourpaint-1.2.2_kde3/kolourpaint/widgets/kptooltoolbar.h	2004-07-10 21:17:10.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/widgets/kptooltoolbar.h	2005-06-04 23:30:43.000000000 +1000
+@@ -30,16 +30,22 @@
+ #define __kp_tool_tool_bar_h__
+ 
+ #include <qvaluevector.h>
++
++// COMPAT: We want KToolBar::contextMenu() :(
++#define private protected
+ #include <ktoolbar.h>
++#undef private
++
+ 
+ class QBoxLayout;
+-class QButton;
+ class QButtonGroup;
+ class QWidget;
+ class QGridLayout;
++class QToolButton;
+ 
+ class kpMainWindow;
+ class kpTool;
++class kpToolButton;
+ 
+ class kpToolWidgetBase;
+ class kpToolWidgetBrush;
+@@ -57,6 +63,21 @@ public:
+     kpToolToolBar (kpMainWindow *mainWindow, int colsOrRows = 2, const char *name = 0);
+     virtual ~kpToolToolBar ();
+ 
++    int defaultIconSize () const;
++    
++    
++protected:
++    // Returns an arbitrary KPopupMenu child with <name> or 0 if it can't
++    // find one.  If more than 1 KPopupMenu child has the same name, then
++    // you can't depend on which one it returns.
++    KPopupMenu *findKPopupMenuChild (const char *name);
++    
++    // Returns the "Icon Size" submenu of contextMenu().  May return 0
++    // if it can't get the contextMenu().
++    KPopupMenu *iconSizeContextMenu ();
++    
++    
++public:
+     void registerTool (kpTool *tool);
+     void unregisterTool (kpTool *tool);
+     void unregisterAllTools ();
+@@ -93,6 +114,9 @@ private slots:
+     void slotToolActionActivated ();
+     void slotToolActionToolTipChanged ();
+ 
++private slots:
++    void changeToDefaultIconSize ();
++    
+ public slots:
+     virtual void setOrientation (Qt::Orientation o);
+ 
+@@ -120,7 +144,7 @@ private:
+ private:
+     struct kpButtonToolPair
+     {
+-        kpButtonToolPair (QButton *button, kpTool *tool)
++        kpButtonToolPair (kpToolButton *button, kpTool *tool)
+             : m_button (button), m_tool (tool)
+         {
+         }
+@@ -130,7 +154,7 @@ private:
+         {
+         }
+ 
+-        QButton *m_button;
++        kpToolButton *m_button;
+         kpTool *m_tool;
+     };
+ 
+@@ -142,7 +166,7 @@ private:
+     // There is no need to maintain binary compatibility at this stage.
+     // The d-pointer is just so that you can experiment without recompiling
+     // the kitchen sink.
+-    class kpToolToolBarPrivate *d;
++    struct kpToolToolBarPrivate *d;
+ };
+ 
+ #endif  // __kp_tool_tool_bar_h__
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/widgets/kptoolwidgetbase.cpp ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/widgets/kptoolwidgetbase.cpp
+--- kolourpaint-1.2.2_kde3/kolourpaint/widgets/kptoolwidgetbase.cpp	2004-08-14 15:40:09.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/widgets/kptoolwidgetbase.cpp	2005-06-04 15:19:18.000000000 +1000
+@@ -553,6 +553,12 @@ bool kpToolWidgetBase::selectNextOption 
+ // protected virtual [base QWidget]
+ void kpToolWidgetBase::mousePressEvent (QMouseEvent *e)
+ {
++    e->ignore ();
++    
++    if (e->button () != Qt::LeftButton)
++    	return;
++
++
+     for (int i = 0; i < (int) m_pixmapRects.size (); i++)
+     {
+         for (int j = 0; j < (int) m_pixmapRects [i].size (); j++)
+@@ -565,8 +571,6 @@ void kpToolWidgetBase::mousePressEvent (
+             }
+         }
+     }
+-
+-    e->ignore ();
+ }
+ 
+ // protected virtual [base QFrame]
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/kolourpaint/widgets/Makefile.am ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/widgets/Makefile.am
+--- kolourpaint-1.2.2_kde3/kolourpaint/widgets/Makefile.am	2004-07-15 00:43:36.000000000 +1000
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/kolourpaint/widgets/Makefile.am	2005-06-03 18:03:30.000000000 +1000
+@@ -1,4 +1,5 @@
+-INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../cursors -I$(srcdir)/../pixmapfx \
++INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../compat -I$(srcdir)/../cursors \
++    -I$(srcdir)/../pixmapfx \
+     -I$(srcdir)/../tools \
+     -I$(srcdir)/../widgets $(all_includes)
+ 
+@@ -15,5 +16,8 @@ libkolourpaintwidgets_la_SOURCES = kpcol
+     kptoolwidgetopaqueortransparent.cpp \
+     kptoolwidgetspraycansize.cpp
+ 
++# TODO: Why is this needed?  Isn't linking at the toplevel enough?
++libkolourpaintwidgets_la_LIBADD = ../compat/libkolourpaintcompat.la
++
+ METASOURCES = AUTO
+ 
+diff -urdpbBw -x'*.o' -x'*.lo' -x'*.la' -x'*.a' -x'*.moc' -x'.#*' -x'*~' -xMakefile -x'Makefile.[cir]*' -x.deps -x.libs -x'*.orig' -x'*.rej' -x kolourpaintlicense.h -xCVS -xk -xk2 -xk3 -xk4 -xk5 -x.svn -xstamp-h1 -x'*.gmo' -xlibtool -x'*deldel*' -x moo -x120req -x122req -xautom4te.cache -xconfig.h -xconfig.log -xconfig.status -xkolourpaint-flick -N kolourpaint-1.2.2_kde3/VERSION ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/VERSION
+--- kolourpaint-1.2.2_kde3/VERSION	2004-11-20 22:47:57.000000000 +1100
++++ ../kolourpaint-1.2.2_kde3-with-lgpl-tux-cache/VERSION	2005-06-04 17:29:15.000000000 +1000
+@@ -1 +1 @@
+-1.2.2_kde3
++1.2.2_kde3 with 1.4 additions
