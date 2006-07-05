@@ -29,7 +29,7 @@
 #include <kpmainwindow_p.h>
 
 #include <kaction.h>
-#include <kactivelabel.h>
+#include <qlabel.h>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -179,7 +179,8 @@ void kpMainWindow::slotHelpTakingScreenshots ()
     dlg.setDefaultButton( KDialog::Close );
     dlg.showButtonSeparator (true);
 
-    KActiveLabel *messageLabel = new KActiveLabel (message, &dlg);
+    QLabel *messageLabel = new QLabel (message, &dlg);
+    messageLabel->setOpenExternalLinks(true);
     messageLabel->setNotifyClick (true);  // Fire urlClick() signal.
     connect (messageLabel, SIGNAL (urlClick (const QString &)),
              this, SLOT (slotHelpTakingScreenshotsFollowLink (const QString &)));
