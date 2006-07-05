@@ -294,30 +294,25 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
 
     QPainter painter (this);
 
-    // sync: painter translated to top-left of contentsRect().
-    painter.translate (contentsRect ().x (), contentsRect ().y ());
-
-
-    const QRect contentsRectMovedTo00 (0, 0,
-        contentsRect ().width (), contentsRect ().height ());
 
     // Fill with background.
     if (isEnabled () && m_mainWindow)
     {
-        // sync: ASSUMPTION: painter translated to top-left of contentsRect().
-        //             This is where the checkerboard starts - must be (0,0)
-        //             from kpView::drawTransparentBackground's point of view.
         kpView::drawTransparentBackground (&painter,
-            contentsRectMovedTo00,
+            contentsRect ().topLeft ()/*checkerboard top-left*/,
+            contentsRect (),
             true/*preview*/);
     }
     else
     {
         // TODO: Given we are no longer double buffering, is this even required?
         //       Remember to check everywhere else in KolourPaint.
-        painter.fillRect (contentsRectMovedTo00,
+        painter.fillRect (contentsRect (),
             palette ().color (QPalette::Background));
     }
+
+
+    painter.translate (contentsRect ().x (), contentsRect ().y ());
 
 
     // Draw "Swap Colours" button (top-right).
@@ -382,9 +377,9 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
 }
 
 
-/*
- * kpColorCells
- */
+//
+// kpColorCells
+///
 
 static inline int roundUp2 (int val)
 {

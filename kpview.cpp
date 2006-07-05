@@ -1265,29 +1265,45 @@ QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
 
 // public static
 void kpView::drawTransparentBackground (QPainter *painter,
-                                        const QRect &rect,
+                                        const QPoint &patternOrigin,
+                                        const QRect &viewRect,
                                         bool isPreview)
 {
+#if DEBUG_KP_VIEW_RENDERER && 1
+    kDebug () << "kpView::drawTransparentBackground() patternOrigin="
+              << patternOrigin
+              << " viewRect=" << viewRect
+              << " isPreview=" << isPreview
+               << endl;
+#endif
+
     const int cellSize = !isPreview ? 16 : 10;
 
-    int starty = rect.y ();
-    if (starty % cellSize)
-        starty -= (starty % cellSize);
+    // TODO: % is unpredictable with negatives.
 
-    int startx = rect.x ();
-    if (startx % cellSize)
-        startx -= (startx % cellSize);
+    int starty = viewRect.y ();
+    if ((starty - patternOrigin.y ()) % cellSize)
+        starty -= ((starty - patternOrigin.y ()) % cellSize);
+
+    int startx = viewRect.x ();
+    if ((startx - patternOrigin.x ()) % cellSize)
+        startx -= ((startx - patternOrigin.x ()) % cellSize);
+
+#if DEBUG_KP_VIEW_RENDERER && 1
+    kDebug () << "\tstartXY=" << QPoint (startx, starty) << endl;
+#endif
 
     painter->save ();
     
-    // Clip to <rect> as we may draw outside it on all sides.
-    painter->setClipRect (rect, Qt::IntersectClip/*honour existing clip*/);
+    // Clip to <viewRect> as we may draw outside it on all sides.
+    painter->setClipRect (viewRect, Qt::IntersectClip/*honour existing clip*/);
     
-    for (int y = starty; y <= rect.bottom (); y += cellSize)
+    for (int y = starty; y <= viewRect.bottom (); y += cellSize)
     {
-        for (int x = startx; x <= rect.right (); x += cellSize)
+        for (int x = startx; x <= viewRect.right (); x += cellSize)
         {
-            bool parity = (x / cellSize + y / cellSize) % 2;
+            bool parity = ((x - patternOrigin.x ()) / cellSize +
+                (y - patternOrigin.y ()) / cellSize) % 2;
             QColor col;
 
             if (parity)
@@ -1303,7 +1319,51 @@ void kpView::drawTransparentBackground (QPainter *painter,
             painter->fillRect (x, y, cellSize, cellSize, col);
         }
     }
+
     painter->restore ();
+}
+
+// protected
+void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRect)
+{
+#if DEBUG_KP_VIEW_RENDERER && 1
+    kDebug () << "kpView(" << name ()
+               << ")::paintEventDrawCheckerBoard(viewRect=" << viewRect
+               << ") origin=" << origin << endl;
+#endif
+
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
+
+    QPoint patternOrigin = origin ();
+
+    if (scrollableContainer ())
+    {
+    #if DEBUG_KP_VIEW_RENDERER && 1 || 1
+        kDebug () << "\tscrollableContainer: contents[XY]="
+                   << QPoint (scrollableContainer ()->contentsX (),
+                              scrollableContainer ()->contentsY ())
+                   << " contents[XY]Soon="
+                   << QPoint (scrollableContainer ()->contentsXSoon (),
+                              scrollableContainer ()->contentsYSoon ())
+                   << endl;
+    #endif
+        // Make checkerboard appear static relative to the scroll view.
+        // This makes it more obvious that any visible bits of the
+        // checkboard represent transparent pixels and not grey and white
+        // squares.
+        patternOrigin = QPoint (scrollableContainer ()->contentsXSoon (),
+                                scrollableContainer ()->contentsYSoon ());
+    #if DEBUG_KP_VIEW_RENDERER && 1 || 1
+        kDebug () << "\t\tpatternOrigin=" << patternOrigin << endl;
+    #endif
+    }
+
+    // TODO: this static business doesn't work yet
+    patternOrigin = QPoint (0, 0);
+
+    drawTransparentBackground (painter, patternOrigin, viewRect);
 }
 
 // protected
@@ -1752,7 +1812,7 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
         kDebug () << "\tmask=" << !docPixmap.mask ().isNull ()
                    << endl;
     #endif
-        drawTransparentBackground (&painter, viewRect);
+        paintEventDrawCheckerBoard (&painter, viewRect);
     }
     else
     {

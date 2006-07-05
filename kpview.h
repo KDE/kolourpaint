@@ -517,22 +517,26 @@ public:
      * Draws an opaque background representing transparency.
      *
      * Currently, it draws a checkerboard which, if it were to be drawn
-     * in its entirety, is tiled from (0,0).  Therefore, if the
-     * checkerboard logically starts from a different point (e.g. if the
-     * view is surrounded by a border on the same paint device), you must
-     * translate the painter (and <rect>) before calling this function.
-     * That way, the top-left of the view is referred to as (0,0).
+     * in its entirety, is tiled from <patternOrigin>.
      *
      * @param painter Painter.
-     * @param rect Rectangle to paint in relative to the painter.
+     * @param patternOrigin Logical top-left point of the checkerboard,
+     *                      relative to the painter, if it were to be
+     *                      drawn in its entirety.
+     * @param viewRect Rectangle to paint in relative to the painter.
      * @param isPreview Whether the view is for a preview as opposed to
      *                  e.g. editing.  If set, this function may render
      *                  slightly differently.
      */
     static void drawTransparentBackground (QPainter *painter,
-                                           const QRect &rect,
+                                           const QPoint &patternOrigin,
+                                           const QRect &viewRect,
                                            bool isPreview = false);
 protected:
+    // Draws a checkerboard that looks static even if the view is scrollable.
+    void paintEventDrawCheckerBoard (QPainter *painter,
+        const QRect &viewRect);
+
     // Draws the selection and its border onto <destPixmap>.
     // <destPixmap> is the part of the document given by <docRect>.
     void paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect);
