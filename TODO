@@ -48,6 +48,15 @@ line: shift+alt doesn't work but alt+shift does
 KolourPaint 1.4
 ~~~~~~~~~~~~~~~
 
+rename pics/custom and pics/ to correct
+rename airspray
+
+rename kolourpaint-1.4pre/kolourpaint to kolourpaint-1.4pre/src (there was
+a reason why this wasn't done but I forgot - document this time)
+
+unix2dos text files in all non-KDE releases to not give bad notepad impression
+
+
 kolourpaint not associated with .bmp
 
 
@@ -190,8 +199,6 @@ text box create != cmd
 => deselecting empty (more accurately, untouched) box = no text box
 
 text toolbar permanently floats to stop view from bobbing up/down
-
-CTRL+Backspace deletes word
 
 
 Rethink kpView/kpViewManager design because of:
@@ -587,7 +594,6 @@ Update: qt-copy/patches/0005-qpixmap_mitshm.patch: "this obsoletes KPixmapIO"
 
 Bela-Andreas Bargel:
 - extra toolbar with slideshow and other image viewing options
-- "CTRL-mousewheel" to zoom in/out of the window
 
 Christoph Eckert:
 - Icons could be rearranged; drawing and editing tools should
