@@ -63,7 +63,7 @@
 
 
 kpMainWindow::kpMainWindow ()
-    : KMainWindow (0/*parent*/, "mainWindow"),
+    : KMainWindow (0/*parent*/),
       m_isFullyConstructed (false)
 {
     init ();
@@ -73,7 +73,7 @@ kpMainWindow::kpMainWindow ()
 }
 
 kpMainWindow::kpMainWindow (const KUrl &url)
-    : KMainWindow (0/*parent*/, "mainWindow"),
+    : KMainWindow (0/*parent*/),
       m_isFullyConstructed (false)
 {
     init ();
@@ -83,7 +83,7 @@ kpMainWindow::kpMainWindow (const KUrl &url)
 }
 
 kpMainWindow::kpMainWindow (kpDocument *newDoc)
-    : KMainWindow (0/*parent*/, "mainWindow"),
+    : KMainWindow (0/*parent*/),
       m_isFullyConstructed (false)
 {
     init ();
