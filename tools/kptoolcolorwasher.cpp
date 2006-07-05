@@ -82,7 +82,7 @@ void kpToolColorWasher::globalDraw ()
     }
 
     if (backgroundColor ().isTransparent () ||
-        document ()->pixmap ()->mask ())
+        !document ()->pixmap ()->mask ().isNull ())
     {
         maskBitmap = kpPixmapFX::getNonNullMask (*document ()->pixmap ());
         maskPainter.begin (&maskBitmap);
