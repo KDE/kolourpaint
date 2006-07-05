@@ -565,7 +565,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 
 
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tselectedURL=" << fd.selectedURL () << endl;
+        kDebug () << "\tselectedUrl=" << fd.selectedURL () << endl;
     #endif
         return fd.selectedUrl ();
     }
