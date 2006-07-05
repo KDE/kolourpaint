@@ -241,7 +241,7 @@ void kpMainWindow::init ()
 
 
     //
-    // create more GUI
+    // Create more GUI.
     //
 
     m_colorToolBar = new kpColorToolBar (i18n ("Color Box"), this);
