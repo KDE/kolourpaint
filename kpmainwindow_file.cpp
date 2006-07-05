@@ -316,7 +316,7 @@ KUrl::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &
     fd.setPreviewWidget (new KImageFilePreview (&fd));
 
     if (fd.exec ())
-        return fd.selectedURLs ();
+        return fd.selectedUrls ();
     else
         return KUrl::List ();
 }
@@ -537,7 +537,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 
 
         bool shouldAllowOverwritePrompt =
-                (fd.selectedURL () != startURL ||
+                (fd.selectedUrl () != startURL ||
                  newSaveOptions.mimeType () != startSaveOptions.mimeType ());
         if (allowOverwritePrompt)
         {
@@ -567,7 +567,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\tselectedURL=" << fd.selectedURL () << endl;
     #endif
-        return fd.selectedURL ();
+        return fd.selectedUrl ();
     }
     else
         return KUrl ();
@@ -1154,12 +1154,15 @@ void kpMainWindow::setAsWallpaper (bool centered)
     // I'm going to all this trouble because the user might not have kdebase
     // installed so kdebase/kdesktop/KBackgroundIface.h might not be around
     // to be compiled in (where user == developer :))
+// COMPAT
+#if 0
     QDBusInterfacePtr kdesktop( "org.kde.kdesktop", "/KBackground", "org.kde.kdesktop.KBackground" );
 	QDBusReply<void> retVal = kdesktop->call( "setWallpaper", QString (m_document->url ().path ()), int (centered ? 1 : 2) );
 	if (!retVal.isSuccess())
     {
         KMessageBox::sorry (this, i18n ("Could not change wallpaper."));
     }
+#endif
 }
 
 // private slot

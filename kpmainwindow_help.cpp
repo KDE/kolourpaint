@@ -106,7 +106,7 @@ void kpMainWindow::slotHelpTakingScreenshots ()
 #if DEBUG_KP_MAIN_WINDOW
     //kDebug () << "\tdcopApps=" << dcopApps << endl;
 #endif
-    bool isRunningKDE = QDBus::sessionBus().busService()->nameHasOwner("kwin");
+    bool isRunningKDE = true;  // COMPAT QDBus::sessionBus().busService()->nameHasOwner("kwin");
 
 #if 0
 {

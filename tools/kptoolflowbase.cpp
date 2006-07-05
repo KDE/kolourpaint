@@ -42,6 +42,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpbug.h>
 #include <kpcolor.h>
 #include <kpcommandhistory.h>
 #include <kpcursorprovider.h>
@@ -222,10 +223,10 @@ void kpToolFlowBase::hover (const QPoint &point)
     setUserShapePoints (point);
 }
 
-QVector <QPoint> kpToolFlowBase::interpolatePoints (const QRect &rect/*TODO:take me away*/,
+QList <QPoint> kpToolFlowBase::interpolatePoints (const QRect &rect/*TODO:take me away*/,
     const QPoint &thisPoint, const QPoint &lastPoint)
 {
-    QVector <QPoint> ret;
+    QList <QPoint> ret;
     
     // Sweeps a pixmap along a line (modified Bresenham's line algorithm,
     // see MODIFIED comment below).
@@ -322,7 +323,7 @@ void kpToolFlowBase::drawLineSetupPainterMask (QPixmap *pixmap,
         painter->setPen (col.toQColor ());
     }
 
-    if (col.isTransparent () || pixmap->mask ())
+    if (col.isTransparent () || !pixmap->mask ().isNull ())
     {
         *maskBitmap = kpPixmapFX::getNonNullMask (*pixmap);
         maskPainter->begin (maskBitmap);

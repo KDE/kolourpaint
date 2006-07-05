@@ -30,9 +30,9 @@
 #define KP_TOOL_FLOW_BASE_H
 
 
+#include <qlist.h>
 #include <qpixmap.h>
 #include <qrect.h>
-#include <qvector.h>
 
 #include <kpcommandhistory.h>
 #include <kptool.h>
@@ -78,7 +78,7 @@ public:
     virtual void beginDraw ();
     virtual void hover (const QPoint &point);
     
-    QVector <QPoint> interpolatePoints (const QRect &rect/*TODO:take me away*/,
+    QList <QPoint> interpolatePoints (const QRect &rect/*TODO:take me away*/,
         const QPoint &thisPoint, const QPoint &lastPoint);
 
     virtual void drawPoint (const QPoint &point) = 0;
