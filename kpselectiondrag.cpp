@@ -67,6 +67,13 @@ kpSelectionDrag::~kpSelectionDrag ()
 // public
 void kpSelectionDrag::setSelection (const kpSelection &sel)
 {
+#if DEBUG_KP_SELECTION_DRAG && 1
+    kDebug () << "kpSelectionDrag::setSelection() w=" << sel.width ()
+               << " h=" << sel.height ()
+               << " pm=" << sel.pixmap ()
+               << endl;
+#endif
+
     if (!sel.pixmap ())
     {
         kError () << "kpSelectionDrag::setSelection() without pixmap" << endl;
@@ -78,7 +85,18 @@ void kpSelectionDrag::setSelection (const kpSelection &sel)
     // OPT: an awful waste of memory storing image in both selection and QImage
 
     // HACK: need to set image else QImageDrag::format() lies
-    setImage (kpPixmapFX::convertToImage (*m_selection.pixmap ()));
+    const QImage image = kpPixmapFX::convertToImage (*m_selection.pixmap ());
+#if DEBUG_KP_SELECTION_DRAG && 1
+    kDebug () << "\timage: w=" << image.width ()
+               << " h=" << image.height ()
+               << endl;
+#endif
+    if (image.isNull ())
+    {
+        kError () << "kpSelectionDrag::setSelection() could not convert to image"
+                   << endl;
+    }
+    setImage (image);
 }
 
 // protected
@@ -139,8 +157,12 @@ bool kpSelectionDrag::provides (const char *mimeType) const
     if (!mimeType)
         return false;
 
-    return (!strcmp (mimeType, kpSelectionDrag::selectionMimeType) ||
+    const bool ret = (!strcmp (mimeType, kpSelectionDrag::selectionMimeType) ||
             Q3ImageDrag::provides (mimeType));
+#if DEBUG_KP_SELECTION_DRAG
+    kDebug () << "\treturning " << ret << endl;
+#endif
+    return ret;
 }
 
 // public virtual [base QMimeSource]
@@ -208,7 +230,12 @@ QByteArray kpSelectionDrag::encodedData (const char *mimeType) const
         kDebug () << "\twant it as QImage in QByteArray" << endl;
     #endif
 
-        return Q3ImageDrag::encodedData (mimeType);
+        QByteArray ba = Q3ImageDrag::encodedData (mimeType);
+ 
+    #if DEBUG_KP_SELECTION_DRAG
+        kDebug () << "\t\tba.size=" << ba.size () << endl;
+    #endif
+        return ba;
     }
 }
 
