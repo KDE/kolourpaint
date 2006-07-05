@@ -198,7 +198,37 @@ text tool could autoresize if font size changes or paste text (Bug #11)
 text box create != cmd
 => deselecting empty (more accurately, untouched) box = no text box
 
-text toolbar permanently floats to stop view from bobbing up/down
+text toolbar permanently floats to stop view from bobbing up/down:
+
+diff -ur -x'Makefile.rules*' -x'Makefile.calls*' -xMakefile.in -x'*.o' -x'*.moc' -x'*.lo' -x.deps -x.libs -xkolourpaint -xk -x'TODO*' -xMakefile -x'*.la' -x'*~' -x'*.txt' -xh -x'*.swp' -Npd -xkolourpaintlicense.h kolourpaint-pris/kpmainwindow.cpp kolourpaint/kpmainwindow.cpp
+--- kolourpaint-pris/kpmainwindow.cpp  2005-02-02 16:35:20.000000000 +1100
++++ kolourpaint/kpmainwindow.cpp 2005-02-01 14:02:46.000000000 +1100
+@@ -29,6 +29,7 @@
+ #include <kpmainwindow.h>
+ #include <kpmainwindow_p.h>
+
++#include <qdockarea.h>
+ #include <qdragobject.h>
+ #include <qpainter.h>
+ #include <qtimer.h>
+@@ -248,6 +249,15 @@ void kpMainWindow::init ()
+     // create more GUI
+     //
+
++    // Prevent text toolbar from docking - it's _really_ irritating
++    // otherwise since causes view to move down to fit toolbar on even
++    // reasonably sized screens
++    moveDockWindow (textToolBar (), Qt::DockTornOff);
++    leftDock ()->setAcceptDockWindow (textToolBar (), false);
++    rightDock ()->setAcceptDockWindow (textToolBar (), false);
++    topDock ()->setAcceptDockWindow (textToolBar (), false);
++    bottomDock ()->setAcceptDockWindow (textToolBar (), false);
++
+     m_colorToolBar = new kpColorToolBar (this, "Color Box");
+ #if DEBUG_KP_MAIN_WINDOW
+     kdDebug () << "\tTIME: new kpColorToolBar = " << time.restart () << "msec" << endl;
+
+This probably works for Qt3 but not Qt4.
 
 
 Rethink kpView/kpViewManager design because of:
