@@ -162,7 +162,7 @@ kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
 
 target_link_libraries(kolourpaint  ${KDE4_KDECORE_LIBS} kdeprint )
 
-install_targets(/bin kolourpaint )
+install(TARGETS kolourpaint  DESTINATION ${BIN_INSTALL_DIR} )
 
 
 ########### install files ###############
