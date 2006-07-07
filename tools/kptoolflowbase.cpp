@@ -30,14 +30,13 @@
 
 #include <kptoolflowbase.h>
 
+#include <cstdlib>
+
 #include <qapplication.h>
 #include <qbitmap.h>
 #include <qcursor.h>
 #include <qimage.h>
 #include <qpainter.h>
-#if DEBUG_KP_TOOL_FLOW_BASE
-    #include <qdatetime.h>
-#endif
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -223,31 +222,48 @@ void kpToolFlowBase::hover (const QPoint &point)
     setUserShapePoints (point);
 }
 
-QList <QPoint> kpToolFlowBase::interpolatePoints (const QRect &rect/*TODO:take me away*/,
-    const QPoint &thisPoint, const QPoint &lastPoint)
+static int randomNumberFrom0to99 ()
+{
+    return (rand () % 100);
+}
+
+QList <QPoint> kpToolFlowBase::interpolatePoints (const QPoint &thisPoint,
+    const QPoint &lastPoint,
+    double probability)
 {
     QList <QPoint> ret;
-    
+ 
+    const int probabilityTimes100 = int (probability * 100);
+#define SHOULD_DRAW()  (probabilityTimes100 == 100/*avoid rand() call*/ ||  \
+                        ::randomNumberFrom0to99 () < probabilityTimes100)
+
+#if 0                        
+    kDebug () << "prob=" << probability
+               << " *100=" << probabilityTimes100
+               << endl;
+#endif
+
+   
     // Sweeps a pixmap along a line (modified Bresenham's line algorithm,
     // see MODIFIED comment below).
     //
     // Derived from the zSprite2 Graphics Engine
 
-    const int x1 = (thisPoint - rect.topLeft ()).x (),
-                y1 = (thisPoint - rect.topLeft ()).y (),
-                x2 = (lastPoint - rect.topLeft ()).x (),
-                y2 = (lastPoint - rect.topLeft ()).y ();
+    const int x1 = thisPoint.x (),
+                y1 = thisPoint.y (),
+                x2 = lastPoint.x (),
+                y2 = lastPoint.y ();
 
     // Difference of x and y values
-    int dx = x2 - x1;
-    int dy = y2 - y1;
+    const int dx = x2 - x1;
+    const int dy = y2 - y1;
 
     // Absolute values of differences
-    int ix = qAbs (dx);
-    int iy = qAbs (dy);
+    const int ix = qAbs (dx);
+    const int iy = qAbs (dy);
 
     // Larger of the x and y differences
-    int inc = ix > iy ? ix : iy;
+    const int inc = ix > iy ? ix : iy;
 
     // Plot location
     int plotx = x1;
@@ -256,7 +272,8 @@ QList <QPoint> kpToolFlowBase::interpolatePoints (const QRect &rect/*TODO:take m
     int x = 0;
     int y = 0;
 
-    ret.append (QPoint (plotx, ploty));
+    if (SHOULD_DRAW ())
+        ret.append (QPoint (plotx, ploty));
     
     
     for (int i = 0; i <= inc; i++)
@@ -300,13 +317,17 @@ QList <QPoint> kpToolFlowBase::interpolatePoints (const QRect &rect/*TODO:take m
                 // is more than 1 point, of course).  This is in contrast to the
                 // ordinary line algorithm which can create diagonal adjacencies.
 
-                ret.append (QPoint (plotx, oldploty));
+                if (SHOULD_DRAW ())
+                    ret.append (QPoint (plotx, oldploty));
             }
 
-            ret.append (QPoint (plotx, ploty));
+            if (SHOULD_DRAW ())
+                ret.append (QPoint (plotx, ploty));
         }    
     }
     
+#undef SHOULD_DRAW
+
     return ret;
 }
 
@@ -363,31 +384,22 @@ void kpToolFlowBase::draw (const QPoint &thisPoint, const QPoint &lastPoint, con
     // sync: remember to restoreFastUpdates() in all exit paths
     viewManager ()->setFastUpdates ();
 
+    QRect dirtyRect;
+
     if (m_brushIsDiagonalLine ?
             currentPointCardinallyNextToLast () :
             currentPointNextToLast ())
     {
-        drawPoint (thisPoint);
+        dirtyRect = drawPoint (thisPoint);
     }
     // in reality, the system is too slow to give us all the MouseMove events
     // so we "interpolate" the missing points :)
     else
     {
-        QRect rect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
-        // TODO: I think this is wrong for pens due to lack of m_brushPixmap.
-        //       See comment for 011_kptoolpen_draw_push_down_draw_methods.diff
-        //       (part of r557112: approx. 2006-07-02 22:32:37 +10:00 AEST).
-        rect = neededRect (rect, m_brushPixmap [m_mouseButton].width ());
-    
-        QPixmap pixmap = document ()->getPixmapAt (rect);
-
-        if (drawLine (&pixmap, rect, thisPoint, lastPoint))
-        {
-            document ()->setPixmapAt (pixmap, rect.topLeft ());
-
-            m_currentCommand->updateBoundingRect (rect);
-        }        
+        dirtyRect = drawLine (thisPoint, lastPoint);
     }
+
+    m_currentCommand->updateBoundingRect (dirtyRect);
 
     viewManager ()->restoreFastUpdates ();
     setUserShapePoints (thisPoint);

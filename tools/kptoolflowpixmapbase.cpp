@@ -30,6 +30,7 @@
 
 #include <qbitmap.h>
 
+#include <kpbug.h>
 #include <kpcolor.h>
 #include <kpdocument.h>
 #include <kppixmapfx.h>
@@ -48,7 +49,7 @@ kpToolFlowPixmapBase::~kpToolFlowPixmapBase ()
 }
 
 
-void kpToolFlowPixmapBase::drawPoint (const QPoint & /*point*/)
+QRect kpToolFlowPixmapBase::drawPoint (const QPoint & /*point*/)
 {            
     if (color (m_mouseButton).isOpaque ())
         document ()->paintPixmapAt (m_brushPixmap [m_mouseButton], hotPoint ());
@@ -60,39 +61,41 @@ void kpToolFlowPixmapBase::drawPoint (const QPoint & /*point*/)
         document ()->slotContentsChanged (hotRect ());
     }
 
-    m_currentCommand->updateBoundingRect (hotRect ());
+    return (hotRect ());
 }
 
 
-
-bool kpToolFlowPixmapBase::drawLine (QPixmap *pixmap,
-    const QRect &docRect,
-    const QPoint &thisPoint, const QPoint &lastPoint)
+QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
-    QList <QPoint> points = interpolatePoints (docRect,
-        thisPoint, lastPoint);
+    QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
+    docRect = neededRect (docRect, m_brushPixmap [m_mouseButton].width ());
+    QPixmap pixmap = document ()->getPixmapAt (docRect);
+
+
+    QList <QPoint> points = interpolatePoints (thisPoint, lastPoint);
         
     for (QList <QPoint>::const_iterator pit = points.begin ();
          pit != points.end ();
          pit++)
     {
-        const int XXX = (*pit).x (), YYY = (*pit).y ();
+        const QPoint point = hotPoint ((*pit).x (), (*pit).y ()) - docRect.topLeft ();
         
         if (!color (m_mouseButton).isTransparent ())
         {
-            kpPixmapFX::paintPixmapAt (pixmap,
-                hotPoint (XXX, YYY),
+            kpPixmapFX::paintPixmapAt (&pixmap,
+                point,
                 m_brushPixmap [m_mouseButton]);
         }
         else
         {
-            kpPixmapFX::paintMaskTransparentWithBrush (pixmap,
-                hotPoint (XXX, YYY),
+            kpPixmapFX::paintMaskTransparentWithBrush (&pixmap,
+                point,
                 kpPixmapFX::getNonNullMask (m_brushPixmap [m_mouseButton]));
         }
     }
-
-    return true;
+    
+    document ()->setPixmapAt (pixmap, docRect.topLeft ());
+    return docRect;
 }
 
     

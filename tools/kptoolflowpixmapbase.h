@@ -50,12 +50,8 @@ public:
     virtual ~kpToolFlowPixmapBase ();
     
 protected:
-    virtual void drawPoint (const QPoint &point);
-    virtual bool drawLine (QPixmap *pixmap,
-        const QRect &docRect,
-        const QPoint &thisPoint, const QPoint &lastPoint);
-
-
+    virtual QRect drawPoint (const QPoint &point);
+    virtual QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint);
 };
 
 

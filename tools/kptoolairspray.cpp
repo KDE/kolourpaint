@@ -26,9 +26,10 @@
 */
 
 
-#define DEBUG_KP_TOOL_SPRAYCAN 0
+#define DEBUG_KP_TOOL_SPRAYCAN 1
 
-#include <stdlib.h>
+
+#include <cstdlib>
 
 #include <qbitmap.h>
 #include <qpainter.h>
@@ -42,335 +43,320 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpbug.h>
 #include <kpcommandhistory.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kptoolairspray.h>
+#include <kptoolflowcommand.h>
 #include <kptooltoolbar.h>
 #include <kptoolwidgetspraycansize.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
 
 
-/*
- * kpToolAirSpray
- */
-
 kpToolAirSpray::kpToolAirSpray (kpMainWindow *mainWindow)
-    : kpTool (i18n ("Spraycan"), i18n ("Sprays graffiti"),
-              Qt::Key_Y,
-              mainWindow, "tool_spraycan"),
-      m_currentCommand (0)
+    : kpToolFlowBase (i18n ("Spraycan"), i18n ("Sprays graffiti"),
+        Qt::Key_Y,
+        mainWindow, "tool_spraycan")
 {
     m_timer = new QTimer (this);
-    connect (m_timer, SIGNAL (timeout ()), this, SLOT (actuallyDraw ()));
+    connect (m_timer, SIGNAL (timeout ()),
+        this, SLOT (timeoutDraw ()));
 }
 
 kpToolAirSpray::~kpToolAirSpray ()
 {
-    delete m_currentCommand;
 }
 
 
-// private
+// protected virtual [base kpToolFlowBase]
 QString kpToolAirSpray::haventBegunDrawUserMessage () const
 {
     return i18n ("Click or drag to spray graffiti.");
 }
 
-// public virtual
+
+// public virtual [base kpToolFlowBase]
 void kpToolAirSpray::begin ()
 {
-    kpToolToolBar *tb = toolToolBar ();
-
     m_toolWidgetSpraycanSize = 0;
-    m_size = 10;
-
+    
+    kpToolToolBar *tb = toolToolBar ();
     if (tb)
     {
         m_toolWidgetSpraycanSize = tb->toolWidgetSpraycanSize ();
 
         if (m_toolWidgetSpraycanSize)
         {
-            m_size = m_toolWidgetSpraycanSize->spraycanSize ();
             connect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged (int)),
                      this, SLOT (slotSpraycanSizeChanged (int)));
 
             m_toolWidgetSpraycanSize->show ();
         }
     }
-
-    setUserMessage (haventBegunDrawUserMessage ());
+    
+    kpToolFlowBase::begin ();
 }
 
-// public virtual
+// public virtual [base kpToolFlowBase]
 void kpToolAirSpray::end ()
 {
+    kpToolFlowBase::end ();
+    
     if (m_toolWidgetSpraycanSize)
     {
         disconnect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged (int)),
                     this, SLOT (slotSpraycanSizeChanged (int)));
         m_toolWidgetSpraycanSize = 0;
     }
-
-    setUserMessage (haventBegunDrawUserMessage ());
-}
-
-// private slot
-void kpToolAirSpray::slotSpraycanSizeChanged (int size)
-{
-    m_size = size;
 }
 
 
-void kpToolAirSpray::beginDraw ()
-{
-    m_currentCommand = new kpToolAirSprayCommand (
-        color (m_mouseButton),
-        m_size,
-        mainWindow ());
-
-    // without delay
-    actuallyDraw ();
-
-    // use a timer instead of reimplementing draw() (we don't draw all the time)
-    m_timer->start (25);
-
-    setUserMessage (cancelUserMessage ());
-}
-
-void kpToolAirSpray::draw (const QPoint &thisPoint, const QPoint &, const QRect &)
-{
-    // if the user is moving the spray, make the spray line continuous
-    if (thisPoint != m_lastPoint)
-    {
-        // without delay
-        actuallyDraw ();
-    }
-
-    setUserShapePoints (thisPoint);
-}
-
-void kpToolAirSpray::actuallyDraw ()
+// protected
+void kpToolAirSpray::paintersSprayOneDocPoint (QPainter *painter,
+    QPainter *maskPainter,
+    const QRect &docRect,
+    const QPoint &docPoint)
 {
     QPolygon pArray (10);
-    int numPoints = 0;
-
-    QPoint p = m_currentPoint;
+    int numPointsCreated = 0;
 
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolAirSpray::actuallyDraw() currentPoint=" << p
-               << " size=" << m_size
+    kDebug () << "\t\tkpToolAirSpray::paintersSprayOneDocPoint(docRect=" << docRect
+               << ",docPoint=" << docPoint
+               << ") spraycanSize=" << spraycanSize ()
                << endl;
 #endif
 
-    int radius = m_size / 2;
+    const int radius = spraycanSize () / 2;
 
     for (int i = 0; i < 10; i++)
     {
         int dx, dy;
 
-        dx = (rand () % m_size) - radius;
-        dy = (rand () % m_size) - radius;
+        dx = (rand () % spraycanSize ()) - radius;
+        dy = (rand () % spraycanSize ()) - radius;
 
         // make it look circular
         // OPT: can be done better
         if (dx * dx + dy * dy <= radius * radius)
-            pArray [numPoints++] = QPoint (p.x () + dx, p.y () + dy);
+            pArray [numPointsCreated++] = QPoint (docPoint.x () + dx, docPoint.y () + dy);
     }
 
-    pArray.resize (numPoints);
+    pArray.resize (numPointsCreated);
 
-    if (numPoints > 0)
-    {
-        // leave the command to draw
-        m_currentCommand->addPoints (pArray);
-    }
-}
-
-// virtual
-void kpToolAirSpray::cancelShape ()
-{
-#if 0
-    endDraw (QPoint (), QRect ());
-    mainWindow ()->commandHistory ()->undo ();
-#else
-    m_timer->stop ();
-
-    m_currentCommand->finalize ();
-    m_currentCommand->cancel ();
-
-    delete m_currentCommand;
-    m_currentCommand = 0;
+#if DEBUG_KP_TOOL_SPRAYCAN && 0
+    kDebug () << "\t\t\tnumPointsCreated=" << numPointsCreated << endl;
 #endif
 
-    setUserMessage (i18n ("Let go of all the mouse buttons."));
-}
 
-void kpToolAirSpray::releasedAllButtons ()
-{
-    setUserMessage (haventBegunDrawUserMessage ());
-}
-
-// virtual
-void kpToolAirSpray::endDraw (const QPoint &, const QRect &)
-{
-    m_timer->stop ();
-
-    m_currentCommand->finalize ();
-    mainWindow ()->commandHistory ()->addCommand (m_currentCommand, false /* don't exec */);
-
-    // don't delete - it's up to the commandHistory
-    m_currentCommand = 0;
-
-    setUserMessage (haventBegunDrawUserMessage ());
-}
-
-
-/*
- * kpToolAirSprayCommand
- */
-
-kpToolAirSprayCommand::kpToolAirSprayCommand (const kpColor &color, int size,
-                                              kpMainWindow *mainWindow)
-    : kpCommand (mainWindow),
-      m_color (color),
-      m_size (size),
-      m_newPixmapPtr (0)
-{
-    m_oldPixmap = *document ()->pixmap ();
-}
-
-kpToolAirSprayCommand::~kpToolAirSprayCommand ()
-{
-    delete m_newPixmapPtr;
-}
-
-
-// public virtual [base kpCommand]
-QString kpToolAirSprayCommand::name () const
-{
-    return i18n ("Spraycan");
-}
-
-
-// public virtual [base kpCommand]
-int kpToolAirSprayCommand::size () const
-{
-    return kpPixmapFX::pixmapSize (m_newPixmapPtr) +
-           kpPixmapFX::pixmapSize (m_oldPixmap);
-}
-
-
-// Redo:
-//
-// must not call before unexecute() as m_newPixmapPtr is null
-// (one reason why we told addCommand() not to execute,
-//  the other being that the dots have already been draw onto the doc)
-void kpToolAirSprayCommand::execute ()
-{
-    if (m_newPixmapPtr)
+    if (numPointsCreated == 0)
+        return;
+        
+    
+    for (int i = 0; i < numPointsCreated; i++)
     {
-        document ()->setPixmapAt (*m_newPixmapPtr, m_boundingRect.topLeft ());
+    #if DEBUG_KP_TOOL_SPRAYCAN && 0
+        kDebug () << "\t\t\t\t" << i << ": " << pArray [i] << endl;
+    #endif
+    
+        QPoint pt (pArray [i].x () - docRect.x (),
+                   pArray [i].y () - docRect.y ());
 
-        // (will be regenerated in unexecute() if required)
-        delete m_newPixmapPtr;
-        m_newPixmapPtr = 0;
+        if (painter->isActive ())
+            painter->drawPoint (pt);
+
+        if (maskPainter->isActive ())
+            maskPainter->drawPoint (pt);
     }
-    else
-        kError () << "kpToolAirSprayCommand::execute() has null m_newPixmapPtr" << endl;
 }
 
-// Undo:
-void kpToolAirSprayCommand::unexecute ()
+// protected
+void kpToolAirSpray::pixmapSprayManyDocPoints (QPixmap *pixmap,
+    const QRect &docRect,
+    const QList <QPoint> &docPoints)
 {
-    if (!m_newPixmapPtr)
-    {
-        // the ultimate in laziness - figure out Redo info only if we Undo
-        m_newPixmapPtr = new QPixmap (m_boundingRect.width (), m_boundingRect.height ());
-        *m_newPixmapPtr = document ()->getPixmapAt (m_boundingRect);
-    }
-    else
-        kError () << "kpToolAirSprayCommand::unexecute() has non-null newPixmapPtr" << endl;
-
-    document ()->setPixmapAt (m_oldPixmap, m_boundingRect.topLeft ());
-}
-
-
-// public
-void kpToolAirSprayCommand::addPoints (const QPolygon &points)
-{
-    QRect docRect = points.boundingRect ();
-
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolAirSprayCommand::addPoints() docRect=" << docRect
-               << " numPoints=" << points.count () << endl;
-    for (int i = 0; i < (int) points.count (); i++)
-        kDebug () << "\t" << i << ": " << points [i] << endl;
+    kDebug () << "\tkpToolAirSpray::pixmapSprayManyDocPoints(docRect="
+               << docRect << ")"
+               << endl;
 #endif
 
-    QPixmap pixmap = document ()->getPixmapAt (docRect);
-    QBitmap mask;
-
+    QBitmap maskBitmap;
     QPainter painter, maskPainter;
-
-    if (m_color.isOpaque ())
+    
+    drawLineSetupPainterMask (pixmap,
+        &maskBitmap,
+        &painter, &maskPainter);
+        
+    for (QList <QPoint>::const_iterator pit = docPoints.begin ();
+         pit != docPoints.end ();
+         pit++)
     {
-        painter.begin (&pixmap);
-        painter.setPen (m_color.toQColor ());
+        paintersSprayOneDocPoint (&painter, &maskPainter,
+            docRect, *pit);
     }
 
-    if (!pixmap.mask ().isNull () || m_color.isTransparent ())
+    drawLineTearDownPainterMask (pixmap,
+        &maskBitmap,
+        &painter, &maskPainter);
+}
+
+
+// public virtual [base kpToolFlowBase]
+void kpToolAirSpray::beginDraw ()
+{
+#if DEBUG_KP_TOOL_SPRAYCAN
+    kDebug () << "kpToolAirSpray::beginDraw()" << endl;
+#endif
+
+    kpToolFlowBase::beginDraw ();
+    
+    // use a timer instead of reimplementing draw() (we don't draw all the time)
+    m_timer->start (25);    
+}
+
+
+// protected
+QRect kpToolAirSpray::drawLineWithProbability (const QPoint &thisPoint,
+         const QPoint &lastPoint,
+         double probability)
+{
+#if DEBUG_KP_TOOL_SPRAYCAN
+    kDebug () << "kpToolAirSpray::drawLine(thisPoint=" << thisPoint
+               << ",lastPoint=" << lastPoint
+               << ")" << endl;
+#endif
+
+    QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
+    docRect = neededRect (docRect, spraycanSize ());
+    QPixmap pixmap = document ()->getPixmapAt (docRect);
+
+    
+    QList <QPoint> docPoints = interpolatePoints (thisPoint, lastPoint,
+        probability);
+    
+    // By chance no points to draw?
+    if (docPoints.empty ())
+        return QRect ();
+        
+        
+    // Drawing a line (not just a point) starting at lastPoint?
+    if (thisPoint != lastPoint &&
+        docPoints [0] == lastPoint)
     {
-        mask = kpPixmapFX::getNonNullMask (pixmap);
-        maskPainter.begin (&mask);
-        maskPainter.setPen (m_color.maskColor ());
+    #if DEBUG_KP_TOOL_SPRAYCAN
+        kDebug () << "\tis a line starting at lastPoint - erasing="
+                   << docPoints [0] << endl;
+    #endif
+    
+        // We're not expecting a duplicate 2nd interpolation point.
+        Q_ASSERT (docPoints [1] != lastPoint);
+        
+        // lastPoint was drawn previously so don't draw over it again or
+        // it will (theoretically) be denser than expected.
+        //
+        // Unlike other tools such as the Brush, drawing over the same
+        // point does result in a different appearance.
+        //
+        // Having said this, the user probably won't notice either way
+        // since spraying on nearby document interpolation points will
+        // spray around this document point anyway (due to the
+        // spraycanSize() radius).
+        docPoints.erase (docPoints.begin ());
     }
+    
+        
+    pixmapSprayManyDocPoints (&pixmap, docRect, docPoints);
 
-    for (int i = 0; i < (int) points.count (); i++)
-    {
-        QPoint pt (points [i].x () - docRect.x (),
-                   points [i].y () - docRect.y ());
-
-        if (painter.isActive ())
-            painter.drawPoint (pt);
-
-        if (maskPainter.isActive ())
-            maskPainter.drawPoint (pt);
-    }
-
-    if (maskPainter.isActive ())
-        maskPainter.end ();
-
-    if (painter.isActive ())
-        painter.end ();
-
-    if (!mask.isNull ())
-        pixmap.setMask (mask);
-
+        
     viewManager ()->setFastUpdates ();
     document ()->setPixmapAt (pixmap, docRect.topLeft ());
     viewManager ()->restoreFastUpdates ();
 
-    m_boundingRect = m_boundingRect.unite (docRect);
+    return docRect;
 }
 
-void kpToolAirSprayCommand::finalize ()
+// public virtual [base kpToolFlowBase]
+QRect kpToolAirSpray::drawPoint (const QPoint &point)
 {
-    // store only needed part of doc pixmap
-    m_oldPixmap = kpTool::neededPixmap (m_oldPixmap, m_boundingRect);
-}
+#if DEBUG_KP_TOOL_SPRAYCAN
+    kDebug () << "kpToolAirSpray::drawPoint" << point
+               << " lastPoint=" << m_lastPoint
+               << endl;
+#endif
 
-void kpToolAirSprayCommand::cancel ()
-{
-    if (m_boundingRect.isValid ())
+    // if this is the first in the flow or if the user is moving the spray, make the spray line continuous
+    if (point != m_lastPoint)
     {
-        viewManager ()->setFastUpdates ();
-        document ()->setPixmapAt (m_oldPixmap, m_boundingRect.topLeft ());
-        viewManager ()->restoreFastUpdates ();
+        // without delay
+        return drawLineWithProbability (point, point,
+            1.0/*100% chance of drawing*/);
     }
+    
+    return QRect ();
 }
+    
+// public virtual [base kpToolFlowBase]
+QRect kpToolAirSpray::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
+{
+    return drawLineWithProbability (thisPoint, lastPoint,
+        0.1/*less dense: select 10% of adjacent pixels - not all*/);
+}
+
+void kpToolAirSpray::timeoutDraw ()
+{
+#if DEBUG_KP_TOOL_SPRAYCAN
+    kDebug () << "kpToolAirSpray::timeoutDraw()" << endl;
+#endif
+
+    const QRect drawnRect = drawLineWithProbability (m_currentPoint, m_currentPoint,
+        1.0/*100% chance of drawing*/);
+
+    m_currentCommand->updateBoundingRect (drawnRect);
+}
+
+    
+// public virtual [base kpToolFlowBase]
+void kpToolAirSpray::cancelShape ()
+{
+#if DEBUG_KP_TOOL_SPRAYCAN
+    kDebug () << "kpToolAirSpray::cancelShape()" << endl;
+#endif
+
+    m_timer->stop ();
+    kpToolFlowBase::cancelShape ();
+}
+
+// public virtual [base kpToolFlowBase]
+void kpToolAirSpray::endDraw (const QPoint &thisPoint,
+    const QRect &normalizedRect)
+{
+#if DEBUG_KP_TOOL_SPRAYCAN
+    kDebug () << "kpToolAirSpray::endDraw(thisPoint=" << thisPoint
+               << ")" << endl;
+#endif
+
+    m_timer->stop ();
+    kpToolFlowBase::endDraw (thisPoint, normalizedRect);
+}
+
+
+// protected
+int kpToolAirSpray::spraycanSize () const
+{
+    return m_toolWidgetSpraycanSize->spraycanSize ();
+}
+
+// protected slot
+void kpToolAirSpray::slotSpraycanSizeChanged (int size)
+{
+    (void) size;
+}
+
 
 #include <kptoolairspray.moc>
+

@@ -38,6 +38,7 @@
 #include <kapplication.h>
 #include <klocale.h>
 
+#include <kpbug.h>
 #include <kpcolor.h>
 #include <kpdocument.h>
 #include <kppixmapfx.h>
@@ -235,7 +236,7 @@ bool kpToolColorWasher::drawShouldProceed (const QPoint & /*thisPoint*/,
 }
 
 
-void kpToolColorWasher::drawPoint (const QPoint &)
+QRect kpToolColorWasher::drawPoint (const QPoint &)
 {            
 #if DEBUG_KP_TOOL_COLOR_WASHER
     kDebug () << "Washing pixmap (immediate)" << endl;
@@ -293,20 +294,13 @@ void kpToolColorWasher::drawPoint (const QPoint &)
     #if DEBUG_KP_TOOL_COLOR_WASHER
         kDebug () << "\tset doc: " << timer.restart () << "ms" << endl;
     #endif
-        m_currentCommand->updateBoundingRect (hotRect ());
-    #if DEBUG_KP_TOOL_COLOR_WASHER
-        kDebug () << "\tupdate boundingRect: " << timer.restart () << "ms" << endl;
-        kDebug () << "\tdone" << endl;
-    #endif
+        return hotRect ();
     }
 
-#if DEBUG_KP_TOOL_COLOR_WASHER && 1
-    kDebug () << endl;
-#endif
+    return QRect ();
 }
 
-bool kpToolColorWasher::drawLine (QPixmap *pixmap, const QRect &docRect,
-    const QPoint &thisPoint, const QPoint &lastPoint)
+QRect kpToolColorWasher::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
 #if DEBUG_KP_TOOL_COLOR_WASHER
     kDebug () << "Washing pixmap (w=" << rect.width ()
@@ -315,10 +309,15 @@ bool kpToolColorWasher::drawLine (QPixmap *pixmap, const QRect &docRect,
     int convAndWashTime;
 #endif
 
+    QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
+    docRect = neededRect (docRect, m_brushPixmap [m_mouseButton].width ());
+    QPixmap pixmap = document ()->getPixmapAt (docRect);
+
+
     QBitmap maskBitmap;    
     QPainter painter, maskPainter;
 
-    drawLineSetupPainterMask (pixmap,
+    drawLineSetupPainterMask (&pixmap,
         &maskBitmap,
         &painter, &maskPainter);
 
@@ -327,7 +326,7 @@ bool kpToolColorWasher::drawLine (QPixmap *pixmap, const QRect &docRect,
 #if DEBUG_KP_TOOL_COLOR_WASHER
     timer.start ();
 #endif
-    image = kpPixmapFX::convertToImage (*pixmap);
+    image = kpPixmapFX::convertToImage (pixmap);
 #if DEBUG_KP_TOOL_COLOR_WASHER
     convAndWashTime = timer.restart ();
     kDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;
@@ -337,17 +336,14 @@ bool kpToolColorWasher::drawLine (QPixmap *pixmap, const QRect &docRect,
 
     kpColor colorToReplace = color (1 - m_mouseButton);
 
-    QList <QPoint> points = interpolatePoints (docRect,
-        thisPoint, lastPoint);
+    QList <QPoint> points = interpolatePoints (thisPoint, lastPoint);
     for (QList <QPoint>::const_iterator pit = points.begin ();
             pit != points.end ();
             pit++)
     {
-        const int XXX = (*pit).x (), YYY = (*pit).y ();
-        
         if (wash (&painter, &maskPainter, image,
                     colorToReplace,
-                    docRect, XXX + docRect.left (), YYY + docRect.top ()))
+                    docRect, (*pit).x (), (*pit).y ()))
         {
             didSomething = true;
         }
@@ -355,7 +351,7 @@ bool kpToolColorWasher::drawLine (QPixmap *pixmap, const QRect &docRect,
 
 
     
-    drawLineTearDownPainterMask (pixmap,
+    drawLineTearDownPainterMask (&pixmap,
         &maskBitmap,
         &painter, &maskPainter,
         didSomething);
@@ -370,7 +366,13 @@ bool kpToolColorWasher::drawLine (QPixmap *pixmap, const QRect &docRect,
     convAndWashTime += ms;
 #endif
 
-    return didSomething;
+    if (didSomething)
+    {
+        document ()->setPixmapAt (pixmap, docRect.topLeft ());
+        return docRect;
+    }
+    
+    return QRect ();
 }
 
 #include <kptoolcolorwasher.moc>

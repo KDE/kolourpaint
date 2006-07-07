@@ -30,85 +30,76 @@
 #define KP_TOOL_AIR_SPRAY_H
 
 
-#include <kpcommandhistory.h>
-#include <kpcolor.h>
-#include <kptool.h>
+#include <kptoolflowbase.h>
 
 
 class QPixmap;
 class QPoint;
-class QPolygon;
 class QRect;
 class QString;
 class QTimer;
 
 class kpMainWindow;
-class kpToolAirSprayCommand;
+class kpToolFlowCommand;
 class kpToolWidgetSpraycanSize;
 class kpViewManager;
 
 
-class kpToolAirSpray : public kpTool
+class kpToolAirSpray : public kpToolFlowBase
 {
 Q_OBJECT
 
 public:
-    kpToolAirSpray (kpMainWindow *);
+    kpToolAirSpray (kpMainWindow *mainWindow);
     virtual ~kpToolAirSpray ();
 
-private:
-    QString haventBegunDrawUserMessage () const;
+    
+protected:
+    virtual QString haventBegunDrawUserMessage () const;
 
+    
 public:
     virtual void begin ();
     virtual void end ();
 
-private slots:
-    void slotSpraycanSizeChanged (int size);
     
+protected:
+    void paintersSprayOneDocPoint (QPainter *painter,
+        QPainter *maskPainter,
+        const QRect &docRect,
+        const QPoint &docPoint);
+    void pixmapSprayManyDocPoints (QPixmap *pixmap,
+        const QRect &docRect,
+        const QList <QPoint> &docPoints);
+
+        
 public:
     virtual void beginDraw ();
-    virtual void draw (const QPoint &thisPoint, const QPoint &, const QRect &);
+protected:
+    // (probability is between 0.0 and 1.0 inclusive)
+    QRect drawLineWithProbability (const QPoint &thisPoint,
+         const QPoint &lastPoint,
+         double probability);
+public:
+    virtual QRect drawPoint (const QPoint &point);    
+    virtual QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint);
     virtual void cancelShape ();
-    virtual void releasedAllButtons ();
-    virtual void endDraw (const QPoint &, const QRect &);
+    virtual void endDraw (const QPoint &thisPoint,
+        const QRect &normalizedRect);
 
 public slots:
-    void actuallyDraw ();
+    void timeoutDraw ();
 
-private:
-    kpToolWidgetSpraycanSize *m_toolWidgetSpraycanSize;
-    kpToolAirSprayCommand *m_currentCommand;
-    QTimer *m_timer;
-    int m_size;
-};
-
-class kpToolAirSprayCommand : public kpCommand
-{
-public:
-    kpToolAirSprayCommand (const kpColor &color, int size,
-                           kpMainWindow *mainWindow);
-    virtual ~kpToolAirSprayCommand ();
-
-    virtual QString name () const;
-
-    virtual int size () const;
     
-    virtual void execute ();
-    virtual void unexecute ();
+protected:
+    int spraycanSize () const;
+protected slots:
+    void slotSpraycanSizeChanged (int size);
+    
 
-    // interface for KToolAirSpray
-    void addPoints (const QPolygon &points);
-    void finalize ();
-    void cancel ();
-
-private:
-    kpColor m_color;
-    int m_size;
-
-    QPixmap *m_newPixmapPtr;
-    QPixmap m_oldPixmap;
-    QRect m_boundingRect;
+protected:
+    QTimer *m_timer;
+    kpToolWidgetSpraycanSize *m_toolWidgetSpraycanSize;
 };
 
 

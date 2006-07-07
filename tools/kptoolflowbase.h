@@ -78,10 +78,11 @@ public:
     virtual void beginDraw ();
     virtual void hover (const QPoint &point);
     
-    QList <QPoint> interpolatePoints (const QRect &rect/*TODO:take me away*/,
-        const QPoint &thisPoint, const QPoint &lastPoint);
+    QList <QPoint> interpolatePoints (const QPoint &thisPoint,
+        const QPoint &lastPoint,
+        double probability = 1.0);
 
-    virtual void drawPoint (const QPoint &point) = 0;
+    virtual QRect drawPoint (const QPoint &point) = 0;
     
     void drawLineSetupPainterMask (QPixmap *pixmap,
         QBitmap *maskBitmap,
@@ -91,8 +92,7 @@ public:
         QPainter *painter, QPainter *maskPainter,
         bool drawingHappened = true);
         
-    virtual bool drawLine (QPixmap *pixmap, const QRect &docRect,
-        const QPoint &thisPoint, const QPoint &lastPoint) = 0;
+    virtual QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint) = 0;
 
     virtual bool drawShouldProceed (const QPoint & /*thisPoint*/, const QPoint & /*lastPoint*/, const QRect & /*normalizedRect*/) { return true; }
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &normalizedRect);

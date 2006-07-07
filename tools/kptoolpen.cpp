@@ -64,7 +64,7 @@ QString kpToolPen::haventBegunDrawUserMessage () const
 }
 
 
-void kpToolPen::drawPoint (const QPoint &point)
+QRect kpToolPen::drawPoint (const QPoint &point)
 {
     QPixmap pixmap (1, 1);
 
@@ -86,17 +86,24 @@ void kpToolPen::drawPoint (const QPoint &point)
     // draw onto doc
     document ()->setPixmapAt (pixmap, point);
 
-    m_currentCommand->updateBoundingRect (point);
+    return QRect (point, point);
 }
 
 
-bool kpToolPen::drawLine (QPixmap *pixmap, const QRect &docRect,
-    const QPoint &thisPoint, const QPoint &lastPoint)
+QRect kpToolPen::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
+    QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
+    // TODO: I think this is wrong for pens due to lack of m_brushPixmap.
+    //       See comment for 011_kptoolpen_draw_push_down_draw_methods.diff
+    //       (part of r557112: approx. 2006-07-02 22:32:37 +10:00 AEST).
+    docRect = neededRect (docRect, m_brushPixmap [m_mouseButton].width ());
+    QPixmap pixmap = document ()->getPixmapAt (docRect);
+
+
     QBitmap maskBitmap;
     QPainter painter, maskPainter;
     
-    drawLineSetupPainterMask (pixmap,
+    drawLineSetupPainterMask (&pixmap,
         &maskBitmap,
         &painter, &maskPainter);
     
@@ -111,12 +118,13 @@ bool kpToolPen::drawLine (QPixmap *pixmap, const QRect &docRect,
         maskPainter.drawLine (sp, ep);
 
  
-    drawLineTearDownPainterMask (pixmap,
+    drawLineTearDownPainterMask (&pixmap,
         &maskBitmap,
         &painter, &maskPainter);
 
-    
-    return true;
+ 
+    document ()->setPixmapAt (pixmap, docRect.topLeft ());
+    return docRect;   
 }
 
 
