@@ -372,8 +372,6 @@ void kpToolFlowBase::drawLineTearDownPainterMask (QPixmap *pixmap,
     }
 }
 
-        
-
 
 // virtual
 void kpToolFlowBase::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &normalizedRect)
