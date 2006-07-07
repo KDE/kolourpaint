@@ -71,7 +71,6 @@ set(libkolourpaintviews_SRCS
 
 set(libkolourpainttools_SRCS 
 	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolaction.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolairspray.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolautocrop.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolbrush.cpp 
 	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolclear.cpp 
@@ -100,6 +99,7 @@ set(libkolourpainttools_SRCS
 	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolrotate.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolroundedrectangle.cpp 
 	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolselection.cpp 
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolspraycan.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolskew.cpp 
 	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptooltext.cpp
 )

@@ -49,7 +49,7 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
-#include <kptoolairspray.h>
+#include <kptoolspraycan.h>
 #include <kptoolflowcommand.h>
 #include <kptooltoolbar.h>
 #include <kptoolwidgetspraycansize.h>
@@ -57,7 +57,7 @@
 #include <kpviewmanager.h>
 
 
-kpToolAirSpray::kpToolAirSpray (kpMainWindow *mainWindow)
+kpToolSpraycan::kpToolSpraycan (kpMainWindow *mainWindow)
     : kpToolFlowBase (i18n ("Spraycan"), i18n ("Sprays graffiti"),
         Qt::Key_Y,
         mainWindow, "tool_spraycan")
@@ -67,20 +67,20 @@ kpToolAirSpray::kpToolAirSpray (kpMainWindow *mainWindow)
         this, SLOT (timeoutDraw ()));
 }
 
-kpToolAirSpray::~kpToolAirSpray ()
+kpToolSpraycan::~kpToolSpraycan ()
 {
 }
 
 
 // protected virtual [base kpToolFlowBase]
-QString kpToolAirSpray::haventBegunDrawUserMessage () const
+QString kpToolSpraycan::haventBegunDrawUserMessage () const
 {
     return i18n ("Click or drag to spray graffiti.");
 }
 
 
 // public virtual [base kpToolFlowBase]
-void kpToolAirSpray::begin ()
+void kpToolSpraycan::begin ()
 {
     m_toolWidgetSpraycanSize = 0;
     
@@ -102,7 +102,7 @@ void kpToolAirSpray::begin ()
 }
 
 // public virtual [base kpToolFlowBase]
-void kpToolAirSpray::end ()
+void kpToolSpraycan::end ()
 {
     kpToolFlowBase::end ();
     
@@ -116,7 +116,7 @@ void kpToolAirSpray::end ()
 
 
 // protected
-void kpToolAirSpray::paintersSprayOneDocPoint (QPainter *painter,
+void kpToolSpraycan::paintersSprayOneDocPoint (QPainter *painter,
     QPainter *maskPainter,
     const QRect &docRect,
     const QPoint &docPoint)
@@ -125,7 +125,7 @@ void kpToolAirSpray::paintersSprayOneDocPoint (QPainter *painter,
     int numPointsCreated = 0;
 
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "\t\tkpToolAirSpray::paintersSprayOneDocPoint(docRect=" << docRect
+    kDebug () << "\t\tkpToolSpraycan::paintersSprayOneDocPoint(docRect=" << docRect
                << ",docPoint=" << docPoint
                << ") spraycanSize=" << spraycanSize ()
                << endl;
@@ -175,12 +175,12 @@ void kpToolAirSpray::paintersSprayOneDocPoint (QPainter *painter,
 }
 
 // protected
-void kpToolAirSpray::pixmapSprayManyDocPoints (QPixmap *pixmap,
+void kpToolSpraycan::pixmapSprayManyDocPoints (QPixmap *pixmap,
     const QRect &docRect,
     const QList <QPoint> &docPoints)
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "\tkpToolAirSpray::pixmapSprayManyDocPoints(docRect="
+    kDebug () << "\tkpToolSpraycan::pixmapSprayManyDocPoints(docRect="
                << docRect << ")"
                << endl;
 #endif
@@ -207,10 +207,10 @@ void kpToolAirSpray::pixmapSprayManyDocPoints (QPixmap *pixmap,
 
 
 // public virtual [base kpToolFlowBase]
-void kpToolAirSpray::beginDraw ()
+void kpToolSpraycan::beginDraw ()
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolAirSpray::beginDraw()" << endl;
+    kDebug () << "kpToolSpraycan::beginDraw()" << endl;
 #endif
 
     kpToolFlowBase::beginDraw ();
@@ -221,12 +221,12 @@ void kpToolAirSpray::beginDraw ()
 
 
 // protected
-QRect kpToolAirSpray::drawLineWithProbability (const QPoint &thisPoint,
+QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
          const QPoint &lastPoint,
          double probability)
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolAirSpray::drawLine(thisPoint=" << thisPoint
+    kDebug () << "kpToolSpraycan::drawLine(thisPoint=" << thisPoint
                << ",lastPoint=" << lastPoint
                << ")" << endl;
 #endif
@@ -281,10 +281,10 @@ QRect kpToolAirSpray::drawLineWithProbability (const QPoint &thisPoint,
 }
 
 // public virtual [base kpToolFlowBase]
-QRect kpToolAirSpray::drawPoint (const QPoint &point)
+QRect kpToolSpraycan::drawPoint (const QPoint &point)
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolAirSpray::drawPoint" << point
+    kDebug () << "kpToolSpraycan::drawPoint" << point
                << " lastPoint=" << m_lastPoint
                << endl;
 #endif
@@ -301,16 +301,16 @@ QRect kpToolAirSpray::drawPoint (const QPoint &point)
 }
     
 // public virtual [base kpToolFlowBase]
-QRect kpToolAirSpray::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
+QRect kpToolSpraycan::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
     return drawLineWithProbability (thisPoint, lastPoint,
         0.1/*less dense: select 10% of adjacent pixels - not all*/);
 }
 
-void kpToolAirSpray::timeoutDraw ()
+void kpToolSpraycan::timeoutDraw ()
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolAirSpray::timeoutDraw()" << endl;
+    kDebug () << "kpToolSpraycan::timeoutDraw()" << endl;
 #endif
 
     const QRect drawnRect = drawLineWithProbability (m_currentPoint, m_currentPoint,
@@ -321,10 +321,10 @@ void kpToolAirSpray::timeoutDraw ()
 
     
 // public virtual [base kpToolFlowBase]
-void kpToolAirSpray::cancelShape ()
+void kpToolSpraycan::cancelShape ()
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolAirSpray::cancelShape()" << endl;
+    kDebug () << "kpToolSpraycan::cancelShape()" << endl;
 #endif
 
     m_timer->stop ();
@@ -332,11 +332,11 @@ void kpToolAirSpray::cancelShape ()
 }
 
 // public virtual [base kpToolFlowBase]
-void kpToolAirSpray::endDraw (const QPoint &thisPoint,
+void kpToolSpraycan::endDraw (const QPoint &thisPoint,
     const QRect &normalizedRect)
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolAirSpray::endDraw(thisPoint=" << thisPoint
+    kDebug () << "kpToolSpraycan::endDraw(thisPoint=" << thisPoint
                << ")" << endl;
 #endif
 
@@ -346,17 +346,17 @@ void kpToolAirSpray::endDraw (const QPoint &thisPoint,
 
 
 // protected
-int kpToolAirSpray::spraycanSize () const
+int kpToolSpraycan::spraycanSize () const
 {
     return m_toolWidgetSpraycanSize->spraycanSize ();
 }
 
 // protected slot
-void kpToolAirSpray::slotSpraycanSizeChanged (int size)
+void kpToolSpraycan::slotSpraycanSizeChanged (int size)
 {
     (void) size;
 }
 
 
-#include <kptoolairspray.moc>
+#include <kptoolspraycan.moc>
 

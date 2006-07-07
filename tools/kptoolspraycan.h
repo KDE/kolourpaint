@@ -26,8 +26,8 @@
 */
 
 
-#ifndef KP_TOOL_AIR_SPRAY_H
-#define KP_TOOL_AIR_SPRAY_H
+#ifndef KP_TOOL_SPRAYCAN_H
+#define KP_TOOL_SPRAYCAN_H
 
 
 #include <kptoolflowbase.h>
@@ -45,13 +45,13 @@ class kpToolWidgetSpraycanSize;
 class kpViewManager;
 
 
-class kpToolAirSpray : public kpToolFlowBase
+class kpToolSpraycan : public kpToolFlowBase
 {
 Q_OBJECT
 
 public:
-    kpToolAirSpray (kpMainWindow *mainWindow);
-    virtual ~kpToolAirSpray ();
+    kpToolSpraycan (kpMainWindow *mainWindow);
+    virtual ~kpToolSpraycan ();
 
     
 protected:
@@ -103,4 +103,4 @@ protected:
 };
 
 
-#endif  // KP_TOOL_AIR_SPRAY_H
+#endif  // KP_TOOL_SPRAYCAN_H

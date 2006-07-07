@@ -42,7 +42,6 @@
 #include <kpselectiontransparency.h>
 #include <kptool.h>
 #include <kptoolaction.h>
-#include <kptoolairspray.h>
 #include <kptoolbrush.h>
 #include <kptoolcolorpicker.h>
 #include <kptoolcolorwasher.h>
@@ -60,6 +59,7 @@
 #include <kptoolrectselection.h>
 #include <kptoolresizescale.h>
 #include <kptoolroundedrectangle.h>
+#include <kptoolspraycan.h>
 #include <kptooltext.h>
 #include <kptooltoolbar.h>
 #include <kptoolwidgetopaqueortransparent.h>
@@ -86,7 +86,7 @@ void kpMainWindow::setupToolActions ()
     m_tools.append (m_toolColorPicker = new kpToolColorPicker (this));
 
     m_tools.append (m_toolColorWasher = new kpToolColorWasher (this));
-    m_tools.append (m_toolAirSpray = new kpToolAirSpray (this));
+    m_tools.append (m_toolSpraycan = new kpToolSpraycan (this));
 
     m_tools.append (m_toolRoundedRectangle = new kpToolRoundedRectangle (this));
     m_tools.append (m_toolRectangle = new kpToolRectangle (this));
@@ -631,7 +631,7 @@ void kpMainWindow::slotTool##toolName ()          \
     m_toolToolBar->selectTool (m_tool##toolName); \
 }
 
-SLOT_TOOL (AirSpray)
+SLOT_TOOL (Spraycan)
 SLOT_TOOL (Brush)
 SLOT_TOOL (ColorPicker)
 SLOT_TOOL (ColorWasher)
