@@ -28,6 +28,8 @@
 #include <kpmainwindow.h>
 #include <kpmainwindow_p.h>
 
+#include <QtDBus>
+
 #include <kaction.h>
 #include <qlabel.h>
 #include <kapplication.h>
@@ -37,7 +39,7 @@
 #include <krun.h>
 #include <klocale.h>
 #include <kshortcut.h>
-#include <QtDBus>
+
 
 // private
 void kpMainWindow::setupHelpMenuActions ()

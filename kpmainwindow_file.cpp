@@ -32,6 +32,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qsize.h>
+#include <QtDBus>
 
 #include <kapplication.h>
 #include <kaction.h>
@@ -55,7 +56,7 @@
 #include <kpviewmanager.h>
 #include <ktoolinvocation.h>
 #include <kglobal.h>
-#include <QtDBus>
+
 
 // private
 void kpMainWindow::setupFileMenuActions ()
