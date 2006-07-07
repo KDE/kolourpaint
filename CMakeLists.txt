@@ -117,8 +117,8 @@ set(libkolourpaintimagelib_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectsdialog.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpfloodfill.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpimage.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kppixmapfx.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kppainter.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kptextstyle.cpp 
 )
 
 set(libkolourpaintcursors_SRCS 
@@ -144,11 +144,11 @@ set(kolourpaint_SRCS ${libkolourpaintcursors_SRCS} ${libkolourpaintimagelib_SRCS
    kpmainwindow_statusbar.cpp 
    kpmainwindow_text.cpp 
    kpmainwindow_view.cpp 
+   kppixmapfx.cpp
    kpselection.cpp 
    kpselectiondrag.cpp 
    kpselectiontransparency.cpp 
    kptemppixmap.cpp 
-   kptextstyle.cpp 
    kpthumbnail.cpp 
    kptool.cpp 
    kpviewmanager.cpp 
