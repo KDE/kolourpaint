@@ -1,0 +1,16 @@
+Index: kpdocumentsaveoptionswidget.cpp
+===================================================================
+--- kpdocumentsaveoptionswidget.cpp	(revision 528185)
++++ kpdocumentsaveoptionswidget.cpp	(revision 528186)
+@@ -148,20 +148,8 @@ void kpDocumentSaveOptionsPreviewDialog:
+                << endl;
+ #endif
+ 
+-    m_fileSizeLabel->setText (i18n ("%1 bytes (approx. %2%)")
+-                                   .arg (KGlobal::locale ()->formatLong (m_fileSize))
+-                                   .arg (percent));
++    m_fileSizeLabel->setText (i18np ("1 byte (approx. %1%)", "%n bytes (approx. %1%)",
++                                     m_fileSize, percent));
+ }
+ 
+ // public slot

@@ -1,0 +1,126 @@
+Index: tools/kptoolpreviewdialog.cpp
+===================================================================
+--- tools/kptoolpreviewdialog.cpp	(revision 536883)
++++ tools/kptoolpreviewdialog.cpp	(revision 536884)
+@@ -391,7 +391,7 @@ void kpToolPreviewDialog::updatePreview 
+         m_previewPixmapLabel->setPixmap (previewPixmap);
+ 
+         // immediate update esp. for expensive previews
+-        m_previewPixmapLabel->repaint (false/*no erase*/);
++        m_previewPixmapLabel->repaint ();
+ 
+ #if DEBUG_KP_TOOL_PREVIEW_DIALOG
+     kDebug () << "\tafter QLabel::setPixmap() previewPixmapLabel: w="
+Index: widgets/kpcolorsimilaritycube.cpp
+===================================================================
+--- widgets/kpcolorsimilaritycube.cpp	(revision 536883)
++++ widgets/kpcolorsimilaritycube.cpp	(revision 536884)
+@@ -134,7 +134,7 @@ void kpColorSimilarityCube::setColorSimi
+ 
+     m_colorSimilarity = similarity;
+ 
+-    repaint (false/*no erase*/);
++    repaint ();
+ }
+ 
+ 
+Index: widgets/kptooltoolbar.cpp
+===================================================================
+--- widgets/kptooltoolbar.cpp	(revision 536883)
++++ widgets/kptooltoolbar.cpp	(revision 536884)
+@@ -389,7 +389,7 @@ int kpToolToolBar::numShownToolWidgets (
+                    << " isShown=" << (*it)->isShown ()
+                    << endl;
+     #endif
+-        if ((*it)->isShown ())
++        if (!(*it)->isHidden ())
+             ret++;
+     }
+ 
+@@ -405,7 +405,7 @@ kpToolWidgetBase *kpToolToolBar::shownTo
+          it != m_toolWidgets.end ();
+          it++)
+     {
+-        if ((*it)->isShown ())
++        if (!(*it)->isHidden ())
+         {
+             if (which == uptoVisibleWidget)
+                 return *it;
+Index: pixmapfx/kpeffectsdialog.cpp
+===================================================================
+--- pixmapfx/kpeffectsdialog.cpp	(revision 536883)
++++ pixmapfx/kpeffectsdialog.cpp	(revision 536884)
+@@ -79,9 +79,9 @@ kpEffectsDialog::kpEffectsDialog (bool a
+ #endif
+ 
+     if (actOnSelection)
+-        setCaption (i18n ("More Image Effects (Selection)"));
++        setWindowTitle (i18n ("More Image Effects (Selection)"));
+     else
+-        setCaption (i18n ("More Image Effects"));
++        setWindowTitle (i18n ("More Image Effects"));
+ 
+ 
+     m_delayedUpdateTimer->setSingleShot (true);
+@@ -210,7 +210,7 @@ void kpEffectsDialog::selectEffect (int 
+     m_colorEffectWidget = 0;
+ 
+ 
+-    m_settingsGroupBox->setCaption (QString::null);
++    m_settingsGroupBox->setWindowTitle (QString::null);
+ 
+ #define CREATE_EFFECT_WIDGET(name)                        \
+     m_colorEffectWidget = new name (m_actOnSelection,     \
+Index: kpthumbnail.cpp
+===================================================================
+--- kpthumbnail.cpp	(revision 536883)
++++ kpthumbnail.cpp	(revision 536884)
+@@ -142,7 +142,7 @@ void kpThumbnail::setView (kpThumbnailVi
+ // public slot
+ void kpThumbnail::updateCaption ()
+ {
+-    setCaption (view () ? view ()->caption () : i18n ("Thumbnail"));
++    setWindowTitle (view () ? view ()->caption () : i18n ("Thumbnail"));
+ }
+ 
+ 
+Index: kpviewscrollablecontainer.cpp
+===================================================================
+--- kpviewscrollablecontainer.cpp	(revision 536883)
++++ kpviewscrollablecontainer.cpp	(revision 536884)
+@@ -911,19 +911,19 @@ void kpViewScrollableContainer::recalcul
+                                   QRect (0, 0, visibleWidth (), visibleHeight ()))
+             .contains (QCursor::pos ()))
+     {
+-        if (m_bottomRightGrip->isShown () &&
++        if (!m_bottomRightGrip->isHidden () &&
+             m_bottomRightGrip->hotRect (true/*to global*/)
+                 .contains (QCursor::pos ()))
+         {
+             m_bottomRightGrip->setUserMessage (i18n ("Left drag the handle to resize the image."));
+         }
+-        else if (m_bottomGrip->isShown () &&
++        else if (!m_bottomGrip->isHidden () &&
+                 m_bottomGrip->hotRect (true/*to global*/)
+                     .contains (QCursor::pos ()))
+         {
+             m_bottomGrip->setUserMessage (i18n ("Left drag the handle to resize the image."));
+         }
+-        else if (m_rightGrip->isShown () &&
++        else if (!m_rightGrip->isHidden () &&
+                 m_rightGrip->hotRect (true/*to global*/)
+                     .contains (QCursor::pos ()))
+         {
+@@ -1076,9 +1076,9 @@ void kpViewScrollableContainer::updateGr
+     #endif
+     }
+ 
+-    m_bottomGrip->setShown (bool (m_view));
+-    m_rightGrip->setShown (bool (m_view));
+-    m_bottomRightGrip->setShown (bool (m_view));
++    m_bottomGrip->setHidden (m_view == 0);
++    m_rightGrip->setHidden (m_view == 0);
++    m_bottomRightGrip->setHidden (m_view == 0);
+ 
+ #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+     kDebug () << "\tcontentsRect=" << contentsRect ()
