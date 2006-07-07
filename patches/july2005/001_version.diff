@@ -1,0 +1,73 @@
+BEGIN
+1.4.1_light -> 1.4-pre (this could cause merging trouble since we are
+working off 1.4 branch not trunk).
+
+Generate kolourpaintversion.h from VERSION.  Include in kolourpaint.cpp
+to avoid SYNC once and for all.
+
+static and const generated string constants.
+END
+
+diff -urdp -x.deps -x.libs -x'*.moc' -x'*.o' -xMakefile -x'*~' -x'.*.swo' -x'.*.swp' -xkptoolselection.cpp -xMakefile.in -xconfig.log -N base/kolourpaint/.cvsignore head/kolourpaint/.cvsignore
+--- base/kolourpaint/.cvsignore	2003-10-16 20:41:02.000000000 +1000
++++ head/kolourpaint/.cvsignore	2005-06-14 14:05:27.595616512 +1000
+@@ -2,4 +2,4 @@ Makefile
+ Makefile.in
+ kolourpaint
+ kolourpaintlicense.h
+-
++kolourpaintversion.h
+diff -urdp -x.deps -x.libs -x'*.moc' -x'*.o' -xMakefile -x'*~' -x'.*.swo' -x'.*.swp' -xkptoolselection.cpp -xMakefile.in -xconfig.log -N base/kolourpaint/kolourpaint.cpp head/kolourpaint/kolourpaint.cpp
+--- base/kolourpaint/kolourpaint.cpp	2005-04-29 22:39:18.000000000 +1000
++++ head/kolourpaint/kolourpaint.cpp	2005-06-14 14:00:02.177087648 +1000
+@@ -45,6 +45,7 @@
+ #include <kpmainwindow.h>
+ 
+ #include <kolourpaintlicense.h>
++#include <kolourpaintversion.h>
+ 
+ 
+ static const KCmdLineOptions cmdLineOptions [] =
+@@ -60,7 +61,7 @@ int main (int argc, char *argv [])
+     (
+         "kolourpaint",
+         I18N_NOOP ("KolourPaint"),
+-        "1.4.1_light",  // SYNC: with VERSION
++        kpVersionText,
+         I18N_NOOP ("Paint Program for KDE"),
+         KAboutData::License_Custom,
+         "Copyright (c) 2003,2004,2005 Clarence Dang",
+diff -urdp -x.deps -x.libs -x'*.moc' -x'*.o' -xMakefile -x'*~' -x'.*.swo' -x'.*.swp' -xkptoolselection.cpp -xMakefile.in -xconfig.log -N base/kolourpaint/Makefile.am head/kolourpaint/Makefile.am
+--- base/kolourpaint/Makefile.am	2005-02-02 22:09:16.000000000 +1100
++++ head/kolourpaint/Makefile.am	2005-06-14 14:03:25.096239248 +1000
+@@ -2,14 +2,21 @@ SUBDIRS = cursors pics pixmapfx tools vi
+ 
+ bin_PROGRAMS = kolourpaint
+ 
+-kolourpaint.o: kolourpaintlicense.h
++
++kolourpaint.o: kolourpaintlicense.h kolourpaintversion.h
+ 
+ kolourpaintlicense.h : $(srcdir)/COPYING
+-	echo "const char *kpLicenseText =" > kolourpaintlicense.h
++	echo "static const char * const kpLicenseText =" > kolourpaintlicense.h
+ 	cat $(srcdir)/COPYING | sed -e 's/"/\\"/g' -e 's/$$/\\n"/g' -e 's/^/    "/g' >> kolourpaintlicense.h
+ 	echo ";" >> kolourpaintlicense.h
+ 
+-CLEANFILES = kolourpaintlicense.h
++kolourpaintversion.h : $(srcdir)/VERSION
++	echo "static const char * const kpVersionText =" > kolourpaintversion.h
++	cat $(srcdir)/VERSION | sed -e 's/"/\\"/g' -e 's/$$/"/g' -e 's/^/    "/g' >> kolourpaintversion.h
++	echo ";" >> kolourpaintversion.h
++
++CLEANFILES = kolourpaintlicense.h kolourpaintversion.h
++
+ 
+ kolourpaint_SOURCES = kolourpaint.cpp \
+     kpdocument.cpp \
+diff -urdp -x.deps -x.libs -x'*.moc' -x'*.o' -xMakefile -x'*~' -x'.*.swo' -x'.*.swp' -xkptoolselection.cpp -xMakefile.in -xconfig.log -N base/kolourpaint/VERSION head/kolourpaint/VERSION
+--- base/kolourpaint/VERSION	2005-04-29 22:39:18.000000000 +1000
++++ head/kolourpaint/VERSION	2005-06-14 14:03:43.007516320 +1000
+@@ -1 +1 @@
+-1.4.1_light
++1.4-pre

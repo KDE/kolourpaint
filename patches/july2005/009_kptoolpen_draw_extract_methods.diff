@@ -1,0 +1,571 @@
+BEGIN
+Extract Methods from kpToolPen::draw():
+
+* drawPixel(),drawPixels()
+* drawPixmap(),washPixmap()
+* interpolatePoints()
+
+More to come.
+END
+
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO -x'autom*' base/kolourpaint/tools/kptoolpen.cpp head/kolourpaint/tools/kptoolpen.cpp
+--- base/kolourpaint/tools/kptoolpen.cpp	2005-06-23 14:38:35.636749240 +1000
++++ head/kolourpaint/tools/kptoolpen.cpp	2005-06-23 15:17:52.002527192 +1000
+@@ -336,126 +336,235 @@ bool kpToolPen::wash (QPainter *painter,
+     return didSomething;
+ }
+ 
+-// virtual
+-// TODO: refactor!
+-void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &)
++void kpToolPen::drawPixel (const QPoint &thisPoint)
+ {
+-    if ((m_mode & WashesPixmaps) && (foregroundColor () == backgroundColor ()) && processedColorSimilarity () == 0)
+-        return;
++    QPixmap pixmap (1, 1);
+ 
+-    // sync: remember to restoreFastUpdates() in all exit paths
+-    viewManager ()->setFastUpdates ();
++    const kpColor c = color (m_mouseButton);
+ 
+-    if (m_brushIsDiagonalLine ? currentPointCardinallyNextToLast () : currentPointNextToLast ())
++    // OPT: this seems hopelessly inefficient
++    if (c.isOpaque ())
+     {
+-        if (m_mode & DrawsPixels)
+-        {
+-            QPixmap pixmap (1, 1);
++        pixmap.fill (c.toQColor ());
++    }
++    else
++    {
++        QBitmap mask (1, 1);
++        mask.fill (Qt::color0/*transparent*/);
+ 
+-            const kpColor c = color (m_mouseButton);
++        pixmap.setMask (mask);
++    }
+ 
+-            // OPT: this seems hopelessly inefficient
+-            if (c.isOpaque ())
+-            {
+-                pixmap.fill (c.toQColor ());
+-            }
+-            else
+-            {
+-                QBitmap mask (1, 1);
+-                mask.fill (Qt::color0/*transparent*/);
++    // draw onto doc
++    document ()->setPixmapAt (pixmap, thisPoint);
+ 
+-                pixmap.setMask (mask);
+-            }
++    m_currentCommand->updateBoundingRect (thisPoint);
++}
+ 
+-            // draw onto doc
+-            document ()->setPixmapAt (pixmap, thisPoint);
++void kpToolPen::drawPixels (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &rect, QPainter *painter, QPainter *maskPainter)
++{
++    QPoint sp = lastPoint - rect.topLeft (), ep = thisPoint - rect.topLeft ();
++    if (painter->isActive ())
++        painter->drawLine (sp, ep);
+ 
+-            m_currentCommand->updateBoundingRect (thisPoint);
+-        }
+-        // Brush & Eraser
+-        else if (m_mode & DrawsPixmaps)
++    if (maskPainter->isActive ())
++        maskPainter->drawLine (sp, ep);
++}
++
++void kpToolPen::drawPixmap ()
++{            
++    if (color (m_mouseButton).isOpaque ())
++        document ()->paintPixmapAt (m_brushPixmap [m_mouseButton], hotPoint ());
++    else
++    {
++        kpPixmapFX::paintMaskTransparentWithBrush (document ()->pixmap (),
++            hotPoint (),
++            kpPixmapFX::getNonNullMask (m_brushPixmap [m_mouseButton]));
++        document ()->slotContentsChanged (hotRect ());
++    }
++
++    m_currentCommand->updateBoundingRect (hotRect ());
++}
++
++
++void kpToolPen::washPixmap ()
++{            
++#if DEBUG_KP_TOOL_PEN
++    kdDebug () << "Washing pixmap (immediate)" << endl;
++    QTime timer;
++#endif
++    QRect rect = hotRect ();
++#if DEBUG_KP_TOOL_PEN
++    timer.start ();
++#endif
++    QPixmap pixmap = document ()->getPixmapAt (rect);
++#if DEBUG_KP_TOOL_PEN
++    kdDebug () << "\tget from doc: " << timer.restart () << "ms" << endl;
++#endif
++    const QImage image = kpPixmapFX::convertToImage (pixmap);
++#if DEBUG_KP_TOOL_PEN
++    kdDebug () << "\tconvert to image: " << timer.restart () << "ms" << endl;
++#endif
++    QPainter painter, maskPainter;
++    QBitmap maskBitmap;
++
++    if (color (m_mouseButton).isOpaque ())
++    {
++        painter.begin (&pixmap);
++        painter.setPen (color (m_mouseButton).toQColor ());
++    }
++
++    if (color (m_mouseButton).isTransparent () ||
++        pixmap.mask ())
++    {
++        maskBitmap = kpPixmapFX::getNonNullMask (pixmap);
++        maskPainter.begin (&maskBitmap);
++        maskPainter.setPen (color (m_mouseButton).maskColor ());
++    }
++
++    bool didSomething = wash (&painter, &maskPainter,
++                                image,
++                                color (1 - m_mouseButton)/*color to replace*/,
++                                rect, rect);
++
++    if (painter.isActive ())
++        painter.end ();
++
++    if (maskPainter.isActive ())
++        maskPainter.end ();
++
++    if (didSomething)
++    {
++        if (!maskBitmap.isNull ())
++            pixmap.setMask (maskBitmap);
++
++    #if DEBUG_KP_TOOL_PEN
++        kdDebug () << "\twashed: " << timer.restart () << "ms" << endl;
++    #endif
++        document ()->setPixmapAt (pixmap, hotPoint ());
++    #if DEBUG_KP_TOOL_PEN
++        kdDebug () << "\tset doc: " << timer.restart () << "ms" << endl;
++    #endif
++        m_currentCommand->updateBoundingRect (hotRect ());
++    #if DEBUG_KP_TOOL_PEN
++        kdDebug () << "\tupdate boundingRect: " << timer.restart () << "ms" << endl;
++        kdDebug () << "\tdone" << endl;
++    #endif
++    }
++
++#if DEBUG_KP_TOOL_PEN && 1
++    kdDebug () << endl;
++#endif
++}
++
++QValueVector <QPoint> kpToolPen::interpolatePoints (const QRect &rect/*TODO:take me away*/,
++    const QPoint &thisPoint, const QPoint &lastPoint)
++{
++    QValueVector <QPoint> ret;
++    
++    // Sweeps a pixmap along a line (modified Bresenham's line algorithm,
++    // see MODIFIED comment below).
++    //
++    // Derived from the zSprite2 Graphics Engine
++
++    const int x1 = (thisPoint - rect.topLeft ()).x (),
++                y1 = (thisPoint - rect.topLeft ()).y (),
++                x2 = (lastPoint - rect.topLeft ()).x (),
++                y2 = (lastPoint - rect.topLeft ()).y ();
++
++    // Difference of x and y values
++    int dx = x2 - x1;
++    int dy = y2 - y1;
++
++    // Absolute values of differences
++    int ix = kAbs (dx);
++    int iy = kAbs (dy);
++
++    // Larger of the x and y differences
++    int inc = ix > iy ? ix : iy;
++
++    // Plot location
++    int plotx = x1;
++    int ploty = y1;
++
++    int x = 0;
++    int y = 0;
++
++    ret.append (QPoint (plotx, ploty));
++    
++    
++    for (int i = 0; i <= inc; i++)
++    {
++        // oldplotx is equally as valid but would look different
++        // (but nobody will notice which one it is)
++        int oldploty = ploty;
++        int plot = 0;
++
++        x += ix;
++        y += iy;
++
++        if (x > inc)
+         {
+-            if (color (m_mouseButton).isOpaque ())
+-                document ()->paintPixmapAt (m_brushPixmap [m_mouseButton], hotPoint ());
+-            else
+-            {
+-                kpPixmapFX::paintMaskTransparentWithBrush (document ()->pixmap (),
+-                    hotPoint (),
+-                    kpPixmapFX::getNonNullMask (m_brushPixmap [m_mouseButton]));
+-                document ()->slotContentsChanged (hotRect ());
+-            }
++            plot++;
++            x -= inc;
+ 
+-            m_currentCommand->updateBoundingRect (hotRect ());
++            if (dx < 0)
++                plotx--;
++            else
++                plotx++;
+         }
+-        else if (m_mode & WashesPixmaps)
+-        {
+-        #if DEBUG_KP_TOOL_PEN
+-            kdDebug () << "Washing pixmap (immediate)" << endl;
+-            QTime timer;
+-        #endif
+-            QRect rect = hotRect ();
+-        #if DEBUG_KP_TOOL_PEN
+-            timer.start ();
+-        #endif
+-            QPixmap pixmap = document ()->getPixmapAt (rect);
+-        #if DEBUG_KP_TOOL_PEN
+-            kdDebug () << "\tget from doc: " << timer.restart () << "ms" << endl;
+-        #endif
+-            const QImage image = kpPixmapFX::convertToImage (pixmap);
+-        #if DEBUG_KP_TOOL_PEN
+-            kdDebug () << "\tconvert to image: " << timer.restart () << "ms" << endl;
+-        #endif
+-            QPainter painter, maskPainter;
+-            QBitmap maskBitmap;
+ 
+-            if (color (m_mouseButton).isOpaque ())
+-            {
+-                painter.begin (&pixmap);
+-                painter.setPen (color (m_mouseButton).toQColor ());
+-            }
++        if (y > inc)
++        {
++            plot++;
++            y -= inc;
+ 
+-            if (color (m_mouseButton).isTransparent () ||
+-                pixmap.mask ())
+-            {
+-                maskBitmap = kpPixmapFX::getNonNullMask (pixmap);
+-                maskPainter.begin (&maskBitmap);
+-                maskPainter.setPen (color (m_mouseButton).maskColor ());
+-            }
++            if (dy < 0)
++                ploty--;
++            else
++                ploty++;
++        }
+ 
+-            bool didSomething = wash (&painter, &maskPainter,
+-                                      image,
+-                                      color (1 - m_mouseButton)/*color to replace*/,
+-                                      rect, rect);
++        if (plot)
++        {
++                if (m_brushIsDiagonalLine && plot == 2)
++                {
++                    // MODIFIED: every point is
++                    // horizontally or vertically adjacent to another point (if there
++                    // is more than 1 point, of course).  This is in contrast to the
++                    // ordinary line algorithm which can create diagonal adjacencies.
+ 
+-            if (painter.isActive ())
+-                painter.end ();
++                    ret.append (QPoint (plotx, oldploty));
++                }
+ 
+-            if (maskPainter.isActive ())
+-                maskPainter.end ();
++                ret.append (QPoint (plotx, ploty));
++        }    
++    }
++    
++    return ret;
++}
+ 
+-            if (didSomething)
+-            {
+-                if (!maskBitmap.isNull ())
+-                    pixmap.setMask (maskBitmap);
++// virtual
++// TODO: refactor!
++void kpToolPen::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &)
++{
++    if ((m_mode & WashesPixmaps) && (foregroundColor () == backgroundColor ()) && processedColorSimilarity () == 0)
++        return;
+ 
+-            #if DEBUG_KP_TOOL_PEN
+-                kdDebug () << "\twashed: " << timer.restart () << "ms" << endl;
+-            #endif
+-                document ()->setPixmapAt (pixmap, hotPoint ());
+-            #if DEBUG_KP_TOOL_PEN
+-                kdDebug () << "\tset doc: " << timer.restart () << "ms" << endl;
+-            #endif
+-                m_currentCommand->updateBoundingRect (hotRect ());
+-            #if DEBUG_KP_TOOL_PEN
+-                kdDebug () << "\tupdate boundingRect: " << timer.restart () << "ms" << endl;
+-                kdDebug () << "\tdone" << endl;
+-            #endif
+-            }
++    // sync: remember to restoreFastUpdates() in all exit paths
++    viewManager ()->setFastUpdates ();
+ 
+-        #if DEBUG_KP_TOOL_PEN && 1
+-            kdDebug () << endl;
+-        #endif
+-        }
++    if (m_brushIsDiagonalLine ?
++            currentPointCardinallyNextToLast () :
++            currentPointNextToLast ())
++    {
++        if (m_mode & DrawsPixels)
++            drawPixel (thisPoint);
++        // Brush & Eraser
++        else if (m_mode & DrawsPixmaps)
++            drawPixmap ();
++        else if (m_mode & WashesPixmaps)
++            washPixmap ();
+     }
+     // in reality, the system is too slow to give us all the MouseMove events
+     // so we "interpolate" the missing points :)
+@@ -517,13 +626,7 @@ void kpToolPen::draw (const QPoint &this
+ 
+         if (m_mode & DrawsPixels)
+         {
+-            QPoint sp = lastPoint - rect.topLeft (), ep = thisPoint - rect.topLeft ();
+-            if (painter.isActive ())
+-                painter.drawLine (sp, ep);
+-
+-            if (maskPainter.isActive ())
+-                maskPainter.drawLine (sp, ep);
+-
++            drawPixels (thisPoint, lastPoint, rect, &painter, &maskPainter);
+             didSomething = true;
+         }
+         // Brush & Eraser
+@@ -534,156 +637,39 @@ void kpToolPen::draw (const QPoint &this
+             if (m_mode & WashesPixmaps)
+                 colorToReplace = color (1 - m_mouseButton);
+ 
+-            // Sweeps a pixmap along a line (modified Bresenham's line algorithm,
+-            // see MODIFIED comment below).
+-            //
+-            // Derived from the zSprite2 Graphics Engine
+-
+-            const int x1 = (thisPoint - rect.topLeft ()).x (),
+-                      y1 = (thisPoint - rect.topLeft ()).y (),
+-                      x2 = (lastPoint - rect.topLeft ()).x (),
+-                      y2 = (lastPoint - rect.topLeft ()).y ();
+-
+-            // Difference of x and y values
+-            int dx = x2 - x1;
+-            int dy = y2 - y1;
+-
+-            // Absolute values of differences
+-            int ix = kAbs (dx);
+-            int iy = kAbs (dy);
+-
+-            // Larger of the x and y differences
+-            int inc = ix > iy ? ix : iy;
+-
+-            // Plot location
+-            int plotx = x1;
+-            int ploty = y1;
+-
+-            int x = 0;
+-            int y = 0;
+-
+-            if (m_mode & WashesPixmaps)
+-            {
+-                if (wash (&painter, &maskPainter, image,
+-                          colorToReplace,
+-                          rect, plotx + rect.left (), ploty + rect.top ()))
+-                {
+-                    didSomething = true;
+-                }
+-            }
+-            else
++            QValueVector <QPoint> points = interpolatePoints (rect,
++                thisPoint, lastPoint);
++            for (QValueVector <QPoint>::const_iterator pit = points.begin ();
++                 pit != points.end ();
++                 pit++)
+             {
+-                if (!transparent)
++                const int XXX = (*pit).x (), YYY = (*pit).y ();
++                
++                if (m_mode & WashesPixmaps)
+                 {
+-                    kpPixmapFX::paintPixmapAt (&pixmap,
+-                        hotPoint (plotx, ploty),
+-                        m_brushPixmap [m_mouseButton]);
++                    if (wash (&painter, &maskPainter, image,
++                                colorToReplace,
++                                rect, XXX + rect.left (), YYY + rect.top ()))
++                    {
++                        didSomething = true;
++                    }
+                 }
+                 else
+                 {
+-                    kpPixmapFX::paintMaskTransparentWithBrush (&pixmap,
+-                        hotPoint (plotx, ploty),
+-                        kpPixmapFX::getNonNullMask (m_brushPixmap [m_mouseButton]));
+-                }
+-
+-                didSomething = true;
+-            }
+-
+-            for (int i = 0; i <= inc; i++)
+-            {
+-                // oldplotx is equally as valid but would look different
+-                // (but nobody will notice which one it is)
+-                int oldploty = ploty;
+-                int plot = 0;
+-
+-                x += ix;
+-                y += iy;
+-
+-                if (x > inc)
+-                {
+-                    plot++;
+-                    x -= inc;
+-
+-                    if (dx < 0)
+-                        plotx--;
+-                    else
+-                        plotx++;
+-                }
+-
+-                if (y > inc)
+-                {
+-                    plot++;
+-                    y -= inc;
+-
+-                    if (dy < 0)
+-                        ploty--;
+-                    else
+-                        ploty++;
+-                }
+-
+-                if (plot)
+-                {
+-                    if (m_brushIsDiagonalLine && plot == 2)
+-                    {
+-                        // MODIFIED: every point is
+-                        // horizontally or vertically adjacent to another point (if there
+-                        // is more than 1 point, of course).  This is in contrast to the
+-                        // ordinary line algorithm which can create diagonal adjacencies.
+-
+-                        if (m_mode & WashesPixmaps)
+-                        {
+-                            if (wash (&painter, &maskPainter, image,
+-                                      colorToReplace,
+-                                      rect, plotx + rect.left (), oldploty + rect.top ()))
+-                            {
+-                                didSomething = true;
+-                            }
+-                        }
+-                        else
+-                        {
+-                            if (!transparent)
+-                            {
+-                                kpPixmapFX::paintPixmapAt (&pixmap,
+-                                    hotPoint (plotx, oldploty),
+-                                    m_brushPixmap [m_mouseButton]);
+-                            }
+-                            else
+-                            {
+-                                kpPixmapFX::paintMaskTransparentWithBrush (&pixmap,
+-                                    hotPoint (plotx, oldploty),
+-                                    kpPixmapFX::getNonNullMask (m_brushPixmap [m_mouseButton]));
+-                            }
+-
+-                            didSomething = true;
+-                        }
+-                    }
+-
+-                    if (m_mode & WashesPixmaps)
++                    if (!transparent)
+                     {
+-                        if (wash (&painter, &maskPainter, image,
+-                                  colorToReplace,
+-                                  rect, plotx + rect.left (), ploty + rect.top ()))
+-                        {
+-                            didSomething = true;
+-                        }
++                        kpPixmapFX::paintPixmapAt (&pixmap,
++                            hotPoint (XXX, YYY),
++                            m_brushPixmap [m_mouseButton]);
+                     }
+                     else
+                     {
+-                        if (!transparent)
+-                        {
+-                            kpPixmapFX::paintPixmapAt (&pixmap,
+-                                hotPoint (plotx, ploty),
+-                                m_brushPixmap [m_mouseButton]);
+-                        }
+-                        else
+-                        {
+-                            kpPixmapFX::paintMaskTransparentWithBrush (&pixmap,
+-                                hotPoint (plotx, ploty),
+-                                kpPixmapFX::getNonNullMask (m_brushPixmap [m_mouseButton]));
+-                        }
+-
+-                        didSomething = true;
++                        kpPixmapFX::paintMaskTransparentWithBrush (&pixmap,
++                            hotPoint (XXX, YYY),
++                            kpPixmapFX::getNonNullMask (m_brushPixmap [m_mouseButton]));
+                     }
++
++                    didSomething = true;
+                 }
+             }
+ 
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO -x'autom*' base/kolourpaint/tools/kptoolpen.h head/kolourpaint/tools/kptoolpen.h
+--- base/kolourpaint/tools/kptoolpen.h	2005-06-23 14:38:35.637749088 +1000
++++ head/kolourpaint/tools/kptoolpen.h	2005-06-23 15:17:23.705828944 +1000
+@@ -31,6 +31,7 @@
+ 
+ #include <qpixmap.h>
+ #include <qrect.h>
++#include <qvaluevector.h>
+ 
+ #include <kpcommandhistory.h>
+ #include <kptool.h>
+@@ -94,6 +95,15 @@ public:
+ 
+     virtual void beginDraw ();
+     virtual void hover (const QPoint &point);
++    
++    void drawPixel (const QPoint &thisPoint);
++    void drawPixels (const QPoint &thisPoint, const QPoint &lastPoint,
++        const QRect &rect, QPainter *painter, QPainter *maskPainter);
++    void drawPixmap ();
++    void washPixmap ();
++    QValueVector <QPoint> interpolatePoints (const QRect &rect/*TODO:take me away*/,
++        const QPoint &thisPoint, const QPoint &lastPoint);
++    
+     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &);
+     virtual void cancelShape ();
+     virtual void releasedAllButtons ();

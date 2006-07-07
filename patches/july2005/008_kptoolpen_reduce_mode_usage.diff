@@ -1,0 +1,160 @@
+BEGIN
+Add virtual kpToolPen::{haveSquareBrushes,haveDiverseBrushes,colorsAreSwapped}()
+to reduce use of m_mode which is going to go.  Add kpToolPen::haveAnyBrushes().
+virtualise kpToolPen::color() [although I still think it might have to be done in kpTool]
+END
+
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO base/kolourpaint/tools/kptoolbrush.h head/kolourpaint/tools/kptoolbrush.h
+--- base/kolourpaint/tools/kptoolbrush.h	2005-06-23 14:18:16.200131784 +1000
++++ head/kolourpaint/tools/kptoolbrush.h	2005-06-23 14:30:04.987379744 +1000
+@@ -45,6 +45,7 @@ public:
+ protected:
+     virtual QString haventBegunDrawUserMessage () const;
+     virtual kpToolPenCommand *newCommand () const;
++    virtual bool haveDiverseBrushes () const { return true; }
+ };
+ 
+ 
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO base/kolourpaint/tools/kptoolcolorwasher.h head/kolourpaint/tools/kptoolcolorwasher.h
+--- base/kolourpaint/tools/kptoolcolorwasher.h	2005-06-23 14:18:16.202131480 +1000
++++ head/kolourpaint/tools/kptoolcolorwasher.h	2005-06-23 14:30:29.775611360 +1000
+@@ -49,6 +49,9 @@ public:
+ protected:
+     virtual QString haventBegunDrawUserMessage () const;
+     virtual kpToolPenCommand *newCommand () const;
++    
++    virtual bool haveSquareBrushes () const { return true; }
++    virtual bool colorsAreSwapped () const { return true; }
+ };
+ 
+ 
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO base/kolourpaint/tools/kptooleraser.h head/kolourpaint/tools/kptooleraser.h
+--- base/kolourpaint/tools/kptooleraser.h	2005-06-23 14:18:16.204131176 +1000
++++ head/kolourpaint/tools/kptooleraser.h	2005-06-23 14:30:11.637368792 +1000
+@@ -50,6 +50,10 @@ public:
+ protected:
+     virtual QString haventBegunDrawUserMessage () const;
+     virtual kpToolPenCommand *newCommand () const;
++    
++    virtual bool haveSquareBrushes () const { return true; }
++    virtual bool colorsAreSwapped () const { return true; }
++
+ };
+ 
+ 
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO base/kolourpaint/tools/kptoolpen.cpp head/kolourpaint/tools/kptoolpen.cpp
+--- base/kolourpaint/tools/kptoolpen.cpp	2005-06-23 14:18:16.206130872 +1000
++++ head/kolourpaint/tools/kptoolpen.cpp	2005-06-23 14:28:46.269346704 +1000
+@@ -118,7 +118,7 @@ void kpToolPen::begin ()
+     if (!tb)
+         return;
+ 
+-    if (m_mode & SquareBrushes)
++    if (haveSquareBrushes ())
+     {
+         m_toolWidgetEraserSize = tb->toolWidgetEraserSize ();
+         connect (m_toolWidgetEraserSize, SIGNAL (eraserSizeChanged (int)),
+@@ -130,7 +130,7 @@ void kpToolPen::begin ()
+         viewManager ()->setCursor (kpCursorProvider::lightCross ());
+     }
+ 
+-    if (m_mode & DiverseBrushes)
++    if (haveDiverseBrushes ())
+     {
+         m_toolWidgetBrush = tb->toolWidgetBrush ();
+         connect (m_toolWidgetBrush, SIGNAL (brushChanged (const QPixmap &, bool)),
+@@ -169,7 +169,7 @@ void kpToolPen::end ()
+         if (vm->tempPixmap () && vm->tempPixmap ()->isBrush ())
+             vm->invalidateTempPixmap ();
+ 
+-        if (m_mode & (SquareBrushes | DiverseBrushes))
++        if (haveAnyBrushes ())
+             vm->unsetCursor ();
+     }
+ 
+@@ -184,6 +184,7 @@ kpToolPenCommand *kpToolPen::newCommand 
+     return new kpToolPenCommand (i18n ("Pen"), mainWindow ());
+ }
+ 
++
+ // virtual
+ void kpToolPen::beginDraw ()
+ {
+@@ -215,9 +216,9 @@ void kpToolPen::hover (const QPoint &poi
+         kpTempPixmap::RenderMode renderMode;
+         QPixmap cursorPixmapForTempPixmap = m_cursorPixmap;
+ 
+-        if (m_mode & SquareBrushes)
++        if (haveSquareBrushes ())
+             renderMode = kpTempPixmap::SetPixmap;
+-        else if (m_mode & DiverseBrushes)
++        else if (haveDiverseBrushes ())
+         {
+             if (color (0).isOpaque ())
+                 renderMode = kpTempPixmap::PaintPixmap;
+@@ -791,7 +792,7 @@ kpColor kpToolPen::color (int which)
+ #endif
+ 
+     // Pen & Brush
+-    if ((m_mode & SwappedColors) == 0)
++    if (!colorsAreSwapped ())
+         return kpTool::color (which);
+     // only the (Color) Eraser uses the opposite color
+     else
+@@ -805,7 +806,7 @@ void kpToolPen::slotForegroundColorChang
+     kdDebug () << "kpToolPen::slotForegroundColorChanged()" << endl;
+ #endif
+     if (col.isOpaque ())
+-        m_brushPixmap [(m_mode & SwappedColors) ? 1 : 0].fill (col.toQColor ());
++        m_brushPixmap [colorsAreSwapped () ? 1 : 0].fill (col.toQColor ());
+ 
+     updateBrushCursor ();
+ }
+@@ -818,7 +819,7 @@ void kpToolPen::slotBackgroundColorChang
+ #endif
+ 
+     if (col.isOpaque ())
+-        m_brushPixmap [(m_mode & SwappedColors) ? 0 : 1].fill (col.toQColor ());
++        m_brushPixmap [colorsAreSwapped () ? 0 : 1].fill (col.toQColor ());
+ 
+     updateBrushCursor ();
+ }
+@@ -911,9 +912,9 @@ void kpToolPen::updateBrushCursor (bool 
+ 
+     if (recalc)
+     {
+-        if (m_mode & SquareBrushes)
++        if (haveSquareBrushes ())
+             m_cursorPixmap = m_toolWidgetEraserSize->cursorPixmap (color (0));
+-        else if (m_mode & DiverseBrushes)
++        else if (haveDiverseBrushes ())
+             m_cursorPixmap = m_brushPixmap [0];
+     }
+ 
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO base/kolourpaint/tools/kptoolpen.h head/kolourpaint/tools/kptoolpen.h
+--- base/kolourpaint/tools/kptoolpen.h	2005-06-23 14:18:16.207130720 +1000
++++ head/kolourpaint/tools/kptoolpen.h	2005-06-23 14:33:07.028705256 +1000
+@@ -80,9 +80,13 @@ public:
+     void setMode (Mode mode);
+ 
+ protected:
+-    // TODO: all eventually abstract in pull-up
++    // TODO: all virtual without inline impl eventually abstract in pull-up
+     virtual QString haventBegunDrawUserMessage () const;
+     virtual kpToolPenCommand *newCommand () const;
++    virtual bool haveSquareBrushes () const { return false; }
++    virtual bool haveDiverseBrushes () const { return false; }
++    virtual bool colorsAreSwapped () const { return false; }
++    bool haveAnyBrushes () const { return (haveSquareBrushes () || haveDiverseBrushes ()); }
+     
+ public:
+     virtual void begin ();
+@@ -112,7 +116,7 @@ protected:
+                const kpColor &colorToReplace,
+                const QRect &imageRect, const QRect &drawRect);
+ 
+-    kpColor color (int which);
++    virtual kpColor color (int which);
+ 
+     QPoint hotPoint () const;
+     QPoint hotPoint (int x, int y) const;

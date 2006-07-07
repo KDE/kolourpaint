@@ -1,0 +1,211 @@
+BEGIN
+Remove "switch"'s.  Push down into haventBegunDrawUserMessage(), newCommand().
+END
+
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO base/kolourpaint/tools/kptoolbrush.cpp head/kolourpaint/tools/kptoolbrush.cpp
+--- base/kolourpaint/tools/kptoolbrush.cpp	2005-02-02 22:11:27.000000000 +1100
++++ head/kolourpaint/tools/kptoolbrush.cpp	2005-06-23 14:08:10.750174168 +1000
+@@ -26,9 +26,11 @@
+ */
+ 
+ 
+-#include <klocale.h>
+ #include <kptoolbrush.h>
+ 
++#include <klocale.h>
++
++
+ kpToolBrush::kpToolBrush (kpMainWindow *mainWindow)
+     : kpToolPen (kpToolPen::Brush,
+                  i18n ("Brush"),
+@@ -42,4 +44,16 @@ kpToolBrush::~kpToolBrush ()
+ {
+ }
+ 
++
++QString kpToolBrush::haventBegunDrawUserMessage () const
++{
++    return i18n ("Click to draw dots or drag to draw strokes.");
++}
++
++kpToolPenCommand *kpToolBrush::newCommand () const
++{
++    return new kpToolPenCommand (i18n ("Brush"), mainWindow ());
++}
++
++
+ #include <kptoolbrush.moc>
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO base/kolourpaint/tools/kptoolbrush.h head/kolourpaint/tools/kptoolbrush.h
+--- base/kolourpaint/tools/kptoolbrush.h	2005-02-02 22:11:27.000000000 +1100
++++ head/kolourpaint/tools/kptoolbrush.h	2005-06-23 14:04:15.000000000 +1000
+@@ -26,11 +26,13 @@
+ */
+ 
+ 
+-#ifndef __kptoolbrush_h__
+-#define __kptoolbrush_h__
++#ifndef KP_TOOL_BRUSH_H
++#define KP_TOOL_BRUSH_H
++
+ 
+ #include <kptoolpen.h>
+ 
++
+ class kpToolBrush : public kpToolPen
+ {
+ Q_OBJECT
+@@ -38,6 +40,12 @@ Q_OBJECT
+ public:
+     kpToolBrush (kpMainWindow *mainWindow);
+     virtual ~kpToolBrush ();
++    
++
++protected:
++    virtual QString haventBegunDrawUserMessage () const;
++    virtual kpToolPenCommand *newCommand () const;
+ };
+ 
+-#endif  // __kptoolbrush_h__
++
++#endif  // KP_TOOL_BRUSH_H
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO base/kolourpaint/tools/kptoolcolorwasher.cpp head/kolourpaint/tools/kptoolcolorwasher.cpp
+--- base/kolourpaint/tools/kptoolcolorwasher.cpp	2005-06-23 14:00:50.296133360 +1000
++++ head/kolourpaint/tools/kptoolcolorwasher.cpp	2005-06-23 14:08:31.645997520 +1000
+@@ -132,5 +132,14 @@ void kpToolColorWasher::globalDraw ()
+     QApplication::restoreOverrideCursor ();
+ }
+ 
++QString kpToolColorWasher::haventBegunDrawUserMessage () const
++{
++    return i18n ("Click or drag to erase pixels of the foreground color.");
++}
++
++kpToolPenCommand *kpToolColorWasher::newCommand () const
++{
++    return new kpToolPenCommand (i18n ("Color Eraser"), mainWindow ());
++}
+ 
+ #include <kptoolcolorwasher.moc>
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO base/kolourpaint/tools/kptoolcolorwasher.h head/kolourpaint/tools/kptoolcolorwasher.h
+--- base/kolourpaint/tools/kptoolcolorwasher.h	2005-06-23 14:00:50.341126520 +1000
++++ head/kolourpaint/tools/kptoolcolorwasher.h	2005-06-23 14:04:21.000000000 +1000
+@@ -44,6 +44,11 @@ public:
+ 
+ public:
+     virtual void globalDraw ();
++    
++
++protected:
++    virtual QString haventBegunDrawUserMessage () const;
++    virtual kpToolPenCommand *newCommand () const;
+ };
+ 
+ 
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO base/kolourpaint/tools/kptooleraser.cpp head/kolourpaint/tools/kptooleraser.cpp
+--- base/kolourpaint/tools/kptooleraser.cpp	2005-06-23 14:00:50.343126216 +1000
++++ head/kolourpaint/tools/kptooleraser.cpp	2005-06-23 14:09:50.762969912 +1000
+@@ -62,4 +62,15 @@ void kpToolEraser::globalDraw ()
+ }
+ 
+ 
++QString kpToolEraser::haventBegunDrawUserMessage () const
++{
++    return i18n ("Click or drag to erase.");
++}
++
++kpToolPenCommand *kpToolEraser::newCommand () const
++{
++    return new kpToolPenCommand (i18n ("Eraser"), mainWindow ());
++}
++
++
+ #include <kptooleraser.moc>
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO base/kolourpaint/tools/kptooleraser.h head/kolourpaint/tools/kptooleraser.h
+--- base/kolourpaint/tools/kptooleraser.h	2005-06-23 14:00:50.344126064 +1000
++++ head/kolourpaint/tools/kptooleraser.h	2005-06-23 14:04:29.000000000 +1000
+@@ -44,6 +44,12 @@ public:
+     
+ public:
+     virtual void globalDraw ();
++    
++
++
++protected:
++    virtual QString haventBegunDrawUserMessage () const;
++    virtual kpToolPenCommand *newCommand () const;
+ };
+ 
+ 
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO base/kolourpaint/tools/kptoolpen.cpp head/kolourpaint/tools/kptoolpen.cpp
+--- base/kolourpaint/tools/kptoolpen.cpp	2005-06-23 14:00:50.346125760 +1000
++++ head/kolourpaint/tools/kptoolpen.cpp	2005-06-23 14:10:42.870048432 +1000
+@@ -105,19 +105,7 @@ kpToolPen::~kpToolPen ()
+ // private
+ QString kpToolPen::haventBegunDrawUserMessage () const
+ {
+-    switch (m_mode)
+-    {
+-    case Pen:
+-    case Brush:
+-        return i18n ("Click to draw dots or drag to draw strokes.");
+-        return i18n ("Click to draw dots or drag to draw strokes.");
+-    case Eraser:
+-        return i18n ("Click or drag to erase.");
+-    case ColorWasher:
+-        return i18n ("Click or drag to erase pixels of the foreground color.");
+-    default:
+-        return QString::null;
+-    }
++    return i18n ("Click to draw dots or drag to draw strokes.");
+ }
+ 
+ // virtual
+@@ -191,28 +179,15 @@ void kpToolPen::end ()
+     m_cursorPixmap.resize (0, 0);
+ }
+ 
++kpToolPenCommand *kpToolPen::newCommand () const
++{
++    return new kpToolPenCommand (i18n ("Pen"), mainWindow ());
++}
++
+ // virtual
+ void kpToolPen::beginDraw ()
+ {
+-    switch (m_mode)
+-    {
+-    case Pen:
+-        m_currentCommand = new kpToolPenCommand (i18n ("Pen"), mainWindow ());
+-        break;
+-    case Brush:
+-        m_currentCommand = new kpToolPenCommand (i18n ("Brush"), mainWindow ());
+-        break;
+-    case Eraser:
+-        m_currentCommand = new kpToolPenCommand (i18n ("Eraser"), mainWindow ());
+-        break;
+-    case ColorWasher:
+-        m_currentCommand = new kpToolPenCommand (i18n ("Color Eraser"), mainWindow ());
+-        break;
+-
+-    default:
+-        m_currentCommand = new kpToolPenCommand (i18n ("Custom Pen or Brush"), mainWindow ());
+-        break;
+-    }
++    m_currentCommand = newCommand ();
+ 
+     // we normally show the Brush pix in the foreground colour but if the
+     // user starts drawing in the background color, we don't want to leave
+diff -udpr -x'*.o' -x'*.moc' -xconfig.log -x.deps -xkolourpaintlicense.h -x.libs -xMakefile.in -xMakefile -x'*~' -x'*.lo' -x'.*.sw*' -xk -xCODING_STYLE -xkolourpaintversion.h -xTODO base/kolourpaint/tools/kptoolpen.h head/kolourpaint/tools/kptoolpen.h
+--- base/kolourpaint/tools/kptoolpen.h	2005-06-23 14:00:50.347125608 +1000
++++ head/kolourpaint/tools/kptoolpen.h	2005-06-23 14:04:01.994990704 +1000
+@@ -80,7 +80,9 @@ public:
+     void setMode (Mode mode);
+ 
+ protected:
+-    QString haventBegunDrawUserMessage () const;
++    // TODO: all eventually abstract in pull-up
++    virtual QString haventBegunDrawUserMessage () const;
++    virtual kpToolPenCommand *newCommand () const;
+     
+ public:
+     virtual void begin ();
