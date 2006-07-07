@@ -2,7 +2,7 @@ project(kolourpaint)
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors/
-    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/
     ${CMAKE_SOURCE_DIR}/kolourpaint/views/
@@ -13,7 +13,7 @@ include_directories(
 
 add_subdirectory( cursors ) 
 add_subdirectory( pics ) 
-add_subdirectory( pixmapfx ) 
+add_subdirectory( imagelib ) 
 add_subdirectory( tools ) 
 add_subdirectory( views ) 
 add_subdirectory( widgets ) 
@@ -104,19 +104,21 @@ set(libkolourpainttools_SRCS
 	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptooltext.cpp
 )
 
-set(libkolourpaintpixmapfx_SRCS
-	${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kpcoloreffect.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kpeffectbalance.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kpeffectblursharpen.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kpeffectemboss.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kpeffectflatten.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kpeffectinvert.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kpeffectreducecolors.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kpeffectsdialog.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kpfloodfill.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kpimage.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kppixmapfx.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/pixmapfx/kppainter.cpp
+set(libkolourpaintimagelib_SRCS
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpcolor.cpp 
+	${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpcoloreffect.cpp 
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpdocumentmetainfo.cpp 
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectbalance.cpp 
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectblursharpen.cpp 
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectemboss.cpp 
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectflatten.cpp 
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectinvert.cpp 
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectreducecolors.cpp 
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectsdialog.cpp 
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpfloodfill.cpp 
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpimage.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kppixmapfx.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kppainter.cpp
 )
 
 set(libkolourpaintcursors_SRCS 
@@ -125,14 +127,12 @@ set(libkolourpaintcursors_SRCS
 	)
 
 
-set(kolourpaint_SRCS ${libkolourpaintcursors_SRCS} ${libkolourpaintpixmapfx_SRCS} ${libkolourpainttools_SRCS} ${libkolourpaintwidgets_SRCS} ${libkolourpaintviews_SRCS}
+set(kolourpaint_SRCS ${libkolourpaintcursors_SRCS} ${libkolourpaintimagelib_SRCS} ${libkolourpainttools_SRCS} ${libkolourpaintwidgets_SRCS} ${libkolourpaintviews_SRCS}
    kolourpaint.cpp 
    kpdocument.cpp 
-   kpdocumentmetainfo.cpp 
    kpdocumentsaveoptions.cpp 
    kpdocumentsaveoptionswidget.cpp 
    kpview.cpp 
-   kpcolor.cpp 
    kpcommandhistory.cpp 
    kpmainwindow.cpp 
    kpmainwindow_edit.cpp 
