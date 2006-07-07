@@ -308,6 +308,16 @@ protected:
     virtual void wheelEvent (QWheelEvent *e);
     
     virtual bool event (QEvent *e);
+
+    void seeIfAndHandleModifierKey (QKeyEvent *e);
+    
+    void arrowKeyPressDirection (const QKeyEvent *e, int *dx, int *dy);
+    void seeIfAndHandleArrowKeyPress (QKeyEvent *e);
+    
+    bool isDrawKey (int key);
+    void seeIfAndHandleBeginDrawKeyPress (QKeyEvent *e);
+    void seeIfAndHandleEndDrawKeyPress (QKeyEvent *e);
+
     virtual void keyPressEvent (QKeyEvent *e);
     virtual void keyReleaseEvent (QKeyEvent *e);
 
