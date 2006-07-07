@@ -24,6 +24,11 @@ audit docs for refer to common:/ e.g. kde-default.css
 QT_HAVE_MAX_IMAGE_SIZE // An extension made by SUSE to Qt :-(((
 QImage::maxImageSize(); defaults to 4096 as max width and height could cause trouble
 
+rename kolourpaint-1.4pre/kolourpaint to kolourpaint-1.4pre/src (there was
+a reason why this wasn't done but I forgot - document this time)
+
+unix2dos text files in all non-KDE releases to not give bad notepad impression
+
 
 KolourPaint 1.2
 ~~~~~~~~~~~~~~~
@@ -47,14 +52,6 @@ line: shift+alt doesn't work but alt+shift does
 
 KolourPaint 1.4
 ~~~~~~~~~~~~~~~
-
-rename pics/custom and pics/ to correct
-rename airspray
-
-rename kolourpaint-1.4pre/kolourpaint to kolourpaint-1.4pre/src (there was
-a reason why this wasn't done but I forgot - document this time)
-
-unix2dos text files in all non-KDE releases to not give bad notepad impression
 
 
 kolourpaint not associated with .bmp
@@ -109,10 +106,6 @@ leaves much place on the screen for the picture (another reason why I
 like kolourpaint). If you would use the "right click" on a tool the
 same way even the palette would fit on this bar.
 (Michael Hoehne)
-
-"QPrinter/KPrinter default resolution" thread on kde-core-devel
-- low resolution when printing
-- also have to consider DPI of image
 
 I noticed a bug in the text tool. I have the subpixel hinting
 turned on but I suppose this should not be used in kolourpaint since
@@ -339,9 +332,6 @@ scaling image with sel (no pixmap), and then manip sel adds extra "Selection: Cr
 (this is a rather difficult problem to fix since sel has already been used
  for Image/Scale so would be inapproriate to replace it in cmd history)
 
-spraycan should be continuous - merge with kpToolBrush base?
-* [cleanup] remove all instances of kpTool*::setMode() - use proper class hierarchy
-
 tool to select rectangular area to zoom into
 
 Emmeran Seehuber:
@@ -383,8 +373,6 @@ tool box icons should have same background color as the other controls
   - but then what about kpCommand::size()?
 
 * kpsqueezedtextlabel could use (or be replaced by) KStringHandler::rPixelSqueeze()
-
-* AUDIT "The QImage class uses explicit sharing, similar to that used by QMemArray."
 
 a better set of cursors that don't obscure the pixel you're drawing at
 (e.g. compare the excellent Brush cursor to the Line Tool's cursor)
@@ -704,4 +692,5 @@ CTRL+Ptrscreen. (Mikhail Capone)
 - add ksnapshot mode to paste grabbed thing directly into kolourpaint so
   that kolourpaint gets a "Take screenshot" menu item
 (Bela-Andreas Bargel)
+
 
