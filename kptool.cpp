@@ -856,7 +856,7 @@ kpCommandHistory *kpTool::commandHistory () const
 
 void kpTool::mousePressEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 1 || 1
     kDebug () << "kpTool::mousePressEvent pos=" << e->pos ()
                << " btnStateBefore=" << (int) e->state ()
                << " btnStateAfter=" << (int) e->stateAfter ()
@@ -870,14 +870,14 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     if (m_mainWindow && e->button () == Qt::MidButton)
     {
         const QString text = QApplication::clipboard ()->text (QClipboard::Selection);
-    #if DEBUG_KP_TOOL && 1
+    #if DEBUG_KP_TOOL && 1 || 1
         kDebug () << "\tMMB pasteText='" << text << "'" << endl;
     #endif
         if (!text.isEmpty ())
         {
             if (hasBegunShape ())
             {
-            #if DEBUG_KP_TOOL && 1
+            #if DEBUG_KP_TOOL && 1 || 1
                 kDebug () << "\t\thasBegunShape - end" << endl;
             #endif
                 endShapeInternal (m_currentPoint,
@@ -897,7 +897,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     }
 
     int mb = mouseButton (buttonState);
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 1 || 1
     kDebug () << "\tmb=" << mb << " m_beganDraw=" << m_beganDraw << endl;
 #endif
 
@@ -907,7 +907,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     {
         if (mb == -1 || mb != m_mouseButton)
         {
-        #if DEBUG_KP_TOOL && 1
+        #if DEBUG_KP_TOOL && 1 || 1
             kDebug () << "\tCancelling operation as " << mb << " == -1 or != " << m_mouseButton << endl;
         #endif
 
@@ -933,9 +933,9 @@ void kpTool::mousePressEvent (QMouseEvent *e)
         kError () << "kpTool::mousePressEvent() without a view under the cursor!" << endl;
     }
 
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 1 || 1
     if (view)
-        kDebug () << "\tview=" << view->name () << endl;
+        kDebug () << "\tview=" << view->objectName () << endl;
 #endif
 
 
@@ -949,7 +949,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     m_viewUnderStartPoint = view;
     m_lastPoint = QPoint (-1, -1);
 
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 1 || 1
     kDebug () << "\tBeginning draw @ " << m_currentPoint << endl;
 #endif
 
@@ -1037,11 +1037,12 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 
 void kpTool::mouseReleaseEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 1 || 1
     kDebug () << "kpTool::mouseReleaseEvent pos=" << e->pos ()
                << " btnStateBefore=" << (int) e->state ()
                << " btnStateAfter=" << (int) e->stateAfter ()
-               << " button=" << (int) e->button () << endl;
+               << " button=" << (int) e->button ()
+               << " beganDraw=" << m_beganDraw << endl;
 #endif
 
     if (m_beganDraw)  // didn't cancelShape()
@@ -1110,145 +1111,230 @@ void kpTool::wheelEvent (QWheelEvent *e)
 bool kpTool::event (QEvent *e)
 {
 #if DEBUG_KP_TOOL
-    kdDebug () << "kpTool::event() returning false" << endl;
+    kDebug () << "kpTool::event() returning false" << endl;
 #endif
 
     // Don't handle.
     return false;
 }
 
-void kpTool::keyPressEvent (QKeyEvent *e)
+
+void kpTool::seeIfAndHandleModifierKey (QKeyEvent *e)
 {
-#if DEBUG_KP_TOOL && 0
-    kDebug () << "kpTool::keyPressEvent() e->key=" << e->key () << endl;
-#endif
-
-    int dx = 0, dy = 0;
-
-    e->ignore ();
-
     switch (e->key ())
     {
     case 0:
     case Qt::Key_unknown:
-    #if DEBUG_KP_TOOL && 0
-        kDebug () << "kpTool::keyPressEvent() picked up unknown key!" << endl;
-    #endif
-        // --- fall thru and update all modifiers ---
-    case Qt::Key_Alt:
-    case Qt::Key_Shift:
-    case Qt::Key_Control:
-        keyUpdateModifierState (e);
-
-        e->accept ();
-        break;
-
-    case Qt::Key_Delete:
-        m_mainWindow->slotDelete ();
-        break;
-
-    /*
-     * QCursor::setPos conveniently causes mouseMoveEvents :)
-     */
-
-    case Qt::Key_Home:     dx = -1, dy = -1;    break;
-    case Qt::Key_Up:                dy = -1;    break;
-    case Qt::Key_PageUp:   dx = +1, dy = -1;    break;
-
-    case Qt::Key_Left:     dx = -1;             break;
-    case Qt::Key_Right:    dx = +1;             break;
-
-    case Qt::Key_End:      dx = -1, dy = +1;    break;
-    case Qt::Key_Down:              dy = +1;    break;
-    case Qt::Key_PageDown: dx = +1, dy = +1;    break;
-
-    case Qt::Key_Enter:
-    case Qt::Key_Return:
-    case Qt::Key_Insert:
-    case Qt::Key_Clear/*Numpad 5 Key*/:
-    {
-        kpView *view = viewUnderCursor (); // TODO: wrong for dragging lines outside of view (for e.g.)
-        if (view)
-        {
-            // TODO: what about the modifiers
-            QMouseEvent me (QEvent::MouseButtonPress,
-                            view->mapFromGlobal (QCursor::pos ()),
-                            Qt::LeftButton,
-                            0);
-            mousePressEvent (&me);
-            e->accept ();
-        }
-
-        break;
-    }}
-
-    kpView *view = viewUnderCursor ();
-    if (view && (dx || dy))
-    {
-        QPoint oldPoint = view->mapFromGlobal (QCursor::pos ());
-    #if DEBUG_KP_TOOL && 0
-        kDebug () << "\toldPoint=" << oldPoint
-                   << " dx=" << dx << " dy=" << dy << endl;
-    #endif
-
-
-        const int viewIncX = (dx ? qMax (1, view->zoomLevelX () / 100) * dx : 0);
-        const int viewIncY = (dy ? qMax (1, view->zoomLevelY () / 100) * dy : 0);
-
-        int newViewX = oldPoint.x () + viewIncX;
-        int newViewY = oldPoint.y () + viewIncY;
-
-
-    #if DEBUG_KP_TOOL && 0
-        kDebug () << "\tnewPoint=" << QPoint (newViewX, newViewY) << endl;
-    #endif
-
-        if (view->transformViewToDoc (QPoint (newViewX, newViewY)) ==
-            view->transformViewToDoc (oldPoint))
-        {
-            newViewX += viewIncX, newViewY += viewIncY;
-
-        #if DEBUG_KP_TOOL && 0
-            kDebug () << "\tneed adjust for doc - newPoint="
-                       << QPoint (newViewX, newViewY) << endl;
-        #endif
-        }
-
-
-        // TODO: visible width/height (e.g. with scrollbars)
-        int x = qMin (qMax (newViewX, 0), view->width () - 1);
-        int y = qMin (qMax (newViewY, 0), view->height () - 1);
-
-        QCursor::setPos (view->mapToGlobal (QPoint (x, y)));
-        e->accept ();
-    }
-}
-
-void kpTool::keyReleaseEvent (QKeyEvent *e)
-{
-#if DEBUG_KP_TOOL && 0
-    kDebug () << "kpTool::keyReleaseEvent() e->key=" << e->key () << endl;
-#endif
-
-    e->ignore ();
-
-    switch (e->key ())
-    {
-    case 0:
-    case Qt::Key_unknown:
-    #if DEBUG_KP_TOOL
-        kDebug () << "kpTool::keyReleaseEvent() picked up unknown key!" << endl;
+    #if DEBUG_KP_TOOL && 0 || 1
+        kDebug () << "kpTool::seeIfAndHandleModifierKey() picked up unknown key!" << endl;
     #endif
         // HACK: around Qt bug: if you hold a modifier before you start the
         //                      program and then release it over the view,
         //                      Qt reports it as the release of an unknown key
         // --- fall thru and update all modifiers ---
+
     case Qt::Key_Alt:
     case Qt::Key_Shift:
     case Qt::Key_Control:
+    #if DEBUG_KP_TOOL && 0 || 1
+        kDebug () << "kpTool::setIfAndHandleModifierKey() accepting" << endl;
+    #endif
         keyUpdateModifierState (e);
 
         e->accept ();
+        break;
+    }
+}
+
+
+// Returns in <dx> and <dy> the direction the arrow key "e->key()" is
+// pointing in or (0,0) if it's not a recognised arrow key.
+void kpTool::arrowKeyPressDirection (const QKeyEvent *e, int *dx, int *dy)
+{
+    int dxLocal = 0, dyLocal = 0;
+
+    switch (e->key ())
+    {
+    case Qt::Key_Home:     dxLocal = -1, dyLocal = -1;    break;
+    case Qt::Key_Up:                     dyLocal = -1;    break;
+    case Qt::Key_PageUp:   dxLocal = +1, dyLocal = -1;    break;
+
+    case Qt::Key_Left:     dxLocal = -1;                  break;
+    case Qt::Key_Right:    dxLocal = +1;                  break;
+
+    case Qt::Key_End:      dxLocal = -1, dyLocal = +1;    break;
+    case Qt::Key_Down:                   dyLocal = +1;    break;
+    case Qt::Key_PageDown: dxLocal = +1, dyLocal = +1;    break;
+    }
+
+    if (dx)
+        *dx = dxLocal;
+    if (dy)
+        *dy = dyLocal;
+}
+
+void kpTool::seeIfAndHandleArrowKeyPress (QKeyEvent *e)
+{
+    int dx, dy;
+
+    arrowKeyPressDirection (e, &dx, &dy);
+    if (dx == 0 && dy == 0)
+        return;    
+
+                
+    kpView * const view = viewUnderCursor ();
+    if (!view)
+        return;
+
+                
+    const QPoint oldPoint = view->mapFromGlobal (QCursor::pos ());
+#if DEBUG_KP_TOOL && 0 || 1
+    kDebug () << "\toldPoint=" << oldPoint
+                << " dx=" << dx << " dy=" << dy << endl;
+#endif
+
+
+    const int viewIncX = (dx ? qMax (1, view->zoomLevelX () / 100) * dx : 0);
+    const int viewIncY = (dy ? qMax (1, view->zoomLevelY () / 100) * dy : 0);
+
+    int newViewX = oldPoint.x () + viewIncX;
+    int newViewY = oldPoint.y () + viewIncY;
+
+
+#if DEBUG_KP_TOOL && 0 || 1
+    kDebug () << "\tnewPoint=" << QPoint (newViewX, newViewY) << endl;
+#endif
+
+    // Make sure we really moved at least one doc point (needed due to
+    // rounding error).
+
+    if (view->transformViewToDoc (QPoint (newViewX, newViewY)) ==
+        view->transformViewToDoc (oldPoint))
+    {
+        newViewX += viewIncX, newViewY += viewIncY;
+
+    #if DEBUG_KP_TOOL && 0 || 1
+        kDebug () << "\tneed adjust for doc - newPoint="
+                    << QPoint (newViewX, newViewY) << endl;
+    #endif
+    }
+
+
+    // TODO: visible width/height (e.g. with scrollbars)
+    const int x = qMin (qMax (newViewX, 0), view->width () - 1);
+    const int y = qMin (qMax (newViewY, 0), view->height () - 1);
+
+    // QCursor::setPos conveniently causes mouseMoveEvents
+    QCursor::setPos (view->mapToGlobal (QPoint (x, y)));
+    e->accept ();
+}
+
+
+bool kpTool::isDrawKey (int key)
+{
+    return (key == Qt::Key_Enter ||
+            key == Qt::Key_Return ||
+            key == Qt::Key_Insert ||
+            key == Qt::Key_Clear/*Numpad 5 Key*/ ||
+            key == Qt::Key_L);
+}
+
+void kpTool::seeIfAndHandleBeginDrawKeyPress (QKeyEvent *e)
+{
+    if (e->isAutoRepeat ())
+        return;
+
+    if (!isDrawKey (e->key ()))
+        return;
+        
+#if DEBUG_KP_TOOL && 0 || 1
+    kDebug () << "kpTool::seeIfAndHandleBeginDrawKeyPress() accept" << endl;
+#endif
+
+
+    // TODO: wrong for dragging lines outside of view (for e.g.)
+    kpView * const view = viewUnderCursor ();
+    if (!view)
+        return;
+        
+        
+    // TODO: what about the modifiers?
+    QMouseEvent me (QEvent::MouseButtonPress,
+                    view->mapFromGlobal (QCursor::pos ()),
+                    Qt::LeftButton,
+                    Qt::LeftButton/*button state after event*/,
+                    Qt::NoModifier);
+    mousePressEvent (&me);
+    e->accept ();
+}
+
+void kpTool::seeIfAndHandleEndDrawKeyPress (QKeyEvent *e)
+{
+#if DEBUG_KP_TOOL && 0 || 1
+    kDebug () << "kpTool::setIfAndHandleEndDrawKeyPress() key=" << e->key ()
+               << " isAutoRepeat=" << e->isAutoRepeat ()
+               << " isDrawKey=" << isDrawKey (e->key ())
+               << " view=" << viewUnderCursor ()
+               << endl;
+#endif
+
+    if (e->isAutoRepeat ())
+        return;
+
+    if (!isDrawKey (e->key ()))
+        return;
+    
+#if DEBUG_KP_TOOL && 0 || 1
+    kDebug () << "kpTool::seeIfAndHandleEndDrawKeyPress() accept" << endl;
+#endif
+    
+    
+    kpView * const view = viewUnderCursor ();
+    if (!view)
+        return;
+    
+        
+    // TODO: what about the modifiers?
+    QMouseEvent me (QEvent::MouseButtonRelease,
+                    view->mapFromGlobal (QCursor::pos ()),
+                    Qt::LeftButton,
+                    Qt::NoButton/*button state after event*/,
+                    Qt::NoModifier);
+    mouseReleaseEvent (&me);
+
+    e->accept ();
+}
+
+
+void kpTool::keyPressEvent (QKeyEvent *e)
+{
+#if DEBUG_KP_TOOL && 0 || 1
+    kDebug () << "kpTool::keyPressEvent() key=" << e->key ()
+              << " state=" << e->state () << " stateAfter=" << e->stateAfter ()
+              << " isAutoRep=" << e->isAutoRepeat ()
+              << endl;
+#endif
+
+    e->ignore ();
+
+
+    seeIfAndHandleModifierKey (e);
+    if (e->isAccepted ())
+        return;
+            
+    seeIfAndHandleArrowKeyPress (e);
+    if (e->isAccepted ())
+        return;
+        
+    seeIfAndHandleBeginDrawKeyPress (e);
+    if (e->isAccepted ())
+        return;
+    
+            
+    switch (e->key ())
+    {
+    case Qt::Key_Delete:
+        m_mainWindow->slotDelete ();
         break;
 
     case Qt::Key_Escape:
@@ -1259,30 +1345,35 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
         }
 
         break;
-
-    case Qt::Key_Enter:
-    case Qt::Key_Return:
-    case Qt::Key_Insert:
-    case Qt::Key_Clear/*Numpad 5 Key*/:
-    {
-        kpView *view = viewUnderCursor ();
-        if (view)
-        {
-            QMouseEvent me (QEvent::MouseButtonRelease,
-                            view->mapFromGlobal (QCursor::pos ()),
-                            Qt::LeftButton,
-                            Qt::LeftButton);
-            mouseReleaseEvent (&me);
-            e->accept ();
-        }
-        break;
-    }}
+    }
 }
+
+void kpTool::keyReleaseEvent (QKeyEvent *e)
+{
+#if DEBUG_KP_TOOL && 0 || 1
+    kDebug () << "kpTool::keyReleaseEvent() key=" << e->key ()
+              << " state=" << e->state () << " stateAfter=" << e->stateAfter ()
+              << " isAutoRep=" << e->isAutoRepeat ()
+              << endl;
+#endif
+
+    e->ignore ();
+
+    
+    seeIfAndHandleModifierKey (e);
+    if (e->isAccepted ())
+        return;
+            
+    seeIfAndHandleEndDrawKeyPress (e);
+    if (e->isAccepted ())
+        return;
+}
+
 
 // private
 void kpTool::keyUpdateModifierState (QKeyEvent *e)
 {
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 0 || 1
     kDebug () << "kpTool::updateModifierState() e->key=" << e->key () << endl;
     kDebug () << "\tshift="
                << (e->stateAfter () & Qt::ShiftModifier)
