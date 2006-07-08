@@ -82,21 +82,13 @@ QString kpToolSpraycan::haventBegunDrawUserMessage () const
 // public virtual [base kpToolFlowBase]
 void kpToolSpraycan::begin ()
 {
-    m_toolWidgetSpraycanSize = 0;
-    
     kpToolToolBar *tb = toolToolBar ();
-    if (tb)
-    {
-        m_toolWidgetSpraycanSize = tb->toolWidgetSpraycanSize ();
+    Q_ASSERT (tb);
 
-        if (m_toolWidgetSpraycanSize)
-        {
-            connect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged (int)),
-                     this, SLOT (slotSpraycanSizeChanged (int)));
-
-            m_toolWidgetSpraycanSize->show ();
-        }
-    }
+    m_toolWidgetSpraycanSize = tb->toolWidgetSpraycanSize ();
+    connect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged (int)),
+            this, SLOT (slotSpraycanSizeChanged (int)));
+    m_toolWidgetSpraycanSize->show ();
     
     kpToolFlowBase::begin ();
 }
@@ -106,12 +98,9 @@ void kpToolSpraycan::end ()
 {
     kpToolFlowBase::end ();
     
-    if (m_toolWidgetSpraycanSize)
-    {
-        disconnect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged (int)),
-                    this, SLOT (slotSpraycanSizeChanged (int)));
-        m_toolWidgetSpraycanSize = 0;
-    }
+    disconnect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged (int)),
+                this, SLOT (slotSpraycanSizeChanged (int)));
+    m_toolWidgetSpraycanSize = 0;
 }
 
 
