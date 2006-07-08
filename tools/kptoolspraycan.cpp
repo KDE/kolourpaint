@@ -228,14 +228,10 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
     QList <QPoint> docPoints = interpolatePoints (thisPoint, lastPoint,
         probability);
     
-    // By chance no points to draw?
-    if (docPoints.empty ())
-        return QRect ();
-        
         
     // Drawing a line (not just a point) starting at lastPoint?
     if (thisPoint != lastPoint &&
-        docPoints [0] == lastPoint)
+        docPoints.size () > 0 && docPoints [0] == lastPoint)
     {
     #if DEBUG_KP_TOOL_SPRAYCAN
         kDebug () << "\tis a line starting at lastPoint - erasing="
@@ -243,7 +239,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
     #endif
     
         // We're not expecting a duplicate 2nd interpolation point.
-        Q_ASSERT (docPoints [1] != lastPoint);
+        Q_ASSERT (docPoints.size () <= 1 || docPoints [1] != lastPoint);
         
         // lastPoint was drawn previously so don't draw over it again or
         // it will (theoretically) be denser than expected.
@@ -255,8 +251,13 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
         // since spraying on nearby document interpolation points will
         // spray around this document point anyway (due to the
         // spraycanSize() radius).
+        // TODO: what if docPoints becomes empty?
         docPoints.erase (docPoints.begin ());
     }
+
+    // By chance no points to draw?
+    if (docPoints.empty ())
+        return QRect ();
     
         
     pixmapSprayManyDocPoints (&pixmap, docRect, docPoints);
