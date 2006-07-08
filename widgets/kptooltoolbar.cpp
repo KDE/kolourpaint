@@ -565,13 +565,13 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
     {
         m_baseLayout = new QBoxLayout (QBoxLayout::LeftToRight, m_baseWidget );
     }
-    m_baseLayout->setSpacing( 10 );
-    m_baseLayout->setMargin( 5 );
+    m_baseLayout->setSpacing (10);
+    m_baseLayout->setMargin (5);
 
     m_toolLayout = new QGridLayout ();
-    m_baseLayout->addItem( m_toolLayout );
-    m_toolLayout->setMargin( 0 );
-    m_toolLayout->setSpacing( 0 );
+    m_baseLayout->addItem (m_toolLayout);
+    m_toolLayout->setMargin (0);
+    m_toolLayout->setSpacing (0);
 
     int num = 0;
 
