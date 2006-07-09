@@ -69,13 +69,13 @@ Q_OBJECT
 public:
     kpTool (const QString &text, const QString &description,
             int key,
-            kpMainWindow *mainWindow, const char *name);
+            kpMainWindow *mainWindow, const QString &name);
     virtual ~kpTool ();
 
 private:
     void init (const QString &text, const QString &description,
                int key,
-               kpMainWindow *mainWindow, const char *name);
+               kpMainWindow *mainWindow, const QString &name);
 
 
 protected:
@@ -109,8 +109,6 @@ public:
     // <some modifiers>+<key>.
     static KShortcut shortcutForKey (int key);
     KShortcut shortcut () const;
-
-    const char *name () const;
 
 
     static QRect neededRect (const QRect &rect, int lineWidth);
@@ -349,7 +347,6 @@ protected:
     static int mouseButton (Qt::MouseButtons mouseButtons);
 
     QString m_text, m_description;
-    const char *m_name;
 
     QPointer <kpMainWindow> m_mainWindow;
     bool m_began;

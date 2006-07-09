@@ -70,7 +70,7 @@ struct kpToolPrivate
 
 kpTool::kpTool (const QString &text, const QString &description,
                 int key,
-                kpMainWindow *mainWindow, const char *name)
+                kpMainWindow *mainWindow, const QString &name)
     : QObject (mainWindow)
 {
     init (text, description, key, mainWindow, name);
@@ -97,7 +97,7 @@ kpTool::~kpTool ()
 // private
 void kpTool::init (const QString &text, const QString &description,
                    int key,
-                   kpMainWindow *mainWindow, const char *name)
+                   kpMainWindow *mainWindow, const QString &name)
 {
     d = new kpToolPrivate ();
 
@@ -106,7 +106,7 @@ void kpTool::init (const QString &text, const QString &description,
     m_ignoreColorSignals = 0;
     m_shiftPressed = false, m_controlPressed = false, m_altPressed = false;  // set in beginInternal()
     m_beganDraw = false;
-    m_text = text, m_description = description, m_name = name;
+    m_text = text, m_description = description; setObjectName (name);
     m_mainWindow = mainWindow;
     m_began = false;
     m_viewUnderStartPoint = 0;
@@ -271,13 +271,6 @@ void kpTool::setDescription (const QString &description)
         m_action->setWhatsThis (m_description);
     else
         createAction ();
-}
-
-
-// public
-const char *kpTool::name () const
-{
-    return m_name;
 }
 
 
