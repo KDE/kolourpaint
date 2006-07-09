@@ -52,6 +52,7 @@ set(libkolourpaintwidgets_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kpcolortoolbar.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kpresizesignallinglabel.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kpsqueezedtextlabel.cpp 
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kptoolpreviewdialog.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kptooltoolbar.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kptoolwidgetbase.cpp 
 	${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kptoolwidgetbrush.cpp 
@@ -70,7 +71,6 @@ set(libkolourpaintviews_SRCS
 )
 
 set(libkolourpainttools_SRCS 
-	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolaction.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolautocrop.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolbrush.cpp 
 	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolclear.cpp 
@@ -92,7 +92,6 @@ set(libkolourpainttools_SRCS
 	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolpen.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolpolygon.cpp 
 	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolpolyline.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolpreviewdialog.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolrectangle.cpp 
 	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolrectselection.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolresizescale.cpp 
@@ -151,6 +150,7 @@ set(kolourpaint_SRCS ${libkolourpaintcursors_SRCS} ${libkolourpaintimagelib_SRCS
    kptemppixmap.cpp 
    kpthumbnail.cpp 
    kptool.cpp 
+   kptoolaction.cpp 
    kpviewmanager.cpp 
    kpviewscrollablecontainer.cpp 
    kpwidgetmapper.cpp 
