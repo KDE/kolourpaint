@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_DOCUMENT 0
+#define DEBUG_KP_DOCUMENT 1
 
 
 #include <kpdocument.h>
@@ -173,7 +173,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
     kDebug () << "\ttempFile=" << tempFile << endl;
     kDebug () << "\tmimetype=" << detectedMimeType << endl;
     kDebug () << "\tsrc=" << url.path () << endl;
-    kDebug () << "\tmimetype of src=" << KImageIO::mimeType (url.path ()) << endl;
+    // COMPAT kDebug () << "\tmimetype of src=" << KImageIO::mimeType (url.path ()) << endl;
 #endif
 
     if (detectedMimeType.isEmpty ())
@@ -199,8 +199,8 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
 
 #if DEBUG_KP_DOCUMENT
     kDebug () << "\timage: depth=" << image.depth ()
-                << " (X display=" << QColor::numBitPlanes () << ")"
-                << " hasAlphaBuffer=" << image.hasAlphaBuffer ()
+                << " (X display=" << QPixmap::defaultDepth () << ")"
+                << " hasAlphaChannel=" << image.hasAlphaChannel ()
                 << endl;
 #endif
 
@@ -534,7 +534,9 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     if (useSaveOptionsColorDepth &&
         imageToSave.depth () != saveOptions.colorDepth ())
     {
-        imageToSave = ::convertImageDepth (imageToSave,
+        // TODO: I think this erases the alpha channel!
+        //       See comment in kpEffectReduceColorsCommand::apply().
+        imageToSave = ::ConvertImageDepth (imageToSave,
                                            saveOptions.colorDepth (),
                                            saveOptions.dither ());
     }

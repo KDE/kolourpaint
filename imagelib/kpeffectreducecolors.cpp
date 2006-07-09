@@ -45,10 +45,33 @@
 #include <kppixmapfx.h>
 
 
-QImage convertImageDepth (const QImage &image, int depth, bool dither)
+static QImage::Format DepthToFormat (int depth)
+{
+    switch (depth)
+    {
+    case 1:
+        // (can be MSB instead, I suppose)
+        return QImage::Format_MonoLSB;
+    
+    case 8:
+        return QImage::Format_Indexed8;
+
+    case 24:
+        // TODO: return RGB32 if no alpha.
+        return QImage::Format_ARGB32;
+
+    default:
+        kError () << "kpeffectreducecolors.cpp:DepthToFormat(depth="
+                  << depth << ")" << endl;
+        return QImage::Format_Invalid;
+    }
+}
+
+// exported
+QImage ConvertImageDepth (const QImage &image, int depth, bool dither)
 {
 #if DEBUG_KP_EFFECT_REDUCE_COLORS
-    kDebug () << "::convertImageDepth() changing image (w=" << image.width ()
+    kDebug () << "kpeffectreducecolors.cpp:ConvertImageDepth() changing image (w=" << image.width ()
                << ",h=" << image.height ()
                << ") depth from " << image.depth ()
                 << " to " << depth
@@ -81,6 +104,7 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
     // result.  Instead, we simply preserve the 2 colours.  One use case
     // is resaving a "colour monochrome" image (<= 2 colours but not
     // necessarily black & white).
+    // TODO: still true for Qt4? and QImage::convertToFormat()?
     if (depth == 1 && !dither)
     {
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
@@ -91,8 +115,9 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
 
         bool moreThan2Colors = false;
 
-        QImage monoImage (image.width (), image.height (),
-                          1/*depth*/, 2/*numColors*/, QImage::LittleEndian);
+        // COMPAT: test new ctor
+        QImage monoImage (image.width (), image.height (), QImage::Format_MonoLSB);
+        monoImage.setNumColors (2);
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
         kDebug () << "\t\tinitialising output image w=" << monoImage.width ()
                    << ",h=" << monoImage.height ()
@@ -103,6 +128,7 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
         {
             for (int x = 0; x < image.width (); x++)
             {
+                // (this can be transparent)
                 QRgb imagePixel = image.pixel (x, y);
 
                 if (color0Valid && imagePixel == color0)
@@ -155,7 +181,7 @@ QImage convertImageDepth (const QImage &image, int depth, bool dither)
     }
 
 
-    QImage retImage = image.convertDepth (depth,
+    QImage retImage = image.convertToFormat (::DepthToFormat (depth),
         Qt::AutoColor |
         (dither ? Qt::DiffuseDither : Qt::ThresholdDither) |
         Qt::ThresholdAlphaDither |
@@ -231,7 +257,7 @@ void kpEffectReduceColorsCommand::apply (QPixmap *destPixmapPtr, int depth, bool
     QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
 
 
-    image = ::convertImageDepth (image, depth, dither);
+    image = ::ConvertImageDepth (image, depth, dither);
 
     if (image.isNull ())
         return;
