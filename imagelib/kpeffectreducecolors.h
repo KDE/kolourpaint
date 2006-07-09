@@ -40,7 +40,7 @@ class QRadioButton;
 class kpMainWindow;
 
 
-QImage convertImageDepth (const QImage &image, int depth, bool dither);
+QImage ConvertImageDepth (const QImage &image, int depth, bool dither);
 
 
 class kpEffectReduceColorsCommand : public kpColorEffectCommand
