@@ -859,8 +859,8 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 #if DEBUG_KP_TOOL && 1 || 1
     kDebug () << "kpTool::mousePressEvent pos=" << e->pos ()
                << " button=" << (int) e->button ()
-               << " stateAfter: buttons=" << (int) e->buttons ()
-               << " modifiers=" << (int) e->modifiers ()
+               << " stateAfter: buttons=" << (int *) (int) e->buttons ()
+               << " modifiers=" << (int *) (int) e->modifiers ()
                << " beganDraw=" << m_beganDraw << endl;
 #endif
 
@@ -960,8 +960,8 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_TOOL && 0
     kDebug () << "kpTool::mouseMoveEvent pos=" << e->pos ()
-               << " stateAfter: buttons=" << (int) e->buttons ()
-               << " modifiers=" << (int) e->modifiers ()
+               << " stateAfter: buttons=" << (int *) (int) e->buttons ()
+               << " modifiers=" << (int *) (int) e->modifiers ()
     kpView *v0 = viewUnderCursor (),
            *v1 = viewManager ()->viewUnderCursor (true/*use Qt*/),
            *v2 = viewUnderStartPoint ();
@@ -1037,8 +1037,8 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
 #if DEBUG_KP_TOOL && 1 || 1
     kDebug () << "kpTool::mouseReleaseEvent pos=" << e->pos ()
                << " button=" << (int) e->button ()
-               << " stateAfter: buttons=" << (int) e->buttons ()
-               << " modifiers=" << (int) e->modifiers ()
+               << " stateAfter: buttons=" << (int *) (int) e->buttons ()
+               << " modifiers=" << (int *) (int) e->modifiers ()
                << " beganDraw=" << m_beganDraw << endl;
 #endif
 
@@ -1127,6 +1127,8 @@ bool kpTool::viewEvent (QEvent *e)
     kDebug () << "kpTool<" << name ()
               << "," << this << ">::viewEvent(type=" << e->type ()
               << ") returning false" << endl;
+#else
+    (void) e;
 #endif
 
     // Don't handle.
@@ -1146,6 +1148,7 @@ void kpTool::seeIfAndHandleModifierKey (QKeyEvent *e)
         // HACK: around Qt bug: if you hold a modifier before you start the
         //                      program and then release it over the view,
         //                      Qt reports it as the release of an unknown key
+        //       Qt4 update: I don't think this happens anymore...
         // --- fall thru and update all modifiers ---
 
     case Qt::Key_Alt:
@@ -1324,8 +1327,8 @@ void kpTool::seeIfAndHandleEndDrawKeyPress (QKeyEvent *e)
 void kpTool::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL && 0 || 1
-    kDebug () << "kpTool::keyPressEvent() key=" << e->key ()
-              << " state=" << e->state () << " stateAfter=" << e->stateAfter ()
+    kDebug () << "kpTool::keyPressEvent() key=" << (int *) e->key ()
+              << " stateAfter: modifiers=" << (int *) (int) e->modifiers ()
               << " isAutoRep=" << e->isAutoRepeat ()
               << endl;
 #endif
@@ -1366,8 +1369,8 @@ void kpTool::keyPressEvent (QKeyEvent *e)
 void kpTool::keyReleaseEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL && 0 || 1
-    kDebug () << "kpTool::keyReleaseEvent() key=" << e->key ()
-              << " state=" << e->state () << " stateAfter=" << e->stateAfter ()
+    kDebug () << "kpTool::keyReleaseEvent() key=" << (int *) e->key ()
+              << " stateAfter: modifiers=" << (int *) (int) e->modifiers ()
               << " isAutoRep=" << e->isAutoRepeat ()
               << endl;
 #endif
@@ -1389,37 +1392,35 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
 void kpTool::keyUpdateModifierState (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL && 0 || 1
-    kDebug () << "kpTool::updateModifierState() e->key=" << e->key () << endl;
+    kDebug () << "kpTool::keyUpdateModifierState() e->key=" << (int *) e->key () << endl;
     kDebug () << "\tshift="
-               << (e->stateAfter () & Qt::ShiftModifier)
+               << (e->modifiers () & Qt::ShiftModifier)
                << " control="
-               << (e->stateAfter () & Qt::ControlModifier)
+               << (e->modifiers () & Qt::ControlModifier)
                << " alt="
-               << (e->stateAfter () & Qt::AltModifier)
+               << (e->modifiers () & Qt::AltModifier)
                << endl;
 #endif
     if (e->key () & (Qt::Key_Alt | Qt::Key_Shift | Qt::Key_Control))
     {
-    #if DEBUG_KP_TOOL && 0
+    #if DEBUG_KP_TOOL && 0 || 1
         kDebug () << "\t\tmodifier changed - use e's claims" << endl;
     #endif
-        setShiftPressed (e->stateAfter () & Qt::ShiftModifier);
-        setControlPressed (e->stateAfter () & Qt::ControlModifier);
-        setAltPressed (e->stateAfter () & Qt::AltModifier);
+        setShiftPressed (e->modifiers () & Qt::ShiftModifier);
+        setControlPressed (e->modifiers () & Qt::ControlModifier);
+        setAltPressed (e->modifiers () & Qt::AltModifier);
     }
+    // See seeIfAndHandleModifierKey() for why this code path exists.
     else
     {
-    #if DEBUG_KP_TOOL && 0
+    #if DEBUG_KP_TOOL && 0 || 1
         kDebug () << "\t\tmodifiers not changed - figure out the truth" << endl;
     #endif
-        uint keyState = QApplication::keyboardModifiers ();
+        Qt::KeyboardModifiers keyState = QApplication::keyboardModifiers ();
 
         setShiftPressed (keyState & Qt::ShiftModifier);
         setControlPressed (keyState & Qt::ControlModifier);
-
-        // TODO: Can't do much about ALT - unless it's always KApplication::Modifier1?
-        //       Ditto for everywhere else where I set SHIFT & CTRL but not alt.
-        setAltPressed (e->stateAfter () & Qt::AltModifier);
+        setAltPressed (keyState & Qt::AltModifier);
     }
 }
 
@@ -1705,3 +1706,4 @@ bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
 
 
 #include <kptool.moc>
+
