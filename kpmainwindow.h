@@ -44,6 +44,7 @@
 #include <kppixmapfx.h>
 
 
+class QActionGroup;
 class QDragEnterEvent;
 class QDropEvent;
 class QMenu;
@@ -207,7 +208,10 @@ private:
     bool m_docResizeToBeCompleted;
 
 public:
+    QActionGroup *toolsActionGroup ();
+
     kpTool *tool () const;
+
     bool toolHasBegunShape () const;
     bool toolIsASelectionTool (bool includingTextTool = true) const;
     bool toolIsTextTool () const;

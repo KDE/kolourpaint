@@ -30,6 +30,8 @@
 #define KP_MAIN_WINDOW_P_H
 
 
+class QActionGroup;
+
 class KAction;
 class KToggleAction;
 
@@ -43,6 +45,8 @@ struct kpMainWindowPrivate
 
     int m_moreEffectsDialogLastEffect;
     bool m_resizeScaleDialogLastKeepAspect;
+
+    QActionGroup *toolsActionGroup;
 };
 
 

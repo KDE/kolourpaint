@@ -27,7 +27,9 @@
 
 
 #include <kpmainwindow.h>
+#include <kpmainwindow_p.h>
 
+#include <QActionGroup>
 #include <qlist.h>
 
 #include <kapplication.h>
@@ -244,6 +246,16 @@ void kpMainWindow::updateToolOptionPrevNextActionsEnabled ()
     m_actionNextToolOptionGroup2->setEnabled (enable &&
         m_toolToolBar->shownToolWidget (1) &&
         m_toolToolBar->shownToolWidget (1)->hasNextOption ());
+}
+
+
+// public
+QActionGroup *kpMainWindow::toolsActionGroup ()
+{
+    if (!d->toolsActionGroup)
+        d->toolsActionGroup = new QActionGroup (this);
+
+    return d->toolsActionGroup;
 }
 
 

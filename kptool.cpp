@@ -125,18 +125,10 @@ void kpTool::createAction ()
     kDebug () << "kpTool(" << objectName () << "::createAction()" << endl;
 #endif
 
-    if (!m_mainWindow)
-    {
-        kError () << "kpTool::createAction() without mw" << endl;
-        return;
-    }
+    Q_ASSERT (m_mainWindow);
 
     KActionCollection *ac = m_mainWindow->actionCollection ();
-    if (!ac)
-    {
-        kError () << "kpTool::createAction() without ac" << endl;
-        return;
-    }
+    Q_ASSERT (ac);
 
 
     if (m_action)
@@ -152,7 +144,10 @@ void kpTool::createAction ()
     m_action = new kpToolAction (text (), iconName (), shortcutForKey (m_key),
                                  this, SLOT (slotActionActivated ()),
                                  m_mainWindow->actionCollection (), objectName ());
-    //m_action->setExclusiveGroup (QLatin1String ("Tool Box Actions"));
+
+    // Make tools mutually exclusive by placing them in the same group.
+    m_action->setActionGroup (m_mainWindow->toolsActionGroup ());
+
     m_action->setWhatsThis (description ());
 
     connect (m_action, SIGNAL (toolTipChanged (const QString &)),
@@ -1699,4 +1694,5 @@ bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
 
 
 #include <kptool.moc>
+
 
