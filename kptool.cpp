@@ -1108,10 +1108,12 @@ void kpTool::wheelEvent (QWheelEvent *e)
     }
 }
 
-bool kpTool::event (QEvent *e)
+bool kpTool::viewEvent (QEvent *e)
 {
 #if DEBUG_KP_TOOL
-    kDebug () << "kpTool::event() returning false" << endl;
+    kDebug () << "kpTool<" << name ()
+              << "," << this << ">::viewEvent(type=" << e->type ()
+              << ") returning false" << endl;
 #endif
 
     // Don't handle.

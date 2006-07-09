@@ -239,7 +239,7 @@ protected:
     // keystrokes while a text selection is active.  This is important
     // because the Tool Box actions default to single letter/number
     // shortcuts.
-    virtual bool event (QEvent *e);
+    virtual bool viewEvent (QEvent *e);
 
 
     /**

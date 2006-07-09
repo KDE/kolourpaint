@@ -1027,7 +1027,7 @@ bool kpView::event (QEvent *e)
 #if DEBUG_KP_VIEW
     kDebug () << "kpView::event() invoking kpTool::event()" << endl;
 #endif
-    if (tool () && tool ()->event (e))
+    if (tool () && tool ()->viewEvent (e))
     {
     #if DEBUG_KP_VIEW
         kDebug () << "\tkpView::event() - tool said eat event, ret true" << endl;

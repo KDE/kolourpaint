@@ -299,6 +299,9 @@ protected:
 
     friend class kpView;
 
+    // Note: _All_ events are forwarded from a kpView.
+    //       The existence of a kpView implies the existence of a kpDocument.
+
     // If you're reimplementing any of these, you probably don't know what
     // you're doing - reimplement begin(),beginDraw(),draw(),cancelShape(),
     // endDraw() etc. instead.
@@ -306,8 +309,15 @@ protected:
     virtual void mouseMoveEvent (QMouseEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
     virtual void wheelEvent (QWheelEvent *e);
-    
-    virtual bool event (QEvent *e);
+
+    // WARNING: Do not call this "event()" as our QObject parent has a
+    //          virtual function called that, that will pass us
+    //          QObject events.  We only care about events forwarded by
+    //          kpView.
+    // TODO: rename mousePressEvent() -> viewMousePressEvent() etc.
+    //       to remind us that events are coming from the view - the tool
+    //       is not a visible object.
+    virtual bool viewEvent (QEvent *e);
 
     void seeIfAndHandleModifierKey (QKeyEvent *e);
     

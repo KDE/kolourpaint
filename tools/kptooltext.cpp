@@ -352,8 +352,8 @@ int kpToolText::moveCursorToNextWordStart (const QList <QString> &textLines,
 //
 
 
-// protected virtual [base QWidget]
-bool kpToolText::event (QEvent *e)
+// protected virtual [base kpTool]
+bool kpToolText::viewEvent (QEvent *e)
 {
     const bool isShortcutOverrideEvent =
         (e->type () == QEvent::ShortcutOverride);
@@ -361,18 +361,18 @@ bool kpToolText::event (QEvent *e)
         (document ()->selection () && document ()->selection ()->isText ());
 
 #if DEBUG_KP_TOOL_TEXT && 0
-    kDebug () << "kpToolText::event() type=" << e->type ()
+    kDebug () << "kpToolText::viewEvent() type=" << e->type ()
               << " isShortcutOverrideEvent=" << isShortcutOverrideEvent
               << " haveTextSel=" << haveTextSelection
               << endl;
 #endif
 
     if (!isShortcutOverrideEvent || !haveTextSelection)
-        return kpToolSelection::event (e);
+        return kpToolSelection::viewEvent (e);
 
     QKeyEvent *ke = static_cast <QKeyEvent *> (e);
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::event() key=" << ke->key ()
+    kDebug () << "kpToolText::viewEvent() key=" << ke->key ()
               << " modifiers=" << ke->modifiers ()
               << " QChar.isPrint()=" << QChar (ke->key ()).isPrint ()
               << endl;
