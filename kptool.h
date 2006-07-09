@@ -346,7 +346,7 @@ protected:
     virtual void leaveEvent (QEvent *e);
 
     // 0 = left, 1 = right, -1 = other (none, left+right, mid)
-    static int mouseButton (const Qt::ButtonState &buttonState);
+    static int mouseButton (Qt::MouseButtons mouseButtons);
 
     QString m_text, m_description;
     const char *m_name;

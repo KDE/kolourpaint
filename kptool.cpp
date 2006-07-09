@@ -858,14 +858,11 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_TOOL && 1 || 1
     kDebug () << "kpTool::mousePressEvent pos=" << e->pos ()
-               << " btnStateBefore=" << (int) e->state ()
-               << " btnStateAfter=" << (int) e->stateAfter ()
                << " button=" << (int) e->button ()
+               << " stateAfter: buttons=" << (int) e->buttons ()
+               << " modifiers=" << (int) e->modifiers ()
                << " beganDraw=" << m_beganDraw << endl;
 #endif
-
-    // state of all the buttons - not just the one that triggered the event (button())
-    Qt::ButtonState buttonState = e->stateAfter ();
 
     if (m_mainWindow && e->button () == Qt::MidButton)
     {
@@ -896,7 +893,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
         }
     }
 
-    int mb = mouseButton (buttonState);
+    int mb = mouseButton (e->buttons ());
 #if DEBUG_KP_TOOL && 1 || 1
     kDebug () << "\tmb=" << mb << " m_beganDraw=" << m_beganDraw << endl;
 #endif
@@ -940,10 +937,10 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
 
     // let user know what mouse button is being used for entire draw
-    m_mouseButton = mouseButton (buttonState);
-    m_shiftPressed = (buttonState & Qt::ShiftModifier);
-    m_controlPressed = (buttonState & Qt::ControlModifier);
-    m_altPressed = (buttonState & Qt::AltModifier);
+    m_mouseButton = mouseButton (e->buttons ());
+    m_shiftPressed = (e->modifiers () & Qt::ShiftModifier);
+    m_controlPressed = (e->modifiers () & Qt::ControlModifier);
+    m_altPressed = (e->modifiers () & Qt::AltModifier);
     m_startPoint = m_currentPoint = view ? view->transformViewToDoc (e->pos ()) : QPoint (-1, -1);
     m_currentViewPoint = view ? e->pos () : QPoint (-1, -1);
     m_viewUnderStartPoint = view;
@@ -963,7 +960,8 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_TOOL && 0
     kDebug () << "kpTool::mouseMoveEvent pos=" << e->pos ()
-               << " btnStateAfter=" << (int) e->stateAfter () << endl;
+               << " stateAfter: buttons=" << (int) e->buttons ()
+               << " modifiers=" << (int) e->modifiers ()
     kpView *v0 = viewUnderCursor (),
            *v1 = viewManager ()->viewUnderCursor (true/*use Qt*/),
            *v2 = viewUnderStartPoint ();
@@ -974,10 +972,9 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
     kDebug () << "\tfocusWidget=" << kapp->focusWidget () << endl;
 #endif
 
-    Qt::ButtonState buttonState = e->stateAfter ();
-    m_shiftPressed = (buttonState & Qt::ShiftModifier);
-    m_controlPressed = (buttonState & Qt::ControlModifier);
-    m_altPressed = (buttonState & Qt::AltModifier);
+    m_shiftPressed = (e->modifiers () & Qt::ShiftModifier);
+    m_controlPressed = (e->modifiers () & Qt::ControlModifier);
+    m_altPressed = (e->modifiers () & Qt::AltModifier);
 
     if (m_beganDraw)
     {
@@ -1039,9 +1036,9 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_TOOL && 1 || 1
     kDebug () << "kpTool::mouseReleaseEvent pos=" << e->pos ()
-               << " btnStateBefore=" << (int) e->state ()
-               << " btnStateAfter=" << (int) e->stateAfter ()
                << " button=" << (int) e->button ()
+               << " stateAfter: buttons=" << (int) e->buttons ()
+               << " modifiers=" << (int) e->modifiers ()
                << " beganDraw=" << m_beganDraw << endl;
 #endif
 
@@ -1059,7 +1056,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
         endDrawInternal (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
     }
 
-    if ((e->stateAfter () & Qt::MouseButtonMask) == 0)
+    if ((e->buttons () & Qt::MouseButtonMask) == 0)
     {
         releasedAllButtons ();
     }
@@ -1067,8 +1064,8 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
 
 void kpTool::wheelEvent (QWheelEvent *e)
 {
-#if DEBUG_KP_TOOL
-    kDebug () << "kpTool::wheelEvent() state=" << e->state ()
+#if DEBUG_KP_TOOL || 1
+    kDebug () << "kpTool::wheelEvent() modifiers=" << (int *) (int) e->modifiers ()
                << " hasBegunDraw=" << hasBegunDraw ()
                << " delta=" << e->delta ()
                << endl;
@@ -1077,12 +1074,22 @@ void kpTool::wheelEvent (QWheelEvent *e)
     e->ignore ();
     
     // If CTRL not pressed, bye.
-    if ((e->state () & Qt::ControlButton) == 0)
+    if ((e->modifiers () & Qt::ControlButton) == 0)
+    {
+    #if DEBUG_KP_TOOL || 1
+        kDebug () << "\tno CTRL -> bye" << endl;
+    #endif
         return;
+    }
     
     // If drawing, bye; don't care if a shape in progress though.
     if (hasBegunDraw ())
+    {
+    #if DEBUG_KP_TOOL || 1
+        kDebug () << "\thasBegunDraw() -> bye" << endl;
+    #endif
         return;
+    }
         
         
     // Zoom in/out depending on wheel direction.
@@ -1090,12 +1097,18 @@ void kpTool::wheelEvent (QWheelEvent *e)
     // Moved wheel away from user?
     if (e->delta () > 0)
     {
+    #if DEBUG_KP_TOOL || 1
+        kDebug () << "\tzoom in" << endl;
+    #endif
         m_mainWindow->zoomIn (true/*center under cursor*/);
         e->accept ();
     }
     // Moved wheel towards user?
     else if (e->delta () < 0)
     {
+    #if DEBUG_KP_TOOL || 1
+        kDebug () << "\tzoom out" << endl;
+    #endif
     #if 1
         m_mainWindow->zoomOut (true/*center under cursor - make zoom in/out
                                      stay under same doc pos*/);
@@ -1493,20 +1506,21 @@ void kpTool::leaveEvent (QEvent *)
 }
 
 // static
-int kpTool::mouseButton (const Qt::ButtonState &buttonState)
+// TODO: we don't handle Qt::XButton1 and Qt::XButton2 at the moment.
+int kpTool::mouseButton (Qt::MouseButtons mouseButtons)
 {
     // we have nothing to do with mid-buttons
-    if (buttonState & Qt::MidButton)
+    if (mouseButtons & Qt::MidButton)
         return -1;
 
     // both left & right together is quite meaningless...
-    Qt::ButtonState bothButtons = (Qt::ButtonState) (Qt::LeftButton | Qt::RightButton);
-    if ((buttonState & bothButtons) == bothButtons)
+    const Qt::MouseButtons bothButtons = (Qt::LeftButton | Qt::RightButton);
+    if ((mouseButtons & bothButtons) == bothButtons)
         return -1;
 
-    if (buttonState & Qt::LeftButton)
+    if (mouseButtons & Qt::LeftButton)
         return 0;
-    else if (buttonState & Qt::RightButton)
+    else if (mouseButtons & Qt::RightButton)
         return 1;
     else
         return -1;
