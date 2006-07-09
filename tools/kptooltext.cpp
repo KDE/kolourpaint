@@ -460,7 +460,7 @@ void kpToolText::handleLeftKeyPress (QKeyEvent *e,
     if (hasBegunShape ())
         endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
-    if ((e->state () & Qt::ControlModifier) == 0)
+    if ((e->modifiers () & Qt::ControlModifier) == 0)
     {
     #if DEBUG_KP_TOOL_TEXT
         kDebug () << "\tmove single char" << endl;
@@ -493,7 +493,7 @@ void kpToolText::handleRightKeyPress (QKeyEvent *e,
     if (hasBegunShape ())
         endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
-    if ((e->state () & Qt::ControlModifier) == 0)
+    if ((e->modifiers () & Qt::ControlModifier) == 0)
     {
     #if DEBUG_KP_TOOL_TEXT
         kDebug () << "\tmove single char" << endl;
@@ -527,7 +527,7 @@ void kpToolText::handleHomeKeyPress (QKeyEvent *e,
     if (hasBegunShape ())
         endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
-    if (e->state () & Qt::ControlModifier)
+    if (e->modifiers () & Qt::ControlModifier)
         cursorRow = 0;
 
     cursorCol = 0;
@@ -548,7 +548,7 @@ void kpToolText::handleEndKeyPress (QKeyEvent *e,
     if (hasBegunShape ())
         endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
 
-    if (e->state () & Qt::ControlModifier)
+    if (e->modifiers () & Qt::ControlModifier)
         cursorRow = textLines.size () - 1;
 
     cursorCol = textLines [cursorRow].length ();
@@ -567,7 +567,7 @@ void kpToolText::handleBackspaceKeyPress (QKeyEvent *e,
     kDebug () << "\tbackspace pressed" << endl;
 #endif
 
-    if ((e->state () & Qt::ControlModifier) == 0)
+    if ((e->modifiers () & Qt::ControlModifier) == 0)
     {
         if (!m_backspaceCommand)
             addNewBackspaceCommand (&m_backspaceCommand);
@@ -604,7 +604,7 @@ void kpToolText::handleDeleteKeyPress (QKeyEvent *e,
     kDebug () << "\tdelete pressed" << endl;
 #endif
 
-    if ((e->state () & Qt::ControlModifier) == 0)
+    if ((e->modifiers () & Qt::ControlModifier) == 0)
     {
         if (!m_deleteCommand)
             addNewDeleteCommand (&m_deleteCommand);
