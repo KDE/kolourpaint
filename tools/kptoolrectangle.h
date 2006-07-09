@@ -65,7 +65,7 @@ public:
                      const QString &text, const QString &description,
                      int key,
                      kpMainWindow *mainWindow,
-                     const char *name);
+                     const QString &name);
     kpToolRectangle (kpMainWindow *);
     virtual ~kpToolRectangle ();
 

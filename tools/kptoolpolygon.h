@@ -73,7 +73,7 @@ public:
 
     kpToolPolygon (Mode mode, const QString &text, const QString &description,
                    int key,
-                   kpMainWindow *mainWindow, const char *name);
+                   kpMainWindow *mainWindow, const QString &name);
     kpToolPolygon (kpMainWindow *mainWindow);
     virtual ~kpToolPolygon ();
 

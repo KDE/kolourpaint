@@ -38,7 +38,7 @@ class kpToolWidgetSpraycanSize : public kpToolWidgetBase
 Q_OBJECT
 
 public:
-    kpToolWidgetSpraycanSize (QWidget *parent, const char *name);
+    kpToolWidgetSpraycanSize (QWidget *parent, const QString &name);
     virtual ~kpToolWidgetSpraycanSize ();
 
     int spraycanSize () const;

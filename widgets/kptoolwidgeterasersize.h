@@ -43,7 +43,7 @@ class kpToolWidgetEraserSize : public kpToolWidgetBase
 Q_OBJECT
 
 public:
-    kpToolWidgetEraserSize (QWidget *parent, const char *name);
+    kpToolWidgetEraserSize (QWidget *parent, const QString &name);
     virtual ~kpToolWidgetEraserSize ();
 
     int eraserSize () const;

@@ -45,7 +45,7 @@
 
 static int spraycanSizes [] = {9, 17, 29};
 
-kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const char *name)
+kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const QString &name)
     : kpToolWidgetBase (parent, name)
 {
 #if DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE

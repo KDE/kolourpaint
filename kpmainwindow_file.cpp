@@ -193,7 +193,7 @@ void kpMainWindow::addRecentURL (const KUrl &url)
 void kpMainWindow::setRecentURLs (const QStringList &items)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow(" << name () << ")::setRecentURLs()" << endl;
+    kDebug () << "kpMainWindow(" << objectName () << ")::setRecentURLs()" << endl;
     kDebug () << "\titems=" << items << endl;
 #endif
     m_actionOpenRecent->setItems (items);

@@ -38,7 +38,7 @@ class kpToolWidgetOpaqueOrTransparent : public kpToolWidgetBase
 Q_OBJECT
 
 public:
-    kpToolWidgetOpaqueOrTransparent (QWidget *parent, const char *name);
+    kpToolWidgetOpaqueOrTransparent (QWidget *parent, const QString &name);
     virtual ~kpToolWidgetOpaqueOrTransparent ();
 
     bool isOpaque () const;

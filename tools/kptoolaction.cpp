@@ -40,7 +40,7 @@
 kpToolAction::kpToolAction (const QString &text,
                             const QString &pic, const KShortcut &shortcut,
                             const QObject *receiver, const char *slot,
-                            KActionCollection *ac, const char *name)
+                            KActionCollection *ac, const QString &name)
     : KToggleAction (KIcon (pic), text, ac, name)
 {
 #if DEBUG_KP_TOOL_ACTION

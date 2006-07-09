@@ -47,7 +47,7 @@ public:
     kpToolAction (const QString &text,
         const QString &pic, const KShortcut &shortcut,
         const QObject *receiver, const char *slot,
-        KActionCollection *ac, const char *name);
+        KActionCollection *ac, const QString &name);
     virtual ~kpToolAction ();
 
 

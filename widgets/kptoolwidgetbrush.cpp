@@ -53,7 +53,7 @@ static int brushSize [][3] =
 #define BRUSH_SIZE_NUM_COLS (int (sizeof (brushSize [0]) / sizeof (brushSize [0][0])))
 #define BRUSH_SIZE_NUM_ROWS (int (sizeof (brushSize) / sizeof (brushSize [0])))
 
-kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const char *name)
+kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const QString &name)
     : kpToolWidgetBase (parent, name)
 {
     setInvertSelectedPixmap ();

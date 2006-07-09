@@ -61,7 +61,7 @@ kpToolSelection::kpToolSelection (Mode mode,
                                   const QString &description,
                                   int key,
                                   kpMainWindow *mainWindow,
-                                  const char *name)
+                                  const QString &name)
     : kpTool (text, description, key, mainWindow, name),
       m_mode (mode),
       m_currentPullFromDocumentCommand (0),

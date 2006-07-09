@@ -45,7 +45,7 @@
 #include <kptool.h>
 
 
-kpToolWidgetFillStyle::kpToolWidgetFillStyle (QWidget *parent, const char *name)
+kpToolWidgetFillStyle::kpToolWidgetFillStyle (QWidget *parent, const QString &name)
     : kpToolWidgetBase (parent, name)
 {
     setInvertSelectedPixmap ();

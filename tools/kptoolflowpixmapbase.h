@@ -46,7 +46,7 @@ Q_OBJECT
 public:
     kpToolFlowPixmapBase (const QString &text, const QString &description,
                int key,
-               kpMainWindow *mainWindow, const char *name);
+               kpMainWindow *mainWindow, const QString &name);
     virtual ~kpToolFlowPixmapBase ();
     
 protected:

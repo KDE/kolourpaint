@@ -122,7 +122,7 @@ void kpTool::init (const QString &text, const QString &description,
 void kpTool::createAction ()
 {
 #if DEBUG_KP_TOOL && 0
-    kDebug () << "kpTool(" << name () << "::createAction()" << endl;
+    kDebug () << "kpTool(" << objectName () << "::createAction()" << endl;
 #endif
 
     if (!m_mainWindow)
@@ -151,7 +151,7 @@ void kpTool::createAction ()
 
     m_action = new kpToolAction (text (), iconName (), shortcutForKey (m_key),
                                  this, SLOT (slotActionActivated ()),
-                                 m_mainWindow->actionCollection (), name ());
+                                 m_mainWindow->actionCollection (), objectName ());
     //m_action->setExclusiveGroup (QLatin1String ("Tool Box Actions"));
     m_action->setWhatsThis (description ());
 
@@ -306,9 +306,9 @@ QPoint kpTool::currentPoint (bool zoomToDoc) const
 #if DEBUG_KP_TOOL && 0
     kDebug () << "kpTool::currentPoint(zoomToDoc=" << zoomToDoc << ")" << endl;
     kDebug () << "\tviewUnderStartPoint="
-               << (viewUnderStartPoint () ? viewUnderStartPoint ()->name () : "(none)")
+               << (viewUnderStartPoint () ? viewUnderStartPoint ()->objectName () : "(none)")
                << " viewUnderCursor="
-               << (viewUnderCursor () ? viewUnderCursor ()->name () : "(none)")
+               << (viewUnderCursor () ? viewUnderCursor ()->objectName () : "(none)")
                << endl;
 #endif
 
@@ -364,9 +364,9 @@ void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_,
                << currentViewPoint_
                << ")" << endl;
     kDebug () << "\tviewUnderStartPoint="
-               << (viewUnderStartPoint () ? viewUnderStartPoint ()->name () : "(none)")
+               << (viewUnderStartPoint () ? viewUnderStartPoint ()->objectName () : "(none)")
                << " viewUnderCursor="
-               << (viewUnderCursor () ? viewUnderCursor ()->name () : "(none)")
+               << (viewUnderCursor () ? viewUnderCursor ()->objectName () : "(none)")
                << endl;
     kDebug () << "\tbegan draw=" << m_beganDraw << endl;
 #endif
@@ -523,19 +523,19 @@ void kpTool::reselect ()
 QIcon kpTool::iconSet (int forceSize) const
 {
 #if DEBUG_KP_TOOL && 0
-    kDebug () << "kpTool(" << name () << ")::iconSet(forceSize=" << forceSize << ")" << endl;
+    kDebug () << "kpTool(" << objectName () << ")::iconSet(forceSize=" << forceSize << ")" << endl;
 #endif
     // (robust in case BarIcon() default arg changes)
     if (forceSize > 0)
-        return BarIconSet (name (), forceSize);
+        return BarIconSet (objectName (), forceSize);
     else
-        return BarIconSet (name ());
+        return BarIconSet (objectName ());
 }
 
 // public
 QString kpTool::iconName () const
 {
-    return name ();
+    return objectName ();
 }
 
 // public
@@ -958,9 +958,9 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
     kpView *v0 = viewUnderCursor (),
            *v1 = viewManager ()->viewUnderCursor (true/*use Qt*/),
            *v2 = viewUnderStartPoint ();
-    kDebug () << "\tviewUnderCursor=" << (v0 ? v0->name () : "(none)")
-               << " viewUnderCursorQt=" << (v1 ? v1->name () : "(none)")
-               << " viewUnderStartPoint=" << (v2 ? v2->name () : "(none)")
+    kDebug () << "\tviewUnderCursor=" << (v0 ? v0->objectName () : "(none)")
+               << " viewUnderCursorQt=" << (v1 ? v1->objectName () : "(none)")
+               << " viewUnderStartPoint=" << (v2 ? v2->objectName () : "(none)")
                << endl;
     kDebug () << "\tfocusWidget=" << kapp->focusWidget () << endl;
 #endif
@@ -1117,7 +1117,7 @@ void kpTool::wheelEvent (QWheelEvent *e)
 bool kpTool::viewEvent (QEvent *e)
 {
 #if DEBUG_KP_TOOL
-    kDebug () << "kpTool<" << name ()
+    kDebug () << "kpTool<" << objectName ()
               << "," << this << ">::viewEvent(type=" << e->type ()
               << ") returning false" << endl;
 #else

@@ -60,7 +60,7 @@
 
 kpToolFlowBase::kpToolFlowBase (const QString &text, const QString &description,
         int key,
-        kpMainWindow *mainWindow, const char *name)
+        kpMainWindow *mainWindow, const QString &name)
     : kpTool (text, description, key, mainWindow, name),
       m_toolWidgetBrush (0),
       m_toolWidgetEraserSize (0),

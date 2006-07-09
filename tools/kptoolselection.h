@@ -66,7 +66,7 @@ public:
     kpToolSelection (Mode mode,
                      const QString &text, const QString &description,
                      int key,
-                     kpMainWindow *mainWindow, const char *name);
+                     kpMainWindow *mainWindow, const QString &name);
     virtual ~kpToolSelection ();
 
     void setMode (Mode mode) { m_mode = mode; }

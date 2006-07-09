@@ -37,7 +37,7 @@
 
 static int lineWidths [] = {1, 2, 3, 5, 8};
 
-kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent, const char *name)
+kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent, const QString &name)
     : kpToolWidgetBase (parent, name)
 {
     setInvertSelectedPixmap ();

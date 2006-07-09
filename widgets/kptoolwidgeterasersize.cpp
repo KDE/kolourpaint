@@ -46,7 +46,7 @@ static int eraserSizes [] = {2, 3, 5, 9, 17, 29};
 static const int numEraserSizes = int (sizeof (eraserSizes) / sizeof (eraserSizes [0]));
 
 
-kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const char *name)
+kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const QString &name)
     : kpToolWidgetBase (parent, name)
 {
     setInvertSelectedPixmap ();

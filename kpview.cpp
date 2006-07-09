@@ -225,7 +225,7 @@ QPoint kpView::origin () const
 void kpView::setOrigin (const QPoint &origin)
 {
 #if DEBUG_KP_VIEW
-    kDebug () << "kpView(" << name () << ")::setOrigin" << origin << endl;
+    kDebug () << "kpView(" << objectName () << ")::setOrigin" << origin << endl;
 #endif
 
     if (origin == d->m_origin)
@@ -550,10 +550,10 @@ void kpView::setHasMouse (bool yes)
         return;
 
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << name ()
+    kDebug () << "kpView(" << objectName ()
                << ")::setHasMouse(" << yes
                << ") existing viewUnderCursor="
-               << (vm->viewUnderCursor () ? vm->viewUnderCursor ()->name () : "(none)")
+               << (vm->viewUnderCursor () ? vm->viewUnderCursor ()->objectName () : "(none)")
                << endl;
 #endif
     if (yes && vm->viewUnderCursor () != this)
@@ -567,7 +567,7 @@ void kpView::setHasMouse (bool yes)
 void kpView::addToQueuedArea (const QRegion &region)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << name ()
+    kDebug () << "kpView(" << objectName ()
                << ")::addToQueuedArea() already=" << d->m_queuedUpdateArea
                << " - plus - " << region
                << endl;
@@ -579,7 +579,7 @@ void kpView::addToQueuedArea (const QRegion &region)
 void kpView::addToQueuedArea (const QRect &rect)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << name ()
+    kDebug () << "kpView(" << objectName ()
                << ")::addToQueuedArea() already=" << d->m_queuedUpdateArea
                << " - plus - " << rect
                << endl;
@@ -602,7 +602,7 @@ void kpView::updateQueuedArea ()
 {
     kpViewManager *vm = viewManager ();
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << name ()
+    kDebug () << "kpView(" << objectName ()
                << ")::updateQueuedArea() vm=" << (bool) vm
                << " queueUpdates=" << (vm && vm->queueUpdates ())
                << " fastUpdates=" << (vm && vm->fastUpdates ())
@@ -963,7 +963,7 @@ bool kpView::mouseOnSelectionToSelectText (const QPoint &viewPoint) const
 void kpView::mouseMoveEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << name () << ")::mouseMoveEvent ("
+    kDebug () << "kpView(" << objectName () << ")::mouseMoveEvent ("
                << e->x () << "," << e->y () << ")"
                << endl;
 #endif
@@ -983,7 +983,7 @@ void kpView::mouseMoveEvent (QMouseEvent *e)
 void kpView::mousePressEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << name () << ")::mousePressEvent ("
+    kDebug () << "kpView(" << objectName () << ")::mousePressEvent ("
                << e->x () << "," << e->y () << ")"
                << endl;
 #endif
@@ -1000,7 +1000,7 @@ void kpView::mousePressEvent (QMouseEvent *e)
 void kpView::mouseReleaseEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << name () << ")::mouseReleaseEvent ("
+    kDebug () << "kpView(" << objectName () << ")::mouseReleaseEvent ("
                << e->x () << "," << e->y () << ")"
                << endl;
 #endif
@@ -1045,7 +1045,7 @@ bool kpView::event (QEvent *e)
 void kpView::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << name () << ")::keyPressEvent()" << endl;
+    kDebug () << "kpView(" << objectName () << ")::keyPressEvent()" << endl;
 #endif
 
     if (tool ())
@@ -1058,7 +1058,7 @@ void kpView::keyPressEvent (QKeyEvent *e)
 void kpView::keyReleaseEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << name () << ")::keyReleaseEvent()" << endl;
+    kDebug () << "kpView(" << objectName () << ")::keyReleaseEvent()" << endl;
 #endif
 
     if (tool ())
@@ -1072,7 +1072,7 @@ void kpView::keyReleaseEvent (QKeyEvent *e)
 void kpView::focusInEvent (QFocusEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << name () << ")::focusInEvent()" << endl;
+    kDebug () << "kpView(" << objectName () << ")::focusInEvent()" << endl;
 #endif
     if (tool ())
         tool ()->focusInEvent (e);
@@ -1082,7 +1082,7 @@ void kpView::focusInEvent (QFocusEvent *e)
 void kpView::focusOutEvent (QFocusEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << name () << ")::focusOutEvent()" << endl;
+    kDebug () << "kpView(" << objectName () << ")::focusOutEvent()" << endl;
 #endif
     if (tool ())
         tool ()->focusOutEvent (e);
@@ -1093,7 +1093,7 @@ void kpView::focusOutEvent (QFocusEvent *e)
 void kpView::enterEvent (QEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << name () << ")::enterEvent()" << endl;
+    kDebug () << "kpView(" << objectName () << ")::enterEvent()" << endl;
 #endif
 
     // Don't call setHasMouse(true) as it displays the brush cursor (if
@@ -1115,7 +1115,7 @@ void kpView::enterEvent (QEvent *e)
 void kpView::leaveEvent (QEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << name () << ")::leaveEvent()" << endl;
+    kDebug () << "kpView(" << objectName () << ")::leaveEvent()" << endl;
 #endif
 
     setHasMouse (false);
@@ -1128,7 +1128,7 @@ void kpView::leaveEvent (QEvent *e)
 void kpView::dragEnterEvent (QDragEnterEvent *)
 {
 #if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << name () << ")::dragEnterEvent()" << endl;
+    kDebug () << "kpView(" << objectName () << ")::dragEnterEvent()" << endl;
 #endif
 
     setHasMouse (true);
@@ -1138,7 +1138,7 @@ void kpView::dragEnterEvent (QDragEnterEvent *)
 void kpView::dragLeaveEvent (QDragLeaveEvent *)
 {
 #if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << name () << ")::dragLeaveEvent" << endl;
+    kDebug () << "kpView(" << objectName () << ")::dragLeaveEvent" << endl;
 #endif
 
     setHasMouse (false);
@@ -1149,7 +1149,7 @@ void kpView::dragLeaveEvent (QDragLeaveEvent *)
 void kpView::resize (int w, int h)
 {
 #if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << name ()
+    kDebug () << "kpView(" << objectName ()
                << ")::resize(" << w << "," << h << ")"
                << endl;
 #endif
@@ -1161,7 +1161,7 @@ void kpView::resize (int w, int h)
 void kpView::resizeEvent (QResizeEvent *e)
 {
 #if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << name () << ")::resizeEvent("
+    kDebug () << "kpView(" << objectName () << ")::resizeEvent("
                << e->size ()
                << " vs actual=" << size ()
                << ") old=" << e->oldSize () << endl;
@@ -1180,7 +1180,7 @@ void kpView::resizeEvent (QResizeEvent *e)
 void kpView::imStartEvent (QIMEvent *e)
 {
 #if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << name () << ")::imStartEvent" << endl;
+    kDebug () << "kpView(" << objectName () << ")::imStartEvent" << endl;
 #endif
 
     if (tool ())
@@ -1192,7 +1192,7 @@ void kpView::imStartEvent (QIMEvent *e)
 void kpView::imComposeEvent (QIMEvent *e)
 {
 #if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << name () << ")::imComposeEvent" << endl;
+    kDebug () << "kpView(" << objectName () << ")::imComposeEvent" << endl;
 #endif
 
     if (tool ())
@@ -1204,7 +1204,7 @@ void kpView::imComposeEvent (QIMEvent *e)
 void kpView::imEndEvent (QIMEvent *e)
 {
 #if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << name () << ")::imEndEvent" << endl;
+    kDebug () << "kpView(" << objectName () << ")::imEndEvent" << endl;
 #endif
 
     if (tool ())
@@ -1327,7 +1327,7 @@ void kpView::drawTransparentBackground (QPainter *painter,
 void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRect)
 {
 #if DEBUG_KP_VIEW_RENDERER && 1
-    kDebug () << "kpView(" << name ()
+    kDebug () << "kpView(" << objectName ()
                << ")::paintEventDrawCheckerBoard(viewRect=" << viewRect
                << ") origin=" << origin << endl;
 #endif

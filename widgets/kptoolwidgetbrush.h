@@ -40,7 +40,7 @@ class kpToolWidgetBrush : public kpToolWidgetBase
 Q_OBJECT
 
 public:
-    kpToolWidgetBrush (QWidget *parent, const char *name);
+    kpToolWidgetBrush (QWidget *parent, const QString &name);
     virtual ~kpToolWidgetBrush ();
 
 private:
