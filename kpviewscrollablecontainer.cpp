@@ -239,7 +239,7 @@ void kpGrip::keyReleaseEvent (QKeyEvent *e)
 void kpGrip::mousePressEvent (QMouseEvent *e)
 {
     if (m_startPoint == KP_INVALID_POINT &&
-        (e->stateAfter () & Qt::MouseButtonMask) == Qt::LeftButton)
+        (e->buttons () & Qt::MouseButtonMask) == Qt::LeftButton)
     {
         m_startPoint = e->pos ();
         m_currentPoint = e->pos ();
@@ -289,13 +289,13 @@ void kpGrip::mouseMoveEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
     kDebug () << "kpGrip::mouseMoveEvent() m_startPoint=" << m_startPoint
-               << " stateAfter=" << e->stateAfter ()
+               << " stateAfter: buttons=" << (int *) (int) e->buttons ()
                << endl;
 #endif
 
     if (m_startPoint == KP_INVALID_POINT)
     {
-        if ((e->stateAfter () & Qt::MouseButtonMask) == 0)
+        if ((e->buttons () & Qt::MouseButtonMask) == 0)
             setUserMessage (haventBegunDrawUserMessage ());
         return;
     }
@@ -308,7 +308,7 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
     kDebug () << "kpGrip::mouseReleaseEvent() m_startPoint=" << m_startPoint
-               << " stateAfter=" << e->stateAfter ()
+               << " stateAfter: buttons=" << (int *) (int) e->buttons ()
                << endl;
 #endif
 
@@ -325,7 +325,7 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
                         (m_type & kpGrip::Bottom) ? dy : 0);
     }
 
-    if ((e->stateAfter () & Qt::MouseButtonMask) == 0)
+    if ((e->buttons () & Qt::MouseButtonMask) == 0)
     {
         m_shouldReleaseMouseButtons = false;
         setUserMessage (QString::null);
