@@ -1416,7 +1416,7 @@ void kpTool::keyUpdateModifierState (QKeyEvent *e)
     #if DEBUG_KP_TOOL && 0 || 1
         kDebug () << "\t\tmodifiers not changed - figure out the truth" << endl;
     #endif
-        Qt::KeyboardModifiers keyState = QApplication::keyboardModifiers ();
+        const Qt::KeyboardModifiers keyState = QApplication::keyboardModifiers ();
 
         setShiftPressed (keyState & Qt::ShiftModifier);
         setControlPressed (keyState & Qt::ControlModifier);
