@@ -34,7 +34,6 @@
 #include <qpainter.h>
 #include <qtimer.h>
 
-#include <kactionclasses.h>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>

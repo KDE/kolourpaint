@@ -33,8 +33,9 @@
 #include <qdatetime.h>
 #include <qpainter.h>
 #include <qtimer.h>
+#include <ktoggleaction.h>
+#include <kselectaction.h>
 
-#include <kactionclasses.h>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -121,7 +122,7 @@ void kpMainWindow::setupViewMenuActions ()
     // since rect _surrounds_ entire doc (hence, won't be rendered).
     d->m_actionShowThumbnailRectangle = new KToggleAction ( i18n ("Enable Thumbnail &Rectangle"),
         actionCollection (), "view_show_thumbnail_rectangle");
-    connect (d->m_actionShowThumbnailRectangle, SIGNAL (triggered (bool)), 
+    connect (d->m_actionShowThumbnailRectangle, SIGNAL (triggered (bool)),
         SLOT (slotThumbnailShowRectangleToggled ()));
 
 
@@ -1149,7 +1150,7 @@ void kpMainWindow::updateThumbnail ()
         // Avoid change/flicker of caption due to view delete
         // (destroyThumbnailView())
         m_thumbnail->hide ();
-        
+
         destroyThumbnailView ();
 
         m_thumbnail->deleteLater (); m_thumbnail = 0;

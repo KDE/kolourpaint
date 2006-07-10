@@ -28,7 +28,6 @@
 
 #include <kpmainwindow.h>
 
-#include <kactionclasses.h>
 #include <kapplication.h>
 
 #include <kconfig.h>
@@ -43,6 +42,9 @@
 #include <kptoolwidgetopaqueortransparent.h>
 #include <kpzoomedview.h>
 #include <kglobal.h>
+#include <ktoggleaction.h>
+#include <kfontsizeaction.h>
+#include <kfontaction.h>
 
 
 // private

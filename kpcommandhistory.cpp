@@ -36,15 +36,15 @@
 #include <qdatetime.h>
 #include <qlinkedlist.h>
 
-#include <kactionclasses.h>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmenu.h>
+#include <kglobal.h>
 #include <kstdaccel.h>
 #include <kstdaction.h>
-
+#include <ktoolbarpopupaction.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
