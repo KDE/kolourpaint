@@ -750,6 +750,10 @@ static void GetSetPixmapAtHelper (QPainter *p, bool drawingOnRGBLayer, void *dat
               << " validSrcRect=" << pack->validSrcRect << endl;
 #endif
 
+    // Make sure "validSrcRect" lives up to its name.
+    Q_ASSERT (pack->validSrcRect.intersect (pack->srcPixmap->rect ()) ==
+              pack->validSrcRect);
+
     if (drawingOnRGBLayer)
     {
         p->drawPixmap (pack->destTopLeft,
@@ -760,18 +764,44 @@ static void GetSetPixmapAtHelper (QPainter *p, bool drawingOnRGBLayer, void *dat
     {
         const QBitmap srcMask = kpPixmapFX::getNonNullMask (*pack->srcPixmap);
         
-        // Hack around Qt bug: QBitmap's (e.g. "srcMask") are considered to
-        // mask themselves (i.e. "srcMask.mask()" returns "srcMask" instead of
-        // "QBitmap()").  Therefore, "drawPixmap(srcMask)" can never set
-        // transparent pixels.
-        p->fillRect (
-            QRect (pack->destTopLeft.x (), pack->destTopLeft.y (),
-                    pack->validSrcRect.width (), pack->validSrcRect.height ()),
-            Qt::color0/*transparent*/);
-            
+        const QRect destRect (pack->destTopLeft.x (), pack->destTopLeft.y (),
+                              pack->validSrcRect.width (), pack->validSrcRect.height ());
+
+        // SYNC: HACK around Qt bug: QBitmap's (e.g. "srcMask") are considered to
+        //       mask themselves (i.e. "srcMask.mask()" returns "srcMask" instead of
+        //       "QBitmap()").  Therefore, "drawPixmap(srcMask)" can never set
+        //       transparent pixels.
+        p->fillRect (destRect, Qt::color0/*transparent*/);
+         
+    // SYNC: HACK around Qt bug:
+    //       On non-XRENDER dispalys, when QPainter is open on a QBitmap,
+    //
+    //           drawPixmap(point, srcPixmap, QRect (sx, sy, sw, sh))
+    //               ["srcPixmap" is also a QBitmap]
+    //
+    //       ignores (sx,sy) and starts grabbing from srcPixmap at (0,0).
+    #if 0
+        // This is what we want to write but does not work on non-XRENDER.
         p->drawPixmap (pack->destTopLeft,
             srcMask,
             pack->validSrcRect);
+    #else
+        // Not needing to think about negatives simplifies the correctness reasoning.
+        //
+        // This is guaranteed by the above Q_ASSERT() but check anyway in case we
+        // accidently remove it.  
+        Q_ASSERT (pack->validSrcRect.x () >= 0 && pack->validSrcRect.y () >= 0);
+
+        p->setClipRect (destRect);
+        p->drawPixmap (
+            QPoint (pack->destTopLeft.x () - pack->validSrcRect.x (),
+                    pack->destTopLeft.y () - pack->validSrcRect.y ()),
+            srcMask,
+            QRect (0,
+                   0,
+                   pack->validSrcRect.width () + pack->validSrcRect.x (),
+                   pack->validSrcRect.height () + pack->validSrcRect.y ()));
+    #endif
     }
 }
 
