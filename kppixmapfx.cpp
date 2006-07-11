@@ -1866,7 +1866,7 @@ static void DrawPolylineHelper (QPainter *p,
 
 #if DEBUG_KP_PIXMAP_FX
     kDebug () << "DrawPolylineHelper() points=" << pack->points.toList ()
-        << " color=" << (pack->color.isValid () ? pack->color.toQRgb () : 0xabadcafe)
+        << " color=" << (int *) pack->color.toQRgb ()
         << " penWidth=" << pack->penWidth
         << endl;
 #endif
@@ -1940,9 +1940,12 @@ static void DrawPolygonHelper (QPainter *p,
 
 #if DEBUG_KP_PIXMAP_FX
     kDebug () << "DrawPolygonHelper() points=" << pack->points.toList ()
-        << " fcolor=" << (pack->fcolor.isValid () ? pack->fcolor.toQRgb () : 0xabadcafe)
+        << " fcolor=" << (int *) pack->fcolor.toQRgb ()
         << " penWidth=" << pack->penWidth
-        << " bcolor=" << (pack->bcolor.isValid () ? pack->bcolor.toQRgb () : 0xabadcafe)
+        << " bcolor="
+        << (int *) (pack->bcolor.isValid () ?
+                       pack->bcolor.toQRgb () :
+                       0xabadcafe)
         << " isFinal=" << pack->isFinal
         << endl;
 #endif
@@ -1954,7 +1957,10 @@ static void DrawPolygonHelper (QPainter *p,
 
     if (pack->bcolor.isValid ())
        p->setBrush (QBrush (::Draw_ToQColor (pack->bcolor, drawingOnRGBLayer)));
-       
+     // HACK: seems to be needed if set_Pen_(Qt::color0) else fills with Qt::color0.
+    else
+        p->setBrush (Qt::NoBrush);
+
     // Qt bug: single point doesn't show up depending on penWidth.
     if (Only1PixelInPointArray (pack->points))
     {
@@ -2050,7 +2056,7 @@ static void DrawCurveHelper (QPainter *p,
         << " controlPointP=" << pack->controlPointP
         << " controlPointQ=" << pack->controlPointQ
         << " endPoint=" << pack->endPoint
-        << " color=" << (pack->color.isValid () ? pack->color.toQRgb () : 0xabadcafe)
+        << " color=" << (int *) pack->color.toQRgb ()
         << " penWidth=" << pack->penWidth
         << endl;
 #endif
@@ -2139,7 +2145,7 @@ void kpPixmapFX::fillRect (QPixmap *image,
 
 
 //
-// RrawGenericRect()
+// DrawGenericRect()
 //
 
 struct DrawGenericRectPackage
@@ -2160,8 +2166,19 @@ static void DrawGenericRectHelper (QPainter *p,
 {
     DrawGenericRectPackage *pack = static_cast <DrawGenericRectPackage *> (data);
 
-#if DEBUG_KP_PIXMAP_FX
-    kDebug () << "\tdraw adjusting for outline width" << endl;
+#if DEBUG_KP_PIXMAP_FX || 1
+    kDebug () << "\tkppixmapfx.cpp:DrawGenericRectHelper(drawingOnRGBLayer="
+              << drawingOnRGBLayer << ") pack: "
+              << pack->x << "," << pack->y << ","
+              << pack->width << "," << pack->height << ",func=" << pack->func << ")"
+              << " pen.color=" << (int *) pack->fcolor.toQRgb ()
+              << " penWidth=" << pack->penWidth
+              << " bcolor="
+              << (int *) (pack->bcolor.isValid () ?
+                             pack->bcolor.toQRgb () :
+                             0xabadcafe)
+              << " isEllipseLike=" << pack->isEllipseLike
+              << endl;
 #endif
 
     p->setPen (
@@ -2171,6 +2188,9 @@ static void DrawGenericRectHelper (QPainter *p,
 
     if (pack->bcolor.isValid ())
         p->setBrush (QBrush (::Draw_ToQColor (pack->bcolor, drawingOnRGBLayer)));
+    // HACK: seems to be needed if set_Pen_(Qt::color0) else fills with Qt::color0.
+    else
+        p->setBrush (Qt::NoBrush);
     
     // Fight Qt behaviour of painting width = fill width + pen width
     // and height = fill height + pen height.  Get rid of pen width.
@@ -2192,10 +2212,19 @@ static void DrawGenericRect (QPixmap *image,
         const kpColor &bcolor,
         bool isEllipseLike = false)
 {
-#if DEBUG_KP_PIXMAP_FX
-    kDebug () << "kpPixmapFX::drawGenericRect(" << x << "," << y << ","
-        << width << "," << height << ",func=" << func << ")" << endl;
-#endif
+#if DEBUG_KP_PIXMAP_FX || 1
+    kDebug () << "kppixmapfx.cpp:DrawGenericRect(" << x << "," << y << ","
+        << width << "," << height << ",func=" << func << ")"
+        << " pen.color=" << (int *) fcolor.toQRgb ()
+        << " penWidth=" << penWidth
+        << " bcolor="
+        << (int *) (bcolor.isValid () ?
+                       bcolor.toQRgb () :
+                       0xabadcafe)
+        << " isEllipseLike=" << isEllipseLike
+        << endl;
+ #endif
+
         
     Q_ASSERT (width > 0);
     Q_ASSERT (height > 0);
