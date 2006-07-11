@@ -526,7 +526,7 @@ bool kpSelection::contains (const QPoint &point) const
     case kpSelection::Points:
         // TODO: make this always include the border
         //       (draw up a rect sel in this mode to see what I mean)
-        return QRegion (m_points, false/*even-odd algo*/).contains (point);
+        return QRegion (m_points, Qt::OddEvenFill).contains (point);
     default:
         return false;
     }
