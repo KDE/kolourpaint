@@ -33,14 +33,14 @@
 #include <qdatetime.h>
 #include <qpainter.h>
 #include <qtimer.h>
-#include <ktoggleaction.h>
-#include <kselectaction.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kselectaction.h>
 #include <kstdaction.h>
+#include <ktoggleaction.h>
 
 #include <kpdefs.h>
 #include <kpdocument.h>

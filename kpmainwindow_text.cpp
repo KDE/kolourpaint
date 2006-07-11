@@ -29,10 +29,13 @@
 #include <kpmainwindow.h>
 
 #include <kapplication.h>
-
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kfontaction.h>
+#include <kfontsizeaction.h>
+#include <kglobal.h>
 #include <klocale.h>
+#include <ktoggleaction.h>
 
 #include <kpcolortoolbar.h>
 #include <kpdefs.h>
@@ -41,10 +44,6 @@
 #include <kptooltoolbar.h>
 #include <kptoolwidgetopaqueortransparent.h>
 #include <kpzoomedview.h>
-#include <kglobal.h>
-#include <ktoggleaction.h>
-#include <kfontsizeaction.h>
-#include <kfontaction.h>
 
 
 // private

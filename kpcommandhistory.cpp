@@ -31,7 +31,7 @@
 
 #include <kpcommandhistory.h>
 
-#include <limits.h>
+#include <climits>
 
 #include <qdatetime.h>
 #include <qlinkedlist.h>
@@ -39,12 +39,13 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kglobal.h>
 #include <klocale.h>
 #include <kmenu.h>
-#include <kglobal.h>
 #include <kstdaccel.h>
 #include <kstdaction.h>
 #include <ktoolbarpopupaction.h>
+
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
