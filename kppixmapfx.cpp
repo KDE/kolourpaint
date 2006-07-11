@@ -774,7 +774,7 @@ static void GetSetPixmapAtHelper (QPainter *p, bool drawingOnRGBLayer, void *dat
         p->fillRect (destRect, Qt::color0/*transparent*/);
          
     // SYNC: HACK around Qt bug:
-    //       On non-XRENDER dispalys, when QPainter is open on a QBitmap,
+    //       On non-XRENDER displays, when QPainter is open on a QBitmap,
     //
     //           drawPixmap(point, srcPixmap, QRect (sx, sy, sw, sh))
     //               ["srcPixmap" is also a QBitmap]
