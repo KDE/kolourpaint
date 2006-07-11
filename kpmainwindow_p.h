@@ -38,6 +38,11 @@ class KToggleAction;
 
 struct kpMainWindowPrivate
 {
+    kpMainWindowPrivate ()
+        : toolsActionGroup (0)
+    {
+    }
+
     bool m_configThumbnailShowRectangle;
     KToggleAction *m_actionShowThumbnailRectangle;
 
