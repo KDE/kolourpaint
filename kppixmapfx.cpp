@@ -55,14 +55,6 @@
 #include <kptool.h>
 
 
-static void Draw (QPixmap *image,
-        void (*drawFunc) (QPainter * /*p*/,
-            bool /*drawingOnRGBLayer*/,
-            void * /*data*/),
-        bool anyColorOpaque, bool anyColorTransparent,
-        void *data);
-
-
 //
 // Overflow Resistant Arithmetic:
 //
@@ -578,6 +570,158 @@ QPixmap kpPixmapFX::pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
     
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (retPixmap);
     return retPixmap;
+}
+
+
+//
+// Drawing Pattern
+//
+
+// Warp the given <width> from 1 to 0.
+// This is not always done (specifically if <drawingEllipse>) because
+// width 0 sometimes looks worse.
+//
+// Qt lines of width 1 look like they have a width between 1-2 i.e.:
+//
+// #
+//  ##
+//   #
+//    #
+//
+// compared to Qt's special "width 0" which just means a "proper" width 1:
+//
+// #
+//  #
+//   #
+//    #
+//
+static int WidthToQPenWidth (int width, bool drawingEllipse = false)
+{
+    if (width == 1)
+    {
+        // 3x10 ellipse with Qt width 0 looks like rectangle.
+        // Therefore, do not apply this 1 -> 0 transformations for ellipses.
+        if (!drawingEllipse)
+        {
+            // Closer to looking width 1, for lines at least.
+            return 0;
+        }
+    }
+
+    return width;
+}
+
+
+static QColor Draw_ToQColor (const kpColor &color, bool drawingOnRGBLayer)
+{
+    if (drawingOnRGBLayer)
+    {
+        if (color.isOpaque ())
+            return color.toQColor ();
+        else  // if (color.isTransparent())
+        {
+            // (arbitrary as image will be transparent here)
+            return Qt::black;
+        }
+    }
+    else
+        return color.maskColor ();
+}
+
+// Exercises the drawing pattern on QPixmap's - draws on, separately, the:
+//
+// 1. RGB layer (if there is an opaque colour involved in the drawing i.e.
+//               <anyColorOpaque>)
+// 2. Mask layer (if there is a transparency involved i.e.
+//                <anyColorTransparent> or the <image> has a mask to start
+//                with)
+//
+// Each time, it opens up a QPainter and calls <drawFunc> with:
+//
+// 1. A pointer to this QPainter
+// 2. A QColor member function that converts from kpColor to QColor
+//    (depending on whether we are currently editing the RGB or mask layer)
+// 3. A pointer to the provided <data>
+
+static void Draw (QPixmap *image,
+        void (*drawFunc) (QPainter * /*p*/,
+            bool /*drawingOnRGBLayer*/,
+            void * /*data*/),
+        bool anyColorOpaque, bool anyColorTransparent,
+        void *data)
+{
+#if DEBUG_KP_PIXMAP_FX || 1
+    kDebug () << "kppixmapfx.cpp:Draw(image: rect=" << image->rect ()
+              << ",drawFunc=" << drawFunc
+              << ",anyColorOpaque=" << anyColorOpaque
+              << ",anyColorTransparent=" << anyColorTransparent
+              << ")" << endl;
+#endif
+
+    // Get mask.  Work around the fact that QBitmap's do not have masks.
+    // but QBitmap::mask() returns itself.
+    QBitmap mask = image->depth () > 1 ?
+        image->mask () :
+        QBitmap ();
+
+#if DEBUG_KP_PIXMAP_FX || 1
+    kDebug () << "\tDraw(): hasMask=" << !mask.isNull () << endl;
+#endif
+    
+    // Draw on RGB layer?
+    if (anyColorOpaque)
+    {
+    #if DEBUG_KP_PIXMAP_FX|| 1
+        kDebug () << "\tDraw(): drawing on RGB" << endl;
+    #endif
+        // RGB draw is not allowed to touch mask.
+        image->setMask (QBitmap ());
+
+        QPainter p (image);
+        (*drawFunc) (&p, true/*on RGB layer*/, data);
+        p.end ();
+
+        // (a mask should not have been created - that's the job of the next step
+        //  i.e. the next call to "drawFunc")
+        Q_ASSERT (!image->hasAlpha ());
+    }
+
+    // Draw on mask layer?
+    if (anyColorTransparent ||
+        !mask.isNull ())
+    {
+    #if DEBUG_KP_PIXMAP_FX || 1
+        kDebug () << "\tDraw(): drawing on transparent" << endl;
+    #endif
+        if (mask.isNull ())
+            mask = kpPixmapFX::getNonNullMask (*image);
+            
+        QPainter p (&mask);
+        (*drawFunc) (&p, false/*on mask layer*/, data);
+        p.end ();
+    }
+
+#if DEBUG_KP_PIXMAP_FX || 1
+    kDebug () << "\tDraw(): setting mask " << !mask.isNull () << endl;
+#endif
+
+    // Set new mask.
+    image->setMask (mask);
+}
+
+// Returns whether there is only 1 distinct point in <points>.
+static bool Only1PixelInPointArray (const QPolygon &points)
+{
+    if (points.count () == 0)
+        return false;
+
+    for (int i = 1; i < (int) points.count (); i++)
+    {
+        if (points [i] != points [0])
+            return false;
+    }
+
+    return true;
 }
 
 
@@ -1700,158 +1844,6 @@ QPen kpPixmapFX::QPainterDrawRectPen (const QColor &color, int qtWidth)
 QPen kpPixmapFX::QPainterDrawLinePen (const QColor &color, int qtWidth)
 {
     return QPen (color, qtWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-}
-
-
-//
-// Drawing Pattern
-//
-
-// Warp the given <width> from 1 to 0.
-// This is not always done (specifically if <drawingEllipse>) because
-// width 0 sometimes looks worse.
-//
-// Qt lines of width 1 look like they have a width between 1-2 i.e.:
-//
-// #
-//  ##
-//   #
-//    #
-//
-// compared to Qt's special "width 0" which just means a "proper" width 1:
-//
-// #
-//  #
-//   #
-//    #
-//
-static int WidthToQPenWidth (int width, bool drawingEllipse = false)
-{
-    if (width == 1)
-    {
-        // 3x10 ellipse with Qt width 0 looks like rectangle.
-        // Therefore, do not apply this 1 -> 0 transformations for ellipses.
-        if (!drawingEllipse)
-        {
-            // Closer to looking width 1, for lines at least.
-            return 0;
-        }
-    }
-
-    return width;
-}
-
-
-static QColor Draw_ToQColor (const kpColor &color, bool drawingOnRGBLayer)
-{
-    if (drawingOnRGBLayer)
-    {
-        if (color.isOpaque ())
-            return color.toQColor ();
-        else  // if (color.isTransparent())
-        {
-            // (arbitrary as image will be transparent here)
-            return Qt::black;
-        }
-    }
-    else
-        return color.maskColor ();
-}
-
-// Exercises the drawing pattern on QPixmap's - draws on, separately, the:
-//
-// 1. RGB layer (if there is an opaque colour involved in the drawing i.e.
-//               <anyColorOpaque>)
-// 2. Mask layer (if there is a transparency involved i.e.
-//                <anyColorTransparent> or the <image> has a mask to start
-//                with)
-//
-// Each time, it opens up a QPainter and calls <drawFunc> with:
-//
-// 1. A pointer to this QPainter
-// 2. A QColor member function that converts from kpColor to QColor
-//    (depending on whether we are currently editing the RGB or mask layer)
-// 3. A pointer to the provided <data>
-
-static void Draw (QPixmap *image,
-        void (*drawFunc) (QPainter * /*p*/,
-            bool /*drawingOnRGBLayer*/,
-            void * /*data*/),
-        bool anyColorOpaque, bool anyColorTransparent,
-        void *data)
-{
-#if DEBUG_KP_PIXMAP_FX || 1
-    kDebug () << "kppixmapfx.cpp:Draw(image: rect=" << image->rect ()
-              << ",drawFunc=" << drawFunc
-              << ",anyColorOpaque=" << anyColorOpaque
-              << ",anyColorTransparent=" << anyColorTransparent
-              << ")" << endl;
-#endif
-
-    // Get mask.  Work around the fact that QBitmap's do not have masks.
-    // but QBitmap::mask() returns itself.
-    QBitmap mask = image->depth () > 1 ?
-        image->mask () :
-        QBitmap ();
-
-#if DEBUG_KP_PIXMAP_FX || 1
-    kDebug () << "\tDraw(): hasMask=" << !mask.isNull () << endl;
-#endif
-    
-    // Draw on RGB layer?
-    if (anyColorOpaque)
-    {
-    #if DEBUG_KP_PIXMAP_FX|| 1
-        kDebug () << "\tDraw(): drawing on RGB" << endl;
-    #endif
-        // RGB draw is not allowed to touch mask.
-        image->setMask (QBitmap ());
-
-        QPainter p (image);
-        (*drawFunc) (&p, true/*on RGB layer*/, data);
-        p.end ();
-
-        // (a mask should not have been created - that's the job of the next step
-        //  i.e. the next call to "drawFunc")
-        Q_ASSERT (!image->hasAlpha ());
-    }
-
-    // Draw on mask layer?
-    if (anyColorTransparent ||
-        !mask.isNull ())
-    {
-    #if DEBUG_KP_PIXMAP_FX || 1
-        kDebug () << "\tDraw(): drawing on transparent" << endl;
-    #endif
-        if (mask.isNull ())
-            mask = kpPixmapFX::getNonNullMask (*image);
-            
-        QPainter p (&mask);
-        (*drawFunc) (&p, false/*on mask layer*/, data);
-        p.end ();
-    }
-
-#if DEBUG_KP_PIXMAP_FX || 1
-    kDebug () << "\tDraw(): setting mask " << !mask.isNull () << endl;
-#endif
-
-    // Set new mask.
-    image->setMask (mask);
-}
-
-// Returns whether there is only 1 distinct point in <points>.
-static bool Only1PixelInPointArray (const QPolygon &points)
-{
-    if (points.count () == 0)
-        return false;
-
-    for (int i = 1; i < (int) points.count (); i++)
-    {
-        if (points [i] != points [0])
-            return false;
-    }
-
-    return true;
 }
 
 
