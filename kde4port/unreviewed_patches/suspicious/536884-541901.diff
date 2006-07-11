@@ -1,0 +1,442 @@
+Index: kptool.cpp
+===================================================================
+--- kptool.cpp	(revision 536883)
++++ kptool.cpp	(revision 541901)
+@@ -58,7 +58,7 @@
+ #include <kptooltoolbar.h>
+ #include <kpview.h>
+ #include <kpviewmanager.h>
+-
++#include <kactioncollection.h>
+ 
+ //
+ // kpTool
+Index: kpmainwindow_text.cpp
+===================================================================
+--- kpmainwindow_text.cpp	(revision 536883)
++++ kpmainwindow_text.cpp	(revision 541901)
+@@ -55,18 +55,18 @@ void kpMainWindow::setupTextToolBarActio
+     m_actionTextFontSize = new KFontSizeAction (i18n ("Font Size"), 0/*shortcut*/,
+         this, SLOT (slotTextFontSizeChanged ()), ac, "text_font_size");
+ 
+-    m_actionTextBold = new KToggleAction (i18n ("Bold"),
+-        "text_bold"/*icon*/, 0/*shortcut*/,
+-        this, SLOT (slotTextBoldChanged ()), ac, "text_bold");
+-    m_actionTextItalic = new KToggleAction (i18n ("Italic"),
+-        "text_italic"/*icon*/, 0/*shortcut*/,
+-        this, SLOT (slotTextItalicChanged ()), ac, "text_italic");
+-    m_actionTextUnderline = new KToggleAction (i18n ("Underline"),
+-        "text_under"/*icon*/, 0/*shortcut*/,
+-        this, SLOT (slotTextUnderlineChanged ()), ac, "text_underline");
+-    m_actionTextStrikeThru = new KToggleAction (i18n ("Strike Through"),
+-        "text_strike"/*icon*/, 0/*shortcut*/,
+-        this, SLOT (slotTextStrikeThruChanged ()), ac, "text_strike_thru");
++    m_actionTextBold = new KToggleAction(KIcon("text_bold"/*icon*/), i18n ("Bold"), ac, "text_bold");
++    connect(m_actionTextBold, SIGNAL(triggered(bool) ), SLOT (slotTextBoldChanged ()));
++    m_actionTextBold->setShortcut(0/*shortcut*/);
++    m_actionTextItalic = new KToggleAction(KIcon("text_italic"/*icon*/), i18n ("Italic"), ac, "text_italic");
++    connect(m_actionTextItalic, SIGNAL(triggered(bool) ), SLOT (slotTextItalicChanged ()));
++    m_actionTextItalic->setShortcut(0/*shortcut*/);
++    m_actionTextUnderline = new KToggleAction(KIcon("text_under"/*icon*/), i18n ("Underline"), ac, "text_underline");
++    connect(m_actionTextUnderline, SIGNAL(triggered(bool) ), SLOT (slotTextUnderlineChanged ()));
++    m_actionTextUnderline->setShortcut(0/*shortcut*/);
++    m_actionTextStrikeThru = new KToggleAction(KIcon("text_strike"/*icon*/), i18n ("Strike Through"), ac, "text_strike_thru");
++    connect(m_actionTextStrikeThru, SIGNAL(triggered(bool) ), SLOT (slotTextStrikeThruChanged ()));
++    m_actionTextStrikeThru->setShortcut(0/*shortcut*/);
+ 
+ 
+     readAndApplyTextSettings ();
+Index: tools/kptoolaction.h
+===================================================================
+--- tools/kptoolaction.h	(revision 536883)
++++ tools/kptoolaction.h	(revision 541901)
+@@ -31,7 +31,7 @@
+ 
+ 
+ #include <kactionclasses.h>
+-
++#include <ktoggleaction.h>
+ #include <kpsinglekeytriggersaction.h>
+ 
+ 
+Index: kpmainwindow_settings.cpp
+===================================================================
+--- kpmainwindow_settings.cpp	(revision 536883)
++++ kpmainwindow_settings.cpp	(revision 541901)
+@@ -61,8 +61,8 @@ void kpMainWindow::setupSettingsMenuActi
+                                                  this/*window*/);
+ 
+ 
+-    m_actionShowPath = new KToggleAction (i18n ("Show &Path"), 0,
+-        this, SLOT (slotShowPathToggled ()), ac, "settings_show_path");
++    m_actionShowPath = new KToggleAction(i18n ("Show &Path"), ac, "settings_show_path");
++    connect(m_actionShowPath, SIGNAL(triggered(bool) ), SLOT (slotShowPathToggled ()));
+     m_actionShowPath->setCheckedState (i18n ("Hide &Path"));
+     slotEnableSettingsShowPath ();
+ 
+@@ -164,7 +164,7 @@ void kpMainWindow::slotConfigureToolBars
+                          this/*parent*/);
+     // Clicking on OK after Apply brings up the dialog (below) again.
+     // Bug with KEditToolBar.
+-    dialog.showButtonApply (false);
++    dialog.showButton( KDialog::Default, false);
+     connect (&dialog, SIGNAL (newToolbarConfig ()),
+              this, SLOT (slotNewToolBarConfig ()));
+ 
+Index: kpmainwindow_file.cpp
+===================================================================
+--- kpmainwindow_file.cpp	(revision 536883)
++++ kpmainwindow_file.cpp	(revision 541901)
+@@ -47,7 +47,7 @@
+ #include <kprinter.h>
+ #include <kstdaccel.h>
+ #include <kstdaction.h>
+-
++#include <krecentfilesaction.h>
+ #include <kpdefs.h>
+ #include <kpdocument.h>
+ #include <kpdocumentsaveoptionswidget.h>
+@@ -72,12 +72,13 @@ void kpMainWindow::setupFileMenuActions 
+     m_actionSave = KStdAction::save (this, SLOT (slotSave ()), ac);
+     m_actionSaveAs = KStdAction::saveAs (this, SLOT (slotSaveAs ()), ac);
+ 
+-    m_actionExport = new KAction (i18n ("E&xport..."), 0,
+-        this, SLOT (slotExport ()), ac, "file_export");
++    m_actionExport = new KAction(i18n ("E&xport..."), ac, "file_export");
++    connect(m_actionExport, SIGNAL(triggered(bool) ), SLOT (slotExport ()));
+ 
+     //m_actionRevert = KStdAction::revert (this, SLOT (slotRevert ()), ac);
+-    m_actionReload = new KAction (i18n ("Reloa&d"), KStdAccel::reload (),
+-        this, SLOT (slotReload ()), ac, "file_revert");
++    m_actionReload = new KAction(i18n ("Reloa&d"), ac, "file_revert");
++    connect(m_actionReload, SIGNAL(triggered(bool) ), SLOT (slotReload ()));
++    m_actionReload->setShortcut(KStdAccel::reload ());
+     slotEnableReload ();
+ 
+     m_actionPrint = KStdAction::print (this, SLOT (slotPrint ()), ac);
+@@ -85,10 +86,10 @@ void kpMainWindow::setupFileMenuActions 
+ 
+     m_actionMail = KStdAction::mail (this, SLOT (slotMail ()), ac);
+ 
+-    m_actionSetAsWallpaperCentered = new KAction (i18n ("Set as Wa&llpaper (Centered)"), 0,
+-        this, SLOT (slotSetAsWallpaperCentered ()), ac, "file_set_as_wallpaper_centered");
+-    m_actionSetAsWallpaperTiled = new KAction (i18n ("Set as Wallpaper (&Tiled)"), 0,
+-        this, SLOT (slotSetAsWallpaperTiled ()), ac, "file_set_as_wallpaper_tiled");
++    m_actionSetAsWallpaperCentered = new KAction(i18n ("Set as Wa&llpaper (Centered)"), ac, "file_set_as_wallpaper_centered");
++    connect(m_actionSetAsWallpaperCentered, SIGNAL(triggered(bool) ), SLOT (slotSetAsWallpaperCentered ()));
++    m_actionSetAsWallpaperTiled = new KAction(i18n ("Set as Wallpaper (&Tiled)"), ac, "file_set_as_wallpaper_tiled");
++    connect(m_actionSetAsWallpaperTiled, SIGNAL(triggered(bool) ), SLOT (slotSetAsWallpaperTiled ()));
+ 
+     m_actionClose = KStdAction::close (this, SLOT (slotClose ()), ac);
+     m_actionQuit = KStdAction::quit (this, SLOT (slotQuit ()), ac);
+Index: kpmainwindow.cpp
+===================================================================
+--- kpmainwindow.cpp	(revision 536883)
++++ kpmainwindow.cpp	(revision 541901)
+@@ -40,7 +40,7 @@
+ #include <kdebug.h>
+ #include <klocale.h>
+ #include <kmessagebox.h>
+-
++#include <krecentfilesaction.h>
+ #include <kpcolortoolbar.h>
+ #include <kpcommandhistory.h>
+ #include <kpdefs.h>
+Index: kpmainwindow_edit.cpp
+===================================================================
+--- kpmainwindow_edit.cpp	(revision 536883)
++++ kpmainwindow_edit.cpp	(revision 541901)
+@@ -108,22 +108,22 @@ void kpMainWindow::setupEditMenuActions 
+     m_actionCut = KStdAction::cut (this, SLOT (slotCut ()), ac);
+     m_actionCopy = KStdAction::copy (this, SLOT (slotCopy ()), ac);
+     m_actionPaste = KStdAction::paste (this, SLOT (slotPaste ()), ac);
+-    m_actionPasteInNewWindow = new KAction (i18n ("Paste in &New Window"),
+-        Qt::CTRL + Qt::SHIFT + Qt::Key_V,
+-        this, SLOT (slotPasteInNewWindow ()), ac, "edit_paste_in_new_window");
++    m_actionPasteInNewWindow = new KAction(i18n ("Paste in &New Window"), ac, "edit_paste_in_new_window");
++    connect(m_actionPasteInNewWindow, SIGNAL(triggered(bool) ), SLOT (slotPasteInNewWindow ()));
++    m_actionPasteInNewWindow->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
+ 
+     //m_actionDelete = KStdAction::clear (this, SLOT (slotDelete ()), ac);
+-    m_actionDelete = new KAction (i18n ("&Delete Selection"), 0,
+-        this, SLOT (slotDelete ()), ac, "edit_clear");
++    m_actionDelete = new KAction(i18n ("&Delete Selection"), ac, "edit_clear");
++    connect(m_actionDelete, SIGNAL(triggered(bool) ), SLOT (slotDelete ()));
+ 
+     m_actionSelectAll = KStdAction::selectAll (this, SLOT (slotSelectAll ()), ac);
+     m_actionDeselect = KStdAction::deselect (this, SLOT (slotDeselect ()), ac);
+ 
+ 
+-    m_actionCopyToFile = new KAction (i18n ("C&opy to File..."), 0,
+-        this, SLOT (slotCopyToFile ()), ac, "edit_copy_to_file");
+-    m_actionPasteFromFile = new KAction (i18n ("Paste &From File..."), 0,
+-        this, SLOT (slotPasteFromFile ()), ac, "edit_paste_from_file");
++    m_actionCopyToFile = new KAction(i18n ("C&opy to File..."), ac, "edit_copy_to_file");
++    connect(m_actionCopyToFile, SIGNAL(triggered(bool) ), SLOT (slotCopyToFile ()));
++    m_actionPasteFromFile = new KAction(i18n ("Paste &From File..."), ac, "edit_paste_from_file");
++    connect(m_actionPasteFromFile, SIGNAL(triggered(bool) ), SLOT (slotPasteFromFile ()));
+ 
+ 
+     m_editMenuDocumentActionsEnabled = false;
+Index: widgets/kptooltoolbar.cpp
+===================================================================
+--- widgets/kptooltoolbar.cpp	(revision 536883)
++++ widgets/kptooltoolbar.cpp	(revision 541901)
+@@ -389,7 +389,7 @@ int kpToolToolBar::numShownToolWidgets (
+                    << " isShown=" << (*it)->isShown ()
+                    << endl;
+     #endif
+-        if ((*it)->isShown ())
++        if (!(*it)->isHidden ())
+             ret++;
+     }
+ 
+@@ -405,7 +405,7 @@ kpToolWidgetBase *kpToolToolBar::shownTo
+          it != m_toolWidgets.end ();
+          it++)
+     {
+-        if ((*it)->isShown ())
++        if (!(*it)->isHidden ())
+         {
+             if (which == uptoVisibleWidget)
+                 return *it;
+@@ -589,16 +589,14 @@ void kpToolToolBar::setOrientation (Qt::
+     delete m_baseLayout;
+     if (o == Qt::Vertical)
+     {
+-        m_baseLayout = new QBoxLayout (m_baseWidget, QBoxLayout::TopToBottom,
+-                                       5/*margin*/,
+-                                       10/*spacing*/);
++        m_baseLayout = new QBoxLayout (QBoxLayout::TopToBottom, m_baseWidget );
+     }
+     else // if (o == Qt::Horizontal)
+     {
+-        m_baseLayout = new QBoxLayout (m_baseWidget, QBoxLayout::LeftToRight,
+-                                       5/*margin*/,
+-                                       10/*spacing*/);
++        m_baseLayout = new QBoxLayout (QBoxLayout::LeftToRight, m_baseWidget );
+     }
++    m_baseLayout->setSpacing( 10 );
++    m_baseLayout->setMargin( 5 );
+ 
+     m_toolLayout = new QGridLayout ();
+     m_baseLayout->addItem( m_toolLayout );
+Index: widgets/kpcolortoolbar.cpp
+===================================================================
+--- widgets/kpcolortoolbar.cpp	(revision 536883)
++++ widgets/kpcolortoolbar.cpp	(revision 541901)
+@@ -862,16 +862,17 @@ void kpColorPalette::setOrientation (Qt:
+ 
+     if (o == Qt::Horizontal)
+     {
+-        m_boxLayout = new QBoxLayout (this, QBoxLayout::LeftToRight, 0/*margin*/, 5/*spacing*/);
++        m_boxLayout = new QBoxLayout (QBoxLayout::LeftToRight, this );
+         m_boxLayout->addWidget (m_transparentColorCell, 0/*stretch*/, Qt::AlignVCenter);
+         m_boxLayout->addWidget (m_colorCells);
+     }
+     else
+     {
+-        m_boxLayout = new QBoxLayout (this, QBoxLayout::TopToBottom, 0/*margin*/, 5/*spacing*/);
++        m_boxLayout = new QBoxLayout (QBoxLayout::TopToBottom, this);
+         m_boxLayout->addWidget (m_transparentColorCell, 0/*stretch*/, Qt::AlignHCenter);
+         m_boxLayout->addWidget (m_colorCells);
+     }
++    m_boxLayout->setSpacing( 5 );
+ 
+     m_orientation = o;
+ }
+--- pixmapfx/kpeffectinvert.cpp	(revision 536883)
++++ pixmapfx/kpeffectinvert.cpp	(revision 541901)
+@@ -153,17 +153,17 @@ kpEffectInvertWidget::kpEffectInvertWidg
+-    QVBoxLayout *centerWidgetLay = new QVBoxLayout (centerWidget,
+-                                                    0/*margin*/,
+-                                                    spacingHint ());
+-
++    QVBoxLayout *centerWidgetLay = new QVBoxLayout (centerWidget );
++    centerWidgetLay->setSpacing( spacingHint() );
+ 
+     m_redCheckBox = new QCheckBox (i18n ("&Red"), centerWidget);
+     m_greenCheckBox = new QCheckBox (i18n ("&Green"), centerWidget);
+Index: kpmainwindow_view.cpp
+===================================================================
+--- kpmainwindow_view.cpp	(revision 536883)
++++ kpmainwindow_view.cpp	(revision 541901)
+@@ -91,29 +91,30 @@ void kpMainWindow::setupViewMenuActions 
+     m_zoomList.append (1000); m_zoomList.append (1200); m_zoomList.append (1600);
+ 
+ 
+-    m_actionShowGrid = new KToggleAction (i18n ("Show &Grid"), Qt::CTRL + Qt::Key_G,
+-        this, SLOT (slotShowGridToggled ()), actionCollection (), "view_show_grid");
++    m_actionShowGrid = new KToggleAction(i18n ("Show &Grid"), actionCollection (), "view_show_grid");
++    connect(m_actionShowGrid, SIGNAL(triggered(bool) ), SLOT (slotShowGridToggled ()));
++    m_actionShowGrid->setShortcut(Qt::CTRL + Qt::Key_G);
+     m_actionShowGrid->setCheckedState (i18n ("Hide &Grid"));
+ 
+ 
+-    m_actionShowThumbnail = new KToggleAction (i18n ("Show T&humbnail"), Qt::CTRL + Qt::Key_H,
+-        this, SLOT (slotShowThumbnailToggled ()), actionCollection (), "view_show_thumbnail");
++    m_actionShowThumbnail = new KToggleAction(i18n ("Show T&humbnail"), actionCollection (), "view_show_thumbnail");
++    connect(m_actionShowThumbnail, SIGNAL(triggered(bool) ), SLOT (slotShowThumbnailToggled ()));
++    m_actionShowThumbnail->setShortcut(Qt::CTRL + Qt::Key_H);
+     m_actionShowThumbnail->setCheckedState (i18n ("Hide T&humbnail"));
+ 
+     // Please do not use setCheckedState() here - it wouldn't make sense
+-    m_actionZoomedThumbnail = new KToggleAction (i18n ("Zoo&med Thumbnail Mode"), 0,
+-        this, SLOT (slotZoomedThumbnailToggled ()), actionCollection (), "view_zoomed_thumbnail");
++    m_actionZoomedThumbnail = new KToggleAction(i18n ("Zoo&med Thumbnail Mode"), actionCollection (), "view_zoomed_thumbnail");
++    connect(m_actionZoomedThumbnail, SIGNAL(triggered(bool) ), SLOT (slotZoomedThumbnailToggled ()));
+ 
+     // For consistency with the above action, don't use setCheckedState()
+     //
+     // Also, don't use "Show Thumbnail Rectangle" because if entire doc
+     // can be seen in scrollView, checking option won't "Show" anything
+     // since rect _surrounds_ entire doc (hence, won't be rendered).
+-    d->m_actionShowThumbnailRectangle = new KToggleAction (
+-        i18n ("Enable Thumbnail &Rectangle"),
+-        0,
+-        this, SLOT (slotThumbnailShowRectangleToggled ()),
++    d->m_actionShowThumbnailRectangle = new KToggleAction ( i18n ("Enable Thumbnail &Rectangle"),
+         actionCollection (), "view_show_thumbnail_rectangle");
++    connect(d->m_actionShowThumbnailRectangle, SIGNAL(triggered(bool) ), 
++	    SLOT (slotThumbnailShowRectangleToggled ()));
+ 
+ 
+     enableViewMenuDocumentActions (false);
+Index: kpmainwindow_image.cpp
+===================================================================
+--- kpmainwindow_image.cpp	(revision 536883)
++++ kpmainwindow_image.cpp	(revision 541901)
+@@ -90,38 +90,47 @@ void kpMainWindow::setupImageMenuActions
+ {
+     KActionCollection *ac = actionCollection ();
+ 
+-    m_actionResizeScale = new KAction (i18n ("R&esize / Scale..."), Qt::CTRL + Qt::Key_E,
+-        this, SLOT (slotResizeScale ()), ac, "image_resize_scale");
+-
+-    m_actionCrop = new KAction (i18n ("Se&t as Image (Crop)"), Qt::CTRL + Qt::Key_T,
+-        this, SLOT (slotCrop ()), ac, "image_crop");
+-
+-    m_actionAutoCrop = new KAction (autoCropText (), Qt::CTRL + Qt::Key_U,
+-        this, SLOT (slotAutoCrop ()), ac, "image_auto_crop");
+-
+-    m_actionFlip = new KAction (i18n ("&Flip..."), Qt::CTRL + Qt::Key_F,
+-        this, SLOT (slotFlip ()), ac, "image_flip");
+-
+-    m_actionRotate = new KAction (i18n ("&Rotate..."), Qt::CTRL + Qt::Key_R,
+-        this, SLOT (slotRotate ()), ac, "image_rotate");
+-
+-    m_actionSkew = new KAction (i18n ("S&kew..."), Qt::CTRL + Qt::Key_K,
+-        this, SLOT (slotSkew ()), ac, "image_skew");
+-
+-    m_actionConvertToBlackAndWhite = new KAction (i18n ("Reduce to Mo&nochrome (Dithered)"), 0,
+-        this, SLOT (slotConvertToBlackAndWhite ()), ac, "image_convert_to_black_and_white");
+-
+-    m_actionConvertToGrayscale = new KAction (i18n ("Reduce to &Grayscale"), 0,
+-        this, SLOT (slotConvertToGrayscale ()), ac, "image_convert_to_grayscale");
+-
+-    m_actionInvertColors = new KAction (i18n ("&Invert Colors"), Qt::CTRL + Qt::Key_I,
+-        this, SLOT (slotInvertColors ()), ac, "image_invert_colors");
+-
+-    m_actionClear = new KAction (i18n ("C&lear"), Qt::CTRL + Qt::SHIFT + Qt::Key_N,
+-        this, SLOT (slotClear ()), ac, "image_clear");
+-
+-    m_actionMoreEffects = new KAction (i18n ("&More Effects..."), Qt::CTRL + Qt::Key_M,
+-        this, SLOT (slotMoreEffects ()), ac, "image_more_effects");
++    m_actionResizeScale = new KAction(i18n ("R&esize / Scale..."), ac, "image_resize_scale");
++    connect(m_actionResizeScale, SIGNAL(triggered(bool) ), SLOT (slotResizeScale ()));
++    m_actionResizeScale->setShortcut(Qt::CTRL + Qt::Key_E);
++
++    m_actionCrop = new KAction(i18n ("Se&t as Image (Crop)"), ac, "image_crop");
++    connect(m_actionCrop, SIGNAL(triggered(bool) ), SLOT (slotCrop ()));
++    m_actionCrop->setShortcut(Qt::CTRL + Qt::Key_T);
++
++    m_actionAutoCrop = new KAction(autoCropText (), ac, "image_auto_crop");
++    connect(m_actionAutoCrop, SIGNAL(triggered(bool) ), SLOT (slotAutoCrop ()));
++    m_actionAutoCrop->setShortcut(Qt::CTRL + Qt::Key_U);
++
++    m_actionFlip = new KAction(i18n ("&Flip..."), ac, "image_flip");
++    connect(m_actionFlip, SIGNAL(triggered(bool) ), SLOT (slotFlip ()));
++    m_actionFlip->setShortcut(Qt::CTRL + Qt::Key_F);
++
++    m_actionRotate = new KAction(i18n ("&Rotate..."), ac, "image_rotate");
++    connect(m_actionRotate, SIGNAL(triggered(bool) ), SLOT (slotRotate ()));
++    m_actionRotate->setShortcut(Qt::CTRL + Qt::Key_R);
++
++    m_actionSkew = new KAction(i18n ("S&kew..."), ac, "image_skew");
++    connect(m_actionSkew, SIGNAL(triggered(bool) ), SLOT (slotSkew ()));
++    m_actionSkew->setShortcut(Qt::CTRL + Qt::Key_K);
++
++    m_actionConvertToBlackAndWhite = new KAction(i18n ("Reduce to Mo&nochrome (Dithered)"), ac, "image_convert_to_black_and_white");
++    connect(m_actionConvertToBlackAndWhite, SIGNAL(triggered(bool) ), SLOT (slotConvertToBlackAndWhite ()));
++
++    m_actionConvertToGrayscale = new KAction(i18n ("Reduce to &Grayscale"), ac, "image_convert_to_grayscale");
++    connect(m_actionConvertToGrayscale, SIGNAL(triggered(bool) ), SLOT (slotConvertToGrayscale ()));
++
++    m_actionInvertColors = new KAction(i18n ("&Invert Colors"), ac, "image_invert_colors");
++    connect(m_actionInvertColors, SIGNAL(triggered(bool) ), SLOT (slotInvertColors ()));
++    m_actionInvertColors->setShortcut(Qt::CTRL + Qt::Key_I);
++
++    m_actionClear = new KAction(i18n ("C&lear"), ac, "image_clear");
++    connect(m_actionClear, SIGNAL(triggered(bool) ), SLOT (slotClear ()));
++    m_actionClear->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
++
++    m_actionMoreEffects = new KAction(i18n ("&More Effects..."), ac, "image_more_effects");
++    connect(m_actionMoreEffects, SIGNAL(triggered(bool) ), SLOT (slotMoreEffects ()));
++    m_actionMoreEffects->setShortcut(Qt::CTRL + Qt::Key_M);
+ 
+     enableImageMenuDocumentActions (false);
+ }
+Index: kpviewscrollablecontainer.cpp
+===================================================================
+--- kpviewscrollablecontainer.cpp	(revision 536883)
++++ kpviewscrollablecontainer.cpp	(revision 541901)
+@@ -911,19 +911,19 @@ void kpViewScrollableContainer::recalcul
+                                   QRect (0, 0, visibleWidth (), visibleHeight ()))
+             .contains (QCursor::pos ()))
+     {
+-        if (m_bottomRightGrip->isShown () &&
++        if (!m_bottomRightGrip->isHidden () &&
+             m_bottomRightGrip->hotRect (true/*to global*/)
+                 .contains (QCursor::pos ()))
+         {
+             m_bottomRightGrip->setUserMessage (i18n ("Left drag the handle to resize the image."));
+         }
+-        else if (m_bottomGrip->isShown () &&
++        else if (!m_bottomGrip->isHidden () &&
+                 m_bottomGrip->hotRect (true/*to global*/)
+                     .contains (QCursor::pos ()))
+         {
+             m_bottomGrip->setUserMessage (i18n ("Left drag the handle to resize the image."));
+         }
+-        else if (m_rightGrip->isShown () &&
++        else if (!m_rightGrip->isHidden () &&
+                 m_rightGrip->hotRect (true/*to global*/)
+                     .contains (QCursor::pos ()))
+         {
+@@ -1076,9 +1076,9 @@ void kpViewScrollableContainer::updateGr
+     #endif
+     }
+ 
+-    m_bottomGrip->setShown (bool (m_view));
+-    m_rightGrip->setShown (bool (m_view));
+-    m_bottomRightGrip->setShown (bool (m_view));
++    m_bottomGrip->setHidden (m_view == 0);
++    m_rightGrip->setHidden (m_view == 0);
++    m_bottomRightGrip->setHidden (m_view == 0);
+ 
+ #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+     kDebug () << "\tcontentsRect=" << contentsRect ()
+Index: kpmainwindow_help.cpp
+===================================================================
+--- kpmainwindow_help.cpp	(revision 536883)
++++ kpmainwindow_help.cpp	(revision 541901)
+@@ -55,8 +55,7 @@ void kpMainWindow::setupHelpMenuActions 
+     // -- Thurston
+     d->m_actionHelpTakingScreenshots = new KAction (
+         i18n ("Acquiring &Screenshots"), 0,
+-        this, SLOT (slotHelpTakingScreenshots ()),
+-        ac, "help_taking_screenshots");
++        this, SLOT (slotHelpTakingScreenshots ()), ac, "help_taking_screenshots");
+ 
+ 
+     enableHelpMenuDocumentActions (false);

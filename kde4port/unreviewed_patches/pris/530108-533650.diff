@@ -1,0 +1,492 @@
+Index: kptool.cpp
+===================================================================
+--- kptool.cpp	(revision 530107)
++++ kptool.cpp	(revision 533650)
+@@ -153,7 +153,7 @@ void kpTool::createAction ()
+     m_action = new kpToolAction (text (), iconName (), shortcutForKey (m_key),
+                                  this, SLOT (slotActionActivated ()),
+                                  m_mainWindow->actionCollection (), name ());
+-    m_action->setExclusiveGroup (QLatin1String ("Tool Box Actions"));
++    //m_action->setExclusiveGroup (QLatin1String ("Tool Box Actions"));
+     m_action->setWhatsThis (description ());
+ 
+     connect (m_action, SIGNAL (toolTipChanged (const QString &)),
+@@ -192,11 +192,13 @@ QString kpTool::toolTipForTextAndShortcu
+ {
+     for (int i = 0; i < (int) shortcut.count (); i++)
+     {
++#if 0
+         const KKeySequence seq = shortcut.seq (i);
+         if (seq.count () == 1 && containsSingleKeyTrigger (seq))
++#endif
+         {
+             return i18nc ("<Tool Name> (<Single Accel Key>)",
+-                          "%1 (%2)", text, seq.toString ());
++                          "%1 (%2)", text, shortcut.toString ());
+         }
+     }
+ 
+@@ -235,10 +237,10 @@ KShortcut kpTool::shortcutForKey (int ke
+ 
+     if (key)
+     {
+-        shortcut.append (KKeySequence (KKey (key)));
++        shortcut.append (KShortcut (key));
+         // (CTRL+<key>, ALT+<key>, CTRL+ALT+<key>, CTRL+SHIFT+<key>
+         //  all clash with global KDE shortcuts)
+-        shortcut.append (KKeySequence (KKey (Qt::ALT + Qt::SHIFT + key)));
++        shortcut.append (KShortcut (Qt::ALT + Qt::SHIFT + key));
+     }
+ 
+     return shortcut;
+@@ -259,19 +261,6 @@ bool kpTool::keyIsText (int key)
+ }
+ 
+ // public static
+-bool kpTool::containsSingleKeyTrigger (const KKeySequence &seq)
+-{
+-    for (int i = 0; i < (int) seq.count (); i++)
+-    {
+-        const KKey key = seq.key (i);
+-        if (keyIsText (key.keyCodeQt ()))
+-            return true;
+-    }
+-
+-    return false;
+-}
+-
+-// public static
+ bool kpTool::containsSingleKeyTrigger (const KShortcut &shortcut,
+     KShortcut *shortcutWithoutSingleKeyTriggers)
+ {
+@@ -282,6 +271,7 @@ bool kpTool::containsSingleKeyTrigger (c
+     KShortcut newShortcut;
+     bool needNewShortcut = false;
+ 
++#if 0
+     for (int i = 0; i < (int) shortcut.count (); i++)
+     {
+         const KKeySequence seq = shortcut.seq (i);
+@@ -295,10 +285,11 @@ bool kpTool::containsSingleKeyTrigger (c
+             newShortcut.append (seq);
+         }
+     }
++#endif
+ 
+ 
+     if (needNewShortcut && shortcutWithoutSingleKeyTriggers)
+-        *shortcutWithoutSingleKeyTriggers = newShortcut;
++        *shortcutWithoutSingleKeyTriggers = shortcut;
+ 
+     return needNewShortcut;
+ }
+Index: kpdocument.cpp
+===================================================================
+--- kpdocument.cpp	(revision 530107)
++++ kpdocument.cpp	(revision 533650)
+@@ -251,7 +251,7 @@ QPixmap kpDocument::getPixmapFromFile (c
+ 
+     QPixmap newPixmap = kpPixmapFX::convertToPixmapAsLosslessAsPossible (image,
+         kpPixmapFX::WarnAboutLossInfo (
+-             ki18n ("The image \"%1\""
++             ki18n (QString("The image \"%1\""
+                    " may have more colors than the current screen mode."
+                    " In order to display it, some colors may be changed."
+                    " Try increasing your screen depth to at least %2bpp."
+@@ -260,13 +260,13 @@ QPixmap kpDocument::getPixmapFromFile (c
+ 
+                    " contains translucency which is not fully"
+                    " supported. The translucency data will be"
+-                   " approximated with a 1-bit transparency mask.",
+-                   prettyFilenameForURL (url)),
+-             ki18n ("The image \"%1\""
++                   " approximated with a 1-bit transparency mask.").arg(
++                   prettyFilenameForURL (url)).utf8()),
++             ki18n (QString("The image \"%1\""
+                    " may have more colors than the current screen mode."
+                    " In order to display it, some colors may be changed."
+-                   " Try increasing your screen depth to at least %2bpp.",
+-                   prettyFilenameForURL (url)),
++                   " Try increasing your screen depth to at least %2bpp.")
++                   .arg(prettyFilenameForURL (url)).utf8()),
+              i18n ("The image \"%1\""
+                    " contains translucency which is not fully"
+                    " supported. The translucency data will be"
+Index: tools/kptoolresizescale.cpp
+===================================================================
+--- tools/kptoolresizescale.cpp	(revision 530107)
++++ tools/kptoolresizescale.cpp	(revision 533650)
+@@ -51,7 +51,7 @@
+ #include <qsize.h>
+ #include <qtoolbutton.h>
+ #include <qmatrix.h>
+-#include <q3whatsthis.h>
++
+ 
+ #include <kapplication.h>
+ #include <kcombobox.h>
+@@ -644,7 +644,7 @@ static void toolButtonSetLook (QToolButt
+ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
+ {
+     m_operationGroupBox = new QGroupBox (i18n ("Operation"), baseWidget);
+-    Q3WhatsThis::add (m_operationGroupBox,
++    m_operationGroupBox->setWhatsThis(
+         i18n ("<qt>"
+               "<ul>"
+                   "<li><b>Resize</b>: The size of the picture will be"
+Index: tools/kptoolaction.cpp
+===================================================================
+--- tools/kptoolaction.cpp	(revision 530107)
++++ tools/kptoolaction.cpp	(revision 533650)
+@@ -75,9 +75,11 @@ void kpToolAction::setText (const QStrin
+ // public slot virtual [base KAction]
+ bool kpToolAction::setShortcut (const KShortcut &shortcut)
+ {
+-    bool ret = KToggleAction::setShortcut (shortcut);
++#warning "kde4: port it"
++    //bool ret = KToggleAction::setShortcut (shortcut);
+     updateToolTip ();
+-    return ret;
++    //return ret;
++	return false;
+ }
+ 
+ 
+Index: kpmainwindow_settings.cpp
+===================================================================
+--- kpmainwindow_settings.cpp	(revision 530107)
++++ kpmainwindow_settings.cpp	(revision 533650)
+@@ -136,7 +136,7 @@ void kpMainWindow::slotKeyBindings ()
+         enableActionsSingleKeyTriggers (true);
+ 
+ 
+-    if (KKeyDialog::configure (actionCollection (), this))
++    if (KKeyDialog::configure (actionCollection (), KKeyChooser::LetterShortcutsAllowed, this))
+     {
+     #if DEBUG_KP_MAIN_WINDOW
+         kDebug () << "\tdialog accepted" << endl;
+Index: kpmainwindow_file.cpp
+===================================================================
+--- kpmainwindow_file.cpp	(revision 530107)
++++ kpmainwindow_file.cpp	(revision 533650)
+@@ -150,7 +150,7 @@ void kpMainWindow::addRecentURL (const K
+     // If we could PROPAGATE: interprocess, then this wouldn't be required.
+     m_actionOpenRecent->loadEntries (cfg);
+ 
+-    m_actionOpenRecent->addURL (url);
++    m_actionOpenRecent->addUrl (url);
+ 
+     m_actionOpenRecent->saveEntries (cfg);
+     cfg->sync ();
+Index: kpmainwindow.cpp
+===================================================================
+--- kpmainwindow.cpp	(revision 530107)
++++ kpmainwindow.cpp	(revision 533650)
+@@ -245,7 +245,7 @@ void kpMainWindow::init ()
+     // create more GUI
+     //
+ 
+-    m_colorToolBar = new kpColorToolBar (i18n ("Color Box"), this, "Color Box");
++    m_colorToolBar = new kpColorToolBar (i18n ("Color Box"), this);
+ #if DEBUG_KP_MAIN_WINDOW
+     kDebug () << "\tTIME: new kpColorToolBar = " << time.restart () << "msec" << endl;
+ #endif
+@@ -292,8 +292,8 @@ void kpMainWindow::init ()
+         kDebug () << "\tfirstTime: positioning toolbars" << endl;
+     #endif
+ 
+-        m_toolToolBar->setBarPos (KToolBar::Left);
+-        m_colorToolBar->setBarPos (KToolBar::Bottom);
++        //m_toolToolBar->setBarPos (KToolBar::Left);
++        //m_colorToolBar->setBarPos (KToolBar::Bottom);
+ 
+         KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+ 
+Index: kptool.h
+===================================================================
+--- kptool.h	(revision 530107)
++++ kptool.h	(revision 533650)
+@@ -48,7 +48,6 @@ class QMouseEvent;
+ class QPixmap;
+ class QWheelEvent;
+ 
+-class KKeySequence;
+ class KShortcut;
+ 
+ class kpColor;
+@@ -112,7 +111,6 @@ public:
+     KShortcut shortcut () const;
+ 
+     static bool keyIsText (int key);
+-    static bool containsSingleKeyTrigger (const KKeySequence &seq);
+     static bool containsSingleKeyTrigger (const KShortcut &shortcut,
+         KShortcut *shortcutWithoutSingleKeyTriggers);
+ 
+Index: widgets/kptooltoolbar.h
+===================================================================
+--- widgets/kptooltoolbar.h	(revision 530107)
++++ widgets/kptooltoolbar.h	(revision 533650)
+@@ -58,7 +58,7 @@ class kpToolToolBar : public KToolBar
+ Q_OBJECT
+ 
+ public:
+-    kpToolToolBar (const QString &label, kpMainWindow *mainWindow, int colsOrRows = 2, const char *name = 0);
++    kpToolToolBar (const QString &label, kpMainWindow *mainWindow, int colsOrRows = 2);
+     virtual ~kpToolToolBar ();
+ 
+ private:
+Index: widgets/kpcolortoolbar.h
+===================================================================
+--- widgets/kpcolortoolbar.h	(revision 530107)
++++ widgets/kpcolortoolbar.h	(revision 533650)
+@@ -251,7 +251,7 @@ class kpColorToolBar : public KToolBar
+ Q_OBJECT
+ 
+ public:
+-    kpColorToolBar (const QString &label, kpMainWindow *mainWindow, const char *name = 0);
++    kpColorToolBar (const QString &label, kpMainWindow *mainWindow);
+     virtual ~kpColorToolBar ();
+ 
+     kpColor color (int which) const;
+Index: widgets/kptoolwidgetbase.cpp
+===================================================================
+--- widgets/kptoolwidgetbase.cpp	(revision 530107)
++++ widgets/kptoolwidgetbase.cpp	(revision 533650)
+@@ -332,8 +332,9 @@ void kpToolWidgetBase::relayoutOptions (
+             m_pixmapRects [r][c] = QRect (x, y, w, h);
+ 
+             if (!m_toolTips [r][c].isEmpty ())
+-                QToolTip::add (this, m_pixmapRects [r][c], m_toolTips [r][c]);
+-        }
++        		QToolTip::add (this, m_pixmapRects [r][c], m_toolTips [r][c]);
++		
++		}
+     }
+ 
+     update ();
+Index: widgets/kptooltoolbar.cpp
+===================================================================
+--- widgets/kptooltoolbar.cpp	(revision 530107)
++++ widgets/kptooltoolbar.cpp	(revision 533650)
+@@ -83,8 +83,8 @@ protected:
+ };
+ 
+ 
+-kpToolToolBar::kpToolToolBar (const QString &label, kpMainWindow *mainWindow, int colsOrRows, const char *name)
+-    : KToolBar ((QWidget *) mainWindow, name, false/*don't use global toolBar settings*/, true/*readConfig*/),
++kpToolToolBar::kpToolToolBar (const QString &label, kpMainWindow *mainWindow, int colsOrRows)
++    : KToolBar ((QWidget *) mainWindow, false/*don't use global toolBar settings*/, true/*readConfig*/),
+       m_vertCols (colsOrRows),
+       m_buttonGroup (0),
+       m_baseWidget (0),
+@@ -93,7 +93,7 @@ kpToolToolBar::kpToolToolBar (const QStr
+       m_previousTool (0), m_currentTool (0),
+       m_defaultIconSize (0)
+ {
+-    setText (label);
++    //setText (label);
+ 
+ 
+     // With these lines enabled, mousePressEvent's weren't being generated
+@@ -236,7 +236,7 @@ void kpToolToolBar::registerTool (kpTool
+ 
+     b->setText (tool->text ());
+     b->setIconSet (tool->iconSet (defaultIconSize ()));
+-    QToolTip::add (b, tool->toolTip ());
++    b->setToolTip( tool->toolTip ());
+     b->setWhatsThis( tool->description ());
+ 
+     m_buttonGroup->addButton (b);
+@@ -551,7 +551,7 @@ void kpToolToolBar::slotToolActionToolTi
+         {
+ // COMPAT
+ #warning "QT4: port to new QTooltip API"				
+-            //QToolTip::add ((*it).m_button, tool->toolTip ());
++            //(*it).m_button->setToolTip( tool->toolTip ());
+             return;
+         }
+     }
+@@ -568,7 +568,7 @@ void kpToolToolBar::setOrientation (Qt::
+ #endif
+ 
+     // (QDockWindow::undock() calls us)
+-    bool isOutsideDock = (place () == Q3DockWindow::OutsideDock);
++    bool isOutsideDock = false; //(place () == Q3DockWindow::OutsideDock);
+ 
+     if (!m_lastDockedOrientationSet || !isOutsideDock)
+     {
+Index: widgets/kpcolortoolbar.cpp
+===================================================================
+--- widgets/kpcolortoolbar.cpp	(revision 530107)
++++ widgets/kpcolortoolbar.cpp	(revision 533650)
+@@ -603,7 +603,7 @@ void kpColorCells::setOrientation (Qt::O
+         }
+ 
+         KColorCells::setColor (pos, colors [i]);
+-        //QToolTip::add (this, cellGeometry (y, x), colors [i].name ());
++        //this->setToolTip( cellGeometry (y, x), colors [i].name ());
+     }
+ 
+     m_orientation = o;
+@@ -759,7 +759,7 @@ kpTransparentColorCell::kpTransparentCol
+ 
+     m_pixmap = UserIcon ("color_transparent_26x26");
+ 
+-    QToolTip::add (this, i18n ("Transparent"));
++    this->setToolTip( i18n ("Transparent"));
+ }
+ 
+ kpTransparentColorCell::~kpTransparentColorCell ()
+@@ -912,9 +912,9 @@ void kpColorSimilarityToolBarItem::setCo
+ 
+     kpColorSimilarityCube::setColorSimilarity (similarity);
+     if (similarity > 0)
+-        QToolTip::add (this, i18n ("Color similarity: %1%", qRound (similarity * 100)));
++        this->setToolTip( i18n ("Color similarity: %1%", qRound (similarity * 100)));
+     else
+-        QToolTip::add (this, i18n ("Color similarity: Exact"));
++        this->setToolTip( i18n ("Color similarity: Exact"));
+ 
+     m_processedColorSimilarity = kpColor::processSimilarity (colorSimilarity ());
+ 
+@@ -952,11 +952,11 @@ void kpColorSimilarityToolBarItem::mouse
+  * kpColorToolBar
+  */
+ 
+-kpColorToolBar::kpColorToolBar (const QString &label, kpMainWindow *mainWindow, const char *name)
+-    : KToolBar (mainWindow, name),
++kpColorToolBar::kpColorToolBar (const QString &label, kpMainWindow *mainWindow)
++    : KToolBar (mainWindow),
+       m_mainWindow (mainWindow)
+ {
+-    setText (label);
++    //setText (label);
+ 
+ 
+     QWidget *base = new QWidget (this);
+@@ -993,14 +993,14 @@ kpColorToolBar::kpColorToolBar (const QS
+     m_lastDockedOrientationSet = false;
+     setOrientation (orientation ());
+ 
+-    KToolBar::insertWidget (0, base->width (), base);
++    //KToolBar::insertWidget (0, base->width (), base);
+ }
+ 
+ // virtual
+ void kpColorToolBar::setOrientation (Qt::Orientation o)
+ {
+     // (QDockWindow::undock() calls us)
+-    bool isOutsideDock = (place () == Q3DockWindow::OutsideDock);
++    bool isOutsideDock =  false; //(place () == Q3DockWindow::OutsideDock);
+ 
+     if (!m_lastDockedOrientationSet || !isOutsideDock)
+     {
+Index: kpthumbnail.cpp
+===================================================================
+--- kpthumbnail.cpp	(revision 530107)
++++ kpthumbnail.cpp	(revision 533650)
+@@ -59,10 +59,12 @@ kpThumbnail::kpThumbnail (kpMainWindow *
+     if (parent)
+     {
+         // Prevent thumbnail from docking - it's _really_ irritating otherwise
++#if 0
+         parent->leftDock ()->setAcceptDockWindow (this, false);
+         parent->rightDock ()->setAcceptDockWindow (this, false);
+         parent->topDock ()->setAcceptDockWindow (this, false);
+         parent->bottomDock ()->setAcceptDockWindow (this, false);
++#endif
+     }
+ 
+ 
+Index: CMakeLists.txt
+===================================================================
+--- CMakeLists.txt	(revision 530107)
++++ CMakeLists.txt	(revision 533650)
+@@ -7,6 +7,7 @@ include_directories(
+     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/
+     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/
+     ${CMAKE_SOURCE_DIR}/kolourpaint/views/
++    ${CMAKE_SOURCE_DIR}/kolourpaint/compat/
+     ${KDE4_INCLUDE_DIR}
+     ${QT_INCLUDES}
+     ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}  )
+@@ -25,7 +26,7 @@ macro(CREATE_VERSION _in_FILE _out_FILE)
+     FILE(WRITE ${_out_FILE} "static const char * const kpVersionText =")
+     STRING(REGEX REPLACE "\n" "" _contents "${_contents}" )
+ 	FILE(APPEND ${_out_FILE} "\"${_contents}\"")
+-	FILE(APPEND ${_out_FILE} ";")
++	FILE(APPEND ${_out_FILE} ";\n")
+ endmacro(CREATE_VERSION)
+ 
+ 
+@@ -37,9 +38,9 @@ create_version(${CMAKE_SOURCE_DIR}/kolou
+ macro(CREATE_LICENSE _in_FILE _out_FILE)
+     FILE(READ ${_in_FILE} _contents)
+     FILE(WRITE ${_out_FILE} "static const char * const kpLicenseText =")
+-    #STRING(REGEX REPLACE "\n" "" _contents "${_contents}" )
++    STRING(REGEX REPLACE "\n" "\\\\n\"\n\"" _contents "${_contents}" )
+     FILE(APPEND ${_out_FILE} "\"${_contents}\"")
+-    FILE(APPEND ${_out_FILE} ";")
++    FILE(APPEND ${_out_FILE} ";\n")
+ endmacro(CREATE_LICENSE)
+ 
+ macro_additional_clean_files( ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintlicense.h )
+@@ -149,13 +150,14 @@ set(kolourpaint_SRCS ${libkolourpaintcur
+    kptool.cpp 
+    kpviewmanager.cpp 
+    kpviewscrollablecontainer.cpp 
+-   kpwidgetmapper.cpp )
++   kpwidgetmapper.cpp 
++   compat/kpbug.cpp )
+ 
+ kde4_automoc(${kolourpaint_SRCS})
+ 
+ kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
+ 
+-target_link_libraries(kolourpaint  ${KDE4_KDECORE_LIBS} kdeprint kolourpaintcursors kolourpaintpixmapfx kolourpainttools kolourpaintviews kolourpaintwidgets )
++target_link_libraries(kolourpaint  ${KDE4_KDECORE_LIBS} kdeprint )
+ 
+ install_targets(/bin kolourpaint )
+ 
+Index: compat/Makefile.am
+===================================================================
+--- compat/Makefile.am	(revision 530107)
++++ compat/Makefile.am	(revision 533650)
+@@ -1,11 +0,0 @@
+-INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../compat -I$(srcdir)/../cursors -I$(srcdir)/../interfaces \
+-    -I$(srcdir)/../pixmapfx \
+-    -I$(srcdir)/../tools \
+-    -I$(srcdir)/../views \
+-    -I$(srcdir)/../widgets $(all_includes)
+-
+-noinst_LTLIBRARIES = libkolourpaintcompat.la
+-libkolourpaintcompat_la_SOURCES = kpbug.cpp
+-
+-METASOURCES = AUTO
+-
+Index: kpmainwindow_help.cpp
+===================================================================
+--- kpmainwindow_help.cpp	(revision 530107)
++++ kpmainwindow_help.cpp	(revision 533650)
+@@ -89,7 +89,7 @@ static QString printScreenShortcutString
+     else
+     {
+         // (localised)
+-        return KKey (Qt::CTRL + Qt::Key_Print).toString ();
++        return KShortcut (Qt::CTRL + Qt::Key_Print).toString ();
+     }
+ }
+ 
+Index: kpmainwindow_tools.cpp
+===================================================================
+--- kpmainwindow_tools.cpp	(revision 530107)
++++ kpmainwindow_tools.cpp	(revision 533650)
+@@ -127,7 +127,7 @@ void kpMainWindow::setupToolActions ()
+ // private
+ void kpMainWindow::createToolBox ()
+ {
+-    m_toolToolBar = new kpToolToolBar (i18n ("Tool Box"), this, 2/*columns/rows*/, "Tool Box");
++    m_toolToolBar = new kpToolToolBar (i18n ("Tool Box"), this, 2/*columns/rows*/);
+     connect (m_toolToolBar, SIGNAL (sigToolSelected (kpTool *)),
+              this, SLOT (slotToolSelected (kpTool *)));
+     connect (m_toolToolBar, SIGNAL (toolWidgetOptionSelected ()),

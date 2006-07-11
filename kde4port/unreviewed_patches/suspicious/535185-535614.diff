@@ -1,0 +1,13 @@
+Index: tools/kptoolpen.cpp
+===================================================================
+--- tools/kptoolpen.cpp	(revision 535184)
++++ tools/kptoolpen.cpp	(revision 535614)
+@@ -968,7 +968,7 @@ void kpToolPen::slotEraserSizeChanged (i
+ 
+     for (int i = 0; i < 2; i++)
+     {
+-        m_brushPixmap [i].resize (size, size);
++        m_brushPixmap [i] = QPixmap (size, size);
+         if (color (i).isOpaque ())
+             m_brushPixmap [i].fill (color (i).toQColor ());
+     }
