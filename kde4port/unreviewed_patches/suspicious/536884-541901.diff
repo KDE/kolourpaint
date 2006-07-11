@@ -53,7 +53,7 @@ Index: tools/kptoolaction.h
 @@ -31,7 +31,7 @@
  
  
- 
+ #include <kactionclasses.h>
 -
 +#include <ktoggleaction.h>
  #include <kpsinglekeytriggersaction.h>
