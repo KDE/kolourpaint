@@ -1329,7 +1329,7 @@ void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRec
 #if DEBUG_KP_VIEW_RENDERER && 1
     kDebug () << "kpView(" << objectName ()
                << ")::paintEventDrawCheckerBoard(viewRect=" << viewRect
-               << ") origin=" << origin << endl;
+               << ") origin=" << origin () << endl;
 #endif
 
     kpDocument *doc = document ();
