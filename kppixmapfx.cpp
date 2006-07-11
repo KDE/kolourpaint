@@ -55,6 +55,14 @@
 #include <kptool.h>
 
 
+static void Draw (QPixmap *image,
+        void (*drawFunc) (QPainter * /*p*/,
+            bool /*drawingOnRGBLayer*/,
+            void * /*data*/),
+        bool anyColorOpaque, bool anyColorTransparent,
+        void *data);
+
+
 //
 // Overflow Resistant Arithmetic:
 //
@@ -554,6 +562,8 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
 QPixmap kpPixmapFX::pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
                                                         const QColor &transparentColor)
 {
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (pixmap);
+    
     if (!pixmap.mask ())
         return pixmap;
 
@@ -565,6 +575,8 @@ QPixmap kpPixmapFX::pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
     p.end ();
 
     retPixmap.setMask (pixmap.mask ());
+    
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (retPixmap);
     return retPixmap;
 }
 
@@ -574,12 +586,57 @@ QPixmap kpPixmapFX::pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
 //
 
 
+struct GetSetPixmapAtPack
+{
+    const QPixmap *srcPixmap;
+    QPoint destTopLeft;
+    QRect validSrcRect;
+};
+
+static void GetSetPixmapAtHelper (QPainter *p, bool drawingOnRGBLayer, void *data)
+{
+    GetSetPixmapAtPack *pack = static_cast <GetSetPixmapAtPack *> (data);
+
+#if DEBUG_KP_PIXMAP_FX || 1
+    kDebug () << "kppixmapfx.cpp:GetSetPixmapAtHelper(drawingOnRGBLayer="
+              << drawingOnRGBLayer << ")"
+              << "  srcPixmap: rect=" << pack->srcPixmap->size ()
+              << " hasAlpha=" << pack->srcPixmap->hasAlpha ()
+              << "  destTopLeft=" << pack->destTopLeft
+              << " validSrcRect=" << pack->validSrcRect << endl;
+#endif
+
+    if (drawingOnRGBLayer)
+    {
+        p->drawPixmap (pack->destTopLeft,
+            *pack->srcPixmap,
+            pack->validSrcRect);
+    }
+    else
+    {
+        const QBitmap srcMask = kpPixmapFX::getNonNullMask (*pack->srcPixmap);
+        
+        // Hack around Qt bug: QBitmap's (e.g. "srcMask") are considered to
+        // mask themselves (i.e. "srcMask.mask()" returns "srcMask" instead of
+        // "QBitmap()").  Therefore, "drawPixmap(srcMask)" can never set
+        // transparent pixels.
+        p->fillRect (
+            QRect (pack->destTopLeft.x (), pack->destTopLeft.y (),
+                    pack->validSrcRect.width (), pack->validSrcRect.height ()),
+            Qt::color0/*transparent*/);
+            
+        p->drawPixmap (pack->destTopLeft,
+            srcMask,
+            pack->validSrcRect);
+    }
+}
+
 // public static
 QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
 {
     QPixmap retPixmap (rect.width (), rect.height ());
 
-#if DEBUG_KP_PIXMAP_FX && 1
+#if DEBUG_KP_PIXMAP_FX && 1 || 1
     kDebug () << "kpPixmapFX::getPixmapAt(pm.hasMask="
                << !pm.mask ().isNull ()
                << ",rect="
@@ -588,10 +645,12 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
                << endl;
 #endif
 
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (pm);
+    
     const QRect validSrcRect = pm.rect ().intersect (rect);
     const bool wouldHaveUndefinedPixels = (validSrcRect != rect);
 
-    // ssss ssss
+    // ssss ssss  <-- "pm", "validSrcRect"
     // ssss ssss
     //     +--------+
     // ssss|SSSS    |
@@ -605,7 +664,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
     // more" should be transparent - not undefined.
     if (wouldHaveUndefinedPixels)
     {
-    #if DEBUG_KP_PIXMAP_FX && 1
+    #if DEBUG_KP_PIXMAP_FX && 1 || 1
         kDebug () << "\tret would contain undefined pixels - setting them to transparent" << endl;
     #endif
         QBitmap transparentMask (rect.width (), rect.height ());
@@ -615,38 +674,31 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
 
     if (validSrcRect.isEmpty ())
     {
-    #if DEBUG_KP_PIXMAP_FX && 1
+    #if DEBUG_KP_PIXMAP_FX && 1 || 1
         kDebug () << "\tsilly case - completely invalid rect - ret transparent pixmap" << endl;
     #endif
         return retPixmap;
     }
 
-    // If dest (retPixmap) has no mask but the source (pm) has a mask,
-    // make sure dest (retPixmap) has a mask so that
-    // QPainter::CompositionMode_Source will copy over source's (pm's)
-    // mask.
-    if (retPixmap.mask ().isNull () && !pm.mask ().isNull ())
-    {
-         QBitmap retPixmapMask (retPixmap.width (), retPixmap.height ());
-         retPixmapMask.fill (Qt::color0/*arbitrary since we're going to be overriden*/);
-         retPixmap.setMask (retPixmapMask);
-    }
+    // TODO: we could call setPixmapAt().
+    GetSetPixmapAtPack pack;
+    pack.srcPixmap = &pm;
+    pack.destTopLeft = validSrcRect.topLeft () - rect.topLeft ();
+    pack.validSrcRect = validSrcRect;
 
-    const QPoint destTopLeft = validSrcRect.topLeft () - rect.topLeft ();
-
-    // Copy data _and_ mask (if avail).
-    QPainter retPixmapPainter (&retPixmap);
-    retPixmapPainter.setCompositionMode (QPainter::CompositionMode_Source);
-    retPixmapPainter.drawPixmap (destTopLeft, pm, validSrcRect);
-    retPixmapPainter.end ();
+    ::Draw (&retPixmap, &::GetSetPixmapAtHelper,
+        true/*always "draw"/copy RGB layer*/,
+        (retPixmap.hasAlpha () || pm.hasAlpha ())/*draw on mask if either has one*/,
+        &pack);
 
 
-#if DEBUG_KP_PIXMAP_FX && 1
+#if DEBUG_KP_PIXMAP_FX && 1 || 1
     kDebug () << "\tretPixmap.hasMask="
                << !retPixmap.mask ().isNull ()
                << endl;
 #endif
 
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (retPixmap);
     return retPixmap;
 }
 
@@ -658,7 +710,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
     if (!destPixmapPtr)
         return;
 
-#if DEBUG_KP_PIXMAP_FX && 1
+#if DEBUG_KP_PIXMAP_FX && 1 || 1
     kDebug () << "kpPixmapFX::setPixmapAt(destPixmap->rect="
                << destPixmapPtr->rect ()
                << ",destPixmap->hasMask="
@@ -672,6 +724,9 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
                << ")"
                << endl;
 #endif
+
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (srcPixmap);
 
 #if DEBUG_KP_PIXMAP_FX && 0
     if (!destPixmapPtr->mask ().isNull ())
@@ -692,28 +747,21 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
     }
 #endif
 
-    // If dest (*destPixmapPtr) has no mask but the source (srcPixmap) has a mask,
-    // make sure dest (*destPixmapPtr) has a mask so that
-    // QPainter::CompositionMode_Source will copy over source's (srcPixmap's)
-    // mask.
-    if (destPixmapPtr->mask ().isNull () && !srcPixmap.mask ().isNull ())
-    {
-         QBitmap destPixmapMask (destPixmapPtr->width (), destPixmapPtr->height ());
-         destPixmapMask.fill (Qt::color0/*arbitrary since we're going to be overriden*/);
-         destPixmapPtr->setMask (destPixmapMask);
-    }
-
     // You cannot copy more than what you have.
     Q_ASSERT (destRect.width () <= srcPixmap.width () &&
               destRect.height () <= srcPixmap.height ());
 
-    // Copy data _and_ mask (if avail).
-    QPainter destPixmapPainter (destPixmapPtr);
-    destPixmapPainter.setCompositionMode (QPainter::CompositionMode_Source);
-    destPixmapPainter.drawPixmap (destRect.topLeft (),
-        srcPixmap, QRect (0, 0, destRect.width (), destRect.height ()));
-    destPixmapPainter.end ();
+    GetSetPixmapAtPack pack;
+    pack.srcPixmap = &srcPixmap;
+    pack.destTopLeft = destRect.topLeft ();
+    pack.validSrcRect = QRect (0, 0, destRect.width (), destRect.height ());
 
+    ::Draw (destPixmapPtr, &::GetSetPixmapAtHelper,
+        true/*always "draw"/copy RGB layer*/,
+        (destPixmapPtr->hasAlpha () || srcPixmap.hasAlpha ())/*draw on mask if either has one*/,
+        &pack);
+
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
 
 #if DEBUG_KP_PIXMAP_FX && 0
     kDebug () << "\tdestPixmap->hasMask="
@@ -763,9 +811,15 @@ void kpPixmapFX::paintPixmapAt (QPixmap *destPixmapPtr, const QPoint &destAt,
     if (!destPixmapPtr)
         return;
 
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (srcPixmap);
+    
     // Copy src (masked by src's mask) on top of dest.
     QPainter p (destPixmapPtr);
     p.drawPixmap (destAt, srcPixmap);
+    p.end ();
+    
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
 }
 
 // public static
@@ -827,20 +881,50 @@ kpColor kpPixmapFX::getColorAtPixel (const QImage &img, int x, int y)
 // Mask Operations
 //
 
-
 // public static
 void kpPixmapFX::ensureNoAlphaChannel (QPixmap *destPixmapPtr)
 {
     if (destPixmapPtr->hasAlphaChannel ())
-        destPixmapPtr->setMask (kpPixmapFX::getNonNullMask/*just in case*/ (*destPixmapPtr));
+    {
+        // We need to change <destPixmapPtr> from 32-bit (RGBA
+        // i.e. hasAlphaChannel() returns true regardless of whether it
+        // actually has one, causing trouble later on) to 24-bit
+        // (RGB with possible mask).
+        //
+        // "destPixmapPtr->setMask (destPixmapPtr->mask())" is not
+        //  sufficient so do it a long way:
+
+        QPixmap oldPixmap = *destPixmapPtr;
+
+        QBitmap oldMask = oldPixmap.mask ();
+        // Kill RGB source mask in case it causes alpha channel / composition
+        // operations in the following copy.
+        oldPixmap.setMask (QBitmap ());
+
+        // Copy RGB layer.
+        *destPixmapPtr = QPixmap (oldPixmap.width (), oldPixmap.height ());
+        QPainter p (destPixmapPtr);
+        p.drawPixmap (QPoint (0, 0), oldPixmap);
+        p.end ();
+
+        // Copy mask layer (if any).
+        destPixmapPtr->setMask (oldMask);
+    }
+
+    // Note that we don't check this on function entry as the purpose of
+    // this function is to force the pixmap to satisfy this invariant.
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
 }
 
 
 // public static
 QBitmap kpPixmapFX::getNonNullMask (const QPixmap &pm)
 {
-    if (!pm.mask ().isNull ())
-        return pm.mask ();
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (pm);
+
+    const QBitmap mask = pm.mask ()/*slow so cache*/;
+    if (!mask.isNull ())
+        return mask;
     else
     {
         QBitmap maskBitmap (pm.width (), pm.height ());
@@ -857,6 +941,8 @@ void kpPixmapFX::ensureTransparentAt (QPixmap *destPixmapPtr, const QRect &destR
     if (!destPixmapPtr)
         return;
 
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
+    
     QBitmap maskBitmap = getNonNullMask (*destPixmapPtr);
 
     QPainter p (&maskBitmap);
@@ -864,6 +950,8 @@ void kpPixmapFX::ensureTransparentAt (QPixmap *destPixmapPtr, const QRect &destR
     p.end ();
 
     destPixmapPtr->setMask (maskBitmap);
+    
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
 }
 
 
@@ -874,6 +962,8 @@ void kpPixmapFX::paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QP
     if (!destPixmapPtr)
         return;
 
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
+    
     if (brushBitmap.depth () > 1)
     {
         kError () << "kpPixmapFX::paintMaskTransparentWidthBrush() passed brushPixmap with depth > 1" << endl;
@@ -904,6 +994,8 @@ void kpPixmapFX::paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QP
     painter.setCompositionMode (QPainter::CompositionMode_DestinationOut);
     painter.drawPixmap (destAt, brushPixmap);
     painter.end ();
+    
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
 }
 
 // public static
@@ -922,6 +1014,8 @@ void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, const QRect &destRect)
     if (!destPixmapPtr || !destPixmapPtr->mask ()/*already opaque*/)
         return;
 
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
+
     QBitmap maskBitmap = destPixmapPtr->mask ();
 
     QPainter p (&maskBitmap);
@@ -929,6 +1023,8 @@ void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, const QRect &destRect)
     p.end ();
 
     destPixmapPtr->setMask (maskBitmap);
+    
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
 }
 
 
@@ -939,17 +1035,26 @@ void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, const QRect &destRect)
 // public static
 void kpPixmapFX::convertToGrayscale (QPixmap *destPixmapPtr)
 {
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
+
     QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
     kpPixmapFX::convertToGrayscale (&image);
     *destPixmapPtr = kpPixmapFX::convertToPixmap (image);
+
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
 }
 
 // public static
 QPixmap kpPixmapFX::convertToGrayscale (const QPixmap &pm)
 {
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (pm);
+
     QImage image = kpPixmapFX::convertToImage (pm);
     kpPixmapFX::convertToGrayscale (&image);
-    return kpPixmapFX::convertToPixmap (image);
+    const QPixmap ret = kpPixmapFX::convertToPixmap (image);
+
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (ret);
+    return ret;
 }
 
 static QRgb toGray (QRgb rgb)
@@ -1002,6 +1107,8 @@ void kpPixmapFX::fill (QPixmap *destPixmapPtr, const kpColor &color)
     if (!destPixmapPtr)
         return;
 
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
+
     if (color.isOpaque ())
     {
         destPixmapPtr->setMask (QBitmap ());  // no mask = opaque
@@ -1011,6 +1118,8 @@ void kpPixmapFX::fill (QPixmap *destPixmapPtr, const kpColor &color)
     {
         kpPixmapFX::ensureTransparentAt (destPixmapPtr, destPixmapPtr->rect ());
     }
+    
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
 }
 
 // public static
@@ -1032,6 +1141,8 @@ void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
 
     if (!destPixmapPtr)
         return;
+    
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
 
     const int oldWidth = destPixmapPtr->width ();
     const int oldHeight = destPixmapPtr->height ();
@@ -1055,6 +1166,7 @@ void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
         {
             QBitmap newPixmapMask (w, h);
             newPixmapMask.fill (Qt::color0/*transparent*/);
+            newPixmap.setMask (newPixmapMask);
         }
     }
 
@@ -1063,6 +1175,8 @@ void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
 
     // Replace pixmap with new one.
     *destPixmapPtr = newPixmap;
+    
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
 }
 
 // public static
@@ -1087,6 +1201,8 @@ void kpPixmapFX::scale (QPixmap *destPixmapPtr, int w, int h, bool pretty)
 // public static
 QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
 {
+    QPixmap retPixmap;
+    
 #if DEBUG_KP_PIXMAP_FX && 0
     kDebug () << "kpPixmapFX::scale(oldRect=" << pm.rect ()
                << ",w=" << w
@@ -1096,8 +1212,11 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
                << endl;
 #endif
 
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (pm);
+
     if (w == pm.width () && h == pm.height ())
         return pm;
+
 
     if (pretty)
     {
@@ -1129,17 +1248,22 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
         }
     #endif
 
-        return kpPixmapFX::convertToPixmap (image, false/*let's not smooth it again*/);
+        retPixmap = kpPixmapFX::convertToPixmap (image, false/*let's not smooth it again*/);
     }
     else
     {
         QMatrix matrix;
 
+        // COMPAT: mask as well?
         matrix.scale (double (w) / double (pm.width ()),
                       double (h) / double (pm.height ()));
 
-        return pm.transformed (matrix);
+        retPixmap = pm.transformed (matrix);
     }
+
+
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (retPixmap);
+    return retPixmap;
 }
 
 
@@ -1579,7 +1703,9 @@ QPen kpPixmapFX::QPainterDrawLinePen (const QColor &color, int qtWidth)
 }
 
 
-
+//
+// Drawing Pattern
+//
 
 // Warp the given <width> from 1 to 0.
 // This is not always done (specifically if <drawingEllipse>) because
@@ -1616,6 +1742,22 @@ static int WidthToQPenWidth (int width, bool drawingEllipse = false)
 }
 
 
+static QColor Draw_ToQColor (const kpColor &color, bool drawingOnRGBLayer)
+{
+    if (drawingOnRGBLayer)
+    {
+        if (color.isOpaque ())
+            return color.toQColor ();
+        else  // if (color.isTransparent())
+        {
+            // (arbitrary as image will be transparent here)
+            return Qt::black;
+        }
+    }
+    else
+        return color.maskColor ();
+}
+
 // Exercises the drawing pattern on QPixmap's - draws on, separately, the:
 //
 // 1. RGB layer (if there is an opaque colour involved in the drawing i.e.
@@ -1630,36 +1772,68 @@ static int WidthToQPenWidth (int width, bool drawingEllipse = false)
 // 2. A QColor member function that converts from kpColor to QColor
 //    (depending on whether we are currently editing the RGB or mask layer)
 // 3. A pointer to the provided <data>
+
 static void Draw (QPixmap *image,
         void (*drawFunc) (QPainter * /*p*/,
-            QColor (kpColor::* /*toQColor*/) () const,
+            bool /*drawingOnRGBLayer*/,
             void * /*data*/),
         bool anyColorOpaque, bool anyColorTransparent,
         void *data)
 {
-    // Get mask.
-    QBitmap mask = image->mask ();
+#if DEBUG_KP_PIXMAP_FX || 1
+    kDebug () << "kppixmapfx.cpp:Draw(image: rect=" << image->rect ()
+              << ",drawFunc=" << drawFunc
+              << ",anyColorOpaque=" << anyColorOpaque
+              << ",anyColorTransparent=" << anyColorTransparent
+              << ")" << endl;
+#endif
 
+    // Get mask.  Work around the fact that QBitmap's do not have masks.
+    // but QBitmap::mask() returns itself.
+    QBitmap mask = image->depth () > 1 ?
+        image->mask () :
+        QBitmap ();
+
+#if DEBUG_KP_PIXMAP_FX || 1
+    kDebug () << "\tDraw(): hasMask=" << !mask.isNull () << endl;
+#endif
+    
     // Draw on RGB layer?
     if (anyColorOpaque)
     {
+    #if DEBUG_KP_PIXMAP_FX|| 1
+        kDebug () << "\tDraw(): drawing on RGB" << endl;
+    #endif
         // RGB draw is not allowed to touch mask.
         image->setMask (QBitmap ());
 
         QPainter p (image);
-        (*drawFunc) (&p, &kpColor::toQColor, data);
+        (*drawFunc) (&p, true/*on RGB layer*/, data);
+        p.end ();
+
+        // (a mask should not have been created - that's the job of the next step
+        //  i.e. the next call to "drawFunc")
+        Q_ASSERT (!image->hasAlpha ());
     }
 
     // Draw on mask layer?
     if (anyColorTransparent ||
         !mask.isNull ())
     {
+    #if DEBUG_KP_PIXMAP_FX || 1
+        kDebug () << "\tDraw(): drawing on transparent" << endl;
+    #endif
         if (mask.isNull ())
             mask = kpPixmapFX::getNonNullMask (*image);
-        
+            
         QPainter p (&mask);
-        (*drawFunc) (&p, &kpColor::maskColor, data);
+        (*drawFunc) (&p, false/*on mask layer*/, data);
+        p.end ();
     }
+
+#if DEBUG_KP_PIXMAP_FX || 1
+    kDebug () << "\tDraw(): setting mask " << !mask.isNull () << endl;
+#endif
 
     // Set new mask.
     image->setMask (mask);
@@ -1693,7 +1867,7 @@ struct DrawPolylinePackage
 };
 
 static void DrawPolylineHelper (QPainter *p,
-        QColor (kpColor::*toQColor) () const,
+        bool drawingOnRGBLayer,
         void *data)
 {
     DrawPolylinePackage *pack = static_cast <DrawPolylinePackage *> (data);
@@ -1707,7 +1881,7 @@ static void DrawPolylineHelper (QPainter *p,
 
     p->setPen (
         kpPixmapFX::QPainterDrawLinePen (
-            (pack->color.*toQColor) (),
+            ::Draw_ToQColor (pack->color, drawingOnRGBLayer),
             ::WidthToQPenWidth (pack->penWidth)));
             
     // Qt bug: single point doesn't show up depending on penWidth.
@@ -1767,7 +1941,7 @@ struct DrawPolygonPackage
 };
 
 static void DrawPolygonHelper (QPainter *p,
-        QColor (kpColor::*toQColor) () const,
+        bool drawingOnRGBLayer,
         void *data)
 {
     DrawPolygonPackage *pack = static_cast <DrawPolygonPackage *> (data);
@@ -1783,11 +1957,11 @@ static void DrawPolygonHelper (QPainter *p,
 
     p->setPen (
         kpPixmapFX::QPainterDrawLinePen (
-            (pack->fcolor.*toQColor) (),
+            ::Draw_ToQColor (pack->fcolor, drawingOnRGBLayer),
             ::WidthToQPenWidth (pack->penWidth)));
 
     if (pack->bcolor.isValid ())
-       p->setBrush (QBrush ((pack->bcolor.*toQColor) ()));
+       p->setBrush (QBrush (::Draw_ToQColor (pack->bcolor, drawingOnRGBLayer)));
        
     // Qt bug: single point doesn't show up depending on penWidth.
     if (Only1PixelInPointArray (pack->points))
@@ -1874,7 +2048,7 @@ struct DrawCurvePackage
 };
 
 static void DrawCurveHelper (QPainter *p,
-        QColor (kpColor::*toQColor) () const,
+        bool drawingOnRGBLayer,
         void *data)
 {
     DrawCurvePackage *pack = static_cast <DrawCurvePackage *> (data);
@@ -1891,7 +2065,7 @@ static void DrawCurveHelper (QPainter *p,
 
     const QPen curvePen =
         kpPixmapFX::QPainterDrawLinePen (
-            (pack->color.*toQColor) (),
+            ::Draw_ToQColor (pack->color, drawingOnRGBLayer),
             ::WidthToQPenWidth (pack->penWidth));
 
     // SYNC: Qt bug: single point doesn't show up depending on penWidth.
@@ -1948,13 +2122,13 @@ struct FillRectPackage
 };
 
 static void FillRectHelper (QPainter *p,
-        QColor (kpColor::*toQColor) () const,
+        bool drawingOnRGBLayer,
         void *data)
 {
     FillRectPackage *pack = static_cast <FillRectPackage *> (data);
 
     p->fillRect (pack->x, pack->y, pack->width, pack->height,
-        (pack->color.*toQColor) ());
+        ::Draw_ToQColor (pack->color, drawingOnRGBLayer));
 }
 
 // public static
@@ -1989,7 +2163,7 @@ struct DrawGenericRectPackage
 };
 
 static void DrawGenericRectHelper (QPainter *p,
-        QColor (kpColor::*toQColor) () const,
+        bool drawingOnRGBLayer,
         void *data)
 {
     DrawGenericRectPackage *pack = static_cast <DrawGenericRectPackage *> (data);
@@ -2000,11 +2174,11 @@ static void DrawGenericRectHelper (QPainter *p,
 
     p->setPen (
         kpPixmapFX::QPainterDrawRectPen (
-            (pack->fcolor.*toQColor) (),
+            ::Draw_ToQColor (pack->fcolor, drawingOnRGBLayer),
             ::WidthToQPenWidth (pack->penWidth, pack->isEllipseLike)));
 
     if (pack->bcolor.isValid ())
-        p->setBrush (QBrush ((pack->bcolor.*toQColor) ()));
+        p->setBrush (QBrush (::Draw_ToQColor (pack->bcolor, drawingOnRGBLayer)));
     
     // Fight Qt behaviour of painting width = fill width + pen width
     // and height = fill height + pen height.  Get rid of pen width.
@@ -2153,3 +2327,4 @@ void kpPixmapFX::drawEllipse (QPixmap *image,
         bcolor,
         true/*ellipse like*/);
 }
+

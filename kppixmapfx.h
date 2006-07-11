@@ -62,6 +62,9 @@ class kpSelection;
 // kpPainter uses us for its Qt backend but we don't use kpPainter.
 // TODO: We should not use kpColor nor QPixmap either for the same reason.
 //
+// WARNING: The given QPixmap's can have masks but not alpha channels.
+//
+#define KP_PFX_CHECK_NO_ALPHA_CHANNEL(pixmap) Q_ASSERT (!(pixmap).hasAlphaChannel ())
 class kpPixmapFX
 {
 public:
@@ -507,3 +510,4 @@ public:
 
 
 #endif  // KP_PIXMAP_FX_H
+

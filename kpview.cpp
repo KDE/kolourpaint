@@ -26,8 +26,8 @@
 */
 
 
-#define DEBUG_KP_VIEW 0
-#define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 0) || 0)
+#define DEBUG_KP_VIEW 1
+#define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 1) || 0)
 
 
 #include <kpview.h>
@@ -1024,7 +1024,7 @@ void kpView::wheelEvent (QWheelEvent *e)
 // protected virtual [base QWidget]
 bool kpView::event (QEvent *e)
 {
-#if DEBUG_KP_VIEW
+#if DEBUG_KP_VIEW || 1
     kDebug () << "kpView::event() invoking kpTool::event()" << endl;
 #endif
     if (tool () && tool ()->viewEvent (e))
@@ -1787,6 +1787,12 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
     if (!docRect.isEmpty ())
     {
         docPixmap = doc->getPixmapAt (docRect);
+        KP_PFX_CHECK_NO_ALPHA_CHANNEL (docPixmap);
+        
+    #if DEBUG_KP_VIEW_RENDERER && 1
+        kDebug () << "\tdocPixmap.hasAlpha()="
+                  << docPixmap.hasAlpha () << endl;
+    #endif
 
         tempPixmapWillBeRendered =
             (!doc->selection () &&
@@ -1953,3 +1959,4 @@ void kpView::paintEvent (QPaintEvent *e)
 
 
 #include <kpview.moc>
+
