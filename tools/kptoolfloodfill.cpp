@@ -89,29 +89,29 @@ void kpToolFloodFill::beginDraw ()
 #endif
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
-
-    // Flood Fill is an expensive CPU operation so we only fill at a
-    // mouse click (beginDraw ()), not on mouse move (virtually draw())
-    d->currentCommand = new kpToolFloodFillCommand (
-        m_currentPoint.x (), m_currentPoint.y (),
-        color (m_mouseButton), processedColorSimilarity (),
-        mainWindow ());
-
-#if DEBUG_KP_TOOL_FLOOD_FILL && 1
-    kDebug () << "\tperforming new-doc-corner-case check" << endl;
-#endif
-
-    if (document ()->url ().isEmpty () && !document ()->isModified ())
     {
-        // Collect the colour that gets changed before we change the pixels
-        // (execute() below).  Needed in unexecute().
-        d->currentCommand->prepareColorToChange ();
-        
-        d->currentCommand->setFillEntirePixmap ();
+        // Flood Fill is an expensive CPU operation so we only fill at a
+        // mouse click (beginDraw ()), not on mouse move (virtually draw())
+        d->currentCommand = new kpToolFloodFillCommand (
+            m_currentPoint.x (), m_currentPoint.y (),
+            color (m_mouseButton), processedColorSimilarity (),
+            mainWindow ());
+
+    #if DEBUG_KP_TOOL_FLOOD_FILL && 1
+        kDebug () << "\tperforming new-doc-corner-case check" << endl;
+    #endif
+
+        if (document ()->url ().isEmpty () && !document ()->isModified ())
+        {
+            // Collect the colour that gets changed before we change the pixels
+            // (execute() below).  Needed in unexecute().
+            d->currentCommand->prepareColorToChange ();
+
+            d->currentCommand->setFillEntirePixmap ();
+        }
+
+        d->currentCommand->execute ();
     }
-
-    d->currentCommand->execute ();
-
     QApplication::restoreOverrideCursor ();
 
     setUserMessage (cancelUserMessage ());
@@ -218,12 +218,12 @@ void kpToolFloodFillCommand::execute ()
         if (rect.isValid ())
         {
             QApplication::setOverrideCursor (Qt::WaitCursor);
+            {
+                d->oldImage = doc->getPixmapAt (rect);
 
-            d->oldImage = doc->getPixmapAt (rect);
-
-            kpFloodFill::fill ();
-            doc->slotContentsChanged (rect);
-
+                kpFloodFill::fill ();
+                doc->slotContentsChanged (rect);
+            }
             QApplication::restoreOverrideCursor ();
         }
         else
