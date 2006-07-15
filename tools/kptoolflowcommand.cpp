@@ -125,7 +125,7 @@ void kpToolFlowCommand::finalize ()
     }
     else
     {
-        d->image = QPixmap ();
+        d->image = kpImage ();
     }
 }
 
