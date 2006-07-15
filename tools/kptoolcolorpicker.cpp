@@ -46,9 +46,9 @@
 #include <kppixmapfx.h>
 
 
-/*
- * kpToolColorPicker
- */
+//
+// kpToolColorPicker
+//
 
 kpToolColorPicker::kpToolColorPicker (kpMainWindow *mainWindow)
     : kpTool (i18n ("Color Picker"), i18n ("Lets you select a color from the image"),
@@ -132,7 +132,7 @@ void kpToolColorPicker::endDraw (const QPoint &thisPoint, const QRect &)
                                                 color, m_oldColor,
                                                 mainWindow ());
 
-        mainWindow ()->commandHistory ()->addCommand (cmd, false /* no exec */);
+        mainWindow ()->commandHistory ()->addCommand (cmd, false/*no exec*/);
         setUserMessage (haventBegunDrawUserMessage ());
     }
     else
@@ -141,9 +141,10 @@ void kpToolColorPicker::endDraw (const QPoint &thisPoint, const QRect &)
     }
 }
 
-/*
- * kpToolColorPickerCommand
- */
+
+//
+// kpToolColorPickerCommand
+//
 
 kpToolColorPickerCommand::kpToolColorPickerCommand (int mouseButton,
                                                     const kpColor &newColor,
@@ -193,5 +194,6 @@ kpColorToolBar *kpToolColorPickerCommand::colorToolBar () const
 {
     return m_mainWindow ? m_mainWindow->colorToolBar () : 0;
 }
+
 
 #include <kptoolcolorpicker.moc>
