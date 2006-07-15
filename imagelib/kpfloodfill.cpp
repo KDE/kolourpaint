@@ -121,11 +121,9 @@ kpFloodFill::~kpFloodFill ()
 int kpFloodFill::size () const
 {
     int fillLinesCacheSize = 0;
-    for (QList < QLinkedList <kpFillLine > >::const_iterator it = d->fillLinesCache.begin ();
-         it != d->fillLinesCache.end ();
-         it++)
+    foreach (const QLinkedList <kpFillLine> linesList, d->fillLinesCache)
     {
-        fillLinesCacheSize += ::FillLinesListSize (*it);
+        fillLinesCacheSize += ::FillLinesListSize (linesList);
     }
     
     return ::FillLinesListSize (d->fillLines) +
@@ -305,7 +303,15 @@ void kpFloodFill::prepare ()
                    << endl;
     #endif
 
-        // make more lines above and below current line
+        //
+        // Make more lines above and below current line.
+        //
+        // WARNING: Adds to end of "fillLines" (the linked list we are iterating
+        //          through).  Therefore, "fillLines" must remain a linked list
+        //          - you cannot change it into a vector.  Also, do not use
+        //          "foreach" for this loop as that makes a copy of the linked
+        //          list at the start and won't see new lines.
+        //
         findAndAddLines (*it, -1);
         findAndAddLines (*it, +1);
     }
@@ -345,12 +351,9 @@ kpColor kpFloodFill::pixelColor (int x, int y, bool *beenHere) const
         return kpColor::invalid;
     }
 
-    const QLinkedList <kpFillLine>::ConstIterator theEnd = d->fillLinesCache [y].end ();
-    for (QLinkedList <kpFillLine>::ConstIterator it = d->fillLinesCache [y].begin ();
-         it != theEnd;
-         it++)
+    foreach (const kpFillLine line, d->fillLinesCache [y])
     {
-        if (x >= (*it).m_x1 && x <= (*it).m_x2)
+        if (x >= line.m_x1 && x <= line.m_x2)
         {
             if (beenHere)
                 *beenHere = true;
