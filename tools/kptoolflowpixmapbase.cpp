@@ -49,6 +49,8 @@ kpToolFlowPixmapBase::~kpToolFlowPixmapBase ()
 }
 
 
+// Wants porting to Qt4.  But may be a bogus optimisation anyway.
+#if 0
 QRect kpToolFlowPixmapBase::drawPoint (const QPoint & /*point*/)
 {            
     if (color (m_mouseButton).isOpaque ())
@@ -63,6 +65,7 @@ QRect kpToolFlowPixmapBase::drawPoint (const QPoint & /*point*/)
 
     return (hotRect ());
 }
+#endif
 
 
 QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
@@ -80,7 +83,7 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
     {
         const QPoint point = hotPoint ((*pit).x (), (*pit).y ()) - docRect.topLeft ();
         
-        if (!color (m_mouseButton).isTransparent ())
+        if (color (m_mouseButton).isOpaque ())
         {
             kpPixmapFX::paintPixmapAt (&pixmap,
                 point,
@@ -93,7 +96,8 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
                 kpPixmapFX::getNonNullMask (m_brushPixmap [m_mouseButton]));
         }
     }
-    
+
+
     document ()->setPixmapAt (pixmap, docRect.topLeft ());
     return docRect;
 }
