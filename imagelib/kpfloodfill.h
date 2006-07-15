@@ -71,7 +71,7 @@ public:
     //         call any of the functions in Step 1.
     //
 
-    // (may invoke Step 1's prepare())
+    // (may invoke Step 1's prepareColorToChange())
     void prepare ();
 
     // (may invoke prepare())
