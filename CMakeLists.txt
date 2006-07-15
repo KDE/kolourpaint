@@ -75,7 +75,7 @@ set(libkolourpainttools_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolbrush.cpp 
 	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolclear.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolcolorpicker.cpp 
-	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolcolorwasher.cpp 
+	${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolcoloreraser.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolconverttograyscale.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolcrop.cpp 
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolcurve.cpp 

@@ -26,21 +26,21 @@
 */
 
 
-#ifndef KP_TOOL_COLOR_WASHER_H
-#define KP_TOOL_COLOR_WASHER_H
+#ifndef KP_TOOL_COLOR_ERASER_H
+#define KP_TOOL_COLOR_ERASER_H
 
 
 #include <kptoolflowbase.h>
 
 
-// Color Washer = Brush that replaces/washes the foreground color with the background color
-class kpToolColorWasher : public kpToolFlowBase
+// Color Eraser = Brush that replaces/washes the foreground color with the background color
+class kpToolColorEraser : public kpToolFlowBase
 {
 Q_OBJECT
 
 public:
-    kpToolColorWasher (kpMainWindow *mainWindow);
-    virtual ~kpToolColorWasher ();
+    kpToolColorEraser (kpMainWindow *mainWindow);
+    virtual ~kpToolColorEraser ();
 
 
 protected:
@@ -73,4 +73,4 @@ protected:
 };
 
 
-#endif  // KP_TOOL_COLOR_WASHER_H
+#endif  // KP_TOOL_COLOR_ERASER_H

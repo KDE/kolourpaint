@@ -45,8 +45,8 @@
 #include <kptool.h>
 #include <kptoolaction.h>
 #include <kptoolbrush.h>
+#include <kptoolcoloreraser.h>
 #include <kptoolcolorpicker.h>
-#include <kptoolcolorwasher.h>
 #include <kptoolcurve.h>
 #include <kptoolellipticalselection.h>
 #include <kptoolellipse.h>
@@ -87,7 +87,7 @@ void kpMainWindow::setupToolActions ()
     m_tools.append (m_toolFloodFill = new kpToolFloodFill (this));
     m_tools.append (m_toolColorPicker = new kpToolColorPicker (this));
 
-    m_tools.append (m_toolColorWasher = new kpToolColorWasher (this));
+    m_tools.append (m_toolColorEraser = new kpToolColorEraser (this));
     m_tools.append (m_toolSpraycan = new kpToolSpraycan (this));
 
     m_tools.append (m_toolRoundedRectangle = new kpToolRoundedRectangle (this));
@@ -645,8 +645,8 @@ void kpMainWindow::slotTool##toolName ()          \
 
 SLOT_TOOL (Spraycan)
 SLOT_TOOL (Brush)
+SLOT_TOOL (ColorEraser)
 SLOT_TOOL (ColorPicker)
-SLOT_TOOL (ColorWasher)
 SLOT_TOOL (Curve)
 SLOT_TOOL (Ellipse)
 SLOT_TOOL (EllipticalSelection)

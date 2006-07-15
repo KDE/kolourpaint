@@ -184,8 +184,9 @@ private slots:
     void updateToolOptionPrevNextActionsEnabled ();
 
 private:
-    kpTool *m_toolSpraycan, *m_toolBrush, *m_toolColorPicker,
-           *m_toolColorWasher, *m_toolCurve, *m_toolEllipse,
+    kpTool *m_toolSpraycan, *m_toolBrush, 
+           *m_toolColorEraser, *m_toolColorPicker,
+           *m_toolCurve, *m_toolEllipse,
            *m_toolEllipticalSelection, *m_toolEraser,
            *m_toolFloodFill, *m_toolFreeFormSelection,
            *m_toolLine, *m_toolPen, *m_toolPolygon,
@@ -255,8 +256,8 @@ private slots:
 public slots:
     void slotToolSpraycan ();
     void slotToolBrush ();
+    void slotToolColorEraser ();
     void slotToolColorPicker ();
-    void slotToolColorWasher ();
     void slotToolCurve ();
     void slotToolEllipse ();
     void slotToolEllipticalSelection ();

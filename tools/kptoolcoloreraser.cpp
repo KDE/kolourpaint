@@ -26,10 +26,10 @@
 */
 
 
-#define DEBUG_KP_TOOL_COLOR_WASHER 0
+#define DEBUG_KP_TOOL_COLOR_ERASER 0
 
 
-#include <kptoolcolorwasher.h>
+#include <kptoolcoloreraser.h>
 
 #include <qbitmap.h>
 #include <qimage.h>
@@ -45,25 +45,25 @@
 #include <kptoolflowcommand.h>
 
 
-kpToolColorWasher::kpToolColorWasher (kpMainWindow *mainWindow)
+kpToolColorEraser::kpToolColorEraser (kpMainWindow *mainWindow)
     : kpToolFlowBase (i18n ("Color Eraser"),
         i18n ("Replaces pixels of the foreground color with the background color"),
         Qt::Key_O,
         mainWindow,
-        "tool_color_washer")
+        "tool_color_eraser")
 {
 }
 
-kpToolColorWasher::~kpToolColorWasher ()
+kpToolColorEraser::~kpToolColorEraser ()
 {
 }
 
 
 // public virtual [base kpTool]
-void kpToolColorWasher::globalDraw ()
+void kpToolColorEraser::globalDraw ()
 {
-#if DEBUG_KP_TOOL_COLOR_WASHER
-    kDebug () << "kpToolColorWasher::globalDraw()" << endl;
+#if DEBUG_KP_TOOL_COLOR_ERASER
+    kDebug () << "kpToolColorEraser::globalDraw()" << endl;
 #endif
     if (foregroundColor () == backgroundColor () && processedColorSimilarity () == 0)
         return;
@@ -124,7 +124,7 @@ void kpToolColorWasher::globalDraw ()
     }
     else
     {
-    #if DEBUG_KP_TOOL_COLOR_WASHER
+    #if DEBUG_KP_TOOL_COLOR_ERASER
         kDebug () << "\tisNOP" << endl;
     #endif
         delete cmd;
@@ -134,14 +134,14 @@ void kpToolColorWasher::globalDraw ()
     QApplication::restoreOverrideCursor ();
 }
 
-QString kpToolColorWasher::haventBegunDrawUserMessage () const
+QString kpToolColorEraser::haventBegunDrawUserMessage () const
 {
     return i18n ("Click or drag to erase pixels of the foreground color.");
 }
 
 
 
-bool kpToolColorWasher::wash (QPainter *painter, QPainter *maskPainter,
+bool kpToolColorEraser::wash (QPainter *painter, QPainter *maskPainter,
                       const QImage &image,
                       const kpColor &colorToReplace,
                       const QRect &imageRect, int plotx, int ploty)
@@ -149,15 +149,15 @@ bool kpToolColorWasher::wash (QPainter *painter, QPainter *maskPainter,
     return wash (painter, maskPainter, image, colorToReplace, imageRect, hotRect (plotx, ploty));
 }
 
-bool kpToolColorWasher::wash (QPainter *painter, QPainter *maskPainter,
+bool kpToolColorEraser::wash (QPainter *painter, QPainter *maskPainter,
                       const QImage &image,
                       const kpColor &colorToReplace,
                       const QRect &imageRect, const QRect &drawRect)
 {
     bool didSomething = false;
 
-#if DEBUG_KP_TOOL_COLOR_WASHER && 0
-    kDebug () << "kpToolColorWasher::wash(imageRect=" << imageRect
+#if DEBUG_KP_TOOL_COLOR_ERASER && 0
+    kDebug () << "kpToolColorEraser::wash(imageRect=" << imageRect
                << ",drawRect=" << drawRect
                << ")" << endl;
 #endif
@@ -187,7 +187,7 @@ bool kpToolColorWasher::wash (QPainter *painter, QPainter *maskPainter,
         int x;  // for FLUSH_LINE()
         for (x = minX; x <= maxX; x++)
         {
-        #if DEBUG_KP_TOOL_COLOR_WASHER && 0
+        #if DEBUG_KP_TOOL_COLOR_ERASER && 0
             fprintf (stderr, "y=%i x=%i colorAtPixel=%08X colorToReplace=%08X ... ",
                      y, x,
                      kpPixmapFX::getColorAtPixel (image, QPoint (x, y)).toQRgb (),
@@ -195,7 +195,7 @@ bool kpToolColorWasher::wash (QPainter *painter, QPainter *maskPainter,
         #endif
             if (kpPixmapFX::getColorAtPixel (image, QPoint (x, y)).isSimilarTo (colorToReplace, processedColorSimilarity ()))
             {
-            #if DEBUG_KP_TOOL_COLOR_WASHER && 0
+            #if DEBUG_KP_TOOL_COLOR_ERASER && 0
                 fprintf (stderr, "similar\n");
             #endif
                 if (startDrawX < 0)
@@ -203,7 +203,7 @@ bool kpToolColorWasher::wash (QPainter *painter, QPainter *maskPainter,
             }
             else
             {
-            #if DEBUG_KP_TOOL_COLOR_WASHER && 0
+            #if DEBUG_KP_TOOL_COLOR_ERASER && 0
                 fprintf (stderr, "different\n");
             #endif
                 if (startDrawX >= 0)
@@ -222,7 +222,7 @@ bool kpToolColorWasher::wash (QPainter *painter, QPainter *maskPainter,
 
 
 
-bool kpToolColorWasher::drawShouldProceed (const QPoint & /*thisPoint*/,
+bool kpToolColorEraser::drawShouldProceed (const QPoint & /*thisPoint*/,
     const QPoint & /*lastPoint*/,
     const QRect & /*normalizedRect*/)
 {
@@ -236,22 +236,22 @@ bool kpToolColorWasher::drawShouldProceed (const QPoint & /*thisPoint*/,
 }
 
 
-QRect kpToolColorWasher::drawPoint (const QPoint &)
+QRect kpToolColorEraser::drawPoint (const QPoint &)
 {            
-#if DEBUG_KP_TOOL_COLOR_WASHER
+#if DEBUG_KP_TOOL_COLOR_ERASER
     kDebug () << "Washing pixmap (immediate)" << endl;
     QTime timer;
 #endif
     QRect rect = hotRect ();
-#if DEBUG_KP_TOOL_COLOR_WASHER
+#if DEBUG_KP_TOOL_COLOR_ERASER
     timer.start ();
 #endif
     QPixmap pixmap = document ()->getPixmapAt (rect);
-#if DEBUG_KP_TOOL_COLOR_WASHER
+#if DEBUG_KP_TOOL_COLOR_ERASER
     kDebug () << "\tget from doc: " << timer.restart () << "ms" << endl;
 #endif
     const QImage image = kpPixmapFX::convertToImage (pixmap);
-#if DEBUG_KP_TOOL_COLOR_WASHER
+#if DEBUG_KP_TOOL_COLOR_ERASER
     kDebug () << "\tconvert to image: " << timer.restart () << "ms" << endl;
 #endif
     QPainter painter, maskPainter;
@@ -287,11 +287,11 @@ QRect kpToolColorWasher::drawPoint (const QPoint &)
         if (!maskBitmap.isNull ())
             pixmap.setMask (maskBitmap);
 
-    #if DEBUG_KP_TOOL_COLOR_WASHER
+    #if DEBUG_KP_TOOL_COLOR_ERASER
         kDebug () << "\twashed: " << timer.restart () << "ms" << endl;
     #endif
         document ()->setPixmapAt (pixmap, hotPoint ());
-    #if DEBUG_KP_TOOL_COLOR_WASHER
+    #if DEBUG_KP_TOOL_COLOR_ERASER
         kDebug () << "\tset doc: " << timer.restart () << "ms" << endl;
     #endif
         return hotRect ();
@@ -300,9 +300,9 @@ QRect kpToolColorWasher::drawPoint (const QPoint &)
     return QRect ();
 }
 
-QRect kpToolColorWasher::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
+QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
-#if DEBUG_KP_TOOL_COLOR_WASHER
+#if DEBUG_KP_TOOL_COLOR_ERASER
     kDebug () << "Washing pixmap (w=" << rect.width ()
                 << ",h=" << rect.height () << ")" << endl;
     QTime timer;
@@ -323,11 +323,11 @@ QRect kpToolColorWasher::drawLine (const QPoint &thisPoint, const QPoint &lastPo
 
         
     QImage image;
-#if DEBUG_KP_TOOL_COLOR_WASHER
+#if DEBUG_KP_TOOL_COLOR_ERASER
     timer.start ();
 #endif
     image = kpPixmapFX::convertToImage (pixmap);
-#if DEBUG_KP_TOOL_COLOR_WASHER
+#if DEBUG_KP_TOOL_COLOR_ERASER
     convAndWashTime = timer.restart ();
     kDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;
 #endif
@@ -357,7 +357,7 @@ QRect kpToolColorWasher::drawLine (const QPoint &thisPoint, const QPoint &lastPo
         didSomething);
 
 
-#if DEBUG_KP_TOOL_COLOR_WASHER
+#if DEBUG_KP_TOOL_COLOR_ERASER
     int ms = timer.restart ();
     kDebug () << "\ttried to wash: " << ms << "ms"
                 << " (" << (ms ? (rect.width () * rect.height () / ms) : -1234)
@@ -375,4 +375,4 @@ QRect kpToolColorWasher::drawLine (const QPoint &thisPoint, const QPoint &lastPo
     return QRect ();
 }
 
-#include <kptoolcolorwasher.moc>
+#include <kptoolcoloreraser.moc>
