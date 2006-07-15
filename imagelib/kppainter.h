@@ -57,7 +57,6 @@ struct kpPainterPrivate;
 class kpPainter
 {
 public:
-    
     // Draws a line from (x1,y1) to (x2,y2) onto <image>, with <color>
     // and <width>.  The corners are rounded and centred at those
     // coordinates so if <width> > 1, the line is likely to extend past
