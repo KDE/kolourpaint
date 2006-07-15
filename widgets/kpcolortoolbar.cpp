@@ -632,7 +632,7 @@ void kpColorCells::paintCell (QPainter *painter, int row, int col)
         setShading (true);
 
         oldColor = KColorCells::color (cellNo);
-        KColorCells::colors [cellNo] = backgroundColor ();
+        KColorCells::colors [cellNo] = palette ().color (backgroundRole ());
     }
 
 
