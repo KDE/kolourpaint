@@ -47,7 +47,9 @@
 #include <kpcursorprovider.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
+#include <kpimage.h>
 #include <kpmainwindow.h>
+#include <kppainter.h>
 #include <kppixmapfx.h>
 #include <kptemppixmap.h>
 #include <kptoolclear.h>
@@ -76,12 +78,10 @@ kpToolFlowBase::~kpToolFlowBase ()
 // virtual
 void kpToolFlowBase::begin ()
 {
-    m_toolWidgetBrush = 0;
     m_brushIsDiagonalLine = false;
 
     kpToolToolBar *tb = toolToolBar ();
-    if (!tb)
-        return;
+    Q_ASSERT (tb);
 
     if (haveSquareBrushes ())
     {
@@ -129,14 +129,13 @@ void kpToolFlowBase::end ()
     }
 
     kpViewManager *vm = viewManager ();
-    if (vm)
-    {
-        if (vm->tempPixmap () && vm->tempPixmap ()->isBrush ())
-            vm->invalidateTempPixmap ();
+    Q_ASSERT (vm);
 
-        if (haveAnyBrushes ())
-            vm->unsetCursor ();
-    }
+    if (vm->tempPixmap () && vm->tempPixmap ()->isBrush ())
+        vm->invalidateTempPixmap ();
+
+    if (haveAnyBrushes ())
+        vm->unsetCursor ();
 
     // save memory
     for (int i = 0; i < 2; i++)
@@ -374,6 +373,12 @@ void kpToolFlowBase::drawLineTearDownPainterMask (QPixmap *pixmap,
 
 
 // virtual
+QRect kpToolFlowBase::drawPoint (const QPoint &point)
+{
+    return drawLine (point, point);
+}
+
+// virtual
 void kpToolFlowBase::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &normalizedRect)
 {
     if (!drawShouldProceed (thisPoint, lastPoint, normalizedRect))
@@ -384,6 +389,8 @@ void kpToolFlowBase::draw (const QPoint &thisPoint, const QPoint &lastPoint, con
 
     QRect dirtyRect;
 
+    // TODO: I'm beginning to wonder this drawPoint() "optimisation" actually
+    //       optimises.  Is it worth the complexity?  Hence drawPoint() impl above.
     if (m_brushIsDiagonalLine ?
             currentPointCardinallyNextToLast () :
             currentPointNextToLast ())

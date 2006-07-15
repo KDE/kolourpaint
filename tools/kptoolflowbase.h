@@ -78,20 +78,26 @@ public:
     virtual void beginDraw ();
     virtual void hover (const QPoint &point);
     
+    // TODO: should be moved to kpPainter as that encapsulates all document drawing ops
     QList <QPoint> interpolatePoints (const QPoint &thisPoint,
         const QPoint &lastPoint,
-        double probability = 1.0);
+        double probability = 1.0) KDE_DEPRECATED;
 
-    virtual QRect drawPoint (const QPoint &point) = 0;
-    
+    // TODO: should be removed as all drawing operations should use kpPainter,
+    //       not manually play with QPixmap's and masks.
     void drawLineSetupPainterMask (QPixmap *pixmap,
         QBitmap *maskBitmap,
-        QPainter *painter, QPainter *maskPainter);
+        QPainter *painter, QPainter *maskPainter) KDE_DEPRECATED;
+    // TODO: should be removed as all drawing operations should use kpPainter,
+    //       not manually play with QPixmap's and masks.
     void drawLineTearDownPainterMask (QPixmap *pixmap,
         const QBitmap *maskBitmap,
         QPainter *painter, QPainter *maskPainter,
-        bool drawingHappened = true);
-        
+        bool drawingHappened = true) KDE_DEPRECATED;
+
+    // drawPoint() normally calls drawLine(point,point).  Override drawPoint()
+    // if you think you can be more efficient.
+    virtual QRect drawPoint (const QPoint &point);
     virtual QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint) = 0;
 
     virtual bool drawShouldProceed (const QPoint & /*thisPoint*/, const QPoint & /*lastPoint*/, const QRect & /*normalizedRect*/) { return true; }
