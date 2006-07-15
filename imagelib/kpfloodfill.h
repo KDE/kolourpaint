@@ -50,19 +50,43 @@ public:
 
     int size () const;
     
-    kpColor color () const { return m_color; }
-    int processedColorSimilarity () const { return m_processedColorSimilarity; }
+    kpColor color () const;
+    int processedColorSimilarity () const;
 
-    // you should call [prepareColorToChange(),[prepare(),[fill()]]]
-    bool prepareColorToChange ();
+    
+    //
+    // Step 1: Determines the colour that will be changed to color().
+    //
+    
+    void prepareColorToChange ();
 
-    // (only valid after prepareColorToChange())
-    kpColor colorToChange () const { return m_colorToChange; };
+    // (may invoke prepareColorToChange()).
+    kpColor colorToChange ();
 
-    bool prepare ();
-    QRect boundingRect () const;  // only valid after prepare()
 
-    bool fill ();
+    //
+    // Step 2: Determines the scanlines / pixels that will be changed to color().
+    //
+    //         Before calling a Step 2 function, you don't have to (but you can)
+    //         call any of the functions in Step 1.
+    //
+
+    // (may invoke Step 1's prepare())
+    void prepare ();
+
+    // (may invoke prepare())
+    QRect boundingRect ();
+
+
+    //
+    // Step 3: Draws the lines identified in Step 2 in color().
+    //
+    //         Before calling a Step 3 function, you don't have to (but you can)
+    //         call any of the functions in Step 1 or 2.
+    //
+
+    // (may invoke Step 2's prepare())
+    void fill ();
 
 private:
     QPixmap *m_pixmapPtr;
@@ -70,7 +94,7 @@ private:
     kpColor m_color;
     int m_processedColorSimilarity;
 
-    int m_initState;
+    bool m_prepared;
 
     QRect m_boundingRect;
 

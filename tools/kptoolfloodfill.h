@@ -30,8 +30,6 @@
 #define KP_TOOL_FLOOD_FILL_H
 
 
-#include <qpixmap.h>
-
 #include <kpcommandhistory.h>
 #include <kpfloodfill.h>
 #include <kptool.h>
@@ -40,10 +38,11 @@
 class QString;
 
 class kpColor;
-
 class kpMainWindow;
 class kpToolFloodFillCommand;
 
+
+struct kpToolFloodFillPrivate;
 
 class kpToolFloodFill : public kpTool
 {
@@ -65,9 +64,11 @@ public:
     virtual void endDraw (const QPoint &, const QRect &);
 
 private:
-    kpToolFloodFillCommand *m_currentCommand;
+    kpToolFloodFillPrivate * const d;
 };
 
+
+struct kpToolFloodFillCommandPrivate;
 
 class kpToolFloodFillCommand : public kpCommand, public kpFloodFill
 {
@@ -81,14 +82,14 @@ public:
 
     virtual int size () const;
 
+    // Optimisation hack.
     void setFillEntirePixmap (bool yes = true);
 
     virtual void execute ();
     virtual void unexecute ();
 
 private:
-    QPixmap m_oldPixmap;
-    bool m_fillEntirePixmap;
+    kpToolFloodFillCommandPrivate * const d;
 };
 
 

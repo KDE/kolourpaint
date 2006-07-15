@@ -46,9 +46,9 @@
 kpFloodFill::kpFloodFill (QPixmap *pixmap, int x, int y,
                          const kpColor &color, int processedColorSimilarity)
     : m_pixmapPtr (pixmap), m_x (x), m_y (y),
-      m_color (color), m_processedColorSimilarity (processedColorSimilarity),
-      m_initState (0)
+      m_color (color), m_processedColorSimilarity (processedColorSimilarity)
 {
+    m_prepared = false;
 }
 
 kpFloodFill::~kpFloodFill ()
@@ -77,20 +77,30 @@ int kpFloodFill::size () const
            kpPixmapFX::imageSize (m_image) +
            fillLinesCacheSize;
 }
-
-
-QRect kpFloodFill::boundingRect () const
+    
+// public
+kpColor kpFloodFill::color () const
 {
+    return m_color;
+}
+
+// public
+int kpFloodFill::processedColorSimilarity () const
+{
+    return m_processedColorSimilarity;
+}
+
+
+QRect kpFloodFill::boundingRect ()
+{
+    prepare ();
+    
     return m_boundingRect;
 }
 
-bool kpFloodFill::fill ()
+void kpFloodFill::fill ()
 {
-    if (m_initState < 2 && !prepare ())
-    {
-        kError () << "kpFloodFill:fill() could not prepare()!" << endl;
-        return false;
-    }
+    prepare ();
 
     // not trying to do a NOP fill
     if (m_boundingRect.isValid ())
@@ -145,15 +155,22 @@ bool kpFloodFill::fill ()
         kDebug () << "kpFloodFill::fill() performing NOP fill" << endl;
     #endif
     }
-
-    return true;
 }
 
-bool kpFloodFill::prepareColorToChange ()
+kpColor kpFloodFill::colorToChange ()
+{
+    prepareColorToChange ();
+    
+    return m_colorToChange;
+}
+
+void kpFloodFill::prepareColorToChange ()
 {
 #if DEBUG_KP_FLOOD_FILL && 1
     kDebug () << "kpFloodFill::prepareColorToChange" << endl;
 #endif
+    if (m_colorToChange.isValid ())
+        return;
 
     m_colorToChange = kpPixmapFX::getColorAtPixel (*m_pixmapPtr, QPoint (m_x, m_y));
 
@@ -172,25 +189,22 @@ bool kpFloodFill::prepareColorToChange ()
         kDebug () << "\tcolorToChange: transparent" << endl;
     #endif
     }
-
-    m_initState = 1;
-    return true;
 }
 
 // Derived from the zSprite2 Graphics Engine
 
-bool kpFloodFill::prepare ()
+void kpFloodFill::prepare ()
 {
 #if DEBUG_KP_FLOOD_FILL && 1
     kDebug () << "kpFloodFill::prepare()" << endl;
 #endif
+    if (m_prepared)
+        return;
+        
+    prepareColorToChange ();
+        
     m_boundingRect = QRect ();
 
-    if (m_initState < 1 && !prepareColorToChange ())
-    {
-        kError () << "kpFloodFill:prepare() could not prepareColorToChange()!" << endl;
-        return false;
-    }
 
 #if DEBUG_KP_FLOOD_FILL && 1
     kDebug () << "\tperforming NOP check" << endl;
@@ -201,21 +215,16 @@ bool kpFloodFill::prepare ()
     {
         // need to do absolutely nothing (this is a significant optimisation
         // for people who randomly click a lot over already-filled areas)
-        m_initState = 2;  // sync with all "return true"'s
-        return true;
+        m_prepared = true;  // sync with all "return true"'s
+        return;
     }
 
 #if DEBUG_KP_FLOOD_FILL && 1
     kDebug () << "\tconverting to image" << endl;
 #endif
 
-    // is this the only way to read pixels?
+    // The only way to read pixels.  Sigh.
     m_image = kpPixmapFX::convertToImage (*m_pixmapPtr);
-    if (m_image.isNull ())
-    {
-        kError () << "kpFloodFill::prepare() could not convert to QImage" << endl;
-        return false;
-    }
 
 #if DEBUG_KP_FLOOD_FILL && 1
     kDebug () << "\tcreating fillLinesCache" << endl;
@@ -256,8 +265,7 @@ bool kpFloodFill::prepare ()
     m_image = QImage ();
     m_fillLinesCache.clear ();
 
-    m_initState = 2;  // sync with all "return true"'s
-    return true;
+    m_prepared = true;  // sync with all "return true"'s
 }
 
 void kpFloodFill::addLine (int y, int x1, int x2)

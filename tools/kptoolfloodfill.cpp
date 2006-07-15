@@ -42,25 +42,33 @@
 #include <kpcommandhistory.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
+#include <kpimage.h>
 #include <kpmainwindow.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
 
 
-/*
- * kpToolFloodFill
- */
+//
+// kpToolFloodFill
+//
+
+struct kpToolFloodFillPrivate
+{
+    kpToolFloodFillCommand *currentCommand;
+};
 
 kpToolFloodFill::kpToolFloodFill (kpMainWindow *mainWindow)
     : kpTool (i18n ("Flood Fill"), i18n ("Fills regions in the image"),
               Qt::Key_F,
               mainWindow, "tool_flood_fill"),
-      m_currentCommand (0)
+      d (new kpToolFloodFillPrivate ())
 {
+    d->currentCommand = 0;
 }
 
 kpToolFloodFill::~kpToolFloodFill ()
 {
+    delete d;
 }
 
 QString kpToolFloodFill::haventBegunDrawUserMessage () const
@@ -84,33 +92,20 @@ void kpToolFloodFill::beginDraw ()
 
     // Flood Fill is an expensive CPU operation so we only fill at a
     // mouse click (beginDraw ()), not on mouse move (virtually draw())
-    m_currentCommand = new kpToolFloodFillCommand (m_currentPoint.x (), m_currentPoint.y (),
-                                                   color (m_mouseButton), processedColorSimilarity (),
-                                                   mainWindow ());
+    d->currentCommand = new kpToolFloodFillCommand (
+        m_currentPoint.x (), m_currentPoint.y (),
+        color (m_mouseButton), processedColorSimilarity (),
+        mainWindow ());
 
-    if (m_currentCommand->prepareColorToChange ())
+#if DEBUG_KP_TOOL_FLOOD_FILL && 1
+    kDebug () << "\tperforming new-doc-corner-case check" << endl;
+#endif
+    if (document ()->url ().isEmpty () && !document ()->isModified ())
     {
-    #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-        kDebug () << "\tperforming new-doc-corner-case check" << endl;
-    #endif
-        if (document ()->url ().isEmpty () && !document ()->isModified ())
-        {
-            m_currentCommand->setFillEntirePixmap ();
-            m_currentCommand->execute ();
-        }
-        else if (m_currentCommand->prepare ())
-        {
-            m_currentCommand->execute ();
-        }
-        else
-        {
-            kError () << "kpToolFloodFill::beginDraw() could not fill!" << endl;
-        }
+        d->currentCommand->setFillEntirePixmap ();
     }
-    else
-    {
-        kError () << "kpToolFloodFill::beginDraw() could not prepareColorToChange!" << endl;
-    }
+
+    d->currentCommand->execute ();
 
     QApplication::restoreOverrideCursor ();
 
@@ -126,15 +121,10 @@ void kpToolFloodFill::draw (const QPoint &thisPoint, const QPoint &, const QRect
 // virtual
 void kpToolFloodFill::cancelShape ()
 {
-#if 0
-    endDraw (QPoint (), QRect ());
-    mainWindow ()->commandHistory ()->undo ();
-#else
-    m_currentCommand->unexecute ();
+    d->currentCommand->unexecute ();
 
-    delete m_currentCommand;
-    m_currentCommand = 0;
-#endif
+    delete d->currentCommand;
+    d->currentCommand = 0;
 
     setUserMessage (i18n ("Let go of all the mouse buttons."));
 }
@@ -147,30 +137,38 @@ void kpToolFloodFill::releasedAllButtons ()
 // virtual
 void kpToolFloodFill::endDraw (const QPoint &, const QRect &)
 {
-    mainWindow ()->commandHistory ()->addCommand (m_currentCommand,
-        false /* no exec - we already did it up there */);
+    mainWindow ()->commandHistory ()->addCommand (d->currentCommand,
+        false/*no exec - we already did it up there*/);
 
-    // don't delete
-    m_currentCommand = 0;
+    // Don't delete - it just got added to the history.
+    d->currentCommand = 0;
     setUserMessage (haventBegunDrawUserMessage ());
 }
 
 
-/*
- * kpToolFloodFillCommand
- */
+//
+// kpToolFloodFillCommand
+//
+
+struct kpToolFloodFillCommandPrivate
+{
+    kpImage oldImage;
+    bool fillEntirePixmap;
+};
 
 kpToolFloodFillCommand::kpToolFloodFillCommand (int x, int y,
-                                                const kpColor &color, int processedColorSimilarity,
-                                                kpMainWindow *mainWindow)
+        const kpColor &color, int processedColorSimilarity,
+        kpMainWindow *mainWindow)
     : kpCommand (mainWindow),
       kpFloodFill (document ()->pixmap (), x, y, color, processedColorSimilarity),
-      m_fillEntirePixmap (false)
+      d (new kpToolFloodFillCommandPrivate ())
 {
+    d->fillEntirePixmap = false;
 }
 
 kpToolFloodFillCommand::~kpToolFloodFillCommand ()
 {
+    delete d;
 }
 
 
@@ -183,13 +181,13 @@ QString kpToolFloodFillCommand::name () const
 // public virtual [base kpCommand]
 int kpToolFloodFillCommand::size () const
 {
-    return kpFloodFill::size () + kpPixmapFX::pixmapSize (m_oldPixmap);
+    return kpFloodFill::size () + kpPixmapFX::pixmapSize (d->oldImage);
 }
 
 
 void kpToolFloodFillCommand::setFillEntirePixmap (bool yes)
 {
-    m_fillEntirePixmap = yes;
+    d->fillEntirePixmap = yes;
 }
 
 
@@ -197,15 +195,15 @@ void kpToolFloodFillCommand::setFillEntirePixmap (bool yes)
 void kpToolFloodFillCommand::execute ()
 {
 #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-    kDebug () << "kpToolFloodFillCommand::execute() m_fillEntirePixmap=" << m_fillEntirePixmap << endl;
+    kDebug () << "kpToolFloodFillCommand::execute() m_fillEntirePixmap="
+              << d->fillEntirePixmap << endl;
 #endif
 
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
 
-    if (m_fillEntirePixmap)
+    if (d->fillEntirePixmap)
     {
         doc->fill (kpFloodFill::color ());
     }
@@ -216,7 +214,7 @@ void kpToolFloodFillCommand::execute ()
         {
             QApplication::setOverrideCursor (Qt::WaitCursor);
 
-            m_oldPixmap = doc->getPixmapAt (rect);
+            d->oldImage = doc->getPixmapAt (rect);
 
             kpFloodFill::fill ();
             doc->slotContentsChanged (rect);
@@ -236,11 +234,10 @@ void kpToolFloodFillCommand::execute ()
 void kpToolFloodFillCommand::unexecute ()
 {
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
 
-    if (m_fillEntirePixmap)
+    if (d->fillEntirePixmap)
     {
         doc->fill (kpFloodFill::colorToChange ());
     }
@@ -249,13 +246,14 @@ void kpToolFloodFillCommand::unexecute ()
         QRect rect = kpFloodFill::boundingRect ();
         if (rect.isValid ())
         {
-            doc->setPixmapAt (m_oldPixmap, rect.topLeft ());
+            doc->setPixmapAt (d->oldImage, rect.topLeft ());
 
-            m_oldPixmap = QPixmap ();
+            d->oldImage = kpImage ();
 
             doc->slotContentsChanged (rect);
         }
     }
 }
+
 
 #include <kptoolfloodfill.moc>
