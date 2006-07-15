@@ -224,7 +224,9 @@ QImage kpPixmapFX::convertToImage (const QPixmap &pixmap)
     if (pixmap.isNull ())
         return QImage ();
 
-    return pixmap.toImage ();
+    const QImage ret = pixmap.toImage ();
+    Q_ASSERT (!ret.isNull ());
+    return ret;
 }
 
 
@@ -650,7 +652,7 @@ static void Draw (QPixmap *image,
         bool anyColorOpaque, bool anyColorTransparent,
         void *data)
 {
-#if DEBUG_KP_PIXMAP_FX || 1
+#if DEBUG_KP_PIXMAP_FX
     kDebug () << "kppixmapfx.cpp:Draw(image: rect=" << image->rect ()
               << ",drawFunc=" << drawFunc
               << ",anyColorOpaque=" << anyColorOpaque
@@ -664,14 +666,14 @@ static void Draw (QPixmap *image,
         image->mask () :
         QBitmap ();
 
-#if DEBUG_KP_PIXMAP_FX || 1
+#if DEBUG_KP_PIXMAP_FX
     kDebug () << "\tDraw(): hasMask=" << !mask.isNull () << endl;
 #endif
     
     // Draw on RGB layer?
     if (anyColorOpaque)
     {
-    #if DEBUG_KP_PIXMAP_FX|| 1
+    #if DEBUG_KP_PIXMAP_FX
         kDebug () << "\tDraw(): drawing on RGB" << endl;
     #endif
         // RGB draw is not allowed to touch mask.
@@ -690,7 +692,7 @@ static void Draw (QPixmap *image,
     if (anyColorTransparent ||
         !mask.isNull ())
     {
-    #if DEBUG_KP_PIXMAP_FX || 1
+    #if DEBUG_KP_PIXMAP_FX
         kDebug () << "\tDraw(): drawing on transparent" << endl;
     #endif
         if (mask.isNull ())
@@ -701,7 +703,7 @@ static void Draw (QPixmap *image,
         p.end ();
     }
 
-#if DEBUG_KP_PIXMAP_FX || 1
+#if DEBUG_KP_PIXMAP_FX
     kDebug () << "\tDraw(): setting mask " << !mask.isNull () << endl;
 #endif
 
@@ -741,7 +743,7 @@ static void GetSetPixmapAtHelper (QPainter *p, bool drawingOnRGBLayer, void *dat
 {
     GetSetPixmapAtPack *pack = static_cast <GetSetPixmapAtPack *> (data);
 
-#if DEBUG_KP_PIXMAP_FX || 1
+#if DEBUG_KP_PIXMAP_FX
     kDebug () << "kppixmapfx.cpp:GetSetPixmapAtHelper(drawingOnRGBLayer="
               << drawingOnRGBLayer << ")"
               << "  srcPixmap: rect=" << pack->srcPixmap->size ()
@@ -810,7 +812,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
 {
     QPixmap retPixmap (rect.width (), rect.height ());
 
-#if DEBUG_KP_PIXMAP_FX && 1 || 1
+#if DEBUG_KP_PIXMAP_FX && 1
     kDebug () << "kpPixmapFX::getPixmapAt(pm.hasMask="
                << !pm.mask ().isNull ()
                << ",rect="
@@ -838,7 +840,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
     // more" should be transparent - not undefined.
     if (wouldHaveUndefinedPixels)
     {
-    #if DEBUG_KP_PIXMAP_FX && 1 || 1
+    #if DEBUG_KP_PIXMAP_FX && 1
         kDebug () << "\tret would contain undefined pixels - setting them to transparent" << endl;
     #endif
         QBitmap transparentMask (rect.width (), rect.height ());
@@ -848,7 +850,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
 
     if (validSrcRect.isEmpty ())
     {
-    #if DEBUG_KP_PIXMAP_FX && 1 || 1
+    #if DEBUG_KP_PIXMAP_FX && 1
         kDebug () << "\tsilly case - completely invalid rect - ret transparent pixmap" << endl;
     #endif
         return retPixmap;
@@ -866,7 +868,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
         &pack);
 
 
-#if DEBUG_KP_PIXMAP_FX && 1 || 1
+#if DEBUG_KP_PIXMAP_FX && 1
     kDebug () << "\tretPixmap.hasMask="
                << !retPixmap.mask ().isNull ()
                << endl;
@@ -884,7 +886,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
     if (!destPixmapPtr)
         return;
 
-#if DEBUG_KP_PIXMAP_FX && 1 || 1
+#if DEBUG_KP_PIXMAP_FX && 1
     kDebug () << "kpPixmapFX::setPixmapAt(destPixmap->rect="
                << destPixmapPtr->rect ()
                << ",destPixmap->hasMask="
@@ -1987,7 +1989,7 @@ static void DrawPolygonHelper (QPainter *p,
 
     if (pack->bcolor.isValid ())
        p->setBrush (QBrush (::Draw_ToQColor (pack->bcolor, drawingOnRGBLayer)));
-     // HACK: seems to be needed if set_Pen_(Qt::color0) else fills with Qt::color0.
+    // HACK: seems to be needed if set_Pen_(Qt::color0) else fills with Qt::color0.
     else
         p->setBrush (Qt::NoBrush);
 
@@ -2196,7 +2198,7 @@ static void DrawGenericRectHelper (QPainter *p,
 {
     DrawGenericRectPackage *pack = static_cast <DrawGenericRectPackage *> (data);
 
-#if DEBUG_KP_PIXMAP_FX || 1
+#if DEBUG_KP_PIXMAP_FX
     kDebug () << "\tkppixmapfx.cpp:DrawGenericRectHelper(drawingOnRGBLayer="
               << drawingOnRGBLayer << ") pack: "
               << pack->x << "," << pack->y << ","
@@ -2242,7 +2244,7 @@ static void DrawGenericRect (QPixmap *image,
         const kpColor &bcolor,
         bool isEllipseLike = false)
 {
-#if DEBUG_KP_PIXMAP_FX || 1
+#if DEBUG_KP_PIXMAP_FX
     kDebug () << "kppixmapfx.cpp:DrawGenericRect(" << x << "," << y << ","
         << width << "," << height << ",func=" << func << ")"
         << " pen.color=" << (int *) fcolor.toQRgb ()
