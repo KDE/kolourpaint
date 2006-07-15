@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_DOCUMENT 1
+#define DEBUG_KP_DOCUMENT 0
 
 
 #include <kpdocument.h>
@@ -334,7 +334,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
 void kpDocument::openNew (const KUrl &url)
 {
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "KpDocument::openNew (" << url << ")" << endl;
+    kDebug () << "kpDocument::openNew (" << url << ")" << endl;
 #endif
 
     m_pixmap->fill (Qt::white);
