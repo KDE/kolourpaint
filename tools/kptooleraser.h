@@ -52,7 +52,6 @@ protected:
     
     virtual bool haveSquareBrushes () const { return true; }
     virtual bool colorsAreSwapped () const { return true; }
-
 };
 
 
