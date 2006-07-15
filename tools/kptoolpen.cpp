@@ -38,6 +38,8 @@
 #include <kpbug.h>
 #include <kpcolor.h>
 #include <kpdocument.h>
+#include <kpimage.h>
+#include <kppainter.h>
 #include <kptoolflowcommand.h>
 
 
@@ -57,18 +59,21 @@ kpToolPen::~kpToolPen ()
 }
 
 
-// private
+// protected virtual [base kpToolFlowBase]
 QString kpToolPen::haventBegunDrawUserMessage () const
 {
     return i18n ("Click to draw dots or drag to draw strokes.");
 }
 
 
+// Wants porting to Qt4.  But may be a bogus optimisation anyway.
+#if 0
 QRect kpToolPen::drawPoint (const QPoint &point)
 {
     QPixmap pixmap (1, 1);
 
     const kpColor c = color (m_mouseButton);
+
 
     // OPT: this seems hopelessly inefficient
     if (c.isOpaque ())
@@ -88,8 +93,10 @@ QRect kpToolPen::drawPoint (const QPoint &point)
 
     return QRect (point, point);
 }
+#endif
 
 
+// protected virtual [base kpToolFlowBase]
 QRect kpToolPen::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
     QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
@@ -97,33 +104,20 @@ QRect kpToolPen::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
     //       See comment for 011_kptoolpen_draw_push_down_draw_methods.diff
     //       (part of r557112: approx. 2006-07-02 22:32:37 +10:00 AEST).
     docRect = neededRect (docRect, m_brushPixmap [m_mouseButton].width ());
-    QPixmap pixmap = document ()->getPixmapAt (docRect);
+    kpImage image = document ()->getPixmapAt (docRect);
 
 
-    QBitmap maskBitmap;
-    QPainter painter, maskPainter;
-    
-    drawLineSetupPainterMask (&pixmap,
-        &maskBitmap,
-        &painter, &maskPainter);
-    
-        
     const QPoint sp = lastPoint - docRect.topLeft (),
                  ep = thisPoint - docRect.topLeft ();
-                 
-    if (painter.isActive ())
-        painter.drawLine (sp, ep);
-
-    if (maskPainter.isActive ())
-        maskPainter.drawLine (sp, ep);
-
- 
-    drawLineTearDownPainterMask (&pixmap,
-        &maskBitmap,
-        &painter, &maskPainter);
+    
+    kpPainter::drawLine (&image,
+        sp.x (), sp.y (),
+        ep.x (), ep.y (),
+        color (m_mouseButton),
+        1/*pen width*/);
 
  
-    document ()->setPixmapAt (pixmap, docRect.topLeft ());
+    document ()->setPixmapAt (image, docRect.topLeft ());
     return docRect;   
 }
 
