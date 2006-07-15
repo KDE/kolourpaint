@@ -61,11 +61,11 @@ public:
     // and <width>.  The corners are rounded and centred at those
     // coordinates so if <width> > 1, the line is likely to extend past
     // a rectangle with those corners.
-    static void drawPolyline (kpImage *image,
-        const QPolygon &points,
-        const kpColor &color, int penWidth);
     static void drawLine (kpImage *image,
         int x1, int y1, int x2, int y2,
+        const kpColor &color, int penWidth);
+    static void drawPolyline (kpImage *image,
+        const QPolygon &points,
         const kpColor &color, int penWidth);
     // <isFinal> = shape completed else drawing but haven't finalised.
     // If not <isFinal>, the edge that would form the closure, if the

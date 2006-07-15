@@ -44,19 +44,20 @@
 
 
 // public static
-void kpPainter::drawPolyline (kpImage *image,
-        const QPolygon &points,
-        const kpColor &color, int penWidth)
-{
-    kpPixmapFX::drawPolyline (image, points, color, penWidth);
-}
-
-// public static
 void kpPainter::drawLine (kpImage *image,
         int x1, int y1, int x2, int y2,
         const kpColor &color, int penWidth)
 {
     kpPixmapFX::drawLine (image, x1, y1, x2, y2, color, penWidth);
+}
+
+
+// public static
+void kpPainter::drawPolyline (kpImage *image,
+        const QPolygon &points,
+        const kpColor &color, int penWidth)
+{
+    kpPixmapFX::drawPolyline (image, points, color, penWidth);
 }
 
 // public static
