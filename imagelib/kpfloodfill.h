@@ -30,20 +30,19 @@
 #define KP_FLOOD_FILL_H
 
 
-#include <qimage.h>
-#include <qlinkedlist.h>
-#include <qlist.h>
-
-#include <kpcolor.h>
+#include <kpimage.h>
 
 
-class QPixmap;
+class kpColor;
+class kpFillLine;
 
+
+struct kpFloodFillPrivate;
 
 class kpFloodFill
 {
 public:
-    kpFloodFill (QPixmap *pixmap, int x, int y,
+    kpFloodFill (kpImage *image, int x, int y,
                  const kpColor &color,
                  int processedColorSimilarity);
     ~kpFloodFill ();
@@ -95,46 +94,16 @@ public:
     void fill ();
 
 private:
-    QPixmap *m_pixmapPtr;
-    int m_x, m_y;
-    kpColor m_color;
-    int m_processedColorSimilarity;
-
-    bool m_prepared;
-
-    QRect m_boundingRect;
+    kpFloodFillPrivate * const d;
     
-public:
-    struct FillLine
-    {
-        FillLine (int y = -1, int x1 = -1, int x2 = -1)
-            : m_y (y), m_x1 (x1), m_x2 (x2)
-        {
-        }
-
-        static int size ()
-        {
-            return sizeof (FillLine);
-        }
-        
-        int m_y, m_x1, m_x2;
-    };
 private:
-    int fillLinesListSize (const QLinkedList <kpFloodFill::FillLine> &fillLines) const;
-    
     void addLine (int y, int x1, int x2);
     kpColor pixelColor (int x, int y, bool *beenHere = 0) const;
     bool shouldGoTo (int x, int y) const;
-    void findAndAddLines (const FillLine &fillLine, int dy);
+    void findAndAddLines (const kpFillLine &fillLine, int dy);
     int findMinX (int y, int x) const;
     int findMaxX (int y, int x) const;
 
-    QLinkedList <FillLine> m_fillLines;
-
-    // Init info
-    QImage m_image;
-    QList < QLinkedList <FillLine> > m_fillLinesCache;
-    kpColor m_colorToChange;
 };
 
 
