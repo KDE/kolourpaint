@@ -211,13 +211,7 @@ kpColor kpFloodFill::pixelColor (int x, int y, bool *beenHere) const
     if (beenHere)
         *beenHere = false;
 
-    if (y >= (int) d->fillLinesCache.count ())
-    {
-        kError () << "kpFloodFill::pixelColor("
-                   << x << ","
-                   << y << ") y out of range=" << d->imagePtr->height () << endl;
-        return kpColor::invalid;
-    }
+    Q_ASSERT (y >= 0 && y < (int) d->fillLinesCache.count ());
 
     foreach (const kpFillLine line, d->fillLinesCache [y])
     {
@@ -277,11 +271,13 @@ int kpFloodFill::findMaxX (int y, int x) const
 void kpFloodFill::addLine (int y, int x1, int x2)
 {
 #if DEBUG_KP_FLOOD_FILL && 0
-    kDebug () << "kpFillCommand::fillAddLine (" << y << "," << x1 << "," << x2 << ")" << endl;
+    kDebug () << "kpFillCommand::fillAddLine ("
+              << y << "," << x1 << "," << x2 << ")" << endl;
 #endif
 
     d->fillLines.append (kpFillLine (y, x1, x2));
-    d->fillLinesCache [y].append (kpFillLine (y /* OPT */, x1, x2));
+    d->fillLinesCache [y].append (
+        kpFillLine (y/*OPT: can determine from array index*/, x1, x2));
     d->boundingRect = d->boundingRect.unite (QRect (QPoint (x1, y), QPoint (x2, y)));
 }
 
@@ -314,11 +310,12 @@ void kpFloodFill::findAndAddLines (const kpFillLine &fillLine, int dy)
 // public
 void kpFloodFill::prepare ()
 {
+    if (d->prepared)
+        return;
+
 #if DEBUG_KP_FLOOD_FILL && 1
     kDebug () << "kpFloodFill::prepare()" << endl;
 #endif
-    if (d->prepared)
-        return;
 
     prepareColorToChange ();
 
@@ -407,21 +404,20 @@ QRect kpFloodFill::boundingRect ()
 // public
 void kpFloodFill::prepareColorToChange ()
 {
-#if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "kpFloodFill::prepareColorToChange" << endl;
-#endif
     if (d->colorToChange.isValid ())
         return;
+
+#if DEBUG_KP_FLOOD_FILL && 1
+    kDebug () << "kpFloodFill::prepareColorToChange()" << endl;
+#endif
 
     d->colorToChange = kpPixmapFX::getColorAtPixel (*d->imagePtr, QPoint (d->x, d->y));
 
     if (d->colorToChange.isOpaque ())
     {
     #if DEBUG_KP_FLOOD_FILL && 1
-        kDebug () << "\tcolorToChange: r=" << d->colorToChange.red ()
-                   << ", b=" << d->colorToChange.blue ()
-                   << ", g=" << d->colorToChange.green ()
-                   << endl;
+        kDebug () << "\tcolorToChange: " << (int *) d->colorToChange.toQRgb ()
+                  << endl;
     #endif
     }
     else
