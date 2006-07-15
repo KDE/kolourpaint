@@ -57,6 +57,8 @@ public:
     //
     // Step 1: Determines the colour that will be changed to color().
     //
+    //         Very fast.
+    //
     
     void prepareColorToChange ();
 
@@ -66,6 +68,8 @@ public:
 
     //
     // Step 2: Determines the scanlines / pixels that will be changed to color().
+    //
+    //         The slowest part of the whole fill operation.
     //
     //         Before calling a Step 2 function, you don't have to (but you can)
     //         call any of the functions in Step 1.
@@ -80,6 +84,8 @@ public:
 
     //
     // Step 3: Draws the lines identified in Step 2 in color().
+    //
+    //         Between the speeds of Step 2 and Step 1.
     //
     //         Before calling a Step 3 function, you don't have to (but you can)
     //         call any of the functions in Step 1 or 2.
@@ -97,7 +103,8 @@ private:
     bool m_prepared;
 
     QRect m_boundingRect;
-
+    
+public:
     struct FillLine
     {
         FillLine (int y = -1, int x1 = -1, int x2 = -1)
@@ -112,7 +119,7 @@ private:
         
         int m_y, m_x1, m_x2;
     };
-
+private:
     int fillLinesListSize (const QLinkedList <kpFloodFill::FillLine> &fillLines) const;
     
     void addLine (int y, int x1, int x2);

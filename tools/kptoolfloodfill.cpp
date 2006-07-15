@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_FLOOD_FILL 0
+#define DEBUG_KP_TOOL_FLOOD_FILL 1
 
 
 #include <kptoolfloodfill.h>
@@ -100,8 +100,13 @@ void kpToolFloodFill::beginDraw ()
 #if DEBUG_KP_TOOL_FLOOD_FILL && 1
     kDebug () << "\tperforming new-doc-corner-case check" << endl;
 #endif
+
     if (document ()->url ().isEmpty () && !document ()->isModified ())
     {
+        // Collect the colour that gets changed before we change the pixels
+        // (execute() below).  Needed in unexecute().
+        d->currentCommand->prepareColorToChange ();
+        
         d->currentCommand->setFillEntirePixmap ();
     }
 
@@ -195,7 +200,7 @@ void kpToolFloodFillCommand::setFillEntirePixmap (bool yes)
 void kpToolFloodFillCommand::execute ()
 {
 #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-    kDebug () << "kpToolFloodFillCommand::execute() m_fillEntirePixmap="
+    kDebug () << "kpToolFloodFillCommand::execute() fillEntirePixmap="
               << d->fillEntirePixmap << endl;
 #endif
 
@@ -233,6 +238,11 @@ void kpToolFloodFillCommand::execute ()
 // virtual
 void kpToolFloodFillCommand::unexecute ()
 {
+#if DEBUG_KP_TOOL_FLOOD_FILL && 1
+    kDebug () << "kpToolFloodFillCommand::unexecute() fillEntirePixmap="
+              << d->fillEntirePixmap << endl;
+#endif
+
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 

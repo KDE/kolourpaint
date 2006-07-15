@@ -41,6 +41,7 @@ class QBitmap;
 class QColor;
 class QImage;
 class QMatrix;
+class QPainter;
 class QPen;
 class QPixmap;
 class QPoint;
@@ -455,7 +456,35 @@ public:
     // <qtWidth> is passed straight to QPen without modification.
     static QPen QPainterDrawLinePen (const QColor &color, int qtWidth);
     
-    
+
+    // Inside a <drawFunc> passed to kpPixmapFX::draw(), pass the <color>
+    // you intend to draw in and <drawingOnRGBLayer> (passed to your <drawFunc>),
+    // and this will spit back the appropriate QColor depending on whether you
+    // are drawing on the RGB layer or a mask.
+    static QColor draw_ToQColor (const kpColor &color, bool drawingOnRGBLayer);
+
+    // Exercises the drawing pattern on QPixmap's - draws on, separately, the:
+    //
+    // 1. RGB layer (if there is an opaque colour involved in the drawing i.e.
+    //               <anyColorOpaque>)
+    // 2. Mask layer (if there is a transparency involved i.e.
+    //                <anyColorTransparent> or the <image> has a mask to start
+    //                with)
+    //
+    // Each time, it opens up a QPainter and calls <drawFunc> with:
+    //
+    // 1. A pointer to this QPainter
+    // 2. A boolean that is true if we are currently drawing on the RGB layer
+    //    and false if we are drawing on the Mask layer.  Often passed straight
+    //    to draw_ToQColor() to convert from kpColor to QColor.
+    // 3. A pointer to the provided <data>
+    static void draw (QPixmap *image,
+        void (*drawFunc) (QPainter * /*p*/,
+            bool /*drawingOnRGBLayer*/,
+            void * /*data*/),
+        bool anyColorOpaque, bool anyColorTransparent,
+        void *data);
+
     
     // Draws a line from (x1,y1) to (x2,y2) onto <image>, with <color>
     // and <width>.  The corners are rounded and centred at those

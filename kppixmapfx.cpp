@@ -614,7 +614,8 @@ static int WidthToQPenWidth (int width, bool drawingEllipse = false)
 }
 
 
-static QColor Draw_ToQColor (const kpColor &color, bool drawingOnRGBLayer)
+// public static
+QColor kpPixmapFX::draw_ToQColor (const kpColor &color, bool drawingOnRGBLayer)
 {
     if (drawingOnRGBLayer)
     {
@@ -630,22 +631,9 @@ static QColor Draw_ToQColor (const kpColor &color, bool drawingOnRGBLayer)
         return color.maskColor ();
 }
 
-// Exercises the drawing pattern on QPixmap's - draws on, separately, the:
-//
-// 1. RGB layer (if there is an opaque colour involved in the drawing i.e.
-//               <anyColorOpaque>)
-// 2. Mask layer (if there is a transparency involved i.e.
-//                <anyColorTransparent> or the <image> has a mask to start
-//                with)
-//
-// Each time, it opens up a QPainter and calls <drawFunc> with:
-//
-// 1. A pointer to this QPainter
-// 2. A QColor member function that converts from kpColor to QColor
-//    (depending on whether we are currently editing the RGB or mask layer)
-// 3. A pointer to the provided <data>
 
-static void Draw (QPixmap *image,
+// public static
+void kpPixmapFX::draw (QPixmap *image,
         void (*drawFunc) (QPainter * /*p*/,
             bool /*drawingOnRGBLayer*/,
             void * /*data*/),
@@ -862,7 +850,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
     pack.destTopLeft = validSrcRect.topLeft () - rect.topLeft ();
     pack.validSrcRect = validSrcRect;
 
-    ::Draw (&retPixmap, &::GetSetPixmapAtHelper,
+    kpPixmapFX::draw (&retPixmap, &::GetSetPixmapAtHelper,
         true/*always "draw"/copy RGB layer*/,
         (retPixmap.hasAlpha () || pm.hasAlpha ())/*draw on mask if either has one*/,
         &pack);
@@ -932,7 +920,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
     pack.destTopLeft = destRect.topLeft ();
     pack.validSrcRect = QRect (0, 0, destRect.width (), destRect.height ());
 
-    ::Draw (destPixmapPtr, &::GetSetPixmapAtHelper,
+    kpPixmapFX::draw (destPixmapPtr, &::GetSetPixmapAtHelper,
         true/*always "draw"/copy RGB layer*/,
         (destPixmapPtr->hasAlpha () || srcPixmap.hasAlpha ())/*draw on mask if either has one*/,
         &pack);
@@ -1905,7 +1893,7 @@ static void DrawPolylineHelper (QPainter *p,
 
     p->setPen (
         kpPixmapFX::QPainterDrawLinePen (
-            ::Draw_ToQColor (pack->color, drawingOnRGBLayer),
+            kpPixmapFX::draw_ToQColor (pack->color, drawingOnRGBLayer),
             ::WidthToQPenWidth (pack->penWidth)));
             
     // Qt bug: single point doesn't show up depending on penWidth.
@@ -1931,7 +1919,7 @@ void kpPixmapFX::drawPolyline (QPixmap *image,
     pack.color = color;
     pack.penWidth = penWidth;
     
-    ::Draw (image, &::DrawPolylineHelper,
+    kpPixmapFX::draw (image, &::DrawPolylineHelper,
         color.isOpaque (), color.isTransparent (),
         &pack);
 }
@@ -1984,11 +1972,11 @@ static void DrawPolygonHelper (QPainter *p,
 
     p->setPen (
         kpPixmapFX::QPainterDrawLinePen (
-            ::Draw_ToQColor (pack->fcolor, drawingOnRGBLayer),
+            kpPixmapFX::draw_ToQColor (pack->fcolor, drawingOnRGBLayer),
             ::WidthToQPenWidth (pack->penWidth)));
 
     if (pack->bcolor.isValid ())
-       p->setBrush (QBrush (::Draw_ToQColor (pack->bcolor, drawingOnRGBLayer)));
+       p->setBrush (QBrush (kpPixmapFX::draw_ToQColor (pack->bcolor, drawingOnRGBLayer)));
     // HACK: seems to be needed if set_Pen_(Qt::color0) else fills with Qt::color0.
     else
         p->setBrush (Qt::NoBrush);
@@ -2057,7 +2045,7 @@ void kpPixmapFX::drawPolygon (QPixmap *image,
     pack.bcolor = bcolor;
     pack.isFinal = isFinal;
     
-    ::Draw (image, &::DrawPolygonHelper,
+    kpPixmapFX::draw (image, &::DrawPolygonHelper,
         fcolor.isOpaque () || (bcolor.isValid () && bcolor.isOpaque ()),
         fcolor.isTransparent () || (bcolor.isValid () && bcolor.isTransparent ()),
         &pack);
@@ -2095,7 +2083,7 @@ static void DrawCurveHelper (QPainter *p,
 
     const QPen curvePen =
         kpPixmapFX::QPainterDrawLinePen (
-            ::Draw_ToQColor (pack->color, drawingOnRGBLayer),
+            kpPixmapFX::draw_ToQColor (pack->color, drawingOnRGBLayer),
             ::WidthToQPenWidth (pack->penWidth));
 
     // SYNC: Qt bug: single point doesn't show up depending on penWidth.
@@ -2135,7 +2123,7 @@ void kpPixmapFX::drawCurve (QPixmap *image,
     pack.color = color;
     pack.penWidth = penWidth;
     
-    ::Draw (image, &::DrawCurveHelper,
+    kpPixmapFX::draw (image, &::DrawCurveHelper,
         color.isOpaque (), color.isTransparent (),
         &pack);
 }
@@ -2158,7 +2146,7 @@ static void FillRectHelper (QPainter *p,
     FillRectPackage *pack = static_cast <FillRectPackage *> (data);
 
     p->fillRect (pack->x, pack->y, pack->width, pack->height,
-        ::Draw_ToQColor (pack->color, drawingOnRGBLayer));
+        kpPixmapFX::draw_ToQColor (pack->color, drawingOnRGBLayer));
 }
 
 // public static
@@ -2170,7 +2158,7 @@ void kpPixmapFX::fillRect (QPixmap *image,
     pack.x = x, pack.y = y, pack.width = width, pack.height = height;
     pack.color = color;
 
-    ::Draw (image, &::FillRectHelper,
+    kpPixmapFX::draw (image, &::FillRectHelper,
         color.isOpaque (), color.isTransparent (),
         &pack);
 }
@@ -2215,11 +2203,11 @@ static void DrawGenericRectHelper (QPainter *p,
 
     p->setPen (
         kpPixmapFX::QPainterDrawRectPen (
-            ::Draw_ToQColor (pack->fcolor, drawingOnRGBLayer),
+            kpPixmapFX::draw_ToQColor (pack->fcolor, drawingOnRGBLayer),
             ::WidthToQPenWidth (pack->penWidth, pack->isEllipseLike)));
 
     if (pack->bcolor.isValid ())
-        p->setBrush (QBrush (::Draw_ToQColor (pack->bcolor, drawingOnRGBLayer)));
+        p->setBrush (QBrush (kpPixmapFX::draw_ToQColor (pack->bcolor, drawingOnRGBLayer)));
     // HACK: seems to be needed if set_Pen_(Qt::color0) else fills with Qt::color0.
     else
         p->setBrush (Qt::NoBrush);
@@ -2310,7 +2298,7 @@ static void DrawGenericRect (QPixmap *image,
     pack.isEllipseLike = isEllipseLike;
 
 
-    ::Draw (image, &::DrawGenericRectHelper,
+    kpPixmapFX::draw (image, &::DrawGenericRectHelper,
         fcolor.isOpaque () || (bcolor.isValid () && bcolor.isOpaque ()),
         fcolor.isTransparent () || (bcolor.isValid () && bcolor.isTransparent ()),
         &pack);

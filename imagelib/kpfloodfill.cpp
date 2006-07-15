@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_FLOOD_FILL 0
+#define DEBUG_KP_FLOOD_FILL 1
 
 
 #include <kpfloodfill.h>
@@ -37,8 +37,9 @@
 #include <qpixmap.h>
 
 #include <kdebug.h>
-#include <kpdefs.h>
 
+#include <kpdefs.h>
+#include <kpimage.h>
 #include <kppixmapfx.h>
 #include <kptool.h>
 
@@ -98,63 +99,61 @@ QRect kpFloodFill::boundingRect ()
     return m_boundingRect;
 }
 
+
+
+
+struct DrawLinesPackage
+{
+    const QLinkedList <kpFloodFill::FillLine> *lines;
+    kpColor color;
+};
+
+static void DrawLinesHelper (QPainter *p,
+        bool drawingOnRGBLayer,
+        void *data)
+{
+    const DrawLinesPackage *pack = static_cast <DrawLinesPackage *> (data);
+
+#if DEBUG_KP_FLOOD_FILL
+    kDebug () << "DrawLinesHelper() lines"
+        << " color=" << (int *) pack->color.toQRgb ()
+        << endl;
+#endif
+
+    p->setPen (kpPixmapFX::draw_ToQColor (pack->color, drawingOnRGBLayer));
+            
+    foreach (const kpFloodFill::FillLine l, *pack->lines)
+    {
+        const QPoint p1 (l.m_x1, l.m_y);
+        const QPoint p2 (l.m_x2, l.m_y);
+
+        p->drawLine (p1, p2);
+    }
+}
+
+static void DrawLines (kpImage *image,
+        const QLinkedList <kpFloodFill::FillLine> &lines,
+        const kpColor &color)
+{
+    DrawLinesPackage pack;
+    pack.lines = &lines;
+    pack.color = color;
+
+    kpPixmapFX::draw (image, &::DrawLinesHelper,
+        color.isOpaque (), color.isTransparent (),
+        &pack);
+}
+
 void kpFloodFill::fill ()
 {
     prepare ();
 
-    // not trying to do a NOP fill
-    if (m_boundingRect.isValid ())
-    {
-        QApplication::setOverrideCursor (Qt::WaitCursor);
 
-        QPainter painter, maskPainter;
-        QBitmap maskBitmap;
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
-        if (!m_pixmapPtr->mask ().isNull() || m_color.isTransparent ())
-        {
-            maskBitmap = kpPixmapFX::getNonNullMask (*m_pixmapPtr);
-            maskPainter.begin (&maskBitmap);
-            maskPainter.setPen (m_color.maskColor ());
-        }
+    ::DrawLines (m_pixmapPtr, m_fillLines, m_color);
 
-        if (m_color.isOpaque ())
-        {
-            painter.begin (m_pixmapPtr);
-            painter.setPen (m_color.toQColor ());
-        }
-
-        const QLinkedList <FillLine>::ConstIterator fillLinesEnd = m_fillLines.end ();
-        for (QLinkedList <FillLine>::ConstIterator it = m_fillLines.begin ();
-             it != fillLinesEnd;
-             it++)
-        {
-            QPoint p1 = QPoint ((*it).m_x1, (*it).m_y);
-            QPoint p2 = QPoint ((*it).m_x2, (*it).m_y);
-
-            if (painter.isActive ())
-                painter.drawLine (p1, p2);
-
-            if (maskPainter.isActive ())
-                maskPainter.drawLine (p1, p2);
-        }
-
-        if (painter.isActive ())
-            painter.end ();
-
-        if (maskPainter.isActive ())
-            maskPainter.end ();
-
-        if (!maskBitmap.isNull ())
-            m_pixmapPtr->setMask (maskBitmap);
-
-        QApplication::restoreOverrideCursor ();
-    }
-    else
-    {
-    #if DEBUG_KP_FLOOD_FILL && 1
-        kDebug () << "kpFloodFill::fill() performing NOP fill" << endl;
-    #endif
-    }
+    QApplication::restoreOverrideCursor ();
 }
 
 kpColor kpFloodFill::colorToChange ()
