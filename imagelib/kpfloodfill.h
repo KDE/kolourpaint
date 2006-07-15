@@ -63,17 +63,16 @@ public:
 
 
     //
-    // Step 3: Draws the lines identified in Step 2 in color().
+    // Step 1: Determines the colour that will be changed to color().
     //
-    //         Between the speeds of Step 2 and Step 1.
-    //
-    //         Before calling a Step 3 function, you don't have to (but you can)
-    //         call any of the functions in Step 1 or 2.
+    //         Very fast.
     //
 
 public:
-    // (may invoke Step 2's prepare())
-    void fill ();
+    void prepareColorToChange ();
+
+    // (may invoke prepareColorToChange()).
+    kpColor colorToChange ();
 
 
     //
@@ -107,16 +106,17 @@ public:
 
 
     //
-    // Step 1: Determines the colour that will be changed to color().
+    // Step 3: Draws the lines identified in Step 2 in color().
     //
-    //         Very fast.
+    //         Between the speeds of Step 2 and Step 1.
+    //
+    //         Before calling a Step 3 function, you don't have to (but you can)
+    //         call any of the functions in Step 1 or 2.
     //
 
 public:
-    void prepareColorToChange ();
-
-    // (may invoke prepareColorToChange()).
-    kpColor colorToChange ();
+    // (may invoke Step 2's prepare())
+    void fill ();
 
 
 private:

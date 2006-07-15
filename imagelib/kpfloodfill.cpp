@@ -138,67 +138,46 @@ int kpFloodFill::size () const
     {
         fillLinesCacheSize += ::FillLinesListSize (linesList);
     }
-    
+
     return ::FillLinesListSize (d->fillLines) +
            kpPixmapFX::imageSize (d->readableImage) +
            fillLinesCacheSize;
 }
 
 
-struct DrawLinesPackage
+// public
+void kpFloodFill::prepareColorToChange ()
 {
-    const QLinkedList <kpFillLine> *lines;
-    kpColor color;
-};
+    if (d->colorToChange.isValid ())
+        return;
 
-static void DrawLinesHelper (QPainter *p,
-        bool drawingOnRGBLayer,
-        void *data)
-{
-    const DrawLinesPackage *pack = static_cast <DrawLinesPackage *> (data);
-
-#if DEBUG_KP_FLOOD_FILL
-    kDebug () << "DrawLinesHelper() lines"
-        << " color=" << (int *) pack->color.toQRgb ()
-        << endl;
+#if DEBUG_KP_FLOOD_FILL && 1
+    kDebug () << "kpFloodFill::prepareColorToChange()" << endl;
 #endif
 
-    p->setPen (kpPixmapFX::draw_ToQColor (pack->color, drawingOnRGBLayer));
-            
-    foreach (const kpFillLine l, *pack->lines)
-    {
-        const QPoint p1 (l.m_x1, l.m_y);
-        const QPoint p2 (l.m_x2, l.m_y);
+    d->colorToChange = kpPixmapFX::getColorAtPixel (*d->imagePtr, QPoint (d->x, d->y));
 
-        p->drawLine (p1, p2);
+    if (d->colorToChange.isOpaque ())
+    {
+    #if DEBUG_KP_FLOOD_FILL && 1
+        kDebug () << "\tcolorToChange: " << (int *) d->colorToChange.toQRgb ()
+                  << endl;
+    #endif
+    }
+    else
+    {
+    #if DEBUG_KP_FLOOD_FILL && 1
+        kDebug () << "\tcolorToChange: transparent" << endl;
+    #endif
     }
 }
-
-static void DrawLines (kpImage *image,
-        const QLinkedList <kpFillLine> &lines,
-        const kpColor &color)
-{
-    DrawLinesPackage pack;
-    pack.lines = &lines;
-    pack.color = color;
-
-    kpPixmapFX::draw (image, &::DrawLinesHelper,
-        color.isOpaque (), color.isTransparent (),
-        &pack);
-}
-
 
 // public
-void kpFloodFill::fill ()
+kpColor kpFloodFill::colorToChange ()
 {
-    prepare ();
+    prepareColorToChange ();
 
-
-    QApplication::setOverrideCursor (Qt::WaitCursor);
-    {
-        ::DrawLines (d->imagePtr, d->fillLines, d->color);
-    }
-    QApplication::restoreOverrideCursor ();
+    return d->colorToChange;
 }
 
 
@@ -401,37 +380,58 @@ QRect kpFloodFill::boundingRect ()
 }
 
 
-// public
-void kpFloodFill::prepareColorToChange ()
+struct DrawLinesPackage
 {
-    if (d->colorToChange.isValid ())
-        return;
+    const QLinkedList <kpFillLine> *lines;
+    kpColor color;
+};
 
-#if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "kpFloodFill::prepareColorToChange()" << endl;
+static void DrawLinesHelper (QPainter *p,
+        bool drawingOnRGBLayer,
+        void *data)
+{
+    const DrawLinesPackage *pack = static_cast <DrawLinesPackage *> (data);
+
+#if DEBUG_KP_FLOOD_FILL
+    kDebug () << "DrawLinesHelper() lines"
+        << " color=" << (int *) pack->color.toQRgb ()
+        << endl;
 #endif
 
-    d->colorToChange = kpPixmapFX::getColorAtPixel (*d->imagePtr, QPoint (d->x, d->y));
+    p->setPen (kpPixmapFX::draw_ToQColor (pack->color, drawingOnRGBLayer));
+            
+    foreach (const kpFillLine l, *pack->lines)
+    {
+        const QPoint p1 (l.m_x1, l.m_y);
+        const QPoint p2 (l.m_x2, l.m_y);
 
-    if (d->colorToChange.isOpaque ())
-    {
-    #if DEBUG_KP_FLOOD_FILL && 1
-        kDebug () << "\tcolorToChange: " << (int *) d->colorToChange.toQRgb ()
-                  << endl;
-    #endif
-    }
-    else
-    {
-    #if DEBUG_KP_FLOOD_FILL && 1
-        kDebug () << "\tcolorToChange: transparent" << endl;
-    #endif
+        p->drawLine (p1, p2);
     }
 }
 
-// public
-kpColor kpFloodFill::colorToChange ()
+static void DrawLines (kpImage *image,
+        const QLinkedList <kpFillLine> &lines,
+        const kpColor &color)
 {
-    prepareColorToChange ();
-    
-    return d->colorToChange;
+    DrawLinesPackage pack;
+    pack.lines = &lines;
+    pack.color = color;
+
+    kpPixmapFX::draw (image, &::DrawLinesHelper,
+        color.isOpaque (), color.isTransparent (),
+        &pack);
+}
+
+
+// public
+void kpFloodFill::fill ()
+{
+    prepare ();
+
+
+    QApplication::setOverrideCursor (Qt::WaitCursor);
+    {
+        ::DrawLines (d->imagePtr, d->fillLines, d->color);
+    }
+    QApplication::restoreOverrideCursor ();
 }
