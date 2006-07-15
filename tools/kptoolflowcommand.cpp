@@ -31,10 +31,10 @@
 
 #include <kptoolflowcommand.h>
 
-#include <qpixmap.h>
 #include <qrect.h>
 
 #include <kpdocument.h>
+#include <kpimage.h>
 #include <kppixmapfx.h>
 #include <kptool.h>
 #include <kpviewmanager.h>
@@ -42,8 +42,8 @@
 
 struct kpToolFlowCommandPrivate
 {
-    QPixmap m_pixmap;
-    QRect m_boundingRect;
+    kpImage image;
+    QRect boundingRect;
 };
 
 
@@ -51,7 +51,7 @@ kpToolFlowCommand::kpToolFlowCommand (const QString &name, kpMainWindow *mainWin
     : kpNamedCommand (name, mainWindow),
       d (new kpToolFlowCommandPrivate ())
 {
-    d->m_pixmap = *document ()->pixmap ();
+    d->image = *document ()->pixmap ();
 }
 
 kpToolFlowCommand::~kpToolFlowCommand ()
@@ -63,7 +63,7 @@ kpToolFlowCommand::~kpToolFlowCommand ()
 // public virtual [base kpCommand]
 int kpToolFlowCommand::size () const
 {
-    return kpPixmapFX::pixmapSize (d->m_pixmap);
+    return kpPixmapFX::pixmapSize (d->image);
 }
 
 
@@ -83,13 +83,13 @@ void kpToolFlowCommand::unexecute ()
 // private
 void kpToolFlowCommand::swapOldAndNew ()
 {
-    if (d->m_boundingRect.isValid ())
+    if (d->boundingRect.isValid ())
     {
-        QPixmap oldPixmap = document ()->getPixmapAt (d->m_boundingRect);
+        const kpImage oldImage = document ()->getPixmapAt (d->boundingRect);
 
-        document ()->setPixmapAt (d->m_pixmap, d->m_boundingRect.topLeft ());
+        document ()->setPixmapAt (d->image, d->boundingRect.topLeft ());
 
-        d->m_pixmap = oldPixmap;
+        d->image = oldImage;
     }
 }
 
@@ -104,38 +104,38 @@ void kpToolFlowCommand::updateBoundingRect (const QRect &rect)
 {
 #if DEBUG_KP_TOOL_FLOW_COMMAND & 0
     kDebug () << "kpToolFlowCommand::updateBoundingRect()  existing="
-               << d->m_boundingRect
+               << d->boundingRect
                << " plus="
                << rect
                << endl;
 #endif
-    d->m_boundingRect = d->m_boundingRect.unite (rect);
+    d->boundingRect = d->boundingRect.unite (rect);
 #if DEBUG_KP_TOOL_FLOW_COMMAND & 0
-    kDebug () << "\tresult=" << d->m_boundingRect << endl;
+    kDebug () << "\tresult=" << d->boundingRect << endl;
 #endif
 }
 
 // public
 void kpToolFlowCommand::finalize ()
 {
-    if (d->m_boundingRect.isValid ())
+    if (d->boundingRect.isValid ())
     {
         // store only needed part of doc pixmap
-        d->m_pixmap = kpTool::neededPixmap (d->m_pixmap, d->m_boundingRect);
+        d->image = kpTool::neededPixmap (d->image, d->boundingRect);
     }
     else
     {
-        d->m_pixmap = QPixmap ();
+        d->image = QPixmap ();
     }
 }
 
 // public
 void kpToolFlowCommand::cancel ()
 {
-    if (d->m_boundingRect.isValid ())
+    if (d->boundingRect.isValid ())
     {
         viewManager ()->setFastUpdates ();
-        document ()->setPixmapAt (d->m_pixmap, d->m_boundingRect.topLeft ());
+        document ()->setPixmapAt (d->image, d->boundingRect.topLeft ());
         viewManager ()->restoreFastUpdates ();
     }
 }
