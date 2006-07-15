@@ -89,7 +89,7 @@ void kpToolSpraycan::begin ()
     connect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged (int)),
             this, SLOT (slotSpraycanSizeChanged (int)));
     m_toolWidgetSpraycanSize->show ();
-    
+
     kpToolFlowBase::begin ();
 }
 
@@ -97,7 +97,7 @@ void kpToolSpraycan::begin ()
 void kpToolSpraycan::end ()
 {
     kpToolFlowBase::end ();
-    
+
     disconnect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged (int)),
                 this, SLOT (slotSpraycanSizeChanged (int)));
     m_toolWidgetSpraycanSize = 0;
