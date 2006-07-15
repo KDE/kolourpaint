@@ -82,7 +82,9 @@ public:
 
     virtual int size () const;
 
-    // Optimisation hack.
+    // Optimisation hack: filling a fresh, unmodified document does not require
+    //                    reading any pixels - just set the whole document to
+    //                    <color>.
     void setFillEntirePixmap (bool yes = true);
 
     virtual void execute ();
