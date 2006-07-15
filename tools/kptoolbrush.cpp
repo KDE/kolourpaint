@@ -44,10 +44,16 @@ kpToolBrush::~kpToolBrush ()
 }
 
 
+// protected virtual [base kpToolFlowBase]
 QString kpToolBrush::haventBegunDrawUserMessage () const
 {
     return i18n ("Click to draw dots or drag to draw strokes.");
 }
+
+
+// See the our corresponding .h for brush selection.
+
+// Logic is in kpToolFlowPixmapBase.
 
 
 #include <kptoolbrush.moc>

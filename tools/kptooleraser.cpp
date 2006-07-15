@@ -62,10 +62,16 @@ void kpToolEraser::globalDraw ()
 }
 
 
+// protected virtual [base kpToolFlowBase]
 QString kpToolEraser::haventBegunDrawUserMessage () const
 {
     return i18n ("Click or drag to erase.");
 }
+
+
+// See the our corresponding .h for brush selection.
+
+// Logic is in kpToolFlowPixmapBase.
 
 
 #include <kptooleraser.moc>
