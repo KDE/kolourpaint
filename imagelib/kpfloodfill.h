@@ -47,38 +47,19 @@ public:
                  int processedColorSimilarity);
     ~kpFloodFill ();
 
-    int size () const;
-    
+
+    //
+    // Spits back constructor arguments.
+    //
+
+public:
     kpColor color () const;
     int processedColorSimilarity () const;
-
     
-    //
-    // Step 1: Determines the colour that will be changed to color().
-    //
-    //         Very fast.
-    //
-    
-    void prepareColorToChange ();
 
-    // (may invoke prepareColorToChange()).
-    kpColor colorToChange ();
-
-
-    //
-    // Step 2: Determines the scanlines / pixels that will be changed to color().
-    //
-    //         The slowest part of the whole fill operation.
-    //
-    //         Before calling a Step 2 function, you don't have to (but you can)
-    //         call any of the functions in Step 1.
-    //
-
-    // (may invoke Step 1's prepareColorToChange())
-    void prepare ();
-
-    // (may invoke prepare())
-    QRect boundingRect ();
+public:
+    // Used for calculating the size of a command in the command history.
+    int size () const;
 
 
     //
@@ -90,22 +71,57 @@ public:
     //         call any of the functions in Step 1 or 2.
     //
 
+public:
     // (may invoke Step 2's prepare())
     void fill ();
 
+
+    //
+    // Step 2: Determines the scanlines / pixels that will be changed to color().
+    //
+    //         The slowest part of the whole fill operation.
+    //
+    //         Before calling a Step 2 function, you don't have to (but you can)
+    //         call any of the functions in Step 1.
+    //
+
 private:
-    kpFloodFillPrivate * const d;
-    
-private:
-    void addLine (int y, int x1, int x2);
     kpColor pixelColor (int x, int y, bool *beenHere = 0) const;
     bool shouldGoTo (int x, int y) const;
-    void findAndAddLines (const kpFillLine &fillLine, int dy);
-    int findMinX (int y, int x) const;
-    int findMaxX (int y, int x) const;
 
+    // Finds the minimum x value at a certain line to be filled.
+    int findMinX (int y, int x) const;
+
+    // Finds the maximum x value at a certain line to be filled.
+    int findMaxX (int y, int x) const;
+    
+    void addLine (int y, int x1, int x2);
+    void findAndAddLines (const kpFillLine &fillLine, int dy);
+
+public:
+    // (may invoke Step 1's prepareColorToChange())
+    void prepare ();
+
+    // (may invoke prepare())
+    QRect boundingRect ();
+
+
+    //
+    // Step 1: Determines the colour that will be changed to color().
+    //
+    //         Very fast.
+    //
+
+public:
+    void prepareColorToChange ();
+
+    // (may invoke prepareColorToChange()).
+    kpColor colorToChange ();
+
+
+private:
+    kpFloodFillPrivate * const d;
 };
 
 
 #endif  // KP_FLOOD_FILL_H
-

@@ -118,20 +118,6 @@ kpFloodFill::~kpFloodFill ()
 
 
 // public
-int kpFloodFill::size () const
-{
-    int fillLinesCacheSize = 0;
-    foreach (const QLinkedList <kpFillLine> linesList, d->fillLinesCache)
-    {
-        fillLinesCacheSize += ::FillLinesListSize (linesList);
-    }
-    
-    return ::FillLinesListSize (d->fillLines) +
-           kpPixmapFX::imageSize (d->readableImage) +
-           fillLinesCacheSize;
-}
-    
-// public
 kpColor kpFloodFill::color () const
 {
     return d->color;
@@ -144,14 +130,19 @@ int kpFloodFill::processedColorSimilarity () const
 }
 
 
-QRect kpFloodFill::boundingRect ()
+// public
+int kpFloodFill::size () const
 {
-    prepare ();
+    int fillLinesCacheSize = 0;
+    foreach (const QLinkedList <kpFillLine> linesList, d->fillLinesCache)
+    {
+        fillLinesCacheSize += ::FillLinesListSize (linesList);
+    }
     
-    return d->boundingRect;
+    return ::FillLinesListSize (d->fillLines) +
+           kpPixmapFX::imageSize (d->readableImage) +
+           fillLinesCacheSize;
 }
-
-
 
 
 struct DrawLinesPackage
@@ -196,54 +187,131 @@ static void DrawLines (kpImage *image,
         &pack);
 }
 
+
+// public
 void kpFloodFill::fill ()
 {
     prepare ();
 
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
-
-    ::DrawLines (d->imagePtr, d->fillLines, d->color);
-
+    {
+        ::DrawLines (d->imagePtr, d->fillLines, d->color);
+    }
     QApplication::restoreOverrideCursor ();
 }
 
-kpColor kpFloodFill::colorToChange ()
-{
-    prepareColorToChange ();
-    
-    return d->colorToChange;
-}
-
-void kpFloodFill::prepareColorToChange ()
-{
-#if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "kpFloodFill::prepareColorToChange" << endl;
-#endif
-    if (d->colorToChange.isValid ())
-        return;
-
-    d->colorToChange = kpPixmapFX::getColorAtPixel (*d->imagePtr, QPoint (d->x, d->y));
-
-    if (d->colorToChange.isOpaque ())
-    {
-    #if DEBUG_KP_FLOOD_FILL && 1
-        kDebug () << "\tcolorToChange: r=" << d->colorToChange.red ()
-                   << ", b=" << d->colorToChange.blue ()
-                   << ", g=" << d->colorToChange.green ()
-                   << endl;
-    #endif
-    }
-    else
-    {
-    #if DEBUG_KP_FLOOD_FILL && 1
-        kDebug () << "\tcolorToChange: transparent" << endl;
-    #endif
-    }
-}
 
 // Derived from the zSprite2 Graphics Engine
 
+
+// private
+kpColor kpFloodFill::pixelColor (int x, int y, bool *beenHere) const
+{
+    if (beenHere)
+        *beenHere = false;
+
+    if (y >= (int) d->fillLinesCache.count ())
+    {
+        kError () << "kpFloodFill::pixelColor("
+                   << x << ","
+                   << y << ") y out of range=" << d->imagePtr->height () << endl;
+        return kpColor::invalid;
+    }
+
+    foreach (const kpFillLine line, d->fillLinesCache [y])
+    {
+        if (x >= line.m_x1 && x <= line.m_x2)
+        {
+            if (beenHere)
+                *beenHere = true;
+            return d->color;
+        }
+    }
+
+    return kpPixmapFX::getColorAtPixel (d->readableImage, QPoint (x, y));
+}
+
+// private
+bool kpFloodFill::shouldGoTo (int x, int y) const
+{
+    bool beenThere;
+    const kpColor col = pixelColor (x, y, &beenThere);
+
+    return (!beenThere && col.isSimilarTo (d->colorToChange, d->processedColorSimilarity));
+}
+
+
+// private
+int kpFloodFill::findMinX (int y, int x) const
+{
+    for (;;)
+    {
+        if (x < 0)
+            return 0;
+
+        if (shouldGoTo (x, y))
+            x--;
+        else
+            return x + 1;
+    }
+}
+
+// private
+int kpFloodFill::findMaxX (int y, int x) const
+{
+    for (;;)
+    {
+        if (x > d->imagePtr->width () - 1)
+            return d->imagePtr->width () - 1;
+
+        if (shouldGoTo (x, y))
+            x++;
+        else
+            return x - 1;
+    }
+}
+
+
+// private
+void kpFloodFill::addLine (int y, int x1, int x2)
+{
+#if DEBUG_KP_FLOOD_FILL && 0
+    kDebug () << "kpFillCommand::fillAddLine (" << y << "," << x1 << "," << x2 << ")" << endl;
+#endif
+
+    d->fillLines.append (kpFillLine (y, x1, x2));
+    d->fillLinesCache [y].append (kpFillLine (y /* OPT */, x1, x2));
+    d->boundingRect = d->boundingRect.unite (QRect (QPoint (x1, y), QPoint (x2, y)));
+}
+
+// private
+void kpFloodFill::findAndAddLines (const kpFillLine &fillLine, int dy)
+{
+    // out of bounds?
+    if (fillLine.m_y + dy < 0 || fillLine.m_y + dy >= d->imagePtr->height ())
+        return;
+
+    for (int xnow = fillLine.m_x1; xnow <= fillLine.m_x2; xnow++)
+    {
+        // At current position, right colour?
+        if (shouldGoTo (xnow, fillLine.m_y + dy))
+        {
+            // Find minimum and maximum x values
+            int minxnow = findMinX (fillLine.m_y + dy, xnow);
+            int maxxnow = findMaxX (fillLine.m_y + dy, xnow);
+
+            // Draw line
+            addLine (fillLine.m_y + dy, minxnow, maxxnow);
+
+            // Move x pointer
+            xnow = maxxnow;
+        }
+    }
+}
+
+
+// public
 void kpFloodFill::prepare ()
 {
 #if DEBUG_KP_FLOOD_FILL && 1
@@ -251,9 +319,9 @@ void kpFloodFill::prepare ()
 #endif
     if (d->prepared)
         return;
-        
+
     prepareColorToChange ();
-        
+
     d->boundingRect = QRect ();
 
 
@@ -327,101 +395,47 @@ void kpFloodFill::prepare ()
     d->prepared = true;  // sync with all "return true"'s
 }
 
-void kpFloodFill::addLine (int y, int x1, int x2)
+// public
+QRect kpFloodFill::boundingRect ()
 {
-#if DEBUG_KP_FLOOD_FILL && 0
-    kDebug () << "kpFillCommand::fillAddLine (" << y << "," << x1 << "," << x2 << ")" << endl;
+    prepare ();
+    
+    return d->boundingRect;
+}
+
+
+// public
+void kpFloodFill::prepareColorToChange ()
+{
+#if DEBUG_KP_FLOOD_FILL && 1
+    kDebug () << "kpFloodFill::prepareColorToChange" << endl;
 #endif
-
-    d->fillLines.append (kpFillLine (y, x1, x2));
-    d->fillLinesCache [y].append (kpFillLine (y /* OPT */, x1, x2));
-    d->boundingRect = d->boundingRect.unite (QRect (QPoint (x1, y), QPoint (x2, y)));
-}
-
-kpColor kpFloodFill::pixelColor (int x, int y, bool *beenHere) const
-{
-    if (beenHere)
-        *beenHere = false;
-
-    if (y >= (int) d->fillLinesCache.count ())
-    {
-        kError () << "kpFloodFill::pixelColor("
-                   << x << ","
-                   << y << ") y out of range=" << d->imagePtr->height () << endl;
-        return kpColor::invalid;
-    }
-
-    foreach (const kpFillLine line, d->fillLinesCache [y])
-    {
-        if (x >= line.m_x1 && x <= line.m_x2)
-        {
-            if (beenHere)
-                *beenHere = true;
-            return d->color;
-        }
-    }
-
-    return kpPixmapFX::getColorAtPixel (d->readableImage, QPoint (x, y));
-}
-
-bool kpFloodFill::shouldGoTo (int x, int y) const
-{
-    bool beenThere;
-    const kpColor col = pixelColor (x, y, &beenThere);
-
-    return (!beenThere && col.isSimilarTo (d->colorToChange, d->processedColorSimilarity));
-}
-
-void kpFloodFill::findAndAddLines (const kpFillLine &fillLine, int dy)
-{
-    // out of bounds?
-    if (fillLine.m_y + dy < 0 || fillLine.m_y + dy >= d->imagePtr->height ())
+    if (d->colorToChange.isValid ())
         return;
 
-    for (int xnow = fillLine.m_x1; xnow <= fillLine.m_x2; xnow++)
+    d->colorToChange = kpPixmapFX::getColorAtPixel (*d->imagePtr, QPoint (d->x, d->y));
+
+    if (d->colorToChange.isOpaque ())
     {
-        // At current position, right colour?
-        if (shouldGoTo (xnow, fillLine.m_y + dy))
-        {
-            // Find minimum and maximum x values
-            int minxnow = findMinX (fillLine.m_y + dy, xnow);
-            int maxxnow = findMaxX (fillLine.m_y + dy, xnow);
-
-            // Draw line
-            addLine (fillLine.m_y + dy, minxnow, maxxnow);
-
-            // Move x pointer
-            xnow = maxxnow;
-        }
+    #if DEBUG_KP_FLOOD_FILL && 1
+        kDebug () << "\tcolorToChange: r=" << d->colorToChange.red ()
+                   << ", b=" << d->colorToChange.blue ()
+                   << ", g=" << d->colorToChange.green ()
+                   << endl;
+    #endif
+    }
+    else
+    {
+    #if DEBUG_KP_FLOOD_FILL && 1
+        kDebug () << "\tcolorToChange: transparent" << endl;
+    #endif
     }
 }
 
-// finds the minimum x value at a certain line to be filled
-int kpFloodFill::findMinX (int y, int x) const
+// public
+kpColor kpFloodFill::colorToChange ()
 {
-    for (;;)
-    {
-        if (x < 0)
-            return 0;
-
-        if (shouldGoTo (x, y))
-            x--;
-        else
-            return x + 1;
-    }
-}
-
-// finds the maximum x value at a certain line to be filled
-int kpFloodFill::findMaxX (int y, int x) const
-{
-    for (;;)
-    {
-        if (x > d->imagePtr->width () - 1)
-            return d->imagePtr->width () - 1;
-
-        if (shouldGoTo (x, y))
-            x++;
-        else
-            return x - 1;
-    }
+    prepareColorToChange ();
+    
+    return d->colorToChange;
 }
