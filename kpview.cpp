@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_VIEW 1
+#define DEBUG_KP_VIEW 0
 #define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 1) || 0)
 
 
@@ -1024,7 +1024,7 @@ void kpView::wheelEvent (QWheelEvent *e)
 // protected virtual [base QWidget]
 bool kpView::event (QEvent *e)
 {
-#if DEBUG_KP_VIEW || 1
+#if DEBUG_KP_VIEW
     kDebug () << "kpView::event() invoking kpTool::event()" << endl;
 #endif
     if (tool () && tool ()->viewEvent (e))
@@ -1340,7 +1340,7 @@ void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRec
 
     if (scrollableContainer ())
     {
-    #if DEBUG_KP_VIEW_RENDERER && 1 || 1
+    #if DEBUG_KP_VIEW_RENDERER && 1
         kDebug () << "\tscrollableContainer: contents[XY]="
                    << QPoint (scrollableContainer ()->contentsX (),
                               scrollableContainer ()->contentsY ())
@@ -1355,7 +1355,7 @@ void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRec
         // squares.
         patternOrigin = QPoint (scrollableContainer ()->contentsXSoon (),
                                 scrollableContainer ()->contentsYSoon ());
-    #if DEBUG_KP_VIEW_RENDERER && 1 || 1
+    #if DEBUG_KP_VIEW_RENDERER && 1
         kDebug () << "\t\tpatternOrigin=" << patternOrigin << endl;
     #endif
     }
@@ -1914,7 +1914,7 @@ void kpView::paintEvent (QPaintEvent *e)
 
     kpViewManager *vm = viewManager ();
 
-#if DEBUG_KP_VIEW_RENDERER && 1 || 1
+#if DEBUG_KP_VIEW_RENDERER && 1
     kDebug () << "kpView(" << objectName () << ")::paintEvent() vm=" << (bool) vm
                << " queueUpdates=" << (vm && vm->queueUpdates ())
                << " fastUpdates=" << (vm && vm->fastUpdates ())
