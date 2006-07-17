@@ -638,6 +638,29 @@ QString kpCommandHistoryBase::redoActionText () const
 
 
 // protected
+QString kpCommandHistoryBase::undoActionToolTip () const
+{
+    kpCommand *undoCommand = nextUndoCommand ();
+
+    if (undoCommand)
+        return i18n ("Undo: %1", undoCommand->name ());
+    else
+        return i18n ("Undo");
+}
+
+// protected
+QString kpCommandHistoryBase::redoActionToolTip () const
+{
+    kpCommand *redoCommand = nextRedoCommand ();
+
+    if (redoCommand)
+        return i18n ("Redo: %1", redoCommand->name ());
+    else
+        return i18n ("Redo");
+}
+
+
+// protected
 void kpCommandHistoryBase::trimCommandListsUpdateActions ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
@@ -806,7 +829,15 @@ void kpCommandHistoryBase::updateActions ()
 #endif
 
     m_actionUndo->setEnabled ((bool) nextUndoCommand ());
-    m_actionUndo->setText (undoActionText ());
+    // Don't want to keep changing toolbar text.
+    // TODO: As a bad side-effect, the menu doesn't have "Undo: <action>"
+    //       anymore.  In any case, the KDE4 KToolBarPopupAction
+    //       sucks in menus as it forces the clicking of a submenu.  IMO,
+    //       there should be no submenu in the menu.
+    //m_actionUndo->setText (undoActionText ());
+
+    // But in icon mode, a tooltip with context is useful.
+    m_actionUndo->setToolTip (undoActionToolTip ());
 #if DEBUG_KP_COMMAND_HISTORY
     QTime timer; timer.start ();
 #endif
@@ -819,7 +850,15 @@ void kpCommandHistoryBase::updateActions ()
 #endif
 
     m_actionRedo->setEnabled ((bool) nextRedoCommand ());
-    m_actionRedo->setText (redoActionText ());
+    // Don't want to keep changing toolbar text.
+    // TODO: As a bad side-effect, the menu doesn't have "Undo: <action>"
+    //       anymore.  In any case, the KDE4 KToolBarPopupAction
+    //       sucks in menus as it forces the clicking of a submenu.  IMO,
+    //       there should be no submenu in the menu.
+    //m_actionRedo->setText (redoActionText ());
+
+    // But in icon mode, a tooltip with context is useful.
+    m_actionRedo->setToolTip (redoActionToolTip ());
 #if DEBUG_KP_COMMAND_HISTORY
     timer.restart ();
 #endif

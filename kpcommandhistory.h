@@ -180,6 +180,9 @@ protected:
     QString undoActionText () const;
     QString redoActionText () const;
 
+    QString undoActionToolTip () const;
+    QString redoActionToolTip () const;
+
     void trimCommandListsUpdateActions ();
     void trimCommandList (QLinkedList <kpCommand *> *commandList);
     void trimCommandLists ();
