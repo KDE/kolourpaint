@@ -54,6 +54,11 @@ KolourPaint 1.4
 ~~~~~~~~~~~~~~~
 
 
+Should CTRL+C'ing a textbox mean that MMB pastes that text?
+KolourPaint does not ATM and it is annoying.  Should there be a KDE standard for this?
+KWrite does it and I think that's sane behaviour.
+
+
 kolourpaint not associated with .bmp
 
 
