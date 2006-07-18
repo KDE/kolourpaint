@@ -134,7 +134,7 @@ int kpFloodFill::processedColorSimilarity () const
 int kpFloodFill::size () const
 {
     int fillLinesCacheSize = 0;
-    foreach (const QLinkedList <kpFillLine> linesList, d->fillLinesCache)
+    foreach (const QLinkedList <kpFillLine> &linesList, d->fillLinesCache)
     {
         fillLinesCacheSize += ::FillLinesListSize (linesList);
     }
@@ -192,7 +192,7 @@ kpColor kpFloodFill::pixelColor (int x, int y, bool *beenHere) const
 
     Q_ASSERT (y >= 0 && y < (int) d->fillLinesCache.count ());
 
-    foreach (const kpFillLine line, d->fillLinesCache [y])
+    foreach (const kpFillLine &line, d->fillLinesCache [y])
     {
         if (x >= line.m_x1 && x <= line.m_x2)
         {
@@ -400,7 +400,7 @@ static void DrawLinesHelper (QPainter *p,
 
     p->setPen (kpPixmapFX::draw_ToQColor (pack->color, drawingOnRGBLayer));
             
-    foreach (const kpFillLine l, *pack->lines)
+    foreach (const kpFillLine &l, *pack->lines)
     {
         const QPoint p1 (l.m_x1, l.m_y);
         const QPoint p2 (l.m_x2, l.m_y);
