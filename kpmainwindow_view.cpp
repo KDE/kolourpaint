@@ -81,7 +81,7 @@ void kpMainWindow::setupViewMenuActions ()
 
     m_actionZoom = new KSelectAction (
         i18n ("&Zoom"), actionCollection (), "view_zoom_to");
-    connect (m_actionZoom, SIGNAL (triggered (bool)), SLOT (slotZoom ()));
+    connect (m_actionZoom, SIGNAL (triggered (QAction *)), SLOT (slotZoom ()));
     m_actionZoom->setEditable (true);
 
     // create the zoom list for the 1st call to zoomTo() below
@@ -264,8 +264,22 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
     if (zoomLevel != *it)
         m_zoomList.insert (it, zoomLevel);
 
+    // OPT: We get called twice on startup.  sendZoomListToActionZoom() is very slow.
     sendZoomListToActionZoom ();
+
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "\tsetCurrentItem(" << index << ")" << endl;
+#endif
     m_actionZoom->setCurrentItem (index);
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "\tcurrentItem="
+              << m_actionZoom->currentItem () 
+              << " action="
+              << m_actionZoom->action (m_actionZoom->currentItem ())
+              << " checkedAction"
+              << m_actionZoom->selectableActionGroup ()->checkedAction ()
+              << endl;;
+#endif
 
 
     if (viewMenuDocumentActionsEnabled ())
@@ -673,24 +687,46 @@ void kpMainWindow::slotFitToHeight ()
 // public
 void kpMainWindow::zoomIn (bool centerUnderCursor)
 {
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "kpMainWindow::zoomIn(centerUnderCursor="
+              << centerUnderCursor << ") currentItem="
+              << m_actionZoom->currentItem ()
+              << endl;
+#endif
     const int targetItem = m_actionZoom->currentItem () + 1;
 
     if (targetItem >= (int) m_zoomList.count ())
         return;
 
     m_actionZoom->setCurrentItem (targetItem);
+
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "\tnew currentItem=" << m_actionZoom->currentItem () << endl;
+#endif
+
     zoomAccordingToZoomAction (centerUnderCursor);
 }
 
 // public
 void kpMainWindow::zoomOut (bool centerUnderCursor)
 {
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "kpMainWindow::zoomOut(centerUnderCursor="
+              << centerUnderCursor << ") currentItem="
+              << m_actionZoom->currentItem ()
+              << endl;
+#endif
     const int targetItem = m_actionZoom->currentItem () - 1;
 
     if (targetItem < 0)
         return;
 
     m_actionZoom->setCurrentItem (targetItem);
+
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "\tnew currentItem=" << m_actionZoom->currentItem () << endl;
+#endif
+
     zoomAccordingToZoomAction (centerUnderCursor);
 }
 
@@ -719,8 +755,20 @@ void kpMainWindow::slotZoomOut ()
 // public
 void kpMainWindow::zoomAccordingToZoomAction (bool centerUnderCursor)
 {
-    zoomTo (zoomLevelFromString (m_actionZoom->currentText ()),
-                                 centerUnderCursor);
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "kpMainWindow::zoomAccordingToZoomAction(centerUnderCursor="
+              << centerUnderCursor << ") currentItem="
+              << m_actionZoom->currentItem ()
+              << " zoomLevel=" << m_zoomList [m_actionZoom->currentItem ()]
+              << endl;
+#endif
+
+    //zoomTo (zoomLevelFromString (m_actionZoom->currentText ()),
+    //                             centerUnderCursor); 
+
+    // TODO: Is this correct even for an editable combo?
+    zoomTo (m_zoomList [m_actionZoom->currentItem ()],
+            centerUnderCursor);
 }
 
 // private slot
@@ -1156,3 +1204,5 @@ void kpMainWindow::updateThumbnail ()
         m_thumbnail->deleteLater (); m_thumbnail = 0;
     }
 }
+
+
