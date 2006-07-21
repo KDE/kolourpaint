@@ -3,7 +3,7 @@
 SYNC: Do not change the number of quotes before the version number
       - it is parsed by the KolourPaint wrapper script.
 -->
-<gui name="kolourpaint" version="40">
+<gui name="kolourpaint" version="41">
 
 <!--
 SYNC: Check for duplicate actions in menus caused by some of our actions
@@ -100,9 +100,8 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
 
     <Action name="edit_undo" />
     <Action name="edit_redo" />
-</ToolBar>
-    
-<ToolBar name="viewToolBar" iconText="icononly" index="1" noMerge="1"><text>View Toolbar</text>
+    <Separator />
+
     <Action name="view_zoom_out" />
     <Action name="view_zoom_to" />
     <Action name="view_zoom_in" />
