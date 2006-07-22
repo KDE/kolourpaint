@@ -160,7 +160,7 @@ kde4_automoc(${kolourpaint_SRCS})
 
 kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
 
-target_link_libraries(kolourpaint ${KDE4_KDECORE_LIBS} kdeprint)
+target_link_libraries(kolourpaint ${KDE4_KDECORE_LIBS} ${KDE4_KDEPRINT_LIBS})
 
 install(TARGETS kolourpaint DESTINATION ${BIN_INSTALL_DIR})
 
