@@ -157,26 +157,26 @@ void kpMainWindow::enableImageMenuDocumentActions (bool enable)
 // private slot
 void kpMainWindow::slotImageMenuUpdateDueToSelection ()
 {
+    // SYNC: kolourpaintui.rc
+    const QString MenuBarItemTextImage = i18nc (
+        "Image/Selection Menu caption - make sure the translation has"
+        " the same accel as the Select&ion translation",
+        "&Image");
+    const QString MenuBarItemTextSelection = i18nc (
+        "Image/Selection Menu caption - make sure that translation has"
+        " the same accel as the &Image translation",
+        "Select&ion");
+
     Q_ASSERT (menuBar ());
     foreach (QAction *action, menuBar ()->actions ())
     {
-        // SYNC: kolourpaintui.rc
-        QString menuBarItemTextImage = i18nc (
-            "Image/Selection Menu caption - make sure the translation has"
-            " the same accel as the Select&ion translation",
-            "&Image");
-        QString menuBarItemTextSelection = i18nc (
-            "Image/Selection Menu caption - make sure that translation has"
-            " the same accel as the &Image translation",
-            "Select&ion");
-
-        if (action->text () == menuBarItemTextImage ||
-            action->text () == menuBarItemTextSelection)
+        if (action->text () == MenuBarItemTextImage ||
+            action->text () == MenuBarItemTextSelection)
         {
             if (isSelectionActive ())
-                action->setText (menuBarItemTextSelection);
+                action->setText (MenuBarItemTextSelection);
             else
-                action->setText (menuBarItemTextImage);
+                action->setText (MenuBarItemTextImage);
 
             break;
         }
