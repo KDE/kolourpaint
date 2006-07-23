@@ -167,8 +167,14 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
         int id = mBar->idAt (index);
 
         // SYNC: kolourpaintui.rc
-        QString menuBarItemTextImage = i18n ("&Image");
-        QString menuBarItemTextSelection = i18n ("Select&ion");
+        QString menuBarItemTextImage = i18nc (
+            "Image/Selection Menu caption - make sure the translation has"
+            " the same accel as the Select&ion translation",
+            "&Image");
+        QString menuBarItemTextSelection = i18nc (
+            "Image/Selection Menu caption - make sure that translation has"
+            " the same accel as the &Image translation",
+            "Select&ion");
 
         const QString menuBarItemText = mBar->text (id);
         if (menuBarItemText == menuBarItemTextImage ||
