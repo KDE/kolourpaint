@@ -70,6 +70,8 @@ RMB colour select & draw, holding shift are not discoverable.
 the kolourpaint window"
 (Adriaan de Groot - http://people.fruitsalad.org/adridg/bobulate/)
 
+easy resize tool for text (instead of trying to grab corners)
+
 
 Paste Into New Window when sel transparency is set to Transparent changes all white to transparent, sel transparency selector after pasting doesn't work because of Set as Image behaviour - unintuitive.
 
@@ -119,6 +121,8 @@ it is enabled globally. If you draw text in KolourPaint on a subpixel
 hinting KDE on LCD, save the file and then view it on a CRT, bad.
 (Amir Michail)
 
+
+SHIFT, CTRL modifiers are not discoverable - show tooltip or something
 
 hold SHIFT while pen does straight lines
 
@@ -310,7 +314,7 @@ If you don't save the image:
 2. what name will it have?  0045_temp-user.png?
 3. why wouldn't you want a copy of an image you send to someone?  Yes, it's in your "Sent Items" but...
 Suggestion: Export instead of save.  But what if really want to save?  Would have to prompt, save, then invoke Mail again - a bit round about.
-What do other programs do?
+What do other programs do?  KOffice?
 
 grid at 400% since 2 people on kde-apps have asked already (think grid
 isn't there)
@@ -482,8 +486,6 @@ Brad Grant:
 Bela-Andreas Bargel:
 - (LPhoto from Lindows): red-eye removal, enhance image
 
-
-DPI when printing?
 
 Jonathan Turner - userinstinct:
 - "Zoom indicator did not work properly";
