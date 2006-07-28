@@ -125,7 +125,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
     // Thumbnail width <= doc width
     else
     {
-        // Centre X (rather than flush left to be consistent with
+        // Center X (rather than flush left to be consistent with
         //           kpZoomedThumbnailView)
         x = -(width () - document ()->width ()) / 2;
     }
@@ -148,7 +148,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
     // Thumbnail height <= doc height
     else
     {
-        // Centre Y (rather than flush top to be consistent with
+        // Center Y (rather than flush top to be consistent with
         //           kpZoomedThumbnailView)
         y = -(height () - document ()->height ()) / 2;
     }

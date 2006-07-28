@@ -961,7 +961,7 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
         // Keep aspect ratio?
         if (m_shiftPressed && !sel->isText ())
         {
-            // Width changed more than height?  At equality, favour width.
+            // Width changed more than height?  At equality, favor width.
             // Fix width, change height.
             if ((userXSign ? double (newWidth) / oldWidth : 0) >=
                 (userYSign ? double (newHeight) / oldHeight : 0))

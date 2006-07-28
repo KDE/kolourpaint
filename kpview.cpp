@@ -1296,7 +1296,7 @@ void kpView::drawTransparentBackground (QPainter *painter,
     painter->save ();
     
     // Clip to <viewRect> as we may draw outside it on all sides.
-    painter->setClipRect (viewRect, Qt::IntersectClip/*honour existing clip*/);
+    painter->setClipRect (viewRect, Qt::IntersectClip/*honor existing clip*/);
     
     for (int y = starty; y <= viewRect.bottom (); y += cellSize)
     {
@@ -1629,7 +1629,7 @@ void kpView::paintEventDrawSelectionResizeHandles (QPainter *painter, const QRec
 
     painter->save ();
 
-    painter->setClipRect (viewRect, Qt::IntersectClip/*honour existing clip*/);
+    painter->setClipRect (viewRect, Qt::IntersectClip/*honor existing clip*/);
 
     QColor fillColor;
     if (selectionResizeHandleAtomicSizeCloseToZoomLevel ())

@@ -144,7 +144,7 @@ void kpMainWindow::addRecentURL (const KUrl &url)
     KConfig *cfg = KGlobal::config ();
 
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
-    // realise what other processes have done e.g. Settings / Show Path
+    // realize what other processes have done e.g. Settings / Show Path
     cfg->reparseConfiguration ();
 
     // HACK: Something might have changed interprocess.
@@ -223,7 +223,7 @@ void kpMainWindow::slotNew ()
 QSize kpMainWindow::defaultDocSize () const
 {
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
-    // realise what other processes have done e.g. Settings / Show Path
+    // realize what other processes have done e.g. Settings / Show Path
     KGlobal::config ()->reparseConfiguration ();
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
@@ -411,7 +411,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
     bool reparsedConfiguration = false;
 
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
-    // realise what other processes have done e.g. Settings / Show Path
+    // realize what other processes have done e.g. Settings / Show Path
     // so reparseConfiguration() must be called
 #define SETUP_READ_CFG()                                                             \
     if (!reparsedConfiguration)                                                      \
@@ -978,7 +978,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
 
     double originX = 0, originY = 0;
 
-    // Centre image on page?
+    // Center image on page?
     if (shouldPrintImageCenteredOnPage ())
     {
         originX = (printerWidthMM * dpiX / 25.4 - pixmap.width ()) / 2;

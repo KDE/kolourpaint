@@ -822,7 +822,7 @@ void kpMainWindow::slotCopyToFile ()
     {
         // Not a floating selection - user has just selected a region;
         // haven't pulled it off yet so probably don't expect and can't
-        // visualise selection transparency so give opaque, not transparent
+        // visualize selection transparency so give opaque, not transparent
         // pixmap.
         pixmapToSave = m_document->getSelectedPixmap ();
     }

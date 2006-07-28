@@ -120,7 +120,7 @@ void kpToolRotateCommand::execute ()
         m_oldSelection.setPixmap (QPixmap ());
 
 
-        // Calculate new top left (so selection rotates about centre)
+        // Calculate new top left (so selection rotates about center)
         // (the Times2 trickery is used to reduce integer division error without
         //  resorting to the troublesome world of floating point)
         QPoint oldCenterTimes2 (sel->x () * 2 + sel->width (),

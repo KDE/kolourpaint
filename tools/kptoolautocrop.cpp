@@ -426,7 +426,7 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
 
 
     // In case e.g. the user pastes a solid, coloured-in rectangle,
-    // we favour killing the bottom and right regions
+    // we favor killing the bottom and right regions
     // (these regions probably contain the unwanted whitespace due
     //  to the doc being bigger than the pasted selection to start with).
     //
@@ -660,7 +660,7 @@ void kpToolAutoCropCommand::unexecute ()
     QPixmap pixmap (m_oldWidth, m_oldHeight);
     QBitmap maskBitmap;
 
-    // restore the position of the centre image
+    // restore the position of the center image
     kpPixmapFX::setPixmapAt (&pixmap, m_contentsRect,
                              *doc->pixmap (m_actOnSelection));
 

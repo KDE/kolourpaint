@@ -389,7 +389,7 @@ void kpToolFlowBase::draw (const QPoint &thisPoint, const QPoint &lastPoint, con
 
     QRect dirtyRect;
 
-    // TODO: I'm beginning to wonder this drawPoint() "optimisation" actually
+    // TODO: I'm beginning to wonder this drawPoint() "optimization" actually
     //       optimises.  Is it worth the complexity?  Hence drawPoint() impl above.
     if (m_brushIsDiagonalLine ?
             currentPointCardinallyNextToLast () :

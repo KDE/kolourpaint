@@ -901,7 +901,7 @@ void kpViewScrollableContainer::recalculateStatusMessage ()
 
     // HACK: After dragging to a new size, handles move so that they are now
     //       under the mouse pointer but no mouseMoveEvent() is generated for
-    //       any grip.  This also handles the case of cancelling over any
+    //       any grip.  This also handles the case of canceling over any
     //       grip.
     //
     if (kpWidgetMapper::toGlobal (this,

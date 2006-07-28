@@ -242,7 +242,7 @@ void kpToolRectangle::applyModifiers ()
                << endl;
 #endif
 
-    // user wants to m_startPoint == centre
+    // user wants to m_startPoint == center
     if (m_controlPressed)
     {
         int xdiff = qAbs (m_startPoint.x () - m_currentPoint.x ());
@@ -274,7 +274,7 @@ void kpToolRectangle::applyModifiers ()
                     rect.setX (rect.right () - rect.height () + 1);
             }
         }
-        // have to maintain the centre
+        // have to maintain the center
         else
         {
             if (rect.width () < rect.height ())

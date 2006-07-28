@@ -141,7 +141,7 @@ void kpToolPreviewDialog::createDimensionsGroupBox ()
          const QString minimumLengthString ("100000 x 100000");
          const int padLength = minimumLengthString.length ();
          for (int i = originalDimensions.length (); i < padLength; i++)
-             originalDimensions += " ";
+             originalDimensions += ' ';
     }
     QLabel *originalDimensionsLabel = new QLabel (originalDimensions, m_dimensionsGroupBox);
 

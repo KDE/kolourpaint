@@ -437,13 +437,13 @@ protected:
      *
      * If the user is currently drawing/resizing something or if the
      * document doesn't have a text selection, it passes control to the
-     * otherwise overriden kpToolSelection::keyPressEvent().
+     * otherwise overridden kpToolSelection::keyPressEvent().
      *
      * Else, for a recognised key it calls handle.*Press().  If a
      * recognised key was not pressed, it assumes that one or more text
      * characters was typed, and calls handleTextTyped().  If none of the
      * handle.*() methods call e->accept(), it passes control to the
-     * otherwise overriden kpToolSelection::keyPressEvent().
+     * otherwise overridden kpToolSelection::keyPressEvent().
      *
      * @param e Mutable key event information.
      *

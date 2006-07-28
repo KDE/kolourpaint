@@ -308,7 +308,7 @@ void kpFloodFill::prepare ()
     // get the color we need to replace
     if (d->processedColorSimilarity == 0 && d->color == d->colorToChange)
     {
-        // need to do absolutely nothing (this is a significant optimisation
+        // need to do absolutely nothing (this is a significant optimization
         // for people who randomly click a lot over already-filled areas)
         d->prepared = true;  // sync with all "return true"'s
         return;

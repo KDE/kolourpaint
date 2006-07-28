@@ -202,7 +202,7 @@ void kpMainWindow::init ()
     //
 
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
-    // realise what other processes have done e.g. Settings / Show Path
+    // realize what other processes have done e.g. Settings / Show Path
     KGlobal::config ()->reparseConfiguration ();
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tTIME: reparseConfig = " << time.restart () << "msec" << endl;

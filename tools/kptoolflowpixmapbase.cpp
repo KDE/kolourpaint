@@ -49,7 +49,7 @@ kpToolFlowPixmapBase::~kpToolFlowPixmapBase ()
 }
 
 
-// Wants porting to Qt4.  But may be a bogus optimisation anyway.
+// Wants porting to Qt4.  But may be a bogus optimization anyway.
 #if 0
 QRect kpToolFlowPixmapBase::drawPoint (const QPoint & /*point*/)
 {            

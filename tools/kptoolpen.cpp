@@ -66,7 +66,7 @@ QString kpToolPen::haventBegunDrawUserMessage () const
 }
 
 
-// Wants porting to Qt4.  But may be a bogus optimisation anyway.
+// Wants porting to Qt4.  But may be a bogus optimization anyway.
 #if 0
 QRect kpToolPen::drawPoint (const QPoint &point)
 {

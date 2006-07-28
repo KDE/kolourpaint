@@ -52,7 +52,7 @@ public:
 
 
 signals:
-    // Not emitted when toolTip is manually overriden by setToolTip()
+    // Not emitted when toolTip is manually overridden by setToolTip()
     void toolTipChanged (const QString &string);
 
 protected:
