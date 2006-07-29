@@ -204,16 +204,33 @@ void kpMainWindow::sendZoomListToActionZoom ()
 }
 
 // private
-int kpMainWindow::zoomLevelFromString (const QString &string)
+int kpMainWindow::zoomLevelFromString (const QString &stringIn)
 {
-    // loop until not digit
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "kpMainWindow::zoomLevelFromString(" << stringIn << ")" << endl;
+#endif
+
+    // kdelibs4 sometimes adds accelerators to actions' text directly :(
+    QString string = stringIn;
+    string.remove ('&');
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "\twithout ampersands='" << string << "'" << endl;
+#endif
+
+    // Loop until not digit.  So that we can cut the '%' from "100%".
     int i;
     for (i = 0; i < (int) string.length () && string.at (i).isDigit (); i++)
         ;
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "\twithout trailing % or text='" << string.left (i) << "'" << endl;
+#endif
 
-    // convert zoom level to number
+    // Convert zoom level to number.
     bool ok = false;
     int zoomLevel = string.left (i).toInt (&ok);
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "\tzoomLevel=" << zoomLevel << endl;
+#endif
 
     if (!ok || zoomLevel <= 0 || zoomLevel > 3200)
         return 0;  // error
@@ -757,18 +774,15 @@ void kpMainWindow::zoomAccordingToZoomAction (bool centerUnderCursor)
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::zoomAccordingToZoomAction(centerUnderCursor="
-              << centerUnderCursor << ") currentItem="
-              << m_actionZoom->currentItem ()
-              << " zoomLevel=" << m_zoomList [m_actionZoom->currentItem ()]
+              << centerUnderCursor
+              << ") currentItem=" << m_actionZoom->currentItem ()
+              << " currentText=" << m_actionZoom->currentText ()
               << endl;
 #endif
 
-    //zoomTo (zoomLevelFromString (m_actionZoom->currentText ()),
-    //                             centerUnderCursor); 
-
-    // TODO: Is this correct even for an editable combo?
-    zoomTo (m_zoomList [m_actionZoom->currentItem ()],
-            centerUnderCursor);
+    // This might be a new zoom level the user has typed in.
+    zoomTo (zoomLevelFromString (m_actionZoom->currentText ()),
+                                 centerUnderCursor); 
 }
 
 // private slot
@@ -778,6 +792,7 @@ void kpMainWindow::slotZoom ()
     kDebug () << "kpMainWindow::slotZoom () index=" << m_actionZoom->currentItem ()
                << " text='" << m_actionZoom->currentText () << "'" << endl;
 #endif
+
     zoomAccordingToZoomAction (false/*don't center under cursor*/);
 }
 
