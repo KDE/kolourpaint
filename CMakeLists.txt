@@ -31,7 +31,7 @@ endmacro(CREATE_VERSION)
 
 macro_additional_clean_files( ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintversion.h )
 
-create_version(${CMAKE_SOURCE_DIR}/kolourpaint/VERSION kolourpaintversion.h)
+create_version(${CMAKE_SOURCE_DIR}/kolourpaint/VERSION ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintversion.h)
 
 
 macro(CREATE_LICENSE _in_FILE _out_FILE)
@@ -44,7 +44,7 @@ endmacro(CREATE_LICENSE)
 
 macro_additional_clean_files( ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintlicense.h )
 
-create_license(${CMAKE_SOURCE_DIR}/kolourpaint/COPYING kolourpaintlicense.h)
+create_license(${CMAKE_SOURCE_DIR}/kolourpaint/COPYING ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintlicense.h)
 
 set(libkolourpaintwidgets_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kpcolorsimilaritycube.cpp
