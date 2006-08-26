@@ -100,10 +100,7 @@ QRect kpToolPen::drawPoint (const QPoint &point)
 QRect kpToolPen::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
     QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
-    // TODO: I think this is wrong for pens due to lack of m_brushPixmap.
-    //       See comment for 011_kptoolpen_draw_push_down_draw_methods.diff
-    //       (part of r557112: approx. 2006-07-02 22:32:37 +10:00 AEST).
-    docRect = neededRect (docRect, m_brushPixmap [m_mouseButton].width ());
+    docRect = neededRect (docRect, 1/*pen width*/);
     kpImage image = document ()->getPixmapAt (docRect);
 
 
