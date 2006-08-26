@@ -42,17 +42,26 @@ const int kpColor::Exact = 0;
 // public static
 const kpColor kpColor::invalid;  // TODO: what's wrong with explicitly specifying () constructor?
 const kpColor kpColor::transparent (0, 0, 0, true/*isTransparent*/);
+const kpColor kpColor::black (0, 0, 0);
+const kpColor kpColor::white (255, 255, 255);
 
 
 kpColor::kpColor ()
     : m_rgbaIsValid (false),
       m_colorCacheIsValid (false)
 {
+#if DEBUG_KP_COLOR
+    kDebug () << "kpColor::<ctor>()" << endl;
+#endif
 }
 
 kpColor::kpColor (int red, int green, int blue, bool isTransparent)
     : m_colorCacheIsValid (false)
 {
+#if DEBUG_KP_COLOR
+    kDebug () << "kpColor::<ctor>(r=" << red << ",g=" << green << ",b=" << blue
+              << ",isTrans=" << isTransparent << ")" << endl;
+#endif
     if (red < 0 || red > 255 ||
         green < 0 || green > 255 ||
         blue < 0 || blue > 255)
@@ -73,6 +82,9 @@ kpColor::kpColor (int red, int green, int blue, bool isTransparent)
 kpColor::kpColor (const QRgb &rgba)
     : m_colorCacheIsValid (false)
 {
+#if DEBUG_KP_COLOR
+    kDebug () << "kpColor::<ctor>(rgba=" << (int *) rgba << ")" << endl;
+#endif
     if (qAlpha (rgba) > 0 && qAlpha (rgba) < 255)
     {
         kError () << "kpColor::<ctor>(QRgb) passed translucent alpha "
@@ -97,6 +109,9 @@ kpColor::kpColor (const kpColor &rhs)
        m_colorCacheIsValid (rhs.m_colorCacheIsValid),
        m_colorCache (rhs.m_colorCache)
 {
+#if DEBUG_KP_COLOR
+    kDebug () << "kpColor::<copy_ctor>()" << endl;
+#endif
 }
 
 // friend

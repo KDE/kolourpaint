@@ -75,6 +75,8 @@ public:
 
     static const kpColor invalid;
     static const kpColor transparent;
+    static const kpColor black;
+    static const kpColor white;
 
     bool isValid () const;
 
@@ -95,6 +97,11 @@ public:
     QColor maskColor () const;
 
 private:
+    // Catch accidental call to "const QRgb &rgba" (unsigned int) ctor
+    // by e.g. "kpColor(Qt::black)" (Qt::black is an enum element that can cast
+    // to "unsigned int").
+    kpColor (Qt::GlobalColor color);
+    
     bool m_rgbaIsValid;
     QRgb m_rgba;
 
