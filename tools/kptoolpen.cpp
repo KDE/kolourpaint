@@ -964,6 +964,7 @@ void kpToolPen::slotEraserSizeChanged (int size)
 
     for (int i = 0; i < 2; i++)
     {
+        // TODO: I can't see how this works for transparent?
         m_brushPixmap [i].resize (size, size);
         if (color (i).isOpaque ())
             m_brushPixmap [i].fill (color (i).toQColor ());
