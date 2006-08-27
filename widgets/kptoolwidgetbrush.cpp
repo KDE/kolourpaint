@@ -126,7 +126,6 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const QString &name)
                 / BRUSH_SIZE_NUM_COLS;
             const int h = (height () - 2/*margin*/ - 3/*spacing*/)
                 / BRUSH_SIZE_NUM_ROWS;
-            Q_ASSERT (w > 0 && h > 0);
             Q_ASSERT (w >= s && h >= s);
             QPixmap previewPixmap (w, h);
 
