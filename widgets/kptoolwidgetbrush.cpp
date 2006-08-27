@@ -119,34 +119,31 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const QString &name)
     {
         for (int i = 0; i < BRUSH_SIZE_NUM_COLS; i++)
         {
-            int w = (width () - 2/*margin*/ - 2/*spacing*/) / BRUSH_SIZE_NUM_COLS;
-            int h = (height () - 2/*margin*/ - 3/*spacing*/) / BRUSH_SIZE_NUM_ROWS;
-            QPixmap previewPixmap ((w <= 0 ? width () : w),
-                                   (h <= 0 ? height () : h));
-
             const int s = ::BrushSizes [shape][i];
 
-            Q_ASSERT (s <= previewPixmap.width ());
-            Q_ASSERT (s <= previewPixmap.height ());
-            const QRect rect = QRect ((previewPixmap.width () - s) / 2,
-                            (previewPixmap.height () - s) / 2,
-                            s,
-                            s);
 
-        #if DEBUG_KP_TOOL_WIDGET_BRUSH
-            kDebug () << "kpToolWidgetBrush::kpToolWidgetBrush() rect=" << rect << endl;
-        #endif
+            const int w = (width () - 2/*margin*/ - 2/*spacing*/)
+                / BRUSH_SIZE_NUM_COLS;
+            const int h = (height () - 2/*margin*/ - 3/*spacing*/)
+                / BRUSH_SIZE_NUM_ROWS;
+            Q_ASSERT (w > 0 && h > 0);
+            Q_ASSERT (w >= s && h >= s);
+            QPixmap previewPixmap (w, h);
 
             kpPainter::fillRect (&previewPixmap,
                 0, 0, previewPixmap.width (), previewPixmap.height (),
                 kpColor::transparent);
 
             DrawPackage pack = drawFunctionDataForRowCol (kpColor::black, shape, i);
-            ::Draw (&previewPixmap, rect.topLeft (), &pack);
+            ::Draw (&previewPixmap,
+                QPoint ((previewPixmap.width () - s) / 2,
+                        (previewPixmap.height () - s) / 2),
+                &pack);
+
 
             addOption (previewPixmap, brushName (shape, i)/*tooltip*/);
         }
-        
+
         startNewOptionRow ();
     }
 
@@ -195,6 +192,20 @@ QString kpToolWidgetBrush::brushName (int shape, int whichSize) const
 
 
 // public
+int kpToolWidgetBrush::brushSize () const
+{
+    return ::BrushSizes [selectedRow ()][selectedCol ()];
+}
+
+// public
+bool kpToolWidgetBrush::brushIsDiagonalLine () const
+{
+    // sync: <brushes>
+    return (selectedRow () >= 2);
+}
+
+
+// public
 kpTempPixmap::UserFunctionType kpToolWidgetBrush::drawFunction () const
 {
     return &::Draw;
@@ -221,21 +232,6 @@ kpToolWidgetBrush::DrawPackage kpToolWidgetBrush::drawFunctionData (
         const kpColor &color) const
 {
     return drawFunctionDataForRowCol (color, selectedRow (), selectedCol ());
-}
-
-
-// public
-int kpToolWidgetBrush::brushSize () const
-{
-    return ::BrushSizes [selectedRow ()][selectedCol ()];
-}
-
-
-// public
-bool kpToolWidgetBrush::brushIsDiagonalLine () const
-{
-    // sync: <brushes>
-    return (selectedRow () >= 2);
 }
 
 

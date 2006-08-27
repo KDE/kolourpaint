@@ -48,6 +48,8 @@ public:
     kpToolWidgetEraserSize (QWidget *parent, const QString &name);
     virtual ~kpToolWidgetEraserSize ();
 
+    int eraserSize () const;
+    
     struct DrawPackage
     {
         int selected;
@@ -55,7 +57,7 @@ public:
     };
 
     // Call the function returned by <drawFunction> to render the current
-    // brush onto the document, in <color>.  Pass the pointer returned by
+    // brush onto an image/document, in <color>.  Pass the pointer returned by
     // <drawFunctionData> to it.
     //
     // <drawCursorFunction> is to same as <drawFunction> but adds a black
@@ -64,11 +66,10 @@ public:
     // TODO: change function + data -> object
     kpTempPixmap::UserFunctionType drawFunction () const;
     kpTempPixmap::UserFunctionType drawCursorFunction () const;
+    
     static DrawPackage drawFunctionDataForSelected (const kpColor &color,
         int selectedIndex);
     DrawPackage drawFunctionData (const kpColor &color) const;
-
-    int eraserSize () const;
 
 signals:
     void eraserSizeChanged (int size);

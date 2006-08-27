@@ -47,8 +47,11 @@ public:
 
 private:
     QString brushName (int shape, int whichSize) const;
-    
+
 public:
+    int brushSize () const;
+    bool brushIsDiagonalLine () const;
+
     struct DrawPackage
     {
         int row;
@@ -57,18 +60,15 @@ public:
     };
 
     // Call the function returned by <drawFunction> to render the current
-    // brush onto the document, in <color>.  Pass the pointer returned by
+    // brush onto an image/document, in <color>.  Pass the pointer returned by
     // <drawFunctionData> to it.
     //
     // TODO: change function + data -> object
     kpTempPixmap::UserFunctionType drawFunction () const;
+
     static DrawPackage drawFunctionDataForRowCol (const kpColor &color,
         int row, int col);
     DrawPackage drawFunctionData (const kpColor &color) const;
-    
-    int brushSize () const;
-
-    bool brushIsDiagonalLine () const;
 
 signals:
     void brushChanged ();

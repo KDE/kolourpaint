@@ -78,6 +78,8 @@ struct kpToolFlowBasePrivate
         kpToolWidgetBrush::DrawPackage brushDrawPackageForMouseButton [2];
         kpToolWidgetEraserSize::DrawPackage eraserDrawPackageForMouseButton [2];
         
+        // Each element points to one of the above (both elements from the same
+        // array).
         void *drawPackageForMouseButton [2];
     
         int brushWidth, brushHeight;
@@ -521,7 +523,7 @@ kpToolFlowCommand *kpToolFlowBase::currentCommand () const
     return d->currentCommand;
 }
 
-// protected
+// protected slot
 void kpToolFlowBase::updateBrushAndCursor ()
 {
 #if DEBUG_KP_TOOL_FLOW_BASE && 1
