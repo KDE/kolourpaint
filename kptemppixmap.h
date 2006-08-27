@@ -46,7 +46,6 @@ public:
     {
         SetPixmap,
         PaintPixmap,
-        PaintMaskTransparentWithBrush,  // TODO: remove
         UserFunction,
     };
 

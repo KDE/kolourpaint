@@ -163,7 +163,6 @@ int kpTempPixmap::height () const
 bool kpTempPixmap::mayChangeDocumentMask () const
 {
     return (m_renderMode == SetPixmap ||
-            m_renderMode == PaintMaskTransparentWithBrush ||
             m_renderMode == UserFunction);
 }
 
@@ -179,9 +178,6 @@ void kpTempPixmap::paint (QPixmap *destPixmap, const QRect &docRect) const
         break;
     case PaintPixmap:
         kpPixmapFX::paintPixmapAt (PARAMS);
-        break;
-    case PaintMaskTransparentWithBrush:
-        kpPixmapFX::paintMaskTransparentWithBrush (PARAMS);
         break;
     case UserFunction:
         m_userFunction (destPixmap, REL_TOP_LEFT, m_userData);
