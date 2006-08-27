@@ -46,7 +46,7 @@ public:
     {
         SetPixmap,
         PaintPixmap,
-        UserFunction,
+        UserFunction
     };
 
     typedef void (*UserFunctionType) (QPixmap * /*destPixmap*/,
