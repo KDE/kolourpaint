@@ -33,8 +33,8 @@
 #include <kdebug.h>
 #include <kfontaction.h>
 #include <kfontsizeaction.h>
-#include <kicon.h>
 #include <kglobal.h>
+#include <kicon.h>
 #include <klocale.h>
 #include <ktoggleaction.h>
 
