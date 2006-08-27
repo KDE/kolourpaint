@@ -38,19 +38,40 @@
 
 
 kpTempPixmap::kpTempPixmap (bool isBrush, RenderMode renderMode,
-                            const QPoint &topLeft, const QPixmap &pixmap)
+        const QPoint &topLeft, const QPixmap &pixmap)
     : m_isBrush (isBrush),
       m_renderMode (renderMode),
       m_topLeft (topLeft),
-      m_pixmap (pixmap)
+      m_pixmap (pixmap),
+      m_width (pixmap.width ()), m_height (pixmap.height ()),
+      m_userFunction (0),
+      m_userData (0)
 {
+    // Use below constructor for that.
+    Q_ASSERT (renderMode != UserFunction);
+}
+
+kpTempPixmap::kpTempPixmap (bool isBrush, const QPoint &topLeft,
+        UserFunctionType userFunction, void *userData,
+        int width, int height)
+    : m_isBrush (isBrush),
+      m_renderMode (UserFunction),
+      m_topLeft (topLeft),
+      m_width (width), m_height (height),
+      m_userFunction (userFunction),
+      m_userData (userData)
+{
+    Q_ASSERT (m_userFunction);
 }
 
 kpTempPixmap::kpTempPixmap (const kpTempPixmap &rhs)
     : m_isBrush (rhs.m_isBrush),
       m_renderMode (rhs.m_renderMode),
       m_topLeft (rhs.m_topLeft),
-      m_pixmap (rhs.m_pixmap)
+      m_pixmap (rhs.m_pixmap),
+      m_width (rhs.m_width), m_height (rhs.m_height),
+      m_userFunction (rhs.m_userFunction),
+      m_userData (rhs.m_userData)
 {
 }
 
@@ -63,6 +84,9 @@ kpTempPixmap &kpTempPixmap::operator= (const kpTempPixmap &rhs)
     m_renderMode = rhs.m_renderMode;
     m_topLeft = rhs.m_topLeft;
     m_pixmap = rhs.m_pixmap;
+    m_width = rhs.m_width, m_height = rhs.m_height;
+    m_userFunction = rhs.m_userFunction;
+    m_userData = rhs.m_userData;
 
     return *this;
 }
@@ -96,6 +120,18 @@ QPixmap kpTempPixmap::pixmap () const
     return m_pixmap;
 }
 
+// public
+kpTempPixmap::UserFunctionType kpTempPixmap::userFunction () const
+{
+    return m_userFunction;
+}
+
+// public
+void *kpTempPixmap::userData () const
+{
+    return m_userData;
+}
+
 
 // public
 bool kpTempPixmap::isVisible (const kpViewManager *vm) const
@@ -107,19 +143,19 @@ bool kpTempPixmap::isVisible (const kpViewManager *vm) const
 QRect kpTempPixmap::rect () const
 {
     return QRect (m_topLeft.x (), m_topLeft.y (),
-                  m_pixmap.width (), m_pixmap.height ());
+                  m_width, m_height);
 }
 
 // public
 int kpTempPixmap::width () const
 {
-    return m_pixmap.width ();
+    return m_width;
 }
 
 // public
 int kpTempPixmap::height () const
 {
-    return m_pixmap.height ();
+    return m_height;
 }
 
 
@@ -127,13 +163,15 @@ int kpTempPixmap::height () const
 bool kpTempPixmap::mayChangeDocumentMask () const
 {
     return (m_renderMode == SetPixmap ||
-            m_renderMode == PaintMaskTransparentWithBrush);
+            m_renderMode == PaintMaskTransparentWithBrush ||
+            m_renderMode == UserFunction);
 }
 
 // public
 void kpTempPixmap::paint (QPixmap *destPixmap, const QRect &docRect) const
 {
-#define PARAMS destPixmap, m_topLeft - docRect.topLeft (), m_pixmap
+#define REL_TOP_LEFT m_topLeft - docRect.topLeft ()
+#define PARAMS destPixmap, REL_TOP_LEFT, m_pixmap
     switch (m_renderMode)
     {
     case SetPixmap:
@@ -145,6 +183,10 @@ void kpTempPixmap::paint (QPixmap *destPixmap, const QRect &docRect) const
     case PaintMaskTransparentWithBrush:
         kpPixmapFX::paintMaskTransparentWithBrush (PARAMS);
         break;
+    case UserFunction:
+        m_userFunction (destPixmap, REL_TOP_LEFT, m_userData);
+        break;
     }
 #undef PARAMS
+#undef REL_TOP_LEFT
 }

@@ -46,15 +46,27 @@ public:
     {
         SetPixmap,
         PaintPixmap,
-        PaintMaskTransparentWithBrush
+        PaintMaskTransparentWithBrush,  // TODO: remove
+        UserFunction,
     };
 
+    typedef void (*UserFunctionType) (QPixmap * /*destPixmap*/,
+        const QPoint & /*topLeft*/,
+        void * /*userData*/);
+    
     /*
      * <isBrush>    Specifies that its visibility is dependent on whether or
      *              not the mouse cursor is inside a view.  If false, the
      *              pixmap is always displayed.
+     *
+     * <userFunction>   This is the only way of specifying the "UserFunction"
+     *                  <renderMode>.  <userFunction> must not draw outside
+     *                  the claimed rectangle.
      */
     kpTempPixmap (bool isBrush, RenderMode renderMode, const QPoint &topLeft, const QPixmap &pixmap);
+    kpTempPixmap (bool isBrush, const QPoint &topLeft,
+        UserFunctionType userFunction, void *userData,
+        int width, int height);
     kpTempPixmap (const kpTempPixmap &rhs);
     kpTempPixmap &operator= (const kpTempPixmap &rhs);
     ~kpTempPixmap ();
@@ -63,6 +75,8 @@ public:
     RenderMode renderMode () const;
     QPoint topLeft () const;
     QPixmap pixmap () const;
+    UserFunctionType userFunction () const;
+    void *userData () const;
 
     bool isVisible (const kpViewManager *vm) const;
     QRect rect () const;
@@ -85,6 +99,10 @@ private:
     RenderMode m_renderMode;
     QPoint m_topLeft;
     QPixmap m_pixmap;
+    // == m_pixmap.{width,height}() unless m_renderMode == UserFunction.
+    int m_width, m_height;
+    UserFunctionType m_userFunction;
+    void *m_userData;
 };
 
 
