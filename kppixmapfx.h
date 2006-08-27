@@ -326,7 +326,7 @@ public:
     //
     // <brushPixmap> must be a QPixmap of depth 1 (or a QBitmap).
     //
-    // TODO: we must drop this since 1. can't be supported in Qt4 2. we later when to support alpha
+    // TODO: we must drop this since 1. can't be supported in Qt4 2. we later want to support alpha
     static void paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QPoint &destAt,
                                                const QPixmap &brushBitmap) KDE_DEPRECATED;
     static void paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, int destX, int destY,
