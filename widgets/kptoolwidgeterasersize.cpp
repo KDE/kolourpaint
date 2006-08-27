@@ -100,6 +100,8 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const QString &
         {
             // HACK: kpToolWidgetBase's layout code sucks and gives uneven spacing
             previewPixmap = QPixmap ((width () - 4) / 3, 9);
+            Q_ASSERT (previewPixmap.width () >= s &&
+                previewPixmap.height () >= s);
         }
 
         kpPainter::fillRect (&previewPixmap,
