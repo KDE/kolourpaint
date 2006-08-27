@@ -71,7 +71,7 @@ QRect kpToolFlowPixmapBase::drawPoint (const QPoint & /*point*/)
 QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
     QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
-    docRect = neededRect (docRect, m_brushPixmap [m_mouseButton].width ());
+    docRect = neededRect (docRect, qMax (brushWidth (), brushHeight ()));
     QPixmap pixmap = document ()->getPixmapAt (docRect);
 
 
@@ -82,19 +82,8 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
          pit++)
     {
         const QPoint point = hotPoint ((*pit).x (), (*pit).y ()) - docRect.topLeft ();
-        
-        if (color (m_mouseButton).isOpaque ())
-        {
-            kpPixmapFX::paintPixmapAt (&pixmap,
-                point,
-                m_brushPixmap [m_mouseButton]);
-        }
-        else
-        {
-            kpPixmapFX::paintMaskTransparentWithBrush (&pixmap,
-                point,
-                kpPixmapFX::getNonNullMask (m_brushPixmap [m_mouseButton]));
-        }
+
+        brushDrawFunction () (&pixmap, point, brushDrawFunctionData ());
     }
 
 

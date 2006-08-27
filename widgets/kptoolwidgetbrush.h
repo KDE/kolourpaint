@@ -32,6 +32,8 @@
 
 #include <qpixmap.h>
 
+#include <kpcolor.h>
+#include <kptemppixmap.h>
 #include <kptoolwidgetbase.h>
 
 
@@ -44,20 +46,35 @@ public:
     virtual ~kpToolWidgetBrush ();
 
 private:
-    QString brushName (int shape, int whichSize);
+    QString brushName (int shape, int whichSize) const;
     
 public:
-    QPixmap brush () const;
+    struct DrawPackage
+    {
+        int row;
+        int col;
+        kpColor color;
+    };
+
+    // Call the function returned by <drawFunction> to render the current
+    // brush onto the document, in <color>.  Pass the pointer returned by
+    // <drawFunctionData> to it.
+    //
+    // TODO: change function + data -> object
+    kpTempPixmap::UserFunctionType drawFunction () const;
+    static DrawPackage drawFunctionDataForRowCol (const kpColor &color,
+        int row, int col);
+    DrawPackage drawFunctionData (const kpColor &color) const;
+    
+    int brushSize () const;
+
     bool brushIsDiagonalLine () const;
 
 signals:
-    void brushChanged (const QPixmap &pixmap, bool isDiagonalLine);
+    void brushChanged ();
 
 protected slots:
     virtual bool setSelected (int row, int col, bool saveAsDefault);
-
-private:
-    QPixmap m_brushBitmaps [16];
 };
 
 

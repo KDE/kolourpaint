@@ -35,6 +35,7 @@
 #include <qrect.h>
 
 #include <kpcommandhistory.h>
+#include <kptemppixmap.h>
 #include <kptool.h>
 
 
@@ -59,6 +60,9 @@ public:
         kpMainWindow *mainWindow, const QString &name);
     virtual ~kpToolFlowBase ();
 
+private:
+    void clearBrushCursorData ();
+    
 protected:
     virtual QString haventBegunDrawUserMessage () const = 0;
     
@@ -106,12 +110,20 @@ public:
     virtual void releasedAllButtons ();
     virtual void endDraw (const QPoint &, const QRect &);
 
+protected:
+    kpTempPixmap::UserFunctionType brushDrawFunction () const;
+    void *brushDrawFunctionData () const;
+    
+    int brushWidth () const;
+    int brushHeight () const;
+
+    kpToolFlowCommand *currentCommand () const;
+
 protected slots:
+    void updateBrushAndCursor ();
+
     virtual void slotForegroundColorChanged (const kpColor &col);
     virtual void slotBackgroundColorChanged (const kpColor &col);
-
-    void slotBrushChanged (const QPixmap &pixmap, bool isDiagonalLine);
-    void slotEraserSizeChanged (int size);
 
 protected:
     virtual kpColor color (int which);
@@ -123,15 +135,9 @@ protected:
     QRect hotRect (int x, int y) const;
     QRect hotRect (const QPoint &point) const;
 
-    void updateBrushCursor (bool recalc = true);
-
-    kpToolWidgetBrush *m_toolWidgetBrush;
-    kpToolWidgetEraserSize *m_toolWidgetEraserSize;
-    QPixmap m_brushPixmap [2];
-    QPixmap m_cursorPixmap;
-    bool m_brushIsDiagonalLine;
-
-    kpToolFlowCommand *m_currentCommand;
+private:
+    struct kpToolFlowBasePrivate *d;
 };
+
 
 #endif  // KP_TOOL_FLOW_BASE_H

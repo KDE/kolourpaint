@@ -310,7 +310,7 @@ QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPo
 #endif
 
     QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
-    docRect = neededRect (docRect, m_brushPixmap [m_mouseButton].width ());
+    docRect = neededRect (docRect, qMax (brushWidth (), brushHeight ()));
     QPixmap pixmap = document ()->getPixmapAt (docRect);
 
 

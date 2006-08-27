@@ -39,10 +39,12 @@
 #include <klocale.h>
 
 #include <kpdefs.h>
+#include <kppainter.h>
 
 
+// TODO: more OO, no arrays (use safer structs).
 /* sync: <brushes> */
-static int brushSize [][3] =
+static int BrushSizes [][3] =
 {
     {8, 4, 1/*like Pen*/},
     {9, 5, 2},
@@ -50,70 +52,99 @@ static int brushSize [][3] =
     {9, 5, 2}
 };
 
-#define BRUSH_SIZE_NUM_COLS (int (sizeof (brushSize [0]) / sizeof (brushSize [0][0])))
-#define BRUSH_SIZE_NUM_ROWS (int (sizeof (brushSize) / sizeof (brushSize [0])))
+#define BRUSH_SIZE_NUM_COLS (int (sizeof (::BrushSizes [0]) / sizeof (::BrushSizes [0][0])))
+#define BRUSH_SIZE_NUM_ROWS (int (sizeof (::BrushSizes) / sizeof (::BrushSizes [0])))
+
+
+static void Draw (QPixmap *destPixmap, const QPoint &topLeft, void *userData)
+{
+    kpToolWidgetBrush::DrawPackage *pack =
+        static_cast <kpToolWidgetBrush::DrawPackage *> (userData);
+
+#if DEBUG_KP_TOOL_WIDGET_BRUSH
+    kDebug () << "kptoolwidgetbrush.cpp:Draw(destPixmap,topLeft="
+              << topLeft << " pack: row=" << pack->row << " col=" << pack->col
+              << " color=" << (int *) pack->color.toQRgb ()
+              << endl;
+#endif
+    const int size = ::BrushSizes [pack->row][pack->col];
+#if DEBUG_KP_TOOL_WIDGET_BRUSH
+    kDebug () << "\tsize=" << size << endl;
+#endif
+
+    // sync: <brushes>
+    switch (pack->row/*shape*/)
+    {
+    case 0:
+        kpPainter::drawEllipse (destPixmap,
+            topLeft.x (), topLeft.y (), size, size,
+            pack->color/*color*/, 1/*width*/,
+            pack->color/*fill color*/);
+        break;
+        
+    case 1:
+        kpPainter::drawRect (destPixmap,
+            topLeft.x (), topLeft.y (), size, size,
+            pack->color/*color*/, 1/*width*/,
+            pack->color/*fill color*/);
+        break;
+        
+    case 2:
+        kpPainter::drawLine (destPixmap,
+            topLeft.x () + size - 1, topLeft.y (),
+            topLeft.x (), topLeft.y () + size - 1,
+            pack->color, 1/*width*/);
+        break;
+        
+    case 3:
+        kpPainter::drawLine (destPixmap,
+            topLeft.x (), topLeft.y (),
+            topLeft.x () + size - 1, topLeft.y () + size - 1,
+            pack->color, 1/*width*/);
+        break;
+
+    default:
+        Q_ASSERT (!"Unknown row");
+        break;
+    }
+}
+
 
 kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const QString &name)
     : kpToolWidgetBase (parent, name)
 {
     setInvertSelectedPixmap ();
 
-    QPixmap *pm = m_brushBitmaps;
-    
     for (int shape = 0; shape < BRUSH_SIZE_NUM_ROWS; shape++)
     {
         for (int i = 0; i < BRUSH_SIZE_NUM_COLS; i++)
         {
             int w = (width () - 2/*margin*/ - 2/*spacing*/) / BRUSH_SIZE_NUM_COLS;
             int h = (height () - 2/*margin*/ - 3/*spacing*/) / BRUSH_SIZE_NUM_ROWS;
-            *pm = QPixmap ((w <= 0 ? width () : w),
-                           (h <= 0 ? height () : h));
+            QPixmap previewPixmap ((w <= 0 ? width () : w),
+                                   (h <= 0 ? height () : h));
 
-            const int s = brushSize [shape][i];
-            QRect rect;
-            
-            if (s >= pm->width () || s >= pm->height ())
-                rect = QRect (0, 0, pm->width (), pm->height ());
-            else
-            {
-                rect = QRect ((pm->width () - s) / 2,
-                              (pm->height () - s) / 2,
-                              s,
-                              s);
-            }
+            const int s = ::BrushSizes [shape][i];
+
+            Q_ASSERT (s <= previewPixmap.width ());
+            Q_ASSERT (s <= previewPixmap.height ());
+            const QRect rect = QRect ((previewPixmap.width () - s) / 2,
+                            (previewPixmap.height () - s) / 2,
+                            s,
+                            s);
 
         #if DEBUG_KP_TOOL_WIDGET_BRUSH
             kDebug () << "kpToolWidgetBrush::kpToolWidgetBrush() rect=" << rect << endl;
         #endif
 
-            pm->fill (Qt::white);
-            
-            QPainter painter (pm);
-            painter.setPen (Qt::black);
-            painter.setBrush (Qt::black);
+            kpPainter::fillRect (&previewPixmap,
+                0, 0, previewPixmap.width (), previewPixmap.height (),
+                kpColor::transparent);
 
-            // sync: <brushes>
-            switch (shape)
-            {
-            case 0:
-                painter.drawEllipse (rect);
-                break;
-            case 1:
-                painter.drawRect (rect);
-                break;
-            case 2:
-                painter.drawLine (rect.topRight (), rect.bottomLeft ());
-                break;
-            case 3:
-                painter.drawLine (rect.topLeft (), rect.bottomRight ());
-                break;
-            }
-            painter.end ();
+            DrawPackage pack = drawFunctionDataForRowCol (kpColor::black, shape, i);
+            ::Draw (&previewPixmap, rect.topLeft (), &pack);
 
-            pm->setMask (pm->createHeuristicMask ());
-            addOption (*pm, brushName (shape, i)/*tooltip*/);
-
-            pm++;
+            addOption (previewPixmap, brushName (shape, i)/*tooltip*/);
         }
         
         startNewOptionRow ();
@@ -128,9 +159,9 @@ kpToolWidgetBrush::~kpToolWidgetBrush ()
 
 
 // private
-QString kpToolWidgetBrush::brushName (int shape, int whichSize)
+QString kpToolWidgetBrush::brushName (int shape, int whichSize) const
 {
-    int s = brushSize [shape][whichSize];
+    int s = ::BrushSizes [shape][whichSize];
     
     if (s == 1)
         return i18n ("1x1");
@@ -162,23 +193,58 @@ QString kpToolWidgetBrush::brushName (int shape, int whichSize)
     return i18n ("%1x%2 %3", s, s, shapeName);
 }
 
-QPixmap kpToolWidgetBrush::brush () const
+
+// public
+kpTempPixmap::UserFunctionType kpToolWidgetBrush::drawFunction () const
 {
-    return m_brushBitmaps [selectedRow () * BRUSH_SIZE_NUM_COLS + selectedCol ()];
+    return &::Draw;
 }
 
+
+// public static
+kpToolWidgetBrush::DrawPackage kpToolWidgetBrush::drawFunctionDataForRowCol (
+        const kpColor &color, int row, int col)
+{
+    Q_ASSERT (row >= 0 && col >= 0);
+    
+    DrawPackage pack;
+    
+    pack.row = row;
+    pack.col = col;
+    pack.color = color;
+
+    return pack;
+}
+
+// public
+kpToolWidgetBrush::DrawPackage kpToolWidgetBrush::drawFunctionData (
+        const kpColor &color) const
+{
+    return drawFunctionDataForRowCol (color, selectedRow (), selectedCol ());
+}
+
+
+// public
+int kpToolWidgetBrush::brushSize () const
+{
+    return ::BrushSizes [selectedRow ()][selectedCol ()];
+}
+
+
+// public
 bool kpToolWidgetBrush::brushIsDiagonalLine () const
 {
     // sync: <brushes>
     return (selectedRow () >= 2);
 }
 
-// virtual protected slot [base kpToolWidgetBase]
+
+// protected slot virtual [base kpToolWidgetBase]
 bool kpToolWidgetBrush::setSelected (int row, int col, bool saveAsDefault)
 {
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);
     if (ret)
-        emit brushChanged (brush (), brushIsDiagonalLine ());
+        emit brushChanged ();
     return ret;
 }
 

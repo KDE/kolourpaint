@@ -60,50 +60,106 @@
 #include <kpviewmanager.h>
 
 
+struct kpToolFlowBasePrivate
+{
+    kpToolWidgetBrush *toolWidgetBrush;
+    kpToolWidgetEraserSize *toolWidgetEraserSize;
+
+
+    //
+    // Cursor and Brush Data
+    // (must be zero if unused)
+    //
+        
+        kpTempPixmap::UserFunctionType brushDrawFunc, cursorDrawFunc;
+
+        // Can't use union since package types contain fields requiring
+        // constructors.
+        kpToolWidgetBrush::DrawPackage brushDrawPackageForMouseButton [2];
+        kpToolWidgetEraserSize::DrawPackage eraserDrawPackageForMouseButton [2];
+        
+        void *drawPackageForMouseButton [2];
+    
+        int brushWidth, brushHeight;
+        int cursorWidth, cursorHeight;
+        
+        bool brushIsDiagonalLine;
+
+
+    kpToolFlowCommand *currentCommand;
+};
+
+
 kpToolFlowBase::kpToolFlowBase (const QString &text, const QString &description,
         int key,
         kpMainWindow *mainWindow, const QString &name)
+        
     : kpTool (text, description, key, mainWindow, name),
-      m_toolWidgetBrush (0),
-      m_toolWidgetEraserSize (0),
-      m_currentCommand (0)
+      d (new kpToolFlowBasePrivate ())
 {
+    d->toolWidgetBrush = 0;
+    d->toolWidgetEraserSize = 0;
+
+    clearBrushCursorData ();
+
+    d->currentCommand = 0;
 }
 
 kpToolFlowBase::~kpToolFlowBase ()
 {
+    delete d;
+}
+
+
+// private
+void kpToolFlowBase::clearBrushCursorData ()
+{
+    d->brushDrawFunc = d->cursorDrawFunc = 0;
+
+    memset (&d->brushDrawPackageForMouseButton,
+        0,
+        sizeof (d->brushDrawPackageForMouseButton));
+    memset (&d->eraserDrawPackageForMouseButton,
+        0,
+        sizeof (d->eraserDrawPackageForMouseButton));
+
+    memset (&d->drawPackageForMouseButton,
+        0,
+        sizeof (d->drawPackageForMouseButton));
+
+    d->brushWidth = d->brushHeight = 0;
+    d->cursorWidth = d->cursorHeight = 0;
+
+    d->brushIsDiagonalLine = false;
 }
 
 
 // virtual
 void kpToolFlowBase::begin ()
 {
-    m_brushIsDiagonalLine = false;
-
     kpToolToolBar *tb = toolToolBar ();
     Q_ASSERT (tb);
 
+    // TODO: Bad smell.  Mutually exclusive.  Use inheritance.
     if (haveSquareBrushes ())
     {
-        m_toolWidgetEraserSize = tb->toolWidgetEraserSize ();
-        connect (m_toolWidgetEraserSize, SIGNAL (eraserSizeChanged (int)),
-                 this, SLOT (slotEraserSizeChanged (int)));
-        m_toolWidgetEraserSize->show ();
+        d->toolWidgetEraserSize = tb->toolWidgetEraserSize ();
+        connect (d->toolWidgetEraserSize, SIGNAL (eraserSizeChanged (int)),
+                 this, SLOT (updateBrushAndCursor ()));
+        d->toolWidgetEraserSize->show ();
 
-        slotEraserSizeChanged (m_toolWidgetEraserSize->eraserSize ());
+        updateBrushAndCursor ();
 
         viewManager ()->setCursor (kpCursorProvider::lightCross ());
     }
-
-    if (haveDiverseBrushes ())
+    else if (haveDiverseBrushes ())
     {
-        m_toolWidgetBrush = tb->toolWidgetBrush ();
-        connect (m_toolWidgetBrush, SIGNAL (brushChanged (const QPixmap &, bool)),
-                 this, SLOT (slotBrushChanged (const QPixmap &, bool)));
-        m_toolWidgetBrush->show ();
+        d->toolWidgetBrush = tb->toolWidgetBrush ();
+        connect (d->toolWidgetBrush, SIGNAL (brushChanged ()),
+                 this, SLOT (updateBrushAndCursor ()));
+        d->toolWidgetBrush->show ();
 
-        slotBrushChanged (m_toolWidgetBrush->brush (),
-                          m_toolWidgetBrush->brushIsDiagonalLine ());
+        updateBrushAndCursor ();
 
         viewManager ()->setCursor (kpCursorProvider::lightCross ());
     }
@@ -114,18 +170,17 @@ void kpToolFlowBase::begin ()
 // virtual
 void kpToolFlowBase::end ()
 {
-    if (m_toolWidgetEraserSize)
+    if (d->toolWidgetEraserSize)
     {
-        disconnect (m_toolWidgetEraserSize, SIGNAL (eraserSizeChanged (int)),
-                    this, SLOT (slotEraserSizeChanged (int)));
-        m_toolWidgetEraserSize = 0;
+        disconnect (d->toolWidgetEraserSize, SIGNAL (eraserSizeChanged (int)),
+                    this, SLOT (updateBrushAndCursor ()));
+        d->toolWidgetEraserSize = 0;
     }
-
-    if (m_toolWidgetBrush)
+    else if (d->toolWidgetBrush)
     {
-        disconnect (m_toolWidgetBrush, SIGNAL (brushChanged (const QPixmap &, bool)),
-                    this, SLOT (slotBrushChanged (const QPixmap &, bool)));
-        m_toolWidgetBrush = 0;
+        disconnect (d->toolWidgetBrush, SIGNAL (brushChanged ()),
+                    this, SLOT (updateBrushAndCursor ()));
+        d->toolWidgetBrush = 0;
     }
 
     kpViewManager *vm = viewManager ();
@@ -137,16 +192,13 @@ void kpToolFlowBase::end ()
     if (haveAnyBrushes ())
         vm->unsetCursor ();
 
-    // save memory
-    for (int i = 0; i < 2; i++)
-        m_brushPixmap [i] = QPixmap ();
-    m_cursorPixmap = QPixmap ();
+    clearBrushCursorData ();
 }
 
 // virtual
 void kpToolFlowBase::beginDraw ()
 {
-    m_currentCommand = new kpToolFlowCommand (text (), mainWindow ());
+    d->currentCommand = new kpToolFlowCommand (text (), mainWindow ());
 
     // we normally show the Brush pix in the foreground colour but if the
     // user starts drawing in the background color, we don't want to leave
@@ -167,39 +219,18 @@ void kpToolFlowBase::hover (const QPoint &point)
                << " cursorPixmap.isNull=" << m_cursorPixmap.isNull ()
                << endl;
 #endif
-    if (point != KP_INVALID_POINT && !m_cursorPixmap.isNull ())
+    if (point != KP_INVALID_POINT && d->cursorDrawFunc)
     {
+        // TODO: why this?
         m_mouseButton = 0;
-
-        kpTempPixmap::RenderMode renderMode = kpTempPixmap::SetPixmap; // default
-        QPixmap cursorPixmapForTempPixmap = m_cursorPixmap;
-
-        if (haveSquareBrushes ())
-            renderMode = kpTempPixmap::SetPixmap;
-        else if (haveDiverseBrushes ())
-        {
-            if (color (0).isOpaque ())
-                renderMode = kpTempPixmap::PaintPixmap;
-            else
-            {
-                renderMode = kpTempPixmap::PaintMaskTransparentWithBrush;
-                cursorPixmapForTempPixmap = kpPixmapFX::getNonNullMask (m_cursorPixmap);
-            }
-        }
-        else
-        {
-            // Never executed.
-            // TODO: restructure code so this is clear and we won't need "renderMode" default above.
-        }
-
 
         viewManager ()->setFastUpdates ();
 
         viewManager ()->setTempPixmap (
             kpTempPixmap (true/*brush*/,
-                          renderMode,
-                          hotPoint (),
-                          cursorPixmapForTempPixmap));
+                hotPoint (),
+                d->cursorDrawFunc, d->drawPackageForMouseButton [0/*left button*/],
+                d->cursorWidth, d->cursorHeight));
 
         viewManager ()->restoreFastUpdates ();
     }
@@ -309,7 +340,7 @@ QList <QPoint> kpToolFlowBase::interpolatePoints (const QPoint &thisPoint,
 
         if (plot)
         {
-            if (m_brushIsDiagonalLine && plot == 2)
+            if (d->brushIsDiagonalLine && plot == 2)
             {
                 // MODIFIED: every point is
                 // horizontally or vertically adjacent to another point (if there
@@ -363,7 +394,6 @@ void kpToolFlowBase::drawLineTearDownPainterMask (QPixmap *pixmap,
         maskPainter->end ();
 
 
-
     if (drawingHappened)
     {
         if (!maskBitmap->isNull ())
@@ -391,7 +421,7 @@ void kpToolFlowBase::draw (const QPoint &thisPoint, const QPoint &lastPoint, con
 
     // TODO: I'm beginning to wonder this drawPoint() "optimization" actually
     //       optimises.  Is it worth the complexity?  Hence drawPoint() impl above.
-    if (m_brushIsDiagonalLine ?
+    if (d->brushIsDiagonalLine ?
             currentPointCardinallyNextToLast () :
             currentPointNextToLast ())
     {
@@ -404,7 +434,7 @@ void kpToolFlowBase::draw (const QPoint &thisPoint, const QPoint &lastPoint, con
         dirtyRect = drawLine (thisPoint, lastPoint);
     }
 
-    m_currentCommand->updateBoundingRect (dirtyRect);
+    d->currentCommand->updateBoundingRect (dirtyRect);
 
     viewManager ()->restoreFastUpdates ();
     setUserShapePoints (thisPoint);
@@ -413,13 +443,13 @@ void kpToolFlowBase::draw (const QPoint &thisPoint, const QPoint &lastPoint, con
 // virtual
 void kpToolFlowBase::cancelShape ()
 {
-    m_currentCommand->finalize ();
-    m_currentCommand->cancel ();
+    d->currentCommand->finalize ();
+    d->currentCommand->cancel ();
 
-    delete m_currentCommand;
-    m_currentCommand = 0;
+    delete d->currentCommand;
+    d->currentCommand = 0;
 
-    updateBrushCursor (false/*no recalc*/);
+    updateBrushAndCursor ();
 
     setUserMessage (i18n ("Let go of all the mouse buttons."));
 }
@@ -432,13 +462,13 @@ void kpToolFlowBase::releasedAllButtons ()
 // virtual
 void kpToolFlowBase::endDraw (const QPoint &, const QRect &)
 {
-    m_currentCommand->finalize ();
-    mainWindow ()->commandHistory ()->addCommand (m_currentCommand, false /* don't exec */);
+    d->currentCommand->finalize ();
+    mainWindow ()->commandHistory ()->addCommand (d->currentCommand, false /* don't exec */);
 
     // don't delete - it's up to the commandHistory
-    m_currentCommand = 0;
+    d->currentCommand = 0;
 
-    updateBrushCursor (false/*no recalc*/);
+    updateBrushAndCursor ();
 
     setUserMessage (haventBegunDrawUserMessage ());
 }
@@ -459,65 +489,105 @@ kpColor kpToolFlowBase::color (int which)
         return kpTool::color (which ? 0 : 1);  // don't trust !0 == 1
 }
 
+
+// protected
+kpTempPixmap::UserFunctionType kpToolFlowBase::brushDrawFunction () const
+{
+    return d->brushDrawFunc;
+}
+
+// protected
+void *kpToolFlowBase::brushDrawFunctionData () const
+{
+    return d->drawPackageForMouseButton [m_mouseButton];
+}
+
+
+// protected
+int kpToolFlowBase::brushWidth () const
+{
+    return d->brushWidth;
+}
+
+// protected
+int kpToolFlowBase::brushHeight () const
+{
+    return d->brushHeight;
+}
+
+// protected
+kpToolFlowCommand *kpToolFlowBase::currentCommand () const
+{
+    return d->currentCommand;
+}
+
+// protected
+void kpToolFlowBase::updateBrushAndCursor ()
+{
+#if DEBUG_KP_TOOL_FLOW_BASE && 1
+    kDebug () << "kpToolFlowBase::updateBrushAndCursor()" << endl;
+#endif
+
+    if (haveSquareBrushes ())
+    {
+        d->brushDrawFunc = d->toolWidgetEraserSize->drawFunction ();
+        d->cursorDrawFunc = d->toolWidgetEraserSize->drawCursorFunction ();
+
+        for (int i = 0; i < 2; i++)
+        {
+            d->drawPackageForMouseButton [i] =
+                &(d->eraserDrawPackageForMouseButton [i] =
+                    d->toolWidgetEraserSize->drawFunctionData (color (i)));
+        }
+
+        d->brushWidth = d->brushHeight =
+            d->cursorWidth = d->cursorHeight =
+                d->toolWidgetEraserSize->eraserSize ();
+
+        d->brushIsDiagonalLine = false;
+    }
+    else if (haveDiverseBrushes ())
+    {
+        d->brushDrawFunc = d->cursorDrawFunc = d->toolWidgetBrush->drawFunction ();
+
+        for (int i = 0; i < 2; i++)
+        {
+            d->drawPackageForMouseButton [i] =
+                &(d->brushDrawPackageForMouseButton [i] =
+                    d->toolWidgetBrush->drawFunctionData (color (i)));
+        }
+
+        d->brushWidth = d->brushHeight =
+            d->cursorWidth = d->cursorHeight =
+                d->toolWidgetBrush->brushSize ();
+
+        d->brushIsDiagonalLine = d->toolWidgetBrush->brushIsDiagonalLine ();
+    }
+
+    hover (hasBegun () ? m_currentPoint : currentPoint ());
+}
+
+
 // virtual private slot
-void kpToolFlowBase::slotForegroundColorChanged (const kpColor &col)
+void kpToolFlowBase::slotForegroundColorChanged (const kpColor & /*col*/)
 {
 #if DEBUG_KP_TOOL_FLOW_BASE
     kDebug () << "kpToolFlowBase::slotForegroundColorChanged()" << endl;
 #endif
-    if (col.isOpaque ())
-        m_brushPixmap [colorsAreSwapped () ? 1 : 0].fill (col.toQColor ());
 
-    updateBrushCursor ();
+    updateBrushAndCursor ();
 }
 
 // virtual private slot
-void kpToolFlowBase::slotBackgroundColorChanged (const kpColor &col)
+void kpToolFlowBase::slotBackgroundColorChanged (const kpColor & /*col*/)
 {
 #if DEBUG_KP_TOOL_FLOW_BASE
     kDebug () << "kpToolFlowBase::slotBackgroundColorChanged()" << endl;
 #endif
 
-    if (col.isOpaque ())
-        m_brushPixmap [colorsAreSwapped () ? 0 : 1].fill (col.toQColor ());
-
-    updateBrushCursor ();
+    updateBrushAndCursor ();
 }
 
-// private slot
-void kpToolFlowBase::slotBrushChanged (const QPixmap &pixmap, bool isDiagonalLine)
-{
-#if DEBUG_KP_TOOL_FLOW_BASE
-    kDebug () << "kpToolFlowBase::slotBrushChanged()" << endl;
-#endif
-    for (int i = 0; i < 2; i++)
-    {
-        m_brushPixmap [i] = pixmap;
-        if (color (i).isOpaque ())
-            m_brushPixmap [i].fill (color (i).toQColor ());
-    }
-
-    m_brushIsDiagonalLine = isDiagonalLine;
-
-    updateBrushCursor ();
-}
-
-// private slot
-void kpToolFlowBase::slotEraserSizeChanged (int size)
-{
-#if DEBUG_KP_TOOL_FLOW_BASE
-    kDebug () << "KpToolFlowBase::slotEraserSizeChanged(size=" << size << ")" << endl;
-#endif
-
-    for (int i = 0; i < 2; i++)
-    {
-        m_brushPixmap [i] = QPixmap (size, size);
-        if (color (i).isOpaque ())
-            m_brushPixmap [i].fill (color (i).toQColor ());
-    }
-
-    updateBrushCursor ();
-}
 
 QPoint kpToolFlowBase::hotPoint () const
 {
@@ -539,9 +609,7 @@ QPoint kpToolFlowBase::hotPoint (const QPoint &point) const
      *        |
      *      Center
      */
-    return point -
-           QPoint (m_brushPixmap [m_mouseButton].width () / 2,
-                   m_brushPixmap [m_mouseButton].height () / 2);
+    return point - QPoint (d->brushWidth / 2, d->brushHeight / 2);
 }
 
 QRect kpToolFlowBase::hotRect () const
@@ -557,28 +625,7 @@ QRect kpToolFlowBase::hotRect (int x, int y) const
 QRect kpToolFlowBase::hotRect (const QPoint &point) const
 {
     QPoint topLeft = hotPoint (point);
-    return QRect (topLeft.x (),
-                  topLeft.y (),
-                  m_brushPixmap [m_mouseButton].width (),
-                  m_brushPixmap [m_mouseButton].height ());
-}
-
-// private
-void kpToolFlowBase::updateBrushCursor (bool recalc)
-{
-#if DEBUG_KP_TOOL_FLOW_BASE && 1
-    kDebug () << "kpToolFlowBase::updateBrushCursor(recalc=" << recalc << ")" << endl;
-#endif
-
-    if (recalc)
-    {
-        if (haveSquareBrushes ())
-            m_cursorPixmap = m_toolWidgetEraserSize->cursorPixmap (color (0));
-        else if (haveDiverseBrushes ())
-            m_cursorPixmap = m_brushPixmap [0];
-    }
-
-    hover (hasBegun () ? m_currentPoint : currentPoint ());
+    return QRect (topLeft.x (), topLeft.y (), d->brushWidth, d->brushHeight);
 }
 
 

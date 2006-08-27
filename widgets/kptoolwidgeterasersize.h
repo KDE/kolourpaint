@@ -32,6 +32,8 @@
 
 #include <qpixmap.h>
 
+#include <kpcolor.h>
+#include <kptemppixmap.h>
 #include <kptoolwidgetbase.h>
 
 
@@ -46,17 +48,33 @@ public:
     kpToolWidgetEraserSize (QWidget *parent, const QString &name);
     virtual ~kpToolWidgetEraserSize ();
 
+    struct DrawPackage
+    {
+        int selected;
+        kpColor color;
+    };
+
+    // Call the function returned by <drawFunction> to render the current
+    // brush onto the document, in <color>.  Pass the pointer returned by
+    // <drawFunctionData> to it.
+    //
+    // <drawCursorFunction> is to same as <drawFunction> but adds a black
+    // border suitable as a cursor only.
+    //
+    // TODO: change function + data -> object
+    kpTempPixmap::UserFunctionType drawFunction () const;
+    kpTempPixmap::UserFunctionType drawCursorFunction () const;
+    static DrawPackage drawFunctionDataForSelected (const kpColor &color,
+        int selectedIndex);
+    DrawPackage drawFunctionData (const kpColor &color) const;
+
     int eraserSize () const;
-    QPixmap cursorPixmap (const kpColor &color) const;
 
 signals:
     void eraserSizeChanged (int size);
 
 protected slots:
     virtual bool setSelected (int row, int col, bool saveAsDefault);
-
-private:
-    QPixmap *m_cursorPixmaps;
 };
 
 

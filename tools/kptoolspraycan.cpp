@@ -306,7 +306,7 @@ void kpToolSpraycan::timeoutDraw ()
     const QRect drawnRect = drawLineWithProbability (m_currentPoint, m_currentPoint,
         1.0/*100% chance of drawing*/);
 
-    m_currentCommand->updateBoundingRect (drawnRect);
+    currentCommand ()->updateBoundingRect (drawnRect);
 }
 
     
