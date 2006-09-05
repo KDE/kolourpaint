@@ -120,7 +120,7 @@ void kpToolFlowCommand::finalize ()
 {
     if (d->boundingRect.isValid ())
     {
-        // store only needed part of doc pixmap
+        // Store only the needed part of doc pixmap.
         d->image = kpTool::neededPixmap (d->image, d->boundingRect);
     }
     else
