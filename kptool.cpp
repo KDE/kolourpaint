@@ -278,6 +278,7 @@ QRect kpTool::neededRect (const QRect &rect, int lineWidth)
     if (lineWidth < 1)
         lineWidth = 1;
 
+    // TODO: why not divide by 2?
     return QRect (QPoint (x1 - lineWidth + 1, y1 - lineWidth + 1),
                   QPoint (x2 + lineWidth - 1, y2 + lineWidth - 1));
 }
