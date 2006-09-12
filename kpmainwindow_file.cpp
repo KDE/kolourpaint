@@ -708,7 +708,7 @@ bool kpMainWindow::slotReload ()
                                "Are you sure?",
                                m_document->prettyFilename ()),
                          QString::null/*caption*/,
-                         i18n ("&Reload"));
+                         KGuiItem(i18n ("&Reload")));
         }
         else
         {
@@ -718,7 +718,7 @@ bool kpMainWindow::slotReload ()
                                "Are you sure?",
                                m_document->prettyFilename ()),
                          QString::null/*caption*/,
-                         i18n ("&Reload"));
+                         KGuiItem(i18n ("&Reload")));
         }
 
         if (result != KMessageBox::Continue)

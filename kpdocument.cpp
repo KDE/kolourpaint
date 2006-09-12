@@ -609,7 +609,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
                   "Do you want to overwrite it?",
                   prettyFilenameForURL (url)),
             QString::null,
-            i18n ("Overwrite"));
+            KGuiItem(i18n ("Overwrite")));
 
         if (result != KMessageBox::Continue)
         {

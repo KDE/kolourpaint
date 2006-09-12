@@ -1682,7 +1682,7 @@ bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
         int accept = KMessageBox::warningContinueCancel (parent,
             text,
             caption,
-            continueButtonText,
+            KGuiItem (continueButtonText),
             QLatin1String ("BigImageDontAskAgain"));
 
         return (accept == KMessageBox::Continue);

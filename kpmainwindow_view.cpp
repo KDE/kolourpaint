@@ -96,7 +96,7 @@ void kpMainWindow::setupViewMenuActions ()
     m_actionShowGrid = new KToggleAction (i18n ("Show &Grid"),
         actionCollection (), "view_show_grid");
     m_actionShowGrid->setShortcut (Qt::CTRL + Qt::Key_G);
-    m_actionShowGrid->setCheckedState (i18n ("Hide &Grid"));
+    m_actionShowGrid->setCheckedState (KGuiItem(i18n ("Hide &Grid")));
     connect (m_actionShowGrid, SIGNAL (triggered (bool)),
         SLOT (slotShowGridToggled ()));
 
@@ -104,7 +104,7 @@ void kpMainWindow::setupViewMenuActions ()
     m_actionShowThumbnail = new KToggleAction (i18n ("Show T&humbnail"),
         actionCollection (), "view_show_thumbnail");
     m_actionShowThumbnail->setShortcut (Qt::CTRL + Qt::Key_H);
-    m_actionShowThumbnail->setCheckedState (i18n ("Hide T&humbnail"));
+    m_actionShowThumbnail->setCheckedState (KGuiItem(i18n ("Hide T&humbnail")));
     connect (m_actionShowThumbnail, SIGNAL (triggered (bool)),
         SLOT (slotShowThumbnailToggled ()));
 

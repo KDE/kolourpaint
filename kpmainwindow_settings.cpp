@@ -64,7 +64,7 @@ void kpMainWindow::setupSettingsMenuActions ()
 
     m_actionShowPath = new KToggleAction(i18n ("Show &Path"), ac, "settings_show_path");
     connect(m_actionShowPath, SIGNAL(triggered(bool) ), SLOT (slotShowPathToggled ()));
-    m_actionShowPath->setCheckedState (i18n ("Hide &Path"));
+    m_actionShowPath->setCheckedState (KGuiItem(i18n ("Hide &Path")));
     slotEnableSettingsShowPath ();
 
 
