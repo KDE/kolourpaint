@@ -11,12 +11,7 @@ include_directories(
     ${QT_INCLUDES}
     )
 
-add_subdirectory( cursors )
 add_subdirectory( pics )
-add_subdirectory( imagelib )
-add_subdirectory( tools )
-add_subdirectory( views )
-add_subdirectory( widgets )
 
 
 ########### next target ###############
