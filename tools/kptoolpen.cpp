@@ -964,7 +964,17 @@ void kpToolPen::slotEraserSizeChanged (int size)
 
     for (int i = 0; i < 2; i++)
     {
-        // TODO: I can't see how this works for transparent?
+        // Note: No matter what, the eraser's brush pixmap is never given
+        //       a mask.
+        //
+        // With a transparent color, since we don't fill anything, the
+        // resize by itself will leave us with garbage pixels.  This
+        // doesn't matter because:
+        //
+        // 1. The hover cursor will ask kpToolWidgetEraserSize for a proper
+        //    cursor pixmap.
+        // 2. We will draw using kpPixmapFX::paintMaskTransparentWithBrush()
+        //    which only cares about the opaqueness.
         m_brushPixmap [i].resize (size, size);
         if (color (i).isOpaque ())
             m_brushPixmap [i].fill (color (i).toQColor ());
