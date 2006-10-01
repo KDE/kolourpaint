@@ -52,7 +52,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>  // TODO: isn't this in KIO?
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 
 #include <kpcolor.h>
 #include <kpcolortoolbar.h>
@@ -630,16 +630,12 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         return false;
     }
 
-
-    KTempFile tempFile;
-    tempFile.setAutoDelete (true);
-
+    KTemporaryFile tempFile;
     QString filename;
 
     if (!url.isLocalFile ())
     {
-        filename = tempFile.name ();
-        if (filename.isEmpty ())
+        if (!tempFile.open())
         {
         #if DEBUG_KP_DOCUMENT
             kDebug () << "\treturning false because tempFile empty" << endl;
@@ -647,6 +643,8 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
             KMessageBox::error (parent,
                                 i18n ("Could not save image - unable to create temporary file."));
             return false;
+        }else{
+            filename = tempFile.fileName ();
         }
     }
     else
