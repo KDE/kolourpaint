@@ -151,7 +151,7 @@ set(kolourpaint_SRCS ${libkolourpaintcursors_SRCS} ${libkolourpaintimagelib_SRCS
    kpwidgetmapper.cpp 
    compat/kpbug.cpp )
 
-kde4_automoc(kolourpaint ${kolourpaint_SRCS})
+kde4_automoc(${kolourpaint_SRCS})
 
 kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
 
