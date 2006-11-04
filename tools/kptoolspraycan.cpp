@@ -107,15 +107,14 @@ void kpToolSpraycan::end ()
 // protected
 void kpToolSpraycan::paintersSprayOneDocPoint (QPainter *painter,
     QPainter *maskPainter,
-    const QRect &docRect,
-    const QPoint &docPoint)
+    const QPoint &point)
 {
     QPolygon pArray (10);
     int numPointsCreated = 0;
 
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "\t\tkpToolSpraycan::paintersSprayOneDocPoint(docRect=" << docRect
-               << ",docPoint=" << docPoint
+    kDebug () << "\t\tkpToolSpraycan::paintersSprayOneDocPoint("
+               << ",point=" << point
                << ") spraycanSize=" << spraycanSize ()
                << endl;
 #endif
@@ -132,7 +131,7 @@ void kpToolSpraycan::paintersSprayOneDocPoint (QPainter *painter,
         // make it look circular
         // OPT: can be done better
         if (dx * dx + dy * dy <= radius * radius)
-            pArray [numPointsCreated++] = QPoint (docPoint.x () + dx, docPoint.y () + dy);
+            pArray [numPointsCreated++] = QPoint (point.x () + dx, point.y () + dy);
     }
 
     pArray.resize (numPointsCreated);
@@ -142,18 +141,14 @@ void kpToolSpraycan::paintersSprayOneDocPoint (QPainter *painter,
 #endif
 
 
-    if (numPointsCreated == 0)
-        return;
-        
-    
     for (int i = 0; i < numPointsCreated; i++)
     {
     #if DEBUG_KP_TOOL_SPRAYCAN && 0
         kDebug () << "\t\t\t\t" << i << ": " << pArray [i] << endl;
     #endif
     
-        QPoint pt (pArray [i].x () - docRect.x (),
-                   pArray [i].y () - docRect.y ());
+        QPoint pt (pArray [i].x (),
+                   pArray [i].y ());
 
         if (painter->isActive ())
             painter->drawPoint (pt);
@@ -186,7 +181,7 @@ void kpToolSpraycan::pixmapSprayManyDocPoints (QPixmap *pixmap,
          pit++)
     {
         paintersSprayOneDocPoint (&painter, &maskPainter,
-            docRect, *pit);
+            *pit - docRect.topLeft ());
     }
 
     drawLineTearDownPainterMask (pixmap,
