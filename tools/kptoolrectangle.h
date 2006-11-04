@@ -56,6 +56,8 @@ class kpToolRectangle : public kpTool
 Q_OBJECT
 
 public:
+    // TODO: awful - needs inheritance
+
     // it turns out that these shapes are all really the same thing
     // (same options, same feel) - the only real difference is the
     // drawing functions (a one line change)
