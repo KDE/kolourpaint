@@ -77,7 +77,7 @@ public:
     virtual void endDraw (const QPoint &thisPoint,
         const QRect &normalizedRect);
 
-public slots:
+protected slots:
     void timeoutDraw ();
 
     

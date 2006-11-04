@@ -64,8 +64,7 @@ kpToolSpraycan::kpToolSpraycan (kpMainWindow *mainWindow)
         mainWindow, "tool_spraycan")
 {
     m_timer = new QTimer (this);
-    connect (m_timer, SIGNAL (timeout ()),
-        this, SLOT (timeoutDraw ()));
+    connect (m_timer, SIGNAL (timeout ()), this, SLOT (timeoutDraw ()));
 }
 
 kpToolSpraycan::~kpToolSpraycan ()
@@ -114,8 +113,8 @@ void kpToolSpraycan::beginDraw ()
 
     kpToolFlowBase::beginDraw ();
     
-    // Use a timer instead of reimplementing draw() (we don't draw all the time).
-    m_timer->start (25);    
+    // We draw even if the user doesn't move the mouse.
+    m_timer->start (25/*ms*/);
 }
 
 
@@ -197,10 +196,11 @@ QRect kpToolSpraycan::drawPoint (const QPoint &point)
                << endl;
 #endif
 
-    // if this is the first in the flow or if the user is moving the spray, make the spray line continuous
+    // If this is the first in the flow or if the user is moving the spray,
+    // make the spray line continuous.
     if (point != m_lastPoint)
     {
-        // without delay
+        // Draw without delay.
         return drawLineWithProbability (point, point,
             1.0/*100% chance of drawing*/);
     }
@@ -211,10 +211,12 @@ QRect kpToolSpraycan::drawPoint (const QPoint &point)
 // public virtual [base kpToolFlowBase]
 QRect kpToolSpraycan::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
+    // Draw only every so often in response to movement.
     return drawLineWithProbability (thisPoint, lastPoint,
         0.1/*less dense: select 10% of adjacent pixels - not all*/);
 }
 
+// protected slot
 void kpToolSpraycan::timeoutDraw ()
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
