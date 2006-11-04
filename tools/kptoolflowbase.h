@@ -83,8 +83,9 @@ public:
     virtual void hover (const QPoint &point);
     
     // TODO: should be moved to kpPainter as that encapsulates all document drawing ops
-    QList <QPoint> interpolatePoints (const QPoint &thisPoint,
+    static QList <QPoint> interpolatePoints (const QPoint &thisPoint,
         const QPoint &lastPoint,
+        bool brushIsDiagonalLine = false,
         double probability = 1.0) KDE_DEPRECATED;
 
     // TODO: should be removed as all drawing operations should use kpPainter,
@@ -117,6 +118,8 @@ protected:
     int brushWidth () const;
     int brushHeight () const;
 
+    bool brushIsDiagonalLine () const;
+
     kpToolFlowCommand *currentCommand () const;
 
 protected slots:
@@ -128,12 +131,17 @@ protected slots:
 protected:
     virtual kpColor color (int which);
 
-    QPoint hotPoint () const;
-    QPoint hotPoint (int x, int y) const;
-    QPoint hotPoint (const QPoint &point) const;
+public:
+    // Returns the dirty rectangle for drawing a brush (of size
+    // <brushWidth>x<brushHeight>) at <mousePoint>.  <mousePoint> will end
+    // up being the midpoint of the returned rectangle (subject to integer
+    // precision).
+    static QRect hotRectForMousePointAndBrushWidthHeight (
+        const QPoint &mousePoint,
+        int brushWidth, int brushHeight);
+protected:
     QRect hotRect () const;
-    QRect hotRect (int x, int y) const;
-    QRect hotRect (const QPoint &point) const;
+
 
 private:
     struct kpToolFlowBasePrivate *d;

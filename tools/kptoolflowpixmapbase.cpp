@@ -75,13 +75,17 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
     QPixmap pixmap = document ()->getPixmapAt (docRect);
 
 
-    QList <QPoint> points = interpolatePoints (thisPoint, lastPoint);
+    QList <QPoint> points = interpolatePoints (thisPoint, lastPoint,
+        brushIsDiagonalLine ());
         
     for (QList <QPoint>::const_iterator pit = points.begin ();
          pit != points.end ();
          pit++)
     {
-        const QPoint point = hotPoint ((*pit).x (), (*pit).y ()) - docRect.topLeft ();
+        const QPoint point =
+            hotRectForMousePointAndBrushWidthHeight (
+                (*pit), brushWidth (), brushHeight ())
+                    .topLeft () - docRect.topLeft ();
 
         brushDrawFunction () (&pixmap, point, brushDrawFunctionData ());
     }

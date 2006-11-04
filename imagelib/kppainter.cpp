@@ -31,6 +31,8 @@
 
 #include <kppainter.h>
 
+#include <cstdio>
+
 #include <QBitmap>
 #include <QPainter>
 #include <QPainterPath>
@@ -38,9 +40,11 @@
 
 #include <kdebug.h>
 
+#include <kpbug.h>
 #include <kpimage.h>
 #include <kppixmapfx.h>
-
+#include <kptool.h>
+#include <kptoolflowbase.h>
 
 
 // public static
@@ -117,4 +121,305 @@ void kpPainter::drawEllipse (kpImage *image,
         const kpColor &bcolor)
 {
     kpPixmapFX::drawEllipse (image, x, y, width, height, fcolor, penWidth, bcolor);
+}
+
+
+// <rgbPainter> and <maskPainter> are operating on the original image
+// (the original image is not passed to this function).
+//
+// <image> = subset of the original image containing all the pixels in
+//           <imageRect>
+// <drawRect> = the rectangle, relative to the painters, whose pixels we
+//              want to change
+static bool ReadableImageWashRect (QPainter *rgbPainter, QPainter *maskPainter,
+        const QImage &image,
+        const kpColor &colorToReplace,
+        const QRect &imageRect, const QRect &drawRect,
+        int processedColorSimilarity)
+{
+    bool didSomething = false;
+
+#if DEBUG_KP_PAINTER && 0
+    kDebug () << "kppixmapfx.cpp:WashRect(imageRect=" << imageRect
+               << ",drawRect=" << drawRect
+               << ")" << endl;
+#endif
+
+// make use of scanline coherence
+#define FLUSH_LINE()                                        \
+{                                                           \
+    if (rgbPainter && rgbPainter->isActive ())              \
+        rgbPainter->drawLine (startDrawX + imageRect.x (),  \
+            y + imageRect.y (),                             \
+            x - 1 + imageRect.x (),                         \
+            y + imageRect.y ());                            \
+    if (maskPainter && maskPainter->isActive ())            \
+        maskPainter->drawLine (startDrawX + imageRect.x (), \
+            y + imageRect.y (),                             \
+            x - 1 + imageRect.x (),                         \
+            y + imageRect.y ());                            \
+    didSomething = true;                                    \
+    startDrawX = -1;                                        \
+}
+
+    const int maxY = drawRect.bottom () - imageRect.top ();
+
+    const int minX = drawRect.left () - imageRect.left ();
+    const int maxX = drawRect.right () - imageRect.left ();
+
+    for (int y = drawRect.top () - imageRect.top ();
+         y <= maxY;
+         y++)
+    {
+        int startDrawX = -1;
+
+        int x;  // for FLUSH_LINE()
+        for (x = minX; x <= maxX; x++)
+        {
+        #if DEBUG_KP_PAINTER && 0
+            fprintf (stderr, "y=%i x=%i colorAtPixel=%08X colorToReplace=%08X ... ",
+                     y, x,
+                     kpPixmapFX::getColorAtPixel (image, QPoint (x, y)).toQRgb (),
+                     colorToReplace.toQRgb ());
+        #endif
+            if (kpPixmapFX::getColorAtPixel (image, QPoint (x, y)).isSimilarTo (colorToReplace, processedColorSimilarity))
+            {
+            #if DEBUG_KP_PAINTER && 0
+                fprintf (stderr, "similar\n");
+            #endif
+                if (startDrawX < 0)
+                    startDrawX = x;
+            }
+            else
+            {
+            #if DEBUG_KP_PAINTER && 0
+                fprintf (stderr, "different\n");
+            #endif
+                if (startDrawX >= 0)
+                    FLUSH_LINE ();
+            }
+        }
+
+        if (startDrawX >= 0)
+            FLUSH_LINE ();
+    }
+
+#undef FLUSH_LINE
+
+    return didSomething;
+}
+
+
+struct WashPack
+{
+    QPoint startPoint, endPoint;
+    kpColor color;
+    int penWidth, penHeight;
+    kpColor colorToReplace;
+    int processedColorSimilarity;
+    
+    QRect readableImageRect;
+    QImage readableImage;
+};
+
+
+static QRect Wash (kpImage *image,
+        const QPoint &startPoint, const QPoint &endPoint,
+        const kpColor &color, int penWidth, int penHeight,
+        const kpColor &colorToReplace,
+        int processedColorSimilarity,
+        QRect (*drawFunc) (QPainter * /*rgbPainter*/, QPainter * /*maskPainter*/,
+            void * /*data*/))
+{
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*image);
+    
+    WashPack pack;
+    pack.startPoint = startPoint; pack.endPoint = endPoint;
+    pack.color = color;
+    pack.penWidth = penWidth; pack.penHeight = penHeight;
+    pack.colorToReplace = colorToReplace;
+    pack.processedColorSimilarity = processedColorSimilarity;
+
+
+    // Get the rectangle that bounds the changes and the pixmap for that
+    // rectangle.
+    const QRect normalizedRect = kpBug::QRect_Normalized (
+        QRect (pack.startPoint, pack.endPoint));
+    pack.readableImageRect = kpTool::neededRect (normalizedRect,
+        qMax (pack.penWidth, pack.penHeight));
+#if DEBUG_KP_PAINTER
+    kDebug () << "kppainter.cpp:Wash() startPoint=" << startPoint
+              << " endPoint=" << endPoint
+              << " --> normalizedRect=" << normalizedRect
+              << " readableImageRect=" << pack.readableImageRect
+              << endl;
+#endif
+    QPixmap pixmap = kpPixmapFX::getPixmapAt (*image, pack.readableImageRect);
+
+
+    // Convert pixmap to QImage so that we can read off the pixels.
+#if DEBUG_KP_PAINTER && 0
+    timer.start ();
+#endif
+    pack.readableImage = kpPixmapFX::convertToImage (pixmap);
+#if DEBUG_KP_PAINTER && 0
+    convAndWashTime = timer.restart ();
+    kDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;
+#endif
+
+
+    const QRect ret = kpPixmapFX::draw (image, drawFunc,
+        color.isOpaque (), color.isTransparent (),
+        &pack);
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*image);
+    return ret;
+}
+
+void WashHelperSetup (QPainter *rgbPainter, QPainter *maskPainter,
+        const WashPack *pack)
+{
+    // Set the drawing colors for the painters.
+    
+    if (rgbPainter)
+    {
+        rgbPainter->setPen (
+            kpPixmapFX::draw_ToQColor (pack->color,
+                true/*drawing on RGB Layer*/));
+    }
+
+    if (maskPainter)
+    {
+        maskPainter->setPen (
+            kpPixmapFX::draw_ToQColor (pack->color,
+                false/*drawing on mask layer*/));
+    }
+}
+
+
+static QRect WashLineHelper (QPainter *rgbPainter, QPainter *maskPainter,
+        void *data)
+{
+#if DEBUG_KP_PAINTER && 0
+    kDebug () << "Washing pixmap (w=" << rect.width ()
+                << ",h=" << rect.height () << ")" << endl;
+    QTime timer;
+    int convAndWashTime;
+#endif
+
+    WashPack *pack = static_cast <WashPack *> (data);
+
+
+    // Setup painters.
+    ::WashHelperSetup (rgbPainter, maskPainter, pack);
+
+
+    bool didSomething = false;
+
+    QList <QPoint> points = kpToolFlowBase::interpolatePoints (pack->endPoint, pack->startPoint);
+    for (QList <QPoint>::const_iterator pit = points.begin ();
+            pit != points.end ();
+            pit++)
+    {
+        if (::ReadableImageWashRect (rgbPainter, maskPainter,
+                pack->readableImage,
+                pack->colorToReplace,
+                pack->readableImageRect,
+                kpToolFlowBase::hotRectForMousePointAndBrushWidthHeight (
+                    *pit, pack->penWidth, pack->penHeight),
+                pack->processedColorSimilarity))
+        {
+            didSomething = true;
+        }
+    }
+
+
+#if DEBUG_KP_PAINTER && 0
+    int ms = timer.restart ();
+    kDebug () << "\ttried to wash: " << ms << "ms"
+                << " (" << (ms ? (rect.width () * rect.height () / ms) : -1234)
+                << " pixels/ms)"
+                << endl;
+    convAndWashTime += ms;
+#endif
+
+
+    // TODO: Rectangle may be too big.  Use QRect::unite() incrementally?
+    //       Efficiency?
+    return didSomething ? pack->readableImageRect : QRect ();
+}
+
+// public static
+QRect kpPainter::washLine (kpImage *image,
+        int x1, int y1, int x2, int y2,
+        const kpColor &color, int penWidth, int penHeight,
+        const kpColor &colorToReplace,
+        int processedColorSimilarity)
+{
+    return ::Wash (image,
+        QPoint (x1, y1), QPoint (x2, y2),
+        color, penWidth, penHeight,
+        colorToReplace,
+        processedColorSimilarity,
+        &::WashLineHelper);
+}
+
+
+static QRect WashRectHelper (QPainter *rgbPainter, QPainter *maskPainter,
+        void *data)
+{
+#if DEBUG_KP_PAINTER && 0
+    kDebug () << "Washing pixmap (w=" << rect.width ()
+                << ",h=" << rect.height () << ")" << endl;
+    QTime timer;
+    int convAndWashTime;
+#endif
+
+    WashPack *pack = static_cast <WashPack *> (data);
+
+
+    // Setup painters.
+    ::WashHelperSetup (rgbPainter, maskPainter, pack);
+
+
+    const QRect drawRect (pack->startPoint, pack->endPoint);
+    
+    bool didSomething = false;
+
+    if (::ReadableImageWashRect (rgbPainter, maskPainter,
+            pack->readableImage,
+            pack->colorToReplace,
+            pack->readableImageRect,
+            drawRect,
+            pack->processedColorSimilarity))
+    {
+        didSomething = true;
+    }
+
+
+#if DEBUG_KP_PAINTER && 0
+    int ms = timer.restart ();
+    kDebug () << "\ttried to wash: " << ms << "ms"
+                << " (" << (ms ? (rect.width () * rect.height () / ms) : -1234)
+                << " pixels/ms)"
+                << endl;
+    convAndWashTime += ms;
+#endif
+
+
+    return didSomething ? drawRect : QRect ();
+}
+
+// public static
+QRect kpPainter::washRect (kpImage *image,
+        int x, int y, int width, int height,
+        const kpColor &color,
+        const kpColor &colorToReplace,
+        int processedColorSimilarity)
+{
+    return ::Wash (image,
+        QPoint (x, y), QPoint (x + width - 1, y + height - 1),
+        color, 1/*pen width*/, 1/*pen height*/,
+        colorToReplace,
+        processedColorSimilarity,
+        &::WashRectHelper);
 }

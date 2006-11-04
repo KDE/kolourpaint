@@ -479,9 +479,25 @@ public:
     //    and false if we are drawing on the Mask layer.  Often passed straight
     //    to draw_ToQColor() to convert from kpColor to QColor.
     // 3. A pointer to the provided <data>
+    //
+    // WARNING: The current implementation does not permit <drawFunc> to access
+    //          <image> (as it clears <image>'s mask before drawFunc() (but
+    //          does restore the mask later)).
     static void draw (QPixmap *image,
         void (*drawFunc) (QPainter * /*p*/,
             bool /*drawingOnRGBLayer*/,
+            void * /*data*/),
+        bool anyColorOpaque, bool anyColorTransparent,
+        void *data);
+
+    // Same as above except that <drawFunc> is called a maximum of once
+    // for the RGB and mask layers simultaneously.  <rgbPainter> can be 0,
+    // <maskPainter> can be 0 but not both.
+    //
+    // <drawFunc> must return the dirty rectangle (return the full image
+    // rectangle if in doubt).  This is then returned by draw() itself.
+    static QRect draw (QPixmap *image,
+        QRect (*drawFunc) (QPainter * /*rgbPainter*/, QPainter * /*maskPainter*/,
             void * /*data*/),
         bool anyColorOpaque, bool anyColorTransparent,
         void *data);

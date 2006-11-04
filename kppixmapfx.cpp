@@ -632,10 +632,52 @@ QColor kpPixmapFX::draw_ToQColor (const kpColor &color, bool drawingOnRGBLayer)
 }
 
 
+struct DrawPack
+{
+    QPixmap *image;
+    void (*userDrawFunc) (QPainter * /*p*/,
+        bool /*drawingOnRGBLayer*/,
+        void * /*data*/);
+    void *userData;
+};
+
+static QRect DrawHelper (QPainter *rgbPainter, QPainter *maskPainter, void *data)
+{
+    DrawPack *pack = static_cast <DrawPack *> (data);
+    
+    if (rgbPainter)
+        pack->userDrawFunc (rgbPainter, true/*drawing on RGB*/, pack->userData);
+
+    if (maskPainter)
+        pack->userDrawFunc (maskPainter, false/*drawing on mask*/, pack->userData);
+
+    // Assume the whole image was clobbered.
+    return QRect (0, 0, pack->image->width (), pack->image->height ());
+}
+
 // public static
 void kpPixmapFX::draw (QPixmap *image,
         void (*drawFunc) (QPainter * /*p*/,
             bool /*drawingOnRGBLayer*/,
+            void * /*data*/),
+        bool anyColorOpaque, bool anyColorTransparent,
+        void *data)
+{
+    DrawPack pack;
+    pack.image = image;
+    pack.userDrawFunc = drawFunc;
+    pack.userData = data;
+
+    // Call below method.
+    kpPixmapFX::draw (image,
+        &::DrawHelper,
+        anyColorOpaque, anyColorTransparent,
+        &pack);
+}
+
+// public static
+QRect kpPixmapFX::draw (QPixmap *image,
+        QRect (*drawFunc) (QPainter * /*rgbPainter*/, QPainter * /*maskPainter*/,
             void * /*data*/),
         bool anyColorOpaque, bool anyColorTransparent,
         void *data)
@@ -648,6 +690,8 @@ void kpPixmapFX::draw (QPixmap *image,
               << ")" << endl;
 #endif
 
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*image);
+    
     // Get mask.  Work around the fact that QBitmap's do not have masks.
     // but QBitmap::mask() returns itself.
     QBitmap mask = image->depth () > 1 ?
@@ -658,6 +702,8 @@ void kpPixmapFX::draw (QPixmap *image,
     kDebug () << "\tDraw(): hasMask=" << !mask.isNull () << endl;
 #endif
     
+    QPainter rgbPainter, maskPainter;
+    
     // Draw on RGB layer?
     if (anyColorOpaque)
     {
@@ -667,13 +713,7 @@ void kpPixmapFX::draw (QPixmap *image,
         // RGB draw is not allowed to touch mask.
         image->setMask (QBitmap ());
 
-        QPainter p (image);
-        (*drawFunc) (&p, true/*on RGB layer*/, data);
-        p.end ();
-
-        // (a mask should not have been created - that's the job of the next step
-        //  i.e. the next call to "drawFunc")
-        Q_ASSERT (!image->hasAlpha ());
+        rgbPainter.begin (image);
     }
 
     // Draw on mask layer?
@@ -686,10 +726,32 @@ void kpPixmapFX::draw (QPixmap *image,
         if (mask.isNull ())
             mask = kpPixmapFX::getNonNullMask (*image);
             
-        QPainter p (&mask);
-        (*drawFunc) (&p, false/*on mask layer*/, data);
-        p.end ();
+        maskPainter.begin (&mask);
     }
+
+
+    if (!rgbPainter.isActive () && !maskPainter.isActive ())
+    {
+        // We did nothing.
+        return QRect ();
+    }
+
+        
+    const QRect dirtyRect = (*drawFunc) (&rgbPainter, &maskPainter, data);
+
+
+    if (rgbPainter.isActive ())
+        rgbPainter.end ();
+
+    if (maskPainter.isActive ())
+        maskPainter.end ();
+
+    if (anyColorOpaque)
+    {
+        // A mask should not have been created - that's the job of the next step.
+        Q_ASSERT (!image->hasAlpha ());
+    }
+
 
 #if DEBUG_KP_PIXMAP_FX
     kDebug () << "\tDraw(): setting mask " << !mask.isNull () << endl;
@@ -697,6 +759,11 @@ void kpPixmapFX::draw (QPixmap *image,
 
     // Set new mask.
     image->setMask (mask);
+
+
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*image);
+
+    return dirtyRect;
 }
 
 // Returns whether there is only 1 distinct point in <points>.

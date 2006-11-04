@@ -43,16 +43,6 @@ public:
     virtual ~kpToolColorEraser ();
 
 
-protected:
-    bool wash (QPainter *painter, QPainter *maskPainter,
-               const QImage &image,
-               const kpColor &colorToReplace,
-               const QRect &imageRect, int plotx, int ploty);
-    bool wash (QPainter *painter, QPainter *maskPainter,
-               const QImage &image,
-               const kpColor &colorToReplace,
-               const QRect &imageRect, const QRect &drawRect);
-
 public:
     virtual void globalDraw ();
     

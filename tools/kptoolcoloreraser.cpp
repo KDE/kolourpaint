@@ -36,11 +36,13 @@
 #include <qpainter.h>
 
 #include <kapplication.h>
+#include <kdebug.h>
 #include <klocale.h>
 
 #include <kpbug.h>
 #include <kpcolor.h>
 #include <kpdocument.h>
+#include <kppainter.h>
 #include <kppixmapfx.h>
 #include <kptoolflowcommand.h>
 
@@ -65,7 +67,7 @@ void kpToolColorEraser::globalDraw ()
 #if DEBUG_KP_TOOL_COLOR_ERASER
     kDebug () << "kpToolColorEraser::globalDraw()" << endl;
 #endif
-    if (foregroundColor () == backgroundColor () && processedColorSimilarity () == 0)
+    if (!drawShouldProceed (QPoint ()/*unused*/, QPoint ()/*unused*/, QRect ()/*unused*/))
         return;
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
@@ -73,48 +75,18 @@ void kpToolColorEraser::globalDraw ()
     kpToolFlowCommand *cmd = new kpToolFlowCommand (
         i18n ("Color Eraser"), mainWindow ());
 
-    QPainter painter, maskPainter;
-    QBitmap maskBitmap;
+    const QRect dirtyRect = kpPainter::washRect (document ()->pixmap (),
+        0, 0, document ()->width (), document ()->height (),
+        backgroundColor ()/*color to draw in*/,
+        foregroundColor ()/*color to replace*/,
+        processedColorSimilarity ());
 
-    if (backgroundColor ().isOpaque ())
+    if (!dirtyRect.isEmpty ())
     {
-        painter.begin (document ()->pixmap ());
-        painter.setPen (backgroundColor ().toQColor ());
-    }
-
-    if (backgroundColor ().isTransparent () ||
-        !document ()->pixmap ()->mask ().isNull ())
-    {
-        maskBitmap = kpPixmapFX::getNonNullMask (*document ()->pixmap ());
-        maskPainter.begin (&maskBitmap);
-
-        maskPainter.setPen (backgroundColor ().maskColor ());
-    }
-
-    const QImage image = kpPixmapFX::convertToImage (*document ()->pixmap ());
-    QRect rect = document ()->rect ();
-
-    const bool didSomething = wash (&painter, &maskPainter, image,
-                                    foregroundColor ()/*replace foreground*/,
-                                    rect, rect);
-
-    // flush
-    if (painter.isActive ())
-        painter.end ();
-
-    if (maskPainter.isActive ())
-        maskPainter.end ();
-
-    if (didSomething)
-    {
-        if (!maskBitmap.isNull ())
-            document ()->pixmap ()->setMask (maskBitmap);
+        document ()->slotContentsChanged (dirtyRect);
 
 
-        document ()->slotContentsChanged (rect);
-
-
-        cmd->updateBoundingRect (rect);
+        cmd->updateBoundingRect (dirtyRect);
         cmd->finalize ();
 
         commandHistory ()->addCommand (cmd, false /* don't exec */);
@@ -140,88 +112,6 @@ QString kpToolColorEraser::haventBegunDrawUserMessage () const
 }
 
 
-
-bool kpToolColorEraser::wash (QPainter *painter, QPainter *maskPainter,
-                      const QImage &image,
-                      const kpColor &colorToReplace,
-                      const QRect &imageRect, int plotx, int ploty)
-{
-    return wash (painter, maskPainter, image, colorToReplace, imageRect, hotRect (plotx, ploty));
-}
-
-bool kpToolColorEraser::wash (QPainter *painter, QPainter *maskPainter,
-                      const QImage &image,
-                      const kpColor &colorToReplace,
-                      const QRect &imageRect, const QRect &drawRect)
-{
-    bool didSomething = false;
-
-#if DEBUG_KP_TOOL_COLOR_ERASER && 0
-    kDebug () << "kpToolColorEraser::wash(imageRect=" << imageRect
-               << ",drawRect=" << drawRect
-               << ")" << endl;
-#endif
-
-// make use of scanline coherence
-#define FLUSH_LINE()                                     \
-{                                                        \
-    if (painter && painter->isActive ())                 \
-        painter->drawLine (startDrawX, y, x - 1, y);     \
-    if (maskPainter && maskPainter->isActive ())         \
-        maskPainter->drawLine (startDrawX, y, x - 1, y); \
-    didSomething = true;                                 \
-    startDrawX = -1;                                     \
-}
-
-    const int maxY = drawRect.bottom () - imageRect.top ();
-
-    const int minX = drawRect.left () - imageRect.left ();
-    const int maxX = drawRect.right () - imageRect.left ();
-
-    for (int y = drawRect.top () - imageRect.top ();
-         y <= maxY;
-         y++)
-    {
-        int startDrawX = -1;
-
-        int x;  // for FLUSH_LINE()
-        for (x = minX; x <= maxX; x++)
-        {
-        #if DEBUG_KP_TOOL_COLOR_ERASER && 0
-            fprintf (stderr, "y=%i x=%i colorAtPixel=%08X colorToReplace=%08X ... ",
-                     y, x,
-                     kpPixmapFX::getColorAtPixel (image, QPoint (x, y)).toQRgb (),
-                     colorToReplace.toQRgb ());
-        #endif
-            if (kpPixmapFX::getColorAtPixel (image, QPoint (x, y)).isSimilarTo (colorToReplace, processedColorSimilarity ()))
-            {
-            #if DEBUG_KP_TOOL_COLOR_ERASER && 0
-                fprintf (stderr, "similar\n");
-            #endif
-                if (startDrawX < 0)
-                    startDrawX = x;
-            }
-            else
-            {
-            #if DEBUG_KP_TOOL_COLOR_ERASER && 0
-                fprintf (stderr, "different\n");
-            #endif
-                if (startDrawX >= 0)
-                    FLUSH_LINE ();
-            }
-        }
-
-        if (startDrawX >= 0)
-            FLUSH_LINE ();
-    }
-
-#undef FLUSH_LINE
-
-    return didSomething;
-}
-
-
-
 bool kpToolColorEraser::drawShouldProceed (const QPoint & /*thisPoint*/,
     const QPoint & /*lastPoint*/,
     const QRect & /*normalizedRect*/)
@@ -239,73 +129,26 @@ bool kpToolColorEraser::drawShouldProceed (const QPoint & /*thisPoint*/,
 QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
 #if DEBUG_KP_TOOL_COLOR_ERASER
-    kDebug () << "Washing pixmap (w=" << rect.width ()
-                << ",h=" << rect.height () << ")" << endl;
-    QTime timer;
-    int convAndWashTime;
+    kDebug () << "kpToolColorEraser::drawLine(thisPoint=" << thisPoint
+        << ",lastPoint=" << lastPoint << ")" << endl;
 #endif
 
-    QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
-    docRect = neededRect (docRect, qMax (brushWidth (), brushHeight ()));
-    QPixmap pixmap = document ()->getPixmapAt (docRect);
+    const QRect dirtyRect = kpPainter::washLine (document ()->pixmap (),
+        lastPoint.x (), lastPoint.y (),
+        thisPoint.x (), thisPoint.y (),
+        color (m_mouseButton)/*color to draw in*/,
+        brushWidth (), brushHeight (),
+        color (1 - m_mouseButton)/*color to replace*/,
+        processedColorSimilarity ());
 
-
-    QBitmap maskBitmap;    
-    QPainter painter, maskPainter;
-
-    drawLineSetupPainterMask (&pixmap,
-        &maskBitmap,
-        &painter, &maskPainter);
-
-        
-    QImage image;
 #if DEBUG_KP_TOOL_COLOR_ERASER
-    timer.start ();
-#endif
-    image = kpPixmapFX::convertToImage (pixmap);
-#if DEBUG_KP_TOOL_COLOR_ERASER
-    convAndWashTime = timer.restart ();
-    kDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;
+    kDebug () << "\tdirtyRect=" << dirtyRect << endl;
 #endif
 
-    bool didSomething = false;
-
-    kpColor colorToReplace = color (1 - m_mouseButton);
-
-    QList <QPoint> points = interpolatePoints (thisPoint, lastPoint);
-    for (QList <QPoint>::const_iterator pit = points.begin ();
-            pit != points.end ();
-            pit++)
+    if (!dirtyRect.isEmpty ())
     {
-        if (wash (&painter, &maskPainter, image,
-                    colorToReplace,
-                    docRect, (*pit).x (), (*pit).y ()))
-        {
-            didSomething = true;
-        }
-    }
-
-
-    
-    drawLineTearDownPainterMask (&pixmap,
-        &maskBitmap,
-        &painter, &maskPainter,
-        didSomething);
-
-
-#if DEBUG_KP_TOOL_COLOR_ERASER
-    int ms = timer.restart ();
-    kDebug () << "\ttried to wash: " << ms << "ms"
-                << " (" << (ms ? (rect.width () * rect.height () / ms) : -1234)
-                << " pixels/ms)"
-                << endl;
-    convAndWashTime += ms;
-#endif
-
-    if (didSomething)
-    {
-        document ()->setPixmapAt (pixmap, docRect.topLeft ());
-        return docRect;
+        document ()->slotContentsChanged (dirtyRect);
+        return dirtyRect;
     }
     
     return QRect ();

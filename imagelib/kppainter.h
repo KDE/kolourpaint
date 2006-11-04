@@ -58,7 +58,7 @@ class kpPainter
 {
 public:
     // Draws a line from (x1,y1) to (x2,y2) onto <image>, with <color>
-    // and <width>.  The corners are rounded and centred at those
+    // and <penWidth>.  The corners are rounded and centred at those
     // coordinates so if <width> > 1, the line is likely to extend past
     // a rectangle with those corners.
     static void drawLine (kpImage *image,
@@ -110,6 +110,27 @@ public:
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth = 1,
         const kpColor &bcolor = kpColor::invalid);
+
+    // Replaces all pixels of <colorToReplace> on the line
+    // from (x1,y1) to (x2,y2) of <image>, with a pen of <color> with
+    // dimensions <penWidth>x<penHeight>.
+    //
+    // The corners are centred at those coordinates so if <penWidth> > 1 or
+    // <penHeight> > 1, the line is likely to extend past a rectangle with
+    // those corners.
+    //
+    // Returns the dirty rectangle.
+    static QRect washLine (kpImage *image,
+        int x1, int y1, int x2, int y2,
+        const kpColor &color, int penWidth, int penHeight,
+        const kpColor &colorToReplace,
+        int processedColorSimilarity);
+
+    static QRect washRect (kpImage *image,
+        int x, int y, int width, int height,
+        const kpColor &color,
+        const kpColor &colorToReplace,
+        int processedColorSimilarity);
 };
 
 

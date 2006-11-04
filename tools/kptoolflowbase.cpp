@@ -230,7 +230,7 @@ void kpToolFlowBase::hover (const QPoint &point)
 
         viewManager ()->setTempPixmap (
             kpTempPixmap (true/*brush*/,
-                hotPoint (),
+                hotRect ().topLeft (),
                 d->cursorDrawFunc, d->drawPackageForMouseButton [0/*left button*/],
                 d->cursorWidth, d->cursorHeight));
 
@@ -254,20 +254,22 @@ void kpToolFlowBase::hover (const QPoint &point)
     setUserShapePoints (point);
 }
 
-static int randomNumberFrom0to99 ()
+static int RandomNumberFrom0to99 ()
 {
     return (rand () % 100);
 }
 
+// public static
 QList <QPoint> kpToolFlowBase::interpolatePoints (const QPoint &thisPoint,
     const QPoint &lastPoint,
+    bool brushIsDiagonalLine,
     double probability)
 {
     QList <QPoint> ret;
  
     const int probabilityTimes100 = int (probability * 100);
 #define SHOULD_DRAW()  (probabilityTimes100 == 100/*avoid rand() call*/ ||  \
-                        ::randomNumberFrom0to99 () < probabilityTimes100)
+                        ::RandomNumberFrom0to99 () < probabilityTimes100)
 
 #if 0                        
     kDebug () << "prob=" << probability
@@ -342,7 +344,7 @@ QList <QPoint> kpToolFlowBase::interpolatePoints (const QPoint &thisPoint,
 
         if (plot)
         {
-            if (d->brushIsDiagonalLine && plot == 2)
+            if (brushIsDiagonalLine && plot == 2)
             {
                 // MODIFIED: every point is
                 // horizontally or vertically adjacent to another point (if there
@@ -518,6 +520,13 @@ int kpToolFlowBase::brushHeight () const
 }
 
 // protected
+bool kpToolFlowBase::brushIsDiagonalLine () const
+{
+    return d->brushIsDiagonalLine;
+}
+
+
+// protected
 kpToolFlowCommand *kpToolFlowBase::currentCommand () const
 {
     return d->currentCommand;
@@ -591,17 +600,10 @@ void kpToolFlowBase::slotBackgroundColorChanged (const kpColor & /*col*/)
 }
 
 
-QPoint kpToolFlowBase::hotPoint () const
-{
-    return hotPoint (m_currentPoint);
-}
-
-QPoint kpToolFlowBase::hotPoint (int x, int y) const
-{
-    return hotPoint (QPoint (x, y));
-}
-
-QPoint kpToolFlowBase::hotPoint (const QPoint &point) const
+// public static
+QRect kpToolFlowBase::hotRectForMousePointAndBrushWidthHeight (
+        const QPoint &mousePoint,
+        int brushWidth, int brushHeight)
 {
     /*
      * e.g.
@@ -611,23 +613,17 @@ QPoint kpToolFlowBase::hotPoint (const QPoint &point) const
      *        |
      *      Center
      */
-    return point - QPoint (d->brushWidth / 2, d->brushHeight / 2);
+    return QRect (mousePoint.x () - brushWidth / 2,
+        mousePoint.y () - brushHeight / 2,
+        brushWidth,
+        brushHeight);
 }
 
+// protected
 QRect kpToolFlowBase::hotRect () const
 {
-    return hotRect (m_currentPoint);
-}
-
-QRect kpToolFlowBase::hotRect (int x, int y) const
-{
-    return hotRect (QPoint (x, y));
-}
-
-QRect kpToolFlowBase::hotRect (const QPoint &point) const
-{
-    QPoint topLeft = hotPoint (point);
-    return QRect (topLeft.x (), topLeft.y (), d->brushWidth, d->brushHeight);
+    return hotRectForMousePointAndBrushWidthHeight (m_currentPoint,
+        d->brushWidth, d->brushHeight);
 }
 
 
