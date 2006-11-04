@@ -491,8 +491,9 @@ public:
         void *data);
 
     // Same as above except that <drawFunc> is called a maximum of once
-    // for the RGB and mask layers simultaneously.  <rgbPainter> can be 0,
-    // <maskPainter> can be 0 but not both.
+    // for the RGB and mask layers simultaneously.  Regarding the arguments
+    // this function passes to <drawFunc>, <rgbPainter> may be 0 and
+    // <maskPainter> may be 0 - but not both.
     //
     // <drawFunc> must return the dirty rectangle (return the full image
     // rectangle if in doubt).  This is then returned by draw() itself.
@@ -560,4 +561,3 @@ public:
 
 
 #endif  // KP_PIXMAP_FX_H
-
