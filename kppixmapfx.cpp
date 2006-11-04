@@ -737,7 +737,10 @@ QRect kpPixmapFX::draw (QPixmap *image,
     }
 
         
-    const QRect dirtyRect = (*drawFunc) (&rgbPainter, &maskPainter, data);
+    const QRect dirtyRect = (*drawFunc) (
+        rgbPainter.isActive () ? &rgbPainter : 0,
+        maskPainter.isActive () ? &maskPainter : 0,
+        data);
 
 
     if (rgbPainter.isActive ())

@@ -145,15 +145,20 @@ static bool ReadableImageWashRect (QPainter *rgbPainter, QPainter *maskPainter,
                << ")" << endl;
 #endif
 
+    // If you're going to pass painter pointers, those painters had better be
+    // active (i.e. QPainter::begin() has been called).
+    Q_ASSERT (!rgbPainter || rgbPainter->isActive ());
+    Q_ASSERT (!maskPainter || maskPainter->isActive ());
+    
 // make use of scanline coherence
 #define FLUSH_LINE()                                        \
 {                                                           \
-    if (rgbPainter && rgbPainter->isActive ())              \
+    if (rgbPainter)                                         \
         rgbPainter->drawLine (startDrawX + imageRect.x (),  \
             y + imageRect.y (),                             \
             x - 1 + imageRect.x (),                         \
             y + imageRect.y ());                            \
-    if (maskPainter && maskPainter->isActive ())            \
+    if (maskPainter)                                        \
         maskPainter->drawLine (startDrawX + imageRect.x (), \
             y + imageRect.y (),                             \
             x - 1 + imageRect.x (),                         \
