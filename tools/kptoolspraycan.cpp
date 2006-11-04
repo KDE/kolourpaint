@@ -104,10 +104,10 @@ void kpToolSpraycan::end ()
 }
 
 
-// protected
-void kpToolSpraycan::paintersSprayOneDocPoint (QPainter *painter,
+static void PaintersSprayOneDocPoint (QPainter *painter,
     QPainter *maskPainter,
-    const QPoint &point)
+    const QPoint &point,
+    int spraycanSize)
 {
     QPolygon pArray (10);
     int numPointsCreated = 0;
@@ -115,18 +115,18 @@ void kpToolSpraycan::paintersSprayOneDocPoint (QPainter *painter,
 #if DEBUG_KP_TOOL_SPRAYCAN
     kDebug () << "\t\tkpToolSpraycan::paintersSprayOneDocPoint("
                << ",point=" << point
-               << ") spraycanSize=" << spraycanSize ()
+               << ") spraycanSize=" << spraycanSize
                << endl;
 #endif
 
-    const int radius = spraycanSize () / 2;
+    const int radius = spraycanSize / 2;
 
     for (int i = 0; i < 10; i++)
     {
         int dx, dy;
 
-        dx = (rand () % spraycanSize ()) - radius;
-        dy = (rand () % spraycanSize ()) - radius;
+        dx = (rand () % spraycanSize) - radius;
+        dy = (rand () % spraycanSize) - radius;
 
         // make it look circular
         // OPT: can be done better
@@ -160,13 +160,11 @@ void kpToolSpraycan::paintersSprayOneDocPoint (QPainter *painter,
 
 // protected
 void kpToolSpraycan::pixmapSprayManyDocPoints (QPixmap *pixmap,
-    const QRect &docRect,
-    const QList <QPoint> &docPoints)
+    const QList <QPoint> &points,
+    int spraycanSize)
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "\tkpToolSpraycan::pixmapSprayManyDocPoints(docRect="
-               << docRect << ")"
-               << endl;
+    kDebug () << "\tkpToolSpraycan::pixmapSprayManyDocPoints()" << endl;
 #endif
 
     QBitmap maskBitmap;
@@ -176,13 +174,8 @@ void kpToolSpraycan::pixmapSprayManyDocPoints (QPixmap *pixmap,
         &maskBitmap,
         &painter, &maskPainter);
         
-    for (QList <QPoint>::const_iterator pit = docPoints.begin ();
-         pit != docPoints.end ();
-         pit++)
-    {
-        paintersSprayOneDocPoint (&painter, &maskPainter,
-            *pit - docRect.topLeft ());
-    }
+    foreach (QPoint p, points)
+        ::PaintersSprayOneDocPoint (&painter, &maskPainter, p, spraycanSize);
 
     drawLineTearDownPainterMask (pixmap,
         &maskBitmap,
@@ -254,8 +247,11 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
     if (docPoints.empty ())
         return QRect ();
     
-        
-    pixmapSprayManyDocPoints (&pixmap, docRect, docPoints);
+
+    QList <QPoint> pixmapPoints;
+    foreach (QPoint dp, docPoints)
+        pixmapPoints.append (dp - docRect.topLeft ());
+    pixmapSprayManyDocPoints (&pixmap, pixmapPoints, spraycanSize ());
 
         
     viewManager ()->setFastUpdates ();

@@ -64,12 +64,9 @@ public:
 
     
 protected:
-    void paintersSprayOneDocPoint (QPainter *painter,
-        QPainter *maskPainter,
-        const QPoint &point);
     void pixmapSprayManyDocPoints (QPixmap *pixmap,
-        const QRect &docRect,
-        const QList <QPoint> &docPoints);
+        const QList <QPoint> &points,
+        int spraycanSize);
 
         
 public:
