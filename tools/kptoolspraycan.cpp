@@ -114,7 +114,7 @@ void kpToolSpraycan::beginDraw ()
 
     kpToolFlowBase::beginDraw ();
     
-    // use a timer instead of reimplementing draw() (we don't draw all the time)
+    // Use a timer instead of reimplementing draw() (we don't draw all the time).
     m_timer->start (25);    
 }
 
@@ -135,11 +135,12 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
     QPixmap pixmap = document ()->getPixmapAt (docRect);
 
     
-    QList <QPoint> docPoints = interpolatePoints (thisPoint, lastPoint,
+    QList <QPoint> docPoints = kpPainter::interpolatePoints (thisPoint, lastPoint,
         probability);
     
         
     // Drawing a line (not just a point) starting at lastPoint?
+    // TODO: this code is hard to read.
     if (thisPoint != lastPoint &&
         docPoints.size () > 0 && docPoints [0] == lastPoint)
     {
@@ -170,6 +171,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
         return QRect ();
     
 
+    // Spray at each point, onto the pixmap.
     QList <QPoint> pixmapPoints;
     foreach (QPoint dp, docPoints)
         pixmapPoints.append (dp - docRect.topLeft ());
@@ -222,6 +224,8 @@ void kpToolSpraycan::timeoutDraw ()
     const QRect drawnRect = drawLineWithProbability (m_currentPoint, m_currentPoint,
         1.0/*100% chance of drawing*/);
 
+    // kpToolFlowBase() does this after calling drawPoint() and drawLine() so
+    // we need to do it too.
     currentCommand ()->updateBoundingRect (drawnRect);
 }
 

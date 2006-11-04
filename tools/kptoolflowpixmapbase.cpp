@@ -33,6 +33,7 @@
 #include <kpbug.h>
 #include <kpcolor.h>
 #include <kpdocument.h>
+#include <kppainter.h>
 #include <kppixmapfx.h>
 #include <kptoolflowcommand.h>
 
@@ -75,7 +76,7 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
     QPixmap pixmap = document ()->getPixmapAt (docRect);
 
 
-    QList <QPoint> points = interpolatePoints (thisPoint, lastPoint,
+    QList <QPoint> points = kpPainter::interpolatePoints (thisPoint, lastPoint,
         brushIsDiagonalLine ());
         
     for (QList <QPoint>::const_iterator pit = points.begin ();

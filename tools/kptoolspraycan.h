@@ -66,7 +66,7 @@ public:
 public:
     virtual void beginDraw ();
 protected:
-    // (probability is between 0.0 and 1.0 inclusive)
+    // (ASSUMPTION: <probability> is between 0.0 and 1.0 inclusive)
     QRect drawLineWithProbability (const QPoint &thisPoint,
          const QPoint &lastPoint,
          double probability);

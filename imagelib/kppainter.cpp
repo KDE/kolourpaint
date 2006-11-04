@@ -47,6 +47,119 @@
 #include <kptoolflowbase.h>
 
 
+// Returns a random integer from 0 to 99 inclusive.
+static int RandomNumberFrom0to99 ()
+{
+    return (rand () % 100);
+}
+
+// public static
+QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
+    const QPoint &endPoint,
+    bool brushIsDiagonalLine,
+    double probability)
+{
+    QList <QPoint> ret;
+
+    Q_ASSERT (probability >= 0.0 && probability <= 1.0);
+    const int probabilityTimes100 = int (probability * 100);
+#define SHOULD_DRAW()  (probabilityTimes100 == 100/*avoid rand() call*/ ||  \
+                        ::RandomNumberFrom0to99 () < probabilityTimes100)
+
+#if 0
+    kDebug () << "prob=" << probability
+               << " *100=" << probabilityTimes100
+               << endl;
+#endif
+
+
+    // Derived from the zSprite2 Graphics Engine.
+    // "MODIFIED" comment shows deviation from zSprite2 and Bresenham's line
+    // algorithm.
+
+    const int x1 = startPoint.x (),
+        y1 = startPoint.y (),
+        x2 = endPoint.x (),
+        y2 = endPoint.y ();
+
+    // Difference of x and y values
+    const int dx = x2 - x1;
+    const int dy = y2 - y1;
+
+    // Absolute values of differences
+    const int ix = qAbs (dx);
+    const int iy = qAbs (dy);
+
+    // Larger of the x and y differences
+    const int inc = ix > iy ? ix : iy;
+
+    // Plot location
+    int plotx = x1;
+    int ploty = y1;
+
+    int x = 0;
+    int y = 0;
+
+    if (SHOULD_DRAW ())
+        ret.append (QPoint (plotx, ploty));
+
+
+    for (int i = 0; i <= inc; i++)
+    {
+        // oldplotx is equally as valid but would look different
+        // (but nobody will notice which one it is)
+        const int oldploty = ploty;
+        int plot = 0;
+
+        x += ix;
+        y += iy;
+
+        if (x > inc)
+        {
+            plot++;
+            x -= inc;
+
+            if (dx < 0)
+                plotx--;
+            else
+                plotx++;
+        }
+
+        if (y > inc)
+        {
+            plot++;
+            y -= inc;
+
+            if (dy < 0)
+                ploty--;
+            else
+                ploty++;
+        }
+
+        if (plot)
+        {
+            if (brushIsDiagonalLine && plot == 2)
+            {
+                // MODIFIED: every point is
+                // horizontally or vertically adjacent to another point (if there
+                // is more than 1 point, of course).  This is in contrast to the
+                // ordinary line algorithm which can create diagonal adjacencies.
+
+                if (SHOULD_DRAW ())
+                    ret.append (QPoint (plotx, oldploty));
+            }
+
+            if (SHOULD_DRAW ())
+                ret.append (QPoint (plotx, ploty));
+        }
+    }
+
+#undef SHOULD_DRAW
+
+    return ret;
+}
+
+
 // public static
 void kpPainter::drawLine (kpImage *image,
         int x1, int y1, int x2, int y2,
@@ -320,7 +433,7 @@ static QRect WashLineHelper (QPainter *rgbPainter, QPainter *maskPainter,
 
     bool didSomething = false;
 
-    QList <QPoint> points = kpToolFlowBase::interpolatePoints (pack->endPoint, pack->startPoint);
+    QList <QPoint> points = kpPainter::interpolatePoints (pack->endPoint, pack->startPoint);
     for (QList <QPoint>::const_iterator pit = points.begin ();
             pit != points.end ();
             pit++)

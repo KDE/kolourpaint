@@ -57,6 +57,36 @@ struct kpPainterPrivate;
 class kpPainter
 {
 public:
+    // Returns a list of points representing a straight line from <thisPoint>
+    // to <lastPoint>, using Bresenham's line algorithm.  Each point is created
+    // only with the specified <probability>.
+    //
+    // <brushIsDiagonalLine> must be set if a diagonal line is to drawn at each
+    // of the returned points, otherwise things won't look right:
+    //
+    //     .\.....
+    //     \.\....
+    //     .\.B...
+    //     ..Ac\..
+    //     ...\.\.
+    //     ....\..
+    //
+    // 'A' is the previous Bresenham point.  'B' is the new point.  See how if
+    // diagonal lines are drawn at A and B, there is a gap between the lines.
+    // Setting <brushIsDiagonalLine> will solve this problem, since it will add
+    // a point at 'c'.
+    //
+    // For those interested in strict definitions: if <brushIsDiagonalLine> is
+    // set, a modified Bresenham's algorithm will add an extra point between
+    // every pair of strictly-diagonally-adjacent points, such that these points
+    // become cardinally adjacent, but before the <probability> is applied.
+    //
+    // ASSUMPTION: <probability> is between 0.0 and 1.0 inclusive.
+    static QList <QPoint> interpolatePoints (const QPoint &thisPoint,
+        const QPoint &lastPoint,
+        bool brushIsDiagonalLine = false,
+        double probability = 1.0);
+
     // Draws a line from (x1,y1) to (x2,y2) onto <image>, with <color>
     // and <penWidth>.  The corners are rounded and centred at those
     // coordinates so if <width> > 1, the line is likely to extend past
@@ -134,6 +164,8 @@ public:
 
     // For each point in <points>, sprays a random pattern of 10 dots of <color>,
     // each within a circle of diameter <spraycanSize>, onto <image>.
+    //
+    // ASSUMPTION: spraycanSize > 0.
     // TODO: I think this diameter is 1 or 2 off.
     static void sprayPoints (kpImage *image,
         const QList <QPoint> &points,
