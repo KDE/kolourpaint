@@ -48,6 +48,7 @@
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
+#include <kppainter.h>
 #include <kppixmapfx.h>
 #include <kptoolspraycan.h>
 #include <kptoolflowcommand.h>
@@ -101,85 +102,6 @@ void kpToolSpraycan::end ()
     disconnect (m_toolWidgetSpraycanSize, SIGNAL (spraycanSizeChanged (int)),
                 this, SLOT (slotSpraycanSizeChanged (int)));
     m_toolWidgetSpraycanSize = 0;
-}
-
-
-static void PaintersSprayOneDocPoint (QPainter *painter,
-    QPainter *maskPainter,
-    const QPoint &point,
-    int spraycanSize)
-{
-    QPolygon pArray (10);
-    int numPointsCreated = 0;
-
-#if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "\t\tkpToolSpraycan::paintersSprayOneDocPoint("
-               << ",point=" << point
-               << ") spraycanSize=" << spraycanSize
-               << endl;
-#endif
-
-    const int radius = spraycanSize / 2;
-
-    for (int i = 0; i < 10; i++)
-    {
-        int dx, dy;
-
-        dx = (rand () % spraycanSize) - radius;
-        dy = (rand () % spraycanSize) - radius;
-
-        // make it look circular
-        // OPT: can be done better
-        if (dx * dx + dy * dy <= radius * radius)
-            pArray [numPointsCreated++] = QPoint (point.x () + dx, point.y () + dy);
-    }
-
-    pArray.resize (numPointsCreated);
-
-#if DEBUG_KP_TOOL_SPRAYCAN && 0
-    kDebug () << "\t\t\tnumPointsCreated=" << numPointsCreated << endl;
-#endif
-
-
-    for (int i = 0; i < numPointsCreated; i++)
-    {
-    #if DEBUG_KP_TOOL_SPRAYCAN && 0
-        kDebug () << "\t\t\t\t" << i << ": " << pArray [i] << endl;
-    #endif
-    
-        QPoint pt (pArray [i].x (),
-                   pArray [i].y ());
-
-        if (painter->isActive ())
-            painter->drawPoint (pt);
-
-        if (maskPainter->isActive ())
-            maskPainter->drawPoint (pt);
-    }
-}
-
-// protected
-void kpToolSpraycan::pixmapSprayManyDocPoints (QPixmap *pixmap,
-    const QList <QPoint> &points,
-    int spraycanSize)
-{
-#if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "\tkpToolSpraycan::pixmapSprayManyDocPoints()" << endl;
-#endif
-
-    QBitmap maskBitmap;
-    QPainter painter, maskPainter;
-    
-    drawLineSetupPainterMask (pixmap,
-        &maskBitmap,
-        &painter, &maskPainter);
-        
-    foreach (QPoint p, points)
-        ::PaintersSprayOneDocPoint (&painter, &maskPainter, p, spraycanSize);
-
-    drawLineTearDownPainterMask (pixmap,
-        &maskBitmap,
-        &painter, &maskPainter);
 }
 
 
@@ -251,7 +173,10 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
     QList <QPoint> pixmapPoints;
     foreach (QPoint dp, docPoints)
         pixmapPoints.append (dp - docRect.topLeft ());
-    pixmapSprayManyDocPoints (&pixmap, pixmapPoints, spraycanSize ());
+    kpPainter::sprayPoints (&pixmap,
+        pixmapPoints,
+        color (m_mouseButton),
+        spraycanSize ());
 
         
     viewManager ()->setFastUpdates ();

@@ -63,12 +63,6 @@ public:
     virtual void end ();
 
     
-protected:
-    void pixmapSprayManyDocPoints (QPixmap *pixmap,
-        const QList <QPoint> &points,
-        int spraycanSize);
-
-        
 public:
     virtual void beginDraw ();
 protected:

@@ -131,6 +131,14 @@ public:
         const kpColor &color,
         const kpColor &colorToReplace,
         int processedColorSimilarity);
+
+    // For each point in <points>, sprays a random pattern of 10 dots of <color>,
+    // each within a circle of diameter <spraycanSize>, onto <image>.
+    // TODO: I think this diameter is 1 or 2 off.
+    static void sprayPoints (kpImage *image,
+        const QList <QPoint> &points,
+        const kpColor &color,
+        int spraycanSize);
 };
 
 

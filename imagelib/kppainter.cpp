@@ -428,3 +428,91 @@ QRect kpPainter::washRect (kpImage *image,
         processedColorSimilarity,
         &::WashRectHelper);
 }
+
+
+struct SprayPointsPackage
+{
+    QList <QPoint> points;
+    kpColor color;
+    int spraycanSize;
+};
+
+static QRect SprayPointsHelper (QPainter *rgbPainter, QPainter *maskPainter,
+        void *data)
+{
+    SprayPointsPackage *pack = static_cast <SprayPointsPackage *> (data);
+
+#if DEBUG_KP_PAINTER
+    kDebug () << "kppainter.cpp:SprayPointsHelper("
+               << ") spraycanSize=" << pack->spraycanSize
+               << endl;
+#endif
+
+    const int radius = pack->spraycanSize / 2;
+
+    // Set the drawing colors for the painters.
+    
+    if (rgbPainter)
+    {
+        rgbPainter->setPen (
+            kpPixmapFX::draw_ToQColor (pack->color,
+                true/*drawing on RGB Layer*/));
+    }
+
+    if (maskPainter)
+    {
+        maskPainter->setPen (
+            kpPixmapFX::draw_ToQColor (pack->color,
+                false/*drawing on mask layer*/));
+    }
+
+    foreach (QPoint p, pack->points)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            const int dx = (rand () % pack->spraycanSize) - radius;
+            const int dy = (rand () % pack->spraycanSize) - radius;
+    
+            // Make it look circular.
+            // TODO: Can be done better by doing a random vector angle & length
+            //       but would sin and cos be too slow?
+            if ((dx * dx) + (dy * dy) > (radius * radius))
+                continue;
+    
+            const QPoint p2 (p.x () + dx, p.y () + dy);
+    
+            if (rgbPainter)
+                rgbPainter->drawPoint (p2);
+    
+            if (maskPainter)
+                maskPainter->drawPoint (p2);
+        }
+    }
+
+    // kpPainter::sprayPoints() ignores the return value of kpPixmapFX::draw(),
+    // which is based on this return value.
+    return QRect ();
+}
+
+// public static
+void kpPainter::sprayPoints (kpImage *image,
+        const QList <QPoint> &points,
+        const kpColor &color,
+        int spraycanSize)
+{
+#if DEBUG_KP_PAINTER
+    kDebug () << "kpPainter::sprayPoints()" << endl;
+#endif
+
+    Q_ASSERT (spraycanSize > 0);
+    
+    SprayPointsPackage pack;
+    pack.points = points;
+    pack.color = color;
+    pack.spraycanSize = spraycanSize;
+
+    kpPixmapFX::draw (image, &::SprayPointsHelper,
+        color.isOpaque (),
+        color.isTransparent (),
+        &pack);
+}
