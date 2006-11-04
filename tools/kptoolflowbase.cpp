@@ -315,7 +315,8 @@ void kpToolFlowBase::releasedAllButtons ()
 void kpToolFlowBase::endDraw (const QPoint &, const QRect &)
 {
     d->currentCommand->finalize ();
-    mainWindow ()->commandHistory ()->addCommand (d->currentCommand, false /* don't exec */);
+    mainWindow ()->commandHistory ()->addCommand (d->currentCommand,
+        false/*don't exec*/);
 
     // don't delete - it's up to the commandHistory
     d->currentCommand = 0;
