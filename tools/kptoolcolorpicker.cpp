@@ -192,7 +192,8 @@ void kpToolColorPickerCommand::unexecute ()
 // private
 kpColorToolBar *kpToolColorPickerCommand::colorToolBar () const
 {
-    return m_mainWindow ? m_mainWindow->colorToolBar () : 0;
+    Q_ASSERT (m_mainWindow);
+    return m_mainWindow->colorToolBar ();
 }
 
 

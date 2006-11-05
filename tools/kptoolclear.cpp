@@ -88,11 +88,7 @@ int kpToolClearCommand::size () const
 void kpToolClearCommand::execute ()
 {
     kpDocument *doc = document ();
-    if (!doc)
-    {
-        kError () << "kpToolClearCommand::execute() without doc" << endl;
-        return;
-    }
+    Q_ASSERT (doc);
 
 
     m_oldPixmapPtr = new QPixmap ();
@@ -120,11 +116,7 @@ void kpToolClearCommand::execute ()
 void kpToolClearCommand::unexecute ()
 {
     kpDocument *doc = document ();
-    if (!doc)
-    {
-        kError () << "kpToolClearCommand::execute() without doc" << endl;
-        return;
-    }
+    Q_ASSERT (doc);
 
 
     doc->setPixmap (m_actOnSelection, *m_oldPixmapPtr);

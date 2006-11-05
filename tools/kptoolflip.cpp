@@ -118,8 +118,7 @@ void kpToolFlipCommand::unexecute ()
 void kpToolFlipCommand::flip ()
 {
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
 
     QApplication::setOverrideCursor (Qt::WaitCursor);

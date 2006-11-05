@@ -100,8 +100,7 @@ int kpToolSkewCommand::size () const
 void kpToolSkewCommand::execute ()
 {
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
@@ -165,8 +164,8 @@ void kpToolSkewCommand::execute ()
                                             m_oldSelection.transparency ()));
         }
 
-        if (m_mainWindow->tool ())
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+        Q_ASSERT (m_mainWindow->tool ());
+        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
     }
     else
     {
@@ -181,8 +180,7 @@ void kpToolSkewCommand::execute ()
 void kpToolSkewCommand::unexecute ()
 {
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
@@ -308,8 +306,7 @@ void kpToolSkewDialog::createAngleGroupBox ()
 QSize kpToolSkewDialog::newDimensions () const
 {
     kpDocument *doc = document ();
-    if (!doc)
-        return QSize ();
+    Q_ASSERT (doc);
 
     QMatrix skewMatrix = kpPixmapFX::skewMatrix (*doc->pixmap (),
                                                   horizontalAngleForPixmapFX (),

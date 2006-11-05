@@ -215,19 +215,8 @@ void kpToolResizeScaleCommand::scaleSelectionRegionWithDocument ()
                << endl;
 #endif
 
-    if (!m_oldSelection)
-    {
-        kError () << "kpToolResizeScaleCommand::scaleSelectionRegionWithDocument()"
-                   << " without old sel" << endl;
-        return;
-    }
-
-    if (m_oldSelection->pixmap ())
-    {
-        kError () << "kpToolResizeScaleCommand::scaleSelectionRegionWithDocument()"
-                   << " old sel has pixmap" << endl;
-        return;
-    }
+    Q_ASSERT (m_oldSelection);
+    Q_ASSERT (!m_oldSelection->pixmap ());
 
 
     const double horizScale = double (m_newWidth) / double (m_oldWidth);
@@ -283,7 +272,7 @@ void kpToolResizeScaleCommand::execute ()
         {
             if (!m_actOnTextSelection)
             {
-                kError () << "kpToolResizeScaleCommand::execute() resizing sel doesn't make sense" << endl;
+                Q_ASSERT (!"kpToolResizeScaleCommand::execute() resizing sel doesn't make sense");
                 return;
             }
             else
@@ -291,8 +280,8 @@ void kpToolResizeScaleCommand::execute ()
                 QApplication::setOverrideCursor (Qt::WaitCursor);
                 document ()->selection ()->textResize (m_newWidth, m_newHeight);
 
-                if (m_mainWindow->tool ())
-                    m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+                Q_ASSERT (m_mainWindow->tool ());
+                m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
 
                 QApplication::restoreOverrideCursor ();
             }
@@ -357,8 +346,8 @@ void kpToolResizeScaleCommand::execute ()
                 kpSelection (kpSelection::Rectangle, newRect, newPixmap,
                              m_oldSelection->transparency ()));
 
-            if (m_mainWindow->tool ())
-                m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+            Q_ASSERT (m_mainWindow->tool ());
+            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
         }
         else
         {
@@ -387,8 +376,7 @@ void kpToolResizeScaleCommand::unexecute ()
         return;
 
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
     if (m_type == Resize)
     {
@@ -396,16 +384,16 @@ void kpToolResizeScaleCommand::unexecute ()
         {
             if (!m_actOnTextSelection)
             {
-                kError () << "kpToolResizeScaleCommand::unexecute() resizing sel doesn't make sense" << endl;
+                Q_ASSERT (!"kpToolResizeScaleCommand::unexecute() resizing sel doesn't make sense");
                 return;
             }
             else
             {
                 QApplication::setOverrideCursor (Qt::WaitCursor);
-                document ()->selection ()->textResize (m_oldWidth, m_oldHeight);
+                doc->selection ()->textResize (m_oldWidth, m_oldHeight);
 
-                if (m_mainWindow->tool ())
-                    m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+                Q_ASSERT (m_mainWindow->tool ());
+                m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
 
                 QApplication::restoreOverrideCursor ();
             }
@@ -460,8 +448,8 @@ void kpToolResizeScaleCommand::unexecute ()
             oldSelection.setPixmap (oldPixmap);
             doc->setSelection (oldSelection);
 
-            if (m_mainWindow->tool ())
-                m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+            Q_ASSERT (m_mainWindow->tool ());
+            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
         }
         else
         {
@@ -471,8 +459,8 @@ void kpToolResizeScaleCommand::unexecute ()
             {
                 doc->setSelection (*m_oldSelection);
 
-                if (m_mainWindow->tool ())
-                    m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+                Q_ASSERT (m_mainWindow->tool ());
+                m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
             }
         }
 
@@ -553,13 +541,15 @@ kpToolResizeScaleDialog::~kpToolResizeScaleDialog ()
 // private
 kpDocument *kpToolResizeScaleDialog::document () const
 {
-    return m_mainWindow ? m_mainWindow->document () : 0;
+    Q_ASSERT (m_mainWindow);
+    return m_mainWindow->document ();
 }
 
 // private
 kpSelection *kpToolResizeScaleDialog::selection () const
 {
-    return document () ? document ()->selection () : 0;
+    Q_ASSERT (document ());
+    return document ()->selection ();
 }
 
 

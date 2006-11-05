@@ -76,8 +76,7 @@ int kpToolConvertToGrayscaleCommand::size () const
 void kpToolConvertToGrayscaleCommand::execute ()
 {
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
 
@@ -95,8 +94,7 @@ void kpToolConvertToGrayscaleCommand::execute ()
 void kpToolConvertToGrayscaleCommand::unexecute ()
 {
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
     doc->setPixmap (m_actOnSelection, *m_oldPixmapPtr);
 

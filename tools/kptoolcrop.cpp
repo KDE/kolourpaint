@@ -175,8 +175,8 @@ void kpToolCropSetImageCommand::execute ()
         document ()->selectionDelete ();
 
 
-        if (mainWindow ()->tool ())
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+        Q_ASSERT (mainWindow ()->tool ());
+        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
     }
     viewManager ()->restoreQueueUpdates ();
 }
@@ -227,13 +227,9 @@ kpToolCropCommand::kpToolCropCommand (kpMainWindow *mainWindow)
     kDebug () << "kpToolCropCommand::<ctor>()" << endl;
 #endif
 
-    if (!mainWindow ||
-        !mainWindow->document () ||
-        !mainWindow->document ()->selection ())
-    {
-        kError () << "kpToolCropCommand::kpToolCropCommand() without sel" << endl;
-        return;
-    }
+    Q_ASSERT (mainWindow &&
+        mainWindow->document () &&
+        mainWindow->document ()->selection ());
 
     kpSelection *sel = mainWindow->document ()->selection ();
 

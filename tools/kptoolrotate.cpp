@@ -95,8 +95,7 @@ int kpToolRotateCommand::size () const
 void kpToolRotateCommand::execute ()
 {
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
@@ -165,8 +164,8 @@ void kpToolRotateCommand::execute ()
                                             m_oldSelection.transparency ()));
         }
 
-        if (m_mainWindow->tool ())
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+        Q_ASSERT (m_mainWindow->tool ());
+        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
     }
     else
         doc->setPixmap (newPixmap);
@@ -179,8 +178,7 @@ void kpToolRotateCommand::execute ()
 void kpToolRotateCommand::unexecute ()
 {
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
@@ -209,8 +207,8 @@ void kpToolRotateCommand::unexecute ()
         oldSelection.setPixmap (oldPixmap);
         doc->setSelection (oldSelection);
 
-        if (m_mainWindow->tool ())
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+        Q_ASSERT (m_mainWindow->tool ());
+        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
     }
 
 

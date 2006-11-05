@@ -144,11 +144,7 @@ kpColor kpToolAutoCropBorder::averageColor () const
     else
     {
         int numPixels = (m_rect.width () * m_rect.height ());
-        if (numPixels <= 0)
-        {
-            kError () << "kpToolAutoCropBorder::averageColor() rect=" << m_rect << endl;
-            return kpColor::invalid;
-        }
+        Q_ASSERT (numPixels > 0);
 
         return kpColor (m_redSum / numPixels,
                         m_greenSum / numPixels,
@@ -172,11 +168,7 @@ bool kpToolAutoCropBorder::calculate (int isX, int dir)
     int maxY = m_pixmapPtr->height () - 1;
 
     QImage image = kpPixmapFX::convertToImage (*m_pixmapPtr);
-    if (image.isNull ())
-    {
-        kError () << "Border::calculate() could not convert to QImage" << endl;
-        return false;
-    }
+    Q_ASSERT (!image.isNull ());
 
     // (sync both branches)
     if (isX)
@@ -336,33 +328,16 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
     kDebug () << "kpToolAutoCrop() CALLED!" << endl;
 #endif
 
-    if (!mainWindow)
-    {
-        kError () << "kpToolAutoCrop() passed NULL mainWindow" << endl;
-        return false;
-    }
-
+    Q_ASSERT (mainWindow);
     kpDocument *doc = mainWindow->document ();
-    if (!doc)
-    {
-        kError () << "kpToolAutoCrop() passed NULL document" << endl;
-        return false;
-    }
+    Q_ASSERT (doc);
 
     // OPT: if already pulled selection pixmap, no need to do it again here
     QPixmap pixmap = doc->selection () ? doc->getSelectedPixmap () : *doc->pixmap ();
-    if (pixmap.isNull ())
-    {
-        kError () << "kptoolAutoCrop() pased NULL pixmap" << endl;
-        return false;
-    }
+    Q_ASSERT (!pixmap.isNull ());
 
     kpViewManager *vm = mainWindow->viewManager ();
-    if (!vm)
-    {
-        kError () << "kpToolAutoCrop() passed NULL vm" << endl;
-        return false;
-    }
+    Q_ASSERT (vm);
 
     int processedColorSimilarity = mainWindow->colorToolBar ()->processedColorSimilarity ();
     kpToolAutoCropBorder leftBorder (&pixmap, processedColorSimilarity),
@@ -493,13 +468,7 @@ kpToolAutoCropCommand::kpToolAutoCropCommand (bool actOnSelection,
       m_botPixmap (0)
 {
     kpDocument *doc = document ();
-    if (!doc)
-    {
-        kError () << "kpToolAutoCropCommand::<ctor>() without doc" << endl;
-        m_oldWidth = 0;
-        m_oldHeight = 0;
-        return;
-    }
+    Q_ASSERT (doc);
 
     m_oldWidth = doc->width (m_actOnSelection);
     m_oldHeight = doc->height (m_actOnSelection);
@@ -550,6 +519,7 @@ int kpToolAutoCropCommand::size () const
 void kpToolAutoCropCommand::getUndoPixmap (const kpToolAutoCropBorder &border, QPixmap **pixmap)
 {
     kpDocument *doc = document ();
+    Q_ASSERT (doc);
 
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
     kDebug () << "kpToolAutoCropCommand::getUndoPixmap()" << endl;
@@ -558,9 +528,6 @@ void kpToolAutoCropCommand::getUndoPixmap (const kpToolAutoCropBorder &border, Q
                << " isSingleColor=" << border.isSingleColor ()
                << endl;
 #endif
-
-    if (!doc)
-        return;
 
     if (pixmap && border.exists () && !border.isSingleColor ())
     {
@@ -613,8 +580,7 @@ void kpToolAutoCropCommand::execute ()
 
 
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
 
     QPixmap pixmapWithoutBorder =
@@ -654,8 +620,7 @@ void kpToolAutoCropCommand::unexecute ()
 #endif
 
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
     QPixmap pixmap (m_oldWidth, m_oldHeight);
     QBitmap maskBitmap;
