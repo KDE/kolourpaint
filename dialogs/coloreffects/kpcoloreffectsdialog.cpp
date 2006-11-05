@@ -368,4 +368,4 @@ void kpEffectsDialog::slotDelayedUpdate ()
 }
 
 
-#include <kpeffectsdialog.moc>
+#include <kpcoloreffectsdialog.moc>
