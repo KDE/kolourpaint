@@ -53,6 +53,7 @@ line: shift+alt doesn't work but alt+shift does
 KolourPaint 1.4
 ~~~~~~~~~~~~~~~
 
+"Universal Selections" modify selections after selecting
 
 Should CTRL+C'ing a textbox mean that MMB pastes that text?
 KolourPaint does not ATM and it is annoying.  Should there be a KDE standard for this?
