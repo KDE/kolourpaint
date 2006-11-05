@@ -2460,3 +2460,18 @@ void kpPixmapFX::drawEllipse (QPixmap *image,
         true/*ellipse like*/);
 }
 
+
+// public static
+void kpPixmapFX::drawXORRect (QPixmap *image,
+        int x, int y, int width, int height)
+{
+    // TODO: Need some XOR simulation.  Trolltech got rid of raster OPs.
+    //
+    //       On XRENDER, we could do a nice blue with alpha.
+    //
+    //       But without XRENDER, I vote stippled blue and yellow.  Of course,
+    //       Qt 4.2 TP had a bug and stippledness did not work.
+    kpPixmapFX::drawRect (image,
+        x, y, width, height,
+        kpColor (0, 0, 255)/*blue*/);
+}

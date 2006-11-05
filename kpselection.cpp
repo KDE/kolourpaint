@@ -897,6 +897,7 @@ void kpSelection::paintBorder (QPixmap *destPixmap, const QRect &docRect,
     kDebug () << "kpSelection::paintBorder() boundingRect=" << boundingRect () << endl;
 #endif
 
+#if 0
     QPainter destPixmapPainter (destPixmap);
     // COMPAT: destPixmapPainter.setRasterOp (Qt::XorROP);
     destPixmapPainter.setPen (QPen (Qt::white, 1, Qt::DotLine));
@@ -912,6 +913,7 @@ void kpSelection::paintBorder (QPixmap *destPixmap, const QRect &docRect,
         maskBitmapPainter.begin (&maskBitmap);
         maskBitmapPainter.setPen (Qt::color1/*opaque*/);
     }
+#endif
 
 
 #define PAINTER_CMD(cmd)                 \
@@ -927,8 +929,10 @@ void kpSelection::paintBorder (QPixmap *destPixmap, const QRect &docRect,
             << endl;
 #endif
 
+#if 0
     if (boundingRect ().topLeft () != boundingRect ().bottomRight ())
     {
+#endif
         switch (type ())
         {
         case kpSelection::Rectangle:
@@ -941,13 +945,15 @@ void kpSelection::paintBorder (QPixmap *destPixmap, const QRect &docRect,
                     << " h=" << boundingRect ().height ()
                     << endl;
         #endif
-            PAINTER_CMD (drawRect (boundingRect ().x () - docRect.x (),
-                                boundingRect ().y () - docRect.y (),
-                                boundingRect ().width (),
-                                boundingRect ().height ()));
+            kpPixmapFX::drawXORRect (destPixmap,
+                boundingRect ().x () - docRect.x (),
+                boundingRect ().y () - docRect.y (),
+                boundingRect ().width (),
+                boundingRect ().height ());
             break;
 
         case kpSelection::Ellipse:
+        #if 0
         #if DEBUG_KP_SELECTION && 1
             kDebug () << "\tselection border = ellipse" << endl;
         #endif
@@ -955,10 +961,12 @@ void kpSelection::paintBorder (QPixmap *destPixmap, const QRect &docRect,
                                     boundingRect ().y () - docRect.y (),
                                     boundingRect ().width (),
                                     boundingRect ().height ()));
+        #endif
             break;
 
         case kpSelection::Points:
         {
+        #if 0
         #if DEBUG_KP_SELECTION
             kDebug () << "\tselection border = freeForm" << endl;
         #endif
@@ -972,6 +980,7 @@ void kpSelection::paintBorder (QPixmap *destPixmap, const QRect &docRect,
             {
                 PAINTER_CMD (drawPolyline (pointsTranslated));
             }
+        #endif
 
             break;
         }
@@ -986,6 +995,7 @@ void kpSelection::paintBorder (QPixmap *destPixmap, const QRect &docRect,
             (type () == kpSelection::Ellipse ||
             type () == kpSelection::Points))
         {
+        #if 0
             destPixmapPainter.save ();
 
             // COMPAT: destPixmapPainter.setRasterOp (Qt::NotROP);
@@ -995,21 +1005,26 @@ void kpSelection::paintBorder (QPixmap *destPixmap, const QRect &docRect,
                                 boundingRect ().height ()));
 
             destPixmapPainter.restore ();
+        #endif
         }
+#if 0
     }
     else
     {
         // SYNC: Work around Qt bug: can't draw 1x1 rectangle
         PAINTER_CMD (drawPoint (boundingRect ().topLeft () - docRect.topLeft ()));
     }
+#endif
 
 #undef PAINTER_CMD
 
+#if 0
     destPixmapPainter.end ();
     if (maskBitmapPainter.isActive ())
         maskBitmapPainter.end ();
 
     destPixmap->setMask (maskBitmap);
+#endif
 }
 
 // private

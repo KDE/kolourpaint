@@ -557,6 +557,11 @@ public:
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth = 1,
         const kpColor &bcolor = kpColor::invalid);
+
+    // Same as drawRect() but simulates an XOR with the existing contents
+    // of the pixmap.  Pen width is set to 1.
+    static void drawXORRect (QPixmap *image,
+        int x, int y, int width, int height);
 };
 
 
