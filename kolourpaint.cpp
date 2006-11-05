@@ -66,7 +66,7 @@ int main (int argc, char *argv [])
         0/*copyright statement - see license instead*/,
         I18N_NOOP ("Support / Feedback:\n"
                    "kolourpaint-support@lists.sourceforge.net\n"),
-        "http://kolourpaint.sourceforge.net/"
+        "http://www.kolourpaint.org/"
     );
 
 
