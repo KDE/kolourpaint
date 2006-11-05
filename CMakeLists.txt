@@ -1,12 +1,21 @@
 project(kolourpaint)
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/kolourpaint/cursors/
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/
-    ${CMAKE_SOURCE_DIR}/kolourpaint/views/
-    ${CMAKE_SOURCE_DIR}/kolourpaint/compat/
+    ${CMAKE_SOURCE_DIR}/kolourpaint/compat
+    ${CMAKE_SOURCE_DIR}/kolourpaint/cursors
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib
+    ${CMAKE_SOURCE_DIR}/kolourpaint/mainwindow
+    ${CMAKE_SOURCE_DIR}/kolourpaint/views
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/selection
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/rectangular
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/color_similarity
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/generic
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/options
     ${KDE4_INCLUDE_DIR}
     ${QT_INCLUDES}
     )
@@ -41,115 +50,101 @@ macro_additional_clean_files( ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintlicense.h )
 
 create_license(${CMAKE_SOURCE_DIR}/kolourpaint/COPYING ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintlicense.h)
 
-set(libkolourpaintwidgets_SRCS
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kpcolorsimilaritycube.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kpcolorsimilaritydialog.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kpcolortoolbar.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kpresizesignallinglabel.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kpsqueezedtextlabel.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kptoolpreviewdialog.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kptooltoolbar.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kptoolwidgetbase.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kptoolwidgetbrush.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kptoolwidgeterasersize.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kptoolwidgetfillstyle.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kptoolwidgetlinewidth.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kptoolwidgetopaqueortransparent.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kptoolwidgetspraycansize.cpp
- )
 
-set(libkolourpaintviews_SRCS 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/views/kpthumbnailview.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/views/kpunzoomedthumbnailview.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/views/kpzoomedthumbnailview.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/views/kpzoomedview.cpp
-)
-
-set(libkolourpainttools_SRCS 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolautocrop.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolbrush.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolclear.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolcoloreraser.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolcolorpicker.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolconverttograyscale.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolcrop.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolcurve.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolflowbase.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolflowcommand.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolflowpixmapbase.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolellipse.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolellipticalselection.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptooleraser.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolflip.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolfloodfill.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolfreeformselection.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolline.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolpen.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolpolygon.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolpolyline.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolrectangle.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolrectselection.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolresizescale.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolrotate.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolroundedrectangle.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolselection.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolspraycan.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolskew.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptooltext.cpp
-)
-
-set(libkolourpaintimagelib_SRCS
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpcolor.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpcoloreffect.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpdocumentmetainfo.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectbalance.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectblursharpen.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectemboss.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectflatten.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectinvert.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectreducecolors.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectsdialog.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpfloodfill.cpp 
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpimage.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kppainter.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kptextstyle.cpp 
-)
-
-set(libkolourpaintcursors_SRCS 
+set(kolourpaint_SRCS
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kolourpaint.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kpcommandhistory.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kpdocument.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kpdocumentsaveoptions.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kpdocumentsaveoptionswidget.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kppixmapfx.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kpselection.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kpselectiondrag.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kpselectiontransparency.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kptemppixmap.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kpthumbnail.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kptoolaction.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kpviewmanager.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kpviewscrollablecontainer.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/kpwidgetmapper.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/compat/kpbug.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors/kpcursorlightcross.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors/kpcursorprovider.cpp
-    )
-
-
-set(kolourpaint_SRCS ${libkolourpaintcursors_SRCS} ${libkolourpaintimagelib_SRCS} ${libkolourpainttools_SRCS} ${libkolourpaintwidgets_SRCS} ${libkolourpaintviews_SRCS}
-   kolourpaint.cpp 
-   kpdocument.cpp 
-   kpdocumentsaveoptions.cpp 
-   kpdocumentsaveoptionswidget.cpp 
-   kpview.cpp 
-   kpcommandhistory.cpp 
-   kpmainwindow.cpp 
-   kpmainwindow_edit.cpp 
-   kpmainwindow_help.cpp 
-   kpmainwindow_image.cpp 
-   kpmainwindow_tools.cpp 
-   kpmainwindow_file.cpp 
-   kpmainwindow_settings.cpp 
-   kpmainwindow_statusbar.cpp 
-   kpmainwindow_text.cpp 
-   kpmainwindow_view.cpp 
-   kppixmapfx.cpp
-   kpselection.cpp 
-   kpselectiondrag.cpp 
-   kpselectiontransparency.cpp 
-   kptemppixmap.cpp 
-   kpthumbnail.cpp 
-   kptool.cpp 
-   kptoolaction.cpp 
-   kpviewmanager.cpp 
-   kpviewscrollablecontainer.cpp 
-   kpwidgetmapper.cpp 
-   compat/kpbug.cpp )
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpcolor.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpcoloreffect.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpdocumentmetainfo.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectbalance.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectblursharpen.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectemboss.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectflatten.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectinvert.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectreducecolors.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpeffectsdialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpfloodfill.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpimage.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kppainter.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kptextstyle.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/mainwindow/kpmainwindow.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/mainwindow/kpmainwindow_edit.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/mainwindow/kpmainwindow_file.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/mainwindow/kpmainwindow_help.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/mainwindow/kpmainwindow_image.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/mainwindow/kpmainwindow_settings.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/mainwindow/kpmainwindow_statusbar.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/mainwindow/kpmainwindow_text.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/mainwindow/kpmainwindow_tools.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/mainwindow/kpmainwindow_view.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolautocrop.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolclear.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolcolorpicker.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolconverttograyscale.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptool.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolcrop.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolflip.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolfloodfill.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolresizescale.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolrotate.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolskew.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptoolbrush.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptoolcoloreraser.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptooleraser.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptoolflowbase.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptoolflowcommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptoolflowpixmapbase.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptoolpen.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptoolspraycan.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal/kptoolcurve.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal/kptoolline.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal/kptoolpolygon.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal/kptoolpolyline.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/rectangular/kptoolellipse.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/rectangular/kptoolrectangle.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/rectangular/kptoolroundedrectangle.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/selection/kptoolellipticalselection.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/selection/kptoolfreeformselection.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/selection/kptoolrectselection.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/selection/kptoolselection.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/selection/kptooltext.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/views/kpthumbnailview.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/views/kpunzoomedthumbnailview.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/views/kpview.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/views/kpzoomedthumbnailview.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/views/kpzoomedview.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kptoolpreviewdialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/color_similarity/kpcolorsimilaritycube.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/color_similarity/kpcolorsimilaritydialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/generic/kpresizesignallinglabel.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/generic/kpsqueezedtextlabel.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/kpcolortoolbar.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/kptooltoolbar.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/options/kptoolwidgetbase.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/options/kptoolwidgetbrush.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/options/kptoolwidgeterasersize.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/options/kptoolwidgetfillstyle.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/options/kptoolwidgetlinewidth.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/options/kptoolwidgetopaqueortransparent.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/options/kptoolwidgetspraycansize.cpp
+   )
 
 kde4_automoc(${kolourpaint_SRCS})
 
