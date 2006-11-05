@@ -44,4 +44,12 @@ kpToolPolyline::~kpToolPolyline ()
 {
 }
 
+
+// private virtual [base kpTool]
+QString kpToolPolyline::haventBegunShapeUserMessage () const
+{
+    return i18n ("Drag to draw the first line.");
+}
+
+
 #include <kptoolpolyline.moc>

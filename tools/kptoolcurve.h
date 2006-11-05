@@ -43,6 +43,9 @@ Q_OBJECT
 public:
     kpToolCurve (kpMainWindow *mainWindow);
     virtual ~kpToolCurve ();
+
+private:
+    QString haventBegunShapeUserMessage () const;
 };
 
 

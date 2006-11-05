@@ -194,21 +194,10 @@ void kpToolPolygon::setMode (Mode m)
 }
 
 
-// private
+// private virtual [base kpTool]
 QString kpToolPolygon::haventBegunShapeUserMessage () const
 {
-    switch (d->mode)
-    {
-    case Line:
-        return i18n ("Drag to draw.");
-    case Polygon:
-    case Polyline:
-        return i18n ("Drag to draw the first line.");
-    case Curve:
-        return i18n ("Drag out the start and end points.");
-    default:
-        return QString::null;
-    }
+    return i18n ("Drag to draw the first line.");
 }
 
 // virtual
@@ -321,19 +310,7 @@ void kpToolPolygon::beginDraw ()
 
     if (!endedShape)
     {
-        switch (d->mode)
-        {
-        case Line:
-        case Curve:
-        case Polygon:
-        case Polyline:
-            setUserMessage (cancelUserMessage ());
-            break;
-
-        default:
-            kError () << "kpToolPolygon::beginDraw() shape" << endl;
-            break;
-        }
+        setUserMessage (cancelUserMessage ());
     }
 }
 
@@ -455,6 +432,11 @@ void kpToolPolygon::applyModifiers ()
         kpBug::QRect_Normalized (
             QRect (d->toolLineStartPoint, d->toolLineEndPoint)),
                    d->toolWidgetLineWidth->lineWidth ());
+}
+
+QPolygon *kpToolPolygon::points () const
+{
+    return &d->points;
 }
 
 // virtual

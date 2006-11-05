@@ -44,4 +44,12 @@ kpToolLine::~kpToolLine ()
 {
 }
 
+
+// private virtual [base kpTool]
+QString kpToolLine::haventBegunShapeUserMessage () const
+{
+    return i18n ("Drag to draw.");
+}
+
+
 #include <kptoolline.moc>

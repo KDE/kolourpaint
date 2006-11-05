@@ -43,6 +43,9 @@ Q_OBJECT
 public:
     kpToolPolyline (kpMainWindow *);
     virtual ~kpToolPolyline ();
+
+private:
+    QString haventBegunShapeUserMessage () const;
 };
 
 

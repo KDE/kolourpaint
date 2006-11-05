@@ -47,6 +47,7 @@
 class QMouseEvent;
 class QPen;
 class QPoint;
+class QPolygon;
 class QRect;
 class QString;
 
@@ -66,6 +67,7 @@ class kpToolPolygon : public kpTool
 Q_OBJECT
 
 public:
+    // TODO: awful - needs inheritance
     enum Mode
     {
         Polygon, Polyline, Line, Curve
@@ -91,6 +93,8 @@ public:
     virtual void beginDraw ();
 private:
     void applyModifiers ();
+protected:
+    QPolygon *points () const;
 public:
     virtual void draw (const QPoint &, const QPoint &, const QRect &);
 private:

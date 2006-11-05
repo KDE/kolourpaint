@@ -44,4 +44,12 @@ kpToolCurve::~kpToolCurve ()
 {
 }
 
+
+// private virtual [base kpTool]
+QString kpToolCurve::haventBegunShapeUserMessage () const
+{
+    return i18n ("Drag out the start and end points.");
+}
+
+
 #include <kptoolcurve.moc>
