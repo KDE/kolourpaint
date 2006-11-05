@@ -42,9 +42,9 @@
  *
  * It is suitable as an ordinary editing view.
  *
- * Do not call setOrigin().
+ * Do not call setOrigin().  TODO: this is bad class design - derived classes should only add functionality - not remove
  *
- * This class is sealed.  Do not derive from it.
+ * This class is sealed.  Do not derive from it.  TODO: this is also bad class design
  *
  * @author Clarence Dang <dang@kde.org>
  */
