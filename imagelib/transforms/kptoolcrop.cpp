@@ -40,7 +40,7 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kpselection.h>
-#include <kptoolclear.h>
+#include <kptoolclearcommand.h>
 #include <kptoolresizescale.h>
 #include <kptoolselection.h>
 #include <kpviewmanager.h>

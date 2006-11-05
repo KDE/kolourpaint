@@ -34,7 +34,7 @@
 #include <klocale.h>
 
 #include <kpcommandhistory.h>
-#include <kptoolclear.h>
+#include <kptoolclearcommand.h>
 
 
 kpToolEraser::kpToolEraser (kpMainWindow *mainWindow)

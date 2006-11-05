@@ -26,7 +26,7 @@
 */
 
 
-#include <kptoolclear.h>
+#include <kptoolclearcommand.h>
 
 #include <qpixmap.h>
 

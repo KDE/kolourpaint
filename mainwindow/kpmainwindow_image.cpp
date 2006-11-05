@@ -51,7 +51,7 @@
 #include <kpselection.h>
 #include <kptool.h>
 #include <kptoolautocrop.h>
-#include <kptoolclear.h>
+#include <kptoolclearcommand.h>
 #include <kptoolconverttograyscale.h>
 #include <kptoolcrop.h>
 #include <kptoolflip.h>
