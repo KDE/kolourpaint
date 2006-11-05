@@ -146,6 +146,8 @@ private:
 public:
     // (<docRect> is the document rectangle that <*destPixmap> represents)
     void paint (QPixmap *destPixmap, const QRect &docRect) const;
+    void paintBorder (QPixmap *destPixmap, const QRect &docRect,
+        bool selectionFinished) const;
 
 private:
     void calculateTextPixmap ();
