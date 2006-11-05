@@ -889,6 +889,129 @@ void kpSelection::paint (QPixmap *destPixmap, const QRect &docRect) const
     }
 }
 
+// public
+void kpSelection::paintBorder (QPixmap *destPixmap, const QRect &docRect,
+        bool selectionFinished) const
+{
+#if DEBUG_KP_SELECTION && 1
+    kDebug () << "kpSelection::paintBorder() boundingRect=" << boundingRect () << endl;
+#endif
+
+    QPainter destPixmapPainter (destPixmap);
+    // COMPAT: destPixmapPainter.setRasterOp (Qt::XorROP);
+    destPixmapPainter.setPen (QPen (Qt::white, 1, Qt::DotLine));
+
+    destPixmapPainter.setBackgroundMode (Qt::OpaqueMode);
+    destPixmapPainter.setBackground (Qt::blue);
+
+    QBitmap maskBitmap;
+    QPainter maskBitmapPainter;
+    if (!destPixmap->mask ().isNull ())
+    {
+        maskBitmap = destPixmap->mask ();
+        maskBitmapPainter.begin (&maskBitmap);
+        maskBitmapPainter.setPen (Qt::color1/*opaque*/);
+    }
+
+
+#define PAINTER_CMD(cmd)                 \
+{                                        \
+    destPixmapPainter . cmd;             \
+    if (maskBitmapPainter.isActive ())   \
+        maskBitmapPainter . cmd;         \
+}
+
+#if DEBUG_KP_SELECTION && 1
+    kDebug () << "\tsel boundingRect="
+            << boundingRect
+            << endl;
+#endif
+
+    if (boundingRect ().topLeft () != boundingRect ().bottomRight ())
+    {
+        switch (type ())
+        {
+        case kpSelection::Rectangle:
+        case kpSelection::Text:
+        #if DEBUG_KP_SELECTION && 1
+            kDebug () << "\tselection border = rectangle" << endl;
+            kDebug () << "\t\tx=" << boundingRect ().x () - docRect.x ()
+                    << " y=" << boundingRect ().y () - docRect.y ()
+                    << " w=" << boundingRect ().width ()
+                    << " h=" << boundingRect ().height ()
+                    << endl;
+        #endif
+            PAINTER_CMD (drawRect (boundingRect ().x () - docRect.x (),
+                                boundingRect ().y () - docRect.y (),
+                                boundingRect ().width (),
+                                boundingRect ().height ()));
+            break;
+
+        case kpSelection::Ellipse:
+        #if DEBUG_KP_SELECTION && 1
+            kDebug () << "\tselection border = ellipse" << endl;
+        #endif
+            PAINTER_CMD (drawEllipse (boundingRect ().x () - docRect.x (),
+                                    boundingRect ().y () - docRect.y (),
+                                    boundingRect ().width (),
+                                    boundingRect ().height ()));
+            break;
+
+        case kpSelection::Points:
+        {
+        #if DEBUG_KP_SELECTION
+            kDebug () << "\tselection border = freeForm" << endl;
+        #endif
+            QPolygon pointsTranslated = points ();
+            pointsTranslated.translate (-docRect.x (), -docRect.y ());
+            if (selectionFinished)
+            {
+                PAINTER_CMD (drawPolygon (pointsTranslated));
+            }
+            else
+            {
+                PAINTER_CMD (drawPolyline (pointsTranslated));
+            }
+
+            break;
+        }
+
+        default:
+            kError () << "kpView::paintEventDrawSelection() unknown sel border type" << endl;
+            break;
+        }
+
+
+        if (selectionFinished &&
+            (type () == kpSelection::Ellipse ||
+            type () == kpSelection::Points))
+        {
+            destPixmapPainter.save ();
+
+            // COMPAT: destPixmapPainter.setRasterOp (Qt::NotROP);
+            PAINTER_CMD (drawRect (boundingRect ().x () - docRect.x (),
+                                boundingRect ().y () - docRect.y (),
+                                boundingRect ().width (),
+                                boundingRect ().height ()));
+
+            destPixmapPainter.restore ();
+        }
+    }
+    else
+    {
+        // SYNC: Work around Qt bug: can't draw 1x1 rectangle
+        PAINTER_CMD (drawPoint (boundingRect ().topLeft () - docRect.topLeft ()));
+    }
+
+#undef PAINTER_CMD
+
+    destPixmapPainter.end ();
+    if (maskBitmapPainter.isActive ())
+        maskBitmapPainter.end ();
+
+    destPixmap->setMask (maskBitmap);
+}
+
 // private
 void kpSelection::calculateTextPixmap ()
 {
