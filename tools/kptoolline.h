@@ -45,7 +45,7 @@ public:
     virtual ~kpToolLine ();
     
 private:
-    QString haventBegunShapeUserMessage () const;
+    virtual QString haventBegunShapeUserMessage () const;
 };
 
 

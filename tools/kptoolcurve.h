@@ -45,7 +45,7 @@ public:
     virtual ~kpToolCurve ();
 
 private:
-    QString haventBegunShapeUserMessage () const;
+    virtual QString haventBegunShapeUserMessage () const;
 };
 
 

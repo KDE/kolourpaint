@@ -67,7 +67,8 @@ class kpToolPolygon : public kpTool
 Q_OBJECT
 
 public:
-    // TODO: awful - needs inheritance
+    // TODO: awful - needs inheritance, all subclasses and I need to derive from
+    //       a class kpToolPolygonalBase.
     enum Mode
     {
         Polygon, Polyline, Line, Curve
@@ -84,7 +85,7 @@ public:
     virtual bool careAboutModifierState () const { return true; }
 
 private:
-    QString haventBegunShapeUserMessage () const;
+    virtual QString haventBegunShapeUserMessage () const;
 
 public:
     virtual void begin ();
