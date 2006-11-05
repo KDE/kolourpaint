@@ -971,12 +971,9 @@ void kpDocument::setPixmap (bool ofSelection, const QPixmap &pixmap)
 {
     if (ofSelection)
     {
-        if (!m_selection)
-        {
-            kError () << "kpDocument::setPixmap(ofSelection=true) without sel" << endl;
-            return;
-        }
-
+        // Have to have a selection in order to set its pixmap.
+        Q_ASSERT (m_selection);
+        
         m_selection->setPixmap (pixmap);
     }
     else
@@ -1109,13 +1106,7 @@ void kpDocument::setSelection (const kpSelection &selection)
 QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
 {
     kpSelection *sel = selection ();
-
-    // must have a selection region
-    if (!sel)
-    {
-        kError () << "kpDocument::getSelectedPixmap() no sel region" << endl;
-        return QPixmap ();
-    }
+    Q_ASSERT (sel);
 
     // easy if we already have it :)
     if (sel->pixmap ())
@@ -1123,11 +1114,7 @@ QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
 
 
     const QRect boundingRect = sel->boundingRect ();
-    if (!boundingRect.isValid ())
-    {
-        kError () << "kpDocument::getSelectedPixmap() boundingRect invalid" << endl;
-        return QPixmap ();
-    }
+    Q_ASSERT (boundingRect.isValid ());
 
 
     QBitmap maskBitmap = maskBitmap_;
@@ -1135,12 +1122,7 @@ QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
         !sel->isRectangular ())
     {
         maskBitmap = sel->maskForOwnType ();
-
-        if (maskBitmap.isNull ())
-        {
-            kError () << "kpDocument::getSelectedPixmap() could not get mask" << endl;
-            return QPixmap ();
-        }
+        Q_ASSERT (!maskBitmap.isNull ());
     }
 
 
@@ -1184,27 +1166,13 @@ bool kpDocument::selectionPullFromDocument (const kpColor &backgroundColor)
     kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
 
     kpSelection *sel = selection ();
+    Q_ASSERT (sel);
 
-    // must have a selection region
-    if (!sel)
-    {
-        kError () << "kpDocument::selectionPullFromDocument() no sel region" << endl;
-        return false;
-    }
-
-    // should not already have a pixmap
-    if (sel->pixmap ())
-    {
-        kError () << "kpDocument::selectionPullFromDocument() already has pixmap" << endl;
-        return false;
-    }
+    // Should not already have a pixmap or we would not be pulling.
+    Q_ASSERT (!sel->pixmap ());
 
     const QRect boundingRect = sel->boundingRect ();
-    if (!boundingRect.isValid ())
-    {
-        kError () << "kpDocument::selectionPullFromDocument() boundingRect invalid" << endl;
-        return false;
-    }
+    Q_ASSERT (boundingRect.isValid ());
 
 
     //
