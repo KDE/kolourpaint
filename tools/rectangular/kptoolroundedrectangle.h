@@ -30,13 +30,13 @@
 #define KP_TOOL_ROUNDED_RECTANGLE_H
 
 
-#include <kptoolrectangle.h>
+#include <kptoolrectangularbase.h>
 
 
 class kpMainWindow;
 
 
-class kpToolRoundedRectangle : public kpToolRectangle
+class kpToolRoundedRectangle : public kpToolRectangularBase
 {
 Q_OBJECT
 

@@ -1,6 +1,8 @@
 project(kolourpaint)
 
 include_directories(
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools
     ${CMAKE_SOURCE_DIR}/kolourpaint/compat
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib
@@ -67,6 +69,8 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/kpviewmanager.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/kpviewscrollablecontainer.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/kpwidgetmapper.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/kptoolflowcommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/kptoolrectangularcommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/compat/kpbug.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors/kpcursorlightcross.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors/kpcursorprovider.cpp
@@ -109,7 +113,6 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptoolcoloreraser.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptooleraser.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptoolflowbase.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptoolflowcommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptoolflowpixmapbase.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptoolpen.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptoolspraycan.cpp
@@ -119,6 +122,7 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal/kptoolpolyline.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/rectangular/kptoolellipse.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/rectangular/kptoolrectangle.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/rectangular/kptoolrectangularbase.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/rectangular/kptoolroundedrectangle.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/selection/kptoolellipticalselection.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/selection/kptoolfreeformselection.cpp

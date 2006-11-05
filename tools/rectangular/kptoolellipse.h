@@ -30,13 +30,13 @@
 #define KP_TOOL_ELLIPSE_H
 
 
-#include <kptoolrectangle.h>
+#include <kptoolrectangularbase.h>
 
 
 class kpMainWindow;
 
 
-class kpToolEllipse : public kpToolRectangle
+class kpToolEllipse : public kpToolRectangularBase
 {
 Q_OBJECT
 

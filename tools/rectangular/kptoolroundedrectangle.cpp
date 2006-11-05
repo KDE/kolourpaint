@@ -26,20 +26,25 @@
 */
 
 
-#include <klocale.h>
 #include <kptoolroundedrectangle.h>
 
+#include <klocale.h>
+
+#include <kppainter.h>
+
+
 kpToolRoundedRectangle::kpToolRoundedRectangle (kpMainWindow *mainWindow)
-    : kpToolRectangle (RoundedRectangle,
-                       i18n ("Rounded Rectangle"),
-                       i18n ("Draws rectangles and squares with rounded corners"),
-                       Qt::Key_U,
-                       mainWindow, "tool_rounded_rectangle")
+    : kpToolRectangularBase (i18n ("Rounded Rectangle"),
+        i18n ("Draws rectangles and squares with rounded corners"),
+        &kpPainter::drawRoundedRect,
+        Qt::Key_U,
+        mainWindow, "tool_rounded_rectangle")
 {
 }
 
 kpToolRoundedRectangle::~kpToolRoundedRectangle ()
 {
 }
+
 
 #include <kptoolroundedrectangle.moc>

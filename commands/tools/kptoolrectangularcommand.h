@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -26,25 +26,45 @@
 */
 
 
-#include <kptoolellipse.h>
-
-#include <klocale.h>
-
-#include <kppainter.h>
+#ifndef KP_TOOL_RECTANGULAR_COMMAND_H
+#define KP_TOOL_RECTANGULAR_COMMAND_H
 
 
-kpToolEllipse::kpToolEllipse (kpMainWindow *mainWindow)
-    : kpToolRectangularBase (i18n ("Ellipse"),
-        i18n ("Draws ellipses and circles"),
-        &kpPainter::drawEllipse,
-        Qt::Key_E,
-        mainWindow, "tool_ellipse")
+#include <qrect.h>
+
+#include <kpcommandhistory.h>
+#include <kptool.h>
+#include <kptoolrectangularbase.h>
+
+
+class QString;
+
+class kpColor;
+class kpMainWindow;
+
+
+struct kpToolRectangularCommandPrivate;
+
+class kpToolRectangularCommand : public kpNamedCommand
 {
-}
+public:
+    kpToolRectangularCommand (const QString &name,
+        kpToolRectangularBase::DrawShapeFunc drawShapeFunc,
+        const QRect &rect,
+        const kpColor &fcolor, int penWidth,
+        const kpColor &bcolor,
+        kpMainWindow *mainWindow);
+    virtual ~kpToolRectangularCommand ();
 
-kpToolEllipse::~kpToolEllipse ()
-{
-}
+    virtual int size () const;
+
+    virtual void execute ();
+    virtual void unexecute ();
+
+private:
+    kpToolRectangularCommandPrivate * const d;
+    kpToolRectangularCommand &operator= (const kpToolRectangularCommand &) const;
+};
 
 
-#include <kptoolellipse.moc>
+#endif  // KP_TOOL_RECTANGULAR_COMMAND_H
