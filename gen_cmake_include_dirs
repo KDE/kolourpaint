@@ -1,0 +1,8 @@
+# Recalculates the KolourPaint-specific part of CMakeLists.txt's "include_directories()"
+
+for f in `find -type d | fgrep -v .svn | egrep -v '^\.$' | egrep -v '^\./pics
+^\./patches$
+^\./tests$' | cut -c3- | sort`
+do
+	echo '${CMAKE_SOURCE_DIR}/kolourpaint/'$f
+done
