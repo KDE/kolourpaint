@@ -790,7 +790,7 @@ static bool Only1PixelInPointArray (const QPolygon &points)
 //
 
 
-struct GetSetPixmapAtPack
+struct GetSetPaintPixmapAtPack
 {
     const QPixmap *srcPixmap;
     QPoint destTopLeft;
@@ -798,12 +798,12 @@ struct GetSetPixmapAtPack
     bool isSettingPixelsNotPainting;
 };
 
-static void GetSetPixmapAtHelper (QPainter *p, bool drawingOnRGBLayer, void *data)
+static void GetSetPaintPixmapAtHelper (QPainter *p, bool drawingOnRGBLayer, void *data)
 {
-    GetSetPixmapAtPack *pack = static_cast <GetSetPixmapAtPack *> (data);
+    GetSetPaintPixmapAtPack *pack = static_cast <GetSetPaintPixmapAtPack *> (data);
 
 #if DEBUG_KP_PIXMAP_FX
-    kDebug () << "kppixmapfx.cpp:GetSetPixmapAtHelper(drawingOnRGBLayer="
+    kDebug () << "kppixmapfx.cpp:GetSetPaintPixmapAtHelper(drawingOnRGBLayer="
               << drawingOnRGBLayer << ")"
               << "  srcPixmap: rect=" << pack->srcPixmap->size ()
               << " hasAlpha=" << pack->srcPixmap->hasAlpha ()
@@ -929,13 +929,13 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
     }
 
     // TODO: we could call setPixmapAt().
-    GetSetPixmapAtPack pack;
+    GetSetPaintPixmapAtPack pack;
     pack.srcPixmap = &pm;
     pack.destTopLeft = validSrcRect.topLeft () - rect.topLeft ();
     pack.validSrcRect = validSrcRect;
     pack.isSettingPixelsNotPainting = true;
 
-    kpPixmapFX::draw (&retPixmap, &::GetSetPixmapAtHelper,
+    kpPixmapFX::draw (&retPixmap, &::GetSetPaintPixmapAtHelper,
         true/*always "draw"/copy RGB layer*/,
         (retPixmap.hasAlpha () || pm.hasAlpha ())/*draw on mask if either has one*/,
         &pack);
@@ -999,13 +999,13 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
     Q_ASSERT (destRect.width () <= srcPixmap.width () &&
               destRect.height () <= srcPixmap.height ());
 
-    GetSetPixmapAtPack pack;
+    GetSetPaintPixmapAtPack pack;
     pack.srcPixmap = &srcPixmap;
     pack.destTopLeft = destRect.topLeft ();
     pack.validSrcRect = QRect (0, 0, destRect.width (), destRect.height ());
     pack.isSettingPixelsNotPainting = true;
 
-    kpPixmapFX::draw (destPixmapPtr, &::GetSetPixmapAtHelper,
+    kpPixmapFX::draw (destPixmapPtr, &::GetSetPaintPixmapAtHelper,
         true/*always "draw"/copy RGB layer*/,
         (destPixmapPtr->hasAlpha () || srcPixmap.hasAlpha ())/*draw on mask if either has one*/,
         &pack);
@@ -1062,13 +1062,13 @@ void kpPixmapFX::paintPixmapAt (QPixmap *destPixmapPtr, const QPoint &destAt,
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (srcPixmap);
 
-    GetSetPixmapAtPack pack;
+    GetSetPaintPixmapAtPack pack;
     pack.srcPixmap = &srcPixmap;
     pack.destTopLeft = destAt;
     pack.validSrcRect = QRect (0, 0, srcPixmap.width (), srcPixmap.height ());
     pack.isSettingPixelsNotPainting = false;
 
-    kpPixmapFX::draw (destPixmapPtr, &::GetSetPixmapAtHelper,
+    kpPixmapFX::draw (destPixmapPtr, &::GetSetPaintPixmapAtHelper,
         true/*always "draw"/copy RGB layer*/,
         destPixmapPtr->hasAlpha ()/*draw on mask only if dest already has one
             (the src will still be masked by its mask if it has one)*/,
