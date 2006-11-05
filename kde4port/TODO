@@ -1,0 +1,38 @@
+This file only concerns itself with porting KolourPaint from KDE 3 to KDE 4
+and code cleanups.
+
+Features to be implemented are in branches/kolourpaint/control/TODO.
+
+
+1. Move all code that accesses document content to imagelib/
+
+2. Move all dialogs to dialogs/
+
+3. Move all commands to commands/
+
+4. Fix tools/polygonal class hierarchy
+
+5. Fix tools/selection class hierarchy
+
+6. Rename files to match classes.  Make sure each file contains just one class.
+   e.g. kpToolFlip.cpp contains class kpToolFlip.  Note the casing - I'm
+   getting sick of kpawholebunchofwordsstucktogetherwithnoseparators.cpp.
+
+12. Remove deprecated qt3support and kde3support references.
+
+
+7. Remove "Thanks To" section in kolourpaint.cpp - it's simply extra work to
+   coordinate with website updates, esp. during release freezes where updates
+   are not allowed.  Measure the startup time improvement :)
+
+8. Write developer's guide .odt/.pdf.
+
+
+11. Push as many classes as possible into kdelibs.
+
+
+9. Review all commits.  Credit people like Laurent Montel for porting.
+
+10. QA entire project due to Qt4 breakages.  Everything needs to be whitebox
+    tested again esp. the file saving path - format conversion, maximal
+    content preservation, formatting loss warnings etc.
