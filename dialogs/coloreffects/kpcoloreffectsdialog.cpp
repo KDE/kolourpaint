@@ -29,7 +29,7 @@
 #define DEBUG_KP_EFFECTS_DIALOG 0
 
 
-#include <kpeffectsdialog.h>
+#include <kpcoloreffectsdialog.h>
 
 #include <qgroupbox.h>
 #include <qlabel.h>
