@@ -23,7 +23,7 @@ Features to be implemented are in branches/kolourpaint/control/TODO.
 
 7. Remove "Thanks To" section in kolourpaint.cpp - it's simply extra work to
    coordinate with website updates, esp. during release freezes where updates
-   are not allowed.  Measure the startup time improvement :)
+   are not allowed.
 
 8. Write developer's guide .odt/.pdf.
 
