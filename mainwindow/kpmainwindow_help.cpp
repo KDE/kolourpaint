@@ -183,7 +183,9 @@ void kpMainWindow::slotHelpTakingScreenshots ()
 
     QLabel *messageLabel = new QLabel (message, &dlg);
     messageLabel->setOpenExternalLinks(true);
+#ifdef __GNUC__
 #warning "not define into qlabel"    
+#endif    
     //messageLabel->setNotifyClick (true);  // Fire urlClick() signal.
     connect (messageLabel, SIGNAL (urlClick (const QString &)),
              this, SLOT (slotHelpTakingScreenshotsFollowLink (const QString &)));
