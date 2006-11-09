@@ -43,6 +43,7 @@ const int kpColor::Exact = 0;
 const kpColor kpColor::Invalid;  // TODO: what's wrong with explicitly specifying () constructor?
 const kpColor kpColor::Transparent (0, 0, 0, true/*isTransparent*/);
 
+// TODO: dup with color constants in kpcolortoolbar.cpp (although those are QColor - will be changed to kpColor once we rewrite the paint engine)
 const kpColor kpColor::Black (0, 0, 0);
 const kpColor kpColor::DarkGray (64, 64, 64);
 const kpColor kpColor::LightGray (192, 192, 192);
@@ -379,3 +380,4 @@ QColor kpColor::maskColor () const
 {
     return isTransparent () ? Qt::color0 : Qt::color1;
 }
+
