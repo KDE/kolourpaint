@@ -30,10 +30,6 @@
 #define KP_TOOL_TEXT_H
 
 
-#include <qstring.h>
-
-#include <kpcommandhistory.h>
-#include <kptextstyle.h>
 #include <kptoolselection.h>
 
 
@@ -42,9 +38,9 @@ class QKeyEvent;
 class kpColor;
 class kpMainWindow;
 class kpSelection;
+class kpTextStyle;
 class kpViewManager;
 
-// (All defined below)
 class kpToolTextInsertCommand;
 class kpToolTextEnterCommand;
 class kpToolTextBackspaceCommand;
@@ -522,124 +518,6 @@ protected:
     int m_IMStartCursorRow;
     int m_IMStartCursorCol;
     QString m_IMPreeditStr;
-};
-
-
-class kpToolTextChangeStyleCommand : public kpNamedCommand
-{
-public:
-    kpToolTextChangeStyleCommand (const QString &name,
-        const kpTextStyle &newTextStyle, const kpTextStyle &oldTextStyle,
-        kpMainWindow *mainWindow);
-    virtual ~kpToolTextChangeStyleCommand ();
-
-    virtual int size () const;
-    
-    virtual void execute ();
-    virtual void unexecute ();
-
-protected:
-    kpTextStyle m_newTextStyle, m_oldTextStyle;
-};
-
-class kpToolTextInsertCommand : public kpNamedCommand
-{
-public:
-    kpToolTextInsertCommand (const QString &name,
-        int row, int col, QString newText,
-        kpMainWindow *mainWindow);
-    virtual ~kpToolTextInsertCommand ();
-
-    void addText (const QString &moreText);
-
-    virtual int size () const;
-    
-    virtual void execute ();
-    virtual void unexecute ();
-
-protected:
-    int m_row, m_col;
-    QString m_newText;
-};
-
-class kpToolTextEnterCommand : public kpNamedCommand
-{
-public:
-    enum Action
-    {
-        DontAddEnterYet,
-        AddEnterNow
-    };
-    
-    kpToolTextEnterCommand (const QString &name,
-        int row, int col, Action action,
-        kpMainWindow *mainWindow);
-    virtual ~kpToolTextEnterCommand ();
-
-    void addEnter ();
-
-    virtual int size () const;
-    
-    virtual void execute ();
-    virtual void unexecute ();
-
-protected:
-    int m_row, m_col;
-    int m_numEnters;
-};
-
-class kpToolTextBackspaceCommand : public kpNamedCommand
-{
-public:
-    enum Action
-    {
-        DontAddBackspaceYet,
-        AddBackspaceNow
-    };
-    
-    kpToolTextBackspaceCommand (const QString &name,
-        int row, int col, Action action,
-        kpMainWindow *mainWindow);
-    virtual ~kpToolTextBackspaceCommand ();
-
-    void addBackspace ();
-
-    virtual int size () const;
-    
-    virtual void execute ();
-    virtual void unexecute ();
-
-protected:
-    int m_row, m_col;
-    int m_numBackspaces;
-    QString m_deletedText;
-};
-
-class kpToolTextDeleteCommand : public kpNamedCommand
-{
-public:
-    enum Action
-    {
-        DontAddDeleteYet,
-        AddDeleteNow
-    };
-    
-    kpToolTextDeleteCommand (const QString &name,
-        int row, int col, Action action,
-        kpMainWindow *mainWindow);
-    virtual ~kpToolTextDeleteCommand ();
-
-    void addDelete ();
-
-    virtual int size () const;
-    
-    virtual void execute ();
-    virtual void unexecute ();
-
-protected:
-    int m_row, m_col;
-    int m_numDeletes;
-    QString m_deletedText;
 };
 
 
