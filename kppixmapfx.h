@@ -573,7 +573,7 @@ public:
     //
     // Qt4 does not actually support XOR, unlike Qt3.  So this function
     // actually produces a non-XOR stipple of <color1Hint> and <color2Hint>.
-    // <fcolor1> and <fcolor2> are ignored for now.
+    // <fcolor1> and <fcolor2> are ignored for now.  TODO: doesn't stipple yet
     //
     // Should Qt support XOR again in the future, this function will be
     // changed to a real XOR using <fcolor1> and <fcolor2>.  <color1Hint>

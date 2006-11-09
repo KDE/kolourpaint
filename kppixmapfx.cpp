@@ -2472,7 +2472,8 @@ void kpPixmapFX::drawStippledXORRect (QPixmap *image,
     //       On XRENDER, we could do a nice blue with alpha.
     //
     //       But without XRENDER, I vote stippled blue and yellow.  Of course,
-    //       Qt 4.2 TP had a bug and stippledness did not work.
+    //       Qt 4.2 TP had a bug and stippledness did not work.  Bug should be
+    //       fixed now though.
     (void) fcolor1; (void) fcolor2;
     (void) color2Hint;
     kpPixmapFX::drawRect (image,
@@ -2487,6 +2488,7 @@ void kpPixmapFX::widgetDrawStippledXORRect (QWidget *widget,
         kpColor color1Hint, kpColor color2Hint,
         QRect clipRect)
 {
+    // TODO: as per above comment.
     (void) fcolor1; (void) fcolor2;
     (void) color2Hint;
 
@@ -2514,7 +2516,9 @@ void kpPixmapFX::fillXORRect (QPixmap *image,
         kpColor fcolor,
         kpColor colorHint)
 {
-    // TODO: XOR simulation.
+    // TODO: XOR simulation or at least, something less solid than current
+    //       (in case user's picture contains a lot of the color we're
+    //        drawing in).
     (void) fcolor;
     kpPixmapFX::fillRect (image,
         x, y, width, height,
@@ -2527,7 +2531,9 @@ void kpPixmapFX::widgetFillXORRect (QWidget *widget,
         kpColor fcolor,
         kpColor colorHint)
 {
-    // TODO: XOR simulation
+    // TODO: XOR simulation or at least, something less solid than current
+    //       (in case user's picture contains a lot of the color we're
+    //        drawing in).
     (void) fcolor;
     QPainter p (widget);
     p.fillRect (x, y, width, height, colorHint.toQColor ());
@@ -2540,7 +2546,9 @@ void kpPixmapFX::drawNOTRect (QPixmap *image,
         kpColor fcolor,
         kpColor colorHint)
 {
-    // TODO: NOT simulation
+    // TODO: NOT simulation or at least, something less solid than current
+    //       (in case user's picture contains a lot of the color we're
+    //        drawing in).
     (void) fcolor;
     kpPixmapFX::drawRect (image,
         x, y, width, height,
@@ -2554,7 +2562,9 @@ void kpPixmapFX::widgetFillNOTRect (QWidget *widget,
         kpColor fcolor,
         kpColor colorHint)
 {
-    // TODO: NOT simulation
+    // TODO: NOT simulation or at least, something less solid than current
+    //       (in case user's picture contains a lot of the color we're
+    //        drawing in).
     (void) fcolor;
     QPainter p (widget);
     p.fillRect (x, y, width, height, colorHint.toQColor ());
