@@ -1351,7 +1351,7 @@ void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRec
     #endif
         // Make checkerboard appear static relative to the scroll view.
         // This makes it more obvious that any visible bits of the
-        // checkboard represent transparent pixels and not grey and white
+        // checkboard represent transparent pixels and not gray and white
         // squares.
         patternOrigin = QPoint (scrollableContainer ()->contentsXSoon (),
                                 scrollableContainer ()->contentsYSoon ());
@@ -1438,26 +1438,11 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
             rect = rect.intersect (sel->textAreaRect ());
             if (!rect.isEmpty ())
             {
-                rect.translate (-docRect.x (), -docRect.y ());
-
-                QBitmap maskBitmap;
-                QPainter destPixmapPainter, maskBitmapPainter;
-
-                if (!destPixmap->mask ().isNull ())
-                {
-                    maskBitmap = destPixmap->mask ();
-                    maskBitmapPainter.begin (&maskBitmap);
-                    maskBitmapPainter.fillRect (rect, Qt::color1/*opaque*/);
-                    maskBitmapPainter.end ();
-                }
-
-                destPixmapPainter.begin (destPixmap);
-                // COMPAT: destPixmapPainter.setRasterOp (Qt::XorROP);
-                destPixmapPainter.fillRect (rect, Qt::white);
-                destPixmapPainter.end ();
-
-                if (!maskBitmap.isNull ())
-                    destPixmap->setMask (maskBitmap);
+                kpPixmapFX::fillXORRect (destPixmap,
+                    rect.x () - docRect.x (), rect.y () - docRect.y (),
+                    rect.width (), rect.height (),
+                    kpColor::White/*XOR color*/,
+                    kpColor::DarkGray/*hint color if XOR not supported*/);
             }
         }
     }
@@ -1470,11 +1455,11 @@ bool kpView::selectionResizeHandleAtomicSizeCloseToZoomLevel () const
 }
 
 // protected
-void kpView::paintEventDrawSelectionResizeHandles (QPainter *painter, const QRect &viewRect)
+void kpView::paintEventDrawSelectionResizeHandles (const QRect &clipRect)
 {
 #if DEBUG_KP_VIEW_RENDERER && 1
     kDebug () << "kpView::paintEventDrawSelectionResizeHandles("
-               << viewRect << ")" << endl;
+               << clipRect << ")" << endl;
 #endif
 
     if (!selectionLargeEnoughToHaveResizeHandles ())
@@ -1499,7 +1484,7 @@ void kpView::paintEventDrawSelectionResizeHandles (QPainter *painter, const QRec
 #if DEBUG_KP_VIEW_RENDERER && 1
     kDebug () << "\tselViewRect=" << selViewRect << endl;
 #endif
-    if (!selViewRect.intersects (viewRect))
+    if (!selViewRect.intersects (clipRect))
     {
     #if DEBUG_KP_VIEW_RENDERER && 1
         kDebug () << "\tdoesn't intersect viewRect" << endl;
@@ -1513,31 +1498,26 @@ void kpView::paintEventDrawSelectionResizeHandles (QPainter *painter, const QRec
                << selResizeHandlesRegion << endl;
 #endif
 
-    painter->save ();
-
-    painter->setClipRect (viewRect, Qt::IntersectClip/*honor existing clip*/);
-
-    QColor fillColor;
-    if (selectionResizeHandleAtomicSizeCloseToZoomLevel ())
+    const bool doXor = !selectionResizeHandleAtomicSizeCloseToZoomLevel ();
+    foreach (QRect r, selResizeHandlesRegion.rects ())
     {
-        fillColor = Qt::blue;
-        // COMPAT: painter->setRasterOp (Qt::CopyROP);
-    }
-    else
-    {
-        fillColor = Qt::white;
-        // COMPAT: painter->setRasterOp (Qt::XorROP);
-    }
+        QRect s = r.intersect (clipRect);
+        if (s.isEmpty ())
+            continue;
 
-    QVector <QRect> rects = selResizeHandlesRegion.rects ();
-    for (QVector <QRect>::ConstIterator it = rects.begin ();
-         it != rects.end ();
-         it++)
-    {
-        painter->fillRect (*it, fillColor);
+        if (doXor)
+        {
+            kpPixmapFX::widgetFillXORRect (this,
+                s.x (), s.y (), s.width (), s.height (),
+                kpColor::White/*XOR color*/,
+                kpColor::LightGray/*hint color if XOR not supported*/);
+        }
+        else
+        {
+            QPainter p (this);
+            p.fillRect (s, Qt::blue);
+        }
     }
-
-    painter->restore ();
 }
 
 // protected
@@ -1764,18 +1744,17 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
     #endif
     }
 
+    painter.end ();
+
 
     const QRect bvsvRect = buddyViewScrollableContainerRectangle ();
     if (!bvsvRect.isEmpty ())
     {
-        // sync: ASSUMPTION: painter clips to viewRect.
-        painter.save ();
-
-        // COMPAT: backBufferPainter.setRasterOp (Qt::XorROP);
-        painter.setPen (Qt::white);
-        painter.drawRect (bvsvRect);
-
-        painter.restore ();
+        kpPixmapFX::widgetDrawStippledXORRect (this,
+            bvsvRect.x (), bvsvRect.y (), bvsvRect.width (), bvsvRect.height (),
+            kpColor::White, kpColor::White,  // Stippled XOR colors
+            kpColor::LightGray, kpColor::LightGray,
+            viewRect);  // Hint colors if XOR not supported
     }
 
 
@@ -1784,7 +1763,7 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
         if (doc->selection ())
         {
             // Draw resize handles on top of possible grid lines
-            paintEventDrawSelectionResizeHandles (&painter, viewRect);
+            paintEventDrawSelectionResizeHandles (viewRect);
         }
     }
 }

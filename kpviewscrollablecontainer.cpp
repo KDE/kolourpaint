@@ -709,22 +709,27 @@ void kpViewScrollableContainer::drawResizeLines ()
 #endif
 
 
-    QPainter p (viewport ()); // COMPAT: , true/*unclipped*/);
-    // COMPAT: p.setRasterOp (Qt::NotROP);
+    //QPainter p (viewport ()); // COMPAT: , true/*unclipped*/);
+
+#define FILL_NOT_RECT(rect)                                                    \
+    kpPixmapFX::widgetFillNOTRect (viewport (),                                \
+        rect.x (), rect.y (), rect.width (), rect.height (),                   \
+        kpColor::White/*"Raster NOT" color*/, kpColor::DarkGray/*hint color if "Raster NOT" not supported*/)
 
     const QRect rightRect = rightResizeLineRect ();
     if (rightRect.isValid ())
-        p.fillRect (mapViewToViewport (rightRect), Qt::black);
+        FILL_NOT_RECT (mapViewToViewport (rightRect));
 
     const QRect bottomRect = bottomResizeLineRect ();
     if (bottomRect.isValid ())
-        p.fillRect (mapViewToViewport (bottomRect), Qt::black);
+        FILL_NOT_RECT (mapViewToViewport (bottomRect));
 
     const QRect bottomRightRect = bottomRightResizeLineRect ();
     if (bottomRightRect.isValid ())
-        p.fillRect (mapViewToViewport (bottomRightRect), Qt::black/*COMPAT: was white with XOR and above ones too*/);
+        FILL_NOT_RECT (mapViewToViewport (bottomRightRect));
 
-    p.end ();
+#undef FILL_NOT_RECT
+    //p.end ();
 }
 
 
@@ -1402,3 +1407,4 @@ void kpViewScrollableContainer::resizeEvent (QResizeEvent *e)
 
 
 #include <kpviewscrollablecontainer.moc>
+

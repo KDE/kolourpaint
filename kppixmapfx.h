@@ -30,6 +30,7 @@
 #define KP_PIXMAP_FX_H
 
 
+#include <qrect.h>
 #include <qstring.h>
 
 #include <klocalizedstring.h>
@@ -61,7 +62,7 @@ class kpSelection;
 // (i.e. kpImage), should be moved to kpPainter.
 //
 // kpPainter uses us for its Qt backend but we don't use kpPainter.
-// TODO: We should not use kpColor nor QPixmap either for the same reason.
+// TODO: We should not use kpColor nor kpImage for the same reason.
 //
 // WARNING: The given QPixmap's can have masks but not alpha channels.
 //
@@ -480,6 +481,9 @@ public:
     //    to draw_ToQColor() to convert from kpColor to QColor.
     // 3. A pointer to the provided <data>
     //
+    // Use of this function permits drawing on pixmaps without breaking our
+    // invariant of no alpha channels (KP_PFX_CHECK_NO_ALPHA_CHANNEL).
+    //
     // WARNING: The current implementation does not permit <drawFunc> to access
     //          <image> (as it clears <image>'s mask before drawFunc() (but
     //          does restore the mask later)).
@@ -558,10 +562,74 @@ public:
         const kpColor &fcolor, int penWidth = 1,
         const kpColor &bcolor = kpColor::Invalid);
 
-    // Same as drawRect() but simulates an XOR with the existing contents
-    // of the pixmap.  Pen width is set to 1.
-    static void drawXORRect (QPixmap *image,
-        int x, int y, int width, int height);
+
+    //
+    // Simulated Stippled Raster XOR
+    //
+
+    // Same as drawRect() but the border consists of stippled lines of
+    // <fcolor1> and <fcolor2>, XOR'ed with the existing contents of the
+    // pixmap.  Pen width is set to 1.
+    //
+    // Qt4 does not actually support XOR, unlike Qt3.  So this function
+    // actually produces a non-XOR stipple of <color1Hint> and <color2Hint>.
+    // <fcolor1> and <fcolor2> are ignored for now.
+    //
+    // Should Qt support XOR again in the future, this function will be
+    // changed to a real XOR using <fcolor1> and <fcolor2>.  <color1Hint>
+    // and <color2Hint> would then be ignored.
+
+    // (used for selection borders)
+    static void drawStippledXORRect (QPixmap *image,
+        int x, int y, int width, int height,
+        kpColor fcolor1, kpColor fcolor2,
+        kpColor color1Hint, kpColor color2Hint);
+
+    // As we are not dealing with a pixmap, the widget versions of our
+    // functions can safely disregard our pixmap invariant of not introducing
+    // an alpha channel (KP_PFX_CHECK_NO_ALPHA_CHANNEL).  This permits a far
+    // more straightforward implementation.
+
+    // The painter is clipped to <clipRect> if it is not empty.
+    // (used for thumbnail rectangle)
+    static void widgetDrawStippledXORRect (QWidget *widget,
+        int x, int y, int width, int height,
+        kpColor fcolor1, kpColor fcolor2,
+        kpColor color1Hint, kpColor color2Hint,
+        QRect clipRect = QRect ());
+
+
+    //
+    // fillRect() version of drawStippledXORRect(), without stippling.
+    //
+
+    // (used for text cursor)
+    static void fillXORRect (QPixmap *image,
+        int x, int y, int width, int height,
+        kpColor fcolor,
+        kpColor colorHint);
+    // (used for selection resize handles)
+    static void widgetFillXORRect (QWidget *widget,
+        int x, int y, int width, int height,
+        kpColor fcolor,
+        kpColor colorHint);
+
+
+    //
+    // Simulated Raster NOP
+    //
+
+    // (used for rectangular bounding border for non-rectangular selections)
+    static void drawNOTRect (QPixmap *image,
+        int x, int y, int width, int height,
+        kpColor fcolor,
+        kpColor colorHint);
+
+    // (used for document resizing lines)
+    static void widgetFillNOTRect (QWidget *widget,
+        int x, int y, int width, int height,
+        kpColor fcolor,
+        kpColor colorHint);
 };
 
 

@@ -2462,8 +2462,10 @@ void kpPixmapFX::drawEllipse (QPixmap *image,
 
 
 // public static
-void kpPixmapFX::drawXORRect (QPixmap *image,
-        int x, int y, int width, int height)
+void kpPixmapFX::drawStippledXORRect (QPixmap *image,
+        int x, int y, int width, int height,
+        kpColor fcolor1, kpColor fcolor2,
+        kpColor color1Hint, kpColor color2Hint)
 {
     // TODO: Need some XOR simulation.  Trolltech got rid of raster OPs.
     //
@@ -2471,7 +2473,89 @@ void kpPixmapFX::drawXORRect (QPixmap *image,
     //
     //       But without XRENDER, I vote stippled blue and yellow.  Of course,
     //       Qt 4.2 TP had a bug and stippledness did not work.
+    (void) fcolor1; (void) fcolor2;
+    (void) color2Hint;
     kpPixmapFX::drawRect (image,
         x, y, width, height,
-        kpColor (0, 0, 255)/*blue*/);
+        color1Hint);
+}
+
+// public static
+void kpPixmapFX::widgetDrawStippledXORRect (QWidget *widget,
+        int x, int y, int width, int height,
+        kpColor fcolor1, kpColor fcolor2,
+        kpColor color1Hint, kpColor color2Hint,
+        QRect clipRect)
+{
+    (void) fcolor1; (void) fcolor2;
+    (void) color2Hint;
+
+    QPainter p (widget);
+
+    if (!clipRect.isEmpty ())
+        p.setClipRect (clipRect);
+
+    p.setPen (color1Hint.toQColor ());
+
+    // TODO: code dup with DrawGenericRect() but hard to not dup
+    if (width == 1 || height == 1)
+    {
+        p.drawLine (x, y, x + width - 1, y + height - 1);
+        return;
+    }
+
+    p.drawRect (x, y, width - 1, height - 1);
+}
+
+
+// public static
+void kpPixmapFX::fillXORRect (QPixmap *image,
+        int x, int y, int width, int height,
+        kpColor fcolor,
+        kpColor colorHint)
+{
+    // TODO: XOR simulation.
+    (void) fcolor;
+    kpPixmapFX::fillRect (image,
+        x, y, width, height,
+        colorHint);
+}
+    
+// public static
+void kpPixmapFX::widgetFillXORRect (QWidget *widget,
+        int x, int y, int width, int height,
+        kpColor fcolor,
+        kpColor colorHint)
+{
+    // TODO: XOR simulation
+    (void) fcolor;
+    QPainter p (widget);
+    p.fillRect (x, y, width, height, colorHint.toQColor ());
+}
+
+
+// public static
+void kpPixmapFX::drawNOTRect (QPixmap *image,
+        int x, int y, int width, int height,
+        kpColor fcolor,
+        kpColor colorHint)
+{
+    // TODO: NOT simulation
+    (void) fcolor;
+    kpPixmapFX::drawRect (image,
+        x, y, width, height,
+        colorHint);
+}
+
+
+// public static
+void kpPixmapFX::widgetFillNOTRect (QWidget *widget,
+        int x, int y, int width, int height,
+        kpColor fcolor,
+        kpColor colorHint)
+{
+    // TODO: NOT simulation
+    (void) fcolor;
+    QPainter p (widget);
+    p.fillRect (x, y, width, height, colorHint.toQColor ());
 }

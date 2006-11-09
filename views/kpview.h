@@ -544,11 +544,9 @@ protected:
     bool selectionResizeHandleAtomicSizeCloseToZoomLevel () const;
 
     // Draws the parts of the selection's resize handles that are inside
-    // <viewRect> on <painter>.
-    void paintEventDrawSelectionResizeHandles (QPainter *painter,
-            const QRect &viewRect);
-    void paintEventDrawTempPixmap (QPixmap *destPixmap,
-            const QRect &docRect);
+    // <clipRect> onto the view
+    void paintEventDrawSelectionResizeHandles (const QRect &clipRect);
+    void paintEventDrawTempPixmap (QPixmap *destPixmap, const QRect &docRect);
 
     // Draws the parts of the grid lines that are inside <viewRect> on
     // <painter>.

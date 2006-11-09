@@ -945,11 +945,13 @@ void kpSelection::paintBorder (QPixmap *destPixmap, const QRect &docRect,
                     << " h=" << boundingRect ().height ()
                     << endl;
         #endif
-            kpPixmapFX::drawXORRect (destPixmap,
+            kpPixmapFX::drawStippledXORRect (destPixmap,
                 boundingRect ().x () - docRect.x (),
                 boundingRect ().y () - docRect.y (),
                 boundingRect ().width (),
-                boundingRect ().height ());
+                boundingRect ().height (),
+                kpColor::White, kpColor::Blue,  // Stippled XOR colors
+                kpColor::Blue, kpColor::Yellow);  // Hint colors if XOR not supported
             break;
 
         case kpSelection::Ellipse:
@@ -995,17 +997,13 @@ void kpSelection::paintBorder (QPixmap *destPixmap, const QRect &docRect,
             (type () == kpSelection::Ellipse ||
             type () == kpSelection::Points))
         {
-        #if 0
-            destPixmapPainter.save ();
-
-            // COMPAT: destPixmapPainter.setRasterOp (Qt::NotROP);
-            PAINTER_CMD (drawRect (boundingRect ().x () - docRect.x (),
-                                boundingRect ().y () - docRect.y (),
-                                boundingRect ().width (),
-                                boundingRect ().height ()));
-
-            destPixmapPainter.restore ();
-        #endif
+            kpPixmapFX::drawNOTRect (destPixmap,
+                boundingRect ().x () - docRect.x (),
+                boundingRect ().y () - docRect.y (),
+                boundingRect ().width (),
+                boundingRect ().height (),
+                kpColor::White/*"Raster NOT" color*/,
+                kpColor::LightGray/*hint color if "Raster NOT" not supported*/);
         }
 #if 0
     }
