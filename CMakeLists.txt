@@ -4,6 +4,10 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/coloreffects
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/flow
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/polygon
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/rectangular
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection
     ${CMAKE_SOURCE_DIR}/kolourpaint/compat
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs
@@ -21,7 +25,6 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/selection
     ${CMAKE_SOURCE_DIR}/kolourpaint/views
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/color_similarity
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/generic
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/options
@@ -63,8 +66,8 @@ create_license(${CMAKE_SOURCE_DIR}/kolourpaint/COPYING ${CMAKE_CURRENT_BINARY_DI
 set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/coloreffects/kptoolclearcommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/coloreffects/kptoolconverttograyscale.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/kptoolflowcommand.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/kptoolrectangularcommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/flow/kptoolflowcommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/rectangular/kptoolrectangularcommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/compat/kpbug.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors/kpcursorlightcross.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors/kpcursorprovider.cpp
