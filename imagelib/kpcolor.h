@@ -77,7 +77,12 @@ public:
     static const kpColor Transparent;
 
     static const kpColor Black;
+    static const kpColor DarkGray;
+    static const kpColor LightGray;
     static const kpColor White;
+    
+    static const kpColor Blue;
+    static const kpColor Yellow;
 
     bool isValid () const;
 
