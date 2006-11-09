@@ -61,6 +61,7 @@ class kpToolSelection : public kpTool
 Q_OBJECT
 
 public:
+    // TODO: use inheritance
     enum Mode {Rectangle, Ellipse, FreeForm, Text};
 
     kpToolSelection (Mode mode,
