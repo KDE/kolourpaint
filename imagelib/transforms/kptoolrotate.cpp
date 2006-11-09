@@ -61,7 +61,7 @@ kpToolRotateCommand::kpToolRotateCommand (bool actOnSelection,
     : kpCommand (mainWindow),
       m_actOnSelection (actOnSelection),
       m_angle (angle),
-      m_backgroundColor (mainWindow ? mainWindow->backgroundColor (actOnSelection) : kpColor::invalid),
+      m_backgroundColor (mainWindow ? mainWindow->backgroundColor (actOnSelection) : kpColor::Invalid),
       m_losslessRotation (kpPixmapFX::isLosslessRotation (angle))
 {
 }
@@ -399,7 +399,7 @@ QPixmap kpToolRotateDialog::transformPixmap (const QPixmap &pixmap,
                                              int targetWidth, int targetHeight) const
 {
     return kpPixmapFX::rotate (pixmap, angle (),
-                               m_mainWindow ? m_mainWindow->backgroundColor (m_actOnSelection) : kpColor::invalid,
+                               m_mainWindow ? m_mainWindow->backgroundColor (m_actOnSelection) : kpColor::Invalid,
                                targetWidth, targetHeight);
 }
 

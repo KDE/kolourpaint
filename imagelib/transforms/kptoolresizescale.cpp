@@ -83,7 +83,7 @@ kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
     : kpCommand (mainWindow),
       m_actOnSelection (actOnSelection),
       m_type (type),
-      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid),
+      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::Invalid),
       m_oldSelection (0)
 {
     kpDocument *doc = document ();

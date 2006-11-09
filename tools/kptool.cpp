@@ -699,7 +699,7 @@ kpColor kpTool::color (int which) const
     else
     {
         kError () << "kpTool::color () without mainWindow" << endl;
-        return kpColor::invalid;
+        return kpColor::Invalid;
     }
 }
 
@@ -744,7 +744,7 @@ kpColor kpTool::oldForegroundColor () const
     else
     {
         kError () << "kpTool::oldForegroundColor() without mainWindow" << endl;
-        return kpColor::invalid;
+        return kpColor::Invalid;
     }
 }
 
@@ -755,7 +755,7 @@ kpColor kpTool::oldBackgroundColor () const
     else
     {
         kError () << "kpTool::oldBackgroundColor() without mainWindow" << endl;
-        return kpColor::invalid;
+        return kpColor::Invalid;
     }
 }
 

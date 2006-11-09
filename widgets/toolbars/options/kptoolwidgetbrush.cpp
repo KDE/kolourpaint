@@ -131,9 +131,9 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const QString &name)
 
             kpPainter::fillRect (&previewPixmap,
                 0, 0, previewPixmap.width (), previewPixmap.height (),
-                kpColor::transparent);
+                kpColor::Transparent);
 
-            DrawPackage pack = drawFunctionDataForRowCol (kpColor::black, shape, i);
+            DrawPackage pack = drawFunctionDataForRowCol (kpColor::Black, shape, i);
             ::Draw (&previewPixmap,
                 QPoint ((previewPixmap.width () - s) / 2,
                         (previewPixmap.height () - s) / 2),

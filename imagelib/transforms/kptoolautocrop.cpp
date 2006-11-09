@@ -135,10 +135,10 @@ kpColor kpToolAutoCropBorder::referenceColor () const
 kpColor kpToolAutoCropBorder::averageColor () const
 {
     if (!m_rect.isValid ())
-        return kpColor::invalid;
+        return kpColor::Invalid;
 
     if (m_referenceColor.isTransparent ())
-        return kpColor::transparent;
+        return kpColor::Transparent;
     else if (m_processedColorSimilarity == 0)
         return m_referenceColor;
     else
@@ -279,7 +279,7 @@ bool kpToolAutoCropBorder::exists () const
 void kpToolAutoCropBorder::invalidate ()
 {
     m_rect = QRect ();
-    m_referenceColor = kpColor::invalid;
+    m_referenceColor = kpColor::Invalid;
     m_redSum = m_greenSum = m_blueSum = 0;
     m_isSingleColor = false;
 }

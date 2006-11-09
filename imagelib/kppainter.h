@@ -106,7 +106,7 @@ public:
     static void drawPolygon (kpImage *image,
         const QPolygon &points,
         const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor = kpColor::invalid,
+        const kpColor &bcolor = kpColor::Invalid,
         bool isFinal = true);
     // Cubic Beizer.
     static void drawCurve (kpImage *image,
@@ -131,15 +131,15 @@ public:
     static void drawRect (kpImage *image,
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::invalid);
+        const kpColor &bcolor = kpColor::Invalid);
     static void drawRoundedRect (kpImage *image,
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::invalid);
+        const kpColor &bcolor = kpColor::Invalid);
     static void drawEllipse (kpImage *image,
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::invalid);
+        const kpColor &bcolor = kpColor::Invalid);
 
     // Replaces all pixels of <colorToReplace> on the line
     // from (x1,y1) to (x2,y2) of <image>, with a pen of <color> with

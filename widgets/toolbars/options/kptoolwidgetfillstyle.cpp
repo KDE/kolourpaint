@@ -241,7 +241,7 @@ kpColor kpToolWidgetFillStyle::drawingBackgroundColor (
     {
     default:
     case NoFill:
-        return kpColor::invalid;
+        return kpColor::Invalid;
 
     case FillWithBackground:
         return backgroundColor;

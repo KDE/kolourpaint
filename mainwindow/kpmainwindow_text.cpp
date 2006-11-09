@@ -309,8 +309,8 @@ kpTextStyle kpMainWindow::textStyle () const
                         m_actionTextItalic->isChecked (),
                         m_actionTextUnderline->isChecked (),
                         m_actionTextStrikeThru->isChecked (),
-                        m_colorToolBar ? m_colorToolBar->foregroundColor () : kpColor::invalid,
-                        m_colorToolBar ? m_colorToolBar->backgroundColor () : kpColor::invalid,
+                        m_colorToolBar ? m_colorToolBar->foregroundColor () : kpColor::Invalid,
+                        m_colorToolBar ? m_colorToolBar->backgroundColor () : kpColor::Invalid,
                         isTextStyleBackgroundOpaque ());
 }
 

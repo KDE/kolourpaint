@@ -56,7 +56,7 @@ public:
     typedef void (*DrawShapeFunc) (kpImage * /*image*/,
         int /*x*/, int /*y*/, int /*width*/, int /*height*/,
         const kpColor &/*fcolor*/, int /*penWidth = 1*/,
-        const kpColor &/*bcolor = kpColor::invalid*/);
+        const kpColor &/*bcolor = kpColor::Invalid*/);
 
     kpToolRectangularBase (const QString &text, const QString &description,
         DrawShapeFunc drawShapeFunc,

@@ -363,7 +363,7 @@ void kpToolPreviewDialog::updatePreview ()
 
         QPixmap previewPixmap (m_previewPixmapLabel->width (),
                                m_previewPixmapLabel->height ());
-        kpPixmapFX::fill (&previewPixmap, kpColor::transparent);
+        kpPixmapFX::fill (&previewPixmap, kpColor::Transparent);
         kpPixmapFX::setPixmapAt (&previewPixmap,
                                  (previewPixmap.width () - transformedShrunkenDocumentPixmap.width ()) / 2,
                                  (previewPixmap.height () - transformedShrunkenDocumentPixmap.height ()) / 2,

@@ -523,7 +523,7 @@ public:
     static void drawPolygon (QPixmap *image,
         const QPolygon &points,
         const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor = kpColor::invalid,
+        const kpColor &bcolor = kpColor::Invalid,
         bool isFinal = true);
     // Cubic Beizer.
     static void drawCurve (QPixmap *image,
@@ -548,15 +548,15 @@ public:
     static void drawRect (QPixmap *image,
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::invalid);
+        const kpColor &bcolor = kpColor::Invalid);
     static void drawRoundedRect (QPixmap *image,
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::invalid);
+        const kpColor &bcolor = kpColor::Invalid);
     static void drawEllipse (QPixmap *image,
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::invalid);
+        const kpColor &bcolor = kpColor::Invalid);
 
     // Same as drawRect() but simulates an XOR with the existing contents
     // of the pixmap.  Pen width is set to 1.

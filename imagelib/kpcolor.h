@@ -73,10 +73,11 @@ public:
     bool isSimilarTo (const kpColor &rhs, int processedSimilarity) const;
     ~kpColor ();
 
-    static const kpColor invalid;
-    static const kpColor transparent;
-    static const kpColor black;
-    static const kpColor white;
+    static const kpColor Invalid;
+    static const kpColor Transparent;
+
+    static const kpColor Black;
+    static const kpColor White;
 
     bool isValid () const;
 

@@ -95,7 +95,7 @@ public:
 
 
     // If isBackgroundOpaque(), returns backgroundColor().
-    // Else, returns kpColor::transparent.
+    // Else, returns kpColor::Transparent.
     kpColor effectiveBackgroundColor () const;
 
     QFont font () const;

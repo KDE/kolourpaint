@@ -256,7 +256,7 @@ kpColor kpTextStyle::effectiveBackgroundColor () const
     if (isBackgroundOpaque ())
         return backgroundColor ();
     else
-        return kpColor::transparent;
+        return kpColor::Transparent;
 }
 
 

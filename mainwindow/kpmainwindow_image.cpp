@@ -205,7 +205,7 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
 kpColor kpMainWindow::backgroundColor (bool ofSelection) const
 {
     if (ofSelection)
-        return kpColor::transparent;
+        return kpColor::Transparent;
     else
     {
         if (m_colorToolBar)
@@ -213,7 +213,7 @@ kpColor kpMainWindow::backgroundColor (bool ofSelection) const
         else
         {
             kError () << "kpMainWindow::backgroundColor() without colorToolBar" << endl;
-            return kpColor::invalid;
+            return kpColor::Invalid;
         }
     }
 }

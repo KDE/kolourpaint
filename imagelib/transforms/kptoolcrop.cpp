@@ -259,7 +259,7 @@ kpToolCropCommand::kpToolCropCommand (kpMainWindow *mainWindow)
         addCommand (
             new kpToolClearCommand (
                 false/*act on doc*/,
-                kpColor::transparent,
+                kpColor::Transparent,
                 mainWindow));
 
     #if DEBUG_KP_TOOL_CROP

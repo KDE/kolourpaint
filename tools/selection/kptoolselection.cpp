@@ -1609,7 +1609,7 @@ void kpToolSelectionCreateCommand::unexecute ()
 kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (const QString &name,
                                                                                 kpMainWindow *mainWindow)
     : kpNamedCommand (name, mainWindow),
-      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::invalid),
+      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::Invalid),
       m_originalSelectionRegion (0)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1

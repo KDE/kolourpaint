@@ -65,7 +65,7 @@ kpToolSkewCommand::kpToolSkewCommand (bool actOnSelection,
     : kpCommand (mainWindow),
       m_actOnSelection (actOnSelection),
       m_hangle (hangle), m_vangle (vangle),
-      m_backgroundColor (mainWindow ? mainWindow->backgroundColor (actOnSelection) : kpColor::invalid),
+      m_backgroundColor (mainWindow ? mainWindow->backgroundColor (actOnSelection) : kpColor::Invalid),
       m_oldPixmapPtr (0)
 {
 }
@@ -323,7 +323,7 @@ QPixmap kpToolSkewDialog::transformPixmap (const QPixmap &pixmap,
     return kpPixmapFX::skew (pixmap,
                              horizontalAngleForPixmapFX (),
                              verticalAngleForPixmapFX (),
-                             m_mainWindow ? m_mainWindow->backgroundColor (m_actOnSelection) : kpColor::invalid,
+                             m_mainWindow ? m_mainWindow->backgroundColor (m_actOnSelection) : kpColor::Invalid,
                              targetWidth,
                              targetHeight);
 }

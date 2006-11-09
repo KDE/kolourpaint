@@ -40,10 +40,11 @@
 const int kpColor::Exact = 0;
 
 // public static
-const kpColor kpColor::invalid;  // TODO: what's wrong with explicitly specifying () constructor?
-const kpColor kpColor::transparent (0, 0, 0, true/*isTransparent*/);
-const kpColor kpColor::black (0, 0, 0);
-const kpColor kpColor::white (255, 255, 255);
+const kpColor kpColor::Invalid;  // TODO: what's wrong with explicitly specifying () constructor?
+const kpColor kpColor::Transparent (0, 0, 0, true/*isTransparent*/);
+
+const kpColor kpColor::Black (0, 0, 0);
+const kpColor kpColor::White (255, 255, 255);
 
 
 kpColor::kpColor ()

@@ -1044,7 +1044,7 @@ void kpSelection::calculateTextPixmap ()
         m_pixmap = new QPixmap (m_rect.width (), m_rect.height ());
 
         if (usesBackgroundPixmapToPaint ())
-            kpPixmapFX::fill (m_pixmap, kpColor::transparent);
+            kpPixmapFX::fill (m_pixmap, kpColor::Transparent);
 
         paintOpaqueText (m_pixmap, m_rect);
     }

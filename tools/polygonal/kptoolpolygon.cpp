@@ -482,7 +482,7 @@ kpColor kpToolPolygon::drawingForegroundColor () const
 kpColor kpToolPolygon::drawingBackgroundColor () const
 {
     if (!d->toolWidgetFillStyle)
-        return kpColor::invalid;
+        return kpColor::Invalid;
         
     const kpColor foregroundColor = color (m_mouseButton);
     const kpColor backgroundColor = color (1 - m_mouseButton);

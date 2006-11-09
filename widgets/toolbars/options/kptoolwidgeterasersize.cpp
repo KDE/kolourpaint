@@ -78,7 +78,7 @@ static void DrawCursor (QPixmap *destPixmap, const QPoint &topLeft, void *userDa
     // Draw 1-pixel border on all sides.
     kpPainter::drawRect (destPixmap,
         topLeft.x (), topLeft.y (), size, size,
-        kpColor::black);
+        kpColor::Black);
 }
 
 
@@ -106,9 +106,9 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const QString &
 
         kpPainter::fillRect (&previewPixmap,
             0, 0, previewPixmap.width (), previewPixmap.height (),
-            kpColor::transparent);
+            kpColor::Transparent);
             
-        DrawPackage pack = drawFunctionDataForSelected (kpColor::black, i);
+        DrawPackage pack = drawFunctionDataForSelected (kpColor::Black, i);
         ::Draw (&previewPixmap,
             QPoint ((previewPixmap.width () - s) / 2,
                     (previewPixmap.height () - s) / 2),
