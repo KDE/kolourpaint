@@ -201,8 +201,12 @@ int main (int argc, char *argv [])
     KApplication app;
 
     // mainly for the Spraycan Tool
+#ifdef Q_OS_WIN
+    //FIXME: look at if it works fine now without getppid()
+    srand ((unsigned int) (getpid ()));
+#else 
     srand ((unsigned int) (getpid () + getppid ()));
-
+#endif
 
     // Qt says this is necessary but I don't think it is...
     QObject::connect (&app, SIGNAL (lastWindowClosed ()),
