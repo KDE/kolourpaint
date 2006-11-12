@@ -20,5 +20,5 @@ MimeType=image/fax-g3;image/gif;image/jp2;image/jpeg;image/png;image/tiff;image/
 Categories=Qt;KDE;Graphics;
 Terminal=false
 X-KDE-StartupNotify=true
-X-DCOP-ServiceType=Multi
+X-DBUS-StartupType=Multi
 
