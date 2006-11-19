@@ -57,7 +57,8 @@
 #include <kptoolflip.h>
 #include <kptoolresizescale.h>
 #include <kptoolrotate.h>
-#include <kptoolselection.h>
+#include <kpToolSelectionCreateCommand.h>
+#include <kpToolSelectionPullFromDocumentCommand.h>
 #include <kptoolskew.h>
 #include <kpviewmanager.h>
 #include <kglobal.h>

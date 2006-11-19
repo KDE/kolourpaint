@@ -69,6 +69,12 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/coloreffects/kptoolconverttograyscale.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/flow/kptoolflowcommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/rectangular/kptoolrectangularcommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/kpToolSelectionCreateCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/kpToolSelectionDestroyCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/kpToolSelectionMoveCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/kpToolSelectionPullFromDocumentCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/kpToolSelectionResizeScaleCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/kpToolSelectionTransparencyCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/text/kpToolTextBackspaceCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/text/kpToolTextChangeStyleCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/text/kpToolTextDeleteCommand.cpp
@@ -164,7 +170,7 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/options/kptoolwidgetlinewidth.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/options/kptoolwidgetopaqueortransparent.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/options/kptoolwidgetspraycansize.cpp
-   )  # set(kolourpaint_SRCS
+)  # set(kolourpaint_SRCS
 
 kde4_automoc(${kolourpaint_SRCS})
 

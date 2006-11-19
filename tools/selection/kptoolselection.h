@@ -30,25 +30,18 @@
 #define KP_TOOL_SELECTION_H
 
 
-#include <qpixmap.h>
-#include <qpoint.h>
-#include <qpolygon.h>
-#include <qrect.h>
+#include <QPoint>
 
-#include <kpcolor.h>
-#include <kpcommandhistory.h>
-#include <kpselection.h>
-#include <kpselectiontransparency.h>
 #include <kptool.h>
 
 
+class QCursor;
 class QKeyEvent;
-class QPoint;
 class QRect;
 class QTimer;
 
+class kpColor;
 class kpMainWindow;
-class kpSelection;
 class kpToolSelectionCreateCommand;
 class kpToolSelectionMoveCommand;
 class kpToolSelectionPullFromDocumentCommand;
@@ -142,170 +135,6 @@ protected:
     bool m_cancelledShapeButStillHoldingButtons;
 
     QTimer *m_createNOPTimer, *m_RMBMoveUpdateGUITimer;
-};
-
-class kpToolSelectionCreateCommand : public kpNamedCommand
-{
-public:
-    // (if fromSelection doesn't have a pixmap, it will only recreate the region)
-    kpToolSelectionCreateCommand (const QString &name, const kpSelection &fromSelection,
-                                  kpMainWindow *mainWindow);
-    virtual ~kpToolSelectionCreateCommand ();
-
-    virtual int size () const;
-
-    static bool nextUndoCommandIsCreateBorder (kpCommandHistory *commandHistory);
-
-    const kpSelection *fromSelection () const;
-    void setFromSelection (const kpSelection &fromSelection);
-
-    virtual void execute ();
-    virtual void unexecute ();
-
-private:
-    kpSelection *m_fromSelection;
-
-    int m_textRow, m_textCol;
-};
-
-class kpToolSelectionPullFromDocumentCommand : public kpNamedCommand
-{
-public:
-    kpToolSelectionPullFromDocumentCommand (const QString &name, kpMainWindow *mainWindow);
-    virtual ~kpToolSelectionPullFromDocumentCommand ();
-
-    virtual int size () const;
-
-    virtual void execute ();
-    virtual void unexecute ();
-
-private:
-    kpColor m_backgroundColor;
-    kpSelection *m_originalSelectionRegion;
-};
-
-class kpToolSelectionTransparencyCommand : public kpNamedCommand
-{
-public:
-    kpToolSelectionTransparencyCommand (const QString &name,
-        const kpSelectionTransparency &st,
-        const kpSelectionTransparency &oldST,
-        kpMainWindow *mainWindow);
-    virtual ~kpToolSelectionTransparencyCommand ();
-
-    virtual int size () const;
-
-    virtual void execute ();
-    virtual void unexecute ();
-
-private:
-    kpSelectionTransparency m_st, m_oldST;
-};
-
-class kpToolSelectionMoveCommand : public kpNamedCommand
-{
-public:
-    kpToolSelectionMoveCommand (const QString &name, kpMainWindow *mainWindow);
-    virtual ~kpToolSelectionMoveCommand ();
-
-    kpSelection originalSelection () const;
-
-    virtual int size () const;
-
-    virtual void execute ();
-    virtual void unexecute ();
-
-    void moveTo (const QPoint &point, bool moveLater = false);
-    void moveTo (int x, int y, bool moveLater = false);
-    void copyOntoDocument ();
-    void finalize ();
-
-private:
-    QPoint m_startPoint, m_endPoint;
-
-    QPixmap m_oldDocumentPixmap;
-
-    // area of document affected (not the bounding rect of the sel)
-    QRect m_documentBoundingRect;
-
-    QPolygon m_copyOntoDocumentPoints;
-};
-
-// You could subclass kpToolResizeScaleCommand and/or
-// kpToolSelectionMoveCommand instead if want a disaster.
-// This is different to kpToolResizeScaleCommand in that:
-//
-// 1. This only works for selections.
-// 2. This is designed for the size and position to change several times
-//    before execute().
-//
-class kpToolSelectionResizeScaleCommand : public QObject,
-                                          public kpNamedCommand
-{
-Q_OBJECT
-
-public:
-    kpToolSelectionResizeScaleCommand (kpMainWindow *mainWindow);
-    virtual ~kpToolSelectionResizeScaleCommand ();
-
-    virtual int size () const;
-
-public:
-    kpSelection originalSelection () const;
-
-    QPoint topLeft () const;
-    void moveTo (const QPoint &point);
-
-    int width () const;
-    int height () const;
-    void resize (int width, int height, bool delayed = false);
-
-    // (equivalent to resize() followed by moveTo() but faster)
-    void resizeAndMoveTo (int width, int height, const QPoint &point,
-                          bool delayed = false);
-
-protected:
-    void killSmoothScaleTimer ();
-
-    // If <delayed>, does a fast, low-quality scale and then calls itself
-    // with <delayed> unset for a smooth scale, a short time later.
-    // If acting on a text box, <delayed> is ignored.
-    void resizeScaleAndMove (bool delayed);
-
-protected slots:
-    void resizeScaleAndMove (/*delayed = false*/);
-
-public:
-    virtual void execute ();
-    virtual void unexecute ();
-
-protected:
-    kpSelection m_originalSelection;
-
-    QPoint m_newTopLeft;
-    int m_newWidth, m_newHeight;
-
-    QTimer *m_smoothScaleTimer;
-};
-
-class kpToolSelectionDestroyCommand : public kpNamedCommand
-{
-public:
-    kpToolSelectionDestroyCommand (const QString &name, bool pushOntoDocument,
-                                   kpMainWindow *mainWindow);
-    virtual ~kpToolSelectionDestroyCommand ();
-
-    virtual int size () const;
-
-    virtual void execute ();
-    virtual void unexecute ();
-
-private:
-    bool m_pushOntoDocument;
-    QPixmap m_oldDocPixmap;
-    kpSelection *m_oldSelection;
-
-    int m_textRow, m_textCol;
 };
 
 

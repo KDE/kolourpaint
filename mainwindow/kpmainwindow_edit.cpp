@@ -54,7 +54,8 @@
 #include <kptool.h>
 #include <kptoolcrop.h>
 #include <kptoolresizescale.h>
-#include <kptoolselection.h>
+#include <kpToolSelectionCreateCommand.h>
+#include <kpToolSelectionDestroyCommand.h>
 #include <kpToolTextEnterCommand.h>
 #include <kpToolTextInsertCommand.h>
 #include <kpviewmanager.h>
