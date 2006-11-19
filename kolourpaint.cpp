@@ -202,7 +202,6 @@ int main (int argc, char *argv [])
 
     // mainly for the Spraycan Tool
 #ifdef Q_OS_WIN
-    //FIXME: look at if it works fine now without getppid()
     srand ((unsigned int) (getpid ()));
 #else 
     srand ((unsigned int) (getpid () + getppid ()));
