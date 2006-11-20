@@ -433,6 +433,9 @@
     <text:list-item>
      <text:p text:style-name="P22">Continual refinement to make it easier to use</text:p>
     </text:list-item>
+    <text:list-item>
+     <text:p text:style-name="P22">Steal ideas from other editors</text:p>
+    </text:list-item>
    </text:list>
    <text:p text:style-name="Text_20_body"/>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Project Structure</text:h>
