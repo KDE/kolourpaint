@@ -56,10 +56,11 @@
 #include <kpviewmanager.h>
 
 
-kpToolSelectionTransparencyCommand::kpToolSelectionTransparencyCommand (const QString &name,
-    const kpSelectionTransparency &st,
-    const kpSelectionTransparency &oldST,
-    kpMainWindow *mainWindow)
+kpToolSelectionTransparencyCommand::kpToolSelectionTransparencyCommand (
+        const QString &name,
+        const kpSelectionTransparency &st,
+        const kpSelectionTransparency &oldST,
+        kpMainWindow *mainWindow)
     : kpNamedCommand (name, mainWindow),
       m_st (st),
       m_oldST (oldST)
@@ -85,16 +86,15 @@ void kpToolSelectionTransparencyCommand::execute ()
     kDebug () << "kpToolSelectionTransparencyCommand::execute()" << endl;
 #endif
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
-
-    m_mainWindow->setSelectionTransparency (m_st, true/*force colour change*/);
-
-    if (doc->selection ())
-        doc->selection ()->setTransparency (m_st);
-
+    {
+        m_mainWindow->setSelectionTransparency (m_st, true/*force colour change*/);
+    
+        if (doc->selection ())
+            doc->selection ()->setTransparency (m_st);
+    }
     QApplication::restoreOverrideCursor ();
 }
 
@@ -106,16 +106,15 @@ void kpToolSelectionTransparencyCommand::unexecute ()
 #endif
 
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
-
-    m_mainWindow->setSelectionTransparency (m_oldST, true/*force colour change*/);
-
-    if (doc->selection ())
-        doc->selection ()->setTransparency (m_oldST);
-
+    {
+        m_mainWindow->setSelectionTransparency (m_oldST, true/*force colour change*/);
+    
+        if (doc->selection ())
+            doc->selection ()->setTransparency (m_oldST);
+    }
     QApplication::restoreOverrideCursor ();
 }
 

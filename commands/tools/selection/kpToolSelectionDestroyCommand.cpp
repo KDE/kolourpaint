@@ -88,17 +88,8 @@ void kpToolSelectionDestroyCommand::execute ()
 #endif
 
     kpDocument *doc = document ();
-    if (!doc)
-    {
-        kError () << "kpToolSelectionDestroyCommand::execute() without doc" << endl;
-        return;
-    }
-
-    if (!doc->selection ())
-    {
-        kError () << "kpToolSelectionDestroyCommand::execute() without sel region" << endl;
-        return;
-    }
+    Q_ASSERT (doc);
+    Q_ASSERT (doc->selection ());
 
     m_textRow = m_mainWindow->viewManager ()->textCursorRow ();
     m_textCol = m_mainWindow->viewManager ()->textCursorCol ();
@@ -124,11 +115,7 @@ void kpToolSelectionDestroyCommand::unexecute ()
 #endif
 
     kpDocument *doc = document ();
-    if (!doc)
-    {
-        kError () << "kpToolSelectionDestroyCommand::unexecute() without doc" << endl;
-        return;
-    }
+    Q_ASSERT (doc);
 
     if (doc->selection ())
     {
@@ -140,16 +127,12 @@ void kpToolSelectionDestroyCommand::unexecute ()
 
         if (doc->selection ()->pixmap ())
         {
-            kError () << "kpToolSelectionDestroyCommand::unexecute() already has sel pixmap" << endl;
+            Q_ASSERT (!"kpToolSelectionDestroyCommand::unexecute() already has sel pixmap");
             return;
         }
     }
 
-    if (!m_oldSelection)
-    {
-        kError () << "kpToolSelectionDestroyCommand::unexecute() without old sel" << endl;
-        return;
-    }
+    Q_ASSERT (m_oldSelection);
 
     if (m_pushOntoDocument)
     {

@@ -62,10 +62,10 @@ kpToolSelectionMoveCommand::kpToolSelectionMoveCommand (const QString &name,
     : kpNamedCommand (name, mainWindow)
 {
     kpDocument *doc = document ();
-    if (doc && doc->selection ())
-    {
-        m_startPoint = m_endPoint = doc->selection ()->topLeft ();
-    }
+    Q_ASSERT (doc);
+    Q_ASSERT (doc->selection ());
+    
+    m_startPoint = m_endPoint = doc->selection ()->topLeft ();
 }
 
 kpToolSelectionMoveCommand::~kpToolSelectionMoveCommand ()
@@ -77,15 +77,8 @@ kpToolSelectionMoveCommand::~kpToolSelectionMoveCommand ()
 kpSelection kpToolSelectionMoveCommand::originalSelection () const
 {
     kpDocument *doc = document ();
-    if (!doc || !doc->selection ())
-    {
-        kError () << "kpToolSelectionMoveCommand::originalSelection() doc="
-                   << doc
-                   << " sel="
-                   << (doc ? doc->selection () : 0)
-                   << endl;
-        return kpSelection (kpSelection::Rectangle, QRect ());
-    }
+    Q_ASSERT (doc);
+    Q_ASSERT (doc->selection ());
 
     kpSelection selection = *doc->selection();
     selection.moveTo (m_startPoint);
@@ -115,35 +108,25 @@ void kpToolSelectionMoveCommand::execute ()
     Q_ASSERT (doc);
 
     kpSelection *sel = doc->selection ();
-
-    // have to have pulled pixmap by now
-    if (!sel || !sel->pixmap ())
-    {
-        kError () << "kpToolSelectionMoveCommand::execute() but haven't pulled pixmap yet: "
-                   << "sel=" << sel << " sel->pixmap=" << (sel ? sel->pixmap () : 0)
-                   << endl;
-        return;
-    }
+    // Have to have pulled pixmap by now.
+    Q_ASSERT (sel && sel->pixmap ());
 
     kpViewManager *vm = m_mainWindow->viewManager ();
     Q_ASSERT (vm);
 
     vm->setQueueUpdates ();
-
-    QPolygon::ConstIterator copyOntoDocumentPointsEnd = m_copyOntoDocumentPoints.end ();
-    for (QPolygon::ConstIterator it = m_copyOntoDocumentPoints.begin ();
-         it != copyOntoDocumentPointsEnd;
-         it++)
     {
-        sel->moveTo (*it);
-        doc->selectionCopyOntoDocument ();
+        foreach (QPoint p, m_copyOntoDocumentPoints)
+        {
+            sel->moveTo (p);
+            doc->selectionCopyOntoDocument ();
+        }
+    
+        sel->moveTo (m_endPoint);
+    
+        if (m_mainWindow->tool ())
+            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
     }
-
-    sel->moveTo (m_endPoint);
-
-    if (m_mainWindow->tool ())
-        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
-
     vm->restoreQueueUpdates ();
 }
 
@@ -160,15 +143,8 @@ void kpToolSelectionMoveCommand::unexecute ()
     Q_ASSERT (doc);
 
     kpSelection *sel = doc->selection ();
-
-    // have to have pulled pixmap by now
-    if (!sel || !sel->pixmap ())
-    {
-        kError () << "kpToolSelectionMoveCommand::unexecute() but haven't pulled pixmap yet: "
-                   << "sel=" << sel << " sel->pixmap=" << (sel ? sel->pixmap () : 0)
-                   << endl;
-        return;
-    }
+    // Have to have pulled pixmap by now.
+    Q_ASSERT (sel && sel->pixmap ());
 
     kpViewManager *vm = m_mainWindow->viewManager ();
     Q_ASSERT (vm);
@@ -200,26 +176,11 @@ void kpToolSelectionMoveCommand::moveTo (const QPoint &point, bool moveLater)
     if (!moveLater)
     {
         kpDocument *doc = document ();
-        if (!doc)
-        {
-            kError () << "kpToolSelectionMoveCommand::moveTo() without doc" << endl;
-            return;
-        }
+        Q_ASSERT (doc);
 
         kpSelection *sel = doc->selection ();
-
-        // have to have pulled pixmap by now
-        if (!sel)
-        {
-            kError () << "kpToolSelectionMoveCommand::moveTo() no sel region" << endl;
-            return;
-        }
-
-        if (!sel->pixmap ())
-        {
-            kError () << "kpToolSelectionMoveCommand::moveTo() no sel pixmap" << endl;
-            return;
-        }
+        // Have to have pulled pixmap by now.
+        Q_ASSERT (sel && sel->pixmap ());
 
         if (point == sel->topLeft ())
             return;
@@ -244,23 +205,11 @@ void kpToolSelectionMoveCommand::copyOntoDocument ()
 #endif
 
     kpDocument *doc = document ();
-    if (!doc)
-        return;
+    Q_ASSERT (doc);
 
     kpSelection *sel = doc->selection ();
-
-    // have to have pulled pixmap by now
-    if (!sel)
-    {
-        kError () << "\tkpToolSelectionMoveCommand::copyOntoDocument() without sel region" << endl;
-        return;
-    }
-
-    if (!sel->pixmap ())
-    {
-        kError () << "kpToolSelectionMoveCommand::moveTo() no sel pixmap" << endl;
-        return;
-    }
+    // Have to have pulled pixmap by now.
+    Q_ASSERT (sel && sel->pixmap ());
 
     if (m_oldDocumentPixmap.isNull ())
         m_oldDocumentPixmap = *doc->pixmap ();

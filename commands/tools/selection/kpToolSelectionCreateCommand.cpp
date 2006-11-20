@@ -124,11 +124,7 @@ void kpToolSelectionCreateCommand::execute ()
 #endif
 
     kpDocument *doc = document ();
-    if (!doc)
-    {
-        kError () << "kpToolSelectionCreateCommand::execute() without doc" << endl;
-        return;
-    }
+    Q_ASSERT (doc);
 
     if (m_fromSelection)
     {
@@ -161,11 +157,7 @@ void kpToolSelectionCreateCommand::execute ()
 void kpToolSelectionCreateCommand::unexecute ()
 {
     kpDocument *doc = document ();
-    if (!doc)
-    {
-        kError () << "kpToolSelectionCreateCommand::unexecute() without doc" << endl;
-        return;
-    }
+    Q_ASSERT (doc);
 
     if (!doc->selection ())
     {
@@ -173,8 +165,7 @@ void kpToolSelectionCreateCommand::unexecute ()
         if (m_fromSelection && !m_fromSelection->pixmap ())
             return;
 
-        kError () << "kpToolSelectionCreateCommand::unexecute() without sel region" << endl;
-        return;
+        Q_ASSERT (!"kpToolSelectionCreateCommand::unexecute() without sel region");
     }
 
     m_textRow = m_mainWindow->viewManager ()->textCursorRow ();

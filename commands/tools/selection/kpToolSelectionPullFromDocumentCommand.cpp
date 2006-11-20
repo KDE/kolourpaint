@@ -56,8 +56,9 @@
 #include <kpviewmanager.h>
 
 
-kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (const QString &name,
-                                                                                kpMainWindow *mainWindow)
+kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (
+        const QString &name,
+        kpMainWindow *mainWindow)
     : kpNamedCommand (name, mainWindow),
       m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::Invalid),
       m_originalSelectionRegion (0)
@@ -137,23 +138,9 @@ void kpToolSelectionPullFromDocumentCommand::unexecute ()
 #endif
 
     kpDocument *doc = document ();
-
-    if (!doc)
-    {
-        kError () << "kpToolSelectionPullFromDocumentCommand::unexecute() without doc" << endl;
-        return;
-    }
-
-    // must have selection pixmap
-    if (!doc->selection () || !doc->selection ()->pixmap ())
-    {
-        kError () << "kpToolSelectionPullFromDocumentCommand::unexecute() sel="
-                   << doc->selection ()
-                   << " pixmap="
-                   << (doc->selection () ? doc->selection ()->pixmap () : 0)
-                   << endl;
-        return;
-    }
+    Q_ASSERT (doc);
+    // Must have selection pixmap.
+    Q_ASSERT (doc->selection () && doc->selection ()->pixmap ());
 
 
     // We can have faith that this is the state of the selection after
