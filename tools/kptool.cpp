@@ -694,13 +694,8 @@ kpToolToolBar *kpTool::toolToolBar () const
 
 kpColor kpTool::color (int which) const
 {
-    if (m_mainWindow)
-        return m_mainWindow->colorToolBar ()->color (which);
-    else
-    {
-        kError () << "kpTool::color () without mainWindow" << endl;
-        return kpColor::Invalid;
-    }
+    Q_ASSERT (m_mainWindow);
+    return m_mainWindow->colorToolBar ()->color (which);
 }
 
 kpColor kpTool::foregroundColor () const
@@ -716,58 +711,33 @@ kpColor kpTool::backgroundColor () const
 
 double kpTool::colorSimilarity () const
 {
-    if (m_mainWindow)
-        return m_mainWindow->colorToolBar ()->colorSimilarity ();
-    else
-    {
-        kError () << "kpTool::colorSimilarity() without mainWindow" << endl;
-        return 0;
-    }
+    Q_ASSERT (m_mainWindow);
+    return m_mainWindow->colorToolBar ()->colorSimilarity ();
 }
 
 int kpTool::processedColorSimilarity () const
 {
-    if (m_mainWindow)
-        return m_mainWindow->colorToolBar ()->processedColorSimilarity ();
-    else
-    {
-        kError () << "kpTool::processedColorSimilarity() without mainWindow" << endl;
-        return kpColor::Exact;
-    }
+    Q_ASSERT (m_mainWindow);
+    return m_mainWindow->colorToolBar ()->processedColorSimilarity ();
 }
 
 
 kpColor kpTool::oldForegroundColor () const
 {
-    if (m_mainWindow)
-        return m_mainWindow->colorToolBar ()->oldForegroundColor ();
-    else
-    {
-        kError () << "kpTool::oldForegroundColor() without mainWindow" << endl;
-        return kpColor::Invalid;
-    }
+    Q_ASSERT (m_mainWindow);
+    return m_mainWindow->colorToolBar ()->oldForegroundColor ();
 }
 
 kpColor kpTool::oldBackgroundColor () const
 {
-    if (m_mainWindow)
-        return m_mainWindow->colorToolBar ()->oldBackgroundColor ();
-    else
-    {
-        kError () << "kpTool::oldBackgroundColor() without mainWindow" << endl;
-        return kpColor::Invalid;
-    }
+    Q_ASSERT (m_mainWindow);
+    return m_mainWindow->colorToolBar ()->oldBackgroundColor ();
 }
 
 double kpTool::oldColorSimilarity () const
 {
-    if (m_mainWindow)
-        return m_mainWindow->colorToolBar ()->oldColorSimilarity ();
-    else
-    {
-        kError () << "kpTool::oldColorSimilarity() without mainWindow" << endl;
-        return 0;
-    }
+    Q_ASSERT (m_mainWindow);
+    return m_mainWindow->colorToolBar ()->oldColorSimilarity ();
 }
 
 
@@ -887,7 +857,11 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     kDebug () << "\tmb=" << mb << " m_beganDraw=" << m_beganDraw << endl;
 #endif
 
-    if (mb == -1 && !m_beganDraw) return; // ignore
+    if (mb == -1 && !m_beganDraw)
+    {
+        // Ignore mouse press.
+        return;
+    }
 
     if (m_beganDraw)
     {
@@ -898,15 +872,12 @@ void kpTool::mousePressEvent (QMouseEvent *e)
         #endif
 
             kpView *view = viewUnderStartPoint ();
-            if (!view)
-            {
-                kError () << "kpTool::mousePressEvent() cancel without a view under the start point!" << endl;
-            }
+            Q_ASSERT (view);
 
             // if we get a mousePressEvent when we're drawing, then the other
             // mouse button must have been pressed
-            m_currentPoint = view ? view->transformViewToDoc (e->pos ()) : QPoint (-1, -1);
-            m_currentViewPoint = view ? e->pos () : QPoint (-1, -1);
+            m_currentPoint = view->transformViewToDoc (e->pos ());
+            m_currentViewPoint = e->pos ();
             cancelShapeInternal ();
         }
 
@@ -914,10 +885,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     }
 
     kpView *view = viewUnderCursor ();
-    if (!view)
-    {
-        kError () << "kpTool::mousePressEvent() without a view under the cursor!" << endl;
-    }
+    Q_ASSERT (view);
 
 #if DEBUG_KP_TOOL && 1
     if (view)
@@ -968,11 +936,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
     if (m_beganDraw)
     {
         kpView *view = viewUnderStartPoint ();
-        if (!view)
-        {
-            kError () << "kpTool::mouseMoveEvent() without a view under the start point!" << endl;
-            return;
-        }
+        Q_ASSERT (view);
 
         m_currentPoint = view->transformViewToDoc (e->pos ());
         m_currentViewPoint = e->pos ();
@@ -1031,14 +995,13 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
                << " beganDraw=" << m_beganDraw << endl;
 #endif
 
-    if (m_beganDraw)  // didn't cancelShape()
+    // Have _not_ already cancelShape()'ed by pressing other mouse button?
+    // (e.g. you can cancel a line dragged out with the LMB, by pressing
+    //       the RMB)
+    if (m_beganDraw)
     {
         kpView *view = viewUnderStartPoint ();
-        if (!view)
-        {
-            kError () << "kpTool::mouseReleaseEvent() without a view under the start point!" << endl;
-            return;
-        }
+        Q_ASSERT (view);
 
         m_currentPoint = view->transformViewToDoc (e->pos ());
         m_currentViewPoint = e->pos ();
