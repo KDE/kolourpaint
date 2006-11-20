@@ -35,7 +35,7 @@
 # 3. After changing the .odt, type "make" to regenerate the folder contents.
 #    "svn add" any new files and then "svn commit".
 #
-# The Makefile magically does this.
+# This Makefile magically does this.
 #
 #
 # To create documents:
@@ -62,7 +62,12 @@ EXT=.odt
 #        cd kolourpaint-developer-guide/
 #        unzip ../kolourpaint-developer-guide.odt
 #        cd ..
+#
+# 5. Add to revision control
+#
 #        svn propedit svn:ignore .  [and type kolourpaint-developer-guide.odt]
+#        svn add kolourpaint-developer-guide/
+#        svn commit
 #
 
 
