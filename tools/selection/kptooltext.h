@@ -55,7 +55,12 @@ public:
     kpToolText (kpMainWindow *mainWindow);
     virtual ~kpToolText ();
 
-    
+protected:
+    virtual QString haventBegunDrawUserMessageOnResizeHandle () const;
+    virtual QString haventBegunDrawUserMessageInsideSelection () const;
+    virtual QString haventBegunDrawUserMessageOutsideSelection () const;
+
+
     //
     // Command Handling
     //
@@ -102,6 +107,14 @@ public:
 
     bool hasBegunText () const;
     virtual bool hasBegunShape () const;
+
+protected:
+    virtual kpToolSelection::DragType beginDrawInsideSelection ();
+    virtual QCursor cursorInsideSelection () const;
+    virtual void setSelectionBorderForHaventBegunDraw ();
+
+
+public:
     virtual void cancelShape ();
     virtual void endShape (const QPoint &thisPoint, const QRect &normalizedRect);
 

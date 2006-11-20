@@ -73,6 +73,13 @@ protected:
     int onSelectionResizeHandle () const;
     bool onSelectionToSelectText () const;
 
+protected:
+    // Appropriate one called by haventBegunDrawUserMessage().
+    // Subclasses may wish to reimplement.
+    virtual QString haventBegunDrawUserMessageOnResizeHandle () const;
+    virtual QString haventBegunDrawUserMessageInsideSelection () const;
+    virtual QString haventBegunDrawUserMessageOutsideSelection () const;
+
 public:
     QString haventBegunDrawUserMessage () const;
 
@@ -83,8 +90,26 @@ public:
     virtual bool careAboutModifierState () const { return true; }
     bool controlOrShiftPressed () const { return (m_controlPressed || m_shiftPressed); }
 
+protected:
+    enum DragType
+    {
+        Unknown, Create, Move, SelectText, ResizeScale
+    };
+
+    // Called by beginDraw() if dragging inside selection.
+    // Returns the type of drag that is occurring.  Will result in side-effects.
+    //
+    // Overridden in kpToolText.
+    // TODO: Not completely clean interface with subclasses due to side effects.
+    virtual DragType beginDrawInsideSelection ();
+
+public:
     virtual void beginDraw ();
 protected:
+    // Returns the mouse cursor when the mouse is on top of a selection.
+    // By default, this is a sizing cursor.  Subclasses may wish to reimplement.
+    virtual QCursor cursorInsideSelection () const;
+
     QCursor cursor () const;
 public:
     virtual void hover (const QPoint &point);
@@ -97,6 +122,17 @@ protected slots:
 public:
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint,
                        const QRect &normalizedRect);
+protected:
+    // Sets the selection border mode when no dragging is occurring.
+    // Subclasses may wish to reimplement but should still call the base
+    // implementation.
+    virtual void setSelectionBorderForHaventBegunDraw ();
+
+private:
+    void cancelMove ();
+    void cancelCreate ();
+    void cancelResizeScale ();
+public:
     virtual void cancelShape ();
     virtual void releasedAllButtons ();
     virtual void endDraw (const QPoint &thisPoint, const QRect &normalizedRect);
@@ -116,10 +152,6 @@ protected:
     Mode m_mode;
 
     QPoint m_startDragFromSelectionTopLeft;
-    enum DragType
-    {
-        Unknown, Create, Move, SelectText, ResizeScale
-    };
     DragType m_dragType;
     bool m_dragHasBegun;
     bool m_hadSelectionBeforeDrag;

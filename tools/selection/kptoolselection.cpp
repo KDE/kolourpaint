@@ -63,11 +63,11 @@
 
 
 kpToolSelection::kpToolSelection (Mode mode,
-                                  const QString &text,
-                                  const QString &description,
-                                  int key,
-                                  kpMainWindow *mainWindow,
-                                  const QString &name)
+        const QString &text,
+        const QString &description,
+        int key,
+        kpMainWindow *mainWindow,
+        const QString &name)
     : kpTool (text, description, key, mainWindow, name),
       m_mode (mode),
       m_currentPullFromDocumentCommand (0),
@@ -133,6 +133,25 @@ bool kpToolSelection::onSelectionToSelectText () const
 }
 
 
+// protected virtual
+QString kpToolSelection::haventBegunDrawUserMessageOnResizeHandle () const
+{
+    return i18n ("Left drag to scale selection.");
+}
+
+// protected virtual
+QString kpToolSelection::haventBegunDrawUserMessageInsideSelection () const
+{
+    return i18n ("Left drag to move selection.");
+}
+
+// protected virtual
+QString kpToolSelection::haventBegunDrawUserMessageOutsideSelection () const
+{
+    return i18n ("Left drag to create selection.");
+}
+
+
 // public
 QString kpToolSelection::haventBegunDrawUserMessage () const
 {
@@ -149,31 +168,15 @@ QString kpToolSelection::haventBegunDrawUserMessage () const
     kpSelection *sel = document ()->selection ();
     if (sel && onSelectionResizeHandle () && !controlOrShiftPressed ())
     {
-        if (m_mode == Text)
-            return i18n ("Left drag to resize text box.");
-        else
-            return i18n ("Left drag to scale selection.");
+        return haventBegunDrawUserMessageOnResizeHandle ();
     }
     else if (sel && sel->contains (m_currentPoint))
     {
-        if (m_mode == Text)
-        {
-            if (onSelectionToSelectText () && !controlOrShiftPressed ())
-                return i18n ("Left click to change cursor position.");
-            else
-                return i18n ("Left drag to move text box.");
-        }
-        else
-        {
-            return i18n ("Left drag to move selection.");
-        }
+        return haventBegunDrawUserMessageInsideSelection ();
     }
     else
     {
-        if (m_mode == Text)
-            return i18n ("Left drag to create text box.");
-        else
-            return i18n ("Left drag to create selection.");
+        return haventBegunDrawUserMessageOutsideSelection ();
     }
 }
 
@@ -186,22 +189,13 @@ void kpToolSelection::begin ()
 #endif
 
     kpToolToolBar *tb = toolToolBar ();
+    Q_ASSERT (tb);
 
-    if (tb)
-    {
-        m_toolWidgetOpaqueOrTransparent = tb->toolWidgetOpaqueOrTransparent ();
-
-        if (m_toolWidgetOpaqueOrTransparent)
-        {
-            connect (m_toolWidgetOpaqueOrTransparent, SIGNAL (isOpaqueChanged (bool)),
-                     this, SLOT (slotIsOpaqueChanged ()));
-            m_toolWidgetOpaqueOrTransparent->show ();
-        }
-    }
-    else
-    {
-        m_toolWidgetOpaqueOrTransparent = 0;
-    }
+    m_toolWidgetOpaqueOrTransparent = tb->toolWidgetOpaqueOrTransparent ();
+    Q_ASSERT (m_toolWidgetOpaqueOrTransparent);
+    connect (m_toolWidgetOpaqueOrTransparent, SIGNAL (isOpaqueChanged (bool)),
+                this, SLOT (slotIsOpaqueChanged ()));
+    m_toolWidgetOpaqueOrTransparent->show ();
 
     viewManager ()->setQueueUpdates ();
     {
@@ -236,12 +230,10 @@ void kpToolSelection::end ()
     if (document ()->selection ())
         pushOntoDocument ();
 
-    if (m_toolWidgetOpaqueOrTransparent)
-    {
-        disconnect (m_toolWidgetOpaqueOrTransparent, SIGNAL (isOpaqueChanged (bool)),
-                    this, SLOT (slotIsOpaqueChanged ()));
-        m_toolWidgetOpaqueOrTransparent = 0;
-    }
+    Q_ASSERT (m_toolWidgetOpaqueOrTransparent);
+    disconnect (m_toolWidgetOpaqueOrTransparent, SIGNAL (isOpaqueChanged (bool)),
+                this, SLOT (slotIsOpaqueChanged ()));
+    m_toolWidgetOpaqueOrTransparent = 0;
 
     viewManager ()->unsetCursor ();
 }
@@ -255,6 +247,32 @@ void kpToolSelection::reselect ()
 
     if (document ()->selection ())
         pushOntoDocument ();
+}
+
+
+// protected virtual
+kpToolSelection::DragType kpToolSelection::beginDrawInsideSelection ()
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kDebug () << "\t\tis move" << endl;
+#endif
+
+    m_startDragFromSelectionTopLeft =
+        m_currentPoint - document ()->selection ()->topLeft ();
+
+    if (m_mouseButton == 0)
+    {
+        setSelectionBorderForMove ();
+    }
+    else
+    {
+        // Don't hide sel border momentarily if user is just
+        // right _clicking_ selection.
+        // (single shot timer)
+        m_RMBMoveUpdateGUITimer->start (100/*ms*/);
+    }
+
+    return kpToolSelection::Move;
 }
 
 
@@ -315,38 +333,7 @@ void kpToolSelection::beginDraw ()
         }
         else if (sel->contains (m_currentPoint))
         {
-            if (m_mode == Text && onSelectionToSelectText () && !controlOrShiftPressed ())
-            {
-            #if DEBUG_KP_TOOL_SELECTION
-                kDebug () << "\t\tis select cursor pos" << endl;
-            #endif
-
-                m_dragType = SelectText;
-
-                viewManager ()->setTextCursorPosition (sel->textRowForPoint (m_currentPoint),
-                                                       sel->textColForPoint (m_currentPoint));
-            }
-            else
-            {
-            #if DEBUG_KP_TOOL_SELECTION
-                kDebug () << "\t\tis move" << endl;
-            #endif
-
-                m_startDragFromSelectionTopLeft = m_currentPoint - selectionRect.topLeft ();
-                m_dragType = Move;
-
-                if (m_mouseButton == 0)
-                {
-                    setSelectionBorderForMove ();
-                }
-                else
-                {
-                    // Don't hide sel border momentarily if user is just
-                    // right _clicking_ selection.
-                    // (single shot timer)
-                    m_RMBMoveUpdateGUITimer->start (100/*ms*/);
-                }
-            }
+            m_dragType = beginDrawInsideSelection ();
         }
         else
         {
@@ -377,6 +364,13 @@ void kpToolSelection::beginDraw ()
     {
         setUserMessage (cancelUserMessage ());
     }
+}
+
+
+// protected virtual
+QCursor kpToolSelection::cursorInsideSelection () const
+{
+    return Qt::SizeAllCursor;
 }
 
 
@@ -429,11 +423,7 @@ QCursor kpToolSelection::cursor () const
         kDebug () << "\tsel contains currentPoint; selecting text? "
                    << onSelectionToSelectText () << endl;
     #endif
-
-        if (m_mode == Text && onSelectionToSelectText () && !controlOrShiftPressed ())
-            return Qt::IBeamCursor;
-        else
-            return Qt::SizeAllCursor;
+        return cursorInsideSelection ();
     }
     else
     {
@@ -473,11 +463,7 @@ void kpToolSelection::hover (const QPoint &point)
 void kpToolSelection::popupRMBMenu ()
 {
     QMenu *pop = mainWindow () ? mainWindow ()->selectionToolRMBMenu () : 0;
-    if (!pop)
-    {
-        kError () << "kpToolSelection::popupRMBMenu() no QMenu*" << endl;
-        return;
-    }
+    Q_ASSERT (pop);
 
     // WARNING: enters event loop - may re-enter view/tool event handlers
     pop->exec (QCursor::pos ());
@@ -1029,6 +1015,73 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
     m_dragHasBegun = nextDragHasBegun;
 }
 
+// protected virtual
+void kpToolSelection::setSelectionBorderForHaventBegunDraw ()
+{
+    viewManager ()->setSelectionBorderVisible (true);
+    viewManager ()->setSelectionBorderFinished (true);
+}
+
+// private
+void kpToolSelection::cancelMove ()
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kDebug () << "\twas drag moving - undo drag and undo acquire" << endl;
+#endif
+
+    if (m_currentMoveCommand)
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kDebug () << "\t\tundo currentMoveCommand" << endl;
+    #endif
+        m_currentMoveCommand->finalize ();
+        m_currentMoveCommand->unexecute ();
+        delete m_currentMoveCommand;
+        m_currentMoveCommand = 0;
+
+        if (document ()->selection ()->isText ())
+            viewManager ()->setTextCursorBlinkState (true);
+    }
+}
+
+// private
+void kpToolSelection::cancelCreate ()
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kDebug () << "\twas creating sel - kill" << endl;
+#endif
+
+    // TODO: should we give the user back the selection s/he had before (if any)?
+    document ()->selectionDelete ();
+
+    if (m_currentCreateTextCommand)
+    {
+        delete m_currentCreateTextCommand;
+        m_currentCreateTextCommand = 0;
+    }
+}
+
+// private
+void kpToolSelection::cancelResizeScale ()
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kDebug () << "\twas resize/scale sel - kill" << endl;
+#endif
+
+    if (m_currentResizeScaleCommand)
+    {
+    #if DEBUG_KP_TOOL_SELECTION
+        kDebug () << "\t\tundo currentResizeScaleCommand" << endl;
+    #endif
+        m_currentResizeScaleCommand->unexecute ();
+        delete m_currentResizeScaleCommand;
+        m_currentResizeScaleCommand = 0;
+
+        if (document ()->selection ()->isText ())
+            viewManager ()->setTextCursorBlinkState (true);
+    }
+}
+
 // virtual
 void kpToolSelection::cancelShape ()
 {
@@ -1044,57 +1097,15 @@ void kpToolSelection::cancelShape ()
     {
         if (m_dragType == Move)
         {
-        #if DEBUG_KP_TOOL_SELECTION
-            kDebug () << "\twas drag moving - undo drag and undo acquire" << endl;
-        #endif
-
-            if (m_currentMoveCommand)
-            {
-            #if DEBUG_KP_TOOL_SELECTION
-                kDebug () << "\t\tundo currentMoveCommand" << endl;
-            #endif
-                m_currentMoveCommand->finalize ();
-                m_currentMoveCommand->unexecute ();
-                delete m_currentMoveCommand;
-                m_currentMoveCommand = 0;
-
-                if (document ()->selection ()->isText ())
-                    viewManager ()->setTextCursorBlinkState (true);
-            }
+            cancelMove ();
         }
         else if (m_dragType == Create)
         {
-        #if DEBUG_KP_TOOL_SELECTION
-            kDebug () << "\twas creating sel - kill" << endl;
-        #endif
-
-            // TODO: should we give the user back the selection s/he had before (if any)?
-            document ()->selectionDelete ();
-
-            if (m_currentCreateTextCommand)
-            {
-                delete m_currentCreateTextCommand;
-                m_currentCreateTextCommand = 0;
-            }
+            cancelCreate ();
         }
         else if (m_dragType == ResizeScale)
         {
-        #if DEBUG_KP_TOOL_SELECTION
-            kDebug () << "\twas resize/scale sel - kill" << endl;
-        #endif
-
-            if (m_currentResizeScaleCommand)
-            {
-            #if DEBUG_KP_TOOL_SELECTION
-                kDebug () << "\t\tundo currentResizeScaleCommand" << endl;
-            #endif
-                m_currentResizeScaleCommand->unexecute ();
-                delete m_currentResizeScaleCommand;
-                m_currentResizeScaleCommand = 0;
-
-                if (document ()->selection ()->isText ())
-                    viewManager ()->setTextCursorBlinkState (true);
-            }
+            cancelResizeScale ();
         }
 
 
@@ -1109,9 +1120,7 @@ void kpToolSelection::cancelShape ()
         }
 
 
-        viewManager ()->setSelectionBorderVisible (true);
-        viewManager ()->setSelectionBorderFinished (true);
-        viewManager ()->setTextCursorEnabled (m_mode == Text);
+        setSelectionBorderForHaventBegunDraw ();
     }
     viewManager ()->restoreQueueUpdates ();
 
@@ -1129,7 +1138,8 @@ void kpToolSelection::releasedAllButtons ()
 }
 
 // virtual
-void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*normalizedRect*/)
+void kpToolSelection::endDraw (const QPoint & /*thisPoint*/,
+        const QRect & /*normalizedRect*/)
 {
     m_createNOPTimer->stop ();
     m_RMBMoveUpdateGUITimer->stop ();
@@ -1231,9 +1241,7 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
         if (cmd)
             commandHistory ()->addCommand (cmd, false/*no exec*/);
 
-        viewManager ()->setSelectionBorderVisible (true);
-        viewManager ()->setSelectionBorderFinished (true);
-        viewManager ()->setTextCursorEnabled (m_mode == Text);
+        setSelectionBorderForHaventBegunDraw ();
     }
     viewManager ()->restoreQueueUpdates ();
 

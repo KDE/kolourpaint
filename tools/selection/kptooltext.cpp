@@ -66,6 +66,28 @@ kpToolText::~kpToolText ()
 }
 
 
+// protected virtual [base kpToolSelection]
+QString kpToolText::haventBegunDrawUserMessageOnResizeHandle () const
+{
+    return i18n ("Left drag to resize text box.");
+}
+
+// protected virtual [base kpToolSelection]
+QString kpToolText::haventBegunDrawUserMessageInsideSelection () const
+{
+    if (onSelectionToSelectText () && !controlOrShiftPressed ())
+        return i18n ("Left click to change cursor position.");
+    else
+        return i18n ("Left drag to move text box.");
+}
+
+// protected virtual [base kpToolSelection]
+QString kpToolText::haventBegunDrawUserMessageOutsideSelection () const
+{
+    return i18n ("Left drag to create text box.");
+}
+
+
 //
 // Command Handling
 //
@@ -156,6 +178,43 @@ bool kpToolText::hasBegunText () const
 bool kpToolText::hasBegunShape () const
 {
     return (hasBegunDraw () || hasBegunText ());
+}
+
+
+// protected virtual [base kpToolSelection]
+kpToolSelection::DragType kpToolText::beginDrawInsideSelection ()
+{
+    if (onSelectionToSelectText () && !controlOrShiftPressed ())
+    {
+    #if DEBUG_KP_TOOL_TEXT
+        kDebug () << "\t\tis select cursor pos" << endl;
+    #endif
+
+        viewManager ()->setTextCursorPosition (
+            document ()->selection ()->textRowForPoint (m_currentPoint),
+            document ()->selection ()->textColForPoint (m_currentPoint));
+
+        return kpToolSelection::SelectText;
+    }
+                
+    return kpToolSelection::beginDrawInsideSelection ();
+}
+
+// protected virtual [base kpToolSelection]
+QCursor kpToolText::cursorInsideSelection () const
+{
+    if (onSelectionToSelectText () && !controlOrShiftPressed ())
+        return Qt::IBeamCursor;
+
+    return kpToolSelection::cursorInsideSelection ();
+}
+
+
+// protected virtual [base kpToolSelection]
+void kpToolText::setSelectionBorderForHaventBegunDraw ()
+{
+    kpToolSelection::setSelectionBorderForHaventBegunDraw ();
+    viewManager ()->setTextCursorEnabled (true);
 }
 
 
