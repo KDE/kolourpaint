@@ -26,9 +26,16 @@
 */
 
 
+#define DEBUG_KP_TOOL_FREE_FROM_SELECTION 0
+
+
 #include <kptoolfreeformselection.h>
 
 #include <klocale.h>
+
+#include <kpdocument.h>
+#include <kpmainwindow.h>
+#include <kpselection.h>
 
 
 kpToolFreeFormSelection::kpToolFreeFormSelection (kpMainWindow *mainWindow)
@@ -44,3 +51,37 @@ kpToolFreeFormSelection::~kpToolFreeFormSelection ()
 {
 }
 
+
+// protected virtual [base kpToolSelection]
+void kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
+        QRect /*normalizedRect*/)
+{
+    QPolygon points;
+
+    if (document ()->selection ())
+        points = document ()->selection ()->points ();
+
+
+    // (not detached so will modify "points" directly but
+    //  still need to call kpDocument::setSelection() to
+    //  update screen)
+
+    if (!m_dragHasBegun)
+    {
+        // We thought the drag at startPoint was a NOP
+        // but it turns out that it wasn't...
+        points.putPoints (points.count (), 1, m_startPoint.x (), m_startPoint.y ());
+    }
+
+    // TODO: there should be an upper limit on this before drawing the
+    //       polygon becomes too slow
+    points.putPoints (points.count (), 1, thisPoint.x (), thisPoint.y ());
+
+
+    document ()->setSelection (kpSelection (points, mainWindow ()->selectionTransparency ()));
+#if DEBUG_KP_TOOL_FREE_FROM_SELECTION && 1
+    kDebug () << "\t\tfreeform; #points=" << document ()->selection ()->points ().count () << endl;
+#endif
+
+    setUserShapePoints (m_currentPoint);
+}

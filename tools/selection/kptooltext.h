@@ -114,6 +114,8 @@ public:
 protected:
     virtual kpToolSelection::DragType beginDrawInsideSelection ();
     virtual QCursor cursorInsideSelection () const;
+    virtual void createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
+        QRect normalizedRect);
     virtual void setSelectionBorderForHaventBegunDraw ();
 
 

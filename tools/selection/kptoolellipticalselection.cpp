@@ -30,6 +30,10 @@
 
 #include <klocale.h>
 
+#include <kpdocument.h>
+#include <kpmainwindow.h>
+#include <kpselection.h>
+
 
 kpToolEllipticalSelection::kpToolEllipticalSelection (kpMainWindow *mainWindow)
     : kpToolSelection (Ellipse,
@@ -44,3 +48,15 @@ kpToolEllipticalSelection::~kpToolEllipticalSelection ()
 {
 }
 
+
+// protected virtual [base kpToolSelection]
+void kpToolEllipticalSelection::createMoreSelectionAndUpdateStatusBar (
+        QPoint /*thisPoint*/,
+        QRect normalizedRect)
+{
+    document ()->setSelection (
+        kpSelection (
+            kpSelection::Ellipse, normalizedRect,
+            mainWindow ()->selectionTransparency ()));
+    setUserShapePoints (m_startPoint, m_currentPoint);
+}

@@ -41,6 +41,10 @@ class kpToolRectSelection : public kpToolSelection
 public:
     kpToolRectSelection (kpMainWindow *);
     virtual ~kpToolRectSelection ();
+    
+protected:
+    virtual void createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
+        QRect normalizedRect);
 };
 
 

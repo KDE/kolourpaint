@@ -30,6 +30,10 @@
 
 #include <klocale.h>
 
+#include <kpdocument.h>
+#include <kpmainwindow.h>
+#include <kpselection.h>
+
 
 kpToolRectSelection::kpToolRectSelection (kpMainWindow *mainWindow)
     : kpToolSelection (Rectangle,
@@ -44,3 +48,18 @@ kpToolRectSelection::~kpToolRectSelection ()
 {
 }
 
+
+// protected virtual [base kpToolSelection]
+void kpToolRectSelection::createMoreSelectionAndUpdateStatusBar (QPoint /*thisPoint*/,
+        QRect normalizedRect)
+{
+    const QRect usefulRect = normalizedRect.intersect (document ()->rect ());
+    document ()->setSelection (
+        kpSelection (
+            kpSelection::Rectangle, usefulRect,
+            mainWindow ()->selectionTransparency ()));
+
+    setUserShapePoints (m_startPoint,
+        QPoint (qMax (0, qMin (m_currentPoint.x (), document ()->width () - 1)),
+                qMax (0, qMin (m_currentPoint.y (), document ()->height () - 1))));
+}

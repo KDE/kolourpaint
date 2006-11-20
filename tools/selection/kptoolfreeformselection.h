@@ -41,6 +41,10 @@ class kpToolFreeFormSelection : public kpToolSelection
 public:
     kpToolFreeFormSelection (kpMainWindow *);
     virtual ~kpToolFreeFormSelection ();
+    
+protected:
+    virtual void createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
+        QRect normalizedRect);
 };
 
 

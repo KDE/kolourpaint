@@ -43,6 +43,7 @@
 #include <kpselection.h>
 #include <kpToolTextBackspaceCommand.h>
 #include <kpToolTextChangeStyleCommand.h>
+#include <kpToolSelectionCreateCommand.h>
 #include <kpToolTextDeleteCommand.h>
 #include <kpToolTextEnterCommand.h>
 #include <kpToolTextInsertCommand.h>
@@ -227,6 +228,130 @@ QCursor kpToolText::cursorInsideSelection () const
     return kpToolSelection::cursorInsideSelection ();
 }
 
+
+// protected virtual [base kpToolSelection]
+void kpToolText::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
+        QRect normalizedRect)
+{
+    const kpTextStyle textStyle = mainWindow ()->textStyle ();
+
+    int minimumWidth, minimumHeight;
+
+    // Just a click?
+    if (!m_dragHasBegun && thisPoint == m_startPoint)
+    {
+    #if DEBUG_KP_TOOL_TEXT && 1
+        kDebug () << "\tclick creating text box" << endl;
+    #endif
+
+        // (Click creating text box with RMB would not be obvious
+        //  since RMB menu most likely hides text box immediately
+        //  afterwards)
+        if (m_mouseButton == 1)
+            return;
+
+
+        minimumWidth = kpSelection::preferredMinimumWidthForTextStyle (textStyle);
+        if (thisPoint.x () >= m_startPoint.x ())
+        {
+            if (m_startPoint.x () + minimumWidth - 1 >= document ()->width ())
+            {
+                minimumWidth =
+                    qMax (kpSelection::minimumWidthForTextStyle (textStyle),
+                        document ()->width () - m_startPoint.x ());
+            }
+        }
+        else
+        {
+            if (m_startPoint.x () - minimumWidth + 1 < 0)
+            {
+                minimumWidth =
+                    qMax (kpSelection::minimumWidthForTextStyle (textStyle),
+                        m_startPoint.x () + 1);
+            }
+        }
+
+        minimumHeight = kpSelection::preferredMinimumHeightForTextStyle (textStyle);
+        if (thisPoint.y () >= m_startPoint.y ())
+        {
+            if (m_startPoint.y () + minimumHeight - 1 >= document ()->height ())
+            {
+                minimumHeight =
+                    qMax (kpSelection::minimumHeightForTextStyle (textStyle),
+                        document ()->height () - m_startPoint.y ());
+            }
+        }
+        else
+        {
+            if (m_startPoint.y () - minimumHeight + 1 < 0)
+            {
+                minimumHeight =
+                    qMax (kpSelection::minimumHeightForTextStyle (textStyle),
+                        m_startPoint.y () + 1);
+            }
+        }
+    }
+    else
+    {
+    #if DEBUG_KP_TOOL_TEXT && 1
+        kDebug () << "\tdrag creating text box" << endl;
+    #endif
+        minimumWidth = kpSelection::minimumWidthForTextStyle (textStyle);
+        minimumHeight = kpSelection::minimumHeightForTextStyle (textStyle);
+    }
+
+
+    if (normalizedRect.width () < minimumWidth)
+    {
+        if (thisPoint.x () >= m_startPoint.x ())
+            normalizedRect.setWidth (minimumWidth);
+        else
+            normalizedRect.setX (normalizedRect.right () - minimumWidth + 1);
+    }
+
+    if (normalizedRect.height () < minimumHeight)
+    {
+        if (thisPoint.y () >= m_startPoint.y ())
+            normalizedRect.setHeight (minimumHeight);
+        else
+            normalizedRect.setY (normalizedRect.bottom () - minimumHeight + 1);
+    }
+#if DEBUG_KP_TOOL_TEXT && 1
+    kDebug () << "\t\tnormalizedRect=" << normalizedRect
+                << " kpSelection::preferredMinimumSize="
+                    << QSize (minimumWidth, minimumHeight)
+                << endl;
+#endif
+
+    QList <QString> textLines;
+    textLines.append (QString ());
+    kpSelection sel (normalizedRect, textLines, textStyle);
+
+    if (!m_currentCreateTextCommand)
+    {
+        m_currentCreateTextCommand = new kpToolSelectionCreateCommand (
+            i18n ("Text: Create Box"),
+            sel,
+            mainWindow ());
+    }
+    else
+        m_currentCreateTextCommand->setFromSelection (sel);
+
+    viewManager ()->setTextCursorPosition (0, 0);
+    document ()->setSelection (sel);
+
+    QPoint actualEndPoint = KP_INVALID_POINT;
+    if (m_startPoint == normalizedRect.topLeft ())
+        actualEndPoint = normalizedRect.bottomRight ();
+    else if (m_startPoint == normalizedRect.bottomRight ())
+        actualEndPoint = normalizedRect.topLeft ();
+    else if (m_startPoint == normalizedRect.topRight ())
+        actualEndPoint = normalizedRect.bottomLeft ();
+    else if (m_startPoint == normalizedRect.bottomLeft ())
+        actualEndPoint = normalizedRect.topRight ();
+
+    setUserShapePoints (m_startPoint, actualEndPoint);
+}
 
 // protected virtual [base kpToolSelection]
 void kpToolText::setSelectionBorderForHaventBegunDraw ()

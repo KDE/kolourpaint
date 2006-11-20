@@ -41,6 +41,10 @@ class kpToolEllipticalSelection : public kpToolSelection
 public:
     kpToolEllipticalSelection (kpMainWindow *);
     virtual ~kpToolEllipticalSelection ();
+
+protected:
+    virtual void createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
+        QRect normalizedRect);
 };
 
 
