@@ -521,13 +521,489 @@ void kpToolSelection::delayedDraw ()
     }
 }
 
-// virtual
-void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoint*/,
-                            const QRect &inNormalizedRect)
+// private
+void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
 {
-    QPoint thisPoint = inThisPoint;
-    QRect normalizedRect = inNormalizedRect;
+#if DEBUG_KP_TOOL_SELECTION && 1
+    kDebug () << "\tnot moving - resizing rect to" << normalizedRect
+                << endl;
+    kDebug () << "\t\tcreateNOPTimer->isActive()="
+                << m_createNOPTimer->isActive ()
+                << " viewManhattanLength from startPoint="
+                << m_viewUnderStartPoint->transformDocToViewX ((thisPoint - m_startPoint).manhattanLength ())
+                << endl;
+#endif
 
+    bool nextDragHasBegun = true;
+
+
+    if (m_createNOPTimer->isActive ())
+    {
+        if (m_viewUnderStartPoint->transformDocToViewX ((thisPoint - m_startPoint).manhattanLength ()) <= 6)
+        {
+        #if DEBUG_KP_TOOL_SELECTION && 1
+            kDebug () << "\t\tsuppress accidental movement" << endl;
+        #endif
+            thisPoint = m_startPoint;
+        }
+        else
+        {
+        #if DEBUG_KP_TOOL_SELECTION && 1
+            kDebug () << "\t\tit's a \"big\" intended move - stop timer" << endl;
+        #endif
+            m_createNOPTimer->stop ();
+        }
+    }
+
+
+    // Prevent unintentional 1-pixel selections
+    if (!m_dragHasBegun && thisPoint == m_startPoint)
+    {
+        if (m_mode != kpToolSelection::Text)
+        {
+        #if DEBUG_KP_TOOL_SELECTION && 1
+            kDebug () << "\tnon-text NOP - return" << endl;
+        #endif
+            setUserShapePoints (thisPoint);
+            return;
+        }
+        else  // m_mode == kpToolSelection::Text
+        {
+            // Attempt to deselect text box by clicking?
+            if (m_hadSelectionBeforeDrag)
+            {
+            #if DEBUG_KP_TOOL_SELECTION && 1
+                kDebug () << "\ttext box deselect - NOP - return" << endl;
+            #endif
+                setUserShapePoints (thisPoint);
+                return;
+            }
+
+            // Drag-wise, this is a NOP so we'd normally return (hence
+            // m_dragHasBegun would not change).  However, as a special
+            // case, allow user to create a text box using a single
+            // click.  But don't set m_dragHasBegun for next iteration
+            // since it would be untrue.
+            //
+            // This makes sure that a single click creation of text box
+            // works even if draw() is invoked more than once at the
+            // same position (esp. with accidental drag suppression
+            // (above)).
+            nextDragHasBegun = false;
+        }
+    }
+
+
+    switch (m_mode)
+    {
+    case kpToolSelection::Rectangle:
+    {
+        const QRect usefulRect = normalizedRect.intersect (document ()->rect ());
+        document ()->setSelection (kpSelection (kpSelection::Rectangle, usefulRect,
+                                                mainWindow ()->selectionTransparency ()));
+
+        setUserShapePoints (m_startPoint,
+                            QPoint (qMax (0, qMin (m_currentPoint.x (), document ()->width () - 1)),
+                                    qMax (0, qMin (m_currentPoint.y (), document ()->height () - 1))));
+        break;
+    }
+    case kpToolSelection::Text:
+    {
+        const kpTextStyle textStyle = mainWindow ()->textStyle ();
+
+        int minimumWidth, minimumHeight;
+
+        // Just a click?
+        if (!m_dragHasBegun && thisPoint == m_startPoint)
+        {
+        #if DEBUG_KP_TOOL_SELECTION && 1
+            kDebug () << "\tclick creating text box" << endl;
+        #endif
+
+            // (Click creating text box with RMB would not be obvious
+            //  since RMB menu most likely hides text box immediately
+            //  afterwards)
+            if (m_mouseButton == 1)
+                break;
+
+
+            minimumWidth = kpSelection::preferredMinimumWidthForTextStyle (textStyle);
+            if (thisPoint.x () >= m_startPoint.x ())
+            {
+                if (m_startPoint.x () + minimumWidth - 1 >= document ()->width ())
+                {
+                    minimumWidth = qMax (kpSelection::minimumWidthForTextStyle (textStyle),
+                                            document ()->width () - m_startPoint.x ());
+                }
+            }
+            else
+            {
+                if (m_startPoint.x () - minimumWidth + 1 < 0)
+                {
+                    minimumWidth = qMax (kpSelection::minimumWidthForTextStyle (textStyle),
+                                            m_startPoint.x () + 1);
+                }
+            }
+
+            minimumHeight = kpSelection::preferredMinimumHeightForTextStyle (textStyle);
+            if (thisPoint.y () >= m_startPoint.y ())
+            {
+                if (m_startPoint.y () + minimumHeight - 1 >= document ()->height ())
+                {
+                    minimumHeight = qMax (kpSelection::minimumHeightForTextStyle (textStyle),
+                                        document ()->height () - m_startPoint.y ());
+                }
+            }
+            else
+            {
+                if (m_startPoint.y () - minimumHeight + 1 < 0)
+                {
+                    minimumHeight = qMax (kpSelection::minimumHeightForTextStyle (textStyle),
+                                        m_startPoint.y () + 1);
+                }
+            }
+        }
+        else
+        {
+        #if DEBUG_KP_TOOL_SELECTION && 1
+            kDebug () << "\tdrag creating text box" << endl;
+        #endif
+            minimumWidth = kpSelection::minimumWidthForTextStyle (textStyle);
+            minimumHeight = kpSelection::minimumHeightForTextStyle (textStyle);
+        }
+
+
+        if (normalizedRect.width () < minimumWidth)
+        {
+            if (thisPoint.x () >= m_startPoint.x ())
+                normalizedRect.setWidth (minimumWidth);
+            else
+                normalizedRect.setX (normalizedRect.right () - minimumWidth + 1);
+        }
+
+        if (normalizedRect.height () < minimumHeight)
+        {
+            if (thisPoint.y () >= m_startPoint.y ())
+                normalizedRect.setHeight (minimumHeight);
+            else
+                normalizedRect.setY (normalizedRect.bottom () - minimumHeight + 1);
+        }
+    #if DEBUG_KP_TOOL_SELECTION && 1
+        kDebug () << "\t\tnormalizedRect=" << normalizedRect
+                    << " kpSelection::preferredMinimumSize="
+                        << QSize (minimumWidth, minimumHeight)
+                    << endl;
+    #endif
+
+        QList <QString> textLines;
+        textLines.append (QString ());
+        kpSelection sel (normalizedRect, textLines, textStyle);
+
+        if (!m_currentCreateTextCommand)
+        {
+            m_currentCreateTextCommand = new kpToolSelectionCreateCommand (
+                i18n ("Text: Create Box"),
+                sel,
+                mainWindow ());
+        }
+        else
+            m_currentCreateTextCommand->setFromSelection (sel);
+
+        viewManager ()->setTextCursorPosition (0, 0);
+        document ()->setSelection (sel);
+
+        QPoint actualEndPoint = KP_INVALID_POINT;
+        if (m_startPoint == normalizedRect.topLeft ())
+            actualEndPoint = normalizedRect.bottomRight ();
+        else if (m_startPoint == normalizedRect.bottomRight ())
+            actualEndPoint = normalizedRect.topLeft ();
+        else if (m_startPoint == normalizedRect.topRight ())
+            actualEndPoint = normalizedRect.bottomLeft ();
+        else if (m_startPoint == normalizedRect.bottomLeft ())
+            actualEndPoint = normalizedRect.topRight ();
+
+        setUserShapePoints (m_startPoint, actualEndPoint);
+        break;
+    }
+    case kpToolSelection::Ellipse:
+        document ()->setSelection (kpSelection (kpSelection::Ellipse, normalizedRect,
+                                                mainWindow ()->selectionTransparency ()));
+        setUserShapePoints (m_startPoint, m_currentPoint);
+        break;
+    case kpToolSelection::FreeForm:
+        QPolygon points;
+
+        if (document ()->selection ())
+            points = document ()->selection ()->points ();
+
+
+        // (not detached so will modify "points" directly but
+        //  still need to call kpDocument::setSelection() to
+        //  update screen)
+
+        if (!m_dragHasBegun)
+        {
+            // We thought the drag at startPoint was a NOP
+            // but it turns out that it wasn't...
+            points.putPoints (points.count (), 1, m_startPoint.x (), m_startPoint.y ());
+        }
+
+        // TODO: there should be an upper limit on this before drawing the
+        //       polygon becomes too slow
+        points.putPoints (points.count (), 1, thisPoint.x (), thisPoint.y ());
+
+
+        document ()->setSelection (kpSelection (points, mainWindow ()->selectionTransparency ()));
+    #if DEBUG_KP_TOOL_SELECTION && 1
+        kDebug () << "\t\tfreeform; #points=" << document ()->selection ()->points ().count () << endl;
+    #endif
+
+        setUserShapePoints (m_currentPoint);
+        break;
+    }
+
+    viewManager ()->setSelectionBorderVisible (true);
+
+
+    m_dragHasBegun = nextDragHasBegun;
+}
+
+// private
+void kpToolSelection::move (QPoint thisPoint, QRect /*normalizedRect*/)
+{
+#if DEBUG_KP_TOOL_SELECTION && 1
+    kDebug () << "\tmoving selection" << endl;
+#endif
+
+    kpSelection *sel = document ()->selection ();
+
+    QRect targetSelRect = QRect (thisPoint.x () - m_startDragFromSelectionTopLeft.x (),
+                                    thisPoint.y () - m_startDragFromSelectionTopLeft.y (),
+                                    sel->width (),
+                                    sel->height ());
+
+#if DEBUG_KP_TOOL_SELECTION && 1
+    kDebug () << "\t\tstartPoint=" << m_startPoint
+                << " thisPoint=" << thisPoint
+                << " startDragFromSel=" << m_startDragFromSelectionTopLeft
+                << " targetSelRect=" << targetSelRect
+                << endl;
+#endif
+
+    // Try to make sure selection still intersects document so that it's
+    // reachable.
+
+    if (targetSelRect.right () < 0)
+        targetSelRect.translate (-targetSelRect.right (), 0);
+    else if (targetSelRect.left () >= document ()->width ())
+        targetSelRect.translate (document ()->width () - targetSelRect.left () - 1, 0);
+
+    if (targetSelRect.bottom () < 0)
+        targetSelRect.translate (0, -targetSelRect.bottom ());
+    else if (targetSelRect.top () >= document ()->height ())
+        targetSelRect.translate (0, document ()->height () - targetSelRect.top () - 1);
+
+#if DEBUG_KP_TOOL_SELECTION && 1
+    kDebug () << "\t\t\tafter ensure sel rect clickable=" << targetSelRect << endl;
+#endif
+
+
+    if (!m_dragHasBegun &&
+        targetSelRect.topLeft () + m_startDragFromSelectionTopLeft == m_startPoint)
+    {
+    #if DEBUG_KP_TOOL_SELECTION && 1
+        kDebug () << "\t\t\t\tnop" << endl;
+    #endif
+
+
+        if (!m_RMBMoveUpdateGUITimer->isActive ())
+        {
+            // (slotRMBMoveUpdateGUI() calls similar line)
+            setUserShapePoints (sel->topLeft ());
+        }
+
+        // Prevent both NOP drag-moves
+        return;
+    }
+
+
+    if (m_RMBMoveUpdateGUITimer->isActive ())
+    {
+        m_RMBMoveUpdateGUITimer->stop ();
+        slotRMBMoveUpdateGUI ();
+    }
+
+
+    if (!sel->pixmap () && !m_currentPullFromDocumentCommand)
+    {
+        m_currentPullFromDocumentCommand = new kpToolSelectionPullFromDocumentCommand (
+            QString::null/*uninteresting child of macro cmd*/,
+            mainWindow ());
+        m_currentPullFromDocumentCommand->execute ();
+    }
+
+    if (!m_currentMoveCommand)
+    {
+        m_currentMoveCommand = new kpToolSelectionMoveCommand (
+            QString::null/*uninteresting child of macro cmd*/,
+            mainWindow ());
+        m_currentMoveCommandIsSmear = false;
+    }
+
+
+    //viewManager ()->setQueueUpdates ();
+    //viewManager ()->setFastUpdates ();
+
+    if (m_shiftPressed)
+        m_currentMoveCommandIsSmear = true;
+
+    if (!m_dragHasBegun && (m_controlPressed || m_shiftPressed))
+        m_currentMoveCommand->copyOntoDocument ();
+
+    m_currentMoveCommand->moveTo (targetSelRect.topLeft ());
+
+    if (m_shiftPressed)
+        m_currentMoveCommand->copyOntoDocument ();
+
+    //viewManager ()->restoreFastUpdates ();
+    //viewManager ()->restoreQueueUpdates ();
+
+    QPoint start = m_currentMoveCommand->originalSelection ().topLeft ();
+    QPoint end = targetSelRect.topLeft ();
+    setUserShapePoints (start, end, false/*don't set size*/);
+    setUserShapeSize (end.x () - start.x (), end.y () - start.y ());
+}
+
+// private
+void kpToolSelection::resizeScale (QPoint thisPoint, QRect /*normalizedRect*/)
+{
+#if DEBUG_KP_TOOL_SELECTION && 1
+    kDebug () << "\tresize/scale" << endl;
+#endif
+
+    kpSelection *sel = document ()->selection ();
+
+    if (!m_dragHasBegun && thisPoint == m_startPoint)
+    {
+    #if DEBUG_KP_TOOL_SELECTION && 1
+        kDebug () << "\t\tnop" << endl;
+    #endif
+
+        setUserShapePoints (QPoint (sel->width (), sel->height ()));
+        return;
+    }
+
+
+    if (!sel->pixmap () && !m_currentPullFromDocumentCommand)
+    {
+        m_currentPullFromDocumentCommand = new kpToolSelectionPullFromDocumentCommand (
+            QString::null/*uninteresting child of macro cmd*/,
+            mainWindow ());
+        m_currentPullFromDocumentCommand->execute ();
+    }
+
+    if (!m_currentResizeScaleCommand)
+    {
+        m_currentResizeScaleCommand = new kpToolSelectionResizeScaleCommand (mainWindow ());
+    }
+
+
+    kpSelection originalSelection = m_currentResizeScaleCommand->originalSelection ();
+    const int oldWidth = originalSelection.width ();
+    const int oldHeight = originalSelection.height ();
+
+
+    // Determine new width.
+
+    int userXSign = 0;
+    if (m_resizeScaleType & kpView::Left)
+        userXSign = -1;
+    else if (m_resizeScaleType & kpView::Right)
+        userXSign = +1;
+
+    int newWidth = oldWidth + userXSign * (thisPoint.x () - m_startPoint.x ());
+
+    newWidth = qMax (originalSelection.minimumWidth (), newWidth);
+
+
+    // Determine new height.
+
+    int userYSign = 0;
+    if (m_resizeScaleType & kpView::Top)
+        userYSign = -1;
+    else if (m_resizeScaleType & kpView::Bottom)
+        userYSign = +1;
+
+    int newHeight = oldHeight + userYSign * (thisPoint.y () - m_startPoint.y ());
+
+    newHeight = qMax (originalSelection.minimumHeight (), newHeight);
+
+
+    // Keep aspect ratio?
+    if (m_shiftPressed && !sel->isText ())
+    {
+        // Width changed more than height?  At equality, favor width.
+        // Fix width, change height.
+        if ((userXSign ? double (newWidth) / oldWidth : 0) >=
+            (userYSign ? double (newHeight) / oldHeight : 0))
+        {
+            newHeight = newWidth * oldHeight / oldWidth;
+            newHeight = qMax (originalSelection.minimumHeight (),
+                                newHeight);
+        }
+        // Height changed more than width?
+        // Fix height, change width.
+        else
+        {
+            newWidth = newHeight * oldWidth / oldHeight;
+            newWidth = qMax (originalSelection.minimumWidth (), newWidth);
+        }
+    }
+
+
+    // Adjust x/y to new width/height for left/top resizes.
+
+    int newX = originalSelection.x ();
+    int newY = originalSelection.y ();
+
+    if (m_resizeScaleType & kpView::Left)
+    {
+        newX -= (newWidth - originalSelection.width ());
+    }
+
+    if (m_resizeScaleType & kpView::Top)
+    {
+        newY -= (newHeight - originalSelection.height ());
+    }
+
+#if DEBUG_KP_TOOL_SELECTION && 1
+    kDebug () << "\t\tnewX=" << newX
+                << " newY=" << newY
+                << " newWidth=" << newWidth
+                << " newHeight=" << newHeight
+                << endl;
+#endif
+
+
+    viewManager ()->setFastUpdates ();
+    m_currentResizeScaleCommand->resizeAndMoveTo (newWidth, newHeight,
+                                                    QPoint (newX, newY),
+                                                    true/*smooth scale delayed*/);
+    viewManager ()->restoreFastUpdates ();
+
+    setUserShapePoints (QPoint (originalSelection.width (),
+                                originalSelection.height ()),
+                        QPoint (newWidth,
+                                newHeight),
+                        false/*don't set size*/);
+    setUserShapeSize (newWidth - originalSelection.width (),
+                        newHeight - originalSelection.height ());
+}
+
+// virtual
+void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*/,
+                            const QRect &normalizedRect)
+{
 #if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "kpToolSelection::draw" << thisPoint
                << " startPoint=" << m_startPoint
@@ -540,479 +1016,18 @@ void kpToolSelection::draw (const QPoint &inThisPoint, const QPoint & /*lastPoin
     //      place
 
 
-    bool nextDragHasBegun = true;
-
-
     if (m_dragType == Create)
     {
-    #if DEBUG_KP_TOOL_SELECTION && 1
-        kDebug () << "\tnot moving - resizing rect to" << normalizedRect
-                   << endl;
-        kDebug () << "\t\tcreateNOPTimer->isActive()="
-                   << m_createNOPTimer->isActive ()
-                   << " viewManhattanLength from startPoint="
-                   << m_viewUnderStartPoint->transformDocToViewX ((thisPoint - m_startPoint).manhattanLength ())
-                   << endl;
-    #endif
-
-        if (m_createNOPTimer->isActive ())
-        {
-            if (m_viewUnderStartPoint->transformDocToViewX ((thisPoint - m_startPoint).manhattanLength ()) <= 6)
-            {
-            #if DEBUG_KP_TOOL_SELECTION && 1
-                kDebug () << "\t\tsuppress accidental movement" << endl;
-            #endif
-                thisPoint = m_startPoint;
-            }
-            else
-            {
-            #if DEBUG_KP_TOOL_SELECTION && 1
-                kDebug () << "\t\tit's a \"big\" intended move - stop timer" << endl;
-            #endif
-                m_createNOPTimer->stop ();
-            }
-        }
-
-
-        // Prevent unintentional 1-pixel selections
-        if (!m_dragHasBegun && thisPoint == m_startPoint)
-        {
-            if (m_mode != kpToolSelection::Text)
-            {
-            #if DEBUG_KP_TOOL_SELECTION && 1
-                kDebug () << "\tnon-text NOP - return" << endl;
-            #endif
-                setUserShapePoints (thisPoint);
-                return;
-            }
-            else  // m_mode == kpToolSelection::Text
-            {
-                // Attempt to deselect text box by clicking?
-                if (m_hadSelectionBeforeDrag)
-                {
-                #if DEBUG_KP_TOOL_SELECTION && 1
-                    kDebug () << "\ttext box deselect - NOP - return" << endl;
-                #endif
-                    setUserShapePoints (thisPoint);
-                    return;
-                }
-
-                // Drag-wise, this is a NOP so we'd normally return (hence
-                // m_dragHasBegun would not change).  However, as a special
-                // case, allow user to create a text box using a single
-                // click.  But don't set m_dragHasBegun for next iteration
-                // since it would be untrue.
-                //
-                // This makes sure that a single click creation of text box
-                // works even if draw() is invoked more than once at the
-                // same position (esp. with accidental drag suppression
-                // (above)).
-                nextDragHasBegun = false;
-            }
-        }
-
-
-        switch (m_mode)
-        {
-        case kpToolSelection::Rectangle:
-        {
-            const QRect usefulRect = normalizedRect.intersect (document ()->rect ());
-            document ()->setSelection (kpSelection (kpSelection::Rectangle, usefulRect,
-                                                    mainWindow ()->selectionTransparency ()));
-
-            setUserShapePoints (m_startPoint,
-                                QPoint (qMax (0, qMin (m_currentPoint.x (), document ()->width () - 1)),
-                                        qMax (0, qMin (m_currentPoint.y (), document ()->height () - 1))));
-            break;
-        }
-        case kpToolSelection::Text:
-        {
-            const kpTextStyle textStyle = mainWindow ()->textStyle ();
-
-            int minimumWidth, minimumHeight;
-
-            // Just a click?
-            if (!m_dragHasBegun && thisPoint == m_startPoint)
-            {
-            #if DEBUG_KP_TOOL_SELECTION && 1
-                kDebug () << "\tclick creating text box" << endl;
-            #endif
-
-                // (Click creating text box with RMB would not be obvious
-                //  since RMB menu most likely hides text box immediately
-                //  afterwards)
-                if (m_mouseButton == 1)
-                    break;
-
-
-                minimumWidth = kpSelection::preferredMinimumWidthForTextStyle (textStyle);
-                if (thisPoint.x () >= m_startPoint.x ())
-                {
-                    if (m_startPoint.x () + minimumWidth - 1 >= document ()->width ())
-                    {
-                        minimumWidth = qMax (kpSelection::minimumWidthForTextStyle (textStyle),
-                                             document ()->width () - m_startPoint.x ());
-                    }
-                }
-                else
-                {
-                    if (m_startPoint.x () - minimumWidth + 1 < 0)
-                    {
-                        minimumWidth = qMax (kpSelection::minimumWidthForTextStyle (textStyle),
-                                             m_startPoint.x () + 1);
-                    }
-                }
-
-                minimumHeight = kpSelection::preferredMinimumHeightForTextStyle (textStyle);
-                if (thisPoint.y () >= m_startPoint.y ())
-                {
-                    if (m_startPoint.y () + minimumHeight - 1 >= document ()->height ())
-                    {
-                        minimumHeight = qMax (kpSelection::minimumHeightForTextStyle (textStyle),
-                                            document ()->height () - m_startPoint.y ());
-                    }
-                }
-                else
-                {
-                    if (m_startPoint.y () - minimumHeight + 1 < 0)
-                    {
-                        minimumHeight = qMax (kpSelection::minimumHeightForTextStyle (textStyle),
-                                            m_startPoint.y () + 1);
-                    }
-                }
-            }
-            else
-            {
-            #if DEBUG_KP_TOOL_SELECTION && 1
-                kDebug () << "\tdrag creating text box" << endl;
-            #endif
-                minimumWidth = kpSelection::minimumWidthForTextStyle (textStyle);
-                minimumHeight = kpSelection::minimumHeightForTextStyle (textStyle);
-            }
-
-
-            if (normalizedRect.width () < minimumWidth)
-            {
-                if (thisPoint.x () >= m_startPoint.x ())
-                    normalizedRect.setWidth (minimumWidth);
-                else
-                    normalizedRect.setX (normalizedRect.right () - minimumWidth + 1);
-            }
-
-            if (normalizedRect.height () < minimumHeight)
-            {
-                if (thisPoint.y () >= m_startPoint.y ())
-                    normalizedRect.setHeight (minimumHeight);
-                else
-                    normalizedRect.setY (normalizedRect.bottom () - minimumHeight + 1);
-            }
-        #if DEBUG_KP_TOOL_SELECTION && 1
-            kDebug () << "\t\tnormalizedRect=" << normalizedRect
-                       << " kpSelection::preferredMinimumSize="
-                           << QSize (minimumWidth, minimumHeight)
-                       << endl;
-        #endif
-
-            QList <QString> textLines;
-            textLines.append (QString ());
-            kpSelection sel (normalizedRect, textLines, textStyle);
-
-            if (!m_currentCreateTextCommand)
-            {
-                m_currentCreateTextCommand = new kpToolSelectionCreateCommand (
-                    i18n ("Text: Create Box"),
-                    sel,
-                    mainWindow ());
-            }
-            else
-                m_currentCreateTextCommand->setFromSelection (sel);
-
-            viewManager ()->setTextCursorPosition (0, 0);
-            document ()->setSelection (sel);
-
-            QPoint actualEndPoint = KP_INVALID_POINT;
-            if (m_startPoint == normalizedRect.topLeft ())
-                actualEndPoint = normalizedRect.bottomRight ();
-            else if (m_startPoint == normalizedRect.bottomRight ())
-                actualEndPoint = normalizedRect.topLeft ();
-            else if (m_startPoint == normalizedRect.topRight ())
-                actualEndPoint = normalizedRect.bottomLeft ();
-            else if (m_startPoint == normalizedRect.bottomLeft ())
-                actualEndPoint = normalizedRect.topRight ();
-
-            setUserShapePoints (m_startPoint, actualEndPoint);
-            break;
-        }
-        case kpToolSelection::Ellipse:
-            document ()->setSelection (kpSelection (kpSelection::Ellipse, normalizedRect,
-                                                    mainWindow ()->selectionTransparency ()));
-            setUserShapePoints (m_startPoint, m_currentPoint);
-            break;
-        case kpToolSelection::FreeForm:
-            QPolygon points;
-
-            if (document ()->selection ())
-                points = document ()->selection ()->points ();
-
-
-            // (not detached so will modify "points" directly but
-            //  still need to call kpDocument::setSelection() to
-            //  update screen)
-
-            if (!m_dragHasBegun)
-            {
-                // We thought the drag at startPoint was a NOP
-                // but it turns out that it wasn't...
-                points.putPoints (points.count (), 1, m_startPoint.x (), m_startPoint.y ());
-            }
-
-            // TODO: there should be an upper limit on this before drawing the
-            //       polygon becomes too slow
-            points.putPoints (points.count (), 1, thisPoint.x (), thisPoint.y ());
-
-
-            document ()->setSelection (kpSelection (points, mainWindow ()->selectionTransparency ()));
-        #if DEBUG_KP_TOOL_SELECTION && 1
-            kDebug () << "\t\tfreeform; #points=" << document ()->selection ()->points ().count () << endl;
-        #endif
-
-            setUserShapePoints (m_currentPoint);
-            break;
-        }
-
-        viewManager ()->setSelectionBorderVisible (true);
+        create (thisPoint, normalizedRect);
     }
     else if (m_dragType == Move)
     {
-    #if DEBUG_KP_TOOL_SELECTION && 1
-       kDebug () << "\tmoving selection" << endl;
-    #endif
-
-        kpSelection *sel = document ()->selection ();
-
-        QRect targetSelRect = QRect (thisPoint.x () - m_startDragFromSelectionTopLeft.x (),
-                                     thisPoint.y () - m_startDragFromSelectionTopLeft.y (),
-                                     sel->width (),
-                                     sel->height ());
-
-    #if DEBUG_KP_TOOL_SELECTION && 1
-        kDebug () << "\t\tstartPoint=" << m_startPoint
-                   << " thisPoint=" << thisPoint
-                   << " startDragFromSel=" << m_startDragFromSelectionTopLeft
-                   << " targetSelRect=" << targetSelRect
-                   << endl;
-    #endif
-
-        // Try to make sure selection still intersects document so that it's
-        // reachable.
-
-        if (targetSelRect.right () < 0)
-            targetSelRect.translate (-targetSelRect.right (), 0);
-        else if (targetSelRect.left () >= document ()->width ())
-            targetSelRect.translate (document ()->width () - targetSelRect.left () - 1, 0);
-
-        if (targetSelRect.bottom () < 0)
-            targetSelRect.translate (0, -targetSelRect.bottom ());
-        else if (targetSelRect.top () >= document ()->height ())
-            targetSelRect.translate (0, document ()->height () - targetSelRect.top () - 1);
-
-    #if DEBUG_KP_TOOL_SELECTION && 1
-        kDebug () << "\t\t\tafter ensure sel rect clickable=" << targetSelRect << endl;
-    #endif
-
-
-        if (!m_dragHasBegun &&
-            targetSelRect.topLeft () + m_startDragFromSelectionTopLeft == m_startPoint)
-        {
-        #if DEBUG_KP_TOOL_SELECTION && 1
-            kDebug () << "\t\t\t\tnop" << endl;
-        #endif
-
-
-            if (!m_RMBMoveUpdateGUITimer->isActive ())
-            {
-                // (slotRMBMoveUpdateGUI() calls similar line)
-                setUserShapePoints (sel->topLeft ());
-            }
-
-            // Prevent both NOP drag-moves
-            return;
-        }
-
-
-        if (m_RMBMoveUpdateGUITimer->isActive ())
-        {
-            m_RMBMoveUpdateGUITimer->stop ();
-            slotRMBMoveUpdateGUI ();
-        }
-
-
-        if (!sel->pixmap () && !m_currentPullFromDocumentCommand)
-        {
-            m_currentPullFromDocumentCommand = new kpToolSelectionPullFromDocumentCommand (
-                QString::null/*uninteresting child of macro cmd*/,
-                mainWindow ());
-            m_currentPullFromDocumentCommand->execute ();
-        }
-
-        if (!m_currentMoveCommand)
-        {
-            m_currentMoveCommand = new kpToolSelectionMoveCommand (
-                QString::null/*uninteresting child of macro cmd*/,
-                mainWindow ());
-            m_currentMoveCommandIsSmear = false;
-        }
-
-
-        //viewManager ()->setQueueUpdates ();
-        //viewManager ()->setFastUpdates ();
-
-        if (m_shiftPressed)
-            m_currentMoveCommandIsSmear = true;
-
-        if (!m_dragHasBegun && (m_controlPressed || m_shiftPressed))
-            m_currentMoveCommand->copyOntoDocument ();
-
-        m_currentMoveCommand->moveTo (targetSelRect.topLeft ());
-
-        if (m_shiftPressed)
-            m_currentMoveCommand->copyOntoDocument ();
-
-        //viewManager ()->restoreFastUpdates ();
-        //viewManager ()->restoreQueueUpdates ();
-
-        QPoint start = m_currentMoveCommand->originalSelection ().topLeft ();
-        QPoint end = targetSelRect.topLeft ();
-        setUserShapePoints (start, end, false/*don't set size*/);
-        setUserShapeSize (end.x () - start.x (), end.y () - start.y ());
+        move (thisPoint, normalizedRect);
     }
     else if (m_dragType == ResizeScale)
     {
-    #if DEBUG_KP_TOOL_SELECTION && 1
-        kDebug () << "\tresize/scale" << endl;
-    #endif
-
-        kpSelection *sel = document ()->selection ();
-
-        if (!m_dragHasBegun && thisPoint == m_startPoint)
-        {
-        #if DEBUG_KP_TOOL_SELECTION && 1
-            kDebug () << "\t\tnop" << endl;
-        #endif
-
-            setUserShapePoints (QPoint (sel->width (), sel->height ()));
-            return;
-        }
-
-
-        if (!sel->pixmap () && !m_currentPullFromDocumentCommand)
-        {
-            m_currentPullFromDocumentCommand = new kpToolSelectionPullFromDocumentCommand (
-                QString::null/*uninteresting child of macro cmd*/,
-                mainWindow ());
-            m_currentPullFromDocumentCommand->execute ();
-        }
-
-        if (!m_currentResizeScaleCommand)
-        {
-            m_currentResizeScaleCommand = new kpToolSelectionResizeScaleCommand (mainWindow ());
-        }
-
-
-        kpSelection originalSelection = m_currentResizeScaleCommand->originalSelection ();
-        const int oldWidth = originalSelection.width ();
-        const int oldHeight = originalSelection.height ();
-
-        
-        // Determine new width.
-        
-        int userXSign = 0;
-        if (m_resizeScaleType & kpView::Left)
-            userXSign = -1;
-        else if (m_resizeScaleType & kpView::Right)
-            userXSign = +1;
-            
-        int newWidth = oldWidth + userXSign * (thisPoint.x () - m_startPoint.x ());
-        
-        newWidth = qMax (originalSelection.minimumWidth (), newWidth);
-        
-        
-        // Determine new height.
-        
-        int userYSign = 0;
-        if (m_resizeScaleType & kpView::Top)
-            userYSign = -1;
-        else if (m_resizeScaleType & kpView::Bottom)
-            userYSign = +1;
-            
-        int newHeight = oldHeight + userYSign * (thisPoint.y () - m_startPoint.y ());
-        
-        newHeight = qMax (originalSelection.minimumHeight (), newHeight);
-
-                
-        // Keep aspect ratio?
-        if (m_shiftPressed && !sel->isText ())
-        {
-            // Width changed more than height?  At equality, favor width.
-            // Fix width, change height.
-            if ((userXSign ? double (newWidth) / oldWidth : 0) >=
-                (userYSign ? double (newHeight) / oldHeight : 0))
-            {
-                newHeight = newWidth * oldHeight / oldWidth;
-                newHeight = qMax (originalSelection.minimumHeight (),
-                                  newHeight);
-            }
-            // Height changed more than width?
-            // Fix height, change width.
-            else
-            {
-                newWidth = newHeight * oldWidth / oldHeight;
-                newWidth = qMax (originalSelection.minimumWidth (), newWidth);
-            }
-        }
-            
-                              
-        // Adjust x/y to new width/height for left/top resizes.
-            
-        int newX = originalSelection.x ();
-        int newY = originalSelection.y ();
-                                                
-        if (m_resizeScaleType & kpView::Left)
-        {
-            newX -= (newWidth - originalSelection.width ());
-        }
-        
-        if (m_resizeScaleType & kpView::Top)
-        {
-            newY -= (newHeight - originalSelection.height ());
-        }
-
-    #if DEBUG_KP_TOOL_SELECTION && 1
-        kDebug () << "\t\tnewX=" << newX
-                   << " newY=" << newY
-                   << " newWidth=" << newWidth
-                   << " newHeight=" << newHeight
-                   << endl;
-    #endif
-
-
-        viewManager ()->setFastUpdates ();
-        m_currentResizeScaleCommand->resizeAndMoveTo (newWidth, newHeight,
-                                                      QPoint (newX, newY),
-                                                      true/*smooth scale delayed*/);
-        viewManager ()->restoreFastUpdates ();
-
-        setUserShapePoints (QPoint (originalSelection.width (),
-                                    originalSelection.height ()),
-                            QPoint (newWidth,
-                                    newHeight),
-                            false/*don't set size*/);
-        setUserShapeSize (newWidth - originalSelection.width (),
-                          newHeight - originalSelection.height ());
+        resizeScale (thisPoint, normalizedRect);
     }
-
-
-    m_dragHasBegun = nextDragHasBegun;
 }
 
 // protected virtual

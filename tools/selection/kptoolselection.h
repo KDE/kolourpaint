@@ -119,6 +119,10 @@ protected:
 protected slots:
     void slotRMBMoveUpdateGUI ();
     void delayedDraw ();
+private:
+    void create (QPoint thisPoint, QRect normalizedRect);
+    void move (QPoint thisPoint, QRect normalizedRect);
+    void resizeScale (QPoint thisPoint, QRect normalizedRect);
 public:
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint,
                        const QRect &normalizedRect);
