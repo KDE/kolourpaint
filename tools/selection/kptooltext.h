@@ -114,6 +114,10 @@ public:
 protected:
     virtual kpToolSelection::DragType beginDrawInsideSelection ();
     virtual QCursor cursorInsideSelection () const;
+private:
+    bool shouldCreate (const kpTextStyle &textStyle,
+        int *minimumWidthOut, int *minimumHeightOut);
+protected:
     virtual void createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
         QRect normalizedRect);
     virtual void setSelectionBorderForHaventBegunDraw ();

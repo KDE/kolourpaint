@@ -229,76 +229,125 @@ QCursor kpToolText::cursorInsideSelection () const
 }
 
 
+// private
+bool kpToolText::shouldCreate (const kpTextStyle &textStyle,
+        int *minimumWidthOut, int *minimumHeightOut)
+{
+    if (m_dragHasBegun || m_currentPoint != m_startPoint)
+    {
+    #if DEBUG_KP_TOOL_TEXT && 1
+        kDebug () << "\tdrag creating text box" << endl;
+    #endif
+        *minimumWidthOut = kpSelection::minimumWidthForTextStyle (textStyle);
+        *minimumHeightOut = kpSelection::minimumHeightForTextStyle (textStyle);
+        return true/*do create text box*/;
+    }
+
+    
+    //
+    // User is possibly clicking to create a text box.
+    //
+    // Create a text box of reasonable ("preferred minimum") size.
+    //
+    // However, if it turns out that this is just the start of the drag,
+    // we will be called again but the above code will execute instead,
+    // ignoring this resonable size.
+    //
+
+#if DEBUG_KP_TOOL_TEXT && 1
+    kDebug () << "\tclick creating text box" << endl;
+#endif
+
+    // (Click creating text box with RMB would not be obvious
+    //  since RMB menu most likely hides text box immediately
+    //  afterwards)
+    if (m_mouseButton == 1)
+        return false/*do not create text box*/;
+
+
+    //
+    // Calculate Width.
+    //
+    
+    // Get reasonable width for a text box.
+    *minimumWidthOut = kpSelection::preferredMinimumWidthForTextStyle (textStyle);
+    
+    // X increasing?
+    if (m_currentPoint.x () >= m_startPoint.x ())
+    {
+        // Text box extends past document width?
+        if (m_startPoint.x () + *minimumWidthOut - 1 >= document ()->width ())
+        {
+            // Cap width to not extend past but not below smallest possible
+            // selection width.
+            *minimumWidthOut =
+                qMax (kpSelection::minimumWidthForTextStyle (textStyle),
+                    document ()->width () - m_startPoint.x ());
+        }
+    }
+    // X decreasing
+    else
+    {
+        // Text box extends past document start?
+        if (m_startPoint.x () - *minimumWidthOut + 1 < 0)
+        {
+            // Cap width to not extend past but not below smallest possible
+            // selection width.
+            *minimumWidthOut =
+                qMax (kpSelection::minimumWidthForTextStyle (textStyle),
+                    m_startPoint.x () + 1);
+        }
+    }
+
+
+    //
+    // Calculate Height.
+    //
+    
+    // Get reasonable height for a text box.
+    *minimumHeightOut = kpSelection::preferredMinimumHeightForTextStyle (textStyle);
+
+    // Y increasing?
+    if (m_currentPoint.y () >= m_startPoint.y ())
+    {
+        // Text box extends past document height?
+        if (m_startPoint.y () + *minimumHeightOut - 1 >= document ()->height ())
+        {
+            // Cap height to not extend past but not below smallest possible
+            // selection height.
+            *minimumHeightOut =
+                qMax (kpSelection::minimumHeightForTextStyle (textStyle),
+                    document ()->height () - m_startPoint.y ());
+        }
+    }
+    // Y decreasing
+    else
+    {
+        // Text box extends past document start?
+        if (m_startPoint.y () - *minimumHeightOut + 1 < 0)
+        {
+            // Cap width to not extend past but not below smallest possible
+            // selection h.
+            *minimumHeightOut =
+                qMax (kpSelection::minimumHeightForTextStyle (textStyle),
+                    m_startPoint.y () + 1);
+        }
+    }
+
+
+    return true/*do create text box*/;
+}
+
 // protected virtual [base kpToolSelection]
 void kpToolText::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
         QRect normalizedRect)
 {
     const kpTextStyle textStyle = mainWindow ()->textStyle ();
 
-    int minimumWidth, minimumHeight;
-
-    // Just a click?
-    if (!m_dragHasBegun && thisPoint == m_startPoint)
-    {
-    #if DEBUG_KP_TOOL_TEXT && 1
-        kDebug () << "\tclick creating text box" << endl;
-    #endif
-
-        // (Click creating text box with RMB would not be obvious
-        //  since RMB menu most likely hides text box immediately
-        //  afterwards)
-        if (m_mouseButton == 1)
-            return;
-
-
-        minimumWidth = kpSelection::preferredMinimumWidthForTextStyle (textStyle);
-        if (thisPoint.x () >= m_startPoint.x ())
-        {
-            if (m_startPoint.x () + minimumWidth - 1 >= document ()->width ())
-            {
-                minimumWidth =
-                    qMax (kpSelection::minimumWidthForTextStyle (textStyle),
-                        document ()->width () - m_startPoint.x ());
-            }
-        }
-        else
-        {
-            if (m_startPoint.x () - minimumWidth + 1 < 0)
-            {
-                minimumWidth =
-                    qMax (kpSelection::minimumWidthForTextStyle (textStyle),
-                        m_startPoint.x () + 1);
-            }
-        }
-
-        minimumHeight = kpSelection::preferredMinimumHeightForTextStyle (textStyle);
-        if (thisPoint.y () >= m_startPoint.y ())
-        {
-            if (m_startPoint.y () + minimumHeight - 1 >= document ()->height ())
-            {
-                minimumHeight =
-                    qMax (kpSelection::minimumHeightForTextStyle (textStyle),
-                        document ()->height () - m_startPoint.y ());
-            }
-        }
-        else
-        {
-            if (m_startPoint.y () - minimumHeight + 1 < 0)
-            {
-                minimumHeight =
-                    qMax (kpSelection::minimumHeightForTextStyle (textStyle),
-                        m_startPoint.y () + 1);
-            }
-        }
-    }
-    else
-    {
-    #if DEBUG_KP_TOOL_TEXT && 1
-        kDebug () << "\tdrag creating text box" << endl;
-    #endif
-        minimumWidth = kpSelection::minimumWidthForTextStyle (textStyle);
-        minimumHeight = kpSelection::minimumHeightForTextStyle (textStyle);
-    }
+    // (will set both variables)
+    int minimumWidth = 0, minimumHeight = 0;
+    if (!shouldCreate (textStyle, &minimumWidth, &minimumHeight))
+        return;
 
 
     if (normalizedRect.width () < minimumWidth)
