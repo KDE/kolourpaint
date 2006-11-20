@@ -98,14 +98,15 @@
   <style:style style:name="P21" style:family="paragraph" style:parent-style-name="Heading_20_2">
    <style:paragraph-properties fo:break-before="page"/>
   </style:style>
-  <style:style style:name="P22" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P22" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L2"/>
+  <style:style style:name="P23" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:paragraph-properties fo:margin-left="0in" fo:margin-right="0in" fo:text-indent="0in" style:auto-text-indent="false"/>
   </style:style>
-  <style:style style:name="P23" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P24" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:text-properties fo:font-style="normal" style:font-style-asian="normal" style:font-style-complex="normal"/>
   </style:style>
-  <style:style style:name="P24" style:family="paragraph" style:parent-style-name="Bibliography_20_Heading" style:master-page-name="Bibliography_20_Front_20_Page"/>
-  <style:style style:name="P25" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P25" style:family="paragraph" style:parent-style-name="Bibliography_20_Heading" style:master-page-name="Bibliography_20_Front_20_Page"/>
+  <style:style style:name="P26" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:text-properties style:font-name="Times New Roman2" fo:font-size="12pt" style:font-size-asian="12pt" style:font-size-complex="12pt"/>
   </style:style>
   <style:style style:name="Sect1" style:family="section">
@@ -151,6 +152,48 @@
     <style:list-level-properties text:min-label-distance="0.15in"/>
    </text:list-level-style-number>
   </text:list-style>
+  <text:list-style style:name="L2">
+   <text:list-level-style-bullet text:level="1" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="2" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="0.25in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="3" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="0.5in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="4" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="0.75in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="5" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="1in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="6" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="1.25in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="7" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="1.5in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="8" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="1.75in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="9" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="2in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="10" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="2.25in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+  </text:list-style>
  </office:automatic-styles>
  <office:body>
   <office:text>
@@ -178,7 +221,7 @@
    <text:p text:style-name="P7"/>
    <text:p text:style-name="P7"/>
    <text:p text:style-name="P7">Clarence Dang</text:p>
-   <text:p text:style-name="P8">&lt;clarencedang@users.sourceforge.net&gt;</text:p>
+   <text:p text:style-name="P8">&lt;clarencedang AT users.sourceforge.net&gt;</text:p>
    <text:p text:style-name="P7"/>
    <text:p text:style-name="P9"/>
    <text:p text:style-name="P7"/>
@@ -188,6 +231,9 @@
    <text:p text:style-name="P7"/>
    <text:p text:style-name="P9"/>
    <text:p text:style-name="P8">Revision: 2006-11-20</text:p>
+   <text:p text:style-name="P8"/>
+   <text:p text:style-name="P8">This document has not reached a useful level of maturity yet.</text:p>
+   <text:p text:style-name="P8">Like software, it is a work-in-progress.</text:p>
    <text:p text:style-name="P8"/>
    <text:p text:style-name="P8"/>
    <text:p text:style-name="P8"/>
@@ -337,11 +383,23 @@
    <text:h text:style-name="Heading_20_2" text:outline-level="2">About This Document</text:h>
    <text:h text:style-name="Heading_20_3" text:outline-level="3">Contents</text:h>
    <text:p text:style-name="Text_20_body">This document is a concise and thorough guide containing all the knowledge needed to maintain and modify KolourPaint. <text:s/>Where possible it points to existing, high-quality information instead of duplicating it here. <text:s/>TODO: not thorough yet.</text:p>
+   <text:p text:style-name="Text_20_body">TODO: Merge all the docs in branches/kolourpaint/control.</text:p>
+   <text:h text:style-name="Heading_20_3" text:outline-level="3">Notation</text:h>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">TODO</text:span> means something that we need to do document-wise.</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">ACTION</text:span> means something that we need to code-wise or project-wise.</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">CITE</text:span> means we need to add a reference (Insert / Indexes and Tables ... / Bibliography Entry / From document content).</text:p>
    <text:h text:style-name="Heading_20_3" text:outline-level="3">Editing</text:h>
+   <text:h text:style-name="Heading_20_4" text:outline-level="4">Generating this Document</text:h>
    <text:p text:style-name="Text_20_body">This is a generated file. <text:s/></text:p>
    <text:p text:style-name="Text_20_body">Use <text:span text:style-name="Code_20_Term">https://svn.kde.org/home/kde/branches/kolourpaint/control/Makefile</text:span> to regenerate this file (see inside that <text:span text:style-name="Code_20_Term">Makefile</text:span> for details).</text:p>
+   <text:h text:style-name="Heading_20_4" text:outline-level="4">Use OpenOffice.org</text:h>
    <text:p text:style-name="Text_20_body">Please use OpenOffice.org 2.0.0 to edit this document, to minimise formatting changing pecularities. <text:s/>Press <text:span text:style-name="Code_20_Term">F11</text:span> to enable the <text:span text:style-name="Non-Code_20_Term">Styles and Formatting</text:span> window and select the <text:span text:style-name="Non-Code_20_Term">Applied Styles</text:span> filter. <text:s/>Press <text:span text:style-name="Code_20_Term">F5</text:span> to enable the <text:span text:style-name="Non-Code_20_Term">Navigator</text:span> window. <text:s/>Dock both to the left of the main view.</text:p>
+   <text:p text:style-name="Text_20_body">Every so often, click Tools / Update / Update All to regenerate generated fields (e.g. The Table of Contents and the Bibliography).</text:p>
+   <text:h text:style-name="Heading_20_4" text:outline-level="4">OpenOffice.org Styles</text:h>
    <text:p text:style-name="Text_20_body">TODO: more on how to use my document template</text:p>
+   <text:p text:style-name="Text_20_body">Separate sentences by two spaces out of stubborn old-fashion-ness.</text:p>
+   <text:p text:style-name="Text_20_body"/>
+   <text:p text:style-name="Text_20_body"/>
    <text:h text:style-name="P21" text:outline-level="2">Goals</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
    <text:h text:style-name="P21" text:outline-level="2">Report Structure</text:h>
@@ -351,17 +409,60 @@
    <text:h text:style-name="Heading_20_1" text:outline-level="1">Background</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">History</text:h>
+   <text:h text:style-name="Heading_20_2" text:outline-level="2">Current Work</text:h>
+   <text:list text:style-name="L2">
+    <text:list-item>
+     <text:p text:style-name="P22">Porting KolourPaint to KDE 4</text:p>
+    </text:list-item>
+    <text:list-item>
+     <text:p text:style-name="P22">Rewriting graphics engine to be device-independent</text:p>
+    </text:list-item>
+   </text:list>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Project Structure</text:h>
+   <text:p text:style-name="Text_20_body">It is a cathedral by accident, like DOSEMU. <text:s text:c="2"/>It should be – and now tries to be – a Bazaar.</text:p>
+   <text:h text:style-name="Heading_20_3" text:outline-level="3">People</text:h>
+   <text:p text:style-name="Text_20_body">Many people have contributed to KolourPaint. <text:s/>However, here are the people who would have in-depth knowledge of the project:</text:p>
+   <text:p text:style-name="Text_20_body">Clarence Dang <text:span text:style-name="Code_20_Term">&lt;clarencedang AT users.sourceforge.net&gt;</text:span> is the founder, main developer and maintainer. <text:s/>He wishes more people would jump in and contribute. <text:s/>Clarence drew the initial (and hopeless) icons using KolourPaint itself, until Kristof Borrey jumped on board.</text:p>
+   <text:p text:style-name="Text_20_body">Thurston Dang <text:span text:style-name="Code_20_Term">&lt;thurston_dang AT users.sourceforge.net&gt;</text:span> provides advice on user interfaces changes and wrote the DocBook documentation (kdegraphics/doc/kolourpaint).</text:p>
+   <text:p text:style-name="Text_20_body">Kazuki Ohta <text:s/><text:span text:style-name="Code_20_Term">&lt;mover AT hct.zaq.ne.jp&gt;</text:span> wrote the InputMethod support. <text:s/>He does not seem to reply to Clarence&apos;s email anymore. <text:s/>The InputMethod support has been disabled in KolourPaint for KDE4 as it has not been ported. <text:s/>ACTION: port</text:p>
+   <text:p text:style-name="Text_20_body">Kristof Borrey <text:span text:style-name="Code_20_Term">&lt;borrey AT kde.org&gt;</text:span> drew the original set of icons.</text:p>
+   <text:p text:style-name="Text_20_body">Nuno Pinheiro <text:span text:style-name="Code_20_Term">&lt;nf.pinheiro AT gmail.com&gt;</text:span> and Danny Allen <text:span text:style-name="Code_20_Term">&lt;dannya40uk AT yahoo.co.uk&gt;</text:span> replaced most of the icons with newer ones.</text:p>
+   <text:h text:style-name="Heading_20_3" text:outline-level="3">Technical Resources</text:h>
+   <text:h text:style-name="Heading_20_4" text:outline-level="4">Source Repository</text:h>
+   <text:p text:style-name="Text_20_body">Initial versions held on Clarence Dang&apos;s hard disk. <text:s/>ACTION: upload onto internet.</text:p>
+   <text:p text:style-name="Text_20_body">After a while, this was moved into KDE CVS.</text:p>
+   <text:p text:style-name="Text_20_body">KDE then converted the repository to KDE SVN. <text:s/>The source code can be modified by anyone with an SVN account [CITE]. <text:s/>Either ask for an account, or send patches to <text:span text:style-name="Code_20_Term">&lt;kolourpaint-support AT lists.sourceforge.net&gt;</text:span>.</text:p>
+   <text:p text:style-name="Text_20_body">branches/kolourpaint/control/ - persistent, documentation and non-source code information</text:p>
+   <text:p text:style-name="Text_20_body">trunk/KDE/kdegraphics/{doc/,}kolourpaint – current development branch porting to KDE 4 and containing all future feature development</text:p>
+   <text:p text:style-name="Text_20_body">branches/KDE/3.5/kdegraphics/{doc/,}kolourpaint – backport branch for KDE 3</text:p>
+   <text:p text:style-name="Text_20_body">branches/KDE/3.4/kdegraphics/{doc/,}kolourpaint – obsolete backport branch (only port critical fixes for distros that love old software)</text:p>
+   <text:p text:style-name="Text_20_body">branches/KDE/3.3/kdegraphics/{doc/,}kolourpaint – only port critical fixes for distros that love old software)</text:p>
+   <text:p text:style-name="Text_20_body">branches/kolourpaint/1.2_kde3/ - dead, standalone release branch for KDE 3.0 (we still need to extract the binary distribution scripts from there, for future standalone releases)</text:p>
+   <text:p text:style-name="Text_20_body">branches/kolourpaint/1.0/ - dead, standalone release branch for KDE 3.0</text:p>
+   <text:h text:style-name="Heading_20_4" text:outline-level="4">Sourceforge</text:h>
+   <text:p text:style-name="Text_20_body"><text:a xlink:type="simple" xlink:href="http://sourceforge.net/projects/kolourpaint">http://sourceforge.net/projects/kolourpaint/</text:a> is the Sourceforge project. <text:s/>The admin, <text:s/>Clarence Dang &lt;clarencedang AT users.sourceforge.net&gt;, can give you access to this.</text:p>
+   <text:h text:style-name="Heading_20_5" text:outline-level="5">Website</text:h>
+   <text:p text:style-name="Text_20_body">The website is <text:a xlink:type="simple" xlink:href="http://kolourpaint.sourceforge.net/">http://kolourpaint.sourceforge.net/</text:a>. <text:s/>You need a Sourceforge account to modify the webpage via <text:span text:style-name="Code_20_Term">SSH</text:span> at <text:span text:style-name="Code_20_Term">shell.sourceforge.net:/home/groups/k/ko/kolourpaint/htdocs/</text:span>.</text:p>
+   <text:p text:style-name="Text_20_body">The website is currently stored on Clarence Dang&apos;s computer using CVS and copied to that path every so often. <text:s/>The HTML is edited directly. <text:s/>We should use a CMS instead.</text:p>
+   <text:p text:style-name="Text_20_body">ACTION: It would be better if this site was hosted on KDE SVN and maintained by an interested <text:s/>web developer.</text:p>
+   <text:p text:style-name="Text_20_body">TODO: mailing lists. <text:s/>Bugs.kde.org <text:s/>TODO: freshmeat.net (clarencedang AT users.sourceforge.net&gt;) <text:s/>TODO: kde-apps.org &lt;dang AT kde.org&gt;</text:p>
+   <text:h text:style-name="Heading_20_4" text:outline-level="4">Domain Name</text:h>
+   <text:p text:style-name="Text_20_body"><text:a xlink:type="simple" xlink:href="http://www.kolourpaint.org/">http://www.kolourpaint.org/</text:a> is currently a Namesecure domain that redirects to <text:a xlink:type="simple" xlink:href="http://kolourpaint.sourceforge.net/">http://kolourpaint.sourceforge.net/</text:a>. <text:s/>The registrant is Clarence Dang, who pays for the domain.</text:p>
+   <text:p text:style-name="Text_20_body"><text:a xlink:type="simple" xlink:href="http://www.kolourpaint.com/">http://www.kolourpaint.com/</text:a> is registered by Clarence Dang for commercialisation possibilities and to prevent someone else from misrepresenting the project. <text:s/>We are not really concerned about kolourpaint.net, kolourpaint.com.au etc. since they are odd domains anyway while .org and .com are very ordinary.</text:p>
+   <text:p text:style-name="Text_20_body">ACTION: It would be better to hide the fact that it redirects as <text:a xlink:type="simple" xlink:href="http://www.kolourpaint.org/">www.kolourpaint.org</text:a> looks more professional.</text:p>
+   <text:p text:style-name="Text_20_body">ACTION: Switch away from namesecure since that don&apos;t provide free email forwarding anymore – would like to have &lt;support AT kolourpaint.org&gt; - and their email forwarding was unreliable anyway. <text:s/>Sitelutions.net is recommended by David Greenaway.</text:p>
+   <text:h text:style-name="Heading_20_3" text:outline-level="3">Discussion</text:h>
+   <text:p text:style-name="Text_20_body">Currently only happens between Clarence Dang and Thurston Dang (out of convenience), which is disappointing. <text:s/>ACTION: use kolourpaint-devel mailinglist more.</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Versions</text:h>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="P20">Chapter 3</text:p>
    <text:h text:style-name="Heading_20_1" text:outline-level="1">Concepts</text:h>
-   <text:p text:style-name="P22">TODO</text:p>
+   <text:p text:style-name="P23">TODO</text:p>
    <text:h text:style-name="P21" text:outline-level="2">Tools</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Selections</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
-   <text:p text:style-name="P23"/>
+   <text:p text:style-name="P24"/>
    <text:p text:style-name="P20">Chapter 4</text:p>
    <text:h text:style-name="Heading_20_1" text:outline-level="1">Conclusion</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
@@ -373,7 +474,7 @@
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"/>
-   <text:p text:style-name="P22"/>
+   <text:p text:style-name="P23"/>
    <text:h text:style-name="P21" text:outline-level="2">Future Work</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
    <text:p text:style-name="Text_20_body"/>
@@ -523,11 +624,11 @@
     </text:bibliography-source>
     <text:index-body>
      <text:index-title text:style-name="Sect2" text:name="Bibliography1_Head">
-      <text:p text:style-name="P24">Bibliography</text:p>
+      <text:p text:style-name="P25">Bibliography</text:p>
      </text:index-title>
     </text:index-body>
    </text:bibliography>
-   <text:p text:style-name="P25"/>
+   <text:p text:style-name="P26"/>
   </office:text>
  </office:body>
 </office:document-content>
