@@ -115,6 +115,18 @@ protected:
     virtual kpToolSelection::DragType beginDrawInsideSelection ();
     virtual QCursor cursorInsideSelection () const;
 private:
+    // Returns the suggested width/height of a click-created text box:
+    //
+    // <mouseStart> = starting X/Y of the entire drag
+    // <mouseEnd> = current ending X/Y of the entire drag
+    //
+    // <preferredMin> = the preferred minimum width/height of the selection
+    // <smallestMin> = the legal minimum width/height of the selection
+    //
+    // <docSize> = the width/height of the document
+    int calcClickCreateDimension (int mouseStart, int mouseEnd,
+        int preferredMin, int smallestMin,
+        int docSize);
     bool shouldCreate (const kpTextStyle &textStyle,
         int *minimumWidthOut, int *minimumHeightOut);
 protected:

@@ -230,6 +230,45 @@ QCursor kpToolText::cursorInsideSelection () const
 
 
 // private
+int kpToolText::calcClickCreateDimension (int mouseStart, int mouseEnd,
+    int preferredMin, int smallestMin,
+    int docSize)
+{
+    Q_ASSERT (preferredMin >= smallestMin);
+    Q_ASSERT (docSize > 0);
+    
+    // Get reasonable width/height for a text box.
+    int ret = preferredMin;
+
+    // X or Y increasing?
+    if (mouseEnd >= mouseStart)
+    {
+        // Text box extends past document width/height?
+        if (mouseStart + ret - 1 >= docSize)
+        {
+            // Cap width/height to not extend past but not below smallest
+            // possible selection width/height
+            ret = qMax (smallestMin, docSize - mouseStart);
+        }
+    }
+    // X or Y decreasing
+    else
+    {
+        // Text box extends past document start?
+        // TODO: I doubt this code can be invoked for a click.
+        //       Maybe very tricky interplay with accidental drag detection?
+        if (mouseStart - ret + 1 < 0)
+        {
+            // Cap width/height to not extend past but not below smallest
+            // possible selection width/height.
+            ret = qMax (smallestMin, mouseStart + 1);
+        }
+    }
+
+    return ret;
+}
+
+// private
 bool kpToolText::shouldCreate (const kpTextStyle &textStyle,
         int *minimumWidthOut, int *minimumHeightOut)
 {
@@ -265,74 +304,21 @@ bool kpToolText::shouldCreate (const kpTextStyle &textStyle,
         return false/*do not create text box*/;
 
 
-    //
-    // Calculate Width.
-    //
-    
-    // Get reasonable width for a text box.
-    *minimumWidthOut = kpSelection::preferredMinimumWidthForTextStyle (textStyle);
-    
-    // X increasing?
-    if (m_currentPoint.x () >= m_startPoint.x ())
-    {
-        // Text box extends past document width?
-        if (m_startPoint.x () + *minimumWidthOut - 1 >= document ()->width ())
-        {
-            // Cap width to not extend past but not below smallest possible
-            // selection width.
-            *minimumWidthOut =
-                qMax (kpSelection::minimumWidthForTextStyle (textStyle),
-                    document ()->width () - m_startPoint.x ());
-        }
-    }
-    // X decreasing
-    else
-    {
-        // Text box extends past document start?
-        if (m_startPoint.x () - *minimumWidthOut + 1 < 0)
-        {
-            // Cap width to not extend past but not below smallest possible
-            // selection width.
-            *minimumWidthOut =
-                qMax (kpSelection::minimumWidthForTextStyle (textStyle),
-                    m_startPoint.x () + 1);
-        }
-    }
+    // Calculate suggested width.
+    *minimumWidthOut = calcClickCreateDimension (
+        m_startPoint.x (),
+            m_currentPoint.x (),
+        kpSelection::preferredMinimumWidthForTextStyle (textStyle),
+            kpSelection::minimumWidthForTextStyle (textStyle),
+        document ()->width ());
 
-
-    //
-    // Calculate Height.
-    //
-    
-    // Get reasonable height for a text box.
-    *minimumHeightOut = kpSelection::preferredMinimumHeightForTextStyle (textStyle);
-
-    // Y increasing?
-    if (m_currentPoint.y () >= m_startPoint.y ())
-    {
-        // Text box extends past document height?
-        if (m_startPoint.y () + *minimumHeightOut - 1 >= document ()->height ())
-        {
-            // Cap height to not extend past but not below smallest possible
-            // selection height.
-            *minimumHeightOut =
-                qMax (kpSelection::minimumHeightForTextStyle (textStyle),
-                    document ()->height () - m_startPoint.y ());
-        }
-    }
-    // Y decreasing
-    else
-    {
-        // Text box extends past document start?
-        if (m_startPoint.y () - *minimumHeightOut + 1 < 0)
-        {
-            // Cap width to not extend past but not below smallest possible
-            // selection h.
-            *minimumHeightOut =
-                qMax (kpSelection::minimumHeightForTextStyle (textStyle),
-                    m_startPoint.y () + 1);
-        }
-    }
+    // Calculate suggested height.
+    *minimumHeightOut = calcClickCreateDimension (
+        m_startPoint.y (),
+            m_currentPoint.y (),
+        kpSelection::preferredMinimumHeightForTextStyle (textStyle),
+            kpSelection::minimumHeightForTextStyle (textStyle),
+        document ()->height ());
 
 
     return true/*do create text box*/;
@@ -344,12 +330,19 @@ void kpToolText::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
 {
     const kpTextStyle textStyle = mainWindow ()->textStyle ();
 
+
+    //
+    // Calculate Text Box Rectangle.
+    //
+
     // (will set both variables)
     int minimumWidth = 0, minimumHeight = 0;
     if (!shouldCreate (textStyle, &minimumWidth, &minimumHeight))
         return;
 
 
+    // Make sure the dragged out rectangle is of the minimum width we just
+    // calculated.
     if (normalizedRect.width () < minimumWidth)
     {
         if (thisPoint.x () >= m_startPoint.x ())
@@ -358,6 +351,8 @@ void kpToolText::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
             normalizedRect.setX (normalizedRect.right () - minimumWidth + 1);
     }
 
+    // Make sure the dragged out rectangle is of the minimum height we just
+    // calculated.
     if (normalizedRect.height () < minimumHeight)
     {
         if (thisPoint.y () >= m_startPoint.y ())
@@ -365,6 +360,7 @@ void kpToolText::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
         else
             normalizedRect.setY (normalizedRect.bottom () - minimumHeight + 1);
     }
+
 #if DEBUG_KP_TOOL_TEXT && 1
     kDebug () << "\t\tnormalizedRect=" << normalizedRect
                 << " kpSelection::preferredMinimumSize="
@@ -372,10 +368,17 @@ void kpToolText::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
                 << endl;
 #endif
 
+
+    //
+    // Construct and Deploy Text Box.
+    //
+    
+    // Create empty text box.
     QList <QString> textLines;
     textLines.append (QString ());
     kpSelection sel (normalizedRect, textLines, textStyle);
 
+    // Create command containing text box.
     if (!m_currentCreateTextCommand)
     {
         m_currentCreateTextCommand = new kpToolSelectionCreateCommand (
@@ -386,9 +389,15 @@ void kpToolText::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
     else
         m_currentCreateTextCommand->setFromSelection (sel);
 
+    // Render.
     viewManager ()->setTextCursorPosition (0, 0);
     document ()->setSelection (sel);
 
+
+    //
+    // Update Status Bar.
+    //
+    
     QPoint actualEndPoint = KP_INVALID_POINT;
     if (m_startPoint == normalizedRect.topLeft ())
         actualEndPoint = normalizedRect.bottomRight ();
