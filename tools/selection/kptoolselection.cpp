@@ -168,15 +168,15 @@ QString kpToolSelection::haventBegunDrawUserMessage () const
     kpSelection *sel = document ()->selection ();
     if (sel && onSelectionResizeHandle () && !controlOrShiftPressed ())
     {
-        return haventBegunDrawUserMessageOnResizeHandle ();
+        return /*virtual*/haventBegunDrawUserMessageOnResizeHandle ();
     }
     else if (sel && sel->contains (m_currentPoint))
     {
-        return haventBegunDrawUserMessageInsideSelection ();
+        return /*virtual*/haventBegunDrawUserMessageInsideSelection ();
     }
     else
     {
-        return haventBegunDrawUserMessageOutsideSelection ();
+        return /*virtual*/haventBegunDrawUserMessageOutsideSelection ();
     }
 }
 
@@ -337,7 +337,7 @@ void kpToolSelection::beginDraw ()
         }
         else if (sel->contains (m_currentPoint))
         {
-            m_dragType = beginDrawInsideSelection ();
+            m_dragType = /*virtual*/beginDrawInsideSelection ();
         }
         else
         {
@@ -427,7 +427,7 @@ QCursor kpToolSelection::cursor () const
         kDebug () << "\tsel contains currentPoint; selecting text? "
                    << onSelectionToSelectText () << endl;
     #endif
-        return cursorInsideSelection ();
+        return /*virtual*/cursorInsideSelection ();
     }
     else
     {
@@ -544,7 +544,7 @@ void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
     if (m_createNOPTimer->isActive ())
     {
         if (m_viewUnderStartPoint->transformDocToViewX (
-            (thisPoint - m_startPoint).manhattanLength ()) <= 6)
+                (thisPoint - m_startPoint).manhattanLength ()) <= 6)
         {
         #if DEBUG_KP_TOOL_SELECTION && 1
             kDebug () << "\t\tsuppress accidental movement" << endl;
@@ -1001,9 +1001,12 @@ void kpToolSelection::resizeScale (QPoint thisPoint, QRect /*normalizedRect*/)
 
 
     viewManager ()->setFastUpdates ();
-    m_currentResizeScaleCommand->resizeAndMoveTo (newWidth, newHeight,
-                                                  QPoint (newX, newY),
-                                                  true/*smooth scale delayed*/);
+    {
+        m_currentResizeScaleCommand->resizeAndMoveTo (
+            newWidth, newHeight,
+            QPoint (newX, newY),
+            true/*smooth scale delayed*/);
+    }
     viewManager ()->restoreFastUpdates ();
 
     setUserShapePoints (QPoint (originalSelection.width (),
@@ -1151,7 +1154,7 @@ void kpToolSelection::cancelShape ()
         }
 
 
-        setSelectionBorderForHaventBegunDraw ();
+        /*virtual*/setSelectionBorderForHaventBegunDraw ();
     }
     viewManager ()->restoreQueueUpdates ();
 
@@ -1271,7 +1274,7 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/,
         if (cmd)
             commandHistory ()->addCommand (cmd, false/*no exec*/);
 
-        setSelectionBorderForHaventBegunDraw ();
+        /*virtual*/setSelectionBorderForHaventBegunDraw ();
     }
     viewManager ()->restoreQueueUpdates ();
 
