@@ -99,15 +99,19 @@
    <style:paragraph-properties fo:break-before="page"/>
   </style:style>
   <style:style style:name="P22" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L2"/>
-  <style:style style:name="P23" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P23" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L3"/>
+  <style:style style:name="P24" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:paragraph-properties fo:margin-left="0in" fo:margin-right="0in" fo:text-indent="0in" style:auto-text-indent="false"/>
   </style:style>
-  <style:style style:name="P24" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P25" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:text-properties fo:font-style="normal" style:font-style-asian="normal" style:font-style-complex="normal"/>
   </style:style>
-  <style:style style:name="P25" style:family="paragraph" style:parent-style-name="Bibliography_20_Heading" style:master-page-name="Bibliography_20_Front_20_Page"/>
-  <style:style style:name="P26" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P26" style:family="paragraph" style:parent-style-name="Bibliography_20_Heading" style:master-page-name="Bibliography_20_Front_20_Page"/>
+  <style:style style:name="P27" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:text-properties style:font-name="Times New Roman2" fo:font-size="12pt" style:font-size-asian="12pt" style:font-size-complex="12pt"/>
+  </style:style>
+  <style:style style:name="T1" style:family="text">
+   <style:text-properties style:text-position="super 58%"/>
   </style:style>
   <style:style style:name="Sect1" style:family="section">
    <style:section-properties fo:background-color="transparent" style:editable="false">
@@ -194,6 +198,38 @@
     <style:text-properties style:font-name="StarSymbol"/>
    </text:list-level-style-bullet>
   </text:list-style>
+  <text:list-style style:name="L3">
+   <text:list-level-style-number text:level="1" text:style-name="Numbering_20_Symbols" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="2" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="3" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.75in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="4" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="5" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="6" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="7" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.75in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="8" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="9" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="10" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+  </text:list-style>
  </office:automatic-styles>
  <office:body>
   <office:text>
@@ -232,8 +268,9 @@
    <text:p text:style-name="P9"/>
    <text:p text:style-name="P8">Revision: 2006-11-20</text:p>
    <text:p text:style-name="P8"/>
-   <text:p text:style-name="P8">This document has not reached a useful level of maturity yet.</text:p>
-   <text:p text:style-name="P8">Like software, it is a work-in-progress.</text:p>
+   <text:p text:style-name="P8">Like software, this document is a work-in-progress.</text:p>
+   <text:p text:style-name="P8">TODO: Unfortunately, it has not reached a useful level of maturity yet.</text:p>
+   <text:p text:style-name="P8"/>
    <text:p text:style-name="P8"/>
    <text:p text:style-name="P8"/>
    <text:p text:style-name="P8"/>
@@ -329,19 +366,31 @@
      <text:p text:style-name="P15">1 Introduction<text:tab/>7</text:p>
      <text:p text:style-name="P16">1.1 About This Document<text:tab/>7</text:p>
      <text:p text:style-name="P17">1.1.1 Contents<text:tab/>7</text:p>
-     <text:p text:style-name="P17">1.1.2 Editing<text:tab/>7</text:p>
-     <text:p text:style-name="P16">1.2 Goals<text:tab/>8</text:p>
-     <text:p text:style-name="P16">1.3 Report Structure<text:tab/>9</text:p>
-     <text:p text:style-name="P15">2 Background<text:tab/>10</text:p>
-     <text:p text:style-name="P16">2.1 History<text:tab/>10</text:p>
-     <text:p text:style-name="P16">2.2 Project Structure<text:tab/>10</text:p>
-     <text:p text:style-name="P16">2.3 Versions<text:tab/>10</text:p>
-     <text:p text:style-name="P15">3 Concepts<text:tab/>11</text:p>
-     <text:p text:style-name="P16">3.1 Tools<text:tab/>12</text:p>
-     <text:p text:style-name="P16">3.2 Selections<text:tab/>12</text:p>
-     <text:p text:style-name="P15">4 Conclusion<text:tab/>13</text:p>
-     <text:p text:style-name="P16">4.1 Achievements<text:tab/>14</text:p>
-     <text:p text:style-name="P16">4.2 Future Work<text:tab/>15</text:p>
+     <text:p text:style-name="P17">1.1.2 Notation<text:tab/>7</text:p>
+     <text:p text:style-name="P17">1.1.3 Editing<text:tab/>8</text:p>
+     <text:p text:style-name="P16">1.2 Goals<text:tab/>9</text:p>
+     <text:p text:style-name="P16">1.3 Report Structure<text:tab/>10</text:p>
+     <text:p text:style-name="P15">2 Background<text:tab/>11</text:p>
+     <text:p text:style-name="P16">2.1 History<text:tab/>11</text:p>
+     <text:p text:style-name="P16">2.2 Current Work<text:tab/>11</text:p>
+     <text:p text:style-name="P17">Short Term<text:tab/>11</text:p>
+     <text:p text:style-name="P16">2.3 Project Structure<text:tab/>12</text:p>
+     <text:p text:style-name="P17">2.3.1 People<text:tab/>12</text:p>
+     <text:p text:style-name="P17">2.3.2 Technical Resources<text:tab/>12</text:p>
+     <text:p text:style-name="P17">2.3.3 Discussion<text:tab/>14</text:p>
+     <text:p text:style-name="P16">2.4 Versions<text:tab/>14</text:p>
+     <text:p text:style-name="P15">3 Concepts<text:tab/>15</text:p>
+     <text:p text:style-name="P16">3.1 Class Diagram<text:tab/>16</text:p>
+     <text:p text:style-name="P16">3.2 Paint Engine<text:tab/>16</text:p>
+     <text:p text:style-name="P16">3.3 Entry Point<text:tab/>17</text:p>
+     <text:p text:style-name="P16">3.4 Main Window<text:tab/>17</text:p>
+     <text:p text:style-name="P16">3.5 Views<text:tab/>18</text:p>
+     <text:p text:style-name="P16">3.6 Commands<text:tab/>18</text:p>
+     <text:p text:style-name="P16">3.7 Tools<text:tab/>18</text:p>
+     <text:p text:style-name="P16">3.8 Selections<text:tab/>18</text:p>
+     <text:p text:style-name="P15">4 Conclusion<text:tab/>20</text:p>
+     <text:p text:style-name="P16">4.1 Achievements<text:tab/>21</text:p>
+     <text:p text:style-name="P16">4.2 Future Work<text:tab/>22</text:p>
     </text:index-body>
    </text:table-of-content>
    <text:p text:style-name="Chapter_20_Start"/>
@@ -383,20 +432,26 @@
    <text:h text:style-name="Heading_20_2" text:outline-level="2">About This Document</text:h>
    <text:h text:style-name="Heading_20_3" text:outline-level="3">Contents</text:h>
    <text:p text:style-name="Text_20_body">This document is a concise and thorough guide containing all the knowledge needed to maintain and modify KolourPaint. <text:s/>Where possible it points to existing, high-quality information instead of duplicating it here. <text:s/>TODO: not thorough yet.</text:p>
-   <text:p text:style-name="Text_20_body">TODO: Merge all the docs in branches/kolourpaint/control.</text:p>
+   <text:p text:style-name="Text_20_body">TODO: Merge all the docs in <text:span text:style-name="Code_20_Term">branches/kolourpaint/control</text:span>.</text:p>
    <text:h text:style-name="Heading_20_3" text:outline-level="3">Notation</text:h>
    <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">TODO</text:span> means something that we need to do document-wise.</text:p>
    <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">ACTION</text:span> means something that we need to code-wise or project-wise.</text:p>
-   <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">CITE</text:span> means we need to add a reference (Insert / Indexes and Tables ... / Bibliography Entry / From document content).</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">CITE</text:span> means we need to add a reference (<text:span text:style-name="Non-Code_20_Term">Insert / Indexes and Tables ... / Bibliography Entry / From document content</text:span>).</text:p>
    <text:h text:style-name="Heading_20_3" text:outline-level="3">Editing</text:h>
    <text:h text:style-name="Heading_20_4" text:outline-level="4">Generating this Document</text:h>
    <text:p text:style-name="Text_20_body">This is a generated file. <text:s/></text:p>
    <text:p text:style-name="Text_20_body">Use <text:span text:style-name="Code_20_Term">https://svn.kde.org/home/kde/branches/kolourpaint/control/Makefile</text:span> to regenerate this file (see inside that <text:span text:style-name="Code_20_Term">Makefile</text:span> for details).</text:p>
+   <text:h text:style-name="Heading_20_4" text:outline-level="4">Language</text:h>
+   <text:p text:style-name="Text_20_body">Please use <text:span text:style-name="Code_20_Term">en_US</text:span> (US English) and not <text:span text:style-name="Code_20_Term">en_AU</text:span> (Australian English) or <text:span text:style-name="Code_20_Term">en_GB</text:span> (British English) for all documentation and code, as it reflects the internationalness [TODO: not a word] of the project. <text:s/>Furthermore, the KDE <text:span text:style-name="Code_20_Term">i18n()</text:span> calls expect strings in <text:span text:style-name="Code_20_Term">en_US</text:span>. <text:s/>The project started with <text:span text:style-name="Code_20_Term">en_AU</text:span> because Clarence Dang is Australian.</text:p>
+   <text:p text:style-name="Text_20_body">Please use 3<text:span text:style-name="T1">rd</text:span> person as there is hopefully not only one person involved with the project.</text:p>
    <text:h text:style-name="Heading_20_4" text:outline-level="4">Use OpenOffice.org</text:h>
    <text:p text:style-name="Text_20_body">Please use OpenOffice.org 2.0.0 to edit this document, to minimise formatting changing pecularities. <text:s/>Press <text:span text:style-name="Code_20_Term">F11</text:span> to enable the <text:span text:style-name="Non-Code_20_Term">Styles and Formatting</text:span> window and select the <text:span text:style-name="Non-Code_20_Term">Applied Styles</text:span> filter. <text:s/>Press <text:span text:style-name="Code_20_Term">F5</text:span> to enable the <text:span text:style-name="Non-Code_20_Term">Navigator</text:span> window. <text:s/>Dock both to the left of the main view.</text:p>
-   <text:p text:style-name="Text_20_body">Every so often, click Tools / Update / Update All to regenerate generated fields (e.g. The Table of Contents and the Bibliography).</text:p>
+   <text:p text:style-name="Text_20_body">Every so often, click <text:span text:style-name="Non-Code_20_Term">Tools / Update / Update All</text:span> to regenerate generated fields (e.g. the <text:span text:style-name="Non-Code_20_Term">Table of Contents</text:span> and the <text:span text:style-name="Non-Code_20_Term">Bibliography</text:span>).</text:p>
    <text:h text:style-name="Heading_20_4" text:outline-level="4">OpenOffice.org Styles</text:h>
    <text:p text:style-name="Text_20_body">TODO: more on how to use my document template</text:p>
+   <text:p text:style-name="Text_20_body">page styles</text:p>
+   <text:p text:style-name="Text_20_body">paragraph styles</text:p>
+   <text:p text:style-name="Text_20_body">character styles</text:p>
    <text:p text:style-name="Text_20_body">Separate sentences by two spaces out of stubborn old-fashion-ness.</text:p>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"/>
@@ -425,7 +480,7 @@
    <text:h text:style-name="Heading_20_4" text:outline-level="4">Medium Term</text:h>
    <text:list text:style-name="L2">
     <text:list-item>
-     <text:p text:style-name="P22">Rewriting graphics engine to be device-independent</text:p>
+     <text:p text:style-name="P22">Rewriting graphics engine to be device-independent [p<text:reference-ref text:reference-format="page" text:ref-name="Doc stored as QPixmap">17</text:reference-ref>, Chapter <text:reference-ref text:reference-format="chapter" text:ref-name="Doc stored as QPixmap">3.2</text:reference-ref>]</text:p>
     </text:list-item>
     <text:list-item>
      <text:p text:style-name="P22">Implement often requested features esp. 8-bit and alpha support</text:p>
@@ -460,41 +515,81 @@
    <text:p text:style-name="Text_20_body">branches/kolourpaint/1.2_kde3/ - dead, standalone release branch for KDE 3.0 (we still need to extract the binary distribution scripts from there, for future standalone releases)</text:p>
    <text:p text:style-name="Text_20_body">branches/kolourpaint/1.0/ - dead, standalone release branch for KDE 3.0</text:p>
    <text:h text:style-name="Heading_20_4" text:outline-level="4">Sourceforge</text:h>
-   <text:p text:style-name="Text_20_body"><text:a xlink:type="simple" xlink:href="http://sourceforge.net/projects/kolourpaint">http://sourceforge.net/projects/kolourpaint/</text:a> is the Sourceforge project. <text:s/>The admin, <text:s/>Clarence Dang &lt;clarencedang AT users.sourceforge.net&gt;, can give you access to this.</text:p>
+   <text:p text:style-name="Text_20_body"><text:a xlink:type="simple" xlink:href="http://sourceforge.net/projects/kolourpaint">http://sourceforge.net/projects/kolourpaint/</text:a> is the Sourceforge project. <text:s/>The admin, <text:s/>Clarence Dang <text:span text:style-name="Code_20_Term">&lt;clarencedang AT users.sourceforge.net&gt;</text:span>, can give you access to this.</text:p>
    <text:h text:style-name="Heading_20_5" text:outline-level="5">Website</text:h>
    <text:p text:style-name="Text_20_body">The website is <text:a xlink:type="simple" xlink:href="http://kolourpaint.sourceforge.net/">http://kolourpaint.sourceforge.net/</text:a>. <text:s/>You need a Sourceforge account to modify the webpage via <text:span text:style-name="Code_20_Term">SSH</text:span> at <text:span text:style-name="Code_20_Term">shell.sourceforge.net:/home/groups/k/ko/kolourpaint/htdocs/</text:span>.</text:p>
    <text:p text:style-name="Text_20_body">The website is currently stored on Clarence Dang&apos;s computer using CVS and copied to that path every so often. <text:s/>The HTML is edited directly. <text:s/>We should use a CMS instead.</text:p>
    <text:p text:style-name="Text_20_body">ACTION: It would be better if this site was hosted on KDE SVN and maintained by an interested <text:s/>web developer.</text:p>
-   <text:p text:style-name="Text_20_body">TODO: mailing lists. <text:s/>Bugs.kde.org <text:s/>TODO: freshmeat.net (clarencedang AT users.sourceforge.net&gt;) <text:s/>TODO: kde-apps.org &lt;dang AT kde.org&gt;</text:p>
+   <text:p text:style-name="Text_20_body">TODO: mailing lists. <text:s/>k<text:a xlink:type="simple" xlink:href="mailto:Kolourpaint-support@lists.sourceforge.net">olourpaint-support AT lists.sourceforge.net</text:a> and spam trouble. <text:s text:c="3"/>Bugs.kde.org <text:s/>TODO: freshmeat.net (clarencedang AT users.sourceforge.net&gt;) <text:s/>TODO: kde-apps.org &lt;dang AT kde.org&gt;</text:p>
    <text:h text:style-name="Heading_20_4" text:outline-level="4">Domain Name</text:h>
    <text:p text:style-name="Text_20_body"><text:a xlink:type="simple" xlink:href="http://www.kolourpaint.org/">http://www.kolourpaint.org/</text:a> is currently a Namesecure domain that redirects to <text:a xlink:type="simple" xlink:href="http://kolourpaint.sourceforge.net/">http://kolourpaint.sourceforge.net/</text:a>. <text:s/>The registrant is Clarence Dang, who pays for the domain.</text:p>
    <text:p text:style-name="Text_20_body"><text:a xlink:type="simple" xlink:href="http://www.kolourpaint.com/">http://www.kolourpaint.com/</text:a> is registered by Clarence Dang for commercialisation possibilities and to prevent someone else from misrepresenting the project. <text:s/>We are not really concerned about kolourpaint.net, kolourpaint.com.au etc. since they are odd domains anyway while .org and .com are very ordinary.</text:p>
    <text:p text:style-name="Text_20_body">ACTION: It would be better to hide the fact that it redirects as <text:a xlink:type="simple" xlink:href="http://www.kolourpaint.org/">www.kolourpaint.org</text:a> looks more professional.</text:p>
-   <text:p text:style-name="Text_20_body">ACTION: Switch away from namesecure since that don&apos;t provide free email forwarding anymore – would like to have &lt;support AT kolourpaint.org&gt; - and their email forwarding was unreliable anyway. <text:s/>Sitelutions.net is recommended by David Greenaway.</text:p>
+   <text:p text:style-name="Text_20_body">ACTION: Switch away from namesecure since that don&apos;t provide free email forwarding anymore – would like to have <text:span text:style-name="Code_20_Term">&lt;support AT kolourpaint.org&gt;</text:span> - and their email forwarding was unreliable anyway. <text:s/><text:span text:style-name="Code_20_Term">sitelutions.net</text:span> is recommended by David Greenaway.</text:p>
    <text:h text:style-name="Heading_20_3" text:outline-level="3">Discussion</text:h>
    <text:p text:style-name="Text_20_body">Currently only happens between Clarence Dang and Thurston Dang (out of convenience), which is disappointing. <text:s/>ACTION: use kolourpaint-devel mailinglist more.</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Versions</text:h>
+   <text:h text:style-name="Heading_20_2" text:outline-level="2"><text:reference-mark-start text:name="Licensing"/>Licensing<text:reference-mark-end text:name="Licensing"/></text:h>
+   <text:p text:style-name="Text_20_body">KolourPaint is under the BSD license since we want the code to be usable by anyone, for anything. <text:s/>This includes closed-source derivatives but actually, the main motivations are to allow:</text:p>
+   <text:list text:style-name="L3">
+    <text:list-item>
+     <text:p text:style-name="P23">Moving of generic code into an LGPL library (you cannot do this with the GPL if the copyright is diluted and those other copyright holders disappear or stubbornly refuse to relicense)</text:p>
+    </text:list-item>
+    <text:list-item>
+     <text:p text:style-name="P23">Reuse of the code in BSD projects, that don&apos;t agree with GPL licensing (which might be due to either die-hard philosophy and/or Reason 1).</text:p>
+    </text:list-item>
+   </text:list>
+   <text:p text:style-name="Text_20_body">The great thing about the BSD license is that if you don&apos;t agree with it, you can make a fork under the GPL license. <text:s/>In contrast, if you license under the GPL to start with, no one can fork it under the BSD license if they disagree with you.</text:p>
+   <text:p text:style-name="Text_20_body">However, the KolourPaint Project will not accept any code contributions that are licensed under anything more restrictive than BSD. <text:s/>MIT/X11 is equivalent to BSD and fine. GPL is too restrictive. <text:s/>LGPL code needs to be isolated in a separate runtime library</text:p>
+   <text:p text:style-name="Text_20_body">Contrary to popular belief, the GPL does not prevent closed-source derivatives from being created – at the expense of everyone else and Stallman&apos;s confusingly named <text:span text:style-name="Emphasis">software freedom</text:span> – as long as there is only one copyright holder or all copyright holders conspire together.<text:span text:style-name="Emphasis"> </text:span><text:s/>Qt is a perfect example of this through its QPL/GPL &amp; commerical dual-licensing, where Trolltech, <text:s/>maintains complete copyright control. <text:s/>Another infamous example is ReiserFS.</text:p>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="P20">Chapter 3</text:p>
    <text:h text:style-name="Heading_20_1" text:outline-level="1">Concepts</text:h>
-   <text:p text:style-name="P23">TODO</text:p>
-   <text:h text:style-name="P21" text:outline-level="2">Main Window</text:h>
+   <text:p text:style-name="P24">TODO</text:p>
+   <text:h text:style-name="P21" text:outline-level="2">Class Diagram</text:h>
+   <text:p text:style-name="Text_20_body">TODO</text:p>
+   <text:h text:style-name="Heading_20_2" text:outline-level="2">Paint Engine</text:h>
+   <text:p text:style-name="Text_20_body">TODO: diagram of graphics client &amp; CPU &amp; memory vs graphics server &amp; graphics card</text:p>
+   <text:p text:style-name="Text_20_body">Normally programs are run on a local computer. <text:s/>However, the X11 protocol permits program logic to be executed on a remote computer (the network server, misleading known as the <text:span text:style-name="Non-Code_20_Term">graphics client</text:span>) and displayed on the local computer (the network client, misleading known as the <text:span text:style-name="Non-Code_20_Term">graphics server</text:span>). <text:s/>For the purposes of this document, when we say server, we mean graphics server and when we say client, we mean graphics client. <text:s/>These are the opposite meanings to the network version of these terms.</text:p>
+   <text:p text:style-name="Text_20_body">While this separation seems rather silly and not often used, this actually makes us think a bit harder about the separation between the graphics card, graphics memory, GPU &amp; monitor <text:s/>(graphics server) and main memory and the CPU (graphics client).</text:p>
+   <text:p text:style-name="Text_20_body">In the case that the program is executed locally, the hardware bus separates the client and server. <text:s/>This is far slower than main and graphics memory and so shifting data between the client and server must be minimised.</text:p>
+   <text:p text:style-name="Text_20_body">If the program is executed remotely, a network of much higher latency could separate the client and server and so this becomes paramount.</text:p>
+   <text:p text:style-name="Text_20_body">A color model is a way of representing a subset of all possible human-visible colors e.g. Indexed RGB, RGB, RGBA, CMYK and XYZ. <text:s/>Any color model can be represented in a device-independent format (i.e. at full quality) on the client in main memory. <text:s/>The graphics memory on the server supports a limited number of color models (at least RGB) at the current display depth. <text:s/>Furthermore, this depth could be 8-bit or even 1-bit so could be very low quality. <text:s/>This means that unless the server can support the document&apos;s color model, we must not store the document in graphics memory. <text:s/>Worse still, some servers such as VNC servers, seem to corrupt/approximate graphics memory so even with a color model match, we can still lose document information.</text:p>
+   <text:p text:style-name="Text_20_body">Therefore, we must store document data in main memory. <text:s/>Every time we change the document we must move it from main memory (client) to graphics memory (server). <text:s/>We cannot do separate drawing operations on main memory and graphics memory as there is no guarantee that, for instance, the graphics card will draw lines in graphics memory, the same way we draw in main memory. <text:s/>This is slow because it crosses the bus or the network.</text:p>
+   <text:p text:style-name="Text_20_body">The graphics card almost certainly supports limited color space conversion (e.g. 32-bit RGBA to 16-bit RGBA), zooming and rotation, and performs these near instantly. <text:s/>We should almost certainly use these capabilities instead of burdening the CPU which performs these operations hundreds or thousands of times slower. <text:s/>A popular and portable interface to this hardware is OpenGL. <text:s/>Qt does not provide such an interfaces and performs all this in software resulting in abysmal performance. <text:s/>TODO: this may have changed with Qt4 since it has an OpenGL drawing buffer so might do the hardware color space conversion for instance (e.g. <text:span text:style-name="Code_20_Term">Qpainter::drawImage(QImage,...)</text:span> might not call the software <text:span text:style-name="Code_20_Term">QPixmap::convertToImage()</text:span> anymore).</text:p>
+   <text:p text:style-name="Text_20_body">In the beginning, KolourPaint used Qt3 without this hardware acceleration. <text:s/>Storing the document in main memory (<text:span text:style-name="Code_20_Term">QImage</text:span>) and converting it to the format for graphics memory (<text:span text:style-name="Code_20_Term">QPixmap</text:span>) <text:s/>using the software <text:span text:style-name="Code_20_Term">QPixmap::convertToImage()</text:span> was – and still is – too slow (from memory, about 100ms to convert a 1024x768x32 image for display on a screen with a matching color model on a Celeron 2.2 Ghz!).</text:p>
+   <text:p text:style-name="Text_20_body">Therefore, for acceptable performance, <text:reference-mark-start text:name="Doc stored as QPixmap"/>KolourPaint stored the document directly in graphics memory (<text:span text:style-name="Code_20_Term">QPixmap</text:span>)<text:reference-mark-end text:name="Doc stored as QPixmap"/>.</text:p>
+   <text:p text:style-name="Text_20_body">Therefore any document that does not match the screen&apos;s color model is corrupted. <text:s/>Actually, it&apos;s worse than that because we also convert all indexed images to RGB, even on an indexed 8-bit display. <text:s/>TODO: check this last bit.</text:p>
+   <text:p text:style-name="Text_20_body">Worse still, QPainter&apos;s behavior on <text:span text:style-name="Code_20_Term">QPixmap</text:span>&apos;s changed from Qt3 to Qt4 and whether or not XRENDER is supported by the display.</text:p>
+   <text:p text:style-name="Text_20_body">ACTION: We must change this for KDE 4 to stop corrupting the user&apos;s data. <text:s/>We need a graphics library that can modify images in arbitrary color models (to at least support RGBA and indexed RGBA color models) stored in main memory. <text:s/>We cannot use Krita&apos;s code as that is GPL [p<text:reference-ref text:reference-format="page" text:ref-name="Licensing">14</text:reference-ref>, Chapter <text:reference-ref text:reference-format="chapter" text:ref-name="Licensing">2.5</text:reference-ref>]. <text:s/>This is quite sad because as more code is added to Krita, software developers are further denied the freedom to reuse such code under licenses such as the LGPL and BSD.</text:p>
+   <text:p text:style-name="Text_20_body">We can then use OpenGL for hardware accelerated color space conversion.</text:p>
+   <text:p text:style-name="Text_20_body">TODO: describe stop gap Qt4 <text:span text:style-name="Code_20_Term">QPixmap</text:span> solution without alpha channel. <text:s/>Look at <text:span text:style-name="Code_20_Term">svn log</text:span> and blog and <text:span text:style-name="Code_20_Term">imagelib/kppainter.h</text:span> comments.</text:p>
+   <text:h text:style-name="Heading_20_2" text:outline-level="2">Entry Point</text:h>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">kolourpaint.cpp:main() </text:span>initializes KolourPaint and creates a whole bunch of <text:span text:style-name="Code_20_Term">kpMainWindow</text:span>&apos;s.</text:p>
+   <text:h text:style-name="Heading_20_2" text:outline-level="2">Main Window</text:h>
+   <text:p text:style-name="Text_20_body">Source code stored in <text:span text:style-name="Code_20_Term">mainwindow/</text:span> folder. <text:s/>Is a monster-sized class.</text:p>
+   <text:p text:style-name="Text_20_body">Far, too often main window pointers are passed around everywhere (since given a pointer to a main window, you can get a pointer to anything else). <text:s/>Unfortunately, this means that tools and commands are tied to the GUI. <text:s/>Worse still, we cannot have 2 main windows viewing the same document. <text:s/>ACTION: Change tools to use a <text:span text:style-name="Code_20_Term">kpToolEnvironment</text:span> interface and commands to use a <text:span text:style-name="Code_20_Term">kpCommandEnvironment</text:span>.</text:p>
+   <text:p text:style-name="Text_20_body">The <text:span text:style-name="Code_20_Term">kpmainwindow_statusbar.cpp</text:span> tries very hard to ensure that the status bar contains the correct text. <text:s/>Far too many other KDE applications allow some status bar text to be, for instance, wiped by a temporary notice and never re-appear. <text:s/>KolourPaint does this right.</text:p>
+   <text:p text:style-name="Text_20_body">ACTION: However, the implementation is too concrete and should be converted into a general status bar update pattern that can be pushed into <text:span text:style-name="Code_20_Term">kdelibs</text:span>. <text:s/>Different objects, say the view, could indicate things that affect that status bar, say the zoom level.</text:p>
+   <text:h text:style-name="Heading_20_2" text:outline-level="2">Views</text:h>
+   <text:p text:style-name="Text_20_body">The source code is stored in the views/ folder. <text:s/>There can be 1 or more views per <text:span text:style-name="Code_20_Term">kpDocument </text:span>document.</text:p>
+   <text:p text:style-name="Text_20_body">ACTION: These classes are badly designed because subclasses limit functionality instead of increasing it. <text:s/>We need to tip the inheritance hierarchy upside-down. </text:p>
+   <text:p text:style-name="Text_20_body">TODO: class diagram</text:p>
+   <text:h text:style-name="Heading_20_2" text:outline-level="2">Commands</text:h>
+   <text:p text:style-name="Text_20_body">Changes must not be made to the document directly using the document class. <text:s/>You must encapsulate the change in a <text:span text:style-name="Code_20_Term">kpCommand</text:span> so that it is undo-able and redo-able. <text:s/>Failure to do this results in inconsistent behaviour when undoing and redoing.</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Tools</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Selections</text:h>
-   <text:p text:style-name="Text_20_body">Constructor &quot;pixmap&quot; arg acts same as setPixmap().</text:p>
-   <text:p text:style-name="Text_20_body">If you pass it a null pixmap, m_pixmap = 0;</text:p>
-   <text:p text:style-name="Text_20_body">This means that the user has dragged out a selection border/region but hasn&apos;t</text:p>
-   <text:p text:style-name="Text_20_body">manipulated it yet (the document remains unmodified).</text:p>
-   <text:p text:style-name="Text_20_body">As soon as you need to modify the contents of the selection, you have to</text:p>
-   <text:p text:style-name="Text_20_body">pull it from the document (modifying the document) and m_pixmap becomes</text:p>
-   <text:p text:style-name="Text_20_body">nonzero.</text:p>
-   <text:p text:style-name="Text_20_body"/>
-   <text:p text:style-name="Text_20_body">support Undo/Redo and</text:p>
-   <text:p text:style-name="Text_20_body">Keeping in mind Undo/Redo and accurately reporting whether the document has</text:p>
-   <text:p text:style-name="Text_20_body">been modified Manipulating selections hard TODO</text:p>
-   <text:p text:style-name="Text_20_body"/>
-   <text:p text:style-name="P24"/>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">kpselection.cpp</text:span> contains the <text:span text:style-name="Code_20_Term">kpSelection</text:span> data structure for selections. <text:s/>Selections are per-document (kpDocument). <text:s/>However, the rendered borders are per-view-manager (kpViewManager) and code is also spread in the view (kpView).</text:p>
+   <text:p text:style-name="Text_20_body">ACTION: group code together like an aspect.</text:p>
+   <text:p text:style-name="Text_20_body">ACTION: split <text:span text:style-name="Code_20_Term">kpSelection</text:span> into subclasses for rectangular, elliptical selections etc.</text:p>
+   <text:p text:style-name="Text_20_body">ACTION: somehow combine with <text:span text:style-name="Code_20_Term">kpTempPixmap</text:span>, which is a per-view-manager concept for storing the currently drawn non-selection shape (e.g. a line).</text:p>
+   <text:p text:style-name="Text_20_body">ACTION: generalise into a layer class.</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">tools/selection/</text:span> contains selection tools.</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">commands/tools/selection/</text:span> contains the commands used by those tools and permit undo and redo of selection modifications. <text:s/>This makes KolourPaint enormously complex.</text:p>
+   <text:p text:style-name="Text_20_body">The constructor&apos;s pixmap argument acts the same as <text:span text:style-name="Code_20_Term">setPixmap(</text:span>). <text:s/>If you pass it a null pixmap, <text:span text:style-name="Code_20_Term">m_pixmap = 0</text:span> - this means that the user has dragged out a selection border but hasn&apos;t manipulated it yet (the document remains unmodified).</text:p>
+   <text:p text:style-name="Text_20_body">As soon as you need to modify the contents of the selection, you have to pull it from the document (<text:span text:style-name="Code_20_Term">kpDocument::selectionPullFromDocument()</text:span>). <text:s/>Only then is the document modified and <text:span text:style-name="Code_20_Term">m_pixmap</text:span> becomes nonzero. <text:s/>The selection now floats above the document and can be moved around.</text:p>
+   <text:p text:style-name="P25"/>
    <text:p text:style-name="P20">Chapter 4</text:p>
    <text:h text:style-name="Heading_20_1" text:outline-level="1">Conclusion</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
@@ -506,7 +601,7 @@
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"/>
-   <text:p text:style-name="P23"/>
+   <text:p text:style-name="P24"/>
    <text:h text:style-name="P21" text:outline-level="2">Future Work</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
    <text:p text:style-name="Text_20_body"/>
@@ -656,11 +751,11 @@
     </text:bibliography-source>
     <text:index-body>
      <text:index-title text:style-name="Sect2" text:name="Bibliography1_Head">
-      <text:p text:style-name="P25">Bibliography</text:p>
+      <text:p text:style-name="P26">Bibliography</text:p>
      </text:index-title>
     </text:index-body>
    </text:bibliography>
-   <text:p text:style-name="P26"/>
+   <text:p text:style-name="P27"/>
   </office:text>
  </office:body>
 </office:document-content>
