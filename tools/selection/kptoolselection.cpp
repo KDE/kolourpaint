@@ -955,7 +955,7 @@ void kpToolSelection::resizeScale (QPoint thisPoint, QRect /*normalizedRect*/)
 
 
     // Keep aspect ratio?
-    if (m_shiftPressed && !sel->isText ())
+    if (m_shiftPressed)
     {
         // Width changed more than height?  At equality, favor width.
         // Fix width, change height.
