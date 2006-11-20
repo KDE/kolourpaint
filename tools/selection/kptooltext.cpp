@@ -186,6 +186,12 @@ kpToolSelection::DragType kpToolText::beginDrawInsideSelection ()
 {
     if (onSelectionToSelectText () && !controlOrShiftPressed ())
     {
+        // This path is a bit dangerous since we don't call the base
+        // implementation.
+        //
+        // However, we are doing something unusual here in that we aren't
+        // drag-moving the selection - therefore it makes sense to not
+        // call the base.
     #if DEBUG_KP_TOOL_TEXT
         kDebug () << "\t\tis select cursor pos" << endl;
     #endif
