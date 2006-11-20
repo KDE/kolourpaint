@@ -478,10 +478,22 @@
    <text:p text:style-name="P20">Chapter 3</text:p>
    <text:h text:style-name="Heading_20_1" text:outline-level="1">Concepts</text:h>
    <text:p text:style-name="P23">TODO</text:p>
-   <text:h text:style-name="P21" text:outline-level="2">Tools</text:h>
+   <text:h text:style-name="P21" text:outline-level="2">Main Window</text:h>
+   <text:h text:style-name="Heading_20_2" text:outline-level="2">Tools</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Selections</text:h>
-   <text:p text:style-name="Text_20_body">TODO</text:p>
+   <text:p text:style-name="Text_20_body">Constructor &quot;pixmap&quot; arg acts same as setPixmap().</text:p>
+   <text:p text:style-name="Text_20_body">If you pass it a null pixmap, m_pixmap = 0;</text:p>
+   <text:p text:style-name="Text_20_body">This means that the user has dragged out a selection border/region but hasn&apos;t</text:p>
+   <text:p text:style-name="Text_20_body">manipulated it yet (the document remains unmodified).</text:p>
+   <text:p text:style-name="Text_20_body">As soon as you need to modify the contents of the selection, you have to</text:p>
+   <text:p text:style-name="Text_20_body">pull it from the document (modifying the document) and m_pixmap becomes</text:p>
+   <text:p text:style-name="Text_20_body">nonzero.</text:p>
+   <text:p text:style-name="Text_20_body"/>
+   <text:p text:style-name="Text_20_body">support Undo/Redo and</text:p>
+   <text:p text:style-name="Text_20_body">Keeping in mind Undo/Redo and accurately reporting whether the document has</text:p>
+   <text:p text:style-name="Text_20_body">been modified Manipulating selections hard TODO</text:p>
+   <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="P24"/>
    <text:p text:style-name="P20">Chapter 4</text:p>
    <text:h text:style-name="Heading_20_1" text:outline-level="1">Conclusion</text:h>
