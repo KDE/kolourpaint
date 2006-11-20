@@ -53,7 +53,7 @@
 
 # This is for a file called "kolourpaint-developer-guide.odt".
 DOC=kolourpaint-developer-guide
-EXT=.odt
+EXT=odt
 
 # 4. Unpack "kolourpaint-developer-guide.odt" into kolourpaint-developer-guide/.
 #    We are going to keep kolourpaint-developer-guide/ in revision control only:
