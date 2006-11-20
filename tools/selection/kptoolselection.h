@@ -124,9 +124,6 @@ private:
     void create (QPoint thisPoint, QRect normalizedRect);
     void move (QPoint thisPoint, QRect normalizedRect);
     
-    // The selection before any resizing/scaling (before the sequence of
-    // drags, where the mouse has been held down) is <oldWidth>x<oldHeight>.
-    //
     // resizeScaleCalculateNewSelectionPosSize() calls us with what the
     // <newWidth>x<newHeight> should be, but before any aspect maintenance
     // operations.
@@ -134,6 +131,9 @@ private:
     // <horizontalGripDragged> specifies whether a horizontal grip is being
     // dragged.  <verticalGripDragged> specifies whether a vertical grip is
     // being dragged.
+    //
+    // The selection before any resizing/scaling (before the sequence of
+    // drags, where the mouse has been held down) is <originalSelection>.
     //
     // The method should output its attempt at maintaining the aspect ratio.
     // We say "attempt" because it is constrained by the minimum allowed
