@@ -410,14 +410,31 @@
    <text:p text:style-name="Text_20_body">TODO</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">History</text:h>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Current Work</text:h>
+   <text:h text:style-name="Heading_20_3" text:outline-level="3" text:is-list-header="true">Short Term</text:h>
    <text:list text:style-name="L2">
     <text:list-item>
-     <text:p text:style-name="P22">Porting KolourPaint to KDE 4</text:p>
+     <text:p text:style-name="P22">Porting to KDE 4</text:p>
     </text:list-item>
+    <text:list-item>
+     <text:p text:style-name="P22">Refactoring</text:p>
+    </text:list-item>
+    <text:list-item>
+     <text:p text:style-name="P22">Adding developer documentation (this document)</text:p>
+    </text:list-item>
+   </text:list>
+   <text:h text:style-name="Heading_20_4" text:outline-level="4">Medium Term</text:h>
+   <text:list text:style-name="L2">
     <text:list-item>
      <text:p text:style-name="P22">Rewriting graphics engine to be device-independent</text:p>
     </text:list-item>
+    <text:list-item>
+     <text:p text:style-name="P22">Implement often requested features esp. 8-bit and alpha support</text:p>
+    </text:list-item>
+    <text:list-item>
+     <text:p text:style-name="P22">Continual refinement to make it easier to use</text:p>
+    </text:list-item>
    </text:list>
+   <text:p text:style-name="Text_20_body"/>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Project Structure</text:h>
    <text:p text:style-name="Text_20_body">It is a cathedral by accident, like DOSEMU. <text:s text:c="2"/>It should be – and now tries to be – a Bazaar.</text:p>
    <text:h text:style-name="Heading_20_3" text:outline-level="3">People</text:h>
