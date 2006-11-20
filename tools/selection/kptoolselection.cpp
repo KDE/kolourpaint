@@ -122,16 +122,6 @@ int kpToolSelection::onSelectionResizeHandle () const
     return v->mouseOnSelectionResizeHandle (m_currentViewPoint);
 }
 
-// protected
-bool kpToolSelection::onSelectionToSelectText () const
-{
-    kpView *v = viewManager ()->viewUnderCursor ();
-    if (!v)
-        return 0;
-
-    return v->mouseOnSelectionToSelectText (m_currentViewPoint);
-}
-
 
 // protected virtual
 QString kpToolSelection::haventBegunDrawUserMessageOnResizeHandle () const
@@ -424,8 +414,7 @@ QCursor kpToolSelection::cursor () const
     else if (sel && sel->contains (m_currentPoint))
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
-        kDebug () << "\tsel contains currentPoint; selecting text? "
-                   << onSelectionToSelectText () << endl;
+        kDebug () << "\tsel contains currentPoint" << endl;
     #endif
         return /*virtual*/cursorInsideSelection ();
     }

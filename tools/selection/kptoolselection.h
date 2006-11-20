@@ -72,7 +72,6 @@ private:
 protected:
     bool onSelectionToMove () const;
     int onSelectionResizeHandle () const;
-    bool onSelectionToSelectText () const;
 
 protected:
     // Appropriate one called by haventBegunDrawUserMessage().

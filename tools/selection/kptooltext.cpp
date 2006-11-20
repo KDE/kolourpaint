@@ -47,6 +47,7 @@
 #include <kpToolTextEnterCommand.h>
 #include <kpToolTextInsertCommand.h>
 #include <kptoolwidgetopaqueortransparent.h>
+#include <kpview.h>
 #include <kpviewmanager.h>
 
 
@@ -63,6 +64,17 @@ kpToolText::kpToolText (kpMainWindow *mainWindow)
 
 kpToolText::~kpToolText ()
 {
+}
+
+
+// private
+bool kpToolText::onSelectionToSelectText () const
+{
+    kpView *v = viewManager ()->viewUnderCursor ();
+    if (!v)
+        return 0;
+
+    return v->mouseOnSelectionToSelectText (m_currentViewPoint);
 }
 
 

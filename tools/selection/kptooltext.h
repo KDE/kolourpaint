@@ -55,6 +55,9 @@ public:
     kpToolText (kpMainWindow *mainWindow);
     virtual ~kpToolText ();
 
+private:
+    bool onSelectionToSelectText () const;
+
 protected:
     virtual QString haventBegunDrawUserMessageOnResizeHandle () const;
     virtual QString haventBegunDrawUserMessageInsideSelection () const;
