@@ -1,3 +1,7 @@
+# TODO: Can we not store:
+#           Thumbnails/thumbnail.png
+#           layout-cache
+#       ?
 
 #
 # Build System for
