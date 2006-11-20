@@ -166,6 +166,7 @@ void kpToolSelectionCreateCommand::unexecute ()
             return;
 
         Q_ASSERT (!"kpToolSelectionCreateCommand::unexecute() without sel region");
+        return;
     }
 
     m_textRow = m_mainWindow->viewManager ()->textCursorRow ();
