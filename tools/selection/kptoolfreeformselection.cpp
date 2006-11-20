@@ -58,29 +58,32 @@ void kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (QPoint this
 {
     QPolygon points;
 
-    if (document ()->selection ())
-        points = document ()->selection ()->points ();
+    Q_ASSERT (m_dragHasBegun == (bool) document ()->selection ());
 
-
-    // (not detached so will modify "points" directly but
-    //  still need to call kpDocument::setSelection() to
-    //  update screen)
-
+    // First point in drag?
     if (!m_dragHasBegun)
     {
-        // We thought the drag at startPoint was a NOP
-        // but it turns out that it wasn't...
-        points.putPoints (points.count (), 1, m_startPoint.x (), m_startPoint.y ());
+        points.append (m_startPoint);
+    }
+    // Not first point in drag.
+    else
+    {
+        // Get existing points in selection.
+        points = document ()->selection ()->points ();
     }
 
-    // TODO: there should be an upper limit on this before drawing the
-    //       polygon becomes too slow
-    points.putPoints (points.count (), 1, thisPoint.x (), thisPoint.y ());
+
+    // TODO: There should be an upper limit on this before drawing the
+    //       polygon becomes too slow.
+    points.append (thisPoint);
 
 
-    document ()->setSelection (kpSelection (points, mainWindow ()->selectionTransparency ()));
+    document ()->setSelection (
+        kpSelection (points, mainWindow ()->selectionTransparency ()));
 #if DEBUG_KP_TOOL_FREE_FROM_SELECTION && 1
-    kDebug () << "\t\tfreeform; #points=" << document ()->selection ()->points ().count () << endl;
+    kDebug () << "\t\tfreeform; #points="
+              << document ()->selection ()->points ().count ()
+              << endl;
 #endif
 
     setUserShapePoints (m_currentPoint);
