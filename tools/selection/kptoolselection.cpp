@@ -194,7 +194,7 @@ void kpToolSelection::begin ()
     m_toolWidgetOpaqueOrTransparent = tb->toolWidgetOpaqueOrTransparent ();
     Q_ASSERT (m_toolWidgetOpaqueOrTransparent);
     connect (m_toolWidgetOpaqueOrTransparent, SIGNAL (isOpaqueChanged (bool)),
-                this, SLOT (slotIsOpaqueChanged ()));
+             this, SLOT (slotIsOpaqueChanged ()));
     m_toolWidgetOpaqueOrTransparent->show ();
 
     viewManager ()->setQueueUpdates ();
@@ -298,7 +298,11 @@ void kpToolSelection::beginDraw ()
 
     // Currently used only to end the current text
     if (hasBegunShape ())
-        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint/* TODO: wrong */, m_currentPoint)));
+    {
+        endShape (m_currentPoint,
+            kpBug::QRect_Normalized (
+                QRect (m_startPoint/* TODO: wrong */, m_currentPoint)));
+    }
 
     m_dragType = Create;
     m_dragHasBegun = false;
@@ -539,7 +543,8 @@ void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
 
     if (m_createNOPTimer->isActive ())
     {
-        if (m_viewUnderStartPoint->transformDocToViewX ((thisPoint - m_startPoint).manhattanLength ()) <= 6)
+        if (m_viewUnderStartPoint->transformDocToViewX (
+            (thisPoint - m_startPoint).manhattanLength ()) <= 6)
         {
         #if DEBUG_KP_TOOL_SELECTION && 1
             kDebug () << "\t\tsuppress accidental movement" << endl;
@@ -599,12 +604,14 @@ void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
     case kpToolSelection::Rectangle:
     {
         const QRect usefulRect = normalizedRect.intersect (document ()->rect ());
-        document ()->setSelection (kpSelection (kpSelection::Rectangle, usefulRect,
-                                                mainWindow ()->selectionTransparency ()));
+        document ()->setSelection (
+            kpSelection (
+                kpSelection::Rectangle, usefulRect,
+                mainWindow ()->selectionTransparency ()));
 
         setUserShapePoints (m_startPoint,
-                            QPoint (qMax (0, qMin (m_currentPoint.x (), document ()->width () - 1)),
-                                    qMax (0, qMin (m_currentPoint.y (), document ()->height () - 1))));
+            QPoint (qMax (0, qMin (m_currentPoint.x (), document ()->width () - 1)),
+                    qMax (0, qMin (m_currentPoint.y (), document ()->height () - 1))));
         break;
     }
     case kpToolSelection::Text:
@@ -632,16 +639,18 @@ void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
             {
                 if (m_startPoint.x () + minimumWidth - 1 >= document ()->width ())
                 {
-                    minimumWidth = qMax (kpSelection::minimumWidthForTextStyle (textStyle),
-                                            document ()->width () - m_startPoint.x ());
+                    minimumWidth =
+                        qMax (kpSelection::minimumWidthForTextStyle (textStyle),
+                            document ()->width () - m_startPoint.x ());
                 }
             }
             else
             {
                 if (m_startPoint.x () - minimumWidth + 1 < 0)
                 {
-                    minimumWidth = qMax (kpSelection::minimumWidthForTextStyle (textStyle),
-                                            m_startPoint.x () + 1);
+                    minimumWidth =
+                        qMax (kpSelection::minimumWidthForTextStyle (textStyle),
+                            m_startPoint.x () + 1);
                 }
             }
 
@@ -650,16 +659,18 @@ void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
             {
                 if (m_startPoint.y () + minimumHeight - 1 >= document ()->height ())
                 {
-                    minimumHeight = qMax (kpSelection::minimumHeightForTextStyle (textStyle),
-                                        document ()->height () - m_startPoint.y ());
+                    minimumHeight =
+                        qMax (kpSelection::minimumHeightForTextStyle (textStyle),
+                            document ()->height () - m_startPoint.y ());
                 }
             }
             else
             {
                 if (m_startPoint.y () - minimumHeight + 1 < 0)
                 {
-                    minimumHeight = qMax (kpSelection::minimumHeightForTextStyle (textStyle),
-                                        m_startPoint.y () + 1);
+                    minimumHeight =
+                        qMax (kpSelection::minimumHeightForTextStyle (textStyle),
+                            m_startPoint.y () + 1);
                 }
             }
         }
@@ -726,8 +737,10 @@ void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
         break;
     }
     case kpToolSelection::Ellipse:
-        document ()->setSelection (kpSelection (kpSelection::Ellipse, normalizedRect,
-                                                mainWindow ()->selectionTransparency ()));
+        document ()->setSelection (
+            kpSelection (
+                kpSelection::Ellipse, normalizedRect,
+                mainWindow ()->selectionTransparency ()));
         setUserShapePoints (m_startPoint, m_currentPoint);
         break;
     case kpToolSelection::FreeForm:
@@ -777,10 +790,10 @@ void kpToolSelection::move (QPoint thisPoint, QRect /*normalizedRect*/)
 
     kpSelection *sel = document ()->selection ();
 
-    QRect targetSelRect = QRect (thisPoint.x () - m_startDragFromSelectionTopLeft.x (),
-                                    thisPoint.y () - m_startDragFromSelectionTopLeft.y (),
-                                    sel->width (),
-                                    sel->height ());
+    QRect targetSelRect (thisPoint.x () - m_startDragFromSelectionTopLeft.x (),
+        thisPoint.y () - m_startDragFromSelectionTopLeft.y (),
+        sel->width (),
+        sel->height ());
 
 #if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "\t\tstartPoint=" << m_startPoint
@@ -896,15 +909,17 @@ void kpToolSelection::resizeScale (QPoint thisPoint, QRect /*normalizedRect*/)
 
     if (!sel->pixmap () && !m_currentPullFromDocumentCommand)
     {
-        m_currentPullFromDocumentCommand = new kpToolSelectionPullFromDocumentCommand (
-            QString::null/*uninteresting child of macro cmd*/,
-            mainWindow ());
+        m_currentPullFromDocumentCommand =
+            new kpToolSelectionPullFromDocumentCommand (
+                QString::null/*uninteresting child of macro cmd*/,
+                mainWindow ());
         m_currentPullFromDocumentCommand->execute ();
     }
 
     if (!m_currentResizeScaleCommand)
     {
-        m_currentResizeScaleCommand = new kpToolSelectionResizeScaleCommand (mainWindow ());
+        m_currentResizeScaleCommand
+            = new kpToolSelectionResizeScaleCommand (mainWindow ());
     }
 
 
@@ -987,8 +1002,8 @@ void kpToolSelection::resizeScale (QPoint thisPoint, QRect /*normalizedRect*/)
 
     viewManager ()->setFastUpdates ();
     m_currentResizeScaleCommand->resizeAndMoveTo (newWidth, newHeight,
-                                                    QPoint (newX, newY),
-                                                    true/*smooth scale delayed*/);
+                                                  QPoint (newX, newY),
+                                                  true/*smooth scale delayed*/);
     viewManager ()->restoreFastUpdates ();
 
     setUserShapePoints (QPoint (originalSelection.width (),
@@ -1101,7 +1116,8 @@ void kpToolSelection::cancelResizeScale ()
 void kpToolSelection::cancelShape ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelection::cancelShape() mouseButton=" << m_mouseButton << endl;
+    kDebug () << "kpToolSelection::cancelShape() mouseButton="
+              << m_mouseButton << endl;
 #endif
 
     m_createNOPTimer->stop ();
@@ -1174,15 +1190,16 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/,
             if (m_currentMoveCommandIsSmear)
             {
                 cmd = new kpMacroCommand (i18n ("%1: Smear",
-                                              document ()->selection ()->name ()),
-                                        mainWindow ());
+                    document ()->selection ()->name ()),
+                    mainWindow ());
             }
             else
             {
-                cmd = new kpMacroCommand ((document ()->selection ()->isText () ?
-                                            i18n ("Text: Move Box") :
-                                            i18n ("Selection: Move")),
-                                        mainWindow ());
+                cmd = new kpMacroCommand (
+                    (document ()->selection ()->isText () ?
+                        i18n ("Text: Move Box") :
+                        i18n ("Selection: Move")),
+                    mainWindow ());
             }
 
             if (document ()->selection ()->isText ())
@@ -1190,8 +1207,9 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/,
         }
         else if (m_currentResizeScaleCommand)
         {
-            cmd = new kpMacroCommand (m_currentResizeScaleCommand->kpNamedCommand::name (),
-                                    mainWindow ());
+            cmd = new kpMacroCommand (
+                m_currentResizeScaleCommand->kpNamedCommand::name (),
+                mainWindow ());
 
             if (document ()->selection ()->isText ())
                 viewManager ()->setTextCursorBlinkState (true);
@@ -1199,39 +1217,36 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/,
 
         if (m_currentPullFromDocumentCommand)
         {
-            if (!m_currentMoveCommand && !m_currentResizeScaleCommand)
+            Q_ASSERT (m_currentMoveCommand || m_currentResizeScaleCommand);
+            kpSelection selection;
+
+            if (m_currentMoveCommand)
+                selection = m_currentMoveCommand->originalSelection ();
+            else if (m_currentResizeScaleCommand)
+                selection = m_currentResizeScaleCommand->originalSelection ();
+
+            // just the border
+            selection.setPixmap (QPixmap ());
+
+            kpCommand *createCommand = new kpToolSelectionCreateCommand (
+                i18n ("Selection: Create"),
+                selection,
+                mainWindow ());
+
+            if (kpToolSelectionCreateCommand::nextUndoCommandIsCreateBorder (
+                    commandHistory ()))
             {
-                kError () << "kpToolSelection::endDraw() pull without move nor resize/scale" << endl;
-                delete m_currentPullFromDocumentCommand;
-                m_currentPullFromDocumentCommand = 0;
+                commandHistory ()->setNextUndoCommand (createCommand);
             }
             else
             {
-                kpSelection selection;
-
-                if (m_currentMoveCommand)
-                    selection = m_currentMoveCommand->originalSelection ();
-                else if (m_currentResizeScaleCommand)
-                    selection = m_currentResizeScaleCommand->originalSelection ();
-
-                // just the border
-                selection.setPixmap (QPixmap ());
-
-                kpCommand *createCommand = new kpToolSelectionCreateCommand (
-                    i18n ("Selection: Create"),
-                    selection,
-                    mainWindow ());
-
-                if (kpToolSelectionCreateCommand::nextUndoCommandIsCreateBorder (commandHistory ()))
-                    commandHistory ()->setNextUndoCommand (createCommand);
-                else
-                    commandHistory ()->addCommand (createCommand,
-                                                   false/*no exec - user already dragged out sel*/);
-
-
-                cmd->addCommand (m_currentPullFromDocumentCommand);
-                m_currentPullFromDocumentCommand = 0;
+                commandHistory ()->addCommand (createCommand,
+                    false/*no exec - user already dragged out sel*/);
             }
+
+
+            cmd->addCommand (m_currentPullFromDocumentCommand);
+            m_currentPullFromDocumentCommand = 0;
         }
 
         if (m_currentMoveCommand)
@@ -1274,7 +1289,8 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/,
 void kpToolSelection::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL_SELECTION && 0
-    kDebug () << "kpToolSelection::keyPressEvent(e->text='" << e->text () << "')" << endl;
+    kDebug () << "kpToolSelection::keyPressEvent(e->text='"
+              << e->text () << "')" << endl;
 #endif
 
 
@@ -1286,7 +1302,8 @@ void kpToolSelection::keyPressEvent (QKeyEvent *e)
          e->key () == Qt::Key_Escape)
     {
     #if DEBUG_KP_TOOL_SELECTION && 0
-        kDebug () << "\tescape pressed with sel when not begun draw - deselecting" << endl;
+        kDebug () << "\tescape pressed with sel when not begun draw - deselecting"
+                  << endl;
     #endif
 
         pushOntoDocument ();
