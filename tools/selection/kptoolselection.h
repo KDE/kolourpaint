@@ -42,6 +42,7 @@ class QTimer;
 
 class kpColor;
 class kpMainWindow;
+class kpSelection;
 class kpToolSelectionCreateCommand;
 class kpToolSelectionMoveCommand;
 class kpToolSelectionPullFromDocumentCommand;
@@ -122,6 +123,29 @@ protected slots:
 private:
     void create (QPoint thisPoint, QRect normalizedRect);
     void move (QPoint thisPoint, QRect normalizedRect);
+    
+    // The selection before any resizing/scaling (before the sequence of
+    // drags, where the mouse has been held down) is <oldWidth>x<oldHeight>.
+    //
+    // resizeScaleCalculateNewSelectionPosSize() calls us with what the
+    // <newWidth>x<newHeight> should be, but before any aspect maintenance
+    // operations.
+    //
+    // <horizontalGripDragged> specifies whether a horizontal grip is being
+    // dragged.  <verticalGripDragged> specifies whether a vertical grip is
+    // being dragged.
+    //
+    // The method should output its attempt at maintaining the aspect ratio.
+    // We say "attempt" because it is constrained by the minimum allowed
+    // size of the selection.
+    void resizeScaleTryKeepAspect (int newWidth, int newHeight,
+        bool horizontalGripDragged, bool verticalGripDragged,
+        const kpSelection &originalSelection,
+        int *newWidthOut, int *newHeightOut);
+    void resizeScaleCalculateNewSelectionPosSize (
+        const kpSelection &originalSelection,
+        int *newX, int *newY,
+        int *newWidth, int *newHeight);
     void resizeScale (QPoint thisPoint, QRect normalizedRect);
 public:
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint,
@@ -139,6 +163,11 @@ private:
 public:
     virtual void cancelShape ();
     virtual void releasedAllButtons ();
+protected:
+    // Returns what the name of the operation that moves - but does not smear
+    // (not holding SHIFT) - the selection.
+    virtual QString nonSmearMoveCommandName () const;
+public:
     virtual void endDraw (const QPoint &thisPoint, const QRect &normalizedRect);
 
 protected:

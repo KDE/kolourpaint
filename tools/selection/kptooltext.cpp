@@ -242,6 +242,12 @@ void kpToolText::cancelShape ()
     else
         kpToolSelection::cancelShape ();
 }
+    
+// protected virtual [base kpToolSelection]
+QString kpToolText::nonSmearMoveCommandName () const
+{
+    return i18n ("Text: Move Box");
+}
 
 // public virtual [base kpTool]
 void kpToolText::endShape (const QPoint &thisPoint, const QRect &normalizedRect)

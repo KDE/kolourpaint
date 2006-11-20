@@ -888,6 +888,126 @@ void kpToolSelection::move (QPoint thisPoint, QRect /*normalizedRect*/)
 }
 
 // private
+void kpToolSelection::resizeScaleTryKeepAspect (int newWidth, int newHeight,
+        bool horizontalGripDragged, bool verticalGripDragged,
+        const kpSelection &originalSelection,
+        int *newWidthOut, int *newHeightOut)
+{
+    const int oldWidth = originalSelection.width (),
+        oldHeight = originalSelection.height ();
+        
+    // Width changed more than height?  At equality, favor width.
+    // Fix width, change height.
+    //
+    // We use <horizontalGripDragged> and <verticalGripDragged> to prevent
+    // e.g. the situation where we've dragged such that newWidth < oldWidth but
+    // we're not dragging a vertical grip.  We certainly don't want this
+    // code to modify the width - we want to fix the width and change the
+    // height.
+    if ((horizontalGripDragged ? double (newWidth) / oldWidth : 0) >=
+        (verticalGripDragged ? double (newHeight) / oldHeight : 0))
+    {
+        *newHeightOut = newWidth * oldHeight / oldWidth;
+        *newHeightOut = qMax (originalSelection.minimumHeight (), *newHeightOut);
+    }
+    // Height changed more than width?
+    // Fix height, change width.
+    else
+    {
+        *newWidthOut = newHeight * oldWidth / oldHeight;
+        *newWidthOut = qMax (originalSelection.minimumWidth (), *newWidthOut);
+    }
+}
+
+// private
+void kpToolSelection::resizeScaleCalculateNewSelectionPosSize (
+        const kpSelection &originalSelection,
+        int *newX, int *newY,
+        int *newWidth, int *newHeight)
+{
+    //
+    // Determine new width.
+    //
+
+    // Dragging left or right grip?
+    // If left, positive X drags decrease width.
+    // If right, positive X drags increase width.
+    int userXSign = 0;
+    if (m_resizeScaleType & kpView::Left)
+        userXSign = -1;
+    else if (m_resizeScaleType & kpView::Right)
+        userXSign = +1;
+
+    // Calcluate new width.
+    *newWidth = originalSelection.width () +
+        userXSign * (m_currentPoint.x () - m_startPoint.x ());
+
+    // Don't allow new width to be less than that kind of selection type's
+    // minimum.
+    *newWidth = qMax (originalSelection.minimumWidth (), *newWidth);
+
+
+    //
+    // Determine new height.
+    //
+
+    // Dragging top or bottom grip?
+    // If top, positive Y drags decrease height.
+    // If bottom, positive Y drags increase height.
+    int userYSign = 0;
+    if (m_resizeScaleType & kpView::Top)
+        userYSign = -1;
+    else if (m_resizeScaleType & kpView::Bottom)
+        userYSign = +1;
+
+    // Calcluate new height.
+    *newHeight = originalSelection.height () +
+        userYSign * (m_currentPoint.y () - m_startPoint.y ());
+
+    // Don't allow new height to be less than that kind of selection type's
+    // minimum.
+    *newHeight = qMax (originalSelection.minimumHeight (), *newHeight);
+
+
+    // Keep aspect ratio?
+    if (m_shiftPressed)
+    {
+        resizeScaleTryKeepAspect (*newWidth, *newHeight,
+            (userXSign != 0)/*X or XY grip dragged*/,
+                (userYSign != 0)/*Y or XY grip dragged*/,
+            originalSelection,
+            newWidth/*ptr*/, newHeight/*ptr*/);
+    }
+
+
+    *newX = originalSelection.x ();
+    *newY = originalSelection.y ();
+
+
+    //
+    // Adjust x/y to new width/height for left/top resizes.
+    //
+    
+    if (m_resizeScaleType & kpView::Left)
+    {
+        *newX -= (*newWidth - originalSelection.width ());
+    }
+
+    if (m_resizeScaleType & kpView::Top)
+    {
+        *newY -= (*newHeight - originalSelection.height ());
+    }
+
+#if DEBUG_KP_TOOL_SELECTION && 1
+    kDebug () << "\t\tnewX=" << *newX
+                << " newY=" << *newY
+                << " newWidth=" << *newWidth
+                << " newHeight=" << *newHeight
+                << endl;
+#endif
+}
+
+// private
 void kpToolSelection::resizeScale (QPoint thisPoint, QRect /*normalizedRect*/)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
@@ -924,80 +1044,17 @@ void kpToolSelection::resizeScale (QPoint thisPoint, QRect /*normalizedRect*/)
 
 
     kpSelection originalSelection = m_currentResizeScaleCommand->originalSelection ();
-    const int oldWidth = originalSelection.width ();
-    const int oldHeight = originalSelection.height ();
 
 
-    // Determine new width.
+    // There is nothing illegal about position (-1,-1) but why not.
+    int newX = -1, newY = -1,
+        newWidth = 0, newHeight = 0;
 
-    int userXSign = 0;
-    if (m_resizeScaleType & kpView::Left)
-        userXSign = -1;
-    else if (m_resizeScaleType & kpView::Right)
-        userXSign = +1;
-
-    int newWidth = oldWidth + userXSign * (thisPoint.x () - m_startPoint.x ());
-
-    newWidth = qMax (originalSelection.minimumWidth (), newWidth);
-
-
-    // Determine new height.
-
-    int userYSign = 0;
-    if (m_resizeScaleType & kpView::Top)
-        userYSign = -1;
-    else if (m_resizeScaleType & kpView::Bottom)
-        userYSign = +1;
-
-    int newHeight = oldHeight + userYSign * (thisPoint.y () - m_startPoint.y ());
-
-    newHeight = qMax (originalSelection.minimumHeight (), newHeight);
-
-
-    // Keep aspect ratio?
-    if (m_shiftPressed)
-    {
-        // Width changed more than height?  At equality, favor width.
-        // Fix width, change height.
-        if ((userXSign ? double (newWidth) / oldWidth : 0) >=
-            (userYSign ? double (newHeight) / oldHeight : 0))
-        {
-            newHeight = newWidth * oldHeight / oldWidth;
-            newHeight = qMax (originalSelection.minimumHeight (),
-                                newHeight);
-        }
-        // Height changed more than width?
-        // Fix height, change width.
-        else
-        {
-            newWidth = newHeight * oldWidth / oldHeight;
-            newWidth = qMax (originalSelection.minimumWidth (), newWidth);
-        }
-    }
-
-
-    // Adjust x/y to new width/height for left/top resizes.
-
-    int newX = originalSelection.x ();
-    int newY = originalSelection.y ();
-
-    if (m_resizeScaleType & kpView::Left)
-    {
-        newX -= (newWidth - originalSelection.width ());
-    }
-
-    if (m_resizeScaleType & kpView::Top)
-    {
-        newY -= (newHeight - originalSelection.height ());
-    }
-
-#if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "\t\tnewX=" << newX
-                << " newY=" << newY
-                << " newWidth=" << newWidth
-                << " newHeight=" << newHeight
-                << endl;
-#endif
+    // This should change all of the above values.
+    resizeScaleCalculateNewSelectionPosSize (
+        originalSelection,
+        &newX, &newY,
+        &newWidth, &newHeight);
 
 
     viewManager ()->setFastUpdates ();
@@ -1171,6 +1228,12 @@ void kpToolSelection::releasedAllButtons ()
     setUserMessage (haventBegunDrawUserMessage ());
 }
 
+// protected virtual
+QString kpToolSelection::nonSmearMoveCommandName () const
+{
+    return i18n ("Selection: Move");
+}
+
 // virtual
 void kpToolSelection::endDraw (const QPoint & /*thisPoint*/,
         const QRect & /*normalizedRect*/)
@@ -1199,9 +1262,7 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/,
             else
             {
                 cmd = new kpMacroCommand (
-                    (document ()->selection ()->isText () ?
-                        i18n ("Text: Move Box") :
-                        i18n ("Selection: Move")),
+                    /*virtual*/nonSmearMoveCommandName (),
                     mainWindow ());
             }
 

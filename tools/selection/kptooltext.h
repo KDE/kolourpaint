@@ -116,6 +116,9 @@ protected:
 
 public:
     virtual void cancelShape ();
+protected:
+    virtual QString nonSmearMoveCommandName () const;
+public:
     virtual void endShape (const QPoint &thisPoint, const QRect &normalizedRect);
 
 
