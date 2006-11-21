@@ -50,6 +50,7 @@ class kpToolSelectionResizeScaleCommand;
 class kpToolWidgetOpaqueOrTransparent;
 
 
+// TODO: push down more functionality into kpToolText
 class kpToolSelection : public kpTool
 {
 Q_OBJECT
@@ -202,7 +203,7 @@ protected:
     kpToolSelectionResizeScaleCommand *m_currentResizeScaleCommand;
     kpToolWidgetOpaqueOrTransparent *m_toolWidgetOpaqueOrTransparent;
 
-    kpToolSelectionCreateCommand *m_currentCreateTextCommand;
+    kpToolSelectionCreateCommand *m_currentCreateTextCommand;  // TODO: push down into kpToolText
     bool m_cancelledShapeButStillHoldingButtons;
 
     QTimer *m_createNOPTimer, *m_RMBMoveUpdateGUITimer;
