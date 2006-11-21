@@ -898,8 +898,8 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     m_shiftPressed = (e->modifiers () & Qt::ShiftModifier);
     m_controlPressed = (e->modifiers () & Qt::ControlModifier);
     m_altPressed = (e->modifiers () & Qt::AltModifier);
-    m_startPoint = m_currentPoint = view ? view->transformViewToDoc (e->pos ()) : QPoint (-1, -1);
-    m_currentViewPoint = view ? e->pos () : QPoint (-1, -1);
+    m_startPoint = m_currentPoint = view->transformViewToDoc (e->pos ());
+    m_currentViewPoint = e->pos ();
     m_viewUnderStartPoint = view;
     m_lastPoint = QPoint (-1, -1);
 
