@@ -26,40 +26,43 @@
 */
 
 
-#ifndef KP_TOOL_FLOOD_FILL_H
-#define KP_TOOL_FLOOD_FILL_H
+#ifndef kpToolFloodFillCommand_H
+#define kpToolFloodFillCommand_H
 
 
-#include <kptool.h>
+#include <kpcommandhistory.h>
+#include <kpfloodfill.h>
 
 
+class kpColor;
 class kpMainWindow;
 
 
-struct kpToolFloodFillPrivate;
+struct kpToolFloodFillCommandPrivate;
 
-class kpToolFloodFill : public kpTool
+class kpToolFloodFillCommand : public kpCommand, public kpFloodFill
 {
-Q_OBJECT
-
 public:
-    kpToolFloodFill (kpMainWindow *);
-    virtual ~kpToolFloodFill ();
+    kpToolFloodFillCommand (int x, int y,
+                            const kpColor &color, int processedColorSimilarity,
+                            kpMainWindow *mainWindow);
+    virtual ~kpToolFloodFillCommand ();
+    
+    virtual QString name () const;
+
+    virtual int size () const;
+
+    // Optimisation hack: filling a fresh, unmodified document does not require
+    //                    reading any pixels - just set the whole document to
+    //                    <color>.
+    void setFillEntirePixmap (bool yes = true);
+
+    virtual void execute ();
+    virtual void unexecute ();
 
 private:
-    QString haventBegunDrawUserMessage () const;
-
-public:
-    virtual void begin ();
-    virtual void beginDraw ();
-    virtual void draw (const QPoint &thisPoint, const QPoint &, const QRect &);
-    virtual void cancelShape ();
-    virtual void releasedAllButtons ();
-    virtual void endDraw (const QPoint &, const QRect &);
-
-private:
-    kpToolFloodFillPrivate * const d;
+    kpToolFloodFillCommandPrivate * const d;
 };
 
 
-#endif  // KP_TOOL_FLOOD_FILL_H
+#endif  // kpToolFloodFillCommand_H

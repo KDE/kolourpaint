@@ -26,40 +26,69 @@
 */
 
 
-#ifndef KP_TOOL_FLOOD_FILL_H
-#define KP_TOOL_FLOOD_FILL_H
+#define DEBUG_KP_TOOL_COLOR_PICKER 0
 
 
-#include <kptool.h>
+#include <kpToolColorPickerCommand.h>
+
+#include <klocale.h>
+
+#include <kpcolortoolbar.h>
+#include <kpdefs.h>
+#include <kpmainwindow.h>
 
 
-class kpMainWindow;
-
-
-struct kpToolFloodFillPrivate;
-
-class kpToolFloodFill : public kpTool
+kpToolColorPickerCommand::kpToolColorPickerCommand (
+        int mouseButton,
+        const kpColor &newColor,
+        const kpColor &oldColor,
+        kpMainWindow *mainWindow)
+        
+    : kpCommand (mainWindow),
+      m_mouseButton (mouseButton),
+      m_newColor (newColor),
+      m_oldColor (oldColor)
 {
-Q_OBJECT
+}
 
-public:
-    kpToolFloodFill (kpMainWindow *);
-    virtual ~kpToolFloodFill ();
-
-private:
-    QString haventBegunDrawUserMessage () const;
-
-public:
-    virtual void begin ();
-    virtual void beginDraw ();
-    virtual void draw (const QPoint &thisPoint, const QPoint &, const QRect &);
-    virtual void cancelShape ();
-    virtual void releasedAllButtons ();
-    virtual void endDraw (const QPoint &, const QRect &);
-
-private:
-    kpToolFloodFillPrivate * const d;
-};
+kpToolColorPickerCommand::~kpToolColorPickerCommand ()
+{
+}
 
 
-#endif  // KP_TOOL_FLOOD_FILL_H
+// public virtual [base kpCommand]
+QString kpToolColorPickerCommand::name () const
+{
+    return i18n ("Color Picker");
+}
+
+
+// public virtual [base kpCommand]
+int kpToolColorPickerCommand::size () const
+{
+    return 0;
+}
+
+
+// public virtual [base kpCommand]
+void kpToolColorPickerCommand::execute ()
+{
+    colorToolBar ()->setColor (m_mouseButton, m_newColor);
+}
+
+// public virtual [base kpCommand]
+void kpToolColorPickerCommand::unexecute ()
+{
+    colorToolBar ()->setColor (m_mouseButton, m_oldColor);
+}
+
+
+// private
+kpColorToolBar *kpToolColorPickerCommand::colorToolBar () const
+{
+    Q_ASSERT (m_mainWindow);
+    return m_mainWindow->colorToolBar ();
+}
+
+
+#include <kpToolColorPickerCommand.moc>

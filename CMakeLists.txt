@@ -68,6 +68,8 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/coloreffects/kptoolclearcommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/coloreffects/kptoolconverttograyscale.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/flow/kptoolflowcommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/kpToolColorPickerCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/kpToolFloodFillCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/rectangular/kptoolrectangularcommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/kpToolSelectionCreateCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/kpToolSelectionDestroyCommand.cpp

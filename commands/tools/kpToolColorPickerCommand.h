@@ -26,40 +26,40 @@
 */
 
 
-#ifndef KP_TOOL_FLOOD_FILL_H
-#define KP_TOOL_FLOOD_FILL_H
+#ifndef kpToolColorPickerCommand_H
+#define kpToolColorPickerCommand_H
 
 
-#include <kptool.h>
+#include <kpcolor.h>
+#include <kpcommandhistory.h>
 
 
-class kpMainWindow;
+class kpColorToolBar;
 
 
-struct kpToolFloodFillPrivate;
-
-class kpToolFloodFill : public kpTool
+class kpToolColorPickerCommand : public kpCommand
 {
-Q_OBJECT
-
 public:
-    kpToolFloodFill (kpMainWindow *);
-    virtual ~kpToolFloodFill ();
+    kpToolColorPickerCommand (int mouseButton,
+                              const kpColor &newColor, const kpColor &oldColor,
+                              kpMainWindow *mainWindow);
+    virtual ~kpToolColorPickerCommand ();
+
+    virtual QString name () const;
+
+    virtual int size () const;
+
+    virtual void execute ();
+    virtual void unexecute ();
 
 private:
-    QString haventBegunDrawUserMessage () const;
-
-public:
-    virtual void begin ();
-    virtual void beginDraw ();
-    virtual void draw (const QPoint &thisPoint, const QPoint &, const QRect &);
-    virtual void cancelShape ();
-    virtual void releasedAllButtons ();
-    virtual void endDraw (const QPoint &, const QRect &);
-
+    kpColorToolBar *colorToolBar () const;
+    
 private:
-    kpToolFloodFillPrivate * const d;
+    int m_mouseButton;
+    kpColor m_newColor;
+    kpColor m_oldColor;
 };
 
 
-#endif  // KP_TOOL_FLOOD_FILL_H
+#endif  // kpToolColorPickerCommand_H

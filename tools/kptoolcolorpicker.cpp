@@ -31,24 +31,16 @@
 
 #include <kptoolcolorpicker.h>
 
-#include <qimage.h>
-#include <qpixmap.h>
-#include <qpoint.h>
-
 #include <kdebug.h>
 #include <klocale.h>
 
 #include <kpcolortoolbar.h>
-#include <kpcommandhistory.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
+#include <kpToolColorPickerCommand.h>
 
-
-//
-// kpToolColorPicker
-//
 
 kpToolColorPicker::kpToolColorPicker (kpMainWindow *mainWindow)
     : kpTool (i18n ("Color Picker"), i18n ("Lets you select a color from the image"),
@@ -61,6 +53,8 @@ kpToolColorPicker::~kpToolColorPicker ()
 {
 }
 
+
+// private
 kpColor kpToolColorPicker::colorAtPixel (const QPoint &p)
 {
 #if DEBUG_KP_TOOL_COLOR_PICKER && 0
@@ -71,17 +65,20 @@ kpColor kpToolColorPicker::colorAtPixel (const QPoint &p)
 }
 
 
+// private
 QString kpToolColorPicker::haventBegunDrawUserMessage () const
 {
     return i18n ("Click to select a color.");
 }
 
+
+// public virtual [base kpTool]
 void kpToolColorPicker::begin ()
 {
     setUserMessage (haventBegunDrawUserMessage ());
 }
 
-// virtual
+// public virtual [base kpTool]
 void kpToolColorPicker::beginDraw ()
 {
     m_oldColor = color (m_mouseButton);
@@ -89,7 +86,7 @@ void kpToolColorPicker::beginDraw ()
     setUserMessage (cancelUserMessage ());
 }
 
-// virtual
+// public virtual [base kpTool]
 void kpToolColorPicker::draw (const QPoint &thisPoint, const QPoint &, const QRect &)
 {
     const kpColor color = colorAtPixel (thisPoint);
@@ -106,7 +103,7 @@ void kpToolColorPicker::draw (const QPoint &thisPoint, const QPoint &, const QRe
     }
 }
 
-// virtual
+// public virtual [base kpTool]
 void kpToolColorPicker::cancelShape ()
 {
     mainWindow ()->colorToolBar ()->setColor (m_mouseButton, m_oldColor);
@@ -114,23 +111,25 @@ void kpToolColorPicker::cancelShape ()
     setUserMessage (i18n ("Let go of all the mouse buttons."));
 }
 
+// public virtual [base kpTool]
 void kpToolColorPicker::releasedAllButtons ()
 {
     setUserMessage (haventBegunDrawUserMessage ());
 
 }
 
-// virtual
+// public virtual [base kpTool]
 void kpToolColorPicker::endDraw (const QPoint &thisPoint, const QRect &)
 {
     const kpColor color = colorAtPixel (thisPoint);
 
     if (color.isValid ())
     {
-        kpToolColorPickerCommand *cmd = new kpToolColorPickerCommand (
-                                                m_mouseButton,
-                                                color, m_oldColor,
-                                                mainWindow ());
+        kpToolColorPickerCommand *cmd =
+            new kpToolColorPickerCommand (
+                m_mouseButton,
+                color, m_oldColor,
+                mainWindow ());
 
         mainWindow ()->commandHistory ()->addCommand (cmd, false/*no exec*/);
         setUserMessage (haventBegunDrawUserMessage ());
@@ -139,61 +138,6 @@ void kpToolColorPicker::endDraw (const QPoint &thisPoint, const QRect &)
     {
         cancelShape ();
     }
-}
-
-
-//
-// kpToolColorPickerCommand
-//
-
-kpToolColorPickerCommand::kpToolColorPickerCommand (int mouseButton,
-                                                    const kpColor &newColor,
-                                                    const kpColor &oldColor,
-                                                    kpMainWindow *mainWindow)
-    : kpCommand (mainWindow),
-      m_mouseButton (mouseButton),
-      m_newColor (newColor),
-      m_oldColor (oldColor)
-{
-}
-
-kpToolColorPickerCommand::~kpToolColorPickerCommand ()
-{
-}
-
-
-// public virtual [base kpCommand]
-QString kpToolColorPickerCommand::name () const
-{
-    return i18n ("Color Picker");
-}
-
-
-// public virtual [base kpCommand]
-int kpToolColorPickerCommand::size () const
-{
-    return 0;
-}
-
-
-// public virtual [base kpCommand]
-void kpToolColorPickerCommand::execute ()
-{
-    colorToolBar ()->setColor (m_mouseButton, m_newColor);
-}
-
-// public virtual [base kpCommand]
-void kpToolColorPickerCommand::unexecute ()
-{
-    colorToolBar ()->setColor (m_mouseButton, m_oldColor);
-}
-
-
-// private
-kpColorToolBar *kpToolColorPickerCommand::colorToolBar () const
-{
-    Q_ASSERT (m_mainWindow);
-    return m_mainWindow->colorToolBar ();
 }
 
 
