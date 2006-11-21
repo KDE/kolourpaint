@@ -124,7 +124,10 @@ void kpToolText::setAllCommandPointersToZero ()
 void kpToolText::addNewBackspaceCommand (kpToolTextBackspaceCommand **cmd)
 {
     if (hasBegunShape ())
-        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+    {
+        endShape (m_currentPoint,
+            kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+    }
     
     *cmd = new kpToolTextBackspaceCommand (i18n ("Text: Backspace"),
                 viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
@@ -137,7 +140,10 @@ void kpToolText::addNewBackspaceCommand (kpToolTextBackspaceCommand **cmd)
 void kpToolText::addNewDeleteCommand (kpToolTextDeleteCommand **cmd)
 {
     if (hasBegunShape ())
-        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+    {
+        endShape (m_currentPoint,
+            kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+    }
 
     *cmd = new kpToolTextDeleteCommand (i18n ("Text: Delete"),
                 viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
