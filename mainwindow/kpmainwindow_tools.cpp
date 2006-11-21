@@ -55,7 +55,7 @@
 #include <kptoolfreeformselection.h>
 #include <kptoolline.h>
 #include <kptoolpen.h>
-#include <kptoolpolygon.h>
+#include <kpToolPolygon.h>
 #include <kptoolpolyline.h>
 #include <kptoolrectangle.h>
 #include <kptoolrectselection.h>

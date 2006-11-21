@@ -32,11 +32,13 @@
 
 
 kpToolCurve::kpToolCurve (kpMainWindow *mainWindow)
-    : kpToolPolygon (Curve,
-                     i18n ("Curve"),
-                     i18n ("Draws curves"),
-                     Qt::Key_V,
-                     mainWindow, "tool_curve")
+    : kpToolPolygonalBase (
+        Curve,
+        i18n ("Curve"),
+        i18n ("Draws curves"),
+        Qt::Key_V,
+        mainWindow,
+        "tool_curve")
 {
 }
 
@@ -45,7 +47,7 @@ kpToolCurve::~kpToolCurve ()
 }
 
 
-// private virtual [base kpTool]
+// private virtual [base kpToolPolygonalBase]
 QString kpToolCurve::haventBegunShapeUserMessage () const
 {
     return i18n ("Drag out the start and end points.");

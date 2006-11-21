@@ -26,8 +26,8 @@
 */
 
 
-#ifndef KP_TOOL_POLYGON_H
-#define KP_TOOL_POLYGON_H
+#ifndef kpToolPolygonalCommand_H
+#define kpToolPolygonalCommand_H
 
 
 #include <qbrush.h>
@@ -41,6 +41,7 @@
 #include <kpcolor.h>
 #include <kpcommandhistory.h>
 #include <kptool.h>
+#include <kpToolPolygonalBase.h>
 #include <kptoolwidgetfillstyle.h>
 
 
@@ -60,83 +61,20 @@ class kpToolWidgetLineWidth;
 class kpViewManager;
 
 
-struct kpToolPolygonPrivate;
+struct kpToolPolygonalCommandPrivate;
 
-class kpToolPolygon : public kpTool
-{
-Q_OBJECT
-
-public:
-    // TODO: awful - needs inheritance, all subclasses and I need to derive from
-    //       a class kpToolPolygonalBase.
-    enum Mode
-    {
-        Polygon, Polyline, Line, Curve
-    };
-
-    kpToolPolygon (Mode mode, const QString &text, const QString &description,
-                   int key,
-                   kpMainWindow *mainWindow, const QString &name);
-    kpToolPolygon (kpMainWindow *mainWindow);
-    virtual ~kpToolPolygon ();
-
-    void setMode (Mode mode);
-
-    virtual bool careAboutModifierState () const { return true; }
-
-private:
-    virtual QString haventBegunShapeUserMessage () const;
-
-public:
-    virtual void begin ();
-    virtual void end ();
-
-    virtual void beginDraw ();
-private:
-    void applyModifiers ();
-protected:
-    QPolygon *points () const;
-public:
-    virtual void draw (const QPoint &, const QPoint &, const QRect &);
-private:
-    kpColor drawingForegroundColor () const;
-    kpColor drawingBackgroundColor () const;
-    void updateShape ();
-public:
-    virtual void cancelShape ();
-    virtual void releasedAllButtons ();
-    virtual void endDraw (const QPoint &, const QRect &);
-    virtual void endShape (const QPoint & = QPoint (), const QRect & = QRect ());
-
-    virtual bool hasBegunShape () const;
-
-public slots:
-    void slotLineWidthChanged ();
-    void slotFillStyleChanged ();
-
-protected slots:
-    virtual void slotForegroundColorChanged (const kpColor &);
-    virtual void slotBackgroundColorChanged (const kpColor &);
-
-private:
-    kpToolPolygonPrivate * const d;
-
-};
-
-struct kpToolPolygonCommandPrivate;
-
-class kpToolPolygonCommand : public kpNamedCommand
+class kpToolPolygonalCommand : public kpNamedCommand
 {
 public:
-    kpToolPolygonCommand (const QString &name,
+    kpToolPolygonalCommand (const QString &name,
         const QPolygon &points,
         const QRect &normalizedRect,
         const kpColor &foregroundColor, int penWidth,
         const kpColor &backgroundColor,
         const QPixmap &originalArea,
-        enum kpToolPolygon::Mode mode,
+        enum kpToolPolygonalBase::Mode mode,
         kpMainWindow *mainWindow);
-    virtual ~kpToolPolygonCommand ();
+    virtual ~kpToolPolygonalCommand ();
 
     virtual int size () const;
     
@@ -144,9 +82,9 @@ public:
     virtual void unexecute ();
 
 private:
-    kpToolPolygonCommandPrivate * const d;
-    kpToolPolygonCommand &operator= (const kpToolPolygonCommand &) const;
+    kpToolPolygonalCommandPrivate * const d;
+    kpToolPolygonalCommand &operator= (const kpToolPolygonalCommand &) const;
 };
 
 
-#endif  // KP_TOOL_POLYGON_H
+#endif  // kpToolPolygonalCommand_H

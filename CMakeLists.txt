@@ -70,6 +70,7 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/flow/kptoolflowcommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/kpToolColorPickerCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/kpToolFloodFillCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/polygon/kpToolPolygonalCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/rectangular/kptoolrectangularcommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/kpToolSelectionCreateCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/kpToolSelectionDestroyCommand.cpp
@@ -144,7 +145,8 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolfloodfill.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal/kptoolcurve.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal/kptoolline.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal/kptoolpolygon.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal/kpToolPolygonalBase.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal/kpToolPolygon.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal/kptoolpolyline.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/rectangular/kptoolellipse.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/rectangular/kptoolrectangle.cpp

@@ -32,11 +32,13 @@
 
 
 kpToolLine::kpToolLine (kpMainWindow *mainWindow)
-    : kpToolPolygon (Line,
-                     i18n ("Line"),
-                     i18n ("Draws lines"),
-                     Qt::Key_L,
-                     mainWindow, "tool_line")
+    : kpToolPolygonalBase (
+        Line,
+        i18n ("Line"),
+        i18n ("Draws lines"),
+        Qt::Key_L,
+        mainWindow,
+        "tool_line")
 {
 }
 
@@ -45,7 +47,7 @@ kpToolLine::~kpToolLine ()
 }
 
 
-// private virtual [base kpTool]
+// private virtual [base kpToolPolygonalBase]
 QString kpToolLine::haventBegunShapeUserMessage () const
 {
     return i18n ("Drag to draw.");

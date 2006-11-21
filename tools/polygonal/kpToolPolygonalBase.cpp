@@ -29,7 +29,7 @@
 #define DEBUG_KP_TOOL_POLYGON 0
 
 
-#include <kptoolpolygon.h>
+#include <kpToolPolygonalBase.h>
 
 #include <float.h>
 #include <math.h>
@@ -57,19 +57,20 @@
 #include <kppainter.h>
 #include <kppixmapfx.h>
 #include <kptemppixmap.h>
+#include <kpToolPolygonalCommand.h>
 #include <kptooltoolbar.h>
 #include <kptoolwidgetlinewidth.h>
 #include <kpviewmanager.h>
 
 
-static kpImage image (const QPixmap &oldImage,
+kpImage kpToolPolygonalBaseImage (const QPixmap &oldImage,
         const QPolygon &points, const QRect &rect,
         const kpColor &foregroundColor, int penWidth,
         kpColor backgroundColor,
-        enum kpToolPolygon::Mode mode, bool final = true)
+        enum kpToolPolygonalBase::Mode mode, bool final)
 {
 #if DEBUG_KP_TOOL_POLYGON
-    kDebug () << "kptoolpolygon.cpp: image(): points=" << points.toList () << endl;
+    kDebug () << "kptoolpolygonalbase.cpp: image(): points=" << points.toList () << endl;
 #endif
 
     kpImage image = oldImage;
@@ -81,14 +82,14 @@ static kpImage image (const QPixmap &oldImage,
 
     switch (mode)
     {
-    case kpToolPolygon::Line:
-    case kpToolPolygon::Polyline:
+    case kpToolPolygonalBase::Line:
+    case kpToolPolygonalBase::Polyline:
         kpPainter::drawPolyline (&image,
             pointsInRect,
             foregroundColor, penWidth);
         break;
 
-    case kpToolPolygon::Polygon:
+    case kpToolPolygonalBase::Polygon:
         kpPainter::drawPolygon (&image,
             pointsInRect,
             foregroundColor, penWidth,
@@ -96,7 +97,7 @@ static kpImage image (const QPixmap &oldImage,
             final);
         break;
 
-    case kpToolPolygon::Curve:
+    case kpToolPolygonalBase::Curve:
     {
         const QPoint startPoint = pointsInRect [0];
         const QPoint endPoint = pointsInRect [1];
@@ -123,7 +124,7 @@ static kpImage image (const QPixmap &oldImage,
             break;
 
         default:
-            kError () << "kptoolpolygon.cpp:image() pointsInRect.count="
+            kError () << "kptoolpolygonalbase.cpp:image() pointsInRect.count="
                 << pointsInRect.count () << endl;
             break;
         }
@@ -140,18 +141,18 @@ static kpImage image (const QPixmap &oldImage,
 
 
 //
-// kpToolPolygon
+// kpToolPolygonalBase
 //
 
-struct kpToolPolygonPrivate
+struct kpToolPolygonalBasePrivate
 {
-    kpToolPolygonPrivate ()
+    kpToolPolygonalBasePrivate ()
         : toolWidgetFillStyle (0),
           toolWidgetLineWidth (0)
     {
     }
     
-    kpToolPolygon::Mode mode;
+    kpToolPolygonalBase::Mode mode;
 
     kpToolWidgetFillStyle *toolWidgetFillStyle;
     kpToolWidgetLineWidth *toolWidgetLineWidth;
@@ -164,50 +165,44 @@ struct kpToolPolygonPrivate
     QPolygon points;
 };
 
-kpToolPolygon::kpToolPolygon (Mode mode,
+kpToolPolygonalBase::kpToolPolygonalBase (Mode mode,
                               const QString &text, const QString &description,
                               int key,
                               kpMainWindow *mainWindow, const QString &name)
     : kpTool (text, description, key, mainWindow, name),
-      d (new kpToolPolygonPrivate ())
+      d (new kpToolPolygonalBasePrivate ())
 {
     d->mode = mode;
 }
 
-kpToolPolygon::kpToolPolygon (kpMainWindow *mainWindow)
+kpToolPolygonalBase::kpToolPolygonalBase (kpMainWindow *mainWindow)
     : kpTool (i18n ("Polygon"), i18n ("Draws polygons"),
               Qt::Key_G,
               mainWindow, "tool_polygon"),
-      d (new kpToolPolygonPrivate ())
+      d (new kpToolPolygonalBasePrivate ())
 {
     d->mode = Polygon;
 }
 
-kpToolPolygon::~kpToolPolygon ()
+kpToolPolygonalBase::~kpToolPolygonalBase ()
 {
     delete d;
 }
 
-void kpToolPolygon::setMode (Mode m)
+void kpToolPolygonalBase::setMode (Mode m)
 {
     d->mode = m;
 }
 
 
-// private virtual [base kpTool]
-QString kpToolPolygon::haventBegunShapeUserMessage () const
-{
-    return i18n ("Drag to draw the first line.");
-}
-
 // virtual
-void kpToolPolygon::begin ()
+void kpToolPolygonalBase::begin ()
 {
     kpToolToolBar *tb = toolToolBar ();
     Q_ASSERT (tb);
 
 #if DEBUG_KP_TOOL_POLYGON
-    kDebug () << "kpToolPolygon::begin() tb=" << tb << endl;
+    kDebug () << "kpToolPolygonalBase::begin() tb=" << tb << endl;
 #endif
 
     if (d->mode == Polygon)
@@ -231,11 +226,11 @@ void kpToolPolygon::begin ()
 
     d->originatingMouseButton = -1;
 
-    setUserMessage (haventBegunShapeUserMessage ());
+    setUserMessage (/*virtual*/haventBegunShapeUserMessage ());
 }
 
 // virtual
-void kpToolPolygon::end ()
+void kpToolPolygonalBase::end ()
 {
     endShape ();
 
@@ -261,10 +256,10 @@ void kpToolPolygon::end ()
 }
 
 
-void kpToolPolygon::beginDraw ()
+void kpToolPolygonalBase::beginDraw ()
 {
 #if DEBUG_KP_TOOL_POLYGON
-    kDebug () << "kpToolPolygon::beginDraw()  d->points=" << d->points.toList ()
+    kDebug () << "kpToolPolygonalBase::beginDraw()  d->points=" << d->points.toList ()
                << ", startPoint=" << m_startPoint << endl;
 #endif
 
@@ -315,7 +310,7 @@ void kpToolPolygon::beginDraw ()
 }
 
 // private
-void kpToolPolygon::applyModifiers ()
+void kpToolPolygonalBase::applyModifiers ()
 {
     int count = d->points.count ();
 
@@ -323,7 +318,7 @@ void kpToolPolygon::applyModifiers ()
     d->toolLineEndPoint = m_currentPoint;
 
 #if DEBUG_KP_TOOL_POLYGON && 1
-    kDebug () << "kpToolPolygon::applyModifiers() #pts=" << count
+    kDebug () << "kpToolPolygonalBase::applyModifiers() #pts=" << count
                << "   line: startPt=" << d->toolLineStartPoint
                << " endPt=" << d->toolLineEndPoint
                << "   modifiers: shift=" << m_shiftPressed
@@ -434,19 +429,19 @@ void kpToolPolygon::applyModifiers ()
                    d->toolWidgetLineWidth->lineWidth ());
 }
 
-QPolygon *kpToolPolygon::points () const
+QPolygon *kpToolPolygonalBase::points () const
 {
     return &d->points;
 }
 
 // virtual
-void kpToolPolygon::draw (const QPoint &, const QPoint &, const QRect &)
+void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
 {
     if (d->points.count () == 0)
         return;
 
 #if DEBUG_KP_TOOL_POLYGON
-    kDebug () << "kpToolPolygon::draw()  d->points=" << d->points.toList ()
+    kDebug () << "kpToolPolygonalBase::draw()  d->points=" << d->points.toList ()
                << ", endPoint=" << m_currentPoint << endl;
 #endif
 
@@ -473,13 +468,13 @@ void kpToolPolygon::draw (const QPoint &, const QPoint &, const QRect &)
 
 // TODO: code dup with kpToolRectangle
 // private
-kpColor kpToolPolygon::drawingForegroundColor () const
+kpColor kpToolPolygonalBase::drawingForegroundColor () const
 {
     return color (m_mouseButton);
 }
 
 // private
-kpColor kpToolPolygon::drawingBackgroundColor () const
+kpColor kpToolPolygonalBase::drawingBackgroundColor () const
 {
     if (!d->toolWidgetFillStyle)
         return kpColor::Invalid;
@@ -492,7 +487,7 @@ kpColor kpToolPolygon::drawingBackgroundColor () const
 }
 
 // private
-void kpToolPolygon::updateShape ()
+void kpToolPolygonalBase::updateShape ()
 {
     if (d->points.count () == 0)
         return;
@@ -501,7 +496,7 @@ void kpToolPolygon::updateShape ()
         d->toolWidgetLineWidth->lineWidth ());
 
 #if DEBUG_KP_TOOL_POLYGON
-    kDebug () << "kpToolPolygon::updateShape() boundingRect="
+    kDebug () << "kpToolPolygonalBase::updateShape() boundingRect="
                << boundingRect
                << " lineWidth="
                << d->toolWidgetLineWidth->lineWidth ()
@@ -509,7 +504,7 @@ void kpToolPolygon::updateShape ()
 #endif
 
     QPixmap oldPixmap = document ()->getPixmapAt (boundingRect);
-    QPixmap newPixmap = ::image (oldPixmap,
+    QPixmap newPixmap = ::kpToolPolygonalBaseImage (oldPixmap,
         d->points, boundingRect,
         drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
         drawingBackgroundColor (),
@@ -524,7 +519,7 @@ void kpToolPolygon::updateShape ()
 }
 
 // virtual
-void kpToolPolygon::cancelShape ()
+void kpToolPolygonalBase::cancelShape ()
 {
     viewManager ()->invalidateTempPixmap ();
     d->points.resize (0);
@@ -532,19 +527,19 @@ void kpToolPolygon::cancelShape ()
     setUserMessage (i18n ("Let go of all the mouse buttons."));
 }
 
-void kpToolPolygon::releasedAllButtons ()
+void kpToolPolygonalBase::releasedAllButtons ()
 {
     if (!hasBegunShape ())
-        setUserMessage (haventBegunShapeUserMessage ());
+        setUserMessage (/*virtual*/haventBegunShapeUserMessage ());
 
     // --- else case already handled by endDraw() ---
 }
 
 // virtual
-void kpToolPolygon::endDraw (const QPoint &, const QRect &)
+void kpToolPolygonalBase::endDraw (const QPoint &, const QRect &)
 {
 #if DEBUG_KP_TOOL_POLYGON
-    kDebug () << "kpToolPolygon::endDraw()  d->points="
+    kDebug () << "kpToolPolygonalBase::endDraw()  d->points="
         << d->points.toList () << endl;
 #endif
 
@@ -562,7 +557,7 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
         switch (d->mode)
         {
         case Line:
-            kError () << "kpToolPolygon::endDraw() - line not ended" << endl;
+            kError () << "kpToolPolygonalBase::endDraw() - line not ended" << endl;
             setUserMessage ();
             break;
 
@@ -570,7 +565,7 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
         case Polyline:
             if (d->points.isEmpty ())
             {
-                kError () << "kpToolPolygon::endDraw() exception - poly without points" << endl;
+                kError () << "kpToolPolygonalBase::endDraw() exception - poly without points" << endl;
                 setUserMessage ();
             }
             else
@@ -612,14 +607,14 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
             }
             else
             {
-                kError () << "kpToolPolygon::endDraw() exception - points" << endl;
+                kError () << "kpToolPolygonalBase::endDraw() exception - points" << endl;
                 setUserMessage ();
             }
 
             break;
 
         default:
-            kError () << "kpToolPolygon::endDraw() - clueless" << endl;
+            kError () << "kpToolPolygonalBase::endDraw() - clueless" << endl;
             setUserMessage ();
             break;
         }
@@ -627,10 +622,10 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
 }
 
 // public virtual
-void kpToolPolygon::endShape (const QPoint &, const QRect &)
+void kpToolPolygonalBase::endShape (const QPoint &, const QRect &)
 {
 #if DEBUG_KP_TOOL_POLYGON
-    kDebug () << "kpToolPolygon::endShape()  d->points="
+    kDebug () << "kpToolPolygonalBase::endShape()  d->points="
         << d->points.toList () << endl;
 #endif
 
@@ -641,8 +636,8 @@ void kpToolPolygon::endShape (const QPoint &, const QRect &)
 
     QRect boundingRect = kpTool::neededRect (d->points.boundingRect (), d->toolWidgetLineWidth->lineWidth ());
 
-    kpToolPolygonCommand *lineCommand =
-        new kpToolPolygonCommand (
+    kpToolPolygonalCommand *lineCommand =
+        new kpToolPolygonalCommand (
             text (),
             d->points, boundingRect,
             drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
@@ -654,107 +649,40 @@ void kpToolPolygon::endShape (const QPoint &, const QRect &)
     commandHistory ()->addCommand (lineCommand);
 
     d->points.resize (0);
-    setUserMessage (haventBegunShapeUserMessage ());
+    setUserMessage (/*virtual*/haventBegunShapeUserMessage ());
 
 }
 
 // public virtual
-bool kpToolPolygon::hasBegunShape () const
+bool kpToolPolygonalBase::hasBegunShape () const
 {
     return (d->points.count () > 0);
 }
 
 
 // public slot
-void kpToolPolygon::slotLineWidthChanged ()
+void kpToolPolygonalBase::slotLineWidthChanged ()
 {
     updateShape ();
 }
 
 // public slot
-void kpToolPolygon::slotFillStyleChanged ()
+void kpToolPolygonalBase::slotFillStyleChanged ()
 {
     updateShape ();
 }
 
 // virtual protected slot
-void kpToolPolygon::slotForegroundColorChanged (const kpColor &)
+void kpToolPolygonalBase::slotForegroundColorChanged (const kpColor &)
 {
     updateShape ();
 }
 
 // virtual protected slot
-void kpToolPolygon::slotBackgroundColorChanged (const kpColor &)
+void kpToolPolygonalBase::slotBackgroundColorChanged (const kpColor &)
 {
     updateShape ();
 }
 
 
-//
-// kpToolPolygonCommand
-//
-
-struct kpToolPolygonCommandPrivate
-{
-    QPolygon points;
-    QRect normalizedRect;
-
-    kpColor foregroundColor, backgroundColor;
-    int penWidth;
-
-    QPixmap originalArea;
-    kpToolPolygon::Mode mode;
-};
-
-kpToolPolygonCommand::kpToolPolygonCommand (const QString &name,
-        const QPolygon &points,
-        const QRect &normalizedRect,
-        const kpColor &foregroundColor, int penWidth,
-        const kpColor &backgroundColor,
-        const QPixmap &originalArea,
-        enum kpToolPolygon::Mode mode,
-        kpMainWindow *mainWindow)
-    : kpNamedCommand (name, mainWindow),
-      d (new kpToolPolygonCommandPrivate ())
-{
-      d->points = points;
-      d->normalizedRect = normalizedRect;
-      d->foregroundColor = foregroundColor; d->backgroundColor = backgroundColor;
-      d->penWidth = penWidth;
-      d->originalArea = originalArea;
-      d->mode = mode;
-}
-
-kpToolPolygonCommand::~kpToolPolygonCommand ()
-{
-    delete d;
-}
-
-
-// public virtual [base kpCommand]
-int kpToolPolygonCommand::size () const
-{
-    return kpPixmapFX::pointArraySize (d->points) +
-           kpPixmapFX::pixmapSize (d->originalArea);
-}
-
-
-// public virtual [base kpCommand]
-void kpToolPolygonCommand::execute ()
-{
-    QPixmap p = ::image (d->originalArea,
-                        d->points, d->normalizedRect,
-                        d->foregroundColor, d->penWidth,
-                        d->backgroundColor,
-                        d->mode);
-    document ()->setPixmapAt (p, d->normalizedRect.topLeft ());
-}
-
-// public virtual [base kpCommand]
-void kpToolPolygonCommand::unexecute ()
-{
-    document ()->setPixmapAt (d->originalArea, d->normalizedRect.topLeft ());
-}
-
-
-#include <kptoolpolygon.moc>
+#include <kpToolPolygonalBase.moc>

@@ -30,13 +30,13 @@
 #define KP_TOOL_LINE_H
 
 
-#include <kptoolpolygon.h>
+#include <kpToolPolygonalBase.h>
 
 
 class kpMainWindow;
 
 
-class kpToolLine : public kpToolPolygon
+class kpToolLine : public kpToolPolygonalBase
 {
 Q_OBJECT
 

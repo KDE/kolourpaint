@@ -26,8 +26,8 @@
 */
 
 
-#ifndef KP_TOOL_CURVE_H
-#define KP_TOOL_CURVE_H
+#ifndef KP_TOOL_POLYGON_H
+#define KP_TOOL_POLYGON_H
 
 
 #include <kpToolPolygonalBase.h>
@@ -36,17 +36,17 @@
 class kpMainWindow;
 
 
-class kpToolCurve : public kpToolPolygonalBase
+class kpToolPolygon : public kpToolPolygonalBase
 {
 Q_OBJECT
 
 public:
-    kpToolCurve (kpMainWindow *mainWindow);
-    virtual ~kpToolCurve ();
+    kpToolPolygon (kpMainWindow *);
+    virtual ~kpToolPolygon ();
 
 private:
     virtual QString haventBegunShapeUserMessage () const;
 };
 
 
-#endif  // KP_TOOL_CURVE_H
+#endif  // KP_TOOL_POLYGON_H

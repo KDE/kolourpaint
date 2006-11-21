@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -26,27 +26,35 @@
 */
 
 
-#ifndef KP_TOOL_CURVE_H
-#define KP_TOOL_CURVE_H
+#define DEBUG_KP_TOOL_POLYGON 0
 
 
-#include <kpToolPolygonalBase.h>
+#include <kpToolPolygon.h>
+
+#include <klocale.h>
 
 
-class kpMainWindow;
-
-
-class kpToolCurve : public kpToolPolygonalBase
+kpToolPolygon::kpToolPolygon (kpMainWindow *mainWindow)
+    : kpToolPolygonalBase (
+        Polygon,
+        i18n ("Polygon"),
+        i18n ("Draws polygons"),
+        Qt::Key_G,
+        mainWindow,
+        "tool_polygon")
 {
-Q_OBJECT
+}
 
-public:
-    kpToolCurve (kpMainWindow *mainWindow);
-    virtual ~kpToolCurve ();
-
-private:
-    virtual QString haventBegunShapeUserMessage () const;
-};
+kpToolPolygon::~kpToolPolygon ()
+{
+}
 
 
-#endif  // KP_TOOL_CURVE_H
+// private virtual [base kpToolPolygonBase]
+QString kpToolPolygon::haventBegunShapeUserMessage () const
+{
+    return i18n ("Drag to draw the first line.");
+}
+
+
+#include <kpToolPolygon.moc>

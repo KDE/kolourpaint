@@ -32,11 +32,13 @@
 
 
 kpToolPolyline::kpToolPolyline (kpMainWindow *mainWindow)
-    : kpToolPolygon (Polyline,
-                     i18n ("Connected Lines"),
-                     i18n ("Draws connected lines"),
-                     Qt::Key_N,
-                     mainWindow, "tool_polyline")
+    : kpToolPolygonalBase (
+        Polyline,
+        i18n ("Connected Lines"),
+        i18n ("Draws connected lines"),
+        Qt::Key_N,
+        mainWindow,
+        "tool_polyline")
 {
 }
 
@@ -45,7 +47,7 @@ kpToolPolyline::~kpToolPolyline ()
 }
 
 
-// private virtual [base kpTool]
+// private virtual [base kpToolPolygonalBase]
 QString kpToolPolyline::haventBegunShapeUserMessage () const
 {
     return i18n ("Drag to draw the first line.");
