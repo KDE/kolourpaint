@@ -69,7 +69,7 @@ Q_OBJECT
 
 public:
     // TODO: awful - needs inheritance, all subclasses and I need to derive from
-    //       a class kpToolPolygonalBasealBase.
+    //       a class kpToolPolygonalBase.
     enum Mode
     {
         Polygon, Polyline, Line, Curve
