@@ -5,7 +5,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/coloreffects
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/flow
-    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/polygon
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/polygonal
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/rectangular
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/text
@@ -70,7 +70,7 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/flow/kptoolflowcommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/kpToolColorPickerCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/kpToolFloodFillCommand.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/polygon/kpToolPolygonalCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/polygonal/kpToolPolygonalCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/rectangular/kptoolrectangularcommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/kpToolSelectionCreateCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/kpToolSelectionDestroyCommand.cpp
