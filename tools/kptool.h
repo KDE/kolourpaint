@@ -61,29 +61,31 @@ class kpToolAction;
 class kpToolToolBar;
 
 
-// Base class for all tools
-// TODO: expose no variables to subclasses - otherwise they could mutate them unexpectedly.
+struct kpToolPrivate;
+
+// Base class for all tools.
+// TODO: rearrange method order to make sense.
 class kpTool : public QObject
 {
 Q_OBJECT
 
 public:
+    // <text> = user-visible name of the tool e.g. "Color Picker"
+    // <description> = user-visible description used for tooltips
+    //                 e.g. "Lets you select a color from the image"
+    // <key> = optional shortcut key for switching to the tool, or 0 otherwise
+    //         e.g. Qt::Key_C
+    // <mainWindow> = pointer to the parent kpMainWindow
+    // <name> = internal QObject name (not user-visible) e.g. "tool_color_picker"
+    //          used for fetching the icon(), the name of the action() and
+    //          debug printing.
     kpTool (const QString &text, const QString &description,
             int key,
             kpMainWindow *mainWindow, const QString &name);
     virtual ~kpTool ();
 
-private:
-    void init (const QString &text, const QString &description,
-               int key,
-               kpMainWindow *mainWindow, const QString &name);
-
-
 protected:
     void createAction ();
-
-    int m_key;
-    kpToolAction *m_action;
 
 signals:
     void actionToolTipChanged (const QString &string);
@@ -153,24 +155,25 @@ private:
                                          const QPoint &currentViewPoint_);
 
 public:
-    // called when the tool is selected
+    // Called when the tool is selected.
     virtual void begin ();
 
-    // called when the tool is deselected
+    // Called when the tool is deselected.
     virtual void end ();
 
-    // set after begin() has been called, unset after end() has been called
-    bool hasBegun () const { return m_began; }
+    // Returns true after begin() has been called but returns false after end()
+    // after end() has been called.
+    bool hasBegun () const;
 
-    bool hasBegunDraw () const { return m_beganDraw; }
+    bool hasBegunDraw () const;
 
-    virtual bool hasBegunShape () const { return hasBegunDraw (); }
+    virtual bool hasBegunShape () const;
 
-    // called when user double-left-clicks on Tool Icon (not view)
+    // Called when user double-left-clicks on a tool in the Tool Box.
     virtual void globalDraw ();
 
-    // called when the user clicks on the Tool Icon even though it's already
-    // the current tool (used by the selection tools to deselect)
+    // Called when the user clicks on a tool in the Tool Box even though it's
+    // already the current tool (used by the selection tools to deselect).
     virtual void reselect ();
 
 signals:
@@ -248,9 +251,6 @@ protected:
     double colorSimilarity () const;
     int processedColorSimilarity () const;
 
-protected:
-    int m_ignoreColorSignals;
-
 protected slots:
     void slotColorsSwappedInternal (const kpColor &newForegroundColor,
                                     const kpColor &newBackgroundColor);
@@ -275,13 +275,6 @@ protected:
     // or if there was no lastPoint
     bool currentPointNextToLast () const;  // (includes diagonal adjacency)
     bool currentPointCardinallyNextToLast () const;  // (only cardinally adjacent i.e. horiz & vert; no diag)
-
-    int m_mouseButton;  /* 0 = left, 1 = right */
-    bool m_shiftPressed, m_controlPressed, m_altPressed;  // m_altPressed is unreliable
-    bool m_beganDraw;  // set after beginDraw() is called, unset before endDraw() is called
-    QPoint m_startPoint,
-           m_currentPoint, m_currentViewPoint,
-           m_lastPoint;
 
 protected:
     friend class kpCommandHistory;
@@ -348,13 +341,6 @@ protected:
     // 0 = left, 1 = right, -1 = other (none, left+right, mid)
     static int mouseButton (Qt::MouseButtons mouseButtons);
 
-    QString m_text, m_description;
-
-    QPointer <kpMainWindow> m_mainWindow;
-    bool m_began;
-
-    kpView *m_viewUnderStartPoint;
-
 
     /*
      * User Notifications (Status Bar)
@@ -388,11 +374,6 @@ signals:
                                  const QPoint &endPoint = KP_INVALID_POINT);
     void userShapeSizeChanged (const QSize &size);
     void userShapeSizeChanged (int width, int height);
-
-protected:
-    QString m_userMessage;
-    QPoint m_userShapeStartPoint, m_userShapeEndPoint;
-    QSize m_userShapeSize;
 
 
 public:
@@ -429,11 +410,19 @@ public:
                                     QWidget *parent);
 
 
+// TODO: Don't expose variables to subclasses - otherwise they could mutate them
+//       unexpectedly.  Provide const accessor methods instead.
 protected:
-    // There is no need to maintain binary compatibility at this stage.
-    // The d-pointer is just so that you can experiment without recompiling
-    // the kitchen sink.
-    class kpToolPrivate *d;
+    int m_mouseButton;  /* 0 = left, 1 = right */
+    bool m_shiftPressed, m_controlPressed, m_altPressed;  // m_altPressed is unreliable
+    QPoint m_startPoint,
+           m_currentPoint, m_currentViewPoint,
+           m_lastPoint;
+           
+    kpView *m_viewUnderStartPoint;
+
+private:
+    kpToolPrivate *d;
 };
 
 
