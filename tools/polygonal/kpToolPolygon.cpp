@@ -33,6 +33,13 @@
 
 #include <klocale.h>
 
+#include <kptooltoolbar.h>
+
+
+struct kpToolPolygonPrivate
+{
+    kpToolWidgetFillStyle *toolWidgetFillStyle;
+};
 
 kpToolPolygon::kpToolPolygon (kpMainWindow *mainWindow)
     : kpToolPolygonalBase (
@@ -41,12 +48,14 @@ kpToolPolygon::kpToolPolygon (kpMainWindow *mainWindow)
         i18n ("Draws polygons"),
         Qt::Key_G,
         mainWindow,
-        "tool_polygon")
+        "tool_polygon"),
+      d (new kpToolPolygonPrivate ())
 {
 }
 
 kpToolPolygon::~kpToolPolygon ()
 {
+    delete d;
 }
 
 
@@ -54,6 +63,44 @@ kpToolPolygon::~kpToolPolygon ()
 QString kpToolPolygon::haventBegunShapeUserMessage () const
 {
     return i18n ("Drag to draw the first line.");
+}
+
+
+// public virtual [base kpToolPolygonalBase]
+void kpToolPolygon::begin ()
+{
+    kpToolPolygonalBase::begin ();
+
+    d->toolWidgetFillStyle = toolToolBar ()->toolWidgetFillStyle ();
+    connect (d->toolWidgetFillStyle,
+        SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
+        this,
+        SLOT (updateShape ()));
+    d->toolWidgetFillStyle->show ();
+}
+
+// public virtual [base kpToolPolygonalBase]
+void kpToolPolygon::end ()
+{
+    kpToolPolygonalBase::end ();
+
+    disconnect (d->toolWidgetFillStyle,
+        SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
+        this,
+        SLOT (updateShape ()));
+    d->toolWidgetFillStyle = 0;
+}
+
+
+// TODO: code dup with kpToolRectangle
+// protected virtual [base kpToolPolygonalBase]
+kpColor kpToolPolygon::drawingBackgroundColor () const
+{
+    const kpColor foregroundColor = color (m_mouseButton);
+    const kpColor backgroundColor = color (1 - m_mouseButton);
+
+    return d->toolWidgetFillStyle->drawingBackgroundColor (
+        foregroundColor, backgroundColor);
 }
 
 

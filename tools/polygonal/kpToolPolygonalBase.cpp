@@ -147,14 +147,12 @@ kpImage kpToolPolygonalBaseImage (const QPixmap &oldImage,
 struct kpToolPolygonalBasePrivate
 {
     kpToolPolygonalBasePrivate ()
-        : toolWidgetFillStyle (0),
-          toolWidgetLineWidth (0)
+        : toolWidgetLineWidth (0)
     {
     }
     
     kpToolPolygonalBase::Mode mode;
 
-    kpToolWidgetFillStyle *toolWidgetFillStyle;
     kpToolWidgetLineWidth *toolWidgetLineWidth;
 
     int originatingMouseButton;
@@ -205,21 +203,9 @@ void kpToolPolygonalBase::begin ()
     kDebug () << "kpToolPolygonalBase::begin() tb=" << tb << endl;
 #endif
 
-    if (d->mode == Polygon)
-    {
-        d->toolWidgetFillStyle = tb->toolWidgetFillStyle ();
-        connect (d->toolWidgetFillStyle,
-            SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
-            this,
-            SLOT (slotFillStyleChanged ()));
-        d->toolWidgetFillStyle->show ();
-    }
-    else
-        d->toolWidgetFillStyle = 0;
-
     d->toolWidgetLineWidth = tb->toolWidgetLineWidth ();
     connect (d->toolWidgetLineWidth, SIGNAL (lineWidthChanged (int)),
-                this, SLOT (slotLineWidthChanged ()));
+                this, SLOT (updateShape ()));
     d->toolWidgetLineWidth->show ();
 
     viewManager ()->setCursor (QCursor (Qt::CrossCursor));
@@ -234,23 +220,11 @@ void kpToolPolygonalBase::end ()
 {
     endShape ();
 
-    if (d->toolWidgetFillStyle)
-    {
-        disconnect (d->toolWidgetFillStyle,
-            SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
-            this,
-            SLOT (slotFillStyleChanged ()));
-        d->toolWidgetFillStyle = 0;
-    }
-
-    if (d->toolWidgetLineWidth)
-    {
-        disconnect (d->toolWidgetLineWidth,
-            SIGNAL (lineWidthChanged (int)),
-            this,
-            SLOT (slotLineWidthChanged ()));
-        d->toolWidgetLineWidth = 0;
-    }
+    disconnect (d->toolWidgetLineWidth,
+        SIGNAL (lineWidthChanged (int)),
+        this,
+        SLOT (updateShape ()));
+    d->toolWidgetLineWidth = 0;
 
     viewManager ()->unsetCursor ();
 }
@@ -473,20 +447,14 @@ kpColor kpToolPolygonalBase::drawingForegroundColor () const
     return color (m_mouseButton);
 }
 
-// private
+// protected virtual
 kpColor kpToolPolygonalBase::drawingBackgroundColor () const
 {
-    if (!d->toolWidgetFillStyle)
-        return kpColor::Invalid;
-        
-    const kpColor foregroundColor = color (m_mouseButton);
-    const kpColor backgroundColor = color (1 - m_mouseButton);
-
-    return d->toolWidgetFillStyle->drawingBackgroundColor (
-        foregroundColor, backgroundColor);
+    return kpColor::Invalid;
 }
 
-// private
+// TODO: code dup with kpToolRectangle
+// protected slot
 void kpToolPolygonalBase::updateShape ()
 {
     if (d->points.count () == 0)
@@ -507,7 +475,7 @@ void kpToolPolygonalBase::updateShape ()
     QPixmap newPixmap = ::kpToolPolygonalBaseImage (oldPixmap,
         d->points, boundingRect,
         drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
-        drawingBackgroundColor (),
+        /*virtual*/drawingBackgroundColor (),
         d->mode, false/*not final*/);
 
     viewManager ()->setFastUpdates ();
@@ -648,7 +616,7 @@ void kpToolPolygonalBase::endShape (const QPoint &, const QRect &)
             text (),
             d->points, boundingRect,
             drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
-            drawingBackgroundColor (),
+            /*virtual*/drawingBackgroundColor (),
             document ()->getPixmapAt (boundingRect),
             d->mode,
             mainWindow ());
@@ -666,18 +634,6 @@ bool kpToolPolygonalBase::hasBegunShape () const
     return (d->points.count () > 0);
 }
 
-
-// public slot
-void kpToolPolygonalBase::slotLineWidthChanged ()
-{
-    updateShape ();
-}
-
-// public slot
-void kpToolPolygonalBase::slotFillStyleChanged ()
-{
-    updateShape ();
-}
 
 // virtual protected slot
 void kpToolPolygonalBase::slotForegroundColorChanged (const kpColor &)

@@ -101,7 +101,9 @@ public:
     virtual void draw (const QPoint &, const QPoint &, const QRect &);
 private:
     kpColor drawingForegroundColor () const;
-    kpColor drawingBackgroundColor () const;
+protected:
+    virtual kpColor drawingBackgroundColor () const;
+protected slots:
     void updateShape ();
 public:
     virtual void cancelShape ();
@@ -110,10 +112,6 @@ public:
     virtual void endShape (const QPoint & = QPoint (), const QRect & = QRect ());
 
     virtual bool hasBegunShape () const;
-
-public slots:
-    void slotLineWidthChanged ();
-    void slotFillStyleChanged ();
 
 protected slots:
     virtual void slotForegroundColorChanged (const kpColor &);

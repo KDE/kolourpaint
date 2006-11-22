@@ -36,6 +36,8 @@
 class kpMainWindow;
 
 
+struct kpToolPolygonPrivate;
+
 class kpToolPolygon : public kpToolPolygonalBase
 {
 Q_OBJECT
@@ -46,6 +48,16 @@ public:
 
 private:
     virtual QString haventBegunShapeUserMessage () const;
+
+public:
+    virtual void begin ();
+    virtual void end ();
+
+protected:
+    kpColor drawingBackgroundColor () const;
+
+private:
+    struct kpToolPolygonPrivate *d;
 };
 
 
