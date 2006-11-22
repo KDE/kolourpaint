@@ -30,6 +30,7 @@
 
 
 #include <kptool.h>
+#include <kpToolPrivate.h>
 
 #include <limits.h>
 
@@ -58,34 +59,6 @@
 #include <kpview.h>
 #include <kpviewmanager.h>
 #include <kactioncollection.h>
-
-
-struct kpToolPrivate
-{
-    // Initialisation / properties.
-    QString text;
-    QString description;
-    int key;
-    QPointer <kpMainWindow> mainWindow;
-    
-    kpToolAction *action;
-
-    // Drawing state.
-    bool began;
-    bool beganDraw;  // set after beginDraw() is called, unset before endDraw() is called
-
-    // Set to 2 when the user swaps the foreground and background color.
-    //
-    // When nonzero, it suppresses the foreground and background "color changed"
-    // signals and is decremented back down to 0 separately by the foreground
-    // code and background code.
-    int ignoreColorSignals;
-
-    // Statusbar.
-    QString userMessage;
-    QPoint userShapeStartPoint, userShapeEndPoint;
-    QSize userShapeSize;
-};
 
 
 kpTool::kpTool (const QString &text, const QString &description,
