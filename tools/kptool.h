@@ -62,6 +62,7 @@ class kpToolToolBar;
 
 
 // Base class for all tools
+// TODO: expose no variables to subclasses - otherwise they could mutate them unexpectedly.
 class kpTool : public QObject
 {
 Q_OBJECT
@@ -240,6 +241,7 @@ protected:
 
     kpColor color (int which) const;
 
+    // TODO: does anyone actually use these?
     kpColor foregroundColor () const;
     kpColor backgroundColor () const;
 
