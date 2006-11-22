@@ -4,6 +4,8 @@ and code cleanups.
 Features to be implemented are in branches/kolourpaint/control/TODO.
 
 
+0. Move stuff from Clarence's USB disk into this.
+
 1. Move all code that accesses document content to imagelib/
 
 2. Move all dialogs to dialogs/
@@ -26,8 +28,6 @@ Features to be implemented are in branches/kolourpaint/control/TODO.
 7. Remove "Thanks To" section in kolourpaint.cpp - it's simply extra work to
    coordinate with website updates, esp. during release freezes where updates
    are not allowed.
-
-8. Write developer's guide .odt/.pdf.
 
 
 11. Push as many classes as possible into kdelibs.
