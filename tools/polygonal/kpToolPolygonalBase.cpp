@@ -242,9 +242,9 @@ void kpToolPolygonalBase::beginDraw ()
     if (d->points.count () == 0)
     {
         d->originatingMouseButton = m_mouseButton;
-        d->points.putPoints (d->points.count (), 2,
-                            m_startPoint.x (), m_startPoint.y (),
-                            m_startPoint.x (), m_startPoint.y ());
+        
+        d->points.append (m_startPoint);
+        d->points.append (m_startPoint);
     }
     // continuing poly*
     else
@@ -258,8 +258,8 @@ void kpToolPolygonalBase::beginDraw ()
         else
         {
             int count = d->points.count ();
-            d->points.putPoints (count, 1,
-                                m_startPoint.x (), m_startPoint.y ());
+            
+            d->points.append (m_startPoint);
 
             // start point = last end point;
             // _not_ the new/current start point
