@@ -33,6 +33,7 @@
 #define DEBUG_KP_TOOL 0
 
 
+// TODO: reduce number of includes
 #include <kptool.h>
 #include <kpToolPrivate.h>
 
