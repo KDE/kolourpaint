@@ -279,6 +279,7 @@ kpToolAction *kpTool::action ()
 }
 
 
+// TODO: need to add access specifiers not just in kpTool but all over KolourPaint source.
 kpMainWindow *kpTool::mainWindow () const
 {
     return d->mainWindow;
