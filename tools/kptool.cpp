@@ -143,13 +143,6 @@ void kpTool::createAction ()
 }
 
 
-// protected slot
-void kpTool::slotActionToolTipChanged (const QString &string)
-{
-    emit actionToolTipChanged (string);
-}
-
-
 // public
 QString kpTool::text () const
 {
