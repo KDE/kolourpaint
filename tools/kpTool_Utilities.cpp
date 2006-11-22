@@ -94,7 +94,7 @@ bool kpTool::hasCurrentPoint () const
 }
 
 // public
-QPoint kpTool::currentPoint (bool zoomToDoc) const
+QPoint kpTool::calculateCurrentPoint (bool zoomToDoc) const
 {
 #if DEBUG_KP_TOOL && 0
     kDebug () << "kpTool::currentPoint(zoomToDoc=" << zoomToDoc << ")" << endl;
@@ -142,7 +142,7 @@ QPoint kpTool::currentPoint (bool zoomToDoc) const
 void kpTool::somethingBelowTheCursorChanged ()
 {
     somethingBelowTheCursorChanged (currentPoint (),
-        currentPoint (false/*view point*/));
+        calculateCurrentPoint (false/*view point*/));
 }
 
 // private
@@ -164,42 +164,42 @@ void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_,
     kDebug () << "\tbegan draw=" << d->beganDraw << endl;
 #endif
 
-    m_currentPoint = currentPoint_;
-    m_currentViewPoint = currentViewPoint_;
+    d->currentPoint = currentPoint_;
+    d->currentViewPoint = currentViewPoint_;
 
     if (d->beganDraw)
     {
-        if (m_currentPoint != KP_INVALID_POINT)
+        if (d->currentPoint != KP_INVALID_POINT)
         {
-            draw (m_currentPoint, m_lastPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
-            m_lastPoint = m_currentPoint;
+            draw (d->currentPoint, d->lastPoint, kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
+            d->lastPoint = d->currentPoint;
         }
     }
     else
     {
-        hover (m_currentPoint);
+        hover (d->currentPoint);
     }
 }
 
 
 bool kpTool::currentPointNextToLast () const
 {
-    if (m_lastPoint == QPoint (-1, -1))
+    if (d->lastPoint == QPoint (-1, -1))
         return true;
 
-    int dx = qAbs (m_currentPoint.x () - m_lastPoint.x ());
-    int dy = qAbs (m_currentPoint.y () - m_lastPoint.y ());
+    int dx = qAbs (d->currentPoint.x () - d->lastPoint.x ());
+    int dy = qAbs (d->currentPoint.y () - d->lastPoint.y ());
 
     return (dx <= 1 && dy <= 1);
 }
 
 bool kpTool::currentPointCardinallyNextToLast () const
 {
-    if (m_lastPoint == QPoint (-1, -1))
+    if (d->lastPoint == QPoint (-1, -1))
         return true;
 
-    int dx = qAbs (m_currentPoint.x () - m_lastPoint.x ());
-    int dy = qAbs (m_currentPoint.y () - m_lastPoint.y ());
+    int dx = qAbs (d->currentPoint.x () - d->lastPoint.x ());
+    int dy = qAbs (d->currentPoint.y () - d->lastPoint.y ());
 
     return (dx + dy <= 1);
 }

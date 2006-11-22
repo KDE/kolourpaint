@@ -63,7 +63,7 @@ void kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (QPoint this
     // First point in drag?
     if (!m_dragHasBegun)
     {
-        points.append (m_startPoint);
+        points.append (startPoint ());
     }
     // Not first point in drag.
     else
@@ -86,5 +86,5 @@ void kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (QPoint this
               << endl;
 #endif
 
-    setUserShapePoints (m_currentPoint);
+    setUserShapePoints (currentPoint ());
 }

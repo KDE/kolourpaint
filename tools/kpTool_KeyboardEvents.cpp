@@ -360,42 +360,42 @@ void kpTool::notifyModifierStateChanged ()
     if (careAboutModifierState ())
     {
         if (d->beganDraw)
-            draw (m_currentPoint, m_lastPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+            draw (d->currentPoint, d->lastPoint, kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
         else
         {
-            m_currentPoint = currentPoint ();
-            m_currentViewPoint = currentPoint (false/*view point*/);
-            hover (m_currentPoint);
+            d->currentPoint = calculateCurrentPoint ();
+            d->currentViewPoint = calculateCurrentPoint (false/*view point*/);
+            hover (d->currentPoint);
         }
     }
 }
 
 void kpTool::setShiftPressed (bool pressed)
 {
-    if (pressed == m_shiftPressed)
+    if (pressed == d->shiftPressed)
         return;
 
-    m_shiftPressed = pressed;
+    d->shiftPressed = pressed;
 
     notifyModifierStateChanged ();
 }
 
 void kpTool::setControlPressed (bool pressed)
 {
-    if (pressed == m_controlPressed)
+    if (pressed == d->controlPressed)
         return;
 
-    m_controlPressed = pressed;
+    d->controlPressed = pressed;
 
     notifyModifierStateChanged ();
 }
 
 void kpTool::setAltPressed (bool pressed)
 {
-    if (pressed = m_altPressed)
+    if (pressed = d->altPressed)
         return;
 
-    m_altPressed = pressed;
+    d->altPressed = pressed;
 
     notifyModifierStateChanged ();
 }

@@ -134,7 +134,7 @@ public:
     //
     // Keep in mind that if viewUnderStartPoint(), this can return coordinates
     // outside of the document/view.
-    QPoint currentPoint (bool zoomToDoc = true) const;
+    QPoint calculateCurrentPoint (bool zoomToDoc = true) const;
 
 public slots:
     // Call this when something below the mouse cursor may have changed
@@ -153,6 +153,24 @@ private:
     // Same as above except that you claim you know better than currentPoint()
     void somethingBelowTheCursorChanged (const QPoint &currentPoint_,
                                          const QPoint &currentViewPoint_);
+
+protected:
+    int mouseButton () const;
+    
+    bool shiftPressed () const;
+    bool controlPressed () const;
+    bool altPressed () const;
+    
+    QPoint startPoint () const;
+    
+    QPoint currentPoint () const;
+    QPoint currentViewPoint () const;
+    
+    QPoint lastPoint () const;
+    
+    kpView *viewUnderStartPoint () const;
+    kpView *viewUnderCursor () const;
+
 
 public:
     // Called when the tool is selected.
@@ -238,8 +256,6 @@ protected:
     kpDocument *document () const;
     kpViewManager *viewManager () const;
     kpToolToolBar *toolToolBar () const;
-    kpView *viewUnderStartPoint () const { return m_viewUnderStartPoint; }
-    kpView *viewUnderCursor () const;
     kpCommandHistory *commandHistory () const;
 
     kpColor color (int which) const;
@@ -409,19 +425,6 @@ public:
                                     const QString &caption,
                                     const QString &continueButtonText,
                                     QWidget *parent);
-
-
-// TODO: Don't expose variables to subclasses - otherwise they could mutate them
-//       unexpectedly.  Provide const accessor methods instead.
-protected:
-    int m_mouseButton;  /* 0 = left, 1 = right */
-    bool m_shiftPressed, m_controlPressed, m_altPressed;  // m_altPressed is unreliable
-    QPoint m_startPoint,
-           m_currentPoint, m_currentViewPoint,
-           m_lastPoint;
-           
-    kpView *m_viewUnderStartPoint;
-
 private:
     kpToolPrivate *d;
 };

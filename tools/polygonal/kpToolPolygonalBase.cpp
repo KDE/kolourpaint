@@ -234,7 +234,7 @@ void kpToolPolygonalBase::beginDraw ()
 {
 #if DEBUG_KP_TOOL_POLYGON
     kDebug () << "kpToolPolygonalBase::beginDraw()  d->points=" << d->points.toList ()
-               << ", startPoint=" << m_startPoint << endl;
+               << ", startPoint=" << startPoint () << endl;
 #endif
 
     bool endedShape = false;
@@ -242,19 +242,19 @@ void kpToolPolygonalBase::beginDraw ()
     // We now need to start with dragging out the initial line?
     if (d->points.count () == 0)
     {
-        d->originatingMouseButton = m_mouseButton;
+        d->originatingMouseButton = mouseButton ();
         
-        d->points.append (m_startPoint);
-        d->points.append (m_startPoint);
+        d->points.append (startPoint ());
+        d->points.append (startPoint ());
     }
     // Already have control points - not dragging out initial line.
     else
     {
         // Clicking the other mouse button?
-        if (m_mouseButton != d->originatingMouseButton)
+        if (mouseButton () != d->originatingMouseButton)
         {
-            // TODO: what for?
-            m_mouseButton = d->originatingMouseButton;
+            // HITODO: what for?
+            // mouseButton () = d->originatingMouseButton;
             
             // Finish shape.  TODO: I suspect we need to call endShapeInternal instead.
             endShape ();
@@ -266,16 +266,16 @@ void kpToolPolygonalBase::beginDraw ()
             int count = d->points.count ();
 
             // Add another control point.
-            d->points.append (m_startPoint);
+            d->points.append (startPoint ());
 
             // start point = last end point;
             // _not_ the new/current start point
             // (which is disregarded in a poly* as only the end points count
             //  after the initial line)
             //
-            // Curve Tool ignores m_startPoint (doesn't call applyModifiers())
+            // Curve Tool ignores startPoint () (doesn't call applyModifiers())
             // after the initial has been defined.
-            m_startPoint = d->points [count - 1];
+            startPoint () = d->points [count - 1];
         }
     }
 
@@ -295,21 +295,21 @@ void kpToolPolygonalBase::applyModifiers ()
 {
     int count = d->points.count ();
 
-    d->toolLineStartPoint = m_startPoint;  /* also correct for poly* tool (see beginDraw()) */
-    d->toolLineEndPoint = m_currentPoint;
+    d->toolLineStartPoint = startPoint ();  /* also correct for poly* tool (see beginDraw()) */
+    d->toolLineEndPoint = currentPoint ();
 
 #if DEBUG_KP_TOOL_POLYGON && 1
     kDebug () << "kpToolPolygonalBase::applyModifiers() #pts=" << count
                << "   line: startPt=" << d->toolLineStartPoint
                << " endPt=" << d->toolLineEndPoint
-               << "   modifiers: shift=" << m_shiftPressed
-               << "   alt=" << m_altPressed
-               << "   ctrl=" << m_controlPressed
+               << "   modifiers: shift=" << shiftPressed ()
+               << "   alt=" << altPressed ()
+               << "   ctrl=" << controlPressed ()
                << endl;
 #endif
 
     // angles
-    if (m_shiftPressed || m_controlPressed)
+    if (shiftPressed () || controlPressed ())
     {
         int diffx = d->toolLineEndPoint.x () - d->toolLineStartPoint.x ();
         int diffy = d->toolLineEndPoint.y () - d->toolLineStartPoint.y ();
@@ -331,11 +331,11 @@ void kpToolPolygonalBase::applyModifiers ()
         double angles [10];  // "ought to be enough for anybody"
         int numAngles = 0;
         angles [numAngles++] = 0;
-        if (m_controlPressed)
+        if (controlPressed ())
             angles [numAngles++] = KP_PI / 6;
-        if (m_shiftPressed)
+        if (shiftPressed ())
             angles [numAngles++] = KP_PI / 4;
-        if (m_controlPressed)
+        if (controlPressed ())
             angles [numAngles++] = KP_PI / 3;
         angles [numAngles++] = KP_PI / 2;
 
@@ -386,10 +386,10 @@ void kpToolPolygonalBase::applyModifiers ()
                        << endl;
         #endif
         }
-    }    // if (m_shiftPressed || m_controlPressed) {
+    }    // if (shiftPressed () || controlPressed ()) {
 
     // centring
-    if (m_altPressed && 0/*ALT is unreliable*/)
+    if (altPressed () && 0/*ALT is unreliable*/)
     {
         // start = start - diff
         //       = start - (end - start)
@@ -399,7 +399,7 @@ void kpToolPolygonalBase::applyModifiers ()
             d->toolLineStartPoint += (d->toolLineStartPoint - d->toolLineEndPoint);
         else
             d->toolLineEndPoint += (d->toolLineEndPoint - d->toolLineStartPoint);
-    }    // if (m_altPressed) {
+    }    // if (altPressed ()) {
 
     d->points [count - 2] = d->toolLineStartPoint;
     d->points [count - 1] = d->toolLineEndPoint;
@@ -418,7 +418,7 @@ void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
 
 #if DEBUG_KP_TOOL_POLYGON
     kDebug () << "kpToolPolygonalBase::draw()  d->points=" << d->points.toList ()
-               << ", endPoint=" << m_currentPoint << endl;
+               << ", endPoint=" << currentPoint () << endl;
 #endif
 
     bool drawingALine = (d->mode != Curve) ||
@@ -427,7 +427,7 @@ void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
     if (drawingALine)
         applyModifiers ();
     else
-        d->points [d->points.count () - 1] = m_currentPoint;
+        d->points [d->points.count () - 1] = currentPoint ();
 
 #if DEBUG_KP_TOOL_POLYGON
     kDebug () << "\tafterwards, d->points=" << d->points.toList () << endl;
@@ -438,7 +438,7 @@ void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
     if (drawingALine)
         setUserShapePoints (d->toolLineStartPoint, d->toolLineEndPoint);
     else
-        setUserShapePoints (m_currentPoint);
+        setUserShapePoints (currentPoint ());
 }
 
 
@@ -446,7 +446,7 @@ void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
 // private
 kpColor kpToolPolygonalBase::drawingForegroundColor () const
 {
-    return color (m_mouseButton);
+    return color (mouseButton ());
 }
 
 // protected virtual

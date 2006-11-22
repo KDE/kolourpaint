@@ -72,15 +72,16 @@ kpTool::kpTool (const QString &text, const QString &description,
     : QObject (mainWindow),
       d (new kpToolPrivate ())
 {
+    // TODO: move into kpToolPrivate.h
     d->key = key;
     d->action = 0;
     d->ignoreColorSignals = 0;
-    m_shiftPressed = false, m_controlPressed = false, m_altPressed = false;  // set in beginInternal()
+    d->shiftPressed = false, d->controlPressed = false, d->altPressed = false;  // set in beginInternal()
     d->beganDraw = false;
     d->text = text, d->description = description; setObjectName (name);
     d->mainWindow = mainWindow;
     d->began = false;
-    m_viewUnderStartPoint = 0;
+    d->viewUnderStartPoint = 0;
     d->userShapeStartPoint = KP_INVALID_POINT;
     d->userShapeEndPoint = KP_INVALID_POINT;
     d->userShapeSize = KP_INVALID_SIZE;
@@ -288,12 +289,6 @@ kpMainWindow *kpTool::mainWindow () const
 kpDocument *kpTool::document () const
 {
     return d->mainWindow ? d->mainWindow->document () : 0;
-}
-
-kpView *kpTool::viewUnderCursor () const
-{
-    kpViewManager *vm = viewManager ();
-    return vm ? vm->viewUnderCursor () : 0;
 }
 
 kpViewManager *kpTool::viewManager () const

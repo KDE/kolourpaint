@@ -109,7 +109,7 @@ bool kpToolSelection::onSelectionToMove () const
     if (!v)
         return 0;
 
-    return v->mouseOnSelectionToMove (m_currentViewPoint);
+    return v->mouseOnSelectionToMove (currentViewPoint ());
 }
 
 // protected
@@ -119,7 +119,7 @@ int kpToolSelection::onSelectionResizeHandle () const
     if (!v)
         return 0;
 
-    return v->mouseOnSelectionResizeHandle (m_currentViewPoint);
+    return v->mouseOnSelectionResizeHandle (currentViewPoint ());
 }
 
 
@@ -160,7 +160,7 @@ QString kpToolSelection::haventBegunDrawUserMessage () const
     {
         return /*virtual*/haventBegunDrawUserMessageOnResizeHandle ();
     }
-    else if (sel && sel->contains (m_currentPoint))
+    else if (sel && sel->contains (currentPoint ()))
     {
         return /*virtual*/haventBegunDrawUserMessageInsideSelection ();
     }
@@ -248,9 +248,9 @@ kpToolSelection::DragType kpToolSelection::beginDrawInsideSelection ()
 #endif
 
     m_startDragFromSelectionTopLeft =
-        m_currentPoint - document ()->selection ()->topLeft ();
+        currentPoint () - document ()->selection ()->topLeft ();
 
-    if (m_mouseButton == 0)
+    if (mouseButton () == 0)
     {
         setSelectionBorderForMove ();
     }
@@ -270,10 +270,10 @@ kpToolSelection::DragType kpToolSelection::beginDrawInsideSelection ()
 void kpToolSelection::beginDraw ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelection::beginDraw() m_startPoint="
-               << m_startPoint
+    kDebug () << "kpToolSelection::beginDraw() startPoint ()="
+               << startPoint ()
                << " QCursor::pos() view startPoint="
-               << m_viewUnderStartPoint->mapFromGlobal (QCursor::pos ())
+               << viewUnderStartPoint ()->mapFromGlobal (QCursor::pos ())
                << endl;
 #endif
 
@@ -284,14 +284,14 @@ void kpToolSelection::beginDraw ()
     // In case the cursor was wrong to start with
     // (forgot to call kpTool::somethingBelowTheCursorChanged()),
     // make sure it is correct during this operation.
-    hover (m_currentPoint);
+    hover (currentPoint ());
 
     // Currently used only to end the current text
     if (hasBegunShape ())
     {
-        endShape (m_currentPoint,
+        endShape (currentPoint (),
             kpBug::QRect_Normalized (
-                QRect (m_startPoint/* TODO: wrong */, m_currentPoint)));
+                QRect (startPoint ()/* TODO: wrong */, currentPoint ())));
     }
 
     m_dragType = Create;
@@ -313,7 +313,7 @@ void kpToolSelection::beginDraw ()
             kDebug () << "\t\tis resize/scale" << endl;
         #endif
 
-            m_startDragFromSelectionTopLeft = m_currentPoint - selectionRect.topLeft ();
+            m_startDragFromSelectionTopLeft = currentPoint () - selectionRect.topLeft ();
             m_dragType = ResizeScale;
             m_resizeScaleType = onSelectionResizeHandle ();
 
@@ -325,7 +325,7 @@ void kpToolSelection::beginDraw ()
             }
             viewManager ()->restoreQueueUpdates ();
         }
-        else if (sel->contains (m_currentPoint))
+        else if (sel->contains (currentPoint ()))
         {
             m_dragType = /*virtual*/beginDrawInsideSelection ();
         }
@@ -373,7 +373,7 @@ QCursor kpToolSelection::cursor () const
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "kpToolSelection::cursor()"
-               << " m_currentPoint=" << m_currentPoint
+               << " currentPoint ()=" << currentPoint ()
                << " QCursor::pos() view under cursor="
                << (viewUnderCursor () ?
                     viewUnderCursor ()->mapFromGlobal (QCursor::pos ()) :
@@ -411,7 +411,7 @@ QCursor kpToolSelection::cursor () const
 
         return Qt::ArrowCursor;
     }
-    else if (sel && sel->contains (m_currentPoint))
+    else if (sel && sel->contains (currentPoint ()))
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
         kDebug () << "\tsel contains currentPoint" << endl;
@@ -498,9 +498,9 @@ void kpToolSelection::delayedDraw ()
 #if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "kpToolSelection::delayedDraw() hasBegunDraw="
                << hasBegunDraw ()
-               << " currentPoint=" << m_currentPoint
-               << " lastPoint=" << m_lastPoint
-               << " startPoint=" << m_startPoint
+               << " currentPoint=" << currentPoint ()
+               << " lastPoint=" << lastPoint ()
+               << " startPoint=" << startPoint ()
                << endl;
 #endif
 
@@ -509,8 +509,8 @@ void kpToolSelection::delayedDraw ()
 
     if (hasBegunDraw ())
     {
-        draw (m_currentPoint, m_lastPoint,
-              kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        draw (currentPoint (), lastPoint (),
+              kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
     }
 }
 
@@ -523,7 +523,7 @@ void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
     kDebug () << "\t\tcreateNOPTimer->isActive()="
                 << m_createNOPTimer->isActive ()
                 << " viewManhattanLength from startPoint="
-                << m_viewUnderStartPoint->transformDocToViewX ((thisPoint - m_startPoint).manhattanLength ())
+                << viewUnderStartPoint ()->transformDocToViewX ((thisPoint - startPoint ()).manhattanLength ())
                 << endl;
 #endif
 
@@ -532,13 +532,13 @@ void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
 
     if (m_createNOPTimer->isActive ())
     {
-        if (m_viewUnderStartPoint->transformDocToViewX (
-                (thisPoint - m_startPoint).manhattanLength ()) <= 6)
+        if (viewUnderStartPoint ()->transformDocToViewX (
+                (thisPoint - startPoint ()).manhattanLength ()) <= 6)
         {
         #if DEBUG_KP_TOOL_SELECTION && 1
             kDebug () << "\t\tsuppress accidental movement" << endl;
         #endif
-            thisPoint = m_startPoint;
+            thisPoint = startPoint ();
         }
         else
         {
@@ -551,7 +551,7 @@ void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
 
 
     // Prevent unintentional 1-pixel selections
-    if (!m_dragHasBegun && thisPoint == m_startPoint)
+    if (!m_dragHasBegun && thisPoint == startPoint ())
     {
         if (m_mode != kpToolSelection::Text)
         {
@@ -611,7 +611,7 @@ void kpToolSelection::move (QPoint thisPoint, QRect /*normalizedRect*/)
         sel->height ());
 
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "\t\tstartPoint=" << m_startPoint
+    kDebug () << "\t\tstartPoint=" << startPoint ()
                 << " thisPoint=" << thisPoint
                 << " startDragFromSel=" << m_startDragFromSelectionTopLeft
                 << " targetSelRect=" << targetSelRect
@@ -637,7 +637,7 @@ void kpToolSelection::move (QPoint thisPoint, QRect /*normalizedRect*/)
 
 
     if (!m_dragHasBegun &&
-        targetSelRect.topLeft () + m_startDragFromSelectionTopLeft == m_startPoint)
+        targetSelRect.topLeft () + m_startDragFromSelectionTopLeft == startPoint ())
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
         kDebug () << "\t\t\t\tnop" << endl;
@@ -682,15 +682,15 @@ void kpToolSelection::move (QPoint thisPoint, QRect /*normalizedRect*/)
     //viewManager ()->setQueueUpdates ();
     //viewManager ()->setFastUpdates ();
 
-    if (m_shiftPressed)
+    if (shiftPressed ())
         m_currentMoveCommandIsSmear = true;
 
-    if (!m_dragHasBegun && (m_controlPressed || m_shiftPressed))
+    if (!m_dragHasBegun && (controlPressed () || shiftPressed ()))
         m_currentMoveCommand->copyOntoDocument ();
 
     m_currentMoveCommand->moveTo (targetSelRect.topLeft ());
 
-    if (m_shiftPressed)
+    if (shiftPressed ())
         m_currentMoveCommand->copyOntoDocument ();
 
     //viewManager ()->restoreFastUpdates ();
@@ -755,7 +755,7 @@ void kpToolSelection::resizeScaleCalculateNewSelectionPosSize (
 
     // Calcluate new width.
     *newWidth = originalSelection.width () +
-        userXSign * (m_currentPoint.x () - m_startPoint.x ());
+        userXSign * (currentPoint ().x () - startPoint ().x ());
 
     // Don't allow new width to be less than that kind of selection type's
     // minimum.
@@ -777,7 +777,7 @@ void kpToolSelection::resizeScaleCalculateNewSelectionPosSize (
 
     // Calcluate new height.
     *newHeight = originalSelection.height () +
-        userYSign * (m_currentPoint.y () - m_startPoint.y ());
+        userYSign * (currentPoint ().y () - startPoint ().y ());
 
     // Don't allow new height to be less than that kind of selection type's
     // minimum.
@@ -785,7 +785,7 @@ void kpToolSelection::resizeScaleCalculateNewSelectionPosSize (
 
 
     // Keep aspect ratio?
-    if (m_shiftPressed)
+    if (shiftPressed ())
     {
         resizeScaleTryKeepAspect (*newWidth, *newHeight,
             (userXSign != 0)/*X or XY grip dragged*/,
@@ -831,7 +831,7 @@ void kpToolSelection::resizeScale (QPoint thisPoint, QRect /*normalizedRect*/)
 
     kpSelection *sel = document ()->selection ();
 
-    if (!m_dragHasBegun && thisPoint == m_startPoint)
+    if (!m_dragHasBegun && thisPoint == startPoint ())
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
         kDebug () << "\t\tnop" << endl;
@@ -896,12 +896,12 @@ void kpToolSelection::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "kpToolSelection::draw" << thisPoint
-               << " startPoint=" << m_startPoint
+               << " startPoint=" << startPoint ()
                << " normalizedRect=" << normalizedRect << endl;
 #endif
 
 
-    // OPT: return when thisPoint == m_lastPoint so that e.g. when creating
+    // OPT: return when thisPoint == lastPoint () so that e.g. when creating
     //      Points sel, press modifiers doesn't add multiple points in same
     //      place
 
@@ -992,7 +992,7 @@ void kpToolSelection::cancelShape ()
 {
 #if DEBUG_KP_TOOL_SELECTION
     kDebug () << "kpToolSelection::cancelShape() mouseButton="
-              << m_mouseButton << endl;
+              << mouseButton () << endl;
 #endif
 
     m_createNOPTimer->stop ();
@@ -1159,7 +1159,7 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/,
     setUserMessage (haventBegunDrawUserMessage ());
 
 
-    if (m_mouseButton == 1/*right*/)
+    if (mouseButton () == 1/*right*/)
         popupRMBMenu ();
 }
 

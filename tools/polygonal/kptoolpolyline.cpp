@@ -82,7 +82,7 @@ void kpToolPolyline::endDraw (const QPoint &, const QRect &)
         return;
     }
     
-    if (m_mouseButton == 0)
+    if (mouseButton () == 0)
     {
         setUserMessage (i18n ("Left drag another line or right click to finish."));
     }

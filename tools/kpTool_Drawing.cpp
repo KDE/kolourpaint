@@ -66,6 +66,73 @@
 #include <kactioncollection.h>
 
 
+// protected
+int kpTool::mouseButton () const
+{
+    return d->mouseButton;
+}
+  
+
+// protected
+bool kpTool::shiftPressed () const
+{
+    return d->shiftPressed;
+}
+
+// protected
+bool kpTool::controlPressed () const
+{
+    return d->controlPressed;
+}
+
+// protected
+bool kpTool::altPressed () const
+{
+    return d->altPressed;
+}
+
+
+// protected
+QPoint kpTool::startPoint () const
+{
+    return d->startPoint;
+}
+
+
+// protected
+QPoint kpTool::currentPoint () const
+{
+    return d->currentPoint;
+}
+
+// protected
+QPoint kpTool::currentViewPoint () const
+{
+    return d->currentViewPoint;
+}
+
+
+// protected
+QPoint kpTool::lastPoint () const
+{
+    return d->lastPoint;
+}
+
+
+// protected
+kpView *kpTool::viewUnderStartPoint () const
+{
+    return d->viewUnderStartPoint;
+}
+
+// protected
+kpView *kpTool::viewUnderCursor () const
+{
+    kpViewManager *vm = viewManager ();
+    return vm ? vm->viewUnderCursor () : 0;
+}
+
+
 void kpTool::beginInternal ()
 {
 #if DEBUG_KP_TOOL
@@ -76,13 +143,13 @@ void kpTool::beginInternal ()
     {
         // clear leftover statusbar messages
         setUserMessage ();
-        m_currentPoint = currentPoint ();
-        m_currentViewPoint = currentPoint (false/*view point*/);
-        setUserShapePoints (m_currentPoint);
+        d->currentPoint = calculateCurrentPoint ();
+        d->currentViewPoint = calculateCurrentPoint (false/*view point*/);
+        setUserShapePoints (d->currentPoint);
 
         // TODO: Audit all the code in this file - states like "d->began" &
         //       "d->beganDraw" should be set before calling user func.
-        //       Also, m_currentPoint should be more frequently initialised.
+        //       Also, d->currentPoint should be more frequently initialised.
 
         // call user virtual func
         begin ();
@@ -96,12 +163,12 @@ void kpTool::beginInternal ()
 
         uint keyState = QApplication::keyboardModifiers ();
 
-        m_shiftPressed = (keyState & Qt::ShiftModifier);
-        m_controlPressed = (keyState & Qt::ControlModifier);
+        d->shiftPressed = (keyState & Qt::ShiftModifier);
+        d->controlPressed = (keyState & Qt::ControlModifier);
 
         // TODO: Can't do much about ALT - unless it's always KApplication::Modifier1?
         //       Ditto for everywhere else where I set SHIFT & CTRL but not alt.  COMPAT: supported by Qt
-        m_altPressed = false;
+        d->altPressed = false;
     }
 }
 
@@ -111,7 +178,7 @@ void kpTool::endInternal ()
     {
         // before we can stop using the tool, we must stop the current drawing operation (if any)
         if (hasBegunShape ())
-            endShapeInternal (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+            endShapeInternal (d->currentPoint, kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
 
         // call user virtual func
         end ();
@@ -170,7 +237,7 @@ void kpTool::beginDrawInternal ()
         beginDraw ();
 
         d->beganDraw = true;
-        emit beganDraw (m_currentPoint);
+        emit beganDraw (d->currentPoint);
     }
 }
 
@@ -217,17 +284,17 @@ void kpTool::cancelShapeInternal ()
     {
         d->beganDraw = false;
         cancelShape ();
-        m_viewUnderStartPoint = 0;
+        d->viewUnderStartPoint = 0;
 
-        emit cancelledShape (viewUnderCursor () ? m_currentPoint : KP_INVALID_POINT);
+        emit cancelledShape (viewUnderCursor () ? d->currentPoint : KP_INVALID_POINT);
 
         if (viewUnderCursor ())
-            hover (m_currentPoint);
+            hover (d->currentPoint);
         else
         {
-            m_currentPoint = KP_INVALID_POINT;
-            m_currentViewPoint = KP_INVALID_POINT;
-            hover (m_currentPoint);
+            d->currentPoint = KP_INVALID_POINT;
+            d->currentViewPoint = KP_INVALID_POINT;
+            hover (d->currentPoint);
         }
 
         if (returnToPreviousToolAfterEndDraw ())
@@ -283,16 +350,16 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
     #endif
         endDraw (thisPoint, normalizedRect);
     }
-    m_viewUnderStartPoint = 0;
+    d->viewUnderStartPoint = 0;
 
-    emit endedDraw (m_currentPoint);
+    emit endedDraw (d->currentPoint);
     if (viewUnderCursor ())
-        hover (m_currentPoint);
+        hover (d->currentPoint);
     else
     {
-        m_currentPoint = KP_INVALID_POINT;
-        m_currentViewPoint = KP_INVALID_POINT;
-        hover (m_currentPoint);
+        d->currentPoint = KP_INVALID_POINT;
+        d->currentViewPoint = KP_INVALID_POINT;
+        hover (d->currentPoint);
     }
 
     if (returnToPreviousToolAfterEndDraw ())

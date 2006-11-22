@@ -72,7 +72,7 @@ QRect kpToolPen::drawPoint (const QPoint &point)
 {
     QPixmap pixmap (1, 1);
 
-    const kpColor c = color (m_mouseButton);
+    const kpColor c = color (mouseButton ());
 
 
     // OPT: this seems hopelessly inefficient
@@ -110,7 +110,7 @@ QRect kpToolPen::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
     kpPainter::drawLine (&image,
         sp.x (), sp.y (),
         ep.x (), ep.y (),
-        color (m_mouseButton),
+        color (mouseButton ()),
         1/*pen width*/);
 
  

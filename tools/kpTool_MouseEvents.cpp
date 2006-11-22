@@ -89,8 +89,8 @@ void kpTool::mousePressEvent (QMouseEvent *e)
             #if DEBUG_KP_TOOL && 1
                 kDebug () << "\t\thasBegunShape - end" << endl;
             #endif
-                endShapeInternal (m_currentPoint,
-                                  kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+                endShapeInternal (d->currentPoint,
+                                  kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
             }
 
             if (viewUnderCursor ())
@@ -118,10 +118,10 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
     if (d->beganDraw)
     {
-        if (mb == -1 || mb != m_mouseButton)
+        if (mb == -1 || mb != d->mouseButton)
         {
         #if DEBUG_KP_TOOL && 1
-            kDebug () << "\tCancelling operation as " << mb << " == -1 or != " << m_mouseButton << endl;
+            kDebug () << "\tCancelling operation as " << mb << " == -1 or != " << d->mouseButton << endl;
         #endif
 
             kpView *view = viewUnderStartPoint ();
@@ -129,8 +129,8 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
             // if we get a mousePressEvent when we're drawing, then the other
             // mouse button must have been pressed
-            m_currentPoint = view->transformViewToDoc (e->pos ());
-            m_currentViewPoint = e->pos ();
+            d->currentPoint = view->transformViewToDoc (e->pos ());
+            d->currentViewPoint = e->pos ();
             cancelShapeInternal ();
         }
 
@@ -147,23 +147,23 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
 
     // let user know what mouse button is being used for entire draw
-    m_mouseButton = mouseButton (e->buttons ());
-    m_shiftPressed = (e->modifiers () & Qt::ShiftModifier);
-    m_controlPressed = (e->modifiers () & Qt::ControlModifier);
-    m_altPressed = (e->modifiers () & Qt::AltModifier);
-    m_startPoint = m_currentPoint = view->transformViewToDoc (e->pos ());
-    m_currentViewPoint = e->pos ();
-    m_viewUnderStartPoint = view;
-    m_lastPoint = QPoint (-1, -1);
+    d->mouseButton = mouseButton (e->buttons ());
+    d->shiftPressed = (e->modifiers () & Qt::ShiftModifier);
+    d->controlPressed = (e->modifiers () & Qt::ControlModifier);
+    d->altPressed = (e->modifiers () & Qt::AltModifier);
+    d->startPoint = d->currentPoint = view->transformViewToDoc (e->pos ());
+    d->currentViewPoint = e->pos ();
+    d->viewUnderStartPoint = view;
+    d->lastPoint = QPoint (-1, -1);
 
 #if DEBUG_KP_TOOL && 1
-    kDebug () << "\tBeginning draw @ " << m_currentPoint << endl;
+    kDebug () << "\tBeginning draw @ " << d->currentPoint << endl;
 #endif
 
     beginDrawInternal ();
 
-    draw (m_currentPoint, m_lastPoint, QRect (m_currentPoint, m_currentPoint));
-    m_lastPoint = m_currentPoint;
+    draw (d->currentPoint, d->lastPoint, QRect (d->currentPoint, d->currentPoint));
+    d->lastPoint = d->currentPoint;
 }
 
 void kpTool::mouseMoveEvent (QMouseEvent *e)
@@ -182,9 +182,9 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
     kDebug () << "\tfocusWidget=" << kapp->focusWidget () << endl;
 #endif
 
-    m_shiftPressed = (e->modifiers () & Qt::ShiftModifier);
-    m_controlPressed = (e->modifiers () & Qt::ControlModifier);
-    m_altPressed = (e->modifiers () & Qt::AltModifier);
+    d->shiftPressed = (e->modifiers () & Qt::ShiftModifier);
+    d->controlPressed = (e->modifiers () & Qt::ControlModifier);
+    d->altPressed = (e->modifiers () & Qt::AltModifier);
 
     if (d->beganDraw)
     {
@@ -193,20 +193,20 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
         //       Does this affect branches/KDE/3.x/kdegraphics/kolourpaint?
         Q_ASSERT (view);
 
-        m_currentPoint = view->transformViewToDoc (e->pos ());
-        m_currentViewPoint = e->pos ();
+        d->currentPoint = view->transformViewToDoc (e->pos ());
+        d->currentViewPoint = e->pos ();
 
     #if DEBUG_KP_TOOL && 0
         kDebug () << "\tDraw!" << endl;
     #endif
 
         bool dragScrolled = false;
-        movedAndAboutToDraw (m_currentPoint, m_lastPoint, view->zoomLevelX (), &dragScrolled);
+        movedAndAboutToDraw (d->currentPoint, d->lastPoint, view->zoomLevelX (), &dragScrolled);
 
         if (dragScrolled)
         {
-            m_currentPoint = currentPoint ();
-            m_currentViewPoint = currentPoint (false/*view point*/);
+            d->currentPoint = calculateCurrentPoint ();
+            d->currentViewPoint = calculateCurrentPoint (false/*view point*/);
 
             // Scrollview has scrolled contents and has scheduled an update
             // for the newly exposed region.  If draw() schedules an update
@@ -217,26 +217,26 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
             viewManager ()->setFastUpdates ();
         }
 
-        draw (m_currentPoint, m_lastPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        draw (d->currentPoint, d->lastPoint, kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
 
         if (dragScrolled)
             viewManager ()->restoreFastUpdates ();
 
-        m_lastPoint = m_currentPoint;
+        d->lastPoint = d->currentPoint;
     }
     else
     {
         kpView *view = viewUnderCursor ();
         if (!view)  // possible if cancelShape()'ed but still holding down initial mousebtn
         {
-            m_currentPoint = KP_INVALID_POINT;
-            m_currentViewPoint = KP_INVALID_POINT;
+            d->currentPoint = KP_INVALID_POINT;
+            d->currentViewPoint = KP_INVALID_POINT;
             return;
         }
 
-        m_currentPoint = view->transformViewToDoc (e->pos ());
-        m_currentViewPoint = e->pos ();
-        hover (m_currentPoint);
+        d->currentPoint = view->transformViewToDoc (e->pos ());
+        d->currentViewPoint = e->pos ();
+        hover (d->currentPoint);
     }
 }
 
@@ -260,9 +260,9 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
         //       Does this affect branches/KDE/3.x/kdegraphics/kolourpaint?
         Q_ASSERT (view);
 
-        m_currentPoint = view->transformViewToDoc (e->pos ());
-        m_currentViewPoint = e->pos ();
-        endDrawInternal (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        d->currentPoint = view->transformViewToDoc (e->pos ());
+        d->currentViewPoint = e->pos ();
+        endDrawInternal (d->currentPoint, kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
     }
 
     if ((e->buttons () & Qt::MouseButtonMask) == 0)

@@ -700,7 +700,7 @@ bool kpView::mouseOnSelectionToMove (const QPoint &viewPoint) const
     // Middle point should always be selectable
     const QPoint selCenterDocPoint = selection ()->boundingRect ().center ();
     if (tool () &&
-        tool ()->currentPoint () == selCenterDocPoint)
+        tool ()->calculateCurrentPoint () == selCenterDocPoint)
     {
         return false;
     }

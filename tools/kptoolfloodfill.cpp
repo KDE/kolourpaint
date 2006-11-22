@@ -87,8 +87,8 @@ void kpToolFloodFill::beginDraw ()
         // Flood Fill is an expensive CPU operation so we only fill at a
         // mouse click (beginDraw ()), not on mouse move (virtually draw())
         d->currentCommand = new kpToolFloodFillCommand (
-            m_currentPoint.x (), m_currentPoint.y (),
-            color (m_mouseButton), processedColorSimilarity (),
+            currentPoint ().x (), currentPoint ().y (),
+            color (mouseButton ()), processedColorSimilarity (),
             mainWindow ());
 
     #if DEBUG_KP_TOOL_FLOOD_FILL && 1

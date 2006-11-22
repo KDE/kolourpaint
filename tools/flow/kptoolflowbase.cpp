@@ -223,8 +223,8 @@ void kpToolFlowBase::hover (const QPoint &point)
 #endif
     if (point != KP_INVALID_POINT && d->cursorDrawFunc)
     {
-        // TODO: why this?
-        m_mouseButton = 0;
+        // HITODO: This was enabled before (when we could still assign to m_mouseButton) but why do we need it?
+        //mouseButton () = 0;
 
         viewManager ()->setFastUpdates ();
 
@@ -352,7 +352,7 @@ kpTempPixmap::UserFunctionType kpToolFlowBase::brushDrawFunction () const
 // protected
 void *kpToolFlowBase::brushDrawFunctionData () const
 {
-    return d->drawPackageForMouseButton [m_mouseButton];
+    return d->drawPackageForMouseButton [mouseButton ()];
 }
 
 
@@ -424,7 +424,7 @@ void kpToolFlowBase::updateBrushAndCursor ()
         d->brushIsDiagonalLine = d->toolWidgetBrush->brushIsDiagonalLine ();
     }
 
-    hover (hasBegun () ? m_currentPoint : currentPoint ());
+    hover (hasBegun () ? currentPoint () : calculateCurrentPoint ());
 }
 
 
@@ -471,7 +471,7 @@ QRect kpToolFlowBase::hotRectForMousePointAndBrushWidthHeight (
 // protected
 QRect kpToolFlowBase::hotRect () const
 {
-    return hotRectForMousePointAndBrushWidthHeight (m_currentPoint,
+    return hotRectForMousePointAndBrushWidthHeight (currentPoint (),
         d->brushWidth, d->brushHeight);
 }
 

@@ -78,7 +78,7 @@ QString kpTool::cancelUserMessage (int mouseButton)
 // public
 QString kpTool::cancelUserMessage () const
 {
-    return cancelUserMessage (m_mouseButton);
+    return cancelUserMessage (d->mouseButton);
 }
 
 

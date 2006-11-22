@@ -172,21 +172,21 @@ void kpToolRectangularBase::end ()
 
 void kpToolRectangularBase::applyModifiers ()
 {
-    QRect rect = kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint));
+    QRect rect = kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ()));
 
 #if DEBUG_KP_TOOL_RECTANGULAR_BASE
     kDebug () << "kpToolRectangularBase::applyModifiers(" << rect
-               << ") shift=" << m_shiftPressed
-               << " ctrl=" << m_controlPressed
+               << ") shift=" << shiftPressed ()
+               << " ctrl=" << controlPressed ()
                << endl;
 #endif
 
-    // user wants to m_startPoint == center
-    if (m_controlPressed)
+    // user wants to startPoint () == center
+    if (controlPressed ())
     {
-        int xdiff = qAbs (m_startPoint.x () - m_currentPoint.x ());
-        int ydiff = qAbs (m_startPoint.y () - m_currentPoint.y ());
-        rect = QRect (m_startPoint.x () - xdiff, m_startPoint.y () - ydiff,
+        int xdiff = qAbs (startPoint ().x () - currentPoint ().x ());
+        int ydiff = qAbs (startPoint ().y () - currentPoint ().y ());
+        rect = QRect (startPoint ().x () - xdiff, startPoint ().y () - ydiff,
                       xdiff * 2 + 1, ydiff * 2 + 1);
     }
 
@@ -194,20 +194,20 @@ void kpToolRectangularBase::applyModifiers ()
     //   rectangle --> square
     //   rounded rectangle --> rounded square
     //   ellipse --> circle
-    if (m_shiftPressed)
+    if (shiftPressed ())
     {
-        if (!m_controlPressed)
+        if (!controlPressed ())
         {
             if (rect.width () < rect.height ())
             {
-                if (m_startPoint.y () == rect.y ())
+                if (startPoint ().y () == rect.y ())
                     rect.setHeight (rect.width ());
                 else
                     rect.setY (rect.bottom () - rect.width () + 1);
             }
             else
             {
-                if (m_startPoint.x () == rect.x ())
+                if (startPoint ().x () == rect.x ())
                     rect.setWidth (rect.height ());
                 else
                     rect.setX (rect.right () - rect.height () + 1);
@@ -243,14 +243,14 @@ void kpToolRectangularBase::beginDraw ()
 // private
 kpColor kpToolRectangularBase::drawingForegroundColor () const
 {
-    return color (m_mouseButton);
+    return color (mouseButton ());
 }
 
 // private
 kpColor kpToolRectangularBase::drawingBackgroundColor () const
 {
-    const kpColor foregroundColor = color (m_mouseButton);
-    const kpColor backgroundColor = color (1 - m_mouseButton);
+    const kpColor foregroundColor = color (mouseButton ());
+    const kpColor backgroundColor = color (1 - mouseButton ());
 
     return d->toolWidgetFillStyle->drawingBackgroundColor (
         foregroundColor, backgroundColor);
@@ -290,24 +290,24 @@ void kpToolRectangularBase::draw (const QPoint &, const QPoint &, const QRect &)
 
     // S. or S or SC or S == C
     // .C    C
-    if (m_currentPoint.x () >= m_startPoint.x () &&
-        m_currentPoint.y () >= m_startPoint.y ())
+    if (currentPoint ().x () >= startPoint ().x () &&
+        currentPoint ().y () >= startPoint ().y ())
     {
         setUserShapePoints (d->toolRectangleRect.topLeft (),
                             d->toolRectangleRect.bottomRight ());
     }
     // .C or C
     // S.    S
-    else if (m_currentPoint.x () >= m_startPoint.x () &&
-             m_currentPoint.y () < m_startPoint.y ())
+    else if (currentPoint ().x () >= startPoint ().x () &&
+             currentPoint ().y () < startPoint ().y ())
     {
         setUserShapePoints (d->toolRectangleRect.bottomLeft (),
                             d->toolRectangleRect.topRight ());
     }
     // .S or CS
     // C.
-    else if (m_currentPoint.x () < m_startPoint.x () &&
-             m_currentPoint.y () >= m_startPoint.y ())
+    else if (currentPoint ().x () < startPoint ().x () &&
+             currentPoint ().y () >= startPoint ().y ())
     {
         setUserShapePoints (d->toolRectangleRect.topRight (),
                             d->toolRectangleRect.bottomLeft ());

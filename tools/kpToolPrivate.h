@@ -53,6 +53,14 @@ struct kpToolPrivate
     // Drawing state.
     bool began;
     bool beganDraw;  // set after beginDraw() is called, unset before endDraw() is called
+    int mouseButton;  /* 0 = left, 1 = right */
+    bool shiftPressed, controlPressed, altPressed;  // m_altPressed is unreliable
+    QPoint startPoint,
+           currentPoint, currentViewPoint,
+           lastPoint;
+           
+    kpView *viewUnderStartPoint;
+
 
     // Set to 2 when the user swaps the foreground and background color.
     //

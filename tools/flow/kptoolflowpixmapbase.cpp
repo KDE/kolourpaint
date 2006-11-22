@@ -54,13 +54,13 @@ kpToolFlowPixmapBase::~kpToolFlowPixmapBase ()
 #if 0
 QRect kpToolFlowPixmapBase::drawPoint (const QPoint & /*point*/)
 {            
-    if (color (m_mouseButton).isOpaque ())
-        document ()->paintPixmapAt (m_brushPixmap [m_mouseButton], hotPoint ());
+    if (color (mouseButton ()).isOpaque ())
+        document ()->paintPixmapAt (m_brushPixmap [mouseButton ()], hotPoint ());
     else
     {
         kpPixmapFX::paintMaskTransparentWithBrush (document ()->pixmap (),
             hotPoint (),
-            kpPixmapFX::getNonNullMask (m_brushPixmap [m_mouseButton]));
+            kpPixmapFX::getNonNullMask (m_brushPixmap [mouseButton ()]));
         document ()->slotContentsChanged (hotRect ());
     }
 

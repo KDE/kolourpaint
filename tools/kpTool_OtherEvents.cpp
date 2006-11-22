@@ -99,7 +99,7 @@ void kpTool::focusOutEvent (QFocusEvent *)
 #endif
 
     if (d->beganDraw)
-        endDrawInternal (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        endDrawInternal (d->currentPoint, kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
 }
 
 void kpTool::enterEvent (QEvent *)
@@ -118,9 +118,9 @@ void kpTool::leaveEvent (QEvent *)
     // if we haven't started drawing (e.g. dragging a rectangle)...
     if (!d->beganDraw)
     {
-        m_currentPoint = KP_INVALID_POINT;
-        m_currentViewPoint = KP_INVALID_POINT;
-        hover (m_currentPoint);
+        d->currentPoint = KP_INVALID_POINT;
+        d->currentViewPoint = KP_INVALID_POINT;
+        hover (d->currentPoint);
     }
 }
 

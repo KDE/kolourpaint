@@ -81,7 +81,7 @@ void kpToolColorPicker::begin ()
 // public virtual [base kpTool]
 void kpToolColorPicker::beginDraw ()
 {
-    m_oldColor = color (m_mouseButton);
+    m_oldColor = color (mouseButton ());
 
     setUserMessage (cancelUserMessage ());
 }
@@ -93,12 +93,12 @@ void kpToolColorPicker::draw (const QPoint &thisPoint, const QPoint &, const QRe
     
     if (color.isValid ())
     {
-        mainWindow ()->colorToolBar ()->setColor (m_mouseButton, color);
+        mainWindow ()->colorToolBar ()->setColor (mouseButton (), color);
         setUserShapePoints (thisPoint);
     }
     else
     {
-        mainWindow ()->colorToolBar ()->setColor (m_mouseButton, m_oldColor);
+        mainWindow ()->colorToolBar ()->setColor (mouseButton (), m_oldColor);
         setUserShapePoints ();
     }
 }
@@ -106,7 +106,7 @@ void kpToolColorPicker::draw (const QPoint &thisPoint, const QPoint &, const QRe
 // public virtual [base kpTool]
 void kpToolColorPicker::cancelShape ()
 {
-    mainWindow ()->colorToolBar ()->setColor (m_mouseButton, m_oldColor);
+    mainWindow ()->colorToolBar ()->setColor (mouseButton (), m_oldColor);
 
     setUserMessage (i18n ("Let go of all the mouse buttons."));
 }
@@ -127,7 +127,7 @@ void kpToolColorPicker::endDraw (const QPoint &thisPoint, const QRect &)
     {
         kpToolColorPickerCommand *cmd =
             new kpToolColorPickerCommand (
-                m_mouseButton,
+                mouseButton (),
                 color, m_oldColor,
                 mainWindow ());
 

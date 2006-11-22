@@ -58,5 +58,5 @@ void kpToolEllipticalSelection::createMoreSelectionAndUpdateStatusBar (
         kpSelection (
             kpSelection::Ellipse, normalizedRect,
             mainWindow ()->selectionTransparency ()));
-    setUserShapePoints (m_startPoint, m_currentPoint);
+    setUserShapePoints (startPoint (), currentPoint ());
 }

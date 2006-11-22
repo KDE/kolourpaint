@@ -176,7 +176,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
         pixmapPoints.append (dp - docRect.topLeft ());
     kpPainter::sprayPoints (&pixmap,
         pixmapPoints,
-        color (m_mouseButton),
+        color (mouseButton ()),
         spraycanSize ());
 
         
@@ -192,13 +192,13 @@ QRect kpToolSpraycan::drawPoint (const QPoint &point)
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
     kDebug () << "kpToolSpraycan::drawPoint" << point
-               << " lastPoint=" << m_lastPoint
+               << " lastPoint=" << lastPoint ()
                << endl;
 #endif
 
     // If this is the first in the flow or if the user is moving the spray,
     // make the spray line continuous.
-    if (point != m_lastPoint)
+    if (point != lastPoint ())
     {
         // Draw without delay.
         return drawLineWithProbability (point, point,
@@ -223,7 +223,7 @@ void kpToolSpraycan::timeoutDraw ()
     kDebug () << "kpToolSpraycan::timeoutDraw()" << endl;
 #endif
 
-    const QRect drawnRect = drawLineWithProbability (m_currentPoint, m_currentPoint,
+    const QRect drawnRect = drawLineWithProbability (currentPoint (), currentPoint (),
         1.0/*100% chance of drawing*/);
 
     // kpToolFlowBase() does this after calling drawPoint() and drawLine() so

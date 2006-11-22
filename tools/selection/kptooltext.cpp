@@ -75,7 +75,7 @@ bool kpToolText::onSelectionToSelectText () const
     if (!v)
         return 0;
 
-    return v->mouseOnSelectionToSelectText (m_currentViewPoint);
+    return v->mouseOnSelectionToSelectText (currentViewPoint ());
 }
 
 
@@ -125,8 +125,8 @@ void kpToolText::addNewBackspaceCommand (kpToolTextBackspaceCommand **cmd)
 {
     if (hasBegunShape ())
     {
-        endShape (m_currentPoint,
-            kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        endShape (currentPoint (),
+            kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
     }
     
     *cmd = new kpToolTextBackspaceCommand (i18n ("Text: Backspace"),
@@ -141,8 +141,8 @@ void kpToolText::addNewDeleteCommand (kpToolTextDeleteCommand **cmd)
 {
     if (hasBegunShape ())
     {
-        endShape (m_currentPoint,
-            kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        endShape (currentPoint (),
+            kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
     }
 
     *cmd = new kpToolTextDeleteCommand (i18n ("Text: Delete"),
@@ -216,8 +216,8 @@ kpToolSelection::DragType kpToolText::beginDrawInsideSelection ()
     #endif
 
         viewManager ()->setTextCursorPosition (
-            document ()->selection ()->textRowForPoint (m_currentPoint),
-            document ()->selection ()->textColForPoint (m_currentPoint));
+            document ()->selection ()->textRowForPoint (currentPoint ()),
+            document ()->selection ()->textColForPoint (currentPoint ()));
 
         return kpToolSelection::SelectText;
     }
@@ -278,7 +278,7 @@ int kpToolText::calcClickCreateDimension (int mouseStart, int mouseEnd,
 bool kpToolText::shouldCreate (const kpTextStyle &textStyle,
         int *minimumWidthOut, int *minimumHeightOut)
 {
-    if (m_dragHasBegun || m_currentPoint != m_startPoint)
+    if (m_dragHasBegun || currentPoint () != startPoint ())
     {
     #if DEBUG_KP_TOOL_TEXT && 1
         kDebug () << "\tdrag creating text box" << endl;
@@ -306,22 +306,22 @@ bool kpToolText::shouldCreate (const kpTextStyle &textStyle,
     // (Click creating text box with RMB would not be obvious
     //  since RMB menu most likely hides text box immediately
     //  afterwards)
-    if (m_mouseButton == 1)
+    if (mouseButton () == 1)
         return false/*do not create text box*/;
 
 
     // Calculate suggested width.
     *minimumWidthOut = calcClickCreateDimension (
-        m_startPoint.x (),
-            m_currentPoint.x (),
+        startPoint ().x (),
+            currentPoint ().x (),
         kpSelection::preferredMinimumWidthForTextStyle (textStyle),
             kpSelection::minimumWidthForTextStyle (textStyle),
         document ()->width ());
 
     // Calculate suggested height.
     *minimumHeightOut = calcClickCreateDimension (
-        m_startPoint.y (),
-            m_currentPoint.y (),
+        startPoint ().y (),
+            currentPoint ().y (),
         kpSelection::preferredMinimumHeightForTextStyle (textStyle),
             kpSelection::minimumHeightForTextStyle (textStyle),
         document ()->height ());
@@ -351,7 +351,7 @@ void kpToolText::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
     // calculated.
     if (normalizedRect.width () < minimumWidth)
     {
-        if (thisPoint.x () >= m_startPoint.x ())
+        if (thisPoint.x () >= startPoint ().x ())
             normalizedRect.setWidth (minimumWidth);
         else
             normalizedRect.setX (normalizedRect.right () - minimumWidth + 1);
@@ -361,7 +361,7 @@ void kpToolText::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
     // calculated.
     if (normalizedRect.height () < minimumHeight)
     {
-        if (thisPoint.y () >= m_startPoint.y ())
+        if (thisPoint.y () >= startPoint ().y ())
             normalizedRect.setHeight (minimumHeight);
         else
             normalizedRect.setY (normalizedRect.bottom () - minimumHeight + 1);
@@ -405,16 +405,16 @@ void kpToolText::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
     //
     
     QPoint actualEndPoint = KP_INVALID_POINT;
-    if (m_startPoint == normalizedRect.topLeft ())
+    if (startPoint () == normalizedRect.topLeft ())
         actualEndPoint = normalizedRect.bottomRight ();
-    else if (m_startPoint == normalizedRect.bottomRight ())
+    else if (startPoint () == normalizedRect.bottomRight ())
         actualEndPoint = normalizedRect.topLeft ();
-    else if (m_startPoint == normalizedRect.topRight ())
+    else if (startPoint () == normalizedRect.topRight ())
         actualEndPoint = normalizedRect.bottomLeft ();
-    else if (m_startPoint == normalizedRect.bottomLeft ())
+    else if (startPoint () == normalizedRect.bottomLeft ())
         actualEndPoint = normalizedRect.topRight ();
 
-    setUserShapePoints (m_startPoint, actualEndPoint);
+    setUserShapePoints (startPoint (), actualEndPoint);
 }
 
 // protected virtual [base kpToolSelection]
@@ -689,7 +689,7 @@ void kpToolText::handleUpKeyPress (QKeyEvent *e,
 #endif
 
     if (hasBegunShape ())
-        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
 
     if (cursorRow > 0)
     {
@@ -710,7 +710,7 @@ void kpToolText::handleDownKeyPress (QKeyEvent *e,
 #endif
 
     if (hasBegunShape ())
-        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
 
     if (cursorRow < (int) textLines.size () - 1)
     {
@@ -731,7 +731,7 @@ void kpToolText::handleLeftKeyPress (QKeyEvent *e,
 #endif
 
     if (hasBegunShape ())
-        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
 
     if ((e->modifiers () & Qt::ControlModifier) == 0)
     {
@@ -764,7 +764,7 @@ void kpToolText::handleRightKeyPress (QKeyEvent *e,
 #endif
 
     if (hasBegunShape ())
-        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
 
     if ((e->modifiers () & Qt::ControlModifier) == 0)
     {
@@ -798,7 +798,7 @@ void kpToolText::handleHomeKeyPress (QKeyEvent *e,
 #endif
 
     if (hasBegunShape ())
-        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
 
     if (e->modifiers () & Qt::ControlModifier)
         cursorRow = 0;
@@ -819,7 +819,7 @@ void kpToolText::handleEndKeyPress (QKeyEvent *e,
 #endif
 
     if (hasBegunShape ())
-        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
 
     if (e->modifiers () & Qt::ControlModifier)
         cursorRow = textLines.size () - 1;
@@ -923,7 +923,7 @@ void kpToolText::handleEnterKeyPress (QKeyEvent *e,
     {
         // TODO: why not endShapeInternal(); ditto for everywhere else in this file?
         if (hasBegunShape ())
-            endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+            endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
 
         m_enterCommand = new kpToolTextEnterCommand (i18n ("Text: New Line"),
             cursorRow, cursorCol,
@@ -960,7 +960,7 @@ void kpToolText::handleTextTyped (QKeyEvent *e,
         if (!m_insertCommand)
         {
             if (hasBegunShape ())
-                endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+                endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
 
             m_insertCommand = new kpToolTextInsertCommand (i18n ("Text: Write"),
                 cursorRow, cursorCol,
@@ -1005,7 +1005,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         kDebug () << "\tno text sel - passing on event to kpTool" << endl;
     #endif
         //if (hasBegunShape ())
-        //    endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        //    endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
 
         kpToolSelection::keyPressEvent (e);
         return;
@@ -1077,7 +1077,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
                    << endl;
     #endif
         //if (hasBegunShape ())
-        //    endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        //    endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
 
         kpToolSelection::keyPressEvent (e);
         return;
@@ -1144,7 +1144,7 @@ void kpToolText::imComposeEvent (QIMEvent *e)
             if (!m_deleteCommand)
             {
                 if (hasBegunShape ())
-                    endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+                    endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
                 
                 m_deleteCommand = new kpToolTextDeleteCommand (i18n ("Text: Delete"),
                     viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
@@ -1164,7 +1164,7 @@ void kpToolText::imComposeEvent (QIMEvent *e)
         if (!m_insertCommand)
         {
             if (hasBegunShape ())
-                endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+                endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
             
             m_insertCommand = new kpToolTextInsertCommand (i18n ("Text: Write"),
                                                            viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
@@ -1211,7 +1211,7 @@ void kpToolText::imEndEvent (QIMEvent *e)
             if (!m_deleteCommand)
             {
                 if (hasBegunShape ())
-                    endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+                    endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
                 
                 m_deleteCommand = new kpToolTextDeleteCommand (i18n ("Text: Delete"),
                     viewManager ()->textCursorRow (),
@@ -1233,7 +1233,7 @@ void kpToolText::imEndEvent (QIMEvent *e)
         if (!m_insertCommand)
         {
             if (hasBegunShape ())
-                endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+                endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
             
             m_insertCommand = new kpToolTextInsertCommand (i18n ("Text: Write"),
                                                            viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
@@ -1288,7 +1288,7 @@ void kpToolText::changeTextStyle (const QString &name,
 #endif
 
     if (hasBegunShape ())
-        endShape (m_currentPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+        endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
 
     commandHistory ()->addCommand (
         new kpToolTextChangeStyleCommand (

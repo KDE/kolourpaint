@@ -89,7 +89,7 @@ public:
     virtual void reselect ();
 
     virtual bool careAboutModifierState () const { return true; }
-    bool controlOrShiftPressed () const { return (m_controlPressed || m_shiftPressed); }
+    bool controlOrShiftPressed () const { return (controlPressed () || shiftPressed ()); }
 
 protected:
     enum DragType

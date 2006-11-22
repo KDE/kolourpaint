@@ -136,9 +136,9 @@ QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPo
     const QRect dirtyRect = kpPainter::washLine (document ()->pixmap (),
         lastPoint.x (), lastPoint.y (),
         thisPoint.x (), thisPoint.y (),
-        color (m_mouseButton)/*color to draw in*/,
+        color (mouseButton ())/*color to draw in*/,
         brushWidth (), brushHeight (),
-        color (1 - m_mouseButton)/*color to replace*/,
+        color (1 - mouseButton ())/*color to replace*/,
         processedColorSimilarity ());
 
 #if DEBUG_KP_TOOL_COLOR_ERASER

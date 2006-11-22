@@ -59,7 +59,7 @@ void kpToolRectSelection::createMoreSelectionAndUpdateStatusBar (QPoint /*thisPo
             kpSelection::Rectangle, usefulRect,
             mainWindow ()->selectionTransparency ()));
 
-    setUserShapePoints (m_startPoint,
-        QPoint (qMax (0, qMin (m_currentPoint.x (), document ()->width () - 1)),
-                qMax (0, qMin (m_currentPoint.y (), document ()->height () - 1))));
+    setUserShapePoints (startPoint (),
+        QPoint (qMax (0, qMin (currentPoint ().x (), document ()->width () - 1)),
+                qMax (0, qMin (currentPoint ().y (), document ()->height () - 1))));
 }
