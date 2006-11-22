@@ -54,7 +54,7 @@ public:
     virtual void end ();
 
 protected:
-    kpColor drawingBackgroundColor () const;
+    virtual kpColor drawingBackgroundColor () const;
 
 private:
     struct kpToolPolygonPrivate *d;
