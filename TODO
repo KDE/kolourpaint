@@ -3,7 +3,7 @@
 2. Look in patches/
 3. grep sources for:
    "OPT" - something that could be optimised
-   "TODO" - something that should be done
+   "TODO" - something that should be done; some TODO's should really be HITODO's
    "HITODO" - something that _must_ be done before the next release
    "HACK" - something that _really_ should be done better
 4. See below:
