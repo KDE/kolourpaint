@@ -543,6 +543,10 @@ void kpToolPolygonalBase::endDraw (const QPoint &, const QRect &)
         << d->points.toList () << endl;
 #endif
 
+    // For all shapes other than the Line, a click of the other mouse button
+    // (to finish shape, instead of adding another control point) would
+    // have caused endShape() to have been called in beginDraw().  The points
+    // list would now be empty.
     if (d->points.count () == 0)
         return;
 
@@ -550,6 +554,9 @@ void kpToolPolygonalBase::endDraw (const QPoint &, const QRect &)
         (d->mode == Curve && d->points.count () >= 4) ||
         d->points.count () >= 50)
     {
+    #if DEBUG_KP_TOOL_POLYGON
+        kDebug () << "\tending shape" << endl;
+    #endif
         endShape ();
     }
     else
