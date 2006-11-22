@@ -229,7 +229,8 @@ private:
 // Else it passes on the Undo/Redo request to kpCommandHistoryBase.
 //
 // TODO: This is wrong.  It won't work if the Undo action is disabled,
-//       for instance.
+//       for instance.  Later: What about kpToolText::viewEvent()'s use of
+//       QEvent::ShortcutOverride?
 //
 //       Maybe the real solution is to call kpCommandHistoryBase::addCommand()
 //       as _soon_ as the shape starts - not after it ends.  But the
