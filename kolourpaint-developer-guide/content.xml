@@ -233,6 +233,7 @@
  </office:automatic-styles>
  <office:body>
   <office:text>
+   <office:forms form:automatic-focus="false" form:apply-design-mode="false"/>
    <text:sequence-decls>
     <text:sequence-decl text:display-outline-level="0" text:name="Illustration"/>
     <text:sequence-decl text:display-outline-level="0" text:name="Table"/>
@@ -431,7 +432,7 @@
    <text:p text:style-name="Text_20_body">TODO</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">About This Document</text:h>
    <text:h text:style-name="Heading_20_3" text:outline-level="3">Contents</text:h>
-   <text:p text:style-name="Text_20_body">This document is a concise and thorough guide containing all the knowledge needed to maintain and modify KolourPaint. <text:s/>Where possible it points to existing, high-quality information instead of duplicating it here. <text:s/>TODO: not thorough yet.</text:p>
+   <text:p text:style-name="Text_20_body">This document is a concise and thorough guide containing all the knowledge – organisational and technical design – needed to maintain and modify KolourPaint. <text:s/>More dynamic, implementation details are in another file (TODO: where?). <text:s/>Where possible it points to existing, high-quality information instead of duplicating it here. <text:s/>TODO: not thorough yet.</text:p>
    <text:p text:style-name="Text_20_body">TODO: Merge all the docs in <text:span text:style-name="Code_20_Term">branches/kolourpaint/control</text:span>.</text:p>
    <text:h text:style-name="Heading_20_3" text:outline-level="3">Notation</text:h>
    <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">TODO</text:span> means something that we need to do document-wise.</text:p>
@@ -447,11 +448,15 @@
    <text:h text:style-name="Heading_20_4" text:outline-level="4">Use OpenOffice.org</text:h>
    <text:p text:style-name="Text_20_body">Please use OpenOffice.org 2.0.0 to edit this document, to minimise formatting changing pecularities. <text:s/>Press <text:span text:style-name="Code_20_Term">F11</text:span> to enable the <text:span text:style-name="Non-Code_20_Term">Styles and Formatting</text:span> window and select the <text:span text:style-name="Non-Code_20_Term">Applied Styles</text:span> filter. <text:s/>Press <text:span text:style-name="Code_20_Term">F5</text:span> to enable the <text:span text:style-name="Non-Code_20_Term">Navigator</text:span> window. <text:s/>Dock both to the left of the main view.</text:p>
    <text:p text:style-name="Text_20_body">Every so often, click <text:span text:style-name="Non-Code_20_Term">Tools / Update / Update All</text:span> to regenerate generated fields (e.g. the <text:span text:style-name="Non-Code_20_Term">Table of Contents</text:span> and the <text:span text:style-name="Non-Code_20_Term">Bibliography</text:span>).</text:p>
+   <text:p text:style-name="Text_20_body">If inserting an image, use <text:span text:style-name="Non-Code_20_Term">Insert / Picture / From File...</text:span> - do not copy and paste it from a paint program as OpenOffice.org will resave it as PNG, which may be huge if the source image was well compressed e.g. JPEG.</text:p>
    <text:h text:style-name="Heading_20_4" text:outline-level="4">OpenOffice.org Styles</text:h>
    <text:p text:style-name="Text_20_body">TODO: more on how to use my document template</text:p>
-   <text:p text:style-name="Text_20_body">page styles</text:p>
-   <text:p text:style-name="Text_20_body">paragraph styles</text:p>
-   <text:p text:style-name="Text_20_body">character styles</text:p>
+   <text:h text:style-name="Heading_20_5" text:outline-level="5">Page Styles</text:h>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">Document Frontmost Page</text:span> is used for the title page of the document. <text:s/><text:span text:style-name="Non-Code_20_Term">Document Front Pages</text:span> is for the subsequent, non-content pages e.g. Table of Contents.</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">Section Front Page</text:span> is used the for the first page of each chapter. <text:s/><text:span text:style-name="Non-Code_20_Term">Default</text:span> is used for the remaining pages in each chapter.</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">Bibliography Front Page</text:span> is for the first page of the Bibliography. <text:s/><text:span text:style-name="Non-Code_20_Term">Bibliography Pages</text:span> is for the remaining Bibliography pages.</text:p>
+   <text:h text:style-name="Heading_20_5" text:outline-level="5">Paragraph Styles</text:h>
+   <text:h text:style-name="Heading_20_5" text:outline-level="5">Character Styles</text:h>
    <text:p text:style-name="Text_20_body">Separate sentences by two spaces out of stubborn old-fashion-ness.</text:p>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"/>
@@ -479,8 +484,8 @@
    </text:list>
    <text:h text:style-name="Heading_20_4" text:outline-level="4">Medium Term</text:h>
    <text:list text:style-name="L2">
-    <text:list-item>
-     <text:p text:style-name="P22">Rewriting graphics engine to be device-independent [p<text:reference-ref text:reference-format="page" text:ref-name="Doc stored as QPixmap">17</text:reference-ref>, Chapter <text:reference-ref text:reference-format="chapter" text:ref-name="Doc stored as QPixmap">3.2</text:reference-ref>]</text:p>
+    <text:list-item text:start-value="1">
+     <text:p text:style-name="P22">Rewriting graphics engine to be device-independent [p<text:reference-ref text:reference-format="page" text:ref-name="Doc stored as QPixmap">18</text:reference-ref>, Chapter <text:reference-ref text:reference-format="chapter" text:ref-name="Doc stored as QPixmap">3.2</text:reference-ref>]</text:p>
     </text:list-item>
     <text:list-item>
      <text:p text:style-name="P22">Implement often requested features esp. 8-bit and alpha support</text:p>
@@ -561,7 +566,7 @@
    <text:p text:style-name="Text_20_body">Therefore, for acceptable performance, <text:reference-mark-start text:name="Doc stored as QPixmap"/>KolourPaint stored the document directly in graphics memory (<text:span text:style-name="Code_20_Term">QPixmap</text:span>)<text:reference-mark-end text:name="Doc stored as QPixmap"/>.</text:p>
    <text:p text:style-name="Text_20_body">Therefore any document that does not match the screen&apos;s color model is corrupted. <text:s/>Actually, it&apos;s worse than that because we also convert all indexed images to RGB, even on an indexed 8-bit display. <text:s/>TODO: check this last bit.</text:p>
    <text:p text:style-name="Text_20_body">Worse still, QPainter&apos;s behavior on <text:span text:style-name="Code_20_Term">QPixmap</text:span>&apos;s changed from Qt3 to Qt4 and whether or not XRENDER is supported by the display.</text:p>
-   <text:p text:style-name="Text_20_body">ACTION: We must change this for KDE 4 to stop corrupting the user&apos;s data. <text:s/>We need a graphics library that can modify images in arbitrary color models (to at least support RGBA and indexed RGBA color models) stored in main memory. <text:s/>We cannot use Krita&apos;s code as that is GPL [p<text:reference-ref text:reference-format="page" text:ref-name="Licensing">14</text:reference-ref>, Chapter <text:reference-ref text:reference-format="chapter" text:ref-name="Licensing">2.5</text:reference-ref>]. <text:s/>This is quite sad because as more code is added to Krita, software developers are further denied the freedom to reuse such code under licenses such as the LGPL and BSD.</text:p>
+   <text:p text:style-name="Text_20_body">ACTION: We must change this for KDE 4 to stop corrupting the user&apos;s data. <text:s/>We need a graphics library that can modify images in arbitrary color models (to at least support RGBA and indexed RGBA color models) stored in main memory. <text:s/>We cannot use Krita&apos;s code as that is GPL [p<text:reference-ref text:reference-format="page" text:ref-name="Licensing">15</text:reference-ref>, Chapter <text:reference-ref text:reference-format="chapter" text:ref-name="Licensing">2.5</text:reference-ref>]. <text:s/>This is quite sad because as more code is added to Krita, software developers are further denied the freedom to reuse such code under licenses such as the LGPL and BSD.</text:p>
    <text:p text:style-name="Text_20_body">We can then use OpenGL for hardware accelerated color space conversion.</text:p>
    <text:p text:style-name="Text_20_body">TODO: describe stop gap Qt4 <text:span text:style-name="Code_20_Term">QPixmap</text:span> solution without alpha channel. <text:s/>Look at <text:span text:style-name="Code_20_Term">svn log</text:span> and blog and <text:span text:style-name="Code_20_Term">imagelib/kppainter.h</text:span> comments.</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Entry Point</text:h>

@@ -536,7 +536,7 @@
     <text:p text:style-name="Header">Chapter <text:chapter text:display="number-and-name" text:outline-level="1">4 Conclusion</text:chapter></text:p>
    </style:header>
    <style:footer>
-    <text:p text:style-name="P1"><text:page-number text:select-page="current">23</text:page-number></text:p>
+    <text:p text:style-name="P1"><text:page-number text:select-page="current">24</text:page-number></text:p>
    </style:footer>
   </style:master-page>
   <style:master-page style:name="Left_20_Page" style:display-name="Left Page" style:page-layout-name="pm2"/>
@@ -544,26 +544,26 @@
   <style:master-page style:name="Endnote" style:page-layout-name="pm4"/>
   <style:master-page style:name="Document_20_Front_20_Pages" style:display-name="Document Front Pages" style:page-layout-name="pm5">
    <style:footer>
-    <text:p text:style-name="P1"><text:page-number text:select-page="current">23</text:page-number></text:p>
+    <text:p text:style-name="P1"><text:page-number text:select-page="current">24</text:page-number></text:p>
    </style:footer>
   </style:master-page>
   <style:master-page style:name="Front_20_Page" style:display-name="Front Page" style:page-layout-name="pm6"/>
   <style:master-page style:name="Section_20_Front_20_Page" style:display-name="Section Front Page" style:page-layout-name="pm7" style:next-style-name="Standard">
    <style:footer>
-    <text:p text:style-name="P1"><text:page-number text:select-page="current">23</text:page-number></text:p>
+    <text:p text:style-name="P1"><text:page-number text:select-page="current">24</text:page-number></text:p>
    </style:footer>
   </style:master-page>
   <style:master-page style:name="Bibliography_20_Front_20_Page" style:display-name="Bibliography Front Page" style:page-layout-name="pm8" style:next-style-name="Bibliography_20_Pages">
    <style:footer>
-    <text:p text:style-name="P1"><text:page-number text:select-page="current">23</text:page-number></text:p>
+    <text:p text:style-name="P1"><text:page-number text:select-page="current">24</text:page-number></text:p>
    </style:footer>
   </style:master-page>
   <style:master-page style:name="Bibliography_20_Pages" style:display-name="Bibliography Pages" style:page-layout-name="pm9">
    <style:header>
-    <text:p text:style-name="Header"><text:chapter text:display="number-and-name" text:outline-level="1">4 Conclusion</text:chapter></text:p>
+    <text:p text:style-name="Header"><text:chapter text:display="number-and-name" text:outline-level="1"/></text:p>
    </style:header>
    <style:footer>
-    <text:p text:style-name="P1"><text:page-number text:select-page="current">23</text:page-number></text:p>
+    <text:p text:style-name="P1"><text:page-number text:select-page="current">24</text:page-number></text:p>
    </style:footer>
   </style:master-page>
   <style:master-page style:name="Document_20_Frontmost_20_Page" style:display-name="Document Frontmost Page" style:page-layout-name="pm10" style:next-style-name="Document_20_Front_20_Pages"/>
