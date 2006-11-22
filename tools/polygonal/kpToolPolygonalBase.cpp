@@ -497,7 +497,7 @@ void kpToolPolygonalBase::releasedAllButtons ()
     // --- else case already handled by endDraw() ---
 }
 
-// public virtual
+// public virtual [base kpTool]
 void kpToolPolygonalBase::endShape (const QPoint &, const QRect &)
 {
 #if DEBUG_KP_TOOL_POLYGON
@@ -529,20 +529,20 @@ void kpToolPolygonalBase::endShape (const QPoint &, const QRect &)
 
 }
 
-// public virtual
+// public virtual [base kpTool]
 bool kpToolPolygonalBase::hasBegunShape () const
 {
     return (d->points.count () > 0);
 }
 
 
-// virtual protected slot
+// virtual protected slot [base kpTool]
 void kpToolPolygonalBase::slotForegroundColorChanged (const kpColor &)
 {
     updateShape ();
 }
 
-// virtual protected slot
+// virtual protected slot [base kpTool]
 void kpToolPolygonalBase::slotBackgroundColorChanged (const kpColor &)
 {
     updateShape ();
