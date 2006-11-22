@@ -63,10 +63,28 @@ class kpViewManager;
 
 struct kpToolPolygonalBasePrivate;
 
-// Subclasses must implement endDraw() from kpTool and use points():
+//
+// This tool base class is for shapes that contain at least an initial line that
+// is dragged out (i.e. at least 2 control points).
+//
+// The tool can also choose to allow an additional point to be added for each
+// additional drag or click.
+//
+// To specify whichever behavior, subclasses must implement endDraw() from
+// kpTool and use points():
+//
 // 1. If the shape is incomplete, call setUserMessage() with a message
 //    telling the user what can be done next.
 // 2. If the shape is complete, call endShape().  See also MaxPoints.
+//
+// If additional points are supported by the user's implementation of endDraw(),
+// beginDraw() will enforce the following behavior:
+//
+//     Clicking the mouse button not used for the initial line drag will
+//     end the shape.
+//
+// This behavior cannot be altered by a subclass.
+//
 class kpToolPolygonalBase : public kpTool
 {
 Q_OBJECT

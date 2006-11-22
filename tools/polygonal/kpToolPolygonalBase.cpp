@@ -217,6 +217,7 @@ void kpToolPolygonalBase::begin ()
 // virtual
 void kpToolPolygonalBase::end ()
 {
+    // TODO: needed?  variable "endedShape" needs to be set?
     endShape ();
 
     disconnect (d->toolWidgetLineWidth,
@@ -238,7 +239,7 @@ void kpToolPolygonalBase::beginDraw ()
 
     bool endedShape = false;
 
-    // starting with a line...
+    // We now need to start with dragging out the initial line?
     if (d->points.count () == 0)
     {
         d->originatingMouseButton = m_mouseButton;
@@ -246,19 +247,25 @@ void kpToolPolygonalBase::beginDraw ()
         d->points.append (m_startPoint);
         d->points.append (m_startPoint);
     }
-    // continuing poly*
+    // Already have control points - not dragging out initial line.
     else
     {
+        // Clicking the other mouse button?
         if (m_mouseButton != d->originatingMouseButton)
         {
+            // TODO: what for?
             m_mouseButton = d->originatingMouseButton;
+            
+            // Finish shape.
             endShape ();
             endedShape = true;
         }
+        // Are we dragging out an extra control point?
         else
         {
             int count = d->points.count ();
-            
+
+            // Add another control point.
             d->points.append (m_startPoint);
 
             // start point = last end point;
@@ -278,6 +285,7 @@ void kpToolPolygonalBase::beginDraw ()
 
     if (!endedShape)
     {
+        // We've started dragging.  Print instructions on how to cancel shape.
         setUserMessage (cancelUserMessage ());
     }
 }

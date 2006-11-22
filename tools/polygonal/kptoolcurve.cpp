@@ -71,7 +71,7 @@ void kpToolCurve::endDraw (const QPoint &, const QRect &)
     // A click of the other mouse button (to finish shape, instead of adding
     // another control point) would have caused endShape() to have been
     // called in kpToolPolygonalBase::beginDraw().  The points list would now
-    // be empty.
+    // be empty.  We are being called by kpTool::mouseReleaseEvent().
     case 0:
         break;
 
