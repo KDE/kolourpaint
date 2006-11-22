@@ -25,6 +25,10 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+//
+// Tool methods for drawing shapes (subclasses reimplement most of these).
+//
+
 
 #define DEBUG_KP_TOOL 0
 
