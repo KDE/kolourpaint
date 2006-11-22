@@ -158,7 +158,6 @@ struct kpToolPolygonalBasePrivate
     int originatingMouseButton;
 
     QPoint toolLineStartPoint, toolLineEndPoint;
-    QRect toolLineRect;
 
     QPolygon points;
 };
@@ -396,11 +395,6 @@ void kpToolPolygonalBase::applyModifiers ()
 
     d->points [count - 2] = d->toolLineStartPoint;
     d->points [count - 1] = d->toolLineEndPoint;
-
-    d->toolLineRect = kpTool::neededRect (
-        kpBug::QRect_Normalized (
-            QRect (d->toolLineStartPoint, d->toolLineEndPoint)),
-                   d->toolWidgetLineWidth->lineWidth ());
 }
 
 QPolygon *kpToolPolygonalBase::points () const
