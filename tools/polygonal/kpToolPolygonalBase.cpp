@@ -217,7 +217,7 @@ void kpToolPolygonalBase::begin ()
 // virtual
 void kpToolPolygonalBase::end ()
 {
-    // TODO: needed?  variable "endedShape" needs to be set?
+    // TODO: needed?
     endShape ();
 
     disconnect (d->toolWidgetLineWidth,
@@ -256,7 +256,7 @@ void kpToolPolygonalBase::beginDraw ()
             // TODO: what for?
             m_mouseButton = d->originatingMouseButton;
             
-            // Finish shape.
+            // Finish shape.  TODO: I suspect we need to call endShapeInternal instead.
             endShape ();
             endedShape = true;
         }
