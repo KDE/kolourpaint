@@ -142,7 +142,13 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/flow/kptoolspraycan.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolcolorpicker.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptool.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kpTool_Drawing.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kptoolfloodfill.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kpTool_KeyboardEvents.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kpTool_MouseEvents.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kpTool_OtherEvents.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kpTool_UserNotifications.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/tools/kpTool_Utilities.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal/kptoolcurve.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal/kptoolline.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/polygonal/kpToolPolygonalBase.cpp

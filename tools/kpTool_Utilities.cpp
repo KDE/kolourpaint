@@ -1,0 +1,292 @@
+
+/*
+   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions
+   are met:
+
+   1. Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+   2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+   THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+   IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+   OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+   IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+   INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+//
+// Tool utility methods - mainly for subclasses' convenience.
+//
+
+
+#define DEBUG_KP_TOOL 0
+
+
+#include <kptool.h>
+#include <kpToolPrivate.h>
+
+#include <limits.h>
+
+#include <qapplication.h>
+#include <qclipboard.h>
+#include <qcursor.h>
+#include <qevent.h>
+#include <qlayout.h>
+#include <qpainter.h>
+#include <qpixmap.h>
+
+#include <kapplication.h>
+#include <kdebug.h>
+#include <kiconloader.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+
+#include <kpbug.h>
+#include <kpcolor.h>
+#include <kpcolortoolbar.h>
+#include <kpdefs.h>
+#include <kpmainwindow.h>
+#include <kppixmapfx.h>
+#include <kptoolaction.h>
+#include <kptooltoolbar.h>
+#include <kpview.h>
+#include <kpviewmanager.h>
+#include <kactioncollection.h>
+
+
+// static
+QRect kpTool::neededRect (const QRect &rect, int lineWidth)
+{
+    int x1, y1, x2, y2;
+    rect.getCoords (&x1, &y1, &x2, &y2);
+
+    if (lineWidth < 1)
+        lineWidth = 1;
+
+    // TODO: why not divide by 2?
+    return QRect (QPoint (x1 - lineWidth + 1, y1 - lineWidth + 1),
+                  QPoint (x2 + lineWidth - 1, y2 + lineWidth - 1));
+}
+
+// static
+QPixmap kpTool::neededPixmap (const QPixmap &pixmap, const QRect &boundingRect)
+{
+    return kpPixmapFX::getPixmapAt (pixmap, boundingRect);
+}
+
+
+// public
+bool kpTool::hasCurrentPoint () const
+{
+    return (viewUnderStartPoint () || viewUnderCursor ());
+}
+
+// public
+QPoint kpTool::currentPoint (bool zoomToDoc) const
+{
+#if DEBUG_KP_TOOL && 0
+    kDebug () << "kpTool::currentPoint(zoomToDoc=" << zoomToDoc << ")" << endl;
+    kDebug () << "\tviewUnderStartPoint="
+               << (viewUnderStartPoint () ? viewUnderStartPoint ()->objectName () : "(none)")
+               << " viewUnderCursor="
+               << (viewUnderCursor () ? viewUnderCursor ()->objectName () : "(none)")
+               << endl;
+#endif
+
+    kpView *v = viewUnderStartPoint ();
+    if (!v)
+    {
+        v = viewUnderCursor ();
+        if (!v)
+        {
+        #if DEBUG_KP_TOOL && 0
+            kDebug () << "\tno view - returning sentinel" << endl;
+        #endif
+            return KP_INVALID_POINT;
+        }
+    }
+
+
+    const QPoint globalPos = QCursor::pos ();
+    const QPoint viewPos = v->mapFromGlobal (globalPos);
+#if DEBUG_KP_TOOL && 0
+    kDebug () << "\tglobalPos=" << globalPos
+               << " viewPos=" << viewPos
+               << endl;
+#endif
+    if (!zoomToDoc)
+        return viewPos;
+
+
+    const QPoint docPos = v->transformViewToDoc (viewPos);
+#if DEBUG_KP_TOOL && 0
+    kDebug () << "\tdocPos=" << docPos << endl;
+#endif
+    return docPos;
+}
+
+
+// public slot
+void kpTool::somethingBelowTheCursorChanged ()
+{
+    somethingBelowTheCursorChanged (currentPoint (),
+        currentPoint (false/*view point*/));
+}
+
+// private
+// TODO: don't dup code from mouseMoveEvent()
+void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_,
+        const QPoint &currentViewPoint_)
+{
+#if DEBUG_KP_TOOL && 0
+    kDebug () << "kpTool::somethingBelowTheCursorChanged(docPoint="
+               << currentPoint_
+               << " viewPoint="
+               << currentViewPoint_
+               << ")" << endl;
+    kDebug () << "\tviewUnderStartPoint="
+               << (viewUnderStartPoint () ? viewUnderStartPoint ()->objectName () : "(none)")
+               << " viewUnderCursor="
+               << (viewUnderCursor () ? viewUnderCursor ()->objectName () : "(none)")
+               << endl;
+    kDebug () << "\tbegan draw=" << d->beganDraw << endl;
+#endif
+
+    m_currentPoint = currentPoint_;
+    m_currentViewPoint = currentViewPoint_;
+
+    if (d->beganDraw)
+    {
+        if (m_currentPoint != KP_INVALID_POINT)
+        {
+            draw (m_currentPoint, m_lastPoint, kpBug::QRect_Normalized (QRect (m_startPoint, m_currentPoint)));
+            m_lastPoint = m_currentPoint;
+        }
+    }
+    else
+    {
+        hover (m_currentPoint);
+    }
+}
+
+
+bool kpTool::currentPointNextToLast () const
+{
+    if (m_lastPoint == QPoint (-1, -1))
+        return true;
+
+    int dx = qAbs (m_currentPoint.x () - m_lastPoint.x ());
+    int dy = qAbs (m_currentPoint.y () - m_lastPoint.y ());
+
+    return (dx <= 1 && dy <= 1);
+}
+
+bool kpTool::currentPointCardinallyNextToLast () const
+{
+    if (m_lastPoint == QPoint (-1, -1))
+        return true;
+
+    int dx = qAbs (m_currentPoint.x () - m_lastPoint.x ());
+    int dy = qAbs (m_currentPoint.y () - m_lastPoint.y ());
+
+    return (dx + dy <= 1);
+}
+
+
+// static
+// TODO: we don't handle Qt::XButton1 and Qt::XButton2 at the moment.
+int kpTool::mouseButton (Qt::MouseButtons mouseButtons)
+{
+    // we have nothing to do with mid-buttons
+    if (mouseButtons & Qt::MidButton)
+        return -1;
+
+    // both left & right together is quite meaningless...
+    const Qt::MouseButtons bothButtons = (Qt::LeftButton | Qt::RightButton);
+    if ((mouseButtons & bothButtons) == bothButtons)
+        return -1;
+
+    if (mouseButtons & Qt::LeftButton)
+        return 0;
+    else if (mouseButtons & Qt::RightButton)
+        return 1;
+    else
+        return -1;
+}
+
+
+
+// public static
+int kpTool::calculateLength (int start, int end)
+{
+    if (start <= end)
+    {
+        return end - start + 1;
+    }
+    else
+    {
+        return end - start - 1;
+    }
+}
+
+
+// public static
+bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
+                                 int newWidth, int newHeight,
+                                 const QString &text,
+                                 const QString &caption,
+                                 const QString &continueButtonText,
+                                 QWidget *parent)
+{
+#if DEBUG_KP_TOOL
+    kDebug () << "kpTool::warnIfBigImageSize()"
+               << " old: w=" << oldWidth << " h=" << oldWidth
+               << " new: w=" << newWidth << " h=" << newHeight
+               << " pixmapSize="
+               << kpPixmapFX::pixmapSize (newWidth,
+                                          newHeight,
+                                          QPixmap::defaultDepth ())
+               << " vs BigImageSize=" << KP_BIG_IMAGE_SIZE
+               << endl;
+#endif
+
+    // Only got smaller or unchanged - don't complain
+    if (!(newWidth > oldWidth || newHeight > oldHeight))
+    {
+        return true;
+    }
+
+    // Was already large - user was warned before, don't annoy him/her again
+    if (kpPixmapFX::pixmapSize (oldWidth, oldHeight, QPixmap::defaultDepth ()) >=
+        KP_BIG_IMAGE_SIZE)
+    {
+        return true;
+    }
+
+    if (kpPixmapFX::pixmapSize (newWidth, newHeight, QPixmap::defaultDepth ()) >=
+        KP_BIG_IMAGE_SIZE)
+    {
+        int accept = KMessageBox::warningContinueCancel (parent,
+            text,
+            caption,
+            KGuiItem (continueButtonText),
+            QLatin1String ("BigImageDontAskAgain"));
+
+        return (accept == KMessageBox::Continue);
+    }
+    else
+    {
+        return true;
+    }
+}
