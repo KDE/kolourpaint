@@ -110,7 +110,7 @@ public:
 protected:
     // The maximum number of points() we should allow (mainly, to ensure
     // good performance).  Enforced by implementors of endShape().
-    static const int kpToolPolygonalBase::MaxPoints = 50;
+    static const int MaxPoints = 50;
 
     virtual QString haventBegunShapeUserMessage () const = 0;
 
