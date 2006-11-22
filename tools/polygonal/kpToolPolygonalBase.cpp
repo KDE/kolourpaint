@@ -275,7 +275,7 @@ void kpToolPolygonalBase::beginDraw ()
             //
             // Curve Tool ignores startPoint () (doesn't call applyModifiers())
             // after the initial has been defined.
-            startPoint () = d->points [count - 1];
+            // HITODO: startPoint () = d->points [count - 1];
         }
     }
 
