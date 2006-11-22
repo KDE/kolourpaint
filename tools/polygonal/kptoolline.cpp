@@ -26,8 +26,12 @@
 */
 
 
+#define DEBUG_KP_TOOL_LINE 1
+
+
 #include <kptoolline.h>
 
+#include <kdebug.h>
 #include <klocale.h>
 
 
@@ -51,6 +55,20 @@ kpToolLine::~kpToolLine ()
 QString kpToolLine::haventBegunShapeUserMessage () const
 {
     return i18n ("Drag to draw.");
+}
+
+
+// public virtual [base kpTool]
+void kpToolLine::endDraw (const QPoint &, const QRect &)
+{
+#if DEBUG_KP_TOOL_LINE
+    kDebug () << "kpToolLine::endDraw()  points="
+        << points ()->toList () << endl;
+#endif
+
+    // After the first drag, we should have a line.
+    Q_ASSERT (points ()->count () == 2);
+    endShape ();
 }
 
 

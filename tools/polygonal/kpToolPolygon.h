@@ -52,9 +52,12 @@ private:
 public:
     virtual void begin ();
     virtual void end ();
-
+    
 protected:
     virtual kpColor drawingBackgroundColor () const;
+
+public:
+    virtual void endDraw (const QPoint &, const QRect &);
 
 private:
     struct kpToolPolygonPrivate *d;

@@ -26,8 +26,12 @@
 */
 
 
+#define DEBUG_KP_TOOL_POLYLINE 1
+
+
 #include <kptoolpolyline.h>
 
+#include <kdebug.h>
 #include <klocale.h>
 
 
@@ -51,6 +55,41 @@ kpToolPolyline::~kpToolPolyline ()
 QString kpToolPolyline::haventBegunShapeUserMessage () const
 {
     return i18n ("Drag to draw the first line.");
+}
+
+
+// public virtual [base kpTool]
+void kpToolPolyline::endDraw (const QPoint &, const QRect &)
+{
+#if DEBUG_KP_TOOL_POLYLINE
+    kDebug () << "kpToolPolyline::endDraw()  points="
+        << points ()->toList () << endl;
+#endif
+
+    // A click of the other mouse button (to finish shape, instead of adding
+    // another control point) would have caused endShape() to have been
+    // called in kpToolPolygonalBase::beginDraw().  The points list would now
+    // be empty.
+    if (points ()->count () == 0)
+        return;
+
+    if (points ()->count () >= kpToolPolygonalBase::MaxPoints)
+    {
+    #if DEBUG_KP_TOOL_POLYLINE
+        kDebug () << "\tending shape" << endl;
+    #endif
+        endShape ();
+        return;
+    }
+    
+    if (m_mouseButton == 0)
+    {
+        setUserMessage (i18n ("Left drag another line or right click to finish."));
+    }
+    else
+    {
+        setUserMessage (i18n ("Right drag another line or left click to finish."));
+    }
 }
 
 

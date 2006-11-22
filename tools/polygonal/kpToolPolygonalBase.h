@@ -63,6 +63,10 @@ class kpViewManager;
 
 struct kpToolPolygonalBasePrivate;
 
+// Subclasses must implement endDraw() from kpTool and use points():
+// 1. If the shape is incomplete, call setUserMessage() with a message
+//    telling the user what can be done next.
+// 2. If the shape is complete, call endShape().  See also MaxPoints.
 class kpToolPolygonalBase : public kpTool
 {
 Q_OBJECT
@@ -86,6 +90,10 @@ public:
     virtual bool careAboutModifierState () const { return true; }
 
 protected:
+    // The maximum number of points() we should allow (mainly, to ensure
+    // good performance).  Enforced by implementors of endShape().
+    static const int kpToolPolygonalBase::MaxPoints = 50;
+
     virtual QString haventBegunShapeUserMessage () const = 0;
 
 public:
@@ -108,7 +116,6 @@ protected slots:
 public:
     virtual void cancelShape ();
     virtual void releasedAllButtons ();
-    virtual void endDraw (const QPoint &, const QRect &);
     virtual void endShape (const QPoint & = QPoint (), const QRect & = QRect ());
 
     virtual bool hasBegunShape () const;

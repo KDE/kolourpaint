@@ -26,8 +26,12 @@
 */
 
 
+#define DEBUG_KP_TOOL_CURVE 1
+
+
 #include <kptoolcurve.h>
 
+#include <kdebug.h>
 #include <klocale.h>
 
 
@@ -51,6 +55,72 @@ kpToolCurve::~kpToolCurve ()
 QString kpToolCurve::haventBegunShapeUserMessage () const
 {
     return i18n ("Drag out the start and end points.");
+}
+
+
+// public virtual [base kpTool]
+void kpToolCurve::endDraw (const QPoint &, const QRect &)
+{
+#if DEBUG_KP_TOOL_CURVE
+    kDebug () << "kpToolCurve::endDraw()  points="
+        << points ()->toList () << endl;
+#endif
+
+    switch (points ()->count ())
+    {
+    // A click of the other mouse button (to finish shape, instead of adding
+    // another control point) would have caused endShape() to have been
+    // called in kpToolPolygonalBase::beginDraw().  The points list would now
+    // be empty.
+    case 0:
+        break;
+
+    case 1:
+        Q_ASSERT (!"kpToolPolygonalBase::beginDraw() ensures we have >= 2 ctrl points");
+        break;
+
+    // Just completed initial line?
+    case 2:
+        if (m_mouseButton == 0)
+        {
+            setUserMessage (
+                i18n ("Left drag to set the first control point or right click to finish."));
+        }
+        else
+        {
+            setUserMessage (
+                i18n ("Right drag to set the first control point or left click to finish."));
+        }
+        
+        break;
+
+    // Have initial line and first control point?
+    case 3:
+        if (m_mouseButton == 0)
+        {
+            setUserMessage (
+                i18n ("Left drag to set the last control point or right click to finish."));
+        }
+        else
+        {
+            setUserMessage (
+                i18n ("Right drag to set the last control point or left click to finish."));
+        }
+
+        break;
+
+    // Have initial line and both control points?
+    case 4:
+    #if DEBUG_KP_TOOL_CURVE
+        kDebug () << "\tending shape" << endl;
+    #endif
+        endShape ();
+        break;
+
+    default:
+        Q_ASSERT (!"Impossible number of points");
+        break;
+    }
 }
 
 

@@ -46,6 +46,9 @@ public:
 
 private:
     virtual QString haventBegunShapeUserMessage () const;
+
+public:
+    virtual void endDraw (const QPoint &, const QRect &);
 };
 
 

@@ -104,4 +104,41 @@ kpColor kpToolPolygon::drawingBackgroundColor () const
 }
 
 
+// public virtual [base kpTool]
+// TODO: dup with kpToolPolyline but we don't want to create another level of
+//       inheritance and readability.
+void kpToolPolygon::endDraw (const QPoint &, const QRect &)
+{
+#if DEBUG_KP_TOOL_POLYGON
+    kDebug () << "kpToolPolygon::endDraw()  points="
+        << points ()->toList () << endl;
+#endif
+
+    // A click of the other mouse button (to finish shape, instead of adding
+    // another control point) would have caused endShape() to have been
+    // called in kpToolPolygonalBase::beginDraw().  The points list would now
+    // be empty.
+    if (points ()->count () == 0)
+        return;
+
+    if (points ()->count () >= kpToolPolygonalBase::MaxPoints)
+    {
+    #if DEBUG_KP_TOOL_POLYGON
+        kDebug () << "\tending shape" << endl;
+    #endif
+        endShape ();
+        return;
+    }
+        
+    if (m_mouseButton == 0)
+    {
+        setUserMessage (i18n ("Left drag another line or right click to finish."));
+    }
+    else
+    {
+        setUserMessage (i18n ("Right drag another line or left click to finish."));
+    }
+}
+
+
 #include <kpToolPolygon.moc>
