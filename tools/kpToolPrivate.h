@@ -27,7 +27,7 @@
 
 
 #ifndef kpToolPrivate_H
-#define kpToolPrivate_h
+#define kpToolPrivate_H
 
 
 #include <QPoint>
