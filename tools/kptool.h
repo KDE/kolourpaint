@@ -64,7 +64,7 @@ class kpToolToolBar;
 struct kpToolPrivate;
 
 // Base class for all tools.
-// TODO: rearrange method order to make sense.
+// TODO: rearrange method order to make sense and reflect kpTool_*.cpp split.
 class kpTool : public QObject
 {
 Q_OBJECT
@@ -341,10 +341,12 @@ protected:
     // 0 = left, 1 = right, -1 = other (none, left+right, mid)
     static int mouseButton (Qt::MouseButtons mouseButtons);
 
+public:
+    static int calculateLength (int start, int end);
 
-    /*
-     * User Notifications (Status Bar)
-     */
+    //
+    // User Notifications (Status Bar)
+    //
 
 public:
     // Returns "(Left|Right) click to cancel." where Left or Right is chosen
@@ -357,7 +359,6 @@ public:
 
     QPoint userShapeStartPoint () const;
     QPoint userShapeEndPoint () const;
-    static int calculateLength (int start, int end);
     void setUserShapePoints (const QPoint &startPoint = KP_INVALID_POINT,
                              const QPoint &endPoint = KP_INVALID_POINT,
                              bool setSize = true);
