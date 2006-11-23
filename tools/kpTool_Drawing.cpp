@@ -102,6 +102,8 @@ QPoint kpTool::startPoint () const
 // protected
 QPoint kpTool::currentPoint () const
 {
+    // TODO: Q_ASSERT (hasBegun()) and similar in other accessors.
+    //       We currently violate these kinds of invariants.
     return d->currentPoint;
 }
 
