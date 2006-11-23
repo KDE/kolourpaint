@@ -81,7 +81,7 @@ void kpToolCurve::endDraw (const QPoint &, const QRect &)
 
     // Just completed initial line?
     case 2:
-        if (mouseButton () == 0)
+        if (originatingMouseButton () == 0)
         {
             setUserMessage (
                 i18n ("Left drag to set the first control point or right click to finish."));
@@ -96,7 +96,7 @@ void kpToolCurve::endDraw (const QPoint &, const QRect &)
 
     // Have initial line and first control point?
     case 3:
-        if (mouseButton () == 0)
+        if (originatingMouseButton () == 0)
         {
             setUserMessage (
                 i18n ("Left drag to set the last control point or right click to finish."));

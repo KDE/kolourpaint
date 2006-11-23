@@ -96,8 +96,8 @@ void kpToolPolygon::end ()
 // protected virtual [base kpToolPolygonalBase]
 kpColor kpToolPolygon::drawingBackgroundColor () const
 {
-    const kpColor foregroundColor = color (mouseButton ());
-    const kpColor backgroundColor = color (1 - mouseButton ());
+    const kpColor foregroundColor = color (originatingMouseButton ());
+    const kpColor backgroundColor = color (1 - originatingMouseButton ());
 
     return d->toolWidgetFillStyle->drawingBackgroundColor (
         foregroundColor, backgroundColor);
@@ -130,7 +130,7 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
         return;
     }
         
-    if (mouseButton () == 0)
+    if (originatingMouseButton () == 0)
     {
         setUserMessage (i18n ("Left drag another line or right click to finish."));
     }

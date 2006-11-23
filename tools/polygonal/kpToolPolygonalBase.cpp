@@ -253,9 +253,6 @@ void kpToolPolygonalBase::beginDraw ()
         // Clicking the other mouse button?
         if (mouseButton () != d->originatingMouseButton)
         {
-            // HITODO: what for?
-            // mouseButton () = d->originatingMouseButton;
-            
             // Finish shape.  TODO: I suspect we need to call endShapeInternal instead.
             endShape ();
             endedShape = true;
@@ -410,6 +407,13 @@ QPolygon *kpToolPolygonalBase::points () const
     return &d->points;
 }
 
+// protected
+int kpToolPolygonalBase::originatingMouseButton () const
+{
+    Q_ASSERT (hasBegunShape ());
+    return d->originatingMouseButton;
+}
+
 // virtual
 void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
 {
@@ -446,7 +450,7 @@ void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
 // private
 kpColor kpToolPolygonalBase::drawingForegroundColor () const
 {
-    return color (mouseButton ());
+    return color (originatingMouseButton ());
 }
 
 // protected virtual

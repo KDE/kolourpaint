@@ -123,6 +123,14 @@ private:
     void applyModifiers ();
 protected:
     QPolygon *points () const;
+    // Returns the mouse button for the drag that created the initial line.
+    // Use this - instead of mouseButton() - for determining whether you should
+    // use the left mouse button's or right mouse button's color.  This is because
+    // the user presses the other mouse button to finish the shape (so mouseButton()
+    // will return the wrong one, after the initial line).
+    //
+    // Only valid if kpTool::hasBegunShape() returns true.
+    int originatingMouseButton () const;
 public:
     virtual void draw (const QPoint &, const QPoint &, const QRect &);
 private:
