@@ -264,15 +264,6 @@ void kpToolPolygonalBase::beginDraw ()
 
             // Add another control point.
             d->points.append (startPoint ());
-
-            // start point = last end point;
-            // _not_ the new/current start point
-            // (which is disregarded in a poly* as only the end points count
-            //  after the initial line)
-            //
-            // Curve Tool ignores startPoint () (doesn't call applyModifiers())
-            // after the initial has been defined.
-            // HITODO: startPoint () = d->points [count - 1];
         }
     }
 
@@ -290,10 +281,10 @@ void kpToolPolygonalBase::beginDraw ()
 // private
 void kpToolPolygonalBase::applyModifiers ()
 {
-    int count = d->points.count ();
+    const int count = d->points.count ();
 
-    d->toolLineStartPoint = startPoint ();  /* also correct for poly* tool (see beginDraw()) */
-    d->toolLineEndPoint = currentPoint ();
+    d->toolLineStartPoint = d->points [count - 2];
+    d->toolLineEndPoint = d->points [count - 1];
 
 #if DEBUG_KP_TOOL_POLYGON && 1
     kDebug () << "kpToolPolygonalBase::applyModifiers() #pts=" << count
@@ -417,6 +408,10 @@ int kpToolPolygonalBase::originatingMouseButton () const
 // virtual
 void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
 {
+    // A click of the other mouse button (to finish shape, instead of adding
+    // another control point) would have caused endShape() to have been
+    // called in kpToolPolygonalBase::beginDraw().  The points list would now
+    // be empty.  We are being called by kpTool::mouseReleaseEvent().
     if (d->points.count () == 0)
         return;
 
@@ -428,10 +423,10 @@ void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
     bool drawingALine = (d->mode != Curve) ||
                         (d->mode == Curve && d->points.count () == 2);
 
+    d->points [d->points.count () - 1] = currentPoint ();
+    
     if (drawingALine)
         applyModifiers ();
-    else
-        d->points [d->points.count () - 1] = currentPoint ();
 
 #if DEBUG_KP_TOOL_POLYGON
     kDebug () << "\tafterwards, d->points=" << d->points.toList () << endl;
