@@ -157,8 +157,6 @@ struct kpToolPolygonalBasePrivate
 
     int originatingMouseButton;
 
-    QPoint toolLineStartPoint, toolLineEndPoint;
-
     QPolygon points;
 };
 
@@ -260,8 +258,6 @@ void kpToolPolygonalBase::beginDraw ()
         // Are we dragging out an extra control point?
         else
         {
-            int count = d->points.count ();
-
             // Add another control point.
             d->points.append (startPoint ());
         }
@@ -283,13 +279,13 @@ void kpToolPolygonalBase::applyModifiers ()
 {
     const int count = d->points.count ();
 
-    d->toolLineStartPoint = d->points [count - 2];
-    d->toolLineEndPoint = d->points [count - 1];
+    QPoint &lineStartPoint = d->points [count - 2];
+    QPoint &lineEndPoint = d->points [count - 1];
 
 #if DEBUG_KP_TOOL_POLYGON && 1
     kDebug () << "kpToolPolygonalBase::applyModifiers() #pts=" << count
-               << "   line: startPt=" << d->toolLineStartPoint
-               << " endPt=" << d->toolLineEndPoint
+               << "   line: startPt=" << lineStartPoint
+               << " endPt=" << lineEndPoint
                << "   modifiers: shift=" << shiftPressed ()
                << "   alt=" << altPressed ()
                << "   ctrl=" << controlPressed ()
@@ -299,8 +295,8 @@ void kpToolPolygonalBase::applyModifiers ()
     // angles
     if (shiftPressed () || controlPressed ())
     {
-        int diffx = d->toolLineEndPoint.x () - d->toolLineStartPoint.x ();
-        int diffy = d->toolLineEndPoint.y () - d->toolLineStartPoint.y ();
+        int diffx = lineEndPoint.x () - lineStartPoint.x ();
+        int diffy = lineEndPoint.y () - lineStartPoint.y ();
 
         double ratio;
         if (diffx == 0)
@@ -342,15 +338,15 @@ void kpToolPolygonalBase::applyModifiers ()
         if (fabs (KP_RADIANS_TO_DEGREES (angle) - 0)
             < kpPixmapFX::AngleInDegreesEpsilon)
         {
-            d->toolLineEndPoint =
-                QPoint (d->toolLineEndPoint.x (), d->toolLineStartPoint.y ());
+            lineEndPoint =
+                QPoint (lineEndPoint.x (), lineStartPoint.y ());
         }
         // vertical (dist from start not maintained)
         else if (fabs (KP_RADIANS_TO_DEGREES (angle) - 90)
                  < kpPixmapFX::AngleInDegreesEpsilon)
         {
-            d->toolLineEndPoint =
-                QPoint (d->toolLineStartPoint.x (), d->toolLineEndPoint.y ());
+            lineEndPoint =
+                QPoint (lineStartPoint.x (), lineEndPoint.y ());
         }
         // diagonal (dist from start maintained)
         else
@@ -364,13 +360,13 @@ void kpToolPolygonalBase::applyModifiers ()
             const int newdy = qRound (dist * sin (angle) * sgn (diffy));
             #undef sgn
 
-            d->toolLineEndPoint = QPoint (d->toolLineStartPoint.x () + newdx,
-                                         d->toolLineStartPoint.y () + newdy);
+            lineEndPoint = QPoint (lineStartPoint.x () + newdx,
+                                         lineStartPoint.y () + newdy);
 
         #if DEBUG_KP_TOOL_POLYGON && 1
             kDebug () << "\t\tdiagonal line: dist=" << dist
                        << " angle=" << (angle * 180 / KP_PI)
-                       << " endPoint=" << d->toolLineEndPoint
+                       << " endPoint=" << lineEndPoint
                        << endl;
         #endif
         }
@@ -384,13 +380,10 @@ void kpToolPolygonalBase::applyModifiers ()
         //       = start - end + start
         //       = 2 * start - end
         if (count == 2)
-            d->toolLineStartPoint += (d->toolLineStartPoint - d->toolLineEndPoint);
+            lineStartPoint += (lineStartPoint - lineEndPoint);
         else
-            d->toolLineEndPoint += (d->toolLineEndPoint - d->toolLineStartPoint);
+            lineEndPoint += (lineEndPoint - lineStartPoint);
     }    // if (altPressed ()) {
-
-    d->points [count - 2] = d->toolLineStartPoint;
-    d->points [count - 1] = d->toolLineEndPoint;
 }
 
 QPolygon *kpToolPolygonalBase::points () const
@@ -423,7 +416,8 @@ void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
     bool drawingALine = (d->mode != Curve) ||
                         (d->mode == Curve && d->points.count () == 2);
 
-    d->points [d->points.count () - 1] = currentPoint ();
+    const int count = d->points.count ();
+    d->points [count - 1] = currentPoint ();
     
     if (drawingALine)
         applyModifiers ();
@@ -435,7 +429,7 @@ void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
     updateShape ();
 
     if (drawingALine)
-        setUserShapePoints (d->toolLineStartPoint, d->toolLineEndPoint);
+        setUserShapePoints (d->points [count - 2], d->points [count - 1]);
     else
         setUserShapePoints (currentPoint ());
 }
