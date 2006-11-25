@@ -338,6 +338,9 @@ void kpToolRectangularBase::endDraw (const QPoint &, const QRect &)
     applyModifiers ();
 
     // TODO: flicker
+    // Later: So why can't we use kpViewManager::setQueueUpdates()?  Check SVN
+    //        log to see if this method was not available at the time of the
+    //        TODO, hence justifying the TODO.
     viewManager ()->invalidateTempPixmap ();
 
     mainWindow ()->commandHistory ()->addCommand (
