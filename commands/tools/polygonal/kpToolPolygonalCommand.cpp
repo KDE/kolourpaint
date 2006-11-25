@@ -68,7 +68,7 @@ struct kpToolPolygonalCommandPrivate
     kpToolPolygonalBase::Mode mode;
     
     QPolygon points;
-    QRect normalizedRect;
+    QRect boundingRect;
 
     kpColor fcolor;
     int penWidth;
@@ -80,10 +80,9 @@ struct kpToolPolygonalCommandPrivate
 kpToolPolygonalCommand::kpToolPolygonalCommand (const QString &name,
         enum kpToolPolygonalBase::Mode mode,
         const QPolygon &points,
-        const QRect &normalizedRect,
+        const QRect &boundingRect,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
-        const QPixmap &oldImage,
         kpMainWindow *mainWindow)
         
     : kpNamedCommand (name, mainWindow),
@@ -92,13 +91,11 @@ kpToolPolygonalCommand::kpToolPolygonalCommand (const QString &name,
       d->mode = mode;
       
       d->points = points;
-      d->normalizedRect = normalizedRect;
+      d->boundingRect = boundingRect;
       
       d->fcolor = fcolor; 
       d->penWidth = penWidth;
       d->bcolor = bcolor;
-      
-      d->oldImage = oldImage;
 }
 
 kpToolPolygonalCommand::~kpToolPolygonalCommand ()
@@ -117,20 +114,38 @@ int kpToolPolygonalCommand::size () const
 // public virtual [base kpCommand]
 void kpToolPolygonalCommand::execute ()
 {
+    kpDocument *doc = document ();
+    Q_ASSERT (doc);
+
+    kpImage image = doc->getPixmapAt (d->boundingRect);
+    
+    // Store Undo info.
+    // OPT: For a pure rectangle, can do better if there is no bcolor, by only
+    //      saving 4 pixmaps corresponding to the pixels dirtied by the 4 edges.
+    Q_ASSERT (d->oldImage.isNull ());
+    d->oldImage = image;
+
     QPixmap p =
         ::kpToolPolygonalBaseImage (
             d->oldImage,
-            d->points, d->normalizedRect,
+            d->points, d->boundingRect,
             d->fcolor, d->penWidth,
             d->bcolor,
             d->mode);
-    document ()->setPixmapAt (p, d->normalizedRect.topLeft ());
+            
+    document ()->setPixmapAt (p, d->boundingRect.topLeft ());
 }
 
 // public virtual [base kpCommand]
 void kpToolPolygonalCommand::unexecute ()
 {
-    document ()->setPixmapAt (d->oldImage, d->normalizedRect.topLeft ());
+    kpDocument *doc = document ();
+    Q_ASSERT (doc);
+
+    Q_ASSERT (!d->oldImage.isNull ());
+    doc->setPixmapAt (d->oldImage, d->boundingRect.topLeft ());
+
+    d->oldImage = kpImage ();
 }
 
 

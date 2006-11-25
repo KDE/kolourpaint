@@ -66,13 +66,13 @@ struct kpToolPolygonalCommandPrivate;
 class kpToolPolygonalCommand : public kpNamedCommand
 {
 public:
+    // <boundingRect> = the bounding rectangle for <points> including <penWidth>.
     kpToolPolygonalCommand (const QString &name,
         enum kpToolPolygonalBase::Mode mode,
         const QPolygon &points,
-        const QRect &normalizedRect,
+        const QRect &boundingRect,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
-        const QPixmap &originalArea,
         kpMainWindow *mainWindow);
     virtual ~kpToolPolygonalCommand ();
 

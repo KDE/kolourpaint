@@ -474,7 +474,7 @@ void kpToolPolygonalBase::updateShape ()
     if (d->points.count () == 0)
         return;
 
-    QRect boundingRect = kpTool::neededRect (d->points.boundingRect (),
+    const QRect boundingRect = kpTool::neededRect (d->points.boundingRect (),
         d->toolWidgetLineWidth->lineWidth ());
 
 #if DEBUG_KP_TOOL_POLYGON
@@ -493,12 +493,14 @@ void kpToolPolygonalBase::updateShape ()
         d->mode, false/*not final*/);
 
     viewManager ()->setFastUpdates ();
-    viewManager ()->setTempPixmap (
-        kpTempPixmap (
-            false/*always display*/,
-            kpTempPixmap::SetPixmap/*render mode*/,
-            boundingRect.topLeft (),
-            newPixmap));
+    {
+        viewManager ()->setTempPixmap (
+            kpTempPixmap (
+                false/*always display*/,
+                kpTempPixmap::SetPixmap/*render mode*/,
+                boundingRect.topLeft (),
+                newPixmap));
+    }
     viewManager ()->restoreFastUpdates ();
 }
 
@@ -541,7 +543,6 @@ void kpToolPolygonalBase::endShape (const QPoint &, const QRect &)
             d->points, boundingRect,
             drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
             /*virtual*/drawingBackgroundColor (),
-            document ()->getPixmapAt (boundingRect),
             mainWindow ());
 
     commandHistory ()->addCommand (lineCommand);
