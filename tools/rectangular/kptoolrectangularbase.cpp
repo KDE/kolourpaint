@@ -260,20 +260,20 @@ kpColor kpToolRectangularBase::drawingBackgroundColor () const
 void kpToolRectangularBase::updateShape ()
 {
     viewManager ()->setFastUpdates ();
-
-    kpImage image = document ()->getPixmapAt (d->toolRectangleRect);
-
-    // Invoke shape drawing function passed in ctor.
-    (*d->drawShapeFunc) (&image,
-        0, 0, d->toolRectangleRect.width (), d->toolRectangleRect.height (),
-        drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
-        drawingBackgroundColor ());
-    kpTempPixmap newTempPixmap (false/*always display*/,
-                                kpTempPixmap::SetPixmap/*render mode*/,
-                                d->toolRectangleRect.topLeft (),
-                                image);
-    viewManager ()->setTempPixmap (newTempPixmap);
-
+    {
+        kpImage image = document ()->getPixmapAt (d->toolRectangleRect);
+    
+        // Invoke shape drawing function passed in ctor.
+        (*d->drawShapeFunc) (&image,
+            0, 0, d->toolRectangleRect.width (), d->toolRectangleRect.height (),
+            drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
+            drawingBackgroundColor ());
+        kpTempPixmap newTempPixmap (false/*always display*/,
+                                    kpTempPixmap::SetPixmap/*render mode*/,
+                                    d->toolRectangleRect.topLeft (),
+                                    image);
+        viewManager ()->setTempPixmap (newTempPixmap);
+    }
     viewManager ()->restoreFastUpdates ();
 }
 
