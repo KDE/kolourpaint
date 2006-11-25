@@ -32,7 +32,6 @@
 
 #include <qobject.h>
 #include <qpoint.h>
-#include <qpointer.h>
 #include <qrect.h>
 #include <qsize.h>
 #include <qstring.h>
