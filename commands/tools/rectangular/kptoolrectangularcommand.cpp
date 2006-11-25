@@ -66,7 +66,7 @@ struct kpToolRectangularCommandPrivate
     int penWidth;
     kpColor bcolor;
     
-    QPixmap *oldPixmapPtr;
+    kpImage oldImage;
 };
 
 kpToolRectangularCommand::kpToolRectangularCommand (const QString &name,
@@ -85,13 +85,10 @@ kpToolRectangularCommand::kpToolRectangularCommand (const QString &name,
     d->fcolor = fcolor;
     d->penWidth = penWidth;
     d->bcolor = bcolor;
-
-    d->oldPixmapPtr = 0;
 }
 
 kpToolRectangularCommand::~kpToolRectangularCommand ()
 {
-    delete d->oldPixmapPtr;
     delete d;
 }
 
@@ -99,7 +96,7 @@ kpToolRectangularCommand::~kpToolRectangularCommand ()
 // public virtual [base kpCommand]
 int kpToolRectangularCommand::size () const
 {
-    return kpPixmapFX::pixmapSize (d->oldPixmapPtr);
+    return kpPixmapFX::pixmapSize (d->oldImage);
 }
 
 
@@ -114,9 +111,8 @@ void kpToolRectangularCommand::execute ()
     // Store Undo info.
     // OPT: For a pure rectangle, can do better if there is no bcolor, by only
     //      saving 4 pixmaps corresponding to the pixels dirtied by the 4 edges.
-    Q_ASSERT (!d->oldPixmapPtr);
-    d->oldPixmapPtr = new QPixmap ();
-    *d->oldPixmapPtr = image;
+    Q_ASSERT (d->oldImage.isNull ());
+    d->oldImage = image;
 
     // Invoke shape drawing function passed in ctor.
     (*d->drawShapeFunc) (&image,
@@ -132,11 +128,10 @@ void kpToolRectangularCommand::unexecute ()
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
-    Q_ASSERT (d->oldPixmapPtr);
-    doc->setPixmapAt (*d->oldPixmapPtr, d->rect.topLeft ());
+    Q_ASSERT (!d->oldImage.isNull ());
+    doc->setPixmapAt (d->oldImage, d->rect.topLeft ());
 
-    delete d->oldPixmapPtr;
-    d->oldPixmapPtr = 0;
+    d->oldImage = kpImage ();
 }
 
 
