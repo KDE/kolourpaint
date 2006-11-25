@@ -75,13 +75,14 @@ kpToolRectangularCommand::kpToolRectangularCommand (const QString &name,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
         kpMainWindow *mainWindow)
+
     : kpNamedCommand (name, mainWindow),
       d (new kpToolRectangularCommandPrivate ())
 {
     d->drawShapeFunc = drawShapeFunc;
 
     d->rect = rect;
-    
+
     d->fcolor = fcolor;
     d->penWidth = penWidth;
     d->bcolor = bcolor;
@@ -116,7 +117,8 @@ void kpToolRectangularCommand::execute ()
     kpImage image = d->oldImage;
     (*d->drawShapeFunc) (&image,
         0, 0, d->rect.width (), d->rect.height (),
-        d->fcolor, d->penWidth, d->bcolor);
+        d->fcolor, d->penWidth,
+        d->bcolor);
 
     doc->setPixmapAt (image, d->rect.topLeft ());
 }
