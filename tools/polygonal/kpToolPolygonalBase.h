@@ -89,9 +89,9 @@ struct kpToolPolygonalBasePrivate;
 // drag.  It will add an extra point for each additional point that is dragged.
 //
 // You may wish to reimplement drawingALine() if your shape does not consist of
-// just connected lines e.g. while the Curve tool, on the initial drag (consisting
-// of 2 points) creates a line, future drags do not create extra lines - they
-// actually modify the Bezier control points.
+// just connected lines e.g. while the Curve tool, on the initial drag, creates
+// a line (consisting of the 2 points returned by points()), future drags do not
+// create extra lines - they actually modify the Bezier control points.
 //
 class kpToolPolygonalBase : public kpTool
 {
@@ -142,15 +142,18 @@ protected:
     // Ctrl+Shift clamps the line to 30 and 45 degree increments i.e.
     // 0, 30, 45, 60, 90, 120, 135, 150, 180, 210, ... degrees.
     //
-    // This really only makes sense if drawingALine() returns true, but you are
-    // free to call even if it returns false.
+    // This really only makes sense if drawingALine() returns true, where draw()
+    // will call applyModifiers() automatically.  Otherwise, if it returns false,
+    // it doesn't really make sense to call applyModifiers() (in a hypothetical
+    // reimplementation of draw()) because you're not manipulating a line - but
+    // you can still call applyModifiers() if you want.
     void applyModifiers ();
 
     // Returns the current points in the shape.  It is updated by beginDraw()
     // (see the class description).
     //
-    // draw() sets the last point to the currentPoint().  If drawingALine(), it
-    // then calls applyModifiers().
+    // draw() sets the last point to the currentPoint().  If drawingALine(),
+    // draw() then calls applyModifiers().
     QPolygon *points () const;
     
     // Returns the mouse button for the drag that created the initial line.
@@ -171,6 +174,12 @@ protected:
     // point of points() e.g. a control point of a Bezier curve.  draw() will
     // _not_ call applyModifiers().  It will update the statubar with just that
     // point.
+    //
+    // Reimplement this if not all points are used to construct connected lines.
+    // For instance, the Curve tool will return true to construct a line, on
+    // the initial drag.  However, for the following 2 control points, it returns
+    // false.  The Curve tool realises it is an initial drag if points() only
+    // returns 2 points.
     virtual bool drawingALine () const { return true; }
 public:
     virtual void draw (const QPoint &, const QPoint &, const QRect &);
