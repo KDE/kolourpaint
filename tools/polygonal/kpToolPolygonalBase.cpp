@@ -241,7 +241,10 @@ void kpToolPolygonalBase::beginDraw ()
     if (d->points.count () == 0)
     {
         d->originatingMouseButton = mouseButton ();
-        
+
+        // The line starts and ends at the start point of the drag.
+        // draw() will modify the last point in d->points to reflect the
+        // mouse drag, as the drag proceeds.
         d->points.append (startPoint ());
         d->points.append (startPoint ());
     }
@@ -274,7 +277,8 @@ void kpToolPolygonalBase::beginDraw ()
     }
 }
 
-// private
+
+// protected
 void kpToolPolygonalBase::applyModifiers ()
 {
     const int count = d->points.count ();
@@ -310,8 +314,8 @@ void kpToolPolygonalBase::applyModifiers ()
     #endif
 
         // Shift        = 0, 45, 90
-        // Alt          = 0, 30, 60, 90
-        // Shift + Alt  = 0, 30, 45, 60, 90
+        // Ctrl         = 0, 30, 60, 90
+        // Shift + Ctrl = 0, 30, 45, 60, 90
         double angles [10];  // "ought to be enough for anybody"
         int numAngles = 0;
         angles [numAngles++] = 0;
@@ -322,6 +326,7 @@ void kpToolPolygonalBase::applyModifiers ()
         if (controlPressed ())
             angles [numAngles++] = KP_PI / 3;
         angles [numAngles++] = KP_PI / 2;
+        Q_ASSERT (numAngles <= int (sizeof (angles) / sizeof (angles [0])));
 
         double angle = angles [numAngles - 1];
         for (int i = 0; i < numAngles - 1; i++)
@@ -386,10 +391,13 @@ void kpToolPolygonalBase::applyModifiers ()
     }    // if (altPressed ()) {
 }
 
+
+// protected
 QPolygon *kpToolPolygonalBase::points () const
 {
     return &d->points;
 }
+
 
 // protected
 int kpToolPolygonalBase::originatingMouseButton () const
@@ -397,6 +405,7 @@ int kpToolPolygonalBase::originatingMouseButton () const
     Q_ASSERT (hasBegunShape ());
     return d->originatingMouseButton;
 }
+
 
 // virtual
 void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
@@ -413,25 +422,35 @@ void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
                << ", endPoint=" << currentPoint () << endl;
 #endif
 
-    bool drawingALine = (d->mode != Curve) ||
-                        (d->mode == Curve && d->points.count () == 2);
-
     const int count = d->points.count ();
-    d->points [count - 1] = currentPoint ();
-    
-    if (drawingALine)
-        applyModifiers ();
-
+    d->points [count - 1] = currentPoint ();    
 #if DEBUG_KP_TOOL_POLYGON
     kDebug () << "\tafterwards, d->points=" << d->points.toList () << endl;
 #endif
 
-    updateShape ();
+    // Are we drawing a line?
+    if (/*virtual*/drawingALine ())
+    {
+        // Adjust the line (end points given by the last 2 points of points())
+        // in response to keyboard modifiers.
+        applyModifiers ();
 
-    if (drawingALine)
+        // Update the preview of the shape.
+        updateShape ();
+
+        // Inform the user that we're dragging out a line with 2 control points.
         setUserShapePoints (d->points [count - 2], d->points [count - 1]);
+    }
+    // We're modifying a point.
     else
-        setUserShapePoints (currentPoint ());
+    {
+        // Update the preview of the shape.
+        updateShape ();
+
+        // Informs the user that we're just modifying a point (perhaps, a control
+        // point of a Bezier).
+        setUserShapePoints (d->points [count - 1]);
+    }
 }
 
 

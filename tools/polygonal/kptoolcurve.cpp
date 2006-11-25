@@ -51,10 +51,19 @@ kpToolCurve::~kpToolCurve ()
 }
 
 
-// private virtual [base kpToolPolygonalBase]
+// protected virtual [base kpToolPolygonalBase]
 QString kpToolCurve::haventBegunShapeUserMessage () const
 {
     return i18n ("Drag out the start and end points.");
+}
+
+
+// protected virtual [base kpToolPolygonalBase]
+bool kpToolCurve::drawingALine () const
+{
+    // On the initial drag (consisting of 2 points) creates a line.
+    // Future drags are for control points.
+    return (points ()->count () == 2);
 }
 
 

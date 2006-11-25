@@ -44,8 +44,10 @@ public:
     kpToolCurve (kpMainWindow *mainWindow);
     virtual ~kpToolCurve ();
 
-private:
+protected:
     virtual QString haventBegunShapeUserMessage () const;
+
+    virtual bool drawingALine () const;
 
 public:
     virtual void endDraw (const QPoint &, const QRect &);

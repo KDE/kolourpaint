@@ -85,6 +85,14 @@ struct kpToolPolygonalBasePrivate;
 //
 // This behavior cannot be altered by a subclass.
 //
+// beginDraw() will ensure that points() contains 2 points on the initial line
+// drag.  It will add an extra point for each additional point that is dragged.
+//
+// You may wish to reimplement drawingALine() if your shape does not consist of
+// just connected lines e.g. while the Curve tool, on the initial drag (consisting
+// of 2 points) creates a line, future drags do not create extra lines - they
+// actually modify the Bezier control points.
+//
 class kpToolPolygonalBase : public kpTool
 {
 Q_OBJECT
@@ -119,10 +127,32 @@ public:
     virtual void end ();
 
     virtual void beginDraw ();
-private:
-    void applyModifiers ();
+
 protected:
+    // Adjusts the current line (end points given by the last 2 points of points())
+    // in response to keyboard modifiers:
+    //
+    // No modifiers: Does nothing
+    // Shift       : Clamps the line to 45 degrees increments
+    // Ctrl        : Clamps the line to 30 degrees increments
+    // Alt         : [currently disabled] Makes the starting point the center
+    //               point of the line.
+    //
+    // It is possible to depress multiple modifiers for combined effects e.g.
+    // Ctrl+Shift clamps the line to 30 and 45 degree increments i.e.
+    // 0, 30, 45, 60, 90, 120, 135, 150, 180, 210, ... degrees.
+    //
+    // This really only makes sense if drawingALine() returns true, but you are
+    // free to call even if it returns false.
+    void applyModifiers ();
+
+    // Returns the current points in the shape.  It is updated by beginDraw()
+    // (see the class description).
+    //
+    // draw() sets the last point to the currentPoint().  If drawingALine(), it
+    // then calls applyModifiers().
     QPolygon *points () const;
+    
     // Returns the mouse button for the drag that created the initial line.
     // Use this - instead of mouseButton() - for determining whether you should
     // use the left mouse button's or right mouse button's color.  This is because
@@ -131,6 +161,17 @@ protected:
     //
     // Only valid if kpTool::hasBegunShape() returns true.
     int originatingMouseButton () const;
+
+    // Returns true if the current drag is visually a line from the 2nd last point
+    // of points() to the last point of points() e.g. the initial line drag for
+    // a Curve and all drags for a Polygon or Polyline.  draw() will call
+    // applyModifiers() and update the statusbar with those 2 points.
+    //
+    // Returns false if the current drag only draws something based on the last
+    // point of points() e.g. a control point of a Bezier curve.  draw() will
+    // _not_ call applyModifiers().  It will update the statubar with just that
+    // point.
+    virtual bool drawingALine () const { return true; }
 public:
     virtual void draw (const QPoint &, const QPoint &, const QRect &);
 private:
