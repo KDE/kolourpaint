@@ -112,7 +112,8 @@ void kpToolRectangularCommand::execute ()
     kpImage image = doc->getPixmapAt (d->rect);
     
     // Store Undo info.
-    // OPT: I can do better with no brush
+    // OPT: For a pure rectangle, can do better if there is no bcolor, by only
+    //      saving 4 pixmaps corresponding to the pixels dirtied by the 4 edges.
     Q_ASSERT (!d->oldPixmapPtr);
     d->oldPixmapPtr = new QPixmap ();
     *d->oldPixmapPtr = image;
