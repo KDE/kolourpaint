@@ -63,12 +63,13 @@ class kpViewManager;
 
 struct kpToolPolygonalCommandPrivate;
 
+// TODO: merge with kpToolRectangularCommand due to code duplication.
 class kpToolPolygonalCommand : public kpNamedCommand
 {
 public:
     // <boundingRect> = the bounding rectangle for <points> including <penWidth>.
     kpToolPolygonalCommand (const QString &name,
-        enum kpToolPolygonalBase::Mode mode,
+        kpToolPolygonalBase::DrawShapeFunc drawShapeFunc,
         const QPolygon &points,
         const QRect &boundingRect,
         const kpColor &fcolor, int penWidth,

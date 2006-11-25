@@ -34,12 +34,58 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kppainter.h>
+
+
+static void DrawShape (kpImage *image,
+        const QPolygon &points,
+        const kpColor &fcolor, int penWidth,
+        const kpColor &bcolor,
+        bool isFinal)
+{
+    (void) bcolor;
+    (void) isFinal;
+    
+    Q_ASSERT (points.count () >= 2 && points.count () <= 4);
+    
+    const QPoint startPoint = points [0];
+    const QPoint endPoint = points [1];
+
+    QPoint controlPointP, controlPointQ;
+    
+    switch (points.count ())
+    {
+    // Just a line?
+    case 2:
+        controlPointP = startPoint;
+        controlPointQ = endPoint;
+        break;
+
+    // Single control point?
+    case 3:
+        controlPointP = controlPointQ = points [2];
+        break;
+
+    // Two control points?
+    case 4:
+        controlPointP = points [2];
+        controlPointQ = points [3];
+        break;
+    }
+            
+    kpPainter::drawCurve (image,
+        startPoint,
+        controlPointP, controlPointQ,
+        endPoint,
+        fcolor, penWidth);
+}
+
 
 kpToolCurve::kpToolCurve (kpMainWindow *mainWindow)
     : kpToolPolygonalBase (
-        Curve,
         i18n ("Curve"),
         i18n ("Draws curves"),
+        &::DrawShape,
         Qt::Key_V,
         mainWindow,
         "tool_curve")

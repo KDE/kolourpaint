@@ -65,7 +65,7 @@
 
 struct kpToolPolygonalCommandPrivate
 {
-    kpToolPolygonalBase::Mode mode;
+    kpToolPolygonalBase::DrawShapeFunc drawShapeFunc;
     
     QPolygon points;
     QRect boundingRect;
@@ -78,24 +78,24 @@ struct kpToolPolygonalCommandPrivate
 };
 
 kpToolPolygonalCommand::kpToolPolygonalCommand (const QString &name,
-        enum kpToolPolygonalBase::Mode mode,
+        kpToolPolygonalBase::DrawShapeFunc drawShapeFunc,
         const QPolygon &points,
         const QRect &boundingRect,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
         kpMainWindow *mainWindow)
-        
+
     : kpNamedCommand (name, mainWindow),
       d (new kpToolPolygonalCommandPrivate ())
 {
-      d->mode = mode;
-      
-      d->points = points;
-      d->boundingRect = boundingRect;
-      
-      d->fcolor = fcolor; 
-      d->penWidth = penWidth;
-      d->bcolor = bcolor;
+    d->drawShapeFunc = drawShapeFunc;
+
+    d->points = points;
+    d->boundingRect = boundingRect;
+
+    d->fcolor = fcolor;
+    d->penWidth = penWidth;
+    d->bcolor = bcolor;
 }
 
 kpToolPolygonalCommand::~kpToolPolygonalCommand ()
@@ -121,15 +121,19 @@ void kpToolPolygonalCommand::execute ()
     Q_ASSERT (d->oldImage.isNull ());
     d->oldImage = doc->getPixmapAt (d->boundingRect);
 
-    QPixmap p =
-        ::kpToolPolygonalBaseImage (
-            d->oldImage,
-            d->points, d->boundingRect,
-            d->fcolor, d->penWidth,
-            d->bcolor,
-            d->mode);
+    // Invoke shape drawing function passed in ctor.
+    kpImage image = d->oldImage;
+
+    QPolygon pointsTranslated = d->points;
+    pointsTranslated.translate (-d->boundingRect.x (), -d->boundingRect.y ());
+    
+    (*d->drawShapeFunc) (&image,
+        pointsTranslated,
+        d->fcolor, d->penWidth,
+        d->bcolor,
+        true/*final shape*/);
             
-    document ()->setPixmapAt (p, d->boundingRect.topLeft ());
+    doc->setPixmapAt (image, d->boundingRect.topLeft ());
 }
 
 // public virtual [base kpCommand]

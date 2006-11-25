@@ -48,6 +48,12 @@ private:
     virtual QString haventBegunShapeUserMessage () const;
 
 public:
+    static void drawShape (kpImage *image,
+        const QPolygon &points,
+        const kpColor &fcolor, int penWidth,
+        const kpColor &bcolor,
+        bool isFinal);
+
     virtual void endDraw (const QPoint &, const QRect &);
 };
 

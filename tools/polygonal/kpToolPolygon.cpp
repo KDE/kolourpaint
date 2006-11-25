@@ -33,6 +33,7 @@
 
 #include <klocale.h>
 
+#include <kppainter.h>
 #include <kptooltoolbar.h>
 
 
@@ -43,9 +44,9 @@ struct kpToolPolygonPrivate
 
 kpToolPolygon::kpToolPolygon (kpMainWindow *mainWindow)
     : kpToolPolygonalBase (
-        Polygon,
         i18n ("Polygon"),
         i18n ("Draws polygons"),
+        &kpPainter::drawPolygon,
         Qt::Key_G,
         mainWindow,
         "tool_polygon"),

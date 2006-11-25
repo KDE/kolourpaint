@@ -34,12 +34,30 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kptoolpolyline.h>
+
+
+static void DrawShape (kpImage *image,
+        const QPolygon &points,
+        const kpColor &fcolor, int penWidth,
+        const kpColor &bcolor,
+        bool isFinal)
+{
+    Q_ASSERT (points.count () == 2);
+    
+    kpToolPolyline::drawShape (image,
+        points,
+        fcolor, penWidth,
+        bcolor,
+        isFinal);
+}
+
 
 kpToolLine::kpToolLine (kpMainWindow *mainWindow)
     : kpToolPolygonalBase (
-        Line,
         i18n ("Line"),
         i18n ("Draws lines"),
+        &::DrawShape,
         Qt::Key_L,
         mainWindow,
         "tool_line")

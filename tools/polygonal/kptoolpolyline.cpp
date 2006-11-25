@@ -34,12 +34,14 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kppainter.h>
+
 
 kpToolPolyline::kpToolPolyline (kpMainWindow *mainWindow)
     : kpToolPolygonalBase (
-        Polyline,
         i18n ("Connected Lines"),
         i18n ("Draws connected lines"),
+        &drawShape,
         Qt::Key_N,
         mainWindow,
         "tool_polyline")
@@ -55,6 +57,22 @@ kpToolPolyline::~kpToolPolyline ()
 QString kpToolPolyline::haventBegunShapeUserMessage () const
 {
     return i18n ("Drag to draw the first line.");
+}
+
+
+// public static
+void kpToolPolyline::drawShape (kpImage *image,
+        const QPolygon &points,
+        const kpColor &fcolor, int penWidth,
+        const kpColor &bcolor,
+        bool isFinal)
+{
+    (void) bcolor;
+    (void) isFinal;
+    
+    kpPainter::drawPolyline (image,
+        points,
+        fcolor, penWidth);
 }
 
 

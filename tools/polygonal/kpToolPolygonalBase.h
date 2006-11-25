@@ -93,25 +93,28 @@ struct kpToolPolygonalBasePrivate;
 // a line (consisting of the 2 points returned by points()), future drags do not
 // create extra lines - they actually modify the Bezier control points.
 //
+// The actual rendering is performed by the <drawShapeFunc> function passed in
+// the constructor.
+//
 class kpToolPolygonalBase : public kpTool
 {
 Q_OBJECT
 
 public:
-    // TODO: awful - needs inheritance, all subclasses and I need to derive from
-    //       a class kpToolPolygonalBase.
-    enum Mode
-    {
-        Polygon, Polyline, Line, Curve
-    };
+    // (all arguments are as per kpPainter::drawPolygon())
+    typedef void (*DrawShapeFunc) (kpImage * /*image*/,
+        const QPolygon &/*points*/,
+        const kpColor &/*fcolor*/, int /*penWidth = 1*/,
+        const kpColor &/*bcolor = kpColor::Invalid*/,
+        bool /*isFinal*/);
 
-    kpToolPolygonalBase (Mode mode, const QString &text, const QString &description,
-                   int key,
-                   kpMainWindow *mainWindow, const QString &name);
-    kpToolPolygonalBase (kpMainWindow *mainWindow);
+    // <drawShapeFunc>
+    kpToolPolygonalBase (const QString &text, const QString &description,
+        DrawShapeFunc drawShapeFunc,
+        int key,
+        kpMainWindow *mainWindow,
+        const QString &name);
     virtual ~kpToolPolygonalBase ();
-
-    void setMode (Mode mode);
 
     virtual bool careAboutModifierState () const { return true; }
 
@@ -186,6 +189,11 @@ public:
 private:
     kpColor drawingForegroundColor () const;
 protected:
+    // This returns the invalid color so that there is never a fill.
+    // This is in contrast to kpToolRectangularBase, which sometimes fills by
+    // returning a valid color.
+    //
+    // Reimplemented in the Polygon tool for a fill.
     virtual kpColor drawingBackgroundColor () const;
 protected slots:
     void updateShape ();
@@ -202,15 +210,7 @@ protected slots:
 
 private:
     kpToolPolygonalBasePrivate * const d;
-
 };
-
-
-kpImage kpToolPolygonalBaseImage (const QPixmap &oldImage,
-        const QPolygon &points, const QRect &rect,
-        const kpColor &foregroundColor, int penWidth,
-        kpColor backgroundColor,
-        enum kpToolPolygonalBase::Mode mode, bool final = true);
 
 
 #endif  // kpToolPolygonalBase_H
