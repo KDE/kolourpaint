@@ -117,11 +117,9 @@ void kpToolPolygonalCommand::execute ()
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
-    kpImage image = doc->getPixmapAt (d->boundingRect);
-    
     // Store Undo info.
     Q_ASSERT (d->oldImage.isNull ());
-    d->oldImage = image;
+    d->oldImage = doc->getPixmapAt (d->boundingRect);
 
     QPixmap p =
         ::kpToolPolygonalBaseImage (

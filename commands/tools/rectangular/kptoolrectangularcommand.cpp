@@ -106,15 +106,14 @@ void kpToolRectangularCommand::execute ()
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
-    kpImage image = doc->getPixmapAt (d->rect);
-    
     // Store Undo info.
     // OPT: For a pure rectangle, can do better if there is no bcolor, by only
     //      saving 4 pixmaps corresponding to the pixels dirtied by the 4 edges.
     Q_ASSERT (d->oldImage.isNull ());
-    d->oldImage = image;
+    d->oldImage = doc->getPixmapAt (d->rect);
 
     // Invoke shape drawing function passed in ctor.
+    kpImage image = d->oldImage;
     (*d->drawShapeFunc) (&image,
         0, 0, d->rect.width (), d->rect.height (),
         d->fcolor, d->penWidth, d->bcolor);
