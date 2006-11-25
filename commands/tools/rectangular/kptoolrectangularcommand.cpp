@@ -61,6 +61,7 @@ struct kpToolRectangularCommandPrivate
     kpToolRectangularBase::DrawShapeFunc drawShapeFunc;
     
     QRect rect;
+    
     kpColor fcolor;
     int penWidth;
     kpColor bcolor;
@@ -80,6 +81,7 @@ kpToolRectangularCommand::kpToolRectangularCommand (const QString &name,
     d->drawShapeFunc = drawShapeFunc;
 
     d->rect = rect;
+    
     d->fcolor = fcolor;
     d->penWidth = penWidth;
     d->bcolor = bcolor;
