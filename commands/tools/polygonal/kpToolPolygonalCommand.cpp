@@ -120,8 +120,6 @@ void kpToolPolygonalCommand::execute ()
     kpImage image = doc->getPixmapAt (d->boundingRect);
     
     // Store Undo info.
-    // OPT: For a pure rectangle, can do better if there is no bcolor, by only
-    //      saving 4 pixmaps corresponding to the pixels dirtied by the 4 edges.
     Q_ASSERT (d->oldImage.isNull ());
     d->oldImage = image;
 
