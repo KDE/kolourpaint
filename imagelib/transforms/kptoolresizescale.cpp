@@ -227,8 +227,6 @@ void kpToolResizeScaleCommand::scaleSelectionRegionWithDocument ()
 
 
     QPolygon currentPoints = m_oldSelection->points ();
-    currentPoints.detach ();
-
     currentPoints.translate (-currentPoints.boundingRect ().x (),
                              -currentPoints.boundingRect ().y ());
 

@@ -101,7 +101,6 @@ kpSelection::kpSelection (const QPolygon &points, const QPixmap &pixmap,
       m_points (points)
 {
     m_pixmap = pixmap.isNull () ? 0 : new QPixmap (pixmap);
-    m_points.detach ();
 
     setTransparency (transparency);
 }
@@ -113,8 +112,6 @@ kpSelection::kpSelection (const QPolygon &points, const kpSelectionTransparency 
       m_points (points),
       m_pixmap (0)
 {
-    m_points.detach ();
-
     setTransparency (transparency);
 }
 
@@ -129,7 +126,6 @@ kpSelection::kpSelection (const kpSelection &rhs)
       m_transparency (rhs.m_transparency),
       m_transparencyMask (rhs.m_transparencyMask)
 {
-    m_points.detach ();
 }
 
 kpSelection &kpSelection::operator= (const kpSelection &rhs)
@@ -140,7 +136,6 @@ kpSelection &kpSelection::operator= (const kpSelection &rhs)
     m_type = rhs.m_type;
     m_rect = rhs.m_rect;
     m_points = rhs.m_points;
-    m_points.detach ();
 
     delete m_pixmap;
     m_pixmap = rhs.m_pixmap ? new QPixmap (*rhs.m_pixmap) : 0;
@@ -218,7 +213,6 @@ void kpSelection::readFromStream (QDataStream &stream,
 
     stream >> m_rect;
     stream >> m_points;
-    m_points.detach ();
 #if DEBUG_KP_SELECTION && 1
     kDebug () << "\trect=" << m_rect << endl;
     //kDebug () << "\tpoints=" << m_points << endl;
@@ -378,7 +372,6 @@ QBitmap kpSelection::maskForOwnType (bool nullForRectangular) const
     else if (m_type == kpSelection::Points)
     {
         QPolygon points = m_points;
-        points.detach ();
         points.translate (-m_rect.x (), -m_rect.y ());
 
         painter.drawPolygon (points, false/*even-odd algo*/);
