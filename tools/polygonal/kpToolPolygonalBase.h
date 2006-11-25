@@ -176,9 +176,9 @@ protected:
     // point.
     //
     // Reimplement this if not all points are used to construct connected lines.
-    // For instance, the Curve tool will return true to construct a line, on
+    // For instance, the Curve tool will return "true" to construct a line, on
     // the initial drag.  However, for the following 2 control points, it returns
-    // false.  The Curve tool realises it is an initial drag if points() only
+    // "false".  The Curve tool realises it is an initial drag if points() only
     // returns 2 points.
     virtual bool drawingALine () const { return true; }
 public:
