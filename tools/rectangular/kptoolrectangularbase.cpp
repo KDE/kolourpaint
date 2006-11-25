@@ -68,10 +68,13 @@ struct kpToolRectangularBasePrivate
 };
 
 
-kpToolRectangularBase::kpToolRectangularBase (const QString &text, const QString &description,
+kpToolRectangularBase::kpToolRectangularBase (
+        const QString &text,
+        const QString &description,
         DrawShapeFunc drawShapeFunc,
         int key,
-        kpMainWindow *mainWindow, const QString &name)
+        kpMainWindow *mainWindow,
+        const QString &name)
         
     : kpTool (text, description, key, mainWindow, name),
       d (new kpToolRectangularBasePrivate ())
@@ -259,19 +262,21 @@ kpColor kpToolRectangularBase::drawingBackgroundColor () const
 // private
 void kpToolRectangularBase::updateShape ()
 {
+    kpImage image = document ()->getPixmapAt (d->toolRectangleRect);
+
+    // Invoke shape drawing function passed in ctor.
+    (*d->drawShapeFunc) (&image,
+        0, 0, d->toolRectangleRect.width (), d->toolRectangleRect.height (),
+        drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
+        drawingBackgroundColor ());
+        
+    kpTempPixmap newTempPixmap (false/*always display*/,
+                                kpTempPixmap::SetPixmap/*render mode*/,
+                                d->toolRectangleRect.topLeft (),
+                                image);
+                                
     viewManager ()->setFastUpdates ();
     {
-        kpImage image = document ()->getPixmapAt (d->toolRectangleRect);
-    
-        // Invoke shape drawing function passed in ctor.
-        (*d->drawShapeFunc) (&image,
-            0, 0, d->toolRectangleRect.width (), d->toolRectangleRect.height (),
-            drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
-            drawingBackgroundColor ());
-        kpTempPixmap newTempPixmap (false/*always display*/,
-                                    kpTempPixmap::SetPixmap/*render mode*/,
-                                    d->toolRectangleRect.topLeft (),
-                                    image);
         viewManager ()->setTempPixmap (newTempPixmap);
     }
     viewManager ()->restoreFastUpdates ();
@@ -341,10 +346,13 @@ void kpToolRectangularBase::endDraw (const QPoint &, const QRect &)
     // Later: So why can't we use kpViewManager::setQueueUpdates()?  Check SVN
     //        log to see if this method was not available at the time of the
     //        TODO, hence justifying the TODO.
+    // Later2: kpToolPolygonalBase, and perhaps, other shapes will have the
+    //         same problem.
     viewManager ()->invalidateTempPixmap ();
 
     mainWindow ()->commandHistory ()->addCommand (
-        new kpToolRectangularCommand (text (),
+        new kpToolRectangularCommand (
+            text (),
             d->drawShapeFunc, d->toolRectangleRect,
             drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
             drawingBackgroundColor (),
