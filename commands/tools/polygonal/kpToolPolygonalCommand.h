@@ -67,12 +67,12 @@ class kpToolPolygonalCommand : public kpNamedCommand
 {
 public:
     kpToolPolygonalCommand (const QString &name,
+        enum kpToolPolygonalBase::Mode mode,
         const QPolygon &points,
         const QRect &normalizedRect,
-        const kpColor &foregroundColor, int penWidth,
-        const kpColor &backgroundColor,
+        const kpColor &fcolor, int penWidth,
+        const kpColor &bcolor,
         const QPixmap &originalArea,
-        enum kpToolPolygonalBase::Mode mode,
         kpMainWindow *mainWindow);
     virtual ~kpToolPolygonalCommand ();
 

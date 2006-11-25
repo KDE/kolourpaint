@@ -65,33 +65,40 @@
 
 struct kpToolPolygonalCommandPrivate
 {
+    kpToolPolygonalBase::Mode mode;
+    
     QPolygon points;
     QRect normalizedRect;
 
-    kpColor foregroundColor, backgroundColor;
+    kpColor fcolor;
     int penWidth;
+    kpColor bcolor;
 
-    QPixmap originalArea;
-    kpToolPolygonalBase::Mode mode;
+    kpImage oldImage;
 };
 
 kpToolPolygonalCommand::kpToolPolygonalCommand (const QString &name,
+        enum kpToolPolygonalBase::Mode mode,
         const QPolygon &points,
         const QRect &normalizedRect,
-        const kpColor &foregroundColor, int penWidth,
-        const kpColor &backgroundColor,
-        const QPixmap &originalArea,
-        enum kpToolPolygonalBase::Mode mode,
+        const kpColor &fcolor, int penWidth,
+        const kpColor &bcolor,
+        const QPixmap &oldImage,
         kpMainWindow *mainWindow)
+        
     : kpNamedCommand (name, mainWindow),
       d (new kpToolPolygonalCommandPrivate ())
 {
+      d->mode = mode;
+      
       d->points = points;
       d->normalizedRect = normalizedRect;
-      d->foregroundColor = foregroundColor; d->backgroundColor = backgroundColor;
+      
+      d->fcolor = fcolor; 
       d->penWidth = penWidth;
-      d->originalArea = originalArea;
-      d->mode = mode;
+      d->bcolor = bcolor;
+      
+      d->oldImage = oldImage;
 }
 
 kpToolPolygonalCommand::~kpToolPolygonalCommand ()
@@ -104,24 +111,26 @@ kpToolPolygonalCommand::~kpToolPolygonalCommand ()
 int kpToolPolygonalCommand::size () const
 {
     return kpPixmapFX::pointArraySize (d->points) +
-           kpPixmapFX::pixmapSize (d->originalArea);
+           kpPixmapFX::pixmapSize (d->oldImage);
 }
 
 // public virtual [base kpCommand]
 void kpToolPolygonalCommand::execute ()
 {
-    QPixmap p = ::kpToolPolygonalBaseImage (d->originalArea,
-                        d->points, d->normalizedRect,
-                        d->foregroundColor, d->penWidth,
-                        d->backgroundColor,
-                        d->mode);
+    QPixmap p =
+        ::kpToolPolygonalBaseImage (
+            d->oldImage,
+            d->points, d->normalizedRect,
+            d->fcolor, d->penWidth,
+            d->bcolor,
+            d->mode);
     document ()->setPixmapAt (p, d->normalizedRect.topLeft ());
 }
 
 // public virtual [base kpCommand]
 void kpToolPolygonalCommand::unexecute ()
 {
-    document ()->setPixmapAt (d->originalArea, d->normalizedRect.topLeft ());
+    document ()->setPixmapAt (d->oldImage, d->normalizedRect.topLeft ());
 }
 
 
