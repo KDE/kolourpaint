@@ -493,10 +493,12 @@ void kpToolPolygonalBase::updateShape ()
         d->mode, false/*not final*/);
 
     viewManager ()->setFastUpdates ();
-    viewManager ()->setTempPixmap (kpTempPixmap (false/*always display*/,
-                                                 kpTempPixmap::SetPixmap/*render mode*/,
-                                                 boundingRect.topLeft (),
-                                                 newPixmap));
+    viewManager ()->setTempPixmap (
+        kpTempPixmap (
+            false/*always display*/,
+            kpTempPixmap::SetPixmap/*render mode*/,
+            boundingRect.topLeft (),
+            newPixmap));
     viewManager ()->restoreFastUpdates ();
 }
 
@@ -535,11 +537,11 @@ void kpToolPolygonalBase::endShape (const QPoint &, const QRect &)
     kpToolPolygonalCommand *lineCommand =
         new kpToolPolygonalCommand (
             text (),
+            d->mode,
             d->points, boundingRect,
             drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
             /*virtual*/drawingBackgroundColor (),
             document ()->getPixmapAt (boundingRect),
-            d->mode,
             mainWindow ());
 
     commandHistory ()->addCommand (lineCommand);
