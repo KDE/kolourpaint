@@ -57,9 +57,11 @@ void kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &/*normalizedRect*/)
 {
-    QPolygon points;
+    Q_ASSERT (accidentalDragAdjustedPoint == currentPoint ());
 
     Q_ASSERT (m_dragHasBegun == (bool) document ()->selection ());
+
+    QPolygon points;
 
     // First point in drag?
     if (!m_dragHasBegun)
@@ -87,5 +89,5 @@ void kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (
               << endl;
 #endif
 
-    setUserShapePoints (currentPoint ());
+    setUserShapePoints (accidentalDragAdjustedPoint);
 }
