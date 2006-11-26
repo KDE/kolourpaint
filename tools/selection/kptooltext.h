@@ -127,7 +127,8 @@ private:
     int calcClickCreateDimension (int mouseStart, int mouseEnd,
         int preferredMin, int smallestMin,
         int docSize);
-    bool shouldCreate (const kpTextStyle &textStyle,
+    bool shouldCreate (const QPoint &accidentalDragAdjustedPoint,
+        const kpTextStyle &textStyle,
         int *minimumWidthOut, int *minimumHeightOut);
 protected:
     virtual void createMoreSelectionAndUpdateStatusBar (

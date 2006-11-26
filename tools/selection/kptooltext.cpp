@@ -275,10 +275,11 @@ int kpToolText::calcClickCreateDimension (int mouseStart, int mouseEnd,
 }
 
 // private
-bool kpToolText::shouldCreate (const kpTextStyle &textStyle,
+bool kpToolText::shouldCreate (const QPoint &accidentalDragAdjustedPoint,
+        const kpTextStyle &textStyle,
         int *minimumWidthOut, int *minimumHeightOut)
 {
-    if (m_dragHasBegun || currentPoint () != startPoint ())
+    if (m_dragHasBegun || accidentalDragAdjustedPoint != startPoint ())
     {
     #if DEBUG_KP_TOOL_TEXT && 1
         kDebug () << "\tdrag creating text box" << endl;
@@ -313,7 +314,7 @@ bool kpToolText::shouldCreate (const kpTextStyle &textStyle,
     // Calculate suggested width.
     *minimumWidthOut = calcClickCreateDimension (
         startPoint ().x (),
-            currentPoint ().x (),
+            accidentalDragAdjustedPoint.x (),
         kpSelection::preferredMinimumWidthForTextStyle (textStyle),
             kpSelection::minimumWidthForTextStyle (textStyle),
         document ()->width ());
@@ -321,7 +322,7 @@ bool kpToolText::shouldCreate (const kpTextStyle &textStyle,
     // Calculate suggested height.
     *minimumHeightOut = calcClickCreateDimension (
         startPoint ().y (),
-            currentPoint ().y (),
+            accidentalDragAdjustedPoint.y (),
         kpSelection::preferredMinimumHeightForTextStyle (textStyle),
             kpSelection::minimumHeightForTextStyle (textStyle),
         document ()->height ());
@@ -347,8 +348,11 @@ void kpToolText::createMoreSelectionAndUpdateStatusBar (
 
     // (will set both variables)
     int minimumWidth = 0, minimumHeight = 0;
-    if (!shouldCreate (textStyle, &minimumWidth, &minimumHeight))
+    if (!shouldCreate (accidentalDragAdjustedPoint, textStyle,
+            &minimumWidth, &minimumHeight))
+    {
         return;
+    }
 
 
     // Make sure the dragged out rectangle is of the minimum width we just
