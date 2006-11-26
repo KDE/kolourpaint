@@ -50,8 +50,9 @@ kpToolRectSelection::~kpToolRectSelection ()
 
 
 // protected virtual [base kpToolSelection]
-void kpToolRectSelection::createMoreSelectionAndUpdateStatusBar (QPoint /*thisPoint*/,
-        QRect normalizedRect)
+void kpToolRectSelection::createMoreSelectionAndUpdateStatusBar (
+        const QPoint &/*accidentalDragAdjustedPoint*/,
+        const QRect &normalizedRect)
 {
     const QRect usefulRect = normalizedRect.intersect (document ()->rect ());
     document ()->setSelection (

@@ -125,8 +125,9 @@ protected:
     // 1. Set the document's selection (which may not have previously existed)
     //    to the specified size.
     // 2. Update the status bar by calling kpTool::setUserShapePoints().
-    virtual void createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
-        QRect normalizedRect) = 0;
+    virtual void createMoreSelectionAndUpdateStatusBar (
+        const QPoint &accidentalDragAdjustedPoint,
+        const QRect &normalizedRect) = 0;
 private:
     void create (QPoint thisPoint, QRect normalizedRect);
     void move (QPoint thisPoint, QRect normalizedRect);

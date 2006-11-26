@@ -53,8 +53,9 @@ kpToolFreeFormSelection::~kpToolFreeFormSelection ()
 
 
 // protected virtual [base kpToolSelection]
-void kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
-        QRect /*normalizedRect*/)
+void kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (
+        const QPoint &accidentalDragAdjustedPoint,
+        const QRect &/*normalizedRect*/)
 {
     QPolygon points;
 
@@ -75,7 +76,7 @@ void kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (QPoint this
 
     // TODO: There should be an upper limit on this before drawing the
     //       polygon becomes too slow.
-    points.append (thisPoint);
+    points.append (accidentalDragAdjustedPoint);
 
 
     document ()->setSelection (

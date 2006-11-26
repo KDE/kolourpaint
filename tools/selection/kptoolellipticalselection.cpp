@@ -51,8 +51,8 @@ kpToolEllipticalSelection::~kpToolEllipticalSelection ()
 
 // protected virtual [base kpToolSelection]
 void kpToolEllipticalSelection::createMoreSelectionAndUpdateStatusBar (
-        QPoint /*thisPoint*/,
-        QRect normalizedRect)
+        const QPoint &/*accidentalDragAdjustedPoint*/,
+        const QRect &normalizedRect)
 {
     document ()->setSelection (
         kpSelection (

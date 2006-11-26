@@ -130,8 +130,9 @@ private:
     bool shouldCreate (const kpTextStyle &textStyle,
         int *minimumWidthOut, int *minimumHeightOut);
 protected:
-    virtual void createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
-        QRect normalizedRect);
+    virtual void createMoreSelectionAndUpdateStatusBar (
+        const QPoint &accidentalDragAdjustedPoint,
+        const QRect &normalizedRect);
     virtual void setSelectionBorderForHaventBegunDraw ();
 
 

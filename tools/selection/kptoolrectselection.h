@@ -43,8 +43,9 @@ public:
     virtual ~kpToolRectSelection ();
     
 protected:
-    virtual void createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
-        QRect normalizedRect);
+    virtual void createMoreSelectionAndUpdateStatusBar (
+        const QPoint &accidentalDragAdjustedPoint,
+        const QRect &normalizedRect);
 };
 
 

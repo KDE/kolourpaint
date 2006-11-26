@@ -530,15 +530,17 @@ void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
     bool nextDragHasBegun = true;
 
 
+    QPoint accidentalDragAdjustedPoint = thisPoint;
+    
     if (m_createNOPTimer->isActive ())
     {
         if (viewUnderStartPoint ()->transformDocToViewX (
-                (thisPoint - startPoint ()).manhattanLength ()) <= 6)
+                (accidentalDragAdjustedPoint - startPoint ()).manhattanLength ()) <= 6)
         {
         #if DEBUG_KP_TOOL_SELECTION && 1
             kDebug () << "\t\tsuppress accidental movement" << endl;
         #endif
-            thisPoint = startPoint ();
+            accidentalDragAdjustedPoint = startPoint ();
         }
         else
         {
@@ -551,14 +553,14 @@ void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
 
 
     // Prevent unintentional 1-pixel selections
-    if (!m_dragHasBegun && thisPoint == startPoint ())
+    if (!m_dragHasBegun && accidentalDragAdjustedPoint == startPoint ())
     {
         if (m_mode != kpToolSelection::Text)
         {
         #if DEBUG_KP_TOOL_SELECTION && 1
             kDebug () << "\tnon-text NOP - return" << endl;
         #endif
-            setUserShapePoints (thisPoint);
+            setUserShapePoints (accidentalDragAdjustedPoint);
             return;
         }
         else  // m_mode == kpToolSelection::Text
@@ -569,7 +571,7 @@ void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
             #if DEBUG_KP_TOOL_SELECTION && 1
                 kDebug () << "\ttext box deselect - NOP - return" << endl;
             #endif
-                setUserShapePoints (thisPoint);
+                setUserShapePoints (accidentalDragAdjustedPoint);
                 return;
             }
 
@@ -588,7 +590,8 @@ void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
     }
 
 
-    /*virtual*/createMoreSelectionAndUpdateStatusBar (thisPoint, normalizedRect);
+    /*virtual*/createMoreSelectionAndUpdateStatusBar (accidentalDragAdjustedPoint,
+        normalizedRect);
 
     viewManager ()->setSelectionBorderVisible (true);
 

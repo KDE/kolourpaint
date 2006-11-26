@@ -331,9 +331,13 @@ bool kpToolText::shouldCreate (const kpTextStyle &textStyle,
 }
 
 // protected virtual [base kpToolSelection]
-void kpToolText::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
-        QRect normalizedRect)
+void kpToolText::createMoreSelectionAndUpdateStatusBar (
+        const QPoint &accidentalDragAdjustedPoint,
+        const QRect &normalizedRectIn)
 {
+    // (will mutate this)
+    QRect normalizedRect = normalizedRectIn;
+    
     const kpTextStyle textStyle = mainWindow ()->textStyle ();
 
 
@@ -351,7 +355,7 @@ void kpToolText::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
     // calculated.
     if (normalizedRect.width () < minimumWidth)
     {
-        if (thisPoint.x () >= startPoint ().x ())
+        if (accidentalDragAdjustedPoint.x () >= startPoint ().x ())
             normalizedRect.setWidth (minimumWidth);
         else
             normalizedRect.setX (normalizedRect.right () - minimumWidth + 1);
@@ -361,7 +365,7 @@ void kpToolText::createMoreSelectionAndUpdateStatusBar (QPoint thisPoint,
     // calculated.
     if (normalizedRect.height () < minimumHeight)
     {
-        if (thisPoint.y () >= startPoint ().y ())
+        if (accidentalDragAdjustedPoint.y () >= startPoint ().y ())
             normalizedRect.setHeight (minimumHeight);
         else
             normalizedRect.setY (normalizedRect.bottom () - minimumHeight + 1);
