@@ -50,7 +50,9 @@ class kpToolSelectionResizeScaleCommand;
 class kpToolWidgetOpaqueOrTransparent;
 
 
-// TODO: push down more functionality into kpToolText
+// TODO: Push down more functionality into kpToolText.
+//       Bad signs would be calls to "kpSelection::isText()" and
+//       "kpViewManager::setTextCursor*()".
 class kpToolSelection : public kpTool
 {
 Q_OBJECT
