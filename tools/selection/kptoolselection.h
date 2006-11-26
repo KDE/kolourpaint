@@ -129,8 +129,8 @@ protected:
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &normalizedRect) = 0;
 private:
-    void create (QPoint thisPoint, QRect normalizedRect);
-    void move (QPoint thisPoint, QRect normalizedRect);
+    void create (const QPoint &thisPoint, const QRect &normalizedRect);
+    void move (const QPoint &thisPoint, const QRect &normalizedRect);
     
     // resizeScaleCalculateNewSelectionPosSize() calls us with what the
     // <newWidth>x<newHeight> should be, but before any aspect maintenance
@@ -154,7 +154,7 @@ private:
         const kpSelection &originalSelection,
         int *newX, int *newY,
         int *newWidth, int *newHeight);
-    void resizeScale (QPoint thisPoint, QRect normalizedRect);
+    void resizeScale (const QPoint &thisPoint, const QRect &normalizedRect);
 public:
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint,
                        const QRect &normalizedRect);

@@ -515,7 +515,7 @@ void kpToolSelection::delayedDraw ()
 }
 
 // private
-void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
+void kpToolSelection::create (const QPoint &thisPoint, const QRect &normalizedRect)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "\tnot moving - resizing rect to" << normalizedRect
@@ -600,7 +600,7 @@ void kpToolSelection::create (QPoint thisPoint, QRect normalizedRect)
 }
 
 // private
-void kpToolSelection::move (QPoint thisPoint, QRect /*normalizedRect*/)
+void kpToolSelection::move (const QPoint &thisPoint, const QRect &/*normalizedRect*/)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "\tmoving selection" << endl;
@@ -826,7 +826,9 @@ void kpToolSelection::resizeScaleCalculateNewSelectionPosSize (
 }
 
 // private
-void kpToolSelection::resizeScale (QPoint thisPoint, QRect /*normalizedRect*/)
+void kpToolSelection::resizeScale (
+        const QPoint &thisPoint,
+        const QRect &/*normalizedRect*/)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "\tresize/scale" << endl;
