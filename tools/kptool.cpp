@@ -217,10 +217,10 @@ KShortcut kpTool::shortcutForKey (int key)
 
     if (key)
     {
-        shortcut.append (KShortcut (key));
+        shortcut.setAlternate (key);
         // (CTRL+<key>, ALT+<key>, CTRL+ALT+<key>, CTRL+SHIFT+<key>
         //  all clash with global KDE shortcuts)
-        shortcut.append (KShortcut (Qt::ALT + Qt::SHIFT + key));
+        shortcut.setAlternate (Qt::ALT + Qt::SHIFT + key);
     }
 
     return shortcut;

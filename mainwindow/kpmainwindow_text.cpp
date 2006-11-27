@@ -52,9 +52,9 @@ void kpMainWindow::setupTextToolBarActions ()
 {
     KActionCollection *ac = actionCollection ();
 
-    m_actionTextFontFamily = new KFontAction (i18n ("Font Family"), 0/*shortcut*/,
+    m_actionTextFontFamily = new KFontAction (i18n ("Font Family"), KShortcut(),
         this, SLOT (slotTextFontFamilyChanged ()), ac, "text_font_family");
-    m_actionTextFontSize = new KFontSizeAction (i18n ("Font Size"), 0/*shortcut*/,
+    m_actionTextFontSize = new KFontSizeAction (i18n ("Font Size"), KShortcut(),
         this, SLOT (slotTextFontSizeChanged ()), ac, "text_font_size");
 
     m_actionTextBold = new KToggleAction (KIcon ("text_bold"),
