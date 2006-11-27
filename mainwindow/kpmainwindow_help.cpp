@@ -81,7 +81,7 @@ static QString printScreenShortcutString ()
 
     // (only use 1st key sequence, if it exists)
     const QString humanReadableShortcut =
-        KShortcut (cfgEntryString).seq (0).toString ();
+        KShortcut (cfgEntryString).primary().toString ();
 
     if (!humanReadableShortcut.isEmpty ())
     {
