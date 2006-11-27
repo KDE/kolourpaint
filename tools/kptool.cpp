@@ -172,14 +172,11 @@ static bool KeyIsText (int key)
 QString kpTool::toolTipForTextAndShortcut (const QString &text,
                                            const KShortcut &shortcut)
 {
-    for (int i = 0; i < (int) shortcut.count (); i++)
+    const QKeySequence seq = shortcut.primary(); // TODO evaluate alternate() too?
+    if (seq.count () == 1 && ::KeyIsText (seq [0]))
     {
-        const QKeySequence seq = shortcut.seq (i);
-        if (seq.count () == 1 && ::KeyIsText (seq [0]))
-        {
-            return i18nc ("<Tool Name> (<Single Accel Key>)",
-                          "%1 (%2)", text, seq.toString ().toUpper ());
-        }
+        return i18nc ("<Tool Name> (<Single Accel Key>)",
+                      "%1 (%2)", text, seq.toString ().toUpper ());
     }
 
     return text;
