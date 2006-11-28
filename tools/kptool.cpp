@@ -172,11 +172,11 @@ static bool KeyIsText (int key)
 QString kpTool::toolTipForTextAndShortcut (const QString &text,
                                            const KShortcut &shortcut)
 {
-    const QKeySequence seq = shortcut.primary(); // TODO evaluate alternate() too?
-    if (seq.count () == 1 && ::KeyIsText (seq [0]))
+    foreach(const QKeySequence &seq, shortcut.toList())
     {
-        return i18nc ("<Tool Name> (<Single Accel Key>)",
-                      "%1 (%2)", text, seq.toString ().toUpper ());
+        if (seq.count () == 1 && ::KeyIsText (seq [0]))
+            return i18nc ("<Tool Name> (<Single Accel Key>)",
+                          "%1 (%2)", text, seq.toString ().toUpper ());
     }
 
     return text;
@@ -214,7 +214,7 @@ KShortcut kpTool::shortcutForKey (int key)
 
     if (key)
     {
-        shortcut.setAlternate (key);
+        shortcut.setPrimary (key);
         // (CTRL+<key>, ALT+<key>, CTRL+ALT+<key>, CTRL+SHIFT+<key>
         //  all clash with global KDE shortcuts)
         shortcut.setAlternate (Qt::ALT + Qt::SHIFT + key);
