@@ -35,11 +35,6 @@
 #include <kimageio.h>
 #include <klocale.h>
 
-// for srand
-#include <stdlib.h>
-#include <sys/types.h>
-#include <unistd.h>
-
 #include <kpdefs.h>
 #include <kpmainwindow.h>
 
@@ -199,13 +194,6 @@ int main (int argc, char *argv [])
     KCmdLineArgs::addCmdLineOptions (cmdLineOptions);
 
     KApplication app;
-
-    // mainly for the Spraycan Tool
-#ifdef Q_OS_WIN
-    srand ((unsigned int) (getpid ()));
-#else 
-    srand ((unsigned int) (getpid () + getppid ()));
-#endif
 
     // Qt says this is necessary but I don't think it is...
     QObject::connect (&app, SIGNAL (lastWindowClosed ()),

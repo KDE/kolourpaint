@@ -39,6 +39,7 @@
 #include <QPolygon>
 
 #include <kdebug.h>
+#include <krandom.h>
 
 #include <kpbug.h>
 #include <kpimage.h>
@@ -50,7 +51,7 @@
 // Returns a random integer from 0 to 99 inclusive.
 static int RandomNumberFrom0to99 ()
 {
-    return (rand () % 100);
+    return (KRandom::random () % 100);
 }
 
 // public static
@@ -63,7 +64,7 @@ QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
 
     Q_ASSERT (probability >= 0.0 && probability <= 1.0);
     const int probabilityTimes100 = int (probability * 100);
-#define SHOULD_DRAW()  (probabilityTimes100 == 100/*avoid rand() call*/ ||  \
+#define SHOULD_DRAW()  (probabilityTimes100 == 100/*avoid ::RandomNumberFrom0to99() call*/ ||  \
                         ::RandomNumberFrom0to99 () < probabilityTimes100)
 
 #if 0
@@ -583,8 +584,8 @@ static QRect SprayPointsHelper (QPainter *rgbPainter, QPainter *maskPainter,
     {
         for (int i = 0; i < 10; i++)
         {
-            const int dx = (rand () % pack->spraycanSize) - radius;
-            const int dy = (rand () % pack->spraycanSize) - radius;
+            const int dx = (KRandom::random () % pack->spraycanSize) - radius;
+            const int dy = (KRandom::random () % pack->spraycanSize) - radius;
     
             // Make it look circular.
             // TODO: Can be done better by doing a random vector angle & length
