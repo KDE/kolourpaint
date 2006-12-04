@@ -87,7 +87,7 @@ void kpToolAction::updateAllActionsToolTips (KActionCollection *ac)
     kDebug () << "kpToolAction::updateAllActionsToolTips()" << endl;
 #endif
 
-    foreach (KAction *action, ac->actions ())
+    foreach (QAction *action, ac->actions ())
     {
         kpToolAction *toolAction = qobject_cast <kpToolAction *> (action);
         if (!toolAction)
