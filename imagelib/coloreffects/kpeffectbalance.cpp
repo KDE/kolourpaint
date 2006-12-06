@@ -245,9 +245,9 @@ QPixmap kpEffectBalanceCommand::applyColorEffect (const QPixmap &pixmap,
 }
 
 // protected virtual [base kpColorEffectCommand]
-QPixmap kpEffectBalanceCommand::applyColorEffect (const QPixmap &pixmap)
+kpImage kpEffectBalanceCommand::applyColorEffect (const kpImage &image)
 {
-    return applyColorEffect (pixmap, m_channels,
+    return applyColorEffect (image, m_channels,
                              m_brightness, m_contrast, m_gamma);
 }
 

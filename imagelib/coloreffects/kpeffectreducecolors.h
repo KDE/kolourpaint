@@ -64,7 +64,7 @@ public:
     //
 
 protected:
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
+    virtual kpImage applyColorEffect (const kpImage &image);
 
     int m_depth;
     bool m_dither;

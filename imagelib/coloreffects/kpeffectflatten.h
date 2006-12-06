@@ -68,7 +68,7 @@ public:
     //
 
 protected:
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
+    virtual kpImage applyColorEffect (const kpImage &image);
 
     QColor m_color1, m_color2;
 };

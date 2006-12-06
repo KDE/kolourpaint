@@ -109,9 +109,9 @@ QImage kpEffectFlattenCommand::apply (const QImage &img,
 //
 
 // protected virtual [base kpColorEffectCommand]
-QPixmap kpEffectFlattenCommand::applyColorEffect (const QPixmap &pixmap)
+kpImage kpEffectFlattenCommand::applyColorEffect (const kpImage &image)
 {
-    return apply (pixmap, m_color1, m_color2);
+    return apply (image, m_color1, m_color2);
 }
 
 

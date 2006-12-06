@@ -134,9 +134,9 @@ QImage kpEffectInvertCommand::apply (const QImage &img, int channels)
 //
 
 // protected virtual [base kpColorEffectCommand]
-QPixmap kpEffectInvertCommand::applyColorEffect (const QPixmap &pixmap)
+kpImage kpEffectInvertCommand::applyColorEffect (const kpImage &image)
 {
-    return apply (pixmap, m_channels);
+    return apply (image, m_channels);
 }
 
 

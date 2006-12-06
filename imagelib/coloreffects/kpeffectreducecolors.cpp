@@ -292,9 +292,9 @@ QPixmap kpEffectReduceColorsCommand::apply (const QPixmap &pm, int depth, bool d
 //
 
 // protected virtual [base kpColorEffectCommand]
-QPixmap kpEffectReduceColorsCommand::applyColorEffect (const QPixmap &pixmap)
+kpImage kpEffectReduceColorsCommand::applyColorEffect (const kpImage &image)
 {
-    return apply (pixmap, m_depth, m_dither);
+    return apply (image, m_depth, m_dither);
 }
 
 

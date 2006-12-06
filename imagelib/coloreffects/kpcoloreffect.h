@@ -33,9 +33,8 @@
 #include <qwidget.h>
 
 #include <kpcommandhistory.h>
+#include <kpimage.h>
 
-
-class QPixmap;
 
 class kpDocument;
 class kpMainWindow;
@@ -62,7 +61,7 @@ public:
     virtual bool isInvertible () const { return false; }
 
 protected:
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap) = 0;
+    virtual kpImage applyColorEffect (const kpImage &image) = 0;
 
 private:
     struct kpColorEffectCommandPrivate *d;

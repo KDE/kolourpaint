@@ -28,8 +28,6 @@
 
 #include <kpcoloreffect.h>
 
-#include <qpixmap.h>
-
 #include <kdialog.h>
 #include <klocale.h>
 
@@ -45,7 +43,7 @@ struct kpColorEffectCommandPrivate
     QString name;
     bool actOnSelection;
 
-    QPixmap *oldPixmapPtr;
+    kpImage oldImage;
 };
 
 kpColorEffectCommand::kpColorEffectCommand (const QString &name,
@@ -56,13 +54,10 @@ kpColorEffectCommand::kpColorEffectCommand (const QString &name,
 {
     d->name = name;
     d->actOnSelection = actOnSelection;
-    d->oldPixmapPtr = 0;
 }
 
 kpColorEffectCommand::~kpColorEffectCommand ()
 {
-    delete d->oldPixmapPtr; d->oldPixmapPtr = 0;
-    
     delete d;
 }
 
@@ -80,7 +75,7 @@ QString kpColorEffectCommand::name () const
 // public virtual [base kpCommand]
 int kpColorEffectCommand::size () const
 {
-    return kpPixmapFX::pixmapSize (d->oldPixmapPtr);
+    return kpPixmapFX::pixmapSize (d->oldImage);
 }
 
 
@@ -93,18 +88,17 @@ void kpColorEffectCommand::execute ()
     Q_ASSERT (doc);
 
 
-    const QPixmap oldPixmap = *doc->pixmap (d->actOnSelection);
+    const kpImage oldImage = *doc->pixmap (d->actOnSelection);
 
     if (!isInvertible ())
     {
-        d->oldPixmapPtr = new QPixmap ();
-        *d->oldPixmapPtr = oldPixmap;
+        d->oldImage = oldImage;
     }
 
 
-    QPixmap newPixmap = /*pure virtual*/applyColorEffect (oldPixmap);
+    kpImage newImage = /*pure virtual*/applyColorEffect (oldImage);
 
-    doc->setPixmap (d->actOnSelection, newPixmap);
+    doc->setPixmap (d->actOnSelection, newImage);
 }
 
 // public virtual [base kpCommand]
@@ -116,21 +110,21 @@ void kpColorEffectCommand::unexecute ()
     Q_ASSERT (doc);
 
 
-    QPixmap newPixmap;
+    kpImage newImage;
 
     if (!isInvertible ())
     {
-        newPixmap = *d->oldPixmapPtr;
+        newImage = d->oldImage;
     }
     else
     {
-        newPixmap = /*pure virtual*/applyColorEffect (*doc->pixmap (d->actOnSelection));
+        newImage = /*pure virtual*/applyColorEffect (*doc->pixmap (d->actOnSelection));
     }
 
-    doc->setPixmap (d->actOnSelection, newPixmap);
+    doc->setPixmap (d->actOnSelection, newImage);
 
 
-    delete d->oldPixmapPtr; d->oldPixmapPtr = 0;
+    d->oldImage = kpImage ();
 }
 
 

@@ -103,9 +103,9 @@ QPixmap kpEffectEmbossCommand::apply (const QPixmap &pixmap,
 }
 
 // protected virtual [base kpColorEffectCommand]
-QPixmap kpEffectEmbossCommand::applyColorEffect (const QPixmap &pixmap)
+kpImage kpEffectEmbossCommand::applyColorEffect (const kpImage &image)
 {
-    return apply (pixmap, m_radius, m_sigma, m_repeat);
+    return apply (image, m_radius, m_sigma, m_repeat);
 }
 
 

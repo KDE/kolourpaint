@@ -121,9 +121,9 @@ QPixmap kpEffectBlurSharpenCommand::apply (const QPixmap &pixmap,
 }
 
 // protected virtual [base kpColorEffectCommand]
-QPixmap kpEffectBlurSharpenCommand::applyColorEffect (const QPixmap &pixmap)
+kpImage kpEffectBlurSharpenCommand::applyColorEffect (const kpImage &image)
 {
-    return apply (pixmap, m_type, m_radius, m_sigma, m_repeat);
+    return apply (image, m_type, m_radius, m_sigma, m_repeat);
 }
 
 

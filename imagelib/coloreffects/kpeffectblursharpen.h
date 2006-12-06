@@ -65,7 +65,7 @@ public:
                           int repeat);
 
 protected:
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
+    virtual kpImage applyColorEffect (const kpImage &image);
 
 protected:
     Type m_type;

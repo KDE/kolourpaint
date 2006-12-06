@@ -65,7 +65,7 @@ public:
                                      int brightness, int contrast, int gamma);
 
 protected:
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
+    virtual kpImage applyColorEffect (const kpImage &image);
 
 protected:
     int m_channels;
