@@ -232,7 +232,7 @@ int kpToolRotateDialog::s_lastAngleCustom = 0;
 
 kpToolRotateDialog::kpToolRotateDialog (bool actOnSelection,
                                         kpMainWindow *mainWindow)
-    : kpToolPreviewDialog (kpToolPreviewDialog::AllFeatures,
+    : kpTransformPreviewDialog (kpTransformPreviewDialog::AllFeatures,
                            false/*don't reserve top row*/,
                            actOnSelection ? i18n ("Rotate Selection") : i18n ("Rotate Image"),
                            i18n ("After Rotate:"),
@@ -349,7 +349,7 @@ void kpToolRotateDialog::createAngleGroupBox ()
 }
 
 
-// public virtual [base kpToolPreviewDialog]
+// public virtual [base kpTransformPreviewDialog]
 bool kpToolRotateDialog::isNoOp () const
 {
     return (angle () == 0);
@@ -386,7 +386,7 @@ int kpToolRotateDialog::angle () const
 }
 
 
-// private virtual [base kpToolPreviewDialog]
+// private virtual [base kpTransformPreviewDialog]
 QSize kpToolRotateDialog::newDimensions () const
 {
     QMatrix matrix = kpPixmapFX::rotateMatrix (m_oldWidth, m_oldHeight, angle ());
@@ -394,7 +394,7 @@ QSize kpToolRotateDialog::newDimensions () const
     return rect.size ();
 }
 
-// private virtual [base kpToolPreviewDialog]
+// private virtual [base kpTransformPreviewDialog]
 QPixmap kpToolRotateDialog::transformPixmap (const QPixmap &pixmap,
                                              int targetWidth, int targetHeight) const
 {
@@ -414,13 +414,13 @@ void kpToolRotateDialog::slotAngleCustomRadioButtonToggled (bool isChecked)
     //    m_angleCustomInput->setFocus ();
 }
 
-// private slot virtual [base kpToolPreviewDialog]
+// private slot virtual [base kpTransformPreviewDialog]
 void kpToolRotateDialog::slotUpdate ()
 {
     s_lastIsClockwise = m_clockwiseRadioButton->isChecked ();
     s_lastAngleCustom = m_angleCustomInput->value ();
 
-    kpToolPreviewDialog::slotUpdate ();
+    kpTransformPreviewDialog::slotUpdate ();
 }
 
 

@@ -35,7 +35,7 @@
 #include <kpcolor.h>
 #include <kpcommandhistory.h>
 #include <kpselection.h>
-#include <kptoolpreviewdialog.h>
+#include <kpTransformPreviewDialog.h>
 
 
 class QLabel;
@@ -72,7 +72,7 @@ private:
 };
 
 
-class kpToolSkewDialog : public kpToolPreviewDialog
+class kpToolSkewDialog : public kpTransformPreviewDialog
 {
 Q_OBJECT
 

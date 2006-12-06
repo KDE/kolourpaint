@@ -26,10 +26,10 @@
 */
 
 
-#define DEBUG_KP_TOOL_PREVIEW_DIALOG 0
+#define DEBUG_KP_TRANSFORM_PREVIEW_DIALOG 0
 
 
-#include <kptoolpreviewdialog.h>
+#include <kpTransformPreviewDialog.h>
 
 #include <qapplication.h>
 #include <qboxlayout.h>
@@ -51,7 +51,7 @@
 #include <kpselection.h>
 
 
-kpToolPreviewDialog::kpToolPreviewDialog (Features features,
+kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
                                           bool reserveTopRow,
                                           const QString &caption,
                                           const QString &afterActionText,
@@ -119,13 +119,13 @@ kpToolPreviewDialog::kpToolPreviewDialog (Features features,
     }
 }
 
-kpToolPreviewDialog::~kpToolPreviewDialog ()
+kpTransformPreviewDialog::~kpTransformPreviewDialog ()
 {
 }
 
 
 // private
-void kpToolPreviewDialog::createDimensionsGroupBox ()
+void kpTransformPreviewDialog::createDimensionsGroupBox ()
 {
     m_dimensionsGroupBox = new QGroupBox (i18n ("Dimensions"), mainWidget ());
 
@@ -160,7 +160,7 @@ void kpToolPreviewDialog::createDimensionsGroupBox ()
 }
 
 // private
-void kpToolPreviewDialog::createPreviewGroupBox ()
+void kpTransformPreviewDialog::createPreviewGroupBox ()
 {
     m_previewGroupBox = new QGroupBox (i18n ("Preview"), mainWidget ());
 
@@ -185,20 +185,20 @@ void kpToolPreviewDialog::createPreviewGroupBox ()
 
 
 // protected
-kpDocument *kpToolPreviewDialog::document () const
+kpDocument *kpTransformPreviewDialog::document () const
 {
     return m_mainWindow ? m_mainWindow->document () : 0;
 }
 
 
 // protected
-void kpToolPreviewDialog::addCustomWidgetToFront (QWidget *w)
+void kpTransformPreviewDialog::addCustomWidgetToFront (QWidget *w)
 {
     m_gridLayout->addWidget (w, 0, 0, 1, 2);
 }
 
 // protected
-void kpToolPreviewDialog::addCustomWidget (QWidget *w)
+void kpTransformPreviewDialog::addCustomWidget (QWidget *w)
 {
     m_gridLayout->addWidget (w, m_gridNumRows, 0, 1, 2);
     m_gridNumRows++;
@@ -206,7 +206,7 @@ void kpToolPreviewDialog::addCustomWidget (QWidget *w)
 
 
 // private
-void kpToolPreviewDialog::updateDimensions ()
+void kpTransformPreviewDialog::updateDimensions ()
 {
     if (!m_dimensionsGroupBox)
         return;
@@ -216,8 +216,8 @@ void kpToolPreviewDialog::updateDimensions ()
         return;
 
     QSize newDim = newDimensions ();
-#if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kDebug () << "kpToolPreviewDialog::updateDimensions(): newDim=" << newDim << endl;
+#if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
+    kDebug () << "kpTransformPreviewDialog::updateDimensions(): newDim=" << newDim << endl;
 #endif
 
     QString newDimString = i18n ("%1 x %2",
@@ -228,7 +228,7 @@ void kpToolPreviewDialog::updateDimensions ()
 
 
 // public static
-double kpToolPreviewDialog::aspectScale (int newWidth, int newHeight,
+double kpTransformPreviewDialog::aspectScale (int newWidth, int newHeight,
                                          int oldWidth, int oldHeight)
 {
     double widthScale = double (newWidth) / double (oldWidth);
@@ -239,7 +239,7 @@ double kpToolPreviewDialog::aspectScale (int newWidth, int newHeight,
 }
 
 // public static
-int kpToolPreviewDialog::scaleDimension (int dimension, double scale, int min, int max)
+int kpTransformPreviewDialog::scaleDimension (int dimension, double scale, int min, int max)
 {
     return qMax (min,
                  qMin (max,
@@ -248,10 +248,10 @@ int kpToolPreviewDialog::scaleDimension (int dimension, double scale, int min, i
 
 
 // private
-void kpToolPreviewDialog::updateShrukenDocumentPixmap ()
+void kpTransformPreviewDialog::updateShrukenDocumentPixmap ()
 {
-#if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kDebug () << "kpToolPreviewDialog::updateShrukenDocumentPixmap()"
+#if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
+    kDebug () << "kpTransformPreviewDialog::updateShrukenDocumentPixmap()"
                << " shrunkenDocPixmap.size="
                << m_shrunkenDocumentPixmap.size ()
                << " previewPixmapLabelSizeWhenUpdatedPixmap="
@@ -268,7 +268,7 @@ void kpToolPreviewDialog::updateShrukenDocumentPixmap ()
     kpDocument *doc = document ();
     if (!doc || !doc->pixmap ())
     {
-        kError () << "kpToolPreviewDialog::updateShrunkenDocumentPixmap() doc="
+        kError () << "kpTransformPreviewDialog::updateShrunkenDocumentPixmap() doc="
                    << doc << endl;
         return;
     }
@@ -276,7 +276,7 @@ void kpToolPreviewDialog::updateShrukenDocumentPixmap ()
     if (m_shrunkenDocumentPixmap.isNull () ||
         m_previewPixmapLabel->size () != m_previewPixmapLabelSizeWhenUpdatedPixmap)
     {
-    #if DEBUG_KP_TOOL_PREVIEW_DIALOG
+    #if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
         kDebug () << "\tupdating shrunkenDocPixmap" << endl;
     #endif
 
@@ -323,10 +323,10 @@ void kpToolPreviewDialog::updateShrukenDocumentPixmap ()
 
 
 // private
-void kpToolPreviewDialog::updatePreview ()
+void kpTransformPreviewDialog::updatePreview ()
 {
-#if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kDebug () << "kpToolPreviewDialog::updatePreview()" << endl;
+#if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
+    kDebug () << "kpTransformPreviewDialog::updatePreview()" << endl;
 #endif
 
     if (!m_previewGroupBox)
@@ -369,8 +369,8 @@ void kpToolPreviewDialog::updatePreview ()
                                  (previewPixmap.height () - transformedShrunkenDocumentPixmap.height ()) / 2,
                                  transformedShrunkenDocumentPixmap);
 
-#if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kDebug () << "kpToolPreviewDialog::updatePreview ():"
+#if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
+    kDebug () << "kpTransformPreviewDialog::updatePreview ():"
                << "   shrunkenDocumentPixmap: w="
                << m_shrunkenDocumentPixmap.width ()
                << " h="
@@ -395,7 +395,7 @@ void kpToolPreviewDialog::updatePreview ()
         // immediate update esp. for expensive previews
         m_previewPixmapLabel->repaint ();
 
-#if DEBUG_KP_TOOL_PREVIEW_DIALOG
+#if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
     kDebug () << "\tafter QLabel::setPixmap() previewPixmapLabel: w="
                << m_previewPixmapLabel->width ()
                << " h="
@@ -407,20 +407,20 @@ void kpToolPreviewDialog::updatePreview ()
 
 
 // protected slot virtual
-void kpToolPreviewDialog::slotUpdate ()
+void kpTransformPreviewDialog::slotUpdate ()
 {
-#if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kDebug () << "kpToolPreviewDialog::slotUpdate()" << endl;
+#if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
+    kDebug () << "kpTransformPreviewDialog::slotUpdate()" << endl;
 #endif
     updateDimensions ();
     updatePreview ();
 }
 
 // protected slot virtual
-void kpToolPreviewDialog::slotUpdateWithWaitCursor ()
+void kpTransformPreviewDialog::slotUpdateWithWaitCursor ()
 {
-#if DEBUG_KP_TOOL_PREVIEW_DIALOG
-    kDebug () << "kpToolPreviewDialog::slotUpdateWithWaitCursor()"
+#if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
+    kDebug () << "kpTransformPreviewDialog::slotUpdateWithWaitCursor()"
                << endl;
 #endif
 
@@ -432,4 +432,4 @@ void kpToolPreviewDialog::slotUpdateWithWaitCursor ()
 }
 
 
-#include <kptoolpreviewdialog.moc>
+#include <kpTransformPreviewDialog.moc>

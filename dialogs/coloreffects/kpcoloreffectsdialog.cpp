@@ -62,7 +62,7 @@ int kpEffectsDialog::s_lastHeight = 620;
 
 kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
                                   kpMainWindow *parent)
-    : kpToolPreviewDialog (kpToolPreviewDialog::Preview,
+    : kpTransformPreviewDialog (kpTransformPreviewDialog::Preview,
                            true/*reserve top row*/,
                            QString::null/*caption*/,
                            QString::null/*afterActionText (no Dimensions Group Box)*/,
@@ -138,7 +138,7 @@ kpEffectsDialog::~kpEffectsDialog ()
 }
 
 
-// public virtual [base kpToolPreviewDialog]
+// public virtual [base kpTransformPreviewDialog]
 bool kpEffectsDialog::isNoOp () const
 {
     if (!m_colorEffectWidget)
@@ -157,7 +157,7 @@ kpColorEffectCommand *kpEffectsDialog::createCommand () const
 }
 
 
-// protected virtual [base kpToolPreviewDialog]
+// protected virtual [base kpTransformPreviewDialog]
 QSize kpEffectsDialog::newDimensions () const
 {
     kpDocument *doc = document ();
@@ -168,7 +168,7 @@ QSize kpEffectsDialog::newDimensions () const
                   doc->height (m_actOnSelection));
 }
 
-// protected virtual [base kpToolPreviewDialog]
+// protected virtual [base kpTransformPreviewDialog]
 QPixmap kpEffectsDialog::transformPixmap (const QPixmap &pixmap,
                                           int targetWidth, int targetHeight) const
 {
@@ -324,7 +324,7 @@ void kpEffectsDialog::selectEffect (int which)
 }
 
 
-// protected slot virtual [base kpToolPreviewDialog]
+// protected slot virtual [base kpTransformPreviewDialog]
 void kpEffectsDialog::slotUpdate ()
 {
 #if DEBUG_KP_EFFECTS_DIALOG
@@ -335,10 +335,10 @@ void kpEffectsDialog::slotUpdate ()
 
     m_delayedUpdateTimer->stop ();
 
-    kpToolPreviewDialog::slotUpdate ();
+    kpTransformPreviewDialog::slotUpdate ();
 }
 
-// protected slot virtual [base kpToolPreviewDialog]
+// protected slot virtual [base kpTransformPreviewDialog]
 void kpEffectsDialog::slotUpdateWithWaitCursor ()
 {
 #if DEBUG_KP_EFFECTS_DIALOG
@@ -349,7 +349,7 @@ void kpEffectsDialog::slotUpdateWithWaitCursor ()
 
     m_delayedUpdateTimer->stop ();
 
-    kpToolPreviewDialog::slotUpdateWithWaitCursor ();
+    kpTransformPreviewDialog::slotUpdateWithWaitCursor ();
 }
 
 

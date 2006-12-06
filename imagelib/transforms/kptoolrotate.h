@@ -36,7 +36,7 @@
 #include <kpcolor.h>
 #include <kpcommandhistory.h>
 #include <kpselection.h>
-#include <kptoolpreviewdialog.h>
+#include <kpTransformPreviewDialog.h>
 
 
 class QButtonGroup;
@@ -77,7 +77,7 @@ private:
 };
 
 
-class kpToolRotateDialog : public kpToolPreviewDialog
+class kpToolRotateDialog : public kpTransformPreviewDialog
 {
 Q_OBJECT
 

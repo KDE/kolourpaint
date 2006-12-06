@@ -221,7 +221,7 @@ int kpToolSkewDialog::s_lastHorizontalAngle = 0,
 
 
 kpToolSkewDialog::kpToolSkewDialog (bool actOnSelection, kpMainWindow *parent)
-    : kpToolPreviewDialog (kpToolPreviewDialog::AllFeatures,
+    : kpTransformPreviewDialog (kpTransformPreviewDialog::AllFeatures,
                            false/*don't reserve top row*/,
                            actOnSelection ? i18n ("Skew Selection") : i18n ("Skew Image"),
                            i18n ("After Skew:"),
@@ -302,7 +302,7 @@ void kpToolSkewDialog::createAngleGroupBox ()
 }
 
 
-// private virtual [base kpToolPreviewDialog]
+// private virtual [base kpTransformPreviewDialog]
 QSize kpToolSkewDialog::newDimensions () const
 {
     kpDocument *doc = document ();
@@ -316,7 +316,7 @@ QSize kpToolSkewDialog::newDimensions () const
     return QSize (skewRect.width (), skewRect.height ());
 }
 
-// private virtual [base kpToolPreviewDialog]
+// private virtual [base kpTransformPreviewDialog]
 QPixmap kpToolSkewDialog::transformPixmap (const QPixmap &pixmap,
                                            int targetWidth, int targetHeight) const
 {
@@ -336,11 +336,11 @@ void kpToolSkewDialog::updateLastAngles ()
     s_lastVerticalAngle = verticalAngle ();
 }
 
-// private slot virtual [base kpToolPreviewDialog]
+// private slot virtual [base kpTransformPreviewDialog]
 void kpToolSkewDialog::slotUpdate ()
 {
     updateLastAngles ();
-    kpToolPreviewDialog::slotUpdate ();
+    kpTransformPreviewDialog::slotUpdate ();
 }
 
 
@@ -383,7 +383,7 @@ int kpToolSkewDialog::verticalAngleForPixmapFX () const
 }
 
 
-// public virtual [base kpToolPreviewDialog]
+// public virtual [base kpTransformPreviewDialog]
 bool kpToolSkewDialog::isNoOp () const
 {
     return (horizontalAngle () == 0) && (verticalAngle () == 0);

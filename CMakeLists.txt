@@ -88,7 +88,7 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors/kpcursorprovider.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/coloreffects/kpcoloreffectsdialog.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/kpcolorsimilaritydialog.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/transforms/kptoolpreviewdialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/transforms/kpTransformPreviewDialog.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/generic/kpwidgetmapper.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/coloreffects/kpcoloreffect.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/coloreffects/kpeffectbalance.cpp

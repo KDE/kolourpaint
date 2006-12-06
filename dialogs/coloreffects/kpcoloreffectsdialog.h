@@ -30,7 +30,7 @@
 #define KP_EFFECTS_DIALOG_H
 
 
-#include <kptoolpreviewdialog.h>
+#include <kpTransformPreviewDialog.h>
 
 
 class QGroupBox;
@@ -46,7 +46,7 @@ class kpColorEffectWidget;
 class kpMainWindow;
 
 
-class kpEffectsDialog : public kpToolPreviewDialog
+class kpEffectsDialog : public kpTransformPreviewDialog
 {
 Q_OBJECT
 

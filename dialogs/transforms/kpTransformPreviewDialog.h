@@ -26,8 +26,8 @@
 */
 
 
-#ifndef KP_TOOL_PREVIEW_DIALOG_H
-#define KP_TOOL_PREVIEW_DIALOG_H
+#ifndef kpTransformPreviewDialog_H
+#define kpTransformPreviewDialog_H
 
 
 #include <qpixmap.h>
@@ -44,7 +44,7 @@ class kpMainWindow;
 class kpResizeSignallingLabel;
 
 
-class kpToolPreviewDialog : public KDialog
+class kpTransformPreviewDialog : public KDialog
 {
 Q_OBJECT
 
@@ -56,7 +56,7 @@ public:
     };
 
     // You must call slotUpdate() in your constructor
-    kpToolPreviewDialog (Features features,
+    kpTransformPreviewDialog (Features features,
                          bool reserveTopRow,
                          // e.g. "Skew (Image|Selection)"
                          const QString &caption,
@@ -64,7 +64,7 @@ public:
                          const QString &afterActionText,
                          bool actOnSelection,
                          kpMainWindow *parent);
-    virtual ~kpToolPreviewDialog ();
+    virtual ~kpTransformPreviewDialog ();
 
 private:
     void createDimensionsGroupBox ();
@@ -109,6 +109,7 @@ protected slots:
     virtual void slotUpdateWithWaitCursor ();
 
 protected:
+    // TODO: Use d-ptr
     QString m_afterActionText;
     bool m_actOnSelection;
     kpMainWindow *m_mainWindow;
@@ -128,4 +129,4 @@ protected:
 };
 
 
-#endif  // KP_TOOL_PREVIEW_DIALOG_H
+#endif  // kpTransformPreviewDialog_H

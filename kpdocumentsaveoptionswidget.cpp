@@ -56,7 +56,7 @@
 #include <kppixmapfx.h>
 #include <kpresizesignallinglabel.h>
 #include <kpselection.h>
-#include <kptoolpreviewdialog.h>
+#include <kpTransformPreviewDialog.h>
 #include <kpwidgetmapper.h>
 
 
@@ -169,7 +169,7 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
             maxNewHeight = qMin (m_filePixmap->height (),
                                  m_filePixmapLabel->height ());
 
-        double keepsAspect = kpToolPreviewDialog::aspectScale (
+        double keepsAspect = kpTransformPreviewDialog::aspectScale (
             maxNewWidth, maxNewHeight,
             m_filePixmap->width (), m_filePixmap->height ());
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
@@ -180,12 +180,12 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
     #endif
 
 
-        const int newWidth = kpToolPreviewDialog::scaleDimension (
+        const int newWidth = kpTransformPreviewDialog::scaleDimension (
             m_filePixmap->width (),
             keepsAspect,
             1,
             maxNewWidth);
-        const int newHeight = kpToolPreviewDialog::scaleDimension (
+        const int newHeight = kpTransformPreviewDialog::scaleDimension (
             m_filePixmap->height (),
             keepsAspect,
             1,
