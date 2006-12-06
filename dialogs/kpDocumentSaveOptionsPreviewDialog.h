@@ -26,52 +26,57 @@
 */
 
 
-#ifndef KP_EFFECT_FLATTEN_H
-#define KP_EFFECT_FLATTEN_H
+#ifndef kpDocumentSaveOptionsPreviewDialog_H
+#define kpDocumentSaveOptionsPreviewDialog_H
 
 
-#include <qcolor.h>
+#include <qsize.h>
+#include <qwidget.h>
 
-#include <kpcoloreffect.h>
 
-
-class QCheckBox;
-class QImage;
+class QCloseEvent;
 class QPixmap;
+class QLabel;
+class QMoveEvent;
+class QResizeEvent;
 
-class KColorButton;
-
-class kpMainWindow;
+class kpResizeSignallingLabel;
 
 
-class kpEffectFlattenCommand : public kpColorEffectCommand
+class kpDocumentSaveOptionsPreviewDialog : public QWidget
 {
+Q_OBJECT
+
 public:
-    kpEffectFlattenCommand (const QColor &color1, const QColor &color2,
-                            bool actOnSelection,
-                            kpMainWindow *mainWindow);
-    virtual ~kpEffectFlattenCommand ();
+    kpDocumentSaveOptionsPreviewDialog (QWidget *parent);
+    virtual ~kpDocumentSaveOptionsPreviewDialog ();
 
-
-    static void apply (QPixmap *destPixmapPtr,
-                       const QColor &color1, const QColor &color2);
-    static QPixmap apply (const QPixmap &pm,
-                          const QColor &color1, const QColor &color2);
-    static void apply (QImage *destImagePtr,
-                       const QColor &color1, const QColor &color2);
-    static QImage apply (const QImage &img,
-                         const QColor &color1, const QColor &color2);
-
-
-    //
-    // kpColorEffectCommand interface
-    //
+    QSize preferredMinimumSize () const;
 
 protected:
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
+    static const QSize s_pixmapLabelMinimumSize;
 
-    QColor m_color1, m_color2;
+signals:
+    void moved ();
+    void resized ();
+    void finished ();
+
+public slots:
+    void setFilePixmapAndSize (const QPixmap &filePixmap, int fileSize);
+    void updatePixmapPreview ();
+
+protected:
+    virtual void closeEvent (QCloseEvent *e);
+    virtual void moveEvent (QMoveEvent *e);
+    virtual void resizeEvent (QResizeEvent *e);
+
+protected:
+    QPixmap *m_filePixmap;
+    int m_fileSize;
+
+    kpResizeSignallingLabel *m_filePixmapLabel;
+    QLabel *m_fileSizeLabel;
 };
 
 
-#endif  // KP_EFFECT_FLATTEN_H
+#endif  // kpDocumentSaveOptionsPreviewDialog_H

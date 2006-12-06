@@ -65,31 +65,4 @@ protected:
 };
 
 
-class kpEffectEmbossWidget : public kpColorEffectWidget
-{
-Q_OBJECT
-
-public:
-    kpEffectEmbossWidget (bool actOnSelection,
-                          kpMainWindow *mainWindow,
-                          QWidget *parent);
-    virtual ~kpEffectEmbossWidget ();
-
-    virtual QString caption () const;
-
-    virtual bool isNoOp () const;
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
-
-    virtual kpColorEffectCommand *createCommand () const;
-
-protected:
-    double radius () const;
-    double sigma () const;
-    int repeat () const;
-
-    //KIntNumInput *m_amountInput;
-    QCheckBox *m_enableCheckBox;
-};
-
-
 #endif  // KP_EFFECT_EMBOSS_H

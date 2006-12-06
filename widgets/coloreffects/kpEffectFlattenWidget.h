@@ -26,13 +26,13 @@
 */
 
 
-#ifndef KP_EFFECT_FLATTEN_H
-#define KP_EFFECT_FLATTEN_H
+#ifndef kpEffectFlattenWidget_H
+#define kpEffectFlattenWidget_H
 
 
 #include <qcolor.h>
 
-#include <kpcoloreffect.h>
+#include <kpColorEffectWidget.h>
 
 
 class QCheckBox;
@@ -44,34 +44,42 @@ class KColorButton;
 class kpMainWindow;
 
 
-class kpEffectFlattenCommand : public kpColorEffectCommand
+class kpEffectFlattenWidget : public kpColorEffectWidget
 {
+Q_OBJECT
+
 public:
-    kpEffectFlattenCommand (const QColor &color1, const QColor &color2,
-                            bool actOnSelection,
-                            kpMainWindow *mainWindow);
-    virtual ~kpEffectFlattenCommand ();
+    kpEffectFlattenWidget (bool actOnSelection,
+                           kpMainWindow *mainWindow,
+                           QWidget *parent);
+    virtual ~kpEffectFlattenWidget ();
 
 
-    static void apply (QPixmap *destPixmapPtr,
-                       const QColor &color1, const QColor &color2);
-    static QPixmap apply (const QPixmap &pm,
-                          const QColor &color1, const QColor &color2);
-    static void apply (QImage *destImagePtr,
-                       const QColor &color1, const QColor &color2);
-    static QImage apply (const QImage &img,
-                         const QColor &color1, const QColor &color2);
+    static QColor s_lastColor1, s_lastColor2;
+
+
+    QColor color1 () const;
+    QColor color2 () const;
 
 
     //
-    // kpColorEffectCommand interface
+    // kpColorEffectWidget interface
     //
 
-protected:
+    virtual QString caption () const;
+
+    virtual bool isNoOp () const;
     virtual QPixmap applyColorEffect (const QPixmap &pixmap);
 
-    QColor m_color1, m_color2;
+    virtual kpColorEffectCommand *createCommand () const;
+
+protected slots:
+    void slotEnableChanged (bool enable);
+
+protected:
+    QCheckBox *m_enableCheckBox;
+    KColorButton *m_color1Button, *m_color2Button;
 };
 
 
-#endif  // KP_EFFECT_FLATTEN_H
+#endif  // kpEffectFlattenWidget_H

@@ -63,6 +63,7 @@
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>
+#include <kpSetOverrideCursorSaver.h>
 #include <kptool.h>
 #include <kpviewmanager.h>
 
@@ -321,21 +322,6 @@ void kpTransformAutoCropBorder::invalidate ()
     m_redSum = m_greenSum = m_blueSum = 0;
     m_isSingleColor = false;
 }
-
-
-class kpSetOverrideCursorSaver
-{
-public:
-    kpSetOverrideCursorSaver (const QCursor &cursor)
-    {
-        QApplication::setOverrideCursor (cursor);
-    }
-
-    ~kpSetOverrideCursorSaver ()
-    {
-        QApplication::restoreOverrideCursor ();
-    }
-};
 
 
 struct kpTransformAutoCropCommandPrivate

@@ -26,52 +26,54 @@
 */
 
 
-#ifndef KP_EFFECT_FLATTEN_H
-#define KP_EFFECT_FLATTEN_H
+#ifndef kpEffectReduceColorsWidget_H
+#define kpEffectReduceColorsWidget_H
 
 
-#include <qcolor.h>
-
-#include <kpcoloreffect.h>
+#include <kpColorEffectWidget.h>
 
 
-class QCheckBox;
 class QImage;
 class QPixmap;
-
-class KColorButton;
+class QRadioButton;
 
 class kpMainWindow;
 
 
-class kpEffectFlattenCommand : public kpColorEffectCommand
+class kpEffectReduceColorsWidget : public kpColorEffectWidget
 {
+Q_OBJECT
+
 public:
-    kpEffectFlattenCommand (const QColor &color1, const QColor &color2,
-                            bool actOnSelection,
-                            kpMainWindow *mainWindow);
-    virtual ~kpEffectFlattenCommand ();
+    kpEffectReduceColorsWidget (bool actOnSelection,
+                                kpMainWindow *mainWindow,
+                                QWidget *parent);
+    virtual ~kpEffectReduceColorsWidget ();
 
 
-    static void apply (QPixmap *destPixmapPtr,
-                       const QColor &color1, const QColor &color2);
-    static QPixmap apply (const QPixmap &pm,
-                          const QColor &color1, const QColor &color2);
-    static void apply (QImage *destImagePtr,
-                       const QColor &color1, const QColor &color2);
-    static QImage apply (const QImage &img,
-                         const QColor &color1, const QColor &color2);
+    int depth () const;
+    bool dither () const;
 
 
     //
-    // kpColorEffectCommand interface
+    // kpColorEffectWidget interface
     //
 
-protected:
+    virtual QString caption () const;
+
+    virtual bool isNoOp () const;
     virtual QPixmap applyColorEffect (const QPixmap &pixmap);
 
-    QColor m_color1, m_color2;
+    virtual kpColorEffectCommand *createCommand () const;
+
+protected:
+    QRadioButton *m_blackAndWhiteRadioButton,
+                 *m_blackAndWhiteDitheredRadioButton,
+                 *m_8BitRadioButton,
+                 *m_8BitDitheredRadioButton,
+                 *m_24BitRadioButton;
+    QRadioButton *m_defaultRadioButton;
 };
 
 
-#endif  // KP_EFFECT_FLATTEN_H
+#endif  // kpEffectReduceColorsWidget_H

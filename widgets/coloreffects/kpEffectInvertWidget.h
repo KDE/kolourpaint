@@ -26,52 +26,56 @@
 */
 
 
-#ifndef KP_EFFECT_FLATTEN_H
-#define KP_EFFECT_FLATTEN_H
+#ifndef kpEffectInvertWidget_H
+#define kpEffectInvertWidget_H
 
 
-#include <qcolor.h>
-
-#include <kpcoloreffect.h>
+#include <kpColorEffectWidget.h>
 
 
 class QCheckBox;
 class QImage;
 class QPixmap;
 
-class KColorButton;
-
 class kpMainWindow;
 
 
-class kpEffectFlattenCommand : public kpColorEffectCommand
+class kpEffectInvertWidget : public kpColorEffectWidget
 {
+Q_OBJECT
+
 public:
-    kpEffectFlattenCommand (const QColor &color1, const QColor &color2,
-                            bool actOnSelection,
-                            kpMainWindow *mainWindow);
-    virtual ~kpEffectFlattenCommand ();
+    kpEffectInvertWidget (bool actOnSelection,
+                          kpMainWindow *mainWindow,
+                          QWidget *parent);
+    virtual ~kpEffectInvertWidget ();
 
 
-    static void apply (QPixmap *destPixmapPtr,
-                       const QColor &color1, const QColor &color2);
-    static QPixmap apply (const QPixmap &pm,
-                          const QColor &color1, const QColor &color2);
-    static void apply (QImage *destImagePtr,
-                       const QColor &color1, const QColor &color2);
-    static QImage apply (const QImage &img,
-                         const QColor &color1, const QColor &color2);
+    int channels () const;
 
 
     //
-    // kpColorEffectCommand interface
+    // kpColorEffectWidget interface
     //
 
-protected:
+    virtual QString caption () const;
+
+    virtual bool isNoOp () const;
     virtual QPixmap applyColorEffect (const QPixmap &pixmap);
 
-    QColor m_color1, m_color2;
+    virtual kpColorEffectCommand *createCommand () const;
+
+protected slots:
+    void slotRGBCheckBoxToggled ();
+    void slotAllCheckBoxToggled ();
+
+protected:
+    QCheckBox *m_redCheckBox, *m_greenCheckBox, *m_blueCheckBox,
+              *m_allCheckBox;
+
+    // blockSignals() didn't seem to work
+    bool m_inSignalHandler;
 };
 
 
-#endif  // KP_EFFECT_FLATTEN_H
+#endif  // kpEffectInvertWidget_H

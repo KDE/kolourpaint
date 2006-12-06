@@ -26,52 +26,19 @@
 */
 
 
-#ifndef KP_EFFECT_FLATTEN_H
-#define KP_EFFECT_FLATTEN_H
+#ifndef kpSetOverrideCursorSaver_H
+#define kpSetOverrideCursorSaver_H
 
 
-#include <qcolor.h>
-
-#include <kpcoloreffect.h>
+class QCursor;
 
 
-class QCheckBox;
-class QImage;
-class QPixmap;
-
-class KColorButton;
-
-class kpMainWindow;
-
-
-class kpEffectFlattenCommand : public kpColorEffectCommand
+class kpSetOverrideCursorSaver
 {
 public:
-    kpEffectFlattenCommand (const QColor &color1, const QColor &color2,
-                            bool actOnSelection,
-                            kpMainWindow *mainWindow);
-    virtual ~kpEffectFlattenCommand ();
-
-
-    static void apply (QPixmap *destPixmapPtr,
-                       const QColor &color1, const QColor &color2);
-    static QPixmap apply (const QPixmap &pm,
-                          const QColor &color1, const QColor &color2);
-    static void apply (QImage *destImagePtr,
-                       const QColor &color1, const QColor &color2);
-    static QImage apply (const QImage &img,
-                         const QColor &color1, const QColor &color2);
-
-
-    //
-    // kpColorEffectCommand interface
-    //
-
-protected:
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
-
-    QColor m_color1, m_color2;
+    kpSetOverrideCursorSaver (const QCursor &cursor);
+    ~kpSetOverrideCursorSaver ();
 };
 
 
-#endif  // KP_EFFECT_FLATTEN_H
+#endif  // kpSetOverrideCursorSaver_H

@@ -44,14 +44,15 @@
 #include <khbox.h>
 #include <klocale.h>
 
+#include <kpColorEffectWidget.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
-#include <kpeffectbalance.h>
-#include <kpeffectblursharpen.h>
-#include <kpeffectemboss.h>
-#include <kpeffectflatten.h>
-#include <kpeffectinvert.h>
-#include <kpeffectreducecolors.h>
+#include <kpEffectBalanceWidget.h>
+#include <kpEffectBlurSharpenWidget.h>
+#include <kpEffectEmbossWidget.h>
+#include <kpEffectFlattenWidget.h>
+#include <kpEffectInvertWidget.h>
+#include <kpEffectReduceColorsWidget.h>
 #include <kppixmapfx.h>
 
 

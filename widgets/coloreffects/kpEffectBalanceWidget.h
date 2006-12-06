@@ -26,52 +26,62 @@
 */
 
 
-#ifndef KP_EFFECT_FLATTEN_H
-#define KP_EFFECT_FLATTEN_H
+#ifndef kpEffectBalanceWidget_H
+#define kpEffectBalanceWidget_H
 
 
-#include <qcolor.h>
-
-#include <kpcoloreffect.h>
+#include <kpColorEffectWidget.h>
 
 
-class QCheckBox;
-class QImage;
+class QLabel;
 class QPixmap;
 
-class KColorButton;
+class KComboBox;
+class KIntNumInput;
 
-class kpMainWindow;
+class kpMainWindowe;
 
 
-class kpEffectFlattenCommand : public kpColorEffectCommand
+class kpEffectBalanceWidget : public kpColorEffectWidget
 {
+Q_OBJECT
+
 public:
-    kpEffectFlattenCommand (const QColor &color1, const QColor &color2,
-                            bool actOnSelection,
-                            kpMainWindow *mainWindow);
-    virtual ~kpEffectFlattenCommand ();
+    kpEffectBalanceWidget (bool actOnSelection,
+                           kpMainWindow *mainWindow,
+                           QWidget *parent);
+    virtual ~kpEffectBalanceWidget ();
 
+    virtual QString caption () const;
 
-    static void apply (QPixmap *destPixmapPtr,
-                       const QColor &color1, const QColor &color2);
-    static QPixmap apply (const QPixmap &pm,
-                          const QColor &color1, const QColor &color2);
-    static void apply (QImage *destImagePtr,
-                       const QColor &color1, const QColor &color2);
-    static QImage apply (const QImage &img,
-                         const QColor &color1, const QColor &color2);
-
-
-    //
-    // kpColorEffectCommand interface
-    //
-
-protected:
+    virtual bool isNoOp () const;
     virtual QPixmap applyColorEffect (const QPixmap &pixmap);
 
-    QColor m_color1, m_color2;
+    virtual kpColorEffectCommand *createCommand () const;
+
+protected:
+    int channels () const;
+
+    int brightness () const;
+    int contrast () const;
+    int gamma () const;
+
+protected slots:
+    void recalculateGammaLabel ();
+
+    void resetBrightness ();
+    void resetContrast ();
+    void resetGamma ();
+
+    void resetAll ();
+
+protected:
+    KIntNumInput *m_brightnessInput,
+                 *m_contrastInput,
+                 *m_gammaInput;
+    QLabel *m_gammaLabel;
+    KComboBox *m_channelsComboBox;
 };
 
 
-#endif  // KP_EFFECT_FLATTEN_H
+#endif  // kpEffectBalanceWidget_H

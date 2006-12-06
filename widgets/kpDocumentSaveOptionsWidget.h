@@ -26,72 +26,31 @@
 */
 
 
-#ifndef KP_DOCUMENT_SAVE_OPTIONS_WIDGET_H
-#define KP_DOCUMENT_SAVE_OPTIONS_WIDGET_H
-
-
-#include <qsize.h>
-#include <qwidget.h>
-
-
-class QCloseEvent;
-class QPixmap;
-class QLabel;
-class QMoveEvent;
-class QResizeEvent;
-
-class kpResizeSignallingLabel;
-
-
-class kpDocumentSaveOptionsPreviewDialog : public QWidget
-{
-Q_OBJECT
-
-public:
-    kpDocumentSaveOptionsPreviewDialog (QWidget *parent);
-    virtual ~kpDocumentSaveOptionsPreviewDialog ();
-
-    QSize preferredMinimumSize () const;
-
-protected:
-    static const QSize s_pixmapLabelMinimumSize;
-
-signals:
-    void moved ();
-    void resized ();
-    void finished ();
-
-public slots:
-    void setFilePixmapAndSize (const QPixmap &filePixmap, int fileSize);
-    void updatePixmapPreview ();
-
-protected:
-    virtual void closeEvent (QCloseEvent *e);
-    virtual void moveEvent (QMoveEvent *e);
-    virtual void resizeEvent (QResizeEvent *e);
-
-protected:
-    QPixmap *m_filePixmap;
-    int m_fileSize;
-
-    kpResizeSignallingLabel *m_filePixmapLabel;
-    QLabel *m_fileSizeLabel;
-};
+#ifndef kpDocumentSaveOptionsWidget_H
+#define kpDocumentSaveOptionsWidget_H
 
 
 #include <qrect.h>
+#include <qsize.h>
 #include <qwidget.h>
 
 #include <kpdocumentmetainfo.h>
 #include <kpdocumentsaveoptions.h>
 
 
+class QCloseEvent;
+class KComboBox;
+class QPixmap;
 class QLabel;
+class QMoveEvent;
+class QResizeEvent;
 class QTimer;
 
-class KComboBox;
 class KIntNumInput;
 class KPushButton;
+
+class kpDocumentSaveOptionsPreviewDialog;
+class kpResizeSignallingLabel;
 
 
 class kpDocumentSaveOptionsWidget : public QWidget
@@ -199,4 +158,4 @@ protected:
 };
 
 
-#endif  // KP_DOCUMENT_SAVE_OPTIONS_WIDGET_H
+#endif  // kpDocumentSaveOptionsWidget_H

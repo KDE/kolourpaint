@@ -26,52 +26,58 @@
 */
 
 
-#ifndef KP_EFFECT_FLATTEN_H
-#define KP_EFFECT_FLATTEN_H
+#ifndef kpColorEffectWidget_H
+#define kpColorEffectWidget_H
 
 
-#include <qcolor.h>
+#include <qstring.h>
+#include <qwidget.h>
 
-#include <kpcoloreffect.h>
+#include <kpcommandhistory.h>
 
 
-class QCheckBox;
-class QImage;
 class QPixmap;
 
-class KColorButton;
-
+class kpColorEffectCommand;
+class kpDocument;
 class kpMainWindow;
 
 
-class kpEffectFlattenCommand : public kpColorEffectCommand
+class kpColorEffectWidget : public QWidget
 {
+Q_OBJECT
+
 public:
-    kpEffectFlattenCommand (const QColor &color1, const QColor &color2,
-                            bool actOnSelection,
-                            kpMainWindow *mainWindow);
-    virtual ~kpEffectFlattenCommand ();
+    kpColorEffectWidget (bool actOnSelection,
+                         kpMainWindow *mainWindow,
+                         QWidget *parent);
+    virtual ~kpColorEffectWidget ();
 
+signals:
+    void settingsChangedNoWaitCursor ();
 
-    static void apply (QPixmap *destPixmapPtr,
-                       const QColor &color1, const QColor &color2);
-    static QPixmap apply (const QPixmap &pm,
-                          const QColor &color1, const QColor &color2);
-    static void apply (QImage *destImagePtr,
-                       const QColor &color1, const QColor &color2);
-    static QImage apply (const QImage &img,
-                         const QColor &color1, const QColor &color2);
+    void settingsChanged ();
 
+    // (same as settingsChanged() but preview doesn't update until there
+    //  has been no activity for a while - used for sliders in slow effects)
+    void settingsChangedDelayed ();
 
-    //
-    // kpColorEffectCommand interface
-    //
+public:
+    virtual QString caption () const;
+
+    virtual bool isNoOp () const = 0;
+    virtual QPixmap applyColorEffect (const QPixmap &pixmap) = 0;
+
+    virtual kpColorEffectCommand *createCommand () const = 0;
 
 protected:
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
+    int marginHint () const;
+    int spacingHint () const;
 
-    QColor m_color1, m_color2;
+protected:
+    bool m_actOnSelection;
+    kpMainWindow *m_mainWindow;
 };
 
 
-#endif  // KP_EFFECT_FLATTEN_H
+#endif  // kpColorEffectWidget_H

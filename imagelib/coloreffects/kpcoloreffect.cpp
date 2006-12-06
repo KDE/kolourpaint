@@ -131,38 +131,4 @@ void kpColorEffectCommand::unexecute ()
 }
 
 
-kpColorEffectWidget::kpColorEffectWidget (bool actOnSelection,
-                                          kpMainWindow *mainWindow,
-                                          QWidget *parent)
-    : QWidget (parent),
-      m_actOnSelection (actOnSelection),
-      m_mainWindow (mainWindow)
-{
-}
-
-kpColorEffectWidget::~kpColorEffectWidget ()
-{
-}
-
-
-// public
-QString kpColorEffectWidget::caption () const
-{
-    return QString::null;
-}
-
-
-// protected
-int kpColorEffectWidget::marginHint () const
-{
-    return 0;
-}
-
-// protected
-int kpColorEffectWidget::spacingHint () const
-{
-    return KDialog::spacingHint ();
-}
-
-
 #include <kpcoloreffect.moc>

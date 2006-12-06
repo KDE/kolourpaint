@@ -89,42 +89,4 @@ protected:
 };
 
 
-class kpEffectInvertWidget : public kpColorEffectWidget
-{
-Q_OBJECT
-
-public:
-    kpEffectInvertWidget (bool actOnSelection,
-                          kpMainWindow *mainWindow,
-                          QWidget *parent);
-    virtual ~kpEffectInvertWidget ();
-
-
-    int channels () const;
-
-
-    //
-    // kpColorEffectWidget interface
-    //
-
-    virtual QString caption () const;
-
-    virtual bool isNoOp () const;
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
-
-    virtual kpColorEffectCommand *createCommand () const;
-
-protected slots:
-    void slotRGBCheckBoxToggled ();
-    void slotAllCheckBoxToggled ();
-
-protected:
-    QCheckBox *m_redCheckBox, *m_greenCheckBox, *m_blueCheckBox,
-              *m_allCheckBox;
-
-    // blockSignals() didn't seem to work
-    bool m_inSignalHandler;
-};
-
-
 #endif  // KP_EFFECT_INVERT_H

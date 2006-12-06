@@ -73,41 +73,4 @@ private:
 };
 
 
-class kpColorEffectWidget : public QWidget
-{
-Q_OBJECT
-
-public:
-    kpColorEffectWidget (bool actOnSelection,
-                         kpMainWindow *mainWindow,
-                         QWidget *parent);
-    virtual ~kpColorEffectWidget ();
-
-signals:
-    void settingsChangedNoWaitCursor ();
-
-    void settingsChanged ();
-
-    // (same as settingsChanged() but preview doesn't update until there
-    //  has been no activity for a while - used for sliders in slow effects)
-    void settingsChangedDelayed ();
-
-public:
-    virtual QString caption () const;
-
-    virtual bool isNoOp () const = 0;
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap) = 0;
-
-    virtual kpColorEffectCommand *createCommand () const = 0;
-
-protected:
-    int marginHint () const;
-    int spacingHint () const;
-
-protected:
-    bool m_actOnSelection;
-    kpMainWindow *m_mainWindow;
-};
-
-
 #endif  // KP_COLOR_EFFECT_H

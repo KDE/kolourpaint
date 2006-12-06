@@ -71,40 +71,4 @@ protected:
 };
 
 
-class kpEffectReduceColorsWidget : public kpColorEffectWidget
-{
-Q_OBJECT
-
-public:
-    kpEffectReduceColorsWidget (bool actOnSelection,
-                                kpMainWindow *mainWindow,
-                                QWidget *parent);
-    virtual ~kpEffectReduceColorsWidget ();
-
-
-    int depth () const;
-    bool dither () const;
-
-
-    //
-    // kpColorEffectWidget interface
-    //
-
-    virtual QString caption () const;
-
-    virtual bool isNoOp () const;
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
-
-    virtual kpColorEffectCommand *createCommand () const;
-
-protected:
-    QRadioButton *m_blackAndWhiteRadioButton,
-                 *m_blackAndWhiteDitheredRadioButton,
-                 *m_8BitRadioButton,
-                 *m_8BitDitheredRadioButton,
-                 *m_24BitRadioButton;
-    QRadioButton *m_defaultRadioButton;
-};
-
-
 #endif  // KP_EFFECT_REDUCE_COLORS_H

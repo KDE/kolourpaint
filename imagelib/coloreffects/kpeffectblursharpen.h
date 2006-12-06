@@ -58,6 +58,8 @@ public:
                                 kpMainWindow *mainWindow);
     virtual ~kpEffectBlurSharpenCommand ();
 
+    static QString nameForType (kpEffectBlurSharpenCommand::Type type);
+    
     static QPixmap apply (const QPixmap &pixmap,
                           Type type, double radius, double sigma,
                           int repeat);
@@ -69,37 +71,6 @@ protected:
     Type m_type;
     double m_radius, m_sigma;
     int m_repeat;
-};
-
-
-class kpEffectBlurSharpenWidget : public kpColorEffectWidget
-{
-Q_OBJECT
-
-public:
-    kpEffectBlurSharpenWidget (bool actOnSelection,
-                               kpMainWindow *mainWindow,
-                               QWidget *parent);
-    virtual ~kpEffectBlurSharpenWidget ();
-
-    virtual QString caption () const;
-
-    virtual bool isNoOp () const;
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
-
-    virtual kpColorEffectCommand *createCommand () const;
-
-protected slots:
-    void slotUpdateTypeLabel ();
-
-protected:
-    kpEffectBlurSharpenCommand::Type type () const;
-    double radius () const;
-    double sigma () const;
-    int repeat () const;
-
-    KIntNumInput *m_amountInput;
-    QLabel *m_typeLabel;
 };
 
 

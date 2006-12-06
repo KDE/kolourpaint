@@ -50,7 +50,7 @@
 #include <krecentfilesaction.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
-#include <kpdocumentsaveoptionswidget.h>
+#include <kpDocumentSaveOptionsWidget.h>
 #include <kptool.h>
 #include <kpview.h>
 #include <kpviewmanager.h>

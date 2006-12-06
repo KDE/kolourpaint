@@ -73,46 +73,4 @@ protected:
 };
 
 
-class kpEffectBalanceWidget : public kpColorEffectWidget
-{
-Q_OBJECT
-
-public:
-    kpEffectBalanceWidget (bool actOnSelection,
-                           kpMainWindow *mainWindow,
-                           QWidget *parent);
-    virtual ~kpEffectBalanceWidget ();
-
-    virtual QString caption () const;
-
-    virtual bool isNoOp () const;
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
-
-    virtual kpColorEffectCommand *createCommand () const;
-
-protected:
-    int channels () const;
-
-    int brightness () const;
-    int contrast () const;
-    int gamma () const;
-
-protected slots:
-    void recalculateGammaLabel ();
-
-    void resetBrightness ();
-    void resetContrast ();
-    void resetGamma ();
-
-    void resetAll ();
-
-protected:
-    KIntNumInput *m_brightnessInput,
-                 *m_contrastInput,
-                 *m_gammaInput;
-    QLabel *m_gammaLabel;
-    KComboBox *m_channelsComboBox;
-};
-
-
 #endif  // KP_EFFECT_BALANCE_H

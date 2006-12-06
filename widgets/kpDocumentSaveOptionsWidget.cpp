@@ -28,7 +28,7 @@
 #define DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET 0
 
 
-#include <kpdocumentsaveoptionswidget.h>
+#include <kpDocumentSaveOptionsWidget.h>
 
 #include <qapplication.h>
 #include <qboxlayout.h>
@@ -53,208 +53,12 @@
 
 #include <kpdefs.h>
 #include <kpdocument.h>
+#include <kpDocumentSaveOptionsPreviewDialog.h>
 #include <kppixmapfx.h>
 #include <kpresizesignallinglabel.h>
 #include <kpselection.h>
 #include <kpTransformPreviewDialog.h>
 #include <kpwidgetmapper.h>
-
-
-// protected static
-const QSize kpDocumentSaveOptionsPreviewDialog::s_pixmapLabelMinimumSize (25, 25);
-
-
-kpDocumentSaveOptionsPreviewDialog::kpDocumentSaveOptionsPreviewDialog (
-    QWidget *parent )
-    : QWidget (parent,
-               Qt::WType_TopLevel |
-               Qt::WStyle_Customize |
-               Qt::WStyle_DialogBorder |
-               Qt::WStyle_Title),
-#if 0
-KDialogBase (parent, name, false/*non-modal*/,
-                   i18n ("Save Preview"),
-                   0/*no buttons*/),
-#endif
-      m_filePixmap (0),
-      m_fileSize (0)
-{
-    setWindowTitle (i18n ("Save Preview"));
-
-    QWidget *baseWidget = this;//new QWidget (this);
-    //setMainWidget (baseWidget);
-
-
-    QGridLayout *lay = new QGridLayout ( baseWidget );
-    lay->setMargin( KDialog::marginHint () );
-    lay->setSpacing( KDialog::spacingHint ());
-
-    m_filePixmapLabel = new kpResizeSignallingLabel (baseWidget);
-    m_fileSizeLabel = new QLabel (baseWidget);
-
-
-    m_filePixmapLabel->setMinimumSize (s_pixmapLabelMinimumSize);
-
-
-    lay->addWidget (m_filePixmapLabel, 0, 0);
-    lay->addWidget (m_fileSizeLabel, 1, 0, Qt::AlignHCenter);
-
-
-    lay->setRowStretch (0, 1);
-
-
-    connect (m_filePixmapLabel, SIGNAL (resized ()),
-             this, SLOT (updatePixmapPreview ()));
-}
-
-kpDocumentSaveOptionsPreviewDialog::~kpDocumentSaveOptionsPreviewDialog ()
-{
-    delete m_filePixmap;
-}
-
-
-// public
-QSize kpDocumentSaveOptionsPreviewDialog::preferredMinimumSize () const
-{
-    const int contentsWidth = 180;
-    const int totalMarginsWidth = 2 * KDialog::marginHint ();
-
-    return QSize (contentsWidth + totalMarginsWidth,
-                  contentsWidth * 3 / 4 + totalMarginsWidth);
-}
-
-
-// public slot
-void kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize (const QPixmap &pixmap,
-                                                              int fileSize)
-{
-    delete m_filePixmap;
-    m_filePixmap = new QPixmap (pixmap);
-
-    updatePixmapPreview ();
-
-    m_fileSize = fileSize;
-
-    const int pixmapSize = kpPixmapFX::pixmapSize (pixmap);
-    const int percent = pixmapSize ?
-                            qMax (1, fileSize * 100 / pixmapSize) :
-                            0;
-#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize()"
-               << " pixmapSize=" << pixmapSize
-               << " fileSize=" << fileSize
-               << " raw fileSize/pixmapSize%="
-               << (pixmapSize ? fileSize * 100 / pixmapSize : 0)
-               << endl;
-#endif
-
-    m_fileSizeLabel->setText (i18np ("1 byte (approx. %1%)", "%n bytes (approx. %1%)",
-                                     m_fileSize, percent));
-}
-
-// public slot
-void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
-{
-#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsPreviewDialog::updatePreviewPixmap()"
-               << " filePixmapLabel.size=" << m_filePixmapLabel->size ()
-               << " filePixmap.size=" << m_filePixmap->size ()
-               << endl;
-#endif
-
-    if (m_filePixmap)
-    {
-        int maxNewWidth = qMin (m_filePixmap->width (),
-                                m_filePixmapLabel->width ()),
-            maxNewHeight = qMin (m_filePixmap->height (),
-                                 m_filePixmapLabel->height ());
-
-        double keepsAspect = kpTransformPreviewDialog::aspectScale (
-            maxNewWidth, maxNewHeight,
-            m_filePixmap->width (), m_filePixmap->height ());
-    #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-        kDebug () << "\tmaxNewWidth=" << maxNewWidth
-                   << " maxNewHeight=" << maxNewHeight
-                   << " keepsAspect=" << keepsAspect
-                   << endl;
-    #endif
-
-
-        const int newWidth = kpTransformPreviewDialog::scaleDimension (
-            m_filePixmap->width (),
-            keepsAspect,
-            1,
-            maxNewWidth);
-        const int newHeight = kpTransformPreviewDialog::scaleDimension (
-            m_filePixmap->height (),
-            keepsAspect,
-            1,
-            maxNewHeight);
-    #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-        kDebug () << "\tnewWidth=" << newWidth
-                   << " newHeight=" << newHeight
-                   << endl;
-    #endif
-
-
-        QPixmap transformedPixmap =
-            kpPixmapFX::scale (*m_filePixmap,
-                               newWidth, newHeight);
-
-
-        QPixmap labelPixmap (m_filePixmapLabel->width (),
-                             m_filePixmapLabel->height ());
-        kpPixmapFX::fill (&labelPixmap, kpColor::Transparent);
-        kpPixmapFX::setPixmapAt (&labelPixmap,
-            (labelPixmap.width () - transformedPixmap.width ()) / 2,
-            (labelPixmap.height () - transformedPixmap.height ()) / 2,
-            transformedPixmap);
-
-
-        m_filePixmapLabel->setPixmap (labelPixmap);
-    }
-    else
-    {
-        m_filePixmapLabel->setPixmap (QPixmap ());
-    }
-}
-
-
-// protected virtual [base QWidget]
-void kpDocumentSaveOptionsPreviewDialog::closeEvent (QCloseEvent *e)
-{
-#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsPreviewDialog::closeEvent()" << endl;
-#endif
-
-    QWidget::closeEvent (e);
-
-    emit finished ();
-}
-
-// protected virtual [base QWidget]
-void kpDocumentSaveOptionsPreviewDialog::moveEvent (QMoveEvent *e)
-{
-#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsPreviewDialog::moveEvent()" << endl;
-#endif
-
-    QWidget::moveEvent (e);
-
-    emit moved ();
-}
-
-// protected virtual [base QWidget]
-void kpDocumentSaveOptionsPreviewDialog::resizeEvent (QResizeEvent *e)
-{
-#if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsPreviewDialog::resizeEvent()" << endl;
-#endif
-
-    QWidget::resizeEvent (e);
-
-    emit resized ();
-}
 
 
 kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
@@ -941,4 +745,4 @@ void kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry ()
 }
 
 
-#include <kpdocumentsaveoptionswidget.moc>
+#include <kpDocumentSaveOptionsWidget.moc>
