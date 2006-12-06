@@ -383,6 +383,7 @@ kpToolAutoCropCommand::~kpToolAutoCropCommand ()
 }
 
 
+// public static
 QString kpToolAutoCropCommand::name (bool actOnSelection, int options)
 {
     if (actOnSelection)
