@@ -67,6 +67,44 @@
 #include <kpviewmanager.h>
 
 
+class kpToolAutoCropBorder
+{
+public:
+    // WARNING: Only call the <ctor> with pixmapPtr = 0 if you are going to use
+    //          operator= to fill it in with a valid pixmapPtr immediately
+    //          afterwards.
+    kpToolAutoCropBorder (const QPixmap *pixmapPtr = 0, int processedColorSimilarity = 0);
+
+    int size () const;
+
+    const QPixmap *pixmap () const;
+    int processedColorSimilarity () const;
+    QRect rect () const;
+    int left () const;
+    int right () const;
+    int top () const;
+    int bottom () const;
+    kpColor referenceColor () const;
+    kpColor averageColor () const;
+    bool isSingleColor () const;
+
+    // (returns true on success (even if no rect) or false on error)
+    bool calculate (int isX, int dir);
+
+    bool fillsEntirePixmap () const;
+    bool exists () const;
+    void invalidate ();
+
+private:
+    const QPixmap *m_pixmapPtr;
+    int m_processedColorSimilarity;
+
+    QRect m_rect;
+    kpColor m_referenceColor;
+    int m_redSum, m_greenSum, m_blueSum;
+    bool m_isSingleColor;
+};
+
 kpToolAutoCropBorder::kpToolAutoCropBorder (const QPixmap *pixmapPtr,
                                             int processedColorSimilarity)
     : m_pixmapPtr (pixmapPtr),
@@ -300,7 +338,308 @@ public:
 };
 
 
-void showNothingToAutocropMessage (kpMainWindow *mainWindow, bool actOnSelection)
+struct kpToolAutoCropCommandPrivate
+{
+    bool actOnSelection;
+    kpToolAutoCropBorder leftBorder, rightBorder, topBorder, botBorder;
+    QPixmap *leftPixmap, *rightPixmap, *topPixmap, *botPixmap;
+
+    QRect contentsRect;
+    int oldWidth, oldHeight;
+    kpSelection oldSelection;
+};
+
+kpToolAutoCropCommand::kpToolAutoCropCommand (bool actOnSelection,
+                                              const kpToolAutoCropBorder &leftBorder,
+                                              const kpToolAutoCropBorder &rightBorder,
+                                              const kpToolAutoCropBorder &topBorder,
+                                              const kpToolAutoCropBorder &botBorder,
+                                              kpMainWindow *mainWindow)
+    : kpNamedCommand (name (actOnSelection, DontShowAccel), mainWindow),
+      d (new kpToolAutoCropCommandPrivate ())
+{
+    d->actOnSelection = actOnSelection;
+    d->leftBorder = leftBorder;
+    d->rightBorder = rightBorder;
+    d->topBorder = topBorder;
+    d->botBorder = botBorder;
+    d->leftPixmap = 0;
+    d->rightPixmap = 0;
+    d->topPixmap = 0;
+    d->botPixmap = 0;
+      
+    kpDocument *doc = document ();
+    Q_ASSERT (doc);
+
+    d->oldWidth = doc->width (d->actOnSelection);
+    d->oldHeight = doc->height (d->actOnSelection);
+}
+
+kpToolAutoCropCommand::~kpToolAutoCropCommand ()
+{
+    deleteUndoPixmaps ();
+
+    delete d;
+}
+
+
+QString kpToolAutoCropCommand::name (bool actOnSelection, int options)
+{
+    if (actOnSelection)
+    {
+        if (options & kpToolAutoCropCommand::ShowAccel)
+            return i18n ("Remove Internal B&order");
+        else
+            return i18n ("Remove Internal Border");
+    }
+    else
+    {
+        if (options & kpToolAutoCropCommand::ShowAccel)
+            return i18n ("Autocr&op");
+        else
+            return i18n ("Autocrop");
+    }
+}
+
+
+// public virtual [base kpCommand]
+int kpToolAutoCropCommand::size () const
+{
+    return d->leftBorder.size () +
+           d->rightBorder.size () +
+           d->topBorder.size () +
+           d->botBorder.size () +
+           kpPixmapFX::pixmapSize (d->leftPixmap) +
+           kpPixmapFX::pixmapSize (d->rightPixmap) +
+           kpPixmapFX::pixmapSize (d->topPixmap) +
+           kpPixmapFX::pixmapSize (d->botPixmap) +
+           d->oldSelection.size ();
+}
+
+
+// private
+void kpToolAutoCropCommand::getUndoPixmap (const kpToolAutoCropBorder &border, QPixmap **pixmap)
+{
+    kpDocument *doc = document ();
+    Q_ASSERT (doc);
+
+#if DEBUG_KP_TOOL_AUTO_CROP && 1
+    kDebug () << "kpToolAutoCropCommand::getUndoPixmap()" << endl;
+    kDebug () << "\tpixmap=" << pixmap
+               << " border: rect=" << border.rect ()
+               << " isSingleColor=" << border.isSingleColor ()
+               << endl;
+#endif
+
+    if (pixmap && border.exists () && !border.isSingleColor ())
+    {
+        if (*pixmap)
+        {
+        #if DEBUG_KP_TOOL_AUTO_CROP && 1
+            kDebug () << "\talready have *pixmap - delete it" << endl;
+        #endif
+            delete *pixmap;
+        }
+
+        *pixmap = new QPixmap (
+            kpPixmapFX::getPixmapAt (*doc->pixmap (d->actOnSelection),
+                                     border.rect ()));
+    }
+}
+
+
+// private
+void kpToolAutoCropCommand::getUndoPixmaps ()
+{
+    getUndoPixmap (d->leftBorder, &d->leftPixmap);
+    getUndoPixmap (d->rightBorder, &d->rightPixmap);
+    getUndoPixmap (d->topBorder, &d->topPixmap);
+    getUndoPixmap (d->botBorder, &d->botPixmap);
+}
+
+// private
+void kpToolAutoCropCommand::deleteUndoPixmaps ()
+{
+#if DEBUG_KP_TOOL_AUTO_CROP && 1
+    kDebug () << "kpToolAutoCropCommand::deleteUndoPixmaps()" << endl;
+#endif
+
+    delete d->leftPixmap; d->leftPixmap = 0;
+    delete d->rightPixmap; d->rightPixmap = 0;
+    delete d->topPixmap; d->topPixmap = 0;
+    delete d->botPixmap; d->botPixmap = 0;
+}
+
+
+// public virtual [base kpCommand]
+void kpToolAutoCropCommand::execute ()
+{
+    if (!d->contentsRect.isValid ())
+        d->contentsRect = contentsRect ();
+
+
+    getUndoPixmaps ();
+
+
+    kpDocument *doc = document ();
+    Q_ASSERT (doc);
+
+
+    QPixmap pixmapWithoutBorder =
+        kpTool::neededPixmap (*doc->pixmap (d->actOnSelection),
+                              d->contentsRect);
+
+
+    if (!d->actOnSelection)
+        doc->setPixmap (pixmapWithoutBorder);
+    else
+    {
+        d->oldSelection = *doc->selection ();
+        d->oldSelection.setPixmap (QPixmap ());
+
+        // d->contentsRect is relative to the top of the sel
+        // while sel is relative to the top of the doc
+        QRect rect = d->contentsRect;
+        rect.translate (d->oldSelection.x (), d->oldSelection.y ());
+
+        kpSelection sel (kpSelection::Rectangle,
+                         rect,
+                         pixmapWithoutBorder,
+                         d->oldSelection.transparency ());
+
+        doc->setSelection (sel);
+
+        if (mainWindow ()->tool ())
+            mainWindow ()->tool ()->somethingBelowTheCursorChanged ();
+    }
+}
+
+// public virtual [base kpCommand]
+void kpToolAutoCropCommand::unexecute ()
+{
+#if DEBUG_KP_TOOL_AUTO_CROP && 1
+    kDebug () << "kpToolAutoCropCommand::unexecute()" << endl;
+#endif
+
+    kpDocument *doc = document ();
+    Q_ASSERT (doc);
+
+    QPixmap pixmap (d->oldWidth, d->oldHeight);
+    QBitmap maskBitmap;
+
+    // restore the position of the center image
+    kpPixmapFX::setPixmapAt (&pixmap, d->contentsRect,
+                             *doc->pixmap (d->actOnSelection));
+
+    // draw the borders
+
+    QPainter painter (&pixmap);
+    QPainter maskPainter;
+
+    const kpToolAutoCropBorder *borders [] =
+    {
+        &d->leftBorder, &d->rightBorder,
+        &d->topBorder, &d->botBorder,
+        0
+    };
+
+    const QPixmap *pixmaps [] =
+    {
+        d->leftPixmap, d->rightPixmap,
+        d->topPixmap, d->botPixmap,
+        0
+    };
+
+    const QPixmap **p = pixmaps;
+    for (const kpToolAutoCropBorder **b = borders; *b; b++, p++)
+    {
+        if (!(*b)->exists ())
+            continue;
+
+        if ((*b)->isSingleColor ())
+        {
+            kpColor col = (*b)->referenceColor ();
+        #if DEBUG_KP_TOOL_AUTO_CROP && 1
+            kDebug () << "\tdrawing border " << (*b)->rect ()
+                       << " rgb=" << (int *) col.toQRgb () /* %X hack */ << endl;
+        #endif
+
+            if (col.isOpaque ())
+            {
+                painter.fillRect ((*b)->rect (), col.toQColor ());
+            }
+            else
+            {
+                if (maskBitmap.isNull ())
+                {
+                    // TODO: dangerous when a painter is active on pixmap?
+                    maskBitmap = kpPixmapFX::getNonNullMask (pixmap);
+                    maskPainter.begin (&maskBitmap);
+                }
+
+                maskPainter.fillRect ((*b)->rect (), Qt::color0/*transparent*/);
+            }
+        }
+        else
+        {
+        #if DEBUG_KP_TOOL_AUTO_CROP && 1
+            kDebug () << "\trestoring border pixmap " << (*b)->rect () << endl;
+        #endif
+            if (*p)
+                painter.drawPixmap ((*b)->rect (), **p);
+        }
+    }
+
+    if (maskPainter.isActive ())
+        maskPainter.end ();
+
+    painter.end ();
+
+    if (!maskBitmap.isNull ())
+        pixmap.setMask (maskBitmap);
+
+
+    if (!d->actOnSelection)
+        doc->setPixmap (pixmap);
+    else
+    {
+        kpSelection sel = d->oldSelection;
+        sel.setPixmap (pixmap);
+
+        doc->setSelection (sel);
+
+        if (mainWindow ()->tool ())
+            mainWindow ()->tool ()->somethingBelowTheCursorChanged ();
+    }
+
+
+    deleteUndoPixmaps ();
+}
+
+
+// private
+QRect kpToolAutoCropCommand::contentsRect () const
+{
+    const QPixmap *pixmap = document ()->pixmap (d->actOnSelection);
+
+    QPoint topLeft (d->leftBorder.exists () ?
+                        d->leftBorder.rect ().right () + 1 :
+                        0,
+                    d->topBorder.exists () ?
+                        d->topBorder.rect ().bottom () + 1 :
+                        0);
+    QPoint botRight (d->rightBorder.exists () ?
+                         d->rightBorder.rect ().left () - 1 :
+                         pixmap->width () - 1,
+                     d->botBorder.exists () ?
+                         d->botBorder.rect ().top () - 1 :
+                         pixmap->height () - 1);
+
+    return QRect (topLeft, botRight);
+}
+
+
+static void ShowNothingToAutocropMessage (kpMainWindow *mainWindow, bool actOnSelection)
 {
     kpSetOverrideCursorSaver cursorSaver (Qt::ArrowCursor);
 
@@ -375,7 +714,7 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
                    << " botBorder.rect=" << botBorder.rect ()
                    << endl;
     #endif
-        ::showNothingToAutocropMessage (mainWindow, (bool) doc->selection ());
+        ::ShowNothingToAutocropMessage (mainWindow, (bool) doc->selection ());
         return false;
     }
 
@@ -447,291 +786,4 @@ bool kpToolAutoCrop (kpMainWindow *mainWindow)
 
 
     return true;
-}
-
-
-kpToolAutoCropCommand::kpToolAutoCropCommand (bool actOnSelection,
-                                              const kpToolAutoCropBorder &leftBorder,
-                                              const kpToolAutoCropBorder &rightBorder,
-                                              const kpToolAutoCropBorder &topBorder,
-                                              const kpToolAutoCropBorder &botBorder,
-                                              kpMainWindow *mainWindow)
-    : kpNamedCommand (name (actOnSelection, DontShowAccel), mainWindow),
-      m_actOnSelection (actOnSelection),
-      m_leftBorder (leftBorder),
-      m_rightBorder (rightBorder),
-      m_topBorder (topBorder),
-      m_botBorder (botBorder),
-      m_leftPixmap (0),
-      m_rightPixmap (0),
-      m_topPixmap (0),
-      m_botPixmap (0)
-{
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
-
-    m_oldWidth = doc->width (m_actOnSelection);
-    m_oldHeight = doc->height (m_actOnSelection);
-}
-
-kpToolAutoCropCommand::~kpToolAutoCropCommand ()
-{
-    deleteUndoPixmaps ();
-}
-
-
-// public static
-QString kpToolAutoCropCommand::name (bool actOnSelection, int options)
-{
-    if (actOnSelection)
-    {
-        if (options & ShowAccel)
-            return i18n ("Remove Internal B&order");
-        else
-            return i18n ("Remove Internal Border");
-    }
-    else
-    {
-        if (options & ShowAccel)
-            return i18n ("Autocr&op");
-        else
-            return i18n ("Autocrop");
-    }
-}
-
-
-// public virtual [base kpCommand]
-int kpToolAutoCropCommand::size () const
-{
-    return m_leftBorder.size () +
-           m_rightBorder.size () +
-           m_topBorder.size () +
-           m_botBorder.size () +
-           kpPixmapFX::pixmapSize (m_leftPixmap) +
-           kpPixmapFX::pixmapSize (m_rightPixmap) +
-           kpPixmapFX::pixmapSize (m_topPixmap) +
-           kpPixmapFX::pixmapSize (m_botPixmap) +
-           m_oldSelection.size ();
-}
-
-
-// private
-void kpToolAutoCropCommand::getUndoPixmap (const kpToolAutoCropBorder &border, QPixmap **pixmap)
-{
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
-
-#if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kDebug () << "kpToolAutoCropCommand::getUndoPixmap()" << endl;
-    kDebug () << "\tpixmap=" << pixmap
-               << " border: rect=" << border.rect ()
-               << " isSingleColor=" << border.isSingleColor ()
-               << endl;
-#endif
-
-    if (pixmap && border.exists () && !border.isSingleColor ())
-    {
-        if (*pixmap)
-        {
-        #if DEBUG_KP_TOOL_AUTO_CROP && 1
-            kDebug () << "\talready have *pixmap - delete it" << endl;
-        #endif
-            delete *pixmap;
-        }
-
-        *pixmap = new QPixmap (
-            kpPixmapFX::getPixmapAt (*doc->pixmap (m_actOnSelection),
-                                     border.rect ()));
-    }
-}
-
-
-// private
-void kpToolAutoCropCommand::getUndoPixmaps ()
-{
-    getUndoPixmap (m_leftBorder, &m_leftPixmap);
-    getUndoPixmap (m_rightBorder, &m_rightPixmap);
-    getUndoPixmap (m_topBorder, &m_topPixmap);
-    getUndoPixmap (m_botBorder, &m_botPixmap);
-}
-
-// private
-void kpToolAutoCropCommand::deleteUndoPixmaps ()
-{
-#if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kDebug () << "kpToolAutoCropCommand::deleteUndoPixmaps()" << endl;
-#endif
-
-    delete m_leftPixmap; m_leftPixmap = 0;
-    delete m_rightPixmap; m_rightPixmap = 0;
-    delete m_topPixmap; m_topPixmap = 0;
-    delete m_botPixmap; m_botPixmap = 0;
-}
-
-
-// public virtual [base kpCommand]
-void kpToolAutoCropCommand::execute ()
-{
-    if (!m_contentsRect.isValid ())
-        m_contentsRect = contentsRect ();
-
-
-    getUndoPixmaps ();
-
-
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
-
-
-    QPixmap pixmapWithoutBorder =
-        kpTool::neededPixmap (*doc->pixmap (m_actOnSelection),
-                              m_contentsRect);
-
-
-    if (!m_actOnSelection)
-        doc->setPixmap (pixmapWithoutBorder);
-    else
-    {
-        m_oldSelection = *doc->selection ();
-        m_oldSelection.setPixmap (QPixmap ());
-
-        // m_contentsRect is relative to the top of the sel
-        // while sel is relative to the top of the doc
-        QRect rect = m_contentsRect;
-        rect.translate (m_oldSelection.x (), m_oldSelection.y ());
-
-        kpSelection sel (kpSelection::Rectangle,
-                         rect,
-                         pixmapWithoutBorder,
-                         m_oldSelection.transparency ());
-
-        doc->setSelection (sel);
-
-        if (m_mainWindow->tool ())
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
-    }
-}
-
-// public virtual [base kpCommand]
-void kpToolAutoCropCommand::unexecute ()
-{
-#if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kDebug () << "kpToolAutoCropCommand::unexecute()" << endl;
-#endif
-
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
-
-    QPixmap pixmap (m_oldWidth, m_oldHeight);
-    QBitmap maskBitmap;
-
-    // restore the position of the center image
-    kpPixmapFX::setPixmapAt (&pixmap, m_contentsRect,
-                             *doc->pixmap (m_actOnSelection));
-
-    // draw the borders
-
-    QPainter painter (&pixmap);
-    QPainter maskPainter;
-
-    const kpToolAutoCropBorder *borders [] =
-    {
-        &m_leftBorder, &m_rightBorder,
-        &m_topBorder, &m_botBorder,
-        0
-    };
-
-    const QPixmap *pixmaps [] =
-    {
-        m_leftPixmap, m_rightPixmap,
-        m_topPixmap, m_botPixmap,
-        0
-    };
-
-    const QPixmap **p = pixmaps;
-    for (const kpToolAutoCropBorder **b = borders; *b; b++, p++)
-    {
-        if (!(*b)->exists ())
-            continue;
-
-        if ((*b)->isSingleColor ())
-        {
-            kpColor col = (*b)->referenceColor ();
-        #if DEBUG_KP_TOOL_AUTO_CROP && 1
-            kDebug () << "\tdrawing border " << (*b)->rect ()
-                       << " rgb=" << (int *) col.toQRgb () /* %X hack */ << endl;
-        #endif
-
-            if (col.isOpaque ())
-            {
-                painter.fillRect ((*b)->rect (), col.toQColor ());
-            }
-            else
-            {
-                if (maskBitmap.isNull ())
-                {
-                    // TODO: dangerous when a painter is active on pixmap?
-                    maskBitmap = kpPixmapFX::getNonNullMask (pixmap);
-                    maskPainter.begin (&maskBitmap);
-                }
-
-                maskPainter.fillRect ((*b)->rect (), Qt::color0/*transparent*/);
-            }
-        }
-        else
-        {
-        #if DEBUG_KP_TOOL_AUTO_CROP && 1
-            kDebug () << "\trestoring border pixmap " << (*b)->rect () << endl;
-        #endif
-            if (*p)
-                painter.drawPixmap ((*b)->rect (), **p);
-        }
-    }
-
-    if (maskPainter.isActive ())
-        maskPainter.end ();
-
-    painter.end ();
-
-    if (!maskBitmap.isNull ())
-        pixmap.setMask (maskBitmap);
-
-
-    if (!m_actOnSelection)
-        doc->setPixmap (pixmap);
-    else
-    {
-        kpSelection sel = m_oldSelection;
-        sel.setPixmap (pixmap);
-
-        doc->setSelection (sel);
-
-        if (m_mainWindow->tool ())
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
-    }
-
-
-    deleteUndoPixmaps ();
-}
-
-
-// private
-QRect kpToolAutoCropCommand::contentsRect () const
-{
-    const QPixmap *pixmap = document ()->pixmap (m_actOnSelection);
-
-    QPoint topLeft (m_leftBorder.exists () ?
-                        m_leftBorder.rect ().right () + 1 :
-                        0,
-                    m_topBorder.exists () ?
-                        m_topBorder.rect ().bottom () + 1 :
-                        0);
-    QPoint botRight (m_rightBorder.exists () ?
-                         m_rightBorder.rect ().left () - 1 :
-                         pixmap->width () - 1,
-                     m_botBorder.exists () ?
-                         m_botBorder.rect ().top () - 1 :
-                         pixmap->height () - 1);
-
-    return QRect (topLeft, botRight);
 }

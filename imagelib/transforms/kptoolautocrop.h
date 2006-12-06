@@ -30,58 +30,14 @@
 #define KP_TOOL_AUTO_CROP_H
 
 
-#include <qrect.h>
-
-#include <kpcolor.h>
 #include <kpcommandhistory.h>
-#include <kpselection.h>
 
 
 class QPixmap;
+class QRect;
 
-class kpDocument;
 class kpMainWindow;
-class kpViewManager;
-
-
-// (returns true on success (even if it did nothing) or false on error)
-bool kpToolAutoCrop (kpMainWindow *mainWindow);
-
-
-class kpToolAutoCropBorder
-{
-public:
-    kpToolAutoCropBorder (const QPixmap *pixmapPtr, int processedColorSimilarity);
-
-    int size () const;
-
-    const QPixmap *pixmap () const;
-    int processedColorSimilarity () const;
-    QRect rect () const;
-    int left () const;
-    int right () const;
-    int top () const;
-    int bottom () const;
-    kpColor referenceColor () const;
-    kpColor averageColor () const;
-    bool isSingleColor () const;
-
-    // (returns true on success (even if no rect) or false on error)
-    bool calculate (int isX, int dir);
-
-    bool fillsEntirePixmap () const;
-    bool exists () const;
-    void invalidate ();
-
-private:
-    const QPixmap *m_pixmapPtr;
-    int m_processedColorSimilarity;
-
-    QRect m_rect;
-    kpColor m_referenceColor;
-    int m_redSum, m_greenSum, m_blueSum;
-    bool m_isSingleColor;
-};
+class kpToolAutoCropBorder;
 
 
 class kpToolAutoCropCommand : public kpNamedCommand
@@ -117,14 +73,12 @@ public:
 private:
     QRect contentsRect () const;
 
-    bool m_actOnSelection;
-    kpToolAutoCropBorder m_leftBorder, m_rightBorder, m_topBorder, m_botBorder;
-    QPixmap *m_leftPixmap, *m_rightPixmap, *m_topPixmap, *m_botPixmap;
-
-    QRect m_contentsRect;
-    int m_oldWidth, m_oldHeight;
-    kpSelection m_oldSelection;
+    struct kpToolAutoCropCommandPrivate *d;
 };
+
+
+// (returns true on success (even if it did nothing) or false on error)
+bool kpToolAutoCrop (kpMainWindow *mainWindow);
 
 
 #endif  // KP_TOOL_AUTO_CROP_H
