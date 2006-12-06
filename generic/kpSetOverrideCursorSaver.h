@@ -33,6 +33,25 @@
 class QCursor;
 
 
+//
+// A less error-prone way of setting the override cursor, compared to
+// the QApplication::{set,restore}OverrideCursor() pair.
+//
+// To use this class, allocate it on the stack with the desired cursor.
+//
+// This class sets the application's override cursor to <cursor> on
+// construction.  It restores the cursor on destruction.
+//
+// Example Usage:
+//
+// {
+//     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
+//
+//     <potentially time-consuming operation>
+//
+// }   // Stack unwinds, calling cursorSaver's destructor,
+//     // which restores the cursor
+//
 class kpSetOverrideCursorSaver
 {
 public:
