@@ -38,6 +38,7 @@
 #include <kpdocument.h>
 #include <kpmainwindow.h>
 #include <kpselection.h>
+#include <kpSetOverrideCursorSaver.h>
 
 
 kpColorEffectCommand::kpColorEffectCommand (const QString &name,
@@ -76,11 +77,10 @@ int kpColorEffectCommand::size () const
 // public virtual [base kpCommand]
 void kpColorEffectCommand::execute ()
 {
+    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
+    
     kpDocument *doc = document ();
-    if (!doc)
-        return;
-
-    QApplication::setOverrideCursor (Qt::WaitCursor);
+    Q_ASSERT (doc);
 
 
     const QPixmap oldPixmap = *doc->pixmap (m_actOnSelection);
@@ -103,11 +103,10 @@ void kpColorEffectCommand::execute ()
 // public virtual [base kpCommand]
 void kpColorEffectCommand::unexecute ()
 {
+    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
+    
     kpDocument *doc = document ();
-    if (!doc)
-        return;
-
-    QApplication::setOverrideCursor (Qt::WaitCursor);
+    Q_ASSERT (doc);
 
 
     QPixmap newPixmap;
@@ -125,9 +124,6 @@ void kpColorEffectCommand::unexecute ()
 
 
     delete m_oldPixmapPtr; m_oldPixmapPtr = 0;
-
-
-    QApplication::restoreOverrideCursor ();
 }
 
 
