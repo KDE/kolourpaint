@@ -26,11 +26,12 @@
 */
 
 
-#ifndef KP_TOOL_SKEW_H
-#define KP_TOOL_SKEW_H
+#ifndef kpTransformRotateDialog_H
+#define kpTransformRotateDialog_H
 
 
 #include <qpixmap.h>
+#include <qpoint.h>
 
 #include <kpcolor.h>
 #include <kpcommandhistory.h>
@@ -38,83 +39,61 @@
 #include <kpTransformPreviewDialog.h>
 
 
-class QLabel;
-class QPixmap;
+class QButtonGroup;
+class QRadioButton;
+class QString;
 
 class KIntNumInput;
 
 class kpDocument;
+class kpViewManager;
 class kpMainWindow;
 
 
-class kpTransformSkewCommand : public kpCommand
-{
-public:
-    kpTransformSkewCommand (bool actOnSelection,
-                       int hangle, int vangle,
-                       kpMainWindow *mainWindow);
-    virtual ~kpTransformSkewCommand ();
-
-    virtual QString name () const;
-
-    virtual int size () const;
-
-    virtual void execute ();
-    virtual void unexecute ();
-
-private:
-    bool m_actOnSelection;
-    int m_hangle, m_vangle;
-
-    kpColor m_backgroundColor;
-    QPixmap *m_oldPixmapPtr;
-    kpSelection m_oldSelection;
-};
-
-
-class kpTransformSkewDialog : public kpTransformPreviewDialog
+class kpTransformRotateDialog : public kpTransformPreviewDialog
 {
 Q_OBJECT
 
 public:
-    kpTransformSkewDialog (bool actOnSelection, kpMainWindow *parent);
-    virtual ~kpTransformSkewDialog ();
+    kpTransformRotateDialog (bool actOnSelection,
+                        kpMainWindow *parent);
+    virtual ~kpTransformRotateDialog ();
 
 private:
     static int s_lastWidth, s_lastHeight;
-    static int s_lastHorizontalAngle, s_lastVerticalAngle;
+    static bool s_lastIsClockwise;
+    static int s_lastAngleCustom;
 
+    void createDirectionGroupBox ();
     void createAngleGroupBox ();
 
+public:
+    virtual bool isNoOp () const;
+    int angle () const;  // 0 <= angle < 360 (clockwise);
+
+private:
     virtual QSize newDimensions () const;
     virtual QPixmap transformPixmap (const QPixmap &pixmap,
                                      int targetWidth, int targetHeight) const;
 
-    void updateLastAngles ();
-
 private slots:
+    void slotAngleCustomRadioButtonToggled (bool isChecked);
     virtual void slotUpdate ();
-
-public:
-    // These are the angles the users sees in the dialog and...
-    int horizontalAngle () const;
-    int verticalAngle () const;
-
-    // ...these functions translate them for use in kpPixmapFX::skew().
-    static int horizontalAngleForPixmapFX (int hangle);
-    static int verticalAngleForPixmapFX (int vangle);
-
-    int horizontalAngleForPixmapFX () const;
-    int verticalAngleForPixmapFX () const;
-
-    virtual bool isNoOp () const;
 
 private slots:
     virtual void accept ();
 
 private:
-    KIntNumInput *m_horizontalSkewInput, *m_verticalSkewInput;
+    QRadioButton *m_antiClockwiseRadioButton,
+                 *m_clockwiseRadioButton;
+
+    QButtonGroup *m_angleButtonGroup;
+    QRadioButton *m_angle90RadioButton,
+                 *m_angle180RadioButton,
+                 *m_angle270RadioButton,
+                 *m_angleCustomRadioButton;
+    KIntNumInput *m_angleCustomInput;
 };
 
 
-#endif  // KP_TOOL_SKEW_H
+#endif  // kpTransformRotateDialog_H

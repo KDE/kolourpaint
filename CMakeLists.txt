@@ -9,6 +9,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/rectangular
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/text
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/transforms
     ${CMAKE_SOURCE_DIR}/kolourpaint/compat
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs
@@ -83,12 +84,20 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/text/kpToolTextDeleteCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/text/kpToolTextEnterCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/text/kpToolTextInsertCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/transforms/kpTransformFlipCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/transforms/kpTransformResizeScaleCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/transforms/kpTransformRotateCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/transforms/kpTransformSkewCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/compat/kpbug.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors/kpcursorlightcross.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors/kpcursorprovider.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/coloreffects/kpcoloreffectsdialog.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/kpcolorsimilaritydialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/transforms/kpTransformFlipDialog.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/transforms/kpTransformPreviewDialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/transforms/kpTransformResizeScaleDialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/transforms/kpTransformRotateDialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/transforms/kpTransformSkewDialog.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/generic/kpwidgetmapper.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/coloreffects/kpcoloreffect.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/coloreffects/kpeffectbalance.cpp
@@ -105,10 +114,6 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kptextstyle.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/transforms/kptoolautocrop.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/transforms/kptoolcrop.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/transforms/kptoolflip.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/transforms/kptoolresizescale.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/transforms/kptoolrotate.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/transforms/kptoolskew.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/kolourpaint.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/kpcommandhistory.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/kpdocument.cpp

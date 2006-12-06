@@ -26,8 +26,8 @@
 */
 
 
-#ifndef KP_TOOL_RESIZE_SCALE_H
-#define KP_TOOL_RESIZE_SCALE_H
+#ifndef kpTransformResizeScaleCommand_H
+#define kpTransformResizeScaleCommand_H
 
 
 #include <qpixmap.h>
@@ -108,94 +108,5 @@ protected:
     kpSelection *m_oldSelection;
 };
 
-class kpTransformResizeScaleDialog : public KDialog
-{
-Q_OBJECT
 
-public:
-    kpTransformResizeScaleDialog (kpMainWindow *mainWindow);
-    virtual ~kpTransformResizeScaleDialog ();
-
-    enum ActOn
-    {
-        Image, Selection
-    };
-
-private:
-    static kpTransformResizeScaleCommand::Type s_lastType;
-    static double s_lastPercentWidth, s_lastPercentHeight;
-
-private:
-    kpDocument *document () const;
-    kpSelection *selection () const;
-
-    void createActOnBox (QWidget *baseWidget);
-    void createOperationGroupBox (QWidget *baseWidget);
-    void createDimensionsGroupBox (QWidget *baseWidget);
-
-    void widthFitHeightToAspectRatio ();
-    void heightFitWidthToAspectRatio ();
-
-private:
-    bool resizeEnabled () const;
-    bool scaleEnabled () const;
-    bool smoothScaleEnabled () const;
-
-public slots:
-    void slotActOnChanged ();
-    void slotTypeChanged ();
-
-    void slotWidthChanged (int width);
-    void slotHeightChanged (int height);
-
-    void slotPercentWidthChanged (double percentWidth);
-    void slotPercentHeightChanged (double percentHeight);
-
-public:
-    // (refers only to the state of the checkbox - user of dialog does
-    //  not have to do extra calculations)
-    bool keepAspectRatio () const;
-public slots:
-    void setKeepAspectRatio (bool on);
-
-private:
-    int originalWidth () const;
-    int originalHeight () const;
-
-public:
-    int imageWidth () const;
-    int imageHeight () const;
-    bool actOnSelection () const;
-    kpTransformResizeScaleCommand::Type type () const;
-
-    bool isNoOp () const;
-
-private slots:
-    virtual void accept ();
-
-private:
-    kpMainWindow *m_mainWindow;
-
-    KHBox *m_actOnBox;
-    QLabel *m_actOnLabel;
-    KComboBox *m_actOnCombo;
-
-    QGroupBox *m_operationGroupBox;
-    QToolButton *m_resizeButton,
-                *m_scaleButton,
-                *m_smoothScaleButton;
-    QLabel *m_resizeLabel,
-                 *m_scaleLabel,
-                 *m_smoothScaleLabel;
-
-    QGroupBox *m_dimensionsGroupBox;
-    KIntNumInput *m_originalWidthInput, *m_originalHeightInput,
-                 *m_newWidthInput, *m_newHeightInput;
-    KDoubleNumInput *m_percentWidthInput, *m_percentHeightInput;
-    QCheckBox *m_keepAspectRatioCheckBox;
-
-    int m_ignoreKeepAspectRatio;
-};
-
-
-#endif  // KP_TOOL_RESIZE_SCALE_H
+#endif  // kpTransformResizeScaleCommand_H

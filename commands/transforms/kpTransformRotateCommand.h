@@ -26,8 +26,8 @@
 */
 
 
-#ifndef KP_TOOL_ROTATE_H
-#define KP_TOOL_ROTATE_H
+#ifndef kpTransformRotateCommand_H
+#define kpTransformRotateCommand_H
 
 
 #include <qpixmap.h>
@@ -77,50 +77,4 @@ private:
 };
 
 
-class kpTransformRotateDialog : public kpTransformPreviewDialog
-{
-Q_OBJECT
-
-public:
-    kpTransformRotateDialog (bool actOnSelection,
-                        kpMainWindow *parent);
-    virtual ~kpTransformRotateDialog ();
-
-private:
-    static int s_lastWidth, s_lastHeight;
-    static bool s_lastIsClockwise;
-    static int s_lastAngleCustom;
-
-    void createDirectionGroupBox ();
-    void createAngleGroupBox ();
-
-public:
-    virtual bool isNoOp () const;
-    int angle () const;  // 0 <= angle < 360 (clockwise);
-
-private:
-    virtual QSize newDimensions () const;
-    virtual QPixmap transformPixmap (const QPixmap &pixmap,
-                                     int targetWidth, int targetHeight) const;
-
-private slots:
-    void slotAngleCustomRadioButtonToggled (bool isChecked);
-    virtual void slotUpdate ();
-
-private slots:
-    virtual void accept ();
-
-private:
-    QRadioButton *m_antiClockwiseRadioButton,
-                 *m_clockwiseRadioButton;
-
-    QButtonGroup *m_angleButtonGroup;
-    QRadioButton *m_angle90RadioButton,
-                 *m_angle180RadioButton,
-                 *m_angle270RadioButton,
-                 *m_angleCustomRadioButton;
-    KIntNumInput *m_angleCustomInput;
-};
-
-
-#endif  // KP_TOOL_ROTATE_H
+#endif  // kpTransformRotateCommand_H

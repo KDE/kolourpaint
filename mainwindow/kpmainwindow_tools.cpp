@@ -59,12 +59,12 @@
 #include <kptoolpolyline.h>
 #include <kptoolrectangle.h>
 #include <kptoolrectselection.h>
-#include <kptoolresizescale.h>
 #include <kptoolroundedrectangle.h>
 #include <kptoolspraycan.h>
 #include <kptooltext.h>
 #include <kptooltoolbar.h>
 #include <kptoolwidgetopaqueortransparent.h>
+#include <kpTransformResizeScaleCommand.h>
 #include <kpviewscrollablecontainer.h>
 #include <kpzoomedview.h>
 

@@ -53,7 +53,7 @@
 #include <kpselectiondrag.h>
 #include <kptool.h>
 #include <kptoolcrop.h>
-#include <kptoolresizescale.h>
+#include <kpTransformResizeScaleCommand.h>
 #include <kpToolSelectionCreateCommand.h>
 #include <kpToolSelectionDestroyCommand.h>
 #include <kpToolTextEnterCommand.h>

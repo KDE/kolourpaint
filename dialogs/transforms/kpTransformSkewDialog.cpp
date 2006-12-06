@@ -30,7 +30,7 @@
 #define DEBUG_KP_TOOL_SKEW_DIALOG 0
 
 
-#include <kptoolskew.h>
+#include <kpTransformSkewDialog.h>
 
 #include <qapplication.h>
 #include <qgridlayout.h>
@@ -53,162 +53,6 @@
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kptool.h>
-
-
-/*
- * kpTransformSkewCommand
- */
-
-kpTransformSkewCommand::kpTransformSkewCommand (bool actOnSelection,
-                                      int hangle, int vangle,
-                                      kpMainWindow *mainWindow)
-    : kpCommand (mainWindow),
-      m_actOnSelection (actOnSelection),
-      m_hangle (hangle), m_vangle (vangle),
-      m_backgroundColor (mainWindow ? mainWindow->backgroundColor (actOnSelection) : kpColor::Invalid),
-      m_oldPixmapPtr (0)
-{
-}
-
-kpTransformSkewCommand::~kpTransformSkewCommand ()
-{
-    delete m_oldPixmapPtr;
-}
-
-
-// public virtual [base kpCommand]
-QString kpTransformSkewCommand::name () const
-{
-    QString opName = i18n ("Skew");
-
-    if (m_actOnSelection)
-        return i18n ("Selection: %1", opName);
-    else
-        return opName;
-}
-
-
-// public virtual [base kpCommand]
-int kpTransformSkewCommand::size () const
-{
-    return kpPixmapFX::pixmapSize (m_oldPixmapPtr) +
-           m_oldSelection.size ();
-}
-
-
-// public virtual [base kpCommand]
-void kpTransformSkewCommand::execute ()
-{
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
-
-
-    QApplication::setOverrideCursor (Qt::WaitCursor);
-
-
-    m_oldPixmapPtr = new QPixmap ();
-    *m_oldPixmapPtr = *doc->pixmap (m_actOnSelection);
-
-
-    QPixmap newPixmap = kpPixmapFX::skew (*doc->pixmap (m_actOnSelection),
-                                          kpTransformSkewDialog::horizontalAngleForPixmapFX (m_hangle),
-                                          kpTransformSkewDialog::verticalAngleForPixmapFX (m_vangle),
-                                          m_backgroundColor);
-
-    if (m_actOnSelection)
-    {
-        kpSelection *sel = doc->selection ();
-
-        // Save old selection
-        m_oldSelection = *sel;
-
-
-        // Calculate skewed points
-        QPolygon currentPoints = sel->points ();
-        currentPoints.translate (-currentPoints.boundingRect ().x (),
-                                 -currentPoints.boundingRect ().y ());
-        QMatrix skewMatrix = kpPixmapFX::skewMatrix (
-            *doc->pixmap (m_actOnSelection),
-            kpTransformSkewDialog::horizontalAngleForPixmapFX (m_hangle),
-            kpTransformSkewDialog::verticalAngleForPixmapFX (m_vangle));
-        currentPoints = skewMatrix.map (currentPoints);
-        currentPoints.translate (-currentPoints.boundingRect ().x () + m_oldSelection.x (),
-                                 -currentPoints.boundingRect ().y () + m_oldSelection.y ());
-
-
-        if (currentPoints.boundingRect ().width () == newPixmap.width () &&
-            currentPoints.boundingRect ().height () == newPixmap.height ())
-        {
-            doc->setSelection (kpSelection (currentPoints, newPixmap,
-                                            m_oldSelection.transparency ()));
-        }
-        else
-        {
-            // TODO: fix the latter "victim of" problem in kpSelection by
-            //       allowing the border width & height != pixmap width & height
-            //       Or maybe autocrop?
-        #if DEBUG_KP_TOOL_SKEW
-            kDebug () << "kpTransformSkewCommand::execute() currentPoints.boundingRect="
-                       << currentPoints.boundingRect ()
-                       << " newPixmap: w=" << newPixmap.width ()
-                       << " h=" << newPixmap.height ()
-                       << " (victim of rounding error and/or skewed-a-(rectangular)-pixmap-that-was-transparent-in-the-corners-making-sel-uselessly-bigger-than-needs-be))"
-                       << endl;
-        #endif
-            doc->setSelection (kpSelection (kpSelection::Rectangle,
-                                            QRect (currentPoints.boundingRect ().x (),
-                                                   currentPoints.boundingRect ().y (),
-                                                   newPixmap.width (),
-                                                   newPixmap.height ()),
-                                            newPixmap,
-                                            m_oldSelection.transparency ()));
-        }
-
-        Q_ASSERT (m_mainWindow->tool ());
-        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
-    }
-    else
-    {
-        doc->setPixmap (newPixmap);
-    }
-
-
-    QApplication::restoreOverrideCursor ();
-}
-
-// public virtual [base kpCommand]
-void kpTransformSkewCommand::unexecute ()
-{
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
-
-
-    QApplication::setOverrideCursor (Qt::WaitCursor);
-
-
-    QPixmap oldPixmap = *m_oldPixmapPtr;
-    delete m_oldPixmapPtr; m_oldPixmapPtr = 0;
-
-
-    if (!m_actOnSelection)
-        doc->setPixmap (oldPixmap);
-    else
-    {
-        kpSelection oldSelection = m_oldSelection;
-        doc->setSelection (oldSelection);
-
-        if (m_mainWindow->tool ())
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
-    }
-
-
-    QApplication::restoreOverrideCursor ();
-}
-
-
-/*
- * kpTransformSkewDialog
- */
 
 
 // private static
@@ -445,4 +289,4 @@ void kpTransformSkewDialog::accept ()
 }
 
 
-#include <kptoolskew.moc>
+#include <kpTransformSkewDialog.moc>

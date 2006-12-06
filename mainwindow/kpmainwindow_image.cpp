@@ -54,12 +54,16 @@
 #include <kptoolclearcommand.h>
 #include <kptoolconverttograyscale.h>
 #include <kptoolcrop.h>
-#include <kptoolflip.h>
-#include <kptoolresizescale.h>
-#include <kptoolrotate.h>
 #include <kpToolSelectionCreateCommand.h>
 #include <kpToolSelectionPullFromDocumentCommand.h>
-#include <kptoolskew.h>
+#include <kpTransformFlipCommand.h>
+#include <kpTransformFlipDialog.h>
+#include <kpTransformResizeScaleCommand.h>
+#include <kpTransformResizeScaleDialog.h>
+#include <kpTransformRotateCommand.h>
+#include <kpTransformRotateDialog.h>
+#include <kpTransformSkewCommand.h>
+#include <kpTransformSkewDialog.h>
 #include <kpviewmanager.h>
 #include <kglobal.h>
 

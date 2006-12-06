@@ -26,7 +26,7 @@
 */
 
 
-#include <kptoolflip.h>
+#include <kpTransformFlipDialog.h>
 
 #include <qapplication.h>
 #include <qgroupbox.h>
@@ -45,106 +45,6 @@
 #include <kptool.h>
 #include <kpmainwindow.h>
 
-
-/*
- * kpTransformFlipCommand
- */
-
-kpTransformFlipCommand::kpTransformFlipCommand (bool actOnSelection,
-                                      bool horiz, bool vert,
-                                      kpMainWindow *mainWindow)
-    : kpCommand (mainWindow),
-      m_actOnSelection (actOnSelection),
-      m_horiz (horiz), m_vert (vert)
-{
-}
-
-kpTransformFlipCommand::~kpTransformFlipCommand ()
-{
-}
-
-
-// public virtual [base kpCommand]
-QString kpTransformFlipCommand::name () const
-{
-    QString opName;
-
-
-#if 1
-    opName = i18n ("Flip");
-#else  // re-enable when giving full descriptions for all actions
-    if (m_horiz && m_vert)
-        opName = i18n ("Flip horizontally and vertically");
-    else if (m_horiz)
-        opName = i18n ("Flip horizontally");
-    else if (m_vert)
-        opName = i18n ("Flip vertically");
-    else
-    {
-        kError () << "kpTransformFlipCommand::name() not asked to flip" << endl;
-        return QString::null;
-    }
-#endif
-
-
-    if (m_actOnSelection)
-        return i18n ("Selection: %1", opName);
-    else
-        return opName;
-}
-
-
-// public virtual [base kpCommand]
-int kpTransformFlipCommand::size () const
-{
-    return 0;
-}
-
-
-// public virtual [base kpCommand]
-void kpTransformFlipCommand::execute ()
-{
-    flip ();
-}
-
-// public virtual [base kpCommand]
-void kpTransformFlipCommand::unexecute ()
-{
-    flip ();
-}
-
-
-// private
-void kpTransformFlipCommand::flip ()
-{
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
-
-
-    QApplication::setOverrideCursor (Qt::WaitCursor);
-
-
-    if (m_actOnSelection)
-    {
-        doc->selection ()->flip (m_horiz, m_vert);
-        if (m_mainWindow->tool ())
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
-    }
-    else
-    {
-        QPixmap newPixmap = kpPixmapFX::flip (*doc->pixmap (), m_horiz, m_vert);
-
-        doc->setPixmap (newPixmap);
-    }
-
-
-    QApplication::restoreOverrideCursor ();
-}
-
-
-/*
- * kpTransformFlipDialog
- */
 
 // private static
 bool kpTransformFlipDialog::s_lastIsVerticalFlip = true;
@@ -207,5 +107,5 @@ bool kpTransformFlipDialog::isNoOp () const
 }
 
 
-#include <kptoolflip.moc>
+#include <kpTransformFlipDialog.moc>
 

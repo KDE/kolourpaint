@@ -26,8 +26,8 @@
 */
 
 
-#ifndef KP_TOOL_FLIP_H
-#define KP_TOOL_FLIP_H
+#ifndef kpTransformFlipCommand_H
+#define kpTransformFlipCommand_H
 
 
 #include <kdialog.h>
@@ -65,28 +65,4 @@ private:
 };
 
 
-class kpTransformFlipDialog : public KDialog
-{
-Q_OBJECT
-
-public:
-    kpTransformFlipDialog (bool actOnSelection, QWidget *parent);
-    ~kpTransformFlipDialog ();
-
-private:
-    static bool s_lastIsVerticalFlip;
-
-public slots:
-    void slotIsVerticalFlipChanged ();
-
-public:
-    bool getHorizontalFlip () const;
-    bool getVerticalFlip () const;
-    bool isNoOp () const;
-
-private:
-    QRadioButton *m_horizontalFlipRadioButton, *m_verticalFlipRadioButton;
-};
-
-
-#endif  // KP_TOOL_FLIP_H
+#endif  // kpTransformFlipCommand_H

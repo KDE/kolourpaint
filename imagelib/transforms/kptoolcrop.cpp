@@ -42,9 +42,9 @@
 #include <kpselection.h>
 #include <kptool.h>
 #include <kptoolclearcommand.h>
-#include <kptoolresizescale.h>
 #include <kpToolSelectionCreateCommand.h>
 #include <kpToolSelectionMoveCommand.h>
+#include <kpTransformResizeScaleCommand.h>
 #include <kpviewmanager.h>
 
 
