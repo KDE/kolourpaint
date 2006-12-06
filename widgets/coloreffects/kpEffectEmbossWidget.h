@@ -31,7 +31,6 @@
 
 
 #include <kpcolor.h>
-
 #include <kpColorEffectWidget.h>
 
 
@@ -43,7 +42,7 @@ class KIntNumInput;
 class kpMainWindow;
 
 
-class kpEffectEmbossWidget : public kpColorEffectWidget
+class kpEffectEmbossWidget : public kpEffectWidgetBase
 {
 Q_OBJECT
 
@@ -56,9 +55,9 @@ public:
     virtual QString caption () const;
 
     virtual bool isNoOp () const;
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
+    virtual kpImage applyEffect (const kpImage &image);
 
-    virtual kpColorEffectCommand *createCommand () const;
+    virtual kpEffectCommandBase *createCommand () const;
 
 protected:
     double radius () const;

@@ -38,7 +38,7 @@
 #include <kpSetOverrideCursorSaver.h>
 
 
-struct kpColorEffectCommandPrivate
+struct kpEffectCommandBasePrivate
 {
     QString name;
     bool actOnSelection;
@@ -46,24 +46,24 @@ struct kpColorEffectCommandPrivate
     kpImage oldImage;
 };
 
-kpColorEffectCommand::kpColorEffectCommand (const QString &name,
+kpEffectCommandBase::kpEffectCommandBase (const QString &name,
                                             bool actOnSelection,
                                             kpMainWindow *mainWindow)
     : kpCommand (mainWindow),
-      d (new kpColorEffectCommandPrivate ())
+      d (new kpEffectCommandBasePrivate ())
 {
     d->name = name;
     d->actOnSelection = actOnSelection;
 }
 
-kpColorEffectCommand::~kpColorEffectCommand ()
+kpEffectCommandBase::~kpEffectCommandBase ()
 {
     delete d;
 }
 
 
 // public virtual [base kpCommand]
-QString kpColorEffectCommand::name () const
+QString kpEffectCommandBase::name () const
 {
     if (d->actOnSelection)
         return i18n ("Selection: %1", d->name);
@@ -73,14 +73,14 @@ QString kpColorEffectCommand::name () const
 
 
 // public virtual [base kpCommand]
-int kpColorEffectCommand::size () const
+int kpEffectCommandBase::size () const
 {
     return kpPixmapFX::pixmapSize (d->oldImage);
 }
 
 
 // public virtual [base kpCommand]
-void kpColorEffectCommand::execute ()
+void kpEffectCommandBase::execute ()
 {
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
     
@@ -96,13 +96,13 @@ void kpColorEffectCommand::execute ()
     }
 
 
-    kpImage newImage = /*pure virtual*/applyColorEffect (oldImage);
+    kpImage newImage = /*pure virtual*/applyEffect (oldImage);
 
     doc->setPixmap (d->actOnSelection, newImage);
 }
 
 // public virtual [base kpCommand]
-void kpColorEffectCommand::unexecute ()
+void kpEffectCommandBase::unexecute ()
 {
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
     
@@ -118,7 +118,7 @@ void kpColorEffectCommand::unexecute ()
     }
     else
     {
-        newImage = /*pure virtual*/applyColorEffect (*doc->pixmap (d->actOnSelection));
+        newImage = /*pure virtual*/applyEffect (*doc->pixmap (d->actOnSelection));
     }
 
     doc->setPixmap (d->actOnSelection, newImage);

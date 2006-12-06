@@ -31,6 +31,7 @@
 
 
 #include <kpColorEffectWidget.h>
+#include <kpimage.h>
 
 
 class QLabel;
@@ -42,7 +43,7 @@ class KIntNumInput;
 class kpMainWindowe;
 
 
-class kpEffectBalanceWidget : public kpColorEffectWidget
+class kpEffectBalanceWidget : public kpEffectWidgetBase
 {
 Q_OBJECT
 
@@ -55,9 +56,9 @@ public:
     virtual QString caption () const;
 
     virtual bool isNoOp () const;
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap);
+    virtual kpImage applyEffect (const kpImage &image);
 
-    virtual kpColorEffectCommand *createCommand () const;
+    virtual kpEffectCommandBase *createCommand () const;
 
 protected:
     int channels () const;

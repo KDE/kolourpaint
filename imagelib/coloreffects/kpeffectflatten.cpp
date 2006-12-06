@@ -53,7 +53,7 @@ kpEffectFlattenCommand::kpEffectFlattenCommand (const QColor &color1,
                                                 const QColor &color2,
                                                 bool actOnSelection,
                                                 kpMainWindow *mainWindow)
-    : kpColorEffectCommand (i18n ("Flatten"), actOnSelection, mainWindow),
+    : kpEffectCommandBase (i18n ("Flatten"), actOnSelection, mainWindow),
       m_color1 (color1), m_color2 (color2)
 {
 }
@@ -105,11 +105,11 @@ QImage kpEffectFlattenCommand::apply (const QImage &img,
 
 
 //
-// kpEffectFlattenCommand implements kpColorEffectCommand interface
+// kpEffectFlattenCommand implements kpEffectCommandBase interface
 //
 
-// protected virtual [base kpColorEffectCommand]
-kpImage kpEffectFlattenCommand::applyColorEffect (const kpImage &image)
+// protected virtual [base kpEffectCommandBase]
+kpImage kpEffectFlattenCommand::applyEffect (const kpImage &image)
 {
     return apply (image, m_color1, m_color2);
 }

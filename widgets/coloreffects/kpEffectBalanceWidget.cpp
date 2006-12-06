@@ -59,7 +59,7 @@
 kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
                                               kpMainWindow *mainWindow,
                                               QWidget *parent)
-    : kpColorEffectWidget (actOnSelection, mainWindow, parent)
+    : kpEffectWidgetBase (actOnSelection, mainWindow, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
     lay->setMargin (marginHint ());
@@ -164,28 +164,28 @@ kpEffectBalanceWidget::~kpEffectBalanceWidget ()
 }
 
 
-// public virtual [base kpColorEffectWidget]
+// public virtual [base kpEffectWidgetBase]
 QString kpEffectBalanceWidget::caption () const
 {
     return i18n ("Settings");
 }
 
 
-// public virtual [base kpColorEffectWidget]
+// public virtual [base kpEffectWidgetBase]
 bool kpEffectBalanceWidget::isNoOp () const
 {
     return (brightness () == 0 && contrast () == 0 && gamma () == 0);
 }
 
-// public virtual [base kpColorEffectWidget]
-QPixmap kpEffectBalanceWidget::applyColorEffect (const QPixmap &pixmap)
+// public virtual [base kpEffectWidgetBase]
+kpImage kpEffectBalanceWidget::applyEffect (const kpImage &image)
 {
-    return kpEffectBalanceCommand::applyColorEffect (pixmap,
-               channels (), brightness (), contrast (), gamma ());
+    return kpEffectBalanceCommand::applyEffect (image,
+        channels (), brightness (), contrast (), gamma ());
 }
 
-// public virtual [base kpColorEffectWidget]
-kpColorEffectCommand *kpEffectBalanceWidget::createCommand () const
+// public virtual [base kpEffectWidgetBase]
+kpEffectCommandBase *kpEffectBalanceWidget::createCommand () const
 {
     return new kpEffectBalanceCommand (channels (),
                                        brightness (), contrast (), gamma (),

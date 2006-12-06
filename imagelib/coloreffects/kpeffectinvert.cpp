@@ -45,7 +45,7 @@
 kpEffectInvertCommand::kpEffectInvertCommand (int channels,
                                               bool actOnSelection,
                                               kpMainWindow *mainWindow)
-    : kpColorEffectCommand (channels == RGB ?
+    : kpEffectCommandBase (channels == RGB ?
                                 i18n ("Invert Colors") : i18n ("Invert"),
                             actOnSelection, mainWindow),
       m_channels (channels)
@@ -54,7 +54,7 @@ kpEffectInvertCommand::kpEffectInvertCommand (int channels,
 
 kpEffectInvertCommand::kpEffectInvertCommand (bool actOnSelection,
                                               kpMainWindow *mainWindow)
-    : kpColorEffectCommand (i18n ("Invert Colors"), actOnSelection, mainWindow),
+    : kpEffectCommandBase (i18n ("Invert Colors"), actOnSelection, mainWindow),
       m_channels (RGB)
 {
 }
@@ -130,11 +130,11 @@ QImage kpEffectInvertCommand::apply (const QImage &img, int channels)
 
 
 //
-// kpEffectInvertCommand implements kpColorEffectCommand interface
+// kpEffectInvertCommand implements kpEffectCommandBase interface
 //
 
-// protected virtual [base kpColorEffectCommand]
-kpImage kpEffectInvertCommand::applyColorEffect (const kpImage &image)
+// protected virtual [base kpEffectCommandBase]
+kpImage kpEffectInvertCommand::applyEffect (const kpImage &image)
 {
     return apply (image, m_channels);
 }

@@ -51,7 +51,7 @@
 kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
                                                       kpMainWindow *mainWindow,
                                                       QWidget *parent)
-    : kpColorEffectWidget (actOnSelection, mainWindow, parent)
+    : kpEffectWidgetBase (actOnSelection, mainWindow, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
     lay->setSpacing (spacingHint ());
@@ -88,28 +88,28 @@ kpEffectBlurSharpenWidget::~kpEffectBlurSharpenWidget ()
 }
 
 
-// public virtual [base kpColorEffectWidget]
+// public virtual [base kpEffectWidgetBase]
 QString kpEffectBlurSharpenWidget::caption () const
 {
     return QString::null;
 }
 
 
-// public virtual [base kpColorEffectWidget]
+// public virtual [base kpEffectWidgetBase]
 bool kpEffectBlurSharpenWidget::isNoOp () const
 {
     return (type () == kpEffectBlurSharpenCommand::None);
 }
 
-// public virtual [base kpColorEffectWidget]
-QPixmap kpEffectBlurSharpenWidget::applyColorEffect (const QPixmap &pixmap)
+// public virtual [base kpEffectWidgetBase]
+kpImage kpEffectBlurSharpenWidget::applyEffect (const kpImage &image)
 {
-    return kpEffectBlurSharpenCommand::apply (pixmap,
+    return kpEffectBlurSharpenCommand::apply (image,
                                               type (), radius (), sigma (), repeat ());
 }
 
-// public virtual [base kpColorEffectWidget]
-kpColorEffectCommand *kpEffectBlurSharpenWidget::createCommand () const
+// public virtual [base kpEffectWidgetBase]
+kpEffectCommandBase *kpEffectBlurSharpenWidget::createCommand () const
 {
     return new kpEffectBlurSharpenCommand (type (), radius (), sigma (), repeat (),
                                            m_actOnSelection,

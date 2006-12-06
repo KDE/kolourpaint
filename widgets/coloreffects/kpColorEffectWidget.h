@@ -26,32 +26,30 @@
 */
 
 
-#ifndef kpColorEffectWidget_H
-#define kpColorEffectWidget_H
+#ifndef kpEffectWidgetBase_H
+#define kpEffectWidgetBase_H
 
 
-#include <qstring.h>
 #include <qwidget.h>
 
 #include <kpcommandhistory.h>
+#include <kpimage.h>
 
 
-class QPixmap;
-
-class kpColorEffectCommand;
+class kpEffectCommandBase;
 class kpDocument;
 class kpMainWindow;
 
 
-class kpColorEffectWidget : public QWidget
+class kpEffectWidgetBase : public QWidget
 {
 Q_OBJECT
 
 public:
-    kpColorEffectWidget (bool actOnSelection,
+    kpEffectWidgetBase (bool actOnSelection,
                          kpMainWindow *mainWindow,
                          QWidget *parent);
-    virtual ~kpColorEffectWidget ();
+    virtual ~kpEffectWidgetBase ();
 
 signals:
     void settingsChangedNoWaitCursor ();
@@ -66,9 +64,9 @@ public:
     virtual QString caption () const;
 
     virtual bool isNoOp () const = 0;
-    virtual QPixmap applyColorEffect (const QPixmap &pixmap) = 0;
+    virtual kpImage applyEffect (const kpImage &image) = 0;
 
-    virtual kpColorEffectCommand *createCommand () const = 0;
+    virtual kpEffectCommandBase *createCommand () const = 0;
 
 protected:
     int marginHint () const;
@@ -80,4 +78,4 @@ protected:
 };
 
 
-#endif  // kpColorEffectWidget_H
+#endif  // kpEffectWidgetBase_H

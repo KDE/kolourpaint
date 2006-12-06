@@ -60,7 +60,7 @@ QColor kpEffectFlattenWidget::s_lastColor2;
 kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
                                               kpMainWindow *mainWindow,
                                               QWidget *parent )
-    : kpColorEffectWidget (actOnSelection, mainWindow, parent)
+    : kpEffectWidgetBase (actOnSelection, mainWindow, parent)
 {
     if (!s_lastColor1.isValid () || !s_lastColor2.isValid ())
     {
@@ -133,39 +133,39 @@ QColor kpEffectFlattenWidget::color2 () const
 
 
 //
-// kpEffectFlattenWidget implements kpColorEffectWidget interface
+// kpEffectFlattenWidget implements kpEffectWidgetBase interface
 //
 
-// public virtual [base kpColorEffectWidget]
+// public virtual [base kpEffectWidgetBase]
 QString kpEffectFlattenWidget::caption () const
 {
     return i18n ("Colors");
 }
 
 
-// public virtual [base kpColorEffectWidget]
+// public virtual [base kpEffectWidgetBase]
 bool kpEffectFlattenWidget::isNoOp () const
 {
     return !m_enableCheckBox->isChecked ();
 }
 
-// public virtual [base kpColorEffectWidget]
-QPixmap kpEffectFlattenWidget::applyColorEffect (const QPixmap &pixmap)
+// public virtual [base kpEffectWidgetBase]
+kpImage kpEffectFlattenWidget::applyEffect (const kpImage &image)
 {
 #if DEBUG_KP_EFFECT_FLATTEN
-    kDebug () << "kpEffectFlattenWidget::applyColorEffect() nop="
+    kDebug () << "kpEffectFlattenWidget::applyEffect() nop="
                << isNoOp () << endl;
 #endif
 
     if (isNoOp ())
-        return pixmap;
+        return image;
 
-    return kpEffectFlattenCommand::apply (pixmap, color1 (), color2 ());
+    return kpEffectFlattenCommand::apply (image, color1 (), color2 ());
 }
 
 
-// public virtual [base kpColorEffectWidget]
-kpColorEffectCommand *kpEffectFlattenWidget::createCommand () const
+// public virtual [base kpEffectWidgetBase]
+kpEffectCommandBase *kpEffectFlattenWidget::createCommand () const
 {
     return new kpEffectFlattenCommand (color1 (), color2 (),
                                        m_actOnSelection,

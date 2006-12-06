@@ -53,7 +53,7 @@
 kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
                                             kpMainWindow *mainWindow,
                                             QWidget *parent)
-    : kpColorEffectWidget (actOnSelection, mainWindow, parent)
+    : kpEffectWidgetBase (actOnSelection, mainWindow, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
     lay->setSpacing (spacingHint ());
@@ -98,31 +98,31 @@ kpEffectEmbossWidget::~kpEffectEmbossWidget ()
 }
 
 
-// public virtual [base kpColorEffectWidget]
+// public virtual [base kpEffectWidgetBase]
 QString kpEffectEmbossWidget::caption () const
 {
     return QString::null;
 }
 
 
-// public virtual [base kpColorEffectWidget]
+// public virtual [base kpEffectWidgetBase]
 bool kpEffectEmbossWidget::isNoOp () const
 {
     //return (m_amountInput->value () == 0);
     return !m_enableCheckBox->isChecked ();
 }
 
-// public virtual [base kpColorEffectWidget]
-QPixmap kpEffectEmbossWidget::applyColorEffect (const QPixmap &pixmap)
+// public virtual [base kpEffectWidgetBase]
+kpImage kpEffectEmbossWidget::applyEffect (const kpImage &image)
 {
     if (isNoOp ())
-        return pixmap;
+        return image;
 
-    return kpEffectEmbossCommand::apply (pixmap, radius (), sigma (), repeat ());
+    return kpEffectEmbossCommand::apply (image, radius (), sigma (), repeat ());
 }
 
-// public virtual [base kpColorEffectWidget]
-kpColorEffectCommand *kpEffectEmbossWidget::createCommand () const
+// public virtual [base kpEffectWidgetBase]
+kpEffectCommandBase *kpEffectEmbossWidget::createCommand () const
 {
     return new kpEffectEmbossCommand (radius (), sigma (), repeat (),
                                       m_actOnSelection,

@@ -31,19 +31,18 @@
 
 
 #include <kpcolor.h>
-
 #include <kpcoloreffect.h>
+#include <kpimage.h>
 
 
 class QLabel;
-class QPixmap;
 
 class KIntNumInput;
 
 class kpMainWindow;
 
 
-class kpEffectBlurSharpenCommand : public kpColorEffectCommand
+class kpEffectBlurSharpenCommand : public kpEffectCommandBase
 {
 public:
     enum Type
@@ -60,12 +59,12 @@ public:
 
     static QString nameForType (kpEffectBlurSharpenCommand::Type type);
     
-    static QPixmap apply (const QPixmap &pixmap,
+    static kpImage apply (const kpImage &image,
                           Type type, double radius, double sigma,
                           int repeat);
 
 protected:
-    virtual kpImage applyColorEffect (const kpImage &image);
+    virtual kpImage applyEffect (const kpImage &image);
 
 protected:
     Type m_type;

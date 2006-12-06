@@ -26,8 +26,8 @@
 */
 
 
-#ifndef KP_COLOR_EFFECT_H
-#define KP_COLOR_EFFECT_H
+#ifndef kpEffectCommandBase_H
+#define kpEffectCommandBase_H
 
 
 #include <qwidget.h>
@@ -40,13 +40,13 @@ class kpDocument;
 class kpMainWindow;
 
 
-class kpColorEffectCommand : public kpCommand
+class kpEffectCommandBase : public kpCommand
 {
 public:
-    kpColorEffectCommand (const QString &name,
-                          bool actOnSelection,
-                          kpMainWindow *mainWindow);
-    virtual ~kpColorEffectCommand ();
+    kpEffectCommandBase (const QString &name,
+        bool actOnSelection,
+        kpMainWindow *mainWindow);
+    virtual ~kpEffectCommandBase ();
 
     virtual QString name () const;
     virtual int size () const;
@@ -56,16 +56,16 @@ public:
     virtual void unexecute ();
 
 public:
-    // Return true if applyColorEffect(applyColorEffect(pixmap)) == pixmap
+    // Return true if applyEffect(applyEffect(image)) == image
     // to avoid storing the old pixmap, saving memory.
     virtual bool isInvertible () const { return false; }
 
 protected:
-    virtual kpImage applyColorEffect (const kpImage &image) = 0;
+    virtual kpImage applyEffect (const kpImage &image) = 0;
 
 private:
-    struct kpColorEffectCommandPrivate *d;
+    struct kpEffectCommandBasePrivate *d;
 };
 
 
-#endif  // KP_COLOR_EFFECT_H
+#endif  // kpEffectCommandBase_H

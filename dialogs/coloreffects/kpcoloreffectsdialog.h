@@ -41,8 +41,8 @@ class QVBoxLayout;
 
 class KComboBox;
 
-class kpColorEffectCommand;
-class kpColorEffectWidget;
+class kpEffectCommandBase;
+class kpEffectWidgetBase;
 class kpMainWindow;
 
 
@@ -56,7 +56,7 @@ public:
     virtual ~kpEffectsDialog ();
 
     virtual bool isNoOp () const;
-    kpColorEffectCommand *createCommand () const;
+    kpEffectCommandBase *createCommand () const;
 
 protected:
     virtual QSize newDimensions () const;
@@ -83,7 +83,7 @@ protected:
     QGroupBox *m_settingsGroupBox;
     QVBoxLayout *m_settingsLayout;
 
-    kpColorEffectWidget *m_colorEffectWidget;
+    kpEffectWidgetBase *m_effectWidget;
 };
 
 

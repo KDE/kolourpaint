@@ -73,7 +73,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
       m_effectsComboBox (0),
       m_settingsGroupBox (0),
       m_settingsLayout (0),
-      m_colorEffectWidget (0)
+      m_effectWidget (0)
 {
 #if DEBUG_KP_EFFECTS_DIALOG
     kDebug () << "kpEffectsDialog::kpEffectsDialog()" << endl;
@@ -142,19 +142,19 @@ kpEffectsDialog::~kpEffectsDialog ()
 // public virtual [base kpTransformPreviewDialog]
 bool kpEffectsDialog::isNoOp () const
 {
-    if (!m_colorEffectWidget)
+    if (!m_effectWidget)
         return true;
 
-    return m_colorEffectWidget->isNoOp ();
+    return m_effectWidget->isNoOp ();
 }
 
 // public
-kpColorEffectCommand *kpEffectsDialog::createCommand () const
+kpEffectCommandBase *kpEffectsDialog::createCommand () const
 {
-    if (!m_colorEffectWidget)
+    if (!m_effectWidget)
         return 0;
 
-    return m_colorEffectWidget->createCommand ();
+    return m_effectWidget->createCommand ();
 }
 
 
@@ -175,8 +175,8 @@ QPixmap kpEffectsDialog::transformPixmap (const QPixmap &pixmap,
 {
     QPixmap pixmapWithEffect;
 
-    if (m_colorEffectWidget)
-        pixmapWithEffect = m_colorEffectWidget->applyColorEffect (pixmap);
+    if (m_effectWidget)
+        pixmapWithEffect = m_effectWidget->applyEffect (pixmap);
     else
         pixmapWithEffect = pixmap;
 
@@ -207,14 +207,14 @@ void kpEffectsDialog::selectEffect (int which)
         m_effectsComboBox->setCurrentIndex (which);
 
 
-    delete m_colorEffectWidget;
-    m_colorEffectWidget = 0;
+    delete m_effectWidget;
+    m_effectWidget = 0;
 
 
     m_settingsGroupBox->setWindowTitle (QString::null);
 
 #define CREATE_EFFECT_WIDGET(name)                        \
-    m_colorEffectWidget = new name (m_actOnSelection,     \
+    m_effectWidget = new name (m_actOnSelection,     \
                                     m_mainWindow,         \
                                     m_settingsGroupBox)
     switch (which)
@@ -246,12 +246,12 @@ void kpEffectsDialog::selectEffect (int which)
 #undef CREATE_EFFECT_WIDGET
 
 
-    if (m_colorEffectWidget)
+    if (m_effectWidget)
     {
     #if DEBUG_KP_EFFECTS_DIALOG
         kDebug () << "\twidget exists for effect #" << endl;
     #endif
-        m_settingsGroupBox->setTitle (m_colorEffectWidget->caption ());
+        m_settingsGroupBox->setTitle (m_effectWidget->caption ());
 
 
         // Don't resize the preview when showing the widget:
@@ -285,12 +285,12 @@ void kpEffectsDialog::selectEffect (int which)
     #endif
 
         // Show widget
-        m_settingsLayout->addWidget (m_colorEffectWidget);
+        m_settingsLayout->addWidget (m_effectWidget);
     #if DEBUG_KP_EFFECTS_DIALOG
         kDebug () << "\tafter addWidget, previewGroupBox.size="
                    << m_previewGroupBox->size () << endl;
     #endif
-        m_colorEffectWidget->show ();
+        m_effectWidget->show ();
     #if DEBUG_KP_EFFECTS_DIALOG
         kDebug () << "\tafter addWidget show, previewGroupBox.size="
                    << m_previewGroupBox->size () << endl;
@@ -310,11 +310,11 @@ void kpEffectsDialog::selectEffect (int which)
     #endif
 
 
-        connect (m_colorEffectWidget, SIGNAL (settingsChangedNoWaitCursor ()),
+        connect (m_effectWidget, SIGNAL (settingsChangedNoWaitCursor ()),
                  this, SLOT (slotUpdate ()));
-        connect (m_colorEffectWidget, SIGNAL (settingsChanged ()),
+        connect (m_effectWidget, SIGNAL (settingsChanged ()),
                  this, SLOT (slotUpdateWithWaitCursor ()));
-        connect (m_colorEffectWidget, SIGNAL (settingsChangedDelayed ()),
+        connect (m_effectWidget, SIGNAL (settingsChangedDelayed ()),
                  this, SLOT (slotDelayedUpdate ()));
         slotUpdateWithWaitCursor ();
     #if DEBUG_KP_EFFECTS_DIALOG

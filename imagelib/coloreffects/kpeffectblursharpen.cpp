@@ -53,7 +53,7 @@ kpEffectBlurSharpenCommand::kpEffectBlurSharpenCommand (Type type,
                                                         int repeat,
                                                         bool actOnSelection,
                                                         kpMainWindow *mainWindow)
-    : kpColorEffectCommand (kpEffectBlurSharpenCommand::nameForType (type),
+    : kpEffectCommandBase (kpEffectBlurSharpenCommand::nameForType (type),
                             actOnSelection, mainWindow),
       m_type (type),
       m_radius (radius), m_sigma (sigma),
@@ -120,8 +120,8 @@ QPixmap kpEffectBlurSharpenCommand::apply (const QPixmap &pixmap,
     return retPixmap;
 }
 
-// protected virtual [base kpColorEffectCommand]
-kpImage kpEffectBlurSharpenCommand::applyColorEffect (const kpImage &image)
+// protected virtual [base kpEffectCommandBase]
+kpImage kpEffectBlurSharpenCommand::applyEffect (const kpImage &image)
 {
     return apply (image, m_type, m_radius, m_sigma, m_repeat);
 }

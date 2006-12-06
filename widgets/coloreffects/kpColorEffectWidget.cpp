@@ -40,7 +40,7 @@
 #include <kpselection.h>
 
 
-kpColorEffectWidget::kpColorEffectWidget (bool actOnSelection,
+kpEffectWidgetBase::kpEffectWidgetBase (bool actOnSelection,
                                           kpMainWindow *mainWindow,
                                           QWidget *parent)
     : QWidget (parent),
@@ -49,26 +49,26 @@ kpColorEffectWidget::kpColorEffectWidget (bool actOnSelection,
 {
 }
 
-kpColorEffectWidget::~kpColorEffectWidget ()
+kpEffectWidgetBase::~kpEffectWidgetBase ()
 {
 }
 
 
 // public
-QString kpColorEffectWidget::caption () const
+QString kpEffectWidgetBase::caption () const
 {
     return QString::null;
 }
 
 
 // protected
-int kpColorEffectWidget::marginHint () const
+int kpEffectWidgetBase::marginHint () const
 {
     return 0;
 }
 
 // protected
-int kpColorEffectWidget::spacingHint () const
+int kpEffectWidgetBase::spacingHint () const
 {
     return KDialog::spacingHint ();
 }

@@ -59,7 +59,7 @@ kpEffectBalanceCommand::kpEffectBalanceCommand (int channels,
         int brightness, int contrast, int gamma,
         bool actOnSelection,
         kpMainWindow *mainWindow)
-    : kpColorEffectCommand (i18n ("Balance"), actOnSelection, mainWindow),
+    : kpEffectCommandBase (i18n ("Balance"), actOnSelection, mainWindow),
       m_channels (channels),
       m_brightness (brightness), m_contrast (contrast), m_gamma (gamma)
 {
@@ -129,12 +129,12 @@ static inline QRgb brightnessContrastGammaForRGB (QRgb rgb,
 
 
 // public static
-QPixmap kpEffectBalanceCommand::applyColorEffect (const QPixmap &pixmap,
-    int channels,
-    int brightness, int contrast, int gamma)
+kpImage kpEffectBalanceCommand::applyEffect (const kpImage &image,
+        int channels,
+        int brightness, int contrast, int gamma)
 {
 #if DEBUG_KP_EFFECT_BALANCE
-    kDebug () << "kpEffectBalanceCommand::applyColorEffect("
+    kDebug () << "kpEffectBalanceCommand::applyEffect("
                << "channels=" << channels
                << ",brightness=" << brightness
                << ",contrast=" << contrast
@@ -143,7 +143,7 @@ QPixmap kpEffectBalanceCommand::applyColorEffect (const QPixmap &pixmap,
     QTime timer; timer.start ();
 #endif
 
-    QImage image = kpPixmapFX::convertToImage (pixmap);
+    QImage qimage = kpPixmapFX::convertToImage (image);
 #if DEBUG_KP_EFFECT_BALANCE
     kDebug () << "\tconvertToImage=" << timer.restart () << endl;
 #endif
@@ -178,28 +178,28 @@ QPixmap kpEffectBalanceCommand::applyColorEffect (const QPixmap &pixmap,
 #endif
 
 
-    if (image.depth () > 8)
+    if (qimage.depth () > 8)
     {
-        for (int y = 0; y < image.height (); y++)
+        for (int y = 0; y < qimage.height (); y++)
         {
-            for (int x = 0; x < image.width (); x++)
+            for (int x = 0; x < qimage.width (); x++)
             {
-                const QRgb rgb = image.pixel (x, y);
+                const QRgb rgb = qimage.pixel (x, y);
 
                 const Q_UINT8 red = (Q_UINT8) qRed (rgb);
                 const Q_UINT8 green = (Q_UINT8) qGreen (rgb);
                 const Q_UINT8 blue = (Q_UINT8) qBlue (rgb);
                 const Q_UINT8 alpha = (Q_UINT8) qAlpha (rgb);
 
-                image.setPixel (x, y,
+                qimage.setPixel (x, y,
                     qRgba (transformRed [red],
                            transformGreen [green],
                            transformBlue [blue],
                            alpha));
 
             #if 0
-                image.setPixel (x, y,
-                    brightnessContrastGammaForRGB (image.pixel (x, y),
+                qimage.setPixel (x, y,
+                    brightnessContrastGammaForRGB (qimage.pixel (x, y),
                         channels,
                         brightness, contrast, gamma));
             #endif
@@ -208,24 +208,24 @@ QPixmap kpEffectBalanceCommand::applyColorEffect (const QPixmap &pixmap,
     }
     else
     {
-        for (int i = 0; i < image.numColors (); i++)
+        for (int i = 0; i < qimage.numColors (); i++)
         {
-            const QRgb rgb = image.color (i);
+            const QRgb rgb = qimage.color (i);
 
             const Q_UINT8 red = (Q_UINT8) qRed (rgb);
             const Q_UINT8 green = (Q_UINT8) qGreen (rgb);
             const Q_UINT8 blue = (Q_UINT8) qBlue (rgb);
             const Q_UINT8 alpha = (Q_UINT8) qAlpha (rgb);
 
-            image.setColor (i,
+            qimage.setColor (i,
                 qRgba (transformRed [red],
                        transformGreen [green],
                        transformBlue [blue],
                        alpha));
 
         #if 0
-            image.setColor (i,
-                brightnessContrastGammaForRGB (image.color (i),
+            qimage.setColor (i,
+                brightnessContrastGammaForRGB (qimage.color (i),
                     channels,
                     brightness, contrast, gamma));
         #endif
@@ -236,7 +236,7 @@ QPixmap kpEffectBalanceCommand::applyColorEffect (const QPixmap &pixmap,
     kDebug () << "\teffect=" << timer.restart () << endl;
 #endif
 
-    const QPixmap retPixmap = kpPixmapFX::convertToPixmap (image);
+    const QPixmap retPixmap = kpPixmapFX::convertToPixmap (qimage);
 #if DEBUG_KP_EFFECT_BALANCE
     kDebug () << "\tconvertToPixmap=" << timer.restart () << endl;
 #endif
@@ -244,11 +244,11 @@ QPixmap kpEffectBalanceCommand::applyColorEffect (const QPixmap &pixmap,
     return retPixmap;
 }
 
-// protected virtual [base kpColorEffectCommand]
-kpImage kpEffectBalanceCommand::applyColorEffect (const kpImage &image)
+// protected virtual [base kpEffectCommandBase]
+kpImage kpEffectBalanceCommand::applyEffect (const kpImage &image)
 {
-    return applyColorEffect (image, m_channels,
-                             m_brightness, m_contrast, m_gamma);
+    return applyEffect (image, m_channels,
+        m_brightness, m_contrast, m_gamma);
 }
 
 

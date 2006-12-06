@@ -31,8 +31,8 @@
 
 
 #include <kpcolor.h>
-
 #include <kpcoloreffect.h>
+#include <kpimage.h>
 
 
 class QCheckBox;
@@ -43,7 +43,7 @@ class KIntNumInput;
 class kpMainWindow;
 
 
-class kpEffectEmbossCommand : public kpColorEffectCommand
+class kpEffectEmbossCommand : public kpEffectCommandBase
 {
 public:
     kpEffectEmbossCommand (double radius, double sigma,
@@ -52,12 +52,12 @@ public:
                            kpMainWindow *mainWindow);
     virtual ~kpEffectEmbossCommand ();
 
-    static QPixmap apply (const QPixmap &pixmap,
+    static kpImage apply (const kpImage &image,
                           double radius, double sigma,
                           int repeat);
 
 protected:
-    virtual kpImage applyColorEffect (const kpImage &image);
+    virtual kpImage applyEffect (const kpImage &image);
 
 protected:
     double m_radius, m_sigma;

@@ -31,6 +31,7 @@
 
 
 #include <kpcoloreffect.h>
+#include <kpimage.h>
 
 
 class QImage;
@@ -43,7 +44,7 @@ class kpMainWindow;
 QImage ConvertImageDepth (const QImage &image, int depth, bool dither);
 
 
-class kpEffectReduceColorsCommand : public kpColorEffectCommand
+class kpEffectReduceColorsCommand : public kpEffectCommandBase
 {
 public:
     // depth must be 1 or 8
@@ -60,11 +61,11 @@ public:
 
 
     //
-    // kpColorEffectCommand interface
+    // kpEffectCommandBase interface
     //
 
 protected:
-    virtual kpImage applyColorEffect (const kpImage &image);
+    virtual kpImage applyEffect (const kpImage &image);
 
     int m_depth;
     bool m_dither;

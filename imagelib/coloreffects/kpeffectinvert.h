@@ -31,6 +31,7 @@
 
 
 #include <kpcoloreffect.h>
+#include <kpimage.h>
 
 
 class QCheckBox;
@@ -40,7 +41,7 @@ class QPixmap;
 class kpMainWindow;
 
 
-class kpEffectInvertCommand : public kpColorEffectCommand
+class kpEffectInvertCommand : public kpEffectCommandBase
 {
 public:
     enum Channel
@@ -76,14 +77,14 @@ public:
 
 
     //
-    // kpColorEffectCommand interface
+    // kpEffectCommandBase interface
     //
 
 public:
     virtual bool isInvertible () const { return true; }
 
 protected:
-    virtual kpImage applyColorEffect (const kpImage &image);
+    virtual kpImage applyEffect (const kpImage &image);
 
     int m_channels;
 };

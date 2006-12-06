@@ -46,7 +46,7 @@
 kpEffectInvertWidget::kpEffectInvertWidget (bool actOnSelection,
                                             kpMainWindow *mainWindow,
                                             QWidget *parent )
-    : kpColorEffectWidget (actOnSelection, mainWindow, parent)
+    : kpEffectWidgetBase (actOnSelection, mainWindow, parent)
 {
     QVBoxLayout *topLevelLay = new QVBoxLayout (this);
     topLevelLay->setSpacing(spacingHint ());
@@ -135,31 +135,31 @@ int kpEffectInvertWidget::channels () const
 
 
 //
-// kpEffectInvertWidget implements kpColorEffectWidget interface
+// kpEffectInvertWidget implements kpEffectWidgetBase interface
 //
 
-// public virtual [base kpColorEffectWidget]
+// public virtual [base kpEffectWidgetBase]
 QString kpEffectInvertWidget::caption () const
 {
     return i18n ("Channels");
 }
 
 
-// public virtual [base kpColorEffectWidget]
+// public virtual [base kpEffectWidgetBase]
 bool kpEffectInvertWidget::isNoOp () const
 {
     return (channels () == kpEffectInvertCommand::None);
 }
 
-// public virtual [base kpColorEffectWidget]
-QPixmap kpEffectInvertWidget::applyColorEffect (const QPixmap &pixmap)
+// public virtual [base kpEffectWidgetBase]
+kpImage kpEffectInvertWidget::applyEffect (const kpImage &image)
 {
-    return kpEffectInvertCommand::apply (pixmap, channels ());
+    return kpEffectInvertCommand::apply (image, channels ());
 }
 
 
-// public virtual [base kpColorEffectWidget]
-kpColorEffectCommand *kpEffectInvertWidget::createCommand () const
+// public virtual [base kpEffectWidgetBase]
+kpEffectCommandBase *kpEffectInvertWidget::createCommand () const
 {
     return new kpEffectInvertCommand (channels (),
                                       m_actOnSelection,

@@ -210,7 +210,7 @@ QImage ConvertImageDepth (const QImage &image, int depth, bool dither)
 kpEffectReduceColorsCommand::kpEffectReduceColorsCommand (int depth, bool dither,
                                                           bool actOnSelection,
                                                           kpMainWindow *mainWindow)
-    : kpColorEffectCommand (commandName (depth, dither), actOnSelection, mainWindow),
+    : kpEffectCommandBase (commandName (depth, dither), actOnSelection, mainWindow),
       m_depth (depth), m_dither (dither)
 {
 }
@@ -288,11 +288,11 @@ QPixmap kpEffectReduceColorsCommand::apply (const QPixmap &pm, int depth, bool d
 
 
 //
-// kpEffectReduceColorsCommand implements kpColorEffectCommand interface
+// kpEffectReduceColorsCommand implements kpEffectCommandBase interface
 //
 
-// protected virtual [base kpColorEffectCommand]
-kpImage kpEffectReduceColorsCommand::applyColorEffect (const kpImage &image)
+// protected virtual [base kpEffectCommandBase]
+kpImage kpEffectReduceColorsCommand::applyEffect (const kpImage &image)
 {
     return apply (image, m_depth, m_dither);
 }

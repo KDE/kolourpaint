@@ -49,7 +49,7 @@
 kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
                                                         kpMainWindow *mainWindow,
                                                         QWidget *parent )
-    : kpColorEffectWidget (actOnSelection, mainWindow, parent)
+    : kpEffectWidgetBase (actOnSelection, mainWindow, parent)
 {
     QVBoxLayout *lay = new QVBoxLayout (this);
     lay->setSpacing(spacingHint ());
@@ -182,31 +182,31 @@ bool kpEffectReduceColorsWidget::dither () const
 
 
 //
-// kpEffectReduceColorsWidget implements kpColorEffectWidget interface
+// kpEffectReduceColorsWidget implements kpEffectWidgetBase interface
 //
 
-// public virtual [base kpColorEffectWidget]
+// public virtual [base kpEffectWidgetBase]
 QString kpEffectReduceColorsWidget::caption () const
 {
     return i18n ("Reduce To");
 }
 
 
-// public virtual [base kpColorEffectWidget]
+// public virtual [base kpEffectWidgetBase]
 bool kpEffectReduceColorsWidget::isNoOp () const
 {
     return (!m_defaultRadioButton || m_defaultRadioButton->isChecked ());
 }
 
-// public virtual [base kpColorEffectWidget]
-QPixmap kpEffectReduceColorsWidget::applyColorEffect (const QPixmap &pixmap)
+// public virtual [base kpEffectWidgetBase]
+kpImage kpEffectReduceColorsWidget::applyEffect (const kpImage &image)
 {
-    return kpEffectReduceColorsCommand::apply (pixmap, depth (), dither ());
+    return kpEffectReduceColorsCommand::apply (image, depth (), dither ());
 }
 
 
-// public virtual [base kpColorEffectWidget]
-kpColorEffectCommand *kpEffectReduceColorsWidget::createCommand () const
+// public virtual [base kpEffectWidgetBase]
+kpEffectCommandBase *kpEffectReduceColorsWidget::createCommand () const
 {
     return new kpEffectReduceColorsCommand (depth (), dither (),
                                             m_actOnSelection,

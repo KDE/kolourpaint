@@ -53,7 +53,7 @@ kpEffectEmbossCommand::kpEffectEmbossCommand (double radius, double sigma,
                                               int repeat,
                                               bool actOnSelection,
                                               kpMainWindow *mainWindow)
-    : kpColorEffectCommand (i18n ("Emboss"), actOnSelection, mainWindow),
+    : kpEffectCommandBase (i18n ("Emboss"), actOnSelection, mainWindow),
       m_radius (radius), m_sigma (sigma),
       m_repeat (repeat)
 {
@@ -65,7 +65,7 @@ kpEffectEmbossCommand::~kpEffectEmbossCommand ()
 
 
 // public static
-QPixmap kpEffectEmbossCommand::apply (const QPixmap &pixmap,
+kpImage kpEffectEmbossCommand::apply (const kpImage &image,
                                       double radius, double sigma,
                                       int repeat)
 {
@@ -80,18 +80,18 @@ QPixmap kpEffectEmbossCommand::apply (const QPixmap &pixmap,
 
     // (KImageEffect::emboss() ignores mask)
     QPixmap usePixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (
-        pixmap,
+        image,
         Qt::white/*arbitrarily chosen*/);
 
 
-    QImage image = kpPixmapFX::convertToImage (usePixmap);
+    QImage qimage = kpPixmapFX::convertToImage (usePixmap);
 
     for (int i = 0; i < repeat; i++)
     {
-        image = KImageEffect::emboss (image, radius, sigma);
+        qimage = KImageEffect::emboss (qimage, radius, sigma);
     }
 
-    QPixmap retPixmap = kpPixmapFX::convertToPixmap (image);
+    QPixmap retPixmap = kpPixmapFX::convertToPixmap (qimage);
 
 
     // KImageEffect::emboss() nukes mask - restore it
@@ -102,8 +102,8 @@ QPixmap kpEffectEmbossCommand::apply (const QPixmap &pixmap,
     return retPixmap;
 }
 
-// protected virtual [base kpColorEffectCommand]
-kpImage kpEffectEmbossCommand::applyColorEffect (const kpImage &image)
+// protected virtual [base kpEffectCommandBase]
+kpImage kpEffectEmbossCommand::applyEffect (const kpImage &image)
 {
     return apply (image, m_radius, m_sigma, m_repeat);
 }

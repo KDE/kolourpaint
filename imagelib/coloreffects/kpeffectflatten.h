@@ -33,6 +33,7 @@
 #include <qcolor.h>
 
 #include <kpcoloreffect.h>
+#include <kpimage.h>
 
 
 class QCheckBox;
@@ -44,7 +45,7 @@ class KColorButton;
 class kpMainWindow;
 
 
-class kpEffectFlattenCommand : public kpColorEffectCommand
+class kpEffectFlattenCommand : public kpEffectCommandBase
 {
 public:
     kpEffectFlattenCommand (const QColor &color1, const QColor &color2,
@@ -64,11 +65,11 @@ public:
 
 
     //
-    // kpColorEffectCommand interface
+    // kpEffectCommandBase interface
     //
 
 protected:
-    virtual kpImage applyColorEffect (const kpImage &image);
+    virtual kpImage applyEffect (const kpImage &image);
 
     QColor m_color1, m_color2;
 };

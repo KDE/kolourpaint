@@ -31,10 +31,10 @@
 
 
 #include <kpcoloreffect.h>
+#include <kpimage.h>
 
 
 class QLabel;
-class QPixmap;
 
 class KComboBox;
 class KIntNumInput;
@@ -42,7 +42,7 @@ class KIntNumInput;
 class kpMainWindowe;
 
 
-class kpEffectBalanceCommand : public kpColorEffectCommand
+class kpEffectBalanceCommand : public kpEffectCommandBase
 {
 public:
     enum Channel
@@ -60,12 +60,12 @@ public:
                             kpMainWindow *mainWindow);
     virtual ~kpEffectBalanceCommand ();
 
-    static QPixmap applyColorEffect (const QPixmap &pixmap,
-                                     int channels,
-                                     int brightness, int contrast, int gamma);
+    static kpImage applyEffect (const QPixmap &image,
+        int channels,
+        int brightness, int contrast, int gamma);
 
 protected:
-    virtual kpImage applyColorEffect (const kpImage &image);
+    virtual kpImage applyEffect (const kpImage &image);
 
 protected:
     int m_channels;
