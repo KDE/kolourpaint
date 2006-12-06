@@ -6,7 +6,16 @@ Features to be implemented are in branches/kolourpaint/control/TODO.
 
 0. Move stuff from Clarence's USB disk into this.
 
-1. Move all code that accesses document content to imagelib/
+1. Move all code that accesses document content to imagelib/.
+   Do a case-insensitive grep for "mask" or case-sensitive grep for QBitmap.
+
+   Examples:
+
+   * imagelib/transforms/{kptoolcrop,kptoolautocrop}.cpp should only contain
+     the QPixmap manipulation code
+
+   * The part of kpToolClearCommand::execute() manipulating the mask should be moved
+     into imagelib/
 
 2. Move all dialogs to dialogs/
 
