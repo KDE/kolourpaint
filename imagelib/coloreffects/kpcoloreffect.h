@@ -30,7 +30,6 @@
 #define KP_COLOR_EFFECT_H
 
 
-#include <qstring.h>
 #include <qwidget.h>
 
 #include <kpcommandhistory.h>
@@ -66,10 +65,7 @@ protected:
     virtual QPixmap applyColorEffect (const QPixmap &pixmap) = 0;
 
 private:
-    QString m_name;
-    bool m_actOnSelection;
-
-    QPixmap *m_oldPixmapPtr;
+    struct kpColorEffectCommandPrivate *d;
 };
 
 

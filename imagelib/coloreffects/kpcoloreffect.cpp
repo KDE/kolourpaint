@@ -40,36 +40,47 @@
 #include <kpSetOverrideCursorSaver.h>
 
 
+struct kpColorEffectCommandPrivate
+{
+    QString name;
+    bool actOnSelection;
+
+    QPixmap *oldPixmapPtr;
+};
+
 kpColorEffectCommand::kpColorEffectCommand (const QString &name,
                                             bool actOnSelection,
                                             kpMainWindow *mainWindow)
     : kpCommand (mainWindow),
-      m_name (name),
-      m_actOnSelection (actOnSelection),
-      m_oldPixmapPtr (0)
+      d (new kpColorEffectCommandPrivate ())
 {
+    d->name = name;
+    d->actOnSelection = actOnSelection;
+    d->oldPixmapPtr = 0;
 }
 
 kpColorEffectCommand::~kpColorEffectCommand ()
 {
-    delete m_oldPixmapPtr; m_oldPixmapPtr = 0;
+    delete d->oldPixmapPtr; d->oldPixmapPtr = 0;
+    
+    delete d;
 }
 
 
 // public virtual [base kpCommand]
 QString kpColorEffectCommand::name () const
 {
-    if (m_actOnSelection)
-        return i18n ("Selection: %1", m_name);
+    if (d->actOnSelection)
+        return i18n ("Selection: %1", d->name);
     else
-        return m_name;
+        return d->name;
 }
 
 
 // public virtual [base kpCommand]
 int kpColorEffectCommand::size () const
 {
-    return kpPixmapFX::pixmapSize (m_oldPixmapPtr);
+    return kpPixmapFX::pixmapSize (d->oldPixmapPtr);
 }
 
 
@@ -82,18 +93,18 @@ void kpColorEffectCommand::execute ()
     Q_ASSERT (doc);
 
 
-    const QPixmap oldPixmap = *doc->pixmap (m_actOnSelection);
+    const QPixmap oldPixmap = *doc->pixmap (d->actOnSelection);
 
     if (!isInvertible ())
     {
-        m_oldPixmapPtr = new QPixmap ();
-        *m_oldPixmapPtr = oldPixmap;
+        d->oldPixmapPtr = new QPixmap ();
+        *d->oldPixmapPtr = oldPixmap;
     }
 
 
     QPixmap newPixmap = /*pure virtual*/applyColorEffect (oldPixmap);
 
-    doc->setPixmap (m_actOnSelection, newPixmap);
+    doc->setPixmap (d->actOnSelection, newPixmap);
 }
 
 // public virtual [base kpCommand]
@@ -109,17 +120,17 @@ void kpColorEffectCommand::unexecute ()
 
     if (!isInvertible ())
     {
-        newPixmap = *m_oldPixmapPtr;
+        newPixmap = *d->oldPixmapPtr;
     }
     else
     {
-        newPixmap = /*pure virtual*/applyColorEffect (*doc->pixmap (m_actOnSelection));
+        newPixmap = /*pure virtual*/applyColorEffect (*doc->pixmap (d->actOnSelection));
     }
 
-    doc->setPixmap (m_actOnSelection, newPixmap);
+    doc->setPixmap (d->actOnSelection, newPixmap);
 
 
-    delete m_oldPixmapPtr; m_oldPixmapPtr = 0;
+    delete d->oldPixmapPtr; d->oldPixmapPtr = 0;
 }
 
 
