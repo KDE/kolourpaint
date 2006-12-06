@@ -28,7 +28,6 @@
 
 #include <kpcoloreffect.h>
 
-#include <qapplication.h>
 #include <qpixmap.h>
 
 #include <kdialog.h>
@@ -95,9 +94,6 @@ void kpColorEffectCommand::execute ()
     QPixmap newPixmap = /*pure virtual*/applyColorEffect (oldPixmap);
 
     doc->setPixmap (m_actOnSelection, newPixmap);
-
-
-    QApplication::restoreOverrideCursor ();
 }
 
 // public virtual [base kpCommand]
