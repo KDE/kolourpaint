@@ -47,13 +47,13 @@ class kpDocument;
 class kpMainWindow;
 
 
-class kpToolSkewCommand : public kpCommand
+class kpTransformSkewCommand : public kpCommand
 {
 public:
-    kpToolSkewCommand (bool actOnSelection,
+    kpTransformSkewCommand (bool actOnSelection,
                        int hangle, int vangle,
                        kpMainWindow *mainWindow);
-    virtual ~kpToolSkewCommand ();
+    virtual ~kpTransformSkewCommand ();
 
     virtual QString name () const;
 
@@ -72,13 +72,13 @@ private:
 };
 
 
-class kpToolSkewDialog : public kpTransformPreviewDialog
+class kpTransformSkewDialog : public kpTransformPreviewDialog
 {
 Q_OBJECT
 
 public:
-    kpToolSkewDialog (bool actOnSelection, kpMainWindow *parent);
-    virtual ~kpToolSkewDialog ();
+    kpTransformSkewDialog (bool actOnSelection, kpMainWindow *parent);
+    virtual ~kpTransformSkewDialog ();
 
 private:
     static int s_lastWidth, s_lastHeight;

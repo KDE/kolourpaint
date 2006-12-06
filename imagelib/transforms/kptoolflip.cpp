@@ -47,10 +47,10 @@
 
 
 /*
- * kpToolFlipCommand
+ * kpTransformFlipCommand
  */
 
-kpToolFlipCommand::kpToolFlipCommand (bool actOnSelection,
+kpTransformFlipCommand::kpTransformFlipCommand (bool actOnSelection,
                                       bool horiz, bool vert,
                                       kpMainWindow *mainWindow)
     : kpCommand (mainWindow),
@@ -59,13 +59,13 @@ kpToolFlipCommand::kpToolFlipCommand (bool actOnSelection,
 {
 }
 
-kpToolFlipCommand::~kpToolFlipCommand ()
+kpTransformFlipCommand::~kpTransformFlipCommand ()
 {
 }
 
 
 // public virtual [base kpCommand]
-QString kpToolFlipCommand::name () const
+QString kpTransformFlipCommand::name () const
 {
     QString opName;
 
@@ -81,7 +81,7 @@ QString kpToolFlipCommand::name () const
         opName = i18n ("Flip vertically");
     else
     {
-        kError () << "kpToolFlipCommand::name() not asked to flip" << endl;
+        kError () << "kpTransformFlipCommand::name() not asked to flip" << endl;
         return QString::null;
     }
 #endif
@@ -95,27 +95,27 @@ QString kpToolFlipCommand::name () const
 
 
 // public virtual [base kpCommand]
-int kpToolFlipCommand::size () const
+int kpTransformFlipCommand::size () const
 {
     return 0;
 }
 
 
 // public virtual [base kpCommand]
-void kpToolFlipCommand::execute ()
+void kpTransformFlipCommand::execute ()
 {
     flip ();
 }
 
 // public virtual [base kpCommand]
-void kpToolFlipCommand::unexecute ()
+void kpTransformFlipCommand::unexecute ()
 {
     flip ();
 }
 
 
 // private
-void kpToolFlipCommand::flip ()
+void kpTransformFlipCommand::flip ()
 {
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -143,14 +143,14 @@ void kpToolFlipCommand::flip ()
 
 
 /*
- * kpToolFlipDialog
+ * kpTransformFlipDialog
  */
 
 // private static
-bool kpToolFlipDialog::s_lastIsVerticalFlip = true;
+bool kpTransformFlipDialog::s_lastIsVerticalFlip = true;
 
 
-kpToolFlipDialog::kpToolFlipDialog (bool actOnSelection, QWidget *parent)
+kpTransformFlipDialog::kpTransformFlipDialog (bool actOnSelection, QWidget *parent)
     : KDialog (parent)
 {
     setCaption( actOnSelection ? i18n ("Flip Selection") : i18n ("Flip Image") );
@@ -176,32 +176,32 @@ kpToolFlipDialog::kpToolFlipDialog (bool actOnSelection, QWidget *parent)
     setMainWidget (groupBox);
 }
 
-kpToolFlipDialog::~kpToolFlipDialog ()
+kpTransformFlipDialog::~kpTransformFlipDialog ()
 {
 }
 
 
 // public slot
-void kpToolFlipDialog::slotIsVerticalFlipChanged ()
+void kpTransformFlipDialog::slotIsVerticalFlipChanged ()
 {
     s_lastIsVerticalFlip = m_verticalFlipRadioButton->isChecked ();
 }
 
 
 // public
-bool kpToolFlipDialog::getHorizontalFlip () const
+bool kpTransformFlipDialog::getHorizontalFlip () const
 {
     return m_horizontalFlipRadioButton->isChecked ();
 }
 
 // public
-bool kpToolFlipDialog::getVerticalFlip () const
+bool kpTransformFlipDialog::getVerticalFlip () const
 {
     return m_verticalFlipRadioButton->isChecked ();
 }
 
 // public
-bool kpToolFlipDialog::isNoOp () const
+bool kpTransformFlipDialog::isNoOp () const
 {
     return !getHorizontalFlip () && !getVerticalFlip ();
 }

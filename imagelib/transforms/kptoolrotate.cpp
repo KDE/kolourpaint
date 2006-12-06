@@ -55,7 +55,7 @@
 #include <kpviewmanager.h>
 
 
-kpToolRotateCommand::kpToolRotateCommand (bool actOnSelection,
+kpTransformRotateCommand::kpTransformRotateCommand (bool actOnSelection,
                                           double angle,
                                           kpMainWindow *mainWindow)
     : kpCommand (mainWindow),
@@ -66,13 +66,13 @@ kpToolRotateCommand::kpToolRotateCommand (bool actOnSelection,
 {
 }
 
-kpToolRotateCommand::~kpToolRotateCommand ()
+kpTransformRotateCommand::~kpTransformRotateCommand ()
 {
 }
 
 
 // public virtual [base kpCommand]
-QString kpToolRotateCommand::name () const
+QString kpTransformRotateCommand::name () const
 {
     QString opName = i18n ("Rotate");
 
@@ -84,7 +84,7 @@ QString kpToolRotateCommand::name () const
 
 
 // public virtual [base kpCommand]
-int kpToolRotateCommand::size () const
+int kpTransformRotateCommand::size () const
 {
     return kpPixmapFX::pixmapSize (m_oldPixmap) +
            m_oldSelection.size ();
@@ -92,7 +92,7 @@ int kpToolRotateCommand::size () const
 
 
 // public virtual [base kpCommand]
-void kpToolRotateCommand::execute ()
+void kpTransformRotateCommand::execute ()
 {
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -150,7 +150,7 @@ void kpToolRotateCommand::execute ()
             //       allowing the border width & height != pixmap width & height
             //       Or maybe autocrop?
         #if DEBUG_KP_TOOL_ROTATE
-            kDebug () << "kpToolRotateCommand::execute() currentPoints.boundingRect="
+            kDebug () << "kpTransformRotateCommand::execute() currentPoints.boundingRect="
                        << currentPoints.boundingRect ()
                        << " newPixmap: w=" << newPixmap.width ()
                        << " h=" << newPixmap.height ()
@@ -175,7 +175,7 @@ void kpToolRotateCommand::execute ()
 }
 
 // public virtual [base kpCommand]
-void kpToolRotateCommand::unexecute ()
+void kpTransformRotateCommand::unexecute ()
 {
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -217,20 +217,20 @@ void kpToolRotateCommand::unexecute ()
 
 
 /*
- * kpToolRotateDialog
+ * kpTransformRotateDialog
  */
 
 
 // private static
-int kpToolRotateDialog::s_lastWidth = -1,
-    kpToolRotateDialog::s_lastHeight = -1;
+int kpTransformRotateDialog::s_lastWidth = -1,
+    kpTransformRotateDialog::s_lastHeight = -1;
 
 // private static
-bool kpToolRotateDialog::s_lastIsClockwise = true;
-int kpToolRotateDialog::s_lastAngleCustom = 0;
+bool kpTransformRotateDialog::s_lastIsClockwise = true;
+int kpTransformRotateDialog::s_lastAngleCustom = 0;
 
 
-kpToolRotateDialog::kpToolRotateDialog (bool actOnSelection,
+kpTransformRotateDialog::kpTransformRotateDialog (bool actOnSelection,
                                         kpMainWindow *mainWindow)
     : kpTransformPreviewDialog (kpTransformPreviewDialog::AllFeatures,
                            false/*don't reserve top row*/,
@@ -253,14 +253,14 @@ kpToolRotateDialog::kpToolRotateDialog (bool actOnSelection,
     slotUpdate ();
 }
 
-kpToolRotateDialog::~kpToolRotateDialog ()
+kpTransformRotateDialog::~kpTransformRotateDialog ()
 {
     s_lastWidth = width (), s_lastHeight = height ();
 }
 
 
 // private
-void kpToolRotateDialog::createDirectionGroupBox ()
+void kpTransformRotateDialog::createDirectionGroupBox ()
 {
     QGroupBox *directionGroupBox = new QGroupBox (i18n ("Direction"), mainWidget ());
     addCustomWidget (directionGroupBox);
@@ -297,7 +297,7 @@ void kpToolRotateDialog::createDirectionGroupBox ()
 }
 
 // private
-void kpToolRotateDialog::createAngleGroupBox ()
+void kpTransformRotateDialog::createAngleGroupBox ()
 {
     QGroupBox *angleGroupBox = new QGroupBox (i18n ("Angle"), mainWidget ());
     addCustomWidget (angleGroupBox);
@@ -350,13 +350,13 @@ void kpToolRotateDialog::createAngleGroupBox ()
 
 
 // public virtual [base kpTransformPreviewDialog]
-bool kpToolRotateDialog::isNoOp () const
+bool kpTransformRotateDialog::isNoOp () const
 {
     return (angle () == 0);
 }
 
 // public
-int kpToolRotateDialog::angle () const
+int kpTransformRotateDialog::angle () const
 {
     int retAngle;
 
@@ -387,7 +387,7 @@ int kpToolRotateDialog::angle () const
 
 
 // private virtual [base kpTransformPreviewDialog]
-QSize kpToolRotateDialog::newDimensions () const
+QSize kpTransformRotateDialog::newDimensions () const
 {
     QMatrix matrix = kpPixmapFX::rotateMatrix (m_oldWidth, m_oldHeight, angle ());
     QRect rect = matrix.mapRect (QRect (0, 0, m_oldWidth, m_oldHeight));
@@ -395,7 +395,7 @@ QSize kpToolRotateDialog::newDimensions () const
 }
 
 // private virtual [base kpTransformPreviewDialog]
-QPixmap kpToolRotateDialog::transformPixmap (const QPixmap &pixmap,
+QPixmap kpTransformRotateDialog::transformPixmap (const QPixmap &pixmap,
                                              int targetWidth, int targetHeight) const
 {
     return kpPixmapFX::rotate (pixmap, angle (),
@@ -405,7 +405,7 @@ QPixmap kpToolRotateDialog::transformPixmap (const QPixmap &pixmap,
 
 
 // private slot
-void kpToolRotateDialog::slotAngleCustomRadioButtonToggled (bool isChecked)
+void kpTransformRotateDialog::slotAngleCustomRadioButtonToggled (bool isChecked)
 {
     m_angleCustomInput->setEnabled (isChecked);
 
@@ -415,7 +415,7 @@ void kpToolRotateDialog::slotAngleCustomRadioButtonToggled (bool isChecked)
 }
 
 // private slot virtual [base kpTransformPreviewDialog]
-void kpToolRotateDialog::slotUpdate ()
+void kpTransformRotateDialog::slotUpdate ()
 {
     s_lastIsClockwise = m_clockwiseRadioButton->isChecked ();
     s_lastAngleCustom = m_angleCustomInput->value ();
@@ -425,7 +425,7 @@ void kpToolRotateDialog::slotUpdate ()
 
 
 // private slot virtual [base QDialog]
-void kpToolRotateDialog::accept ()
+void kpTransformRotateDialog::accept ()
 {
     KLocalizedString message;
     QString caption, continueButtonText;

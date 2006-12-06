@@ -73,10 +73,10 @@
 
 
 /*
- * kpToolResizeScaleCommand
+ * kpTransformResizeScaleCommand
  */
 
-kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
+kpTransformResizeScaleCommand::kpTransformResizeScaleCommand (bool actOnSelection,
                                                     int newWidth, int newHeight,
                                                     Type type,
                                                     kpMainWindow *mainWindow)
@@ -106,14 +106,14 @@ kpToolResizeScaleCommand::kpToolResizeScaleCommand (bool actOnSelection,
                                  !document ()->selection ()->pixmap ());
 }
 
-kpToolResizeScaleCommand::~kpToolResizeScaleCommand ()
+kpTransformResizeScaleCommand::~kpTransformResizeScaleCommand ()
 {
     delete m_oldSelection;
 }
 
 
 // public virtual [base kpCommand]
-QString kpToolResizeScaleCommand::name () const
+QString kpTransformResizeScaleCommand::name () const
 {
     if (m_actOnSelection)
     {
@@ -147,7 +147,7 @@ QString kpToolResizeScaleCommand::name () const
 }
 
 // public virtual [base kpCommand]
-int kpToolResizeScaleCommand::size () const
+int kpTransformResizeScaleCommand::size () const
 {
     return kpPixmapFX::pixmapSize (m_oldPixmap) +
            kpPixmapFX::pixmapSize (m_oldRightPixmap) +
@@ -157,39 +157,39 @@ int kpToolResizeScaleCommand::size () const
 
 
 // public
-int kpToolResizeScaleCommand::newWidth () const
+int kpTransformResizeScaleCommand::newWidth () const
 {
     return m_newWidth;
 }
 
 // public
-void kpToolResizeScaleCommand::setNewWidth (int width)
+void kpTransformResizeScaleCommand::setNewWidth (int width)
 {
     resize (width, newHeight ());
 }
 
 
 // public
-int kpToolResizeScaleCommand::newHeight () const
+int kpTransformResizeScaleCommand::newHeight () const
 {
     return m_newHeight;
 }
 
 // public
-void kpToolResizeScaleCommand::setNewHeight (int height)
+void kpTransformResizeScaleCommand::setNewHeight (int height)
 {
     resize (newWidth (), height);
 }
 
 
 // public
-QSize kpToolResizeScaleCommand::newSize () const
+QSize kpTransformResizeScaleCommand::newSize () const
 {
     return QSize (newWidth (), newHeight ());
 }
 
 // public virtual
-void kpToolResizeScaleCommand::resize (int width, int height)
+void kpTransformResizeScaleCommand::resize (int width, int height)
 {
     m_newWidth = width;
     m_newHeight = height;
@@ -201,17 +201,17 @@ void kpToolResizeScaleCommand::resize (int width, int height)
 
 
 // public
-bool kpToolResizeScaleCommand::scaleSelectionWithImage () const
+bool kpTransformResizeScaleCommand::scaleSelectionWithImage () const
 {
     return m_scaleSelectionWithImage;
 }
 
 
 // private
-void kpToolResizeScaleCommand::scaleSelectionRegionWithDocument ()
+void kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
-    kDebug () << "kpToolResizeScaleCommand::scaleSelectionRegionWithDocument"
+    kDebug () << "kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument"
                << endl;
 #endif
 
@@ -249,10 +249,10 @@ void kpToolResizeScaleCommand::scaleSelectionRegionWithDocument ()
 
 
 // public virtual [base kpCommand]
-void kpToolResizeScaleCommand::execute ()
+void kpTransformResizeScaleCommand::execute ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
-    kDebug () << "kpToolResizeScaleCommand::execute() type="
+    kDebug () << "kpTransformResizeScaleCommand::execute() type="
                << (int) m_type
                << " oldWidth=" << m_oldWidth
                << " oldHeight=" << m_oldHeight
@@ -270,7 +270,7 @@ void kpToolResizeScaleCommand::execute ()
         {
             if (!m_actOnTextSelection)
             {
-                Q_ASSERT (!"kpToolResizeScaleCommand::execute() resizing sel doesn't make sense");
+                Q_ASSERT (!"kpTransformResizeScaleCommand::execute() resizing sel doesn't make sense");
                 return;
             }
             else
@@ -363,10 +363,10 @@ void kpToolResizeScaleCommand::execute ()
 }
 
 // public virtual [base kpCommand]
-void kpToolResizeScaleCommand::unexecute ()
+void kpTransformResizeScaleCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
-    kDebug () << "kpToolResizeScaleCommand::unexecute() type="
+    kDebug () << "kpTransformResizeScaleCommand::unexecute() type="
                << m_type << endl;
 #endif
 
@@ -382,7 +382,7 @@ void kpToolResizeScaleCommand::unexecute ()
         {
             if (!m_actOnTextSelection)
             {
-                Q_ASSERT (!"kpToolResizeScaleCommand::unexecute() resizing sel doesn't make sense");
+                Q_ASSERT (!"kpTransformResizeScaleCommand::unexecute() resizing sel doesn't make sense");
                 return;
             }
             else
@@ -469,7 +469,7 @@ void kpToolResizeScaleCommand::unexecute ()
 
 
 /*
- * kpToolResizeScaleDialog
+ * kpTransformResizeScaleDialog
  */
 
 #define SET_VALUE_WITHOUT_SIGNAL_EMISSION(knuminput_instance,value)    \
@@ -488,15 +488,15 @@ void kpToolResizeScaleCommand::unexecute ()
 
 
 // private static
-kpToolResizeScaleCommand::Type kpToolResizeScaleDialog::s_lastType =
-    kpToolResizeScaleCommand::Resize;
+kpTransformResizeScaleCommand::Type kpTransformResizeScaleDialog::s_lastType =
+    kpTransformResizeScaleCommand::Resize;
 
 // private static
-double kpToolResizeScaleDialog::s_lastPercentWidth = 100,
-       kpToolResizeScaleDialog::s_lastPercentHeight = 100;
+double kpTransformResizeScaleDialog::s_lastPercentWidth = 100,
+       kpTransformResizeScaleDialog::s_lastPercentHeight = 100;
 
 
-kpToolResizeScaleDialog::kpToolResizeScaleDialog (kpMainWindow *mainWindow)
+kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (kpMainWindow *mainWindow)
     : KDialog ((QWidget *) mainWindow),
       m_mainWindow (mainWindow),
       m_ignoreKeepAspectRatio (0)
@@ -531,20 +531,20 @@ kpToolResizeScaleDialog::kpToolResizeScaleDialog (kpMainWindow *mainWindow)
     //enableButtonOk (!isNoOp ());
 }
 
-kpToolResizeScaleDialog::~kpToolResizeScaleDialog ()
+kpTransformResizeScaleDialog::~kpTransformResizeScaleDialog ()
 {
 }
 
 
 // private
-kpDocument *kpToolResizeScaleDialog::document () const
+kpDocument *kpTransformResizeScaleDialog::document () const
 {
     Q_ASSERT (m_mainWindow);
     return m_mainWindow->document ();
 }
 
 // private
-kpSelection *kpToolResizeScaleDialog::selection () const
+kpSelection *kpTransformResizeScaleDialog::selection () const
 {
     Q_ASSERT (document ());
     return document ()->selection ();
@@ -552,7 +552,7 @@ kpSelection *kpToolResizeScaleDialog::selection () const
 
 
 // private
-void kpToolResizeScaleDialog::createActOnBox (QWidget *baseWidget)
+void kpTransformResizeScaleDialog::createActOnBox (QWidget *baseWidget)
 {
     m_actOnBox = new KHBox (baseWidget);
     m_actOnBox->setSpacing (spacingHint () * 2);
@@ -634,7 +634,7 @@ static void toolButtonSetLook (QToolButton *button,
 
 
 // private
-void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
+void kpTransformResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
 {
     m_operationGroupBox = new QGroupBox (i18n ("Operation"), baseWidget);
     m_operationGroupBox->setWhatsThis(
@@ -711,7 +711,7 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
 }
 
 // private
-void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
+void kpTransformResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
 {
     m_dimensionsGroupBox = new QGroupBox (i18n ("Dimensions"), baseWidget);
 
@@ -808,7 +808,7 @@ void kpToolResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
 
 
 // private
-void kpToolResizeScaleDialog::widthFitHeightToAspectRatio ()
+void kpTransformResizeScaleDialog::widthFitHeightToAspectRatio ()
 {
     if (m_keepAspectRatioCheckBox->isChecked () && !m_ignoreKeepAspectRatio)
     {
@@ -821,7 +821,7 @@ void kpToolResizeScaleDialog::widthFitHeightToAspectRatio ()
 }
 
 // private
-void kpToolResizeScaleDialog::heightFitWidthToAspectRatio ()
+void kpTransformResizeScaleDialog::heightFitWidthToAspectRatio ()
 {
     if (m_keepAspectRatioCheckBox->isChecked () && !m_ignoreKeepAspectRatio)
     {
@@ -835,30 +835,30 @@ void kpToolResizeScaleDialog::heightFitWidthToAspectRatio ()
 
 
 // private
-bool kpToolResizeScaleDialog::resizeEnabled () const
+bool kpTransformResizeScaleDialog::resizeEnabled () const
 {
     return (!actOnSelection () ||
             (actOnSelection () && selection ()->isText ()));
 }
 
 // private
-bool kpToolResizeScaleDialog::scaleEnabled () const
+bool kpTransformResizeScaleDialog::scaleEnabled () const
 {
     return (!(actOnSelection () && selection ()->isText ()));
 }
 
 // private
-bool kpToolResizeScaleDialog::smoothScaleEnabled () const
+bool kpTransformResizeScaleDialog::smoothScaleEnabled () const
 {
     return scaleEnabled ();
 }
 
 
 // public slot
-void kpToolResizeScaleDialog::slotActOnChanged ()
+void kpTransformResizeScaleDialog::slotActOnChanged ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
-    kDebug () << "kpToolResizeScaleDialog::slotActOnChanged()" << endl;
+    kDebug () << "kpTransformResizeScaleDialog::slotActOnChanged()" << endl;
 #endif
 
     m_resizeButton->setEnabled (resizeEnabled ());
@@ -880,7 +880,7 @@ void kpToolResizeScaleDialog::slotActOnChanged ()
         }
         else
         {
-            if (s_lastType == kpToolResizeScaleCommand::Scale)
+            if (s_lastType == kpTransformResizeScaleCommand::Scale)
                 m_scaleButton->setChecked (true);
             else
                 m_smoothScaleButton->setChecked (true);
@@ -888,9 +888,9 @@ void kpToolResizeScaleDialog::slotActOnChanged ()
     }
     else
     {
-        if (s_lastType == kpToolResizeScaleCommand::Resize)
+        if (s_lastType == kpTransformResizeScaleCommand::Resize)
             m_resizeButton->setChecked (true);
-        else if (s_lastType == kpToolResizeScaleCommand::Scale)
+        else if (s_lastType == kpTransformResizeScaleCommand::Scale)
             m_scaleButton->setChecked (true);
         else
             m_smoothScaleButton->setChecked (true);
@@ -923,16 +923,16 @@ void kpToolResizeScaleDialog::slotActOnChanged ()
 
 
 // public slot
-void kpToolResizeScaleDialog::slotTypeChanged ()
+void kpTransformResizeScaleDialog::slotTypeChanged ()
 {
     s_lastType = type ();
 }
 
 // public slot
-void kpToolResizeScaleDialog::slotWidthChanged (int width)
+void kpTransformResizeScaleDialog::slotWidthChanged (int width)
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
-    kDebug () << "kpToolResizeScaleDialog::slotWidthChanged("
+    kDebug () << "kpTransformResizeScaleDialog::slotWidthChanged("
                << width << ")" << endl;
 #endif
     const double newPercentWidth = double (width) * 100 / double (originalWidth ());
@@ -946,10 +946,10 @@ void kpToolResizeScaleDialog::slotWidthChanged (int width)
 }
 
 // public slot
-void kpToolResizeScaleDialog::slotHeightChanged (int height)
+void kpTransformResizeScaleDialog::slotHeightChanged (int height)
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
-    kDebug () << "kpToolResizeScaleDialog::slotHeightChanged("
+    kDebug () << "kpTransformResizeScaleDialog::slotHeightChanged("
                << height << ")" << endl;
 #endif
     const double newPercentHeight = double (height) * 100 / double (originalHeight ());
@@ -963,10 +963,10 @@ void kpToolResizeScaleDialog::slotHeightChanged (int height)
 }
 
 // public slot
-void kpToolResizeScaleDialog::slotPercentWidthChanged (double percentWidth)
+void kpTransformResizeScaleDialog::slotPercentWidthChanged (double percentWidth)
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
-    kDebug () << "kpToolResizeScaleDialog::slotPercentWidthChanged("
+    kDebug () << "kpTransformResizeScaleDialog::slotPercentWidthChanged("
                << percentWidth << ")" << endl;
 #endif
 
@@ -980,10 +980,10 @@ void kpToolResizeScaleDialog::slotPercentWidthChanged (double percentWidth)
 }
 
 // public slot
-void kpToolResizeScaleDialog::slotPercentHeightChanged (double percentHeight)
+void kpTransformResizeScaleDialog::slotPercentHeightChanged (double percentHeight)
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
-    kDebug () << "kpToolResizeScaleDialog::slotPercentHeightChanged("
+    kDebug () << "kpTransformResizeScaleDialog::slotPercentHeightChanged("
                << percentHeight << ")" << endl;
 #endif
 
@@ -997,16 +997,16 @@ void kpToolResizeScaleDialog::slotPercentHeightChanged (double percentHeight)
 }
 
 // public
-bool kpToolResizeScaleDialog::keepAspectRatio () const
+bool kpTransformResizeScaleDialog::keepAspectRatio () const
 {
     return m_keepAspectRatioCheckBox->isChecked ();
 }
 
 // public slot
-void kpToolResizeScaleDialog::setKeepAspectRatio (bool on)
+void kpTransformResizeScaleDialog::setKeepAspectRatio (bool on)
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
-    kDebug () << "kpToolResizeScaleDialog::setKeepAspectRatio("
+    kDebug () << "kpTransformResizeScaleDialog::setKeepAspectRatio("
                << on << ")" << endl;
 #endif
     if (on != m_keepAspectRatioCheckBox->isChecked ())
@@ -1021,49 +1021,49 @@ void kpToolResizeScaleDialog::setKeepAspectRatio (bool on)
 
 
 // private
-int kpToolResizeScaleDialog::originalWidth () const
+int kpTransformResizeScaleDialog::originalWidth () const
 {
     return document ()->width (actOnSelection ());
 }
 
 // private
-int kpToolResizeScaleDialog::originalHeight () const
+int kpTransformResizeScaleDialog::originalHeight () const
 {
     return document ()->height (actOnSelection ());
 }
 
 
 // public
-int kpToolResizeScaleDialog::imageWidth () const
+int kpTransformResizeScaleDialog::imageWidth () const
 {
     return m_newWidthInput->value ();
 }
 
 // public
-int kpToolResizeScaleDialog::imageHeight () const
+int kpTransformResizeScaleDialog::imageHeight () const
 {
     return m_newHeightInput->value ();
 }
 
 // public
-bool kpToolResizeScaleDialog::actOnSelection () const
+bool kpTransformResizeScaleDialog::actOnSelection () const
 {
     return (m_actOnCombo->currentIndex () == Selection);
 }
 
 // public
-kpToolResizeScaleCommand::Type kpToolResizeScaleDialog::type () const
+kpTransformResizeScaleCommand::Type kpTransformResizeScaleDialog::type () const
 {
     if (m_resizeButton->isChecked ())
-        return kpToolResizeScaleCommand::Resize;
+        return kpTransformResizeScaleCommand::Resize;
     else if (m_scaleButton->isChecked ())
-        return kpToolResizeScaleCommand::Scale;
+        return kpTransformResizeScaleCommand::Scale;
     else
-        return kpToolResizeScaleCommand::SmoothScale;
+        return kpTransformResizeScaleCommand::SmoothScale;
 }
 
 // public
-bool kpToolResizeScaleDialog::isNoOp () const
+bool kpTransformResizeScaleDialog::isNoOp () const
 {
     return (imageWidth () == originalWidth () &&
             imageHeight () == originalHeight ());
@@ -1071,7 +1071,7 @@ bool kpToolResizeScaleDialog::isNoOp () const
 
 
 // private slot virtual [base QDialog]
-void kpToolResizeScaleDialog::accept ()
+void kpTransformResizeScaleDialog::accept ()
 {
     enum { eText, eSelection, eImage } actionTarget = eText;
 
@@ -1101,7 +1101,7 @@ void kpToolResizeScaleDialog::accept ()
     switch (type ())
     {
     default:
-    case kpToolResizeScaleCommand::Resize:
+    case kpTransformResizeScaleCommand::Resize:
         if (actionTarget == eText)
         {
             message =
@@ -1133,7 +1133,7 @@ void kpToolResizeScaleDialog::accept ()
 
         break;
 
-    case kpToolResizeScaleCommand::Scale:
+    case kpTransformResizeScaleCommand::Scale:
         if (actionTarget == eImage)
         {
             message =
@@ -1165,7 +1165,7 @@ void kpToolResizeScaleDialog::accept ()
 
         break;
 
-    case kpToolResizeScaleCommand::SmoothScale:
+    case kpTransformResizeScaleCommand::SmoothScale:
         if (actionTarget == eImage)
         {
             message =

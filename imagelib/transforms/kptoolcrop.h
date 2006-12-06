@@ -33,7 +33,7 @@
 class kpMainWindow;
 
 
-void kpToolCrop (kpMainWindow *mainWindow);
+void kpTransformCrop (kpMainWindow *mainWindow);
 
 
 #endif  // KP_TOOL_CROP_H

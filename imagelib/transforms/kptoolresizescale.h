@@ -57,7 +57,7 @@ class kpMainWindow;
 class kpViewManager;
 
 
-class kpToolResizeScaleCommand : public kpCommand
+class kpTransformResizeScaleCommand : public kpCommand
 {
 public:
     enum Type
@@ -65,11 +65,11 @@ public:
         Resize, Scale, SmoothScale
     };
 
-    kpToolResizeScaleCommand (bool actOnSelection,
+    kpTransformResizeScaleCommand (bool actOnSelection,
                               int newWidth, int newHeight,
                               Type type,
                               kpMainWindow *mainWindow);
-    virtual ~kpToolResizeScaleCommand ();
+    virtual ~kpTransformResizeScaleCommand ();
 
     virtual QString name () const;
     virtual int size () const;
@@ -108,13 +108,13 @@ protected:
     kpSelection *m_oldSelection;
 };
 
-class kpToolResizeScaleDialog : public KDialog
+class kpTransformResizeScaleDialog : public KDialog
 {
 Q_OBJECT
 
 public:
-    kpToolResizeScaleDialog (kpMainWindow *mainWindow);
-    virtual ~kpToolResizeScaleDialog ();
+    kpTransformResizeScaleDialog (kpMainWindow *mainWindow);
+    virtual ~kpTransformResizeScaleDialog ();
 
     enum ActOn
     {
@@ -122,7 +122,7 @@ public:
     };
 
 private:
-    static kpToolResizeScaleCommand::Type s_lastType;
+    static kpTransformResizeScaleCommand::Type s_lastType;
     static double s_lastPercentWidth, s_lastPercentHeight;
 
 private:
@@ -166,7 +166,7 @@ public:
     int imageWidth () const;
     int imageHeight () const;
     bool actOnSelection () const;
-    kpToolResizeScaleCommand::Type type () const;
+    kpTransformResizeScaleCommand::Type type () const;
 
     bool isNoOp () const;
 

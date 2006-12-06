@@ -81,8 +81,8 @@ bool kpMainWindow::isTextSelection () const
 // private
 QString kpMainWindow::autoCropText () const
 {
-    return kpToolAutoCropCommand::name (isSelectionActive (),
-                                        kpToolAutoCropCommand::ShowAccel);
+    return kpTransformAutoCropCommand::name (isSelectionActive (),
+                                        kpTransformAutoCropCommand::ShowAccel);
 }
 
 
@@ -293,12 +293,12 @@ void kpMainWindow::slotResizeScale ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpToolResizeScaleDialog dialog (this);
+    kpTransformResizeScaleDialog dialog (this);
     dialog.setKeepAspectRatio (d->m_resizeScaleDialogLastKeepAspect);
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
-        kpToolResizeScaleCommand *cmd = new kpToolResizeScaleCommand (
+        kpTransformResizeScaleCommand *cmd = new kpTransformResizeScaleCommand (
             dialog.actOnSelection (),
             dialog.imageWidth (), dialog.imageHeight (),
             dialog.type (),
@@ -315,7 +315,7 @@ void kpMainWindow::slotResizeScale ()
 
         // Resized document?
         if (!dialog.actOnSelection () &&
-            dialog.type () == kpToolResizeScaleCommand::Resize)
+            dialog.type () == kpTransformResizeScaleCommand::Resize)
         {
             // TODO: this should be the responsibility of kpDocument
             saveDefaultDocSize (QSize (dialog.imageWidth (), dialog.imageHeight ()));
@@ -350,7 +350,7 @@ void kpMainWindow::slotCrop ()
     }
 
 
-    ::kpToolCrop (this);
+    ::kpTransformCrop (this);
 }
 
 // private slot
@@ -359,7 +359,7 @@ void kpMainWindow::slotAutoCrop ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    ::kpToolAutoCrop (this);
+    ::kpTransformAutoCrop (this);
 }
 
 // private slot
@@ -368,12 +368,12 @@ void kpMainWindow::slotFlip ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpToolFlipDialog dialog ((bool) m_document->selection (), this);
+    kpTransformFlipDialog dialog ((bool) m_document->selection (), this);
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
         addImageOrSelectionCommand (
-            new kpToolFlipCommand (m_document->selection (),
+            new kpTransformFlipCommand (m_document->selection (),
                                    dialog.getHorizontalFlip (), dialog.getVerticalFlip (),
                                    this));
     }
@@ -385,12 +385,12 @@ void kpMainWindow::slotRotate ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpToolRotateDialog dialog ((bool) m_document->selection (), this);
+    kpTransformRotateDialog dialog ((bool) m_document->selection (), this);
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
         addImageOrSelectionCommand (
-            new kpToolRotateCommand (m_document->selection (),
+            new kpTransformRotateCommand (m_document->selection (),
                                      dialog.angle (),
                                      this));
     }
@@ -402,12 +402,12 @@ void kpMainWindow::slotSkew ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpToolSkewDialog dialog ((bool) m_document->selection (), this);
+    kpTransformSkewDialog dialog ((bool) m_document->selection (), this);
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
         addImageOrSelectionCommand (
-            new kpToolSkewCommand (m_document->selection (),
+            new kpTransformSkewCommand (m_document->selection (),
                                    dialog.horizontalAngle (), dialog.verticalAngle (),
                                    this));
     }

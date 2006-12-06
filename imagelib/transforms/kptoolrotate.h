@@ -50,13 +50,13 @@ class kpViewManager;
 class kpMainWindow;
 
 
-class kpToolRotateCommand : public kpCommand
+class kpTransformRotateCommand : public kpCommand
 {
 public:
-    kpToolRotateCommand (bool actOnSelection,
+    kpTransformRotateCommand (bool actOnSelection,
                          double angle,  // 0 <= angle < 360 (clockwise)
                          kpMainWindow *mainWindow);
-    virtual ~kpToolRotateCommand ();
+    virtual ~kpTransformRotateCommand ();
 
     virtual QString name () const;
 
@@ -77,14 +77,14 @@ private:
 };
 
 
-class kpToolRotateDialog : public kpTransformPreviewDialog
+class kpTransformRotateDialog : public kpTransformPreviewDialog
 {
 Q_OBJECT
 
 public:
-    kpToolRotateDialog (bool actOnSelection,
+    kpTransformRotateDialog (bool actOnSelection,
                         kpMainWindow *parent);
-    virtual ~kpToolRotateDialog ();
+    virtual ~kpTransformRotateDialog ();
 
 private:
     static int s_lastWidth, s_lastHeight;

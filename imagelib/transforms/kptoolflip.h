@@ -42,13 +42,13 @@ class kpDocument;
 class kpMainWindow;
 
 
-class kpToolFlipCommand : public kpCommand
+class kpTransformFlipCommand : public kpCommand
 {
 public:
-    kpToolFlipCommand (bool actOnSelection,
+    kpTransformFlipCommand (bool actOnSelection,
                        bool horiz, bool vert,
                        kpMainWindow *mainWindow);
-    virtual ~kpToolFlipCommand ();
+    virtual ~kpTransformFlipCommand ();
 
     virtual QString name () const;
 
@@ -65,13 +65,13 @@ private:
 };
 
 
-class kpToolFlipDialog : public KDialog
+class kpTransformFlipDialog : public KDialog
 {
 Q_OBJECT
 
 public:
-    kpToolFlipDialog (bool actOnSelection, QWidget *parent);
-    ~kpToolFlipDialog ();
+    kpTransformFlipDialog (bool actOnSelection, QWidget *parent);
+    ~kpTransformFlipDialog ();
 
 private:
     static bool s_lastIsVerticalFlip;

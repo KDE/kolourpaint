@@ -60,14 +60,14 @@ kpSelection selectionBorderAndMovedTo0_0 (const kpSelection &sel)
 
 
 //
-// kpToolCropSetImageCommand
+// kpTransformCropSetImageCommand
 //
 
-class kpToolCropSetImageCommand : public kpCommand
+class kpTransformCropSetImageCommand : public kpCommand
 {
 public:
-    kpToolCropSetImageCommand (kpMainWindow *mainWindow);
-    virtual ~kpToolCropSetImageCommand ();
+    kpTransformCropSetImageCommand (kpMainWindow *mainWindow);
+    virtual ~kpTransformCropSetImageCommand ();
 
     /* (uninteresting child of macro cmd) */
     virtual QString name () const { return QString::null; }
@@ -90,7 +90,7 @@ protected:
 };
 
 
-kpToolCropSetImageCommand::kpToolCropSetImageCommand (kpMainWindow *mainWindow)
+kpTransformCropSetImageCommand::kpTransformCropSetImageCommand (kpMainWindow *mainWindow)
     : kpCommand (mainWindow),
       m_backgroundColor (mainWindow->backgroundColor ()),
       m_fromSelection (*mainWindow->document ()->selection ()),
@@ -101,16 +101,16 @@ kpToolCropSetImageCommand::kpToolCropSetImageCommand (kpMainWindow *mainWindow)
 {
 }
 
-kpToolCropSetImageCommand::~kpToolCropSetImageCommand ()
+kpTransformCropSetImageCommand::~kpTransformCropSetImageCommand ()
 {
 }
 
 
 // public virtual [base kpCommand]
-void kpToolCropSetImageCommand::execute ()
+void kpTransformCropSetImageCommand::execute ()
 {
 #if DEBUG_KP_TOOL_CROP
-    kDebug () << "kpToolCropSetImageCommand::execute()" << endl;
+    kDebug () << "kpTransformCropSetImageCommand::execute()" << endl;
 #endif
 
     viewManager ()->setQueueUpdates ();
@@ -184,10 +184,10 @@ void kpToolCropSetImageCommand::execute ()
 }
 
 // public virtual [base kpCommand]
-void kpToolCropSetImageCommand::unexecute ()
+void kpTransformCropSetImageCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_CROP
-    kDebug () << "kpToolCropSetImageCommand::unexecute()" << endl;
+    kDebug () << "kpTransformCropSetImageCommand::unexecute()" << endl;
 #endif
 
     viewManager ()->setQueueUpdates ();
@@ -210,23 +210,23 @@ void kpToolCropSetImageCommand::unexecute ()
 
 
 //
-// kpToolCropCommand
+// kpTransformCropCommand
 //
 
 
-class kpToolCropCommand : public kpMacroCommand
+class kpTransformCropCommand : public kpMacroCommand
 {
 public:
-    kpToolCropCommand (kpMainWindow *mainWindow);
-    virtual ~kpToolCropCommand ();
+    kpTransformCropCommand (kpMainWindow *mainWindow);
+    virtual ~kpTransformCropCommand ();
 };
 
 
-kpToolCropCommand::kpToolCropCommand (kpMainWindow *mainWindow)
+kpTransformCropCommand::kpTransformCropCommand (kpMainWindow *mainWindow)
     : kpMacroCommand (i18n ("Set as Image"), mainWindow)
 {
 #if DEBUG_KP_TOOL_CROP
-    kDebug () << "kpToolCropCommand::<ctor>()" << endl;
+    kDebug () << "kpTransformCropCommand::<ctor>()" << endl;
 #endif
 
     Q_ASSERT (mainWindow &&
@@ -242,13 +242,13 @@ kpToolCropCommand::kpToolCropCommand (kpMainWindow *mainWindow)
                << " <- resizing doc to these dimen" << endl;
 #endif
 
-    // (must resize doc _before_ kpToolCropSetImageCommand in case doc
+    // (must resize doc _before_ kpTransformCropSetImageCommand in case doc
     //  needs to gets bigger - else pasted down pixmap may not fit)
     addCommand (
-        new kpToolResizeScaleCommand (
+        new kpTransformResizeScaleCommand (
             false/*act on doc, not sel*/,
             sel->width (), sel->height (),
-            kpToolResizeScaleCommand::Resize,
+            kpTransformResizeScaleCommand::Resize,
             mainWindow));
 
 
@@ -281,7 +281,7 @@ kpToolCropCommand::kpToolCropCommand (kpMainWindow *mainWindow)
         kDebug () << "\tis pixmap sel" << endl;
         kDebug () << "\tcreating SetImage cmd" << endl;
     #endif
-        addCommand (new kpToolCropSetImageCommand (mainWindow));
+        addCommand (new kpTransformCropSetImageCommand (mainWindow));
 
     #if 0
         addCommand (
@@ -293,12 +293,12 @@ kpToolCropCommand::kpToolCropCommand (kpMainWindow *mainWindow)
     }
 }
 
-kpToolCropCommand::~kpToolCropCommand ()
+kpTransformCropCommand::~kpTransformCropCommand ()
 {
 }
 
 
-void kpToolCrop (kpMainWindow *mainWindow)
+void kpTransformCrop (kpMainWindow *mainWindow)
 {
     kpDocument *doc = mainWindow->document ();
     Q_ASSERT (doc);
@@ -312,7 +312,7 @@ void kpToolCrop (kpMainWindow *mainWindow)
 
 
     mainWindow->addImageOrSelectionCommand (
-        new kpToolCropCommand (mainWindow),
+        new kpTransformCropCommand (mainWindow),
         true/*add create cmd*/,
         false/*don't add pull cmd*/);
 

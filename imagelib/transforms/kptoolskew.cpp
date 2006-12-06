@@ -56,10 +56,10 @@
 
 
 /*
- * kpToolSkewCommand
+ * kpTransformSkewCommand
  */
 
-kpToolSkewCommand::kpToolSkewCommand (bool actOnSelection,
+kpTransformSkewCommand::kpTransformSkewCommand (bool actOnSelection,
                                       int hangle, int vangle,
                                       kpMainWindow *mainWindow)
     : kpCommand (mainWindow),
@@ -70,14 +70,14 @@ kpToolSkewCommand::kpToolSkewCommand (bool actOnSelection,
 {
 }
 
-kpToolSkewCommand::~kpToolSkewCommand ()
+kpTransformSkewCommand::~kpTransformSkewCommand ()
 {
     delete m_oldPixmapPtr;
 }
 
 
 // public virtual [base kpCommand]
-QString kpToolSkewCommand::name () const
+QString kpTransformSkewCommand::name () const
 {
     QString opName = i18n ("Skew");
 
@@ -89,7 +89,7 @@ QString kpToolSkewCommand::name () const
 
 
 // public virtual [base kpCommand]
-int kpToolSkewCommand::size () const
+int kpTransformSkewCommand::size () const
 {
     return kpPixmapFX::pixmapSize (m_oldPixmapPtr) +
            m_oldSelection.size ();
@@ -97,7 +97,7 @@ int kpToolSkewCommand::size () const
 
 
 // public virtual [base kpCommand]
-void kpToolSkewCommand::execute ()
+void kpTransformSkewCommand::execute ()
 {
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -111,8 +111,8 @@ void kpToolSkewCommand::execute ()
 
 
     QPixmap newPixmap = kpPixmapFX::skew (*doc->pixmap (m_actOnSelection),
-                                          kpToolSkewDialog::horizontalAngleForPixmapFX (m_hangle),
-                                          kpToolSkewDialog::verticalAngleForPixmapFX (m_vangle),
+                                          kpTransformSkewDialog::horizontalAngleForPixmapFX (m_hangle),
+                                          kpTransformSkewDialog::verticalAngleForPixmapFX (m_vangle),
                                           m_backgroundColor);
 
     if (m_actOnSelection)
@@ -129,8 +129,8 @@ void kpToolSkewCommand::execute ()
                                  -currentPoints.boundingRect ().y ());
         QMatrix skewMatrix = kpPixmapFX::skewMatrix (
             *doc->pixmap (m_actOnSelection),
-            kpToolSkewDialog::horizontalAngleForPixmapFX (m_hangle),
-            kpToolSkewDialog::verticalAngleForPixmapFX (m_vangle));
+            kpTransformSkewDialog::horizontalAngleForPixmapFX (m_hangle),
+            kpTransformSkewDialog::verticalAngleForPixmapFX (m_vangle));
         currentPoints = skewMatrix.map (currentPoints);
         currentPoints.translate (-currentPoints.boundingRect ().x () + m_oldSelection.x (),
                                  -currentPoints.boundingRect ().y () + m_oldSelection.y ());
@@ -148,7 +148,7 @@ void kpToolSkewCommand::execute ()
             //       allowing the border width & height != pixmap width & height
             //       Or maybe autocrop?
         #if DEBUG_KP_TOOL_SKEW
-            kDebug () << "kpToolSkewCommand::execute() currentPoints.boundingRect="
+            kDebug () << "kpTransformSkewCommand::execute() currentPoints.boundingRect="
                        << currentPoints.boundingRect ()
                        << " newPixmap: w=" << newPixmap.width ()
                        << " h=" << newPixmap.height ()
@@ -177,7 +177,7 @@ void kpToolSkewCommand::execute ()
 }
 
 // public virtual [base kpCommand]
-void kpToolSkewCommand::unexecute ()
+void kpTransformSkewCommand::unexecute ()
 {
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -207,20 +207,20 @@ void kpToolSkewCommand::unexecute ()
 
 
 /*
- * kpToolSkewDialog
+ * kpTransformSkewDialog
  */
 
 
 // private static
-int kpToolSkewDialog::s_lastWidth = -1,
-    kpToolSkewDialog::s_lastHeight = -1;
+int kpTransformSkewDialog::s_lastWidth = -1,
+    kpTransformSkewDialog::s_lastHeight = -1;
 
 // private static
-int kpToolSkewDialog::s_lastHorizontalAngle = 0,
-    kpToolSkewDialog::s_lastVerticalAngle = 0;
+int kpTransformSkewDialog::s_lastHorizontalAngle = 0,
+    kpTransformSkewDialog::s_lastVerticalAngle = 0;
 
 
-kpToolSkewDialog::kpToolSkewDialog (bool actOnSelection, kpMainWindow *parent)
+kpTransformSkewDialog::kpTransformSkewDialog (bool actOnSelection, kpMainWindow *parent)
     : kpTransformPreviewDialog (kpTransformPreviewDialog::AllFeatures,
                            false/*don't reserve top row*/,
                            actOnSelection ? i18n ("Skew Selection") : i18n ("Skew Image"),
@@ -241,14 +241,14 @@ kpToolSkewDialog::kpToolSkewDialog (bool actOnSelection, kpMainWindow *parent)
     slotUpdate ();
 }
 
-kpToolSkewDialog::~kpToolSkewDialog ()
+kpTransformSkewDialog::~kpTransformSkewDialog ()
 {
     s_lastWidth = width (), s_lastHeight = height ();
 }
 
 
 // private
-void kpToolSkewDialog::createAngleGroupBox ()
+void kpTransformSkewDialog::createAngleGroupBox ()
 {
     QGroupBox *angleGroupBox = new QGroupBox (i18n ("Angle"), mainWidget ());
     addCustomWidget (angleGroupBox);
@@ -303,7 +303,7 @@ void kpToolSkewDialog::createAngleGroupBox ()
 
 
 // private virtual [base kpTransformPreviewDialog]
-QSize kpToolSkewDialog::newDimensions () const
+QSize kpTransformSkewDialog::newDimensions () const
 {
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -317,7 +317,7 @@ QSize kpToolSkewDialog::newDimensions () const
 }
 
 // private virtual [base kpTransformPreviewDialog]
-QPixmap kpToolSkewDialog::transformPixmap (const QPixmap &pixmap,
+QPixmap kpTransformSkewDialog::transformPixmap (const QPixmap &pixmap,
                                            int targetWidth, int targetHeight) const
 {
     return kpPixmapFX::skew (pixmap,
@@ -330,14 +330,14 @@ QPixmap kpToolSkewDialog::transformPixmap (const QPixmap &pixmap,
 
 
 // private
-void kpToolSkewDialog::updateLastAngles ()
+void kpTransformSkewDialog::updateLastAngles ()
 {
     s_lastHorizontalAngle = horizontalAngle ();
     s_lastVerticalAngle = verticalAngle ();
 }
 
 // private slot virtual [base kpTransformPreviewDialog]
-void kpToolSkewDialog::slotUpdate ()
+void kpTransformSkewDialog::slotUpdate ()
 {
     updateLastAngles ();
     kpTransformPreviewDialog::slotUpdate ();
@@ -345,53 +345,53 @@ void kpToolSkewDialog::slotUpdate ()
 
 
 // public
-int kpToolSkewDialog::horizontalAngle () const
+int kpTransformSkewDialog::horizontalAngle () const
 {
     return m_horizontalSkewInput->value ();
 }
 
 // public
-int kpToolSkewDialog::verticalAngle () const
+int kpTransformSkewDialog::verticalAngle () const
 {
     return m_verticalSkewInput->value ();
 }
 
 
 // public static
-int kpToolSkewDialog::horizontalAngleForPixmapFX (int hangle)
+int kpTransformSkewDialog::horizontalAngleForPixmapFX (int hangle)
 {
     return -hangle;
 }
 
 // public static
-int kpToolSkewDialog::verticalAngleForPixmapFX (int vangle)
+int kpTransformSkewDialog::verticalAngleForPixmapFX (int vangle)
 {
     return -vangle;
 }
 
 
 // public
-int kpToolSkewDialog::horizontalAngleForPixmapFX () const
+int kpTransformSkewDialog::horizontalAngleForPixmapFX () const
 {
-    return kpToolSkewDialog::horizontalAngleForPixmapFX (horizontalAngle ());
+    return kpTransformSkewDialog::horizontalAngleForPixmapFX (horizontalAngle ());
 }
 
 // public
-int kpToolSkewDialog::verticalAngleForPixmapFX () const
+int kpTransformSkewDialog::verticalAngleForPixmapFX () const
 {
-    return kpToolSkewDialog::verticalAngleForPixmapFX (verticalAngle ());
+    return kpTransformSkewDialog::verticalAngleForPixmapFX (verticalAngle ());
 }
 
 
 // public virtual [base kpTransformPreviewDialog]
-bool kpToolSkewDialog::isNoOp () const
+bool kpTransformSkewDialog::isNoOp () const
 {
     return (horizontalAngle () == 0) && (verticalAngle () == 0);
 }
 
 
 // private slot virtual [base QDialog]
-void kpToolSkewDialog::accept ()
+void kpTransformSkewDialog::accept ()
 {
     KLocalizedString message;
     QString caption, continueButtonText;

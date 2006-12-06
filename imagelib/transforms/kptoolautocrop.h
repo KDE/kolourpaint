@@ -37,19 +37,19 @@ class QPixmap;
 class QRect;
 
 class kpMainWindow;
-class kpToolAutoCropBorder;
+class kpTransformAutoCropBorder;
 
 
-class kpToolAutoCropCommand : public kpNamedCommand
+class kpTransformAutoCropCommand : public kpNamedCommand
 {
 public:
-    kpToolAutoCropCommand (bool actOnSelection,
-                           const kpToolAutoCropBorder &leftBorder,
-                           const kpToolAutoCropBorder &rightBorder,
-                           const kpToolAutoCropBorder &topBorder,
-                           const kpToolAutoCropBorder &botBorder,
-                           kpMainWindow *mainWindow);
-    virtual ~kpToolAutoCropCommand ();
+    kpTransformAutoCropCommand (bool actOnSelection,
+        const kpTransformAutoCropBorder &leftBorder,
+        const kpTransformAutoCropBorder &rightBorder,
+        const kpTransformAutoCropBorder &topBorder,
+        const kpTransformAutoCropBorder &botBorder,
+        kpMainWindow *mainWindow);
+    virtual ~kpTransformAutoCropCommand ();
 
     enum NameOptions
     {
@@ -62,7 +62,7 @@ public:
     virtual int size () const;
 
 private:
-    void getUndoPixmap (const kpToolAutoCropBorder &border, QPixmap **pixmap);
+    void getUndoPixmap (const kpTransformAutoCropBorder &border, QPixmap **pixmap);
     void getUndoPixmaps ();
     void deleteUndoPixmaps ();
 
@@ -73,12 +73,12 @@ public:
 private:
     QRect contentsRect () const;
 
-    struct kpToolAutoCropCommandPrivate *d;
+    struct kpTransformAutoCropCommandPrivate *d;
 };
 
 
 // (returns true on success (even if it did nothing) or false on error)
-bool kpToolAutoCrop (kpMainWindow *mainWindow);
+bool kpTransformAutoCrop (kpMainWindow *mainWindow);
 
 
 #endif  // KP_TOOL_AUTO_CROP_H

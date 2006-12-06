@@ -554,10 +554,10 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
             this))
     {
         m_commandHistory->addCommand (
-            new kpToolResizeScaleCommand (
+            new kpTransformResizeScaleCommand (
                 false/*doc, not sel*/,
                 m_docResizeWidth, m_docResizeHeight,
-                kpToolResizeScaleCommand::Resize,
+                kpTransformResizeScaleCommand::Resize,
                 this));
 
         saveDefaultDocSize (QSize (m_docResizeWidth, m_docResizeHeight));

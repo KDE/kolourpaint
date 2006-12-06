@@ -364,11 +364,11 @@ void kpMainWindow::paste (const kpSelection &sel, bool forceTopLeft)
         sel.height () > m_document->height ())
     {
         m_commandHistory->addCommand (
-            new kpToolResizeScaleCommand (
+            new kpTransformResizeScaleCommand (
                 false/*act on doc, not sel*/,
                 qMax (sel.width (), m_document->width ()),
                 qMax (sel.height (), m_document->height ()),
-                kpToolResizeScaleCommand::Resize,
+                kpTransformResizeScaleCommand::Resize,
                 this));
     }
 
