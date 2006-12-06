@@ -4,9 +4,7 @@ and code cleanups.
 Features to be implemented are in branches/kolourpaint/control/TODO.
 
 
-0. Move stuff from Clarence's USB disk into this.
-
-1. Move all code that accesses document content to imagelib/.
+1. Move all code that accesses document content to imagelib/.  Merge with kppixmapfx.cpp.
    Do a case-insensitive grep for "mask" or case-sensitive grep for QBitmap.
 
    Examples:
@@ -48,8 +46,6 @@ Features to be implemented are in branches/kolourpaint/control/TODO.
     tested again esp. the file saving path - format conversion, maximal
     content preservation, formatting loss warnings etc.
 
-kolourpaint
-* port to KDE4
 * QA
 * reduce size of code (51352-28 generated lines 2006-03-23; hopefully reduce by 10KLOC)
   - go through each class finding stuff that can be factored into kdelibs
@@ -78,10 +74,6 @@ command scheme
          - need Krita's "guide lines"
   - find out common requests that require other programs e.g. dropshadow:
     http://people.kde.nl/marco.html
-
--------- July 2006 ----------
-
-* push KolourPaint painting aspect into new dir imagelib/ (merge with pixmapfx)
 
 * look at new backend for 16-bit, translucency, 8-bit paletted with alpha
   - convince Qt to implement 8-bit paletted with alpha?
