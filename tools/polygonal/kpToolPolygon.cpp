@@ -72,6 +72,9 @@ void kpToolPolygon::begin ()
 {
     kpToolPolygonalBase::begin ();
 
+#ifndef __GNUC__
+#warning toolToolBar() can return 0 (CID 3120)
+#endif
     d->toolWidgetFillStyle = toolToolBar ()->toolWidgetFillStyle ();
     connect (d->toolWidgetFillStyle,
         SIGNAL (fillStyleChanged (kpToolWidgetFillStyle::FillStyle)),
