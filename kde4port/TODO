@@ -38,15 +38,6 @@ Features to be implemented are in branches/kolourpaint/control/TODO.
 
 
 11. Push as many classes as possible into kdelibs.
-
-
-9. Review all commits.  Credit people like Laurent Montel for porting.
-
-10. QA entire project due to Qt4 breakages.  Everything needs to be whitebox
-    tested again esp. the file saving path - format conversion, maximal
-    content preservation, formatting loss warnings etc.
-
-* QA
 * reduce size of code (51352-28 generated lines 2006-03-23; hopefully reduce by 10KLOC)
   - go through each class finding stuff that can be factored into kdelibs
     (also go through bug reports), SYNC, HACK, COMPAT etc.
@@ -57,6 +48,16 @@ command scheme
   - push multicolumn toolbar out (see how rodda's KAction changes affect it
 - ask rodda)
     - ktoolbar support multicolumn - see how krita does it
+
+
+9. Review all commits.  Credit people like Laurent Montel for porting.
+
+10. QA entire project due to Qt4 breakages.  Everything needs to be whitebox
+    tested again esp. the file saving path - format conversion, maximal
+    content preservation, formatting loss warnings etc.
+
+13. Profile startup time
+
 * KParts (see bug report by zrusin)
   - import-export for KOffice & KolourPaint
     - look up thread in mail where I said I'd rename to "Save A Copy" etc.
@@ -84,6 +85,14 @@ command scheme
     - lose quality?  don't think so since 16-bit values
     - when set alpha to 0, color dies?  is this so important?
 
-* profile startup time
-
 * arbitrary brushes
+
+
+
+* commit coloreffects/ -> effects/, commands/coloreffects/ -> commands/imagelib/effects/ change
+
+* rename *coloreffect*.{h,cpp}
+
+* grayscale command is out of place and should derive from kpeffectcommandbase
+
+* selection .diff sitting in local checkout for refactoring accidental drag detection
