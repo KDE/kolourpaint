@@ -519,7 +519,7 @@
    <text:h text:style-name="Heading_20_4" text:outline-level="4">Medium Term</text:h>
    <text:list text:style-name="L2">
     <text:list-item text:start-value="1">
-     <text:p text:style-name="P22">Rewriting graphics engine to be device-independent [p<text:reference-ref text:reference-format="page" text:ref-name="Doc stored as QPixmap">19</text:reference-ref>, Chapter <text:reference-ref text:reference-format="chapter" text:ref-name="Doc stored as QPixmap">3.2</text:reference-ref>]</text:p>
+     <text:p text:style-name="P22">Rewriting graphics engine to be device-independent [p<text:reference-ref text:reference-format="page" text:ref-name="Doc stored as QPixmap">19</text:reference-ref>, Chapter <text:reference-ref text:reference-format="chapter" text:ref-name="Doc stored as QPixmap">3.3</text:reference-ref>]</text:p>
     </text:list-item>
     <text:list-item>
      <text:p text:style-name="P22">Implement often requested features esp. 8-bit and alpha support</text:p>
@@ -573,6 +573,8 @@
    <text:h text:style-name="Heading_20_5" text:outline-level="5">Code Readability</text:h>
    <text:p text:style-name="Text_20_body">Code readability affects reliability but it is possible to have unreadable but reliable code.</text:p>
    <text:p text:style-name="Text_20_body">KolourPaint needs a lot of refactoring in places. <text:s/>TODO: details</text:p>
+   <text:h text:style-name="Heading_20_4" text:outline-level="4">Coverity</text:h>
+   <text:p text:style-name="Text_20_body">Coverity [<text:a xlink:type="simple" xlink:href="http://www.coverity.com/">http://www.coverity.com/</text:a>] is a commercial and expensive static source analyser that finds bugs and false positives. <text:s/>They do free scans of KDE but you need to apply to Coverity for an account to see the results of the scans. <text:s/>Many KDE developers have Coverity accounts, including Clarence Dang <text:span text:style-name="Code_20_Term">&lt;dang AT kde.org&gt;</text:span>.</text:p>
    <text:h text:style-name="Heading_20_4" text:outline-level="4">Sourceforge</text:h>
    <text:p text:style-name="Text_20_body"><text:a xlink:type="simple" xlink:href="http://sourceforge.net/projects/kolourpaint">http://sourceforge.net/projects/kolourpaint/</text:a> is the Sourceforge project. <text:s/>The admin, <text:s/>Clarence Dang <text:span text:style-name="Code_20_Term">&lt;clarencedang AT users.sourceforge.net&gt;</text:span>, can give you access to this.</text:p>
    <text:h text:style-name="Heading_20_5" text:outline-level="5">Website</text:h>
@@ -607,6 +609,15 @@
    <text:p text:style-name="P25">TODO</text:p>
    <text:h text:style-name="P21" text:outline-level="2">Class Diagram</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
+   <text:h text:style-name="Heading_20_2" text:outline-level="2">Code Patterns</text:h>
+   <text:p text:style-name="Text_20_body">TODO: separate chapter?</text:p>
+   <text:p text:style-name="Text_20_body">All kpMainWindow slots in response to user input (e.g. selecting a menu item or toolbar item either by clicking or using a shortcut key), that access (read, write or both) the document, must be prefixed with the following:</text:p>
+   <text:p text:style-name="Code">if (toolHasBegunShape ())</text:p>
+   <text:p text:style-name="Code"><text:s text:c="4"/>tool ()-&gt;endShapeInternal ();</text:p>
+   <text:p text:style-name="Code_20__28_blank_20_line_20_after_20_it_29_"/>
+   <text:p text:style-name="Text_20_body">This completes any shape currently being drawn.</text:p>
+   <text:p text:style-name="Text_20_body">This is needed so that the following logic in the slot can assume that the shape is not in an intermediate stage of being drag-created by the user.</text:p>
+   <text:p text:style-name="Text_20_body">Consider the case where a line is being dragged out and CTRL+I is pressed to invert the image. <text:s/>The CTRL+I invert code (<text:span text:style-name="Code_20_Term">kpMainWindow::slotInvertColors()</text:span>) must force the line to be completed before the invert can meaningfully proceed.</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Paint Engine</text:h>
    <text:p text:style-name="Text_20_body">TODO: diagram of graphics client &amp; CPU &amp; memory vs graphics server &amp; graphics card</text:p>
    <text:p text:style-name="Text_20_body">Normally programs are run on a local computer. <text:s/>However, the X11 protocol permits program logic to be executed on a remote computer (the network server, misleading known as the <text:span text:style-name="Non-Code_20_Term">graphics client</text:span>) and displayed on the local computer (the network client, misleading known as the <text:span text:style-name="Non-Code_20_Term">graphics server</text:span>). <text:s/>For the purposes of this document, when we say server, we mean graphics server and when we say client, we mean graphics client. <text:s/>These are the opposite meanings to the network version of these terms.</text:p>
@@ -650,10 +661,16 @@
    <text:p text:style-name="Text_20_body">Instead of releasing the mouse button that initiated the drag, the user may press the other mouse button while the initiating mouse button is still held down. <text:s/><text:span text:style-name="Code_20_Term">cancelShape()</text:span> is called to cancel the operation – it should erase the <text:span text:style-name="Code_20_Term">kpTempPixmap</text:span> but not commit to the command history. <text:s/></text:p>
    <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">releasedAllButtons()</text:span> is called when no mouse buttons are no longer held. <text:s/>This is for updating the status bar message. <text:s/>Consider the case where <text:span text:style-name="Code_20_Term">beginDraw()</text:span> has been called due to a left mouse press. <text:s/>If the right mouse button is then pressed, while still holding down the left, <text:span text:style-name="Code_20_Term">cancelShape()</text:span> will be called. <text:s/>But after that, as long as at least one button remains depressed, no matter what buttons are pressed or released, no drawing methods are called. <text:s/>Only after all buttons are released, will <text:span text:style-name="Code_20_Term">releasedAllButtons()</text:span> be called and the tool starts recognising events again.</text:p>
    <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">hover()</text:span> is called when the mouse is moved over the view but differs from <text:span text:style-name="Code_20_Term">draw()</text:span>, in that <text:span text:style-name="Code_20_Term">hover()</text:span> is only called outside of a draw operation i.e. when <text:span text:style-name="Code_20_Term">hasBegunDraw()</text:span> returns false and equivalently, when no buttons being pressed.</text:p>
-   <text:p text:style-name="Text_20_body">TODO: shapes vs ordinary draw pattern</text:p>
-   <text:p text:style-name="Text_20_body">TODO: end() calls endShape().</text:p>
-   <text:p text:style-name="Text_20_body">TODO: statusbar message</text:p>
+   <text:p text:style-name="Text_20_body">A shape that is not constructed from a single drag (such as a polygon; TODO: explain while selections use this) can use an extension of the drawing “pattern”. <text:s/>By implementing hasBegunShape(), beginShape() and endShape(). <text:s/>This abstraction is necessary at the kpTool level to ensure that endDraw() is called, if needed before endShape() and endShape() is automatically called before end(). <text:s/>TODO: expand</text:p>
+   <text:p text:style-name="Text_20_body">TODO: statusbar message – when call?</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">setUserMessage()</text:span> sets the string to be displayed as the first field in the statusbar, which gives the user instructions on what to do next e.g. “Curve: Drag out the start and end points” or “Curve: Left drag to set the first control point or right click to finish”. <text:s/>This can be empty but never should be because instructions should always be available.</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">setUserShapePoints()</text:span> can be passed 0, 1 and 2 points and this determines what is displayed in the second field of the statusbar:</text:p>
+   <text:p text:style-name="Text_20_body">0 points: mouse is outside of all views, display nothing</text:p>
+   <text:p text:style-name="Text_20_body">1 point: mouse is moving inside view or drawing with a flow tool (e.g. Pen), show that the currrent point</text:p>
+   <text:p text:style-name="Text_20_body">2 points: user is dragging out a shape from a start point to and end point, show these 2 points separated by a dash e.g. the start and end points of a line. <text:s/>This automatically calls <text:span text:style-name="Code_20_Term">setUserShapeSize()</text:span> with the calculated size of the shape with these points (can have negative components for a left and/or up drag). <text:s/>You can disable this automatic call by disabling the <text:span text:style-name="Code_20_Term">setSize </text:span>argument. <text:s/>ACTION: document setSize in .h</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">setUserShapeSize()</text:span> is passed the size of the current drag (can have negative components for a left and/or up drag) and is displayed in the third field. <text:s/>If this is <text:span text:style-name="Code_20_Term">KP_INVALID_SIZE</text:span>, no drawing is happening and it displays nothing. <text:s/>Note that <text:span text:style-name="Code_20_Term">QSize()</text:span> is not <text:span text:style-name="Code_20_Term">KP_INVALID_SIZE</text:span> as <text:span text:style-name="Code_20_Term">QSize()</text:span> is actually a legal size (0x0; TODO: check).</text:p>
    <text:p text:style-name="Text_20_body">TODO: keep track of color changes etc.</text:p>
+   <text:p text:style-name="Text_20_body">TODO: draw() not called at endDraw() - causes problems at least with polygon</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Selections</text:h>
    <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">kpselection.cpp</text:span> contains the <text:span text:style-name="Code_20_Term">kpSelection</text:span> data structure for selections. <text:s/>Selections are per-document (kpDocument). <text:s/>However, the rendered borders are per-view-manager (kpViewManager) and code is also spread in the view (kpView).</text:p>
    <text:p text:style-name="Text_20_body">ACTION: group code together like an aspect.</text:p>
