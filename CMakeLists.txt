@@ -2,22 +2,24 @@ project(kolourpaint)
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands
-    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/coloreffects
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/transforms
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/flow
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/polygonal
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/rectangular
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/text
-    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/transforms
     ${CMAKE_SOURCE_DIR}/kolourpaint/compat
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs
-    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/coloreffects
-    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/transforms
+    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/imagelib
+    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/imagelib/effects
+    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/imagelib/transforms
     ${CMAKE_SOURCE_DIR}/kolourpaint/generic
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/coloreffects
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/transforms
     ${CMAKE_SOURCE_DIR}/kolourpaint/mainwindow
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools
@@ -27,8 +29,9 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/kolourpaint/tools/selection
     ${CMAKE_SOURCE_DIR}/kolourpaint/views
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/coloreffects
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/generic
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/imagelib
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/imagelib/effects
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/options
     ${KDE4_INCLUDE_DIR}
@@ -67,8 +70,12 @@ create_license(${CMAKE_SOURCE_DIR}/kolourpaint/COPYING ${CMAKE_CURRENT_BINARY_DI
 
 
 set(kolourpaint_SRCS
-    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/coloreffects/kptoolclearcommand.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/coloreffects/kptoolconverttograyscale.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kptoolclearcommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kptoolconverttograyscale.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/transforms/kpTransformFlipCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/transforms/kpTransformRotateCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/transforms/kpTransformSkewCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/flow/kptoolflowcommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/kpToolColorPickerCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/kpToolFloodFillCommand.cpp
@@ -85,30 +92,26 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/text/kpToolTextDeleteCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/text/kpToolTextEnterCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/tools/selection/text/kpToolTextInsertCommand.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/transforms/kpTransformFlipCommand.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/transforms/kpTransformResizeScaleCommand.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/transforms/kpTransformRotateCommand.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/transforms/kpTransformSkewCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/compat/kpbug.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors/kpcursorlightcross.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/cursors/kpcursorprovider.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/coloreffects/kpcoloreffectsdialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/imagelib/effects/kpcoloreffectsdialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/imagelib/transforms/kpTransformFlipDialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/imagelib/transforms/kpTransformRotateDialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/imagelib/transforms/kpTransformSkewDialog.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/kpcolorsimilaritydialog.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/kpDocumentSaveOptionsPreviewDialog.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/transforms/kpTransformFlipDialog.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/transforms/kpTransformPreviewDialog.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/transforms/kpTransformResizeScaleDialog.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/transforms/kpTransformRotateDialog.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/transforms/kpTransformSkewDialog.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/generic/kpSetOverrideCursorSaver.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/generic/kpwidgetmapper.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/coloreffects/kpcoloreffect.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/coloreffects/kpeffectbalance.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/coloreffects/kpeffectblursharpen.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/coloreffects/kpeffectemboss.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/coloreffects/kpeffectflatten.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/coloreffects/kpeffectinvert.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/coloreffects/kpeffectreducecolors.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpcoloreffect.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpeffectbalance.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpeffectblursharpen.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpeffectemboss.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpeffectflatten.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpeffectinvert.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpeffectreducecolors.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpcolor.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpdocumentmetainfo.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpfloodfill.cpp
@@ -175,15 +178,15 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/views/kpview.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/views/kpzoomedthumbnailview.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/views/kpzoomedview.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/coloreffects/kpColorEffectWidget.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/coloreffects/kpEffectBalanceWidget.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/coloreffects/kpEffectBlurSharpenWidget.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/coloreffects/kpEffectEmbossWidget.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/coloreffects/kpEffectFlattenWidget.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/coloreffects/kpEffectInvertWidget.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/coloreffects/kpEffectReduceColorsWidget.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/generic/kpresizesignallinglabel.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/generic/kpsqueezedtextlabel.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/imagelib/effects/kpColorEffectWidget.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/imagelib/effects/kpEffectBalanceWidget.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/imagelib/effects/kpEffectBlurSharpenWidget.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/imagelib/effects/kpEffectEmbossWidget.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/imagelib/effects/kpEffectFlattenWidget.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/imagelib/effects/kpEffectInvertWidget.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kpcolorsimilaritycube.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/kpDocumentSaveOptionsWidget.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/widgets/toolbars/kpcolortoolbar.cpp
