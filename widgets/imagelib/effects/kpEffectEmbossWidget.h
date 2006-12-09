@@ -31,7 +31,7 @@
 
 
 #include <kpcolor.h>
-#include <kpColorEffectWidget.h>
+#include <kpEffectWidgetBase.h>
 
 
 class QCheckBox;

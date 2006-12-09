@@ -26,7 +26,7 @@
 */
 
 
-#include <kpcoloreffect.h>
+#include <kpEffectCommandBase.h>
 
 #include <kdialog.h>
 #include <klocale.h>
@@ -128,4 +128,4 @@ void kpEffectCommandBase::unexecute ()
 }
 
 
-#include <kpcoloreffect.moc>
+#include <kpEffectCommandBase.moc>

@@ -29,7 +29,7 @@
 #define DEBUG_KP_EFFECTS_DIALOG 0
 
 
-#include <kpcoloreffectsdialog.h>
+#include <kpEffectsDialog.h>
 
 #include <qgroupbox.h>
 #include <qlabel.h>
@@ -44,7 +44,6 @@
 #include <khbox.h>
 #include <klocale.h>
 
-#include <kpColorEffectWidget.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
 #include <kpEffectBalanceWidget.h>
@@ -369,4 +368,4 @@ void kpEffectsDialog::slotDelayedUpdate ()
 }
 
 
-#include <kpcoloreffectsdialog.moc>
+#include <kpEffectsDialog.moc>

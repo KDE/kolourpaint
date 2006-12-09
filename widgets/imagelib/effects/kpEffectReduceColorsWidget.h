@@ -30,7 +30,7 @@
 #define kpEffectReduceColorsWidget_H
 
 
-#include <kpColorEffectWidget.h>
+#include <kpEffectWidgetBase.h>
 
 
 class QImage;

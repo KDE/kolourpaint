@@ -32,7 +32,7 @@
 
 #include <kpcolor.h>
 
-#include <kpColorEffectWidget.h>
+#include <kpEffectWidgetBase.h>
 #include <kpeffectblursharpen.h>
 
 

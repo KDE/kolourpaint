@@ -30,7 +30,7 @@
 #define kpEffectBalanceWidget_H
 
 
-#include <kpColorEffectWidget.h>
+#include <kpEffectWidgetBase.h>
 #include <kpimage.h>
 
 

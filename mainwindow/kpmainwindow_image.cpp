@@ -41,13 +41,12 @@
 
 #include <kpcolor.h>
 #include <kpdefs.h>
-#include <kpcoloreffect.h>
-#include <kpcoloreffectsdialog.h>
 #include <kpcolortoolbar.h>
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
 #include <kpeffectinvert.h>
 #include <kpeffectreducecolors.h>
+#include <kpEffectsDialog.h>
 #include <kpselection.h>
 #include <kptool.h>
 #include <kptoolautocrop.h>

@@ -32,7 +32,7 @@
 
 #include <qcolor.h>
 
-#include <kpcoloreffect.h>
+#include <kpEffectCommandBase.h>
 #include <kpimage.h>
 
 

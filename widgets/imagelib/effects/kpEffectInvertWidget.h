@@ -30,7 +30,7 @@
 #define kpEffectInvertWidget_H
 
 
-#include <kpColorEffectWidget.h>
+#include <kpEffectWidgetBase.h>
 
 
 class QCheckBox;

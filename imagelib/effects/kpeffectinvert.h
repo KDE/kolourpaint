@@ -30,7 +30,7 @@
 #define KP_EFFECT_INVERT_H
 
 
-#include <kpcoloreffect.h>
+#include <kpEffectCommandBase.h>
 #include <kpimage.h>
 
 

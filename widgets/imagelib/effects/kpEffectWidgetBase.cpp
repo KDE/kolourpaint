@@ -26,7 +26,7 @@
 */
 
 
-#include <kpColorEffectWidget.h>
+#include <kpEffectWidgetBase.h>
 
 #include <qapplication.h>
 #include <qpixmap.h>
@@ -74,4 +74,4 @@ int kpEffectWidgetBase::spacingHint () const
 }
 
 
-#include <kpColorEffectWidget.moc>
+#include <kpEffectWidgetBase.moc>
