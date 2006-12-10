@@ -598,7 +598,10 @@ void kpToolWidgetBase::paintEvent (QPaintEvent *e)
                 painter.fillRect (rect, Qt::blue/*selection color*/);
 
                 if (m_invertSelectedPixmap)
+                {
+                    // TODO: Should use kpPixmapFX instead i.e. method on view content, not document content
                     kpEffectInvert::applyEffect (&pixmap);
+                }
             }
 
         #if DEBUG_KP_TOOL_WIDGET_BASE && 1
