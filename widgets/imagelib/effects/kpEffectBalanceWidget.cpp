@@ -180,7 +180,7 @@ bool kpEffectBalanceWidget::isNoOp () const
 // public virtual [base kpEffectWidgetBase]
 kpImage kpEffectBalanceWidget::applyEffect (const kpImage &image)
 {
-    return kpEffectBalanceCommand::applyEffect (image,
+    return kpEffectBalance::applyEffect (image,
         channels (), brightness (), contrast (), gamma ());
 }
 
@@ -201,16 +201,16 @@ int kpEffectBalanceWidget::channels () const
     {
     default:
     case 0:
-        return kpEffectBalanceCommand::RGB;
+        return kpEffectBalance::RGB;
 
     case 1:
-        return kpEffectBalanceCommand::Red;
+        return kpEffectBalance::Red;
 
     case 2:
-        return kpEffectBalanceCommand::Green;
+        return kpEffectBalance::Green;
 
     case 3:
-        return kpEffectBalanceCommand::Blue;
+        return kpEffectBalance::Blue;
     }
 }
 

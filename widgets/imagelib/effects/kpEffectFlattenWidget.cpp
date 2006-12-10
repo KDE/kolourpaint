@@ -160,7 +160,7 @@ kpImage kpEffectFlattenWidget::applyEffect (const kpImage &image)
     if (isNoOp ())
         return image;
 
-    return kpEffectFlattenCommand::apply (image, color1 (), color2 ());
+    return kpEffectFlatten::applyEffect (image, color1 (), color2 ());
 }
 
 

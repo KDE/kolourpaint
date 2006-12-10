@@ -42,53 +42,31 @@
 #include <kppixmapfx.h>
 
 
-kpEffectInvertCommand::kpEffectInvertCommand (int channels,
-                                              bool actOnSelection,
-                                              kpMainWindow *mainWindow)
-    : kpEffectCommandBase (channels == RGB ?
-                                i18n ("Invert Colors") : i18n ("Invert"),
-                            actOnSelection, mainWindow),
-      m_channels (channels)
-{
-}
-
-kpEffectInvertCommand::kpEffectInvertCommand (bool actOnSelection,
-                                              kpMainWindow *mainWindow)
-    : kpEffectCommandBase (i18n ("Invert Colors"), actOnSelection, mainWindow),
-      m_channels (RGB)
-{
-}
-
-kpEffectInvertCommand::~kpEffectInvertCommand ()
-{
-}
-
-
 // public static
-void kpEffectInvertCommand::apply (QPixmap *destPixmapPtr, int channels)
+void kpEffectInvert::applyEffect (QPixmap *destPixmapPtr, int channels)
 {
     QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
-    apply (&image, channels);
+    applyEffect (&image, channels);
     *destPixmapPtr = kpPixmapFX::convertToPixmap (image);
 }
 
 // public static
-QPixmap kpEffectInvertCommand::apply (const QPixmap &pm, int channels)
+QPixmap kpEffectInvert::applyEffect (const QPixmap &pm, int channels)
 {
     QImage image = kpPixmapFX::convertToImage (pm);
-    apply (&image, channels);
+    applyEffect (&image, channels);
     return kpPixmapFX::convertToPixmap (image);
 }
 
 // public static
-void kpEffectInvertCommand::apply (QImage *destImagePtr, int channels)
+void kpEffectInvert::applyEffect (QImage *destImagePtr, int channels)
 {
     QRgb mask = qRgba ((channels & Red) ? 0xFF : 0,
                        (channels & Green) ? 0xFF : 0,
                        (channels & Blue) ? 0xFF : 0,
                        0/*don't invert alpha*/);
 #if DEBUG_KP_EFFECT_INVERT
-    kDebug () << "kpEffectInvertCommand::apply(channels=" << channels
+    kDebug () << "kpEffectInvert::applyEffect(channels=" << channels
                << ") mask=" << (int *) mask
                << endl;
 #endif
@@ -121,11 +99,33 @@ void kpEffectInvertCommand::apply (QImage *destImagePtr, int channels)
 }
 
 // public static
-QImage kpEffectInvertCommand::apply (const QImage &img, int channels)
+QImage kpEffectInvert::applyEffect (const QImage &img, int channels)
 {
     QImage retImage = img;
-    apply (&retImage, channels);
+    applyEffect (&retImage, channels);
     return retImage;
+}
+
+
+kpEffectInvertCommand::kpEffectInvertCommand (int channels,
+                                              bool actOnSelection,
+                                              kpMainWindow *mainWindow)
+    : kpEffectCommandBase (channels == kpEffectInvert::RGB ?
+                                i18n ("Invert Colors") : i18n ("Invert"),
+                            actOnSelection, mainWindow),
+      m_channels (channels)
+{
+}
+
+kpEffectInvertCommand::kpEffectInvertCommand (bool actOnSelection,
+                                              kpMainWindow *mainWindow)
+    : kpEffectCommandBase (i18n ("Invert Colors"), actOnSelection, mainWindow),
+      m_channels (kpEffectInvert::RGB)
+{
+}
+
+kpEffectInvertCommand::~kpEffectInvertCommand ()
+{
 }
 
 
@@ -136,7 +136,7 @@ QImage kpEffectInvertCommand::apply (const QImage &img, int channels)
 // protected virtual [base kpEffectCommandBase]
 kpImage kpEffectInvertCommand::applyEffect (const kpImage &image)
 {
-    return apply (image, m_channels);
+    return kpEffectInvert::applyEffect (image, m_channels);
 }
 
 

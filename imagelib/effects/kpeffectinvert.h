@@ -41,7 +41,7 @@ class QPixmap;
 class kpMainWindow;
 
 
-class kpEffectInvertCommand : public kpEffectCommandBase
+class kpEffectInvert
 {
 public:
     enum Channel
@@ -50,14 +50,6 @@ public:
         Red = 1, Green = 2, Blue = 4,
         RGB = Red | Green | Blue
     };
-
-    kpEffectInvertCommand (int channels,
-                           bool actOnSelection,
-                           kpMainWindow *mainWindow);
-    kpEffectInvertCommand (bool actOnSelection,
-                           kpMainWindow *mainWindow);
-    virtual ~kpEffectInvertCommand ();
-
 
     //
     // Inverts the colours of each pixel in the given image.
@@ -70,10 +62,22 @@ public:
     // 2. never inverts the Alpha Buffer
     //
 
-    static void apply (QPixmap *destPixmapPtr, int channels = RGB);
-    static QPixmap apply (const QPixmap &pm, int channels = RGB);
-    static void apply (QImage *destImagePtr, int channels = RGB);
-    static QImage apply (const QImage &img, int channels = RGB);
+    static void applyEffect (QPixmap *destPixmapPtr, int channels = RGB);
+    static QPixmap applyEffect (const QPixmap &pm, int channels = RGB);
+    static void applyEffect (QImage *destImagePtr, int channels = RGB);
+    static QImage applyEffect (const QImage &img, int channels = RGB);
+};
+
+
+class kpEffectInvertCommand : public kpEffectCommandBase
+{
+public:
+    kpEffectInvertCommand (int channels,
+                           bool actOnSelection,
+                           kpMainWindow *mainWindow);
+    kpEffectInvertCommand (bool actOnSelection,
+                           kpMainWindow *mainWindow);
+    virtual ~kpEffectInvertCommand ();
 
 
     //

@@ -98,14 +98,14 @@ QString kpEffectBlurSharpenWidget::caption () const
 // public virtual [base kpEffectWidgetBase]
 bool kpEffectBlurSharpenWidget::isNoOp () const
 {
-    return (type () == kpEffectBlurSharpenCommand::None);
+    return (type () == kpEffectBlurSharpen::None);
 }
 
 // public virtual [base kpEffectWidgetBase]
 kpImage kpEffectBlurSharpenWidget::applyEffect (const kpImage &image)
 {
-    return kpEffectBlurSharpenCommand::apply (image,
-                                              type (), radius (), sigma (), repeat ());
+    return kpEffectBlurSharpen::applyEffect (image,
+        type (), radius (), sigma (), repeat ());
 }
 
 // public virtual [base kpEffectWidgetBase]
@@ -131,14 +131,14 @@ void kpEffectBlurSharpenWidget::slotUpdateTypeLabel ()
 
 
 // protected
-kpEffectBlurSharpenCommand::Type kpEffectBlurSharpenWidget::type () const
+kpEffectBlurSharpen::Type kpEffectBlurSharpenWidget::type () const
 {
     if (m_amountInput->value () == 0)
-        return kpEffectBlurSharpenCommand::None;
+        return kpEffectBlurSharpen::None;
     else if (m_amountInput->value () < 0)
-        return kpEffectBlurSharpenCommand::Blur;
+        return kpEffectBlurSharpen::Blur;
     else
-        return kpEffectBlurSharpenCommand::Sharpen;
+        return kpEffectBlurSharpen::Sharpen;
 }
 
 // The numbers that follow were picked by experimentation.

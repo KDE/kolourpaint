@@ -42,7 +42,7 @@ class KIntNumInput;
 class kpMainWindow;
 
 
-class kpEffectBlurSharpenCommand : public kpEffectCommandBase
+class kpEffectBlurSharpen
 {
 public:
     enum Type
@@ -50,24 +50,29 @@ public:
         None = 0, Blur, Sharpen
     };
 
-    kpEffectBlurSharpenCommand (Type type,
+    static kpImage applyEffect (const kpImage &image,
+        Type type, double radius, double sigma,
+        int repeat);
+};
+
+
+class kpEffectBlurSharpenCommand : public kpEffectCommandBase
+{
+public:
+    kpEffectBlurSharpenCommand (kpEffectBlurSharpen::Type type,
                                 double radius, double sigma,
                                 int repeat,
                                 bool actOnSelection,
                                 kpMainWindow *mainWindow);
     virtual ~kpEffectBlurSharpenCommand ();
 
-    static QString nameForType (kpEffectBlurSharpenCommand::Type type);
+    static QString nameForType (kpEffectBlurSharpen::Type type);
     
-    static kpImage apply (const kpImage &image,
-                          Type type, double radius, double sigma,
-                          int repeat);
-
 protected:
     virtual kpImage applyEffect (const kpImage &image);
 
 protected:
-    Type m_type;
+    kpEffectBlurSharpen::Type m_type;
     double m_radius, m_sigma;
     int m_repeat;
 };

@@ -118,7 +118,7 @@ kpImage kpEffectEmbossWidget::applyEffect (const kpImage &image)
     if (isNoOp ())
         return image;
 
-    return kpEffectEmbossCommand::apply (image, radius (), sigma (), repeat ());
+    return kpEffectEmboss::applyEffect (image, radius (), sigma (), repeat ());
 }
 
 // public virtual [base kpEffectWidgetBase]

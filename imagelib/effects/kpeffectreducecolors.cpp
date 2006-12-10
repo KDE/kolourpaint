@@ -67,8 +67,8 @@ static QImage::Format DepthToFormat (int depth)
     }
 }
 
-// exported
-QImage ConvertImageDepth (const QImage &image, int depth, bool dither)
+// public static
+QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, bool dither)
 {
 #if DEBUG_KP_EFFECT_REDUCE_COLORS
     kDebug () << "kpeffectreducecolors.cpp:ConvertImageDepth() changing image (w=" << image.width ()
@@ -203,6 +203,49 @@ QImage ConvertImageDepth (const QImage &image, int depth, bool dither)
 }
 
 
+// public static
+void kpEffectReduceColors::applyEffect (QPixmap *destPixmapPtr, int depth, bool dither)
+{
+    if (!destPixmapPtr)
+        return;
+
+    if (depth != 1 && depth != 8)
+        return;
+
+
+    QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
+
+
+    image = kpEffectReduceColors::convertImageDepth (image, depth, dither);
+
+    if (image.isNull ())
+        return;
+
+
+    QPixmap pixmap = kpPixmapFX::convertToPixmap (image, false/*no dither*/);
+
+
+    // HACK: The above "image.convertDepth()" erases the Alpha Channel
+    //       (at least for monochrome).
+    //       qpixmap.html says "alpha masks on monochrome images are ignored."
+    //
+    //       Put the mask back.
+    //
+    if (!destPixmapPtr->mask ().isNull())
+        pixmap.setMask (destPixmapPtr->mask ());
+
+    *destPixmapPtr = pixmap;
+}
+
+// public static
+QPixmap kpEffectReduceColors::applyEffect (const QPixmap &pm, int depth, bool dither)
+{
+    QPixmap ret = pm;
+    applyEffect (&ret, depth, dither);
+    return ret;
+}
+
+
 //
 // kpEffectReduceColorsCommand
 //
@@ -244,49 +287,6 @@ QString kpEffectReduceColorsCommand::commandName (int depth, int dither) const
 }
 
 
-// public static
-void kpEffectReduceColorsCommand::apply (QPixmap *destPixmapPtr, int depth, bool dither)
-{
-    if (!destPixmapPtr)
-        return;
-
-    if (depth != 1 && depth != 8)
-        return;
-
-
-    QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
-
-
-    image = ::ConvertImageDepth (image, depth, dither);
-
-    if (image.isNull ())
-        return;
-
-
-    QPixmap pixmap = kpPixmapFX::convertToPixmap (image, false/*no dither*/);
-
-
-    // HACK: The above "image.convertDepth()" erases the Alpha Channel
-    //       (at least for monochrome).
-    //       qpixmap.html says "alpha masks on monochrome images are ignored."
-    //
-    //       Put the mask back.
-    //
-    if (!destPixmapPtr->mask ().isNull())
-        pixmap.setMask (destPixmapPtr->mask ());
-
-    *destPixmapPtr = pixmap;
-}
-
-// public static
-QPixmap kpEffectReduceColorsCommand::apply (const QPixmap &pm, int depth, bool dither)
-{
-    QPixmap ret = pm;
-    apply (&ret, depth, dither);
-    return ret;
-}
-
-
 //
 // kpEffectReduceColorsCommand implements kpEffectCommandBase interface
 //
@@ -294,7 +294,7 @@ QPixmap kpEffectReduceColorsCommand::apply (const QPixmap &pm, int depth, bool d
 // protected virtual [base kpEffectCommandBase]
 kpImage kpEffectReduceColorsCommand::applyEffect (const kpImage &image)
 {
-    return apply (image, m_depth, m_dither);
+    return kpEffectReduceColors::applyEffect (image, m_depth, m_dither);
 }
 
 

@@ -43,6 +43,15 @@ class KIntNumInput;
 class kpMainWindow;
 
 
+class kpEffectEmboss
+{
+public:
+    static kpImage applyEffect (const kpImage &image,
+                                double radius, double sigma,
+                                int repeat);
+};
+
+
 class kpEffectEmbossCommand : public kpEffectCommandBase
 {
 public:
@@ -51,10 +60,6 @@ public:
                            bool actOnSelection,
                            kpMainWindow *mainWindow);
     virtual ~kpEffectEmbossCommand ();
-
-    static kpImage apply (const kpImage &image,
-                          double radius, double sigma,
-                          int repeat);
 
 protected:
     virtual kpImage applyEffect (const kpImage &image);

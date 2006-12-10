@@ -65,7 +65,7 @@ protected slots:
     void slotUpdateTypeLabel ();
 
 protected:
-    kpEffectBlurSharpenCommand::Type type () const;
+    kpEffectBlurSharpen::Type type () const;
     double radius () const;
     double sigma () const;
     int repeat () const;

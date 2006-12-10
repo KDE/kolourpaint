@@ -535,8 +535,8 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
         imageToSave.depth () != saveOptions.colorDepth ())
     {
         // TODO: I think this erases the alpha channel!
-        //       See comment in kpEffectReduceColorsCommand::apply().
-        imageToSave = ::ConvertImageDepth (imageToSave,
+        //       See comment in kpEffectReduceColors::applyEffect().
+        imageToSave = kpEffectReduceColors::convertImageDepth (imageToSave,
                                            saveOptions.colorDepth (),
                                            saveOptions.dither ());
     }

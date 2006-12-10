@@ -30,6 +30,8 @@
 #define KP_EFFECT_REDUCE_COLORS_H
 
 
+#include <kdemacros.h>
+
 #include <kpEffectCommandBase.h>
 #include <kpimage.h>
 
@@ -41,7 +43,17 @@ class QRadioButton;
 class kpMainWindow;
 
 
-QImage ConvertImageDepth (const QImage &image, int depth, bool dither);
+class kpEffectReduceColors
+{
+public:
+    // TODO: why isn't applyEffect() for the public API sufficient?  Ans: see TODO in kpdocument.cpp.
+    static QImage convertImageDepth (const QImage &image, int depth, bool dither);
+
+    // (always preserves mask)
+    static void applyEffect (QPixmap *destPixmapPtr, int depth, bool dither);
+    static QPixmap applyEffect (const QPixmap &pm, int depth, bool dither);
+};
+
 
 
 class kpEffectReduceColorsCommand : public kpEffectCommandBase
@@ -54,11 +66,6 @@ public:
     virtual ~kpEffectReduceColorsCommand ();
 
     QString commandName (int depth, int dither) const;
-
-    // (always preserves mask)
-    static void apply (QPixmap *destPixmapPtr, int depth, bool dither);
-    static QPixmap apply (const QPixmap &pm, int depth, bool dither);
-
 
     //
     // kpEffectCommandBase interface

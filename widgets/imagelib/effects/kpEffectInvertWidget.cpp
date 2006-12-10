@@ -118,13 +118,13 @@ int kpEffectInvertWidget::channels () const
 
 
     if (m_redCheckBox->isChecked ())
-        channels |= kpEffectInvertCommand::Red;
+        channels |= kpEffectInvert::Red;
 
     if (m_greenCheckBox->isChecked ())
-        channels |= kpEffectInvertCommand::Green;
+        channels |= kpEffectInvert::Green;
 
     if (m_blueCheckBox->isChecked ())
-        channels |= kpEffectInvertCommand::Blue;
+        channels |= kpEffectInvert::Blue;
 
 
 #if DEBUG_KP_EFFECT_INVERT
@@ -148,13 +148,13 @@ QString kpEffectInvertWidget::caption () const
 // public virtual [base kpEffectWidgetBase]
 bool kpEffectInvertWidget::isNoOp () const
 {
-    return (channels () == kpEffectInvertCommand::None);
+    return (channels () == kpEffectInvert::None);
 }
 
 // public virtual [base kpEffectWidgetBase]
 kpImage kpEffectInvertWidget::applyEffect (const kpImage &image)
 {
-    return kpEffectInvertCommand::apply (image, channels ());
+    return kpEffectInvert::applyEffect (image, channels ());
 }
 
 

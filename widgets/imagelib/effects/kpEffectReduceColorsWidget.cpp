@@ -201,7 +201,7 @@ bool kpEffectReduceColorsWidget::isNoOp () const
 // public virtual [base kpEffectWidgetBase]
 kpImage kpEffectReduceColorsWidget::applyEffect (const kpImage &image)
 {
-    return kpEffectReduceColorsCommand::apply (image, depth (), dither ());
+    return kpEffectReduceColors::applyEffect (image, depth (), dither ());
 }
 
 

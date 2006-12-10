@@ -55,21 +55,6 @@
 #endif
 
 
-kpEffectBalanceCommand::kpEffectBalanceCommand (int channels,
-        int brightness, int contrast, int gamma,
-        bool actOnSelection,
-        kpMainWindow *mainWindow)
-    : kpEffectCommandBase (i18n ("Balance"), actOnSelection, mainWindow),
-      m_channels (channels),
-      m_brightness (brightness), m_contrast (contrast), m_gamma (gamma)
-{
-}
-
-kpEffectBalanceCommand::~kpEffectBalanceCommand ()
-{
-}
-
-
 static inline int between0And255 (int val)
 {
     if (val < 0)
@@ -116,11 +101,11 @@ static inline QRgb brightnessContrastGammaForRGB (QRgb rgb,
     int blue = qBlue (rgb);
 
 
-    if (channels & kpEffectBalanceCommand::Red)
+    if (channels & kpEffectBalance::Red)
         red = brightnessContrastGamma (red, brightness, contrast, gamma);
-    if (channels & kpEffectBalanceCommand::Green)
+    if (channels & kpEffectBalance::Green)
         green = brightnessContrastGamma (green, brightness, contrast, gamma);
-    if (channels & kpEffectBalanceCommand::Blue)
+    if (channels & kpEffectBalance::Blue)
         blue = brightnessContrastGamma (blue, brightness, contrast, gamma);
 
 
@@ -129,12 +114,12 @@ static inline QRgb brightnessContrastGammaForRGB (QRgb rgb,
 
 
 // public static
-kpImage kpEffectBalanceCommand::applyEffect (const kpImage &image,
+kpImage kpEffectBalance::applyEffect (const kpImage &image,
         int channels,
         int brightness, int contrast, int gamma)
 {
 #if DEBUG_KP_EFFECT_BALANCE
-    kDebug () << "kpEffectBalanceCommand::applyEffect("
+    kDebug () << "kpEffectBalance::applyEffect("
                << "channels=" << channels
                << ",brightness=" << brightness
                << ",contrast=" << contrast
@@ -157,17 +142,17 @@ kpImage kpEffectBalanceCommand::applyEffect (const kpImage &image,
     {
         Q_UINT8 applied = (Q_UINT8) brightnessContrastGamma (i, brightness, contrast, gamma);
 
-        if (channels & kpEffectBalanceCommand::Red)
+        if (channels & kpEffectBalance::Red)
             transformRed [i] = applied;
         else
             transformRed [i] = i;
 
-        if (channels & kpEffectBalanceCommand::Green)
+        if (channels & kpEffectBalance::Green)
             transformGreen [i] = applied;
         else
             transformGreen [i] = i;
 
-        if (channels & kpEffectBalanceCommand::Blue)
+        if (channels & kpEffectBalance::Blue)
             transformBlue [i] = applied;
         else
             transformBlue [i] = i;
@@ -244,10 +229,26 @@ kpImage kpEffectBalanceCommand::applyEffect (const kpImage &image,
     return retPixmap;
 }
 
+
+kpEffectBalanceCommand::kpEffectBalanceCommand (int channels,
+        int brightness, int contrast, int gamma,
+        bool actOnSelection,
+        kpMainWindow *mainWindow)
+    : kpEffectCommandBase (i18n ("Balance"), actOnSelection, mainWindow),
+      m_channels (channels),
+      m_brightness (brightness), m_contrast (contrast), m_gamma (gamma)
+{
+}
+
+kpEffectBalanceCommand::~kpEffectBalanceCommand ()
+{
+}
+
+
 // protected virtual [base kpEffectCommandBase]
 kpImage kpEffectBalanceCommand::applyEffect (const kpImage &image)
 {
-    return applyEffect (image, m_channels,
+    return kpEffectBalance::applyEffect (image, m_channels,
         m_brightness, m_contrast, m_gamma);
 }
 

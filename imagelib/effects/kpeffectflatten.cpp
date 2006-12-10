@@ -49,6 +49,47 @@
 #include <kppixmapfx.h>
 
 
+// public static
+void kpEffectFlatten::applyEffect (QPixmap *destPixmapPtr,
+        const QColor &color1, const QColor &color2)
+{
+    if (!destPixmapPtr)
+        return;
+
+    QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
+    applyEffect (&image, color1, color2);
+    *destPixmapPtr = kpPixmapFX::convertToPixmap (image);
+}
+
+// public static
+QPixmap kpEffectFlatten::applyEffect (const QPixmap &pm,
+        const QColor &color1, const QColor &color2)
+{
+    QImage image = kpPixmapFX::convertToImage (pm);
+    applyEffect (&image, color1, color2);
+    return kpPixmapFX::convertToPixmap (image);
+}
+
+// public static
+void kpEffectFlatten::applyEffect (QImage *destImagePtr,
+        const QColor &color1, const QColor &color2)
+{
+    if (!destImagePtr)
+        return;
+
+    KImageEffect::flatten (*destImagePtr/*ref*/, color1, color2);
+}
+
+// public static
+QImage kpEffectFlatten::applyEffect (const QImage &img,
+        const QColor &color1, const QColor &color2)
+{
+    QImage retImage = img;
+    applyEffect (&retImage, color1, color2);
+    return retImage;
+}
+
+
 kpEffectFlattenCommand::kpEffectFlattenCommand (const QColor &color1,
                                                 const QColor &color2,
                                                 bool actOnSelection,
@@ -63,47 +104,6 @@ kpEffectFlattenCommand::~kpEffectFlattenCommand ()
 }
 
 
-// public static
-void kpEffectFlattenCommand::apply (QPixmap *destPixmapPtr,
-                                    const QColor &color1, const QColor &color2)
-{
-    if (!destPixmapPtr)
-        return;
-
-    QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
-    apply (&image, color1, color2);
-    *destPixmapPtr = kpPixmapFX::convertToPixmap (image);
-}
-
-// public static
-QPixmap kpEffectFlattenCommand::apply (const QPixmap &pm,
-                                       const QColor &color1, const QColor &color2)
-{
-    QImage image = kpPixmapFX::convertToImage (pm);
-    apply (&image, color1, color2);
-    return kpPixmapFX::convertToPixmap (image);
-}
-
-// public static
-void kpEffectFlattenCommand::apply (QImage *destImagePtr,
-                                    const QColor &color1, const QColor &color2)
-{
-    if (!destImagePtr)
-        return;
-
-    KImageEffect::flatten (*destImagePtr/*ref*/, color1, color2);
-}
-
-// public static
-QImage kpEffectFlattenCommand::apply (const QImage &img,
-                                      const QColor &color1, const QColor &color2)
-{
-    QImage retImage = img;
-    apply (&retImage, color1, color2);
-    return retImage;
-}
-
-
 //
 // kpEffectFlattenCommand implements kpEffectCommandBase interface
 //
@@ -111,7 +111,7 @@ QImage kpEffectFlattenCommand::apply (const QImage &img,
 // protected virtual [base kpEffectCommandBase]
 kpImage kpEffectFlattenCommand::applyEffect (const kpImage &image)
 {
-    return apply (image, m_color1, m_color2);
+    return kpEffectFlatten::applyEffect (image, m_color1, m_color2);
 }
 
 

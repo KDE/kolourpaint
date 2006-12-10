@@ -598,7 +598,7 @@ void kpToolWidgetBase::paintEvent (QPaintEvent *e)
                 painter.fillRect (rect, Qt::blue/*selection color*/);
 
                 if (m_invertSelectedPixmap)
-                    kpEffectInvertCommand::apply (&pixmap);
+                    kpEffectInvert::applyEffect (&pixmap);
             }
 
         #if DEBUG_KP_TOOL_WIDGET_BASE && 1

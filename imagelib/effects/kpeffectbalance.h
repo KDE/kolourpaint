@@ -42,7 +42,7 @@ class KIntNumInput;
 class kpMainWindowe;
 
 
-class kpEffectBalanceCommand : public kpEffectCommandBase
+class kpEffectBalance
 {
 public:
     enum Channel
@@ -52,17 +52,22 @@ public:
         RGB = Red | Green | Blue
     };
 
-    // <brightness>, <contrast> & <gamma> are from -50 to 50
+    // (<brightness>, <contrast> & <gamma> are from -50 to 50)
+    static kpImage applyEffect (const kpImage &image,
+        int channels,
+        int brightness, int contrast, int gamma);
+};
 
+
+class kpEffectBalanceCommand : public kpEffectCommandBase
+{
+public:
+    // (<brightness>, <contrast> & <gamma> are from -50 to 50)
     kpEffectBalanceCommand (int channels,
                             int brightness, int contrast, int gamma,
                             bool actOnSelection,
                             kpMainWindow *mainWindow);
     virtual ~kpEffectBalanceCommand ();
-
-    static kpImage applyEffect (const QPixmap &image,
-        int channels,
-        int brightness, int contrast, int gamma);
 
 protected:
     virtual kpImage applyEffect (const kpImage &image);

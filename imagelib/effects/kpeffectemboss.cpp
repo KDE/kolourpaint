@@ -49,28 +49,13 @@
 #include <kppixmapfx.h>
 
 
-kpEffectEmbossCommand::kpEffectEmbossCommand (double radius, double sigma,
-                                              int repeat,
-                                              bool actOnSelection,
-                                              kpMainWindow *mainWindow)
-    : kpEffectCommandBase (i18n ("Emboss"), actOnSelection, mainWindow),
-      m_radius (radius), m_sigma (sigma),
-      m_repeat (repeat)
-{
-}
-
-kpEffectEmbossCommand::~kpEffectEmbossCommand ()
-{
-}
-
-
 // public static
-kpImage kpEffectEmbossCommand::apply (const kpImage &image,
-                                      double radius, double sigma,
-                                      int repeat)
+kpImage kpEffectEmboss::applyEffect (const kpImage &image,
+        double radius, double sigma,
+        int repeat)
 {
 #if DEBUG_KP_EFFECT_EMBOSS
-    kDebug () << "kpEffectEmbossCommand::apply()"
+    kDebug () << "kpEffectEmboss::applyEffect()"
                << " radius=" << radius
                << " sigma=" << sigma
                << " repeat=" << repeat
@@ -102,10 +87,26 @@ kpImage kpEffectEmbossCommand::apply (const kpImage &image,
     return retPixmap;
 }
 
+
+kpEffectEmbossCommand::kpEffectEmbossCommand (double radius, double sigma,
+                                              int repeat,
+                                              bool actOnSelection,
+                                              kpMainWindow *mainWindow)
+    : kpEffectCommandBase (i18n ("Emboss"), actOnSelection, mainWindow),
+      m_radius (radius), m_sigma (sigma),
+      m_repeat (repeat)
+{
+}
+
+kpEffectEmbossCommand::~kpEffectEmbossCommand ()
+{
+}
+
+
 // protected virtual [base kpEffectCommandBase]
 kpImage kpEffectEmbossCommand::applyEffect (const kpImage &image)
 {
-    return apply (image, m_radius, m_sigma, m_repeat);
+    return kpEffectEmboss::applyEffect (image, m_radius, m_sigma, m_repeat);
 }
 
 
