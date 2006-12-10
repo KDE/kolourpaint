@@ -26,56 +26,27 @@
 */
 
 
-#ifndef KP_EFFECT_BLUR_SHARPEN_H
-#define KP_EFFECT_BLUR_SHARPEN_H
+#ifndef kpEffectFlatten_H
+#define kpEffectFlatten_H
 
 
-#include <kpcolor.h>
-#include <kpEffectCommandBase.h>
-#include <kpimage.h>
+class QColor;
+class QImage;
+class QPixmap;
 
 
-class QLabel;
-
-class KIntNumInput;
-
-class kpMainWindow;
-
-
-class kpEffectBlurSharpen
+class kpEffectFlatten
 {
 public:
-    enum Type
-    {
-        None = 0, Blur, Sharpen
-    };
-
-    static kpImage applyEffect (const kpImage &image,
-        Type type, double radius, double sigma,
-        int repeat);
+    static void applyEffect (QPixmap *destPixmapPtr,
+        const QColor &color1, const QColor &color2);
+    static QPixmap applyEffect (const QPixmap &pm,
+        const QColor &color1, const QColor &color2);
+    static void applyEffect (QImage *destImagePtr,
+        const QColor &color1, const QColor &color2);
+    static QImage applyEffect (const QImage &img,
+        const QColor &color1, const QColor &color2);
 };
 
 
-class kpEffectBlurSharpenCommand : public kpEffectCommandBase
-{
-public:
-    kpEffectBlurSharpenCommand (kpEffectBlurSharpen::Type type,
-                                double radius, double sigma,
-                                int repeat,
-                                bool actOnSelection,
-                                kpMainWindow *mainWindow);
-    virtual ~kpEffectBlurSharpenCommand ();
-
-    static QString nameForType (kpEffectBlurSharpen::Type type);
-    
-protected:
-    virtual kpImage applyEffect (const kpImage &image);
-
-protected:
-    kpEffectBlurSharpen::Type m_type;
-    double m_radius, m_sigma;
-    int m_repeat;
-};
-
-
-#endif  // KP_EFFECT_BLUR_SHARPEN_H
+#endif  // kpEffectFlatten_H

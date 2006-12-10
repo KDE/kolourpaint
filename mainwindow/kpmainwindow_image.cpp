@@ -44,8 +44,8 @@
 #include <kpcolortoolbar.h>
 #include <kpcommandhistory.h>
 #include <kpdocument.h>
-#include <kpeffectinvert.h>
-#include <kpeffectreducecolors.h>
+#include <kpEffectInvertCommand.h>
+#include <kpEffectReduceColorsCommand.h>
 #include <kpEffectsDialog.h>
 #include <kpselection.h>
 #include <kptool.h>

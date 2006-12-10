@@ -42,7 +42,8 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpeffectreducecolors.h>
+#include <kpEffectReduceColors.h>
+#include <kpEffectReduceColorsCommand.h>
 #include <kppixmapfx.h>
 
 

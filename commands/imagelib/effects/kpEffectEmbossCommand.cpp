@@ -26,56 +26,50 @@
 */
 
 
-#ifndef KP_EFFECT_BALANCE_H
-#define KP_EFFECT_BALANCE_H
+#define DEBUG_KP_EFFECT_EMBOSS 0
 
 
-#include <kpEffectCommandBase.h>
-#include <kpimage.h>
+#include <kpEffectEmbossCommand.h>
+
+#include <qbitmap.h>
+#include <qcheckbox.h>
+#include <qgridlayout.h>
+#include <qimage.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qpixmap.h>
+#include <qpushbutton.h>
+
+#include <kdebug.h>
+#include <kimageeffect.h>
+#include <klocale.h>
+#include <knuminput.h>
+
+#include <kpEffectEmboss.h>
+#include <kpmainwindow.h>
+#include <kppixmapfx.h>
 
 
-class QLabel;
-
-class KComboBox;
-class KIntNumInput;
-
-class kpMainWindowe;
-
-
-class kpEffectBalance
+kpEffectEmbossCommand::kpEffectEmbossCommand (double radius, double sigma,
+                                              int repeat,
+                                              bool actOnSelection,
+                                              kpMainWindow *mainWindow)
+    : kpEffectCommandBase (i18n ("Emboss"), actOnSelection, mainWindow),
+      m_radius (radius), m_sigma (sigma),
+      m_repeat (repeat)
 {
-public:
-    enum Channel
-    {
-        None = 0,
-        Red = 1, Green = 2, Blue = 4,
-        RGB = Red | Green | Blue
-    };
+}
 
-    // (<brightness>, <contrast> & <gamma> are from -50 to 50)
-    static kpImage applyEffect (const kpImage &image,
-        int channels,
-        int brightness, int contrast, int gamma);
-};
-
-
-class kpEffectBalanceCommand : public kpEffectCommandBase
+kpEffectEmbossCommand::~kpEffectEmbossCommand ()
 {
-public:
-    // (<brightness>, <contrast> & <gamma> are from -50 to 50)
-    kpEffectBalanceCommand (int channels,
-                            int brightness, int contrast, int gamma,
-                            bool actOnSelection,
-                            kpMainWindow *mainWindow);
-    virtual ~kpEffectBalanceCommand ();
-
-protected:
-    virtual kpImage applyEffect (const kpImage &image);
-
-protected:
-    int m_channels;
-    int m_brightness, m_contrast, m_gamma;
-};
+}
 
 
-#endif  // KP_EFFECT_BALANCE_H
+// protected virtual [base kpEffectCommandBase]
+kpImage kpEffectEmbossCommand::applyEffect (const kpImage &image)
+{
+    return kpEffectEmboss::applyEffect (image, m_radius, m_sigma, m_repeat);
+}
+
+
+#include <kpEffectEmbossCommand.moc>

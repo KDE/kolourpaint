@@ -29,7 +29,7 @@
 #define DEBUG_KP_EFFECT_FLATTEN 0
 
 
-#include <kpeffectflatten.h>
+#include <kpEffectFlatten.h>
 
 #include <qcheckbox.h>
 #include <qimage.h>
@@ -90,30 +90,5 @@ QImage kpEffectFlatten::applyEffect (const QImage &img,
 }
 
 
-kpEffectFlattenCommand::kpEffectFlattenCommand (const QColor &color1,
-                                                const QColor &color2,
-                                                bool actOnSelection,
-                                                kpMainWindow *mainWindow)
-    : kpEffectCommandBase (i18n ("Flatten"), actOnSelection, mainWindow),
-      m_color1 (color1), m_color2 (color2)
-{
-}
-
-kpEffectFlattenCommand::~kpEffectFlattenCommand ()
-{
-}
-
-
-//
-// kpEffectFlattenCommand implements kpEffectCommandBase interface
-//
-
-// protected virtual [base kpEffectCommandBase]
-kpImage kpEffectFlattenCommand::applyEffect (const kpImage &image)
-{
-    return kpEffectFlatten::applyEffect (image, m_color1, m_color2);
-}
-
-
-#include <kpeffectflatten.moc>
+#include <kpEffectFlatten.moc>
 

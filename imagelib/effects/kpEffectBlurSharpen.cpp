@@ -26,13 +26,12 @@
 */
 
 
-#define DEBUG_KP_EFFECT_EMBOSS 0
+#define DEBUG_KP_EFFECT_BLUR_SHARPEN 0
 
 
-#include <kpeffectemboss.h>
+#include <kpEffectBlurSharpen.h>
 
 #include <qbitmap.h>
-#include <qcheckbox.h>
 #include <qgridlayout.h>
 #include <qimage.h>
 #include <qlabel.h>
@@ -50,12 +49,13 @@
 
 
 // public static
-kpImage kpEffectEmboss::applyEffect (const kpImage &image,
-        double radius, double sigma,
+kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
+        Type type, double radius, double sigma,
         int repeat)
 {
-#if DEBUG_KP_EFFECT_EMBOSS
-    kDebug () << "kpEffectEmboss::applyEffect()"
+#if DEBUG_KP_EFFECT_BLUR_SHARPEN
+    kDebug () << "kpEffectBlurSharpen::applyEffect(type="
+               << int (type)
                << " radius=" << radius
                << " sigma=" << sigma
                << " repeat=" << repeat
@@ -63,7 +63,7 @@ kpImage kpEffectEmboss::applyEffect (const kpImage &image,
                << endl;
 #endif
 
-    // (KImageEffect::emboss() ignores mask)
+    // (KImageEffect::(blur|sharpen)() ignores mask)
     QPixmap usePixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (
         image,
         Qt::white/*arbitrarily chosen*/);
@@ -73,13 +73,16 @@ kpImage kpEffectEmboss::applyEffect (const kpImage &image,
 
     for (int i = 0; i < repeat; i++)
     {
-        qimage = KImageEffect::emboss (qimage, radius, sigma);
+        if (type == Blur)
+            qimage = KImageEffect::blur (qimage, radius, sigma);
+        else if (type == Sharpen)
+            qimage = KImageEffect::sharpen (qimage, radius, sigma);
     }
 
     QPixmap retPixmap = kpPixmapFX::convertToPixmap (qimage);
 
 
-    // KImageEffect::emboss() nukes mask - restore it
+    // KImageEffect::(blur|sharpen)() nukes mask - restore it
     if (!usePixmap.mask ().isNull())
         retPixmap.setMask (usePixmap.mask ());
 
@@ -88,26 +91,4 @@ kpImage kpEffectEmboss::applyEffect (const kpImage &image,
 }
 
 
-kpEffectEmbossCommand::kpEffectEmbossCommand (double radius, double sigma,
-                                              int repeat,
-                                              bool actOnSelection,
-                                              kpMainWindow *mainWindow)
-    : kpEffectCommandBase (i18n ("Emboss"), actOnSelection, mainWindow),
-      m_radius (radius), m_sigma (sigma),
-      m_repeat (repeat)
-{
-}
-
-kpEffectEmbossCommand::~kpEffectEmbossCommand ()
-{
-}
-
-
-// protected virtual [base kpEffectCommandBase]
-kpImage kpEffectEmbossCommand::applyEffect (const kpImage &image)
-{
-    return kpEffectEmboss::applyEffect (image, m_radius, m_sigma, m_repeat);
-}
-
-
-#include <kpeffectemboss.moc>
+#include <kpEffectBlurSharpen.moc>

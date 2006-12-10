@@ -26,53 +26,57 @@
 */
 
 
-#ifndef kpEffectBlurSharpenWidget_H
-#define kpEffectBlurSharpenWidget_H
+#define DEBUG_KP_EFFECT_BALANCE 0
 
 
-#include <kpcolor.h>
+#include <kpEffectBalanceCommand.h>
 
-#include <kpEffectWidgetBase.h>
-#include <kpEffectBlurSharpen.h>
+#include <math.h>
+
+#include <qfontmetrics.h>
+#include <qgridlayout.h>
+#include <qimage.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qpixmap.h>
+#include <qpushbutton.h>
+
+#include <kcombobox.h>
+#include <kdebug.h>
+#include <kimageeffect.h>
+#include <klocale.h>
+#include <knuminput.h>
+
+#include <kpEffectBalance.h>
+#include <kppixmapfx.h>
 
 
-class QLabel;
-class QPixmap;
-
-class KIntNumInput;
-
-class kpMainWindow;
+#if DEBUG_KP_EFFECT_BALANCE
+    #include <qdatetime.h>
+#endif
 
 
-class kpEffectBlurSharpenWidget : public kpEffectWidgetBase
+kpEffectBalanceCommand::kpEffectBalanceCommand (int channels,
+        int brightness, int contrast, int gamma,
+        bool actOnSelection,
+        kpMainWindow *mainWindow)
+    : kpEffectCommandBase (i18n ("Balance"), actOnSelection, mainWindow),
+      m_channels (channels),
+      m_brightness (brightness), m_contrast (contrast), m_gamma (gamma)
 {
-Q_OBJECT
+}
 
-public:
-    kpEffectBlurSharpenWidget (bool actOnSelection,
-                               kpMainWindow *mainWindow,
-                               QWidget *parent);
-    virtual ~kpEffectBlurSharpenWidget ();
-
-    virtual QString caption () const;
-
-    virtual bool isNoOp () const;
-    virtual kpImage applyEffect (const kpImage &image);
-
-    virtual kpEffectCommandBase *createCommand () const;
-
-protected slots:
-    void slotUpdateTypeLabel ();
-
-protected:
-    kpEffectBlurSharpen::Type type () const;
-    double radius () const;
-    double sigma () const;
-    int repeat () const;
-
-    KIntNumInput *m_amountInput;
-    QLabel *m_typeLabel;
-};
+kpEffectBalanceCommand::~kpEffectBalanceCommand ()
+{
+}
 
 
-#endif  // kpEffectBlurSharpenWidget_H
+// protected virtual [base kpEffectCommandBase]
+kpImage kpEffectBalanceCommand::applyEffect (const kpImage &image)
+{
+    return kpEffectBalance::applyEffect (image, m_channels,
+        m_brightness, m_contrast, m_gamma);
+}
+
+
+#include <kpEffectBalanceCommand.moc>

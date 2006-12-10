@@ -44,6 +44,7 @@
 #include <klocale.h>
 #include <knuminput.h>
 
+#include <kpEffectBlurSharpenCommand.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 

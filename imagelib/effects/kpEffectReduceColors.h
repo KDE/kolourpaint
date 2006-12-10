@@ -26,48 +26,27 @@
 */
 
 
-#ifndef KP_EFFECT_EMBOSS_H
-#define KP_EFFECT_EMBOSS_H
+#ifndef kpEffectReduceColors_H
+#define kpEffectReduceColors_H
 
 
-#include <kpcolor.h>
-#include <kpEffectCommandBase.h>
 #include <kpimage.h>
 
 
-class QCheckBox;
+class QImage;
 class QPixmap;
 
-class KIntNumInput;
 
-class kpMainWindow;
-
-
-class kpEffectEmboss
+class kpEffectReduceColors
 {
 public:
-    static kpImage applyEffect (const kpImage &image,
-                                double radius, double sigma,
-                                int repeat);
+    // TODO: why isn't applyEffect() for the public API sufficient?  Ans: see TODO in kpdocument.cpp.
+    static QImage convertImageDepth (const QImage &image, int depth, bool dither);
+
+    // (always preserves mask)
+    static void applyEffect (QPixmap *destPixmapPtr, int depth, bool dither);
+    static QPixmap applyEffect (const QPixmap &pm, int depth, bool dither);
 };
 
 
-class kpEffectEmbossCommand : public kpEffectCommandBase
-{
-public:
-    kpEffectEmbossCommand (double radius, double sigma,
-                           int repeat,
-                           bool actOnSelection,
-                           kpMainWindow *mainWindow);
-    virtual ~kpEffectEmbossCommand ();
-
-protected:
-    virtual kpImage applyEffect (const kpImage &image);
-
-protected:
-    double m_radius, m_sigma;
-    int m_repeat;
-};
-
-
-#endif  // KP_EFFECT_EMBOSS_H
+#endif  // kpEffectReduceColors_H

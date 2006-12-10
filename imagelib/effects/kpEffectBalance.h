@@ -26,53 +26,28 @@
 */
 
 
-#ifndef kpEffectBlurSharpenWidget_H
-#define kpEffectBlurSharpenWidget_H
+#ifndef kpEffectBalance_H
+#define kpEffectBalance_H
 
 
-#include <kpcolor.h>
-
-#include <kpEffectWidgetBase.h>
-#include <kpEffectBlurSharpen.h>
+#include <kpimage.h>
 
 
-class QLabel;
-class QPixmap;
-
-class KIntNumInput;
-
-class kpMainWindow;
-
-
-class kpEffectBlurSharpenWidget : public kpEffectWidgetBase
+class kpEffectBalance
 {
-Q_OBJECT
-
 public:
-    kpEffectBlurSharpenWidget (bool actOnSelection,
-                               kpMainWindow *mainWindow,
-                               QWidget *parent);
-    virtual ~kpEffectBlurSharpenWidget ();
+    enum Channel
+    {
+        None = 0,
+        Red = 1, Green = 2, Blue = 4,
+        RGB = Red | Green | Blue
+    };
 
-    virtual QString caption () const;
-
-    virtual bool isNoOp () const;
-    virtual kpImage applyEffect (const kpImage &image);
-
-    virtual kpEffectCommandBase *createCommand () const;
-
-protected slots:
-    void slotUpdateTypeLabel ();
-
-protected:
-    kpEffectBlurSharpen::Type type () const;
-    double radius () const;
-    double sigma () const;
-    int repeat () const;
-
-    KIntNumInput *m_amountInput;
-    QLabel *m_typeLabel;
+    // (<brightness>, <contrast> & <gamma> are from -50 to 50)
+    static kpImage applyEffect (const kpImage &image,
+        int channels,
+        int brightness, int contrast, int gamma);
 };
 
 
-#endif  // kpEffectBlurSharpenWidget_H
+#endif  // kpEffectBalance_H

@@ -46,7 +46,8 @@
 #include <kvbox.h>
 
 #include <kpdefs.h>
-#include <kpeffectflatten.h>
+#include <kpEffectFlatten.h>
+#include <kpEffectFlattenCommand.h>
 #include <kppixmapfx.h>
 
 

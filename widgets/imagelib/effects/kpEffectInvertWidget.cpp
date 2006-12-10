@@ -39,7 +39,8 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpeffectinvert.h>
+#include <kpEffectInvert.h>
+#include <kpEffectInvertCommand.h>
 #include <kppixmapfx.h>
 
 

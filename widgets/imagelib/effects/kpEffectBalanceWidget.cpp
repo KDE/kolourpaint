@@ -47,7 +47,8 @@
 #include <klocale.h>
 #include <knuminput.h>
 
-#include <kpeffectbalance.h>
+#include <kpEffectBalance.h>
+#include <kpEffectBalanceCommand.h>
 #include <kppixmapfx.h>
 
 

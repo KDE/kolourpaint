@@ -26,57 +26,39 @@
 */
 
 
-#ifndef KP_EFFECT_REDUCE_COLORS_H
-#define KP_EFFECT_REDUCE_COLORS_H
+#ifndef kpEffectBalanceCommand_H
+#define kpEffectBalanceCommand_H
 
-
-#include <kdemacros.h>
 
 #include <kpEffectCommandBase.h>
 #include <kpimage.h>
 
 
-class QImage;
-class QPixmap;
-class QRadioButton;
+class QLabel;
+
+class KComboBox;
+class KIntNumInput;
 
 class kpMainWindow;
 
 
-class kpEffectReduceColors
+class kpEffectBalanceCommand : public kpEffectCommandBase
 {
 public:
-    // TODO: why isn't applyEffect() for the public API sufficient?  Ans: see TODO in kpdocument.cpp.
-    static QImage convertImageDepth (const QImage &image, int depth, bool dither);
-
-    // (always preserves mask)
-    static void applyEffect (QPixmap *destPixmapPtr, int depth, bool dither);
-    static QPixmap applyEffect (const QPixmap &pm, int depth, bool dither);
-};
-
-
-
-class kpEffectReduceColorsCommand : public kpEffectCommandBase
-{
-public:
-    // depth must be 1 or 8
-    kpEffectReduceColorsCommand (int depth, bool dither,
-                                 bool actOnSelection,
-                                 kpMainWindow *mainWindow);
-    virtual ~kpEffectReduceColorsCommand ();
-
-    QString commandName (int depth, int dither) const;
-
-    //
-    // kpEffectCommandBase interface
-    //
+    // (<brightness>, <contrast> & <gamma> are from -50 to 50)
+    kpEffectBalanceCommand (int channels,
+                            int brightness, int contrast, int gamma,
+                            bool actOnSelection,
+                            kpMainWindow *mainWindow);
+    virtual ~kpEffectBalanceCommand ();
 
 protected:
     virtual kpImage applyEffect (const kpImage &image);
 
-    int m_depth;
-    bool m_dither;
+protected:
+    int m_channels;
+    int m_brightness, m_contrast, m_gamma;
 };
 
 
-#endif  // KP_EFFECT_REDUCE_COLORS_H
+#endif  // kpEffectBalanceCommand_H

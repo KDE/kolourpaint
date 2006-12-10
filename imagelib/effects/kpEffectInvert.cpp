@@ -29,7 +29,7 @@
 #define DEBUG_KP_EFFECT_INVERT 0
 
 
-#include <kpeffectinvert.h>
+#include <kpEffectInvert.h>
 
 #include <qcheckbox.h>
 #include <qimage.h>
@@ -107,38 +107,5 @@ QImage kpEffectInvert::applyEffect (const QImage &img, int channels)
 }
 
 
-kpEffectInvertCommand::kpEffectInvertCommand (int channels,
-                                              bool actOnSelection,
-                                              kpMainWindow *mainWindow)
-    : kpEffectCommandBase (channels == kpEffectInvert::RGB ?
-                                i18n ("Invert Colors") : i18n ("Invert"),
-                            actOnSelection, mainWindow),
-      m_channels (channels)
-{
-}
-
-kpEffectInvertCommand::kpEffectInvertCommand (bool actOnSelection,
-                                              kpMainWindow *mainWindow)
-    : kpEffectCommandBase (i18n ("Invert Colors"), actOnSelection, mainWindow),
-      m_channels (kpEffectInvert::RGB)
-{
-}
-
-kpEffectInvertCommand::~kpEffectInvertCommand ()
-{
-}
-
-
-//
-// kpEffectInvertCommand implements kpEffectCommandBase interface
-//
-
-// protected virtual [base kpEffectCommandBase]
-kpImage kpEffectInvertCommand::applyEffect (const kpImage &image)
-{
-    return kpEffectInvert::applyEffect (image, m_channels);
-}
-
-
-#include <kpeffectinvert.moc>
+#include <kpEffectInvert.moc>
 

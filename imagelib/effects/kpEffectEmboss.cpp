@@ -26,12 +26,13 @@
 */
 
 
-#define DEBUG_KP_EFFECT_BLUR_SHARPEN 0
+#define DEBUG_KP_EFFECT_EMBOSS 0
 
 
-#include <kpeffectblursharpen.h>
+#include <kpEffectEmboss.h>
 
 #include <qbitmap.h>
+#include <qcheckbox.h>
 #include <qgridlayout.h>
 #include <qimage.h>
 #include <qlabel.h>
@@ -49,13 +50,12 @@
 
 
 // public static
-kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
-        Type type, double radius, double sigma,
+kpImage kpEffectEmboss::applyEffect (const kpImage &image,
+        double radius, double sigma,
         int repeat)
 {
-#if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    kDebug () << "kpEffectBlurSharpen::applyEffect(type="
-               << int (type)
+#if DEBUG_KP_EFFECT_EMBOSS
+    kDebug () << "kpEffectEmboss::applyEffect()"
                << " radius=" << radius
                << " sigma=" << sigma
                << " repeat=" << repeat
@@ -63,7 +63,7 @@ kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
                << endl;
 #endif
 
-    // (KImageEffect::(blur|sharpen)() ignores mask)
+    // (KImageEffect::emboss() ignores mask)
     QPixmap usePixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (
         image,
         Qt::white/*arbitrarily chosen*/);
@@ -73,16 +73,13 @@ kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
 
     for (int i = 0; i < repeat; i++)
     {
-        if (type == Blur)
-            qimage = KImageEffect::blur (qimage, radius, sigma);
-        else if (type == Sharpen)
-            qimage = KImageEffect::sharpen (qimage, radius, sigma);
+        qimage = KImageEffect::emboss (qimage, radius, sigma);
     }
 
     QPixmap retPixmap = kpPixmapFX::convertToPixmap (qimage);
 
 
-    // KImageEffect::(blur|sharpen)() nukes mask - restore it
+    // KImageEffect::emboss() nukes mask - restore it
     if (!usePixmap.mask ().isNull())
         retPixmap.setMask (usePixmap.mask ());
 
@@ -91,41 +88,4 @@ kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
 }
 
 
-kpEffectBlurSharpenCommand::kpEffectBlurSharpenCommand (kpEffectBlurSharpen::Type type,
-                                                        double radius, double sigma,
-                                                        int repeat,
-                                                        bool actOnSelection,
-                                                        kpMainWindow *mainWindow)
-    : kpEffectCommandBase (kpEffectBlurSharpenCommand::nameForType (type),
-                            actOnSelection, mainWindow),
-      m_type (type),
-      m_radius (radius), m_sigma (sigma),
-      m_repeat (repeat)
-{
-}
-
-kpEffectBlurSharpenCommand::~kpEffectBlurSharpenCommand ()
-{
-}
-
-
-// public static
-QString kpEffectBlurSharpenCommand::nameForType (kpEffectBlurSharpen::Type type)
-{
-    if (type == kpEffectBlurSharpen::Blur)
-        return i18n ("Soften");
-    else if (type == kpEffectBlurSharpen::Sharpen)
-        return i18n ("Sharpen");
-    else
-        return QString::null;
-}
-
-
-// protected virtual [base kpEffectCommandBase]
-kpImage kpEffectBlurSharpenCommand::applyEffect (const kpImage &image)
-{
-    return kpEffectBlurSharpen::applyEffect (image, m_type, m_radius, m_sigma, m_repeat);
-}
-
-
-#include <kpeffectblursharpen.moc>
+#include <kpEffectEmboss.moc>

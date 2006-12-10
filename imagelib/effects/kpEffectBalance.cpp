@@ -29,7 +29,7 @@
 #define DEBUG_KP_EFFECT_BALANCE 0
 
 
-#include <kpeffectbalance.h>
+#include <kpEffectBalance.h>
 
 #include <math.h>
 
@@ -230,27 +230,4 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
 }
 
 
-kpEffectBalanceCommand::kpEffectBalanceCommand (int channels,
-        int brightness, int contrast, int gamma,
-        bool actOnSelection,
-        kpMainWindow *mainWindow)
-    : kpEffectCommandBase (i18n ("Balance"), actOnSelection, mainWindow),
-      m_channels (channels),
-      m_brightness (brightness), m_contrast (contrast), m_gamma (gamma)
-{
-}
-
-kpEffectBalanceCommand::~kpEffectBalanceCommand ()
-{
-}
-
-
-// protected virtual [base kpEffectCommandBase]
-kpImage kpEffectBalanceCommand::applyEffect (const kpImage &image)
-{
-    return kpEffectBalance::applyEffect (image, m_channels,
-        m_brightness, m_contrast, m_gamma);
-}
-
-
-#include <kpeffectbalance.moc>
+#include <kpEffectBalance.moc>

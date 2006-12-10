@@ -26,53 +26,41 @@
 */
 
 
-#ifndef kpEffectBlurSharpenWidget_H
-#define kpEffectBlurSharpenWidget_H
+#ifndef kpEffectReduceColorsCommand_H
+#define kpEffectReduceColorsCommand_H
 
 
-#include <kpcolor.h>
-
-#include <kpEffectWidgetBase.h>
-#include <kpEffectBlurSharpen.h>
+#include <kpEffectCommandBase.h>
+#include <kpimage.h>
 
 
-class QLabel;
+class QImage;
 class QPixmap;
-
-class KIntNumInput;
 
 class kpMainWindow;
 
 
-class kpEffectBlurSharpenWidget : public kpEffectWidgetBase
+class kpEffectReduceColorsCommand : public kpEffectCommandBase
 {
-Q_OBJECT
-
 public:
-    kpEffectBlurSharpenWidget (bool actOnSelection,
-                               kpMainWindow *mainWindow,
-                               QWidget *parent);
-    virtual ~kpEffectBlurSharpenWidget ();
+    // depth must be 1 or 8
+    kpEffectReduceColorsCommand (int depth, bool dither,
+                                 bool actOnSelection,
+                                 kpMainWindow *mainWindow);
+    virtual ~kpEffectReduceColorsCommand ();
 
-    virtual QString caption () const;
+    QString commandName (int depth, int dither) const;
 
-    virtual bool isNoOp () const;
-    virtual kpImage applyEffect (const kpImage &image);
-
-    virtual kpEffectCommandBase *createCommand () const;
-
-protected slots:
-    void slotUpdateTypeLabel ();
+    //
+    // kpEffectCommandBase interface
+    //
 
 protected:
-    kpEffectBlurSharpen::Type type () const;
-    double radius () const;
-    double sigma () const;
-    int repeat () const;
+    virtual kpImage applyEffect (const kpImage &image);
 
-    KIntNumInput *m_amountInput;
-    QLabel *m_typeLabel;
+    int m_depth;
+    bool m_dither;
 };
 
 
-#endif  // kpEffectBlurSharpenWidget_H
+#endif  // kpEffectReduceColorsCommand_H

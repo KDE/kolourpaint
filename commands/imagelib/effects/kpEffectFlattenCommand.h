@@ -26,8 +26,8 @@
 */
 
 
-#ifndef KP_EFFECT_FLATTEN_H
-#define KP_EFFECT_FLATTEN_H
+#ifndef kpEffectFlattenCommand_H
+#define kpEffectFlattenCommand_H
 
 
 #include <qcolor.h>
@@ -43,20 +43,6 @@ class QPixmap;
 class KColorButton;
 
 class kpMainWindow;
-
-
-class kpEffectFlatten
-{
-public:
-    static void applyEffect (QPixmap *destPixmapPtr,
-        const QColor &color1, const QColor &color2);
-    static QPixmap applyEffect (const QPixmap &pm,
-        const QColor &color1, const QColor &color2);
-    static void applyEffect (QImage *destImagePtr,
-        const QColor &color1, const QColor &color2);
-    static QImage applyEffect (const QImage &img,
-        const QColor &color1, const QColor &color2);
-};
 
 
 class kpEffectFlattenCommand : public kpEffectCommandBase
@@ -79,4 +65,4 @@ protected:
 };
 
 
-#endif  // KP_EFFECT_FLATTEN_H
+#endif  // kpEffectFlattenCommand_H

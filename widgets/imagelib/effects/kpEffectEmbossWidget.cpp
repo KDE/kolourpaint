@@ -45,7 +45,8 @@
 #include <klocale.h>
 #include <knuminput.h>
 
-#include <kpeffectemboss.h>
+#include <kpEffectEmboss.h>
+#include <kpEffectEmbossCommand.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 

@@ -26,53 +26,40 @@
 */
 
 
-#ifndef kpEffectBlurSharpenWidget_H
-#define kpEffectBlurSharpenWidget_H
+#ifndef kpEffectInvert_H
+#define kpEffectInvert_H
 
 
-#include <kpcolor.h>
-
-#include <kpEffectWidgetBase.h>
-#include <kpEffectBlurSharpen.h>
-
-
-class QLabel;
+class QImage;
 class QPixmap;
 
-class KIntNumInput;
 
-class kpMainWindow;
-
-
-class kpEffectBlurSharpenWidget : public kpEffectWidgetBase
+class kpEffectInvert
 {
-Q_OBJECT
-
 public:
-    kpEffectBlurSharpenWidget (bool actOnSelection,
-                               kpMainWindow *mainWindow,
-                               QWidget *parent);
-    virtual ~kpEffectBlurSharpenWidget ();
+    enum Channel
+    {
+        None = 0,
+        Red = 1, Green = 2, Blue = 4,
+        RGB = Red | Green | Blue
+    };
 
-    virtual QString caption () const;
+    //
+    // Inverts the colours of each pixel in the given image.
+    // These functions differ from QImage::invertPixels() in the following ways:
+    //
+    // 1. for 8-bit images, it inverts the colours of the Colour Table
+    //    (this means that you would get visually similar results to inversion
+    //     at higher bit depths - rather than a "random-looking" inversion
+    //     depending on the contents of the Colour Table)
+    // 2. never inverts the Alpha Buffer
+    //
 
-    virtual bool isNoOp () const;
-    virtual kpImage applyEffect (const kpImage &image);
-
-    virtual kpEffectCommandBase *createCommand () const;
-
-protected slots:
-    void slotUpdateTypeLabel ();
-
-protected:
-    kpEffectBlurSharpen::Type type () const;
-    double radius () const;
-    double sigma () const;
-    int repeat () const;
-
-    KIntNumInput *m_amountInput;
-    QLabel *m_typeLabel;
+    static void applyEffect (QPixmap *destPixmapPtr, int channels = RGB);
+    static QPixmap applyEffect (const QPixmap &pm, int channels = RGB);
+    static void applyEffect (QImage *destImagePtr, int channels = RGB);
+    static QImage applyEffect (const QImage &img, int channels = RGB);
 };
 
 
-#endif  // kpEffectBlurSharpenWidget_H
+#endif  // kpEffectInvert_H

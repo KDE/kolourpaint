@@ -45,7 +45,7 @@
 #include <kglobal.h>
 
 #include <kpdefs.h>
-#include <kpeffectinvert.h>
+#include <kpEffectInvert.h>
 
 
 kpToolWidgetBase::kpToolWidgetBase (QWidget *parent, const QString &name)

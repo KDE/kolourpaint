@@ -26,53 +26,25 @@
 */
 
 
-#ifndef kpEffectBlurSharpenWidget_H
-#define kpEffectBlurSharpenWidget_H
+#ifndef kpEffectBlurSharpen_H
+#define kpEffectBlurSharpen_H
 
 
-#include <kpcolor.h>
-
-#include <kpEffectWidgetBase.h>
-#include <kpEffectBlurSharpen.h>
+#include <kpimage.h>
 
 
-class QLabel;
-class QPixmap;
-
-class KIntNumInput;
-
-class kpMainWindow;
-
-
-class kpEffectBlurSharpenWidget : public kpEffectWidgetBase
+class kpEffectBlurSharpen
 {
-Q_OBJECT
-
 public:
-    kpEffectBlurSharpenWidget (bool actOnSelection,
-                               kpMainWindow *mainWindow,
-                               QWidget *parent);
-    virtual ~kpEffectBlurSharpenWidget ();
+    enum Type
+    {
+        None = 0, Blur, Sharpen
+    };
 
-    virtual QString caption () const;
-
-    virtual bool isNoOp () const;
-    virtual kpImage applyEffect (const kpImage &image);
-
-    virtual kpEffectCommandBase *createCommand () const;
-
-protected slots:
-    void slotUpdateTypeLabel ();
-
-protected:
-    kpEffectBlurSharpen::Type type () const;
-    double radius () const;
-    double sigma () const;
-    int repeat () const;
-
-    KIntNumInput *m_amountInput;
-    QLabel *m_typeLabel;
+    static kpImage applyEffect (const kpImage &image,
+        Type type, double radius, double sigma,
+        int repeat);
 };
 
 
-#endif  // kpEffectBlurSharpenWidget_H
+#endif  // kpEffectBlurSharpen_H

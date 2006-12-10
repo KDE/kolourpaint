@@ -26,53 +26,43 @@
 */
 
 
-#ifndef kpEffectBlurSharpenWidget_H
-#define kpEffectBlurSharpenWidget_H
+#ifndef kpEffectBlurSharpenCommand_H
+#define kpEffectBlurSharpenCommand_H
 
 
 #include <kpcolor.h>
-
-#include <kpEffectWidgetBase.h>
 #include <kpEffectBlurSharpen.h>
+#include <kpEffectCommandBase.h>
+#include <kpimage.h>
 
 
 class QLabel;
-class QPixmap;
 
 class KIntNumInput;
 
 class kpMainWindow;
 
 
-class kpEffectBlurSharpenWidget : public kpEffectWidgetBase
+class kpEffectBlurSharpenCommand : public kpEffectCommandBase
 {
-Q_OBJECT
-
 public:
-    kpEffectBlurSharpenWidget (bool actOnSelection,
-                               kpMainWindow *mainWindow,
-                               QWidget *parent);
-    virtual ~kpEffectBlurSharpenWidget ();
+    kpEffectBlurSharpenCommand (kpEffectBlurSharpen::Type type,
+                                double radius, double sigma,
+                                int repeat,
+                                bool actOnSelection,
+                                kpMainWindow *mainWindow);
+    virtual ~kpEffectBlurSharpenCommand ();
 
-    virtual QString caption () const;
-
-    virtual bool isNoOp () const;
+    static QString nameForType (kpEffectBlurSharpen::Type type);
+    
+protected:
     virtual kpImage applyEffect (const kpImage &image);
 
-    virtual kpEffectCommandBase *createCommand () const;
-
-protected slots:
-    void slotUpdateTypeLabel ();
-
 protected:
-    kpEffectBlurSharpen::Type type () const;
-    double radius () const;
-    double sigma () const;
-    int repeat () const;
-
-    KIntNumInput *m_amountInput;
-    QLabel *m_typeLabel;
+    kpEffectBlurSharpen::Type m_type;
+    double m_radius, m_sigma;
+    int m_repeat;
 };
 
 
-#endif  // kpEffectBlurSharpenWidget_H
+#endif  // kpEffectBlurSharpenCommand_H

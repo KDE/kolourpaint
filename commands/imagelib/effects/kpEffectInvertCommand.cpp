@@ -26,53 +26,55 @@
 */
 
 
-#ifndef kpEffectBlurSharpenWidget_H
-#define kpEffectBlurSharpenWidget_H
+#define DEBUG_KP_EFFECT_INVERT 0
 
 
-#include <kpcolor.h>
+#include <kpEffectInvertCommand.h>
 
-#include <kpEffectWidgetBase.h>
-#include <kpEffectBlurSharpen.h>
+#include <qcheckbox.h>
+#include <qimage.h>
+#include <qlayout.h>
+#include <qpixmap.h>
+
+#include <kdebug.h>
+#include <klocale.h>
+
+#include <kpEffectInvert.h>
+#include <kppixmapfx.h>
 
 
-class QLabel;
-class QPixmap;
-
-class KIntNumInput;
-
-class kpMainWindow;
-
-
-class kpEffectBlurSharpenWidget : public kpEffectWidgetBase
+kpEffectInvertCommand::kpEffectInvertCommand (int channels,
+                                              bool actOnSelection,
+                                              kpMainWindow *mainWindow)
+    : kpEffectCommandBase (channels == kpEffectInvert::RGB ?
+                                i18n ("Invert Colors") : i18n ("Invert"),
+                            actOnSelection, mainWindow),
+      m_channels (channels)
 {
-Q_OBJECT
+}
 
-public:
-    kpEffectBlurSharpenWidget (bool actOnSelection,
-                               kpMainWindow *mainWindow,
-                               QWidget *parent);
-    virtual ~kpEffectBlurSharpenWidget ();
+kpEffectInvertCommand::kpEffectInvertCommand (bool actOnSelection,
+                                              kpMainWindow *mainWindow)
+    : kpEffectCommandBase (i18n ("Invert Colors"), actOnSelection, mainWindow),
+      m_channels (kpEffectInvert::RGB)
+{
+}
 
-    virtual QString caption () const;
-
-    virtual bool isNoOp () const;
-    virtual kpImage applyEffect (const kpImage &image);
-
-    virtual kpEffectCommandBase *createCommand () const;
-
-protected slots:
-    void slotUpdateTypeLabel ();
-
-protected:
-    kpEffectBlurSharpen::Type type () const;
-    double radius () const;
-    double sigma () const;
-    int repeat () const;
-
-    KIntNumInput *m_amountInput;
-    QLabel *m_typeLabel;
-};
+kpEffectInvertCommand::~kpEffectInvertCommand ()
+{
+}
 
 
-#endif  // kpEffectBlurSharpenWidget_H
+//
+// kpEffectInvertCommand implements kpEffectCommandBase interface
+//
+
+// protected virtual [base kpEffectCommandBase]
+kpImage kpEffectInvertCommand::applyEffect (const kpImage &image)
+{
+    return kpEffectInvert::applyEffect (image, m_channels);
+}
+
+
+#include <kpEffectInvertCommand.moc>
+

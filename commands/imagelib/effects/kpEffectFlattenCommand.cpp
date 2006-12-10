@@ -26,53 +26,54 @@
 */
 
 
-#ifndef kpEffectBlurSharpenWidget_H
-#define kpEffectBlurSharpenWidget_H
+#define DEBUG_KP_EFFECT_FLATTEN 0
 
 
-#include <kpcolor.h>
+#include <kpEffectFlattenCommand.h>
 
-#include <kpEffectWidgetBase.h>
-#include <kpEffectBlurSharpen.h>
+#include <qcheckbox.h>
+#include <qimage.h>
+#include <qlayout.h>
+#include <qpixmap.h>
+
+#include <kcolorbutton.h>
+#include <kconfig.h>
+#include <kdialog.h>
+#include <kdebug.h>
+#include <kglobal.h>
+#include <kimageeffect.h>
+#include <klocale.h>
+#include <kvbox.h>
+
+#include <kpEffectFlatten.h>
+#include <kpdefs.h>
+#include <kppixmapfx.h>
 
 
-class QLabel;
-class QPixmap;
-
-class KIntNumInput;
-
-class kpMainWindow;
-
-
-class kpEffectBlurSharpenWidget : public kpEffectWidgetBase
+kpEffectFlattenCommand::kpEffectFlattenCommand (const QColor &color1,
+                                                const QColor &color2,
+                                                bool actOnSelection,
+                                                kpMainWindow *mainWindow)
+    : kpEffectCommandBase (i18n ("Flatten"), actOnSelection, mainWindow),
+      m_color1 (color1), m_color2 (color2)
 {
-Q_OBJECT
+}
 
-public:
-    kpEffectBlurSharpenWidget (bool actOnSelection,
-                               kpMainWindow *mainWindow,
-                               QWidget *parent);
-    virtual ~kpEffectBlurSharpenWidget ();
-
-    virtual QString caption () const;
-
-    virtual bool isNoOp () const;
-    virtual kpImage applyEffect (const kpImage &image);
-
-    virtual kpEffectCommandBase *createCommand () const;
-
-protected slots:
-    void slotUpdateTypeLabel ();
-
-protected:
-    kpEffectBlurSharpen::Type type () const;
-    double radius () const;
-    double sigma () const;
-    int repeat () const;
-
-    KIntNumInput *m_amountInput;
-    QLabel *m_typeLabel;
-};
+kpEffectFlattenCommand::~kpEffectFlattenCommand ()
+{
+}
 
 
-#endif  // kpEffectBlurSharpenWidget_H
+//
+// kpEffectFlattenCommand implements kpEffectCommandBase interface
+//
+
+// protected virtual [base kpEffectCommandBase]
+kpImage kpEffectFlattenCommand::applyEffect (const kpImage &image)
+{
+    return kpEffectFlatten::applyEffect (image, m_color1, m_color2);
+}
+
+
+#include <kpEffectFlattenCommand.moc>
+

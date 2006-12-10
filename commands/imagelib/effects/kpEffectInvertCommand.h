@@ -26,53 +26,44 @@
 */
 
 
-#ifndef kpEffectBlurSharpenWidget_H
-#define kpEffectBlurSharpenWidget_H
+#ifndef kpEffectInvertCommand_H
+#define kpEffectInvertCommand_H
 
 
-#include <kpcolor.h>
-
-#include <kpEffectWidgetBase.h>
-#include <kpEffectBlurSharpen.h>
+#include <kpEffectCommandBase.h>
+#include <kpimage.h>
 
 
-class QLabel;
+class QCheckBox;
+class QImage;
 class QPixmap;
-
-class KIntNumInput;
 
 class kpMainWindow;
 
 
-class kpEffectBlurSharpenWidget : public kpEffectWidgetBase
+class kpEffectInvertCommand : public kpEffectCommandBase
 {
-Q_OBJECT
+public:
+    kpEffectInvertCommand (int channels,
+                           bool actOnSelection,
+                           kpMainWindow *mainWindow);
+    kpEffectInvertCommand (bool actOnSelection,
+                           kpMainWindow *mainWindow);
+    virtual ~kpEffectInvertCommand ();
+
+
+    //
+    // kpEffectCommandBase interface
+    //
 
 public:
-    kpEffectBlurSharpenWidget (bool actOnSelection,
-                               kpMainWindow *mainWindow,
-                               QWidget *parent);
-    virtual ~kpEffectBlurSharpenWidget ();
-
-    virtual QString caption () const;
-
-    virtual bool isNoOp () const;
-    virtual kpImage applyEffect (const kpImage &image);
-
-    virtual kpEffectCommandBase *createCommand () const;
-
-protected slots:
-    void slotUpdateTypeLabel ();
+    virtual bool isInvertible () const { return true; }
 
 protected:
-    kpEffectBlurSharpen::Type type () const;
-    double radius () const;
-    double sigma () const;
-    int repeat () const;
+    virtual kpImage applyEffect (const kpImage &image);
 
-    KIntNumInput *m_amountInput;
-    QLabel *m_typeLabel;
+    int m_channels;
 };
 
 
-#endif  // kpEffectBlurSharpenWidget_H
+#endif  // kpEffectInvertCommand_H

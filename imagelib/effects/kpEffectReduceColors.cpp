@@ -29,7 +29,7 @@
 #define DEBUG_KP_EFFECT_REDUCE_COLORS 0
 
 
-#include <kpeffectreducecolors.h>
+#include <kpEffectReduceColors.h>
 
 #include <qbitmap.h>
 #include <qbuttongroup.h>
@@ -246,57 +246,5 @@ QPixmap kpEffectReduceColors::applyEffect (const QPixmap &pm, int depth, bool di
 }
 
 
-//
-// kpEffectReduceColorsCommand
-//
-
-kpEffectReduceColorsCommand::kpEffectReduceColorsCommand (int depth, bool dither,
-                                                          bool actOnSelection,
-                                                          kpMainWindow *mainWindow)
-    : kpEffectCommandBase (commandName (depth, dither), actOnSelection, mainWindow),
-      m_depth (depth), m_dither (dither)
-{
-}
-
-kpEffectReduceColorsCommand::~kpEffectReduceColorsCommand ()
-{
-}
-
-
-// public
-QString kpEffectReduceColorsCommand::commandName (int depth, int dither) const
-{
-    if (depth == 1)
-    {
-        if (dither)
-            return i18n ("Reduce to Monochrome (Dithered)");
-        else
-            return i18n ("Reduce to Monochrome");
-    }
-    else if (depth == 8)
-    {
-        if (dither)
-            return i18n ("Reduce to 256 Color (Dithered)");
-        else
-            return i18n ("Reduce to 256 Color");
-    }
-    else
-    {
-        return QString::null;
-    }
-}
-
-
-//
-// kpEffectReduceColorsCommand implements kpEffectCommandBase interface
-//
-
-// protected virtual [base kpEffectCommandBase]
-kpImage kpEffectReduceColorsCommand::applyEffect (const kpImage &image)
-{
-    return kpEffectReduceColors::applyEffect (image, m_depth, m_dither);
-}
-
-
-#include <kpeffectreducecolors.moc>
+#include <kpEffectReduceColors.moc>
 

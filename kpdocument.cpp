@@ -59,7 +59,7 @@
 #include <kpdefs.h>
 #include <kpdocumentsaveoptions.h>
 #include <kpdocumentmetainfo.h>
-#include <kpeffectreducecolors.h>
+#include <kpEffectReduceColors.h>
 #include <kpmainwindow.h>
 #include <kppixmapfx.h>
 #include <kpselection.h>

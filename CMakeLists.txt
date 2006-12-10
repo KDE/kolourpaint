@@ -70,7 +70,13 @@ create_license(${CMAKE_SOURCE_DIR}/kolourpaint/COPYING ${CMAKE_CURRENT_BINARY_DI
 
 
 set(kolourpaint_SRCS
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectBalanceCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectCommandBase.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectEmbossCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectFlattenCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectInvertCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectReduceColorsCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kptoolclearcommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kptoolconverttograyscale.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/transforms/kpTransformFlipCommand.cpp
@@ -106,12 +112,12 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/kpDocumentSaveOptionsPreviewDialog.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/generic/kpSetOverrideCursorSaver.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/generic/kpwidgetmapper.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpeffectbalance.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpeffectblursharpen.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpeffectemboss.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpeffectflatten.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpeffectinvert.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpeffectreducecolors.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpEffectBalance.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpEffectBlurSharpen.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpEffectEmboss.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpEffectFlatten.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpEffectInvert.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpEffectReduceColors.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpcolor.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpdocumentmetainfo.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpfloodfill.cpp
