@@ -345,14 +345,6 @@ public:
 
 
     //
-    // Converts the image to grayscale.
-    //
-    static void convertToGrayscale (QPixmap *destPixmapPtr);
-    static QPixmap convertToGrayscale (const QPixmap &pm);
-    static void convertToGrayscale (QImage *destImagePtr);
-    static QImage convertToGrayscale (const QImage &img);
-
-    //
     // Fills an image in the given color.
     //
     static void fill (QPixmap *destPixmapPtr, const kpColor &color);

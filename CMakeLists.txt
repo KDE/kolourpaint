@@ -75,10 +75,10 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectCommandBase.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectEmbossCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectFlattenCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectGrayscaleCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectInvertCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectReduceColorsCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kptoolclearcommand.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kptoolconverttograyscale.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/transforms/kpTransformFlipCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/transforms/kpTransformRotateCommand.cpp
@@ -116,6 +116,7 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpEffectBlurSharpen.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpEffectEmboss.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpEffectFlatten.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpEffectGrayscale.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpEffectInvert.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpEffectReduceColors.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/kpcolor.cpp

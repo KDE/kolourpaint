@@ -26,36 +26,22 @@
 */
 
 
-#ifndef KP_TOOL_CONVERT_TO_GRAYSCALE_H
-#define KP_TOOL_CONVERT_TO_GRAYSCALE_H
+#ifndef kpEffectGrayscale_H
+#define kpEffectGrayscale_H
 
 
-#include <kpcommandhistory.h>
+#include <kpimage.h>
 
 
-class QPixmap;
-class QString;
+//
+// Converts the image to grayscale.
+//
 
-class kpMainWindow;
-
-
-class kpToolConvertToGrayscaleCommand : public kpCommand
+class kpEffectGrayscale
 {
 public:
-    kpToolConvertToGrayscaleCommand (bool actOnSelection,
-                                     kpMainWindow *mainWindow);
-    virtual ~kpToolConvertToGrayscaleCommand ();
-    
-    virtual QString name () const;
-    virtual int size () const;
-
-    virtual void execute ();
-    virtual void unexecute ();
-
-private:
-    bool m_actOnSelection;
-    QPixmap *m_oldPixmapPtr;
+    static kpImage applyEffect (const kpImage &image);
 };
 
 
-#endif  // KP_TOOL_CONVERT_TO_GRAYSCALE_H
+#endif  // kpEffectGrayscale_H

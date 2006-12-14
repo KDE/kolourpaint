@@ -51,7 +51,7 @@
 #include <kptool.h>
 #include <kptoolautocrop.h>
 #include <kptoolclearcommand.h>
-#include <kptoolconverttograyscale.h>
+#include <kpEffectGrayscaleCommand.h>
 #include <kptoolcrop.h>
 #include <kpToolSelectionCreateCommand.h>
 #include <kpToolSelectionPullFromDocumentCommand.h>
@@ -434,7 +434,7 @@ void kpMainWindow::slotConvertToGrayscale ()
         tool ()->endShapeInternal ();
 
     addImageOrSelectionCommand (
-        new kpToolConvertToGrayscaleCommand (m_document->selection (), this));
+        new kpEffectGrayscaleCommand (m_document->selection (), this));
 }
 
 // private slot
