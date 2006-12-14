@@ -72,7 +72,6 @@ kpTool::kpTool (const QString &text, const QString &description,
     : QObject (mainWindow),
       d (new kpToolPrivate ())
 {
-    // TODO: move into kpToolPrivate.h
     d->key = key;
     d->action = 0;
     d->ignoreColorSignals = 0;
@@ -86,7 +85,7 @@ kpTool::kpTool (const QString &text, const QString &description,
     d->userShapeEndPoint = KP_INVALID_POINT;
     d->userShapeSize = KP_INVALID_SIZE;
 
-    createAction ();
+    initAction ();
 }
 
 kpTool::~kpTool ()
@@ -95,23 +94,17 @@ kpTool::~kpTool ()
     if (d->began)
         endInternal ();
 
-    if (d->action)
-    {
-        if (d->mainWindow && d->mainWindow->actionCollection ())
-            d->mainWindow->actionCollection ()->remove (d->action);
-        else
-            delete d->action;
-    }
+    delete d->action;
 
     delete d;
 }
 
 
 // private
-void kpTool::createAction ()
+void kpTool::initAction ()
 {
 #if DEBUG_KP_TOOL && 0
-    kDebug () << "kpTool(" << objectName () << "::createAction()" << endl;
+    kDebug () << "kpTool(" << objectName () << "::initAction()" << endl;
 #endif
 
     Q_ASSERT (d->mainWindow);
@@ -120,19 +113,9 @@ void kpTool::createAction ()
     Q_ASSERT (ac);
 
 
-    if (d->action)
-    {
-    #if DEBUG_KP_TOOL
-        kDebug () << "\tdeleting existing" << endl;
-    #endif
-        ac->remove (d->action);
-        d->action = 0;
-    }
-
-
     d->action = new kpToolAction (text (), iconName (), shortcutForKey (d->key),
                                  this, SLOT (slotActionActivated ()),
-                                 d->mainWindow->actionCollection (), objectName ());
+                                 ac, objectName ());
 
     // Make tools mutually exclusive by placing them in the same group.
     d->action->setActionGroup (d->mainWindow->toolsActionGroup ());
@@ -155,10 +138,7 @@ void kpTool::setText (const QString &text)
 {
     d->text = text;
 
-    if (d->action)
-        d->action->setText (d->text);
-    else
-        createAction ();
+    d->action->setText (d->text);
 }
 
 
@@ -200,11 +180,8 @@ void kpTool::setKey (int key)
 {
     d->key = key;
 
-    if (d->action)
-        // TODO: this probably not wise since it nukes the user's settings
-        d->action->setShortcut (shortcutForKey (d->key));
-    else
-        createAction ();
+    // TODO: this probably not wise since it nukes the user's settings
+    d->action->setShortcut (shortcutForKey (d->key));
 }
 
 // public static
@@ -226,7 +203,7 @@ KShortcut kpTool::shortcutForKey (int key)
 // public
 KShortcut kpTool::shortcut () const
 {
-    return d->action ? d->action->shortcut () : KShortcut ();
+    return d->action->shortcut ();
 }
 
 
@@ -241,10 +218,7 @@ void kpTool::setDescription (const QString &description)
 {
     d->description = description;
 
-    if (d->action)
-        d->action->setWhatsThis (d->description);
-    else
-        createAction ();
+    d->action->setWhatsThis (d->description);
 }
 
 
@@ -268,11 +242,8 @@ QString kpTool::iconName () const
 }
 
 // public
-kpToolAction *kpTool::action ()
+kpToolAction *kpTool::action () const
 {
-    if (!d->action)
-        createAction ();
-
     return d->action;
 }
 

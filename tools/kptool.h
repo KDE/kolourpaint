@@ -83,8 +83,9 @@ public:
             kpMainWindow *mainWindow, const QString &name);
     virtual ~kpTool ();
 
-protected:
-    void createAction ();
+private:
+    // Only called by ctor to create action().
+    void initAction ();
 
 signals:
     void actionToolTipChanged (const QString &string);
@@ -214,7 +215,7 @@ signals:
 public:
     QIcon iconSet (int forceSize = 0) const;
     QString iconName () const;
-    kpToolAction *action ();
+    kpToolAction *action () const;
 
 signals:
     // User clicked on the tool's action - i.e. select this tool
