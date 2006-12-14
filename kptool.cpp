@@ -142,8 +142,6 @@ void kpTool::createAction ()
     {
         // TODO: I don't think this will ever be executed as we are not called
         //       outside of the constructor.
-        //
-        //       In any case, I think we'd need to "delete m_action" as well.
     #if DEBUG_KP_TOOL
         kdDebug () << "\tdeleting existing" << endl;
     #endif
