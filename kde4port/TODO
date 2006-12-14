@@ -89,10 +89,8 @@ command scheme
 
 
 
-* grayscale command is out of place and should derive from kpeffectcommandbase
-
 * selection .diff sitting in local checkout for refactoring accidental drag detection
 
-* aseigo coverity kpToolPolygon.cpp
-
 * kpEffectReduceColors::convertImageDepth() must die
+
+* freeform, elliptical selections
