@@ -248,7 +248,8 @@ kpToolAction *kpTool::action () const
 }
 
 
-// TODO: need to add access specifiers not just in kpTool but all over KolourPaint source.
+
+// TODO: need to add access specifier comments (like "public virtual [base AmOverridingThisClass'Method]") not just in kpTool but all over KolourPaint source.
 kpMainWindow *kpTool::mainWindow () const
 {
     return d->mainWindow;
