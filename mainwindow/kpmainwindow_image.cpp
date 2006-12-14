@@ -50,7 +50,7 @@
 #include <kpselection.h>
 #include <kptool.h>
 #include <kptoolautocrop.h>
-#include <kptoolclearcommand.h>
+#include <kpEffectClearCommand.h>
 #include <kpEffectGrayscaleCommand.h>
 #include <kptoolcrop.h>
 #include <kpToolSelectionCreateCommand.h>
@@ -454,7 +454,10 @@ void kpMainWindow::slotClear ()
         tool ()->endShapeInternal ();
 
     addImageOrSelectionCommand (
-        new kpToolClearCommand (m_document->selection (), this));
+        new kpEffectClearCommand (
+            m_document->selection (),
+            backgroundColor (),
+            this));
 }
 
 // private slot

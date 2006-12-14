@@ -72,13 +72,13 @@ create_license(${CMAKE_SOURCE_DIR}/kolourpaint/COPYING ${CMAKE_CURRENT_BINARY_DI
 set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectBalanceCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectBlurSharpenCommand.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectClearCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectCommandBase.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectEmbossCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectFlattenCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectGrayscaleCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectInvertCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kpEffectReduceColorsCommand.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/effects/kptoolclearcommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/transforms/kpTransformFlipCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/commands/imagelib/transforms/kpTransformRotateCommand.cpp

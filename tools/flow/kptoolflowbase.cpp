@@ -52,7 +52,6 @@
 #include <kppainter.h>
 #include <kppixmapfx.h>
 #include <kptemppixmap.h>
-#include <kptoolclearcommand.h>
 #include <kptoolflowcommand.h>
 #include <kptooltoolbar.h>
 #include <kptoolwidgetbrush.h>

@@ -589,6 +589,18 @@ void kpSelection::setPixmap (const QPixmap &pixmap)
 }
 
 
+void kpSelection::fill (const kpColor &color)
+{
+    QPixmap newPixmap (width (), height ());
+    kpPixmapFX::fill (&newPixmap, color);
+
+    // TODO: maybe disable Image/Clear menu item if transparent colour
+    if (color.isOpaque ())
+        newPixmap.setMask (maskForOwnType ());
+
+    setPixmap (newPixmap);
+}
+
 // public
 bool kpSelection::usesBackgroundPixmapToPaint () const
 {

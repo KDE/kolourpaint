@@ -137,6 +137,9 @@ public:
     QPixmap *pixmap () const;
     void setPixmap (const QPixmap &pixmap);
 
+    // The current shape (e.g. ellipse) filled in with <color>.
+    void fill (const kpColor &color);
+
     bool usesBackgroundPixmapToPaint () const;
 
 private:

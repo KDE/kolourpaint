@@ -26,8 +26,8 @@
 */
 
 
-#ifndef KP_TOOL_CLEAR_H
-#define KP_TOOL_CLEAR_H
+#ifndef kpEffectClearCommand_H
+#define kpEffectClearCommand_H
 
 
 #include <kpcommandhistory.h>
@@ -42,15 +42,13 @@ class kpDocument;
 class kpMainWindow;
 
 
-class kpToolClearCommand : public kpCommand
+class kpEffectClearCommand : public kpCommand
 {
 public:
-    kpToolClearCommand (bool actOnSelection,
+    kpEffectClearCommand (bool actOnSelection,
         const kpColor &newColor,
         kpMainWindow *mainWindow);
-    kpToolClearCommand (bool actOnSelection,
-        kpMainWindow *mainWindow);
-    virtual ~kpToolClearCommand ();
+    virtual ~kpEffectClearCommand ();
 
     virtual QString name () const;
 
@@ -67,4 +65,4 @@ private:
 };
 
 
-#endif  // KP_TOOL_CLEAR_H
+#endif  // kpEffectClearCommand_H

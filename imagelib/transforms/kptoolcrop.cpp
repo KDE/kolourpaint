@@ -41,7 +41,7 @@
 #include <kpmainwindow.h>
 #include <kpselection.h>
 #include <kptool.h>
-#include <kptoolclearcommand.h>
+#include <kpEffectClearCommand.h>
 #include <kpToolSelectionCreateCommand.h>
 #include <kpToolSelectionMoveCommand.h>
 #include <kpTransformResizeScaleCommand.h>
@@ -259,7 +259,7 @@ kpTransformCropCommand::kpTransformCropCommand (kpMainWindow *mainWindow)
         kDebug () << "\tclearing doc with trans cmd" << endl;
     #endif
         addCommand (
-            new kpToolClearCommand (
+            new kpEffectClearCommand (
                 false/*act on doc*/,
                 kpColor::Transparent,
                 mainWindow));

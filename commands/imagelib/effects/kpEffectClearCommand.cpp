@@ -26,7 +26,7 @@
 */
 
 
-#include <kptoolclearcommand.h>
+#include <kpEffectClearCommand.h>
 
 #include <qpixmap.h>
 
@@ -40,7 +40,7 @@
 #include <kpselection.h>
 
 
-kpToolClearCommand::kpToolClearCommand (bool actOnSelection,
+kpEffectClearCommand::kpEffectClearCommand (bool actOnSelection,
                                         const kpColor &newColor,
                                         kpMainWindow *mainWindow)
     : kpCommand (mainWindow),
@@ -50,23 +50,14 @@ kpToolClearCommand::kpToolClearCommand (bool actOnSelection,
 {
 }
 
-kpToolClearCommand::kpToolClearCommand (bool actOnSelection,
-                                        kpMainWindow *mainWindow)
-    : kpCommand (mainWindow),
-      m_actOnSelection (actOnSelection),
-      m_newColor (mainWindow ? mainWindow->backgroundColor () : kpColor::Invalid),
-      m_oldPixmapPtr (0)
-{
-}
-
-kpToolClearCommand::~kpToolClearCommand ()
+kpEffectClearCommand::~kpEffectClearCommand ()
 {
     delete m_oldPixmapPtr;
 }
 
 
 // public virtual [base kpCommand]
-QString kpToolClearCommand::name () const
+QString kpEffectClearCommand::name () const
 {
     QString opName = i18n ("Clear");
 
@@ -78,14 +69,14 @@ QString kpToolClearCommand::name () const
 
 
 // public virtual [base kpCommand]
-int kpToolClearCommand::size () const
+int kpEffectClearCommand::size () const
 {
     return kpPixmapFX::pixmapSize (m_oldPixmapPtr);
 }
 
 
 // public virtual [base kpCommand]
-void kpToolClearCommand::execute ()
+void kpEffectClearCommand::execute ()
 {
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -95,25 +86,21 @@ void kpToolClearCommand::execute ()
     *m_oldPixmapPtr = *doc->pixmap (m_actOnSelection);
 
 
+    // TODO: Would like to derive entire class from kpEffectCommandBase but
+    //       this code makes it difficult since it's not just acting on pixels
+    //       (kpSelection::fill() takes into account the shape of a selection).
     if (m_actOnSelection)
     {
         // OPT: could just edit pixmap directly and signal change
         kpSelection *sel = doc->selection ();
-
-        QPixmap newPixmap (sel->width (), sel->height ());
-        kpPixmapFX::fill (&newPixmap, m_newColor);
-        // TODO: maybe disable Image/Clear if transparent colour
-        if (m_newColor.isOpaque ())
-            newPixmap.setMask (sel->maskForOwnType ());
-
-        sel->setPixmap (newPixmap);
+        sel->fill (m_newColor);
     }
     else
         doc->fill (m_newColor);
 }
 
 // public virtual [base kpCommand]
-void kpToolClearCommand::unexecute ()
+void kpEffectClearCommand::unexecute ()
 {
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -125,3 +112,6 @@ void kpToolClearCommand::unexecute ()
     delete m_oldPixmapPtr;
     m_oldPixmapPtr = 0;
 }
+
+
+#include <kpEffectClearCommand.moc>

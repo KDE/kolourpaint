@@ -34,7 +34,7 @@
 #include <klocale.h>
 
 #include <kpcommandhistory.h>
-#include <kptoolclearcommand.h>
+#include <kpEffectClearCommand.h>
 
 
 kpToolEraser::kpToolEraser (kpMainWindow *mainWindow)
@@ -58,7 +58,10 @@ void kpToolEraser::globalDraw ()
 #endif
 
     commandHistory ()->addCommand (
-        new kpToolClearCommand (false/*act on doc, not sel*/, mainWindow ()));
+        new kpEffectClearCommand (
+            false/*act on doc, not sel*/,
+            backgroundColor (),
+            mainWindow ()));
 }
 
 
