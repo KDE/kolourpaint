@@ -262,7 +262,7 @@ QRect kpToolFlowBase::drawPoint (const QPoint &point)
 // virtual
 void kpToolFlowBase::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &normalizedRect)
 {
-    if (!drawShouldProceed (thisPoint, lastPoint, normalizedRect))
+    if (!/*virtual*/drawShouldProceed (thisPoint, lastPoint, normalizedRect))
         return;
 
     // sync: remember to restoreFastUpdates() in all exit paths
