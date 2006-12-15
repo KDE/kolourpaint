@@ -2,6 +2,12 @@
 KolourPaint 1.4_relight Series (branches/KDE/3.5/)
 ===============================
 
+KolourPaint 1.4.6_relight (Frozen ???)
+
+   * Fix crash triggered by rapidly deselecting a selection after
+     drag-scaling the selection (Bug 117866)
+     [also in branches/KDE/3.[34]/, branches/kolourpaint/1.2_kde3/]
+
 KolourPaint 1.4.5_relight (Frozen 2006-09-19)
 
    * Translation updates

@@ -1069,6 +1069,7 @@ void kpToolSelection::cancelShape ()
             #if DEBUG_KP_TOOL_SELECTION
                 kdDebug () << "\t\tundo currentResizeScaleCommand" << endl;
             #endif
+                m_currentResizeScaleCommand->finalize ();  // (unneeded but let's be safe)
                 m_currentResizeScaleCommand->unexecute ();
                 delete m_currentResizeScaleCommand;
                 m_currentResizeScaleCommand = 0;
@@ -1202,6 +1203,7 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/, const QRect & /*nor
 
         if (m_currentResizeScaleCommand)
         {
+            m_currentResizeScaleCommand->finalize ();
             cmd->addCommand (m_currentResizeScaleCommand);
             m_currentResizeScaleCommand = 0;
 
@@ -2175,6 +2177,26 @@ void kpToolSelectionResizeScaleCommand::resizeScaleAndMove ()
     kdDebug () << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove()" << endl;
 #endif
     resizeScaleAndMove (false/*no delay*/);
+}
+
+
+// public
+void kpToolSelectionResizeScaleCommand::finalize ()
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kdDebug () << "kpToolSelectionResizeScaleCommand::finalize()"
+               << " smoothScaleTimer->isActive="
+               << m_smoothScaleTimer->isActive ()
+               << endl;
+#endif
+    
+    // Make sure the selection contains the final image and the timer won't
+    // fire afterwards.
+    if (m_smoothScaleTimer->isActive ())
+    {
+        resizeScaleAndMove ();
+        Q_ASSERT (!m_smoothScaleTimer->isActive ());
+    }
 }
 
 
