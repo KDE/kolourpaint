@@ -94,3 +94,5 @@ command scheme
 * kpEffectReduceColors::convertImageDepth() must die
 
 * freeform, elliptical selections
+
+* kpdocument.cpp manipulates document using kpPixmapFX instead of kpPainter (for invert?); look for such a TODO
