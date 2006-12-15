@@ -46,6 +46,9 @@ protected:
     virtual QString haventBegunDrawUserMessage () const;
     //virtual QRect drawPoint (const QPoint &point);
     virtual QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint);
+
+private:
+    struct kpToolPenPrivate *d;
 };
 
         

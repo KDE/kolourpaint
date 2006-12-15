@@ -43,19 +43,21 @@
 #include <kptoolflowcommand.h>
 
 
-//
-// kpToolPen
-//
+struct kpToolPenPrivate
+{
+};
 
 kpToolPen::kpToolPen (kpMainWindow *mainWindow)
     : kpToolFlowBase (i18n ("Pen"), i18n ("Draws dots and freehand strokes"),
         Qt::Key_P,
-        mainWindow, "tool_pen")
+        mainWindow, "tool_pen"),
+      d (new kpToolPenPrivate ())
 {
 }
 
 kpToolPen::~kpToolPen ()
 {
+    delete d;
 }
 
 
