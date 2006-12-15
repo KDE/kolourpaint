@@ -55,6 +55,14 @@ line: shift+alt doesn't work but alt+shift does
 KolourPaint 1.4
 ~~~~~~~~~~~~~~~
 
+Less technical people do not know the difference between "PNG", "JPG" and
+"FormatIMadeUp".  Have some sort of interface for them (e.g. "Large, Perfect Quality"
+for "PNG" and "Small, Low Quality" for "JPG").
+
+The current are-you-sure-you-want-to-save-in-a-lossy-format dialog should
+have a way to select another format directly.
+
+
 "Universal Selections" modify selections after selecting
 
 Should CTRL+C'ing a textbox mean that MMB pastes that text?
