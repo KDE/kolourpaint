@@ -504,7 +504,6 @@ config flaws:
   done easily without KUniqueApplication or DCOP?
 
 config dialogs (look into new kconfig generator)
-- open documents in same window mode
 - recent files history length
 - undo limit
 - grid tiling
@@ -669,9 +668,6 @@ draw rectangle and land on doc resize handle - wrong status mess
 - that's a problem with Qt not giving EnterEvents when the mouse move is
   initiated from another object (see kpViewManager::viewUnderCursor() for
   the same problem)
-
-"Open documents in the same window" mode - goes against what most KDE apps do
-but it is convenient sometimes
 
 Bart Symons
 - "Edit" -> "Duplicate current image" (opens up another Kolourpaint instance
