@@ -235,6 +235,7 @@ void kpToolPen::hover (const QPoint &point)
 #endif
     if (point != KP_INVALID_POINT && !m_cursorPixmap.isNull ())
     {
+        // (for hotPoint() as m_mouseButton is not normally defined in hover())
         m_mouseButton = 0;
 
         kpTempPixmap::RenderMode renderMode;
