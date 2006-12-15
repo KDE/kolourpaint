@@ -248,10 +248,10 @@ int kpTransformPreviewDialog::scaleDimension (int dimension, double scale, int m
 
 
 // private
-void kpTransformPreviewDialog::updateShrukenDocumentPixmap ()
+void kpTransformPreviewDialog::updateShrunkenDocumentPixmap ()
 {
 #if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
-    kDebug () << "kpTransformPreviewDialog::updateShrukenDocumentPixmap()"
+    kDebug () << "kpTransformPreviewDialog::updateShrunkenDocumentPixmap()"
                << " shrunkenDocPixmap.size="
                << m_shrunkenDocumentPixmap.size ()
                << " previewPixmapLabelSizeWhenUpdatedPixmap="
@@ -337,7 +337,7 @@ void kpTransformPreviewDialog::updatePreview ()
     if (!doc)
         return;
 
-    updateShrukenDocumentPixmap ();
+    updateShrunkenDocumentPixmap ();
 
     if (!m_shrunkenDocumentPixmap.isNull ())
     {

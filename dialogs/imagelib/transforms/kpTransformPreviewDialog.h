@@ -97,7 +97,7 @@ public:
     static int scaleDimension (int dimension, double scale, int min, int max);
 
 private:
-    void updateShrukenDocumentPixmap ();
+    void updateShrunkenDocumentPixmap ();
 
 protected slots:
     void updatePreview ();
