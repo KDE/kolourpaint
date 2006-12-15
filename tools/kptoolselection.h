@@ -275,6 +275,9 @@ protected slots:
     void resizeScaleAndMove (/*delayed = false*/);
 
 public:
+    void finalize ();
+
+public:
     virtual void execute ();
     virtual void unexecute ();
 

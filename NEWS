@@ -2,6 +2,12 @@
 KolourPaint 1.4_light Series (branches/KDE/3.4/)
 ============================
 
+KolourPaint 1.4.5_light (Unreleased Frozen ???)
+
+   * Fix crash triggered by rapidly deselecting a selection after
+     drag-scaling the selection (Bug 117866)
+     [also in branches/KDE/3.[35]/, branches/kolourpaint/1.2_kde3/]
+
 KolourPaint 1.4.4_light (Unreleased Frozen 2006-03-15)
 
    * Printing improvements (Bug #108976)
