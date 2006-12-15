@@ -222,9 +222,6 @@ void kpToolFlowBase::hover (const QPoint &point)
 #endif
     if (point != KP_INVALID_POINT && d->cursorDrawFunc)
     {
-        // HITODO: This was enabled before (when we could still assign to m_mouseButton) but why do we need it?
-        //mouseButton () = 0;
-
         viewManager ()->setFastUpdates ();
 
         viewManager ()->setTempPixmap (
