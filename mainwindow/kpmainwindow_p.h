@@ -51,6 +51,8 @@ struct kpMainWindowPrivate
     int m_moreEffectsDialogLastEffect;
     bool m_resizeScaleDialogLastKeepAspect;
 
+    bool configOpenImagesInSameWindow;
+
     QActionGroup *toolsActionGroup;
 };
 

@@ -15,6 +15,9 @@ KolourPaint 4.0.0 (Frozen ???)
      - Centre image on page
      [also in branches/KDE/3.5/]
 
+   * Add hidden configuration option "Open Images in the Same Window"
+     (Bug #125116)
+
 
 KolourPaint 1.4_relight Series (branches/KDE/3.5/)
 ===============================

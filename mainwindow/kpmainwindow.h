@@ -296,7 +296,6 @@ private:
     bool m_exportFirstTime;
 
 private:
-    bool shouldOpenInNewWindow () const;
     void addRecentURL (const KUrl &url);
     void setRecentURLs (const QStringList &items);
 

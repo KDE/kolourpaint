@@ -27,6 +27,7 @@
 
 
 #include <kpmainwindow.h>
+#include <kpmainwindow_p.h>
 
 #include <qdatastream.h>
 #include <qpainter.h>
@@ -126,12 +127,6 @@ void kpMainWindow::enableFileMenuDocumentActions (bool enable)
 
 
 // private
-bool kpMainWindow::shouldOpenInNewWindow () const
-{
-    return (m_document && !m_document->isEmpty ());
-}
-
-// private
 void kpMainWindow::addRecentURL (const KUrl &url)
 {
 #if DEBUG_KP_MAIN_WINDOW
@@ -202,13 +197,19 @@ void kpMainWindow::setRecentURLs (const QStringList &items)
 
 
 // private slot
+// TODO: Disable action if
+//       (d->configOpenImagesInSameWindow && m_document && m_document->isEmpty())
+//       as it does nothing if this is true.
 void kpMainWindow::slotNew ()
 {
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    if (m_document)
+    if (m_document && !d->configOpenImagesInSameWindow)
     {
+        // A document -- empty or otherwise -- is open.
+        // Force open a new window.  In contrast, open() might not open
+        // a new window in this case.
         kpMainWindow *win = new kpMainWindow ();
         win->show ();
     }
@@ -262,31 +263,64 @@ void kpMainWindow::saveDefaultDocSize (const QSize &size)
 // private
 bool kpMainWindow::open (const KUrl &url, bool newDocSameNameIfNotExist)
 {
-    QSize docSize = defaultDocSize ();
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "kpMainWindow::open(" << url
+              << ",newDocSameNameIfNotExist=" << newDocSameNameIfNotExist
+              << ")" << endl;
+#endif
 
-    // create doc
+    if (d->configOpenImagesInSameWindow)
+    {
+    #if DEBUG_KP_MAIN_WINDOW
+        kDebug () << "\topenImagesInSameWindow" << endl;
+    #endif
+        // (this brings up a dialog and might save the current doc)
+        if (!queryClose ())
+        {
+        #if DEBUG_KP_MAIN_WINDOW
+            kDebug () << "\t\tqueryClose() aborts open" << endl;
+        #endif
+            return false;
+        }
+    }
+
+    // Create/open doc.
+    const QSize docSize = defaultDocSize ();
     kpDocument *newDoc = new kpDocument (docSize.width (), docSize.height (), this);
     if (newDoc->open (url, newDocSameNameIfNotExist))
     {
+    #if DEBUG_KP_MAIN_WINDOW
+        kDebug () << "\topen OK" << endl;
+    #endif
         if (newDoc->isFromURL (false/*don't bother checking exists*/))
             addRecentURL (url);
     }
     else
     {
+    #if DEBUG_KP_MAIN_WINDOW
+        kDebug () << "\topen failed" << endl;
+    #endif
         delete newDoc;
         return false;
     }
 
-    // need new window?
-    if (shouldOpenInNewWindow ())
+    // Want new window?
+    if (m_document && !m_document->isEmpty () &&
+        !d->configOpenImagesInSameWindow)
     {
-        // send doc to new window
+    #if DEBUG_KP_MAIN_WINDOW
+        kDebug () << "\topen in new window" << endl;
+    #endif
+        // Send doc to new window.
         kpMainWindow *win = new kpMainWindow (newDoc);
         win->show ();
     }
     else
     {
-        // set up views, doc signals
+    #if DEBUG_KP_MAIN_WINDOW
+        kDebug () << "\topen in same window" << endl;
+    #endif
+        // (sets up views, doc signals)
         setDocument (newDoc);
     }
 

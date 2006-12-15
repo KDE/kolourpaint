@@ -124,6 +124,25 @@ void kpMainWindow::readGeneralSettings ()
     d->m_moreEffectsDialogLastEffect = cfg.readEntry (kpSettingMoreEffectsLastEffect, 0);
     d->m_resizeScaleDialogLastKeepAspect = cfg.readEntry (kpSettingResizeScaleLastKeepAspect, false);
 
+    if (cfg.hasKey (kpSettingOpenImagesInSameWindow))
+    {
+        d->configOpenImagesInSameWindow = cfg.readEntry (kpSettingOpenImagesInSameWindow, false);
+    }
+    else
+    {
+        d->configOpenImagesInSameWindow = false;
+#if DEBUG_KP_MAIN_WINDOW
+        kDebug () << "\tconfigOpenImagesInSameWindow: first time"
+                  << " - writing default: " << d->configOpenImagesInSameWindow
+                  << endl;
+#endif
+        // TODO: More hidden options have to write themselves out on startup,
+        //       not on use, to be discoverable (e.g. printing centered on page).
+        cfg.writeEntry (kpSettingOpenImagesInSameWindow,
+                        d->configOpenImagesInSameWindow);
+        cfg.sync ();
+    }
+
 
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\t\tGeneral Settings: firstTime=" << m_configFirstTime
@@ -132,6 +151,7 @@ void kpMainWindow::readGeneralSettings ()
                << " colorSimilarity=" << m_configColorSimilarity
                << " moreEffectsDialogLastEffect=" << d->m_moreEffectsDialogLastEffect
                << " resizeScaleDialogLastKeepAspect=" << d->m_resizeScaleDialogLastKeepAspect
+               << " openImagesInSameWindow=" << d->configOpenImagesInSameWindow
                << endl;
 #endif
 }
