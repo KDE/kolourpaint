@@ -266,12 +266,7 @@ void kpTransformPreviewDialog::updateShrunkenDocumentPixmap ()
 
 
     kpDocument *doc = document ();
-    if (!doc || !doc->pixmap ())
-    {
-        kError () << "kpTransformPreviewDialog::updateShrunkenDocumentPixmap() doc="
-                   << doc << endl;
-        return;
-    }
+    Q_ASSERT (doc && doc->pixmap ());
 
     if (m_shrunkenDocumentPixmap.isNull () ||
         m_previewPixmapLabel->size () != m_previewPixmapLabelSizeWhenUpdatedPixmap)
