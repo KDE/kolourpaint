@@ -983,6 +983,7 @@ void kpToolSelection::cancelResizeScale ()
     #if DEBUG_KP_TOOL_SELECTION
         kDebug () << "\t\tundo currentResizeScaleCommand" << endl;
     #endif
+        m_currentResizeScaleCommand->finalize ();  // (unneeded but let's be safe)
         m_currentResizeScaleCommand->unexecute ();
         delete m_currentResizeScaleCommand;
         m_currentResizeScaleCommand = 0;
@@ -1145,6 +1146,7 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/,
 
         if (m_currentResizeScaleCommand)
         {
+            m_currentResizeScaleCommand->finalize ();
             cmd->addCommand (m_currentResizeScaleCommand);
             m_currentResizeScaleCommand = 0;
 

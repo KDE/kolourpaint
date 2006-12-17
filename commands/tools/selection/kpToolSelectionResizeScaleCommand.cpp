@@ -215,6 +215,26 @@ void kpToolSelectionResizeScaleCommand::resizeScaleAndMove ()
 }
 
 
+// public
+void kpToolSelectionResizeScaleCommand::finalize ()
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kDebug () << "kpToolSelectionResizeScaleCommand::finalize()"
+               << " smoothScaleTimer->isActive="
+               << m_smoothScaleTimer->isActive ()
+               << endl;
+#endif
+    
+    // Make sure the selection contains the final image and the timer won't
+    // fire afterwards.
+    if (m_smoothScaleTimer->isActive ())
+    {
+        resizeScaleAndMove ();
+        Q_ASSERT (!m_smoothScaleTimer->isActive ());
+    }
+}
+
+
 // public virtual [base kpToolResizeScaleCommand]
 void kpToolSelectionResizeScaleCommand::execute ()
 {
