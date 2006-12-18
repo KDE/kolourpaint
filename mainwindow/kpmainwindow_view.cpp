@@ -39,7 +39,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kselectaction.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <ktoggleaction.h>
 
 #include <kpdefs.h>
@@ -65,18 +65,18 @@ void kpMainWindow::setupViewMenuActions ()
 
     KActionCollection *ac = actionCollection ();
 
-    /*m_actionFullScreen = KStdAction::fullScreen (0, 0, ac);
+    /*m_actionFullScreen = KStandardAction::fullScreen (0, 0, ac);
     m_actionFullScreen->setEnabled (false);*/
 
 
-    m_actionActualSize = KStdAction::actualSize (this, SLOT (slotActualSize ()), ac);
-    /*m_actionFitToPage = KStdAction::fitToPage (this, SLOT (slotFitToPage ()), ac);
-    m_actionFitToWidth = KStdAction::fitToWidth (this, SLOT (slotFitToWidth ()), ac);
-    m_actionFitToHeight = KStdAction::fitToHeight (this, SLOT (slotFitToHeight ()), ac);*/
+    m_actionActualSize = KStandardAction::actualSize (this, SLOT (slotActualSize ()), ac);
+    /*m_actionFitToPage = KStandardAction::fitToPage (this, SLOT (slotFitToPage ()), ac);
+    m_actionFitToWidth = KStandardAction::fitToWidth (this, SLOT (slotFitToWidth ()), ac);
+    m_actionFitToHeight = KStandardAction::fitToHeight (this, SLOT (slotFitToHeight ()), ac);*/
 
 
-    m_actionZoomIn = KStdAction::zoomIn (this, SLOT (slotZoomIn ()), ac);
-    m_actionZoomOut = KStdAction::zoomOut (this, SLOT (slotZoomOut ()), ac);
+    m_actionZoomIn = KStandardAction::zoomIn (this, SLOT (slotZoomIn ()), ac);
+    m_actionZoomOut = KStandardAction::zoomOut (this, SLOT (slotZoomOut ()), ac);
 
 
     m_actionZoom = new KSelectAction (

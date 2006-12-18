@@ -41,7 +41,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <kxmlguifactory.h>
 
 #include <kpcommandhistory.h>
@@ -107,19 +107,19 @@ void kpMainWindow::setupEditMenuActions ()
     }
 
 
-    m_actionCut = KStdAction::cut (this, SLOT (slotCut ()), ac);
-    m_actionCopy = KStdAction::copy (this, SLOT (slotCopy ()), ac);
-    m_actionPaste = KStdAction::paste (this, SLOT (slotPaste ()), ac);
+    m_actionCut = KStandardAction::cut (this, SLOT (slotCut ()), ac);
+    m_actionCopy = KStandardAction::copy (this, SLOT (slotCopy ()), ac);
+    m_actionPaste = KStandardAction::paste (this, SLOT (slotPaste ()), ac);
     m_actionPasteInNewWindow = new KAction(i18n ("Paste in &New Window"), ac, "edit_paste_in_new_window");
     connect(m_actionPasteInNewWindow, SIGNAL(triggered(bool) ), SLOT (slotPasteInNewWindow ()));
     m_actionPasteInNewWindow->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
 
-    //m_actionDelete = KStdAction::clear (this, SLOT (slotDelete ()), ac);
+    //m_actionDelete = KStandardAction::clear (this, SLOT (slotDelete ()), ac);
     m_actionDelete = new KAction(i18n ("&Delete Selection"), ac, "edit_clear");
     connect(m_actionDelete, SIGNAL(triggered(bool) ), SLOT (slotDelete ()));
 
-    m_actionSelectAll = KStdAction::selectAll (this, SLOT (slotSelectAll ()), ac);
-    m_actionDeselect = KStdAction::deselect (this, SLOT (slotDeselect ()), ac);
+    m_actionSelectAll = KStandardAction::selectAll (this, SLOT (slotSelectAll ()), ac);
+    m_actionDeselect = KStandardAction::deselect (this, SLOT (slotDeselect ()), ac);
 
 
     m_actionCopyToFile = new KAction(i18n ("C&opy to File..."), ac, "edit_copy_to_file");

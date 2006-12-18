@@ -43,7 +43,7 @@
 #include <klocale.h>
 #include <kmenu.h>
 #include <kstdaccel.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <ktoolbarpopupaction.h>
 
 #include <kpdefs.h>
@@ -257,13 +257,13 @@ kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
         QLatin1String ("undo"),
         KStdAccel::shortcut (KStdAccel::Undo),
         this, SLOT (undo ()),
-        ac, KStdAction::name (KStdAction::Undo));
+        ac, KStandardAction::name (KStandardAction::Undo));
 
     m_actionRedo = new KToolBarPopupAction (redoActionText (),
         QLatin1String ("redo"),
         KStdAccel::shortcut (KStdAccel::Redo),
         this, SLOT (redo ()),
-        ac, KStdAction::name (KStdAction::Redo));
+        ac, KStandardAction::name (KStandardAction::Redo));
 
 
     m_actionUndo->setEnabled (false);

@@ -47,7 +47,7 @@
 #include <kmessagebox.h>
 #include <kprinter.h>
 #include <kstdaccel.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <krecentfilesaction.h>
 #include <kpdefs.h>
 #include <kpdocument.h>
@@ -64,36 +64,36 @@ void kpMainWindow::setupFileMenuActions ()
 {
     KActionCollection *ac = actionCollection ();
 
-    m_actionNew = KStdAction::openNew (this, SLOT (slotNew ()), ac);
-    m_actionOpen = KStdAction::open (this, SLOT (slotOpen ()), ac);
+    m_actionNew = KStandardAction::openNew (this, SLOT (slotNew ()), ac);
+    m_actionOpen = KStandardAction::open (this, SLOT (slotOpen ()), ac);
 
-    m_actionOpenRecent = KStdAction::openRecent (this, SLOT (slotOpenRecent (const KUrl &)), ac);
+    m_actionOpenRecent = KStandardAction::openRecent (this, SLOT (slotOpenRecent (const KUrl &)), ac);
     m_actionOpenRecent->loadEntries (KGlobal::config ());
 
-    m_actionSave = KStdAction::save (this, SLOT (slotSave ()), ac);
-    m_actionSaveAs = KStdAction::saveAs (this, SLOT (slotSaveAs ()), ac);
+    m_actionSave = KStandardAction::save (this, SLOT (slotSave ()), ac);
+    m_actionSaveAs = KStandardAction::saveAs (this, SLOT (slotSaveAs ()), ac);
 
     m_actionExport = new KAction(i18n ("E&xport..."), ac, "file_export");
     connect(m_actionExport, SIGNAL(triggered(bool) ), SLOT (slotExport ()));
 
-    //m_actionRevert = KStdAction::revert (this, SLOT (slotRevert ()), ac);
+    //m_actionRevert = KStandardAction::revert (this, SLOT (slotRevert ()), ac);
     m_actionReload = new KAction(i18n ("Reloa&d"), ac, "file_revert");
     connect(m_actionReload, SIGNAL(triggered(bool) ), SLOT (slotReload ()));
     m_actionReload->setShortcut(KStdAccel::reload ());
     slotEnableReload ();
 
-    m_actionPrint = KStdAction::print (this, SLOT (slotPrint ()), ac);
-    m_actionPrintPreview = KStdAction::printPreview (this, SLOT (slotPrintPreview ()), ac);
+    m_actionPrint = KStandardAction::print (this, SLOT (slotPrint ()), ac);
+    m_actionPrintPreview = KStandardAction::printPreview (this, SLOT (slotPrintPreview ()), ac);
 
-    m_actionMail = KStdAction::mail (this, SLOT (slotMail ()), ac);
+    m_actionMail = KStandardAction::mail (this, SLOT (slotMail ()), ac);
 
     m_actionSetAsWallpaperCentered = new KAction(i18n ("Set as Wa&llpaper (Centered)"), ac, "file_set_as_wallpaper_centered");
     connect(m_actionSetAsWallpaperCentered, SIGNAL(triggered(bool) ), SLOT (slotSetAsWallpaperCentered ()));
     m_actionSetAsWallpaperTiled = new KAction(i18n ("Set as Wallpaper (&Tiled)"), ac, "file_set_as_wallpaper_tiled");
     connect(m_actionSetAsWallpaperTiled, SIGNAL(triggered(bool) ), SLOT (slotSetAsWallpaperTiled ()));
 
-    m_actionClose = KStdAction::close (this, SLOT (slotClose ()), ac);
-    m_actionQuit = KStdAction::quit (this, SLOT (slotQuit ()), ac);
+    m_actionClose = KStandardAction::close (this, SLOT (slotClose ()), ac);
+    m_actionQuit = KStandardAction::quit (this, SLOT (slotQuit ()), ac);
 
     enableFileMenuDocumentActions (false);
 }

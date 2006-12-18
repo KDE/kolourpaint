@@ -36,7 +36,7 @@
 #include <kkeydialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <ktogglefullscreenaction.h>
 
 #include <kpdefs.h>
@@ -58,7 +58,7 @@ void kpMainWindow::setupSettingsMenuActions ()
     createStandardStatusBarAction ();
 
 
-    m_actionFullScreen = KStdAction::fullScreen (this, SLOT (slotFullScreen ()), ac,
+    m_actionFullScreen = KStandardAction::fullScreen (this, SLOT (slotFullScreen ()), ac,
                                                  this/*window*/);
 
 
@@ -68,9 +68,9 @@ void kpMainWindow::setupSettingsMenuActions ()
     slotEnableSettingsShowPath ();
 
 
-    m_actionKeyBindings = KStdAction::keyBindings (this, SLOT (slotKeyBindings ()), ac);
-    m_actionConfigureToolbars = KStdAction::configureToolbars (this, SLOT (slotConfigureToolBars ()), ac);
-    // m_actionConfigure = KStdAction::preferences (this, SLOT (slotConfigure ()), ac);
+    m_actionKeyBindings = KStandardAction::keyBindings (this, SLOT (slotKeyBindings ()), ac);
+    m_actionConfigureToolbars = KStandardAction::configureToolbars (this, SLOT (slotConfigureToolBars ()), ac);
+    // m_actionConfigure = KStandardAction::preferences (this, SLOT (slotConfigure ()), ac);
 
 
     enableSettingsMenuDocumentActions (false);
