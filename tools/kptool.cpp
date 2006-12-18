@@ -152,7 +152,7 @@ static bool KeyIsText (int key)
 QString kpTool::toolTipForTextAndShortcut (const QString &text,
                                            const KShortcut &shortcut)
 {
-    foreach(const QKeySequence &seq, shortcut.toList())
+    foreach(const QKeySequence &seq, shortcut)
     {
         if (seq.count () == 1 && ::KeyIsText (seq [0]))
             return i18nc ("<Tool Name> (<Single Accel Key>)",
