@@ -32,11 +32,11 @@
 
 #include <kaction.h>
 #include <qlabel.h>
-#include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <krun.h>
+#include <kglobal.h>
 #include <klocale.h>
 #include <kshortcut.h>
 

@@ -43,6 +43,7 @@
 
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kglobal.h>
 #include <kglobalsettings.h>
 #include <kicontheme.h>
 
