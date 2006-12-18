@@ -55,6 +55,9 @@ line: shift+alt doesn't work but alt+shift does
 KolourPaint 1.4
 ~~~~~~~~~~~~~~~
 
+In light of crash Bug 117866, check that all timers are killed before e.g. adding
+a command to the command history.
+
 Less technical people do not know the difference between "PNG", "JPG" and
 "FormatIMadeUp".  Have some sort of interface for them (e.g. "Large, Perfect Quality"
 for "PNG" and "Small, Low Quality" for "JPG").

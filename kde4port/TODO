@@ -1,5 +1,6 @@
 This file only concerns itself with porting KolourPaint from KDE 3 to KDE 4
-and code cleanups.
+and code cleanups.  TODO: we broke this rule at the bottom of the file and
+started talking about features.
 
 Features to be implemented are in branches/kolourpaint/control/TODO.
 
@@ -51,6 +52,7 @@ command scheme
 
 
 9. Review all commits.  Credit people like Laurent Montel for porting.
+   Look in this folder.
 
 10. QA entire project due to Qt4 breakages.  Everything needs to be whitebox
     tested again esp. the file saving path - format conversion, maximal
