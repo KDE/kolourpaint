@@ -37,7 +37,7 @@
 #include <kptoolpolyline.h>
 
 
-static void DrawShape (kpImage *image,
+static void DrawLineShape (kpImage *image,
         const QPolygon &points,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
@@ -57,7 +57,7 @@ kpToolLine::kpToolLine (kpMainWindow *mainWindow)
     : kpToolPolygonalBase (
         i18n ("Line"),
         i18n ("Draws lines"),
-        &::DrawShape,
+        &::DrawLineShape,
         Qt::Key_L,
         mainWindow,
         "tool_line")

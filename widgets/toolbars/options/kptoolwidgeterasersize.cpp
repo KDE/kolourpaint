@@ -48,7 +48,7 @@ static const int NumEraserSizes =
     int (sizeof (::EraserSizes) / sizeof (::EraserSizes [0]));
 
 
-static void Draw (QPixmap *destPixmap, const QPoint &topLeft, void *userData)
+static void DrawPixmap (QPixmap *destPixmap, const QPoint &topLeft, void *userData)
 {
     kpToolWidgetEraserSize::DrawPackage *pack =
         static_cast <kpToolWidgetEraserSize::DrawPackage *> (userData);
@@ -62,7 +62,7 @@ static void Draw (QPixmap *destPixmap, const QPoint &topLeft, void *userData)
 
 static void DrawCursor (QPixmap *destPixmap, const QPoint &topLeft, void *userData)
 {
-    ::Draw (destPixmap, topLeft, userData);
+    ::DrawPixmap (destPixmap, topLeft, userData);
 
 
     kpToolWidgetEraserSize::DrawPackage *pack =
@@ -109,7 +109,7 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const QString &
             kpColor::Transparent);
             
         DrawPackage pack = drawFunctionDataForSelected (kpColor::Black, i);
-        ::Draw (&previewPixmap,
+        ::DrawPixmap (&previewPixmap,
             QPoint ((previewPixmap.width () - s) / 2,
                     (previewPixmap.height () - s) / 2),
             &pack);
@@ -136,7 +136,7 @@ int kpToolWidgetEraserSize::eraserSize () const
 // public
 kpTempPixmap::UserFunctionType kpToolWidgetEraserSize::drawFunction () const
 {
-    return &::Draw;
+    return &::DrawPixmap;
 }
 
 // public

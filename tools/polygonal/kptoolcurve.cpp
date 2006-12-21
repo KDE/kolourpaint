@@ -37,7 +37,7 @@
 #include <kppainter.h>
 
 
-static void DrawShape (kpImage *image,
+static void DrawCurveShape (kpImage *image,
         const QPolygon &points,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
@@ -85,7 +85,7 @@ kpToolCurve::kpToolCurve (kpMainWindow *mainWindow)
     : kpToolPolygonalBase (
         i18n ("Curve"),
         i18n ("Draws curves"),
-        &::DrawShape,
+        &::DrawCurveShape,
         Qt::Key_V,
         mainWindow,
         "tool_curve")
