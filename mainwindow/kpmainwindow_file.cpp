@@ -57,7 +57,8 @@
 #include <kpviewmanager.h>
 #include <ktoolinvocation.h>
 #include <kglobal.h>
-
+#include <QDBusInterface>
+#include <QDesktopWidget>
 
 // private
 void kpMainWindow::setupFileMenuActions ()
@@ -1190,10 +1191,17 @@ void kpMainWindow::setAsWallpaper (bool centered)
     // installed so kdebase/kdesktop/KBackgroundIface.h might not be around
     // to be compiled in (where user == developer :))
 // COMPAT
-#if 0
-    QDBusInterfacePtr kdesktop( "org.kde.kdesktop", "/KBackground", "org.kde.kdesktop.KBackground" );
-	QDBusReply<void> retVal = kdesktop->call( "setWallpaper", QString (m_document->url ().path ()), int (centered ? 1 : 2) );
-	if (!retVal.isSuccess())
+
+#ifdef Q_WS_X11
+    int konq_screen_number = KApplication::desktop()->primaryScreen();
+    QByteArray appname;
+    if (konq_screen_number == 0)
+        appname = "org.kde.kdesktop";
+    else
+        appname = "org.kde.kdesktop-screen-" + QByteArray::number(konq_screen_number);
+    QDBusInterface kdesktop(appname, "/Background", "org.kde.kdesktop.Background");
+    QDBusReply<void> retVal = kdesktop.call( "setWallpaper", QString (m_document->url ().path ()), int (centered ? 1 : 2) );
+    if (!retVal.isValid())
     {
         KMessageBox::sorry (this, i18n ("Could not change wallpaper."));
     }
