@@ -112,6 +112,14 @@ void kpMainWindow::setupImageMenuActions ()
 
     m_actionRotate = new KAction(i18n ("&Rotate..."), ac, "image_rotate");
     connect(m_actionRotate, SIGNAL(triggered(bool) ), SLOT (slotRotate ()));
+    m_actionRotate->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_R);
+
+    m_actionRotate = new KAction(i18n ("Rotate 90 Degrees Counterclockwise"), ac, "image_rotate_270deg");
+    connect(m_actionRotate, SIGNAL(triggered(bool) ), SLOT (slotRotate270 ()));
+    m_actionRotate->setShortcut(Qt::CTRL + Qt::Key_L);
+
+    m_actionRotate = new KAction(i18n ("Rotate 90 Degrees Clockwise"), ac, "image_rotate_90deg");
+    connect(m_actionRotate, SIGNAL(triggered(bool) ), SLOT (slotRotate90 ()));
     m_actionRotate->setShortcut(Qt::CTRL + Qt::Key_R);
 
     m_actionSkew = new KAction(i18n ("S&kew..."), ac, "image_skew");
@@ -382,6 +390,7 @@ void kpMainWindow::slotFlip ()
     }
 }
 
+
 // private slot
 void kpMainWindow::slotRotate ()
 {
@@ -398,6 +407,35 @@ void kpMainWindow::slotRotate ()
                                      this));
     }
 }
+
+// private slot
+void kpMainWindow::slotRotate270 ()
+{
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+    // TODO: Special command name instead of just "Rotate"?
+    addImageOrSelectionCommand (
+        new kpTransformRotateCommand (
+            m_document->selection (),
+            270,
+            this));
+}
+
+// private slot
+void kpMainWindow::slotRotate90 ()
+{
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+    // TODO: Special command name instead of just "Rotate"?
+    addImageOrSelectionCommand (
+        new kpTransformRotateCommand (
+            m_document->selection (),
+            90,
+            this));
+}
+
 
 // private slot
 void kpMainWindow::slotSkew ()

@@ -548,7 +548,11 @@ public slots:
 private slots:
     void slotAutoCrop ();
     void slotFlip ();
+
     void slotRotate ();
+    void slotRotate270 ();
+    void slotRotate90 ();
+
     void slotSkew ();
     void slotConvertToBlackAndWhite ();
     void slotConvertToGrayscale ();

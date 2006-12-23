@@ -22,6 +22,11 @@ KolourPaint 4.0.0 (Frozen ???)
      drag-scaling the selection (Bug 117866)
      [also in branches/KDE/3.[345]/, branches/kolourpaint/1.2_kde3/]
 
+   * Add "Rotate 90 Degrees Counterclockwise" (CTRL+L) and
+     "Rotate 90 Degrees Clockwise" (CTRL+R) to "Image" menu as a quick way
+     to access the common types of "Rotate..." (changed from CTRL+R to
+     CTRL+SHIFT+R) (Bug #135184)
+
 
 KolourPaint 1.4_relight Series (branches/KDE/3.5/)
 ===============================
