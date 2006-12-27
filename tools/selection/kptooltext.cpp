@@ -1026,7 +1026,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     const int cursorCol = viewManager ()->textCursorCol ();
 
 
-    // TODO: KTextEdit::keyPressEvent() uses KStdAccel instead of hardcoding; same fix for kpTool?
+    // TODO: KTextEdit::keyPressEvent() uses KStandardShortcut instead of hardcoding; same fix for kpTool?
     switch (e->key ())
     {
     case Qt::Key_Up:

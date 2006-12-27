@@ -46,7 +46,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprinter.h>
-#include <kstdaccel.h>
+#include <kstandardshortcut.h>
 #include <kstandardaction.h>
 #include <krecentfilesaction.h>
 #include <kpdefs.h>
@@ -80,7 +80,7 @@ void kpMainWindow::setupFileMenuActions ()
     //m_actionRevert = KStandardAction::revert (this, SLOT (slotRevert ()), ac);
     m_actionReload = new KAction(i18n ("Reloa&d"), ac, "file_revert");
     connect(m_actionReload, SIGNAL(triggered(bool) ), SLOT (slotReload ()));
-    m_actionReload->setShortcut(KStdAccel::reload ());
+    m_actionReload->setShortcut(KStandardShortcut::reload ());
     slotEnableReload ();
 
     m_actionPrint = KStandardAction::print (this, SLOT (slotPrint ()), ac);
@@ -1083,7 +1083,7 @@ void kpMainWindow::slotMail ()
                         i18n ("You must save this image before sending it.\n"
                               "Do you want to save it?"),
                         QString::null,
-                        KStdGuiItem::save (), KStdGuiItem::cancel ());
+                        KStandardGuiItem::save (), KStandardGuiItem::cancel ());
 
         if (result == KMessageBox::Yes)
         {
@@ -1136,7 +1136,7 @@ void kpMainWindow::setAsWallpaper (bool centered)
 
         int result = KMessageBox::questionYesNo (this,
                          question, QString::null,
-                         KStdGuiItem::save (), KStdGuiItem::cancel ());
+                         KStandardGuiItem::save (), KStandardGuiItem::cancel ());
 
         if (result == KMessageBox::Yes)
         {

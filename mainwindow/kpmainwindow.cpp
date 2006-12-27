@@ -677,7 +677,7 @@ bool kpMainWindow::queryClose ()
                            "Do you want to save it?",
                            m_document->prettyFilename ()),
                     QString::null/*caption*/,
-                    KStdGuiItem::save (), KStdGuiItem::discard ());
+                    KStandardGuiItem::save (), KStandardGuiItem::discard ());
 
     switch (result)
     {
