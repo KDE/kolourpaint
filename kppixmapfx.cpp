@@ -1399,7 +1399,10 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
                << endl;
 #endif
 
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (pm);
+    // HACK: We're used by kpTransformResizeScaleDialog.cpp:toolButtonIconSet()
+    //       to scale an icon.  Rethink whether we really need to enforce no
+    //       alpha channel in kpPixmapFX.
+    // KP_PFX_CHECK_NO_ALPHA_CHANNEL (pm);
 
     if (w == pm.width () && h == pm.height ())
         return pm;
@@ -1449,7 +1452,10 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
     }
 
 
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (retPixmap);
+    // HACK: We're used by kpTransformResizeScaleDialog.cpp:toolButtonIconSet()
+    //       to scale an icon.  Rethink whether we really need to enforce no
+    //       alpha channel in kpPixmapFX.
+    // KP_PFX_CHECK_NO_ALPHA_CHANNEL (retPixmap);
     return retPixmap;
 }
 
