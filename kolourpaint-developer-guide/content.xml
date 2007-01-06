@@ -95,23 +95,24 @@
    <style:paragraph-properties fo:break-before="page"/>
   </style:style>
   <style:style style:name="P20" style:family="paragraph" style:parent-style-name="Chapter_20_Start" style:master-page-name="Section_20_Front_20_Page"/>
-  <style:style style:name="P21" style:family="paragraph" style:parent-style-name="Heading_20_2">
+  <style:style style:name="P21" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L1"/>
+  <style:style style:name="P22" style:family="paragraph" style:parent-style-name="Heading_20_2">
    <style:paragraph-properties fo:break-before="page"/>
   </style:style>
-  <style:style style:name="P22" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L2"/>
   <style:style style:name="P23" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L3"/>
   <style:style style:name="P24" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L4"/>
-  <style:style style:name="P25" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P25" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L5"/>
+  <style:style style:name="P26" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:paragraph-properties fo:margin-left="0in" fo:margin-right="0in" fo:text-indent="0in" style:auto-text-indent="false"/>
   </style:style>
-  <style:style style:name="P26" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L5"/>
   <style:style style:name="P27" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L6"/>
   <style:style style:name="P28" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L7"/>
-  <style:style style:name="P29" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P29" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L8"/>
+  <style:style style:name="P30" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:text-properties fo:font-style="normal" style:font-style-asian="normal" style:font-style-complex="normal"/>
   </style:style>
-  <style:style style:name="P30" style:family="paragraph" style:parent-style-name="Bibliography_20_Heading" style:master-page-name="Bibliography_20_Front_20_Page"/>
-  <style:style style:name="P31" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P31" style:family="paragraph" style:parent-style-name="Bibliography_20_Heading" style:master-page-name="Bibliography_20_Front_20_Page"/>
+  <style:style style:name="P32" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:text-properties style:font-name="Times New Roman2" fo:font-size="12pt" style:font-size-asian="12pt" style:font-size-complex="12pt"/>
   </style:style>
   <style:style style:name="T1" style:family="text">
@@ -129,6 +130,38 @@
    </style:section-properties>
   </style:style>
   <text:list-style style:name="L1">
+   <text:list-level-style-number text:level="1" text:style-name="Numbering_20_Symbols" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="2" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="3" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.75in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="4" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="5" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="6" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="7" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.75in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="8" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="9" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="10" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+  </text:list-style>
+  <text:list-style style:name="L2">
    <text:list-level-style-number text:level="1" text:style-name="Numbering_20_Symbols" style:num-suffix=" " style:num-format="1">
     <style:list-level-properties text:min-label-distance="0.15in"/>
    </text:list-level-style-number>
@@ -160,7 +193,7 @@
     <style:list-level-properties text:min-label-distance="0.15in"/>
    </text:list-level-style-number>
   </text:list-style>
-  <text:list-style style:name="L2">
+  <text:list-style style:name="L3">
    <text:list-level-style-bullet text:level="1" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
     <style:list-level-properties text:min-label-width="0.25in"/>
     <style:text-properties style:font-name="StarSymbol"/>
@@ -201,38 +234,6 @@
     <style:list-level-properties text:space-before="2.25in" text:min-label-width="0.25in"/>
     <style:text-properties style:font-name="StarSymbol"/>
    </text:list-level-style-bullet>
-  </text:list-style>
-  <text:list-style style:name="L3">
-   <text:list-level-style-number text:level="1" text:style-name="Numbering_20_Symbols" style:num-suffix="." style:num-format="1">
-    <style:list-level-properties text:space-before="0.25in" text:min-label-width="0.25in"/>
-   </text:list-level-style-number>
-   <text:list-level-style-number text:level="2" style:num-suffix="." style:num-format="1">
-    <style:list-level-properties text:space-before="0.5in" text:min-label-width="0.25in"/>
-   </text:list-level-style-number>
-   <text:list-level-style-number text:level="3" style:num-suffix="." style:num-format="1">
-    <style:list-level-properties text:space-before="0.75in" text:min-label-width="0.25in"/>
-   </text:list-level-style-number>
-   <text:list-level-style-number text:level="4" style:num-suffix="." style:num-format="1">
-    <style:list-level-properties text:space-before="1in" text:min-label-width="0.25in"/>
-   </text:list-level-style-number>
-   <text:list-level-style-number text:level="5" style:num-suffix="." style:num-format="1">
-    <style:list-level-properties text:space-before="1.25in" text:min-label-width="0.25in"/>
-   </text:list-level-style-number>
-   <text:list-level-style-number text:level="6" style:num-suffix="." style:num-format="1">
-    <style:list-level-properties text:space-before="1.5in" text:min-label-width="0.25in"/>
-   </text:list-level-style-number>
-   <text:list-level-style-number text:level="7" style:num-suffix="." style:num-format="1">
-    <style:list-level-properties text:space-before="1.75in" text:min-label-width="0.25in"/>
-   </text:list-level-style-number>
-   <text:list-level-style-number text:level="8" style:num-suffix="." style:num-format="1">
-    <style:list-level-properties text:space-before="2in" text:min-label-width="0.25in"/>
-   </text:list-level-style-number>
-   <text:list-level-style-number text:level="9" style:num-suffix="." style:num-format="1">
-    <style:list-level-properties text:space-before="2.25in" text:min-label-width="0.25in"/>
-   </text:list-level-style-number>
-   <text:list-level-style-number text:level="10" style:num-suffix="." style:num-format="1">
-    <style:list-level-properties text:space-before="2.5in" text:min-label-width="0.25in"/>
-   </text:list-level-style-number>
   </text:list-style>
   <text:list-style style:name="L4">
    <text:list-level-style-number text:level="1" text:style-name="Numbering_20_Symbols" style:num-suffix="." style:num-format="1">
@@ -331,6 +332,38 @@
    </text:list-level-style-number>
   </text:list-style>
   <text:list-style style:name="L7">
+   <text:list-level-style-number text:level="1" text:style-name="Numbering_20_Symbols" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="2" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="3" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.75in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="4" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="5" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="6" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="7" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.75in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="8" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="9" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="10" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+  </text:list-style>
+  <text:list-style style:name="L8">
    <text:list-level-style-bullet text:level="1" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
     <style:list-level-properties text:min-label-width="0.25in"/>
     <style:text-properties style:font-name="StarSymbol"/>
@@ -600,12 +633,30 @@
    <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">Bibliography Front Page</text:span> is for the first page of the Bibliography. <text:s/><text:span text:style-name="Non-Code_20_Term">Bibliography Pages</text:span> is for the remaining Bibliography pages.</text:p>
    <text:h text:style-name="Heading_20_5" text:outline-level="5">Paragraph Styles</text:h>
    <text:h text:style-name="Heading_20_5" text:outline-level="5">Character Styles</text:h>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">Default</text:span> is used for most text.</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">Emphasis</text:span> is used instead of a manual italics override, in case we wish to change the style of emphasised text later, e.g. <text:span text:style-name="Emphasis">This text is emphasized.</text:span></text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">New Term</text:span> is used to introduce or re-enforce a new term e.g. <text:span text:style-name="Non-Code_20_Term">selection transparency</text:span>. <text:s/>Quotes are not used.</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">Code Term</text:span> is used to introduce or re-enforce a source-code-level keyword e.g. <text:span text:style-name="Code_20_Term">Class::method()</text:span>. <text:s/>Quotes are not used.</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Non-Code_20_Term">Psuedo-heading in a numbered list</text:span> is used like this:</text:p>
+   <text:list text:style-name="L1">
+    <text:list-item>
+     <text:p text:style-name="P21"><text:span text:style-name="Psuedo-heading_20_in_20_a_20_numbered_20_list">This is my heading in the pseudo-heading in a numbered list style:<text:line-break/></text:span>After pressing CTRL+Enter (to stay in the same paragraph), normal text, normal text</text:p>
+    </text:list-item>
+    <text:list-item>
+     <text:p text:style-name="P21"><text:span text:style-name="Psuedo-heading_20_in_20_a_20_numbered_20_list"><text:span text:style-name="Psuedo-heading_20_in_20_a_20_numbered_20_list">This is my heading in the pseudo-heading in a numbered list style:<text:line-break/></text:span></text:span>After pressing CTRL+Enter (to stay in the same paragraph), normal text, normal text</text:p>
+    </text:list-item>
+   </text:list>
+   <text:p text:style-name="Text_20_body"/>
+   <text:p text:style-name="Text_20_body">TODO: who is using the character style “Strong Emphasis”?</text:p>
+   <text:p text:style-name="Text_20_body"/>
+   <text:p text:style-name="Text_20_body">TODO: put somewhere:</text:p>
+   <text:p text:style-name="Text_20_body">Quotes are only used for ironic text.</text:p>
    <text:p text:style-name="Text_20_body">Separate sentences by two spaces out of stubborn old-fashion-ness.</text:p>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"/>
-   <text:h text:style-name="P21" text:outline-level="2">Goals</text:h>
+   <text:h text:style-name="P22" text:outline-level="2">Goals</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
-   <text:h text:style-name="P21" text:outline-level="2">Report Structure</text:h>
+   <text:h text:style-name="P22" text:outline-level="2">Report Structure</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="P20">Chapter 2</text:p>
@@ -614,30 +665,30 @@
    <text:h text:style-name="Heading_20_2" text:outline-level="2">History</text:h>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Current Work</text:h>
    <text:h text:style-name="Heading_20_3" text:outline-level="3" text:is-list-header="true">Short Term</text:h>
-   <text:list text:style-name="L2">
+   <text:list text:style-name="L3">
     <text:list-item>
-     <text:p text:style-name="P22">Porting to KDE 4</text:p>
+     <text:p text:style-name="P23">Porting to KDE 4</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P22">Refactoring</text:p>
+     <text:p text:style-name="P23">Refactoring</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P22">Adding developer documentation (this document)</text:p>
+     <text:p text:style-name="P23">Adding developer documentation (this document)</text:p>
     </text:list-item>
    </text:list>
    <text:h text:style-name="Heading_20_4" text:outline-level="4">Medium Term</text:h>
-   <text:list text:style-name="L2">
+   <text:list text:style-name="L3">
     <text:list-item text:start-value="1">
-     <text:p text:style-name="P22">Rewriting graphics engine to be device-independent [p<text:reference-ref text:reference-format="page" text:ref-name="Doc stored as QPixmap">22</text:reference-ref>, Chapter <text:reference-ref text:reference-format="chapter" text:ref-name="Doc stored as QPixmap">3.4</text:reference-ref>]</text:p>
+     <text:p text:style-name="P23">Rewriting graphics engine to be device-independent [p<text:reference-ref text:reference-format="page" text:ref-name="Doc stored as QPixmap">22</text:reference-ref>, Chapter <text:reference-ref text:reference-format="chapter" text:ref-name="Doc stored as QPixmap">3.4</text:reference-ref>]</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P22">Implement often requested features esp. 8-bit and alpha support</text:p>
+     <text:p text:style-name="P23">Implement often requested features esp. 8-bit and alpha support</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P22">Continual refinement to make it easier to use</text:p>
+     <text:p text:style-name="P23">Continual refinement to make it easier to use</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P22">Steal ideas from other editors</text:p>
+     <text:p text:style-name="P23">Steal ideas from other editors</text:p>
     </text:list-item>
    </text:list>
    <text:p text:style-name="Text_20_body"/>
@@ -666,15 +717,15 @@
    <text:p text:style-name="Text_20_body">The KDE 3.x versions received full code coverage white-box testing and full functionality testing with black-box testing. <text:s/>This testing was paranoid.</text:p>
    <text:p text:style-name="Text_20_body">This is why the Coverity static code analyser failed to find a single non-false-positive out of more than 50 thousand lines of code.</text:p>
    <text:p text:style-name="Text_20_body">You will not get memory errors in KolourPaint code, except some memory leaks on application termination due to some missing destruction (but this is cleaned up by the OS anyway). <text:s/>However:</text:p>
-   <text:list text:style-name="L3">
+   <text:list text:style-name="L4">
     <text:list-item>
-     <text:p text:style-name="P23">The selection code, combined with undo/redo, is very complicated. <text:s/>It would not be surprising if there was a path that causes a crash (and there is even an unreproduceable bug open) – although a huge number of contrived paths have been tested. <text:s/>We should simplify this code to fix this.</text:p>
+     <text:p text:style-name="P24">The selection code, combined with undo/redo, is very complicated. <text:s/>It would not be surprising if there was a path that causes a crash (and there is even an unreproduceable bug open) – although a huge number of contrived paths have been tested. <text:s/>We should simplify this code to fix this.</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P23">Large images are poorly handled by Qt (you get memory allocation errors and partial operation completion but no exceptions are thrown – silent failure is bad).</text:p>
+     <text:p text:style-name="P24">Large images are poorly handled by Qt (you get memory allocation errors and partial operation completion but no exceptions are thrown – silent failure is bad).</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P23">If the combined size of images in KolourPaint exceeds 2GB on a 32-bit system, the 32-bit <text:span text:style-name="Code_20_Term">int</text:span>&apos;s are likely to overflowed somewhere.</text:p>
+     <text:p text:style-name="P24">If the combined size of images in KolourPaint exceeds 2GB on a 32-bit system, the 32-bit <text:span text:style-name="Code_20_Term">int</text:span>&apos;s are likely to overflowed somewhere.</text:p>
     </text:list-item>
    </text:list>
    <text:p text:style-name="Text_20_body">One of the main claims to fame of KolourPaint is its reliability. <text:s/>This is in stark contrast to other opensource projects which have entire <text:span text:style-name="Emphasis">mailing lists</text:span> devoted to crashes.</text:p>
@@ -701,12 +752,12 @@
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Versions</text:h>
    <text:h text:style-name="Heading_20_2" text:outline-level="2"><text:reference-mark-start text:name="Licensing"/>Licensing<text:reference-mark-end text:name="Licensing"/></text:h>
    <text:p text:style-name="Text_20_body">KolourPaint is under the BSD license since we want the code to be usable by anyone, for anything. <text:s/>This includes closed-source derivatives but actually, the main motivations are to allow:</text:p>
-   <text:list text:style-name="L4">
+   <text:list text:style-name="L5">
     <text:list-item>
-     <text:p text:style-name="P24">Moving of generic code into an LGPL library (you cannot do this with the GPL if the copyright is diluted and those other copyright holders disappear or stubbornly refuse to relicense)</text:p>
+     <text:p text:style-name="P25">Moving of generic code into an LGPL library (you cannot do this with the GPL if the copyright is diluted and those other copyright holders disappear or stubbornly refuse to relicense)</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P24">Reuse of the code in BSD projects, that don&apos;t agree with GPL licensing (which might be due to either die-hard philosophy and/or Reason 1).</text:p>
+     <text:p text:style-name="P25">Reuse of the code in BSD projects, that don&apos;t agree with GPL licensing (which might be due to either die-hard philosophy and/or Reason 1).</text:p>
     </text:list-item>
    </text:list>
    <text:p text:style-name="Text_20_body">The great thing about the BSD license is that if you don&apos;t agree with it, you can make a fork under the GPL license. <text:s/>In contrast, if you license under the GPL to start with, no one can fork it under the BSD license if they disagree with you.</text:p>
@@ -716,8 +767,8 @@
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="P20">Chapter 3</text:p>
    <text:h text:style-name="Heading_20_1" text:outline-level="1">Concepts</text:h>
-   <text:p text:style-name="P25">TODO</text:p>
-   <text:h text:style-name="P21" text:outline-level="2">Class Diagram</text:h>
+   <text:p text:style-name="P26">TODO</text:p>
+   <text:h text:style-name="P22" text:outline-level="2">Class Diagram</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Code Patterns</text:h>
    <text:p text:style-name="Text_20_body">TODO: separate chapter?</text:p>
@@ -842,12 +893,12 @@
    <text:p text:style-name="Text_20_body">ACTION: group code together like an aspect.</text:p>
    <text:p text:style-name="Text_20_body">Selections in KolourPaint result in amazingly complicated code because selection commands are individually undoable and redoable. <text:s/>For instance, if you were to select an area of the image, move that selection, scale that selection and then move that selection again, each of these 3 commands would be in the command history and KolourPaint would remember the selection border for each. <text:s/>In contrast, with other paint programs, all 3 selection commands would be grouped into 1. <text:s/>Worse still, undoing would leave you in the state before selecting the area and redoing after that would leave you in the state after the selection is pushed down, after those 3 manipulations. <text:s/>You do not have an active selection anymore – you have lost the selection border.</text:p>
    <text:p text:style-name="Text_20_body">KolourPaint selections can be either:</text:p>
-   <text:list text:style-name="L5">
+   <text:list text:style-name="L6">
     <text:list-item>
-     <text:p text:style-name="P26">Shapes: rectangles, ellipses or polygons</text:p>
+     <text:p text:style-name="P27">Shapes: rectangles, ellipses or polygons</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P26">Text (in a rectangular box)</text:p>
+     <text:p text:style-name="P27">Text (in a rectangular box)</text:p>
     </text:list-item>
    </text:list>
    <text:p text:style-name="Text_20_body">ACTION: split <text:span text:style-name="Code_20_Term">kpSelection</text:span> into subclasses for rectangular, elliptical selections etc.</text:p>
@@ -864,15 +915,15 @@
    <text:p text:style-name="Text_20_body">In an <text:span text:style-name="Non-Code_20_Term">opaque selection</text:span>, selection transparency does nothing. <text:s/>In a <text:span text:style-name="Non-Code_20_Term">transparent selection</text:span>, all pixels in the selection that are similar to the current background color (CITE: see color similarity) are treated as transparent. <text:s/>This is why changes to the background color or color similarity setting, while a selection is active, are undoable/redoable commands. <text:s/>This feature is used for primitive background subtraction – for copying an object rendered against a fairly solid background.</text:p>
    <text:p text:style-name="Text_20_body">The area of the document covered by the selection, before selection transparency is applied, is stored in <text:span text:style-name="Code_20_Term">kpSelection</text:span> and accessible via the <text:span text:style-name="Code_20_Term">pixmap()</text:span> and <text:span text:style-name="Code_20_Term">opaquePixmap()</text:span> methods. <text:s/>The selection image, after any selection transparency is applied, is accessible via the <text:span text:style-name="Code_20_Term">transparentPixmap()</text:span> method. <text:s/>Copying the image to the clipboard, and all image effect commands, operate on the image data <text:span text:style-name="Emphasis">before</text:span> selection transparency is applied (TODO: name a good reason why?). <text:s/>However, pushing the selection onto the image uses the the selection image data after selection transparency is applied.</text:p>
    <text:p text:style-name="Text_20_body">As an example, suppose:</text:p>
-   <text:list text:style-name="L6">
+   <text:list text:style-name="L7">
     <text:list-item>
-     <text:p text:style-name="P27">There is currently a floating, rectangular selection of a red apple on a blue background.</text:p>
+     <text:p text:style-name="P28">There is currently a floating, rectangular selection of a red apple on a blue background.</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P27">The background color is blue.</text:p>
+     <text:p text:style-name="P28">The background color is blue.</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P27">The selection transparency is opaque.</text:p>
+     <text:p text:style-name="P28">The selection transparency is opaque.</text:p>
     </text:list-item>
    </text:list>
    <text:p text:style-name="Text_20_body">If we were to move this selection on top of a green area of the document, we would have an apple on top of a striking blue area on top of the green. <text:s/>If we were to now switch the selection transparency to transparent, we would now have just the apple on top of the green. <text:s/>All blue from the selection would be removed. <text:s/>If the apple happened to have any blue (maybe someone dropped some blue paint on it), it too would be removed, resulting in a hole in the apple.</text:p>
@@ -883,24 +934,24 @@
    <text:p text:style-name="Text_20_body">In order to modify the contents of the selection (e.g. an image effect on a selection or drag-moving the selection), the image data must be copied or pulled from the document to form a <text:span text:style-name="Non-Code_20_Term">floating selection</text:span> that hovers as a temporary layer on top of the document. <text:s/>It is no longer just a border. <text:s/>Floating selections&apos; image data accessors will return non-null images. <text:s/>Such an operation is considered to modify the document and is recorded in the command history as a <text:span text:style-name="Code_20_Term">kpToolSelectionPullFromDocumentCommand</text:span> (which wraps a call to <text:span text:style-name="Code_20_Term">kpDocument::selectionPullFromDocument())</text:span>.</text:p>
    <text:p text:style-name="Text_20_body">Pulling from the document destructively leaves in the place of all opaque pixels inside the selection (after applying selection transparency), the background color (TODO: a good reason why). <text:s/>However, if the pull is being caused by a drag-move, the user can non-destructively pull from the document by holding <text:span text:style-name="Code_20_Term">CTRL</text:span>. <text:s/>KolourPaint actually implements this by destructively pulling and then gets <text:span text:style-name="Code_20_Term">kpToolSelectionMoveCommand</text:span> to stamp the transparent selection back onto the document, without destroying the selection, by using <text:span text:style-name="Code_20_Term">kpDocument::selectionCopyOntoDocument()</text:span>.</text:p>
    <text:p text:style-name="Text_20_body">Floating selections can be manipulated by:</text:p>
-   <text:list text:style-name="L7">
+   <text:list text:style-name="L8">
     <text:list-item>
-     <text:p text:style-name="P28">Image effect commands</text:p>
+     <text:p text:style-name="P29">Image effect commands</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P28">Several selection commands</text:p>
+     <text:p text:style-name="P29">Several selection commands</text:p>
      <text:list>
       <text:list-item>
-       <text:p text:style-name="P28"><text:span text:style-name="Code_20_Term">kpToolSelectionMoveCommand</text:span> for moving the selection around</text:p>
+       <text:p text:style-name="P29"><text:span text:style-name="Code_20_Term">kpToolSelectionMoveCommand</text:span> for moving the selection around</text:p>
       </text:list-item>
       <text:list-item>
-       <text:p text:style-name="P28"><text:span text:style-name="Code_20_Term">kpToolSelectionResizeScaleCommand</text:span> for scaling the selection (but not resizing – you can only resize text selections)</text:p>
+       <text:p text:style-name="P29"><text:span text:style-name="Code_20_Term">kpToolSelectionResizeScaleCommand</text:span> for scaling the selection (but not resizing – you can only resize text selections)</text:p>
       </text:list-item>
       <text:list-item>
-       <text:p text:style-name="P28"><text:span text:style-name="Code_20_Term">kpToolSelectionTransparencyCommand</text:span> for changing selection transparency parameters (opaque/transparent selection choice, background color and color similarity)</text:p>
+       <text:p text:style-name="P29"><text:span text:style-name="Code_20_Term">kpToolSelectionTransparencyCommand</text:span> for changing selection transparency parameters (opaque/transparent selection choice, background color and color similarity)</text:p>
       </text:list-item>
       <text:list-item>
-       <text:p text:style-name="P28"><text:span text:style-name="Code_20_Term">kpToolSelectionPushOntoDocumentCommand</text:span> for destroying the selection by either throwing it away (using <text:span text:style-name="Code_20_Term">kpDocument::selectionDelete()</text:span>) or by pushing its contents (after selection transparency is applied) onto the document (using <text:span text:style-name="Code_20_Term">kpDocument::selectionPushOntoDocument()</text:span>).</text:p>
+       <text:p text:style-name="P29"><text:span text:style-name="Code_20_Term">kpToolSelectionPushOntoDocumentCommand</text:span> for destroying the selection by either throwing it away (using <text:span text:style-name="Code_20_Term">kpDocument::selectionDelete()</text:span>) or by pushing its contents (after selection transparency is applied) onto the document (using <text:span text:style-name="Code_20_Term">kpDocument::selectionPushOntoDocument()</text:span>).</text:p>
       </text:list-item>
      </text:list>
     </text:list-item>
@@ -924,20 +975,20 @@
    <text:p text:style-name="Text_20_body">TODO: selection undo/redo in detail – use cases and deselecting a selection if selecting a new selection border; restoring selection transparency settings (e.g. background color) on undo/redo and keeping them in sync with selections</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Temp Pixmaps</text:h>
    <text:p text:style-name="Text_20_body">Should be merged with selections and future layer class.</text:p>
-   <text:p text:style-name="P29"/>
+   <text:p text:style-name="P30"/>
    <text:p text:style-name="P20">Chapter 4</text:p>
    <text:h text:style-name="Heading_20_1" text:outline-level="1">Conclusion</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
    <text:p text:style-name="Text_20_body"/>
-   <text:h text:style-name="P21" text:outline-level="2">Achievements</text:h>
+   <text:h text:style-name="P22" text:outline-level="2">Achievements</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="Text_20_body"/>
-   <text:p text:style-name="P25"/>
-   <text:h text:style-name="P21" text:outline-level="2">Future Work</text:h>
+   <text:p text:style-name="P26"/>
+   <text:h text:style-name="P22" text:outline-level="2">Future Work</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
    <text:p text:style-name="Text_20_body"/>
    <text:bibliography text:style-name="Sect1" text:name="Bibliography1">
@@ -1086,11 +1137,11 @@
     </text:bibliography-source>
     <text:index-body>
      <text:index-title text:style-name="Sect2" text:name="Bibliography1_Head">
-      <text:p text:style-name="P30">Bibliography</text:p>
+      <text:p text:style-name="P31">Bibliography</text:p>
      </text:index-title>
     </text:index-body>
    </text:bibliography>
-   <text:p text:style-name="P31"/>
+   <text:p text:style-name="P32"/>
   </office:text>
  </office:body>
 </office:document-content>
