@@ -85,6 +85,7 @@ public:
 
     //
     // QPixmap Statistics
+    // TODO: move into a statistics class
     //
 
     // Returns the width * height.
