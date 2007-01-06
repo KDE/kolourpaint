@@ -3,7 +3,7 @@
 SYNC: Do not change the number of quotes before the version number
       - it is parsed by the KolourPaint wrapper script.
 -->
-<gui name="kolourpaint" version="43">
+<gui name="kolourpaint" version="51">
 
 <!--
 SYNC: Check for duplicate actions in menus caused by some of our actions
@@ -94,6 +94,32 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
         <Action name="help_taking_screenshots" />
     </Menu>
 
+    <!-- HACK: See kpmainwindow_tools.cpp:kpMainWindow::createToolBox(). -->
+    <Menu name="toolToolBarHiddenMenu"><text>DO NOT TRANSLATE, JUST LEAVE AS IS: toolToolBarHiddenMenu</text>
+        <Action name="tool_brush" />
+        <Action name="tool_color_eraser" />
+        <Action name="tool_color_picker" />
+        <Action name="tool_curve" />
+        <Action name="tool_ellipse" />
+        <Action name="tool_elliptical_selection" />
+        <Action name="tool_eraser" />
+        <Action name="tool_flood_fill" />
+        <Action name="tool_free_form_selection" />
+        <Action name="tool_line" />
+        <Action name="tool_pen" />
+        <Action name="tool_polygon" />
+        <Action name="tool_polyline" />
+        <Action name="tool_rectangle" />
+        <Action name="tool_rect_selection" />
+        <Action name="tool_rounded_rectangle" />
+        <Action name="tool_spraycan" />
+        <Action name="tool_text" />
+
+        <Action name="prev_tool_option_group_1" />
+        <Action name="next_tool_option_group_1" />
+        <Action name="prev_tool_option_group_2" />
+        <Action name="next_tool_option_group_2" />
+    </Menu>
 </MenuBar>
 
 <ToolBar name="mainToolBar" index="1" noMerge="1"><text>Main Toolbar</text>

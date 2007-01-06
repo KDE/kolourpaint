@@ -37,6 +37,7 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
+#include <KMenuBar>
 
 #include <kpcolortoolbar.h>
 #include <kpcommandhistory.h>
@@ -134,6 +135,23 @@ void kpMainWindow::setupToolActions ()
 // private
 void kpMainWindow::createToolBox ()
 {
+    // HACK: Until we have a proper kpToolToolBar where tool actions are
+    //       plugged into it properly, Qt4 will not recognise our actions'
+    //       shortcuts.
+    //
+    //       In kolourpaintui.rc, we get around this by plugging them into
+    //       a fake menu.  Here, we hide that fake menu.
+    Q_ASSERT (menuBar ());
+    foreach (QAction *action, menuBar ()->actions ())
+    {
+        if (action->text () == "DO NOT TRANSLATE, JUST LEAVE AS IS: toolToolBarHiddenMenu")
+        {
+            action->setVisible (false);
+            break;
+        }
+    }
+
+
     m_toolToolBar = new kpToolToolBar (i18n ("Tool Box"), this, 2/*columns/rows*/);
     m_toolToolBar->setObjectName ("Tool Box");  // (needed for QMainWindow::saveState())
     connect (m_toolToolBar, SIGNAL (sigToolSelected (kpTool *)),
