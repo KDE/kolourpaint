@@ -104,11 +104,14 @@
   <style:style style:name="P25" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:paragraph-properties fo:margin-left="0in" fo:margin-right="0in" fo:text-indent="0in" style:auto-text-indent="false"/>
   </style:style>
-  <style:style style:name="P26" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P26" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L5"/>
+  <style:style style:name="P27" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L6"/>
+  <style:style style:name="P28" style:family="paragraph" style:parent-style-name="Text_20_body" style:list-style-name="L7"/>
+  <style:style style:name="P29" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:text-properties fo:font-style="normal" style:font-style-asian="normal" style:font-style-complex="normal"/>
   </style:style>
-  <style:style style:name="P27" style:family="paragraph" style:parent-style-name="Bibliography_20_Heading" style:master-page-name="Bibliography_20_Front_20_Page"/>
-  <style:style style:name="P28" style:family="paragraph" style:parent-style-name="Text_20_body">
+  <style:style style:name="P30" style:family="paragraph" style:parent-style-name="Bibliography_20_Heading" style:master-page-name="Bibliography_20_Front_20_Page"/>
+  <style:style style:name="P31" style:family="paragraph" style:parent-style-name="Text_20_body">
    <style:text-properties style:font-name="Times New Roman2" fo:font-size="12pt" style:font-size-asian="12pt" style:font-size-complex="12pt"/>
   </style:style>
   <style:style style:name="T1" style:family="text">
@@ -263,6 +266,112 @@
     <style:list-level-properties text:space-before="2.5in" text:min-label-width="0.25in"/>
    </text:list-level-style-number>
   </text:list-style>
+  <text:list-style style:name="L5">
+   <text:list-level-style-number text:level="1" text:style-name="Numbering_20_Symbols" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="2" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="3" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.75in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="4" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="5" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="6" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="7" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.75in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="8" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="9" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="10" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+  </text:list-style>
+  <text:list-style style:name="L6">
+   <text:list-level-style-number text:level="1" text:style-name="Numbering_20_Symbols" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="2" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="3" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="0.75in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="4" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="5" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="6" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="7" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="1.75in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="8" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="9" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2.25in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+   <text:list-level-style-number text:level="10" style:num-suffix="." style:num-format="1">
+    <style:list-level-properties text:space-before="2.5in" text:min-label-width="0.25in"/>
+   </text:list-level-style-number>
+  </text:list-style>
+  <text:list-style style:name="L7">
+   <text:list-level-style-bullet text:level="1" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="2" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="0.25in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="3" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="0.5in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="4" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="0.75in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="5" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="1in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="6" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="1.25in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="7" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="1.5in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="8" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="1.75in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="9" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="2in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+   <text:list-level-style-bullet text:level="10" text:style-name="Bullet_20_Symbols" style:num-suffix="." text:bullet-char="•">
+    <style:list-level-properties text:space-before="2.25in" text:min-label-width="0.25in"/>
+    <style:text-properties style:font-name="StarSymbol"/>
+   </text:list-level-style-bullet>
+  </text:list-style>
  </office:automatic-styles>
  <office:body>
   <office:text>
@@ -300,7 +409,7 @@
    <text:p text:style-name="P7"/>
    <text:p text:style-name="P7"/>
    <text:p text:style-name="P9"/>
-   <text:p text:style-name="P8">Revision: 2006-11-22</text:p>
+   <text:p text:style-name="P8">Revision: 2007-01-06</text:p>
    <text:p text:style-name="P8"/>
    <text:p text:style-name="P8">Like software, this document is a work-in-progress.</text:p>
    <text:p text:style-name="P8">TODO: Unfortunately, it has not reached a useful level of maturity yet.</text:p>
@@ -602,7 +711,7 @@
    </text:list>
    <text:p text:style-name="Text_20_body">The great thing about the BSD license is that if you don&apos;t agree with it, you can make a fork under the GPL license. <text:s/>In contrast, if you license under the GPL to start with, no one can fork it under the BSD license if they disagree with you.</text:p>
    <text:p text:style-name="Text_20_body">However, the KolourPaint Project will not accept any code contributions that are licensed under anything more restrictive than BSD. <text:s/>MIT/X11 is equivalent to BSD and fine. GPL is too restrictive. <text:s/>LGPL code needs to be isolated in a separate runtime library.</text:p>
-   <text:p text:style-name="Text_20_body">Having said, GPL code can be used if it is in a plugin loaded at <text:span text:style-name="Non-Code_20_Term">runtime</text:span> by an LGPL library. <text:s/>This is a good way of working around the GPL as all you need to do is come up with an LGPL wrapper library. <text:s/>Then KolourPaint only needs to link to the LGPL library. <text:s/>Note that this only works with GPLv2 and not GPLv3.</text:p>
+   <text:p text:style-name="Text_20_body">Having said, GPL code can be used if it is in a plugin loaded at <text:span text:style-name="Non-Code_20_Term">runtime</text:span> by an LGPL library. <text:s/>This is a good way of working around the GPL as all you need to do is come up with an LGPL wrapper library. <text:s/>Then KolourPaint only needs to link to the LGPL library. <text:s/>Note that this only works with GPLv2 and not GPLv3 (TODO: I only heard that it doesn&apos;t work with GPLv3 by rumour, check whether it really doesn&apos;t work).</text:p>
    <text:p text:style-name="Text_20_body">Contrary to popular belief, the GPL does not prevent closed-source derivatives from being created – at the expense of everyone else and Stallman&apos;s confusingly named <text:span text:style-name="Emphasis">software freedom</text:span> – as long as there is only one copyright holder or all copyright holders conspire together.<text:span text:style-name="Emphasis"> </text:span><text:s/>Qt is a perfect example of this through its QPL/GPL &amp; commerical dual-licensing, where Trolltech, <text:s/>maintains complete copyright control. <text:s/>Another infamous example is ReiserFS.</text:p>
    <text:p text:style-name="Text_20_body"/>
    <text:p text:style-name="P20">Chapter 3</text:p>
@@ -682,8 +791,11 @@
    <text:p text:style-name="Text_20_body">The source code is stored in the views/ folder. <text:s/>There can be 1 or more views per <text:span text:style-name="Code_20_Term">kpDocument </text:span>document.</text:p>
    <text:p text:style-name="Text_20_body">ACTION: These classes are badly designed because subclasses limit functionality instead of increasing it. <text:s/>We need to tip the inheritance hierarchy upside-down. </text:p>
    <text:p text:style-name="Text_20_body">TODO: class diagram</text:p>
-   <text:h text:style-name="Heading_20_2" text:outline-level="2">Commands</text:h>
+   <text:h text:style-name="Heading_20_2" text:outline-level="2">Commands and Undo/Redo</text:h>
    <text:p text:style-name="Text_20_body">Changes must not be made to the document directly using the document class. <text:s/>You must encapsulate each change in a <text:span text:style-name="Code_20_Term">kpCommand</text:span> so that it is undoable and redoable. <text:s/>Failure to do this results in inconsistent behaviour when undoing and redoing.</text:p>
+   <text:p text:style-name="Text_20_body">Interestingly, the <text:span text:style-name="Non-Code_20_Term">Color Picker</text:span> is undo-able and redo-able even though it does not affect the document<text:span text:style-name="Non-Code_20_Term">.</text:span> <text:s/>This is because we want to protect the user&apos;s hard work looking for a particular needle color in the image haystack. <text:s/>We may want to rethink this in the future as making something a command has a nasty side effect with linear command histories, as we now discuss.</text:p>
+   <text:p text:style-name="Text_20_body">Suppose, under KolourPaint&apos;s linear command history (which is similar to Konqueror&apos;s Back / Forward buttons and KWrite&apos;s Undo/Redo), one has performed the Line, Circle and Rectangle commands. <text:s/>Undoing would remove the rectangle. <text:s/>Undoing again would remove the circle. <text:s/>Undoing yet again would remove the line. <text:s/>However, it&apos;s possible to “undo the undo” and return to the states before we undid anything. <text:s/>If we now redo, we traverse the command history in the opposite direction: a redo recreates the line, a second redo recreates the circle and a third redo recreates the rectangle.</text:p>
+   <text:p text:style-name="Text_20_body">The problem is suppose we had pressed undo those 3 times. <text:s/>If we were now to do something that adds a command to the history e.g. draw a different line, draw a polygon or use the Color Picker, the redo history is cleared. <text:s/>It is not possible to redo the Line, Circle or Rectangle commands by pressing <text:span text:style-name="Emphasis">any</text:span> combination of undo and redo. <text:s/>A tree-like command history would solve this problem but would probably add quite some UI complexity and memory footprint.</text:p>
    <text:p text:style-name="Text_20_body">Many command classes are quite similar, so in the future, we might merge some of the classes e.g. <text:span text:style-name="Code_20_Term">kpToolPolygonalCommand</text:span> and <text:span text:style-name="Code_20_Term">kpToolRectangularCommand</text:span>.</text:p>
    <text:p text:style-name="Text_20_body">TODO: kpCommand is similar to KCommand except for the size() method; kpMacroCommand is similar to KMacroCommand; kpCommandHistory is similar to KCommandHistory except for more sophisticated clipping based on size and a hacky interface for accessing the commands in the history directly (TODO: why? <text:s/>It had something to do with undoing and redoing selections – we should cover selections and undo history in detail). <text:s/>Eventually, all this should be pushed into kdelibs.</text:p>
    <text:p text:style-name="Text_20_body">This section covers the external interface to command classes, usually invoked by tool classes, and the internals so that you can understand the implementation of a command class.</text:p>
@@ -725,18 +837,94 @@
    <text:p text:style-name="Text_20_body">TODO: keep track of color changes etc.</text:p>
    <text:p text:style-name="Text_20_body">TODO: draw() not called at endDraw() - causes problems at least with polygon</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Selections</text:h>
-   <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">kpselection.cpp</text:span> contains the <text:span text:style-name="Code_20_Term">kpSelection</text:span> data structure for selections. <text:s/>Selections are per-document (kpDocument). <text:s/>However, the rendered borders are per-view-manager (kpViewManager) and code is also spread in the view (kpView).</text:p>
+   <text:p text:style-name="Text_20_body">KolourPaint&apos;s selections are similar to those in text editors and are a primitive version of layers found in other image programs. <text:s/>When a selection is active, all editing must be done on the selection and not the main image below (with the notable exception of being able to resize the image below). <text:s/>Before editing can continue on the image below, the selection must either be deleted or pushed onto the image below.</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">kpselection.cpp</text:span> contains the <text:span text:style-name="Code_20_Term">kpSelection</text:span> data structure for selections. <text:s/>Selections are per-document (<text:span text:style-name="Code_20_Term">kpDocument</text:span>). <text:s/>However, the rendered borders are per-view-manager (<text:span text:style-name="Code_20_Term">kpViewManager</text:span>) and code is also spread in the view (<text:span text:style-name="Code_20_Term">kpView</text:span>). <text:s/>This original idea for splitting selection concerns between the document and the view classes was so that the selection border would be the same size regardless of the zoom level, as it would be expressed in view pixels, not document pixels. <text:s/>ACTION: We have yet to actually implement this.</text:p>
    <text:p text:style-name="Text_20_body">ACTION: group code together like an aspect.</text:p>
+   <text:p text:style-name="Text_20_body">Selections in KolourPaint result in amazingly complicated code because selection commands are individually undoable and redoable. <text:s/>For instance, if you were to select an area of the image, move that selection, scale that selection and then move that selection again, each of these 3 commands would be in the command history and KolourPaint would remember the selection border for each. <text:s/>In contrast, with other paint programs, all 3 selection commands would be grouped into 1. <text:s/>Worse still, undoing would leave you in the state before selecting the area and redoing after that would leave you in the state after the selection is pushed down, after those 3 manipulations. <text:s/>You do not have an active selection anymore – you have lost the selection border.</text:p>
+   <text:p text:style-name="Text_20_body">KolourPaint selections can be either:</text:p>
+   <text:list text:style-name="L5">
+    <text:list-item>
+     <text:p text:style-name="P26">Shapes: rectangles, ellipses or polygons</text:p>
+    </text:list-item>
+    <text:list-item>
+     <text:p text:style-name="P26">Text (in a rectangular box)</text:p>
+    </text:list-item>
+   </text:list>
    <text:p text:style-name="Text_20_body">ACTION: split <text:span text:style-name="Code_20_Term">kpSelection</text:span> into subclasses for rectangular, elliptical selections etc.</text:p>
    <text:p text:style-name="Text_20_body">ACTION: somehow combine with <text:span text:style-name="Code_20_Term">kpTempPixmap</text:span>, which is a per-view-manager concept for storing the currently drawn non-selection shape (e.g. a line).</text:p>
    <text:p text:style-name="Text_20_body">ACTION: generalise into a layer class.</text:p>
+   <text:p text:style-name="Text_20_body">Note that transparency in all types of selections means that the transparent bits of the selection will not affect the part of the document it is floating on top of (they <text:span text:style-name="Non-Code_20_Term">paint</text:span> on top of the document). <text:s/>This is in contrast to drawing tools (e.g. Line) which really set document pixels to the transparent color (they <text:span text:style-name="Non-Code_20_Term">set</text:span> document pixels).</text:p>
+   <text:h text:style-name="Heading_20_3" text:outline-level="3">Shapes</text:h>
+   <text:p text:style-name="Text_20_body">Shape selections contain a number of document pixels inside and on the border of the shape. <text:s/>Note that some of these pixels may be transparent as the document happened to be transparent there. <text:s/>In contrast, all pixels outside of the border are always set to transparent.</text:p>
+   <text:p text:style-name="Text_20_body">Now, consider as an example, a mask of an elliptical selection:</text:p>
+   <text:p text:style-name="Text_20_body">The opaque pixels of this mask are inside or on the border of the ellipse and therefore refer to document pixels in the selection. <text:s/>Importantly, there is nothing saying that these documents pixels are either transparent or opaque – an opaque portion of the mask does not mean an opaque document pixel.</text:p>
+   <text:p text:style-name="Text_20_body">Similarly, the transparent pixels of this mask are outside of the ellipse and therefore refer to transparent pixels (TODO: clarify that these latter pixels are due to pulling behavior) inside the bounding rectangle of the selection but outside of the selection shape.</text:p>
+   <text:h text:style-name="Heading_20_4" text:outline-level="4">Selection Transparency</text:h>
+   <text:p text:style-name="Text_20_body">To complicate matters, selections have a concept of <text:span text:style-name="Non-Code_20_Term">selection transparency </text:span>(class <text:span text:style-name="Code_20_Term">kpSelectionTransparency</text:span>). <text:s/>When we say an <text:span text:style-name="Non-Code_20_Term">transparent selection</text:span>, we mean that the selection&apos;s selection transparency is set to transparent – we say nothing about the document pixels covered by the selection. <text:s/>Similarly, when we say an <text:span text:style-name="Non-Code_20_Term">opaque selection</text:span>, we mean that the selection&apos;s selection transparency is set to opaque – we say nothing about the document pixels covered by the selection.</text:p>
+   <text:p text:style-name="Text_20_body">In an <text:span text:style-name="Non-Code_20_Term">opaque selection</text:span>, selection transparency does nothing. <text:s/>In a <text:span text:style-name="Non-Code_20_Term">transparent selection</text:span>, all pixels in the selection that are similar to the current background color (CITE: see color similarity) are treated as transparent. <text:s/>This is why changes to the background color or color similarity setting, while a selection is active, are undoable/redoable commands. <text:s/>This feature is used for primitive background subtraction – for copying an object rendered against a fairly solid background.</text:p>
+   <text:p text:style-name="Text_20_body">The area of the document covered by the selection, before selection transparency is applied, is stored in <text:span text:style-name="Code_20_Term">kpSelection</text:span> and accessible via the <text:span text:style-name="Code_20_Term">pixmap()</text:span> and <text:span text:style-name="Code_20_Term">opaquePixmap()</text:span> methods. <text:s/>The selection image, after any selection transparency is applied, is accessible via the <text:span text:style-name="Code_20_Term">transparentPixmap()</text:span> method. <text:s/>Copying the image to the clipboard, and all image effect commands, operate on the image data <text:span text:style-name="Emphasis">before</text:span> selection transparency is applied (TODO: name a good reason why?). <text:s/>However, pushing the selection onto the image uses the the selection image data after selection transparency is applied.</text:p>
+   <text:p text:style-name="Text_20_body">As an example, suppose:</text:p>
+   <text:list text:style-name="L6">
+    <text:list-item>
+     <text:p text:style-name="P27">There is currently a floating, rectangular selection of a red apple on a blue background.</text:p>
+    </text:list-item>
+    <text:list-item>
+     <text:p text:style-name="P27">The background color is blue.</text:p>
+    </text:list-item>
+    <text:list-item>
+     <text:p text:style-name="P27">The selection transparency is opaque.</text:p>
+    </text:list-item>
+   </text:list>
+   <text:p text:style-name="Text_20_body">If we were to move this selection on top of a green area of the document, we would have an apple on top of a striking blue area on top of the green. <text:s/>If we were to now switch the selection transparency to transparent, we would now have just the apple on top of the green. <text:s/>All blue from the selection would be removed. <text:s/>If the apple happened to have any blue (maybe someone dropped some blue paint on it), it too would be removed, resulting in a hole in the apple.</text:p>
+   <text:p text:style-name="Text_20_body">If we were to deselect the selection, pushing it onto the document, we would end up with this apple on top of the green. <text:s/>However, if we were to copy the selection to another program, the blue would still be in the image data in the destination program.</text:p>
+   <text:p text:style-name="Text_20_body">If we were to now invert the selection, the blue would become yellow. <text:s/>The background of the selection would not be removed by selection transparency as it is now yellow, not blue. <text:s/>If we were to invert again or undo, the background would revert to blue and it would be viewed as transparent again due to selection transparency.</text:p>
+   <text:h text:style-name="Heading_20_4" text:outline-level="4">Lifecycle</text:h>
+   <text:p text:style-name="Text_20_body">When the user drags to select an area of the document, the document is not modified so the command history is not changed. <text:s/>This is to allow the user to selection to continually change the selected area without nuking the redo history [CITE]. <text:s/>As the current selection is just a border, all <text:span text:style-name="Code_20_Term">kpSelection</text:span> image data accessors (<text:span text:style-name="Code_20_Term">pixmap()</text:span>, <text:span text:style-name="Code_20_Term">opaquePixmap()</text:span>, <text:span text:style-name="Code_20_Term">transparentPixmap()</text:span>) will return a null image. <text:s/>Selection transparency has no effect, yet.</text:p>
+   <text:p text:style-name="Text_20_body">In order to modify the contents of the selection (e.g. an image effect on a selection or drag-moving the selection), the image data must be copied or pulled from the document to form a <text:span text:style-name="Non-Code_20_Term">floating selection</text:span> that hovers as a temporary layer on top of the document. <text:s/>It is no longer just a border. <text:s/>Floating selections&apos; image data accessors will return non-null images. <text:s/>Such an operation is considered to modify the document and is recorded in the command history as a <text:span text:style-name="Code_20_Term">kpToolSelectionPullFromDocumentCommand</text:span> (which wraps a call to <text:span text:style-name="Code_20_Term">kpDocument::selectionPullFromDocument())</text:span>.</text:p>
+   <text:p text:style-name="Text_20_body">Pulling from the document destructively leaves in the place of all opaque pixels inside the selection (after applying selection transparency), the background color (TODO: a good reason why). <text:s/>However, if the pull is being caused by a drag-move, the user can non-destructively pull from the document by holding <text:span text:style-name="Code_20_Term">CTRL</text:span>. <text:s/>KolourPaint actually implements this by destructively pulling and then gets <text:span text:style-name="Code_20_Term">kpToolSelectionMoveCommand</text:span> to stamp the transparent selection back onto the document, without destroying the selection, by using <text:span text:style-name="Code_20_Term">kpDocument::selectionCopyOntoDocument()</text:span>.</text:p>
+   <text:p text:style-name="Text_20_body">Floating selections can be manipulated by:</text:p>
+   <text:list text:style-name="L7">
+    <text:list-item>
+     <text:p text:style-name="P28">Image effect commands</text:p>
+    </text:list-item>
+    <text:list-item>
+     <text:p text:style-name="P28">Several selection commands</text:p>
+     <text:list>
+      <text:list-item>
+       <text:p text:style-name="P28"><text:span text:style-name="Code_20_Term">kpToolSelectionMoveCommand</text:span> for moving the selection around</text:p>
+      </text:list-item>
+      <text:list-item>
+       <text:p text:style-name="P28"><text:span text:style-name="Code_20_Term">kpToolSelectionResizeScaleCommand</text:span> for scaling the selection (but not resizing – you can only resize text selections)</text:p>
+      </text:list-item>
+      <text:list-item>
+       <text:p text:style-name="P28"><text:span text:style-name="Code_20_Term">kpToolSelectionTransparencyCommand</text:span> for changing selection transparency parameters (opaque/transparent selection choice, background color and color similarity)</text:p>
+      </text:list-item>
+      <text:list-item>
+       <text:p text:style-name="P28"><text:span text:style-name="Code_20_Term">kpToolSelectionPushOntoDocumentCommand</text:span> for destroying the selection by either throwing it away (using <text:span text:style-name="Code_20_Term">kpDocument::selectionDelete()</text:span>) or by pushing its contents (after selection transparency is applied) onto the document (using <text:span text:style-name="Code_20_Term">kpDocument::selectionPushOntoDocument()</text:span>).</text:p>
+      </text:list-item>
+     </text:list>
+    </text:list-item>
+   </text:list>
+   <text:h text:style-name="Heading_20_3" text:outline-level="3">Text</text:h>
+   <text:p text:style-name="Text_20_body">Text selections are rectangular boxes containing a list of text lines. <text:s/>The selection transparency field is ignored with text style (<text:span text:style-name="Code_20_Term">kpTextStyle</text:span>) taking its place.</text:p>
+   <text:h text:style-name="Heading_20_4" text:outline-level="4">Text Styles</text:h>
+   <text:p text:style-name="Text_20_body">A text style contains the font family, size in points, color and effects (bold, italic, underline, strike through).</text:p>
+   <text:p text:style-name="Text_20_body">Background color is also stored but is effectively transparent if selection transparency is set to transparent. <text:s/>In other words, a transparent background can be achieved through either a transparent background color or, if selection transparency is set to transparent, any color. <text:s/>Changes to the background color (TODO: and color similarity out of laziness?) are undoable as they affect the selection.</text:p>
+   <text:h text:style-name="Heading_20_4" text:outline-level="4">Life Cycle</text:h>
+   <text:p text:style-name="Text_20_body">When the user drags to create a text box, it instantly becomes floating and this is considered to modify the document so is undoable. <text:s/>There is no pulling from the document to create a text box. <text:s text:c="3"/>ACTION: simply dragging out a text box should not modify the document – it&apos;s like dragging out a selection border.</text:p>
+   <text:p text:style-name="Text_20_body">It is possible to add and remove text and each text operation is undoable. <text:s/>However, the cursor position is not maintained in the command history (ACTION: it would be neat to do so). <text:s/>ACTION: There is currently no dynamic wordwrap, unlike KWrite.</text:p>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">pixmap()</text:span>, <text:span text:style-name="Code_20_Term">opaquePixmap()</text:span> and <text:span text:style-name="Code_20_Term">transparentPixmap()</text:span> always return a non-null pixmap and they all return the same thing, since selection transparency is ignored. <text:s/>However, it is generally incorrect to use these methods for text boxes with transparent backgrounds. <text:s/>This is because text boxes are floating and rendered on top of a document, which usually contains some opaque content, permitting text antialiasing. <text:s/>But these methods are not aware of this underlying content so cannot antialias, giving a different – and lower quality – result compared to what the user sees on screen. <text:s/>Use the <text:span text:style-name="Code_20_Term">paint()</text:span> method, which accepts the background image data, instead.</text:p>
+   <text:p text:style-name="Text_20_body">For simplicity, it is not possible to convert to and from a shape selection and a text selection. <text:s/>As a result, you cannot apply image effects onto a text selection. <text:s/>You can resize a text box but not scale it.</text:p>
+   <text:p text:style-name="Text_20_body"/>
+   <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term"/></text:p>
    <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">tools/selection/</text:span> contains selection tools.</text:p>
    <text:p text:style-name="Text_20_body"><text:span text:style-name="Code_20_Term">commands/tools/selection/</text:span> contains the commands used by those tools and permit undo and redo of selection modifications. <text:s/>This makes KolourPaint enormously complex.</text:p>
-   <text:p text:style-name="Text_20_body">The constructor&apos;s pixmap argument acts the same as <text:span text:style-name="Code_20_Term">setPixmap(</text:span>). <text:s/>If you pass it a null pixmap, <text:span text:style-name="Code_20_Term">m_pixmap = 0</text:span> - this means that the user has dragged out a selection border but hasn&apos;t manipulated it yet (the document remains unmodified).</text:p>
-   <text:p text:style-name="Text_20_body">As soon as you need to modify the contents of the selection, you have to pull it from the document (<text:span text:style-name="Code_20_Term">kpDocument::selectionPullFromDocument()</text:span>). <text:s/>Only then is the document modified and <text:span text:style-name="Code_20_Term">m_pixmap</text:span> becomes nonzero. <text:s/>The selection now floats above the document and can be moved around.</text:p>
+   <text:p text:style-name="Text_20_body"/>
+   <text:p text:style-name="Text_20_body"/>
+   <text:p text:style-name="Text_20_body">TODO: selection undo/redo in detail – use cases and deselecting a selection if selecting a new selection border; restoring selection transparency settings (e.g. background color) on undo/redo and keeping them in sync with selections</text:p>
    <text:h text:style-name="Heading_20_2" text:outline-level="2">Temp Pixmaps</text:h>
    <text:p text:style-name="Text_20_body">Should be merged with selections and future layer class.</text:p>
-   <text:p text:style-name="P26"/>
+   <text:p text:style-name="P29"/>
    <text:p text:style-name="P20">Chapter 4</text:p>
    <text:h text:style-name="Heading_20_1" text:outline-level="1">Conclusion</text:h>
    <text:p text:style-name="Text_20_body">TODO</text:p>
@@ -898,11 +1086,11 @@
     </text:bibliography-source>
     <text:index-body>
      <text:index-title text:style-name="Sect2" text:name="Bibliography1_Head">
-      <text:p text:style-name="P27">Bibliography</text:p>
+      <text:p text:style-name="P30">Bibliography</text:p>
      </text:index-title>
     </text:index-body>
    </text:bibliography>
-   <text:p text:style-name="P28"/>
+   <text:p text:style-name="P31"/>
   </office:text>
  </office:body>
 </office:document-content>

@@ -3,7 +3,7 @@
 <office:document-settings xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0" xmlns:ooo="http://openoffice.org/2004/office" office:version="1.0">
  <office:settings>
   <config:config-item-set config:name="ooo:view-settings">
-   <config:config-item config:name="ViewAreaTop" config:type="int">561552</config:config-item>
+   <config:config-item config:name="ViewAreaTop" config:type="int">753745</config:config-item>
    <config:config-item config:name="ViewAreaLeft" config:type="int">0</config:config-item>
    <config:config-item config:name="ViewAreaWidth" config:type="int">20137</config:config-item>
    <config:config-item config:name="ViewAreaHeight" config:type="int">14051</config:config-item>
@@ -12,12 +12,24 @@
    <config:config-item-map-indexed config:name="Views">
     <config:config-item-map-entry>
      <config:config-item config:name="ViewId" config:type="string">view2</config:config-item>
-     <config:config-item config:name="ViewLeft" config:type="int">17477</config:config-item>
-     <config:config-item config:name="ViewTop" config:type="int">565688</config:config-item>
+     <config:config-item config:name="ViewLeft" config:type="int">5747</config:config-item>
+     <config:config-item config:name="ViewTop" config:type="int">769786</config:config-item>
      <config:config-item config:name="VisibleLeft" config:type="int">0</config:config-item>
-     <config:config-item config:name="VisibleTop" config:type="int">561552</config:config-item>
+     <config:config-item config:name="VisibleTop" config:type="int">753745</config:config-item>
      <config:config-item config:name="VisibleRight" config:type="int">20135</config:config-item>
-     <config:config-item config:name="VisibleBottom" config:type="int">575601</config:config-item>
+     <config:config-item config:name="VisibleBottom" config:type="int">767794</config:config-item>
+     <config:config-item config:name="ZoomType" config:type="short">0</config:config-item>
+     <config:config-item config:name="ZoomFactor" config:type="short">100</config:config-item>
+     <config:config-item config:name="IsSelectedFrame" config:type="boolean">false</config:config-item>
+    </config:config-item-map-entry>
+    <config:config-item-map-entry>
+     <config:config-item config:name="ViewId" config:type="string">view2</config:config-item>
+     <config:config-item config:name="ViewLeft" config:type="int">7558</config:config-item>
+     <config:config-item config:name="ViewTop" config:type="int">901920</config:config-item>
+     <config:config-item config:name="VisibleLeft" config:type="int">2752</config:config-item>
+     <config:config-item config:name="VisibleTop" config:type="int">891117</config:config-item>
+     <config:config-item config:name="VisibleRight" config:type="int">20346</config:config-item>
+     <config:config-item config:name="VisibleBottom" config:type="int">903658</config:config-item>
      <config:config-item config:name="ZoomType" config:type="short">0</config:config-item>
      <config:config-item config:name="ZoomFactor" config:type="short">100</config:config-item>
      <config:config-item config:name="IsSelectedFrame" config:type="boolean">false</config:config-item>
