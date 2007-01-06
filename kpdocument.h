@@ -165,7 +165,12 @@ public:
 
     void paintPixmapAt (const QPixmap &pixmap, const QPoint &at);
 
-    // (not including the selection)
+    // "pixmap(false)" returns a non-zero pointer to the document's image
+    // data, ignoring any floating selection.
+    //
+    // "pixmap(true)" returns a pointer to a floating selection's image
+    // data (before selection transparency is applied), or 0 if no floating
+    // selection exists.
     QPixmap *pixmap (bool ofSelection = false) const;
     void setPixmap (const QPixmap &pixmap);
     void setPixmap (bool ofSelection, const QPixmap &pixmap);
