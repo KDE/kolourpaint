@@ -97,8 +97,10 @@ private slots:
     void slotToolActionActivated ();
     void slotToolActionToolTipChanged ();
 
-public slots:
-    virtual void setOrientation (Qt::Orientation o);
+private:
+    Qt::Orientation orientation () const;
+public:
+    void setOrientation (Qt::Orientation o);
 
 private:
     void addButton (QAbstractButton *button, Qt::Orientation o, int num);

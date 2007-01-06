@@ -1007,11 +1007,24 @@ kpColorToolBar::kpColorToolBar (const QString &label, kpMainWindow *mainWindow)
     addWidget (base);
 }
 
+// TODO: setOrientation() is not virtual in Qt4.
+//       So don't we need the kptooltoolbar.cpp hacks too?  Maybe not
+//       since the default orientation is horizontal.
+//
+//       In any case, we need to rewrite kpColorToolBar to be based on
+//       QDockWidget.
+
 // virtual
 void kpColorToolBar::setOrientation (Qt::Orientation o)
 {
+#if DEBUG_KP_COLOR_TOOL_BAR
+    kDebug () << "kpColorToolBar::setOrientation("
+               << (o == Qt::Vertical ? "vertical" : "horizontal")
+               << ") called!" << endl;
+#endif
+
     // (QDockWindow::undock() calls us)
-    bool isOutsideDock =  false; //(place () == Q3DockWindow::OutsideDock);
+    bool isOutsideDock = false; //(place () == Q3DockWindow::OutsideDock);
 
     if (!m_lastDockedOrientationSet || !isOutsideDock)
     {

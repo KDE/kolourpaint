@@ -530,9 +530,24 @@ void kpToolToolBar::slotToolActionToolTipChanged ()
 }
 
 
-// public slot virtual [base QDockWindow]
+// HACK: The port to Qt4 broke a lot of things like orientation (as
+//       setOrientation() is no longer virtual) and outside docking.
+//       For now, make sure we're always vertical and docked.
+//
+//       We simply need to rewrite kpToolToolBar to be based on QDockWidget
+//       with pluggable actions.
+
+// private
+Qt::Orientation kpToolToolBar::orientation () const
+{
+    return Qt::Vertical;
+}
+
+// public
 void kpToolToolBar::setOrientation (Qt::Orientation o)
 {
+    Q_ASSERT (o == Qt::Vertical);
+
 #if DEBUG_KP_TOOL_TOOL_BAR
     kDebug () << "kpToolToolBar::setOrientation("
                << (o == Qt::Vertical ? "vertical" : "horizontal")
@@ -556,23 +571,23 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
         o = m_lastDockedOrientation;
     }
 
-    delete m_toolLayout;
     delete m_baseLayout;
     if (o == Qt::Vertical)
     {
-        m_baseLayout = new QBoxLayout (QBoxLayout::TopToBottom, m_baseWidget );
+        m_baseLayout = new QBoxLayout (QBoxLayout::TopToBottom, m_baseWidget);
     }
     else // if (o == Qt::Horizontal)
     {
-        m_baseLayout = new QBoxLayout (QBoxLayout::LeftToRight, m_baseWidget );
+        m_baseLayout = new QBoxLayout (QBoxLayout::LeftToRight, m_baseWidget);
     }
     m_baseLayout->setSpacing (10);
     m_baseLayout->setMargin (5);
 
     m_toolLayout = new QGridLayout ();
-    m_baseLayout->addItem (m_toolLayout);
     m_toolLayout->setMargin (0);
     m_toolLayout->setSpacing (0);
+    // (ownership is transferred to m_baseLayout)
+    m_baseLayout->addItem (m_toolLayout);
 
     int num = 0;
 
@@ -614,4 +629,5 @@ void kpToolToolBar::addButton (QAbstractButton *button, Qt::Orientation o, int n
 
 
 #include <kptooltoolbar.moc>
+
 
