@@ -57,7 +57,7 @@ class QSize;
 class QStringList;
 class QUrl;
 
-class KAction;
+class QAction;
 class KFontAction;
 class KFontSizeAction;
 class KSelectAction;
@@ -184,7 +184,7 @@ private slots:
     void updateToolOptionPrevNextActionsEnabled ();
 
 private:
-    kpTool *m_toolSpraycan, *m_toolBrush, 
+    kpTool *m_toolSpraycan, *m_toolBrush,
            *m_toolColorEraser, *m_toolColorPicker,
            *m_toolCurve, *m_toolEllipse,
            *m_toolEllipticalSelection, *m_toolEraser,
@@ -198,7 +198,7 @@ private:
     int m_lastToolNumber;
 
     bool m_toolActionsEnabled;
-    KAction *m_actionPrevToolOptionGroup1,
+    QAction *m_actionPrevToolOptionGroup1,
             *m_actionNextToolOptionGroup1,
             *m_actionPrevToolOptionGroup2,
             *m_actionNextToolOptionGroup2;
@@ -282,9 +282,9 @@ private:
     void setupFileMenuActions ();
     void enableFileMenuDocumentActions (bool enable = true);
 
-    KAction *m_actionNew, *m_actionOpen;
+    QAction *m_actionNew, *m_actionOpen;
     KRecentFilesAction *m_actionOpenRecent;
-    KAction *m_actionSave, *m_actionSaveAs, *m_actionExport,
+    QAction *m_actionSave, *m_actionSaveAs, *m_actionExport,
             *m_actionReload,
             *m_actionPrint, *m_actionPrintPreview,
             *m_actionMail,
@@ -372,7 +372,7 @@ private:
 
     bool m_editMenuDocumentActionsEnabled;
 
-    KAction *m_actionUndo, *m_actionRedo,
+    QAction *m_actionUndo, *m_actionRedo,
             *m_actionCut, *m_actionCopy,
             *m_actionPaste, *m_actionPasteInNewWindow,
             *m_actionDelete,
@@ -437,7 +437,7 @@ private:
     void enableViewMenuDocumentActions (bool enable = true);
     void actionShowGridUpdate ();
 
-    KAction *m_actionActualSize,
+    QAction *m_actionActualSize,
             *m_actionFitToPage, *m_actionFitToWidth, *m_actionFitToHeight,
             *m_actionZoomIn, *m_actionZoomOut;
     KSelectAction *m_actionZoom;
@@ -464,14 +464,14 @@ private slots:
 public:
     void zoomIn (bool centerUnderCursor = false);
     void zoomOut (bool centerUnderCursor = false);
-    
+
 public slots:
     void slotZoomIn ();
     void slotZoomOut ();
 
 private:
     void zoomAccordingToZoomAction (bool centerUnderCursor = false);
-    
+
 private slots:
     void slotZoom ();
 
@@ -525,7 +525,7 @@ private:
 
     bool m_imageMenuDocumentActionsEnabled;
 
-    KAction *m_actionResizeScale,
+    QAction *m_actionResizeScale,
             *m_actionCrop, *m_actionAutoCrop,
             *m_actionFlip, *m_actionRotate, *m_actionSkew,
             *m_actionConvertToBlackAndWhite, *m_actionConvertToGrayscale,
@@ -570,7 +570,7 @@ private:
     void enableSettingsMenuDocumentActions (bool enable = true);
 
     KToggleAction *m_actionShowPath;
-    KAction *m_actionKeyBindings, *m_actionConfigureToolbars, *m_actionConfigure;
+    QAction *m_actionKeyBindings, *m_actionConfigureToolbars, *m_actionConfigure;
     KToggleFullScreenAction *m_actionFullScreen;
 
 private slots:

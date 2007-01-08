@@ -41,6 +41,7 @@
 #include <kselectaction.h>
 #include <kstandardaction.h>
 #include <ktoggleaction.h>
+#include <kactioncollection.h>
 
 #include <kpdefs.h>
 #include <kpdocument.h>
@@ -79,8 +80,8 @@ void kpMainWindow::setupViewMenuActions ()
     m_actionZoomOut = KStandardAction::zoomOut (this, SLOT (slotZoomOut ()), ac);
 
 
-    m_actionZoom = new KSelectAction (
-        i18n ("&Zoom"), actionCollection (), "view_zoom_to");
+    m_actionZoom = actionCollection()->add<KSelectAction> ("view_zoom_to");
+    m_actionZoom->setText (i18n ("&Zoom"));
     connect (m_actionZoom, SIGNAL (triggered (QAction *)), SLOT (slotZoom ()));
     m_actionZoom->setEditable (true);
 
@@ -93,25 +94,24 @@ void kpMainWindow::setupViewMenuActions ()
     m_zoomList.append (1000); m_zoomList.append (1200); m_zoomList.append (1600);
 
 
-    m_actionShowGrid = new KToggleAction (i18n ("Show &Grid"),
-        actionCollection (), "view_show_grid");
+    m_actionShowGrid = actionCollection()->add<KToggleAction> ("view_show_grid");
+    m_actionShowGrid->setText (i18n ("Show &Grid"));
     m_actionShowGrid->setShortcut (Qt::CTRL + Qt::Key_G);
     m_actionShowGrid->setCheckedState (KGuiItem(i18n ("Hide &Grid")));
     connect (m_actionShowGrid, SIGNAL (triggered (bool)),
         SLOT (slotShowGridToggled ()));
 
 
-    m_actionShowThumbnail = new KToggleAction (i18n ("Show T&humbnail"),
-        actionCollection (), "view_show_thumbnail");
+    m_actionShowThumbnail = actionCollection()->add<KToggleAction> ("view_show_thumbnail");
+    m_actionShowThumbnail->setText (i18n ("Show T&humbnail"));
     m_actionShowThumbnail->setShortcut (Qt::CTRL + Qt::Key_H);
     m_actionShowThumbnail->setCheckedState (KGuiItem(i18n ("Hide T&humbnail")));
     connect (m_actionShowThumbnail, SIGNAL (triggered (bool)),
         SLOT (slotShowThumbnailToggled ()));
 
     // Please do not use setCheckedState() here - it wouldn't make sense
-    m_actionZoomedThumbnail = new KToggleAction (
-        i18n ("Zoo&med Thumbnail Mode"),
-        actionCollection (), "view_zoomed_thumbnail");
+    m_actionZoomedThumbnail = actionCollection()->add<KToggleAction> ("view_zoomed_thumbnail");
+    m_actionZoomedThumbnail->setText (i18n ("Zoo&med Thumbnail Mode"));
     connect (m_actionZoomedThumbnail, SIGNAL (triggered (bool)),
         SLOT (slotZoomedThumbnailToggled ()));
 
@@ -120,8 +120,8 @@ void kpMainWindow::setupViewMenuActions ()
     // Also, don't use "Show Thumbnail Rectangle" because if entire doc
     // can be seen in scrollView, checking option won't "Show" anything
     // since rect _surrounds_ entire doc (hence, won't be rendered).
-    d->m_actionShowThumbnailRectangle = new KToggleAction ( i18n ("Enable Thumbnail &Rectangle"),
-        actionCollection (), "view_show_thumbnail_rectangle");
+    d->m_actionShowThumbnailRectangle = actionCollection()->add<KToggleAction> ("view_show_thumbnail_rectangle");
+    d->m_actionShowThumbnailRectangle->setText (i18n ("Enable Thumbnail &Rectangle"));
     connect (d->m_actionShowThumbnailRectangle, SIGNAL (triggered (bool)),
         SLOT (slotThumbnailShowRectangleToggled ()));
 
@@ -290,7 +290,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
     m_actionZoom->setCurrentItem (index);
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tcurrentItem="
-              << m_actionZoom->currentItem () 
+              << m_actionZoom->currentItem ()
               << " action="
               << m_actionZoom->action (m_actionZoom->currentItem ())
               << " checkedAction"
@@ -782,7 +782,7 @@ void kpMainWindow::zoomAccordingToZoomAction (bool centerUnderCursor)
 
     // This might be a new zoom level the user has typed in.
     zoomTo (zoomLevelFromString (m_actionZoom->currentText ()),
-                                 centerUnderCursor); 
+                                 centerUnderCursor);
 }
 
 // private slot

@@ -37,6 +37,7 @@
 
 #include <kapplication.h>
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
@@ -74,13 +75,15 @@ void kpMainWindow::setupFileMenuActions ()
     m_actionSave = KStandardAction::save (this, SLOT (slotSave ()), ac);
     m_actionSaveAs = KStandardAction::saveAs (this, SLOT (slotSaveAs ()), ac);
 
-    m_actionExport = new KAction(i18n ("E&xport..."), ac, "file_export");
+    m_actionExport = ac->addAction("file_export");
+    m_actionExport->setText (i18n ("E&xport..."));
     connect(m_actionExport, SIGNAL(triggered(bool) ), SLOT (slotExport ()));
 
     //m_actionRevert = KStandardAction::revert (this, SLOT (slotRevert ()), ac);
-    m_actionReload = new KAction(i18n ("Reloa&d"), ac, "file_revert");
+    m_actionReload = ac->addAction ("file_revert");
+    m_actionReload->setText (i18n ("Reloa&d"));
     connect(m_actionReload, SIGNAL(triggered(bool) ), SLOT (slotReload ()));
-    m_actionReload->setShortcut(KStandardShortcut::reload ());
+    m_actionReload->setShortcuts(KStandardShortcut::reload ());
     slotEnableReload ();
 
     m_actionPrint = KStandardAction::print (this, SLOT (slotPrint ()), ac);
@@ -88,9 +91,11 @@ void kpMainWindow::setupFileMenuActions ()
 
     m_actionMail = KStandardAction::mail (this, SLOT (slotMail ()), ac);
 
-    m_actionSetAsWallpaperCentered = new KAction(i18n ("Set as Wa&llpaper (Centered)"), ac, "file_set_as_wallpaper_centered");
+    m_actionSetAsWallpaperCentered = ac->addAction ("file_set_as_wallpaper_centered");
+    m_actionSetAsWallpaperCentered->setText (i18n ("Set as Wa&llpaper (Centered)"));
     connect(m_actionSetAsWallpaperCentered, SIGNAL(triggered(bool) ), SLOT (slotSetAsWallpaperCentered ()));
-    m_actionSetAsWallpaperTiled = new KAction(i18n ("Set as Wallpaper (&Tiled)"), ac, "file_set_as_wallpaper_tiled");
+    m_actionSetAsWallpaperTiled = ac->addAction ("file_set_as_wallpaper_tiled");
+    m_actionSetAsWallpaperTiled->setText (i18n ("Set as Wallpaper (&Tiled)"));
     connect(m_actionSetAsWallpaperTiled, SIGNAL(triggered(bool) ), SLOT (slotSetAsWallpaperTiled ()));
 
     m_actionClose = KStandardAction::close (this, SLOT (slotClose ()), ac);

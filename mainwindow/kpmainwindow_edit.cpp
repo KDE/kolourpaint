@@ -42,6 +42,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandardaction.h>
+#include <kactioncollection.h>
 #include <kxmlguifactory.h>
 
 #include <kpcommandhistory.h>
@@ -110,21 +111,25 @@ void kpMainWindow::setupEditMenuActions ()
     m_actionCut = KStandardAction::cut (this, SLOT (slotCut ()), ac);
     m_actionCopy = KStandardAction::copy (this, SLOT (slotCopy ()), ac);
     m_actionPaste = KStandardAction::paste (this, SLOT (slotPaste ()), ac);
-    m_actionPasteInNewWindow = new KAction(i18n ("Paste in &New Window"), ac, "edit_paste_in_new_window");
+    m_actionPasteInNewWindow = ac->addAction ("edit_paste_in_new_window");
+    m_actionPasteInNewWindow->setText (i18n ("Paste in &New Window"));
     connect(m_actionPasteInNewWindow, SIGNAL(triggered(bool) ), SLOT (slotPasteInNewWindow ()));
     m_actionPasteInNewWindow->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
 
     //m_actionDelete = KStandardAction::clear (this, SLOT (slotDelete ()), ac);
-    m_actionDelete = new KAction(i18n ("&Delete Selection"), ac, "edit_clear");
+    m_actionDelete = ac->addAction ("edit_clear");
+    m_actionDelete->setText (i18n ("&Delete Selection"));
     connect(m_actionDelete, SIGNAL(triggered(bool) ), SLOT (slotDelete ()));
 
     m_actionSelectAll = KStandardAction::selectAll (this, SLOT (slotSelectAll ()), ac);
     m_actionDeselect = KStandardAction::deselect (this, SLOT (slotDeselect ()), ac);
 
 
-    m_actionCopyToFile = new KAction(i18n ("C&opy to File..."), ac, "edit_copy_to_file");
+    m_actionCopyToFile = ac->addAction ("edit_copy_to_file");
+    m_actionCopyToFile->setText (i18n ("C&opy to File..."));
     connect(m_actionCopyToFile, SIGNAL(triggered(bool) ), SLOT (slotCopyToFile ()));
-    m_actionPasteFromFile = new KAction(i18n ("Paste &From File..."), ac, "edit_paste_from_file");
+    m_actionPasteFromFile = ac->addAction ("edit_paste_from_file");
+    m_actionPasteFromFile->setText (i18n ("Paste &From File..."));
     connect(m_actionPasteFromFile, SIGNAL(triggered(bool) ), SLOT (slotPasteFromFile ()));
 
 

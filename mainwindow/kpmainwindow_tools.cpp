@@ -33,6 +33,7 @@
 #include <qlist.h>
 
 #include <kapplication.h>
+#include <kactioncollection.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
@@ -103,31 +104,27 @@ void kpMainWindow::setupToolActions ()
 
     KActionCollection *ac = actionCollection ();
 
-    m_actionPrevToolOptionGroup1 = new KAction (
-        i18n ("Previous Tool Option (Group #1)"),
-        ac, "prev_tool_option_group_1");
-    m_actionPrevToolOptionGroup1->setShortcut (kpTool::shortcutForKey (Qt::Key_1));
+    m_actionPrevToolOptionGroup1 = ac->addAction ("prev_tool_option_group_1");
+    m_actionPrevToolOptionGroup1->setText (i18n ("Previous Tool Option (Group #1)"));
+    m_actionPrevToolOptionGroup1->setShortcuts (kpTool::shortcutForKey (Qt::Key_1));
     connect (m_actionPrevToolOptionGroup1, SIGNAL (triggered (bool)),
         SLOT (slotActionPrevToolOptionGroup1 ()));
 
-    m_actionNextToolOptionGroup1 = new KAction (
-        i18n ("Next Tool Option (Group #1)"),
-        ac, "next_tool_option_group_1");
-    m_actionNextToolOptionGroup1->setShortcut (kpTool::shortcutForKey (Qt::Key_2));
+    m_actionNextToolOptionGroup1 = ac->addAction ("next_tool_option_group_1");
+    m_actionNextToolOptionGroup1->setText (i18n ("Next Tool Option (Group #1)"));
+    m_actionNextToolOptionGroup1->setShortcuts (kpTool::shortcutForKey (Qt::Key_2));
     connect (m_actionNextToolOptionGroup1, SIGNAL (triggered (bool)),
         SLOT (slotActionNextToolOptionGroup1 ()));
 
-    m_actionPrevToolOptionGroup2 = new KAction (
-        i18n ("Previous Tool Option (Group #2)"),
-        ac, "prev_tool_option_group_2");
-    m_actionPrevToolOptionGroup2->setShortcut (kpTool::shortcutForKey (Qt::Key_3));
+    m_actionPrevToolOptionGroup2 = ac->addAction ("prev_tool_option_group_2");
+    m_actionPrevToolOptionGroup2->setText (i18n ("Previous Tool Option (Group #2)"));
+    m_actionPrevToolOptionGroup2->setShortcuts (kpTool::shortcutForKey (Qt::Key_3));
     connect (m_actionPrevToolOptionGroup2, SIGNAL (triggered (bool)),
         SLOT (slotActionPrevToolOptionGroup2 ()));
 
-    m_actionNextToolOptionGroup2 = new KAction (
-        i18n ("Next Tool Option (Group #2)"),
-        ac, "next_tool_option_group_2");
-    m_actionNextToolOptionGroup2->setShortcut (kpTool::shortcutForKey (Qt::Key_4));
+    m_actionNextToolOptionGroup2 = ac->addAction ("next_tool_option_group_2");
+    m_actionNextToolOptionGroup2->setText (i18n ("Next Tool Option (Group #2)"));
+    m_actionNextToolOptionGroup2->setShortcuts (kpTool::shortcutForKey (Qt::Key_4));
     connect (m_actionNextToolOptionGroup2, SIGNAL (triggered (bool)),
         SLOT (slotActionNextToolOptionGroup2 ()));
 }

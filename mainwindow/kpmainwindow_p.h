@@ -32,7 +32,7 @@
 
 class QActionGroup;
 
-class KAction;
+class QAction;
 class KToggleAction;
 
 
@@ -46,7 +46,7 @@ struct kpMainWindowPrivate
     bool m_configThumbnailShowRectangle;
     KToggleAction *m_actionShowThumbnailRectangle;
 
-    KAction *m_actionHelpTakingScreenshots;
+    QAction *m_actionHelpTakingScreenshots;
 
     int m_moreEffectsDialogLastEffect;
     bool m_resizeScaleDialogLastKeepAspect;

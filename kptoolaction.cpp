@@ -41,7 +41,7 @@ kpToolAction::kpToolAction (const QString &text,
                             const QString &pic, const KShortcut &shortcut,
                             const QObject *receiver, const char *slot,
                             KActionCollection *ac, const QString &name)
-    : KToggleAction (KIcon (pic), text, ac, name)
+    : KToggleAction (KIcon (pic), text, ac)
 {
 #if DEBUG_KP_TOOL_ACTION
     kDebug () << "kpToolAction<" << name << ">::kpToolAction(shortcut="
@@ -54,6 +54,8 @@ kpToolAction::kpToolAction (const QString &text,
         connect (this, SIGNAL (triggered (bool)), receiver, slot);
 
     updateToolTip ();
+
+    ac->addAction (name, this);
 }
 
 kpToolAction::~kpToolAction ()

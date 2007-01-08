@@ -45,6 +45,7 @@
 #include <kstandardshortcut.h>
 #include <kstandardaction.h>
 #include <ktoolbarpopupaction.h>
+#include <kactioncollection.h>
 
 #include <kpdefs.h>
 #include <kpdocument.h>
@@ -253,17 +254,15 @@ kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
                                             KActionCollection *ac)
     : d (new kpCommandHistoryBasePrivate ())
 {
-    m_actionUndo = new KToolBarPopupAction (undoActionText (),
-        QLatin1String ("undo"),
-        KStandardShortcut::shortcut (KStandardShortcut::Undo),
-        this, SLOT (undo ()),
-        ac, KStandardAction::name (KStandardAction::Undo));
+    m_actionUndo = new KToolBarPopupAction (KIcon ("undo"), undoActionText (), this);
+    ac->addAction (KStandardAction::name (KStandardAction::Undo), m_actionUndo);
+    m_actionUndo->setShortcuts (KStandardShortcut::shortcut (KStandardShortcut::Undo));
+    connect (m_actionUndo, SIGNAL(triggered(bool)), this, SLOT (undo ()));
 
-    m_actionRedo = new KToolBarPopupAction (redoActionText (),
-        QLatin1String ("redo"),
-        KStandardShortcut::shortcut (KStandardShortcut::Redo),
-        this, SLOT (redo ()),
-        ac, KStandardAction::name (KStandardAction::Redo));
+    m_actionRedo = new KToolBarPopupAction (KIcon ("redo"), redoActionText (), this);
+    ac->addAction (KStandardAction::name (KStandardAction::Redo), m_actionRedo);
+    m_actionRedo->setShortcuts (KStandardShortcut::shortcut (KStandardShortcut::Redo));
+    connect (m_actionRedo, SIGNAL(triggered(bool)), this, SLOT (redo ()));
 
 
     m_actionUndo->setEnabled (false);

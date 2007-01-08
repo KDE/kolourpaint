@@ -31,6 +31,7 @@
 #include <QtDBus>
 
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <qlabel.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -54,8 +55,8 @@ void kpMainWindow::setupHelpMenuActions ()
     // from a digital camera in future versions of KolourPaint.  Hence
     // "Acquiring" is more appropriate.
     // -- Thurston
-    d->m_actionHelpTakingScreenshots = new KAction (i18n ("Acquiring &Screenshots"),
-        ac, "help_taking_screenshots");
+    d->m_actionHelpTakingScreenshots = ac->addAction ("help_taking_screenshots");
+    d->m_actionHelpTakingScreenshots->setText (i18n ("Acquiring &Screenshots"));
     connect (d->m_actionHelpTakingScreenshots, SIGNAL (triggered (bool)),
         SLOT (slotHelpTakingScreenshots ()));
 
@@ -184,8 +185,8 @@ void kpMainWindow::slotHelpTakingScreenshots ()
     QLabel *messageLabel = new QLabel (message, &dlg);
     messageLabel->setOpenExternalLinks(true);
 #ifdef __GNUC__
-#warning "not define into qlabel"    
-#endif    
+#warning "not define into qlabel"
+#endif
     //messageLabel->setNotifyClick (true);  // Fire urlClick() signal.
     connect (messageLabel, SIGNAL (urlClick (const QString &)),
              this, SLOT (slotHelpTakingScreenshotsFollowLink (const QString &)));

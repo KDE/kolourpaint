@@ -33,6 +33,7 @@
 #include <qsize.h>
 
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -94,53 +95,66 @@ void kpMainWindow::setupImageMenuActions ()
 {
     KActionCollection *ac = actionCollection ();
 
-    m_actionResizeScale = new KAction(i18n ("R&esize / Scale..."), ac, "image_resize_scale");
+    m_actionResizeScale = ac->addAction ("image_resize_scale");
+    m_actionResizeScale->setText (i18n ("R&esize / Scale..."));
     connect(m_actionResizeScale, SIGNAL(triggered(bool) ), SLOT (slotResizeScale ()));
     m_actionResizeScale->setShortcut(Qt::CTRL + Qt::Key_E);
 
-    m_actionCrop = new KAction(i18n ("Se&t as Image (Crop)"), ac, "image_crop");
+    m_actionCrop = ac->addAction ("image_crop");
+    m_actionCrop->setText (i18n ("Se&t as Image (Crop)"));
     connect(m_actionCrop, SIGNAL(triggered(bool) ), SLOT (slotCrop ()));
     m_actionCrop->setShortcut(Qt::CTRL + Qt::Key_T);
 
-    m_actionAutoCrop = new KAction(autoCropText (), ac, "image_auto_crop");
+    m_actionAutoCrop = ac->addAction ("image_auto_crop");
+    m_actionAutoCrop->setText (autoCropText ());
     connect(m_actionAutoCrop, SIGNAL(triggered(bool) ), SLOT (slotAutoCrop ()));
     m_actionAutoCrop->setShortcut(Qt::CTRL + Qt::Key_U);
 
-    m_actionFlip = new KAction(i18n ("&Flip..."), ac, "image_flip");
+    m_actionFlip = ac->addAction ("image_flip");
+    m_actionFlip->setText (i18n ("&Flip..."));
     connect(m_actionFlip, SIGNAL(triggered(bool) ), SLOT (slotFlip ()));
     m_actionFlip->setShortcut(Qt::CTRL + Qt::Key_F);
 
-    m_actionRotate = new KAction(i18n ("&Rotate..."), ac, "image_rotate");
+    m_actionRotate = ac->addAction ("image_rotate");
+    m_actionRotate->setText (i18n ("&Rotate..."));
     connect(m_actionRotate, SIGNAL(triggered(bool) ), SLOT (slotRotate ()));
     m_actionRotate->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_R);
 
-    m_actionRotate = new KAction(i18n ("Rotate 90 Degrees Counterclockwise"), ac, "image_rotate_270deg");
+    m_actionRotate = ac->addAction ("image_rotate_270deg");
+    m_actionRotate->setText (i18n ("Rotate 90 Degrees Counterclockwise"));
     connect(m_actionRotate, SIGNAL(triggered(bool) ), SLOT (slotRotate270 ()));
     m_actionRotate->setShortcut(Qt::CTRL + Qt::Key_L);
 
-    m_actionRotate = new KAction(i18n ("Rotate 90 Degrees Clockwise"), ac, "image_rotate_90deg");
+    m_actionRotate = ac->addAction ("image_rotate_90deg");
+    m_actionRotate->setText (i18n ("Rotate 90 Degrees Clockwise"));
     connect(m_actionRotate, SIGNAL(triggered(bool) ), SLOT (slotRotate90 ()));
     m_actionRotate->setShortcut(Qt::CTRL + Qt::Key_R);
 
-    m_actionSkew = new KAction(i18n ("S&kew..."), ac, "image_skew");
+    m_actionSkew = ac->addAction ("image_skew");
+    m_actionSkew->setText (i18n ("S&kew..."));
     connect(m_actionSkew, SIGNAL(triggered(bool) ), SLOT (slotSkew ()));
     m_actionSkew->setShortcut(Qt::CTRL + Qt::Key_K);
 
-    m_actionConvertToBlackAndWhite = new KAction(i18n ("Reduce to Mo&nochrome (Dithered)"), ac, "image_convert_to_black_and_white");
+    m_actionConvertToBlackAndWhite = ac->addAction ("image_convert_to_black_and_white");
+    m_actionConvertToBlackAndWhite->setText (i18n ("Reduce to Mo&nochrome (Dithered)"));
     connect(m_actionConvertToBlackAndWhite, SIGNAL(triggered(bool) ), SLOT (slotConvertToBlackAndWhite ()));
 
-    m_actionConvertToGrayscale = new KAction(i18n ("Reduce to &Grayscale"), ac, "image_convert_to_grayscale");
+    m_actionConvertToGrayscale = ac->addAction ("image_convert_to_grayscale");
+    m_actionConvertToGrayscale->setText (i18n ("Reduce to &Grayscale"));
     connect(m_actionConvertToGrayscale, SIGNAL(triggered(bool) ), SLOT (slotConvertToGrayscale ()));
 
-    m_actionInvertColors = new KAction(i18n ("&Invert Colors"), ac, "image_invert_colors");
+    m_actionInvertColors = ac->addAction ("image_invert_colors");
+    m_actionInvertColors->setText (i18n ("&Invert Colors"));
     connect(m_actionInvertColors, SIGNAL(triggered(bool) ), SLOT (slotInvertColors ()));
     m_actionInvertColors->setShortcut(Qt::CTRL + Qt::Key_I);
 
-    m_actionClear = new KAction(i18n ("C&lear"), ac, "image_clear");
+    m_actionClear = ac->addAction ("image_clear");
+    m_actionClear->setText (i18n ("C&lear"));
     connect(m_actionClear, SIGNAL(triggered(bool) ), SLOT (slotClear ()));
     m_actionClear->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
 
-    m_actionMoreEffects = new KAction(i18n ("&More Effects..."), ac, "image_more_effects");
+    m_actionMoreEffects = ac->addAction ("image_more_effects");
+    m_actionMoreEffects->setText (i18n ("&More Effects..."));
     connect(m_actionMoreEffects, SIGNAL(triggered(bool) ), SLOT (slotMoreEffects ()));
     m_actionMoreEffects->setShortcut(Qt::CTRL + Qt::Key_M);
 

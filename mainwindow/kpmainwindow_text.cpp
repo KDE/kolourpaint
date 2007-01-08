@@ -37,6 +37,7 @@
 #include <kicon.h>
 #include <klocale.h>
 #include <ktoggleaction.h>
+#include <kactioncollection.h>
 
 #include <kpcolortoolbar.h>
 #include <kpdefs.h>
@@ -52,28 +53,37 @@ void kpMainWindow::setupTextToolBarActions ()
 {
     KActionCollection *ac = actionCollection ();
 
-    m_actionTextFontFamily = new KFontAction (i18n ("Font Family"), KShortcut(),
-        this, SLOT (slotTextFontFamilyChanged ()), ac, "text_font_family");
-    m_actionTextFontSize = new KFontSizeAction (i18n ("Font Size"), KShortcut(),
-        this, SLOT (slotTextFontSizeChanged ()), ac, "text_font_size");
+    m_actionTextFontFamily = ac->add<KFontAction> ("text_font_family");
+    m_actionTextFontFamily->setText (i18n ("Font Family"));
+    connect (m_actionTextFontFamily, SIGNAL(triggered (int)),
+             this, SLOT (slotTextFontFamilyChanged ()));
 
-    m_actionTextBold = new KToggleAction (KIcon ("text_bold"),
-        i18n ("Bold"), ac, "text_bold");
+    m_actionTextFontSize = ac->add<KFontSizeAction> ("text_font_size");
+    m_actionTextFontSize->setText (i18n ("Font Size"));
+    connect (m_actionTextFontSize, SIGNAL(fontSizeChanged (int)),
+             this, SLOT (slotTextFontSizeChanged ()));
+
+    m_actionTextBold = ac->add<KToggleAction> ("text_bold");
+    m_actionTextBold->setIcon (KIcon ("text_bold"));
+    m_actionTextBold->setText (i18n ("Bold"));
     connect (m_actionTextBold, SIGNAL (triggered (bool)),
         SLOT (slotTextBoldChanged ()));
 
-    m_actionTextItalic = new KToggleAction (KIcon ("text_italic"),
-        i18n ("Italic"), ac, "text_italic");
+    m_actionTextItalic = ac->add<KToggleAction> ("text_italic");
+    m_actionTextItalic->setIcon (KIcon ("text_italic"));
+    m_actionTextItalic->setText (i18n ("Italic"));
     connect (m_actionTextItalic, SIGNAL (triggered (bool)),
         SLOT (slotTextItalicChanged ()));
 
-    m_actionTextUnderline = new KToggleAction (KIcon ("text_under"),
-        i18n ("Underline"), ac, "text_underline");
+    m_actionTextUnderline = ac->add<KToggleAction> ("text_underline");
+    m_actionTextUnderline->setIcon (KIcon ("text_under"));
+    m_actionTextUnderline->setText (i18n ("Underline"));
     connect (m_actionTextUnderline, SIGNAL (triggered (bool)),
         SLOT (slotTextUnderlineChanged ()));
 
-    m_actionTextStrikeThru = new KToggleAction (KIcon ("text_strike"),
-        i18n ("Strike Through"), ac, "text_strike_thru");
+    m_actionTextStrikeThru = ac->add<KToggleAction> ("text_strike_thru");
+    m_actionTextStrikeThru->setIcon (KIcon ("text_strike"));
+    m_actionTextStrikeThru->setText (i18n ("Strike Through"));
     connect (m_actionTextStrikeThru, SIGNAL (triggered (bool)),
         SLOT (slotTextStrikeThruChanged ()));
 

@@ -38,6 +38,7 @@
 #include <kmessagebox.h>
 #include <kstandardaction.h>
 #include <ktogglefullscreenaction.h>
+#include <kactioncollection.h>
 
 #include <kpdefs.h>
 #include <kpdocument.h>
@@ -58,11 +59,12 @@ void kpMainWindow::setupSettingsMenuActions ()
     createStandardStatusBarAction ();
 
 
-    m_actionFullScreen = KStandardAction::fullScreen (this, SLOT (slotFullScreen ()), ac,
-                                                 this/*window*/);
+    m_actionFullScreen = KStandardAction::fullScreen (this, SLOT (slotFullScreen ()),
+                                                      this/*window*/, ac);
 
 
-    m_actionShowPath = new KToggleAction(i18n ("Show &Path"), ac, "settings_show_path");
+    m_actionShowPath = ac->add<KToggleAction> ("settings_show_path");
+    m_actionShowPath->setText (i18n ("Show &Path"));
     connect(m_actionShowPath, SIGNAL(triggered(bool) ), SLOT (slotShowPathToggled ()));
     m_actionShowPath->setCheckedState (KGuiItem(i18n ("Hide &Path")));
     slotEnableSettingsShowPath ();
