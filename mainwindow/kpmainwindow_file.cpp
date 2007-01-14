@@ -174,12 +174,8 @@ void kpMainWindow::addRecentURL (const KUrl &url)
              it++)
         {
             kpMainWindow *mw = dynamic_cast <kpMainWindow *> (*it);
+            Q_ASSERT (mw);
 
-            if (!mw)
-            {
-                kError () << "kpMainWindow::addRecentURL() given fake kpMainWindow: " << (*it) << endl;
-                continue;
-            }
         #if DEBUG_KP_MAIN_WINDOW
             kDebug () << "\t\tmw=" << mw << endl;
         #endif
