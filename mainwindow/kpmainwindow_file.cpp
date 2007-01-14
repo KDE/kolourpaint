@@ -133,8 +133,20 @@ void kpMainWindow::enableFileMenuDocumentActions (bool enable)
 
 
 // private
-void kpMainWindow::addRecentURL (const KUrl &url)
+void kpMainWindow::addRecentURL (const KUrl &url_)
 {
+    // HACK: KRecentFilesAction::loadEntries() clears the KRecentFilesAction::d->m_urls
+    //       map.
+    //
+    //       So afterwards, the URL ref, our method is given, points to an
+    //       element in this now-cleared map (see KRecentFilesAction::urlSelected(QAction*)).
+    //       Accessing it would result in a crash.
+    //
+    //       To avoid the crash, make a copy of it before calling
+    //       loadEntries() and use this copy, instead of the to-be-dangling
+    //       ref.
+    const KUrl url = url_;
+
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::addRecentURL(" << url << ")" << endl;
 #endif
