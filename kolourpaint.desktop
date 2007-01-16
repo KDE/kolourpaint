@@ -4,6 +4,7 @@ Encoding=UTF-8
 Name=KolourPaint
 Name[x-test]=xxKolourPaintxx
 GenericName=Paint Program
+GenericName[el]=Πρόγραμμα ζωγραφικής
 GenericName[fr]=Petit programme de dessin
 GenericName[x-test]=xxPaint Programxx
 Icon=kolourpaint
