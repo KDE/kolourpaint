@@ -175,6 +175,10 @@ public:
     void setPixmap (const QPixmap &pixmap);
     void setPixmap (bool ofSelection, const QPixmap &pixmap);
 
+    //
+    // Selections
+    //
+
 public:
     kpSelection *selection () const;
     void setSelection (const kpSelection &selection);
@@ -246,7 +250,7 @@ private:
     // There is no need to maintain binary compatibility at this stage.
     // The d-pointer is just so that you can experiment without recompiling
     // the kitchen sink.
-    class kpDocumentPrivate *d;
+    struct kpDocumentPrivate *d;
 };
 
 
