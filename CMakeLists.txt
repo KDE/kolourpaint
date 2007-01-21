@@ -17,6 +17,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/imagelib
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/imagelib/effects
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/imagelib/transforms
+    ${CMAKE_SOURCE_DIR}/kolourpaint/document
     ${CMAKE_SOURCE_DIR}/kolourpaint/generic
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects
@@ -110,6 +111,11 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/imagelib/transforms/kpTransformSkewDialog.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/kpcolorsimilaritydialog.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/dialogs/kpDocumentSaveOptionsPreviewDialog.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/document/kpDocument.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/document/kpDocument_Open.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/document/kpDocument_Save.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/document/kpDocumentSaveOptions.cpp
+    ${CMAKE_SOURCE_DIR}/kolourpaint/document/kpDocument_Selection.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/generic/kpSetOverrideCursorSaver.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/generic/kpwidgetmapper.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/effects/kpEffectBalance.cpp
@@ -129,8 +135,6 @@ set(kolourpaint_SRCS
     ${CMAKE_SOURCE_DIR}/kolourpaint/imagelib/transforms/kptoolcrop.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/kolourpaint.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/kpcommandhistory.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/kpdocument.cpp
-    ${CMAKE_SOURCE_DIR}/kolourpaint/kpdocumentsaveoptions.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/kppixmapfx.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/kpselection.cpp
     ${CMAKE_SOURCE_DIR}/kolourpaint/kpselectiondrag.cpp
