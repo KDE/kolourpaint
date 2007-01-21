@@ -490,6 +490,33 @@ int kpSelection::height () const
     return boundingRect ().height ();
 }
 
+// protected
+QRegion kpSelection::maskRegion () const
+{
+    // OPT: QRegion is probably incredibly slow - cache
+    // We can't use the m_pixmap (if avail) and get the transparency of
+    // the pixel at that point as it may be transparent but still within the
+    // border
+    switch (m_type)
+    {
+    case kpSelection::Rectangle:
+    case kpSelection::Text:
+        return QRegion (m_rect, QRegion::Rectangle);
+        
+    case kpSelection::Ellipse:
+        return QRegion (m_rect, QRegion::Ellipse);
+        
+    case kpSelection::Points:
+        // TODO: make this always include the border
+        //       (draw up a rect sel in this mode to see what I mean)
+        return QRegion (m_points, Qt::OddEvenFill);
+        
+    default:
+        Q_ASSERT (!"unknown type");
+        return QRegion ();
+    }
+}
+
 // public
 bool kpSelection::contains (const QPoint &point) const
 {
@@ -505,21 +532,14 @@ bool kpSelection::contains (const QPoint &point) const
     if (!rect.contains (point))
         return false;
 
-    // OPT: QRegion is probably incredibly slow - cache
-    // We can't use the m_pixmap (if avail) and get the transparency of
-    // the pixel at that point as it may be transparent but still within the
-    // border
     switch (m_type)
     {
     case kpSelection::Rectangle:
     case kpSelection::Text:
         return true;
     case kpSelection::Ellipse:
-        return QRegion (m_rect, QRegion::Ellipse).contains (point);
     case kpSelection::Points:
-        // TODO: make this always include the border
-        //       (draw up a rect sel in this mode to see what I mean)
-        return QRegion (m_points, Qt::OddEvenFill).contains (point);
+        return maskRegion ().contains (point);
     default:
         return false;
     }
@@ -529,6 +549,42 @@ bool kpSelection::contains (const QPoint &point) const
 bool kpSelection::contains (int x, int y)
 {
     return contains (QPoint (x, y));
+}
+
+
+// public
+kpImage kpSelection::givenImageMaskedByShape (const kpImage &image) const
+{
+#if DEBUG_KP_SELECTION || 1
+    kDebug () << "kpSelection::givenImageMaskedByShape() boundingRect="
+              << boundingRect () << endl;
+#endif
+    Q_ASSERT (image.width () == width () && image.height () == height ());
+
+    if (isRectangular ())
+        return image;
+        
+
+    const QRegion mRegion = maskRegion ().translated (-topLeft ());
+
+    kpImage retImage (width (), height ());
+    kpPixmapFX::ensureTransparentAt (&retImage, retImage.rect ());
+
+    // OPT: Hopelessly inefficent due to function call overhead.
+    //      kpPixmapFX should have a function that does this.
+    foreach (QRect r, mRegion.rects ())
+    {
+    #if DEBUG_KP_SELECTION || 1
+        kDebug () << "\tcopy rect=" << r << endl;
+    #endif
+        // OPT: Hopeless inefficient.  If kpPixmapFX::setPixmapAt() was
+        //      more flexible, we wouldn't need to call getPixmapAt().
+        const kpImage srcPixmap = kpPixmapFX::getPixmapAt (image, r);
+        
+        kpPixmapFX::setPixmapAt (&retImage, r.topLeft (), srcPixmap);
+    }
+
+    return retImage;
 }
 
 
@@ -587,7 +643,6 @@ void kpSelection::setPixmap (const QPixmap &pixmap)
 
     calculateTransparencyMask ();
 }
-
 
 void kpSelection::fill (const kpColor &color)
 {

@@ -190,7 +190,7 @@ public:
     void setSelection (const kpSelection &selection);
 
     // TODO: this always returns opaque pixmap - need transparent ver
-    QPixmap getSelectedPixmap (const QBitmap &maskBitmap = QBitmap ()) const;
+    QPixmap getSelectedPixmap () const;
 
     bool selectionPullFromDocument (const kpColor &backgroundColor);
     bool selectionDelete ();

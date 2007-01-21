@@ -191,7 +191,7 @@ void kpDocument::setSelection (const kpSelection &selection)
 }
 
 // public
-QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
+QPixmap kpDocument::getSelectedPixmap () const
 {
     kpSelection *sel = selection ();
     Q_ASSERT (sel);
@@ -204,48 +204,9 @@ QPixmap kpDocument::getSelectedPixmap (const QBitmap &maskBitmap_) const
     const QRect boundingRect = sel->boundingRect ();
     Q_ASSERT (boundingRect.isValid ());
 
-
-    QBitmap maskBitmap = maskBitmap_;
-    if (maskBitmap.isNull () &&
-        !sel->isRectangular ())
-    {
-        maskBitmap = sel->maskForOwnType ();
-        Q_ASSERT (!maskBitmap.isNull ());
-    }
-
-
-    QPixmap selPixmap = getPixmapAt (boundingRect);
-
-    if (!maskBitmap.isNull ())
-    {
-        if (selPixmap.mask ().isNull ())
-            selPixmap.setMask (kpPixmapFX::getNonNullMask (selPixmap));
-
-        // Dest Src = Result
-        // -----------------
-        //  0    0      0
-        //  0    1      0
-        //  1    0      0
-        //  1    1      1
-        //
-        // Dest = selMaskBitmap (rectangular pixmap cutout -
-        //        may have transparent pixels so can't blindly opaque
-        //        bits according to selection shape - must use AND)
-        // Src = maskBitmap (selection shape)
-
-        QPixmap maskPixmap (maskBitmap.width (), maskBitmap.height ());
-        maskPixmap.fill (Qt::yellow/*arbitrary since source pixels ignored*/);
-        maskPixmap.setMask (maskBitmap);  // Mask is not ignored though.
-
-//selPixmap.save ("a.png", "PNG");
-        QPainter painter (&selPixmap);
-        painter.setCompositionMode (QPainter::CompositionMode_DestinationIn);
-        painter.drawPixmap (QPoint (0, 0), maskPixmap);
-        painter.end ();
-//selPixmap.save ("b.png", "PNG");
-    }
-
-    return selPixmap;
+    // TODO: This is very slow.  Image / More Effects ... calls us twice
+    //       unnecessarily.
+    return sel->givenImageMaskedByShape (getPixmapAt (boundingRect));
 }
 
 // public
@@ -264,17 +225,10 @@ bool kpDocument::selectionPullFromDocument (const kpColor &backgroundColor)
 
 
     //
-    // Figure out mask for non-rectangular selections
-    //
-
-    QBitmap maskBitmap = sel->maskForOwnType (true/*return null bitmap for rectangular*/);
-
-
-    //
     // Get selection pixmap from document
     //
 
-    QPixmap selPixmap = getSelectedPixmap (maskBitmap);
+    QPixmap selPixmap = getSelectedPixmap ();
 
     if (vm)
         vm->setQueueUpdates ();

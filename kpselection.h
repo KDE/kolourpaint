@@ -41,6 +41,7 @@
 #include <qstring.h>
 
 #include <kpcolor.h>
+#include <kpimage.h>
 #include <kppixmapfx.h>
 #include <kpselectiontransparency.h>
 #include <kptextstyle.h>
@@ -125,11 +126,28 @@ public:
     int height () const;
 
 
+protected:
+    // Returns the region corresponding to the shape of the selection
+    // e.g. elliptical region for an elliptical selection.
+    //
+    // Very slow.
+    QRegion maskRegion () const;
+    
+public:
+
     // (for non-rectangular selections, may return false even if
     //  kpView::onSelectionResizeHandle())
     bool contains (const QPoint &point) const;
     bool contains (int x, int y);
 
+
+    // Ignoring the current pixmap(), returns the given <image> with the
+    // pixels outside of the selection's shape set to transparent.
+    //
+    // Very slow.
+    //
+    // ASSUMPTION: The image has the same dimensions as the selection.
+    kpImage givenImageMaskedByShape (const kpImage &image) const;
 
     // (Avoid using for text selections since text selection may
     //  require a background for antialiasing purposes - use paint()
