@@ -46,6 +46,7 @@
 #include <kptooltoolbar.h>
 #include <kptoolwidgetopaqueortransparent.h>
 #include <kpzoomedview.h>
+#include <kconfiggroup.h>
 
 
 // private

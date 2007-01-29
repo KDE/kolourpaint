@@ -41,6 +41,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
+#include <kconfiggroup.h>
 #include <kpcolortoolbar.h>
 #include <kpcommandhistory.h>
 #include <kpdefs.h>
@@ -873,4 +874,3 @@ void kpMainWindow::slotDocumentRestored ()
 
 
 #include <kpmainwindow.moc>
-

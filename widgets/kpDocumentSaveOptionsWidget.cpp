@@ -50,6 +50,7 @@
 #include <klocale.h>
 #include <knuminput.h>
 #include <kpushbutton.h>
+#include <kconfiggroup.h>
 
 #include <kpdefs.h>
 #include <kpdocument.h>

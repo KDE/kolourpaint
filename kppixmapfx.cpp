@@ -54,6 +54,7 @@
 #include <kpdefs.h>
 #include <kpselection.h>
 #include <kptool.h>
+#include <kconfiggroup.h>
 
 
 //

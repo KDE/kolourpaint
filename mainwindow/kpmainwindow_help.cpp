@@ -40,6 +40,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kshortcut.h>
+#include <kconfiggroup.h>
 
 
 // private

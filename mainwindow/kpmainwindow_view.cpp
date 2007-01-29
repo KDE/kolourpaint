@@ -55,6 +55,7 @@
 #include <kpzoomedview.h>
 #include <kpzoomedthumbnailview.h>
 #include <kglobal.h>
+#include <kconfiggroup.h>
 
 
 // private

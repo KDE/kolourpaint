@@ -44,6 +44,7 @@
 #include <kpdocument.h>
 #include <kptoolaction.h>
 #include <kptooltoolbar.h>
+#include <kconfiggroup.h>
 
 
 // private

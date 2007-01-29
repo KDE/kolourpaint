@@ -69,6 +69,7 @@
 #include <kpTransformResizeScaleCommand.h>
 #include <kpviewscrollablecontainer.h>
 #include <kpzoomedview.h>
+#include <kconfiggroup.h>
 
 
 // private

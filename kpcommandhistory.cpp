@@ -46,6 +46,7 @@
 #include <kstandardaction.h>
 #include <ktoolbarpopupaction.h>
 #include <kactioncollection.h>
+#include <kconfiggroup.h>
 
 #include <kpdefs.h>
 #include <kpdocument.h>

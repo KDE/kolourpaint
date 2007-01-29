@@ -44,6 +44,7 @@
 #include <kimageeffect.h>
 #include <klocale.h>
 #include <kvbox.h>
+#include <kconfiggroup.h>
 
 #include <kpdefs.h>
 #include <kpEffectFlatten.h>
@@ -191,4 +192,3 @@ void kpEffectFlattenWidget::slotEnableChanged (bool enable)
 
 
 #include <kpEffectFlattenWidget.moc>
-

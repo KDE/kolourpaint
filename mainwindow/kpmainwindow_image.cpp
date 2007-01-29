@@ -66,6 +66,7 @@
 #include <kpTransformSkewDialog.h>
 #include <kpviewmanager.h>
 #include <kglobal.h>
+#include <kconfiggroup.h>
 
 
 // private

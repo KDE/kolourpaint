@@ -39,6 +39,7 @@
 #include <kglobal.h>
 
 #include <kpdefs.h>
+#include <kconfiggroup.h>
 
 
 struct kpDocumentSaveOptionsPrivate

@@ -46,6 +46,7 @@
 #include <kglobal.h>
 #include <kglobalsettings.h>
 #include <kicontheme.h>
+#include <kconfiggroup.h>
 
 #include <kpbug.h>
 #include <kpdefs.h>
@@ -629,5 +630,3 @@ void kpToolToolBar::addButton (QAbstractButton *button, Qt::Orientation o, int n
 
 
 #include <kptooltoolbar.moc>
-
-

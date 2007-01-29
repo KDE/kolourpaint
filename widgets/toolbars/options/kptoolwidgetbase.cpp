@@ -43,6 +43,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
+#include <kconfiggroup.h>
 
 #include <kpdefs.h>
 #include <kpEffectInvert.h>

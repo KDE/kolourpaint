@@ -60,6 +60,7 @@
 #include <kglobal.h>
 #include <QDBusInterface>
 #include <QDesktopWidget>
+#include <kconfiggroup.h>
 
 // private
 void kpMainWindow::setupFileMenuActions ()
@@ -70,7 +71,7 @@ void kpMainWindow::setupFileMenuActions ()
     m_actionOpen = KStandardAction::open (this, SLOT (slotOpen ()), ac);
 
     m_actionOpenRecent = KStandardAction::openRecent (this, SLOT (slotOpenRecent (const KUrl &)), ac);
-    m_actionOpenRecent->loadEntries (KGlobal::config ());
+    m_actionOpenRecent->loadEntries (KGlobal::config ().data());
 
     m_actionSave = KStandardAction::save (this, SLOT (slotSave ()), ac);
     m_actionSaveAs = KStandardAction::saveAs (this, SLOT (slotSaveAs ()), ac);
@@ -154,7 +155,7 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
         return;
 
 
-    KConfig *cfg = KGlobal::config ();
+    KSharedConfig::Ptr cfg = KGlobal::config();
 
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
     // realize what other processes have done e.g. Settings / Show Path
@@ -162,11 +163,11 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
 
     // HACK: Something might have changed interprocess.
     // If we could PROPAGATE: interprocess, then this wouldn't be required.
-    m_actionOpenRecent->loadEntries (cfg);
+    m_actionOpenRecent->loadEntries (cfg.data());
 
     m_actionOpenRecent->addUrl (url);
 
-    m_actionOpenRecent->saveEntries (cfg);
+    m_actionOpenRecent->saveEntries (cfg.data());
     cfg->sync ();
 
 #if DEBUG_KP_MAIN_WINDOW
