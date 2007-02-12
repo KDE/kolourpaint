@@ -812,7 +812,7 @@ static void populatePopupMenu (KMenu *popupMenu,
     {
         // TODO: maybe have a scrollview show all the items instead
         KPopupTitle *title = new KPopupTitle (popupMenu);
-        title->setTitle (i18np ("%n more item", "%n more items",
+        title->setTitle (i18np ("%1 more item", "%1 more items",
                                commandList.size () - i));
 
         popupMenu->insertItem (title);

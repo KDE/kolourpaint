@@ -148,7 +148,7 @@ void kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize (const QPixmap &pi
                << endl;
 #endif
 
-    m_fileSizeLabel->setText (i18np ("1 byte (approx. %1%)", "%n bytes (approx. %1%)",
+    m_fileSizeLabel->setText (i18np ("1 byte (approx. %2%)", "%1 bytes (approx. %2%)",
                                      m_fileSize, percent));
 }
 
