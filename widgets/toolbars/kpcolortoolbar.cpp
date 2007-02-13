@@ -535,14 +535,14 @@ void kpColorCells::setOrientation (Qt::Orientation o)
     kDebug () << "kpColorCells::setOrientation(): r=" << r << " c=" << c << endl;
 #endif
 
-    setNumRows (r);
-    setNumCols (c);
+    setRowCount(r);
+    setColumnCount(c);
 
     setCellWidth (26);
     setCellHeight (26);
 
-    setFixedSize (numCols () * cellWidth () + frameWidth () * 2,
-                  numRows () * cellHeight () + frameWidth () * 2);
+    setFixedSize (columnCount () * cellWidth () + frameWidth () * 2,
+                  rowCount  () * cellHeight () + frameWidth () * 2);
 
 /*
     kDebug () << "\tlimits: array=" << sizeof (colors) / sizeof (colors [0])
@@ -626,7 +626,7 @@ void kpColorCells::paintCell (QPainter *painter, int row, int col)
 
     if (!isEnabled ())
     {
-        cellNo = row * numCols () + col;
+        cellNo = row * columnCount () + col;
 
         // make all cells 3D (so that disabled palette doesn't look flat)
         setShading (true);
