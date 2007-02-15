@@ -40,6 +40,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kurldrag.h>
+#include <kscan.h>
 
 #include <kpcolortoolbar.h>
 #include <kpcommandhistory.h>
@@ -187,6 +188,7 @@ void kpMainWindow::init ()
     m_statusBarCreated = false;
     m_settingSelectionTransparency = 0;
     m_settingTextStyle = 0;
+    m_scanDialog = 0;
 
     m_docResizeToBeCompleted = false;
 

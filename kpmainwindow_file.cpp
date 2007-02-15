@@ -48,6 +48,7 @@
 #include <kprinter.h>
 #include <kstdaccel.h>
 #include <kstdaction.h>
+#include <kscan.h>
 
 #include <kpdefs.h>
 #include <kpdocument.h>
@@ -55,7 +56,6 @@
 #include <kptool.h>
 #include <kpview.h>
 #include <kpviewmanager.h>
-
 
 // private
 void kpMainWindow::setupFileMenuActions ()
@@ -73,6 +73,9 @@ void kpMainWindow::setupFileMenuActions ()
 
     m_actionExport = new KAction (i18n ("E&xport..."), 0,
         this, SLOT (slotExport ()), ac, "file_export");
+
+    m_actionScan = new KAction (i18n ("Scan..."), 0,
+        this, SLOT (slotScan ()), ac, "file_scan");
 
     //m_actionRevert = KStdAction::revert (this, SLOT (slotRevert ()), ac);
     m_actionReload = new KAction (i18n ("Reloa&d"), KStdAccel::reload (),
@@ -678,6 +681,46 @@ bool kpMainWindow::slotExport ()
     return true;
 }
 
+// private slot
+void kpMainWindow::slotScan ()
+{
+    if ( !m_scanDialog )
+    {
+        m_scanDialog = KScanDialog::getScanDialog( this, "scandialog", true );
+        if ( !m_scanDialog ) // no scanning support installed?
+            return;
+ 
+       connect( m_scanDialog, SIGNAL( finalImage( const QImage&, int )),
+                SLOT( slotScanned( const QImage&, int ) ));
+    }
+
+    if ( m_scanDialog->setup() ) // only if scanner configured/available
+        m_scanDialog->show();
+}
+
+// private slot
+void kpMainWindow::slotScanned( const QImage &image, int )
+{
+    QApplication::setOverrideCursor (Qt::waitCursor);
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+    kpDocument *doc = new kpDocument (image.width(), image.height(), this);
+    doc->setPixmap (image);
+
+    if (shouldOpenInNewWindow ())
+    {
+        kpMainWindow *win = new kpMainWindow (doc);
+        win->show ();
+    }
+    else
+        setDocument (doc);
+
+    QApplication::restoreOverrideCursor ();
+
+    m_scanDialog->hide();
+}
 
 // private slot
 void kpMainWindow::slotEnableReload ()

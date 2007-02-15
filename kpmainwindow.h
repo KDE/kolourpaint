@@ -61,6 +61,7 @@ class KToolBar;
 class KPrinter;
 class KRecentFilesAction;
 class KToggleFullScreenAction;
+class KScanDialog;
 
 class kpColor;
 class kpColorToolBar;
@@ -280,7 +281,7 @@ private:
 
     KAction *m_actionNew, *m_actionOpen;
     KRecentFilesAction *m_actionOpenRecent;
-    KAction *m_actionSave, *m_actionSaveAs, *m_actionExport,
+    KAction *m_actionSave, *m_actionSaveAs, *m_actionExport, *m_actionScan,
             *m_actionReload,
             *m_actionPrint, *m_actionPrintPreview,
             *m_actionMail,
@@ -290,6 +291,7 @@ private:
     KURL m_lastExportURL;
     kpDocumentSaveOptions m_lastExportSaveOptions;
     bool m_exportFirstTime;
+    KScanDialog *m_scanDialog;
 
 private:
     bool shouldOpenInNewWindow () const;
@@ -298,6 +300,7 @@ private:
 
 private slots:
     void slotNew ();
+    void slotScanned( const QImage &image, int );
 
 private:
     QSize defaultDocSize () const;
@@ -334,6 +337,7 @@ private slots:
     bool slotSaveAs ();
 
     bool slotExport ();
+    void slotScan ();
 
     void slotEnableReload ();
     bool slotReload ();
