@@ -474,7 +474,7 @@ kpColorCells::kpColorCells (QWidget *parent,
     setAcceptDrags (true);
 
     connect (this, SIGNAL (colorDoubleClicked (int)),
-             SLOT (slotColorDoubleClicked (int)));
+             SLOT (slotColorDoubleClicked (int, QColor)));
 
     if (!ownColorsInitialised)
     {
@@ -538,11 +538,16 @@ void kpColorCells::setOrientation (Qt::Orientation o)
     setRowCount(r);
     setColumnCount(c);
 
+#ifdef __GNUC__
+#warning "Port to KColorCells API changes"
+#endif
+#if 0
     setCellWidth (26);
     setCellHeight (26);
+#endif
 
-    setFixedSize (columnCount () * cellWidth () + frameWidth () * 2,
-                  rowCount  () * cellHeight () + frameWidth () * 2);
+    setFixedSize (columnCount () * columnWidth (0) + frameWidth () * 2,
+                  rowCount  () * rowHeight (0) + frameWidth () * 2);
 
 /*
     kDebug () << "\tlimits: array=" << sizeof (colors) / sizeof (colors [0])
@@ -621,6 +626,10 @@ void kpColorCells::dropEvent (QDropEvent *e)
 // virtual protected
 void kpColorCells::paintCell (QPainter *painter, int row, int col)
 {
+#ifdef __GNUC__
+#warning "Port to KColorCells API changes"
+#endif
+#if 0
     QColor oldColor;
     int cellNo = -1;
 
@@ -647,6 +656,7 @@ void kpColorCells::paintCell (QPainter *painter, int row, int col)
         KColorCells::colors [cellNo] = oldColor;
         setShading (false);
     }
+#endif
 }
 
 // protected virtual [base QWidget]
@@ -678,9 +688,9 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
             m_mouseButton = 1;
     }
 
-    connect (this, SIGNAL (colorSelected (int)), this, SLOT (slotColorSelected (int)));
+    connect (this, SIGNAL (colorSelected (int, QColor)), this, SLOT (slotColorSelected (int)));
     KColorCells::mouseReleaseEvent (e);
-    disconnect (this, SIGNAL (colorSelected (int)), this, SLOT (slotColorSelected (int)));
+    disconnect (this, SIGNAL (colorSelected (int, QColor)), this, SLOT (slotColorSelected (int)));
 
 #if DEBUG_KP_COLOR_TOOL_BAR
     kDebug () << "kpColorCells::mouseReleaseEvent() setting m_mouseButton back to -1" << endl;
