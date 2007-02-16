@@ -3,6 +3,7 @@ Encoding=UTF-8
 
 Name=KolourPaint
 Name[nb]=KPaint
+Name[ne]=रङ पेन्ट
 Name[pa]=ਕੇ-ਰੰਗ-ਪੇਂਟ
 Name[sv]=Kolourpaint
 Name[ta]=நிற பெயின்ட் 
@@ -42,6 +43,7 @@ GenericName[ms]=Program Mewarna
 GenericName[mt]=Programm sempliċi tat-tpinġija
 GenericName[nb]=Maleprogram
 GenericName[nds]=Maalprogramm
+GenericName[ne]=पेन्ट कार्यक्रम
 GenericName[nl]=Tekenprogramma
 GenericName[nn]=Måleprogram
 GenericName[nso]=Lenaneo la Paint
