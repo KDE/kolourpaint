@@ -34,7 +34,7 @@
 #include <qpixmap.h>
 #include <qstring.h>
 
-#include <kconfig.h>
+#include <ksharedconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 
@@ -245,25 +245,25 @@ bool kpDocumentSaveOptions::qualityIsInvalid () const
 
 
 // public static
-QString kpDocumentSaveOptions::defaultMimeType (KConfigBase *config)
+QString kpDocumentSaveOptions::defaultMimeType (const KConfigGroup &config)
 {
-    return config->readEntry (kpSettingForcedMimeType,
+    return config.readEntry (kpSettingForcedMimeType,
                               QString::fromLatin1 ("image/png"));
 }
 
 // public static
-void kpDocumentSaveOptions::saveDefaultMimeType (KConfigBase *config,
+void kpDocumentSaveOptions::saveDefaultMimeType (KConfigGroup &config,
                                                  const QString &mimeType)
 {
-    config->writeEntry (kpSettingForcedMimeType, mimeType);
+    config.writeEntry (kpSettingForcedMimeType, mimeType);
 }
 
 
 // public static
-int kpDocumentSaveOptions::defaultColorDepth (KConfigBase *config)
+int kpDocumentSaveOptions::defaultColorDepth (const KConfigGroup &config)
 {
     int colorDepth =
-        config->readEntry (kpSettingForcedColorDepth, -1);
+        config.readEntry (kpSettingForcedColorDepth, -1);
 
     if (colorDepthIsInvalid (colorDepth))
     {
@@ -275,29 +275,29 @@ int kpDocumentSaveOptions::defaultColorDepth (KConfigBase *config)
 }
 
 // public static
-void kpDocumentSaveOptions::saveDefaultColorDepth (KConfigBase *config, int colorDepth)
+void kpDocumentSaveOptions::saveDefaultColorDepth (KConfigGroup &config, int colorDepth)
 {
-    config->writeEntry (kpSettingForcedColorDepth, colorDepth);
+    config.writeEntry (kpSettingForcedColorDepth, colorDepth);
 }
 
 
 // public static
-int kpDocumentSaveOptions::defaultDither (KConfigBase *config)
+int kpDocumentSaveOptions::defaultDither (const KConfigGroup &config)
 {
-    return config->readEntry (kpSettingForcedDither, initialDither ());
+    return config.readEntry (kpSettingForcedDither, initialDither ());
 }
 
 // public static
-void kpDocumentSaveOptions::saveDefaultDither (KConfigBase *config, bool dither)
+void kpDocumentSaveOptions::saveDefaultDither (KConfigGroup &config, bool dither)
 {
-    config->writeEntry (kpSettingForcedDither, dither);
+    config.writeEntry (kpSettingForcedDither, dither);
 }
 
 
 // public static
-int kpDocumentSaveOptions::defaultQuality (KConfigBase *config)
+int kpDocumentSaveOptions::defaultQuality (const KConfigGroup &config)
 {
-    int val = config->readEntry (kpSettingForcedQuality, -1);
+    int val = config.readEntry (kpSettingForcedQuality, -1);
     if (qualityIsInvalid (val))
         val = -1;
 
@@ -305,14 +305,14 @@ int kpDocumentSaveOptions::defaultQuality (KConfigBase *config)
 }
 
 // public static
-void kpDocumentSaveOptions::saveDefaultQuality (KConfigBase *config, int quality)
+void kpDocumentSaveOptions::saveDefaultQuality (KConfigGroup &config, int quality)
 {
-    config->writeEntry (kpSettingForcedQuality, quality);
+    config.writeEntry (kpSettingForcedQuality, quality);
 }
 
 
 // public static
-kpDocumentSaveOptions kpDocumentSaveOptions::defaultDocumentSaveOptions (KConfigBase *config)
+kpDocumentSaveOptions kpDocumentSaveOptions::defaultDocumentSaveOptions (const KConfigGroup &config)
 {
     kpDocumentSaveOptions saveOptions;
     saveOptions.setMimeType (defaultMimeType (config));
@@ -328,7 +328,7 @@ kpDocumentSaveOptions kpDocumentSaveOptions::defaultDocumentSaveOptions (KConfig
 }
 
 // public static
-bool kpDocumentSaveOptions::saveDefaultDifferences (KConfigBase *config,
+bool kpDocumentSaveOptions::saveDefaultDifferences (KConfigGroup &config,
                                                     const kpDocumentSaveOptions &oldDocInfo,
                                                     const kpDocumentSaveOptions &newDocInfo)
 {
@@ -442,15 +442,15 @@ int kpDocumentSaveOptions::mimeTypeMaximumColorDepth (const QString &mimeType)
     QStringList defaultList;
 
     // SYNC: update mime info here
-    
+
     // Greyscale actually (unenforced since depth not set to configurable)
     defaultList << QLatin1String ("image/x-eps:32");
-    
+
     defaultList << QLatin1String ("image/x-portable-bitmap:1");
-    
+
     // Greyscale actually (unenforced since depth not set to configurable)
     defaultList << QLatin1String ("image/x-portable-greymap:8");
-    
+
     defaultList << QLatin1String ("image/x-xbm:1");
 
     const QStringList mimeTypeList = mimeTypesSupportingProperty (
@@ -490,11 +490,11 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableColorDepth (const QString &mi
     defaultMimeTypes << QLatin1String ("image/png");
     defaultMimeTypes << QLatin1String ("image/x-bmp");
     defaultMimeTypes << QLatin1String ("image/x-pcx");
-    
+
     // TODO: Only 1, 24 not 8; Qt only sees 32 but "file" cmd realises
     //       it's either 1 or 24.
     defaultMimeTypes << QLatin1String ("image/x-rgb");
-  
+
     // TODO: Only 8 and 24 - no 1.
     defaultMimeTypes << QLatin1String ("image/x-xpm");
 

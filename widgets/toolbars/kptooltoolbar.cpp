@@ -41,7 +41,7 @@
 #include <qtooltip.h>
 #include <qwidget.h>
 
-#include <kconfig.h>
+#include <ksharedconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>

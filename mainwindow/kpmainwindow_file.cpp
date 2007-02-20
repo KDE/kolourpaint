@@ -71,7 +71,7 @@ void kpMainWindow::setupFileMenuActions ()
     m_actionOpen = KStandardAction::open (this, SLOT (slotOpen ()), ac);
 
     m_actionOpenRecent = KStandardAction::openRecent (this, SLOT (slotOpenRecent (const KUrl &)), ac);
-    m_actionOpenRecent->loadEntries (KGlobal::config ().data());
+    m_actionOpenRecent->loadEntries (KGlobal::config ()->group( QString() ) );
 
     m_actionSave = KStandardAction::save (this, SLOT (slotSave ()), ac);
     m_actionSaveAs = KStandardAction::saveAs (this, SLOT (slotSaveAs ()), ac);
@@ -163,11 +163,11 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
 
     // HACK: Something might have changed interprocess.
     // If we could PROPAGATE: interprocess, then this wouldn't be required.
-    m_actionOpenRecent->loadEntries (cfg.data());
+    m_actionOpenRecent->loadEntries (cfg->group( QString() ) );
 
     m_actionOpenRecent->addUrl (url);
 
-    m_actionOpenRecent->saveEntries (cfg.data());
+    m_actionOpenRecent->saveEntries (cfg->group( QString() ) );
     cfg->sync ();
 
 #if DEBUG_KP_MAIN_WINDOW
@@ -508,7 +508,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 
         SETUP_READ_CFG ();
 
-        fdSaveOptions.setMimeType (kpDocumentSaveOptions::defaultMimeType (&cfg));
+        fdSaveOptions.setMimeType (kpDocumentSaveOptions::defaultMimeType (cfg));
 
 
         if (!MIME_TYPE_IS_VALID ())
@@ -531,15 +531,15 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
     {
         SETUP_READ_CFG ();
 
-        fdSaveOptions.setColorDepth (kpDocumentSaveOptions::defaultColorDepth (&cfg));
-        fdSaveOptions.setDither (kpDocumentSaveOptions::defaultDither (&cfg));
+        fdSaveOptions.setColorDepth (kpDocumentSaveOptions::defaultColorDepth (cfg));
+        fdSaveOptions.setDither (kpDocumentSaveOptions::defaultDither (cfg));
     }
 
     if (fdSaveOptions.qualityIsInvalid ())
     {
         SETUP_READ_CFG ();
 
-        fdSaveOptions.setQuality (kpDocumentSaveOptions::defaultQuality (&cfg));
+        fdSaveOptions.setQuality (kpDocumentSaveOptions::defaultQuality (cfg));
     }
 #if DEBUG_KP_MAIN_WINDOW
     fdSaveOptions.printDebug ("\tcorrected saveOptions passed to fileDialog");
@@ -577,7 +577,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
         KConfigGroup cfg (KGlobal::config (), forcedSaveOptionsGroup);
 
         // Save options user forced - probably want to use them in future
-        kpDocumentSaveOptions::saveDefaultDifferences (&cfg,
+        kpDocumentSaveOptions::saveDefaultDifferences (cfg,
             fdSaveOptions, newSaveOptions);
         cfg.sync ();
 

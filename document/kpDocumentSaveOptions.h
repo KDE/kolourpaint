@@ -33,7 +33,7 @@
 class QPixmap;
 class QString;
 
-class KConfigBase;
+class KConfigGroup;
 
 
 class kpDocumentSaveOptions
@@ -86,22 +86,22 @@ public:
     // (All assume that <config>'s group has been set)
     // (None of them call KConfigBase::reparseConfig() nor KConfigBase::sync())
 
-    static QString defaultMimeType (KConfigBase *config);
-    static void saveDefaultMimeType (KConfigBase *config, const QString &mimeType);
+    static QString defaultMimeType (const KConfigGroup &config);
+    static void saveDefaultMimeType (KConfigGroup &config, const QString &mimeType);
 
-    static int defaultColorDepth (KConfigBase *config);
-    static void saveDefaultColorDepth (KConfigBase *config, int colorDepth);
+    static int defaultColorDepth (const KConfigGroup &config);
+    static void saveDefaultColorDepth (KConfigGroup &config, int colorDepth);
 
-    static int defaultDither (KConfigBase *config);
-    static void saveDefaultDither (KConfigBase *config, bool dither);
+    static int defaultDither (const KConfigGroup &config);
+    static void saveDefaultDither (KConfigGroup &config, bool dither);
 
-    static int defaultQuality (KConfigBase *config);
-    static void saveDefaultQuality (KConfigBase *config, int quality);
+    static int defaultQuality (const KConfigGroup &config);
+    static void saveDefaultQuality (KConfigGroup &config, int quality);
 
 
-    static kpDocumentSaveOptions defaultDocumentSaveOptions (KConfigBase *config);
+    static kpDocumentSaveOptions defaultDocumentSaveOptions (const KConfigGroup &config);
     // (returns true if it encountered a difference (and saved it to <config>))
-    static bool saveDefaultDifferences (KConfigBase *config,
+    static bool saveDefaultDifferences (KConfigGroup &config,
                                         const kpDocumentSaveOptions &oldDocInfo,
                                         const kpDocumentSaveOptions &newDocInfo);
 
