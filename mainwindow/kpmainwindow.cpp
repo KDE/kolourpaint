@@ -57,6 +57,7 @@
 #include <kpwidgetmapper.h>
 #include <kpzoomedthumbnailview.h>
 #include <kpzoomedview.h>
+#include <kscan.h>
 
 #if DEBUG_KP_MAIN_WINDOW
     #include <qdatetime.h>
@@ -204,6 +205,7 @@ void kpMainWindow::init ()
     m_statusBarCreated = false;
     m_settingSelectionTransparency = 0;
     m_settingTextStyle = 0;
+    m_scanDialog = 0;
 
     m_docResizeToBeCompleted = false;
 

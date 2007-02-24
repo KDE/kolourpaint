@@ -58,6 +58,7 @@
 #include <kpviewmanager.h>
 #include <ktoolinvocation.h>
 #include <kglobal.h>
+#include <kscan.h>
 #include <QDBusInterface>
 #include <QDesktopWidget>
 #include <kconfiggroup.h>
@@ -79,6 +80,10 @@ void kpMainWindow::setupFileMenuActions ()
     m_actionExport = ac->addAction("file_export");
     m_actionExport->setText (i18n ("E&xport..."));
     connect(m_actionExport, SIGNAL(triggered(bool) ), SLOT (slotExport ()));
+
+    m_actionScan = ac->addAction("file_scan");
+    m_actionScan->setText (i18n ("Scan..."));
+    connect(m_actionScan, SIGNAL(triggered(bool) ), SLOT (slotScan ()));
 
     //m_actionRevert = KStandardAction::revert (this, SLOT (slotRevert ()), ac);
     m_actionReload = ac->addAction ("file_revert");
@@ -131,7 +136,6 @@ void kpMainWindow::enableFileMenuDocumentActions (bool enable)
     m_actionClose->setEnabled (enable);
     // m_actionQuit->setEnabled (enable);
 }
-
 
 // private
 void kpMainWindow::addRecentURL (const KUrl &url_)
@@ -725,6 +729,48 @@ bool kpMainWindow::slotExport ()
     return true;
 }
 
+// private slot
+void kpMainWindow::slotScan ()
+{
+    if ( !m_scanDialog )
+    {
+        m_scanDialog = KScanDialog::getScanDialog( this );
+        if ( !m_scanDialog ) // no scanning support installed?
+            return;
+ 
+       connect( m_scanDialog, SIGNAL( finalImage( const QImage&, int )),
+                SLOT( slotScanned( const QImage&, int ) ));
+    }
+
+    if ( m_scanDialog->setup() ) // only if scanner configured/available
+        m_scanDialog->show();
+}
+
+// private slot
+void kpMainWindow::slotScanned( const QImage &image, int )
+{
+    QApplication::setOverrideCursor (Qt::waitCursor);
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+    kpDocument *doc = new kpDocument (image.width(), image.height(), this);
+    doc->setPixmap (QPixmap::fromImage(image));
+
+    // Want new window?
+    if (m_document && !m_document->isEmpty () &&
+        !d->configOpenImagesInSameWindow)
+    {
+        kpMainWindow *win = new kpMainWindow (doc);
+        win->show ();
+    }
+    else
+        setDocument (doc);
+
+    QApplication::restoreOverrideCursor ();
+
+    m_scanDialog->hide();
+}
 
 // private slot
 void kpMainWindow::slotEnableReload ()
