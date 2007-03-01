@@ -473,7 +473,7 @@ kpColorCells::kpColorCells (QWidget *parent,
     setAcceptDrops (true);
     setAcceptDrags (true);
 
-    connect (this, SIGNAL (colorDoubleClicked (int)),
+    connect (this, SIGNAL (colorDoubleClicked (int, QColor)),
              SLOT (slotColorDoubleClicked (int, QColor)));
 
     if (!ownColorsInitialised)
@@ -734,7 +734,7 @@ void kpColorCells::slotColorSelected (int cell)
 }
 
 // protected slot
-void kpColorCells::slotColorDoubleClicked (int cell)
+void kpColorCells::slotColorDoubleClicked (int cell,const QColor &)
 {
 #if DEBUG_KP_COLOR_TOOL_BAR
     kDebug () << "kpColorCells::slotColorDoubleClicked(cell="

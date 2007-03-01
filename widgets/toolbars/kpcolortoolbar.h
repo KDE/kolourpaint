@@ -152,7 +152,7 @@ protected:
 
 protected slots:
     void slotColorSelected (int cell);
-    void slotColorDoubleClicked (int cell);
+    void slotColorDoubleClicked (int cell,const QColor&);
 };
 
 
