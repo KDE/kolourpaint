@@ -55,6 +55,11 @@ line: shift+alt doesn't work but alt+shift does
 KolourPaint 1.4
 ~~~~~~~~~~~~~~~
 
+Use kipiplugins' "sendimages" plugin instead of homebrew File / Mail...
+(which has limitations like not being able to select format, must save
+first etc.).
+
+
 In light of crash Bug 117866, check that all timers are killed before e.g. adding
 a command to the command history.
 
