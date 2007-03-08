@@ -65,25 +65,25 @@ void kpMainWindow::setupTextToolBarActions ()
              this, SLOT (slotTextFontSizeChanged ()));
 
     m_actionTextBold = ac->add<KToggleAction> ("text_bold");
-    m_actionTextBold->setIcon (KIcon ("text_bold"));
+    m_actionTextBold->setIcon (KIcon ("format-text-bold"));
     m_actionTextBold->setText (i18n ("Bold"));
     connect (m_actionTextBold, SIGNAL (triggered (bool)),
         SLOT (slotTextBoldChanged ()));
 
     m_actionTextItalic = ac->add<KToggleAction> ("text_italic");
-    m_actionTextItalic->setIcon (KIcon ("text_italic"));
+    m_actionTextItalic->setIcon (KIcon ("format-text-italic"));
     m_actionTextItalic->setText (i18n ("Italic"));
     connect (m_actionTextItalic, SIGNAL (triggered (bool)),
         SLOT (slotTextItalicChanged ()));
 
     m_actionTextUnderline = ac->add<KToggleAction> ("text_underline");
-    m_actionTextUnderline->setIcon (KIcon ("text_under"));
+    m_actionTextUnderline->setIcon (KIcon ("format-text-underline"));
     m_actionTextUnderline->setText (i18n ("Underline"));
     connect (m_actionTextUnderline, SIGNAL (triggered (bool)),
         SLOT (slotTextUnderlineChanged ()));
 
     m_actionTextStrikeThru = ac->add<KToggleAction> ("text_strike_thru");
-    m_actionTextStrikeThru->setIcon (KIcon ("text_strike"));
+    m_actionTextStrikeThru->setIcon (KIcon ("format-text-strikethrough"));
     m_actionTextStrikeThru->setText (i18n ("Strike Through"));
     connect (m_actionTextStrikeThru, SIGNAL (triggered (bool)),
         SLOT (slotTextStrikeThruChanged ()));
