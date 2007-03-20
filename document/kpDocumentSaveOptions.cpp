@@ -417,19 +417,19 @@ static bool mimeTypeSupportsProperty (const QString &mimeType,
 // no Depth settings).
 //
 // Mimetypes done:
-//  image/jp2 [UNTESTED]
+//  image/jpeg2000 [UNTESTED]
 //  image/jpeg
 //  image/png
-//  image/x-bmp
+//  image/bmp
 //  image/x-eps
 //  image/x-pcx
 //  image/x-portable-bitmap
-//  image/x-portable-greymap
+//  image/x-portable-graymap
 //  image/x-portable-pixmap
 //  image/x-rgb
-//  image/x-targa
-//  image/x-xbm
-//  image/x-xpm
+//  image/x-tga
+//  image/x-xbitmap
+//  image/x-xpixmap
 //
 // To test whether depth is configurable, write an image in the new
 // mimetype with all depths and read each one back.  See what
@@ -449,9 +449,9 @@ int kpDocumentSaveOptions::mimeTypeMaximumColorDepth (const QString &mimeType)
     defaultList << QLatin1String ("image/x-portable-bitmap:1");
 
     // Greyscale actually (unenforced since depth not set to configurable)
-    defaultList << QLatin1String ("image/x-portable-greymap:8");
+    defaultList << QLatin1String ("image/x-portable-graymap:8");
 
-    defaultList << QLatin1String ("image/x-xbm:1");
+    defaultList << QLatin1String ("image/x-xbitmap:1");
 
     const QStringList mimeTypeList = mimeTypesSupportingProperty (
         kpSettingMimeTypeMaximumColorDepth, defaultList);
@@ -488,7 +488,7 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableColorDepth (const QString &mi
 
     // SYNC: update mime info here
     defaultMimeTypes << QLatin1String ("image/png");
-    defaultMimeTypes << QLatin1String ("image/x-bmp");
+    defaultMimeTypes << QLatin1String ("image/bmp");
     defaultMimeTypes << QLatin1String ("image/x-pcx");
 
     // TODO: Only 1, 24 not 8; Qt only sees 32 but "file" cmd realises
@@ -496,7 +496,7 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableColorDepth (const QString &mi
     defaultMimeTypes << QLatin1String ("image/x-rgb");
 
     // TODO: Only 8 and 24 - no 1.
-    defaultMimeTypes << QLatin1String ("image/x-xpm");
+    defaultMimeTypes << QLatin1String ("image/x-xpixmap");
 
     return mimeTypeSupportsProperty (mimeType,
         kpSettingMimeTypeHasConfigurableColorDepth,
@@ -516,7 +516,7 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableQuality (const QString &mimeT
     QStringList defaultMimeTypes;
 
     // SYNC: update mime info here
-    defaultMimeTypes << QLatin1String ("image/jp2");
+    defaultMimeTypes << QLatin1String ("image/jpeg2000");
     defaultMimeTypes << QLatin1String ("image/jpeg");
 
     return mimeTypeSupportsProperty (mimeType,

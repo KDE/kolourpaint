@@ -523,8 +523,8 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
         #endif
             if (mimeTypes.contains ("image/png"))
                 fdSaveOptions.setMimeType ("image/png");
-            else if (mimeTypes.contains ("image/x-bmp"))
-                fdSaveOptions.setMimeType ("image/x-bmp");
+            else if (mimeTypes.contains ("image/bmp"))
+                fdSaveOptions.setMimeType ("image/bmp");
             else
                 fdSaveOptions.setMimeType (mimeTypes.first ());
         }
