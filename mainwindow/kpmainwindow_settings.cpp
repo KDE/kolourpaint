@@ -33,7 +33,7 @@
 #include <kdebug.h>
 #include <kedittoolbar.h>
 #include <kglobal.h>
-#include <kkeydialog.h>
+#include <kshortcutsdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandardaction.h>
@@ -134,8 +134,8 @@ void kpMainWindow::slotKeyBindings ()
     kDebug () << "kpMainWindow::slotKeyBindings()" << endl;
 #endif
 
-    if (KKeyDialog::configure (actionCollection (),
-            KKeyChooser::LetterShortcutsAllowed,
+    if (KShortcutsDialog::configure (actionCollection (),
+            KShortcutsEditor::LetterShortcutsAllowed,
             this))
     {
     #if DEBUG_KP_MAIN_WINDOW
