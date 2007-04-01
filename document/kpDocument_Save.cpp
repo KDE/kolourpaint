@@ -133,6 +133,7 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
                 //       low maximum colour depth
                 i18n ("Lossy File Format"),
                 KStandardGuiItem::save (),
+                KStandardGuiItem::cancel(),
                 QLatin1String ("SaveInLossyMimeTypeDontAskAgain")));
     }
     else if (lossyType & kpDocumentSaveOptions::ColorDepthLow)
@@ -148,6 +149,7 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
                       saveOptions.colorDepth ()),
                 i18n ("Low Color Depth"),
                 KStandardGuiItem::save (),
+                KStandardGuiItem::cancel(),
                 QLatin1String ("SaveAtLowColorDepthDontAskAgain")));
     }
 #undef QUIT_IF_CANCEL
