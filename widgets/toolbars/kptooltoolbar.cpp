@@ -235,9 +235,9 @@ void kpToolToolBar::registerTool (kpTool *tool)
 
     QToolButton *b = new kpToolButton (tool, m_baseWidget);
     b->setAutoRaise (true);
-    b->setUsesBigPixmap (false);
-    b->setUsesTextLabel (false);
-    b->setToggleButton (true);
+    b->setIconSize (QSize (22,22));
+    b->setToolButtonStyle (Qt::ToolButtonIconOnly);
+    b->setCheckable (true);
 
     b->setText (tool->text ());
     b->setIconSet (tool->iconSet (defaultIconSize ()));

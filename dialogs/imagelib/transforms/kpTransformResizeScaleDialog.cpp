@@ -223,11 +223,11 @@ static void toolButtonSetLook (QToolButton *button,
                                const QString &name)
 {
     button->setIconSet (toolButtonIconSet (iconName));
-    button->setUsesTextLabel (true);
-    button->setTextLabel (name, false/*no tooltip*/);
+    button->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
+    button->setText (name);
     button->setAccel (Q3Accel::shortcutKey (name));
     button->setFocusPolicy (Qt::StrongFocus);
-    button->setToggleButton (true);
+    button->setCheckable (true);
 }
 
 
@@ -387,7 +387,7 @@ void kpTransformResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget
 
     dimensionsLayout->addWidget (m_keepAspectRatioCheckBox, 4, 0, 1, 4);
     dimensionsLayout->setRowStretch (4/*row*/, 1);
-    dimensionsLayout->setRowSpacing (4/*row*/, dimensionsLayout->rowSpacing (4) * 2);
+    dimensionsLayout->setRowMinimumHeight (4/*row*/, dimensionsLayout->rowMinimumHeight (4) * 2);
 
 
     connect (m_newWidthInput, SIGNAL (valueChanged (int)),
