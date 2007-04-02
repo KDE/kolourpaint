@@ -157,7 +157,7 @@ void kpMainWindow::slotConfigureToolBars ()
 
     //saveMainWindowSettings (KGlobal::config (), autoSaveGroup ());
 
-    KEditToolbar dialog (actionCollection (),
+    KEditToolBar dialog (actionCollection (),
                          QString::null/*default ui.rc file*/,
                          true/*global resource*/,
                          this/*parent*/);
