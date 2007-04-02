@@ -157,10 +157,7 @@ void kpMainWindow::slotConfigureToolBars ()
 
     //saveMainWindowSettings (KGlobal::config (), autoSaveGroup ());
 
-    KEditToolBar dialog (actionCollection (),
-                         QString::null/*default ui.rc file*/,
-                         true/*global resource*/,
-                         this/*parent*/);
+    KEditToolBar dialog (actionCollection (), this);
     // Clicking on OK after Apply brings up the dialog (below) again.
     // Bug with KEditToolBar.
     dialog.showButton( KDialog::Default, false);
