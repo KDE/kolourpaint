@@ -1,0 +1,177 @@
+
+/*
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions
+   are met:
+
+   1. Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+   2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+   THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+   IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+   OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+   IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+   INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+
+#ifndef KP_PAINTER_H
+#define KP_PAINTER_H
+
+
+#include <kpColor.h>
+#include <kpImage.h>
+
+
+class QPolygon;
+
+
+//
+// Stateless painter with sane semantics that works on kpImage's i.e. it
+// works on document - not view - data.  If you find that you need state,
+// you should probably move it into kpPainter to avoid the overhead of
+// passing around this state (e.g. color, line width) and for reuse.
+//
+// Therefore, it should not be used as an on-screen replacement for
+// QPainter since kpImage is not supposed to have any relationship with
+// QPaintDevice in the future.
+//
+// This encapsulates the set of functionality used by all of KolourPaint's
+// document drawing functions and nothing more, permitting rewriting of
+// the graphics backend.  Currently uses QPainter/kpPixmapFX as the backend.
+//
+
+struct kpPainterPrivate;
+
+class kpPainter
+{
+public:
+    // Returns a list of points representing a straight line from <thisPoint>
+    // to <lastPoint>, using Bresenham's line algorithm.  Each point is created
+    // only with the specified <probability>.
+    //
+    // <brushIsDiagonalLine> must be set if a diagonal line is to drawn at each
+    // of the returned points, otherwise things won't look right:
+    //
+    //     .\.....
+    //     \.\....
+    //     .\.B...
+    //     ..Ac\..
+    //     ...\.\.
+    //     ....\..
+    //
+    // 'A' is the previous Bresenham point.  'B' is the new point.  See how if
+    // diagonal lines are drawn at A and B, there is a gap between the lines.
+    // Setting <brushIsDiagonalLine> will solve this problem, since it will add
+    // a point at 'c'.
+    //
+    // For those interested in strict definitions: if <brushIsDiagonalLine> is
+    // set, a modified Bresenham's algorithm will add an extra point between
+    // every pair of strictly-diagonally-adjacent points, such that these points
+    // become cardinally adjacent, but before the <probability> is applied.
+    //
+    // ASSUMPTION: <probability> is between 0.0 and 1.0 inclusive.
+    static QList <QPoint> interpolatePoints (const QPoint &thisPoint,
+        const QPoint &lastPoint,
+        bool brushIsDiagonalLine = false,
+        double probability = 1.0);
+
+    // Draws a line from (x1,y1) to (x2,y2) onto <image>, with <color>
+    // and <penWidth>.  The corners are rounded and centred at those
+    // coordinates so if <width> > 1, the line is likely to extend past
+    // a rectangle with those corners.
+    static void drawLine (kpImage *image,
+        int x1, int y1, int x2, int y2,
+        const kpColor &color, int penWidth);
+    static void drawPolyline (kpImage *image,
+        const QPolygon &points,
+        const kpColor &color, int penWidth);
+    // <isFinal> = shape completed else drawing but haven't finalised.
+    // If not <isFinal>, the edge that would form the closure, if the
+    // shape were finalised now, is highlighted specially.  Unfortunately,
+    // the argument is currently ignored.
+    //
+    // Odd-even fill.
+    static void drawPolygon (kpImage *image,
+        const QPolygon &points,
+        const kpColor &fcolor, int penWidth,
+        const kpColor &bcolor = kpColor::Invalid,
+        bool isFinal = true);
+    // Cubic Beizer.
+    static void drawCurve (kpImage *image,
+        const QPoint &startPoint,
+        const QPoint &controlPointP, const QPoint &controlPointQ,
+        const QPoint &endPoint,
+        const kpColor &color, int penWidth);
+
+    static void fillRect (kpImage *image,
+        int x, int y, int width, int height,
+        const kpColor &color);
+                
+    // Draws a rectangle / rounded rectangle / ellipse with top-left at
+    // (x, y) with width <width> and height <height>.  Unlike QPainter,
+    // this rectangle will really fit inside <width>x<height> and won't
+    // be one pixel higher or wider etc.
+    //
+    // <width> and <height> must be >= 0.
+    //
+    // <fcolor> must not be invalid.  However, <bcolor> may be invalid
+    // to signify an unfilled rectangle / rounded rectangle /ellipse.
+    static void drawRect (kpImage *image,
+        int x, int y, int width, int height,
+        const kpColor &fcolor, int penWidth = 1,
+        const kpColor &bcolor = kpColor::Invalid);
+    static void drawRoundedRect (kpImage *image,
+        int x, int y, int width, int height,
+        const kpColor &fcolor, int penWidth = 1,
+        const kpColor &bcolor = kpColor::Invalid);
+    static void drawEllipse (kpImage *image,
+        int x, int y, int width, int height,
+        const kpColor &fcolor, int penWidth = 1,
+        const kpColor &bcolor = kpColor::Invalid);
+
+    // Replaces all pixels of <colorToReplace> on the line
+    // from (x1,y1) to (x2,y2) of <image>, with a pen of <color> with
+    // dimensions <penWidth>x<penHeight>.
+    //
+    // The corners are centred at those coordinates so if <penWidth> > 1 or
+    // <penHeight> > 1, the line is likely to extend past a rectangle with
+    // those corners.
+    //
+    // Returns the dirty rectangle.
+    static QRect washLine (kpImage *image,
+        int x1, int y1, int x2, int y2,
+        const kpColor &color, int penWidth, int penHeight,
+        const kpColor &colorToReplace,
+        int processedColorSimilarity);
+
+    static QRect washRect (kpImage *image,
+        int x, int y, int width, int height,
+        const kpColor &color,
+        const kpColor &colorToReplace,
+        int processedColorSimilarity);
+
+    // For each point in <points>, sprays a random pattern of 10 dots of <color>,
+    // each within a circle of diameter <spraycanSize>, onto <image>.
+    //
+    // ASSUMPTION: spraycanSize > 0.
+    // TODO: I think this diameter is 1 or 2 off.
+    static void sprayPoints (kpImage *image,
+        const QList <QPoint> &points,
+        const kpColor &color,
+        int spraycanSize);
+};
+
+
+#endif  // KP_PAINTER_H

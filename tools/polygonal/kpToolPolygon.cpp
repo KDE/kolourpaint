@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -33,8 +33,8 @@
 
 #include <klocale.h>
 
-#include <kppainter.h>
-#include <kptooltoolbar.h>
+#include <kpPainter.h>
+#include <kpToolToolBar.h>
 
 
 struct kpToolPolygonPrivate

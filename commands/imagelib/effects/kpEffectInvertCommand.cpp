@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
 #include <klocale.h>
 
 #include <kpEffectInvert.h>
-#include <kppixmapfx.h>
+#include <kpPixmapFX.h>
 
 
 kpEffectInvertCommand::kpEffectInvertCommand (int channels,

@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -43,12 +43,12 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpcolor.h>
-#include <kpdocument.h>
-#include <kpmainwindow.h>
-#include <kppixmapfx.h>
-#include <kpresizesignallinglabel.h>
-#include <kpselection.h>
+#include <kpColor.h>
+#include <kpDocument.h>
+#include <kpMainWindow.h>
+#include <kpPixmapFX.h>
+#include <kpResizeSignallingLabel.h>
+#include <kpSelection.h>
 
 
 kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,

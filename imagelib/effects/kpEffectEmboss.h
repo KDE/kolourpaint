@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
 #define kpEffectEmboss_H
 
 
-#include <kpimage.h>
+#include <kpImage.h>
 
 
 class kpEffectEmboss

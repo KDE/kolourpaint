@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -48,19 +48,19 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpbug.h>
-#include <kpcommandhistory.h>
-#include <kpdocument.h>
-#include <kpdefs.h>
-#include <kpimage.h>
-#include <kpmainwindow.h>
-#include <kppainter.h>
-#include <kppixmapfx.h>
-#include <kptemppixmap.h>
+#include <kpBug.h>
+#include <kpCommandHistory.h>
+#include <kpDocument.h>
+#include <kpDefs.h>
+#include <kpImage.h>
+#include <kpMainWindow.h>
+#include <kpPainter.h>
+#include <kpPixmapFX.h>
+#include <kpTempPixmap.h>
 #include <kpToolPolygonalCommand.h>
-#include <kptooltoolbar.h>
-#include <kptoolwidgetlinewidth.h>
-#include <kpviewmanager.h>
+#include <kpToolToolBar.h>
+#include <kpToolWidgetLineWidth.h>
+#include <kpViewManager.h>
 
 
 struct kpToolPolygonalBasePrivate

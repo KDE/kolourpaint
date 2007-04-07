@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -44,17 +44,17 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpbug.h>
-#include <kpcommandhistory.h>
-#include <kpdefs.h>
-#include <kpdocument.h>
-#include <kpmainwindow.h>
-#include <kpselection.h>
-#include <kptool.h>
-#include <kptooltoolbar.h>
-#include <kptoolwidgetopaqueortransparent.h>
-#include <kpview.h>
-#include <kpviewmanager.h>
+#include <kpBug.h>
+#include <kpCommandHistory.h>
+#include <kpDefs.h>
+#include <kpDocument.h>
+#include <kpMainWindow.h>
+#include <kpSelection.h>
+#include <kpTool.h>
+#include <kpToolToolBar.h>
+#include <kpToolWidgetOpaqueOrTransparent.h>
+#include <kpView.h>
+#include <kpViewManager.h>
 
 
 kpToolSelectionDestroyCommand::kpToolSelectionDestroyCommand (const QString &name,

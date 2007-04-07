@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -30,10 +30,10 @@
 #define kpEffectBlurSharpenCommand_H
 
 
-#include <kpcolor.h>
+#include <kpColor.h>
 #include <kpEffectBlurSharpen.h>
 #include <kpEffectCommandBase.h>
-#include <kpimage.h>
+#include <kpImage.h>
 
 
 class QLabel;

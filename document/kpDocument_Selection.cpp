@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -55,18 +55,18 @@
 #include <kmimetype.h>  // TODO: isn't this in KIO?
 #include <ktemporaryfile.h>
 
-#include <kpcolor.h>
-#include <kpcolortoolbar.h>
-#include <kpdefs.h>
-#include <kpdocumentsaveoptions.h>
-#include <kpdocumentmetainfo.h>
+#include <kpColor.h>
+#include <kpColorToolBar.h>
+#include <kpDefs.h>
+#include <kpDocumentSaveOptions.h>
+#include <kpDocumentMetaInfo.h>
 #include <kpEffectReduceColors.h>
-#include <kpmainwindow.h>
-#include <kppixmapfx.h>
-#include <kpselection.h>
-#include <kptool.h>
-#include <kptooltoolbar.h>
-#include <kpviewmanager.h>
+#include <kpMainWindow.h>
+#include <kpPixmapFX.h>
+#include <kpSelection.h>
+#include <kpTool.h>
+#include <kpToolToolBar.h>
+#include <kpViewManager.h>
 
 
 // public

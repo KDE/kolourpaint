@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -38,11 +38,11 @@
 #include <qpolygon.h>
 #include <qrect.h>
 
-#include <kpcolor.h>
-#include <kpcommandhistory.h>
-#include <kptool.h>
+#include <kpColor.h>
+#include <kpCommandHistory.h>
+#include <kpTool.h>
 #include <kpToolPolygonalBase.h>
-#include <kptoolwidgetfillstyle.h>
+#include <kpToolWidgetFillStyle.h>
 
 
 class QMouseEvent;

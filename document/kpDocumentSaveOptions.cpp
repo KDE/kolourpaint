@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
 #define DEBUG_KP_DOCUMENT_SAVE_OPTIONS 0
 
 
-#include <kpdocumentsaveoptions.h>
+#include <kpDocumentSaveOptions.h>
 
 #include <qbitmap.h>
 #include <qpixmap.h>
@@ -38,7 +38,7 @@
 #include <kdebug.h>
 #include <kglobal.h>
 
-#include <kpdefs.h>
+#include <kpDefs.h>
 #include <kconfiggroup.h>
 
 

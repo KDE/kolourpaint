@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -46,8 +46,8 @@
 #include <knuminput.h>
 
 #include <kpEffectEmboss.h>
-#include <kpmainwindow.h>
-#include <kppixmapfx.h>
+#include <kpMainWindow.h>
+#include <kpPixmapFX.h>
 
 
 kpEffectEmbossCommand::kpEffectEmbossCommand (double radius, double sigma,

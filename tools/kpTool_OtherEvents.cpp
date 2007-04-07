@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
 #define DEBUG_KP_TOOL 0
 
 
-#include <kptool.h>
+#include <kpTool.h>
 #include <kpToolPrivate.h>
 
 #include <limits.h>
@@ -56,16 +56,16 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include <kpbug.h>
-#include <kpcolor.h>
-#include <kpcolortoolbar.h>
-#include <kpdefs.h>
-#include <kpmainwindow.h>
-#include <kppixmapfx.h>
-#include <kptoolaction.h>
-#include <kptooltoolbar.h>
-#include <kpview.h>
-#include <kpviewmanager.h>
+#include <kpBug.h>
+#include <kpColor.h>
+#include <kpColorToolBar.h>
+#include <kpDefs.h>
+#include <kpMainWindow.h>
+#include <kpPixmapFX.h>
+#include <kpToolAction.h>
+#include <kpToolToolBar.h>
+#include <kpView.h>
+#include <kpViewManager.h>
 #include <kactioncollection.h>
 
 

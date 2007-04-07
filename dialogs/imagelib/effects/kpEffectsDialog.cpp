@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -44,15 +44,15 @@
 #include <khbox.h>
 #include <klocale.h>
 
-#include <kpdefs.h>
-#include <kpdocument.h>
+#include <kpDefs.h>
+#include <kpDocument.h>
 #include <kpEffectBalanceWidget.h>
 #include <kpEffectBlurSharpenWidget.h>
 #include <kpEffectEmbossWidget.h>
 #include <kpEffectFlattenWidget.h>
 #include <kpEffectInvertWidget.h>
 #include <kpEffectReduceColorsWidget.h>
-#include <kppixmapfx.h>
+#include <kpPixmapFX.h>
 
 
 // protected static

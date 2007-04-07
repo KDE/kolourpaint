@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -30,8 +30,8 @@
 #define kpToolFloodFillCommand_H
 
 
-#include <kpcommandhistory.h>
-#include <kpfloodfill.h>
+#include <kpCommandHistory.h>
+#include <kpFloodFill.h>
 
 
 class kpColor;

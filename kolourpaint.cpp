@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -35,8 +35,8 @@
 #include <kimageio.h>
 #include <klocale.h>
 
-#include <kpdefs.h>
-#include <kpmainwindow.h>
+#include <kpDefs.h>
+#include <kpMainWindow.h>
 
 #include <kolourpaintlicense.h>
 #include <kolourpaintversion.h>

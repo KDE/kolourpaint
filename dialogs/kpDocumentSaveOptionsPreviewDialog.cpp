@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -51,13 +51,13 @@
 #include <knuminput.h>
 #include <kpushbutton.h>
 
-#include <kpdefs.h>
-#include <kpdocument.h>
-#include <kppixmapfx.h>
-#include <kpresizesignallinglabel.h>
-#include <kpselection.h>
+#include <kpDefs.h>
+#include <kpDocument.h>
+#include <kpPixmapFX.h>
+#include <kpResizeSignallingLabel.h>
+#include <kpSelection.h>
 #include <kpTransformPreviewDialog.h>
-#include <kpwidgetmapper.h>
+#include <kpWidgetMapper.h>
 
 
 // protected static

@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -33,9 +33,9 @@
 
 #include <klocale.h>
 
-#include <kpcolortoolbar.h>
-#include <kpdefs.h>
-#include <kpmainwindow.h>
+#include <kpColorToolBar.h>
+#include <kpDefs.h>
+#include <kpMainWindow.h>
 
 
 kpToolColorPickerCommand::kpToolColorPickerCommand (

@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -46,8 +46,8 @@
 #include <kvbox.h>
 
 #include <kpEffectFlatten.h>
-#include <kpdefs.h>
-#include <kppixmapfx.h>
+#include <kpDefs.h>
+#include <kpPixmapFX.h>
 
 
 kpEffectFlattenCommand::kpEffectFlattenCommand (const QColor &color1,

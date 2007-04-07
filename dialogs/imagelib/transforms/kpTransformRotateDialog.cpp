@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -46,13 +46,13 @@
 #include <knuminput.h>
 #include <klocale.h>
 
-#include <kpdefs.h>
-#include <kpdocument.h>
-#include <kpmainwindow.h>
-#include <kppixmapfx.h>
-#include <kpselection.h>
-#include <kptool.h>
-#include <kpviewmanager.h>
+#include <kpDefs.h>
+#include <kpDocument.h>
+#include <kpMainWindow.h>
+#include <kpPixmapFX.h>
+#include <kpSelection.h>
+#include <kpTool.h>
+#include <kpViewManager.h>
 
 
 // private static

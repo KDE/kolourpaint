@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2006 Clarence Dang <dang@kde.org>
+   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -33,11 +33,11 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpdefs.h>
-#include <kpdocument.h>
-#include <kpmainwindow.h>
-#include <kppixmapfx.h>
-#include <kpselection.h>
+#include <kpDefs.h>
+#include <kpDocument.h>
+#include <kpMainWindow.h>
+#include <kpPixmapFX.h>
+#include <kpSelection.h>
 
 
 kpEffectClearCommand::kpEffectClearCommand (bool actOnSelection,
