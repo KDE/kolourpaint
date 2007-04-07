@@ -26,9 +26,7 @@ Features to be implemented are in branches/kolourpaint/control/TODO.
 
 6. Rename files to match classes.  Make sure each file contains just one
    public class. e.g. kpToolFlip.cpp contains class kpToolFlip but can also
-   contain MyPrivateHelperClass.  Note the casing of the file - I'm
-   getting sick of kpawholebunchofwordsstucktogetherwithnoseparators.cpp.
-   Start migrating all files to CamelCase.
+   contain MyPrivateHelperClass.
 
 12. Remove deprecated qt3support and kde3support references.
 
