@@ -240,7 +240,7 @@ void kpToolToolBar::registerTool (kpTool *tool)
     b->setCheckable (true);
 
     b->setText (tool->text ());
-    b->setIconSet (tool->iconSet (defaultIconSize ()));
+    b->setIcon (tool->iconSet (defaultIconSize ()));
     b->setToolTip( tool->toolTip ());
     b->setWhatsThis( tool->description ());
 

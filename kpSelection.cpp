@@ -374,7 +374,7 @@ QBitmap kpSelection::maskForOwnType (bool nullForRectangular) const
         QPolygon points = m_points;
         points.translate (-m_rect.x (), -m_rect.y ());
 
-        painter.drawPolygon (points, false/*even-odd algo*/);
+        painter.drawPolygon (points, Qt::OddEvenFill);
     }
 
     painter.end ();

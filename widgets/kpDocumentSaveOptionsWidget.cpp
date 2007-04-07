@@ -105,7 +105,7 @@ void kpDocumentSaveOptionsWidget::init ()
     m_qualityInput->setRange (1, 100, 1/*step*/, true/*slider*/);
 
     m_previewButton = new KPushButton (i18n ("&Preview"), this);
-    m_previewButton->setToggleButton (true);
+    m_previewButton->setCheckable (true);
 
 
     m_colorDepthLabel->setBuddy (m_colorDepthCombo);
@@ -484,12 +484,12 @@ void kpDocumentSaveOptionsWidget::setMode (Mode mode)
 
 
     // If mode == None, we show still show the Color Depth widgets but disabled
-    m_colorDepthLabel->setShown (mode != Quality);
-    m_colorDepthCombo->setShown (mode != Quality);
-    m_colorDepthSpaceWidget->setShown (mode != Quality);
+    m_colorDepthLabel->setVisible (mode != Quality);
+    m_colorDepthCombo->setVisible (mode != Quality);
+    m_colorDepthSpaceWidget->setVisible (mode != Quality);
 
-    m_qualityLabel->setShown (mode == Quality);
-    m_qualityInput->setShown (mode == Quality);
+    m_qualityLabel->setVisible (mode == Quality);
+    m_qualityInput->setVisible (mode == Quality);
 
 
     m_colorDepthLabel->setEnabled (mode == ColorDepth);

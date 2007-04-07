@@ -260,7 +260,7 @@ void kpEffectsDialog::selectEffect (int which)
         QSize previewGroupBoxMaxSize = m_previewGroupBox->maximumSize ();
         QLayout::SizeConstraint previewGroupBoxResizeMode =
             m_previewGroupBox->layout () ?
-                m_previewGroupBox->layout ()->resizeMode () :
+                m_previewGroupBox->layout ()->sizeConstraint () :
                 QLayout::SetDefaultConstraint;
     #if DEBUG_KP_EFFECTS_DIALOG
         kDebug () << "\tpreviewGroupBox: minSize=" << previewGroupBoxMinSize
@@ -272,7 +272,7 @@ void kpEffectsDialog::selectEffect (int which)
     #endif
 
         if (m_previewGroupBox->layout ())
-            m_previewGroupBox->layout ()->setResizeMode (QLayout::SetNoConstraint);
+            m_previewGroupBox->layout ()->setSizeConstraint (QLayout::SetNoConstraint);
     #if DEBUG_KP_EFFECTS_DIALOG
         kDebug () << "\tafter set resizeMode, previewGroupBox.size="
                    << m_previewGroupBox->size () << endl;
@@ -302,7 +302,7 @@ void kpEffectsDialog::selectEffect (int which)
                    << m_previewGroupBox->size () << endl;
     #endif
         if (m_previewGroupBox->layout ())
-            m_previewGroupBox->layout ()->setResizeMode (previewGroupBoxResizeMode);
+            m_previewGroupBox->layout ()->setSizeConstraint (previewGroupBoxResizeMode);
     #if DEBUG_KP_EFFECTS_DIALOG
         kDebug () << "\tafter restore resizeMode, previewGroupBox.size="
                    << m_previewGroupBox->size () << endl;

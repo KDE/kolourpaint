@@ -131,7 +131,7 @@ void kpMainWindow::enableTextToolBarActions (bool enable)
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\thave toolbar - setShown" << endl;
     #endif
-        textToolBar ()->setShown (enable);
+        textToolBar ()->setVisible (enable);
     }
 }
 
