@@ -36,6 +36,7 @@
 #include <QPainter>
 
 #include <KColorDialog>
+#include <KColorMimeData>
 #include <KDebug>
 #include <KIconLoader>
 
@@ -183,23 +184,15 @@ QRect kpDualColorButton::backgroundRect () const
 // protected virtual [base QWidget]
 void kpDualColorButton::dragMoveEvent (QDragMoveEvent *e)
 {
-    (void) e;
-// COMPAT: linker errors???
-#if 0
-    e->accept ((foregroundRect ().contains (e->pos ()) ||
+    e->setAccepted ((foregroundRect ().contains (e->pos ()) ||
                 backgroundRect ().contains (e->pos ())) &&
-               K3ColorDrag::canDecode (e));
-#endif
+               KColorMimeData::canDecode (e->mimeData ()));
 }
 
 // protected virtual [base QWidget]
 void kpDualColorButton::dropEvent (QDropEvent *e)
 {
-    (void) e;
-// COMPAT: linker errors???
-#if 0
-    QColor col;
-    K3ColorDrag::decode (e, col/*ref*/);
+    QColor col = KColorMimeData::fromMimeData (e->mimeData ());
 
     if (col.isValid ())
     {
@@ -208,7 +201,6 @@ void kpDualColorButton::dropEvent (QDropEvent *e)
         else if (backgroundRect ().contains (e->pos ()))
             setBackgroundColor (kpColor (col.rgb ()));
     }
-#endif
 }
 
 
