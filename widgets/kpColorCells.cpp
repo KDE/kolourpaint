@@ -191,19 +191,21 @@ void kpColorCells::setOrientation (Qt::Orientation o)
     kDebug () << "kpColorCells::setOrientation(): r=" << r << " c=" << c << endl;
 #endif
 
-    setRowCount(r);
-    setColumnCount(c);
+    setRowCount (r);
+    setColumnCount (c);
 
-#ifdef __GNUC__
-#warning "Port to KColorCells API changes"
-#endif
-#if 0
-    setCellWidth (26);
-    setCellHeight (26);
-#endif
+    // COMPAT: Get cell dimensions exactly as claimed by these variables.
+    //         I suspect frameWidth() isn't right.
+    // TODO: It wasn't right in KDE 3.4 either (haven't checked 3.5).
+    const int CellWidth = 26, CellHeight = 26;
 
-    setFixedSize (columnCount () * columnWidth (0) + frameWidth () * 2,
-                  rowCount  () * rowHeight (0) + frameWidth () * 2);
+    for (int y = 0; y < r; y++)
+        setRowHeight (y, CellHeight);
+    for (int x = 0; x < c; x++)
+        setColumnWidth (x, CellWidth);
+
+    setFixedSize (columnCount () * CellWidth + frameWidth () * 2,
+                  rowCount  () * CellHeight + frameWidth () * 2);
 
 /*
     kDebug () << "\tlimits: array=" << sizeof (colors) / sizeof (colors [0])
@@ -284,6 +286,8 @@ void kpColorCells::paintCell (QPainter *painter, int row, int col)
 {
 #ifdef __GNUC__
 #warning "Port to KColorCells API changes"
+// All the below code does is gray out all the colors and give each cell
+// a 3D look, when the widget is disabled.
 #endif
 #if 0
     QColor oldColor;
@@ -301,9 +305,6 @@ void kpColorCells::paintCell (QPainter *painter, int row, int col)
     }
 
 
-    // no focus rect as it doesn't make sense
-    // since 2 colors (foreground & background) can be selected
-    KColorCells::selected = -1;
     KColorCells::paintCell (painter, row, col);
 
 
@@ -344,6 +345,7 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
             m_mouseButton = 1;
     }
 
+    // (m_mouseButton will be read in the slot)
     connect (this, SIGNAL (colorSelected (int, QColor)), this, SLOT (slotColorSelected (int)));
     KColorCells::mouseReleaseEvent (e);
     disconnect (this, SIGNAL (colorSelected (int, QColor)), this, SLOT (slotColorSelected (int)));
@@ -352,6 +354,17 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
     kDebug () << "kpColorCells::mouseReleaseEvent() setting m_mouseButton back to -1" << endl;
 #endif
     m_mouseButton = -1;
+
+    // Deselect the selected cell (selected by above KColorCells::mouseReleaseEvent()).
+    // KolourPaint's palette has no concept of a current cell/color: you can
+    // pick a color but you can't mark a cell as selected.  In any case, a
+    // selected cell would be rendered as violet, which would ruin the cell.
+    //
+    // setSelectionMode (KColorCells::NoSelection); does not work so we
+    // clearSelection().  I think setSelectionMode() concerns when the user
+    // directly selects a cell - not when KColorCells::mouseReleaseEvent()
+    // selects a cell programmatically.
+    clearSelection ();
 }
 
 // protected virtual [base KColorCells]
@@ -369,11 +382,13 @@ void kpColorCells::resizeEvent (QResizeEvent *e)
 // protected slot
 void kpColorCells::slotColorSelected (int cell)
 {
+    QColor c = KColorCells::color (cell);
 #if DEBUG_KP_COLOR_CELLS
     kDebug () << "kpColorCells::slotColorSelected(cell=" << cell
-               << ") mouseButton = " << m_mouseButton << endl;
+               << ") mouseButton = " << m_mouseButton
+               << " rgb=" << (int *) c.rgb ()
+               << endl;
 #endif
-    QColor c = KColorCells::color (cell);
 
     if (m_mouseButton == 0)
     {
@@ -390,7 +405,7 @@ void kpColorCells::slotColorSelected (int cell)
 }
 
 // protected slot
-void kpColorCells::slotColorDoubleClicked (int cell,const QColor &)
+void kpColorCells::slotColorDoubleClicked (int cell, const QColor &)
 {
 #if DEBUG_KP_COLOR_CELLS
     kDebug () << "kpColorCells::slotColorDoubleClicked(cell="

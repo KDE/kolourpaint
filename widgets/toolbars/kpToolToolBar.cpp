@@ -41,12 +41,13 @@
 #include <qtooltip.h>
 #include <qwidget.h>
 
-#include <ksharedconfig.h>
+#include <kconfiggroup.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
 #include <kicontheme.h>
-#include <kconfiggroup.h>
+#include <KIconLoader>
+#include <ksharedconfig.h>
 
 #include <kpBug.h>
 #include <kpDefs.h>
@@ -184,6 +185,8 @@ int kpToolToolBar::defaultIconSize ()
 
     if (cfg.hasKey (kpSettingToolBoxIconSize))
     {
+        // TODO: Specifying 48 gives me the 48 icon scaled down to 22 but the
+        //       button is still 48x48 (with lots of empty space).
         m_defaultIconSize = cfg.readEntry (kpSettingToolBoxIconSize, 0);
     #if DEBUG_KP_TOOL_TOOL_BAR
         kDebug () << "\tread: " << m_defaultIconSize << endl;
@@ -235,14 +238,16 @@ void kpToolToolBar::registerTool (kpTool *tool)
 
     QToolButton *b = new kpToolButton (tool, m_baseWidget);
     b->setAutoRaise (true);
-    b->setIconSize (QSize (22,22));
+    // Specify size of the button.
+    b->setIconSize (QSize (defaultIconSize (), defaultIconSize ()));
     b->setToolButtonStyle (Qt::ToolButtonIconOnly);
     b->setCheckable (true);
 
     b->setText (tool->text ());
+    // Specify size of the source icon file.
     b->setIcon (tool->iconSet (defaultIconSize ()));
-    b->setToolTip( tool->toolTip ());
-    b->setWhatsThis( tool->description ());
+    b->setToolTip (tool->toolTip ());
+    b->setWhatsThis (tool->description ());
 
     m_buttonGroup->addButton (b);
     addButton (b, orientation (), num);
