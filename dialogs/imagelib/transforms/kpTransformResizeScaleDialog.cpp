@@ -200,7 +200,7 @@ static QIcon toolButtonIconSet (const QString &iconName)
         UserIcon (iconName),
         K3Icon::Toolbar, K3Icon::DisabledState);
 
-    const QPixmap iconSetNormalIcon = iconSet.pixmap (QIcon::Small,
+    const QPixmap iconSetNormalIcon = iconSet.pixmap (QSize(22,22),
                                                       QIcon::Normal);
 
     // I bet past or future versions of KIconEffect::apply() resize the
@@ -212,8 +212,8 @@ static QIcon toolButtonIconSet (const QString &iconName)
                                       true/*smooth scale*/);
 
 
-    iconSet.setPixmap (disabledIcon,
-                       QIcon::Small, QIcon::Disabled);
+    iconSet.addPixmap (disabledIcon,
+                       QIcon::Disabled);
 
     return iconSet;
 }
@@ -225,7 +225,7 @@ static void toolButtonSetLook (QToolButton *button,
     button->setIcon (toolButtonIconSet (iconName));
     button->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
     button->setText (name);
-    button->setAccel (Q3Accel::shortcutKey (name));
+    button->setShortcut ( name );
     button->setFocusPolicy (Qt::StrongFocus);
     button->setCheckable (true);
 }
