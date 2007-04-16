@@ -36,7 +36,7 @@
 #include <qlist.h>
 #include <qsize.h>
 
-#include <kmainwindow.h>
+#include <kxmlguiwindow.h>
 #include <kurl.h>
 
 #include <kpDefs.h>
@@ -89,7 +89,7 @@ class kpToolToolBar;
 class kpZoomedView;
 
 
-class kpMainWindow : public KMainWindow
+class kpMainWindow : public KXmlGuiWindow
 {
 Q_OBJECT
 
