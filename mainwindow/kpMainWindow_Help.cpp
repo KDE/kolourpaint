@@ -184,12 +184,9 @@ void kpMainWindow::slotHelpTakingScreenshots ()
     dlg.showButtonSeparator (true);
 
     QLabel *messageLabel = new QLabel (message, &dlg);
-    messageLabel->setOpenExternalLinks(true);
-#ifdef __GNUC__
-#warning "not define into qlabel"
-#endif
-    //messageLabel->setNotifyClick (true);  // Fire urlClick() signal.
-    connect (messageLabel, SIGNAL (urlClick (const QString &)),
+    messageLabel->setWordWrap(true);
+
+    connect (messageLabel, SIGNAL (linkActivated (const QString &)),
              this, SLOT (slotHelpTakingScreenshotsFollowLink (const QString &)));
 
     dlg.setMainWidget (messageLabel);
