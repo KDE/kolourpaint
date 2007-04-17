@@ -2,6 +2,10 @@
 KolourPaint 1.4_relight Series (branches/KDE/3.5/)
 ===============================
 
+KolourPaint 1.4.7_relight (Frozen 2007-04-30)
+
+   * Add "File / Scan..." feature (Martin Koller)
+
 KolourPaint 1.4.6_relight (Frozen 2007-01-13)
 
    * Fix crash triggered by rapidly deselecting the selection after
