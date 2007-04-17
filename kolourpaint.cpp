@@ -106,6 +106,9 @@ int main (int argc, char *argv [])
     aboutData.addAuthor ("Kazuki Ohta", I18N_NOOP ("InputMethod Support"), "mover@hct.zaq.ne.jp");
     aboutData.addAuthor ("Nuno Pinheiro", I18N_NOOP ("Icons"), "nf.pinheiro@gmail.com");
     aboutData.addAuthor ("Danny Allen", I18N_NOOP ("Icons"), "dannya40uk@yahoo.co.uk");
+    aboutData.addAuthor ("Martin Koller",
+                         0/*SYNC: string freeze prevents us from writing: Scanning Support*/,
+                         "m.koller@surfeu.at");
 
 
     aboutData.addCredit ("Rashid N. Achilov");
