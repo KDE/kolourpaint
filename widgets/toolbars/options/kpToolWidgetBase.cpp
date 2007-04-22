@@ -37,7 +37,7 @@
 #include <qimage.h>
 #include <qpainter.h>
 #include <qpixmap.h>
-#include <qtooltip.h>
+
 
 #include <kapplication.h>
 #include <kconfig.h>

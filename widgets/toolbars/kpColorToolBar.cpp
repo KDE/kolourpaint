@@ -39,7 +39,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qsize.h>
-#include <qtooltip.h>
+
 #include <qwidget.h>
 
 #include <kapplication.h>

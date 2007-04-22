@@ -38,7 +38,7 @@
 #include <qgridlayout.h>
 #include <qlayout.h>
 #include <qtoolbutton.h>
-#include <qtooltip.h>
+
 #include <qwidget.h>
 
 #include <kconfiggroup.h>

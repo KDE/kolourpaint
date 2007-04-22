@@ -43,7 +43,7 @@
 #include <qpolygon.h>
 #include <qpushbutton.h>
 #include <qrect.h>
-#include <qtooltip.h>
+
 
 #include <kdebug.h>
 #include <klocale.h>
