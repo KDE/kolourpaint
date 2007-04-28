@@ -95,6 +95,8 @@ void kpMainWindow::setupFileMenuActions ()
     m_actionClose = KStdAction::close (this, SLOT (slotClose ()), ac);
     m_actionQuit = KStdAction::quit (this, SLOT (slotQuit ()), ac);
 
+    m_scanDialog = 0;
+
     enableFileMenuDocumentActions (false);
 }
 
@@ -354,6 +356,52 @@ void kpMainWindow::slotOpenRecent (const KURL &url)
         tool ()->endShapeInternal ();
 
     open (url);
+}
+
+
+// private slot
+void kpMainWindow::slotScan ()
+{
+    if (!m_scanDialog)
+    {
+        m_scanDialog = KScanDialog::getScanDialog (this, "scandialog", true/*modal*/);
+        // No scanning support installed?
+        if (!m_scanDialog)
+            return;
+ 
+        connect (m_scanDialog, SIGNAL (finalImage (const QImage &, int)),
+                 SLOT (slotScanned (const QImage &, int)));
+    }
+
+    if (m_scanDialog->setup ())
+    {
+        // Called only if scanner configured/available.
+        m_scanDialog->show ();
+    }
+}
+
+// private slot
+void kpMainWindow::slotScanned (const QImage &image, int)
+{
+    QApplication::setOverrideCursor (Qt::waitCursor);
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+    kpDocument *doc = new kpDocument (image.width (), image.height (), this);
+    doc->setPixmap (image);
+
+    if (shouldOpenInNewWindow ())
+    {
+        kpMainWindow *win = new kpMainWindow (doc);
+        win->show ();
+    }
+    else
+        setDocument (doc);
+
+    QApplication::restoreOverrideCursor ();
+
+    m_scanDialog->hide ();
 }
 
 
@@ -681,46 +729,6 @@ bool kpMainWindow::slotExport ()
     return true;
 }
 
-// private slot
-void kpMainWindow::slotScan ()
-{
-    if ( !m_scanDialog )
-    {
-        m_scanDialog = KScanDialog::getScanDialog( this, "scandialog", true );
-        if ( !m_scanDialog ) // no scanning support installed?
-            return;
- 
-       connect( m_scanDialog, SIGNAL( finalImage( const QImage&, int )),
-                SLOT( slotScanned( const QImage&, int ) ));
-    }
-
-    if ( m_scanDialog->setup() ) // only if scanner configured/available
-        m_scanDialog->show();
-}
-
-// private slot
-void kpMainWindow::slotScanned( const QImage &image, int )
-{
-    QApplication::setOverrideCursor (Qt::waitCursor);
-
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
-
-    kpDocument *doc = new kpDocument (image.width(), image.height(), this);
-    doc->setPixmap (image);
-
-    if (shouldOpenInNewWindow ())
-    {
-        kpMainWindow *win = new kpMainWindow (doc);
-        win->show ();
-    }
-    else
-        setDocument (doc);
-
-    QApplication::restoreOverrideCursor ();
-
-    m_scanDialog->hide();
-}
 
 // private slot
 void kpMainWindow::slotEnableReload ()

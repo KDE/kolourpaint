@@ -3,7 +3,7 @@
 SYNC: Do not change the number of quotes before the version number
       - it is parsed by the KolourPaint wrapper script.
 -->
-<gui name="kolourpaint" version="24">
+<gui name="kolourpaint" version="25">
 
 <!--
 SYNC: Check for duplicate actions in menus caused by some of our actions
@@ -16,6 +16,7 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
         <!-- <Action name="file_new_window" append="new_merge" /> -->
 
         <Action name="file_scan" append="open_merge" />
+
         <Action name="file_export" append="save_merge" />
         <Separator append="save_merge" />
 
