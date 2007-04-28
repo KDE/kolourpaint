@@ -40,6 +40,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
+#include <kiconloader.h>
 #include <kimagefilepreview.h>
 #include <kimageio.h>
 #include <kio/netaccess.h>
@@ -74,7 +75,7 @@ void kpMainWindow::setupFileMenuActions ()
     m_actionExport = new KAction (i18n ("E&xport..."), 0,
         this, SLOT (slotExport ()), ac, "file_export");
 
-    m_actionScan = new KAction (i18n ("Scan..."), 0,
+    m_actionScan = new KAction (i18n ("Scan..."), SmallIcon ("scanner"), 0,
         this, SLOT (slotScan ()), ac, "file_scan");
 
     //m_actionRevert = KStdAction::revert (this, SLOT (slotRevert ()), ac);
@@ -362,35 +363,87 @@ void kpMainWindow::slotOpenRecent (const KURL &url)
 // private slot
 void kpMainWindow::slotScan ()
 {
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kdDebug () << "kpMainWindow::slotScan() scanDialog=" << m_scanDialog << endl;
+#endif
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+
     if (!m_scanDialog)
     {
+        // Create scan dialog by looking for plugin.
         m_scanDialog = KScanDialog::getScanDialog (this, "scandialog", true/*modal*/);
-        // No scanning support installed?
-        if (!m_scanDialog)
+
+        // No scanning support (kdegraphics/libkscan) installed?
+        // [Remove $KDEDIR/share/servicetypes/kscan.desktop and
+        //         $KDEDIR/share/services/scanservice.desktop to simulate this]
+        if (!m_scanDialog) {
+        #if DEBUG_KP_MAIN_WINDOW || 1
+            kdDebug () << "\tcould not create scan dialog" << endl;
+        #endif
+            // SYNC: We really need a dialog here.  We can't due to string freeze.
+            //
+            //       Or we could try to create the scan dialog in the ctor
+            //       and just disable the action in the first place.  But
+            //       this increases startup time and is also too risky on
+            //       the stable branch (e.g. if the scan support hangs,
+            //       KolourPaint would not be able to be started at all).
+            m_actionScan->setEnabled (false);
             return;
+        }
  
+    #if DEBUG_KP_MAIN_WINDOW || 1
+        kdDebug () << "\tcreated scanDialog=" << m_scanDialog << endl;
+    #endif
         connect (m_scanDialog, SIGNAL (finalImage (const QImage &, int)),
                  SLOT (slotScanned (const QImage &, int)));
     }
 
+
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kdDebug () << "\tcalling setup" << endl;
+#endif
+    // Bring up dialog to select scan device.
     if (m_scanDialog->setup ())
     {
+    #if DEBUG_KP_MAIN_WINDOW || 1
+        kdDebug () << "\t\tOK - showing dialog" << endl;
+    #endif
         // Called only if scanner configured/available.
+        //
+        // In reality, this seems to be called even if you press "Cancel" in
+        // the KScanDialog::setup() dialog!
         m_scanDialog->show ();
+    }
+    else
+    {
+        // Have never seen this code path execute even if "Cancel" is pressed.
+    #if DEBUG_KP_MAIN_WINDOW || 1
+        kdDebug () << "\t\tFAIL" << endl;
+    #endif
     }
 }
 
 // private slot
 void kpMainWindow::slotScanned (const QImage &image, int)
 {
-    QApplication::setOverrideCursor (Qt::waitCursor);
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kdDebug () << "kpMainWindow::slotScanned() image.rect=" << image.rect () << endl;
+#endif
 
+    // (just in case there's some drawing between slotScan() exiting and
+    //  us being called)
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
+
     kpDocument *doc = new kpDocument (image.width (), image.height (), this);
+    // TODO: Lossy conversion from image to pixmap.
     doc->setPixmap (image);
 
+    // TODO: This duplicates code with kpMainWindow::open().
     if (shouldOpenInNewWindow ())
     {
         kpMainWindow *win = new kpMainWindow (doc);
@@ -399,8 +452,10 @@ void kpMainWindow::slotScanned (const QImage &image, int)
     else
         setDocument (doc);
 
-    QApplication::restoreOverrideCursor ();
 
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kdDebug () << "\thiding dialog" << endl;
+#endif
     m_scanDialog->hide ();
 }
 
