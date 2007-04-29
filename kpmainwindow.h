@@ -295,7 +295,6 @@ private:
     bool m_exportFirstTime;
 
 private:
-    bool shouldOpenInNewWindow () const;
     void addRecentURL (const KURL &url);
     void setRecentURLs (const QStringList &items);
 
@@ -305,6 +304,10 @@ private slots:
 private:
     QSize defaultDocSize () const;
     void saveDefaultDocSize (const QSize &size);
+
+private:
+    bool shouldOpenInNewWindow () const;
+    void setDocumentChoosingWindow (kpDocument *doc);
 
 private:
     bool open (const KURL &url, bool newDocSameNameIfNotExist = false);
@@ -468,14 +471,14 @@ private slots:
 public:
     void zoomIn (bool centerUnderCursor = false);
     void zoomOut (bool centerUnderCursor = false);
-    
+
 public slots:
     void slotZoomIn ();
     void slotZoomOut ();
 
 private:
     void zoomAccordingToZoomAction (bool centerUnderCursor = false);
-    
+
 private slots:
     void slotZoom ();
 

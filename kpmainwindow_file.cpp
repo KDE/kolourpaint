@@ -130,12 +130,6 @@ void kpMainWindow::enableFileMenuDocumentActions (bool enable)
 
 
 // private
-bool kpMainWindow::shouldOpenInNewWindow () const
-{
-    return (m_document && !m_document->isEmpty ());
-}
-
-// private
 void kpMainWindow::addRecentURL (const KURL &url)
 {
 #if DEBUG_KP_MAIN_WINDOW
@@ -204,7 +198,6 @@ void kpMainWindow::setRecentURLs (const QStringList &items)
 }
 
 
-
 // private slot
 void kpMainWindow::slotNew ()
 {
@@ -266,6 +259,30 @@ void kpMainWindow::saveDefaultDocSize (const QSize &size)
 
 
 // private
+bool kpMainWindow::shouldOpenInNewWindow () const
+{
+    return (m_document && !m_document->isEmpty ());
+}
+
+// private
+void kpMainWindow::setDocumentChoosingWindow (kpDocument *doc)
+{
+    // need new window?
+    if (shouldOpenInNewWindow ())
+    {
+        // send doc to new window
+        kpMainWindow *win = new kpMainWindow (doc);
+        win->show ();
+    }
+    else
+    {
+        // set up views, doc signals
+        setDocument (doc);
+    }
+}
+
+
+// private
 bool kpMainWindow::open (const KURL &url, bool newDocSameNameIfNotExist)
 {
     QSize docSize = defaultDocSize ();
@@ -283,18 +300,8 @@ bool kpMainWindow::open (const KURL &url, bool newDocSameNameIfNotExist)
         return false;
     }
 
-    // need new window?
-    if (shouldOpenInNewWindow ())
-    {
-        // send doc to new window
-        kpMainWindow *win = new kpMainWindow (newDoc);
-        win->show ();
-    }
-    else
-    {
-        // set up views, doc signals
-        setDocument (newDoc);
-    }
+    // Send document to current or new window.
+    setDocumentChoosingWindow (newDoc);
 
     return true;
 }
@@ -363,7 +370,7 @@ void kpMainWindow::slotOpenRecent (const KURL &url)
 // private slot
 void kpMainWindow::slotScan ()
 {
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotScan() scanDialog=" << m_scanDialog << endl;
 #endif
 
@@ -381,7 +388,7 @@ void kpMainWindow::slotScan ()
         //         $KDEDIR/share/services/scanservice.desktop to simulate this]
         if (!m_scanDialog)
         {
-        #if DEBUG_KP_MAIN_WINDOW || 1
+        #if DEBUG_KP_MAIN_WINDOW
             kdDebug () << "\tcould not create scan dialog" << endl;
         #endif
             // SYNC: We really need a dialog here.  We can't due to string freeze.
@@ -395,7 +402,7 @@ void kpMainWindow::slotScan ()
             return;
         }
 
-    #if DEBUG_KP_MAIN_WINDOW || 1
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tcreated scanDialog=" << m_scanDialog << endl;
     #endif
         connect (m_scanDialog, SIGNAL (finalImage (const QImage &, int)),
@@ -403,13 +410,13 @@ void kpMainWindow::slotScan ()
     }
 
 
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\tcalling setup" << endl;
 #endif
     // Bring up dialog to select scan device.
     if (m_scanDialog->setup ())
     {
-    #if DEBUG_KP_MAIN_WINDOW || 1
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\t\tOK - showing dialog" << endl;
     #endif
         // Called only if scanner configured/available.
@@ -421,7 +428,7 @@ void kpMainWindow::slotScan ()
     else
     {
         // Have never seen this code path execute even if "Cancel" is pressed.
-    #if DEBUG_KP_MAIN_WINDOW || 1
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\t\tFAIL" << endl;
     #endif
     }
@@ -430,7 +437,7 @@ void kpMainWindow::slotScan ()
 // private slot
 void kpMainWindow::slotScanned (const QImage &image, int)
 {
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotScanned() image.rect=" << image.rect () << endl;
 #endif
 
@@ -439,9 +446,12 @@ void kpMainWindow::slotScanned (const QImage &image, int)
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
+
     // TODO: Maybe this code should be moved into kpdocument.cpp -
     //       since it resembles the responsibilities of kpDocument::open().
 
+    // Convert QImage to kpDocument's image format, gathering meta info
+    // from QImage.
     kpDocumentSaveOptions saveOptions;
     kpDocumentMetaInfo metaInfo;
     const QPixmap pixmap = kpDocument::convertToPixmapAsLosslessAsPossible (
@@ -454,7 +464,7 @@ void kpMainWindow::slotScanned (const QImage &image, int)
 
     if (pixmap.isNull ())
     {
-    #if DEBUG_KP_MAIN_WINDOW || 1
+    #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tcould not convert to pixmap" << endl;
     #endif
         // SYNC: After string freeze, we need a message like
@@ -463,22 +473,19 @@ void kpMainWindow::slotScanned (const QImage &image, int)
         return;
     }
 
+
+    // Create document from image and meta info.
     kpDocument *doc = new kpDocument (pixmap.width (), pixmap.height (), this);
     doc->setPixmap (pixmap);
     doc->setSaveOptions (saveOptions);
     doc->setMetaInfo (metaInfo);
 
-    // TODO: This duplicates code with kpMainWindow::open().
-    if (shouldOpenInNewWindow ())
-    {
-        kpMainWindow *win = new kpMainWindow (doc);
-        win->show ();
-    }
-    else
-        setDocument (doc);
+
+    // Send document to current or new window.
+    setDocumentChoosingWindow (doc);
 
 
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "\thiding dialog" << endl;
 #endif
     m_scanDialog->hide ();
