@@ -70,7 +70,7 @@ public:
 
     // Wraps kpPixmapFX::convertToPixmapAsLosslessAsPossible() but also
     // returns document meta information.
-    static QPixmap kpDocument::convertToPixmapAsLosslessAsPossible (
+    static QPixmap convertToPixmapAsLosslessAsPossible (
         const QImage &image,
         const kpPixmapFX::WarnAboutLossInfo &wali = kpPixmapFX::WarnAboutLossInfo (),
         kpDocumentSaveOptions *saveOptions = 0,
