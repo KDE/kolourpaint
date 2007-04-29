@@ -125,69 +125,16 @@ void kpDocument::setMainWindow (kpMainWindow *mainWindow)
  */
 
 // public static
-QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExistDialog,
-                                       QWidget *parent,
-                                       kpDocumentSaveOptions *saveOptions,
-                                       kpDocumentMetaInfo *metaInfo)
+QPixmap kpDocument::convertToPixmapAsLosslessAsPossible (
+        const QImage &image,
+        const kpPixmapFX::WarnAboutLossInfo &wali,
+
+        kpDocumentSaveOptions *saveOptions,
+        kpDocumentMetaInfo *metaInfo)
 {
-#if DEBUG_KP_DOCUMENT
-    kdDebug () << "kpDocument::getPixmapFromFile(" << url << "," << parent << ")" << endl;
-#endif
-
-    if (saveOptions)
-        *saveOptions = kpDocumentSaveOptions ();
-
-    if (metaInfo)
-        *metaInfo = kpDocumentMetaInfo ();
-
-
-    QString tempFile;
-    if (url.isEmpty () || !KIO::NetAccess::download (url, tempFile, parent))
-    {
-        if (!suppressDoesntExistDialog)
-        {
-            KMessageBox::sorry (parent,
-                                i18n ("Could not open \"%1\".")
-                                    .arg (kpDocument::prettyFilenameForURL (url)));
-        }
-
-        return QPixmap ();
-    }
-
-
-    // sync: remember to "KIO::NetAccess::removeTempFile (tempFile)" in all exit paths
-
-    QString detectedMimeType = KImageIO::mimeType (tempFile);
-    if (saveOptions)
-        saveOptions->setMimeType (detectedMimeType);
-
-#if DEBUG_KP_DOCUMENT
-    kdDebug () << "\ttempFile=" << tempFile << endl;
-    kdDebug () << "\tmimetype=" << detectedMimeType << endl;
-    kdDebug () << "\tsrc=" << url.path () << endl;
-    kdDebug () << "\tmimetype of src=" << KImageIO::mimeType (url.path ()) << endl;
-#endif
-
-    if (detectedMimeType.isEmpty ())
-    {
-        KMessageBox::sorry (parent,
-                            i18n ("Could not open \"%1\" - unknown mimetype.")
-                                .arg (kpDocument::prettyFilenameForURL (url)));
-        KIO::NetAccess::removeTempFile (tempFile);
-        return QPixmap ();
-    }
-
-
-    QImage image (tempFile);
     if (image.isNull ())
-    {
-        KMessageBox::sorry (parent,
-                            i18n ("Could not open \"%1\" - unsupported image format.\n"
-                                  "The file may be corrupt.")
-                                .arg (kpDocument::prettyFilenameForURL (url)));
-        KIO::NetAccess::removeTempFile (tempFile);
         return QPixmap ();
-    }
+
 
 #if DEBUG_KP_DOCUMENT
     kdDebug () << "\timage: depth=" << image.depth ()
@@ -241,31 +188,7 @@ QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExist
 #endif
 
 
-    QPixmap newPixmap = kpPixmapFX::convertToPixmapAsLosslessAsPossible (image,
-        kpPixmapFX::WarnAboutLossInfo (
-             i18n ("The image \"%1\""
-                   " may have more colors than the current screen mode."
-                   " In order to display it, some colors may be changed."
-                   " Try increasing your screen depth to at least %2bpp."
-
-                   "\nIt also"
-
-                   " contains translucency which is not fully"
-                   " supported. The translucency data will be"
-                   " approximated with a 1-bit transparency mask.")
-                 .arg (prettyFilenameForURL (url)),
-             i18n ("The image \"%1\""
-                   " may have more colors than the current screen mode."
-                   " In order to display it, some colors may be changed."
-                   " Try increasing your screen depth to at least %2bpp.")
-                 .arg (prettyFilenameForURL (url)),
-             i18n ("The image \"%1\""
-                   " contains translucency which is not fully"
-                   " supported. The translucency data will be"
-                   " approximated with a 1-bit transparency mask.")
-                .arg (prettyFilenameForURL (url)),
-            "docOpen",
-            parent));
+    QPixmap newPixmap = kpPixmapFX::convertToPixmapAsLosslessAsPossible (image, wali);
 
 
 #if DEBUG_KP_DOCUMENT && 1
@@ -302,12 +225,112 @@ QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExist
 }
 #endif
 
+    return newPixmap;
+}
+
+// public static
+QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExistDialog,
+                                       QWidget *parent,
+                                       kpDocumentSaveOptions *saveOptions,
+                                       kpDocumentMetaInfo *metaInfo)
+{
+#if DEBUG_KP_DOCUMENT
+    kdDebug () << "kpDocument::getPixmapFromFile(" << url << "," << parent << ")" << endl;
+#endif
+
+    if (saveOptions)
+        *saveOptions = kpDocumentSaveOptions ();
+
+    if (metaInfo)
+        *metaInfo = kpDocumentMetaInfo ();
+
+
+    QString tempFile;
+    if (url.isEmpty () || !KIO::NetAccess::download (url, tempFile, parent))
+    {
+        if (!suppressDoesntExistDialog)
+        {
+            KMessageBox::sorry (parent,
+                                i18n ("Could not open \"%1\".")
+                                    .arg (kpDocument::prettyFilenameForURL (url)));
+        }
+
+        return QPixmap ();
+    }
+
+
+    QImage image;
+
+    // sync: remember to "KIO::NetAccess::removeTempFile (tempFile)" in all exit paths
+    {
+        QString detectedMimeType = KImageIO::mimeType (tempFile);
+        if (saveOptions)
+            saveOptions->setMimeType (detectedMimeType);
+
+    #if DEBUG_KP_DOCUMENT
+        kdDebug () << "\ttempFile=" << tempFile << endl;
+        kdDebug () << "\tmimetype=" << detectedMimeType << endl;
+        kdDebug () << "\tsrc=" << url.path () << endl;
+        kdDebug () << "\tmimetype of src=" << KImageIO::mimeType (url.path ()) << endl;
+    #endif
+
+        if (detectedMimeType.isEmpty ())
+        {
+            KMessageBox::sorry (parent,
+                                i18n ("Could not open \"%1\" - unknown mimetype.")
+                                    .arg (kpDocument::prettyFilenameForURL (url)));
+            KIO::NetAccess::removeTempFile (tempFile);
+            return QPixmap ();
+        }
+
+
+        image = QImage (tempFile);
+        KIO::NetAccess::removeTempFile (tempFile);
+    }
+
+
+    if (image.isNull ())
+    {
+        KMessageBox::sorry (parent,
+                            i18n ("Could not open \"%1\" - unsupported image format.\n"
+                                  "The file may be corrupt.")
+                                .arg (kpDocument::prettyFilenameForURL (url)));
+        return QPixmap ();
+    }
+
+    const QPixmap newPixmap = kpDocument::convertToPixmapAsLosslessAsPossible (image,
+        kpPixmapFX::WarnAboutLossInfo (
+             i18n ("The image \"%1\""
+                   " may have more colors than the current screen mode."
+                   " In order to display it, some colors may be changed."
+                   " Try increasing your screen depth to at least %2bpp."
+
+                   "\nIt also"
+
+                   " contains translucency which is not fully"
+                   " supported. The translucency data will be"
+                   " approximated with a 1-bit transparency mask.")
+                 .arg (prettyFilenameForURL (url)),
+             i18n ("The image \"%1\""
+                   " may have more colors than the current screen mode."
+                   " In order to display it, some colors may be changed."
+                   " Try increasing your screen depth to at least %2bpp.")
+                 .arg (prettyFilenameForURL (url)),
+             i18n ("The image \"%1\""
+                   " contains translucency which is not fully"
+                   " supported. The translucency data will be"
+                   " approximated with a 1-bit transparency mask.")
+                .arg (prettyFilenameForURL (url)),
+            "docOpen",
+            parent),
+        saveOptions,
+        metaInfo);
+
     if (newPixmap.isNull ())
     {
         KMessageBox::sorry (parent,
                             i18n ("Could not open \"%1\" - out of graphics memory.")
                                 .arg (kpDocument::prettyFilenameForURL (url)));
-        KIO::NetAccess::removeTempFile (tempFile);
         return QPixmap ();
     }
 
@@ -319,7 +342,6 @@ QPixmap kpDocument::getPixmapFromFile (const KURL &url, bool suppressDoesntExist
 #endif
 
 
-    KIO::NetAccess::removeTempFile (tempFile);
     return newPixmap;
 }
 

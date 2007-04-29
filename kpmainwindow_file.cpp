@@ -394,7 +394,7 @@ void kpMainWindow::slotScan ()
             m_actionScan->setEnabled (false);
             return;
         }
- 
+
     #if DEBUG_KP_MAIN_WINDOW || 1
         kdDebug () << "\tcreated scanDialog=" << m_scanDialog << endl;
     #endif
@@ -439,10 +439,34 @@ void kpMainWindow::slotScanned (const QImage &image, int)
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
+    // TODO: Maybe this code should be moved into kpdocument.cpp -
+    //       since it resembles the responsibilities of kpDocument::open().
 
-    kpDocument *doc = new kpDocument (image.width (), image.height (), this);
-    // TODO: Lossy conversion from image to pixmap.
-    doc->setPixmap (image);
+    kpDocumentSaveOptions saveOptions;
+    kpDocumentMetaInfo metaInfo;
+    const QPixmap pixmap = kpDocument::convertToPixmapAsLosslessAsPossible (
+        image,
+        // SYNC: After string freeze, have a custom message about the
+        //       "scanned image".
+        kpMainWindow::pasteWarnAboutLossInfo (),
+        &saveOptions,
+        &metaInfo);
+
+    if (pixmap.isNull ())
+    {
+    #if DEBUG_KP_MAIN_WINDOW || 1
+        kdDebug () << "\tcould not convert to pixmap" << endl;
+    #endif
+        // SYNC: After string freeze, we need a message like
+        //       "out of graphics memory" (see
+        //        kpDocument::getPixmapFromFile()).
+        return;
+    }
+
+    kpDocument *doc = new kpDocument (pixmap.width (), pixmap.height (), this);
+    doc->setPixmap (pixmap);
+    doc->setSaveOptions (saveOptions);
+    doc->setMetaInfo (metaInfo);
 
     // TODO: This duplicates code with kpMainWindow::open().
     if (shouldOpenInNewWindow ())
@@ -974,7 +998,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
         // according to the screen's DPI.
         // TODO: I think we should use the image's DPI.  Technically
         //       possible?
-        //       
+        //
         //       So no matter what computer you draw text on, you get
         //       the same pixels.
         //
@@ -1015,7 +1039,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
                << endl;
 #endif
 
-    
+
     double dpiX = pixmapDotsPerMeterX / InchesPerMeter;
     double dpiY = pixmapDotsPerMeterY / InchesPerMeter;
 #if DEBUG_KP_MAIN_WINDOW

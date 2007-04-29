@@ -35,7 +35,10 @@
 
 #include <kurl.h>
 
+#include <kppixmapfx.h>
 
+
+class QImage;
 class QIODevice;
 class QPixmap;
 class QPoint;
@@ -64,6 +67,14 @@ public:
     /*
      * File I/O
      */
+
+    // Wraps kpPixmapFX::convertToPixmapAsLosslessAsPossible() but also
+    // returns document meta information.
+    static QPixmap kpDocument::convertToPixmapAsLosslessAsPossible (
+        const QImage &image,
+        const kpPixmapFX::WarnAboutLossInfo &wali = kpPixmapFX::WarnAboutLossInfo (),
+        kpDocumentSaveOptions *saveOptions = 0,
+        kpDocumentMetaInfo *metaInfo = 0);
 
     static QPixmap getPixmapFromFile (const KURL &url, bool suppressDoesntExistDialog,
                                       QWidget *parent,
