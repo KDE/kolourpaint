@@ -1,0 +1,11 @@
+The KDE 3.4 branch of KolourPaint is unmaintained, due to a lack of time.
+No more changes will be made in this branch, except for security fixes.
+
+The last change we merged in, from the latest stable branch of KDE (3.5), was:
+
+    r613815 | dang | 2006-12-15 21:27:53 +1100 (Fri, 15 Dec 2006) | 16 lines
+    Changed paths:
+        M /branches/KDE/3.5/kdegraphics/kolourpaint/
+
+If you must use KDE 3.4, you should manually merge in later fixes from the
+latest stable branch (KDE 3.5).
