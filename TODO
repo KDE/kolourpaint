@@ -3,7 +3,8 @@
 2. Look in patches/
 3. grep sources for:
    "OPT" - something that could be optimised
-   "TODO" - something that should be done; some TODO's should really be HITODO's
+   "LOTODO" - something that should be done but probably no one will care
+   "TODO" - something that should be done; some TODO's should really be LOTODO's or HITODO's
    "HITODO" - something that _must_ be done before the next release
    "HACK" - something that _really_ should be done better
    TODO: explain "SYNC" (check something still valid for each KolourPaint or KDE or Qt release), "sync" (check dependencies between code when modifying), "COMPAT" (KDE 4 port breakage)
