@@ -463,6 +463,19 @@ void kpMainWindow::slotScanned (const QImage &image, int)
     kdDebug () << "kpMainWindow::slotScanned() image.rect=" << image.rect () << endl;
 #endif
 
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\thiding dialog" << endl;
+#endif
+    // (KScanDialog does not close itself after a scan is made)
+    //
+    // Close the dialog, first thing:
+    //
+    // 1. This means that any dialogs we bring up won't be nested on top.
+    //
+    // 2. We don't want to return from this method but forget to close
+    //    the dialog.  So do it before anything else.
+    m_scanDialog->hide ();
+
     // (just in case there's some drawing between slotScan() exiting and
     //  us being called)
     if (toolHasBegunShape ())
@@ -505,12 +518,6 @@ void kpMainWindow::slotScanned (const QImage &image, int)
 
     // Send document to current or new window.
     setDocumentChoosingWindow (doc);
-
-
-#if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "\thiding dialog" << endl;
-#endif
-    m_scanDialog->hide ();
 }
 
 
