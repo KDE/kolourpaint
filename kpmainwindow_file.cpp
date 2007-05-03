@@ -381,6 +381,7 @@ void kpMainWindow::slotScan ()
     if (!m_scanDialog)
     {
         // Create scan dialog by looking for plugin.
+        // [takes about 500ms on 350Mhz]
         m_scanDialog = KScanDialog::getScanDialog (this, "scandialog", true/*modal*/);
 
         // No scanning support (kdegraphics/libkscan) installed?
@@ -392,13 +393,34 @@ void kpMainWindow::slotScan ()
             kdDebug () << "\tcould not create scan dialog" << endl;
         #endif
             // SYNC: We really need a dialog here.  We can't due to string freeze.
+            //       In order to signal to the user -- without a dialog -- that
+            //       scanning support is not installed, we disable the action
+            //       in every window.
             //
             //       Or we could try to create the scan dialog in the ctor
             //       and just disable the action in the first place.  But
             //       this increases startup time and is also too risky on
             //       the stable branch (e.g. if the scan support hangs,
             //       KolourPaint would not be able to be started at all).
-            m_actionScan->setEnabled (false);
+
+            // TODO: PROPAGATE: interprocess
+            if (KMainWindow::memberList)
+            {
+                for (QPtrList <KMainWindow>::const_iterator it = KMainWindow::memberList->begin ();
+                     it != KMainWindow::memberList->end ();
+                     it++)
+                {
+                    kpMainWindow *mw = dynamic_cast <kpMainWindow *> (*it);
+                    Q_ASSERT (mw);
+
+                #if DEBUG_KP_MAIN_WINDOW
+                    kdDebug () << "\t\tmw=" << mw << endl;
+                #endif
+
+                    mw->m_actionScan->setEnabled (false);
+                }
+            }
+
             return;
         }
 
