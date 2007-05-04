@@ -278,7 +278,7 @@ protected slots:  // TODO: there is no reason why these should be slots
     virtual void slotColorsSwapped (const kpColor & /*newForegroundColor*/, const kpColor & /*newBackgroundColor*/) {}
     virtual void slotForegroundColorChanged (const kpColor & /*color*/) {}
     virtual void slotBackgroundColorChanged (const kpColor & /*color*/) {}
-    virtual void slotColorSimilarityChanged (double /*similarity*/, int /*processedSimilarity*/) {};
+    virtual void slotColorSimilarityChanged (double /*similarity*/, int /*processedSimilarity*/) {}
 
 protected:
     // (only valid in slots connected to the respective signals above)
