@@ -684,14 +684,30 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
     }
 
 
-    KTempFile tempFile;
-    tempFile.setAutoDelete (true);
-
-    QString filename;
-
-    if (!url.isLocalFile ())
+    // Local file?
+    if (url.isLocalFile ())
     {
-        filename = tempFile.name ();
+        const QString filename = url.path ();
+
+        // Write to local file directly.
+        // HITODO: This is NOT atomic.  This truncates files if saving fails.
+        //         MUST BE FIXED.
+        QFile file (filename);
+        if (!savePixmapToQFile (pixmap,
+                                &file, url,
+                                saveOptions, metaInfo,
+                                parent))
+        {
+            return false;
+        }
+    }
+    // Remote file?
+    else
+    {
+        KTempFile tempFile;
+        tempFile.setAutoDelete (true);
+
+        QString filename = tempFile.name ();
         if (filename.isEmpty ())
         {
         #if DEBUG_KP_DOCUMENT
@@ -701,22 +717,19 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
                                 i18n ("Could not save image - unable to create temporary file."));
             return false;
         }
-    }
-    else
-        filename = url.path ();
 
+        // Write to local temporary file.
+        QFile file (filename);
+        if (!savePixmapToQFile (pixmap,
+                                &file, url,
+                                saveOptions, metaInfo,
+                                parent))
+        {
+            return false;
+        }
 
-    QFile file (filename);
-    if (!savePixmapToQFile (pixmap,
-                            &file, url,
-                            saveOptions, metaInfo,
-                            parent))
-    {
-        return false;
-    }
-
-    if (!url.isLocalFile ())
-    {
+        // Copy local temporary file to overwrite remote.
+        // TODO: We're assuming this is atomic - I think it is.
         if (!KIO::NetAccess::upload (filename, url, parent))
         {
         #if DEBUG_KP_DOCUMENT
