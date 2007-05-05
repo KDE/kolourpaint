@@ -595,6 +595,47 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     return true;
 }
 
+// private static
+bool kpDocument::savePixmapToQFile (const QPixmap &pixmap,
+        QFile *file,
+        const KURL &url,
+        const kpDocumentSaveOptions &saveOptions,
+        const kpDocumentMetaInfo &metaInfo,
+        QWidget *parent)
+{
+    bool fileOpenOK = false;
+    if (!(fileOpenOK = file->open (IO_WriteOnly)) ||
+        !savePixmapToDevice (pixmap, file,
+                             saveOptions, metaInfo,
+                             false/*no lossy prompt*/,
+                             parent) ||
+        (file->close (),
+         file->status () != IO_Ok))
+    {
+    #if DEBUG_KP_DOCUMENT
+        if (!fileOpenOK)
+        {
+            kdDebug () << "\treturning false because fileOpenOK=false"
+                       << " errorString=" << file.errorString () << endl;
+        }
+        else
+        {
+            kdDebug () << "\treturning false because could not save pixmap to device"
+                       << endl;
+        }
+    #endif
+
+        // TODO: use file.errorString()
+        KMessageBox::error (parent,
+                            i18n ("Could not save as \"%1\".")
+                                .arg (kpDocument::prettyFilenameForURL (url)));
+
+        return false;
+    }
+
+    return true;
+}
+
 // public static
 bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
                                    const KURL &url,
@@ -666,36 +707,13 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
 
 
     QFile file (filename);
-    bool fileOpenOK = false;
-    if (!(fileOpenOK = file.open (IO_WriteOnly)) ||
-        !savePixmapToDevice (pixmap, &file,
-                             saveOptions, metaInfo,
-                             false/*no lossy prompt*/,
-                             parent) ||
-        (file.close (),
-         file.status () != IO_Ok))
+    if (!savePixmapToQFile (pixmap,
+                            &file, url,
+                            saveOptions, metaInfo,
+                            parent))
     {
-    #if DEBUG_KP_DOCUMENT
-        if (!fileOpenOK)
-        {
-            kdDebug () << "\treturning false because fileOpenOK=false"
-                       << " errorString=" << file.errorString () << endl;
-        }
-        else
-        {
-            kdDebug () << "\treturning false because could not save pixmap to device"
-                       << endl;
-        }
-    #endif
-
-        // TODO: use file.errorString()
-        KMessageBox::error (parent,
-                            i18n ("Could not save as \"%1\".")
-                                .arg (kpDocument::prettyFilenameForURL (url)));
-
         return false;
     }
-
 
     if (!url.isLocalFile ())
     {
