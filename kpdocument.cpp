@@ -684,9 +684,9 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
 
             // Write to local temporary file.
             if (!savePixmapToDevice (pixmap, atomicFileWriter.file (),
-                                    saveOptions, metaInfo,
-                                    false/*no lossy prompt*/,
-                                    parent))
+                                     saveOptions, metaInfo,
+                                     false/*no lossy prompt*/,
+                                     parent))
             {
                 atomicFileWriter.abort ();
 

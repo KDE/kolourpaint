@@ -38,7 +38,6 @@
 #include <kppixmapfx.h>
 
 
-class QFile;
 class QImage;
 class QIODevice;
 class QPixmap;
@@ -96,16 +95,6 @@ public:
                                     bool lossyPrompt,
                                     QWidget *parent,
                                     bool *userCancelled = 0);
-private:
-    // Saves <pixmap>, with <saveOptions> and <metaInfo>, to <file> and returns true.
-    // On error, brings up an error dialog using <url> and <parent>, and returns false.
-    static bool savePixmapToQFile (const QPixmap &pixmap,
-                                   QFile *file,
-                                   const KURL &url,
-                                   const kpDocumentSaveOptions &saveOptions,
-                                   const kpDocumentMetaInfo &metaInfo,
-                                   QWidget *parent);
-public:
     static bool savePixmapToFile (const QPixmap &pixmap,
                                   const KURL &url,
                                   const kpDocumentSaveOptions &saveOptions,
