@@ -2,7 +2,11 @@
 KolourPaint 1.4_relight Series (branches/KDE/3.5/)
 ===============================
 
-KolourPaint 1.4.7_relight (Frozen 2007-04-30)
+KolourPaint 1.4.7_relight (Frozen 2007-05-14)
+
+   * Save local files atomically - KolourPaint will no longer truncate
+     an existing file if the KImageIO library for the file format is
+     missing or if you run out of disk space.
 
    * Add "File / Scan..." feature (Martin Koller)
 
