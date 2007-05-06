@@ -52,6 +52,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>
+#include <ksavefile.h>
 #include <ktempfile.h>
 
 #include <kpcolor.h>
@@ -595,45 +596,18 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     return true;
 }
 
-// private static
-bool kpDocument::savePixmapToQFile (const QPixmap &pixmap,
-        QFile *file,
-        const KURL &url,
-        const kpDocumentSaveOptions &saveOptions,
-        const kpDocumentMetaInfo &metaInfo,
-        QWidget *parent)
+static void CouldNotCreateTemporaryFileDialog (QWidget *parent)
 {
-    bool fileOpenOK = false;
-    if (!(fileOpenOK = file->open (IO_WriteOnly)) ||
-        !savePixmapToDevice (pixmap, file,
-                             saveOptions, metaInfo,
-                             false/*no lossy prompt*/,
-                             parent) ||
-        (file->close (),
-         file->status () != IO_Ok))
-    {
-    #if DEBUG_KP_DOCUMENT
-        if (!fileOpenOK)
-        {
-            kdDebug () << "\treturning false because fileOpenOK=false"
-                       << " errorString=" << file.errorString () << endl;
-        }
-        else
-        {
-            kdDebug () << "\treturning false because could not save pixmap to device"
-                       << endl;
-        }
-    #endif
+    KMessageBox::error (parent,
+                        i18n ("Could not save image - unable to create temporary file."));
+}
 
-        // TODO: use file.errorString()
-        KMessageBox::error (parent,
-                            i18n ("Could not save as \"%1\".")
-                                .arg (kpDocument::prettyFilenameForURL (url)));
-
-        return false;
-    }
-
-    return true;
+static void CouldNotSaveDialog (const KURL &url, QWidget *parent)
+{
+    // TODO: use file.errorString()
+    KMessageBox::error (parent,
+                        i18n ("Could not save as \"%1\".")
+                            .arg (kpDocument::prettyFilenameForURL (url)));
 }
 
 // public static
@@ -689,21 +663,60 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
     {
         const QString filename = url.path ();
 
-        // Write to local file directly.
-        // HITODO: This is NOT atomic.  This truncates files if saving fails.
-        //         MUST BE FIXED.
-        QFile file (filename);
-        if (!savePixmapToQFile (pixmap,
-                                &file, url,
-                                saveOptions, metaInfo,
-                                parent))
+        // sync: All failure exit paths _must_ call KSaveFile::abort() or
+        //       else, the KSaveFile destructor will overwrite the file,
+        //       <filename>, despite the failure.
+        KSaveFile atomicFileWriter (filename);
         {
-            return false;
-        }
+            if (atomicFileWriter.status () != 0)
+            {
+                // We probably don't need this as <filename> has not been
+                // opened.
+                atomicFileWriter.abort ();
+
+            #if DEBUG_KP_DOCUMENT
+                kdDebug () << "\treturning false because could not open KSaveFile"
+                           << " status=" << atomicFileWriter.status () << endl;
+            #endif
+                ::CouldNotCreateTemporaryFileDialog (parent);
+                return false;
+            }
+
+            // Write to local temporary file.
+            if (!savePixmapToDevice (pixmap, atomicFileWriter.file (),
+                                    saveOptions, metaInfo,
+                                    false/*no lossy prompt*/,
+                                    parent))
+            {
+                atomicFileWriter.abort ();
+
+            #if DEBUG_KP_DOCUMENT
+                kdDebug () << "\treturning false because could not save pixmap to device"
+                            << endl;
+            #endif
+                ::CouldNotSaveDialog (url, parent);
+                return false;
+            }
+
+            // Atomically overwrite local file with the temporary file
+            // we saved to.
+            if (!atomicFileWriter.close ())
+            {
+                atomicFileWriter.abort ();
+
+            #if DEBUG_KP_DOCUMENT
+                kdDebug () << "\tcould not close KSaveFile" << endl;
+            #endif
+                ::CouldNotSaveDialog (url, parent);
+                return false;
+            }
+        }  // sync KSaveFile.abort()
     }
     // Remote file?
     else
     {
+        // Create temporary file that is deleted when the variable goes
+        // out of scope.
         KTempFile tempFile;
         tempFile.setAutoDelete (true);
 
@@ -713,23 +726,48 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         #if DEBUG_KP_DOCUMENT
             kdDebug () << "\treturning false because tempFile empty" << endl;
         #endif
-            KMessageBox::error (parent,
-                                i18n ("Could not save image - unable to create temporary file."));
+            ::CouldNotCreateTemporaryFileDialog (parent);
             return false;
         }
 
         // Write to local temporary file.
         QFile file (filename);
-        if (!savePixmapToQFile (pixmap,
-                                &file, url,
-                                saveOptions, metaInfo,
-                                parent))
         {
+            if (!file.open (IO_WriteOnly))
+            {
+            #if DEBUG_KP_DOCUMENT
+                kdDebug () << "\treturning false because can't open file"
+                            << " errorString=" << file.errorString () << endl;
+            #endif
+                ::CouldNotCreateTemporaryFileDialog (parent);
+                return false;
+            }
+
+            if (!savePixmapToDevice (pixmap, &file,
+                                     saveOptions, metaInfo,
+                                     false/*no lossy prompt*/,
+                                     parent))
+            {
+            #if DEBUG_KP_DOCUMENT
+                kdDebug () << "\treturning false because could not save pixmap to device"
+                            << endl;
+            #endif
+                ::CouldNotSaveDialog (url, parent);
+                return false;
+            }
+        }
+        file.close ();
+        if (file.status () != IO_Ok)
+        {
+        #if DEBUG_KP_DOCUMENT
+            kdDebug () << "\treturning false because could not close" << endl;
+        #endif
+            ::CouldNotSaveDialog (url, parent);
             return false;
         }
 
         // Copy local temporary file to overwrite remote.
-        // TODO: We're assuming this is atomic - I think it is.
+        // TODO: At least, FISH (ssh) is not atomic.
         if (!KIO::NetAccess::upload (filename, url, parent))
         {
         #if DEBUG_KP_DOCUMENT
