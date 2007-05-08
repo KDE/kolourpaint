@@ -767,7 +767,9 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         }
 
         // Copy local temporary file to overwrite remote.
-        // TODO: At least, FISH (ssh) is not atomic.
+        // TODO: No one seems to know how to do this atomically
+        //       [http://lists.kde.org/?l=kde-core-devel&m=117845162728484&w=2].
+        //       At least, fish:// (ssh) is definitely not atomic.
         if (!KIO::NetAccess::upload (filename, url, parent))
         {
         #if DEBUG_KP_DOCUMENT
