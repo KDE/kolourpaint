@@ -96,3 +96,16 @@ command scheme
 * freeform, elliptical selections
 
 * kpdocument.cpp manipulates document using kpPixmapFX instead of kpPainter (for invert?); look for such a TODO
+
+
+KDE 4 - about dialog
+KDE 4 - ksavefile [see /home/kdevel for 357 diff]
+
+KDE 4 -dpi gui
+
+KDE 4 open recent crash
+
+KDE 4 constructorWidth,Height -> originalWidth,Height
+
+KDE 4 distribute copyright (InputMethod, Koller, Montel etc.)
+
