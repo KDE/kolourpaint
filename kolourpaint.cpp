@@ -65,8 +65,14 @@ int main (int argc, char *argv [])
         I18N_NOOP ("Paint Program for KDE"),
         KAboutData::License_Custom,
         0/*copyright statement - see licence instead*/,
+#if 1
+        0/*free text*/,
+// SYNC: After string freeze, make below the "free text" but point to
+//       http://www.kolourpaint.org/support.
+#else
         I18N_NOOP ("Support / Feedback:\n"
                    "kolourpaint-support@lists.sourceforge.net\n"),
+#endif
         "http://www.kolourpaint.org/"
     );
 
@@ -75,6 +81,11 @@ int main (int argc, char *argv [])
     aboutData.setLicenseText (kpLicenseText);
 
 
+#if 1
+    aboutData.setCustomAuthorText (QString::null, QString::null);
+// SYNC: After string freeze, make below the custom author text but point to
+//       http://www.kolourpaint.org/support.
+#else
     aboutData.setCustomAuthorText (
         I18N_NOOP
         (
@@ -95,6 +106,7 @@ int main (int argc, char *argv [])
             "<br>"
             "</qt>"
         ));
+#endif
 
 
     // SYNC: with AUTHORS
