@@ -10,10 +10,12 @@ KolourPaint 1.4.7_relight (Frozen 2007-05-14)
 
    * Add "File / Scan..." feature (Martin Koller)
 
+   * Add global session save/restore (Bug #94651)
+
 KolourPaint 1.4.6_relight (Frozen 2007-01-13)
 
    * Fix crash triggered by rapidly deselecting the selection after
-     drag-scaling it (Bug 117866)
+     drag-scaling it (Bug #117866)
      [also in branches/KDE/3.[34]/, branches/kolourpaint/1.2_kde3/]
 
 KolourPaint 1.4.5_relight (Frozen 2006-09-19)
