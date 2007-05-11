@@ -220,7 +220,11 @@ int main (int argc, char *argv [])
 
 
     if (app.isRestored ())
+    {
+        // Creates a kpMainWindow using the default constructor and then
+        // calls kpMainWindow::readProperties().
         RESTORE (kpMainWindow)
+    }
     else
     {
         kpMainWindow *mainWindow;

@@ -283,28 +283,44 @@ void kpMainWindow::setDocumentChoosingWindow (kpDocument *doc)
 
 
 // private
-bool kpMainWindow::open (const KURL &url, bool newDocSameNameIfNotExist)
+kpDocument *kpMainWindow::openInternal (const KURL &url,
+        const QSize &fallbackDocSize,
+        bool newDocSameNameIfNotExist)
 {
-    QSize docSize = defaultDocSize ();
-
     // create doc
-    kpDocument *newDoc = new kpDocument (docSize.width (), docSize.height (), this);
-    if (newDoc->open (url, newDocSameNameIfNotExist))
-    {
-        if (newDoc->isFromURL (false/*don't bother checking exists*/))
-            addRecentURL (url);
-    }
-    else
+    kpDocument *newDoc = new kpDocument (fallbackDocSize.width (),
+                                         fallbackDocSize.height (),
+                                         this);
+    if (!newDoc->open (url, newDocSameNameIfNotExist))
     {
         delete newDoc;
-        return false;
+        return 0;
     }
 
     // Send document to current or new window.
     setDocumentChoosingWindow (newDoc);
 
-    return true;
+    return newDoc;
 }
+
+// private
+bool kpMainWindow::open (const KURL &url, bool newDocSameNameIfNotExist)
+{
+    kpDocument *newDoc = openInternal (url,
+                                       defaultDocSize (),
+                                       newDocSameNameIfNotExist);
+    if (newDoc)
+    {
+        if (newDoc->isFromURL (false/*don't bother checking exists*/))
+            addRecentURL (url);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 
 // private
 KURL::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &startURL,

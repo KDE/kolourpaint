@@ -132,5 +132,20 @@
 #define kpSettingFlattenEffectColor2 QString::fromLatin1 ("Color2")
 
 
+//
+// Session Restore Setting
+//
+
+// URL of the document in the main window.
+//
+// This key only exists if the document does.  If it exists, it can be empty.
+// The URL need not point to a file that exists e.g. "kolourpaint doesnotexist.png".
+#define kpSessionSettingDocumentUrl QString::fromLatin1 ("Session Document Url")
+
+// The size of a document which is not from a URL e.g. "kolourpaint doesnotexist.png".
+// This key does not exist for documents from URLs.
+#define kpSessionSettingNotFromUrlDocumentSize QString::fromLatin1 ("Session Not-From-Url Document Size")
+
+
 #endif  // __kp_defs_h__
 

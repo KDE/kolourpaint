@@ -120,6 +120,15 @@ private:
     void readThumbnailSettings ();
     void init ();
 
+    // (only called for restoring a previous session e.g. starting KDE with
+    //  a previously saved session; it's not called on normal KolourPaint
+    //  startup)
+    virtual void readProperties (KConfig *cfg);
+    // (only called for saving the current session e.g. logging out of KDE
+    //  with the KolourPaint window open; it's not called on normal KolourPaint
+    //  exit)
+    virtual void saveProperties (KConfig *cfg);
+
 public:
     ~kpMainWindow ();
 
@@ -310,7 +319,22 @@ private:
     void setDocumentChoosingWindow (kpDocument *doc);
 
 private:
+    kpDocument *openInternal (const KURL &url,
+        const QSize &fallbackDocSize,
+        bool newDocSameNameIfNotExist);
+    // Same as above except that it:
+    //
+    // 1. Assumes a default fallback document size.
+    // 2. If the URL is successfully opened (with the special exception of
+    //    the "kolourpaint doesnotexist.png" case), it is bubbled up to the
+    //    top in the Recent Files Action.
+    //
+    // As a result of this behavior, this should only be called in response
+    // to a user open request e.g. File / Open or "kolourpaint doesexist.png".
+    // It should not be used for session restore - in that case, it does not
+    // make sense to bubble the Recent Files list.
     bool open (const KURL &url, bool newDocSameNameIfNotExist = false);
+
     KURL::List askForOpenURLs (const QString &caption,
                                const QString &startURL,
                                bool allowMultipleURLs = true);

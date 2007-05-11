@@ -310,6 +310,170 @@ void kpMainWindow::init ()
 #endif
 }
 
+
+// private virtual [base KMainWindow]
+void kpMainWindow::readProperties (KConfig *cfg)
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow<" << this << ">::readProperties()" << endl;
+#endif
+
+    // No document at all?
+    if (!cfg->hasKey (kpSessionSettingDocumentUrl))
+    {
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\tno url - no document" << endl;
+    #endif
+        setDocument (0);
+    }
+    // Have a document.
+    else
+    {
+        const KURL url (cfg->readEntry (kpSessionSettingDocumentUrl));
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\turl=" << url << endl;
+    #endif
+
+        const QSize notFromURLDocSize =
+            cfg->readSizeEntry (kpSessionSettingNotFromUrlDocumentSize);
+
+        // Is from URL?
+        if (notFromURLDocSize.isEmpty ())
+        {
+            // If this fails, the empty document that kpMainWindow::kpMainWindow()
+            // created is left untouched.
+            openInternal (url, defaultDocSize (),
+                false/*show error message if url !exist*/);
+        }
+        // Not from URL?
+        else
+        {
+        #if DEBUG_KP_MAIN_WINDOW
+            kdDebug () << "\tnot from url; doc size=" << notFromURLDocSize << endl;
+        #endif
+            // Either we have an empty URL or we have a "kolourpaint doesnotexist.png"
+            // URL.  Regarding the latter case, if a file now actually exists at that
+            // URL, we do open it - ignoring notFromURLDocSize - to avoid putting
+            // the user in a situation where he might accidentally overwrite an
+            // existing file.
+            openInternal (url, notFromURLDocSize,
+                true/*create an empty doc with the same url if url !exist*/);
+        }
+    }
+
+}
+
+// private virtual [base KMainWindow]
+// WARNING: KMainWindow API Doc says "No user interaction is allowed
+//          in this function!"
+void kpMainWindow::saveProperties (KConfig *cfg)
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow<" << this << ">::saveProperties()" << endl;
+#endif
+
+    // No document at all?
+    if (!m_document)
+    {
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\tno url - no document" << endl;
+    #endif
+    }
+    // Have a document.
+    else
+    {
+        // Save URL in all cases:
+        //
+        //    a) m_document->isFromURL()
+        //    b) !m_document->isFromURL() [save size in this case]
+        //       i) No URL
+        //       ii) URL (from "kolourpaint doesnotexist.png")
+
+        const KURL url = m_document->url ();
+    #if DEBUG_KP_MAIN_WINDOW
+        kdDebug () << "\turl=" << url << endl;
+    #endif
+        cfg->writeEntry (kpSessionSettingDocumentUrl, url.url ());
+
+        // Not from URL e.g. "kolourpaint doesnotexist.png"?
+        //
+        // Note that "kolourpaint doesexist.png" is considered to be from
+        // a URL even if it was deleted in the background (hence the
+        // "false" arg to isFromURL()).  This is because the user expects
+        // it to be from a URL, so when we session restore, we pop up a
+        // "cannot find file" dialog, instead of silently creating a new,
+        // blank document.
+        if (!m_document->isFromURL (false/*don't bother checking exists*/))
+        {
+            // If we don't have a URL either:
+            //
+            // a) it was not modified - so we can use either width() or
+            //    constructorWidth() (they'll be equal).
+            // b) the changes were discarded so we use the initial width,
+            //    constructorWidth().
+            //
+            // Similarly for height() and constructorHeight().
+            const QSize docSize (m_document->constructorWidth (),
+                                 m_document->constructorHeight ());
+        #if DEBUG_KP_MAIN_WINDOW
+            kdDebug () << "\tnot from url; doc size=" << docSize << endl;
+        #endif
+            cfg->writeEntry (kpSessionSettingNotFromUrlDocumentSize, docSize);
+        }
+
+
+        // Local session save i.e. queryClose() was not called beforehand
+        // (see QApplication::saveState())?
+    #if 0
+        if (m_document->isModified ())
+        {
+            // TODO: Implement by saving the current image to a persistent file.
+            //       We do this instead of saving/mutating the backing image file
+            //       as no one expects a file save on a session save without a
+            //       "do you want to save" dialog first.
+            //
+            //       I don't think any KDE application implements local session saving.
+            //
+            //       --- The below code does not compile but shows you want to do ---
+
+            // Create unique name for the document in this main window.
+            const KURL tempURL = homeDir +
+                "kolourpaint session " + sessionID +
+                mainWindowPtrToString + ".png";
+            // TODO: Use lossless PNG saving options.
+            kpDocumentSaveOptions pngSaveOptions;
+
+            if (kpDocument::savePixmapToFile (m_document->pixmapWithSelection (),
+                    tempURL,
+                    pngSaveOptions, *m_document->metaInfo (),
+                    false/*no overwrite prompt*/,
+                    false/*no lossy prompt*/,
+                    this))
+            {
+                // readProperties() will still open kpSessionSettingDocumentUrl
+                // (as that's the expected URL) and will then add commands to:
+                //
+                // 1. Resize the document to the size of image at
+                //    kpSessionSettingDocumentUnsavedContentsUrl, if the sizes
+                //    differ.
+                // 2. Paste the kpSessionSettingDocumentUnsavedContentsUrl image
+                //    (setting the main window's selection mode to opaque beforehand).
+                //
+                // It will then delete the file at
+                // kpSessionSettingDocumentUnsavedContentsUrl.
+                cfg->writeEntry (kpSessionSettingDocumentUnsavedContentsUrl,
+                    tempURL.url ());
+            }
+            else
+            {
+                // Not much we can do - we aren't allowed to throw up a dialog.
+            }
+        }
+    #endif
+    }
+}
+
+
 kpMainWindow::~kpMainWindow ()
 {
     m_isFullyConstructed = false;
@@ -885,4 +1049,3 @@ void kpMainWindow::slotDocumentRestored ()
 
 
 #include <kpmainwindow.moc>
-
