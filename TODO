@@ -90,13 +90,6 @@ have a way to select another format directly.
 
 "Universal Selections" modify selections after selecting
 
-Should CTRL+C'ing a textbox mean that MMB pastes that text?
-KolourPaint does not ATM and it is annoying.  Should there be a KDE standard for this?
-KWrite does it and I think that's sane behaviour.
-
-
-kolourpaint not associated with .bmp
-
 
 RMB colour select & draw, holding shift are not discoverable.
 
@@ -352,19 +345,14 @@ If you don't save the image:
 Suggestion: Export instead of save.  But what if really want to save?  Would have to prompt, save, then invoke Mail again - a bit round about.
 What do other programs do?  KOffice?
 
-grid at 400% since 2 people on kde-apps have asked already (think grid
-isn't there)
+Need to change grid to a non-solid color pattern so that at 400%, it doesn't
+look like part of the image!
 
 Bela-Andreas Bargel:
-- kooka scanning
-
 - acquire from kamera
 
 fix Bug #23. Changing tool options while in the middle of a drawing option may
    confuse KolourPaint.
-
-use KSaveFile for atomic writes - if the temp is put in the same place as
-dest, what about small media like floppy?
 
 resize doc or sel freehand - usershapepoints should be (after string freeze):
 "oldX x oldY - newX x newY  |||  (+|-)deltaX x (+|-)deltaY"
@@ -603,8 +591,7 @@ ideas (or things I should really do :)) that may or may not ever get
 implemented:
 
 
-guard all ptr derefs with if (ptr) ptr->whatever
-- also don't store ptrs to e.g. kpDocument as they may go out of date
+also don't store ptrs to e.g. kpDocument as they may go out of date
 
 kdError -> KP_PANIC or KMessageBox
 wait cursor for slow ops - should it be in kpDocument or in the commands???
