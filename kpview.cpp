@@ -66,6 +66,20 @@
 
 struct kpViewPrivate
 {
+    // sync: kpView::paintEvent()
+    //
+    // Normally, these pointers must be valid while the kpView is alive.
+    // Generally, the objects they point to are deleted only after kpView
+    // is deleted.
+    //
+    // However, sometimes we use deleteLater() for the kpView.
+    // Before the delayed deletion is executed, those objects are deleted
+    // and then our paintEvent() is called.  paintEvent() must therefore
+    // have some way of realising that those objects have been deleted so
+    // we use guardded pointers.
+    //
+    // For more details, see SVN commit:
+    //     "r385274 | dang | 2005-02-02 22:08:27 +1100 (Wed, 02 Feb 2005) | 21 lines".
     QGuardedPtr <kpDocument> m_document;
     QGuardedPtr <kpToolToolBar> m_toolToolBar;
     QGuardedPtr <kpViewManager> m_viewManager;
@@ -1839,6 +1853,10 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
 // protected virtual [base QWidget]
 void kpView::paintEvent (QPaintEvent *e)
 {
+    // sync: kpViewPrivate
+    // WARNING: document(), viewManager() and friends might be 0.
+    // TODO: I'm not 100% convinced that we always check if their friends are 0.
+
 #if DEBUG_KP_VIEW_RENDERER && 1
     QTime timer;
     timer.start ();
