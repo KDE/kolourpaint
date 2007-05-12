@@ -1,16 +1,24 @@
 
 1. Look in BUGS
 2. Look in patches/
-3. grep sources for:
+3. grep all files (not just .cpp and .h) for:
+   "COMPAT" - KDE 4 port breakage that must be fixed before the release
    "CONFIG" - something that maybe should be configurable (either via GUI
               or by editing config file directly)
-   "OPT" - something that could be optimised
-   "LOTODO" - something that should be done but probably no one will care
-   "TODO" - something that should be done; some TODO's should really be LOTODO's or HITODO's
    "HITODO" - something that _must_ be done before the next release
+   "LOTODO" - something that should be done but probably no one will care
+   "OPT" - something that could be optimised
+   "PROPAGATE" - an update that should be sent to other KolourPaint processes
+                 using an IPC mechanism (e.g. DBUS for KDE 4, DCOP for KDE 3)
    "HACK" - something that _really_ should be done better
+   "sync" - check dependencies between code when modifying
+   "SYNC" - check this is still valid before _every_ KolourPaint or KDE or
+            Qt release - if this is regarding a hack around a library bug,
+            test if that hack still works and if it does, it's probably safer
+            than removing that hack esp. in the stable branch of KDE
+   "STRING" - a string that should be added after the string freeze
+   "TODO" - something that should be done; some TODO's should really be LOTODO's or HITODO's
 
-   TODO: explain "SYNC" (check something still valid for each KolourPaint or KDE or Qt release), "sync" (check dependencies between code when modifying), "COMPAT" (KDE 4 port breakage)
 4. See below:
 
 
