@@ -15,6 +15,9 @@ KolourPaint 1.4.7_relight (Frozen 2007-05-14)
    * Make "File / Open Recent" consistently work when multiple windows are
      open
 
+   * CTRL+C'ing a text box also places the text in the middle-mouse-button
+     clipboard, in lieu of being able to highlight the text to do this
+
 KolourPaint 1.4.6_relight (Frozen 2007-01-13)
 
    * Fix crash triggered by rapidly deselecting the selection after

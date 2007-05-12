@@ -221,6 +221,26 @@ void kpMainWindow::slotCopy ()
         {
             QApplication::clipboard ()->setData (new QTextDrag (sel.text ()),
                                                  QClipboard::Clipboard);
+
+            // SYNC: Normally, users highlight text and press CTRL+C.
+            //       Highlighting text copies it to the X11 "middle
+            //       mouse button" clipboard.  CTRL+C copies it to the
+            //       separate, Windows-like "CTRL+V" clipboard.
+            //
+            //       However, KolourPaint doesn't support highlighting.
+            //       So when they press CTRL+C to copy all text, simulate
+            //       the highlighting by copying the text to the "middle
+            //       mouse button" clipboard.  We don't do this for images
+            //       as no one ever middle-mouse-pastes images.
+            //
+            //       Note that we don't share the QTextDrag pointer with
+            //       the above in case Qt doesn't expect it.
+            //
+            //       Once we change KolourPaint to support highlighted text
+            //       and CTRL+C to copy only the highlighted text, delete
+            //       this code.
+            QApplication::clipboard ()->setData (new QTextDrag (sel.text ()),
+                                                 QClipboard::Selection);
         }
     }
     else
