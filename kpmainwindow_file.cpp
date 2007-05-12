@@ -432,16 +432,16 @@ void kpMainWindow::slotScan ()
         #if DEBUG_KP_MAIN_WINDOW
             kdDebug () << "\tcould not create scan dialog" << endl;
         #endif
-            // SYNC: We really need a dialog here.  We can't due to string freeze.
-            //       In order to signal to the user -- without a dialog -- that
-            //       scanning support is not installed, we disable the action
-            //       in every window.
+            // STRING: We really need a dialog here.  We can't due to string freeze.
+            //         In order to signal to the user -- without a dialog -- that
+            //         scanning support is not installed, we disable the action
+            //         in every window.
             //
-            //       Or we could try to create the scan dialog in the ctor
-            //       and just disable the action in the first place.  But
-            //       this increases startup time and is also too risky on
-            //       the stable branch (e.g. if the scan support hangs,
-            //       KolourPaint would not be able to be started at all).
+            //         Or we could try to create the scan dialog in the ctor
+            //         and just disable the action in the first place.  But
+            //         this increases startup time and is also too risky on
+            //         the stable branch (e.g. if the scan support hangs,
+            //         KolourPaint would not be able to be started at all).
 
             // TODO: PROPAGATE: interprocess
             if (KMainWindow::memberList)
@@ -531,8 +531,8 @@ void kpMainWindow::slotScanned (const QImage &image, int)
     kpDocumentMetaInfo metaInfo;
     const QPixmap pixmap = kpDocument::convertToPixmapAsLosslessAsPossible (
         image,
-        // SYNC: After string freeze, have a custom message about the
-        //       "scanned image".
+        // STRING: After string freeze, have a custom message about the
+        //         "scanned image".
         kpMainWindow::pasteWarnAboutLossInfo (),
         &saveOptions,
         &metaInfo);
@@ -542,9 +542,9 @@ void kpMainWindow::slotScanned (const QImage &image, int)
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tcould not convert to pixmap" << endl;
     #endif
-        // SYNC: After string freeze, we need a message like
-        //       "out of graphics memory" (see
-        //        kpDocument::getPixmapFromFile()).
+        // STRING: After string freeze, we need a message like
+        //         "out of graphics memory" (see
+        //         kpDocument::getPixmapFromFile()).
         return;
     }
 
@@ -568,7 +568,7 @@ bool kpMainWindow::save (bool localOnly)
         KImageIO::mimeTypes (KImageIO::Writing)
             .findIndex (m_document->saveOptions ()->mimeType ()) < 0 ||
         // SYNC: kpDocument::getPixmapFromFile() can't determine quality
-        //       from file
+        //       from file so it has been set initially to an invalid value.
         (m_document->saveOptions ()->mimeTypeHasConfigurableQuality () &&
             m_document->saveOptions ()->qualityIsInvalid ()) ||
         (localOnly && !m_document->url ().isLocalFile ()))

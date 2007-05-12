@@ -67,8 +67,8 @@ int main (int argc, char *argv [])
         0/*copyright statement - see licence instead*/,
 #if 1
         0/*free text*/,
-// SYNC: After string freeze, make below the "free text" but point to
-//       http://www.kolourpaint.org/support.
+// STRING: After string freeze, make below the "free text" but point to
+//         http://www.kolourpaint.org/support.
 #else
         I18N_NOOP ("Support / Feedback:\n"
                    "kolourpaint-support@lists.sourceforge.net\n"),
@@ -83,8 +83,8 @@ int main (int argc, char *argv [])
 
 #if 1
     aboutData.setCustomAuthorText (QString::null, QString::null);
-// SYNC: After string freeze, make below the custom author text but point to
-//       http://www.kolourpaint.org/support.
+// STRING: After string freeze, make below the custom author text but point to
+//         http://www.kolourpaint.org/support.
 #else
     aboutData.setCustomAuthorText (
         I18N_NOOP
@@ -119,7 +119,7 @@ int main (int argc, char *argv [])
     aboutData.addAuthor ("Nuno Pinheiro", I18N_NOOP ("Icons"), "nf.pinheiro@gmail.com");
     aboutData.addAuthor ("Danny Allen", I18N_NOOP ("Icons"), "dannya40uk@yahoo.co.uk");
     aboutData.addAuthor ("Martin Koller",
-                         0/*SYNC: string freeze prevents us from writing: Scanning Support*/,
+                         0/*STRING: string freeze prevents us from writing: Scanning Support*/,
                          "m.koller@surfeu.at");
 
 
