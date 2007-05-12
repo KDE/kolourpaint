@@ -1854,7 +1854,7 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
 void kpView::paintEvent (QPaintEvent *e)
 {
     // sync: kpViewPrivate
-    // WARNING: document(), viewManager() and friends might be 0.
+    // WARNING: document(), viewManager() and friends might be 0 in this method.
     // TODO: I'm not 100% convinced that we always check if their friends are 0.
 
 #if DEBUG_KP_VIEW_RENDERER && 1
