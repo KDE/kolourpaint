@@ -81,11 +81,9 @@ int main (int argc, char *argv [])
     aboutData.setLicenseText (kpLicenseText);
 
 
-#if 1
-    aboutData.setCustomAuthorText (QString::null, QString::null);
 // STRING: After string freeze, make below the custom author text but point to
 //         http://www.kolourpaint.org/support.
-#else
+#if 0
     aboutData.setCustomAuthorText (
         I18N_NOOP
         (
