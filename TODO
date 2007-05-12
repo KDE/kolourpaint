@@ -12,6 +12,8 @@
                  using an IPC mechanism (e.g. DBUS for KDE 4, DCOP for KDE 3)
    "HACK" - something that _really_ should be done better
    "sync" - check dependencies between code when modifying
+            e.g. "sync: kpView::paintEvent()" means synchronize changes with
+            the corresponding "sync" in "kpView::paintEvent()".
    "SYNC" - check this is still valid before _every_ KolourPaint or KDE or
             Qt release - if this is regarding a hack around a library bug,
             test if that hack still works and if it does, it's probably safer
