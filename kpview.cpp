@@ -250,10 +250,10 @@ void kpView::setOrigin (const QPoint &origin)
 // public
 bool kpView::canShowGrid () const
 {
-    // (minimum zoom level < 600% would probably be reported as a bug by
+    // (minimum zoom level < 400% would probably be reported as a bug by
     //  users who thought that the grid was a part of the image!)
-    return ((zoomLevelX () >= 600 && zoomLevelX () % 100 == 0) &&
-            (zoomLevelY () >= 600 && zoomLevelY () % 100 == 0));
+    return ((zoomLevelX () >= 400 && zoomLevelX () % 100 == 0) &&
+            (zoomLevelY () >= 400 && zoomLevelY () % 100 == 0));
 }
 
 // public

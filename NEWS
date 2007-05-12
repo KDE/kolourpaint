@@ -18,6 +18,8 @@ KolourPaint 1.4.7_relight (Frozen 2007-05-14)
    * CTRL+C'ing a text box also places the text in the middle-mouse-button
      clipboard, in lieu of being able to highlight the text to do this
 
+   * Change minimum allowed zoom level for the grid from 600% to 400%
+
 KolourPaint 1.4.6_relight (Frozen 2007-01-13)
 
    * Fix crash triggered by rapidly deselecting the selection after
