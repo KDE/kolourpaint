@@ -58,9 +58,13 @@
 #include <kpview.h>
 #include <kpviewmanager.h>
 
+
 // private
 void kpMainWindow::setupFileMenuActions ()
 {
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "kpMainWindow::setupFileMenuActions()" << endl;
+#endif
     KActionCollection *ac = actionCollection ();
 
     m_actionNew = KStdAction::openNew (this, SLOT (slotNew ()), ac);
@@ -68,6 +72,9 @@ void kpMainWindow::setupFileMenuActions ()
 
     m_actionOpenRecent = KStdAction::openRecent (this, SLOT (slotOpenRecent (const KURL &)), ac);
     m_actionOpenRecent->loadEntries (kapp->config ());
+#if DEBUG_KP_MAIN_WINDOW
+    kdDebug () << "\trecent URLs=" << m_actionOpenRecent->items () << endl;
+#endif
 
     m_actionSave = KStdAction::save (this, SLOT (slotSave ()), ac);
     m_actionSaveAs = KStdAction::saveAs (this, SLOT (slotSaveAs ()), ac);
@@ -182,19 +189,23 @@ void kpMainWindow::addRecentURL (const KURL &url)
         #endif
 
             if (mw != this)
-                mw->setRecentURLs (m_actionOpenRecent->items ());
+            {
+                // WARNING: Do not use KRecentFilesAction::setItems()
+                //          - it does not work since only its superclass,
+                //          KSelectAction, implements setItems() and can't
+                //          update KRecentFilesAction's URL list.
+
+                // Avoid URL memory leak in KRecentFilesAction::loadEntries().
+                mw->m_actionOpenRecent->clearURLList ();
+
+                mw->m_actionOpenRecent->loadEntries (cfg);
+            #if DEBUG_KP_MAIN_WINDOW
+                kdDebug () << "\t\t\tcheck recent URLs="
+                           << mw->m_actionOpenRecent->items () << endl;
+            #endif
+            }
         }
     }
-}
-
-// private
-void kpMainWindow::setRecentURLs (const QStringList &items)
-{
-#if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow(" << name () << ")::setRecentURLs()" << endl;
-    kdDebug () << "\titems=" << items << endl;
-#endif
-    m_actionOpenRecent->setItems (items);
 }
 
 
@@ -374,12 +385,25 @@ void kpMainWindow::slotOpenRecent (const KURL &url)
 {
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotOpenRecent(" << url << ")" << endl;
+    kdDebug () << "\titems=" << m_actionOpenRecent->items () << endl;
 #endif
 
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
     open (url);
+
+    // If the open is successful, addRecentURL() would have bubbled up the
+    // URL in the File / Open Recent action.  As a side effect, the URL is
+    // deselected.
+    //
+    // If the open fails, we should deselect the URL:
+    //
+    // 1. for consistency
+    //
+    // 2. because it has not been opened.
+    //
+    m_actionOpenRecent->setCurrentItem (-1);
 }
 
 

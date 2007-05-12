@@ -12,6 +12,9 @@ KolourPaint 1.4.7_relight (Frozen 2007-05-14)
 
    * Add global session save/restore (Bug #94651)
 
+   * Make "File / Open Recent" consistently work when multiple windows are
+     open
+
 KolourPaint 1.4.6_relight (Frozen 2007-01-13)
 
    * Fix crash triggered by rapidly deselecting the selection after

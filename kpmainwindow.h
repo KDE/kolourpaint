@@ -305,7 +305,6 @@ private:
 
 private:
     void addRecentURL (const KURL &url);
-    void setRecentURLs (const QStringList &items);
 
 private slots:
     void slotNew ();
