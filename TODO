@@ -82,7 +82,7 @@ a command to the command history.
 
 Less technical people do not know the difference between "PNG", "JPG" and
 "FormatIMadeUp".  Have some sort of interface for them (e.g. "Large, Perfect Quality"
-for "PNG" and "Small, Low Quality" for "JPG").
+for "PNG" and "Small, Low Quality" for "JPG") [See Bug 104228]
 
 The current are-you-sure-you-want-to-save-in-a-lossy-format dialog should
 have a way to select another format directly.
