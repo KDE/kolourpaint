@@ -61,14 +61,6 @@ Edit / Paste changes to Edit / Paste Text when text since CTRL+PrintScreen
 seems to be so unreliable
 
 
-[move to bug report]
-hold SHIFT while pen does straight lines
-
-With flow tools (pen, brush, spraycan), holding SHIFT forces horizontal drawing;
-CTRL forces vertical - so those of us without perfectly steady hands
-can still draw straight without continually hitting the Undo button :)
-
-
 [kpScrollableView rewrite]
 Antonio Bianco
 - split views
@@ -164,9 +156,6 @@ This probably works for Qt3 but not Qt4.
 
 
 kolourcircles.cpp; rendering glitches at 37% with rect sel tool
-
-[remove, it's already a bug report]
-Bug 89594: inserted text not anti-aliased
 
 
 kptoolpreviewdialog: wrong if new pixels result in diff selection transparency
@@ -308,14 +297,9 @@ Emmeran Seehuber:
   after old sel deselected) every time a new text selection is being drawn
   out
 
-[remove since in bug report]
-make sure session restore actually works (Luke-Jr:Bug94651)
 
 keyboard friendly scrollview
 
-
-[remove since in bugreport]
-[LO] fix antialising e.g. Courier [Adobe] antialiases in KWrite but not KolourPaint but Luxi Mono works in KolourPaint so it's probably the font selection i.e. that KFontSelect box that's wrong
 
 
 [document for bindist]
