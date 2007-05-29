@@ -56,7 +56,7 @@ macro(CREATE_VERSION _in_FILE _out_FILE)
 endmacro(CREATE_VERSION)
 
 
-macro_additional_clean_files( ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintversion.h )
+#macro_additional_clean_files( ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintversion.h )
 
 create_version(${CMAKE_CURRENT_SOURCE_DIR}/VERSION ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintversion.h)
 
@@ -69,7 +69,7 @@ macro(CREATE_LICENSE _in_FILE _out_FILE)
     FILE(APPEND ${_out_FILE} ";\n")
 endmacro(CREATE_LICENSE)
 
-macro_additional_clean_files( ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintlicense.h )
+#macro_additional_clean_files( ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintlicense.h )
 
 create_license(${CMAKE_CURRENT_SOURCE_DIR}/COPYING ${CMAKE_CURRENT_BINARY_DIR}/kolourpaintlicense.h)
 
