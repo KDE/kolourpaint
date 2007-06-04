@@ -34,8 +34,6 @@
 #include <kpImage.h>
 
 
-class QImage;
-class QPixmap;
 
 class kpMainWindow;
 

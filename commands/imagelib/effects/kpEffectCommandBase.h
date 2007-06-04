@@ -36,7 +36,6 @@
 #include <kpImage.h>
 
 
-class kpDocument;
 class kpMainWindow;
 
 

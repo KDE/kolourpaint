@@ -38,12 +38,10 @@
 #include <kpTransformPreviewDialog.h>
 
 
-class QLabel;
 class QPixmap;
 
 class KIntNumInput;
 
-class kpDocument;
 class kpMainWindow;
 
 

@@ -39,7 +39,6 @@
 
 
 class QMouseEvent;
-class QPainter;
 
 
 // TODO: frame becomes a combobox when its parent kpToolToolBar becomes too small

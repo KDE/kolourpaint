@@ -36,9 +36,7 @@
 #include <kpImage.h>
 
 
-class QLabel;
 
-class KIntNumInput;
 
 class kpMainWindow;
 

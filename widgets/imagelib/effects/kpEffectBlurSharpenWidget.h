@@ -37,7 +37,6 @@
 
 
 class QLabel;
-class QPixmap;
 
 class KIntNumInput;
 

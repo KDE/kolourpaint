@@ -49,13 +49,11 @@ class QDragEnterEvent;
 class QDropEvent;
 class QMenu;
 class QMoveEvent;
-class QPainter;
 class QPixmap;
 class QPoint;
 class QRect;
 class QSize;
 class QStringList;
-class QUrl;
 
 class QAction;
 class KFontAction;

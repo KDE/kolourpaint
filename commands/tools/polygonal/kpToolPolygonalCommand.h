@@ -45,20 +45,14 @@
 #include <kpToolWidgetFillStyle.h>
 
 
-class QMouseEvent;
-class QPen;
-class QPoint;
 class QPolygon;
 class QRect;
 class QString;
 
 class kpView;
-class kpDocument;
 class kpMainWindow;
 
 class kpToolWidgetFillStyle;
-class kpToolWidgetLineWidth;
-class kpViewManager;
 
 
 struct kpToolPolygonalCommandPrivate;

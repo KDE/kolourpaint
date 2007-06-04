@@ -45,9 +45,6 @@ class QString;
 class kpColor;
 class kpMainWindow;
 class kpToolFlowCommand;
-class kpToolWidgetBrush;
-class kpToolWidgetEraserSize;
-class kpViewManager;
 
 
 class kpToolFlowBase : public kpTool

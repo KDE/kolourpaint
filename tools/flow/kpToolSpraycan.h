@@ -33,16 +33,13 @@
 #include <kpToolFlowBase.h>
 
 
-class QPixmap;
 class QPoint;
 class QRect;
 class QString;
 class QTimer;
 
 class kpMainWindow;
-class kpToolFlowCommand;
 class kpToolWidgetSpraycanSize;
-class kpViewManager;
 
 
 class kpToolSpraycan : public kpToolFlowBase

@@ -35,7 +35,6 @@
 
 class QGroupBox;
 class QPixmap;
-class QStringList;
 class QTimer;
 class QVBoxLayout;
 

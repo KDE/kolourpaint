@@ -36,7 +36,6 @@
 #include <qrect.h>
 
 
-class QPixmap;
 class QRect;
 class QTimer;
 

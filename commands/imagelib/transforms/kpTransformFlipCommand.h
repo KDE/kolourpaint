@@ -35,10 +35,8 @@
 #include <kpCommandHistory.h>
 
 
-class QRadioButton;
 class QString;
 
-class kpDocument;
 class kpMainWindow;
 
 

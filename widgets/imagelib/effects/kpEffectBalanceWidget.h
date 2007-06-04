@@ -35,12 +35,10 @@
 
 
 class QLabel;
-class QPixmap;
 
 class KComboBox;
 class KIntNumInput;
 
-class kpMainWindowe;
 
 
 class kpEffectBalanceWidget : public kpEffectWidgetBase

@@ -50,7 +50,6 @@ class QWheelEvent;
 class KShortcut;
 
 class kpColor;
-class kpColorToolBar;
 class kpCommandHistory;
 class kpDocument;
 class kpView;

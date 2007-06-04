@@ -39,14 +39,9 @@
 #include <kpTransformPreviewDialog.h>
 
 
-class QButtonGroup;
-class QRadioButton;
 class QString;
 
-class KIntNumInput;
 
-class kpDocument;
-class kpViewManager;
 class kpMainWindow;
 
 

@@ -37,7 +37,6 @@
 
 
 class kpEffectCommandBase;
-class kpDocument;
 class kpMainWindow;
 
 

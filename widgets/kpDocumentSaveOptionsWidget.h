@@ -38,19 +38,15 @@
 #include <kpDocumentSaveOptions.h>
 
 
-class QCloseEvent;
 class KComboBox;
 class QPixmap;
 class QLabel;
-class QMoveEvent;
-class QResizeEvent;
 class QTimer;
 
 class KIntNumInput;
 class KPushButton;
 
 class kpDocumentSaveOptionsPreviewDialog;
-class kpResizeSignallingLabel;
 
 
 class kpDocumentSaveOptionsWidget : public QWidget

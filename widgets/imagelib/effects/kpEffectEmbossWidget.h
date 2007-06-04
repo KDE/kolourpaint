@@ -35,7 +35,6 @@
 
 
 class QCheckBox;
-class QPixmap;
 
 class KIntNumInput;
 

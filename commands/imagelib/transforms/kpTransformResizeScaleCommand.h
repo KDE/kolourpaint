@@ -39,22 +39,11 @@
 #include <kpSelection.h>
 
 
-class QCheckBox;
-class QGroupBox;
-class QLabel;
-class QRadioButton;
 class QSize;
 class QString;
-class QToolButton;
 
-class KComboBox;
-class KDoubleNumInput;
-class KHBox;
-class KIntNumInput;
 
-class kpDocument;
 class kpMainWindow;
-class kpViewManager;
 
 
 class kpTransformResizeScaleCommand : public kpCommand

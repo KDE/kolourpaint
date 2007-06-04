@@ -36,8 +36,6 @@
 
 
 class QCheckBox;
-class QImage;
-class QPixmap;
 
 class KColorButton;
 

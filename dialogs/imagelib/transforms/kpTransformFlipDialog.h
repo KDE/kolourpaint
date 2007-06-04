@@ -36,10 +36,7 @@
 
 
 class QRadioButton;
-class QString;
 
-class kpDocument;
-class kpMainWindow;
 
 
 class kpTransformFlipDialog : public KDialog

@@ -43,9 +43,6 @@
 class QCheckBox;
 class QGroupBox;
 class QLabel;
-class QRadioButton;
-class QSize;
-class QString;
 class QToolButton;
 
 class KComboBox;
@@ -55,7 +52,6 @@ class KIntNumInput;
 
 class kpDocument;
 class kpMainWindow;
-class kpViewManager;
 
 
 class kpTransformResizeScaleDialog : public KDialog

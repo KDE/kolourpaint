@@ -33,8 +33,6 @@
 #include <kpEffectWidgetBase.h>
 
 
-class QImage;
-class QPixmap;
 class QRadioButton;
 
 class kpMainWindow;

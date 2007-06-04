@@ -37,9 +37,7 @@ class QKeyEvent;
 
 class kpColor;
 class kpMainWindow;
-class kpSelection;
 class kpTextStyle;
-class kpViewManager;
 
 class kpToolTextInsertCommand;
 class kpToolTextEnterCommand;

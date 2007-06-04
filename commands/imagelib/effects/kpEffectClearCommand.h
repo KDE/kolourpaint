@@ -38,7 +38,6 @@
 class QPixmap;
 class QString;
 
-class kpDocument;
 class kpMainWindow;
 
 

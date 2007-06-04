@@ -34,8 +34,6 @@
 
 
 class QCheckBox;
-class QImage;
-class QPixmap;
 
 class kpMainWindow;
 

@@ -40,13 +40,7 @@
 
 
 class QBoxLayout;
-class QDragMoveEvent;
-class QDropEvent;
-class QGridLayout;
-class QMouseEvent;
-class QPixmap;
 
-class KColorButton;
 
 class kpColorPalette;
 class kpColorSimilarityToolBarItem;
