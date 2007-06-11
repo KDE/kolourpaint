@@ -204,11 +204,11 @@ void kpMainWindow::slotHelpTakingScreenshotsFollowLink (const QString &link)
 
     if (link == "configure kde shortcuts")
     {
-        KRun::runCommand ("kcmshell keys");
+        KRun::runCommand ("kcmshell keys", this);
     }
     else if (link == "run ksnapshot")
     {
-        KRun::runCommand ("ksnapshot");
+        KRun::runCommand ("ksnapshot", this);
     }
     else
     {
