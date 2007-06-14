@@ -531,8 +531,6 @@ void kpMainWindow::slotScanned (const QImage &image, int)
     kpDocumentMetaInfo metaInfo;
     const QPixmap pixmap = kpDocument::convertToPixmapAsLosslessAsPossible (
         image,
-        // STRING: After string freeze, have a custom message about the
-        //         "scanned image".
         kpMainWindow::pasteWarnAboutLossInfo (),
         &saveOptions,
         &metaInfo);
