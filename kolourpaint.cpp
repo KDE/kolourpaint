@@ -65,46 +65,13 @@ int main (int argc, char *argv [])
         I18N_NOOP ("Paint Program for KDE"),
         KAboutData::License_Custom,
         0/*copyright statement - see licence instead*/,
-#if 1
-        0/*free text*/,
-// STRING: After string freeze, make below the "free text" but point to
-//         http://www.kolourpaint.org/support.
-#else
-        I18N_NOOP ("Support / Feedback:\n"
-                   "kolourpaint-support@lists.sourceforge.net\n"),
-#endif
+        0/*no free text*/,
         "http://www.kolourpaint.org/"
     );
 
 
     // this is _not_ the same as KAboutData::License_BSD
     aboutData.setLicenseText (kpLicenseText);
-
-
-// STRING: After string freeze, make below the custom author text but point to
-//         http://www.kolourpaint.org/support.
-#if 0
-    aboutData.setCustomAuthorText (
-        I18N_NOOP
-        (
-            "\n"
-            "For support, or to report bugs and feature requests, please email\n"
-            "<kolourpaint-support@lists.sourceforge.net>"
-            " - the free and friendly\n"
-            "KolourPaint support service.\n"
-            "\n"
-        ),
-        I18N_NOOP
-        (
-            "<qt>"
-            "For support, or to report bugs and feature requests, please email<br>"
-            "<a href=\"mailto:kolourpaint-support@lists.sourceforge.net\">kolourpaint-support@lists.sourceforge.net</a>"
-            " - the free and friendly<br>"
-            "KolourPaint support service.<br>"
-            "<br>"
-            "</qt>"
-        ));
-#endif
 
 
     // SYNC: with AUTHORS
