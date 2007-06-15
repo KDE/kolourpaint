@@ -432,35 +432,19 @@ void kpMainWindow::slotScan ()
         #if DEBUG_KP_MAIN_WINDOW
             kdDebug () << "\tcould not create scan dialog" << endl;
         #endif
-            // STRING: We really need a dialog here.  We can't due to string freeze.
-            //         In order to signal to the user -- without a dialog -- that
-            //         scanning support is not installed, we disable the action
-            //         in every window.
+            // Instead, we could try to create the scan dialog in the ctor
+            // and just disable the action in the first place, removing
+            // the need for this dialog.
             //
-            //         Or we could try to create the scan dialog in the ctor
-            //         and just disable the action in the first place.  But
-            //         this increases startup time and is also too risky on
-            //         the stable branch (e.g. if the scan support hangs,
-            //         KolourPaint would not be able to be started at all).
-
-            // TODO: PROPAGATE: interprocess
-            if (KMainWindow::memberList)
-            {
-                for (QPtrList <KMainWindow>::const_iterator it = KMainWindow::memberList->begin ();
-                     it != KMainWindow::memberList->end ();
-                     it++)
-                {
-                    kpMainWindow *mw = dynamic_cast <kpMainWindow *> (*it);
-                    Q_ASSERT (mw);
-
-                #if DEBUG_KP_MAIN_WINDOW
-                    kdDebug () << "\t\tmw=" << mw << endl;
-                #endif
-
-                    mw->m_actionScan->setEnabled (false);
-                }
-            }
-
+            // But this increases startup time and is a bit risky e.g. if
+            // the scan support hangs, KolourPaint would not be able to be
+            // started at all.
+            //
+            // Also, disabling the action is bad because the scan support
+            // can be installed while KolourPaint is still running.
+            KMessageBox::sorry (this,
+                         i18n ("Scanning support is not installed."),
+                         i18n ("No Scanning Support"));
             return;
         }
 
@@ -540,9 +524,9 @@ void kpMainWindow::slotScanned (const QImage &image, int)
     #if DEBUG_KP_MAIN_WINDOW
         kdDebug () << "\tcould not convert to pixmap" << endl;
     #endif
-        // STRING: After string freeze, we need a message like
-        //         "out of graphics memory" (see
-        //         kpDocument::getPixmapFromFile()).
+        KMessageBox::sorry (this,
+                            i18n ("Cannot scan - out of graphics memory."),
+                            i18n ("Cannot Scan"));
         return;
     }
 
