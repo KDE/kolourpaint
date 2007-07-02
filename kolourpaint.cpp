@@ -42,35 +42,29 @@
 #include <kolourpaintversion.h>
 
 
-static const KCmdLineOptions cmdLineOptions [] =
-{
-    {"+[file]", I18N_NOOP ("Image file to open"), 0},
-    KCmdLineLastOption
-};
-
 
 int main (int argc, char *argv [])
 {
     KAboutData aboutData
     (
-        "kolourpaint",
-        I18N_NOOP ("KolourPaint"),
+        "kolourpaint", 0,
+        ki18n ("KolourPaint"),
         kpVersionText,
-        I18N_NOOP ("Paint Program for KDE"),
+        ki18n ("Paint Program for KDE"),
         KAboutData::License_Custom,
-        0/*copyright statement - see license instead*/,
-        I18N_NOOP ("Support / Feedback:\n"
+        ki18n(0/*copyright statement - see license instead*/),
+        ki18n ("Support / Feedback:\n"
                    "kolourpaint-support@lists.sourceforge.net\n"),
         "http://www.kolourpaint.org/"
     );
 
 
     // this is _not_ the same as KAboutData::License_BSD
-    aboutData.setLicenseText (kpLicenseText);
+    aboutData.setLicenseText (ki18n(kpLicenseText));
 
 
     aboutData.setCustomAuthorText (
-        I18N_NOOP
+        ki18n
         (
             "\n"
             "For support, or to report bugs and feature requests, please email\n"
@@ -79,7 +73,7 @@ int main (int argc, char *argv [])
             "KolourPaint support service.\n"
             "\n"
         ),
-        I18N_NOOP
+        ki18n
         (
             "<qt>"
             "For support, or to report bugs and feature requests, please email<br>"
@@ -93,104 +87,107 @@ int main (int argc, char *argv [])
 
     // SYNC: with AUTHORS
 
-    aboutData.addAuthor ("Clarence Dang", I18N_NOOP ("Maintainer"), "dang@kde.org");
-    aboutData.addAuthor ("Thurston Dang", I18N_NOOP ("Chief Investigator"),
+    aboutData.addAuthor (ki18n("Clarence Dang"), ki18n ("Maintainer"), "dang@kde.org");
+    aboutData.addAuthor (ki18n("Thurston Dang"), ki18n ("Chief Investigator"),
                          "thurston_dang@users.sourceforge.net");
-    aboutData.addAuthor ("Kristof Borrey", I18N_NOOP ("Icons"), "borrey@kde.org");
-    aboutData.addAuthor ("Kazuki Ohta", I18N_NOOP ("InputMethod Support"), "mover@hct.zaq.ne.jp");
-    aboutData.addAuthor ("Nuno Pinheiro", I18N_NOOP ("Icons"), "nf.pinheiro@gmail.com");
-    aboutData.addAuthor ("Danny Allen", I18N_NOOP ("Icons"), "dannya40uk@yahoo.co.uk");
-    aboutData.addAuthor ("Laurent Montel", I18N_NOOP ("KDE 4 Porting"), "montel@kde.org");
+    aboutData.addAuthor (ki18n("Kristof Borrey"), ki18n ("Icons"), "borrey@kde.org");
+    aboutData.addAuthor (ki18n("Kazuki Ohta"), ki18n ("InputMethod Support"), "mover@hct.zaq.ne.jp");
+    aboutData.addAuthor (ki18n("Nuno Pinheiro"), ki18n ("Icons"), "nf.pinheiro@gmail.com");
+    aboutData.addAuthor (ki18n("Danny Allen"), ki18n ("Icons"), "dannya40uk@yahoo.co.uk");
+    aboutData.addAuthor (ki18n("Laurent Montel"), ki18n ("KDE 4 Porting"), "montel@kde.org");
 
 
-    aboutData.addCredit ("Rashid N. Achilov");
-    aboutData.addCredit ("Toyohiro Asukai");
-    aboutData.addCredit ("Bela-Andreas Bargel");
-    aboutData.addCredit ("Waldo Bastian");
-    aboutData.addCredit ("Ismail Belhachmi");
-    aboutData.addCredit ("Sashmit Bhaduri");
-    aboutData.addCredit ("Antonio Bianco");
-    aboutData.addCredit ("Stephan Binner");
-    aboutData.addCredit ("Markus Brueffer");
-    aboutData.addCredit ("Rob Buis");
-    aboutData.addCredit ("Lucijan Busch");
-    aboutData.addCredit ("Mikhail Capone");
-    aboutData.addCredit ("Enrico Ceppi");
-    aboutData.addCredit ("Tom Chance");
-    aboutData.addCredit ("Albert Astals Cid");
-    aboutData.addCredit ("Jennifer Dang");
-    aboutData.addCredit ("Lawrence Dang");
-    aboutData.addCredit ("Christoph Eckert");
-    aboutData.addCredit ("David Faure");
-    aboutData.addCredit ("P. Fisher");
-    aboutData.addCredit ("Nicolas Goutte");
-    aboutData.addCredit ("Herbert Graeber");
-    aboutData.addCredit ("Brad Grant");
-    aboutData.addCredit ("David Greenaway");
-    aboutData.addCredit ("Wilco Greven");
-    aboutData.addCredit ("Hubert Grininger");
-    aboutData.addCredit ("Adriaan de Groot");
-    aboutData.addCredit ("Esben Mose Hansen");
-    aboutData.addCredit ("Nadeem Hasan");
-    aboutData.addCredit ("Simon Hausmann");
-    aboutData.addCredit ("Michael Hoehne");
-    aboutData.addCredit ("Andrew J");
-    aboutData.addCredit ("Werner Joss");
-    aboutData.addCredit ("Derek Kite");
-    aboutData.addCredit ("Tobias Koenig");
-    aboutData.addCredit ("Dmitry Kolesnikov");
-    aboutData.addCredit ("Stephan Kulow");
-    aboutData.addCredit ("Eric Laffoon");
-    aboutData.addCredit ("Michael Lake");
-    aboutData.addCredit ("Sebastien Laout");
-    aboutData.addCredit ("David Ling");
-    aboutData.addCredit ("Volker Lochte");
-    aboutData.addCredit ("Anders Lund");
-    aboutData.addCredit ("Thiago Macieira");
-    aboutData.addCredit ("Jacek Masiulaniec");
-    aboutData.addCredit ("Benjamin Meyer");
-    aboutData.addCredit ("Amir Michail");
-    aboutData.addCredit ("Robert Moszczynski");
-    aboutData.addCredit ("Dirk Mueller");
-    aboutData.addCredit ("Ruivaldo Neto");
-    aboutData.addCredit ("Ralf Nolden");
-    aboutData.addCredit ("Maks Orlovich");
-    aboutData.addCredit ("Steven Pasternak");
-    aboutData.addCredit ("Cédric Pasteur");
-    aboutData.addCredit ("Erik K. Pedersen");
-    aboutData.addCredit ("Dennis Pennekamp");
-    aboutData.addCredit ("Jos Poortvliet");
-    aboutData.addCredit ("Boudewijn Rempt");
-    aboutData.addCredit ("Marcos Rodriguez");
-    aboutData.addCredit ("Matt Rogers");
-    aboutData.addCredit ("Francisco Jose Canizares Santofimia");
-    aboutData.addCredit ("Bram Schoenmakers");
-    aboutData.addCredit ("Dirk Schönberger");
-    aboutData.addCredit ("Lutz Schweizer");
-    aboutData.addCredit ("Emmeran Seehuber");
-    aboutData.addCredit ("Peter Simonsson");
-    aboutData.addCredit ("Andrew Simpson");
-    aboutData.addCredit ("A T Somers");
-    aboutData.addCredit ("Igor Stepin");
-    aboutData.addCredit ("Stephen Sweeney");
-    aboutData.addCredit ("Bart Symons");
-    aboutData.addCredit ("Stefan Taferner");
-    aboutData.addCredit ("Hogne Titlestad");
-    aboutData.addCredit ("Brandon Mark Turner");
-    aboutData.addCredit ("Jonathan Turner");
-    aboutData.addCredit ("Stephan Unknown");
-    aboutData.addCredit ("Dries Verachtert");
-    aboutData.addCredit ("Simon Vermeersch");
-    aboutData.addCredit ("Lauri Watts");
-    aboutData.addCredit ("Mark Wege");
-    aboutData.addCredit ("Christoph Wiesen");
-    aboutData.addCredit ("Andre Wobbeking");
-    aboutData.addCredit ("Luke-Jr");
-    aboutData.addCredit ("Maxim_86ualb2");
-    aboutData.addCredit ("Michele");
+    aboutData.addCredit (ki18n("Rashid N. Achilov"));
+    aboutData.addCredit (ki18n("Toyohiro Asukai"));
+    aboutData.addCredit (ki18n("Bela-Andreas Bargel"));
+    aboutData.addCredit (ki18n("Waldo Bastian"));
+    aboutData.addCredit (ki18n("Ismail Belhachmi"));
+    aboutData.addCredit (ki18n("Sashmit Bhaduri"));
+    aboutData.addCredit (ki18n("Antonio Bianco"));
+    aboutData.addCredit (ki18n("Stephan Binner"));
+    aboutData.addCredit (ki18n("Markus Brueffer"));
+    aboutData.addCredit (ki18n("Rob Buis"));
+    aboutData.addCredit (ki18n("Lucijan Busch"));
+    aboutData.addCredit (ki18n("Mikhail Capone"));
+    aboutData.addCredit (ki18n("Enrico Ceppi"));
+    aboutData.addCredit (ki18n("Tom Chance"));
+    aboutData.addCredit (ki18n("Albert Astals Cid"));
+    aboutData.addCredit (ki18n("Jennifer Dang"));
+    aboutData.addCredit (ki18n("Lawrence Dang"));
+    aboutData.addCredit (ki18n("Christoph Eckert"));
+    aboutData.addCredit (ki18n("David Faure"));
+    aboutData.addCredit (ki18n("P. Fisher"));
+    aboutData.addCredit (ki18n("Nicolas Goutte"));
+    aboutData.addCredit (ki18n("Herbert Graeber"));
+    aboutData.addCredit (ki18n("Brad Grant"));
+    aboutData.addCredit (ki18n("David Greenaway"));
+    aboutData.addCredit (ki18n("Wilco Greven"));
+    aboutData.addCredit (ki18n("Hubert Grininger"));
+    aboutData.addCredit (ki18n("Adriaan de Groot"));
+    aboutData.addCredit (ki18n("Esben Mose Hansen"));
+    aboutData.addCredit (ki18n("Nadeem Hasan"));
+    aboutData.addCredit (ki18n("Simon Hausmann"));
+    aboutData.addCredit (ki18n("Michael Hoehne"));
+    aboutData.addCredit (ki18n("Andrew J"));
+    aboutData.addCredit (ki18n("Werner Joss"));
+    aboutData.addCredit (ki18n("Derek Kite"));
+    aboutData.addCredit (ki18n("Tobias Koenig"));
+    aboutData.addCredit (ki18n("Dmitry Kolesnikov"));
+    aboutData.addCredit (ki18n("Stephan Kulow"));
+    aboutData.addCredit (ki18n("Eric Laffoon"));
+    aboutData.addCredit (ki18n("Michael Lake"));
+    aboutData.addCredit (ki18n("Sebastien Laout"));
+    aboutData.addCredit (ki18n("David Ling"));
+    aboutData.addCredit (ki18n("Volker Lochte"));
+    aboutData.addCredit (ki18n("Anders Lund"));
+    aboutData.addCredit (ki18n("Thiago Macieira"));
+    aboutData.addCredit (ki18n("Jacek Masiulaniec"));
+    aboutData.addCredit (ki18n("Benjamin Meyer"));
+    aboutData.addCredit (ki18n("Amir Michail"));
+    aboutData.addCredit (ki18n("Robert Moszczynski"));
+    aboutData.addCredit (ki18n("Dirk Mueller"));
+    aboutData.addCredit (ki18n("Ruivaldo Neto"));
+    aboutData.addCredit (ki18n("Ralf Nolden"));
+    aboutData.addCredit (ki18n("Maks Orlovich"));
+    aboutData.addCredit (ki18n("Steven Pasternak"));
+    aboutData.addCredit (ki18n("Cédric Pasteur"));
+    aboutData.addCredit (ki18n("Erik K. Pedersen"));
+    aboutData.addCredit (ki18n("Dennis Pennekamp"));
+    aboutData.addCredit (ki18n("Jos Poortvliet"));
+    aboutData.addCredit (ki18n("Boudewijn Rempt"));
+    aboutData.addCredit (ki18n("Marcos Rodriguez"));
+    aboutData.addCredit (ki18n("Matt Rogers"));
+    aboutData.addCredit (ki18n("Francisco Jose Canizares Santofimia"));
+    aboutData.addCredit (ki18n("Bram Schoenmakers"));
+    aboutData.addCredit (ki18n("Dirk Schönberger"));
+    aboutData.addCredit (ki18n("Lutz Schweizer"));
+    aboutData.addCredit (ki18n("Emmeran Seehuber"));
+    aboutData.addCredit (ki18n("Peter Simonsson"));
+    aboutData.addCredit (ki18n("Andrew Simpson"));
+    aboutData.addCredit (ki18n("A T Somers"));
+    aboutData.addCredit (ki18n("Igor Stepin"));
+    aboutData.addCredit (ki18n("Stephen Sweeney"));
+    aboutData.addCredit (ki18n("Bart Symons"));
+    aboutData.addCredit (ki18n("Stefan Taferner"));
+    aboutData.addCredit (ki18n("Hogne Titlestad"));
+    aboutData.addCredit (ki18n("Brandon Mark Turner"));
+    aboutData.addCredit (ki18n("Jonathan Turner"));
+    aboutData.addCredit (ki18n("Stephan Unknown"));
+    aboutData.addCredit (ki18n("Dries Verachtert"));
+    aboutData.addCredit (ki18n("Simon Vermeersch"));
+    aboutData.addCredit (ki18n("Lauri Watts"));
+    aboutData.addCredit (ki18n("Mark Wege"));
+    aboutData.addCredit (ki18n("Christoph Wiesen"));
+    aboutData.addCredit (ki18n("Andre Wobbeking"));
+    aboutData.addCredit (ki18n("Luke-Jr"));
+    aboutData.addCredit (ki18n("Maxim_86ualb2"));
+    aboutData.addCredit (ki18n("Michele"));
 
 
     KCmdLineArgs::init (argc, argv, &aboutData);
+
+    KCmdLineOptions cmdLineOptions;
+    cmdLineOptions.add("+[file]", ki18n ("Image file to open"));
     KCmdLineArgs::addCmdLineOptions (cmdLineOptions);
 
     KApplication app;
