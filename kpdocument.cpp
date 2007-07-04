@@ -1395,6 +1395,8 @@ bool kpDocument::selectionCopyOntoDocument (bool useTransparentPixmap)
 
     if (!sel->isText ())
     {
+        // We can't use kpSelection::paint() since that always uses the
+        // transparent pixmap.
         paintPixmapAt (useTransparentPixmap ? sel->transparentPixmap () : sel->opaquePixmap (),
                        boundingRect.topLeft ());
     }
