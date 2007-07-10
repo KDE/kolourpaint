@@ -222,7 +222,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/options/kpToolWidgetSpraycanSize.cp
 
 )  # set(kolourpaint_SRCS
 
-kde4_automoc(${kolourpaint_SRCS})
 
 kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
 
