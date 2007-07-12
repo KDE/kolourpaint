@@ -1142,6 +1142,7 @@ void kpDocument::setSelection (const kpSelection &selection)
             slotContentsChanged (m_selection->boundingRect ());
         else
             vm->updateViews (m_selection->boundingRect ());
+
         delete m_selection;
     }
 
@@ -1189,6 +1190,12 @@ void kpDocument::setSelection (const kpSelection &selection)
     else
         vm->updateViews (m_selection->boundingRect ());
 
+    // There's no need to disconnect() since we:
+    //
+    // 1. Connect our _copy_ of the given selection.
+    // 2. We delete our copy when setSelection() is called again.
+    //
+    // See code above for both.
     connect (m_selection, SIGNAL (changed (const QRect &)),
              this, SLOT (slotContentsChanged (const QRect &)));
 
