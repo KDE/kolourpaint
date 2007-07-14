@@ -1141,6 +1141,10 @@ void kpDocument::setSelection (const kpSelection &selection)
         if (m_selection->pixmap ())
             slotContentsChanged (m_selection->boundingRect ());
         else
+            // TODO: Should emit contentsChanged() instead?
+            //       I don't think it matters since contentsChanged() is
+            //       connected to updateViews() anyway (see
+            //       kpMainWindow::setDocument ()).
             vm->updateViews (m_selection->boundingRect ());
 
         delete m_selection;
@@ -1188,9 +1192,13 @@ void kpDocument::setSelection (const kpSelection &selection)
     if (m_selection->pixmap ())
         slotContentsChanged (m_selection->boundingRect ());
     else
+        // TODO: Should emit contentsChanged() instead?
+        //       I don't think it matters since contentsChanged() is
+        //       connected to updateViews() anyway (see
+        //       kpMainWindow::setDocument ()).
         vm->updateViews (m_selection->boundingRect ());
 
-    // There's no need to disconnect() since we:
+    // There's no need to disconnect() the old selection since we:
     //
     // 1. Connect our _copy_ of the given selection.
     // 2. We delete our copy when setSelection() is called again.
