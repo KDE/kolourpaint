@@ -78,7 +78,7 @@ static inline int contrast (int base, int strength)
 
 static inline int gamma (int base, int strength)
 {
-    return between0And255 (qRound (255.0 * pow (base / 255.0, 1.0 / pow (10, strength / 50.0))));
+    return between0And255 (qRound (255.0 * pow (base / 255.0, 1.0 / pow (10., strength / 50.0))));
 }
 
 

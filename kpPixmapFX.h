@@ -329,10 +329,10 @@ public:
     // <brushPixmap> must be a QPixmap of depth 1 (or a QBitmap).
     //
     // TODO: we must drop this since 1. can't be supported in Qt4 2. we later want to support alpha
-    static void paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QPoint &destAt,
-                                               const QPixmap &brushBitmap) KDE_DEPRECATED;
-    static void paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, int destX, int destY,
-                                               const QPixmap &brushBitmap) KDE_DEPRECATED;
+    static KDE_DEPRECATED void paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QPoint &destAt,
+                                               const QPixmap &brushBitmap);
+    static KDE_DEPRECATED void paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, int destX, int destY,
+                                               const QPixmap &brushBitmap);
 
     //
     // Ensures that <*destPixmapPtr> is opaque at <rect>.

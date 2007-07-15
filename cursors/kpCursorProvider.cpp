@@ -30,8 +30,6 @@
 
 #include <qcursor.h>
 
-#include <kstaticdeleter.h>
-
 #include <kpCursorLightCross.h>
 
 

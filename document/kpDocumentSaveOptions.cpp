@@ -42,8 +42,9 @@
 #include <kconfiggroup.h>
 
 
-struct kpDocumentSaveOptionsPrivate
+class kpDocumentSaveOptionsPrivate
 {
+public:
     QString m_mimeType;
     int m_colorDepth;
     bool m_dither;
