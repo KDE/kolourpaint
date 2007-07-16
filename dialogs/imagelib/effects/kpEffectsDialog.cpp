@@ -52,6 +52,7 @@
 #include <kpEffectFlattenWidget.h>
 #include <kpEffectInvertWidget.h>
 #include <kpEffectReduceColorsWidget.h>
+#include <kpEffectHSVWidget.h>
 #include <kpPixmapFX.h>
 
 
@@ -103,6 +104,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     m_effectsComboBox->addItem (i18n ("Invert"));
     m_effectsComboBox->addItem (i18n ("Reduce Colors"));
     m_effectsComboBox->addItem (i18n ("Soften & Sharpen"));
+    m_effectsComboBox->addItem (i18n ("Hue, Saturation, Value"));
 
     label->setBuddy (m_effectsComboBox);
     effectContainer->setStretchFactor (m_effectsComboBox, 1);
@@ -240,6 +242,10 @@ void kpEffectsDialog::selectEffect (int which)
 
     case 5:
         CREATE_EFFECT_WIDGET (kpEffectBlurSharpenWidget);
+        break;
+
+    case 6:
+        CREATE_EFFECT_WIDGET (kpEffectHSVWidget);
         break;
     }
 #undef CREATE_EFFECT_WIDGET

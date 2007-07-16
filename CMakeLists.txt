@@ -85,6 +85,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/commands/imagelib/effects/kpEffectFlattenCommand.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/imagelib/effects/kpEffectGrayscaleCommand.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/imagelib/effects/kpEffectInvertCommand.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/imagelib/effects/kpEffectReduceColorsCommand.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/commands/imagelib/effects/kpEffectHSVCommand.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/imagelib/transforms/kpTransformFlipCommand.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/imagelib/transforms/kpTransformResizeScaleCommand.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/imagelib/transforms/kpTransformRotateCommand.cpp
@@ -130,6 +131,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectFlatten.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectGrayscale.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectInvert.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectReduceColors.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectHSV.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpColor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpDocumentMetaInfo.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpFloodFill.cpp
@@ -202,6 +204,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imagelib/effects/kpEffectEmbossWidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imagelib/effects/kpEffectFlattenWidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imagelib/effects/kpEffectInvertWidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imagelib/effects/kpEffectReduceColorsWidget.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/widgets/imagelib/effects/kpEffectHSVWidget.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imagelib/effects/kpEffectWidgetBase.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpColorCells.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpColorPalette.cpp
