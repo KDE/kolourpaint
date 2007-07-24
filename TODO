@@ -40,6 +40,13 @@ selections_opaque_transparent.  [Thurston]
 KolourPaint 4
 ~~~~~~~~~~~~~
 
+<24-bit screen warning at startup
+
+
+text box create != cmd
+=> deselecting empty (more accurately, untouched) box = no text box
+
+
 Spraycan is a bit thick even if drawn quickly.
 
 
@@ -228,11 +235,6 @@ Goto next/prev color in palete
   Hue, saturation,... (mracek who is at the domain xko period or dot cz)
 
 
-[just use "long long"; future 64-bit computers will have more memory BTW]
-kpCommand::size() additions can overflow INT_MAX; protect against - but then
-user would have already run out of memory...
-
-
 sel border should not be xored against uninitialised rgb values (transparent pixels)
 e.g. CTRL+A, Crop Outside the Selection
 
@@ -415,10 +417,6 @@ DCOP scriptable
 
 
 Bug #12 - selectable text
-
-
-text box create != cmd
-=> deselecting empty (more accurately, untouched) box = no text box
 
 
 
