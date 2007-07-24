@@ -11,6 +11,7 @@
    "PROPAGATE" - an update that should be sent to other KolourPaint processes
                  using an IPC mechanism (e.g. DBUS for KDE 4, DCOP for KDE 3)
    "HACK" - something that _really_ should be done better
+   "REFACTOR" - bad coding style that should be fixed
    "sync" - check dependencies between code when modifying
             e.g. "sync: kpView::paintEvent()" means synchronize changes with
             the corresponding "sync" in "kpView::paintEvent()".
@@ -205,10 +206,6 @@ instead of
 "oldX , oldY - newX , newY  |||  (-)deltaX x (-)deltaY"
 (the "+" is to show that it's a delta, not a size; on 2nd thoughts, if
 they're both -, it would be ambiguous)
-
-
-tool to select rectangular area to zoom into
-
 
 
 Emmeran Seehuber:
