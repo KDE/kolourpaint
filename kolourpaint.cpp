@@ -52,7 +52,7 @@ int main (int argc, char *argv [])
         kpVersionText,
         ki18n ("Paint Program for KDE"),
         KAboutData::License_Custom,
-        ki18n(0/*copyright statement - see license instead*/),
+        ki18n (0/*copyright statement - see license instead*/),
         ki18n ("Support / Feedback:\n"
                    "kolourpaint-support@lists.sourceforge.net\n"),
         "http://www.kolourpaint.org/"
@@ -87,14 +87,14 @@ int main (int argc, char *argv [])
 
     // SYNC: with AUTHORS
 
-    aboutData.addAuthor (ki18n("Clarence Dang"), ki18n ("Maintainer"), "dang@kde.org");
-    aboutData.addAuthor (ki18n("Thurston Dang"), ki18n ("Chief Investigator"),
+    aboutData.addAuthor (ki18n ("Clarence Dang"), ki18n ("Maintainer"), "dang@kde.org");
+    aboutData.addAuthor (ki18n ("Thurston Dang"), ki18n ("Chief Investigator"),
                          "thurston_dang@users.sourceforge.net");
-    aboutData.addAuthor (ki18n("Kristof Borrey"), ki18n ("Icons"), "borrey@kde.org");
-    aboutData.addAuthor (ki18n("Kazuki Ohta"), ki18n ("InputMethod Support"), "mover@hct.zaq.ne.jp");
-    aboutData.addAuthor (ki18n("Nuno Pinheiro"), ki18n ("Icons"), "nf.pinheiro@gmail.com");
-    aboutData.addAuthor (ki18n("Danny Allen"), ki18n ("Icons"), "dannya40uk@yahoo.co.uk");
-    aboutData.addAuthor (ki18n("Laurent Montel"), ki18n ("KDE 4 Porting"), "montel@kde.org");
+    aboutData.addAuthor (ki18n ("Kristof Borrey"), ki18n ("Icons"), "borrey@kde.org");
+    aboutData.addAuthor (ki18n ("Kazuki Ohta"), ki18n ("InputMethod Support"), "mover@hct.zaq.ne.jp");
+    aboutData.addAuthor (ki18n ("Nuno Pinheiro"), ki18n ("Icons"), "nf.pinheiro@gmail.com");
+    aboutData.addAuthor (ki18n ("Danny Allen"), ki18n ("Icons"), "dannya40uk@yahoo.co.uk");
+    aboutData.addAuthor (ki18n ("Laurent Montel"), ki18n ("KDE 4 Porting"), "montel@kde.org");
 
 
     aboutData.addCredit (ki18n("Rashid N. Achilov"));
@@ -187,7 +187,7 @@ int main (int argc, char *argv [])
     KCmdLineArgs::init (argc, argv, &aboutData);
 
     KCmdLineOptions cmdLineOptions;
-    cmdLineOptions.add("+[file]", ki18n ("Image file to open"));
+    cmdLineOptions.add ("+[file]", ki18n ("Image file to open"));
     KCmdLineArgs::addCmdLineOptions (cmdLineOptions);
 
     KApplication app;
