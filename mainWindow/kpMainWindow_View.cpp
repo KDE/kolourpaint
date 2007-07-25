@@ -211,24 +211,20 @@ int kpMainWindow::zoomLevelFromString (const QString &stringIn)
     kDebug () << "kpMainWindow::zoomLevelFromString(" << stringIn << ")" << endl;
 #endif
 
-    // kdelibs4 sometimes adds accelerators to actions' text directly :(
+    // Remove any non-digits kdelibs sometimes adds behind our back :( e.g.:
+    //
+    // 1. kdelibs adds accelerators to actions' text directly
+    // 2. ',' is automatically added to change "1000%" to "1,000%"
+    //
     QString string = stringIn;
-    string.remove ('&');
+    string.remove (QRegExp ("[^0-9]"));
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\twithout ampersands='" << string << "'" << endl;
-#endif
-
-    // Loop until not digit.  So that we can cut the '%' from "100%".
-    int i;
-    for (i = 0; i < (int) string.length () && string.at (i).isDigit (); i++)
-        ;
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\twithout trailing % or text='" << string.left (i) << "'" << endl;
+    kDebug () << "\twithout non-digits='" << string << "'" << endl;
 #endif
 
     // Convert zoom level to number.
     bool ok = false;
-    int zoomLevel = string.left (i).toInt (&ok);
+    int zoomLevel = string.toInt (&ok);
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tzoomLevel=" << zoomLevel << endl;
 #endif
