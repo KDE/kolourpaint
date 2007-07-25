@@ -45,10 +45,10 @@
 #include <kpCommandHistory.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
 #include <kpPainter.h>
 #include <kpPixmapFX.h>
-#include <kpTempPixmap.h>
+#include <kpTempImage.h>
+#include <kpToolEnvironment.h>
 #include <kpToolRectangularCommand.h>
 #include <kpToolToolBar.h>
 #include <kpToolWidgetFillStyle.h>
@@ -60,7 +60,7 @@
 struct kpToolRectangularBasePrivate
 {
     kpToolRectangularBase::DrawShapeFunc drawShapeFunc;
-    
+
     kpToolWidgetLineWidth *toolWidgetLineWidth;
     kpToolWidgetFillStyle *toolWidgetFillStyle;
 
@@ -73,14 +73,14 @@ kpToolRectangularBase::kpToolRectangularBase (
         const QString &description,
         DrawShapeFunc drawShapeFunc,
         int key,
-        kpMainWindow *mainWindow,
+        kpToolEnvironment *environ, QObject *parent,
         const QString &name)
-        
-    : kpTool (text, description, key, mainWindow, name),
+
+    : kpTool (text, description, key, environ, parent, name),
       d (new kpToolRectangularBasePrivate ())
 {
     d->drawShapeFunc = drawShapeFunc;
-    
+
     d->toolWidgetLineWidth = 0, d->toolWidgetFillStyle = 0;
 }
 
@@ -262,22 +262,22 @@ kpColor kpToolRectangularBase::drawingBackgroundColor () const
 // private
 void kpToolRectangularBase::updateShape ()
 {
-    kpImage image = document ()->getPixmapAt (d->toolRectangleRect);
+    kpImage image = document ()->getImageAt (d->toolRectangleRect);
 
     // Invoke shape drawing function passed in ctor.
     (*d->drawShapeFunc) (&image,
         0, 0, d->toolRectangleRect.width (), d->toolRectangleRect.height (),
         drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
         drawingBackgroundColor ());
-        
-    kpTempPixmap newTempPixmap (false/*always display*/,
-                                kpTempPixmap::SetPixmap/*render mode*/,
+
+    kpTempImage newTempImage (false/*always display*/,
+                                kpTempImage::SetImage/*render mode*/,
                                 d->toolRectangleRect.topLeft (),
                                 image);
-                                
+
     viewManager ()->setFastUpdates ();
     {
-        viewManager ()->setTempPixmap (newTempPixmap);
+        viewManager ()->setTempImage (newTempImage);
     }
     viewManager ()->restoreFastUpdates ();
 }
@@ -328,7 +328,7 @@ void kpToolRectangularBase::draw (const QPoint &, const QPoint &, const QRect &)
 
 void kpToolRectangularBase::cancelShape ()
 {
-    viewManager ()->invalidateTempPixmap ();
+    viewManager ()->invalidateTempImage ();
 
     setUserMessage (i18n ("Let go of all the mouse buttons."));
 }
@@ -348,15 +348,15 @@ void kpToolRectangularBase::endDraw (const QPoint &, const QRect &)
     //        TODO, hence justifying the TODO.
     // Later2: kpToolPolygonalBase, and perhaps, other shapes will have the
     //         same problem.
-    viewManager ()->invalidateTempPixmap ();
+    viewManager ()->invalidateTempImage ();
 
-    mainWindow ()->commandHistory ()->addCommand (
+    environ ()->commandHistory ()->addCommand (
         new kpToolRectangularCommand (
             text (),
             d->drawShapeFunc, d->toolRectangleRect,
             drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
             drawingBackgroundColor (),
-            mainWindow ()));
+            environ ()->commandEnvironment ()));
 
     setUserMessage (haventBegunDrawUserMessage ());
 }

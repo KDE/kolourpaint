@@ -35,9 +35,6 @@
 #include <kpColor.h>
 
 
-class kpMainWindow;
-
-
 //
 // Widget similar to KDualColorButton.
 // Main differences:
@@ -52,8 +49,7 @@ class kpDualColorButton : public QFrame
 Q_OBJECT
 
 public:
-    kpDualColorButton (kpMainWindow *mainWindow,
-                       QWidget *parent);
+    kpDualColorButton (QWidget *parent);
     virtual ~kpDualColorButton ();
 
     kpColor color (int which) const;
@@ -89,7 +85,7 @@ protected:
     QRect foregroundRect () const;
     QRect backgroundRect () const;
 
-    //virtual void dragEnterEvent (QDragEnterEvent *e);
+    virtual void dragEnterEvent (QDragEnterEvent *e);
     virtual void dragMoveEvent (QDragMoveEvent *e);
     virtual void dropEvent (QDropEvent *e);
 
@@ -98,7 +94,6 @@ protected:
 
     virtual void paintEvent (QPaintEvent *e);
 
-    kpMainWindow *m_mainWindow;
     kpColor m_color [2];
     kpColor m_oldColor [2];
 };

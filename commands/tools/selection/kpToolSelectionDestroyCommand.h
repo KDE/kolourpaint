@@ -30,31 +30,29 @@
 #define kpToolSelectionDestroyCommand_H
 
 
-#include <qpixmap.h>
+#include <kpImage.h>
+#include <kpNamedCommand.h>
 
-#include <kpCommandHistory.h>
 
-
-class kpMainWindow;
-class kpSelection;
+class kpAbstractSelection;
 
 
 class kpToolSelectionDestroyCommand : public kpNamedCommand
 {
 public:
     kpToolSelectionDestroyCommand (const QString &name, bool pushOntoDocument,
-                                   kpMainWindow *mainWindow);
+                                   kpCommandEnvironment *environ);
     virtual ~kpToolSelectionDestroyCommand ();
 
-    virtual int size () const;
+    virtual kpCommandSize::SizeType size () const;
 
     virtual void execute ();
     virtual void unexecute ();
 
 private:
     bool m_pushOntoDocument;
-    QPixmap m_oldDocPixmap;
-    kpSelection *m_oldSelection;
+    kpImage m_oldDocImage;
+    kpAbstractSelection *m_oldSelectionPtr;
 
     int m_textRow, m_textCol;
 };

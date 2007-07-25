@@ -47,6 +47,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 
+#include <kactioncollection.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -56,14 +57,14 @@
 #include <kpBug.h>
 #include <kpColor.h>
 #include <kpColorToolBar.h>
+#include <kpCommandSize.h>
 #include <kpDefs.h>
-#include <kpMainWindow.h>
+#include <kpPainter.h>
 #include <kpPixmapFX.h>
 #include <kpToolAction.h>
 #include <kpToolToolBar.h>
 #include <kpView.h>
 #include <kpViewManager.h>
-#include <kactioncollection.h>
 
 
 // static
@@ -198,10 +199,8 @@ bool kpTool::currentPointCardinallyNextToLast () const
     if (d->lastPoint == QPoint (-1, -1))
         return true;
 
-    int dx = qAbs (d->currentPoint.x () - d->lastPoint.x ());
-    int dy = qAbs (d->currentPoint.y () - d->lastPoint.y ());
-
-    return (dx + dy <= 1);
+    return (d->currentPoint == d->lastPoint ||
+            kpPainter::pointsAreCardinallyAdjacent (d->currentPoint, d->lastPoint));
 }
 
 
@@ -269,13 +268,13 @@ bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
     }
 
     // Was already large - user was warned before, don't annoy him/her again
-    if (kpPixmapFX::pixmapSize (oldWidth, oldHeight, QPixmap::defaultDepth ()) >=
+    if (kpCommandSize::PixmapSize (oldWidth, oldHeight, QPixmap::defaultDepth ()) >=
         KP_BIG_IMAGE_SIZE)
     {
         return true;
     }
 
-    if (kpPixmapFX::pixmapSize (newWidth, newHeight, QPixmap::defaultDepth ()) >=
+    if (kpCommandSize::PixmapSize (newWidth, newHeight, QPixmap::defaultDepth ()) >=
         KP_BIG_IMAGE_SIZE)
     {
         int accept = KMessageBox::warningContinueCancel (parent,

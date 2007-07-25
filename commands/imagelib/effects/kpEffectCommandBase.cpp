@@ -33,8 +33,6 @@
 
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpSelection.h>
 #include <kpSetOverrideCursorSaver.h>
 
 
@@ -47,9 +45,9 @@ struct kpEffectCommandBasePrivate
 };
 
 kpEffectCommandBase::kpEffectCommandBase (const QString &name,
-                                            bool actOnSelection,
-                                            kpMainWindow *mainWindow)
-    : kpCommand (mainWindow),
+        bool actOnSelection,
+        kpCommandEnvironment *environ)
+    : kpCommand (environ),
       d (new kpEffectCommandBasePrivate ())
 {
     d->name = name;
@@ -73,9 +71,9 @@ QString kpEffectCommandBase::name () const
 
 
 // public virtual [base kpCommand]
-int kpEffectCommandBase::size () const
+kpCommandSize::SizeType kpEffectCommandBase::size () const
 {
-    return kpPixmapFX::pixmapSize (d->oldImage);
+    return ImageSize (d->oldImage);
 }
 
 
@@ -83,12 +81,12 @@ int kpEffectCommandBase::size () const
 void kpEffectCommandBase::execute ()
 {
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
-    
+
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
 
-    const kpImage oldImage = *doc->pixmap (d->actOnSelection);
+    const kpImage oldImage = doc->image (d->actOnSelection);
 
     if (!isInvertible ())
     {
@@ -98,14 +96,14 @@ void kpEffectCommandBase::execute ()
 
     kpImage newImage = /*pure virtual*/applyEffect (oldImage);
 
-    doc->setPixmap (d->actOnSelection, newImage);
+    doc->setImage (d->actOnSelection, newImage);
 }
 
 // public virtual [base kpCommand]
 void kpEffectCommandBase::unexecute ()
 {
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
-    
+
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
@@ -118,10 +116,10 @@ void kpEffectCommandBase::unexecute ()
     }
     else
     {
-        newImage = /*pure virtual*/applyEffect (*doc->pixmap (d->actOnSelection));
+        newImage = /*pure virtual*/applyEffect (doc->image (d->actOnSelection));
     }
 
-    doc->setPixmap (d->actOnSelection, newImage);
+    doc->setImage (d->actOnSelection, newImage);
 
 
     d->oldImage = kpImage ();

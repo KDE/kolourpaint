@@ -1,9 +1,10 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
 <!--
 SYNC: Do not change the number of quotes before the version number
-      - it is parsed by the KolourPaint wrapper script.
+      - it is parsed by the KolourPaint wrapper shell script (in standalone
+      backport releases of KolourPaint)
 -->
-<gui name="kolourpaint" version="51">
+<gui name="kolourpaint" version="58">
 
 <!--
 SYNC: Check for duplicate actions in menus caused by some of our actions
@@ -16,6 +17,9 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
         <!-- <Action name="file_new_window" append="new_merge" /> -->
 
         <Action name="file_scan" append="open_merge" />
+        <Separator append="open_merge" />
+        <Action name="file_properties" append="open_merge" />
+
         <Action name="file_export" append="save_merge" />
         <Separator append="save_merge" />
 
@@ -85,6 +89,22 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
         <Separator />
         <Action name="image_invert_colors" />
         <Action name="image_clear" />
+        <Separator />
+        <!-- Implemented in kpMainWindow_Tools.cpp, not kpImageWindow_Image.cpp
+             since they're really setting tool options. -->
+        <Action name="image_draw_opaque" />
+        <Action name="image_draw_color_similarity" />
+    </Menu>
+
+    <Menu name="colors"><text>&amp;Colors</text>
+        <Action name="colors_default" />
+        <Action name="colors_kde" />
+        <Action name="colors_open" />
+        <Separator />
+        <Action name="colors_save_as" />
+        <Separator />
+        <Action name="colors_append_row" />
+        <Action name="colors_delete_row" />
     </Menu>
 
     <Menu name="settings">
@@ -115,6 +135,7 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
         <Action name="tool_rounded_rectangle" />
         <Action name="tool_spraycan" />
         <Action name="tool_text" />
+        <Action name="tool_zoom" />
 
         <Action name="prev_tool_option_group_1" />
         <Action name="next_tool_option_group_1" />

@@ -49,9 +49,9 @@
 
 kpEffectHSVCommand::kpEffectHSVCommand (double hue, double saturation, double value,
         bool actOnSelection,
-        kpMainWindow *mainWindow)
-    : kpEffectCommandBase (i18n ("Hue, Saturation, Value"), actOnSelection, mainWindow),
-      m_hue (hue), m_saturation (saturation), m_value(value)
+        kpCommandEnvironment *environ)
+    : kpEffectCommandBase (i18n ("Hue, Saturation, Value"), actOnSelection, environ),
+      m_hue (hue), m_saturation (saturation), m_value (value)
 {
 }
 

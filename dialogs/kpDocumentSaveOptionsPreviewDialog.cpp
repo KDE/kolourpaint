@@ -30,34 +30,24 @@
 
 #include <kpDocumentSaveOptionsPreviewDialog.h>
 
-#include <qapplication.h>
-#include <qboxlayout.h>
-#include <qbuffer.h>
 #include <qevent.h>
 #include <qgridlayout.h>
-#include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpixmap.h>
-#include <qtimer.h>
 
-#include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kglobal.h>
-#include <kimageio.h>
 #include <klocale.h>
-#include <knuminput.h>
-#include <kpushbutton.h>
 
+#include <kpCommandSize.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
 #include <kpPixmapFX.h>
 #include <kpResizeSignallingLabel.h>
-#include <kpSelection.h>
 #include <kpTransformPreviewDialog.h>
-#include <kpWidgetMapper.h>
 
 
 // protected static
@@ -126,7 +116,7 @@ QSize kpDocumentSaveOptionsPreviewDialog::preferredMinimumSize () const
 
 // public slot
 void kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize (const QPixmap &pixmap,
-                                                              int fileSize)
+                                                               qint64 fileSize)
 {
     delete m_filePixmap;
     m_filePixmap = new QPixmap (pixmap);
@@ -135,16 +125,19 @@ void kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize (const QPixmap &pi
 
     m_fileSize = fileSize;
 
-    const int pixmapSize = kpPixmapFX::pixmapSize (pixmap);
+    const kpCommandSize::SizeType pixmapSize = kpCommandSize::PixmapSize (pixmap);
+    // (int cast is safe as long as the file size is not more than 20 million
+    //  -- i.e. INT_MAX / 100 -- times the pixmap size)
     const int percent = pixmapSize ?
-                            qMax (1, fileSize * 100 / pixmapSize) :
+                            qMax (1,
+                                  (int) ((kpCommandSize::SizeType) fileSize * 100 / pixmapSize)) :
                             0;
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
     kDebug () << "kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize()"
                << " pixmapSize=" << pixmapSize
                << " fileSize=" << fileSize
                << " raw fileSize/pixmapSize%="
-               << (pixmapSize ? fileSize * 100 / pixmapSize : 0)
+               << (pixmapSize ? (kpCommandSize::SizeType) fileSize * 100 / pixmapSize : 0)
                << endl;
 #endif
 

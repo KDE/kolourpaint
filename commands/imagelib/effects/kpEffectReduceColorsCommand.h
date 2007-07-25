@@ -35,16 +35,13 @@
 
 
 
-class kpMainWindow;
-
-
 class kpEffectReduceColorsCommand : public kpEffectCommandBase
 {
 public:
     // depth must be 1 or 8
     kpEffectReduceColorsCommand (int depth, bool dither,
                                  bool actOnSelection,
-                                 kpMainWindow *mainWindow);
+                                 kpCommandEnvironment *environ);
     virtual ~kpEffectReduceColorsCommand ();
 
     QString commandName (int depth, int dither) const;

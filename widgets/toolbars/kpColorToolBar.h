@@ -41,11 +41,10 @@
 
 class QBoxLayout;
 
-
+class kpColorCells;
 class kpColorPalette;
 class kpColorSimilarityToolBarItem;
 class kpDualColorButton;
-class kpMainWindow;
 
 
 class kpColorToolBar : public KToolBar
@@ -53,8 +52,10 @@ class kpColorToolBar : public KToolBar
 Q_OBJECT
 
 public:
-    kpColorToolBar (const QString &label, kpMainWindow *mainWindow);
+    kpColorToolBar (const QString &label, QWidget *parent);
     virtual ~kpColorToolBar ();
+
+    kpColorCells *colorCells () const;
 
     kpColor color (int which) const;
     void setColor (int which, const kpColor &color);
@@ -65,6 +66,9 @@ public:
     double colorSimilarity () const;
     void setColorSimilarity (double similarity);
     int processedColorSimilarity () const;
+
+    void openColorSimilarityDialog ();
+    void flashColorSimilarityToolBarItem ();
 
 signals:
     // If you connect to this signal, ignore the following
@@ -90,8 +94,6 @@ public slots:
     void setBackgroundColor (const kpColor &color);
 
 private:
-    kpMainWindow *m_mainWindow;
-
     Qt::Orientation m_lastDockedOrientation;
     bool m_lastDockedOrientationSet;
     virtual void setOrientation (Qt::Orientation o);

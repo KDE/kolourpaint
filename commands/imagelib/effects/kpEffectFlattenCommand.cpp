@@ -51,10 +51,10 @@
 
 
 kpEffectFlattenCommand::kpEffectFlattenCommand (const QColor &color1,
-                                                const QColor &color2,
-                                                bool actOnSelection,
-                                                kpMainWindow *mainWindow)
-    : kpEffectCommandBase (i18n ("Flatten"), actOnSelection, mainWindow),
+        const QColor &color2,
+        bool actOnSelection,
+        kpCommandEnvironment *environ)
+    : kpEffectCommandBase (i18n ("Flatten"), actOnSelection, environ),
       m_color1 (color1), m_color2 (color2)
 {
 }

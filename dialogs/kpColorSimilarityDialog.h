@@ -33,33 +33,35 @@
 #include <kdialog.h>
 
 
+class QLabel;
+
 class KIntNumInput;
 
-class kpColorSimilarityCube;
-class kpMainWindow;
+class kpColorSimilarityFrame;
 
 
+// LOTODO: Why doesn't this dialog automatically enforce a minimum size
+//         based on layout magic, like Image -> Resize / Scale?
 class kpColorSimilarityDialog : public KDialog
 {
 Q_OBJECT
 
 public:
-    kpColorSimilarityDialog (kpMainWindow *mainWindow,
-                             QWidget *parent);
+    kpColorSimilarityDialog (QWidget *parent);
     virtual ~kpColorSimilarityDialog ();
 
     double colorSimilarity () const;
     void setColorSimilarity (double similarity);
 
-    static const double maximumColorSimilarity;
-
 private slots:
     void slotColorSimilarityValueChanged ();
 
+    void slotWhatIsLabelClicked ();
+
 private:
-    kpMainWindow *m_mainWindow;
-    kpColorSimilarityCube *m_colorSimilarityCube;
+    kpColorSimilarityFrame *m_colorSimilarityFrame;
     KIntNumInput *m_colorSimilarityInput;
+    QLabel *m_whatIsLabel;
 };
 
 

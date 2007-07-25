@@ -32,14 +32,14 @@
 
 #include <kdebug.h>
 
-#include <kpMainWindow.h>
-#include <kpSelection.h>
+#include <kpCommandEnvironment.h>
+#include <kpTextSelection.h>
 
 
 kpToolTextChangeStyleCommand::kpToolTextChangeStyleCommand (const QString &name,
-    const kpTextStyle &newTextStyle, const kpTextStyle &oldTextStyle,
-    kpMainWindow *mainWindow)
-    : kpNamedCommand (name, mainWindow),
+        const kpTextStyle &newTextStyle, const kpTextStyle &oldTextStyle,
+        kpCommandEnvironment *environ)
+    : kpNamedCommand (name, environ),
       m_newTextStyle (newTextStyle),
       m_oldTextStyle (oldTextStyle)
 {
@@ -51,7 +51,7 @@ kpToolTextChangeStyleCommand::~kpToolTextChangeStyleCommand ()
 
 
 // public virtual [base kpCommand]
-int kpToolTextChangeStyleCommand::size () const
+kpCommandSize::SizeType kpToolTextChangeStyleCommand::size () const
 {
     return 0;
 }
@@ -71,10 +71,10 @@ void kpToolTextChangeStyleCommand::execute ()
                << endl;
 #endif
 
-    m_mainWindow->setTextStyle (m_newTextStyle);
-    
-    Q_ASSERT (selection ());
-    selection ()->setTextStyle (m_newTextStyle);
+    environ ()->setTextStyle (m_newTextStyle);
+
+    Q_ASSERT (textSelection ());
+    textSelection ()->setTextStyle (m_newTextStyle);
 }
 
 // public virtual [base kpCommand]
@@ -91,10 +91,10 @@ void kpToolTextChangeStyleCommand::unexecute ()
                << endl;
 #endif
 
-    m_mainWindow->setTextStyle (m_oldTextStyle);
-    
-    Q_ASSERT (selection ());
-    selection ()->setTextStyle (m_oldTextStyle);
+    environ ()->setTextStyle (m_oldTextStyle);
+
+    Q_ASSERT (textSelection ());
+    textSelection ()->setTextStyle (m_oldTextStyle);
 }
 
 

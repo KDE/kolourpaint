@@ -2,5 +2,5 @@
 
 for f in `find -name \*.cpp | cut -c3- | sort`
 do
-	echo '${CMAKE_SOURCE_DIR}/kolourpaint/'$f
+	echo '${CMAKE_CURRENT_SOURCE_DIR}/'$f
 done

@@ -32,19 +32,19 @@
 
 #include <qlist.h>
 
-#include <kpSelection.h>
+#include <kpTextSelection.h>
 #include <kpViewManager.h>
 
 
 kpToolTextDeleteCommand::kpToolTextDeleteCommand (const QString &name,
-    int row, int col, Action action,
-    kpMainWindow *mainWindow)
-    : kpNamedCommand (name, mainWindow),
+        int row, int col, Action action,
+        kpCommandEnvironment *environ)
+    : kpNamedCommand (name, environ),
       m_row (row), m_col (col),
       m_numDeletes (0)
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
-    
+
     if (action == AddDeleteNow)
         addDelete ();
 }
@@ -57,7 +57,7 @@ kpToolTextDeleteCommand::~kpToolTextDeleteCommand ()
 // public
 void kpToolTextDeleteCommand::addDelete ()
 {
-    QList <QString> textLines = selection ()->textLines ();
+    QList <QString> textLines = textSelection ()->textLines ();
 
     if (m_col < (int) textLines [m_row].length ())
     {
@@ -77,7 +77,7 @@ void kpToolTextDeleteCommand::addDelete ()
         }
     }
 
-    selection ()->setTextLines (textLines);
+    textSelection ()->setTextLines (textLines);
 
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
@@ -86,9 +86,9 @@ void kpToolTextDeleteCommand::addDelete ()
 
 
 // public virtual [base kpCommand]
-int kpToolTextDeleteCommand::size () const
+kpCommandSize::SizeType kpToolTextDeleteCommand::size () const
 {
-    return m_deletedText.length () * sizeof (QChar);
+    return (kpCommandSize::SizeType) m_deletedText.length () * sizeof (QChar);
 }
 
 
@@ -110,7 +110,7 @@ void kpToolTextDeleteCommand::unexecute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
-    QList <QString> textLines = selection ()->textLines ();
+    QList <QString> textLines = textSelection ()->textLines ();
 
     for (int i = 0; i < (int) m_deletedText.length (); i++)
     {
@@ -132,7 +132,7 @@ void kpToolTextDeleteCommand::unexecute ()
 
     m_deletedText.clear ();
 
-    selection ()->setTextLines (textLines);
+    textSelection ()->setTextLines (textLines);
 
     viewManager ()->setTextCursorPosition (m_row, m_col);
 }

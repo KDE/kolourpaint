@@ -30,33 +30,33 @@
 #define kpToolSelectionCreateCommand_H
 
 
-#include <kpCommandHistory.h>
+#include <kpNamedCommand.h>
 
 
-class kpMainWindow;
-class kpSelection;
+class kpAbstractSelection;
+class kpCommandHistory;
 
 
 class kpToolSelectionCreateCommand : public kpNamedCommand
 {
 public:
     // (if fromSelection doesn't have a pixmap, it will only recreate the region)
-    kpToolSelectionCreateCommand (const QString &name, const kpSelection &fromSelection,
-                                  kpMainWindow *mainWindow);
+    kpToolSelectionCreateCommand (const QString &name, const kpAbstractSelection &fromSelection,
+                                  kpCommandEnvironment *environ);
     virtual ~kpToolSelectionCreateCommand ();
 
-    virtual int size () const;
+    virtual kpCommandSize::SizeType size () const;
 
     static bool nextUndoCommandIsCreateBorder (kpCommandHistory *commandHistory);
 
-    const kpSelection *fromSelection () const;
-    void setFromSelection (const kpSelection &fromSelection);
+    const kpAbstractSelection *fromSelection () const;
+    void setFromSelection (const kpAbstractSelection &fromSelection);
 
     virtual void execute ();
     virtual void unexecute ();
 
 private:
-    kpSelection *m_fromSelection;
+    kpAbstractSelection *m_fromSelection;
 
     int m_textRow, m_textCol;
 };

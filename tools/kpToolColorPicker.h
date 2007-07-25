@@ -43,7 +43,7 @@ class kpToolColorPicker : public kpTool
 Q_OBJECT
 
 public:
-    kpToolColorPicker (kpMainWindow *);
+    kpToolColorPicker (kpToolEnvironment *environ, QObject *parent);
     virtual ~kpToolColorPicker ();
 
     // generally the user goes to pick a color but wants to return to using
@@ -52,7 +52,7 @@ public:
 
 private:
     kpColor colorAtPixel (const QPoint &p);
-    
+
     QString haventBegunDrawUserMessage () const;
 
 public:

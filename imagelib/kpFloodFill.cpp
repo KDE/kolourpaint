@@ -53,7 +53,7 @@ struct kpFillLine
     {
     }
 
-    static int size ()
+    static kpCommandSize::SizeType size ()
     {
         return sizeof (kpFillLine);
     }
@@ -61,18 +61,18 @@ struct kpFillLine
     int m_y, m_x1, m_x2;
 };
 
-static int FillLinesListSize (const QLinkedList <kpFillLine> &fillLines)
+static kpCommandSize::SizeType FillLinesListSize (const QLinkedList <kpFillLine> &fillLines)
 {
     return (fillLines.size () * kpFillLine::size ());
 }
-    
+
 
 struct kpFloodFillPrivate
 {
     //
     // Copy of whatever was passed to the constructor.
     //
-    
+
     kpImage *imagePtr;
     int x, y;
     kpColor color;
@@ -82,21 +82,21 @@ struct kpFloodFillPrivate
     //
     // Set by Step 1.
     //
-    
+
     kpColor colorToChange;
 
 
     //
     // Set by Step 2.
     //
-    
+
     QImage readableImage;
-    
+
     QLinkedList <kpFillLine> fillLines;
     QList < QLinkedList <kpFillLine> > fillLinesCache;
 
     QRect boundingRect;
-    
+
     bool prepared;
 };
 
@@ -131,16 +131,16 @@ int kpFloodFill::processedColorSimilarity () const
 
 
 // public
-int kpFloodFill::size () const
+kpCommandSize::SizeType kpFloodFill::size () const
 {
-    int fillLinesCacheSize = 0;
+    kpCommandSize::SizeType fillLinesCacheSize = 0;
     foreach (const QLinkedList <kpFillLine> &linesList, d->fillLinesCache)
     {
         fillLinesCacheSize += ::FillLinesListSize (linesList);
     }
 
     return ::FillLinesListSize (d->fillLines) +
-           kpPixmapFX::imageSize (d->readableImage) +
+           kpCommandSize::QImageSize (d->readableImage) +
            fillLinesCacheSize;
 }
 
@@ -375,7 +375,7 @@ void kpFloodFill::prepare ()
 QRect kpFloodFill::boundingRect ()
 {
     prepare ();
-    
+
     return d->boundingRect;
 }
 
@@ -399,7 +399,7 @@ static void DrawLinesHelper (QPainter *p,
 #endif
 
     p->setPen (kpPixmapFX::draw_ToQColor (pack->color, drawingOnRGBLayer));
-            
+
     foreach (const kpFillLine &l, *pack->lines)
     {
         const QPoint p1 (l.m_x1, l.m_y);

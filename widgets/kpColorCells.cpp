@@ -26,13 +26,15 @@
 */
 
 
-#define DEBUG_KP_COLOR_CELLS 0
+#define DEBUG_KP_COLOR_CELLS 1
 
 
 #include <kpColorCells.h>
 
 #include <QContextMenuEvent>
 #include <QMouseEvent>
+
+#include <kpColorCollection.h>
 
 #include <kpColor.h>
 
@@ -73,20 +75,17 @@ static QColor add (const QColor &a, const QColor &b)
 }
 
 
-
-
-
 //
 // make our own colors in case weird ones like "Qt::cyan"
 // (turquoise) get changed by Qt
 //
 
 // primary colors + B&W
-static QColor kpRed;
-static QColor kpGreen;
-static QColor kpBlue;
-static QColor kpBlack;
-static QColor kpWhite;
+static QColor kpRed (255, 0, 0);
+static QColor kpGreen (0, 255, 0);
+static QColor kpBlue (0, 0, 255);
+static QColor kpBlack (0, 0, 0);
+static QColor kpWhite (255, 255, 255);
 
 // intentionally _not_ an HSV darkener
 static QColor dark (const QColor &color)
@@ -95,124 +94,32 @@ static QColor dark (const QColor &color)
 }
 
 // full-brightness colors
-static QColor kpYellow;
-static QColor kpPurple;
-static QColor kpAqua;
+static QColor kpYellow = add (kpRed, kpGreen);
+static QColor kpPurple = add (kpRed, kpBlue);
+static QColor kpAqua = add (kpGreen, kpBlue);
 
 // mixed colors
-static QColor kpGrey;
-static QColor kpLightGrey;
-static QColor kpOrange;
+static QColor kpGrey = blend (kpBlack, kpWhite);
+static QColor kpLightGrey = blend (kpGrey, kpWhite);
+static QColor kpOrange = blend (kpRed, kpYellow);
 
 // pastel colors
-static QColor kpPink;
-static QColor kpLightGreen;
-static QColor kpLightBlue;
-static QColor kpTan;
+static QColor kpPink = blend (kpRed, kpWhite);
+static QColor kpLightGreen = blend (kpGreen, kpWhite);
+static QColor kpLightBlue = blend (kpBlue, kpWhite);
+static QColor kpTan = blend (kpYellow, kpWhite);
 
-static bool ownColorsInitialised = false;
 
-/* TODO: clean up this code!!!
- *       (probably when adding palette load/save)
- */
-#define rows 2
-#define cols 11
-kpColorCells::kpColorCells (QWidget *parent,
-                            Qt::Orientation o)
-    : KColorCells (parent, rows, cols),
-      m_mouseButton (-1)
+
+class kpDefaultColorCollection : public kpColorCollection
 {
-    setShading (false);  // no 3D look
+public:
+    kpDefaultColorCollection ();
+    ~kpDefaultColorCollection ();
+};
 
-    // Trap KColorDrag so that kpMainWindow does not trap it.
-    // See our impl of dropEvent().
-    setAcceptDrops (true);
-    setAcceptDrags (true);
-
-    connect (this, SIGNAL (colorDoubleClicked (int, QColor)),
-             SLOT (slotColorDoubleClicked (int, QColor)));
-
-    if (!ownColorsInitialised)
-    {
-        // Don't initialise globally when we probably don't have a colour
-        // allocation context.  This way, the colours aren't sometimes
-        // invalid (e.g. at 8-bit).
-
-        kpRed = QColor (255, 0, 0);
-        kpGreen = QColor (0, 255, 0);
-        kpBlue = QColor (0, 0, 255);
-        kpBlack = QColor (0, 0, 0);
-        kpWhite = QColor (255, 255, 255);
-
-        kpYellow = add (kpRed, kpGreen);
-        kpPurple = add (kpRed, kpBlue);
-        kpAqua = add (kpGreen, kpBlue);
-
-        kpGrey = blend (kpBlack, kpWhite);
-        kpLightGrey = blend (kpGrey, kpWhite);
-        kpOrange = blend (kpRed, kpYellow);
-
-        kpPink = blend (kpRed, kpWhite);
-        kpLightGreen = blend (kpGreen, kpWhite);
-        kpLightBlue = blend (kpBlue, kpWhite);
-        kpTan = blend (kpYellow, kpWhite);
-
-        ownColorsInitialised = true;
-    }
-
-    setOrientation (o);
-}
-
-kpColorCells::~kpColorCells ()
+kpDefaultColorCollection::kpDefaultColorCollection ()
 {
-}
-
-Qt::Orientation kpColorCells::orientation () const
-{
-    return m_orientation;
-}
-
-void kpColorCells::setOrientation (Qt::Orientation o)
-{
-    int c, r;
-
-    if (o == Qt::Horizontal)
-    {
-        c = cols;
-        r = rows;
-    }
-    else
-    {
-        c = rows;
-        r = cols;
-    }
-
-#if DEBUG_KP_COLOR_CELLS
-    kDebug () << "kpColorCells::setOrientation(): r=" << r << " c=" << c << endl;
-#endif
-
-    setRowCount (r);
-    setColumnCount (c);
-
-    // COMPAT: Get cell dimensions exactly as claimed by these variables.
-    //         I suspect frameWidth() isn't right.
-    // TODO: It wasn't right in KDE 3.4 either (haven't checked 3.5).
-    const int CellWidth = 26, CellHeight = 26;
-
-    for (int y = 0; y < r; y++)
-        setRowHeight (y, CellHeight);
-    for (int x = 0; x < c; x++)
-        setColumnWidth (x, CellWidth);
-
-    setFixedSize (columnCount () * CellWidth + frameWidth () * 2,
-                  rowCount  () * CellHeight + frameWidth () * 2);
-
-/*
-    kDebug () << "\tlimits: array=" << sizeof (colors) / sizeof (colors [0])
-               << " r*c=" << r * c << endl;
-    kDebug () << "\tsizeof (colors)=" << sizeof (colors)
-               << " sizeof (colors [0])=" << sizeof (colors [0])
-               << endl;*/
     QColor colors [] =
     {
         kpBlack,
@@ -240,6 +147,153 @@ void kpColorCells::setOrientation (Qt::Orientation o)
         kpTan
     };
 
+    for (int i = 0; i < (int) (sizeof (colors) / sizeof (colors [0])); i++)
+    {
+        addColor (colors [i]);
+    }
+}
+
+kpDefaultColorCollection::~kpDefaultColorCollection ()
+{
+}
+
+
+
+
+
+/* TODO: clean up this code!!!
+ *       (probably when adding palette load/save)
+ */
+
+struct kpColorCellsPrivate
+{
+    Qt::Orientation orientation;
+    int mouseButton;
+
+    kpColorCollection colorCol;
+    KUrl url;
+    bool isModified;
+};
+
+static int PaletteColumns (const kpColorCollection &colorCol)
+{
+    // 11 or smaller.
+    return qMin (11, colorCol.count ());
+}
+
+static int PaletteRows (const kpColorCollection &colorCol)
+{
+    const int cols = ::PaletteColumns (colorCol);
+    if (cols == 0)
+        return 0;
+
+    return (colorCol.count () + (cols - 1)) / cols;
+}
+
+
+static int PaletteCellSize (const kpColorCollection &colorCol)
+{
+    if (::PaletteRows (colorCol) <= 2)
+        return 26;
+    else
+        return 13;
+}
+
+
+// HITODO: You should not be able to get text focus for this!
+kpColorCells::kpColorCells (QWidget *parent,
+                            Qt::Orientation o)
+    : KColorCells (parent, 1/*rows for now*/, 300/*HACK due to KColorCells bug: cols for now*/),
+      d (new kpColorCellsPrivate ())
+{
+    d->mouseButton = -1;
+
+    setShading (false);  // no 3D look
+
+    // Trap KColorDrag so that kpMainWindow does not trap it.
+    // See our impl of dropEvent().
+    setAcceptDrops (true);
+    setAcceptDrags (true);
+
+    connect (this, SIGNAL (colorDoubleClicked (int, QColor)),
+             SLOT (slotColorDoubleClicked (int, QColor)));
+
+    setOrientation (o);
+
+
+    setColorCollection (kpDefaultColorCollection ());
+}
+
+kpColorCells::~kpColorCells ()
+{
+    delete d;
+}
+
+// public static
+kpColorCollection kpColorCells::DefaultColorCollection ()
+{
+    return kpDefaultColorCollection ();
+}
+
+Qt::Orientation kpColorCells::orientation () const
+{
+    return d->orientation;
+}
+
+void kpColorCells::setOrientation (Qt::Orientation o)
+{
+    d->orientation = o;
+
+    makeCellsMatchColorCollection ();
+}
+
+
+// protected
+// OPT: Find out why this is being called multiple times on startup.
+void kpColorCells::makeCellsMatchColorCollection ()
+{
+    int c, r;
+
+    if (orientation () == Qt::Horizontal)
+    {
+        c = ::PaletteColumns (d->colorCol);
+        r = ::PaletteRows (d->colorCol);
+    }
+    else
+    {
+        c = ::PaletteRows (d->colorCol);
+        r = ::PaletteColumns (d->colorCol);;
+    }
+
+#if DEBUG_KP_COLOR_CELLS
+    kDebug () << "kpColorCells::makeCellsMatchColorCollection():"
+              << " r=" << r << " c=" << c << endl;
+#endif
+
+    setRowCount (r);
+    setColumnCount (c);
+
+
+    // COMPAT: Get cell dimensions exactly as claimed by these variables.
+    //         I suspect frameWidth() isn't right.
+    // TODO: It wasn't right in KDE 3.4 either (haven't checked 3.5).
+    int CellWidth = ::PaletteCellSize (d->colorCol),
+        CellHeight = ::PaletteCellSize (d->colorCol);
+
+    for (int y = 0; y < r; y++)
+        setRowHeight (y, CellHeight);
+    for (int x = 0; x < c; x++)
+        setColumnWidth (x, CellWidth);
+
+    setFixedSize (columnCount () * CellWidth + frameWidth () * 2,
+                  rowCount () * CellHeight + frameWidth () * 2);
+
+/*
+    kDebug () << "\tlimits: array=" << sizeof (colors) / sizeof (colors [0])
+               << " r*c=" << r * c << endl;
+    kDebug () << "\tsizeof (colors)=" << sizeof (colors)
+               << " sizeof (colors [0])=" << sizeof (colors [0])
+               << endl;*/
     for (int i = 0;
          /*i < int (sizeof (colors) / sizeof (colors [0])) &&*/
          i < r * c;
@@ -248,26 +302,108 @@ void kpColorCells::setOrientation (Qt::Orientation o)
         int y, x;
         int pos;
 
-        if (o == Qt::Horizontal)
+        if (orientation () == Qt::Horizontal)
         {
-            y = i / cols;
-            x = i % cols;
+            y = i / c;
+            x = i % c;
             pos = i;
         }
         else
         {
-            y = i % cols;
-            x = i / cols;
-            // int x = rows - 1 - i / cols;
-            pos = y * rows + x;
+            y = i % r;
+            x = i / r;
+            // int x = c - 1 - i / r;
+            pos = y * c + x;
         }
-
-        KColorCells::setColor (pos, colors [i]);
+    #if DEBUG_KP_COLOR_CELLS
+        kDebug () << "\tSetting cell " << i << ": y=" << y << " x=" << x
+                  << " pos=" << pos << endl;
+        kDebug () << "\t\tcolor=" << (int *) d->colorCol.color (i).rgb () << endl;
+    #endif
+        KColorCells::setColor (pos, d->colorCol.color (i));
         //this->setToolTip( cellGeometry (y, x), colors [i].name ());
     }
-
-    m_orientation = o;
 }
+
+
+bool kpColorCells::isModified () const
+{
+    return d->isModified;
+}
+
+// TODO: Use
+void kpColorCells::setModified (bool yes)
+{
+    if (yes != d->isModified)
+        return;
+
+    d->isModified = yes;
+}
+
+
+KUrl kpColorCells::url () const
+{
+    return d->url;
+}
+
+
+void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const KUrl &url)
+{
+    d->colorCol = colorCol;
+    d->url = url;
+
+    d->isModified = false;
+
+    makeCellsMatchColorCollection ();
+}
+
+
+bool kpColorCells::openColorCollection (const KUrl &url)
+{
+    if (d->colorCol.open (url))
+    {
+        d->url = url;
+        d->isModified = false;
+
+        makeCellsMatchColorCollection ();
+
+        return true;
+    }
+
+    return false;  // TODO: error message
+}
+
+bool kpColorCells::saveColorCollectionAs (const KUrl &url)
+{
+    if (d->colorCol.saveAs (url))
+    {
+        d->url = url;
+        d->isModified = false;
+        return true;
+    }
+
+    return false;  // TODO: error message
+}
+
+
+void kpColorCells::appendRow ()
+{
+    // TODO: Wrong for 0 columns.
+    const int cols = ::PaletteColumns (d->colorCol);
+    const int cellArea = ::PaletteRows (d->colorCol) * cols;
+
+    const int totalColors = (cellArea - d->colorCol.count ()) + cols;
+    for (int i = 0; i < totalColors; i++)
+        d->colorCol.addColor (Qt::white);
+
+    makeCellsMatchColorCollection ();
+}
+
+void kpColorCells::deleteLastRow ()
+{
+    return;  // TODO
+}
+
 
 // virtual protected [base KColorCells]
 void kpColorCells::dropEvent (QDropEvent *e)
@@ -278,7 +414,13 @@ void kpColorCells::dropEvent (QDropEvent *e)
     //    palettes)
     // 2. kpMainWindow::dropEvent() doesn't try to paste colour code as text
     //    (when the user slips and drags colour cell a little instead of clicking)
-    e->accept ();
+    //e->accept ();
+
+    // TODO: Remove method.
+
+
+
+    KColorCells::dropEvent (e);
 }
 
 // virtual protected
@@ -326,7 +468,7 @@ void kpColorCells::contextMenuEvent (QContextMenuEvent *e)
 // virtual protected
 void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
 {
-    m_mouseButton = -1;
+    d->mouseButton = -1;
 
     Qt::ButtonState button = e->button ();
 #if DEBUG_KP_COLOR_CELLS
@@ -340,20 +482,20 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
     if (!((button & Qt::LeftButton) && (button & Qt::RightButton)))
     {
         if (button & Qt::LeftButton)
-            m_mouseButton = 0;
+            d->mouseButton = 0;
         else if (button & Qt::RightButton)
-            m_mouseButton = 1;
+            d->mouseButton = 1;
     }
 
-    // (m_mouseButton will be read in the slot)
+    // (d->mouseButton will be read in the slot)
     connect (this, SIGNAL (colorSelected (int, QColor)), this, SLOT (slotColorSelected (int)));
     KColorCells::mouseReleaseEvent (e);
     disconnect (this, SIGNAL (colorSelected (int, QColor)), this, SLOT (slotColorSelected (int)));
 
 #if DEBUG_KP_COLOR_CELLS
-    kDebug () << "kpColorCells::mouseReleaseEvent() setting m_mouseButton back to -1" << endl;
+    kDebug () << "kpColorCells::mouseReleaseEvent() setting d->mouseButton back to -1" << endl;
 #endif
-    m_mouseButton = -1;
+    d->mouseButton = -1;
 
     // Deselect the selected cell (selected by above KColorCells::mouseReleaseEvent()).
     // KolourPaint's palette has no concept of a current cell/color: you can
@@ -385,23 +527,21 @@ void kpColorCells::slotColorSelected (int cell)
     QColor c = KColorCells::color (cell);
 #if DEBUG_KP_COLOR_CELLS
     kDebug () << "kpColorCells::slotColorSelected(cell=" << cell
-               << ") mouseButton = " << m_mouseButton
+               << ") mouseButton = " << d->mouseButton
                << " rgb=" << (int *) c.rgb ()
                << endl;
 #endif
 
-    if (m_mouseButton == 0)
+    if (d->mouseButton == 0)
     {
-        emit foregroundColorChanged (c);
         emit foregroundColorChanged (kpColor (c.rgb ()));
     }
-    else if (m_mouseButton == 1)
+    else if (d->mouseButton == 1)
     {
-        emit backgroundColorChanged (c);
         emit backgroundColorChanged (kpColor (c.rgb ()));
     }
 
-    m_mouseButton = -1;  // just in case
+    d->mouseButton = -1;  // just in case
 }
 
 // protected slot

@@ -38,18 +38,17 @@
 #include <klocale.h>
 #include <kvbox.h>
 
+#include <kpAbstractImageSelection.h>
+#include <kpCommandEnvironment.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
 #include <kpPixmapFX.h>
-#include <kpSelection.h>
-#include <kpTool.h>
-#include <kpMainWindow.h>
 
 
 kpTransformFlipCommand::kpTransformFlipCommand (bool actOnSelection,
-                                      bool horiz, bool vert,
-                                      kpMainWindow *mainWindow)
-    : kpCommand (mainWindow),
+        bool horiz, bool vert,
+        kpCommandEnvironment *environ)
+    : kpCommand (environ),
       m_actOnSelection (actOnSelection),
       m_horiz (horiz), m_vert (vert)
 {
@@ -91,7 +90,7 @@ QString kpTransformFlipCommand::name () const
 
 
 // public virtual [base kpCommand]
-int kpTransformFlipCommand::size () const
+kpCommandSize::SizeType kpTransformFlipCommand::size () const
 {
     return 0;
 }
@@ -122,15 +121,15 @@ void kpTransformFlipCommand::flip ()
 
     if (m_actOnSelection)
     {
-        doc->selection ()->flip (m_horiz, m_vert);
-        if (m_mainWindow->tool ())
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+        Q_ASSERT (doc->imageSelection ());
+        doc->imageSelection ()->flip (m_horiz, m_vert);
+        environ ()->somethingBelowTheCursorChanged ();
     }
     else
     {
-        QPixmap newPixmap = kpPixmapFX::flip (*doc->pixmap (), m_horiz, m_vert);
+        kpImage newImage = kpPixmapFX::flip (doc->image (), m_horiz, m_vert);
 
-        doc->setPixmap (newPixmap);
+        doc->setImage (newImage);
     }
 
 

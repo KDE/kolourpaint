@@ -49,10 +49,9 @@
 
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
-#include <kpSelection.h>
 #include <kpTool.h>
+#include <kpTransformDialogEnvironment.h>
 
 
 // private static
@@ -64,12 +63,14 @@ int kpTransformSkewDialog::s_lastHorizontalAngle = 0,
     kpTransformSkewDialog::s_lastVerticalAngle = 0;
 
 
-kpTransformSkewDialog::kpTransformSkewDialog (bool actOnSelection, kpMainWindow *parent)
+kpTransformSkewDialog::kpTransformSkewDialog (bool actOnSelection,
+        kpTransformDialogEnvironment *environ, QWidget *parent)
     : kpTransformPreviewDialog (kpTransformPreviewDialog::AllFeatures,
-                           false/*don't reserve top row*/,
-                           actOnSelection ? i18n ("Skew Selection") : i18n ("Skew Image"),
-                           i18n ("After Skew:"),
-                           actOnSelection, parent)
+        false/*don't reserve top row*/,
+        actOnSelection ? i18n ("Skew Selection") : i18n ("Skew Image"),
+        i18n ("After Skew:"),
+        actOnSelection,
+        environ, parent)
 {
     // Too confusing - disable for now
     s_lastHorizontalAngle = s_lastVerticalAngle = 0;
@@ -152,7 +153,7 @@ QSize kpTransformSkewDialog::newDimensions () const
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
-    QMatrix skewMatrix = kpPixmapFX::skewMatrix (*doc->pixmap (),
+    QMatrix skewMatrix = kpPixmapFX::skewMatrix (doc->image (),
                                                   horizontalAngleForPixmapFX (),
                                                   verticalAngleForPixmapFX ());
     QRect skewRect = skewMatrix.mapRect (doc->rect (m_actOnSelection));
@@ -167,7 +168,7 @@ QPixmap kpTransformSkewDialog::transformPixmap (const QPixmap &pixmap,
     return kpPixmapFX::skew (pixmap,
                              horizontalAngleForPixmapFX (),
                              verticalAngleForPixmapFX (),
-                             m_mainWindow ? m_mainWindow->backgroundColor (m_actOnSelection) : kpColor::Invalid,
+                             m_environ->backgroundColor (m_actOnSelection),
                              targetWidth,
                              targetHeight);
 }
@@ -242,7 +243,7 @@ void kpTransformSkewDialog::accept ()
 
     if (document ()->selection ())
     {
-        if (!document ()->selection ()->isText ())
+        if (!document ()->textSelection ())
         {
             message =
                 ki18n ("<qt><p>Skewing the selection to %1x%2"

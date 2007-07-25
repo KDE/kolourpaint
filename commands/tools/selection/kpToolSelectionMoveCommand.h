@@ -30,27 +30,26 @@
 #define kpToolSelectionMoveCommand_H
 
 
-#include <QPixmap>
 #include <QPoint>
 #include <QPolygon>
 #include <QRect>
 
-#include <kpCommandHistory.h>
+#include <kpImage.h>
+#include <kpNamedCommand.h>
 
 
-class kpMainWindow;
-class kpSelection;
+class kpAbstractSelection;
 
 
 class kpToolSelectionMoveCommand : public kpNamedCommand
 {
 public:
-    kpToolSelectionMoveCommand (const QString &name, kpMainWindow *mainWindow);
+    kpToolSelectionMoveCommand (const QString &name, kpCommandEnvironment *environ);
     virtual ~kpToolSelectionMoveCommand ();
 
-    kpSelection originalSelection () const;
+    kpAbstractSelection *originalSelectionClone () const;
 
-    virtual int size () const;
+    virtual kpCommandSize::SizeType size () const;
 
     virtual void execute ();
     virtual void unexecute ();
@@ -63,7 +62,7 @@ public:
 private:
     QPoint m_startPoint, m_endPoint;
 
-    QPixmap m_oldDocumentPixmap;
+    kpImage m_oldDocumentImage;
 
     // area of document affected (not the bounding rect of the sel)
     QRect m_documentBoundingRect;

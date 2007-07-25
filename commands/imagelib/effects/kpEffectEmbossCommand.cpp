@@ -46,17 +46,14 @@
 #include <knuminput.h>
 
 #include <kpEffectEmboss.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
 
 
-kpEffectEmbossCommand::kpEffectEmbossCommand (double radius, double sigma,
-                                              int repeat,
-                                              bool actOnSelection,
-                                              kpMainWindow *mainWindow)
-    : kpEffectCommandBase (i18n ("Emboss"), actOnSelection, mainWindow),
-      m_radius (radius), m_sigma (sigma),
-      m_repeat (repeat)
+kpEffectEmbossCommand::kpEffectEmbossCommand (int strength,
+        bool actOnSelection,
+        kpCommandEnvironment *environ)
+    : kpEffectCommandBase (i18n ("Emboss"), actOnSelection, environ),
+      m_strength (strength)
 {
 }
 
@@ -68,7 +65,7 @@ kpEffectEmbossCommand::~kpEffectEmbossCommand ()
 // protected virtual [base kpEffectCommandBase]
 kpImage kpEffectEmbossCommand::applyEffect (const kpImage &image)
 {
-    return kpEffectEmboss::applyEffect (image, m_radius, m_sigma, m_repeat);
+    return kpEffectEmboss::applyEffect (image, m_strength);
 }
 
 

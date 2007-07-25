@@ -30,36 +30,28 @@
 #define kpEffectBlurSharpenCommand_H
 
 
-#include <kpColor.h>
 #include <kpEffectBlurSharpen.h>
 #include <kpEffectCommandBase.h>
 #include <kpImage.h>
-
-
-
-
-class kpMainWindow;
 
 
 class kpEffectBlurSharpenCommand : public kpEffectCommandBase
 {
 public:
     kpEffectBlurSharpenCommand (kpEffectBlurSharpen::Type type,
-                                double radius, double sigma,
-                                int repeat,
+                                int strength,
                                 bool actOnSelection,
-                                kpMainWindow *mainWindow);
+                                kpCommandEnvironment *environ);
     virtual ~kpEffectBlurSharpenCommand ();
 
     static QString nameForType (kpEffectBlurSharpen::Type type);
-    
+
 protected:
     virtual kpImage applyEffect (const kpImage &image);
 
 protected:
     kpEffectBlurSharpen::Type m_type;
-    double m_radius, m_sigma;
-    int m_repeat;
+    int m_strength;
 };
 
 

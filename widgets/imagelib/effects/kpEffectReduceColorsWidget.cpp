@@ -48,9 +48,8 @@
 
 
 kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
-                                                        kpMainWindow *mainWindow,
-                                                        QWidget *parent )
-    : kpEffectWidgetBase (actOnSelection, mainWindow, parent)
+                                                        QWidget *parent)
+    : kpEffectWidgetBase (actOnSelection, parent)
 {
     QVBoxLayout *lay = new QVBoxLayout (this);
     lay->setSpacing(spacingHint ());
@@ -207,11 +206,12 @@ kpImage kpEffectReduceColorsWidget::applyEffect (const kpImage &image)
 
 
 // public virtual [base kpEffectWidgetBase]
-kpEffectCommandBase *kpEffectReduceColorsWidget::createCommand () const
+kpEffectCommandBase *kpEffectReduceColorsWidget::createCommand (
+        kpCommandEnvironment *cmdEnviron) const
 {
     return new kpEffectReduceColorsCommand (depth (), dither (),
                                             m_actOnSelection,
-                                            m_mainWindow);
+                                            cmdEnviron);
 }
 
 

@@ -47,9 +47,9 @@
 
 
 kpEffectReduceColorsCommand::kpEffectReduceColorsCommand (int depth, bool dither,
-                                                          bool actOnSelection,
-                                                          kpMainWindow *mainWindow)
-    : kpEffectCommandBase (commandName (depth, dither), actOnSelection, mainWindow),
+        bool actOnSelection,
+        kpCommandEnvironment *environ)
+    : kpEffectCommandBase (commandName (depth, dither), actOnSelection, environ),
       m_depth (depth), m_dither (dither)
 {
 }

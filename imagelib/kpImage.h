@@ -45,6 +45,11 @@
 // Currently, the reality is that it's tied to the screen depth and only
 // really supports RGB(M) (0/1 transparency mask).
 //
+// sync: kpAbstractImageSelection::sizeWithoutImage() depends on kpImage
+//       using copy-on-write.
+//
+// REFACTOR: Make this into a class that doesn't expose the underlying
+//           QPixmap except to methods in imagelib/
 typedef QPixmap kpImage;
 
 

@@ -48,10 +48,10 @@
 #include <kpDefs.h>
 #include <kpDocument.h>
 #include <kpImage.h>
-#include <kpMainWindow.h>
 #include <kpPainter.h>
 #include <kpPixmapFX.h>
-#include <kpTempPixmap.h>
+#include <kpTempImage.h>
+#include <kpToolEnvironment.h>
 #include <kpToolFlowCommand.h>
 #include <kpToolToolBar.h>
 #include <kpToolWidgetBrush.h>
@@ -69,21 +69,21 @@ struct kpToolFlowBasePrivate
     // Cursor and Brush Data
     // (must be zero if unused)
     //
-        
-        kpTempPixmap::UserFunctionType brushDrawFunc, cursorDrawFunc;
+
+        kpTempImage::UserFunctionType brushDrawFunc, cursorDrawFunc;
 
         // Can't use union since package types contain fields requiring
         // constructors.
         kpToolWidgetBrush::DrawPackage brushDrawPackageForMouseButton [2];
         kpToolWidgetEraserSize::DrawPackage eraserDrawPackageForMouseButton [2];
-        
+
         // Each element points to one of the above (both elements from the same
         // array).
         void *drawPackageForMouseButton [2];
-    
+
         int brushWidth, brushHeight;
         int cursorWidth, cursorHeight;
-        
+
         bool brushIsDiagonalLine;
 
 
@@ -93,9 +93,9 @@ struct kpToolFlowBasePrivate
 
 kpToolFlowBase::kpToolFlowBase (const QString &text, const QString &description,
         int key,
-        kpMainWindow *mainWindow, const QString &name)
-        
-    : kpTool (text, description, key, mainWindow, name),
+        kpToolEnvironment *environ, QObject *parent, const QString &name)
+
+    : kpTool (text, description, key, environ, parent, name),
       d (new kpToolFlowBasePrivate ())
 {
     d->toolWidgetBrush = 0;
@@ -187,8 +187,8 @@ void kpToolFlowBase::end ()
     kpViewManager *vm = viewManager ();
     Q_ASSERT (vm);
 
-    if (vm->tempPixmap () && vm->tempPixmap ()->isBrush ())
-        vm->invalidateTempPixmap ();
+    if (vm->tempImage () && vm->tempImage ()->isBrush ())
+        vm->invalidateTempImage ();
 
     if (haveAnyBrushes ())
         vm->unsetCursor ();
@@ -199,13 +199,13 @@ void kpToolFlowBase::end ()
 // virtual
 void kpToolFlowBase::beginDraw ()
 {
-    d->currentCommand = new kpToolFlowCommand (text (), mainWindow ());
+    d->currentCommand = new kpToolFlowCommand (text (), environ ()->commandEnvironment ());
 
     // We normally show the brush cursor in the foreground colour but if the
     // user starts drawing in the background color, we don't want to leave
     // the brush cursor in the foreground colour -- just hide it in all cases
     // to avoid confusion.
-    viewManager ()->invalidateTempPixmap ();
+    viewManager ()->invalidateTempImage ();
 
     setUserMessage (cancelUserMessage ());
 }
@@ -224,8 +224,8 @@ void kpToolFlowBase::hover (const QPoint &point)
     {
         viewManager ()->setFastUpdates ();
 
-        viewManager ()->setTempPixmap (
-            kpTempPixmap (true/*brush*/,
+        viewManager ()->setTempImage (
+            kpTempImage (true/*brush*/,
                 hotRect ().topLeft (),
                 d->cursorDrawFunc, d->drawPackageForMouseButton [0/*left button*/],
                 d->cursorWidth, d->cursorHeight));
@@ -311,7 +311,7 @@ void kpToolFlowBase::releasedAllButtons ()
 void kpToolFlowBase::endDraw (const QPoint &, const QRect &)
 {
     d->currentCommand->finalize ();
-    mainWindow ()->commandHistory ()->addCommand (d->currentCommand,
+    environ ()->commandHistory ()->addCommand (d->currentCommand,
         false/*don't exec*/);
 
     // don't delete - it's up to the commandHistory
@@ -340,7 +340,7 @@ kpColor kpToolFlowBase::color (int which)
 
 
 // protected
-kpTempPixmap::UserFunctionType kpToolFlowBase::brushDrawFunction () const
+kpTempImage::UserFunctionType kpToolFlowBase::brushDrawFunction () const
 {
     return d->brushDrawFunc;
 }

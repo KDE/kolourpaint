@@ -39,17 +39,13 @@ class QCheckBox;
 
 class KColorButton;
 
-class kpMainWindow;
-
 
 class kpEffectFlattenWidget : public kpEffectWidgetBase
 {
 Q_OBJECT
 
 public:
-    kpEffectFlattenWidget (bool actOnSelection,
-                           kpMainWindow *mainWindow,
-                           QWidget *parent);
+    kpEffectFlattenWidget (bool actOnSelection, QWidget *parent);
     virtual ~kpEffectFlattenWidget ();
 
 
@@ -69,7 +65,8 @@ public:
     virtual bool isNoOp () const;
     virtual kpImage applyEffect (const kpImage &image);
 
-    virtual kpEffectCommandBase *createCommand () const;
+    virtual kpEffectCommandBase *createCommand (
+        kpCommandEnvironment *cmdEnviron) const;
 
 protected slots:
     void slotEnableChanged (bool enable);

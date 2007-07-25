@@ -30,6 +30,7 @@
 #define KP_FLOOD_FILL_H
 
 
+#include <kpCommandSize.h>
 #include <kpImage.h>
 
 
@@ -55,11 +56,11 @@ public:
 public:
     kpColor color () const;
     int processedColorSimilarity () const;
-    
+
 
 public:
     // Used for calculating the size of a command in the command history.
-    int size () const;
+    kpCommandSize::SizeType size () const;
 
 
     //
@@ -93,7 +94,7 @@ private:
 
     // Finds the maximum x value at a certain line to be filled.
     int findMaxX (int y, int x) const;
-    
+
     void addLine (int y, int x1, int x2);
     void findAndAddLines (const kpFillLine &fillLine, int dy);
 

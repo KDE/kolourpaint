@@ -57,7 +57,6 @@
 #include <kpDocumentSaveOptionsPreviewDialog.h>
 #include <kpPixmapFX.h>
 #include <kpResizeSignallingLabel.h>
-#include <kpSelection.h>
 #include <kpTransformPreviewDialog.h>
 #include <kpWidgetMapper.h>
 
@@ -102,6 +101,7 @@ void kpDocumentSaveOptionsWidget::init ()
     // Note that we set min to 1 not 0 since "0 Quality" is a bit misleading
     // and 101 quality settings would be weird.  So we lose 1 quality setting
     // according to QImage::save().
+    // TODO: 100 quality is also misleading since that implies perfect quality.
     m_qualityInput->setRange (1, 100, 1/*step*/, true/*slider*/);
 
     m_previewButton = new KPushButton (i18n ("&Preview"), this);

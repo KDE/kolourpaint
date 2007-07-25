@@ -57,7 +57,6 @@
 #include <kpColor.h>
 #include <kpColorToolBar.h>
 #include <kpDefs.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
 #include <kpToolAction.h>
 #include <kpToolToolBar.h>

@@ -30,10 +30,7 @@
 #define KP_TOOL_TEXT_DELETE_COMMAND_H
 
 
-#include <kpCommandHistory.h>
-
-
-class kpMainWindow;
+#include <kpNamedCommand.h>
 
 
 class kpToolTextDeleteCommand : public kpNamedCommand
@@ -44,16 +41,16 @@ public:
         DontAddDeleteYet,
         AddDeleteNow
     };
-    
+
     kpToolTextDeleteCommand (const QString &name,
         int row, int col, Action action,
-        kpMainWindow *mainWindow);
+        kpCommandEnvironment *environ);
     virtual ~kpToolTextDeleteCommand ();
 
     void addDelete ();
 
-    virtual int size () const;
-    
+    virtual kpCommandSize::SizeType size () const;
+
     virtual void execute ();
     virtual void unexecute ();
 

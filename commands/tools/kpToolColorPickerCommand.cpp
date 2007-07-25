@@ -31,20 +31,19 @@
 
 #include <kpToolColorPickerCommand.h>
 
-#include <klocale.h>
+#include <KLocale>
 
-#include <kpColorToolBar.h>
+#include <kpCommandEnvironment.h>
 #include <kpDefs.h>
-#include <kpMainWindow.h>
 
 
 kpToolColorPickerCommand::kpToolColorPickerCommand (
         int mouseButton,
         const kpColor &newColor,
         const kpColor &oldColor,
-        kpMainWindow *mainWindow)
-        
-    : kpCommand (mainWindow),
+        kpCommandEnvironment *environ)
+
+    : kpCommand (environ),
       m_mouseButton (mouseButton),
       m_newColor (newColor),
       m_oldColor (oldColor)
@@ -64,7 +63,7 @@ QString kpToolColorPickerCommand::name () const
 
 
 // public virtual [base kpCommand]
-int kpToolColorPickerCommand::size () const
+kpCommandSize::SizeType kpToolColorPickerCommand::size () const
 {
     return 0;
 }
@@ -73,21 +72,13 @@ int kpToolColorPickerCommand::size () const
 // public virtual [base kpCommand]
 void kpToolColorPickerCommand::execute ()
 {
-    colorToolBar ()->setColor (m_mouseButton, m_newColor);
+    environ ()->setColor (m_mouseButton, m_newColor);
 }
 
 // public virtual [base kpCommand]
 void kpToolColorPickerCommand::unexecute ()
 {
-    colorToolBar ()->setColor (m_mouseButton, m_oldColor);
-}
-
-
-// private
-kpColorToolBar *kpToolColorPickerCommand::colorToolBar () const
-{
-    Q_ASSERT (m_mainWindow);
-    return m_mainWindow->colorToolBar ();
+    environ ()->setColor (m_mouseButton, m_oldColor);
 }
 
 

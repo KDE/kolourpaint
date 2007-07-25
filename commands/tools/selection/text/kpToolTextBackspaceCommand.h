@@ -30,10 +30,7 @@
 #define KP_TOOL_TEXT_BACKSPACE_COMMAND_H
 
 
-#include <kpCommandHistory.h>
-
-
-class kpMainWindow;
+#include <kpNamedCommand.h>
 
 
 class kpToolTextBackspaceCommand : public kpNamedCommand
@@ -44,16 +41,16 @@ public:
         DontAddBackspaceYet,
         AddBackspaceNow
     };
-    
+
     kpToolTextBackspaceCommand (const QString &name,
         int row, int col, Action action,
-        kpMainWindow *mainWindow);
+        kpCommandEnvironment *environ);
     virtual ~kpToolTextBackspaceCommand ();
 
     void addBackspace ();
 
-    virtual int size () const;
-    
+    virtual kpCommandSize::SizeType size () const;
+
     virtual void execute ();
     virtual void unexecute ();
 

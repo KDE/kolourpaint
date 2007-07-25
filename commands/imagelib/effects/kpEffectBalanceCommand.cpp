@@ -59,8 +59,8 @@
 kpEffectBalanceCommand::kpEffectBalanceCommand (int channels,
         int brightness, int contrast, int gamma,
         bool actOnSelection,
-        kpMainWindow *mainWindow)
-    : kpEffectCommandBase (i18n ("Balance"), actOnSelection, mainWindow),
+        kpCommandEnvironment *environ)
+    : kpEffectCommandBase (i18n ("Balance"), actOnSelection, environ),
       m_channels (channels),
       m_brightness (brightness), m_contrast (contrast), m_gamma (gamma)
 {

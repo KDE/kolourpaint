@@ -30,10 +30,7 @@
 #define KP_TOOL_TEXT_ENTER_COMMAND_H
 
 
-#include <kpCommandHistory.h>
-
-
-class kpMainWindow;
+#include <kpNamedCommand.h>
 
 
 class kpToolTextEnterCommand : public kpNamedCommand
@@ -44,16 +41,16 @@ public:
         DontAddEnterYet,
         AddEnterNow
     };
-    
+
     kpToolTextEnterCommand (const QString &name,
         int row, int col, Action action,
-        kpMainWindow *mainWindow);
+        kpCommandEnvironment *environ);
     virtual ~kpToolTextEnterCommand ();
 
     void addEnter ();
 
-    virtual int size () const;
-    
+    virtual kpCommandSize::SizeType size () const;
+
     virtual void execute ();
     virtual void unexecute ();
 

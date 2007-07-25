@@ -31,27 +31,26 @@
 
 
 #include <kpColor.h>
-#include <kpCommandHistory.h>
+#include <kpNamedCommand.h>
 
 
-class kpMainWindow;
-class kpSelection;
+class kpAbstractImageSelection;
 
 
 class kpToolSelectionPullFromDocumentCommand : public kpNamedCommand
 {
 public:
-    kpToolSelectionPullFromDocumentCommand (const QString &name, kpMainWindow *mainWindow);
+    kpToolSelectionPullFromDocumentCommand (const QString &name, kpCommandEnvironment *environ);
     virtual ~kpToolSelectionPullFromDocumentCommand ();
 
-    virtual int size () const;
+    virtual kpCommandSize::SizeType size () const;
 
     virtual void execute ();
     virtual void unexecute ();
 
 private:
     kpColor m_backgroundColor;
-    kpSelection *m_originalSelectionRegion;
+    kpAbstractImageSelection *m_originalSelectionRegion;
 };
 
 

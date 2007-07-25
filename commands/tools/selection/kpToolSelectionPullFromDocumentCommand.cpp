@@ -44,13 +44,10 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpBug.h>
-#include <kpCommandHistory.h>
+#include <kpAbstractImageSelection.h>
+#include <kpCommandEnvironment.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpSelection.h>
-#include <kpToolToolBar.h>
 #include <kpToolWidgetOpaqueOrTransparent.h>
 #include <kpView.h>
 #include <kpViewManager.h>
@@ -58,14 +55,14 @@
 
 kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (
         const QString &name,
-        kpMainWindow *mainWindow)
-    : kpNamedCommand (name, mainWindow),
-      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::Invalid),
+        kpCommandEnvironment *environ)
+    : kpNamedCommand (name, environ),
+      m_backgroundColor (environ->backgroundColor ()),
       m_originalSelectionRegion (0)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolSelectionPullFromDocumentCommand::<ctor>() mainWindow="
-               << m_mainWindow
+    kDebug () << "kpToolSelectionPullFromDocumentCommand::<ctor>() environ="
+               << environ
                << endl;
 #endif
 }
@@ -77,9 +74,9 @@ kpToolSelectionPullFromDocumentCommand::~kpToolSelectionPullFromDocumentCommand 
 
 
 // public virtual [base kpCommand]
-int kpToolSelectionPullFromDocumentCommand::size () const
+kpCommandSize::SizeType kpToolSelectionPullFromDocumentCommand::size () const
 {
-    return kpPixmapFX::selectionSize (m_originalSelectionRegion);
+    return SelectionSize (m_originalSelectionRegion);
 }
 
 
@@ -90,12 +87,10 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
     kDebug () << "kpToolSelectionPullFromDocumentCommand::execute()" << endl;
 #endif
 
-    Q_ASSERT (m_mainWindow);
-
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
-    kpViewManager *vm = m_mainWindow->viewManager ();
+    kpViewManager *vm = viewManager ();
     Q_ASSERT (vm);
 
     vm->setQueueUpdates ();
@@ -105,27 +100,18 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
     // originally requested region - not the random one.
     if (m_originalSelectionRegion)
     {
-        if (m_originalSelectionRegion->transparency () != m_mainWindow->selectionTransparency ())
-            m_mainWindow->setSelectionTransparency (m_originalSelectionRegion->transparency ());
+        if (m_originalSelectionRegion->transparency () != environ ()->imageSelectionTransparency ())
+            environ ()->setImageSelectionTransparency (m_originalSelectionRegion->transparency ());
 
         doc->setSelection (*m_originalSelectionRegion);
     }
     else
     {
-        // must have selection region but not pixmap
-        if (!doc->selection () || doc->selection ()->pixmap ())
-        {
-            kError () << "kpToolSelectionPullFromDocumentCommand::execute() sel="
-                       << doc->selection ()
-                       << " pixmap="
-                       << (doc->selection () ? doc->selection ()->pixmap () : 0)
-                       << endl;
-            vm->restoreQueueUpdates ();
-            return;
-        }
+        // Must have selection region but not image content.
+        Q_ASSERT (imageSelection () && !imageSelection ()->hasContent ());
     }
 
-    doc->selectionPullFromDocument (m_backgroundColor);
+    doc->imageSelectionPullFromDocument (m_backgroundColor);
 
     vm->restoreQueueUpdates ();
 }
@@ -139,8 +125,8 @@ void kpToolSelectionPullFromDocumentCommand::unexecute ()
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
-    // Must have selection pixmap.
-    Q_ASSERT (doc->selection () && doc->selection ()->pixmap ());
+    // Must have selection image content.
+    Q_ASSERT (doc->imageSelection () && doc->imageSelection ()->hasContent ());
 
 
     // We can have faith that this is the state of the selection after
@@ -148,10 +134,10 @@ void kpToolSelectionPullFromDocumentCommand::unexecute ()
     // simply selecting another region as to do that, a destroy command
     // must have been used.
     doc->selectionCopyOntoDocument (false/*use opaque pixmap*/);
-    doc->selection ()->setPixmap (QPixmap ());
+    doc->imageSelection ()->setBaseImage (kpImage ());
 
     delete m_originalSelectionRegion;
-    m_originalSelectionRegion = new kpSelection (*doc->selection ());
+    m_originalSelectionRegion = imageSelection ()->clone ();
 }
 
 

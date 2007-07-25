@@ -37,6 +37,7 @@
 
 
 class QPoint;
+class QStringList;
 
 
 class kpDocumentMetaInfo
@@ -70,13 +71,11 @@ public:
     void setOffset (const QPoint &point);
 
 
-    QMap <QImageTextKeyLang, QString> textMap () const;
-    QList <QImageTextKeyLang> textList () const;
+    QMap <QString, QString> textMap () const;
+    QList <QString> textKeys () const;
 
-    QString text (const QImageTextKeyLang &itkl) const;
-    QString text (const char *key, const char *lang) const;
-    void setText (const QImageTextKeyLang &itkl, const QString &string);
-    void setText (const char *key, const char *lang, const QString &string);
+    QString text (const QString &key) const;
+    void setText (const QString &key, const QString &value);
 
 
 private:

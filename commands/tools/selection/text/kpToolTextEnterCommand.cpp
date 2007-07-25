@@ -32,19 +32,19 @@
 
 #include <qlist.h>
 
-#include <kpSelection.h>
+#include <kpTextSelection.h>
 #include <kpViewManager.h>
 
 
 kpToolTextEnterCommand::kpToolTextEnterCommand (const QString &name,
     int row, int col, Action action,
-    kpMainWindow *mainWindow)
-    : kpNamedCommand (name, mainWindow),
+    kpCommandEnvironment *environ)
+    : kpNamedCommand (name, environ),
       m_row (row), m_col (col),
       m_numEnters (0)
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
-    
+
     if (action == AddEnterNow)
         addEnter ();
 }
@@ -57,14 +57,14 @@ kpToolTextEnterCommand::~kpToolTextEnterCommand ()
 // public
 void kpToolTextEnterCommand::addEnter ()
 {
-    QList <QString> textLines = selection ()->textLines ();
+    QList <QString> textLines = textSelection ()->textLines ();
 
     const QString rightHalf = textLines [m_row].mid (m_col);
 
     textLines [m_row].truncate (m_col);
     textLines.insert (textLines.begin () + m_row + 1, rightHalf);
 
-    selection ()->setTextLines (textLines);
+    textSelection ()->setTextLines (textLines);
 
     m_row++;
     m_col = 0;
@@ -76,7 +76,7 @@ void kpToolTextEnterCommand::addEnter ()
 
 
 // public virtual [base kpCommand]
-int kpToolTextEnterCommand::size () const
+kpCommandSize::SizeType kpToolTextEnterCommand::size () const
 {
     return 0;
 }
@@ -98,7 +98,7 @@ void kpToolTextEnterCommand::unexecute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
-    QList <QString> textLines = selection ()->textLines ();
+    QList <QString> textLines = textSelection ()->textLines ();
 
     for (int i = 0; i < m_numEnters; i++)
     {
@@ -118,7 +118,7 @@ void kpToolTextEnterCommand::unexecute ()
         m_col = newCol;
     }
 
-    selection ()->setTextLines (textLines);
+    textSelection ()->setTextLines (textLines);
 
     viewManager ()->setTextCursorPosition (m_row, m_col);
 }

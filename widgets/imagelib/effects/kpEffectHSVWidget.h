@@ -35,17 +35,13 @@
 
 class KDoubleNumInput;
 
-class kpMainWindow;
-
 
 class kpEffectHSVWidget : public kpEffectWidgetBase
 {
 Q_OBJECT
 
 public:
-    kpEffectHSVWidget (bool actOnSelection,
-                               kpMainWindow *mainWindow,
-                               QWidget *parent);
+    kpEffectHSVWidget (bool actOnSelection, QWidget *parent);
     virtual ~kpEffectHSVWidget ();
 
     virtual QString caption () const;
@@ -53,7 +49,8 @@ public:
     virtual bool isNoOp () const;
     virtual kpImage applyEffect (const kpImage &image);
 
-    virtual kpEffectCommandBase *createCommand () const;
+    virtual kpEffectCommandBase *createCommand (
+        kpCommandEnvironment *cmdEnviron) const;
 
 protected:
     KDoubleNumInput *m_hueInput;

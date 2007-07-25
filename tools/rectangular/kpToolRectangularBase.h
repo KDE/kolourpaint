@@ -39,7 +39,6 @@ class QRect;
 class QString;
 
 class kpColor;
-class kpMainWindow;
 
 
 struct kpToolRectangularBasePrivate;
@@ -61,7 +60,7 @@ public:
     kpToolRectangularBase (const QString &text, const QString &description,
         DrawShapeFunc drawShapeFunc,
         int key,
-        kpMainWindow *mainWindow,
+        kpToolEnvironment *environ, QObject *parent,
         const QString &name);
     virtual ~kpToolRectangularBase ();
 

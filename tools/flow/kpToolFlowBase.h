@@ -34,8 +34,7 @@
 #include <qpixmap.h>
 #include <qrect.h>
 
-#include <kpCommandHistory.h>
-#include <kpTempPixmap.h>
+#include <kpTempImage.h>
 #include <kpTool.h>
 
 
@@ -43,7 +42,6 @@ class QPoint;
 class QString;
 
 class kpColor;
-class kpMainWindow;
 class kpToolFlowCommand;
 
 
@@ -54,31 +52,31 @@ Q_OBJECT
 public:
     kpToolFlowBase (const QString &text, const QString &description,
         int key,
-        kpMainWindow *mainWindow, const QString &name);
+        kpToolEnvironment *environ, QObject *parent, const QString &name);
     virtual ~kpToolFlowBase ();
 
 private:
     void clearBrushCursorData ();
-    
+
 protected:
     virtual QString haventBegunDrawUserMessage () const = 0;
-    
+
     virtual bool haveSquareBrushes () const { return false; }
-    virtual bool haveDiverseBrushes () const { return false; }    
+    virtual bool haveDiverseBrushes () const { return false; }
     bool haveAnyBrushes () const
     {
         return (haveSquareBrushes () || haveDiverseBrushes ());
     }
-    
+
     virtual bool colorsAreSwapped () const { return false; }
-    
+
 public:
     virtual void begin ();
     virtual void end ();
 
     virtual void beginDraw ();
     virtual void hover (const QPoint &point);
-    
+
     // drawPoint() normally calls drawLine(point,point).  Override drawPoint()
     // if you think you can be more efficient.
     virtual QRect drawPoint (const QPoint &point);
@@ -91,9 +89,9 @@ public:
     virtual void endDraw (const QPoint &, const QRect &);
 
 protected:
-    kpTempPixmap::UserFunctionType brushDrawFunction () const;
+    kpTempImage::UserFunctionType brushDrawFunction () const;
     void *brushDrawFunctionData () const;
-    
+
     int brushWidth () const;
     int brushHeight () const;
 

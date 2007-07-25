@@ -40,17 +40,13 @@ class QLabel;
 
 class KIntNumInput;
 
-class kpMainWindow;
-
 
 class kpEffectBlurSharpenWidget : public kpEffectWidgetBase
 {
 Q_OBJECT
 
 public:
-    kpEffectBlurSharpenWidget (bool actOnSelection,
-                               kpMainWindow *mainWindow,
-                               QWidget *parent);
+    kpEffectBlurSharpenWidget (bool actOnSelection, QWidget *parent);
     virtual ~kpEffectBlurSharpenWidget ();
 
     virtual QString caption () const;
@@ -58,16 +54,15 @@ public:
     virtual bool isNoOp () const;
     virtual kpImage applyEffect (const kpImage &image);
 
-    virtual kpEffectCommandBase *createCommand () const;
+    virtual kpEffectCommandBase *createCommand (
+        kpCommandEnvironment *cmdEnviron) const;
 
 protected slots:
     void slotUpdateTypeLabel ();
 
 protected:
     kpEffectBlurSharpen::Type type () const;
-    double radius () const;
-    double sigma () const;
-    int repeat () const;
+    int strength () const;
 
     KIntNumInput *m_amountInput;
     QLabel *m_typeLabel;

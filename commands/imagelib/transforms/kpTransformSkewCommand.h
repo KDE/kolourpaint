@@ -30,31 +30,25 @@
 #define kpTransformSkewCommand_H
 
 
-#include <qpixmap.h>
-
 #include <kpColor.h>
-#include <kpCommandHistory.h>
-#include <kpSelection.h>
-#include <kpTransformPreviewDialog.h>
+#include <kpImage.h>
+#include <kpCommand.h>
 
 
-class QPixmap;
-
-
-class kpMainWindow;
+class kpAbstractSelection;
 
 
 class kpTransformSkewCommand : public kpCommand
 {
 public:
     kpTransformSkewCommand (bool actOnSelection,
-                       int hangle, int vangle,
-                       kpMainWindow *mainWindow);
+        int hangle, int vangle,
+        kpCommandEnvironment *environ);
     virtual ~kpTransformSkewCommand ();
 
     virtual QString name () const;
 
-    virtual int size () const;
+    virtual SizeType size () const;
 
     virtual void execute ();
     virtual void unexecute ();
@@ -64,8 +58,8 @@ private:
     int m_hangle, m_vangle;
 
     kpColor m_backgroundColor;
-    QPixmap *m_oldPixmapPtr;
-    kpSelection m_oldSelection;
+    kpImage m_oldImage;
+    kpAbstractImageSelection *m_oldSelectionPtr;
 };
 
 

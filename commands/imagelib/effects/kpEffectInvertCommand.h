@@ -35,17 +35,14 @@
 
 
 
-class kpMainWindow;
-
-
 class kpEffectInvertCommand : public kpEffectCommandBase
 {
 public:
     kpEffectInvertCommand (int channels,
                            bool actOnSelection,
-                           kpMainWindow *mainWindow);
+                           kpCommandEnvironment *environ);
     kpEffectInvertCommand (bool actOnSelection,
-                           kpMainWindow *mainWindow);
+                           kpCommandEnvironment *environ);
     virtual ~kpEffectInvertCommand ();
 
 

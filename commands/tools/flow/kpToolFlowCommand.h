@@ -30,7 +30,7 @@
 #define KP_TOOL_FLOW_COMMAND_H
 
 
-#include <kpCommandHistory.h>
+#include <kpNamedCommand.h>
 
 
 class QPoint;
@@ -40,11 +40,11 @@ class QRect;
 class kpToolFlowCommand : public kpNamedCommand
 {
 public:
-    kpToolFlowCommand (const QString &name, kpMainWindow *mainWindow);
+    kpToolFlowCommand (const QString &name, kpCommandEnvironment *environ);
     virtual ~kpToolFlowCommand ();
 
-    virtual int size () const;
-    
+    virtual kpCommandSize::SizeType size () const;
+
     virtual void execute ();
     virtual void unexecute ();
 
@@ -57,7 +57,7 @@ public:
 private:
     void swapOldAndNew ();
 
-    struct kpToolFlowCommandPrivate *d;
+    struct kpToolFlowCommandPrivate * const d;
 };
 
 

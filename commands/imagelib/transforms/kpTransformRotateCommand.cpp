@@ -31,43 +31,38 @@
 #include <kpTransformRotateCommand.h>
 
 #include <qapplication.h>
-#include <qbuttongroup.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
 #include <qpixmap.h>
 #include <qpolygon.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
 #include <qmatrix.h>
 
 #include <kdebug.h>
-#include <kiconloader.h>
-#include <knuminput.h>
 #include <klocale.h>
 
+#include <kpAbstractImageSelection.h>
+#include <kpCommandEnvironment.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
+#include <kpFreeFormImageSelection.h>
 #include <kpPixmapFX.h>
-#include <kpSelection.h>
-#include <kpTool.h>
+#include <kpRectangularImageSelection.h>
 #include <kpViewManager.h>
 
 
 kpTransformRotateCommand::kpTransformRotateCommand (bool actOnSelection,
-                                          double angle,
-                                          kpMainWindow *mainWindow)
-    : kpCommand (mainWindow),
+        double angle,
+        kpCommandEnvironment *environ)
+    : kpCommand (environ),
       m_actOnSelection (actOnSelection),
       m_angle (angle),
-      m_backgroundColor (mainWindow ? mainWindow->backgroundColor (actOnSelection) : kpColor::Invalid),
-      m_losslessRotation (kpPixmapFX::isLosslessRotation (angle))
+      m_backgroundColor (environ->backgroundColor (actOnSelection)),
+      m_losslessRotation (kpPixmapFX::isLosslessRotation (angle)),
+      m_oldSelectionPtr (0)
 {
 }
 
 kpTransformRotateCommand::~kpTransformRotateCommand ()
 {
+    delete m_oldSelectionPtr;
 }
 
 
@@ -84,10 +79,10 @@ QString kpTransformRotateCommand::name () const
 
 
 // public virtual [base kpCommand]
-int kpTransformRotateCommand::size () const
+kpCommandSize::SizeType kpTransformRotateCommand::size () const
 {
-    return kpPixmapFX::pixmapSize (m_oldPixmap) +
-           m_oldSelection.size ();
+    return ImageSize (m_oldImage) +
+           SelectionSize (m_oldSelectionPtr);
 }
 
 
@@ -102,21 +97,33 @@ void kpTransformRotateCommand::execute ()
 
 
     if (!m_losslessRotation)
-        m_oldPixmap = *doc->pixmap (m_actOnSelection);
+        m_oldImage = doc->image (m_actOnSelection);
 
 
-    QPixmap newPixmap = kpPixmapFX::rotate (*doc->pixmap (m_actOnSelection),
+    kpImage newImage = kpPixmapFX::rotate (doc->image (m_actOnSelection),
                                             m_angle,
                                             m_backgroundColor);
 
-
-    if (m_actOnSelection)
+    if (!m_actOnSelection)
+        doc->setImage (newImage);
+    else
     {
-        kpSelection *sel = doc->selection ();
+        kpAbstractImageSelection *sel = doc->imageSelection ();
+        Q_ASSERT (sel);
 
         // Save old selection
-        m_oldSelection = *sel;
-        m_oldSelection.setPixmap (QPixmap ());
+        m_oldSelectionPtr = sel->clone ();
+
+        // Conserve memmory:
+        //
+        // 1. If it's a lossless rotation, we don't need to the store old
+        //    image anywhere at all, as we can reconstruct it by rotating in
+        //    reverse.
+        // 2. If it's not a lossless rotation, "m_oldImage" already holds
+        //    a copy of the old image.  In this case, we actually save very
+        //    little with this line (just, the computed transpareny mask) since
+        //    kpImage is copy-on-write.
+        m_oldSelectionPtr->setBaseImage (kpImage ());
 
 
         // Calculate new top left (so selection rotates about center)
@@ -124,51 +131,51 @@ void kpTransformRotateCommand::execute ()
         //  resorting to the troublesome world of floating point)
         QPoint oldCenterTimes2 (sel->x () * 2 + sel->width (),
                                 sel->y () * 2 + sel->height ());
-        QPoint newTopLeftTimes2 (oldCenterTimes2 - QPoint (newPixmap.width (), newPixmap.height ()));
+        QPoint newTopLeftTimes2 (oldCenterTimes2 - QPoint (newImage.width (), newImage.height ()));
         QPoint newTopLeft (newTopLeftTimes2.x () / 2, newTopLeftTimes2.y () / 2);
 
 
         // Calculate rotated points
-        QPolygon currentPoints = sel->points ();
+        QPolygon currentPoints = sel->calculatePoints ();
         currentPoints.translate (-currentPoints.boundingRect ().x (),
                                  -currentPoints.boundingRect ().y ());
-        QMatrix rotateMatrix = kpPixmapFX::rotateMatrix (*doc->pixmap (m_actOnSelection), m_angle);
+        QMatrix rotateMatrix = kpPixmapFX::rotateMatrix (doc->image (m_actOnSelection), m_angle);
         currentPoints = rotateMatrix.map (currentPoints);
         currentPoints.translate (-currentPoints.boundingRect ().x () + newTopLeft.x (),
                                  -currentPoints.boundingRect ().y () + newTopLeft.y ());
 
 
-        if (currentPoints.boundingRect ().width () == newPixmap.width () &&
-            currentPoints.boundingRect ().height () == newPixmap.height ())
+        if (currentPoints.boundingRect ().width () == newImage.width () &&
+            currentPoints.boundingRect ().height () == newImage.height ())
         {
-            doc->setSelection (kpSelection (currentPoints, newPixmap,
-                                            m_oldSelection.transparency ()));
+            doc->setSelection (
+                kpFreeFormImageSelection (
+                    currentPoints, newImage,
+                    m_oldSelectionPtr->transparency ()));
         }
         else
         {
-            // TODO: fix the latter "victim of" problem in kpSelection by
+            // TODO: fix the latter "victim of" problem in kpAbstractImageSelection by
             //       allowing the border width & height != pixmap width & height
             //       Or maybe autocrop?
         #if DEBUG_KP_TOOL_ROTATE
             kDebug () << "kpTransformRotateCommand::execute() currentPoints.boundingRect="
                        << currentPoints.boundingRect ()
-                       << " newPixmap: w=" << newPixmap.width ()
-                       << " h=" << newPixmap.height ()
+                       << " newPixmap: w=" << newImage.width ()
+                       << " h=" << newImage.height ()
                        << " (victim of rounding error and/or rotated-a-(rectangular)-pixmap-that-was-transparent-in-the-corners-making-sel-uselessly-bigger-than-needs-be)"
                        << endl;
         #endif
-            doc->setSelection (kpSelection (kpSelection::Rectangle,
-                                            QRect (newTopLeft.x (), newTopLeft.y (),
-                                                   newPixmap.width (), newPixmap.height ()),
-                                            newPixmap,
-                                            m_oldSelection.transparency ()));
+            doc->setSelection (
+                kpRectangularImageSelection (
+                    QRect (newTopLeft.x (), newTopLeft.y (),
+                            newImage.width (), newImage.height ()),
+                    newImage,
+                    m_oldSelectionPtr->transparency ()));
         }
 
-        Q_ASSERT (m_mainWindow->tool ());
-        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+        environ ()->somethingBelowTheCursorChanged ();
     }
-    else
-        doc->setPixmap (newPixmap);
 
 
     QApplication::restoreOverrideCursor ();
@@ -184,31 +191,30 @@ void kpTransformRotateCommand::unexecute ()
     QApplication::setOverrideCursor (Qt::WaitCursor);
 
 
-    QPixmap oldPixmap;
+    kpImage oldImage;
 
     if (!m_losslessRotation)
     {
-        oldPixmap = m_oldPixmap;
-        m_oldPixmap = QPixmap();
+        oldImage = m_oldImage;
+        m_oldImage = kpImage ();
     }
     else
     {
-        oldPixmap = kpPixmapFX::rotate (*doc->pixmap (m_actOnSelection),
-                                        360 - m_angle,
-                                        m_backgroundColor);
+        oldImage = kpPixmapFX::rotate (doc->image (m_actOnSelection),
+                                    360 - m_angle,
+                                    m_backgroundColor);
     }
 
 
     if (!m_actOnSelection)
-        doc->setPixmap (oldPixmap);
+        doc->setImage (oldImage);
     else
     {
-        kpSelection oldSelection = m_oldSelection;
-        oldSelection.setPixmap (oldPixmap);
-        doc->setSelection (oldSelection);
+        m_oldSelectionPtr->setBaseImage (oldImage);
+        doc->setSelection (*m_oldSelectionPtr);
+        delete m_oldSelectionPtr; m_oldSelectionPtr = 0;
 
-        Q_ASSERT (m_mainWindow->tool ());
-        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+        environ ()->somethingBelowTheCursorChanged ();
     }
 
 

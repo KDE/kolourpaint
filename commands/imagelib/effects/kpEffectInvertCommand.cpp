@@ -44,18 +44,18 @@
 
 
 kpEffectInvertCommand::kpEffectInvertCommand (int channels,
-                                              bool actOnSelection,
-                                              kpMainWindow *mainWindow)
+        bool actOnSelection,
+        kpCommandEnvironment *environ)
     : kpEffectCommandBase (channels == kpEffectInvert::RGB ?
                                 i18n ("Invert Colors") : i18n ("Invert"),
-                            actOnSelection, mainWindow),
+                            actOnSelection, environ),
       m_channels (channels)
 {
 }
 
 kpEffectInvertCommand::kpEffectInvertCommand (bool actOnSelection,
-                                              kpMainWindow *mainWindow)
-    : kpEffectCommandBase (i18n ("Invert Colors"), actOnSelection, mainWindow),
+                                              kpCommandEnvironment *environ)
+    : kpEffectCommandBase (i18n ("Invert Colors"), actOnSelection, environ),
       m_channels (kpEffectInvert::RGB)
 {
 }

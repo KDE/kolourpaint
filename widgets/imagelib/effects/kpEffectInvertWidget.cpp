@@ -45,9 +45,8 @@
 
 
 kpEffectInvertWidget::kpEffectInvertWidget (bool actOnSelection,
-                                            kpMainWindow *mainWindow,
-                                            QWidget *parent )
-    : kpEffectWidgetBase (actOnSelection, mainWindow, parent)
+                                            QWidget *parent)
+    : kpEffectWidgetBase (actOnSelection, parent)
 {
     QVBoxLayout *topLevelLay = new QVBoxLayout (this);
     topLevelLay->setSpacing(spacingHint ());
@@ -160,11 +159,12 @@ kpImage kpEffectInvertWidget::applyEffect (const kpImage &image)
 
 
 // public virtual [base kpEffectWidgetBase]
-kpEffectCommandBase *kpEffectInvertWidget::createCommand () const
+kpEffectCommandBase *kpEffectInvertWidget::createCommand (
+        kpCommandEnvironment *cmdEnviron) const
 {
     return new kpEffectInvertCommand (channels (),
                                       m_actOnSelection,
-                                      m_mainWindow);
+                                      cmdEnviron);
 }
 
 

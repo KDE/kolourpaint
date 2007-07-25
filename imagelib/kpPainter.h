@@ -57,12 +57,22 @@ struct kpPainterPrivate;
 class kpPainter
 {
 public:
-    // Returns a list of points representing a straight line from <thisPoint>
-    // to <lastPoint>, using Bresenham's line algorithm.  Each point is created
-    // only with the specified <probability>.
+    // Returns whether the given points are cardinally adjacent (i.e. one point
+    // is exactly 1 pixel north, east, south or west of the other).  Equal
+    // points are not cardinally adjacent.
+    static bool pointsAreCardinallyAdjacent (const QPoint &p, const QPoint &q);
+
+    // Returns a list of points representing a straight line from <startPoint>
+    // to <endPoint> inclusive, using Bresenham's line algorithm.  Each point
+    // is created only with the specified <probability>.
     //
-    // <brushIsDiagonalLine> must be set if a diagonal line is to drawn at each
-    // of the returned points, otherwise things won't look right:
+    // If <cardinalAdjacency> is set, a modified Bresenham's algorithm will add
+    // an extra point between every pair of originally strictly-diagonally-adjacent
+    // points, such that these points become cardinally adjacent.  However, these
+    // extra points are also created only with the specified <probability>.
+    //
+    // For instance, <cardinalAdjacency> must be set if a diagonal line is to
+    // drawn at each of the returned points, otherwise things won't look right:
     //
     //     .\.....
     //     \.\....
@@ -73,18 +83,13 @@ public:
     //
     // 'A' is the previous Bresenham point.  'B' is the new point.  See how if
     // diagonal lines are drawn at A and B, there is a gap between the lines.
-    // Setting <brushIsDiagonalLine> will solve this problem, since it will add
+    // Setting <cardinalAdjacency> will solve this problem, since it will add
     // a point at 'c'.
     //
-    // For those interested in strict definitions: if <brushIsDiagonalLine> is
-    // set, a modified Bresenham's algorithm will add an extra point between
-    // every pair of strictly-diagonally-adjacent points, such that these points
-    // become cardinally adjacent, but before the <probability> is applied.
-    //
     // ASSUMPTION: <probability> is between 0.0 and 1.0 inclusive.
-    static QList <QPoint> interpolatePoints (const QPoint &thisPoint,
-        const QPoint &lastPoint,
-        bool brushIsDiagonalLine = false,
+    static QList <QPoint> interpolatePoints (const QPoint &startPoint,
+        const QPoint &endPoint,
+        bool cardinalAdjacency = false,
         double probability = 1.0);
 
     // Draws a line from (x1,y1) to (x2,y2) onto <image>, with <color>
@@ -118,7 +123,7 @@ public:
     static void fillRect (kpImage *image,
         int x, int y, int width, int height,
         const kpColor &color);
-                
+
     // Draws a rectangle / rounded rectangle / ellipse with top-left at
     // (x, y) with width <width> and height <height>.  Unlike QPainter,
     // this rectangle will really fit inside <width>x<height> and won't

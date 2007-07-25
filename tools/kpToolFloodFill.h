@@ -33,17 +33,12 @@
 #include <kpTool.h>
 
 
-class kpMainWindow;
-
-
-struct kpToolFloodFillPrivate;
-
 class kpToolFloodFill : public kpTool
 {
 Q_OBJECT
 
 public:
-    kpToolFloodFill (kpMainWindow *);
+    kpToolFloodFill (kpToolEnvironment *environ, QObject *parent);
     virtual ~kpToolFloodFill ();
 
 private:
@@ -58,7 +53,7 @@ public:
     virtual void endDraw (const QPoint &, const QRect &);
 
 private:
-    kpToolFloodFillPrivate * const d;
+    struct kpToolFloodFillPrivate * const d;
 };
 
 

@@ -4,5 +4,5 @@ for f in `find -type d | fgrep -v .svn | egrep -v '^\.$' | egrep -v '^\./pics
 ^\./patches$
 ^\./tests$' | cut -c3- | sort`
 do
-	echo '${CMAKE_SOURCE_DIR}/kolourpaint/'$f
+	echo '${CMAKE_CURRENT_SOURCE_DIR}/'$f
 done

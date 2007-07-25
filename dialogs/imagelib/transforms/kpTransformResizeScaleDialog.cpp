@@ -62,12 +62,13 @@
 #include <klocale.h>
 #include <knuminput.h>
 
+#include <kpAbstractSelection.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
-#include <kpSelection.h>
+#include <kpTextSelection.h>
 #include <kpTool.h>
+#include <kpTransformDialogEnvironment.h>
 
 
 #define SET_VALUE_WITHOUT_SIGNAL_EMISSION(knuminput_instance,value)    \
@@ -94,9 +95,10 @@ double kpTransformResizeScaleDialog::s_lastPercentWidth = 100,
        kpTransformResizeScaleDialog::s_lastPercentHeight = 100;
 
 
-kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (kpMainWindow *mainWindow)
-    : KDialog ((QWidget *) mainWindow),
-      m_mainWindow (mainWindow),
+kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (
+        kpTransformDialogEnvironment *environ, QWidget *parent)
+    : KDialog (parent),
+      m_environ (environ),
       m_ignoreKeepAspectRatio (0)
 {
     setCaption( i18n ("Resize / Scale") );
@@ -115,8 +117,8 @@ kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (kpMainWindow *mainWi
 
 
     QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget);
-    baseLayout->setSpacing(spacingHint ());
-    baseLayout->setMargin(0/*margin*/);
+    baseLayout->setSpacing (spacingHint ());
+    baseLayout->setMargin (0/*margin*/);
     baseLayout->addWidget (m_actOnBox);
     baseLayout->addWidget (m_operationGroupBox);
     baseLayout->addWidget (m_dimensionsGroupBox);
@@ -137,15 +139,21 @@ kpTransformResizeScaleDialog::~kpTransformResizeScaleDialog ()
 // private
 kpDocument *kpTransformResizeScaleDialog::document () const
 {
-    Q_ASSERT (m_mainWindow);
-    return m_mainWindow->document ();
+    return m_environ->document ();
 }
 
 // private
-kpSelection *kpTransformResizeScaleDialog::selection () const
+kpAbstractSelection *kpTransformResizeScaleDialog::selection () const
 {
     Q_ASSERT (document ());
     return document ()->selection ();
+}
+
+// private
+kpTextSelection *kpTransformResizeScaleDialog::textSelection () const
+{
+    Q_ASSERT (document ());
+    return document ()->textSelection ();
 }
 
 
@@ -167,7 +175,7 @@ void kpTransformResizeScaleDialog::createActOnBox (QWidget *baseWidget)
     {
         QString selName = i18n ("Selection");
 
-        if (selection ()->isText ())
+        if (textSelection ())
             selName = i18n ("Text Box");
 
         m_actOnCombo->insertItem (Selection, selName);
@@ -287,8 +295,8 @@ void kpTransformResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
 
 
     QGridLayout *operationLayout = new QGridLayout (m_operationGroupBox );
-    operationLayout->setMargin( marginHint () * 2/*don't overlap groupbox title*/ );
-    operationLayout->setSpacing( spacingHint ());
+    operationLayout->setMargin (marginHint () * 2/*don't overlap groupbox title*/);
+    operationLayout->setSpacing (spacingHint ());
 
     operationLayout->addWidget (m_resizeButton, 0, 0, Qt::AlignCenter);
     //operationLayout->addWidget (m_resizeLabel, 1, 0, Qt::AlignCenter);
@@ -360,9 +368,9 @@ void kpTransformResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget
     percentLabel->setBuddy (m_percentWidthInput);
 
 
-    QGridLayout *dimensionsLayout = new QGridLayout (m_dimensionsGroupBox );
-    dimensionsLayout->setMargin( marginHint () * 2 );
-    dimensionsLayout->setSpacing( spacingHint ());
+    QGridLayout *dimensionsLayout = new QGridLayout (m_dimensionsGroupBox);
+    dimensionsLayout->setMargin (marginHint () * 2);
+    dimensionsLayout->setSpacing (spacingHint ());
     dimensionsLayout->setColumnStretch (1/*column*/, 1);
     dimensionsLayout->setColumnStretch (3/*column*/, 1);
 
@@ -436,13 +444,13 @@ void kpTransformResizeScaleDialog::heightFitWidthToAspectRatio ()
 bool kpTransformResizeScaleDialog::resizeEnabled () const
 {
     return (!actOnSelection () ||
-            (actOnSelection () && selection ()->isText ()));
+            (actOnSelection () && textSelection ()));
 }
 
 // private
 bool kpTransformResizeScaleDialog::scaleEnabled () const
 {
-    return (!(actOnSelection () && selection ()->isText ()));
+    return (!(actOnSelection () && textSelection ()));
 }
 
 // private
@@ -472,7 +480,7 @@ void kpTransformResizeScaleDialog::slotActOnChanged ()
     // TODO: somehow share logic with (resize|*scale)Enabled()
     if (actOnSelection ())
     {
-        if (selection ()->isText ())
+        if (textSelection ())
         {
             m_resizeButton->setChecked (true);
         }
@@ -675,7 +683,7 @@ void kpTransformResizeScaleDialog::accept ()
 
     if (actOnSelection ())
     {
-        if (selection ()->isText ())
+        if (textSelection ())
         {
             actionTarget = eText;
         }

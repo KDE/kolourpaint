@@ -34,24 +34,14 @@
 
 #include <math.h>
 
-#include <q3accel.h>
 #include <qapplication.h>
-#include <qboxlayout.h>
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qgridlayout.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
 #include <qpixmap.h>
 #include <qpoint.h>
 #include <qpolygon.h>
-#include <qpushbutton.h>
 #include <qrect.h>
 #include <qsize.h>
 #include <qtoolbutton.h>
 #include <qmatrix.h>
-
 
 #include <kapplication.h>
 #include <kcombobox.h>
@@ -64,23 +54,25 @@
 #include <klocale.h>
 #include <knuminput.h>
 
+#include <kpAbstractImageSelection.h>
+#include <kpCommandEnvironment.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
+#include <kpFreeFormImageSelection.h>
 #include <kpPixmapFX.h>
-#include <kpSelection.h>
-#include <kpTool.h>
+#include <kpRectangularImageSelection.h>
+#include <kpTextSelection.h>
 
 
 kpTransformResizeScaleCommand::kpTransformResizeScaleCommand (bool actOnSelection,
-                                                    int newWidth, int newHeight,
-                                                    Type type,
-                                                    kpMainWindow *mainWindow)
-    : kpCommand (mainWindow),
+        int newWidth, int newHeight,
+        Type type,
+        kpCommandEnvironment *environ)
+    : kpCommand (environ),
       m_actOnSelection (actOnSelection),
       m_type (type),
-      m_backgroundColor (mainWindow ? mainWindow->backgroundColor () : kpColor::Invalid),
-      m_oldSelection (0)
+      m_backgroundColor (environ->backgroundColor ()),
+      m_oldSelectionPtr (0)
 {
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -89,8 +81,7 @@ kpTransformResizeScaleCommand::kpTransformResizeScaleCommand (bool actOnSelectio
     m_oldHeight = doc->height (m_actOnSelection);
 
     m_actOnTextSelection = (m_actOnSelection &&
-                            doc->selection () &&
-                            doc->selection ()->isText ());
+                            doc->textSelection ());
 
     resize (newWidth, newHeight);
 
@@ -99,12 +90,12 @@ kpTransformResizeScaleCommand::kpTransformResizeScaleCommand (bool actOnSelectio
     m_scaleSelectionWithImage = (!m_actOnSelection &&
                                  (m_type == Scale || m_type == SmoothScale) &&
                                  document ()->selection () &&
-                                 !document ()->selection ()->pixmap ());
+                                 !document ()->selection ()->hasContent ());
 }
 
 kpTransformResizeScaleCommand::~kpTransformResizeScaleCommand ()
 {
-    delete m_oldSelection;
+    delete m_oldSelectionPtr;
 }
 
 
@@ -143,12 +134,12 @@ QString kpTransformResizeScaleCommand::name () const
 }
 
 // public virtual [base kpCommand]
-int kpTransformResizeScaleCommand::size () const
+kpCommandSize::SizeType kpTransformResizeScaleCommand::size () const
 {
-    return kpPixmapFX::pixmapSize (m_oldPixmap) +
-           kpPixmapFX::pixmapSize (m_oldRightPixmap) +
-           kpPixmapFX::pixmapSize (m_oldBottomPixmap) +
-           (m_oldSelection ? m_oldSelection->size () : 0);
+    return ImageSize (m_oldImage) +
+           ImageSize (m_oldRightImage) +
+           ImageSize (m_oldBottomImage) +
+           SelectionSize (m_oldSelectionPtr);
 }
 
 
@@ -211,22 +202,23 @@ void kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument ()
                << endl;
 #endif
 
-    Q_ASSERT (m_oldSelection);
-    Q_ASSERT (!m_oldSelection->pixmap ());
+    Q_ASSERT (m_oldSelectionPtr);
+    Q_ASSERT (!m_oldSelectionPtr->hasContent ());
 
 
     const double horizScale = double (m_newWidth) / double (m_oldWidth);
     const double vertScale = double (m_newHeight) / double (m_oldHeight);
 
-    const int newX = (int) (m_oldSelection->x () * horizScale);
-    const int newY = (int) (m_oldSelection->y () * vertScale);
+    const int newX = (int) (m_oldSelectionPtr->x () * horizScale);
+    const int newY = (int) (m_oldSelectionPtr->y () * vertScale);
 
 
-    QPolygon currentPoints = m_oldSelection->points ();
+    QPolygon currentPoints = m_oldSelectionPtr->calculatePoints ();
     currentPoints.translate (-currentPoints.boundingRect ().x (),
                              -currentPoints.boundingRect ().y ());
 
     // TODO: refactor into kpPixmapFX
+    // TODO: Can we get to size 0x0 accidently?
     QMatrix scaleMatrix;
     scaleMatrix.scale (horizScale, vertScale);
     currentPoints = scaleMatrix.map (currentPoints);
@@ -235,12 +227,28 @@ void kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument ()
         -currentPoints.boundingRect ().x () + newX,
         -currentPoints.boundingRect ().y () + newY);
 
-    document ()->setSelection (kpSelection (currentPoints, QPixmap (),
-                                            m_oldSelection->transparency ()));
+    kpAbstractImageSelection *imageSel =
+        dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr);
+    kpTextSelection *textSel =
+        dynamic_cast <kpTextSelection *> (m_oldSelectionPtr);
+    if (imageSel)
+    {
+        document ()->setSelection (
+            kpFreeFormImageSelection (currentPoints, kpImage (),
+                imageSel->transparency ()));
+    }
+    else if (textSel)
+    {
+        document ()->setSelection (
+            kpTextSelection (currentPoints.boundingRect (),
+                textSel->textLines (),
+                textSel->textStyle ()));
+    }
+    else
+        Q_ASSERT (!"Unknown selection type");
 
 
-    if (m_mainWindow->tool ())
-        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+    environ ()->somethingBelowTheCursorChanged ();
 }
 
 
@@ -272,10 +280,15 @@ void kpTransformResizeScaleCommand::execute ()
             else
             {
                 QApplication::setOverrideCursor (Qt::WaitCursor);
-                document ()->selection ()->textResize (m_newWidth, m_newHeight);
 
-                Q_ASSERT (m_mainWindow->tool ());
-                m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+                kpTextSelection *textSel = textSelection ();
+                Q_ASSERT (textSel);
+
+                kpTextSelection *newSel = textSel->resized (m_newWidth, m_newHeight);
+                document ()->setSelection (*newSel);
+                delete newSel;
+
+                environ ()->somethingBelowTheCursorChanged ();
 
                 QApplication::restoreOverrideCursor ();
             }
@@ -287,16 +300,14 @@ void kpTransformResizeScaleCommand::execute ()
 
             if (m_newWidth < m_oldWidth)
             {
-                m_oldRightPixmap = kpPixmapFX::getPixmapAt (
-                    *document ()->pixmap (),
+                m_oldRightImage = document ()->getImageAt (
                     QRect (m_newWidth, 0,
                         m_oldWidth - m_newWidth, m_oldHeight));
             }
 
             if (m_newHeight < m_oldHeight)
             {
-                m_oldBottomPixmap = kpPixmapFX::getPixmapAt (
-                    *document ()->pixmap (),
+                m_oldBottomImage = document ()->getImageAt (
                     QRect (0, m_newHeight,
                         m_newWidth, m_oldHeight - m_newHeight));
             }
@@ -312,40 +323,44 @@ void kpTransformResizeScaleCommand::execute ()
         QApplication::setOverrideCursor (Qt::WaitCursor);
 
 
-        QPixmap oldPixmap = *document ()->pixmap (m_actOnSelection);
+        kpImage oldImage = document ()->image (m_actOnSelection);
 
         if (!m_isLosslessScale)
-            m_oldPixmap = oldPixmap;
+            m_oldImage = oldImage;
 
-        QPixmap newPixmap = kpPixmapFX::scale (oldPixmap, m_newWidth, m_newHeight,
+        kpImage newImage = kpPixmapFX::scale (oldImage, m_newWidth, m_newHeight,
                                                m_type == SmoothScale);
 
 
-        if (!m_oldSelection && document ()->selection ())
+        if (!m_oldSelectionPtr && document ()->selection ())
         {
             // Save sel border
-            m_oldSelection = new kpSelection (*document ()->selection ());
-            m_oldSelection->setPixmap (QPixmap ());
+            m_oldSelectionPtr = document ()->selection ()->clone ();
+
+            Q_ASSERT (dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr));
+            static_cast <kpAbstractImageSelection *> (m_oldSelectionPtr)
+                ->setBaseImage (kpImage ());
         }
 
         if (m_actOnSelection)
         {
-            Q_ASSERT (m_oldSelection);
-            QRect newRect = QRect (m_oldSelection->x (), m_oldSelection->y (),
-                                   newPixmap.width (), newPixmap.height ());
+            Q_ASSERT (m_oldSelectionPtr);
+            QRect newRect = QRect (m_oldSelectionPtr->x (), m_oldSelectionPtr->y (),
+                                   newImage.width (), newImage.height ());
 
             // Not possible to retain non-rectangular selection borders on scale
             // (think about e.g. a 45 deg line as part of the border & 2x scale)
+            Q_ASSERT (dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr));
             document ()->setSelection (
-                kpSelection (kpSelection::Rectangle, newRect, newPixmap,
-                             m_oldSelection->transparency ()));
+                kpRectangularImageSelection (newRect, newImage,
+                    static_cast <kpAbstractImageSelection *> (m_oldSelectionPtr)
+                        ->transparency ()));
 
-            Q_ASSERT (m_mainWindow->tool ());
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+            environ ()->somethingBelowTheCursorChanged ();
         }
         else
         {
-            document ()->setPixmap (newPixmap);
+            document ()->setImage (newImage);
 
             if (m_scaleSelectionWithImage)
             {
@@ -384,10 +399,15 @@ void kpTransformResizeScaleCommand::unexecute ()
             else
             {
                 QApplication::setOverrideCursor (Qt::WaitCursor);
-                doc->selection ()->textResize (m_oldWidth, m_oldHeight);
 
-                Q_ASSERT (m_mainWindow->tool ());
-                m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+                kpTextSelection *textSel = textSelection ();
+                Q_ASSERT (textSel);
+
+                kpTextSelection *newSel = textSel->resized (m_oldWidth, m_oldHeight);
+                document ()->setSelection (*newSel);
+                delete newSel;
+
+                environ ()->somethingBelowTheCursorChanged ();
 
                 QApplication::restoreOverrideCursor ();
             }
@@ -397,26 +417,26 @@ void kpTransformResizeScaleCommand::unexecute ()
             QApplication::setOverrideCursor (Qt::WaitCursor);
 
 
-            QPixmap newPixmap (m_oldWidth, m_oldHeight);
+            kpImage newImage (m_oldWidth, m_oldHeight);
 
-            kpPixmapFX::setPixmapAt (&newPixmap, QPoint (0, 0),
-                                    *doc->pixmap ());
+            kpPixmapFX::setPixmapAt (&newImage, QPoint (0, 0),
+                                     doc->image ());
 
             if (m_newWidth < m_oldWidth)
             {
-                kpPixmapFX::setPixmapAt (&newPixmap,
+                kpPixmapFX::setPixmapAt (&newImage,
                                         QPoint (m_newWidth, 0),
-                                        m_oldRightPixmap);
+                                        m_oldRightImage);
             }
 
             if (m_newHeight < m_oldHeight)
             {
-                kpPixmapFX::setPixmapAt (&newPixmap,
+                kpPixmapFX::setPixmapAt (&newImage,
                                         QPoint (0, m_newHeight),
-                                        m_oldBottomPixmap);
+                                        m_oldBottomImage);
             }
 
-            doc->setPixmap (newPixmap);
+            doc->setImage (newImage);
 
 
             QApplication::restoreOverrideCursor ();
@@ -427,34 +447,37 @@ void kpTransformResizeScaleCommand::unexecute ()
         QApplication::setOverrideCursor (Qt::WaitCursor);
 
 
-        QPixmap oldPixmap;
+        kpImage oldImage;
 
         if (!m_isLosslessScale)
-            oldPixmap = m_oldPixmap;
+            oldImage = m_oldImage;
         else
-            oldPixmap = kpPixmapFX::scale (*doc->pixmap (m_actOnSelection),
-                                           m_oldWidth, m_oldHeight);
+            oldImage = kpPixmapFX::scale (doc->image (m_actOnSelection),
+                                          m_oldWidth, m_oldHeight);
 
 
         if (m_actOnSelection)
         {
-            kpSelection oldSelection = *m_oldSelection;
-            oldSelection.setPixmap (oldPixmap);
-            doc->setSelection (oldSelection);
+            Q_ASSERT (dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr));
+            kpAbstractImageSelection *oldImageSel =
+                static_cast <kpAbstractImageSelection *> (m_oldSelectionPtr);
 
-            Q_ASSERT (m_mainWindow->tool ());
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+            kpAbstractImageSelection *oldSelection = oldImageSel->clone ();
+            oldSelection->setBaseImage (oldImage);
+            doc->setSelection (*oldSelection);
+            delete oldSelection;
+
+            environ ()->somethingBelowTheCursorChanged ();
         }
         else
         {
-            doc->setPixmap (oldPixmap);
+            doc->setImage (oldImage);
 
             if (m_scaleSelectionWithImage)
             {
-                doc->setSelection (*m_oldSelection);
+                doc->setSelection (*m_oldSelectionPtr);
 
-                Q_ASSERT (m_mainWindow->tool ());
-                m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+                environ ()->somethingBelowTheCursorChanged ();
             }
         }
 

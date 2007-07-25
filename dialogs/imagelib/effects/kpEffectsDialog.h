@@ -42,7 +42,6 @@ class KComboBox;
 
 class kpEffectCommandBase;
 class kpEffectWidgetBase;
-class kpMainWindow;
 
 
 class kpEffectsDialog : public kpTransformPreviewDialog
@@ -51,7 +50,8 @@ Q_OBJECT
 
 public:
     kpEffectsDialog (bool actOnSelection,
-                     kpMainWindow *parent);
+                     kpTransformDialogEnvironment *environ,
+                     QWidget *parent);
     virtual ~kpEffectsDialog ();
 
     virtual bool isNoOp () const;

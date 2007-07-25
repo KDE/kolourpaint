@@ -42,13 +42,11 @@
 
 #include <kpBug.h>
 #include <kpColor.h>
-#include <kpCommandHistory.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
 #include <kpPainter.h>
 #include <kpPixmapFX.h>
-#include <kpTempPixmap.h>
+#include <kpTempImage.h>
 #include <kpToolToolBar.h>
 #include <kpToolWidgetFillStyle.h>
 #include <kpToolWidgetLineWidth.h>
@@ -59,13 +57,13 @@
 struct kpToolRectangularCommandPrivate
 {
     kpToolRectangularBase::DrawShapeFunc drawShapeFunc;
-    
+
     QRect rect;
-    
+
     kpColor fcolor;
     int penWidth;
     kpColor bcolor;
-    
+
     kpImage oldImage;
 };
 
@@ -74,9 +72,9 @@ kpToolRectangularCommand::kpToolRectangularCommand (const QString &name,
         const QRect &rect,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
-        kpMainWindow *mainWindow)
+        kpCommandEnvironment *environ)
 
-    : kpNamedCommand (name, mainWindow),
+    : kpNamedCommand (name, environ),
       d (new kpToolRectangularCommandPrivate ())
 {
     d->drawShapeFunc = drawShapeFunc;
@@ -95,9 +93,9 @@ kpToolRectangularCommand::~kpToolRectangularCommand ()
 
 
 // public virtual [base kpCommand]
-int kpToolRectangularCommand::size () const
+kpCommandSize::SizeType kpToolRectangularCommand::size () const
 {
-    return kpPixmapFX::pixmapSize (d->oldImage);
+    return ImageSize (d->oldImage);
 }
 
 
@@ -111,7 +109,7 @@ void kpToolRectangularCommand::execute ()
     // OPT: For a pure rectangle, can do better if there is no bcolor, by only
     //      saving 4 pixmaps corresponding to the pixels dirtied by the 4 edges.
     Q_ASSERT (d->oldImage.isNull ());
-    d->oldImage = doc->getPixmapAt (d->rect);
+    d->oldImage = doc->getImageAt (d->rect);
 
     // Invoke shape drawing function passed in ctor.
     kpImage image = d->oldImage;
@@ -120,7 +118,7 @@ void kpToolRectangularCommand::execute ()
         d->fcolor, d->penWidth,
         d->bcolor);
 
-    doc->setPixmapAt (image, d->rect.topLeft ());
+    doc->setImageAt (image, d->rect.topLeft ());
 }
 
 // public virtual [base kpCommand]
@@ -130,7 +128,7 @@ void kpToolRectangularCommand::unexecute ()
     Q_ASSERT (doc);
 
     Q_ASSERT (!d->oldImage.isNull ());
-    doc->setPixmapAt (d->oldImage, d->rect.topLeft ());
+    doc->setImageAt (d->oldImage, d->rect.topLeft ());
 
     d->oldImage = kpImage ();
 }

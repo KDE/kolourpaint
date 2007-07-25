@@ -60,9 +60,8 @@ QColor kpEffectFlattenWidget::s_lastColor1;
 QColor kpEffectFlattenWidget::s_lastColor2;
 
 kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
-                                              kpMainWindow *mainWindow,
-                                              QWidget *parent )
-    : kpEffectWidgetBase (actOnSelection, mainWindow, parent)
+                                              QWidget *parent)
+    : kpEffectWidgetBase (actOnSelection, parent)
 {
     if (!s_lastColor1.isValid () || !s_lastColor2.isValid ())
     {
@@ -167,11 +166,12 @@ kpImage kpEffectFlattenWidget::applyEffect (const kpImage &image)
 
 
 // public virtual [base kpEffectWidgetBase]
-kpEffectCommandBase *kpEffectFlattenWidget::createCommand () const
+kpEffectCommandBase *kpEffectFlattenWidget::createCommand (
+        kpCommandEnvironment *cmdEnviron) const
 {
     return new kpEffectFlattenCommand (color1 (), color2 (),
                                        m_actOnSelection,
-                                       m_mainWindow);
+                                       cmdEnviron);
 }
 
 

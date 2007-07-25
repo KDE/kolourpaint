@@ -34,24 +34,19 @@
 #include <kpImage.h>
 
 
-class kpMainWindow;
-
-
 class kpEffectEmbossCommand : public kpEffectCommandBase
 {
 public:
-    kpEffectEmbossCommand (double radius, double sigma,
-                           int repeat,
+    kpEffectEmbossCommand (int strength,
                            bool actOnSelection,
-                           kpMainWindow *mainWindow);
+                           kpCommandEnvironment *environ);
     virtual ~kpEffectEmbossCommand ();
 
 protected:
     virtual kpImage applyEffect (const kpImage &image);
 
 protected:
-    double m_radius, m_sigma;
-    int m_repeat;
+    int m_strength;
 };
 
 

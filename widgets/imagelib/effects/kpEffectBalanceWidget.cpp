@@ -58,9 +58,8 @@
 
 
 kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
-                                              kpMainWindow *mainWindow,
                                               QWidget *parent)
-    : kpEffectWidgetBase (actOnSelection, mainWindow, parent)
+    : kpEffectWidgetBase (actOnSelection, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
     lay->setMargin (marginHint ());
@@ -82,6 +81,8 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
     m_gammaInput->setRange (-50, 50, 1/*step*/, true/*slider*/);
     // TODO: This is what should be shown in the m_gammaInput spinbox
     m_gammaLabel = new QLabel (this);
+    // TODO: This doesn't seem to be wide enough with some fonts so the
+    //       whole layout moves when we drag the gamma slider.
     m_gammaLabel->setMinimumWidth (m_gammaLabel->fontMetrics ().width (QLatin1String (" 10.00 ")));
     m_gammaLabel->setAlignment (m_gammaLabel->alignment () | Qt::AlignRight);
     QPushButton *gammaResetPushButton = new QPushButton (i18n ("Rese&t"), this);
@@ -186,12 +187,13 @@ kpImage kpEffectBalanceWidget::applyEffect (const kpImage &image)
 }
 
 // public virtual [base kpEffectWidgetBase]
-kpEffectCommandBase *kpEffectBalanceWidget::createCommand () const
+kpEffectCommandBase *kpEffectBalanceWidget::createCommand (
+        kpCommandEnvironment *cmdEnviron) const
 {
     return new kpEffectBalanceCommand (channels (),
                                        brightness (), contrast (), gamma (),
                                        m_actOnSelection,
-                                       m_mainWindow);
+                                       cmdEnviron);
 }
 
 

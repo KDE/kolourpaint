@@ -35,8 +35,6 @@
 #include <kdialog.h>
 
 #include <kpColor.h>
-#include <kpCommandHistory.h>
-#include <kpSelection.h>
 #include <kpTransformResizeScaleCommand.h>
 
 
@@ -50,8 +48,10 @@ class KDoubleNumInput;
 class KHBox;
 class KIntNumInput;
 
+class kpAbstractSelection;
 class kpDocument;
-class kpMainWindow;
+class kpTextSelection;
+class kpTransformDialogEnvironment;
 
 
 class kpTransformResizeScaleDialog : public KDialog
@@ -59,7 +59,8 @@ class kpTransformResizeScaleDialog : public KDialog
 Q_OBJECT
 
 public:
-    kpTransformResizeScaleDialog (kpMainWindow *mainWindow);
+    kpTransformResizeScaleDialog (kpTransformDialogEnvironment *environ,
+        QWidget *parent);
     virtual ~kpTransformResizeScaleDialog ();
 
     enum ActOn
@@ -73,7 +74,8 @@ private:
 
 private:
     kpDocument *document () const;
-    kpSelection *selection () const;
+    kpAbstractSelection *selection () const;
+    kpTextSelection *textSelection () const;
 
     void createActOnBox (QWidget *baseWidget);
     void createOperationGroupBox (QWidget *baseWidget);
@@ -120,7 +122,7 @@ private slots:
     virtual void accept ();
 
 private:
-    kpMainWindow *m_mainWindow;
+    kpTransformDialogEnvironment *m_environ;
 
     KHBox *m_actOnBox;
     QLabel *m_actOnLabel;

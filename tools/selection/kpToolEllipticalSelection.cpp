@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -25,22 +25,26 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define DEBUG_KP_TOOL_ELLIPTICAL_SELECTION 1
+
 
 #include <kpToolEllipticalSelection.h>
 
 #include <klocale.h>
 
 #include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpSelection.h>
+#include <kpEllipticalImageSelection.h>
+#include <kpToolSelectionEnvironment.h>
 
 
-kpToolEllipticalSelection::kpToolEllipticalSelection (kpMainWindow *mainWindow)
+kpToolEllipticalSelection::kpToolEllipticalSelection (kpToolSelectionEnvironment *environ,
+        QObject *parent)
     : kpToolSelection (Ellipse,
                        i18n ("Selection (Elliptical)"),
                        i18n ("Makes an elliptical or circular selection"),
                        Qt::Key_I,
-                       mainWindow, "tool_elliptical_selection")
+                       environ, parent,
+                       "tool_elliptical_selection")
 {
 }
 
@@ -50,16 +54,29 @@ kpToolEllipticalSelection::~kpToolEllipticalSelection ()
 
 
 // protected virtual [base kpToolSelection]
-void kpToolEllipticalSelection::createMoreSelectionAndUpdateStatusBar (
+bool kpToolEllipticalSelection::createMoreSelectionAndUpdateStatusBar (
+        bool dragHasBegun,
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &normalizedRect)
 {
+    // Prevent unintentional creation of 1-pixel selections.
+    if (!dragHasBegun && accidentalDragAdjustedPoint == startPoint ())
+    {
+    #if DEBUG_KP_TOOL_ELLIPTICAL_SELECTION && 1
+        kDebug () << "\tnon-text NOP - return" << endl;
+    #endif
+        setUserShapePoints (accidentalDragAdjustedPoint);
+        return false;
+    }
+
     Q_ASSERT (accidentalDragAdjustedPoint == currentPoint ());
-    
+
     document ()->setSelection (
-        kpSelection (
-            kpSelection::Ellipse, normalizedRect,
-            mainWindow ()->selectionTransparency ()));
-        
+        kpEllipticalImageSelection (
+            normalizedRect,
+            environ ()->imageSelectionTransparency ()));
+
     setUserShapePoints (startPoint (), currentPoint ());
+
+    return true;
 }

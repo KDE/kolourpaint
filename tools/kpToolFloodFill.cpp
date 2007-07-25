@@ -36,9 +36,10 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpCommandHistory.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
+#include <kpToolEnvironment.h>
 #include <kpToolFloodFillCommand.h>
 
 
@@ -47,10 +48,10 @@ struct kpToolFloodFillPrivate
     kpToolFloodFillCommand *currentCommand;
 };
 
-kpToolFloodFill::kpToolFloodFill (kpMainWindow *mainWindow)
+kpToolFloodFill::kpToolFloodFill (kpToolEnvironment *environ, QObject *parent)
     : kpTool (i18n ("Flood Fill"), i18n ("Fills regions in the image"),
               Qt::Key_F,
-              mainWindow, "tool_flood_fill"),
+              environ, parent, "tool_flood_fill"),
       d (new kpToolFloodFillPrivate ())
 {
     d->currentCommand = 0;
@@ -84,12 +85,14 @@ void kpToolFloodFill::beginDraw ()
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
     {
+        environ ()->flashColorSimilarityToolBarItem ();
+
         // Flood Fill is an expensive CPU operation so we only fill at a
         // mouse click (beginDraw ()), not on mouse move (virtually draw())
         d->currentCommand = new kpToolFloodFillCommand (
             currentPoint ().x (), currentPoint ().y (),
             color (mouseButton ()), processedColorSimilarity (),
-            mainWindow ());
+            environ ()->commandEnvironment ());
 
     #if DEBUG_KP_TOOL_FLOOD_FILL && 1
         kDebug () << "\tperforming new-doc-corner-case check" << endl;
@@ -101,7 +104,7 @@ void kpToolFloodFill::beginDraw ()
             // (execute() below).  Needed in unexecute().
             d->currentCommand->prepareColorToChange ();
 
-            d->currentCommand->setFillEntirePixmap ();
+            d->currentCommand->setFillEntireImage ();
         }
 
         d->currentCommand->execute ();
@@ -137,7 +140,7 @@ void kpToolFloodFill::releasedAllButtons ()
 // public virtual [base kpTool]
 void kpToolFloodFill::endDraw (const QPoint &, const QRect &)
 {
-    mainWindow ()->commandHistory ()->addCommand (d->currentCommand,
+    environ ()->commandHistory ()->addCommand (d->currentCommand,
         false/*no exec - we already did it up there*/);
 
     // Don't delete - it just got added to the history.

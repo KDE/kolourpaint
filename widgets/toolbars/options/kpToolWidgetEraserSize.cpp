@@ -134,13 +134,13 @@ int kpToolWidgetEraserSize::eraserSize () const
 
 
 // public
-kpTempPixmap::UserFunctionType kpToolWidgetEraserSize::drawFunction () const
+kpTempImage::UserFunctionType kpToolWidgetEraserSize::drawFunction () const
 {
     return &::DrawPixmap;
 }
 
 // public
-kpTempPixmap::UserFunctionType kpToolWidgetEraserSize::drawCursorFunction () const
+kpTempImage::UserFunctionType kpToolWidgetEraserSize::drawCursorFunction () const
 {
     return &::DrawCursor;
 }

@@ -34,8 +34,6 @@
 #include <qpoint.h>
 
 #include <kpColor.h>
-#include <kpCommandHistory.h>
-#include <kpSelection.h>
 #include <kpTransformPreviewDialog.h>
 
 
@@ -44,8 +42,6 @@ class QRadioButton;
 
 class KIntNumInput;
 
-class kpMainWindow;
-
 
 class kpTransformRotateDialog : public kpTransformPreviewDialog
 {
@@ -53,7 +49,8 @@ Q_OBJECT
 
 public:
     kpTransformRotateDialog (bool actOnSelection,
-                        kpMainWindow *parent);
+        kpTransformDialogEnvironment *environ,
+        QWidget *parent);
     virtual ~kpTransformRotateDialog ();
 
 private:

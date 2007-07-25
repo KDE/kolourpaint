@@ -30,11 +30,16 @@
 #define kpDocumentPrivate_H
 
 
+class kpDocumentEnvironment;
+
+
 struct kpDocumentPrivate
 {
     kpDocumentPrivate ()
     {
     }
+
+    kpDocumentEnvironment *environ;
 };
 
 

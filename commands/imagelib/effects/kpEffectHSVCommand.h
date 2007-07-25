@@ -33,15 +33,12 @@
 #include <kpEffectCommandBase.h>
 
 
-class kpMainWindow;
-
-
 class kpEffectHSVCommand : public kpEffectCommandBase
 {
 public:
     kpEffectHSVCommand (double hue, double saturation, double value,
-                                bool actOnSelection,
-                                kpMainWindow *mainWindow);
+            bool actOnSelection,
+            kpCommandEnvironment *environ);
     virtual ~kpEffectHSVCommand ();
 
 protected:

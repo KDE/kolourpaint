@@ -47,14 +47,12 @@
 
 #include <kpEffectEmboss.h>
 #include <kpEffectEmbossCommand.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
 
 
 kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
-                                            kpMainWindow *mainWindow,
                                             QWidget *parent)
-    : kpEffectWidgetBase (actOnSelection, mainWindow, parent)
+    : kpEffectWidgetBase (actOnSelection, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
     lay->setSpacing (spacingHint ());
@@ -64,7 +62,8 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
 #if 0
     QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
     m_amountInput = new KIntNumInput (this);
-    m_amountInput->setRange (0, 10, 1/*step*/, true/*slider*/);
+    m_amountInput->setRange (kpEffectEmboss::MinStrength,
+        kpEffectEmboss::MaxStrength, 1/*step*/, true/*slider*/);
     m_amountInput->setSpecialValueText (i18n ("None"));
 
 
@@ -119,55 +118,22 @@ kpImage kpEffectEmbossWidget::applyEffect (const kpImage &image)
     if (isNoOp ())
         return image;
 
-    return kpEffectEmboss::applyEffect (image, radius (), sigma (), repeat ());
+    return kpEffectEmboss::applyEffect (image, strength ());
 }
 
 // public virtual [base kpEffectWidgetBase]
-kpEffectCommandBase *kpEffectEmbossWidget::createCommand () const
+kpEffectCommandBase *kpEffectEmbossWidget::createCommand (
+        kpCommandEnvironment *cmdEnviron) const
 {
-    return new kpEffectEmbossCommand (radius (), sigma (), repeat (),
+    return new kpEffectEmbossCommand (strength (),
                                       m_actOnSelection,
-                                      m_mainWindow);
-}
-
-
-// The numbers that follow were picked by experimentation.
-// I still have no idea what "radius" and "sigma" mean
-// (even after reading the API).
-
-// protected
-double kpEffectEmbossWidget::radius () const
-{
-    //if (m_amountInput->value () == 0)
-    //    return 0;
-
-    return 0;
-}
-
-
-// protected
-double kpEffectEmbossWidget::sigma () const
-{
-#if 0
-    if (m_amountInput->value () == 0)
-        return 0;
-
-    const double Min = 1;
-    const double Max = 1.2;
-
-    return Min +
-               (m_amountInput->maxValue () - m_amountInput->value ()) *
-                    (Max - Min) /
-                        (m_amountInput->maxValue () - 1);
-#endif
-
-    return 1;
+                                      cmdEnviron);
 }
 
 // protected
-int kpEffectEmbossWidget::repeat () const
+int kpEffectEmbossWidget::strength () const
 {
-    return 1;
+    return kpEffectEmboss::MaxStrength;
 }
 
 

@@ -45,14 +45,14 @@ static void DrawCurveShape (kpImage *image,
 {
     (void) bcolor;
     (void) isFinal;
-    
+
     Q_ASSERT (points.count () >= 2 && points.count () <= 4);
-    
+
     const QPoint startPoint = points [0];
     const QPoint endPoint = points [1];
 
     QPoint controlPointP, controlPointQ;
-    
+
     switch (points.count ())
     {
     // Just a line?
@@ -72,7 +72,7 @@ static void DrawCurveShape (kpImage *image,
         controlPointQ = points [3];
         break;
     }
-            
+
     kpPainter::drawCurve (image,
         startPoint,
         controlPointP, controlPointQ,
@@ -81,13 +81,13 @@ static void DrawCurveShape (kpImage *image,
 }
 
 
-kpToolCurve::kpToolCurve (kpMainWindow *mainWindow)
+kpToolCurve::kpToolCurve (kpToolEnvironment *environ, QObject *parent)
     : kpToolPolygonalBase (
         i18n ("Curve"),
         i18n ("Draws curves"),
         &::DrawCurveShape,
         Qt::Key_V,
-        mainWindow,
+        environ, parent,
         "tool_curve")
 {
 }
@@ -146,7 +146,7 @@ void kpToolCurve::endDraw (const QPoint &, const QRect &)
             setUserMessage (
                 i18n ("Right drag to set the first control point or left click to finish."));
         }
-        
+
         break;
 
     // Have initial line and first control point?

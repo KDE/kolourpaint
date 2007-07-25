@@ -1,4 +1,6 @@
 
+// REFACTOR: Rename to kpAbstractFlowImageTool, and use kpImage instead of QPixmap
+
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -46,9 +48,9 @@ Q_OBJECT
 public:
     kpToolFlowPixmapBase (const QString &text, const QString &description,
                int key,
-               kpMainWindow *mainWindow, const QString &name);
+               kpToolEnvironment *environ, QObject *parent, const QString &name);
     virtual ~kpToolFlowPixmapBase ();
-    
+
 protected:
     //virtual QRect drawPoint (const QPoint &point);
     virtual QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint);

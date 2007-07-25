@@ -45,23 +45,56 @@
 #include <klocale.h>
 #include <knuminput.h>
 
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
 
 
+static QImage EmbossQImage (const QImage &qimage_, int strength)
+{
+    QImage qimage = qimage_;
+    if (strength == 0)
+        return qimage;
+
+
+    // The numbers that follow were picked by experimentation.
+    // I still have no idea what "radius" and "sigma" mean
+    // (even after reading the API).
+
+    const double radius = 0;
+
+#if 0
+    const double SigmaMin = 1;
+    const double SigmaMax = 1.2;
+
+    return SigmaMin +
+        (kpEffectEmboss::MaxStrength - strength) *
+        (SigmaMax - SigmaMin) /
+        (kpEffectEmboss::MaxStrength - 1);
+#endif
+    const double sigma = 1;
+
+    const int repeat = 1;
+
+
+    for (int i = 0; i < repeat; i++)
+    {
+        qimage = KImageEffect::emboss (qimage, radius, sigma);
+    }
+
+
+    return qimage;
+}
+
+
 // public static
-kpImage kpEffectEmboss::applyEffect (const kpImage &image,
-        double radius, double sigma,
-        int repeat)
+kpImage kpEffectEmboss::applyEffect (const kpImage &image, int strength)
 {
 #if DEBUG_KP_EFFECT_EMBOSS
-    kDebug () << "kpEffectEmboss::applyEffect()"
-               << " radius=" << radius
-               << " sigma=" << sigma
-               << " repeat=" << repeat
-               << ")"
+    kDebug () << "kpEffectEmboss::applyEffect(strength=" << strength << ")"
                << endl;
 #endif
+
+    Q_ASSERT (strength >= MinStrength && strength <= MaxStrength);
+
 
     // (KImageEffect::emboss() ignores mask)
     QPixmap usePixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (
@@ -71,10 +104,7 @@ kpImage kpEffectEmboss::applyEffect (const kpImage &image,
 
     QImage qimage = kpPixmapFX::convertToImage (usePixmap);
 
-    for (int i = 0; i < repeat; i++)
-    {
-        qimage = KImageEffect::emboss (qimage, radius, sigma);
-    }
+    qimage = ::EmbossQImage (qimage, strength);
 
     QPixmap retPixmap = kpPixmapFX::convertToPixmap (qimage);
 

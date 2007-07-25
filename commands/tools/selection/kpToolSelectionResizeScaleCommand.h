@@ -30,15 +30,15 @@
 #define kpToolSelectionResizeScaleCommand_H
 
 
+#include <QObject>
 #include <QPoint>
 
-#include <kpCommandHistory.h>
-#include <kpSelection.h>
+#include <kpNamedCommand.h>
 
 
 class QTimer;
 
-class kpMainWindow;
+class kpAbstractSelection;
 
 
 // You could subclass kpToolResizeScaleCommand and/or
@@ -55,13 +55,13 @@ class kpToolSelectionResizeScaleCommand : public QObject,
 Q_OBJECT
 
 public:
-    kpToolSelectionResizeScaleCommand (kpMainWindow *mainWindow);
+    kpToolSelectionResizeScaleCommand (kpCommandEnvironment *environ);
     virtual ~kpToolSelectionResizeScaleCommand ();
 
-    virtual int size () const;
+    virtual kpCommandSize::SizeType size () const;
 
 public:
-    kpSelection originalSelection () const;
+    const kpAbstractSelection *originalSelection () const;
 
     QPoint topLeft () const;
     void moveTo (const QPoint &point);
@@ -93,7 +93,7 @@ public:
     virtual void unexecute ();
 
 protected:
-    kpSelection m_originalSelection;
+    kpAbstractSelection *m_originalSelectionPtr;
 
     QPoint m_newTopLeft;
     int m_newWidth, m_newHeight;

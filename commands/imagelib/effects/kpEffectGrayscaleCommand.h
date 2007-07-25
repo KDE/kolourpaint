@@ -34,14 +34,11 @@
 #include <kpImage.h>
 
 
-class kpMainWindow;
-
-
 class kpEffectGrayscaleCommand : public kpEffectCommandBase
 {
 public:
     kpEffectGrayscaleCommand (bool actOnSelection,
-                              kpMainWindow *mainWindow);
+                              kpCommandEnvironment *environ);
     virtual ~kpEffectGrayscaleCommand ();
 
 

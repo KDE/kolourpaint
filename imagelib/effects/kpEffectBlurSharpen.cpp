@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_EFFECT_BLUR_SHARPEN 0
+#define DEBUG_KP_EFFECT_BLUR_SHARPEN 1
 
 
 #include <kpEffectBlurSharpen.h>
@@ -44,24 +44,113 @@
 #include <klocale.h>
 #include <knuminput.h>
 
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
+
+
+static QImage BlurQImage (const QImage qimage_, int strength)
+{
+    QImage qimage = qimage_;
+    if (strength == 0)
+        return qimage;
+
+
+    // The numbers that follow were picked by experimentation.
+    // I still have no idea what "radius" and "sigma" mean
+    // (even after reading the API).
+
+    const double radius = 8;
+
+    const double SigmaMin = .5;
+    const double SigmaMax = 4;
+    const double sigma = SigmaMin +
+        (strength - 1) *
+        (SigmaMax - SigmaMin) /
+        (kpEffectBlurSharpen::MaxStrength - 1);
+
+    const int repeat = 1;
+
+#if DEBUG_KP_EFFECT_BLUR_SHARPEN
+    kDebug () << "kpEffectBlurSharpen.cpp:BlurQImage(strength=" << strength << ")"
+               << " radius=" << radius
+               << " sigma=" << sigma
+               << " repeat=" << repeat
+               << endl;
+#endif
+
+
+    for (int i = 0; i < repeat; i++)
+    {
+        qimage = KImageEffect::blur (qimage, radius, sigma);
+    }
+
+
+    return qimage;
+}
+
+static QImage SharpenQImage (const QImage &qimage_, int strength)
+{
+    QImage qimage = qimage_;
+    if (strength == 0)
+        return qimage;
+
+
+    // The numbers that follow were picked by experimentation.
+    // I still have no idea what "radius" and "sigma" mean
+    // (even after reading the API).
+
+    const double RadiusMin = .1;
+    const double RadiusMax = 2.5;
+    const double radius = RadiusMin +
+       (strength - 1) *
+       (RadiusMax - RadiusMin) /
+       (kpEffectBlurSharpen::MaxStrength - 1);
+
+    const double SigmaMin = .5;
+    const double SigmaMax = 3.0;
+    const double sigma = SigmaMin +
+        (strength - 1) *
+        (SigmaMax - SigmaMin) /
+        (kpEffectBlurSharpen::MaxStrength - 1);
+
+    const double RepeatMin = 1;
+    const double RepeatMax = 2;
+    const double repeat = qRound (RepeatMin +
+        (strength - 1) *
+        (RepeatMax - RepeatMin) /
+        (kpEffectBlurSharpen::MaxStrength - 1));
+
+#if DEBUG_KP_EFFECT_BLUR_SHARPEN
+    kDebug () << "kpEffectBlurSharpen.cpp:SharpenQImage(strength=" << strength << ")"
+               << " radius=" << radius
+               << " sigma=" << sigma
+               << " repeat=" << repeat
+               << endl;
+#endif
+
+
+    for (int i = 0; i < repeat; i++)
+    {
+        qimage = KImageEffect::sharpen (qimage, radius, sigma);
+    }
+
+
+    return qimage;
+}
 
 
 // public static
 kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
-        Type type, double radius, double sigma,
-        int repeat)
+        Type type, int strength)
 {
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    kDebug () << "kpEffectBlurSharpen::applyEffect(type="
-               << int (type)
-               << " radius=" << radius
-               << " sigma=" << sigma
-               << " repeat=" << repeat
-               << ")"
-               << endl;
+    kDebug () << "kpEffectBlurSharpen::applyEffect(image.rect=" << image.rect ()
+              << ",type=" << int (type)
+              << ",strength=" << strength
+              << ")" << endl;
 #endif
+
+    Q_ASSERT (strength >= MinStrength && strength <= MaxStrength);
+
 
     // (KImageEffect::(blur|sharpen)() ignores mask)
     QPixmap usePixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (
@@ -71,13 +160,10 @@ kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
 
     QImage qimage = kpPixmapFX::convertToImage (usePixmap);
 
-    for (int i = 0; i < repeat; i++)
-    {
-        if (type == Blur)
-            qimage = KImageEffect::blur (qimage, radius, sigma);
-        else if (type == Sharpen)
-            qimage = KImageEffect::sharpen (qimage, radius, sigma);
-    }
+    if (type == Blur)
+        qimage = ::BlurQImage (qimage, strength);
+    else if (type == Sharpen)
+        qimage = ::SharpenQImage (qimage, strength);
 
     QPixmap retPixmap = kpPixmapFX::convertToPixmap (qimage);
 

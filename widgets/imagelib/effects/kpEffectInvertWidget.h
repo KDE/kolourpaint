@@ -35,8 +35,6 @@
 
 class QCheckBox;
 
-class kpMainWindow;
-
 
 class kpEffectInvertWidget : public kpEffectWidgetBase
 {
@@ -44,7 +42,6 @@ Q_OBJECT
 
 public:
     kpEffectInvertWidget (bool actOnSelection,
-                          kpMainWindow *mainWindow,
                           QWidget *parent);
     virtual ~kpEffectInvertWidget ();
 
@@ -61,7 +58,8 @@ public:
     virtual bool isNoOp () const;
     virtual kpImage applyEffect (const kpImage &image);
 
-    virtual kpEffectCommandBase *createCommand () const;
+    virtual kpEffectCommandBase *createCommand (
+        kpCommandEnvironment *cmdEnviron) const;
 
 protected slots:
     void slotRGBCheckBoxToggled ();

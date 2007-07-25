@@ -28,24 +28,13 @@
 
 #include <kpEffectWidgetBase.h>
 
-#include <qapplication.h>
-#include <qpixmap.h>
-
-#include <kdialog.h>
-#include <klocale.h>
-
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpSelection.h>
+#include <KDialog>
 
 
 kpEffectWidgetBase::kpEffectWidgetBase (bool actOnSelection,
-                                          kpMainWindow *mainWindow,
-                                          QWidget *parent)
+                                        QWidget *parent)
     : QWidget (parent),
-      m_actOnSelection (actOnSelection),
-      m_mainWindow (mainWindow)
+      m_actOnSelection (actOnSelection)
 {
 }
 

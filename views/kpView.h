@@ -45,8 +45,9 @@ class QPaintEvent;
 class QPixmap;
 class QResizeEvent;
 
+class kpAbstractSelection;
 class kpDocument;
-class kpSelection;
+class kpTextSelection;
 class kpTool;
 class kpToolToolBar;
 class kpViewManager;
@@ -108,7 +109,9 @@ protected:
     /**
      * @returns the document's selection.
      */
-    kpSelection *selection () const;
+    kpAbstractSelection *selection () const;
+
+    kpTextSelection *textSelection () const;
 
 public:
     /**
@@ -369,7 +372,7 @@ public:
      *
      * @param rect Rectangle (in view coordinates) that needs repainting.
      */
-     void addToQueuedArea (const QRect &rect);
+    void addToQueuedArea (const QRect &rect);
 
     /**
      * Removes the dirty region that has been queued for updating.
@@ -405,38 +408,7 @@ public slots:
 
 
 public:
-    QRect selectionViewRect () const;
-
-    // (if <viewPoint> is KP_INVALID_POINT, it uses QCursor::pos())
-
     QPoint mouseViewPoint (const QPoint &returnViewPoint = KP_INVALID_POINT) const;
-    QPoint mouseViewPointRelativeToSelection (const QPoint &viewPoint = KP_INVALID_POINT) const;
-    bool mouseOnSelection (const QPoint &viewPoint = KP_INVALID_POINT) const;
-
-    int textSelectionMoveBorderAtomicSize () const;
-    bool mouseOnSelectionToMove (const QPoint &viewPoint = KP_INVALID_POINT) const;
-
-protected:
-    bool selectionLargeEnoughToHaveResizeHandlesIfAtomicSize (int atomicSize) const;
-public:
-    int selectionResizeHandleAtomicSize () const;
-    bool selectionLargeEnoughToHaveResizeHandles () const;
-
-    QRegion selectionResizeHandlesViewRegion (bool forRenderer = false) const;
-
-    enum SelectionResizeType
-    {
-        None = 0,
-        Left = 1,
-        Right = 2,
-        Top = 4,
-        Bottom = 8
-    };
-
-    // Returns a bitwise OR of the SelectionResizeType's
-    int mouseOnSelectionResizeHandle (const QPoint &viewPoint = KP_INVALID_POINT) const;
-
-    bool mouseOnSelectionToSelectText (const QPoint &viewPoint = KP_INVALID_POINT) const;
 
 
 signals:
@@ -472,6 +444,50 @@ signals:
      */
     void originChanged (const QPoint &origin);
 
+
+
+//
+// Selections
+//
+
+public:
+    QRect selectionViewRect () const;
+
+    // (if <viewPoint> is KP_INVALID_POINT, it uses QCursor::pos())
+
+    QPoint mouseViewPointRelativeToSelection (const QPoint &viewPoint = KP_INVALID_POINT) const;
+    bool mouseOnSelection (const QPoint &viewPoint = KP_INVALID_POINT) const;
+
+    int textSelectionMoveBorderAtomicSize () const;
+    bool mouseOnSelectionToMove (const QPoint &viewPoint = KP_INVALID_POINT) const;
+
+protected:
+    bool selectionLargeEnoughToHaveResizeHandlesIfAtomicSize (int atomicSize) const;
+public:
+    int selectionResizeHandleAtomicSize () const;
+    bool selectionLargeEnoughToHaveResizeHandles () const;
+
+    QRegion selectionResizeHandlesViewRegion (bool forRenderer = false) const;
+
+    enum SelectionResizeType
+    {
+        None = 0,
+        Left = 1,
+        Right = 2,
+        Top = 4,
+        Bottom = 8
+    };
+
+    // Returns a bitwise OR of the SelectionResizeType's
+    int mouseOnSelectionResizeHandle (const QPoint &viewPoint = KP_INVALID_POINT) const;
+
+    bool mouseOnSelectionToSelectText (const QPoint &viewPoint = KP_INVALID_POINT) const;
+
+
+//
+// Events
+//
+
 protected:
     virtual void mouseMoveEvent (QMouseEvent *e);
     virtual void mousePressEvent (QMouseEvent *e);
@@ -481,30 +497,45 @@ public:
     //  QScrollView::contentsWheelEvent())
     virtual void wheelEvent (QWheelEvent *e);
 
+
 protected:
-    virtual bool event (QEvent *e);
     virtual void keyPressEvent (QKeyEvent *e);
     virtual void keyReleaseEvent (QKeyEvent *e);
 
+
+protected:
+    // COMPAT: Need to update InputMethod Support
+    // virtual void imStartEvent (QIMEvent *e);
+    // virtual void imComposeEvent (QIMEvent *e);
+    // virtual void imEndEvent (QIMEvent *e);
+
+
+protected:
+    virtual bool event (QEvent *e);
+
+
+protected:
     virtual void focusInEvent (QFocusEvent *e);
     virtual void focusOutEvent (QFocusEvent *e);
 
+
+protected:
     virtual void enterEvent (QEvent *e);
     virtual void leaveEvent (QEvent *e);
 
+
+protected:
     virtual void dragEnterEvent (QDragEnterEvent *);
     virtual void dragLeaveEvent (QDragLeaveEvent *);
 
-    // COMPAT
-    //virtual void imStartEvent (QIMEvent *e);
-    //virtual void imComposeEvent (QIMEvent *e);
-    //virtual void imEndEvent (QIMEvent *e);
 
-public:
-    virtual void resize (int w, int h);
 protected:
     virtual void resizeEvent (QResizeEvent *e);
 
+
+//
+// Painting
+//
 
 protected:
     // Returns the document rectangle that, when scaled to the view,
@@ -546,7 +577,7 @@ protected:
     // Draws the parts of the selection's resize handles that are inside
     // <clipRect> onto the view
     void paintEventDrawSelectionResizeHandles (const QRect &clipRect);
-    void paintEventDrawTempPixmap (QPixmap *destPixmap, const QRect &docRect);
+    void paintEventDrawTempImage (QPixmap *destPixmap, const QRect &docRect);
 
     // Draws the parts of the grid lines that are inside <viewRect> on
     // <painter>.

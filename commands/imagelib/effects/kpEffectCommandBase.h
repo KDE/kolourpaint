@@ -32,11 +32,8 @@
 
 #include <qwidget.h>
 
-#include <kpCommandHistory.h>
+#include <kpCommand.h>
 #include <kpImage.h>
-
-
-class kpMainWindow;
 
 
 class kpEffectCommandBase : public kpCommand
@@ -44,11 +41,11 @@ class kpEffectCommandBase : public kpCommand
 public:
     kpEffectCommandBase (const QString &name,
         bool actOnSelection,
-        kpMainWindow *mainWindow);
+        kpCommandEnvironment *environ);
     virtual ~kpEffectCommandBase ();
 
     virtual QString name () const;
-    virtual int size () const;
+    virtual SizeType size () const;
 
 public:
     virtual void execute ();
@@ -56,7 +53,7 @@ public:
 
 public:
     // Return true if applyEffect(applyEffect(image)) == image
-    // to avoid storing the old pixmap, saving memory.
+    // to avoid storing the old image, saving memory.
     virtual bool isInvertible () const { return false; }
 
 protected:

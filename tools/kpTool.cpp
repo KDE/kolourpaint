@@ -47,6 +47,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 
+#include <kactioncollection.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -57,19 +58,19 @@
 #include <kpColor.h>
 #include <kpColorToolBar.h>
 #include <kpDefs.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
 #include <kpToolAction.h>
+#include <kpToolEnvironment.h>
 #include <kpToolToolBar.h>
 #include <kpView.h>
 #include <kpViewManager.h>
-#include <kactioncollection.h>
 
 
 kpTool::kpTool (const QString &text, const QString &description,
-                int key,
-                kpMainWindow *mainWindow, const QString &name)
-    : QObject (mainWindow),
+        int key,
+        kpToolEnvironment *environ,
+        QObject *parent, const QString &name)
+    : QObject (parent),
       d (new kpToolPrivate ())
 {
     d->key = key;
@@ -78,12 +79,13 @@ kpTool::kpTool (const QString &text, const QString &description,
     d->shiftPressed = false, d->controlPressed = false, d->altPressed = false;  // set in beginInternal()
     d->beganDraw = false;
     d->text = text, d->description = description; setObjectName (name);
-    d->mainWindow = mainWindow;
     d->began = false;
     d->viewUnderStartPoint = 0;
     d->userShapeStartPoint = KP_INVALID_POINT;
     d->userShapeEndPoint = KP_INVALID_POINT;
     d->userShapeSize = KP_INVALID_SIZE;
+
+    d->environ = environ;
 
     initAction ();
 }
@@ -107,9 +109,7 @@ void kpTool::initAction ()
     kDebug () << "kpTool(" << objectName () << "::initAction()" << endl;
 #endif
 
-    Q_ASSERT (d->mainWindow);
-
-    KActionCollection *ac = d->mainWindow->actionCollection ();
+    KActionCollection *ac = d->environ->actionCollection ();
     Q_ASSERT (ac);
 
 
@@ -118,7 +118,7 @@ void kpTool::initAction ()
                                  ac, objectName ());
 
     // Make tools mutually exclusive by placing them in the same group.
-    d->action->setActionGroup (d->mainWindow->toolsActionGroup ());
+    d->action->setActionGroup (d->environ->toolsActionGroup ());
 
     d->action->setWhatsThis (description ());
 
@@ -249,31 +249,26 @@ kpToolAction *kpTool::action () const
 
 
 
-// TODO: need to add access specifier comments (like "public virtual [base AmOverridingThisClass'Method]") not just in kpTool but all over KolourPaint source.
-kpMainWindow *kpTool::mainWindow () const
-{
-    return d->mainWindow;
-}
+// REFACTOR: need to add access specifier comments (like "public virtual [base AmOverridingThisClass'Method]") not just in kpTool but all over KolourPaint source.
 
 kpDocument *kpTool::document () const
 {
-    return d->mainWindow ? d->mainWindow->document () : 0;
+    return d->environ->document ();
 }
 
 kpViewManager *kpTool::viewManager () const
 {
-    return d->mainWindow ? d->mainWindow->viewManager () : 0;
+    return d->environ->viewManager ();
 }
 
 kpToolToolBar *kpTool::toolToolBar () const
 {
-    return d->mainWindow ? d->mainWindow->toolToolBar () : 0;
+    return d->environ->toolToolBar ();
 }
 
 kpColor kpTool::color (int which) const
 {
-    Q_ASSERT (d->mainWindow);
-    return d->mainWindow->colorToolBar ()->color (which);
+    return d->environ->color (which);
 }
 
 kpColor kpTool::foregroundColor () const
@@ -287,40 +282,44 @@ kpColor kpTool::backgroundColor () const
 }
 
 
+// TODO: Some of these might not be common enough.
+//       Just put in kpToolEnvironment?
+
 double kpTool::colorSimilarity () const
 {
-    Q_ASSERT (d->mainWindow);
-    return d->mainWindow->colorToolBar ()->colorSimilarity ();
+    return d->environ->colorSimilarity ();
 }
 
 int kpTool::processedColorSimilarity () const
 {
-    Q_ASSERT (d->mainWindow);
-    return d->mainWindow->colorToolBar ()->processedColorSimilarity ();
+    return d->environ->processedColorSimilarity ();
 }
 
 
 kpColor kpTool::oldForegroundColor () const
 {
-    Q_ASSERT (d->mainWindow);
-    return d->mainWindow->colorToolBar ()->oldForegroundColor ();
+    return d->environ->oldForegroundColor ();
 }
 
 kpColor kpTool::oldBackgroundColor () const
 {
-    Q_ASSERT (d->mainWindow);
-    return d->mainWindow->colorToolBar ()->oldBackgroundColor ();
+    return d->environ->oldBackgroundColor ();
 }
 
 double kpTool::oldColorSimilarity () const
 {
-    Q_ASSERT (d->mainWindow);
-    return d->mainWindow->colorToolBar ()->oldColorSimilarity ();
+    return d->environ->oldColorSimilarity ();
 }
 
 kpCommandHistory *kpTool::commandHistory () const
 {
-    return d->mainWindow ? d->mainWindow->commandHistory () : 0;
+    return d->environ->commandHistory ();
+}
+
+
+kpToolEnvironment *kpTool::environ () const
+{
+    return d->environ;
 }
 
 

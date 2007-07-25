@@ -36,17 +36,12 @@
 #include <kpImage.h>
 
 
-
-
-class kpMainWindow;
-
-
 class kpEffectFlattenCommand : public kpEffectCommandBase
 {
 public:
     kpEffectFlattenCommand (const QColor &color1, const QColor &color2,
                             bool actOnSelection,
-                            kpMainWindow *mainWindow);
+                            kpCommandEnvironment *environ);
     virtual ~kpEffectFlattenCommand ();
 
 

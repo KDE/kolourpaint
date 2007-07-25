@@ -41,9 +41,16 @@ public:
         None = 0, Blur, Sharpen
     };
 
+    // Blur or Sharpen with this strength is the same as None.
+    // This will always be 0 - this constant will not change.
+    static const int MinStrength = 0;
+
+    static const int MaxStrength = 10;
+
+    // <strength> = strength of the effect
+    //              (must be between MinStrength and MaxStrength inclusive)
     static kpImage applyEffect (const kpImage &image,
-        Type type, double radius, double sigma,
-        int repeat);
+        Type type, int strength);
 };
 
 

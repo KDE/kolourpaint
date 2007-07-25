@@ -37,13 +37,13 @@
 #include <kpPainter.h>
 
 
-kpToolPolyline::kpToolPolyline (kpMainWindow *mainWindow)
+kpToolPolyline::kpToolPolyline (kpToolEnvironment *environ, QObject *parent)
     : kpToolPolygonalBase (
         i18n ("Connected Lines"),
         i18n ("Draws connected lines"),
         &drawShape,
         Qt::Key_N,
-        mainWindow,
+        environ, parent,
         "tool_polyline")
 {
 }
@@ -69,7 +69,7 @@ void kpToolPolyline::drawShape (kpImage *image,
 {
     (void) bcolor;
     (void) isFinal;
-    
+
     kpPainter::drawPolyline (image,
         points,
         fcolor, penWidth);
@@ -99,7 +99,7 @@ void kpToolPolyline::endDraw (const QPoint &, const QRect &)
         endShape ();
         return;
     }
-    
+
     if (originatingMouseButton () == 0)
     {
         setUserMessage (i18n ("Left drag another line or right click to finish."));

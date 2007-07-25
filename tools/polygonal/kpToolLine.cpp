@@ -44,7 +44,7 @@ static void DrawLineShape (kpImage *image,
         bool isFinal)
 {
     Q_ASSERT (points.count () == 2);
-    
+
     kpToolPolyline::drawShape (image,
         points,
         fcolor, penWidth,
@@ -53,13 +53,13 @@ static void DrawLineShape (kpImage *image,
 }
 
 
-kpToolLine::kpToolLine (kpMainWindow *mainWindow)
+kpToolLine::kpToolLine (kpToolEnvironment *environ, QObject *parent)
     : kpToolPolygonalBase (
         i18n ("Line"),
         i18n ("Draws lines"),
         &::DrawLineShape,
         Qt::Key_L,
-        mainWindow,
+        environ, parent,
         "tool_line")
 {
 }

@@ -1,4 +1,7 @@
 
+// COMPAT: This spray is too thick compared to KolourPaint in KDE 3.5.
+//       Check commit history to see when it was broken (probably during conversion to flow-based tool).  I swear I tried to fix this at one point already -- Clarence
+
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -44,24 +47,23 @@
 #include <klocale.h>
 
 #include <kpBug.h>
-#include <kpCommandHistory.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
 #include <kpPainter.h>
 #include <kpPixmapFX.h>
-#include <kpToolSpraycan.h>
+#include <kpToolEnvironment.h>
 #include <kpToolFlowCommand.h>
+#include <kpToolSpraycan.h>
 #include <kpToolToolBar.h>
 #include <kpToolWidgetSpraycanSize.h>
 #include <kpView.h>
 #include <kpViewManager.h>
 
 
-kpToolSpraycan::kpToolSpraycan (kpMainWindow *mainWindow)
+kpToolSpraycan::kpToolSpraycan (kpToolEnvironment *environ, QObject *parent)
     : kpToolFlowBase (i18n ("Spraycan"), i18n ("Sprays graffiti"),
         Qt::Key_Y,
-        mainWindow, "tool_spraycan")
+        environ, parent, "tool_spraycan")
 {
     m_timer = new QTimer (this);
     connect (m_timer, SIGNAL (timeout ()), this, SLOT (timeoutDraw ()));
@@ -112,7 +114,7 @@ void kpToolSpraycan::beginDraw ()
 #endif
 
     kpToolFlowBase::beginDraw ();
-    
+
     // We draw even if the user doesn't move the mouse.
     m_timer->start (25/*ms*/);
 }
@@ -131,15 +133,15 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
 
     QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
     docRect = neededRect (docRect, spraycanSize ());
-    QPixmap pixmap = document ()->getPixmapAt (docRect);
+    QPixmap pixmap = document ()->getImageAt (docRect);
 
-    
-    QList <QPoint> docPoints = kpPainter::interpolatePoints (thisPoint, lastPoint,
+
+    QList <QPoint> docPoints = kpPainter::interpolatePoints (lastPoint, thisPoint,
         probability);
-    
-        
+
+
     // Drawing a line (not just a point) starting at lastPoint?
-    // TODO: this code is hard to read.
+    // TODO: this code is hard to read.  Need to verify again.
     if (thisPoint != lastPoint &&
         docPoints.size () > 0 && docPoints [0] == lastPoint)
     {
@@ -147,10 +149,10 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
         kDebug () << "\tis a line starting at lastPoint - erasing="
                    << docPoints [0] << endl;
     #endif
-    
+
         // We're not expecting a duplicate 2nd interpolation point.
         Q_ASSERT (docPoints.size () <= 1 || docPoints [1] != lastPoint);
-        
+
         // lastPoint was drawn previously so don't draw over it again or
         // it will (theoretically) be denser than expected.
         //
@@ -168,7 +170,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
     // By chance no points to draw?
     if (docPoints.empty ())
         return QRect ();
-    
+
 
     // Spray at each point, onto the pixmap.
     QList <QPoint> pixmapPoints;
@@ -179,9 +181,9 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
         color (mouseButton ()),
         spraycanSize ());
 
-        
+
     viewManager ()->setFastUpdates ();
-    document ()->setPixmapAt (pixmap, docRect.topLeft ());
+    document ()->setImageAt (pixmap, docRect.topLeft ());
     viewManager ()->restoreFastUpdates ();
 
     return docRect;
@@ -204,10 +206,10 @@ QRect kpToolSpraycan::drawPoint (const QPoint &point)
         return drawLineWithProbability (point, point,
             1.0/*100% chance of drawing*/);
     }
-    
+
     return QRect ();
 }
-    
+
 // public virtual [base kpToolFlowBase]
 QRect kpToolSpraycan::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
@@ -231,7 +233,7 @@ void kpToolSpraycan::timeoutDraw ()
     currentCommand ()->updateBoundingRect (drawnRect);
 }
 
-    
+
 // public virtual [base kpToolFlowBase]
 void kpToolSpraycan::cancelShape ()
 {

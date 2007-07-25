@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_DOCUMENT 0
+#define DEBUG_KP_DOCUMENT 1
 
 
 #include <kpDocument.h>
@@ -52,129 +52,94 @@
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kmimetype.h>  // TODO: isn't this in KIO?
+#include <kmimetype.h>  // LOTODO: isn't this in KIO?
 #include <ktemporaryfile.h>
 
 #include <kpColor.h>
 #include <kpColorToolBar.h>
 #include <kpDefs.h>
+#include <kpDocumentEnvironment.h>
 #include <kpDocumentSaveOptions.h>
 #include <kpDocumentMetaInfo.h>
 #include <kpEffectReduceColors.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
-#include <kpSelection.h>
+#include <kpAbstractSelection.h>
+#include <kpAbstractImageSelection.h>
+#include <kpTextSelection.h>
 #include <kpTool.h>
 #include <kpToolToolBar.h>
-#include <kpViewManager.h>
 
 
 // public
-kpSelection *kpDocument::selection () const
+kpAbstractSelection *kpDocument::selection () const
 {
     return m_selection;
 }
 
 // public
-void kpDocument::setSelection (const kpSelection &selection)
+kpAbstractImageSelection *kpDocument::imageSelection () const
 {
-#if DEBUG_KP_DOCUMENT && 0
+    return dynamic_cast <kpAbstractImageSelection *> (m_selection);
+}
+
+// public
+kpTextSelection *kpDocument::textSelection () const
+{
+    return dynamic_cast <kpTextSelection *> (m_selection);
+}
+
+
+// public
+void kpDocument::setSelection (const kpAbstractSelection &selection)
+{
+#if DEBUG_KP_DOCUMENT && 1
     kDebug () << "kpDocument::setSelection() sel boundingRect="
                << selection.boundingRect ()
                << endl;
 #endif
 
-    Q_ASSERT (m_mainWindow);
-
-    kpViewManager *vm = m_mainWindow->viewManager ();
-    Q_ASSERT (vm);
-
-    vm->setQueueUpdates ();
+    d->environ->setQueueViewUpdates ();
 
 
     bool hadSelection = (bool) m_selection;
 
 
-    const bool isTextChanged = (m_mainWindow->toolIsTextTool () !=
-                                (selection.type () == kpSelection::Text));
-
-    // (we don't change the Selection Tool if the new selection's
-    //  shape is different to the tool's because all the Selection
-    //  Tools act the same, except for what would be really irritating
-    //  if it kept changing whenever you paste an image - drawing the
-    //  selection region)
-    if (!m_mainWindow->toolIsASelectionTool () || isTextChanged)
-    {
-        // Switch to the appropriately shaped selection tool
-        // _before_ we change the selection
-        // (all selection tool's ::end() functions nuke the current selection)
-        switch (selection.type ())
-        {
-        case kpSelection::Rectangle:
-            m_mainWindow->slotToolRectSelection ();
-            break;
-        case kpSelection::Ellipse:
-            m_mainWindow->slotToolEllipticalSelection ();
-            break;
-        case kpSelection::Points:
-            m_mainWindow->slotToolFreeFormSelection ();
-            break;
-        case kpSelection::Text:
-            m_mainWindow->slotToolText ();
-            break;
-        default:
-            break;
-        }
-    }
+    bool isTextChanged = false;
+    d->environ->switchToCompatibleTool (selection, &isTextChanged);
 
 
     if (m_selection)
     {
-        if (m_selection->pixmap ())
+        if (m_selection->hasContent ())
             slotContentsChanged (m_selection->boundingRect ());
         else
-            vm->updateViews (m_selection->boundingRect ());
+            emit contentsChanged (m_selection->boundingRect ());
+
         delete m_selection;
     }
 
-    m_selection = new kpSelection (selection);
+    m_selection = selection.clone ();
 
-    // TODO: this coupling to m_mainWindow is bad, careless and lazy
-    if (!m_selection->isText ())
-    {
-        if (m_selection->transparency () != m_mainWindow->selectionTransparency ())
-        {
-            kDebug () << "kpDocument::setSelection() sel's transparency differs "
-                          "from mainWindow's transparency - setting mainWindow's transparency "
-                          "to sel"
-                       << endl;
-            kDebug () << "\tisOpaque: sel=" << m_selection->transparency ().isOpaque ()
-                       << " mainWindow=" << m_mainWindow->selectionTransparency ().isOpaque ()
-                       << endl;
-            m_mainWindow->setSelectionTransparency (m_selection->transparency ());
-        }
-    }
-    else
-    {
-        if (m_selection->textStyle () != m_mainWindow->textStyle ())
-        {
-            kDebug () << "kpDocument::setSelection() sel's textStyle differs "
-                          "from mainWindow's textStyle - setting mainWindow's textStyle "
-                          "to sel"
-                       << endl;
-            m_mainWindow->setTextStyle (m_selection->textStyle ());
-        }
-    }
+    d->environ->assertMatchingUIState (selection);
 
-#if DEBUG_KP_DOCUMENT && 0
+#if DEBUG_KP_DOCUMENT && 1
     kDebug () << "\tcheck sel " << (int *) m_selection
                << " boundingRect=" << m_selection->boundingRect ()
                << endl;
 #endif
-    if (m_selection->pixmap ())
+    if (m_selection->hasContent ())
         slotContentsChanged (m_selection->boundingRect ());
     else
-        vm->updateViews (m_selection->boundingRect ());
+        emit contentsChanged (m_selection->boundingRect ());
+
+
+    // There's no need to uninitialize the old selection
+    // (e.g. call disconnect()) since we:
+    //
+    // 1. Initialize our _copy_ of the given selection.
+    // 2. We delete our copy when setSelection() is called again.
+    //
+    // See code above for both.
 
     connect (m_selection, SIGNAL (changed (const QRect &)),
              this, SLOT (slotContentsChanged (const QRect &)));
@@ -184,43 +149,44 @@ void kpDocument::setSelection (const kpSelection &selection)
         emit selectionEnabled (true);
 
     if (isTextChanged)
-        emit selectionIsTextChanged (selection.type () == kpSelection::Text);
+        emit selectionIsTextChanged (dynamic_cast <kpTextSelection *> (m_selection));
 
-    if (vm)
-        vm->restoreQueueUpdates ();
+    d->environ->restoreQueueViewUpdates ();
+#if DEBUG_KP_DOCUMENT && 1
+    kDebug () << "\tkpDocument::setSelection() ended" << endl;
+#endif
 }
 
 // public
-QPixmap kpDocument::getSelectedPixmap () const
+kpImage kpDocument::getSelectedBaseImage () const
 {
-    kpSelection *sel = selection ();
-    Q_ASSERT (sel);
+    kpAbstractImageSelection *imageSel = imageSelection ();
+    Q_ASSERT (imageSel);
 
-    // easy if we already have it :)
-    if (sel->pixmap ())
-        return *sel->pixmap ();
+    // Easy if we already have it :)
+    const kpImage image = imageSel->baseImage ();
+    if (!image.isNull ())
+        return image;
 
 
-    const QRect boundingRect = sel->boundingRect ();
+    const QRect boundingRect = imageSel->boundingRect ();
     Q_ASSERT (boundingRect.isValid ());
 
     // TODO: This is very slow.  Image / More Effects ... calls us twice
     //       unnecessarily.
-    return sel->givenImageMaskedByShape (getPixmapAt (boundingRect));
+    return imageSel->givenImageMaskedByShape (getImageAt (boundingRect));
 }
 
 // public
-bool kpDocument::selectionPullFromDocument (const kpColor &backgroundColor)
+void kpDocument::imageSelectionPullFromDocument (const kpColor &backgroundColor)
 {
-    kpViewManager *vm = m_mainWindow ? m_mainWindow->viewManager () : 0;
+    kpAbstractImageSelection *imageSel = imageSelection ();
+    Q_ASSERT (imageSel);
 
-    kpSelection *sel = selection ();
-    Q_ASSERT (sel);
+    // Should not already have an image or we would not be pulling.
+    Q_ASSERT (!imageSel->hasContent ());
 
-    // Should not already have a pixmap or we would not be pulling.
-    Q_ASSERT (!sel->pixmap ());
-
-    const QRect boundingRect = sel->boundingRect ();
+    const QRect boundingRect = imageSel->boundingRect ();
     Q_ASSERT (boundingRect.isValid ());
 
 
@@ -228,12 +194,11 @@ bool kpDocument::selectionPullFromDocument (const kpColor &backgroundColor)
     // Get selection pixmap from document
     //
 
-    QPixmap selPixmap = getSelectedPixmap ();
+    kpImage selectedImage = getSelectedBaseImage ();
 
-    if (vm)
-        vm->setQueueUpdates ();
+    d->environ->setQueueViewUpdates ();
 
-    sel->setPixmap (selPixmap);
+    imageSel->setBaseImage (selectedImage);
 
 
     //
@@ -241,45 +206,38 @@ bool kpDocument::selectionPullFromDocument (const kpColor &backgroundColor)
     //
 
     // TODO: this assumes backgroundColor == sel->transparency ().transparentColor()
-    const QPixmap selTransparentPixmap = sel->transparentPixmap ();
+    const kpImage selTransparentImage = imageSel->transparentImage ();
 
     if (backgroundColor.isOpaque ())
     {
-        QPixmap erasePixmap (boundingRect.width (), boundingRect.height ());
-        erasePixmap.fill (backgroundColor.toQColor ());
+        kpImage eraseImage (boundingRect.width (), boundingRect.height ());
+        eraseImage.fill (backgroundColor.toQColor ());
 
-        if (!selTransparentPixmap.mask ().isNull ())
-            erasePixmap.setMask (selTransparentPixmap.mask ());
+        if (!selTransparentImage.mask ().isNull ())
+            eraseImage.setMask (selTransparentImage.mask ());
 
-        paintPixmapAt (erasePixmap, boundingRect.topLeft ());
+        paintImageAt (eraseImage, boundingRect.topLeft ());
     }
     else
     {
-        kpPixmapFX::paintMaskTransparentWithBrush (m_pixmap,
+        kpPixmapFX::paintMaskTransparentWithBrush (m_image,
                                                    boundingRect.topLeft (),
-                                                   kpPixmapFX::getNonNullMask (selTransparentPixmap));
+                                                   kpPixmapFX::getNonNullMask (selTransparentImage));
         slotContentsChanged (boundingRect);
     }
 
-    if (vm)
-        vm->restoreQueueUpdates ();
-
-    return true;
+    d->environ->restoreQueueViewUpdates ();
 }
 
 // public
-bool kpDocument::selectionDelete ()
+void kpDocument::selectionDelete ()
 {
-    kpSelection *sel = selection ();
+    Q_ASSERT (m_selection);
 
-    if (!sel)
-        return false;
+    const QRect boundingRect = m_selection->boundingRect ();
+    Q_ASSERT (boundingRect.isValid ());
 
-    const QRect boundingRect = sel->boundingRect ();
-    if (!boundingRect.isValid ())
-        return false;
-
-    bool selectionHadPixmap = m_selection ? (bool) m_selection->pixmap () : false;
+    const bool selectionHadContent = m_selection->hasContent ();
 
     delete m_selection;
     m_selection = 0;
@@ -287,73 +245,65 @@ bool kpDocument::selectionDelete ()
 
     // HACK to prevent document from being modified when
     //      user cancels dragging out a new selection
-    if (selectionHadPixmap)
+    // REFACTOR: Extract this out into a method.
+    if (selectionHadContent)
         slotContentsChanged (boundingRect);
     else
         emit contentsChanged (boundingRect);
 
     emit selectionEnabled (false);
-
-
-    return true;
 }
 
 // public
-bool kpDocument::selectionCopyOntoDocument (bool useTransparentPixmap)
+void kpDocument::selectionCopyOntoDocument (bool applySelTransparency)
 {
-    kpSelection *sel = selection ();
+    Q_ASSERT (m_selection);
+    Q_ASSERT (m_selection->hasContent ());
 
-    // must have a pixmap already
-    if (!sel)
-        return false;
+    const QRect boundingRect = m_selection->boundingRect ();
+    Q_ASSERT (boundingRect.isValid ());
 
-    // hasn't actually been lifted yet
-    if (!sel->pixmap ())
-        return true;
-
-    const QRect boundingRect = sel->boundingRect ();
-    if (!boundingRect.isValid ())
-        return false;
-
-    if (!sel->isText ())
+    // TODO: We should be setting the modified state.
+    //       I think this is a bug in KolourPaint/KDE 3 as well.
+    if (imageSelection ())
     {
-        // TODO: why can't we just use paint()?
-        paintPixmapAt (useTransparentPixmap ? sel->transparentPixmap () : sel->opaquePixmap (),
-                       boundingRect.topLeft ());
+        if (applySelTransparency)
+            imageSelection ()->paint (m_image, rect ());
+        else
+            imageSelection ()->paintWithBaseImage (m_image, rect ());
     }
     else
     {
         // (for antialiasing with background)
-        sel->paint (m_pixmap, rect ());
+        m_selection->paint (m_image, rect ());
     }
-
-    return true;
 }
 
 // public
-bool kpDocument::selectionPushOntoDocument (bool useTransparentPixmap)
+void kpDocument::selectionPushOntoDocument (bool applySelTransparency)
 {
-    return (selectionCopyOntoDocument (useTransparentPixmap) && selectionDelete ());
+    selectionCopyOntoDocument (applySelTransparency);
+    selectionDelete ();
 }
 
 // public
-QPixmap kpDocument::pixmapWithSelection () const
+kpImage kpDocument::imageWithSelection () const
 {
 #if DEBUG_KP_DOCUMENT && 1
-    kDebug () << "kpDocument::pixmapWithSelection()" << endl;
+    kDebug () << "kpDocument::imageWithSelection()" << endl;
 #endif
 
     // Have floating selection?
-    if (m_selection && m_selection->pixmap ())
+    if (m_selection && m_selection->hasContent ())
     {
     #if DEBUG_KP_DOCUMENT && 1
         kDebug () << "\tselection @ " << m_selection->boundingRect () << endl;
     #endif
-        QPixmap output = *m_pixmap;
+        kpImage output = *m_image;
 
-        kpPixmapFX::paintPixmapAt (&output,
-                                   m_selection->topLeft (),
-                                   m_selection->transparentPixmap ());
+        // TODO: In KolourPaint/KDE3, we weren't antialiasing text boxes
+        m_selection->paint (&output, rect ());
+
         return output;
     }
     else
@@ -361,7 +311,6 @@ QPixmap kpDocument::pixmapWithSelection () const
     #if DEBUG_KP_DOCUMENT && 1
         kDebug () << "\tno selection" << endl;
     #endif
-        return *m_pixmap;
+        return *m_image;
     }
 }
-

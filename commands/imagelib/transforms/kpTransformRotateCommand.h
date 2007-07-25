@@ -30,32 +30,25 @@
 #define kpTransformRotateCommand_H
 
 
-#include <qpixmap.h>
-#include <qpoint.h>
-
 #include <kpColor.h>
-#include <kpCommandHistory.h>
-#include <kpSelection.h>
-#include <kpTransformPreviewDialog.h>
+#include <kpCommand.h>
+#include <kpImage.h>
 
 
-class QString;
-
-
-class kpMainWindow;
+class kpAbstractImageSelection;
 
 
 class kpTransformRotateCommand : public kpCommand
 {
 public:
     kpTransformRotateCommand (bool actOnSelection,
-                         double angle,  // 0 <= angle < 360 (clockwise)
-                         kpMainWindow *mainWindow);
+        double angle,  // 0 <= angle < 360 (clockwise)
+        kpCommandEnvironment *environ);
     virtual ~kpTransformRotateCommand ();
 
     virtual QString name () const;
 
-    virtual int size () const;
+    virtual SizeType size () const;
 
     virtual void execute ();
     virtual void unexecute ();
@@ -67,8 +60,8 @@ private:
     kpColor m_backgroundColor;
 
     bool m_losslessRotation;
-    QPixmap m_oldPixmap;
-    kpSelection m_oldSelection;
+    kpImage m_oldImage;
+    kpAbstractImageSelection *m_oldSelectionPtr;
 };
 
 

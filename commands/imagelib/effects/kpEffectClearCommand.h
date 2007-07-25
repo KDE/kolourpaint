@@ -30,15 +30,10 @@
 #define kpEffectClearCommand_H
 
 
-#include <kpCommandHistory.h>
+#include <kpCommand.h>
 
 #include <kpColor.h>
-
-
-class QPixmap;
-class QString;
-
-class kpMainWindow;
+#include <kpImage.h>
 
 
 class kpEffectClearCommand : public kpCommand
@@ -46,12 +41,12 @@ class kpEffectClearCommand : public kpCommand
 public:
     kpEffectClearCommand (bool actOnSelection,
         const kpColor &newColor,
-        kpMainWindow *mainWindow);
+        kpCommandEnvironment *environ);
     virtual ~kpEffectClearCommand ();
 
     virtual QString name () const;
 
-    virtual int size () const;
+    virtual SizeType size () const;
 
     virtual void execute ();
     virtual void unexecute ();
@@ -60,7 +55,7 @@ private:
     bool m_actOnSelection;
 
     kpColor m_newColor;
-    QPixmap *m_oldPixmapPtr;
+    kpImage *m_oldImagePtr;
 };
 
 

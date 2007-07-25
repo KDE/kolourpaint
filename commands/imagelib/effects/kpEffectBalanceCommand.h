@@ -34,11 +34,6 @@
 #include <kpImage.h>
 
 
-
-
-class kpMainWindow;
-
-
 class kpEffectBalanceCommand : public kpEffectCommandBase
 {
 public:
@@ -46,7 +41,7 @@ public:
     kpEffectBalanceCommand (int channels,
                             int brightness, int contrast, int gamma,
                             bool actOnSelection,
-                            kpMainWindow *mainWindow);
+                            kpCommandEnvironment *environ);
     virtual ~kpEffectBalanceCommand ();
 
 protected:

@@ -30,12 +30,12 @@
 #define kpToolFloodFillCommand_H
 
 
-#include <kpCommandHistory.h>
+#include <kpCommand.h>
 #include <kpFloodFill.h>
 
 
 class kpColor;
-class kpMainWindow;
+class kpCommandEnvironment;
 
 
 struct kpToolFloodFillCommandPrivate;
@@ -45,17 +45,17 @@ class kpToolFloodFillCommand : public kpCommand, public kpFloodFill
 public:
     kpToolFloodFillCommand (int x, int y,
                             const kpColor &color, int processedColorSimilarity,
-                            kpMainWindow *mainWindow);
+                            kpCommandEnvironment *environ);
     virtual ~kpToolFloodFillCommand ();
-    
+
     virtual QString name () const;
 
-    virtual int size () const;
+    virtual kpCommandSize::SizeType size () const;
 
     // Optimisation hack: filling a fresh, unmodified document does not require
     //                    reading any pixels - just set the whole document to
     //                    <color>.
-    void setFillEntirePixmap (bool yes = true);
+    void setFillEntireImage (bool yes = true);
 
     virtual void execute ();
     virtual void unexecute ();

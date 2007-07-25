@@ -47,6 +47,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 
+#include <kactioncollection.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -57,13 +58,12 @@
 #include <kpColor.h>
 #include <kpColorToolBar.h>
 #include <kpDefs.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
 #include <kpToolAction.h>
+#include <kpToolEnvironment.h>
 #include <kpToolToolBar.h>
 #include <kpView.h>
 #include <kpViewManager.h>
-#include <kactioncollection.h>
 
 
 void kpTool::mousePressEvent (QMouseEvent *e)
@@ -76,7 +76,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
                << " beganDraw=" << d->beganDraw << endl;
 #endif
 
-    if (d->mainWindow && e->button () == Qt::MidButton)
+    if (e->button () == Qt::MidButton)
     {
         const QString text = QApplication::clipboard ()->text (QClipboard::Selection);
     #if DEBUG_KP_TOOL && 1
@@ -95,7 +95,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
             if (viewUnderCursor ())
             {
-                d->mainWindow->pasteTextAt (text,
+                d->environ->pasteTextAt (text,
                     viewUnderCursor ()->transformViewToDoc (e->pos ()),
                     true/*adjust topLeft so that cursor isn't
                           on top of resize handle*/);
@@ -166,6 +166,15 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     d->lastPoint = d->currentPoint;
 }
 
+// OPT: If the mouse is moving in terms of view pixels, it still might
+//      not be moving in terms of document pixels (when zoomed in).
+//
+//      So we should detect this and not call draw() or hover().
+//
+//      However, kpToolSelection needs hover() to be called on all view
+//      point changes, not just document points, since the selection resize
+//      handles may be smaller than document points.  Also, I wonder if
+//      selections' accidental drag detection feature cares?
 void kpTool::mouseMoveEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_TOOL && 0
@@ -213,11 +222,11 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
             // as well (instead of immediately updating), the scrollview's
             // update will be executed first and it'll only update part of
             // the screen resulting in ugly tearing of the viewManager's
-            // tempPixmap.
+            // tempImage.
             viewManager ()->setFastUpdates ();
         }
 
-        draw (d->currentPoint, d->lastPoint, kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
+        drawInternal ();
 
         if (dragScrolled)
             viewManager ()->restoreFastUpdates ();
@@ -262,6 +271,9 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
 
         d->currentPoint = view->transformViewToDoc (e->pos ());
         d->currentViewPoint = e->pos ();
+
+        drawInternal ();
+
         endDrawInternal (d->currentPoint, kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
     }
 
@@ -270,6 +282,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
         releasedAllButtons ();
     }
 }
+
 
 void kpTool::wheelEvent (QWheelEvent *e)
 {
@@ -281,7 +294,7 @@ void kpTool::wheelEvent (QWheelEvent *e)
 #endif
 
     e->ignore ();
-    
+
     // If CTRL not pressed, bye.
     if ((e->modifiers () & Qt::ControlButton) == 0)
     {
@@ -290,7 +303,7 @@ void kpTool::wheelEvent (QWheelEvent *e)
     #endif
         return;
     }
-    
+
     // If drawing, bye; don't care if a shape in progress though.
     if (hasBegunDraw ())
     {
@@ -299,17 +312,17 @@ void kpTool::wheelEvent (QWheelEvent *e)
     #endif
         return;
     }
-        
-        
+
+
     // Zoom in/out depending on wheel direction.
-    
+
     // Moved wheel away from user?
     if (e->delta () > 0)
     {
     #if DEBUG_KP_TOOL
         kDebug () << "\tzoom in" << endl;
     #endif
-        d->mainWindow->zoomIn (true/*center under cursor*/);
+        d->environ->zoomIn (true/*center under cursor*/);
         e->accept ();
     }
     // Moved wheel towards user?
@@ -319,12 +332,12 @@ void kpTool::wheelEvent (QWheelEvent *e)
         kDebug () << "\tzoom out" << endl;
     #endif
     #if 1
-        d->mainWindow->zoomOut (true/*center under cursor - make zoom in/out
-                                     stay under same doc pos*/);
+        d->environ->zoomOut (true/*center under cursor - make zoom in/out
+                                   stay under same doc pos*/);
     #else
-        d->mainWindow->zoomOut (false/*don't center under cursor - as is
-                                      confusing behaviour when zooming
-                                      out*/);
+        d->environ->zoomOut (false/*don't center under cursor - as is
+                                    confusing behaviour when zooming
+                                    out*/);
     #endif
         e->accept ();
     }

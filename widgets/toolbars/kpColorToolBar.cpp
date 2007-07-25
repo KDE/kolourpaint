@@ -51,29 +51,26 @@
 #include <klocale.h>
 
 #include <kpColorPalette.h>
-#include <kpColorSimilarityDialog.h>
 #include <kpColorSimilarityToolBarItem.h>
 #include <kpDefs.h>
 #include <kpDualColorButton.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
 #include <kpTool.h>
 #include <kpView.h>
 
 
-kpColorToolBar::kpColorToolBar (const QString &label, kpMainWindow *mainWindow)
-    : KToolBar (mainWindow),
-      m_mainWindow (mainWindow)
+kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
+    : KToolBar (parent)
 {
     setWindowTitle (label);
 
 
     QWidget *base = new QWidget (this);
-    m_boxLayout = new QBoxLayout (QBoxLayout::LeftToRight, base );
-    m_boxLayout->setMargin( 5 );
-    m_boxLayout->setSpacing( 10 * 4 );
+    m_boxLayout = new QBoxLayout (QBoxLayout::LeftToRight, base);
+    m_boxLayout->setMargin (5);
+    m_boxLayout->setSpacing (10 * 4);
 
-    m_dualColorButton = new kpDualColorButton (mainWindow, base);
+    m_dualColorButton = new kpDualColorButton (base);
     m_dualColorButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
     connect (m_dualColorButton, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
              this, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)));
@@ -90,7 +87,7 @@ kpColorToolBar::kpColorToolBar (const QString &label, kpMainWindow *mainWindow)
              m_dualColorButton, SLOT (setBackgroundColor (const kpColor &)));
     m_boxLayout->addWidget (m_colorPalette, 0/*stretch*/);
 
-    m_colorSimilarityToolBarItem = new kpColorSimilarityToolBarItem (mainWindow, base);
+    m_colorSimilarityToolBarItem = new kpColorSimilarityToolBarItem (base);
     m_colorSimilarityToolBarItem->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
     connect (m_colorSimilarityToolBarItem, SIGNAL (colorSimilarityChanged (double, int)),
              this, SIGNAL (colorSimilarityChanged (double, int)));
@@ -155,26 +152,24 @@ kpColorToolBar::~kpColorToolBar ()
 {
 }
 
+
+// public
+kpColorCells *kpColorToolBar::colorCells () const
+{
+    return m_colorPalette->colorCells ();
+}
+
+
 kpColor kpColorToolBar::color (int which) const
 {
-    if (which < 0 || which > 1)
-    {
-        kWarning () << "kpColorToolBar::color (" << which
-                     << ") - out of range" << endl;
-        which = 0;
-    }
+    Q_ASSERT (which == 0 || which == 1);
 
     return m_dualColorButton->color (which);
 }
 
 void kpColorToolBar::setColor (int which, const kpColor &color)
 {
-    if (which < 0 || which > 1)
-    {
-        kWarning () << "kpColorToolBar::setColor (" << which
-                     << ") - out of range" << endl;
-        which = 0;
-    }
+    Q_ASSERT (which == 0 || which == 1);
 
     m_dualColorButton->setColor (which, color);
 }
@@ -186,6 +181,10 @@ kpColor kpColorToolBar::foregroundColor () const
 
 void kpColorToolBar::setForegroundColor (const kpColor &color)
 {
+#if DEBUG_KP_COLOR_TOOL_BAR
+    kDebug () << "kpColorToolBar::setForegroundColor("
+              << (int *) color.toQRgb () << ")" << endl;
+#endif
     m_dualColorButton->setForegroundColor (color);
 }
 
@@ -196,6 +195,10 @@ kpColor kpColorToolBar::backgroundColor () const
 
 void kpColorToolBar::setBackgroundColor (const kpColor &color)
 {
+#if DEBUG_KP_COLOR_TOOL_BAR
+    kDebug () << "kpColorToolBar::setBackgroundColor("
+              << (int *) color.toQRgb () << ")" << endl;
+#endif
     m_dualColorButton->setBackgroundColor (color);
 }
 
@@ -229,6 +232,17 @@ void kpColorToolBar::setColorSimilarity (double similarity)
 int kpColorToolBar::processedColorSimilarity () const
 {
     return m_colorSimilarityToolBarItem->processedColorSimilarity ();
+}
+
+
+void kpColorToolBar::openColorSimilarityDialog ()
+{
+    m_colorSimilarityToolBarItem->openDialog ();
+}
+
+void kpColorToolBar::flashColorSimilarityToolBarItem ()
+{
+    m_colorSimilarityToolBarItem->flash ();
 }
 
 

@@ -32,11 +32,9 @@
 
 #include <QWidget>
 
-class QBoxLayout;
 
 class kpColor;
 class kpColorCells;
-class kpTransparentColorCell;
 
 
 class kpColorPalette : public QWidget
@@ -51,16 +49,14 @@ public:
     Qt::Orientation orientation () const;
     void setOrientation (Qt::Orientation o);
 
+    kpColorCells *colorCells () const;
+
 signals:
     void foregroundColorChanged (const kpColor &color);
     void backgroundColorChanged (const kpColor &color);
 
-protected:
-    Qt::Orientation m_orientation;
-
-    QBoxLayout *m_boxLayout;
-    kpTransparentColorCell *m_transparentColorCell;
-    kpColorCells *m_colorCells;
+private:
+    struct kpColorPalettePrivate * const d;
 };
 
 

@@ -38,17 +38,13 @@ class QCheckBox;
 
 class KIntNumInput;
 
-class kpMainWindow;
-
 
 class kpEffectEmbossWidget : public kpEffectWidgetBase
 {
 Q_OBJECT
 
 public:
-    kpEffectEmbossWidget (bool actOnSelection,
-                          kpMainWindow *mainWindow,
-                          QWidget *parent);
+    kpEffectEmbossWidget (bool actOnSelection, QWidget *parent);
     virtual ~kpEffectEmbossWidget ();
 
     virtual QString caption () const;
@@ -56,12 +52,11 @@ public:
     virtual bool isNoOp () const;
     virtual kpImage applyEffect (const kpImage &image);
 
-    virtual kpEffectCommandBase *createCommand () const;
+    virtual kpEffectCommandBase *createCommand (
+        kpCommandEnvironment *cmdEnviron) const;
 
 protected:
-    double radius () const;
-    double sigma () const;
-    int repeat () const;
+    int strength () const;
 
     //KIntNumInput *m_amountInput;
     QCheckBox *m_enableCheckBox;

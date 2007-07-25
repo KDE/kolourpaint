@@ -47,10 +47,10 @@ struct kpToolPenPrivate
 {
 };
 
-kpToolPen::kpToolPen (kpMainWindow *mainWindow)
+kpToolPen::kpToolPen (kpToolEnvironment *environ, QObject *parent)
     : kpToolFlowBase (i18n ("Pen"), i18n ("Draws dots and freehand strokes"),
         Qt::Key_P,
-        mainWindow, "tool_pen"),
+        environ, parent, "tool_pen"),
       d (new kpToolPenPrivate ())
 {
 }
@@ -103,21 +103,21 @@ QRect kpToolPen::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
     QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
     docRect = neededRect (docRect, 1/*pen width*/);
-    kpImage image = document ()->getPixmapAt (docRect);
+    kpImage image = document ()->getImageAt (docRect);
 
 
     const QPoint sp = lastPoint - docRect.topLeft (),
                  ep = thisPoint - docRect.topLeft ();
-    
+
     kpPainter::drawLine (&image,
         sp.x (), sp.y (),
         ep.x (), ep.y (),
         color (mouseButton ()),
         1/*pen width*/);
 
- 
-    document ()->setPixmapAt (image, docRect.topLeft ());
-    return docRect;   
+
+    document ()->setImageAt (image, docRect.topLeft ());
+    return docRect;
 }
 
 

@@ -28,31 +28,28 @@
 
 #include <kpEffectClearCommand.h>
 
-#include <qpixmap.h>
-
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpAbstractImageSelection.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
-#include <kpSelection.h>
 
 
 kpEffectClearCommand::kpEffectClearCommand (bool actOnSelection,
-                                        const kpColor &newColor,
-                                        kpMainWindow *mainWindow)
-    : kpCommand (mainWindow),
+        const kpColor &newColor,
+        kpCommandEnvironment *environ)
+    : kpCommand (environ),
       m_actOnSelection (actOnSelection),
       m_newColor (newColor),
-      m_oldPixmapPtr (0)
+      m_oldImagePtr (0)
 {
 }
 
 kpEffectClearCommand::~kpEffectClearCommand ()
 {
-    delete m_oldPixmapPtr;
+    delete m_oldImagePtr;
 }
 
 
@@ -69,9 +66,9 @@ QString kpEffectClearCommand::name () const
 
 
 // public virtual [base kpCommand]
-int kpEffectClearCommand::size () const
+kpCommandSize::SizeType kpEffectClearCommand::size () const
 {
-    return kpPixmapFX::pixmapSize (m_oldPixmapPtr);
+    return ImageSize (m_oldImagePtr);
 }
 
 
@@ -82,17 +79,18 @@ void kpEffectClearCommand::execute ()
     Q_ASSERT (doc);
 
 
-    m_oldPixmapPtr = new QPixmap ();
-    *m_oldPixmapPtr = *doc->pixmap (m_actOnSelection);
+    m_oldImagePtr = new kpImage ();
+    *m_oldImagePtr = doc->image (m_actOnSelection);
 
 
-    // TODO: Would like to derive entire class from kpEffectCommandBase but
-    //       this code makes it difficult since it's not just acting on pixels
-    //       (kpSelection::fill() takes into account the shape of a selection).
+    // REFACTOR: Would like to derive entire class from kpEffectCommandBase but
+    //           this code makes it difficult since it's not just acting on pixels
+    //           (kpAbstractImageSelection::fill() takes into account the shape of a selection).
     if (m_actOnSelection)
     {
         // OPT: could just edit pixmap directly and signal change
-        kpSelection *sel = doc->selection ();
+        kpAbstractImageSelection *sel = doc->imageSelection ();
+        Q_ASSERT (sel);
         sel->fill (m_newColor);
     }
     else
@@ -106,11 +104,11 @@ void kpEffectClearCommand::unexecute ()
     Q_ASSERT (doc);
 
 
-    doc->setPixmap (m_actOnSelection, *m_oldPixmapPtr);
+    doc->setImage (m_actOnSelection, *m_oldImagePtr);
 
 
-    delete m_oldPixmapPtr;
-    m_oldPixmapPtr = 0;
+    delete m_oldImagePtr;
+    m_oldImagePtr = 0;
 }
 
 

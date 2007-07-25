@@ -44,28 +44,27 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpBug.h>
-#include <kpCommandHistory.h>
+#include <kpAbstractSelection.h>
+#include <kpAbstractImageSelection.h>
+#include <kpCommandEnvironment.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpSelection.h>
-#include <kpTool.h>
-#include <kpToolToolBar.h>
+#include <kpRectangularImageSelection.h>
+#include <kpTextSelection.h>
 #include <kpToolWidgetOpaqueOrTransparent.h>
 #include <kpView.h>
 #include <kpViewManager.h>
 
 
 kpToolSelectionResizeScaleCommand::kpToolSelectionResizeScaleCommand (
-        kpMainWindow *mainWindow)
-    : kpNamedCommand (mainWindow->document ()->selection ()->isText () ?
+        kpCommandEnvironment *environ)
+    : kpNamedCommand (environ->textSelection () ?
                          i18n ("Text: Resize Box") :
                          i18n ("Selection: Smooth Scale"),
-                      mainWindow),
+                      environ),
       m_smoothScaleTimer (new QTimer (this))
 {
-    m_originalSelection = *selection ();
+    m_originalSelectionPtr = selection ()->clone ();
 
     m_newTopLeft = selection ()->topLeft ();
     m_newWidth = selection ()->width ();
@@ -78,20 +77,21 @@ kpToolSelectionResizeScaleCommand::kpToolSelectionResizeScaleCommand (
 
 kpToolSelectionResizeScaleCommand::~kpToolSelectionResizeScaleCommand ()
 {
+    delete m_originalSelectionPtr;
 }
 
 
 // public virtual
-int kpToolSelectionResizeScaleCommand::size () const
+kpCommandSize::SizeType kpToolSelectionResizeScaleCommand::size () const
 {
-    return m_originalSelection.size ();
+    return SelectionSize (m_originalSelectionPtr);
 }
 
 
 // public
-kpSelection kpToolSelectionResizeScaleCommand::originalSelection () const
+const kpAbstractSelection *kpToolSelectionResizeScaleCommand::originalSelection () const
 {
-    return m_originalSelection;
+    return m_originalSelectionPtr;
 }
 
 
@@ -174,24 +174,31 @@ void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
 
     killSmoothScaleTimer ();
 
-    kpSelection newSel;
+    kpAbstractSelection *newSelPtr = 0;
 
-    if (selection ()->isText ())
+    if (textSelection ())
     {
-        newSel = m_originalSelection;
-        newSel.textResize (m_newWidth, m_newHeight);
+        Q_ASSERT (dynamic_cast <kpTextSelection *> (m_originalSelectionPtr));
+        kpTextSelection *orgTextSel =
+            static_cast <kpTextSelection *> (m_originalSelectionPtr);
+
+        newSelPtr = orgTextSel->resized (m_newWidth, m_newHeight);
     }
     else
     {
-        newSel = kpSelection (kpSelection::Rectangle,
-            QRect (m_originalSelection.x (),
-                   m_originalSelection.y (),
+        Q_ASSERT (dynamic_cast <kpAbstractImageSelection *> (m_originalSelectionPtr));
+        kpAbstractImageSelection *imageSel =
+            static_cast <kpAbstractImageSelection *> (m_originalSelectionPtr);
+
+        newSelPtr = new kpRectangularImageSelection (
+            QRect (imageSel->x (),
+                   imageSel->y (),
                    m_newWidth,
                    m_newHeight),
-            kpPixmapFX::scale (*m_originalSelection.pixmap (),
+            kpPixmapFX::scale (imageSel->baseImage (),
                                m_newWidth, m_newHeight,
                                !delayed/*if not delayed, smooth*/),
-            m_originalSelection.transparency ());
+            imageSel->transparency ());
 
         if (delayed)
         {
@@ -200,9 +207,12 @@ void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
         }
     }
 
-    newSel.moveTo (m_newTopLeft);
+    Q_ASSERT (newSelPtr);
+    newSelPtr->moveTo (m_newTopLeft);
 
-    m_mainWindow->document ()->setSelection (newSel);
+    document ()->setSelection (*newSelPtr);
+
+    delete newSelPtr;
 }
 
 // protected slots
@@ -224,7 +234,7 @@ void kpToolSelectionResizeScaleCommand::finalize ()
                << m_smoothScaleTimer->isActive ()
                << endl;
 #endif
-    
+
     // Make sure the selection contains the final image and the timer won't
     // fire afterwards.
     if (m_smoothScaleTimer->isActive ())
@@ -244,8 +254,7 @@ void kpToolSelectionResizeScaleCommand::execute ()
 
     resizeScaleAndMove ();
 
-    if (m_mainWindow->tool ())
-        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+    environ ()->somethingBelowTheCursorChanged ();
 
     QApplication::restoreOverrideCursor ();
 }
@@ -257,10 +266,9 @@ void kpToolSelectionResizeScaleCommand::unexecute ()
 
     killSmoothScaleTimer ();
 
-    m_mainWindow->document ()->setSelection (m_originalSelection);
+    document ()->setSelection (*m_originalSelectionPtr);
 
-    if (m_mainWindow->tool ())
-        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+    environ ()->somethingBelowTheCursorChanged ();
 
     QApplication::restoreOverrideCursor ();
 }

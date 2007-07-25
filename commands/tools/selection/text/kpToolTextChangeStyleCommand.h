@@ -30,11 +30,8 @@
 #define KP_TOOL_TEXT_CHANGE_STYLE_COMMAND_H
 
 
-#include <kpCommandHistory.h>
+#include <kpNamedCommand.h>
 #include <kpTextStyle.h>
-
-
-class kpMainWindow;
 
 
 class kpToolTextChangeStyleCommand : public kpNamedCommand
@@ -42,11 +39,11 @@ class kpToolTextChangeStyleCommand : public kpNamedCommand
 public:
     kpToolTextChangeStyleCommand (const QString &name,
         const kpTextStyle &newTextStyle, const kpTextStyle &oldTextStyle,
-        kpMainWindow *mainWindow);
+        kpCommandEnvironment *environ);
     virtual ~kpToolTextChangeStyleCommand ();
 
-    virtual int size () const;
-    
+    virtual kpCommandSize::SizeType size () const;
+
     virtual void execute ();
     virtual void unexecute ();
 

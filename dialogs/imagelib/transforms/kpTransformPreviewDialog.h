@@ -39,9 +39,10 @@ class QLabel;
 class QGridLayout;
 class QGroupBox;
 
+class kpColor;
 class kpDocument;
-class kpMainWindow;
 class kpResizeSignallingLabel;
+class kpTransformDialogEnvironment;
 
 
 class kpTransformPreviewDialog : public KDialog
@@ -57,13 +58,14 @@ public:
 
     // You must call slotUpdate() in your constructor
     kpTransformPreviewDialog (Features features,
-                         bool reserveTopRow,
-                         // e.g. "Skew (Image|Selection)"
-                         const QString &caption,
-                         // (in the Dimensions Group Box) e.g. "After Skew:"
-                         const QString &afterActionText,
-                         bool actOnSelection,
-                         kpMainWindow *parent);
+        bool reserveTopRow,
+        // e.g. "Skew (Image|Selection)"
+        const QString &caption,
+        // (in the Dimensions Group Box) e.g. "After Skew:"
+        const QString &afterActionText,
+        bool actOnSelection,
+        kpTransformDialogEnvironment *environ,
+        QWidget *parent);
     virtual ~kpTransformPreviewDialog ();
 
 private:
@@ -112,7 +114,6 @@ protected:
     // TODO: Use d-ptr
     QString m_afterActionText;
     bool m_actOnSelection;
-    kpMainWindow *m_mainWindow;
 
     int m_oldWidth, m_oldHeight;
 
@@ -126,6 +127,8 @@ protected:
 
     QGridLayout *m_gridLayout;
     int m_gridNumRows;
+
+    kpTransformDialogEnvironment *m_environ;
 };
 
 

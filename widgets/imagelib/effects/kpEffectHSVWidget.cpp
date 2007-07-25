@@ -48,10 +48,8 @@
 #include <stdlib.h>
 
 
-kpEffectHSVWidget::kpEffectHSVWidget (bool actOnSelection,
-                                                      kpMainWindow *mainWindow,
-                                                      QWidget *parent)
-    : kpEffectWidgetBase (actOnSelection, mainWindow, parent)
+kpEffectHSVWidget::kpEffectHSVWidget (bool actOnSelection, QWidget *parent)
+    : kpEffectWidgetBase (actOnSelection, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
     lay->setSpacing (spacingHint ());
@@ -121,11 +119,13 @@ kpImage kpEffectHSVWidget::applyEffect (const kpImage &image)
 }
 
 // public virtual [base kpEffectWidgetBase]
-kpEffectCommandBase *kpEffectHSVWidget::createCommand () const
+kpEffectCommandBase *kpEffectHSVWidget::createCommand (
+        kpCommandEnvironment *cmdEnviron) const
 {
-    return new kpEffectHSVCommand (m_hueInput->value (), m_saturationInput->value (), m_valueInput->value (),
-                                           m_actOnSelection,
-                                           m_mainWindow);
+    return new kpEffectHSVCommand (
+        m_hueInput->value (), m_saturationInput->value (), m_valueInput->value (),
+        m_actOnSelection,
+        cmdEnviron);
 }
 
 

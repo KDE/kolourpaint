@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -41,17 +41,20 @@
 
 #include <kpBug.h>
 #include <kpColor.h>
+#include <kpCommandHistory.h>
 #include <kpDocument.h>
+#include <kpMacroCommand.h>
 #include <kpPainter.h>
 #include <kpPixmapFX.h>
 #include <kpToolFlowCommand.h>
+#include <kpToolEnvironment.h>
 
 
-kpToolColorEraser::kpToolColorEraser (kpMainWindow *mainWindow)
+kpToolColorEraser::kpToolColorEraser (kpToolEnvironment *environ, QObject *parent)
     : kpToolFlowBase (i18n ("Color Eraser"),
         i18n ("Replaces pixels of the foreground color with the background color"),
         Qt::Key_O,
-        mainWindow,
+        environ, parent,
         "tool_color_eraser")
 {
 }
@@ -72,10 +75,12 @@ void kpToolColorEraser::globalDraw ()
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
 
-    kpToolFlowCommand *cmd = new kpToolFlowCommand (
-        i18n ("Color Eraser"), mainWindow ());
+    environ ()->flashColorSimilarityToolBarItem ();
 
-    const QRect dirtyRect = kpPainter::washRect (document ()->pixmap (),
+    kpToolFlowCommand *cmd = new kpToolFlowCommand (
+        i18n ("Color Eraser"), environ ()->commandEnvironment ());
+
+    const QRect dirtyRect = kpPainter::washRect (document ()->imagePointer (),
         0, 0, document ()->width (), document ()->height (),
         backgroundColor ()/*color to draw in*/,
         foregroundColor ()/*color to replace*/,
@@ -121,7 +126,7 @@ bool kpToolColorEraser::drawShouldProceed (const QPoint & /*thisPoint*/,
     {
         return false;
     }
-    
+
     return true;
 }
 
@@ -133,7 +138,9 @@ QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPo
         << ",lastPoint=" << lastPoint << ")" << endl;
 #endif
 
-    const QRect dirtyRect = kpPainter::washLine (document ()->pixmap (),
+    environ ()->flashColorSimilarityToolBarItem ();
+
+    const QRect dirtyRect = kpPainter::washLine (document ()->imagePointer (),
         lastPoint.x (), lastPoint.y (),
         thisPoint.x (), thisPoint.y (),
         color (mouseButton ())/*color to draw in*/,
@@ -150,7 +157,7 @@ QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPo
         document ()->slotContentsChanged (dirtyRect);
         return dirtyRect;
     }
-    
+
     return QRect ();
 }
 

@@ -44,21 +44,17 @@
 #include <qpushbutton.h>
 #include <qrect.h>
 
-
 #include <kdebug.h>
 #include <klocale.h>
 
 #include <kpBug.h>
-#include <kpCommandHistory.h>
 #include <kpDocument.h>
 #include <kpDefs.h>
 #include <kpImage.h>
-#include <kpMainWindow.h>
 #include <kpPainter.h>
 #include <kpPixmapFX.h>
-#include <kpTempPixmap.h>
+#include <kpTempImage.h>
 #include <kpToolPolygonalBase.h>
-#include <kpToolToolBar.h>
 #include <kpToolWidgetLineWidth.h>
 #include <kpViewManager.h>
 
@@ -66,7 +62,7 @@
 struct kpToolPolygonalCommandPrivate
 {
     kpToolPolygonalBase::DrawShapeFunc drawShapeFunc;
-    
+
     QPolygon points;
     QRect boundingRect;
 
@@ -83,9 +79,9 @@ kpToolPolygonalCommand::kpToolPolygonalCommand (const QString &name,
         const QRect &boundingRect,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
-        kpMainWindow *mainWindow)
+        kpCommandEnvironment *environ)
 
-    : kpNamedCommand (name, mainWindow),
+    : kpNamedCommand (name, environ),
       d (new kpToolPolygonalCommandPrivate ())
 {
     d->drawShapeFunc = drawShapeFunc;
@@ -105,10 +101,10 @@ kpToolPolygonalCommand::~kpToolPolygonalCommand ()
 
 
 // public virtual [base kpCommand]
-int kpToolPolygonalCommand::size () const
+kpCommandSize::SizeType kpToolPolygonalCommand::size () const
 {
-    return kpPixmapFX::pointArraySize (d->points) +
-           kpPixmapFX::pixmapSize (d->oldImage);
+    return PolygonSize (d->points) +
+           ImageSize (d->oldImage);
 }
 
 // public virtual [base kpCommand]
@@ -119,21 +115,21 @@ void kpToolPolygonalCommand::execute ()
 
     // Store Undo info.
     Q_ASSERT (d->oldImage.isNull ());
-    d->oldImage = doc->getPixmapAt (d->boundingRect);
+    d->oldImage = doc->getImageAt (d->boundingRect);
 
     // Invoke shape drawing function passed in ctor.
     kpImage image = d->oldImage;
 
     QPolygon pointsTranslated = d->points;
     pointsTranslated.translate (-d->boundingRect.x (), -d->boundingRect.y ());
-    
+
     (*d->drawShapeFunc) (&image,
         pointsTranslated,
         d->fcolor, d->penWidth,
         d->bcolor,
         true/*final shape*/);
-            
-    doc->setPixmapAt (image, d->boundingRect.topLeft ());
+
+    doc->setImageAt (image, d->boundingRect.topLeft ());
 }
 
 // public virtual [base kpCommand]
@@ -143,7 +139,7 @@ void kpToolPolygonalCommand::unexecute ()
     Q_ASSERT (doc);
 
     Q_ASSERT (!d->oldImage.isNull ());
-    doc->setPixmapAt (d->oldImage, d->boundingRect.topLeft ());
+    doc->setImageAt (d->oldImage, d->boundingRect.topLeft ());
 
     d->oldImage = kpImage ();
 }

@@ -35,25 +35,31 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpAbstractImageSelection.h>
 #include <kpColor.h>
+#include <kpCommandEnvironment.h>
 #include <kpCommandHistory.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpSelection.h>
-#include <kpTool.h>
 #include <kpEffectClearCommand.h>
+#include <kpMacroCommand.h>
+#include <kpMainWindow.h>
+#include <kpTextSelection.h>
+#include <kpTool.h>
 #include <kpToolSelectionCreateCommand.h>
 #include <kpToolSelectionMoveCommand.h>
 #include <kpTransformResizeScaleCommand.h>
 #include <kpViewManager.h>
 
 
-kpSelection selectionBorderAndMovedTo0_0 (const kpSelection &sel)
+kpAbstractSelection *selectionBorderAndMovedTo0_0 (const kpAbstractSelection &sel)
 {
-    kpSelection borderSel = sel;
+    kpAbstractSelection *borderSel = sel.clone ();
 
-    borderSel.setPixmap (QPixmap ());  // only interested in border
-    borderSel.moveTo (QPoint (0, 0));
+    kpAbstractImageSelection *borderImageSel =
+        dynamic_cast <kpAbstractImageSelection *> (borderSel);
+    if (borderImageSel)
+        borderImageSel->setBaseImage (kpImage ());  // only interested in border
+    borderSel->moveTo (QPoint (0, 0));
 
     return borderSel;
 }
@@ -63,20 +69,21 @@ kpSelection selectionBorderAndMovedTo0_0 (const kpSelection &sel)
 // kpTransformCropSetImageCommand
 //
 
+// TODO: Move into commands/
 class kpTransformCropSetImageCommand : public kpCommand
 {
 public:
-    kpTransformCropSetImageCommand (kpMainWindow *mainWindow);
+    kpTransformCropSetImageCommand (kpCommandEnvironment *environ);
     virtual ~kpTransformCropSetImageCommand ();
 
     /* (uninteresting child of macro cmd) */
     virtual QString name () const { return QString::null; }
 
-    virtual int size () const
+    virtual kpCommandSize::SizeType size () const
     {
-        return kpPixmapFX::pixmapSize (m_oldPixmap) +
-               kpPixmapFX::selectionSize (m_fromSelection) +
-               kpPixmapFX::pixmapSize (m_pixmapIfFromSelectionDoesntHaveOne);
+        return ImageSize (m_oldPixmap) +
+               SelectionSize (m_fromSelectionPtr) +
+               ImageSize (m_pixmapIfFromSelectionDoesntHaveOne);
     }
 
     virtual void execute ();
@@ -85,24 +92,44 @@ public:
 protected:
     kpColor m_backgroundColor;
     QPixmap m_oldPixmap;
-    kpSelection m_fromSelection;
+    kpAbstractSelection *m_fromSelectionPtr;
     QPixmap m_pixmapIfFromSelectionDoesntHaveOne;
 };
 
 
-kpTransformCropSetImageCommand::kpTransformCropSetImageCommand (kpMainWindow *mainWindow)
-    : kpCommand (mainWindow),
-      m_backgroundColor (mainWindow->backgroundColor ()),
-      m_fromSelection (*mainWindow->document ()->selection ()),
+static bool SelectionHasImage (const kpAbstractSelection &selection)
+{
+    if (dynamic_cast <const kpTextSelection *> (&selection))
+    {
+        // A text selection can be meaningfully displayed even if it just
+        // an empty box, with no text content...
+        return true;
+    }
+
+    const kpAbstractImageSelection *imageSel =
+        dynamic_cast <const kpAbstractImageSelection *> (&selection);
+    Q_ASSERT (imageSel);
+
+    // ... but an image selection really needs to have pulled image content
+    // from the document to be meaningfully displayed.
+    return imageSel->hasContent ();
+}
+
+
+kpTransformCropSetImageCommand::kpTransformCropSetImageCommand (kpCommandEnvironment *environ)
+    : kpCommand (environ),
+      m_backgroundColor (environ->backgroundColor ()),
+      m_fromSelectionPtr (environ->document ()->selection ()->clone ()),
       m_pixmapIfFromSelectionDoesntHaveOne (
-        m_fromSelection.pixmap () ?
-            QPixmap () :
-            mainWindow->document ()->getSelectedPixmap ())
+        ::SelectionHasImage (*m_fromSelectionPtr) ?
+            kpImage () :
+            document ()->getSelectedBaseImage ())
 {
 }
 
 kpTransformCropSetImageCommand::~kpTransformCropSetImageCommand ()
 {
+    delete m_fromSelectionPtr;
 }
 
 
@@ -115,8 +142,8 @@ void kpTransformCropSetImageCommand::execute ()
 
     viewManager ()->setQueueUpdates ();
     {
-        m_oldPixmap = kpPixmapFX::getPixmapAt (*document ()->pixmap (),
-            QRect (0, 0, m_fromSelection.width (), m_fromSelection.height ()));
+        m_oldPixmap = kpPixmapFX::getPixmapAt (document ()->image (),
+            QRect (0, 0, m_fromSelectionPtr->width (), m_fromSelectionPtr->height ()));
 
 
         //
@@ -135,19 +162,30 @@ void kpTransformCropSetImageCommand::execute ()
         // The selection pixmap stays the same.
         //
 
-        QPixmap newDocPixmap (m_fromSelection.width (), m_fromSelection.height ());
+        QPixmap newDocPixmap (m_fromSelectionPtr->width (), m_fromSelectionPtr->height ());
         kpPixmapFX::fill (&newDocPixmap, m_backgroundColor);
 
     #if DEBUG_KP_TOOL_CROP
-        kDebug () << "\tsel: rect=" << m_fromSelection.boundingRect ()
-                   << " pm=" << m_fromSelection.pixmap ()
+        kDebug () << "\tsel: rect=" << m_fromSelectionPtr->boundingRect ()
+                   << " pm=" << m_fromSelectionPtr->hasContent ()
                    << endl;
     #endif
         QPixmap selTransparentPixmap;
 
-        if (m_fromSelection.pixmap ())
+        kpAbstractImageSelection *imageSel =
+            dynamic_cast <kpAbstractImageSelection *> (m_fromSelectionPtr);
+        kpTextSelection *textSel =
+            dynamic_cast <kpTextSelection *> (m_fromSelectionPtr);
+
+        if (::SelectionHasImage (*m_fromSelectionPtr))
         {
-            selTransparentPixmap = m_fromSelection.transparentPixmap ();
+            if (imageSel)
+                selTransparentPixmap = imageSel->transparentImage ();
+            else if (textSel)
+                selTransparentPixmap = textSel->approximateImage ();
+            else
+                Q_ASSERT (!"Unknown selection type");
+
         #if DEBUG_KP_TOOL_CROP
             kDebug () << "\thave pixmap; rect="
                        << selTransparentPixmap.rect ()
@@ -164,21 +202,29 @@ void kpTransformCropSetImageCommand::execute ()
         #endif
         }
 
-        kpPixmapFX::paintMaskTransparentWithBrush (&newDocPixmap,
-            QPoint (0, 0),
-            m_fromSelection.maskForOwnType ());
+        if (imageSel)
+        {
+            kpPixmapFX::paintMaskTransparentWithBrush (&newDocPixmap,
+                QPoint (0, 0),
+                imageSel->shapeBitmap ());
+        }
+        else if (textSel)
+        {
+            // COMPAT: port
+        }
+        else
+            Q_ASSERT (!"Unknown selection type");
 
         kpPixmapFX::paintPixmapAt (&newDocPixmap,
             QPoint (0, 0),
             selTransparentPixmap);
 
 
-        document ()->setPixmapAt (newDocPixmap, QPoint (0, 0));
+        document ()->setImageAt (newDocPixmap, QPoint (0, 0));
         document ()->selectionDelete ();
 
 
-        Q_ASSERT (mainWindow ()->tool ());
-        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+        environ ()->somethingBelowTheCursorChanged ();
     }
     viewManager ()->restoreQueueUpdates ();
 }
@@ -192,18 +238,17 @@ void kpTransformCropSetImageCommand::unexecute ()
 
     viewManager ()->setQueueUpdates ();
     {
-        document ()->setPixmapAt (m_oldPixmap, QPoint (0, 0));
+        document ()->setImageAt (m_oldPixmap, QPoint (0, 0));
         m_oldPixmap = QPixmap ();
 
     #if DEBUG_KP_TOOL_CROP
-        kDebug () << "\tsel: rect=" << m_fromSelection.boundingRect ()
-                   << " pm=" << m_fromSelection.pixmap ()
+        kDebug () << "\tsel: rect=" << m_fromSelectionPtr->boundingRect ()
+                   << " pm=" << m_fromSelectionPtr->hasContent ()
                    << endl;
     #endif
-        document ()->setSelection (m_fromSelection);
+        document ()->setSelection (*m_fromSelectionPtr);
 
-        if (mainWindow ()->tool ())
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+        environ ()->somethingBelowTheCursorChanged ();
     }
     viewManager ()->restoreQueueUpdates ();
 }
@@ -214,26 +259,26 @@ void kpTransformCropSetImageCommand::unexecute ()
 //
 
 
+// TODO: Move into commands/
 class kpTransformCropCommand : public kpMacroCommand
 {
 public:
-    kpTransformCropCommand (kpMainWindow *mainWindow);
+    kpTransformCropCommand (kpCommandEnvironment *environ);
     virtual ~kpTransformCropCommand ();
 };
 
 
-kpTransformCropCommand::kpTransformCropCommand (kpMainWindow *mainWindow)
-    : kpMacroCommand (i18n ("Set as Image"), mainWindow)
+kpTransformCropCommand::kpTransformCropCommand (kpCommandEnvironment *environ)
+    : kpMacroCommand (i18n ("Set as Image"), environ)
 {
 #if DEBUG_KP_TOOL_CROP
     kDebug () << "kpTransformCropCommand::<ctor>()" << endl;
 #endif
 
-    Q_ASSERT (mainWindow &&
-        mainWindow->document () &&
-        mainWindow->document ()->selection ());
+    Q_ASSERT (document () &&
+       document ()->selection ());
 
-    kpSelection *sel = mainWindow->document ()->selection ();
+    kpAbstractSelection *sel = document ()->selection ();
 
 
 #if DEBUG_KP_TOOL_CROP
@@ -249,10 +294,10 @@ kpTransformCropCommand::kpTransformCropCommand (kpMainWindow *mainWindow)
             false/*act on doc, not sel*/,
             sel->width (), sel->height (),
             kpTransformResizeScaleCommand::Resize,
-            mainWindow));
+            environ));
 
 
-    if (sel->isText ())
+    if (textSelection ())
     {
     #if DEBUG_KP_TOOL_CROP
         kDebug () << "\tisText" << endl;
@@ -262,7 +307,7 @@ kpTransformCropCommand::kpTransformCropCommand (kpMainWindow *mainWindow)
             new kpEffectClearCommand (
                 false/*act on doc*/,
                 kpColor::Transparent,
-                mainWindow));
+                environ));
 
     #if DEBUG_KP_TOOL_CROP
         kDebug () << "\tmoving sel to (0,0) cmd" << endl;
@@ -270,7 +315,7 @@ kpTransformCropCommand::kpTransformCropCommand (kpMainWindow *mainWindow)
         kpToolSelectionMoveCommand *moveCmd =
             new kpToolSelectionMoveCommand (
                 QString::null/*uninteresting child of macro cmd*/,
-                mainWindow);
+                environ);
         moveCmd->moveTo (QPoint (0, 0), true/*move on exec, not now*/);
         moveCmd->finalize ();
         addCommand (moveCmd);
@@ -281,14 +326,16 @@ kpTransformCropCommand::kpTransformCropCommand (kpMainWindow *mainWindow)
         kDebug () << "\tis pixmap sel" << endl;
         kDebug () << "\tcreating SetImage cmd" << endl;
     #endif
-        addCommand (new kpTransformCropSetImageCommand (mainWindow));
+        addCommand (new kpTransformCropSetImageCommand (environ));
 
     #if 0
+        kpAbstractImageSelection *newSel = selectionBorderAndMovedTo0_0 (*sel);
         addCommand (
             new kpToolSelectionCreateCommand (
                 QString::null/*uninteresting child of macro cmd*/,
-                selectionBorderAndMovedTo0_0 (*sel),
-                mainWindow));
+                *newSel,
+                environ ()));
+        delete newSel;
     #endif
     }
 }
@@ -303,16 +350,16 @@ void kpTransformCrop (kpMainWindow *mainWindow)
     kpDocument *doc = mainWindow->document ();
     Q_ASSERT (doc);
 
-    kpSelection *sel = doc->selection ();
+    kpAbstractSelection *sel = doc->selection ();
     Q_ASSERT (sel);
 
 
-    bool selWasText = sel->isText ();
-    kpSelection borderSel = selectionBorderAndMovedTo0_0 (*sel);
+    bool selWasText = dynamic_cast <kpTextSelection *> (sel);
+    kpAbstractSelection *borderSel = selectionBorderAndMovedTo0_0 (*sel);
 
 
     mainWindow->addImageOrSelectionCommand (
-        new kpTransformCropCommand (mainWindow),
+        new kpTransformCropCommand (mainWindow->commandEnvironment ()),
         true/*add create cmd*/,
         false/*don't add pull cmd*/);
 
@@ -322,7 +369,10 @@ void kpTransformCrop (kpMainWindow *mainWindow)
         mainWindow->commandHistory ()->addCommand (
             new kpToolSelectionCreateCommand (
                 i18n ("Selection: Create"),
-                borderSel,
-                mainWindow));
+                *borderSel,
+                mainWindow->commandEnvironment ()));
     }
+
+
+    delete borderSel;
 }

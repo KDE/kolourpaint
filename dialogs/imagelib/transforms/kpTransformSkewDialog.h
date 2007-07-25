@@ -33,8 +33,6 @@
 #include <qpixmap.h>
 
 #include <kpColor.h>
-#include <kpCommandHistory.h>
-#include <kpSelection.h>
 #include <kpTransformPreviewDialog.h>
 
 
@@ -42,15 +40,14 @@ class QPixmap;
 
 class KIntNumInput;
 
-class kpMainWindow;
-
 
 class kpTransformSkewDialog : public kpTransformPreviewDialog
 {
 Q_OBJECT
 
 public:
-    kpTransformSkewDialog (bool actOnSelection, kpMainWindow *parent);
+    kpTransformSkewDialog (bool actOnSelection,
+        kpTransformDialogEnvironment *environ, QWidget *parent);
     virtual ~kpTransformSkewDialog ();
 
 private:

@@ -31,10 +31,7 @@
 
 
 #include <kpColor.h>
-#include <kpCommandHistory.h>
-
-
-class kpColorToolBar;
+#include <kpCommand.h>
 
 
 class kpToolColorPickerCommand : public kpCommand
@@ -42,19 +39,16 @@ class kpToolColorPickerCommand : public kpCommand
 public:
     kpToolColorPickerCommand (int mouseButton,
                               const kpColor &newColor, const kpColor &oldColor,
-                              kpMainWindow *mainWindow);
+                              kpCommandEnvironment *environ);
     virtual ~kpToolColorPickerCommand ();
 
     virtual QString name () const;
 
-    virtual int size () const;
+    virtual SizeType size () const;
 
     virtual void execute ();
     virtual void unexecute ();
 
-private:
-    kpColorToolBar *colorToolBar () const;
-    
 private:
     int m_mouseButton;
     kpColor m_newColor;

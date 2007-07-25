@@ -44,20 +44,17 @@
 #include <klocale.h>
 #include <knuminput.h>
 
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
 
 
 kpEffectBlurSharpenCommand::kpEffectBlurSharpenCommand (kpEffectBlurSharpen::Type type,
-                                                        double radius, double sigma,
-                                                        int repeat,
-                                                        bool actOnSelection,
-                                                        kpMainWindow *mainWindow)
+        int strength,
+        bool actOnSelection,
+        kpCommandEnvironment *environ)
     : kpEffectCommandBase (kpEffectBlurSharpenCommand::nameForType (type),
-                            actOnSelection, mainWindow),
+                            actOnSelection, environ),
       m_type (type),
-      m_radius (radius), m_sigma (sigma),
-      m_repeat (repeat)
+      m_strength (strength)
 {
 }
 
@@ -81,7 +78,7 @@ QString kpEffectBlurSharpenCommand::nameForType (kpEffectBlurSharpen::Type type)
 // protected virtual [base kpEffectCommandBase]
 kpImage kpEffectBlurSharpenCommand::applyEffect (const kpImage &image)
 {
-    return kpEffectBlurSharpen::applyEffect (image, m_type, m_radius, m_sigma, m_repeat);
+    return kpEffectBlurSharpen::applyEffect (image, m_type, m_strength);
 }
 
 

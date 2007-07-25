@@ -57,9 +57,9 @@
 #include <kpColor.h>
 #include <kpColorToolBar.h>
 #include <kpDefs.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
 #include <kpToolAction.h>
+#include <kpToolEnvironment.h>
 #include <kpToolToolBar.h>
 #include <kpView.h>
 #include <kpViewManager.h>
@@ -71,7 +71,7 @@ int kpTool::mouseButton () const
 {
     return d->mouseButton;
 }
-  
+
 
 // protected
 bool kpTool::shiftPressed () const
@@ -195,15 +195,7 @@ void kpTool::endInternal ()
         // and so we can't be drawing with it
         d->beganDraw = false;
 
-        if (d->mainWindow)
-        {
-            kpToolToolBar *tb = d->mainWindow->toolToolBar ();
-            if (tb)
-            {
-                tb->hideAllToolWidgets ();
-            }
-        }
-
+        d->environ->hideAllToolWidgets ();
     }
 }
 
@@ -279,6 +271,14 @@ void kpTool::draw (const QPoint &, const QPoint &, const QRect &)
 {
 }
 
+// private
+void kpTool::drawInternal ()
+{
+    draw (d->currentPoint, d->lastPoint,
+          kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
+}
+
+
 // also called by kpView
 void kpTool::cancelShapeInternal ()
 {
@@ -301,15 +301,7 @@ void kpTool::cancelShapeInternal ()
 
         if (returnToPreviousToolAfterEndDraw ())
         {
-            kpToolToolBar *tb = mainWindow ()->toolToolBar ();
-            
-            // (don't end up with no tool selected)
-            if (tb->previousTool ())
-            {
-                // endInternal() will be called by kpMainWindow (thanks to this line)
-                // so we won't have the view anymore
-                tb->selectPreviousTool ();
-            }
+            d->environ->selectPreviousTool ();
         }
     }
 }
@@ -366,15 +358,7 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
 
     if (returnToPreviousToolAfterEndDraw ())
     {
-        kpToolToolBar *tb = mainWindow ()->toolToolBar ();
-        
-        // (don't end up with no tool selected)
-        if (tb->previousTool ())
-        {
-            // endInternal() will be called by kpMainWindow (thanks to this line)
-            // so we won't have the view anymore
-            tb->selectPreviousTool ();
-        }
+        d->environ->selectPreviousTool ();
     }
 }
 

@@ -56,13 +56,15 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
+#include <kpAbstractImageSelection.h>
 #include <kpBug.h>
 #include <kpColorToolBar.h>
+#include <kpCommandEnvironment.h>
 #include <kpCommandHistory.h>
 #include <kpDocument.h>
 #include <kpMainWindow.h>
 #include <kpPixmapFX.h>
-#include <kpSelection.h>
+#include <kpRectangularImageSelection.h>
 #include <kpSetOverrideCursorSaver.h>
 #include <kpTool.h>
 #include <kpViewManager.h>
@@ -76,7 +78,7 @@ public:
     //          afterwards.
     kpTransformAutoCropBorder (const QPixmap *pixmapPtr = 0, int processedColorSimilarity = 0);
 
-    int size () const;
+    kpCommandSize::SizeType size () const;
 
     const QPixmap *pixmap () const;
     int processedColorSimilarity () const;
@@ -116,7 +118,7 @@ kpTransformAutoCropBorder::kpTransformAutoCropBorder (const QPixmap *pixmapPtr,
 
 
 // public
-int kpTransformAutoCropBorder::size () const
+kpCommandSize::SizeType kpTransformAutoCropBorder::size () const
 {
     return sizeof (kpTransformAutoCropBorder);
 }
@@ -332,16 +334,17 @@ struct kpTransformAutoCropCommandPrivate
 
     QRect contentsRect;
     int oldWidth, oldHeight;
-    kpSelection oldSelection;
+    kpAbstractImageSelection *oldSelectionPtr;
 };
 
+// TODO: Move to /commands/
 kpTransformAutoCropCommand::kpTransformAutoCropCommand (bool actOnSelection,
                                               const kpTransformAutoCropBorder &leftBorder,
                                               const kpTransformAutoCropBorder &rightBorder,
                                               const kpTransformAutoCropBorder &topBorder,
                                               const kpTransformAutoCropBorder &botBorder,
-                                              kpMainWindow *mainWindow)
-    : kpNamedCommand (name (actOnSelection, DontShowAccel), mainWindow),
+                                              kpCommandEnvironment *environ)
+    : kpNamedCommand (name (actOnSelection, DontShowAccel), environ),
       d (new kpTransformAutoCropCommandPrivate ())
 {
     d->actOnSelection = actOnSelection;
@@ -353,18 +356,21 @@ kpTransformAutoCropCommand::kpTransformAutoCropCommand (bool actOnSelection,
     d->rightPixmap = 0;
     d->topPixmap = 0;
     d->botPixmap = 0;
-      
+
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
     d->oldWidth = doc->width (d->actOnSelection);
     d->oldHeight = doc->height (d->actOnSelection);
+
+    d->oldSelectionPtr = 0;
 }
 
 kpTransformAutoCropCommand::~kpTransformAutoCropCommand ()
 {
     deleteUndoPixmaps ();
 
+    delete d->oldSelectionPtr;
     delete d;
 }
 
@@ -390,17 +396,17 @@ QString kpTransformAutoCropCommand::name (bool actOnSelection, int options)
 
 
 // public virtual [base kpCommand]
-int kpTransformAutoCropCommand::size () const
+kpCommandSize::SizeType kpTransformAutoCropCommand::size () const
 {
     return d->leftBorder.size () +
            d->rightBorder.size () +
            d->topBorder.size () +
            d->botBorder.size () +
-           kpPixmapFX::pixmapSize (d->leftPixmap) +
-           kpPixmapFX::pixmapSize (d->rightPixmap) +
-           kpPixmapFX::pixmapSize (d->topPixmap) +
-           kpPixmapFX::pixmapSize (d->botPixmap) +
-           d->oldSelection.size ();
+           ImageSize (d->leftPixmap) +
+           ImageSize (d->rightPixmap) +
+           ImageSize (d->topPixmap) +
+           ImageSize (d->botPixmap) +
+           SelectionSize (d->oldSelectionPtr);
 }
 
 
@@ -429,7 +435,7 @@ void kpTransformAutoCropCommand::getUndoPixmap (const kpTransformAutoCropBorder 
         }
 
         *pixmap = new QPixmap (
-            kpPixmapFX::getPixmapAt (*doc->pixmap (d->actOnSelection),
+            kpPixmapFX::getPixmapAt (doc->image (d->actOnSelection),
                                      border.rect ()));
     }
 }
@@ -473,31 +479,30 @@ void kpTransformAutoCropCommand::execute ()
 
 
     QPixmap pixmapWithoutBorder =
-        kpTool::neededPixmap (*doc->pixmap (d->actOnSelection),
+        kpTool::neededPixmap (doc->image (d->actOnSelection),
                               d->contentsRect);
 
 
     if (!d->actOnSelection)
-        doc->setPixmap (pixmapWithoutBorder);
+        doc->setImage (pixmapWithoutBorder);
     else
     {
-        d->oldSelection = *doc->selection ();
-        d->oldSelection.setPixmap (QPixmap ());
+        d->oldSelectionPtr = doc->imageSelection ()->clone ();
+        d->oldSelectionPtr->setBaseImage (kpImage ());
 
         // d->contentsRect is relative to the top of the sel
         // while sel is relative to the top of the doc
         QRect rect = d->contentsRect;
-        rect.translate (d->oldSelection.x (), d->oldSelection.y ());
+        rect.translate (d->oldSelectionPtr->x (), d->oldSelectionPtr->y ());
 
-        kpSelection sel (kpSelection::Rectangle,
-                         rect,
-                         pixmapWithoutBorder,
-                         d->oldSelection.transparency ());
+        kpRectangularImageSelection sel (
+            rect,
+            pixmapWithoutBorder,
+            d->oldSelectionPtr->transparency ());
 
         doc->setSelection (sel);
 
-        if (mainWindow ()->tool ())
-            mainWindow ()->tool ()->somethingBelowTheCursorChanged ();
+        environ ()->somethingBelowTheCursorChanged ();
     }
 }
 
@@ -516,7 +521,7 @@ void kpTransformAutoCropCommand::unexecute ()
 
     // restore the position of the center image
     kpPixmapFX::setPixmapAt (&pixmap, d->contentsRect,
-                             *doc->pixmap (d->actOnSelection));
+                             doc->image (d->actOnSelection));
 
     // draw the borders
 
@@ -587,16 +592,15 @@ void kpTransformAutoCropCommand::unexecute ()
 
 
     if (!d->actOnSelection)
-        doc->setPixmap (pixmap);
+        doc->setImage (pixmap);
     else
     {
-        kpSelection sel = d->oldSelection;
-        sel.setPixmap (pixmap);
+        d->oldSelectionPtr->setBaseImage (pixmap);
 
-        doc->setSelection (sel);
+        doc->setSelection (*d->oldSelectionPtr);
+        delete d->oldSelectionPtr; d->oldSelectionPtr = 0;
 
-        if (mainWindow ()->tool ())
-            mainWindow ()->tool ()->somethingBelowTheCursorChanged ();
+        environ ()->somethingBelowTheCursorChanged ();
     }
 
 
@@ -607,7 +611,7 @@ void kpTransformAutoCropCommand::unexecute ()
 // private
 QRect kpTransformAutoCropCommand::contentsRect () const
 {
-    const QPixmap *pixmap = document ()->pixmap (d->actOnSelection);
+    const kpImage image = document ()->image (d->actOnSelection);
 
     QPoint topLeft (d->leftBorder.exists () ?
                         d->leftBorder.rect ().right () + 1 :
@@ -617,10 +621,10 @@ QRect kpTransformAutoCropCommand::contentsRect () const
                         0);
     QPoint botRight (d->rightBorder.exists () ?
                          d->rightBorder.rect ().left () - 1 :
-                         pixmap->width () - 1,
+                         image.width () - 1,
                      d->botBorder.exists () ?
                          d->botBorder.rect ().top () - 1 :
-                         pixmap->height () - 1);
+                         image.height () - 1);
 
     return QRect (topLeft, botRight);
 }
@@ -659,20 +663,22 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
     Q_ASSERT (doc);
 
     // OPT: if already pulled selection pixmap, no need to do it again here
-    QPixmap pixmap = doc->selection () ? doc->getSelectedPixmap () : *doc->pixmap ();
-    Q_ASSERT (!pixmap.isNull ());
+    kpImage image = doc->selection () ? doc->getSelectedBaseImage () : doc->image ();
+    Q_ASSERT (!image.isNull ());
 
     kpViewManager *vm = mainWindow->viewManager ();
     Q_ASSERT (vm);
 
     int processedColorSimilarity = mainWindow->colorToolBar ()->processedColorSimilarity ();
-    kpTransformAutoCropBorder leftBorder (&pixmap, processedColorSimilarity),
-                         rightBorder (&pixmap, processedColorSimilarity),
-                         topBorder (&pixmap, processedColorSimilarity),
-                         botBorder (&pixmap, processedColorSimilarity);
+    kpTransformAutoCropBorder leftBorder (&image, processedColorSimilarity),
+                         rightBorder (&image, processedColorSimilarity),
+                         topBorder (&image, processedColorSimilarity),
+                         botBorder (&image, processedColorSimilarity);
 
 
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
+
+    mainWindow->colorToolBar ()->flashColorSimilarityToolBarItem ();
 
     // TODO: With Colour Similarity, a lot of weird (and wonderful) things can
     //       happen resulting in a huge number of code paths.  Needs refactoring
@@ -769,7 +775,7 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
             (bool) doc->selection (),
             leftBorder, rightBorder,
             topBorder, botBorder,
-            mainWindow));
+            mainWindow->commandEnvironment ()));
 
 
     return true;

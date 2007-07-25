@@ -43,32 +43,33 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpAbstractImageSelection.h>
 #include <kpColor.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
 #include <kpResizeSignallingLabel.h>
-#include <kpSelection.h>
+#include <kpTransformDialogEnvironment.h>
 
 
 kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
-                                          bool reserveTopRow,
-                                          const QString &caption,
-                                          const QString &afterActionText,
-                                          bool actOnSelection,
-                                          kpMainWindow *parent)
+        bool reserveTopRow,
+        const QString &caption,
+        const QString &afterActionText,
+        bool actOnSelection,
+        kpTransformDialogEnvironment *environ,
+        QWidget *parent)
     : KDialog (parent),
       m_afterActionText (afterActionText),
       m_actOnSelection (actOnSelection),
-      m_mainWindow (parent),
       m_dimensionsGroupBox (0),
       m_afterTransformDimensionsLabel (0),
       m_previewGroupBox (0),
       m_previewPixmapLabel (0),
-      m_gridLayout (0)
+      m_gridLayout (0),
+      m_environ (environ)
 {
-    setCaption( caption );
-    setButtons( KDialog::Ok | KDialog::Cancel );
+    setCaption (caption);
+    setButtons (KDialog::Ok | KDialog::Cancel);
     QWidget *baseWidget = new QWidget (this);
     setMainWidget (baseWidget);
 
@@ -92,7 +93,7 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
 
 
     m_gridLayout = new QGridLayout (baseWidget );
-    m_gridLayout->setSpacing( spacingHint() );
+    m_gridLayout->setSpacing (spacingHint ());
     m_gridNumRows = reserveTopRow ? 1 : 0;
     if (m_dimensionsGroupBox || m_previewGroupBox)
     {
@@ -175,9 +176,9 @@ void kpTransformPreviewDialog::createPreviewGroupBox ()
              this, SLOT (slotUpdateWithWaitCursor ()));
 
 
-    QVBoxLayout *previewLayout = new QVBoxLayout (m_previewGroupBox );
-    previewLayout->setMargin( marginHint () * 2 );
-    previewLayout->setSpacing( qMax (1, spacingHint () / 2));
+    QVBoxLayout *previewLayout = new QVBoxLayout (m_previewGroupBox);
+    previewLayout->setMargin (marginHint () * 2);
+    previewLayout->setSpacing (qMax (1, spacingHint () / 2));
 
     previewLayout->addWidget (m_previewPixmapLabel, 1/*stretch*/);
     previewLayout->addWidget (updatePushButton, 0/*stretch*/, Qt::AlignHCenter);
@@ -187,7 +188,7 @@ void kpTransformPreviewDialog::createPreviewGroupBox ()
 // protected
 kpDocument *kpTransformPreviewDialog::document () const
 {
-    return m_mainWindow ? m_mainWindow->document () : 0;
+    return m_environ->document ();
 }
 
 
@@ -266,7 +267,7 @@ void kpTransformPreviewDialog::updateShrunkenDocumentPixmap ()
 
 
     kpDocument *doc = document ();
-    Q_ASSERT (doc && doc->pixmap ());
+    Q_ASSERT (doc && !doc->image ().isNull ());
 
     if (m_shrunkenDocumentPixmap.isNull () ||
         m_previewPixmapLabel->size () != m_previewPixmapLabelSizeWhenUpdatedPixmap)
@@ -282,19 +283,20 @@ void kpTransformPreviewDialog::updateShrunkenDocumentPixmap ()
                                                m_oldWidth,
                                                m_oldHeight);
 
-        QPixmap pixmap;
+        kpImage pixmap;
 
         if (m_actOnSelection)
         {
-            kpSelection sel = *doc->selection ();
-            if (!sel.pixmap ())
-                sel.setPixmap (doc->getSelectedPixmap ());
+            kpAbstractImageSelection *sel = doc->imageSelection ()->clone ();
+            if (!sel->hasContent ())
+                sel->setBaseImage (doc->getSelectedBaseImage ());
 
-            pixmap = sel.transparentPixmap ();
+            pixmap = sel->transparentImage ();
+            delete sel;
         }
         else
         {
-            pixmap = *doc->pixmap ();
+            pixmap = doc->image ();
         }
 
         m_shrunkenDocumentPixmap = kpPixmapFX::scale (

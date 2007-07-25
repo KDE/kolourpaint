@@ -45,14 +45,12 @@
 #include <knuminput.h>
 
 #include <kpEffectBlurSharpenCommand.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
 
 
 kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
-                                                      kpMainWindow *mainWindow,
                                                       QWidget *parent)
-    : kpEffectWidgetBase (actOnSelection, mainWindow, parent)
+    : kpEffectWidgetBase (actOnSelection, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
     lay->setSpacing (spacingHint ());
@@ -61,7 +59,9 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
 
     QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
     m_amountInput = new KIntNumInput (this);
-    m_amountInput->setRange (-10, 10, 1/*step*/, true/*slider*/);
+    m_amountInput->setRange (-kpEffectBlurSharpen::MaxStrength/*- for blur*/,
+        +kpEffectBlurSharpen::MaxStrength/*+ for sharpen*/,
+        1/*step*/, true/*slider*/);
 
     m_typeLabel = new QLabel (this);
 
@@ -106,15 +106,16 @@ bool kpEffectBlurSharpenWidget::isNoOp () const
 kpImage kpEffectBlurSharpenWidget::applyEffect (const kpImage &image)
 {
     return kpEffectBlurSharpen::applyEffect (image,
-        type (), radius (), sigma (), repeat ());
+        type (), strength ());
 }
 
 // public virtual [base kpEffectWidgetBase]
-kpEffectCommandBase *kpEffectBlurSharpenWidget::createCommand () const
+kpEffectCommandBase *kpEffectBlurSharpenWidget::createCommand (
+        kpCommandEnvironment *cmdEnviron) const
 {
-    return new kpEffectBlurSharpenCommand (type (), radius (), sigma (), repeat (),
+    return new kpEffectBlurSharpenCommand (type (), strength (),
                                            m_actOnSelection,
-                                           m_mainWindow);
+                                           cmdEnviron);
 }
 
 
@@ -142,78 +143,10 @@ kpEffectBlurSharpen::Type kpEffectBlurSharpenWidget::type () const
         return kpEffectBlurSharpen::Sharpen;
 }
 
-// The numbers that follow were picked by experimentation.
-// I still have no idea what "radius" and "sigma" mean
-// (even after reading the API).
-
 // protected
-double kpEffectBlurSharpenWidget::radius () const
+int kpEffectBlurSharpenWidget::strength () const
 {
-    if (m_amountInput->value () == 0)
-        return 0;
-
-    if (m_amountInput->value () < 0)
-    {
-        return 8;
-    }
-    else
-    {
-        const double SharpenMin = .1;
-        const double SharpenMax = 2.5;
-
-        return SharpenMin +
-                  (m_amountInput->value () - 1) *
-                      (SharpenMax - SharpenMin) /
-                          (m_amountInput->maximum () - 1);
-    }
-}
-
-// protected
-double kpEffectBlurSharpenWidget::sigma () const
-{
-    if (m_amountInput->value () == 0)
-        return 0;
-
-    if (m_amountInput->value () < 0)
-    {
-        const double BlurMin = .5;
-        const double BlurMax = 4;
-
-        return BlurMin +
-                   (-m_amountInput->value () - 1) *
-                        (BlurMax - BlurMin) /
-                            (-m_amountInput->minimum () - 1);
-    }
-    else
-    {
-        const double SharpenMin = .5;
-        const double SharpenMax = 3.0;
-
-        return SharpenMin +
-                   (m_amountInput->value () - 1) *
-                       (SharpenMax - SharpenMin) /
-                           (m_amountInput->maximum () - 1);
-    }
-}
-
-// protected
-int kpEffectBlurSharpenWidget::repeat () const
-{
-    if (m_amountInput->value () == 0)
-        return 0;
-
-    if (m_amountInput->value () < 0)
-        return 1;
-    else
-    {
-        const double SharpenMin = 1;
-        const double SharpenMax = 2;
-
-        return qRound (SharpenMin +
-                          (m_amountInput->value () - 1) *
-                              (SharpenMax - SharpenMin) /
-                                  (m_amountInput->maximum () - 1));
-    }
+    return qAbs (m_amountInput->value ());
 }
 
 

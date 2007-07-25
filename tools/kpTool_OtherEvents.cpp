@@ -60,7 +60,6 @@
 #include <kpColor.h>
 #include <kpColorToolBar.h>
 #include <kpDefs.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
 #include <kpToolAction.h>
 #include <kpToolToolBar.h>
@@ -101,6 +100,7 @@ void kpTool::focusOutEvent (QFocusEvent *)
     if (d->beganDraw)
         endDrawInternal (d->currentPoint, kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
 }
+
 
 void kpTool::enterEvent (QEvent *)
 {

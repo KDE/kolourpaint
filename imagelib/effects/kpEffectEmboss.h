@@ -36,9 +36,14 @@
 class kpEffectEmboss
 {
 public:
-    static kpImage applyEffect (const kpImage &image,
-                                double radius, double sigma,
-                                int repeat);
+    // This will always be 0 - this constant will not change.
+    static const int MinStrength = 0;
+
+    static const int MaxStrength = 10;
+
+    // <strength> = strength of the effect
+    //              (must be between MinStrength and MaxStrength inclusive)
+    static kpImage applyEffect (const kpImage &image, int strength);
 };
 
 

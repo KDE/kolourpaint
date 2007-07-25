@@ -40,34 +40,39 @@ class QKeyEvent;
 class QRect;
 class QTimer;
 
+class kpAbstractSelection;
 class kpColor;
-class kpMainWindow;
-class kpSelection;
 class kpToolSelectionCreateCommand;
+class kpToolSelectionEnvironment;
 class kpToolSelectionMoveCommand;
 class kpToolSelectionPullFromDocumentCommand;
 class kpToolSelectionResizeScaleCommand;
 class kpToolWidgetOpaqueOrTransparent;
 
 
-// TODO: Push down more functionality into kpToolText.
-//       Bad signs would be calls to "kpSelection::isText()" and
-//       "kpViewManager::setTextCursor*()".
+// REFACTOR: Push down more functionality into kpToolText.
+//           Bad signs would be calls to "kpDocument::textSelection()" and
+//           "kpViewManager::setTextCursor*()".
 class kpToolSelection : public kpTool
 {
 Q_OBJECT
 
 public:
-    // TODO: use inheritance
+    // REFACTOR: use inheritance
     enum Mode {Rectangle, Ellipse, FreeForm, Text};
 
     kpToolSelection (Mode mode,
-                     const QString &text, const QString &description,
-                     int key,
-                     kpMainWindow *mainWindow, const QString &name);
+        const QString &text, const QString &description,
+        int key,
+        kpToolSelectionEnvironment *environ, QObject *parent,
+        const QString &name);
     virtual ~kpToolSelection ();
 
     void setMode (Mode mode) { m_mode = mode; }
+
+protected:
+    // (overrides non-virtual method in kpTool)
+    kpToolSelectionEnvironment *environ () const;
 
 private:
     void pushOntoDocument ();
@@ -103,7 +108,7 @@ protected:
     // Returns the type of drag that is occurring.  Will result in side-effects.
     //
     // Overridden in kpToolText.
-    // TODO: Not completely clean interface with subclasses due to side effects.
+    // REFACTOR: Not completely clean interface with subclasses due to side effects.
     virtual DragType beginDrawInsideSelection ();
 
 public:
@@ -127,13 +132,28 @@ protected:
     // 1. Set the document's selection (which may not have previously existed)
     //    to the specified size.
     // 2. Update the status bar by calling kpTool::setUserShapePoints().
-    virtual void createMoreSelectionAndUpdateStatusBar (
+    //
+    // <accidentalDragAdjustedPoint> = currentPoint() but is set to startPoint()
+    //                                 if the mouse has not been moved much
+    //                                 (6 manhatten length pixels from startPoint()
+    //                                 within a short period of time (200ms).
+    //                                 See m_createNOPTimer.
+    // <normalizedRect> = as passed to kpTool::draw().
+    //
+    // If the drag has already begun (dragHasBegun), you must return "true".
+    // If it has not, you should return whether you think the drag should be
+    // started based on drag (usually, if <accidentalDragAdjustedPoint> is
+    // not equal to startPoint()).
+    virtual bool createMoreSelectionAndUpdateStatusBar (
+        bool dragHasBegun,
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &normalizedRect) = 0;
 private:
+    void pullSelectionFromDocumentIfNeeded ();
+
     void create (const QPoint &thisPoint, const QRect &normalizedRect);
     void move (const QPoint &thisPoint, const QRect &normalizedRect);
-    
+
     // resizeScaleCalculateNewSelectionPosSize() calls us with what the
     // <newWidth>x<newHeight> should be, but before any aspect maintenance
     // operations.
@@ -150,10 +170,10 @@ private:
     // size of the selection.
     void resizeScaleTryKeepAspect (int newWidth, int newHeight,
         bool horizontalGripDragged, bool verticalGripDragged,
-        const kpSelection &originalSelection,
+        const kpAbstractSelection &originalSelection,
         int *newWidthOut, int *newHeightOut);
     void resizeScaleCalculateNewSelectionPosSize (
-        const kpSelection &originalSelection,
+        const kpAbstractSelection &originalSelection,
         int *newX, int *newY,
         int *newWidth, int *newHeight);
     void resizeScale (const QPoint &thisPoint, const QRect &normalizedRect);
@@ -206,7 +226,7 @@ protected:
     kpToolSelectionResizeScaleCommand *m_currentResizeScaleCommand;
     kpToolWidgetOpaqueOrTransparent *m_toolWidgetOpaqueOrTransparent;
 
-    kpToolSelectionCreateCommand *m_currentCreateTextCommand;  // TODO: push down into kpToolText
+    kpToolSelectionCreateCommand *m_currentCreateTextCommand;  // REFACTOR: push down into kpToolText
     bool m_cancelledShapeButStillHoldingButtons;
 
     QTimer *m_createNOPTimer, *m_RMBMoveUpdateGUITimer;

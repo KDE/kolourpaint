@@ -33,7 +33,7 @@
 #include <qpixmap.h>
 
 #include <kpColor.h>
-#include <kpTempPixmap.h>
+#include <kpTempImage.h>
 #include <kpToolWidgetBase.h>
 
 
@@ -64,8 +64,8 @@ public:
     // border suitable as a cursor only.
     //
     // TODO: change function + data -> object
-    kpTempPixmap::UserFunctionType drawFunction () const;
-    kpTempPixmap::UserFunctionType drawCursorFunction () const;
+    kpTempImage::UserFunctionType drawFunction () const;
+    kpTempImage::UserFunctionType drawCursorFunction () const;
     
     static DrawPackage drawFunctionDataForSelected (const kpColor &color,
         int selectedIndex);

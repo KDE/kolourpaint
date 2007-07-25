@@ -39,7 +39,7 @@ struct kpDocumentMetaInfoPrivate
     int m_dotsPerMeterX, m_dotsPerMeterY;
     QPoint m_offset;
 
-    QMap <QImageTextKeyLang, QString> m_textMap;
+    QMap <QString, QString> m_textMap;
 };
 
 
@@ -93,15 +93,14 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
                << " Y=" << dotsPerMeterY ()
                << " offset=" << offset () << endl;
 
-    QList <QImageTextKeyLang> keyList = textList ();
-    for (QList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
+    QList <QString> keyList = textKeys ();
+    for (QList <QString>::const_iterator it = keyList.begin ();
          it != keyList.end ();
          it++)
     {
-        kDebug () << "key=" << (*it).key
-                   << " lang=" << (*it).lang
-                   << " text=" << text (*it)
-                   << endl;
+        kDebug () << "key=" << (*it)
+                  << " text=" << text (*it)
+                  << endl;
     }
 
     kDebug () << usedPrefix << "ENDS" << endl;
@@ -148,41 +147,26 @@ void kpDocumentMetaInfo::setOffset (const QPoint &point)
 
 
 // public
-QMap <QImageTextKeyLang, QString> kpDocumentMetaInfo::textMap () const
+QMap <QString, QString> kpDocumentMetaInfo::textMap () const
 {
     return d->m_textMap;
 }
 
 // public
-QList <QImageTextKeyLang> kpDocumentMetaInfo::textList () const
+QList <QString> kpDocumentMetaInfo::textKeys () const
 {
     return d->m_textMap.keys ();
 }
 
 
 // public
-QString kpDocumentMetaInfo::text (const QImageTextKeyLang &itkl) const
+QString kpDocumentMetaInfo::text (const QString &key) const
 {
-    return d->m_textMap [itkl];
+    return d->m_textMap [key];
 }
 
 // public
-QString kpDocumentMetaInfo::text (const char *key, const char *lang) const
+void kpDocumentMetaInfo::setText (const QString &key, const QString &value)
 {
-    return text (QImageTextKeyLang (key, lang));
-}
-
-
-// public
-void kpDocumentMetaInfo::setText (const QImageTextKeyLang &itkl,
-                                  const QString &string)
-{
-    d->m_textMap [itkl] = string;
-}
-
-// public
-void kpDocumentMetaInfo::setText (const char *key, const char *lang,
-                                  const QString &string)
-{
-    setText (QImageTextKeyLang (key, lang), string);
+    d->m_textMap [key] = value;
 }

@@ -50,10 +50,12 @@
 #include <kpEffectBlurSharpenWidget.h>
 #include <kpEffectEmbossWidget.h>
 #include <kpEffectFlattenWidget.h>
+#include <kpEffectHSVWidget.h>
 #include <kpEffectInvertWidget.h>
 #include <kpEffectReduceColorsWidget.h>
-#include <kpEffectHSVWidget.h>
+#include <kpEffectToneEnhanceWidget.h>
 #include <kpPixmapFX.h>
+#include <kpTransformDialogEnvironment.h>
 
 
 // protected static
@@ -62,12 +64,14 @@ int kpEffectsDialog::s_lastHeight = 620;
 
 
 kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
-                                  kpMainWindow *parent)
+                                  kpTransformDialogEnvironment *environ,
+                                  QWidget *parent)
     : kpTransformPreviewDialog (kpTransformPreviewDialog::Preview,
                            true/*reserve top row*/,
                            QString::null/*caption*/,
                            QString::null/*afterActionText (no Dimensions Group Box)*/,
                            actOnSelection,
+                           environ,
                            parent),
       m_delayedUpdateTimer (new QTimer (this)),
       m_effectsComboBox (0),
@@ -99,12 +103,13 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 
     m_effectsComboBox = new KComboBox (effectContainer);
     m_effectsComboBox->addItem (i18n ("Balance"));
+    m_effectsComboBox->addItem (i18n ("Hue, Saturation, Value"));
     m_effectsComboBox->addItem (i18n ("Emboss"));
     m_effectsComboBox->addItem (i18n ("Flatten"));
     m_effectsComboBox->addItem (i18n ("Invert"));
     m_effectsComboBox->addItem (i18n ("Reduce Colors"));
     m_effectsComboBox->addItem (i18n ("Soften & Sharpen"));
-    m_effectsComboBox->addItem (i18n ("Hue, Saturation, Value"));
+    m_effectsComboBox->addItem (i18n ("Tone Enhance"));
 
     label->setBuddy (m_effectsComboBox);
     effectContainer->setStretchFactor (m_effectsComboBox, 1);
@@ -155,7 +160,7 @@ kpEffectCommandBase *kpEffectsDialog::createCommand () const
     if (!m_effectWidget)
         return 0;
 
-    return m_effectWidget->createCommand ();
+    return m_effectWidget->createCommand (m_environ->commandEnvironment ());
 }
 
 
@@ -214,10 +219,8 @@ void kpEffectsDialog::selectEffect (int which)
 
     m_settingsGroupBox->setWindowTitle (QString::null);
 
-#define CREATE_EFFECT_WIDGET(name)                        \
-    m_effectWidget = new name (m_actOnSelection,     \
-                                    m_mainWindow,         \
-                                    m_settingsGroupBox)
+#define CREATE_EFFECT_WIDGET(name)  \
+    m_effectWidget = new name (m_actOnSelection, m_settingsGroupBox)
     switch (which)
     {
     case 0:
@@ -225,27 +228,31 @@ void kpEffectsDialog::selectEffect (int which)
         break;
 
     case 1:
-        CREATE_EFFECT_WIDGET (kpEffectEmbossWidget);
+        CREATE_EFFECT_WIDGET (kpEffectHSVWidget);
         break;
 
     case 2:
-        CREATE_EFFECT_WIDGET (kpEffectFlattenWidget);
+        CREATE_EFFECT_WIDGET (kpEffectEmbossWidget);
         break;
 
     case 3:
-        CREATE_EFFECT_WIDGET (kpEffectInvertWidget);
+        CREATE_EFFECT_WIDGET (kpEffectFlattenWidget);
         break;
 
     case 4:
-        CREATE_EFFECT_WIDGET (kpEffectReduceColorsWidget);
+        CREATE_EFFECT_WIDGET (kpEffectInvertWidget);
         break;
 
     case 5:
-        CREATE_EFFECT_WIDGET (kpEffectBlurSharpenWidget);
+        CREATE_EFFECT_WIDGET (kpEffectReduceColorsWidget);
         break;
 
     case 6:
-        CREATE_EFFECT_WIDGET (kpEffectHSVWidget);
+        CREATE_EFFECT_WIDGET (kpEffectBlurSharpenWidget);
+        break;
+
+    case 7:
+        CREATE_EFFECT_WIDGET (kpEffectToneEnhanceWidget);
         break;
     }
 #undef CREATE_EFFECT_WIDGET
@@ -261,6 +268,10 @@ void kpEffectsDialog::selectEffect (int which)
 
         // Don't resize the preview when showing the widget:
         // TODO: actually work
+        //
+        //       And I think this resizing is causing the effect (including
+        //       QPixmap -> QImage translation?) to be executed twice on switching
+        //       effect.
 
         QSize previewGroupBoxMinSize = m_previewGroupBox->minimumSize ();
         QSize previewGroupBoxMaxSize = m_previewGroupBox->maximumSize ();

@@ -1,9 +1,8 @@
 
-Please send bug reports and feature requests to http://bugs.kde.org/ or
-<kolourpaint-support@lists.sourceforge.net>.  Don't hesitate to report bugs
-nor hesitate to send us your wishes - it provides valuable feedback that
-will help to improve future versions of KolourPaint and you will not
-receive flames for reporting duplicates.
+Please send bug reports and feature requests to http://bugs.kde.org/.
+Don't hesitate to report bugs nor hesitate to send us your wishes - it
+provides valuable feedback that will help to improve future versions of
+KolourPaint and you will not receive flames for reporting duplicates.
 
 
 This file lists known bugs in this version that are not considered
@@ -55,11 +54,6 @@ This file lists known bugs in this version that are not considered
     you can fit in a text box.
 
 12. You cannot select only parts of the text you write.
-
-13. Due to a workaround for a Qt bug, writing text with the foreground
-    colour set to transparent is incredibly slow.  Write your text in
-    another colour and then set the foreground colour to transparent after
-    you've finished typing to avoid this issue.
 
 14. The text cursor may be momentarily misrendered when scrolling the view.
 

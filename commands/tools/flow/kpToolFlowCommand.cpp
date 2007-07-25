@@ -47,11 +47,11 @@ struct kpToolFlowCommandPrivate
 };
 
 
-kpToolFlowCommand::kpToolFlowCommand (const QString &name, kpMainWindow *mainWindow)
-    : kpNamedCommand (name, mainWindow),
+kpToolFlowCommand::kpToolFlowCommand (const QString &name, kpCommandEnvironment *environ)
+    : kpNamedCommand (name, environ),
       d (new kpToolFlowCommandPrivate ())
 {
-    d->image = *document ()->pixmap ();
+    d->image = document ()->image ();
 }
 
 kpToolFlowCommand::~kpToolFlowCommand ()
@@ -61,9 +61,9 @@ kpToolFlowCommand::~kpToolFlowCommand ()
 
 
 // public virtual [base kpCommand]
-int kpToolFlowCommand::size () const
+kpCommandSize::SizeType kpToolFlowCommand::size () const
 {
-    return kpPixmapFX::pixmapSize (d->image);
+    return ImageSize (d->image);
 }
 
 
@@ -85,9 +85,9 @@ void kpToolFlowCommand::swapOldAndNew ()
 {
     if (d->boundingRect.isValid ())
     {
-        const kpImage oldImage = document ()->getPixmapAt (d->boundingRect);
+        const kpImage oldImage = document ()->getImageAt (d->boundingRect);
 
-        document ()->setPixmapAt (d->image, d->boundingRect.topLeft ());
+        document ()->setImageAt (d->image, d->boundingRect.topLeft ());
 
         d->image = oldImage;
     }
@@ -120,7 +120,7 @@ void kpToolFlowCommand::finalize ()
 {
     if (d->boundingRect.isValid ())
     {
-        // Store only the needed part of doc pixmap.
+        // Store only the needed part of doc image.
         d->image = kpTool::neededPixmap (d->image, d->boundingRect);
     }
     else
@@ -135,7 +135,7 @@ void kpToolFlowCommand::cancel ()
     if (d->boundingRect.isValid ())
     {
         viewManager ()->setFastUpdates ();
-        document ()->setPixmapAt (d->image, d->boundingRect.topLeft ());
+        document ()->setImageAt (d->image, d->boundingRect.topLeft ());
         viewManager ()->restoreFastUpdates ();
     }
 }

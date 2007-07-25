@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_SELECTION 0
+#define DEBUG_KP_TOOL_SELECTION 1
 
 
 #include <kpToolSelection.h>
@@ -44,18 +44,20 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <kpAbstractImageSelection.h>
+#include <kpAbstractSelection.h>
 #include <kpBug.h>
 #include <kpCommandHistory.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpSelection.h>
+#include <kpMacroCommand.h>
 #include <kpToolSelectionCreateCommand.h>
 #include <kpToolSelectionDestroyCommand.h>
+#include <kpToolSelectionEnvironment.h>
 #include <kpToolSelectionMoveCommand.h>
 #include <kpToolSelectionPullFromDocumentCommand.h>
 #include <kpToolSelectionResizeScaleCommand.h>
-#include <kpToolSelectionTransparencyCommand.h>
+#include <kpToolImageSelectionTransparencyCommand.h>
 #include <kpToolToolBar.h>
 #include <kpToolWidgetOpaqueOrTransparent.h>
 #include <kpView.h>
@@ -66,9 +68,9 @@ kpToolSelection::kpToolSelection (Mode mode,
         const QString &text,
         const QString &description,
         int key,
-        kpMainWindow *mainWindow,
+        kpToolSelectionEnvironment *environ, QObject *parent,
         const QString &name)
-    : kpTool (text, description, key, mainWindow, name),
+    : kpTool (text, description, key, environ, parent, name),
       m_mode (mode),
       m_currentPullFromDocumentCommand (0),
       m_currentMoveCommand (0),
@@ -92,13 +94,22 @@ kpToolSelection::~kpToolSelection ()
 }
 
 
+// protected overrides [base kpTool]
+kpToolSelectionEnvironment *kpToolSelection::environ () const
+{
+    kpToolEnvironment *e = kpTool::environ ();
+    Q_ASSERT (dynamic_cast <kpToolSelectionEnvironment *> (e));
+    return static_cast <kpToolSelectionEnvironment *> (e);
+}
+
+
 // private
 void kpToolSelection::pushOntoDocument ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "kpToolSelection::pushOntoDocument() CALLED" << endl;
 #endif
-    mainWindow ()->slotDeselect ();
+    environ ()->deselectSelection ();
 }
 
 
@@ -138,6 +149,7 @@ QString kpToolSelection::haventBegunDrawUserMessageInsideSelection () const
 // protected virtual
 QString kpToolSelection::haventBegunDrawUserMessageOutsideSelection () const
 {
+    // TODO: This is wrong because you can still use RMB.
     return i18n ("Left drag to create selection.");
 }
 
@@ -155,7 +167,7 @@ QString kpToolSelection::haventBegunDrawUserMessage () const
     if (m_cancelledShapeButStillHoldingButtons)
         return i18n ("Let go of all the mouse buttons.");
 
-    kpSelection *sel = document ()->selection ();
+    kpAbstractSelection *sel = document ()->selection ();
     if (sel && onSelectionResizeHandle () && !controlOrShiftPressed ())
     {
         return /*virtual*/haventBegunDrawUserMessageOnResizeHandle ();
@@ -175,7 +187,7 @@ QString kpToolSelection::haventBegunDrawUserMessage () const
 void kpToolSelection::begin ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelection::begin()" << endl;
+    kDebug () << "kpToolSelection<" << objectName () << ">::begin()" << endl;
 #endif
 
     kpToolToolBar *tb = toolToolBar ();
@@ -214,7 +226,7 @@ void kpToolSelection::begin ()
 void kpToolSelection::end ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelection::end()" << endl;
+    kDebug () << "kpToolSelection<" << objectName () << ">::end()" << endl;
 #endif
 
     if (document ()->selection ())
@@ -297,7 +309,7 @@ void kpToolSelection::beginDraw ()
     m_dragType = Create;
     m_dragHasBegun = false;
 
-    kpSelection *sel = document ()->selection ();
+    kpAbstractSelection *sel = document ()->selection ();
     m_hadSelectionBeforeDrag = bool (sel);
 
     if (sel)
@@ -344,7 +356,12 @@ void kpToolSelection::beginDraw ()
     {
         viewManager ()->setQueueUpdates ();
         {
+            // LOREFACTOR: I suspect some calls to viewManager() in this
+            //             file (including this) are redundant since any
+            //             code that tweaks such settings, returns them to
+            //             their original state, after the code is complete.
             viewManager ()->setSelectionBorderVisible (true);
+
             viewManager ()->setSelectionBorderFinished (false);
             viewManager ()->setTextCursorEnabled (false);
         }
@@ -382,7 +399,7 @@ QCursor kpToolSelection::cursor () const
                << endl;
 #endif
 
-    kpSelection *sel = document () ? document ()->selection () : 0;
+    kpAbstractSelection *sel = document () ? document ()->selection () : 0;
 
     if (sel && onSelectionResizeHandle () && !controlOrShiftPressed ())
     {
@@ -455,7 +472,7 @@ void kpToolSelection::hover (const QPoint &point)
 // protected
 void kpToolSelection::popupRMBMenu ()
 {
-    QMenu *pop = mainWindow () ? mainWindow ()->selectionToolRMBMenu () : 0;
+    QMenu *pop = environ ()->selectionToolRMBMenu ();
     Q_ASSERT (pop);
 
     // WARNING: enters event loop - may re-enter view/tool event handlers
@@ -487,7 +504,7 @@ void kpToolSelection::slotRMBMoveUpdateGUI ()
 
     setSelectionBorderForMove ();
 
-    kpSelection * const sel = document () ? document ()->selection () : 0;
+    kpAbstractSelection * const sel = document () ? document ()->selection () : 0;
     if (sel)
         setUserShapePoints (sel->topLeft ());
 }
@@ -509,9 +526,31 @@ void kpToolSelection::delayedDraw ()
 
     if (hasBegunDraw ())
     {
+        // TODO: Why doesn't this modify "m_dragHasBegun"?
+        //       Maybe "m_dragHasBegun" should be replaced by
+        //       "!m_createNOPTimer->isActive()"?
         draw (currentPoint (), lastPoint (),
               kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
     }
+}
+
+// private
+void kpToolSelection::pullSelectionFromDocumentIfNeeded ()
+{
+    kpAbstractImageSelection *imageSel = document ()->imageSelection ();
+
+    if (imageSel && !imageSel->hasContent () &&
+        !m_currentPullFromDocumentCommand)
+    {
+        if (imageSel->transparency ().isTransparent ())
+            environ ()->flashColorSimilarityToolBarItem ();
+
+        m_currentPullFromDocumentCommand = new kpToolSelectionPullFromDocumentCommand (
+            QString::null/*uninteresting child of macro cmd*/,
+            environ ()->commandEnvironment ());
+        m_currentPullFromDocumentCommand->execute ();
+    }
+
 }
 
 // private
@@ -527,13 +566,12 @@ void kpToolSelection::create (const QPoint &thisPoint, const QRect &normalizedRe
                 << endl;
 #endif
 
-    bool nextDragHasBegun = true;
-
-
     QPoint accidentalDragAdjustedPoint = thisPoint;
-    
     if (m_createNOPTimer->isActive ())
     {
+        // REFACTOR: Rearrange code to make this apparent.
+        Q_ASSERT (!m_dragHasBegun);
+
         if (viewUnderStartPoint ()->transformDocToViewX (
                 (accidentalDragAdjustedPoint - startPoint ()).manhattanLength ()) <= 6)
         {
@@ -552,51 +590,19 @@ void kpToolSelection::create (const QPoint &thisPoint, const QRect &normalizedRe
     }
 
 
-    // Prevent unintentional 1-pixel selections
-    if (!m_dragHasBegun && accidentalDragAdjustedPoint == startPoint ())
-    {
-        if (m_mode != kpToolSelection::Text)
-        {
-        #if DEBUG_KP_TOOL_SELECTION && 1
-            kDebug () << "\tnon-text NOP - return" << endl;
-        #endif
-            setUserShapePoints (accidentalDragAdjustedPoint);
-            return;
-        }
-        else  // m_mode == kpToolSelection::Text
-        {
-            // Attempt to deselect text box by clicking?
-            if (m_hadSelectionBeforeDrag)
-            {
-            #if DEBUG_KP_TOOL_SELECTION && 1
-                kDebug () << "\ttext box deselect - NOP - return" << endl;
-            #endif
-                setUserShapePoints (accidentalDragAdjustedPoint);
-                return;
-            }
+    const bool hadSelection = document ()->selection ();
 
-            // Drag-wise, this is a NOP so we'd normally return (hence
-            // m_dragHasBegun would not change).  However, as a special
-            // case, allow user to create a text box using a single
-            // click.  But don't set m_dragHasBegun for next iteration
-            // since it would be untrue.
-            //
-            // This makes sure that a single click creation of text box
-            // works even if draw() is invoked more than once at the
-            // same position (esp. with accidental drag suppression
-            // (above)).
-            nextDragHasBegun = false;
-        }
-    }
-
-
-    /*virtual*/createMoreSelectionAndUpdateStatusBar (accidentalDragAdjustedPoint,
+    const bool oldDragHasBegun = m_dragHasBegun;
+    m_dragHasBegun = /*virtual*/createMoreSelectionAndUpdateStatusBar (
+        m_dragHasBegun,
+        accidentalDragAdjustedPoint,
         normalizedRect);
+    if (oldDragHasBegun)
+        Q_ASSERT (m_dragHasBegun);
 
-    viewManager ()->setSelectionBorderVisible (true);
-
-
-    m_dragHasBegun = nextDragHasBegun;
+    // Did we just create a selection?
+    if (!hadSelection && document ()->selection ())
+        viewManager ()->setSelectionBorderVisible (true);
 }
 
 // private
@@ -606,7 +612,7 @@ void kpToolSelection::move (const QPoint &thisPoint, const QRect &/*normalizedRe
     kDebug () << "\tmoving selection" << endl;
 #endif
 
-    kpSelection *sel = document ()->selection ();
+    kpAbstractSelection *sel = document ()->selection ();
 
     QRect targetSelRect (thisPoint.x () - m_startDragFromSelectionTopLeft.x (),
         thisPoint.y () - m_startDragFromSelectionTopLeft.y (),
@@ -665,19 +671,14 @@ void kpToolSelection::move (const QPoint &thisPoint, const QRect &/*normalizedRe
     }
 
 
-    if (!sel->pixmap () && !m_currentPullFromDocumentCommand)
-    {
-        m_currentPullFromDocumentCommand = new kpToolSelectionPullFromDocumentCommand (
-            QString::null/*uninteresting child of macro cmd*/,
-            mainWindow ());
-        m_currentPullFromDocumentCommand->execute ();
-    }
+    pullSelectionFromDocumentIfNeeded ();
+
 
     if (!m_currentMoveCommand)
     {
         m_currentMoveCommand = new kpToolSelectionMoveCommand (
             QString::null/*uninteresting child of macro cmd*/,
-            mainWindow ());
+            environ ()->commandEnvironment ());
         m_currentMoveCommandIsSmear = false;
     }
 
@@ -699,21 +700,27 @@ void kpToolSelection::move (const QPoint &thisPoint, const QRect &/*normalizedRe
     //viewManager ()->restoreFastUpdates ();
     //viewManager ()->restoreQueueUpdates ();
 
-    QPoint start = m_currentMoveCommand->originalSelection ().topLeft ();
+    // REFACTOR: yuck, yuck
+    kpAbstractSelection *orgSel = m_currentMoveCommand->originalSelectionClone ();
+    QPoint start = orgSel->topLeft ();
+    delete orgSel;
     QPoint end = targetSelRect.topLeft ();
     setUserShapePoints (start, end, false/*don't set size*/);
     setUserShapeSize (end.x () - start.x (), end.y () - start.y ());
+
+
+    m_dragHasBegun = true;
 }
 
 // private
 void kpToolSelection::resizeScaleTryKeepAspect (int newWidth, int newHeight,
         bool horizontalGripDragged, bool verticalGripDragged,
-        const kpSelection &originalSelection,
+        const kpAbstractSelection &originalSelection,
         int *newWidthOut, int *newHeightOut)
 {
     const int oldWidth = originalSelection.width (),
         oldHeight = originalSelection.height ();
-        
+
     // Width changed more than height?  At equality, favor width.
     // Fix width, change height.
     //
@@ -739,7 +746,7 @@ void kpToolSelection::resizeScaleTryKeepAspect (int newWidth, int newHeight,
 
 // private
 void kpToolSelection::resizeScaleCalculateNewSelectionPosSize (
-        const kpSelection &originalSelection,
+        const kpAbstractSelection &originalSelection,
         int *newX, int *newY,
         int *newWidth, int *newHeight)
 {
@@ -805,7 +812,7 @@ void kpToolSelection::resizeScaleCalculateNewSelectionPosSize (
     //
     // Adjust x/y to new width/height for left/top resizes.
     //
-    
+
     if (m_resizeScaleType & kpView::Left)
     {
         *newX -= (*newWidth - originalSelection.width ());
@@ -834,7 +841,7 @@ void kpToolSelection::resizeScale (
     kDebug () << "\tresize/scale" << endl;
 #endif
 
-    kpSelection *sel = document ()->selection ();
+    kpAbstractSelection *sel = document ()->selection ();
 
     if (!m_dragHasBegun && thisPoint == startPoint ())
     {
@@ -847,23 +854,18 @@ void kpToolSelection::resizeScale (
     }
 
 
-    if (!sel->pixmap () && !m_currentPullFromDocumentCommand)
-    {
-        m_currentPullFromDocumentCommand =
-            new kpToolSelectionPullFromDocumentCommand (
-                QString::null/*uninteresting child of macro cmd*/,
-                mainWindow ());
-        m_currentPullFromDocumentCommand->execute ();
-    }
+    pullSelectionFromDocumentIfNeeded ();
+
 
     if (!m_currentResizeScaleCommand)
     {
         m_currentResizeScaleCommand
-            = new kpToolSelectionResizeScaleCommand (mainWindow ());
+            = new kpToolSelectionResizeScaleCommand (environ ()->commandEnvironment ());
     }
 
 
-    kpSelection originalSelection = m_currentResizeScaleCommand->originalSelection ();
+    const kpAbstractSelection *originalSelection =
+        m_currentResizeScaleCommand->originalSelection ();
 
 
     // There is nothing illegal about position (-1,-1) but why not.
@@ -872,7 +874,7 @@ void kpToolSelection::resizeScale (
 
     // This should change all of the above values.
     resizeScaleCalculateNewSelectionPosSize (
-        originalSelection,
+        *originalSelection,
         &newX, &newY,
         &newWidth, &newHeight);
 
@@ -886,13 +888,16 @@ void kpToolSelection::resizeScale (
     }
     viewManager ()->restoreFastUpdates ();
 
-    setUserShapePoints (QPoint (originalSelection.width (),
-                                originalSelection.height ()),
+    setUserShapePoints (QPoint (originalSelection->width (),
+                                originalSelection->height ()),
                         QPoint (newWidth,
                                 newHeight),
                         false/*don't set size*/);
-    setUserShapeSize (newWidth - originalSelection.width (),
-                        newHeight - originalSelection.height ());
+    setUserShapeSize (newWidth - originalSelection->width (),
+                        newHeight - originalSelection->height ());
+
+
+    m_dragHasBegun = true;
 }
 
 // virtual
@@ -949,7 +954,7 @@ void kpToolSelection::cancelMove ()
         delete m_currentMoveCommand;
         m_currentMoveCommand = 0;
 
-        if (document ()->selection ()->isText ())
+        if (document ()->textSelection ())
             viewManager ()->setTextCursorBlinkState (true);
     }
 }
@@ -988,7 +993,7 @@ void kpToolSelection::cancelResizeScale ()
         delete m_currentResizeScaleCommand;
         m_currentResizeScaleCommand = 0;
 
-        if (document ()->selection ()->isText ())
+        if (document ()->textSelection ())
             viewManager ()->setTextCursorBlinkState (true);
     }
 }
@@ -1078,45 +1083,53 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/,
             {
                 cmd = new kpMacroCommand (i18n ("%1: Smear",
                     document ()->selection ()->name ()),
-                    mainWindow ());
+                    environ ()->commandEnvironment ());
             }
             else
             {
                 cmd = new kpMacroCommand (
                     /*virtual*/nonSmearMoveCommandName (),
-                    mainWindow ());
+                    environ ()->commandEnvironment ());
             }
 
-            if (document ()->selection ()->isText ())
+            if (document ()->textSelection ())
                 viewManager ()->setTextCursorBlinkState (true);
         }
         else if (m_currentResizeScaleCommand)
         {
             cmd = new kpMacroCommand (
                 m_currentResizeScaleCommand->kpNamedCommand::name (),
-                mainWindow ());
+                environ ()->commandEnvironment ());
 
-            if (document ()->selection ()->isText ())
+            if (document ()->textSelection ())
                 viewManager ()->setTextCursorBlinkState (true);
         }
 
         if (m_currentPullFromDocumentCommand)
         {
             Q_ASSERT (m_currentMoveCommand || m_currentResizeScaleCommand);
-            kpSelection selection;
+            kpAbstractImageSelection *newImageSel = 0;
 
+            kpAbstractSelection *newSel = 0;
             if (m_currentMoveCommand)
-                selection = m_currentMoveCommand->originalSelection ();
+                newSel = m_currentMoveCommand->originalSelectionClone ();
             else if (m_currentResizeScaleCommand)
-                selection = m_currentResizeScaleCommand->originalSelection ();
+                newSel = m_currentResizeScaleCommand->originalSelection ()->clone ();
 
-            // just the border
-            selection.setPixmap (QPixmap ());
+            // There is a PullFromDocument command active, which only works
+            // on image selections, so we must currently have an image selection.
+            Q_ASSERT (dynamic_cast <kpAbstractImageSelection *> (newSel));
+            newImageSel = static_cast <kpAbstractImageSelection *> (newSel);
+
+            // Store just the border.
+            newImageSel->setBaseImage (kpImage ());
 
             kpCommand *createCommand = new kpToolSelectionCreateCommand (
                 i18n ("Selection: Create"),
-                selection,
-                mainWindow ());
+                *newImageSel,
+                environ ()->commandEnvironment ());
+
+            delete newImageSel;
 
             if (kpToolSelectionCreateCommand::nextUndoCommandIsCreateBorder (
                     commandHistory ()))
@@ -1140,7 +1153,7 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/,
             cmd->addCommand (m_currentMoveCommand);
             m_currentMoveCommand = 0;
 
-            if (document ()->selection ()->isText ())
+            if (document ()->textSelection ())
                 viewManager ()->setTextCursorBlinkState (true);
         }
 
@@ -1150,7 +1163,7 @@ void kpToolSelection::endDraw (const QPoint & /*thisPoint*/,
             cmd->addCommand (m_currentResizeScaleCommand);
             m_currentResizeScaleCommand = 0;
 
-            if (document ()->selection ()->isText ())
+            if (document ()->textSelection ())
                 viewManager ()->setTextCursorBlinkState (true);
         }
 
@@ -1213,6 +1226,7 @@ void kpToolSelection::keyPressEvent (QKeyEvent *e)
 
 
 // private slot
+// HIREFACTOR: Who calls us?
 void kpToolSelection::selectionTransparencyChanged (const QString & /*name*/)
 {
 #if 0
@@ -1220,11 +1234,11 @@ void kpToolSelection::selectionTransparencyChanged (const QString & /*name*/)
     kDebug () << "kpToolSelection::selectionTransparencyChanged(" << name << ")" << endl;
 #endif
 
-    if (mainWindow ()->settingSelectionTransparency ())
+    if (environ ()->settingImageSelectionTransparency ())
     {
     #if DEBUG_KP_TOOL_SELECTION
         kDebug () << "\trecursion - abort setting selection transparency: "
-                   << mainWindow ()->settingSelectionTransparency () << endl;
+                   << environ ()->settingImageSelectionTransparency () << endl;
     #endif
         return;
     }
@@ -1235,8 +1249,8 @@ void kpToolSelection::selectionTransparencyChanged (const QString & /*name*/)
         kDebug () << "\thave sel - set transparency" << endl;
     #endif
 
-        kpSelectionTransparency oldST = document ()->selection ()->transparency ();
-        kpSelectionTransparency st = mainWindow ()->selectionTransparency ();
+        kpImageSelectionTransparency oldST = document ()->selection ()->transparency ();
+        kpImageSelectionTransparency st = environ ()->selectionTransparency ();
 
         // TODO: This "NOP" check causes us a great deal of trouble e.g.:
         //
@@ -1256,24 +1270,24 @@ void kpToolSelection::selectionTransparencyChanged (const QString & /*name*/)
         if (true)
         {
         #if DEBUG_KP_TOOL_SELECTION
-            kDebug () << "\t\twhich changed the pixmap" << endl;
+            kDebug () << "\t\twhich changed the image" << endl;
         #endif
 
-            commandHistory ()->addCommand (new kpToolSelectionTransparencyCommand (
+            commandHistory ()->addCommand (new kpToolImageSelectionTransparencyCommand (
                 i18n ("Selection: Transparency"), // name,
                 st, oldST,
-                mainWindow ()),
+                environ ()->commandEnvironment ()),
                 false/* no exec*/);
         }
     }
 #endif
 
     // TODO: I've duplicated the code (see below 3x) to make sure
-    //       kpSelectionTransparency(oldST)::transparentColor() is defined
+    //       kpImageSelectionTransparency(oldST)::transparentColor() is defined
     //       and not taken from kpDocument (where it may not be defined because
     //       the transparency may be opaque).
     //
-    //       That way kpToolSelectionTransparencyCommand can force set colours.
+    //       That way kpToolImageSelectionTransparencyCommand can force set colours.
 }
 
 
@@ -1284,19 +1298,20 @@ void kpToolSelection::slotIsOpaqueChanged ()
     kDebug () << "kpToolSelection::slotIsOpaqueChanged()" << endl;
 #endif
 
-    if (mainWindow ()->settingSelectionTransparency ())
+    if (environ ()->settingImageSelectionTransparency ())
     {
     #if DEBUG_KP_TOOL_SELECTION
         kDebug () << "\trecursion - abort setting selection transparency: "
-                   << mainWindow ()->settingSelectionTransparency () << endl;
+                   << environ ()->settingImageSelectionTransparency () << endl;
     #endif
         return;
     }
 
-    if (document ()->selection ())
+    kpAbstractImageSelection *imageSel = document ()->imageSelection ();
+    if (imageSel)
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\thave sel - set transparency" << endl;
+        kDebug () << "\thave image sel - set transparency" << endl;
     #endif
 
         QApplication::setOverrideCursor (Qt::WaitCursor);
@@ -1304,17 +1319,21 @@ void kpToolSelection::slotIsOpaqueChanged ()
         if (hasBegunShape ())
             endShapeInternal ();
 
-        kpSelectionTransparency st = mainWindow ()->selectionTransparency ();
-        kpSelectionTransparency oldST = st;
+        kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
+        kpImageSelectionTransparency oldST = st;
         oldST.setOpaque (!oldST.isOpaque ());
 
-        document ()->selection ()->setTransparency (st);
-        commandHistory ()->addCommand (new kpToolSelectionTransparencyCommand (
+        if (imageSel->hasContent () && st.isTransparent ())
+            environ ()->flashColorSimilarityToolBarItem ();
+
+        imageSel->setTransparency (st);
+
+        commandHistory ()->addCommand (new kpToolImageSelectionTransparencyCommand (
             st.isOpaque () ?
                 i18n ("Selection: Opaque") :
                 i18n ("Selection: Transparent"),
             st, oldST,
-            mainWindow ()),
+            environ ()->commandEnvironment ()),
             false/* no exec*/);
 
         QApplication::restoreOverrideCursor ();
@@ -1328,32 +1347,41 @@ void kpToolSelection::slotBackgroundColorChanged (const kpColor &)
     kDebug () << "kpToolSelection::slotBackgroundColorChanged()" << endl;
 #endif
 
-    if (mainWindow ()->settingSelectionTransparency ())
+    if (environ ()->settingImageSelectionTransparency ())
     {
     #if DEBUG_KP_TOOL_SELECTION
         kDebug () << "\trecursion - abort setting selection transparency: "
-                   << mainWindow ()->settingSelectionTransparency () << endl;
+                   << environ ()->settingImageSelectionTransparency () << endl;
     #endif
         return;
     }
 
-    if (document ()->selection ())
+    kpAbstractImageSelection *imageSel = document ()->imageSelection ();
+    if (imageSel)
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\thave sel - set transparency" << endl;
+        kDebug () << "\thave image sel (hasContent=" << imageSel->hasContent ()
+                  << ") - set transparency" << endl;
     #endif
 
         QApplication::setOverrideCursor (Qt::WaitCursor);
 
-        kpSelectionTransparency st = mainWindow ()->selectionTransparency ();
-        kpSelectionTransparency oldST = st;
+        kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
+    #if DEBUG_KP_TOOL_SELECTION
+        kDebug () << "\tisTransparent=" << st.isTransparent () << endl;
+    #endif
+        kpImageSelectionTransparency oldST = st;
         oldST.setTransparentColor (oldBackgroundColor ());
 
-        document ()->selection ()->setTransparency (st);
-        commandHistory ()->addCommand (new kpToolSelectionTransparencyCommand (
+        if (imageSel->hasContent () && st.isTransparent ())
+            environ ()->flashColorSimilarityToolBarItem ();
+
+        imageSel->setTransparency (st);
+
+        commandHistory ()->addCommand (new kpToolImageSelectionTransparencyCommand (
             i18n ("Selection: Transparency Color"),
             st, oldST,
-            mainWindow ()),
+            environ ()->commandEnvironment ()),
             false/* no exec*/);
 
         QApplication::restoreOverrideCursor ();
@@ -1367,32 +1395,37 @@ void kpToolSelection::slotColorSimilarityChanged (double, int)
     kDebug () << "kpToolSelection::slotColorSimilarityChanged()" << endl;
 #endif
 
-    if (mainWindow ()->settingSelectionTransparency ())
+    if (environ ()->settingImageSelectionTransparency ())
     {
     #if DEBUG_KP_TOOL_SELECTION
         kDebug () << "\trecursion - abort setting selection transparency: "
-                   << mainWindow ()->settingSelectionTransparency () << endl;
+                   << environ ()->settingImageSelectionTransparency () << endl;
     #endif
         return;
     }
 
-    if (document ()->selection ())
+    kpAbstractImageSelection *imageSel = document ()->imageSelection ();
+    if (document ()->imageSelection ())
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\thave sel - set transparency" << endl;
+        kDebug () << "\thave image sel - set transparency" << endl;
     #endif
 
         QApplication::setOverrideCursor (Qt::WaitCursor);
 
-        kpSelectionTransparency st = mainWindow ()->selectionTransparency ();
-        kpSelectionTransparency oldST = st;
+        kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
+        kpImageSelectionTransparency oldST = st;
         oldST.setColorSimilarity (oldColorSimilarity ());
 
-        document ()->selection ()->setTransparency (st);
-        commandHistory ()->addCommand (new kpToolSelectionTransparencyCommand (
+        if (imageSel->hasContent () && st.isTransparent ())
+            environ ()->flashColorSimilarityToolBarItem ();
+
+        imageSel->setTransparency (st);
+
+        commandHistory ()->addCommand (new kpToolImageSelectionTransparencyCommand (
             i18n ("Selection: Transparency Color Similarity"),
             st, oldST,
-            mainWindow ()),
+            environ ()->commandEnvironment ()),
             false/* no exec*/);
 
         QApplication::restoreOverrideCursor ();

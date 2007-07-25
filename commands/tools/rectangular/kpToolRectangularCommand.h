@@ -30,20 +30,12 @@
 #define KP_TOOL_RECTANGULAR_COMMAND_H
 
 
-#include <qrect.h>
-
-#include <kpCommandHistory.h>
-#include <kpTool.h>
+#include <kpNamedCommand.h>
 #include <kpToolRectangularBase.h>
 
 
-class QString;
-
 class kpColor;
-class kpMainWindow;
 
-
-struct kpToolRectangularCommandPrivate;
 
 class kpToolRectangularCommand : public kpNamedCommand
 {
@@ -53,16 +45,16 @@ public:
         const QRect &rect,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
-        kpMainWindow *mainWindow);
+        kpCommandEnvironment *environ);
     virtual ~kpToolRectangularCommand ();
 
-    virtual int size () const;
+    virtual kpCommandSize::SizeType size () const;
 
     virtual void execute ();
     virtual void unexecute ();
 
 private:
-    kpToolRectangularCommandPrivate * const d;
+    struct kpToolRectangularCommandPrivate * const d;
     kpToolRectangularCommand &operator= (const kpToolRectangularCommand &) const;
 };
 

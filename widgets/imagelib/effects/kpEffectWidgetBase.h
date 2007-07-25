@@ -32,12 +32,11 @@
 
 #include <qwidget.h>
 
-#include <kpCommandHistory.h>
 #include <kpImage.h>
 
 
+class kpCommandEnvironment;
 class kpEffectCommandBase;
-class kpMainWindow;
 
 
 class kpEffectWidgetBase : public QWidget
@@ -45,9 +44,7 @@ class kpEffectWidgetBase : public QWidget
 Q_OBJECT
 
 public:
-    kpEffectWidgetBase (bool actOnSelection,
-                         kpMainWindow *mainWindow,
-                         QWidget *parent);
+    kpEffectWidgetBase (bool actOnSelection, QWidget *parent);
     virtual ~kpEffectWidgetBase ();
 
 signals:
@@ -65,7 +62,8 @@ public:
     virtual bool isNoOp () const = 0;
     virtual kpImage applyEffect (const kpImage &image) = 0;
 
-    virtual kpEffectCommandBase *createCommand () const = 0;
+    virtual kpEffectCommandBase *createCommand (
+        kpCommandEnvironment *cmdEnviron) const = 0;
 
 protected:
     int marginHint () const;
@@ -73,7 +71,6 @@ protected:
 
 protected:
     bool m_actOnSelection;
-    kpMainWindow *m_mainWindow;
 };
 
 

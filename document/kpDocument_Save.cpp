@@ -53,17 +53,17 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>  // TODO: isn't this in KIO?
+#include <KSaveFile>
 #include <ktemporaryfile.h>
 
 #include <kpColor.h>
 #include <kpColorToolBar.h>
 #include <kpDefs.h>
+#include <kpDocumentEnvironment.h>
 #include <kpDocumentSaveOptions.h>
 #include <kpDocumentMetaInfo.h>
 #include <kpEffectReduceColors.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
-#include <kpSelection.h>
 #include <kpTool.h>
 #include <kpToolToolBar.h>
 #include <kpViewManager.h>
@@ -83,7 +83,7 @@ bool kpDocument::save (bool overwritePrompt, bool lossyPrompt)
     // TODO: check feels weak
     if (m_url.isEmpty () || m_saveOptions->mimeType ().isEmpty ())
     {
-        KMessageBox::detailedError (m_mainWindow,
+        KMessageBox::detailedError (d->environ->dialogParent (),
             i18n ("Could not save image - insufficient information."),
             i18n ("URL: %1\n"
                   "Mimetype: %2",
@@ -225,12 +225,12 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     imageToSave.setDotsPerMeterY (metaInfo.dotsPerMeterY ());
     imageToSave.setOffset (metaInfo.offset ());
 
-    QList <QImageTextKeyLang> keyList = metaInfo.textList ();
-    for (QList <QImageTextKeyLang>::const_iterator it = keyList.begin ();
+    QList <QString> keyList = metaInfo.textKeys ();
+    for (QList <QString>::const_iterator it = keyList.begin ();
          it != keyList.end ();
          it++)
     {
-        imageToSave.setText ((*it).key, (*it).lang, metaInfo.text (*it));
+        imageToSave.setText (*it, metaInfo.text (*it));
     }
 
 
@@ -256,6 +256,21 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     kDebug () << "\tsave OK" << endl;
 #endif
     return true;
+}
+
+
+static void CouldNotCreateTemporaryFileDialog (QWidget *parent)
+{
+    KMessageBox::error (parent,
+                        i18n ("Could not save image - unable to create temporary file."));
+}
+
+static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
+{
+    // TODO: use file.errorString()
+    KMessageBox::error (parent,
+                        i18n ("Could not save as \"%1\".",
+                              kpDocument::prettyFilenameForURL (url)));
 }
 
 // public static
@@ -305,62 +320,113 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         return false;
     }
 
-    KTemporaryFile tempFile;
-    QString filename;
 
-    if (!url.isLocalFile ())
+    // Local file?
+    if (url.isLocalFile ())
     {
-        if (!tempFile.open())
+        const QString filename = url.path ();
+
+        // sync: All failure exit paths _must_ call KSaveFile::abort() or
+        //       else, the KSaveFile destructor will overwrite the file,
+        //       <filename>, despite the failure.
+        KSaveFile atomicFileWriter (filename);
+        {
+            if (!atomicFileWriter.open ())
+            {
+                // We probably don't need this as <filename> has not been
+                // opened.
+                atomicFileWriter.abort ();
+
+            #if DEBUG_KP_DOCUMENT
+                kDebug () << "\treturning false because could not open KSaveFile"
+                          << " error=" << atomicFileWriter.error () << endl;
+            #endif
+                ::CouldNotCreateTemporaryFileDialog (parent);
+                return false;
+            }
+
+            // Write to local temporary file.
+            if (!savePixmapToDevice (pixmap, &atomicFileWriter,
+                                     saveOptions, metaInfo,
+                                     false/*no lossy prompt*/,
+                                     parent))
+            {
+                atomicFileWriter.abort ();
+
+            #if DEBUG_KP_DOCUMENT
+                kDebug () << "\treturning false because could not save pixmap to device"
+                          << endl;
+            #endif
+                ::CouldNotSaveDialog (url, parent);
+                return false;
+            }
+
+            // Atomically overwrite local file with the temporary file
+            // we saved to.
+            if (!atomicFileWriter.finalize ())
+            {
+                atomicFileWriter.abort ();
+
+            #if DEBUG_KP_DOCUMENT
+                kDebug () << "\tcould not close KSaveFile" << endl;
+            #endif
+                ::CouldNotSaveDialog (url, parent);
+                return false;
+            }
+        }  // sync KSaveFile.abort()
+    }
+    // Remote file?
+    else
+    {
+        // Create temporary file that is deleted when the variable goes
+        // out of scope.
+        KTemporaryFile tempFile;
+        if (!tempFile.open ())
         {
         #if DEBUG_KP_DOCUMENT
-            kDebug () << "\treturning false because tempFile empty" << endl;
+            kDebug () << "\treturning false because could not open tempFile" << endl;
         #endif
-            KMessageBox::error (parent,
-                                i18n ("Could not save image - unable to create temporary file."));
+            ::CouldNotCreateTemporaryFileDialog (parent);
             return false;
-        }else{
-            filename = tempFile.fileName ();
         }
-    }
-    else
-        filename = url.path ();
 
-
-    QFile file (filename);
-    bool fileOpenOK = false;
-    if (!(fileOpenOK = file.open (QIODevice::WriteOnly)) ||
-        !savePixmapToDevice (pixmap, &file,
-                             saveOptions, metaInfo,
-                             false/*no lossy prompt*/,
-                             parent) ||
-        (file.close (),
-         file.error () != QFile::NoError))
-    {
-    #if DEBUG_KP_DOCUMENT
-        if (!fileOpenOK)
+        // Write to local temporary file.
+        if (!savePixmapToDevice (pixmap, &tempFile,
+                                 saveOptions, metaInfo,
+                                 false/*no lossy prompt*/,
+                                 parent))
         {
-            kDebug () << "\treturning false because fileOpenOK=false"
-                       << " errorString=" << file.errorString () << endl;
-        }
-        else
-        {
+        #if DEBUG_KP_DOCUMENT
             kDebug () << "\treturning false because could not save pixmap to device"
-                       << endl;
+                        << endl;
+        #endif
+            ::CouldNotSaveDialog (url, parent);
+            return false;
         }
+
+        // Collect name of temporary file now, as QTemporaryFile::fileName()
+        // stops working after close() is called.
+        const QString tempFileName = tempFile.fileName ();
+    #if DEBUG_KP_DOCUMENT
+            kDebug () << "\ttempFileName='" << tempFileName << "'" << endl;
     #endif
+        Q_ASSERT (!tempFileName.isEmpty ());
 
-        // TODO: use file.errorString()
-        KMessageBox::error (parent,
-                            i18n ("Could not save as \"%1\".",
-                                  kpDocument::prettyFilenameForURL (url)));
+        tempFile.close ();
+        if (tempFile.error () != QFile::NoError)
+        {
+        #if DEBUG_KP_DOCUMENT
+            kDebug () << "\treturning false because could not close" << endl;
+        #endif
+            ::CouldNotSaveDialog (url, parent);
+            return false;
+        }
 
-        return false;
-    }
-
-
-    if (!url.isLocalFile ())
-    {
-        if (!KIO::NetAccess::upload (filename, url, parent))
+        // Copy local temporary file to overwrite remote.
+        // TODO: No one seems to know how to do this atomically
+        //       [http://lists.kde.org/?l=kde-core-devel&m=117845162728484&w=2].
+        //       At least, fish:// (ssh) is definitely not atomic.
+        if (!KIO::NetAccess::upload (tempFileName, url, parent))
         {
         #if DEBUG_KP_DOCUMENT
             kDebug () << "\treturning false because could not upload" << endl;
@@ -385,12 +451,12 @@ bool kpDocument::saveAs (const KUrl &url,
                << saveOptions.mimeType () << ")" << endl;
 #endif
 
-    if (kpDocument::savePixmapToFile (pixmapWithSelection (),
+    if (kpDocument::savePixmapToFile (imageWithSelection (),
                                       url,
                                       saveOptions, *metaInfo (),
                                       overwritePrompt,
                                       lossyPrompt,
-                                      m_mainWindow))
+                                      d->environ->dialogParent ()))
     {
         setURL (url, true/*is from url*/);
         *m_saveOptions = saveOptions;

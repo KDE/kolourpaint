@@ -48,6 +48,16 @@
 #include <kpToolFlowBase.h>
 
 
+// public static
+bool kpPainter::pointsAreCardinallyAdjacent (const QPoint &p, const QPoint &q)
+{
+    int dx = qAbs (p.x () - q.x ());
+    int dy = qAbs (p.y () - q.y ());
+
+    return (dx + dy == 1);
+}
+
+
 // Returns a random integer from 0 to 99 inclusive.
 static int RandomNumberFrom0to99 ()
 {
@@ -57,7 +67,7 @@ static int RandomNumberFrom0to99 ()
 // public static
 QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
     const QPoint &endPoint,
-    bool brushIsDiagonalLine,
+    bool cardinalAdjacency,
     double probability)
 {
     QList <QPoint> ret;
@@ -139,9 +149,9 @@ QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
 
         if (plot)
         {
-            if (brushIsDiagonalLine && plot == 2)
+            if (cardinalAdjacency && plot == 2)
             {
-                // MODIFIED: every point is
+                // MODIFIED: Every point is
                 // horizontally or vertically adjacent to another point (if there
                 // is more than 1 point, of course).  This is in contrast to the
                 // ordinary line algorithm which can create diagonal adjacencies.
@@ -263,7 +273,7 @@ static bool ReadableImageWashRect (QPainter *rgbPainter, QPainter *maskPainter,
     // active (i.e. QPainter::begin() has been called).
     Q_ASSERT (!rgbPainter || rgbPainter->isActive ());
     Q_ASSERT (!maskPainter || maskPainter->isActive ());
-    
+
 // make use of scanline coherence
 #define FLUSH_LINE()                                        \
 {                                                           \
@@ -336,7 +346,7 @@ struct WashPack
     int penWidth, penHeight;
     kpColor colorToReplace;
     int processedColorSimilarity;
-    
+
     QRect readableImageRect;
     QImage readableImage;
 };
@@ -351,7 +361,7 @@ static QRect Wash (kpImage *image,
             void * /*data*/))
 {
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (*image);
-    
+
     WashPack pack;
     pack.startPoint = startPoint; pack.endPoint = endPoint;
     pack.color = color;
@@ -398,7 +408,7 @@ void WashHelperSetup (QPainter *rgbPainter, QPainter *maskPainter,
         const WashPack *pack)
 {
     // Set the drawing colors for the painters.
-    
+
     if (rgbPainter)
     {
         rgbPainter->setPen (
@@ -434,7 +444,7 @@ static QRect WashLineHelper (QPainter *rgbPainter, QPainter *maskPainter,
 
     bool didSomething = false;
 
-    QList <QPoint> points = kpPainter::interpolatePoints (pack->endPoint, pack->startPoint);
+    QList <QPoint> points = kpPainter::interpolatePoints (pack->startPoint, pack->endPoint);
     for (QList <QPoint>::const_iterator pit = points.begin ();
             pit != points.end ();
             pit++)
@@ -501,7 +511,7 @@ static QRect WashRectHelper (QPainter *rgbPainter, QPainter *maskPainter,
 
 
     const QRect drawRect (pack->startPoint, pack->endPoint);
-    
+
     bool didSomething = false;
 
     if (::ReadableImageWashRect (rgbPainter, maskPainter,
@@ -565,7 +575,7 @@ static QRect SprayPointsHelper (QPainter *rgbPainter, QPainter *maskPainter,
     const int radius = pack->spraycanSize / 2;
 
     // Set the drawing colors for the painters.
-    
+
     if (rgbPainter)
     {
         rgbPainter->setPen (
@@ -586,18 +596,18 @@ static QRect SprayPointsHelper (QPainter *rgbPainter, QPainter *maskPainter,
         {
             const int dx = (KRandom::random () % pack->spraycanSize) - radius;
             const int dy = (KRandom::random () % pack->spraycanSize) - radius;
-    
+
             // Make it look circular.
             // TODO: Can be done better by doing a random vector angle & length
             //       but would sin and cos be too slow?
             if ((dx * dx) + (dy * dy) > (radius * radius))
                 continue;
-    
+
             const QPoint p2 (p.x () + dx, p.y () + dy);
-    
+
             if (rgbPainter)
                 rgbPainter->drawPoint (p2);
-    
+
             if (maskPainter)
                 maskPainter->drawPoint (p2);
         }
@@ -619,7 +629,7 @@ void kpPainter::sprayPoints (kpImage *image,
 #endif
 
     Q_ASSERT (spraycanSize > 0);
-    
+
     SprayPointsPackage pack;
     pack.points = points;
     pack.color = color;

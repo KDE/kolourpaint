@@ -44,7 +44,6 @@
 #include <qpushbutton.h>
 #include <qrect.h>
 
-
 #include <kdebug.h>
 #include <klocale.h>
 
@@ -53,10 +52,10 @@
 #include <kpDocument.h>
 #include <kpDefs.h>
 #include <kpImage.h>
-#include <kpMainWindow.h>
 #include <kpPainter.h>
 #include <kpPixmapFX.h>
-#include <kpTempPixmap.h>
+#include <kpTempImage.h>
+#include <kpToolEnvironment.h>
 #include <kpToolPolygonalCommand.h>
 #include <kpToolToolBar.h>
 #include <kpToolWidgetLineWidth.h>
@@ -69,9 +68,9 @@ struct kpToolPolygonalBasePrivate
         : toolWidgetLineWidth (0)
     {
     }
-    
+
     kpToolPolygonalBase::DrawShapeFunc drawShapeFunc;
-    
+
     kpToolWidgetLineWidth *toolWidgetLineWidth;
 
     int originatingMouseButton;
@@ -84,10 +83,10 @@ kpToolPolygonalBase::kpToolPolygonalBase (
         const QString &description,
         DrawShapeFunc drawShapeFunc,
         int key,
-        kpMainWindow *mainWindow,
+        kpToolEnvironment *environ, QObject *parent,
         const QString &name)
-        
-    : kpTool (text, description, key, mainWindow, name),
+
+    : kpTool (text, description, key, environ, parent, name),
       d (new kpToolPolygonalBasePrivate ())
 {
     d->drawShapeFunc = drawShapeFunc;
@@ -339,7 +338,7 @@ void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
     // Update points() so that last point reflects current mouse position.
     const int count = d->points.count ();
     d->points [count - 1] = currentPoint ();
-    
+
 #if DEBUG_KP_TOOL_POLYGON
     kDebug () << "\tafterwards, d->points=" << d->points.toList () << endl;
 #endif
@@ -402,25 +401,25 @@ void kpToolPolygonalBase::updateShape ()
                << endl;
 #endif
 
-    kpImage image = document ()->getPixmapAt (boundingRect);
-    
+    kpImage image = document ()->getImageAt (boundingRect);
+
     QPolygon pointsTranslated = d->points;
     pointsTranslated.translate (-boundingRect.x (), -boundingRect.y ());
-    
+
     (*d->drawShapeFunc) (&image,
         pointsTranslated,
         drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
         /*virtual*/drawingBackgroundColor (),
         false/*not final*/);
 
-    kpTempPixmap newTempPixmap (false/*always display*/,
-                                kpTempPixmap::SetPixmap/*render mode*/,
+    kpTempImage newTempImage (false/*always display*/,
+                                kpTempImage::SetImage/*render mode*/,
                                 boundingRect.topLeft (),
                                 image);
 
     viewManager ()->setFastUpdates ();
     {
-        viewManager ()->setTempPixmap (newTempPixmap);
+        viewManager ()->setTempImage (newTempImage);
     }
     viewManager ()->restoreFastUpdates ();
 }
@@ -428,7 +427,7 @@ void kpToolPolygonalBase::updateShape ()
 // virtual
 void kpToolPolygonalBase::cancelShape ()
 {
-    viewManager ()->invalidateTempPixmap ();
+    viewManager ()->invalidateTempImage ();
     d->points.resize (0);
 
     setUserMessage (i18n ("Let go of all the mouse buttons."));
@@ -453,7 +452,7 @@ void kpToolPolygonalBase::endShape (const QPoint &, const QRect &)
     if (!hasBegunShape ())
         return;
 
-    viewManager ()->invalidateTempPixmap ();
+    viewManager ()->invalidateTempImage ();
 
     QRect boundingRect = kpTool::neededRect (
         d->points.boundingRect (),
@@ -466,7 +465,7 @@ void kpToolPolygonalBase::endShape (const QPoint &, const QRect &)
             d->points, boundingRect,
             drawingForegroundColor (), d->toolWidgetLineWidth->lineWidth (),
             /*virtual*/drawingBackgroundColor (),
-            mainWindow ()));
+            environ ()->commandEnvironment ()));
 
     d->points.resize (0);
     setUserMessage (/*virtual*/haventBegunShapeUserMessage ());

@@ -30,7 +30,7 @@
 #define KP_TOOL_AUTO_CROP_H
 
 
-#include <kpCommandHistory.h>
+#include <kpNamedCommand.h>
 
 
 class QPixmap;
@@ -40,6 +40,7 @@ class kpMainWindow;
 class kpTransformAutoCropBorder;
 
 
+// TODO: This should be moved into /commands/
 class kpTransformAutoCropCommand : public kpNamedCommand
 {
 public:
@@ -48,7 +49,7 @@ public:
         const kpTransformAutoCropBorder &rightBorder,
         const kpTransformAutoCropBorder &topBorder,
         const kpTransformAutoCropBorder &botBorder,
-        kpMainWindow *mainWindow);
+        kpCommandEnvironment *environ);
     virtual ~kpTransformAutoCropCommand ();
 
     enum NameOptions
@@ -59,7 +60,7 @@ public:
 
     static QString name (bool actOnSelection, int options);
 
-    virtual int size () const;
+    virtual SizeType size () const;
 
 private:
     void getUndoPixmap (const kpTransformAutoCropBorder &border, QPixmap **pixmap);

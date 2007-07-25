@@ -44,23 +44,22 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpBug.h>
+#include <kpAbstractSelection.h>
+#include <kpAbstractImageSelection.h>
+#include <kpCommandEnvironment.h>
 #include <kpCommandHistory.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpSelection.h>
-#include <kpTool.h>
-#include <kpToolToolBar.h>
+#include <kpTextSelection.h>
 #include <kpToolWidgetOpaqueOrTransparent.h>
 #include <kpView.h>
 #include <kpViewManager.h>
 
 
 kpToolSelectionCreateCommand::kpToolSelectionCreateCommand (const QString &name,
-                                                            const kpSelection &fromSelection,
-                                                            kpMainWindow *mainWindow)
-    : kpNamedCommand (name, mainWindow),
+        const kpAbstractSelection &fromSelection,
+        kpCommandEnvironment *environ)
+    : kpNamedCommand (name, environ),
       m_fromSelection (0),
       m_textRow (0), m_textCol (0)
 {
@@ -74,9 +73,9 @@ kpToolSelectionCreateCommand::~kpToolSelectionCreateCommand ()
 
 
 // public virtual [base kpCommand]
-int kpToolSelectionCreateCommand::size () const
+kpCommandSize::SizeType kpToolSelectionCreateCommand::size () const
 {
-    return kpPixmapFX::selectionSize (m_fromSelection);
+    return SelectionSize (m_fromSelection);
 }
 
 
@@ -95,25 +94,25 @@ bool kpToolSelectionCreateCommand::nextUndoCommandIsCreateBorder (
     if (!c)
         return false;
 
-    const kpSelection *sel = c->fromSelection ();
+    const kpAbstractSelection *sel = c->fromSelection ();
     if (!sel)
         return false;
 
-    return (!sel->pixmap ());
+    return (!sel->hasContent ());
 }
 
 
 // public
-const kpSelection *kpToolSelectionCreateCommand::fromSelection () const
+const kpAbstractSelection *kpToolSelectionCreateCommand::fromSelection () const
 {
     return m_fromSelection;
 }
 
 // public
-void kpToolSelectionCreateCommand::setFromSelection (const kpSelection &fromSelection)
+void kpToolSelectionCreateCommand::setFromSelection (const kpAbstractSelection &fromSelection)
 {
     delete m_fromSelection;
-    m_fromSelection = new kpSelection (fromSelection);
+    m_fromSelection = fromSelection.clone ();
 }
 
 // public virtual [base kpCommand]
@@ -131,25 +130,29 @@ void kpToolSelectionCreateCommand::execute ()
     #if DEBUG_KP_TOOL_SELECTION
         kDebug () << "\tusing fromSelection" << endl;
         kDebug () << "\t\thave sel=" << doc->selection ()
-                   << " pixmap=" << (doc->selection () ? doc->selection ()->pixmap () : 0)
                    << endl;
     #endif
-        if (!m_fromSelection->isText ())
+        kpAbstractImageSelection *imageSel =
+            dynamic_cast <kpAbstractImageSelection *> (m_fromSelection);
+        kpTextSelection *textSel =
+            dynamic_cast <kpTextSelection *> (m_fromSelection);
+        if (imageSel)
         {
-            if (m_fromSelection->transparency () != m_mainWindow->selectionTransparency ())
-                m_mainWindow->setSelectionTransparency (m_fromSelection->transparency ());
+            if (imageSel->transparency () != environ ()->imageSelectionTransparency ())
+                environ ()->setImageSelectionTransparency (imageSel->transparency ());
+        }
+        else if (textSel)
+        {
+            if (textSel->textStyle () != environ ()->textStyle ())
+                environ ()->setTextStyle (textSel->textStyle ());
         }
         else
-        {
-            if (m_fromSelection->textStyle () != m_mainWindow->textStyle ())
-                m_mainWindow->setTextStyle (m_fromSelection->textStyle ());
-        }
+            Q_ASSERT (!"Unknown selection type");
 
-        m_mainWindow->viewManager ()->setTextCursorPosition (m_textRow, m_textCol);
+        viewManager ()->setTextCursorPosition (m_textRow, m_textCol);
         doc->setSelection (*m_fromSelection);
 
-        if (m_mainWindow->tool ())
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+        environ ()->somethingBelowTheCursorChanged ();
     }
 }
 
@@ -162,20 +165,19 @@ void kpToolSelectionCreateCommand::unexecute ()
     if (!doc->selection ())
     {
         // Was just a border that got deselected?
-        if (m_fromSelection && !m_fromSelection->pixmap ())
+        if (m_fromSelection && !m_fromSelection->hasContent ())
             return;
 
         Q_ASSERT (!"kpToolSelectionCreateCommand::unexecute() without sel region");
         return;
     }
 
-    m_textRow = m_mainWindow->viewManager ()->textCursorRow ();
-    m_textCol = m_mainWindow->viewManager ()->textCursorCol ();
+    m_textRow = viewManager ()->textCursorRow ();
+    m_textCol = viewManager ()->textCursorCol ();
 
     doc->selectionDelete ();
 
-    if (m_mainWindow->tool ())
-        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+    environ ()->somethingBelowTheCursorChanged ();
 }
 
 

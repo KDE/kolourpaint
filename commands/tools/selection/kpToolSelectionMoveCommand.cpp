@@ -44,27 +44,24 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpBug.h>
-#include <kpCommandHistory.h>
+#include <kpAbstractSelection.h>
+#include <kpCommandEnvironment.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpSelection.h>
 #include <kpTool.h>
-#include <kpToolToolBar.h>
 #include <kpToolWidgetOpaqueOrTransparent.h>
 #include <kpView.h>
 #include <kpViewManager.h>
 
 
 kpToolSelectionMoveCommand::kpToolSelectionMoveCommand (const QString &name,
-                                                        kpMainWindow *mainWindow)
-    : kpNamedCommand (name, mainWindow)
+        kpCommandEnvironment *environ)
+    : kpNamedCommand (name, environ)
 {
     kpDocument *doc = document ();
     Q_ASSERT (doc);
     Q_ASSERT (doc->selection ());
-    
+
     m_startPoint = m_endPoint = doc->selection ()->topLeft ();
 }
 
@@ -74,24 +71,24 @@ kpToolSelectionMoveCommand::~kpToolSelectionMoveCommand ()
 
 
 // public
-kpSelection kpToolSelectionMoveCommand::originalSelection () const
+kpAbstractSelection *kpToolSelectionMoveCommand::originalSelectionClone () const
 {
     kpDocument *doc = document ();
     Q_ASSERT (doc);
     Q_ASSERT (doc->selection ());
 
-    kpSelection selection = *doc->selection();
-    selection.moveTo (m_startPoint);
+    kpAbstractSelection *selection = doc->selection ()->clone ();
+    selection->moveTo (m_startPoint);
 
     return selection;
 }
 
 
 // public virtual [base kpComand]
-int kpToolSelectionMoveCommand::size () const
+kpCommandSize::SizeType kpToolSelectionMoveCommand::size () const
 {
-    return kpPixmapFX::pixmapSize (m_oldDocumentPixmap) +
-           kpPixmapFX::pointArraySize (m_copyOntoDocumentPoints);
+    return ImageSize (m_oldDocumentImage) +
+           PolygonSize (m_copyOntoDocumentPoints);
 }
 
 
@@ -102,16 +99,15 @@ void kpToolSelectionMoveCommand::execute ()
     kDebug () << "kpToolSelectionMoveCommand::execute()" << endl;
 #endif
 
-    Q_ASSERT (m_mainWindow);
-
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
-    kpSelection *sel = doc->selection ();
+    kpAbstractSelection *sel = doc->selection ();
     // Have to have pulled pixmap by now.
-    Q_ASSERT (sel && sel->pixmap ());
+    // TODO: Not true for text selections.
+    Q_ASSERT (sel && sel->hasContent ());
 
-    kpViewManager *vm = m_mainWindow->viewManager ();
+    kpViewManager *vm = viewManager ();
     Q_ASSERT (vm);
 
     vm->setQueueUpdates ();
@@ -121,11 +117,10 @@ void kpToolSelectionMoveCommand::execute ()
             sel->moveTo (p);
             doc->selectionCopyOntoDocument ();
         }
-    
+
         sel->moveTo (m_endPoint);
-    
-        if (m_mainWindow->tool ())
-            m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+
+        environ ()->somethingBelowTheCursorChanged ();
     }
     vm->restoreQueueUpdates ();
 }
@@ -137,29 +132,27 @@ void kpToolSelectionMoveCommand::unexecute ()
     kDebug () << "kpToolSelectionMoveCommand::unexecute()" << endl;
 #endif
 
-    Q_ASSERT (m_mainWindow);
-
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
-    kpSelection *sel = doc->selection ();
+    kpAbstractSelection *sel = doc->selection ();
     // Have to have pulled pixmap by now.
-    Q_ASSERT (sel && sel->pixmap ());
+    // TODO: Not true for text selections.
+    Q_ASSERT (sel && sel->hasContent ());
 
-    kpViewManager *vm = m_mainWindow->viewManager ();
+    kpViewManager *vm = viewManager ();
     Q_ASSERT (vm);
 
     vm->setQueueUpdates ();
 
-    if (!m_oldDocumentPixmap.isNull ())
-        doc->setPixmapAt (m_oldDocumentPixmap, m_documentBoundingRect.topLeft ());
+    if (!m_oldDocumentImage.isNull ())
+        doc->setImageAt (m_oldDocumentImage, m_documentBoundingRect.topLeft ());
 #if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "\tmove to startPoint=" << m_startPoint << endl;
 #endif
     sel->moveTo (m_startPoint);
 
-    if (m_mainWindow->tool ())
-        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+    environ ()->somethingBelowTheCursorChanged ();
 
     vm->restoreQueueUpdates ();
 }
@@ -178,9 +171,10 @@ void kpToolSelectionMoveCommand::moveTo (const QPoint &point, bool moveLater)
         kpDocument *doc = document ();
         Q_ASSERT (doc);
 
-        kpSelection *sel = doc->selection ();
+        kpAbstractSelection *sel = doc->selection ();
         // Have to have pulled pixmap by now.
-        Q_ASSERT (sel && sel->pixmap ());
+        // TODO: Not true for text selections.
+        Q_ASSERT (sel && sel->hasContent ());
 
         if (point == sel->topLeft ())
             return;
@@ -207,12 +201,13 @@ void kpToolSelectionMoveCommand::copyOntoDocument ()
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
-    kpSelection *sel = doc->selection ();
+    kpAbstractSelection *sel = doc->selection ();
     // Have to have pulled pixmap by now.
-    Q_ASSERT (sel && sel->pixmap ());
+    // TODO: Not true for text selections.
+    Q_ASSERT (sel && sel->hasContent ());
 
-    if (m_oldDocumentPixmap.isNull ())
-        m_oldDocumentPixmap = *doc->pixmap ();
+    if (m_oldDocumentImage.isNull ())
+        m_oldDocumentImage = doc->image ();
 
     QRect selBoundingRect = sel->boundingRect ();
     m_documentBoundingRect.unite (selBoundingRect);
@@ -228,9 +223,9 @@ void kpToolSelectionMoveCommand::copyOntoDocument ()
 // public
 void kpToolSelectionMoveCommand::finalize ()
 {
-    if (!m_oldDocumentPixmap.isNull () && !m_documentBoundingRect.isNull ())
+    if (!m_oldDocumentImage.isNull () && !m_documentBoundingRect.isNull ())
     {
-        m_oldDocumentPixmap = kpTool::neededPixmap (m_oldDocumentPixmap,
+        m_oldDocumentImage = kpTool::neededPixmap (m_oldDocumentImage,
                                                     m_documentBoundingRect);
     }
 }

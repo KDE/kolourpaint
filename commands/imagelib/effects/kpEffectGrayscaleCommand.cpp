@@ -35,12 +35,12 @@
 
 kpEffectGrayscaleCommand::kpEffectGrayscaleCommand (
         bool actOnSelection,
-        kpMainWindow *mainWindow)
-        
+        kpCommandEnvironment *environ)
+
     : kpEffectCommandBase (
         i18n ("Reduce to Grayscale"),
         actOnSelection,
-        mainWindow)
+        environ)
 {
 }
 

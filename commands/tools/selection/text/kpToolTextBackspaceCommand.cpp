@@ -32,19 +32,19 @@
 
 #include <qlist.h>
 
-#include <kpSelection.h>
+#include <kpTextSelection.h>
 #include <kpViewManager.h>
 
 
 kpToolTextBackspaceCommand::kpToolTextBackspaceCommand (const QString &name,
     int row, int col, Action action,
-    kpMainWindow *mainWindow)
-    : kpNamedCommand (name, mainWindow),
+    kpCommandEnvironment *environ)
+    : kpNamedCommand (name, environ),
       m_row (row), m_col (col),
       m_numBackspaces (0)
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
-    
+
     if (action == AddBackspaceNow)
         addBackspace ();
 }
@@ -57,7 +57,7 @@ kpToolTextBackspaceCommand::~kpToolTextBackspaceCommand ()
 // public
 void kpToolTextBackspaceCommand::addBackspace ()
 {
-    QList <QString> textLines = selection ()->textLines ();
+    QList <QString> textLines = textSelection ()->textLines ();
 
     if (m_col > 0)
     {
@@ -85,7 +85,7 @@ void kpToolTextBackspaceCommand::addBackspace ()
         }
     }
 
-    selection ()->setTextLines (textLines);
+    textSelection ()->setTextLines (textLines);
 
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
@@ -94,9 +94,9 @@ void kpToolTextBackspaceCommand::addBackspace ()
 
 
 // public virtual [base kpCommand]
-int kpToolTextBackspaceCommand::size () const
+kpCommandSize::SizeType kpToolTextBackspaceCommand::size () const
 {
-    return m_deletedText.length () * sizeof (QChar);
+    return (kpCommandSize::SizeType) m_deletedText.length () * sizeof (QChar);
 }
 
 
@@ -118,7 +118,7 @@ void kpToolTextBackspaceCommand::unexecute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
-    QList <QString> textLines = selection ()->textLines ();
+    QList <QString> textLines = textSelection ()->textLines ();
 
     for (int i = 0; i < (int) m_deletedText.length (); i++)
     {
@@ -144,7 +144,7 @@ void kpToolTextBackspaceCommand::unexecute ()
 
     m_deletedText.clear ();
 
-    selection ()->setTextLines (textLines);
+    textSelection ()->setTextLines (textLines);
 
     viewManager ()->setTextCursorPosition (m_row, m_col);
 }

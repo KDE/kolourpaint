@@ -37,46 +37,43 @@
 #include <qevent.h>
 #include <qmenu.h>
 #include <qpainter.h>
-#include <qpixmap.h>
 #include <qpolygon.h>
 #include <qtimer.h>
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpBug.h>
-#include <kpCommandHistory.h>
+#include <kpAbstractSelection.h>
+#include <kpAbstractImageSelection.h>
+#include <kpCommandEnvironment.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpSelection.h>
-#include <kpTool.h>
-#include <kpToolToolBar.h>
+#include <kpTextSelection.h>
 #include <kpToolWidgetOpaqueOrTransparent.h>
 #include <kpView.h>
 #include <kpViewManager.h>
 
 
 kpToolSelectionDestroyCommand::kpToolSelectionDestroyCommand (const QString &name,
-                                                              bool pushOntoDocument,
-                                                              kpMainWindow *mainWindow)
-    : kpNamedCommand (name, mainWindow),
+        bool pushOntoDocument,
+        kpCommandEnvironment *environ)
+    : kpNamedCommand (name, environ),
       m_pushOntoDocument (pushOntoDocument),
-      m_oldSelection (0)
+      m_oldSelectionPtr (0)
 {
 }
 
 kpToolSelectionDestroyCommand::~kpToolSelectionDestroyCommand ()
 {
-    delete m_oldSelection;
+    delete m_oldSelectionPtr;
 }
 
 
 // public virtual [base kpCommand]
-int kpToolSelectionDestroyCommand::size () const
+kpCommandSize::SizeType kpToolSelectionDestroyCommand::size () const
 {
-    return kpPixmapFX::pixmapSize (m_oldDocPixmap) +
-           kpPixmapFX::selectionSize (m_oldSelection);
+    return ImageSize (m_oldDocImage) +
+           SelectionSize (m_oldSelectionPtr);
 }
 
 
@@ -91,20 +88,19 @@ void kpToolSelectionDestroyCommand::execute ()
     Q_ASSERT (doc);
     Q_ASSERT (doc->selection ());
 
-    m_textRow = m_mainWindow->viewManager ()->textCursorRow ();
-    m_textCol = m_mainWindow->viewManager ()->textCursorCol ();
+    m_textRow = viewManager ()->textCursorRow ();
+    m_textCol = viewManager ()->textCursorCol ();
 
-    m_oldSelection = new kpSelection (*doc->selection ());
+    m_oldSelectionPtr = doc->selection ()->clone ();
     if (m_pushOntoDocument)
     {
-        m_oldDocPixmap = doc->getPixmapAt (doc->selection ()->boundingRect ());
+        m_oldDocImage = doc->getImageAt (doc->selection ()->boundingRect ());
         doc->selectionPushOntoDocument ();
     }
     else
         doc->selectionDelete ();
 
-    if (m_mainWindow->tool ())
-        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+    environ ()->somethingBelowTheCursorChanged ();
 }
 
 // public virtual [base kpCommand]
@@ -120,57 +116,57 @@ void kpToolSelectionDestroyCommand::unexecute ()
     if (doc->selection ())
     {
         // not error because it's possible that the user dragged out a new
-        // region (without pulling pixmap), and then CTRL+Z
+        // region (without pulling image), and then CTRL+Z
     #if DEBUG_KP_TOOL_SELECTION
         kDebug () << "kpToolSelectionDestroyCommand::unexecute() already has sel region" << endl;
     #endif
 
-        if (doc->selection ()->pixmap ())
+        if (doc->selection ()->hasContent ())
         {
-            Q_ASSERT (!"kpToolSelectionDestroyCommand::unexecute() already has sel pixmap");
+            Q_ASSERT (!"kpToolSelectionDestroyCommand::unexecute() already has sel content");
             return;
         }
     }
 
-    Q_ASSERT (m_oldSelection);
+    Q_ASSERT (m_oldSelectionPtr);
 
     if (m_pushOntoDocument)
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\tunpush oldDocPixmap onto doc first" << endl;
+        kDebug () << "\tunpush oldDocImage onto doc first" << endl;
     #endif
-        doc->setPixmapAt (m_oldDocPixmap, m_oldSelection->topLeft ());
+        doc->setImageAt (m_oldDocImage, m_oldSelectionPtr->topLeft ());
     }
 
 #if DEBUG_KP_TOOL_SELECTION
     kDebug () << "\tsetting selection to: rect=" << m_oldSelection->boundingRect ()
-               << " pixmap=" << m_oldSelection->pixmap ()
-               << " pixmap.isNull()=" << (m_oldSelection->pixmap ()
-                                              ?
-                                          m_oldSelection->pixmap ()->isNull ()
-                                              :
-                                          true)
+               << " hasContent=" << m_oldSelection->hasContent ()
                << endl;
 #endif
-    if (!m_oldSelection->isText ())
+    kpAbstractImageSelection *imageSel =
+        dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr);
+    kpTextSelection *textSel =
+        dynamic_cast <kpTextSelection *> (m_oldSelectionPtr);
+    if (imageSel)
     {
-        if (m_oldSelection->transparency () != m_mainWindow->selectionTransparency ())
-            m_mainWindow->setSelectionTransparency (m_oldSelection->transparency ());
+        if (imageSel->transparency () != environ ()->imageSelectionTransparency ())
+            environ ()->setImageSelectionTransparency (imageSel->transparency ());
+    }
+    else if (textSel)
+    {
+        if (textSel->textStyle () != environ ()->textStyle ())
+            environ ()->setTextStyle (textSel->textStyle ());
     }
     else
-    {
-        if (m_oldSelection->textStyle () != m_mainWindow->textStyle ())
-            m_mainWindow->setTextStyle (m_oldSelection->textStyle ());
-    }
+        Q_ASSERT (!"Unknown selection type");
 
-    m_mainWindow->viewManager ()->setTextCursorPosition (m_textRow, m_textCol);
-    doc->setSelection (*m_oldSelection);
+    viewManager ()->setTextCursorPosition (m_textRow, m_textCol);
+    doc->setSelection (*m_oldSelectionPtr);
 
-    if (m_mainWindow->tool ())
-        m_mainWindow->tool ()->somethingBelowTheCursorChanged ();
+    environ ()->somethingBelowTheCursorChanged ();
 
-    delete m_oldSelection;
-    m_oldSelection = 0;
+    delete m_oldSelectionPtr;
+    m_oldSelectionPtr = 0;
 }
 
 

@@ -41,9 +41,7 @@
 #include <kpDefs.h>
 #include <kpDocument.h>
 #include <kpPixmapFX.h>
-#include <kpSelection.h>
 #include <kpTool.h>
-#include <kpMainWindow.h>
 
 
 // private static
@@ -53,7 +51,7 @@ bool kpTransformFlipDialog::s_lastIsVerticalFlip = true;
 kpTransformFlipDialog::kpTransformFlipDialog (bool actOnSelection, QWidget *parent)
     : KDialog (parent)
 {
-    setCaption( actOnSelection ? i18n ("Flip Selection") : i18n ("Flip Image") );
+    setCaption (actOnSelection ? i18n ("Flip Selection") : i18n ("Flip Image"));
     setButtons( KDialog::Ok | KDialog::Cancel );
     QGroupBox *groupBox = new QGroupBox (i18n ("Direction"), this);
 

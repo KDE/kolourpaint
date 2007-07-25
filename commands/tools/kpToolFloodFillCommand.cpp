@@ -46,18 +46,18 @@
 struct kpToolFloodFillCommandPrivate
 {
     kpImage oldImage;
-    bool fillEntirePixmap;
+    bool fillEntireImage;
 };
 
 kpToolFloodFillCommand::kpToolFloodFillCommand (int x, int y,
         const kpColor &color, int processedColorSimilarity,
-        kpMainWindow *mainWindow)
-        
-    : kpCommand (mainWindow),
-      kpFloodFill (document ()->pixmap (), x, y, color, processedColorSimilarity),
+        kpCommandEnvironment *environ)
+
+    : kpCommand (environ),
+      kpFloodFill (document ()->imagePointer (), x, y, color, processedColorSimilarity),
       d (new kpToolFloodFillCommandPrivate ())
 {
-    d->fillEntirePixmap = false;
+    d->fillEntireImage = false;
 }
 
 kpToolFloodFillCommand::~kpToolFloodFillCommand ()
@@ -73,16 +73,16 @@ QString kpToolFloodFillCommand::name () const
 }
 
 // public virtual [base kpCommand]
-int kpToolFloodFillCommand::size () const
+kpCommandSize::SizeType kpToolFloodFillCommand::size () const
 {
-    return kpFloodFill::size () + kpPixmapFX::pixmapSize (d->oldImage);
+    return kpFloodFill::size () + ImageSize (d->oldImage);
 }
 
 
 // public
-void kpToolFloodFillCommand::setFillEntirePixmap (bool yes)
+void kpToolFloodFillCommand::setFillEntireImage (bool yes)
 {
-    d->fillEntirePixmap = yes;
+    d->fillEntireImage = yes;
 }
 
 
@@ -90,15 +90,15 @@ void kpToolFloodFillCommand::setFillEntirePixmap (bool yes)
 void kpToolFloodFillCommand::execute ()
 {
 #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-    kDebug () << "kpToolFloodFillCommand::execute() fillEntirePixmap="
-              << d->fillEntirePixmap << endl;
+    kDebug () << "kpToolFloodFillCommand::execute() fillEntireImage="
+              << d->fillEntireImage << endl;
 #endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
 
-    if (d->fillEntirePixmap)
+    if (d->fillEntireImage)
     {
         doc->fill (kpFloodFill::color ());
     }
@@ -109,7 +109,7 @@ void kpToolFloodFillCommand::execute ()
         {
             QApplication::setOverrideCursor (Qt::WaitCursor);
             {
-                d->oldImage = doc->getPixmapAt (rect);
+                d->oldImage = doc->getImageAt (rect);
 
                 kpFloodFill::fill ();
                 doc->slotContentsChanged (rect);
@@ -129,15 +129,15 @@ void kpToolFloodFillCommand::execute ()
 void kpToolFloodFillCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-    kDebug () << "kpToolFloodFillCommand::unexecute() fillEntirePixmap="
-              << d->fillEntirePixmap << endl;
+    kDebug () << "kpToolFloodFillCommand::unexecute() fillEntireImage="
+              << d->fillEntireImage << endl;
 #endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
 
-    if (d->fillEntirePixmap)
+    if (d->fillEntireImage)
     {
         doc->fill (kpFloodFill::colorToChange ());
     }
@@ -146,7 +146,7 @@ void kpToolFloodFillCommand::unexecute ()
         QRect rect = kpFloodFill::boundingRect ();
         if (rect.isValid ())
         {
-            doc->setPixmapAt (d->oldImage, rect.topLeft ());
+            doc->setImageAt (d->oldImage, rect.topLeft ());
 
             d->oldImage = kpImage ();
 

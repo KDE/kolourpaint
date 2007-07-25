@@ -71,7 +71,6 @@
 #define kpSettingShowPath QString::fromLatin1 ("Show Path")
 #define kpSettingColorSimilarity QString::fromLatin1 ("Color Similarity")
 #define kpSettingDitherOnOpen QString::fromLatin1 ("Dither on Open if Screen is 15/16bpp and Image Num Colors More Than")
-#define kpSettingPrintImageCenteredOnPage QString::fromLatin1 ("Print Image Centered On Page")
 #define kpSettingOpenImagesInSameWindow QString::fromLatin1 ("Open Images in the Same Window")
 
 #define kpSettingsGroupFileSaveAs QString::fromLatin1 ("File/Save As")
@@ -131,6 +130,21 @@
 #define kpSettingsGroupFlattenEffect QString::fromLatin1 ("Flatten Effect Settings")
 #define kpSettingFlattenEffectColor1 QString::fromLatin1 ("Color1")
 #define kpSettingFlattenEffectColor2 QString::fromLatin1 ("Color2")
+
+
+//
+// Session Restore Setting
+//
+
+// URL of the document in the main window.
+//
+// This key only exists if the document does.  If it exists, it can be empty.
+// The URL need not point to a file that exists e.g. "kolourpaint doesnotexist.png".
+#define kpSessionSettingDocumentUrl QString::fromLatin1 ("Session Document Url")
+
+// The size of a document which is not from a URL e.g. "kolourpaint doesnotexist.png".
+// This key does not exist for documents from URLs.
+#define kpSessionSettingNotFromUrlDocumentSize QString::fromLatin1 ("Session Not-From-Url Document Size")
 
 
 #endif  // KP_DEFS_H

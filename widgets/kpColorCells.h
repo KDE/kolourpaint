@@ -31,9 +31,12 @@
 
 
 #include <kcolordialog.h>
+#include <KUrl>
 
 
 class QDropEvent;
+
+class kpColorCollection;
 
 class kpColor;
 
@@ -47,31 +50,46 @@ public:
                   Qt::Orientation o = Qt::Horizontal);
     virtual ~kpColorCells ();
 
+    static kpColorCollection DefaultColorCollection ();
+
     Qt::Orientation orientation () const;
     void setOrientation (Qt::Orientation o);
 
-signals:
-    void foregroundColorChanged (const QColor &color);
-    void backgroundColorChanged (const QColor &color);
+protected:
+    void makeCellsMatchColorCollection ();
 
-    // lazy
+public:
+    bool isModified () const;
+    void setModified (bool yes = true);
+
+    KUrl url () const;
+
+    void setColorCollection (const kpColorCollection &colorCol,
+        const KUrl &url = KUrl ());
+
+    bool openColorCollection (const KUrl &url);
+    bool saveColorCollectionAs (const KUrl &url);
+
+    void appendRow ();
+    void deleteLastRow ();
+
+signals:
     void foregroundColorChanged (const kpColor &color);
     void backgroundColorChanged (const kpColor &color);
 
 protected:
-    Qt::Orientation m_orientation;
-
     virtual void dropEvent (QDropEvent *e);
     virtual void paintCell (QPainter *painter, int row, int col);
     virtual void contextMenuEvent (QContextMenuEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
     virtual void resizeEvent (QResizeEvent *e);
 
-    int m_mouseButton;
-
 protected slots:
     void slotColorSelected (int cell);
-    void slotColorDoubleClicked (int cell,const QColor&);
+    void slotColorDoubleClicked (int cell, const QColor &);
+
+private:
+    struct kpColorCellsPrivate * const d;
 };
 
 

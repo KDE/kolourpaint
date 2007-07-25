@@ -46,9 +46,7 @@ class kpEffectBalanceWidget : public kpEffectWidgetBase
 Q_OBJECT
 
 public:
-    kpEffectBalanceWidget (bool actOnSelection,
-                           kpMainWindow *mainWindow,
-                           QWidget *parent);
+    kpEffectBalanceWidget (bool actOnSelection, QWidget *parent);
     virtual ~kpEffectBalanceWidget ();
 
     virtual QString caption () const;
@@ -56,7 +54,8 @@ public:
     virtual bool isNoOp () const;
     virtual kpImage applyEffect (const kpImage &image);
 
-    virtual kpEffectCommandBase *createCommand () const;
+    virtual kpEffectCommandBase *createCommand (
+        kpCommandEnvironment *cmdEnviron) const;
 
 protected:
     int channels () const;

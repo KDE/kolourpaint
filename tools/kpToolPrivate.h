@@ -36,8 +36,8 @@
 #include <QSize>
 
 
-class kpMainWindow;
 class kpToolAction;
+class kpToolEnvironment;
 
 
 struct kpToolPrivate
@@ -46,8 +46,7 @@ struct kpToolPrivate
     QString text;
     QString description;
     int key;
-    QPointer <kpMainWindow> mainWindow;
-    
+
     kpToolAction *action;
 
     // Drawing state.
@@ -58,7 +57,7 @@ struct kpToolPrivate
     QPoint startPoint,
            currentPoint, currentViewPoint,
            lastPoint;
-           
+
     kpView *viewUnderStartPoint;
 
 
@@ -73,6 +72,8 @@ struct kpToolPrivate
     QString userMessage;
     QPoint userShapeStartPoint, userShapeEndPoint;
     QSize userShapeSize;
+
+    kpToolEnvironment *environ;
 };
 
 

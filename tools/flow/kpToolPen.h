@@ -39,7 +39,7 @@ class kpToolPen : public kpToolFlowBase
 Q_OBJECT
 
 public:
-    kpToolPen (kpMainWindow *mainWindow);
+    kpToolPen (kpToolEnvironment *environ, QObject *parent);
     virtual ~kpToolPen ();
 
 protected:
@@ -51,5 +51,5 @@ private:
     struct kpToolPenPrivate *d;
 };
 
-        
+
 #endif  // KP_TOOL_PEN_H

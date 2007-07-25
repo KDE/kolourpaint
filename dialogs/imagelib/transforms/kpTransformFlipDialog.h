@@ -32,8 +32,6 @@
 
 #include <kdialog.h>
 
-#include <kpCommandHistory.h>
-
 
 class QRadioButton;
 

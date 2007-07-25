@@ -86,8 +86,8 @@ protected:
 };
 
 
-kpToolToolBar::kpToolToolBar (const QString &label, kpMainWindow *mainWindow, int colsOrRows)
-    : KToolBar ((QWidget *) mainWindow, false/*don't use global toolBar settings*/, true/*readConfig*/),
+kpToolToolBar::kpToolToolBar (const QString &label, int colsOrRows, QWidget *parent)
+    : KToolBar (parent, false/*don't use global toolBar settings*/, true/*readConfig*/),
       m_vertCols (colsOrRows),
       m_buttonGroup (0),
       m_baseWidget (0),

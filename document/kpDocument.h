@@ -36,7 +36,11 @@
 
 #include <kurl.h>
 
+#include <kpImage.h>
+#include <kpPixmapFX.h>
 
+
+class QImage;
 class QIODevice;
 class QPixmap;
 class QPoint;
@@ -44,10 +48,12 @@ class QRect;
 class QSize;
 
 class kpColor;
+class kpDocumentEnvironment;
 class kpDocumentSaveOptions;
 class kpDocumentMetaInfo;
-class kpMainWindow;
-class kpSelection;
+class kpAbstractImageSelection;
+class kpAbstractSelection;
+class kpTextSelection;
 
 
 class kpDocument : public QObject
@@ -55,16 +61,24 @@ class kpDocument : public QObject
 Q_OBJECT
 
 public:
-    kpDocument (int w, int h, kpMainWindow *mainWindow);
+    kpDocument (int w, int h, kpDocumentEnvironment *environ);
     ~kpDocument ();
 
-    kpMainWindow *mainWindow () const;
-    void setMainWindow (kpMainWindow *mainWindow);
+    kpDocumentEnvironment *environ () const;
+    void setEnviron (kpDocumentEnvironment *environ);
 
 
     //
     // File I/O - Open
     //
+
+    // Wraps kpPixmapFX::convertToPixmapAsLosslessAsPossible() but also
+    // returns document meta information.
+    static QPixmap convertToPixmapAsLosslessAsPossible (
+        const QImage &image,
+        const kpPixmapFX::WarnAboutLossInfo &wali = kpPixmapFX::WarnAboutLossInfo (),
+        kpDocumentSaveOptions *saveOptions = 0,
+        kpDocumentMetaInfo *metaInfo = 0);
 
     static QPixmap getPixmapFromFile (const KUrl &url, bool suppressDoesntExistDialog,
                                       QWidget *parent,
@@ -110,14 +124,14 @@ public:
     KUrl url () const;
     void setURL (const KUrl &url, bool isFromURL);
 
-    // Returns whether the document's pixmap was successfully opened from
+    // Returns whether the document's image was successfully opened from
     // or saved to the URL returned by url().  This is not true for a
     // new kpDocument and in the case of open() being passed
     // "newDocSameNameIfNotExist = true" when the URL doesn't exist.
     //
     // If this returns true and the kpDocument hasn't been modified,
-    // this gives a pretty good indication that the pixmap stored at url()
-    // is equal to pixmap() (unless the something has happened to that url
+    // this gives a pretty good indication that the image stored at url()
+    // is equal to image() (unless the something has happened to that url
     // outside of KolourPaint).
     bool isFromURL (bool checkURLStillExists = true) const;
 
@@ -159,47 +173,92 @@ public:
     QRect rect (bool ofSelection = false) const;
 
 
-    /*
-     * Pixmap access
-     */
-
-    // get a copy of a bit of the doc's pixmap
-    // (not including the selection)
-    QPixmap getPixmapAt (const QRect &rect) const;
-
-    void setPixmapAt (const QPixmap &pixmap, const QPoint &at);
-
-    void paintPixmapAt (const QPixmap &pixmap, const QPoint &at);
-
-    // "pixmap(false)" returns a non-zero pointer to the document's image
-    // data, ignoring any floating selection.
     //
-    // "pixmap(true)" returns a pointer to a floating selection's image
-    // data (before selection transparency is applied), or 0 if no floating
-    // selection exists.
-    QPixmap *pixmap (bool ofSelection = false) const;
-    void setPixmap (const QPixmap &pixmap);
-    void setPixmap (bool ofSelection, const QPixmap &pixmap);
+    // Image access
+    //
+
+    // Returns a copy of part of the document's image (not including the
+    // selection).
+    kpImage getImageAt (const QRect &rect) const;
+
+    void setImageAt (const kpImage &image, const QPoint &at);
+
+    void paintImageAt (const kpImage &image, const QPoint &at);
+
+    // "image(false)" returns a copy of the document's image, ignoring any
+    // floating selection.
+    //
+    // "image(true)" returns a copy of a floating image selection's base
+    // image (i.e. before selection transparency is applied), which may be
+    // null if the image selection is a just a border.
+    //
+    // ASSUMPTION: For <ofSelection> == true only, an image selection exists.
+    kpImage image (bool ofSelection = false) const;
+    kpImage *imagePointer () const;
+
+    void setImage (const kpImage &image);
+    // ASSUMPTION: If setting the selection's image, the selection must be
+    //             an image selection.
+    void setImage (bool ofSelection, const kpImage &image);
+
 
     //
     // Selections
     //
 
 public:
-    kpSelection *selection () const;
-    void setSelection (const kpSelection &selection);
+    kpAbstractSelection *selection () const;
+    kpAbstractImageSelection *imageSelection () const;
+    kpTextSelection *textSelection () const;
 
-    // TODO: this always returns opaque pixmap - need transparent ver
-    QPixmap getSelectedPixmap () const;
+    // Sets the document's selection to the given one and changes to the
+    // matching selection tool.
+    //
+    // WARNING: Before calling this, you must ensure that the UI (kpMainWindow)
+    //          has the <selection>'s selection transparency or
+    //          for a text selection, its text style, selected.
+    // TODO: Why can't we change it for them, if we change tool automatically for them already?
+    void setSelection (const kpAbstractSelection &selection);
 
-    bool selectionPullFromDocument (const kpColor &backgroundColor);
-    bool selectionDelete ();
-    bool selectionCopyOntoDocument (bool useTransparentPixmap = true);
-    bool selectionPushOntoDocument (bool useTransparentPixmap = true);
+    // Returns the base image of the current image selection.  If this is
+    // null (because the selection is still a border), it extracts the
+    // pixels of the document marked out by the border of the selection.
+    //
+    // ASSUMPTION: There is an imageSelection().
+    //
+    // TODO: this always returns base image - need ver that applies selection
+    //       transparency.
+    kpImage getSelectedBaseImage () const;
 
-    // same as pixmap() but returns a _copy_ of the current pixmap
-    // + any selection pasted on top
-    QPixmap pixmapWithSelection () const;
+    // Sets the base image of the current image selection to the pixels
+    // of the document marked out by the border of the selection.
+    //
+    // ASSUMPTION: There is an imageSelection() that is just a border
+    //             (no base image).
+    void imageSelectionPullFromDocument (const kpColor &backgroundColor);
+
+    // Deletes the current selection.
+    //
+    // ASSUMPTION: There is a selection().
+    void selectionDelete ();
+
+    // Stamps a copy of the selection onto the document.
+    //
+    // For image selections, <applySelTransparency> set to true, means that
+    // the transparent image of the selection is used.  If set to false,
+    // the base image of the selection is used.  This argument is ignored
+    // for non-image selections.
+    //
+    // ASSUMPTION: There is a selection() with content.
+    void selectionCopyOntoDocument (bool applySelTransparency = true);
+
+    // Same as selectionCopyOntoDocument() but deletes the selection
+    // afterwards.
+    void selectionPushOntoDocument (bool applySelTransparency = true);
+
+    // Same as image() but returns a _copy_ of the document image
+    // + any (even non-image) selection pasted on top.
+    kpImage imageWithSelection () const;
 
 
     /*
@@ -232,13 +291,15 @@ signals:
 
     void selectionEnabled (bool on);
 
-    // HACK: until we support Text Selection -> Rectangular Selection for Image ops
+    // Emitted when setSelection() is given a selection such that we change
+    // from a non-text-selection tool to the text selection tool or vice-versa.
+    // <isText> reports whether the new selection is text (and therefore,
+    // whether we've switched to the text tool).
     void selectionIsTextChanged (bool isText);
 
 private:
     int m_constructorWidth, m_constructorHeight;
-    kpMainWindow *m_mainWindow;
-    QPixmap *m_pixmap;
+    kpImage *m_image;
 
     KUrl m_url;
     bool m_isFromURL;
@@ -249,7 +310,7 @@ private:
 
     bool m_modified;
 
-    kpSelection *m_selection;
+    kpAbstractSelection *m_selection;
 
     int m_oldWidth, m_oldHeight;
 

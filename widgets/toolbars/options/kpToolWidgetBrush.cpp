@@ -205,7 +205,7 @@ bool kpToolWidgetBrush::brushIsDiagonalLine () const
 
 
 // public
-kpTempPixmap::UserFunctionType kpToolWidgetBrush::drawFunction () const
+kpTempImage::UserFunctionType kpToolWidgetBrush::drawFunction () const
 {
     return &::Draw;
 }

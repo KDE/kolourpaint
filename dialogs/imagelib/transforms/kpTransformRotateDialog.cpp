@@ -48,10 +48,9 @@
 
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
-#include <kpSelection.h>
 #include <kpTool.h>
+#include <kpTransformDialogEnvironment.h>
 #include <kpViewManager.h>
 
 
@@ -65,12 +64,13 @@ int kpTransformRotateDialog::s_lastAngleCustom = 0;
 
 
 kpTransformRotateDialog::kpTransformRotateDialog (bool actOnSelection,
-                                        kpMainWindow *mainWindow)
+        kpTransformDialogEnvironment *environ, QWidget *parent)
     : kpTransformPreviewDialog (kpTransformPreviewDialog::AllFeatures,
-                           false/*don't reserve top row*/,
-                           actOnSelection ? i18n ("Rotate Selection") : i18n ("Rotate Image"),
-                           i18n ("After Rotate:"),
-                           actOnSelection, mainWindow)
+        false/*don't reserve top row*/,
+        actOnSelection ? i18n ("Rotate Selection") : i18n ("Rotate Image"),
+        i18n ("After Rotate:"),
+        actOnSelection,
+        environ, parent)
 {
     s_lastAngleCustom = 0;
 
@@ -233,7 +233,7 @@ QPixmap kpTransformRotateDialog::transformPixmap (const QPixmap &pixmap,
                                              int targetWidth, int targetHeight) const
 {
     return kpPixmapFX::rotate (pixmap, angle (),
-                               m_mainWindow ? m_mainWindow->backgroundColor (m_actOnSelection) : kpColor::Invalid,
+                               m_environ->backgroundColor (m_actOnSelection),
                                targetWidth, targetHeight);
 }
 
@@ -266,7 +266,7 @@ void kpTransformRotateDialog::accept ()
 
     if (document ()->selection ())
     {
-        if (!document ()->selection ()->isText ())
+        if (!document ()->textSelection ())
         {
             message =
                 ki18n ("<qt><p>Rotating the selection to %1x%2"

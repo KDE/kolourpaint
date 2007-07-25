@@ -47,6 +47,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 
+#include <kactioncollection.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -57,13 +58,12 @@
 #include <kpColor.h>
 #include <kpColorToolBar.h>
 #include <kpDefs.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
 #include <kpToolAction.h>
+#include <kpToolEnvironment.h>
 #include <kpToolToolBar.h>
 #include <kpView.h>
 #include <kpViewManager.h>
-#include <kactioncollection.h>
 
 
 void kpTool::seeIfAndHandleModifierKey (QKeyEvent *e)
@@ -127,14 +127,14 @@ void kpTool::seeIfAndHandleArrowKeyPress (QKeyEvent *e)
 
     arrowKeyPressDirection (e, &dx, &dy);
     if (dx == 0 && dy == 0)
-        return;    
+        return;
 
-                
+
     kpView * const view = viewUnderCursor ();
     if (!view)
         return;
 
-                
+
     const QPoint oldPoint = view->mapFromGlobal (QCursor::pos ());
 #if DEBUG_KP_TOOL && 0
     kDebug () << "\toldPoint=" << oldPoint
@@ -194,7 +194,7 @@ void kpTool::seeIfAndHandleBeginDrawKeyPress (QKeyEvent *e)
 
     if (!isDrawKey (e->key ()))
         return;
-        
+
 #if DEBUG_KP_TOOL && 0
     kDebug () << "kpTool::seeIfAndHandleBeginDrawKeyPress() accept" << endl;
 #endif
@@ -204,8 +204,8 @@ void kpTool::seeIfAndHandleBeginDrawKeyPress (QKeyEvent *e)
     kpView * const view = viewUnderCursor ();
     if (!view)
         return;
-        
-        
+
+
     // TODO: what about the modifiers?
     QMouseEvent me (QEvent::MouseButtonPress,
                     view->mapFromGlobal (QCursor::pos ()),
@@ -231,17 +231,17 @@ void kpTool::seeIfAndHandleEndDrawKeyPress (QKeyEvent *e)
 
     if (!isDrawKey (e->key ()))
         return;
-    
+
 #if DEBUG_KP_TOOL && 0
     kDebug () << "kpTool::seeIfAndHandleEndDrawKeyPress() accept" << endl;
 #endif
-    
-    
+
+
     kpView * const view = viewUnderCursor ();
     if (!view)
         return;
-    
-        
+
+
     // TODO: what about the modifiers?
     QMouseEvent me (QEvent::MouseButtonRelease,
                     view->mapFromGlobal (QCursor::pos ()),
@@ -269,20 +269,20 @@ void kpTool::keyPressEvent (QKeyEvent *e)
     seeIfAndHandleModifierKey (e);
     if (e->isAccepted ())
         return;
-            
+
     seeIfAndHandleArrowKeyPress (e);
     if (e->isAccepted ())
         return;
-        
+
     seeIfAndHandleBeginDrawKeyPress (e);
     if (e->isAccepted ())
         return;
-    
-            
+
+
     switch (e->key ())
     {
     case Qt::Key_Delete:
-        d->mainWindow->slotDelete ();
+        d->environ->deleteSelection ();
         break;
 
     case Qt::Key_Escape:
@@ -307,11 +307,11 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
 
     e->ignore ();
 
-    
+
     seeIfAndHandleModifierKey (e);
     if (e->isAccepted ())
         return;
-            
+
     seeIfAndHandleEndDrawKeyPress (e);
     if (e->isAccepted ())
         return;

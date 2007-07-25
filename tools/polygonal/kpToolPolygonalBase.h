@@ -39,7 +39,6 @@
 #include <qrect.h>
 
 #include <kpColor.h>
-#include <kpCommandHistory.h>
 #include <kpImage.h>
 #include <kpTool.h>
 #include <kpToolWidgetFillStyle.h>
@@ -51,7 +50,6 @@ class QRect;
 class QString;
 
 class kpView;
-class kpMainWindow;
 
 class kpToolWidgetFillStyle;
 
@@ -107,7 +105,7 @@ public:
     kpToolPolygonalBase (const QString &text, const QString &description,
         DrawShapeFunc drawShapeFunc,
         int key,
-        kpMainWindow *mainWindow,
+        kpToolEnvironment *environ, QObject *parent,
         const QString &name);
     virtual ~kpToolPolygonalBase ();
 
@@ -153,7 +151,7 @@ protected:
     // draw() sets the last point to the currentPoint().  If drawingALine(),
     // draw() then calls applyModifiers().
     QPolygon *points () const;
-    
+
     // Returns the mouse button for the drag that created the initial line.
     // Use this - instead of mouseButton() - for determining whether you should
     // use the left mouse button's or right mouse button's color.  This is because

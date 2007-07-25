@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -31,19 +31,23 @@
 
 #include <kpToolFreeFormSelection.h>
 
-#include <klocale.h>
+#include <KDebug>
+#include <KLocale>
 
 #include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpSelection.h>
+#include <kpFreeFormImageSelection.h>
+#include <kpPainter.h>
+#include <kpToolSelectionEnvironment.h>
 
 
-kpToolFreeFormSelection::kpToolFreeFormSelection (kpMainWindow *mainWindow)
+kpToolFreeFormSelection::kpToolFreeFormSelection (kpToolSelectionEnvironment *environ,
+        QObject *parent)
     : kpToolSelection (kpToolSelection::FreeForm,
                        i18n ("Selection (Free-Form)"),
                        i18n ("Makes a free-form selection"),
                        Qt::Key_M,
-                       mainWindow, "tool_free_form_selection")
+                       environ, parent,
+                       "tool_free_form_selection")
 {
 }
 
@@ -53,18 +57,44 @@ kpToolFreeFormSelection::~kpToolFreeFormSelection ()
 
 
 // protected virtual [base kpToolSelection]
-void kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (
+bool kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (
+        bool dragHasBegun,
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &/*normalizedRect*/)
 {
-    Q_ASSERT (accidentalDragAdjustedPoint == currentPoint ());
+#if DEBUG_KP_TOOL_FREE_FROM_SELECTION
+    kDebug () << "kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar("
+               << "dragHasBegun=" << dragHasBegun
+               << ",accidentalDragAdjustedPoint=" << accidentalDragAdjustedPoint
+               << ")" << endl;
+#endif
 
-    Q_ASSERT (m_dragHasBegun == (bool) document ()->selection ());
+    // Prevent unintentional creation of 1-pixel selections.
+    if (!dragHasBegun && accidentalDragAdjustedPoint == startPoint ())
+    {
+    #if DEBUG_KP_TOOL_FREE_FROM_SELECTION && 1
+        kDebug () << "\tnon-text NOP - return" << endl;
+    #endif
+        setUserShapePoints (accidentalDragAdjustedPoint);
+        return false;
+    }
+
+    Q_ASSERT (accidentalDragAdjustedPoint == currentPoint ());
+    Q_ASSERT (dragHasBegun == (bool) document ()->selection ());
+
+    const kpFreeFormImageSelection *oldPointsSel = 0;
+    if (document ()->selection ())
+    {
+        kpAbstractSelection *sel = document ()->selection ();
+        Q_ASSERT (dynamic_cast <kpFreeFormImageSelection *> (sel));
+        oldPointsSel = static_cast <kpFreeFormImageSelection *> (sel);
+    }
+
 
     QPolygon points;
 
     // First point in drag?
-    if (!m_dragHasBegun)
+    if (!dragHasBegun)
     {
         points.append (startPoint ());
     }
@@ -72,9 +102,13 @@ void kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (
     else
     {
         // Get existing points in selection.
-        points = document ()->selection ()->points ();
+        points = oldPointsSel->cardinallyAdjacentPoints ();
     }
 
+
+#if DEBUG_KP_TOOL_FREE_FROM_SELECTION
+    kDebug () << "\tlast old point=" << points.last () << endl;
+#endif
 
     // TODO: There should be an upper limit on this before drawing the
     //       polygon becomes too slow.
@@ -82,12 +116,19 @@ void kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (
 
 
     document ()->setSelection (
-        kpSelection (points, mainWindow ()->selectionTransparency ()));
+        kpFreeFormImageSelection (points, environ ()->imageSelectionTransparency ()));
+
+    // Prevent accidental usage of dangling pointer to old selection
+    // (deleted by kpDocument::setSelection()).
+    oldPointsSel = 0;
+
 #if DEBUG_KP_TOOL_FREE_FROM_SELECTION && 1
     kDebug () << "\t\tfreeform; #points="
-              << document ()->selection ()->points ().count ()
+              << document ()->selection ()->calculatePoints ().count ()
               << endl;
 #endif
 
     setUserShapePoints (accidentalDragAdjustedPoint);
+
+    return true;
 }

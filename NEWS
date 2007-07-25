@@ -6,6 +6,32 @@ KolourPaint 4.0.0 (Frozen ???)
 
    * Port to KDE 4 (Laurent Montel)
 
+   * Save local files atomically - KolourPaint will no longer truncate
+     an existing file if the KImageIO library for the file format is
+     missing or if you run out of disk space.
+     [also in branches/KDE/3.5]
+
+   * Add "File / Scan..." feature (Martin Koller)
+     [also in branches/KDE/3.5/]
+
+   * Add "Hue, Saturation, Value" effect (Mike Gashler)
+
+   * Add "Tone Enhance" effect (Mike Gashler)
+
+   * Add global session save/restore (Bug #94651)
+     [also in branches/KDE/3.5/]
+
+   * Make "File / Open Recent" consistently work when multiple windows are
+     open
+     [also in branches/KDE/3.5/]
+
+   * CTRL+C'ing a text box also places the text in the middle-mouse-button
+     clipboard, in lieu of being able to highlight the text to do this
+     [also in branches/KDE/3.5/]
+
+   * Change minimum allowed zoom level for the grid from 600% to 400%
+     [also in branches/KDE/3.5/]
+
    * Rectangles, rounded rectangles and ellipsed are now bounded by
      the dimensions of the dragged out rectangle
 
@@ -15,17 +41,34 @@ KolourPaint 4.0.0 (Frozen ???)
      - Centre image on page
      [also in branches/KDE/3.5/]
 
+   * Add, to the print dialog, a choice between printing the image at the
+     top-left of the page or at the center (this was previously a hidden
+     configuration option, which is now ignored)
+     (Bug #33481)
+
    * Add hidden configuration option "Open Images in the Same Window"
      (Bug #125116)
 
    * Fix crash triggered by rapidly deselecting a selection after
-     drag-scaling the selection (Bug 117866)
+     drag-scaling the selection (Bug #117866)
      [also in branches/KDE/3.[345]/, branches/kolourpaint/1.2_kde3/]
 
-   * Add "Rotate 90 Degrees Counterclockwise" (CTRL+L) and
-     "Rotate 90 Degrees Clockwise" (CTRL+R) to "Image" menu as a quick way
-     to access the common types of "Rotate..." (changed from CTRL+R to
-     CTRL+SHIFT+R) (Bug #135184)
+   * Add "Rotate Left" (CTRL+SHIFT+Left) and "Rotate Right" (CTRL+SHIFT+R)
+     to "Image" menu as a quick way to access the common types of "Rotate..."
+     (Bug #135184, #141530))
+
+   * Add "Image / Draw Opaque" menu item since some users expect it.
+     It duplicates the functionality of the already existent Tool Box widget.
+
+   * Animate the Color Similarity Tool Bar Item, to highlight the existence
+     of the feature
+     - And make the configuration more accessible
+       - Also add "Image / Draw With Color Similarity" to duplicate the tool
+         bar item
+
+   * REGRESSION: The rendering quality of a text box with opaque text but
+                 a see-through background, on top of transparent document
+                 areas, is lower than before.
 
 
 KolourPaint 1.4_relight Series (branches/KDE/3.5/)

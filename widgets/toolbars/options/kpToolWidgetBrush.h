@@ -33,7 +33,7 @@
 #include <qpixmap.h>
 
 #include <kpColor.h>
-#include <kpTempPixmap.h>
+#include <kpTempImage.h>
 #include <kpToolWidgetBase.h>
 
 
@@ -64,7 +64,7 @@ public:
     // <drawFunctionData> to it.
     //
     // TODO: change function + data -> object
-    kpTempPixmap::UserFunctionType drawFunction () const;
+    kpTempImage::UserFunctionType drawFunction () const;
 
     static DrawPackage drawFunctionDataForRowCol (const kpColor &color,
         int row, int col);

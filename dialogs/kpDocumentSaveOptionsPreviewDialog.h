@@ -62,7 +62,7 @@ signals:
     void finished ();
 
 public slots:
-    void setFilePixmapAndSize (const QPixmap &filePixmap, int fileSize);
+    void setFilePixmapAndSize (const QPixmap &filePixmap, qint64 fileSize);
     void updatePixmapPreview ();
 
 protected:
@@ -72,7 +72,7 @@ protected:
 
 protected:
     QPixmap *m_filePixmap;
-    int m_fileSize;
+    qint64 m_fileSize;
 
     kpResizeSignallingLabel *m_filePixmapLabel;
     QLabel *m_fileSizeLabel;

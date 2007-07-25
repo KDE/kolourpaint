@@ -30,10 +30,7 @@
 #define KP_TOOL_TEXT_INSERT_COMMAND_H
 
 
-#include <kpCommandHistory.h>
-
-
-class kpMainWindow;
+#include <kpNamedCommand.h>
 
 
 class kpToolTextInsertCommand : public kpNamedCommand
@@ -41,13 +38,13 @@ class kpToolTextInsertCommand : public kpNamedCommand
 public:
     kpToolTextInsertCommand (const QString &name,
         int row, int col, QString newText,
-        kpMainWindow *mainWindow);
+        kpCommandEnvironment *environ);
     virtual ~kpToolTextInsertCommand ();
 
     void addText (const QString &moreText);
 
-    virtual int size () const;
-    
+    virtual kpCommandSize::SizeType size () const;
+
     virtual void execute ();
     virtual void unexecute ();
 

@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_DUAL_COLOR_BUTTON 0
+#define DEBUG_KP_DUAL_COLOR_BUTTON 1
 
 
 #include <kpDualColorButton.h>
@@ -43,10 +43,8 @@
 #include <kpView.h>
 
 
-kpDualColorButton::kpDualColorButton (kpMainWindow *mainWindow,
-                                      QWidget *parent)
-    : QFrame (parent),
-      m_mainWindow (mainWindow)
+kpDualColorButton::kpDualColorButton (QWidget *parent)
+    : QFrame (parent)
 {
     setFrameStyle (QFrame::Panel | QFrame::Sunken);
 
@@ -63,12 +61,7 @@ kpDualColorButton::~kpDualColorButton ()
 
 kpColor kpDualColorButton::color (int which) const
 {
-    if (which < 0 || which > 1)
-    {
-        kWarning () << "kpDualColorButton::color (" << which
-                     << ") - out of range" << endl;
-        which = 0;
-    }
+    Q_ASSERT (which == 0 || which == 1);
 
     return m_color [which];
 }
@@ -86,12 +79,7 @@ kpColor kpDualColorButton::backgroundColor () const
 
 void kpDualColorButton::setColor (int which, const kpColor &color)
 {
-    if (which < 0 || which > 1)
-    {
-        kWarning () << "kpDualColorButton::setColor (" << which
-                     << ") - out of range" << endl;
-        which = 0;
-    }
+    Q_ASSERT (which == 0 || which == 1);
 
     if (m_color [which] == color)
         return;
@@ -181,18 +169,39 @@ QRect kpDualColorButton::backgroundRect () const
 
 // TODO: drag a colour from this widget
 
+// protected virtual
+void kpDualColorButton::dragEnterEvent (QDragEnterEvent *e)
+{
+#if DEBUG_KP_DUAL_COLOR_BUTTON
+    kDebug () << "kpDualColorButton::dragEnterEvent() canDecode="
+              << KColorMimeData::canDecode (e->mimeData ())
+              << endl;
+#endif
+    e->accept ();
+}
+
 // protected virtual [base QWidget]
 void kpDualColorButton::dragMoveEvent (QDragMoveEvent *e)
 {
-    e->setAccepted ((foregroundRect ().contains (e->pos ()) ||
-                backgroundRect ().contains (e->pos ())) &&
-               KColorMimeData::canDecode (e->mimeData ()));
+#if DEBUG_KP_DUAL_COLOR_BUTTON
+    kDebug () << "kpDualColorButton::dragMoveEvent() canDecode="
+              << KColorMimeData::canDecode (e->mimeData ())
+              << endl;
+#endif
+    e->setAccepted (
+        (foregroundRect ().contains (e->pos ()) ||
+            backgroundRect ().contains (e->pos ())) &&
+        KColorMimeData::canDecode (e->mimeData ()));
 }
 
 // protected virtual [base QWidget]
 void kpDualColorButton::dropEvent (QDropEvent *e)
 {
     QColor col = KColorMimeData::fromMimeData (e->mimeData ());
+#if DEBUG_KP_DUAL_COLOR_BUTTON
+    kDebug () << "kpDualColorButton::dropEvent() col="
+              << (int *) col.rgb () << endl;
+#endif
 
     if (col.isValid ())
     {
@@ -268,7 +277,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
 
 
     // Fill with background.
-    if (isEnabled () && m_mainWindow)
+    if (isEnabled ())
     {
         kpView::drawTransparentBackground (&painter,
             contentsRect ().topLeft ()/*checkerboard top-left*/,

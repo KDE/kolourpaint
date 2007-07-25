@@ -40,8 +40,8 @@
 
 kpToolFlowPixmapBase::kpToolFlowPixmapBase (const QString &text, const QString &description,
             int key,
-            kpMainWindow *mainWindow, const QString &name)
-    : kpToolFlowBase (text, description, key, mainWindow, name)
+            kpToolEnvironment *environ, QObject *parent, const QString &name)
+    : kpToolFlowBase (text, description, key, environ, parent, name)
 {
 }
 
@@ -53,7 +53,7 @@ kpToolFlowPixmapBase::~kpToolFlowPixmapBase ()
 // Wants porting to Qt4.  But may be a bogus optimization anyway.
 #if 0
 QRect kpToolFlowPixmapBase::drawPoint (const QPoint & /*point*/)
-{            
+{
     if (color (mouseButton ()).isOpaque ())
         document ()->paintPixmapAt (m_brushPixmap [mouseButton ()], hotPoint ());
     else
@@ -73,12 +73,12 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
 {
     QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
     docRect = neededRect (docRect, qMax (brushWidth (), brushHeight ()));
-    QPixmap pixmap = document ()->getPixmapAt (docRect);
+    QPixmap pixmap = document ()->getImageAt (docRect);
 
 
-    QList <QPoint> points = kpPainter::interpolatePoints (thisPoint, lastPoint,
+    QList <QPoint> points = kpPainter::interpolatePoints (lastPoint, thisPoint,
         brushIsDiagonalLine ());
-        
+
     for (QList <QPoint>::const_iterator pit = points.begin ();
          pit != points.end ();
          pit++)
@@ -92,9 +92,9 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
     }
 
 
-    document ()->setPixmapAt (pixmap, docRect.topLeft ());
+    document ()->setImageAt (pixmap, docRect.topLeft ());
     return docRect;
 }
 
-    
+
 #include <kpToolFlowPixmapBase.moc>

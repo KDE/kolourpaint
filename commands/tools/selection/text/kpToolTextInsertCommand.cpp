@@ -32,14 +32,14 @@
 
 #include <qlist.h>
 
-#include <kpSelection.h>
+#include <kpTextSelection.h>
 #include <kpViewManager.h>
 
 
 kpToolTextInsertCommand::kpToolTextInsertCommand (const QString &name,
-    int row, int col, QString newText,
-    kpMainWindow *mainWindow)
-    : kpNamedCommand (name, mainWindow),
+        int row, int col, QString newText,
+        kpCommandEnvironment *environ)
+    : kpNamedCommand (name, environ),
       m_row (row), m_col (col)
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
@@ -57,11 +57,11 @@ void kpToolTextInsertCommand::addText (const QString &moreText)
     if (moreText.isEmpty ())
         return;
 
-    QList <QString> textLines = selection ()->textLines ();
+    QList <QString> textLines = textSelection ()->textLines ();
     const QString leftHalf = textLines [m_row].left (m_col);
     const QString rightHalf = textLines [m_row].mid (m_col);
     textLines [m_row] = leftHalf + moreText + rightHalf;
-    selection ()->setTextLines (textLines);
+    textSelection ()->setTextLines (textLines);
 
     m_newText += moreText;
     m_col += moreText.length ();
@@ -71,9 +71,9 @@ void kpToolTextInsertCommand::addText (const QString &moreText)
 
 
 // public virtual [base kpCommand]
-int kpToolTextInsertCommand::size () const
+kpCommandSize::SizeType kpToolTextInsertCommand::size () const
 {
-    return m_newText.length () * sizeof (QChar);
+    return (kpCommandSize::SizeType) m_newText.length () * sizeof (QChar);
 }
 
 
@@ -92,11 +92,11 @@ void kpToolTextInsertCommand::unexecute ()
 {
     viewManager ()->setTextCursorPosition (m_row, m_col);
 
-    QList <QString> textLines = selection ()->textLines ();
+    QList <QString> textLines = textSelection ()->textLines ();
     const QString leftHalf = textLines [m_row].left (m_col - m_newText.length ());
     const QString rightHalf = textLines [m_row].mid (m_col);
     textLines [m_row] = leftHalf + rightHalf;
-    selection ()->setTextLines (textLines);
+    textSelection ()->setTextLines (textLines);
 
     m_col -= m_newText.length ();
 

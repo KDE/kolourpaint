@@ -35,8 +35,6 @@
 
 class QRadioButton;
 
-class kpMainWindow;
-
 
 class kpEffectReduceColorsWidget : public kpEffectWidgetBase
 {
@@ -44,7 +42,6 @@ Q_OBJECT
 
 public:
     kpEffectReduceColorsWidget (bool actOnSelection,
-                                kpMainWindow *mainWindow,
                                 QWidget *parent);
     virtual ~kpEffectReduceColorsWidget ();
 
@@ -62,7 +59,8 @@ public:
     virtual bool isNoOp () const;
     virtual kpImage applyEffect (const kpImage &image);
 
-    virtual kpEffectCommandBase *createCommand () const;
+    virtual kpEffectCommandBase *createCommand (
+        kpCommandEnvironment *cmdEnviron) const;
 
 protected:
     QRadioButton *m_blackAndWhiteRadioButton,

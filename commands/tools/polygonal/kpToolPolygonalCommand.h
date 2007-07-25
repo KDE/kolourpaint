@@ -30,32 +30,15 @@
 #define kpToolPolygonalCommand_H
 
 
-#include <qbrush.h>
-#include <qpen.h>
-#include <qobject.h>
-#include <qpixmap.h>
-#include <qpoint.h>
-#include <qpolygon.h>
-#include <qrect.h>
-
-#include <kpColor.h>
-#include <kpCommandHistory.h>
-#include <kpTool.h>
+#include <kpNamedCommand.h>
 #include <kpToolPolygonalBase.h>
-#include <kpToolWidgetFillStyle.h>
 
 
 class QPolygon;
 class QRect;
-class QString;
 
-class kpView;
-class kpMainWindow;
+class kpColor;
 
-class kpToolWidgetFillStyle;
-
-
-struct kpToolPolygonalCommandPrivate;
 
 // TODO: merge with kpToolRectangularCommand due to code duplication.
 class kpToolPolygonalCommand : public kpNamedCommand
@@ -68,16 +51,16 @@ public:
         const QRect &boundingRect,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
-        kpMainWindow *mainWindow);
+        kpCommandEnvironment *environ);
     virtual ~kpToolPolygonalCommand ();
 
-    virtual int size () const;
-    
+    virtual kpCommandSize::SizeType size () const;
+
     virtual void execute ();
     virtual void unexecute ();
 
 private:
-    kpToolPolygonalCommandPrivate * const d;
+    struct kpToolPolygonalCommandPrivate * const d;
     kpToolPolygonalCommand &operator= (const kpToolPolygonalCommand &) const;
 };
 

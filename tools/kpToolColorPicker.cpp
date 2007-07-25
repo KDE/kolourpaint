@@ -35,17 +35,18 @@
 #include <klocale.h>
 
 #include <kpColorToolBar.h>
+#include <kpCommandHistory.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
 #include <kpToolColorPickerCommand.h>
+#include <kpToolEnvironment.h>
 
 
-kpToolColorPicker::kpToolColorPicker (kpMainWindow *mainWindow)
+kpToolColorPicker::kpToolColorPicker (kpToolEnvironment *environ, QObject *parent)
     : kpTool (i18n ("Color Picker"), i18n ("Lets you select a color from the image"),
               Qt::Key_C,
-              mainWindow, "tool_color_picker")
+              environ, parent, "tool_color_picker")
 {
 }
 
@@ -61,7 +62,7 @@ kpColor kpToolColorPicker::colorAtPixel (const QPoint &p)
     kDebug () << "kpToolColorPicker::colorAtPixel" << p << endl;
 #endif
 
-    return kpPixmapFX::getColorAtPixel (*document ()->pixmap (), p);
+    return kpPixmapFX::getColorAtPixel (document ()->image (), p);
 }
 
 
@@ -90,15 +91,15 @@ void kpToolColorPicker::beginDraw ()
 void kpToolColorPicker::draw (const QPoint &thisPoint, const QPoint &, const QRect &)
 {
     const kpColor color = colorAtPixel (thisPoint);
-    
+
     if (color.isValid ())
     {
-        mainWindow ()->colorToolBar ()->setColor (mouseButton (), color);
+        environ ()->setColor (mouseButton (), color);
         setUserShapePoints (thisPoint);
     }
     else
     {
-        mainWindow ()->colorToolBar ()->setColor (mouseButton (), m_oldColor);
+        environ ()->setColor (mouseButton (), m_oldColor);
         setUserShapePoints ();
     }
 }
@@ -106,7 +107,7 @@ void kpToolColorPicker::draw (const QPoint &thisPoint, const QPoint &, const QRe
 // public virtual [base kpTool]
 void kpToolColorPicker::cancelShape ()
 {
-    mainWindow ()->colorToolBar ()->setColor (mouseButton (), m_oldColor);
+    environ ()->setColor (mouseButton (), m_oldColor);
 
     setUserMessage (i18n ("Let go of all the mouse buttons."));
 }
@@ -129,9 +130,9 @@ void kpToolColorPicker::endDraw (const QPoint &thisPoint, const QRect &)
             new kpToolColorPickerCommand (
                 mouseButton (),
                 color, m_oldColor,
-                mainWindow ());
+                environ ()->commandEnvironment ());
 
-        mainWindow ()->commandHistory ()->addCommand (cmd, false/*no exec*/);
+        environ ()->commandHistory ()->addCommand (cmd, false/*no exec*/);
         setUserMessage (haventBegunDrawUserMessage ());
     }
     else

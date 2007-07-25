@@ -41,7 +41,6 @@ class QButtonGroup;
 class QGridLayout;
 class QWidget;
 
-class kpMainWindow;
 class kpTool;
 
 class kpToolWidgetBase;
@@ -58,7 +57,7 @@ class kpToolToolBar : public KToolBar
 Q_OBJECT
 
 public:
-    kpToolToolBar (const QString &label, kpMainWindow *mainWindow, int colsOrRows = 2);
+    kpToolToolBar (const QString &label, int colsOrRows, QWidget *parent);
     virtual ~kpToolToolBar ();
 
 private:
@@ -143,7 +142,7 @@ private:
     QList <kpButtonToolPair> m_buttonToolPairs;
 
     kpTool *m_previousTool, *m_currentTool;
-    
+
     int m_defaultIconSize;
 
 private:

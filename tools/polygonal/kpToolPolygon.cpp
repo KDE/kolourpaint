@@ -42,13 +42,13 @@ struct kpToolPolygonPrivate
     kpToolWidgetFillStyle *toolWidgetFillStyle;
 };
 
-kpToolPolygon::kpToolPolygon (kpMainWindow *mainWindow)
+kpToolPolygon::kpToolPolygon (kpToolEnvironment *environ, QObject *parent)
     : kpToolPolygonalBase (
         i18n ("Polygon"),
         i18n ("Draws polygons"),
         &kpPainter::drawPolygon,
         Qt::Key_G,
-        mainWindow,
+        environ, parent,
         "tool_polygon"),
       d (new kpToolPolygonPrivate ())
 {
@@ -133,7 +133,7 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
         endShape ();
         return;
     }
-        
+
     if (originatingMouseButton () == 0)
     {
         setUserMessage (i18n ("Left drag another line or right click to finish."));

@@ -35,15 +35,13 @@
 #include <kdialog.h>
 
 #include <kpColor.h>
-#include <kpCommandHistory.h>
-#include <kpSelection.h>
+#include <kpCommand.h>
+#include <kpImage.h>
 
 
 class QSize;
-class QString;
 
-
-class kpMainWindow;
+class kpAbstractSelection;
 
 
 class kpTransformResizeScaleCommand : public kpCommand
@@ -55,13 +53,13 @@ public:
     };
 
     kpTransformResizeScaleCommand (bool actOnSelection,
-                              int newWidth, int newHeight,
-                              Type type,
-                              kpMainWindow *mainWindow);
+        int newWidth, int newHeight,
+        Type type,
+        kpCommandEnvironment *environ);
     virtual ~kpTransformResizeScaleCommand ();
 
     virtual QString name () const;
-    virtual int size () const;
+    virtual SizeType size () const;
 
 public:
     int newWidth () const;
@@ -93,8 +91,8 @@ protected:
 
     int m_oldWidth, m_oldHeight;
     bool m_actOnTextSelection;
-    QPixmap m_oldPixmap, m_oldRightPixmap, m_oldBottomPixmap;
-    kpSelection *m_oldSelection;
+    kpImage m_oldImage, m_oldRightImage, m_oldBottomImage;
+    kpAbstractSelection *m_oldSelectionPtr;
 };
 
 

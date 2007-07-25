@@ -54,8 +54,8 @@ class kpCommandHistory;
 class kpDocument;
 class kpView;
 class kpViewManager;
-class kpMainWindow;
 class kpToolAction;
+class kpToolEnvironment;
 class kpToolToolBar;
 
 
@@ -73,13 +73,13 @@ public:
     //                 e.g. "Lets you select a color from the image"
     // <key> = optional shortcut key for switching to the tool, or 0 otherwise
     //         e.g. Qt::Key_C
-    // <mainWindow> = pointer to the parent kpMainWindow
     // <name> = internal QObject name (not user-visible) e.g. "tool_color_picker"
     //          used for fetching the icon(), the name of the action() and
     //          debug printing.
     kpTool (const QString &text, const QString &description,
             int key,
-            kpMainWindow *mainWindow, const QString &name);
+            kpToolEnvironment *environ,
+            QObject *parent, const QString &name);
     virtual ~kpTool ();
 
 private:
@@ -155,19 +155,21 @@ private:
 
 protected:
     int mouseButton () const;
-    
+
     bool shiftPressed () const;
     bool controlPressed () const;
     bool altPressed () const;
-    
+
     QPoint startPoint () const;
-    
+
     QPoint currentPoint () const;
     QPoint currentViewPoint () const;
-    
+
     QPoint lastPoint () const;
-    
+
+public:  // for kpMainWindow
     kpView *viewUnderStartPoint () const;
+protected:
     kpView *viewUnderCursor () const;
 
 
@@ -225,7 +227,11 @@ protected slots:
 
 
 protected:
+    // (this method is called by kpTool just as it is needed - its value
+    //  is not cached, so it is allowed to return different things at
+    //  different times)
     virtual bool returnToPreviousToolAfterEndDraw () const { return false; }
+
     virtual bool careAboutModifierState () const { return false; }
     virtual bool careAboutColorsSwapped () const { return false; }
 
@@ -239,6 +245,10 @@ protected:
     virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint,
                         const QRect &normalizedRect);
 
+private:
+    void drawInternal ();
+
+protected:
     // (m_mouseButton will not change from beginDraw())
     virtual void cancelShape ();
     virtual void releasedAllButtons ();
@@ -251,11 +261,11 @@ protected:
         endDraw (thisPoint, normalizedRect);
     }
 
-    kpMainWindow *mainWindow () const;
     kpDocument *document () const;
     kpViewManager *viewManager () const;
     kpToolToolBar *toolToolBar () const;
     kpCommandHistory *commandHistory () const;
+    kpToolEnvironment *environ () const;
 
     kpColor color (int which) const;
 
@@ -291,10 +301,10 @@ protected:
     bool currentPointNextToLast () const;  // (includes diagonal adjacency)
     bool currentPointCardinallyNextToLast () const;  // (only cardinally adjacent i.e. horiz & vert; no diag)
 
-protected:
-    friend class kpCommandHistory;
-    friend class kpMainWindow;
-    friend class kpToolToolBar;
+// TODO: We should rename these.
+//       These are accessed from kpTool logic and our friends, kpCommandHistory,
+//       kpMainWindow, kpToolToolBar and kpView.
+public:
     void beginInternal ();
     void endInternal ();
 
@@ -305,8 +315,12 @@ protected:
     void endShapeInternal (const QPoint &thisPoint = QPoint (),
                            const QRect &normalizedRect = QRect ());
 
-    friend class kpView;
 
+//
+// Mouse Events
+//
+
+public:
     // Note: _All_ events are forwarded from a kpView.
     //       The existence of a kpView implies the existence of a kpDocument.
 
@@ -316,43 +330,71 @@ protected:
     virtual void mousePressEvent (QMouseEvent *e);
     virtual void mouseMoveEvent (QMouseEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
+
     virtual void wheelEvent (QWheelEvent *e);
 
-    // WARNING: Do not call this "event()" as our QObject parent has a
-    //          virtual function called that, that will pass us
-    //          QObject events.  We only care about events forwarded by
-    //          kpView.
-    // TODO: rename mousePressEvent() -> viewMousePressEvent() etc.
-    //       to remind us that events are coming from the view - the tool
-    //       is not a visible object.
-    virtual bool viewEvent (QEvent *e);
 
+//
+// Keyboard Events
+//
+
+// REFACTOR: Make these private?
+protected:
     void seeIfAndHandleModifierKey (QKeyEvent *e);
-    
+
     void arrowKeyPressDirection (const QKeyEvent *e, int *dx, int *dy);
     void seeIfAndHandleArrowKeyPress (QKeyEvent *e);
-    
+
     bool isDrawKey (int key);
     void seeIfAndHandleBeginDrawKeyPress (QKeyEvent *e);
     void seeIfAndHandleEndDrawKeyPress (QKeyEvent *e);
 
+public:
     virtual void keyPressEvent (QKeyEvent *e);
     virtual void keyReleaseEvent (QKeyEvent *e);
 
     virtual void inputMethodEvent (QInputMethodEvent *) {}
-    
+
 private:
     void keyUpdateModifierState (QKeyEvent *e);
     void notifyModifierStateChanged ();
+
 protected:
     virtual void setShiftPressed (bool pressed);
     virtual void setControlPressed (bool pressed);
+
     virtual void setAltPressed (bool pressed);
+
+
+//
+// Other Events - 1. View Events
+//
+
+public:
+    // WARNING: Do not call this "event()" as our QObject parent has a
+    //          virtual function called that, that will pass us
+    //          QObject events.  We only care about events forwarded by
+    //          kpView.
+    // REFACTOR: rename mousePressEvent() -> viewMousePressEvent() etc.
+    //       to remind us that events are coming from the view - the tool
+    //       is not a visible object.
+    virtual bool viewEvent (QEvent *e);
+
+public:
     virtual void focusInEvent (QFocusEvent *e);
     virtual void focusOutEvent (QFocusEvent *e);
+
+public:
     virtual void enterEvent (QEvent *e);
     virtual void leaveEvent (QEvent *e);
 
+
+//
+// Other Events - 2. Non-view Events
+// REFACTOR: Group methods under this.
+//
+
+protected:
     // 0 = left, 1 = right, -1 = other (none, left+right, mid)
     static int mouseButton (Qt::MouseButtons mouseButtons);
 
@@ -424,6 +466,7 @@ public:
                                     const QString &caption,
                                     const QString &continueButtonText,
                                     QWidget *parent);
+
 private:
     kpToolPrivate *d;
 };

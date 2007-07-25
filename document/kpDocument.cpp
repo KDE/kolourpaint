@@ -55,23 +55,25 @@
 #include <kmimetype.h>  // TODO: isn't this in KIO?
 #include <ktemporaryfile.h>
 
+#include <kpAbstractSelection.h>
+#include <kpAbstractImageSelection.h>
 #include <kpColor.h>
 #include <kpColorToolBar.h>
 #include <kpDefs.h>
+#include <kpDocumentEnvironment.h>
 #include <kpDocumentSaveOptions.h>
 #include <kpDocumentMetaInfo.h>
 #include <kpEffectReduceColors.h>
-#include <kpMainWindow.h>
 #include <kpPixmapFX.h>
-#include <kpSelection.h>
 #include <kpTool.h>
 #include <kpToolToolBar.h>
 #include <kpViewManager.h>
 
 
-kpDocument::kpDocument (int w, int h, kpMainWindow *mainWindow)
-    : m_constructorWidth (w), m_constructorHeight (h),
-      m_mainWindow (mainWindow),
+kpDocument::kpDocument (int w, int h,
+        kpDocumentEnvironment *environ)
+    : QObject (),
+      m_constructorWidth (w), m_constructorHeight (h),
       m_isFromURL (false),
       m_savedAtLeastOnceBefore (false),
       m_saveOptions (new kpDocumentSaveOptions ()),
@@ -85,15 +87,17 @@ kpDocument::kpDocument (int w, int h, kpMainWindow *mainWindow)
     kDebug () << "kpDocument::kpDocument (" << w << "," << h << ")" << endl;
 #endif
 
-    m_pixmap = new QPixmap (w, h);
-    m_pixmap->fill (Qt::white);
+    m_image = new kpImage (w, h);
+    m_image->fill (Qt::white);
+
+    d->environ = environ;
 }
 
 kpDocument::~kpDocument ()
 {
     delete d;
 
-    delete m_pixmap;
+    delete m_image;
 
     delete m_saveOptions;
     delete m_metaInfo;
@@ -102,14 +106,16 @@ kpDocument::~kpDocument ()
 }
 
 
-kpMainWindow *kpDocument::mainWindow () const
+// public
+kpDocumentEnvironment *kpDocument::environ () const
 {
-    return m_mainWindow;
+    return d->environ;
 }
 
-void kpDocument::setMainWindow (kpMainWindow *mainWindow)
+// public
+void kpDocument::setEnviron (kpDocumentEnvironment *environ)
 {
-    m_mainWindow = mainWindow;
+    d->environ = environ;
 }
 
 
@@ -142,7 +148,8 @@ bool kpDocument::isFromURL (bool checkURLStillExists) const
         return true;
 
     return (!m_url.isEmpty () &&
-            KIO::NetAccess::exists (m_url, true/*open*/, m_mainWindow));
+            KIO::NetAccess::exists (m_url, true/*open*/,
+                d->environ->dialogParent ()));
 }
 
 
@@ -240,7 +247,7 @@ int kpDocument::width (bool ofSelection) const
     if (ofSelection && m_selection)
         return m_selection->width ();
     else
-        return m_pixmap->width ();
+        return m_image->width ();
 }
 
 int kpDocument::oldWidth () const
@@ -264,7 +271,7 @@ int kpDocument::height (bool ofSelection) const
     if (ofSelection && m_selection)
         return m_selection->height ();
     else
-        return m_pixmap->height ();
+        return m_image->height ();
 }
 
 int kpDocument::oldHeight () const
@@ -282,89 +289,100 @@ QRect kpDocument::rect (bool ofSelection) const
     if (ofSelection && m_selection)
         return m_selection->boundingRect ();
     else
-        return m_pixmap->rect ();
+        return m_image->rect ();
 }
 
 
-/*
- * Pixmap access
- */
-
 // public
-QPixmap kpDocument::getPixmapAt (const QRect &rect) const
+kpImage kpDocument::getImageAt (const QRect &rect) const
 {
-    return kpPixmapFX::getPixmapAt (*m_pixmap, rect);
+    return kpPixmapFX::getPixmapAt (*m_image, rect);
 }
 
 // public
-void kpDocument::setPixmapAt (const QPixmap &pixmap, const QPoint &at)
+void kpDocument::setImageAt (const kpImage &image, const QPoint &at)
 {
 #if DEBUG_KP_DOCUMENT && 0
-    kDebug () << "kpDocument::setPixmapAt (pixmap (w="
-               << pixmap.width ()
-               << ",h=" << pixmap.height ()
+    kDebug () << "kpDocument::setImageAt (image (w="
+               << image.width ()
+               << ",h=" << image.height ()
                << "), x=" << at.x ()
                << ",y=" << at.y ()
                << endl;
 #endif
 
-    kpPixmapFX::setPixmapAt (m_pixmap, at, pixmap);
-    slotContentsChanged (QRect (at.x (), at.y (), pixmap.width (), pixmap.height ()));
+    kpPixmapFX::setPixmapAt (m_image, at, image);
+    slotContentsChanged (QRect (at.x (), at.y (), image.width (), image.height ()));
 }
 
 // public
-void kpDocument::paintPixmapAt (const QPixmap &pixmap, const QPoint &at)
+void kpDocument::paintImageAt (const kpImage &image, const QPoint &at)
 {
-    kpPixmapFX::paintPixmapAt (m_pixmap, at, pixmap);
-    slotContentsChanged (QRect (at.x (), at.y (), pixmap.width (), pixmap.height ()));
+    kpPixmapFX::paintPixmapAt (m_image, at, image);
+    slotContentsChanged (QRect (at.x (), at.y (), image.width (), image.height ()));
 }
 
 
 // public
-QPixmap *kpDocument::pixmap (bool ofSelection) const
+kpImage kpDocument::image (bool ofSelection) const
 {
+    kpImage ret;
+
     if (ofSelection)
     {
-        if (m_selection && m_selection->pixmap ())
-            return m_selection->pixmap ();
-        else
-            return 0;
+        kpAbstractImageSelection *imageSel = imageSelection ();
+        Q_ASSERT (imageSel);
+
+        ret = imageSel->baseImage ();
     }
     else
-        return m_pixmap;
+        ret = *m_image;
+
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (ret);
+    return ret;
 }
 
 // public
-void kpDocument::setPixmap (const QPixmap &pixmap)
+kpImage *kpDocument::imagePointer () const
 {
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*m_image);
+    return m_image;
+}
+
+
+// public
+void kpDocument::setImage (const kpImage &image)
+{
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (image);
+
     m_oldWidth = width (), m_oldHeight = height ();
 
-    *m_pixmap = pixmap;
+    *m_image = image;
 
     if (m_oldWidth == width () && m_oldHeight == height ())
-        slotContentsChanged (pixmap.rect ());
+        slotContentsChanged (image.rect ());
     else
         slotSizeChanged (width (), height ());
 }
 
 // public
-void kpDocument::setPixmap (bool ofSelection, const QPixmap &pixmap)
+void kpDocument::setImage (bool ofSelection, const kpImage &image)
 {
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (image);
+
     if (ofSelection)
     {
-        // Have to have a selection in order to set its pixmap.
-        Q_ASSERT (m_selection);
-        
-        m_selection->setPixmap (pixmap);
+        kpAbstractImageSelection *imageSel = imageSelection ();
+
+        // Have to have an image selection in order to set its pixmap.
+        Q_ASSERT (imageSel);
+
+        imageSel->setBaseImage (image);
     }
     else
-        setPixmap (pixmap);
+        setImage (image);
 }
 
-
-/*
- * Transformations
- */
 
 void kpDocument::fill (const kpColor &color)
 {
@@ -372,8 +390,8 @@ void kpDocument::fill (const kpColor &color)
     kDebug () << "kpDocument::fill ()" << endl;
 #endif
 
-    kpPixmapFX::fill (m_pixmap, color);
-    slotContentsChanged (m_pixmap->rect ());
+    kpPixmapFX::fill (m_image, color);
+    slotContentsChanged (m_image->rect ());
 }
 
 void kpDocument::resize (int w, int h, const kpColor &backgroundColor)
@@ -393,15 +411,11 @@ void kpDocument::resize (int w, int h, const kpColor &backgroundColor)
     if (w == m_oldWidth && h == m_oldHeight)
         return;
 
-    kpPixmapFX::resize (m_pixmap, w, h, backgroundColor);
+    kpPixmapFX::resize (m_image, w, h, backgroundColor);
 
     slotSizeChanged (width (), height ());
 }
 
-
-/*
- * Slots
- */
 
 void kpDocument::slotContentsChanged (const QRect &rect)
 {
@@ -420,6 +434,7 @@ void kpDocument::slotSizeChanged (const QSize &newSize)
 {
     slotSizeChanged (newSize.width (), newSize.height ());
 }
+
 
 #include <kpDocument.moc>
 

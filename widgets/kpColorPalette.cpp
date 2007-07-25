@@ -32,67 +32,95 @@
 #include <kpColorPalette.h>
 
 #include <QBoxLayout>
+#include <QScrollArea>
+
+#include <KColorDialog>
 
 #include <kpColorCells.h>
 #include <kpTransparentColorCell.h>
 
 
-kpColorPalette::kpColorPalette (QWidget *parent,
-                                Qt::Orientation o)
+struct kpColorPalettePrivate
+{
+    Qt::Orientation orientation;
+
+    QBoxLayout *boxLayout;
+
+    kpTransparentColorCell *transparentColorCell;
+
+    QScrollArea *colorCellsScroll;
+    kpColorCells *colorCells;
+};
+
+kpColorPalette::kpColorPalette (QWidget *parent, Qt::Orientation o)
     : QWidget (parent),
-      m_boxLayout (0)
+      d (new kpColorPalettePrivate ())
 {
 #if DEBUG_KP_COLOR_PALETTE
     kDebug () << "kpColorPalette::kpColorPalette()" << endl;
 #endif
 
-    m_transparentColorCell = new kpTransparentColorCell (this);
-    m_transparentColorCell->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
-    connect (m_transparentColorCell, SIGNAL (foregroundColorChanged (const kpColor &)),
+    d->boxLayout = 0;
+
+    d->transparentColorCell = new kpTransparentColorCell (this);
+    d->transparentColorCell->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+    connect (d->transparentColorCell, SIGNAL (foregroundColorChanged (const kpColor &)),
              this, SIGNAL (foregroundColorChanged (const kpColor &)));
-    connect (m_transparentColorCell, SIGNAL (backgroundColorChanged (const kpColor &)),
+    connect (d->transparentColorCell, SIGNAL (backgroundColorChanged (const kpColor &)),
              this, SIGNAL (backgroundColorChanged (const kpColor &)));
 
-    m_colorCells = new kpColorCells (this);
-    connect (m_colorCells, SIGNAL (foregroundColorChanged (const kpColor &)),
+    d->colorCellsScroll = new QScrollArea (this);
+
+    d->colorCells = new kpColorCells (d->colorCellsScroll);
+    connect (d->colorCells, SIGNAL (foregroundColorChanged (const kpColor &)),
              this, SIGNAL (foregroundColorChanged (const kpColor &)));
-    connect (m_colorCells, SIGNAL (backgroundColorChanged (const kpColor &)),
+    connect (d->colorCells, SIGNAL (backgroundColorChanged (const kpColor &)),
              this, SIGNAL (backgroundColorChanged (const kpColor &)));
+
+    d->colorCellsScroll->setWidget (d->colorCells);
 
     setOrientation (o);
 }
 
 kpColorPalette::~kpColorPalette ()
 {
+    delete d;
 }
 
 // public
 Qt::Orientation kpColorPalette::orientation () const
 {
-    return m_orientation;
+    return d->orientation;
 }
 
 void kpColorPalette::setOrientation (Qt::Orientation o)
 {
-    m_colorCells->setOrientation (o);
+    d->colorCells->setOrientation (o);
 
-    delete m_boxLayout;
+    delete d->boxLayout;
 
     if (o == Qt::Horizontal)
     {
-        m_boxLayout = new QBoxLayout (QBoxLayout::LeftToRight, this );
-        m_boxLayout->addWidget (m_transparentColorCell, 0/*stretch*/, Qt::AlignVCenter);
-        m_boxLayout->addWidget (m_colorCells);
+        d->boxLayout = new QBoxLayout (QBoxLayout::LeftToRight, this );
+        d->boxLayout->addWidget (d->transparentColorCell, 0/*stretch*/, Qt::AlignVCenter);
+        d->boxLayout->addWidget (d->colorCellsScroll);
     }
     else
     {
-        m_boxLayout = new QBoxLayout (QBoxLayout::TopToBottom, this);
-        m_boxLayout->addWidget (m_transparentColorCell, 0/*stretch*/, Qt::AlignHCenter);
-        m_boxLayout->addWidget (m_colorCells);
+        d->boxLayout = new QBoxLayout (QBoxLayout::TopToBottom, this);
+        d->boxLayout->addWidget (d->transparentColorCell, 0/*stretch*/, Qt::AlignHCenter);
+        d->boxLayout->addWidget (d->colorCellsScroll);
     }
-    m_boxLayout->setSpacing( 5 );
+    d->boxLayout->setSpacing (5);
 
-    m_orientation = o;
+    d->orientation = o;
+}
+
+
+// public
+kpColorCells *kpColorPalette::colorCells () const
+{
+    return d->colorCells;
 }
 
 
