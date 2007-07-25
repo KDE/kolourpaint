@@ -875,6 +875,12 @@ void kpMainWindow::dropEvent (QDropEvent *e)
     }
     else if (!(urls = KUrl::List::fromMimeData (e->mimeData ())).isEmpty ())
     {
+        // LOTODO: kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+        //
+        //         However, you would need to prefix all possible error/warning
+        //         dialogs that might be called, with Qt::arrowCursor e.g. in
+        //         kpDocument, kpPixmapFX::convertToPixmapAsLosslessAsPossible()
+        //         and probably a lot more places.
         foreach (KUrl u, urls)
             open (u);
     }
