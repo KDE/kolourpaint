@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_DUAL_COLOR_BUTTON 1
+#define DEBUG_KP_DUAL_COLOR_BUTTON 0
 
 
 #include <kpDualColorButton.h>
@@ -261,6 +261,9 @@ void kpDualColorButton::mouseReleaseEvent (QMouseEvent *e)
 
 
 // protected virtual [base QWidget]
+// LOOPT: If we move the mouse around the KolourPaint window (not even on
+//        top of this widget), we get called a _lot_ of times unnecessarily.
+//        I have no idea why.
 void kpDualColorButton::paintEvent (QPaintEvent *e)
 {
 #if DEBUG_KP_DUAL_COLOR_BUTTON && 1
