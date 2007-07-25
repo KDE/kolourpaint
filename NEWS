@@ -18,6 +18,12 @@ KolourPaint 4.0.0 (Frozen ???)
 
    * Add "Tone Enhance" effect (Mike Gashler)
 
+   * Configurable color palette
+
+   * Add Zoom Tool
+
+   * Add "File / Properties..."
+
    * Add global session save/restore (Bug #94651)
      [also in branches/KDE/3.5/]
 
