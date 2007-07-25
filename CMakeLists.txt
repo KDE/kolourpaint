@@ -309,7 +309,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/kpColorCollection.cpp
 
 kde4_add_library(kolourpaint_lgpl SHARED ${kolourpaint_lgpl_SRCS})
 
-target_link_libraries(kolourpaint_lgpl ${KDE4_KDE3SUPPORT_LIBS})
+target_link_libraries(kolourpaint_lgpl ${KDE4_KDEUI_LIBS})
 
 install(TARGETS kolourpaint_lgpl DESTINATION ${LIB_INSTALL_DIR})
 
