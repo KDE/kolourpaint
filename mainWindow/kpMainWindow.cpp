@@ -850,8 +850,8 @@ bool kpMainWindow::queryClose ()
 void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
 {
     e->setAccepted (kpSelectionDrag::canDecode (e) ||
-               // COMPAT: KURLDrag::canDecode (e) ||
-               Q3TextDrag::canDecode (e));
+                    KUrl::List::canDecode (e->mimeData ()) ||
+                    Q3TextDrag::canDecode (e));
 }
 
 // private virtual [base QWidget]
@@ -873,16 +873,11 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         paste (*sel);
         delete sel;
     }
-// COMPAT
-#if 0
-    else if (KURLDrag::decode (e, urls/*ref*/))
+    else if (!(urls = KUrl::List::fromMimeData (e->mimeData ())).isEmpty ())
     {
-        for (KUrl::List::ConstIterator it = urls.begin (); it != urls.end (); ++it)
-        {
-            open (*it);
-        }
+        foreach (KUrl u, urls)
+            open (u);
     }
-#endif
     else if (Q3TextDrag::decode (e, text/*ref*/))
     {
         QPoint selTopLeft = KP_INVALID_POINT;
