@@ -39,6 +39,9 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
+// kolourpaint needs
+#include "kolourpaint_lgpl.h"
+
 class KUrl;
 
 /**
@@ -51,7 +54,7 @@ class KUrl;
  *
  * @author Waldo Bastian (bastian@kde.org), Clarence Dang (dang@kde.org)
  **/
-class /* COMPAT: KDEUI_EXPORT */ kpColorCollection
+class KOLOURPAINT_LGPL_EXPORT /* COMPAT: KDEUI_EXPORT */ kpColorCollection
 {
 public:
    /**
