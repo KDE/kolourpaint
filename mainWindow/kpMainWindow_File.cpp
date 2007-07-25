@@ -204,39 +204,30 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
 
 
     // TODO: PROPAGATE: interprocess
-    if (!KMainWindow::memberList ().isEmpty ())
+    foreach (KMainWindow *kmw, KMainWindow::memberList ())
     {
+        Q_ASSERT (dynamic_cast <kpMainWindow *> (kmw));
+        kpMainWindow *mw = static_cast <kpMainWindow *> (kmw);
+
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\thave memberList" << endl;
+        kDebug () << "\t\tmw=" << mw << endl;
     #endif
 
-        for (QList <KMainWindow *>::const_iterator it = KMainWindow::memberList ().begin ();
-             it != KMainWindow::memberList ().end ();
-             it++)
+        if (mw != this)
         {
-            kpMainWindow *mw = dynamic_cast <kpMainWindow *> (*it);
-            Q_ASSERT (mw);
+            // WARNING: Do not use KRecentFilesAction::setItems()
+            //          - it does not work since only its superclass,
+            //          KSelectAction, implements setItems() and can't
+            //          update KRecentFilesAction's URL list.
 
+            // Avoid URL memory leak in KRecentFilesAction::loadEntries().
+            mw->m_actionOpenRecent->clear ();
+
+            mw->m_actionOpenRecent->loadEntries (cfg->group (QString ()));
         #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\t\tmw=" << mw << endl;
+            kDebug () << "\t\t\tcheck recent URLs="
+                        << mw->m_actionOpenRecent->items () << endl;
         #endif
-
-            if (mw != this)
-            {
-                // WARNING: Do not use KRecentFilesAction::setItems()
-                //          - it does not work since only its superclass,
-                //          KSelectAction, implements setItems() and can't
-                //          update KRecentFilesAction's URL list.
-
-                // Avoid URL memory leak in KRecentFilesAction::loadEntries().
-                mw->m_actionOpenRecent->clear ();
-
-                mw->m_actionOpenRecent->loadEntries (cfg->group (QString ()));
-            #if DEBUG_KP_MAIN_WINDOW
-                kDebug () << "\t\t\tcheck recent URLs="
-                          << mw->m_actionOpenRecent->items () << endl;
-            #endif
-            }
         }
     }
 }

@@ -657,25 +657,16 @@ void kpMainWindow::slotPaste ()
             i18n ("Cannot Paste"));
 
         // TODO: PROPAGATE: interprocess
-        if (!KMainWindow::memberList ().isEmpty ())
+        foreach (KMainWindow *kmw, KMainWindow::memberList ())
         {
+            Q_ASSERT (dynamic_cast <kpMainWindow *> (kmw));
+            kpMainWindow *mw = static_cast <kpMainWindow *> (kmw);
+
         #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\thave memberList" << endl;
+            kDebug () << "\t\tmw=" << mw << endl;
         #endif
 
-            for (QList <KMainWindow *>::const_iterator it = KMainWindow::memberList ().begin ();
-                 it != KMainWindow::memberList ().end ();
-                 it++)
-            {
-                kpMainWindow *mw = dynamic_cast <kpMainWindow *> (*it);
-                Q_ASSERT (mw);
-
-            #if DEBUG_KP_MAIN_WINDOW
-                kDebug () << "\t\tmw=" << mw << endl;
-            #endif
-
-                mw->slotEnablePaste ();
-            }
+            mw->slotEnablePaste ();
         }
 
         return;
