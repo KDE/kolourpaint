@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KOLOURPAINT_LGPL_H
-#define KOLOURPAINT_LGPL_H
+#ifndef KOLOURPAINT_LGPL_EXPORT_H
+#define KOLOURPAINT_LGPL_EXPORT_H
 
 /* needed for KDE_EXPORT and KDE_IMPORT macros */
 #include <kdemacros.h>

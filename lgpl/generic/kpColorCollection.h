@@ -32,15 +32,13 @@
 #ifndef kpColorCollection_H
 #define kpColorCollection_H
 
-// COMPAT #include <kdeui_export.h>
+#include <kolourpaint_lgpl_export.h>
 
 #include <QtGui/QColor>
 #include <QtCore/QList>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
-// kolourpaint needs
-#include "kolourpaint_lgpl.h"
 
 class KUrl;
 
@@ -54,7 +52,7 @@ class KUrl;
  *
  * @author Waldo Bastian (bastian@kde.org), Clarence Dang (dang@kde.org)
  **/
-class KOLOURPAINT_LGPL_EXPORT /* COMPAT: KDEUI_EXPORT */ kpColorCollection
+class KOLOURPAINT_LGPL_EXPORT kpColorCollection
 {
 public:
    /**
