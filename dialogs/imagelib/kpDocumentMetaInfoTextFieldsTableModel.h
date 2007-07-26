@@ -35,6 +35,9 @@
 #include <kpDocumentMetaInfoProvider.h>
 
 
+class kpDocumentMetaInfo;
+
+
 class kpDocumentMetaInfoTextFieldsTableModel : public QAbstractTableModel
 {
 Q_OBJECT
@@ -43,6 +46,14 @@ public:
     kpDocumentMetaInfoTextFieldsTableModel (kpDocumentMetaInfoProvider *metaInfoProvider,
         QObject *parent);
     virtual ~kpDocumentMetaInfoTextFieldsTableModel ();
+
+private:
+    kpDocumentMetaInfo *metaInfo () const;
+
+public:
+    virtual Qt::ItemFlags flags (const QModelIndex &index) const;
+
+    virtual QVariant headerData (int section, Qt::Orientation orientation, int role) const;
 
     virtual int rowCount (const QModelIndex &parent) const;
     virtual int columnCount (const QModelIndex &parent) const;
