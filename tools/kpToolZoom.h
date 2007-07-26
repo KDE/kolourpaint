@@ -41,6 +41,8 @@ public:
     kpToolZoom (kpToolEnvironment *environ, QWidget *parent);
     virtual ~kpToolZoom ();
 
+    virtual QString iconName () const;
+
     virtual bool returnToPreviousToolAfterEndDraw () const;
 
 private:
