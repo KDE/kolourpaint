@@ -73,7 +73,7 @@ Qt::ItemFlags kpDocumentMetaInfoTextFieldsTableModel::flags (const QModelIndex &
     // All items are editable.
     (void) index;
 
-    return Qt::ItemIsEditable;
+    return (Qt::ItemIsEditable | Qt::ItemIsEnabled);
 }
 
 
@@ -87,9 +87,9 @@ QVariant kpDocumentMetaInfoTextFieldsTableModel::headerData (
               << ",role=" << role << ")" << endl;
 #endif
 
-    // Numbered rows...
     if (orientation == Qt::Vertical)
     {
+        // Numbered rows.
         return QAbstractTableModel::headerData (section, orientation, role);
     }
     else if (orientation == Qt::Horizontal)
@@ -133,6 +133,7 @@ int kpDocumentMetaInfoTextFieldsTableModel::columnCount (const QModelIndex &pare
     return 2;
 }
 
+
 // public virtual [base QAbstractItemModel]
 QVariant kpDocumentMetaInfoTextFieldsTableModel::data (const QModelIndex &parent,
         int role) const
@@ -142,6 +143,7 @@ QVariant kpDocumentMetaInfoTextFieldsTableModel::data (const QModelIndex &parent
               << parent << ",role=" << role << ")" << endl;
 #endif
 
+    // TODO: Do we actually get an EditRole in this method?
     if (role != Qt::DisplayRole && role != Qt::EditRole)
         return QVariant ();
 
@@ -165,6 +167,35 @@ QVariant kpDocumentMetaInfoTextFieldsTableModel::data (const QModelIndex &parent
         Q_ASSERT (!"invalid column");
         return QVariant ();
     }
+}
+
+// public virtual [base QAbstractItemModel]
+bool kpDocumentMetaInfoTextFieldsTableModel::setData (
+        const QModelIndex &index, const QVariant &value, int role)
+{
+#if DEBUG_DMITFTM
+    kDebug () << "DMITFTM::setData(index=" << index
+              << ",value=" << value << ",role=" << role << ")" << endl;
+#endif
+
+    if (role != Qt::EditRole)
+        return false;
+
+    const int row = index.row (), col = index.column ();
+    Q_ASSERT (row >= 0 && row < metaInfo ()->textKeys ().size () + 1);
+
+    // TODO
+    if (row == metaInfo ()->textKeys ().size ())
+        return false;
+
+    // TODO: What if 2 keys are the same?
+    if (col == 0)
+        return false;
+
+    metaInfo ()->setText (metaInfo ()->textKeys () [row], value.toString ());
+    emit dataChanged (index/*top left*/, index/*bottom right*/);
+
+    return false;
 }
 
 
