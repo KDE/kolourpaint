@@ -167,12 +167,17 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (const kpDocumentMetaInfo *do
     fieldsLayout->addWidget (d->fieldsTableView);
 
 
-    QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget);
+    QGridLayout *baseLayout = new QGridLayout (baseWidget);
     baseLayout->setSpacing (spacingHint ());
     baseLayout->setMargin (0/*margin*/);
-    baseLayout->addWidget (dpiGroupBox);
-    baseLayout->addWidget (offsetGroupBox);
-    baseLayout->addWidget (fieldsGroupBox, 1/*stretch*/);
+
+    // Row 0
+    baseLayout->addWidget (dpiGroupBox, 0, 0);
+    baseLayout->addWidget (offsetGroupBox, 0, 1);
+
+    // Row 1
+    baseLayout->addWidget (fieldsGroupBox, 1, 0, 1/*row span*/, 2/*col span*/);
+    baseLayout->setRowStretch (1, 1/*stretch*/);
 
 
     //
