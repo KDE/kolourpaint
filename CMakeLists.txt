@@ -144,7 +144,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/cursors/kpCursorLightCross.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/cursors/kpCursorProvider.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/effects/kpEffectsDialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/kpDocumentMetaInfoDialog.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/kpDocumentMetaInfoTextFieldsTableModel.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/transforms/kpTransformFlipDialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp

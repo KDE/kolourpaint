@@ -28,20 +28,18 @@
 
 #include <kpDocumentMetaInfoDialog.h>
 
-#include <QAbstractItemModel>
 #include <QAbstractItemView>
 #include <QLabel>
 #include <QGroupBox>
 #include <QGridLayout>
 #include <QHBoxLayout>
-#include <QTableView>
+#include <QTableWidget>
 #include <QVBoxLayout>
 
 #include <KIntNumInput>
 #include <KLocale>
 
 #include <kpDocumentMetaInfo.h>
-#include <kpDocumentMetaInfoTextFieldsTableModel.h>
 
 
 struct kpDocumentMetaInfoDialogPrivate
@@ -52,8 +50,7 @@ struct kpDocumentMetaInfoDialogPrivate
     KIntNumInput *horizDpiInput, *vertDpiInput;
     KIntNumInput *horizOffsetInput, *vertOffsetInput;
 
-    QAbstractItemView *fieldsTableView;
-    QAbstractItemModel *fieldsTableModel;
+    QTableWidget *fieldsTableWidget;
 };
 
 // "ought to be enough for anybody"
@@ -81,8 +78,9 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (const kpDocumentMetaInfo *do
     setMainWidget (baseWidget);
 
 
-    QGroupBox *dpiGroupBox = new QGroupBox (i18n ("Resolution (DPI)"),
+    QGroupBox *dpiGroupBox = new QGroupBox (i18n ("&Resolution (DPI)"),
         baseWidget);
+    dpiGroupBox->setWhatsThis (i18n ("TODO"));
 
     // Top Row:
     QLabel *horizDpiLabel = new QLabel (i18n ("&Horizontal:"));
@@ -126,7 +124,8 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (const kpDocumentMetaInfo *do
     dpiLay->addWidget (d->vertDpiInput, 1, 2);
 
 
-    QGroupBox *offsetGroupBox = new QGroupBox (i18n ("Offset"), baseWidget);
+    QGroupBox *offsetGroupBox = new QGroupBox (i18n ("&Offset"), baseWidget);
+    offsetGroupBox->setWhatsThis (i18n ("TODO"));
 
     d->horizOffsetInput = new KIntNumInput (offsetGroupBox);
     d->horizOffsetInput->setLabel (i18n ("Horizontal:"),
@@ -155,16 +154,16 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (const kpDocumentMetaInfo *do
              this, SLOT (slotColorSimilarityValueChanged ()));
 #endif
 
-    QGroupBox *fieldsGroupBox = new QGroupBox (i18n ("&Text Fields"), baseWidget);
+    QGroupBox *fieldsGroupBox = new QGroupBox (i18n ("&Text Fields"),
+        baseWidget);
+    fieldsGroupBox->setWhatsThis (i18n ("TODO"));
 
-    d->fieldsTableView = new QTableView (fieldsGroupBox);
-    d->fieldsTableModel = new kpDocumentMetaInfoTextFieldsTableModel (this, this);
-    d->fieldsTableView->setModel (d->fieldsTableModel);
+    d->fieldsTableWidget = new QTableWidget (fieldsGroupBox);
 
     QVBoxLayout *fieldsLayout = new QVBoxLayout (fieldsGroupBox);
     fieldsLayout->setSpacing (spacingHint ());
     fieldsLayout->setMargin (marginHint () * 2);
-    fieldsLayout->addWidget (d->fieldsTableView);
+    fieldsLayout->addWidget (d->fieldsTableWidget);
 
 
     QGridLayout *baseLayout = new QGridLayout (baseWidget);
@@ -192,6 +191,25 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (const kpDocumentMetaInfo *do
 
     d->horizOffsetInput->setValue (d->startingDocMetaInfo->offset ().x ());
     d->vertOffsetInput->setValue (d->startingDocMetaInfo->offset ().y ());
+
+
+    d->fieldsTableWidget->setRowCount (d->startingDocMetaInfo->textKeys ().size () + 1);
+    d->fieldsTableWidget->setColumnCount (2);
+
+    QStringList fieldsHeader;
+    fieldsHeader << i18n ("Key") << i18n ("Value");
+    d->fieldsTableWidget->setHorizontalHeaderLabels (fieldsHeader);
+
+    int row = 0;
+    foreach (QString key, d->startingDocMetaInfo->textKeys ())
+    {
+        d->fieldsTableWidget->setItem (row, 0/*1st col*/,
+            new QTableWidgetItem (key));
+        d->fieldsTableWidget->setItem (row, 1/*2nd col*/,
+            new QTableWidgetItem (d->startingDocMetaInfo->text (key)));
+
+        row++;
+    }
 
 
     if (::LastWidth > 0 && ::LastHeight > 0)
