@@ -2,7 +2,7 @@
 # Change this number every time you add an icon to force the build system
 # to rebuild and pick the icon up:
 #
-# 0
+# 1
 #
 
 add_subdirectory( custom ) 

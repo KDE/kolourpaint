@@ -215,7 +215,11 @@ signals:
 
 public:
     QIcon iconSet (int forceSize = 0) const;
-    QString iconName () const;
+
+    // Override this to use an icon whose name is not the same as the tool's
+    // <name> as passed to the constructor.
+    virtual QString iconName () const;
+
     kpToolAction *action () const;
 
 signals:
@@ -230,6 +234,7 @@ protected:
     // (this method is called by kpTool just as it is needed - its value
     //  is not cached, so it is allowed to return different things at
     //  different times)
+    // REFACTOR: Misleadingly named.  Is called in endShapeInternal()?
     virtual bool returnToPreviousToolAfterEndDraw () const { return false; }
 
     virtual bool careAboutModifierState () const { return false; }
@@ -312,6 +317,8 @@ public:
     void endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRect,
                           bool wantEndShape = false);
     void cancelShapeInternal ();
+    // TODO: Who is actually calling endShapeInternal()?
+    //       Tools seem to call endShape() directly.
     void endShapeInternal (const QPoint &thisPoint = QPoint (),
                            const QRect &normalizedRect = QRect ());
 

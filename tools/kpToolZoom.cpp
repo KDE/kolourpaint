@@ -83,6 +83,14 @@ kpToolZoom::~kpToolZoom ()
 
 
 // public virtual [base kpTool]
+QString kpToolZoom::iconName () const
+{
+    // Standard KDE action icon.
+    return QString ("zoom-original");
+}
+
+
+// public virtual [base kpTool]
 bool kpToolZoom::returnToPreviousToolAfterEndDraw () const
 {
     // (generally the user goes to zoom but wants to return to using
