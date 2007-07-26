@@ -1,6 +1,4 @@
 
-// TODO: Remember last dialog size
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -63,6 +61,9 @@ struct kpDocumentMetaInfoDialogPrivate
 static const int MaxDPI = 600/*a lot of DPI*/ * 100;
 static const int MaxOffset = 4000/*a big image*/ * 100,
                  MinOffset = -::MaxOffset;
+
+// (shared by all dialogs, across all main windows, in a KolourPaint instance)
+static int LastWidth = -1, LastHeight = -1;
 
 kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (const kpDocumentMetaInfo *docMetaInfo,
                                                   QWidget *parent)
@@ -186,10 +187,16 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (const kpDocumentMetaInfo *do
 
     d->horizOffsetInput->setValue (d->startingDocMetaInfo->offset ().x ());
     d->vertOffsetInput->setValue (d->startingDocMetaInfo->offset ().y ());
+
+
+    if (::LastWidth > 0 && ::LastHeight > 0)
+        resize (::LastWidth, ::LastHeight);
 }
 
 kpDocumentMetaInfoDialog::~kpDocumentMetaInfoDialog ()
 {
+    ::LastWidth = width (), ::LastHeight = height ();
+
     delete d;
 }
 
