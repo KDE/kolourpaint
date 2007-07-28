@@ -52,7 +52,7 @@ kpTransformFlipDialog::kpTransformFlipDialog (bool actOnSelection, QWidget *pare
     : KDialog (parent)
 {
     setCaption (actOnSelection ? i18n ("Flip Selection") : i18n ("Flip Image"));
-    setButtons( KDialog::Ok | KDialog::Cancel );
+    setButtons (KDialog::Ok | KDialog::Cancel);
     QGroupBox *groupBox = new QGroupBox (i18n ("Direction"), this);
 
     // I'm sure vert flipping is much more common than horiz flipping so make it come first
