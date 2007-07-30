@@ -393,9 +393,29 @@ private slots:
 
 private:
     void setupViewMenuActions ();
+
     bool viewMenuDocumentActionsEnabled () const;
     void enableViewMenuDocumentActions (bool enable = true);
+
+private:
     void actionShowGridUpdate ();
+private slots:
+    void slotShowGridToggled ();
+private:
+    void updateMainViewGrid ();
+
+private:
+    QRect mapToGlobal (const QRect &rect) const;
+    QRect mapFromGlobal (const QRect &rect) const;
+
+
+    //
+    // View Menu - Zoom
+    //
+
+private:
+    void setupViewMenuZoomActions ();
+    void enableViewMenuZoomDocumentActions (bool enable);
 
 private:
     void sendZoomListToActionZoom ();
@@ -424,13 +444,14 @@ private:
 private slots:
     void slotZoom ();
 
-    void slotShowGridToggled ();
-private:
-    void updateMainViewGrid ();
+
+    //
+    // View Menu - Thumbnail
+    //
 
 private:
-    QRect mapToGlobal (const QRect &rect) const;
-    QRect mapFromGlobal (const QRect &rect) const;
+    void setupViewMenuThumbnailActions ();
+    void enableViewMenuThumbnailDocumentActions (bool enable);
 
 private slots:
     void slotDestroyThumbnail ();

@@ -94,16 +94,9 @@ static QString ZoomLevelToString (int zoomLevel)
 
 
 // private
-void kpMainWindow::setupViewMenuActions ()
+void kpMainWindow::setupViewMenuZoomActions ()
 {
-    d->viewMenuDocumentActionsEnabled = false;
-    d->thumbnailSaveConfigTimer = 0;
-
-
     KActionCollection *ac = actionCollection ();
-
-    /*d->actionFullScreen = KStandardAction::fullScreen (0, 0, ac);
-    d->actionFullScreen->setEnabled (false);*/
 
 
     d->actionActualSize = KStandardAction::actualSize (this, SLOT (slotActualSize ()), ac);
@@ -128,14 +121,14 @@ void kpMainWindow::setupViewMenuActions ()
     d->zoomList.append (200); d->zoomList.append (300);
     d->zoomList.append (400); d->zoomList.append (600); d->zoomList.append (800);
     d->zoomList.append (1000); d->zoomList.append (1200); d->zoomList.append (1600);
+}
 
+// private
+void kpMainWindow::setupViewMenuThumbnailActions ()
+{
+    d->thumbnailSaveConfigTimer = 0;
 
-    d->actionShowGrid = ac->add <KToggleAction> ("view_show_grid");
-    d->actionShowGrid->setText (i18n ("Show &Grid"));
-    d->actionShowGrid->setShortcut (Qt::CTRL + Qt::Key_G);
-    d->actionShowGrid->setCheckedState (KGuiItem(i18n ("Hide &Grid")));
-    connect (d->actionShowGrid, SIGNAL (triggered (bool)),
-        SLOT (slotShowGridToggled ()));
+    KActionCollection *ac = actionCollection ();
 
 
     d->actionShowThumbnail = ac->add <KToggleAction> ("view_show_thumbnail");
@@ -160,6 +153,32 @@ void kpMainWindow::setupViewMenuActions ()
     d->actionShowThumbnailRectangle->setText (i18n ("Enable Thumbnail &Rectangle"));
     connect (d->actionShowThumbnailRectangle, SIGNAL (triggered (bool)),
         SLOT (slotThumbnailShowRectangleToggled ()));
+}
+
+// private
+void kpMainWindow::setupViewMenuActions ()
+{
+    d->viewMenuDocumentActionsEnabled = false;
+
+
+    KActionCollection *ac = actionCollection ();
+
+    /*d->actionFullScreen = KStandardAction::fullScreen (0, 0, ac);
+    d->actionFullScreen->setEnabled (false);*/
+
+
+    setupViewMenuZoomActions ();
+
+
+    d->actionShowGrid = ac->add <KToggleAction> ("view_show_grid");
+    d->actionShowGrid->setText (i18n ("Show &Grid"));
+    d->actionShowGrid->setShortcut (Qt::CTRL + Qt::Key_G);
+    d->actionShowGrid->setCheckedState (KGuiItem(i18n ("Hide &Grid")));
+    connect (d->actionShowGrid, SIGNAL (triggered (bool)),
+        SLOT (slotShowGridToggled ()));
+
+
+    setupViewMenuThumbnailActions ();
 
 
     enableViewMenuDocumentActions (false);
@@ -172,11 +191,8 @@ bool kpMainWindow::viewMenuDocumentActionsEnabled () const
 }
 
 // private
-void kpMainWindow::enableViewMenuDocumentActions (bool enable)
+void kpMainWindow::enableViewMenuZoomDocumentActions (bool enable)
 {
-    d->viewMenuDocumentActionsEnabled = enable;
-
-
     d->actionActualSize->setEnabled (enable);
     /*d->actionFitToPage->setEnabled (enable);
     d->actionFitToWidth->setEnabled (enable);
@@ -187,11 +203,6 @@ void kpMainWindow::enableViewMenuDocumentActions (bool enable)
 
     d->actionZoom->setEnabled (enable);
 
-    actionShowGridUpdate ();
-
-    d->actionShowThumbnail->setEnabled (enable);
-    enableThumbnailOptionActions (enable);
-
 
     // TODO: for the time being, assume that we start at zoom 100%
     //       with no grid
@@ -201,6 +212,26 @@ void kpMainWindow::enableViewMenuDocumentActions (bool enable)
     // always be correct:
 
     zoomTo (100);
+}
+
+// private
+void kpMainWindow::enableViewMenuThumbnailDocumentActions (bool enable)
+{
+    d->actionShowThumbnail->setEnabled (enable);
+    enableThumbnailOptionActions (enable);
+}
+
+// private
+void kpMainWindow::enableViewMenuDocumentActions (bool enable)
+{
+    d->viewMenuDocumentActionsEnabled = enable;
+
+
+    enableViewMenuZoomDocumentActions (enable);
+
+    actionShowGridUpdate ();
+
+    enableViewMenuThumbnailDocumentActions (enable);
 }
 
 // private
@@ -1127,5 +1158,3 @@ void kpMainWindow::updateThumbnail ()
         d->thumbnail->deleteLater (); d->thumbnail = 0;
     }
 }
-
-
