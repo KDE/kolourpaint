@@ -81,7 +81,7 @@ static ZoomLevelFromString (const QString &stringIn)
     kDebug () << "\tzoomLevel=" << zoomLevel << endl;
 #endif
 
-    if (!ok || zoomLevel <= 0 || zoomLevel > 3200)
+    if (!ok || zoomLevel < kpView::MinZoomLevel || zoomLevel > kpView::MaxZoomLevel)
         return 0;  // error
     else
         return zoomLevel;
@@ -250,8 +250,8 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
     kDebug () << "kpMainWindow::zoomTo (" << zoomLevel << ")" << endl;
 #endif
 
-    if (zoomLevel <= 0)
-        zoomLevel = m_mainView ? m_mainView->zoomLevelX () : 100;
+    Q_ASSERT (zoomLevel >= kpView::MinZoomLevel &&
+              zoomLevel <= kpView::MaxZoomLevel);
 
 // mute point since the thumbnail suffers from this too
 #if 0
@@ -565,10 +565,15 @@ void kpMainWindow::slotFitToPage ()
 
     // doc_width * zoom / 100 <= view_width &&
     // doc_height * zoom / 100 <= view_height &&
-    // 1 <= zoom <= 3200
+    // 1 <= zoom <= kpView::MaxZoomLevel
 
-    zoomTo (qMin (3200, qMax (1, qMin (m_scrollView->visibleWidth () * 100 / m_document->width (),
-                              m_scrollView->visibleHeight () * 100 / m_document->height ()))));
+    zoomTo (
+        qMin (kpView::MaxZoomLevel,
+              qMax (1,
+                    qMin (m_scrollView->visibleWidth () * 100 /
+                            m_document->width (),
+                          m_scrollView->visibleHeight () * 100 /
+                            m_document->height ()))));
 }
 
 // private slot
@@ -578,9 +583,13 @@ void kpMainWindow::slotFitToWidth ()
         return;
 
     // doc_width * zoom / 100 <= view_width &&
-    // 1 <= zoom <= 3200
+    // 1 <= zoom <= kpView::MaxZoomLevel
 
-    zoomTo (qMin (3200, qMax (1, m_scrollView->visibleWidth () * 100 / m_document->width ())));
+    zoomTo (
+        qMin (kpView::MaxZoomLevel,
+              qMax (1,
+                    m_scrollView->visibleWidth () * 100 /
+                        m_document->width ())));
 }
 
 // private slot
@@ -590,9 +599,13 @@ void kpMainWindow::slotFitToHeight ()
         return;
 
     // doc_height * zoom / 100 <= view_height &&
-    // 1 <= zoom <= 3200
+    // 1 <= zoom <= kpView::MaxZoomLevel
 
-    zoomTo (qMin (3200, qMax (1, m_scrollView->visibleHeight () * 100 / m_document->height ())));
+    zoomTo (
+        qMin (kpView::MaxZoomLevel,
+              qMax (1,
+                    m_scrollView->visibleHeight () * 100 /
+                        m_document->height ())));
 }
 
 

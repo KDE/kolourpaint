@@ -100,6 +100,12 @@ public:
     virtual ~kpView ();
 
 
+    //
+    // Constants (enforced by methods)
+    //
+    static const int MinZoomLevel, MaxZoomLevel;
+
+
     /**
      * @returns the document.
      */
@@ -162,6 +168,9 @@ public:
      *
      * @param hzoom Horizontal zoom level.
      * @param vzoom Vertical zoom level.
+     *
+     * This method automatically bounds <hzoom> and <vzoom> to be between
+     * MinZoomLevel and MaxZoomLevel inclusive.
      *
      * If reimplementing, you must call this base implementation.
      */

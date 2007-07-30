@@ -63,6 +63,11 @@
 #include <kpViewScrollableContainer.h>
 
 
+// public static
+const int kpView::MinZoomLevel = 1;
+const int kpView::MaxZoomLevel = 3200;
+
+
 kpView::kpView (kpDocument *document,
         kpToolToolBar *toolToolBar,
         kpViewManager *viewManager,
@@ -185,10 +190,10 @@ int kpView::zoomLevelY (void) const
 // public virtual
 void kpView::setZoomLevel (int hzoom, int vzoom)
 {
-    if (hzoom == d->hzoom && vzoom == d->vzoom)
-        return;
+    hzoom = qBound (MinZoomLevel, hzoom, MaxZoomLevel);
+    vzoom = qBound (MinZoomLevel, vzoom, MaxZoomLevel);
 
-    if (hzoom <= 0 || vzoom <= 0)
+    if (hzoom == d->hzoom && vzoom == d->vzoom)
         return;
 
     d->hzoom = hzoom;
