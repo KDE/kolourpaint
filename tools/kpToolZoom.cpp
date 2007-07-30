@@ -64,7 +64,7 @@ static void DrawZoomRect (kpImage *destImage,
 
 struct kpToolZoomPrivate
 {
-    bool dragHasBegun;
+    bool dragHasBegun, dragCompleted;
     DrawZoomRectPackage drawPackage;
 };
 
@@ -93,10 +93,23 @@ QString kpToolZoom::iconName () const
 // public virtual [base kpTool]
 bool kpToolZoom::returnToPreviousToolAfterEndDraw () const
 {
-    // (generally the user goes to zoom but wants to return to using
-    // his/her previous drawing tool)
-    // TODO
-    return false;
+    // If the user clicks to zoom in or out, s/he generally wants to click
+    // some more to get the exact zoom level wanted.
+    //
+    // However, if they drag out a rectangle to zoom into a particular area,
+    // they probably don't need to do any further zooming so we can return
+    // them to their previous tool.
+    //
+    // Note that if they cancel a drag (cancelShape()), we do _not_ return
+    // them to their previous tool, unlike the Color Picker.  This is because
+    // cancelling a drag generally means that the user got the top-left of
+    // the drag wrong and wants to try a different top-left.  In contrast,
+    // with the Color Picket, if you've made a mistake while pressing the
+    // mouse, you can just keep holding down the mouse and drag to the intended
+    // color -- a cancel with a Color Picker really means "I've decided not
+    // to pick another color after all", not "I got the start of the drag wrong"
+    // because you can correct that drag.
+    return d->dragCompleted;
 }
 
 
@@ -126,6 +139,7 @@ void kpToolZoom::end ()
 void kpToolZoom::beginDraw ()
 {
     d->dragHasBegun = false;
+    d->dragCompleted = false;
 
     setUserMessage (cancelUserMessage ());
 }
@@ -211,6 +225,8 @@ void kpToolZoom::endDraw (const QPoint &, const QRect &)
     else
     {
         // TODO
+
+        d->dragCompleted = true;
     }
 }
 
