@@ -55,7 +55,6 @@
 #include <kpEffectClearCommand.h>
 #include <kpEffectGrayscaleCommand.h>
 #include <kpMacroCommand.h>
-#include <kpTool.h>
 #include <kpToolSelectionCreateCommand.h>
 #include <kpToolSelectionPullFromDocumentCommand.h>
 #include <kpTransformAutoCrop.h>
@@ -328,8 +327,8 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
 // private slot
 void kpMainWindow::slotResizeScale ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
+
 
     kpTransformResizeScaleDialog dialog (transformDialogEnvironment (), this);
     dialog.setKeepAspectRatio (d->resizeScaleDialogLastKeepAspect);
@@ -376,8 +375,7 @@ void kpMainWindow::slotResizeScale ()
 // public slot
 void kpMainWindow::slotCrop ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     Q_ASSERT (d->document && d->document->selection ());
 
@@ -388,8 +386,7 @@ void kpMainWindow::slotCrop ()
 // private slot
 void kpMainWindow::slotAutoCrop ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     ::kpTransformAutoCrop (this);
 }
@@ -397,8 +394,7 @@ void kpMainWindow::slotAutoCrop ()
 // private slot
 void kpMainWindow::slotFlip ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     kpTransformFlipDialog dialog ((bool) d->document->selection (), this);
 
@@ -415,8 +411,7 @@ void kpMainWindow::slotFlip ()
 // private slot
 void kpMainWindow::slotRotate ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     kpTransformRotateDialog dialog ((bool) d->document->selection (),
         transformDialogEnvironment (), this);
@@ -433,8 +428,7 @@ void kpMainWindow::slotRotate ()
 // private slot
 void kpMainWindow::slotRotate270 ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     // TODO: Special command name instead of just "Rotate"?
     addImageOrSelectionCommand (
@@ -447,8 +441,7 @@ void kpMainWindow::slotRotate270 ()
 // private slot
 void kpMainWindow::slotRotate90 ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     // TODO: Special command name instead of just "Rotate"?
     addImageOrSelectionCommand (
@@ -462,8 +455,7 @@ void kpMainWindow::slotRotate90 ()
 // private slot
 void kpMainWindow::slotSkew ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     kpTransformSkewDialog dialog ((bool) d->document->selection (),
         transformDialogEnvironment (), this);
@@ -480,8 +472,7 @@ void kpMainWindow::slotSkew ()
 // private slot
 void kpMainWindow::slotConvertToBlackAndWhite ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     addImageOrSelectionCommand (
         new kpEffectReduceColorsCommand (1/*depth*/, true/*dither*/,
@@ -492,8 +483,7 @@ void kpMainWindow::slotConvertToBlackAndWhite ()
 // private slot
 void kpMainWindow::slotConvertToGrayscale ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     addImageOrSelectionCommand (
         new kpEffectGrayscaleCommand (d->document->selection (),
@@ -503,8 +493,7 @@ void kpMainWindow::slotConvertToGrayscale ()
 // private slot
 void kpMainWindow::slotInvertColors ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     addImageOrSelectionCommand (
         new kpEffectInvertCommand (d->document->selection (),
@@ -514,8 +503,7 @@ void kpMainWindow::slotInvertColors ()
 // private slot
 void kpMainWindow::slotClear ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     addImageOrSelectionCommand (
         new kpEffectClearCommand (
@@ -527,8 +515,7 @@ void kpMainWindow::slotClear ()
 // private slot
 void kpMainWindow::slotMoreEffects ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     kpEffectsDialog dialog ((bool) d->document->selection (),
         transformDialogEnvironment (), this);

@@ -64,8 +64,8 @@
 #include <kpDocumentMetaInfoCommand.h>
 #include <kpDocumentMetaInfoDialog.h>
 #include <kpDocumentSaveOptionsWidget.h>
+#include <kpPixmapFX.h>
 #include <kpPrintDialogPage.h>
-#include <kpTool.h>
 #include <kpView.h>
 #include <kpViewManager.h>
 
@@ -239,8 +239,7 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
 //       as it does nothing if this is true.
 void kpMainWindow::slotNew ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     if (d->document && !d->configOpenImagesInSameWindow)
     {
@@ -432,8 +431,7 @@ KUrl::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &
 // private slot
 void kpMainWindow::slotOpen ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
 
     const KUrl::List urls = askForOpenURLs (i18n ("Open Image"),
@@ -455,8 +453,7 @@ void kpMainWindow::slotOpenRecent (const KUrl &url)
     kDebug () << "\titems=" << d->actionOpenRecent->items () << endl;
 #endif
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     open (url);
 
@@ -481,8 +478,7 @@ void kpMainWindow::slotScan ()
     kDebug () << "kpMainWindow::slotScan() scanDialog=" << d->scanDialog << endl;
 #endif
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
 
     if (!d->scanDialog)
@@ -592,8 +588,7 @@ void kpMainWindow::slotScanned (const QImage &image, int)
 
     // (just in case there's some drawing between slotScan() exiting and
     //  us being called)
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
 
     // TODO: Maybe this code should be moved into kpdocument.cpp -
@@ -637,8 +632,7 @@ void kpMainWindow::slotScanned (const QImage &image, int)
 // private slot
 void kpMainWindow::slotProperties ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     kpDocumentMetaInfoDialog dialog (document ()->metaInfo (), this);
 
@@ -683,8 +677,7 @@ bool kpMainWindow::save (bool localOnly)
 // private slot
 bool kpMainWindow::slotSave ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     return save ();
 }
@@ -917,8 +910,7 @@ bool kpMainWindow::saveAs (bool localOnly)
 // private slot
 bool kpMainWindow::slotSaveAs ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     return saveAs ();
 }
@@ -930,8 +922,7 @@ bool kpMainWindow::slotExport ()
     kDebug () << "kpMainWindow::slotExport()" << endl;
 #endif
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
 
     kpDocumentSaveOptions chosenSaveOptions;
@@ -985,11 +976,9 @@ void kpMainWindow::slotEnableReload ()
 // private slot
 bool kpMainWindow::slotReload ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
-    if (!d->document)
-        return false;
+    Q_ASSERT (d->document);
 
 
     KUrl oldURL = d->document->url ();
@@ -1286,8 +1275,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
 // private slot
 void kpMainWindow::slotPrint ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     KPrinter printer;
     printer.addDialogPage (new kpPrintDialogPage (this));
@@ -1298,8 +1286,7 @@ void kpMainWindow::slotPrint ()
 // private slot
 void kpMainWindow::slotPrintPreview ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     // Do not specify "false" to KPrinter::<ctor>()'s "restore" arg,
     // since we want to use the same KPrinter::options(), set by
@@ -1316,6 +1303,9 @@ void kpMainWindow::slotPrintPreview ()
 // private slot
 void kpMainWindow::slotMail ()
 {
+    // KDE3
+    toolEndShape ();
+
     if (d->document->url ().isEmpty ()/*no name*/ ||
         !d->document->isFromURL () ||
         d->document->isModified ()/*needs to be saved*/)
@@ -1452,8 +1442,7 @@ void kpMainWindow::setAsWallpaper (bool centered)
 // private slot
 void kpMainWindow::slotSetAsWallpaperCentered ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     setAsWallpaper (true/*centered*/);
 }
@@ -1461,8 +1450,7 @@ void kpMainWindow::slotSetAsWallpaperCentered ()
 // private slot
 void kpMainWindow::slotSetAsWallpaperTiled ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     setAsWallpaper (false/*tiled*/);
 }
@@ -1471,8 +1459,7 @@ void kpMainWindow::slotSetAsWallpaperTiled ()
 // private slot
 void kpMainWindow::slotClose ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotClose()" << endl;
@@ -1487,8 +1474,7 @@ void kpMainWindow::slotClose ()
 // private slot
 void kpMainWindow::slotQuit ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotQuit()" << endl;

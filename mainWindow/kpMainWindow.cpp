@@ -50,7 +50,6 @@
 #include <kpDefs.h>
 #include <kpDocument.h>
 #include <kpDocumentEnvironment.h>
-#include <kpPixmapFX.h>
 #include <kpSelectionDrag.h>
 #include <kpThumbnail.h>
 #include <kpTool.h>
@@ -826,8 +825,7 @@ bool kpMainWindow::queryClose ()
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::queryClose()" << endl;
 #endif
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     if (!d->document || !d->document->isModified ())
         return true;  // ok to close current doc

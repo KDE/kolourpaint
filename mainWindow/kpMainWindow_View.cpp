@@ -158,4 +158,3 @@ QRect kpMainWindow::mapFromGlobal (const QRect &rect) const
 {
     return kpWidgetMapper::fromGlobal (this, rect);
 }
-

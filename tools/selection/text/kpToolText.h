@@ -44,6 +44,7 @@ class kpToolTextBackspaceCommand;
 class kpToolTextDeleteCommand;
 
 
+// REFACTOR: This whole shape thing (e.g. calls to endShape()) is confusing - what is going on?
 class kpToolText : public kpToolSelection
 {
 Q_OBJECT

@@ -100,8 +100,8 @@ This file lists known bugs in this version that are not considered
        (e.g. for the same function calls, KDE 3.2's effects are slower but
         give better results than those in KDE 3.0)
 
-23. Changing tool options while in the middle of a drawing option may
-    confuse KolourPaint.  For instance:
+23. Changing tool options while in the middle of a drawing option should
+    work but confuses KolourPaint instead.  For instance:
 
     a) With the brush tools, the cursor incorrectly appears.
 

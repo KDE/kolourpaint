@@ -95,7 +95,6 @@ void kpMainWindow::createStatusBar ()
 }
 
 
-
 // private slot
 void kpMainWindow::setStatusBarMessage (const QString &message)
 {

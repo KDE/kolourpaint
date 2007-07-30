@@ -37,7 +37,6 @@
 
 #include <kpColorCells.h>
 #include <kpColorToolBar.h>
-#include <kpTool.h>
 
 
 static QStringList KDEColorCollectionNames ()
@@ -115,8 +114,8 @@ void kpMainWindow::deselectActionColorsKDE ()
 // private slot
 void kpMainWindow::slotColorsDefault ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    // Call just in case.
+    toolEndShape ();
 
     colorCells ()->setColorCollection (
         kpColorCells::DefaultColorCollection ());
@@ -127,8 +126,8 @@ void kpMainWindow::slotColorsDefault ()
 // private slot
 void kpMainWindow::slotColorsKDE ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    // Call in case an error dialog appears.
+    toolEndShape ();
 
     const QStringList colNames = ::KDEColorCollectionNames ();
     const int selected = d->actionColorsKDE->currentItem ();
@@ -144,8 +143,8 @@ void kpMainWindow::slotColorsKDE ()
 // private slot
 void kpMainWindow::slotColorsOpen ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    // Call due to dialog.
+    toolEndShape ();
 
     KFileDialog fd (colorCells ()->url (), QString::null/*filter*/, this);
     fd.setCaption (i18n ("Open Colors"));
@@ -165,8 +164,8 @@ void kpMainWindow::slotColorsOpen ()
 // private slot
 void kpMainWindow::slotColorsSaveAs ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    // Call due to dialog.
+    toolEndShape ();
 
     KFileDialog fd (colorCells ()->url (), QString::null/*filter*/, this);
     fd.setCaption (i18n ("Save Colors As"));
@@ -185,8 +184,8 @@ void kpMainWindow::slotColorsSaveAs ()
 // private slot
 void kpMainWindow::slotColorsAppendRow ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    // Call just in case.
+    toolEndShape ();
 
     kpColorCells *colorCells = d->colorToolBar->colorCells ();
     colorCells->appendRow ();
@@ -195,8 +194,8 @@ void kpMainWindow::slotColorsAppendRow ()
 // private slot
 void kpMainWindow::slotColorsDeleteRow ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    // Call just in case.
+    toolEndShape ();
 
     kpColorCells *colorCells = d->colorToolBar->colorCells ();
     colorCells->deleteLastRow ();

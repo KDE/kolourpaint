@@ -103,7 +103,7 @@ void kpMainWindow::setupEditMenuActions ()
 
 
     // Undo/Redo
-    // CONFIG: need GUI
+    // CONFIG: Need GUI for config history size.
     d->commandHistory = new kpCommandHistory (true/*read config*/, this);
 
     if (d->configFirstTime)
@@ -196,8 +196,7 @@ void kpMainWindow::slotCut ()
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     slotCopy ();
     slotDelete ();
@@ -224,8 +223,7 @@ void kpMainWindow::slotCopy ()
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     kpAbstractSelection *sel = d->document->selection ()->clone ();
 
@@ -366,8 +364,7 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
 
     //
@@ -448,8 +445,7 @@ void kpMainWindow::pasteText (const QString &text,
     // sync: restoreOverrideCursor() in all exit paths
     QApplication::setOverrideCursor (Qt::WaitCursor);
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
 
     QList <QString> textLines;
@@ -562,8 +558,7 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
 
     if (d->document &&
@@ -607,8 +602,7 @@ void kpMainWindow::slotPaste ()
     // sync: restoreOverrideCursor() in all exit paths
     QApplication::setOverrideCursor (Qt::WaitCursor);
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
 
     //
@@ -688,8 +682,7 @@ void kpMainWindow::slotPasteInNewWindow ()
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
 
     kpMainWindow *win = new kpMainWindow (0/*no document*/);
@@ -724,8 +717,7 @@ void kpMainWindow::slotDelete ()
         return;
     }
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     addImageOrSelectionCommand (new kpToolSelectionDestroyCommand (
         d->document->textSelection () ?
@@ -748,8 +740,7 @@ void kpMainWindow::slotSelectAll ()
         return;
     }
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     if (d->document->selection ())
         slotDeselect ();
@@ -843,8 +834,7 @@ void kpMainWindow::slotDeselect ()
         return;
     }
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     addDeselectFirstCommand (0);
 }
@@ -857,8 +847,7 @@ void kpMainWindow::slotCopyToFile ()
     kDebug () << "kpMainWindow::slotCopyToFile()" << endl;
 #endif
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
 
     if (!d->document->selection ())
@@ -933,8 +922,7 @@ void kpMainWindow::slotPasteFromFile ()
     kDebug () << "kpMainWindow::slotPasteFromFile()" << endl;
 #endif
 
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
 
     KUrl::List urls = askForOpenURLs (i18n ("Paste From File"),

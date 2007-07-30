@@ -181,6 +181,51 @@ public:
     bool toolIsASelectionTool (bool includingTextTool = true) const;
     bool toolIsTextTool () const;
 
+private:
+    // Ends the current shape.  If there is no shape currently being drawn,
+    // it does nothing.
+    //
+    // In general, call this at the start of every kpMainWindow slot,
+    // directly invoked by the _user_ (by activating an action or via another
+    // way), so that:
+    //
+    // 1. The document contains the pixels of that shape:
+    //
+    //    Most tools have the shape, currently being drawn, layered above the
+    //    document as a kpTempImage.  In other words, the document does not
+    //    yet contain the pixels of that shape.  By ending the shape, the layer
+    //    is pushed down onto the document so that it now contains those
+    //    pixels.  Your slot can now safely read the document as it's now
+    //    consistent with what's on the screen.
+    //
+    //    Note that selection layers are not pushed down by this method.
+    //    This is a feature, not a bug.  The user would be annoyed if e.g.
+    //    slotSave() happened to push down the selection.  Use
+    //    kpDocument::imageWithSelection() to get around this problem.  You
+    //    should still call toolEndShape() even if a selection is active
+    //    -- this ends selection "shapes", which are actually things like
+    //    selection moves or smearing operations, rather than the selections
+    //    themselves.
+    //
+    // AND/OR:
+    //
+    // 2. The current tool is no longer in a drawing state:
+    //
+    //    If your slot is going to bring up a new main window or modal dialog
+    //    or at least some widget that acquires mouse or keyboard focus, this
+    //    could confuse the tool if the tool is in the middle of a drawing
+    //    operation.
+    //
+    // Do not call this in slots not invoked by the user.  For instance,
+    // calling this method in response to an internal timer tick would be
+    // wrong.  The user's drawing operation would unexpectedly finish and
+    // this would bewilder and irritate the user.
+    //
+    // TODO: Help / KolourPaint Handbook does not call this.  I'm sure there
+    //       are a few other actions that don't call this but should.
+    void toolEndShape ();
+
+public:
     kpImageSelectionTransparency imageSelectionTransparency () const;
     void setImageSelectionTransparency (const kpImageSelectionTransparency &transparency,
                                    bool forceColorChange = false);

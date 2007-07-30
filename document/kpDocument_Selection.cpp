@@ -99,59 +99,71 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
 #endif
 
     d->environ->setQueueViewUpdates ();
-
-
-    bool hadSelection = (bool) m_selection;
-
-
-    bool isTextChanged = false;
-    d->environ->switchToCompatibleTool (selection, &isTextChanged);
-
-
-    if (m_selection)
     {
+        const bool hadSelection = (bool) m_selection;
+        kpAbstractSelection *oldSelection = m_selection;
+
+
+        m_selection = selection.clone ();
+
+        // There's no need to uninitialize the old selection
+        // (e.g. call disconnect()) since we delete it later.
+        connect (m_selection, SIGNAL (changed (const QRect &)),
+                 this, SLOT (slotContentsChanged (const QRect &)));
+
+
+        //
+        // Now all kpDocument state has been set.
+        // We can _only_ change the environment after that, as the environment
+        // may access the document.
+        //
+
+
+        bool isTextChanged = false;
+        d->environ->switchToCompatibleTool (selection, &isTextChanged);
+
+
+        d->environ->assertMatchingUIState (selection);
+
+
+        //
+        // Now all kpDocument and environment state has been set.
+        // We can _only_ fire signals after that, as the signal receivers (the
+        // "wider environment") may access the document and the environment.
+        // KDE3: Need to backport fix the whole kpDocument::setSelection() reordering.
+        //       Although setQueueViewUpdates() has probably mitigated that need.
+        //
+
+    #if DEBUG_KP_DOCUMENT && 1
+        kDebug () << "\tcheck sel " << (int *) m_selection
+                   << " boundingRect=" << m_selection->boundingRect ()
+                   << endl;
+    #endif
+        if (oldSelection)
+        {
+            if (oldSelection->hasContent ())
+                slotContentsChanged (oldSelection->boundingRect ());
+            else
+                emit contentsChanged (oldSelection->boundingRect ());
+
+            delete oldSelection;
+            oldSelection = 0;
+        }
+
         if (m_selection->hasContent ())
             slotContentsChanged (m_selection->boundingRect ());
         else
             emit contentsChanged (m_selection->boundingRect ());
 
-        delete m_selection;
+
+        if (!hadSelection)
+            emit selectionEnabled (true);
+
+        if (isTextChanged)
+            emit selectionIsTextChanged (textSelection ());
     }
-
-    m_selection = selection.clone ();
-
-    d->environ->assertMatchingUIState (selection);
-
-#if DEBUG_KP_DOCUMENT && 1
-    kDebug () << "\tcheck sel " << (int *) m_selection
-               << " boundingRect=" << m_selection->boundingRect ()
-               << endl;
-#endif
-    if (m_selection->hasContent ())
-        slotContentsChanged (m_selection->boundingRect ());
-    else
-        emit contentsChanged (m_selection->boundingRect ());
-
-
-    // There's no need to uninitialize the old selection
-    // (e.g. call disconnect()) since we:
-    //
-    // 1. Initialize our _copy_ of the given selection.
-    // 2. We delete our copy when setSelection() is called again.
-    //
-    // See code above for both.
-
-    connect (m_selection, SIGNAL (changed (const QRect &)),
-             this, SLOT (slotContentsChanged (const QRect &)));
-
-
-    if (!hadSelection)
-        emit selectionEnabled (true);
-
-    if (isTextChanged)
-        emit selectionIsTextChanged (dynamic_cast <kpTextSelection *> (m_selection));
-
     d->environ->restoreQueueViewUpdates ();
+
 #if DEBUG_KP_DOCUMENT && 1
     kDebug () << "\tkpDocument::setSelection() ended" << endl;
 #endif
@@ -172,8 +184,8 @@ kpImage kpDocument::getSelectedBaseImage () const
     const QRect boundingRect = imageSel->boundingRect ();
     Q_ASSERT (boundingRect.isValid ());
 
-    // TODO: This is very slow.  Image / More Effects ... calls us twice
-    //       unnecessarily.
+    // OPT: This is very slow.  Image / More Effects ... calls us twice
+    //      unnecessarily.
     return imageSel->givenImageMaskedByShape (getImageAt (boundingRect));
 }
 
@@ -263,8 +275,8 @@ void kpDocument::selectionCopyOntoDocument (bool applySelTransparency)
     const QRect boundingRect = m_selection->boundingRect ();
     Q_ASSERT (boundingRect.isValid ());
 
-    // TODO: We should be setting the modified state.
-    //       I think this is a bug in KolourPaint/KDE 3 as well.
+    // HITODO: KDE3: We should be setting the modified state.
+    //         I think this is a bug in KolourPaint/KDE 3 as well.
     if (imageSelection ())
     {
         if (applySelTransparency)
@@ -314,3 +326,4 @@ kpImage kpDocument::imageWithSelection () const
         return *m_image;
     }
 }
+

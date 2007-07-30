@@ -57,12 +57,12 @@ void kpMainWindow::setupTextToolBarActions ()
 
     d->actionTextFontFamily = ac->add<KFontAction> ("text_font_family");
     d->actionTextFontFamily->setText (i18n ("Font Family"));
-    connect (d->actionTextFontFamily, SIGNAL(triggered (int)),
+    connect (d->actionTextFontFamily, SIGNAL (triggered (int)),
              this, SLOT (slotTextFontFamilyChanged ()));
 
     d->actionTextFontSize = ac->add<KFontSizeAction> ("text_font_size");
     d->actionTextFontSize->setText (i18n ("Font Size"));
-    connect (d->actionTextFontSize, SIGNAL(fontSizeChanged (int)),
+    connect (d->actionTextFontSize, SIGNAL (fontSizeChanged (int)),
              this, SLOT (slotTextFontSizeChanged ()));
 
     d->actionTextBold = ac->add<KToggleAction> ("text_bold");
@@ -153,6 +153,7 @@ void kpMainWindow::slotTextFontFamilyChanged ()
 
     if (d->toolText && d->toolText->hasBegun ())
     {
+        toolEndShape ();
         d->toolText->slotFontFamilyChanged (d->actionTextFontFamily->font (),
                                            d->textOldFontFamily);
     }
@@ -185,6 +186,7 @@ void kpMainWindow::slotTextFontSizeChanged ()
 
     if (d->toolText && d->toolText->hasBegun ())
     {
+        toolEndShape ();
         d->toolText->slotFontSizeChanged (d->actionTextFontSize->fontSize (),
                                          d->textOldFontSize);
     }
@@ -216,7 +218,10 @@ void kpMainWindow::slotTextBoldChanged ()
         return;
 
     if (d->toolText && d->toolText->hasBegun ())
+    {
+        toolEndShape ();
         d->toolText->slotBoldChanged (d->actionTextBold->isChecked ());
+    }
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingBold, d->actionTextBold->isChecked ());
@@ -238,7 +243,10 @@ void kpMainWindow::slotTextItalicChanged ()
         return;
 
     if (d->toolText && d->toolText->hasBegun ())
+    {
+        toolEndShape ();
         d->toolText->slotItalicChanged (d->actionTextItalic->isChecked ());
+    }
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingItalic, d->actionTextItalic->isChecked ());
@@ -260,7 +268,10 @@ void kpMainWindow::slotTextUnderlineChanged ()
         return;
 
     if (d->toolText && d->toolText->hasBegun ())
+    {
+        toolEndShape ();
         d->toolText->slotUnderlineChanged (d->actionTextUnderline->isChecked ());
+    }
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingUnderline, d->actionTextUnderline->isChecked ());
@@ -282,7 +293,10 @@ void kpMainWindow::slotTextStrikeThruChanged ()
         return;
 
     if (d->toolText && d->toolText->hasBegun ())
+    {
+        toolEndShape ();
         d->toolText->slotStrikeThruChanged (d->actionTextStrikeThru->isChecked ());
+    }
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingStrikeThru, d->actionTextStrikeThru->isChecked ());

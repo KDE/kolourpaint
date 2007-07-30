@@ -25,22 +25,24 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
 #include <kpMainWindow.h>
 #include <kpMainWindowPrivate.h>
 
+#include <QLabel>
 #include <QtDBus>
 
 #include <kaction.h>
 #include <kactioncollection.h>
-#include <qlabel.h>
+
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <krun.h>
 #include <kglobal.h>
 #include <klocale.h>
+#include <krun.h>
 #include <kshortcut.h>
-#include <kconfiggroup.h>
 
 
 // private
@@ -68,6 +70,7 @@ void kpMainWindow::setupHelpMenuActions ()
 // private
 void kpMainWindow::enableHelpMenuDocumentActions (bool /*enable*/)
 {
+    // d->m_actionHelpTakingScreenshots
 }
 
 
@@ -103,6 +106,9 @@ void kpMainWindow::slotHelpTakingScreenshots ()
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotHelpTakingScreenshots()" << endl;
 #endif
+
+    // KDE3
+    toolEndShape ();
 
 
     // TODO: Totally bogus logic if kwin not running under same user as KolourPaint.

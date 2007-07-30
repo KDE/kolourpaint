@@ -29,23 +29,23 @@
 #include <kpMainWindow.h>
 #include <kpMainWindowPrivate.h>
 
+#include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kdebug.h>
 #include <kedittoolbar.h>
 #include <kglobal.h>
-#include <kshortcutsdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kshortcutsdialog.h>
 #include <kstandardaction.h>
 #include <ktogglefullscreenaction.h>
-#include <kactioncollection.h>
 
 #include <kpDefs.h>
 #include <kpDocument.h>
 #include <kpToolAction.h>
 #include <kpToolToolBar.h>
-#include <kconfiggroup.h>
 
 
 // private
@@ -135,6 +135,9 @@ void kpMainWindow::slotKeyBindings ()
     kDebug () << "kpMainWindow::slotKeyBindings()" << endl;
 #endif
 
+    // KDE3
+    toolEndShape ();
+
     if (KShortcutsDialog::configure (actionCollection (),
             KShortcutsEditor::LetterShortcutsAllowed,
             this))
@@ -155,6 +158,9 @@ void kpMainWindow::slotConfigureToolBars ()
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotConfigureToolBars()" << endl;
 #endif
+
+    // KDE3
+    toolEndShape ();
 
     //saveMainWindowSettings (KGlobal::config (), autoSaveGroup ());
 

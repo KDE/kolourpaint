@@ -159,7 +159,7 @@ void kpMainWindow::setupToolActions ()
     // kpImageWindow_Image.cpp since they're really setting tool options.
     //
 
-    d->actionDrawOpaque = ac->add<KToggleAction> ("image_draw_opaque");
+    d->actionDrawOpaque = ac->add <KToggleAction> ("image_draw_opaque");
     d->actionDrawOpaque->setText (i18n ("&Draw Opaque"));
     connect (d->actionDrawOpaque, SIGNAL (triggered (bool)),
         SLOT (slotActionDrawOpaqueToggled ()));
@@ -394,6 +394,14 @@ bool kpMainWindow::toolIsTextTool () const
 }
 
 
+// private
+void kpMainWindow::toolEndShape ()
+{
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+}
+
+
 // public
 kpImageSelectionTransparency kpMainWindow::imageSelectionTransparency () const
 {
@@ -586,8 +594,7 @@ bool kpMainWindow::slotEndDragScroll ()
 // private slot
 void kpMainWindow::slotBeganDocResize ()
 {
-    if (toolHasBegunShape ())
-        tool ()->endShapeInternal ();
+    toolEndShape ();
 
     recalculateStatusBarShape ();
 }
@@ -690,6 +697,9 @@ void kpMainWindow::slotActionPrevToolOptionGroup1 ()
     if (!d->toolToolBar->shownToolWidget (0))
         return;
 
+    // We don't call toolEndShape() here because we want #23 in the file BUGS
+    // to later work.
+
     d->toolToolBar->shownToolWidget (0)->selectPreviousOption ();
     updateToolOptionPrevNextActionsEnabled ();
 }
@@ -699,6 +709,9 @@ void kpMainWindow::slotActionNextToolOptionGroup1 ()
 {
     if (!d->toolToolBar->shownToolWidget (0))
         return;
+
+    // We don't call toolEndShape() here because we want #23 in the file BUGS
+    // to later work.
 
     d->toolToolBar->shownToolWidget (0)->selectNextOption ();
     updateToolOptionPrevNextActionsEnabled ();
@@ -711,6 +724,9 @@ void kpMainWindow::slotActionPrevToolOptionGroup2 ()
     if (!d->toolToolBar->shownToolWidget (1))
         return;
 
+    // We don't call toolEndShape() here because we want #23 in the file BUGS
+    // to later work.
+
     d->toolToolBar->shownToolWidget (1)->selectPreviousOption ();
     updateToolOptionPrevNextActionsEnabled ();
 }
@@ -720,6 +736,9 @@ void kpMainWindow::slotActionNextToolOptionGroup2 ()
 {
     if (!d->toolToolBar->shownToolWidget (1))
         return;
+
+    // We don't call toolEndShape() here because we want #23 in the file BUGS
+    // to later work.
 
     d->toolToolBar->shownToolWidget (1)->selectNextOption ();
     updateToolOptionPrevNextActionsEnabled ();
@@ -732,6 +751,8 @@ void kpMainWindow::slotActionDrawOpaqueToggled ()
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotActionDrawOpaqueToggled()" << endl;
 #endif
+    toolEndShape ();
+
     // ("kpToolWidgetBase::" is to access one overload shadowed by the override
     //  of the other overload)
     d->toolToolBar->toolWidgetOpaqueOrTransparent ()->kpToolWidgetBase::setSelected (
@@ -747,6 +768,8 @@ void kpMainWindow::slotActionDrawColorSimilarity ()
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotActionDrawColorSimilarity()" << endl;
 #endif
+    toolEndShape ();
+
     d->colorToolBar->openColorSimilarityDialog ();
 }
 
