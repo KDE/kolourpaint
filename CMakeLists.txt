@@ -206,6 +206,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_StatusBar.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Text.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Tools.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View_Thumbnail.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View_Zoom.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_AbstractDraw.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_DrawRasterOps.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_DrawShapes.cpp
