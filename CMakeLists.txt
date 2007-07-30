@@ -35,8 +35,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/generic
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/transforms
-${CMAKE_CURRENT_SOURCE_DIR}/interfaces
-${CMAKE_CURRENT_SOURCE_DIR}/interfaces/imagelib
 ${CMAKE_CURRENT_SOURCE_DIR}/layers
 ${CMAKE_CURRENT_SOURCE_DIR}/layers/selections
 ${CMAKE_CURRENT_SOURCE_DIR}/layers/selections/image

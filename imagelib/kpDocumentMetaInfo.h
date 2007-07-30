@@ -47,26 +47,40 @@ public:
     kpDocumentMetaInfo (const kpDocumentMetaInfo &rhs);
     virtual ~kpDocumentMetaInfo ();
 
-private:
     bool operator== (const kpDocumentMetaInfo &rhs) const;
     bool operator!= (const kpDocumentMetaInfo &rhs) const;
 
-public:
     kpDocumentMetaInfo &operator= (const kpDocumentMetaInfo &rhs);
 
 
     void printDebug (const QString &prefix) const;
 
 
+    //
+    // Constants (enforced by methods)
+    //
+
+    static const int MinDotsPerMeter, MaxDotsPerMeter;
+    static const int MinOffset, MaxOffset;
+
+
     // See QImage documentation
 
+    // <val> is 0 if the resolution is unspecified.
+    // Else, these methods automatically bound <val> to be between
+    // MinDotsPerMeter ... MaxDotsPerMeter inclusive.
     int dotsPerMeterX () const;
     void setDotsPerMeterX (int val);
 
+    // <val> is 0 if the resolution is unspecified.
+    // Else, these methods automatically bound <val> to be between
+    // MinDotsPerMeter ... MaxDotsPerMeter inclusive.
     int dotsPerMeterY () const;
     void setDotsPerMeterY (int val);
 
 
+    // These method automatically bound each of X and Y to be between
+    // MinOffset and MaxOffset inclusive.
     QPoint offset () const;
     void setOffset (const QPoint &point);
 
@@ -74,15 +88,15 @@ public:
     QMap <QString, QString> textMap () const;
     QList <QString> textKeys () const;
 
+    // (if <key> is empty, it returns an empty string)
     QString text (const QString &key) const;
+
+    // (if <key> is empty, the operation is ignored)
     void setText (const QString &key, const QString &value);
 
 
 private:
-    // There is no need to maintain binary compatibility at this stage.
-    // The d-pointer is just so that you can experiment without recompiling
-    // the kitchen sink.
-    class kpDocumentMetaInfoPrivate *d;
+    struct kpDocumentMetaInfoPrivate *d;
 };
 
 

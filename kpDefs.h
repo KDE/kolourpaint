@@ -57,6 +57,10 @@
 #define KP_INVALID_SIZE QSize (INT_MIN / 8, INT_MIN / 8)
 
 
+#define KP_INCHES_PER_METER (100 / 2.54)
+#define KP_MILLIMETERS_PER_INCH 25.4
+
+
 //
 // Settings
 //

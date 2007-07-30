@@ -28,10 +28,33 @@
 
 #include <kpDocumentMetaInfo.h>
 
+#include <cmath>
+
 #include <qlist.h>
 #include <qpoint.h>
 
 #include <kdebug.h>
+
+#include <kpDefs.h>
+
+
+//
+// Constants which "ought to be enough for anybody"
+// LOTODO: Maybe there are some QImage constants somewhere?
+//
+
+// public static
+
+// (round up to guarantee at least 1 dot per inch)
+const int kpDocumentMetaInfo::MinDotsPerMeter =
+    int (ceil (1/*single dot per inch - a very low DPI*/ * KP_INCHES_PER_METER) + .1);
+
+const int kpDocumentMetaInfo::MaxDotsPerMeter =
+    int ((600 * 100)/*a lot of DPI*/ * KP_INCHES_PER_METER);
+
+// public static
+const int kpDocumentMetaInfo::MaxOffset = (4000/*big image*/ * 100)/*a very big image*/;
+const int kpDocumentMetaInfo::MinOffset = -kpDocumentMetaInfo::MaxOffset;
 
 
 struct kpDocumentMetaInfoPrivate
@@ -69,8 +92,27 @@ kpDocumentMetaInfo::~kpDocumentMetaInfo ()
 
 
 // public
+bool kpDocumentMetaInfo::operator== (const kpDocumentMetaInfo &rhs) const
+{
+    return (d->m_dotsPerMeterX == rhs.d->m_dotsPerMeterX &&
+            d->m_dotsPerMeterY == rhs.d->m_dotsPerMeterY &&
+            d->m_offset == rhs.d->m_offset &&
+            d->m_textMap == rhs.d->m_textMap);
+}
+
+// public
+bool kpDocumentMetaInfo::operator!= (const kpDocumentMetaInfo &rhs) const
+{
+    return !(*this == rhs);
+}
+
+
+// public
 kpDocumentMetaInfo &kpDocumentMetaInfo::operator= (const kpDocumentMetaInfo &rhs)
 {
+    if (this == &rhs)
+        return *this;
+
     d->m_dotsPerMeterX = rhs.dotsPerMeterX ();
     d->m_dotsPerMeterY = rhs.dotsPerMeterY ();
     d->m_offset = rhs.offset ();
@@ -116,7 +158,14 @@ int kpDocumentMetaInfo::dotsPerMeterX () const
 // public
 void kpDocumentMetaInfo::setDotsPerMeterX (int val)
 {
-    d->m_dotsPerMeterX = val;
+    // Unspecified resolution?
+    if (val == 0)
+    {
+        d->m_dotsPerMeterX = 0;
+        return;
+    }
+
+    d->m_dotsPerMeterX = qBound (MinDotsPerMeter, val, MaxDotsPerMeter);
 }
 
 
@@ -129,7 +178,14 @@ int kpDocumentMetaInfo::dotsPerMeterY () const
 // public
 void kpDocumentMetaInfo::setDotsPerMeterY (int val)
 {
-    d->m_dotsPerMeterY = val;
+    // Unspecified resolution?
+    if (val == 0)
+    {
+        d->m_dotsPerMeterY = 0;
+        return;
+    }
+
+    d->m_dotsPerMeterY = qBound (MinDotsPerMeter, val, MaxDotsPerMeter);
 }
 
 
@@ -142,7 +198,10 @@ QPoint kpDocumentMetaInfo::offset () const
 // public
 void kpDocumentMetaInfo::setOffset (const QPoint &point)
 {
-    d->m_offset = point;
+    const int x = qBound (MinOffset, point.x (), MaxOffset);
+    const int y = qBound (MinOffset, point.y (), MaxOffset);
+
+    d->m_offset = QPoint (x, y);
 }
 
 
@@ -162,11 +221,17 @@ QList <QString> kpDocumentMetaInfo::textKeys () const
 // public
 QString kpDocumentMetaInfo::text (const QString &key) const
 {
+    if (key.isEmpty ())
+        return QString ();
+
     return d->m_textMap [key];
 }
 
 // public
 void kpDocumentMetaInfo::setText (const QString &key, const QString &value)
 {
+    if (key.isEmpty ())
+        return;
+
     d->m_textMap [key] = value;
 }

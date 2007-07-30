@@ -647,7 +647,7 @@ void kpMainWindow::slotProperties ()
         commandHistory ()->addCommand (
             new kpDocumentMetaInfoCommand (
                 i18n ("Document Properties"),
-                *dialog.metaInfo ()/*new*/, *document ()->metaInfo ()/*old*/,
+                dialog.metaInfo ()/*new*/, *document ()->metaInfo ()/*old*/,
                 commandEnvironment ()));
     }
 }
@@ -1092,12 +1092,6 @@ void kpMainWindow::sendFilenameToPrinter (KPrinter *printer)
 }
 
 
-static const double InchesPerMeter = 100 / 2.54;
-
-
-// TODO: GUI should allow viewing & changing of DPI.
-
-
 // private
 void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
         bool showPrinterSetupDialog)
@@ -1122,7 +1116,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
 
     // Image DPI invalid (e.g. new image, could not read from file
     // or Qt3 doesn't implement DPI for JPEG)?
-    if (pixmapDotsPerMeterX < 1 || pixmapDotsPerMeterY < 1)
+    if (pixmapDotsPerMeterX <= 0 || pixmapDotsPerMeterY <= 0)
     {
         // Even if just one DPI dimension is invalid, mutate both DPI
         // dimensions as we have no information about the intended
@@ -1152,8 +1146,8 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
         kDebug () << "\tusing screen dpi: x=" << dpiX << " y=" << dpiY << endl;
     #endif
 
-        pixmapDotsPerMeterX = dpiX * InchesPerMeter;
-        pixmapDotsPerMeterY = dpiY * InchesPerMeter;
+        pixmapDotsPerMeterX = dpiX * KP_INCHES_PER_METER;
+        pixmapDotsPerMeterY = dpiY * KP_INCHES_PER_METER;
     }
 
 
@@ -1173,8 +1167,8 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
 #endif
 
 
-    double dpiX = pixmapDotsPerMeterX / InchesPerMeter;
-    double dpiY = pixmapDotsPerMeterY / InchesPerMeter;
+    double dpiX = pixmapDotsPerMeterX / KP_INCHES_PER_METER;
+    double dpiY = pixmapDotsPerMeterY / KP_INCHES_PER_METER;
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tpixmap: dpiX=" << dpiX << " dpiY=" << dpiY << endl;
 #endif
@@ -1184,10 +1178,12 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
     // If image doesn't fit on page at intended DPI, change the DPI.
     //
 
-    const double scaleDpiX = (pixmap.width () / (printerWidthMM / 25.4))
-        / dpiX;
-    const double scaleDpiY = (pixmap.height () / (printerHeightMM / 25.4))
-        / dpiY;
+    const double scaleDpiX =
+        (pixmap.width () / (printerWidthMM / KP_MILLIMETERS_PER_INCH))
+            / dpiX;
+    const double scaleDpiY =
+        (pixmap.height () / (printerHeightMM / KP_MILLIMETERS_PER_INCH))
+            / dpiY;
     const double scaleDpi = qMax (scaleDpiX, scaleDpiY);
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\t\tscaleDpi: x=" << scaleDpiX << " y=" << scaleDpiY
@@ -1266,8 +1262,12 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
     // after the print dialog ("printer->setup()") has been accepted.
     if (kpPrintDialogPage::shouldPrintImageCenteredOnPage (printer))
     {
-        originX = (printerWidthMM * dpiX / 25.4 - pixmap.width ()) / 2;
-        originY = (printerHeightMM * dpiY / 25.4 - pixmap.height ()) / 2;
+        originX =
+            (printerWidthMM * dpiX / KP_MILLIMETERS_PER_INCH - pixmap.width ())
+                / 2;
+        originY =
+            (printerHeightMM * dpiY / KP_MILLIMETERS_PER_INCH - pixmap.height ())
+                / 2;
     }
 
 #if DEBUG_KP_MAIN_WINDOW
