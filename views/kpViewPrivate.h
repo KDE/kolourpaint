@@ -59,19 +59,19 @@ struct kpViewPrivate
     //
     // For more details, see SVN commit:
     //     "r385274 | dang | 2005-02-02 22:08:27 +1100 (Wed, 02 Feb 2005) | 21 lines".
-    QPointer <kpDocument> m_document;
-    QPointer <kpToolToolBar> m_toolToolBar;
-    QPointer <kpViewManager> m_viewManager;
-    QPointer <kpView> m_buddyView;
-    QPointer <kpViewScrollableContainer> m_scrollableContainer;
+    QPointer <kpDocument> document;
+    QPointer <kpToolToolBar> toolToolBar;
+    QPointer <kpViewManager> viewManager;
+    QPointer <kpView> buddyView;
+    QPointer <kpViewScrollableContainer> scrollableContainer;
 
-    int m_hzoom, m_vzoom;
-    QPoint m_origin;
-    bool m_showGrid;
-    bool m_isBuddyViewScrollableContainerRectangleShown;
-    QRect m_buddyViewScrollableContainerRectangle;
+    int hzoom, vzoom;
+    QPoint origin;
+    bool showGrid;
+    bool isBuddyViewScrollableContainerRectangleShown;
+    QRect buddyViewScrollableContainerRectangle;
 
-    QRegion m_queuedUpdateArea;
+    QRegion queuedUpdateArea;
 };
 
 

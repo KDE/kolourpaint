@@ -72,16 +72,16 @@ kpView::kpView (kpDocument *document,
     : QWidget (parent),
       d (new kpViewPrivate ())
 {
-    d->m_document = document;
-    d->m_toolToolBar = toolToolBar;
-    d->m_viewManager = viewManager;
-    d->m_buddyView = buddyView;
-    d->m_scrollableContainer = scrollableContainer;
+    d->document = document;
+    d->toolToolBar = toolToolBar;
+    d->viewManager = viewManager;
+    d->buddyView = buddyView;
+    d->scrollableContainer = scrollableContainer;
 
-    d->m_hzoom = 100, d->m_vzoom = 100;
-    d->m_origin = QPoint (0, 0);
-    d->m_showGrid = false;
-    d->m_isBuddyViewScrollableContainerRectangleShown = false;
+    d->hzoom = 100, d->vzoom = 100;
+    d->origin = QPoint (0, 0);
+    d->showGrid = false;
+    d->isBuddyViewScrollableContainerRectangleShown = false;
 
     // Don't waste CPU drawing default background since its overridden by
     // our fully opaque drawing.  In reality, this seems to make no
@@ -117,7 +117,7 @@ kpView::~kpView ()
 // public
 kpDocument *kpView::document () const
 {
-    return d->m_document;
+    return d->document;
 }
 
 // protected
@@ -136,7 +136,7 @@ kpTextSelection *kpView::textSelection () const
 // public
 kpToolToolBar *kpView::toolToolBar () const
 {
-    return d->m_toolToolBar;
+    return d->toolToolBar;
 }
 
 // protected
@@ -148,13 +148,13 @@ kpTool *kpView::tool () const
 // public
 kpViewManager *kpView::viewManager () const
 {
-    return d->m_viewManager;
+    return d->viewManager;
 }
 
 // public
 kpView *kpView::buddyView () const
 {
-    return d->m_buddyView;
+    return d->buddyView;
 }
 
 // public
@@ -166,33 +166,33 @@ kpViewScrollableContainer *kpView::buddyViewScrollableContainer () const
 // public
 kpViewScrollableContainer *kpView::scrollableContainer () const
 {
-    return d->m_scrollableContainer;
+    return d->scrollableContainer;
 }
 
 
 // public
 int kpView::zoomLevelX (void) const
 {
-    return d->m_hzoom;
+    return d->hzoom;
 }
 
 // public
 int kpView::zoomLevelY (void) const
 {
-    return d->m_vzoom;
+    return d->vzoom;
 }
 
 // public virtual
 void kpView::setZoomLevel (int hzoom, int vzoom)
 {
-    if (hzoom == d->m_hzoom && vzoom == d->m_vzoom)
+    if (hzoom == d->hzoom && vzoom == d->vzoom)
         return;
 
     if (hzoom <= 0 || vzoom <= 0)
         return;
 
-    d->m_hzoom = hzoom;
-    d->m_vzoom = vzoom;
+    d->hzoom = hzoom;
+    d->vzoom = vzoom;
 
     if (viewManager ())
         viewManager ()->updateView (this);
@@ -204,7 +204,7 @@ void kpView::setZoomLevel (int hzoom, int vzoom)
 // public
 QPoint kpView::origin () const
 {
-    return d->m_origin;
+    return d->origin;
 }
 
 // public virtual
@@ -214,7 +214,7 @@ void kpView::setOrigin (const QPoint &origin)
     kDebug () << "kpView(" << objectName () << ")::setOrigin" << origin << endl;
 #endif
 
-    if (origin == d->m_origin)
+    if (origin == d->origin)
     {
     #if DEBUG_KP_VIEW
         kDebug () << "\tNOP" << endl;
@@ -222,7 +222,7 @@ void kpView::setOrigin (const QPoint &origin)
         return;
     }
 
-    d->m_origin = origin;
+    d->origin = origin;
 
     if (viewManager ())
         viewManager ()->updateView (this);
@@ -243,19 +243,19 @@ bool kpView::canShowGrid () const
 // public
 bool kpView::isGridShown () const
 {
-    return d->m_showGrid;
+    return d->showGrid;
 }
 
 // public
 void kpView::showGrid (bool yes)
 {
-    if (d->m_showGrid == yes)
+    if (d->showGrid == yes)
         return;
 
     if (yes && !canShowGrid ())
         return;
 
-    d->m_showGrid = yes;
+    d->showGrid = yes;
 
     if (viewManager ())
         viewManager ()->updateView (this);
@@ -265,18 +265,18 @@ void kpView::showGrid (bool yes)
 // public
 bool kpView::isBuddyViewScrollableContainerRectangleShown () const
 {
-    return d->m_isBuddyViewScrollableContainerRectangleShown;
+    return d->isBuddyViewScrollableContainerRectangleShown;
 }
 
 // public
 void kpView::showBuddyViewScrollableContainerRectangle (bool yes)
 {
-    if (yes == d->m_isBuddyViewScrollableContainerRectangleShown)
+    if (yes == d->isBuddyViewScrollableContainerRectangleShown)
         return;
 
-    d->m_isBuddyViewScrollableContainerRectangleShown = yes;
+    d->isBuddyViewScrollableContainerRectangleShown = yes;
 
-    if (d->m_isBuddyViewScrollableContainerRectangleShown)
+    if (d->isBuddyViewScrollableContainerRectangleShown)
     {
         // Got these connect statements by analysing deps of
         // updateBuddyViewScrollableContainerRectangle() rect update code.
@@ -341,7 +341,7 @@ void kpView::showBuddyViewScrollableContainerRectangle (bool yes)
 // protected
 QRect kpView::buddyViewScrollableContainerRectangle () const
 {
-    return d->m_buddyViewScrollableContainerRectangle;
+    return d->buddyViewScrollableContainerRectangle;
 }
 
 // protected slot
@@ -351,13 +351,13 @@ void kpView::updateBuddyViewScrollableContainerRectangle ()
         viewManager ()->setQueueUpdates ();
 
     {
-        if (d->m_buddyViewScrollableContainerRectangle.isValid ())
+        if (d->buddyViewScrollableContainerRectangle.isValid ())
         {
             if (viewManager ())
             {
                 // Erase last
                 viewManager ()->updateViewRectangleEdges (this,
-                    d->m_buddyViewScrollableContainerRectangle);
+                    d->buddyViewScrollableContainerRectangle);
             }
         }
 
@@ -390,18 +390,18 @@ void kpView::updateBuddyViewScrollableContainerRectangle ()
             newRect = QRect ();
         }
 
-        if (newRect != d->m_buddyViewScrollableContainerRectangle)
+        if (newRect != d->buddyViewScrollableContainerRectangle)
         {
             // (must set before updateView() for paintEvent() to see new
             //  rect)
-            d->m_buddyViewScrollableContainerRectangle = newRect;
+            d->buddyViewScrollableContainerRectangle = newRect;
 
             if (newRect.isValid ())
             {
                 if (viewManager ())
                 {
                     viewManager ()->updateViewRectangleEdges (this,
-                        d->m_buddyViewScrollableContainerRectangle);
+                        d->buddyViewScrollableContainerRectangle);
                 }
             }
         }
@@ -554,11 +554,11 @@ void kpView::addToQueuedArea (const QRegion &region)
 {
 #if DEBUG_KP_VIEW && 0
     kDebug () << "kpView(" << objectName ()
-               << ")::addToQueuedArea() already=" << d->m_queuedUpdateArea
+               << ")::addToQueuedArea() already=" << d->queuedUpdateArea
                << " - plus - " << region
                << endl;
 #endif
-    d->m_queuedUpdateArea += region;
+    d->queuedUpdateArea += region;
 }
 
 // public
@@ -566,11 +566,11 @@ void kpView::addToQueuedArea (const QRect &rect)
 {
 #if DEBUG_KP_VIEW && 0
     kDebug () << "kpView(" << objectName ()
-               << ")::addToQueuedArea() already=" << d->m_queuedUpdateArea
+               << ")::addToQueuedArea() already=" << d->queuedUpdateArea
                << " - plus - " << rect
                << endl;
 #endif
-    d->m_queuedUpdateArea += rect;
+    d->queuedUpdateArea += rect;
 }
 
 // public
@@ -580,7 +580,7 @@ void kpView::invalidateQueuedArea ()
     kDebug () << "kpView::invalidateQueuedArea()" << endl;
 #endif
 
-    d->m_queuedUpdateArea = QRegion ();
+    d->queuedUpdateArea = QRegion ();
 }
 
 // public
@@ -592,7 +592,7 @@ void kpView::updateQueuedArea ()
                << ")::updateQueuedArea() vm=" << (bool) vm
                << " queueUpdates=" << (vm && vm->queueUpdates ())
                << " fastUpdates=" << (vm && vm->fastUpdates ())
-               << " area=" << d->m_queuedUpdateArea
+               << " area=" << d->queuedUpdateArea
                << endl;
 #endif
 
@@ -602,8 +602,8 @@ void kpView::updateQueuedArea ()
     if (vm->queueUpdates ())
         return;
 
-    if (!d->m_queuedUpdateArea.isEmpty ())
-        vm->updateView (this, d->m_queuedUpdateArea);
+    if (!d->queuedUpdateArea.isEmpty ())
+        vm->updateView (this, d->queuedUpdateArea);
 
     invalidateQueuedArea ();
 }
