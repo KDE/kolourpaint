@@ -633,7 +633,11 @@ QPoint kpView::mouseViewPoint (const QPoint &returnViewPoint) const
     if (returnViewPoint != KP_INVALID_POINT)
         return returnViewPoint;
     else
+    {
+        // TODO: I don't think this is right for the main view since that's
+        //       inside the scrollview (which can scroll).
         return mapFromGlobal (QCursor::pos ());
+    }
 }
 
 

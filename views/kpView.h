@@ -417,6 +417,9 @@ public slots:
 
 
 public:
+    // If <returnViewPoint> is not KP_INVALID_POINT, it spits it back.
+    // Else, it returns the current mouse position in view coordinates.
+    // REFACTOR: Seems like a bad API.
     QPoint mouseViewPoint (const QPoint &returnViewPoint = KP_INVALID_POINT) const;
 
 
