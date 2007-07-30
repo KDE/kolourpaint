@@ -58,7 +58,7 @@
 #include <kconfiggroup.h>
 
 
-static ZoomLevelFromString (const QString &stringIn)
+static int ZoomLevelFromString (const QString &stringIn)
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow_View.cpp:ZoomLevelFromString(" << stringIn << ")" << endl;
@@ -87,7 +87,7 @@ static ZoomLevelFromString (const QString &stringIn)
         return zoomLevel;
 }
 
-static ZoomLevelToString (int zoomLevel)
+static QString ZoomLevelToString (int zoomLevel)
 {
     return i18n ("%1%", zoomLevel);
 }
