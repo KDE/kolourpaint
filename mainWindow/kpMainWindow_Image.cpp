@@ -85,13 +85,13 @@ kpTransformDialogEnvironment *kpMainWindow::transformDialogEnvironment ()
 // private
 bool kpMainWindow::isSelectionActive () const
 {
-    return (m_document ? bool (m_document->selection ()) : false);
+    return (d->document ? bool (d->document->selection ()) : false);
 }
 
 // private
 bool kpMainWindow::isTextSelection () const
 {
-    return (m_document && m_document->textSelection ());
+    return (d->document && d->document->textSelection ());
 }
 
 
@@ -108,68 +108,68 @@ void kpMainWindow::setupImageMenuActions ()
 {
     KActionCollection *ac = actionCollection ();
 
-    m_actionResizeScale = ac->addAction ("image_resize_scale");
-    m_actionResizeScale->setText (i18n ("R&esize / Scale..."));
-    connect (m_actionResizeScale, SIGNAL (triggered (bool)), SLOT (slotResizeScale ()));
-    m_actionResizeScale->setShortcut(Qt::CTRL + Qt::Key_E);
+    d->actionResizeScale = ac->addAction ("image_resize_scale");
+    d->actionResizeScale->setText (i18n ("R&esize / Scale..."));
+    connect (d->actionResizeScale, SIGNAL (triggered (bool)), SLOT (slotResizeScale ()));
+    d->actionResizeScale->setShortcut(Qt::CTRL + Qt::Key_E);
 
-    m_actionCrop = ac->addAction ("image_crop");
-    m_actionCrop->setText (i18n ("Se&t as Image (Crop)"));
-    connect (m_actionCrop, SIGNAL (triggered (bool)), SLOT (slotCrop ()));
-    m_actionCrop->setShortcut(Qt::CTRL + Qt::Key_T);
+    d->actionCrop = ac->addAction ("image_crop");
+    d->actionCrop->setText (i18n ("Se&t as Image (Crop)"));
+    connect (d->actionCrop, SIGNAL (triggered (bool)), SLOT (slotCrop ()));
+    d->actionCrop->setShortcut(Qt::CTRL + Qt::Key_T);
 
-    m_actionAutoCrop = ac->addAction ("image_auto_crop");
-    m_actionAutoCrop->setText (autoCropText ());
-    connect (m_actionAutoCrop, SIGNAL (triggered (bool)), SLOT (slotAutoCrop ()));
-    m_actionAutoCrop->setShortcut(Qt::CTRL + Qt::Key_U);
+    d->actionAutoCrop = ac->addAction ("image_auto_crop");
+    d->actionAutoCrop->setText (autoCropText ());
+    connect (d->actionAutoCrop, SIGNAL (triggered (bool)), SLOT (slotAutoCrop ()));
+    d->actionAutoCrop->setShortcut(Qt::CTRL + Qt::Key_U);
 
-    m_actionFlip = ac->addAction ("image_flip");
-    m_actionFlip->setText (i18n ("&Flip..."));
-    connect (m_actionFlip, SIGNAL (triggered (bool)), SLOT (slotFlip ()));
-    m_actionFlip->setShortcut(Qt::CTRL + Qt::Key_F);
+    d->actionFlip = ac->addAction ("image_flip");
+    d->actionFlip->setText (i18n ("&Flip..."));
+    connect (d->actionFlip, SIGNAL (triggered (bool)), SLOT (slotFlip ()));
+    d->actionFlip->setShortcut(Qt::CTRL + Qt::Key_F);
 
-    m_actionRotate = ac->addAction ("image_rotate");
-    m_actionRotate->setText (i18n ("&Rotate..."));
-    connect (m_actionRotate, SIGNAL (triggered (bool)), SLOT (slotRotate ()));
-    m_actionRotate->setShortcut(Qt::CTRL + Qt::Key_R);
+    d->actionRotate = ac->addAction ("image_rotate");
+    d->actionRotate->setText (i18n ("&Rotate..."));
+    connect (d->actionRotate, SIGNAL (triggered (bool)), SLOT (slotRotate ()));
+    d->actionRotate->setShortcut(Qt::CTRL + Qt::Key_R);
 
-    m_actionRotateLeft = ac->addAction ("image_rotate_270deg");
-    m_actionRotateLeft->setText (i18n ("Rotate &Left"));
-    connect (m_actionRotateLeft, SIGNAL (triggered (bool)), SLOT (slotRotate270 ()));
-    m_actionRotateLeft->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Left);
+    d->actionRotateLeft = ac->addAction ("image_rotate_270deg");
+    d->actionRotateLeft->setText (i18n ("Rotate &Left"));
+    connect (d->actionRotateLeft, SIGNAL (triggered (bool)), SLOT (slotRotate270 ()));
+    d->actionRotateLeft->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Left);
 
-    m_actionRotateRight = ac->addAction ("image_rotate_90deg");
-    m_actionRotateRight->setText (i18n ("Rotate Righ&t"));
-    connect (m_actionRotateRight, SIGNAL (triggered (bool)), SLOT (slotRotate90 ()));
-    m_actionRotateRight->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Right);
+    d->actionRotateRight = ac->addAction ("image_rotate_90deg");
+    d->actionRotateRight->setText (i18n ("Rotate Righ&t"));
+    connect (d->actionRotateRight, SIGNAL (triggered (bool)), SLOT (slotRotate90 ()));
+    d->actionRotateRight->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Right);
 
-    m_actionSkew = ac->addAction ("image_skew");
-    m_actionSkew->setText (i18n ("S&kew..."));
-    connect (m_actionSkew, SIGNAL (triggered (bool)), SLOT (slotSkew ()));
-    m_actionSkew->setShortcut(Qt::CTRL + Qt::Key_K);
+    d->actionSkew = ac->addAction ("image_skew");
+    d->actionSkew->setText (i18n ("S&kew..."));
+    connect (d->actionSkew, SIGNAL (triggered (bool)), SLOT (slotSkew ()));
+    d->actionSkew->setShortcut(Qt::CTRL + Qt::Key_K);
 
-    m_actionConvertToBlackAndWhite = ac->addAction ("image_convert_to_black_and_white");
-    m_actionConvertToBlackAndWhite->setText (i18n ("Reduce to Mo&nochrome (Dithered)"));
-    connect (m_actionConvertToBlackAndWhite, SIGNAL (triggered (bool)), SLOT (slotConvertToBlackAndWhite ()));
+    d->actionConvertToBlackAndWhite = ac->addAction ("image_convert_to_black_and_white");
+    d->actionConvertToBlackAndWhite->setText (i18n ("Reduce to Mo&nochrome (Dithered)"));
+    connect (d->actionConvertToBlackAndWhite, SIGNAL (triggered (bool)), SLOT (slotConvertToBlackAndWhite ()));
 
-    m_actionConvertToGrayscale = ac->addAction ("image_convert_to_grayscale");
-    m_actionConvertToGrayscale->setText (i18n ("Reduce to &Grayscale"));
-    connect (m_actionConvertToGrayscale, SIGNAL (triggered (bool)), SLOT (slotConvertToGrayscale ()));
+    d->actionConvertToGrayscale = ac->addAction ("image_convert_to_grayscale");
+    d->actionConvertToGrayscale->setText (i18n ("Reduce to &Grayscale"));
+    connect (d->actionConvertToGrayscale, SIGNAL (triggered (bool)), SLOT (slotConvertToGrayscale ()));
 
-    m_actionInvertColors = ac->addAction ("image_invert_colors");
-    m_actionInvertColors->setText (i18n ("&Invert Colors"));
-    connect (m_actionInvertColors, SIGNAL (triggered (bool)), SLOT (slotInvertColors ()));
-    m_actionInvertColors->setShortcut(Qt::CTRL + Qt::Key_I);
+    d->actionInvertColors = ac->addAction ("image_invert_colors");
+    d->actionInvertColors->setText (i18n ("&Invert Colors"));
+    connect (d->actionInvertColors, SIGNAL (triggered (bool)), SLOT (slotInvertColors ()));
+    d->actionInvertColors->setShortcut(Qt::CTRL + Qt::Key_I);
 
-    m_actionClear = ac->addAction ("image_clear");
-    m_actionClear->setText (i18n ("C&lear"));
-    connect (m_actionClear, SIGNAL (triggered (bool)), SLOT (slotClear ()));
-    m_actionClear->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
+    d->actionClear = ac->addAction ("image_clear");
+    d->actionClear->setText (i18n ("C&lear"));
+    connect (d->actionClear, SIGNAL (triggered (bool)), SLOT (slotClear ()));
+    d->actionClear->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
 
-    m_actionMoreEffects = ac->addAction ("image_more_effects");
-    m_actionMoreEffects->setText (i18n ("&More Effects..."));
-    connect (m_actionMoreEffects, SIGNAL (triggered (bool)), SLOT (slotMoreEffects ()));
-    m_actionMoreEffects->setShortcut(Qt::CTRL + Qt::Key_M);
+    d->actionMoreEffects = ac->addAction ("image_more_effects");
+    d->actionMoreEffects->setText (i18n ("&More Effects..."));
+    connect (d->actionMoreEffects, SIGNAL (triggered (bool)), SLOT (slotMoreEffects ()));
+    d->actionMoreEffects->setShortcut(Qt::CTRL + Qt::Key_M);
 
 
     enableImageMenuDocumentActions (false);
@@ -178,21 +178,21 @@ void kpMainWindow::setupImageMenuActions ()
 // private
 void kpMainWindow::enableImageMenuDocumentActions (bool enable)
 {
-    m_actionResizeScale->setEnabled (enable);
-    m_actionCrop->setEnabled (enable);
-    m_actionAutoCrop->setEnabled (enable);
-    m_actionFlip->setEnabled (enable);
-    m_actionRotate->setEnabled (enable);
-    m_actionRotateLeft->setEnabled (enable);
-    m_actionRotateRight->setEnabled (enable);
-    m_actionSkew->setEnabled (enable);
-    m_actionConvertToBlackAndWhite->setEnabled (enable);
-    m_actionConvertToGrayscale->setEnabled (enable);
-    m_actionInvertColors->setEnabled (enable);
-    m_actionClear->setEnabled (enable);
-    m_actionMoreEffects->setEnabled (enable);
+    d->actionResizeScale->setEnabled (enable);
+    d->actionCrop->setEnabled (enable);
+    d->actionAutoCrop->setEnabled (enable);
+    d->actionFlip->setEnabled (enable);
+    d->actionRotate->setEnabled (enable);
+    d->actionRotateLeft->setEnabled (enable);
+    d->actionRotateRight->setEnabled (enable);
+    d->actionSkew->setEnabled (enable);
+    d->actionConvertToBlackAndWhite->setEnabled (enable);
+    d->actionConvertToGrayscale->setEnabled (enable);
+    d->actionInvertColors->setEnabled (enable);
+    d->actionClear->setEnabled (enable);
+    d->actionMoreEffects->setEnabled (enable);
 
-    m_imageMenuDocumentActionsEnabled = enable;
+    d->imageMenuDocumentActionsEnabled = enable;
 }
 
 
@@ -225,23 +225,23 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
     }
 
 
-    m_actionResizeScale->setEnabled (m_imageMenuDocumentActionsEnabled);
-    m_actionCrop->setEnabled (m_imageMenuDocumentActionsEnabled &&
+    d->actionResizeScale->setEnabled (d->imageMenuDocumentActionsEnabled);
+    d->actionCrop->setEnabled (d->imageMenuDocumentActionsEnabled &&
                               isSelectionActive ());
 
-    const bool enable = (m_imageMenuDocumentActionsEnabled && !isTextSelection ());
-    m_actionAutoCrop->setText (autoCropText ());
-    m_actionAutoCrop->setEnabled (enable);
-    m_actionFlip->setEnabled (enable);
-    m_actionRotate->setEnabled (enable);
-    m_actionRotateLeft->setEnabled (enable);
-    m_actionRotateRight->setEnabled (enable);
-    m_actionSkew->setEnabled (enable);
-    m_actionConvertToBlackAndWhite->setEnabled (enable);
-    m_actionConvertToGrayscale->setEnabled (enable);
-    m_actionInvertColors->setEnabled (enable);
-    m_actionClear->setEnabled (enable);
-    m_actionMoreEffects->setEnabled (enable);
+    const bool enable = (d->imageMenuDocumentActionsEnabled && !isTextSelection ());
+    d->actionAutoCrop->setText (autoCropText ());
+    d->actionAutoCrop->setEnabled (enable);
+    d->actionFlip->setEnabled (enable);
+    d->actionRotate->setEnabled (enable);
+    d->actionRotateLeft->setEnabled (enable);
+    d->actionRotateRight->setEnabled (enable);
+    d->actionSkew->setEnabled (enable);
+    d->actionConvertToBlackAndWhite->setEnabled (enable);
+    d->actionConvertToGrayscale->setEnabled (enable);
+    d->actionInvertColors->setEnabled (enable);
+    d->actionClear->setEnabled (enable);
+    d->actionMoreEffects->setEnabled (enable);
 }
 
 
@@ -252,8 +252,8 @@ kpColor kpMainWindow::backgroundColor (bool ofSelection) const
         return kpColor::Transparent;
     else
     {
-        Q_ASSERT (m_colorToolBar);
-        return m_colorToolBar->backgroundColor ();
+        Q_ASSERT (d->colorToolBar);
+        return d->colorToolBar->backgroundColor ();
     }
 }
 
@@ -270,14 +270,14 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
                << endl;
 #endif
 
-    Q_ASSERT (m_document);
+    Q_ASSERT (d->document);
 
 
-    if (m_viewManager)
-        m_viewManager->setQueueUpdates ();
+    if (d->viewManager)
+        d->viewManager->setQueueUpdates ();
 
 
-    kpAbstractImageSelection *sel = m_document->imageSelection ();
+    kpAbstractImageSelection *sel = d->document->imageSelection ();
 #if DEBUG_KP_MAIN_WINDOW && 1
     kDebug () << "\timage sel=" << sel
                << " sel->hasContent=" << (sel ? sel->hasContent () : 0)
@@ -302,7 +302,7 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
     if (addSelPullCmdIfSelAvail && sel && !sel->hasContent ())
     {
         if (sel->transparency ().isTransparent ())
-            m_colorToolBar->flashColorSimilarityToolBarItem ();
+            d->colorToolBar->flashColorSimilarityToolBarItem ();
 
         kpMacroCommand *macroCmd = new kpMacroCommand (cmd->name (),
             commandEnvironment ());
@@ -313,16 +313,16 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
 
         macroCmd->addCommand (cmd);
 
-        m_commandHistory->addCommand (macroCmd);
+        d->commandHistory->addCommand (macroCmd);
     }
     else
     {
-        m_commandHistory->addCommand (cmd);
+        d->commandHistory->addCommand (cmd);
     }
 
 
-    if (m_viewManager)
-        m_viewManager->restoreQueueUpdates ();
+    if (d->viewManager)
+        d->viewManager->restoreQueueUpdates ();
 }
 
 // private slot
@@ -332,7 +332,7 @@ void kpMainWindow::slotResizeScale ()
         tool ()->endShapeInternal ();
 
     kpTransformResizeScaleDialog dialog (transformDialogEnvironment (), this);
-    dialog.setKeepAspectRatio (d->m_resizeScaleDialogLastKeepAspect);
+    dialog.setKeepAspectRatio (d->resizeScaleDialogLastKeepAspect);
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
@@ -361,14 +361,14 @@ void kpMainWindow::slotResizeScale ()
     }
 
 
-    if (d->m_resizeScaleDialogLastKeepAspect != dialog.keepAspectRatio ())
+    if (d->resizeScaleDialogLastKeepAspect != dialog.keepAspectRatio ())
     {
-        d->m_resizeScaleDialogLastKeepAspect = dialog.keepAspectRatio ();
+        d->resizeScaleDialogLastKeepAspect = dialog.keepAspectRatio ();
 
         KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
         cfg.writeEntry (kpSettingResizeScaleLastKeepAspect,
-                         d->m_resizeScaleDialogLastKeepAspect);
+                         d->resizeScaleDialogLastKeepAspect);
         cfg.sync ();
     }
 }
@@ -379,7 +379,7 @@ void kpMainWindow::slotCrop ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    Q_ASSERT (m_document && m_document->selection ());
+    Q_ASSERT (d->document && d->document->selection ());
 
 
     ::kpTransformCrop (this);
@@ -400,12 +400,12 @@ void kpMainWindow::slotFlip ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpTransformFlipDialog dialog ((bool) m_document->selection (), this);
+    kpTransformFlipDialog dialog ((bool) d->document->selection (), this);
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
         addImageOrSelectionCommand (
-            new kpTransformFlipCommand (m_document->selection (),
+            new kpTransformFlipCommand (d->document->selection (),
                                    dialog.getHorizontalFlip (), dialog.getVerticalFlip (),
                                    commandEnvironment ()));
     }
@@ -418,13 +418,13 @@ void kpMainWindow::slotRotate ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpTransformRotateDialog dialog ((bool) m_document->selection (),
+    kpTransformRotateDialog dialog ((bool) d->document->selection (),
         transformDialogEnvironment (), this);
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
         addImageOrSelectionCommand (
-            new kpTransformRotateCommand (m_document->selection (),
+            new kpTransformRotateCommand (d->document->selection (),
                 dialog.angle (),
                 commandEnvironment ()));
     }
@@ -439,7 +439,7 @@ void kpMainWindow::slotRotate270 ()
     // TODO: Special command name instead of just "Rotate"?
     addImageOrSelectionCommand (
         new kpTransformRotateCommand (
-            m_document->selection (),
+            d->document->selection (),
             270,
             commandEnvironment ()));
 }
@@ -453,7 +453,7 @@ void kpMainWindow::slotRotate90 ()
     // TODO: Special command name instead of just "Rotate"?
     addImageOrSelectionCommand (
         new kpTransformRotateCommand (
-            m_document->selection (),
+            d->document->selection (),
             90,
             commandEnvironment ()));
 }
@@ -465,13 +465,13 @@ void kpMainWindow::slotSkew ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpTransformSkewDialog dialog ((bool) m_document->selection (),
+    kpTransformSkewDialog dialog ((bool) d->document->selection (),
         transformDialogEnvironment (), this);
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
         addImageOrSelectionCommand (
-            new kpTransformSkewCommand (m_document->selection (),
+            new kpTransformSkewCommand (d->document->selection (),
                 dialog.horizontalAngle (), dialog.verticalAngle (),
                 commandEnvironment ()));
     }
@@ -485,7 +485,7 @@ void kpMainWindow::slotConvertToBlackAndWhite ()
 
     addImageOrSelectionCommand (
         new kpEffectReduceColorsCommand (1/*depth*/, true/*dither*/,
-            m_document->selection (),
+            d->document->selection (),
             commandEnvironment ()));
 }
 
@@ -496,7 +496,7 @@ void kpMainWindow::slotConvertToGrayscale ()
         tool ()->endShapeInternal ();
 
     addImageOrSelectionCommand (
-        new kpEffectGrayscaleCommand (m_document->selection (),
+        new kpEffectGrayscaleCommand (d->document->selection (),
             commandEnvironment ()));
 }
 
@@ -507,7 +507,7 @@ void kpMainWindow::slotInvertColors ()
         tool ()->endShapeInternal ();
 
     addImageOrSelectionCommand (
-        new kpEffectInvertCommand (m_document->selection (),
+        new kpEffectInvertCommand (d->document->selection (),
             commandEnvironment ()));
 }
 
@@ -519,7 +519,7 @@ void kpMainWindow::slotClear ()
 
     addImageOrSelectionCommand (
         new kpEffectClearCommand (
-            m_document->selection (),
+            d->document->selection (),
             backgroundColor (),
             commandEnvironment ()));
 }
@@ -530,9 +530,9 @@ void kpMainWindow::slotMoreEffects ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpEffectsDialog dialog ((bool) m_document->selection (),
+    kpEffectsDialog dialog ((bool) d->document->selection (),
         transformDialogEnvironment (), this);
-    dialog.selectEffect (d->m_moreEffectsDialogLastEffect);
+    dialog.selectEffect (d->moreEffectsDialogLastEffect);
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
@@ -540,14 +540,14 @@ void kpMainWindow::slotMoreEffects ()
     }
 
 
-    if (d->m_moreEffectsDialogLastEffect != dialog.selectedEffect ())
+    if (d->moreEffectsDialogLastEffect != dialog.selectedEffect ())
     {
-        d->m_moreEffectsDialogLastEffect = dialog.selectedEffect ();
+        d->moreEffectsDialogLastEffect = dialog.selectedEffect ();
 
         KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
         cfg.writeEntry (kpSettingMoreEffectsLastEffect,
-                         d->m_moreEffectsDialogLastEffect);
+                         d->moreEffectsDialogLastEffect);
         cfg.sync ();
     }
 }

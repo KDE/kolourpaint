@@ -30,6 +30,12 @@
 #define kpMainWindowPrivate_H
 
 
+#define DEBUG_KP_MAIN_WINDOW 0
+
+
+#include <kpDocumentSaveOptions.h>
+
+
 class QAction;
 class QActionGroup;
 
@@ -45,14 +51,28 @@ class kpTransformDialogEnvironment;
 struct kpMainWindowPrivate
 {
     kpMainWindowPrivate ()
-        : documentEnvironment (0),
-          commandEnvironment (0),
-          toolSelectionEnvironment (0),
-          toolsActionGroup (0),
-          transformDialogEnvironment (0)
     {
     }
 
+    bool isFullyConstructed;
+
+    kpViewScrollableContainer *scrollView;
+    kpZoomedView *mainView;
+    kpThumbnail *thumbnail;
+    kpThumbnailView *thumbnailView;
+    kpDocument *document;
+    kpViewManager *viewManager;
+    kpColorToolBar *colorToolBar;
+    kpToolToolBar *toolToolBar;
+    kpCommandHistory *commandHistory;
+
+    bool configFirstTime;
+    bool configShowGrid;
+    bool configShowPath;
+
+    bool configThumbnailShown;
+    QRect configThumbnailGeometry;
+    bool configZoomedThumbnail;
 
     kpDocumentEnvironment *documentEnvironment;
     kpCommandEnvironment *commandEnvironment;
@@ -65,6 +85,30 @@ struct kpMainWindowPrivate
     kpToolSelectionEnvironment *toolSelectionEnvironment;
     QActionGroup *toolsActionGroup;
 
+    kpTool *toolSpraycan, *toolBrush,
+           *toolColorEraser, *toolColorPicker,
+           *toolCurve, *toolEllipse,
+           *toolEllipticalSelection, *toolEraser,
+           *toolFloodFill, *toolFreeFormSelection,
+           *toolLine, *toolPen, *toolPolygon,
+           *toolPolyline, *toolRectangle, *toolRectSelection,
+           *toolRoundedRectangle, *toolZoom;
+    kpToolText *toolText;
+
+    QList <kpTool *> tools;
+    int lastToolNumber;
+
+    bool toolActionsEnabled;
+    QAction *actionPrevToolOptionGroup1,
+            *actionNextToolOptionGroup1,
+            *actionPrevToolOptionGroup2,
+            *actionNextToolOptionGroup2;
+
+    int settingImageSelectionTransparency;
+
+    int docResizeWidth, docResizeHeight;
+    bool docResizeToBeCompleted;
+
 
     //
     // File Menu
@@ -72,13 +116,62 @@ struct kpMainWindowPrivate
 
     bool configOpenImagesInSameWindow;
 
+    QAction *actionNew, *actionOpen;
+    KRecentFilesAction *actionOpenRecent;
+    QAction *actionScan, *actionProperties,
+            *actionSave, *actionSaveAs, *actionExport,
+            *actionReload,
+            *actionPrint, *actionPrintPreview,
+            *actionMail,
+            *actionSetAsWallpaperTiled, *actionSetAsWallpaperCentered,
+            *actionClose, *actionQuit;
+
+    KScanDialog *scanDialog;
+
+    KUrl lastExportURL;
+    kpDocumentSaveOptions lastExportSaveOptions;
+    bool exportFirstTime;
+
+
+    //
+    // Edit Menu
+    //
+
+    bool editMenuDocumentActionsEnabled;
+
+    QAction *actionUndo, *actionRedo,
+            *actionCut, *actionCopy,
+            *actionPaste, *actionPasteInNewWindow,
+            *actionDelete,
+            *actionSelectAll, *actionDeselect,
+            *actionCopyToFile, *actionPasteFromFile;
+
+    KUrl lastPasteFromURL;
+
+    KUrl lastCopyToURL;
+    kpDocumentSaveOptions lastCopyToSaveOptions;
+    bool copyToFirstTime;
+
 
     //
     // View Menu
     //
 
-    bool m_configThumbnailShowRectangle;
-    KToggleAction *m_actionShowThumbnailRectangle;
+    bool configThumbnailShowRectangle;
+    KToggleAction *actionShowThumbnailRectangle;
+
+    bool viewMenuDocumentActionsEnabled;
+
+    QAction *actionActualSize,
+            *actionFitToPage, *actionFitToWidth, *actionFitToHeight,
+            *actionZoomIn, *actionZoomOut;
+    KSelectAction *actionZoom;
+    KToggleAction *actionShowGrid,
+                  *actionShowThumbnail, *actionZoomedThumbnail;
+
+    QList <int> zoomList;
+
+    QTimer *thumbnailSaveConfigTimer;
 
 
     //
@@ -87,13 +180,24 @@ struct kpMainWindowPrivate
 
     kpTransformDialogEnvironment *transformDialogEnvironment;
 
+    bool imageMenuDocumentActionsEnabled;
+
+    QAction *actionResizeScale,
+            *actionCrop, *actionAutoCrop,
+            *actionFlip,
+            *actionRotate, *actionRotateLeft, *actionRotateRight,
+            *actionSkew,
+            *actionConvertToBlackAndWhite, *actionConvertToGrayscale,
+            *actionMoreEffects,
+            *actionInvertColors, *actionClear;
+
     // Implemented in kpMainWindow_Tools.cpp, not kpImageWindow_Image.cpp
     // since they're really setting tool options.
     KToggleAction *actionDrawOpaque;
     QAction *actionDrawColorSimilarity;
 
-    int m_moreEffectsDialogLastEffect;
-    bool m_resizeScaleDialogLastKeepAspect;
+    int moreEffectsDialogLastEffect;
+    bool resizeScaleDialogLastKeepAspect;
 
 
     //
@@ -111,10 +215,46 @@ struct kpMainWindowPrivate
 
 
     //
+    // Settings Menu
+    //
+
+    KToggleAction *actionShowPath;
+    QAction *actionKeyBindings, *actionConfigureToolbars, *actionConfigure;
+    KToggleFullScreenAction *actionFullScreen;
+
+
+    //
+    // Status Bar
+    //
+
+    bool statusBarCreated;
+    kpSqueezedTextLabel *statusBarMessageLabel;
+
+    bool statusBarShapeLastPointsInitialised;
+    QPoint statusBarShapeLastStartPoint, statusBarShapeLastEndPoint;
+    bool statusBarShapeLastSizeInitialised;
+    QSize statusBarShapeLastSize;
+
+
+    //
+    // Text ToolBar
+    //
+
+    KFontAction *actionTextFontFamily;
+    KFontSizeAction *actionTextFontSize;
+    KToggleAction *actionTextBold, *actionTextItalic,
+                  *actionTextUnderline, *actionTextStrikeThru;
+
+    int settingTextStyle;
+    QString textOldFontFamily;
+    int textOldFontSize;
+
+
+    //
     // Help Menu
     //
 
-    QAction *m_actionHelpTakingScreenshots;
+    QAction *actionHelpTakingScreenshots;
 };
 
 

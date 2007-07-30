@@ -97,60 +97,60 @@ void kpMainWindow::setupToolActions ()
     kpToolSelectionEnvironment *toolSelEnv = toolSelectionEnvironment ();
     kpToolEnvironment *toolEnv = toolEnvironment ();
 
-    m_tools.append (m_toolFreeFormSelection = new kpToolFreeFormSelection (toolSelEnv, this));
-    m_tools.append (m_toolRectSelection = new kpToolRectSelection (toolSelEnv, this));
+    d->tools.append (d->toolFreeFormSelection = new kpToolFreeFormSelection (toolSelEnv, this));
+    d->tools.append (d->toolRectSelection = new kpToolRectSelection (toolSelEnv, this));
 
-    m_tools.append (m_toolEllipticalSelection = new kpToolEllipticalSelection (toolSelEnv, this));
-    m_tools.append (m_toolText = new kpToolText (toolSelEnv, this));
+    d->tools.append (d->toolEllipticalSelection = new kpToolEllipticalSelection (toolSelEnv, this));
+    d->tools.append (d->toolText = new kpToolText (toolSelEnv, this));
 
-    m_tools.append (m_toolLine = new kpToolLine (toolEnv, this));
-    m_tools.append (m_toolPen = new kpToolPen (toolEnv, this));
+    d->tools.append (d->toolLine = new kpToolLine (toolEnv, this));
+    d->tools.append (d->toolPen = new kpToolPen (toolEnv, this));
 
-    m_tools.append (m_toolEraser = new kpToolEraser (toolEnv, this));
-    m_tools.append (m_toolBrush = new kpToolBrush (toolEnv, this));
+    d->tools.append (d->toolEraser = new kpToolEraser (toolEnv, this));
+    d->tools.append (d->toolBrush = new kpToolBrush (toolEnv, this));
 
-    m_tools.append (m_toolFloodFill = new kpToolFloodFill (toolEnv, this));
-    m_tools.append (m_toolColorPicker = new kpToolColorPicker (toolEnv, this));
+    d->tools.append (d->toolFloodFill = new kpToolFloodFill (toolEnv, this));
+    d->tools.append (d->toolColorPicker = new kpToolColorPicker (toolEnv, this));
 
-    m_tools.append (m_toolColorEraser = new kpToolColorEraser (toolEnv, this));
-    m_tools.append (m_toolSpraycan = new kpToolSpraycan (toolEnv, this));
+    d->tools.append (d->toolColorEraser = new kpToolColorEraser (toolEnv, this));
+    d->tools.append (d->toolSpraycan = new kpToolSpraycan (toolEnv, this));
 
-    m_tools.append (m_toolRoundedRectangle = new kpToolRoundedRectangle (toolEnv, this));
-    m_tools.append (m_toolRectangle = new kpToolRectangle (toolEnv, this));
+    d->tools.append (d->toolRoundedRectangle = new kpToolRoundedRectangle (toolEnv, this));
+    d->tools.append (d->toolRectangle = new kpToolRectangle (toolEnv, this));
 
-    m_tools.append (m_toolPolygon = new kpToolPolygon (toolEnv, this));
-    m_tools.append (m_toolEllipse = new kpToolEllipse (toolEnv, this));
+    d->tools.append (d->toolPolygon = new kpToolPolygon (toolEnv, this));
+    d->tools.append (d->toolEllipse = new kpToolEllipse (toolEnv, this));
 
-    m_tools.append (m_toolPolyline = new kpToolPolyline (toolEnv, this));
-    m_tools.append (m_toolCurve = new kpToolCurve (toolEnv, this));
+    d->tools.append (d->toolPolyline = new kpToolPolyline (toolEnv, this));
+    d->tools.append (d->toolCurve = new kpToolCurve (toolEnv, this));
 
-    m_tools.append (m_toolZoom = new kpToolZoom (toolEnv, this));
+    d->tools.append (d->toolZoom = new kpToolZoom (toolEnv, this));
 
 
     KActionCollection *ac = actionCollection ();
 
-    m_actionPrevToolOptionGroup1 = ac->addAction ("prev_tool_option_group_1");
-    m_actionPrevToolOptionGroup1->setText (i18n ("Previous Tool Option (Group #1)"));
-    m_actionPrevToolOptionGroup1->setShortcuts (kpTool::shortcutForKey (Qt::Key_1));
-    connect (m_actionPrevToolOptionGroup1, SIGNAL (triggered (bool)),
+    d->actionPrevToolOptionGroup1 = ac->addAction ("prev_tool_option_group_1");
+    d->actionPrevToolOptionGroup1->setText (i18n ("Previous Tool Option (Group #1)"));
+    d->actionPrevToolOptionGroup1->setShortcuts (kpTool::shortcutForKey (Qt::Key_1));
+    connect (d->actionPrevToolOptionGroup1, SIGNAL (triggered (bool)),
         SLOT (slotActionPrevToolOptionGroup1 ()));
 
-    m_actionNextToolOptionGroup1 = ac->addAction ("next_tool_option_group_1");
-    m_actionNextToolOptionGroup1->setText (i18n ("Next Tool Option (Group #1)"));
-    m_actionNextToolOptionGroup1->setShortcuts (kpTool::shortcutForKey (Qt::Key_2));
-    connect (m_actionNextToolOptionGroup1, SIGNAL (triggered (bool)),
+    d->actionNextToolOptionGroup1 = ac->addAction ("next_tool_option_group_1");
+    d->actionNextToolOptionGroup1->setText (i18n ("Next Tool Option (Group #1)"));
+    d->actionNextToolOptionGroup1->setShortcuts (kpTool::shortcutForKey (Qt::Key_2));
+    connect (d->actionNextToolOptionGroup1, SIGNAL (triggered (bool)),
         SLOT (slotActionNextToolOptionGroup1 ()));
 
-    m_actionPrevToolOptionGroup2 = ac->addAction ("prev_tool_option_group_2");
-    m_actionPrevToolOptionGroup2->setText (i18n ("Previous Tool Option (Group #2)"));
-    m_actionPrevToolOptionGroup2->setShortcuts (kpTool::shortcutForKey (Qt::Key_3));
-    connect (m_actionPrevToolOptionGroup2, SIGNAL (triggered (bool)),
+    d->actionPrevToolOptionGroup2 = ac->addAction ("prev_tool_option_group_2");
+    d->actionPrevToolOptionGroup2->setText (i18n ("Previous Tool Option (Group #2)"));
+    d->actionPrevToolOptionGroup2->setShortcuts (kpTool::shortcutForKey (Qt::Key_3));
+    connect (d->actionPrevToolOptionGroup2, SIGNAL (triggered (bool)),
         SLOT (slotActionPrevToolOptionGroup2 ()));
 
-    m_actionNextToolOptionGroup2 = ac->addAction ("next_tool_option_group_2");
-    m_actionNextToolOptionGroup2->setText (i18n ("Next Tool Option (Group #2)"));
-    m_actionNextToolOptionGroup2->setShortcuts (kpTool::shortcutForKey (Qt::Key_4));
-    connect (m_actionNextToolOptionGroup2, SIGNAL (triggered (bool)),
+    d->actionNextToolOptionGroup2 = ac->addAction ("next_tool_option_group_2");
+    d->actionNextToolOptionGroup2->setText (i18n ("Next Tool Option (Group #2)"));
+    d->actionNextToolOptionGroup2->setShortcuts (kpTool::shortcutForKey (Qt::Key_4));
+    connect (d->actionNextToolOptionGroup2, SIGNAL (triggered (bool)),
         SLOT (slotActionNextToolOptionGroup2 ()));
 
 
@@ -190,29 +190,29 @@ void kpMainWindow::createToolBox ()
     }
 
 
-    m_toolToolBar = new kpToolToolBar (i18n ("Tool Box"), 2/*columns/rows*/, this);
-    m_toolToolBar->setObjectName ("Tool Box");  // (needed for QMainWindow::saveState())
+    d->toolToolBar = new kpToolToolBar (i18n ("Tool Box"), 2/*columns/rows*/, this);
+    d->toolToolBar->setObjectName ("Tool Box");  // (needed for QMainWindow::saveState())
     // HACK: QToolBar::setOrientation() is no longer virtual in Qt4.
     //       Therefore, our override of setOrientation() will never be
     //       called in response to user movement.  We might be stuck in
     //       a horizontal position at the start.  So force it vertical
     //       - this is probably what the user wants.
-    m_toolToolBar->setOrientation (Qt::Vertical);
-    connect (m_toolToolBar, SIGNAL (sigToolSelected (kpTool *)),
+    d->toolToolBar->setOrientation (Qt::Vertical);
+    connect (d->toolToolBar, SIGNAL (sigToolSelected (kpTool *)),
              this, SLOT (slotToolSelected (kpTool *)));
-    connect (m_toolToolBar, SIGNAL (toolWidgetOptionSelected ()),
+    connect (d->toolToolBar, SIGNAL (toolWidgetOptionSelected ()),
              this, SLOT (updateToolOptionPrevNextActionsEnabled ()));
 
-    connect (m_toolToolBar->toolWidgetOpaqueOrTransparent (),
+    connect (d->toolToolBar->toolWidgetOpaqueOrTransparent (),
              SIGNAL (isOpaqueChanged (bool)),
              SLOT (updateActionDrawOpaqueChecked ()));
     updateActionDrawOpaqueChecked ();
 
-    for (QList <kpTool *>::const_iterator it = m_tools.begin ();
-         it != m_tools.end ();
+    for (QList <kpTool *>::const_iterator it = d->tools.begin ();
+         it != d->tools.end ();
          it++)
     {
-        m_toolToolBar->registerTool (*it);
+        d->toolToolBar->registerTool (*it);
     }
 
 
@@ -230,37 +230,37 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
     kDebug () << "kpMainWindow::enableToolsDocumentsAction(" << enable << ")" << endl;
 #endif
 
-    m_toolActionsEnabled = enable;
+    d->toolActionsEnabled = enable;
 
 
-    if (enable && !m_toolToolBar->isEnabled ())
+    if (enable && !d->toolToolBar->isEnabled ())
     {
-        kpTool *previousTool = m_toolToolBar->previousTool ();
+        kpTool *previousTool = d->toolToolBar->previousTool ();
 
         // select tool for enabled Tool Box
 
         if (previousTool)
-            m_toolToolBar->selectPreviousTool ();
+            d->toolToolBar->selectPreviousTool ();
         else
         {
-            if (m_lastToolNumber >= 0 && m_lastToolNumber < (int) m_tools.count ())
-                m_toolToolBar->selectTool (m_tools.at (m_lastToolNumber));
+            if (d->lastToolNumber >= 0 && d->lastToolNumber < (int) d->tools.count ())
+                d->toolToolBar->selectTool (d->tools.at (d->lastToolNumber));
             else
-                m_toolToolBar->selectTool (m_toolPen);
+                d->toolToolBar->selectTool (d->toolPen);
         }
     }
-    else if (!enable && m_toolToolBar->isEnabled ())
+    else if (!enable && d->toolToolBar->isEnabled ())
     {
         // don't have a disabled Tool Box with an enabled Tool
-        m_toolToolBar->selectTool (0);
+        d->toolToolBar->selectTool (0);
     }
 
 
-    m_toolToolBar->setEnabled (enable);
+    d->toolToolBar->setEnabled (enable);
 
 
-    for (QList <kpTool *>::const_iterator it = m_tools.begin ();
-         it != m_tools.end ();
+    for (QList <kpTool *>::const_iterator it = d->tools.begin ();
+         it != d->tools.end ();
          it++)
     {
         kpToolAction *action = (*it)->action ();
@@ -294,26 +294,26 @@ void kpMainWindow::updateToolOptionPrevNextActionsEnabled ()
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::updateToolOptionPrevNextActionsEnabled()"
                << " numShownToolWidgets="
-               << m_toolToolBar->numShownToolWidgets ()
+               << d->toolToolBar->numShownToolWidgets ()
                << endl;
 #endif
 
-    const bool enable = m_toolActionsEnabled;
+    const bool enable = d->toolActionsEnabled;
 
 
-    m_actionPrevToolOptionGroup1->setEnabled (enable &&
-        m_toolToolBar->shownToolWidget (0) &&
-        m_toolToolBar->shownToolWidget (0)->hasPreviousOption ());
-    m_actionNextToolOptionGroup1->setEnabled (enable &&
-        m_toolToolBar->shownToolWidget (0) &&
-        m_toolToolBar->shownToolWidget (0)->hasNextOption ());
+    d->actionPrevToolOptionGroup1->setEnabled (enable &&
+        d->toolToolBar->shownToolWidget (0) &&
+        d->toolToolBar->shownToolWidget (0)->hasPreviousOption ());
+    d->actionNextToolOptionGroup1->setEnabled (enable &&
+        d->toolToolBar->shownToolWidget (0) &&
+        d->toolToolBar->shownToolWidget (0)->hasNextOption ());
 
-    m_actionPrevToolOptionGroup2->setEnabled (enable &&
-        m_toolToolBar->shownToolWidget (1) &&
-        m_toolToolBar->shownToolWidget (1)->hasPreviousOption ());
-    m_actionNextToolOptionGroup2->setEnabled (enable &&
-        m_toolToolBar->shownToolWidget (1) &&
-        m_toolToolBar->shownToolWidget (1)->hasNextOption ());
+    d->actionPrevToolOptionGroup2->setEnabled (enable &&
+        d->toolToolBar->shownToolWidget (1) &&
+        d->toolToolBar->shownToolWidget (1)->hasPreviousOption ());
+    d->actionNextToolOptionGroup2->setEnabled (enable &&
+        d->toolToolBar->shownToolWidget (1) &&
+        d->toolToolBar->shownToolWidget (1)->hasNextOption ());
 }
 
 
@@ -325,7 +325,7 @@ void kpMainWindow::updateActionDrawOpaqueChecked ()
 #endif
 
     const bool drawOpaque =
-        (m_toolToolBar->toolWidgetOpaqueOrTransparent ()->selectedRow () == 0);
+        (d->toolToolBar->toolWidgetOpaqueOrTransparent ()->selectedRow () == 0);
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tdrawOpaque=" << drawOpaque << endl;
 #endif
@@ -340,7 +340,7 @@ void kpMainWindow::updateActionDrawOpaqueEnabled ()
     kDebug () << "kpMainWindow::updateActionDrawOpaqueEnabled()" << endl;
 #endif
 
-    const bool enable = m_toolActionsEnabled;
+    const bool enable = d->toolActionsEnabled;
 
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tenable=" << enable
@@ -366,7 +366,7 @@ QActionGroup *kpMainWindow::toolsActionGroup ()
 // public
 kpTool *kpMainWindow::tool () const
 {
-    return m_toolToolBar ? m_toolToolBar->tool () : 0;
+    return d->toolToolBar ? d->toolToolBar->tool () : 0;
 }
 
 // public
@@ -381,26 +381,26 @@ bool kpMainWindow::toolIsASelectionTool (bool includingTextTool) const
 {
     kpTool *currentTool = tool ();
 
-    return ((currentTool == m_toolFreeFormSelection) ||
-            (currentTool == m_toolRectSelection) ||
-            (currentTool == m_toolEllipticalSelection) ||
-            (currentTool == m_toolText && includingTextTool));
+    return ((currentTool == d->toolFreeFormSelection) ||
+            (currentTool == d->toolRectSelection) ||
+            (currentTool == d->toolEllipticalSelection) ||
+            (currentTool == d->toolText && includingTextTool));
 }
 
 // public
 bool kpMainWindow::toolIsTextTool () const
 {
-    return (tool () == m_toolText);
+    return (tool () == d->toolText);
 }
 
 
 // public
 kpImageSelectionTransparency kpMainWindow::imageSelectionTransparency () const
 {
-    kpToolWidgetOpaqueOrTransparent *oot = m_toolToolBar->toolWidgetOpaqueOrTransparent ();
+    kpToolWidgetOpaqueOrTransparent *oot = d->toolToolBar->toolWidgetOpaqueOrTransparent ();
     Q_ASSERT (oot);
 
-    return kpImageSelectionTransparency (oot->isOpaque (), backgroundColor (), m_colorToolBar->colorSimilarity ());
+    return kpImageSelectionTransparency (oot->isOpaque (), backgroundColor (), d->colorToolBar->colorSimilarity ());
 }
 
 // public
@@ -413,25 +413,25 @@ void kpMainWindow::setImageSelectionTransparency (const kpImageSelectionTranspar
                << endl;
 #endif
 
-    kpToolWidgetOpaqueOrTransparent *oot = m_toolToolBar->toolWidgetOpaqueOrTransparent ();
+    kpToolWidgetOpaqueOrTransparent *oot = d->toolToolBar->toolWidgetOpaqueOrTransparent ();
     Q_ASSERT (oot);
 
-    m_settingImageSelectionTransparency++;
+    d->settingImageSelectionTransparency++;
 
     oot->setOpaque (transparency.isOpaque ());
     if (transparency.isTransparent () || forceColorChange)
     {
-        m_colorToolBar->setColor (1, transparency.transparentColor ());
-        m_colorToolBar->setColorSimilarity (transparency.colorSimilarity ());
+        d->colorToolBar->setColor (1, transparency.transparentColor ());
+        d->colorToolBar->setColorSimilarity (transparency.colorSimilarity ());
     }
 
-    m_settingImageSelectionTransparency--;
+    d->settingImageSelectionTransparency--;
 }
 
 // public
 int kpMainWindow::settingImageSelectionTransparency () const
 {
-    return m_settingImageSelectionTransparency;
+    return d->settingImageSelectionTransparency;
 }
 
 
@@ -442,7 +442,7 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
     kDebug () << "kpMainWindow::slotToolSelected (" << tool << ")" << endl;
 #endif
 
-    kpTool *previousTool = m_toolToolBar ? m_toolToolBar->previousTool () : 0;
+    kpTool *previousTool = d->toolToolBar ? d->toolToolBar->previousTool () : 0;
 
     if (previousTool)
     {
@@ -460,13 +460,13 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
         disconnect (previousTool, SIGNAL (userShapeSizeChanged (const QSize &)),
                     this, SLOT (recalculateStatusBarShape ()));
 
-        disconnect (m_colorToolBar, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
+        disconnect (d->colorToolBar, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
                     previousTool, SLOT (slotColorsSwappedInternal (const kpColor &, const kpColor &)));
-        disconnect (m_colorToolBar, SIGNAL (foregroundColorChanged (const kpColor &)),
+        disconnect (d->colorToolBar, SIGNAL (foregroundColorChanged (const kpColor &)),
                     previousTool, SLOT (slotForegroundColorChangedInternal (const kpColor &)));
-        disconnect (m_colorToolBar, SIGNAL (backgroundColorChanged (const kpColor &)),
+        disconnect (d->colorToolBar, SIGNAL (backgroundColorChanged (const kpColor &)),
                     previousTool, SLOT (slotBackgroundColorChangedInternal (const kpColor &)));
-        disconnect (m_colorToolBar, SIGNAL (colorSimilarityChanged (double, int)),
+        disconnect (d->colorToolBar, SIGNAL (colorSimilarityChanged (double, int)),
                     previousTool, SLOT (slotColorSimilarityChangedInternal (double, int)));
     }
 
@@ -487,13 +487,13 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
                  this, SLOT (recalculateStatusBarShape ()));
         recalculateStatusBar ();
 
-        connect (m_colorToolBar, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
+        connect (d->colorToolBar, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
                  tool, SLOT (slotColorsSwappedInternal (const kpColor &, const kpColor &)));
-        connect (m_colorToolBar, SIGNAL (foregroundColorChanged (const kpColor &)),
+        connect (d->colorToolBar, SIGNAL (foregroundColorChanged (const kpColor &)),
                  tool, SLOT (slotForegroundColorChangedInternal (const kpColor &)));
-        connect (m_colorToolBar, SIGNAL (backgroundColorChanged (const kpColor &)),
+        connect (d->colorToolBar, SIGNAL (backgroundColorChanged (const kpColor &)),
                  tool, SLOT (slotBackgroundColorChangedInternal (const kpColor &)));
-        connect (m_colorToolBar, SIGNAL (colorSimilarityChanged (double, int)),
+        connect (d->colorToolBar, SIGNAL (colorSimilarityChanged (double, int)),
                  tool, SLOT (slotColorSimilarityChangedInternal (double, int)));
 
 
@@ -510,7 +510,7 @@ void kpMainWindow::readLastTool ()
 {
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupTools);
 
-    m_lastToolNumber = cfg.readEntry (kpSettingLastTool, -1);
+    d->lastToolNumber = cfg.readEntry (kpSettingLastTool, -1);
 }
 
 
@@ -518,8 +518,8 @@ void kpMainWindow::readLastTool ()
 int kpMainWindow::toolNumber () const
 {
     int number = 0;
-    for (QList <kpTool *>::const_iterator it = m_tools.begin ();
-         it != m_tools.end ();
+    for (QList <kpTool *>::const_iterator it = d->tools.begin ();
+         it != d->tools.end ();
          it++)
     {
         if (*it == tool ())
@@ -535,7 +535,7 @@ int kpMainWindow::toolNumber () const
 void kpMainWindow::saveLastTool ()
 {
     int number = toolNumber ();
-    if (number < 0 || number >= (int) m_tools.count ())
+    if (number < 0 || number >= (int) d->tools.count ())
         return;
 
 
@@ -549,8 +549,8 @@ void kpMainWindow::saveLastTool ()
 // private
 bool kpMainWindow::maybeDragScrollingMainView () const
 {
-    return (tool () && m_mainView &&
-            tool ()->viewUnderStartPoint () == m_mainView);
+    return (tool () && d->mainView &&
+            tool ()->viewUnderStartPoint () == d->mainView);
 }
 
 // private slot
@@ -567,7 +567,7 @@ bool kpMainWindow::slotDragScroll (const QPoint &docPoint,
 
     if (maybeDragScrollingMainView ())
     {
-        return m_scrollView->beginDragScroll (docPoint, docLastPoint, zoomLevel, scrolled);
+        return d->scrollView->beginDragScroll (docPoint, docLastPoint, zoomLevel, scrolled);
     }
     else
     {
@@ -579,7 +579,7 @@ bool kpMainWindow::slotDragScroll (const QPoint &docPoint,
 bool kpMainWindow::slotEndDragScroll ()
 {
     // (harmless if haven't started drag scroll)
-    return m_scrollView->endDragScroll ();
+    return d->scrollView->endDragScroll ();
 }
 
 
@@ -609,18 +609,18 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
 {
 #define DOC_RESIZE_COMPLETED()           \
 {                                        \
-    m_docResizeToBeCompleted = false;    \
+    d->docResizeToBeCompleted = false;    \
     recalculateStatusBar ();             \
 }
 
     // Prevent statusbar updates
-    m_docResizeToBeCompleted = true;
+    d->docResizeToBeCompleted = true;
 
-    m_docResizeWidth = (size.width () > 0 ? size.width () : 1),
-    m_docResizeHeight = (size.height () > 0 ? size.height () : 1);
+    d->docResizeWidth = (size.width () > 0 ? size.width () : 1),
+    d->docResizeHeight = (size.height () > 0 ? size.height () : 1);
 
-    if (m_docResizeWidth == m_document->width () &&
-        m_docResizeHeight == m_document->height ())
+    if (d->docResizeWidth == d->document->width () &&
+        d->docResizeHeight == d->document->height ())
     {
         DOC_RESIZE_COMPLETED ();
         return;
@@ -633,9 +633,9 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
     setStatusBarShapeSize ();
 
 
-    if (kpTool::warnIfBigImageSize (m_document->width (),
-            m_document->height (),
-            m_docResizeWidth, m_docResizeHeight,
+    if (kpTool::warnIfBigImageSize (d->document->width (),
+            d->document->height (),
+            d->docResizeWidth, d->docResizeHeight,
             i18n ("<qt><p>Resizing the image to"
                     " %1x%2 may take a substantial amount of memory."
                     " This can reduce system"
@@ -644,20 +644,20 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
 
                     "<p>Are you sure want to resize the"
                     " image?</p></qt>",
-                  m_docResizeWidth,
-                  m_docResizeHeight),
+                  d->docResizeWidth,
+                  d->docResizeHeight),
             i18n ("Resize Image?"),
             i18n ("R&esize Image"),
             this))
     {
-        m_commandHistory->addCommand (
+        d->commandHistory->addCommand (
             new kpTransformResizeScaleCommand (
                 false/*doc, not sel*/,
-                m_docResizeWidth, m_docResizeHeight,
+                d->docResizeWidth, d->docResizeHeight,
                 kpTransformResizeScaleCommand::Resize,
                 commandEnvironment ()));
 
-        saveDefaultDocSize (QSize (m_docResizeWidth, m_docResizeHeight));
+        saveDefaultDocSize (QSize (d->docResizeWidth, d->docResizeHeight));
     }
 
 
@@ -671,13 +671,13 @@ void kpMainWindow::slotDocResizeMessageChanged (const QString &string)
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotDocResizeMessageChanged(" << string
-               << ") docResizeToBeCompleted=" << m_docResizeToBeCompleted
+               << ") docResizeToBeCompleted=" << d->docResizeToBeCompleted
                << endl;
 #else
     (void) string;
 #endif
 
-    if (m_docResizeToBeCompleted)
+    if (d->docResizeToBeCompleted)
         return;
 
     recalculateStatusBarMessage ();
@@ -687,20 +687,20 @@ void kpMainWindow::slotDocResizeMessageChanged (const QString &string)
 // private slot
 void kpMainWindow::slotActionPrevToolOptionGroup1 ()
 {
-    if (!m_toolToolBar->shownToolWidget (0))
+    if (!d->toolToolBar->shownToolWidget (0))
         return;
 
-    m_toolToolBar->shownToolWidget (0)->selectPreviousOption ();
+    d->toolToolBar->shownToolWidget (0)->selectPreviousOption ();
     updateToolOptionPrevNextActionsEnabled ();
 }
 
 // private slot
 void kpMainWindow::slotActionNextToolOptionGroup1 ()
 {
-    if (!m_toolToolBar->shownToolWidget (0))
+    if (!d->toolToolBar->shownToolWidget (0))
         return;
 
-    m_toolToolBar->shownToolWidget (0)->selectNextOption ();
+    d->toolToolBar->shownToolWidget (0)->selectNextOption ();
     updateToolOptionPrevNextActionsEnabled ();
 }
 
@@ -708,20 +708,20 @@ void kpMainWindow::slotActionNextToolOptionGroup1 ()
 // private slot
 void kpMainWindow::slotActionPrevToolOptionGroup2 ()
 {
-    if (!m_toolToolBar->shownToolWidget (1))
+    if (!d->toolToolBar->shownToolWidget (1))
         return;
 
-    m_toolToolBar->shownToolWidget (1)->selectPreviousOption ();
+    d->toolToolBar->shownToolWidget (1)->selectPreviousOption ();
     updateToolOptionPrevNextActionsEnabled ();
 }
 
 // private slot
 void kpMainWindow::slotActionNextToolOptionGroup2 ()
 {
-    if (!m_toolToolBar->shownToolWidget (1))
+    if (!d->toolToolBar->shownToolWidget (1))
         return;
 
-    m_toolToolBar->shownToolWidget (1)->selectNextOption ();
+    d->toolToolBar->shownToolWidget (1)->selectNextOption ();
     updateToolOptionPrevNextActionsEnabled ();
 }
 
@@ -734,7 +734,7 @@ void kpMainWindow::slotActionDrawOpaqueToggled ()
 #endif
     // ("kpToolWidgetBase::" is to access one overload shadowed by the override
     //  of the other overload)
-    m_toolToolBar->toolWidgetOpaqueOrTransparent ()->kpToolWidgetBase::setSelected (
+    d->toolToolBar->toolWidgetOpaqueOrTransparent ()->kpToolWidgetBase::setSelected (
         (d->actionDrawOpaque->isChecked () ?
             0/*row 0 = opaque*/ :
             1/*row 1 = transparent*/),
@@ -747,7 +747,7 @@ void kpMainWindow::slotActionDrawColorSimilarity ()
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotActionDrawColorSimilarity()" << endl;
 #endif
-    m_colorToolBar->openColorSimilarityDialog ();
+    d->colorToolBar->openColorSimilarityDialog ();
 }
 
 
@@ -757,13 +757,13 @@ void kpMainWindow::slotActionDrawColorSimilarity ()
 #define SLOT_TOOL(toolName)                       \
 void kpMainWindow::slotTool##toolName ()          \
 {                                                 \
-    if (!m_toolToolBar)                           \
+    if (!d->toolToolBar)                           \
         return;                                   \
                                                   \
-    if (tool () == m_tool##toolName)              \
+    if (tool () == d->tool##toolName)              \
         return;                                   \
                                                   \
-    m_toolToolBar->selectTool (m_tool##toolName); \
+    d->toolToolBar->selectTool (d->tool##toolName); \
 }
 
 SLOT_TOOL (Spraycan)

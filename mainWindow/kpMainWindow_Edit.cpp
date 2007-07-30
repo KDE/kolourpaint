@@ -27,6 +27,7 @@
 
 
 #include <kpMainWindow.h>
+#include <kpMainWindowPrivate.h>
 
 #include <qapplication.h>
 #include <qclipboard.h>
@@ -103,44 +104,44 @@ void kpMainWindow::setupEditMenuActions ()
 
     // Undo/Redo
     // CONFIG: need GUI
-    m_commandHistory = new kpCommandHistory (true/*read config*/, this);
+    d->commandHistory = new kpCommandHistory (true/*read config*/, this);
 
-    if (m_configFirstTime)
+    if (d->configFirstTime)
     {
         // (so that cfg-file-editing user can modify in the meantime)
-        m_commandHistory->writeConfig ();
+        d->commandHistory->writeConfig ();
     }
 
 
-    m_actionCut = KStandardAction::cut (this, SLOT (slotCut ()), ac);
-    m_actionCopy = KStandardAction::copy (this, SLOT (slotCopy ()), ac);
-    m_actionPaste = KStandardAction::paste (this, SLOT (slotPaste ()), ac);
-    m_actionPasteInNewWindow = ac->addAction ("edit_paste_in_new_window");
-    m_actionPasteInNewWindow->setText (i18n ("Paste in &New Window"));
-    connect (m_actionPasteInNewWindow, SIGNAL (triggered (bool)),
+    d->actionCut = KStandardAction::cut (this, SLOT (slotCut ()), ac);
+    d->actionCopy = KStandardAction::copy (this, SLOT (slotCopy ()), ac);
+    d->actionPaste = KStandardAction::paste (this, SLOT (slotPaste ()), ac);
+    d->actionPasteInNewWindow = ac->addAction ("edit_paste_in_new_window");
+    d->actionPasteInNewWindow->setText (i18n ("Paste in &New Window"));
+    connect (d->actionPasteInNewWindow, SIGNAL (triggered (bool)),
         SLOT (slotPasteInNewWindow ()));
-    m_actionPasteInNewWindow->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
+    d->actionPasteInNewWindow->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
 
-    //m_actionDelete = KStandardAction::clear (this, SLOT (slotDelete ()), ac);
-    m_actionDelete = ac->addAction ("edit_clear");
-    m_actionDelete->setText (i18n ("&Delete Selection"));
-    connect (m_actionDelete, SIGNAL (triggered (bool)), SLOT (slotDelete ()));
+    //d->actionDelete = KStandardAction::clear (this, SLOT (slotDelete ()), ac);
+    d->actionDelete = ac->addAction ("edit_clear");
+    d->actionDelete->setText (i18n ("&Delete Selection"));
+    connect (d->actionDelete, SIGNAL (triggered (bool)), SLOT (slotDelete ()));
 
-    m_actionSelectAll = KStandardAction::selectAll (this, SLOT (slotSelectAll ()), ac);
-    m_actionDeselect = KStandardAction::deselect (this, SLOT (slotDeselect ()), ac);
+    d->actionSelectAll = KStandardAction::selectAll (this, SLOT (slotSelectAll ()), ac);
+    d->actionDeselect = KStandardAction::deselect (this, SLOT (slotDeselect ()), ac);
 
 
-    m_actionCopyToFile = ac->addAction ("edit_copy_to_file");
-    m_actionCopyToFile->setText (i18n ("C&opy to File..."));
-    connect (m_actionCopyToFile, SIGNAL (triggered (bool)),
+    d->actionCopyToFile = ac->addAction ("edit_copy_to_file");
+    d->actionCopyToFile->setText (i18n ("C&opy to File..."));
+    connect (d->actionCopyToFile, SIGNAL (triggered (bool)),
         SLOT (slotCopyToFile ()));
-    m_actionPasteFromFile = ac->addAction ("edit_paste_from_file");
-    m_actionPasteFromFile->setText (i18n ("Paste &From File..."));
-    connect (m_actionPasteFromFile, SIGNAL (triggered (bool)),
+    d->actionPasteFromFile = ac->addAction ("edit_paste_frod->file");
+    d->actionPasteFromFile->setText (i18n ("Paste &From File..."));
+    connect (d->actionPasteFromFile, SIGNAL (triggered (bool)),
         SLOT (slotPasteFromFile ()));
 
 
-    m_editMenuDocumentActionsEnabled = false;
+    d->editMenuDocumentActionsEnabled = false;
     enableEditMenuDocumentActions (false);
 
     // Paste should always be enabled, as long as there is something paste
@@ -153,20 +154,20 @@ void kpMainWindow::setupEditMenuActions ()
 // private
 void kpMainWindow::enableEditMenuDocumentActions (bool enable)
 {
-    // m_actionCut
-    // m_actionCopy
-    // m_actionPaste
-    // m_actionPasteInNewWindow
+    // d->actionCut
+    // d->actionCopy
+    // d->actionPaste
+    // d->actionPasteInNewWindow
 
-    // m_actionDelete
+    // d->actionDelete
 
-    m_actionSelectAll->setEnabled (enable);
-    // m_actionDeselect
+    d->actionSelectAll->setEnabled (enable);
+    // d->actionDeselect
 
-    m_editMenuDocumentActionsEnabled = enable;
+    d->editMenuDocumentActionsEnabled = enable;
 
-    // m_actionCopyToFile
-    m_actionPasteFromFile->setEnabled (enable);
+    // d->actionCopyToFile
+    d->actionPasteFromFile->setEnabled (enable);
 }
 
 
@@ -184,10 +185,10 @@ void kpMainWindow::slotCut ()
     kDebug () << "kpMainWindow::slotCut() CALLED" << endl;
 #endif
 
-    if (!m_document || !m_document->selection ())
+    if (!d->document || !d->document->selection ())
     {
-        kError () << "kpMainWindow::slotCut () doc=" << m_document
-                   << " sel=" << (m_document ? m_document->selection () : 0)
+        kError () << "kpMainWindow::slotCut () doc=" << d->document
+                   << " sel=" << (d->document ? d->document->selection () : 0)
                    << endl;
         return;
     }
@@ -212,10 +213,10 @@ void kpMainWindow::slotCopy ()
     kDebug () << "kpMainWindow::slotCopy() CALLED" << endl;
 #endif
 
-    if (!m_document || !m_document->selection ())
+    if (!d->document || !d->document->selection ())
     {
-        kError () << "kpMainWindow::slotCopy () doc=" << m_document
-                   << " sel=" << (m_document ? m_document->selection () : 0)
+        kError () << "kpMainWindow::slotCopy () doc=" << d->document
+                   << " sel=" << (d->document ? d->document->selection () : 0)
                    << endl;
         return;
     }
@@ -226,7 +227,7 @@ void kpMainWindow::slotCopy ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpAbstractSelection *sel = m_document->selection ()->clone ();
+    kpAbstractSelection *sel = d->document->selection ()->clone ();
 
     if (dynamic_cast <kpTextSelection *> (sel))
     {
@@ -268,7 +269,7 @@ void kpMainWindow::slotCopy ()
         imageSel->setTransparency (kpImageSelectionTransparency ());
 
         if (!imageSel->hasContent ())
-            imageSel->setBaseImage (m_document->getSelectedBaseImage ());
+            imageSel->setBaseImage (d->document->getSelectedBaseImage ());
         QApplication::clipboard ()->setData (new kpSelectionDrag (*imageSel),
                                              QClipboard::Clipboard);
     }
@@ -309,8 +310,8 @@ void kpMainWindow::slotEnablePaste ()
     #endif
     }
 
-    m_actionPasteInNewWindow->setEnabled (shouldEnable);
-    m_actionPaste->setEnabled (shouldEnable);
+    d->actionPasteInNewWindow->setEnabled (shouldEnable);
+    d->actionPaste->setEnabled (shouldEnable);
 }
 
 
@@ -323,7 +324,7 @@ QRect kpMainWindow::calcUsefulPasteRect (int pixmapWidth, int pixmapHeight)
                << ")"
                << endl;
 #endif
-    if (!m_document)
+    if (!d->document)
     {
         kError () << "kpMainWindow::calcUsefulPasteRect() without doc" << endl;
         return QRect ();
@@ -331,15 +332,15 @@ QRect kpMainWindow::calcUsefulPasteRect (int pixmapWidth, int pixmapHeight)
 
     // TODO: 1st choice is to paste sel near but not overlapping last deselect point
 
-    if (m_mainView && m_scrollView)
+    if (d->mainView && d->scrollView)
     {
-        const QPoint viewTopLeft (m_scrollView->contentsX (),
-                                  m_scrollView->contentsY ());
+        const QPoint viewTopLeft (d->scrollView->contentsX (),
+                                  d->scrollView->contentsY ());
 
-        const QPoint docTopLeft = m_mainView->transformViewToDoc (viewTopLeft);
+        const QPoint docTopLeft = d->mainView->transformViewToDoc (viewTopLeft);
 
-        if ((docTopLeft.x () + pixmapWidth <= m_document->width () &&
-             docTopLeft.y () + pixmapHeight <= m_document->height ()) ||
+        if ((docTopLeft.x () + pixmapWidth <= d->document->width () &&
+             docTopLeft.y () + pixmapHeight <= d->document->height ()) ||
             pixmapWidth <= docTopLeft.x () ||
             pixmapHeight <= docTopLeft.y ())
         {
@@ -373,7 +374,7 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
     // Make sure we've got a document (esp. with File/Close)
     //
 
-    if (!m_document)
+    if (!d->document)
     {
         kpDocument *newDoc = new kpDocument (
             sel.width (), sel.height (), documentEnvironment ());
@@ -391,7 +392,7 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
         dynamic_cast <const kpAbstractImageSelection *> (&sel);
     if (imageSel && imageSel->hasContent () && imageSel->transparency ().isTransparent ())
     {
-        m_colorToolBar->flashColorSimilarityToolBarItem ();
+        d->colorToolBar->flashColorSimilarityToolBarItem ();
     }
 
     kpAbstractSelection *selInUsefulPos = sel.clone ();
@@ -412,14 +413,14 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
     //
     // No annoying dialog necessary.
     //
-    if (sel.width () > m_document->width () ||
-        sel.height () > m_document->height ())
+    if (sel.width () > d->document->width () ||
+        sel.height () > d->document->height ())
     {
-        m_commandHistory->addCommand (
+        d->commandHistory->addCommand (
             new kpTransformResizeScaleCommand (
                 false/*act on doc, not sel*/,
-                qMax (sel.width (), m_document->width ()),
-                qMax (sel.height (), m_document->height ()),
+                qMax (sel.width (), d->document->width ()),
+                qMax (sel.height (), d->document->height ()),
                 kpTransformResizeScaleCommand::Resize,
                 commandEnvironment ()));
     }
@@ -464,8 +465,8 @@ void kpMainWindow::pasteText (const QString &text,
 
 
     if (!forceNewTextSelection &&
-        m_document && m_document->textSelection () &&
-        m_commandHistory && m_viewManager)
+        d->document && d->document->textSelection () &&
+        d->commandHistory && d->viewManager)
     {
     #if DEBUG_KP_MAIN_WINDOW && 1
         kDebug () << "\treusing existing Text Selection" << endl;
@@ -481,8 +482,8 @@ void kpMainWindow::pasteText (const QString &text,
                 macroCmd->addCommand (
                     new kpToolTextEnterCommand (
                         QString::null/*uninteresting child of macroCmd*/,
-                        m_viewManager->textCursorRow (),
-                        m_viewManager->textCursorCol (),
+                        d->viewManager->textCursorRow (),
+                        d->viewManager->textCursorCol (),
                         kpToolTextEnterCommand::AddEnterNow,
                         commandEnvironment ()));
             }
@@ -490,13 +491,13 @@ void kpMainWindow::pasteText (const QString &text,
             macroCmd->addCommand (
                 new kpToolTextInsertCommand (
                     QString::null/*uninteresting child of macroCmd*/,
-                    m_viewManager->textCursorRow (),
-                    m_viewManager->textCursorCol (),
+                    d->viewManager->textCursorRow (),
+                    d->viewManager->textCursorCol (),
                     textLines [i],
                     commandEnvironment ()));
         }
 
-        m_commandHistory->addCommand (macroCmd, false/*no exec*/);
+        d->commandHistory->addCommand (macroCmd, false/*no exec*/);
     }
     else
     {
@@ -565,16 +566,16 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
         tool ()->endShapeInternal ();
 
 
-    if (m_document &&
-        m_document->textSelection () &&
-        m_document->textSelection ()->pointIsInTextArea (point))
+    if (d->document &&
+        d->document->textSelection () &&
+        d->document->textSelection ()->pointIsInTextArea (point))
     {
-        kpTextSelection *textSel = m_document->textSelection ();
+        kpTextSelection *textSel = d->document->textSelection ();
 
         const int row = textSel->closestTextRowForPoint (point);
         const int col = textSel->closestTextColForPoint (point);
 
-        m_viewManager->setTextCursorPosition (row, col);
+        d->viewManager->setTextCursorPosition (row, col);
 
         pasteText (text);
     }
@@ -707,7 +708,7 @@ void kpMainWindow::slotDelete ()
 #if DEBUG_KP_MAIN_WINDOW && 1
     kDebug () << "kpMainWindow::slotDelete() CALLED" << endl;
 #endif
-    if (!m_actionDelete->isEnabled ())
+    if (!d->actionDelete->isEnabled ())
     {
     #if DEBUG_KP_MAIN_WINDOW && 1
         kDebug () << "\taction not enabled - was probably called from kpTool::keyPressEvent()" << endl;
@@ -715,10 +716,10 @@ void kpMainWindow::slotDelete ()
         return;
     }
 
-    if (!m_document || !m_document->selection ())
+    if (!d->document || !d->document->selection ())
     {
-        kError () << "kpMainWindow::slotDelete () doc=" << m_document
-                   << " sel=" << (m_document ? m_document->selection () : 0)
+        kError () << "kpMainWindow::slotDelete () doc=" << d->document
+                   << " sel=" << (d->document ? d->document->selection () : 0)
                    << endl;
         return;
     }
@@ -727,7 +728,7 @@ void kpMainWindow::slotDelete ()
         tool ()->endShapeInternal ();
 
     addImageOrSelectionCommand (new kpToolSelectionDestroyCommand (
-        m_document->textSelection () ?
+        d->document->textSelection () ?
             i18n ("Text: Delete Box") :  // not to be confused with i18n ("Text: Delete")
             i18n ("Selection: Delete"),
         false/*no push onto doc*/,
@@ -741,7 +742,7 @@ void kpMainWindow::slotSelectAll ()
 #if DEBUG_KP_MAIN_WINDOW && 1
     kDebug () << "kpMainWindow::slotSelectAll() CALLED" << endl;
 #endif
-    if (!m_document)
+    if (!d->document)
     {
         kError () << "kpMainWindow::slotSelectAll() without doc" << endl;
         return;
@@ -750,12 +751,12 @@ void kpMainWindow::slotSelectAll ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    if (m_document->selection ())
+    if (d->document->selection ())
         slotDeselect ();
 
     // just the border - don't actually pull pixmap from doc yet
-    m_document->setSelection (
-        kpRectangularImageSelection (m_document->rect (),
+    d->document->setSelection (
+        kpRectangularImageSelection (d->document->rect (),
             imageSelectionTransparency ()));
 
     if (tool ())
@@ -774,7 +775,7 @@ void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
 #endif
 
 
-    kpAbstractSelection *sel = m_document->selection ();
+    kpAbstractSelection *sel = d->document->selection ();
 
 #if DEBUG_KP_MAIN_WINDOW && 1
     kDebug () << "\tsel=" << sel << endl;
@@ -789,12 +790,12 @@ void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
         #if DEBUG_KP_MAIN_WINDOW && 1
             kDebug () << "\tjust a fresh border - was nop - delete" << endl;
         #endif
-            m_document->selectionDelete ();
+            d->document->selectionDelete ();
             if (tool ())
                 tool ()->somethingBelowTheCursorChanged ();
 
             if (cmd)
-                m_commandHistory->addCommand (cmd);
+                d->commandHistory->addCommand (cmd);
         }
         else
         {
@@ -814,16 +815,16 @@ void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
                     commandEnvironment ());
                 macroCmd->addCommand (deselectCommand);
                 macroCmd->addCommand (cmd);
-                m_commandHistory->addCommand (macroCmd);
+                d->commandHistory->addCommand (macroCmd);
             }
             else
-                m_commandHistory->addCommand (deselectCommand);
+                d->commandHistory->addCommand (deselectCommand);
         }
     }
     else
     {
         if (cmd)
-            m_commandHistory->addCommand (cmd);
+            d->commandHistory->addCommand (cmd);
     }
 }
 
@@ -834,10 +835,10 @@ void kpMainWindow::slotDeselect ()
 #if DEBUG_KP_MAIN_WINDOW && 1
     kDebug () << "kpMainWindow::slotDeselect() CALLED" << endl;
 #endif
-    if (!m_document || !m_document->selection ())
+    if (!d->document || !d->document->selection ())
     {
-        kError () << "kpMainWindow::slotDeselect() doc=" << m_document
-                   << " sel=" << (m_document ? m_document->selection () : 0)
+        kError () << "kpMainWindow::slotDeselect() doc=" << d->document
+                   << " sel=" << (d->document ? d->document->selection () : 0)
                    << endl;
         return;
     }
@@ -860,28 +861,28 @@ void kpMainWindow::slotCopyToFile ()
         tool ()->endShapeInternal ();
 
 
-    if (!m_document->selection ())
+    if (!d->document->selection ())
         return;
 
     kpImage imageToSave;
 
-    if (m_document->imageSelection ())
+    if (d->document->imageSelection ())
     {
-        kpAbstractImageSelection *imageSel = m_document->imageSelection ();
+        kpAbstractImageSelection *imageSel = d->document->imageSelection ();
         if (!imageSel->hasContent ())
         {
             // Not a floating selection - user has just selected a region;
             // haven't pulled it off yet so probably don't expect and can't
             // visualize selection transparency so give opaque, not transparent
             // pixmap.
-            imageToSave = m_document->getSelectedBaseImage ();
+            imageToSave = d->document->getSelectedBaseImage ();
         }
         else
             imageToSave = imageSel->transparentImage ();
     }
-    else if (m_document->textSelection ())
+    else if (d->document->textSelection ())
     {
-        imageToSave = m_document->textSelection ()->approximateImage ();
+        imageToSave = d->document->textSelection ()->approximateImage ();
     }
     else
         Q_ASSERT (!"Unknown selection type");
@@ -890,14 +891,14 @@ void kpMainWindow::slotCopyToFile ()
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
     KUrl chosenURL = askForSaveURL (i18n ("Copy to File"),
-                                    m_lastCopyToURL.url (),
+                                    d->lastCopyToURL.url (),
                                     imageToSave,
-                                    m_lastCopyToSaveOptions,
+                                    d->lastCopyToSaveOptions,
                                     kpDocumentMetaInfo (),
                                     kpSettingsGroupEditCopyTo,
                                     false/*allow remote files*/,
                                     &chosenSaveOptions,
-                                    m_copyToFirstTime,
+                                    d->copyToFirstTime,
                                     &allowOverwritePrompt,
                                     &allowLossyPrompt);
 
@@ -919,10 +920,10 @@ void kpMainWindow::slotCopyToFile ()
     addRecentURL (chosenURL);
 
 
-    m_lastCopyToURL = chosenURL;
-    m_lastCopyToSaveOptions = chosenSaveOptions;
+    d->lastCopyToURL = chosenURL;
+    d->lastCopyToSaveOptions = chosenSaveOptions;
 
-    m_copyToFirstTime = false;
+    d->copyToFirstTime = false;
 }
 
 // private slot
@@ -937,14 +938,14 @@ void kpMainWindow::slotPasteFromFile ()
 
 
     KUrl::List urls = askForOpenURLs (i18n ("Paste From File"),
-                                      m_lastPasteFromURL.url (),
+                                      d->lastPasteFromURL.url (),
                                       false/*only 1 URL*/);
 
     if (urls.count () != 1)
         return;
 
     KUrl url = urls.first ();
-    m_lastPasteFromURL = url;
+    d->lastPasteFromURL = url;
 
 
     QPixmap pixmap = kpDocument::getPixmapFromFile (url,

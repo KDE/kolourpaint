@@ -27,6 +27,7 @@
 
 
 #include <kpMainWindow.h>
+#include <kpMainWindowPrivate.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -54,38 +55,38 @@ void kpMainWindow::setupTextToolBarActions ()
 {
     KActionCollection *ac = actionCollection ();
 
-    m_actionTextFontFamily = ac->add<KFontAction> ("text_font_family");
-    m_actionTextFontFamily->setText (i18n ("Font Family"));
-    connect (m_actionTextFontFamily, SIGNAL(triggered (int)),
+    d->actionTextFontFamily = ac->add<KFontAction> ("text_font_family");
+    d->actionTextFontFamily->setText (i18n ("Font Family"));
+    connect (d->actionTextFontFamily, SIGNAL(triggered (int)),
              this, SLOT (slotTextFontFamilyChanged ()));
 
-    m_actionTextFontSize = ac->add<KFontSizeAction> ("text_font_size");
-    m_actionTextFontSize->setText (i18n ("Font Size"));
-    connect (m_actionTextFontSize, SIGNAL(fontSizeChanged (int)),
+    d->actionTextFontSize = ac->add<KFontSizeAction> ("text_font_size");
+    d->actionTextFontSize->setText (i18n ("Font Size"));
+    connect (d->actionTextFontSize, SIGNAL(fontSizeChanged (int)),
              this, SLOT (slotTextFontSizeChanged ()));
 
-    m_actionTextBold = ac->add<KToggleAction> ("text_bold");
-    m_actionTextBold->setIcon (KIcon ("format-text-bold"));
-    m_actionTextBold->setText (i18n ("Bold"));
-    connect (m_actionTextBold, SIGNAL (triggered (bool)),
+    d->actionTextBold = ac->add<KToggleAction> ("text_bold");
+    d->actionTextBold->setIcon (KIcon ("format-text-bold"));
+    d->actionTextBold->setText (i18n ("Bold"));
+    connect (d->actionTextBold, SIGNAL (triggered (bool)),
         SLOT (slotTextBoldChanged ()));
 
-    m_actionTextItalic = ac->add<KToggleAction> ("text_italic");
-    m_actionTextItalic->setIcon (KIcon ("format-text-italic"));
-    m_actionTextItalic->setText (i18n ("Italic"));
-    connect (m_actionTextItalic, SIGNAL (triggered (bool)),
+    d->actionTextItalic = ac->add<KToggleAction> ("text_italic");
+    d->actionTextItalic->setIcon (KIcon ("format-text-italic"));
+    d->actionTextItalic->setText (i18n ("Italic"));
+    connect (d->actionTextItalic, SIGNAL (triggered (bool)),
         SLOT (slotTextItalicChanged ()));
 
-    m_actionTextUnderline = ac->add<KToggleAction> ("text_underline");
-    m_actionTextUnderline->setIcon (KIcon ("format-text-underline"));
-    m_actionTextUnderline->setText (i18n ("Underline"));
-    connect (m_actionTextUnderline, SIGNAL (triggered (bool)),
+    d->actionTextUnderline = ac->add<KToggleAction> ("text_underline");
+    d->actionTextUnderline->setIcon (KIcon ("format-text-underline"));
+    d->actionTextUnderline->setText (i18n ("Underline"));
+    connect (d->actionTextUnderline, SIGNAL (triggered (bool)),
         SLOT (slotTextUnderlineChanged ()));
 
-    m_actionTextStrikeThru = ac->add<KToggleAction> ("text_strike_thru");
-    m_actionTextStrikeThru->setIcon (KIcon ("format-text-strikethrough"));
-    m_actionTextStrikeThru->setText (i18n ("Strike Through"));
-    connect (m_actionTextStrikeThru, SIGNAL (triggered (bool)),
+    d->actionTextStrikeThru = ac->add<KToggleAction> ("text_strike_thru");
+    d->actionTextStrikeThru->setIcon (KIcon ("format-text-strikethrough"));
+    d->actionTextStrikeThru->setText (i18n ("Strike Through"));
+    connect (d->actionTextStrikeThru, SIGNAL (triggered (bool)),
         SLOT (slotTextStrikeThruChanged ()));
 
 
@@ -100,15 +101,15 @@ void kpMainWindow::readAndApplyTextSettings ()
 {
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
 
-    m_actionTextFontFamily->setFont (cfg.readEntry (kpSettingFontFamily, QString::fromLatin1 ("Times")));
-    m_actionTextFontSize->setFontSize (cfg.readEntry (kpSettingFontSize, 14));
-    m_actionTextBold->setChecked (cfg.readEntry (kpSettingBold, false));
-    m_actionTextItalic->setChecked (cfg.readEntry (kpSettingItalic, false));
-    m_actionTextUnderline->setChecked (cfg.readEntry (kpSettingUnderline, false));
-    m_actionTextStrikeThru->setChecked (cfg.readEntry (kpSettingStrikeThru, false));
+    d->actionTextFontFamily->setFont (cfg.readEntry (kpSettingFontFamily, QString::fromLatin1 ("Times")));
+    d->actionTextFontSize->setFontSize (cfg.readEntry (kpSettingFontSize, 14));
+    d->actionTextBold->setChecked (cfg.readEntry (kpSettingBold, false));
+    d->actionTextItalic->setChecked (cfg.readEntry (kpSettingItalic, false));
+    d->actionTextUnderline->setChecked (cfg.readEntry (kpSettingUnderline, false));
+    d->actionTextStrikeThru->setChecked (cfg.readEntry (kpSettingStrikeThru, false));
 
-    m_textOldFontFamily = m_actionTextFontFamily->font ();
-    m_textOldFontSize = m_actionTextFontSize->fontSize ();
+    d->textOldFontFamily = d->actionTextFontFamily->font ();
+    d->textOldFontSize = d->actionTextFontSize->fontSize ();
 }
 
 
@@ -119,12 +120,12 @@ void kpMainWindow::enableTextToolBarActions (bool enable)
     kDebug () << "kpMainWindow::enableTextToolBarActions(" << enable << ")" << endl;
 #endif
 
-    m_actionTextFontFamily->setEnabled (enable);
-    m_actionTextFontSize->setEnabled (enable);
-    m_actionTextBold->setEnabled (enable);
-    m_actionTextItalic->setEnabled (enable);
-    m_actionTextUnderline->setEnabled (enable);
-    m_actionTextStrikeThru->setEnabled (enable);
+    d->actionTextFontFamily->setEnabled (enable);
+    d->actionTextFontSize->setEnabled (enable);
+    d->actionTextBold->setEnabled (enable);
+    d->actionTextItalic->setEnabled (enable);
+    d->actionTextUnderline->setEnabled (enable);
+    d->actionTextStrikeThru->setEnabled (enable);
 
     if (textToolBar ())
     {
@@ -141,31 +142,31 @@ void kpMainWindow::slotTextFontFamilyChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotTextFontFamilyChanged() alive="
-               << m_isFullyConstructed
+               << d->isFullyConstructed
                << " fontFamily="
-               << m_actionTextFontFamily->font ()
+               << d->actionTextFontFamily->font ()
                << endl;
 #endif
 
-    if (!m_isFullyConstructed)
+    if (!d->isFullyConstructed)
         return;
 
-    if (m_toolText && m_toolText->hasBegun ())
+    if (d->toolText && d->toolText->hasBegun ())
     {
-        m_toolText->slotFontFamilyChanged (m_actionTextFontFamily->font (),
-                                           m_textOldFontFamily);
+        d->toolText->slotFontFamilyChanged (d->actionTextFontFamily->font (),
+                                           d->textOldFontFamily);
     }
 
     // Since editable KSelectAction's steal focus from view, switch back to mainView
     // TODO: back to the last view
-    if (m_mainView)
-        m_mainView->setFocus ();
+    if (d->mainView)
+        d->mainView->setFocus ();
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
-    cfg.writeEntry (kpSettingFontFamily, m_actionTextFontFamily->font ());
+    cfg.writeEntry (kpSettingFontFamily, d->actionTextFontFamily->font ());
     cfg.sync ();
 
-    m_textOldFontFamily = m_actionTextFontFamily->font ();
+    d->textOldFontFamily = d->actionTextFontFamily->font ();
 }
 
 // private slot
@@ -173,31 +174,31 @@ void kpMainWindow::slotTextFontSizeChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotTextFontSizeChanged() alive="
-               << m_isFullyConstructed
+               << d->isFullyConstructed
                << " fontSize="
-               << m_actionTextFontSize->fontSize ()
+               << d->actionTextFontSize->fontSize ()
                << endl;
 #endif
 
-    if (!m_isFullyConstructed)
+    if (!d->isFullyConstructed)
         return;
 
-    if (m_toolText && m_toolText->hasBegun ())
+    if (d->toolText && d->toolText->hasBegun ())
     {
-        m_toolText->slotFontSizeChanged (m_actionTextFontSize->fontSize (),
-                                         m_textOldFontSize);
+        d->toolText->slotFontSizeChanged (d->actionTextFontSize->fontSize (),
+                                         d->textOldFontSize);
     }
 
     // Since editable KSelectAction's steal focus from view, switch back to mainView
     // TODO: back to the last view
-    if (m_mainView)
-        m_mainView->setFocus ();
+    if (d->mainView)
+        d->mainView->setFocus ();
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
-    cfg.writeEntry (kpSettingFontSize, m_actionTextFontSize->fontSize ());
+    cfg.writeEntry (kpSettingFontSize, d->actionTextFontSize->fontSize ());
     cfg.sync ();
 
-    m_textOldFontSize = m_actionTextFontSize->fontSize ();
+    d->textOldFontSize = d->actionTextFontSize->fontSize ();
 }
 
 // private slot
@@ -205,20 +206,20 @@ void kpMainWindow::slotTextBoldChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotTextFontBoldChanged() alive="
-               << m_isFullyConstructed
+               << d->isFullyConstructed
                << " bold="
-               << m_actionTextBold->isChecked ()
+               << d->actionTextBold->isChecked ()
                << endl;
 #endif
 
-    if (!m_isFullyConstructed)
+    if (!d->isFullyConstructed)
         return;
 
-    if (m_toolText && m_toolText->hasBegun ())
-        m_toolText->slotBoldChanged (m_actionTextBold->isChecked ());
+    if (d->toolText && d->toolText->hasBegun ())
+        d->toolText->slotBoldChanged (d->actionTextBold->isChecked ());
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
-    cfg.writeEntry (kpSettingBold, m_actionTextBold->isChecked ());
+    cfg.writeEntry (kpSettingBold, d->actionTextBold->isChecked ());
     cfg.sync ();
 }
 
@@ -227,20 +228,20 @@ void kpMainWindow::slotTextItalicChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotTextFontItalicChanged() alive="
-               << m_isFullyConstructed
+               << d->isFullyConstructed
                << " bold="
-               << m_actionTextItalic->isChecked ()
+               << d->actionTextItalic->isChecked ()
                << endl;
 #endif
 
-    if (!m_isFullyConstructed)
+    if (!d->isFullyConstructed)
         return;
 
-    if (m_toolText && m_toolText->hasBegun ())
-        m_toolText->slotItalicChanged (m_actionTextItalic->isChecked ());
+    if (d->toolText && d->toolText->hasBegun ())
+        d->toolText->slotItalicChanged (d->actionTextItalic->isChecked ());
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
-    cfg.writeEntry (kpSettingItalic, m_actionTextItalic->isChecked ());
+    cfg.writeEntry (kpSettingItalic, d->actionTextItalic->isChecked ());
     cfg.sync ();
 }
 
@@ -249,20 +250,20 @@ void kpMainWindow::slotTextUnderlineChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotTextFontUnderlineChanged() alive="
-               << m_isFullyConstructed
+               << d->isFullyConstructed
                << " underline="
-               << m_actionTextUnderline->isChecked ()
+               << d->actionTextUnderline->isChecked ()
                << endl;
 #endif
 
-    if (!m_isFullyConstructed)
+    if (!d->isFullyConstructed)
         return;
 
-    if (m_toolText && m_toolText->hasBegun ())
-        m_toolText->slotUnderlineChanged (m_actionTextUnderline->isChecked ());
+    if (d->toolText && d->toolText->hasBegun ())
+        d->toolText->slotUnderlineChanged (d->actionTextUnderline->isChecked ());
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
-    cfg.writeEntry (kpSettingUnderline, m_actionTextUnderline->isChecked ());
+    cfg.writeEntry (kpSettingUnderline, d->actionTextUnderline->isChecked ());
     cfg.sync ();
 }
 
@@ -271,20 +272,20 @@ void kpMainWindow::slotTextStrikeThruChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotTextStrikeThruChanged() alive="
-               << m_isFullyConstructed
+               << d->isFullyConstructed
                << " strikeThru="
-               << m_actionTextStrikeThru->isChecked ()
+               << d->actionTextStrikeThru->isChecked ()
                << endl;
 #endif
 
-    if (!m_isFullyConstructed)
+    if (!d->isFullyConstructed)
         return;
 
-    if (m_toolText && m_toolText->hasBegun ())
-        m_toolText->slotStrikeThruChanged (m_actionTextStrikeThru->isChecked ());
+    if (d->toolText && d->toolText->hasBegun ())
+        d->toolText->slotStrikeThruChanged (d->actionTextStrikeThru->isChecked ());
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
-    cfg.writeEntry (kpSettingStrikeThru, m_actionTextStrikeThru->isChecked ());
+    cfg.writeEntry (kpSettingStrikeThru, d->actionTextStrikeThru->isChecked ());
     cfg.sync ();
 }
 
@@ -297,10 +298,10 @@ KToolBar *kpMainWindow::textToolBar ()
 
 bool kpMainWindow::isTextStyleBackgroundOpaque () const
 {
-    if (m_toolToolBar)
+    if (d->toolToolBar)
     {
         kpToolWidgetOpaqueOrTransparent *oot =
-            m_toolToolBar->toolWidgetOpaqueOrTransparent ();
+            d->toolToolBar->toolWidgetOpaqueOrTransparent ();
 
         if (oot)
         {
@@ -314,14 +315,14 @@ bool kpMainWindow::isTextStyleBackgroundOpaque () const
 // public
 kpTextStyle kpMainWindow::textStyle () const
 {
-    return kpTextStyle (m_actionTextFontFamily->font (),
-                        m_actionTextFontSize->fontSize (),
-                        m_actionTextBold->isChecked (),
-                        m_actionTextItalic->isChecked (),
-                        m_actionTextUnderline->isChecked (),
-                        m_actionTextStrikeThru->isChecked (),
-                        m_colorToolBar ? m_colorToolBar->foregroundColor () : kpColor::Invalid,
-                        m_colorToolBar ? m_colorToolBar->backgroundColor () : kpColor::Invalid,
+    return kpTextStyle (d->actionTextFontFamily->font (),
+                        d->actionTextFontSize->fontSize (),
+                        d->actionTextBold->isChecked (),
+                        d->actionTextItalic->isChecked (),
+                        d->actionTextUnderline->isChecked (),
+                        d->actionTextStrikeThru->isChecked (),
+                        d->colorToolBar ? d->colorToolBar->foregroundColor () : kpColor::Invalid,
+                        d->colorToolBar ? d->colorToolBar->backgroundColor () : kpColor::Invalid,
                         isTextStyleBackgroundOpaque ());
 }
 
@@ -332,63 +333,63 @@ void kpMainWindow::setTextStyle (const kpTextStyle &textStyle_)
     kDebug () << "kpMainWindow::setTextStyle()" << endl;
 #endif
 
-    m_settingTextStyle++;
+    d->settingTextStyle++;
 
 
-    if (textStyle_.fontFamily () != m_actionTextFontFamily->font ())
+    if (textStyle_.fontFamily () != d->actionTextFontFamily->font ())
     {
-        m_actionTextFontFamily->setFont (textStyle_.fontFamily ());
+        d->actionTextFontFamily->setFont (textStyle_.fontFamily ());
         slotTextFontFamilyChanged ();
     }
 
-    if (textStyle_.fontSize () != m_actionTextFontSize->fontSize ())
+    if (textStyle_.fontSize () != d->actionTextFontSize->fontSize ())
     {
-        m_actionTextFontSize->setFontSize (textStyle_.fontSize ());
+        d->actionTextFontSize->setFontSize (textStyle_.fontSize ());
         slotTextFontSizeChanged ();
     }
 
-    if (textStyle_.isBold () != m_actionTextBold->isChecked ())
+    if (textStyle_.isBold () != d->actionTextBold->isChecked ())
     {
-        m_actionTextBold->setChecked (textStyle_.isBold ());
+        d->actionTextBold->setChecked (textStyle_.isBold ());
         slotTextBoldChanged ();
     }
 
-    if (textStyle_.isItalic () != m_actionTextItalic->isChecked ())
+    if (textStyle_.isItalic () != d->actionTextItalic->isChecked ())
     {
-        m_actionTextItalic->setChecked (textStyle_.isItalic ());
+        d->actionTextItalic->setChecked (textStyle_.isItalic ());
         slotTextItalicChanged ();
     }
 
-    if (textStyle_.isUnderline () != m_actionTextUnderline->isChecked ())
+    if (textStyle_.isUnderline () != d->actionTextUnderline->isChecked ())
     {
-        m_actionTextUnderline->setChecked (textStyle_.isUnderline ());
+        d->actionTextUnderline->setChecked (textStyle_.isUnderline ());
         slotTextUnderlineChanged ();
     }
 
-    if (textStyle_.isStrikeThru () != m_actionTextStrikeThru->isChecked ())
+    if (textStyle_.isStrikeThru () != d->actionTextStrikeThru->isChecked ())
     {
-        m_actionTextStrikeThru->setChecked (textStyle_.isStrikeThru ());
+        d->actionTextStrikeThru->setChecked (textStyle_.isStrikeThru ());
         slotTextStrikeThruChanged ();
     }
 
 
-    if (textStyle_.foregroundColor () != m_colorToolBar->foregroundColor ())
+    if (textStyle_.foregroundColor () != d->colorToolBar->foregroundColor ())
     {
-        m_colorToolBar->setForegroundColor (textStyle_.foregroundColor ());
+        d->colorToolBar->setForegroundColor (textStyle_.foregroundColor ());
     }
 
-    if (textStyle_.backgroundColor () != m_colorToolBar->backgroundColor ())
+    if (textStyle_.backgroundColor () != d->colorToolBar->backgroundColor ())
     {
-        m_colorToolBar->setBackgroundColor (textStyle_.backgroundColor ());
+        d->colorToolBar->setBackgroundColor (textStyle_.backgroundColor ());
     }
 
 
     if (textStyle_.isBackgroundOpaque () != isTextStyleBackgroundOpaque ())
     {
-        if (m_toolToolBar)
+        if (d->toolToolBar)
         {
             kpToolWidgetOpaqueOrTransparent *oot =
-                m_toolToolBar->toolWidgetOpaqueOrTransparent ();
+                d->toolToolBar->toolWidgetOpaqueOrTransparent ();
 
             if (oot)
             {
@@ -398,12 +399,12 @@ void kpMainWindow::setTextStyle (const kpTextStyle &textStyle_)
     }
 
 
-    m_settingTextStyle--;
+    d->settingTextStyle--;
 }
 
 // public
 int kpMainWindow::settingTextStyle () const
 {
-    return m_settingTextStyle;
+    return d->settingTextStyle;
 }
 

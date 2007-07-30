@@ -188,7 +188,7 @@ void kpMainWindow::slotColorsAppendRow ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpColorCells *colorCells = m_colorToolBar->colorCells ();
+    kpColorCells *colorCells = d->colorToolBar->colorCells ();
     colorCells->appendRow ();
 }
 
@@ -198,6 +198,6 @@ void kpMainWindow::slotColorsDeleteRow ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    kpColorCells *colorCells = m_colorToolBar->colorCells ();
+    kpColorCells *colorCells = d->colorToolBar->colorCells ();
     colorCells->deleteLastRow ();
 }

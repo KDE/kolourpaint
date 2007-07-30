@@ -78,54 +78,54 @@ void kpMainWindow::setupFileMenuActions ()
 #endif
     KActionCollection *ac = actionCollection ();
 
-    m_actionNew = KStandardAction::openNew (this, SLOT (slotNew ()), ac);
-    m_actionOpen = KStandardAction::open (this, SLOT (slotOpen ()), ac);
+    d->actionNew = KStandardAction::openNew (this, SLOT (slotNew ()), ac);
+    d->actionOpen = KStandardAction::open (this, SLOT (slotOpen ()), ac);
 
-    m_actionOpenRecent = KStandardAction::openRecent (this, SLOT (slotOpenRecent (const KUrl &)), ac);
-    m_actionOpenRecent->loadEntries (KGlobal::config ()->group( QString() ) );
+    d->actionOpenRecent = KStandardAction::openRecent (this, SLOT (slotOpenRecent (const KUrl &)), ac);
+    d->actionOpenRecent->loadEntries (KGlobal::config ()->group( QString() ) );
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\trecent URLs=" << m_actionOpenRecent->items () << endl;
+    kDebug () << "\trecent URLs=" << d->actionOpenRecent->items () << endl;
 #endif
 
-    m_actionSave = KStandardAction::save (this, SLOT (slotSave ()), ac);
-    m_actionSaveAs = KStandardAction::saveAs (this, SLOT (slotSaveAs ()), ac);
+    d->actionSave = KStandardAction::save (this, SLOT (slotSave ()), ac);
+    d->actionSaveAs = KStandardAction::saveAs (this, SLOT (slotSaveAs ()), ac);
 
-    m_actionExport = ac->addAction("file_export");
-    m_actionExport->setText (i18n ("E&xport..."));
-    connect(m_actionExport, SIGNAL(triggered(bool) ), SLOT (slotExport ()));
+    d->actionExport = ac->addAction("file_export");
+    d->actionExport->setText (i18n ("E&xport..."));
+    connect(d->actionExport, SIGNAL(triggered(bool) ), SLOT (slotExport ()));
 
-    m_actionScan = ac->addAction("file_scan");
-    m_actionScan->setText (i18n ("Scan..."));
-    m_actionScan->setIcon (SmallIcon ("scanner"));
-    connect(m_actionScan, SIGNAL(triggered(bool) ), SLOT (slotScan ()));
+    d->actionScan = ac->addAction("file_scan");
+    d->actionScan->setText (i18n ("Scan..."));
+    d->actionScan->setIcon (SmallIcon ("scanner"));
+    connect(d->actionScan, SIGNAL(triggered(bool) ), SLOT (slotScan ()));
 
-    m_actionProperties = ac->addAction ("file_properties");
-    m_actionProperties->setText ("Properties...");
-    connect (m_actionProperties, SIGNAL (triggered (bool)), SLOT (slotProperties ()));
+    d->actionProperties = ac->addAction ("file_properties");
+    d->actionProperties->setText ("Properties...");
+    connect (d->actionProperties, SIGNAL (triggered (bool)), SLOT (slotProperties ()));
 
-    //m_actionRevert = KStandardAction::revert (this, SLOT (slotRevert ()), ac);
-    m_actionReload = ac->addAction ("file_revert");
-    m_actionReload->setText (i18n ("Reloa&d"));
-    connect(m_actionReload, SIGNAL(triggered(bool) ), SLOT (slotReload ()));
-    m_actionReload->setShortcuts(KStandardShortcut::reload ());
+    //d->actionRevert = KStandardAction::revert (this, SLOT (slotRevert ()), ac);
+    d->actionReload = ac->addAction ("file_revert");
+    d->actionReload->setText (i18n ("Reloa&d"));
+    connect(d->actionReload, SIGNAL(triggered(bool) ), SLOT (slotReload ()));
+    d->actionReload->setShortcuts(KStandardShortcut::reload ());
     slotEnableReload ();
 
-    m_actionPrint = KStandardAction::print (this, SLOT (slotPrint ()), ac);
-    m_actionPrintPreview = KStandardAction::printPreview (this, SLOT (slotPrintPreview ()), ac);
+    d->actionPrint = KStandardAction::print (this, SLOT (slotPrint ()), ac);
+    d->actionPrintPreview = KStandardAction::printPreview (this, SLOT (slotPrintPreview ()), ac);
 
-    m_actionMail = KStandardAction::mail (this, SLOT (slotMail ()), ac);
+    d->actionMail = KStandardAction::mail (this, SLOT (slotMail ()), ac);
 
-    m_actionSetAsWallpaperCentered = ac->addAction ("file_set_as_wallpaper_centered");
-    m_actionSetAsWallpaperCentered->setText (i18n ("Set as Wa&llpaper (Centered)"));
-    connect(m_actionSetAsWallpaperCentered, SIGNAL(triggered(bool) ), SLOT (slotSetAsWallpaperCentered ()));
-    m_actionSetAsWallpaperTiled = ac->addAction ("file_set_as_wallpaper_tiled");
-    m_actionSetAsWallpaperTiled->setText (i18n ("Set as Wallpaper (&Tiled)"));
-    connect(m_actionSetAsWallpaperTiled, SIGNAL(triggered(bool) ), SLOT (slotSetAsWallpaperTiled ()));
+    d->actionSetAsWallpaperCentered = ac->addAction ("file_set_as_wallpaper_centered");
+    d->actionSetAsWallpaperCentered->setText (i18n ("Set as Wa&llpaper (Centered)"));
+    connect(d->actionSetAsWallpaperCentered, SIGNAL(triggered(bool) ), SLOT (slotSetAsWallpaperCentered ()));
+    d->actionSetAsWallpaperTiled = ac->addAction ("file_set_as_wallpaper_tiled");
+    d->actionSetAsWallpaperTiled->setText (i18n ("Set as Wallpaper (&Tiled)"));
+    connect(d->actionSetAsWallpaperTiled, SIGNAL(triggered(bool) ), SLOT (slotSetAsWallpaperTiled ()));
 
-    m_actionClose = KStandardAction::close (this, SLOT (slotClose ()), ac);
-    m_actionQuit = KStandardAction::quit (this, SLOT (slotQuit ()), ac);
+    d->actionClose = KStandardAction::close (this, SLOT (slotClose ()), ac);
+    d->actionQuit = KStandardAction::quit (this, SLOT (slotQuit ()), ac);
 
-    m_scanDialog = 0;
+    d->scanDialog = 0;
 
     enableFileMenuDocumentActions (false);
 }
@@ -133,38 +133,38 @@ void kpMainWindow::setupFileMenuActions ()
 // private
 void kpMainWindow::enableFileMenuDocumentActions (bool enable)
 {
-    // m_actionNew
-    // m_actionOpen
+    // d->actionNew
+    // d->actionOpen
 
-    // m_actionOpenRecent
+    // d->actionOpenRecent
 
-    m_actionSave->setEnabled (enable);
-    m_actionSaveAs->setEnabled (enable);
+    d->actionSave->setEnabled (enable);
+    d->actionSaveAs->setEnabled (enable);
 
-    m_actionExport->setEnabled (enable);
+    d->actionExport->setEnabled (enable);
 
-    // m_actionScan
+    // d->actionScan
 
-    m_actionProperties->setEnabled (enable);
+    d->actionProperties->setEnabled (enable);
 
-    // m_actionReload
+    // d->actionReload
 
-    m_actionPrint->setEnabled (enable);
-    m_actionPrintPreview->setEnabled (enable);
+    d->actionPrint->setEnabled (enable);
+    d->actionPrintPreview->setEnabled (enable);
 
-    m_actionMail->setEnabled (enable);
+    d->actionMail->setEnabled (enable);
 
-    m_actionSetAsWallpaperCentered->setEnabled (enable);
-    m_actionSetAsWallpaperTiled->setEnabled (enable);
+    d->actionSetAsWallpaperCentered->setEnabled (enable);
+    d->actionSetAsWallpaperTiled->setEnabled (enable);
 
-    m_actionClose->setEnabled (enable);
-    // m_actionQuit->setEnabled (enable);
+    d->actionClose->setEnabled (enable);
+    // d->actionQuit->setEnabled (enable);
 }
 
 // private
 void kpMainWindow::addRecentURL (const KUrl &url_)
 {
-    // HACK: KRecentFilesAction::loadEntries() clears the KRecentFilesAction::d->m_urls
+    // HACK: KRecentFilesAction::loadEntries() clears the KRecentFilesAction::d->urls
     //       map.
     //
     //       So afterwards, the URL ref, our method is given, points to an
@@ -191,15 +191,15 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
 
     // HACK: Something might have changed interprocess.
     // If we could PROPAGATE: interprocess, then this wouldn't be required.
-    m_actionOpenRecent->loadEntries (cfg->group (QString ()));
+    d->actionOpenRecent->loadEntries (cfg->group (QString ()));
 
-    m_actionOpenRecent->addUrl (url);
+    d->actionOpenRecent->addUrl (url);
 
-    m_actionOpenRecent->saveEntries (cfg->group (QString ()));
+    d->actionOpenRecent->saveEntries (cfg->group (QString ()));
     cfg->sync ();
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tnew recent URLs=" << m_actionOpenRecent->items () << endl;
+    kDebug () << "\tnew recent URLs=" << d->actionOpenRecent->items () << endl;
 #endif
 
 
@@ -221,12 +221,12 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
             //          update KRecentFilesAction's URL list.
 
             // Avoid URL memory leak in KRecentFilesAction::loadEntries().
-            mw->m_actionOpenRecent->clear ();
+            mw->d->actionOpenRecent->clear ();
 
-            mw->m_actionOpenRecent->loadEntries (cfg->group (QString ()));
+            mw->d->actionOpenRecent->loadEntries (cfg->group (QString ()));
         #if DEBUG_KP_MAIN_WINDOW
             kDebug () << "\t\t\tcheck recent URLs="
-                        << mw->m_actionOpenRecent->items () << endl;
+                        << mw->d->actionOpenRecent->items () << endl;
         #endif
         }
     }
@@ -235,14 +235,14 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
 
 // private slot
 // TODO: Disable action if
-//       (d->configOpenImagesInSameWindow && m_document && m_document->isEmpty())
+//       (d->configOpenImagesInSameWindow && d->document && d->document->isEmpty())
 //       as it does nothing if this is true.
 void kpMainWindow::slotNew ()
 {
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    if (m_document && !d->configOpenImagesInSameWindow)
+    if (d->document && !d->configOpenImagesInSameWindow)
     {
         // A document -- empty or otherwise -- is open.
         // Force open a new window.  In contrast, open() might not open
@@ -322,7 +322,7 @@ bool kpMainWindow::shouldOpen ()
 void kpMainWindow::setDocumentChoosingWindow (kpDocument *doc)
 {
     // Want new window?
-    if (m_document && !m_document->isEmpty () &&
+    if (d->document && !d->document->isEmpty () &&
         !d->configOpenImagesInSameWindow)
     {
     #if DEBUG_KP_MAIN_WINDOW
@@ -437,7 +437,7 @@ void kpMainWindow::slotOpen ()
 
 
     const KUrl::List urls = askForOpenURLs (i18n ("Open Image"),
-        m_document ? m_document->url ().url () : QString::null);
+        d->document ? d->document->url ().url () : QString::null);
 
     for (KUrl::List::const_iterator it = urls.begin ();
          it != urls.end ();
@@ -452,7 +452,7 @@ void kpMainWindow::slotOpenRecent (const KUrl &url)
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotOpenRecent(" << url << ")" << endl;
-    kDebug () << "\titems=" << m_actionOpenRecent->items () << endl;
+    kDebug () << "\titems=" << d->actionOpenRecent->items () << endl;
 #endif
 
     if (toolHasBegunShape ())
@@ -470,7 +470,7 @@ void kpMainWindow::slotOpenRecent (const KUrl &url)
     //
     // 2. because it has not been opened.
     //
-    m_actionOpenRecent->setCurrentItem (-1);
+    d->actionOpenRecent->setCurrentItem (-1);
 }
 
 
@@ -478,23 +478,23 @@ void kpMainWindow::slotOpenRecent (const KUrl &url)
 void kpMainWindow::slotScan ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotScan() scanDialog=" << m_scanDialog << endl;
+    kDebug () << "kpMainWindow::slotScan() scanDialog=" << d->scanDialog << endl;
 #endif
 
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
 
-    if (!m_scanDialog)
+    if (!d->scanDialog)
     {
         // Create scan dialog by looking for plugin.
         // [takes about 500ms on 350Mhz]
-        m_scanDialog = KScanDialog::getScanDialog (this);
+        d->scanDialog = KScanDialog::getScanDialog (this);
 
         // No scanning support (kdegraphics/libkscan) installed?
         // [Remove $KDEDIR/share/servicetypes/kscan.desktop and
         //         $KDEDIR/share/services/scanservice.desktop to simulate this]
-        if (!m_scanDialog)
+        if (!d->scanDialog)
         {
         #if DEBUG_KP_MAIN_WINDOW
             kDebug () << "\tcould not create scan dialog" << endl;
@@ -516,9 +516,9 @@ void kpMainWindow::slotScan ()
         }
 
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tcreated scanDialog=" << m_scanDialog << endl;
+        kDebug () << "\tcreated scanDialog=" << d->scanDialog << endl;
     #endif
-        connect (m_scanDialog, SIGNAL (finalImage (const QImage &, int)),
+        connect (d->scanDialog, SIGNAL (finalImage (const QImage &, int)),
                  SLOT (slotScanned (const QImage &, int)));
     }
 
@@ -547,7 +547,7 @@ void kpMainWindow::slotScan ()
     // Bring up dialog to select scan device.
     // If there is no scanner, we find that this does not bring up a dialog
     // but still returns true.
-    if (m_scanDialog->setup ())
+    if (d->scanDialog->setup ())
     {
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\t\tOK - showing dialog" << endl;
@@ -559,7 +559,7 @@ void kpMainWindow::slotScan ()
         //
         // We use exec() to make sure it's modal.  show() seems to work too
         // but better safe than sorry.
-        m_scanDialog->exec ();
+        d->scanDialog->exec ();
     }
     else
     {
@@ -588,7 +588,7 @@ void kpMainWindow::slotScanned (const QImage &image, int)
     //
     // 2. We don't want to return from this method but forget to close
     //    the dialog.  So do it before anything else.
-    m_scanDialog->hide ();
+    d->scanDialog->hide ();
 
     // (just in case there's some drawing between slotScan() exiting and
     //  us being called)
@@ -656,23 +656,23 @@ void kpMainWindow::slotProperties ()
 // private slot
 bool kpMainWindow::save (bool localOnly)
 {
-    if (m_document->url ().isEmpty () ||
+    if (d->document->url ().isEmpty () ||
         !KImageIO::mimeTypes (KImageIO::Writing)
-            .contains (m_document->saveOptions ()->mimeType ()) ||
+            .contains (d->document->saveOptions ()->mimeType ()) ||
         // SYNC: kpDocument::getPixmapFromFile() can't determine quality
         //       from file so it has been set initially to an invalid value.
-        (m_document->saveOptions ()->mimeTypeHasConfigurableQuality () &&
-            m_document->saveOptions ()->qualityIsInvalid ()) ||
-        (localOnly && !m_document->url ().isLocalFile ()))
+        (d->document->saveOptions ()->mimeTypeHasConfigurableQuality () &&
+            d->document->saveOptions ()->qualityIsInvalid ()) ||
+        (localOnly && !d->document->url ().isLocalFile ()))
     {
         return saveAs (localOnly);
     }
     else
     {
-        if (m_document->save (false/*no overwrite prompt*/,
-                              !m_document->savedAtLeastOnceBefore ()/*lossy prompt*/))
+        if (d->document->save (false/*no overwrite prompt*/,
+                              !d->document->savedAtLeastOnceBefore ()/*lossy prompt*/))
         {
-            addRecentURL (m_document->url ());
+            addRecentURL (d->document->url ());
             return true;
         }
         else
@@ -879,20 +879,20 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 bool kpMainWindow::saveAs (bool localOnly)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::saveAs URL=" << m_document->url () << endl;
+    kDebug () << "kpMainWindow::saveAs URL=" << d->document->url () << endl;
 #endif
 
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
     KUrl chosenURL = askForSaveURL (i18n ("Save Image As"),
-                                    m_document->url ().url (),
-                                    m_document->imageWithSelection (),
-                                    *m_document->saveOptions (),
-                                    *m_document->metaInfo (),
+                                    d->document->url ().url (),
+                                    d->document->imageWithSelection (),
+                                    *d->document->saveOptions (),
+                                    *d->document->metaInfo (),
                                     kpSettingsGroupFileSaveAs,
                                     localOnly,
                                     &chosenSaveOptions,
-                                    !m_document->savedAtLeastOnceBefore (),
+                                    !d->document->savedAtLeastOnceBefore (),
                                     &allowOverwritePrompt,
                                     &allowLossyPrompt);
 
@@ -901,7 +901,7 @@ bool kpMainWindow::saveAs (bool localOnly)
         return false;
 
 
-    if (!m_document->saveAs (chosenURL, chosenSaveOptions,
+    if (!d->document->saveAs (chosenURL, chosenSaveOptions,
                              allowOverwritePrompt,
                              allowLossyPrompt))
     {
@@ -937,14 +937,14 @@ bool kpMainWindow::slotExport ()
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
     KUrl chosenURL = askForSaveURL (i18n ("Export"),
-                                    m_lastExportURL.url (),
-                                    m_document->imageWithSelection (),
-                                    m_lastExportSaveOptions,
-                                    *m_document->metaInfo (),
+                                    d->lastExportURL.url (),
+                                    d->document->imageWithSelection (),
+                                    d->lastExportSaveOptions,
+                                    *d->document->metaInfo (),
                                     kpSettingsGroupFileExport,
                                     false/*allow remote files*/,
                                     &chosenSaveOptions,
-                                    m_exportFirstTime,
+                                    d->exportFirstTime,
                                     &allowOverwritePrompt,
                                     &allowLossyPrompt);
 
@@ -953,9 +953,9 @@ bool kpMainWindow::slotExport ()
         return false;
 
 
-    if (!kpDocument::savePixmapToFile (m_document->imageWithSelection (),
+    if (!kpDocument::savePixmapToFile (d->document->imageWithSelection (),
                                        chosenURL,
-                                       chosenSaveOptions, *m_document->metaInfo (),
+                                       chosenSaveOptions, *d->document->metaInfo (),
                                        allowOverwritePrompt,
                                        allowLossyPrompt,
                                        this))
@@ -967,10 +967,10 @@ bool kpMainWindow::slotExport ()
     addRecentURL (chosenURL);
 
 
-    m_lastExportURL = chosenURL;
-    m_lastExportSaveOptions = chosenSaveOptions;
+    d->lastExportURL = chosenURL;
+    d->lastExportSaveOptions = chosenSaveOptions;
 
-    m_exportFirstTime = false;
+    d->exportFirstTime = false;
 
     return true;
 }
@@ -979,7 +979,7 @@ bool kpMainWindow::slotExport ()
 // private slot
 void kpMainWindow::slotEnableReload ()
 {
-    m_actionReload->setEnabled (m_document);
+    d->actionReload->setEnabled (d->document);
 }
 
 // private slot
@@ -988,24 +988,24 @@ bool kpMainWindow::slotReload ()
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
 
-    if (!m_document)
+    if (!d->document)
         return false;
 
 
-    KUrl oldURL = m_document->url ();
+    KUrl oldURL = d->document->url ();
 
 
-    if (m_document->isModified ())
+    if (d->document->isModified ())
     {
         int result = KMessageBox::Cancel;
 
-        if (m_document->isFromURL (false/*don't bother checking exists*/) && !oldURL.isEmpty ())
+        if (d->document->isFromURL (false/*don't bother checking exists*/) && !oldURL.isEmpty ())
         {
             result = KMessageBox::warningContinueCancel (this,
                          i18n ("The document \"%1\" has been modified.\n"
                                "Reloading will lose all changes since you last saved it.\n"
                                "Are you sure?",
-                               m_document->prettyFilename ()),
+                               d->document->prettyFilename ()),
                          QString::null/*caption*/,
                          KGuiItem(i18n ("&Reload")));
         }
@@ -1015,7 +1015,7 @@ bool kpMainWindow::slotReload ()
                          i18n ("The document \"%1\" has been modified.\n"
                                "Reloading will lose all changes.\n"
                                "Are you sure?",
-                               m_document->prettyFilename ()),
+                               d->document->prettyFilename ()),
                          QString::null/*caption*/,
                          KGuiItem(i18n ("&Reload")));
         }
@@ -1028,7 +1028,7 @@ bool kpMainWindow::slotReload ()
     kpDocument *doc = 0;
 
     // If it's _supposed to_ come from a URL or it exists
-    if (m_document->isFromURL (false/*don't bother checking exists*/) ||
+    if (d->document->isFromURL (false/*don't bother checking exists*/) ||
         (!oldURL.isEmpty () && KIO::NetAccess::exists (oldURL, true/*open*/, this)))
     {
     #if DEBUG_KP_MAIN_WINDOW
@@ -1050,8 +1050,8 @@ bool kpMainWindow::slotReload ()
         kDebug () << "kpMainWindow::slotReload() create doc" << endl;
     #endif
 
-        doc = new kpDocument (m_document->constructorWidth (),
-                              m_document->constructorHeight (),
+        doc = new kpDocument (d->document->constructorWidth (),
+                              d->document->constructorHeight (),
                               documentEnvironment ());
         doc->setURL (oldURL, false/*not from URL*/);
     }
@@ -1066,7 +1066,7 @@ bool kpMainWindow::slotReload ()
 // private
 void kpMainWindow::sendFilenameToPrinter (KPrinter *printer)
 {
-    KUrl url = m_document->url ();
+    KUrl url = d->document->url ();
     if (!url.isEmpty ())
     {
         int dot;
@@ -1097,14 +1097,14 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
         bool showPrinterSetupDialog)
 {
     // Get image to be printed.
-    QPixmap pixmap = m_document->imageWithSelection ();
+    QPixmap pixmap = d->document->imageWithSelection ();
 
 
     // Get image DPI.
     double pixmapDotsPerMeterX =
-        double (m_document->metaInfo ()->dotsPerMeterX ());
+        double (d->document->metaInfo ()->dotsPerMeterX ());
     double pixmapDotsPerMeterY =
-        double (m_document->metaInfo ()->dotsPerMeterY ());
+        double (d->document->metaInfo ()->dotsPerMeterY ());
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::sendPixmapToPrinter() pixmap:"
                << " width=" << pixmap.width ()
@@ -1316,9 +1316,9 @@ void kpMainWindow::slotPrintPreview ()
 // private slot
 void kpMainWindow::slotMail ()
 {
-    if (m_document->url ().isEmpty ()/*no name*/ ||
-        !m_document->isFromURL () ||
-        m_document->isModified ()/*needs to be saved*/)
+    if (d->document->url ().isEmpty ()/*no name*/ ||
+        !d->document->isFromURL () ||
+        d->document->isModified ()/*needs to be saved*/)
     {
         int result = KMessageBox::questionYesNo (this,
                         i18n ("You must save this image before sending it.\n"
@@ -1345,24 +1345,24 @@ void kpMainWindow::slotMail ()
         QString::null/*to*/,
         QString::null/*cc*/,
         QString::null/*bcc*/,
-        m_document->prettyFilename()/*subject*/,
+        d->document->prettyFilename()/*subject*/,
         QString::null/*body*/,
         QString::null/*messageFile*/,
-        QStringList (m_document->url ().url ())/*attachments*/);
+        QStringList (d->document->url ().url ())/*attachments*/);
 }
 
 
 // private
 void kpMainWindow::setAsWallpaper (bool centered)
 {
-    if (m_document->url ().isEmpty ()/*no name*/ ||
-        !m_document->url ().isLocalFile ()/*remote file*/ ||
-        !m_document->isFromURL () ||
-        m_document->isModified ()/*needs to be saved*/)
+    if (d->document->url ().isEmpty ()/*no name*/ ||
+        !d->document->url ().isLocalFile ()/*remote file*/ ||
+        !d->document->isFromURL () ||
+        d->document->isModified ()/*needs to be saved*/)
     {
         QString question;
 
-        if (!m_document->url ().isLocalFile ())
+        if (!d->document->url ().isLocalFile ())
         {
             question = i18n ("Before this image can be set as the wallpaper, "
                              "you must save it as a local file.\n"
@@ -1403,9 +1403,9 @@ void kpMainWindow::setAsWallpaper (bool centered)
     // write path
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::setAsWallpaper() path="
-               << m_document->url ().path () << endl;
+               << d->document->url ().path () << endl;
 #endif
-    dataStream << QString (m_document->url ().path ());
+    dataStream << QString (d->document->url ().path ());
 
     // write position:
     //
@@ -1441,7 +1441,7 @@ void kpMainWindow::setAsWallpaper (bool centered)
     else
         appname = "org.kde.kdesktop-screen-" + QByteArray::number(konq_screen_number);
     QDBusInterface kdesktop(appname, "/Background", "org.kde.kdesktop.Background");
-    QDBusReply<void> retVal = kdesktop.call( "setWallpaper", QString (m_document->url ().path ()), int (centered ? 1 : 2) );
+    QDBusReply<void> retVal = kdesktop.call( "setWallpaper", QString (d->document->url ().path ()), int (centered ? 1 : 2) );
     if (!retVal.isValid())
     {
         KMessageBox::sorry (this, i18n ("Could not change wallpaper."));

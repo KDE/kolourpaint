@@ -30,17 +30,10 @@
 #define KP_MAIN_WINDOW_H
 
 
-#define DEBUG_KP_MAIN_WINDOW 0
-
-#include <qpoint.h>
-#include <qlist.h>
-#include <qsize.h>
-
 #include <kxmlguiwindow.h>
 #include <kurl.h>
 
 #include <kpDefs.h>
-#include <kpDocumentSaveOptions.h>
 #include <kpPixmapFX.h>
 
 
@@ -111,14 +104,6 @@ public:
     kpMainWindow (kpDocument *newDoc);
 
 private:
-    bool m_configFirstTime;
-    bool m_configShowGrid;
-    bool m_configShowPath;
-
-    bool m_configThumbnailShown;
-    QRect m_configThumbnailGeometry;
-    bool m_configZoomedThumbnail;
-
     void readGeneralSettings ();
     void readThumbnailSettings ();
     void init ();
@@ -135,9 +120,6 @@ private:
 public:
     ~kpMainWindow ();
 
-private:
-    bool m_isFullyConstructed;
-
 public:
     kpDocument *document () const;
     kpDocumentEnvironment *documentEnvironment ();
@@ -147,17 +129,6 @@ public:
     kpToolToolBar *toolToolBar () const;
     kpCommandHistory *commandHistory () const;
     kpCommandEnvironment *commandEnvironment ();
-
-private:
-    kpViewScrollableContainer *m_scrollView;
-    kpZoomedView *m_mainView;
-    kpThumbnail *m_thumbnail;
-    kpThumbnailView *m_thumbnailView;
-    kpDocument *m_document;
-    kpViewManager *m_viewManager;
-    kpColorToolBar *m_colorToolBar;
-    kpToolToolBar *m_toolToolBar;
-    kpCommandHistory *m_commandHistory;
 
 private:
     void setupActions ();
@@ -200,31 +171,6 @@ private slots:
     void updateActionDrawOpaqueChecked ();
 private:
     void updateActionDrawOpaqueEnabled ();
-
-private:
-    kpTool *m_toolSpraycan, *m_toolBrush,
-           *m_toolColorEraser, *m_toolColorPicker,
-           *m_toolCurve, *m_toolEllipse,
-           *m_toolEllipticalSelection, *m_toolEraser,
-           *m_toolFloodFill, *m_toolFreeFormSelection,
-           *m_toolLine, *m_toolPen, *m_toolPolygon,
-           *m_toolPolyline, *m_toolRectangle, *m_toolRectSelection,
-           *m_toolRoundedRectangle, *m_toolZoom;
-    kpToolText *m_toolText;
-
-    QList <kpTool *> m_tools;
-    int m_lastToolNumber;
-
-    bool m_toolActionsEnabled;
-    QAction *m_actionPrevToolOptionGroup1,
-            *m_actionNextToolOptionGroup1,
-            *m_actionPrevToolOptionGroup2,
-            *m_actionNextToolOptionGroup2;
-
-    int m_settingImageSelectionTransparency;
-
-    int m_docResizeWidth, m_docResizeHeight;
-    bool m_docResizeToBeCompleted;
 
 public:
     QActionGroup *toolsActionGroup ();
@@ -304,23 +250,6 @@ private:
     void setupFileMenuActions ();
     void enableFileMenuDocumentActions (bool enable = true);
 
-    QAction *m_actionNew, *m_actionOpen;
-    KRecentFilesAction *m_actionOpenRecent;
-    QAction *m_actionScan, *m_actionProperties,
-            *m_actionSave, *m_actionSaveAs, *m_actionExport,
-            *m_actionReload,
-            *m_actionPrint, *m_actionPrintPreview,
-            *m_actionMail,
-            *m_actionSetAsWallpaperTiled, *m_actionSetAsWallpaperCentered,
-            *m_actionClose, *m_actionQuit;
-
-    KScanDialog *m_scanDialog;
-
-    KUrl m_lastExportURL;
-    kpDocumentSaveOptions m_lastExportSaveOptions;
-    bool m_exportFirstTime;
-
-private:
     void addRecentURL (const KUrl &url);
 
 private slots:
@@ -418,21 +347,6 @@ private:
     void setupEditMenuActions ();
     void enableEditMenuDocumentActions (bool enable = true);
 
-    bool m_editMenuDocumentActionsEnabled;
-
-    QAction *m_actionUndo, *m_actionRedo,
-            *m_actionCut, *m_actionCopy,
-            *m_actionPaste, *m_actionPasteInNewWindow,
-            *m_actionDelete,
-            *m_actionSelectAll, *m_actionDeselect,
-            *m_actionCopyToFile, *m_actionPasteFromFile;
-
-    KUrl m_lastPasteFromURL;
-
-    KUrl m_lastCopyToURL;
-    kpDocumentSaveOptions m_lastCopyToSaveOptions;
-    bool m_copyToFirstTime;
-
 public:
     QMenu *selectionToolRMBMenu ();
 
@@ -478,21 +392,10 @@ private slots:
     //
 
 private:
-    bool m_viewMenuDocumentActionsEnabled;
-
     void setupViewMenuActions ();
     bool viewMenuDocumentActionsEnabled () const;
     void enableViewMenuDocumentActions (bool enable = true);
     void actionShowGridUpdate ();
-
-    QAction *m_actionActualSize,
-            *m_actionFitToPage, *m_actionFitToWidth, *m_actionFitToHeight,
-            *m_actionZoomIn, *m_actionZoomOut;
-    KSelectAction *m_actionZoom;
-    KToggleAction *m_actionShowGrid,
-                  *m_actionShowThumbnail, *m_actionZoomedThumbnail;
-
-    QList <int> m_zoomList;
 
 private:
     void sendZoomListToActionZoom ();
@@ -534,9 +437,6 @@ private slots:
     void slotDestroyThumbnailInitatedByUser ();
     void slotCreateThumbnail ();
 
-private:
-    QTimer *m_thumbnailSaveConfigTimer;
-
 public:
     void notifyThumbnailGeometryChanged ();
 
@@ -570,17 +470,6 @@ private:
 
     void setupImageMenuActions ();
     void enableImageMenuDocumentActions (bool enable = true);
-
-    bool m_imageMenuDocumentActionsEnabled;
-
-    QAction *m_actionResizeScale,
-            *m_actionCrop, *m_actionAutoCrop,
-            *m_actionFlip,
-            *m_actionRotate, *m_actionRotateLeft, *m_actionRotateRight,
-            *m_actionSkew,
-            *m_actionConvertToBlackAndWhite, *m_actionConvertToGrayscale,
-            *m_actionMoreEffects,
-            *m_actionInvertColors, *m_actionClear;
 
 private slots:
     void slotImageMenuUpdateDueToSelection ();
@@ -641,10 +530,6 @@ private:
     void setupSettingsMenuActions ();
     void enableSettingsMenuDocumentActions (bool enable = true);
 
-    KToggleAction *m_actionShowPath;
-    QAction *m_actionKeyBindings, *m_actionConfigureToolbars, *m_actionConfigure;
-    KToggleFullScreenAction *m_actionFullScreen;
-
 private slots:
     void slotFullScreen ();
 
@@ -664,14 +549,6 @@ private slots:
     //
 
 private:
-    bool m_statusBarCreated;
-    kpSqueezedTextLabel *m_statusBarMessageLabel;
-
-    bool m_statusBarShapeLastPointsInitialised;
-    QPoint m_statusBarShapeLastStartPoint, m_statusBarShapeLastEndPoint;
-    bool m_statusBarShapeLastSizeInitialised;
-    QSize m_statusBarShapeLastSize;
-
     enum
     {
         StatusBarItemMessage,
@@ -726,16 +603,6 @@ public:
     void setTextStyle (const kpTextStyle &textStyle_);
     int settingTextStyle () const;
 
-private:
-    KFontAction *m_actionTextFontFamily;
-    KFontSizeAction *m_actionTextFontSize;
-    KToggleAction *m_actionTextBold, *m_actionTextItalic,
-                  *m_actionTextUnderline, *m_actionTextStrikeThru;
-
-    int m_settingTextStyle;
-    QString m_textOldFontFamily;
-    int m_textOldFontSize;
-
 
     //
     // Help Menu
@@ -750,10 +617,7 @@ private slots:
 
 
 private:
-    // There is no need to maintain binary compatibility at this stage.
-    // The d-pointer is just so that you can experiment without recompiling
-    // the kitchen sink.
-    class kpMainWindowPrivate *d;
+    struct kpMainWindowPrivate *d;
 };
 
 

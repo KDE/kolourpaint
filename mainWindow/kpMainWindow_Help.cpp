@@ -56,9 +56,9 @@ void kpMainWindow::setupHelpMenuActions ()
     // from a digital camera in future versions of KolourPaint.  Hence
     // "Acquiring" is more appropriate.
     // -- Thurston
-    d->m_actionHelpTakingScreenshots = ac->addAction ("help_taking_screenshots");
-    d->m_actionHelpTakingScreenshots->setText (i18n ("Acquiring &Screenshots"));
-    connect (d->m_actionHelpTakingScreenshots, SIGNAL (triggered (bool)),
+    d->actionHelpTakingScreenshots = ac->addAction ("help_taking_screenshots");
+    d->actionHelpTakingScreenshots->setText (i18n ("Acquiring &Screenshots"));
+    connect (d->actionHelpTakingScreenshots, SIGNAL (triggered (bool)),
         SLOT (slotHelpTakingScreenshots ()));
 
 

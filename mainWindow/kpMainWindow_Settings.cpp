@@ -27,6 +27,7 @@
 
 
 #include <kpMainWindow.h>
+#include <kpMainWindowPrivate.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -60,20 +61,20 @@ void kpMainWindow::setupSettingsMenuActions ()
     createStandardStatusBarAction ();
 
 
-    m_actionFullScreen = KStandardAction::fullScreen (this, SLOT (slotFullScreen ()),
+    d->actionFullScreen = KStandardAction::fullScreen (this, SLOT (slotFullScreen ()),
                                                       this/*window*/, ac);
 
 
-    m_actionShowPath = ac->add<KToggleAction> ("settings_show_path");
-    m_actionShowPath->setText (i18n ("Show &Path"));
-    connect(m_actionShowPath, SIGNAL(triggered(bool) ), SLOT (slotShowPathToggled ()));
-    m_actionShowPath->setCheckedState (KGuiItem(i18n ("Hide &Path")));
+    d->actionShowPath = ac->add<KToggleAction> ("settings_show_path");
+    d->actionShowPath->setText (i18n ("Show &Path"));
+    connect(d->actionShowPath, SIGNAL(triggered(bool) ), SLOT (slotShowPathToggled ()));
+    d->actionShowPath->setCheckedState (KGuiItem(i18n ("Hide &Path")));
     slotEnableSettingsShowPath ();
 
 
-    m_actionKeyBindings = KStandardAction::keyBindings (this, SLOT (slotKeyBindings ()), ac);
-    m_actionConfigureToolbars = KStandardAction::configureToolbars (this, SLOT (slotConfigureToolBars ()), ac);
-    // m_actionConfigure = KStandardAction::preferences (this, SLOT (slotConfigure ()), ac);
+    d->actionKeyBindings = KStandardAction::keyBindings (this, SLOT (slotKeyBindings ()), ac);
+    d->actionConfigureToolbars = KStandardAction::configureToolbars (this, SLOT (slotConfigureToolBars ()), ac);
+    // d->actionConfigure = KStandardAction::preferences (this, SLOT (slotConfigure ()), ac);
 
 
     enableSettingsMenuDocumentActions (false);
@@ -88,7 +89,7 @@ void kpMainWindow::enableSettingsMenuDocumentActions (bool /*enable*/)
 // private slot
 void kpMainWindow::slotFullScreen ()
 {
-    if (m_actionFullScreen->isChecked ())
+    if (d->actionFullScreen->isChecked ())
         showFullScreen ();
     else
         showNormal ();
@@ -102,10 +103,10 @@ void kpMainWindow::slotEnableSettingsShowPath ()
     kDebug () << "kpMainWindow::slotEnableSettingsShowPath()" << endl;
 #endif
 
-    const bool enable = (m_document && !m_document->url ().isEmpty ());
+    const bool enable = (d->document && !d->document->url ().isEmpty ());
 
-    m_actionShowPath->setEnabled (enable);
-    m_actionShowPath->setChecked (enable && m_configShowPath);
+    d->actionShowPath->setEnabled (enable);
+    d->actionShowPath->setChecked (enable && d->configShowPath);
 }
 
 // private slot
@@ -115,14 +116,14 @@ void kpMainWindow::slotShowPathToggled ()
     kDebug () << "kpMainWindow::slotShowPathToggled()" << endl;
 #endif
 
-    m_configShowPath = m_actionShowPath->isChecked ();
+    d->configShowPath = d->actionShowPath->isChecked ();
 
     slotUpdateCaption ();
 
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
-    cfg.writeEntry (kpSettingShowPath, m_configShowPath);
+    cfg.writeEntry (kpSettingShowPath, d->configShowPath);
     cfg.sync ();
 }
 

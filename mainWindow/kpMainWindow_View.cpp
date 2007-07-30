@@ -96,59 +96,59 @@ static QString ZoomLevelToString (int zoomLevel)
 // private
 void kpMainWindow::setupViewMenuActions ()
 {
-    m_viewMenuDocumentActionsEnabled = false;
-    m_thumbnailSaveConfigTimer = 0;
+    d->viewMenuDocumentActionsEnabled = false;
+    d->thumbnailSaveConfigTimer = 0;
 
 
     KActionCollection *ac = actionCollection ();
 
-    /*m_actionFullScreen = KStandardAction::fullScreen (0, 0, ac);
-    m_actionFullScreen->setEnabled (false);*/
+    /*d->actionFullScreen = KStandardAction::fullScreen (0, 0, ac);
+    d->actionFullScreen->setEnabled (false);*/
 
 
-    m_actionActualSize = KStandardAction::actualSize (this, SLOT (slotActualSize ()), ac);
-    /*m_actionFitToPage = KStandardAction::fitToPage (this, SLOT (slotFitToPage ()), ac);
-    m_actionFitToWidth = KStandardAction::fitToWidth (this, SLOT (slotFitToWidth ()), ac);
-    m_actionFitToHeight = KStandardAction::fitToHeight (this, SLOT (slotFitToHeight ()), ac);*/
+    d->actionActualSize = KStandardAction::actualSize (this, SLOT (slotActualSize ()), ac);
+    /*d->actionFitToPage = KStandardAction::fitToPage (this, SLOT (slotFitToPage ()), ac);
+    d->actionFitToWidth = KStandardAction::fitToWidth (this, SLOT (slotFitToWidth ()), ac);
+    d->actionFitToHeight = KStandardAction::fitToHeight (this, SLOT (slotFitToHeight ()), ac);*/
 
 
-    m_actionZoomIn = KStandardAction::zoomIn (this, SLOT (slotZoomIn ()), ac);
-    m_actionZoomOut = KStandardAction::zoomOut (this, SLOT (slotZoomOut ()), ac);
+    d->actionZoomIn = KStandardAction::zoomIn (this, SLOT (slotZoomIn ()), ac);
+    d->actionZoomOut = KStandardAction::zoomOut (this, SLOT (slotZoomOut ()), ac);
 
 
-    m_actionZoom = ac->add <KSelectAction> ("view_zoom_to");
-    m_actionZoom->setText (i18n ("&Zoom"));
-    connect (m_actionZoom, SIGNAL (triggered (QAction *)), SLOT (slotZoom ()));
-    m_actionZoom->setEditable (true);
+    d->actionZoom = ac->add <KSelectAction> ("view_zood->to");
+    d->actionZoom->setText (i18n ("&Zoom"));
+    connect (d->actionZoom, SIGNAL (triggered (QAction *)), SLOT (slotZoom ()));
+    d->actionZoom->setEditable (true);
 
     // create the zoom list for the 1st call to zoomTo() below
-    m_zoomList.append (10); m_zoomList.append (25); m_zoomList.append (33);
-    m_zoomList.append (50); m_zoomList.append (67); m_zoomList.append (75);
-    m_zoomList.append (100);
-    m_zoomList.append (200); m_zoomList.append (300);
-    m_zoomList.append (400); m_zoomList.append (600); m_zoomList.append (800);
-    m_zoomList.append (1000); m_zoomList.append (1200); m_zoomList.append (1600);
+    d->zoomList.append (10); d->zoomList.append (25); d->zoomList.append (33);
+    d->zoomList.append (50); d->zoomList.append (67); d->zoomList.append (75);
+    d->zoomList.append (100);
+    d->zoomList.append (200); d->zoomList.append (300);
+    d->zoomList.append (400); d->zoomList.append (600); d->zoomList.append (800);
+    d->zoomList.append (1000); d->zoomList.append (1200); d->zoomList.append (1600);
 
 
-    m_actionShowGrid = ac->add <KToggleAction> ("view_show_grid");
-    m_actionShowGrid->setText (i18n ("Show &Grid"));
-    m_actionShowGrid->setShortcut (Qt::CTRL + Qt::Key_G);
-    m_actionShowGrid->setCheckedState (KGuiItem(i18n ("Hide &Grid")));
-    connect (m_actionShowGrid, SIGNAL (triggered (bool)),
+    d->actionShowGrid = ac->add <KToggleAction> ("view_show_grid");
+    d->actionShowGrid->setText (i18n ("Show &Grid"));
+    d->actionShowGrid->setShortcut (Qt::CTRL + Qt::Key_G);
+    d->actionShowGrid->setCheckedState (KGuiItem(i18n ("Hide &Grid")));
+    connect (d->actionShowGrid, SIGNAL (triggered (bool)),
         SLOT (slotShowGridToggled ()));
 
 
-    m_actionShowThumbnail = ac->add <KToggleAction> ("view_show_thumbnail");
-    m_actionShowThumbnail->setText (i18n ("Show T&humbnail"));
-    m_actionShowThumbnail->setShortcut (Qt::CTRL + Qt::Key_H);
-    m_actionShowThumbnail->setCheckedState (KGuiItem(i18n ("Hide T&humbnail")));
-    connect (m_actionShowThumbnail, SIGNAL (triggered (bool)),
+    d->actionShowThumbnail = ac->add <KToggleAction> ("view_show_thumbnail");
+    d->actionShowThumbnail->setText (i18n ("Show T&humbnail"));
+    d->actionShowThumbnail->setShortcut (Qt::CTRL + Qt::Key_H);
+    d->actionShowThumbnail->setCheckedState (KGuiItem(i18n ("Hide T&humbnail")));
+    connect (d->actionShowThumbnail, SIGNAL (triggered (bool)),
         SLOT (slotShowThumbnailToggled ()));
 
     // Please do not use setCheckedState() here - it wouldn't make sense
-    m_actionZoomedThumbnail = ac->add <KToggleAction> ("view_zoomed_thumbnail");
-    m_actionZoomedThumbnail->setText (i18n ("Zoo&med Thumbnail Mode"));
-    connect (m_actionZoomedThumbnail, SIGNAL (triggered (bool)),
+    d->actionZoomedThumbnail = ac->add <KToggleAction> ("view_zoomed_thumbnail");
+    d->actionZoomedThumbnail->setText (i18n ("Zoo&med Thumbnail Mode"));
+    connect (d->actionZoomedThumbnail, SIGNAL (triggered (bool)),
         SLOT (slotZoomedThumbnailToggled ()));
 
     // For consistency with the above action, don't use setCheckedState()
@@ -156,9 +156,9 @@ void kpMainWindow::setupViewMenuActions ()
     // Also, don't use "Show Thumbnail Rectangle" because if entire doc
     // can be seen in scrollView, checking option won't "Show" anything
     // since rect _surrounds_ entire doc (hence, won't be rendered).
-    d->m_actionShowThumbnailRectangle = ac->add <KToggleAction> ("view_show_thumbnail_rectangle");
-    d->m_actionShowThumbnailRectangle->setText (i18n ("Enable Thumbnail &Rectangle"));
-    connect (d->m_actionShowThumbnailRectangle, SIGNAL (triggered (bool)),
+    d->actionShowThumbnailRectangle = ac->add <KToggleAction> ("view_show_thumbnail_rectangle");
+    d->actionShowThumbnailRectangle->setText (i18n ("Enable Thumbnail &Rectangle"));
+    connect (d->actionShowThumbnailRectangle, SIGNAL (triggered (bool)),
         SLOT (slotThumbnailShowRectangleToggled ()));
 
 
@@ -168,28 +168,28 @@ void kpMainWindow::setupViewMenuActions ()
 // private
 bool kpMainWindow::viewMenuDocumentActionsEnabled () const
 {
-    return m_viewMenuDocumentActionsEnabled;
+    return d->viewMenuDocumentActionsEnabled;
 }
 
 // private
 void kpMainWindow::enableViewMenuDocumentActions (bool enable)
 {
-    m_viewMenuDocumentActionsEnabled = enable;
+    d->viewMenuDocumentActionsEnabled = enable;
 
 
-    m_actionActualSize->setEnabled (enable);
-    /*m_actionFitToPage->setEnabled (enable);
-    m_actionFitToWidth->setEnabled (enable);
-    m_actionFitToHeight->setEnabled (enable);*/
+    d->actionActualSize->setEnabled (enable);
+    /*d->actionFitToPage->setEnabled (enable);
+    d->actionFitToWidth->setEnabled (enable);
+    d->actionFitToHeight->setEnabled (enable);*/
 
-    m_actionZoomIn->setEnabled (enable);
-    m_actionZoomOut->setEnabled (enable);
+    d->actionZoomIn->setEnabled (enable);
+    d->actionZoomOut->setEnabled (enable);
 
-    m_actionZoom->setEnabled (enable);
+    d->actionZoom->setEnabled (enable);
 
     actionShowGridUpdate ();
 
-    m_actionShowThumbnail->setEnabled (enable);
+    d->actionShowThumbnail->setEnabled (enable);
     enableThumbnailOptionActions (enable);
 
 
@@ -210,10 +210,10 @@ void kpMainWindow::actionShowGridUpdate ()
     kDebug () << "kpMainWindow::actionShowGridUpdate()" << endl;
 #endif
     const bool enable = (viewMenuDocumentActionsEnabled () &&
-                         m_mainView && m_mainView->canShowGrid ());
+                         d->mainView && d->mainView->canShowGrid ());
 
-    m_actionShowGrid->setEnabled (enable);
-    m_actionShowGrid->setChecked (enable && m_configShowGrid);
+    d->actionShowGrid->setEnabled (enable);
+    d->actionShowGrid->setChecked (enable && d->configShowGrid);
 }
 
 
@@ -222,8 +222,8 @@ void kpMainWindow::sendZoomListToActionZoom ()
 {
     QStringList items;
 
-    const QList <int>::ConstIterator zoomListEnd (m_zoomList.end ());
-    for (QList <int>::ConstIterator it = m_zoomList.begin ();
+    const QList <int>::ConstIterator zoomListEnd (d->zoomList.end ());
+    for (QList <int>::ConstIterator it = d->zoomList.begin ();
          it != zoomListEnd;
          it++)
     {
@@ -233,10 +233,10 @@ void kpMainWindow::sendZoomListToActionZoom ()
     // Work around a KDE bug - KSelectAction::setItems() enables the action.
     // David Faure said it won't be fixed because it's a feature used by
     // KRecentFilesAction.
-    bool e = m_actionZoom->isEnabled ();
-    m_actionZoom->setItems (items);
-    if (e != m_actionZoom->isEnabled ())
-        m_actionZoom->setEnabled (e);
+    bool e = d->actionZoom->isEnabled ();
+    d->actionZoom->setItems (items);
+    if (e != d->actionZoom->isEnabled ())
+        d->actionZoom->setEnabled (e);
 }
 
 
@@ -255,7 +255,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
 
 // mute point since the thumbnail suffers from this too
 #if 0
-    else if (m_mainView && m_mainView->zoomLevelX () % 100 == 0 && zoomLevel % 100)
+    else if (d->mainView && d->mainView->zoomLevelX () % 100 == 0 && zoomLevel % 100)
     {
         if (KMessageBox::warningContinueCancel (this,
             i18n ("Setting the zoom level to a value that is not a multiple of 100% "
@@ -266,19 +266,19 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
             i18n ("Set Zoom Level to %1%", zoomLevel),
             "DoNotAskAgain_ZoomLevelNotMultipleOf100") != KMessageBox::Continue)
         {
-            zoomLevel = m_mainView->zoomLevelX ();
+            zoomLevel = d->mainView->zoomLevelX ();
         }
     }
 #endif
 
     int index = 0;
-    QList <int>::Iterator it = m_zoomList.begin ();
+    QList <int>::Iterator it = d->zoomList.begin ();
 
-    while (index < (int) m_zoomList.count () && zoomLevel > *it)
+    while (index < (int) d->zoomList.count () && zoomLevel > *it)
         it++, index++;
 
     if (zoomLevel != *it)
-        m_zoomList.insert (it, zoomLevel);
+        d->zoomList.insert (it, zoomLevel);
 
     // OPT: We get called twice on startup.  sendZoomListToActionZoom() is very slow.
     sendZoomListToActionZoom ();
@@ -286,70 +286,70 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tsetCurrentItem(" << index << ")" << endl;
 #endif
-    m_actionZoom->setCurrentItem (index);
+    d->actionZoom->setCurrentItem (index);
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tcurrentItem="
-              << m_actionZoom->currentItem ()
+              << d->actionZoom->currentItem ()
               << " action="
-              << m_actionZoom->action (m_actionZoom->currentItem ())
+              << d->actionZoom->action (d->actionZoom->currentItem ())
               << " checkedAction"
-              << m_actionZoom->selectableActionGroup ()->checkedAction ()
+              << d->actionZoom->selectableActionGroup ()->checkedAction ()
               << endl;;
 #endif
 
 
     if (viewMenuDocumentActionsEnabled ())
     {
-        m_actionActualSize->setEnabled (zoomLevel != 100);
+        d->actionActualSize->setEnabled (zoomLevel != 100);
 
-        m_actionZoomIn->setEnabled (m_actionZoom->currentItem () < (int) m_zoomList.count () - 1);
-        m_actionZoomOut->setEnabled (m_actionZoom->currentItem () > 0);
+        d->actionZoomIn->setEnabled (d->actionZoom->currentItem () < (int) d->zoomList.count () - 1);
+        d->actionZoomOut->setEnabled (d->actionZoom->currentItem () > 0);
     }
 
 
-    if (m_viewManager)
-        m_viewManager->setQueueUpdates ();
+    if (d->viewManager)
+        d->viewManager->setQueueUpdates ();
 
 
-    if (m_scrollView)
+    if (d->scrollView)
     {
-        m_scrollView->setUpdatesEnabled (false);
-        if (m_scrollView->viewport ())
-            m_scrollView->viewport ()->setUpdatesEnabled (false);
+        d->scrollView->setUpdatesEnabled (false);
+        if (d->scrollView->viewport ())
+            d->scrollView->viewport ()->setUpdatesEnabled (false);
     }
 
-    if (m_mainView)
+    if (d->mainView)
     {
-        m_mainView->setUpdatesEnabled (false);
+        d->mainView->setUpdatesEnabled (false);
 
-        if (m_scrollView && m_scrollView->viewport ())
+        if (d->scrollView && d->scrollView->viewport ())
         {
         // COMPAT: when we use a more flexible scrollView, this flicker problem goes away.
         //         In the meantime, Qt4 does not let us draw outside paintEvent().
         #if 0
             // Ordinary flicker is better than the whole view moving
-            QPainter p (m_mainView);
-            p.fillRect (m_mainView->rect (),
-                        m_scrollView->viewport ()->colorGroup ().background ());
+            QPainter p (d->mainView);
+            p.fillRect (d->mainView->rect (),
+                        d->scrollView->viewport ()->colorGroup ().background ());
         #endif
         }
     }
 
 
-    if (m_scrollView && m_mainView)
+    if (d->scrollView && d->mainView)
     {
     #if DEBUG_KP_MAIN_WINDOW && 1
-        kDebug () << "\tscrollView   contentsX=" << m_scrollView->contentsX ()
-                   << " contentsY=" << m_scrollView->contentsY ()
-                   << " contentsWidth=" << m_scrollView->contentsWidth ()
-                   << " contentsHeight=" << m_scrollView->contentsHeight ()
-                   << " visibleWidth=" << m_scrollView->visibleWidth ()
-                   << " visibleHeight=" << m_scrollView->visibleHeight ()
-                   << " oldZoomX=" << m_mainView->zoomLevelX ()
-                   << " oldZoomY=" << m_mainView->zoomLevelY ()
+        kDebug () << "\tscrollView   contentsX=" << d->scrollView->contentsX ()
+                   << " contentsY=" << d->scrollView->contentsY ()
+                   << " contentsWidth=" << d->scrollView->contentsWidth ()
+                   << " contentsHeight=" << d->scrollView->contentsHeight ()
+                   << " visibleWidth=" << d->scrollView->visibleWidth ()
+                   << " visibleHeight=" << d->scrollView->visibleHeight ()
+                   << " oldZoomX=" << d->mainView->zoomLevelX ()
+                   << " oldZoomY=" << d->mainView->zoomLevelY ()
                    << " newZoom=" << zoomLevel
-                   << " mainViewX=" << m_scrollView->childX (m_mainView)
-                   << " mainViewY=" << m_scrollView->childY (m_mainView)
+                   << " mainViewX=" << d->scrollView->childX (d->mainView)
+                   << " mainViewY=" << d->scrollView->childY (d->mainView)
                   << endl;
     #endif
 
@@ -366,9 +366,9 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         double targetDocX = -1, targetDocY = -1;
 
         if (centerUnderCursor &&
-            m_viewManager && m_viewManager->viewUnderCursor ())
+            d->viewManager && d->viewManager->viewUnderCursor ())
         {
-            kpView *const vuc = m_viewManager->viewUnderCursor ();
+            kpView *const vuc = d->viewManager->viewUnderCursor ();
             QPoint viewPoint = vuc->mouseViewPoint ();
 
             // vuc->transformViewToDoc() returns QPoint which only has int
@@ -377,44 +377,44 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
             targetDocY = vuc->transformViewToDocY (viewPoint.y ());
             targetDocAvail = true;
 
-            if (vuc != m_mainView)
-                viewPoint = vuc->transformViewToOtherView (viewPoint, m_mainView);
+            if (vuc != d->mainView)
+                viewPoint = vuc->transformViewToOtherView (viewPoint, d->mainView);
 
             viewX = viewPoint.x ();
             viewY = viewPoint.y ();
         }
         else
         {
-            viewX = m_scrollView->contentsX () +
-                        qMin (m_mainView->width (),
-                              m_scrollView->visibleWidth ()) / 2;
-            viewY = m_scrollView->contentsY () +
-                        qMin (m_mainView->height (),
-                              m_scrollView->visibleHeight ()) / 2;
+            viewX = d->scrollView->contentsX () +
+                        qMin (d->mainView->width (),
+                              d->scrollView->visibleWidth ()) / 2;
+            viewY = d->scrollView->contentsY () +
+                        qMin (d->mainView->height (),
+                              d->scrollView->visibleHeight ()) / 2;
         }
 
-        int newCenterX = viewX * zoomLevel / m_mainView->zoomLevelX ();
-        int newCenterY = viewY * zoomLevel / m_mainView->zoomLevelY ();
+        int newCenterX = viewX * zoomLevel / d->mainView->zoomLevelX ();
+        int newCenterY = viewY * zoomLevel / d->mainView->zoomLevelY ();
 
-        m_mainView->setZoomLevel (zoomLevel, zoomLevel);
+        d->mainView->setZoomLevel (zoomLevel, zoomLevel);
 
     #if DEBUG_KP_MAIN_WINDOW && 1
-        kDebug () << "\tvisibleWidth=" << m_scrollView->visibleWidth ()
-                    << " visibleHeight=" << m_scrollView->visibleHeight ()
+        kDebug () << "\tvisibleWidth=" << d->scrollView->visibleWidth ()
+                    << " visibleHeight=" << d->scrollView->visibleHeight ()
                     << endl;
         kDebug () << "\tnewCenterX=" << newCenterX
                     << " newCenterY=" << newCenterY << endl;
     #endif
 
-        m_scrollView->center (newCenterX, newCenterY);
+        d->scrollView->center (newCenterX, newCenterY);
 
     // COMPAT: no more QWidget::clipRegion()
     #if 0
         if (centerUnderCursor &&
             targetDocAvail &&
-            m_viewManager && m_viewManager->viewUnderCursor ())
+            d->viewManager && d->viewManager->viewUnderCursor ())
         {
-            kpView *const vuc = m_viewManager->viewUnderCursor ();
+            kpView *const vuc = d->viewManager->viewUnderCursor ();
 
         #if DEBUG_KP_MAIN_WINDOW
             kDebug () << "\tcenterUnderCursor: reposition cursor; viewUnderCursor="
@@ -476,13 +476,13 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
     #endif  // COMPAT
 
     #if DEBUG_KP_MAIN_WINDOW && 1
-        kDebug () << "\t\tcheck (contentsX=" << m_scrollView->contentsX ()
-                    << ",contentsY=" << m_scrollView->contentsY ()
+        kDebug () << "\t\tcheck (contentsX=" << d->scrollView->contentsX ()
+                    << ",contentsY=" << d->scrollView->contentsY ()
                     << ")" << endl;
     #endif
     }
 
-    if (m_mainView)
+    if (d->mainView)
     {
         actionShowGridUpdate ();
         updateMainViewGrid ();
@@ -490,7 +490,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         // Since Zoom Level KSelectAction on ToolBar grabs focus after changing
         // Zoom, switch back to the Main View.
         // TODO: back to the last view
-        m_mainView->setFocus ();
+        d->mainView->setFocus ();
 
     }
 
@@ -501,7 +501,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
     // HACK: make sure all of Qt's update() calls trigger
     //       kpView::paintEvent() _now_ so that they can be queued by us
     //       (until kpViewManager::restoreQueueUpdates()) to reduce flicker
-    //       caused mainly by m_scrollView->center()
+    //       caused mainly by d->scrollView->center()
     //
     // TODO: remove flicker completely
     //QTimer::singleShot (0, this, SLOT (finishZoomTo ()));
@@ -521,29 +521,29 @@ void kpMainWindow::finishZoomTo ()
     // TODO: setUpdatesEnabled() should really return to old value
     //       - not neccessarily "true"
 
-    if (m_mainView)
+    if (d->mainView)
     {
-        m_mainView->setUpdatesEnabled (true);
-        m_mainView->update ();
+        d->mainView->setUpdatesEnabled (true);
+        d->mainView->update ();
     }
 
-    if (m_scrollView)
+    if (d->scrollView)
     {
-        if (m_scrollView->viewport ())
+        if (d->scrollView->viewport ())
         {
-            m_scrollView->viewport ()->setUpdatesEnabled (true);
-            m_scrollView->viewport ()->update ();
+            d->scrollView->viewport ()->setUpdatesEnabled (true);
+            d->scrollView->viewport ()->update ();
         }
 
-        m_scrollView->setUpdatesEnabled (true);
-        m_scrollView->update ();
+        d->scrollView->setUpdatesEnabled (true);
+        d->scrollView->update ();
     }
 
 
-    if (m_viewManager && m_viewManager->queueUpdates ()/*just in case*/)
-        m_viewManager->restoreQueueUpdates ();
+    if (d->viewManager && d->viewManager->queueUpdates ()/*just in case*/)
+        d->viewManager->restoreQueueUpdates ();
 
-    setStatusBarZoom (m_mainView ? m_mainView->zoomLevelX () : 0);
+    setStatusBarZoom (d->mainView ? d->mainView->zoomLevelX () : 0);
 
 #if DEBUG_KP_MAIN_WINDOW && 1
     kDebug () << "\tkpMainWindow::finishZoomTo done" << endl;
@@ -560,7 +560,7 @@ void kpMainWindow::slotActualSize ()
 // private slot
 void kpMainWindow::slotFitToPage ()
 {
-    if (!m_scrollView || !m_document)
+    if (!d->scrollView || !d->document)
         return;
 
     // doc_width * zoom / 100 <= view_width &&
@@ -570,16 +570,16 @@ void kpMainWindow::slotFitToPage ()
     zoomTo (
         qMin (kpView::MaxZoomLevel,
               qMax (1,
-                    qMin (m_scrollView->visibleWidth () * 100 /
-                            m_document->width (),
-                          m_scrollView->visibleHeight () * 100 /
-                            m_document->height ()))));
+                    qMin (d->scrollView->visibleWidth () * 100 /
+                            d->document->width (),
+                          d->scrollView->visibleHeight () * 100 /
+                            d->document->height ()))));
 }
 
 // private slot
 void kpMainWindow::slotFitToWidth ()
 {
-    if (!m_scrollView || !m_document)
+    if (!d->scrollView || !d->document)
         return;
 
     // doc_width * zoom / 100 <= view_width &&
@@ -588,14 +588,14 @@ void kpMainWindow::slotFitToWidth ()
     zoomTo (
         qMin (kpView::MaxZoomLevel,
               qMax (1,
-                    m_scrollView->visibleWidth () * 100 /
-                        m_document->width ())));
+                    d->scrollView->visibleWidth () * 100 /
+                        d->document->width ())));
 }
 
 // private slot
 void kpMainWindow::slotFitToHeight ()
 {
-    if (!m_scrollView || !m_document)
+    if (!d->scrollView || !d->document)
         return;
 
     // doc_height * zoom / 100 <= view_height &&
@@ -604,8 +604,8 @@ void kpMainWindow::slotFitToHeight ()
     zoomTo (
         qMin (kpView::MaxZoomLevel,
               qMax (1,
-                    m_scrollView->visibleHeight () * 100 /
-                        m_document->height ())));
+                    d->scrollView->visibleHeight () * 100 /
+                        d->document->height ())));
 }
 
 
@@ -615,18 +615,18 @@ void kpMainWindow::zoomIn (bool centerUnderCursor)
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::zoomIn(centerUnderCursor="
               << centerUnderCursor << ") currentItem="
-              << m_actionZoom->currentItem ()
+              << d->actionZoom->currentItem ()
               << endl;
 #endif
-    const int targetItem = m_actionZoom->currentItem () + 1;
+    const int targetItem = d->actionZoom->currentItem () + 1;
 
-    if (targetItem >= (int) m_zoomList.count ())
+    if (targetItem >= (int) d->zoomList.count ())
         return;
 
-    m_actionZoom->setCurrentItem (targetItem);
+    d->actionZoom->setCurrentItem (targetItem);
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tnew currentItem=" << m_actionZoom->currentItem () << endl;
+    kDebug () << "\tnew currentItem=" << d->actionZoom->currentItem () << endl;
 #endif
 
     zoomAccordingToZoomAction (centerUnderCursor);
@@ -638,18 +638,18 @@ void kpMainWindow::zoomOut (bool centerUnderCursor)
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::zoomOut(centerUnderCursor="
               << centerUnderCursor << ") currentItem="
-              << m_actionZoom->currentItem ()
+              << d->actionZoom->currentItem ()
               << endl;
 #endif
-    const int targetItem = m_actionZoom->currentItem () - 1;
+    const int targetItem = d->actionZoom->currentItem () - 1;
 
     if (targetItem < 0)
         return;
 
-    m_actionZoom->setCurrentItem (targetItem);
+    d->actionZoom->setCurrentItem (targetItem);
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tnew currentItem=" << m_actionZoom->currentItem () << endl;
+    kDebug () << "\tnew currentItem=" << d->actionZoom->currentItem () << endl;
 #endif
 
     zoomAccordingToZoomAction (centerUnderCursor);
@@ -683,13 +683,13 @@ void kpMainWindow::zoomAccordingToZoomAction (bool centerUnderCursor)
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::zoomAccordingToZoomAction(centerUnderCursor="
               << centerUnderCursor
-              << ") currentItem=" << m_actionZoom->currentItem ()
-              << " currentText=" << m_actionZoom->currentText ()
+              << ") currentItem=" << d->actionZoom->currentItem ()
+              << " currentText=" << d->actionZoom->currentText ()
               << endl;
 #endif
 
     // This might be a new zoom level the user has typed in.
-    zoomTo (::ZoomLevelFromString (m_actionZoom->currentText ()),
+    zoomTo (::ZoomLevelFromString (d->actionZoom->currentText ()),
                                    centerUnderCursor);
 }
 
@@ -697,8 +697,8 @@ void kpMainWindow::zoomAccordingToZoomAction (bool centerUnderCursor)
 void kpMainWindow::slotZoom ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotZoom () index=" << m_actionZoom->currentItem ()
-               << " text='" << m_actionZoom->currentText () << "'" << endl;
+    kDebug () << "kpMainWindow::slotZoom () index=" << d->actionZoom->currentItem ()
+               << " text='" << d->actionZoom->currentText () << "'" << endl;
 #endif
 
     zoomAccordingToZoomAction (false/*don't center under cursor*/);
@@ -717,7 +717,7 @@ void kpMainWindow::slotShowGridToggled ()
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
-    cfg.writeEntry (kpSettingShowGrid, m_configShowGrid = m_actionShowGrid->isChecked ());
+    cfg.writeEntry (kpSettingShowGrid, d->configShowGrid = d->actionShowGrid->isChecked ());
     cfg.sync ();
 }
 
@@ -728,8 +728,8 @@ void kpMainWindow::updateMainViewGrid ()
     kDebug () << "kpMainWindow::updateMainViewGrid ()" << endl;
 #endif
 
-    if (m_mainView)
-        m_mainView->showGrid (m_actionShowGrid->isChecked ());
+    if (d->mainView)
+        d->mainView->showGrid (d->actionShowGrid->isChecked ());
 }
 
 
@@ -758,7 +758,7 @@ void kpMainWindow::slotDestroyThumbnail ()
     kDebug () << "kpMainWindow::slotDestroyThumbnail()" << endl;
 #endif
 
-    m_actionShowThumbnail->setChecked (false);
+    d->actionShowThumbnail->setChecked (false);
     enableThumbnailOptionActions (false);
     updateThumbnail ();
 }
@@ -770,7 +770,7 @@ void kpMainWindow::slotDestroyThumbnailInitatedByUser ()
     kDebug () << "kpMainWindow::slotDestroyThumbnailInitiatedByUser()" << endl;
 #endif
 
-    m_actionShowThumbnail->setChecked (false);
+    d->actionShowThumbnail->setChecked (false);
     slotShowThumbnailToggled ();
 }
 
@@ -781,7 +781,7 @@ void kpMainWindow::slotCreateThumbnail ()
     kDebug () << "kpMainWindow::slotCreateThumbnail()" << endl;
 #endif
 
-    m_actionShowThumbnail->setChecked (true);
+    d->actionShowThumbnail->setChecked (true);
     enableThumbnailOptionActions (true);
     updateThumbnail ();
 }
@@ -793,16 +793,16 @@ void kpMainWindow::notifyThumbnailGeometryChanged ()
     kDebug () << "kpMainWindow::notifyThumbnailGeometryChanged()" << endl;
 #endif
 
-    if (!m_thumbnailSaveConfigTimer)
+    if (!d->thumbnailSaveConfigTimer)
     {
-        m_thumbnailSaveConfigTimer = new QTimer (this);
-        m_thumbnailSaveConfigTimer->setSingleShot (true);
-        connect (m_thumbnailSaveConfigTimer, SIGNAL (timeout ()),
+        d->thumbnailSaveConfigTimer = new QTimer (this);
+        d->thumbnailSaveConfigTimer->setSingleShot (true);
+        connect (d->thumbnailSaveConfigTimer, SIGNAL (timeout ()),
                  this, SLOT (slotSaveThumbnailGeometry ()));
     }
 
     // (single shot)
-    m_thumbnailSaveConfigTimer->start (500/*msec*/);
+    d->thumbnailSaveConfigTimer->start (500/*msec*/);
 }
 
 // private slot
@@ -812,26 +812,26 @@ void kpMainWindow::slotSaveThumbnailGeometry ()
     kDebug () << "kpMainWindow::saveThumbnailGeometry()" << endl;
 #endif
 
-    if (!m_thumbnail)
+    if (!d->thumbnail)
         return;
 
-    QRect rect (m_thumbnail->x (), m_thumbnail->y (),
-                m_thumbnail->width (), m_thumbnail->height ());
+    QRect rect (d->thumbnail->x (), d->thumbnail->y (),
+                d->thumbnail->width (), d->thumbnail->height ());
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tthumbnail relative geometry=" << rect << endl;
 #endif
 
-    m_configThumbnailGeometry = mapFromGlobal (rect);
+    d->configThumbnailGeometry = mapFromGlobal (rect);
 
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tCONFIG: saving thumbnail geometry "
-                << m_configThumbnailGeometry
+                << d->configThumbnailGeometry
                 << endl;
 #endif
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
 
-    cfg.writeEntry (kpSettingThumbnailGeometry, m_configThumbnailGeometry);
+    cfg.writeEntry (kpSettingThumbnailGeometry, d->configThumbnailGeometry);
     cfg.sync ();
 }
 
@@ -842,15 +842,15 @@ void kpMainWindow::slotShowThumbnailToggled ()
     kDebug () << "kpMainWindow::slotShowThumbnailToggled()" << endl;
 #endif
 
-    m_configThumbnailShown = m_actionShowThumbnail->isChecked ();
+    d->configThumbnailShown = d->actionShowThumbnail->isChecked ();
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
 
-    cfg.writeEntry (kpSettingThumbnailShown, m_configThumbnailShown);
+    cfg.writeEntry (kpSettingThumbnailShown, d->configThumbnailShown);
     cfg.sync ();
 
 
-    enableThumbnailOptionActions (m_actionShowThumbnail->isChecked ());
+    enableThumbnailOptionActions (d->actionShowThumbnail->isChecked ());
     updateThumbnail ();
 }
 
@@ -859,10 +859,10 @@ void kpMainWindow::updateThumbnailZoomed ()
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::updateThumbnailZoomed() zoomed="
-               << m_actionZoomedThumbnail->isChecked () << endl;
+               << d->actionZoomedThumbnail->isChecked () << endl;
 #endif
 
-    if (!m_thumbnailView)
+    if (!d->thumbnailView)
         return;
 
     destroyThumbnailView ();
@@ -876,11 +876,11 @@ void kpMainWindow::slotZoomedThumbnailToggled ()
     kDebug () << "kpMainWindow::slotZoomedThumbnailToggled()" << endl;
 #endif
 
-    m_configZoomedThumbnail = m_actionZoomedThumbnail->isChecked ();
+    d->configZoomedThumbnail = d->actionZoomedThumbnail->isChecked ();
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
 
-    cfg.writeEntry (kpSettingThumbnailZoomed, m_configZoomedThumbnail);
+    cfg.writeEntry (kpSettingThumbnailZoomed, d->configZoomedThumbnail);
     cfg.sync ();
 
 
@@ -894,18 +894,18 @@ void kpMainWindow::slotThumbnailShowRectangleToggled ()
     kDebug () << "kpMainWindow::slotThumbnailShowRectangleToggled()" << endl;
 #endif
 
-    d->m_configThumbnailShowRectangle = d->m_actionShowThumbnailRectangle->isChecked ();
+    d->configThumbnailShowRectangle = d->actionShowThumbnailRectangle->isChecked ();
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
 
-    cfg.writeEntry (kpSettingThumbnailShowRectangle, d->m_configThumbnailShowRectangle);
+    cfg.writeEntry (kpSettingThumbnailShowRectangle, d->configThumbnailShowRectangle);
     cfg.sync ();
 
 
-    if (m_thumbnailView)
+    if (d->thumbnailView)
     {
-        m_thumbnailView->showBuddyViewScrollableContainerRectangle (
-            d->m_actionShowThumbnailRectangle->isChecked ());
+        d->thumbnailView->showBuddyViewScrollableContainerRectangle (
+            d->actionShowThumbnailRectangle->isChecked ());
     }
 }
 
@@ -916,12 +916,12 @@ void kpMainWindow::enableViewZoomedThumbnail (bool enable)
     kDebug () << "kpMainWindow::enableSettingsViewZoomedThumbnail()" << endl;
 #endif
 
-    m_actionZoomedThumbnail->setEnabled (enable &&
-        m_actionShowThumbnail->isChecked ());
+    d->actionZoomedThumbnail->setEnabled (enable &&
+        d->actionShowThumbnail->isChecked ());
 
     // Note: Don't uncheck if disabled - being able to see the zoomed state
     //       before turning on the thumbnail can be useful.
-    m_actionZoomedThumbnail->setChecked (m_configZoomedThumbnail);
+    d->actionZoomedThumbnail->setChecked (d->configZoomedThumbnail);
 }
 
 // private
@@ -931,13 +931,13 @@ void kpMainWindow::enableViewShowThumbnailRectangle (bool enable)
     kDebug () << "kpMainWindow::enableViewShowThumbnailRectangle()" << endl;
 #endif
 
-    d->m_actionShowThumbnailRectangle->setEnabled (enable &&
-        m_actionShowThumbnail->isChecked ());
+    d->actionShowThumbnailRectangle->setEnabled (enable &&
+        d->actionShowThumbnail->isChecked ());
 
     // Note: Don't uncheck if disabled for consistency with
     //       enableViewZoomedThumbnail()
-    d->m_actionShowThumbnailRectangle->setChecked (
-        d->m_configThumbnailShowRectangle);
+    d->actionShowThumbnailRectangle->setChecked (
+        d->configThumbnailShowRectangle);
 }
 
 // private
@@ -955,63 +955,63 @@ void kpMainWindow::createThumbnailView ()
     kDebug () << "\t\tcreating new kpView:" << endl;
 #endif
 
-    if (m_thumbnailView)
+    if (d->thumbnailView)
     {
         kDebug () << "kpMainWindow::createThumbnailView() had to destroy view" << endl;
         destroyThumbnailView ();
     }
 
-    if (m_actionZoomedThumbnail->isChecked ())
+    if (d->actionZoomedThumbnail->isChecked ())
     {
-        m_thumbnailView = new kpZoomedThumbnailView (
-            m_document, m_toolToolBar, m_viewManager,
-            m_mainView,
+        d->thumbnailView = new kpZoomedThumbnailView (
+            d->document, d->toolToolBar, d->viewManager,
+            d->mainView,
             0/*scrollableContainer*/,
-            m_thumbnail );
-        m_thumbnailView->setObjectName ("thumbnailView");
+            d->thumbnail );
+        d->thumbnailView->setObjectName ("thumbnailView");
     }
     else
     {
-        m_thumbnailView = new kpUnzoomedThumbnailView (
-            m_document, m_toolToolBar, m_viewManager,
-            m_mainView,
+        d->thumbnailView = new kpUnzoomedThumbnailView (
+            d->document, d->toolToolBar, d->viewManager,
+            d->mainView,
             0/*scrollableContainer*/,
-            m_thumbnail);
-        m_thumbnailView->setObjectName ("thumbnailView");
+            d->thumbnail);
+        d->thumbnailView->setObjectName ("thumbnailView");
     }
 
-    m_thumbnailView->showBuddyViewScrollableContainerRectangle (
-        d->m_actionShowThumbnailRectangle->isChecked ());
+    d->thumbnailView->showBuddyViewScrollableContainerRectangle (
+        d->actionShowThumbnailRectangle->isChecked ());
 
 
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\t\tgive kpThumbnail the kpView:" << endl;
 #endif
-    if (m_thumbnail)
-        m_thumbnail->setView (m_thumbnailView);
+    if (d->thumbnail)
+        d->thumbnail->setView (d->thumbnailView);
     else
         kError () << "kpMainWindow::createThumbnailView() no thumbnail" << endl;
 
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\t\tregistering the kpView:" << endl;
 #endif
-    if (m_viewManager)
-        m_viewManager->registerView (m_thumbnailView);
+    if (d->viewManager)
+        d->viewManager->registerView (d->thumbnailView);
 }
 
 // private
 void kpMainWindow::destroyThumbnailView ()
 {
-    if (!m_thumbnailView)
+    if (!d->thumbnailView)
         return;
 
-    if (m_viewManager)
-        m_viewManager->unregisterView (m_thumbnailView);
+    if (d->viewManager)
+        d->viewManager->unregisterView (d->thumbnailView);
 
-    if (m_thumbnail)
-        m_thumbnail->setView (0);
+    if (d->thumbnail)
+        d->thumbnail->setView (0);
 
-    m_thumbnailView->deleteLater (); m_thumbnailView = 0;
+    d->thumbnailView->deleteLater (); d->thumbnailView = 0;
 }
 
 
@@ -1021,20 +1021,20 @@ void kpMainWindow::updateThumbnail ()
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::updateThumbnail()" << endl;
 #endif
-    bool enable = m_actionShowThumbnail->isChecked ();
+    bool enable = d->actionShowThumbnail->isChecked ();
 
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tthumbnail="
-               << bool (m_thumbnail)
+               << bool (d->thumbnail)
                << " action_isChecked="
                << enable
                << endl;
 #endif
 
-    if (bool (m_thumbnail) == enable)
+    if (bool (d->thumbnail) == enable)
         return;
 
-    if (!m_thumbnail)
+    if (!d->thumbnail)
     {
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\tcreating thumbnail" << endl;
@@ -1042,12 +1042,12 @@ void kpMainWindow::updateThumbnail ()
 
         // Read last saved geometry before creating thumbnail & friends
         // in case they call notifyThumbnailGeometryChanged()
-        QRect thumbnailGeometry = m_configThumbnailGeometry;
+        QRect thumbnailGeometry = d->configThumbnailGeometry;
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\t\tlast used geometry=" << thumbnailGeometry << endl;
     #endif
 
-        m_thumbnail = new kpThumbnail (this);
+        d->thumbnail = new kpThumbnail (this);
 
         createThumbnailView ();
 
@@ -1058,18 +1058,18 @@ void kpMainWindow::updateThumbnail ()
             QRect (0, 0, width (), height ()).intersects (thumbnailGeometry))
         {
             const QRect geometry = mapToGlobal (thumbnailGeometry);
-            m_thumbnail->resize (geometry.size ());
-            m_thumbnail->move (geometry.topLeft ());
+            d->thumbnail->resize (geometry.size ());
+            d->thumbnail->move (geometry.topLeft ());
         }
         else
         {
-            if (m_scrollView)
+            if (d->scrollView)
             {
                 const int margin = 20;
                 const int initialWidth = 160, initialHeight = 120;
 
                 QRect geometryRect (width () - initialWidth - margin * 2,
-                                    m_scrollView->y () + margin,
+                                    d->scrollView->y () + margin,
                                     initialWidth,
                                     initialHeight);
 
@@ -1081,20 +1081,20 @@ void kpMainWindow::updateThumbnail ()
             #if DEBUG_KP_MAIN_WINDOW
                 kDebug () << "\t\tmap to global=" << geometryRect << endl;
             #endif
-                m_thumbnail->resize (geometryRect.size ());
-                m_thumbnail->move (geometryRect.topLeft ());
+                d->thumbnail->resize (geometryRect.size ());
+                d->thumbnail->move (geometryRect.topLeft ());
             }
         }
 
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\t\tshowing thumbnail" << endl;
     #endif
-        m_thumbnail->show ();
+        d->thumbnail->show ();
 
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\t\tconnecting thumbnail::visibilityChange to destroy slot" << endl;
     #endif
-        connect (m_thumbnail, SIGNAL (windowClosed ()),
+        connect (d->thumbnail, SIGNAL (windowClosed ()),
                  this, SLOT (slotDestroyThumbnailInitatedByUser ()));
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\t\tDONE" << endl;
@@ -1103,28 +1103,28 @@ void kpMainWindow::updateThumbnail ()
     else
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tdestroying thumbnail m_thumbnail="
-            << m_thumbnail << endl;
+        kDebug () << "\tdestroying thumbnail d->thumbnail="
+            << d->thumbnail << endl;
     #endif
 
-        if (m_thumbnailSaveConfigTimer && m_thumbnailSaveConfigTimer->isActive ())
+        if (d->thumbnailSaveConfigTimer && d->thumbnailSaveConfigTimer->isActive ())
         {
-            m_thumbnailSaveConfigTimer->stop ();
+            d->thumbnailSaveConfigTimer->stop ();
             slotSaveThumbnailGeometry ();
         }
 
         // Must be done before hiding the thumbnail to avoid triggering
         // this signal - re-entering this code.
-        disconnect (m_thumbnail, SIGNAL (windowClosed ()),
+        disconnect (d->thumbnail, SIGNAL (windowClosed ()),
                     this, SLOT (slotDestroyThumbnailInitatedByUser ()));
 
         // Avoid change/flicker of caption due to view delete
         // (destroyThumbnailView())
-        m_thumbnail->hide ();
+        d->thumbnail->hide ();
 
         destroyThumbnailView ();
 
-        m_thumbnail->deleteLater (); m_thumbnail = 0;
+        d->thumbnail->deleteLater (); d->thumbnail = 0;
     }
 }
 
