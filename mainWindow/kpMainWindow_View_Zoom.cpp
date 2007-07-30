@@ -34,7 +34,6 @@
 #include <qtimer.h>
 
 #include <kapplication.h>
-#include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kselectaction.h>
@@ -53,8 +52,6 @@
 #include <kpWidgetMapper.h>
 #include <kpZoomedView.h>
 #include <kpZoomedThumbnailView.h>
-#include <kglobal.h>
-#include <kconfiggroup.h>
 
 
 static int ZoomLevelFromString (const QString &stringIn)
@@ -108,7 +105,7 @@ void kpMainWindow::setupViewMenuZoomActions ()
     d->actionZoomOut = KStandardAction::zoomOut (this, SLOT (slotZoomOut ()), ac);
 
 
-    d->actionZoom = ac->add <KSelectAction> ("view_zood->to");
+    d->actionZoom = ac->add <KSelectAction> ("view_zoom_to");
     d->actionZoom->setText (i18n ("&Zoom"));
     connect (d->actionZoom, SIGNAL (triggered (QAction *)), SLOT (slotZoom ()));
     d->actionZoom->setEditable (true);

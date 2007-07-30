@@ -135,7 +135,7 @@ void kpMainWindow::setupEditMenuActions ()
     d->actionCopyToFile->setText (i18n ("C&opy to File..."));
     connect (d->actionCopyToFile, SIGNAL (triggered (bool)),
         SLOT (slotCopyToFile ()));
-    d->actionPasteFromFile = ac->addAction ("edit_paste_frod->file");
+    d->actionPasteFromFile = ac->addAction ("edit_paste_from_file");
     d->actionPasteFromFile->setText (i18n ("Paste &From File..."));
     connect (d->actionPasteFromFile, SIGNAL (triggered (bool)),
         SLOT (slotPasteFromFile ()));

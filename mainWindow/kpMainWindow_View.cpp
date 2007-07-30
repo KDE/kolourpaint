@@ -35,7 +35,9 @@
 
 #include <kapplication.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kdebug.h>
+#include <kglobal.h>
 #include <klocale.h>
 #include <kselectaction.h>
 #include <kstandardaction.h>
@@ -53,8 +55,6 @@
 #include <kpWidgetMapper.h>
 #include <kpZoomedView.h>
 #include <kpZoomedThumbnailView.h>
-#include <kglobal.h>
-#include <kconfiggroup.h>
 
 
 // private
