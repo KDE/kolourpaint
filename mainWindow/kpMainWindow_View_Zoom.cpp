@@ -168,17 +168,16 @@ void kpMainWindow::sendZoomListToActionZoom ()
 
 
 // private
-void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
+void kpMainWindow::zoomToPre (int zoomLevel)
 {
     // We're called quite early in the init process and/or when there might
     // not be a document or a view so we have a lot of "if (ptr)" guards.
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::zoomTo (" << zoomLevel << ")" << endl;
+    kDebug () << "kpMainWindow::zoomToPre(" << zoomLevel << ")" << endl;
 #endif
 
-    Q_ASSERT (zoomLevel >= kpView::MinZoomLevel &&
-              zoomLevel <= kpView::MaxZoomLevel);
+    zoomLevel = qBound (kpView::MinZoomLevel, zoomLevel, kpView::MaxZoomLevel);
 
 // mute point since the thumbnail suffers from this too
 #if 0
@@ -261,6 +260,79 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         #endif
         }
     }
+}
+
+// private
+void kpMainWindow::zoomToPost ()
+{
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kDebug () << "kpMainWindow::zoomToPost()" << endl;
+#endif
+
+    if (d->mainView)
+    {
+        actionShowGridUpdate ();
+        updateMainViewGrid ();
+
+        // Since Zoom Level KSelectAction on ToolBar grabs focus after changing
+        // Zoom, switch back to the Main View.
+        // TODO: back to the last view
+        d->mainView->setFocus ();
+
+    }
+
+    // The view magnified and moved beneath the cursor
+    if (tool ())
+        tool ()->somethingBelowTheCursorChanged ();
+
+    // HACK: make sure all of Qt's update() calls trigger
+    //       kpView::paintEvent() _now_ so that they can be queued by us
+    //       (until kpViewManager::restoreQueueUpdates()) to reduce flicker
+    //       caused mainly by d->scrollView->center()
+    //
+    // TODO: remove flicker completely
+    //QTimer::singleShot (0, this, SLOT (finishZoomTo ()));
+
+    // Later: I don't think there is an update() that needs to be queued
+    //        - let's reduce latency instead.
+
+    // TODO: setUpdatesEnabled() should really return to old value
+    //       - not neccessarily "true"
+
+    if (d->mainView)
+    {
+        d->mainView->setUpdatesEnabled (true);
+        d->mainView->update ();
+    }
+
+    if (d->scrollView)
+    {
+        if (d->scrollView->viewport ())
+        {
+            d->scrollView->viewport ()->setUpdatesEnabled (true);
+            d->scrollView->viewport ()->update ();
+        }
+
+        d->scrollView->setUpdatesEnabled (true);
+        d->scrollView->update ();
+    }
+
+
+    if (d->viewManager && d->viewManager->queueUpdates ()/*just in case*/)
+        d->viewManager->restoreQueueUpdates ();
+
+    setStatusBarZoom (d->mainView ? d->mainView->zoomLevelX () : 0);
+
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kDebug () << "kpMainWindow::zoomToPost() done" << endl;
+#endif
+}
+
+
+// private
+void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
+{
+    zoomToPre (zoomLevel);
 
 
     if (d->scrollView && d->mainView)
@@ -409,72 +481,50 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
     #endif
     }
 
-    if (d->mainView)
-    {
-        actionShowGridUpdate ();
-        updateMainViewGrid ();
 
-        // Since Zoom Level KSelectAction on ToolBar grabs focus after changing
-        // Zoom, switch back to the Main View.
-        // TODO: back to the last view
-        d->mainView->setFocus ();
-
-    }
-
-    // The view magnified and moved beneath the cursor
-    if (tool ())
-        tool ()->somethingBelowTheCursorChanged ();
-
-    // HACK: make sure all of Qt's update() calls trigger
-    //       kpView::paintEvent() _now_ so that they can be queued by us
-    //       (until kpViewManager::restoreQueueUpdates()) to reduce flicker
-    //       caused mainly by d->scrollView->center()
-    //
-    // TODO: remove flicker completely
-    //QTimer::singleShot (0, this, SLOT (finishZoomTo ()));
-
-    // Later: I don't think there is an update() that needs to be queued
-    //        - let's reduce latency instead.
-    finishZoomTo ();
+    zoomToPost ();
 }
 
-// private slot
-void kpMainWindow::finishZoomTo ()
+// private
+void kpMainWindow::zoomToRect (const QRect &normalizedDocRect)
 {
-#if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "\tkpMainWindow::finishZoomTo enter" << endl;
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "kpMainWindow::zoomToRect(normalizedDocRect="
+              << normalizedDocRect << ")"
+              << " contents: w=" << d->scrollView->width ()
+              << " h=" << d->scrollView->height () << endl;
 #endif
 
-    // TODO: setUpdatesEnabled() should really return to old value
-    //       - not neccessarily "true"
 
-    if (d->mainView)
-    {
-        d->mainView->setUpdatesEnabled (true);
-        d->mainView->update ();
-    }
+    // TODO: Account for the scrollbars.
 
-    if (d->scrollView)
-    {
-        if (d->scrollView->viewport ())
-        {
-            d->scrollView->viewport ()->setUpdatesEnabled (true);
-            d->scrollView->viewport ()->update ();
-        }
+    // We want the selected document rectangle to fill the scroll view.
+    const int zoomX =
+        qMax (1, d->scrollView->width () * 100 / normalizedDocRect.width ());
+    const int zoomY =
+        qMax (1, d->scrollView->height () * 100 / normalizedDocRect.height ());
 
-        d->scrollView->setUpdatesEnabled (true);
-        d->scrollView->update ();
-    }
+    // Since kpView only supports identical horizontal and vertical zooms,
+    // choose the one that will show the greatest amount of document
+    // content.
+    const int zoomLevel = qMin (zoomX, zoomY);
 
-
-    if (d->viewManager && d->viewManager->queueUpdates ()/*just in case*/)
-        d->viewManager->restoreQueueUpdates ();
-
-    setStatusBarZoom (d->mainView ? d->mainView->zoomLevelX () : 0);
-
-#if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "\tkpMainWindow::finishZoomTo done" << endl;
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "\tzoomX=" << zoomX
+        << " zoomY=" << zoomY
+        << " -> zoomLevel=" << zoomLevel << endl;
 #endif
+
+    zoomToPre (zoomLevel);
+    {
+        d->mainView->setZoomLevel (zoomLevel, zoomLevel);
+
+        const QPoint viewPoint =
+            d->mainView->transformDocToView (normalizedDocRect.topLeft ());
+
+        d->scrollView->setContentsPos (viewPoint.x (), viewPoint.y ());
+    }
+    zoomToPost ();
 }
 
 

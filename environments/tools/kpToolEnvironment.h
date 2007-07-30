@@ -35,6 +35,7 @@
 
 class QActionGroup;
 class QPoint;
+class QRect;
 class QString;
 
 class KActionCollection;
@@ -143,6 +144,8 @@ public:
 
     void zoomIn (bool centerUnderCursor = false) const;
     void zoomOut (bool centerUnderCursor = false) const;
+
+    void zoomToRect (const QRect &normalizedDocRect) const;
 
 
 private:

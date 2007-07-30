@@ -203,8 +203,13 @@ void kpToolZoom::releasedAllButtons ()
 }
 
 // public virtual [base kpTool]
-void kpToolZoom::endDraw (const QPoint &, const QRect &)
+void kpToolZoom::endDraw (const QPoint &, const QRect &normalizedRect)
 {
+#if DEBUG_KP_TOOL_ZOOM
+    kDebug () << "kpToolZoom::endDraw(rect=" << normalizedRect << ")"
+        << " dragHasBegun=" << d->dragHasBegun << endl;
+#endif
+
     // TODO: This cursor doesn't stay on for long enough because zooming uses
     //       event loop tricks.
     kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
@@ -224,7 +229,7 @@ void kpToolZoom::endDraw (const QPoint &, const QRect &)
     // Drag?
     else
     {
-        // TODO
+        environ ()->zoomToRect (normalizedRect);
 
         d->dragCompleted = true;
     }

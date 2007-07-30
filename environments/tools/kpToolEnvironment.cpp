@@ -190,4 +190,11 @@ void kpToolEnvironment::zoomOut (bool centerUnderCursor) const
 }
 
 
+// public
+void kpToolEnvironment::zoomToRect (const QRect &normalizedDocRect) const
+{
+    mainWindow ()->zoomToRect (normalizedDocRect);
+}
+
+
 #include <kpToolEnvironment.moc>

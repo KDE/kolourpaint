@@ -419,10 +419,13 @@ private:
 
 private:
     void sendZoomListToActionZoom ();
-    void zoomTo (int zoomLevel, bool centerUnderCursor = false);
 
-private slots:
-    void finishZoomTo ();
+    void zoomToPre (int zoomLevel);
+    void zoomToPost ();
+
+public:
+    void zoomTo (int zoomLevel, bool centerUnderCursor = false);
+    void zoomToRect (const QRect &normalizedDocRect);
 
 private slots:
     void slotActualSize ();
