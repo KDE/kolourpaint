@@ -234,7 +234,8 @@ protected:
     // (this method is called by kpTool just as it is needed - its value
     //  is not cached, so it is allowed to return different things at
     //  different times)
-    // REFACTOR: Misleadingly named.  Is called in endShapeInternal()?
+    // REFACTOR: Misleadingly named as it's also called in cancelShapeInternal().
+    //           And it seems to be called in endShapeInternal() as well?
     virtual bool returnToPreviousToolAfterEndDraw () const { return false; }
 
     virtual bool careAboutModifierState () const { return false; }
