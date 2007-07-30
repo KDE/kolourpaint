@@ -79,7 +79,7 @@ public:
     void setDotsPerMeterY (int val);
 
 
-    // These method automatically bound each of X and Y to be between
+    // These methods automatically bound each of X and Y to be between
     // MinOffset and MaxOffset inclusive.
     QPoint offset () const;
     void setOffset (const QPoint &point);
