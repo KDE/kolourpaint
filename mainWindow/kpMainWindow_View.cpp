@@ -58,6 +58,41 @@
 #include <kconfiggroup.h>
 
 
+static ZoomLevelFromString (const QString &stringIn)
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "kpMainWindow_View.cpp:ZoomLevelFromString(" << stringIn << ")" << endl;
+#endif
+
+    // Remove any non-digits kdelibs sometimes adds behind our back :( e.g.:
+    //
+    // 1. kdelibs adds accelerators to actions' text directly
+    // 2. ',' is automatically added to change "1000%" to "1,000%"
+    QString string = stringIn;
+    string.remove (QRegExp ("[^0-9]"));
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "\twithout non-digits='" << string << "'" << endl;
+#endif
+
+    // Convert zoom level to number.
+    bool ok = false;
+    int zoomLevel = string.toInt (&ok);
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "\tzoomLevel=" << zoomLevel << endl;
+#endif
+
+    if (!ok || zoomLevel <= 0 || zoomLevel > 3200)
+        return 0;  // error
+    else
+        return zoomLevel;
+}
+
+static ZoomLevelToString (int zoomLevel)
+{
+    return i18n ("%1%", zoomLevel);
+}
+
+
 // private
 void kpMainWindow::setupViewMenuActions ()
 {
@@ -192,7 +227,7 @@ void kpMainWindow::sendZoomListToActionZoom ()
          it != zoomListEnd;
          it++)
     {
-        items << zoomLevelToString (*it);
+        items << ::ZoomLevelToString (*it);
     }
 
     // Work around a KDE bug - KSelectAction::setItems() enables the action.
@@ -204,45 +239,13 @@ void kpMainWindow::sendZoomListToActionZoom ()
         m_actionZoom->setEnabled (e);
 }
 
-// private
-int kpMainWindow::zoomLevelFromString (const QString &stringIn)
-{
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::zoomLevelFromString(" << stringIn << ")" << endl;
-#endif
-
-    // Remove any non-digits kdelibs sometimes adds behind our back :( e.g.:
-    //
-    // 1. kdelibs adds accelerators to actions' text directly
-    // 2. ',' is automatically added to change "1000%" to "1,000%"
-    QString string = stringIn;
-    string.remove (QRegExp ("[^0-9]"));
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\twithout non-digits='" << string << "'" << endl;
-#endif
-
-    // Convert zoom level to number.
-    bool ok = false;
-    int zoomLevel = string.toInt (&ok);
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tzoomLevel=" << zoomLevel << endl;
-#endif
-
-    if (!ok || zoomLevel <= 0 || zoomLevel > 3200)
-        return 0;  // error
-    else
-        return zoomLevel;
-}
-
-// private
-QString kpMainWindow::zoomLevelToString (int zoomLevel)
-{
-    return i18n ("%1%", zoomLevel);
-}
 
 // private
 void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
 {
+    // We're called quite early in the init process and/or when there might
+    // not be a document or a view so we have a lot of "if (ptr)" guards.
+
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::zoomTo (" << zoomLevel << ")" << endl;
 #endif
@@ -405,6 +408,8 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
 
         m_scrollView->center (newCenterX, newCenterY);
 
+    // COMPAT: no more QWidget::clipRegion()
+    #if 0
         if (centerUnderCursor &&
             targetDocAvail &&
             m_viewManager && m_viewManager->viewUnderCursor ())
@@ -427,8 +432,6 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
                        << endl;
         #endif
 
-        // COMPAT: no more QWidget::clipRegion()
-        #if 0
             if (vuc->clipRegion ().contains (viewPoint))
             {
                 const QPoint globalPoint =
@@ -469,8 +472,8 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
                 // TODO: Sane cursor flashing indication that indicates
                 //       that the normal cursor movement didn't happen.
             }
-        #endif
         }
+    #endif  // COMPAT
 
     #if DEBUG_KP_MAIN_WINDOW && 1
         kDebug () << "\t\tcheck (contentsX=" << m_scrollView->contentsX ()
@@ -673,8 +676,8 @@ void kpMainWindow::zoomAccordingToZoomAction (bool centerUnderCursor)
 #endif
 
     // This might be a new zoom level the user has typed in.
-    zoomTo (zoomLevelFromString (m_actionZoom->currentText ()),
-                                 centerUnderCursor);
+    zoomTo (::ZoomLevelFromString (m_actionZoom->currentText ()),
+                                   centerUnderCursor);
 }
 
 // private slot

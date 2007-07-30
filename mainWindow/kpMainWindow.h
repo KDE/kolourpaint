@@ -496,8 +496,6 @@ private:
 
 private:
     void sendZoomListToActionZoom ();
-    int zoomLevelFromString (const QString &string);
-    QString zoomLevelToString (int zoomLevel);
     void zoomTo (int zoomLevel, bool centerUnderCursor = false);
 
 private slots:
