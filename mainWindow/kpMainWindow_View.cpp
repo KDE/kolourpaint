@@ -25,7 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_ZOOM_FLICKER 0
+
 
 #include <kpMainWindow.h>
 #include <kpMainWindowPrivate.h>
@@ -394,14 +394,6 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         int newCenterY = viewY * zoomLevel / m_mainView->zoomLevelY ();
 
         m_mainView->setZoomLevel (zoomLevel, zoomLevel);
-    #if DEBUG_ZOOM_FLICKER
-    {
-        kDebug () << "FLICKER: just setZoomLevel" << endl;
-        QTime timer; timer.start ();
-        while (timer.elapsed () < 1000)
-            ;
-    }
-    #endif
 
     #if DEBUG_KP_MAIN_WINDOW && 1
         kDebug () << "\tvisibleWidth=" << m_scrollView->visibleWidth ()
@@ -412,14 +404,6 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
     #endif
 
         m_scrollView->center (newCenterX, newCenterY);
-    #if DEBUG_ZOOM_FLICKER
-    {
-        kDebug () << "FLICKER: just centred" << endl;
-        QTime timer; timer.start ();
-        while (timer.elapsed () < 2000)
-            ;
-    }
-    #endif
 
         if (centerUnderCursor &&
             targetDocAvail &&
@@ -498,54 +482,18 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
     if (m_mainView)
     {
         actionShowGridUpdate ();
-    #if DEBUG_ZOOM_FLICKER
-    {
-        kDebug () << "FLICKER: updated grid action" << endl;
-        QTime timer; timer.start ();
-        while (timer.elapsed () < 1000)
-            ;
-    }
-    #endif
-
-
         updateMainViewGrid ();
-    #if DEBUG_ZOOM_FLICKER
-    {
-        kDebug () << "FLICKER: just updated grid" << endl;
-        QTime timer; timer.start ();
-        while (timer.elapsed () < 1000)
-            ;
-    }
-    #endif
-
 
         // Since Zoom Level KSelectAction on ToolBar grabs focus after changing
         // Zoom, switch back to the Main View.
         // TODO: back to the last view
         m_mainView->setFocus ();
-    #if DEBUG_ZOOM_FLICKER
-    {
-        kDebug () << "FLICKER: just set focus to mainview" << endl;
-        QTime timer; timer.start ();
-        while (timer.elapsed () < 1000)
-            ;
-    }
-    #endif
 
     }
-#if 1
+
     // The view magnified and moved beneath the cursor
     if (tool ())
         tool ()->somethingBelowTheCursorChanged ();
-    #if DEBUG_ZOOM_FLICKER
-    {
-        kDebug () << "FLICKER: signalled something below cursor" << endl;
-        QTime timer; timer.start ();
-        while (timer.elapsed () < 1000)
-            ;
-    }
-    #endif
-#endif
 
     // HACK: make sure all of Qt's update() calls trigger
     //       kpView::paintEvent() _now_ so that they can be queued by us
@@ -567,15 +515,6 @@ void kpMainWindow::finishZoomTo ()
     kDebug () << "\tkpMainWindow::finishZoomTo enter" << endl;
 #endif
 
-#if DEBUG_ZOOM_FLICKER
-{
-    kDebug () << "FLICKER: inside finishZoomTo" << endl;
-    QTime timer; timer.start ();
-    while (timer.elapsed () < 2000)
-        ;
-}
-#endif
-
     // TODO: setUpdatesEnabled() should really return to old value
     //       - not neccessarily "true"
 
@@ -585,15 +524,6 @@ void kpMainWindow::finishZoomTo ()
         m_mainView->update ();
     }
 
-#if DEBUG_ZOOM_FLICKER
-{
-    kDebug () << "FLICKER: just updated mainView" << endl;
-    QTime timer; timer.start ();
-    while (timer.elapsed () < 1000)
-        ;
-}
-#endif
-
     if (m_scrollView)
     {
         if (m_scrollView->viewport ())
@@ -601,53 +531,19 @@ void kpMainWindow::finishZoomTo ()
             m_scrollView->viewport ()->setUpdatesEnabled (true);
             m_scrollView->viewport ()->update ();
         }
-    #if DEBUG_ZOOM_FLICKER
-    {
-        kDebug () << "FLICKER: just updated scrollView::viewport()" << endl;
-        QTime timer; timer.start ();
-        while (timer.elapsed () < 1000)
-            ;
-    }
-    #endif
 
         m_scrollView->setUpdatesEnabled (true);
         m_scrollView->update ();
-    #if DEBUG_ZOOM_FLICKER
-    {
-        kDebug () << "FLICKER: just updated scrollView" << endl;
-        QTime timer; timer.start ();
-        while (timer.elapsed () < 1000)
-            ;
-    }
-    #endif
-
     }
 
 
     if (m_viewManager && m_viewManager->queueUpdates ()/*just in case*/)
         m_viewManager->restoreQueueUpdates ();
-#if DEBUG_ZOOM_FLICKER
-{
-    kDebug () << "FLICKER: restored vm queued updates" << endl;
-    QTime timer; timer.start ();
-    while (timer.elapsed () < 1000)
-        ;
-}
-#endif
 
     setStatusBarZoom (m_mainView ? m_mainView->zoomLevelX () : 0);
 
 #if DEBUG_KP_MAIN_WINDOW && 1
     kDebug () << "\tkpMainWindow::finishZoomTo done" << endl;
-#endif
-
-#if DEBUG_ZOOM_FLICKER
-{
-    kDebug () << "FLICKER: finishZoomTo done" << endl;
-    QTime timer; timer.start ();
-    while (timer.elapsed () < 1000)
-        ;
-}
 #endif
 }
 
