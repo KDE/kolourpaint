@@ -69,7 +69,7 @@ static void Draw (QPixmap *destPixmap, const QPoint &topLeft, void *userData)
 #endif
     const int size = ::BrushSizes [pack->row][pack->col];
 #if DEBUG_KP_TOOL_WIDGET_BRUSH
-    kDebug () << "\tsize=" << size << endl;
+    kDebug () << "\tsize=" << size;
 #endif
 
     // sync: <brushes>

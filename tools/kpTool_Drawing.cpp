@@ -138,7 +138,7 @@ kpView *kpTool::viewUnderCursor () const
 void kpTool::beginInternal ()
 {
 #if DEBUG_KP_TOOL
-    kDebug () << "kpTool::beginInternal()" << endl;
+    kDebug () << "kpTool::beginInternal()";
 #endif
 
     if (!d->began)
@@ -203,7 +203,7 @@ void kpTool::endInternal ()
 void kpTool::begin ()
 {
 #if DEBUG_KP_TOOL
-    kDebug () << "kpTool::begin() base implementation" << endl;
+    kDebug () << "kpTool::begin() base implementation";
 #endif
 }
 
@@ -211,7 +211,7 @@ void kpTool::begin ()
 void kpTool::end ()
 {
 #if DEBUG_KP_TOOL
-    kDebug () << "kpTool::end() base implementation" << endl;
+    kDebug () << "kpTool::end() base implementation";
 #endif
 }
 
@@ -261,7 +261,7 @@ void kpTool::globalDraw ()
 void kpTool::reselect ()
 {
 #if DEBUG_KP_TOOL
-    kDebug () << "kpTool::reselect() base implementation" << endl;
+    kDebug () << "kpTool::reselect() base implementation";
 #endif
 }
 
@@ -309,7 +309,7 @@ void kpTool::cancelShapeInternal ()
 // virtual
 void kpTool::cancelShape ()
 {
-    kWarning () << "Tool cannot cancel operation!" << endl;
+    kWarning () << "Tool cannot cancel operation!" ;
 }
 
 void kpTool::releasedAllButtons ()
@@ -320,7 +320,7 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
                               bool wantEndShape)
 {
 #if DEBUG_KP_TOOL && 1
-    kDebug () << "kpTool::endDrawInternal() wantEndShape=" << wantEndShape << endl;
+    kDebug () << "kpTool::endDrawInternal() wantEndShape=" << wantEndShape;
 #endif
 
     if (wantEndShape && !hasBegunShape ())
@@ -333,14 +333,14 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
     if (wantEndShape)
     {
     #if DEBUG_KP_TOOL && 0
-        kDebug () << "\tcalling endShape()" << endl;
+        kDebug () << "\tcalling endShape()";
     #endif
         endShape (thisPoint, normalizedRect);
     }
     else
     {
     #if DEBUG_KP_TOOL && 0
-        kDebug () << "\tcalling endDraw()" << endl;
+        kDebug () << "\tcalling endDraw()";
     #endif
         endDraw (thisPoint, normalizedRect);
     }

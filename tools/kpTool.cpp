@@ -106,7 +106,7 @@ kpTool::~kpTool ()
 void kpTool::initAction ()
 {
 #if DEBUG_KP_TOOL && 0
-    kDebug () << "kpTool(" << objectName () << "::initAction()" << endl;
+    kDebug () << "kpTool(" << objectName () << "::initAction()";
 #endif
 
     KActionCollection *ac = d->environ->actionCollection ();
@@ -226,7 +226,7 @@ void kpTool::setDescription (const QString &description)
 QIcon kpTool::iconSet (int forceSize) const
 {
 #if DEBUG_KP_TOOL && 0
-    kDebug () << "kpTool(" << objectName () << ")::iconSet(forceSize=" << forceSize << ") iconName=" << iconName () << endl;
+    kDebug () << "kpTool(" << objectName () << ")::iconSet(forceSize=" << forceSize << ") iconName=" << iconName ();
 #endif
     // (robust in case BarIcon() default arg changes)
     if (forceSize > 0)

@@ -80,7 +80,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
       m_effectWidget (0)
 {
 #if DEBUG_KP_EFFECTS_DIALOG
-    kDebug () << "kpEffectsDialog::kpEffectsDialog()" << endl;
+    kDebug () << "kpEffectsDialog::kpEffectsDialog()";
 #endif
 
     if (actOnSelection)
@@ -133,7 +133,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 
 
 #if DEBUG_KP_EFFECTS_DIALOG
-    kDebug () << "\tabout to slotUpdate()" << endl;
+    kDebug () << "\tabout to slotUpdate()";
 #endif
     slotUpdate ();
 }
@@ -200,7 +200,7 @@ int kpEffectsDialog::selectedEffect () const
 void kpEffectsDialog::selectEffect (int which)
 {
 #if DEBUG_KP_EFFECTS_DIALOG
-    kDebug () << "kpEffectsDialog::selectEffect(" << which << ")" << endl;
+    kDebug () << "kpEffectsDialog::selectEffect(" << which << ")";
 #endif
 
     if (which < 0 ||
@@ -261,7 +261,7 @@ void kpEffectsDialog::selectEffect (int which)
     if (m_effectWidget)
     {
     #if DEBUG_KP_EFFECTS_DIALOG
-        kDebug () << "\twidget exists for effect #" << endl;
+        kDebug () << "\twidget exists for effect #";
     #endif
         m_settingsGroupBox->setTitle (m_effectWidget->caption ());
 

@@ -130,7 +130,7 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
 
     QImage qimage = kpPixmapFX::convertToImage (image);
 #if DEBUG_KP_EFFECT_BALANCE
-    kDebug () << "\tconvertToImage=" << timer.restart () << endl;
+    kDebug () << "\tconvertToImage=" << timer.restart ();
 #endif
 
 
@@ -159,7 +159,7 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
     }
 
 #if DEBUG_KP_EFFECT_BALANCE
-    kDebug () << "\tbuild lookup=" << timer.restart () << endl;
+    kDebug () << "\tbuild lookup=" << timer.restart ();
 #endif
 
 
@@ -218,12 +218,12 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
 
     }
 #if DEBUG_KP_EFFECT_BALANCE
-    kDebug () << "\teffect=" << timer.restart () << endl;
+    kDebug () << "\teffect=" << timer.restart ();
 #endif
 
     const QPixmap retPixmap = kpPixmapFX::convertToPixmap (qimage);
 #if DEBUG_KP_EFFECT_BALANCE
-    kDebug () << "\tconvertToPixmap=" << timer.restart () << endl;
+    kDebug () << "\tconvertToPixmap=" << timer.restart ();
 #endif
 
     return retPixmap;

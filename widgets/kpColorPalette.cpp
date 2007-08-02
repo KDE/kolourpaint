@@ -57,7 +57,7 @@ kpColorPalette::kpColorPalette (QWidget *parent, Qt::Orientation o)
       d (new kpColorPalettePrivate ())
 {
 #if DEBUG_KP_COLOR_PALETTE
-    kDebug () << "kpColorPalette::kpColorPalette()" << endl;
+    kDebug () << "kpColorPalette::kpColorPalette()";
 #endif
 
     d->boxLayout = 0;

@@ -393,7 +393,7 @@ static QRect Wash (kpImage *image,
     pack.readableImage = kpPixmapFX::convertToImage (pixmap);
 #if DEBUG_KP_PAINTER && 0
     convAndWashTime = timer.restart ();
-    kDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;
+    kDebug () << "\tconvert to image: " << convAndWashTime << " ms";
 #endif
 
 
@@ -625,7 +625,7 @@ void kpPainter::sprayPoints (kpImage *image,
         int spraycanSize)
 {
 #if DEBUG_KP_PAINTER
-    kDebug () << "kpPainter::sprayPoints()" << endl;
+    kDebug () << "kpPainter::sprayPoints()";
 #endif
 
     Q_ASSERT (spraycanSize > 0);

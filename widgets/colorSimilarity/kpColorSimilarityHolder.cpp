@@ -120,7 +120,7 @@ double kpColorSimilarityHolder::colorSimilarity () const
 void kpColorSimilarityHolder::setColorSimilarity (double similarity)
 {
 #if DEBUG_KP_COLOR_SIMILARITY_CUBE
-    kDebug () << "kpColorSimilarityHolder::setColorSimilarity(" << similarity << ")" << endl;
+    kDebug () << "kpColorSimilarityHolder::setColorSimilarity(" << similarity << ")";
 #endif
 
     if (m_colorSimilarity == similarity)

@@ -96,7 +96,7 @@ kpCommandSize::SizeType kpToolSelectionMoveCommand::size () const
 void kpToolSelectionMoveCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolSelectionMoveCommand::execute()" << endl;
+    kDebug () << "kpToolSelectionMoveCommand::execute()";
 #endif
 
     kpDocument *doc = document ();
@@ -129,7 +129,7 @@ void kpToolSelectionMoveCommand::execute ()
 void kpToolSelectionMoveCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolSelectionMoveCommand::unexecute()" << endl;
+    kDebug () << "kpToolSelectionMoveCommand::unexecute()";
 #endif
 
     kpDocument *doc = document ();
@@ -148,7 +148,7 @@ void kpToolSelectionMoveCommand::unexecute ()
     if (!m_oldDocumentImage.isNull ())
         doc->setImageAt (m_oldDocumentImage, m_documentBoundingRect.topLeft ());
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "\tmove to startPoint=" << m_startPoint << endl;
+    kDebug () << "\tmove to startPoint=" << m_startPoint;
 #endif
     sel->moveTo (m_startPoint);
 
@@ -195,7 +195,7 @@ void kpToolSelectionMoveCommand::moveTo (int x, int y, bool moveLater)
 void kpToolSelectionMoveCommand::copyOntoDocument ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelectionMoveCommand::copyOntoDocument()" << endl;
+    kDebug () << "kpToolSelectionMoveCommand::copyOntoDocument()";
 #endif
 
     kpDocument *doc = document ();

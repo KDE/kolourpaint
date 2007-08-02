@@ -242,7 +242,7 @@ void kpDualColorButton::mouseReleaseEvent (QMouseEvent *e)
         m_color [0] != m_color [1])
     {
     #if DEBUG_KP_DUAL_COLOR_BUTTON && 1
-        kDebug () << "kpDualColorButton::mouseReleaseEvent() swap colors:" << endl;
+        kDebug () << "kpDualColorButton::mouseReleaseEvent() swap colors:";
     #endif
         m_oldColor [0] = m_color [0];
         m_oldColor [1] = m_color [1];

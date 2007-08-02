@@ -127,13 +127,13 @@ bool kpSelectionDrag::holdsSelection () const
 const char *kpSelectionDrag::format (int which) const
 {
 #if DEBUG_KP_SELECTION_DRAG && 0
-    kDebug () << "kpSelectionDrag::format(" << which << ")" << endl;
+    kDebug () << "kpSelectionDrag::format(" << which << ")";
 #endif
     const char *ret = Q3ImageDrag::format (which);
     if (ret)
     {
     #if DEBUG_KP_SELECTION_DRAG && 0
-        kDebug () << "\tQImageDrag reports " << ret << endl;
+        kDebug () << "\tQImageDrag reports " << ret;
     #endif
         return ret;
     }
@@ -143,20 +143,20 @@ const char *kpSelectionDrag::format (int which) const
         ;
 
 #if DEBUG_KP_SELECTION_DRAG && 0
-    kDebug () << "\tend of QImageDrag format list at " << i << endl;
+    kDebug () << "\tend of QImageDrag format list at " << i;
 #endif
 
     if (i == which)
     {
     #if DEBUG_KP_SELECTION_DRAG && 0
-        kDebug () << "\treturning own mimetype" << endl;
+        kDebug () << "\treturning own mimetype";
     #endif
         return kpSelectionDrag::SelectionMimeType;
     }
     else
     {
     #if DEBUG_KP_SELECTION_DRAG && 0
-        kDebug () << "\treturning non-existent" << endl;
+        kDebug () << "\treturning non-existent";
     #endif
         return 0;
     }
@@ -168,7 +168,7 @@ const char *kpSelectionDrag::format (int which) const
 bool kpSelectionDrag::provides (const char *mimeType) const
 {
 #if DEBUG_KP_SELECTION_DRAG
-    kDebug () << "kpSelectionDrag::provides(" << mimeType << ")" << endl;
+    kDebug () << "kpSelectionDrag::provides(" << mimeType << ")";
 #endif
 
     Q_ASSERT (mimeType);
@@ -176,7 +176,7 @@ bool kpSelectionDrag::provides (const char *mimeType) const
     const bool ret = (!strcmp (mimeType, kpSelectionDrag::SelectionMimeType) ||
         Q3ImageDrag::provides (mimeType));
 #if DEBUG_KP_SELECTION_DRAG
-    kDebug () << "\treturning " << ret << endl;
+    kDebug () << "\treturning " << ret;
 #endif
     return ret;
 }
@@ -185,7 +185,7 @@ bool kpSelectionDrag::provides (const char *mimeType) const
 QByteArray kpSelectionDrag::encodedData (const char *mimeType) const
 {
 #if DEBUG_KP_SELECTION_DRAG
-    kDebug () << "kpSelectionDrag::encodedData(" << mimeType << ")" << endl;
+    kDebug () << "kpSelectionDrag::encodedData(" << mimeType << ")";
 #endif
 
     Q_ASSERT (mimeType);
@@ -197,20 +197,20 @@ QByteArray kpSelectionDrag::encodedData (const char *mimeType) const
         QDataStream stream (&ba, QIODevice::WriteOnly);
 
     #if DEBUG_KP_SELECTION_DRAG
-        kDebug () << "\twant it as kpAbstractSelection in QByteArray" << endl;
+        kDebug () << "\twant it as kpAbstractSelection in QByteArray";
     #endif
 
         if (holdsSelection ())
         {
         #if DEBUG_KP_SELECTION_DRAG
-            kDebug () << "\t\thave selection - return it" << endl;
+            kDebug () << "\t\thave selection - return it";
         #endif
             stream << *d->selection;
         }
         else
         {
         #if DEBUG_KP_SELECTION_DRAG
-            kDebug () << "\t\thave image - call kpSelectionDrag::decode(QImage)" << endl;
+            kDebug () << "\t\thave image - call kpSelectionDrag::decode(QImage)";
         #endif
             QImage image;
             if (kpSelectionDrag::decode (this, image/*ref*/))
@@ -244,13 +244,13 @@ QByteArray kpSelectionDrag::encodedData (const char *mimeType) const
     else
     {
     #if DEBUG_KP_SELECTION_DRAG
-        kDebug () << "\twant it as QImage in QByteArray" << endl;
+        kDebug () << "\twant it as QImage in QByteArray";
     #endif
 
         QByteArray ba = Q3ImageDrag::encodedData (mimeType);
 
     #if DEBUG_KP_SELECTION_DRAG
-        kDebug () << "\t\tba.size=" << ba.size () << endl;
+        kDebug () << "\t\tba.size=" << ba.size ();
     #endif
         return ba;
     }
@@ -261,7 +261,7 @@ QByteArray kpSelectionDrag::encodedData (const char *mimeType) const
 bool kpSelectionDrag::canDecode (const QMimeSource *e)
 {
 #if DEBUG_KP_SELECTION_DRAG
-    kDebug () << "kpSelectionDrag::canDecode()" << endl;
+    kDebug () << "kpSelectionDrag::canDecode()";
 #endif
 
     Q_ASSERT (e);
@@ -275,7 +275,7 @@ bool kpSelectionDrag::canDecode (const QMimeSource *e)
 bool kpSelectionDrag::decode (const QMimeSource *e, QImage &img)
 {
 #if DEBUG_KP_SELECTION_DRAG
-    kDebug () << "kpSelectionDrag::decode(QImage)" << endl;
+    kDebug () << "kpSelectionDrag::decode(QImage)";
 #endif
     Q_ASSERT (e);
 
@@ -288,14 +288,14 @@ kpAbstractImageSelection *kpSelectionDrag::decode (const QMimeSource *e,
         const kpPixmapFX::WarnAboutLossInfo &wali)
 {
 #if DEBUG_KP_SELECTION_DRAG
-    kDebug () << "kpSelectionDrag::decode(kpAbstractSelection)" << endl;
+    kDebug () << "kpSelectionDrag::decode(kpAbstractSelection)";
 #endif
     Q_ASSERT (e);
 
     if (e->provides (kpSelectionDrag::SelectionMimeType))
     {
     #if DEBUG_KP_SELECTION_DRAG
-        kDebug () << "\tmimeSource provides selection - just return it in QByteArray" << endl;
+        kDebug () << "\tmimeSource provides selection - just return it in QByteArray";
     #endif
         QByteArray data = e->encodedData (kpSelectionDrag::SelectionMimeType);
         QDataStream stream (&data, QIODevice::ReadOnly);
@@ -318,14 +318,14 @@ kpAbstractImageSelection *kpSelectionDrag::decode (const QMimeSource *e,
     else
     {
     #if DEBUG_KP_SELECTION_DRAG
-        kDebug () << "\tmimeSource doesn't provide selection - try image" << endl;
+        kDebug () << "\tmimeSource doesn't provide selection - try image";
     #endif
 
         QImage image;
         if (kpSelectionDrag::decode (e, image/*ref*/))
         {
         #if DEBUG_KP_SELECTION_DRAG
-            kDebug () << "\tok w=" << image.width () << " h=" << image.height () << endl;
+            kDebug () << "\tok w=" << image.width () << " h=" << image.height ();
         #endif
 
             return new kpRectangularImageSelection (

@@ -110,7 +110,7 @@ void kpToolPolygonalBase::begin ()
     Q_ASSERT (tb);
 
 #if DEBUG_KP_TOOL_POLYGON
-    kDebug () << "kpToolPolygonalBase::begin() tb=" << tb << endl;
+    kDebug () << "kpToolPolygonalBase::begin() tb=" << tb;
 #endif
 
     d->toolWidgetLineWidth = tb->toolWidgetLineWidth ();
@@ -180,7 +180,7 @@ void kpToolPolygonalBase::beginDraw ()
     }
 
 #if DEBUG_KP_TOOL_POLYGON
-    kDebug () << "\tafterwards, d->points=" << d->points.toList () << endl;
+    kDebug () << "\tafterwards, d->points=" << d->points.toList ();
 #endif
 
     if (!endedShape)
@@ -340,7 +340,7 @@ void kpToolPolygonalBase::draw (const QPoint &, const QPoint &, const QRect &)
     d->points [count - 1] = currentPoint ();
 
 #if DEBUG_KP_TOOL_POLYGON
-    kDebug () << "\tafterwards, d->points=" << d->points.toList () << endl;
+    kDebug () << "\tafterwards, d->points=" << d->points.toList ();
 #endif
 
     // Are we drawing a line?

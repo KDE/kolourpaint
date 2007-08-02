@@ -216,13 +216,13 @@ QPoint kpView::origin () const
 void kpView::setOrigin (const QPoint &origin)
 {
 #if DEBUG_KP_VIEW
-    kDebug () << "kpView(" << objectName () << ")::setOrigin" << origin << endl;
+    kDebug () << "kpView(" << objectName () << ")::setOrigin" << origin;
 #endif
 
     if (origin == d->origin)
     {
     #if DEBUG_KP_VIEW
-        kDebug () << "\tNOP" << endl;
+        kDebug () << "\tNOP";
     #endif
         return;
     }
@@ -582,7 +582,7 @@ void kpView::addToQueuedArea (const QRect &rect)
 void kpView::invalidateQueuedArea ()
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView::invalidateQueuedArea()" << endl;
+    kDebug () << "kpView::invalidateQueuedArea()";
 #endif
 
     d->queuedUpdateArea = QRegion ();

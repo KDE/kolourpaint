@@ -464,7 +464,7 @@ bool kpTransformResizeScaleDialog::smoothScaleEnabled () const
 void kpTransformResizeScaleDialog::slotActOnChanged ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG && 1
-    kDebug () << "kpTransformResizeScaleDialog::slotActOnChanged()" << endl;
+    kDebug () << "kpTransformResizeScaleDialog::slotActOnChanged()";
 #endif
 
     m_resizeButton->setEnabled (resizeEnabled ());

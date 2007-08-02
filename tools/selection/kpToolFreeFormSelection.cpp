@@ -73,7 +73,7 @@ bool kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (
     if (!dragHasBegun && accidentalDragAdjustedPoint == startPoint ())
     {
     #if DEBUG_KP_TOOL_FREE_FROM_SELECTION && 1
-        kDebug () << "\tnon-text NOP - return" << endl;
+        kDebug () << "\tnon-text NOP - return";
     #endif
         setUserShapePoints (accidentalDragAdjustedPoint);
         return false;
@@ -107,7 +107,7 @@ bool kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (
 
 
 #if DEBUG_KP_TOOL_FREE_FROM_SELECTION
-    kDebug () << "\tlast old point=" << points.last () << endl;
+    kDebug () << "\tlast old point=" << points.last ();
 #endif
 
     // TODO: There should be an upper limit on this before drawing the

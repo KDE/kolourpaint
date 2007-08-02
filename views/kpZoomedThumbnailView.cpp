@@ -107,12 +107,12 @@ void kpZoomedThumbnailView::adjustToEnvironment ()
         hzoom = vzoom;
 
 #if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW && 1
-    kDebug () << "\tproposed zoom=" << hzoom << endl;
+    kDebug () << "\tproposed zoom=" << hzoom;
 #endif
     if (hzoom > 100 || vzoom > 100)
     {
     #if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW && 1
-        kDebug () << "\twon't magnify - setting zoom to 100%" << endl;
+        kDebug () << "\twon't magnify - setting zoom to 100%";
     #endif
         hzoom = 100, vzoom = 100;
     }

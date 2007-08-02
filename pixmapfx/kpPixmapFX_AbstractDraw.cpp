@@ -142,7 +142,7 @@ QRect kpPixmapFX::draw (QPixmap *image,
         QBitmap ();
 
 #if DEBUG_KP_PIXMAP_FX
-    kDebug () << "\tDraw(): hasMask=" << !mask.isNull () << endl;
+    kDebug () << "\tDraw(): hasMask=" << !mask.isNull ();
 #endif
 
     QPainter rgbPainter, maskPainter;
@@ -151,7 +151,7 @@ QRect kpPixmapFX::draw (QPixmap *image,
     if (anyColorOpaque)
     {
     #if DEBUG_KP_PIXMAP_FX
-        kDebug () << "\tDraw(): drawing on RGB" << endl;
+        kDebug () << "\tDraw(): drawing on RGB";
     #endif
         // RGB draw is not allowed to touch mask.
         image->setMask (QBitmap ());
@@ -164,7 +164,7 @@ QRect kpPixmapFX::draw (QPixmap *image,
         !mask.isNull ())
     {
     #if DEBUG_KP_PIXMAP_FX
-        kDebug () << "\tDraw(): drawing on transparent" << endl;
+        kDebug () << "\tDraw(): drawing on transparent";
     #endif
         if (mask.isNull ())
             mask = kpPixmapFX::getNonNullMask (*image);
@@ -200,7 +200,7 @@ QRect kpPixmapFX::draw (QPixmap *image,
 
 
 #if DEBUG_KP_PIXMAP_FX
-    kDebug () << "\tDraw(): setting mask " << !mask.isNull () << endl;
+    kDebug () << "\tDraw(): setting mask " << !mask.isNull ();
 #endif
 
     // Set new mask.

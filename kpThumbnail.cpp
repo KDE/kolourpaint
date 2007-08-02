@@ -106,7 +106,7 @@ kpThumbnailView *kpThumbnail::view () const
 void kpThumbnail::setView (kpThumbnailView *view)
 {
 #if DEBUG_KP_THUMBNAIL
-    kDebug () << "kpThumbnail::setView(" << view << ")" << endl;
+    kDebug () << "kpThumbnail::setView(" << view << ")";
 #endif
 
     if (d->view == view)
@@ -151,7 +151,7 @@ void kpThumbnail::updateCaption ()
 void kpThumbnail::slotViewDestroyed ()
 {
 #if DEBUG_KP_THUMBNAIL
-    kDebug () << "kpThumbnail::slotViewDestroyed()" << endl;
+    kDebug () << "kpThumbnail::slotViewDestroyed()";
 #endif
 
     d->view = 0;

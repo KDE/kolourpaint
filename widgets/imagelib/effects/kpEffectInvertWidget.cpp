@@ -128,7 +128,7 @@ int kpEffectInvertWidget::channels () const
 
 
 #if DEBUG_KP_EFFECT_INVERT
-    kDebug () << "\treturning channels=" << (int *) channels << endl;
+    kDebug () << "\treturning channels=" << (int *) channels;
 #endif
     return channels;
 }

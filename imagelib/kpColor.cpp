@@ -58,7 +58,7 @@ kpColor::kpColor ()
       m_colorCacheIsValid (false)
 {
 #if DEBUG_KP_COLOR
-    kDebug () << "kpColor::<ctor>()" << endl;
+    kDebug () << "kpColor::<ctor>()";
 #endif
 }
 
@@ -90,7 +90,7 @@ kpColor::kpColor (const QRgb &rgba)
     : m_colorCacheIsValid (false)
 {
 #if DEBUG_KP_COLOR
-    kDebug () << "kpColor::<ctor>(rgba=" << (int *) rgba << ")" << endl;
+    kDebug () << "kpColor::<ctor>(rgba=" << (int *) rgba << ")";
 #endif
     if (qAlpha (rgba) > 0 && qAlpha (rgba) < 255)
     {
@@ -117,7 +117,7 @@ kpColor::kpColor (const kpColor &rhs)
        m_colorCache (rhs.m_colorCache)
 {
 #if DEBUG_KP_COLOR
-    kDebug () << "kpColor::<copy_ctor>()" << endl;
+    kDebug () << "kpColor::<copy_ctor>()";
 #endif
 }
 

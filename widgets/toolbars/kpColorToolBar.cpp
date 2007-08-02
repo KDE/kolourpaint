@@ -130,7 +130,7 @@ void kpColorToolBar::setOrientation (Qt::Orientation o)
 
     if (isOutsideDock)
     {
-        //kDebug () << "\toutside dock, forcing orientation to last" << endl;
+        //kDebug () << "\toutside dock, forcing orientation to last";
         o = m_lastDockedOrientation;
     }
 

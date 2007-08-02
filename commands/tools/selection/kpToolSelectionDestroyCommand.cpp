@@ -81,7 +81,7 @@ kpCommandSize::SizeType kpToolSelectionDestroyCommand::size () const
 void kpToolSelectionDestroyCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelectionDestroyCommand::execute () CALLED" << endl;
+    kDebug () << "kpToolSelectionDestroyCommand::execute () CALLED";
 #endif
 
     kpDocument *doc = document ();
@@ -107,7 +107,7 @@ void kpToolSelectionDestroyCommand::execute ()
 void kpToolSelectionDestroyCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelectionDestroyCommand::unexecute () CALLED" << endl;
+    kDebug () << "kpToolSelectionDestroyCommand::unexecute () CALLED";
 #endif
 
     kpDocument *doc = document ();
@@ -118,7 +118,7 @@ void kpToolSelectionDestroyCommand::unexecute ()
         // not error because it's possible that the user dragged out a new
         // region (without pulling image), and then CTRL+Z
     #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "kpToolSelectionDestroyCommand::unexecute() already has sel region" << endl;
+        kDebug () << "kpToolSelectionDestroyCommand::unexecute() already has sel region";
     #endif
 
         if (doc->selection ()->hasContent ())
@@ -133,7 +133,7 @@ void kpToolSelectionDestroyCommand::unexecute ()
     if (m_pushOntoDocument)
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\tunpush oldDocImage onto doc first" << endl;
+        kDebug () << "\tunpush oldDocImage onto doc first";
     #endif
         doc->setImageAt (m_oldDocImage, m_oldSelectionPtr->topLeft ());
     }

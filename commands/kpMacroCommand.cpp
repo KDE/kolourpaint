@@ -58,12 +58,12 @@ kpMacroCommand::~kpMacroCommand ()
 kpCommandSize::SizeType kpMacroCommand::size () const
 {
 #if DEBUG_KP_COMMAND_HISTORY && 0
-    kDebug () << "kpMacroCommand::size()" << endl;
+    kDebug () << "kpMacroCommand::size()";
 #endif
     SizeType s = 0;
 
 #if DEBUG_KP_COMMAND_HISTORY && 0
-    kDebug () << "\tcalculating:" << endl;
+    kDebug () << "\tcalculating:";
 #endif
     foreach (kpCommand *cmd, m_commandList)
     {
@@ -76,7 +76,7 @@ kpCommandSize::SizeType kpMacroCommand::size () const
     }
 
 #if DEBUG_KP_COMMAND_HISTORY && 0
-    kDebug () << "\treturning " << s << endl;
+    kDebug () << "\treturning " << s;
 #endif
     return s;
 }
@@ -86,14 +86,14 @@ kpCommandSize::SizeType kpMacroCommand::size () const
 void kpMacroCommand::execute ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kDebug () << "kpMacroCommand::execute()" << endl;
+    kDebug () << "kpMacroCommand::execute()";
 #endif
     for (QLinkedList <kpCommand *>::const_iterator it = m_commandList.begin ();
          it != m_commandList.end ();
          it++)
     {
     #if DEBUG_KP_COMMAND_HISTORY
-        kDebug () << "\texecuting " << (*it)->name () << endl;
+        kDebug () << "\texecuting " << (*it)->name ();
     #endif
         (*it)->execute ();
     }
@@ -103,7 +103,7 @@ void kpMacroCommand::execute ()
 void kpMacroCommand::unexecute ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kDebug () << "kpMacroCommand::unexecute()" << endl;
+    kDebug () << "kpMacroCommand::unexecute()";
 #endif
     QLinkedList <kpCommand *>::const_iterator it = m_commandList.end ();
     it--;
@@ -111,7 +111,7 @@ void kpMacroCommand::unexecute ()
     while (it != m_commandList.end ())
     {
     #if DEBUG_KP_COMMAND_HISTORY
-        kDebug () << "\tunexecuting " << (*it)->name () << endl;
+        kDebug () << "\tunexecuting " << (*it)->name ();
     #endif
         (*it)->unexecute ();
 

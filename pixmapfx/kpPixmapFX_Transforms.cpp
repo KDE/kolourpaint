@@ -63,7 +63,7 @@ void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
                          const kpColor &backgroundColor)
 {
 #if DEBUG_KP_PIXMAP_FX && 1
-    kDebug () << "kpPixmapFX::resize()" << endl;
+    kDebug () << "kpPixmapFX::resize()";
 #endif
 
     if (!destPixmapPtr)
@@ -153,7 +153,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
         QImage image = kpPixmapFX::convertToImage (pm);
 
     #if DEBUG_KP_PIXMAP_FX && 0
-        kDebug () << "\tBefore smooth scale:" << endl;
+        kDebug () << "\tBefore smooth scale:";
         for (int y = 0; y < image.height (); y++)
         {
             for (int x = 0; x < image.width (); x++)
@@ -167,7 +167,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
         image = image.scaled (w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
     #if DEBUG_KP_PIXMAP_FX && 0
-        kDebug () << "\tAfter smooth scale:" << endl;
+        kDebug () << "\tAfter smooth scale:";
         for (int y = 0; y < image.height (); y++)
         {
             for (int x = 0; x < image.width (); x++)
@@ -231,7 +231,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
 #endif
     QRect newRect = transformMatrix.mapRect (pm.rect ());
 #if DEBUG_KP_PIXMAP_FX && 1
-    kDebug () << "\tmappedRect=" << newRect << endl;
+    kDebug () << "\tmappedRect=" << newRect;
 
 #endif
 
@@ -239,7 +239,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
     if (targetWidth > 0 && targetWidth != newRect.width ())
     {
     #if DEBUG_KP_PIXMAP_FX && 1
-        kDebug () << "\tadjusting for targetWidth" << endl;
+        kDebug () << "\tadjusting for targetWidth";
     #endif
         scaleMatrix.scale (double (targetWidth) / double (newRect.width ()), 1);
     }
@@ -247,7 +247,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
     if (targetHeight > 0 && targetHeight != newRect.height ())
     {
     #if DEBUG_KP_PIXMAP_FX && 1
-        kDebug () << "\tadjusting for targetHeight" << endl;
+        kDebug () << "\tadjusting for targetHeight";
     #endif
         scaleMatrix.scale (1, double (targetHeight) / double (newRect.height ()));
     }
@@ -305,7 +305,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
 
         newRect = transformMatrix.mapRect (pm.rect ());
     #if DEBUG_KP_PIXMAP_FX && 1
-        kDebug () << "\tnewRect after targetWidth,targetHeight adjust=" << newRect << endl;
+        kDebug () << "\tnewRect after targetWidth,targetHeight adjust=" << newRect;
     #endif
     }
 
@@ -348,7 +348,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
 #endif
     painter.setMatrix (transformMatrix);
 #if DEBUG_KP_PIXMAP_FX && 0
-    kDebug () << "\ttranslate top=" << painter.xForm (QPoint (0, 0)) << endl;
+    kDebug () << "\ttranslate top=" << painter.xForm (QPoint (0, 0));
     kDebug () << "\tmatrix: m11=" << painter.worldMatrix ().m11 ()
                << " m12=" << painter.worldMatrix ().m12 ()
                << " m21=" << painter.worldMatrix ().m21 ()

@@ -137,7 +137,7 @@ kpTransformCropSetImageCommand::~kpTransformCropSetImageCommand ()
 void kpTransformCropSetImageCommand::execute ()
 {
 #if DEBUG_KP_TOOL_CROP
-    kDebug () << "kpTransformCropSetImageCommand::execute()" << endl;
+    kDebug () << "kpTransformCropSetImageCommand::execute()";
 #endif
 
     viewManager ()->setQueueUpdates ();
@@ -233,7 +233,7 @@ void kpTransformCropSetImageCommand::execute ()
 void kpTransformCropSetImageCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_CROP
-    kDebug () << "kpTransformCropSetImageCommand::unexecute()" << endl;
+    kDebug () << "kpTransformCropSetImageCommand::unexecute()";
 #endif
 
     viewManager ()->setQueueUpdates ();
@@ -272,7 +272,7 @@ kpTransformCropCommand::kpTransformCropCommand (kpCommandEnvironment *environ)
     : kpMacroCommand (i18n ("Set as Image"), environ)
 {
 #if DEBUG_KP_TOOL_CROP
-    kDebug () << "kpTransformCropCommand::<ctor>()" << endl;
+    kDebug () << "kpTransformCropCommand::<ctor>()";
 #endif
 
     Q_ASSERT (document () &&
@@ -300,8 +300,8 @@ kpTransformCropCommand::kpTransformCropCommand (kpCommandEnvironment *environ)
     if (textSelection ())
     {
     #if DEBUG_KP_TOOL_CROP
-        kDebug () << "\tisText" << endl;
-        kDebug () << "\tclearing doc with trans cmd" << endl;
+        kDebug () << "\tisText";
+        kDebug () << "\tclearing doc with trans cmd";
     #endif
         addCommand (
             new kpEffectClearCommand (
@@ -310,7 +310,7 @@ kpTransformCropCommand::kpTransformCropCommand (kpCommandEnvironment *environ)
                 environ));
 
     #if DEBUG_KP_TOOL_CROP
-        kDebug () << "\tmoving sel to (0,0) cmd" << endl;
+        kDebug () << "\tmoving sel to (0,0) cmd";
     #endif
         kpToolSelectionMoveCommand *moveCmd =
             new kpToolSelectionMoveCommand (
@@ -323,8 +323,8 @@ kpTransformCropCommand::kpTransformCropCommand (kpCommandEnvironment *environ)
     else
     {
     #if DEBUG_KP_TOOL_CROP
-        kDebug () << "\tis pixmap sel" << endl;
-        kDebug () << "\tcreating SetImage cmd" << endl;
+        kDebug () << "\tis pixmap sel";
+        kDebug () << "\tcreating SetImage cmd";
     #endif
         addCommand (new kpTransformCropSetImageCommand (environ));
 

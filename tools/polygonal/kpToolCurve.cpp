@@ -167,7 +167,7 @@ void kpToolCurve::endDraw (const QPoint &, const QRect &)
     // Have initial line and both control points?
     case 4:
     #if DEBUG_KP_TOOL_CURVE
-        kDebug () << "\tending shape" << endl;
+        kDebug () << "\tending shape";
     #endif
         endShape ();
         break;

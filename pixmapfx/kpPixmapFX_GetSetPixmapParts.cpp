@@ -180,7 +180,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
     if (wouldHaveUndefinedPixels)
     {
     #if DEBUG_KP_PIXMAP_FX && 1
-        kDebug () << "\tret would contain undefined pixels - setting them to transparent" << endl;
+        kDebug () << "\tret would contain undefined pixels - setting them to transparent";
     #endif
         QBitmap transparentMask (rect.width (), rect.height ());
         transparentMask.fill (Qt::color0/*transparent*/);
@@ -190,7 +190,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
     if (validSrcRect.isEmpty ())
     {
     #if DEBUG_KP_PIXMAP_FX && 1
-        kDebug () << "\tsilly case - completely invalid rect - ret transparent pixmap" << endl;
+        kDebug () << "\tsilly case - completely invalid rect - ret transparent pixmap";
     #endif
         return retPixmap;
     }
@@ -258,7 +258,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
             }
         }
 
-        kDebug () << "\tdestPixmapPtr numTrans=" << numTrans << endl;
+        kDebug () << "\tdestPixmapPtr numTrans=" << numTrans;
     }
 #endif
 
@@ -297,7 +297,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
             }
         }
 
-        kDebug () << "\tdestPixmapPtr numTrans=" << numTrans << endl;
+        kDebug () << "\tdestPixmapPtr numTrans=" << numTrans;
     }
 #endif
 }
@@ -356,7 +356,7 @@ void kpPixmapFX::paintPixmapAt (QPixmap *destPixmapPtr, int destX, int destY,
 kpColor kpPixmapFX::getColorAtPixel (const QPixmap &pm, const QPoint &at)
 {
 #if DEBUG_KP_PIXMAP_FX && 0
-    kDebug () << "kpToolColorPicker::colorAtPixel" << p << endl;
+    kDebug () << "kpToolColorPicker::colorAtPixel" << p;
 #endif
 
     if (at.x () < 0 || at.x () >= pm.width () ||

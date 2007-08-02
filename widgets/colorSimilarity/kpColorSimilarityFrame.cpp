@@ -65,7 +65,7 @@ kpColorSimilarityFrame::~kpColorSimilarityFrame ()
 void kpColorSimilarityFrame::setColorSimilarity (double similarity)
 {
 #if DEBUG_KP_COLOR_SIMILARITY_CUBE
-    kDebug () << "kpColorSimilarityFrame::setColorSimilarity(" << similarity << ")" << endl;
+    kDebug () << "kpColorSimilarityFrame::setColorSimilarity(" << similarity << ")";
 #endif
 
     kpColorSimilarityHolder::setColorSimilarity (similarity);

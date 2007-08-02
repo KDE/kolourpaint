@@ -131,7 +131,7 @@ void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
         endPoint == d->statusBarShapeLastEndPoint)
     {
     #if DEBUG_STATUS_BAR && 0
-        kDebug () << "\tNOP" << endl;
+        kDebug () << "\tNOP";
     #endif
         return;
     }
@@ -179,7 +179,7 @@ void kpMainWindow::setStatusBarShapeSize (const QSize &size)
         size == d->statusBarShapeLastSize)
     {
     #if DEBUG_STATUS_BAR && 0
-        kDebug () << "\tNOP" << endl;
+        kDebug () << "\tNOP";
     #endif
         return;
     }
@@ -277,11 +277,11 @@ void kpMainWindow::setStatusBarZoom (int zoom)
 void kpMainWindow::recalculateStatusBarMessage ()
 {
 #if DEBUG_STATUS_BAR && 1
-    kDebug () << "kpMainWindow::recalculateStatusBarMessage()" << endl;
+    kDebug () << "kpMainWindow::recalculateStatusBarMessage()";
 #endif
     QString scrollViewMessage = d->scrollView->statusMessage ();
 #if DEBUG_STATUS_BAR && 1
-    kDebug () << "\tscrollViewMessage=" << scrollViewMessage << endl;
+    kDebug () << "\tscrollViewMessage=" << scrollViewMessage;
     kDebug () << "\tresizing doc? " << !d->scrollView->newDocSize ().isEmpty ()
                << endl;
     kDebug () << "\tviewUnderCursor? "
@@ -306,7 +306,7 @@ void kpMainWindow::recalculateStatusBarMessage ()
 
         scrollViewMessage.clear ();
     #if DEBUG_STATUS_BAR && 1
-        kDebug () << "\t\t\tdone" << endl;
+        kDebug () << "\t\t\tdone";
     #endif
     }
 
@@ -332,12 +332,12 @@ void kpMainWindow::recalculateStatusBarMessage ()
 void kpMainWindow::recalculateStatusBarShape ()
 {
 #if DEBUG_STATUS_BAR && 0
-    kDebug () << "kpMainWindow::recalculateStatusBarShape()" << endl;
+    kDebug () << "kpMainWindow::recalculateStatusBarShape()";
 #endif
 
     QSize docResizeTo = d->scrollView->newDocSize ();
 #if DEBUG_STATUS_BAR && 0
-    kDebug () << "\tdocResizeTo=" << docResizeTo << endl;
+    kDebug () << "\tdocResizeTo=" << docResizeTo;
 #endif
     if (docResizeTo.isValid ())
     {
@@ -365,7 +365,7 @@ void kpMainWindow::recalculateStatusBarShape ()
     {
         const kpTool *t = tool ();
     #if DEBUG_STATUS_BAR && 0
-        kDebug () << "\ttool=" << t << endl;
+        kDebug () << "\ttool=" << t;
     #endif
         if (t)
         {

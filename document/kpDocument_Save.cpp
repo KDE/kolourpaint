@@ -107,7 +107,7 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
                                       QWidget *parent)
 {
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "kpDocument::lossyPromptContinue()" << endl;
+    kDebug () << "kpDocument::lossyPromptContinue()";
 #endif
 
 #define QUIT_IF_CANCEL(messageBoxCommand)            \
@@ -181,7 +181,7 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
             *userCancelled = true;
 
     #if DEBUG_KP_DOCUMENT
-        kDebug () << "\treturning false because of lossyPrompt" << endl;
+        kDebug () << "\treturning false because of lossyPrompt";
     #endif
         return false;
     }
@@ -246,14 +246,14 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     if (!imageToSave.save (device, type.toLatin1 (), quality))
     {
     #if DEBUG_KP_DOCUMENT
-        kDebug () << "\tQImage::save() returned false" << endl;
+        kDebug () << "\tQImage::save() returned false";
     #endif
         return false;
     }
 
 
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "\tsave OK" << endl;
+    kDebug () << "\tsave OK";
 #endif
     return true;
 }
@@ -304,7 +304,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         if (result != KMessageBox::Continue)
         {
         #if DEBUG_KP_DOCUMENT
-            kDebug () << "\tuser doesn't want to overwrite" << endl;
+            kDebug () << "\tuser doesn't want to overwrite";
         #endif
 
             return false;
@@ -315,7 +315,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
     if (lossyPrompt && !lossyPromptContinue (pixmap, saveOptions, parent))
     {
     #if DEBUG_KP_DOCUMENT
-        kDebug () << "\treturning false because of lossyPrompt" << endl;
+        kDebug () << "\treturning false because of lossyPrompt";
     #endif
         return false;
     }
@@ -368,7 +368,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
                 atomicFileWriter.abort ();
 
             #if DEBUG_KP_DOCUMENT
-                kDebug () << "\tcould not close KSaveFile" << endl;
+                kDebug () << "\tcould not close KSaveFile";
             #endif
                 ::CouldNotSaveDialog (url, parent);
                 return false;
@@ -384,7 +384,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         if (!tempFile.open ())
         {
         #if DEBUG_KP_DOCUMENT
-            kDebug () << "\treturning false because could not open tempFile" << endl;
+            kDebug () << "\treturning false because could not open tempFile";
         #endif
             ::CouldNotCreateTemporaryFileDialog (parent);
             return false;
@@ -408,7 +408,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         // stops working after close() is called.
         const QString tempFileName = tempFile.fileName ();
     #if DEBUG_KP_DOCUMENT
-            kDebug () << "\ttempFileName='" << tempFileName << "'" << endl;
+            kDebug () << "\ttempFileName='" << tempFileName << "'";
     #endif
         Q_ASSERT (!tempFileName.isEmpty ());
 
@@ -416,7 +416,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         if (tempFile.error () != QFile::NoError)
         {
         #if DEBUG_KP_DOCUMENT
-            kDebug () << "\treturning false because could not close" << endl;
+            kDebug () << "\treturning false because could not close";
         #endif
             ::CouldNotSaveDialog (url, parent);
             return false;
@@ -429,7 +429,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         if (!KIO::NetAccess::upload (tempFileName, url, parent))
         {
         #if DEBUG_KP_DOCUMENT
-            kDebug () << "\treturning false because could not upload" << endl;
+            kDebug () << "\treturning false because could not upload";
         #endif
             KMessageBox::error (parent,
                                 i18n ("Could not save image - failed to upload."));

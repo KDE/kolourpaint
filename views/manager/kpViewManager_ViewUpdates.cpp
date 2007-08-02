@@ -199,7 +199,7 @@ void kpViewManager::updateViews ()
 void kpViewManager::updateViews (const QRect &docRect)
 {
 #if DEBUG_KP_VIEW_MANAGER && 0
-    kDebug () << "kpViewManager::updateViews (" << docRect << ")" << endl;
+    kDebug () << "kpViewManager::updateViews (" << docRect << ")";
 #endif
 
     for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
@@ -209,12 +209,12 @@ void kpViewManager::updateViews (const QRect &docRect)
         kpView *view = *it;
 
     #if DEBUG_KP_VIEW_MANAGER && 0
-        kDebug () << "\tupdating view " << view->name () << endl;
+        kDebug () << "\tupdating view " << view->name ();
     #endif
         if (view->zoomLevelX () % 100 == 0 && view->zoomLevelY () % 100 == 0)
         {
         #if DEBUG_KP_VIEW_MANAGER && 0
-            kDebug () << "\t\tviewRect=" << view->transformDocToView (docRect) << endl;
+            kDebug () << "\t\tviewRect=" << view->transformDocToView (docRect);
         #endif
             updateView (view, view->transformDocToView (docRect));
         }
@@ -231,7 +231,7 @@ void kpViewManager::updateViews (const QRect &docRect)
                                 .intersect (QRect (0, 0, view->width (), view->height ()));
 
         #if DEBUG_KP_VIEW_MANAGER && 0
-            kDebug () << "\t\tviewRect (+compensate)=" << newRect << endl;
+            kDebug () << "\t\tviewRect (+compensate)=" << newRect;
         #endif
             updateView (view, newRect);
         }

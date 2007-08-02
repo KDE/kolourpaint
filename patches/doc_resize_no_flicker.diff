@@ -280,7 +280,7 @@ diff -u -p -r1.7 kpviewscrollablecontainer.cpp
 -    //         e.g. sleep 5 && gedit & sleep 10 && killall gedit
 +    QRegion oldLinesRegion = resizeLinesRegion ();
 +#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-+    kDebug () << "\toldLinesRegion=" << oldLinesRegion << endl;
++    kDebug () << "\toldLinesRegion=" << oldLinesRegion;
 +#endif
 +
 +
@@ -299,7 +299,7 @@ diff -u -p -r1.7 kpviewscrollablecontainer.cpp
 +
 +    QRegion newLinesRegion = resizeLinesRegion ();
 +#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-+    kDebug () << "\tnewLinesRegion=" << newLinesRegion << endl;
++    kDebug () << "\tnewLinesRegion=" << newLinesRegion;
 +#endif
 +
 +

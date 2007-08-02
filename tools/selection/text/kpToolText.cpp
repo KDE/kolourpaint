@@ -157,7 +157,7 @@ void kpToolText::addNewDeleteCommand (kpToolTextDeleteCommand **cmd)
 void kpToolText::begin ()
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kDebug () << "kpToolText::begin()" << endl;
+    kDebug () << "kpToolText::begin()";
 #endif
 
     environ ()->enableTextToolBarActions (true);
@@ -172,7 +172,7 @@ void kpToolText::begin ()
 void kpToolText::end ()
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kDebug () << "kpToolText::end()" << endl;
+    kDebug () << "kpToolText::end()";
 #endif
 
     kpToolSelection::end ();
@@ -212,7 +212,7 @@ kpToolSelection::DragType kpToolText::beginDrawInsideSelection ()
         // drag-moving the selection - therefore it makes sense to not
         // call the base.
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\t\tis select cursor pos" << endl;
+        kDebug () << "\t\tis select cursor pos";
     #endif
 
         Q_ASSERT (document ()->textSelection ());
@@ -293,7 +293,7 @@ bool kpToolText::shouldCreate (bool dragHasBegun,
         if (m_hadSelectionBeforeDrag)
         {
         #if DEBUG_KP_TOOL_TEXT && 1
-            kDebug () << "\ttext box deselect - NOP - return" << endl;
+            kDebug () << "\ttext box deselect - NOP - return";
         #endif
             // We must be attempting to deselect the text box.
             // This deselection has already been done by kpToolSelection::beginDraw().
@@ -324,7 +324,7 @@ bool kpToolText::shouldCreate (bool dragHasBegun,
             //
 
         #if DEBUG_KP_TOOL_TEXT && 1
-            kDebug () << "\tclick creating text box" << endl;
+            kDebug () << "\tclick creating text box";
         #endif
 
             // (Click creating text box with RMB would not be obvious
@@ -359,7 +359,7 @@ bool kpToolText::shouldCreate (bool dragHasBegun,
     else
     {
     #if DEBUG_KP_TOOL_TEXT && 1
-        kDebug () << "\tdrag creating text box" << endl;
+        kDebug () << "\tdrag creating text box";
     #endif
         *minimumWidthOut = kpTextSelection::MinimumWidthForTextStyle (textStyle);
         *minimumHeightOut = kpTextSelection::MinimumHeightForTextStyle (textStyle);
@@ -481,7 +481,7 @@ void kpToolText::setSelectionBorderForHaventBegunDraw ()
 void kpToolText::cancelShape ()
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::cancelShape()" << endl;
+    kDebug () << "kpToolText::cancelShape()";
 #endif
 
     if (m_dragType != Unknown)
@@ -506,7 +506,7 @@ QString kpToolText::nonSmearMoveCommandName () const
 void kpToolText::endShape (const QPoint &thisPoint, const QRect &normalizedRect)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::endShape()" << endl;
+    kDebug () << "kpToolText::endShape()";
 #endif
 
     if (m_dragType != Unknown)
@@ -539,7 +539,7 @@ bool kpToolText::shouldChangeTextStyle () const
     if (!document ()->textSelection ())
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tno text selection - abort setting text style" << endl;
+        kDebug () << "\tno text selection - abort setting text style";
     #endif
         return false;
     }
@@ -553,7 +553,7 @@ void kpToolText::changeTextStyle (const QString &name,
                                   const kpTextStyle &oldTextStyle)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::changeTextStyle(" << name << ")" << endl;
+    kDebug () << "kpToolText::changeTextStyle(" << name << ")";
 #endif
 
     if (hasBegunShape ())
@@ -572,7 +572,7 @@ void kpToolText::changeTextStyle (const QString &name,
 void kpToolText::slotIsOpaqueChanged ()
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotIsOpaqueChanged()" << endl;
+    kDebug () << "kpToolText::slotIsOpaqueChanged()";
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -595,7 +595,7 @@ void kpToolText::slotColorsSwapped (const kpColor &newForegroundColor,
                                     const kpColor &newBackgroundColor)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotColorsSwapped()" << endl;
+    kDebug () << "kpToolText::slotColorsSwapped()";
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -616,7 +616,7 @@ void kpToolText::slotColorsSwapped (const kpColor &newForegroundColor,
 void kpToolText::slotForegroundColorChanged (const kpColor & /*color*/)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotForegroundColorChanged()" << endl;
+    kDebug () << "kpToolText::slotForegroundColorChanged()";
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -636,7 +636,7 @@ void kpToolText::slotForegroundColorChanged (const kpColor & /*color*/)
 void kpToolText::slotBackgroundColorChanged (const kpColor & /*color*/)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotBackgroundColorChanged()" << endl;
+    kDebug () << "kpToolText::slotBackgroundColorChanged()";
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -720,7 +720,7 @@ void kpToolText::slotFontSizeChanged (int fontSize, int oldFontSize)
 void kpToolText::slotBoldChanged (bool isBold)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotBoldChanged(" << isBold << ")" << endl;
+    kDebug () << "kpToolText::slotBoldChanged(" << isBold << ")";
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -741,7 +741,7 @@ void kpToolText::slotBoldChanged (bool isBold)
 void kpToolText::slotItalicChanged (bool isItalic)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotItalicChanged(" << isItalic << ")" << endl;
+    kDebug () << "kpToolText::slotItalicChanged(" << isItalic << ")";
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -762,7 +762,7 @@ void kpToolText::slotItalicChanged (bool isItalic)
 void kpToolText::slotUnderlineChanged (bool isUnderline)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotUnderlineChanged(" << isUnderline << ")" << endl;
+    kDebug () << "kpToolText::slotUnderlineChanged(" << isUnderline << ")";
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -783,7 +783,7 @@ void kpToolText::slotUnderlineChanged (bool isUnderline)
 void kpToolText::slotStrikeThruChanged (bool isStrikeThru)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotStrikeThruChanged(" << isStrikeThru << ")" << endl;
+    kDebug () << "kpToolText::slotStrikeThruChanged(" << isStrikeThru << ")";
 #endif
 
     if (!shouldChangeTextStyle ())

@@ -227,7 +227,7 @@ void kpMainWindow::createToolBox ()
 void kpMainWindow::enableToolsDocumentActions (bool enable)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::enableToolsDocumentsAction(" << enable << ")" << endl;
+    kDebug () << "kpMainWindow::enableToolsDocumentsAction(" << enable << ")";
 #endif
 
     d->toolActionsEnabled = enable;
@@ -267,7 +267,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
         if (action)
         {
         #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\tchanging enabled state of " << (*it)->objectName () << endl;
+            kDebug () << "\tchanging enabled state of " << (*it)->objectName ();
         #endif
 
             if (!enable && action->isChecked ())
@@ -278,7 +278,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
         else
         {
         #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\tno action for " << (*it)->objectName () << endl;
+            kDebug () << "\tno action for " << (*it)->objectName ();
         #endif
         }
     }
@@ -321,13 +321,13 @@ void kpMainWindow::updateToolOptionPrevNextActionsEnabled ()
 void kpMainWindow::updateActionDrawOpaqueChecked ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::updateActionDrawOpaqueChecked()" << endl;
+    kDebug () << "kpMainWindow::updateActionDrawOpaqueChecked()";
 #endif
 
     const bool drawOpaque =
         (d->toolToolBar->toolWidgetOpaqueOrTransparent ()->selectedRow () == 0);
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tdrawOpaque=" << drawOpaque << endl;
+    kDebug () << "\tdrawOpaque=" << drawOpaque;
 #endif
 
     d->actionDrawOpaque->setChecked (drawOpaque);
@@ -337,7 +337,7 @@ void kpMainWindow::updateActionDrawOpaqueChecked ()
 void kpMainWindow::updateActionDrawOpaqueEnabled ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::updateActionDrawOpaqueEnabled()" << endl;
+    kDebug () << "kpMainWindow::updateActionDrawOpaqueEnabled()";
 #endif
 
     const bool enable = d->toolActionsEnabled;
@@ -447,7 +447,7 @@ int kpMainWindow::settingImageSelectionTransparency () const
 void kpMainWindow::slotToolSelected (kpTool *tool)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotToolSelected (" << tool << ")" << endl;
+    kDebug () << "kpMainWindow::slotToolSelected (" << tool << ")";
 #endif
 
     kpTool *previousTool = d->toolToolBar ? d->toolToolBar->previousTool () : 0;
@@ -749,7 +749,7 @@ void kpMainWindow::slotActionNextToolOptionGroup2 ()
 void kpMainWindow::slotActionDrawOpaqueToggled ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotActionDrawOpaqueToggled()" << endl;
+    kDebug () << "kpMainWindow::slotActionDrawOpaqueToggled()";
 #endif
     toolEndShape ();
 
@@ -766,7 +766,7 @@ void kpMainWindow::slotActionDrawOpaqueToggled ()
 void kpMainWindow::slotActionDrawColorSimilarity ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotActionDrawColorSimilarity()" << endl;
+    kDebug () << "kpMainWindow::slotActionDrawColorSimilarity()";
 #endif
     toolEndShape ();
 

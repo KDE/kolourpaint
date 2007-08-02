@@ -154,7 +154,7 @@ void kpPixmapFX::paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QP
     foreach (QRect r, brushRegion.rects ())
     {
     #if DEBUG_KP_PIXMAP_FX
-        kDebug () << "\tcopy rect=" << r << endl;
+        kDebug () << "\tcopy rect=" << r;
     #endif
         kpPixmapFX::fillRect (destPixmapPtr,
             r.x (), r.y (), r.width (), r.height (),

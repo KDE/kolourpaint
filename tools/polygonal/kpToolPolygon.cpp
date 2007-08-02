@@ -128,7 +128,7 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
     if (points ()->count () >= kpToolPolygonalBase::MaxPoints)
     {
     #if DEBUG_KP_TOOL_POLYGON
-        kDebug () << "\tending shape" << endl;
+        kDebug () << "\tending shape";
     #endif
         endShape ();
         return;

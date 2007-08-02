@@ -119,7 +119,7 @@ void kpToolFloodFillCommand::execute ()
         else
         {
         #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-            kDebug () << "\tinvalid boundingRect - must be NOP case" << endl;
+            kDebug () << "\tinvalid boundingRect - must be NOP case";
         #endif
         }
     }

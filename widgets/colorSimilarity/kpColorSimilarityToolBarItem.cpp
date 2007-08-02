@@ -57,7 +57,7 @@ kpColorSimilarityToolBarItem::kpColorSimilarityToolBarItem (QWidget *parent)
       m_suppressingFlashCounter (0)
 {
 #if DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM
-    kDebug () << "kpColorSimilarityToolBarItem::<ctor>()" << endl;
+    kDebug () << "kpColorSimilarityToolBarItem::<ctor>()";
 #endif
 
     setAutoRaise (true);
@@ -76,7 +76,7 @@ kpColorSimilarityToolBarItem::kpColorSimilarityToolBarItem (QWidget *parent)
              SLOT (slotFlashTimerTimeout ()));
 
 #if DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM
-    kDebug () << "kpColorSimilarityToolBarItem::<ctor>() ends" << endl;
+    kDebug () << "kpColorSimilarityToolBarItem::<ctor>() ends";
 #endif
 }
 
@@ -170,7 +170,7 @@ void kpColorSimilarityToolBarItem::slotFlashTimerTimeout ()
 void kpColorSimilarityToolBarItem::flash ()
 {
 #if DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM
-    kDebug () << "kpColorSimilarityToolBarItem::flash()" << endl;
+    kDebug () << "kpColorSimilarityToolBarItem::flash()";
 #endif
     if (isSuppressingFlash ())
         return;
@@ -178,7 +178,7 @@ void kpColorSimilarityToolBarItem::flash ()
     if (m_flashHighlight == 255)
     {
     #if DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM
-        kDebug () << "\tNOP" << endl;
+        kDebug () << "\tNOP";
     #endif
     }
     else
@@ -216,7 +216,7 @@ void kpColorSimilarityToolBarItem::unsupressFlash ()
 void kpColorSimilarityToolBarItem::updateToolTip ()
 {
 #if DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM
-    kDebug () << "kpColorSimilarityToolBarItem::updateToolTip()" << endl;
+    kDebug () << "kpColorSimilarityToolBarItem::updateToolTip()";
 #endif
 
     if (colorSimilarity () > 0)

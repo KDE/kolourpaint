@@ -84,7 +84,7 @@ kpDocument::kpDocument (int w, int h,
       d (new kpDocumentPrivate ())
 {
 #if DEBUG_KP_DOCUMENT && 0
-    kDebug () << "kpDocument::kpDocument (" << w << "," << h << ")" << endl;
+    kDebug () << "kpDocument::kpDocument (" << w << "," << h << ")";
 #endif
 
     m_image = new kpImage (w, h);
@@ -387,7 +387,7 @@ void kpDocument::setImage (bool ofSelection, const kpImage &image)
 void kpDocument::fill (const kpColor &color)
 {
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "kpDocument::fill ()" << endl;
+    kDebug () << "kpDocument::fill ()";
 #endif
 
     kpPixmapFX::fill (m_image, color);
@@ -397,7 +397,7 @@ void kpDocument::fill (const kpColor &color)
 void kpDocument::resize (int w, int h, const kpColor &backgroundColor)
 {
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "kpDocument::resize (" << w << "," << h << ")" << endl;
+    kDebug () << "kpDocument::resize (" << w << "," << h << ")";
 #endif
 
     m_oldWidth = width (), m_oldHeight = height ();

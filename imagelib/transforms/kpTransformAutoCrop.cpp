@@ -203,7 +203,7 @@ bool kpTransformAutoCropBorder::isSingleColor () const
 bool kpTransformAutoCropBorder::calculate (int isX, int dir)
 {
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kDebug () << "kpTransformAutoCropBorder::calculate() CALLED!" << endl;
+    kDebug () << "kpTransformAutoCropBorder::calculate() CALLED!";
 #endif
     int maxX = m_pixmapPtr->width () - 1;
     int maxY = m_pixmapPtr->height () - 1;
@@ -417,7 +417,7 @@ void kpTransformAutoCropCommand::getUndoPixmap (const kpTransformAutoCropBorder 
     Q_ASSERT (doc);
 
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kDebug () << "kpTransformAutoCropCommand::getUndoPixmap()" << endl;
+    kDebug () << "kpTransformAutoCropCommand::getUndoPixmap()";
     kDebug () << "\tpixmap=" << pixmap
                << " border: rect=" << border.rect ()
                << " isSingleColor=" << border.isSingleColor ()
@@ -429,7 +429,7 @@ void kpTransformAutoCropCommand::getUndoPixmap (const kpTransformAutoCropBorder 
         if (*pixmap)
         {
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
-            kDebug () << "\talready have *pixmap - delete it" << endl;
+            kDebug () << "\talready have *pixmap - delete it";
         #endif
             delete *pixmap;
         }
@@ -454,7 +454,7 @@ void kpTransformAutoCropCommand::getUndoPixmaps ()
 void kpTransformAutoCropCommand::deleteUndoPixmaps ()
 {
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kDebug () << "kpTransformAutoCropCommand::deleteUndoPixmaps()" << endl;
+    kDebug () << "kpTransformAutoCropCommand::deleteUndoPixmaps()";
 #endif
 
     delete d->leftPixmap; d->leftPixmap = 0;
@@ -510,7 +510,7 @@ void kpTransformAutoCropCommand::execute ()
 void kpTransformAutoCropCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kDebug () << "kpTransformAutoCropCommand::unexecute()" << endl;
+    kDebug () << "kpTransformAutoCropCommand::unexecute()";
 #endif
 
     kpDocument *doc = document ();
@@ -575,7 +575,7 @@ void kpTransformAutoCropCommand::unexecute ()
         else
         {
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
-            kDebug () << "\trestoring border pixmap " << (*b)->rect () << endl;
+            kDebug () << "\trestoring border pixmap " << (*b)->rect ();
         #endif
             if (*p)
                 painter.drawPixmap ((*b)->rect (), **p);
@@ -655,7 +655,7 @@ static void ShowNothingToAutocropMessage (kpMainWindow *mainWindow, bool actOnSe
 bool kpTransformAutoCrop (kpMainWindow *mainWindow)
 {
 #if DEBUG_KP_TOOL_AUTO_CROP
-    kDebug () << "kpTransformAutoCrop() CALLED!" << endl;
+    kDebug () << "kpTransformAutoCrop() CALLED!";
 #endif
 
     Q_ASSERT (mainWindow);
@@ -712,7 +712,7 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
     }
 
 #if DEBUG_KP_TOOL_AUTO_CROP
-    kDebug () << "\tnumRegions=" << numRegions << endl;
+    kDebug () << "\tnumRegions=" << numRegions;
     kDebug () << "\t\tleft=" << leftBorder.rect ()
                << " refCol=" << (leftBorder.exists () ? (int *) leftBorder.referenceColor ().toQRgb () : 0)
                << " avgCol=" << (leftBorder.exists () ? (int *) leftBorder.averageColor ().toQRgb () : 0)
@@ -748,7 +748,7 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
             leftBorder.right () >= rightBorder.left () - 1)  // kissing or overlapping
         {
         #if DEBUG_KP_TOOL_AUTO_CROP
-            kDebug () << "\tignoring left border" << endl;
+            kDebug () << "\tignoring left border";
         #endif
             leftBorder.invalidate ();
         }
@@ -763,7 +763,7 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
             topBorder.bottom () >= botBorder.top () - 1)  // kissing or overlapping
         {
         #if DEBUG_KP_TOOL_AUTO_CROP
-            kDebug () << "\tignoring top border" << endl;
+            kDebug () << "\tignoring top border";
         #endif
             topBorder.invalidate ();
         }

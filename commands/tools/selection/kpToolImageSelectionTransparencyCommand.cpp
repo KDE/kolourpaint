@@ -80,7 +80,7 @@ kpCommandSize::SizeType kpToolImageSelectionTransparencyCommand::size () const
 void kpToolImageSelectionTransparencyCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolImageSelectionTransparencyCommand::execute()" << endl;
+    kDebug () << "kpToolImageSelectionTransparencyCommand::execute()";
 #endif
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -99,7 +99,7 @@ void kpToolImageSelectionTransparencyCommand::execute ()
 void kpToolImageSelectionTransparencyCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolImageSelectionTransparencyCommand::unexecute()" << endl;
+    kDebug () << "kpToolImageSelectionTransparencyCommand::unexecute()";
 #endif
 
     kpDocument *doc = document ();

@@ -116,14 +116,14 @@ QString kpToolRectangularBase::haventBegunDrawUserMessage () const
 void kpToolRectangularBase::begin ()
 {
 #if DEBUG_KP_TOOL_RECTANGULAR_BASE
-    kDebug () << "kpToolRectangularBase::begin ()" << endl;
+    kDebug () << "kpToolRectangularBase::begin ()";
 #endif
 
     kpToolToolBar *tb = toolToolBar ();
     Q_ASSERT (tb);
 
 #if DEBUG_KP_TOOL_RECTANGULAR_BASE
-    kDebug () << "\ttoolToolBar=" << tb << endl;
+    kDebug () << "\ttoolToolBar=" << tb;
 #endif
 
     d->toolWidgetLineWidth = tb->toolWidgetLineWidth ();
@@ -149,7 +149,7 @@ void kpToolRectangularBase::begin ()
 void kpToolRectangularBase::end ()
 {
 #if DEBUG_KP_TOOL_RECTANGULAR_BASE
-    kDebug () << "kpToolRectangularBase::end ()" << endl;
+    kDebug () << "kpToolRectangularBase::end ()";
 #endif
 
     if (d->toolWidgetLineWidth)

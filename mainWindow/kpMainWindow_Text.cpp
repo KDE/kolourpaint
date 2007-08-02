@@ -117,7 +117,7 @@ void kpMainWindow::readAndApplyTextSettings ()
 void kpMainWindow::enableTextToolBarActions (bool enable)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::enableTextToolBarActions(" << enable << ")" << endl;
+    kDebug () << "kpMainWindow::enableTextToolBarActions(" << enable << ")";
 #endif
 
     d->actionTextFontFamily->setEnabled (enable);
@@ -130,7 +130,7 @@ void kpMainWindow::enableTextToolBarActions (bool enable)
     if (textToolBar ())
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\thave toolbar - setShown" << endl;
+        kDebug () << "\thave toolbar - setShown";
     #endif
         textToolBar ()->setVisible (enable);
     }
@@ -344,7 +344,7 @@ kpTextStyle kpMainWindow::textStyle () const
 void kpMainWindow::setTextStyle (const kpTextStyle &textStyle_)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::setTextStyle()" << endl;
+    kDebug () << "kpMainWindow::setTextStyle()";
 #endif
 
     d->settingTextStyle++;

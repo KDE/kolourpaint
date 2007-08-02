@@ -218,7 +218,7 @@ void kpTransformPreviewDialog::updateDimensions ()
 
     QSize newDim = newDimensions ();
 #if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
-    kDebug () << "kpTransformPreviewDialog::updateDimensions(): newDim=" << newDim << endl;
+    kDebug () << "kpTransformPreviewDialog::updateDimensions(): newDim=" << newDim;
 #endif
 
     QString newDimString = i18n ("%1 x %2",
@@ -273,7 +273,7 @@ void kpTransformPreviewDialog::updateShrunkenDocumentPixmap ()
         m_previewPixmapLabel->size () != m_previewPixmapLabelSizeWhenUpdatedPixmap)
     {
     #if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
-        kDebug () << "\tupdating shrunkenDocPixmap" << endl;
+        kDebug () << "\tupdating shrunkenDocPixmap";
     #endif
 
         // TODO: Why the need to keep aspect ratio here?
@@ -323,7 +323,7 @@ void kpTransformPreviewDialog::updateShrunkenDocumentPixmap ()
 void kpTransformPreviewDialog::updatePreview ()
 {
 #if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
-    kDebug () << "kpTransformPreviewDialog::updatePreview()" << endl;
+    kDebug () << "kpTransformPreviewDialog::updatePreview()";
 #endif
 
     if (!m_previewGroupBox)
@@ -407,7 +407,7 @@ void kpTransformPreviewDialog::updatePreview ()
 void kpTransformPreviewDialog::slotUpdate ()
 {
 #if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
-    kDebug () << "kpTransformPreviewDialog::slotUpdate()" << endl;
+    kDebug () << "kpTransformPreviewDialog::slotUpdate()";
 #endif
     updateDimensions ();
     updatePreview ();

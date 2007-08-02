@@ -81,7 +81,7 @@ bool kpToolText::viewEvent (QEvent *e)
     if (ke->key () == 0 && ke->key () == Qt::Key_unknown)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tcan't be shortcut - safe to not react" << endl;
+        kDebug () << "\tcan't be shortcut - safe to not react";
     #endif
     }
     // Normal letter (w/ or w/o shift, keypad button ok)?
@@ -91,7 +91,7 @@ bool kpToolText::viewEvent (QEvent *e)
             ke->key () < 0x100 /*QChar (ke->key ()).isPrint () - unfortunately F1 is printable too...*/)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tis text - grab" << endl;
+        kDebug () << "\tis text - grab";
     #endif
         e->accept ();
     }
@@ -111,7 +111,7 @@ void kpToolText::handleUpKeyPress (QKeyEvent *e,
     const QList <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tup pressed" << endl;
+    kDebug () << "\tup pressed";
 #endif
 
     if (hasBegunShape ())
@@ -132,7 +132,7 @@ void kpToolText::handleDownKeyPress (QKeyEvent *e,
     const QList <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tdown pressed" << endl;
+    kDebug () << "\tdown pressed";
 #endif
 
     if (hasBegunShape ())
@@ -153,7 +153,7 @@ void kpToolText::handleLeftKeyPress (QKeyEvent *e,
     const QList <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tleft pressed" << endl;
+    kDebug () << "\tleft pressed";
 #endif
 
     if (hasBegunShape ())
@@ -162,7 +162,7 @@ void kpToolText::handleLeftKeyPress (QKeyEvent *e,
     if ((e->modifiers () & Qt::ControlModifier) == 0)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tmove single char" << endl;
+        kDebug () << "\tmove single char";
     #endif
 
         moveCursorLeft (textLines, &cursorRow, &cursorCol);
@@ -171,7 +171,7 @@ void kpToolText::handleLeftKeyPress (QKeyEvent *e,
     else
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tmove to start of word" << endl;
+        kDebug () << "\tmove to start of word";
     #endif
 
         moveCursorToWordStart (textLines, &cursorRow, &cursorCol);
@@ -186,7 +186,7 @@ void kpToolText::handleRightKeyPress (QKeyEvent *e,
     const QList <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tright pressed" << endl;
+    kDebug () << "\tright pressed";
 #endif
 
     if (hasBegunShape ())
@@ -195,7 +195,7 @@ void kpToolText::handleRightKeyPress (QKeyEvent *e,
     if ((e->modifiers () & Qt::ControlModifier) == 0)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tmove single char" << endl;
+        kDebug () << "\tmove single char";
     #endif
 
         moveCursorRight (textLines, &cursorRow, &cursorCol);
@@ -204,7 +204,7 @@ void kpToolText::handleRightKeyPress (QKeyEvent *e,
     else
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tmove to start of next word" << endl;
+        kDebug () << "\tmove to start of next word";
     #endif
 
         moveCursorToNextWordStart (textLines, &cursorRow, &cursorCol);
@@ -220,7 +220,7 @@ void kpToolText::handleHomeKeyPress (QKeyEvent *e,
     const QList <QString> & /*textLines*/, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\thome pressed" << endl;
+    kDebug () << "\thome pressed";
 #endif
 
     if (hasBegunShape ())
@@ -241,7 +241,7 @@ void kpToolText::handleEndKeyPress (QKeyEvent *e,
     const QList <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tend pressed" << endl;
+    kDebug () << "\tend pressed";
 #endif
 
     if (hasBegunShape ())
@@ -263,7 +263,7 @@ void kpToolText::handleBackspaceKeyPress (QKeyEvent *e,
     const QList <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tbackspace pressed" << endl;
+    kDebug () << "\tbackspace pressed";
 #endif
 
     if ((e->modifiers () & Qt::ControlModifier) == 0)
@@ -300,7 +300,7 @@ void kpToolText::handleDeleteKeyPress (QKeyEvent *e,
     const QList <QString> & textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tdelete pressed" << endl;
+    kDebug () << "\tdelete pressed";
 #endif
 
     if ((e->modifiers () & Qt::ControlModifier) == 0)
@@ -343,7 +343,7 @@ void kpToolText::handleEnterKeyPress (QKeyEvent *e,
     const QList <QString> & /*textLines*/, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tenter pressed" << endl;
+    kDebug () << "\tenter pressed";
 #endif
     if (!m_enterCommand)
     {
@@ -369,7 +369,7 @@ void kpToolText::handleTextTyped (QKeyEvent *e,
     const QList <QString> & /*textLines*/, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\ttext='" << e->text () << "'" << endl;
+    kDebug () << "\ttext='" << e->text () << "'";
 #endif
     QString usableText;
     for (int i = 0; i < (int) e->text ().length (); i++)
@@ -378,7 +378,7 @@ void kpToolText::handleTextTyped (QKeyEvent *e,
             usableText += e->text ().at (i);
     }
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tusableText='" << usableText << "'" << endl;
+    kDebug () << "\tusableText='" << usableText << "'";
 #endif
 
     if (usableText.length () > 0)
@@ -406,7 +406,7 @@ void kpToolText::handleTextTyped (QKeyEvent *e,
 void kpToolText::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::keyPressEvent(e->text='" << e->text () << "')" << endl;
+    kDebug () << "kpToolText::keyPressEvent(e->text='" << e->text () << "')";
 #endif
 
 
@@ -416,7 +416,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     if (hasBegunDraw ())
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\talready began draw with mouse - passing on event to kpTool" << endl;
+        kDebug () << "\talready began draw with mouse - passing on event to kpTool";
     #endif
         kpToolSelection::keyPressEvent (e);
         return;
@@ -428,7 +428,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     if (!textSel)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tno text sel - passing on event to kpTool" << endl;
+        kDebug () << "\tno text sel - passing on event to kpTool";
     #endif
         //if (hasBegunShape ())
         //    endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));

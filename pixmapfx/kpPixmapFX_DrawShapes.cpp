@@ -154,7 +154,7 @@ static void DrawPolylineHelper (QPainter *p,
     if (Only1PixelInPointArray (pack->points))
     {
     #if DEBUG_KP_PIXMAP_FX
-        kDebug () << "\tinvoking single point hack" << endl;
+        kDebug () << "\tinvoking single point hack";
     #endif
         p->drawPoint (pack->points [0]);
         return;
@@ -239,7 +239,7 @@ static void DrawPolygonHelper (QPainter *p,
     if (Only1PixelInPointArray (pack->points))
     {
     #if DEBUG_KP_PIXMAP_FX
-        kDebug () << "\tinvoking single point hack" << endl;
+        kDebug () << "\tinvoking single point hack";
     #endif
         p->drawPoint (pack->points [0]);
         return;
@@ -346,7 +346,7 @@ static void DrawCurveHelper (QPainter *p,
         pack->controlPointQ == pack->endPoint)
     {
     #if DEBUG_KP_PIXMAP_FX
-        kDebug () << "\tinvoking single point hack" << endl;
+        kDebug () << "\tinvoking single point hack";
     #endif
         p->setPen (curvePen);
         p->drawPoint (pack->startPoint);
@@ -513,7 +513,7 @@ static void DrawGenericRect (QPixmap *image,
     if (width == 1 || height == 1)
     {
     #if DEBUG_KP_PIXMAP_FX
-        kDebug () << "\twidth=1 or height=1 - draw line" << endl;
+        kDebug () << "\twidth=1 or height=1 - draw line";
     #endif
 
         kpPixmapFX::drawLine (image,
@@ -532,7 +532,7 @@ static void DrawGenericRect (QPixmap *image,
     if (penWidth * 2 >= width || penWidth * 2 >= height)
     {
     #if DEBUG_KP_PIXMAP_FX
-        kDebug () << "\toutline dominates fill - fill with outline" << endl;
+        kDebug () << "\toutline dominates fill - fill with outline";
     #endif
 
         // Fill with outline.

@@ -74,7 +74,7 @@ diff -u -p -r1.9 kptoolpen.cpp
 -            image = pixmap.convertToImage ();
 -        #if DEBUG_KP_TOOL_PEN
 -            convAndWashTime = timer.restart ();
--            kDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;    
+-            kDebug () << "\tconvert to image: " << convAndWashTime << " ms";    
 -        #endif
 -        }
          
@@ -95,7 +95,7 @@ diff -u -p -r1.9 kptoolpen.cpp
 +        
 +            #if DEBUG_KP_TOOL_PEN
 +                convAndWashTime = timer.restart ();
-+                kDebug () << "\tconvert to image: " << convAndWashTime << " ms" << endl;    
++                kDebug () << "\tconvert to image: " << convAndWashTime << " ms";    
 +            #endif
 +            }
 +
@@ -213,7 +213,7 @@ diff -u -p -r1.9 kptoolpen.cpp
 +                    QRect r = rects [i];
 +                    QPixmap pm = document ()->getPixmapAt (r);
 +                #if DEBUG_KP_TOOL_PEN && 0
-+                    kDebug () << "\tr=" << r << endl;
++                    kDebug () << "\tr=" << r;
 +                #endif
 +            
 +                    bool drew = false;

@@ -61,7 +61,7 @@ kpImageSelectionTransparency::kpImageSelectionTransparency (bool isOpaque, const
 bool kpImageSelectionTransparency::operator== (const kpImageSelectionTransparency &rhs) const
 {
 #if DEBUG_KP_SELECTION_TRANSPARENCY && 0
-    kDebug () << "kpImageSelectionTransparency::operator==()" << endl;
+    kDebug () << "kpImageSelectionTransparency::operator==()";
 #endif
     
     if (m_isOpaque != rhs.m_isOpaque)
@@ -77,7 +77,7 @@ bool kpImageSelectionTransparency::operator== (const kpImageSelectionTransparenc
     if (m_isOpaque)
     {
     #if DEBUG_KP_SELECTION_TRANSPARENCY && 0
-        kDebug () << "\tboth opaque - eq" << endl;
+        kDebug () << "\tboth opaque - eq";
     #endif
         return true;
     }

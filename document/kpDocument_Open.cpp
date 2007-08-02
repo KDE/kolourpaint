@@ -114,7 +114,7 @@ QPixmap kpDocument::convertToPixmapAsLosslessAsPossible (
 {
     if (image.width () <= 16 && image.height () <= 16)
     {
-        kDebug () << "Image dump:" << endl;
+        kDebug () << "Image dump:";
 
         for (int y = 0; y < image.height (); y++)
         {
@@ -136,7 +136,7 @@ QPixmap kpDocument::convertToPixmapAsLosslessAsPossible (
 #if DEBUG_KP_DOCUMENT && 1
 {
     const QImage image2 = kpPixmapFX::convertToImage (newPixmap);
-    kDebug () << "(Converted to pixmap) Image dump:" << endl;
+    kDebug () << "(Converted to pixmap) Image dump:";
 
     bool differsFromOrgImage = false;
     unsigned long hash = 0;
@@ -177,7 +177,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
                                        kpDocumentMetaInfo *metaInfo)
 {
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "kpDocument::getPixmapFromFile(" << url << "," << parent << ")" << endl;
+    kDebug () << "kpDocument::getPixmapFromFile(" << url << "," << parent << ")";
 #endif
 
     if (saveOptions)
@@ -222,10 +222,10 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
             saveOptions->setMimeType (detectedMimeType);
 
     #if DEBUG_KP_DOCUMENT
-        kDebug () << "\ttempFile=" << tempFile << endl;
-        kDebug () << "\tmimetype=" << detectedMimeType << endl;
-        kDebug () << "\tsrc=" << url.path () << endl;
-        // COMPAT kDebug () << "\tmimetype of src=" << KImageIO::mimeType (url.path ()) << endl;
+        kDebug () << "\ttempFile=" << tempFile;
+        kDebug () << "\tmimetype=" << detectedMimeType;
+        kDebug () << "\tsrc=" << url.path ();
+        // COMPAT kDebug () << "\tmimetype of src=" << KImageIO::mimeType (url.path ());
     #endif
 
         if (detectedMimeType.isEmpty ())
@@ -301,7 +301,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
 void kpDocument::openNew (const KUrl &url)
 {
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "kpDocument::openNew (" << url << ")" << endl;
+    kDebug () << "kpDocument::openNew (" << url << ")";
 #endif
 
     m_image->fill (Qt::white);
@@ -323,7 +323,7 @@ void kpDocument::openNew (const KUrl &url)
 bool kpDocument::open (const KUrl &url, bool newDocSameNameIfNotExist)
 {
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "kpDocument::open (" << url << ")" << endl;
+    kDebug () << "kpDocument::open (" << url << ")";
 #endif
 
     kpDocumentSaveOptions newSaveOptions;

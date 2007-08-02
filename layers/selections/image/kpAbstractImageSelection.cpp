@@ -139,14 +139,14 @@ void kpAbstractImageSelection::writeToStream (QDataStream &stream) const
     {
         const QImage image = kpPixmapFX::convertToImage (d->baseImage);
     #if DEBUG_KP_SELECTION && 1
-        kDebug () << "\twrote image rect=" << image.rect () << endl;
+        kDebug () << "\twrote image rect=" << image.rect ();
     #endif
         stream << image;
     }
     else
     {
     #if DEBUG_KP_SELECTION && 1
-        kDebug () << "\twrote no image because no pixmap" << endl;
+        kDebug () << "\twrote no image because no pixmap";
     #endif
         stream << QImage ();
     }
@@ -267,7 +267,7 @@ kpImage kpAbstractImageSelection::givenImageMaskedByShape (const kpImage &image)
     foreach (QRect r, mRegion.rects ())
     {
     #if DEBUG_KP_SELECTION
-        kDebug () << "\tcopy rect=" << r << endl;
+        kDebug () << "\tcopy rect=" << r;
     #endif
         // OPT: Hopelessly inefficient.  If kpPixmapFX::setPixmapAt() was
         //      more flexible, we wouldn't need to call getPixmapAt().
@@ -331,7 +331,7 @@ bool kpAbstractImageSelection::setTransparency (
         if (d->transparencyMaskCache.isNull ())
         {
         #if DEBUG_KP_SELECTION
-            kDebug () << "\tboth old and new pixmaps are null - nothing changed" << endl;
+            kDebug () << "\tboth old and new pixmaps are null - nothing changed";
         #endif
             haveChanged = false;
         }
@@ -377,13 +377,13 @@ bool kpAbstractImageSelection::setTransparency (
 void kpAbstractImageSelection::recalculateTransparencyMaskCache ()
 {
 #if DEBUG_KP_SELECTION
-    kDebug () << "kpAbstractImageSelection::recalculateTransparencyMaskCache()" << endl;
+    kDebug () << "kpAbstractImageSelection::recalculateTransparencyMaskCache()";
 #endif
 
     if (d->baseImage.isNull ())
     {
     #if DEBUG_KP_SELECTION
-        kDebug () << "\tno image - no need for transparency mask" << endl;
+        kDebug () << "\tno image - no need for transparency mask";
     #endif
         d->transparencyMaskCache = QBitmap ();
         return;
@@ -392,7 +392,7 @@ void kpAbstractImageSelection::recalculateTransparencyMaskCache ()
     if (d->transparency.isOpaque ())
     {
     #if DEBUG_KP_SELECTION
-        kDebug () << "\topaque - no need for transparency mask" << endl;
+        kDebug () << "\topaque - no need for transparency mask";
     #endif
         d->transparencyMaskCache = QBitmap ();
         return;
@@ -430,7 +430,7 @@ void kpAbstractImageSelection::recalculateTransparencyMaskCache ()
     if (!hasTransparent)
     {
     #if DEBUG_KP_SELECTION
-        kDebug () << "\tcolour useless - completely opaque" << endl;
+        kDebug () << "\tcolour useless - completely opaque";
     #endif
         d->transparencyMaskCache = QBitmap ();
         return;
@@ -476,7 +476,7 @@ void kpAbstractImageSelection::flip (bool horiz, bool vert)
     if (!d->baseImage.isNull ())
     {
     #if DEBUG_KP_SELECTION && 1
-        kDebug () << "\thave pixmap - flipping that" << endl;
+        kDebug () << "\thave pixmap - flipping that";
     #endif
         kpPixmapFX::flip (&d->baseImage, horiz, vert);
     }
@@ -484,7 +484,7 @@ void kpAbstractImageSelection::flip (bool horiz, bool vert)
     if (!d->transparencyMaskCache.isNull ())
     {
     #if DEBUG_KP_SELECTION && 1
-        kDebug () << "\thave transparency mask - flipping that" << endl;
+        kDebug () << "\thave transparency mask - flipping that";
     #endif
         kpPixmapFX::flip (&d->transparencyMaskCache, horiz, vert);
     }

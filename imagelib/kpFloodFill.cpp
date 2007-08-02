@@ -152,7 +152,7 @@ void kpFloodFill::prepareColorToChange ()
         return;
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "kpFloodFill::prepareColorToChange()" << endl;
+    kDebug () << "kpFloodFill::prepareColorToChange()";
 #endif
 
     d->colorToChange = kpPixmapFX::getColorAtPixel (*d->imagePtr, QPoint (d->x, d->y));
@@ -167,7 +167,7 @@ void kpFloodFill::prepareColorToChange ()
     else
     {
     #if DEBUG_KP_FLOOD_FILL && 1
-        kDebug () << "\tcolorToChange: transparent" << endl;
+        kDebug () << "\tcolorToChange: transparent";
     #endif
     }
 }
@@ -293,7 +293,7 @@ void kpFloodFill::prepare ()
         return;
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "kpFloodFill::prepare()" << endl;
+    kDebug () << "kpFloodFill::prepare()";
 #endif
 
     prepareColorToChange ();
@@ -302,7 +302,7 @@ void kpFloodFill::prepare ()
 
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "\tperforming NOP check" << endl;
+    kDebug () << "\tperforming NOP check";
 #endif
 
     // get the color we need to replace
@@ -315,14 +315,14 @@ void kpFloodFill::prepare ()
     }
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "\tconverting to image" << endl;
+    kDebug () << "\tconverting to image";
 #endif
 
     // The only way to read pixels.  Sigh.
     d->readableImage = kpPixmapFX::convertToImage (*d->imagePtr);
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "\tcreating fillLinesCache" << endl;
+    kDebug () << "\tcreating fillLinesCache";
 #endif
 
     // ready cache
@@ -330,7 +330,7 @@ void kpFloodFill::prepare ()
          d->fillLinesCache.append (QLinkedList <kpFillLine> ());
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "\tcreating fill lines" << endl;
+    kDebug () << "\tcreating fill lines";
 #endif
 
     // draw initial line
@@ -361,7 +361,7 @@ void kpFloodFill::prepare ()
     }
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "\tfinalising memory usage" << endl;
+    kDebug () << "\tfinalising memory usage";
 #endif
 
     // finalize memory usage

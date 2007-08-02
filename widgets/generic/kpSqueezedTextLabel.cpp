@@ -122,7 +122,7 @@ QString kpSqueezedTextLabel::ellipsisText () const
 void kpSqueezedTextLabel::squeezeText ()
 {
 #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-    kDebug () << "kpSqueezedTextLabeL::squeezeText" << endl;
+    kDebug () << "kpSqueezedTextLabeL::squeezeText";
 #endif
 
     QFontMetrics fontMetrics (font ());
@@ -137,14 +137,14 @@ void kpSqueezedTextLabel::squeezeText ()
     if (fullTextWidth <= width ())
     {
     #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-        kDebug () << "\tfullText will fit - display" << endl;
+        kDebug () << "\tfullText will fit - display";
     #endif
         QLabel::setText (m_fullText);
     }
     else
     {
     #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-        kDebug () << "\tfullText won't fit :( - squeeze" << endl;
+        kDebug () << "\tfullText won't fit :( - squeeze";
         kDebug () << "\t\twidth of \"...\"="
                    << fontMetrics.width (ellipsisText ())
                    << endl;
@@ -153,7 +153,7 @@ void kpSqueezedTextLabel::squeezeText ()
         if (fontMetrics.width (ellipsisText ()) > width ())
         {
         #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-            kDebug () << "\t\t\tcan't even fit \"...\" - forget it" << endl;
+            kDebug () << "\t\t\tcan't even fit \"...\" - forget it";
         #endif
             QLabel::setText (QString::null);
             return;
@@ -180,7 +180,7 @@ void kpSqueezedTextLabel::squeezeText ()
             if (squeezedWidth == width ())
             {
             #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-                kDebug () << "\t\tperfect match!" << endl;
+                kDebug () << "\t\tperfect match!";
             #endif
                 numLettersToUse = numLettersToUseMid;
                 break;
@@ -206,7 +206,7 @@ void kpSqueezedTextLabel::squeezeText ()
             else
             {
             #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
-                kDebug () << "\t\ttoo big" << endl;
+                kDebug () << "\t\ttoo big";
             #endif
                 numLettersToUseHi = numLettersToUseMid - 1;
             }

@@ -108,7 +108,7 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
     if (depth == 1 && !dither)
     {
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
-        kDebug () << "\tinvoking convert-to-depth 1 hack" << endl;
+        kDebug () << "\tinvoking convert-to-depth 1 hack";
     #endif
         QRgb color0 = 0, color1 = 0;
         bool color0Valid = false, color1Valid = false;
@@ -188,7 +188,7 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
         (dither ? Qt::PreferDither : Qt::AvoidDither));
 
 #if DEBUG_KP_EFFECT_REDUCE_COLORS && 0
-    kDebug () << "After colour reduction:" << endl;
+    kDebug () << "After colour reduction:";
     for (int y = 0; y < image.height (); y++)
     {
         for (int x = 0; x < image.width (); x++)

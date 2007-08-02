@@ -103,21 +103,21 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
     if (m_24BitRadioButton->isEnabled ())
     {
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
-        kDebug () << "\tdefault is 24-bit button" << endl;
+        kDebug () << "\tdefault is 24-bit button";
     #endif
         m_defaultRadioButton = m_24BitRadioButton;
     }
     else if (m_8BitRadioButton->isEnabled ())
     {
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
-        kDebug () << "\tdefault is 8-bit button" << endl;
+        kDebug () << "\tdefault is 8-bit button";
     #endif
         m_defaultRadioButton = m_8BitRadioButton;
     }
     else
     {
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
-        kDebug () << "\tuser must have a 1-bit screen - no default" << endl;
+        kDebug () << "\tuser must have a 1-bit screen - no default";
     #endif
     }
 

@@ -160,7 +160,7 @@ void kpDocumentSaveOptionsWidget::init ()
 kpDocumentSaveOptionsWidget::~kpDocumentSaveOptionsWidget ()
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsWidget::<dtor>()" << endl;
+    kDebug () << "kpDocumentSaveOptionsWidget::<dtor>()";
 #endif
     hidePreview ();
 
@@ -565,7 +565,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
         if (m_previewDialogLastRelativeGeometry.isEmpty ())
         {
         #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-            kDebug () << "\tread cfg preview dialog last rel geometry" << endl;
+            kDebug () << "\tread cfg preview dialog last rel geometry";
         #endif
             KConfigGroup cfg (KGlobal::config (), kpSettingsGroupPreviewSave);
 
@@ -585,14 +585,14 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
             m_visualParent->rect ().intersects (m_previewDialogLastRelativeGeometry))
         {
         #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-            kDebug () << "\tok" << endl;
+            kDebug () << "\tok";
         #endif
             relativeGeometry = m_previewDialogLastRelativeGeometry;
         }
         else
         {
         #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-            kDebug () << "\t\tinvalid" << endl;
+            kDebug () << "\t\tinvalid";
         #endif
             const int margin = 20;
 
@@ -740,7 +740,7 @@ void kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry ()
     else
     {
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-        kDebug () << "\tnot visible - ignoring geometry" << endl;
+        kDebug () << "\tnot visible - ignoring geometry";
     #endif
     }
 }

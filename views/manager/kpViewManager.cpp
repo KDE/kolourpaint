@@ -96,13 +96,13 @@ kpDocument *kpViewManager::document () const
 void kpViewManager::registerView (kpView *view)
 {
 #if DEBUG_KP_VIEW_MANAGER && 1
-    kDebug () << "kpViewManager::registerView (" << view << ")" << endl;
+    kDebug () << "kpViewManager::registerView (" << view << ")";
 #endif
     Q_ASSERT (view);
     Q_ASSERT (!d->views.contains (view));
 
 #if DEBUG_KP_VIEW_MANAGER && 1
-    kDebug () << "\tadded view" << endl;
+    kDebug () << "\tadded view";
 #endif
     view->setCursor (d->cursor);
     d->views.append (view);
@@ -170,7 +170,7 @@ void kpViewManager::setViewUnderCursor (kpView *view)
         if (d->tempImage && d->tempImage->isBrush ())
         {
         #if DEBUG_KP_VIEW_MANAGER && 1
-            kDebug () << "\thiding brush pixmap since cursor left view" << endl;
+            kDebug () << "\thiding brush pixmap since cursor left view";
         #endif
             updateViews (d->tempImage->rect ());
         }
@@ -180,7 +180,7 @@ void kpViewManager::setViewUnderCursor (kpView *view)
         if (d->mainWindow->tool ())
         {
         #if DEBUG_KP_VIEW_MANAGER && 1
-            kDebug () << "\tnotify tool that something changed below cursor" << endl;
+            kDebug () << "\tnotify tool that something changed below cursor";
         #endif
             d->mainWindow->tool ()->somethingBelowTheCursorChanged ();
         }

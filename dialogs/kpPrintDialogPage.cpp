@@ -58,7 +58,7 @@ kpPrintDialogPage::kpPrintDialogPage (QWidget *parent)
       d (new kpPrintDialogPagePrivate ())
 {
 #if DEBUG_KP_PRINT_DIALOG_PAGE
-    kDebug () << "kpPrintDialogPage::<ctor>()" << endl;
+    kDebug () << "kpPrintDialogPage::<ctor>()";
 #endif
 
     setTitle (i18n ("Ima&ge Position"));
@@ -118,7 +118,7 @@ void kpPrintDialogPage::getOptions (QMap <QString, QString> &options,
 #endif
     {
     #if DEBUG_KP_PRINT_DIALOG_PAGE
-        kDebug () << "\tsetting config" << endl;
+        kDebug () << "\tsetting config";
     #endif
         options [OptionPrintImageCentered] = printCentered ?
             "true" :
@@ -130,12 +130,12 @@ void kpPrintDialogPage::getOptions (QMap <QString, QString> &options,
 void kpPrintDialogPage::setOptions (const QMap <QString, QString> &options)
 {
 #if DEBUG_KP_PRINT_DIALOG_PAGE
-    kDebug () << "kpPrintDialogPage::setOptions() filling dialog" << endl;
+    kDebug () << "kpPrintDialogPage::setOptions() filling dialog";
 #endif
     const QString printCenteredStr = options [OptionPrintImageCentered];
     const bool printCentered = ::ShouldPrintImageCenteredOnPage (printCenteredStr);
 #if DEBUG_KP_PRINT_DIALOG_PAGE
-    kDebug () << "\tgot config: printCentered=" << printCentered << endl;
+    kDebug () << "\tgot config: printCentered=" << printCentered;
 #endif
     if (printCentered)
         d->printCenteredRadio->setChecked (true);

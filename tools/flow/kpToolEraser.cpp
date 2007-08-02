@@ -55,7 +55,7 @@ kpToolEraser::~kpToolEraser ()
 void kpToolEraser::globalDraw ()
 {
 #if DEBUG_KP_TOOL_ERASER
-    kDebug () << "kpToolEraser::globalDraw()" << endl;
+    kDebug () << "kpToolEraser::globalDraw()";
 #endif
 
     commandHistory ()->addCommand (

@@ -336,7 +336,7 @@ bool kpDocumentSaveOptions::saveDefaultDifferences (KConfigGroup &config,
     bool savedSomething = false;
 
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS
-    kDebug () << "kpDocumentSaveOptions::saveDefaultDifferences()" << endl;
+    kDebug () << "kpDocumentSaveOptions::saveDefaultDifferences()";
     oldDocInfo.printDebug ("\told");
     newDocInfo.printDebug ("\tnew");
 #endif

@@ -104,7 +104,7 @@ static QString printScreenShortcutString ()
 void kpMainWindow::slotHelpTakingScreenshots ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotHelpTakingScreenshots()" << endl;
+    kDebug () << "kpMainWindow::slotHelpTakingScreenshots()";
 #endif
 
     // KDE3
@@ -114,7 +114,7 @@ void kpMainWindow::slotHelpTakingScreenshots ()
     // TODO: Totally bogus logic if kwin not running under same user as KolourPaint.
     // SYNC: KWin contains PrintScreen key logic
 #if DEBUG_KP_MAIN_WINDOW
-    //kDebug () << "\tdcopApps=" << dcopApps << endl;
+    //kDebug () << "\tdcopApps=" << dcopApps;
 #endif
     bool isRunningKDE = true;  // COMPAT QDBus::sessionBus().busService()->nameHasOwner("kwin");
 

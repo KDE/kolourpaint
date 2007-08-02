@@ -219,7 +219,7 @@ void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
 void kpToolSelectionResizeScaleCommand::resizeScaleAndMove ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove()" << endl;
+    kDebug () << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove()";
 #endif
     resizeScaleAndMove (false/*no delay*/);
 }

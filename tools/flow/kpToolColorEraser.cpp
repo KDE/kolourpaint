@@ -68,7 +68,7 @@ kpToolColorEraser::~kpToolColorEraser ()
 void kpToolColorEraser::globalDraw ()
 {
 #if DEBUG_KP_TOOL_COLOR_ERASER
-    kDebug () << "kpToolColorEraser::globalDraw()" << endl;
+    kDebug () << "kpToolColorEraser::globalDraw()";
 #endif
     if (!drawShouldProceed (QPoint ()/*unused*/, QPoint ()/*unused*/, QRect ()/*unused*/))
         return;
@@ -102,7 +102,7 @@ void kpToolColorEraser::globalDraw ()
     else
     {
     #if DEBUG_KP_TOOL_COLOR_ERASER
-        kDebug () << "\tisNOP" << endl;
+        kDebug () << "\tisNOP";
     #endif
         delete cmd;
         cmd = 0;
@@ -149,7 +149,7 @@ QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPo
         processedColorSimilarity ());
 
 #if DEBUG_KP_TOOL_COLOR_ERASER
-    kDebug () << "\tdirtyRect=" << dirtyRect << endl;
+    kDebug () << "\tdirtyRect=" << dirtyRect;
 #endif
 
     if (!dirtyRect.isEmpty ())

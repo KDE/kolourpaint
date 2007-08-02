@@ -177,7 +177,7 @@ int kpToolToolBar::defaultIconSize ()
         return m_defaultIconSize;
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "kpToolToolBar::defaultIconSize()" << endl;
+    kDebug () << "kpToolToolBar::defaultIconSize()";
 #endif
 
 
@@ -189,14 +189,14 @@ int kpToolToolBar::defaultIconSize ()
         //       button is still 48x48 (with lots of empty space).
         m_defaultIconSize = cfg.readEntry (kpSettingToolBoxIconSize, 0);
     #if DEBUG_KP_TOOL_TOOL_BAR
-        kDebug () << "\tread: " << m_defaultIconSize << endl;
+        kDebug () << "\tread: " << m_defaultIconSize;
     #endif
     }
     else
     {
         m_defaultIconSize = -1;
 #if DEBUG_KP_TOOL_TOOL_BAR
-        kDebug () << "\tfirst time - writing default: " << m_defaultIconSize << endl;
+        kDebug () << "\tfirst time - writing default: " << m_defaultIconSize;
 #endif
         cfg.writeEntry (kpSettingToolBoxIconSize, m_defaultIconSize);
         cfg.sync ();
@@ -208,7 +208,7 @@ int kpToolToolBar::defaultIconSize ()
         // Adapt according to screen geometry
         const QRect desktopSize = KGlobalSettings::desktopGeometry (this);
     #if DEBUG_KP_TOOL_TOOL_BAR
-        kDebug () << "\tadapting to screen size=" << desktopSize << endl;
+        kDebug () << "\tadapting to screen size=" << desktopSize;
     #endif
 
         if (desktopSize.width () >= 1024 && desktopSize.height () >= 768)
@@ -219,7 +219,7 @@ int kpToolToolBar::defaultIconSize ()
 
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "\treturning " << m_defaultIconSize << endl;
+    kDebug () << "\treturning " << m_defaultIconSize;
 #endif
     return m_defaultIconSize;
 }
@@ -332,7 +332,7 @@ void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
     {
         QAbstractButton *b = kpBug::QButtonGroup_CheckedButton (m_buttonGroup);
     #if DEBUG_KP_TOOL_TOOL_BAR
-        kDebug () << "\twant to select no tool - button selected=" << b << endl;
+        kDebug () << "\twant to select no tool - button selected=" << b;
     #endif
         if (b)
         {
@@ -382,7 +382,7 @@ void kpToolToolBar::hideAllToolWidgets ()
 int kpToolToolBar::numShownToolWidgets () const
 {
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "kpToolToolBar::numShownToolWidgets()" << endl;
+    kDebug () << "kpToolToolBar::numShownToolWidgets()";
 #endif
 
     int ret = 0;
@@ -431,7 +431,7 @@ void kpToolToolBar::slotToolButtonClicked ()
     QAbstractButton *b = kpBug::QButtonGroup_CheckedButton (m_buttonGroup);
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "kpToolToolBar::slotToolButtonClicked() button=" << b << endl;
+    kDebug () << "kpToolToolBar::slotToolButtonClicked() button=" << b;
 #endif
 
     kpTool *tool = 0;
@@ -572,7 +572,7 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
     if (isOutsideDock)
     {
     #if DEBUG_KP_TOOL_TOOL_BAR
-        kDebug () << "\toutside dock, forcing orientation to last" << endl;
+        kDebug () << "\toutside dock, forcing orientation to last";
     #endif
         o = m_lastDockedOrientation;
     }

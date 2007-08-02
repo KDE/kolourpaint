@@ -60,7 +60,7 @@ bool kpViewManager::textCursorEnabled () const
 void kpViewManager::setTextCursorEnabled (bool yes)
 {
 #if DEBUG_KP_VIEW_MANAGER && 1
-    kDebug () << "kpViewManager::setTextCursorEnabled(" << yes << ")" << endl;
+    kDebug () << "kpViewManager::setTextCursorEnabled(" << yes << ")";
 #endif
 
     if (yes == textCursorEnabled ())
@@ -195,7 +195,7 @@ QRect kpViewManager::textCursorRect () const
 void kpViewManager::updateTextCursor ()
 {
 #if DEBUG_KP_VIEW_MANAGER && 0
-    kDebug () << "kpViewManager::updateTextCursor()" << endl;
+    kDebug () << "kpViewManager::updateTextCursor()";
 #endif
 
     const QRect r = textCursorRect ();

@@ -59,7 +59,7 @@ kpToolColorPicker::~kpToolColorPicker ()
 kpColor kpToolColorPicker::colorAtPixel (const QPoint &p)
 {
 #if DEBUG_KP_TOOL_COLOR_PICKER && 0
-    kDebug () << "kpToolColorPicker::colorAtPixel" << p << endl;
+    kDebug () << "kpToolColorPicker::colorAtPixel" << p;
 #endif
 
     return kpPixmapFX::getColorAtPixel (document ()->image (), p);

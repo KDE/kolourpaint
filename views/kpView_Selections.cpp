@@ -237,7 +237,7 @@ int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
     if (!mouseOnSelection (viewPoint))
     {
     #if DEBUG_KP_VIEW
-        kDebug () << "\tmouse not on sel" << endl;
+        kDebug () << "\tmouse not on sel";
     #endif
         return 0;
     }
@@ -245,19 +245,19 @@ int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
 
     const QRect selViewRect = selectionViewRect ();
 #if DEBUG_KP_VIEW
-    kDebug () << "\tselViewRect=" << selViewRect << endl;
+    kDebug () << "\tselViewRect=" << selViewRect;
 #endif
 
 
     const int atomicLength = selectionResizeHandleAtomicSize ();
 #if DEBUG_KP_VIEW
-    kDebug () << "\tatomicLength=" << atomicLength << endl;
+    kDebug () << "\tatomicLength=" << atomicLength;
 #endif
 
     if (atomicLength <= 0)
     {
     #if DEBUG_KP_VIEW
-        kDebug () << "\tsel not large enough to have resize handles" << endl;
+        kDebug () << "\tsel not large enough to have resize handles";
     #endif
         // Want to make it possible to move a small selection
         return 0;
@@ -266,7 +266,7 @@ int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
 
     const QPoint viewPointRelSel = mouseViewPointRelativeToSelection (viewPoint);
 #if DEBUG_KP_VIEW
-    kDebug () << "\tviewPointRelSel=" << viewPointRelSel << endl;
+    kDebug () << "\tviewPointRelSel=" << viewPointRelSel;
 #endif
 
 
@@ -312,7 +312,7 @@ int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
     else
     {
     #if DEBUG_KP_VIEW
-        kDebug () << "\tnot on sel resize handle" << endl;
+        kDebug () << "\tnot on sel resize handle";
     #endif
         return 0;
     }
@@ -330,7 +330,7 @@ bool kpView::mouseOnSelectionToSelectText (const QPoint &viewPoint) const
     if (!mouseOnSelection (viewPoint))
     {
     #if DEBUG_KP_VIEW
-        kDebug () << "\tmouse non on sel" << endl;
+        kDebug () << "\tmouse non on sel";
     #endif
         return false;
     }
@@ -338,7 +338,7 @@ bool kpView::mouseOnSelectionToSelectText (const QPoint &viewPoint) const
     if (!textSelection ())
     {
     #if DEBUG_KP_VIEW
-        kDebug () << "\tsel not text" << endl;
+        kDebug () << "\tsel not text";
     #endif
         return false;
     }

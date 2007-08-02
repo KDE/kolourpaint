@@ -84,7 +84,7 @@ kpCommandSize::SizeType kpToolSelectionPullFromDocumentCommand::size () const
 void kpToolSelectionPullFromDocumentCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolSelectionPullFromDocumentCommand::execute()" << endl;
+    kDebug () << "kpToolSelectionPullFromDocumentCommand::execute()";
 #endif
 
     kpDocument *doc = document ();
@@ -120,7 +120,7 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
 void kpToolSelectionPullFromDocumentCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolSelectionPullFromDocumentCommand::unexecute()" << endl;
+    kDebug () << "kpToolSelectionPullFromDocumentCommand::unexecute()";
 #endif
 
     kpDocument *doc = document ();

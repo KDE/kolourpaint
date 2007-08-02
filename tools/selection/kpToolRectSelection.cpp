@@ -63,7 +63,7 @@ bool kpToolRectSelection::createMoreSelectionAndUpdateStatusBar (
     if (!dragHasBegun && accidentalDragAdjustedPoint == startPoint ())
     {
     #if DEBUG_KP_TOOL_RECT_SELECTION && 1
-        kDebug () << "\tnon-text NOP - return" << endl;
+        kDebug () << "\tnon-text NOP - return";
     #endif
         setUserShapePoints (accidentalDragAdjustedPoint);
         return false;

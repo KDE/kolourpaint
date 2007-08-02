@@ -73,7 +73,7 @@ void kpTool::seeIfAndHandleModifierKey (QKeyEvent *e)
     case 0:
     case Qt::Key_unknown:
     #if DEBUG_KP_TOOL && 0
-        kDebug () << "kpTool::seeIfAndHandleModifierKey() picked up unknown key!" << endl;
+        kDebug () << "kpTool::seeIfAndHandleModifierKey() picked up unknown key!";
     #endif
         // HACK: around Qt bug: if you hold a modifier before you start the
         //                      program and then release it over the view,
@@ -85,7 +85,7 @@ void kpTool::seeIfAndHandleModifierKey (QKeyEvent *e)
     case Qt::Key_Shift:
     case Qt::Key_Control:
     #if DEBUG_KP_TOOL && 0
-        kDebug () << "kpTool::setIfAndHandleModifierKey() accepting" << endl;
+        kDebug () << "kpTool::setIfAndHandleModifierKey() accepting";
     #endif
         keyUpdateModifierState (e);
 
@@ -150,7 +150,7 @@ void kpTool::seeIfAndHandleArrowKeyPress (QKeyEvent *e)
 
 
 #if DEBUG_KP_TOOL && 0
-    kDebug () << "\tnewPoint=" << QPoint (newViewX, newViewY) << endl;
+    kDebug () << "\tnewPoint=" << QPoint (newViewX, newViewY);
 #endif
 
     // Make sure we really moved at least one doc point (needed due to
@@ -196,7 +196,7 @@ void kpTool::seeIfAndHandleBeginDrawKeyPress (QKeyEvent *e)
         return;
 
 #if DEBUG_KP_TOOL && 0
-    kDebug () << "kpTool::seeIfAndHandleBeginDrawKeyPress() accept" << endl;
+    kDebug () << "kpTool::seeIfAndHandleBeginDrawKeyPress() accept";
 #endif
 
 
@@ -233,7 +233,7 @@ void kpTool::seeIfAndHandleEndDrawKeyPress (QKeyEvent *e)
         return;
 
 #if DEBUG_KP_TOOL && 0
-    kDebug () << "kpTool::seeIfAndHandleEndDrawKeyPress() accept" << endl;
+    kDebug () << "kpTool::seeIfAndHandleEndDrawKeyPress() accept";
 #endif
 
 
@@ -322,7 +322,7 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
 void kpTool::keyUpdateModifierState (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL && 0
-    kDebug () << "kpTool::keyUpdateModifierState() e->key=" << (int *) e->key () << endl;
+    kDebug () << "kpTool::keyUpdateModifierState() e->key=" << (int *) e->key ();
     kDebug () << "\tshift="
                << (e->modifiers () & Qt::ShiftModifier)
                << " control="
@@ -334,7 +334,7 @@ void kpTool::keyUpdateModifierState (QKeyEvent *e)
     if (e->key () & (Qt::Key_Alt | Qt::Key_Shift | Qt::Key_Control))
     {
     #if DEBUG_KP_TOOL && 0
-        kDebug () << "\t\tmodifier changed - use e's claims" << endl;
+        kDebug () << "\t\tmodifier changed - use e's claims";
     #endif
         setShiftPressed (e->modifiers () & Qt::ShiftModifier);
         setControlPressed (e->modifiers () & Qt::ControlModifier);
@@ -344,7 +344,7 @@ void kpTool::keyUpdateModifierState (QKeyEvent *e)
     else
     {
     #if DEBUG_KP_TOOL && 0
-        kDebug () << "\t\tmodifiers not changed - figure out the truth" << endl;
+        kDebug () << "\t\tmodifiers not changed - figure out the truth";
     #endif
         const Qt::KeyboardModifiers keyState = QApplication::keyboardModifiers ();
 

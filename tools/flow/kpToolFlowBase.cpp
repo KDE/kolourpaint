@@ -327,7 +327,7 @@ void kpToolFlowBase::endDraw (const QPoint &, const QRect &)
 kpColor kpToolFlowBase::color (int which)
 {
 #if DEBUG_KP_TOOL_FLOW_BASE && 0
-    kDebug () << "kpToolFlowBase::color (" << which << ")" << endl;
+    kDebug () << "kpToolFlowBase::color (" << which << ")";
 #endif
 
     // Pen & Brush
@@ -381,7 +381,7 @@ kpToolFlowCommand *kpToolFlowBase::currentCommand () const
 void kpToolFlowBase::updateBrushAndCursor ()
 {
 #if DEBUG_KP_TOOL_FLOW_BASE && 1
-    kDebug () << "kpToolFlowBase::updateBrushAndCursor()" << endl;
+    kDebug () << "kpToolFlowBase::updateBrushAndCursor()";
 #endif
 
     if (haveSquareBrushes ())
@@ -428,7 +428,7 @@ void kpToolFlowBase::updateBrushAndCursor ()
 void kpToolFlowBase::slotForegroundColorChanged (const kpColor & /*col*/)
 {
 #if DEBUG_KP_TOOL_FLOW_BASE
-    kDebug () << "kpToolFlowBase::slotForegroundColorChanged()" << endl;
+    kDebug () << "kpToolFlowBase::slotForegroundColorChanged()";
 #endif
 
     updateBrushAndCursor ();
@@ -438,7 +438,7 @@ void kpToolFlowBase::slotForegroundColorChanged (const kpColor & /*col*/)
 void kpToolFlowBase::slotBackgroundColorChanged (const kpColor & /*col*/)
 {
 #if DEBUG_KP_TOOL_FLOW_BASE
-    kDebug () << "kpToolFlowBase::slotBackgroundColorChanged()" << endl;
+    kDebug () << "kpToolFlowBase::slotBackgroundColorChanged()";
 #endif
 
     updateBrushAndCursor ();

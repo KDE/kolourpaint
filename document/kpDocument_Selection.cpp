@@ -165,7 +165,7 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
     d->environ->restoreQueueViewUpdates ();
 
 #if DEBUG_KP_DOCUMENT && 1
-    kDebug () << "\tkpDocument::setSelection() ended" << endl;
+    kDebug () << "\tkpDocument::setSelection() ended";
 #endif
 }
 
@@ -302,14 +302,14 @@ void kpDocument::selectionPushOntoDocument (bool applySelTransparency)
 kpImage kpDocument::imageWithSelection () const
 {
 #if DEBUG_KP_DOCUMENT && 1
-    kDebug () << "kpDocument::imageWithSelection()" << endl;
+    kDebug () << "kpDocument::imageWithSelection()";
 #endif
 
     // Have floating selection?
     if (m_selection && m_selection->hasContent ())
     {
     #if DEBUG_KP_DOCUMENT && 1
-        kDebug () << "\tselection @ " << m_selection->boundingRect () << endl;
+        kDebug () << "\tselection @ " << m_selection->boundingRect ();
     #endif
         kpImage output = *m_image;
 
@@ -321,7 +321,7 @@ kpImage kpDocument::imageWithSelection () const
     else
     {
     #if DEBUG_KP_DOCUMENT && 1
-        kDebug () << "\tno selection" << endl;
+        kDebug () << "\tno selection";
     #endif
         return *m_image;
     }

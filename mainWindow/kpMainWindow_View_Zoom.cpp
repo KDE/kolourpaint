@@ -57,7 +57,7 @@
 static int ZoomLevelFromString (const QString &stringIn)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow_View.cpp:ZoomLevelFromString(" << stringIn << ")" << endl;
+    kDebug () << "kpMainWindow_View.cpp:ZoomLevelFromString(" << stringIn << ")";
 #endif
 
     // Remove any non-digits kdelibs sometimes adds behind our back :( e.g.:
@@ -67,14 +67,14 @@ static int ZoomLevelFromString (const QString &stringIn)
     QString string = stringIn;
     string.remove (QRegExp ("[^0-9]"));
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\twithout non-digits='" << string << "'" << endl;
+    kDebug () << "\twithout non-digits='" << string << "'";
 #endif
 
     // Convert zoom level to number.
     bool ok = false;
     int zoomLevel = string.toInt (&ok);
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tzoomLevel=" << zoomLevel << endl;
+    kDebug () << "\tzoomLevel=" << zoomLevel;
 #endif
 
     if (!ok || zoomLevel < kpView::MinZoomLevel || zoomLevel > kpView::MaxZoomLevel)
@@ -174,7 +174,7 @@ void kpMainWindow::zoomToPre (int zoomLevel)
     // not be a document or a view so we have a lot of "if (ptr)" guards.
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::zoomToPre(" << zoomLevel << ")" << endl;
+    kDebug () << "kpMainWindow::zoomToPre(" << zoomLevel << ")";
 #endif
 
     zoomLevel = qBound (kpView::MinZoomLevel, zoomLevel, kpView::MaxZoomLevel);
@@ -210,7 +210,7 @@ void kpMainWindow::zoomToPre (int zoomLevel)
     sendZoomListToActionZoom ();
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tsetCurrentItem(" << index << ")" << endl;
+    kDebug () << "\tsetCurrentItem(" << index << ")";
 #endif
     d->actionZoom->setCurrentItem (index);
 #if DEBUG_KP_MAIN_WINDOW
@@ -266,7 +266,7 @@ void kpMainWindow::zoomToPre (int zoomLevel)
 void kpMainWindow::zoomToPost ()
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::zoomToPost()" << endl;
+    kDebug () << "kpMainWindow::zoomToPost()";
 #endif
 
     if (d->mainView)
@@ -324,7 +324,7 @@ void kpMainWindow::zoomToPost ()
     setStatusBarZoom (d->mainView ? d->mainView->zoomLevelX () : 0);
 
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::zoomToPost() done" << endl;
+    kDebug () << "kpMainWindow::zoomToPost() done";
 #endif
 }
 
@@ -436,7 +436,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
                 const QPoint globalPoint =
                     kpWidgetMapper::toGlobal (vuc, viewPoint);
             #if DEBUG_KP_MAIN_WINDOW
-                kDebug () << "\t\tglobalPoint=" << globalPoint << endl;
+                kDebug () << "\t\tglobalPoint=" << globalPoint;
             #endif
 
                 // TODO: Determine some sane cursor flashing indication -
@@ -603,7 +603,7 @@ void kpMainWindow::zoomIn (bool centerUnderCursor)
     d->actionZoom->setCurrentItem (targetItem);
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tnew currentItem=" << d->actionZoom->currentItem () << endl;
+    kDebug () << "\tnew currentItem=" << d->actionZoom->currentItem ();
 #endif
 
     zoomAccordingToZoomAction (centerUnderCursor);
@@ -626,7 +626,7 @@ void kpMainWindow::zoomOut (bool centerUnderCursor)
     d->actionZoom->setCurrentItem (targetItem);
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tnew currentItem=" << d->actionZoom->currentItem () << endl;
+    kDebug () << "\tnew currentItem=" << d->actionZoom->currentItem ();
 #endif
 
     zoomAccordingToZoomAction (centerUnderCursor);
@@ -637,7 +637,7 @@ void kpMainWindow::zoomOut (bool centerUnderCursor)
 void kpMainWindow::slotZoomIn ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotZoomIn ()" << endl;
+    kDebug () << "kpMainWindow::slotZoomIn ()";
 #endif
 
     zoomIn (false/*don't center under cursor*/);
@@ -647,7 +647,7 @@ void kpMainWindow::slotZoomIn ()
 void kpMainWindow::slotZoomOut ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotZoomOut ()" << endl;
+    kDebug () << "kpMainWindow::slotZoomOut ()";
 #endif
 
     zoomOut (false/*don't center under cursor*/);

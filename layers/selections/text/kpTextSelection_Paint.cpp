@@ -161,7 +161,7 @@ void kpTextSelection::drawTextInternal (QPixmap *destPixmap, const QRect &docRec
         d->textStyle.effectiveBackgroundColor ().isTransparent ())
     {
     #if DEBUG_KP_SELECTION
-        kDebug () << "\tensuring image's transparent pixels are defined" << endl;
+        kDebug () << "\tensuring image's transparent pixels are defined";
     #endif
 
         // Set the RGB of transparent pixels to the foreground colour to avoid
@@ -203,7 +203,7 @@ void kpTextSelection::drawTextInternal (QPixmap *destPixmap, const QRect &docRec
     ::DebugAlpha (*destPixmap);
 
 #if DEBUG_KP_SELECTION
-    kDebug () << endl;
+    kDebug ();
 #endif
 }
 

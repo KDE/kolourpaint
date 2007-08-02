@@ -119,7 +119,7 @@ void kpToolSelectionCreateCommand::setFromSelection (const kpAbstractSelection &
 void kpToolSelectionCreateCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelectionCreateCommand::execute()" << endl;
+    kDebug () << "kpToolSelectionCreateCommand::execute()";
 #endif
 
     kpDocument *doc = document ();
@@ -128,7 +128,7 @@ void kpToolSelectionCreateCommand::execute ()
     if (m_fromSelection)
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\tusing fromSelection" << endl;
+        kDebug () << "\tusing fromSelection";
         kDebug () << "\t\thave sel=" << doc->selection ()
                    << endl;
     #endif

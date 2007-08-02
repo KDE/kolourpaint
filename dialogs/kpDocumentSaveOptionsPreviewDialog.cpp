@@ -217,7 +217,7 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
 void kpDocumentSaveOptionsPreviewDialog::closeEvent (QCloseEvent *e)
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsPreviewDialog::closeEvent()" << endl;
+    kDebug () << "kpDocumentSaveOptionsPreviewDialog::closeEvent()";
 #endif
 
     QWidget::closeEvent (e);
@@ -229,7 +229,7 @@ void kpDocumentSaveOptionsPreviewDialog::closeEvent (QCloseEvent *e)
 void kpDocumentSaveOptionsPreviewDialog::moveEvent (QMoveEvent *e)
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsPreviewDialog::moveEvent()" << endl;
+    kDebug () << "kpDocumentSaveOptionsPreviewDialog::moveEvent()";
 #endif
 
     QWidget::moveEvent (e);
@@ -241,7 +241,7 @@ void kpDocumentSaveOptionsPreviewDialog::moveEvent (QMoveEvent *e)
 void kpDocumentSaveOptionsPreviewDialog::resizeEvent (QResizeEvent *e)
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsPreviewDialog::resizeEvent()" << endl;
+    kDebug () << "kpDocumentSaveOptionsPreviewDialog::resizeEvent()";
 #endif
 
     QWidget::resizeEvent (e);

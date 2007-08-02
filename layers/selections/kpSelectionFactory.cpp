@@ -43,7 +43,7 @@ kpAbstractImageSelection *kpSelectionFactory::FromStream (QDataStream &stream,
         const kpPixmapFX::WarnAboutLossInfo &wali)
 {
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "kpSelectionFactory::FromStream()" << endl;
+    kDebug () << "kpSelectionFactory::FromStream()";
 #endif
     int serialID;
     stream >> serialID;

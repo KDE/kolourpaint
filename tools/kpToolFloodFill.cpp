@@ -80,7 +80,7 @@ void kpToolFloodFill::begin ()
 void kpToolFloodFill::beginDraw ()
 {
 #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-    kDebug () << "kpToolFloodFill::beginDraw()" << endl;
+    kDebug () << "kpToolFloodFill::beginDraw()";
 #endif
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
@@ -95,7 +95,7 @@ void kpToolFloodFill::beginDraw ()
             environ ()->commandEnvironment ());
 
     #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-        kDebug () << "\tperforming new-doc-corner-case check" << endl;
+        kDebug () << "\tperforming new-doc-corner-case check";
     #endif
 
         if (document ()->url ().isEmpty () && !document ()->isModified ())

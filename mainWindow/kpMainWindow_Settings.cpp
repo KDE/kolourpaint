@@ -100,7 +100,7 @@ void kpMainWindow::slotFullScreen ()
 void kpMainWindow::slotEnableSettingsShowPath ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotEnableSettingsShowPath()" << endl;
+    kDebug () << "kpMainWindow::slotEnableSettingsShowPath()";
 #endif
 
     const bool enable = (d->document && !d->document->url ().isEmpty ());
@@ -113,7 +113,7 @@ void kpMainWindow::slotEnableSettingsShowPath ()
 void kpMainWindow::slotShowPathToggled ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotShowPathToggled()" << endl;
+    kDebug () << "kpMainWindow::slotShowPathToggled()";
 #endif
 
     d->configShowPath = d->actionShowPath->isChecked ();
@@ -132,7 +132,7 @@ void kpMainWindow::slotShowPathToggled ()
 void kpMainWindow::slotKeyBindings ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotKeyBindings()" << endl;
+    kDebug () << "kpMainWindow::slotKeyBindings()";
 #endif
 
     // KDE3
@@ -143,7 +143,7 @@ void kpMainWindow::slotKeyBindings ()
             this))
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tdialog accepted" << endl;
+        kDebug () << "\tdialog accepted";
     #endif
         // TODO: PROPAGATE: thru mainWindow's and interprocess
 
@@ -156,7 +156,7 @@ void kpMainWindow::slotKeyBindings ()
 void kpMainWindow::slotConfigureToolBars ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotConfigureToolBars()" << endl;
+    kDebug () << "kpMainWindow::slotConfigureToolBars()";
 #endif
 
     // KDE3
@@ -178,7 +178,7 @@ void kpMainWindow::slotConfigureToolBars ()
 void kpMainWindow::slotNewToolBarConfig ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotNewToolBarConfig()" << endl;
+    kDebug () << "kpMainWindow::slotNewToolBarConfig()";
 #endif
 
     // Wouldn't it be nice if createGUI () didn't nuke all the KToolBar's?

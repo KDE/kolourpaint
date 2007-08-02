@@ -110,7 +110,7 @@ void kpToolSpraycan::end ()
 void kpToolSpraycan::beginDraw ()
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolSpraycan::beginDraw()" << endl;
+    kDebug () << "kpToolSpraycan::beginDraw()";
 #endif
 
     kpToolFlowBase::beginDraw ();
@@ -222,7 +222,7 @@ QRect kpToolSpraycan::drawLine (const QPoint &thisPoint, const QPoint &lastPoint
 void kpToolSpraycan::timeoutDraw ()
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolSpraycan::timeoutDraw()" << endl;
+    kDebug () << "kpToolSpraycan::timeoutDraw()";
 #endif
 
     const QRect drawnRect = drawLineWithProbability (currentPoint (), currentPoint (),
@@ -238,7 +238,7 @@ void kpToolSpraycan::timeoutDraw ()
 void kpToolSpraycan::cancelShape ()
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolSpraycan::cancelShape()" << endl;
+    kDebug () << "kpToolSpraycan::cancelShape()";
 #endif
 
     m_timer->stop ();

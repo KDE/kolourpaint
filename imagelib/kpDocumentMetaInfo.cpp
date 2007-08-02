@@ -129,7 +129,7 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
                                    prefix + QLatin1String (":") :
                                    QString::null;
 
-    kDebug () << usedPrefix << endl;
+    kDebug () << usedPrefix;
 
     kDebug () << "dotsPerMeter X=" << dotsPerMeterX ()
                << " Y=" << dotsPerMeterY ()
@@ -145,7 +145,7 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
                   << endl;
     }
 
-    kDebug () << usedPrefix << "ENDS" << endl;
+    kDebug () << usedPrefix << "ENDS";
 }
 
 

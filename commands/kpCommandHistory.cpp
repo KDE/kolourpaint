@@ -50,12 +50,12 @@ kpCommandHistory::~kpCommandHistory ()
 void kpCommandHistory::undo ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kDebug () << "kpCommandHistory::undo() CALLED!" << endl;
+    kDebug () << "kpCommandHistory::undo() CALLED!";
 #endif
     if (m_mainWindow && m_mainWindow->toolHasBegunShape ())
     {
     #if DEBUG_KP_COMMAND_HISTORY
-        kDebug () << "\thas begun shape - cancel draw" << endl;
+        kDebug () << "\thas begun shape - cancel draw";
     #endif
         m_mainWindow->tool ()->cancelShapeInternal ();
     }

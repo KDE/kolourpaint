@@ -193,7 +193,7 @@ bool kpAbstractSelection::contains (int x, int y) const
 void kpAbstractSelection::moveBy (int dx, int dy)
 {
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "kpAbstractSelection::moveBy(" << dx << "," << dy << ")" << endl;
+    kDebug () << "kpAbstractSelection::moveBy(" << dx << "," << dy << ")";
 #endif
 
     if (dx == 0 && dy == 0)
@@ -202,12 +202,12 @@ void kpAbstractSelection::moveBy (int dx, int dy)
     QRect oldRect = boundingRect ();
 
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "\toldRect=" << oldRect << endl;
+    kDebug () << "\toldRect=" << oldRect;
 #endif
 
     d->rect.translate (dx, dy);
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "\tnewRect=" << d->rect << endl;
+    kDebug () << "\tnewRect=" << d->rect;
 #endif
 
     emit changed (oldRect);
@@ -224,11 +224,11 @@ void kpAbstractSelection::moveTo (int dx, int dy)
 void kpAbstractSelection::moveTo (const QPoint &topLeftPoint)
 {
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "kpAbstractSelection::moveTo(" << topLeftPoint << ")" << endl;
+    kDebug () << "kpAbstractSelection::moveTo(" << topLeftPoint << ")";
 #endif
     QRect oldBoundingRect = boundingRect ();
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "\toldBoundingRect=" << oldBoundingRect << endl;
+    kDebug () << "\toldBoundingRect=" << oldBoundingRect;
 #endif
     if (topLeftPoint == oldBoundingRect.topLeft ())
         return;
@@ -251,7 +251,7 @@ void kpAbstractSelection::paintRectangularBorder (QPixmap *destPixmap,
 #endif
 
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "\tselection border = rectangle" << endl;
+    kDebug () << "\tselection border = rectangle";
     kDebug () << "\t\tx=" << boundingRect ().x () - docRect.x ()
               << " y=" << boundingRect ().y () - docRect.y ()
               << " w=" << boundingRect ().width ()

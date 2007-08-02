@@ -318,7 +318,7 @@ void kpColorCells::makeCellsMatchColorCollection ()
     #if DEBUG_KP_COLOR_CELLS
         kDebug () << "\tSetting cell " << i << ": y=" << y << " x=" << x
                   << " pos=" << pos << endl;
-        kDebug () << "\t\tcolor=" << (int *) d->colorCol.color (i).rgb () << endl;
+        kDebug () << "\t\tcolor=" << (int *) d->colorCol.color (i).rgb ();
     #endif
         KColorCells::setColor (pos, d->colorCol.color (i));
         //this->setToolTip( cellGeometry (y, x), colors [i].name ());
@@ -493,7 +493,7 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
     disconnect (this, SIGNAL (colorSelected (int, QColor)), this, SLOT (slotColorSelected (int)));
 
 #if DEBUG_KP_COLOR_CELLS
-    kDebug () << "kpColorCells::mouseReleaseEvent() setting d->mouseButton back to -1" << endl;
+    kDebug () << "kpColorCells::mouseReleaseEvent() setting d->mouseButton back to -1";
 #endif
     d->mouseButton = -1;
 

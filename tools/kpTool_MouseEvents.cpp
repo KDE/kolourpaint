@@ -80,14 +80,14 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     {
         const QString text = QApplication::clipboard ()->text (QClipboard::Selection);
     #if DEBUG_KP_TOOL && 1
-        kDebug () << "\tMMB pasteText='" << text << "'" << endl;
+        kDebug () << "\tMMB pasteText='" << text << "'";
     #endif
         if (!text.isEmpty ())
         {
             if (hasBegunShape ())
             {
             #if DEBUG_KP_TOOL && 1
-                kDebug () << "\t\thasBegunShape - end" << endl;
+                kDebug () << "\t\thasBegunShape - end";
             #endif
                 endShapeInternal (d->currentPoint,
                                   kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
@@ -107,7 +107,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
     int mb = mouseButton (e->buttons ());
 #if DEBUG_KP_TOOL && 1
-    kDebug () << "\tmb=" << mb << " d->beganDraw=" << d->beganDraw << endl;
+    kDebug () << "\tmb=" << mb << " d->beganDraw=" << d->beganDraw;
 #endif
 
     if (mb == -1 && !d->beganDraw)
@@ -121,7 +121,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
         if (mb == -1 || mb != d->mouseButton)
         {
         #if DEBUG_KP_TOOL && 1
-            kDebug () << "\tCancelling operation as " << mb << " == -1 or != " << d->mouseButton << endl;
+            kDebug () << "\tCancelling operation as " << mb << " == -1 or != " << d->mouseButton;
         #endif
 
             kpView *view = viewUnderStartPoint ();
@@ -142,7 +142,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 
 #if DEBUG_KP_TOOL && 1
     if (view)
-        kDebug () << "\tview=" << view->objectName () << endl;
+        kDebug () << "\tview=" << view->objectName ();
 #endif
 
 
@@ -157,7 +157,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     d->lastPoint = QPoint (-1, -1);
 
 #if DEBUG_KP_TOOL && 1
-    kDebug () << "\tBeginning draw @ " << d->currentPoint << endl;
+    kDebug () << "\tBeginning draw @ " << d->currentPoint;
 #endif
 
     beginDrawInternal ();
@@ -188,7 +188,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
                << " viewUnderCursorQt=" << (v1 ? v1->objectName () : "(none)")
                << " viewUnderStartPoint=" << (v2 ? v2->objectName () : "(none)")
                << endl;
-    kDebug () << "\tfocusWidget=" << kapp->focusWidget () << endl;
+    kDebug () << "\tfocusWidget=" << kapp->focusWidget ();
 #endif
 
     d->shiftPressed = (e->modifiers () & Qt::ShiftModifier);
@@ -206,7 +206,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
         d->currentViewPoint = e->pos ();
 
     #if DEBUG_KP_TOOL && 0
-        kDebug () << "\tDraw!" << endl;
+        kDebug () << "\tDraw!";
     #endif
 
         bool dragScrolled = false;
@@ -299,7 +299,7 @@ void kpTool::wheelEvent (QWheelEvent *e)
     if ((e->modifiers () & Qt::ControlButton) == 0)
     {
     #if DEBUG_KP_TOOL
-        kDebug () << "\tno CTRL -> bye" << endl;
+        kDebug () << "\tno CTRL -> bye";
     #endif
         return;
     }
@@ -308,7 +308,7 @@ void kpTool::wheelEvent (QWheelEvent *e)
     if (hasBegunDraw ())
     {
     #if DEBUG_KP_TOOL
-        kDebug () << "\thasBegunDraw() -> bye" << endl;
+        kDebug () << "\thasBegunDraw() -> bye";
     #endif
         return;
     }
@@ -320,7 +320,7 @@ void kpTool::wheelEvent (QWheelEvent *e)
     if (e->delta () > 0)
     {
     #if DEBUG_KP_TOOL
-        kDebug () << "\tzoom in" << endl;
+        kDebug () << "\tzoom in";
     #endif
         d->environ->zoomIn (true/*center under cursor*/);
         e->accept ();
@@ -329,7 +329,7 @@ void kpTool::wheelEvent (QWheelEvent *e)
     else if (e->delta () < 0)
     {
     #if DEBUG_KP_TOOL
-        kDebug () << "\tzoom out" << endl;
+        kDebug () << "\tzoom out";
     #endif
     #if 1
         d->environ->zoomOut (true/*center under cursor - make zoom in/out

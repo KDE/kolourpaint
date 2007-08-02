@@ -90,7 +90,7 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
         bool *isTextChanged) const
 {
 #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-    kDebug () << "kpDocumentEnvironment::switchToCompatibleTool(" << &selection << ")" << endl;
+    kDebug () << "kpDocumentEnvironment::switchToCompatibleTool(" << &selection << ")";
 #endif
 
     *isTextChanged = (mainWindow ()->toolIsTextTool () !=
@@ -109,28 +109,28 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
         if (dynamic_cast <const kpRectangularImageSelection *> (&selection))
         {
         #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-            kDebug () << "\tswitch to rect selection tool" << endl;
+            kDebug () << "\tswitch to rect selection tool";
         #endif
             mainWindow ()->slotToolRectSelection ();
         }
         else if (dynamic_cast <const kpEllipticalImageSelection *> (&selection))
         {
         #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-            kDebug () << "\tswitch to elliptical selection tool" << endl;
+            kDebug () << "\tswitch to elliptical selection tool";
         #endif
             mainWindow ()->slotToolEllipticalSelection ();
         }
         else if (dynamic_cast <const kpFreeFormImageSelection *> (&selection))
         {
         #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-            kDebug () << "\tswitch to free form selection tool" << endl;
+            kDebug () << "\tswitch to free form selection tool";
         #endif
             mainWindow ()->slotToolFreeFormSelection ();
         }
         else if (dynamic_cast <const kpTextSelection *> (&selection))
         {
         #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-            kDebug () << "\tswitch to text selection tool" << endl;
+            kDebug () << "\tswitch to text selection tool";
         #endif
             mainWindow ()->slotToolText ();
         }
@@ -139,7 +139,7 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
     }
 
 #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-    kDebug () << "kpDocumentEnvironment::switchToCompatibleTool(" << &selection << ") finished" << endl;
+    kDebug () << "kpDocumentEnvironment::switchToCompatibleTool(" << &selection << ") finished";
 #endif
 }
 

@@ -45,7 +45,7 @@ kpTransparentColorCell::kpTransparentColorCell (QWidget *parent)
     : QFrame (parent)
 {
 #if DEBUG_KP_TRANSPARENT_COLOR_CELL
-    kDebug () << "kpTransparentColorCell::kpTransparentColorCell()" << endl;
+    kDebug () << "kpTransparentColorCell::kpTransparentColorCell()";
 #endif
 
     setFrameStyle (QFrame::Panel | QFrame::Sunken);

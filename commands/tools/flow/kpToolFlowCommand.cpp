@@ -111,7 +111,7 @@ void kpToolFlowCommand::updateBoundingRect (const QRect &rect)
 #endif
     d->boundingRect = d->boundingRect.unite (rect);
 #if DEBUG_KP_TOOL_FLOW_COMMAND & 0
-    kDebug () << "\tresult=" << d->boundingRect << endl;
+    kDebug () << "\tresult=" << d->boundingRect;
 #endif
 }
 

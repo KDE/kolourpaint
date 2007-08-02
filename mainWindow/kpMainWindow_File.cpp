@@ -74,7 +74,7 @@
 void kpMainWindow::setupFileMenuActions ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::setupFileMenuActions()" << endl;
+    kDebug () << "kpMainWindow::setupFileMenuActions()";
 #endif
     KActionCollection *ac = actionCollection ();
 
@@ -84,7 +84,7 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionOpenRecent = KStandardAction::openRecent (this, SLOT (slotOpenRecent (const KUrl &)), ac);
     d->actionOpenRecent->loadEntries (KGlobal::config ()->group( QString() ) );
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\trecent URLs=" << d->actionOpenRecent->items () << endl;
+    kDebug () << "\trecent URLs=" << d->actionOpenRecent->items ();
 #endif
 
     d->actionSave = KStandardAction::save (this, SLOT (slotSave ()), ac);
@@ -177,7 +177,7 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
     const KUrl url = url_;
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::addRecentURL(" << url << ")" << endl;
+    kDebug () << "kpMainWindow::addRecentURL(" << url << ")";
 #endif
     if (url.isEmpty ())
         return;
@@ -199,7 +199,7 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
     cfg->sync ();
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tnew recent URLs=" << d->actionOpenRecent->items () << endl;
+    kDebug () << "\tnew recent URLs=" << d->actionOpenRecent->items ();
 #endif
 
 
@@ -210,7 +210,7 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
         kpMainWindow *mw = static_cast <kpMainWindow *> (kmw);
 
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\t\tmw=" << mw << endl;
+        kDebug () << "\t\tmw=" << mw;
     #endif
 
         if (mw != this)
@@ -286,7 +286,7 @@ QSize kpMainWindow::defaultDocSize () const
 void kpMainWindow::saveDefaultDocSize (const QSize &size)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tCONFIG: saving Last Doc Size = " << size << endl;
+    kDebug () << "\tCONFIG: saving Last Doc Size = " << size;
 #endif
 
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
@@ -302,13 +302,13 @@ bool kpMainWindow::shouldOpen ()
     if (d->configOpenImagesInSameWindow)
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\topenImagesInSameWindow" << endl;
+        kDebug () << "\topenImagesInSameWindow";
     #endif
         // (this brings up a dialog and might save the current doc)
         if (!queryClose ())
         {
         #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\t\tqueryClose() aborts open" << endl;
+            kDebug () << "\t\tqueryClose() aborts open";
         #endif
             return false;
         }
@@ -325,7 +325,7 @@ void kpMainWindow::setDocumentChoosingWindow (kpDocument *doc)
         !d->configOpenImagesInSameWindow)
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\topen in new window" << endl;
+        kDebug () << "\topen in new window";
     #endif
         // Send doc to new window.
         kpMainWindow *win = new kpMainWindow (doc);
@@ -334,7 +334,7 @@ void kpMainWindow::setDocumentChoosingWindow (kpDocument *doc)
     else
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\topen in same window" << endl;
+        kDebug () << "\topen in same window";
     #endif
         // (sets up views, doc signals)
         setDocument (doc);
@@ -359,14 +359,14 @@ kpDocument *kpMainWindow::openInternal (const KUrl &url,
     if (!newDoc->open (url, newDocSameNameIfNotExist))
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\topen failed" << endl;
+        kDebug () << "\topen failed";
     #endif
         delete newDoc;
         return 0;
     }
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\topen OK" << endl;
+    kDebug () << "\topen OK";
 #endif
     // Send document to current or new window.
     setDocumentChoosingWindow (newDoc);
@@ -449,8 +449,8 @@ void kpMainWindow::slotOpen ()
 void kpMainWindow::slotOpenRecent (const KUrl &url)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotOpenRecent(" << url << ")" << endl;
-    kDebug () << "\titems=" << d->actionOpenRecent->items () << endl;
+    kDebug () << "kpMainWindow::slotOpenRecent(" << url << ")";
+    kDebug () << "\titems=" << d->actionOpenRecent->items ();
 #endif
 
     toolEndShape ();
@@ -475,7 +475,7 @@ void kpMainWindow::slotOpenRecent (const KUrl &url)
 void kpMainWindow::slotScan ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotScan() scanDialog=" << d->scanDialog << endl;
+    kDebug () << "kpMainWindow::slotScan() scanDialog=" << d->scanDialog;
 #endif
 
     toolEndShape ();
@@ -493,7 +493,7 @@ void kpMainWindow::slotScan ()
         if (!d->scanDialog)
         {
         #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\tcould not create scan dialog" << endl;
+            kDebug () << "\tcould not create scan dialog";
         #endif
             // Instead, we could try to create the scan dialog in the ctor
             // and just disable the action in the first place, removing
@@ -512,7 +512,7 @@ void kpMainWindow::slotScan ()
         }
 
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tcreated scanDialog=" << d->scanDialog << endl;
+        kDebug () << "\tcreated scanDialog=" << d->scanDialog;
     #endif
         connect (d->scanDialog, SIGNAL (finalImage (const QImage &, int)),
                  SLOT (slotScanned (const QImage &, int)));
@@ -538,7 +538,7 @@ void kpMainWindow::slotScan ()
 
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tcalling setup" << endl;
+    kDebug () << "\tcalling setup";
 #endif
     // Bring up dialog to select scan device.
     // If there is no scanner, we find that this does not bring up a dialog
@@ -546,7 +546,7 @@ void kpMainWindow::slotScan ()
     if (d->scanDialog->setup ())
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\t\tOK - showing dialog" << endl;
+        kDebug () << "\t\tOK - showing dialog";
     #endif
         // Called only if scanner configured/available.
         //
@@ -561,7 +561,7 @@ void kpMainWindow::slotScan ()
     {
         // Have never seen this code path execute even if "Cancel" is pressed.
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\t\tFAIL" << endl;
+        kDebug () << "\t\tFAIL";
     #endif
     }
 }
@@ -570,11 +570,11 @@ void kpMainWindow::slotScan ()
 void kpMainWindow::slotScanned (const QImage &image, int)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotScanned() image.rect=" << image.rect () << endl;
+    kDebug () << "kpMainWindow::slotScanned() image.rect=" << image.rect ();
 #endif
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\thiding dialog" << endl;
+    kDebug () << "\thiding dialog";
 #endif
     // (KScanDialog does not close itself after a scan is made)
     //
@@ -607,7 +607,7 @@ void kpMainWindow::slotScanned (const QImage &image, int)
     if (pixmap.isNull ())
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tcould not convert to pixmap" << endl;
+        kDebug () << "\tcould not convert to pixmap";
     #endif
         KMessageBox::sorry (this,
                             i18n ("Cannot scan - out of graphics memory."),
@@ -696,7 +696,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
                                   bool *allowLossyPrompt)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::askForURL() startURL=" << startURL << endl;
+    kDebug () << "kpMainWindow::askForURL() startURL=" << startURL;
     startSaveOptions.printDebug ("\tstartSaveOptions");
 #endif
 
@@ -731,7 +731,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 #if DEBUG_KP_MAIN_WINDOW
     QStringList sortedMimeTypes = mimeTypes;
     sortedMimeTypes.sort ();
-    kDebug () << "\tmimeTypes=" << mimeTypes << endl
+    kDebug () << "\tmimeTypes=" << mimeTypes
                << "\tsortedMimeTypes=" << sortedMimeTypes << endl;
 #endif
     if (mimeTypes.isEmpty ())
@@ -800,7 +800,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
     fd.setCaption (caption);
     fd.setOperationMode (KFileDialog::Saving);
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tmimeTypes=" << mimeTypes << endl;
+    kDebug () << "\tmimeTypes=" << mimeTypes;
 #endif
     fd.setMimeFilter (mimeTypes, fdSaveOptions.mimeType ());
     if (localOnly)
@@ -836,7 +836,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
         {
             *allowOverwritePrompt = shouldAllowOverwritePrompt;
         #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\tallowOverwritePrompt=" << *allowOverwritePrompt << endl;
+            kDebug () << "\tallowOverwritePrompt=" << *allowOverwritePrompt;
         #endif
         }
 
@@ -852,13 +852,13 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
                  newSaveOptions.colorDepth () != startSaveOptions.colorDepth () ||
                  newSaveOptions.dither () != startSaveOptions.dither ());
         #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\tallowLossyPrompt=" << *allowLossyPrompt << endl;
+            kDebug () << "\tallowLossyPrompt=" << *allowLossyPrompt;
         #endif
         }
 
 
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tselectedUrl=" << fd.selectedUrl () << endl;
+        kDebug () << "\tselectedUrl=" << fd.selectedUrl ();
     #endif
         return fd.selectedUrl ();
     }
@@ -872,7 +872,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 bool kpMainWindow::saveAs (bool localOnly)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::saveAs URL=" << d->document->url () << endl;
+    kDebug () << "kpMainWindow::saveAs URL=" << d->document->url ();
 #endif
 
     kpDocumentSaveOptions chosenSaveOptions;
@@ -919,7 +919,7 @@ bool kpMainWindow::slotSaveAs ()
 bool kpMainWindow::slotExport ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotExport()" << endl;
+    kDebug () << "kpMainWindow::slotExport()";
 #endif
 
     toolEndShape ();
@@ -1021,7 +1021,7 @@ bool kpMainWindow::slotReload ()
         (!oldURL.isEmpty () && KIO::NetAccess::exists (oldURL, true/*open*/, this)))
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "kpMainWindow::slotReload() reloading from disk!" << endl;
+        kDebug () << "kpMainWindow::slotReload() reloading from disk!";
     #endif
 
         doc = new kpDocument (1, 1, documentEnvironment ());
@@ -1036,7 +1036,7 @@ bool kpMainWindow::slotReload ()
     else
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "kpMainWindow::slotReload() create doc" << endl;
+        kDebug () << "kpMainWindow::slotReload() create doc";
     #endif
 
         doc = new kpDocument (d->document->constructorWidth (),
@@ -1132,7 +1132,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
         const int dpiX = screenDevice->logicalDpiX (),
             dpiY = screenDevice->logicalDpiY ();
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tusing screen dpi: x=" << dpiX << " y=" << dpiY << endl;
+        kDebug () << "\tusing screen dpi: x=" << dpiX << " y=" << dpiY;
     #endif
 
         pixmapDotsPerMeterX = dpiX * KP_INCHES_PER_METER;
@@ -1159,7 +1159,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
     double dpiX = pixmapDotsPerMeterX / KP_INCHES_PER_METER;
     double dpiY = pixmapDotsPerMeterY / KP_INCHES_PER_METER;
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tpixmap: dpiX=" << dpiX << " dpiY=" << dpiY << endl;
+    kDebug () << "\tpixmap: dpiX=" << dpiX << " dpiY=" << dpiY;
 #endif
 
 
@@ -1260,7 +1260,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
     }
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\torigin: x=" << originX << " y=" << originY << endl;
+    kDebug () << "\torigin: x=" << originX << " y=" << originY;
 #endif
 
 
@@ -1462,7 +1462,7 @@ void kpMainWindow::slotClose ()
     toolEndShape ();
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotClose()" << endl;
+    kDebug () << "kpMainWindow::slotClose()";
 #endif
 
     if (!queryClose ())
@@ -1477,7 +1477,7 @@ void kpMainWindow::slotQuit ()
     toolEndShape ();
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotQuit()" << endl;
+    kDebug () << "kpMainWindow::slotQuit()";
 #endif
 
     close ();  // will call queryClose()

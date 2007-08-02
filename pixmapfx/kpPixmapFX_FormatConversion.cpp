@@ -244,7 +244,7 @@ QPixmap kpPixmapFX::convertToPixmap (const QImage &image, bool pretty,
     }
 
 #if DEBUG_KP_PIXMAP_FX && 1
-    kDebug () << "\tconversion took " << timer.elapsed () << "msec" << endl;
+    kDebug () << "\tconversion took " << timer.elapsed () << "msec";
 #endif
 
     kpPixmapFX::ensureNoAlphaChannel (&destPixmap);
@@ -329,7 +329,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
     else
     {
     #if DEBUG_KP_PIXMAP_FX && 1
-        kDebug () << "\tscreen depth > 8 - read config" << endl;
+        kDebug () << "\tscreen depth > 8 - read config";
     #endif
 
         int configDitherIfNumColorsGreaterThan = 323;
@@ -377,7 +377,7 @@ QPixmap kpPixmapFX::convertToPixmapAsLosslessAsPossible (const QImage &image,
                                  ditherFlags);
 
 #if DEBUG_KP_PIXMAP_FX && 1
-    kDebug () << "\tconversion took " << timer.elapsed () << "msec" << endl;
+    kDebug () << "\tconversion took " << timer.elapsed () << "msec";
 #endif
 
     kpPixmapFX::ensureNoAlphaChannel (&destPixmap);
