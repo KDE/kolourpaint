@@ -320,7 +320,7 @@ install(TARGETS kolourpaint_lgpl DESTINATION ${LIB_INSTALL_DIR})
 
 kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
 
-target_link_libraries(kolourpaint ${KDE4_KDEPRINT_LIBS} ${QT_QT3SUPPORT_LIBRARY} kolourpaint_lgpl)
+target_link_libraries(kolourpaint ${KDE4_KDEPRINT_LIBS} ${QT_QT3SUPPORT_LIBRARY} blitz kolourpaint_lgpl)
 
 install(TARGETS kolourpaint DESTINATION ${BIN_INSTALL_DIR})
 
