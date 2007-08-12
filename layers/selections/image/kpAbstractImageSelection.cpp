@@ -214,9 +214,6 @@ QBitmap kpAbstractImageSelection::shapeBitmap (bool nullForRectangular) const
     {
         painter.begin (&maskBitmap);
 
-        // (Doesn't seem to be needed but do it just in case)
-        painter.setBackgroundMode (Qt::OpaqueMode);
-
         painter.setPen (Qt::color1/*opaque*/);
         painter.setBrush (Qt::color1/*opaque*/);
 
