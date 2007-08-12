@@ -31,21 +31,14 @@
 
 #include <kpEffectBlurSharpenWidget.h>
 
-#include <qbitmap.h>
 #include <qgridlayout.h>
-#include <qimage.h>
 #include <qlabel.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
 
 #include <kdebug.h>
-#include <kimageeffect.h>
 #include <klocale.h>
 #include <knuminput.h>
 
 #include <kpEffectBlurSharpenCommand.h>
-#include <kpPixmapFX.h>
 
 
 kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,

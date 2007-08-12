@@ -31,19 +31,15 @@
 
 #include <kpEffectBalanceWidget.h>
 
-#include <math.h>
+#include <cmath>
 
-#include <qfontmetrics.h>
 #include <qgridlayout.h>
-#include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qpixmap.h>
 #include <qpushbutton.h>
 
 #include <kcombobox.h>
 #include <kdebug.h>
-#include <kimageeffect.h>
 #include <klocale.h>
 #include <knuminput.h>
 

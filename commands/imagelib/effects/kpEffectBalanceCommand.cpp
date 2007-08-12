@@ -31,29 +31,10 @@
 
 #include <kpEffectBalanceCommand.h>
 
-#include <math.h>
-
-#include <qfontmetrics.h>
-#include <qgridlayout.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
-
-#include <kcombobox.h>
 #include <kdebug.h>
-#include <kimageeffect.h>
 #include <klocale.h>
-#include <knuminput.h>
 
 #include <kpEffectBalance.h>
-#include <kpPixmapFX.h>
-
-
-#if DEBUG_KP_EFFECT_BALANCE
-    #include <qdatetime.h>
-#endif
 
 
 kpEffectBalanceCommand::kpEffectBalanceCommand (int channels,

@@ -32,24 +32,20 @@
 #include <kpEffectFlattenWidget.h>
 
 #include <qcheckbox.h>
-#include <qimage.h>
 #include <qlayout.h>
-#include <qpixmap.h>
 
 #include <kcolorbutton.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kdialog.h>
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kimageeffect.h>
 #include <klocale.h>
 #include <kvbox.h>
-#include <kconfiggroup.h>
 
 #include <kpDefs.h>
 #include <kpEffectFlatten.h>
 #include <kpEffectFlattenCommand.h>
-#include <kpPixmapFX.h>
 
 
 // public static

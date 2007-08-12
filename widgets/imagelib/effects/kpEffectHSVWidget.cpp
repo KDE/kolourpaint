@@ -29,23 +29,15 @@
 
 #include <kpEffectHSVWidget.h>
 
-#include <qimage.h>
-#include <qrect.h>
+#include <qgridlayout.h>
 #include <qlabel.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
 
 #include <kdebug.h>
-#include <kimageeffect.h>
 #include <klocale.h>
 #include <knuminput.h>
 
 #include <kpEffectHSV.h>
 #include <kpEffectHSVCommand.h>
-#include <kpPixmapFX.h>
-
-#include <stdlib.h>
 
 
 kpEffectHSVWidget::kpEffectHSVWidget (bool actOnSelection, QWidget *parent)

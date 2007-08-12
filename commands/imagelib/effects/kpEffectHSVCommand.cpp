@@ -25,26 +25,13 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-// LOTODO: Remove unused headers
 
 #include <kpEffectHSVCommand.h>
 
-#include <qimage.h>
-#include <qrect.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
-
 #include <kdebug.h>
-#include <kimageeffect.h>
 #include <klocale.h>
-#include <knuminput.h>
 
 #include <kpEffectHSV.h>
-#include <kpPixmapFX.h>
-
-#include <stdlib.h>
 
 
 kpEffectHSVCommand::kpEffectHSVCommand (double hue, double saturation, double value,

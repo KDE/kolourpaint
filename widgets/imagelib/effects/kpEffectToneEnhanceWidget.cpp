@@ -26,27 +26,18 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-// LOTODO: Remove unused headers
 
 #include <kpEffectToneEnhanceWidget.h>
 
-#include <qimage.h>
-#include <qrect.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
+#include <QGridLayout>
+#include <QLabel>
 
 #include <kdebug.h>
-#include <kimageeffect.h>
 #include <klocale.h>
 #include <knuminput.h>
 
 #include <kpEffectToneEnhance.h>
 #include <kpEffectToneEnhanceCommand.h>
-#include <kpPixmapFX.h>
-
-#include <stdlib.h>
 
 
 kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,

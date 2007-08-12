@@ -31,20 +31,8 @@
 
 #include <kpEffectBlurSharpenCommand.h>
 
-#include <qbitmap.h>
-#include <qgridlayout.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
-
 #include <kdebug.h>
-#include <kimageeffect.h>
 #include <klocale.h>
-#include <knuminput.h>
-
-#include <kpPixmapFX.h>
 
 
 kpEffectBlurSharpenCommand::kpEffectBlurSharpenCommand (kpEffectBlurSharpen::Type type,

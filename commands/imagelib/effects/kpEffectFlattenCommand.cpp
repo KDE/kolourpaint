@@ -31,23 +31,10 @@
 
 #include <kpEffectFlattenCommand.h>
 
-#include <qcheckbox.h>
-#include <qimage.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-
-#include <kcolorbutton.h>
-#include <kconfig.h>
-#include <kdialog.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <kimageeffect.h>
 #include <klocale.h>
-#include <kvbox.h>
 
 #include <kpEffectFlatten.h>
-#include <kpDefs.h>
-#include <kpPixmapFX.h>
 
 
 kpEffectFlattenCommand::kpEffectFlattenCommand (const QColor &color1,
