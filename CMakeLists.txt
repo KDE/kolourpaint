@@ -1,7 +1,5 @@
 project(kolourpaint)
 
-find_package(Blitz REQUIRED)
-
 add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 
 include_directories(
