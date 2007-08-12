@@ -1,5 +1,7 @@
 project(kolourpaint)
 
+find_package(Blitz REQUIRED)
+
 add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 
 include_directories(
@@ -60,6 +62,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imagelib/effects
 ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars
 ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/options
 
+${BLITZ_INCLUDES}
 ${KDE4_INCLUDE_DIR}
 ${QT_INCLUDES}
 
@@ -320,7 +323,7 @@ install(TARGETS kolourpaint_lgpl DESTINATION ${LIB_INSTALL_DIR})
 
 kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
 
-target_link_libraries(kolourpaint ${KDE4_KDEPRINT_LIBS} ${QT_QT3SUPPORT_LIBRARY} blitz kolourpaint_lgpl)
+target_link_libraries(kolourpaint ${KDE4_KDEPRINT_LIBS} ${QT_QT3SUPPORT_LIBRARY} ${BLITZ_LIBRARIES} kolourpaint_lgpl)
 
 install(TARGETS kolourpaint DESTINATION ${BIN_INSTALL_DIR})
 
