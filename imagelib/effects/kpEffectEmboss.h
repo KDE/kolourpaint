@@ -43,6 +43,8 @@ public:
 
     // <strength> = strength of the effect
     //              (must be between MinStrength and MaxStrength inclusive)
+    //
+    //              Currently, all non-zero strengths are the same.
     static kpImage applyEffect (const kpImage &image, int strength);
 };
 
