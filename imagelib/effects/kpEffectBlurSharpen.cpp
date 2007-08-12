@@ -31,20 +31,19 @@
 
 #include <kpEffectBlurSharpen.h>
 
+#include <blitz.h>
+
 #include <qbitmap.h>
-#include <qgridlayout.h>
 #include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
 
 #include <kdebug.h>
-#include <kimageeffect.h>
-#include <klocale.h>
-#include <knuminput.h>
 
 #include <kpPixmapFX.h>
+
+
+#if DEBUG_KP_EFFECT_BLUR_SHARPEN
+    #include <QTime>
+#endif
 
 
 static QImage BlurQImage (const QImage qimage_, int strength)
@@ -54,34 +53,27 @@ static QImage BlurQImage (const QImage qimage_, int strength)
         return qimage;
 
 
-    // The numbers that follow were picked by experimentation.
-    // I still have no idea what "radius" and "sigma" mean
-    // (even after reading the API).
+    // The numbers that follow were picked by experimentation to try to get
+    // an effect linearly proportional to <strength> and at the same time,
+    // be fast enough.
+    //
+    // I still have no idea what "radius" means.
 
-    const double radius = 8;
-
-    const double SigmaMin = .5;
-    const double SigmaMax = 4;
-    const double sigma = SigmaMin +
+    const double RadiusMin = 1;
+    const double RadiusMax = 10;
+    const double radius = RadiusMin +
         (strength - 1) *
-        (SigmaMax - SigmaMin) /
+        (RadiusMax - RadiusMin) /
         (kpEffectBlurSharpen::MaxStrength - 1);
-
-    const int repeat = 1;
 
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
     kDebug () << "kpEffectBlurSharpen.cpp:BlurQImage(strength=" << strength << ")"
                << " radius=" << radius
-               << " sigma=" << sigma
-               << " repeat=" << repeat
                << endl;
 #endif
 
 
-    for (int i = 0; i < repeat; i++)
-    {
-        qimage = KImageEffect::blur (qimage, radius, sigma);
-    }
+    qimage = Blitz::blur (qimage, qRound (radius));
 
 
     return qimage;
@@ -94,9 +86,11 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
         return qimage;
 
 
-    // The numbers that follow were picked by experimentation.
-    // I still have no idea what "radius" and "sigma" mean
-    // (even after reading the API).
+    // The numbers that follow were picked by experimentation to try to get
+    // an effect linearly proportional to <strength> and at the same time,
+    // be fast enough.
+    //
+    // I still have no idea what "radius" and "sigma" mean.
 
     const double RadiusMin = .1;
     const double RadiusMax = 2.5;
@@ -119,6 +113,24 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
         (RepeatMax - RepeatMin) /
         (kpEffectBlurSharpen::MaxStrength - 1));
 
+#if 0  // I guess more proper due to auto-calculated radius but too slow.
+    const double radius = 0/*auto-calculate*/;
+
+    const double SigmaMin = .6;
+    const double SigmaMax = 1.0;
+    const double sigma = SigmaMin +
+        (strength - 1) *
+        (SigmaMax - SigmaMin) /
+        (kpEffectBlurSharpen::MaxStrength - 1);
+
+    const double RepeatMin = 1;
+    const double RepeatMax = 3;
+    const double repeat = qRound (RepeatMin +
+        (strength - 1) *
+        (RepeatMax - RepeatMin) /
+        (kpEffectBlurSharpen::MaxStrength - 1));
+#endif
+
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
     kDebug () << "kpEffectBlurSharpen.cpp:SharpenQImage(strength=" << strength << ")"
                << " radius=" << radius
@@ -130,7 +142,14 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
 
     for (int i = 0; i < repeat; i++)
     {
-        qimage = KImageEffect::sharpen (qimage, radius, sigma);
+    #if DEBUG_KP_EFFECT_BLUR_SHARPEN
+	QTime timer; timer.start ();
+    #endif
+        qimage = Blitz::sharpen (qimage, radius, sigma);
+    #if DEBUG_KP_EFFECT_BLUR_SHARPEN
+        kDebug () << "\titeration #" + QString::number (i)
+                  << ": " + QString::number (timer.elapsed ()) << "ms" << endl;
+    #endif
     }
 
 
@@ -152,28 +171,34 @@ kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
     Q_ASSERT (strength >= MinStrength && strength <= MaxStrength);
 
 
-    // (KImageEffect::(blur|sharpen)() ignores mask)
-    QPixmap usePixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (
+    // Replace transparent pixels with white, the most "neutral" color.
+    // Else the blur effect assumes that those transparent pixels next to
+    // opaque pixels, are black, creating a black outline.
+    //
+    // Whether we should do this is arguable because we now create a white
+    // outline instead...
+    kpImage useImage = kpPixmapFX::pixmapWithDefinedTransparentPixels (
         image,
         Qt::white/*arbitrarily chosen*/);
+    useImage.setMask (QBitmap ());
 
 
-    QImage qimage = kpPixmapFX::convertToImage (usePixmap);
+    QImage qimage = kpPixmapFX::convertToImage (useImage);
 
     if (type == Blur)
         qimage = ::BlurQImage (qimage, strength);
     else if (type == Sharpen)
         qimage = ::SharpenQImage (qimage, strength);
 
-    QPixmap retPixmap = kpPixmapFX::convertToPixmap (qimage);
+    kpImage retImage = kpPixmapFX::convertToPixmap (qimage);
 
 
-    // KImageEffect::(blur|sharpen)() nukes mask - restore it
-    if (!usePixmap.mask ().isNull())
-        retPixmap.setMask (usePixmap.mask ());
+    // Restore mask.
+    if (!image.mask ().isNull ())
+        retImage.setMask (image.mask ());
 
 
-    return retPixmap;
+    return retImage;
 }
 
 
