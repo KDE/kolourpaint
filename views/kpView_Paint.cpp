@@ -575,8 +575,8 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
         kpPixmapFX::widgetDrawStippledXORRect (this,
             bvsvRect.x (), bvsvRect.y (), bvsvRect.width (), bvsvRect.height (),
             kpColor::White, kpColor::White,  // Stippled XOR colors
-            kpColor::LightGray, kpColor::LightGray,
-            viewRect);  // Hint colors if XOR not supported
+            kpColor::LightGray, kpColor::DarkGray,  // Hint colors if XOR not supported
+            viewRect);
     }
 
 

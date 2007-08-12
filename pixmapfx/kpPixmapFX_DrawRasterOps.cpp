@@ -115,16 +115,16 @@ void kpPixmapFX::widgetDrawStippledXORRect (QWidget *widget,
         const kpColor &color1Hint, const kpColor &color2Hint,
         const QRect &clipRect)
 {
-    // TODO: as per above comment.
     (void) fcolor1; (void) fcolor2;
-    (void) color2Hint;
 
     QPainter p (widget);
 
     if (!clipRect.isEmpty ())
         p.setClipRect (clipRect);
 
-    p.setPen (color1Hint.toQColor ());
+    p.setPen (QPen (color1Hint.toQColor (), 1/*width*/, Qt::DotLine));
+    p.setBackground (color2Hint.toQColor ());
+    p.setBackgroundMode (Qt::OpaqueMode);
 
     // TODO: code dup with DrawGenericRect() but hard to not dup
     if (width == 1 || height == 1)
