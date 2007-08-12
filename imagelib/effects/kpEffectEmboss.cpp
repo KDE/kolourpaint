@@ -47,9 +47,11 @@ static QImage EmbossQImage (const QImage &qimage_, int strength)
         return qimage;
 
 
-    // The numbers that follow were picked by experimentation.
-    // I still have no idea what "radius" and "sigma" mean
-    // (even after reading the API).
+    // The numbers that follow were picked by experimentation to try to get
+    // an effect linearly proportional to <strength> and at the same time,
+    // be fast enough.
+    //
+    // I still have no idea what "radius" and "sigma" mean.
 
     const double radius = 0;
 
