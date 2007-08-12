@@ -25,26 +25,18 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-// LOTODO: Remove unused headers
 
 #include <kpEffectHSV.h>
 
-#include <QBitmap>
+#include <math.h>
+
+#include <qbitmap.h>
 #include <qimage.h>
-#include <qrect.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpixmap.h>
 
 #include <kdebug.h>
-#include <kimageeffect.h>
-#include <klocale.h>
-#include <knuminput.h>
 
 #include <kpPixmapFX.h>
 
-#include <stdlib.h>
-#include <math.h>
 
 void ColorToHSV(unsigned int c, float* pHue, float* pSaturation, float* pValue)
 {

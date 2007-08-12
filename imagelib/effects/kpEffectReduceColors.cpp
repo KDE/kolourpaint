@@ -32,15 +32,10 @@
 #include <kpEffectReduceColors.h>
 
 #include <qbitmap.h>
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
 #include <qimage.h>
-#include <qlayout.h>
 #include <qpixmap.h>
-#include <qradiobutton.h>
 
 #include <kdebug.h>
-#include <klocale.h>
 
 #include <kpPixmapFX.h>
 

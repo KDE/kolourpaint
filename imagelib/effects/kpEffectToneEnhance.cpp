@@ -26,7 +26,6 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-// LOTODO: Remove unused headers
 
 // TODO: Audit this code and related Widget and Command for errors e.g. divide by zero etc. - Clarence
 
@@ -34,19 +33,12 @@
 
 #include <QBitmap>
 #include <qimage.h>
-#include <qrect.h>
-#include <qlabel.h>
-#include <qlayout.h>
 #include <qpixmap.h>
 
 #include <kdebug.h>
-#include <kimageeffect.h>
-#include <klocale.h>
-#include <knuminput.h>
 
 #include <kpPixmapFX.h>
 
-#include <stdlib.h>
 
 
 #define RED_WEIGHT 77
