@@ -605,7 +605,8 @@ public:
     // Simulated Raster NOP
     //
 
-    // (used for rectangular bounding border for non-rectangular selections)
+    // (used for rectangular bounding border for non-rectangular selections
+    //  and when dragging a rectangle to zoom into with the Zoom Tool)
     static void drawNOTRect (QPixmap *image,
         int x, int y, int width, int height,
         const kpColor &fcolor,
