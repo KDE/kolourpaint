@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_EFFECT_BLUR_SHARPEN 1
+#define DEBUG_KP_EFFECT_BLUR_SHARPEN 0
 
 
 #include <kpEffectBlurSharpen.h>
@@ -113,7 +113,9 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
         (RepeatMax - RepeatMin) /
         (kpEffectBlurSharpen::MaxStrength - 1));
 
-#if 0  // I guess more proper due to auto-calculated radius but too slow.
+// I guess these values are more proper as they use an auto-calculated
+// radius but they cause sharpen() to be too slow.
+#if 0
     const double radius = 0/*auto-calculate*/;
 
     const double SigmaMin = .6;
