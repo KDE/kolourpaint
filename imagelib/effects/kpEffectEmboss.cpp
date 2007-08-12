@@ -31,19 +31,11 @@
 
 #include <kpEffectEmboss.h>
 
-#include <qbitmap.h>
-#include <qcheckbox.h>
-#include <qgridlayout.h>
+#include <blitz.h>
+
 #include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
 
 #include <kdebug.h>
-#include <kimageeffect.h>
-#include <klocale.h>
-#include <knuminput.h>
 
 #include <kpPixmapFX.h>
 
@@ -77,7 +69,7 @@ static QImage EmbossQImage (const QImage &qimage_, int strength)
 
     for (int i = 0; i < repeat; i++)
     {
-        qimage = KImageEffect::emboss (qimage, radius, sigma);
+        qimage = Blitz::emboss (qimage, radius, sigma);
     }
 
 
@@ -96,25 +88,20 @@ kpImage kpEffectEmboss::applyEffect (const kpImage &image, int strength)
     Q_ASSERT (strength >= MinStrength && strength <= MaxStrength);
 
 
-    // (KImageEffect::emboss() ignores mask)
-    QPixmap usePixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (
-        image,
-        Qt::white/*arbitrarily chosen*/);
-
-
-    QImage qimage = kpPixmapFX::convertToImage (usePixmap);
+    QImage qimage = kpPixmapFX::convertToImage (image);
 
     qimage = ::EmbossQImage (qimage, strength);
 
-    QPixmap retPixmap = kpPixmapFX::convertToPixmap (qimage);
+    kpImage retImage = kpPixmapFX::convertToPixmap (qimage);
 
 
-    // KImageEffect::emboss() nukes mask - restore it
-    if (!usePixmap.mask ().isNull())
-        retPixmap.setMask (usePixmap.mask ());
+#if DEBUG_KP_EFFECT_EMBOSS
+    kDebug () << "\thave masks: input=" << image.hasAlpha ()
+              << " output=" << retImage.hasAlpha ()
+              << endl;
+#endif
 
-
-    return retPixmap;
+    return retImage;
 }
 
 
