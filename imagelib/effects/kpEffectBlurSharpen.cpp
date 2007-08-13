@@ -147,7 +147,7 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
     #if DEBUG_KP_EFFECT_BLUR_SHARPEN
 	QTime timer; timer.start ();
     #endif
-        qimage = Blitz::sharpen (qimage, radius, sigma);
+        qimage = Blitz::gaussianSharpen (qimage, radius, sigma);
     #if DEBUG_KP_EFFECT_BLUR_SHARPEN
         kDebug () << "\titeration #" + QString::number (i)
                   << ": " + QString::number (timer.elapsed ()) << "ms" << endl;
