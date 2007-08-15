@@ -39,78 +39,6 @@
 #include <kpColor.h>
 
 
-static inline int roundUp2 (int val)
-{
-    return val % 2 ? val + 1 : val;
-}
-
-static inline int btwn0_255 (int val)
-{
-    if (val < 0)
-        return 0;
-    else if (val > 255)
-        return 255;
-    else
-        return val;
-}
-
-enum
-{
-    blendDark = 25,
-    blendNormal = 50,
-    blendLight = 75,
-    blendAdd = 100
-};
-
-static QColor blend (const QColor &a, const QColor &b, int percent = blendNormal)
-{
-    return QColor (btwn0_255 (roundUp2 (a.red () + b.red ()) * percent / 100),
-                   btwn0_255 (roundUp2 (a.green () + b.green ()) * percent / 100),
-                   btwn0_255 (roundUp2 (a.blue () + b.blue ()) * percent / 100));
-}
-
-static QColor add (const QColor &a, const QColor &b)
-{
-    return blend (a, b, blendAdd);
-}
-
-
-//
-// make our own colors in case weird ones like "Qt::cyan"
-// (turquoise) get changed by Qt
-//
-
-// primary colors + B&W
-static QColor kpRed (255, 0, 0);
-static QColor kpGreen (0, 255, 0);
-static QColor kpBlue (0, 0, 255);
-static QColor kpBlack (0, 0, 0);
-static QColor kpWhite (255, 255, 255);
-
-// intentionally _not_ an HSV darkener
-static QColor dark (const QColor &color)
-{
-    return blend (color, kpBlack);
-}
-
-// full-brightness colors
-static QColor kpYellow = add (kpRed, kpGreen);
-static QColor kpPurple = add (kpRed, kpBlue);
-static QColor kpAqua = add (kpGreen, kpBlue);
-
-// mixed colors
-static QColor kpGrey = blend (kpBlack, kpWhite);
-static QColor kpLightGrey = blend (kpGrey, kpWhite);
-static QColor kpOrange = blend (kpRed, kpYellow);
-
-// pastel colors
-static QColor kpPink = blend (kpRed, kpWhite);
-static QColor kpLightGreen = blend (kpGreen, kpWhite);
-static QColor kpLightBlue = blend (kpBlue, kpWhite);
-static QColor kpTan = blend (kpYellow, kpWhite);
-
-
-
 class kpDefaultColorCollection : public kpColorCollection
 {
 public:
@@ -120,36 +48,36 @@ public:
 
 kpDefaultColorCollection::kpDefaultColorCollection ()
 {
-    QColor colors [] =
+    kpColor colors [] =
     {
-        kpBlack,
-        kpGrey,
-        kpRed,
-        kpOrange,
-        kpYellow,
-        kpGreen,
-        kpAqua,
-        kpBlue,
-        kpPurple,
-        kpPink,
-        kpLightGreen,
+        kpColor::Black,
+        kpColor::Gray,
+        kpColor::Red,
+        kpColor::Orange,
+        kpColor::Yellow,
+        kpColor::Green,
+        kpColor::Aqua,
+        kpColor::Blue,
+        kpColor::Purple,
+        kpColor::Pink,
+        kpColor::LightGreen,
 
-        kpWhite,
-        kpLightGrey,
-        dark (kpRed),
-        dark (kpOrange)/*brown*/,
-        dark (kpYellow),
-        dark (kpGreen),
-        dark (kpAqua),
-        dark (kpBlue),
-        dark (kpPurple),
-        kpLightBlue,
-        kpTan
+        kpColor::White,
+        kpColor::LightGray,
+        kpColor::DarkRed,
+        kpColor::DarkOrange,
+        kpColor::DarkYellow,
+        kpColor::DarkGreen,
+        kpColor::DarkAqua,
+        kpColor::DarkBlue,
+        kpColor::DarkPurple,
+        kpColor::LightBlue,
+        kpColor::Tan
     };
 
     for (int i = 0; i < (int) (sizeof (colors) / sizeof (colors [0])); i++)
     {
-        addColor (colors [i]);
+        addColor (colors [i].toQColor ());
     }
 }
 

@@ -173,6 +173,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectHSV.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectInvert.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectReduceColors.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectToneEnhance.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpColor_Constants.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpColor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpDocumentMetaInfo.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpFloodFill.cpp

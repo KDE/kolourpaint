@@ -38,7 +38,7 @@ class QDataStream;
 
 //
 // kpColor is an object-oriented abstraction of QRgb, with the additional
-// restriction of following the KolourPaint convention of only supporting
+// restriction of enforcing the KolourPaint convention of only supporting
 // totally transparent and totally opaque colors.  Eventually, this
 // restriction will be dropped.  In the future, other color models such as
 // 8-bit indexed will be supported.  It also provides better error handling,
@@ -47,11 +47,11 @@ class QDataStream;
 //
 // In general, you should pass around kpColor objects instead of QRgb
 // and QColor.  Only convert an opaque kpColor to a QColor (using toQColor())
-// if you need to draw something onscreen.  Constructing a kpColor object
-// from QColor is probably wrong since onscreen representations of color
-// are not guaranteed to be faithful (due to QColor color allocation).
-// COMPAT: QColor is just as exact as QRgb in Qt4
+// if you need to draw something on-screen.
 //
+// Constructing a kpColor object from QColor is usually wrong since QColor's
+// come from on-screen pixels, which may lack the full color resolution of
+// kpColor, due to the limited color range on e.g. a 16-bit screen.
 //
 class kpColor
 {
@@ -66,23 +66,67 @@ public:
     bool operator== (const kpColor &rhs) const;
     bool operator!= (const kpColor &rhs) const;
 
+
+//
+// Constants
+//
+public:
+    // "lhs.isSimilarTo (rhs, kpColor::Exact)" is exactly the same as calling
+    // "lhs == rhs".
+    static const int Exact;
+  
+    static const kpColor Invalid;
+    static const kpColor Transparent;
+
+
+    //
+    // Primary Colors + B&W
+    //
+    
+    static const kpColor Red, Green, Blue;
+    static const kpColor Black, White;
+
+
+    //
+    // Full-brightness Colors
+    //
+
+    static const kpColor Yellow, Purple, Aqua;
+
+
+    //
+    // Mixed Colors
+    //
+    
+    static const kpColor Gray, LightGray, Orange;
+     
+
+    //
+    // Pastel Colors
+    //
+
+    static const kpColor Pink, LightGreen, LightBlue, Tan;
+
+
+    //
+    // Dark Colors
+    //
+    
+    static const kpColor DarkRed;
+
+    // (identical)
+    static const kpColor DarkOrange, Brown;
+
+    static const kpColor DarkYellow, DarkGreen, DarkAqua, DarkBlue,
+        DarkPurple, DarkGray;
+
+
+public:
     static int processSimilarity (double colorSimilarity);
-    static const int Exact;  // "isSimilarTo (rhs, kpColor::Exact)" == "== rhs"
     // Usage: isSimilarTo (rhs, kpColor::processSimilarity (.1)) checks for
     //        Color Similarity within 10%
     bool isSimilarTo (const kpColor &rhs, int processedSimilarity) const;
     ~kpColor ();
-
-    static const kpColor Invalid;
-    static const kpColor Transparent;
-
-    static const kpColor Black;
-    static const kpColor DarkGray;
-    static const kpColor LightGray;
-    static const kpColor White;
-    
-    static const kpColor Blue;
-    static const kpColor Yellow;
 
     bool isValid () const;
 
