@@ -45,7 +45,8 @@ private:
     virtual QString haventBegunShapeUserMessage () const;
 
 public:
-    static void drawShape (kpImage *image,
+    // (used by kpToolLine)
+    static void DrawShape (kpImage *image,
         const QPolygon &points,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,

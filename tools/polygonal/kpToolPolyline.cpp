@@ -41,7 +41,7 @@ kpToolPolyline::kpToolPolyline (kpToolEnvironment *environ, QObject *parent)
     : kpToolPolygonalBase (
         i18n ("Connected Lines"),
         i18n ("Draws connected lines"),
-        &drawShape,
+        &DrawShape,
         Qt::Key_N,
         environ, parent,
         "tool_polyline")
@@ -61,7 +61,7 @@ QString kpToolPolyline::haventBegunShapeUserMessage () const
 
 
 // public static
-void kpToolPolyline::drawShape (kpImage *image,
+void kpToolPolyline::DrawShape (kpImage *image,
         const QPolygon &points,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,

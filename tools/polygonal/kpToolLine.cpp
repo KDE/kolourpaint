@@ -45,7 +45,7 @@ static void DrawLineShape (kpImage *image,
 {
     Q_ASSERT (points.count () == 2);
 
-    kpToolPolyline::drawShape (image,
+    kpToolPolyline::DrawShape (image,
         points,
         fcolor, penWidth,
         bcolor,
