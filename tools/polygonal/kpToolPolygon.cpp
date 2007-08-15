@@ -37,6 +37,20 @@
 #include <kpToolToolBar.h>
 
 
+static void DrawPolygonShape (kpImage *image,
+        const QPolygon &points,
+        const kpColor &fcolor, int penWidth,
+        const kpColor &bcolor,
+        bool isFinal)
+{
+    kpPainter::drawPolygon (image,
+        points,
+        fcolor, penWidth,
+        bcolor,
+        isFinal);
+}
+
+
 struct kpToolPolygonPrivate
 {
     kpToolWidgetFillStyle *toolWidgetFillStyle;
@@ -46,7 +60,7 @@ kpToolPolygon::kpToolPolygon (kpToolEnvironment *environ, QObject *parent)
     : kpToolPolygonalBase (
         i18n ("Polygon"),
         i18n ("Draws polygons"),
-        &kpPainter::drawPolygon,
+        &::DrawPolygonShape,
         Qt::Key_G,
         environ, parent,
         "tool_polygon"),
