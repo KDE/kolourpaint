@@ -1018,7 +1018,7 @@ bool kpMainWindow::slotReload ()
 
     // If it's _supposed to_ come from a URL or it exists
     if (d->document->isFromURL (false/*don't bother checking exists*/) ||
-        (!oldURL.isEmpty () && KIO::NetAccess::exists (oldURL, true/*open*/, this)))
+        (!oldURL.isEmpty () && KIO::NetAccess::exists (oldURL, KIO::NetAccess::SourceSide/*open*/, this)))
     {
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "kpMainWindow::slotReload() reloading from disk!";

@@ -148,7 +148,7 @@ bool kpDocument::isFromURL (bool checkURLStillExists) const
         return true;
 
     return (!m_url.isEmpty () &&
-            KIO::NetAccess::exists (m_url, true/*open*/,
+            KIO::NetAccess::exists (m_url, KIO::NetAccess::SourceSide/*open*/,
                 d->environ->dialogParent ()));
 }
 

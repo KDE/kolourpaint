@@ -292,7 +292,8 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
     metaInfo.printDebug (QLatin1String ("\tmetaInfo"));
 #endif
 
-    if (overwritePrompt && KIO::NetAccess::exists (url, false/*write*/, parent))
+    if (overwritePrompt &&
+        KIO::NetAccess::exists (url, KIO::NetAccess::DestinationSide/*write*/, parent))
     {
         int result = KMessageBox::warningContinueCancel (parent,
             i18n ("A document called \"%1\" already exists.\n"
