@@ -294,8 +294,8 @@ void kpAbstractSelection::paintPolygonalBorder (const QPolygon &points,
             boundingRect ().y () - docRect.y (),
             boundingRect ().width (),
             boundingRect ().height (),
-            kpColor::White/*"Raster NOT" color*/,
-            kpColor::LightGray/*hint color if "Raster NOT" not supported*/);
+            kpColor::LightGray/*1st hint color if "Raster NOT" not supported*/,
+            kpColor::DarkGray/*2nd hint color if "Raster NOT" not supported*/);
     }
 }
 

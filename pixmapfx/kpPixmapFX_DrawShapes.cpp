@@ -108,6 +108,34 @@ static int WidthToQPenWidth (int width, bool drawingEllipse = false)
 }
 
 
+static void QPainterSetPenWithStipple (QPainter *p,
+        bool drawingOnRGBLayer,
+        const kpColor &fColor,
+        int penWidth,
+        const kpColor &fStippleColor = kpColor::Invalid,
+        bool isEllipseLike = false)
+{
+    if (!fStippleColor.isValid ())
+    {
+        p->setPen (
+           kpPixmapFX::QPainterDrawLinePen (
+                kpPixmapFX::draw_ToQColor (fColor, drawingOnRGBLayer),
+                ::WidthToQPenWidth (penWidth, isEllipseLike)));
+    }
+    else
+    {
+        QPen usePen = kpPixmapFX::QPainterDrawLinePen (
+            kpPixmapFX::draw_ToQColor (fColor, drawingOnRGBLayer),
+            ::WidthToQPenWidth (penWidth, isEllipseLike));
+        usePen.setStyle (Qt::DashLine);
+        p->setPen (usePen);
+
+        p->setBackground (kpPixmapFX::draw_ToQColor (fStippleColor, drawingOnRGBLayer));
+        p->setBackgroundMode (Qt::OpaqueMode);
+    }
+}
+
+
 // public static
 QPen kpPixmapFX::QPainterDrawRectPen (const QColor &color, int qtWidth)
 {
@@ -130,6 +158,7 @@ struct DrawPolylinePackage
     QPolygon points;
     kpColor color;
     int penWidth;
+    kpColor stippleColor;
 };
 
 static void DrawPolylineHelper (QPainter *p,
@@ -145,11 +174,10 @@ static void DrawPolylineHelper (QPainter *p,
         << endl;
 #endif
 
-    p->setPen (
-        kpPixmapFX::QPainterDrawLinePen (
-            kpPixmapFX::draw_ToQColor (pack->color, drawingOnRGBLayer),
-            ::WidthToQPenWidth (pack->penWidth)));
-
+    ::QPainterSetPenWithStipple (p, drawingOnRGBLayer,
+        pack->color, pack->penWidth,
+        pack->stippleColor);
+    
     // Qt bug: single point doesn't show up depending on penWidth.
     if (Only1PixelInPointArray (pack->points))
     {
@@ -159,29 +187,33 @@ static void DrawPolylineHelper (QPainter *p,
         p->drawPoint (pack->points [0]);
         return;
     }
-
+    
     p->drawPolyline (pack->points);
 }
 
 // public static
 void kpPixmapFX::drawPolyline (QPixmap *image,
         const QPolygon &points,
-        const kpColor &color, int penWidth)
+        const kpColor &color, int penWidth,
+        const kpColor &stippleColor)
 {
     DrawPolylinePackage pack;
     pack.points = points;
     pack.color = color;
     pack.penWidth = penWidth;
+    pack.stippleColor = stippleColor;
 
     kpPixmapFX::draw (image, &::DrawPolylineHelper,
-        color.isOpaque (), color.isTransparent (),
+        color.isOpaque () || (stippleColor.isValid () && stippleColor.isOpaque ()),
+        color.isTransparent () || (stippleColor.isValid () && stippleColor.isTransparent ()),
         &pack);
 }
 
 // public static
 void kpPixmapFX::drawLine (QPixmap *image,
         int x1, int y1, int x2, int y2,
-        const kpColor &color, int penWidth)
+        const kpColor &color, int penWidth,
+        const kpColor &stippleColor)
 {
     QPolygon points;
     points.append (QPoint (x1, y1));
@@ -189,7 +221,8 @@ void kpPixmapFX::drawLine (QPixmap *image,
 
     drawPolyline (image,
         points,
-        color, penWidth);
+        color, penWidth,
+        stippleColor);
 }
 
 
@@ -204,6 +237,7 @@ struct DrawPolygonPackage
     int penWidth;
     kpColor bcolor;
     bool isFinal;
+    kpColor fStippleColor;
 };
 
 static void DrawPolygonHelper (QPainter *p,
@@ -224,13 +258,12 @@ static void DrawPolygonHelper (QPainter *p,
         << endl;
 #endif
 
-    p->setPen (
-        kpPixmapFX::QPainterDrawLinePen (
-            kpPixmapFX::draw_ToQColor (pack->fcolor, drawingOnRGBLayer),
-            ::WidthToQPenWidth (pack->penWidth)));
+    ::QPainterSetPenWithStipple (p, drawingOnRGBLayer,
+        pack->fcolor, pack->penWidth,
+        pack->fStippleColor);
 
     if (pack->bcolor.isValid ())
-       p->setBrush (QBrush (kpPixmapFX::draw_ToQColor (pack->bcolor, drawingOnRGBLayer)));
+        p->setBrush (QBrush (kpPixmapFX::draw_ToQColor (pack->bcolor, drawingOnRGBLayer)));
     // HACK: seems to be needed if set_Pen_(Qt::color0) else fills with Qt::color0.
     else
         p->setBrush (Qt::NoBrush);
@@ -290,7 +323,8 @@ void kpPixmapFX::drawPolygon (QPixmap *image,
         const QPolygon &points,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
-        bool isFinal)
+        bool isFinal,
+        const kpColor &fStippleColor)
 {
     DrawPolygonPackage pack;
     pack.points = points;
@@ -298,10 +332,15 @@ void kpPixmapFX::drawPolygon (QPixmap *image,
     pack.penWidth = penWidth;
     pack.bcolor = bcolor;
     pack.isFinal = isFinal;
+    pack.fStippleColor = fStippleColor,
 
     kpPixmapFX::draw (image, &::DrawPolygonHelper,
-        fcolor.isOpaque () || (bcolor.isValid () && bcolor.isOpaque ()),
-        fcolor.isTransparent () || (bcolor.isValid () && bcolor.isTransparent ()),
+        fcolor.isOpaque () ||
+            (bcolor.isValid () && bcolor.isOpaque ()) ||
+            (fStippleColor.isValid () && fStippleColor.isOpaque ()),
+        fcolor.isTransparent () ||
+            (bcolor.isValid () && bcolor.isTransparent ()) ||
+            (fStippleColor.isValid () && fStippleColor.isTransparent ()),
         &pack);
 }
 
@@ -335,10 +374,8 @@ static void DrawCurveHelper (QPainter *p,
         << endl;
 #endif
 
-    const QPen curvePen =
-        kpPixmapFX::QPainterDrawLinePen (
-            kpPixmapFX::draw_ToQColor (pack->color, drawingOnRGBLayer),
-            ::WidthToQPenWidth (pack->penWidth));
+    ::QPainterSetPenWithStipple (p, drawingOnRGBLayer,
+        pack->color, pack->penWidth);
 
     // SYNC: Qt bug: single point doesn't show up depending on penWidth.
     if (pack->startPoint == pack->controlPointP &&
@@ -348,7 +385,6 @@ static void DrawCurveHelper (QPainter *p,
     #if DEBUG_KP_PIXMAP_FX
         kDebug () << "\tinvoking single point hack";
     #endif
-        p->setPen (curvePen);
         p->drawPoint (pack->startPoint);
         return;
     }
@@ -359,7 +395,7 @@ static void DrawCurveHelper (QPainter *p,
         pack->controlPointQ,
         pack->endPoint);
 
-    p->strokePath (curvePath, curvePen);
+    p->strokePath (curvePath, p->pen ());
 }
 
 // public static
@@ -391,6 +427,7 @@ struct FillRectPackage
 {
     int x, y, width, height;
     kpColor color;
+    kpColor stippleColor;
 };
 
 static void FillRectHelper (QPainter *p,
@@ -399,21 +436,53 @@ static void FillRectHelper (QPainter *p,
 {
     FillRectPackage *pack = static_cast <FillRectPackage *> (data);
 
-    p->fillRect (pack->x, pack->y, pack->width, pack->height,
-        kpPixmapFX::draw_ToQColor (pack->color, drawingOnRGBLayer));
+    if (!pack->stippleColor.isValid ())
+    {
+        p->fillRect (pack->x, pack->y, pack->width, pack->height,
+            kpPixmapFX::draw_ToQColor (pack->color, drawingOnRGBLayer));
+    }
+    else
+    {
+        const int StippleSize = 4;
+
+        p->save ();
+        p->setClipRect (pack->x, pack->y, pack->width, pack->height);
+        {
+            for (int dy = 0; dy < pack->height; dy += StippleSize)
+            {
+                for (int dx = 0; dx < pack->width; dx += StippleSize)
+                {
+                    const bool parity = ((dy + dx) / StippleSize) % 2;
+    
+                    kpColor useColor;
+                    if (!parity)
+                        useColor = pack->color;
+                    else
+                        useColor = pack->stippleColor;
+                        
+                    p->fillRect (pack->x + dx, pack->y + dy, StippleSize, StippleSize,
+                        kpPixmapFX::draw_ToQColor (useColor, drawingOnRGBLayer));
+                }
+            }
+        }
+        p->restore ();
+    }
 }
 
 // public static
 void kpPixmapFX::fillRect (QPixmap *image,
         int x, int y, int width, int height,
-        const kpColor &color)
+        const kpColor &color,
+        const kpColor &stippleColor)
 {
     FillRectPackage pack;
     pack.x = x, pack.y = y, pack.width = width, pack.height = height;
     pack.color = color;
+    pack.stippleColor = stippleColor;
 
     kpPixmapFX::draw (image, &::FillRectHelper,
-        color.isOpaque (), color.isTransparent (),
+        color.isOpaque () || (stippleColor.isValid () && stippleColor.isOpaque ()),
+        color.isTransparent () || (stippleColor.isValid () && stippleColor.isTransparent ()),
         &pack);
 }
 
@@ -431,6 +500,7 @@ struct DrawGenericRectPackage
     kpColor fcolor;
     int penWidth;
     kpColor bcolor;
+    kpColor fStippleColor;
     bool isEllipseLike;
 };
 
@@ -455,10 +525,10 @@ static void DrawGenericRectHelper (QPainter *p,
               << endl;
 #endif
 
-    p->setPen (
-        kpPixmapFX::QPainterDrawRectPen (
-            kpPixmapFX::draw_ToQColor (pack->fcolor, drawingOnRGBLayer),
-            ::WidthToQPenWidth (pack->penWidth, pack->isEllipseLike)));
+    ::QPainterSetPenWithStipple (p, drawingOnRGBLayer,
+        pack->fcolor, pack->penWidth,
+        pack->fStippleColor,
+        pack->isEllipseLike);
 
     if (pack->bcolor.isValid ())
         p->setBrush (QBrush (kpPixmapFX::draw_ToQColor (pack->bcolor, drawingOnRGBLayer)));
@@ -484,7 +554,8 @@ static void DrawGenericRect (QPixmap *image,
                 int /*width*/, int/*height*/),
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
-        bool isEllipseLike = false)
+        const kpColor &fStippleColor,
+        bool isEllipseLike)
 {
 #if DEBUG_KP_PIXMAP_FX
     kDebug () << "kppixmapfx.cpp:DrawGenericRect(" << x << "," << y << ","
@@ -518,7 +589,8 @@ static void DrawGenericRect (QPixmap *image,
 
         kpPixmapFX::drawLine (image,
             x, y, x + width - 1, y + height - 1,
-            fcolor, 1/*force pen width to 1*/);
+            fcolor, 1/*force pen width to 1*/,
+            fStippleColor);
         return;
     }
 
@@ -549,12 +621,18 @@ static void DrawGenericRect (QPixmap *image,
         pack.bcolor = bcolor;
     }
 
+    pack.fStippleColor = fStippleColor;
+
     pack.isEllipseLike = isEllipseLike;
 
 
     kpPixmapFX::draw (image, &::DrawGenericRectHelper,
-        fcolor.isOpaque () || (bcolor.isValid () && bcolor.isOpaque ()),
-        fcolor.isTransparent () || (bcolor.isValid () && bcolor.isTransparent ()),
+        fcolor.isOpaque () ||
+            (bcolor.isValid () && bcolor.isOpaque ()) ||
+            (fStippleColor.isValid () && fStippleColor.isOpaque ()),
+        fcolor.isTransparent () ||
+            (bcolor.isValid () && bcolor.isTransparent ()) ||
+            (fStippleColor.isValid () && fStippleColor.isTransparent ()),
         &pack);
 }
 
@@ -569,13 +647,16 @@ static void DrawRectHelper (QPainter *p,
 void kpPixmapFX::drawRect (QPixmap *image,
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor)
+        const kpColor &bcolor,
+        const kpColor &fStippleColor)
 {
     ::DrawGenericRect (image,
         x, y, width, height,
         &::DrawRectHelper,
         fcolor, penWidth,
-        bcolor);
+        bcolor,
+        fStippleColor,
+        false/*not ellipse-like*/);
 }
 
 
@@ -592,13 +673,15 @@ static void DrawRoundedRectHelper (QPainter *p,
 void kpPixmapFX::drawRoundedRect (QPixmap *image,
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor)
+        const kpColor &bcolor,
+        const kpColor &fStippleColor)
 {
     ::DrawGenericRect (image,
         x, y, width, height,
         &::DrawRoundedRectHelper,
         fcolor, penWidth,
         bcolor,
+        fStippleColor,
         true/*ellipse like*/);
 }
 
@@ -613,12 +696,14 @@ static void DrawEllipseHelper (QPainter *p,
 void kpPixmapFX::drawEllipse (QPixmap *image,
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor)
+        const kpColor &bcolor,
+        const kpColor &fStippleColor)
 {
     ::DrawGenericRect (image,
         x, y, width, height,
         &::DrawEllipseHelper,
         fcolor, penWidth,
         bcolor,
+        fStippleColor,
         true/*ellipse like*/);
 }

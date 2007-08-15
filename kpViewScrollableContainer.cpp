@@ -714,7 +714,8 @@ void kpViewScrollableContainer::drawResizeLines ()
 #define FILL_NOT_RECT(rect)                                                    \
     kpPixmapFX::widgetFillNOTRect (viewport (),                                \
         rect.x (), rect.y (), rect.width (), rect.height (),                   \
-        kpColor::White/*"Raster NOT" color*/, kpColor::DarkGray/*hint color if "Raster NOT" not supported*/)
+        kpColor::Black/*1st hint color if "Raster NOT" not supported*/,    \
+        kpColor::White/*2nd hint color if "Raster NOT" not supported*/)
 
     const QRect rightRect = rightResizeLineRect ();
     if (rightRect.isValid ())

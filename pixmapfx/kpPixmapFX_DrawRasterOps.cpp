@@ -57,33 +57,64 @@
 #include <kconfiggroup.h>
 
 
+static void WidgetFillStippledRect (QWidget *widget,
+        int x, int y, int width, int height,
+        const kpColor &colorHint1, const kpColor &colorHint2)
+{
+    // (transparent color handling not yet implemented)
+    Q_ASSERT (colorHint1.isOpaque () && colorHint2.isOpaque ());
+
+
+    // LOREFACTOR: code dup with FillRectHelper() but hard to not dup
+    
+    QPainter p (widget);
+    p.setClipRect (x, y, width, height);
+    
+    const int StippleSize = 4;
+
+    for (int dy = 0; dy < height; dy += StippleSize)
+    {
+        for (int dx = 0; dx < width; dx += StippleSize)
+        {
+            const bool parity = ((dy + dx) / StippleSize) % 2;
+
+            kpColor useColor;
+            if (!parity)
+                useColor = colorHint1;
+            else
+                useColor = colorHint2;
+
+            p.fillRect (x + dx, y + dy, StippleSize, StippleSize,
+                useColor.toQColor ());
+        }
+    }
+}
+
+
 // public static
 void kpPixmapFX::drawStippledXORPolygon (QPixmap *image,
         const QPolygon &points,
         const kpColor &fcolor1, const kpColor &fcolor2,
-        const kpColor &color1Hint, const kpColor &color2Hint,
+        const kpColor &colorHint1, const kpColor &colorHint2,
         bool isFinal)
 {
-   // TODO: Need some XOR simulation.  Trolltech got rid of raster OPs.
-    //
-    //       On XRENDER, we could do a nice blue with alpha.
-    //
-    //       But without XRENDER, I vote stippled blue and yellow.  Of course,
-    //       Qt 4.2 TP had a bug and stippledness did not work.  Bug should be
-    //       fixed now though.
     (void) fcolor1; (void) fcolor2;
-    (void) color2Hint;
+    
     if (!isFinal)
     {
         kpPixmapFX::drawPolyline (image,
             points,
-            color1Hint, 1/*pen width*/);
+            colorHint1, 1/*pen width*/,
+            colorHint2);
     }
     else
     {
         kpPixmapFX::drawPolygon (image,
             points,
-            color1Hint, 1/*pen width*/);
+            colorHint1, 1/*pen width*/,
+            kpColor::Invalid/*no background*/,
+            true/*is final*/,
+            colorHint2);
     }
 }
 
@@ -92,41 +123,38 @@ void kpPixmapFX::drawStippledXORPolygon (QPixmap *image,
 void kpPixmapFX::drawStippledXORRect (QPixmap *image,
         int x, int y, int width, int height,
         const kpColor &fcolor1, const kpColor &fcolor2,
-        const kpColor &color1Hint, const kpColor &color2Hint)
+        const kpColor &colorHint1, const kpColor &colorHint2)
 {
-    // TODO: Need some XOR simulation.  Trolltech got rid of raster OPs.
-    //
-    //       On XRENDER, we could do a nice blue with alpha.
-    //
-    //       But without XRENDER, I vote stippled blue and yellow.  Of course,
-    //       Qt 4.2 TP had a bug and stippledness did not work.  Bug should be
-    //       fixed now though.
     (void) fcolor1; (void) fcolor2;
-    (void) color2Hint;
     kpPixmapFX::drawRect (image,
         x, y, width, height,
-        color1Hint);
+        colorHint1, 1/*pen width*/,
+        kpColor::Invalid/*no background*/,
+        colorHint2);
 }
 
 // public static
 void kpPixmapFX::widgetDrawStippledXORRect (QWidget *widget,
         int x, int y, int width, int height,
         const kpColor &fcolor1, const kpColor &fcolor2,
-        const kpColor &color1Hint, const kpColor &color2Hint,
+        const kpColor &colorHint1, const kpColor &colorHint2,
         const QRect &clipRect)
 {
     (void) fcolor1; (void) fcolor2;
 
+    // (transparent color handling not yet implemented)
+    Q_ASSERT (colorHint1.isOpaque () && colorHint2.isOpaque ());
+    
     QPainter p (widget);
 
     if (!clipRect.isEmpty ())
         p.setClipRect (clipRect);
 
-    p.setPen (QPen (color1Hint.toQColor (), 1/*width*/, Qt::DotLine));
-    p.setBackground (color2Hint.toQColor ());
+    p.setPen (QPen (colorHint1.toQColor (), 1/*width*/, Qt::DotLine));
+    p.setBackground (colorHint2.toQColor ());
     p.setBackgroundMode (Qt::OpaqueMode);
 
-    // TODO: code dup with DrawGenericRect() but hard to not dup
+    // LOREFACTOR: code dup with DrawGenericRect() but hard to not dup
     if (width == 1 || height == 1)
     {
         p.drawLine (x, y, x + width - 1, y + height - 1);
@@ -141,58 +169,46 @@ void kpPixmapFX::widgetDrawStippledXORRect (QWidget *widget,
 void kpPixmapFX::fillXORRect (QPixmap *image,
         int x, int y, int width, int height,
         const kpColor &fcolor,
-        const kpColor &colorHint)
+        const kpColor &colorHint1, const kpColor &colorHint2)
 {
-    // TODO: XOR simulation or at least, something less solid than current
-    //       (in case user's picture contains a lot of the color we're
-    //        drawing in).
     (void) fcolor;
     kpPixmapFX::fillRect (image,
         x, y, width, height,
-        colorHint);
+        colorHint1, colorHint2);
 }
 
 // public static
 void kpPixmapFX::widgetFillXORRect (QWidget *widget,
         int x, int y, int width, int height,
         const kpColor &fcolor,
-        const kpColor &colorHint)
+        const kpColor &colorHint1, const kpColor &colorHint2)
 {
-    // TODO: XOR simulation or at least, something less solid than current
-    //       (in case user's picture contains a lot of the color we're
-    //        drawing in).
     (void) fcolor;
-    QPainter p (widget);
-    p.fillRect (x, y, width, height, colorHint.toQColor ());
+    ::WidgetFillStippledRect (widget,
+        x, y, width, height,
+        colorHint1, colorHint2);
 }
 
 
 // public static
 void kpPixmapFX::drawNOTRect (QPixmap *image,
         int x, int y, int width, int height,
-        const kpColor &fcolor,
-        const kpColor &colorHint)
+        const kpColor &colorHint1, const kpColor &colorHint2)
 {
-    // TODO: NOT simulation or at least, something less solid than current
-    //       (in case user's picture contains a lot of the color we're
-    //        drawing in).
-    (void) fcolor;
     kpPixmapFX::drawRect (image,
         x, y, width, height,
-        colorHint);
+        colorHint1, 1/*pen width*/,
+        kpColor::Invalid/*no background*/,
+        colorHint2);
 }
 
 
 // public static
 void kpPixmapFX::widgetFillNOTRect (QWidget *widget,
         int x, int y, int width, int height,
-        const kpColor &fcolor,
-        const kpColor &colorHint)
+        const kpColor &colorHint1, const kpColor &colorHint2)
 {
-    // TODO: NOT simulation or at least, something less solid than current
-    //       (in case user's picture contains a lot of the color we're
-    //        drawing in).
-    (void) fcolor;
-    QPainter p (widget);
-    p.fillRect (x, y, width, height, colorHint.toQColor ());
+    ::WidgetFillStippledRect (widget,
+        x, y, width, height,
+        colorHint1, colorHint2);
 }

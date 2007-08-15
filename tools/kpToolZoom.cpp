@@ -57,8 +57,8 @@ static void DrawZoomRect (kpImage *destImage,
 
     kpPixmapFX::drawNOTRect (destImage,
         topLeft.x (), topLeft.y (), pack->normalizedRect.width (), pack->normalizedRect.height (),
-        kpColor::White/*foreground color*/,
-        kpColor::Yellow/*simulated NOT*/);
+        kpColor::Yellow/*1st hint color if "Raster NOT" not supported*/,
+        kpColor::Green/*2nd hint color if "Raster NOT" not supported*/);
 }
 
 

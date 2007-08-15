@@ -487,12 +487,17 @@ public:
     // and <width>.  The corners are rounded and centred at those
     // coordinates so if <width> > 1, the line is likely to extend past
     // a rectangle with those corners.
+    //
+    // If <stippleColor> is valid, it draws a stippled line alternating
+    // between long strips of <color> and short strips of <stippleColor>.
     static void drawPolyline (QPixmap *image,
         const QPolygon &points,
-        const kpColor &color, int penWidth);
+        const kpColor &color, int penWidth,
+        const kpColor &stippleColor = kpColor::Invalid);
     static void drawLine (QPixmap *image,
         int x1, int y1, int x2, int y2,
-        const kpColor &color, int penWidth);
+        const kpColor &color, int penWidth,
+        const kpColor &stippleColor = kpColor::Invalid);
     // <isFinal> = shape completed else drawing but haven't finalised.
     // If not <isFinal>, the edge that would form the closure, if the
     // shape were finalised now, is highlighted specially.  Unfortunately,
@@ -503,7 +508,8 @@ public:
         const QPolygon &points,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor = kpColor::Invalid,
-        bool isFinal = true);
+        bool isFinal = true,
+        const kpColor &fStippleColor = kpColor::Invalid);
     // Cubic Beizer.
     static void drawCurve (QPixmap *image,
         const QPoint &startPoint,
@@ -513,7 +519,8 @@ public:
 
     static void fillRect (QPixmap *image,
         int x, int y, int width, int height,
-        const kpColor &color);
+        const kpColor &color,
+        const kpColor &stippleColor = kpColor::Invalid);
 
     // Draws a rectangle / rounded rectangle / ellipse with top-left at
     // (x, y) with width <width> and height <height>.  Unlike QPainter,
@@ -527,19 +534,46 @@ public:
     static void drawRect (QPixmap *image,
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::Invalid);
+        const kpColor &bcolor = kpColor::Invalid,
+        const kpColor &fStippleColor = kpColor::Invalid);
     static void drawRoundedRect (QPixmap *image,
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::Invalid);
+        const kpColor &bcolor = kpColor::Invalid,
+        const kpColor &fStippleColor = kpColor::Invalid);
     static void drawEllipse (QPixmap *image,
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::Invalid);
+        const kpColor &bcolor = kpColor::Invalid,
+        const kpColor &fStippleColor = kpColor::Invalid);
 
 
     //
     // Drawing Using Raster Operations
+    //
+    //
+    // 1. Alpha Channel Invariant
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //
+    // The widgetDraw*() methods do not deal with pixmap data, so they safely
+    // safely disregard our pixmap invariant of not introducing an alpha
+    // channel (KP_PFX_CHECK_NO_ALPHA_CHANNEL).  This permits far
+    // more straightforward implementations.
+    //
+    //
+    // 2. Raster Operation Emulation
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Qt4 does not actually support raster operations, unlike Qt3.  So for
+    // now, these methods ignore any given colors and produce a stipple of
+    // <colorHint1> and <colorHint2>.
+    //
+    // LOTODO: For the widgetDraw*() methods (which aren't bound by the
+    //         no-alpha-channel requirement), if XRENDER is currently active,
+    //         we could do nice alpha effects instead of stippling.
+    //
+    // Should Qt support raster operations again, these methods should be
+    // changed to use them with the given colors.  <colorHint1> and
+    // <colorHint2> would then be ignored.
     //
 
 
@@ -547,58 +581,53 @@ public:
     // Simulated Stippled Raster XOR
     //
 
+    // (used for polygonal selection border)
     static void drawStippledXORPolygon (QPixmap *image,
         const QPolygon &points,
         const kpColor &fcolor1, const kpColor &fcolor2,
-        const kpColor &color1Hint, const kpColor &color2Hint,
+        const kpColor &colorHint1, const kpColor &colorHint2,
         bool isFinal = true);
 
     // Same as drawRect() but the border consists of stippled lines of
     // <fcolor1> and <fcolor2>, XOR'ed with the existing contents of the
     // pixmap.  Pen width is set to 1.
     //
-    // Qt4 does not actually support XOR, unlike Qt3.  So this function
-    // actually produces a non-XOR stipple of <color1Hint> and <color2Hint>.
-    // <fcolor1> and <fcolor2> are ignored for now.  TODO: doesn't stipple yet
-    //
-    // Should Qt support XOR again in the future, this function will be
-    // changed to a real XOR using <fcolor1> and <fcolor2>.  <color1Hint>
-    // and <color2Hint> would then be ignored.
-
-    // (used for selection borders)
+    // (used for rectangular selection borders)
     static void drawStippledXORRect (QPixmap *image,
         int x, int y, int width, int height,
         const kpColor &fcolor1, const kpColor &fcolor2,
-        const kpColor &color1Hint, const kpColor &color2Hint);
-
-    // As we are not dealing with a pixmap, the widget versions of our
-    // functions can safely disregard our pixmap invariant of not introducing
-    // an alpha channel (KP_PFX_CHECK_NO_ALPHA_CHANNEL).  This permits a far
-    // more straightforward implementation.
+        const kpColor &colorHint1, const kpColor &colorHint2);
 
     // The painter is clipped to <clipRect> if it is not empty.
     // (used for thumbnail rectangle)
+    //
+    // WARNING: Just for this method, neither <colorHint1> nor <colorHint2>
+    //          are allowed to be transparent.
     static void widgetDrawStippledXORRect (QWidget *widget,
         int x, int y, int width, int height,
         const kpColor &fcolor1, const kpColor &fcolor2,
-        const kpColor &color1Hint, const kpColor &color2Hint,
+        const kpColor &colorHint1, const kpColor &colorHint2,
         const QRect &clipRect = QRect ());
 
 
     //
-    // fillRect() version of drawStippledXORRect(), without stippling.
+    // Simulated Raster XOR Filling
     //
 
     // (used for text cursor)
     static void fillXORRect (QPixmap *image,
         int x, int y, int width, int height,
         const kpColor &fcolor,
-        const kpColor &colorHint);
+        const kpColor &colorHint1, const kpColor &colorHint2);
+
     // (used for selection resize handles)
+    //
+    // WARNING: Just for this method, neither <colorHint1> nor <colorHint2>
+    //          are allowed to be transparent.
     static void widgetFillXORRect (QWidget *widget,
         int x, int y, int width, int height,
         const kpColor &fcolor,
-        const kpColor &colorHint);
+        const kpColor &colorHint1, const kpColor &colorHint2);
 
 
     //
@@ -609,14 +638,15 @@ public:
     //  and when dragging a rectangle to zoom into with the Zoom Tool)
     static void drawNOTRect (QPixmap *image,
         int x, int y, int width, int height,
-        const kpColor &fcolor,
-        const kpColor &colorHint);
+        const kpColor &colorHint1, const kpColor &colorHint2);
 
     // (used for document resizing lines)
+    //
+    // WARNING: Just for this method, neither <colorHint1> nor <colorHint2>
+    //          are allowed to be transparent.
     static void widgetFillNOTRect (QWidget *widget,
         int x, int y, int width, int height,
-        const kpColor &fcolor,
-        const kpColor &colorHint);
+        const kpColor &colorHint1, const kpColor &colorHint2);
 };
 
 

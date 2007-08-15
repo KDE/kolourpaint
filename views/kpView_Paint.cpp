@@ -265,7 +265,8 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
                 rect.x () - docRect.x (), rect.y () - docRect.y (),
                 rect.width (), rect.height (),
                 kpColor::White/*XOR color*/,
-                kpColor::DarkGray/*hint color if XOR not supported*/);
+                kpColor::LightGray/*1st hint color if XOR not supported*/,
+                kpColor::DarkGray/*2nd hint color if XOR not supported*/);
         }
     }
 }
@@ -332,12 +333,13 @@ void kpView::paintEventDrawSelectionResizeHandles (const QRect &clipRect)
             kpPixmapFX::widgetFillXORRect (this,
                 s.x (), s.y (), s.width (), s.height (),
                 kpColor::White/*XOR color*/,
-                kpColor::LightGray/*hint color if XOR not supported*/);
+                kpColor::Aqua/*1st hint color if XOR not supported*/,
+                kpColor::Red/*2nd hint color if XOR not supported*/);
         }
         else
         {
             QPainter p (this);
-            p.fillRect (s, Qt::blue);
+            p.fillRect (s, Qt::cyan);
         }
     }
 }
