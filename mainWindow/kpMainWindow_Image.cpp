@@ -307,7 +307,7 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
             commandEnvironment ());
 
         macroCmd->addCommand (new kpToolSelectionPullFromDocumentCommand (
-            QString::null/*uninteresting child of macro cmd*/,
+            QString::null/*uninteresting child of macro cmd*/,	//krazy:exclude=nullstrassign for old broken gcc
             commandEnvironment ()));
 
         macroCmd->addCommand (cmd);

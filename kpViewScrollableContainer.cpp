@@ -328,7 +328,7 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
     if ((e->buttons () & Qt::MouseButtonMask) == 0)
     {
         m_shouldReleaseMouseButtons = false;
-        setUserMessage (QString::null);
+        setUserMessage (QString::null);	//krazy:exclude=nullstrassigment for old broken gcc
         setCursor (cursorForType (m_type));
 
         releaseKeyboard ();
@@ -379,7 +379,7 @@ void kpGrip::leaveEvent (QEvent * /*e*/)
     if (m_startPoint == KP_INVALID_POINT &&
         !m_shouldReleaseMouseButtons)
     {
-        setUserMessage (QString::null);
+        setUserMessage (QString::null);	//krazy:exclude=nullstrassigment for old broken gcc
     }
 }
 
@@ -511,11 +511,10 @@ void kpViewScrollableContainer::clearStatusMessage ()
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 1
     kDebug () << "kpViewScrollableContainer::clearStatusMessage()";
 #endif
-    m_bottomRightGrip->setUserMessage (QString::null);
-    m_bottomGrip->setUserMessage (QString::null);
-    m_rightGrip->setUserMessage (QString::null);
+    m_bottomRightGrip->setUserMessage (QString::null);	//krazy:exclude=nullstrassigment for old broken gcc
+    m_bottomGrip->setUserMessage (QString::null);	//krazy:exclude=nullstrassigment for old broken gcc
+    m_rightGrip->setUserMessage (QString::null);	//krazy:exclude=nullstrassigment for old broken gcc
 }
-
 
 // protected
 QSize kpViewScrollableContainer::newDocSize (int viewDX, int viewDY) const

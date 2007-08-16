@@ -188,7 +188,7 @@ void kpMainWindow::zoomToPre (int zoomLevel)
                   "results in imprecise editing and redraw glitches.\n"
                   "Do you really want to set to zoom level to %1%?",
                   zoomLevel),
-            QString::null/*caption*/,
+            QString::null/*caption*/,	//krazy:exclude=nullstrassign for old broken gcc
             i18n ("Set Zoom Level to %1%", zoomLevel),
             "DoNotAskAgain_ZoomLevelNotMultipleOf100") != KMessageBox::Continue)
         {

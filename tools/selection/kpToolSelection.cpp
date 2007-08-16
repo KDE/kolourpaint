@@ -546,7 +546,7 @@ void kpToolSelection::pullSelectionFromDocumentIfNeeded ()
             environ ()->flashColorSimilarityToolBarItem ();
 
         m_currentPullFromDocumentCommand = new kpToolSelectionPullFromDocumentCommand (
-            QString::null/*uninteresting child of macro cmd*/,
+            QString::null/*uninteresting child of macro cmd*/,	//krazy:exclude=nullstrassign for old broken gcc
             environ ()->commandEnvironment ());
         m_currentPullFromDocumentCommand->execute ();
     }
@@ -677,7 +677,7 @@ void kpToolSelection::move (const QPoint &thisPoint, const QRect &/*normalizedRe
     if (!m_currentMoveCommand)
     {
         m_currentMoveCommand = new kpToolSelectionMoveCommand (
-            QString::null/*uninteresting child of macro cmd*/,
+            QString::null/*uninteresting child of macro cmd*/,	//krazy:exclude=nullstrassign for old broken gcc
             environ ()->commandEnvironment ());
         m_currentMoveCommandIsSmear = false;
     }

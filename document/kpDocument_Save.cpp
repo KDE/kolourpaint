@@ -299,7 +299,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
             i18n ("A document called \"%1\" already exists.\n"
                   "Do you want to overwrite it?",
                   prettyFilenameForURL (url)),
-            QString::null,
+            QString::null,	//krazy:exclude=nullstrassign for old broken gcc
             KGuiItem(i18n ("Overwrite")));
 
         if (result != KMessageBox::Continue)

@@ -216,7 +216,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
         QString detectedMimeType =
             detectedMimeTypePtr != KMimeType::defaultMimeTypePtr () ?
                 detectedMimeTypePtr->name () :
-                QString::null;
+                QString::null;	//krazy:exclude=nullstrassign for old broken gcc
     #endif
         if (saveOptions)
             saveOptions->setMimeType (detectedMimeType);

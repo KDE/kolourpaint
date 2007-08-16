@@ -115,7 +115,7 @@ void kpSqueezedTextLabel::resizeEvent (QResizeEvent *e)
 // protected
 QString kpSqueezedTextLabel::ellipsisText () const
 {
-    return m_showEllipsis ? i18n ("...") : QString::null;
+    return m_showEllipsis ? i18n ("...") : QString::null;	//krazy:exclude=nullstrassign for old broken gcc
 }
 
 // protected
@@ -155,7 +155,7 @@ void kpSqueezedTextLabel::squeezeText ()
         #if DEBUG_KP_SQUEEZED_TEXT_LABEL && 1
             kDebug () << "\t\t\tcan't even fit \"...\" - forget it";
         #endif
-            QLabel::setText (QString::null);
+            QLabel::setText (QString::null);	//krazy:exclude=nullstrassign for old broken gcc
             return;
         }
 

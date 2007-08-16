@@ -659,11 +659,11 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 
 
     if (!d->lastCopyToURL.isEmpty ())
-        d->lastCopyToURL.setFileName (QString::null);
+        d->lastCopyToURL.setFileName (QString::null);	//krazy:exclude=nullstrassign for old broken gcc
     d->copyToFirstTime = true;
 
     if (!d->lastExportURL.isEmpty ())
-        d->lastExportURL.setFileName (QString::null);
+        d->lastExportURL.setFileName (QString::null);	//krazy:exclude=nullstrassign for old broken gcc
     d->exportFirstTime = true;
 
 
@@ -834,7 +834,7 @@ bool kpMainWindow::queryClose ()
                      i18n ("The document \"%1\" has been modified.\n"
                            "Do you want to save it?",
                            d->document->prettyFilename ()),
-                    QString::null/*caption*/,
+                    QString::null/*caption*/,	//krazy:exclude=nullstrassign for old broken gcc
                     KStandardGuiItem::save (), KStandardGuiItem::discard ());
 
     switch (result)
@@ -1020,7 +1020,7 @@ void kpMainWindow::slotUpdateCaption ()
     }
     else
     {
-        setCaption (QString::null, false);
+        setCaption (QString::null, false);	//krazy:exclude=nullstrassign for old broken gcc
     }
 }
 

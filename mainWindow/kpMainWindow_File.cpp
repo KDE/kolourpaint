@@ -435,7 +435,7 @@ void kpMainWindow::slotOpen ()
 
 
     const KUrl::List urls = askForOpenURLs (i18n ("Open Image"),
-        d->document ? d->document->url ().url () : QString::null);
+        d->document ? d->document->url ().url () : QString::null);	//krazy:exclude=nullstrassign for old broken gcc
 
     for (KUrl::List::const_iterator it = urls.begin ();
          it != urls.end ();
@@ -794,7 +794,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
             docMetaInfo,
             0/*COMPAT: port - somehow, this was broken by the selection API changes*/);
 
-    KFileDialog fd (startURL, QString::null, this,
+    KFileDialog fd (startURL, QString::null, this,	//krazy:exclude=nullstrassign for old broken gcc
                     saveOptionsWidget);
     saveOptionsWidget->setVisualParent (&fd);
     fd.setCaption (caption);
@@ -995,7 +995,7 @@ bool kpMainWindow::slotReload ()
                                "Reloading will lose all changes since you last saved it.\n"
                                "Are you sure?",
                                d->document->prettyFilename ()),
-                         QString::null/*caption*/,
+                         QString::null/*caption*/,	//krazy:exclude=nullstrassign for old broken gcc
                          KGuiItem(i18n ("&Reload")));
         }
         else
@@ -1005,7 +1005,7 @@ bool kpMainWindow::slotReload ()
                                "Reloading will lose all changes.\n"
                                "Are you sure?",
                                d->document->prettyFilename ()),
-                         QString::null/*caption*/,
+                         QString::null/*caption*/,	//krazy:exclude=nullstrassign for old broken gcc
                          KGuiItem(i18n ("&Reload")));
         }
 
@@ -1313,7 +1313,7 @@ void kpMainWindow::slotMail ()
         int result = KMessageBox::questionYesNo (this,
                         i18n ("You must save this image before sending it.\n"
                               "Do you want to save it?"),
-                        QString::null,
+                        QString::null,	//krazy:exclude=nullstrassign for old broken gcc
                         KStandardGuiItem::save (), KStandardGuiItem::cancel ());
 
         if (result == KMessageBox::Yes)
@@ -1332,12 +1332,12 @@ void kpMainWindow::slotMail ()
     }
 
     KToolInvocation::invokeMailer (
-        QString::null/*to*/,
-        QString::null/*cc*/,
-        QString::null/*bcc*/,
+        QString::null/*to*/,	//krazy:exclude=nullstrassign for old broken gcc
+        QString::null/*cc*/,	//krazy:exclude=nullstrassign for old broken gcc
+        QString::null/*bcc*/,	//krazy:exclude=nullstrassign for old broken gcc
         d->document->prettyFilename()/*subject*/,
-        QString::null/*body*/,
-        QString::null/*messageFile*/,
+        QString::null/*body*/,	//krazy:exclude=nullstrassign for old broken gcc
+        QString::null/*messageFile*/,	//krazy:exclude=nullstrassign for old broken gcc
         QStringList (d->document->url ().url ())/*attachments*/);
 }
 
@@ -1366,7 +1366,7 @@ void kpMainWindow::setAsWallpaper (bool centered)
         }
 
         int result = KMessageBox::questionYesNo (this,
-                         question, QString::null,
+                         question, QString::null,	//krazy:exclude=nullstrassign for old broken gcc
                          KStandardGuiItem::save (), KStandardGuiItem::cancel ());
 
         if (result == KMessageBox::Yes)

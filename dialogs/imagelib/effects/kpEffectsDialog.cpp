@@ -68,8 +68,8 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
                                   QWidget *parent)
     : kpTransformPreviewDialog (kpTransformPreviewDialog::Preview,
                            true/*reserve top row*/,
-                           QString::null/*caption*/,
-                           QString::null/*afterActionText (no Dimensions Group Box)*/,
+                           QString::null/*caption*/,	//krazy:exclude=nullstrassign for old broken gcc
+                           QString::null/*afterActionText (no Dimensions Group Box)*/,	//krazy:exclude=nullstrassign for old broken gcc
                            actOnSelection,
                            environ,
                            parent),
@@ -217,7 +217,7 @@ void kpEffectsDialog::selectEffect (int which)
     m_effectWidget = 0;
 
 
-    m_settingsGroupBox->setWindowTitle (QString::null);
+    m_settingsGroupBox->setWindowTitle (QString::null);	//krazy:exclude=nullstrassign for old broken gcc
 
 #define CREATE_EFFECT_WIDGET(name)  \
     m_effectWidget = new name (m_actOnSelection, m_settingsGroupBox)

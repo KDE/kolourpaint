@@ -146,7 +146,7 @@ void kpMainWindow::slotColorsOpen ()
     // Call due to dialog.
     toolEndShape ();
 
-    KFileDialog fd (colorCells ()->url (), QString::null/*filter*/, this);
+    KFileDialog fd (colorCells ()->url (), QString::null/*filter*/, this);	//krazy:exclude=nullstrassign for old broken gcc
     fd.setCaption (i18n ("Open Colors"));
     fd.setOperationMode (KFileDialog::Opening);
 
@@ -167,7 +167,7 @@ void kpMainWindow::slotColorsSaveAs ()
     // Call due to dialog.
     toolEndShape ();
 
-    KFileDialog fd (colorCells ()->url (), QString::null/*filter*/, this);
+    KFileDialog fd (colorCells ()->url (), QString::null/*filter*/, this);	//krazy:exclude=nullstrassign for old broken gcc
     fd.setCaption (i18n ("Save Colors As"));
     fd.setOperationMode (KFileDialog::Saving);
 

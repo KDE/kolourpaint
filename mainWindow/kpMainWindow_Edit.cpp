@@ -454,7 +454,7 @@ void kpMainWindow::pasteText (const QString &text,
     for (int i = 0; i < (int) text.length (); i++)
     {
         if (text [i] == '\n')
-            textLines.push_back (QString::null);
+            textLines.push_back (QString::null);	//krazy:exclude=nullstrassign for old broken gcc
         else
             textLines [textLines.size () - 1].append (text [i]);
     }
@@ -477,7 +477,7 @@ void kpMainWindow::pasteText (const QString &text,
             {
                 macroCmd->addCommand (
                     new kpToolTextEnterCommand (
-                        QString::null/*uninteresting child of macroCmd*/,
+                        QString::null/*uninteresting child of macroCmd*/,	//krazy:exclude=nullstrassign for old broken gcc
                         d->viewManager->textCursorRow (),
                         d->viewManager->textCursorCol (),
                         kpToolTextEnterCommand::AddEnterNow,
@@ -486,7 +486,7 @@ void kpMainWindow::pasteText (const QString &text,
 
             macroCmd->addCommand (
                 new kpToolTextInsertCommand (
-                    QString::null/*uninteresting child of macroCmd*/,
+                    QString::null/*uninteresting child of macroCmd*/,	//krazy:exclude=nullstrassign for old broken gcc
                     d->viewManager->textCursorRow (),
                     d->viewManager->textCursorCol (),
                     textLines [i],

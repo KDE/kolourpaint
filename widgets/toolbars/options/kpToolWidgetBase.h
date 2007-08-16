@@ -54,7 +54,7 @@ public:
     virtual ~kpToolWidgetBase ();
 
 public:
-    void addOption (const QPixmap &pixmap, const QString &toolTip = QString::null);
+    void addOption (const QPixmap &pixmap, const QString &toolTip = QString::null);	//krazy:exclude=nullstrassign for old broken gcc
     void startNewOptionRow ();
 
     // Call this at the end of your constructor.

@@ -58,7 +58,7 @@ void kpMainWindow::addPermanentStatusBarItem (int id, int maxTextLen)
 
     // Permanent --> place on the right
     sb->insertPermanentFixedItem (textWithMaxLen, id);
-    sb->changeItem (QString::null, id);
+    sb->changeItem (QString::null, id);	//krazy:exclude=nullstrassign for old broken gcc
 }
 
 // private
@@ -69,7 +69,7 @@ void kpMainWindow::createStatusBar ()
     // 9999 pixels "ought to be enough for anybody"
     const int maxDimenLength = 4;
 
-    //sb->insertItem (QString::null, StatusBarItemMessage, 1/*stretch*/);
+    //sb->insertItem (QString::null, StatusBarItemMessage, 1/*stretch*/);	//krazy:exclude=nullstrassign for old broken gcc
     //sb->setItemAlignment (StatusBarItemMessage, Qt::AlignLeft | Qt::AlignVCenter);
 
     d->statusBarMessageLabel = new kpSqueezedTextLabel (sb);
@@ -138,7 +138,7 @@ void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
 
     if (startPoint == KP_INVALID_POINT)
     {
-        statusBar ()->changeItem (QString::null, StatusBarItemShapePoints);
+        statusBar ()->changeItem (QString::null, StatusBarItemShapePoints);	//krazy:exclude=nullstrassign for old broken gcc
     }
     else if (endPoint == KP_INVALID_POINT)
     {
@@ -186,7 +186,7 @@ void kpMainWindow::setStatusBarShapeSize (const QSize &size)
 
     if (size == KP_INVALID_SIZE)
     {
-        statusBar ()->changeItem (QString::null, StatusBarItemShapeSize);
+        statusBar ()->changeItem (QString::null, StatusBarItemShapeSize);	//krazy:exclude=nullstrassign for old broken gcc
     }
     else
     {
@@ -215,7 +215,7 @@ void kpMainWindow::setStatusBarDocSize (const QSize &size)
 
     if (size == KP_INVALID_SIZE)
     {
-        statusBar ()->changeItem (QString::null, StatusBarItemDocSize);
+        statusBar ()->changeItem (QString::null, StatusBarItemDocSize);	//krazy:exclude=nullstrassign for old broken gcc
     }
     else
     {
@@ -241,7 +241,7 @@ void kpMainWindow::setStatusBarDocDepth (int depth)
 
     if (depth <= 0)
     {
-        statusBar ()->changeItem (QString::null, StatusBarItemDocDepth);
+        statusBar ()->changeItem (QString::null, StatusBarItemDocDepth);	//krazy:exclude=nullstrassign for old broken gcc
     }
     else
     {
@@ -265,7 +265,7 @@ void kpMainWindow::setStatusBarZoom (int zoom)
 
     if (zoom <= 0)
     {
-        statusBar ()->changeItem (QString::null, StatusBarItemZoom);
+        statusBar ()->changeItem (QString::null, StatusBarItemZoom);	//krazy:exclude=nullstrassign for old broken gcc
     }
     else
     {

@@ -127,7 +127,7 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
 {
     const QString usedPrefix = !prefix.isEmpty () ?
                                    prefix + QLatin1String (":") :
-                                   QString::null;
+                                   QString::null;	//krazy:exclude=nullstrassign for old broken gcc
 
     kDebug () << usedPrefix;
 
