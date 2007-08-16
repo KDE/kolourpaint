@@ -85,7 +85,7 @@ kpEffectBlurSharpenWidget::~kpEffectBlurSharpenWidget ()
 // public virtual [base kpEffectWidgetBase]
 QString kpEffectBlurSharpenWidget::caption () const
 {
-    return QString::null;
+    return QString();
 }
 
 

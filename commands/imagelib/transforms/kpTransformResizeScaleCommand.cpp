@@ -130,7 +130,7 @@ QString kpTransformResizeScaleCommand::name () const
         }
     }
 
-    return QString::null;
+    return QString();
 }
 
 // public virtual [base kpCommand]

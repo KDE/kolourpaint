@@ -118,7 +118,7 @@ void kpDocumentSaveOptions::printDebug (const QString &prefix) const
 {
     const QString usedPrefix = !prefix.isEmpty () ?
                                    prefix + QLatin1String (": ") :
-                                   QString::null;
+                                   QString();
 
     kDebug () << usedPrefix
                << "mimeType=" << mimeType ()
@@ -145,7 +145,7 @@ void kpDocumentSaveOptions::setMimeType (const QString &mimeType)
 // public static
 QString kpDocumentSaveOptions::invalidMimeType ()
 {
-    return QString::null;
+    return QString();
 }
 
 // public static

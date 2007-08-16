@@ -142,7 +142,7 @@ QString kpToolWidgetFillStyle::fillStyleName (FillStyle fs) const
         return i18n ("Fill with Foreground Color");
         break;
     default:
-        return QString::null;
+        return QString();
         break;
     }
 }

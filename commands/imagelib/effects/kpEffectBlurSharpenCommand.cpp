@@ -59,7 +59,7 @@ QString kpEffectBlurSharpenCommand::nameForType (kpEffectBlurSharpen::Type type)
     else if (type == kpEffectBlurSharpen::Sharpen)
         return i18n ("Sharpen");
     else
-        return QString::null;
+        return QString();
 }
 
 

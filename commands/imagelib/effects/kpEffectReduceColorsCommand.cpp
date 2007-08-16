@@ -78,7 +78,7 @@ QString kpEffectReduceColorsCommand::commandName (int depth, int dither) const
     }
     else
     {
-        return QString::null;
+        return QString();
     }
 }
 

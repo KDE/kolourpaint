@@ -90,7 +90,7 @@ kpEffectHSVWidget::~kpEffectHSVWidget ()
 QString kpEffectHSVWidget::caption () const
 {
     // TODO: Why doesn't this have a caption?  Ditto for the other effects.
-    return QString::null;
+    return QString();
 }
 
 

@@ -46,7 +46,7 @@ kpEffectWidgetBase::~kpEffectWidgetBase ()
 // public
 QString kpEffectWidgetBase::caption () const
 {
-    return QString::null;
+    return QString();
 }
 
 

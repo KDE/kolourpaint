@@ -184,7 +184,7 @@ QString kpToolWidgetBrush::brushName (int shape, int whichSize) const
     }
     
     if (shapeName.isEmpty ())
-        return QString::null;
+        return QString();
     
     return i18n ("%1x%2 %3", s, s, shapeName);
 }

@@ -192,7 +192,7 @@ void kpTextSelection::setTextLines (const QList <QString> &textLines_)
 QString kpTextSelection::TextForTextLines (const QList <QString> &textLines)
 {
     if (textLines.isEmpty ())
-        return QString::null;
+        return QString();
 
     QString bigString = textLines [0];
 

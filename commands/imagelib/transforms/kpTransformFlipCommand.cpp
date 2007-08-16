@@ -77,7 +77,7 @@ QString kpTransformFlipCommand::name () const
     else
     {
         kError () << "kpTransformFlipCommand::name() not asked to flip" << endl;
-        return QString::null;
+        return QString();
     }
 #endif
 

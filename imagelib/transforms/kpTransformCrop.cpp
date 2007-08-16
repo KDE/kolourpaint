@@ -77,7 +77,7 @@ public:
     virtual ~kpTransformCropSetImageCommand ();
 
     /* (uninteresting child of macro cmd) */
-    virtual QString name () const { return QString::null; }
+    virtual QString name () const { return QString::null; }	//krazy:exclusion=nullstrassign for old broken gcc
 
     virtual kpCommandSize::SizeType size () const
     {
@@ -314,7 +314,7 @@ kpTransformCropCommand::kpTransformCropCommand (kpCommandEnvironment *environ)
     #endif
         kpToolSelectionMoveCommand *moveCmd =
             new kpToolSelectionMoveCommand (
-                QString::null/*uninteresting child of macro cmd*/,
+                QString::null/*uninteresting child of macro cmd*/,	//krazy:exclusion=nullstrassign for old broken gcc
                 environ);
         moveCmd->moveTo (QPoint (0, 0), true/*move on exec, not now*/);
         moveCmd->finalize ();
@@ -332,7 +332,7 @@ kpTransformCropCommand::kpTransformCropCommand (kpCommandEnvironment *environ)
         kpAbstractImageSelection *newSel = selectionBorderAndMovedTo0_0 (*sel);
         addCommand (
             new kpToolSelectionCreateCommand (
-                QString::null/*uninteresting child of macro cmd*/,
+                QString::null/*uninteresting child of macro cmd*/,	//krazy:exclusion=nullstrassign for old broken gcc
                 *newSel,
                 environ ()));
         delete newSel;
