@@ -115,7 +115,7 @@ void kpSqueezedTextLabel::resizeEvent (QResizeEvent *e)
 // protected
 QString kpSqueezedTextLabel::ellipsisText () const
 {
-    return m_showEllipsis ? i18n ("...") : QString::null;	//krazy:exclude=nullstrassign for old broken gcc
+    return m_showEllipsis ? i18n ("...") : QString();
 }
 
 // protected

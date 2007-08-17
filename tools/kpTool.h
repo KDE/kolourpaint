@@ -420,7 +420,7 @@ public:
     QString cancelUserMessage () const;
 
     QString userMessage () const;
-    void setUserMessage (const QString &userMessage = QString::null);	//krazy:exclude=nullstrassign for old broken gcc
+    void setUserMessage (const QString &userMessage = QString());
 
     QPoint userShapeStartPoint () const;
     QPoint userShapeEndPoint () const;

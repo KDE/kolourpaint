@@ -68,8 +68,8 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
                                   QWidget *parent)
     : kpTransformPreviewDialog (kpTransformPreviewDialog::Preview,
                            true/*reserve top row*/,
-                           QString::null/*caption*/,	//krazy:exclude=nullstrassign for old broken gcc
-                           QString::null/*afterActionText (no Dimensions Group Box)*/,	//krazy:exclude=nullstrassign for old broken gcc
+                           QString()/*caption*/,
+                           QString()/*afterActionText (no Dimensions Group Box)*/,
                            actOnSelection,
                            environ,
                            parent),

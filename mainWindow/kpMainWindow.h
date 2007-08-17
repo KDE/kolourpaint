@@ -632,7 +632,7 @@ private:
     void createStatusBar ();
 
 private slots:
-    void setStatusBarMessage (const QString &message = QString::null);	//krazy:exclude=nullstrassign for old broken gcc
+    void setStatusBarMessage (const QString &message = QString());
     void setStatusBarShapePoints (const QPoint &startPoint = KP_INVALID_POINT,
                                   const QPoint &endPoint = KP_INVALID_POINT);
     void setStatusBarShapeSize (const QSize &size = KP_INVALID_SIZE);

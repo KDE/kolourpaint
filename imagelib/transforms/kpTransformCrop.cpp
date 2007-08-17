@@ -77,7 +77,7 @@ public:
     virtual ~kpTransformCropSetImageCommand ();
 
     /* (uninteresting child of macro cmd) */
-    virtual QString name () const { return QString::null; }	//krazy:exclusion=nullstrassign for old broken gcc
+    virtual QString name () const { return QString(); }
 
     virtual kpCommandSize::SizeType size () const
     {
