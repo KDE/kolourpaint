@@ -31,12 +31,13 @@
 
 #include <kpEffectFlatten.h>
 
+#include <blitz.h>
+
 #include <qimage.h>
 #include <qpixmap.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kimageeffect.h>
 
 #include <kpPixmapFX.h>
 
@@ -69,7 +70,7 @@ void kpEffectFlatten::applyEffect (QImage *destImagePtr,
     if (!destImagePtr)
         return;
 
-    KImageEffect::flatten (*destImagePtr/*ref*/, color1, color2);
+    Blitz::flatten (*destImagePtr/*ref*/, color1, color2);
 }
 
 // public static
