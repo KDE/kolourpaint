@@ -246,7 +246,7 @@ void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*
     if (!d->currentMoveCommand)
     {
         d->currentMoveCommand = new kpToolSelectionMoveCommand (
-            QString::null/*uninteresting child of macro cmd*/,
+            QString::null/*uninteresting child of macro cmd*/,	//krazy:exclude=nullstrassign for old broken gcc
             environ ()->commandEnvironment ());
         d->currentMoveCommandIsSmear = false;
     }
