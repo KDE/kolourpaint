@@ -115,6 +115,13 @@ QPoint kpTool::currentViewPoint () const
 
 
 // protected
+QRect kpTool::normalizedRect () const
+{
+    return kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint));
+}
+
+
+// protected
 QPoint kpTool::lastPoint () const
 {
     return d->lastPoint;
@@ -180,7 +187,7 @@ void kpTool::endInternal ()
     {
         // before we can stop using the tool, we must stop the current drawing operation (if any)
         if (hasBegunShape ())
-            endShapeInternal (d->currentPoint, kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
+            endShapeInternal (d->currentPoint, normalizedRect ());
 
         // call user virtual func
         end ();
@@ -274,8 +281,7 @@ void kpTool::draw (const QPoint &, const QPoint &, const QRect &)
 // private
 void kpTool::drawInternal ()
 {
-    draw (d->currentPoint, d->lastPoint,
-          kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
+    draw (d->currentPoint, d->lastPoint, normalizedRect ());
 }
 
 

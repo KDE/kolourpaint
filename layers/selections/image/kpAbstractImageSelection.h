@@ -141,10 +141,6 @@ public:
     //       space saving hack.
     kpCommandSize::SizeType sizeWithoutImage () const;
 
-public:
-    // Returns whether there's a non-null base image.
-    virtual bool hasContent () const;
-
 
 //
 // Dimensions
@@ -200,8 +196,14 @@ public:
 
 
 //
-// Base Image
+// Content - Base Image
 //
+
+public:
+    // Returns whether there's a non-null base image.
+    virtual bool hasContent () const;
+
+    virtual void deleteContent ();
 
 public:
     kpImage baseImage () const;

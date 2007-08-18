@@ -25,45 +25,44 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_TOOL_RECT_SELECTION 1
+#define DEBUG_KP_TOOL_ELLIPTICAL_SELECTION 1
 
-#include <kpToolRectSelection.h>
+
+#include <kpToolEllipticalSelection.h>
 
 #include <klocale.h>
 
 #include <kpDocument.h>
-#include <kpRectangularImageSelection.h>
+#include <kpEllipticalImageSelection.h>
 #include <kpToolSelectionEnvironment.h>
 
 
-kpToolRectSelection::kpToolRectSelection (kpToolSelectionEnvironment *environ,
+kpToolEllipticalSelection::kpToolEllipticalSelection (kpToolSelectionEnvironment *environ,
         QObject *parent)
-    : kpToolSelection (Rectangle,
-                       i18n ("Selection (Rectangular)"),
-                       i18n ("Makes a rectangular selection"),
-                       Qt::Key_S,
+    : kpAbstractImageSelectionTool (i18n ("Selection (Elliptical)"),
+                       i18n ("Makes an elliptical or circular selection"),
+                       Qt::Key_I,
                        environ, parent,
-                       "tool_rect_selection")
+                       "tool_elliptical_selection")
 {
 }
 
-kpToolRectSelection::~kpToolRectSelection ()
+kpToolEllipticalSelection::~kpToolEllipticalSelection ()
 {
 }
 
 
-// protected virtual [base kpToolSelection]
-bool kpToolRectSelection::createMoreSelectionAndUpdateStatusBar (
+// protected virtual [base kpAbstractSelectionTool]
+bool kpToolEllipticalSelection::drawCreateMoreSelectionAndUpdateStatusBar (
         bool dragHasBegun,
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &normalizedRect)
 {
     // Prevent unintentional creation of 1-pixel selections.
-    // REFACTOR: This line is duplicated code with other tools.
     if (!dragHasBegun && accidentalDragAdjustedPoint == startPoint ())
     {
-    #if DEBUG_KP_TOOL_RECT_SELECTION && 1
-        kDebug () << "\tnon-text NOP - return";
+    #if DEBUG_KP_TOOL_ELLIPTICAL_SELECTION && 1
+        kDebug () << "\tnon-text NOP - return" << endl;
     #endif
         setUserShapePoints (accidentalDragAdjustedPoint);
         return false;
@@ -71,15 +70,12 @@ bool kpToolRectSelection::createMoreSelectionAndUpdateStatusBar (
 
     Q_ASSERT (accidentalDragAdjustedPoint == currentPoint ());
 
-    const QRect usefulRect = normalizedRect.intersect (document ()->rect ());
     document ()->setSelection (
-        kpRectangularImageSelection (
-            usefulRect,
+        kpEllipticalImageSelection (
+            normalizedRect,
             environ ()->imageSelectionTransparency ()));
 
-    setUserShapePoints (startPoint (),
-        QPoint (qMax (0, qMin (currentPoint ().x (), document ()->width () - 1)),
-                qMax (0, qMin (currentPoint ().y (), document ()->height () - 1))));
+    setUserShapePoints (startPoint (), currentPoint ());
 
     return true;
 }

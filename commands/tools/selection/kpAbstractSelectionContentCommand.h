@@ -26,34 +26,46 @@
 */
 
 
-#ifndef kpToolSelectionPullFromDocumentCommand_H
-#define kpToolSelectionPullFromDocumentCommand_H
+#ifndef kpAbstractSelectionContentCommand_H
+#define kpAbstractSelectionContentCommand_H
 
 
-#include <kpColor.h>
-#include <kpAbstractSelectionContentCommand.h>
+#include <kpNamedCommand.h>
 
 
-class kpAbstractImageSelection;
-
-
-class kpToolSelectionPullFromDocumentCommand :
-        public kpAbstractSelectionContentCommand
+// Converts a selection border to a selection with content.
+// This must be executed before any manipulations can be made
+// to a selection.
+//
+// Its construction and execution always follows that of a
+// kpToolSelectionCreateCommand, which must be given a selection with
+// no content.
+//
+// It's always the first subcommand of a kpMacroCommand, with the following
+// subcommands being whatever the selection operation is (e.g. movement,
+// resizing).
+class kpAbstractSelectionContentCommand : public kpNamedCommand
 {
+// LOREFACTOR: Pull up more methods into here?  Looking at the code, not
+//             much could be dragged up without unnecessarily complicated
+//             abstraction.
 public:
-    kpToolSelectionPullFromDocumentCommand (
-        const kpAbstractImageSelection &originalSelBorder,
-        const kpColor &backgroundColor,
+    // <originalSelBorder> must be a border i.e. have no content.
+    kpAbstractSelectionContentCommand (
+        const kpAbstractSelection &originalSelBorder,
         const QString &name,
         kpCommandEnvironment *environ);
-    virtual ~kpToolSelectionPullFromDocumentCommand ();
+    virtual ~kpAbstractSelectionContentCommand ();
 
-    virtual void execute ();
-    virtual void unexecute ();
+    virtual kpCommandSize::SizeType size () const;
+
+    // Note: Returned pointer is only valid for as long as this command is
+    //       alive.
+    const kpAbstractSelection *originalSelection () const;
 
 private:
-    kpColor m_backgroundColor;
+    struct kpAbstractSelectionContentCommandPrivate * const d;
 };
 
 
-#endif  // kpToolSelectionPullFromDocumentCommand_H
+#endif  // kpAbstractSelectionContentCommand_H

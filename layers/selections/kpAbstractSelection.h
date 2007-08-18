@@ -142,9 +142,6 @@ public:
     // e.g. return false for an elliptical selection.
     virtual bool isRectangular () const = 0;
 
-    // i.e. Has an image or text - not just a border.
-    virtual bool hasContent () const = 0;
-
 
 //
 // Position & Dimensions
@@ -196,6 +193,19 @@ public:
     //  kpView::onSelectionResizeHandle())
     virtual bool contains (const QPoint &point) const = 0;
     bool contains (int x, int y) const;
+
+
+//
+// Content
+//
+
+public:
+    // i.e. Has an image or text - not just a border.
+    virtual bool hasContent () const = 0;
+
+    // Deletes the content, changing the selection back into a border.
+    // If the selection has no content, it does nothing.
+    virtual void deleteContent () = 0;
 
 
 //

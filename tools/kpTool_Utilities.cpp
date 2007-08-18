@@ -172,7 +172,7 @@ void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_,
     {
         if (d->currentPoint != KP_INVALID_POINT)
         {
-            draw (d->currentPoint, d->lastPoint, kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
+            draw (d->currentPoint, d->lastPoint, normalizedRect ());
             d->lastPoint = d->currentPoint;
         }
     }

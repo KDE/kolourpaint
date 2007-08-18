@@ -98,7 +98,7 @@ void kpTool::focusOutEvent (QFocusEvent *)
 #endif
 
     if (d->beganDraw)
-        endDrawInternal (d->currentPoint, kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
+        endDrawInternal (d->currentPoint, normalizedRect ());
 }
 
 

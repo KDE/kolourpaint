@@ -139,21 +139,6 @@ public:
 public:
     virtual bool isRectangular () const;
 
-    // (see class header comment)
-    virtual bool hasContent () const;
-
-public:
-    kpTextStyle textStyle () const;
-    void setTextStyle (const kpTextStyle &textStyle);
-
-    QList <QString> textLines () const;
-    void setTextLines (const QList <QString> &textLines);
-
-    static QString TextForTextLines (const QList <QString> &textLines);
-    // Returns textLines() as one long newline-separated string.
-    // If the last text line is not empty, there is no trailing newline.
-    QString text () const;
-
 
 //
 // Position & Dimensions
@@ -210,6 +195,35 @@ public:
 public:
     bool pointIsInTextBorderArea (const QPoint &point) const;
     bool pointIsInTextArea (const QPoint &point) const;
+
+
+//
+// Content
+//
+
+public:
+    // (see class header comment)
+    virtual bool hasContent () const;
+
+    virtual void deleteContent ();
+
+public:
+    QList <QString> textLines () const;
+    void setTextLines (const QList <QString> &textLines);
+
+    static QString TextForTextLines (const QList <QString> &textLines);
+    // Returns textLines() as one long newline-separated string.
+    // If the last text line is not empty, there is no trailing newline.
+    QString text () const;
+
+
+//
+// Text Style
+//
+
+public:
+    kpTextStyle textStyle () const;
+    void setTextStyle (const kpTextStyle &textStyle);
 
 
 //

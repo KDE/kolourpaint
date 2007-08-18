@@ -26,32 +26,34 @@
 */
 
 
-#ifndef KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
-#define KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
+#ifndef kpToolTextGiveContentCommand_H
+#define kpToolTextGiveContentCommand_H
 
 
-#include <kpToolWidgetBase.h>
+#include <kpAbstractSelectionContentCommand.h>
 
 
-class kpToolWidgetOpaqueOrTransparent : public kpToolWidgetBase
+class kpTextSelection;
+
+
+// Converts a text border (no text lines) to a text selection with 1 empty
+// text line.  This must be executed before any manipulations can be made
+// to a text selection.
+//
+// Text analogue of kpToolSelectionPullFromDocumentCommand.
+class kpToolTextGiveContentCommand :
+        public kpAbstractSelectionContentCommand
 {
-Q_OBJECT
-
 public:
-    kpToolWidgetOpaqueOrTransparent (QWidget *parent, const QString &name);
-    virtual ~kpToolWidgetOpaqueOrTransparent ();
+    kpToolTextGiveContentCommand (
+        const kpTextSelection &originalSelBorder,
+        const QString &name,
+        kpCommandEnvironment *environ);
+    virtual ~kpToolTextGiveContentCommand ();
 
-    bool isOpaque () const;
-    bool isTransparent () const;
-    void setOpaque (bool yes = true);
-    void setTransparent (bool yes = true);
-
-signals:
-    void isOpaqueChanged (bool isOpaque);
-
-protected slots:
-    virtual bool setSelected (int row, int col, bool saveAsDefault);
+    virtual void execute ();
+    virtual void unexecute ();
 };
 
 
-#endif  // KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
+#endif  // kpToolTextGiveContentCommand_H

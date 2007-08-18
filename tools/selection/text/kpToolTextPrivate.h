@@ -26,32 +26,31 @@
 */
 
 
-#ifndef KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
-#define KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
+#ifndef kpToolTextPrivate_H
+#define kpToolTextPrivate_H
 
 
-#include <kpToolWidgetBase.h>
+#include <QString>
 
 
-class kpToolWidgetOpaqueOrTransparent : public kpToolWidgetBase
+class kpToolTextInsertCommand;
+class kpToolTextEnterCommand;
+class kpToolTextBackspaceCommand;
+class kpToolTextDeleteCommand;
+
+
+struct kpToolTextPrivate
 {
-Q_OBJECT
+    kpToolTextInsertCommand *insertCommand;
+    kpToolTextEnterCommand *enterCommand;
+    kpToolTextBackspaceCommand *backspaceCommand, *backspaceWordCommand;
+    kpToolTextDeleteCommand *deleteCommand, *deleteWordCommand;
 
-public:
-    kpToolWidgetOpaqueOrTransparent (QWidget *parent, const QString &name);
-    virtual ~kpToolWidgetOpaqueOrTransparent ();
-
-    bool isOpaque () const;
-    bool isTransparent () const;
-    void setOpaque (bool yes = true);
-    void setTransparent (bool yes = true);
-
-signals:
-    void isOpaqueChanged (bool isOpaque);
-
-protected slots:
-    virtual bool setSelected (int row, int col, bool saveAsDefault);
+    bool isIMStarted;
+    int IMStartCursorRow;
+    int IMStartCursorCol;
+    QString IMPreeditStr;
 };
 
 
-#endif  // KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
+#endif  // kpToolTextPrivate_H

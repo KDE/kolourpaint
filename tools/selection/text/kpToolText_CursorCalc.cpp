@@ -52,7 +52,7 @@
 
 
 // protected static
-bool kpToolText::cursorIsOnWordChar (const QList <QString> &textLines,
+bool kpToolText::CursorIsOnWordChar (const QList <QString> &textLines,
     int cursorRow, int cursorCol)
 {
     return (cursorRow >= 0 && cursorRow < (int) textLines.size () &&
@@ -62,14 +62,14 @@ bool kpToolText::cursorIsOnWordChar (const QList <QString> &textLines,
 
 
 // protected static
-bool kpToolText::cursorIsAtStart (const QList <QString> &,
+bool kpToolText::CursorIsAtStart (const QList <QString> &,
     int cursorRow, int cursorCol)
 {
     return (cursorRow == 0 && cursorCol == 0);
 }
 
 // protected static
-bool kpToolText::cursorIsAtEnd (const QList <QString> &textLines,
+bool kpToolText::CursorIsAtEnd (const QList <QString> &textLines,
     int cursorRow, int cursorCol)
 {
     return (cursorRow == (int) textLines.size () - 1 &&
@@ -78,7 +78,7 @@ bool kpToolText::cursorIsAtEnd (const QList <QString> &textLines,
 
 
 // protected static
-void kpToolText::moveCursorLeft (const QList <QString> &textLines,
+void kpToolText::MoveCursorLeft (const QList <QString> &textLines,
     int *cursorRow, int *cursorCol)
 {
     (*cursorCol)--;
@@ -97,7 +97,7 @@ void kpToolText::moveCursorLeft (const QList <QString> &textLines,
 }
 
 // protected static
-void kpToolText::moveCursorRight (const QList <QString> &textLines,
+void kpToolText::MoveCursorRight (const QList <QString> &textLines,
     int *cursorRow, int *cursorCol)
 {
     (*cursorCol)++;
@@ -116,20 +116,20 @@ void kpToolText::moveCursorRight (const QList <QString> &textLines,
 }
 
 
-#define IS_ON_SPACE_OR_EOL() !cursorIsOnWordChar (textLines, *cursorRow, *cursorCol)
+#define IS_ON_SPACE_OR_EOL() !CursorIsOnWordChar (textLines, *cursorRow, *cursorCol)
 
 // protected static
-int kpToolText::moveCursorToWordStart (const QList <QString> &textLines,
+int kpToolText::MoveCursorToWordStart (const QList <QString> &textLines,
     int *cursorRow, int *cursorCol)
 {
     int numMoves = 0;
 
 #define IS_ON_ANCHOR()                                            \
-    (cursorIsOnWordChar (textLines, *cursorRow, *cursorCol) &&    \
+    (CursorIsOnWordChar (textLines, *cursorRow, *cursorCol) &&    \
          (cursorCol == 0 ||                                       \
-             !cursorIsOnWordChar (textLines, *cursorRow, *cursorCol - 1)))
+             !CursorIsOnWordChar (textLines, *cursorRow, *cursorCol - 1)))
 #define MOVE_CURSOR_LEFT()    \
-    (moveCursorLeft (textLines, cursorRow, cursorCol), ++numMoves)
+    (MoveCursorLeft (textLines, cursorRow, cursorCol), ++numMoves)
 
 
     // (these comments will exclude the row=0,col=0 boundary case)
@@ -162,14 +162,14 @@ int kpToolText::moveCursorToWordStart (const QList <QString> &textLines,
 }
 
 // protected static
-int kpToolText::moveCursorToNextWordStart (const QList <QString> &textLines,
+int kpToolText::MoveCursorToNextWordStart (const QList <QString> &textLines,
     int *cursorRow, int *cursorCol)
 {
     int numMoves = 0;
 
-#define IS_AT_END() cursorIsAtEnd (textLines, *cursorRow, *cursorCol)
+#define IS_AT_END() CursorIsAtEnd (textLines, *cursorRow, *cursorCol)
 #define MOVE_CURSOR_RIGHT()    \
-    (moveCursorRight (textLines, cursorRow, cursorCol), ++numMoves)
+    (MoveCursorRight (textLines, cursorRow, cursorCol), ++numMoves)
 
 
     // (these comments will exclude the last row,end col boundary case)

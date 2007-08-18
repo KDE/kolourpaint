@@ -29,42 +29,40 @@
 #define DEBUG_KP_TOOL_SELECTION 0
 
 
-#include <kpToolSelectionPullFromDocumentCommand.h>
+#include <kpToolTextGiveContentCommand.h>
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpAbstractImageSelection.h>
 #include <kpCommandEnvironment.h>
 #include <kpDocument.h>
+#include <kpTextSelection.h>
 #include <kpViewManager.h>
 
 
-kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (
-        const kpAbstractImageSelection &originalSelBorder,
-        const kpColor &backgroundColor,
+kpToolTextGiveContentCommand::kpToolTextGiveContentCommand (
+        const kpTextSelection &originalSelBorder,
         const QString &name,
         kpCommandEnvironment *environ)
-    : kpAbstractSelectionContentCommand (originalSelBorder, name, environ),
-      m_backgroundColor (backgroundColor)
+    : kpAbstractSelectionContentCommand (originalSelBorder, name, environ)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolSelectionPullFromDocumentCommand::<ctor>() environ="
+    kDebug () << "kpToolTextGiveContentCommand::<ctor>() environ="
                << environ
                << endl;
 #endif
 }
 
-kpToolSelectionPullFromDocumentCommand::~kpToolSelectionPullFromDocumentCommand ()
+kpToolTextGiveContentCommand::~kpToolTextGiveContentCommand ()
 {
 }
 
 
 // public virtual [base kpCommand]
-void kpToolSelectionPullFromDocumentCommand::execute ()
+void kpToolTextGiveContentCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolSelectionPullFromDocumentCommand::execute()";
+    kDebug () << "kpToolTextGiveContentCommand::execute()" << endl;
 #endif
 
     kpDocument *doc = document ();
@@ -80,7 +78,7 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
         //
 
         // The previously executed command is required to have been a
-        // kpToolSelectionCreateCommand, which must have been given an image
+        // kpToolSelectionCreateCommand, which must have been given a text
         // selection with no content.
         //
         // However, there is a tricky case.  Suppose we are called for the first
@@ -95,52 +93,50 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
         //
         // This assertion covers all 3 possibilities:
         //
-        // 1. First call: image selection with no content
+        // 1. First call: text selection with no content
         // 2. Later calls:
-        //    a) no image selection (due to deselection)
-        //    b) image selection with no content, at an arbitrary location
-        Q_ASSERT (!imageSelection () || !imageSelection ()->hasContent ());
+        //    a) no text selection (due to deselection)
+        //    b) text selection with no content, at an arbitrary location
+        Q_ASSERT (!textSelection () || !textSelection ()->hasContent ());
 
-        const kpAbstractImageSelection *originalImageSel =
-            static_cast <const kpAbstractImageSelection *> (originalSelection ());
-        if (originalImageSel->transparency () !=
-            environ ()->imageSelectionTransparency ())
-        {
-            environ ()->setImageSelectionTransparency (originalImageSel->transparency ());
-        }
+        const kpTextSelection *originalTextSel =
+            static_cast <const kpTextSelection *> (originalSelection ());
+        if (originalTextSel->textStyle () != environ ()->textStyle ())
+            environ ()->setTextStyle (originalTextSel->textStyle ());
 
         doc->setSelection (*originalSelection ());
 
 
         //
-        // Add content
+        // Add Content
         //
 
-        doc->imageSelectionPullFromDocument (m_backgroundColor);
+        QList <QString> listOfOneEmptyString;
+        listOfOneEmptyString.append (QString ());
+        textSelection ()->setTextLines (listOfOneEmptyString);
     }
     vm->restoreQueueUpdates ();
 }
 
 // public virtual [base kpCommand]
-void kpToolSelectionPullFromDocumentCommand::unexecute ()
+void kpToolTextGiveContentCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolSelectionPullFromDocumentCommand::unexecute()";
+    kDebug () << "kpToolTextGiveContentCommand::unexecute()" << endl;
 #endif
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
-    // Must have selection image content.
-    Q_ASSERT (doc->imageSelection () && doc->imageSelection ()->hasContent ());
+    // Must have selection text content.
+    Q_ASSERT (doc->textSelection () && doc->textSelection ()->hasContent ());
 
 
     // We can have faith that this is the state of the selection after
     // execute(), rather than after the user tried to throw us off by
     // simply selecting another region as to do that, a destroy command
     // must have been used.
-    doc->selectionCopyOntoDocument (false/*use opaque pixmap*/);
-    doc->imageSelection ()->deleteContent ();
+    doc->textSelection ()->deleteContent ();
 }
 
 
-#include <kpToolSelectionPullFromDocumentCommand.moc>
+#include <kpToolTextGiveContentCommand.moc>

@@ -26,32 +26,62 @@
 */
 
 
-#ifndef KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
-#define KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
+#ifndef kpAbstractSelectionToolPrivate_H
+#define kpAbstractSelectionToolPrivate_H
 
 
-#include <kpToolWidgetBase.h>
+#include <QPoint>
+
+#include <kpAbstractSelectionTool.h>
 
 
-class kpToolWidgetOpaqueOrTransparent : public kpToolWidgetBase
+class QTimer;
+
+class kpAbstractSelectionContentCommand;
+class kpToolSelectionMoveCommand;
+class kpToolSelectionResizeScaleCommand;
+class kpToolWidgetOpaqueOrTransparent;
+
+
+struct kpAbstractSelectionToolPrivate
 {
-Q_OBJECT
+    kpAbstractSelectionTool::DrawType drawType;
+    kpAbstractSelectionContentCommand *currentSelContentCommand;
 
-public:
-    kpToolWidgetOpaqueOrTransparent (QWidget *parent, const QString &name);
-    virtual ~kpToolWidgetOpaqueOrTransparent ();
+    bool dragHasBegun;
+    bool hadSelectionBeforeDraw;
 
-    bool isOpaque () const;
-    bool isTransparent () const;
-    void setOpaque (bool yes = true);
-    void setTransparent (bool yes = true);
+    bool cancelledShapeButStillHoldingButtons;
 
-signals:
-    void isOpaqueChanged (bool isOpaque);
+    kpToolWidgetOpaqueOrTransparent *toolWidgetOpaqueOrTransparent;
 
-protected slots:
-    virtual bool setSelected (int row, int col, bool saveAsDefault);
+
+    //
+    // Create
+    //
+
+    QTimer *createNOPTimer;
+
+
+    //
+    // Move
+    //
+
+    kpToolSelectionMoveCommand *currentMoveCommand;
+    bool currentMoveCommandIsSmear;
+
+    QPoint startMoveDragFromSelectionTopLeft;
+
+    QTimer *RMBMoveUpdateGUITimer;
+
+
+    //
+    // Resize / Scale
+    //
+
+    kpToolSelectionResizeScaleCommand *currentResizeScaleCommand;
+    int resizeScaleType;
 };
 
 
-#endif  // KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
+#endif  // kpAbstractSelectionToolPrivate_H

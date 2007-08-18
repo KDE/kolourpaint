@@ -25,26 +25,39 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-#ifndef KP_TOOL_ELLIPTICAL_SELECTION_H
-#define KP_TOOL_ELLIPTICAL_SELECTION_H
+#define DEBUG_KP_TOOL_TEXT 1
 
 
-#include <kpToolSelection.h>
+#include <kpToolText.h>
+#include <kpToolTextPrivate.h>
+
+#include <KLocale>
+
+#include <kpViewManager.h>
 
 
-class kpToolEllipticalSelection : public kpToolSelection
+// protected virtual [kpAbstractSelectionTool]
+QString kpToolText::haventBegunDrawUserMessageMove () const
 {
-public:
-    kpToolEllipticalSelection (kpToolSelectionEnvironment *environ, QObject *parent);
-    virtual ~kpToolEllipticalSelection ();
-
-protected:
-    virtual bool createMoreSelectionAndUpdateStatusBar (
-        bool dragHasBegun,
-        const QPoint &accidentalDragAdjustedPoint,
-        const QRect &normalizedRect);
-};
+    return i18n ("Left drag to move text box.");
+}
 
 
-#endif  // KP_TOOL_ELLIPTICAL_SELECTION_H
+// protected virtual [base kpAbstractSelectionTool]
+void kpToolText::setSelectionBorderForBeginDrawMove ()
+{
+    viewManager ()->setQueueUpdates ();
+    {
+        kpAbstractSelectionTool::setSelectionBorderForBeginDrawMove ();
+        viewManager ()->setTextCursorEnabled (false);
+    }
+    viewManager ()->restoreQueueUpdates ();
+}
+
+
+// protected virtual [kpAbstractSelectionTool]
+QString kpToolText::nonSmearMoveCommandName () const
+{
+    return i18n ("Text: Move Box");
+}
+

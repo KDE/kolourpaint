@@ -360,7 +360,7 @@ void kpTool::notifyModifierStateChanged ()
     if (careAboutModifierState ())
     {
         if (d->beganDraw)
-            draw (d->currentPoint, d->lastPoint, kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
+            draw (d->currentPoint, d->lastPoint, normalizedRect ());
         else
         {
             d->currentPoint = calculateCurrentPoint ();

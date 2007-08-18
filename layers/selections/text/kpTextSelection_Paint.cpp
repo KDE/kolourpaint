@@ -28,7 +28,7 @@
 */
 
 
-#define DEBUG_KP_SELECTION 1
+#define DEBUG_KP_SELECTION 0
 
 
 #include <kpTextSelection.h>

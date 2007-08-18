@@ -175,7 +175,7 @@ void kpToolRectangularBase::end ()
 
 void kpToolRectangularBase::applyModifiers ()
 {
-    QRect rect = kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ()));
+    QRect rect = normalizedRect ();
 
 #if DEBUG_KP_TOOL_RECTANGULAR_BASE
     kDebug () << "kpToolRectangularBase::applyModifiers(" << rect

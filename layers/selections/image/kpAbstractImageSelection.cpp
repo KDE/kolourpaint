@@ -173,12 +173,6 @@ kpCommandSize::SizeType kpAbstractImageSelection::sizeWithoutImage () const
     return (size () - kpCommandSize::ImageSize (d->baseImage));
 }
 
-// public virtual [kpAbstractSelection]
-bool kpAbstractImageSelection::hasContent () const
-{
-    return (!d->baseImage.isNull ());
-}
-
 
 // public virtual [kpAbstractSelection]
 int kpAbstractImageSelection::minimumWidth () const
@@ -274,6 +268,22 @@ kpImage kpAbstractImageSelection::givenImageMaskedByShape (const kpImage &image)
     }
 
     return retImage;
+}
+
+
+// public virtual [kpAbstractSelection]
+bool kpAbstractImageSelection::hasContent () const
+{
+    return !d->baseImage.isNull ();
+}
+
+// public virtual [kpAbstractSelection]
+void kpAbstractImageSelection::deleteContent ()
+{
+    if (!hasContent ())
+        return;
+
+    setBaseImage (kpImage ());
 }
 
 

@@ -26,25 +26,44 @@
 */
 
 
-#ifndef KP_TOOL_RECT_SELECTION_H
-#define KP_TOOL_RECT_SELECTION_H
+#include <kpAbstractSelectionContentCommand.h>
+
+#include <kpAbstractSelection.h>
 
 
-#include <kpToolSelection.h>
-
-
-class kpToolRectSelection : public kpToolSelection
+struct kpAbstractSelectionContentCommandPrivate
 {
-public:
-    kpToolRectSelection (kpToolSelectionEnvironment *environ, QObject *parent);
-    virtual ~kpToolRectSelection ();
-
-protected:
-    virtual bool createMoreSelectionAndUpdateStatusBar (
-        bool dragHasBegun,
-        const QPoint &accidentalDragAdjustedPoint,
-        const QRect &normalizedRect);
+    const kpAbstractSelection *orgSelBorder;
 };
 
+kpAbstractSelectionContentCommand::kpAbstractSelectionContentCommand (
+        const kpAbstractSelection &originalSelBorder,
+        const QString &name,
+        kpCommandEnvironment *environ)
+    : kpNamedCommand (name, environ),
+      d (new kpAbstractSelectionContentCommandPrivate ())
+{
+    Q_ASSERT (!originalSelBorder.hasContent ());
 
-#endif  // KP_TOOL_RECT_SELECTION_H
+    d->orgSelBorder = originalSelBorder.clone ();
+}
+
+kpAbstractSelectionContentCommand::~kpAbstractSelectionContentCommand ()
+{
+    delete d->orgSelBorder;
+    delete d;
+}
+
+
+// public virtual [base kpCommand]
+kpCommandSize::SizeType kpAbstractSelectionContentCommand::size () const
+{
+    return d->orgSelBorder->size ();
+}
+
+
+// public
+const kpAbstractSelection *kpAbstractSelectionContentCommand::originalSelection () const
+{
+    return d->orgSelBorder;
+}

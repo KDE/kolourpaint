@@ -89,8 +89,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
             #if DEBUG_KP_TOOL && 1
                 kDebug () << "\t\thasBegunShape - end";
             #endif
-                endShapeInternal (d->currentPoint,
-                                  kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
+                endShapeInternal (d->currentPoint, normalizedRect ());
             }
 
             if (viewUnderCursor ())
@@ -274,7 +273,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
 
         drawInternal ();
 
-        endDrawInternal (d->currentPoint, kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint)));
+        endDrawInternal (d->currentPoint, normalizedRect ());
     }
 
     if ((e->buttons () & Qt::MouseButtonMask) == 0)

@@ -25,33 +25,31 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-#ifndef KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
-#define KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
+#define DEBUG_KP_TOOL_TEXT 1
 
 
-#include <kpToolWidgetBase.h>
+#include <kpToolText.h>
+#include <kpToolTextPrivate.h>
+
+#include <KLocale>
+
+#include <kpViewManager.h>
 
 
-class kpToolWidgetOpaqueOrTransparent : public kpToolWidgetBase
+// protected virtual [kpAbstractSelectionTool]
+QString kpToolText::haventBegunDrawUserMessageResizeScale () const
 {
-Q_OBJECT
-
-public:
-    kpToolWidgetOpaqueOrTransparent (QWidget *parent, const QString &name);
-    virtual ~kpToolWidgetOpaqueOrTransparent ();
-
-    bool isOpaque () const;
-    bool isTransparent () const;
-    void setOpaque (bool yes = true);
-    void setTransparent (bool yes = true);
-
-signals:
-    void isOpaqueChanged (bool isOpaque);
-
-protected slots:
-    virtual bool setSelected (int row, int col, bool saveAsDefault);
-};
+    return i18n ("Left drag to resize text box.");
+}
 
 
-#endif  // KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
+// protected virtual [base kpAbstractSelectionTool]
+void kpToolText::setSelectionBorderForBeginDrawResizeScale ()
+{
+    viewManager ()->setQueueUpdates ();
+    {
+        kpAbstractSelectionTool::setSelectionBorderForBeginDrawResizeScale ();
+        viewManager ()->setTextCursorEnabled (false);
+    }
+    viewManager ()->restoreQueueUpdates ();
+}

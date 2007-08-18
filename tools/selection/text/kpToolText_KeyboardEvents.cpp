@@ -29,6 +29,7 @@
 
 
 #include <kpToolText.h>
+#include <kpToolTextPrivate.h>
 
 #include <qevent.h>
 #include <qlist.h>
@@ -67,7 +68,7 @@ bool kpToolText::viewEvent (QEvent *e)
 #endif
 
     if (!isShortcutOverrideEvent || !haveTextSelection)
-        return kpToolSelection::viewEvent (e);
+        return kpAbstractSelectionTool::viewEvent (e);
 
     QKeyEvent *ke = static_cast <QKeyEvent *> (e);
 #if DEBUG_KP_TOOL_TEXT
@@ -102,7 +103,7 @@ bool kpToolText::viewEvent (QEvent *e)
         // uses arrow keys too).
     }
 
-    return kpToolSelection::event (e);
+    return kpAbstractSelectionTool::event (e);
 }
 
 
@@ -115,7 +116,7 @@ void kpToolText::handleUpKeyPress (QKeyEvent *e,
 #endif
 
     if (hasBegunShape ())
-        endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
+        endShape (currentPoint (), normalizedRect ());
 
     if (cursorRow > 0)
     {
@@ -136,7 +137,7 @@ void kpToolText::handleDownKeyPress (QKeyEvent *e,
 #endif
 
     if (hasBegunShape ())
-        endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
+        endShape (currentPoint (), normalizedRect ());
 
     if (cursorRow < (int) textLines.size () - 1)
     {
@@ -157,7 +158,7 @@ void kpToolText::handleLeftKeyPress (QKeyEvent *e,
 #endif
 
     if (hasBegunShape ())
-        endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
+        endShape (currentPoint (), normalizedRect ());
 
     if ((e->modifiers () & Qt::ControlModifier) == 0)
     {
@@ -165,7 +166,7 @@ void kpToolText::handleLeftKeyPress (QKeyEvent *e,
         kDebug () << "\tmove single char";
     #endif
 
-        moveCursorLeft (textLines, &cursorRow, &cursorCol);
+        MoveCursorLeft (textLines, &cursorRow, &cursorCol);
         viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
     }
     else
@@ -174,7 +175,7 @@ void kpToolText::handleLeftKeyPress (QKeyEvent *e,
         kDebug () << "\tmove to start of word";
     #endif
 
-        moveCursorToWordStart (textLines, &cursorRow, &cursorCol);
+        MoveCursorToWordStart (textLines, &cursorRow, &cursorCol);
         viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
     }
 
@@ -190,7 +191,7 @@ void kpToolText::handleRightKeyPress (QKeyEvent *e,
 #endif
 
     if (hasBegunShape ())
-        endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
+        endShape (currentPoint (), normalizedRect ());
 
     if ((e->modifiers () & Qt::ControlModifier) == 0)
     {
@@ -198,7 +199,7 @@ void kpToolText::handleRightKeyPress (QKeyEvent *e,
         kDebug () << "\tmove single char";
     #endif
 
-        moveCursorRight (textLines, &cursorRow, &cursorCol);
+        MoveCursorRight (textLines, &cursorRow, &cursorCol);
         viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
     }
     else
@@ -207,7 +208,7 @@ void kpToolText::handleRightKeyPress (QKeyEvent *e,
         kDebug () << "\tmove to start of next word";
     #endif
 
-        moveCursorToNextWordStart (textLines, &cursorRow, &cursorCol);
+        MoveCursorToNextWordStart (textLines, &cursorRow, &cursorCol);
         viewManager ()->setTextCursorPosition (cursorRow, cursorCol);
     }
 
@@ -224,7 +225,7 @@ void kpToolText::handleHomeKeyPress (QKeyEvent *e,
 #endif
 
     if (hasBegunShape ())
-        endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
+        endShape (currentPoint (), normalizedRect ());
 
     if (e->modifiers () & Qt::ControlModifier)
         cursorRow = 0;
@@ -245,7 +246,7 @@ void kpToolText::handleEndKeyPress (QKeyEvent *e,
 #endif
 
     if (hasBegunShape ())
-        endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
+        endShape (currentPoint (), normalizedRect ());
 
     if (e->modifiers () & Qt::ControlModifier)
         cursorRow = textLines.size () - 1;
@@ -268,23 +269,23 @@ void kpToolText::handleBackspaceKeyPress (QKeyEvent *e,
 
     if ((e->modifiers () & Qt::ControlModifier) == 0)
     {
-        if (!m_backspaceCommand)
-            addNewBackspaceCommand (&m_backspaceCommand);
+        if (!d->backspaceCommand)
+            addNewBackspaceCommand (&d->backspaceCommand);
 
-        m_backspaceCommand->addBackspace ();
+        d->backspaceCommand->addBackspace ();
     }
     else
     {
-        if (!m_backspaceWordCommand)
-            addNewBackspaceCommand (&m_backspaceWordCommand);
+        if (!d->backspaceWordCommand)
+            addNewBackspaceCommand (&d->backspaceWordCommand);
 
-        const int numMoves = moveCursorToWordStart (textLines,
+        const int numMoves = MoveCursorToWordStart (textLines,
             &cursorRow, &cursorCol);
 
         viewManager ()->setQueueUpdates ();
         {
             for (int i = 0; i < numMoves; i++)
-                m_backspaceWordCommand->addBackspace ();
+                d->backspaceWordCommand->addBackspace ();
         }
         viewManager ()->restoreQueueUpdates ();
 
@@ -305,27 +306,27 @@ void kpToolText::handleDeleteKeyPress (QKeyEvent *e,
 
     if ((e->modifiers () & Qt::ControlModifier) == 0)
     {
-        if (!m_deleteCommand)
-            addNewDeleteCommand (&m_deleteCommand);
+        if (!d->deleteCommand)
+            addNewDeleteCommand (&d->deleteCommand);
 
-        m_deleteCommand->addDelete ();
+        d->deleteCommand->addDelete ();
     }
     else
     {
-        if (!m_deleteWordCommand)
-            addNewDeleteCommand (&m_deleteWordCommand);
+        if (!d->deleteWordCommand)
+            addNewDeleteCommand (&d->deleteWordCommand);
 
         // We don't want to know the cursor pos of the next word start
         // as delete should keep cursor in same pos.
         int cursorRowThrowAway = cursorRow,
             cursorColThrowAway = cursorCol;
-        const int numMoves = moveCursorToNextWordStart (textLines,
+        const int numMoves = MoveCursorToNextWordStart (textLines,
             &cursorRowThrowAway, &cursorColThrowAway);
 
         viewManager ()->setQueueUpdates ();
         {
             for (int i = 0; i < numMoves; i++)
-                m_deleteWordCommand->addDelete ();
+                d->deleteWordCommand->addDelete ();
         }
         viewManager ()->restoreQueueUpdates ();
 
@@ -340,25 +341,15 @@ void kpToolText::handleDeleteKeyPress (QKeyEvent *e,
 
 // protected
 void kpToolText::handleEnterKeyPress (QKeyEvent *e,
-    const QList <QString> & /*textLines*/, int cursorRow, int cursorCol)
+    const QList <QString> & /*textLines*/, int /*cursorRow*/, int /*cursorCol*/)
 {
 #if DEBUG_KP_TOOL_TEXT
     kDebug () << "\tenter pressed";
 #endif
-    if (!m_enterCommand)
-    {
-        // TODO: why not endShapeInternal(); ditto for everywhere else in this file?
-        if (hasBegunShape ())
-            endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
-
-        m_enterCommand = new kpToolTextEnterCommand (i18n ("Text: New Line"),
-            cursorRow, cursorCol,
-            kpToolTextEnterCommand::AddEnterNow,
-            environ ()->commandEnvironment ());
-        commandHistory ()->addCommand (m_enterCommand, false/*no exec*/);
-    }
-    else
-        m_enterCommand->addEnter ();
+    if (!d->enterCommand)
+        addNewEnterCommand (&d->enterCommand);
+        
+    d->enterCommand->addEnter ();
 
     e->accept ();
 }
@@ -366,7 +357,7 @@ void kpToolText::handleEnterKeyPress (QKeyEvent *e,
 
 // protected
 void kpToolText::handleTextTyped (QKeyEvent *e,
-    const QList <QString> & /*textLines*/, int cursorRow, int cursorCol)
+    const QList <QString> & /*textLines*/, int /*cursorRow*/, int /*cursorCol*/)
 {
 #if DEBUG_KP_TOOL_TEXT
     kDebug () << "\ttext='" << e->text () << "'";
@@ -383,26 +374,17 @@ void kpToolText::handleTextTyped (QKeyEvent *e,
 
     if (usableText.length () > 0)
     {
-        if (!m_insertCommand)
-        {
-            if (hasBegunShape ())
-                endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
-
-            m_insertCommand = new kpToolTextInsertCommand (i18n ("Text: Write"),
-                cursorRow, cursorCol,
-                usableText,
-                environ ()->commandEnvironment ());
-            commandHistory ()->addCommand (m_insertCommand, false/*no exec*/);
-        }
-        else
-            m_insertCommand->addText (usableText);
+        if (!d->insertCommand)
+            addNewInsertCommand (&d->insertCommand);
+            
+        d->insertCommand->addText (usableText);
 
         e->accept ();
     }
 }
 
 
-// protected virtual [base kpTool]
+// protected virtual [base kpAbstractSelectionTool]
 void kpToolText::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL_TEXT
@@ -418,7 +400,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     #if DEBUG_KP_TOOL_TEXT
         kDebug () << "\talready began draw with mouse - passing on event to kpTool";
     #endif
-        kpToolSelection::keyPressEvent (e);
+        kpAbstractSelectionTool::keyPressEvent (e);
         return;
     }
 
@@ -431,9 +413,9 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
         kDebug () << "\tno text sel - passing on event to kpTool";
     #endif
         //if (hasBegunShape ())
-        //    endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
+        //    endShape (currentPoint (), normalizedRect ());
 
-        kpToolSelection::keyPressEvent (e);
+        kpAbstractSelectionTool::keyPressEvent (e);
         return;
     }
 
@@ -499,13 +481,13 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     #if DEBUG_KP_TOOL_TEXT
         kDebug () << "\tkey processing did not accept (text was '"
                    << e->text ()
-                   << "') - passing on event to kpToolSelection"
+                   << "') - passing on event to kpAbstractSelectionTool"
                    << endl;
     #endif
         //if (hasBegunShape ())
-        //    endShape (currentPoint (), kpBug::QRect_Normalized (QRect (startPoint (), currentPoint ())));
+        //    endShape (currentPoint (), normalizedRect ());
 
-        kpToolSelection::keyPressEvent (e);
+        kpAbstractSelectionTool::keyPressEvent (e);
         return;
     }
 }

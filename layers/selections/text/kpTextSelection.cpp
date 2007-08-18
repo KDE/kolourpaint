@@ -151,68 +151,6 @@ bool kpTextSelection::isRectangular () const
     return true;
 }
 
-// public virtual [kpAbstractSelection]
-bool kpTextSelection::hasContent () const
-{
-    return !d->textLines.isEmpty ();
-}
-
-
-// public
-kpTextStyle kpTextSelection::textStyle () const
-{
-    return d->textStyle;
-}
-
-// public
-void kpTextSelection::setTextStyle (const kpTextStyle &textStyle)
-{
-    d->textStyle = textStyle;
-
-    emit changed (boundingRect ());
-}
-
-
-// public
-QList <QString> kpTextSelection::textLines () const
-{
-    return d->textLines;
-}
-
-// public
-void kpTextSelection::setTextLines (const QList <QString> &textLines_)
-{
-    d->textLines = textLines_;
-
-    emit changed (boundingRect ());
-}
-
-
-// public static
-QString kpTextSelection::TextForTextLines (const QList <QString> &textLines)
-{
-    if (textLines.isEmpty ())
-        return QString();
-
-    QString bigString = textLines [0];
-
-    for (QList <QString>::const_iterator it = textLines.begin () + 1;
-         it != textLines.end ();
-         it++)
-    {
-        bigString += QLatin1String ("\n");
-        bigString += (*it);
-    }
-
-    return bigString;
-}
-
-// public
-QString kpTextSelection::text () const
-{
-    return kpTextSelection::TextForTextLines (d->textLines);
-}
-
 
 // public static
 int kpTextSelection::MinimumWidthForTextStyle (const kpTextStyle &)
@@ -320,6 +258,78 @@ bool kpTextSelection::pointIsInTextBorderArea (const QPoint &point) const
 bool kpTextSelection::pointIsInTextArea (const QPoint &point) const
 {
     return textAreaRect ().contains (point);
+}
+
+
+// public virtual [kpAbstractSelection]
+bool kpTextSelection::hasContent () const
+{
+    return !d->textLines.isEmpty ();
+}
+
+// public virtual [kpAbstractSelection]
+void kpTextSelection::deleteContent ()
+{
+    if (!hasContent ())
+        return;
+
+    setTextLines (QList <QString> ());
+}
+
+
+// public
+QList <QString> kpTextSelection::textLines () const
+{
+    return d->textLines;
+}
+
+// public
+void kpTextSelection::setTextLines (const QList <QString> &textLines_)
+{
+    d->textLines = textLines_;
+
+    emit changed (boundingRect ());
+}
+
+
+// public static
+QString kpTextSelection::TextForTextLines (const QList <QString> &textLines)
+{
+    if (textLines.isEmpty ())
+        return QString();
+
+    QString bigString = textLines [0];
+
+    for (QList <QString>::const_iterator it = textLines.begin () + 1;
+         it != textLines.end ();
+         it++)
+    {
+        bigString += QLatin1String ("\n");
+        bigString += (*it);
+    }
+
+    return bigString;
+}
+
+// public
+QString kpTextSelection::text () const
+{
+    return kpTextSelection::TextForTextLines (d->textLines);
+}
+
+
+// public
+kpTextStyle kpTextSelection::textStyle () const
+{
+    return d->textStyle;
+}
+
+// public
+void kpTextSelection::setTextStyle (const kpTextStyle &textStyle)
+{
+    d->textStyle = textStyle;
+
+    emit changed (boundingRect ());
 }
 
 

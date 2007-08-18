@@ -30,7 +30,7 @@
 #define KP_TOOL_TEXT_H
 
 
-#include <kpToolSelection.h>
+#include <kpAbstractSelectionTool.h>
 
 
 class QKeyEvent;
@@ -45,7 +45,7 @@ class kpToolTextDeleteCommand;
 
 
 // REFACTOR: This whole shape thing (e.g. calls to endShape()) is confusing - what is going on?
-class kpToolText : public kpToolSelection
+class kpToolText : public kpAbstractSelectionTool
 {
 Q_OBJECT
 
@@ -53,20 +53,12 @@ public:
     kpToolText (kpToolSelectionEnvironment *environ, QObject *parent);
     virtual ~kpToolText ();
 
+
+//
+// Text Command Handling
+//
+
 private:
-    bool onSelectionToSelectText () const;
-
-protected:
-    virtual QString haventBegunDrawUserMessageOnResizeHandle () const;
-    virtual QString haventBegunDrawUserMessageInsideSelection () const;
-    virtual QString haventBegunDrawUserMessageOutsideSelection () const;
-
-
-//
-// Command Handling
-//
-
-protected:
     /**
      * Indicates that no current text editing command is active.
      * You must call this when ending the current command (e.g. changing
@@ -101,17 +93,72 @@ protected:
      */
     void addNewDeleteCommand (kpToolTextDeleteCommand **cmd);
 
+    void addNewEnterCommand (kpToolTextEnterCommand **cmd);
+    
+    void addNewInsertCommand (kpToolTextInsertCommand **cmd);
+
+
+//
+// Drawing
+//
+
+protected:
+    virtual kpAbstractSelectionContentCommand *newGiveContentCommand () const;
+
+    virtual QString nameOfCreateCommand () const;
+
+
+protected:
+    virtual void setSelectionBorderForHaventBegunDraw ();
+
 
 public:
     virtual void begin ();
     virtual void end ();
 
+
+public:
     bool hasBegunText () const;
     virtual bool hasBegunShape () const;
 
+
+//
+// Drawing - Beginning a Drag
+//
+
 protected:
-    virtual kpToolSelection::DragType beginDrawInsideSelection ();
-    virtual QCursor cursorInsideSelection () const;
+    virtual DrawType calculateDrawTypeInsideSelection () const;
+
+
+public:
+    virtual void cancelShape ();
+
+
+public:
+    virtual void endShape (const QPoint &thisPoint, const QRect &normalizedRect);
+    
+
+//
+// Drawing - Operation Dispatching
+//
+
+protected:
+    virtual QVariant operation (DrawType drawType, Operation op,
+        const QVariant &data1 = QVariant (), const QVariant &data2 = QVariant ());
+
+
+//
+// Create
+//
+
+protected:
+    virtual QString haventBegunDrawUserMessageCreate () const;
+
+
+protected:
+    virtual void setSelectionBorderForBeginDrawCreate ();
+
+
 private:
     // Returns the suggested width/height of a click-created text box:
     //
@@ -132,19 +179,114 @@ private:
         int *minimumWidthOut, int *minimumHeightOut,
         bool *newDragHasBegun);
 protected:
-    virtual bool createMoreSelectionAndUpdateStatusBar (
+    virtual bool drawCreateMoreSelectionAndUpdateStatusBar (
         bool dragHasBegun,
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &normalizedRectIn);
-    virtual void setSelectionBorderForHaventBegunDraw ();
 
 
-public:
-    virtual void cancelShape ();
+//
+// Move
+//
+
+protected:
+    virtual QString haventBegunDrawUserMessageMove () const;
+
+
+protected:
+    virtual void setSelectionBorderForBeginDrawMove ();
+
+
 protected:
     virtual QString nonSmearMoveCommandName () const;
-public:
-    virtual void endShape (const QPoint &thisPoint, const QRect &normalizedRect);
+
+    
+//
+// Resize/Scale
+//
+
+protected:
+    virtual QString haventBegunDrawUserMessageResizeScale () const;
+
+
+protected:
+    virtual void setSelectionBorderForBeginDrawResizeScale ();
+
+
+//
+// Select Text
+//
+
+private:
+    bool onSelectionToSelectText () const;
+
+
+private:
+    QString haventBegunDrawUserMessageSelectText () const;
+
+    void setCursorSelectText ();
+
+
+private:
+    void beginDrawSelectText ();
+
+
+protected:
+    virtual QVariant selectTextOperation (Operation op,
+        const QVariant &data1 = QVariant (), const QVariant &data2 = QVariant ());
+
+
+//
+// User Changing Text Style Elements
+//
+
+protected:
+    bool shouldChangeTextStyle () const;
+
+    /**
+     * Adds a kpToolTextChangeStyleCommand to commandHistory().
+     *
+     * Call this when an element of the text style changes (e.g. user
+     * changes font size, boldness, color etc.).
+     *
+     * @param name Name of the command in the command history.
+     * @param newTextStyle The new and current text style.
+     * @param oldTextStyle The old and previous text style.
+     *
+     * You should only call this if shouldChangeTextStyle() returns true.
+     */
+    void changeTextStyle (const QString &name,
+                          const kpTextStyle &newTextStyle,
+                          const kpTextStyle &oldTextStyle);
+
+protected slots:
+    virtual void slotIsOpaqueChanged (bool isOpaque);
+
+
+protected:
+    /**
+     * Asks kpTool to call slotColorsSwapped() when the foreground and
+     * background color are swapped.
+     *
+     * Re-implemented from kpTool.
+     */
+    virtual bool careAboutColorsSwapped () const { return true; }
+
+protected slots:
+    virtual void slotColorsSwapped (const kpColor &newForegroundColor,
+                                    const kpColor &newBackgroundColor);
+
+    virtual void slotForegroundColorChanged (const kpColor &color);
+    virtual void slotBackgroundColorChanged (const kpColor &color);
+    virtual void slotColorSimilarityChanged (double, int);
+
+public slots:
+    void slotFontFamilyChanged (const QString &fontFamily, const QString &oldFontFamily);
+    void slotFontSizeChanged (int fontSize, int oldFontSize);
+    void slotBoldChanged (bool isBold);
+    void slotItalicChanged (bool isItalic);
+    void slotUnderlineChanged (bool isUnderline);
+    void slotStrikeThruChanged (bool isStrikeThru);
 
 
 //
@@ -160,7 +302,7 @@ protected:
      * @returns whether the cursor is currently on a word character
      *          (not a space).
      */
-    static bool cursorIsOnWordChar (const QList <QString> &textLines,
+    static bool CursorIsOnWordChar (const QList <QString> &textLines,
         int cursorRow, int cursorCol);
 
 
@@ -173,7 +315,7 @@ protected:
      *          textLines (on the first character of the first line)
      *          i.e. when moveCursorLeft() won't do anything.
      */
-    static bool cursorIsAtStart (const QList <QString> &textLines,
+    static bool CursorIsAtStart (const QList <QString> &textLines,
         int cursorRow, int cursorCol);
 
     /**
@@ -185,7 +327,7 @@ protected:
      *          textLines (after the last character of the last line)
      *          i.e. when moveCursorRight() won't do anything.
      */
-    static bool cursorIsAtEnd (const QList <QString> &textLines,
+    static bool CursorIsAtEnd (const QList <QString> &textLines,
         int cursorRow, int cursorCol);
 
 
@@ -202,7 +344,7 @@ protected:
      *                  the current column of the cursor and modified on
      *                  return to indicate the new column.
      */
-    static void moveCursorLeft (const QList <QString> &textLines,
+    static void MoveCursorLeft (const QList <QString> &textLines,
         int *cursorRow, int *cursorCol);
 
     /**
@@ -218,7 +360,7 @@ protected:
      *                  the current column of the cursor and modified on
      *                  return to indicate the new column.
      */
-    static void moveCursorRight (const QList <QString> &textLines,
+    static void MoveCursorRight (const QList <QString> &textLines,
         int *cursorRow, int *cursorCol);
 
 
@@ -241,7 +383,7 @@ protected:
      *          Note: Attempting to moving left when cursorIsAtStart()
      *                may still be counted as a move.
      */
-    static int moveCursorToWordStart (const QList <QString> &textLines,
+    static int MoveCursorToWordStart (const QList <QString> &textLines,
         int *cursorRow, int *cursorCol);
 
     /**
@@ -263,7 +405,7 @@ protected:
      *          Note: Attempting to moving right when cursorIsAtEnd()
      *                may still be counted as a move.
      */
-    static int moveCursorToNextWordStart (const QList <QString> &textLines,
+    static int MoveCursorToNextWordStart (const QList <QString> &textLines,
         int *cursorRow, int *cursorCol);
 
 
@@ -474,91 +616,32 @@ protected:
      *
      * If the user is currently drawing/resizing something or if the
      * document doesn't have a text selection, it passes control to the
-     * otherwise overridden kpToolSelection::keyPressEvent().
+     * otherwise overridden kpAbstractSelectionTool::keyPressEvent().
      *
      * Else, for a recognised key it calls handle.*Press().  If a
      * recognised key was not pressed, it assumes that one or more text
      * characters was typed, and calls handleTextTyped().  If none of the
      * handle.*() methods call e->accept(), it passes control to the
-     * otherwise overridden kpToolSelection::keyPressEvent().
+     * otherwise overridden kpAbstractSelectionTool::keyPressEvent().
      *
      * @param e Mutable key event information.
      *
-     * Re-implemented from kpToolSelection.
+     * Re-implemented from kpAbstractSelectionTool.
      */
 
     virtual void keyPressEvent (QKeyEvent *e);
 
 
-    //
-    // Input Method Text Entry
-    //
+//
+// Input Method Text Entry
+//
 
+protected:
     virtual void inputMethodEvent (QInputMethodEvent *e);
 
 
-    //
-    // User Changing Text Style Elements
-    //
-
-    bool shouldChangeTextStyle () const;
-
-    /**
-     * Adds a kpToolTextChangeStyleCommand to commandHistory().
-     *
-     * Call this when an element of the text style changes (e.g. user
-     * changes font size, boldness, color etc.).
-     *
-     * @param name Name of the command in the command history.
-     * @param newTextStyle The new and current text style.
-     * @param oldTextStyle The old and previous text style.
-     *
-     * You should only call this if shouldChangeTextStyle() returns true.
-     */
-    void changeTextStyle (const QString &name,
-                          const kpTextStyle &newTextStyle,
-                          const kpTextStyle &oldTextStyle);
-
-protected slots:
-    virtual void slotIsOpaqueChanged ();
-
-
-protected:
-    /**
-     * Asks kpTool to call slotColorsSwapped() when the foreground and
-     * background color are swapped.
-     *
-     * Re-implemented from kpTool.
-     */
-    virtual bool careAboutColorsSwapped () const { return true; }
-
-protected slots:
-    virtual void slotColorsSwapped (const kpColor &newForegroundColor,
-                                    const kpColor &newBackgroundColor);
-
-    virtual void slotForegroundColorChanged (const kpColor &color);
-    virtual void slotBackgroundColorChanged (const kpColor &color);
-    virtual void slotColorSimilarityChanged (double, int);
-
-public slots:
-    void slotFontFamilyChanged (const QString &fontFamily, const QString &oldFontFamily);
-    void slotFontSizeChanged (int fontSize, int oldFontSize);
-    void slotBoldChanged (bool isBold);
-    void slotItalicChanged (bool isItalic);
-    void slotUnderlineChanged (bool isUnderline);
-    void slotStrikeThruChanged (bool isStrikeThru);
-
-
-protected:
-    kpToolTextInsertCommand *m_insertCommand;
-    kpToolTextEnterCommand *m_enterCommand;
-    kpToolTextBackspaceCommand *m_backspaceCommand, *m_backspaceWordCommand;
-    kpToolTextDeleteCommand *m_deleteCommand, *m_deleteWordCommand;
-
-    bool m_isIMStarted;
-    int m_IMStartCursorRow;
-    int m_IMStartCursorCol;
-    QString m_IMPreeditStr;
+private:
+    struct kpToolTextPrivate * const d;
 };
 
 

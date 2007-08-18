@@ -26,25 +26,61 @@
 */
 
 
-#ifndef KP_TOOL_FREE_FORM_SELECTION_H
-#define KP_TOOL_FREE_FORM_SELECTION_H
+#ifndef kpAbstractImageSelectionTool_H
+#define kpAbstractImageSelectionTool_H
 
 
-#include <kpToolSelection.h>
+#include <kpAbstractSelectionTool.h>
 
 
-class kpToolFreeFormSelection : public kpToolSelection
+class kpAbstractImageSelectionTool : public kpAbstractSelectionTool
 {
+Q_OBJECT
+
 public:
-    kpToolFreeFormSelection (kpToolSelectionEnvironment *environ, QObject *parent);
-    virtual ~kpToolFreeFormSelection ();
+    kpAbstractImageSelectionTool (const QString &text, const QString &description,
+        int key,
+        kpToolSelectionEnvironment *environ, QObject *parent,
+        const QString &name);
+    virtual ~kpAbstractImageSelectionTool ();
+
+
+//
+// Drawing
+//
 
 protected:
-    virtual bool createMoreSelectionAndUpdateStatusBar (
-        bool dragHasBegun,
-        const QPoint &accidentalDragAdjustedPoint,
-        const QRect &normalizedRect);
+    virtual kpAbstractSelectionContentCommand *newGiveContentCommand () const;
+    
+    virtual QString nameOfCreateCommand () const;
+
+
+//
+// Create, Move, Resize/Scale
+//
+
+protected:
+    virtual QString haventBegunDrawUserMessageCreate () const;
+    virtual QString haventBegunDrawUserMessageMove () const;
+    virtual QString haventBegunDrawUserMessageResizeScale () const;
+
+
+//
+// User Changing Selection Transparency
+//
+
+protected:
+    void selectionTransparencyChanged (const QString &name);
+
+protected slots:
+    virtual void slotIsOpaqueChanged (bool isOpaque);
+    virtual void slotBackgroundColorChanged (const kpColor &color);
+    virtual void slotColorSimilarityChanged (double similarity, int);
+
+
+private:
+    struct kpAbstractImageSelectionToolPrivate * const d;
 };
 
 
-#endif  // KP_TOOL_FREE_FORM_SELECTION_H
+#endif  // kpAbstractImageSelectionTool_H

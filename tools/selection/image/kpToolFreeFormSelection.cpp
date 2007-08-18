@@ -42,8 +42,7 @@
 
 kpToolFreeFormSelection::kpToolFreeFormSelection (kpToolSelectionEnvironment *environ,
         QObject *parent)
-    : kpToolSelection (kpToolSelection::FreeForm,
-                       i18n ("Selection (Free-Form)"),
+    : kpAbstractImageSelectionTool (i18n ("Selection (Free-Form)"),
                        i18n ("Makes a free-form selection"),
                        Qt::Key_M,
                        environ, parent,
@@ -56,8 +55,8 @@ kpToolFreeFormSelection::~kpToolFreeFormSelection ()
 }
 
 
-// protected virtual [base kpToolSelection]
-bool kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (
+// protected virtual [base kpAbstractSelectionTool]
+bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
         bool dragHasBegun,
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &/*normalizedRect*/)
@@ -73,7 +72,7 @@ bool kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (
     if (!dragHasBegun && accidentalDragAdjustedPoint == startPoint ())
     {
     #if DEBUG_KP_TOOL_FREE_FROM_SELECTION && 1
-        kDebug () << "\tnon-text NOP - return";
+        kDebug () << "\tnon-text NOP - return" << endl;
     #endif
         setUserShapePoints (accidentalDragAdjustedPoint);
         return false;
@@ -107,7 +106,7 @@ bool kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar (
 
 
 #if DEBUG_KP_TOOL_FREE_FROM_SELECTION
-    kDebug () << "\tlast old point=" << points.last ();
+    kDebug () << "\tlast old point=" << points.last () << endl;
 #endif
 
     // TODO: There should be an upper limit on this before drawing the

@@ -26,32 +26,25 @@
 */
 
 
-#ifndef KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
-#define KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
+#ifndef KP_TOOL_FREE_FORM_SELECTION_H
+#define KP_TOOL_FREE_FORM_SELECTION_H
 
 
-#include <kpToolWidgetBase.h>
+#include <kpAbstractImageSelectionTool.h>
 
 
-class kpToolWidgetOpaqueOrTransparent : public kpToolWidgetBase
+class kpToolFreeFormSelection : public kpAbstractImageSelectionTool
 {
-Q_OBJECT
-
 public:
-    kpToolWidgetOpaqueOrTransparent (QWidget *parent, const QString &name);
-    virtual ~kpToolWidgetOpaqueOrTransparent ();
+    kpToolFreeFormSelection (kpToolSelectionEnvironment *environ, QObject *parent);
+    virtual ~kpToolFreeFormSelection ();
 
-    bool isOpaque () const;
-    bool isTransparent () const;
-    void setOpaque (bool yes = true);
-    void setTransparent (bool yes = true);
-
-signals:
-    void isOpaqueChanged (bool isOpaque);
-
-protected slots:
-    virtual bool setSelected (int row, int col, bool saveAsDefault);
+protected:
+    virtual bool drawCreateMoreSelectionAndUpdateStatusBar (
+        bool dragHasBegun,
+        const QPoint &accidentalDragAdjustedPoint,
+        const QRect &normalizedRect);
 };
 
 
-#endif  // KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
+#endif  // KP_TOOL_FREE_FORM_SELECTION_H

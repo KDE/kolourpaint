@@ -33,7 +33,7 @@
 #define DEBUG_KP_TOOL 0
 
 
-// TODO: reduce number of includes
+// LOREFACTOR: reduce number of includes
 #include <kpTool.h>
 #include <kpToolPrivate.h>
 

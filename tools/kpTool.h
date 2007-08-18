@@ -165,6 +165,8 @@ protected:
     QPoint currentPoint () const;
     QPoint currentViewPoint () const;
 
+    QRect normalizedRect () const;
+
     QPoint lastPoint () const;
 
 public:  // for kpMainWindow
@@ -420,7 +422,11 @@ public:
     QString cancelUserMessage () const;
 
     QString userMessage () const;
-    void setUserMessage (const QString &userMessage = QString());
+    // WARNING: setUserMessage() will store a message different to <userMessage>,
+    //          in unspecified ways (e.g. the name of the tool, followed
+    //          by a colon and a space, will be prepended).  userMessage()
+    //          will return this different string.
+    void setUserMessage (const QString &userMessage = QString ());
 
     QPoint userShapeStartPoint () const;
     QPoint userShapeEndPoint () const;
