@@ -34,6 +34,7 @@
 #include <kdebug.h>
 #include <kimageio.h>
 #include <klocale.h>
+#include <KMessageBox>
 
 #include <kpDefs.h>
 #include <kpMainWindow.h>
@@ -94,6 +95,26 @@ int main (int argc, char *argv [])
     // Qt says this is necessary but I don't think it is...
     QObject::connect (&app, SIGNAL (lastWindowClosed ()),
                       &app, SLOT (quit ()));
+
+
+    // Avoid paletted screen modes as QImage's -- created from on-screen
+    // QPixmap -- format changes from truecolor to paletted and that requires
+    // completely different code paths, which we haven't always implemented
+    // and/or tested.
+    if (QPixmap::defaultDepth () < 15/*smallest truecolor mode's bpp*/)
+    {
+        // Even though we support 15-bit truecolor, we're more ambitious and
+        // ask for 24-bit since it's safer (see kpPixmapFX::WarnAboutLossInfo).
+        KMessageBox::information (0/*parent*/,
+            ki18n ("<qt><p>KolourPaint does not support the current screen depth of %1bpp."
+                " KolourPaint will attempt to start but may act unreliably.</p>"
+                
+                "<p>To avoid this issue, please change your screen depth to 24bpp"
+                " and then restart KolourPaint.</p></qt>")
+                .subs (QPixmap::defaultDepth ()).toString (),
+            i18n ("Unsupported Screen Mode"),
+            "startup_unsupported_bpp"/*DontAskAgain ID*/);
+    }
 
 
     if (app.isSessionRestored ())
