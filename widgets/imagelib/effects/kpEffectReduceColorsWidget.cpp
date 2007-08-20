@@ -69,7 +69,7 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
     m_24BitRadioButton = new QRadioButton (i18n ("24-&bit color"), this);
 
 
-    // COMPAT: don't think this is needed
+    // LOCOMPAT: don't think this is needed
     QButtonGroup *buttonGroup = new QButtonGroup (this);
     buttonGroup->addButton (m_blackAndWhiteRadioButton);
     buttonGroup->addButton (m_blackAndWhiteDitheredRadioButton);

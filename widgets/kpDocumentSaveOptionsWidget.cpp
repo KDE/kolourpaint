@@ -708,7 +708,7 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
     image.loadFromData (data,
         KImageIO::typeForMime (mimeType ()) [0].toLatin1 ());
 
-    // TODO: merge with kpDocument::getPixmapFromFile()
+    // REFACTOR: merge with kpDocument::getPixmapFromFile()
     m_previewDialog->setFilePixmapAndSize (
         kpPixmapFX::convertToPixmapAsLosslessAsPossible (image),
         data.size ());

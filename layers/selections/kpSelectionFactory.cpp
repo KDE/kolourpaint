@@ -76,7 +76,7 @@ kpAbstractImageSelection *kpSelectionFactory::FromStream (QDataStream &stream,
     // Unknown selection type?
     if (imageSel == 0)
     {
-        // TODO: You could kill KolourPaint/KDE 3 by sending a bogus selection
+        // KDE3: TODO: You could kill KolourPaint/KDE 3 by sending a bogus selection
         //       over the clipboard.
         return 0;
     }
