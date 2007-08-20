@@ -312,6 +312,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/options/kpToolWidgetSpraycanSize.cp
 )  # set(kolourpaint_SRCS
 
 set(kolourpaint_lgpl_SRCS
+    ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/kpUrlFormatter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/kpColorCollection.cpp
     )
 
@@ -323,7 +324,7 @@ set(kolourpaint_lgpl_SRCS
 
 kde4_add_library(kolourpaint_lgpl SHARED ${kolourpaint_lgpl_SRCS})
 
-target_link_libraries(kolourpaint_lgpl ${KDE4_KDEUI_LIBS})
+target_link_libraries(kolourpaint_lgpl ${KDE4_KDEPRINT_LIBS})
 set_target_properties(kolourpaint_lgpl PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION})
 
 install(TARGETS kolourpaint_lgpl DESTINATION ${LIB_INSTALL_DIR})
