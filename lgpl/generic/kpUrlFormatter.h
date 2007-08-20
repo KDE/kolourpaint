@@ -35,13 +35,15 @@
 #ifndef kpUrlFormatter_H
 #define kpUrlFormatter_H
 
+#include <kolourpaint_lgpl_export.h>
+
 
 class QString;
 
 class KUrl;
 
 
-class kpUrlFormatter
+class KOLOURPAINT_LGPL_EXPORT kpUrlFormatter
 {
 public:
     // (will convert: empty Url --> "Untitled")
