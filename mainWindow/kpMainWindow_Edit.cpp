@@ -73,26 +73,44 @@
 kpPixmapFX::WarnAboutLossInfo kpMainWindow::pasteWarnAboutLossInfo ()
 {
     return kpPixmapFX::WarnAboutLossInfo (
-               ki18n ("The image to be pasted"
-                     " may have more colors than the current screen mode."
-                     " In order to display it, some colors may be changed."
-                     " Try increasing your screen depth to at least %1bpp."
+        ki18n ("<qt><p>The image to be pasted"
+            " may have more colors than the current screen mode can support."
+            " In order to display it, some color information may be removed.</p>"
 
-                     "\nIt also"
+            "<p><b>If you save this image, any color loss will become"
+            " permanent.</b></p>"
 
-                     " contains translucency which is not fully"
-                     " supported. The translucency data will be"
-                     " approximated with a 1-bit transparency mask."),
-               ki18n ("The image to be pasted"
-                     " may have more colors than the current screen mode."
-                     " In order to display it, some colors may be changed."
-                     " Try increasing your screen depth to at least %1bpp."),
-               i18n ("The image to be pasted"
-                     " contains translucency which is not fully"
-                     " supported. The translucency data will be"
-                     " approximated with a 1-bit transparency mask."),
-               "paste",
-               this);
+            "<p>To avoid this issue, increase your screen depth to at"
+            " least %1bpp and then restart KolourPaint.</p>"
+
+            "<hr/>"
+            
+            "<p>It also"
+
+            " contains translucency which is not fully"
+            " supported. The translucency data will be"
+            " approximated with a 1-bit transparency mask.</p>"
+
+            "<p><b>If you save this image, this loss of translucency will"
+            " become permanent.</b></p></qt>"),
+        ki18n ("<qt><p>The image to be pasted"
+            " may have more colors than the current screen mode can support."
+            " In order to display it, some color information may be removed.</p>"
+
+            "<p><b>If you save this image, any color loss will become"
+            " permanent.</b></p>"
+
+            "<p>To avoid this issue, increase your screen depth to at"
+            " least %1bpp and then restart KolourPaint.</p></qt>"),
+        i18n ("<qt><p>The image to be pasted"
+            " contains translucency which is not fully"
+            " supported. The translucency data will be"
+            " approximated with a 1-bit transparency mask.</p>"
+
+            "<p><b>If you save this image, this loss of translucency will"
+            " become permanent.</b></p></qt>"),
+        "paste",
+        this);
 }
 
 

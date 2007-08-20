@@ -175,12 +175,15 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
 
     QApplication::setOverrideCursor (Qt::ArrowCursor);
 
+    // TODO: We really need something like KMessageBox::warning() as the
+    //       messages are about data loss.
+    
     if (moreColorsThanDisplay && hasAlphaChannel)
     {
         KMessageBox::information (wali.m_parent,
             wali.m_moreColorsThanDisplayAndHasAlphaChannelMessage
                 .subs (screenDepthNeeded).toString (),
-            QString(),  // or would you prefer "Low Screen Depth and Image Contains Transparency"? :)
+            i18n ("Loss of Color and Translucency Information"),
             colorDepthTranslucencyDontAskAgain);
 
         if (!KMessageBox::shouldBeShownContinue (colorDepthTranslucencyDontAskAgain))
@@ -194,14 +197,14 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
         KMessageBox::information (wali.m_parent,
             wali.m_moreColorsThanDisplayMessage
                 .subs (screenDepthNeeded).toString (),
-            i18n ("Low Screen Depth"),
+            i18n ("Loss of Color Information"),
             colorDepthDontAskAgain);
     }
     else if (hasAlphaChannel)
     {
         KMessageBox::information (wali.m_parent,
             wali.m_hasAlphaChannelMessage,
-            i18n ("Image Contains Translucency"),
+            i18n ("Loss of Translucency Information"),
             translucencyDontAskAgain);
     }
 

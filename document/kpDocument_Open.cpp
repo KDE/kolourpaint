@@ -65,6 +65,7 @@
 #include <kpPixmapFX.h>
 #include <kpTool.h>
 #include <kpToolToolBar.h>
+#include <kpUrlFormatter.h>
 #include <kpViewManager.h>
 
 
@@ -198,7 +199,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
             // TODO: Have captions for all dialogs in KolourPaint.
             KMessageBox::sorry (parent,
                                 i18n ("Could not open \"%1\".",
-                                      kpDocument::prettyFilenameForURL (url)));
+                                      kpUrlFormatter::prettyFilename (url)));
         }
 
         return QPixmap ();
@@ -232,7 +233,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
         {
             KMessageBox::sorry (parent,
                                 i18n ("Could not open \"%1\" - unknown mimetype.",
-                                    kpDocument::prettyFilenameForURL (url)));
+                                    kpUrlFormatter::prettyFilename (url)));
             KIO::NetAccess::removeTempFile (tempFile);
             return QPixmap ();
         }
@@ -247,33 +248,51 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
         KMessageBox::sorry (parent,
                             i18n ("Could not open \"%1\" - unsupported image format.\n"
                                   "The file may be corrupt.",
-                                  kpDocument::prettyFilenameForURL (url)));
+                                  kpUrlFormatter::prettyFilename (url)));
         return QPixmap ();
     }
 
     const QPixmap newPixmap = kpDocument::convertToPixmapAsLosslessAsPossible (image,
         kpPixmapFX::WarnAboutLossInfo (
-             ki18n ("The image \"%1\""
-                   " may have more colors than the current screen mode."
-                   " In order to display it, some colors may be changed."
-                   " Try increasing your screen depth to at least %2bpp."
+             ki18n ("<qt><p>The image \"%1\""
+                    " may have more colors than the current screen mode can support."
+                    " In order to display it, some color information may be removed.</p>"
 
-                   "\nIt also"
+                    "<p><b>If you save this image, any color loss will become"
+                    " permanent.</b></p>"
+                   
+                    "<p>To avoid this issue, increase your screen depth to at"
+                    " least %2bpp and then restart KolourPaint.</p>"
 
+                    "<hr/>"
+                    
+                    "<p>It also"
+
+                    " contains translucency which is not fully"
+                    " supported. The translucency data will be"
+                    " approximated with a 1-bit transparency mask.</p>"
+
+                    "<p><b>If you save this image, this loss of translucency will"
+                    " become permanent.</b></p></qt>")
+                .subs (kpUrlFormatter::prettyFilename (url)),
+             ki18n ("<qt><p>The image \"%1\""
+                    " may have more colors than the current screen mode can support."
+                    " In order to display it, some color information may be removed.</p>"
+
+                    "<p><b>If you save this image, any color loss will become"
+                    " permanent.</b></p>"
+                   
+                    "<p>To avoid this issue, increase your screen depth to at"
+                    " least %2bpp and then restart KolourPaint.</p></qt>")
+                .subs (kpUrlFormatter::prettyFilename (url)),
+             i18n ("<qt><p>The image \"%1\""
                    " contains translucency which is not fully"
                    " supported. The translucency data will be"
-                   " approximated with a 1-bit transparency mask.")
-                   .subs (prettyFilenameForURL (url)),
-             ki18n ("The image \"%1\""
-                   " may have more colors than the current screen mode."
-                   " In order to display it, some colors may be changed."
-                   " Try increasing your screen depth to at least %2bpp.")
-                   .subs (prettyFilenameForURL (url)),
-             i18n ("The image \"%1\""
-                   " contains translucency which is not fully"
-                   " supported. The translucency data will be"
-                   " approximated with a 1-bit transparency mask.",
-                   prettyFilenameForURL (url)),
+                   " approximated with a 1-bit transparency mask.</p>"
+
+                   "<p><b>If you save this image, this loss of translucency will"
+                   " become permanent.</b></p></qt>",
+                   kpUrlFormatter::prettyFilename (url)),
             "docOpen",
             parent),
         saveOptions,
@@ -283,7 +302,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
     {
         KMessageBox::sorry (parent,
                             i18n ("Could not open \"%1\" - out of graphics memory.",
-                                  kpDocument::prettyFilenameForURL (url)));
+                                  kpUrlFormatter::prettyFilename (url)));
         return QPixmap ();
     }
 

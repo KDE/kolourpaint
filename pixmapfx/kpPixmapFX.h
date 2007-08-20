@@ -87,32 +87,58 @@ public:
     //
     // Dialog info for warning about data loss with convertToPixmap().
     //
+    // Currently (2007-08-20), instances are only created in:
+    //
+    // 1. kpDocument::getPixmapFromFile()
+    // 2. kpMainWindow::pasteWarnAboutLossInfo ()
+    //
+    // KDE3: Backport message changes (which do justice to the seriousness of
+    //       the issues) to KDE 3.
+    //
     struct WarnAboutLossInfo
     {
         // <moreColorsThanDisplayAndHasAlphaChannelMessage>:
         //
-        //     ki18n ("The (image \"example.jpg\"|image from the clipboard)"
-        //           " may have more colors than the current screen mode."
-        //           " In order to display it, some colors may be changed."
-        //           " Try increasing your screen depth to at least %1bpp."  <-- HITODO: We should tell them to then restart KolourPaint and reload the image.  Maybe backport to KDE 3.5 branch as well, after string freeze.
+        //     ki18n ("<qt><p>The (image \"example.jpg\"|image to be pasted)"
+        //            " may have more colors than the current screen mode can support."
+        //            " In order to display it, some color information may be removed.</p>"
         //
-        //           "\nIt also"
+        //            "<p><b>If you save this image, any color loss will become"
+        //            " permanent.</b></p>"
         //
-        //           " contains translucency which is not fully"
-        //           " supported. The translucency data will be"
-        //           " approximated with a 1-bit transparency mask.")
+        //            "<p>To avoid this issue, increase your screen depth to at"
+        //            " least %1bpp and then restart KolourPaint.</p>"
+        //
+        //            "<hr/>"
+        //
+        //            "<p>It also"
+        //
+        //            " contains translucency which is not fully"
+        //            " supported. The translucency data will be"
+        //            " approximated with a 1-bit transparency mask.</p>"
+        //
+        //            "<p><b>If you save this image, this loss of translucency will"
+        //            " become permanent.</b></p></qt>")
         //
         // <moreColorsThanDisplayMessage>:
-        //     ki18n ("The (image \"example.jpg\"|image from the clipboard)"
-        //           " may have more colors than the current screen mode."
-        //           " In order to display it, some colors may be changed."
-        //           " Try increasing your screen depth to at least %1bpp.")
+        //     ki18n ("<qt><p>The (image \"example.jpg\"|image to be pasted)"
+        //            " may have more colors than the current screen mode can support."
+        //            " In order to display it, some color information may be removed.</p>"
+        //
+        //            "<p><b>If you save this image, any color loss will become"
+        //            " permanent.</b></p>"
+        //
+        //            "<p>To avoid this issue, increase your screen depth to at"
+        //            " least %1bpp and then restart KolourPaint.</p></qt>")
         //
         // <hasAlphaChannelMessage>:
-        //     i18n ("The (image \"example.jpg\"|image from the clipboard)"
+        //     i18n ("<qt><p>The (image \"example.jpg\"|image to be pasted)"
         //           " contains translucency which is not fully"
         //           " supported. The translucency data will be"
-        //           " approximated with a 1-bit transparency mask.")
+        //           " approximated with a 1-bit transparency mask.</p>"
+        //
+        //           "<p><b>If you save this image, this loss of translucency will"
+        //           " become permanent.</b></p></qt>")
         //
         // <dontAskAgainPrefix>:
         //
@@ -122,7 +148,8 @@ public:
         //
         //     Dialog parent
         //
-        WarnAboutLossInfo (const KLocalizedString &moreColorsThanDisplayAndHasAlphaChannelMessage,
+        WarnAboutLossInfo (
+                const KLocalizedString &moreColorsThanDisplayAndHasAlphaChannelMessage,
                 const KLocalizedString &moreColorsThanDisplayMessage,
                 const QString &hasAlphaChannelMessage,
                 const QString &dontAskAgainPrefix,
