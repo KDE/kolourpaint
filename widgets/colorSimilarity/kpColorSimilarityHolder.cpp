@@ -71,7 +71,7 @@ QString kpColorSimilarityHolder::WhatsThisWithClickInstructions ()
 {
     return i18n ("<qt>"
         "<p><b>Color Similarity</b> is how <i>similar</i> the colors of different pixels"
-        " must be, for operations to consider them to be the same."
+        " must be, for operations to consider them to be the same.</p>"
 
         "<p>If you set it to something other than <b>Exact Match</b>,"
         " you can work more effectively with dithered"
@@ -96,7 +96,7 @@ QString kpColorSimilarityHolder::WhatsThisWithClickInstructions ()
 
         "<li><b>Autocrop</b> and <b>Remove Internal Border</b>: For"
         " borders with <i>similar</i> - but not identical - colored pixels,"
-        " a higher setting is more likely to crop the whole border."
+        " a higher setting is more likely to crop the whole border.</li>"
 
         "</ul>"
         
@@ -121,7 +121,7 @@ QString kpColorSimilarityHolder::WhatsThis ()
 {
     return i18n ("<qt>"
         "<p><b>Color Similarity</b> is how <i>similar</i> the colors of different pixels"
-        " must be, for operations to consider them to be the same."
+        " must be, for operations to consider them to be the same.</p>"
 
         "<p>If you set it to something other than <b>Exact Match</b>,"
         " you can work more effectively with dithered"
@@ -146,7 +146,7 @@ QString kpColorSimilarityHolder::WhatsThis ()
 
         "<li><b>Autocrop</b> and <b>Remove Internal Border</b>: For"
         " borders with <i>similar</i> - but not identical - colored pixels,"
-        " a higher setting is more likely to crop the whole border."
+        " a higher setting is more likely to crop the whole border.</li>"
 
         "</ul>"
         
