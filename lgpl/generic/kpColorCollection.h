@@ -85,15 +85,15 @@ public:
    kpColorCollection& operator=( const kpColorCollection &);
 
    // Added for KolourPaint.
-   bool open(const KUrl &url);
-   bool saveAs(const KUrl &url) const;
+   bool open(const KUrl &url, QWidget *parent);
+   bool saveAs(const KUrl &url, QWidget *parent) const;
 
    /**
     * Save the collection
     *
     * @return 'true' if successful
     **/
-   bool save() const;
+   bool save(QWidget *parent) const;
 
    /**
     * Get the description of the collection.

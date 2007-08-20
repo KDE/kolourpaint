@@ -204,7 +204,7 @@ void kpColorCells::makeCellsMatchColorCollection ()
 
     // COMPAT: Get cell dimensions exactly as claimed by these variables.
     //         I suspect frameWidth() isn't right.
-    // TODO: It wasn't right in KDE 3.4 either (haven't checked 3.5).
+    // TODO: KDE3: It wasn't right in KDE 3.4 either (haven't checked 3.5).
     int CellWidth = ::PaletteCellSize (d->colorCol),
         CellHeight = ::PaletteCellSize (d->colorCol);
 
@@ -288,7 +288,7 @@ void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const 
 
 bool kpColorCells::openColorCollection (const KUrl &url)
 {
-    if (d->colorCol.open (url))
+    if (d->colorCol.open (url, this))
     {
         d->url = url;
         d->isModified = false;
@@ -303,7 +303,7 @@ bool kpColorCells::openColorCollection (const KUrl &url)
 
 bool kpColorCells::saveColorCollectionAs (const KUrl &url)
 {
-    if (d->colorCol.saveAs (url))
+    if (d->colorCol.saveAs (url, this))
     {
         d->url = url;
         d->isModified = false;

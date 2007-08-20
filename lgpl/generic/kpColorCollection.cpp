@@ -24,11 +24,17 @@
 
 #include <QtCore/QFile>
 #include <QtCore/QTextIStream>
-#include <kstandarddirs.h>
+
 #include <kglobal.h>
+#include <kio/netaccess.h>
+#include <KLocale>
+#include <KMessageBox>
 #include <ksavefile.h>
+#include <kstandarddirs.h>
 #include <kstringhandler.h>
 #include <KUrl>
+
+#include <kpUrlFormatter.h>
 
 struct ColorNode
 {
@@ -91,7 +97,7 @@ kpColorCollection::kpColorCollection(const QString &name)
   QString filename = KStandardDirs::locate("config", "colors/"+name);
   if (filename.isEmpty()) return;
 
-  open (KUrl (filename));
+  open (KUrl (filename), 0/*HITODO: correct widget*/);
 }
 
 kpColorCollection::kpColorCollection(const kpColorCollection &p)
@@ -106,17 +112,30 @@ kpColorCollection::~kpColorCollection()
 }
 
 bool
-kpColorCollection::open(const KUrl &url)
+kpColorCollection::open(const KUrl &url, QWidget *parent)
 {
    // HITODO: This is wrong for remote files.
   QFile paletteFile(url.path ());
-  if (!paletteFile.exists()) return false;
-  if (!paletteFile.open(QIODevice::ReadOnly)) return false;
+  if (!paletteFile.exists() ||
+      !paletteFile.open(QIODevice::ReadOnly))
+  {
+     KMessageBox::sorry (parent,
+        i18n ("Could not open color palette \"%1\".",
+              kpUrlFormatter::prettyFilename (url)));
+     return false;
+  }
 
   // Read first line
   // Expected "GIMP Palette"
   QString line = QString::fromLocal8Bit(paletteFile.readLine());
-  if (line.indexOf(" Palette") == -1) return false;
+  if (line.indexOf(" Palette") == -1)
+  {
+     KMessageBox::sorry (parent,
+        i18n ("Could not open color palette \"%1\" - unsupported format.\n"
+              "The file may be corrupt.",
+              kpUrlFormatter::prettyFilename (url)));
+     return false;
+  }
 
   QList <ColorNode> newColorList;
   QString newDesc;
@@ -158,14 +177,39 @@ kpColorCollection::open(const KUrl &url)
   return true;
 }
 
-bool
-kpColorCollection::saveAs(const KUrl &url) const
+static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
 {
+    // TODO: use file.errorString()
+    KMessageBox::error (parent,
+                        i18n ("Could not save color palette as \"%1\".",
+                              kpUrlFormatter::prettyFilename (url)));
+}
+
+bool
+kpColorCollection::saveAs(const KUrl &url, QWidget *parent) const
+{
+   if (KIO::NetAccess::exists (url, KIO::NetAccess::DestinationSide/*write*/, parent))
+   {
+       int result = KMessageBox::warningContinueCancel (parent,
+          i18n ("A color palette called \"%1\" already exists.\n"
+                "Do you want to overwrite it?",
+                kpUrlFormatter::prettyFilename (url)),
+          QString (),
+          KGuiItem (i18n ("Overwrite")));
+       if (result != KMessageBox::Continue)
+          return false;
+   }
+
    // HITODO: This is wrong for remote files.
    const QString filename = url.path ();
 
    KSaveFile sf(filename);
-   if (!sf.open()) return false;
+   if (!sf.open())
+   {
+      ::CouldNotSaveDialog (url, parent);
+      return false;
+   }
+
 
    QTextStream str ( &sf );
 
@@ -182,14 +226,20 @@ kpColorCollection::saveAs(const KUrl &url) const
    }
 
    sf.flush();
-   return sf.finalize();
+   if (!sf.finalize())
+   {
+      ::CouldNotSaveDialog (url, parent);
+      return false;
+   }
+
+   return true;
 }
 
 bool
-kpColorCollection::save() const
+kpColorCollection::save(QWidget *parent) const
 {
    QString filename = KStandardDirs::locateLocal("config", "colors/" + d->name);
-   return saveAs (KUrl (filename));
+   return saveAs (KUrl (filename), parent);
 }
 
 QString kpColorCollection::description() const
