@@ -52,7 +52,7 @@
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kmimetype.h>  // TODO: isn't this in KIO?
+#include <kmimetype.h>  // LOTODO: isn't this in KIO?
 #include <ktemporaryfile.h>
 
 #include <kpAbstractSelection.h>
@@ -67,6 +67,7 @@
 #include <kpPixmapFX.h>
 #include <kpTool.h>
 #include <kpToolToolBar.h>
+#include <kpUrlFormatter.h>
 #include <kpViewManager.h>
 
 
@@ -153,35 +154,16 @@ bool kpDocument::isFromURL (bool checkURLStillExists) const
 }
 
 
-// static
-QString kpDocument::prettyURLForURL (const KUrl &url)
-{
-    if (url.isEmpty ())
-        return i18n ("Untitled");
-    else
-        return url.pathOrUrl ();
-}
-
+// public
 QString kpDocument::prettyUrl () const
 {
-    return prettyURLForURL (m_url);
+    return kpUrlFormatter::prettyUrl (m_url);
 }
 
-
-// static
-QString kpDocument::prettyFilenameForURL (const KUrl &url)
-{
-    if (url.isEmpty ())
-        return i18n ("Untitled");
-    else if (url.fileName ().isEmpty ())
-        return prettyURLForURL (url);  // better than the name ""
-    else
-        return url.fileName ();
-}
-
+// public
 QString kpDocument::prettyFilename () const
 {
-    return prettyFilenameForURL (m_url);
+    return kpUrlFormatter::prettyFilename (m_url);
 }
 
 

@@ -66,6 +66,7 @@
 #include <kpPixmapFX.h>
 #include <kpTool.h>
 #include <kpToolToolBar.h>
+#include <kpUrlFormatter.h>
 #include <kpViewManager.h>
 
 
@@ -270,7 +271,7 @@ static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
     // TODO: use file.errorString()
     KMessageBox::error (parent,
                         i18n ("Could not save as \"%1\".",
-                              kpDocument::prettyFilenameForURL (url)));
+                              kpUrlFormatter::prettyFilename (url)));
 }
 
 // public static
@@ -298,7 +299,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         int result = KMessageBox::warningContinueCancel (parent,
             i18n ("A document called \"%1\" already exists.\n"
                   "Do you want to overwrite it?",
-                  prettyFilenameForURL (url)),
+                  kpUrlFormatter::prettyFilename (url)),
             QString(),
             KGuiItem(i18n ("Overwrite")));
 

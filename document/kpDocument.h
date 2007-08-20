@@ -135,12 +135,10 @@ public:
     // outside of KolourPaint).
     bool isFromURL (bool checkURLStillExists = true) const;
 
-    // (will convert: empty URL --> "Untitled")
-    static QString prettyURLForURL (const KUrl &url);
+    // (will convert: empty Url --> "Untitled")
     QString prettyUrl () const;
 
-    // (will convert: empty URL --> "Untitled")
-    static QString prettyFilenameForURL (const KUrl &url);
+    // (will convert: empty Url --> "Untitled")
     QString prettyFilename () const;
 
     // (guaranteed to return valid pointer)
