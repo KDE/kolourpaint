@@ -63,26 +63,52 @@ kpColorSimilarityHolder::~kpColorSimilarityHolder ()
 }
 
 
-// HITODO: We need a better explanation.  Get text from the handbook?
-
 // Don't cause the translators grief by appending strings etc.
 // - duplicate text with 2 cases
 
 // public static
 QString kpColorSimilarityHolder::WhatsThisWithClickInstructions ()
 {
-    return i18n ("<qt><p><b>Color Similarity</b> is how close "
-        "colors must be in the RGB Color Cube "
-        "to be considered the same.</p>"
+    return i18n ("<qt>"
+        "<p><b>Color Similarity</b> is how <i>similar</i> the colors of different pixels"
+        " must be, for operations to consider them to be the same."
 
-        "<p>If you set it to something "
-        "other than <b>Exact Match</b>, "
-        "you can work more effectively with dithered "
-        "images and photos.</p>"
+        "<p>If you set it to something other than <b>Exact Match</b>,"
+        " you can work more effectively with dithered"
+        " images and photos, in a comparable manner to the \"Magic Wand\""
+        " feature of other paint programs.</p>"
 
-        "<p>This feature applies to transparent selections, as well as "
-        "the Flood Fill, Color Eraser and Autocrop / Remove Internal Border "
-        "tools.</p>"
+        "<p>This feature applies to:</p>"
+
+        "<ul>"
+         
+        "<li><b>Selections</b>: In <b>Transparent</b> mode, any color in the"
+        " selection that is <i>similar</i> to the background color will"
+        " be made transparent.</li>"
+
+        "<li><b>Flood Fill</b>: For regions with <i>similar</i> - but not"
+        " identical - colored pixels, a higher setting is likely to"
+        " fill more pixels.</li>"
+        
+        "<li><b>Color Eraser</b>: Any pixel whose color is <i>similar</i>"
+        " to the foreground color will be replaced with the background"
+        " color.</li>"
+
+        "<li><b>Autocrop</b> and <b>Remove Internal Border</b>: For"
+        " borders with <i>similar</i> - but not identical - colored pixels,"
+        " a higher setting is more likely to crop the whole border."
+
+        "</ul>"
+        
+        "<p>Higher settings mean that operations consider an increased range"
+        " of colors to be sufficiently <i>similar</i> so as to be the same.  Therefore,"
+        " you should increase the setting if the above operations are not"
+        " affecting pixels whose colors you consider to be similar enough.</p>"
+
+        "<p>However, if they are having too much of an effect and are changing"
+        " pixels whose colors you do not consider to be similar"
+        " (e.g. if <b>Flood Fill</b> is changing too many pixels), you"
+        " should decrease this setting.</p>"
 
         // sync: Compared to the other string below, we've added this line.
         "<p>To configure it, click on the cube.</p>"
@@ -93,18 +119,46 @@ QString kpColorSimilarityHolder::WhatsThisWithClickInstructions ()
 // public static
 QString kpColorSimilarityHolder::WhatsThis ()
 {
-    return i18n ("<qt><p><b>Color Similarity</b> is how close "
-        "colors must be in the RGB Color Cube "
-        "to be considered the same.</p>"
+    return i18n ("<qt>"
+        "<p><b>Color Similarity</b> is how <i>similar</i> the colors of different pixels"
+        " must be, for operations to consider them to be the same."
 
-        "<p>If you set it to something "
-        "other than <b>Exact Match</b>, "
-        "you can work more effectively with dithered "
-        "images and photos.</p>"
+        "<p>If you set it to something other than <b>Exact Match</b>,"
+        " you can work more effectively with dithered"
+        " images and photos, in a comparable manner to the \"Magic Wand\""
+        " feature of other paint programs.</p>"
 
-        "<p>This feature applies to transparent selections, as well as "
-        "the Flood Fill, Color Eraser and Autocrop / Remove Internal Border "
-        "tools.</p>"
+        "<p>This feature applies to:</p>"
+
+        "<ul>"
+         
+        "<li><b>Selections</b>: In <b>Transparent</b> mode, any color in the"
+        " selection that is <i>similar</i> to the background color will"
+        " be made transparent.</li>"
+
+        "<li><b>Flood Fill</b>: For regions with <i>similar</i> - but not"
+        " identical - colored pixels, a higher setting is likely to"
+        " fill more pixels.</li>"
+        
+        "<li><b>Color Eraser</b>: Any pixel whose color is <i>similar</i>"
+        " to the foreground color will be replaced with the background"
+        " color.</li>"
+
+        "<li><b>Autocrop</b> and <b>Remove Internal Border</b>: For"
+        " borders with <i>similar</i> - but not identical - colored pixels,"
+        " a higher setting is more likely to crop the whole border."
+
+        "</ul>"
+        
+        "<p>Higher settings mean that operations consider an increased range"
+        " of colors to be sufficiently <i>similar</i> so as to be the same.  Therefore,"
+        " you should increase the setting if the above operations are not"
+        " affecting pixels whose colors you consider to be similar enough.</p>"
+
+        "<p>However, if they are having too much of an effect and are changing"
+        " pixels whose colors you do not consider to be similar"
+        " (e.g. if <b>Flood Fill</b> is changing too many pixels), you"
+        " should decrease this setting.</p>"
 
         "</qt>");
 }
