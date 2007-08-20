@@ -584,7 +584,9 @@ private slots:
     void slotColorsDefault ();
     void slotColorsKDE ();
     void slotColorsOpen ();
+    void slotColorsReload ();
 
+    void slotColorsSave ();
     void slotColorsSaveAs ();
 
     void slotColorsAppendRow ();

@@ -206,9 +206,9 @@ struct kpMainWindowPrivate
 
     QAction *actionColorsDefault;
     KSelectAction *actionColorsKDE;
-    QAction *actionColorsOpen;
+    QAction *actionColorsOpen, *actionColorsReload;
 
-    QAction *actionColorsSaveAs;
+    QAction *actionColorsSave, *actionColorsSaveAs;
 
     QAction *actionColorsAppendRow;
     QAction *actionColorsDeleteRow;

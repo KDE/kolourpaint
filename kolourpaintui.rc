@@ -4,7 +4,7 @@ SYNC: Do not change the number of quotes before the version number
       - it is parsed by the KolourPaint wrapper shell script (in standalone
       backport releases of KolourPaint)
 -->
-<gui name="kolourpaint" version="58">
+<gui name="kolourpaint" version="59">
 
 <!--
 SYNC: Check for duplicate actions in menus caused by some of our actions
@@ -101,7 +101,10 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
         <Action name="colors_kde" />
         <Action name="colors_open" />
         <Separator />
+        <Action name="colors_save" />
         <Action name="colors_save_as" />
+        <Separator />
+        <Action name="colors_reload" />
         <Separator />
         <Action name="colors_append_row" />
         <Action name="colors_delete_row" />

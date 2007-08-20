@@ -32,10 +32,12 @@
 #include <KAction>
 #include <KActionCollection>
 #include <KFileDialog>
-#include <kpColorCollection.h>
+#include <KMessageBox>
 #include <KSelectAction>
+#include <KStandardGuiItem>
 
 #include <kpColorCells.h>
+#include <kpColorCollection.h>
 #include <kpColorToolBar.h>
 
 
@@ -62,16 +64,25 @@ void kpMainWindow::setupColorsMenuActions ()
         SLOT (slotColorsKDE ()));
     foreach (QString colName, ::KDEColorCollectionNames ())
         d->actionColorsKDE->addAction (colName);
-    // TODO: Add refresh submenu item.
 
     d->actionColorsOpen = ac->addAction ("colors_open");
-    d->actionColorsOpen->setText (i18n ("Use File..."));
+    d->actionColorsOpen->setText (i18n ("&Open..."));
     connect (d->actionColorsOpen, SIGNAL (triggered (bool)),
         SLOT (slotColorsOpen ()));
 
+    d->actionColorsReload = ac->addAction ("colors_reload");
+    d->actionColorsReload->setText (i18n ("Reloa&d"));
+    connect (d->actionColorsReload, SIGNAL (triggered (bool)),
+        SLOT (slotColorsReload ()));
 
+
+    d->actionColorsSave = ac->addAction ("colors_save");
+    d->actionColorsSave->setText (i18n ("&Save"));
+    connect (d->actionColorsSave, SIGNAL (triggered (bool)),
+        SLOT (slotColorsSave ()));
+    
     d->actionColorsSaveAs = ac->addAction ("colors_save_as");
-    d->actionColorsSaveAs->setText (i18n ("Save As..."));
+    d->actionColorsSaveAs->setText (i18n ("Save &As..."));
     connect (d->actionColorsSaveAs, SIGNAL (triggered (bool)),
         SLOT (slotColorsSaveAs ()));
 
@@ -147,7 +158,7 @@ void kpMainWindow::slotColorsOpen ()
     toolEndShape ();
 
     KFileDialog fd (colorCells ()->url (), QString()/*filter*/, this);
-    fd.setCaption (i18n ("Open Colors"));
+    fd.setCaption (i18n ("Open Color Palette"));
     fd.setOperationMode (KFileDialog::Opening);
 
     if (fd.exec ())
@@ -160,6 +171,47 @@ void kpMainWindow::slotColorsOpen ()
     }
 }
 
+// private slot
+#include <kpDocument.h>
+void kpMainWindow::slotColorsReload ()
+{
+    // TODO: Put in right place! - queryColorCloseOrSimilar
+    int result = KMessageBox::warningYesNoCancel (this,
+                     i18n ("The color palette \"%1\" has been modified.\n"
+                           "Do you want to save it?",
+                           d->document->prettyFilename ()),
+                    QString()/*caption*/,
+                    KStandardGuiItem::save (), KStandardGuiItem::discard ());
+
+    result = KMessageBox::warningContinueCancel (this,
+                    i18n ("The color palette \"%1\" has been modified.\n"
+                        "Reloading will lose all changes since you last saved it.\n"
+                        "Are you sure?",
+                        d->document->prettyFilename ()),
+                    QString()/*caption*/,
+                    KGuiItem(i18n ("&Reload")));
+
+
+    result = KMessageBox::warningYesNoCancel (this,
+                     i18n ("The color palette has been modified.\n"
+                           "Do you want to save it to a file?"),
+                    QString()/*caption*/,
+                    KStandardGuiItem::save (), KStandardGuiItem::discard ());
+
+    result = KMessageBox::warningContinueCancel (this,
+                    i18n ("The color palette has been modified.\n"
+                        "Reloading will lose all changes.\n"
+                        "Are you sure?"),
+                    QString()/*caption*/,
+                    KGuiItem(i18n ("&Reload")));
+
+}
+
+
+// private slot
+void kpMainWindow::slotColorsSave ()
+{
+}
 
 // private slot
 void kpMainWindow::slotColorsSaveAs ()
@@ -168,7 +220,7 @@ void kpMainWindow::slotColorsSaveAs ()
     toolEndShape ();
 
     KFileDialog fd (colorCells ()->url (), QString()/*filter*/, this);
-    fd.setCaption (i18n ("Save Colors As"));
+    fd.setCaption (i18n ("Save Color Palette As"));
     fd.setOperationMode (KFileDialog::Saving);
 
     if (fd.exec ())
