@@ -686,7 +686,7 @@ bool kpMainWindow::slotSave ()
 // private
 KUrl kpMainWindow::askForSaveURL (const QString &caption,
                                   const QString &startURL,
-                                  const QPixmap &pixmapToBeSaved,
+                                  const kpImage &imageToBeSaved,
                                   const kpDocumentSaveOptions &startSaveOptions,
                                   const kpDocumentMetaInfo &docMetaInfo,
                                   const QString &forcedSaveOptionsGroup,
@@ -790,7 +790,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 #endif
 
     kpDocumentSaveOptionsWidget *saveOptionsWidget =
-        new kpDocumentSaveOptionsWidget (pixmapToBeSaved,
+        new kpDocumentSaveOptionsWidget (imageToBeSaved,
             fdSaveOptions,
             docMetaInfo,
             0/*COMPAT: port - somehow, this was broken by the selection API changes*/);
@@ -1083,7 +1083,7 @@ void kpMainWindow::sendFilenameToPrinter (KPrinter *printer)
 
 
 // private
-void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
+void kpMainWindow::sendImageToPrinter (KPrinter *printer,
         bool showPrinterSetupDialog)
 {
     // Get image to be printed.
@@ -1096,7 +1096,7 @@ void kpMainWindow::sendPixmapToPrinter (KPrinter *printer,
     double pixmapDotsPerMeterY =
         double (d->document->metaInfo ()->dotsPerMeterY ());
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::sendPixmapToPrinter() pixmap:"
+    kDebug () << "kpMainWindow::sendImageToPrinter() pixmap:"
                << " width=" << pixmap.width ()
                << " height=" << pixmap.height ()
                << " dotsPerMeterX=" << pixmapDotsPerMeterX
@@ -1281,7 +1281,7 @@ void kpMainWindow::slotPrint ()
     KPrinter printer;
     printer.addDialogPage (new kpPrintDialogPage (this));
 
-    sendPixmapToPrinter (&printer, true/*showPrinterSetupDialog*/);
+    sendImageToPrinter (&printer, true/*showPrinterSetupDialog*/);
 }
 
 // private slot
@@ -1297,7 +1297,7 @@ void kpMainWindow::slotPrintPreview ()
     // TODO: pass "this" as parent
     printer.setPreviewOnly (true);
 
-    sendPixmapToPrinter (&printer, false/*don't showPrinterSetupDialog*/);
+    sendImageToPrinter (&printer, false/*don't showPrinterSetupDialog*/);
 }
 
 

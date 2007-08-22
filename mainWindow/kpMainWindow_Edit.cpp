@@ -332,11 +332,11 @@ void kpMainWindow::slotEnablePaste ()
 
 
 // private
-QRect kpMainWindow::calcUsefulPasteRect (int pixmapWidth, int pixmapHeight)
+QRect kpMainWindow::calcUsefulPasteRect (int imageWidth, int imageHeight)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
     kDebug () << "kpMainWindow::calcUsefulPasteRect("
-               << pixmapWidth << "," << pixmapHeight
+               << imageWidth << "," << imageHeight
                << ")"
                << endl;
 #endif
@@ -355,17 +355,17 @@ QRect kpMainWindow::calcUsefulPasteRect (int pixmapWidth, int pixmapHeight)
 
         const QPoint docTopLeft = d->mainView->transformViewToDoc (viewTopLeft);
 
-        if ((docTopLeft.x () + pixmapWidth <= d->document->width () &&
-             docTopLeft.y () + pixmapHeight <= d->document->height ()) ||
-            pixmapWidth <= docTopLeft.x () ||
-            pixmapHeight <= docTopLeft.y ())
+        if ((docTopLeft.x () + imageWidth <= d->document->width () &&
+             docTopLeft.y () + imageHeight <= d->document->height ()) ||
+            imageWidth <= docTopLeft.x () ||
+            imageHeight <= docTopLeft.y ())
         {
             return QRect (docTopLeft.x (), docTopLeft.y (),
-                          pixmapWidth, pixmapHeight);
+                          imageWidth, imageHeight);
         }
     }
 
-    return QRect (0, 0, pixmapWidth, pixmapHeight);
+    return QRect (0, 0, imageWidth, imageHeight);
 }
 
 // private
@@ -624,7 +624,7 @@ void kpMainWindow::slotPaste ()
 
 
     //
-    // Acquire the pixmap
+    // Acquire the image.
     //
 
     QMimeSource *ms = QApplication::clipboard ()->data (QClipboard::Clipboard);
@@ -763,7 +763,7 @@ void kpMainWindow::slotSelectAll ()
     if (d->document->selection ())
         slotDeselect ();
 
-    // just the border - don't actually pull pixmap from doc yet
+    // just the border - don't actually pull image from doc yet
     d->document->setSelection (
         kpRectangularImageSelection (d->document->rect (),
             imageSelectionTransparency ()));
@@ -809,7 +809,7 @@ void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
         else
         {
         #if DEBUG_KP_MAIN_WINDOW && 1
-            kDebug () << "\treal selection with pixmap - push onto doc cmd";
+            kDebug () << "\treal selection with image - push onto doc cmd";
         #endif
             kpCommand *deselectCommand = new kpToolSelectionDestroyCommand (
                 dynamic_cast <kpTextSelection *> (sel) ?
@@ -881,7 +881,7 @@ void kpMainWindow::slotCopyToFile ()
             // Not a floating selection - user has just selected a region;
             // haven't pulled it off yet so probably don't expect and can't
             // visualize selection transparency so give opaque, not transparent
-            // pixmap.
+            // image.
             imageToSave = d->document->getSelectedBaseImage ();
         }
         else
@@ -954,12 +954,12 @@ void kpMainWindow::slotPasteFromFile ()
     d->lastPasteFromURL = url;
 
 
-    QPixmap pixmap = kpDocument::getPixmapFromFile (url,
+    kpImage image = kpDocument::getPixmapFromFile (url,
         false/*show error message if doesn't exist*/,
         this);
 
 
-    if (pixmap.isNull ())
+    if (image.isNull ())
         return;
 
 
@@ -968,7 +968,7 @@ void kpMainWindow::slotPasteFromFile ()
     // HITODO: We're not respecting the currently selected selection transparency.
     //         Check everywhere that we are.  Bug also in KDE 3.
     paste (kpRectangularImageSelection (
-        QRect (0, 0, pixmap.width (), pixmap.height ()),
-        pixmap));
+        QRect (0, 0, image.width (), image.height ()),
+        image));
 }
 

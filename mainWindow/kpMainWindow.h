@@ -35,6 +35,7 @@
 
 #include <kpDefs.h>
 #include <kpPixmapFX.h>
+#include <kpImage.h>
 
 
 class QAction;
@@ -43,7 +44,6 @@ class QDragEnterEvent;
 class QDropEvent;
 class QMenu;
 class QMoveEvent;
-class QPixmap;
 class QPoint;
 class QRect;
 class QSize;
@@ -344,7 +344,7 @@ private slots:
 private:
     KUrl askForSaveURL (const QString &caption,
                         const QString &startURL,
-                        const QPixmap &pixmapToBeSaved,
+                        const kpImage &imageToBeSaved,
                         const kpDocumentSaveOptions &startSaveOptions,
                         const kpDocumentMetaInfo &docMetaInfo,
                         const QString &forcedSaveOptionsGroup,
@@ -365,7 +365,7 @@ private slots:
 
 private:
     void sendFilenameToPrinter (KPrinter *printer);
-    void sendPixmapToPrinter (KPrinter *printer, bool showPrinterSetupDialog);
+    void sendImageToPrinter (KPrinter *printer, bool showPrinterSetupDialog);
 
 private slots:
     void slotPrint ();
@@ -400,7 +400,7 @@ private slots:
     void slotCopy ();
     void slotEnablePaste ();
 private:
-    QRect calcUsefulPasteRect (int pixmapWidth, int pixmapHeight);
+    QRect calcUsefulPasteRect (int imageWidth, int imageHeight);
     void paste (const kpAbstractSelection &sel,
                 bool forceTopLeft = false);
 public:
