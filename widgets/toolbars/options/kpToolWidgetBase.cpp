@@ -34,10 +34,11 @@
 #include <qbitmap.h>
 #include <qcolor.h>
 #include <qevent.h>
+#include <QHelpEvent>
 #include <qimage.h>
 #include <qpainter.h>
 #include <qpixmap.h>
-
+#include <QToolTip>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -326,11 +327,7 @@ void kpToolWidgetBase::relayoutOptions ()
                 h = rowYOffset [r + 1] - y;
 
             m_pixmapRects [r][c] = QRect (x, y, w, h);
-
-            if (!m_toolTips [r][c].isEmpty ())
-        		this->setToolTip(m_toolTips [r][c]);
-		
-		}
+        }
     }
 
     update ();
@@ -540,6 +537,60 @@ bool kpToolWidgetBase::selectNextOption ()
         return false;
 
     return setSelected (newRow, newCol);
+}
+
+
+// protected virtual [base QWidget]
+bool kpToolWidgetBase::event (QEvent *e)
+{
+    // HITODO: It's unclear when we should call the base, call accept() and
+    //         return true or false.  Look at other event() handlers.  The
+    //         kpToolText one is wrong since after calling accept(), it calls
+    //         its base which calls ignore() :)
+    if (e->type () == QEvent::ToolTip)
+    {
+        QHelpEvent *he = (QHelpEvent *) e;
+    #if DEBUG_KP_TOOL_WIDGET_BASE || 1
+        kDebug () << "kpToolWidgetBase::event() QHelpEvent pos=" << he->pos () << endl;
+    #endif
+
+        bool showedText = false;
+        for (int r = 0; r < (int) m_pixmapRects.count (); r++)
+        {
+            for (int c = 0; c < (int) m_pixmapRects [r].count (); c++)
+            {
+                if (m_pixmapRects [r][c].contains (he->pos ()))
+                {
+                    const QString tip = m_toolTips [r][c];
+                #if DEBUG_KP_TOOL_WIDGET_BASE || 1
+                    kDebug () << "\tin option: r=" << r << "c=" << c
+                              << "tip='" << tip << "'" << endl;
+                #endif                
+                    if (!tip.isEmpty ())
+                    {
+                        QToolTip::showText (he->globalPos (), tip, this);
+                        showedText = true;
+                    }
+
+                    e->accept ();
+                    goto exit_loops;
+                }
+            }
+        }
+
+    exit_loops:
+        if (!showedText)
+        {
+        #if DEBUG_KP_TOOL_WIDGET_BASE || 1
+            kDebug () << "\thiding text" << endl;
+        #endif
+            QToolTip::hideText ();
+        }
+
+        return true;
+    }
+    else
+        return QWidget::event (e);
 }
 
 

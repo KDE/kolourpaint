@@ -96,6 +96,8 @@ signals:
     void optionSelected (int row, int col);
 
 protected:
+    virtual bool event (QEvent *e);
+    
     virtual void mousePressEvent (QMouseEvent *e);
     virtual void paintEvent (QPaintEvent *e);
 
