@@ -56,6 +56,7 @@
 #include <kpPixmapFX.h>
 #include <kpRectangularImageSelection.h>
 #include <kpSelectionDrag.h>
+#include <kpSetOverrideCursorSaver.h>
 #include <kpTextSelection.h>
 #include <kpTool.h>
 #include <kpTransformCrop.h>
@@ -203,24 +204,14 @@ void kpMainWindow::slotCut ()
     kDebug () << "kpMainWindow::slotCut() CALLED";
 #endif
 
-    if (!d->document || !d->document->selection ())
-    {
-        kError () << "kpMainWindow::slotCut () doc=" << d->document
-                   << " sel=" << (d->document ? d->document->selection () : 0)
-                   << endl;
-        return;
-    }
+    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
 
-
-    QApplication::setOverrideCursor (Qt::WaitCursor);
+    Q_ASSERT (d->document && d->document->selection ());
 
     toolEndShape ();
 
     slotCopy ();
     slotDelete ();
-
-    QApplication::restoreOverrideCursor ();
-
 }
 
 // private slot
@@ -230,16 +221,9 @@ void kpMainWindow::slotCopy ()
     kDebug () << "kpMainWindow::slotCopy() CALLED";
 #endif
 
-    if (!d->document || !d->document->selection ())
-    {
-        kError () << "kpMainWindow::slotCopy () doc=" << d->document
-                   << " sel=" << (d->document ? d->document->selection () : 0)
-                   << endl;
-        return;
-    }
-
-
-    QApplication::setOverrideCursor (Qt::WaitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+    
+    Q_ASSERT (d->document && d->document->selection ());
 
     toolEndShape ();
 
@@ -293,8 +277,6 @@ void kpMainWindow::slotCopy ()
         Q_ASSERT (!"Unknown selection type");
 
     delete sel;
-
-    QApplication::restoreOverrideCursor ();
 }
 
 // private slot
@@ -340,11 +322,7 @@ QRect kpMainWindow::calcUsefulPasteRect (int imageWidth, int imageHeight)
                << ")"
                << endl;
 #endif
-    if (!d->document)
-    {
-        kError () << "kpMainWindow::calcUsefulPasteRect() without doc" << endl;
-        return QRect ();
-    }
+    Q_ASSERT (d->document);
 
     // TODO: 1st choice is to paste sel near but not overlapping last deselect point
 
@@ -371,6 +349,8 @@ QRect kpMainWindow::calcUsefulPasteRect (int imageWidth, int imageHeight)
 // private
 void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
 {
+    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+
     // COMPAT: update
 #if 0
     if (!sel.pixmap ())
@@ -379,8 +359,6 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
         return;
     }
 #endif
-
-    QApplication::setOverrideCursor (Qt::WaitCursor);
 
     toolEndShape ();
 
@@ -439,9 +417,6 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
                 kpTransformResizeScaleCommand::Resize,
                 commandEnvironment ()));
     }
-
-
-    QApplication::restoreOverrideCursor ();
 }
 
 // public
@@ -460,8 +435,7 @@ void kpMainWindow::pasteText (const QString &text,
         return;
 
 
-    // sync: restoreOverrideCursor() in all exit paths
-    QApplication::setOverrideCursor (Qt::WaitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
 
     toolEndShape ();
 
@@ -557,9 +531,6 @@ void kpMainWindow::pasteText (const QString &text,
 
         delete sel;
     }
-
-
-    QApplication::restoreOverrideCursor ();
 }
 
 // public
@@ -574,7 +545,7 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
                << ")" << endl;
 #endif
 
-    QApplication::setOverrideCursor (Qt::WaitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
 
     toolEndShape ();
 
@@ -606,8 +577,6 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
 
         pasteText (text, true/*force new text selection*/, pointToUse);
     }
-
-    QApplication::restoreOverrideCursor ();
 }
 
 // public slot
@@ -617,8 +586,7 @@ void kpMainWindow::slotPaste ()
     kDebug () << "kpMainWindow::slotPaste() CALLED";
 #endif
 
-    // sync: restoreOverrideCursor() in all exit paths
-    QApplication::setOverrideCursor (Qt::WaitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
 
     toolEndShape ();
 
@@ -631,7 +599,6 @@ void kpMainWindow::slotPaste ()
     if (!ms)
     {
         kError () << "kpMainWindow::slotPaste() without mimeSource" << endl;
-        QApplication::restoreOverrideCursor ();
         return;
     }
 
@@ -650,7 +617,7 @@ void kpMainWindow::slotPaste ()
     }
     else
     {
-        QApplication::restoreOverrideCursor ();
+        kpSetOverrideCursorSaver cursorSaver (Qt::arrowCursor);
 
         kDebug () << "kpMainWindow::slotPaste() could not decode selection";
         kDebug () << "\tFormats supported:";
@@ -684,8 +651,6 @@ void kpMainWindow::slotPaste ()
 
         return;
     }
-
-    QApplication::restoreOverrideCursor ();
 }
 
 // private slot
@@ -698,7 +663,7 @@ void kpMainWindow::slotPasteInNewWindow ()
     kDebug () << "kpMainWindow::slotPasteInNewWindow() CALLED";
 #endif
 
-    QApplication::setOverrideCursor (Qt::WaitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
 
     toolEndShape ();
 
@@ -708,9 +673,6 @@ void kpMainWindow::slotPasteInNewWindow ()
 
     win->slotPaste ();
     win->slotCrop ();
-
-
-    QApplication::restoreOverrideCursor ();
 }
 
 // public slot
@@ -727,13 +689,7 @@ void kpMainWindow::slotDelete ()
         return;
     }
 
-    if (!d->document || !d->document->selection ())
-    {
-        kError () << "kpMainWindow::slotDelete () doc=" << d->document
-                   << " sel=" << (d->document ? d->document->selection () : 0)
-                   << endl;
-        return;
-    }
+    Q_ASSERT (d->document && d->document->selection ());
 
     toolEndShape ();
 
@@ -752,11 +708,7 @@ void kpMainWindow::slotSelectAll ()
 #if DEBUG_KP_MAIN_WINDOW && 1
     kDebug () << "kpMainWindow::slotSelectAll() CALLED";
 #endif
-    if (!d->document)
-    {
-        kError () << "kpMainWindow::slotSelectAll() without doc" << endl;
-        return;
-    }
+    Q_ASSERT (d->document);
 
     toolEndShape ();
 
@@ -844,13 +796,7 @@ void kpMainWindow::slotDeselect ()
 #if DEBUG_KP_MAIN_WINDOW && 1
     kDebug () << "kpMainWindow::slotDeselect() CALLED";
 #endif
-    if (!d->document || !d->document->selection ())
-    {
-        kError () << "kpMainWindow::slotDeselect() doc=" << d->document
-                   << " sel=" << (d->document ? d->document->selection () : 0)
-                   << endl;
-        return;
-    }
+    Q_ASSERT (d->document && d->document->selection ());
 
     toolEndShape ();
 
