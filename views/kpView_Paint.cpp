@@ -248,13 +248,19 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
     // Draw text cursor
     //
 
+    // TODO: It would be nice to display the text cursor even if it's not
+    //       within the text box (this can happen if the text box is too
+    //       small for the text it contains).
+    //
+    //       However, too much selection repaint code assumes that it
+    //       only paints inside its kpAbstractSelection::boundingRect().
     kpTextSelection *textSel = dynamic_cast <kpTextSelection *> (sel);
     if (textSel &&
         vm->textCursorEnabled () &&
         (vm->textCursorBlinkState () ||
         // For the current main window:
-        // As long as _any_ view has focus, blink _all_ views not just the
-        // one with focus   // !this->isActiveWindow ()
+        //     As long as _any_ view has focus, blink _all_ views not just the
+        //     one with focus.
         !vm->hasAViewWithFocus ()))  // sync: call will break when vm is not held by 1 mainWindow
     {
         QRect rect = vm->textCursorRect ();

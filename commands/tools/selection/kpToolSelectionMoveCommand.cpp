@@ -103,8 +103,7 @@ void kpToolSelectionMoveCommand::execute ()
     Q_ASSERT (doc);
 
     kpAbstractSelection *sel = doc->selection ();
-    // Have to have pulled pixmap by now.
-    // TODO: Not true for text selections.
+    // Must have content before it can be moved.
     Q_ASSERT (sel && sel->hasContent ());
 
     kpViewManager *vm = viewManager ();
@@ -136,8 +135,7 @@ void kpToolSelectionMoveCommand::unexecute ()
     Q_ASSERT (doc);
 
     kpAbstractSelection *sel = doc->selection ();
-    // Have to have pulled pixmap by now.
-    // TODO: Not true for text selections.
+    // Must have content before it can be un-moved.
     Q_ASSERT (sel && sel->hasContent ());
 
     kpViewManager *vm = viewManager ();
@@ -172,8 +170,7 @@ void kpToolSelectionMoveCommand::moveTo (const QPoint &point, bool moveLater)
         Q_ASSERT (doc);
 
         kpAbstractSelection *sel = doc->selection ();
-        // Have to have pulled pixmap by now.
-        // TODO: Not true for text selections.
+        // Must have content before it can be moved.
         Q_ASSERT (sel && sel->hasContent ());
 
         if (point == sel->topLeft ())
@@ -202,8 +199,8 @@ void kpToolSelectionMoveCommand::copyOntoDocument ()
     Q_ASSERT (doc);
 
     kpAbstractSelection *sel = doc->selection ();
-    // Have to have pulled pixmap by now.
-    // TODO: Not true for text selections.
+    // Must have content before we allow it be stamped onto the document,
+    // to be consistent with the requirement on other selection operations.
     Q_ASSERT (sel && sel->hasContent ());
 
     if (m_oldDocumentImage.isNull ())
