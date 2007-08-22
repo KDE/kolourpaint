@@ -72,6 +72,9 @@ bool kpToolText::CursorIsAtStart (const QList <QString> &,
 bool kpToolText::CursorIsAtEnd (const QList <QString> &textLines,
     int cursorRow, int cursorCol)
 {
+    if (textLines.isEmpty ())
+        return (cursorRow == 0 && cursorCol == 0);
+        
     return (cursorRow == (int) textLines.size () - 1 &&
             cursorCol == (int) textLines [cursorRow].length ());
 }
@@ -81,6 +84,9 @@ bool kpToolText::CursorIsAtEnd (const QList <QString> &textLines,
 void kpToolText::MoveCursorLeft (const QList <QString> &textLines,
     int *cursorRow, int *cursorCol)
 {
+    if (textLines.isEmpty ())
+        return;
+        
     (*cursorCol)--;
 
     if (*cursorCol < 0)
@@ -100,6 +106,9 @@ void kpToolText::MoveCursorLeft (const QList <QString> &textLines,
 void kpToolText::MoveCursorRight (const QList <QString> &textLines,
     int *cursorRow, int *cursorCol)
 {
+    if (textLines.isEmpty ())
+        return;
+        
     (*cursorCol)++;
 
     if (*cursorCol > (int) textLines [*cursorRow].length ())
@@ -122,6 +131,9 @@ void kpToolText::MoveCursorRight (const QList <QString> &textLines,
 int kpToolText::MoveCursorToWordStart (const QList <QString> &textLines,
     int *cursorRow, int *cursorCol)
 {
+    if (textLines.isEmpty ())
+        return 0;
+
     int numMoves = 0;
 
 #define IS_ON_ANCHOR()                                            \
@@ -165,6 +177,9 @@ int kpToolText::MoveCursorToWordStart (const QList <QString> &textLines,
 int kpToolText::MoveCursorToNextWordStart (const QList <QString> &textLines,
     int *cursorRow, int *cursorCol)
 {
+    if (textLines.isEmpty ())
+        return 0;
+        
     int numMoves = 0;
 
 #define IS_AT_END() CursorIsAtEnd (textLines, *cursorRow, *cursorCol)
