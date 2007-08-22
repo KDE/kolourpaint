@@ -151,6 +151,7 @@ void kpAbstractSelectionTool::pushOntoDocument ()
 #if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "kpAbstractSelectionTool::pushOntoDocument() CALLED" << endl;
 #endif
+    Q_ASSERT (document ()->selection ());
     environ ()->deselectSelection ();
 }
 

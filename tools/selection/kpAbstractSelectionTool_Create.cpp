@@ -119,7 +119,8 @@ void kpAbstractSelectionTool::setSelectionBorderForBeginDrawCreate ()
 // private
 void kpAbstractSelectionTool::beginDrawCreate ()
 {
-    pushOntoDocument ();
+    if (document ()->selection ())
+        pushOntoDocument ();
 
     /*virtual*/setSelectionBorderForBeginDrawCreate ();
 

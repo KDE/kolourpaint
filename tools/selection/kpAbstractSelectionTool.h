@@ -93,6 +93,13 @@ protected:
 
 
 protected:
+    // Deselects the current selection:
+    //
+    // 1. If it has no content, it is simply deleted.
+    // 2. If it has content, it pushes it onto the document, adding the
+    //    necessary commands to the command history.
+    //
+    // ASSUMPTION: There is a current selection.
     void pushOntoDocument ();
 
 
