@@ -363,7 +363,8 @@ public:
     virtual void keyPressEvent (QKeyEvent *e);
     virtual void keyReleaseEvent (QKeyEvent *e);
 
-    virtual void inputMethodEvent (QInputMethodEvent *) {}
+    // COMPAT: Need to update InputMethod support.
+    // virtual void inputMethodEvent (QInputMethodEvent *) {}
 
 private:
     void keyUpdateModifierState (QKeyEvent *e);

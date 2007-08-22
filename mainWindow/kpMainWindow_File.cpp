@@ -1,6 +1,7 @@
 
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2007 Martin Koller <m.koller@surfeu.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without

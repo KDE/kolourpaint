@@ -31,15 +31,7 @@
 
 #include <kpToolImageSelectionTransparencyCommand.h>
 
-#include <qapplication.h>
-#include <qbitmap.h>
 #include <qcursor.h>
-#include <qevent.h>
-#include <qmenu.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qpolygon.h>
-#include <qtimer.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -47,10 +39,7 @@
 #include <kpAbstractImageSelection.h>
 #include <kpCommandEnvironment.h>
 #include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpToolWidgetOpaqueOrTransparent.h>
-#include <kpView.h>
-#include <kpViewManager.h>
+#include <kpSetOverrideCursorSaver.h>
 
 
 kpToolImageSelectionTransparencyCommand::kpToolImageSelectionTransparencyCommand (
@@ -82,17 +71,13 @@ void kpToolImageSelectionTransparencyCommand::execute ()
 #if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "kpToolImageSelectionTransparencyCommand::execute()";
 #endif
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
 
-    QApplication::setOverrideCursor (Qt::WaitCursor);
-    {
-        environ ()->setImageSelectionTransparency (m_st, true/*force colour change*/);
+    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+        
+    environ ()->setImageSelectionTransparency (m_st, true/*force colour change*/);
 
-        if (doc->imageSelection ())
-            doc->imageSelection ()->setTransparency (m_st);
-    }
-    QApplication::restoreOverrideCursor ();
+    if (imageSelection ())
+        imageSelection ()->setTransparency (m_st);
 }
 
 // public virtual [base kpCommand]
@@ -102,17 +87,12 @@ void kpToolImageSelectionTransparencyCommand::unexecute ()
     kDebug () << "kpToolImageSelectionTransparencyCommand::unexecute()";
 #endif
 
-    kpDocument *doc = document ();
-    Q_ASSERT (doc);
+    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+        
+    environ ()->setImageSelectionTransparency (m_oldST, true/*force colour change*/);
 
-    QApplication::setOverrideCursor (Qt::WaitCursor);
-    {
-        environ ()->setImageSelectionTransparency (m_oldST, true/*force colour change*/);
-
-        if (doc->imageSelection ())
-            doc->imageSelection ()->setTransparency (m_oldST);
-    }
-    QApplication::restoreOverrideCursor ();
+    if (imageSelection ())
+        imageSelection ()->setTransparency (m_oldST);
 }
 
 

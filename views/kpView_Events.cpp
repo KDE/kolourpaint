@@ -1,6 +1,7 @@
 
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2005 Kazuki Ohta <mover@hct.zaq.ne.jp>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -129,8 +130,9 @@ void kpView::keyReleaseEvent (QKeyEvent *e)
 }
 
 
-// COMPAT
+// COMPAT: Need to update InputMethod support.
 #if 0
+
 // private virtual
 void kpView::imStartEvent (QIMEvent *e)
 {
@@ -140,7 +142,7 @@ void kpView::imStartEvent (QIMEvent *e)
 
     if (tool ())
         tool ()->imStartEvent (e);
-    e->accept();
+    e->accept ();
 }
 
 // private virtual
@@ -152,7 +154,7 @@ void kpView::imComposeEvent (QIMEvent *e)
 
     if (tool ())
         tool ()->imComposeEvent (e);
-    e->accept();
+    e->accept ();
 }
 
 // private virtual
@@ -164,8 +166,9 @@ void kpView::imEndEvent (QIMEvent *e)
 
     if (tool ())
         tool ()->imEndEvent (e);
-    e->accept();
+    e->accept ();
 }
+
 #endif  // COMPAT
 
 

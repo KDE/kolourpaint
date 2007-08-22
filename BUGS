@@ -30,7 +30,7 @@ This file lists known bugs in this version that are not considered
       the drawing of multi-segment shapes (Polygon, Connected Lines,
       Curve).  They are however updated after shapes' completion.
 
-   b) The text and brush-like tools set the document modified flag even if
+   b) The brush-like tools set the document modified flag even if
       user cancels the draw operation.
 
    c) Select a region, manipulate it (e.g. move), undo - the document is

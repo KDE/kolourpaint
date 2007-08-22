@@ -396,7 +396,8 @@ public:
      */
     void updateQueuedArea ();
 
-    void updateMicroFocusHint (const QRect &microFocusHint);
+    // COMPAT: Need to update InputMethod support.
+    //void updateMicroFocusHint (const QRect &microFocusHint);
 
 
 public slots:

@@ -59,8 +59,8 @@ int main (int argc, char *argv [])
     );
 
 
-    // this is _not_ the same as KAboutData::License_BSD
-    aboutData.setLicenseText (ki18n(kpLicenseText));
+    // (this is _not_ the same as KAboutData::License_BSD)
+    aboutData.setLicenseText (ki18n (kpLicenseText));
 
 
     // Please add yourself here if you feel you're missing.

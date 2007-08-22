@@ -1,5 +1,7 @@
 Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
-Portions Copyright (c) 2006 Mike Gashler <gashlerm@yahoo.com>
+Portions Copyright (c) 2005 Kazuki Ohta <mover@hct.zaq.ne.jp>
+Portions Copyright (c) 2006-2007 Mike Gashler <gashlerm@yahoo.com>
+Portions Copyright (c) 2007 Martin Koller <m.koller@surfeu.at>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -22,3 +24,63 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+"libkolourpaint" Library
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The "libkolourpaint" dynamic link library contains various pieces of code,
+each with a different license:
+
+
+License 1
+---------
+
+Copyright (C) 1999 Waldo Bastian (bastian@kde.org)
+Copyright (C) 2007 Clarence Dang (dang@kde.org)
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Library General Public
+License as published by the Free Software Foundation; either
+version 2 of the License.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Library General Public License for more details.
+
+You should have received a copy of the GNU Library General Public License
+along with this library; see the file COPYING.LIB.  If not, write to
+the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA 02110-1301, USA.
+
+
+License 2
+---------
+
+Copyright (C) 2007 David Faure <faure@kde.org>
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Library General Public
+License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Library General Public License for more details.
+
+You should have received a copy of the GNU Library General Public License
+along with this library; see the file COPYING.LIB.  If not, write to
+the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA 02110-1301, USA.
+
+
+Icons
+~~~~~
+
+Copyright (c) Nuno Pinheiro <nf.pinheiro@gmail.com>
+Copyright (c) Danny Allen <dannya40uk@yahoo.co.uk>
+Portions Copyright (c) Clarence Dang <dang@kde.org>
+Portions Copyright (c) Kristof Borrey <borrey@kde.org>
+

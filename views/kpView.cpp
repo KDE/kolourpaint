@@ -1,6 +1,7 @@
 
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2005 Kazuki Ohta <mover@hct.zaq.ne.jp>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -108,7 +109,9 @@ kpView::kpView (kpDocument *document,
     setFocusPolicy (Qt::WheelFocus);
     setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
     setAttribute (Qt::WA_KeyCompression, true);
-    setAttribute (Qt::WA_InputMethodEnabled, true);  // ensure using InputMethod
+
+    // COMPAT: Need to update InputMethod support.
+    //setAttribute (Qt::WA_InputMethodEnabled, true);  // ensure using InputMethod
 }
 
 kpView::~kpView ()
@@ -613,6 +616,8 @@ void kpView::updateQueuedArea ()
     invalidateQueuedArea ();
 }
 
+// COMPAT: Need to update InputMethod support.
+#if 0
 // public
 void kpView::updateMicroFocusHint (const QRect &microFocusHint)
 {
@@ -621,10 +626,10 @@ void kpView::updateMicroFocusHint (const QRect &microFocusHint)
     int width = microFocusHint.width();
     int height = microFocusHint.height();
 
-    // COMPAT
     (void) x; (void) y; (void) width; (void) height;
-    //setMicroFocusHint (x, y, width, height);
+    setMicroFocusHint (x, y, width, height);
 }
+#endif
 
 
 // public

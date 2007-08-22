@@ -4,6 +4,7 @@
 //       vice versa.  And the cursor could be outside of the selection.
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2005 Kazuki Ohta <mover@hct.zaq.ne.jp>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -146,7 +147,7 @@ void kpViewManager::setTextCursorPosition (int row, int col, bool isUpdateMicroF
     restoreQueueUpdates ();
     restoreFastUpdates ();
 
-// COMPAT
+// COMPAT: Need to update InputMethod support.
 #if 1
     (void) isUpdateMicroFocusHint;
 #else

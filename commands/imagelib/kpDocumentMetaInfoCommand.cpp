@@ -34,7 +34,6 @@
 #include <kpDefs.h>
 #include <kpDocument.h>
 #include <kpDocumentMetaInfo.h>
-#include <kpSetOverrideCursorSaver.h>
 
 
 struct kpDocumentMetaInfoCommandPrivate

@@ -1,6 +1,7 @@
 
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2005 Kazuki Ohta <mover@hct.zaq.ne.jp>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -52,19 +53,11 @@
 #include <kpViewManager.h>
 
 
-#if 1
-
-// protected virtual
-void kpToolText::inputMethodEvent (QInputMethodEvent *e)
-{
-    kpAbstractSelectionTool::inputMethodEvent (e);
-}
-
-
+// COMPAT: Need to update InputMethod support.
+//
 // This code needs lots of updating not just to Qt/KDE4 but also to changes
 // in KolourPaint internals.
-#else
-
+#if 0
 
 void kpToolText::imStartEvent (QIMEvent *e)
 {
@@ -214,4 +207,5 @@ void kpToolText::imEndEvent (QIMEvent *e)
             d->insertCommand->addText (inputStr);
     }
 }
+
 #endif  // COMPAT

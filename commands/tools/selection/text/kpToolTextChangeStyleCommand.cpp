@@ -73,8 +73,8 @@ void kpToolTextChangeStyleCommand::execute ()
 
     environ ()->setTextStyle (m_newTextStyle);
 
-    Q_ASSERT (textSelection ());
-    textSelection ()->setTextStyle (m_newTextStyle);
+    if (textSelection ())
+        textSelection ()->setTextStyle (m_newTextStyle);
 }
 
 // public virtual [base kpCommand]
@@ -93,8 +93,8 @@ void kpToolTextChangeStyleCommand::unexecute ()
 
     environ ()->setTextStyle (m_oldTextStyle);
 
-    Q_ASSERT (textSelection ());
-    textSelection ()->setTextStyle (m_oldTextStyle);
+    if (textSelection ())
+        textSelection ()->setTextStyle (m_oldTextStyle);
 }
 
 
