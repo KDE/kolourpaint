@@ -793,7 +793,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
         new kpDocumentSaveOptionsWidget (imageToBeSaved,
             fdSaveOptions,
             docMetaInfo,
-            0/*COMPAT: port - somehow, this was broken by the selection API changes*/);
+            this);
 
     KFileDialog fd (startURL, QString(), this,
                     saveOptionsWidget);
