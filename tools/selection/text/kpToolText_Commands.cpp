@@ -59,7 +59,7 @@ void kpToolText::setAllCommandPointersToZero ()
 // private
 void kpToolText::addNewBackspaceCommand (kpToolTextBackspaceCommand **cmd)
 {
-    // TODO: why not endShapeInternal(); ditto for everywhere else in this file?
+    // TODO: why not endShapeInternal(); ditto for everywhere else in kpToolText*.cpp?
     if (hasBegunShape ())
     {
         endShape (currentPoint (), normalizedRect ());
