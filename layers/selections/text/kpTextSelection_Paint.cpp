@@ -110,6 +110,8 @@ static void DrawTextHelper (QPainter *p, bool drawingOnRGBLayer, void *data)
     //    this in draw()?
     if (!(drawingOnRGBLayer && pack->textStyle.foregroundColor ().isTransparent ()))
     {
+        p->setClipRect (pack->wholeAreaRect);
+        
         p->setPen (
             kpPixmapFX::draw_ToQColor (pack->textStyle.foregroundColor (),
                 drawingOnRGBLayer));
