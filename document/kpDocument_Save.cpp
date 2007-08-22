@@ -271,7 +271,7 @@ static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
     // TODO: use file.errorString()
     KMessageBox::error (parent,
                         i18n ("Could not save as \"%1\".",
-                              kpUrlFormatter::prettyFilename (url)));
+                              kpUrlFormatter::PrettyFilename (url)));
 }
 
 // public static
@@ -299,7 +299,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
         int result = KMessageBox::warningContinueCancel (parent,
             i18n ("A document called \"%1\" already exists.\n"
                   "Do you want to overwrite it?",
-                  kpUrlFormatter::prettyFilename (url)),
+                  kpUrlFormatter::PrettyFilename (url)),
             QString(),
             KGuiItem(i18n ("Overwrite")));
 

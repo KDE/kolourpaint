@@ -33,7 +33,7 @@
 
 
 // public static
-QString kpUrlFormatter::prettyUrl (const KUrl &url)
+QString kpUrlFormatter::PrettyUrl (const KUrl &url)
 {
     if (url.isEmpty ())
         return i18n ("Untitled");
@@ -42,12 +42,12 @@ QString kpUrlFormatter::prettyUrl (const KUrl &url)
 }
 
 // public static
-QString kpUrlFormatter::prettyFilename (const KUrl &url)
+QString kpUrlFormatter::PrettyFilename (const KUrl &url)
 {
     if (url.isEmpty ())
         return i18n ("Untitled");
     else if (url.fileName ().isEmpty ())
-        return kpUrlFormatter::prettyUrl (url);  // better than the name ""
+        return kpUrlFormatter::PrettyUrl (url);  // better than the name ""
     else
         return url.fileName ();
 }

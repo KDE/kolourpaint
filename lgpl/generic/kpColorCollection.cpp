@@ -121,7 +121,7 @@ kpColorCollection::open(const KUrl &url, QWidget *parent)
   {
      KMessageBox::sorry (parent,
         i18n ("Could not open color palette \"%1\".",
-              kpUrlFormatter::prettyFilename (url)));
+              kpUrlFormatter::PrettyFilename (url)));
      return false;
   }
 
@@ -133,7 +133,7 @@ kpColorCollection::open(const KUrl &url, QWidget *parent)
      KMessageBox::sorry (parent,
         i18n ("Could not open color palette \"%1\" - unsupported format.\n"
               "The file may be corrupt.",
-              kpUrlFormatter::prettyFilename (url)));
+              kpUrlFormatter::PrettyFilename (url)));
      return false;
   }
 
@@ -182,7 +182,7 @@ static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
     // TODO: use file.errorString()
     KMessageBox::error (parent,
                         i18n ("Could not save color palette as \"%1\".",
-                              kpUrlFormatter::prettyFilename (url)));
+                              kpUrlFormatter::PrettyFilename (url)));
 }
 
 bool
@@ -193,7 +193,7 @@ kpColorCollection::saveAs(const KUrl &url, QWidget *parent) const
        int result = KMessageBox::warningContinueCancel (parent,
           i18n ("A color palette called \"%1\" already exists.\n"
                 "Do you want to overwrite it?",
-                kpUrlFormatter::prettyFilename (url)),
+                kpUrlFormatter::PrettyFilename (url)),
           QString (),
           KGuiItem (i18n ("Overwrite")));
        if (result != KMessageBox::Continue)

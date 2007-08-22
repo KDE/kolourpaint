@@ -47,10 +47,10 @@ class KOLOURPAINT_LGPL_EXPORT kpUrlFormatter
 {
 public:
     // (will convert: empty Url --> "Untitled")
-    static QString prettyUrl (const KUrl &url);
+    static QString PrettyUrl (const KUrl &url);
 
     // (will convert: empty Url --> "Untitled")
-    static QString prettyFilename (const KUrl &url);
+    static QString PrettyFilename (const KUrl &url);
 };
 
 

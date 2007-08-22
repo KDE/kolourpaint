@@ -157,13 +157,13 @@ bool kpDocument::isFromURL (bool checkURLStillExists) const
 // public
 QString kpDocument::prettyUrl () const
 {
-    return kpUrlFormatter::prettyUrl (m_url);
+    return kpUrlFormatter::PrettyUrl (m_url);
 }
 
 // public
 QString kpDocument::prettyFilename () const
 {
-    return kpUrlFormatter::prettyFilename (m_url);
+    return kpUrlFormatter::PrettyFilename (m_url);
 }
 
 
