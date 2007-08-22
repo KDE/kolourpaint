@@ -322,7 +322,7 @@ void kpAbstractSelectionTool::end ()
 
     Q_ASSERT (d->toolWidgetOpaqueOrTransparent);
     disconnect (d->toolWidgetOpaqueOrTransparent, SIGNAL (isOpaqueChanged (bool)),
-                this, SLOT (slotIsOpaqueChanged ()));
+                this, SLOT (slotIsOpaqueChanged (bool)));
     d->toolWidgetOpaqueOrTransparent = 0;
 
 
