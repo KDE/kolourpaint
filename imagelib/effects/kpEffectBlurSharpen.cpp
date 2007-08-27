@@ -31,7 +31,7 @@
 
 #include <kpEffectBlurSharpen.h>
 
-#include <blitz.h>
+#include <qimageblitz.h>
 
 #include <qbitmap.h>
 #include <qimage.h>

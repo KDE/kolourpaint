@@ -31,7 +31,7 @@
 
 #include <kpEffectEmboss.h>
 
-#include <blitz.h>
+#include <qimageblitz.h>
 
 #include <qimage.h>
 
