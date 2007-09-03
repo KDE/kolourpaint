@@ -71,6 +71,10 @@ class kpAbstractSelection;
 //          You must maintain this invariant (i.e. use the following assertion)
 //          or all hell will break loose - see KolourPaint developer docs.
 //
+//          Simply removing instances of this invariant check, to avoid
+//          assertion failure, is ABSOLUTELY WRONG and is merely pushing
+//          bugs elsewhere.
+//
 #define KP_PFX_CHECK_NO_ALPHA_CHANNEL(pixmap) Q_ASSERT (!(pixmap).hasAlphaChannel ())
 class kpPixmapFX
 {
