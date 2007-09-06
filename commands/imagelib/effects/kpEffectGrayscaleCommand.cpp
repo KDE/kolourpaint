@@ -59,5 +59,3 @@ kpImage kpEffectGrayscaleCommand::applyEffect (const kpImage &image)
     return kpEffectGrayscale::applyEffect (image);
 }
 
-
-#include <kpEffectGrayscaleCommand.moc>

@@ -157,5 +157,3 @@ void kpToolSelectionCreateCommand::unexecute ()
     environ ()->somethingBelowTheCursorChanged ();
 }
 
-
-#include <kpToolSelectionCreateCommand.moc>

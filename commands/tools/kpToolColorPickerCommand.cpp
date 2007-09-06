@@ -81,5 +81,3 @@ void kpToolColorPickerCommand::unexecute ()
     environ ()->setColor (m_mouseButton, m_oldColor);
 }
 
-
-#include <kpToolColorPickerCommand.moc>

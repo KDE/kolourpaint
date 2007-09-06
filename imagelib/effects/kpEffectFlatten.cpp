@@ -83,5 +83,3 @@ QImage kpEffectFlatten::applyEffect (const QImage &img,
 }
 
 
-#include <kpEffectFlatten.moc>
-

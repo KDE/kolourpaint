@@ -59,5 +59,3 @@ kpImage kpEffectBalanceCommand::applyEffect (const kpImage &image)
         m_brightness, m_contrast, m_gamma);
 }
 
-
-#include <kpEffectBalanceCommand.moc>

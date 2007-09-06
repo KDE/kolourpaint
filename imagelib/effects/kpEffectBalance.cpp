@@ -219,5 +219,3 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
     return retPixmap;
 }
 
-
-#include <kpEffectBalance.moc>

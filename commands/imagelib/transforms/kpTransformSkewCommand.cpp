@@ -197,5 +197,3 @@ void kpTransformSkewCommand::unexecute ()
     QApplication::restoreOverrideCursor ();
 }
 
-
-#include <kpTransformSkewCommand.moc>

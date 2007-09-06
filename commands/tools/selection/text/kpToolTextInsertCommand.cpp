@@ -103,5 +103,3 @@ void kpToolTextInsertCommand::unexecute ()
     viewManager ()->setTextCursorPosition (m_row, m_col);
 }
 
-
-#include <kpToolTextInsertCommand.moc>

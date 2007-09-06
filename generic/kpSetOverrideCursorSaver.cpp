@@ -41,5 +41,3 @@ kpSetOverrideCursorSaver::~kpSetOverrideCursorSaver ()
     QApplication::restoreOverrideCursor ();
 }
 
-
-#include <kpSetOverrideCursorSaver.moc>

@@ -227,5 +227,3 @@ void kpToolSelectionMoveCommand::finalize ()
     }
 }
 
-
-#include <kpToolSelectionMoveCommand.moc>

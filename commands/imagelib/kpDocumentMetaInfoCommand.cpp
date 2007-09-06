@@ -88,5 +88,3 @@ void kpDocumentMetaInfoCommand::unexecute ()
     doc->setModified ();
 }
 
-
-#include <kpDocumentMetaInfoCommand.moc>

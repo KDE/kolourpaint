@@ -69,5 +69,3 @@ kpImage kpEffectBlurSharpenCommand::applyEffect (const kpImage &image)
     return kpEffectBlurSharpen::applyEffect (image, m_type, m_strength);
 }
 
-
-#include <kpEffectBlurSharpenCommand.moc>

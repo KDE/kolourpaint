@@ -62,5 +62,3 @@ kpImage kpEffectFlattenCommand::applyEffect (const kpImage &image)
 }
 
 
-#include <kpEffectFlattenCommand.moc>
-

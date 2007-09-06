@@ -481,5 +481,3 @@ void kpTransformResizeScaleCommand::unexecute ()
     }
 }
 
-
-#include <kpTransformResizeScaleCommand.moc>

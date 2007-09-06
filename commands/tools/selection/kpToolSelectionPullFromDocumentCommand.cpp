@@ -142,5 +142,3 @@ void kpToolSelectionPullFromDocumentCommand::unexecute ()
     doc->imageSelection ()->deleteContent ();
 }
 
-
-#include <kpToolSelectionPullFromDocumentCommand.moc>

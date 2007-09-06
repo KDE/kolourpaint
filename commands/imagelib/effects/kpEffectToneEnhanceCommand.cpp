@@ -54,5 +54,3 @@ kpImage kpEffectToneEnhanceCommand::applyEffect (const kpImage &image)
     return kpEffectToneEnhance::applyEffect (image, m_granularity, m_amount);
 }
 
-
-#include <kpEffectToneEnhanceCommand.moc>

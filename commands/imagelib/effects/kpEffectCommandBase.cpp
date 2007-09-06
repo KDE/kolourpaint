@@ -125,5 +125,3 @@ void kpEffectCommandBase::unexecute ()
     d->oldImage = kpImage ();
 }
 
-
-#include <kpEffectCommandBase.moc>

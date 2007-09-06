@@ -221,5 +221,3 @@ void kpTransformRotateCommand::unexecute ()
     QApplication::restoreOverrideCursor ();
 }
 
-
-#include <kpTransformRotateCommand.moc>

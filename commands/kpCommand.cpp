@@ -83,5 +83,3 @@ kpViewManager *kpCommand::viewManager () const
     return m_environ->viewManager ();
 }
 
-
-#include <kpCommand.moc>

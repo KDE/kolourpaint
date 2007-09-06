@@ -104,5 +104,3 @@ QImage kpEffectInvert::applyEffect (const QImage &img, int channels)
 }
 
 
-#include <kpEffectInvert.moc>
-

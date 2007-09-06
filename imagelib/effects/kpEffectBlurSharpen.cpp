@@ -203,5 +203,3 @@ kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
     return retImage;
 }
 
-
-#include <kpEffectBlurSharpen.moc>

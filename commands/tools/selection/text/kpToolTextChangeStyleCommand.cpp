@@ -97,5 +97,3 @@ void kpToolTextChangeStyleCommand::unexecute ()
         textSelection ()->setTextStyle (m_oldTextStyle);
 }
 
-
-#include <kpToolTextChangeStyleCommand.moc>

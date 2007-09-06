@@ -76,5 +76,3 @@ kpImage kpEffectInvertCommand::applyEffect (const kpImage &image)
 }
 
 
-#include <kpEffectInvertCommand.moc>
-

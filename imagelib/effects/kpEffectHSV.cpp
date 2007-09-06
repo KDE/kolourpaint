@@ -163,5 +163,3 @@ kpImage kpEffectHSV::applyEffect (const kpImage &image,
     return retPixmap;
 }
 
-
-#include <kpEffectHSV.moc>

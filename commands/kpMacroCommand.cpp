@@ -126,5 +126,3 @@ void kpMacroCommand::addCommand (kpCommand *command)
     m_commandList.push_back (command);
 }
 
-
-#include <kpMacroCommand.moc>

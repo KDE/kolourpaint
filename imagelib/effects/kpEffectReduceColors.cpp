@@ -241,5 +241,3 @@ QPixmap kpEffectReduceColors::applyEffect (const QPixmap &pm, int depth, bool di
 }
 
 
-#include <kpEffectReduceColors.moc>
-

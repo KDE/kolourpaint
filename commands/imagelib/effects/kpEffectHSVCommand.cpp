@@ -53,5 +53,3 @@ kpImage kpEffectHSVCommand::applyEffect (const kpImage &image)
     return kpEffectHSV::applyEffect (image, m_hue, m_saturation, m_value);
 }
 
-
-#include <kpEffectHSVCommand.moc>

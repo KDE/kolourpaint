@@ -133,5 +133,3 @@ void kpToolRectangularCommand::unexecute ()
     d->oldImage = kpImage ();
 }
 
-
-#include <kpToolRectangularCommand.moc>

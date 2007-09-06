@@ -111,5 +111,3 @@ void kpEffectClearCommand::unexecute ()
     m_oldImagePtr = 0;
 }
 
-
-#include <kpEffectClearCommand.moc>

@@ -158,5 +158,3 @@ kpCommandSize::SizeType kpCommandSize::PolygonSize (const QPolygon &points)
     return ((SizeType) points.size () * sizeof (QPoint));
 }
 
-
-#include <kpCommandSize.moc>

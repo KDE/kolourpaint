@@ -94,5 +94,3 @@ kpImage kpEffectReduceColorsCommand::applyEffect (const kpImage &image)
 }
 
 
-#include <kpEffectReduceColorsCommand.moc>
-

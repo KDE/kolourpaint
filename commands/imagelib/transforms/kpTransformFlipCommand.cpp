@@ -137,5 +137,3 @@ void kpTransformFlipCommand::flip ()
 }
 
 
-#include <kpTransformFlipCommand.moc>
-

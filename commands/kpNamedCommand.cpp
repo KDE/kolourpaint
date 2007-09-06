@@ -49,5 +49,3 @@ QString kpNamedCommand::name () const
     return m_name;
 }
 
-
-#include <kpNamedCommand.moc>

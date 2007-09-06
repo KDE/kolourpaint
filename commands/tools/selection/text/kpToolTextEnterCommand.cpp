@@ -123,5 +123,3 @@ void kpToolTextEnterCommand::unexecute ()
     viewManager ()->setTextCursorPosition (m_row, m_col);
 }
 
-
-#include <kpToolTextEnterCommand.moc>

@@ -171,5 +171,3 @@ void kpToolSelectionDestroyCommand::unexecute ()
     m_oldSelectionPtr = 0;
 }
 
-
-#include <kpToolSelectionDestroyCommand.moc>

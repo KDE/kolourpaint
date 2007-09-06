@@ -155,5 +155,3 @@ void kpToolFloodFillCommand::unexecute ()
     }
 }
 
-
-#include <kpToolFloodFillCommand.moc>

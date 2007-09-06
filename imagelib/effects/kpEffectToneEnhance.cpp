@@ -273,5 +273,3 @@ kpImage kpEffectToneEnhance::applyEffect (const kpImage &image,
     return retPixmap;
 }
 
-
-#include <kpEffectToneEnhance.moc>

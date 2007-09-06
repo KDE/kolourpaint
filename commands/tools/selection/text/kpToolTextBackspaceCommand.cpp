@@ -149,5 +149,3 @@ void kpToolTextBackspaceCommand::unexecute ()
     viewManager ()->setTextCursorPosition (m_row, m_col);
 }
 
-
-#include <kpToolTextBackspaceCommand.moc>

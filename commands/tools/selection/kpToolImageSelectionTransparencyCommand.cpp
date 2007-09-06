@@ -95,5 +95,3 @@ void kpToolImageSelectionTransparencyCommand::unexecute ()
         imageSelection ()->setTransparency (m_oldST);
 }
 
-
-#include <kpToolImageSelectionTransparencyCommand.moc>

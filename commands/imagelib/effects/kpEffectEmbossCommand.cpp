@@ -56,5 +56,3 @@ kpImage kpEffectEmbossCommand::applyEffect (const kpImage &image)
     return kpEffectEmboss::applyEffect (image, m_strength);
 }
 
-
-#include <kpEffectEmbossCommand.moc>

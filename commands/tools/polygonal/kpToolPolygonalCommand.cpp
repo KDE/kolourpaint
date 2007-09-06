@@ -144,5 +144,3 @@ void kpToolPolygonalCommand::unexecute ()
     d->oldImage = kpImage ();
 }
 
-
-#include <kpToolPolygonalCommand.moc>

@@ -138,5 +138,3 @@ void kpToolTextGiveContentCommand::unexecute ()
     doc->textSelection ()->deleteContent ();
 }
 
-
-#include <kpToolTextGiveContentCommand.moc>
