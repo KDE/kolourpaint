@@ -59,12 +59,13 @@
 #include <kpSetOverrideCursorSaver.h>
 #include <kpTextSelection.h>
 #include <kpTool.h>
-#include <kpTransformCrop.h>
-#include <kpTransformResizeScaleCommand.h>
+#include <kpToolTextGiveContentCommand.h>
 #include <kpToolSelectionCreateCommand.h>
 #include <kpToolSelectionDestroyCommand.h>
 #include <kpToolTextEnterCommand.h>
 #include <kpToolTextInsertCommand.h>
+#include <kpTransformCrop.h>
+#include <kpTransformResizeScaleCommand.h>
 #include <kpViewManager.h>
 #include <kpViewScrollableContainer.h>
 #include <kpZoomedView.h>
@@ -85,7 +86,7 @@ kpPixmapFX::WarnAboutLossInfo kpMainWindow::pasteWarnAboutLossInfo ()
             " least %1bpp and then restart KolourPaint.</p>"
 
             "<hr/>"
-            
+
             "<p>It also"
 
             " contains translucency which is not fully"
@@ -222,7 +223,7 @@ void kpMainWindow::slotCopy ()
 #endif
 
     kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
-    
+
     Q_ASSERT (d->document && d->document->selection ());
 
     toolEndShape ();
@@ -351,15 +352,6 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
 {
     kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
 
-    // COMPAT: update
-#if 0
-    if (!sel.pixmap ())
-    {
-        kError () << "kpMainWindow::paste() with sel without pixmap" << endl;
-        return;
-    }
-#endif
-
     toolEndShape ();
 
 
@@ -391,6 +383,8 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
     kpAbstractSelection *selInUsefulPos = sel.clone ();
     if (!forceTopLeft)
         selInUsefulPos->moveTo (calcUsefulPasteRect (sel.width (), sel.height ()).topLeft ());
+    // TODO: Should use kpCommandHistory::addCreateSelectionCommand()
+    //       to really support pasting selection borders.
     addDeselectFirstCommand (new kpToolSelectionCreateCommand (
         dynamic_cast <kpTextSelection *> (selInUsefulPos) ?
             i18n ("Text: Create Box") :
@@ -460,8 +454,33 @@ void kpMainWindow::pasteText (const QString &text,
         kDebug () << "\treusing existing Text Selection";
     #endif
 
+        kpTextSelection *textSel = d->document->textSelection ();
+        if (!textSel->hasContent ())
+        {
+        #if DEBUG_KP_MAIN_WINDOW && 1
+            kDebug () << "\t\tneeds content" << endl;
+        #endif
+            commandHistory ()->addCreateSelectionCommand (
+                new kpToolSelectionCreateCommand (
+                    i18n ("Text: Create Box"),
+                    *textSel,
+                    commandEnvironment ()),
+                false/*no exec*/);
+        }
+
         kpMacroCommand *macroCmd = new kpMacroCommand (i18n ("Text: Paste"),
             commandEnvironment ());
+        // (yes, this is the same check as the previous "if")
+        if (!textSel->hasContent ())
+        {
+            kpCommand *giveContentCmd = new kpToolTextGiveContentCommand (
+                *textSel,
+                QString ()/*uninteresting child of macro cmd*/,
+                commandEnvironment ());
+            giveContentCmd->execute ();
+
+            macroCmd->addCommand (giveContentCmd);
+        }
 
         for (int i = 0; i < (int) textLines.size (); i++)
         {
@@ -515,21 +534,19 @@ void kpMainWindow::pasteText (const QString &text,
                                    width + kpTextSelection::TextBorderSize () * 2);
         const int selHeight = qMax (kpTextSelection::MinimumHeightForTextStyle (ts),
                                     height + kpTextSelection::TextBorderSize () * 2);
-        kpAbstractSelection *sel = new kpTextSelection (QRect (0, 0, selWidth, selHeight),
+        kpTextSelection newTextSel (QRect (0, 0, selWidth, selHeight),
             textLines,
             ts);
 
         if (newTextSelectionTopLeft != KP_INVALID_POINT)
         {
-            sel->moveTo (newTextSelectionTopLeft);
-            paste (*sel, true/*force topLeft*/);
+            newTextSel.moveTo (newTextSelectionTopLeft);
+            paste (newTextSel, true/*force topLeft*/);
         }
         else
         {
-            paste (*sel);
+            paste (newTextSel);
         }
-
-        delete sel;
     }
 }
 
@@ -556,8 +573,17 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
     {
         kpTextSelection *textSel = d->document->textSelection ();
 
-        const int row = textSel->closestTextRowForPoint (point);
-        const int col = textSel->closestTextColForPoint (point);
+        int row, col;
+
+        if (textSel->hasContent ())
+        {
+            row = textSel->closestTextRowForPoint (point);
+            col = textSel->closestTextColForPoint (point);
+        }
+        else
+        {
+            row = col = 0;
+        }
 
         d->viewManager->setTextCursorPosition (row, col);
 

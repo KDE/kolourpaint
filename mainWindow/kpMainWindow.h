@@ -401,6 +401,7 @@ private slots:
     void slotEnablePaste ();
 private:
     QRect calcUsefulPasteRect (int imageWidth, int imageHeight);
+    // (it is possible to paste a selection border i.e. a selection with no content)
     void paste (const kpAbstractSelection &sel,
                 bool forceTopLeft = false);
 public:
