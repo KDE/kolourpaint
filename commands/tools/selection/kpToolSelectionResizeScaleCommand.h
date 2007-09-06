@@ -49,6 +49,8 @@ class kpAbstractSelection;
 // 2. This is designed for the size and position to change several times
 //    before execute().
 //
+// REFACTOR: Later: I take that all back.  We should merge with
+//           kpToolResizeScaleCommand to reduce code duplication.
 class kpToolSelectionResizeScaleCommand : public QObject,
                                           public kpNamedCommand
 {

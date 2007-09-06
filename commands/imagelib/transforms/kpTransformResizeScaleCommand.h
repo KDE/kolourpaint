@@ -44,6 +44,9 @@ class QSize;
 class kpAbstractSelection;
 
 
+// REFACTOR: Split into multiple classes, each doing a different thing
+//           e.g. resize, scale and smooth scale.
+// REFACTOR: Replace kpToolSelectionResizeScaleCommand with us.
 class kpTransformResizeScaleCommand : public kpCommand
 {
 public:
