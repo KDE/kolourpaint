@@ -55,8 +55,10 @@
 #include <kpEffectClearCommand.h>
 #include <kpEffectGrayscaleCommand.h>
 #include <kpMacroCommand.h>
+#include <kpTextSelection.h>
 #include <kpToolSelectionCreateCommand.h>
 #include <kpToolSelectionPullFromDocumentCommand.h>
+#include <kpToolTextGiveContentCommand.h>
 #include <kpTransformAutoCrop.h>
 #include <kpTransformCrop.h>
 #include <kpTransformDialogEnvironment.h>
@@ -258,6 +260,7 @@ kpColor kpMainWindow::backgroundColor (bool ofSelection) const
 
 
 // public
+// REFACTOR: sync: Code dup with kpAbstractSelectionTool::addNeedingContentCommand().
 void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
     bool addSelCreateCmdIfSelAvail,
     bool addSelPullCmdIfSelAvail)
@@ -276,7 +279,7 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
         d->viewManager->setQueueUpdates ();
 
 
-    kpAbstractImageSelection *sel = d->document->imageSelection ();
+    kpAbstractSelection *sel = d->document->selection ();
 #if DEBUG_KP_MAIN_WINDOW && 1
     kDebug () << "\timage sel=" << sel
                << " sel->hasContent=" << (sel ? sel->hasContent () : 0)
@@ -284,10 +287,19 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
 #endif
     if (addSelCreateCmdIfSelAvail && sel && !sel->hasContent ())
     {
+        QString createCmdName;
+
+        if (dynamic_cast <kpAbstractImageSelection *> (sel))
+            createCmdName = i18n ("Selection: Create");
+        else if (dynamic_cast <kpTextSelection *> (sel))
+            createCmdName = i18n ("Text: Create Box");
+        else
+            Q_ASSERT (!"Unknown selection type");
+
         // create selection region
         commandHistory ()->addCreateSelectionCommand (
             new kpToolSelectionCreateCommand (
-                i18n ("Selection: Create"),
+                createCmdName,
                 *sel,
                 commandEnvironment ()),
             false/*no exec - user already dragged out sel*/);
@@ -296,17 +308,36 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
 
     if (addSelPullCmdIfSelAvail && sel && !sel->hasContent ())
     {
-        if (sel->transparency ().isTransparent ())
+        kpAbstractImageSelection *imageSel =
+            dynamic_cast <kpAbstractImageSelection *> (sel);
+        kpTextSelection *textSel =
+            dynamic_cast <kpTextSelection *> (sel);
+
+        if (imageSel && imageSel->transparency ().isTransparent ())
             d->colorToolBar->flashColorSimilarityToolBarItem ();
 
         kpMacroCommand *macroCmd = new kpMacroCommand (cmd->name (),
             commandEnvironment ());
 
-        macroCmd->addCommand (new kpToolSelectionPullFromDocumentCommand (
-            *sel,
-            backgroundColor (),
-            QString::null/*uninteresting child of macro cmd*/,	//krazy:exclude=nullstrassign for old broken gcc
-            commandEnvironment ()));
+        if (imageSel)
+        {
+            macroCmd->addCommand (
+                new kpToolSelectionPullFromDocumentCommand (
+                    *imageSel,
+                    backgroundColor (),
+                    QString::null/*uninteresting child of macro cmd*/,	//krazy:exclude=nullstrassign for old broken gcc
+                    commandEnvironment ()));
+        }
+        else if (textSel)
+        {
+            macroCmd->addCommand (
+                new kpToolTextGiveContentCommand (
+                    *textSel,
+                    QString::null/*uninteresting child of macro cmd*/,  //krazy:exclude=nullstrassign for old broken gcc
+                    commandEnvironment ()));
+        }
+        else
+            Q_ASSERT (!"Unknown selection type");
 
         macroCmd->addCommand (cmd);
 

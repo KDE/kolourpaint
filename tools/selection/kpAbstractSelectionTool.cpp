@@ -174,6 +174,7 @@ void kpAbstractSelectionTool::giveContentIfNeeded ()
 }
 
 // protected
+// REFACTOR: sync: Code dup with kpMainWindow::addImageOrSelectionCommand ().
 void kpAbstractSelectionTool::addNeedingContentCommand (kpCommand *cmd)
 {
     Q_ASSERT (cmd);
