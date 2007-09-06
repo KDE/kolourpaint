@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_SELECTION 0
+#define DEBUG_KP_TOOL_SELECTION 1
 
 
 #include <kpToolSelectionDestroyCommand.h>
@@ -91,7 +91,9 @@ void kpToolSelectionDestroyCommand::execute ()
     m_textRow = viewManager ()->textCursorRow ();
     m_textCol = viewManager ()->textCursorCol ();
 
+    Q_ASSERT (!m_oldSelectionPtr);
     m_oldSelectionPtr = doc->selection ()->clone ();
+
     if (m_pushOntoDocument)
     {
         m_oldDocImage = doc->getImageAt (doc->selection ()->boundingRect ());
@@ -139,8 +141,8 @@ void kpToolSelectionDestroyCommand::unexecute ()
     }
 
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\tsetting selection to: rect=" << m_oldSelection->boundingRect ()
-               << " hasContent=" << m_oldSelection->hasContent ()
+    kDebug () << "\tsetting selection to: rect=" << m_oldSelectionPtr->boundingRect ()
+               << " hasContent=" << m_oldSelectionPtr->hasContent ()
                << endl;
 #endif
     kpAbstractImageSelection *imageSel =
