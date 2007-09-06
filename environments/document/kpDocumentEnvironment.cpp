@@ -41,6 +41,9 @@
 #include <kpRectangularImageSelection.h>
 #include <kpTextSelection.h>
 #include <kpTextStyle.h>
+#if DEBUG_KP_DOCUMENT_ENVIRONMENT
+    #include <kpTool.h>
+#endif
 #include <kpViewManager.h>
 
 
@@ -90,7 +93,14 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
         bool *isTextChanged) const
 {
 #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-    kDebug () << "kpDocumentEnvironment::switchToCompatibleTool(" << &selection << ")";
+    kDebug () << "kpDocumentEnvironment::switchToCompatibleTool("
+              << &selection << ")"
+              << " mainwindow.tool="
+              << (mainWindow ()->tool () ? mainWindow ()->tool ()->objectName () : 0)
+              << " mainWindow.toolIsTextTool=" << mainWindow ()->toolIsTextTool ()
+              << " selection is text="
+              << dynamic_cast <const kpTextSelection *> (&selection)
+              << endl;
 #endif
 
     *isTextChanged = (mainWindow ()->toolIsTextTool () !=
@@ -101,7 +111,7 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
     //  Tools act the same, except for what would be really irritating
     //  if it kept changing whenever you paste an image - drawing the
     //  selection region)
-    if (!mainWindow ()->toolIsASelectionTool () || isTextChanged)
+    if (!mainWindow ()->toolIsASelectionTool () || *isTextChanged)
     {
         // Switch to the appropriately shaped selection tool
         // _before_ we change the selection
