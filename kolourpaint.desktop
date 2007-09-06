@@ -69,7 +69,7 @@ Icon=kolourpaint
 
 Type=Application
 Exec=kolourpaint %u
-DocPath=kolourpaint/index.html
+X-DocPath=kolourpaint/index.html
 
 # SYNC: Run branches/kolourpaint/control/scripts/gen_mimetype_line.sh in
 #       the version of kdelibs/kimgio/ (e.g. KDE 3.5) KolourPaint is
