@@ -130,7 +130,7 @@ QString kpTransformResizeScaleCommand::name () const
         }
     }
 
-    return QString();
+    return QString ();
 }
 
 // public virtual [base kpCommand]
@@ -273,25 +273,20 @@ void kpTransformResizeScaleCommand::execute ()
         if (m_actOnSelection)
         {
             if (!m_actOnTextSelection)
-            {
                 Q_ASSERT (!"kpTransformResizeScaleCommand::execute() resizing sel doesn't make sense");
-                return;
-            }
-            else
-            {
-                QApplication::setOverrideCursor (Qt::WaitCursor);
 
-                kpTextSelection *textSel = textSelection ();
-                Q_ASSERT (textSel);
+            QApplication::setOverrideCursor (Qt::WaitCursor);
 
-                kpTextSelection *newSel = textSel->resized (m_newWidth, m_newHeight);
-                document ()->setSelection (*newSel);
-                delete newSel;
+            kpTextSelection *textSel = textSelection ();
+            Q_ASSERT (textSel);
 
-                environ ()->somethingBelowTheCursorChanged ();
+            kpTextSelection *newSel = textSel->resized (m_newWidth, m_newHeight);
+            document ()->setSelection (*newSel);
+            delete newSel;
 
-                QApplication::restoreOverrideCursor ();
-            }
+            environ ()->somethingBelowTheCursorChanged ();
+
+            QApplication::restoreOverrideCursor ();
         }
         else
         {
@@ -318,6 +313,7 @@ void kpTransformResizeScaleCommand::execute ()
             QApplication::restoreOverrideCursor ();
         }
     }
+    // Scale
     else
     {
         QApplication::setOverrideCursor (Qt::WaitCursor);
@@ -336,14 +332,14 @@ void kpTransformResizeScaleCommand::execute ()
         {
             // Save sel border
             m_oldSelectionPtr = document ()->selection ()->clone ();
-
-            Q_ASSERT (dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr));
-            static_cast <kpAbstractImageSelection *> (m_oldSelectionPtr)
-                ->setBaseImage (kpImage ());
+            m_oldSelectionPtr->deleteContent ();
         }
 
         if (m_actOnSelection)
         {
+            if (m_actOnTextSelection)
+                Q_ASSERT (!"kpTransformResizeScaleCommand::execute() scaling text sel doesn't make sense");
+
             Q_ASSERT (m_oldSelectionPtr);
             QRect newRect = QRect (m_oldSelectionPtr->x (), m_oldSelectionPtr->y (),
                                    newImage.width (), newImage.height ());
@@ -392,25 +388,20 @@ void kpTransformResizeScaleCommand::unexecute ()
         if (m_actOnSelection)
         {
             if (!m_actOnTextSelection)
-            {
                 Q_ASSERT (!"kpTransformResizeScaleCommand::unexecute() resizing sel doesn't make sense");
-                return;
-            }
-            else
-            {
-                QApplication::setOverrideCursor (Qt::WaitCursor);
 
-                kpTextSelection *textSel = textSelection ();
-                Q_ASSERT (textSel);
+            QApplication::setOverrideCursor (Qt::WaitCursor);
 
-                kpTextSelection *newSel = textSel->resized (m_oldWidth, m_oldHeight);
-                document ()->setSelection (*newSel);
-                delete newSel;
+            kpTextSelection *textSel = textSelection ();
+            Q_ASSERT (textSel);
 
-                environ ()->somethingBelowTheCursorChanged ();
+            kpTextSelection *newSel = textSel->resized (m_oldWidth, m_oldHeight);
+            document ()->setSelection (*newSel);
+            delete newSel;
 
-                QApplication::restoreOverrideCursor ();
-            }
+            environ ()->somethingBelowTheCursorChanged ();
+
+            QApplication::restoreOverrideCursor ();
         }
         else
         {
@@ -442,6 +433,7 @@ void kpTransformResizeScaleCommand::unexecute ()
             QApplication::restoreOverrideCursor ();
         }
     }
+    // Scale
     else
     {
         QApplication::setOverrideCursor (Qt::WaitCursor);
@@ -458,6 +450,9 @@ void kpTransformResizeScaleCommand::unexecute ()
 
         if (m_actOnSelection)
         {
+            if (m_actOnTextSelection)
+                Q_ASSERT (!"kpTransformResizeScaleCommand::unexecute() scaling text sel doesn't make sense");
+
             Q_ASSERT (dynamic_cast <kpAbstractImageSelection *> (m_oldSelectionPtr));
             kpAbstractImageSelection *oldImageSel =
                 static_cast <kpAbstractImageSelection *> (m_oldSelectionPtr);
