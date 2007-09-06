@@ -35,6 +35,7 @@
 #include <kpTextSelection.h>
 #include <kpViewManager.h>
 
+
 kpToolTextInsertCommand::kpToolTextInsertCommand (const QString &name,
         int row, int col, QString newText,
         kpCommandEnvironment *environ)
@@ -53,7 +54,7 @@ kpToolTextInsertCommand::~kpToolTextInsertCommand ()
 // public
 void kpToolTextInsertCommand::addText (const QString &moreText)
 {
-    if (moreText.isEmpty () || m_row ==-1 || m_col == -1)
+    if (moreText.isEmpty ())
         return;
 
     QList <QString> textLines = textSelection ()->textLines ();
