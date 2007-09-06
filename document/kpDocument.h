@@ -210,7 +210,26 @@ public:
     kpTextSelection *textSelection () const;
 
     // Sets the document's selection to the given one and changes to the
-    // matching selection tool.
+    // matching selection tool.  Tool changes occur in the following situations:
+    //
+    // 1. Setting a <selection> when a selection tool is not active.
+    //
+    // 2. Setting an image <selection> when the text tool is active.
+    //    ASSUMPTION: There is no text selection active when calling this
+    //                method (push it onto the document before calling this,
+    //                to avoid this problem).
+    //
+    // 3. Setting a text <selection> when an image selection tool is active.
+    //    ASSUMPTION: There is no image selection active when calling this
+    //                method (push it onto the document before calling this,
+    //                to avoid this problem).
+    //
+    // The justification for the above assumptions are to reduce the complexity
+    // of this method's implementation -- changing from an image selection tool
+    // to a text selection tool, or vice-versa, calls the end() method of the
+    // current tool, which pushes any active selection onto the document.  Since
+    // this method sets the selection, losing the old selection in the middle of
+    // the method would be tricky to work around.
     //
     // WARNING: Before calling this, you must ensure that the UI (kpMainWindow)
     //          has the <selection>'s selection transparency or
@@ -254,8 +273,23 @@ public:
     // afterwards.
     void selectionPushOntoDocument (bool applySelTransparency = true);
 
+    //
     // Same as image() but returns a _copy_ of the document image
     // + any (even non-image) selection pasted on top.
+    //
+    // Even if the selection has no content, it is still pasted:
+    //
+    // 1. For an image selection, this makes no difference.
+    //
+    // 2. For a text selection:
+    //
+    //    a) with an opaque background: the background rectangle is
+    //      included -- this is necessary since the rectangle is visually
+    //      there after all, and the intention of this method is to report
+    //      everything.
+    //
+    //    b) with a transparent background: this makes no difference.
+    //
     kpImage imageWithSelection () const;
 
 

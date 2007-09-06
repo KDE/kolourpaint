@@ -33,6 +33,15 @@
 #include <kpAbstractSelectionTool.h>
 
 
+// The only difference between the various subclasses of us is the kind of
+// selection that they create e.g. elliptical vs rectangular.
+//
+// For every other operation, they act identically so, for instance, it is
+// possible to move an elliptical selection while using the rectangular
+// selection tool (this situation can arise when you paste an elliptical
+// selection while using the rectangular selection tool; a tool change
+// does not occur out of convenience to the user - see
+// kpDocumentEnvironment::switchToCompatibleTool()).
 class kpAbstractImageSelectionTool : public kpAbstractSelectionTool
 {
 Q_OBJECT
@@ -51,7 +60,7 @@ public:
 
 protected:
     virtual kpAbstractSelectionContentCommand *newGiveContentCommand () const;
-    
+
     virtual QString nameOfCreateCommand () const;
 
 

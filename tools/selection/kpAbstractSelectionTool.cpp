@@ -128,7 +128,7 @@ bool kpAbstractSelectionTool::hadSelectionBeforeDraw () const
     return d->hadSelectionBeforeDraw;
 }
 
-    
+
 // protected overrides [base kpTool]
 kpToolSelectionEnvironment *kpAbstractSelectionTool::environ () const
 {
@@ -149,13 +149,14 @@ bool kpAbstractSelectionTool::controlOrShiftPressed () const
 void kpAbstractSelectionTool::pushOntoDocument ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpAbstractSelectionTool::pushOntoDocument() CALLED" << endl;
+    kDebug () << "kpAbstractSelectionTool::pushOntoDocument() selection="
+              << document ()->selection () << endl;
 #endif
     Q_ASSERT (document ()->selection ());
     environ ()->deselectSelection ();
 }
 
-    
+
 // protected
 void kpAbstractSelectionTool::giveContentIfNeeded ()
 {
@@ -540,7 +541,7 @@ void kpAbstractSelectionTool::endDraw (const QPoint & /*thisPoint*/,
 
     ::AssertAllTimersInactive (d);
 
-    
+
     if (mouseButton () == 1/*right*/)
         popupRMBMenu ();
 

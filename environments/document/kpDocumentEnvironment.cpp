@@ -35,6 +35,7 @@
 
 #include <kpMainWindow.h>
 #include <kpAbstractSelection.h>
+#include <kpDocument.h>
 #include <kpEllipticalImageSelection.h>
 #include <kpFreeFormImageSelection.h>
 #include <kpImageSelectionTransparency.h>
@@ -98,7 +99,9 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
               << " mainwindow.tool="
               << (mainWindow ()->tool () ? mainWindow ()->tool ()->objectName () : 0)
               << " mainWindow.toolIsTextTool=" << mainWindow ()->toolIsTextTool ()
-              << " selection is text="
+              << " current selection="
+              << document ()->selection ()
+              << " new selection is text="
               << dynamic_cast <const kpTextSelection *> (&selection)
               << endl;
 #endif
@@ -106,13 +109,25 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
     *isTextChanged = (mainWindow ()->toolIsTextTool () !=
                      (dynamic_cast <const kpTextSelection *> (&selection) != 0));
 
-    // (we don't change the Selection Tool if the new selection's
-    //  shape is different to the tool's because all the Selection
-    //  Tools act the same, except for what would be really irritating
-    //  if it kept changing whenever you paste an image - drawing the
-    //  selection region)
+    // We don't change the Selection Tool if the new selection's
+    // shape is merely different to the current tool's (e.g. rectangular
+    // vs elliptical) because:
+    //
+    // 1. All image selection tools support editing selections of all the
+    //    different shapes anyway.
+    // 2. Suppose the user is trying out different drags of selection borders
+    //    and then decides to paste a differently shaped selection before continuing
+    //    to try out different borders.  If the pasting were to switch to
+    //    a differently shaped tool, the borders drawn after the paste would
+    //    be using a new shape rather than the shape before the paste.  This
+    //    could get irritating so we don't do the switch.
+    //
+    // KDE3: Use this comment in kpDocument::setSelection().
     if (!mainWindow ()->toolIsASelectionTool () || *isTextChanged)
     {
+        // See kpDocument::setSelection() APIDoc for this assumption.
+        Q_ASSERT (!document ()->selection ());
+
         // Switch to the appropriately shaped selection tool
         // _before_ we change the selection
         // (all selection tool's ::end() functions nuke the current selection)

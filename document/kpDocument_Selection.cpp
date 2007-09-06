@@ -104,6 +104,14 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
         kpAbstractSelection *oldSelection = m_selection;
 
 
+        // (must be called before give the document a new selection, to
+        //  avoid a potential mess where switchToCompatibleTool() ends
+        //  the current selection tool, killing the new selection)
+        bool isTextChanged = false;
+        d->environ->switchToCompatibleTool (selection, &isTextChanged);
+        Q_ASSERT (m_selection == oldSelection);
+
+
         m_selection = selection.clone ();
 
         // There's no need to uninitialize the old selection
@@ -115,13 +123,9 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
         //
         // Now all kpDocument state has been set.
         // We can _only_ change the environment after that, as the environment
-        // may access the document.
+        // may access the document.  Exception is above with
+        // switchToCompatibleTool().
         //
-
-
-        bool isTextChanged = false;
-        d->environ->switchToCompatibleTool (selection, &isTextChanged);
-
 
         d->environ->assertMatchingUIState (selection);
 
@@ -305,15 +309,19 @@ kpImage kpDocument::imageWithSelection () const
     kDebug () << "kpDocument::imageWithSelection()";
 #endif
 
-    // Have floating selection?
-    if (m_selection && m_selection->hasContent ())
+    // Have selection?
+    //
+    // It need not have any content because e.g. a text box with an opaque
+    // background, but no content, is still visually there.
+    if (m_selection)
     {
     #if DEBUG_KP_DOCUMENT && 1
         kDebug () << "\tselection @ " << m_selection->boundingRect ();
     #endif
         kpImage output = *m_image;
 
-        // TODO: In KolourPaint/KDE3, we weren't antialiasing text boxes
+        // TODO: KDE3: In KolourPaint/KDE3, we weren't antialiasing text boxes
+        // (this is a NOP for image selections without content)
         m_selection->paint (&output, rect ());
 
         return output;
