@@ -47,8 +47,6 @@ public:
 
     virtual kpCommandSize::SizeType size () const;
 
-    static bool nextUndoCommandIsCreateBorder (kpCommandHistory *commandHistory);
-
     const kpAbstractSelection *fromSelection () const;
     void setFromSelection (const kpAbstractSelection &fromSelection);
 

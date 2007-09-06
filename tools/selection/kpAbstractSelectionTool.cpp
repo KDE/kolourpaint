@@ -184,21 +184,12 @@ void kpAbstractSelectionTool::addNeedingContentCommand (kpCommand *cmd)
     #if DEBUG_KP_TOOL_SELECTION
         kDebug () << "\thave currentSelContentCommand" << endl;
     #endif
-        kpCommand *createCommand = new kpToolSelectionCreateCommand (
-            /*virtual*/nameOfCreateCommand (),
-            *d->currentSelContentCommand->originalSelection (),
-            environ ()->commandEnvironment ());
-
-        if (kpToolSelectionCreateCommand::nextUndoCommandIsCreateBorder (
-                commandHistory ()))
-        {
-            commandHistory ()->setNextUndoCommand (createCommand);
-        }
-        else
-        {
-            commandHistory ()->addCommand (createCommand,
-                false/*no exec - user already dragged out sel*/);
-        }
+        commandHistory ()->addCreateSelectionCommand (
+            new kpToolSelectionCreateCommand (
+                /*virtual*/nameOfCreateCommand (),
+                *d->currentSelContentCommand->originalSelection (),
+                environ ()->commandEnvironment ()),
+            false/*no exec - user already dragged out sel*/);
     }
 
     // Do we have a content setting command we need to commit?
@@ -586,3 +577,4 @@ QVariant kpAbstractSelectionTool::operation (DrawType drawType, Operation op,
 
 
 #include <kpAbstractSelectionTool.moc>
+

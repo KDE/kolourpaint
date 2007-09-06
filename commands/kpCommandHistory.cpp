@@ -31,8 +31,10 @@
 
 #include <kpCommandHistory.h>
 
+#include <kpAbstractSelection.h>
 #include <kpMainWindow.h>
 #include <kpTool.h>
+#include <kpToolSelectionCreateCommand.h>
 
 
 kpCommandHistory::kpCommandHistory (bool doReadConfig, kpMainWindow *mainWindow)
@@ -43,6 +45,45 @@ kpCommandHistory::kpCommandHistory (bool doReadConfig, kpMainWindow *mainWindow)
 
 kpCommandHistory::~kpCommandHistory ()
 {
+}
+
+
+static bool NextUndoCommandIsCreateBorder (kpCommandHistory *commandHistory)
+{
+    Q_ASSERT (commandHistory);
+
+    kpCommand *cmd = commandHistory->nextUndoCommand ();
+    if (!cmd)
+        return false;
+
+    kpToolSelectionCreateCommand *c = dynamic_cast <kpToolSelectionCreateCommand *> (cmd);
+    if (!c)
+        return false;
+
+    const kpAbstractSelection *sel = c->fromSelection ();
+    Q_ASSERT (sel);
+
+    return (!sel->hasContent ());
+}
+
+// public
+void kpCommandHistory::addCreateSelectionCommand (kpToolSelectionCreateCommand *cmd,
+        bool execute)
+{
+    if (cmd->fromSelection ()->hasContent ())
+    {
+        addCommand (cmd, execute);
+        return;
+    }
+
+    if (::NextUndoCommandIsCreateBorder (this))
+    {
+        setNextUndoCommand (cmd);
+        if (execute)
+            cmd->execute ();
+    }
+    else
+        addCommand (cmd, execute);
 }
 
 

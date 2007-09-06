@@ -285,16 +285,12 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
     if (addSelCreateCmdIfSelAvail && sel && !sel->hasContent ())
     {
         // create selection region
-        kpCommand *createCommand = new kpToolSelectionCreateCommand (
-            i18n ("Selection: Create"),
-            *sel,
-            commandEnvironment ());
-
-        if (kpToolSelectionCreateCommand::nextUndoCommandIsCreateBorder (commandHistory ()))
-            commandHistory ()->setNextUndoCommand (createCommand);
-        else
-            commandHistory ()->addCommand (createCommand,
-                                           false/*no exec - user already dragged out sel*/);
+        commandHistory ()->addCreateSelectionCommand (
+            new kpToolSelectionCreateCommand (
+                i18n ("Selection: Create"),
+                *sel,
+                commandEnvironment ()),
+            false/*no exec - user already dragged out sel*/);
     }
 
 

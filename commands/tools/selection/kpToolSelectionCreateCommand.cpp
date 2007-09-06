@@ -79,29 +79,6 @@ kpCommandSize::SizeType kpToolSelectionCreateCommand::size () const
 }
 
 
-// public static
-bool kpToolSelectionCreateCommand::nextUndoCommandIsCreateBorder (
-    kpCommandHistory *commandHistory)
-{
-    if (!commandHistory)
-        return false;
-
-    kpCommand *cmd = commandHistory->nextUndoCommand ();
-    if (!cmd)
-        return false;
-
-    kpToolSelectionCreateCommand *c = dynamic_cast <kpToolSelectionCreateCommand *> (cmd);
-    if (!c)
-        return false;
-
-    const kpAbstractSelection *sel = c->fromSelection ();
-    if (!sel)
-        return false;
-
-    return (!sel->hasContent ());
-}
-
-
 // public
 const kpAbstractSelection *kpToolSelectionCreateCommand::fromSelection () const
 {
