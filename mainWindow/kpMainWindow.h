@@ -548,7 +548,7 @@ public:
     kpColor backgroundColor (bool ofSelection = false) const;
     void addImageOrSelectionCommand (kpCommand *cmd,
                                      bool addSelCreateCmdIfSelAvail = true,
-                                     bool addSelPullCmdIfSelAvail = true);
+                                     bool addSelContentCmdIfSelAvail = true);
 
 private slots:
     void slotResizeScale ();

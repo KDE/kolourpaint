@@ -263,12 +263,12 @@ kpColor kpMainWindow::backgroundColor (bool ofSelection) const
 // REFACTOR: sync: Code dup with kpAbstractSelectionTool::addNeedingContentCommand().
 void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
     bool addSelCreateCmdIfSelAvail,
-    bool addSelPullCmdIfSelAvail)
+    bool addSelContentCmdIfSelAvail)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
     kDebug () << "kpMainWindow::addImageOrSelectionCommand()"
                << " addSelCreateCmdIfSelAvail=" << addSelCreateCmdIfSelAvail
-               << " addSelPullCmdIfSelAvail=" << addSelPullCmdIfSelAvail
+               << " addSelContentCmdIfSelAvail=" << addSelContentCmdIfSelAvail
                << endl;
 #endif
 
@@ -306,7 +306,7 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
     }
 
 
-    if (addSelPullCmdIfSelAvail && sel && !sel->hasContent ())
+    if (addSelContentCmdIfSelAvail && sel && !sel->hasContent ())
     {
         kpAbstractImageSelection *imageSel =
             dynamic_cast <kpAbstractImageSelection *> (sel);
@@ -372,12 +372,12 @@ void kpMainWindow::slotResizeScale ()
 
         bool addSelCreateCommand = (dialog.actOnSelection () ||
                                     cmd->scaleSelectionWithImage ());
-        bool addSelPullCommand = dialog.actOnSelection ();
+        bool addSelContentCommand = dialog.actOnSelection ();
 
         addImageOrSelectionCommand (
             cmd,
             addSelCreateCommand,
-            addSelPullCommand);
+            addSelContentCommand);
 
         // Resized document?
         if (!dialog.actOnSelection () &&
