@@ -104,7 +104,7 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
         kpAbstractSelection *oldSelection = m_selection;
 
 
-        // (must be called before give the document a new selection, to
+        // (must be called before giving the document a new selection, to
         //  avoid a potential mess where switchToCompatibleTool() ends
         //  the current selection tool, killing the new selection)
         bool isTextChanged = false;
