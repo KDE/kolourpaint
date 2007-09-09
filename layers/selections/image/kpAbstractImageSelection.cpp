@@ -37,6 +37,24 @@
 #include <KDebug>
 
 
+// Returns whether <sel> can be set to have <baseImage>.
+// In other words, this is the precondition for <sel>.setBaseImage(<baseImage).
+//
+// This checks that they have compatible relative dimensions.
+static bool CanSetBaseImageTo (kpAbstractImageSelection *sel, const kpImage &baseImage)
+{
+    if (baseImage.isNull ())
+    {
+        // Always allowed to wipe out selection content, changing it into a
+        // border.
+        return true;
+    }
+
+    return (baseImage.width () == sel->width () &&
+            baseImage.height () == sel->height ());
+}
+
+
 struct kpAbstractImageSelectionPrivate
 {
     kpImage baseImage;
@@ -108,17 +126,35 @@ bool kpAbstractImageSelection::readFromStream (QDataStream &stream,
     if (!kpAbstractSelection::readFromStream (stream, wali))
         return false;
 
-    QImage image;
-    stream >> image;
+    QImage qimage;
+    stream >> qimage;
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "\timage: w=" << image.width () << " h=" << image.height ()
-               << " depth=" << image.depth () << endl;
+    kDebug () << "\timage: w=" << qimage.width () << " h=" << qimage.height ()
+               << " depth=" << qimage.depth () << endl;
 #endif
 
-    if (!image.isNull ())
+    if (!qimage.isNull ())
     {
-        d->baseImage = kpPixmapFX::convertToPixmap (image, false/*no dither*/, wali);
+        const kpImage image = kpPixmapFX::convertToPixmap (qimage, false/*no dither*/, wali);
+        if (image.isNull ())
+        {
+            // There was definitely source image data (stored in <image>) but
+            // the conversion failed.
+            return false;
+        }
+
+        // Image size does not match the selection's dimensions?
+        // This call only accesses our superclass' fields, which have already
+        // been read in.
+        if (!::CanSetBaseImageTo (this, image))
+        {
+            return false;
+        }
+
+        d->baseImage = image;
     }
+    // (was just a selection border in the clipboard, even though KolourPaint's
+    //  GUI doesn't allow you to copy such a thing into the clipboard)
     else
         d->baseImage = kpImage ();
 
@@ -294,15 +330,10 @@ kpImage kpAbstractImageSelection::baseImage () const
 }
 
 // public
-void kpAbstractImageSelection::setBaseImage (const QPixmap &baseImage)
+void kpAbstractImageSelection::setBaseImage (const kpImage &baseImage)
 {
+    Q_ASSERT (::CanSetBaseImageTo (this, baseImage));
     d->baseImage = baseImage;
-
-    if (!d->baseImage.isNull ())
-    {
-        Q_ASSERT (d->baseImage.width () == width () &&
-                  d->baseImage.height () == height ());
-    }
 
     recalculateTransparencyMaskCache ();
 
