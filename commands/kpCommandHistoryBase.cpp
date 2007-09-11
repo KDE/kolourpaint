@@ -627,18 +627,13 @@ static void populatePopupMenu (KMenu *popupMenu,
         i++, it++;
     }
 
-// COMPAT: KPopupTitle gone
-#if 0
     if (it != commandList.end ())
     {
-        // TODO: maybe have a scrollview show all the items instead
-        KPopupTitle *title = new KPopupTitle (popupMenu);
-        title->setTitle (i18np ("%1 more item", "%1 more items",
-                               commandList.size () - i));
-
-        popupMenu->insertItem (title);
+        // TODO: maybe have a scrollview show all the items instead, like KOffice in KDE3
+        // LOCOMPAT: should be centered text.
+        popupMenu->addTitle (i18np ("%1 more item", "%1 more items",
+                                    commandList.size () - i));
     }
-#endif
 }
 
 
