@@ -1,5 +1,4 @@
 
-// TODO: Cursor when no content - it seems to flash wrong
 // REFACTOR: For all files involved in the class, refactor remaining bits and pieces and add APIDoc
 
 /*
