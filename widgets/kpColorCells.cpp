@@ -35,58 +35,9 @@
 #include <QMouseEvent>
 
 #include <kpColorCollection.h>
+#include <kpDefaultColorCollection.h>
 
 #include <kpColor.h>
-
-
-class kpDefaultColorCollection : public kpColorCollection
-{
-public:
-    kpDefaultColorCollection ();
-    ~kpDefaultColorCollection ();
-};
-
-kpDefaultColorCollection::kpDefaultColorCollection ()
-{
-    kpColor colors [] =
-    {
-        kpColor::Black,
-        kpColor::Gray,
-        kpColor::Red,
-        kpColor::Orange,
-        kpColor::Yellow,
-        kpColor::Green,
-        kpColor::Aqua,
-        kpColor::Blue,
-        kpColor::Purple,
-        kpColor::Pink,
-        kpColor::LightGreen,
-
-        kpColor::White,
-        kpColor::LightGray,
-        kpColor::DarkRed,
-        kpColor::DarkOrange,
-        kpColor::DarkYellow,
-        kpColor::DarkGreen,
-        kpColor::DarkAqua,
-        kpColor::DarkBlue,
-        kpColor::DarkPurple,
-        kpColor::LightBlue,
-        kpColor::Tan
-    };
-
-    for (int i = 0; i < (int) (sizeof (colors) / sizeof (colors [0])); i++)
-    {
-        addColor (colors [i].toQColor ());
-    }
-}
-
-kpDefaultColorCollection::~kpDefaultColorCollection ()
-{
-}
-
-
-
 
 
 /* TODO: clean up this code!!!
