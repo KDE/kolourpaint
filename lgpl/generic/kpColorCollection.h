@@ -84,8 +84,17 @@ public:
     **/
    kpColorCollection& operator=( const kpColorCollection &);
 
+   // On failure, this prints an error dialog and returns false.
+   // On success, it returns true.
+   //
    // Added for KolourPaint.
    bool open(const KUrl &url, QWidget *parent);
+
+   // On failure, this prints an error dialog and returns false.
+   // If the user cancels any presented overwrite dialog, it also returns false.
+   // On success, it returns true.
+   //
+   // Added for KolourPaint.
    bool saveAs(const KUrl &url, QWidget *parent) const;
 
    /**

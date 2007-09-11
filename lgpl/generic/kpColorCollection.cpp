@@ -1,3 +1,7 @@
+
+// REFACT0R: Remote open/save file logic is duplicated in kpDocument.
+// HITODO: Test when remote file support in KDE 4 stabilizes
+
 /* This file is part of the KDE libraries
     Copyright (C) 1999 Waldo Bastian (bastian@kde.org)
     Copyright (C) 2007 Clarence Dang (dang@kde.org)
@@ -20,6 +24,8 @@
 //-----------------------------------------------------------------------------
 // KDE color collection
 
+#define DEBUG_KP_COLOR_COLLECTION 1
+
 #include "kpColorCollection.h"
 
 #include <QtCore/QFile>
@@ -32,6 +38,7 @@
 #include <ksavefile.h>
 #include <kstandarddirs.h>
 #include <kstringhandler.h>
+#include <KTemporaryFile>
 #include <KUrl>
 
 #include <kpUrlFormatter.h>
@@ -111,17 +118,37 @@ kpColorCollection::~kpColorCollection()
     delete d;
 }
 
-bool
-kpColorCollection::open(const KUrl &url, QWidget *parent)
+static void CouldNotOpenDialog (const KUrl &url, QWidget *parent)
 {
-   // HITODO: This is wrong for remote files.
-  QFile paletteFile(url.path ());
-  if (!paletteFile.exists() ||
-      !paletteFile.open(QIODevice::ReadOnly))
-  {
      KMessageBox::sorry (parent,
         i18n ("Could not open color palette \"%1\".",
               kpUrlFormatter::PrettyFilename (url)));
+}
+
+bool
+kpColorCollection::open(const KUrl &url, QWidget *parent)
+{
+  QString tempPaletteFilePath;
+  if (url.isEmpty () || !KIO::NetAccess::download (url, tempPaletteFilePath, parent))
+  {
+  #if DEBUG_KP_COLOR_COLLECTION
+     kDebug () << "\tcould not download";
+  #endif
+     ::CouldNotOpenDialog (url, parent);
+     return false;
+  }
+
+  // sync: remember to "KIO::NetAccess::removeTempFile (tempPaletteFilePath)" in all exit paths
+
+  QFile paletteFile(tempPaletteFilePath);
+  if (!paletteFile.exists() ||
+      !paletteFile.open(QIODevice::ReadOnly))
+  {
+  #if DEBUG_KP_COLOR_COLLECTION
+     kDebug () << "\tcould not open qfile";
+  #endif
+     KIO::NetAccess::removeTempFile (tempPaletteFilePath);
+     ::CouldNotOpenDialog (url, parent);
      return false;
   }
 
@@ -130,6 +157,7 @@ kpColorCollection::open(const KUrl &url, QWidget *parent)
   QString line = QString::fromLocal8Bit(paletteFile.readLine());
   if (line.indexOf(" Palette") == -1)
   {
+     KIO::NetAccess::removeTempFile (tempPaletteFilePath);
      KMessageBox::sorry (parent,
         i18n ("Could not open color palette \"%1\" - unsupported format.\n"
               "The file may be corrupt.",
@@ -174,6 +202,7 @@ kpColorCollection::open(const KUrl &url, QWidget *parent)
   d->colorList = newColorList;
   d->desc = newDesc;
 
+  KIO::NetAccess::removeTempFile (tempPaletteFilePath);
   return true;
 }
 
@@ -183,6 +212,25 @@ static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
     KMessageBox::error (parent,
                         i18n ("Could not save color palette as \"%1\".",
                               kpUrlFormatter::PrettyFilename (url)));
+}
+
+static void SaveToFile (kpColorCollectionPrivate *d, QIODevice *device)
+{
+   QTextStream str (device);
+
+   QString description = d->desc.trimmed();
+   description = '#'+description.split( "\n", QString::KeepEmptyParts).join("\n#");
+
+   str << "KDE RGB Palette\n";
+   str << description << "\n";
+   foreach (const ColorNode &node, d->colorList)
+   {
+       int r,g,b;
+       node.color.getRgb(&r, &g, &b);
+       str << r << " " << g << " " << b << " " << node.name << "\n";
+   }
+
+   str.flush();
 }
 
 bool
@@ -200,37 +248,95 @@ kpColorCollection::saveAs(const KUrl &url, QWidget *parent) const
           return false;
    }
 
-   // HITODO: This is wrong for remote files.
-   const QString filename = url.path ();
-
-   KSaveFile sf(filename);
-   if (!sf.open())
+   if (url.isLocalFile ())
    {
-      ::CouldNotSaveDialog (url, parent);
-      return false;
-   }
+       const QString filename = url.path ();
+    
+        // sync: All failure exit paths _must_ call KSaveFile::abort() or
+        //       else, the KSaveFile destructor will overwrite the file,
+        //       <filename>, despite the failure.
+        KSaveFile atomicFileWriter (filename);
+        {
+            if (!atomicFileWriter.open ())
+            {
+                // We probably don't need this as <filename> has not been
+                // opened.
+                atomicFileWriter.abort ();
 
+            #if DEBUG_KP_COLOR_COLLECTION
+                kDebug () << "\treturning false because could not open KSaveFile"
+                          << " error=" << atomicFileWriter.error () << endl;
+            #endif
+                ::CouldNotSaveDialog (url, parent);
+                return false;
+            }
 
-   QTextStream str ( &sf );
+            // Write to local temporary file.
+            ::SaveToFile (d, &atomicFileWriter);
 
-   QString description = d->desc.trimmed();
-   description = '#'+description.split( "\n", QString::KeepEmptyParts).join("\n#");
+            // Atomically overwrite local file with the temporary file
+            // we saved to.
+            if (!atomicFileWriter.finalize ())
+            {
+                atomicFileWriter.abort ();
 
-   str << "KDE RGB Palette\n";
-   str << description << "\n";
-   foreach (const ColorNode &node, d->colorList)
-   {
-       int r,g,b;
-       node.color.getRgb(&r, &g, &b);
-       str << r << " " << g << " " << b << " " << node.name << "\n";
-   }
+            #if DEBUG_KP_COLOR_COLLECTION
+                kDebug () << "\tcould not close KSaveFile";
+            #endif
+                ::CouldNotSaveDialog (url, parent);
+                return false;
+            }
+        }  // sync KSaveFile.abort()
+    }
+    // Remote file?
+    else
+    {
+        // Create temporary file that is deleted when the variable goes
+        // out of scope.
+        KTemporaryFile tempFile;
+        if (!tempFile.open ())
+        {
+        #if DEBUG_KP_COLOR_COLLECTION
+            kDebug () << "\treturning false because could not open tempFile";
+        #endif
+            ::CouldNotSaveDialog (url, parent);
+            return false;
+        }
 
-   sf.flush();
-   if (!sf.finalize())
-   {
-      ::CouldNotSaveDialog (url, parent);
-      return false;
-   }
+        // Write to local temporary file.
+        ::SaveToFile (d, &tempFile);
+
+        // Collect name of temporary file now, as QTemporaryFile::fileName()
+        // stops working after close() is called.
+        const QString tempFileName = tempFile.fileName ();
+    #if DEBUG_KP_COLOR_COLLECTION
+            kDebug () << "\ttempFileName='" << tempFileName << "'";
+    #endif
+        Q_ASSERT (!tempFileName.isEmpty ());
+
+        tempFile.close ();
+        if (tempFile.error () != QFile::NoError)
+        {
+        #if DEBUG_KP_COLOR_COLLECTION
+            kDebug () << "\treturning false because could not close";
+        #endif
+            ::CouldNotSaveDialog (url, parent);
+            return false;
+        }
+
+        // Copy local temporary file to overwrite remote.
+        // TODO: No one seems to know how to do this atomically
+        //       [http://lists.kde.org/?l=kde-core-devel&m=117845162728484&w=2].
+        //       At least, fish:// (ssh) is definitely not atomic.
+        if (!KIO::NetAccess::upload (tempFileName, url, parent))
+        {
+        #if DEBUG_KP_COLOR_COLLECTION
+            kDebug () << "\treturning false because could not upload";
+        #endif
+            ::CouldNotSaveDialog (url, parent);
+            return false;
+        }
+    }
 
    return true;
 }
