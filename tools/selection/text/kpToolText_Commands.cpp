@@ -43,7 +43,7 @@
 
 
 // private
-void kpToolText::setAllCommandPointersToZero ()
+void kpToolText::endTypingCommands ()
 {
     d->insertCommand = 0;
     d->enterCommand = 0;

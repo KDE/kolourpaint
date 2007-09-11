@@ -265,6 +265,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/tools/selection/text/kpToolText_Create.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tools/selection/text/kpToolText_CursorCalc.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tools/selection/text/kpToolText_InputMethodEvents.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tools/selection/text/kpToolText_KeyboardEvents.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/tools/selection/text/kpToolText_KeyboardEvents_HandleArrowKeys.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/tools/selection/text/kpToolText_KeyboardEvents_HandleTypingKeys.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tools/selection/text/kpToolText_Move.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tools/selection/text/kpToolText_ResizeScale.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tools/selection/text/kpToolText_SelectText.cpp

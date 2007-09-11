@@ -44,7 +44,27 @@ class kpToolTextBackspaceCommand;
 class kpToolTextDeleteCommand;
 
 
-// REFACTOR: This whole shape thing (e.g. calls to endShape()) is confusing - what is going on?
+//
+// kpAbstractSelectionTool considers a drawing operation to be a mouse
+// drag that creates, moves or resize/scales a selection.
+//
+// kpToolText also considers any such drawing operation and alternatively,
+// any active text command (e.g. inserting text), to be the "current
+// shape".  kpTool's shape methods (e.g. hasBegunShape() and endShape())
+// have been overloaded to ensure that they operate on whatever operation
+// (drawing or text) is active.
+//
+// It is not possible to have a drawing command and text command active
+// simultaneously.  However, it is possible to have neither active.
+//
+// Text commands do not end until a different kind of key is pressed or
+// a drawing command commences.  For instance, if you were to
+// type a character of text, a kpToolTextInsertCommand would be added to
+// the command history but stays active so that future typed characters
+// would simply be added to this command.  As soon as the user presses
+// a different kind of key (e.g. arrow key, backspace) or drags the mouse,
+// the command is no longer kept active.
+//
 class kpToolText : public kpAbstractSelectionTool
 {
 Q_OBJECT
@@ -61,40 +81,46 @@ public:
 private:
     /**
      * Indicates that no current text editing command is active.
-     * You must call this when ending the current command (e.g. changing
-     * from backspacing to inserting text).
+     * You must call this, via endShape(), when ending the current command
+     * (e.g. changing from backspacing to inserting text
+     *  e.g.2. changing from moving/resizing to inserting text).
      *
-     * It achieves this by zero'ing out all the m_.+Command pointers.
+     * It achieves this by zero'ing out all the d->.+Command pointers.
      * It does not delete the pointers as they should be owned by the
      * commandHistory().
+     *
+     * If you call this excessively, you will break up commands into many
+     * smaller commands e.g. a text insertion command with 10 characters
+     * might be split into 10 text insertion commands, each containing 1
+     * character.
      */
-    void setAllCommandPointersToZero ();
+    void endTypingCommands ();
 
 
     /**
      * Ends the current text editing command by eventually calling
-     * setAllCommandPointersToZero(), returns a new
+     * endTypingCommands(), returns a new
      * kpToolTextBackspaceCommand and adds it to the commandHistory().
      *
-     * @param cmd A Pointer to one of the m_backspace.*Command pointers.
-     *            On function return, the pointed-to m_backspace.*Command
+     * @param cmd A Pointer to one of the d->backspace.*Command pointers.
+     *            On function return, the pointed-to d->backspace.*Command
      *            pointer will point to a new kpToolTextBackspaceCommand.
      */
     void addNewBackspaceCommand (kpToolTextBackspaceCommand **cmd);
 
     /**
      * Ends the current text editing command by eventually calling
-     * setAllCommandPointersToZero(), returns a new
+     * endTypingCommands(), returns a new
      * kpToolTextDeleteCommand and adds it to the commandHistory().
      *
-     * @param cmd A Pointer to one of the m_delete.*Command pointers. On
-     *            function return, the pointed-to m_delete.*Command pointer
+     * @param cmd A Pointer to one of the d->delete.*Command pointers. On
+     *            function return, the pointed-to d->delete.*Command pointer
      *            will point to a new kpToolTextDeleteCommand.
      */
     void addNewDeleteCommand (kpToolTextDeleteCommand **cmd);
 
     void addNewEnterCommand (kpToolTextEnterCommand **cmd);
-    
+
     void addNewInsertCommand (kpToolTextInsertCommand **cmd);
 
 
@@ -136,7 +162,7 @@ public:
 
 public:
     virtual void endShape (const QPoint &thisPoint, const QRect &normalizedRect);
-    
+
 
 //
 // Drawing - Operation Dispatching
@@ -200,7 +226,7 @@ protected:
 protected:
     virtual QString nonSmearMoveCommandName () const;
 
-    
+
 //
 // Resize/Scale
 //
@@ -410,21 +436,30 @@ protected:
 
 
 //
-// Keyboard Events
+// Keyboard Events - Handling Arrow Keys
 //
-
+// These methods always:
+//
+// 1. Before doing anything, end the current shape (e.g. a text editing command or
+//    selection move command).  This is done for 2 reasons:
+//
+//    a) The user has interrupted the current command e.g. if I were to
+//       type some text, press an arrow key and then type text again, the two
+//       periods of text typing should be separate commands due to the arrow
+//       key interruption.
+//
+//    b) To simplify the code by avoiding interference with the current command
+//       esp. since commands do not expect the cursor to move in the middle.
+//
+// 2. Accept the event as it is always intended for the method.  This is even
+//    if the operation could not complete e.g. an attempt to move the cursor
+//    left when it is already at column 0.
+//
 protected:
-    // Prevents actions with single letter/number shortcuts from eating
-    // keystrokes while a text selection is active.  This is important
-    // because the Tool Box actions default to single letter/number
-    // shortcuts.
-    virtual bool viewEvent (QEvent *e);
-
-
     /**
      * Moves the text cursor up one character.  Accepts the key event @p e.
      *
-     * If there was an active text editing command, it ends it first.
+     * If there was an active text editing or selection command, it ends it first.
      *
      * @param e Mutable key event information.
      * @param textLines One or more lines of text (convenience parameter).
@@ -439,7 +474,7 @@ protected:
     /**
      * Moves the text cursor down one character.  Accepts the key event @p e.
      *
-     * If there was an active text editing command, it ends it first.
+     * If there was an active text editing or selection command, it ends it first.
      *
      * @param e Mutable key event information.
      * @param textLines One or more lines of text (convenience parameter).
@@ -455,7 +490,7 @@ protected:
      * Moves the text cursor left one character or if CTRL is held, one
      * word.  Accepts the key event @p e.
      *
-     * If there was an active text editing command, it ends it first.
+     * If there was an active text editing or selection command, it ends it first.
      *
      * @param e Mutable key event information.
      * @param textLines One or more lines of text (convenience parameter).
@@ -471,7 +506,7 @@ protected:
      * Moves the text cursor right one character or if CTRL is held, one
      * word.  Accepts the key event @p e.
      *
-     * If there was an active text editing command, it ends it first.
+     * If there was an active text editing or selection command, it ends it first.
      *
      * @param e Mutable key event information.
      * @param textLines One or more lines of text (convenience parameter).
@@ -488,7 +523,7 @@ protected:
      * Moves the text cursor to the start of the line and if CTRL is held,
      * to the first line.  Accepts the key event @p e.
      *
-     * If there was an active text editing command, it ends it first.
+     * If there was an active text editing or selection command, it ends it first.
      *
      * @param e Mutable key event information.
      * @param textLines One or more lines of text (convenience parameter).
@@ -505,7 +540,7 @@ protected:
      * text line or if CTRL is held, after the last character of the last
      * line.  Accepts the key event @p e.
      *
-     * If there was an active text editing command, it ends it first.
+     * If there was an active text editing or selection command, it ends it first.
      *
      * @param e Mutable key event information.
      * @param textLines One or more lines of text (convenience parameter).
@@ -518,15 +553,38 @@ protected:
         const QList <QString> &textLines, int cursorRow, int cursorCol);
 
 
+//
+// Keyboard Events - Handling Typing Keys
+//
+// For each method, if the respective event was actually intended for the
+// method:
+//
+// 1. If the event will not be a NOP:
+//
+//        If the current command is not the same as what this method would produce,
+//        it starts a new one, ending the current one (using the addNew*Command()
+//        methods).  If the current command is the same, it simply extends the
+//        current command e.g. if the current command was a kpToolTextInsertCommand
+//        and the user typed another character of text, that character would just be
+//        added to that command.
+//
+// 2. Accept the event.  This is even if the operation could not complete e.g.
+//    an attempt backspace when the cursor is at column 0.
+//
+// If the event was not intended for the method (e.g. pressing CTRL, Caps Lock
+// or any other key that does not produce text, in handleTextTyped()), nothing
+// happens.
+//
+protected:
     /**
      * Backspaces and if the active text editing command is not
-     * m_backspaceCommand, it calls addNewBackspaceCommand() on
-     * m_backspaceCommand first.
+     * d->backspaceCommand, it calls addNewBackspaceCommand() on
+     * d->backspaceCommand first.
      *
      * If CTRL is held, it backspaces to the start of the active word
      * and if the current text editing command was not
-     * m_backspaceWordCommand, it calls addNewBackspaceCommand() on
-     * m_backspaceWordCommand first.
+     * d->backspaceWordCommand, it calls addNewBackspaceCommand() on
+     * d->backspaceWordCommand first.
      *
      * In this way, Backspace and CTRL+Backspace are separate entries
      * in the commandHistory().
@@ -545,13 +603,13 @@ protected:
 
     /**
      * Deletes and if the active text editing command is not
-     * m_deleteCommand, it calls addNewDeleteCommand() on
-     * m_deleteCommand first.
+     * d->deleteCommand, it calls addNewDeleteCommand() on
+     * d->deleteCommand first.
      *
-     * If CTRL is held, it delets to the start of the next word
+     * If CTRL is held, it deletes to the start of the next word
      * and if the active text editing command was not
-     * m_deleteWordCommand, it calls addNewDeleteCommand() on
-     * m_deleteWordCommand first.
+     * d->deleteWordCommand, it calls addNewDeleteCommand() on
+     * d->deleteWordCommand first.
      *
      * In this way, Delete and CTRL+Delete are separate entries
      * in the commandHistory().
@@ -571,7 +629,7 @@ protected:
 
     /**
      * Enters and if the active text editing command is not
-     * m_enterCommand, it ends the command, constructs m_enterCommand adding
+     * d->enterCommand, it ends the command, constructs d->enterCommand adding
      * it to commandHistory(), first.
      *
      * Accepts the key event @p e.
@@ -590,7 +648,7 @@ protected:
     /**
      * Inserts the printable characters of e->text() and accepts the key
      * event @p e.  If the active text editing command is not
-     * m_insertCommand, it ends the command, constructs m_insertCommand
+     * d->insertCommand, it ends the command, constructs d->insertCommand
      * adding it to commandHistory(), first.
      *
      * If e->text() does not contain any printable characters, it does not
@@ -610,7 +668,17 @@ protected:
         const QList <QString> &textLines, int cursorRow, int cursorCol);
 
 
+//
+// Keyboard Events
+//
+
 protected:
+    // Prevents actions with single letter/number shortcuts from eating
+    // keystrokes while a text selection is active.  This is important
+    // because the Tool Box actions default to single letter/number
+    // shortcuts.
+    virtual bool viewEvent (QEvent *e);
+
     /**
      * Handles key press events.
      *

@@ -1,7 +1,6 @@
 
-// TODO: Cursor when no content
-// TODO: Combining text typing with pull command [should be fixed - test]
-// TODO: Refactor
+// TODO: Cursor when no content - it seems to flash wrong
+// REFACTOR: For all files involved in the class, refactor remaining bits and pieces and add APIDoc
 
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
@@ -129,7 +128,7 @@ void kpToolText::begin ()
     // consistency with end().
     viewManager ()->setTextCursorEnabled (true);
 
-    setAllCommandPointersToZero ();
+    endTypingCommands ();
 
     kpAbstractSelectionTool::begin ();
 }
@@ -189,7 +188,7 @@ void kpToolText::cancelShape ()
         kpAbstractSelectionTool::cancelShape ();
     else if (hasBegunText ())
     {
-        setAllCommandPointersToZero ();
+        endTypingCommands ();
 
         commandHistory ()->undo ();
     }
@@ -208,7 +207,7 @@ void kpToolText::endShape (const QPoint &thisPoint, const QRect &normalizedRect)
     if (drawType () != None)
         kpAbstractSelectionTool::endDraw (thisPoint, normalizedRect);
     else if (hasBegunText ())
-        setAllCommandPointersToZero ();
+        endTypingCommands ();
     else
         kpAbstractSelectionTool::endDraw (thisPoint, normalizedRect);
 }
