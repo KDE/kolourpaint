@@ -81,7 +81,7 @@ int main (int argc, char *argv [])
     aboutData.addAuthor (ki18n ("Martin Koller"), ki18n ("Scanning Support"), "m.koller@surfeu.at");
 
 
-    aboutData.addCredit (ki18n ("Thanks to the many people who have helped to make this program possible."));
+    aboutData.addCredit (ki18n ("Thanks to the many others who have helped to make this program possible."));
 
 
     KCmdLineArgs::init (argc, argv, &aboutData);
