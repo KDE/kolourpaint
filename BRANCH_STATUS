@@ -1,0 +1,55 @@
+This KolourPaint 1.2_kde3 branch (a backport of KDE 3.3's KolourPaint to
+KDE 3.0, with scripts to create distro-independent binaries) is unmaintained,
+due to:
+
+1. A lack of time.  I didn't even get time to do a backport branch of
+   KDE 3.5's KolourPaint.
+
+2. Our cousin branch of KolourPaint (KDE 3.3) became unmaintained.
+
+3. Everyone is using kdelibs 3.5 by now so there is no need for
+   kdelibs 3.[012] support.
+
+4. KDE 4 is the future.
+
+5. These days distributions do a much better job of providing packages and
+   also, the workload involved in creating distro-independent packages
+   by myself became too high.
+
+The last change we merged in, from our cousin branch of KDE (3.3) [which was
+marked as unmaintained after that commit], was:
+
+    r614011 | dang | 2006-12-16 11:19:22 +1100 (Sat, 16 Dec 2006) | 17 lines
+    Changed paths:
+       M /branches/KDE/3.3/kdegraphics/kolourpaint/NEWS
+       M /branches/KDE/3.3/kdegraphics/kolourpaint/README
+       M /branches/KDE/3.3/kdegraphics/kolourpaint/VERSION
+       M /branches/KDE/3.3/kdegraphics/kolourpaint/kolourpaint.cpp
+       M /branches/KDE/3.3/kdegraphics/kolourpaint/tools/kptoolselection.cpp
+       M /branches/KDE/3.3/kdegraphics/kolourpaint/tools/kptoolselection.h
+
+       * Fix crash triggered by rapidly deselecting a selection after
+         drag-scaling the selection (Bug 117866)
+         [before inserting "kpToolSelectionResizeScaleCommand" into the command
+          history, finalize the smooth scale so that the "m_smoothScaleTimer"
+          is disabled]
+
+       * Up ver to 1.2.6-pre
+
+    [BACKPORT of fix to branches/KDE/3.[45]/]
+
+    Needs backporting to branches/kolourpaint/1.2_kde3/ and
+    forward porting to trunk/KDE/ (KDE 4).  We lazily claim in the NEWS file that
+    we've already backported.
+
+    This fix will be in KDE 3.3-based distros distros.
+
+If you are using a KDE older than 3.5, you should upgrade.  Then, there is
+no need for this branch from a user perspective.
+
+In case we decide to do a backport and/or distro-independent package again
+(perhaps for KDE >= 4.0), it would be useful to diff the KDE 3.3 branch
+against us, to obtain the packaging scripts and the few bits of code/magic
+that would still be relevant.  But if we never do another backport or
+package, this branch contains no value.
+
