@@ -49,7 +49,7 @@ int main (int argc, char *argv [])
     KAboutData aboutData
     (
         "kolourpaint", 0,
-        ki18n ("KolourPaint"),
+        ki18n ("KolourPaint BETA"),
         kpVersionText,
         ki18n ("Paint Program for KDE"),
         KAboutData::License_Custom,
