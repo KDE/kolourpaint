@@ -42,12 +42,13 @@
 
 #include <kapplication.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kconfiggroup.h>
 
 #include <kpDefs.h>
 #include <kpEffectInvert.h>
+#include <kpPixmapFX.h>
 
 
 kpToolWidgetBase::kpToolWidgetBase (QWidget *parent, const QString &name)
@@ -651,7 +652,8 @@ void kpToolWidgetBase::paintEvent (QPaintEvent *e)
 
                 if (m_invertSelectedPixmap)
                 {
-                    // TODO: Should use kpPixmapFX instead i.e. method on view content, not document content
+                    // REFACTOR: Should use kpPixmapFX instead i.e. method on view content, not document content
+                    kpPixmapFX::ensureNoAlphaChannel (&pixmap);
                     kpEffectInvert::applyEffect (&pixmap);
                 }
             }
