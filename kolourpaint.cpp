@@ -92,10 +92,6 @@ int main (int argc, char *argv [])
 
     KApplication app;
 
-    // Qt says this is necessary but I don't think it is...
-    QObject::connect (&app, SIGNAL (lastWindowClosed ()),
-                      &app, SLOT (quit ()));
-
 
     // Avoid paletted screen modes as QImage's -- created from on-screen
     // QPixmap -- format changes from truecolor to paletted and that requires
@@ -148,3 +144,4 @@ int main (int argc, char *argv [])
 
     return app.exec ();
 }
+
