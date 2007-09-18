@@ -227,7 +227,7 @@ QBrush kpToolWidgetFillStyle::brushForFillStyle (FillStyle fs,
 }
 
 // public
-// TODO: remove since this widget is for document options and we are returning an on-screen Qt brush instead of e.g. kpColor
+// REFACTOR: remove since this widget is for document options and we are returning an on-screen Qt brush instead of e.g. kpColor
 QBrush kpToolWidgetFillStyle::brush (const kpColor &foregroundColor,
                                      const kpColor &backgroundColor)
 {
