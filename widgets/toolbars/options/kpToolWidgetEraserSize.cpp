@@ -40,6 +40,7 @@
 
 #include <kpColor.h>
 #include <kpPainter.h>
+#include <kpPixmapFX.h>
 #include <kpTool.h>
 
 
@@ -48,21 +49,21 @@ static const int NumEraserSizes =
     int (sizeof (::EraserSizes) / sizeof (::EraserSizes [0]));
 
 
-static void DrawPixmap (QPixmap *destPixmap, const QPoint &topLeft, void *userData)
+static void DrawImage (kpImage *destImage, const QPoint &topLeft, void *userData)
 {
     kpToolWidgetEraserSize::DrawPackage *pack =
         static_cast <kpToolWidgetEraserSize::DrawPackage *> (userData);
 
     const int size = ::EraserSizes [pack->selected];
 
-    kpPainter::fillRect (destPixmap,
+    kpPainter::fillRect (kpImage::CastPixmapPtr (destImage),
         topLeft.x (), topLeft.y (), size, size,
         pack->color);
 }
 
-static void DrawCursor (QPixmap *destPixmap, const QPoint &topLeft, void *userData)
+static void DrawCursor (kpImage *destImage, const QPoint &topLeft, void *userData)
 {
-    ::DrawPixmap (destPixmap, topLeft, userData);
+    ::DrawImage (destImage, topLeft, userData);
 
 
     kpToolWidgetEraserSize::DrawPackage *pack =
@@ -76,7 +77,7 @@ static void DrawCursor (QPixmap *destPixmap, const QPoint &topLeft, void *userDa
         return;
 
     // Draw 1-pixel border on all sides.
-    kpPainter::drawRect (destPixmap,
+    kpPainter::drawRect (destImage,
         topLeft.x (), topLeft.y (), size, size,
         kpColor::Black);
 }
@@ -104,12 +105,12 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const QString &
                 previewPixmap.height () >= s);
         }
 
-        kpPainter::fillRect (&previewPixmap,
+        kpPainter::fillRect (kpImage::CastPixmapPtr (&previewPixmap),
             0, 0, previewPixmap.width (), previewPixmap.height (),
             kpColor::Transparent);
             
         DrawPackage pack = drawFunctionDataForSelected (kpColor::Black, i);
-        ::DrawPixmap (&previewPixmap,
+        ::DrawImage (kpImage::CastPixmapPtr (&previewPixmap),
             QPoint ((previewPixmap.width () - s) / 2,
                     (previewPixmap.height () - s) / 2),
             &pack);
@@ -136,7 +137,7 @@ int kpToolWidgetEraserSize::eraserSize () const
 // public
 kpTempImage::UserFunctionType kpToolWidgetEraserSize::drawFunction () const
 {
-    return &::DrawPixmap;
+    return &::DrawImage;
 }
 
 // public

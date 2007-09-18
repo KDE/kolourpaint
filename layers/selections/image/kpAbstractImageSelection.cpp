@@ -173,7 +173,7 @@ void kpAbstractImageSelection::writeToStream (QDataStream &stream) const
 
     if (!d->baseImage.isNull ())
     {
-        const QImage image = kpPixmapFX::convertToImage (d->baseImage);
+        const QImage image = kpPixmapFX::convertToQImage (d->baseImage);
     #if DEBUG_KP_SELECTION && 1
         kDebug () << "\twrote image rect=" << image.rect ();
     #endif
@@ -375,8 +375,8 @@ bool kpAbstractImageSelection::setTransparency (
         }
         else if (checkTransparentPixmapChanged)
         {
-            QImage oldTransparencyMaskImage = kpPixmapFX::convertToImage (oldTransparencyMaskCache);
-            QImage newTransparencyMaskImage = kpPixmapFX::convertToImage (d->transparencyMaskCache);
+            QImage oldTransparencyMaskImage = kpPixmapFX::convertToQImage (oldTransparencyMaskCache);
+            QImage newTransparencyMaskImage = kpPixmapFX::convertToQImage (d->transparencyMaskCache);
 
             bool changed = false;
             for (int y = 0; y < oldTransparencyMaskImage.height () && !changed; y++)
@@ -438,7 +438,7 @@ void kpAbstractImageSelection::recalculateTransparencyMaskCache ()
 
     d->transparencyMaskCache = QBitmap (d->baseImage.width (), d->baseImage.height ());
 
-    QImage image = kpPixmapFX::convertToImage (d->baseImage);
+    QImage image = kpPixmapFX::convertToQImage (d->baseImage);
     QPainter transparencyMaskPainter (&d->transparencyMaskCache);
 
     bool hasTransparent = false;

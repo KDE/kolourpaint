@@ -58,7 +58,7 @@
 
 
 // public static
-QImage kpPixmapFX::convertToImage (const QPixmap &pixmap)
+QImage kpPixmapFX::convertToQImage (const QPixmap &pixmap)
 {
     if (pixmap.isNull ())
         return QImage ();
@@ -177,7 +177,7 @@ static void convertToPixmapWarnAboutLoss (const QImage &image,
 
     // TODO: We really need something like KMessageBox::warning() as the
     //       messages are about data loss.
-    
+
     if (moreColorsThanDisplay && hasAlphaChannel)
     {
         KMessageBox::information (wali.m_parent,

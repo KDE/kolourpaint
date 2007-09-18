@@ -68,25 +68,29 @@ class kpAbstractSelection;
 // TODO: We should not use kpColor nor kpImage for the same reason.
 //
 // WARNING: The given QPixmap's can have masks but not alpha channels.
-//          You must maintain this invariant (i.e. use the following assertion)
-//          or all hell will break loose - see KolourPaint developer docs.
+//          You must maintain this invariant (i.e. use the
+//          KP_PFX_CHECK_NO_ALPHA_CHANNEL assertion).
 //
-//          Simply removing instances of this invariant check, to avoid
-//          assertion failure, is ABSOLUTELY WRONG and is merely pushing
-//          bugs elsewhere.
-//
-#define KP_PFX_CHECK_NO_ALPHA_CHANNEL(pixmap) Q_ASSERT (!(pixmap).hasAlphaChannel ())
 class kpPixmapFX
 {
 public:
+    // Call this as early as possible -- after KApplication is constructed
+    // and before any kpPixmapFX methods have been called.
     //
-    // QPixmap/QImage Conversion Functions
-    //
+    // This may display dialogs to the user.
+    static void init ();
+
+
+//
+// QPixmap/QImage Conversion Functions
+//
+
+public:
 
     //
     // Converts <pixmap> to a QImage and returns it.
     //
-    static QImage convertToImage (const QPixmap &pixmap);
+    static QImage convertToQImage (const QPixmap &pixmap);
 
     //
     // Dialog info for warning about data loss with convertToPixmap().
@@ -236,10 +240,11 @@ public:
 
 
 
-    //
-    // Abstract Drawing
-    //
+//
+// Abstract Drawing
+//
 
+public:
 
     // Inside a <drawFunc> passed to kpPixmapFX::draw(), pass the <color>
     // you intend to draw in and <drawingOnRGBLayer> (passed to your <drawFunc>),
@@ -290,10 +295,11 @@ public:
         void *data);
 
 
-    //
-    // Get/Set Parts of Pixmap
-    //
+//
+// Get/Set Parts of Pixmap
+//
 
+public:
 
     //
     // Returns the pixel and mask data found at the <rect> in <pm>.
@@ -347,17 +353,98 @@ public:
     static kpColor getColorAtPixel (const QImage &img, int x, int y);
 
 
+//
+// Mask Operations
+//
+
+public:
+
+    // 1. For X11: QPixmap, with XRENDER under a screen depth of 32bpp
+    //    (subtlely different to 24bpp), always has an alpha channel, even
+    //    if the channel is empty.  This violates the KolourPaint invariant
+    //    so we fix that by disabling XRENDER, killing the alpha channel.
+    //    The other approach would be to change screen depth to 24bpp but
+    //    such changes are not possible under X11 (XRANDR limitation).
     //
-    // Mask Operations
+    //    This is nasty since it reduces the quality of the whole GUI.
+    //    The proper fix would be to either:
     //
+    //    a) Rewrite the kpImage class so that it's not tied to the screen
+    //       depth (long term goal that would take months to do).
+    //
+    //    OR
+    //
+    //    b) Add extra code paths to support images with alpha channels
+    //       (would probably require a few days of work).
+    //
+    // 2. If the screen mode is paletted, it brings up a dialog warning the
+    //    user that KolourPaint has not been tested under such an environment
+    //    (paletted QImage's, usually created from paletted QPixmaps, need
+    //     completely different code paths to truecolor QImage's -- in some
+    //     places, we have not even implemented such paths yet).
+    //
+    // Called by init() - do not call directly.
+    static void initMaskOps ();
+
+    // You must use this instead of QPixmap::hasAlpha() or
+    // !QPixmap::mask().isNull(), which give unexpectedly different results
+    // at 32bpp, compared to other screen depths (e.g. 16bpp and 24bpp).
+    static bool hasMask (const QPixmap &pixmap);
+
+    // You must use this instead of QPixmap::hasAlphaChannel(),
+    // which gives unexpectedly different results at 32bpp, compared to
+    // other screen depths (e.g. 16bpp and 2bpp).
+    static bool hasAlphaChannel (const QPixmap &pixmap);
+
+    // Controls whether the KP_PFX_CHECK_NO_ALPHA_CHANNEL assert, if it
+    // trips, should print out an error message or crash.
+    //
+    // Called by KP_PFX_CHECK_NO_ALPHA_CHANNEL() - do not call directly.
+    // LOREFACTOR: Compile out in release mode.
+    static bool checkNoAlphaChannelInternal (const QPixmap &pixmap);
+
+    // Simply removing instances of this invariant check, to avoid
+    // assertion failure, is ABSOLUTELY WRONG and is merely pushing
+    // bugs elsewhere.
+    //
+    // See ensureNoAlphaChannel().
+    #define KP_PFX_CHECK_NO_ALPHA_CHANNEL(pixmap)  \
+        Q_ASSERT (kpPixmapFX::checkNoAlphaChannelInternal (pixmap))
 
 
     //
     // Removes <*destPixmapPtr>'s Alpha Channel and attempts to convert it
-    // to a mask.  KolourPaint - and QPixmap to a great extent - does not
-    // support Alpha Channels - only masks.  Call this whenever you get
-    // a pixmap from a foreign source; else all KolourPaint code will
-    // exhibit "undefined behaviour".
+    // to a mask.  KolourPaint does not support Alpha Channels - only masks.
+    //
+    // Note that this method is slow so you should avoid calling it, if
+    // possible.
+    //
+    // Generally, the only time you need to call it is when you get a pixmap
+    // from a foreign source e.g. file or clipboard.
+    //
+    // It is invalid to use a QPainter directly on a QPixmap, which
+    // usually introduces an alpha channel, and then to call this method to
+    // fix it up.  While this works on XRENDER, the same code path will fail
+    // without XRENDER: QPainter does not draw to the QPixmap::mask() when
+    // drawing to a QPixmap, if XRENDER is disabled.  The correct way to
+    // manipulate QPixmap's is to use this class' draw*() methods or draw(),
+    // which do not introduce an alpha channel and work regardless of whether
+    // XRENDER is enabled.
+    //
+    // The no-alpha-channel invariant is checked by the
+    // KP_PFX_CHECK_NO_ALPHA_CHANNEL assertion.  You must maintain this
+    // invariant for all pixmaps that you manipulate using kpPixmapFX methods
+    // or else:
+    //
+    // 1. For XRENDER screens, KolourPaint will slow down to a crawl
+    //    (QPixmap::mask(), used extensively by kpPixmapFX, is very slow if
+    //     an alpha channel exists) and there may be some painting artifacts.
+    //
+    // 2. For non-XRENDER screens, the invariant cannot be broken since
+    //    alpha channels are not supported.  However, the code path, that
+    //    would have broken the invariant had XRENDER been enabled, would
+    //    likely fail to draw to the pixmap mask with XRENDER disabled (see
+    //    above).
     //
     static void ensureNoAlphaChannel (QPixmap *destPixmapPtr);
 
@@ -391,10 +478,11 @@ public:
     static void ensureOpaqueAt (QPixmap *destPixmapPtr, const QRect &destRect);
 
 
-    //
-    // Effects
-    //
+//
+// Effects
+//
 
+public:
 
     //
     // Fills an image in the given color.
@@ -403,10 +491,11 @@ public:
     static QPixmap fill (const QPixmap &pm, const kpColor &color);
 
 
-    //
-    // Transforms
-    //
+//
+// Transforms
+//
 
+public:
 
     //
     // Resizes an image to the given width and height,
@@ -497,10 +586,11 @@ public:
     static QImage flip (const QImage &img, bool horz, bool vert);
 
 
-    //
-    // Drawing Shapes
-    //
+//
+// Drawing Shapes
+//
 
+public:
 
     // Returns a pen suitable for drawing a rectangle with 90 degree
     // corners ("MiterJoin").  This is necessary since Qt4 defaults to
@@ -579,34 +669,35 @@ public:
         const kpColor &fStippleColor = kpColor::Invalid);
 
 
-    //
-    // Drawing Using Raster Operations
-    //
-    //
-    // 1. Alpha Channel Invariant
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //
-    // The widgetDraw*() methods do not deal with pixmap data, so they safely
-    // safely disregard our pixmap invariant of not introducing an alpha
-    // channel (KP_PFX_CHECK_NO_ALPHA_CHANNEL).  This permits far
-    // more straightforward implementations.
-    //
-    //
-    // 2. Raster Operation Emulation
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Qt4 does not actually support raster operations, unlike Qt3.  So for
-    // now, these methods ignore any given colors and produce a stipple of
-    // <colorHint1> and <colorHint2>.
-    //
-    // LOTODO: For the widgetDraw*() methods (which aren't bound by the
-    //         no-alpha-channel requirement), if XRENDER is currently active,
-    //         we could do nice alpha effects instead of stippling.
-    //
-    // Should Qt support raster operations again, these methods should be
-    // changed to use them with the given colors.  <colorHint1> and
-    // <colorHint2> would then be ignored.
-    //
+//
+// Drawing Using Raster Operations
+//
+//
+// 1. Alpha Channel Invariant
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+// The widgetDraw*() methods do not deal with pixmap data, so they safely
+// safely disregard our pixmap invariant of not introducing an alpha
+// channel (KP_PFX_CHECK_NO_ALPHA_CHANNEL).  This permits far
+// more straightforward implementations.
+//
+//
+// 2. Raster Operation Emulation
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Qt4 does not actually support raster operations, unlike Qt3.  So for
+// now, these methods ignore any given colors and produce a stipple of
+// <colorHint1> and <colorHint2>.
+//
+// LOTODO: For the widgetDraw*() methods (which aren't bound by the
+//         no-alpha-channel requirement), if XRENDER is currently active,
+//         we could do nice alpha effects instead of stippling.
+//
+// Should Qt support raster operations again, these methods should be
+// changed to use them with the given colors.  <colorHint1> and
+// <colorHint2> would then be ignored.
+//
 
+public:
 
     //
     // Simulated Stippled Raster XOR

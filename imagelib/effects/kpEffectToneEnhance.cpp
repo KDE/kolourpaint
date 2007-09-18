@@ -257,7 +257,7 @@ kpImage kpEffectToneEnhance::applyEffect (const kpImage &image,
         Qt::white/*arbitrarily chosen*/);
 
 
-    QImage qimage = kpPixmapFX::convertToImage (usePixmap);
+    QImage qimage = kpPixmapFX::convertToQImage (usePixmap);
 
     // OPT: Cache the calculated values?
     kpEffectToneEnhanceApplier applier;

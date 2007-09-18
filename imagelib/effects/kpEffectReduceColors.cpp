@@ -208,7 +208,7 @@ void kpEffectReduceColors::applyEffect (QPixmap *destPixmapPtr, int depth, bool 
         return;
 
 
-    QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
+    QImage image = kpPixmapFX::convertToQImage (*destPixmapPtr);
 
 
     image = kpEffectReduceColors::convertImageDepth (image, depth, dither);

@@ -149,7 +149,7 @@ kpImage kpEffectHSV::applyEffect (const kpImage &image,
         Qt::white/*arbitrarily chosen*/);
 
 
-    QImage qimage = kpPixmapFX::convertToImage (usePixmap);
+    QImage qimage = kpPixmapFX::convertToQImage (usePixmap);
 
     adjustHSV (&qimage, hue, saturation, value);
 

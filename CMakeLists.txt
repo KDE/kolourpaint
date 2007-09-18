@@ -215,6 +215,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View_Thumbnail.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View_Zoom.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_AbstractDraw.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_DrawRasterOps.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_DrawShapes.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_Effects.cpp

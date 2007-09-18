@@ -236,7 +236,7 @@ void kpToolFlowBase::hover (const QPoint &point)
 #if DEBUG_KP_TOOL_FLOW_BASE && 0
     if (document ()->rect ().contains (point))
     {
-        QImage image = kpPixmapFX::convertToImage (*document ()->pixmap ());
+        QImage image = kpPixmapFX::convertToQImage (*document ()->pixmap ());
 
         QRgb v = image.pixel (point.x (), point.y ());
         kDebug () << "(" << point << "): r=" << qRed (v)

@@ -136,7 +136,7 @@ QPixmap kpDocument::convertToPixmapAsLosslessAsPossible (
 
 #if DEBUG_KP_DOCUMENT && 1
 {
-    const QImage image2 = kpPixmapFX::convertToImage (newPixmap);
+    const QImage image2 = kpPixmapFX::convertToQImage (newPixmap);
     kDebug () << "(Converted to pixmap) Image dump:";
 
     bool differsFromOrgImage = false;

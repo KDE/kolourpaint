@@ -135,6 +135,7 @@ QRect kpPixmapFX::draw (QPixmap *image,
 
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (*image);
 
+
     // Get mask.  Work around the fact that QBitmap's do not have masks.
     // but QBitmap::mask() returns itself.
     QBitmap mask = image->depth () > 1 ?
@@ -195,7 +196,7 @@ QRect kpPixmapFX::draw (QPixmap *image,
     if (anyColorOpaque)
     {
         // A mask should not have been created - that's the job of the next step.
-        Q_ASSERT (!image->hasAlpha ());
+        Q_ASSERT (!kpPixmapFX::hasMask (*image));
     }
 
 

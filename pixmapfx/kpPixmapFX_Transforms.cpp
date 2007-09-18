@@ -150,7 +150,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
 
     if (pretty)
     {
-        QImage image = kpPixmapFX::convertToImage (pm);
+        QImage image = kpPixmapFX::convertToQImage (pm);
 
     #if DEBUG_KP_PIXMAP_FX && 0
         kDebug () << "\tBefore smooth scale:";

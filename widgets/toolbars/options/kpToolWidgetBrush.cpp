@@ -40,6 +40,7 @@
 
 #include <kpDefs.h>
 #include <kpPainter.h>
+#include <kpPixmapFX.h>
 
 
 // TODO: more OO, no arrays (use safer structs).
@@ -56,13 +57,13 @@ static int BrushSizes [][3] =
 #define BRUSH_SIZE_NUM_ROWS (int (sizeof (::BrushSizes) / sizeof (::BrushSizes [0])))
 
 
-static void Draw (QPixmap *destPixmap, const QPoint &topLeft, void *userData)
+static void Draw (kpImage *destImage, const QPoint &topLeft, void *userData)
 {
     kpToolWidgetBrush::DrawPackage *pack =
         static_cast <kpToolWidgetBrush::DrawPackage *> (userData);
 
 #if DEBUG_KP_TOOL_WIDGET_BRUSH
-    kDebug () << "kptoolwidgetbrush.cpp:Draw(destPixmap,topLeft="
+    kDebug () << "kptoolwidgetbrush.cpp:Draw(destImage,topLeft="
               << topLeft << " pack: row=" << pack->row << " col=" << pack->col
               << " color=" << (int *) pack->color.toQRgb ()
               << endl;
@@ -76,28 +77,28 @@ static void Draw (QPixmap *destPixmap, const QPoint &topLeft, void *userData)
     switch (pack->row/*shape*/)
     {
     case 0:
-        kpPainter::drawEllipse (destPixmap,
+        kpPainter::drawEllipse (destImage,
             topLeft.x (), topLeft.y (), size, size,
             pack->color/*color*/, 1/*width*/,
             pack->color/*fill color*/);
         break;
         
     case 1:
-        kpPainter::drawRect (destPixmap,
+        kpPainter::drawRect (destImage,
             topLeft.x (), topLeft.y (), size, size,
             pack->color/*color*/, 1/*width*/,
             pack->color/*fill color*/);
         break;
         
     case 2:
-        kpPainter::drawLine (destPixmap,
+        kpPainter::drawLine (destImage,
             topLeft.x () + size - 1, topLeft.y (),
             topLeft.x (), topLeft.y () + size - 1,
             pack->color, 1/*width*/);
         break;
         
     case 3:
-        kpPainter::drawLine (destPixmap,
+        kpPainter::drawLine (destImage,
             topLeft.x (), topLeft.y (),
             topLeft.x () + size - 1, topLeft.y () + size - 1,
             pack->color, 1/*width*/);
@@ -129,12 +130,12 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const QString &name)
             Q_ASSERT (w >= s && h >= s);
             QPixmap previewPixmap (w, h);
 
-            kpPainter::fillRect (&previewPixmap,
+            kpPainter::fillRect (kpImage::CastPixmapPtr (&previewPixmap),
                 0, 0, previewPixmap.width (), previewPixmap.height (),
                 kpColor::Transparent);
 
             DrawPackage pack = drawFunctionDataForRowCol (kpColor::Black, shape, i);
-            ::Draw (&previewPixmap,
+            ::Draw (kpImage::CastPixmapPtr (&previewPixmap),
                 QPoint ((previewPixmap.width () - s) / 2,
                         (previewPixmap.height () - s) / 2),
                 &pack);

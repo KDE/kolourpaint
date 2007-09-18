@@ -52,7 +52,7 @@ kpImage kpEffectGrayscale::applyEffect (const kpImage &image)
 {
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (image);
 
-    QImage qimage = kpPixmapFX::convertToImage (image);
+    QImage qimage = kpPixmapFX::convertToQImage (image);
     
     // TODO: Why not just write to the kpImage directly?
     if (qimage.depth () > 8)

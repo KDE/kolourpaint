@@ -319,7 +319,7 @@ void kpFloodFill::prepare ()
 #endif
 
     // The only way to read pixels.  Sigh.
-    d->readableImage = kpPixmapFX::convertToImage (*d->imagePtr);
+    d->readableImage = kpPixmapFX::convertToQImage (*d->imagePtr);
 
 #if DEBUG_KP_FLOOD_FILL && 1
     kDebug () << "\tcreating fillLinesCache";

@@ -42,7 +42,7 @@
 // public static
 void kpEffectInvert::applyEffect (QPixmap *destPixmapPtr, int channels)
 {
-    QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
+    QImage image = kpPixmapFX::convertToQImage (*destPixmapPtr);
     applyEffect (&image, channels);
     *destPixmapPtr = kpPixmapFX::convertToPixmap (image);
 }
@@ -50,7 +50,7 @@ void kpEffectInvert::applyEffect (QPixmap *destPixmapPtr, int channels)
 // public static
 QPixmap kpEffectInvert::applyEffect (const QPixmap &pm, int channels)
 {
-    QImage image = kpPixmapFX::convertToImage (pm);
+    QImage image = kpPixmapFX::convertToQImage (pm);
     applyEffect (&image, channels);
     return kpPixmapFX::convertToPixmap (image);
 }

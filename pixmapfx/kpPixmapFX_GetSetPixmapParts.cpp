@@ -73,7 +73,7 @@ static void GetSetPaintPixmapAtHelper (QPainter *p, bool drawingOnRGBLayer, void
     kDebug () << "kppixmapfx.cpp:GetSetPaintPixmapAtHelper(drawingOnRGBLayer="
               << drawingOnRGBLayer << ")"
               << "  srcPixmap: rect=" << pack->srcPixmap->size ()
-              << " hasAlpha=" << pack->srcPixmap->hasAlpha ()
+              << " hasMask=" << kpPixmapFX::hasMask (*pack->srcPixmap)
               << "  destTopLeft=" << pack->destTopLeft
               << " validSrcRect=" << pack->validSrcRect << endl;
 #endif
@@ -204,7 +204,8 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
 
     kpPixmapFX::draw (&retPixmap, &::GetSetPaintPixmapAtHelper,
         true/*always "draw"/copy RGB layer*/,
-        (retPixmap.hasAlpha () || pm.hasAlpha ())/*draw on mask if either has one*/,
+        (kpPixmapFX::hasMask (retPixmap) ||
+         kpPixmapFX::hasMask (pm))/*draw on mask if either has one*/,
         &pack);
 
 
@@ -246,7 +247,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
 #if DEBUG_KP_PIXMAP_FX && 0
     if (!destPixmapPtr->mask ().isNull ())
     {
-        QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
+        QImage image = kpPixmapFX::convertToQImage (*destPixmapPtr);
         int numTrans = 0;
 
         for (int y = 0; y < image.height (); y++)
@@ -274,7 +275,8 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
 
     kpPixmapFX::draw (destPixmapPtr, &::GetSetPaintPixmapAtHelper,
         true/*always "draw"/copy RGB layer*/,
-        (destPixmapPtr->hasAlpha () || srcPixmap.hasAlpha ())/*draw on mask if either has one*/,
+        (kpPixmapFX::hasMask (*destPixmapPtr) ||
+         kpPixmapFX::hasMask (srcPixmap))/*draw on mask if either has one*/,
         &pack);
 
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
@@ -285,7 +287,7 @@ void kpPixmapFX::setPixmapAt (QPixmap *destPixmapPtr, const QRect &destRect,
                << endl;
     if (!destPixmapPtr->mask ().isNull ())
     {
-        QImage image = kpPixmapFX::convertToImage (*destPixmapPtr);
+        QImage image = kpPixmapFX::convertToQImage (*destPixmapPtr);
         int numTrans = 0;
 
         for (int y = 0; y < image.height (); y++)
@@ -337,7 +339,7 @@ void kpPixmapFX::paintPixmapAt (QPixmap *destPixmapPtr, const QPoint &destAt,
 
     kpPixmapFX::draw (destPixmapPtr, &::GetSetPaintPixmapAtHelper,
         true/*always "draw"/copy RGB layer*/,
-        destPixmapPtr->hasAlpha ()/*draw on mask only if dest already has one
+        kpPixmapFX::hasMask (*destPixmapPtr)/*draw on mask only if dest already has one
             (the src will still be masked by its mask if it has one)*/,
         &pack);
 
@@ -366,7 +368,7 @@ kpColor kpPixmapFX::getColorAtPixel (const QPixmap &pm, const QPoint &at)
     }
 
     QPixmap pixmap = getPixmapAt (pm, QRect (at, at));
-    QImage image = kpPixmapFX::convertToImage (pixmap);
+    QImage image = kpPixmapFX::convertToQImage (pixmap);
     if (image.isNull ())
     {
         kError () << "kpPixmapFX::getColorAtPixel(QPixmap) could not convert to QImage" << endl;

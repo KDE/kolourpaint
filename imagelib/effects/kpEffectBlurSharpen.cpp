@@ -185,7 +185,7 @@ kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
     useImage.setMask (QBitmap ());
 
 
-    QImage qimage = kpPixmapFX::convertToImage (useImage);
+    QImage qimage = kpPixmapFX::convertToQImage (useImage);
 
     if (type == Blur)
         qimage = ::BlurQImage (qimage, strength);

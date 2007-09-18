@@ -369,7 +369,7 @@ void kpView::paintEventDrawTempImage (QPixmap *destPixmap, const QRect &docRect)
     if (!tpi || !tpi->isVisible (vm))
         return;
 
-    tpi->paint (destPixmap, docRect);
+    tpi->paint (kpImage::CastPixmapPtr (destPixmap), docRect);
 }
 
 // protected

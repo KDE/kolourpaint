@@ -133,7 +133,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
 
     QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
     docRect = neededRect (docRect, spraycanSize ());
-    QPixmap pixmap = document ()->getImageAt (docRect);
+    kpImage image = document ()->getImageAt (docRect);
 
 
     QList <QPoint> docPoints = kpPainter::interpolatePoints (lastPoint, thisPoint,
@@ -172,18 +172,18 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
         return QRect ();
 
 
-    // Spray at each point, onto the pixmap.
-    QList <QPoint> pixmapPoints;
+    // Spray at each point, onto the image.
+    QList <QPoint> imagePoints;
     foreach (QPoint dp, docPoints)
-        pixmapPoints.append (dp - docRect.topLeft ());
-    kpPainter::sprayPoints (&pixmap,
-        pixmapPoints,
+        imagePoints.append (dp - docRect.topLeft ());
+    kpPainter::sprayPoints (&image,
+        imagePoints,
         color (mouseButton ()),
         spraycanSize ());
 
 
     viewManager ()->setFastUpdates ();
-    document ()->setImageAt (pixmap, docRect.topLeft ());
+    document ()->setImageAt (image, docRect.topLeft ());
     viewManager ()->restoreFastUpdates ();
 
     return docRect;

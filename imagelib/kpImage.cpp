@@ -24,3 +24,48 @@
    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
+
+#include <kpImage.h>
+
+#include <kpPixmapFX.h>
+
+
+kpImage::kpImage ()
+    : QPixmap ()
+{
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*this);
+}
+
+kpImage::kpImage (int width, int height)
+    : QPixmap (width, height)
+{
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*this);
+}
+
+kpImage::kpImage (const kpImage &image)
+    : QPixmap (image)
+{
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (image);
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*this);
+}
+
+kpImage::kpImage (const QPixmap &pixmap)
+    : QPixmap (pixmap)
+{
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (pixmap);
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*this);
+}
+
+
+// public static
+kpImage *kpImage::CastPixmapPtr (QPixmap *pixmap)
+{
+    return static_cast <kpImage *> (pixmap);
+}
+
+// public static
+const kpImage *kpImage::CastPixmapPtr (const QPixmap *pixmap)
+{
+    return static_cast <const kpImage *> (pixmap);
+}

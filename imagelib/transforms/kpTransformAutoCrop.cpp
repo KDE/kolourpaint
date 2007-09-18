@@ -50,7 +50,6 @@
 #include <qbitmap.h>
 #include <qimage.h>
 #include <qpainter.h>
-#include <qpixmap.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -73,14 +72,14 @@
 class kpTransformAutoCropBorder
 {
 public:
-    // WARNING: Only call the <ctor> with pixmapPtr = 0 if you are going to use
-    //          operator= to fill it in with a valid pixmapPtr immediately
+    // WARNING: Only call the <ctor> with imagePtr = 0 if you are going to use
+    //          operator= to fill it in with a valid imagePtr immediately
     //          afterwards.
-    kpTransformAutoCropBorder (const QPixmap *pixmapPtr = 0, int processedColorSimilarity = 0);
+    kpTransformAutoCropBorder (const kpImage *imagePtr = 0, int processedColorSimilarity = 0);
 
     kpCommandSize::SizeType size () const;
 
-    const QPixmap *pixmap () const;
+    const kpImage *image () const;
     int processedColorSimilarity () const;
     QRect rect () const;
     int left () const;
@@ -94,12 +93,12 @@ public:
     // (returns true on success (even if no rect) or false on error)
     bool calculate (int isX, int dir);
 
-    bool fillsEntirePixmap () const;
+    bool fillsEntireImage () const;
     bool exists () const;
     void invalidate ();
 
 private:
-    const QPixmap *m_pixmapPtr;
+    const kpImage *m_imagePtr;
     int m_processedColorSimilarity;
 
     QRect m_rect;
@@ -108,9 +107,9 @@ private:
     bool m_isSingleColor;
 };
 
-kpTransformAutoCropBorder::kpTransformAutoCropBorder (const QPixmap *pixmapPtr,
+kpTransformAutoCropBorder::kpTransformAutoCropBorder (const kpImage *imagePtr,
                                             int processedColorSimilarity)
-    : m_pixmapPtr (pixmapPtr),
+    : m_imagePtr (imagePtr),
       m_processedColorSimilarity (processedColorSimilarity)
 {
     invalidate ();
@@ -125,9 +124,9 @@ kpCommandSize::SizeType kpTransformAutoCropBorder::size () const
 
 
 // public
-const QPixmap *kpTransformAutoCropBorder::pixmap () const
+const kpImage *kpTransformAutoCropBorder::image () const
 {
-    return m_pixmapPtr;
+    return m_imagePtr;
 }
 
 // public
@@ -205,11 +204,11 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
     kDebug () << "kpTransformAutoCropBorder::calculate() CALLED!";
 #endif
-    int maxX = m_pixmapPtr->width () - 1;
-    int maxY = m_pixmapPtr->height () - 1;
+    int maxX = m_imagePtr->width () - 1;
+    int maxY = m_imagePtr->height () - 1;
 
-    QImage image = kpPixmapFX::convertToImage (*m_pixmapPtr);
-    Q_ASSERT (!image.isNull ());
+    QImage qimage = kpPixmapFX::convertToQImage (*m_imagePtr);
+    Q_ASSERT (!qimage.isNull ());
 
     // (sync both branches)
     if (isX)
@@ -217,7 +216,7 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
         int numCols = 0;
         int startX = (dir > 0) ? 0 : maxX;
 
-        kpColor col = kpPixmapFX::getColorAtPixel (image, startX, 0);
+        kpColor col = kpPixmapFX::getColorAtPixel (qimage, startX, 0);
         for (int x = startX;
              x >= 0 && x <= maxX;
              x += dir)
@@ -225,7 +224,7 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
             int y;
             for (y = 0; y <= maxY; y++)
             {
-                if (!kpPixmapFX::getColorAtPixel (image, x, y).isSimilarTo (col, m_processedColorSimilarity))
+                if (!kpPixmapFX::getColorAtPixel (qimage, x, y).isSimilarTo (col, m_processedColorSimilarity))
                     break;
             }
 
@@ -248,7 +247,7 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
         int numRows = 0;
         int startY = (dir > 0) ? 0 : maxY;
 
-        kpColor col = kpPixmapFX::getColorAtPixel (image, 0, startY);
+        kpColor col = kpPixmapFX::getColorAtPixel (qimage, 0, startY);
         for (int y = startY;
              y >= 0 && y <= maxY;
              y += dir)
@@ -256,7 +255,7 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
             int x;
             for (x = 0; x <= maxX; x++)
             {
-                if (!kpPixmapFX::getColorAtPixel (image, x, y).isSimilarTo (col, m_processedColorSimilarity))
+                if (!kpPixmapFX::getColorAtPixel (qimage, x, y).isSimilarTo (col, m_processedColorSimilarity))
                     break;
             }
 
@@ -286,7 +285,7 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
             {
                 for (int x = m_rect.left (); x <= m_rect.right (); x++)
                 {
-                    kpColor colAtPixel = kpPixmapFX::getColorAtPixel (image, x, y);
+                    kpColor colAtPixel = kpPixmapFX::getColorAtPixel (qimage, x, y);
 
                     if (m_isSingleColor && colAtPixel != m_referenceColor)
                         m_isSingleColor = false;
@@ -304,9 +303,9 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
 }
 
 // public
-bool kpTransformAutoCropBorder::fillsEntirePixmap () const
+bool kpTransformAutoCropBorder::fillsEntireImage () const
 {
-    return (m_rect == m_pixmapPtr->rect ());
+    return (m_rect == m_imagePtr->rect ());
 }
 
 // public
@@ -330,7 +329,7 @@ struct kpTransformAutoCropCommandPrivate
 {
     bool actOnSelection;
     kpTransformAutoCropBorder leftBorder, rightBorder, topBorder, botBorder;
-    QPixmap *leftPixmap, *rightPixmap, *topPixmap, *botPixmap;
+    kpImage *leftImage, *rightImage, *topImage, *botImage;
 
     QRect contentsRect;
     int oldWidth, oldHeight;
@@ -352,10 +351,10 @@ kpTransformAutoCropCommand::kpTransformAutoCropCommand (bool actOnSelection,
     d->rightBorder = rightBorder;
     d->topBorder = topBorder;
     d->botBorder = botBorder;
-    d->leftPixmap = 0;
-    d->rightPixmap = 0;
-    d->topPixmap = 0;
-    d->botPixmap = 0;
+    d->leftImage = 0;
+    d->rightImage = 0;
+    d->topImage = 0;
+    d->botImage = 0;
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
@@ -368,7 +367,7 @@ kpTransformAutoCropCommand::kpTransformAutoCropCommand (bool actOnSelection,
 
 kpTransformAutoCropCommand::~kpTransformAutoCropCommand ()
 {
-    deleteUndoPixmaps ();
+    deleteUndoImages ();
 
     delete d->oldSelectionPtr;
     delete d;
@@ -402,39 +401,39 @@ kpCommandSize::SizeType kpTransformAutoCropCommand::size () const
            d->rightBorder.size () +
            d->topBorder.size () +
            d->botBorder.size () +
-           ImageSize (d->leftPixmap) +
-           ImageSize (d->rightPixmap) +
-           ImageSize (d->topPixmap) +
-           ImageSize (d->botPixmap) +
+           ImageSize (d->leftImage) +
+           ImageSize (d->rightImage) +
+           ImageSize (d->topImage) +
+           ImageSize (d->botImage) +
            SelectionSize (d->oldSelectionPtr);
 }
 
 
 // private
-void kpTransformAutoCropCommand::getUndoPixmap (const kpTransformAutoCropBorder &border, QPixmap **pixmap)
+void kpTransformAutoCropCommand::getUndoImage (const kpTransformAutoCropBorder &border, kpImage **image)
 {
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kDebug () << "kpTransformAutoCropCommand::getUndoPixmap()";
-    kDebug () << "\tpixmap=" << pixmap
+    kDebug () << "kpTransformAutoCropCommand::getUndoImage()";
+    kDebug () << "\timage=" << image
                << " border: rect=" << border.rect ()
                << " isSingleColor=" << border.isSingleColor ()
                << endl;
 #endif
 
-    if (pixmap && border.exists () && !border.isSingleColor ())
+    if (image && border.exists () && !border.isSingleColor ())
     {
-        if (*pixmap)
+        if (*image)
         {
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
-            kDebug () << "\talready have *pixmap - delete it";
+            kDebug () << "\talready have *image - delete it";
         #endif
-            delete *pixmap;
+            delete *image;
         }
 
-        *pixmap = new QPixmap (
+        *image = new kpImage (
             kpPixmapFX::getPixmapAt (doc->image (d->actOnSelection),
                                      border.rect ()));
     }
@@ -442,25 +441,25 @@ void kpTransformAutoCropCommand::getUndoPixmap (const kpTransformAutoCropBorder 
 
 
 // private
-void kpTransformAutoCropCommand::getUndoPixmaps ()
+void kpTransformAutoCropCommand::getUndoImages ()
 {
-    getUndoPixmap (d->leftBorder, &d->leftPixmap);
-    getUndoPixmap (d->rightBorder, &d->rightPixmap);
-    getUndoPixmap (d->topBorder, &d->topPixmap);
-    getUndoPixmap (d->botBorder, &d->botPixmap);
+    getUndoImage (d->leftBorder, &d->leftImage);
+    getUndoImage (d->rightBorder, &d->rightImage);
+    getUndoImage (d->topBorder, &d->topImage);
+    getUndoImage (d->botBorder, &d->botImage);
 }
 
 // private
-void kpTransformAutoCropCommand::deleteUndoPixmaps ()
+void kpTransformAutoCropCommand::deleteUndoImages ()
 {
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kDebug () << "kpTransformAutoCropCommand::deleteUndoPixmaps()";
+    kDebug () << "kpTransformAutoCropCommand::deleteUndoImages()";
 #endif
 
-    delete d->leftPixmap; d->leftPixmap = 0;
-    delete d->rightPixmap; d->rightPixmap = 0;
-    delete d->topPixmap; d->topPixmap = 0;
-    delete d->botPixmap; d->botPixmap = 0;
+    delete d->leftImage; d->leftImage = 0;
+    delete d->rightImage; d->rightImage = 0;
+    delete d->topImage; d->topImage = 0;
+    delete d->botImage; d->botImage = 0;
 }
 
 
@@ -471,20 +470,20 @@ void kpTransformAutoCropCommand::execute ()
         d->contentsRect = contentsRect ();
 
 
-    getUndoPixmaps ();
+    getUndoImages ();
 
 
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
 
-    QPixmap pixmapWithoutBorder =
+    kpImage imageWithoutBorder =
         kpTool::neededPixmap (doc->image (d->actOnSelection),
                               d->contentsRect);
 
 
     if (!d->actOnSelection)
-        doc->setImage (pixmapWithoutBorder);
+        doc->setImage (imageWithoutBorder);
     else
     {
         d->oldSelectionPtr = doc->imageSelection ()->clone ();
@@ -497,7 +496,7 @@ void kpTransformAutoCropCommand::execute ()
 
         kpRectangularImageSelection sel (
             rect,
-            pixmapWithoutBorder,
+            imageWithoutBorder,
             d->oldSelectionPtr->transparency ());
 
         doc->setSelection (sel);
@@ -516,16 +515,16 @@ void kpTransformAutoCropCommand::unexecute ()
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
-    QPixmap pixmap (d->oldWidth, d->oldHeight);
+    kpImage image (d->oldWidth, d->oldHeight);
     QBitmap maskBitmap;
 
     // restore the position of the center image
-    kpPixmapFX::setPixmapAt (&pixmap, d->contentsRect,
+    kpPixmapFX::setPixmapAt (&image, d->contentsRect,
                              doc->image (d->actOnSelection));
 
     // draw the borders
 
-    QPainter painter (&pixmap);
+    QPainter painter (&image);
     QPainter maskPainter;
 
     const kpTransformAutoCropBorder *borders [] =
@@ -535,14 +534,14 @@ void kpTransformAutoCropCommand::unexecute ()
         0
     };
 
-    const QPixmap *pixmaps [] =
+    const kpImage *images [] =
     {
-        d->leftPixmap, d->rightPixmap,
-        d->topPixmap, d->botPixmap,
+        d->leftImage, d->rightImage,
+        d->topImage, d->botImage,
         0
     };
 
-    const QPixmap **p = pixmaps;
+    const kpImage **p = images;
     for (const kpTransformAutoCropBorder **b = borders; *b; b++, p++)
     {
         if (!(*b)->exists ())
@@ -564,8 +563,8 @@ void kpTransformAutoCropCommand::unexecute ()
             {
                 if (maskBitmap.isNull ())
                 {
-                    // TODO: dangerous when a painter is active on pixmap?
-                    maskBitmap = kpPixmapFX::getNonNullMask (pixmap);
+                    // TODO: dangerous when a painter is active on image?
+                    maskBitmap = kpPixmapFX::getNonNullMask (image);
                     maskPainter.begin (&maskBitmap);
                 }
 
@@ -575,7 +574,7 @@ void kpTransformAutoCropCommand::unexecute ()
         else
         {
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
-            kDebug () << "\trestoring border pixmap " << (*b)->rect ();
+            kDebug () << "\trestoring border image " << (*b)->rect ();
         #endif
             if (*p)
                 painter.drawPixmap ((*b)->rect (), **p);
@@ -588,14 +587,14 @@ void kpTransformAutoCropCommand::unexecute ()
     painter.end ();
 
     if (!maskBitmap.isNull ())
-        pixmap.setMask (maskBitmap);
+        image.setMask (maskBitmap);
 
 
     if (!d->actOnSelection)
-        doc->setImage (pixmap);
+        doc->setImage (image);
     else
     {
-        d->oldSelectionPtr->setBaseImage (pixmap);
+        d->oldSelectionPtr->setBaseImage (image);
 
         doc->setSelection (*d->oldSelectionPtr);
         delete d->oldSelectionPtr; d->oldSelectionPtr = 0;
@@ -604,7 +603,7 @@ void kpTransformAutoCropCommand::unexecute ()
     }
 
 
-    deleteUndoPixmaps ();
+    deleteUndoImages ();
 }
 
 
@@ -662,7 +661,7 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
     kpDocument *doc = mainWindow->document ();
     Q_ASSERT (doc);
 
-    // OPT: if already pulled selection pixmap, no need to do it again here
+    // OPT: if already pulled selection image, no need to do it again here
     kpImage image = doc->selection () ? doc->getSelectedBaseImage () : doc->image ();
     Q_ASSERT (!image.isNull ());
 
@@ -688,13 +687,13 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
     //       invalidate top and continue autocrop.
     int numRegions = 0;
     if (!leftBorder.calculate (true/*x*/, +1/*going right*/) ||
-        leftBorder.fillsEntirePixmap () ||
+        leftBorder.fillsEntireImage () ||
         !rightBorder.calculate (true/*x*/, -1/*going left*/) ||
-        rightBorder.fillsEntirePixmap () ||
+        rightBorder.fillsEntireImage () ||
         !topBorder.calculate (false/*y*/, +1/*going down*/) ||
-        topBorder.fillsEntirePixmap () ||
+        topBorder.fillsEntireImage () ||
         !botBorder.calculate (false/*y*/, -1/*going up*/) ||
-        botBorder.fillsEntirePixmap () ||
+        botBorder.fillsEntireImage () ||
         ((numRegions = leftBorder.exists () +
                        rightBorder.exists () +
                        topBorder.exists () +

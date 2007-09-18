@@ -31,7 +31,6 @@
 #include <qapplication.h>
 #include <qbitmap.h>
 #include <qpainter.h>
-#include <qpixmap.h>
 
 #include <klocale.h>
 
@@ -72,7 +71,7 @@ QString kpToolPen::haventBegunDrawUserMessage () const
 #if 0
 QRect kpToolPen::drawPoint (const QPoint &point)
 {
-    QPixmap pixmap (1, 1);
+    kpImage image (1, 1);
 
     const kpColor c = color (mouseButton ());
 
@@ -80,18 +79,18 @@ QRect kpToolPen::drawPoint (const QPoint &point)
     // OPT: this seems hopelessly inefficient
     if (c.isOpaque ())
     {
-        pixmap.fill (c.toQColor ());
+        image.fill (c.toQColor ());
     }
     else
     {
         QBitmap mask (1, 1);
         mask.fill (Qt::color0/*transparent*/);
 
-        pixmap.setMask (mask);
+        image.setMask (mask);
     }
 
     // draw onto doc
-    document ()->setPixmapAt (pixmap, point);
+    document ()->setImageAt (image, point);
 
     return QRect (point, point);
 }

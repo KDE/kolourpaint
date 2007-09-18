@@ -390,7 +390,7 @@ static QRect Wash (kpImage *image,
 #if DEBUG_KP_PAINTER && 0
     timer.start ();
 #endif
-    pack.readableImage = kpPixmapFX::convertToImage (pixmap);
+    pack.readableImage = kpPixmapFX::convertToQImage (pixmap);
 #if DEBUG_KP_PAINTER && 0
     convAndWashTime = timer.restart ();
     kDebug () << "\tconvert to image: " << convAndWashTime << " ms";

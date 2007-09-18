@@ -102,7 +102,7 @@ void kpSelectionDrag::setSelection (const kpAbstractImageSelection &sel)
     // OPT: an awful waste of memory storing image in both selection and QImage
 
     // HACK: need to set image else QImageDrag::format() lies
-    const QImage image = kpPixmapFX::convertToImage (d->selection->baseImage ());
+    const QImage image = kpPixmapFX::convertToQImage (d->selection->baseImage ());
 #if DEBUG_KP_SELECTION_DRAG && 1
     kDebug () << "\timage: w=" << image.width ()
                << " h=" << image.height ()

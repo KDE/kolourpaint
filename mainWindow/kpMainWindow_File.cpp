@@ -1087,26 +1087,26 @@ void kpMainWindow::sendImageToPrinter (KPrinter *printer,
         bool showPrinterSetupDialog)
 {
     // Get image to be printed.
-    QPixmap pixmap = d->document->imageWithSelection ();
+    kpImage image = d->document->imageWithSelection ();
 
 
     // Get image DPI.
-    double pixmapDotsPerMeterX =
+    double imageDotsPerMeterX =
         double (d->document->metaInfo ()->dotsPerMeterX ());
-    double pixmapDotsPerMeterY =
+    double imageDotsPerMeterY =
         double (d->document->metaInfo ()->dotsPerMeterY ());
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::sendImageToPrinter() pixmap:"
-               << " width=" << pixmap.width ()
-               << " height=" << pixmap.height ()
-               << " dotsPerMeterX=" << pixmapDotsPerMeterX
-               << " dotsPerMeterY=" << pixmapDotsPerMeterY
+    kDebug () << "kpMainWindow::sendImageToPrinter() image:"
+               << " width=" << image.width ()
+               << " height=" << image.height ()
+               << " dotsPerMeterX=" << imageDotsPerMeterX
+               << " dotsPerMeterY=" << imageDotsPerMeterY
                << endl;
 #endif
 
     // Image DPI invalid (e.g. new image, could not read from file
     // or Qt3 doesn't implement DPI for JPEG)?
-    if (pixmapDotsPerMeterX <= 0 || pixmapDotsPerMeterY <= 0)
+    if (imageDotsPerMeterX <= 0 || imageDotsPerMeterY <= 0)
     {
         // Even if just one DPI dimension is invalid, mutate both DPI
         // dimensions as we have no information about the intended
@@ -1129,15 +1129,16 @@ void kpMainWindow::sendImageToPrinter (KPrinter *printer,
         // what if you have multiple screens connected to the same computer
         // with different DPIs?
         // TODO: mysteriously, someone else is setting this to 96dpi always.
-        const QPaintDevice *screenDevice = &pixmap/*arbitrary screen element*/;
+        QPixmap arbitraryScreenElement;
+        const QPaintDevice *screenDevice = &arbitraryScreenElement;
         const int dpiX = screenDevice->logicalDpiX (),
             dpiY = screenDevice->logicalDpiY ();
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\tusing screen dpi: x=" << dpiX << " y=" << dpiY;
     #endif
 
-        pixmapDotsPerMeterX = dpiX * KP_INCHES_PER_METER;
-        pixmapDotsPerMeterY = dpiY * KP_INCHES_PER_METER;
+        imageDotsPerMeterX = dpiX * KP_INCHES_PER_METER;
+        imageDotsPerMeterY = dpiY * KP_INCHES_PER_METER;
     }
 
 
@@ -1157,10 +1158,10 @@ void kpMainWindow::sendImageToPrinter (KPrinter *printer,
 #endif
 
 
-    double dpiX = pixmapDotsPerMeterX / KP_INCHES_PER_METER;
-    double dpiY = pixmapDotsPerMeterY / KP_INCHES_PER_METER;
+    double dpiX = imageDotsPerMeterX / KP_INCHES_PER_METER;
+    double dpiY = imageDotsPerMeterY / KP_INCHES_PER_METER;
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tpixmap: dpiX=" << dpiX << " dpiY=" << dpiY;
+    kDebug () << "\timage: dpiX=" << dpiX << " dpiY=" << dpiY;
 #endif
 
 
@@ -1169,10 +1170,10 @@ void kpMainWindow::sendImageToPrinter (KPrinter *printer,
     //
 
     const double scaleDpiX =
-        (pixmap.width () / (printerWidthMM / KP_MILLIMETERS_PER_INCH))
+        (image.width () / (printerWidthMM / KP_MILLIMETERS_PER_INCH))
             / dpiX;
     const double scaleDpiY =
-        (pixmap.height () / (printerHeightMM / KP_MILLIMETERS_PER_INCH))
+        (image.height () / (printerHeightMM / KP_MILLIMETERS_PER_INCH))
             / dpiY;
     const double scaleDpi = qMax (scaleDpiX, scaleDpiY);
 #if DEBUG_KP_MAIN_WINDOW
@@ -1201,12 +1202,12 @@ void kpMainWindow::sendImageToPrinter (KPrinter *printer,
     if (dpiX > dpiY)
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tdpiX > dpiY; stretching pixmap height to equalise DPIs to dpiX="
+        kDebug () << "\tdpiX > dpiY; stretching image height to equalise DPIs to dpiX="
                    << dpiX << endl;
     #endif
-        kpPixmapFX::scale (&pixmap,
-             pixmap.width (),
-             qMax (1, qRound (pixmap.height () * dpiX / dpiY)),
+        kpPixmapFX::scale (&image,
+             image.width (),
+             qMax (1, qRound (image.height () * dpiX / dpiY)),
              false/*don't antialias*/);
 
         dpiY = dpiX;
@@ -1214,12 +1215,12 @@ void kpMainWindow::sendImageToPrinter (KPrinter *printer,
     else if (dpiY > dpiX)
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tdpiY > dpiX; stretching pixmap width to equalise DPIs to dpiY="
+        kDebug () << "\tdpiY > dpiX; stretching image width to equalise DPIs to dpiY="
                    << dpiY << endl;
     #endif
-        kpPixmapFX::scale (&pixmap,
-             qMax (1, qRound (pixmap.width () * dpiY / dpiX)),
-             pixmap.height (),
+        kpPixmapFX::scale (&image,
+             qMax (1, qRound (image.width () * dpiY / dpiX)),
+             image.height (),
              false/*don't antialias*/);
 
         dpiX = dpiY;
@@ -1253,10 +1254,10 @@ void kpMainWindow::sendImageToPrinter (KPrinter *printer,
     if (kpPrintDialogPage::shouldPrintImageCenteredOnPage (printer))
     {
         originX =
-            (printerWidthMM * dpiX / KP_MILLIMETERS_PER_INCH - pixmap.width ())
+            (printerWidthMM * dpiX / KP_MILLIMETERS_PER_INCH - image.width ())
                 / 2;
         originY =
-            (printerHeightMM * dpiY / KP_MILLIMETERS_PER_INCH - pixmap.height ())
+            (printerHeightMM * dpiY / KP_MILLIMETERS_PER_INCH - image.height ())
                 / 2;
     }
 
@@ -1265,10 +1266,10 @@ void kpMainWindow::sendImageToPrinter (KPrinter *printer,
 #endif
 
 
-    // Send pixmap to printer.
+    // Send image to printer.
     QPainter painter;
     painter.begin (printer);
-    painter.drawPixmap (qRound (originX), qRound (originY), pixmap);
+    painter.drawPixmap (qRound (originX), qRound (originY), image);
     painter.end ();
 }
 
@@ -1437,6 +1438,8 @@ void kpMainWindow::setAsWallpaper (bool centered)
     {
         KMessageBox::sorry (this, i18n ("Could not change wallpaper."));
     }
+#else
+    #warning "Setting wallpaper not implemented in non-X11"
 #endif
 }
 

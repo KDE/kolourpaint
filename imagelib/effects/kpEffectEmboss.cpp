@@ -90,7 +90,7 @@ kpImage kpEffectEmboss::applyEffect (const kpImage &image, int strength)
     Q_ASSERT (strength >= MinStrength && strength <= MaxStrength);
 
 
-    QImage qimage = kpPixmapFX::convertToImage (image);
+    QImage qimage = kpPixmapFX::convertToQImage (image);
 
     qimage = ::EmbossQImage (qimage, strength);
 

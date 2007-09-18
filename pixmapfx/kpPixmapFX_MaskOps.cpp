@@ -56,15 +56,139 @@
 #include <kpDefs.h>
 #include <kpTool.h>
 
+#ifdef Q_WS_X11
+    #include <private/qt_x11_p.h>
+#endif
+
+
+// public static
+void kpPixmapFX::initMaskOps ()
+{
+#if DEBUG_KP_PIXMAP_FX
+    kDebug () << "kpPixmapFX::initMaskOps()"
+              << "QPixmap::defaultDepth=" << QPixmap::defaultDepth ()
+              << "QPixmap().depth()=" << QPixmap ().depth ();
+#endif
+
+#ifdef Q_WS_X11
+    if (QPixmap::defaultDepth () == 32)
+    {
+        Q_ASSERT (X11);
+
+        X11->use_xrender = 0;
+
+    #if DEBUG_KP_PIXMAP_FX
+        kDebug () << "\tCannot handle alpha channel - disabling XRENDER"
+                  << "QPixmap().depth()=" << QPixmap ().depth ();
+    #endif
+    }
+#else
+    #warning "KolourPaint is heavily dependent on the behavior of QPixmap under X11."
+    #warning "Until KolourPaint gets a proper image library, it is unlikely to work under non-X11."
+#endif
+
+    // Check KolourPaint invariant.
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (QPixmap ());
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (QPixmap (1, 1));
+    Q_ASSERT (QPixmap ().depth () == QPixmap::defaultDepth ());
+    Q_ASSERT (QPixmap (1, 1).depth () == QPixmap::defaultDepth ());
+
+
+    if (QPixmap::defaultDepth () < 15/*smallest truecolor mode's bpp*/)
+    {
+        // Even though we support 15-bit truecolor, we're more ambitious and
+        // ask for 24-bit since it's safer (see kpPixmapFX::WarnAboutLossInfo).
+        KMessageBox::information (0/*parent*/,
+            ki18n ("<qt><p>KolourPaint does not support the current screen depth of %1bpp."
+                " KolourPaint will attempt to start but may act unreliably.</p>"
+
+                "<p>To avoid this issue, please change your screen depth to 24bpp"
+                " and then restart KolourPaint.</p></qt>")
+                .subs (QPixmap::defaultDepth ()).toString (),
+            i18n ("Unsupported Screen Mode"),
+            "startup_unsupported_bpp"/*DontAskAgain ID*/);
+    }
+}
+
+
+// public static
+bool kpPixmapFX::hasMask (const QPixmap &pixmap)
+{
+#ifdef Q_WS_X11
+    if (QPixmap::defaultDepth () == 32)
+    {
+        // QPixmap::mask() is hideously slow, and always returns a non-null
+        // mask, if the pixmap has an alpha channel (even if the channel is
+        // supposed to be empty).
+        //
+        // Without XRENDER, pixmaps definitely don't have alpha channels.
+        // As a result, QPixmap::mask() will be fast and, if there is no mask,
+        // it will correctly return a null bitmap.
+        Q_ASSERT (!X11->use_xrender);
+
+        // We need this since QPixmap::hasAlpha() lies and returns true
+        // purely because the depth is 32.
+        //
+        // Note: QPixmap::mask() is slightly slow even on a pixmap without an
+        //       alpha channel.
+        return !pixmap.mask ().isNull ();
+    }
+#endif
+
+    return pixmap.hasAlpha ();
+}
+
+
+// public static
+bool kpPixmapFX::hasAlphaChannel (const QPixmap &pixmap)
+{
+#ifdef Q_WS_X11
+    if (QPixmap::defaultDepth () == 32)
+    {
+        Q_ASSERT (!X11->use_xrender);
+
+        // We need this path since QPixmap::hasAlphaChannel() lies and returns
+        // true purely because the depth is 32.
+        //
+        // Without XRENDER, pixmaps definitely don't have alpha channels.
+        return false;
+    }
+#endif
+
+    return pixmap.hasAlphaChannel ();
+}
+
+// public static
+bool kpPixmapFX::checkNoAlphaChannelInternal (const QPixmap &pixmap)
+{
+    if (!kpPixmapFX::hasAlphaChannel (pixmap))
+        return true;
+
+#if 1
+    kError () << "Pixmap has alpha channel.  See the .h doc for"
+                 " kpPixmapFX::ensureNoAlphaChannel() to fix this.";
+    // Ignore bug rather than crashing the program because I bet developers
+    // will inadvertently trigger this, when changing the code.  The bug has
+    // very annoying effects under XRENDER but only causes serious failure
+    // without XRENDER (which is not so common).
+    return true;
+#else
+    // Assert-crash the program.
+    return false;
+#endif
+}
+
 
 // public static
 void kpPixmapFX::ensureNoAlphaChannel (QPixmap *destPixmapPtr)
 {
-    if (destPixmapPtr->hasAlphaChannel ())
+    Q_ASSERT (destPixmapPtr);
+
+    if (kpPixmapFX::hasAlphaChannel (*destPixmapPtr))
     {
         // We need to change <destPixmapPtr> from 32-bit (RGBA
-        // i.e. hasAlphaChannel() returns true regardless of whether it
-        // actually has one, causing trouble later on) to 24-bit
+        // i.e. hasAlphaChannel() returns true regardless of whether the
+        // channel has any content, causing trouble later on) to 24-bit
         // (RGB with possible mask).
         //
         // "destPixmapPtr->setMask (destPixmapPtr->mask())" is not
@@ -98,7 +222,9 @@ QBitmap kpPixmapFX::getNonNullMask (const QPixmap &pm)
 {
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (pm);
 
-    const QBitmap mask = pm.mask ()/*slow so cache*/;
+    // (a bit slow so we cache it)
+    const QBitmap mask = pm.mask ();
+
     if (!mask.isNull ())
         return mask;
     else
@@ -177,12 +303,17 @@ void kpPixmapFX::paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, int dest
 // public static
 void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, const QRect &destRect)
 {
-    if (!destPixmapPtr || !destPixmapPtr->mask ()/*already opaque*/)
+    if (!destPixmapPtr)
         return;
 
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
 
+    // (a bit slow so we cache it)
     QBitmap maskBitmap = destPixmapPtr->mask ();
+
+    // Already opaque?
+    if (maskBitmap.isNull ())
+        return;
 
     QPainter p (&maskBitmap);
     p.fillRect (destRect, Qt::color1/*opaque*/);

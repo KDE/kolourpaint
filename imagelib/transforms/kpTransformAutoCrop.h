@@ -33,9 +33,9 @@
 #include <kpNamedCommand.h>
 
 
-class QPixmap;
 class QRect;
 
+class kpImage;
 class kpMainWindow;
 class kpTransformAutoCropBorder;
 
@@ -63,9 +63,9 @@ public:
     virtual SizeType size () const;
 
 private:
-    void getUndoPixmap (const kpTransformAutoCropBorder &border, QPixmap **pixmap);
-    void getUndoPixmaps ();
-    void deleteUndoPixmaps ();
+    void getUndoImage (const kpTransformAutoCropBorder &border, kpImage **image);
+    void getUndoImages ();
+    void deleteUndoImages ();
 
 public:
     virtual void execute ();

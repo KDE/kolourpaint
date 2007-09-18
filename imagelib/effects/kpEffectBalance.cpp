@@ -118,7 +118,7 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
     QTime timer; timer.start ();
 #endif
 
-    QImage qimage = kpPixmapFX::convertToImage (image);
+    QImage qimage = kpPixmapFX::convertToQImage (image);
 #if DEBUG_KP_EFFECT_BALANCE
     kDebug () << "\tconvertToImage=" << timer.restart ();
 #endif

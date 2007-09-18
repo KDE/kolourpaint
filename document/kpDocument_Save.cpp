@@ -191,7 +191,7 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     QPixmap pixmapToSave =
         kpPixmapFX::pixmapWithDefinedTransparentPixels (pixmap,
             Qt::white);  // CONFIG
-    QImage imageToSave = kpPixmapFX::convertToImage (pixmapToSave);
+    QImage imageToSave = kpPixmapFX::convertToQImage (pixmapToSave);
 
 
     // TODO: fix dup with kpDocumentSaveOptions::isLossyForSaving()
