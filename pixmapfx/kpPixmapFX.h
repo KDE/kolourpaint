@@ -74,11 +74,14 @@ class kpAbstractSelection;
 class kpPixmapFX
 {
 public:
+    // Call this before KApplication has been constructed.
+    static void initPre ();
+
     // Call this as early as possible -- after KApplication is constructed
     // and before any kpPixmapFX methods have been called.
     //
     // This may display dialogs to the user.
-    static void init ();
+    static void initPost ();
 
 
 //
@@ -359,32 +362,35 @@ public:
 
 public:
 
-    // 1. For X11: QPixmap, with XRENDER under a screen depth of 32bpp
-    //    (subtlely different to 24bpp), always has an alpha channel, even
-    //    if the channel is empty.  This violates the KolourPaint invariant
-    //    so we fix that by disabling XRENDER, killing the alpha channel.
-    //    The other approach would be to change screen depth to 24bpp but
-    //    such changes are not possible under X11 (XRANDR limitation).
+    // For X11: QPixmap, with XRENDER under a screen depth of 32bpp
+    // (subtlely different to 24bpp), always has an alpha channel, even
+    // if the channel is empty.  This violates the KolourPaint invariant
+    // so we fix that by disabling XRENDER, killing the alpha channel.
+    // The other approach would be to change screen depth to 24bpp but
+    // such changes are not possible under X11 (XRANDR limitation).
     //
-    //    This is nasty since it reduces the quality of the whole GUI.
-    //    The proper fix would be to either:
+    // This is nasty since it reduces the quality of the whole GUI.
+    // The proper fix would be to either:
     //
-    //    a) Rewrite the kpImage class so that it's not tied to the screen
-    //       depth (long term goal that would take months to do).
+    // a) Rewrite the kpImage class so that it's not tied to the screen
+    //    depth (long term goal that would take months to do).
     //
-    //    OR
+    // OR
     //
-    //    b) Add extra code paths to support images with alpha channels
-    //       (would probably require a few days of work).
+    // b) Add extra code paths to support images with alpha channels
+    //    (would probably require a few days of work).
     //
-    // 2. If the screen mode is paletted, it brings up a dialog warning the
-    //    user that KolourPaint has not been tested under such an environment
-    //    (paletted QImage's, usually created from paletted QPixmaps, need
-    //     completely different code paths to truecolor QImage's -- in some
-    //     places, we have not even implemented such paths yet).
+    // Called by initPre() - do not call directly.
+    static void initMaskOpsPre ();
+
+    // If the screen mode is paletted, it brings up a dialog warning the
+    // user that KolourPaint has not been tested under such an environment
+    // (paletted QImage's, usually created from paletted QPixmaps, need
+    //  completely different code paths to truecolor QImage's -- in some
+    //  places, we have not even implemented such paths yet).
     //
-    // Called by init() - do not call directly.
-    static void initMaskOps ();
+    // Called by initPost() - do not call directly.
+    static void initMaskOpsPost ();
 
     // You must use this instead of QPixmap::hasAlpha() or
     // !QPixmap::mask().isNull(), which give unexpectedly different results

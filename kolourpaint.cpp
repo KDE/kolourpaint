@@ -87,9 +87,12 @@ int main (int argc, char *argv [])
     cmdLineOptions.add ("+[file]", ki18n ("Image file to open"));
     KCmdLineArgs::addCmdLineOptions (cmdLineOptions);
 
+    kpPixmapFX::initPre ();
+
     KApplication app;
 
-    kpPixmapFX::init ();
+    kpPixmapFX::initPost ();
+
 
     if (app.isSessionRestored ())
     {

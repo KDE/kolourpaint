@@ -33,7 +33,13 @@
 
 
 // public static
-void kpPixmapFX::init ()
+void kpPixmapFX::initPre ()
 {
-    kpPixmapFX::initMaskOps ();
+    kpPixmapFX::initMaskOpsPre ();
+}
+
+// public static
+void kpPixmapFX::initPost ()
+{
+    kpPixmapFX::initMaskOpsPost ();
 }

@@ -26,12 +26,15 @@
 */
 
 
-#define DEBUG_KP_PIXMAP_FX 0
+#define DEBUG_KP_PIXMAP_FX 1
 
 
 #include <kpPixmapFX.h>
 
-#include <math.h>
+#include <cstdlib>
+#include <cmath>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include <qapplication.h>
 #include <qbitmap.h>
@@ -44,6 +47,7 @@
 #include <qpolygon.h>
 #include <qrect.h>
 
+#include <KApplication>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>
@@ -56,35 +60,112 @@
 #include <kpDefs.h>
 #include <kpTool.h>
 
+
+#if DEBUG_KP_PIXMAP_FX
+    #define KP_PRINTF(x...) fprintf (stderr, x)
+#else
+    #define KP_PRINTF(x...)
+#endif
+
+
 #ifdef Q_WS_X11
-    #include <private/qt_x11_p.h>
+// Same as QPixmap::defaultDepth(), but returns a meaningful answer when
+// called before QApplication has been constructed, rather than always 32.
+// After QApplication has been constructed, you must use QPixmap::defaultDepth()
+// instead.
+//
+// Returns 0 if it encounters an error.
+//
+// Internally, this method forks the process.  In the child, a KApplication
+// is constructed, QPixmap::defaultDepth() is called and the result is sent to
+// the parent.  The child is then killed.
+static int QPixmapCalculateDefaultDepthWithoutQApplication ()
+{
+    KP_PRINTF ("QPixmapCalculateDefaultDepthWithoutQApplication()\n");
+
+    // [0] = read
+    // [1] = write
+    enum
+    {
+        Read = 0, Write = 1
+    };
+    int fds [2];
+    if (pipe (fds) != 0)
+    {
+        perror ("pipe");
+        return 0;
+    }
+    
+    pid_t pid = fork ();
+    if (pid == -1)
+    {
+        perror ("fork");
+        close (fds [Read]);
+        close (fds [Write]);
+        return 0;
+    }
+
+    // In child?
+    if (pid == 0)
+    {
+        KP_PRINTF ("Child: created\n");
+        close (fds [Read]);
+
+        KApplication app;
+
+        const int depth = QPixmap::defaultDepth ();
+        KP_PRINTF ("Child: writing default depth %d\n", depth);
+        write (fds [Write], &depth, sizeof (depth));
+        KP_PRINTF ("Child: wrote default depth\n");
+
+        close (fds [Write]);
+        KP_PRINTF ("Child: exit\n");
+        exit (0);
+    }
+    // In parent?
+    else
+    {
+        KP_PRINTF ("Parent: in here\n");
+        close (fds [Write]);
+
+        int depth = 0;
+        KP_PRINTF ("Parent: reading default depth\n");
+        read (fds [Read], &depth, sizeof (depth));
+        KP_PRINTF ("Parent: read default depth %d\n", depth);
+
+        close (fds [Read]);
+        KP_PRINTF ("Parent: complete\n");
+        return depth;
+    }
+}
 #endif
 
 
 // public static
-void kpPixmapFX::initMaskOps ()
+// (KApplication has not been constructed yet)
+void kpPixmapFX::initMaskOpsPre ()
 {
-#if DEBUG_KP_PIXMAP_FX
-    kDebug () << "kpPixmapFX::initMaskOps()"
-              << "QPixmap::defaultDepth=" << QPixmap::defaultDepth ()
-              << "QPixmap().depth()=" << QPixmap ().depth ();
-#endif
-
 #ifdef Q_WS_X11
-    if (QPixmap::defaultDepth () == 32)
+    const int defaultDepth = QPixmapCalculateDefaultDepthWithoutQApplication ();
+    KP_PRINTF ("kpPixmapFX::initMaskOpsPre() QPixmap::defaultDepth=%d\n",
+               defaultDepth);
+
+    if (defaultDepth == 32)
     {
-        Q_ASSERT (X11);
-
-        X11->use_xrender = 0;
-
-    #if DEBUG_KP_PIXMAP_FX
-        kDebug () << "\tCannot handle alpha channel - disabling XRENDER"
-                  << "QPixmap().depth()=" << QPixmap ().depth ();
-    #endif
+        KP_PRINTF ("\tCannot handle alpha channel - disabling XRENDER\n");
+        setenv ("QT_X11_NO_XRENDER", "1", 1/*overwrite value*/);
     }
 #else
     #warning "KolourPaint is heavily dependent on the behavior of QPixmap under X11."
     #warning "Until KolourPaint gets a proper image library, it is unlikely to work under non-X11."
+#endif
+}
+
+// public static
+void kpPixmapFX::initMaskOpsPost ()
+{
+#if DEBUG_KP_PIXMAP_FX
+    kDebug () << "kpPixmapFX::initMaskOpsPost(): QPixmap().depth()=" << QPixmap ().depth ();
 #endif
 
     // Check KolourPaint invariant.
@@ -117,17 +198,21 @@ bool kpPixmapFX::hasMask (const QPixmap &pixmap)
 #ifdef Q_WS_X11
     if (QPixmap::defaultDepth () == 32)
     {
+        // Note:
+        //
         // QPixmap::mask() is hideously slow, and always returns a non-null
         // mask, if the pixmap has an alpha channel (even if the channel is
         // supposed to be empty).
         //
+        // initMaskOpsPre() has already disabled XRENDER.
+        //
         // Without XRENDER, pixmaps definitely don't have alpha channels.
         // As a result, QPixmap::mask() will be fast and, if there is no mask,
         // it will correctly return a null bitmap.
-        Q_ASSERT (!X11->use_xrender);
 
-        // We need this since QPixmap::hasAlpha() lies and returns true
-        // purely because the depth is 32.
+
+        // We need this code path since QPixmap::hasAlpha() lies and returns
+        // true purely because the depth is 32.
         //
         // Note: QPixmap::mask() is slightly slow even on a pixmap without an
         //       alpha channel.
@@ -145,10 +230,8 @@ bool kpPixmapFX::hasAlphaChannel (const QPixmap &pixmap)
 #ifdef Q_WS_X11
     if (QPixmap::defaultDepth () == 32)
     {
-        Q_ASSERT (!X11->use_xrender);
-
-        // We need this path since QPixmap::hasAlphaChannel() lies and returns
-        // true purely because the depth is 32.
+        // We need this code path since QPixmap::hasAlphaChannel() lies
+        // and returns true purely because the depth is 32.
         //
         // Without XRENDER, pixmaps definitely don't have alpha channels.
         return false;
