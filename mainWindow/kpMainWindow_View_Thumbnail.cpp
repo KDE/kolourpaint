@@ -442,7 +442,7 @@ void kpMainWindow::updateThumbnail ()
         d->thumbnail->show ();
 
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\t\tconnecting thumbnail::visibilityChange to destroy slot";
+        kDebug () << "\t\tconnecting signal thumbnail::windowClosed to destroy slot";
     #endif
         connect (d->thumbnail, SIGNAL (windowClosed ()),
                  this, SLOT (slotDestroyThumbnailInitatedByUser ()));
