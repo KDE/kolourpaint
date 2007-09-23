@@ -48,8 +48,8 @@ class kpDualColorButton;
 
 
 // COMPAT: Vertical orientation and undocking were broken by the Qt4 port
-//         so kpMainWindow::init() fixes this tool bar's position for the
-//         time being.  To help make this workaround possible, we use QDockWidget,
+//         so kpMainWindow::init() keeps this tool bar in a constant position for
+//         the time being.  To help make this workaround possible, we use QDockWidget,
 //         instead of KToolBar, to prevent XMLGUI from managing the tool
 //         bar position.  This also allows us to use QMainWindow::setCorner().
 //
