@@ -51,7 +51,7 @@ class kpToolWidgetOpaqueOrTransparent;
 class kpToolWidgetSpraycanSize;
 
 
-// COMPAT: Vertical orientation and undocking were broken by the Qt4 port
+// COMPAT: Horizontal orientation and undocking were broken by the Qt4 port
 //         so kpMainWindow::init() keeps this tool bar in a constant position for
 //         the time being.  To help make this workaround possible, we use QDockWidget,
 //         instead of KToolBar, to prevent XMLGUI from managing the tool
