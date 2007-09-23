@@ -37,7 +37,6 @@ class kpColor;
 class kpColorCells;
 
 
-// TODO: For now, vertical orientation is broken.
 class kpColorPalette : public QWidget
 {
 Q_OBJECT
@@ -55,10 +54,6 @@ public:
 signals:
     void foregroundColorChanged (const kpColor &color);
     void backgroundColorChanged (const kpColor &color);
-
-private slots:
-    void expandColorCells ();
-    void shrinkColorCells ();
 
 private:
     struct kpColorPalettePrivate * const d;
