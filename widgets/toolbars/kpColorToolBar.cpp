@@ -91,9 +91,9 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
              this, SIGNAL (colorSimilarityChanged (double, int)));
     m_boxLayout->addWidget (m_colorSimilarityToolBarItem, 0/*stretch*/);
 
-    // Pad out all the horizontal space on the right of the Tool Box so that
-    // that the real Tool Box widgets aren't placed in the center of the Tool
-    // Box.
+    // Pad out all the horizontal space on the right of the Color Tool Bar so that
+    // that the real Color Tool Bar widgets aren't placed in the center of the
+    // Color Tool Bar.
     m_boxLayout->addItem (
         new QSpacerItem (1, 1, QSizePolicy::Expanding, QSizePolicy::Preferred));
 

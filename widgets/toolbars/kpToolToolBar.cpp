@@ -86,7 +86,7 @@ protected:
 };
 
 
-// TODO: Once we support moveable toolbars again, calls this need to be
+// TODO: Once we support moveable toolbars again, calls to this need to be
 //       changed to the non-static kpToolToolBar::orientation().
 static Qt::Orientation Orientation ()
 {
