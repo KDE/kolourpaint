@@ -153,6 +153,8 @@ void kpPixmapFX::initMaskOpsPre ()
     if (defaultDepth == 32)
     {
         KP_PRINTF ("\tCannot handle alpha channel - disabling XRENDER\n");
+
+        // SYNC: Might break with Qt upgrades.
         setenv ("QT_X11_NO_XRENDER", "1", 1/*overwrite value*/);
     }
 #else
