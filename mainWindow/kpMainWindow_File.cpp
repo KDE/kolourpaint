@@ -306,10 +306,10 @@ bool kpMainWindow::shouldOpen ()
         kDebug () << "\topenImagesInSameWindow";
     #endif
         // (this brings up a dialog and might save the current doc)
-        if (!queryClose ())
+        if (!queryCloseDocument ())
         {
         #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\t\tqueryClose() aborts open";
+            kDebug () << "\t\tqueryCloseDocument() aborts open";
         #endif
             return false;
         }
@@ -1460,6 +1460,49 @@ void kpMainWindow::slotSetAsWallpaperTiled ()
 }
 
 
+// private
+bool kpMainWindow::queryCloseDocument ()
+{
+    toolEndShape ();
+
+    if (!d->document || !d->document->isModified ())
+        return true;  // ok to close current doc
+
+    int result = KMessageBox::warningYesNoCancel (this,
+                     i18n ("The document \"%1\" has been modified.\n"
+                           "Do you want to save it?",
+                           d->document->prettyFilename ()),
+                    QString()/*caption*/,
+                    KStandardGuiItem::save (), KStandardGuiItem::discard ());
+
+    switch (result)
+    {
+    case KMessageBox::Yes:
+        return slotSave ();  // close only if save succeeds
+    case KMessageBox::No:
+        return true;  // close without saving
+    default:
+        return false;  // don't close current doc
+    }
+}
+
+// private virtual [base KMainWindow]
+bool kpMainWindow::queryClose ()
+{
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "kpMainWindow::queryClose()";
+#endif
+    toolEndShape ();
+
+    if (!queryCloseDocument ())
+        return false;
+
+    if (!queryCloseColors ())
+        return false;
+
+    return true;
+}
+
 // private slot
 void kpMainWindow::slotClose ()
 {
@@ -1469,7 +1512,7 @@ void kpMainWindow::slotClose ()
     kDebug () << "kpMainWindow::slotClose()";
 #endif
 
-    if (!queryClose ())
+    if (!queryCloseDocument ())
         return;
 
     setDocument (0);

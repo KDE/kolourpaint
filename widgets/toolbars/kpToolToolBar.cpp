@@ -86,8 +86,15 @@ protected:
 };
 
 
+// TODO: Once we support moveable toolbars again, calls this need to be
+//       changed to the non-static kpToolToolBar::orientation().
+static Qt::Orientation Orientation ()
+{
+    return Qt::Vertical;
+}
+
 kpToolToolBar::kpToolToolBar (const QString &label, int colsOrRows, QWidget *parent)
-    : KToolBar (parent, false/*don't use global toolBar settings*/, true/*readConfig*/),
+    : QDockWidget (parent),
       m_vertCols (colsOrRows),
       m_buttonGroup (0),
       m_baseWidget (0),
@@ -146,8 +153,7 @@ kpToolToolBar::kpToolToolBar (const QString &label, int colsOrRows, QWidget *par
                << timer.restart () << endl;
 #endif
 
-    m_lastDockedOrientationSet = false;
-    setOrientation (orientation ());
+    adjustToOrientation (::Orientation ());
 
 #if DEBUG_KP_TOOL_TOOL_BAR
     kDebug () << "kpToolToolBar::<ctor> layout tool widgets msec="
@@ -160,7 +166,7 @@ kpToolToolBar::kpToolToolBar (const QString &label, int colsOrRows, QWidget *par
     hideAllToolWidgets ();
 
 
-    addWidget (m_baseWidget);
+    setWidget (m_baseWidget);
 }
 
 kpToolToolBar::~kpToolToolBar ()
@@ -250,7 +256,7 @@ void kpToolToolBar::registerTool (kpTool *tool)
     b->setWhatsThis (tool->description ());
 
     m_buttonGroup->addButton (b);
-    addButton (b, orientation (), num);
+    addButton (b, ::Orientation (), num);
 
     m_buttonToolPairs.append (kpButtonToolPair (b, tool));
 
@@ -536,46 +542,16 @@ void kpToolToolBar::slotToolActionToolTipChanged ()
 }
 
 
-// HACK: The port to Qt4 broke a lot of things like orientation (as
-//       setOrientation() is no longer virtual) and outside docking.
-//       For now, make sure we're always vertical and docked.
-//
-//       We simply need to rewrite kpToolToolBar to be based on QDockWidget
-//       with pluggable actions.
-
-// private
-Qt::Orientation kpToolToolBar::orientation () const
-{
-    return Qt::Vertical;
-}
-
 // public
-void kpToolToolBar::setOrientation (Qt::Orientation o)
+void kpToolToolBar::adjustToOrientation (Qt::Orientation o)
 {
-    Q_ASSERT (o == Qt::Vertical);
-
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "kpToolToolBar::setOrientation("
+    kDebug () << "kpToolToolBar::adjustToOrientation("
                << (o == Qt::Vertical ? "vertical" : "horizontal")
                << ") called!" << endl;
 #endif
 
-    // (QDockWindow::undock() calls us)
-    bool isOutsideDock = false; //(place () == Q3DockWindow::OutsideDock);
-
-    if (!m_lastDockedOrientationSet || !isOutsideDock)
-    {
-        m_lastDockedOrientation = o;
-        m_lastDockedOrientationSet = true;
-    }
-
-    if (isOutsideDock)
-    {
-    #if DEBUG_KP_TOOL_TOOL_BAR
-        kDebug () << "\toutside dock, forcing orientation to last";
-    #endif
-        o = m_lastDockedOrientation;
-    }
+    Q_ASSERT (o == Qt::Vertical);
 
     delete m_baseLayout;
     if (o == Qt::Vertical)
@@ -617,7 +593,11 @@ void kpToolToolBar::setOrientation (Qt::Orientation o)
         }
     }
 
-    KToolBar::setOrientation (o);
+    // Pad out all the vertical space at the bottom of the Tool Box so that
+    // that the real Tool Box widgets aren't placed in the center of the Tool
+    // Box.
+    m_baseLayout->addItem (
+        new QSpacerItem (1, 1, QSizePolicy::Preferred, QSizePolicy::Expanding));
 }
 
 // private

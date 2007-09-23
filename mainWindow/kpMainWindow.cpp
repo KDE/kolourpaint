@@ -274,6 +274,27 @@ void kpMainWindow::init ()
     kDebug () << "\tTIME: createToolBox = " << time.restart () << "msec";
 #endif
 
+
+    // Let the Tool Box take all the vertical space, since it can be quite
+    // tall with all its tool option widgets.  This also avoids occasional
+    // bugs like the Tool Box overlapping the Color Tool Bar.
+    setCorner (Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+
+
+    // HACK: We couldn't get toolbar orientations and undocking to work
+    //       properly so we fix their positions for the time being.
+    //
+    //       Must be called before setAutoSaveSettings() or there are
+    //       massive redraw errors (don't know why).
+    addDockWidget (Qt::LeftDockWidgetArea, d->toolToolBar, Qt::Vertical);
+    d->toolToolBar->setTitleBarWidget (new QLabel (d->toolToolBar));
+    d->toolToolBar->setFeatures (QDockWidget::NoDockWidgetFeatures);
+
+    addDockWidget (Qt::BottomDockWidgetArea, d->colorToolBar, Qt::Horizontal);
+    d->colorToolBar->setTitleBarWidget (new QLabel (d->toolToolBar));
+    d->colorToolBar->setFeatures (QDockWidget::NoDockWidgetFeatures);
+
+
     d->scrollView = new kpViewScrollableContainer (this);
     d->scrollView->setObjectName ("scrollView");
     connect (d->scrollView, SIGNAL (beganDocResize ()),
@@ -312,14 +333,18 @@ void kpMainWindow::init ()
         kDebug () << "\tfirstTime: positioning toolbars";
     #endif
 
+    // Not needed due to above toolbar HACK.
+    #if 0
         addToolBar (Qt::LeftToolBarArea, d->toolToolBar);
         addToolBar (Qt::BottomToolBarArea, d->colorToolBar);
+    #endif
 
         KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
         cfg.writeEntry (kpSettingFirstTime, d->configFirstTime = false);
         cfg.sync ();
     }
+
 
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tall done in " << totalTime.elapsed () << "msec";
@@ -816,36 +841,6 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tdocument and views ready to go!";
 #endif
-}
-
-
-// private virtual [base KMainWindow]
-bool kpMainWindow::queryClose ()
-{
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::queryClose()";
-#endif
-    toolEndShape ();
-
-    if (!d->document || !d->document->isModified ())
-        return true;  // ok to close current doc
-
-    int result = KMessageBox::warningYesNoCancel (this,
-                     i18n ("The document \"%1\" has been modified.\n"
-                           "Do you want to save it?",
-                           d->document->prettyFilename ()),
-                    QString()/*caption*/,
-                    KStandardGuiItem::save (), KStandardGuiItem::discard ());
-
-    switch (result)
-    {
-    case KMessageBox::Yes:
-        return slotSave ();  // close only if save succeeds
-    case KMessageBox::No:
-        return true;  // close without saving
-    default:
-        return false;  // don't close current doc
-    }
 }
 
 

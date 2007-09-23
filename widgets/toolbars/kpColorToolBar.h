@@ -30,11 +30,11 @@
 #define KP_COLOR_TOOLBAR_H
 
 
+#include <QDockWidget>
 #include <qframe.h>
 #include <qwidget.h>
 
 #include <kcolordialog.h>
-#include <ktoolbar.h>
 
 #include <kpColor.h>
 
@@ -47,7 +47,14 @@ class kpColorSimilarityToolBarItem;
 class kpDualColorButton;
 
 
-class kpColorToolBar : public KToolBar
+// TODO: For now, vertical orientation and undocking are broken.
+//       We use QDockWidget, instead of KToolBar, to prevent KMainWindow from
+//       managing tool bar position and to also allow the use of
+//       QMainWindow::setCorner().
+//
+//       A nice must-have side-effect is that we are now resizeable, which
+//       is good for configurable (and potentially large) color collections.
+class kpColorToolBar : public QDockWidget
 {
 Q_OBJECT
 
@@ -94,9 +101,7 @@ public slots:
     void setBackgroundColor (const kpColor &color);
 
 private:
-    Qt::Orientation m_lastDockedOrientation;
-    bool m_lastDockedOrientationSet;
-    virtual void setOrientation (Qt::Orientation o);
+    void adjustToOrientation (Qt::Orientation o);
 
     QBoxLayout *m_boxLayout;
     kpDualColorButton *m_dualColorButton;

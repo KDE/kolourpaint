@@ -137,8 +137,6 @@ private:
 private:
     void setDocument (kpDocument *newDoc);
 
-    virtual bool queryClose ();
-
     virtual void dragEnterEvent (QDragEnterEvent *e);
     virtual void dropEvent (QDropEvent *e);
 
@@ -379,6 +377,9 @@ private slots:
     void slotSetAsWallpaperCentered ();
     void slotSetAsWallpaperTiled ();
 
+    bool queryCloseDocument ();
+    virtual bool queryClose ();
+
     void slotClose ();
     void slotQuit ();
 
@@ -581,14 +582,25 @@ private:
 private:
     void deselectActionColorsKDE ();
 
+    bool queryCloseColors ();
+
 private slots:
     void slotColorsDefault ();
+
+private:
+    bool openKDEColors (const QString &name);
+private slots:
     void slotColorsKDE ();
+
+private:
+    bool openColors (const KUrl &url);
+private slots:
     void slotColorsOpen ();
+
     void slotColorsReload ();
 
-    void slotColorsSave ();
-    void slotColorsSaveAs ();
+    bool slotColorsSave ();
+    bool slotColorsSaveAs ();
 
     void slotColorsAppendRow ();
     void slotColorsDeleteRow ();

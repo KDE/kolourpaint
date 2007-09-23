@@ -47,7 +47,8 @@ kpTransparentColorCell::kpTransparentColorCell (QWidget *parent)
 #if DEBUG_KP_TRANSPARENT_COLOR_CELL
     kDebug () << "kpTransparentColorCell::kpTransparentColorCell()";
 #endif
-
+    setSizePolicy (QSizePolicy::Minimum/*horizontal*/,
+                   QSizePolicy::Minimum/*vertical*/);
     setFrameStyle (QFrame::Panel | QFrame::Sunken);
 #if DEBUG_KP_TRANSPARENT_COLOR_CELL && 0
     kDebug () << "\tdefault line width=" << lineWidth ()

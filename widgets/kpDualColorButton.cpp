@@ -46,6 +46,8 @@
 kpDualColorButton::kpDualColorButton (QWidget *parent)
     : QFrame (parent)
 {
+    setSizePolicy (QSizePolicy::Minimum/*horizontal*/,
+                   QSizePolicy::Minimum/*vertical*/);
     setFrameStyle (QFrame::Panel | QFrame::Sunken);
 
     m_color [0] = kpColor (0, 0, 0);  // black

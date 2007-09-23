@@ -39,6 +39,7 @@
 #include <kpColorCells.h>
 #include <kpColorCollection.h>
 #include <kpColorToolBar.h>
+#include <kpUrlFormatter.h>
 
 
 static QStringList KDEColorCollectionNames ()
@@ -80,7 +81,7 @@ void kpMainWindow::setupColorsMenuActions ()
     d->actionColorsSave->setText (i18n ("&Save"));
     connect (d->actionColorsSave, SIGNAL (triggered (bool)),
         SLOT (slotColorsSave ()));
-    
+
     d->actionColorsSaveAs = ac->addAction ("colors_save_as");
     d->actionColorsSaveAs->setText (i18n ("Save &As..."));
     connect (d->actionColorsSaveAs, SIGNAL (triggered (bool)),
@@ -107,7 +108,9 @@ void kpMainWindow::enableColorsMenuDocumentActions (bool enable)
     d->actionColorsDefault->setEnabled (enable);
     d->actionColorsKDE->setEnabled (enable);
     d->actionColorsOpen->setEnabled (enable);
+    d->actionColorsReload->setEnabled (enable);
 
+    d->actionColorsSave->setEnabled (enable);
     d->actionColorsSaveAs->setEnabled (enable);
 
     d->actionColorsAppendRow->setEnabled (enable);
@@ -122,16 +125,94 @@ void kpMainWindow::deselectActionColorsKDE ()
 }
 
 
+// private
+bool kpMainWindow::queryCloseColors ()
+{
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kDebug () << "kpMainWindow::queryCloseColors() colorCells.modified="
+              << colorCells ()->isModified ();
+#endif
+
+    toolEndShape ();
+
+    if (!colorCells ()->isModified ())
+        return true;  // ok to close
+
+    int result = KMessageBox::Cancel;
+
+
+    if (!colorCells ()->url ().isEmpty ())
+    {
+        result = KMessageBox::warningYesNoCancel (this,
+            i18n ("The color palette \"%1\" has been modified.\n"
+                  "Do you want to save it?",
+                  kpUrlFormatter::PrettyFilename (colorCells ()->url ())),
+            QString ()/*caption*/,
+            KStandardGuiItem::save (), KStandardGuiItem::discard ());
+    }
+    else
+    {
+        const QString name = colorCells ()->colorCollection ()->name ();
+        if (!name.isEmpty ())
+        {
+            result = KMessageBox::warningYesNoCancel (this,
+                i18n ("The KDE color palette \"%1\" has been modified.\n"
+                      "Do you want to save it to a file?",
+                      name),
+                QString ()/*caption*/,
+                KStandardGuiItem::save (), KStandardGuiItem::discard ());
+        }
+        else
+        {
+            result = KMessageBox::warningYesNoCancel (this,
+                i18n ("The default color palette has been modified.\n"
+                      "Do you want to save it to a file?"),
+                QString ()/*caption*/,
+                KStandardGuiItem::save (), KStandardGuiItem::discard ());
+        }
+    }
+
+    switch (result)
+    {
+    case KMessageBox::Yes:
+        return slotColorsSave ();  // close only if save succeeds
+    case KMessageBox::No:
+        return true;  // close without saving
+    default:
+        return false;  // don't close current doc
+    }
+}
+
+
+
 // private slot
 void kpMainWindow::slotColorsDefault ()
 {
     // Call just in case.
     toolEndShape ();
 
+    if (!queryCloseColors ())
+        return;
+
     colorCells ()->setColorCollection (
         kpColorCells::DefaultColorCollection ());
 
     deselectActionColorsKDE ();
+}
+
+// private
+bool kpMainWindow::openKDEColors (const QString &name)
+{
+    kpColorCollection colorCol;
+    if (colorCol.openKDE (name, this))
+    {
+        colorCells ()->setColorCollection (colorCol);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 // private slot
@@ -140,15 +221,28 @@ void kpMainWindow::slotColorsKDE ()
     // Call in case an error dialog appears.
     toolEndShape ();
 
+    if (!queryCloseColors ())
+    {
+        deselectActionColorsKDE ();
+        return;
+    }
+
     const QStringList colNames = ::KDEColorCollectionNames ();
     const int selected = d->actionColorsKDE->currentItem ();
     Q_ASSERT (selected >= 0 && selected < colNames.size ());
 
-    kpColorCollection colorCol (colNames [selected]);
-    // TODO: Failure?
+    if (!openKDEColors (colNames [selected]))
+        deselectActionColorsKDE ();
+}
 
-    // TODO: modified?
-    colorCells ()->setColorCollection (colorCol);
+// private
+bool kpMainWindow::openColors (const KUrl &url)
+{
+    if (!colorCells ()->openColorCollection (url))
+        return false;
+
+    deselectActionColorsKDE ();
+    return true;
 }
 
 // private slot
@@ -163,58 +257,88 @@ void kpMainWindow::slotColorsOpen ()
 
     if (fd.exec ())
     {
-        // TODO: modified
+        if (!queryCloseColors ())
+            return;
 
-        colorCells ()->openColorCollection (fd.selectedUrl ());
-
-        deselectActionColorsKDE ();
+        openColors (fd.selectedUrl ());
     }
 }
 
 // private slot
-#include <kpDocument.h>
 void kpMainWindow::slotColorsReload ()
 {
-    // TODO: Put in right place! - queryColorCloseOrSimilar
-    int result = KMessageBox::warningYesNoCancel (this,
-                     i18n ("The color palette \"%1\" has been modified.\n"
-                           "Do you want to save it?",
-                           d->document->prettyFilename ()),
-                    QString()/*caption*/,
-                    KStandardGuiItem::save (), KStandardGuiItem::discard ());
+    toolEndShape ();
 
-    result = KMessageBox::warningContinueCancel (this,
-                    i18n ("The color palette \"%1\" has been modified.\n"
-                        "Reloading will lose all changes since you last saved it.\n"
-                        "Are you sure?",
-                        d->document->prettyFilename ()),
-                    QString()/*caption*/,
-                    KGuiItem(i18n ("&Reload")));
+    if (colorCells ()->isModified ())
+    {
+        int result = KMessageBox::Cancel;
+
+        if (!colorCells ()->url ().isEmpty ())
+        {
+            result = KMessageBox::warningContinueCancel (this,
+                i18n ("The color palette \"%1\" has been modified.\n"
+                      "Reloading will lose all changes since you last saved it.\n"
+                      "Are you sure?",
+                      kpUrlFormatter::PrettyFilename (colorCells ()->url ())),
+                QString ()/*caption*/,
+                KGuiItem(i18n ("&Reload")));
+        }
+        else
+        {
+            const QString name = colorCells ()->colorCollection ()->name ();
+            if (!name.isEmpty ())
+            {
+                result = KMessageBox::warningContinueCancel (this,
+                    i18n ("The KDE color palette \"%1\" has been modified.\n"
+                          "Reloading will lose all changes.\n"
+                          "Are you sure?",
+                          colorCells ()->colorCollection ()->name ()),
+                    QString ()/*caption*/,
+                    KGuiItem (i18n ("&Reload")));
+            }
+            else
+            {
+                result = KMessageBox::warningYesNoCancel (this,
+                    i18n ("The default color palette has been modified.\n"
+                          "Reloading will lose all changes.\n"
+                          "Are you sure?"),
+                    QString ()/*caption*/,
+                    KGuiItem (i18n ("&Reload")));
+            }
+        }
+
+        if (result != KMessageBox::Continue)
+            return;
+    }
 
 
-    result = KMessageBox::warningYesNoCancel (this,
-                     i18n ("The color palette has been modified.\n"
-                           "Do you want to save it to a file?"),
-                    QString()/*caption*/,
-                    KStandardGuiItem::save (), KStandardGuiItem::discard ());
-
-    result = KMessageBox::warningContinueCancel (this,
-                    i18n ("The color palette has been modified.\n"
-                        "Reloading will lose all changes.\n"
-                        "Are you sure?"),
-                    QString()/*caption*/,
-                    KGuiItem(i18n ("&Reload")));
-
+    if (!colorCells ()->url ().isEmpty ())
+    {
+        openColors (colorCells ()->url ());
+    }
+    else
+    {
+        openKDEColors (colorCells ()->colorCollection ()->name ());
+    }
 }
 
 
 // private slot
-void kpMainWindow::slotColorsSave ()
+bool kpMainWindow::slotColorsSave ()
 {
+    // Call due to dialog.
+    toolEndShape ();
+
+    if (colorCells ()->url ().isEmpty ())
+    {
+        return slotColorsSaveAs ();
+    }
+
+    return colorCells ()->saveColorCollection ();
 }
 
 // private slot
-void kpMainWindow::slotColorsSaveAs ()
+bool kpMainWindow::slotColorsSaveAs ()
 {
     // Call due to dialog.
     toolEndShape ();
@@ -225,11 +349,14 @@ void kpMainWindow::slotColorsSaveAs ()
 
     if (fd.exec ())
     {
-        colorCells ()->saveColorCollectionAs (fd.selectedUrl ());
+        if (!colorCells ()->saveColorCollectionAs (fd.selectedUrl ()))
+            return false;
 
         // We're definitely using our own color collection now.
         deselectActionColorsKDE ();
     }
+
+    return true;
 }
 
 

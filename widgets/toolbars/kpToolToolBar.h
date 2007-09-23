@@ -31,8 +31,7 @@
 
 
 #include <qlist.h>
-
-#include <ktoolbar.h>
+#include <QDockWidget>
 
 
 class QAbstractButton;
@@ -52,7 +51,11 @@ class kpToolWidgetOpaqueOrTransparent;
 class kpToolWidgetSpraycanSize;
 
 
-class kpToolToolBar : public KToolBar
+// TODO: For now, horizontal orientation and undocking are broken.
+//       We use QDockWidget, instead of KToolBar, to prevent KMainWindow from
+//       managing tool bar position and to also allow the use of
+//       QMainWindow::setCorner().
+class kpToolToolBar : public QDockWidget
 {
 Q_OBJECT
 
@@ -97,15 +100,11 @@ private slots:
     void slotToolActionToolTipChanged ();
 
 private:
-    Qt::Orientation orientation () const;
-public:
-    void setOrientation (Qt::Orientation o);
+    void adjustToOrientation (Qt::Orientation o);
 
 private:
     void addButton (QAbstractButton *button, Qt::Orientation o, int num);
 
-    Qt::Orientation m_lastDockedOrientation;
-    bool m_lastDockedOrientationSet;
     int m_vertCols;
 
     QButtonGroup *m_buttonGroup;

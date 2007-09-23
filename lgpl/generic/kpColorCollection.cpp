@@ -57,7 +57,7 @@ struct ColorNode
 class kpColorCollectionPrivate
 {
 public:
-    kpColorCollectionPrivate(const QString&);
+    kpColorCollectionPrivate(const QString &name = QString ());
     kpColorCollectionPrivate(const kpColorCollectionPrivate&);
     ~kpColorCollectionPrivate() {}
     QList<ColorNode> colorList;
@@ -98,13 +98,6 @@ kpColorCollection::installedCollections()
 kpColorCollection::kpColorCollection(const QString &name)
 {
   d = new kpColorCollectionPrivate(name);
-
-  if (name.isEmpty()) return;
-
-  QString filename = KStandardDirs::locate("config", "colors/"+name);
-  if (filename.isEmpty()) return;
-
-  open (KUrl (filename), 0/*HITODO: correct widget*/);
 }
 
 kpColorCollection::kpColorCollection(const kpColorCollection &p)
@@ -125,6 +118,7 @@ static void CouldNotOpenDialog (const KUrl &url, QWidget *parent)
               kpUrlFormatter::PrettyFilename (url)));
 }
 
+// TODO: Set d->name and d->editable?
 bool
 kpColorCollection::open(const KUrl &url, QWidget *parent)
 {
@@ -206,6 +200,36 @@ kpColorCollection::open(const KUrl &url, QWidget *parent)
   return true;
 }
 
+static void CouldNotOpenKDEDialog (const QString &name, QWidget *parent)
+{
+     KMessageBox::sorry (parent,
+        i18n ("Could not open KDE color palette \"%1\".", name));
+}
+
+bool
+kpColorCollection::openKDE(const QString &name, QWidget *parent)
+{
+  if (name.isEmpty())
+  {
+    ::CouldNotOpenKDEDialog (name, parent);
+    return false;
+  }
+
+  QString filename = KStandardDirs::locate("config", "colors/"+name);
+  if (filename.isEmpty())
+  {
+    ::CouldNotOpenKDEDialog (name, parent);
+    return false;
+  }
+
+  // (this will pop up an error dialog on failure)
+  if (!open (KUrl (filename), parent))
+    return false;
+
+  d->name = name;
+  return true;
+}
+
 static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
 {
     // TODO: use file.errorString()
@@ -234,9 +258,11 @@ static void SaveToFile (kpColorCollectionPrivate *d, QIODevice *device)
 }
 
 bool
-kpColorCollection::saveAs(const KUrl &url, QWidget *parent) const
+kpColorCollection::saveAs(const KUrl &url, bool showOverwritePrompt,
+        QWidget *parent) const
 {
-   if (KIO::NetAccess::exists (url, KIO::NetAccess::DestinationSide/*write*/, parent))
+   if (showOverwritePrompt &&
+       KIO::NetAccess::exists (url, KIO::NetAccess::DestinationSide/*write*/, parent))
    {
        int result = KMessageBox::warningContinueCancel (parent,
           i18n ("A color palette called \"%1\" already exists.\n"
@@ -342,10 +368,10 @@ kpColorCollection::saveAs(const KUrl &url, QWidget *parent) const
 }
 
 bool
-kpColorCollection::save(QWidget *parent) const
+kpColorCollection::saveKDE(QWidget *parent) const
 {
    QString filename = KStandardDirs::locateLocal("config", "colors/" + d->name);
-   return saveAs (KUrl (filename), parent);
+   return saveAs (KUrl (filename), false/*no overwite prompt*/, parent);
 }
 
 QString kpColorCollection::description() const

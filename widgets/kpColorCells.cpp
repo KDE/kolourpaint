@@ -44,6 +44,33 @@
  *       (probably when adding palette load/save)
  */
 
+static int PaletteColumns (const kpColorCollection &colorCol)
+{
+    return 11;
+}
+
+static int PaletteRows (const kpColorCollection &colorCol)
+{
+    const int cols = ::PaletteColumns (colorCol);
+
+    return (colorCol.count () + (cols - 1)) / cols;
+}
+
+
+static int PaletteCellWidth (const kpColorCollection &colorCol)
+{
+    return 26;
+}
+
+static int PaletteCellHeight (const kpColorCollection &colorCol)
+{
+    if (::PaletteRows (colorCol) <= 2)
+        return 26;
+    else
+        return 17;
+}
+
+
 struct kpColorCellsPrivate
 {
     Qt::Orientation orientation;
@@ -54,38 +81,17 @@ struct kpColorCellsPrivate
     bool isModified;
 };
 
-static int PaletteColumns (const kpColorCollection &colorCol)
-{
-    // 11 or smaller.
-    return qMin (11, colorCol.count ());
-}
-
-static int PaletteRows (const kpColorCollection &colorCol)
-{
-    const int cols = ::PaletteColumns (colorCol);
-    if (cols == 0)
-        return 0;
-
-    return (colorCol.count () + (cols - 1)) / cols;
-}
-
-
-static int PaletteCellSize (const kpColorCollection &colorCol)
-{
-    if (::PaletteRows (colorCol) <= 2)
-        return 26;
-    else
-        return 13;
-}
-
-
-// HITODO: You should not be able to get text focus for this!
 kpColorCells::kpColorCells (QWidget *parent,
                             Qt::Orientation o)
     : KColorCells (parent, 1/*rows for now*/, 300/*HACK due to KColorCells bug: cols for now*/),
       d (new kpColorCellsPrivate ())
 {
     d->mouseButton = -1;
+    d->isModified = false;
+
+    // When a text box is active, clicking to change the background color
+    // should not move the keyboard focus away from the text box.
+    setFocusPolicy (Qt::TabFocus);
 
     setShading (false);  // no 3D look
 
@@ -156,8 +162,8 @@ void kpColorCells::makeCellsMatchColorCollection ()
     // COMPAT: Get cell dimensions exactly as claimed by these variables.
     //         I suspect frameWidth() isn't right.
     // TODO: KDE3: It wasn't right in KDE 3.4 either (haven't checked 3.5).
-    int CellWidth = ::PaletteCellSize (d->colorCol),
-        CellHeight = ::PaletteCellSize (d->colorCol);
+    int CellWidth = ::PaletteCellWidth (d->colorCol),
+        CellHeight = ::PaletteCellHeight (d->colorCol);
 
     for (int y = 0; y < r; y++)
         setRowHeight (y, CellHeight);
@@ -194,11 +200,13 @@ void kpColorCells::makeCellsMatchColorCollection ()
             // int x = c - 1 - i / r;
             pos = y * c + x;
         }
-    #if DEBUG_KP_COLOR_CELLS
+    #if DEBUG_KP_COLOR_CELLS && 0
         kDebug () << "\tSetting cell " << i << ": y=" << y << " x=" << x
                   << " pos=" << pos << endl;
         kDebug () << "\t\tcolor=" << (int *) d->colorCol.color (i).rgb ();
     #endif
+
+        // (colorCol.color(i) returns an invalid QColor if it's out-of-range)
         KColorCells::setColor (pos, d->colorCol.color (i));
         //this->setToolTip( cellGeometry (y, x), colors [i].name ());
     }
@@ -210,10 +218,14 @@ bool kpColorCells::isModified () const
     return d->isModified;
 }
 
-// TODO: Use
+// TODO: Use - for dropping too.
 void kpColorCells::setModified (bool yes)
 {
-    if (yes != d->isModified)
+#if DEBUG_KP_COLOR_CELLS
+    kDebug () << "kpColorCells::setModified(" << yes << ")" << endl;
+#endif
+
+    if (yes == d->isModified)
         return;
 
     d->isModified = yes;
@@ -226,12 +238,16 @@ KUrl kpColorCells::url () const
 }
 
 
+const kpColorCollection *kpColorCells::colorCollection () const
+{
+    return &d->colorCol;
+}
+
 void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const KUrl &url)
 {
     d->colorCol = colorCol;
     d->url = url;
-
-    d->isModified = false;
+    setModified (false);
 
     makeCellsMatchColorCollection ();
 }
@@ -239,29 +255,44 @@ void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const 
 
 bool kpColorCells::openColorCollection (const KUrl &url)
 {
+    // (this will pop up an error dialog on failure)
     if (d->colorCol.open (url, this))
     {
         d->url = url;
-        d->isModified = false;
+        setModified (false);
 
         makeCellsMatchColorCollection ();
 
         return true;
     }
 
-    return false;  // TODO: error message
+    return false;
 }
 
 bool kpColorCells::saveColorCollectionAs (const KUrl &url)
 {
-    if (d->colorCol.saveAs (url, this))
+    // (this will pop up an error dialog on failure)
+    if (d->colorCol.saveAs (url, true/*show overwrite prompt*/, this))
     {
         d->url = url;
-        d->isModified = false;
+        setModified (false);
+
         return true;
     }
 
-    return false;  // TODO: error message
+    return false;
+}
+
+bool kpColorCells::saveColorCollection ()
+{
+    // (this will pop up an error dialog on failure)
+    if (d->colorCol.saveAs (d->url, false/*no overwrite prompt*/, this))
+    {
+        setModified (false);
+        return true;
+    }
+
+    return false;
 }
 
 
@@ -275,11 +306,14 @@ void kpColorCells::appendRow ()
     for (int i = 0; i < totalColors; i++)
         d->colorCol.addColor (Qt::white);
 
+    setModified (true);
+
     makeCellsMatchColorCollection ();
 }
 
 void kpColorCells::deleteLastRow ()
 {
+    setModified (true);
     return;  // TODO
 }
 
@@ -298,6 +332,7 @@ void kpColorCells::dropEvent (QDropEvent *e)
     // TODO: Remove method.
 
 
+    // connect (this, SIGNAL (itemChanged (QTableWidgetItem *)),
 
     KColorCells::dropEvent (e);
 }
@@ -433,9 +468,11 @@ void kpColorCells::slotColorDoubleClicked (int cell, const QColor &)
 
     QColor color = KColorCells::color (cell);
 
-    // TODO: parent
-    if (KColorDialog::getColor (color/*ref*/))
+    if (KColorDialog::getColor (color/*ref*/, this))
+    {
         KColorCells::setColor (cell, color);
+        setModified (true);
+    }
 }
 
 

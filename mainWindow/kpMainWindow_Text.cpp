@@ -29,16 +29,18 @@
 #include <kpMainWindow.h>
 #include <kpMainWindowPrivate.h>
 
+#include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kdebug.h>
 #include <kfontaction.h>
 #include <kfontsizeaction.h>
 #include <kglobal.h>
 #include <kicon.h>
 #include <klocale.h>
+#include <KToolBar>
 #include <ktoggleaction.h>
-#include <kactioncollection.h>
 
 #include <kpColorToolBar.h>
 #include <kpDefs.h>
@@ -47,7 +49,6 @@
 #include <kpToolToolBar.h>
 #include <kpToolWidgetOpaqueOrTransparent.h>
 #include <kpZoomedView.h>
-#include <kconfiggroup.h>
 
 
 // private

@@ -192,12 +192,6 @@ void kpMainWindow::createToolBox ()
 
     d->toolToolBar = new kpToolToolBar (i18n ("Tool Box"), 2/*columns/rows*/, this);
     d->toolToolBar->setObjectName ("Tool Box");  // (needed for QMainWindow::saveState())
-    // HACK: QToolBar::setOrientation() is no longer virtual in Qt4.
-    //       Therefore, our override of setOrientation() will never be
-    //       called in response to user movement.  We might be stuck in
-    //       a horizontal position at the start.  So force it vertical
-    //       - this is probably what the user wants.
-    d->toolToolBar->setOrientation (Qt::Vertical);
     connect (d->toolToolBar, SIGNAL (sigToolSelected (kpTool *)),
              this, SLOT (slotToolSelected (kpTool *)));
     connect (d->toolToolBar, SIGNAL (toolWidgetOptionSelected ()),

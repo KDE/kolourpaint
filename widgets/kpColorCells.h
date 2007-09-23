@@ -64,11 +64,13 @@ public:
 
     KUrl url () const;
 
+    const kpColorCollection *colorCollection () const;
     void setColorCollection (const kpColorCollection &colorCol,
         const KUrl &url = KUrl ());
 
     bool openColorCollection (const KUrl &url);
     bool saveColorCollectionAs (const KUrl &url);
+    bool saveColorCollection ();
 
     void appendRow ();
     void deleteLastRow ();

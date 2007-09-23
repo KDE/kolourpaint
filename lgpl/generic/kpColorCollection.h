@@ -63,9 +63,7 @@ public:
    static QStringList installedCollections();
 
    /**
-    * kpColorCollection constructor. Creates a kpColorCollection from a file
-    * the filename is derived from the name.
-    * @param name The name of collection as returned by installedCollections()
+    * kpColorCollection constructor
     **/
    explicit kpColorCollection(const QString &name=QString());
 
@@ -90,19 +88,28 @@ public:
    // Added for KolourPaint.
    bool open(const KUrl &url, QWidget *parent);
 
+   // Same as open() but is given the name of a KDE palette, not a filename.
+   //
+   // @param name The name of collection as returned by installedCollections()
+   //
+   // Added for KolourPaint
+   bool openKDE(const QString &name, QWidget *parent);
+
    // On failure, this prints an error dialog and returns false.
    // If the user cancels any presented overwrite dialog, it also returns false.
    // On success, it returns true.
    //
    // Added for KolourPaint.
-   bool saveAs(const KUrl &url, QWidget *parent) const;
+   bool saveAs(const KUrl &url, bool showOverwritePrompt, QWidget *parent) const;
 
    /**
     * Save the collection
     *
     * @return 'true' if successful
+    *
+    * Renamed from save() for KolourPaint.
     **/
-   bool save(QWidget *parent) const;
+   bool saveKDE(QWidget *parent) const;
 
    /**
     * Get the description of the collection.

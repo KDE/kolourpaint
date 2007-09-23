@@ -60,7 +60,7 @@
 
 
 kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
-    : KToolBar (parent)
+    : QDockWidget (parent)
 {
     setWindowTitle (label);
 
@@ -71,14 +71,13 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
     m_boxLayout->setSpacing (10 * 4);
 
     m_dualColorButton = new kpDualColorButton (base);
-    m_dualColorButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
     connect (m_dualColorButton, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
              this, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)));
     connect (m_dualColorButton, SIGNAL (foregroundColorChanged (const kpColor &)),
              this, SIGNAL (foregroundColorChanged (const kpColor &)));
     connect (m_dualColorButton, SIGNAL (backgroundColorChanged (const kpColor &)),
              this, SIGNAL (backgroundColorChanged (const kpColor &)));
-    m_boxLayout->addWidget (m_dualColorButton, 0/*stretch*/);
+    m_boxLayout->addWidget (m_dualColorButton, 0/*stretch*/, Qt::AlignVCenter);
 
     m_colorPalette = new kpColorPalette (base);
     connect (m_colorPalette, SIGNAL (foregroundColorChanged (const kpColor &)),
@@ -88,51 +87,30 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
     m_boxLayout->addWidget (m_colorPalette, 0/*stretch*/);
 
     m_colorSimilarityToolBarItem = new kpColorSimilarityToolBarItem (base);
-    m_colorSimilarityToolBarItem->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
     connect (m_colorSimilarityToolBarItem, SIGNAL (colorSimilarityChanged (double, int)),
              this, SIGNAL (colorSimilarityChanged (double, int)));
     m_boxLayout->addWidget (m_colorSimilarityToolBarItem, 0/*stretch*/);
 
-    // HACK: couldn't get QSpacerItem to work
-    QWidget *fakeSpacer = new QWidget (base);
-    m_boxLayout->addWidget (fakeSpacer, 1/*stretch*/);
+    // Pad out all the horizontal space on the right of the Tool Box so that
+    // that the real Tool Box widgets aren't placed in the center of the Tool
+    // Box.
+    m_boxLayout->addItem (
+        new QSpacerItem (1, 1, QSizePolicy::Expanding, QSizePolicy::Preferred));
 
-    m_lastDockedOrientationSet = false;
-    setOrientation (orientation ());
+    adjustToOrientation (Qt::Horizontal);
 
-    addWidget (base);
+    setWidget (base);
 }
 
-// TODO: setOrientation() is not virtual in Qt4.
-//       So don't we need the kptooltoolbar.cpp hacks too?  Maybe not
-//       since the default orientation is horizontal.
-//
-//       In any case, we need to rewrite kpColorToolBar to be based on
-//       QDockWidget.
-
-// virtual
-void kpColorToolBar::setOrientation (Qt::Orientation o)
+void kpColorToolBar::adjustToOrientation (Qt::Orientation o)
 {
 #if DEBUG_KP_COLOR_TOOL_BAR
-    kDebug () << "kpColorToolBar::setOrientation("
+    kDebug () << "kpColorToolBar::adjustToOrientation("
                << (o == Qt::Vertical ? "vertical" : "horizontal")
-               << ") called!" << endl;
+               << ") called!";
 #endif
 
-    // (QDockWindow::undock() calls us)
-    bool isOutsideDock = false; //(place () == Q3DockWindow::OutsideDock);
-
-    if (!m_lastDockedOrientationSet || !isOutsideDock)
-    {
-        m_lastDockedOrientation = o;
-        m_lastDockedOrientationSet = true;
-    }
-
-    if (isOutsideDock)
-    {
-        //kDebug () << "\toutside dock, forcing orientation to last";
-        o = m_lastDockedOrientation;
-    }
+    Q_ASSERT (o == Qt::Horizontal);
 
     if (o == Qt::Horizontal)
     {
@@ -144,8 +122,6 @@ void kpColorToolBar::setOrientation (Qt::Orientation o)
     }
 
     m_colorPalette->setOrientation (o);
-
-    KToolBar::setOrientation (o);
 }
 
 kpColorToolBar::~kpColorToolBar ()

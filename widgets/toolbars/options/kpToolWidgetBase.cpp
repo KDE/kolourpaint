@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_WIDGET_BASE 0
+#define DEBUG_KP_TOOL_WIDGET_BASE 1
 
 
 #include <kpToolWidgetBase.h>
@@ -59,7 +59,9 @@ kpToolWidgetBase::kpToolWidgetBase (QWidget *parent, const QString &name)
     setObjectName (name);
 
     setFrameStyle (QFrame::Panel | QFrame::Sunken);
+
     setFixedSize (44, 66);
+    setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Minimum);
 }
 
 kpToolWidgetBase::~kpToolWidgetBase ()
@@ -98,6 +100,17 @@ void kpToolWidgetBase::finishConstruction (int fallBackRow, int fallBackCol)
 #endif
 
     relayoutOptions ();
+
+    // HACK: Undo the maximum half of setFixedSize() in the ctor to avoid
+    //       bizarre redraw errors when tool widgets are hidden and others
+    //       are shown.
+    //
+    //       The reason why we didn't just use setMinimumSize() in the ctor is
+    //       because all tool widgets construct pixmaps whose sizes are dependent
+    //       on the size() in the ctor, so we needed to get the correct size
+    //       in there.  This is bad design because it means that tool widgets
+    //       can't really be resized.
+    setMaximumSize (QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
 
     const QPair <int, int> rowColPair = defaultSelectedRowAndCol ();
     if (!setSelected (rowColPair.first, rowColPair.second, false/*don't save*/))
@@ -235,7 +248,7 @@ void kpToolWidgetBase::saveSelectedAsDefault () const
 void kpToolWidgetBase::relayoutOptions ()
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "kpToolWidgetBase::relayoutOptions()";
+    kDebug () << "kpToolWidgetBase::relayoutOptions() size=" << size ();
 #endif
 
     while (!m_pixmaps.isEmpty () && m_pixmaps.last ().count () == 0)

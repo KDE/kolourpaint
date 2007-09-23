@@ -2,7 +2,7 @@
 KolourPaint 4 Series (trunk/KDE/)
 ====================
 
-KolourPaint 4.0.0 (Frozen ???)
+KolourPaint 4.0.0 BETA (Frozen 2007-10-21)
 
    * Port to KDE 4 (Laurent Montel)
 
@@ -77,6 +77,9 @@ KolourPaint 4.0.0 (Frozen ???)
    * REGRESSION: The rendering quality of a text box with opaque text but
                  a see-through background, on top of transparent document
                  areas, is lower than before.
+
+   * REGRESSION: The Tool Box and Color Tool Bar are no longer movable or
+                 floatable.
 
 
 KolourPaint 1.4_relight Series (branches/KDE/3.5/)
