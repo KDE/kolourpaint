@@ -30,8 +30,9 @@
 #define kpColorCells_H
 
 
-#include <kcolordialog.h>
 #include <KUrl>
+
+#include <kpColorCellsBase.h>
 
 
 class QDropEvent;
@@ -41,7 +42,7 @@ class kpColorCollection;
 class kpColor;
 
 
-class kpColorCells : public KColorCells
+class kpColorCells : public kpColorCellsBase
 {
 Q_OBJECT
 

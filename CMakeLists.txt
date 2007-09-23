@@ -320,6 +320,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/options/kpToolWidgetSpraycanSize.cp
 
 set(kolourpaint_lgpl_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/kpUrlFormatter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/kpColorCellsBase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/kpColorCollection.cpp
     )
 

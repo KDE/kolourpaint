@@ -1,4 +1,7 @@
 
+// REFACTOR: Avoid hacky code by changing kpColorCellsBase as required,
+//           to solve the problems in the first place.
+
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -34,10 +37,12 @@
 #include <QContextMenuEvent>
 #include <QMouseEvent>
 
-#include <kpColorCollection.h>
-#include <kpDefaultColorCollection.h>
+#include <KColorDialog>
+#include <KDebug>
 
 #include <kpColor.h>
+#include <kpColorCollection.h>
+#include <kpDefaultColorCollection.h>
 
 
 /* TODO: clean up this code!!!
@@ -83,7 +88,7 @@ struct kpColorCellsPrivate
 
 kpColorCells::kpColorCells (QWidget *parent,
                             Qt::Orientation o)
-    : KColorCells (parent, 1/*rows for now*/, 300/*HACK due to KColorCells bug: cols for now*/),
+    : kpColorCellsBase (parent, 1/*rows for now*/, 300/*HACK due to kpColorCellsBase bug: cols for now*/),
       d (new kpColorCellsPrivate ())
 {
     d->mouseButton = -1;
@@ -207,7 +212,7 @@ void kpColorCells::makeCellsMatchColorCollection ()
     #endif
 
         // (colorCol.color(i) returns an invalid QColor if it's out-of-range)
-        KColorCells::setColor (pos, d->colorCol.color (i));
+        kpColorCellsBase::setColor (pos, d->colorCol.color (i));
         //this->setToolTip( cellGeometry (y, x), colors [i].name ());
     }
 }
@@ -318,7 +323,7 @@ void kpColorCells::deleteLastRow ()
 }
 
 
-// virtual protected [base KColorCells]
+// virtual protected [base kpColorCellsBase]
 void kpColorCells::dropEvent (QDropEvent *e)
 {
     // Eat event so that:
@@ -334,7 +339,7 @@ void kpColorCells::dropEvent (QDropEvent *e)
 
     // connect (this, SIGNAL (itemChanged (QTableWidgetItem *)),
 
-    KColorCells::dropEvent (e);
+    kpColorCellsBase::dropEvent (e);
 }
 
 // virtual protected
@@ -356,17 +361,17 @@ void kpColorCells::paintCell (QPainter *painter, int row, int col)
         // make all cells 3D (so that disabled palette doesn't look flat)
         setShading (true);
 
-        oldColor = KColorCells::color (cellNo);
-        KColorCells::colors [cellNo] = palette ().color (backgroundRole ());
+        oldColor = kpColorCellsBase::color (cellNo);
+        kpColorCellsBase::colors [cellNo] = palette ().color (backgroundRole ());
     }
 
 
-    KColorCells::paintCell (painter, row, col);
+    kpColorCellsBase::paintCell (painter, row, col);
 
 
     if (!isEnabled ())
     {
-        KColorCells::colors [cellNo] = oldColor;
+        kpColorCellsBase::colors [cellNo] = oldColor;
         setShading (false);
     }
 #endif
@@ -403,7 +408,7 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
 
     // (d->mouseButton will be read in the slot)
     connect (this, SIGNAL (colorSelected (int, QColor)), this, SLOT (slotColorSelected (int)));
-    KColorCells::mouseReleaseEvent (e);
+    kpColorCellsBase::mouseReleaseEvent (e);
     disconnect (this, SIGNAL (colorSelected (int, QColor)), this, SLOT (slotColorSelected (int)));
 
 #if DEBUG_KP_COLOR_CELLS
@@ -411,22 +416,22 @@ void kpColorCells::mouseReleaseEvent (QMouseEvent *e)
 #endif
     d->mouseButton = -1;
 
-    // Deselect the selected cell (selected by above KColorCells::mouseReleaseEvent()).
+    // Deselect the selected cell (selected by above kpColorCellsBase::mouseReleaseEvent()).
     // KolourPaint's palette has no concept of a current cell/color: you can
     // pick a color but you can't mark a cell as selected.  In any case, a
     // selected cell would be rendered as violet, which would ruin the cell.
     //
-    // setSelectionMode (KColorCells::NoSelection); does not work so we
+    // setSelectionMode (kpColorCellsBase::NoSelection); does not work so we
     // clearSelection().  I think setSelectionMode() concerns when the user
-    // directly selects a cell - not when KColorCells::mouseReleaseEvent()
+    // directly selects a cell - not when kpColorCellsBase::mouseReleaseEvent()
     // selects a cell programmatically.
     clearSelection ();
 }
 
-// protected virtual [base KColorCells]
+// protected virtual [base kpColorCellsBase]
 void kpColorCells::resizeEvent (QResizeEvent *e)
 {
-    // KColorCells::resizeEvent() tries to adjust the cellWidth and cellHeight
+    // kpColorCellsBase::resizeEvent() tries to adjust the cellWidth and cellHeight
     // to the current dimensions but doesn't take into account
     // frame{Width,Height}().
     //
@@ -438,7 +443,7 @@ void kpColorCells::resizeEvent (QResizeEvent *e)
 // protected slot
 void kpColorCells::slotColorSelected (int cell)
 {
-    QColor c = KColorCells::color (cell);
+    QColor c = kpColorCellsBase::color (cell);
 #if DEBUG_KP_COLOR_CELLS
     kDebug () << "kpColorCells::slotColorSelected(cell=" << cell
                << ") mouseButton = " << d->mouseButton
@@ -466,11 +471,11 @@ void kpColorCells::slotColorDoubleClicked (int cell, const QColor &)
                << cell << ")" << endl;
 #endif
 
-    QColor color = KColorCells::color (cell);
+    QColor color = kpColorCellsBase::color (cell);
 
     if (KColorDialog::getColor (color/*ref*/, this))
     {
-        KColorCells::setColor (cell, color);
+        kpColorCellsBase::setColor (cell, color);
         setModified (true);
     }
 }
