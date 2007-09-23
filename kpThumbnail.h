@@ -30,7 +30,7 @@
 #define KP_THUMBNAIL_H
 
 
-#include <QDockWidget>
+#include <kpSubWindow.h>
 
 
 class QMoveEvent;
@@ -42,7 +42,7 @@ class kpThumbnailView;
 
 struct kpThumbnailPrivate;
 
-class kpThumbnail : public QDockWidget
+class kpThumbnail : public kpSubWindow
 {
 Q_OBJECT
 
@@ -63,6 +63,7 @@ protected slots:
 protected:
     virtual void resizeEvent (QResizeEvent *e);
     virtual void moveEvent (QMoveEvent *e);
+    virtual void closeEvent (QCloseEvent *e);
 
 signals:
     void windowClosed ();

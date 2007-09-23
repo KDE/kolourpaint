@@ -26,58 +26,15 @@
 */
 
 
-#ifndef kpDocumentSaveOptionsPreviewDialog_H
-#define kpDocumentSaveOptionsPreviewDialog_H
-
-
-#include <qsize.h>
-
 #include <kpSubWindow.h>
 
 
-class QCloseEvent;
-class QPixmap;
-class QLabel;
-class QMoveEvent;
-class QResizeEvent;
-
-class kpResizeSignallingLabel;
-
-
-class kpDocumentSaveOptionsPreviewDialog : public kpSubWindow
+kpSubWindow::kpSubWindow (QWidget *parent)
+    : QDialog (parent),
+      d (0)
 {
-Q_OBJECT
+}
 
-public:
-    kpDocumentSaveOptionsPreviewDialog (QWidget *parent);
-    virtual ~kpDocumentSaveOptionsPreviewDialog ();
-
-    QSize preferredMinimumSize () const;
-
-protected:
-    static const QSize s_pixmapLabelMinimumSize;
-
-signals:
-    void moved ();
-    void resized ();
-    void finished ();
-
-public slots:
-    void setFilePixmapAndSize (const QPixmap &filePixmap, qint64 fileSize);
-    void updatePixmapPreview ();
-
-protected:
-    virtual void closeEvent (QCloseEvent *e);
-    virtual void moveEvent (QMoveEvent *e);
-    virtual void resizeEvent (QResizeEvent *e);
-
-protected:
-    QPixmap *m_filePixmap;
-    qint64 m_fileSize;
-
-    kpResizeSignallingLabel *m_filePixmapLabel;
-    QLabel *m_fileSizeLabel;
-};
-
-
-#endif  // kpDocumentSaveOptionsPreviewDialog_H
+kpSubWindow::~kpSubWindow ()
+{
+}

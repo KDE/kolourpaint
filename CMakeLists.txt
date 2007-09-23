@@ -32,6 +32,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/environments/document
 ${CMAKE_CURRENT_SOURCE_DIR}/environments/tools
 ${CMAKE_CURRENT_SOURCE_DIR}/environments/tools/selection
 ${CMAKE_CURRENT_SOURCE_DIR}/generic
+${CMAKE_CURRENT_SOURCE_DIR}/generic/widgets
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/transforms
@@ -168,6 +169,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/environments/tools/kpToolEnvironment.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/environments/tools/selection/kpToolSelectionEnvironment.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/kpSetOverrideCursorSaver.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/kpWidgetMapper.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/generic/widgets/kpSubWindow.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectBalance.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectBlurSharpen.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectEmboss.cpp

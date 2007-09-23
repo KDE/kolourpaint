@@ -26,58 +26,36 @@
 */
 
 
-#ifndef kpDocumentSaveOptionsPreviewDialog_H
-#define kpDocumentSaveOptionsPreviewDialog_H
+#ifndef kpSubWindow_H
+#define kpSubWindow_H
 
 
-#include <qsize.h>
+#include <QDialog>
 
-#include <kpSubWindow.h>
-
-
-class QCloseEvent;
-class QPixmap;
-class QLabel;
-class QMoveEvent;
-class QResizeEvent;
-
-class kpResizeSignallingLabel;
-
-
-class kpDocumentSaveOptionsPreviewDialog : public kpSubWindow
+//
+// A tool window with the following properties, in order of importance:
+//
+// 1. Stays on top of its parent window, but not on top of any other
+//    window (this rules out Qt::WindowStaysOnTop)
+// 2. Does not auto-hide when its parent window loses focus
+//    (this rules out Qt::Tool).
+// 3. Does not have a taskbar entry.
+// 4. TODO: Does not take keyboard focus away from the parent window,
+//          when it is shown.
+// 5. TODO: Is not in the Alt+Tab list
+//
+// We mean "tool window" in the window system sense.  It has nothing to do
+// with kpTool so to avoid confusion, we do not name it "kpToolWindow".
+//
+class kpSubWindow : public QDialog
 {
-Q_OBJECT
-
 public:
-    kpDocumentSaveOptionsPreviewDialog (QWidget *parent);
-    virtual ~kpDocumentSaveOptionsPreviewDialog ();
+    kpSubWindow (QWidget *parent);
+    virtual ~kpSubWindow ();
 
-    QSize preferredMinimumSize () const;
-
-protected:
-    static const QSize s_pixmapLabelMinimumSize;
-
-signals:
-    void moved ();
-    void resized ();
-    void finished ();
-
-public slots:
-    void setFilePixmapAndSize (const QPixmap &filePixmap, qint64 fileSize);
-    void updatePixmapPreview ();
-
-protected:
-    virtual void closeEvent (QCloseEvent *e);
-    virtual void moveEvent (QMoveEvent *e);
-    virtual void resizeEvent (QResizeEvent *e);
-
-protected:
-    QPixmap *m_filePixmap;
-    qint64 m_fileSize;
-
-    kpResizeSignallingLabel *m_filePixmapLabel;
-    QLabel *m_fileSizeLabel;
+private:
+    struct kpSubWindowPrivate * const d;
 };
 
 
-#endif  // kpDocumentSaveOptionsPreviewDialog_H
+#endif  // kpSubWindow_H

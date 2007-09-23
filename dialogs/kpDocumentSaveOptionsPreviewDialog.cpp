@@ -56,11 +56,7 @@ const QSize kpDocumentSaveOptionsPreviewDialog::s_pixmapLabelMinimumSize (25, 25
 
 kpDocumentSaveOptionsPreviewDialog::kpDocumentSaveOptionsPreviewDialog (
     QWidget *parent )
-    : QWidget (parent,
-               Qt::WType_TopLevel |
-               Qt::WStyle_Customize |
-               Qt::WStyle_DialogBorder |
-               Qt::WStyle_Title),
+    : kpSubWindow (parent),
 #if 0
 KDialogBase (parent, name, false/*non-modal*/,
                    i18n ("Save Preview"),

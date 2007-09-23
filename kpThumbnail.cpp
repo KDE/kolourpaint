@@ -48,43 +48,21 @@ struct kpThumbnailPrivate
 {
     kpMainWindow *mainWindow;
     kpThumbnailView *view;
+    QHBoxLayout *lay;
 };
 
-// TODO: get out of the Alt+Tab list
-// TODO: Trolltech suggests using a "tool window" instead of a QDockWidget
-//       that is not allowed to dock :)  Would solve "float" button
-//       problem (below) too.
 kpThumbnail::kpThumbnail (kpMainWindow *parent)
-    : QDockWidget (parent),
+    : kpSubWindow (parent),
       d (new kpThumbnailPrivate ())
 {
     Q_ASSERT (parent);
 
     d->mainWindow = parent;
     d->view = 0;
+    d->lay = new QHBoxLayout (this);
 
 
     setMinimumSize (64, 64);
-
-
-    // Prevent us from docking to the mainWindow - it's _really_ irritating 
-    // otherwise.
-    setAllowedAreas (0);
-
-    // No "float" button (which looks more like a maximise button)
-    // since we don't allow docking.
-    // TODO: Not specifying QDockWidget::DockWidgetFloatable prevents the
-    //       thumbnail from begin moved.  We would rather have a useless
-    //       float button that duplicates the close button.
-    //setFeatures (QDockWidget::DockWidgetClosable |
-    //    QDockWidget::DockWidgetMovable);
-
-    // Float above mainWindow.
-    setFloating (true);
-
-
-    connect (toggleViewAction (), SIGNAL (toggled (bool)),
-        this, SIGNAL (windowClosed ()));
 
 
     updateCaption ();
@@ -120,7 +98,7 @@ void kpThumbnail::setView (kpThumbnailView *view)
         disconnect (d->view, SIGNAL (zoomLevelChanged (int, int)),
                     this, SLOT (updateCaption ()));
 
-        setWidget (0);
+        d->lay->removeWidget (d->view);
     }
 
     d->view = view;
@@ -132,7 +110,9 @@ void kpThumbnail::setView (kpThumbnailView *view)
         connect (d->view, SIGNAL (zoomLevelChanged (int, int)),
                  this, SLOT (updateCaption ()));
 
-        setWidget (d->view);
+        Q_ASSERT (d->view->parent () == this);
+        d->lay->addWidget (d->view, Qt::AlignCenter);
+        
         d->view->show ();
     }
     
@@ -167,7 +147,7 @@ void kpThumbnail::resizeEvent (QResizeEvent *e)
                << "," << height () << ")" << endl;
 #endif
 
-    QDockWidget::resizeEvent (e);
+    QWidget::resizeEvent (e);
 
     // updateVariableZoom ();  TODO: is below a good idea since this commented out?
 
@@ -187,5 +167,13 @@ void kpThumbnail::moveEvent (QMoveEvent * /*e*/)
         d->mainWindow->notifyThumbnailGeometryChanged ();
 }
 
+// protected virtual [base QWidget]
+void kpThumbnail::closeEvent (QCloseEvent *e)
+{
+    QWidget::closeEvent (e);
+
+    emit windowClosed ();
+}
+    
 
 #include <kpThumbnail.moc>

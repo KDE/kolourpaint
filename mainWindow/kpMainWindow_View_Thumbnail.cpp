@@ -67,6 +67,11 @@ void kpMainWindow::setupViewMenuThumbnailActions ()
 
     d->actionShowThumbnail = ac->add <KToggleAction> ("view_show_thumbnail");
     d->actionShowThumbnail->setText (i18n ("Show T&humbnail"));
+    // TODO: This doesn't work when the thumbnail has focus. 
+    //       Testcase: Press CTRL+H twice on a fresh KolourPaint.
+    //                 The second CTRL+H doesn't close the thumbnail.
+    //
+    //       KDE3: Problem in KDE3 as well.
     d->actionShowThumbnail->setShortcut (Qt::CTRL + Qt::Key_H);
     d->actionShowThumbnail->setCheckedState (KGuiItem(i18n ("Hide T&humbnail")));
     connect (d->actionShowThumbnail, SIGNAL (triggered (bool)),
@@ -312,7 +317,7 @@ void kpMainWindow::createThumbnailView ()
             d->document, d->toolToolBar, d->viewManager,
             d->mainView,
             0/*scrollableContainer*/,
-            d->thumbnail );
+            d->thumbnail);
         d->thumbnailView->setObjectName ("thumbnailView");
     }
     else
