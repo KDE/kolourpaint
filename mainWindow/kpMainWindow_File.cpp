@@ -1439,7 +1439,9 @@ void kpMainWindow::setAsWallpaper (bool centered)
         KMessageBox::sorry (this, i18n ("Could not change wallpaper."));
     }
 #else
+#ifdef __GNUC__
     #warning "Setting wallpaper not implemented in non-X11"
+#endif
 #endif
 }
 

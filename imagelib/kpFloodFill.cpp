@@ -46,8 +46,9 @@
 #include <kpTool.h>
 
 
-struct kpFillLine
+class kpFillLine
 {
+public:
     kpFillLine (int y = -1, int x1 = -1, int x2 = -1)
         : m_y (y), m_x1 (x1), m_x2 (x2)
     {

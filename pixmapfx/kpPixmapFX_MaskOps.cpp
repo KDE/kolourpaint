@@ -62,7 +62,11 @@
 
 
 #if DEBUG_KP_PIXMAP_FX
+#ifdef Q_CC_MSVC
+    #define KP_PRINTF
+#else
     #define KP_PRINTF(x...) fprintf (stderr, x)
+#endif
 #else
     #define KP_PRINTF(x...)
 #endif
@@ -158,8 +162,10 @@ void kpPixmapFX::initMaskOpsPre ()
         setenv ("QT_X11_NO_XRENDER", "1", 1/*overwrite value*/);
     }
 #else
+#ifdef __GNUC__
     #warning "KolourPaint is heavily dependent on the behavior of QPixmap under X11."
     #warning "Until KolourPaint gets a proper image library, it is unlikely to work under non-X11."
+#endif
 #endif
 }
 

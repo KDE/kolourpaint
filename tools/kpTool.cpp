@@ -64,6 +64,7 @@
 #include <kpToolToolBar.h>
 #include <kpView.h>
 #include <kpViewManager.h>
+#undef environ  // macro on win32
 
 
 kpTool::kpTool (const QString &text, const QString &description,

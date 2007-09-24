@@ -34,7 +34,10 @@
 #include <QPointer>
 
 #include <QSize>
-
+#ifdef Q_OS_WIN
+  #include <stdlib.h>
+  #undef environ  // macro on win32
+#endif
 
 class kpToolAction;
 class kpToolEnvironment;

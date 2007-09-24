@@ -38,7 +38,7 @@
 
 #include <kpImage.h>
 #include <kpPixmapFX.h>
-
+#undef environ
 
 class QImage;
 class QIODevice;

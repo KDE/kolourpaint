@@ -31,6 +31,7 @@
 
 
 #include <kpCommandSize.h>
+#undef environ  // macro on win32
 
 
 class QString;

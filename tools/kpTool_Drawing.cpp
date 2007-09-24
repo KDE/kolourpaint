@@ -64,6 +64,7 @@
 #include <kpView.h>
 #include <kpViewManager.h>
 #include <kactioncollection.h>
+#undef environ  // macro on win32
 
 
 // protected
