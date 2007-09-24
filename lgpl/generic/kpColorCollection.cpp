@@ -209,8 +209,15 @@ static void CouldNotOpenKDEDialog (const QString &name, QWidget *parent)
 bool
 kpColorCollection::openKDE(const QString &name, QWidget *parent)
 {
+#if DEBUG_KP_COLOR_COLLECTION
+  kDebug () << "name=" << name;
+#endif
+
   if (name.isEmpty())
   {
+  #if DEBUG_KP_COLOR_COLLECTION
+    kDebug () << "name.isEmpty";
+  #endif
     ::CouldNotOpenKDEDialog (name, parent);
     return false;
   }
@@ -218,15 +225,26 @@ kpColorCollection::openKDE(const QString &name, QWidget *parent)
   QString filename = KStandardDirs::locate("config", "colors/"+name);
   if (filename.isEmpty())
   {
+  #if DEBUG_KP_COLOR_COLLECTION
+    kDebug () << "could not find file";
+  #endif
     ::CouldNotOpenKDEDialog (name, parent);
     return false;
   }
 
   // (this will pop up an error dialog on failure)
   if (!open (KUrl (filename), parent))
+  {
+  #if DEBUG_KP_COLOR_COLLECTION
+    kDebug () << "could not open";
+  #endif
     return false;
+  }
 
   d->name = name;
+#if DEBUG_KP_COLOR_COLLECTION
+  kDebug () << "opened";
+#endif
   return true;
 }
 
