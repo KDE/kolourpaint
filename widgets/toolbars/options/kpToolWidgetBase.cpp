@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_WIDGET_BASE 1
+#define DEBUG_KP_TOOL_WIDGET_BASE 0
 
 
 #include <kpToolWidgetBase.h>
