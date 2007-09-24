@@ -34,6 +34,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
 #include <qapplication.h>
@@ -138,6 +139,12 @@ static int QPixmapCalculateDefaultDepthWithoutQApplication ()
         KP_PRINTF ("Parent: read default depth %d\n", depth);
 
         close (fds [Read]);
+
+        // Kill zombie child.
+        KP_PRINTF ("Parent: waiting for child\n");
+        int status;
+        (void) waitpid (pid, &status, 0/*options*/);
+
         KP_PRINTF ("Parent: complete\n");
         return depth;
     }
