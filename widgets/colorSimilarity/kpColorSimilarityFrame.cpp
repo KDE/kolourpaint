@@ -93,19 +93,13 @@ void kpColorSimilarityFrame::paintEvent (QPaintEvent *e)
     QFrame::paintEvent (e);
 
 
-    QPainter painter (this);
-
-
-    painter.fillRect (contentsRect (), palette().color (QPalette::Background));
-
-
     int cubeRectSize = qMin (contentsRect ().width () * 6 / 8,
                              contentsRect ().height () * 6 / 8);
-    int dx = (contentsRect ().width () - cubeRectSize) / 2,
-        dy = (contentsRect ().height () - cubeRectSize) / 2;
-    painter.translate (contentsRect ().x () + dx, contentsRect ().y () + dy);
+    int x = contentsRect ().x () + (contentsRect ().width () - cubeRectSize) / 2,
+        y = contentsRect ().y () + (contentsRect ().height () - cubeRectSize) / 2;
 
 
-    kpColorSimilarityCubeRenderer::Paint (&painter, cubeRectSize,
+    kpColorSimilarityCubeRenderer::WidgetPaint (this,
+        x, y, cubeRectSize,
         colorSimilarity ());
 }
