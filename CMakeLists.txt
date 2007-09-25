@@ -43,6 +43,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/layers/selections/text
 ${CMAKE_CURRENT_SOURCE_DIR}/layers/tempImage
 ${CMAKE_CURRENT_SOURCE_DIR}/lgpl
 ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic
+${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/widgets
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx
 ${CMAKE_CURRENT_SOURCE_DIR}/tools
@@ -320,8 +321,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/options/kpToolWidgetSpraycanSize.cp
 
 set(kolourpaint_lgpl_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/kpUrlFormatter.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/kpColorCellsBase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/kpColorCollection.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/widgets/kpColorCellsBase.cpp
     )
 
 
