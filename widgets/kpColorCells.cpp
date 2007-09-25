@@ -171,7 +171,7 @@ kpColorCells::kpColorCells (QWidget *parent,
         // any cells or require the addition of a horizontal scrollbar, which would
         // look ugly and take even more precious room.
         //
-        // We do not dyamically reserve room based on the actual number of rows
+        // We do not dynamically reserve room based on the actual number of rows
         // of cells, as that would make our containing widgets too big.
         setMinimumSize (::TableDefaultWidth + frameWidth () * 2 + scrollBarAdjust,
                         ::TableDefaultHeight + frameWidth () * 2);
