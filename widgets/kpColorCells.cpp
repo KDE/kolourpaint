@@ -137,8 +137,6 @@ kpColorCells::kpColorCells (QWidget *parent,
 
     setShading (false);  // no 3D look
 
-    // Trap KColorDrag so that kpMainWindow does not trap it.
-    // See our impl of dropEvent().
     setAcceptDrops (true);
     setAcceptDrags (true);
 

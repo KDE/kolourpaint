@@ -870,6 +870,8 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         pasteWarnAboutLossInfo ());
     if (sel)
     {
+        // TODO: How do you actually drop a selection or ordinary images on
+        //       the clipboard)?  Will this code path _ever_ execute?
         sel->setTransparency (imageSelectionTransparency ());
         // TODO: drop at point like with QTextDrag below?
         paste (*sel);
