@@ -526,6 +526,16 @@ void kpColorCells::slotColorDoubleClicked (int cell, const QColor &)
 
     QColor color = kpColorCellsBase::color (cell);
 
+    // TODO: If you double-click on an invalid color and press OK, you get
+    //       white, instead of the color staying as invalid.
+    //
+    //       We should modify or fork KColorDialog to fix this.
+    //
+    //       It would be wrong to stop the user from double-clicking on an
+    //       invalid color as that would make it more difficult to initialize
+    //       the cell with a color (s/he would only be left with drag-and-drop).
+    //
+    // sync: see also kpDualColorButton::mouseDoubleClickEvent().
     if (KColorDialog::getColor (color/*ref*/, this))
     {
         setColor (cell, color);

@@ -251,12 +251,27 @@ void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
 
     if (whichColor == 0 || whichColor == 1)
     {
-        QColor col = Qt::black;
+        QColor col;
+
         if (color (whichColor).isOpaque ())
             col = color (whichColor).toQColor ();
+        else
+        {
+            // TODO: If you double-click on a transparent color and press OK, you get
+            //       white, instead of the color staying as invalid.
+            //
+            //       We should modify or fork KColorDialog to fix this.
+            //
+            //       It would be wrong to stop the user from double-clicking on a
+            //       transparent color as that would make the UI inconsistent, compared
+            //       to opaque colors.
+            //
+            // sync: see also kpColorCells::slotColorDoubleClicked().
+            //
+            // KDE3: Problem in KDE3 as well.
+        }
 
-        // TODO: parent
-        if (KColorDialog::getColor (col/*ref*/))
+        if (KColorDialog::getColor (col/*ref*/, this))
             setColor (whichColor, kpColor (col.rgb ()));
     }
 }
