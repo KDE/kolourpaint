@@ -244,6 +244,8 @@ void kpColorCellsBase::setColor( int column, const QColor &color )
 
 void kpColorCellsBase::changeEvent( QEvent* event )
 {
+    QTableWidget::changeEvent (event);
+
     if (event->type () != QEvent::EnabledChange)
         return;
         
@@ -461,6 +463,7 @@ void kpColorCellsBase::dropEvent( QDropEvent *event)
      #if DEBUG_KP_COLOR_CELLS_BASE
           kDebug () << "\tcell=" << cell;
      #endif
+          // TODO: I believe kdelibs forgets to do this.
           if (cell == -1)
               return;
 
