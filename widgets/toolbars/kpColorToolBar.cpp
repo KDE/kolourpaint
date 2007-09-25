@@ -102,7 +102,7 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
     QWidget *base = new QWidget (this);
     m_boxLayout = new QBoxLayout (QBoxLayout::LeftToRight, base);
     m_boxLayout->setMargin (5);
-    m_boxLayout->setSpacing (10 * 4);
+    m_boxLayout->setSpacing (10 * 3);
 
     m_dualColorButton = new kpDualColorButton (base);
     connect (m_dualColorButton, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
