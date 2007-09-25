@@ -204,6 +204,8 @@ struct kpMainWindowPrivate
     // Colors Menu
     //
 
+    bool colorMenuDocumentActionsEnabled;
+
     QAction *actionColorsDefault;
     KSelectAction *actionColorsKDE;
     QAction *actionColorsOpen, *actionColorsReload;

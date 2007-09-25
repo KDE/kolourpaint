@@ -36,6 +36,7 @@
 #include <qdatetime.h>
 #include <qevent.h>
 #include <qgridlayout.h>
+#include <QLabel>
 #include <qlayout.h>
 #include <qtoolbutton.h>
 
@@ -104,6 +105,10 @@ kpToolToolBar::kpToolToolBar (const QString &label, int colsOrRows, QWidget *par
       m_defaultIconSize (0)
 {
     setWindowTitle (label);
+
+    // Disable title when it's docked.
+    // TODO: This currently disables the title even when it's not docked.
+    setTitleBarWidget (new QLabel (this));
 
 
     // With these lines enabled, mousePressEvent's weren't being generated

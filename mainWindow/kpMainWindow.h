@@ -152,9 +152,9 @@ private slots:
     void slotDocumentRestored ();
 
 
-    //
-    // Tools
-    //
+//
+// Tools
+//
 
 private:
     kpToolSelectionEnvironment *toolSelectionEnvironment ();
@@ -285,9 +285,9 @@ public slots:
     void slotToolZoom ();
 
 
-    //
-    // File Menu
-    //
+//
+// File Menu
+//
 
 private:
     void setupFileMenuActions ();
@@ -384,9 +384,9 @@ private slots:
     void slotQuit ();
 
 
-    //
-    // Edit Menu
-    //
+//
+// Edit Menu
+//
 
 private:
     kpPixmapFX::WarnAboutLossInfo pasteWarnAboutLossInfo ();
@@ -434,9 +434,9 @@ private slots:
     void slotPasteFromFile ();
 
 
-    //
-    // View Menu
-    //
+//
+// View Menu
+//
 
 private:
     void setupViewMenuActions ();
@@ -456,9 +456,9 @@ private:
     QRect mapFromGlobal (const QRect &rect) const;
 
 
-    //
-    // View Menu - Zoom
-    //
+//
+// View Menu - Zoom
+//
 
 private:
     void setupViewMenuZoomActions ();
@@ -495,9 +495,9 @@ private slots:
     void slotZoom ();
 
 
-    //
-    // View Menu - Thumbnail
-    //
+//
+// View Menu - Thumbnail
+//
 
 private:
     void setupViewMenuThumbnailActions ();
@@ -527,9 +527,9 @@ private:
     void updateThumbnail ();
 
 
-    //
-    // Image Menu
-    //
+//
+// Image Menu
+//
 
 private:
     kpTransformDialogEnvironment *transformDialogEnvironment ();
@@ -571,19 +571,23 @@ private slots:
     void slotMoreEffects ();
 
 
-    //
-    // Colors Menu
-    //
+//
+// Colors Menu
+//
 
 private:
     void setupColorsMenuActions ();
     void enableColorsMenuDocumentActions (bool enable);
+private slots:
+    void slotUpdateColorsDeleteRowActionEnabled ();
 
 private:
     void deselectActionColorsKDE ();
 
     bool queryCloseColors ();
 
+private:
+    void openDefaultColors ();
 private slots:
     void slotColorsDefault ();
 
@@ -606,9 +610,9 @@ private slots:
     void slotColorsDeleteRow ();
 
 
-    //
-    // Settings Menu
-    //
+//
+// Settings Menu
+//
 
 private:
     void setupSettingsMenuActions ();
@@ -628,9 +632,9 @@ private slots:
     void slotConfigure ();
 
 
-    //
-    // Status Bar
-    //
+//
+// Status Bar
+//
 
 private:
     enum
@@ -661,9 +665,9 @@ private slots:
     void recalculateStatusBar ();
 
 
-    //
-    // Text ToolBar
-    //
+//
+// Text ToolBar
+//
 
 private:
     void setupTextToolBarActions ();
@@ -688,9 +692,10 @@ public:
     int settingTextStyle () const;
 
 
-    //
-    // Help Menu
-    //
+//
+// Help Menu
+//
+
 private:
     void setupHelpMenuActions ();
     void enableHelpMenuDocumentActions (bool enable = true);

@@ -114,7 +114,22 @@ void kpMainWindow::enableColorsMenuDocumentActions (bool enable)
     d->actionColorsSaveAs->setEnabled (enable);
 
     d->actionColorsAppendRow->setEnabled (enable);
-    d->actionColorsDeleteRow->setEnabled (enable);
+
+    d->colorMenuDocumentActionsEnabled = enable;
+
+    slotUpdateColorsDeleteRowActionEnabled ();
+}
+
+// private slot
+void kpMainWindow::slotUpdateColorsDeleteRowActionEnabled ()
+{
+    // Currently, this is always enabled since kpColorCells guarantees that
+    // there will be at least one row of cells (which might all be of the
+    // invalid color).
+    //
+    // But this method is left here for future extensibility.
+    d->actionColorsDeleteRow->setEnabled (
+        d->colorMenuDocumentActionsEnabled && (colorCells ()->rowCount () > 0));
 }
 
 
@@ -184,6 +199,12 @@ bool kpMainWindow::queryCloseColors ()
 }
 
 
+// private
+void kpMainWindow::openDefaultColors ()
+{
+    colorCells ()->setColorCollection (
+        kpColorCells::DefaultColorCollection ());
+}
 
 // private slot
 void kpMainWindow::slotColorsDefault ()
@@ -194,8 +215,7 @@ void kpMainWindow::slotColorsDefault ()
     if (!queryCloseColors ())
         return;
 
-    colorCells ()->setColorCollection (
-        kpColorCells::DefaultColorCollection ());
+    openDefaultColors ();
 
     deselectActionColorsKDE ();
 }
@@ -203,14 +223,24 @@ void kpMainWindow::slotColorsDefault ()
 // private
 bool kpMainWindow::openKDEColors (const QString &name)
 {
+#if DEBUG_KP_MAIN_WINDOW || 1
+    kDebug () << "kpMainWindow::openKDEColors(" << name << ")";
+#endif
+
     kpColorCollection colorCol;
     if (colorCol.openKDE (name, this))
     {
+    #if DEBUG_KP_MAIN_WINDOW || 1
+        kDebug () << "opened";
+    #endif
         colorCells ()->setColorCollection (colorCol);
         return true;
     }
     else
     {
+    #if DEBUG_KP_MAIN_WINDOW || 1
+        kDebug () << "failed to open";
+    #endif
         return false;
     }
 }
@@ -298,7 +328,7 @@ void kpMainWindow::slotColorsReload ()
             }
             else
             {
-                result = KMessageBox::warningYesNoCancel (this,
+                result = KMessageBox::warningContinueCancel (this,
                     i18n ("The default color palette has been modified.\n"
                           "Reloading will lose all changes.\n"
                           "Are you sure?"),
@@ -307,6 +337,10 @@ void kpMainWindow::slotColorsReload ()
             }
         }
 
+    #if DEBUG_KP_MAIN_WINDOW || 1
+        kDebug () << "result=" << result
+                  << "vs KMessageBox::Continue" << KMessageBox::Continue;
+    #endif
         if (result != KMessageBox::Continue)
             return;
     }
@@ -318,7 +352,11 @@ void kpMainWindow::slotColorsReload ()
     }
     else
     {
-        openKDEColors (colorCells ()->colorCollection ()->name ());
+        const QString name = colorCells ()->colorCollection ()->name ();
+        if (!name.isEmpty ())
+            openKDEColors (name);
+        else
+            openDefaultColors ();
     }
 }
 

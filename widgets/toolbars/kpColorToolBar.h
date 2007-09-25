@@ -88,6 +88,8 @@ signals:
     void backgroundColorChanged (const kpColor &color);
     void colorSimilarityChanged (double similarity, int processedSimilarity);
 
+    void reloadColorsButtonClicked ();
+
 public:
     // (only valid in slots connected to foregroundColorChanged())
     kpColor oldForegroundColor () const;
@@ -101,6 +103,9 @@ public slots:
     void setForegroundColor (const kpColor &color);
     void setBackgroundColor (const kpColor &color);
 
+private slots:
+    void updateTitleLabel ();
+
 private:
     void adjustToOrientation (Qt::Orientation o);
 
@@ -108,6 +113,8 @@ private:
     kpDualColorButton *m_dualColorButton;
     kpColorPalette *m_colorPalette;
     kpColorSimilarityToolBarItem *m_colorSimilarityToolBarItem;
+
+    struct kpColorToolBarPrivate * const d;
 };
 
 

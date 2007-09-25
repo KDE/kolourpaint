@@ -45,6 +45,7 @@
 
 #include <kpAbstractImageSelection.h>
 #include <kpCommandEnvironment.h>
+#include <kpColorCells.h>
 #include <kpColorToolBar.h>
 #include <kpCommandHistory.h>
 #include <kpDefs.h>
@@ -268,6 +269,11 @@ void kpMainWindow::init ()
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tTIME: new kpColorToolBar = " << time.restart () << "msec";
 #endif
+    connect (d->colorToolBar, SIGNAL (reloadColorsButtonClicked ()),
+        SLOT (slotColorsReload ()));
+    connect (colorCells (), SIGNAL (rowCountChanged (int)),
+        SLOT (slotUpdateColorsDeleteRowActionEnabled ()));
+
 
     createToolBox ();
 #if DEBUG_KP_MAIN_WINDOW
@@ -287,11 +293,9 @@ void kpMainWindow::init ()
     //       Must be called before setAutoSaveSettings() or there are
     //       massive redraw errors (don't know why).
     addDockWidget (Qt::LeftDockWidgetArea, d->toolToolBar, Qt::Vertical);
-    d->toolToolBar->setTitleBarWidget (new QLabel (d->toolToolBar));
     d->toolToolBar->setFeatures (QDockWidget::NoDockWidgetFeatures);
 
     addDockWidget (Qt::BottomDockWidgetArea, d->colorToolBar, Qt::Horizontal);
-    d->colorToolBar->setTitleBarWidget (new QLabel (d->toolToolBar));
     d->colorToolBar->setFeatures (QDockWidget::NoDockWidgetFeatures);
 
 

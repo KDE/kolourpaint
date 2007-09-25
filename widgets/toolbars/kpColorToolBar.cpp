@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_COLOR_TOOL_BAR 0
+#define DEBUG_KP_COLOR_TOOL_BAR 1
 
 
 #include <kpColorToolBar.h>
@@ -35,9 +35,11 @@
 #include <qboxlayout.h>
 #include <qdrawutil.h>
 #include <qevent.h>
+#include <QLabel>
 #include <qlayout.h>
 #include <qpainter.h>
 #include <qpixmap.h>
+#include <QPushButton>
 #include <qsize.h>
 
 #include <qwidget.h>
@@ -50,6 +52,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 
+#include <kpColorCells.h>
 #include <kpColorPalette.h>
 #include <kpColorSimilarityToolBarItem.h>
 #include <kpDefs.h>
@@ -59,10 +62,41 @@
 #include <kpView.h>
 
 
+struct kpColorToolBarPrivate
+{
+    QPushButton *titlePushButton;
+    QWidget *titleBarWidget;
+};
+
 kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
-    : QDockWidget (parent)
+    : QDockWidget (parent),
+      d (new kpColorToolBarPrivate ())
 {
     setWindowTitle (label);
+
+    d->titleBarWidget = new QWidget (this);
+    d->titlePushButton = new QPushButton (i18n ("Reload Colors"), d->titleBarWidget);
+    connect (d->titlePushButton, SIGNAL (clicked ()),
+             SIGNAL (reloadColorsButtonClicked ()));
+
+    const int h = d->titlePushButton->sizeHint ().height ();
+#if DEBUG_KP_COLOR_TOOL_BAR
+    kDebug () << "titlePushButton sizeHint=" << d->titlePushButton->sizeHint ();
+#endif
+
+    QHBoxLayout *titleBarLay = new QHBoxLayout (d->titleBarWidget);
+    titleBarLay->addItem (
+        new QSpacerItem (1, h, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    titleBarLay->addWidget (d->titlePushButton);
+    titleBarLay->addItem (
+        new QSpacerItem (1, h, QSizePolicy::Expanding, QSizePolicy::Minimum));
+
+    d->titlePushButton->hide ();
+
+    // Disable title when it's docked.
+    // sync: updateTitleLabel()
+    // TODO: This currently disables the title even when it's not docked.
+    setTitleBarWidget (d->titleBarWidget);
 
 
     QWidget *base = new QWidget (this);
@@ -84,6 +118,11 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
              m_dualColorButton, SLOT (setForegroundColor (const kpColor &)));
     connect (m_colorPalette, SIGNAL (backgroundColorChanged (const kpColor &)),
              m_dualColorButton, SLOT (setBackgroundColor (const kpColor &)));
+    
+    connect (m_colorPalette, SIGNAL (colorCellsIsModifiedChanged (bool)),
+             SLOT (updateTitleLabel ()));
+    updateTitleLabel ();
+
     m_boxLayout->addWidget (m_colorPalette, 0/*stretch*/);
 
     m_colorSimilarityToolBarItem = new kpColorSimilarityToolBarItem (base);
@@ -126,6 +165,7 @@ void kpColorToolBar::adjustToOrientation (Qt::Orientation o)
 
 kpColorToolBar::~kpColorToolBar ()
 {
+    delete d;
 }
 
 
@@ -219,6 +259,44 @@ void kpColorToolBar::openColorSimilarityDialog ()
 void kpColorToolBar::flashColorSimilarityToolBarItem ()
 {
     m_colorSimilarityToolBarItem->flash ();
+}
+
+
+static QString RemoveAmpersands (const QString &textIn)
+{
+    QString text = textIn;
+    text.remove (QRegExp ("&"));
+    return text;
+}
+
+// private slot
+void kpColorToolBar::updateTitleLabel ()
+{
+#if DEBUG_KP_COLOR_TOOL_BAR
+    kDebug () << "titlePushButton sizeHint=" << d->titlePushButton->sizeHint ();
+#endif
+
+    if (!m_colorPalette->colorCells ()->isModified ())
+        d->titlePushButton->hide ();
+        //d->titleLabel->clear ();
+    else
+    {
+        d->titlePushButton->show ();
+
+
+#if 0
+        d->titleLabel->setText (
+            ki18nc ("\"color palette [modified]\","
+                        " like \"file.txt [modified]\" in a window caption",
+                    "%1 [modified]")
+                .subs (::RemoveAmpersands (windowTitle ()))
+                .toString ());
+#endif
+    }
+
+#if DEBUG_KP_COLOR_TOOL_BAR
+    kDebug () << "titlePushButton sizeHint=" << d->titlePushButton->sizeHint ();
+#endif
 }
 
 
