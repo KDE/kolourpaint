@@ -40,6 +40,12 @@
 * So it is possible to have "holes" in this rectangular table of cells.
 * You can delete a cell widget by calling setColor() with an invalid QColor.
 *
+* An invariant is that color() returns an invalid color iff the cells' widget
+* does not exist.  Note that:
+*
+* 1. You can double click on cells that don't contain a widget
+* 2. You can drop onto -- but not drag a -- cell that doesn't contain a widget
+*
 * If a color is dragged and dropped to-and-from the same instance of this
 * widget, then the colors in the source and destination cells are swapped
 * (this is a "move action").

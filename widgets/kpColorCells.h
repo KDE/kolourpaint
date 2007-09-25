@@ -41,7 +41,18 @@ class kpColorCollection;
 
 class kpColor;
 
-
+// Cell widgets might not exist for 2 reasons:
+//
+// 1. The respective colors in the color collection are invalid.
+//    An easy way to create this situation is to appendRow().
+//
+// 2. The number of colors in the color collection is not divisible by
+//    the columnCount() [currently fixed at 11], so some cells in the
+//    last row might not be linked to colors in the color collection.
+//
+// Currently, this class always ensures that there is at least one
+// visual/table row (which might contain no cell widgets).
+//
 // TODO: For now, only horizontal orientation is supported.
 class kpColorCells : public kpColorCellsBase
 {
@@ -84,6 +95,21 @@ public:
     bool saveColorCollectionAs (const KUrl &url);
     bool saveColorCollection ();
 
+    // These add and delete visual/table rows, independent of whether the number
+    // of colors in the color collection is divisible by the columnCount()
+    // [currently fixed at 11].
+    //
+    // For instance, if you only had 15 colors in the color collection, there are
+    // visually 2 rows (22 cells in total):
+    //
+    // 1. appendRow() will add a visual row so that there will be 3 visual rows
+    //    (33 cells in total).  (22 - 15) + 11 invalid colors will be added to
+    //    the back of the color collection.  Note that invalid colors are not
+    //    saved by kpColorCollection, so those new cells not initialized by the
+    //    user will not be saved.
+    // 2. deleteRow() will delete a visual row so that there will be 1 visual
+    //    row (11 cells in total) remaining.  (15 - 11) colors will be deleted
+    //    from the back of the color collection.
     void appendRow ();
     void deleteLastRow ();
 
