@@ -53,6 +53,8 @@ class kpColor;
 // Currently, this class always ensures that there is at least one
 // visual/table row (which might contain no cell widgets).
 //
+// See also the API documentation for kpColorCellsBase.
+//
 // TODO: For now, only horizontal orientation is supported.
 class kpColorCells : public kpColorCellsBase
 {
