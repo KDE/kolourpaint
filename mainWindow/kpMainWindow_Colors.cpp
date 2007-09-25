@@ -392,9 +392,11 @@ bool kpMainWindow::slotColorsSaveAs ()
 
         // We're definitely using our own color collection now.
         deselectActionColorsKDE ();
-    }
 
-    return true;
+        return true;
+    }
+    else
+        return false;
 }
 
 
