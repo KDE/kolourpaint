@@ -5,7 +5,7 @@
 //
 //       which this is a fork of.
 //
-//       Our changes can be merged back into KDE (grep for "Added for KolourPaint").
+//       Our changes can be merged back into KDE (grep for "Added for KolourPaint" and similar).
 
 /* This file is part of the KDE libraries
     Copyright (C) 1999 Waldo Bastian (bastian@kde.org)
@@ -162,6 +162,15 @@ public:
     * @return the number of colors
     **/
    int count() const;
+
+   /**
+    * Adds invalid colors or removes colors so that there will be @p amount
+    * colors in the color collection.
+    * @param target number of colors
+    *
+    * Added for KolourPaint.
+    */
+   void resize(int amount);
 
    /**
     * Find color by index.

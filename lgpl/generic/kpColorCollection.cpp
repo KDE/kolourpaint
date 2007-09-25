@@ -267,6 +267,10 @@ static void SaveToFile (kpColorCollectionPrivate *d, QIODevice *device)
    str << description << "\n";
    foreach (const ColorNode &node, d->colorList)
    {
+       // Added for KolourPaint.
+       if(node.color.isValid ())
+           continue;
+
        int r,g,b;
        node.color.getRgb(&r, &g, &b);
        str << r << " " << g << " " << b << " " << node.name << "\n";
@@ -425,6 +429,24 @@ void kpColorCollection::setEditable(Editable editable)
 int kpColorCollection::count() const
 {
     return (int) d->colorList.count();
+}
+
+void kpColorCollection::resize(int amount)
+{
+    if (amount == count())
+        return;
+    else if (amount < count())
+    {
+        d->colorList.erase(d->colorList.begin() + amount, d->colorList.end());
+    }
+    else if (amount > count())
+    {
+         while(amount > count())
+         {
+             const int ret = addColor(QColor(), QString()/*color name*/);
+             Q_ASSERT(ret == count() - 1);
+         }
+    }
 }
 
 kpColorCollection&
