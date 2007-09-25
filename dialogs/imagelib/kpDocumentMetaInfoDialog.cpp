@@ -46,28 +46,9 @@
 #include <KMessageBox>
 #include <KVBox>
 
+#include <kpBug.h>
 #include <kpDefs.h>
 #include <kpDocumentMetaInfo.h>
-
-
-// COMPAT: I think this is needed due to a Qt/KDE4 regression.
-//         Maybe move into kpBug class and use everywhere in KolourPaint?
-static void RecursiveAddWhatsThis (QWidget *w, const QString &str)
-{
-#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
-    kDebug () << "RecursiveAddWhatsThis(" << w << ",'" << str << "')";
-#endif
-
-    w->setWhatsThis (str);
-
-    foreach (QWidget *child, w->findChildren <QWidget *> ())
-    {
-    #if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
-        kDebug () << "\tChild: " << child;
-    #endif
-        child->setWhatsThis (str);
-    }
-}
 
 
 struct kpDocumentMetaInfoDialogPrivate
@@ -199,7 +180,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     // Call this _after_ we've constructed all the child widgets.
     // Of course, this will not work if any of our child widgets are clever
     // and create more widgets at runtime.
-    ::RecursiveAddWhatsThis (dpiGroupBox,
+    kpBug::QWidget_SetWhatsThis (dpiGroupBox,
         i18n (
             "<qt>"
             "<p><b>Dots Per Inch</b> (DPI) specifies the number of pixels"
@@ -266,7 +247,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     // Call this _after_ we've constructed all the child widgets.
     // Of course, this will not work if any of our child widgets are clever
     // and create more widgets at runtime.
-    ::RecursiveAddWhatsThis (offsetGroupBox,
+    kpBug::QWidget_SetWhatsThis (offsetGroupBox,
         i18n (
             "<qt>"
             "<p>The <b>Offset</b> is the relative position where this image"
@@ -335,7 +316,8 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     // Call this _after_ we've constructed all the child widgets.
     // Of course, this will not work if any of our child widgets are clever
     // and create more widgets at runtime.
-    ::RecursiveAddWhatsThis (fieldsGroupBox,
+    // TODO: Seems this is not working well on d->fieldsTableWidget.
+    kpBug::QWidget_SetWhatsThis (fieldsGroupBox,
         i18n (
             "<qt>"
             "<p><b>Text Fields</b> provide extra information about the image."

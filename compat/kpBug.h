@@ -33,6 +33,8 @@
 class QAbstractButton;
 class QButtonGroup;
 class QRect;
+class QString;
+class QWidget;
 
 
 /**
@@ -87,6 +89,22 @@ public:
     // QRect_Normalized() will use the Qt3 behaviour and therefore, work for
     // all input.
     static QRect QRect_Normalized (const QRect &rect);
+
+    // QWidget::setWhatsThis() for a widget does not allow its child widgets
+    // to present that former widget's "what's this" text.
+    //
+    // Probably due to a regression in kdelibs/kdeui/util/kwhatsthismanager.cpp.
+    //
+    //
+    // QWidget_SetWhatsThis() works around this bug by setting the "what's this"
+    // for all of <w>'s children, grandchildren, great-grandchildren etc.
+    //
+    // Call this _after_ you've constructed all the child widgets of <w>.
+    // If more child widgets are later constructed, call this again on <w>.
+    //
+    // If you later reparent a child away from <w>, you would probably want to
+    // unset the "what's this" on that child.
+    static void QWidget_SetWhatsThis (QWidget *w, const QString &text);
 };
 
 
