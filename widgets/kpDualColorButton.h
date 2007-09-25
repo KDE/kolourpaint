@@ -89,8 +89,8 @@ protected:
     virtual void dragMoveEvent (QDragMoveEvent *e);
     virtual void dropEvent (QDropEvent *e);
 
-    virtual void mouseDoubleClickEvent (QMouseEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
+    virtual void mouseDoubleClickEvent (QMouseEvent *e);
 
     virtual void paintEvent (QPaintEvent *e);
 

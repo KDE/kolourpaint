@@ -216,28 +216,6 @@ void kpDualColorButton::dropEvent (QDropEvent *e)
 
 
 // protected virtual [base QWidget]
-void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
-{
-    int whichColor = -1;
-
-    if (foregroundRect ().contains (e->pos ()))
-        whichColor = 0;
-    else if (backgroundRect ().contains (e->pos ()))
-        whichColor = 1;
-
-    if (whichColor == 0 || whichColor == 1)
-    {
-        QColor col = Qt::black;
-        if (color (whichColor).isOpaque ())
-            col = color (whichColor).toQColor ();
-
-        // TODO: parent
-        if (KColorDialog::getColor (col/*ref*/))
-            setColor (whichColor, kpColor (col.rgb ()));
-    }
-}
-
-// protected virtual [base QWidget]
 void kpDualColorButton::mouseReleaseEvent (QMouseEvent *e)
 {
     if (swapPixmapRect ().contains (e->pos ()) &&
@@ -258,6 +236,28 @@ void kpDualColorButton::mouseReleaseEvent (QMouseEvent *e)
         emit colorsSwapped (m_color [0], m_color [1]);
         emit foregroundColorChanged (m_color [0]);
         emit backgroundColorChanged (m_color [1]);
+    }
+}
+
+// protected virtual [base QWidget]
+void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
+{
+    int whichColor = -1;
+
+    if (foregroundRect ().contains (e->pos ()))
+        whichColor = 0;
+    else if (backgroundRect ().contains (e->pos ()))
+        whichColor = 1;
+
+    if (whichColor == 0 || whichColor == 1)
+    {
+        QColor col = Qt::black;
+        if (color (whichColor).isOpaque ())
+            col = color (whichColor).toQColor ();
+
+        // TODO: parent
+        if (KColorDialog::getColor (col/*ref*/))
+            setColor (whichColor, kpColor (col.rgb ()));
     }
 }
 
