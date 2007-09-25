@@ -33,6 +33,20 @@
 * A table of editable color cells.
 *
 * @author Martin Jones <mjones@kde.org>
+*
+* Added for KolourPaint:
+*
+* If you have not called setColor() for a cell, its widget will not exist.
+* So it is possible to have "holes" in this rectangular table of cells.
+* You can delete a cell widget by calling setColor() with an invalid QColor.
+*
+* If a color is dragged and dropped to-and-from the same instance of this
+* widget, then the colors in the source and destination cells are swapped
+* (this is a "move action").
+*
+* If CTRL is held or they are not from the same instance, then the source
+* cell's color is copied into the destination cell, without any change to
+* the source cell (this is a "copy action").
 */
 class KOLOURPAINT_LGPL_EXPORT kpColorCellsBase : public QTableWidget
 {
@@ -45,19 +59,54 @@ public:
    * @param parent The parent of the new widget
    * @param rows The number of rows in the table
    * @param columns The number of columns in the table
+   *
+   * Specifying <rows> and <columns> was made optional for KolourPaint.
    */
-  kpColorCellsBase( QWidget *parent, int rows, int columns );
+  kpColorCellsBase( QWidget *parent, int rows = 0, int columns = 0 );
   ~kpColorCellsBase();
 
-  /** Sets the color in the given index in the table */
+  /** Added for KolourPaint.
+      WARNING: These are not virtual in QTableWidget.
+  */
+private:
+  void invalidateAllColors ();
+public:
+  void clear ();
+  void clearContents ();
+
+  /** Added for KolourPaint. */
+  void setRowColumnCounts (int rows, int columns);
+
+  /** Added for KolourPaint.
+      WARNING: These are not virtual in QTableWidget.
+  */
+  void setColumnCount (int columns);
+  void setRowCount (int rows);
+
+  /** Sets the color in the given index in the table.
+
+      The following behavior change was added for KolourPaint:
+
+          If <col> is not valid, the cell widget at <index> is deleted.
+  */
   void setColor( int index, const QColor &col );
-  /** Returns the color at a given index in the table */
+  /** Returns the color at a given index in the table.
+      If a cell widget does not exist at <index>, the invalid color is
+      returned.
+   */
   QColor color( int index ) const;
   /** Returns the total number of color cells in the table */
   int count() const;
 
   void setShading(bool shade);
   void setAcceptDrags(bool acceptDrags);
+
+  /** Whether component cells should resize with the entire widget.
+      Default is true.
+
+      Added for KolourPaint.
+  */
+  void setCellsResizable(bool yes);
 
   /** Sets the currently selected cell to @p index */
   void setSelected(int index);
@@ -67,10 +116,28 @@ public:
 Q_SIGNALS:
   /** Emitted when a color is selected in the table */
   void colorSelected( int index , const QColor& color );
+  /** Emitted with the above.
+
+      Added for KolourPaint.
+  */
+  void colorSelected( int index , const QColor& color, Qt::MouseButton button );
+
   /** Emitted when a color in the table is double-clicked */
   void colorDoubleClicked( int index , const QColor& color );
 
+  /** Emitted when setColor() is called.
+      This includes when a color is dropped onto the table, via drag-and-drop.
+
+      Added for KolourPaint.
+  */
+  void colorChanged( int index , const QColor& color );
+
 protected:
+  /** Grays out the cells, when the object is disabled.
+      Added for KolourPaint. 
+  */
+  virtual void changeEvent( QEvent* event );
+
   // the three methods below are used to ensure equal column widths and row heights
   // for all cells and to update the widths/heights when the widget is resized
   virtual int sizeHintForColumn(int column) const;
@@ -85,7 +152,8 @@ protected:
   virtual void dropEvent( QDropEvent *);
   virtual void mouseDoubleClickEvent( QMouseEvent * );
 
-  int positionToCell(const QPoint &pos, bool ignoreBorders=false) const;
+  int positionToCell(const QPoint &pos, bool ignoreBorders=false,
+    bool allowEmptyCell=false) const;
 
 private:
   class kpColorCellsBasePrivate;

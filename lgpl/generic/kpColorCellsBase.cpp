@@ -10,6 +10,7 @@
 /* This file is part of the KDE libraries
     Copyright (C) 1997 Martin Jones (mjones@kde.org)
     Copyright (C) 2007 Roberto Raggi (roberto@kdevelop.org)
+    Copyright (C) 2007 Clarence Dang (dang@kde.org)
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -27,6 +28,8 @@
     Boston, MA 02110-1301, USA.
 */
 //-----------------------------------------------------------------------------
+
+#define DEBUG_KP_COLOR_CELLS_BASE 1
 
 #include <kpColorCellsBase.h>
 
@@ -51,14 +54,30 @@ public:
         selected = -1;
         shade = false;
         acceptDrags = false;
+        cellsResizable = true;
     }
 
     kpColorCellsBase *q;
+    
+    // Note: This is a good thing and is _not_ data duplication with the
+    //       colors of QTableWidget cells, for the following reasons:
+    //
+    //       1. QColor in Qt4 is full-quality RGB.  However, QTableWidget
+    //          cells are lossy as their colors may be dithered on the screen.
+    //
+    //          Eventually, this field will be changed to a kpColor.
+    //
+    //       2. We change the QTableWidget cells' colors when the widget is
+    //          disabled (see changeEvent()).
+    //
+    //       Therefore, do not remove this field without better reasons.
     QColor *colors;
+    
     QPoint mousePos;
     int	selected;
     bool shade;
     bool acceptDrags;
+    bool cellsResizable;
     bool inMouse;
 };
 
@@ -74,9 +93,6 @@ kpColorCellsBase::kpColorCellsBase( QWidget *parent, int rows, int cols )
     horizontalHeader()->hide();
 
     d->colors = new QColor [ rows * cols ];
-
-    for ( int i = 0; i < rows * cols; i++ )
-        d->colors[i] = QColor();
 
     d->selected = 0;
     d->inMouse = false;
@@ -95,6 +111,60 @@ kpColorCellsBase::~kpColorCellsBase()
     delete [] d->colors;
 
     delete d;
+}
+
+void kpColorCellsBase::invalidateAllColors ()
+{
+    for (int r = 0; r < rowCount (); r++)
+        for (int c = 0; c < columnCount (); c++)
+            d->colors [r * columnCount () + c] = QColor ();
+}
+
+void kpColorCellsBase::clear()
+{
+    invalidateAllColors ();
+    QTableWidget::clear ();
+}
+
+void kpColorCellsBase::clearContents()
+{
+    invalidateAllColors ();
+    QTableWidget::clearContents ();
+}
+
+void kpColorCellsBase::setRowColumnCounts (int rows, int columns)
+{
+    const int oldRows = rowCount (), oldCols = columnCount ();
+    const int newRows = rows, newCols = columns;
+#if DEBUG_KP_COLOR_CELLS_BASE
+    kDebug () << "oldRows=" << oldRows << "oldCols=" << oldCols
+        << "newRows=" << newRows << "newCols=" << newCols;
+#endif
+
+    if (oldRows == newRows && oldCols == newCols)
+        return;
+
+    QTableWidget::setColumnCount (newCols);
+    QTableWidget::setRowCount (newRows);
+
+    QColor *oldColors = d->colors;
+    d->colors = new QColor [newRows * newCols];
+
+    for (int r = 0; r < qMin (oldRows, newRows); r++)
+        for (int c = 0; c < qMin (oldCols, newCols); c++)
+            d->colors [r * newCols + c] = oldColors [r * oldCols + c];
+
+    delete [] oldColors;
+}
+
+void kpColorCellsBase::setColumnCount (int newColumns)
+{
+    setRowColumnCounts (rowCount (), newColumns);
+}
+
+void kpColorCellsBase::setRowCount (int newRows)
+{
+    setRowColumnCounts (newRows, columnCount ());
 }
 
 QColor kpColorCellsBase::color(int index) const
@@ -117,6 +187,11 @@ void kpColorCellsBase::setAcceptDrags(bool _acceptDrags)
     d->acceptDrags = _acceptDrags;
 }
 
+void kpColorCellsBase::setCellsResizable(bool yes)
+{
+    d->cellsResizable = yes;
+}
+
 void kpColorCellsBase::setSelected(int index)
 {
     Q_ASSERT( index >= 0 && index < count() );
@@ -129,6 +204,13 @@ int kpColorCellsBase::selectedIndex() const
     return d->selected;
 }
 
+static void TableWidgetItemSetColor (QTableWidgetItem *tableItem,
+        const QColor &color)
+{
+    Q_ASSERT (tableItem);
+    tableItem->setData(Qt::BackgroundRole , QBrush(color));
+}
+
 void kpColorCellsBase::setColor( int column, const QColor &color )
 {
     const int tableRow = column / columnCount();
@@ -137,15 +219,54 @@ void kpColorCellsBase::setColor( int column, const QColor &color )
     Q_ASSERT( tableRow >= 0 && tableRow < rowCount() );
     Q_ASSERT( tableColumn >= 0 && tableColumn < columnCount() );
 
+    d->colors[column] = color;
+
     QTableWidgetItem* tableItem = item(tableRow,tableColumn);
 
-    if ( tableItem == 0 ) {
-        tableItem = new QTableWidgetItem();
-        setItem(tableRow,tableColumn,tableItem);
+    if (color.isValid ())
+    {
+        if ( tableItem == 0 ) {
+            tableItem = new QTableWidgetItem();
+            setItem(tableRow,tableColumn,tableItem);
+        }
+
+        if (isEnabled ())
+            ::TableWidgetItemSetColor (tableItem, color);
+    }
+    else
+    {
+        if (tableItem)
+            delete tableItem;
     }
 
-	d->colors[column] = color;
-    tableItem->setData(Qt::BackgroundRole , QBrush(color));
+    emit colorChanged (column, color);
+}
+
+void kpColorCellsBase::changeEvent( QEvent* event )
+{
+    if (event->type () != QEvent::EnabledChange)
+        return;
+        
+    for (int r = 0; r < rowCount (); r++)
+    {
+        for (int c = 0; c < columnCount (); c++)
+        {
+            QTableWidgetItem* tableItem = item(r, c);
+            if (!tableItem)
+                continue;
+
+            QColor color;
+            if (isEnabled ())
+            {
+                color = d->colors [r * columnCount () + c];
+                Q_ASSERT (color.isValid ());
+            }
+            else
+                color = palette ().color (backgroundRole ());
+
+            ::TableWidgetItemSetColor (tableItem, color);
+        }
+    }
 }
 
 /*void kpColorCellsBase::paintCell( QPainter *painter, int row, int col )
@@ -178,28 +299,39 @@ void kpColorCellsBase::setColor( int column, const QColor &color )
 	}
 }*/
 
-void kpColorCellsBase::resizeEvent( QResizeEvent* )
+void kpColorCellsBase::resizeEvent( QResizeEvent* e )
 {
-    // According to the Qt doc:
-    //   If you need to set the width of a given column to a fixed value, call
-    //   QHeaderView::resizeSection() on the table's {horizontal,vertical}
-    //   header.
-    // Therefore we iterate over each row and column and set the header section
-    // size, as the sizeHint does indeed appear to be ignored in favor of a
-    // minimum size that is larger than what we want.
-    for ( int index = 0 ; index < columnCount() ; index++ )
-        horizontalHeader()->resizeSection( index, sizeHintForColumn(index) );
-    for ( int index = 0 ; index < rowCount() ; index++ )
-        verticalHeader()->resizeSection( index, sizeHintForRow(index) );
+    if (d->cellsResizable)
+    {
+        // According to the Qt doc:
+        //   If you need to set the width of a given column to a fixed value, call
+        //   QHeaderView::resizeSection() on the table's {horizontal,vertical}
+        //   header.
+        // Therefore we iterate over each row and column and set the header section
+        // size, as the sizeHint does indeed appear to be ignored in favor of a
+        // minimum size that is larger than what we want.
+        for ( int index = 0 ; index < columnCount() ; index++ )
+            horizontalHeader()->resizeSection( index, sizeHintForColumn(index) );
+        for ( int index = 0 ; index < rowCount() ; index++ )
+            verticalHeader()->resizeSection( index, sizeHintForRow(index) );
+    }
+    else
+    {
+        // Update scrollbars if they're forced on by a subclass.
+        // TODO: Should the d->cellsResizable path (from kdelibs) do this as well?
+        QTableWidget::resizeEvent (e);
+    }
 }
 
 int kpColorCellsBase::sizeHintForColumn(int /*column*/) const
 {
+    // TODO: Should it be "(width() - frameWidth() * 2) / columnCount()"?
     return width() / columnCount() ;
 }
 
 int kpColorCellsBase::sizeHintForRow(int /*row*/) const
 {
+    // TODO: Should be "(height() - frameWidth() * 2) / rowCount()"?
     return height() / rowCount() ;
 }
 
@@ -210,19 +342,22 @@ void kpColorCellsBase::mousePressEvent( QMouseEvent *e )
 }
 
 
-int kpColorCellsBase::positionToCell(const QPoint &pos, bool ignoreBorders) const
+int kpColorCellsBase::positionToCell(const QPoint &pos, bool ignoreBorders,
+        bool allowEmptyCell) const
 {
     //TODO ignoreBorders not yet handled
     Q_UNUSED( ignoreBorders )
 
-   QTableWidgetItem* tableItem = itemAt(pos);
+    const int r = indexAt (pos).row (), c = indexAt (pos).column ();
+    kDebug () << "r=" << r << "c=" << c;
 
-   if (!tableItem)
+    if (r == -1 || c == -1)
+       return -1;
+   
+    if (!allowEmptyCell && !itemAt(pos))
         return -1;
-
-   const int itemRow = row(tableItem);
-   const int itemColumn = column(tableItem);
-   int cell = itemRow * columnCount() + itemColumn;
+   
+    const int cell = r * columnCount() + c;
 
    /*if (!ignoreBorders)
    {
@@ -234,7 +369,7 @@ int kpColorCellsBase::positionToCell(const QPoint &pos, bool ignoreBorders) cons
          return -1;
    }*/
 
-   return cell;
+    return cell;
 }
 
 
@@ -250,38 +385,99 @@ void kpColorCellsBase::mouseMoveEvent( QMouseEvent *e )
             int cell = positionToCell(d->mousePos);
             if ((cell != -1) && d->colors[cell].isValid())
             {
-               KColorMimeData::createDrag( d->colors[cell], this)->start();
+            #if DEBUG_KP_COLOR_CELLS_BASE
+               kDebug () << "beginning drag from cell=" << cell;
+            #endif
+               KColorMimeData::createDrag( d->colors[cell], this)->start(Qt::CopyAction | Qt::MoveAction);
+            #if DEBUG_KP_COLOR_CELLS_BASE
+               kDebug () << "finished drag";
+            #endif
             }
         }
     }
 }
 
+
+// LOTODO: I'm not quite clear on how the drop actions logic is supposed
+//         to be done e.g.:
+//
+//         1. Who is supposed to call setDropAction().
+//         2. Which variant of accept(), setAccepted(), acceptProposedAction() etc.
+//            is supposed to be called to accept a move -- rather than copy --
+//            action.
+//
+//         Nevertheless, it appears to work -- probably because we restrict
+//         the non-Qt-default move/swap action to be intrawidget.
+static void SetDropAction (QWidget *self, QDropEvent *event)
+{
+     if (event->source () == self && (event->keyboardModifiers () & Qt::ControlModifier) == 0)
+         event->setDropAction(Qt::MoveAction);
+     else
+         event->setDropAction(Qt::CopyAction);
+}
+
 void kpColorCellsBase::dragEnterEvent( QDragEnterEvent *event)
 {
+#if DEBUG_KP_COLOR_CELLS_BASE
      kDebug () << "kpColorCellsBase::dragEnterEvent() acceptDrags="
                << d->acceptDrags
                << " canDecode=" << KColorMimeData::canDecode(event->mimeData())
                << endl;
+#endif
      event->setAccepted( d->acceptDrags && KColorMimeData::canDecode( event->mimeData()));
+     if (event->isAccepted ())
+         ::SetDropAction (this, event);
 }
 
 // Reimplemented to override QTableWidget's override.  Else dropping doesn't work.
 void kpColorCellsBase::dragMoveEvent (QDragMoveEvent *event)
 {
+#if DEBUG_KP_COLOR_CELLS_BASE
      kDebug () << "kpColorCellsBase::dragMoveEvent() acceptDrags="
                << d->acceptDrags
                << " canDecode=" << KColorMimeData::canDecode(event->mimeData())
                << endl;
+#endif
      event->setAccepted( d->acceptDrags && KColorMimeData::canDecode( event->mimeData()));
+     if (event->isAccepted ())
+         ::SetDropAction (this, event);
 }
 
 void kpColorCellsBase::dropEvent( QDropEvent *event)
 {
      QColor c=KColorMimeData::fromMimeData(event->mimeData());
-     kDebug () << "kpColorCellsBase::dropEvent() color.isValid=" << c.isValid();
+     const int dragSourceCell = event->source () == this ?
+         positionToCell (d->mousePos, true) :
+         -1;
+#if DEBUG_KP_COLOR_CELLS_BASE
+     kDebug () << "kpColorCellsBase::dropEvent()"
+               << "color: rgb=" << (const int *) c.rgb () << "isValid=" << c.isValid()
+               << "source=" << event->source () << "dragSourceCell=" << dragSourceCell;
+#endif
      if( c.isValid()) {
-          int cell = positionToCell(event->pos(), true);
+          ::SetDropAction (this, event);
+
+          int cell = positionToCell(event->pos(), true, true/*allow empty cell*/);
+     #if DEBUG_KP_COLOR_CELLS_BASE
+          kDebug () << "\tcell=" << cell;
+     #endif
+          if (cell == -1)
+              return;
+
+          // Avoid NOP.
+          if (cell == dragSourceCell)
+              return;
+
+          QColor destOldColor = d->colors [cell];
 	  setColor(cell,c);
+
+    #if DEBUG_KP_COLOR_CELLS_BASE
+          kDebug () << "\tdropAction=" << event->dropAction ()
+                    << "destOldColor=" << (const int *) destOldColor.rgb ();
+    #endif
+          if (event->dropAction () == Qt::MoveAction && dragSourceCell != -1) {
+              setColor(dragSourceCell, destOldColor);
+          }
      }
 }
 
@@ -309,12 +505,15 @@ void kpColorCellsBase::mouseReleaseEvent( QMouseEvent *e )
 
     d->inMouse = false;
     if (cell != -1)
+    {
 	emit colorSelected( cell , color(cell) );
+	emit colorSelected( cell , color(cell), e->button() );
+    }
 }
 
 void kpColorCellsBase::mouseDoubleClickEvent( QMouseEvent * /*e*/ )
 {
-  int cell = positionToCell(d->mousePos);
+  int cell = positionToCell(d->mousePos, false, true/*allow empty cell*/);
 
   if (cell != -1)
     emit colorDoubleClicked( cell , color(cell) );
