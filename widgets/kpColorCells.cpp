@@ -39,6 +39,7 @@
 #include <KDebug>
 #include <KLocale>
 
+#include <kpBug.h>
 #include <kpColor.h>
 #include <kpColorCollection.h>
 #include <kpDefaultColorCollection.h>
@@ -93,6 +94,22 @@ struct kpColorCellsPrivate
 
     // REFACTOR: This is data duplication with kpColorCellsBase::color[].
     //           We've probably forgotten to synchronize them in some points.
+    //
+    // Calls to kpColorCellsBase::setColor() (which also come from
+    // kpColorCellsBase itself) will automatically update both
+    // kpColorCellsBase::d->color[] and the table cells.  setColor() emits
+    // colorChanged(), which is caught by our slotColorChanged(),
+    // which synchronizes this color collection and updates the modified flag.
+    //
+    // Avoid calling our grandparent's, QTableWidget's, mutating methods as we
+    // don't override enough of them, to fire signals that we can catch to update
+    // this color collection.
+    //
+    // If you modify this color collection directly (e.g. in setColorCollection(),
+    // openColorCollection(), appendRow(), deleteLastRow(), ...), you must work
+    // the other way and call makeCellsMatchColorCollection() to synchronize
+    // kpColorCellsBase::d->color[] and the table cells.  You still need to update
+    // the modified flag.
     kpColorCollection colorCol;
 
     KUrl url;
@@ -148,6 +165,14 @@ kpColorCells::kpColorCells (QWidget *parent,
             scrollBarAdjust = 20;
         }
 
+        // Reserve enough room for the default color collection's cells _and_
+        // a vertical scrollbar, which only appears when it's required.
+        // This ensures that if the vertical scrollbar apears, it does not obscure
+        // any cells or require the addition of a horizontal scrollbar, which would
+        // look ugly and take even more precious room.
+        //
+        // We do not dyamically reserve room based on the actual number of rows
+        // of cells, as that would make our containing widgets too big.
         setMinimumSize (::TableDefaultWidth + frameWidth () * 2 + scrollBarAdjust,
                         ::TableDefaultHeight + frameWidth () * 2);
     }
@@ -156,10 +181,10 @@ kpColorCells::kpColorCells (QWidget *parent,
         Q_ASSERT (!"implemented");
     }
 
-    setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
+    setVerticalScrollBarPolicy (Qt::ScrollBarAsNeeded);
 
     // The default QTableWidget policy of QSizePolicy::Expanding forces our
-    // grandparent to get too big.  Overwrite it.
+    // containing widgets to get too big.  Override it.
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Minimum);
 
 
@@ -176,15 +201,24 @@ kpColorCells::kpColorCells (QWidget *parent,
     setColorCollection (kpDefaultColorCollection ());
 
 
-    setWhatsThis (
+    // Call this _after_ we've constructed all the child widgets.
+    // Of course, this will not work if any of our child widgets are clever
+    // and create more widgets at runtime.
+    kpBug::QWidget_SetWhatsThis (this,
         i18n (
             "<qt>"
 
-            "<p>Double-click on a color cell to change its color.</p>"
+            "<p>To select the foreground color that tools draw in,"
+            " left-click on a filled-in color cell."
+            " To select the background color, right-click instead.</p>"
 
-            "<p>You can also swap filled-in color cells using drag and drop."
-            " If you hold the <b>Control</b> key, the destination cell will be"
-            " overridden, instead of being swapped with the source cell.</p>"
+            "<p>To change the color of a color cell itself, double-click on it.</p>"
+
+            "<p>You can also swap the color of a filled-in cell with any other"
+            " cell using drag and drop."
+            " And, if you hold the <b>Control</b> key, the destination"
+            " cell's color will be"
+            " overwritten, instead of being swapped with the color of the source cell.</p>"
 
             "</qt>"));
 }
@@ -240,7 +274,9 @@ void kpColorCells::makeCellsMatchColorCollection ()
                     QSize (-12, -34));
 #endif
 
-    // Delete all cell widgets.
+    // Delete all cell widgets.  This ensures that there will be no left-over
+    // cell widgets, for the colors in the new color collection that are
+    // actually invalid (which should not have cell widgets).
     clearContents ();
 
     setRowCount (r);
@@ -404,6 +440,10 @@ bool kpColorCells::saveColorCollection ()
 
 void kpColorCells::appendRow ()
 {
+    // This is the easiest implementation: change the color collection
+    // and then synchronize the table cells.  The other way is to call
+    // setRowCount() and then, synchronize the color collection.
+
     const int targetNumCells = (rowCount () + 1) * ::TableDefaultNumColumns;
     d->colorCol.resize (targetNumCells);
 
@@ -416,6 +456,10 @@ void kpColorCells::appendRow ()
 
 void kpColorCells::deleteLastRow ()
 {
+    // This is the easiest implementation: change the color collection
+    // and then synchronize the table cells.  The other way is to call
+    // setRowCount() and then, synchronize the color collection.
+
     const int targetNumCells =
         qMax (0, rowCount () * columnCount () - ::TableDefaultNumColumns);
     d->colorCol.resize (targetNumCells);
@@ -487,7 +531,10 @@ void kpColorCells::slotColorDoubleClicked (int cell, const QColor &)
     if (KColorDialog::getColor (color/*ref*/, this))
     {
         setColor (cell, color);
-        setModified (true);
+
+        // setColor() should have cause slotColorChanged() to have been
+        // called.
+        Q_ASSERT (isModified ());
     }
 }
 
@@ -503,7 +550,8 @@ void kpColorCells::slotColorChanged (int cell, const QColor &color)
         return;
 
     // Cater for adding new colors to the end.
-    d->colorCol.resize(cell+1);
+    if (cell >= d->colorCol.count ())
+        d->colorCol.resize (cell + 1);
 
     // TODO: We lose color names on a color swap (during drag-and-drop).
     const int ret = d->colorCol.changeColor (cell, color,
