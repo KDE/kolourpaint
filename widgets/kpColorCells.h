@@ -42,6 +42,7 @@ class kpColorCollection;
 class kpColor;
 
 
+// TODO: For now, only horizontal orientation is supported.
 class kpColorCells : public kpColorCellsBase
 {
 Q_OBJECT
@@ -61,11 +62,21 @@ protected:
 
 public:
     bool isModified () const;
-    void setModified (bool yes = true);
+    // (this emits isModifiedChanged() if the modified state changes)
+    void setModified (bool yes);
+public slots:
+    // (this emits isModifiedChanged() if the modified state changes)
+    void setModified ();
 
+public:
     KUrl url () const;
 
     const kpColorCollection *colorCollection () const;
+  
+private:
+    // Ensures there's a least one row of cells, to avoid a confusing UI.
+    void ensureHaveAtLeastOneRow ();
+public:
     void setColorCollection (const kpColorCollection &colorCol,
         const KUrl &url = KUrl ());
 
@@ -80,16 +91,20 @@ signals:
     void foregroundColorChanged (const kpColor &color);
     void backgroundColorChanged (const kpColor &color);
 
+    void rowCountChanged (int rowCount);
+
+    // Emitted when setModified() is called and the modified state changes.
+    // It may be called at other times, even when the modified state did
+    // not change.
+    void isModifiedChanged (bool isModified);
+
 protected:
-    virtual void dropEvent (QDropEvent *e);
-    virtual void paintCell (QPainter *painter, int row, int col);
     virtual void contextMenuEvent (QContextMenuEvent *e);
-    virtual void mouseReleaseEvent (QMouseEvent *e);
-    virtual void resizeEvent (QResizeEvent *e);
 
 protected slots:
-    void slotColorSelected (int cell);
-    void slotColorDoubleClicked (int cell, const QColor &);
+    void slotColorSelected (int cell, const QColor &color, Qt::MouseButton button);
+    void slotColorDoubleClicked (int cell, const QColor &color);
+    void slotColorChanged (int cell, const QColor &color);
 
 private:
     struct kpColorCellsPrivate * const d;
