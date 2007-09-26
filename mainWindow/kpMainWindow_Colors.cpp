@@ -89,7 +89,7 @@ void kpMainWindow::setupColorsMenuActions ()
 
 
     d->actionColorsAppendRow = ac->addAction ("colors_append_row");
-    d->actionColorsAppendRow->setText (i18n ("Append Row"));
+    d->actionColorsAppendRow->setText (i18n ("Add Row"));
     connect (d->actionColorsAppendRow, SIGNAL (triggered (bool)),
         SLOT (slotColorsAppendRow ()));
 
