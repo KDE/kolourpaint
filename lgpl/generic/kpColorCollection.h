@@ -83,7 +83,7 @@ public:
    kpColorCollection& operator=( const kpColorCollection &);
 
    // On failure, this prints an error dialog and returns false.
-   // On success, it returns true.
+   // On success, it sets the name() to an empty string and returns true.
    //
    // Added for KolourPaint.
    bool open(const KUrl &url, QWidget *parent);
