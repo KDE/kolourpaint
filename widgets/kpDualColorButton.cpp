@@ -266,6 +266,10 @@ void kpDualColorButton::mouseMoveEvent (QMouseEvent *e)
             color = foregroundColor ();
         else if (backgroundRect ().contains (m_dragStartPoint))
             color = backgroundColor ();
+        else
+        {
+            // "color" is left as invalid.
+        }
 
     #if DEBUG_KP_DUAL_COLOR_BUTTON
         kDebug () << "\tcolor.isValid=" << color.isValid ()
