@@ -137,6 +137,8 @@ kpColorCells::kpColorCells (QWidget *parent,
 
     setShading (false);  // no 3D look
 
+    setSupportsAlpha (false);
+
     setAcceptDrops (true);
     setAcceptDrags (true);
 
@@ -362,6 +364,11 @@ KUrl kpColorCells::url () const
     return d->url;
 }
 
+QString kpColorCells::name () const
+{
+    return d->colorCol.name ();
+}
+
 
 const kpColorCollection *kpColorCells::colorCollection () const
 {
@@ -386,6 +393,8 @@ void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const 
     makeCellsMatchColorCollection ();
     
     emit rowCountChanged (rowCount ());
+    emit urlChanged (d->url);
+    emit nameChanged (name ());
 }
 
 
@@ -402,6 +411,8 @@ bool kpColorCells::openColorCollection (const KUrl &url)
         makeCellsMatchColorCollection ();
     
         emit rowCountChanged (rowCount ());
+        emit urlChanged (d->url);
+        emit nameChanged (name ());
 
         return true;
     }
@@ -417,6 +428,7 @@ bool kpColorCells::saveColorCollectionAs (const KUrl &url)
         d->url = url;
         setModified (false);
 
+        emit urlChanged (d->url);
         return true;
     }
 

@@ -82,7 +82,12 @@ public slots:
     void setModified ();
 
 public:
+    // The source URL of the kpColorCollection.  May be empty for color
+    // collections that did not come from files.
     KUrl url () const;
+
+    // The name of the kpColorCollection.  May be empty.
+    QString name () const;
 
     const kpColorCollection *colorCollection () const;
   
@@ -120,6 +125,9 @@ signals:
     void backgroundColorChanged (const kpColor &color);
 
     void rowCountChanged (int rowCount);
+
+    void nameChanged (const QString &name);
+    void urlChanged (const KUrl &url);
 
     // Emitted when setModified() is called and the modified state changes.
     // It may be called at other times, even when the modified state did
