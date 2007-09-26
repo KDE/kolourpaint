@@ -269,8 +269,6 @@ void kpMainWindow::init ()
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\tTIME: new kpColorToolBar = " << time.restart () << "msec";
 #endif
-    connect (d->colorToolBar, SIGNAL (reloadColorsButtonClicked ()),
-        SLOT (slotColorsReload ()));
     connect (colorCells (), SIGNAL (rowCountChanged (int)),
         SLOT (slotUpdateColorsDeleteRowActionEnabled ()));
 

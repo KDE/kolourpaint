@@ -55,8 +55,6 @@ signals:
     void foregroundColorChanged (const kpColor &color);
     void backgroundColorChanged (const kpColor &color);
 
-    void colorCellsIsModifiedChanged (bool isModified);
-
 private:
     struct kpColorPalettePrivate * const d;
 };

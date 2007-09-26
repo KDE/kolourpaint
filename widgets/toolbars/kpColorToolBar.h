@@ -88,8 +88,6 @@ signals:
     void backgroundColorChanged (const kpColor &color);
     void colorSimilarityChanged (double similarity, int processedSimilarity);
 
-    void reloadColorsButtonClicked ();
-
 public:
     // (only valid in slots connected to foregroundColorChanged())
     kpColor oldForegroundColor () const;
@@ -104,7 +102,14 @@ public slots:
     void setBackgroundColor (const kpColor &color);
 
 private slots:
-    void updateTitleLabel ();
+    void updateNameOrUrlLabel ();
+
+protected:
+    // Eat color drops (which are usually accidental drags from one of our
+    // child widgets) to prevent them from being pasted as text in the
+    // main window (by kpMainWindow::dropEvent()).
+    virtual void dragEnterEvent (QDragEnterEvent *e);
+    virtual void dragMoveEvent (QDragMoveEvent *e);
 
 private:
     void adjustToOrientation (Qt::Orientation o);

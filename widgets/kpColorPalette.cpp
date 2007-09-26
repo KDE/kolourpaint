@@ -73,9 +73,6 @@ kpColorPalette::kpColorPalette (QWidget *parent, Qt::Orientation o)
     connect (d->colorCells, SIGNAL (backgroundColorChanged (const kpColor &)),
              this, SIGNAL (backgroundColorChanged (const kpColor &)));
 
-    connect (d->colorCells, SIGNAL (isModifiedChanged (bool)),
-             this, SIGNAL (colorCellsIsModifiedChanged (bool)));
-
     setOrientation (o);
 }
 

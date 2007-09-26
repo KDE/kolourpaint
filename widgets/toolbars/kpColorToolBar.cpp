@@ -41,14 +41,14 @@
 #include <qpixmap.h>
 #include <QPushButton>
 #include <qsize.h>
-
 #include <qwidget.h>
 
 #include <kapplication.h>
-#include <kcolordialog.h>
 #include <k3colordrag.h>
+#include <KColorMimeData>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <klocale.h>
 
@@ -64,8 +64,6 @@
 
 struct kpColorToolBarPrivate
 {
-    QPushButton *titlePushButton;
-    QWidget *titleBarWidget;
 };
 
 kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
@@ -74,29 +72,7 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
 {
     setWindowTitle (label);
 
-    d->titleBarWidget = new QWidget (this);
-    d->titlePushButton = new QPushButton (i18n ("Reload Colors"), d->titleBarWidget);
-    connect (d->titlePushButton, SIGNAL (clicked ()),
-             SIGNAL (reloadColorsButtonClicked ()));
-
-    const int h = d->titlePushButton->sizeHint ().height ();
-#if DEBUG_KP_COLOR_TOOL_BAR
-    kDebug () << "titlePushButton sizeHint=" << d->titlePushButton->sizeHint ();
-#endif
-
-    QHBoxLayout *titleBarLay = new QHBoxLayout (d->titleBarWidget);
-    titleBarLay->addItem (
-        new QSpacerItem (1, h, QSizePolicy::Expanding, QSizePolicy::Minimum));
-    titleBarLay->addWidget (d->titlePushButton);
-    titleBarLay->addItem (
-        new QSpacerItem (1, h, QSizePolicy::Expanding, QSizePolicy::Minimum));
-
-    d->titlePushButton->hide ();
-
-    // Disable title when it's docked.
-    // sync: updateTitleLabel()
-    // TODO: This currently disables the title even when it's not docked.
-    setTitleBarWidget (d->titleBarWidget);
+    setAcceptDrops (true);
 
 
     QWidget *base = new QWidget (this);
@@ -119,9 +95,13 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
     connect (m_colorPalette, SIGNAL (backgroundColorChanged (const kpColor &)),
              m_dualColorButton, SLOT (setBackgroundColor (const kpColor &)));
     
-    connect (m_colorPalette, SIGNAL (colorCellsIsModifiedChanged (bool)),
-             SLOT (updateTitleLabel ()));
-    updateTitleLabel ();
+    connect (m_colorPalette->colorCells (), SIGNAL (isModifiedChanged (bool)),
+             SLOT (updateNameOrUrlLabel ()));
+    connect (m_colorPalette->colorCells (), SIGNAL (urlChanged (const KUrl &)),
+             SLOT (updateNameOrUrlLabel ()));
+    connect (m_colorPalette->colorCells (), SIGNAL (nameChanged (const KUrl &)),
+             SLOT (updateNameOrUrlLabel ()));
+    updateNameOrUrlLabel ();
 
     m_boxLayout->addWidget (m_colorPalette, 0/*stretch*/);
 
@@ -262,40 +242,73 @@ void kpColorToolBar::flashColorSimilarityToolBarItem ()
 }
 
 
-static QString RemoveAmpersands (const QString &textIn)
-{
-    QString text = textIn;
-    text.remove (QRegExp ("&"));
-    return text;
-}
-
 // private slot
-void kpColorToolBar::updateTitleLabel ()
+void kpColorToolBar::updateNameOrUrlLabel ()
 {
-#if DEBUG_KP_COLOR_TOOL_BAR
-    kDebug () << "titlePushButton sizeHint=" << d->titlePushButton->sizeHint ();
-#endif
+    QString name;
 
-    if (!m_colorPalette->colorCells ()->isModified ())
-        d->titlePushButton->hide ();
-        //d->titleLabel->clear ();
+    kpColorCells *colorCells = m_colorPalette->colorCells ();
+    if (!colorCells->url ().isEmpty ())
+        name = colorCells->url ().fileName ();
     else
     {
-        d->titlePushButton->show ();
-
-
-#if 0
-        d->titleLabel->setText (
-            ki18nc ("\"color palette [modified]\","
-                        " like \"file.txt [modified]\" in a window caption",
-                    "%1 [modified]")
-                .subs (::RemoveAmpersands (windowTitle ()))
-                .toString ());
-#endif
+        if (!colorCells->name ().isEmpty ())
+            name = colorCells->name ();
+        else
+            name = i18n ("KolourPaint Defaults");
     }
 
+    if (name.isEmpty ())
+        name = i18n ("Untitled");
+
+
+    KLocalizedString labelStr;
+
+    if (!m_colorPalette->colorCells ()->isModified ())
+    {
+        labelStr =
+            ki18nc ("Colors: name_or_url_of_color_palette",
+                    "Colors: %1")
+                .subs (name);
+    }
+    else
+    {
+        labelStr =
+            ki18nc ("Colors: name_or_url_of_color_palette [modified]",
+                    "Colors: %1 [modified]")
+                .subs (name);
+    }
+
+    // Kill 2 birds with 1 stone:
+    //
+    // 1. Hide the windowTitle() when it's docked.
+    // 2. Add a label containing the name of the open color palette.
+    //
+    // TODO: This currently hides the windowTitle() even when it's not docked,
+    //       because we've abused it to show the name of open color palette
+    //       instead.
+    setWindowTitle (labelStr.toString ());
+}
+
+
+// protected virtual [base QWidget]
+void kpColorToolBar::dragEnterEvent (QDragEnterEvent *e)
+{
+    // Grab the color drag for this widget, preventing it from being
+    // handled by our parent, the main window.
+    e->setAccepted (KColorMimeData::canDecode (e->mimeData ()) == true);
 #if DEBUG_KP_COLOR_TOOL_BAR
-    kDebug () << "titlePushButton sizeHint=" << d->titlePushButton->sizeHint ();
+    kDebug () << "isAccepted=" << e->isAccepted ();
+#endif
+}
+
+// protected virtual [base QWidget]
+void kpColorToolBar::dragMoveEvent (QDragMoveEvent *e)
+{
+    // Stop the grabbed drag from being dropped.
+    e->setAccepted (KColorMimeData::canDecode (e->mimeData ()) == false);
+#if DEBUG_KP_COLOR_TOOL_BAR
+    kDebug () << "isAccepted=" << e->isAccepted ();
 #endif
 }
 

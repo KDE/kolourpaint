@@ -106,8 +106,8 @@ kpToolToolBar::kpToolToolBar (const QString &label, int colsOrRows, QWidget *par
 {
     setWindowTitle (label);
 
-    // Disable title when it's docked.
-    // TODO: This currently disables the title even when it's not docked.
+    // Hide the windowTitle() when it's docked.
+    // TODO: This currently hides the windowTitle() even when it's not docked.
     setTitleBarWidget (new QLabel (this));
 
 
