@@ -118,7 +118,7 @@ static void CouldNotOpenDialog (const KUrl &url, QWidget *parent)
               kpUrlFormatter::PrettyFilename (url)));
 }
 
-// TODO: Set d->name and d->editable?
+// TODO: Set d->editable?
 bool
 kpColorCollection::open(const KUrl &url, QWidget *parent)
 {
@@ -194,6 +194,7 @@ kpColorCollection::open(const KUrl &url, QWidget *parent)
   }
 
   d->colorList = newColorList;
+  d->name = QString ();
   d->desc = newDesc;
 
   KIO::NetAccess::removeTempFile (tempPaletteFilePath);
