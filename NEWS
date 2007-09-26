@@ -78,6 +78,9 @@ KolourPaint 4.0.0 BETA (Frozen 2007-10-21)
                  a see-through background, on top of transparent document
                  areas, is lower than before.
 
+   * Make the Tool Box use as much vertical space as possible, since it
+     needs it for the option widgets.
+
    * REGRESSION: The Tool Box and Color Tool Bar are no longer movable or
                  floatable.
 
