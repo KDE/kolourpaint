@@ -426,6 +426,8 @@ void kpColorCellsBase::mouseMoveEvent( QMouseEvent *e )
 //         the non-Qt-default move/swap action to be intrawidget.
 static void SetDropAction (QWidget *self, QDropEvent *event)
 {
+     // TODO: Would be nice to default to CopyAction if the destination cell
+     //       is null. 
      if (event->source () == self && (event->keyboardModifiers () & Qt::ControlModifier) == 0)
          event->setDropAction(Qt::MoveAction);
      else
@@ -440,7 +442,6 @@ void kpColorCellsBase::dragEnterEvent( QDragEnterEvent *event)
                << " canDecode=" << KColorMimeData::canDecode(event->mimeData())
                << endl;
 #endif
-     // TODO: Disallow drag that isn't onto a cell.
      event->setAccepted( d->acceptDrags && KColorMimeData::canDecode( event->mimeData()));
      if (event->isAccepted ())
          ::SetDropAction (this, event);
@@ -455,6 +456,7 @@ void kpColorCellsBase::dragMoveEvent (QDragMoveEvent *event)
                << " canDecode=" << KColorMimeData::canDecode(event->mimeData())
                << endl;
 #endif
+     // TODO: Disallow drag that isn't onto a cell.
      event->setAccepted( d->acceptDrags && KColorMimeData::canDecode( event->mimeData()));
      if (event->isAccepted ())
          ::SetDropAction (this, event);
