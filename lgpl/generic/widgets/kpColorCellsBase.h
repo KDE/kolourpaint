@@ -107,6 +107,18 @@ public:
   void setShading(bool shade);
   void setAcceptDrags(bool acceptDrags);
 
+  /** Whether the alpha values (e.g. as passed to setColor() and received
+      from a drop) will be ignored for colors 
+      Default is false.
+
+      Call this in your constructor before you've set any colors.
+
+      Added for KolourPaint since none of the drawing routines support
+      alpha, other than pure transparency, which we don't currently
+      support drags/drops of, anyway (into the color cells).
+  */
+  void setSupportsAlpha(bool yes);
+
   /** Whether component cells should resize with the entire widget.
       Default is true.
 

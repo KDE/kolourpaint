@@ -55,6 +55,7 @@ public:
         shade = false;
         acceptDrags = false;
         cellsResizable = true;
+        supportsAlpha = true;
     }
 
     kpColorCellsBase *q;
@@ -78,6 +79,7 @@ public:
     bool shade;
     bool acceptDrags;
     bool cellsResizable;
+    bool supportsAlpha;
     bool inMouse;
 };
 
@@ -187,6 +189,11 @@ void kpColorCellsBase::setAcceptDrags(bool _acceptDrags)
     d->acceptDrags = _acceptDrags;
 }
 
+void kpColorCellsBase::setSupportsAlpha(bool yes)
+{
+    d->supportsAlpha = yes;
+}
+
 void kpColorCellsBase::setCellsResizable(bool yes)
 {
     d->cellsResizable = yes;
@@ -211,13 +218,20 @@ static void TableWidgetItemSetColor (QTableWidgetItem *tableItem,
     tableItem->setData(Qt::BackgroundRole , QBrush(color));
 }
 
-void kpColorCellsBase::setColor( int column, const QColor &color )
+void kpColorCellsBase::setColor( int column, const QColor &colorIn )
 {
     const int tableRow = column / columnCount();
     const int tableColumn = column % columnCount();
 
     Q_ASSERT( tableRow >= 0 && tableRow < rowCount() );
     Q_ASSERT( tableColumn >= 0 && tableColumn < columnCount() );
+
+    QColor color = colorIn;
+    if (color.isValid ())
+    {
+        if (!d->supportsAlpha)
+            color = QColor (color.rgb ());
+    }
 
     d->colors[column] = color;
 
@@ -390,7 +404,7 @@ void kpColorCellsBase::mouseMoveEvent( QMouseEvent *e )
             #if DEBUG_KP_COLOR_CELLS_BASE
                kDebug () << "beginning drag from cell=" << cell;
             #endif
-               KColorMimeData::createDrag( d->colors[cell], this)->start(Qt::CopyAction | Qt::MoveAction);
+               KColorMimeData::createDrag(d->colors[cell], this)->start(Qt::CopyAction | Qt::MoveAction);
             #if DEBUG_KP_COLOR_CELLS_BASE
                kDebug () << "finished drag";
             #endif
@@ -426,6 +440,7 @@ void kpColorCellsBase::dragEnterEvent( QDragEnterEvent *event)
                << " canDecode=" << KColorMimeData::canDecode(event->mimeData())
                << endl;
 #endif
+     // TODO: Disallow drag that isn't onto a cell.
      event->setAccepted( d->acceptDrags && KColorMimeData::canDecode( event->mimeData()));
      if (event->isAccepted ())
          ::SetDropAction (this, event);
@@ -448,15 +463,19 @@ void kpColorCellsBase::dragMoveEvent (QDragMoveEvent *event)
 void kpColorCellsBase::dropEvent( QDropEvent *event)
 {
      QColor c=KColorMimeData::fromMimeData(event->mimeData());
+
      const int dragSourceCell = event->source () == this ?
          positionToCell (d->mousePos, true) :
          -1;
 #if DEBUG_KP_COLOR_CELLS_BASE
      kDebug () << "kpColorCellsBase::dropEvent()"
-               << "color: rgb=" << (const int *) c.rgb () << "isValid=" << c.isValid()
+               << "color: rgba=" << (const int *) c.rgba () << "isValid=" << c.isValid()
                << "source=" << event->source () << "dragSourceCell=" << dragSourceCell;
 #endif
      if( c.isValid()) {
+          if (!d->supportsAlpha)
+            c = QColor (c.rgb ());
+
           ::SetDropAction (this, event);
 
           int cell = positionToCell(event->pos(), true, true/*allow empty cell*/);
@@ -476,7 +495,7 @@ void kpColorCellsBase::dropEvent( QDropEvent *event)
 
     #if DEBUG_KP_COLOR_CELLS_BASE
           kDebug () << "\tdropAction=" << event->dropAction ()
-                    << "destOldColor=" << (const int *) destOldColor.rgb ();
+                    << "destOldColor.rgba=" << (const int *) destOldColor.rgba ();
     #endif
           if (event->dropAction () == Qt::MoveAction && dragSourceCell != -1) {
               setColor(dragSourceCell, destOldColor);
