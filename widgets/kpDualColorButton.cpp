@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_DUAL_COLOR_BUTTON 0
+#define DEBUG_KP_DUAL_COLOR_BUTTON 1
 
 
 #include <kpDualColorButton.h>
@@ -38,13 +38,15 @@
 #include <KColorDialog>
 #include <KColorMimeData>
 #include <KDebug>
+#include <KGlobalSettings>
 #include <KIconLoader>
 
 #include <kpView.h>
 
 
 kpDualColorButton::kpDualColorButton (QWidget *parent)
-    : QFrame (parent)
+    : QFrame (parent),
+      m_dragStartPoint (KP_INVALID_POINT)
 {
     setSizePolicy (QSizePolicy::Minimum/*horizontal*/,
                    QSizePolicy::Minimum/*vertical*/);
@@ -169,8 +171,6 @@ QRect kpDualColorButton::backgroundRect () const
 }
 
 
-// TODO: drag a colour from this widget
-
 // protected virtual
 void kpDualColorButton::dragEnterEvent (QDragEnterEvent *e)
 {
@@ -202,11 +202,16 @@ void kpDualColorButton::dropEvent (QDropEvent *e)
     QColor col = KColorMimeData::fromMimeData (e->mimeData ());
 #if DEBUG_KP_DUAL_COLOR_BUTTON
     kDebug () << "kpDualColorButton::dropEvent() col="
-              << (int *) col.rgb () << endl;
+              << (int *) col.rgb ()
+              << " (with alpha=" << (int *) col.rgba () << ")" << endl;
 #endif
 
     if (col.isValid ())
     {
+        // QColor::rgb() excludes the alpha value, unlike QColor::rgba().
+        // This is good since kpColor doesn't support alpha, other than
+        // pure transparency, which we don't currently support drags/drops of, anyway.
+
         if (foregroundRect ().contains (e->pos ()))
             setForegroundColor (kpColor (col.rgb ()));
         else if (backgroundRect ().contains (e->pos ()))
@@ -216,8 +221,73 @@ void kpDualColorButton::dropEvent (QDropEvent *e)
 
 
 // protected virtual [base QWidget]
+void kpDualColorButton::mousePressEvent (QMouseEvent *e)
+{
+#if DEBUG_KP_DUAL_COLOR_BUTTON
+    kDebug () << "kpDualColorButton::mousePressEvent() pos=" << e->pos () << endl;
+#endif
+
+    m_dragStartPoint = KP_INVALID_POINT;
+
+    if (e->button () == Qt::LeftButton)
+        m_dragStartPoint = e->pos ();
+}
+
+void kpDualColorButton::mouseMoveEvent (QMouseEvent *e)
+{
+#if DEBUG_KP_DUAL_COLOR_BUTTON
+    kDebug () << "kpDualColorButton::mouseMoveEvent() pos=" << e->pos ()
+              << " buttons=" << e->buttons ()
+              << " dragStartPoint=" << m_dragStartPoint << endl;
+#endif
+
+    if (m_dragStartPoint == KP_INVALID_POINT)
+        return;
+
+    if (!(e->buttons () & Qt::LeftButton))
+    {
+        m_dragStartPoint = KP_INVALID_POINT;
+        return;
+    }
+
+    const int delay = KGlobalSettings::dndEventDelay ();
+    if (e->x () < m_dragStartPoint.x () - delay ||
+        e->x () > m_dragStartPoint.x () + delay ||
+        e->y () < m_dragStartPoint.y () - delay ||
+        e->y () > m_dragStartPoint.y () + delay)
+    {
+    #if DEBUG_KP_DUAL_COLOR_BUTTON
+        kDebug () << "\tstarting drag as long as it's in a rectangle" << endl;
+    #endif
+
+        kpColor color;
+
+        if (foregroundRect ().contains (m_dragStartPoint))
+            color = foregroundColor ();
+        else if (backgroundRect ().contains (m_dragStartPoint))
+            color = backgroundColor ();
+
+    #if DEBUG_KP_DUAL_COLOR_BUTTON
+        kDebug () << "\tcolor.isValid=" << color.isValid ()
+                  << " rgb=" << (color.isValid () ? (int *) color.toQRgb () : 0)
+                  << endl;
+    #endif
+
+        if (color.isValid ())
+        {
+            if (!color.isTransparent ())
+                KColorMimeData::createDrag (color.toQColor (), this)->exec ();
+        }
+
+        m_dragStartPoint = KP_INVALID_POINT;
+    }
+}
+
+// protected virtual [base QWidget]
 void kpDualColorButton::mouseReleaseEvent (QMouseEvent *e)
 {
+    m_dragStartPoint = KP_INVALID_POINT;
+
     if (swapPixmapRect ().contains (e->pos ()) &&
         m_color [0] != m_color [1])
     {
@@ -238,6 +308,7 @@ void kpDualColorButton::mouseReleaseEvent (QMouseEvent *e)
         emit backgroundColorChanged (m_color [1]);
     }
 }
+
 
 // protected virtual [base QWidget]
 void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
@@ -270,6 +341,10 @@ void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
             //
             // KDE3: Problem in KDE3 as well.
         }
+
+    #if DEBUG_KP_DUAL_COLOR_BUTTON
+        kDebug () << "color=" << (int *) col.rgba () << endl;
+    #endif
 
         if (KColorDialog::getColor (col/*ref*/, this))
             setColor (whichColor, kpColor (col.rgb ()));
