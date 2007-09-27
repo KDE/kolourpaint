@@ -75,7 +75,7 @@ void kpMainWindow::setupViewMenuActions ()
     d->actionShowGrid = ac->add <KToggleAction> ("view_show_grid");
     d->actionShowGrid->setText (i18n ("Show &Grid"));
     d->actionShowGrid->setShortcut (Qt::CTRL + Qt::Key_G);
-    d->actionShowGrid->setCheckedState (KGuiItem(i18n ("Hide &Grid")));
+    //d->actionShowGrid->setCheckedState (KGuiItem(i18n ("Hide &Grid")));
     connect (d->actionShowGrid, SIGNAL (triggered (bool)),
         SLOT (slotShowGridToggled ()));
 

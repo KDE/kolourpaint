@@ -73,7 +73,7 @@ void kpMainWindow::setupViewMenuThumbnailActions ()
     //
     //       KDE3: Problem in KDE3 as well.
     d->actionShowThumbnail->setShortcut (Qt::CTRL + Qt::Key_H);
-    d->actionShowThumbnail->setCheckedState (KGuiItem(i18n ("Hide T&humbnail")));
+    //d->actionShowThumbnail->setCheckedState (KGuiItem(i18n ("Hide T&humbnail")));
     connect (d->actionShowThumbnail, SIGNAL (triggered (bool)),
         SLOT (slotShowThumbnailToggled ()));
 
