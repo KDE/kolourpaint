@@ -57,18 +57,17 @@ struct ColorNode
 class kpColorCollectionPrivate
 {
 public:
-    kpColorCollectionPrivate(const QString &name = QString ());
+    kpColorCollectionPrivate();
     kpColorCollectionPrivate(const kpColorCollectionPrivate&);
     ~kpColorCollectionPrivate() {}
-    QList<ColorNode> colorList;
 
+    QList<ColorNode> colorList;
     QString name;
     QString desc;
     kpColorCollection::Editable editable;
 };
 
-kpColorCollectionPrivate::kpColorCollectionPrivate(const QString &_name)
-    : name(_name)
+kpColorCollectionPrivate::kpColorCollectionPrivate()
 {
 }
 
@@ -95,9 +94,9 @@ kpColorCollection::installedCollections()
   return paletteList;
 }
 
-kpColorCollection::kpColorCollection(const QString &name)
+kpColorCollection::kpColorCollection()
 {
-  d = new kpColorCollectionPrivate(name);
+  d = new kpColorCollectionPrivate();
 }
 
 kpColorCollection::kpColorCollection(const kpColorCollection &p)
@@ -194,7 +193,7 @@ kpColorCollection::open(const KUrl &url, QWidget *parent)
   }
 
   d->colorList = newColorList;
-  d->name = QString ();
+  d->name.clear ();
   d->desc = newDesc;
 
   KIO::NetAccess::removeTempFile (tempPaletteFilePath);
@@ -269,7 +268,7 @@ static void SaveToFile (kpColorCollectionPrivate *d, QIODevice *device)
    foreach (const ColorNode &node, d->colorList)
    {
        // Added for KolourPaint.
-       if(node.color.isValid ())
+       if(!node.color.isValid ())
            continue;
 
        int r,g,b;
@@ -300,7 +299,7 @@ kpColorCollection::saveAs(const KUrl &url, bool showOverwritePrompt,
    if (url.isLocalFile ())
    {
        const QString filename = url.path ();
-    
+
         // sync: All failure exit paths _must_ call KSaveFile::abort() or
         //       else, the KSaveFile destructor will overwrite the file,
         //       <filename>, despite the failure.
@@ -387,14 +386,19 @@ kpColorCollection::saveAs(const KUrl &url, bool showOverwritePrompt,
         }
     }
 
+   d->name.clear ();
    return true;
 }
 
 bool
 kpColorCollection::saveKDE(QWidget *parent) const
 {
-   QString filename = KStandardDirs::locateLocal("config", "colors/" + d->name);
-   return saveAs (KUrl (filename), false/*no overwite prompt*/, parent);
+   const QString name = d->name;
+   QString filename = KStandardDirs::locateLocal("config", "colors/" + name);
+   const bool ret = saveAs (KUrl (filename), false/*no overwite prompt*/, parent);
+   // (d->name is wiped by saveAs()).
+   d->name = name;
+   return ret;
 }
 
 QString kpColorCollection::description() const
@@ -432,17 +436,17 @@ int kpColorCollection::count() const
     return (int) d->colorList.count();
 }
 
-void kpColorCollection::resize(int amount)
+void kpColorCollection::resize(int newCount)
 {
-    if (amount == count())
+    if (newCount == count())
         return;
-    else if (amount < count())
+    else if (newCount < count())
     {
-        d->colorList.erase(d->colorList.begin() + amount, d->colorList.end());
+        d->colorList.erase(d->colorList.begin() + newCount, d->colorList.end());
     }
-    else if (amount > count())
+    else if (newCount > count())
     {
-         while(amount > count())
+         while(newCount > count())
          {
              const int ret = addColor(QColor(), QString()/*color name*/);
              Q_ASSERT(ret == count() - 1);

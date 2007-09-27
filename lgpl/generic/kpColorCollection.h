@@ -48,6 +48,9 @@ class KUrl;
  * This class makes it easy to handle color collections, sometimes referred to
  * as "palettes". This class can read and write collections from and to a file.
  *
+ * Collections that are managed by KDE have a non-empty name().  Collections
+ * stored in regular files have an empty name().
+ *
  * This class uses the "GIMP" palette file format.
  *
  * @author Waldo Bastian (bastian@kde.org), Clarence Dang (dang@kde.org)
@@ -64,8 +67,11 @@ public:
 
    /**
     * kpColorCollection constructor
+    *
+    * <name> argument removed for KolourPaint.
+    * Use openKDE() instead, which also has error handling.
     **/
-   explicit kpColorCollection(const QString &name=QString());
+   explicit kpColorCollection();
 
    /**
     * kpColorCollection copy constructor.
@@ -90,20 +96,27 @@ public:
 
    // Same as open() but is given the name of a KDE palette, not a filename.
    //
-   // @param name The name of collection as returned by installedCollections()
+   // @param name The name of collection as returned by installedCollections().
+   //             name() is set to this.
    //
-   // Added for KolourPaint
+   // Added for KolourPaint.
    bool openKDE(const QString &name, QWidget *parent);
 
    // On failure, this prints an error dialog and returns false.
    // If the user cancels any presented overwrite dialog, it also returns false.
    // On success, it returns true.
    //
+   // The file can be overwritten without displaying any warning dialog, if
+   // <showOverwritePrompt> is set to false.
+   //
+   // name() is set to an empty string.
+   //
    // Added for KolourPaint.
    bool saveAs(const KUrl &url, bool showOverwritePrompt, QWidget *parent) const;
 
    /**
-    * Save the collection
+    * Save the collection to the KDE-local store
+    * (usually $HOME/.kde/share/config/colors) using name().
     *
     * @return 'true' if successful
     *
@@ -164,13 +177,14 @@ public:
    int count() const;
 
    /**
-    * Adds invalid colors or removes colors so that there will be @p amount
+    * Adds invalid colors or removes colors so that there will be @p newCount
     * colors in the color collection.
+    *
     * @param target number of colors
     *
     * Added for KolourPaint.
     */
-   void resize(int amount);
+   void resize(int newCount);
 
    /**
     * Find color by index.
