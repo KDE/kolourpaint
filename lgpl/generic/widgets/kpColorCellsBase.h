@@ -1,3 +1,12 @@
+
+// SYNC: Periodically merge in changes from:
+//
+//           trunk/KDE/kdelibs/kdeui/colors/kcolordialog.{h,cpp}
+//
+//       which this is a fork of.
+//
+//       Our changes can be merged back into KDE (grep for "Added for KolourPaint" and similar).
+
 /* This file is part of the KDE libraries
     Copyright (C) 1997 Martin Jones (mjones@kde.org)
 
@@ -44,7 +53,8 @@
 * does not exist.  Note that:
 *
 * 1. You can double click on cells that don't contain a widget
-* 2. You can drop onto -- but not drag a -- cell that doesn't contain a widget
+* 2. You can drop onto -- but not drag from -- a cell that doesn't contain a
+*    widget
 *
 * If a color is dragged and dropped to-and-from the same instance of this
 * widget, then the colors in the source and destination cells are swapped
@@ -58,9 +68,9 @@ class KOLOURPAINT_LGPL_EXPORT kpColorCellsBase : public QTableWidget
 {
   Q_OBJECT
 public:
-  /** 
+  /**
    * Constructs a new table of color cells, consisting of
-   * @p rows * @p columns colors. 
+   * @p rows * @p columns colors.
    *
    * @param parent The parent of the new widget
    * @param rows The number of rows in the table
@@ -71,12 +81,14 @@ public:
   kpColorCellsBase( QWidget *parent, int rows = 0, int columns = 0 );
   ~kpColorCellsBase();
 
+private:
+  /** Added for KolourPaint. */
+  void invalidateAllColors ();
+
+public:
   /** Added for KolourPaint.
       WARNING: These are not virtual in QTableWidget.
   */
-private:
-  void invalidateAllColors ();
-public:
   void clear ();
   void clearContents ();
 
@@ -108,10 +120,11 @@ public:
   void setAcceptDrags(bool acceptDrags);
 
   /** Whether the alpha values (e.g. as passed to setColor() and received
-      from a drop) will be ignored for colors 
+      from a drop) will be ignored for colors
       Default is false.
 
       Call this in your constructor before you've set any colors.
+      If you ignore this instruction, undefined behavior will result.
 
       Added for KolourPaint since none of the drawing routines support
       alpha, other than pure transparency, which we don't currently
@@ -130,7 +143,7 @@ public:
   void setSelected(int index);
   /** Returns the index of the cell which is currently selected */
   int  selectedIndex() const;
-  
+
 Q_SIGNALS:
   /** Emitted when a color is selected in the table */
   void colorSelected( int index , const QColor& color );
@@ -152,7 +165,7 @@ Q_SIGNALS:
 
 protected:
   /** Grays out the cells, when the object is disabled.
-      Added for KolourPaint. 
+      Added for KolourPaint.
   */
   virtual void changeEvent( QEvent* event );
 
@@ -170,6 +183,7 @@ protected:
   virtual void dropEvent( QDropEvent *);
   virtual void mouseDoubleClickEvent( QMouseEvent * );
 
+  /** <allowEmptyCell> was added for KolourPaint. */
   int positionToCell(const QPoint &pos, bool ignoreBorders=false,
     bool allowEmptyCell=false) const;
 
@@ -177,7 +191,7 @@ private:
   class kpColorCellsBasePrivate;
   friend class kpColorCellsBasePrivate;
   kpColorCellsBasePrivate *const d;
-  
+
   Q_DISABLE_COPY(kpColorCellsBase)
 };
 

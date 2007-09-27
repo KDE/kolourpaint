@@ -1,12 +1,4 @@
 
-// SYNC: Periodically merge in changes from:
-//
-//           trunk/KDE/kdelibs/kdeui/colors/kcolordialog.{h,cpp}
-//
-//       which this is a fork of.
-//
-//       Our changes can be merged back into KDE (grep for "Added for KolourPaint" and similar).
-
 /* This file is part of the KDE libraries
     Copyright (C) 1997 Martin Jones (mjones@kde.org)
     Copyright (C) 2007 Roberto Raggi (roberto@kdevelop.org)
@@ -59,7 +51,7 @@ public:
     }
 
     kpColorCellsBase *q;
-    
+
     // Note: This is a good thing and is _not_ data duplication with the
     //       colors of QTableWidget cells, for the following reasons:
     //
@@ -73,7 +65,7 @@ public:
     //
     //       Therefore, do not remove this field without better reasons.
     QColor *colors;
-    
+
     QPoint mousePos;
     int	selected;
     bool shade;
@@ -262,21 +254,25 @@ void kpColorCellsBase::changeEvent( QEvent* event )
 
     if (event->type () != QEvent::EnabledChange)
         return;
-        
+
     for (int r = 0; r < rowCount (); r++)
     {
         for (int c = 0; c < columnCount (); c++)
         {
+            const int index = r * columnCount () + c;
+
             QTableWidgetItem* tableItem = item(r, c);
+
+            // See API Doc for this invariant.
+            Q_ASSERT (!!tableItem == d->colors [index].isValid ());
+
             if (!tableItem)
                 continue;
 
+
             QColor color;
             if (isEnabled ())
-            {
-                color = d->colors [r * columnCount () + c];
-                Q_ASSERT (color.isValid ());
-            }
+                color = d->colors [index];
             else
                 color = palette ().color (backgroundRole ());
 
@@ -369,10 +365,10 @@ int kpColorCellsBase::positionToCell(const QPoint &pos, bool ignoreBorders,
 
     if (r == -1 || c == -1)
        return -1;
-   
+
     if (!allowEmptyCell && !itemAt(pos))
         return -1;
-   
+
     const int cell = r * columnCount() + c;
 
    /*if (!ignoreBorders)
@@ -399,11 +395,14 @@ void kpColorCellsBase::mouseMoveEvent( QMouseEvent *e )
            e->y() > d->mousePos.y()+delay || e->y() < d->mousePos.y()-delay){
             // Drag color object
             int cell = positionToCell(d->mousePos);
-            if ((cell != -1) && d->colors[cell].isValid())
+            if (cell != -1)
             {
             #if DEBUG_KP_COLOR_CELLS_BASE
-               kDebug () << "beginning drag from cell=" << cell;
+               kDebug () << "beginning drag from cell=" << cell
+                         << "color: isValid=" << d->colors [cell].isValid ()
+                         << " rgba=" << (int *) d->colors [cell].rgba();
             #endif
+               Q_ASSERT (d->colors[cell].isValid());
                KColorMimeData::createDrag(d->colors[cell], this)->start(Qt::CopyAction | Qt::MoveAction);
             #if DEBUG_KP_COLOR_CELLS_BASE
                kDebug () << "finished drag";
@@ -427,7 +426,7 @@ void kpColorCellsBase::mouseMoveEvent( QMouseEvent *e )
 static void SetDropAction (QWidget *self, QDropEvent *event)
 {
      // TODO: Would be nice to default to CopyAction if the destination cell
-     //       is null. 
+     //       is null.
      if (event->source () == self && (event->keyboardModifiers () & Qt::ControlModifier) == 0)
          event->setDropAction(Qt::MoveAction);
      else
