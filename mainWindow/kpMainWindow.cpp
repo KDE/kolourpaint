@@ -264,14 +264,10 @@ void kpMainWindow::init ()
     // Create more GUI.
     //
 
-    d->colorToolBar = new kpColorToolBar (i18n ("Color Box"), this);
-    d->colorToolBar->setObjectName ("Color Box");  // (needed for QMainWindow::saveState())
+    createColorBox ();
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tTIME: new kpColorToolBar = " << time.restart () << "msec";
+    kDebug () << "\tTIME: createColorBox = " << time.restart () << "msec";
 #endif
-    connect (colorCells (), SIGNAL (rowCountChanged (int)),
-        SLOT (slotUpdateColorsDeleteRowActionEnabled ()));
-
 
     createToolBox ();
 #if DEBUG_KP_MAIN_WINDOW
@@ -639,6 +635,13 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 
         // sync with the bit marked "sync" below
 
+        // TODO: Never disable the Color Box because the user should be
+        //       able to manipulate the colors, even without a currently
+        //       open document.
+        //
+        //       We just have to make sure that signals from the Color
+        //       Box aren't fired and received unexpectedly when there's
+        //       no document.
         Q_ASSERT (d->colorToolBar);
         d->colorToolBar->setEnabled (false);
 

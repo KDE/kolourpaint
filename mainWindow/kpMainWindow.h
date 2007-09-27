@@ -577,6 +577,7 @@ private slots:
 
 private:
     void setupColorsMenuActions ();
+    void createColorBox ();
     void enableColorsMenuDocumentActions (bool enable);
 private slots:
     void slotUpdateColorsDeleteRowActionEnabled ();

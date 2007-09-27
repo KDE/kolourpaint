@@ -61,6 +61,8 @@ void kpMainWindow::setupColorsMenuActions ()
 
     d->actionColorsKDE = ac->add <KSelectAction> ("colors_kde");
     d->actionColorsKDE->setText (i18n ("Use KDE's"));
+    // TODO: Will this slot be called spuriously if there are no colors
+    //       installed?
     connect (d->actionColorsKDE, SIGNAL (triggered (QAction *)),
         SLOT (slotColorsKDE ()));
     foreach (QString colName, ::KDEColorCollectionNames ())
@@ -103,6 +105,15 @@ void kpMainWindow::setupColorsMenuActions ()
 }
 
 // private
+void kpMainWindow::createColorBox ()
+{
+    d->colorToolBar = new kpColorToolBar (i18n ("Color Box"), this);
+    d->colorToolBar->setObjectName ("Color Box");  // (needed for QMainWindow::saveState())
+    connect (colorCells (), SIGNAL (rowCountChanged (int)),
+        SLOT (slotUpdateColorsDeleteRowActionEnabled ()));
+}
+
+// private
 void kpMainWindow::enableColorsMenuDocumentActions (bool enable)
 {
     d->actionColorsDefault->setEnabled (enable);
@@ -133,6 +144,16 @@ void kpMainWindow::slotUpdateColorsDeleteRowActionEnabled ()
 }
 
 
+// Used in 2 situations:
+//
+// 1. User opens a color without using the "Use KDE's" submenu.
+// 2. User attempts to open a color using the "Use KDE's" submenu but the
+//    opening fails.
+//
+// TODO: Maybe we could put the 3 actions (for different ways of opening
+//       colors) in an exclusive group -- this might elminate the need for
+//       this hack.
+//
 // private
 void kpMainWindow::deselectActionColorsKDE ()
 {
@@ -251,10 +272,18 @@ void kpMainWindow::slotColorsKDE ()
     // Call in case an error dialog appears.
     toolEndShape ();
 
+    const int curItem = d->actionColorsKDE->currentItem ();
+
     if (!queryCloseColors ())
     {
         deselectActionColorsKDE ();
         return;
+    }
+    else
+    {
+        // queryCloseColors() calls slotColorSave(), which can call
+        // slotColorSaveAs(), which can call deselectActionColorsKDE().
+        d->actionColorsKDE->setCurrentItem (curItem);
     }
 
     const QStringList colNames = ::KDEColorCollectionNames ();
@@ -271,7 +300,6 @@ bool kpMainWindow::openColors (const KUrl &url)
     if (!colorCells ()->openColorCollection (url))
         return false;
 
-    deselectActionColorsKDE ();
     return true;
 }
 
@@ -290,7 +318,8 @@ void kpMainWindow::slotColorsOpen ()
         if (!queryCloseColors ())
             return;
 
-        openColors (fd.selectedUrl ());
+        if (openColors (fd.selectedUrl ()))
+            deselectActionColorsKDE ();
     }
 }
 
