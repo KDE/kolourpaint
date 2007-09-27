@@ -55,7 +55,10 @@ class kpToolWidgetSpraycanSize;
 //         so kpMainWindow::init() keeps this tool bar in a constant position for
 //         the time being.  To help make this workaround possible, we use QDockWidget,
 //         instead of KToolBar, to prevent XMLGUI from managing the tool
-//         bar position.  This also allows us to use QMainWindow::setCorner().
+//         bar position.  This also allows us to use QMainWindow::setCorner(),
+//         so we should probably keep it as a QDockWidget in the long-term
+//         and once we fix orientation and undocking, we should put XMLGUI
+//         support back in, somehow (create a "KDockWidget" class?).
 class kpToolToolBar : public QDockWidget
 {
 Q_OBJECT

@@ -55,6 +55,9 @@ class kpDualColorButton;
 //
 //         A nice must-have side-effect is that we are now resizeable, which
 //         is good for configurable (and potentially large) color collections.
+//         So we should probably keep it as a QDockWidget in the long-term
+//         and once we fix orientation and undocking, we should put XMLGUI
+//         support back in, somehow (create a "KDockWidget" class?).
 class kpColorToolBar : public QDockWidget
 {
 Q_OBJECT
