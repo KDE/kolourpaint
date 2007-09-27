@@ -95,7 +95,7 @@ void kpColorPalette::setOrientation (Qt::Orientation o)
 
     if (o == Qt::Horizontal)
     {
-        d->boxLayout = new QBoxLayout (QBoxLayout::LeftToRight, this );
+        d->boxLayout = new QBoxLayout (QBoxLayout::LeftToRight, this);
         d->boxLayout->addWidget (d->transparentColorCell, 0/*stretch*/, Qt::AlignVCenter);
         d->boxLayout->addWidget (d->colorCells);
     }
