@@ -41,6 +41,14 @@ class kpColorCollection;
 
 class kpColor;
 
+
+// This widget consists of rows of 11 cells of colors.  The cells become
+// shorter as soon as there are 3 rows.  After that, a vertical scrollbar
+// is usually displayed.
+//
+// By default, it is set to the DefaultColorCollection(), with 2 rows.
+//
+//
 // Cell widgets might not exist for 2 reasons:
 //
 // 1. The respective colors in the color collection are invalid.
@@ -52,6 +60,16 @@ class kpColor;
 //
 // Currently, this class always ensures that there is at least one
 // visual/table row (which might contain no cell widgets).
+//
+//
+// To determine where the color collection came from:
+//
+// 1. If url() is non-empty, it came from a file.
+//
+// 2. If url() is empty:
+//    a) If name() is non-empty, it came from KDE-managed color collection.
+//    b) If name() is empty, it came from DefaultColorCollection().
+//
 //
 // See also the API documentation for kpColorCellsBase.
 //
@@ -82,15 +100,16 @@ public slots:
     void setModified ();
 
 public:
-    // The source URL of the kpColorCollection.  May be empty for color
+    // The source URL of the kpColorCollection.  Empty for color
     // collections that did not come from files.
     KUrl url () const;
 
-    // The name of the kpColorCollection.  May be empty.
+    // The name of the kpColorCollection.  Empty for color collections
+    // managed by KDE.
     QString name () const;
 
     const kpColorCollection *colorCollection () const;
-  
+
 private:
     // Ensures there's a least one row of cells, to avoid a confusing UI.
     void ensureHaveAtLeastOneRow ();

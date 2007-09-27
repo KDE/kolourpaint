@@ -45,12 +45,16 @@
 #include <kpDefaultColorCollection.h>
 
 
-/* TODO: clean up this code!!!
- *       (probably when adding palette load/save)
- */
+//
+// Table Geometry
+//
+
+
 // The number of columns that the table normally has.
 const int TableDefaultNumColumns = 11;
+
 const int TableDefaultWidth = ::TableDefaultNumColumns * 26;
+
 const int TableDefaultHeight = 52;
 
 
@@ -88,6 +92,11 @@ static int TableCellHeight (const kpColorCollection &colorCol)
 }
 
 
+//
+// kpColorCells
+//
+
+
 struct kpColorCellsPrivate
 {
     Qt::Orientation orientation;
@@ -114,7 +123,7 @@ struct kpColorCellsPrivate
 
     KUrl url;
     bool isModified;
-    
+
     bool blockColorChangedSig;
 };
 
@@ -127,6 +136,7 @@ kpColorCells::kpColorCells (QWidget *parent,
     Q_ASSERT (o == Qt::Horizontal);
 
 
+    d->orientation = o;
     d->isModified = false;
     d->blockColorChangedSig = false;
 
@@ -195,10 +205,8 @@ kpColorCells::kpColorCells (QWidget *parent,
     connect (this, SIGNAL (colorChanged (int, const QColor &)),
              SLOT (slotColorChanged (int, const QColor &)));
 
-    setOrientation (o);
 
-
-    setColorCollection (kpDefaultColorCollection ());
+    setColorCollection (DefaultColorCollection ());
 
 
     // Call this _after_ we've constructed all the child widgets.
@@ -228,17 +236,21 @@ kpColorCells::~kpColorCells ()
     delete d;
 }
 
+
 // public static
 kpColorCollection kpColorCells::DefaultColorCollection ()
 {
     return kpDefaultColorCollection ();
 }
 
+
+// public
 Qt::Orientation kpColorCells::orientation () const
 {
     return d->orientation;
 }
 
+// public
 void kpColorCells::setOrientation (Qt::Orientation o)
 {
     d->orientation = o;
@@ -319,7 +331,7 @@ void kpColorCells::makeCellsMatchColorCollection ()
             // int x = c - 1 - i / r;
             pos = y * c + x;
         }
-    #if DEBUG_KP_COLOR_CELLS && 1
+    #if DEBUG_KP_COLOR_CELLS && 0
         kDebug () << "\tSetting cell " << i << ": y=" << y << " x=" << x
                   << " pos=" << pos << endl;
         kDebug () << "\t\tcolor=" << (int *) d->colorCol.color (i).rgb ()
@@ -391,7 +403,7 @@ void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const 
     setModified (false);
 
     makeCellsMatchColorCollection ();
-    
+
     emit rowCountChanged (rowCount ());
     emit urlChanged (d->url);
     emit nameChanged (name ());
@@ -409,7 +421,7 @@ bool kpColorCells::openColorCollection (const KUrl &url)
         setModified (false);
 
         makeCellsMatchColorCollection ();
-    
+
         emit rowCountChanged (rowCount ());
         emit urlChanged (d->url);
         emit nameChanged (name ());
@@ -471,7 +483,7 @@ void kpColorCells::deleteLastRow ()
     // setRowCount() and then, synchronize the color collection.
 
     const int targetNumCells =
-        qMax (0, rowCount () * columnCount () - ::TableDefaultNumColumns);
+        qMax (0, (rowCount () - 1) * ::TableDefaultNumColumns);
     d->colorCol.resize (targetNumCells);
 
     // If there was only one row of colors to start with, the effect of this
@@ -577,7 +589,7 @@ void kpColorCells::slotColorChanged (int cell, const QColor &color)
     const int ret = d->colorCol.changeColor (cell, color,
         QString ()/*color name*/);
     Q_ASSERT (ret == cell);
-    
+
     setModified (true);
 }
 
