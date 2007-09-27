@@ -59,6 +59,7 @@
 #include <kpDualColorButton.h>
 #include <kpPixmapFX.h>
 #include <kpTool.h>
+#include <kpUrlFormatter.h>
 #include <kpView.h>
 
 
@@ -80,6 +81,8 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
     m_boxLayout->setMargin (5);
     m_boxLayout->setSpacing (10 * 3);
 
+    // This holds the current global foreground and background colors, for
+    // tools.
     m_dualColorButton = new kpDualColorButton (base);
     connect (m_dualColorButton, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)),
              this, SIGNAL (colorsSwapped (const kpColor &, const kpColor &)));
@@ -94,12 +97,12 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
              m_dualColorButton, SLOT (setForegroundColor (const kpColor &)));
     connect (m_colorPalette, SIGNAL (backgroundColorChanged (const kpColor &)),
              m_dualColorButton, SLOT (setBackgroundColor (const kpColor &)));
-    
+
     connect (m_colorPalette->colorCells (), SIGNAL (isModifiedChanged (bool)),
              SLOT (updateNameOrUrlLabel ()));
     connect (m_colorPalette->colorCells (), SIGNAL (urlChanged (const KUrl &)),
              SLOT (updateNameOrUrlLabel ()));
-    connect (m_colorPalette->colorCells (), SIGNAL (nameChanged (const KUrl &)),
+    connect (m_colorPalette->colorCells (), SIGNAL (nameChanged (const QString &)),
              SLOT (updateNameOrUrlLabel ()));
     updateNameOrUrlLabel ();
 
@@ -249,7 +252,7 @@ void kpColorToolBar::updateNameOrUrlLabel ()
 
     kpColorCells *colorCells = m_colorPalette->colorCells ();
     if (!colorCells->url ().isEmpty ())
-        name = colorCells->url ().fileName ();
+        name = kpUrlFormatter::PrettyFilename (colorCells->url ());
     else
     {
         if (!colorCells->name ().isEmpty ())
