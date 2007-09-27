@@ -130,6 +130,8 @@ void kpMainWindow::enableViewMenuZoomDocumentActions (bool enable)
     d->actionZoomIn->setEnabled (enable);
     d->actionZoomOut->setEnabled (enable);
 
+    // HITODO: This seems to stay enabled no matter what.
+    //         Looks like a KSelectAction bug.
     d->actionZoom->setEnabled (enable);
 
 
