@@ -106,6 +106,10 @@ public:
 private:
     void readGeneralSettings ();
     void readThumbnailSettings ();
+
+    // WARNING: This is not virtual in our parent, KXmlGuiWindow.
+    void createGUI ();
+
     void init ();
 
     // (only called for restoring a previous session e.g. starting KDE with

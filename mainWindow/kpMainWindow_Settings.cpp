@@ -162,12 +162,16 @@ void kpMainWindow::slotConfigureToolBars ()
     // KDE3
     toolEndShape ();
 
-    //saveMainWindowSettings (KGlobal::config (), autoSaveGroup ());
+// TODO: Do we need this?
+#if 0
+    // KConfig::readEntry() does not actually reread from disk, hence doesn't
+    // realize what other processes have done e.g. Settings / Show Path
+    KGlobal::config ()->reparseConfiguration ();
+#endif
+
+    saveMainWindowSettings (KGlobal::config ()->group (autoSaveGroup ()));
 
     KEditToolBar dialog (actionCollection (), this);
-    // Clicking on OK after Apply brings up the dialog (below) again.
-    // Bug with KEditToolBar.
-    dialog.showButton( KDialog::Default, false);
     connect (&dialog, SIGNAL (newToolbarConfig ()),
              this, SLOT (slotNewToolBarConfig ()));
 
@@ -181,18 +185,8 @@ void kpMainWindow::slotNewToolBarConfig ()
     kDebug () << "kpMainWindow::slotNewToolBarConfig()";
 #endif
 
-    // Wouldn't it be nice if createGUI () didn't nuke all the KToolBar's?
-    // (including my non-XMLGUI ones whose states take a _lot_ of effort to
-    //  restore).
-    // TODO: this message is probably unacceptable - so restore the state of
-    //       my toolbars instead.
-    KMessageBox::information (this,
-        i18n ("You have to restart KolourPaint for these changes to take effect."),
-        i18n ("Toolbar Settings Changed"),
-        QLatin1String ("ToolBarSettingsChanged"));
-
-    //createGUI();
-    //applyMainWindowSettings (KGlobal::config (), autoSaveGroup ());
+    createGUI();
+    applyMainWindowSettings (KGlobal::config ()->group (autoSaveGroup ()));
 }
 
 

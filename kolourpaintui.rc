@@ -118,7 +118,7 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
         <Action name="help_taking_screenshots" />
     </Menu>
 
-    <!-- HACK: See kpmainwindow_tools.cpp:kpMainWindow::createToolBox(). -->
+    <!-- HACK: See kpmainwindow.cpp:kpMainWindow::createGUI(). -->
     <Menu name="toolToolBarHiddenMenu"><text>DO NOT TRANSLATE, JUST LEAVE AS IS: toolToolBarHiddenMenu</text>
         <Action name="tool_brush" />
         <Action name="tool_color_eraser" />
