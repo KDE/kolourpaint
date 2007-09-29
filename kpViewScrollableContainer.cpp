@@ -706,7 +706,7 @@ void kpViewScrollableContainer::drawResizeLines ()
 #endif
 
 
-// TODO: If XRENDER is disabled, this painting with Qt::WA_PaintOutsidePaintEvent
+// TODO: If XRENDER is disabled, this painting with Qt::WA_PaintUnclipped
 //       seems to trigger a harmless, asynchronous error:
 //
 //           X Error: RenderBadPicture (invalid Picture parameter) 180
@@ -716,6 +716,11 @@ void kpViewScrollableContainer::drawResizeLines ()
 //
 //       I don't know what code is _directly_ triggering that error -- running
 //       KolourPaint with "-sync" doesn't seem to make the error synchronous.
+//
+//       The API doc for Qt::WA_PaintUnclipped says "This flag is only
+//       supported for widgets for which the WA_PaintOnScreen".  We don't
+//       actually enable "WA_PaintOnScreen" (which looks quite scary), so that
+//       might be part of the cause.
 #define FILL_NOT_RECT(rect)                                              \
     kpPixmapFX::widgetFillNOTRect (viewport (),                          \
         rect.x (), rect.y (), rect.width (), rect.height (),             \
