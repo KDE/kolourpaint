@@ -27,7 +27,7 @@
 
 
 #define DEBUG_KP_VIEW 0
-#define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 1) || 0)
+#define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 1) || 1)
 
 
 #include <kpView.h>
@@ -35,6 +35,9 @@
 
 #include <QPainter>
 #include <QPaintEvent>
+#include <QTime>
+
+#include <KDebug>
 
 #include <kpAbstractSelection.h>
 #include <kpColor.h>
@@ -440,19 +443,38 @@ void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
     }
 }
 
-
-void kpView::paintEventDrawRect (const QRect &viewRect)
+// This is called "_Unclipped" because it may draw outside of
+// <viewRect>.  For instance, if:
+//
+// 1. <viewRect> = QRect (0, 0, 2, 3) [top-left of the view]
+// 2. zoomLevelX() == 800
+// 3. zoomLevelY() == 800
+//
+// Then, the local variable <docRect> will be QRect (0, 0, 1, 1).
+// When the part of the document corresponding to <docRect>
+// (a single document pixel) is drawn with QPainter::scale(), the
+// view rectangle QRect (0, 0, 7, 7) will be overwritten due to the
+// 8x zoom.  This view rectangle is bigger than <viewRect>.
+//
+// We can't use QPainter::setClipRect() since it is buggy in Qt 4.3.1
+// and clips too many pixels when used in combination with scale()
+// [qt-bugs@trolltech.com issue N181038].
+//
+// This over-drawing is dangerous -- see the comments in paintEvent().
+// This over-drawing is only safe from Qt's perspective since Qt
+// automatically clips all drawing in paintEvent() (which calls us) to
+// QPaintEvent::region().
+void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
 {
 #if DEBUG_KP_VIEW_RENDERER
-    kDebug () << "\tkpView::paintEventDrawRect(viewRect=" << viewRect
-               << ")" << endl;
+    kDebug () << "\tviewRect=" << viewRect;
 #endif
 
     kpViewManager *vm = viewManager ();
     const kpDocument *doc = document ();
 
-    if (!vm || !doc)
-        return;
+    Q_ASSERT (vm);
+    Q_ASSERT (doc);
 
 
     if (viewRect.isEmpty ())
@@ -468,16 +490,8 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
 
     QPainter painter (this);
 
-    // sync: painter clips to viewRect.
-    painter.setClipRect (viewRect);
-
-
-    //
-    // Draw checkboard for transparent images and/or views with borders
-    //
 
     QPixmap docPixmap;
-
     bool tempImageWillBeRendered = false;
 
     if (!docRect.isEmpty ())
@@ -506,6 +520,10 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
                    << endl;
     #endif
     }
+
+    //
+    // Draw checkboard for transparent images and/or views with borders
+    //
 
     if (!docPixmap.mask ().isNull () ||
         (tempImageWillBeRendered && vm->tempImage ()->paintMayAddMask ()))
@@ -546,7 +564,7 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
     #if DEBUG_KP_VIEW_RENDERER && 1
         QTime scaleTimer; scaleTimer.start ();
     #endif
-        // sync: ASSUMPTION: painter clips to viewRect.
+        // This is the only troublesome part of the method that draws unclipped.
         painter.translate (origin ().x (), origin ().y ());
         painter.scale (double (zoomLevelX ()) / 100.0,
                        double (zoomLevelY ()) / 100.0);
@@ -557,47 +575,7 @@ void kpView::paintEventDrawRect (const QRect &viewRect)
     #endif
 
     }  // if (!docRect.isEmpty ()) {
-
-
-    //
-    // Draw Grid Lines
-    //
-
-    if (isGridShown ())
-    {
-    #if DEBUG_KP_VIEW_RENDERER && 1
-        QTime gridTimer; gridTimer.start ();
-    #endif
-        paintEventDrawGridLines (&painter, viewRect);
-    #if DEBUG_KP_VIEW_RENDERER && 1
-        kDebug () << "\tgrid time=" << gridTimer.elapsed ();
-    #endif
-    }
-
-    painter.end ();
-
-
-    const QRect bvsvRect = buddyViewScrollableContainerRectangle ();
-    if (!bvsvRect.isEmpty ())
-    {
-        kpPixmapFX::widgetDrawStippledXORRect (this,
-            bvsvRect.x (), bvsvRect.y (), bvsvRect.width (), bvsvRect.height (),
-            kpColor::White, kpColor::White,  // Stippled XOR colors
-            kpColor::LightGray, kpColor::DarkGray,  // Hint colors if XOR not supported
-            viewRect);
-    }
-
-
-    if (!docRect.isEmpty ())
-    {
-        if (doc->selection ())
-        {
-            // Draw resize handles on top of possible grid lines
-            paintEventDrawSelectionResizeHandles (viewRect);
-        }
-    }
 }
-
 
 // protected virtual [base QWidget]
 void kpView::paintEvent (QPaintEvent *e)
@@ -635,6 +613,11 @@ void kpView::paintEvent (QPaintEvent *e)
     }
 
 
+    kpDocument *doc = document ();
+    if (!doc)
+        return;
+
+
     // It seems that e->region() is already clipped by Qt to the visible
     // part of the view (which could be quite small inside a scrollview).
     QRegion viewRegion = e->region ();
@@ -643,13 +626,59 @@ void kpView::paintEvent (QPaintEvent *e)
     kDebug () << "\t#rects = " << rects.count ();
 #endif
 
-    for (QVector <QRect>::ConstIterator it = rects.begin ();
-         it != rects.end ();
-         it++)
+    // Draw all of the requested regions of the document _before_ drawing
+    // the grid lines, buddy rectangle and selection resize handles.
+    // This ordering is important since paintEventDrawDoc_Unclipped()
+    // may draw outside of the view rectangle passed to it.
+    //
+    // To illustrate this, suppose we changed each iteration of the loop
+    // to call paintEventDrawDoc_Unclipped() _and_ then,
+    // paintEventDrawGridLines().  If there are 2 or more iterations of this
+    // loop, paintEventDrawDoc_Unclipped() in one iteration may draw over
+    // parts of nearby grid lines (which were drawn in a previous iteration)
+    // with document pixels.  Those grid line parts are probably not going to
+    // be redrawn, so will appear to be missing.
+    foreach (QRect r, rects)
     {
-        paintEventDrawRect (*it);
+        paintEventDrawDoc_Unclipped (r);
     }
 
+
+    //
+    // Draw Grid Lines
+    //
+
+    if (isGridShown ())
+    {
+        QPainter painter (this);
+    #if DEBUG_KP_VIEW_RENDERER && 1
+        QTime gridTimer; gridTimer.start ();
+    #endif
+        foreach (QRect r, rects)
+            paintEventDrawGridLines (&painter, r);
+    #if DEBUG_KP_VIEW_RENDERER && 1
+        kDebug () << "\tgrid time=" << gridTimer.elapsed ();
+    #endif
+    }
+
+
+    const QRect bvsvRect = buddyViewScrollableContainerRectangle ();
+    if (!bvsvRect.isEmpty ())
+    {
+        kpPixmapFX::widgetDrawStippledXORRect (this,
+            bvsvRect.x (), bvsvRect.y (), bvsvRect.width (), bvsvRect.height (),
+            kpColor::White, kpColor::White,  // Stippled XOR colors
+            kpColor::LightGray, kpColor::DarkGray,  // Hint colors if XOR not supported
+            e->rect ());
+    }
+
+
+    // KDE3: There was a !docRect.isEmpty() check which was wrong
+    if (doc->selection ())
+    {
+        // Draw resize handles on top of possible grid lines
+        paintEventDrawSelectionResizeHandles (e->rect ());
+    }
 
 #if DEBUG_KP_VIEW_RENDERER && 1
     kDebug () << "\tall done in: " << timer.restart () << "ms";
