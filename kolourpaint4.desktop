@@ -74,7 +74,7 @@ Exec=kolourpaint4 %u
 X-DocPath=kolourpaint4/index.html
 
 # SYNC: Run branches/kolourpaint/control/scripts/gen_mimetype_line.sh in
-#       the version of kdelibs/kimgio/ (e.g. KDE 3.5) KolourPaint is
+#       the version of kdelibs/kimgio/ (e.g. KDE 4.0) KolourPaint is
 #       shipped with.
 MimeType=image/fax-g3;image/gif;image/jpeg2000;image/jpeg;image/png;image/tiff;image/bmp;image/x-dds;image/x-eps;image/x-exr;image/x-hdr;image/x-ico;image/x-pcx;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-rgb;image/x-tga;image/x-psd;image/x-xbitmap;image/x-xcf;image/x-xpixmap;video/x-mng;
 
