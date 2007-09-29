@@ -1297,7 +1297,13 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
 
             // Repaint newly exposed region immediately to reduce tearing
             // of scrollView.
+        #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 1
+            kDebug () << "\t\tscrolled - repaint new region:" << region;
+        #endif
             m_view->repaint (region);
+        #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 1
+            kDebug () << "\t\tscrolled - repainted";
+        #endif
         }
     }
 
