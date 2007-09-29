@@ -83,7 +83,7 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionOpen = KStandardAction::open (this, SLOT (slotOpen ()), ac);
 
     d->actionOpenRecent = KStandardAction::openRecent (this, SLOT (slotOpenRecent (const KUrl &)), ac);
-    d->actionOpenRecent->loadEntries (KGlobal::config ()->group( QString() ) );
+    d->actionOpenRecent->loadEntries (KGlobal::config ()->group (kpSettingsGroupRecentFiles));
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\trecent URLs=" << d->actionOpenRecent->items ();
 #endif
@@ -192,11 +192,11 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
 
     // HACK: Something might have changed interprocess.
     // If we could PROPAGATE: interprocess, then this wouldn't be required.
-    d->actionOpenRecent->loadEntries (cfg->group (QString ()));
+    d->actionOpenRecent->loadEntries (cfg->group (kpSettingsGroupRecentFiles));
 
     d->actionOpenRecent->addUrl (url);
 
-    d->actionOpenRecent->saveEntries (cfg->group (QString ()));
+    d->actionOpenRecent->saveEntries (cfg->group (kpSettingsGroupRecentFiles));
     cfg->sync ();
 
 #if DEBUG_KP_MAIN_WINDOW
@@ -224,7 +224,7 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
             // Avoid URL memory leak in KRecentFilesAction::loadEntries().
             mw->d->actionOpenRecent->clear ();
 
-            mw->d->actionOpenRecent->loadEntries (cfg->group (QString ()));
+            mw->d->actionOpenRecent->loadEntries (cfg->group (kpSettingsGroupRecentFiles));
         #if DEBUG_KP_MAIN_WINDOW
             kDebug () << "\t\t\tcheck recent URLs="
                         << mw->d->actionOpenRecent->items () << endl;

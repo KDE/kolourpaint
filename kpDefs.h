@@ -69,6 +69,8 @@
 //  KConfigBase::readEntry()'s use of QVariant due to the lack of
 //  QLatin1String::QLatin1String(void))
 
+#define kpSettingsGroupRecentFiles QString::fromLatin1 ("Recent Files")
+
 #define kpSettingsGroupGeneral QString::fromLatin1 ("General Settings")
 #define kpSettingFirstTime QString::fromLatin1 ("First Time")
 #define kpSettingShowGrid QString::fromLatin1 ("Show Grid")
@@ -152,4 +154,5 @@
 
 
 #endif  // KP_DEFS_H
+
 
