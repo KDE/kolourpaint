@@ -1,4 +1,4 @@
-project(kolourpaint)
+project(kolourpaint4)
 
 add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 
@@ -355,7 +355,8 @@ install(TARGETS kolourpaint4 DESTINATION ${BIN_INSTALL_DIR})
 ########### install files ###############
 
 install( FILES kolourpaint4.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
-install( FILES kolourpaint4ui.rc  DESTINATION  ${DATA_INSTALL_DIR}/kolourpaint )
+install( FILES kolourpaint4ui.rc  DESTINATION
+${DATA_INSTALL_DIR}/kolourpaint4 )
 
 
 

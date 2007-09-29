@@ -169,7 +169,7 @@ void kpMainWindow::readThumbnailSettings ()
 // private [override KXmlGuiWindow]
 void kpMainWindow::createGUI ()
 {
-    KXmlGuiWindow::createGUI (kpSettingsUIFile);
+    KXmlGuiWindow::createGUI ();
 
     // HACK: Until we have a proper kpToolToolBar where tool actions are
     //       plugged into it properly, Qt4 will not recognise our actions'
@@ -343,8 +343,7 @@ void kpMainWindow::init ()
     // set initial pos/size of GUI
     //
 
-    // (see kpdefs.h for why we use the "KolourPaint4" prefix)
-    setAutoSaveSettings ("KolourPaint4 MainWindow"/*config group*/);
+    setAutoSaveSettings ();
 
     // Put our non-XMLGUI toolbars in a sane place, the first time around
     // (have to do this _after_ setAutoSaveSettings as that applies default

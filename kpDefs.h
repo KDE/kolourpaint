@@ -65,19 +65,13 @@
 // Settings
 //
 
-// Groups are prefixed with "KolourPaint4" to allow the KDE3 version of KolourPaint
-// to share the same config file, without interfering with the KDE4 version.
-
 // (I would use QLatin1String but that doesn't compile with
 //  KConfigBase::readEntry()'s use of QVariant due to the lack of
 //  QLatin1String::QLatin1String(void))
 
-#define kpSettingsUIFile QString::fromLatin1 ("kolourpaint4ui.rc")
+#define kpSettingsGroupRecentFiles QString::fromLatin1 ("Recent Files")
 
-
-#define kpSettingsGroupRecentFiles QString::fromLatin1 ("KolourPaint4 Recent Files")
-
-#define kpSettingsGroupGeneral QString::fromLatin1 ("KolourPaint4 General Settings")
+#define kpSettingsGroupGeneral QString::fromLatin1 ("General Settings")
 #define kpSettingFirstTime QString::fromLatin1 ("First Time")
 #define kpSettingShowGrid QString::fromLatin1 ("Show Grid")
 #define kpSettingShowPath QString::fromLatin1 ("Show Path")
@@ -85,9 +79,9 @@
 #define kpSettingDitherOnOpen QString::fromLatin1 ("Dither on Open if Screen is 15/16bpp and Image Num Colors More Than")
 #define kpSettingOpenImagesInSameWindow QString::fromLatin1 ("Open Images in the Same Window")
 
-#define kpSettingsGroupFileSaveAs QString::fromLatin1 ("KolourPaint4 File/Save As")
-#define kpSettingsGroupFileExport QString::fromLatin1 ("KolourPaint4 File/Export")
-#define kpSettingsGroupEditCopyTo QString::fromLatin1 ("KolourPaint4 Edit/Copy To")
+#define kpSettingsGroupFileSaveAs QString::fromLatin1 ("File/Save As")
+#define kpSettingsGroupFileExport QString::fromLatin1 ("File/Export")
+#define kpSettingsGroupEditCopyTo QString::fromLatin1 ("Edit/Copy To")
 
 #define kpSettingForcedMimeType QString::fromLatin1 ("Forced MimeType")
 #define kpSettingForcedColorDepth QString::fromLatin1 ("Forced Color Depth")
@@ -101,36 +95,36 @@
 #define kpSettingResizeScaleLastKeepAspect QString::fromLatin1 ("Resize Scale - Last Keep Aspect")
 
 
-#define kpSettingsGroupMimeTypeProperties QString::fromLatin1 ("KolourPaint4 MimeType Properties Version 1.2-2")
+#define kpSettingsGroupMimeTypeProperties QString::fromLatin1 ("MimeType Properties Version 1.2-2")
 #define kpSettingMimeTypeMaximumColorDepth QString::fromLatin1 ("Maximum Color Depth")
 #define kpSettingMimeTypeHasConfigurableColorDepth QString::fromLatin1 ("Configurable Color Depth")
 #define kpSettingMimeTypeHasConfigurableQuality QString::fromLatin1 ("Configurable Quality Setting")
 
 
-#define kpSettingsGroupUndoRedo QString::fromLatin1 ("KolourPaint4 Undo/Redo Settings")
+#define kpSettingsGroupUndoRedo QString::fromLatin1 ("Undo/Redo Settings")
 #define kpSettingUndoMinLimit QString::fromLatin1 ("Min Limit")
 #define kpSettingUndoMaxLimit QString::fromLatin1 ("Max Limit")
 #define kpSettingUndoMaxLimitSizeLimit QString::fromLatin1 ("Max Limit Size Limit")
 
 
-#define kpSettingsGroupThumbnail QString::fromLatin1 ("KolourPaint4 Thumbnail Settings")
+#define kpSettingsGroupThumbnail QString::fromLatin1 ("Thumbnail Settings")
 #define kpSettingThumbnailShown QString::fromLatin1 ("Shown")
 #define kpSettingThumbnailGeometry QString::fromLatin1 ("Geometry")
 #define kpSettingThumbnailZoomed QString::fromLatin1 ("Zoomed")
 #define kpSettingThumbnailShowRectangle QString::fromLatin1 ("ShowRectangle")
 
 
-#define kpSettingsGroupPreviewSave QString::fromLatin1 ("KolourPaint4 Save Preview Settings")
+#define kpSettingsGroupPreviewSave QString::fromLatin1 ("Save Preview Settings")
 #define kpSettingPreviewSaveGeometry QString::fromLatin1 ("Geometry")
 #define kpSettingPreviewSaveUpdateDelay QString::fromLatin1 ("Update Delay")
 
 
-#define kpSettingsGroupTools QString::fromLatin1 ("KolourPaint4 Tool Settings")
+#define kpSettingsGroupTools QString::fromLatin1 ("Tool Settings")
 #define kpSettingLastTool QString::fromLatin1 ("Last Used Tool")
 #define kpSettingToolBoxIconSize QString::fromLatin1 ("Tool Box Icon Size")
 
 
-#define kpSettingsGroupText QString::fromLatin1 ("KolourPaint4 Text Settings")
+#define kpSettingsGroupText QString::fromLatin1 ("Text Settings")
 #define kpSettingFontFamily QString::fromLatin1 ("Font Family")
 #define kpSettingFontSize QString::fromLatin1 ("Font Size")
 #define kpSettingBold QString::fromLatin1 ("Bold")
@@ -139,7 +133,7 @@
 #define kpSettingStrikeThru QString::fromLatin1 ("Strike Thru")
 
 
-#define kpSettingsGroupFlattenEffect QString::fromLatin1 ("KolourPaint4 Flatten Effect Settings")
+#define kpSettingsGroupFlattenEffect QString::fromLatin1 ("Flatten Effect Settings")
 #define kpSettingFlattenEffectColor1 QString::fromLatin1 ("Color1")
 #define kpSettingFlattenEffectColor2 QString::fromLatin1 ("Color2")
 
@@ -160,4 +154,5 @@
 
 
 #endif  // KP_DEFS_H
+
 

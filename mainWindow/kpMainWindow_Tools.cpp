@@ -175,8 +175,7 @@ void kpMainWindow::createToolBox ()
     d->toolToolBar = new kpToolToolBar (i18n ("Tool Box"), 2/*columns/rows*/, this);
 
     // (needed for QMainWindow::saveState())
-    // (see kpdefs.h for why we use the "KolourPaint4" prefix)
-    d->toolToolBar->setObjectName ("KolourPaint4 Tool Box");
+    d->toolToolBar->setObjectName ("Tool Box");
 
     connect (d->toolToolBar, SIGNAL (sigToolSelected (kpTool *)),
              this, SLOT (slotToolSelected (kpTool *)));
