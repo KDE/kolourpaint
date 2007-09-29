@@ -25,7 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_VIEW_SCROLLABLE_CONTAINER 0
+#define DEBUG_KP_VIEW_SCROLLABLE_CONTAINER 1
 
 #include <kpViewScrollableContainer.h>
 
@@ -193,11 +193,7 @@ void kpGrip::updatePixmap ()
 #endif
     if (hr.isValid ())
         kpPixmapFX::ensureOpaqueAt (&pixmap, hr);
- //   QPalette palette;
-   // palette.setBrush(backgroundRole(), QBrush(pixmap));
-    //setPalette(palette);
 
-    // COMPAT: why didn't leaving kpGrip as QWidget work?
     setPixmap (pixmap);
     if (!pixmap.mask ().isNull ())
         setMask (pixmap.mask ());
@@ -415,7 +411,9 @@ kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent)
     m_rightGrip->setObjectName ("Right Grip");
     m_bottomRightGrip->setObjectName ("BottomRight Grip");
 
-    // COMPAT: remove
+    // HITODO: drawResizeLines() uses this feature -- it therefore
+    //         flickers and only works on X11.  Fix drawResizeLines()
+    //         to remove the need for these attributes.
     viewport ()->setAttribute (Qt::WA_PaintOutsidePaintEvent);
     viewport ()->setAttribute (Qt::WA_PaintUnclipped);
 
@@ -708,12 +706,20 @@ void kpViewScrollableContainer::drawResizeLines ()
 #endif
 
 
-    //QPainter p (viewport ()); // COMPAT: , true/*unclipped*/);
-
-#define FILL_NOT_RECT(rect)                                                    \
-    kpPixmapFX::widgetFillNOTRect (viewport (),                                \
-        rect.x (), rect.y (), rect.width (), rect.height (),                   \
-        kpColor::Black/*1st hint color if "Raster NOT" not supported*/,    \
+// TODO: If XRENDER is disabled, this painting with Qt::WA_PaintOutsidePaintEvent
+//       seems to trigger a harmless, asynchronous error:
+//
+//           X Error: RenderBadPicture (invalid Picture parameter) 180
+//           Extension:    153 (RENDER)
+//           Minor opcode: 5 (RenderChangePicture)
+//           Resource id:  0x0
+//
+//       I don't know what code is _directly_ triggering that error -- running
+//       KolourPaint with "-sync" doesn't seem to make the error synchronous.
+#define FILL_NOT_RECT(rect)                                              \
+    kpPixmapFX::widgetFillNOTRect (viewport (),                          \
+        rect.x (), rect.y (), rect.width (), rect.height (),             \
+        kpColor::Black/*1st hint color if "Raster NOT" not supported*/,  \
         kpColor::White/*2nd hint color if "Raster NOT" not supported*/)
 
     const QRect rightRect = rightResizeLineRect ();
@@ -729,7 +735,6 @@ void kpViewScrollableContainer::drawResizeLines ()
         FILL_NOT_RECT (mapViewToViewport (bottomRightRect));
 
 #undef FILL_NOT_RECT
-    //p.end ();
 }
 
 
@@ -1292,7 +1297,6 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
     }
 
 
-    // COMPAT: this was ->changeInterval - check
     m_dragScrollTimer->start (DragScrollInterval);
     m_scrollTimerRunOnce = true;
 
@@ -1383,18 +1387,26 @@ void kpViewScrollableContainer::viewportPaintEvent (QPaintEvent *e)
 #endif
 
     Q3ScrollView::viewportPaintEvent (e);
+
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+    kDebug () << "done";
+#endif
 }
 
 // protected virtual [base QFrame]
 void kpViewScrollableContainer::paintEvent (QPaintEvent *e)
 {
-#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
     kDebug () << "kpViewScrollableContainer::paintEvent("
                << e->rect ()
                << ")" << endl;
 #endif
 
     Q3ScrollView::paintEvent (e);
+
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+    kDebug () << "done";
+#endif
 }
 
 // protected virtual [base QScrollView]
