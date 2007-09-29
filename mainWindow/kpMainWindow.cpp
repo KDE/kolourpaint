@@ -169,7 +169,7 @@ void kpMainWindow::readThumbnailSettings ()
 // private [override KXmlGuiWindow]
 void kpMainWindow::createGUI ()
 {
-    KXmlGuiWindow::createGUI ();
+    KXmlGuiWindow::createGUI (kpSettingsUIFile);
 
     // HACK: Until we have a proper kpToolToolBar where tool actions are
     //       plugged into it properly, Qt4 will not recognise our actions'
@@ -343,7 +343,8 @@ void kpMainWindow::init ()
     // set initial pos/size of GUI
     //
 
-    setAutoSaveSettings ();
+    // (see kpdefs.h for why we use the "KolourPaint4" prefix)
+    setAutoSaveSettings ("KolourPaint4 MainWindow"/*config group*/);
 
     // Put our non-XMLGUI toolbars in a sane place, the first time around
     // (have to do this _after_ setAutoSaveSettings as that applies default
@@ -996,7 +997,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 // private slot
 void kpMainWindow::slotScrollViewAboutToScroll ()
 {
-#if DEBUG_KP_MAIN_WINDOW && 0
+#if DEBUG_KP_MAIN_WINDOW && 0 || 1
     kDebug () << "kpMainWindow::slotScrollViewAboutToScroll()";
     kDebug () << "\tfastUpdates=" << viewManager ()->fastUpdates ()
                << " queueUpdates=" << viewManager ()->queueUpdates ()
@@ -1009,7 +1010,7 @@ void kpMainWindow::slotScrollViewAboutToScroll ()
 // private slot
 void kpMainWindow::slotScrollViewAfterScroll ()
 {
-#if DEBUG_KP_MAIN_WINDOW && 0
+#if DEBUG_KP_MAIN_WINDOW && 0 || 1
     kDebug () << "kpMainWindow::slotScrollViewAfterScroll() tool="
                << tool () << endl;
 #endif

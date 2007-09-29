@@ -108,7 +108,11 @@ void kpMainWindow::setupColorsMenuActions ()
 void kpMainWindow::createColorBox ()
 {
     d->colorToolBar = new kpColorToolBar (i18n ("Color Box"), this);
-    d->colorToolBar->setObjectName ("Color Box");  // (needed for QMainWindow::saveState())
+
+    // (needed for QMainWindow::saveState())
+    // (see kpdefs.h for why we use the "KolourPaint4" prefix)
+    d->colorToolBar->setObjectName ("KolourPaint4 Color Box");
+
     connect (colorCells (), SIGNAL (rowCountChanged (int)),
         SLOT (slotUpdateColorsDeleteRowActionEnabled ()));
 }

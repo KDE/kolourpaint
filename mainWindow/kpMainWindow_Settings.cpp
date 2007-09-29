@@ -172,6 +172,8 @@ void kpMainWindow::slotConfigureToolBars ()
     saveMainWindowSettings (KGlobal::config ()->group (autoSaveGroup ()));
 
     KEditToolBar dialog (actionCollection (), this);
+    dialog.setResourceFile (kpSettingsUIFile);
+
     connect (&dialog, SIGNAL (newToolbarConfig ()),
              this, SLOT (slotNewToolBarConfig ()));
 
