@@ -938,7 +938,7 @@ void kpMainWindow::slotPasteFromFile ()
     addRecentURL (url);
 
     // HITODO: We're not respecting the currently selected selection transparency.
-    //         Check everywhere that we are.  Bug also in KDE 3.
+    //         Check everywhere that we are.  KDE3: Bug also in KDE 3.
     paste (kpRectangularImageSelection (
         QRect (0, 0, image.width (), image.height ()),
         image));

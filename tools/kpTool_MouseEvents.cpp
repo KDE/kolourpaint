@@ -197,8 +197,8 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
     if (d->beganDraw)
     {
         kpView *view = viewUnderStartPoint ();
-        // TODO: RMB drag then left drag away menu = assert failure.
-        //       Does this affect branches/KDE/3.x/kdegraphics/kolourpaint?
+        // HITODO: RMB drag then left drag away menu = assert failure.
+        // KDE3: Does this affect branches/KDE/3.x/kdegraphics/kolourpaint?
         Q_ASSERT (view);
 
         d->currentPoint = view->transformViewToDoc (e->pos ());
@@ -264,8 +264,8 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
     if (d->beganDraw)
     {
         kpView *view = viewUnderStartPoint ();
-        // TODO: RMB drag then left click away menu = assert failure.
-        //       Does this affect branches/KDE/3.x/kdegraphics/kolourpaint?
+        // HITODO: RMB drag then left click away menu = assert failure.
+        // KDE3: Does this affect branches/KDE/3.x/kdegraphics/kolourpaint?
         Q_ASSERT (view);
 
         d->currentPoint = view->transformViewToDoc (e->pos ());
