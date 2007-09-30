@@ -467,6 +467,8 @@ void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
 void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
 {
 #if DEBUG_KP_VIEW_RENDERER
+    QTime timer;
+    timer.start ();
     kDebug () << "\tviewRect=" << viewRect;
 #endif
 
@@ -575,6 +577,10 @@ void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
     #endif
 
     }  // if (!docRect.isEmpty ()) {
+
+#if DEBUG_KP_VIEW_RENDERER && 1
+    kDebug () << "\tdrawDocRect done in: " << timer.restart () << "ms";
+#endif
 }
 
 // protected virtual [base QWidget]
