@@ -1014,6 +1014,9 @@ void kpMainWindow::slotScrollViewAfterScroll ()
                << tool () << endl;
 #endif
 
+    // OPT: Why can't this be moved into kpViewScrollableContainer::slotDragScroll(),
+    //      grouping all drag-scroll-related repaints, which would potentially avoid
+    //      double repainting?
     if (tool ())
     {
         tool ()->somethingBelowTheCursorChanged ();
