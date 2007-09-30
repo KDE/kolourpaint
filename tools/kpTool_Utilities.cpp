@@ -142,7 +142,9 @@ QPoint kpTool::calculateCurrentPoint (bool zoomToDoc) const
 // public slot
 void kpTool::somethingBelowTheCursorChanged ()
 {
-    somethingBelowTheCursorChanged (currentPoint (),
+    // KDE3: Why don't we need calculateCurrentPoint() for the doc point?
+    //       KolourPaint/KDE4 sure needs it.
+    somethingBelowTheCursorChanged (calculateCurrentPoint (),
         calculateCurrentPoint (false/*view point*/));
 }
 
@@ -151,7 +153,7 @@ void kpTool::somethingBelowTheCursorChanged ()
 void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_,
         const QPoint &currentViewPoint_)
 {
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 1 || 1
     kDebug () << "kpTool::somethingBelowTheCursorChanged(docPoint="
                << currentPoint_
                << " viewPoint="
