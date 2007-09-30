@@ -49,9 +49,9 @@
 // (Pulled from out of Thurston's hat)
 static const int DragScrollLeftTopMargin = 0;
 static const int DragScrollRightBottomMargin = 16;  // scrollbarish
-static const int DragScrollInterval = 1000 / 10;
+static const int DragScrollInterval = 150;
 static const int DragScrollInitialInterval = DragScrollInterval * 2;
-static const int DragScrollNumPixels = 5;
+static const int DragScrollNumPixels = 10;
 static const int DragDistanceFromRectMaxFor1stMultiplier = 50;
 static const int DragDistanceFromRectMaxFor2ndMultiplier = 100;
 
@@ -1229,6 +1229,9 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
     const QPoint pos = mapFromGlobal (QCursor::pos ());
 
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
+    for (int i = 0; i < 10; i++)
+        kDebug () << QString ();
+
     kDebug () << "kpViewScrollableContainer::slotDragScroll()"
                   << " noDragScrollRect=" << rect
                   << " pos=" << pos
@@ -1261,7 +1264,7 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
         dyMultiplier = distanceFromRectToMultiplier (pos.y () - rect.bottom ());
     }
 
-#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 1
     kDebug () << "kpViewScrollableContainer::slotDragScroll()"
                   << " dx=" << dx << " * " << dxMultiplier
                   << " dy=" << dy << " * " << dyMultiplier
@@ -1297,6 +1300,7 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
 
             // Repaint newly exposed region immediately to reduce tearing
             // of scrollView.
+     #if 1
         #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 1
             kDebug () << "\t\tscrolled - repaint new region:" << region;
         #endif
@@ -1304,6 +1308,7 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
         #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 1
             kDebug () << "\t\tscrolled - repainted";
         #endif
+     #endif
         }
     }
 
@@ -1314,6 +1319,12 @@ bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)
 
     if (didSomething)
         *didSomething = scrolled;
+
+
+#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 1
+    for (int i = 0; i < 10; i++)
+        kDebug () << QString ();
+#endif
 
     return scrolled;
 }
