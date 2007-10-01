@@ -519,7 +519,7 @@ void kpTransformAutoCropCommand::unexecute ()
     kpImage image (d->oldWidth, d->oldHeight);
 
     // restore the position of the center image
-    kpPixmapFX::setPixmapAt (&image, d->contentsRect.topLeft (),
+    kpPixmapFX::setPixmapAt (&image, d->contentsRect,
         doc->image (d->actOnSelection));
 
     // draw the borders
