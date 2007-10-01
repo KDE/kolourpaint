@@ -41,7 +41,7 @@
 //       to get vastly differently colors in both sides yet they will be
 //       considered similar).
 
-#define DEBUG_KP_TOOL_AUTO_CROP 0
+#define DEBUG_KP_TOOL_AUTO_CROP 1
 
 
 #include <kpTransformAutoCrop.h>
@@ -62,6 +62,7 @@
 #include <kpCommandHistory.h>
 #include <kpDocument.h>
 #include <kpMainWindow.h>
+#include <kpPainter.h>
 #include <kpPixmapFX.h>
 #include <kpRectangularImageSelection.h>
 #include <kpSetOverrideCursorSaver.h>
@@ -336,13 +337,13 @@ struct kpTransformAutoCropCommandPrivate
     kpAbstractImageSelection *oldSelectionPtr;
 };
 
-// TODO: Move to /commands/
+// REFACTOR: Move to /commands/
 kpTransformAutoCropCommand::kpTransformAutoCropCommand (bool actOnSelection,
-                                              const kpTransformAutoCropBorder &leftBorder,
-                                              const kpTransformAutoCropBorder &rightBorder,
-                                              const kpTransformAutoCropBorder &topBorder,
-                                              const kpTransformAutoCropBorder &botBorder,
-                                              kpCommandEnvironment *environ)
+        const kpTransformAutoCropBorder &leftBorder,
+        const kpTransformAutoCropBorder &rightBorder,
+        const kpTransformAutoCropBorder &topBorder,
+        const kpTransformAutoCropBorder &botBorder,
+        kpCommandEnvironment *environ)
     : kpNamedCommand (name (actOnSelection, DontShowAccel), environ),
       d (new kpTransformAutoCropCommandPrivate ())
 {
@@ -516,16 +517,12 @@ void kpTransformAutoCropCommand::unexecute ()
     Q_ASSERT (doc);
 
     kpImage image (d->oldWidth, d->oldHeight);
-    QBitmap maskBitmap;
 
     // restore the position of the center image
-    kpPixmapFX::setPixmapAt (&image, d->contentsRect,
-                             doc->image (d->actOnSelection));
+    kpPixmapFX::setPixmapAt (&image, d->contentsRect.topLeft (),
+        doc->image (d->actOnSelection));
 
     // draw the borders
-
-    QPainter painter (&image);
-    QPainter maskPainter;
 
     const kpTransformAutoCropBorder *borders [] =
     {
@@ -555,39 +552,25 @@ void kpTransformAutoCropCommand::unexecute ()
                        << " rgb=" << (int *) col.toQRgb () /* %X hack */ << endl;
         #endif
 
-            if (col.isOpaque ())
-            {
-                painter.fillRect ((*b)->rect (), col.toQColor ());
-            }
-            else
-            {
-                if (maskBitmap.isNull ())
-                {
-                    // TODO: dangerous when a painter is active on image?
-                    maskBitmap = kpPixmapFX::getNonNullMask (image);
-                    maskPainter.begin (&maskBitmap);
-                }
-
-                maskPainter.fillRect ((*b)->rect (), Qt::color0/*transparent*/);
-            }
+            const QRect r = (*b)->rect ();
+            kpPainter::fillRect (&image,
+                r.x (), r.y (), r.width (), r.height (),
+                col);
         }
         else
         {
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
             kDebug () << "\trestoring border image " << (*b)->rect ();
         #endif
+            // KDE3: Forgot to initialize the transparent pixels.
+            //       Strange interaction with old mask lines (previously above) as well.
             if (*p)
-                painter.drawPixmap ((*b)->rect (), **p);
+            {
+                // REFACTOR: Add equivalent method to kpPainter and use.
+                kpPixmapFX::setPixmapAt (&image, (*b)->rect (), **p);
+            }
         }
     }
-
-    if (maskPainter.isActive ())
-        maskPainter.end ();
-
-    painter.end ();
-
-    if (!maskBitmap.isNull ())
-        image.setMask (maskBitmap);
 
 
     if (!d->actOnSelection)

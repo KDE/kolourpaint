@@ -40,7 +40,7 @@ class kpMainWindow;
 class kpTransformAutoCropBorder;
 
 
-// TODO: This should be moved into /commands/
+// REFACTOR: This should be moved into /commands/
 class kpTransformAutoCropCommand : public kpNamedCommand
 {
 public:
