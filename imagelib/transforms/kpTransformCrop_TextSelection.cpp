@@ -25,55 +25,52 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #define DEBUG_KP_TOOL_CROP 0
 
 
 #include <kpTransformCrop.h>
 #include <kpTransformCropPrivate.h>
 
-#include <KLocale>
-
-#include <kpAbstractImageSelection.h>
-#include <kpAbstractSelection.h>
-#include <kpDocument.h>
+#include <kpEffectClearCommand.h>
+#include <kpMacroCommand.h>
 #include <kpMainWindow.h>
-#include <kpTextSelection.h>
-#include <kpTransformResizeScaleCommand.h>
+#include <kpToolSelectionMoveCommand.h>
 
 
-static const QString CommandName = i18n ("Set as Image");
-
-
-void kpTransformCrop (kpMainWindow *mainWindow)
+void kpTransformCrop_TextSelection (kpMainWindow *mainWindow,
+        const QString &commandName, kpCommand *resizeDocCommand)
 {
-    kpDocument *doc = mainWindow->document ();
-    Q_ASSERT (doc);
-
-    kpAbstractSelection *sel = doc->selection ();
-    Q_ASSERT (sel);
+    kpCommandEnvironment *environ = mainWindow->commandEnvironment ();
 
 
-    kpCommand *resizeDocCommand =
-        new kpTransformResizeScaleCommand (
-            false/*act on doc, not sel*/,
-            sel->width (), sel->height (),
-            kpTransformResizeScaleCommand::Resize,
-            mainWindow->commandEnvironment ());
+    kpMacroCommand *macroCmd = new kpMacroCommand (commandName, environ);
+
+    macroCmd->addCommand (resizeDocCommand);
+
+#if DEBUG_KP_TOOL_CROP
+    kDebug () << "\tisText";
+    kDebug () << "\tclearing doc with trans cmd";
+#endif
+    macroCmd->addCommand (
+        new kpEffectClearCommand (
+            false/*act on doc*/,
+            kpColor::Transparent,
+            environ));
+
+#if DEBUG_KP_TOOL_CROP
+    kDebug () << "\tmoving sel to (0,0) cmd";
+#endif
+    kpToolSelectionMoveCommand *moveCmd =
+        new kpToolSelectionMoveCommand (
+            QString::null/*uninteresting child of macro cmd*/,  //krazy:exclusion=nullstrassign for old broken gcc
+            environ);
+    moveCmd->moveTo (QPoint (0, 0), true/*move on exec, not now*/);
+    moveCmd->finalize ();
+    macroCmd->addCommand (moveCmd);
 
 
-    kpTextSelection *textSel =
-        dynamic_cast <kpTextSelection *> (sel);
-    kpAbstractImageSelection *imageSel =
-        dynamic_cast <kpAbstractImageSelection *> (sel);
-    // It's either a text selection or an image selection, but cannot be
-    // neither or both.
-    Q_ASSERT (!!textSel != !!imageSel);
-
-    if (textSel)
-        ::kpTransformCrop_TextSelection (mainWindow, ::CommandName, resizeDocCommand);
-    else if (imageSel)
-        ::kpTransformCrop_ImageSelection (mainWindow, ::CommandName, resizeDocCommand);
-    else
-        Q_ASSERT (!"unreachable");
+    mainWindow->addImageOrSelectionCommand (
+        macroCmd,
+        true/*add create cmd*/,
+        true/*add create content cmd*/);
 }

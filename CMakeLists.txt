@@ -187,6 +187,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpFloodFill.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpImage.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpPainter.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/transforms/kpTransformAutoCrop.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/imagelib/transforms/kpTransformCrop_ImageSelection.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/imagelib/transforms/kpTransformCrop_TextSelection.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/transforms/kpTransformCrop.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/kolourpaint.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/kpThumbnail.cpp
