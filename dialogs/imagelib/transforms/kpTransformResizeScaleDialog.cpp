@@ -207,13 +207,13 @@ static QIcon toolButtonIconSet (const QString &iconName)
 
     QPixmap disabledIcon = KIconLoader::global ()->iconEffect ()->apply (
         UserIcon (iconName),
-        K3Icon::Toolbar, K3Icon::DisabledState);
+        KIconLoader::Toolbar, KIconLoader::DisabledState);
 
     const QPixmap iconSetNormalIcon = iconSet.pixmap (QSize(22,22),
                                                       QIcon::Normal);
 
     // I bet past or future versions of KIconEffect::apply() resize the
-    // disabled icon if we claim it's in group K3Icon::Toolbar.  So resize
+    // disabled icon if we claim it's in group KIconLoader::Toolbar.  So resize
     // it to match the QIcon::Normal icon, just in case.
     disabledIcon = kpPixmapFX::scale (disabledIcon,
                                       iconSetNormalIcon.width (),
