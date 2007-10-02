@@ -139,10 +139,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
                << endl;
 #endif
 
-    // HACK: We're used by kpTransformResizeScaleDialog.cpp:toolButtonIconSet()
-    //       to scale an icon.  Rethink whether we really need to enforce no
-    //       alpha channel in kpPixmapFX.
-    // KP_PFX_CHECK_NO_ALPHA_CHANNEL (pm);
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (pm);
 
     if (w == pm.width () && h == pm.height ())
         return pm;
@@ -192,10 +189,7 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
     }
 
 
-    // HACK: We're used by kpTransformResizeScaleDialog.cpp:toolButtonIconSet()
-    //       to scale an icon.  Rethink whether we really need to enforce no
-    //       alpha channel in kpPixmapFX.
-    // KP_PFX_CHECK_NO_ALPHA_CHANNEL (retPixmap);
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (retPixmap);
     return retPixmap;
 }
 
@@ -621,3 +615,4 @@ QImage kpPixmapFX::flip (const QImage &img, bool horz, bool vert)
 
     return img.mirrored (horz, vert);
 }
+
