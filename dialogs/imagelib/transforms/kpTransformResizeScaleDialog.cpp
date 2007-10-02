@@ -26,7 +26,6 @@
 */
 
 
-#define DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND 0
 #define DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG 0
 
 
@@ -382,6 +381,8 @@ void kpTransformResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget
     connect (m_newHeightInput, SIGNAL (valueChanged (int)),
              this, SLOT (slotHeightChanged (int)));
 
+    // COMPAT: KDoubleNumInput only fires valueChanged(double) once per
+    //         edit, not once per keystroke.  Bug in KDoubleNumInput.
     connect (m_percentWidthInput, SIGNAL (valueChanged (double)),
              this, SLOT (slotPercentWidthChanged (double)));
     connect (m_percentHeightInput, SIGNAL (valueChanged (double)),
