@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_COLOR_TOOL_BAR 1
+#define DEBUG_KP_COLOR_TOOL_BAR 0
 
 
 #include <kpColorToolBar.h>

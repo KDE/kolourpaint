@@ -153,7 +153,7 @@ void kpTool::somethingBelowTheCursorChanged ()
 void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_,
         const QPoint &currentViewPoint_)
 {
-#if DEBUG_KP_TOOL && 1 || 1
+#if DEBUG_KP_TOOL && 1
     kDebug () << "kpTool::somethingBelowTheCursorChanged(docPoint="
                << currentPoint_
                << " viewPoint="

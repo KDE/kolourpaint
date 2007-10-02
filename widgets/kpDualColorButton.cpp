@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_DUAL_COLOR_BUTTON 1
+#define DEBUG_KP_DUAL_COLOR_BUTTON 0
 
 
 #include <kpDualColorButton.h>
