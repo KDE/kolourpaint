@@ -114,35 +114,9 @@ static void GetSetPaintPixmapAtHelper (QPainter *p, bool drawingOnRGBLayer, void
             p->fillRect (destRect, Qt::color0/*transparent*/);
         }
 
-    // SYNC: HACK around Qt bug:
-    //       On non-XRENDER displays, when QPainter is open on a QBitmap,
-    //
-    //           drawPixmap(point, srcPixmap, QRect (sx, sy, sw, sh))
-    //               ["srcPixmap" is also a QBitmap]
-    //
-    //       ignores (sx,sy) and starts grabbing from srcPixmap at (0,0).
-    #if 0
-        // This is what we want to write but does not work on non-XRENDER.
         p->drawPixmap (pack->destTopLeft,
             srcMask,
             pack->validSrcRect);
-    #else
-        // Not needing to think about negatives simplifies the correctness reasoning.
-        //
-        // This is guaranteed by the above Q_ASSERT() but check anyway in case we
-        // accidently remove it.
-        Q_ASSERT (pack->validSrcRect.x () >= 0 && pack->validSrcRect.y () >= 0);
-
-        p->setClipRect (destRect);
-        p->drawPixmap (
-            QPoint (pack->destTopLeft.x () - pack->validSrcRect.x (),
-                    pack->destTopLeft.y () - pack->validSrcRect.y ()),
-            srcMask,
-            QRect (0,
-                   0,
-                   pack->validSrcRect.width () + pack->validSrcRect.x (),
-                   pack->validSrcRect.height () + pack->validSrcRect.y ()));
-    #endif
     }
 }
 
