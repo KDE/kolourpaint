@@ -52,7 +52,9 @@ static QImage::Format DepthToFormat (int depth)
         return QImage::Format_Indexed8;
 
     case 24:
-        // TODO: return RGB32 if no alpha.
+        // If the src image has no mask, we should really return RGB32, to
+        // avoid introducing a mask.  But for some reason, a mask is not
+        // introduced so this is correct :)
         return QImage::Format_ARGB32;
 
     default:
@@ -95,11 +97,12 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
 
     // Hack around Qt's braindead QImage::convertDepth(1, ...) (with
     // dithering off) which produces pathetic results with an image that
-    // only has 2 colours - sometimes it just gives a completely black
-    // result.  Instead, we simply preserve the 2 colours.  One use case
-    // is resaving a "colour monochrome" image (<= 2 colours but not
-    // necessarily black & white).
-    // TODO: still true for Qt4? and QImage::convertToFormat()?
+    // only has 2 colors - sometimes it just gives a completely black
+    // result (try yellow and white as input).  Instead, we simply preserve
+    // the 2 colours.
+    //
+    // One use case is resaving a "color monochrome" image (<= 2 colors but
+    // not necessarily black & white).
     if (depth == 1 && !dither)
     {
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
@@ -110,7 +113,6 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
 
         bool moreThan2Colors = false;
 
-        // COMPAT: test new ctor
         QImage monoImage (image.width (), image.height (), QImage::Format_MonoLSB);
         monoImage.setNumColors (2);
     #if DEBUG_KP_EFFECT_REDUCE_COLORS
@@ -220,12 +222,21 @@ void kpEffectReduceColors::applyEffect (QPixmap *destPixmapPtr, int depth, bool 
     QPixmap pixmap = kpPixmapFX::convertToPixmap (image, false/*no dither*/);
 
 
-    // HACK: The above "image.convertDepth()" erases the Alpha Channel
+#if DEBUG_KP_EFFECT_REDUCE_COLORS
+    kDebug () << "after image depth conversion: hasMask="
+              << kpPixmapFX::hasMask (pixmap)
+              << " src.hasMask="
+              << kpPixmapFX::hasMask (*destPixmapPtr);
+#endif
+    
+
+    // HACK: The above "image.convertToFormat()" erases the mask
     //       (at least for monochrome).
     //       qpixmap.html says "alpha masks on monochrome images are ignored."
     //
     //       Put the mask back.
     //
+    //       Still required under Qt 4.3.1.
     if (!destPixmapPtr->mask ().isNull())
         pixmap.setMask (destPixmapPtr->mask ());
 
