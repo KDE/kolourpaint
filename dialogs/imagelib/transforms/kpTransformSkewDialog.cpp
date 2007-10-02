@@ -131,12 +131,12 @@ void kpTransformSkewDialog::createAngleGroupBox ()
 
     angleLayout->addWidget (horizontalSkewPixmapLabel, 0, 0);
     angleLayout->addWidget (horizontalSkewLabel, 0, 1);
-    angleLayout->addWidget (m_horizontalSkewInput, 0, 2);
+    angleLayout->addWidget (m_horizontalSkewInput, 0, 2, Qt::AlignVCenter);
     angleLayout->addWidget (horizontalSkewDegreesLabel, 0, 3);
 
     angleLayout->addWidget (verticalSkewPixmapLabel, 1, 0);
     angleLayout->addWidget (verticalSkewLabel, 1, 1);
-    angleLayout->addWidget (m_verticalSkewInput, 1, 2);
+    angleLayout->addWidget (m_verticalSkewInput, 1, 2, Qt::AlignVCenter);
     angleLayout->addWidget (verticalSkewDegreesLabel, 1, 3);
 
 
