@@ -564,7 +564,7 @@ bool kpToolWidgetBase::event (QEvent *e)
     if (e->type () == QEvent::ToolTip)
     {
         QHelpEvent *he = (QHelpEvent *) e;
-    #if DEBUG_KP_TOOL_WIDGET_BASE || 1
+    #if DEBUG_KP_TOOL_WIDGET_BASE
         kDebug () << "kpToolWidgetBase::event() QHelpEvent pos=" << he->pos () << endl;
     #endif
 
@@ -576,7 +576,7 @@ bool kpToolWidgetBase::event (QEvent *e)
                 if (m_pixmapRects [r][c].contains (he->pos ()))
                 {
                     const QString tip = m_toolTips [r][c];
-                #if DEBUG_KP_TOOL_WIDGET_BASE || 1
+                #if DEBUG_KP_TOOL_WIDGET_BASE
                     kDebug () << "\tin option: r=" << r << "c=" << c
                               << "tip='" << tip << "'" << endl;
                 #endif                
@@ -595,7 +595,7 @@ bool kpToolWidgetBase::event (QEvent *e)
     exit_loops:
         if (!showedText)
         {
-        #if DEBUG_KP_TOOL_WIDGET_BASE || 1
+        #if DEBUG_KP_TOOL_WIDGET_BASE
             kDebug () << "\thiding text" << endl;
         #endif
             QToolTip::hideText ();
