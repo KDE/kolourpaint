@@ -337,7 +337,17 @@ static void FlipPoints (QPolygon *points,
 
     const QMatrix matrix = kpPixmapFX::flipMatrix (oldRect.width (), oldRect.height (),
                                                    horiz, vert);
+
+#if !defined (QT_NO_DEBUG) && !defined (NDEBUG)
+    QPolygon oldPoints = *points;
+#endif
+
     *points = matrix.map (*points);
+
+#if !defined (QT_NO_DEBUG) && !defined (NDEBUG)
+    // Sanity check: flipping the points twice gives us the original points.
+    Q_ASSERT (oldPoints == matrix.map (*points));
+#endif
 
     points->translate (oldRect.x (), oldRect.y ());
 }
