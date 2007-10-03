@@ -70,7 +70,8 @@ QImage kpPixmapFX::convertToQImage (const QPixmap &pixmap)
 
 
 // Returns true if <image> contains translucency (rather than just transparency)
-// QPixmap::hasAlphaChannel() appears to give incorrect results
+// QPixmap::hasAlphaChannel() is a blind method that doesn't actually check
+// each pixel.
 static bool imageHasAlphaChannel (const QImage &image)
 {
     if (image.depth () < 32)
@@ -92,6 +93,7 @@ static bool imageHasAlphaChannel (const QImage &image)
 
 static int imageNumColorsUpTo (const QImage &image, int max)
 {
+    // OPT: Use hash table, not binary tree.
     QMap <QRgb, bool> rgbMap;
 
     if (image.depth () <= 8)

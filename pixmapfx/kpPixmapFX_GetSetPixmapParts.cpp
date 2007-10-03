@@ -169,7 +169,7 @@ QPixmap kpPixmapFX::getPixmapAt (const QPixmap &pm, const QRect &rect)
         return retPixmap;
     }
 
-    // TODO: we could call setPixmapAt().
+    // REFACTOR: we could call setPixmapAt().
     GetSetPaintPixmapAtPack pack;
     pack.srcPixmap = &pm;
     pack.destTopLeft = validSrcRect.topLeft () - rect.topLeft ();
