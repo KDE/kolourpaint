@@ -355,10 +355,10 @@ static void TransformPixmapHelper (QPainter *p, bool drawingOnRGBLayer, void *da
     //       as the user does not want their image to get blurier every
     //       time they e.g. rotate it (especially important for multiples
     //       of 90 degrees but also true for every other angle).
-    p->setMatrix (pack->transformMatrix);
 
     if (drawingOnRGBLayer)
     {
+        p->setMatrix (pack->transformMatrix);
         p->drawPixmap (QPoint (0, 0), *pack->srcPixmap);
     }
     else
@@ -367,9 +367,15 @@ static void TransformPixmapHelper (QPainter *p, bool drawingOnRGBLayer, void *da
         //       mask themselves (i.e. "srcMask.mask()" returns "srcMask" instead of
         //       "QBitmap()").  Therefore, "drawPixmap(srcMask)" can never create
         //       transparent pixels.
+        //
+        // Notice the way we do this -- by not involving a matrix in the
+        // fill, we guarantee we won't miss any pixels due to rounding error
+        // etc.
         const QRect destRect (0, 0,
             pack->destPixmapSize.width (), pack->destPixmapSize.height ());
         p->fillRect (destRect, Qt::color0/*transparent*/);
+
+        p->setMatrix (pack->transformMatrix);
 
         const QBitmap srcMask = kpPixmapFX::getNonNullMask (*pack->srcPixmap);
         p->drawPixmap (QPoint (0, 0), srcMask);
@@ -888,7 +894,11 @@ QPixmap kpPixmapFX::flip (const QPixmap &pm, bool horz, bool vert)
             kpColor::Invalid/*don't need a background*/, w, h);
     }
     else
+    {
+        // pm.depth() == 1 is used by kpAbstractImageSelection::flip()
+        // flipping the selection transparency mask.
         return ::FlipPixmapDepth1 (pm, matrix);
+    }
 }
 
 // public static
