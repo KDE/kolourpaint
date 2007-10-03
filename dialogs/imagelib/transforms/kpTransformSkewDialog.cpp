@@ -84,6 +84,10 @@ kpTransformSkewDialog::kpTransformSkewDialog (bool actOnSelection,
 
 
     slotUpdate ();
+    
+
+    // KDE3: backport focus setting
+    m_horizontalSkewInput->setFocus ();
 }
 
 kpTransformSkewDialog::~kpTransformSkewDialog ()

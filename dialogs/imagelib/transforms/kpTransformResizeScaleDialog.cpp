@@ -126,7 +126,8 @@ kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (
 
     slotActOnChanged ();
 
-    m_operationGroupBox->setFocus ();
+    // KDE3: backport focus setting
+    m_newWidthInput->setFocus ();
 
     //enableButtonOk (!isNoOp ());
 }
