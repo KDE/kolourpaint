@@ -1,5 +1,4 @@
 
-// COMPAT: Port to Qt4
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -27,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_PIXMAP_FX 0
+#define DEBUG_KP_PIXMAP_FX 1
 
 
 #include <kpPixmapFX.h>
@@ -147,6 +146,15 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
 
     if (pretty)
     {
+        // We don't use QPixmap::scaled() with Qt::SmoothTransformation since
+        // that double-smoothes, making the image blurier than intended
+        // -- internally QPixmap::scaled() does the following:
+        //
+        // 1. Calls QImage::scaled() with Qt::SmoothTransformation, like we do.
+        //
+        // 2. But it then calls the Qt equivalent of kpPixmapFX::convertToPixmap(),
+        //    which will do an unwanted second smooth on screens of depth
+        //    < 32 (since it dithers down a 32-bit QImage).
         QImage image = kpPixmapFX::convertToQImage (pm);
 
     #if DEBUG_KP_PIXMAP_FX && 0
@@ -175,13 +183,16 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
         }
     #endif
 
+        // COMPAT: Regression compared to Qt3.
+        //         This causes some smudging between transparent and non-transparent
+        //         pixels after scaling.  Some transparent pixels on the boundary
+        //         become black.
         retPixmap = kpPixmapFX::convertToPixmap (image, false/*let's not smooth it again*/);
     }
     else
     {
         QMatrix matrix;
 
-        // COMPAT: mask as well?
         matrix.scale (double (w) / double (pm.width ()),
                       double (h) / double (pm.height ()));
 
@@ -200,29 +211,207 @@ const double kpPixmapFX::AngleInDegreesEpsilon =
         / (2.0/*max error allowed*/ * 2.0/*for good measure*/);
 
 
-static QMatrix matrixWithZeroOrigin (const QMatrix &matrix, int width, int height)
+static void MatrixDebug (const QString matrixName, const QMatrix &matrix,
+        int srcPixmapWidth = -1, int srcPixmapHeight = -1)
 {
-    QRect newRect = matrix.mapRect (QRect (0, 0, width, height));
+#if DEBUG_KP_PIXMAP_FX
+    const int w = srcPixmapWidth, h = srcPixmapHeight;
 
-    QMatrix translatedMatrix (matrix.m11 (), matrix.m12 (), matrix.m21 (), matrix.m22 (),
-                               matrix.dx () - newRect.left (), matrix.dy () - newRect.top ());
+    kDebug () << matrixName << "=" << matrix;
+    // Sometimes this precision lets us see unexpected rounding errors.
+    fprintf (stderr, "m11=%.24f m12=%.24f m21=%.24f m22=%.24f dx=%.24f dy=%.24f\n",
+             matrix.m11 (), matrix.m12 (),
+             matrix.m21 (), matrix.m22 (),
+             matrix.dx (), matrix.dy ());
+    if (w > 0 && h > 0)
+    {
+        kDebug () << "(0,0) ->" << matrix.map (QPoint (0, 0));
+        kDebug () << "(w-1,0) ->" << matrix.map (QPoint (w - 1, 0));
+        kDebug () << "(0,h-1) ->" << matrix.map (QPoint (0, h - 1));
+        kDebug () << "(w-1,h-1) ->" << matrix.map (QPoint (w - 1, h - 1));
+    }
+
+#if 0
+    QMatrix trueMatrix = QPixmap::trueMatrix (matrix, w, h);
+    kDebug () << matrixName << "trueMatrix=" << trueMatrix;
+    if (w > 0 && h > 0)
+    {
+        kDebug () << "(0,0) ->" << trueMatrix.map (QPoint (0, 0));
+        kDebug () << "(w-1,0) ->" << trueMatrix.map (QPoint (w - 1, 0));
+        kDebug () << "(0,h-1) ->" << trueMatrix.map (QPoint (0, h - 1));
+        kDebug () << "(w-1,h-1) ->" << trueMatrix.map (QPoint (w - 1, h - 1));
+    }
+#endif
+
+#else
+
+    Q_UNUSED (matrixName);
+    Q_UNUSED (matrix);
+    Q_UNUSED (srcPixmapWidth);
+    Q_UNUSED (srcPixmapHeight);
+
+#endif  // DEBUG_KP_PIXMAP_FX
+}
+
+
+// Theoretically, this should act the same as QPixmap::trueMatrix() but
+// it doesn't.  As an example, if you rotate tests/transforms.png by 90
+// degrees clockwise, this returns the correct <dx> of 26 but
+// QPixmap::trueMatrix() returns 27.
+//
+// You should use the returned matrix to map points accurately (e.g. selection
+// borders).  For QPainter::drawPixmap() + setWorldMatrix() rendering accuracy,
+// pass the returned matrix through QPixmap::trueMatrix() and use that.
+//
+// TODO: If you put the flipMatrix() of tests/transforms.png through this,
+//       the output is the same as QPixmap::trueMatrix(): <dy> is one off
+//       (dy=27 instead of 26).
+//       SYNC: I bet this is a Qt4 bug.
+static QMatrix MatrixWithZeroOrigin (const QMatrix &matrix, int width, int height)
+{
+#if DEBUG_KP_PIXMAP_FX
+    kDebug () << "matrixWithZeroOrigin(w=" << width << ",h=" << height << ")" << endl;
+    kDebug () << "\tmatrix: m11=" << matrix.m11 ()
+               << "m12=" << matrix.m12 ()
+               << "m21=" << matrix.m21 ()
+               << "m22=" << matrix.m22 ()
+               << "dx=" << matrix.dx ()
+               << "dy=" << matrix.dy ();
+#endif
+
+    QRect mappedRect = matrix.mapRect (QRect (0, 0, width, height));
+#if DEBUG_KP_PIXMAP_FX
+    kDebug () << "\tmappedRect=" << mappedRect;
+#endif
+
+    QMatrix translatedMatrix (
+        matrix.m11 (), matrix.m12 (),
+        matrix.m21 (), matrix.m22 (),
+        matrix.dx () - mappedRect.left (), matrix.dy () - mappedRect.top ());
+
+#if DEBUG_KP_PIXMAP_FX
+    kDebug () << "\treturning" << translatedMatrix;
+    kDebug () << "(0,0) ->" << translatedMatrix.map (QPoint (0, 0));
+    kDebug () << "(w-1,0) ->" << translatedMatrix.map (QPoint (width - 1, 0));
+    kDebug () << "(0,h-1) ->" << translatedMatrix.map (QPoint (0, height - 1));
+    kDebug () << "(w-1,h-1) ->" << translatedMatrix.map (QPoint (width - 1, height - 1));
+#endif
 
     return translatedMatrix;
 }
 
-static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
-                      const kpColor &backgroundColor,
-                      int targetWidth, int targetHeight)
+
+static double TrueMatrixEpsilon = 0.000001;
+
+// An attempt to reverse tiny rounding errors introduced by QPixmap::trueMatrix()
+// when skewing tests/transforms.png by 45% horizontally.
+// Unfortunately, this does not work enough to stop the rendering errors
+// that follow.  But it was worth a try and might still help us given the
+// sometimes excessive aliasing QPainter::drawPixmap() gives us, when
+// QPainter::SmoothPixmapTransform is disabled.
+static double TrueMatrixFixInts (double x)
+{
+    if (fabs (x - qRound (x)) < TrueMatrixEpsilon)
+        return qRound (x);
+    else
+        return x;
+}
+
+static QMatrix TrueMatrix (const QMatrix &matrix, int srcPixmapWidth, int srcPixmapHeight)
+{
+    ::MatrixDebug ("TrueMatrix(): org", matrix);
+    
+    const QMatrix truMat = QPixmap::trueMatrix (matrix, srcPixmapWidth, srcPixmapHeight);
+    ::MatrixDebug ("TrueMatrix(): passed through QPixmap::trueMatrix()", truMat);
+
+    const QMatrix retMat (
+        ::TrueMatrixFixInts (truMat.m11 ()),
+        ::TrueMatrixFixInts (truMat.m12 ()),
+        ::TrueMatrixFixInts (truMat.m21 ()),
+        ::TrueMatrixFixInts (truMat.m22 ()),
+        ::TrueMatrixFixInts (truMat.dx ()),
+        ::TrueMatrixFixInts (truMat.dy ()));
+    ::MatrixDebug ("TrueMatrix(): fixed ints", retMat);
+
+    return retMat;
+}
+
+
+struct TransformPixmapPack
+{
+    QSize destPixmapSize;
+    const QPixmap *srcPixmap;
+    QMatrix transformMatrix;
+};
+
+// This "sets" pixels instead of "painting" them.
+static void TransformPixmapHelper (QPainter *p, bool drawingOnRGBLayer, void *data)
+{
+    TransformPixmapPack *pack = static_cast <TransformPixmapPack *> (data);
+
+    p->save ();
+
+    // Note: Do _not_ use "p->setRenderHints (QPainter::SmoothPixmapTransform);"
+    //       as the user does not want their image to get blurier every
+    //       time they e.g. rotate it (especially important for multiples
+    //       of 90 degrees but also true for every other angle).
+    p->setMatrix (pack->transformMatrix);
+
+    if (drawingOnRGBLayer)
+    {
+        p->drawPixmap (QPoint (0, 0), *pack->srcPixmap);
+    }
+    else
+    {
+        // SYNC: Work around a Qt "feature": QBitmap's (e.g. "srcMask") are considered to
+        //       mask themselves (i.e. "srcMask.mask()" returns "srcMask" instead of
+        //       "QBitmap()").  Therefore, "drawPixmap(srcMask)" can never create
+        //       transparent pixels.
+        const QRect destRect (0, 0,
+            pack->destPixmapSize.width (), pack->destPixmapSize.height ());
+        p->fillRect (destRect, Qt::color0/*transparent*/);
+
+        const QBitmap srcMask = kpPixmapFX::getNonNullMask (*pack->srcPixmap);
+        p->drawPixmap (QPoint (0, 0), srcMask);
+    }
+
+    p->restore ();
+}
+
+// Like QPixmap::transformed() but fills new areas with <backgroundColor>
+// (unless <backgroundColor> is invalid) and works around internal QMatrix
+// floating point -> integer oddities, that would otherwise give fatally
+// incorrect results.  If you don't believe me on this latter point, compare
+// QPixmap::transformed() to us using a flip matrix or a rotate-by-multiple-of-90
+// matrix on tests/transforms.png -- QPixmap::transformed()'s output is 1
+// pixel too high or low depending on whether the matrix is passed through
+// QPixmap::trueMatrix().
+//
+// Use <targetWidth> and <targetHeight> to specify the intended output size
+// of the pixmap.  -1 if don't care.
+static QPixmap TransformPixmap (const QPixmap &pm, const QMatrix &transformMatrix_,
+        const kpColor &backgroundColor,
+        int targetWidth, int targetHeight)
 {
     QMatrix transformMatrix = transformMatrix_;
 
 #if DEBUG_KP_PIXMAP_FX && 1
-    kDebug () << "kppixmapfx.cpp: xForm(pm.size=" << pm.size ()
+    kDebug () << "kppixmapfx.cpp: TransformPixmap(pm.size=" << pm.size ()
                << ",targetWidth=" << targetWidth
                << ",targetHeight=" << targetHeight
                << ")"
                << endl;
 #endif
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (pm);
+
+    // Code path has not been tested on monochrone bitmaps.
+    //
+    // Futhermore, since Qt doesn't support masks on such bitmaps and their
+    // color channel only has up to 2 colors, it makes little sense to
+    // support arbitrary transformations of them (other than flipping,
+    // which is already covered by FlipPixmapDepth1() below).
+    Q_ASSERT (pm.depth () > 1);
+
     QRect newRect = transformMatrix.mapRect (pm.rect ());
 #if DEBUG_KP_PIXMAP_FX && 1
     kDebug () << "\tmappedRect=" << newRect;
@@ -304,13 +493,45 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
     }
 
 
+    ::MatrixDebug ("TransformPixmap(): before trueMatrix", transformMatrix,
+                   pm.width (), pm.height ());
+#if DEBUG_KP_PIXMAP_FX && 1
+    QMatrix oldMatrix = transformMatrix;
+#endif
+
+    // Translate the matrix to account for Qt rounding errors,
+    // so that flipping and rotating by a multiple of 90 degrees actually
+    // work as expected (try tests/transforms.png).
+    //
+    // SYNC: This was not required with Qt3 so we are actually working
+    //       around a Qt4 bug/feature.
+    //
+    // COMPAT: Regrettably, this decreases the quality of rotating and skewing
+    //         by 45 degrees (in Qt4, some outermost edges disappear and
+    //         this also means that if you skew a rectangular selection,
+    //         the skewed selection border does not line up with the skewed
+    //         image data; in Qt3, the source image is translated 1 pixel
+    //         off the destination image).
+    // TODO: do we need to pass <newRect> through this new matrix?
+    transformMatrix = ::TrueMatrix (transformMatrix,
+        pm.width (), pm.height ());
+
+#if DEBUG_KP_PIXMAP_FX && 1
+    kDebug () << "trueMatrix changed matrix?" << (oldMatrix == transformMatrix);
+#endif
+    ::MatrixDebug ("TransformPixmap(): after trueMatrix", transformMatrix,
+                   pm.width (), pm.height ());
+
+
     QPixmap newPixmap (targetWidth > 0 ? targetWidth : newRect.width (),
                        targetHeight > 0 ? targetHeight : newRect.height ());
+
+
     if ((targetWidth > 0 && targetWidth != newRect.width ()) ||
         (targetHeight > 0 && targetHeight != newRect.height ()))
     {
     #if DEBUG_KP_PIXMAP_FX && 1
-        kDebug () << "kppixmapfx.cpp: xForm(pm.size=" << pm.size ()
+        kDebug () << "kppixmapfx.cpp: TransformPixmap(pm.size=" << pm.size ()
                    << ",targetWidth=" << targetWidth
                    << ",targetHeight=" << targetHeight
                    << ") newRect=" << newRect
@@ -319,28 +540,7 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
     #endif
     }
 
-    QBitmap newBitmapMask;
 
-    if (backgroundColor.isOpaque ())
-        newPixmap.fill (backgroundColor.toQColor ());
-
-    if (backgroundColor.isTransparent () || !pm.mask ().isNull ())
-    {
-        newBitmapMask = QPixmap (newPixmap.width (), newPixmap.height ());
-        newBitmapMask.fill (backgroundColor.maskColor ());
-    }
-
-    QPainter painter (&newPixmap);
-#if DEBUG_KP_PIXMAP_FX && 0
-    kDebug () << "\tmatrix: m11=" << transformMatrix.m11 ()
-            << " m12=" << transformMatrix.m12 ()
-            << " m21=" << transformMatrix.m21 ()
-            << " m22=" << transformMatrix.m22 ()
-            << " dx=" << transformMatrix.dx ()
-            << " dy=" << transformMatrix.dy ()
-            << endl;
-#endif
-    painter.setMatrix (transformMatrix);
 #if DEBUG_KP_PIXMAP_FX && 0
     kDebug () << "\ttranslate top=" << painter.xForm (QPoint (0, 0));
     kDebug () << "\tmatrix: m11=" << painter.worldMatrix ().m11 ()
@@ -351,20 +551,102 @@ static QPixmap xForm (const QPixmap &pm, const QMatrix &transformMatrix_,
                << " dy=" << painter.worldMatrix ().dy ()
                << endl;
 #endif
-    painter.drawPixmap (QPoint (0, 0), pm);
-    painter.end ();
 
-    if (!newBitmapMask.isNull ())
+
+    // Some insurance in case the background drawing code below misses a few
+    // pixels.
+    if (backgroundColor.isValid ())
+        kpPixmapFX::fill (&newPixmap, backgroundColor);
+
+
+    TransformPixmapPack pack;
+    pack.destPixmapSize = newPixmap.size ();
+    pack.srcPixmap = &pm;
+    pack.transformMatrix = transformMatrix;
+
+    kpPixmapFX::draw (&newPixmap, &::TransformPixmapHelper,
+        true/*always "draw"/copy RGB layer*/,
+        kpPixmapFX::hasMask (pm)/*draw on mask*/,
+        &pack);
+
+
+    // For rotate and skew matrices, there will be initialized pixels in
+    // the corners.  Fill these corners with the background color.
+    if (backgroundColor.isValid ())
     {
-        QPainter maskPainter (&newBitmapMask);
+        // OPT: The below is hideously slow.
+
+        QBitmap opaqueMask (pm.width (), pm.height ());
+        opaqueMask.fill (Qt::color1/*opaque*/);
+
+        QBitmap mask (newPixmap.width (), newPixmap.height ());
+        mask.fill (Qt::color0/*transparent*/);
+    
+        QPainter maskPainter (&mask);
         maskPainter.setMatrix (transformMatrix);
-        maskPainter.drawPixmap (QPoint (0, 0), kpPixmapFX::getNonNullMask (pm));
+        // We could have used QPainter::fillRect() but we fear that that
+        // could be setting a slightly different pixel area compared to
+        // TransformPixmapHelper().
+        maskPainter.drawPixmap (QPoint (0, 0), opaqueMask);
         maskPainter.end ();
-        newPixmap.setMask (newBitmapMask);
+    
+ 
+        // Invert the pixels of "mask".
+        QImage maskQImage = kpPixmapFX::convertToQImage (mask);
+        maskQImage.invertPixels ();
+        mask = kpPixmapFX::convertToPixmap (maskQImage);
+    
+
+        if (backgroundColor.isOpaque ())
+        {
+            QPixmap fillPixmap (newPixmap.width (), newPixmap.height ());
+            fillPixmap.fill (backgroundColor.toQColor ());
+            fillPixmap.setMask (mask);
+    
+            kpPixmapFX::paintPixmapAt (&newPixmap, QPoint (0, 0), fillPixmap);
+        }
+        else
+        {
+            kpPixmapFX::paintMaskTransparentWithBrush (&newPixmap,
+                QPoint (0, 0), mask);
+        }
     }
 
+
+#if DEBUG_KP_PIXMAP_FX && 1
+    kDebug () << "Done" << endl << endl << endl;
+#endif
+
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (newPixmap);
     return newPixmap;
 }
+
+// A lightweight version of TransformPixmap(), only supporting flipping 1-bit bitmaps.
+static QPixmap FlipPixmapDepth1 (const QPixmap &pm, const QMatrix &flipMatrix)
+{
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (pm);
+    Q_ASSERT (pm.depth () == 1);
+
+    // A flip does not change the size of a bitmap.
+    QBitmap retPixmap (pm.width (), pm.height ());
+
+    // SYNC: Work around a Qt "feature": QBitmap's (e.g. "srcMask") are considered to
+    //       mask themselves (i.e. "srcMask.mask()" returns "srcMask" instead of
+    //       "QBitmap()").  Therefore, "drawPixmap(srcMask)" can never create
+    //       transparent pixels.
+    retPixmap.fill (Qt::color0/*transparent*/);
+
+    QPainter p (&retPixmap);
+    QMatrix transformMatrix = ::TrueMatrix (flipMatrix,
+        pm.width (), pm.height ());
+    p.setMatrix (transformMatrix);
+    p.drawPixmap (QPoint (0, 0), pm);
+    p.end ();
+
+    KP_PFX_CHECK_NO_ALPHA_CHANNEL (retPixmap);
+    return retPixmap;
+}
+
 
 // public static
 QMatrix kpPixmapFX::skewMatrix (int width, int height, double hangle, double vangle)
@@ -404,13 +686,13 @@ QMatrix kpPixmapFX::skewMatrix (int width, int height, double hangle, double van
      *
      */
 
-    //QWMatrix matrix (1, tan (KP_DEGREES_TO_RADIANS (vangle)), tan (KP_DEGREES_TO_RADIANS (hangle)), 1, 0, 0);
+    //QMatrix matrix (1, tan (KP_DEGREES_TO_RADIANS (vangle)), tan (KP_DEGREES_TO_RADIANS (hangle)), 1, 0, 0);
     // I think this is clearer than above :)
     QMatrix matrix;
     matrix.shear (tan (KP_DEGREES_TO_RADIANS (hangle)),
                   tan (KP_DEGREES_TO_RADIANS (vangle)));
 
-    return matrixWithZeroOrigin (matrix, width, height);
+    return ::MatrixWithZeroOrigin (matrix, width, height);
 }
 
 // public static
@@ -465,7 +747,7 @@ QPixmap kpPixmapFX::skew (const QPixmap &pm, double hangle, double vangle,
 
     QMatrix matrix = skewMatrix (pm, hangle, vangle);
 
-    return ::xForm (pm, matrix, backgroundColor, targetWidth, targetHeight);
+    return ::TransformPixmap (pm, matrix, backgroundColor, targetWidth, targetHeight);
 }
 
 
@@ -481,7 +763,7 @@ QMatrix kpPixmapFX::rotateMatrix (int width, int height, double angle)
     matrix.translate (width / 2, height / 2);
     matrix.rotate (angle);
 
-    return matrixWithZeroOrigin (matrix, width, height);
+    return ::MatrixWithZeroOrigin (matrix, width, height);
 }
 
 // public static
@@ -551,7 +833,7 @@ QPixmap kpPixmapFX::rotate (const QPixmap &pm, double angle,
 
     QMatrix matrix = rotateMatrix (pm, angle);
 
-    return ::xForm (pm, matrix, backgroundColor, targetWidth, targetHeight);
+    return ::TransformPixmap (pm, matrix, backgroundColor, targetWidth, targetHeight);
 }
 
 
@@ -564,12 +846,13 @@ QMatrix kpPixmapFX::flipMatrix (int width, int height, bool horz, bool vert)
         return QMatrix ();
     }
 
-    return QMatrix (horz ? -1 : +1,  // m11
+    QMatrix matrix (horz ? -1 : +1,  // m11
                      0,  // m12
                      0,  // m21
                      vert ? -1 : +1,  // m22
                      horz ? (width - 1) : 0,  // dx
                      vert ? (height - 1) : 0);  // dy
+    return matrix;
 }
 
 // public static
@@ -595,7 +878,17 @@ QPixmap kpPixmapFX::flip (const QPixmap &pm, bool horz, bool vert)
     if (!horz && !vert)
         return pm;
 
-    return pm.transformed (flipMatrix (pm, horz, vert));
+    const int w = pm.width (), h = pm.height ();
+
+    const QMatrix matrix = flipMatrix (pm, horz, vert);
+
+    if (pm.depth () > 1)
+    {
+        return ::TransformPixmap (pm, matrix,
+            kpColor::Invalid/*don't need a background*/, w, h);
+    }
+    else
+        return ::FlipPixmapDepth1 (pm, matrix);
 }
 
 // public static
@@ -615,4 +908,3 @@ QImage kpPixmapFX::flip (const QImage &img, bool horz, bool vert)
 
     return img.mirrored (horz, vert);
 }
-
