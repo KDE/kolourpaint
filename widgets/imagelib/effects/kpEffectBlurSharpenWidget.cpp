@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_EFFECT_BLUR_SHARPEN 0
+#define DEBUG_KP_EFFECT_BLUR_SHARPEN 1
 
 
 #include <kpEffectBlurSharpenWidget.h>
@@ -57,6 +57,39 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
         1/*step*/, true/*slider*/);
 
     m_typeLabel = new QLabel (this);
+
+    // Make sure <m_typeLabel> doesn't expand when the effect type changes,
+    // as otherwise, that would cause the preview pixmap label in the
+    // "More Effects" dialog (which our widget is inside) to contract,
+    // which would look a bit weird.
+    //
+    // We do this by setting the label to every possible string it could
+    // contain and fixing its height to the maximum seen size hint height.
+
+    int h = m_typeLabel->sizeHint ().height ();
+#if DEBUG_KP_EFFECT_BLUR_SHARPEN
+    kDebug () << "initial size hint height=" << h << endl;
+#endif
+
+    m_typeLabel->setText (
+        kpEffectBlurSharpenCommand::nameForType (kpEffectBlurSharpen::Blur));
+    h = qMax (h, m_typeLabel->sizeHint ().height ());
+
+    m_typeLabel->setText (
+        kpEffectBlurSharpenCommand::nameForType (kpEffectBlurSharpen::Sharpen));
+    h = qMax (h, m_typeLabel->sizeHint ().height ());
+
+    // Set this text last as the label's text needs to reflect the default
+    // effect of "None".
+    m_typeLabel->setText (
+        kpEffectBlurSharpenCommand::nameForType (kpEffectBlurSharpen::None));
+    h = qMax (h, m_typeLabel->sizeHint ().height ());
+
+#if DEBUG_KP_EFFECT_BLUR_SHARPEN
+    kDebug () << "maximum size hint height" << h << endl;
+#endif
+    m_typeLabel->setFixedHeight (h);
+    m_typeLabel->setAlignment (Qt::AlignCenter);
 
 
     amountLabel->setBuddy (m_amountInput);
@@ -121,7 +154,14 @@ void kpEffectBlurSharpenWidget::slotUpdateTypeLabel ()
     kDebug () << "kpEffectBlurSharpenWidget::slotUpdateTypeLabel() text="
                << text << endl;
 #endif
+    const int h = m_typeLabel->height ();
     m_typeLabel->setText (text);
+    if (m_typeLabel->height () != h)
+    {
+        kError () << "Label changed height despite the hack in ctor:"
+                  << "was=" << h 
+                  << "now=" << m_typeLabel->height ();
+    }
 }
 
 
