@@ -383,7 +383,16 @@ void kpTransformResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget
              this, SLOT (slotHeightChanged (int)));
 
     // COMPAT: KDoubleNumInput only fires valueChanged(double) once per
-    //         edit, not once per keystroke.  Bug in KDoubleNumInput.
+    //         edit.  It should either fire:
+    //        
+    //             1. At the end of the edit (triggered by clicking or tabbing
+    //                away), like with KDE3.
+    //
+    //             OR
+    //
+    //             2. Once per keystroke.
+    //
+    //         Bug in KDoubleNumInput.
     connect (m_percentWidthInput, SIGNAL (valueChanged (double)),
              this, SLOT (slotPercentWidthChanged (double)));
     connect (m_percentHeightInput, SIGNAL (valueChanged (double)),

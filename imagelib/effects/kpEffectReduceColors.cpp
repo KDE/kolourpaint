@@ -95,8 +95,8 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
 #endif
 
 
-    // Hack around Qt's braindead QImage::convertDepth(1, ...) (with
-    // dithering off) which produces pathetic results with an image that
+    // Hack around Qt's braindead QImage::convertToFormat(QImage::Format_MonoLSB, ...)
+    // (with dithering off) which produces pathetic results with an image that
     // only has 2 colors - sometimes it just gives a completely black
     // result (try yellow and white as input).  Instead, we simply preserve
     // the 2 colours.
