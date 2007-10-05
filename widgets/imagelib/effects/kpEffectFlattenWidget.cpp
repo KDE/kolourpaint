@@ -49,9 +49,6 @@
 
 
 // public static
-// Don't initialise globally when we probably don't have a colour
-// allocation context.  This way, the colours aren't sometimes invalid
-// (e.g. at 8-bit).
 QColor kpEffectFlattenWidget::s_lastColor1;
 QColor kpEffectFlattenWidget::s_lastColor2;
 
