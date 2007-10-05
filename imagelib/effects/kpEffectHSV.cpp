@@ -38,7 +38,7 @@
 #include <kpPixmapFX.h>
 
 
-void ColorToHSV(unsigned int c, float* pHue, float* pSaturation, float* pValue)
+static void ColorToHSV(unsigned int c, float* pHue, float* pSaturation, float* pValue)
 {
     int r = qRed(c);
     int g = qGreen(c);
@@ -96,7 +96,7 @@ void ColorToHSV(unsigned int c, float* pHue, float* pSaturation, float* pValue)
     }
 }
 
-unsigned int HSVToColor(int alpha, float hue, float saturation, float value)
+static unsigned int HSVToColor(int alpha, float hue, float saturation, float value)
 {
     //Q_ASSERT (hue >= 0 && hue <= 1 && saturation >= 0 && saturation <= 1 && value >= 0 && value <= 1);
 
@@ -117,25 +117,46 @@ unsigned int HSVToColor(int alpha, float hue, float saturation, float value)
     return qRgba(0, 0, 0, alpha);
 }
 
-
-void adjustHSV (QImage* pImage, double hue, double saturation, double value)
+static QRgb AdjustHSVInternal (QRgb pix, double hueDiv360, double saturation, double value)
 {
-    int x, y, alpha;
-    unsigned int pix;
     float h, s, v;
+    ::ColorToHSV(pix, &h, &s, &v);
+    
+    const int alpha = qAlpha(pix);
+
+    h += (float)hueDiv360;
+    h -= floor(h);
+
+    s = qMax((float)0, qMin((float)1, s + (float)saturation));
+
+    v = qMax((float)0, qMin((float)1, v + (float)value));
+
+    return ::HSVToColor(alpha, h, s, v);
+}
+
+static void AdjustHSV (QImage* pImage, double hue, double saturation, double value)
+{
     hue /= 360;
-    for(y = 0; y < pImage->height(); y++)
+
+    if (pImage->depth () > 8)
     {
-        for(x = 0; x < pImage->width(); x++)
+        for (int y = 0; y < pImage->height (); y++)
         {
-            pix = pImage->pixel(x, y);
-            ColorToHSV(pix, &h, &s, &v);
-            alpha = qAlpha(pix);
-            h += (float)hue;
-            h -= floor(h);
-            s = qMax((float)0, qMin((float)1, s + (float)saturation));
-            v = qMax((float)0, qMin((float)1, v + (float)value));
-            pImage->setPixel(x, y, HSVToColor(alpha, h, s, v));
+            for (int x = 0; x < pImage->width (); x++)
+            {
+                QRgb pix = pImage->pixel (x, y);
+                pix = ::AdjustHSVInternal (pix, hue, saturation, value);
+                pImage->setPixel (x, y, pix);
+            }
+        }
+    }
+    else
+    {
+        for (int i = 0; i < pImage->numColors (); i++)
+        {
+            QRgb pix = pImage->color (i);
+            pix = ::AdjustHSVInternal (pix, hue, saturation, value);
+            pImage->setColor (i, pix);
         }
     }
 }
@@ -151,7 +172,7 @@ kpImage kpEffectHSV::applyEffect (const kpImage &image,
 
     QImage qimage = kpPixmapFX::convertToQImage (usePixmap);
 
-    adjustHSV (&qimage, hue, saturation, value);
+    ::AdjustHSV (&qimage, hue, saturation, value);
 
     QPixmap retPixmap = kpPixmapFX::convertToPixmap (qimage);
 
