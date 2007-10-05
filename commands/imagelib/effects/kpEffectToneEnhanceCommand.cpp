@@ -38,7 +38,7 @@
 kpEffectToneEnhanceCommand::kpEffectToneEnhanceCommand (double granularity, double amount,
         bool actOnSelection,
         kpCommandEnvironment *environ)
-    : kpEffectCommandBase (i18n ("Tone Enhance"), actOnSelection, environ),
+    : kpEffectCommandBase (i18n ("Histogram Equalizer"), actOnSelection, environ),
       m_granularity (granularity), m_amount (amount)
 {
 }

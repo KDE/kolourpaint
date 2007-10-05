@@ -34,6 +34,22 @@
 #include <kpImage.h>
 
 
+//
+// Histogram Equalizer effect.
+//
+// It just divides out the color histogram from the pixel values. (So if
+// you plot the color histogram after equalizing, you should get a nearly
+// flat/uniform distribution.)
+//
+// The two sliders adjust:
+//
+// 1. The extent to which it equalizes
+// 2. The local-ness of the equalization. (In other words, it computes just
+//    the histogram of the regions near the pixel it is adjusting.)
+//
+// ASSUMPTION: The given <image> is not paletted (currently, this is the
+//             same as the screen mode not being paletted).
+//
 class kpEffectToneEnhance
 {
 public:

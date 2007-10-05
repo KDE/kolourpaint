@@ -112,11 +112,11 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     m_effectsComboBox->addItem (i18n ("Balance"));
     m_effectsComboBox->addItem (i18n ("Emboss"));
     m_effectsComboBox->addItem (i18n ("Flatten"));
+    m_effectsComboBox->addItem (i18n ("Histogram Equalizer"));
     m_effectsComboBox->addItem (i18n ("Hue, Saturation, Value"));
     m_effectsComboBox->addItem (i18n ("Invert"));
     m_effectsComboBox->addItem (i18n ("Reduce Colors"));
     m_effectsComboBox->addItem (i18n ("Soften & Sharpen"));
-    m_effectsComboBox->addItem (i18n ("Tone Enhance"));
 
     label->setBuddy (m_effectsComboBox);
     effectContainer->setStretchFactor (m_effectsComboBox, 1);
@@ -251,23 +251,23 @@ void kpEffectsDialog::selectEffect (int which)
         break;
     
     case 3:
-        CREATE_EFFECT_WIDGET (kpEffectHSVWidget);
+        CREATE_EFFECT_WIDGET (kpEffectToneEnhanceWidget);
         break;
 
     case 4:
-        CREATE_EFFECT_WIDGET (kpEffectInvertWidget);
+        CREATE_EFFECT_WIDGET (kpEffectHSVWidget);
         break;
 
     case 5:
-        CREATE_EFFECT_WIDGET (kpEffectReduceColorsWidget);
+        CREATE_EFFECT_WIDGET (kpEffectInvertWidget);
         break;
 
     case 6:
-        CREATE_EFFECT_WIDGET (kpEffectBlurSharpenWidget);
+        CREATE_EFFECT_WIDGET (kpEffectReduceColorsWidget);
         break;
 
     case 7:
-        CREATE_EFFECT_WIDGET (kpEffectToneEnhanceWidget);
+        CREATE_EFFECT_WIDGET (kpEffectBlurSharpenWidget);
         break;
     }
 #undef CREATE_EFFECT_WIDGET
