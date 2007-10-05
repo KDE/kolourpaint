@@ -48,6 +48,11 @@ public:
 
     virtual QString caption () const;
 
+private:
+    double amount () const;
+    double granularity () const;
+
+public:
     virtual bool isNoOp () const;
     virtual kpImage applyEffect (const kpImage &image);
 

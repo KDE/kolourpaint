@@ -27,7 +27,7 @@
 */
 
 
-// TODO: Audit this code and related Widget and Command for errors e.g. divide by zero etc. - Clarence
+// TODO: Clarence's code review
 
 #include <kpEffectToneEnhance.h>
 
@@ -38,7 +38,6 @@
 #include <kdebug.h>
 
 #include <kpPixmapFX.h>
-
 
 
 #define RED_WEIGHT 77
@@ -252,6 +251,28 @@ void kpEffectToneEnhanceApplier::BalanceImageTone(QImage* pImage, double granula
 kpImage kpEffectToneEnhance::applyEffect (const kpImage &image,
                                           double granularity, double amount)
 {
+    if (amount == 0)
+        return image;
+
+
+    // This effect does not currently support paletted images.  TODO: can we fix that?
+    //
+    // Regarding the implementation of this check:
+    //
+    //     Because kpImage's are currently QPixmap's, they are tied to the screen
+    //     (this assumption will change if we rewrite kpImage to use a proper
+    //     image library).
+    //
+    //     So if the screen is paletted, the kpImage's must be too.
+    Q_ASSERT (!kpPixmapFX::screenIsPaletted ());
+
+
+    // Replace transparent pixels with white, the most "neutral" color.
+    // Else the effect assumes that those transparent pixels next to
+    // opaque pixels, are black, warping the tone map.
+    //
+    // Whether we should do this is arguable because you could argue that
+    // white warps the tone map.
     QPixmap usePixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (
         image,
         Qt::white/*arbitrarily chosen*/);

@@ -38,40 +38,59 @@
 
 #include <kpEffectToneEnhance.h>
 #include <kpEffectToneEnhanceCommand.h>
+#include <kpPixmapFX.h>
 
 
 kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,
                                                       QWidget *parent)
-    : kpEffectWidgetBase (actOnSelection, parent)
+    : kpEffectWidgetBase (actOnSelection, parent),
+      m_granularityInput (0),
+      m_amountInput (0)
+
 {
     QGridLayout *lay = new QGridLayout (this);
     lay->setSpacing (spacingHint ());
     lay->setMargin (marginHint ());
 
-    QLabel *granularityLabel = new QLabel (i18n ("&Granularity:"), this);
-    QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
-    m_granularityInput = new KDoubleNumInput (this);
-    m_granularityInput->setRange (0, 1, .1/*step*/, true/*slider*/);
-    m_amountInput = new KDoubleNumInput (this);
-    m_amountInput->setRange (0, 1, .1/*step*/, true/*slider*/);
 
-    granularityLabel->setBuddy (m_granularityInput);
-    amountLabel->setBuddy (m_amountInput);
+    // See kpEffectToneEnhance::applyEffect().
+    if (kpPixmapFX::screenIsPaletted ())
+    {
+        QLabel *unsupportedLabel =
+            new QLabel (kpPixmapFX::effectDoesNotSupportPalettedScreenMessage ());
+        lay->addWidget (unsupportedLabel, 0, 0);
+    }
+    else
+    {
+        QLabel *granularityLabel = new QLabel (i18n ("&Granularity:"), this);
+
+        QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
+
+        m_granularityInput = new KDoubleNumInput (this);
+        m_granularityInput->setRange (0, 1, .1/*step*/, true/*slider*/);
+
+        m_amountInput = new KDoubleNumInput (this);
+        m_amountInput->setRange (0, 1, .1/*step*/, true/*slider*/);
+
+        granularityLabel->setBuddy (m_granularityInput);
+        amountLabel->setBuddy (m_amountInput);
 
 
-    lay->addWidget (granularityLabel, 0, 0);
-    lay->addWidget (m_granularityInput, 0, 1);
-    lay->addWidget (amountLabel, 1, 0);
-    lay->addWidget (m_amountInput, 1, 1);
+        lay->addWidget (granularityLabel, 0, 0);
+        lay->addWidget (m_granularityInput, 0, 1);
 
-    lay->setColumnStretch (1, 1);
+        lay->addWidget (amountLabel, 1, 0);
+        lay->addWidget (m_amountInput, 1, 1);
+
+        lay->setColumnStretch (1, 1);
 
 
-    connect (m_granularityInput, SIGNAL (valueChanged (double)),
-             this, SIGNAL (settingsChangedDelayed ()));
+        connect (m_granularityInput, SIGNAL (valueChanged (double)),
+                 this, SIGNAL (settingsChangedDelayed ()));
 
-    connect (m_amountInput, SIGNAL (valueChanged (double)),
-             this, SIGNAL (settingsChangedDelayed ()));
+        connect (m_amountInput, SIGNAL (valueChanged (double)),
+                 this, SIGNAL (settingsChangedDelayed ()));
+    }
 }
 
 kpEffectToneEnhanceWidget::~kpEffectToneEnhanceWidget ()
@@ -87,10 +106,26 @@ QString kpEffectToneEnhanceWidget::caption () const
 }
 
 
+// private
+double kpEffectToneEnhanceWidget::amount () const
+{
+    return m_amountInput ? m_amountInput->value () : 0;
+}
+
+// private
+double kpEffectToneEnhanceWidget::granularity () const
+{
+    return m_granularityInput ? m_granularityInput->value () : 0;
+}
+
+
 // public virtual [base kpEffectWidgetBase]
 bool kpEffectToneEnhanceWidget::isNoOp () const
 {
-    if (m_amountInput->value () == 0)
+    // If the "amount" is 0, nothing happens regardless of the granularity.
+    // Note that if "granularity" is 0 but "amount" > 0, the effect _is_ active.
+    // Therefore, "granularity" should have no involvement in this check.
+    if (amount () == 0)
         return true;
     else
         return false;
@@ -100,14 +135,14 @@ bool kpEffectToneEnhanceWidget::isNoOp () const
 kpImage kpEffectToneEnhanceWidget::applyEffect (const kpImage &image)
 {
     return kpEffectToneEnhance::applyEffect (image,
-        m_granularityInput->value (), m_amountInput->value ());
+        granularity (), amount ());
 }
 
 // public virtual [base kpEffectWidgetBase]
 kpEffectCommandBase *kpEffectToneEnhanceWidget::createCommand (
         kpCommandEnvironment *cmdEnviron) const
 {
-    return new kpEffectToneEnhanceCommand (m_granularityInput->value (), m_amountInput->value (),
+    return new kpEffectToneEnhanceCommand (granularity (), amount (),
                                            m_actOnSelection,
                                            cmdEnviron);
 }
