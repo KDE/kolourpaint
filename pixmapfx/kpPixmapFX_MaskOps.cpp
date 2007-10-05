@@ -63,13 +63,9 @@
 
 
 #if DEBUG_KP_PIXMAP_FX
-#ifdef Q_CC_MSVC
-    #define KP_PRINTF
+    #define KP_PRINTF if (1) printf
 #else
-    #define KP_PRINTF(x...) fprintf (stderr, x)
-#endif
-#else
-    #define KP_PRINTF(x...)
+    #define KP_PRINTF if (0) (void)
 #endif
 
 
@@ -86,7 +82,7 @@
 // the parent.  The child is then killed.
 static int QPixmapCalculateDefaultDepthWithoutQApplication ()
 {
-    KP_PRINTF ("QPixmapCalculateDefaultDepthWithoutQApplication()\n");
+    KP_PRINTF (("QPixmapCalculateDefaultDepthWithoutQApplication()\n"));
 
     // [0] = read
     // [1] = write
@@ -119,9 +115,8 @@ static int QPixmapCalculateDefaultDepthWithoutQApplication ()
         KApplication app;
 
         const int depth = QPixmap::defaultDepth ();
-        KP_PRINTF ("Child: writing default depth %d\n", depth);
         write (fds [Write], &depth, sizeof (depth));
-        KP_PRINTF ("Child: wrote default depth\n");
+        KP_PRINTF (("Child: wrote default depth\n"));
 
         close (fds [Write]);
         KP_PRINTF ("Child: exit\n");
