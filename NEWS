@@ -16,7 +16,7 @@ KolourPaint 4.0.0 BETA (Frozen 2007-10-21)
 
    * Add "Hue, Saturation, Value" effect (Mike Gashler)
 
-   * Add "Tone Enhance" effect (Mike Gashler)
+   * Add "Histogram Equalizer" effect (Mike Gashler)
 
    * Configurable color palette
 
