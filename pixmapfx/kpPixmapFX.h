@@ -85,6 +85,38 @@ public:
 
 
 //
+// Screen Depth
+//
+
+public:
+    // Called by initPre() - do not call directly.
+    static void initScreenDepthPre ();
+
+    // If the screen mode is paletted, it brings up a dialog warning the
+    // user that KolourPaint has not been tested under such an environment
+    // (paletted QImage's, usually created from paletted QPixmap's, need
+    //  completely different code paths to truecolor QImage's).
+    //
+    // Called by initPost() - do not call directly.
+    static void initScreenDepthPost ();
+
+
+    // Returns whether the screen mode is paletted, rather than truecolor.
+    // If this returns true, all QPixmap's (and therefore, kpImage's) are
+    // paletted.  Otherwise, they are truecolor.
+    static bool screenIsPaletted ();
+
+    // Returns a translated message stating that the (image) effect does
+    // not support paletted screen modes.
+    //
+    // This method is included here so that the similar messages in this
+    // method and initScreenDepthPost() can be synchronized.
+    //
+    // ASSUMPTION: screenIsPaletted()
+    static QString effectDoesNotSupportPalettedScreenMessage ();
+
+
+//
 // QPixmap/QImage Conversion Functions
 //
 
@@ -383,11 +415,7 @@ public:
     // Called by initPre() - do not call directly.
     static void initMaskOpsPre ();
 
-    // If the screen mode is paletted, it brings up a dialog warning the
-    // user that KolourPaint has not been tested under such an environment
-    // (paletted QImage's, usually created from paletted QPixmaps, need
-    //  completely different code paths to truecolor QImage's -- in some
-    //  places, we have not even implemented such paths yet).
+    // Asserts invariants.
     //
     // Called by initPost() - do not call directly.
     static void initMaskOpsPost ();

@@ -183,22 +183,6 @@ void kpPixmapFX::initMaskOpsPost ()
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (QPixmap (1, 1));
     Q_ASSERT (QPixmap ().depth () == QPixmap::defaultDepth ());
     Q_ASSERT (QPixmap (1, 1).depth () == QPixmap::defaultDepth ());
-
-
-    if (QPixmap::defaultDepth () < 15/*smallest truecolor mode's bpp*/)
-    {
-        // Even though we support 15-bit truecolor, we're more ambitious and
-        // ask for 24-bit since it's safer (see kpPixmapFX::WarnAboutLossInfo).
-        KMessageBox::information (0/*parent*/,
-            ki18n ("<qt><p>KolourPaint does not support the current screen depth of %1bpp."
-                " KolourPaint will attempt to start but may act unreliably.</p>"
-
-                "<p>To avoid this issue, please change your screen depth to 24bpp"
-                " and then restart KolourPaint.</p></qt>")
-                .subs (QPixmap::defaultDepth ()).toString (),
-            i18n ("Unsupported Screen Mode"),
-            "startup_unsupported_bpp"/*DontAskAgain ID*/);
-    }
 }
 
 
@@ -368,11 +352,14 @@ void kpPixmapFX::paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QP
 
     const QRegion brushRegion = QRegion (brushBitmap).translated (destAt);
 
-    // OPT: Hopelessly inefficent due to function call overhead.
-    //      kpPixmapFX should have a function that does this.
+    // OPT: Hopelessly inefficent due to function call overhead and
+    //      fillRect() changing the mask every single iteration.
+    //
+    //      kpPixmapFX should have a function that does this with only a
+    //      single mask write.
     foreach (QRect r, brushRegion.rects ())
     {
-    #if DEBUG_KP_PIXMAP_FX
+    #if DEBUG_KP_PIXMAP_FX && 0
         kDebug () << "\tcopy rect=" << r;
     #endif
         kpPixmapFX::fillRect (destPixmapPtr,
@@ -416,4 +403,5 @@ void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, const QRect &destRect)
 
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
 }
+
 

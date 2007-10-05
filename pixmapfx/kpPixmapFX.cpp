@@ -35,11 +35,13 @@
 // public static
 void kpPixmapFX::initPre ()
 {
+    kpPixmapFX::initScreenDepthPre ();
     kpPixmapFX::initMaskOpsPre ();
 }
 
 // public static
 void kpPixmapFX::initPost ()
 {
+    kpPixmapFX::initScreenDepthPost ();
     kpPixmapFX::initMaskOpsPost ();
 }
