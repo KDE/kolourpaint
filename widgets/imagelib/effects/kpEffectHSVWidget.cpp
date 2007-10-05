@@ -25,7 +25,6 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-// LOTODO: Remove unused headers
 
 #include <kpEffectHSVWidget.h>
 
@@ -50,10 +49,13 @@ kpEffectHSVWidget::kpEffectHSVWidget (bool actOnSelection, QWidget *parent)
     QLabel *hueLabel = new QLabel (i18n ("&Hue:"), this);
     QLabel *saturationLabel = new QLabel (i18n ("&Saturation:"), this);
     QLabel *valueLabel = new QLabel (i18n ("&Value:"), this);
+
     m_hueInput = new KDoubleNumInput (this);
     m_hueInput->setRange (-180, 180, 15/*step*/, true/*slider*/);
+
     m_saturationInput = new KDoubleNumInput (this);
     m_saturationInput->setRange (-1, 1, .1/*step*/, true/*slider*/);
+
     m_valueInput = new KDoubleNumInput (this);
     m_valueInput->setRange (-1, 1, .1/*step*/, true/*slider*/);
 
@@ -63,8 +65,10 @@ kpEffectHSVWidget::kpEffectHSVWidget (bool actOnSelection, QWidget *parent)
 
     lay->addWidget (hueLabel, 0, 0);
     lay->addWidget (m_hueInput, 0, 1);
+
     lay->addWidget (saturationLabel, 1, 0);
     lay->addWidget (m_saturationInput, 1, 1);
+
     lay->addWidget (valueLabel, 2, 0);
     lay->addWidget (m_valueInput, 2, 1);
 
