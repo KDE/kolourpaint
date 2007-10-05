@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_EFFECTS_DIALOG 0
+#define DEBUG_KP_EFFECTS_DIALOG 1
 
 
 #include <kpEffectsDialog.h>
@@ -65,7 +65,8 @@ int kpEffectsDialog::s_lastHeight = 620;
 
 kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
                                   kpTransformDialogEnvironment *environ,
-                                  QWidget *parent)
+                                  QWidget *parent,
+                                  int defaultSelectedEffect)
     : kpTransformPreviewDialog (kpTransformPreviewDialog::Preview,
                            true/*reserve top row*/,
                            QString()/*caption*/,
@@ -82,6 +83,9 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 #if DEBUG_KP_EFFECTS_DIALOG
     kDebug () << "kpEffectsDialog::kpEffectsDialog()";
 #endif
+    const bool e = updatesEnabled ();
+    setUpdatesEnabled (false);
+
 
     if (actOnSelection)
         setWindowTitle (i18n ("More Image Effects (Selection)"));
@@ -126,16 +130,23 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 
     connect (m_effectsComboBox, SIGNAL (activated (int)),
              this, SLOT (selectEffect (int)));
-    selectEffect (0);
+    selectEffect (defaultSelectedEffect);
 
 
     resize (s_lastWidth, s_lastHeight);
 
 
 #if DEBUG_KP_EFFECTS_DIALOG
-    kDebug () << "\tabout to slotUpdate()";
+    kDebug () << "about to setUpdatesEnabled()";
 #endif
-    slotUpdate ();
+    // OPT: The preview pixmap gets recalculated here and then possibly
+    //      again when QResizeEvent fires, when the dialog is shown.
+    setUpdatesEnabled (e);
+#if DEBUG_KP_EFFECTS_DIALOG
+    kDebug () << endl
+              << endl
+              << endl;
+#endif
 }
 
 kpEffectsDialog::~kpEffectsDialog ()
@@ -260,71 +271,26 @@ void kpEffectsDialog::selectEffect (int which)
 
     if (m_effectWidget)
     {
+        const bool e = updatesEnabled ();
+        setUpdatesEnabled (false);
+
     #if DEBUG_KP_EFFECTS_DIALOG
-        kDebug () << "\twidget exists for effect #";
+        kDebug () << "widget exists for effect #";
     #endif
         m_settingsGroupBox->setTitle (m_effectWidget->caption ());
 
-
-        // Don't resize the preview when showing the widget:
-        // TODO: actually work
+        // Show widget.
         //
-        //       And I think this resizing is causing the effect (including
-        //       QPixmap -> QImage translation?) to be executed twice on switching
-        //       effect.
-
-        QSize previewGroupBoxMinSize = m_previewGroupBox->minimumSize ();
-        QSize previewGroupBoxMaxSize = m_previewGroupBox->maximumSize ();
-        QLayout::SizeConstraint previewGroupBoxResizeMode =
-            m_previewGroupBox->layout () ?
-                m_previewGroupBox->layout ()->sizeConstraint () :
-                QLayout::SetDefaultConstraint;
+        // Don't resize the whole dialog when doing this.
+        // This seems to work magically without any extra code with Qt4.
     #if DEBUG_KP_EFFECTS_DIALOG
-        kDebug () << "\tpreviewGroupBox: minSize=" << previewGroupBoxMinSize
-                   << " maxSize=" << previewGroupBoxMaxSize
-                   << " size=" << m_previewGroupBox->size ()
-                   << " layout=" << m_previewGroupBox->layout ()
-                   << " resizeMode=" << previewGroupBoxResizeMode
-                   << endl;
+        kDebug () << "addWidget";
     #endif
-
-        if (m_previewGroupBox->layout ())
-            m_previewGroupBox->layout ()->setSizeConstraint (QLayout::SetNoConstraint);
-    #if DEBUG_KP_EFFECTS_DIALOG
-        kDebug () << "\tafter set resizeMode, previewGroupBox.size="
-                   << m_previewGroupBox->size () << endl;
-    #endif
-        m_previewGroupBox->setFixedSize (m_previewGroupBox->size ());
-    #if DEBUG_KP_EFFECTS_DIALOG
-        kDebug () << "\tafter set fixedSize, previewGroupBox.size="
-                   << m_previewGroupBox->size () << endl;
-    #endif
-
-        // Show widget
         m_settingsLayout->addWidget (m_effectWidget);
     #if DEBUG_KP_EFFECTS_DIALOG
-        kDebug () << "\tafter addWidget, previewGroupBox.size="
-                   << m_previewGroupBox->size () << endl;
+        kDebug () << "show widget";
     #endif
         m_effectWidget->show ();
-    #if DEBUG_KP_EFFECTS_DIALOG
-        kDebug () << "\tafter addWidget show, previewGroupBox.size="
-                   << m_previewGroupBox->size () << endl;
-    #endif
-
-        m_previewGroupBox->setMinimumSize (previewGroupBoxMinSize);
-        m_previewGroupBox->setMaximumSize (previewGroupBoxMaxSize);
-    #if DEBUG_KP_EFFECTS_DIALOG
-        kDebug () << "\tafter set fixedSize, previewGroupBox.size="
-                   << m_previewGroupBox->size () << endl;
-    #endif
-        if (m_previewGroupBox->layout ())
-            m_previewGroupBox->layout ()->setSizeConstraint (previewGroupBoxResizeMode);
-    #if DEBUG_KP_EFFECTS_DIALOG
-        kDebug () << "\tafter restore resizeMode, previewGroupBox.size="
-                   << m_previewGroupBox->size () << endl;
-    #endif
-
 
         connect (m_effectWidget, SIGNAL (settingsChangedNoWaitCursor ()),
                  this, SLOT (slotUpdate ()));
@@ -332,12 +298,20 @@ void kpEffectsDialog::selectEffect (int which)
                  this, SLOT (slotUpdateWithWaitCursor ()));
         connect (m_effectWidget, SIGNAL (settingsChangedDelayed ()),
                  this, SLOT (slotDelayedUpdate ()));
-        slotUpdateWithWaitCursor ();
+
     #if DEBUG_KP_EFFECTS_DIALOG
-        kDebug () << "\tafter slotUpdateWithWaitCursor, previewGroupBox.size="
-                   << m_previewGroupBox->size () << endl;
+        kDebug () << "about to setUpdatesEnabled()";
     #endif
+        setUpdatesEnabled (e);
     }
+
+
+#if DEBUG_KP_EFFECTS_DIALOG
+    kDebug () << "done"
+              << endl
+              << endl
+              << endl;
+#endif
 }
 
 

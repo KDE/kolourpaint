@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TRANSFORM_PREVIEW_DIALOG 0
+#define DEBUG_KP_TRANSFORM_PREVIEW_DIALOG 1
 
 
 #include <kpTransformPreviewDialog.h>
@@ -206,6 +206,16 @@ void kpTransformPreviewDialog::addCustomWidget (QWidget *w)
 }
 
 
+// public override [base QWidget]
+void kpTransformPreviewDialog::setUpdatesEnabled (bool enable)
+{
+    KDialog::setUpdatesEnabled (enable);
+
+    if (enable)
+        slotUpdateWithWaitCursor ();
+}
+
+
 // private
 void kpTransformPreviewDialog::updateDimensions ()
 {
@@ -215,6 +225,14 @@ void kpTransformPreviewDialog::updateDimensions ()
     kpDocument *doc = document ();
     if (!doc)
         return;
+
+    if (!updatesEnabled ())
+    {
+    #if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
+        kDebug () << "updates not enabled - aborting";
+    #endif
+        return;
+    }
 
     QSize newDim = newDimensions ();
 #if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
@@ -334,6 +352,16 @@ void kpTransformPreviewDialog::updatePreview ()
     if (!doc)
         return;
 
+
+    if (!updatesEnabled ())
+    {
+    #if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
+        kDebug () << "updates not enabled - aborting";
+    #endif
+        return;
+    }
+
+
     updateShrunkenDocumentPixmap ();
 
     if (!m_shrunkenDocumentPixmap.isNull ())
@@ -417,8 +445,7 @@ void kpTransformPreviewDialog::slotUpdate ()
 void kpTransformPreviewDialog::slotUpdateWithWaitCursor ()
 {
 #if DEBUG_KP_TRANSFORM_PREVIEW_DIALOG
-    kDebug () << "kpTransformPreviewDialog::slotUpdateWithWaitCursor()"
-               << endl;
+    kDebug () << "kpTransformPreviewDialog::slotUpdateWithWaitCursor()";
 #endif
 
     QApplication::setOverrideCursor (Qt::WaitCursor);

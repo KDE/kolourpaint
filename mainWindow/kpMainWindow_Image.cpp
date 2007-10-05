@@ -547,8 +547,8 @@ void kpMainWindow::slotMoreEffects ()
     toolEndShape ();
 
     kpEffectsDialog dialog ((bool) d->document->selection (),
-        transformDialogEnvironment (), this);
-    dialog.selectEffect (d->moreEffectsDialogLastEffect);
+        transformDialogEnvironment (), this,
+        d->moreEffectsDialogLastEffect);
 
     if (dialog.exec () && !dialog.isNoOp ())
     {

@@ -90,6 +90,15 @@ protected:
     virtual QPixmap transformPixmap (const QPixmap &pixmap,
                                      int targetWidth, int targetHeight) const = 0;
 
+public:
+    // Use to avoid excessive, expensive preview pixmap label recalcuations,
+    // during init and widget relayouts.
+    //
+    // Setting <enable> to true automatically calls slotUpdateWithWaitCursor().
+    //
+    // WARNING: This overrides a non-virtual method in QWidget.
+    void setUpdatesEnabled (bool enable);
+
 private:
     void updateDimensions ();
 
@@ -111,7 +120,7 @@ protected slots:
     virtual void slotUpdateWithWaitCursor ();
 
 protected:
-    // TODO: Use d-ptr
+    // REFACTOR: Use d-ptr
     QString m_afterActionText;
     bool m_actOnSelection;
 

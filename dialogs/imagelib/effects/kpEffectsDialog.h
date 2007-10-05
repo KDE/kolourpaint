@@ -49,9 +49,12 @@ class kpEffectsDialog : public kpTransformPreviewDialog
 Q_OBJECT
 
 public:
+    // Specifying <defaultSelectedEffect> is more efficient than leaving it
+    // as 0 and then calling selectEffect() afterwards.
     kpEffectsDialog (bool actOnSelection,
                      kpTransformDialogEnvironment *environ,
-                     QWidget *parent);
+                     QWidget *parent,
+                     int defaultSelectedEffect = 0);
     virtual ~kpEffectsDialog ();
 
     virtual bool isNoOp () const;
