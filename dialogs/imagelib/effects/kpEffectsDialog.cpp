@@ -106,10 +106,13 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     QLabel *label = new QLabel (i18n ("&Effect:"), effectContainer);
 
     m_effectsComboBox = new KComboBox (effectContainer);
+    // Keep in alphabetical order.
+    // TODO: What about translations?
+    // sync: order in selectEffect().
     m_effectsComboBox->addItem (i18n ("Balance"));
-    m_effectsComboBox->addItem (i18n ("Hue, Saturation, Value"));
     m_effectsComboBox->addItem (i18n ("Emboss"));
     m_effectsComboBox->addItem (i18n ("Flatten"));
+    m_effectsComboBox->addItem (i18n ("Hue, Saturation, Value"));
     m_effectsComboBox->addItem (i18n ("Invert"));
     m_effectsComboBox->addItem (i18n ("Reduce Colors"));
     m_effectsComboBox->addItem (i18n ("Soften & Sharpen"));
@@ -192,7 +195,7 @@ QPixmap kpEffectsDialog::transformPixmap (const QPixmap &pixmap,
 {
     QPixmap pixmapWithEffect;
 
-    if (m_effectWidget)
+    if (m_effectWidget && !m_effectWidget->isNoOp ())
         pixmapWithEffect = m_effectWidget->applyEffect (pixmap);
     else
         pixmapWithEffect = pixmap;
@@ -232,6 +235,7 @@ void kpEffectsDialog::selectEffect (int which)
 
 #define CREATE_EFFECT_WIDGET(name)  \
     m_effectWidget = new name (m_actOnSelection, m_settingsGroupBox)
+    // sync: order in constructor.
     switch (which)
     {
     case 0:
@@ -239,15 +243,15 @@ void kpEffectsDialog::selectEffect (int which)
         break;
 
     case 1:
-        CREATE_EFFECT_WIDGET (kpEffectHSVWidget);
-        break;
-
-    case 2:
         CREATE_EFFECT_WIDGET (kpEffectEmbossWidget);
         break;
 
-    case 3:
+    case 2:
         CREATE_EFFECT_WIDGET (kpEffectFlattenWidget);
+        break;
+    
+    case 3:
+        CREATE_EFFECT_WIDGET (kpEffectHSVWidget);
         break;
 
     case 4:
