@@ -135,12 +135,12 @@ QRect kpPixmapFX::draw (QPixmap *image,
 
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (*image);
 
+    // Interesting note (in case we support depth 1 later):
+    // QBitmap's do not have masks but QBitmap::mask() returns itself.
+    Q_ASSERT (image->depth () > 1);
 
-    // Get mask.  Work around the fact that QBitmap's do not have masks.
-    // but QBitmap::mask() returns itself.
-    QBitmap mask = image->depth () > 1 ?
-        image->mask () :
-        QBitmap ();
+
+    QBitmap mask = image->mask ();
 
 #if DEBUG_KP_PIXMAP_FX
     kDebug () << "\tDraw(): hasMask=" << !mask.isNull ();

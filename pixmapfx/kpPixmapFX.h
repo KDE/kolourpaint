@@ -309,6 +309,14 @@ public:
     // WARNING: The current implementation does not permit <drawFunc> to access
     //          <image> (as it clears <image>'s mask before drawFunc() (but
     //          does restore the mask later)).
+    //
+    // ASSUMPTIONS:
+    //
+    // 1. <image> already satisifes the no-alpha-channel invariant
+    //    (any newly-constructed QPixmap will, even though the RGB channel
+    //     contains randomness).
+    // 2. <image> is not of depth 1.
+    //
     static void draw (QPixmap *image,
         void (*drawFunc) (QPainter * /*p*/,
             bool /*drawingOnRGBLayer*/,
