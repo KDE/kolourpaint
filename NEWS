@@ -59,6 +59,11 @@ KolourPaint 4.0.0 BETA (Frozen 2007-10-21)
      drag-scaling the selection (Bug #117866)
      [also in branches/KDE/3.[345]/, branches/kolourpaint/1.2_kde3/]
 
+   * Paste transparent pixels as white instead of uninitialized colors,
+     when the app does not support pasting transparent pixels (such as
+     OpenOffice.org)
+     [also in branches/KDE/3.5/]
+
    * Add "Rotate Left" (CTRL+SHIFT+Left) and "Rotate Right" (CTRL+SHIFT+R)
      to "Image" menu as a quick way to access the common types of "Rotate..."
      (Bug #135184, #141530))

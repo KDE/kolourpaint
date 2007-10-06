@@ -269,8 +269,25 @@ void kpMainWindow::slotCopy ()
         // if we ever call sel.setBaseImage().
         imageSel->setTransparency (kpImageSelectionTransparency ());
 
-        if (!imageSel->hasContent ())
-            imageSel->setBaseImage (d->document->getSelectedBaseImage ());
+        kpImage rawImage;
+
+        if (imageSel->hasContent ())
+            rawImage = imageSel->baseImage ();
+        else
+            rawImage = d->document->getSelectedBaseImage ();
+
+        // Some apps, such as OpenOffice.org 2.0.4, ignore the image mask
+        // when pasting.  For transparent pixels, the uninitialized RGB
+        // values are used.  Fix this by initializing those values to a
+        // neutral color -- white.
+        //
+        // Strangely enough, OpenOffice.org respects the mask when inserting
+        // an image from a file, as opposed to pasting one from the clipbaord.
+        imageSel->setBaseImage (
+            kpPixmapFX::pixmapWithDefinedTransparentPixels (
+                rawImage,
+                Qt::white));  // CONFIG
+
         QApplication::clipboard ()->setData (new kpSelectionDrag (*imageSel),
                                              QClipboard::Clipboard);
     }
