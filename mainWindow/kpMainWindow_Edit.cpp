@@ -282,7 +282,10 @@ void kpMainWindow::slotCopy ()
         // neutral color -- white.
         //
         // Strangely enough, OpenOffice.org respects the mask when inserting
-        // an image from a file, as opposed to pasting one from the clipbaord.
+        // an image from a file, as opposed to pasting one from the clipboard.
+        //
+        // REFACTOR: This logic should be moved into kpSelectionDrag as that
+        //           would centralize this responsibility.
         imageSel->setBaseImage (
             kpPixmapFX::pixmapWithDefinedTransparentPixels (
                 rawImage,
