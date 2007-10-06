@@ -2,7 +2,11 @@
 KolourPaint 1.4_relight Series (branches/KDE/3.5/)
 ===============================
 
-KolourPaint 1.4.8_relight (Frozen ???)
+KolourPaint 1.4.8_relight (Frozen 2007-10-07)
+
+   * Paste transparent pixels as white instead of uninitialized colors,
+     when the app does not support pasting transparent pixels (such as
+     OpenOffice.org)
 
    * Add error dialogs for:
     - if scanning support is unavailable
