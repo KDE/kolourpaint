@@ -41,6 +41,7 @@
 #include <kstringhandler.h>
 #include <KTemporaryFile>
 #include <KUrl>
+#include <kdebug.h>
 
 #include <kpUrlFormatter.h>
 
