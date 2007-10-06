@@ -34,6 +34,7 @@
 #include <QList>
 
 #include <KLocale>
+#include <KDebug>
 
 #include <kpDocument.h>
 #include <kpTextSelection.h>

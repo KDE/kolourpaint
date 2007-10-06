@@ -35,6 +35,7 @@
 #include <KMessageBox>
 #include <KSelectAction>
 #include <KStandardGuiItem>
+#include <KDebug>
 
 #include <kpColorCells.h>
 #include <kpColorCollection.h>

@@ -30,6 +30,7 @@
 #include <kpToolRectSelection.h>
 
 #include <klocale.h>
+#include <kdebug.h>
 
 #include <kpDocument.h>
 #include <kpRectangularImageSelection.h>

@@ -31,6 +31,7 @@
 #include <kpToolEllipticalSelection.h>
 
 #include <klocale.h>
+#include <kdebug.h>
 
 #include <kpDocument.h>
 #include <kpEllipticalImageSelection.h>

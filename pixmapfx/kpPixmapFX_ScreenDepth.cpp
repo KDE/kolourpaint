@@ -35,6 +35,7 @@
 
 #include <KLocale>
 #include <KMessageBox>
+#include <KDebug>
 
 
 // public static

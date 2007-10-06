@@ -36,6 +36,7 @@
 #include <KLocale>
 #include <KMessageBox>
 #include <ksavefile.h>
+#include <kdebug.h>
 #include <kstandarddirs.h>
 #include <kstringhandler.h>
 #include <KTemporaryFile>

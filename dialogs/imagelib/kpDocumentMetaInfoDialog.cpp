@@ -45,6 +45,7 @@
 #include <KLocale>
 #include <KMessageBox>
 #include <KVBox>
+#include <KDebug>
 
 #include <kpBug.h>
 #include <kpDefs.h>
