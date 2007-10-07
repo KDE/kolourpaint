@@ -714,8 +714,20 @@ void kpToolAutoCropCommand::unexecute ()
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
             kdDebug () << "\trestoring border pixmap " << (*b)->rect () << endl;
         #endif
+            // **p cannot contain a single transparent pixel because
+            // if it did, all other pixels must be transparent (only
+            // transparent pixels are similar to transparent pixels)
+            // and the other branch would execute.
             if (*p)
+            {
+                // TODO: We should really edit the mask here.  Due to good
+                //       luck -- kpToolAutoCrop discarding regions, ensuring
+                //       that we will never have a fully-transparent-single-color
+                //       region and a pixmap region to restore simultaneously, we
+                //       don't actually have to edit the mask but this is
+                //       highly error-prone.
                 painter.drawPixmap ((*b)->rect (), **p);
+            }
         }
     }
 
