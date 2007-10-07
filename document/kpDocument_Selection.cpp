@@ -134,8 +134,6 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
         // Now all kpDocument and environment state has been set.
         // We can _only_ fire signals after that, as the signal receivers (the
         // "wider environment") may access the document and the environment.
-        // KDE3: Need to backport fix the whole kpDocument::setSelection() reordering.
-        //       Although setQueueViewUpdates() has probably mitigated that need.
         //
 
     #if DEBUG_KP_DOCUMENT && 1
