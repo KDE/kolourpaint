@@ -111,6 +111,8 @@ static QPixmap pixmap (const kpToolRectangle::Mode mode,
         kdDebug () << "\tdraw shape" << endl;
     #endif
 
+        // TODO: Rectangle of pen width 1, height 1 and width X is rendered
+        //       as width X - 1.
         switch (mode)
         {
         case kpToolRectangle::Rectangle:
