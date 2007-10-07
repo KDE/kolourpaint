@@ -16,6 +16,10 @@ KolourPaint 1.4.8_relight (Frozen 2007-10-07)
     - if scanning support is unavailable
     - running out of graphics memory during a scan
 
+   * Focus an input field when the "Skew", "Rotate" and "Resize / Scale"
+     dialogs are displayed -- this allows the user to edit values without
+     an extra mouse click
+
 KolourPaint 1.4.7_relight (Frozen 2007-05-14)
 
    * Save local files atomically - KolourPaint will no longer truncate
