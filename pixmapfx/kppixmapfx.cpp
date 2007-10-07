@@ -1237,7 +1237,21 @@ double kpPixmapFX::AngleInDegreesEpsilon =
 
 static QWMatrix matrixWithZeroOrigin (const QWMatrix &matrix, int width, int height)
 {
+#if DEBUG_KP_PIXMAP_FX
+    kdDebug () << "matrixWithZeroOrigin(w=" << width << ",h=" << height << ")" << endl;
+    kdDebug () << "\tmatrix: m11=" << matrix.m11 ()
+               << " m12=" << matrix.m12 ()
+               << " m21=" << matrix.m21 ()
+               << " m22=" << matrix.m22 ()
+               << " dx=" << matrix.dx ()
+               << " dy=" << matrix.dy ()
+               << endl;
+#endif
+    // TODO: Should we be using QWMatrix::Areas?
     QRect newRect = matrix.mapRect (QRect (0, 0, width, height));
+#if DEBUG_KP_PIXMAP_FX
+    kdDebug () << "\tnewRect=" << newRect << endl;
+#endif
 
     QWMatrix translatedMatrix (matrix.m11 (), matrix.m12 (), matrix.m21 (), matrix.m22 (),
                                matrix.dx () - newRect.left (), matrix.dy () - newRect.top ());
@@ -1258,6 +1272,7 @@ static QPixmap xForm (const QPixmap &pm, const QWMatrix &transformMatrix_,
                << ")"
                << endl;
 #endif
+    // TODO: Should we be using QWMatrix::Areas?
     QRect newRect = transformMatrix.map (pm.rect ());
 #if DEBUG_KP_PIXMAP_FX && 1
     kdDebug () << "\tmappedRect=" << newRect << endl;
@@ -1332,6 +1347,7 @@ static QPixmap xForm (const QPixmap &pm, const QWMatrix &transformMatrix_,
 
         transformMatrix = transformMatrix * scaleMatrix;
 
+        // TODO: Should we be using QWMatrix::Areas?
         newRect = transformMatrix.map (pm.rect ());
     #if DEBUG_KP_PIXMAP_FX && 1
         kdDebug () << "\tnewRect after targetWidth,targetHeight adjust=" << newRect << endl;
@@ -1366,13 +1382,22 @@ static QPixmap xForm (const QPixmap &pm, const QWMatrix &transformMatrix_,
     }
 
     QPainter painter (&newPixmap);
-#if DEBUG_KP_PIXMAP_FX && 0
+#if DEBUG_KP_PIXMAP_FX && 1
     kdDebug () << "\tmatrix: m11=" << transformMatrix.m11 ()
             << " m12=" << transformMatrix.m12 ()
             << " m21=" << transformMatrix.m21 ()
             << " m22=" << transformMatrix.m22 ()
             << " dx=" << transformMatrix.dx ()
             << " dy=" << transformMatrix.dy ()
+            << endl;
+    const QWMatrix trueMatrix = QPixmap::trueMatrix (transformMatrix,
+        pm.width (), pm.height ());
+    kdDebug () << "\ttrue matrix: m11=" << trueMatrix.m11 ()
+            << " m12=" << trueMatrix.m12 ()
+            << " m21=" << trueMatrix.m21 ()
+            << " m22=" << trueMatrix.m22 ()
+            << " dx=" << trueMatrix.dx ()
+            << " dy=" << trueMatrix.dy ()
             << endl;
 #endif
     painter.setWorldMatrix (transformMatrix);

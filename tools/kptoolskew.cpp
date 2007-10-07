@@ -310,6 +310,7 @@ QSize kpToolSkewDialog::newDimensions () const
     QWMatrix skewMatrix = kpPixmapFX::skewMatrix (*doc->pixmap (),
                                                   horizontalAngleForPixmapFX (),
                                                   verticalAngleForPixmapFX ());
+    // TODO: Should we be using QWMatrix::Areas?
     QRect skewRect = skewMatrix.mapRect (doc->rect (m_actOnSelection));
 
     return QSize (skewRect.width (), skewRect.height ());

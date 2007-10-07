@@ -56,7 +56,7 @@ kpViewManager::kpViewManager (kpMainWindow *mainWindow)
       m_selectionBorderVisible (false),
       m_selectionBorderFinished (false)
 {
-    m_queueUpdatesCounter = m_fastUpdatesCounter =  0;
+    m_queueUpdatesCounter = m_fastUpdatesCounter = 0;
 }
 
 // private
@@ -233,6 +233,7 @@ void kpViewManager::setTextCursorEnabled (bool yes)
                  this, SLOT (slotTextCursorBlink ()));
         slotTextCursorBlink ();
     }
+    // TODO: What if !yes - shouldn't it clear the cursor?
 
     restoreQueueUpdates ();
     restoreFastUpdates ();
@@ -351,6 +352,7 @@ void kpViewManager::setTextCursorPosition (int row, int col, bool isUpdateMicroF
 
         if (m_viewUnderCursor)
         {
+            // TODO: Fix code duplication: kpViewManager::{setTextCursorPosition,updateTextCursor}() & kpView::paintEventDrawSelection()
             QPoint topLeft = sel->pointForTextRowCol (m_textCursorRow, m_textCursorCol);
             if (topLeft != KP_INVALID_POINT)
             {
@@ -395,7 +397,7 @@ void kpViewManager::updateTextCursor ()
     if (!sel || !sel->isText ())
         return;
 
-    // TODO: fix code duplication with kpView::paintEventDrawSelection()
+    // TODO: Fix code duplication: kpViewManager::{setTextCursorPosition,updateTextCursor}() & kpView::paintEventDrawSelection()
     QPoint topLeft = sel->pointForTextRowCol (m_textCursorRow, m_textCursorCol);
     if (topLeft != KP_INVALID_POINT)
     {
@@ -749,3 +751,4 @@ void kpViewManager::adjustViewsToEnvironment ()
 }
 
 #include <kpviewmanager.moc>
+

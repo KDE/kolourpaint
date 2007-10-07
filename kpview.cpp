@@ -1469,7 +1469,7 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
         // one with focus   // !this->isActiveWindow ()
         !vm->activeView ()))  // sync: call will break when vm is not held by 1 mainWindow
     {
-        // TODO: fix code duplication with kpViewManager::updateTextCursor()
+        // TODO: Fix code duplication: kpViewManager::{setTextCursorPosition,updateTextCursor}() & kpView::paintEventDrawSelection()
         QPoint topLeft = sel->pointForTextRowCol (vm->textCursorRow (), vm->textCursorCol ());
         if (topLeft != KP_INVALID_POINT)
         {

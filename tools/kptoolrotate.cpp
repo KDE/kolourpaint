@@ -409,6 +409,7 @@ int kpToolRotateDialog::angle () const
 QSize kpToolRotateDialog::newDimensions () const
 {
     QWMatrix matrix = kpPixmapFX::rotateMatrix (m_oldWidth, m_oldHeight, angle ());
+    // TODO: Should we be using QWMatrix::Areas?
     QRect rect = matrix.map (QRect (0, 0, m_oldWidth, m_oldHeight));
     return rect.size ();
 }
