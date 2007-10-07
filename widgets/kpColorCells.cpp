@@ -33,7 +33,6 @@
 
 #include <QContextMenuEvent>
 #include <QMouseEvent>
-#include <QScrollBar>
 
 #include <KColorDialog>
 #include <KDebug>
@@ -43,6 +42,7 @@
 #include <kpColor.h>
 #include <kpColorCollection.h>
 #include <kpDefaultColorCollection.h>
+#include <kpAbstractScrollAreaUtils.h>
 
 
 //
@@ -157,24 +157,6 @@ kpColorCells::kpColorCells (QWidget *parent,
 
     if (o == Qt::Horizontal)
     {
-        int scrollBarAdjust = verticalScrollBar () ?
-            verticalScrollBar ()->sizeHint ().width () :
-            0;
-    #if DEBUG_KP_COLOR_CELLS
-        kDebug () << "verticalScrollBar=" << verticalScrollBar ()
-                  << " sizeHint=" << scrollBarAdjust;
-    #endif
-
-        if (scrollBarAdjust <= 0)
-        {
-            kError () << "verticalScrollBar sizeHint of" << scrollBarAdjust
-                      << "is invalid.  Qt's behavior changed so find another"
-                      << "way to get the scrollbar size.";
-
-            // Should be big enough for most styles.
-            scrollBarAdjust = 20;
-        }
-
         // Reserve enough room for the default color collection's cells _and_
         // a vertical scrollbar, which only appears when it's required.
         // This ensures that if the vertical scrollbar apears, it does not obscure
@@ -183,7 +165,8 @@ kpColorCells::kpColorCells (QWidget *parent,
         //
         // We do not dynamically reserve room based on the actual number of rows
         // of cells, as that would make our containing widgets too big.
-        setMinimumSize (::TableDefaultWidth + frameWidth () * 2 + scrollBarAdjust,
+        setMinimumSize (::TableDefaultWidth + frameWidth () * 2 +
+                            kpAbstractScrollAreaUtils::EstimateVerticalScrollBarWidth (this),
                         ::TableDefaultHeight + frameWidth () * 2);
     }
     else
@@ -302,7 +285,6 @@ void kpColorCells::makeCellsMatchColorCollection ()
     //       cells don't have exactly the sizes requested here.  e.g. the
     //       top row of cells is 1 pixel shorter than the bottom row.  There
     //       are probably other glitches.
-    // KDE3: It wasn't right in KDE 3.4 either (haven't checked 3.5).
     for (int y = 0; y < r; y++)
         setRowHeight (y, CellHeight);
     for (int x = 0; x < c; x++)
@@ -515,6 +497,8 @@ void kpColorCells::slotColorSelected (int cell, const QColor &color,
                << ") mouseButton = " << button
                << " rgb=" << (int *) color.rgb ()
                << endl;
+#else
+    Q_UNUSED (cell);
 #endif
 
     if (button == Qt::LeftButton)

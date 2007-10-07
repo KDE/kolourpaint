@@ -178,6 +178,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/environments/document/kpDocumentEnvironment.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/environments/kpEnvironmentBase.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/environments/tools/kpToolEnvironment.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/environments/tools/selection/kpToolSelectionEnvironment.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/generic/kpAbstractScrollAreaUtils.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/kpSetOverrideCursorSaver.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/kpWidgetMapper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/widgets/kpSubWindow.cpp
