@@ -1434,6 +1434,8 @@ bool kpDocument::selectionCopyOntoDocument (bool useTransparentPixmap)
         sel->paint (m_pixmap, rect ());
     }
 
+    slotContentsChanged (boundingRect);
+
     return true;
 }
 
