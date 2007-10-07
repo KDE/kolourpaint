@@ -877,7 +877,7 @@ void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
 {
     e->setAccepted (kpSelectionDrag::canDecode (e) ||
                     KUrl::List::canDecode (e->mimeData ()) ||
-                    Q3TextDrag::canDecode (e));
+                    e->mimeData ()->hasText ());
 }
 
 // private virtual [base QWidget]
@@ -888,7 +888,6 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 #endif
 
     KUrl::List urls;
-    QString text;
 
     kpAbstractImageSelection *sel = kpSelectionDrag::decode (e,
         pasteWarnAboutLossInfo ());
@@ -912,8 +911,10 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         foreach (KUrl u, urls)
             open (u);
     }
-    else if (Q3TextDrag::decode (e, text/*ref*/))
+    else if (e->mimeData ()->hasText ())
     {
+        const QString text = e->mimeData ()->text ();
+
         QPoint selTopLeft = KP_INVALID_POINT;
         const QPoint globalPos = QWidget::mapToGlobal (e->pos ());
     #if DEBUG_KP_MAIN_WINDOW
