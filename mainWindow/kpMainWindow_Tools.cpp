@@ -732,6 +732,8 @@ void kpMainWindow::slotActionDrawOpaqueToggled ()
 #endif
     toolEndShape ();
 
+    // TODO: How does this differ to setImageSelectionTransparency()?
+
     // ("kpToolWidgetBase::" is to access one overload shadowed by the override
     //  of the other overload)
     d->toolToolBar->toolWidgetOpaqueOrTransparent ()->kpToolWidgetBase::setSelected (
