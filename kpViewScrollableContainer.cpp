@@ -55,8 +55,10 @@ static const int DragScrollNumPixels = 10;
 static const int DragDistanceFromRectMaxFor1stMultiplier = 50;
 static const int DragDistanceFromRectMaxFor2ndMultiplier = 100;
 
-static const int GripSize = 7;
 static const int GripHandleSize = 7;
+
+// public static
+const int kpGrip::Size = 7;
 
 
 kpGrip::kpGrip (GripType type, QWidget *parent)
@@ -417,17 +419,17 @@ kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent)
     viewport ()->setAttribute (Qt::WA_PaintOutsidePaintEvent);
     viewport ()->setAttribute (Qt::WA_PaintUnclipped);
 
-    m_bottomGrip->setFixedHeight (GripSize);
+    m_bottomGrip->setFixedHeight (kpGrip::Size);
     m_bottomGrip->hide ();
     addChild (m_bottomGrip);
     connectGripSignals (m_bottomGrip);
 
-    m_rightGrip->setFixedWidth (GripSize);
+    m_rightGrip->setFixedWidth (kpGrip::Size);
     m_rightGrip->hide ();
     addChild (m_rightGrip);
     connectGripSignals (m_rightGrip);
 
-    m_bottomRightGrip->setFixedSize (GripSize, GripSize);
+    m_bottomRightGrip->setFixedSize (kpGrip::Size, kpGrip::Size);
     m_bottomRightGrip->hide ();
     addChild (m_bottomRightGrip);
     connectGripSignals (m_bottomRightGrip);

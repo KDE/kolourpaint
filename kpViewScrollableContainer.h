@@ -63,6 +63,8 @@ public:
         BottomRight = Right | Bottom
     };
 
+    static const int Size;
+
     kpGrip (GripType type, QWidget *parent);
     virtual ~kpGrip ();
 
