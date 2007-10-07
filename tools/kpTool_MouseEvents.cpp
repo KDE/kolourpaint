@@ -68,7 +68,7 @@
 
 void kpTool::mousePressEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 1 
     kDebug () << "kpTool::mousePressEvent pos=" << e->pos ()
                << " button=" << (int) e->button ()
                << " stateAfter: buttons=" << (int *) (int) e->buttons ()
@@ -105,7 +105,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     }
 
     int mb = mouseButton (e->buttons ());
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 1 
     kDebug () << "\tmb=" << mb << " d->beganDraw=" << d->beganDraw;
 #endif
 
@@ -139,7 +139,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     kpView *view = viewUnderCursor ();
     Q_ASSERT (view);
 
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 1 
     if (view)
         kDebug () << "\tview=" << view->objectName ();
 #endif
@@ -155,7 +155,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     d->viewUnderStartPoint = view;
     d->lastPoint = QPoint (-1, -1);
 
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 1 
     kDebug () << "\tBeginning draw @ " << d->currentPoint;
 #endif
 
@@ -176,18 +176,18 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 //      selections' accidental drag detection feature cares?
 void kpTool::mouseMoveEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 0
+#if DEBUG_KP_TOOL && 0 
     kDebug () << "kpTool::mouseMoveEvent pos=" << e->pos ()
                << " stateAfter: buttons=" << (int *) (int) e->buttons ()
-               << " modifiers=" << (int *) (int) e->modifiers ()
+               << " modifiers=" << (int *) (int) e->modifiers ();
     kpView *v0 = viewUnderCursor (),
            *v1 = viewManager ()->viewUnderCursor (true/*use Qt*/),
            *v2 = viewUnderStartPoint ();
     kDebug () << "\tviewUnderCursor=" << (v0 ? v0->objectName () : "(none)")
                << " viewUnderCursorQt=" << (v1 ? v1->objectName () : "(none)")
-               << " viewUnderStartPoint=" << (v2 ? v2->objectName () : "(none)")
-               << endl;
+               << " viewUnderStartPoint=" << (v2 ? v2->objectName () : "(none)");
     kDebug () << "\tfocusWidget=" << kapp->focusWidget ();
+    kDebug () << "\tbeganDraw=" << d->beganDraw;
 #endif
 
     d->shiftPressed = (e->modifiers () & Qt::ShiftModifier);
@@ -197,14 +197,12 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
     if (d->beganDraw)
     {
         kpView *view = viewUnderStartPoint ();
-        // HITODO: RMB drag then left drag away menu = assert failure.
-        // KDE3: Does this affect branches/KDE/3.x/kdegraphics/kolourpaint?
         Q_ASSERT (view);
 
         d->currentPoint = view->transformViewToDoc (e->pos ());
         d->currentViewPoint = e->pos ();
 
-    #if DEBUG_KP_TOOL && 0
+    #if DEBUG_KP_TOOL && 0 
         kDebug () << "\tDraw!";
     #endif
 
@@ -250,7 +248,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 
 void kpTool::mouseReleaseEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 1
+#if DEBUG_KP_TOOL && 1 
     kDebug () << "kpTool::mouseReleaseEvent pos=" << e->pos ()
                << " button=" << (int) e->button ()
                << " stateAfter: buttons=" << (int *) (int) e->buttons ()
@@ -264,8 +262,6 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
     if (d->beganDraw)
     {
         kpView *view = viewUnderStartPoint ();
-        // HITODO: RMB drag then left click away menu = assert failure.
-        // KDE3: Does this affect branches/KDE/3.x/kdegraphics/kolourpaint?
         Q_ASSERT (view);
 
         d->currentPoint = view->transformViewToDoc (e->pos ());

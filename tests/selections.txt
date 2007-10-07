@@ -1,0 +1,12 @@
+An obscure testcase with the selection tool is:
+
+1. RMB-drag to create a selection and popup a menu.
+2. LMB-drag outside of the menu, to close it.
+3. While still holding down the LMB, hold down the RMB and continue
+   moving the mouse.
+4. Let go of the LMB and continue moving the mouse.
+
+etc.
+
+KolourPaint should not crash or anything like that.
+
