@@ -122,6 +122,11 @@ This file lists known bugs in this version that are not considered
     not drawing or KolourPaint may fail to detect the release of the Enter
     key.
 
+27. InputMethod has not been tested at zoom levels other than 100%.
+
+28. KolourPaint has not been tested against invalid or malicious clipboard
+    data.
+
 
 Issue with XFree86 <= 3.3.6 with the "Emulate3Buttons" Option
 =============================================================

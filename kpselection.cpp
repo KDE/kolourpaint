@@ -200,6 +200,8 @@ QDataStream &operator>> (QDataStream &stream, kpSelection &selection)
 }
 
 // public
+// TODO: KolourPaint has not been tested against invalid or malicious
+//       clipboard data [Bug #28].
 void kpSelection::readFromStream (QDataStream &stream,
                                   const kpPixmapFX::WarnAboutLossInfo &wali)
 {

@@ -356,6 +356,18 @@ void kpViewManager::setTextCursorPosition (int row, int col, bool isUpdateMicroF
             QPoint topLeft = sel->pointForTextRowCol (m_textCursorRow, m_textCursorCol);
             if (topLeft != KP_INVALID_POINT)
             {
+                // TODO: I think you need to consider zooming e.g. try editing
+                //       text at 800% or with focus set to the thumbnail.
+                //       kpSelection/kpDocument works fully in unzoomed 
+                //       coordinates unlike the view (which is zoomed and can
+                //       change size).
+                //
+                //       To fix it here, I think you should call
+                //       m_viewUnderCursor->transformDocToView(QRect).  However,
+                //       the rest of the InputMethod support still needs to
+                //       audited for this.
+                //
+                //       [Bug #27]
                 m_viewUnderCursor->updateMicroFocusHint(QRect (topLeft.x (), topLeft.y (), 1, sel->textStyle ().fontMetrics ().height ())); 
             }
         }
