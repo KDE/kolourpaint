@@ -195,7 +195,7 @@ void kpTool::endInternal ()
 
         // clear leftover statusbar messages
         setUserMessage ();
-        setUserShapePoints (currentPoint ());
+        setUserShapePoints (calculateCurrentPoint ());
 
         // we've stopped using the tool...
         d->began = false;
