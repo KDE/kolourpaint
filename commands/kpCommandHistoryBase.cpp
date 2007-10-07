@@ -629,7 +629,7 @@ static void populatePopupMenu (KMenu *popupMenu,
 
     if (it != commandList.end ())
     {
-        // TODO: maybe have a scrollview show all the items instead, like KOffice in KDE3
+        // TODO: maybe have a scrollview show all the items instead, like KOffice in KDE 3
         // LOCOMPAT: should be centered text.
         popupMenu->addTitle (i18np ("%1 more item", "%1 more items",
                                     commandList.size () - i));

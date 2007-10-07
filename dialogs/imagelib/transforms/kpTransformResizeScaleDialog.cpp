@@ -385,7 +385,7 @@ void kpTransformResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget
     //         edit.  It should either fire:
     //        
     //             1. At the end of the edit (triggered by clicking or tabbing
-    //                away), like with KDE3.
+    //                away), like with KDE 3.
     //
     //             OR
     //
