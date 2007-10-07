@@ -721,9 +721,9 @@ void kpToolAutoCropCommand::unexecute ()
             if (*p)
             {
                 // TODO: We should really edit the mask here.  Due to good
-                //       luck -- kpToolAutoCrop discarding regions, ensuring
-                //       that we will never have a fully-transparent-single-color
-                //       region and a pixmap region to restore simultaneously, we
+                //       luck (if "maskBitmap" is initialized above, this region
+                //       will be marked as opaque in the mask; if it's not
+                //       initialized, we will be opaque by default), we
                 //       don't actually have to edit the mask but this is
                 //       highly error-prone.
                 painter.drawPixmap ((*b)->rect (), **p);
