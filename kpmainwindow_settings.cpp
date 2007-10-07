@@ -40,6 +40,7 @@
 
 #include <kpdefs.h>
 #include <kpdocument.h>
+#include <kptool.h>
 #include <kptooltoolbar.h>
 
 
@@ -130,6 +131,10 @@ void kpMainWindow::slotKeyBindings ()
     kdDebug () << "kpMainWindow::slotKeyBindings()" << endl;
 #endif
 
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
+
     bool singleKeyTriggersDisabled = !actionsSingleKeyTriggersEnabled ();
 
     if (singleKeyTriggersDisabled)
@@ -155,6 +160,10 @@ void kpMainWindow::slotConfigureToolBars ()
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotConfigureToolBars()" << endl;
 #endif
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
 
     //saveMainWindowSettings (kapp->config (), autoSaveGroup ());
 

@@ -1234,6 +1234,9 @@ void kpMainWindow::slotPrintPreview ()
 // private slot
 void kpMainWindow::slotMail ()
 {
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
+
     if (m_document->url ().isEmpty ()/*no name*/ ||
         !m_document->isFromURL () ||
         m_document->isModified ()/*needs to be saved*/)

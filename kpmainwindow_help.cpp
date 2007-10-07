@@ -39,6 +39,8 @@
 #include <klocale.h>
 #include <kshortcut.h>
 
+#include <kptool.h>
+
 
 // private
 void kpMainWindow::setupHelpMenuActions ()
@@ -101,6 +103,9 @@ void kpMainWindow::slotHelpTakingScreenshots ()
 #if DEBUG_KP_MAIN_WINDOW
     kdDebug () << "kpMainWindow::slotHelpTakingScreenshots()" << endl;
 #endif
+
+    if (toolHasBegunShape ())
+        tool ()->endShapeInternal ();
 
 
     // TODO: Totally bogus logic if kwin not running under same user as KolourPaint.
