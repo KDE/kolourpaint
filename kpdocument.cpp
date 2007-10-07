@@ -1453,9 +1453,8 @@ QPixmap kpDocument::pixmapWithSelection () const
     #endif
         QPixmap output = *m_pixmap;
 
-        kpPixmapFX::paintPixmapAt (&output,
-                                   m_selection->topLeft (),
-                                   m_selection->transparentPixmap ());
+        m_selection->paint (&output, rect ());
+
         return output;
     }
     else
