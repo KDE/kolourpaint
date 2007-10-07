@@ -1146,6 +1146,11 @@ void kpDocument::setSelection (const kpSelection &selection)
 
     if (m_selection)
     {
+        // TODO: Emitting this, before setting the new selection, is bogus
+        //       since it would redraw the old selection.
+        //
+        //       Luckily, this doesn't matter thanks to the
+        //       kpViewManager::setQueueUpdates() call above.
         if (m_selection->pixmap ())
             slotContentsChanged (m_selection->boundingRect ());
         else
