@@ -24,6 +24,12 @@ KolourPaint 1.4.8_relight (Frozen 2007-10-07)
     - if scanning support is unavailable
     - running out of graphics memory during a scan
 
+   * Other minor changes -- some of these are:
+     - Finish the current shape in more cases of menu item accesses
+     - [internal] kpDocument::selectionCopyOntoDocument() marks the document
+       as modified
+     - More comments
+
 KolourPaint 1.4.7_relight (Frozen 2007-05-14)
 
    * Save local files atomically - KolourPaint will no longer truncate
