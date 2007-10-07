@@ -1105,11 +1105,19 @@ void kpDocument::setSelection (const kpSelection &selection)
     const bool isTextChanged = (m_mainWindow->toolIsTextTool () !=
                                 (selection.type () == kpSelection::Text));
 
-    // (we don't change the Selection Tool if the new selection's
-    //  shape is different to the tool's because all the Selection
-    //  Tools act the same, except for what would be really irritating
-    //  if it kept changing whenever you paste an image - drawing the
-    //  selection region)
+    // We don't change the Selection Tool if the new selection's
+    // shape is merely different to the current tool's (e.g. rectangular
+    // vs elliptical) because:
+    //
+    // 1. All image selection tools support editing selections of all the
+    //    different shapes anyway.
+    // 2. Suppose the user is trying out different drags of selection borders
+    //    and then decides to paste a differently shaped selection before continuing
+    //    to try out different borders.  If the pasting were to switch to
+    //    a differently shaped tool, the borders drawn after the paste would
+    //    be using a new shape rather than the shape before the paste.  This
+    //    could get irritating so we don't do the switch.
+    //
     if (m_mainWindow &&
         (!m_mainWindow->toolIsASelectionTool () || isTextChanged))
     {
