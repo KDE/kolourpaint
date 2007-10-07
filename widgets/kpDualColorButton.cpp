@@ -333,7 +333,7 @@ void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
         else
         {
             // TODO: If you double-click on a transparent color and press OK, you get
-            //       white, instead of the color staying as invalid.
+            //       white, instead of the color staying as transparent.
             //
             //       We should modify or fork KColorDialog to fix this.
             //
@@ -342,8 +342,6 @@ void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
             //       to opaque colors.
             //
             // sync: see also kpColorCells::slotColorDoubleClicked().
-            //
-            // KDE3: Problem in KDE3 as well.
         }
 
     #if DEBUG_KP_DUAL_COLOR_BUTTON
