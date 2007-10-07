@@ -39,6 +39,8 @@
 
 
 // public static
+// TODO: KolourPaint has not been tested against invalid or malicious
+//       clipboard data [Bug #28].
 kpAbstractImageSelection *kpSelectionFactory::FromStream (QDataStream &stream,
         const kpPixmapFX::WarnAboutLossInfo &wali)
 {
@@ -76,8 +78,6 @@ kpAbstractImageSelection *kpSelectionFactory::FromStream (QDataStream &stream,
     // Unknown selection type?
     if (imageSel == 0)
     {
-        // KDE3: TODO: You could kill KolourPaint/KDE 3 by sending a bogus selection
-        //       over the clipboard.
         return 0;
     }
 

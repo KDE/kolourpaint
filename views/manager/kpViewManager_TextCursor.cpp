@@ -2,6 +2,19 @@
 // TODO: This is bad design as it's easy to get out of sync with the selection.
 //       e.g. You could have textCursorEnabled() but no text selection or
 //       vice versa.  And the cursor could be outside of the selection.
+//
+//       In fact, out text commands momentarily violate these "invariants":
+//
+//       1. A text box with content must have the cursor somewhere on an
+//          existing text line, possibly 1 position after the last character
+//          on a line.
+//
+//       2. Special case: A content-less text box (i.e. no text lines) must
+//          have the cursor at (0,0).
+//
+//       We don't assert-check them at the moment.  We should when we fix
+//       the design so that the invariants are always maintained.
+
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    Copyright (c) 2005 Kazuki Ohta <mover@hct.zaq.ne.jp>
@@ -160,6 +173,18 @@ void kpViewManager::setTextCursorPosition (int row, int col, bool isUpdateMicroF
         if (!d->viewUnderCursor)
             return;
 
+        // TODO: I think you need to consider zooming e.g. try editing
+        //       text at 800% or with focus set to the thumbnail.
+        //       kpSelection/kpDocument works fully in unzoomed
+        //       coordinates unlike the view (which is zoomed and can
+        //       change size).
+        //
+        //       To fix it here, I think you should call
+        //       m_viewUnderCursor->transformDocToView(QRect).  However,
+        //       the rest of the InputMethod support still needs to
+        //       audited for this.
+        //
+        //       [Bug #27]
         d->viewUnderCursor->updateMicroFocusHint (r);
     }
 #endif
