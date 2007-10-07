@@ -245,6 +245,17 @@ void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
         QColor col = Qt::black;
         if (color (whichColor).isOpaque ())
             col = color (whichColor).toQColor ();
+        else
+        {
+            // TODO: If you double-click on a transparent color and press OK, you get
+            //       black, instead of the color staying as transparent.
+            //
+            //       We should modify or fork KColorDialog to allow us to fix this.
+            //
+            //       It would be wrong to stop the user from double-clicking on a
+            //       transparent color as that would make the UI inconsistent, compared
+            //       to opaque colors.
+        }
 
         // TODO: parent
         if (KColorDialog::getColor (col/*ref*/))
