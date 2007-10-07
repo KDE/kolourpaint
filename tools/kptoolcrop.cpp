@@ -118,19 +118,22 @@ void kpToolCropSetImageCommand::execute ()
 
 
         //
-        // Original rounded rectangle selection:
+        // e.g. original elliptical selection:
         //
-        //      T/---\      ...............
-        //      | TT |      T = Transparent
-        //      T\__/T      ...............
+        //     t/---\    T = original transparent selection pixel
+        //     | TT |    t = outside the selection region
+        //     t\__/t    [every other character] = original opaque selection pixel
         //
-        // After Crop Outside the Selection, the _image_ becomes:
+        // Afterwards, the _document_ image becomes:
         //
-        //      Bttttt
-        //      ttTTtt      T,t = Transparent
-        //      BttttB      B = Background Colour
+        //      b/---\   T = [unchanged]
+        //      | TT |   b = background color
+        //      b\__/b   [every other character] = [unchanged]
         //
-        // The selection pixmap stays the same.
+        // The selection is deleted.
+        //
+        // TODO: Do not introduce a mask if the result will not contain
+        //       any transparent pixels.
         //
 
         QPixmap newDocPixmap (m_fromSelection.width (), m_fromSelection.height ());
