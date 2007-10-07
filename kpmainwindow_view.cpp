@@ -95,6 +95,9 @@ void kpMainWindow::setupViewMenuActions ()
     m_actionShowGrid->setCheckedState (i18n ("Hide &Grid"));
 
 
+    // TODO: This doesn't work when the thumbnail has focus.
+    //       Testcase: Press CTRL+H twice on a fresh KolourPaint.
+    //                 The second CTRL+H doesn't close the thumbnail.
     m_actionShowThumbnail = new KToggleAction (i18n ("Show T&humbnail"), CTRL + Key_H,
         this, SLOT (slotShowThumbnailToggled ()), actionCollection (), "view_show_thumbnail");
     m_actionShowThumbnail->setCheckedState (i18n ("Hide T&humbnail"));
