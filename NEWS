@@ -8,6 +8,10 @@ KolourPaint 1.4.8_relight (Frozen 2007-10-07)
      when the app does not support pasting transparent pixels (such as
      OpenOffice.org)
 
+   * Make "Edit / Paste in New Window" always paste white pixels as white
+     (it used to paste them as transparent when the selection transparency
+      mode was set to Transparent)
+
    * Add error dialogs for:
     - if scanning support is unavailable
     - running out of graphics memory during a scan

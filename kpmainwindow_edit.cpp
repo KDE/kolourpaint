@@ -48,6 +48,7 @@
 #include <kppixmapfx.h>
 #include <kpselection.h>
 #include <kpselectiondrag.h>
+#include <kpselectiontransparency.h>
 #include <kptool.h>
 #include <kptoolcrop.h>
 #include <kptoolresizescale.h>
@@ -345,6 +346,11 @@ QRect kpMainWindow::calcUsefulPasteRect (int pixmapWidth, int pixmapHeight)
 // private
 void kpMainWindow::paste (const kpSelection &sel, bool forceTopLeft)
 {
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kdDebug () << "kpMainWindow::paste(forceTopLeft=" << forceTopLeft << ")"
+               << endl;
+#endif
+
     if (!sel.pixmap ())
     {
         kdError () << "kpMainWindow::paste() with sel without pixmap" << endl;
@@ -385,6 +391,13 @@ void kpMainWindow::paste (const kpSelection &sel, bool forceTopLeft)
         selInUsefulPos,
         this));
 
+
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kdDebug () << "sel.size=" << QSize (sel.width (), sel.height ())
+               << " document.size="
+               << QSize (m_document->width (), m_document->height ())
+               << endl;
+#endif
 
     // If the selection is bigger than the document, automatically
     // resize the document (with the option of Undo'ing) to fit
@@ -677,10 +690,39 @@ void kpMainWindow::slotPasteInNewWindow ()
         tool ()->endShapeInternal ();
 
 
+    //
+    // Pasting must ensure that:
+    //
+    // Requirement 1. the document is the same size as the image to be pasted.
+    // Requirement 2. transparent pixels in the image must remain as transparent.
+    //
+
     kpMainWindow *win = new kpMainWindow (0/*no document*/);
     win->show ();
 
+    // Make "Edit / Paste in New Window" always paste white pixels as white.
+    // Don't let selection transparency get in the way and paste them as
+    // transparent.
+    kpSelectionTransparency transparency = win->selectionTransparency ();
+    if (transparency.isTransparent ())
+    {
+    #if DEBUG_KP_MAIN_WINDOW && 1
+        kdDebug () << "\tchanging selection transparency to opaque" << endl;
+    #endif
+        transparency.setOpaque ();
+        // Since we are setting selection transparency programmatically
+        // -- as opposed to in response to user input -- this will not
+        // affect the selection transparency tool option widget's "last used"
+        // config setting.
+        win->setSelectionTransparency (transparency);
+    }
+
+    // (this handles Requirement 1. above)
     win->slotPaste ();
+
+    // (this handles Requirement 2. above;
+    //  slotDeselect() is not enough unless the document is filled with the
+    //  transparent color in advance)
     win->slotCrop ();
 
 
