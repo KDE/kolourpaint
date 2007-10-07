@@ -52,6 +52,8 @@ public:
     virtual void begin ();
     virtual void end ();
 
+    virtual void globalDraw ();
+
     virtual void beginDraw ();
     virtual void draw (const QPoint &thisPoint, const QPoint &, const QRect &);
     virtual void cancelShape ();

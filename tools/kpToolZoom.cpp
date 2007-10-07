@@ -37,6 +37,7 @@
 #include <klocale.h>
 
 #include <kpDefs.h>
+#include <kpDocument.h>
 #include <kpPixmapFX.h>
 #include <kpSetOverrideCursorSaver.h>
 #include <kpTempImage.h>
@@ -132,6 +133,16 @@ void kpToolZoom::begin ()
 void kpToolZoom::end ()
 {
     viewManager ()->unsetCursor ();
+}
+
+
+// public virtual [base kpTool]
+void kpToolZoom::globalDraw ()
+{
+#if DEBUG_KP_TOOL_ZOOM
+    kDebug () << "CALL";
+#endif
+    environ ()->zoomToRect (document ()->rect ());
 }
 
 
