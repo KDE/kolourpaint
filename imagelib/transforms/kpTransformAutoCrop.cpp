@@ -562,8 +562,6 @@ void kpTransformAutoCropCommand::unexecute ()
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
             kDebug () << "\trestoring border image " << (*b)->rect ();
         #endif
-            // KDE3: Forgot to initialize the transparent pixels.
-            //       Strange interaction with old mask lines (previously above) as well.
             if (*p)
             {
                 // REFACTOR: Add equivalent method to kpPainter and use.
