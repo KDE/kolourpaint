@@ -320,7 +320,6 @@ kpImage kpDocument::imageWithSelection () const
     #endif
         kpImage output = *m_image;
 
-        // TODO: KDE3: In KolourPaint/KDE3, we weren't antialiasing text boxes
         // (this is a NOP for image selections without content)
         m_selection->paint (&output, rect ());
 
