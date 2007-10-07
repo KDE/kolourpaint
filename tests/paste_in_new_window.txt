@@ -1,0 +1,15 @@
+paste_in_new_window.png consists of white lines on black ("Hermann illusion")
+with a transparent rectangle in the middle.
+
+Use this to test "Edit / Paste in New Window".
+
+Prior to 2007-10-07, a troublesome sequence of steps with this image was:
+
+1. Set the selection transparency mode to Transparent
+2. Select All (Ctrl+A)
+3. Copy (Ctrl+C)
+4. Paste in New Window (Ctrl+Shift+V)
+
+The white lines became transparent.
+
+This testcase was originally by Thurston Dang.

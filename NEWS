@@ -64,6 +64,11 @@ KolourPaint 4.0.0 BETA (Frozen 2007-10-21)
      OpenOffice.org)
      [also in branches/KDE/3.5/]
 
+   * Make "Edit / Paste in New Window" always paste white pixels as white
+     (it used to paste them as transparent when the selection transparency
+      mode was set to Transparent)
+     [also in branches/KDE/3.5/]
+
    * Add "Rotate Left" (CTRL+SHIFT+Left) and "Rotate Right" (CTRL+SHIFT+R)
      to "Image" menu as a quick way to access the common types of "Rotate..."
      (Bug #135184, #141530))

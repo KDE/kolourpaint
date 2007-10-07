@@ -52,6 +52,7 @@
 #include <kpDocument.h>
 #include <kpDocumentMetaInfo.h>
 #include <kpDocumentSaveOptions.h>
+#include <kpImageSelectionTransparency.h>
 #include <kpMacroCommand.h>
 #include <kpPixmapFX.h>
 #include <kpRectangularImageSelection.h>
@@ -370,6 +371,11 @@ QRect kpMainWindow::calcUsefulPasteRect (int imageWidth, int imageHeight)
 // private
 void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
 {
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kdDebug () << "kpMainWindow::paste(forceTopLeft=" << forceTopLeft << ")"
+               << endl;
+#endif
+
     kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
 
     toolEndShape ();
@@ -403,8 +409,8 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
     kpAbstractSelection *selInUsefulPos = sel.clone ();
     if (!forceTopLeft)
         selInUsefulPos->moveTo (calcUsefulPasteRect (sel.width (), sel.height ()).topLeft ());
-    // TODO: Should use kpCommandHistory::addCreateSelectionCommand()
-    //       to really support pasting selection borders.
+    // TODO: Should use kpCommandHistory::addCreateSelectionCommand(),
+    //       as well, to really support pasting selection borders.
     addDeselectFirstCommand (new kpToolSelectionCreateCommand (
         dynamic_cast <kpTextSelection *> (selInUsefulPos) ?
             i18n ("Text: Create Box") :
@@ -413,6 +419,13 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
         commandEnvironment ()));
     delete selInUsefulPos;
 
+
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kdDebug () << "sel.size=" << QSize (sel.width (), sel.height ())
+               << " document.size="
+               << QSize (m_document->width (), m_document->height ())
+               << endl;
+#endif
 
     // If the selection is bigger than the document, automatically
     // resize the document (with the option of Undo'ing) to fit
@@ -714,10 +727,39 @@ void kpMainWindow::slotPasteInNewWindow ()
     toolEndShape ();
 
 
+    //
+    // Pasting must ensure that:
+    //
+    // Requirement 1. the document is the same size as the image to be pasted.
+    // Requirement 2. transparent pixels in the image must remain as transparent.
+    //
+
     kpMainWindow *win = new kpMainWindow (0/*no document*/);
     win->show ();
 
+    // Make "Edit / Paste in New Window" always paste white pixels as white.
+    // Don't let selection transparency get in the way and paste them as
+    // transparent.
+    kpImageSelectionTransparency transparency = win->imageSelectionTransparency ();
+    if (transparency.isTransparent ())
+    {
+    #if DEBUG_KP_MAIN_WINDOW && 1
+        kdDebug () << "\tchanging image selection transparency to opaque" << endl;
+    #endif
+        transparency.setOpaque ();
+        // Since we are setting selection transparency programmatically
+        // -- as opposed to in response to user input -- this will not
+        // affect the selection transparency tool option widget's "last used"
+        // config setting.
+        win->setImageSelectionTransparency (transparency);
+    }
+
+    // (this handles Requirement 1. above)
     win->slotPaste ();
+
+    // (this handles Requirement 2. above;
+    //  slotDeselect() is not enough unless the document is filled with the
+    //  transparent color in advance)
     win->slotCrop ();
 }
 
