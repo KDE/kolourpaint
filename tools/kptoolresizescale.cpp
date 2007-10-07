@@ -534,7 +534,7 @@ kpToolResizeScaleDialog::kpToolResizeScaleDialog (kpMainWindow *mainWindow)
 
     slotActOnChanged ();
 
-    m_operationGroupBox->setFocus ();
+    m_newWidthInput->setEditFocus ();
 
     //enableButtonOK (!isNoOp ());
 }

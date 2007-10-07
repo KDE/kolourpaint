@@ -429,9 +429,8 @@ void kpToolRotateDialog::slotAngleCustomRadioButtonToggled (bool isChecked)
 {
     m_angleCustomInput->setEnabled (isChecked);
 
-    // doesn't work
-    //if (isChecked)
-    //    m_angleCustomInput->setFocus ();
+    if (isChecked)
+        m_angleCustomInput->setEditFocus ();
 }
 
 // private slot virtual [base kpToolPreviewDialog]

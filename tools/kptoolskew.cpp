@@ -238,6 +238,9 @@ kpToolSkewDialog::kpToolSkewDialog (bool actOnSelection, kpMainWindow *parent,
 
 
     slotUpdate ();
+
+
+    m_horizontalSkewInput->setEditFocus ();
 }
 
 kpToolSkewDialog::~kpToolSkewDialog ()
