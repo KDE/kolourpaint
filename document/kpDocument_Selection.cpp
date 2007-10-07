@@ -277,8 +277,6 @@ void kpDocument::selectionCopyOntoDocument (bool applySelTransparency)
     const QRect boundingRect = m_selection->boundingRect ();
     Q_ASSERT (boundingRect.isValid ());
 
-    // HITODO: KDE3: We should be setting the modified state.
-    //         I think this is a bug in KolourPaint/KDE 3 as well.
     if (imageSelection ())
     {
         if (applySelTransparency)
@@ -291,6 +289,8 @@ void kpDocument::selectionCopyOntoDocument (bool applySelTransparency)
         // (for antialiasing with background)
         m_selection->paint (m_image, rect ());
     }
+
+    slotContentsChanged (boundingRect);
 }
 
 // public
