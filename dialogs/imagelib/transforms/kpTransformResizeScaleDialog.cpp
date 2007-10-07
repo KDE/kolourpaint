@@ -126,8 +126,7 @@ kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (
 
     slotActOnChanged ();
 
-    // KDE3: backport focus setting
-    m_newWidthInput->setFocus ();
+    m_newWidthInput->setEditFocus ();
 
     //enableButtonOk (!isNoOp ());
 }
@@ -207,7 +206,7 @@ static void toolButtonSetLook (QToolButton *button,
     
     button->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
     button->setText (name);
-    button->setShortcut ( name );
+    button->setShortcut (name);
     button->setFocusPolicy (Qt::StrongFocus);
     button->setCheckable (true);
 }

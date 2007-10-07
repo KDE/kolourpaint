@@ -243,9 +243,8 @@ void kpTransformRotateDialog::slotAngleCustomRadioButtonToggled (bool isChecked)
 {
     m_angleCustomInput->setEnabled (isChecked);
 
-    // KDE3: backport focus setting
     if (isChecked)
-        m_angleCustomInput->setFocus ();
+        m_angleCustomInput->setEditFocus ();
 }
 
 // private slot virtual [base kpTransformPreviewDialog]
