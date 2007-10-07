@@ -121,8 +121,6 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
     //    a differently shaped tool, the borders drawn after the paste would
     //    be using a new shape rather than the shape before the paste.  This
     //    could get irritating so we don't do the switch.
-    //
-    // KDE3: Use this comment in kpDocument::setSelection().
     if (!mainWindow ()->toolIsASelectionTool () || *isTextChanged)
     {
         // See kpDocument::setSelection() APIDoc for this assumption.
