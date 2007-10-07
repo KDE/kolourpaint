@@ -114,19 +114,23 @@ void SetDocumentToSelectionImageCommand::execute ()
 
 
         //
-        // Original elliptical selection:
+        // e.g. original elliptical selection:
         //
-        //      T/---\      ...............
-        //      | TT |      T = Transparent
-        //      T\__/T      ...............
+        //     t/---\    T = original transparent selection pixel
+        //     | TT |    t = outside the selection region
+        //     t\__/t    [every other character] = original opaque selection pixel
         //
-        // Afterwards, the document image becomes:
+        // Afterwards, the _document_ image becomes:
         //
-        //      B.....      . = Original selection pixel
-        //      ..TT..      T = Transparent
-        //      B....B      B = Background Colour
+        //      b/---\   T = [unchanged]
+        //      | TT |   b = background color
+        //      b\__/b   [every other character] = [unchanged]
         //
-        // KDE3: Update comments.
+        // The selection is deleted.
+        //
+        // TODO: Do not introduce a mask if the result will not contain
+        //       any transparent pixels.
+        //
 
         kpImage newDocImage (document ()->width (), document ()->height ());
         kpPixmapFX::fill (&newDocImage, m_backgroundColor);
