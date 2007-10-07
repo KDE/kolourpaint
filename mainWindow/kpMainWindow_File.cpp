@@ -1311,7 +1311,6 @@ void kpMainWindow::slotPrintPreview ()
 // private slot
 void kpMainWindow::slotMail ()
 {
-    // KDE3
     toolEndShape ();
 
     if (d->document->url ().isEmpty ()/*no name*/ ||

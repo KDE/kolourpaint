@@ -135,7 +135,6 @@ void kpMainWindow::slotKeyBindings ()
     kDebug () << "kpMainWindow::slotKeyBindings()";
 #endif
 
-    // KDE3
     toolEndShape ();
 
     if (KShortcutsDialog::configure (actionCollection (),
@@ -159,7 +158,6 @@ void kpMainWindow::slotConfigureToolBars ()
     kDebug () << "kpMainWindow::slotConfigureToolBars()";
 #endif
 
-    // KDE3
     toolEndShape ();
 
 // TODO: Do we need this?

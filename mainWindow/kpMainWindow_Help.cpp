@@ -107,7 +107,6 @@ void kpMainWindow::slotHelpTakingScreenshots ()
     kDebug () << "kpMainWindow::slotHelpTakingScreenshots()";
 #endif
 
-    // KDE3
     toolEndShape ();
 
 
