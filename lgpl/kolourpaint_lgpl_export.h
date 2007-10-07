@@ -24,7 +24,7 @@
 #include <kdemacros.h>
 
 #ifndef KOLOURPAINT_LGPL_EXPORT
-# if defined(MAKE_KOLOURPAINT_LGPL_LIB)
+# if defined(MAKE_KOLOURPAINT4_LGPL_LIB)
    /* We are building this library */ 
 #  define KOLOURPAINT_LGPL_EXPORT KDE_EXPORT
 # else
