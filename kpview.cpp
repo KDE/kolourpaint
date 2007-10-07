@@ -1219,7 +1219,7 @@ QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
         // at least round up the bottom-right point and deal with matrix weirdness:
         // - helpful because it ensures we at least cover the required area
         //   at e.g. 67% or 573%
-        // - harmless since Qt clips for us anyway
+        // - harmless since paintEventDrawRect() clips for us anyway
         docRect.setBottomRight (docRect.bottomRight () + QPoint (2, 2));
     }
 
