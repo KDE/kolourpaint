@@ -216,6 +216,13 @@ void kpMainWindow::slotCut ()
     slotDelete ();
 }
 
+static QMimeData *NewTextMimeData (const QString &text)
+{
+    QMimeData *md = new QMimeData ();
+    md->setText (text);
+    return md;
+}
+
 // private slot
 void kpMainWindow::slotCopy ()
 {
@@ -236,8 +243,9 @@ void kpMainWindow::slotCopy ()
         kpTextSelection *textSel = static_cast <kpTextSelection *> (sel);
         if (!textSel->text ().isEmpty ())
         {
-            QApplication::clipboard ()->setData (new Q3TextDrag (textSel->text ()),
-                                                 QClipboard::Clipboard);
+            QApplication::clipboard ()->setMimeData (
+                ::NewTextMimeData (textSel->text ()),
+                QClipboard::Clipboard);
 
             // SYNC: Normally, users highlight text and press CTRL+C.
             //       Highlighting text copies it to the X11 "middle
@@ -250,14 +258,15 @@ void kpMainWindow::slotCopy ()
             //       mouse button" clipboard.  We don't do this for images
             //       as no one ever middle-mouse-pastes images.
             //
-            //       Note that we don't share the QTextDrag pointer with
+            //       Note that we don't share the QMimeData pointer with
             //       the above in case Qt doesn't expect it.
             //
             //       Once we change KolourPaint to support highlighted text
             //       and CTRL+C to copy only the highlighted text, delete
             //       this code.
-            QApplication::clipboard ()->setData (new Q3TextDrag (textSel->text ()),
-                                                 QClipboard::Selection);
+            QApplication::clipboard ()->setMimeData (
+                ::NewTextMimeData (textSel->text ()),
+                QClipboard::Selection);
         }
     }
     else if (dynamic_cast <kpAbstractImageSelection *> (sel))
@@ -313,10 +322,11 @@ void kpMainWindow::slotEnablePaste ()
     bool shouldEnable = false;
 
     QMimeSource *ms = QApplication::clipboard ()->data (QClipboard::Clipboard);
+    const QMimeData *md = QApplication::clipboard ()->mimeData (QClipboard::Clipboard);
     if (ms)
     {
         shouldEnable = (kpSelectionDrag::canDecode (ms) ||
-                        Q3TextDrag::canDecode (ms));
+                        md->hasText ());
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\t" << name () << "***canDecode=" << timer.restart ();
         for (int i = 0; ; i++)
@@ -661,18 +671,24 @@ void kpMainWindow::slotPaste ()
         return;
     }
 
+    const QMimeData *md = QApplication::clipboard ()->mimeData (QClipboard::Clipboard);
+    if (md)
+    {
+	//kDebug () << "hasImage=" << md->hasImage ();
+        //qvariant_cast <QImage> (md->imageData ()).save ("cp.png", "PNG");
+    }
+
     kpAbstractImageSelection *sel = kpSelectionDrag::decode (ms,
         pasteWarnAboutLossInfo ());
-    QString text;
     if (sel)
     {
         sel->setTransparency (imageSelectionTransparency ());
         paste (*sel);
         delete sel;
     }
-    else if (Q3TextDrag::decode (ms, text/*ref*/))
+    else if (md->hasText ())
     {
-        pasteText (text);
+        pasteText (md->text ());
     }
     else
     {
@@ -999,10 +1015,9 @@ void kpMainWindow::slotPasteFromFile ()
 
     addRecentURL (url);
 
-    // HITODO: We're not respecting the currently selected selection transparency.
-    //         Check everywhere that we are.  KDE3: Bug also in KDE 3.
     paste (kpRectangularImageSelection (
         QRect (0, 0, image.width (), image.height ()),
-        image));
+        image,
+        imageSelectionTransparency ()));
 }
 
