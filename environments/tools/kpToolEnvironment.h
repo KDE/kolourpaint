@@ -145,7 +145,11 @@ public:
     void zoomIn (bool centerUnderCursor = false) const;
     void zoomOut (bool centerUnderCursor = false) const;
 
-    void zoomToRect (const QRect &normalizedDocRect) const;
+    void zoomToRect (const QRect &normalizedDocRect,
+        bool accountForGrips,
+        bool careAboutWidth, bool careAboutHeight) const;
+
+    void fitToPage () const;
 
 
 private:

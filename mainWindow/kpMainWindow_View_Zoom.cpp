@@ -1,3 +1,4 @@
+// REFACTOR: Clean up bits of this file
 
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
@@ -41,6 +42,7 @@
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
 
+#include <kpAbstractScrollAreaUtils.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
 #include <kpThumbnail.h>
@@ -96,9 +98,9 @@ void kpMainWindow::setupViewMenuZoomActions ()
 
 
     d->actionActualSize = KStandardAction::actualSize (this, SLOT (slotActualSize ()), ac);
-    /*d->actionFitToPage = KStandardAction::fitToPage (this, SLOT (slotFitToPage ()), ac);
+    d->actionFitToPage = KStandardAction::fitToPage (this, SLOT (slotFitToPage ()), ac);
     d->actionFitToWidth = KStandardAction::fitToWidth (this, SLOT (slotFitToWidth ()), ac);
-    d->actionFitToHeight = KStandardAction::fitToHeight (this, SLOT (slotFitToHeight ()), ac);*/
+    d->actionFitToHeight = KStandardAction::fitToHeight (this, SLOT (slotFitToHeight ()), ac);
 
 
     d->actionZoomIn = KStandardAction::zoomIn (this, SLOT (slotZoomIn ()), ac);
@@ -130,7 +132,7 @@ void kpMainWindow::enableViewMenuZoomDocumentActions (bool enable)
     d->actionZoomIn->setEnabled (enable);
     d->actionZoomOut->setEnabled (enable);
 
-    // HITODO: This seems to stay enabled no matter what.
+    // COMPAT: This seems to stay enabled no matter what.
     //         Looks like a KSelectAction bug.
     d->actionZoom->setEnabled (enable);
 
@@ -235,32 +237,27 @@ void kpMainWindow::zoomToPre (int zoomLevel)
     }
 
 
+    if (d->mainView)
+    {
+        // Ordinary flicker is better than the whole view moving (try
+        // zooming in from 100%, without this code).
+        //
+        // TODO: Use a more flexible scrollarea implementation to
+        //       eliminate this flicker.
+        //
+        // Later: The view takes a lot longer to resize in Qt4 so this
+        //        blanking is seen for too long and is ultra-annoying.
+        //        So I've disabled the blanking.
+        //d->mainView->setPaintBlank ();
+    }
+
+    // TODO: Is this actually needed?
     if (d->viewManager)
         d->viewManager->setQueueUpdates ();
-
 
     if (d->scrollView)
     {
         d->scrollView->setUpdatesEnabled (false);
-        if (d->scrollView->viewport ())
-            d->scrollView->viewport ()->setUpdatesEnabled (false);
-    }
-
-    if (d->mainView)
-    {
-        d->mainView->setUpdatesEnabled (false);
-
-        if (d->scrollView && d->scrollView->viewport ())
-        {
-        // COMPAT: when we use a more flexible scrollView, this flicker problem goes away.
-        //         In the meantime, Qt4 does not let us draw outside paintEvent().
-        #if 0
-            // Ordinary flicker is better than the whole view moving
-            QPainter p (d->mainView);
-            p.fillRect (d->mainView->rect (),
-                        d->scrollView->viewport ()->colorGroup ().background ());
-        #endif
-        }
     }
 }
 
@@ -283,45 +280,27 @@ void kpMainWindow::zoomToPost ()
 
     }
 
+
     // The view magnified and moved beneath the cursor
     if (tool ())
         tool ()->somethingBelowTheCursorChanged ();
 
-    // HACK: make sure all of Qt's update() calls trigger
-    //       kpView::paintEvent() _now_ so that they can be queued by us
-    //       (until kpViewManager::restoreQueueUpdates()) to reduce flicker
-    //       caused mainly by d->scrollView->center()
-    //
-    // TODO: remove flicker completely
-    //QTimer::singleShot (0, this, SLOT (finishZoomTo ()));
-
-    // Later: I don't think there is an update() that needs to be queued
-    //        - let's reduce latency instead.
-
-    // TODO: setUpdatesEnabled() should really return to old value
-    //       - not neccessarily "true"
-
-    if (d->mainView)
-    {
-        d->mainView->setUpdatesEnabled (true);
-        d->mainView->update ();
-    }
 
     if (d->scrollView)
     {
-        if (d->scrollView->viewport ())
-        {
-            d->scrollView->viewport ()->setUpdatesEnabled (true);
-            d->scrollView->viewport ()->update ();
-        }
-
+        // TODO: setUpdatesEnabled() should really return to old value
+        //       - not neccessarily "true"
         d->scrollView->setUpdatesEnabled (true);
-        d->scrollView->update ();
     }
-
 
     if (d->viewManager && d->viewManager->queueUpdates ()/*just in case*/)
         d->viewManager->restoreQueueUpdates ();
+
+    if (d->mainView)
+    {
+        //d->mainView->restorePaintBlank ();
+    }
+
 
     setStatusBarZoom (d->mainView ? d->mainView->zoomLevelX () : 0);
 
@@ -357,9 +336,12 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         // TODO: when changing from no scrollbars to scrollbars, Qt lies about
         //       visibleWidth() & visibleHeight() (doesn't take into account the
         //       space taken by the would-be scrollbars) until it updates the
-        //       scrollview; hence the centring is off by about 5-10 pixels.
+        //       scrollview; hence the centering is off by about 5-10 pixels.
 
-        // TODO: use visibleRect() for greater accuracy?
+        // TODO: Use visibleRect() for greater accuracy?
+        //       Or use kpAbstractScrollAreaUtils::EstimateUsableArea()
+        //       instead of Q3ScrollView::visible{Width,Height}(), as
+        //       per zoomToRect()?
 
         int viewX, viewY;
 
@@ -394,9 +376,11 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
                               d->scrollView->visibleHeight ()) / 2;
         }
 
+
         int newCenterX = viewX * zoomLevel / d->mainView->zoomLevelX ();
         int newCenterY = viewY * zoomLevel / d->mainView->zoomLevelY ();
 
+        // Do the zoom.
         d->mainView->setZoomLevel (zoomLevel, zoomLevel);
 
     #if DEBUG_KP_MAIN_WINDOW && 1
@@ -409,12 +393,14 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
 
         d->scrollView->center (newCenterX, newCenterY);
 
-    // COMPAT: no more QWidget::clipRegion()
-    #if 0
+
         if (centerUnderCursor &&
             targetDocAvail &&
             d->viewManager && d->viewManager->viewUnderCursor ())
         {
+            // Move the mouse cursor so that it is still above the same
+            // document pixel as before the zoom.
+
             kpView *const vuc = d->viewManager->viewUnderCursor ();
 
         #if DEBUG_KP_MAIN_WINDOW
@@ -433,7 +419,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
                        << endl;
         #endif
 
-            if (vuc->clipRegion ().contains (viewPoint))
+            if (vuc->visibleRegion ().contains (viewPoint))
             {
                 const QPoint globalPoint =
                     kpWidgetMapper::toGlobal (vuc, viewPoint);
@@ -474,7 +460,6 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
                 //       that the normal cursor movement didn't happen.
             }
         }
-    #endif  // COMPAT
 
     #if DEBUG_KP_MAIN_WINDOW && 1
         kDebug () << "\t\tcheck (contentsX=" << d->scrollView->contentsX ()
@@ -488,23 +473,59 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
 }
 
 // private
-void kpMainWindow::zoomToRect (const QRect &normalizedDocRect)
+void kpMainWindow::zoomToRect (const QRect &normalizedDocRect,
+        bool accountForGrips,
+        bool careAboutWidth, bool careAboutHeight)
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::zoomToRect(normalizedDocRect="
-              << normalizedDocRect << ")"
-              << " contents: w=" << d->scrollView->width ()
-              << " h=" << d->scrollView->height () << endl;
+              << normalizedDocRect
+              << ",accountForGrips=" << accountForGrips
+              << ",careAboutWidth=" << careAboutWidth
+              << ",careAboutHeight=" << careAboutHeight
+              << ")";
 #endif
+    // You can't care about nothing.
+    Q_ASSERT (careAboutWidth || careAboutHeight);
 
+    // The size of the scroll view minus the current or future scrollbars.
+    const QSize usableScrollArea =
+        kpAbstractScrollAreaUtils::EstimateUsableArea (d->scrollView);
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "size=" << d->scrollView->size ()
+              << "usableSize=" << usableScrollArea;
+#endif
+    // Handle rounding error, mis-estimating the scroll view size and
+    // cosmic rays.  We do this because we really don't want unnecessary
+    // scrollbars.  This seems to need to be at least 2 for slotFitToWidth()
+    // and friends.
+    // least 2.
+    // TODO: I might have fixed this but check later.
+    const int slack = 5;
 
-    // TODO: Account for the scrollbars.
+    // The grip and slack are in view coordinates but are never zoomed.
+    const int viewWidth =
+        usableScrollArea.width () -
+        (accountForGrips ? kpGrip::Size : 0) -
+        slack;
+    const int viewHeight =
+        usableScrollArea.height () -
+        (accountForGrips ? kpGrip::Size : 0) -
+        slack;
 
     // We want the selected document rectangle to fill the scroll view.
+    //
+    // The integer arithmetic rounds down, rather than to the nearest zoom
+    // level, as rounding down guarantees that the view, at the zoom level,
+    // will fit inside <viewWidth> x <viewHeight>.
     const int zoomX =
-        qMax (1, d->scrollView->width () * 100 / normalizedDocRect.width ());
+        careAboutWidth ?
+            qMax (1, viewWidth * 100 / normalizedDocRect.width ()) :
+            INT_MAX;
     const int zoomY =
-        qMax (1, d->scrollView->height () * 100 / normalizedDocRect.height ());
+        careAboutHeight ?
+            qMax (1, viewHeight * 100 / normalizedDocRect.height ()) :
+            INT_MAX;
 
     // Since kpView only supports identical horizontal and vertical zooms,
     // choose the one that will show the greatest amount of document
@@ -530,61 +551,47 @@ void kpMainWindow::zoomToRect (const QRect &normalizedDocRect)
 }
 
 
-// private slot
+// public slot
 void kpMainWindow::slotActualSize ()
 {
     zoomTo (100);
 }
 
-// private slot
+// public slot
 void kpMainWindow::slotFitToPage ()
 {
-    if (!d->scrollView || !d->document)
-        return;
-
-    // doc_width * zoom / 100 <= view_width &&
-    // doc_height * zoom / 100 <= view_height &&
-    // 1 <= zoom <= kpView::MaxZoomLevel
-
-    zoomTo (
-        qMin (kpView::MaxZoomLevel,
-              qMax (1,
-                    qMin (d->scrollView->visibleWidth () * 100 /
-                            d->document->width (),
-                          d->scrollView->visibleHeight () * 100 /
-                            d->document->height ()))));
+    zoomToRect (
+        d->document->rect (),
+        true/*account for grips*/,
+        true/*care about width*/, true/*care about height*/);
 }
 
-// private slot
+// public slot
 void kpMainWindow::slotFitToWidth ()
 {
-    if (!d->scrollView || !d->document)
-        return;
-
-    // doc_width * zoom / 100 <= view_width &&
-    // 1 <= zoom <= kpView::MaxZoomLevel
-
-    zoomTo (
-        qMin (kpView::MaxZoomLevel,
-              qMax (1,
-                    d->scrollView->visibleWidth () * 100 /
-                        d->document->width ())));
+    const QRect docRect (
+        0/*x*/,
+        (int) d->mainView->transformViewToDocY (d->scrollView->contentsY ())/*maintain y*/,
+        d->document->width (),
+        1/*don't care about height*/);
+    zoomToRect (
+        docRect,
+        true/*account for grips*/,
+        true/*care about width*/, false/*don't care about height*/);
 }
 
-// private slot
+// public slot
 void kpMainWindow::slotFitToHeight ()
 {
-    if (!d->scrollView || !d->document)
-        return;
-
-    // doc_height * zoom / 100 <= view_height &&
-    // 1 <= zoom <= kpView::MaxZoomLevel
-
-    zoomTo (
-        qMin (kpView::MaxZoomLevel,
-              qMax (1,
-                    d->scrollView->visibleHeight () * 100 /
-                        d->document->height ())));
+    const QRect docRect (
+        (int) d->mainView->transformViewToDocX (d->scrollView->contentsX ())/*maintain x*/,
+        0/*y*/,
+        1/*don't care about width*/,
+        d->document->height ());
+    zoomToRect (
+        docRect,
+        true/*account for grips*/,
+        false/*don't care about width*/, true/*care about height*/);
 }
 
 

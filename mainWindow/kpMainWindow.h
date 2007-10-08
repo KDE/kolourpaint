@@ -476,9 +476,11 @@ private:
 
 public:
     void zoomTo (int zoomLevel, bool centerUnderCursor = false);
-    void zoomToRect (const QRect &normalizedDocRect);
+    void zoomToRect (const QRect &normalizedDocRect,
+        bool accountForGrips,
+        bool careAboutWidth, bool careAboutHeight);
 
-private slots:
+public slots:
     void slotActualSize ();
     void slotFitToPage ();
     void slotFitToWidth ();

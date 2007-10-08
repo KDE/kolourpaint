@@ -191,9 +191,21 @@ void kpToolEnvironment::zoomOut (bool centerUnderCursor) const
 
 
 // public
-void kpToolEnvironment::zoomToRect (const QRect &normalizedDocRect) const
+void kpToolEnvironment::zoomToRect (
+        const QRect &normalizedDocRect,
+        bool accountForGrips,
+        bool careAboutWidth, bool careAboutHeight) const
 {
-    mainWindow ()->zoomToRect (normalizedDocRect);
+    mainWindow ()->zoomToRect (
+        normalizedDocRect,
+        accountForGrips,
+        careAboutWidth, careAboutHeight);
+}
+
+// public
+void kpToolEnvironment::fitToPage () const
+{
+    mainWindow ()->slotFitToPage ();
 }
 
 

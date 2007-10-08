@@ -4,7 +4,7 @@ KolourPaint 4 Series (trunk/KDE/)
 
 KolourPaint 4.0.0 BETA (Frozen 2007-10-21)
 
-   * Port to KDE 4 (Laurent Montel)
+   * Port to KDE 4 (Clarence Dang, Laurent Montel)
 
    * Save local files atomically - KolourPaint will no longer truncate
      an existing file if the KImageIO library for the file format is
@@ -72,6 +72,9 @@ KolourPaint 4.0.0 BETA (Frozen 2007-10-21)
    * Add "Rotate Left" (CTRL+SHIFT+Left) and "Rotate Right" (CTRL+SHIFT+R)
      to "Image" menu as a quick way to access the common types of "Rotate..."
      (Bug #135184, #141530))
+
+   * Add "Fit to Page", "Fit to Page Width" and "Fit to Page Height" to the
+     "View" Menu
 
    * Add "Image / Draw Opaque" menu item since some users expect it.
      It duplicates the functionality of the already existent Tool Box widget.

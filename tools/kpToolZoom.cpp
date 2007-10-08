@@ -142,7 +142,7 @@ void kpToolZoom::globalDraw ()
 #if DEBUG_KP_TOOL_ZOOM
     kDebug () << "CALL";
 #endif
-    environ ()->zoomToRect (document ()->rect ());
+    environ ()->fitToPage ();
 }
 
 
@@ -240,7 +240,10 @@ void kpToolZoom::endDraw (const QPoint &, const QRect &normalizedRect)
     // Drag?
     else
     {
-        environ ()->zoomToRect (normalizedRect);
+        environ ()->zoomToRect (
+            normalizedRect,
+            false/*don't account for grips*/,
+            true/*care about width*/, true/*care about height*/);
 
         d->dragCompleted = true;
     }
