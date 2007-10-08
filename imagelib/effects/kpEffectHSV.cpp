@@ -166,21 +166,11 @@ static void AdjustHSV (QImage* pImage, double hue, double saturation, double val
 kpImage kpEffectHSV::applyEffect (const kpImage &image,
                                           double hue, double saturation, double value)
 {
-    QPixmap usePixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (
-        image,
-        Qt::white/*arbitrarily chosen*/);
-
-
-    QImage qimage = kpPixmapFX::convertToQImage (usePixmap);
+    QImage qimage = kpPixmapFX::convertToQImage (image);
 
     ::AdjustHSV (&qimage, hue, saturation, value);
 
     QPixmap retPixmap = kpPixmapFX::convertToPixmap (qimage);
-
-
-    // restore the mask
-    if (!usePixmap.mask ().isNull ())
-        retPixmap.setMask (usePixmap.mask ());
 
     return retPixmap;
 }

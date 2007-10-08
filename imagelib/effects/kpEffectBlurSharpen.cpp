@@ -181,7 +181,8 @@ kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
     // outline instead...
     kpImage useImage = kpPixmapFX::pixmapWithDefinedTransparentPixels (
         image,
-        Qt::white/*arbitrarily chosen*/);
+        Qt::white);
+    // See kpPixmapFX::pixmapWithDefinedTransparentPixels API Doc.
     useImage.setMask (QBitmap ());
 
 

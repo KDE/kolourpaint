@@ -169,6 +169,8 @@ void kpTextSelection::drawTextInternal (QPixmap *destPixmap, const QRect &docRec
         // Set the RGB of transparent pixels to the foreground colour to avoid
         // anti-aliasing the foreground colored text with undefined RGBs.
     #if 1
+        // TODO: This might not work under Qt4.
+        //       See kpPixmapFX::pixmapWithDefinedTransparentPixels() API Doc.
         *destPixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (*destPixmap,
             d->textStyle.foregroundColor ().toQColor ());
         // This touches fewer pixels and could be more efficient than the

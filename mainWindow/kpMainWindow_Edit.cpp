@@ -301,7 +301,8 @@ void kpMainWindow::slotCopy ()
         // REFACTOR: This logic should be moved into kpSelectionDrag as that
         //           would centralize this responsibility.
         //
-        // TODO: This does not work under Qt4.
+        // TODO: This does not work under Qt4 (we get black, instead of white,
+        //       which is still OK, just not intended).
         //       See kpPixmapFX::pixmapWithDefinedTransparentPixels() API Doc.
         imageSel->setBaseImage (
             kpPixmapFX::pixmapWithDefinedTransparentPixels (

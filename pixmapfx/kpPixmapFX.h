@@ -270,6 +270,17 @@ public:
     // Sets the RGB values of the pixels where <pixmap> is transparent to
     // <transparentColor>.  This has visually no effect on the <pixmap>
     // unless the mask is lost.
+    //
+    // TODO: As of Qt4, this does not appear to work:
+    //
+    //       It certainly does not work if you convert the result to a QImage,
+    //       without nuking the result's mask before the conversion.  The
+    //       transparent pixels in the QImage seem to have black RGB values.
+    //       It looks like nuking the mask gets around this but then you lose
+    //       transparency (nevertheless, this solution is usually applicable
+    //       if you later restore the transparency).
+    //
+    //       I'm not sure if it works if you _don't_ do a QImage conversion.
     static QPixmap pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
         const QColor &transparentColor);
 

@@ -267,15 +267,18 @@ kpImage kpEffectToneEnhance::applyEffect (const kpImage &image,
     Q_ASSERT (!kpPixmapFX::screenIsPaletted ());
 
 
-    // Replace transparent pixels with white, the most "neutral" color.
-    // Else the effect assumes that those transparent pixels next to
-    // opaque pixels, are black, warping the tone map.
+    // Replace transparent pixels with black, which this effect uses to
+    // produce white, the most "neutral" color.  This is actually not
+    // required as it is the default behavior when converting to QImage,
+    // but better safe than sorry.
     //
     // Whether we should do this is arguable because you could argue that
-    // white warps the tone map.
+    // we are warping the tone map.
     QPixmap usePixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (
         image,
-        Qt::white/*arbitrarily chosen*/);
+        Qt::black);
+    // See kpPixmapFX::pixmapWithDefinedTransparentPixels API Doc.
+    usePixmap.setMask (QBitmap ());
 
 
     QImage qimage = kpPixmapFX::convertToQImage (usePixmap);
@@ -287,9 +290,9 @@ kpImage kpEffectToneEnhance::applyEffect (const kpImage &image,
     QPixmap retPixmap = kpPixmapFX::convertToPixmap (qimage);
 
 
-    // restore the mask
-    if (!usePixmap.mask ().isNull ())
-        retPixmap.setMask (usePixmap.mask ());
+    // Restore the mask.
+    if (!image.mask ().isNull ())
+        retPixmap.setMask (image.mask ());
 
     return retPixmap;
 }
