@@ -346,7 +346,10 @@ struct TransformPixmapPack
 
 // This "sets" pixels instead of "painting" them.
 static void TransformPixmapHelper (QPainter *p, bool drawingOnRGBLayer, void *data)
-{
+{ 
+#if DEBUG_KP_PIXMAP_FX
+    kDebug () << "CALL(drawOnRGBLayer=" << drawingOnRGBLayer << ")";
+#endif
     TransformPixmapPack *pack = static_cast <TransformPixmapPack *> (data);
 
     p->save ();
@@ -382,6 +385,9 @@ static void TransformPixmapHelper (QPainter *p, bool drawingOnRGBLayer, void *da
     }
 
     p->restore ();
+#if DEBUG_KP_PIXMAP_FX
+    kDebug () << "DONE";
+#endif
 }
 
 // Like QPixmap::transformed() but fills new areas with <backgroundColor>
@@ -570,6 +576,9 @@ static QPixmap TransformPixmap (const QPixmap &pm, const QMatrix &transformMatri
     pack.srcPixmap = &pm;
     pack.transformMatrix = transformMatrix;
 
+#if DEBUG_KP_PIXMAP_FX && 1
+    kDebug () << "drawing";
+#endif
     kpPixmapFX::draw (&newPixmap, &::TransformPixmapHelper,
         true/*always "draw"/copy RGB layer*/,
         kpPixmapFX::hasMask (pm)/*draw on mask*/,
@@ -580,6 +589,9 @@ static QPixmap TransformPixmap (const QPixmap &pm, const QMatrix &transformMatri
     // the corners.  Fill these corners with the background color.
     if (backgroundColor.isValid ())
     {
+    #if DEBUG_KP_PIXMAP_FX && 1
+        kDebug () << "filling with background color";
+    #endif
         // OPT: The below is hideously slow.
 
         QBitmap opaqueMask (pm.width (), pm.height ());
