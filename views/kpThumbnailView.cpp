@@ -81,6 +81,7 @@ void kpThumbnailView::resizeEvent (QResizeEvent *e)
     // the event loop.  So eat useless update() calls that can only slow
     // things down.
     // TODO: this doesn't seem to work.
+    //       Later: In Qt4, setUpdatesEnabled(true) calls update().
     const bool oldIsUpdatesEnabled = updatesEnabled ();
     setUpdatesEnabled (false);
 
