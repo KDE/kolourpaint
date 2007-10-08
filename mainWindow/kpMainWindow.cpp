@@ -875,9 +875,11 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 // private virtual [base QWidget]
 void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
 {
-    e->setAccepted (kpSelectionDrag::canDecode (e->mimeData ()) ||
+    // It's faster to test for QMimeData::hasText() first due to the
+    // lazy evaluation of the '||' operator.
+    e->setAccepted (e->mimeData ()->hasText () ||
                     KUrl::List::canDecode (e->mimeData ()) ||
-                    e->mimeData ()->hasText ());
+                    kpSelectionDrag::canDecode (e->mimeData ()));
 }
 
 // private virtual [base QWidget]
