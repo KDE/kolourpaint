@@ -550,6 +550,15 @@ protected:
 // Painting
 //
 
+public:
+    // HACK: Makes paintEvent() do nothing.  Used for exchanging distracting
+    //       scrollarea flicker with simple flicker.
+    //
+    // You can nest blocks of setPaintBlank()/restorePaintBlank().
+    bool isPaintBlank () const;
+    void setPaintBlank ();
+    void restorePaintBlank ();
+
 protected:
     // Returns the document rectangle that, when scaled to the view,
     // is "guaranteed" to at least cover <viewRect> and possibly more

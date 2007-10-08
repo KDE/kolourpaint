@@ -48,6 +48,42 @@
 #include <kpViewScrollableContainer.h>
 
 
+// public
+bool kpView::isPaintBlank () const
+{
+    return (d->paintBlankCounter > 0);
+}
+
+// public
+void kpView::setPaintBlank ()
+{
+    d->paintBlankCounter++;
+
+    // Go from blank painting to normal painting.
+    if (d->paintBlankCounter == 1)
+    {
+        // We want to go blank _now_, as we are used to hide flicker in
+        // whatever operation that follows.
+        repaint ();
+    }
+}
+
+// public
+void kpView::restorePaintBlank ()
+{
+    d->paintBlankCounter--;
+    Q_ASSERT (d->paintBlankCounter >= 0);
+
+    // Go from normal painting to blank painting.
+    if (d->paintBlankCounter == 0)
+    {
+        // Unlike setPaintBlank(), we can wait a while for the normal
+        // contents to re-appear, without any ill effects.
+        update ();
+    }
+}
+
+
 // protected
 QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
 {
@@ -74,7 +110,6 @@ QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
         // at least round up the bottom-right point and deal with matrix weirdness:
         // - helpful because it ensures we at least cover the required area
         //   at e.g. 67% or 573%
-        // - harmless since Qt clips for us anyway
         docRect.setBottomRight (docRect.bottomRight () + QPoint (2, 2));
     }
 
@@ -444,21 +479,29 @@ void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
 }
 
 // This is called "_Unclipped" because it may draw outside of
-// <viewRect>.  For instance, if:
+// <viewRect>.
 //
-// 1. <viewRect> = QRect (0, 0, 2, 3) [top-left of the view]
-// 2. zoomLevelX() == 800
-// 3. zoomLevelY() == 800
+// There are 2 reasons for doing so:
 //
-// Then, the local variable <docRect> will be QRect (0, 0, 1, 1).
-// When the part of the document corresponding to <docRect>
-// (a single document pixel) is drawn with QPainter::scale(), the
-// view rectangle QRect (0, 0, 7, 7) will be overwritten due to the
-// 8x zoom.  This view rectangle is bigger than <viewRect>.
+// A. If, for instance:
 //
-// We can't use QPainter::setClipRect() since it is buggy in Qt 4.3.1
-// and clips too many pixels when used in combination with scale()
-// [qt-bugs@trolltech.com issue N181038].
+//    1. <viewRect> = QRect (0, 0, 2, 3) [top-left of the view]
+//    2. zoomLevelX() == 800
+//    3. zoomLevelY() == 800
+//
+//    Then, the local variable <docRect> will be QRect (0, 0, 1, 1).
+//    When the part of the document corresponding to <docRect>
+//    (a single document pixel) is drawn with QPainter::scale(), the
+//    view rectangle QRect (0, 0, 7, 7) will be overwritten due to the
+//    8x zoom.  This view rectangle is bigger than <viewRect>.
+//
+//    We can't use QPainter::setClipRect() since it is buggy in Qt 4.3.1
+//    and clips too many pixels when used in combination with scale()
+//    [qt-bugs@trolltech.com issue N181038].
+//
+// B. paintEventGetDocRect() may, by design, return a larger document
+//    rectangle than what <viewRect> corresponds to, if the zoom levels
+//    are not perfectly divisible by 100.
 //
 // This over-drawing is dangerous -- see the comments in paintEvent().
 // This over-drawing is only safe from Qt's perspective since Qt
@@ -496,6 +539,7 @@ void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
     QPixmap docPixmap;
     bool tempImageWillBeRendered = false;
 
+    // LOTODO: I think <docRect> being empty would be a bug.
     if (!docRect.isEmpty ())
     {
         docPixmap = doc->getImageAt (docRect);
@@ -522,6 +566,7 @@ void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
                    << endl;
     #endif
     }
+
 
     //
     // Draw checkboard for transparent images and/or views with borders
@@ -619,6 +664,10 @@ void kpView::paintEvent (QPaintEvent *e)
     }
 
 
+    if (isPaintBlank ())
+        return;
+
+
     kpDocument *doc = document ();
     if (!doc)
         return;
@@ -679,7 +728,6 @@ void kpView::paintEvent (QPaintEvent *e)
     }
 
 
-    // KDE3: There was a !docRect.isEmpty() check which was wrong
     if (doc->selection ())
     {
         // Draw resize handles on top of possible grid lines

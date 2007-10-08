@@ -71,6 +71,8 @@ struct kpViewPrivate
     bool isBuddyViewScrollableContainerRectangleShown;
     QRect buddyViewScrollableContainerRectangle;
 
+    int paintBlankCounter;
+
     QRegion queuedUpdateArea;
 };
 

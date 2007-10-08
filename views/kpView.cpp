@@ -89,6 +89,8 @@ kpView::kpView (kpDocument *document,
     d->showGrid = false;
     d->isBuddyViewScrollableContainerRectangleShown = false;
 
+    d->paintBlankCounter = 0;
+
     // Don't waste CPU drawing default background since its overridden by
     // our fully opaque drawing.  In reality, this seems to make no
     // difference in performance.
