@@ -405,7 +405,7 @@ void kpAbstractSelectionTool::beginDraw ()
 // public virtual [base kpTool]
 void kpAbstractSelectionTool::hover (const QPoint &point)
 {
-#if DEBUG_KP_TOOL_SELECTION && 0
+#if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "kpAbstractSelectionTool::hover" << point << endl;
 #endif
 
@@ -501,17 +501,27 @@ void kpAbstractSelectionTool::releasedAllButtons ()
 // protected
 void kpAbstractSelectionTool::popupRMBMenu ()
 {
+#if DEBUG_KP_TOOL_SELECTION
+    kDebug () << "CALL - exec'ing menu";
+#endif
+
     QMenu *pop = environ ()->selectionToolRMBMenu ();
     Q_ASSERT (pop);
 
     // Blocks until the menu closes.
     // WARNING: Enters event loop - may re-enter view/tool event handlers.
     pop->exec (QCursor::pos ());
+#if DEBUG_KP_TOOL_SELECTION
+    kDebug () << "calling somethingBelowTheCursorChanged()";
+#endif
 
     // Cursor may have moved while the menu was up, triggering QMouseMoveEvents
     // for the menu -- but not the view -- so we may have missed cursor moves.
     // Update cursor position now.
     somethingBelowTheCursorChanged ();
+#if DEBUG_KP_TOOL_SELECTION
+    kDebug () << "DONE";
+#endif
 }
 
 // public virtual [base kpTool]
