@@ -319,22 +319,26 @@ void kpMainWindow::slotCopy ()
 }
 
 
-static bool HasSomethingToPaste ()
+static bool HasSomethingToPaste (kpMainWindow *mw)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow(" << name () << ")::slotEnablePaste()";
+    kDebug () << "kpMainWindow(" << mw->name () << ")::slotEnablePaste()";
     QTime timer;
     timer.start ();
+#else
+    (void) mw;
 #endif
 
     const QMimeData *md =
         QApplication::clipboard ()->mimeData (QClipboard::Clipboard);
     Q_ASSERT (md);
         
+    // It's faster to test for QMimeData::hasText() first due to the
+    // lazy evaluation of the '||' operator.
     const bool hasSomething =
-        (kpSelectionDrag::canDecode (md) || md->hasText ());
+        (md->hasText () || kpSelectionDrag::canDecode (md));
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\t" << name () << "***canDecode=" << hasSomething
+    kDebug () << "\t" << mw->name () << "***canDecode=" << hasSomething
               << "(time=" << timer.restart () << ")"
               << "formats=" << md->formats ();
 #endif
@@ -356,14 +360,10 @@ static bool HasSomethingToPaste ()
 // Call before any paste only.
 static bool HasSomethingToPasteWithDialogIfNot (kpMainWindow *mw)
 {
-    if (::HasSomethingToPaste ())
+    if (::HasSomethingToPaste (mw))
         return true;
 
     kpSetOverrideCursorSaver cursorSaver (Qt::arrowCursor);
-
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tFormats supported:" << md->formats ();
-#endif
 
     KMessageBox::sorry (mw,
         i18n ("<qt><p>There is nothing in the clipboard to paste.</p></qt>"),
@@ -384,7 +384,7 @@ void kpMainWindow::slotEnablePaste ()
 
 
 // Call before any paste only.
-static bool HasSomethingToPasteWithDialogIfNot ()
+static bool HasSomethingToPasteWithDialogIfNot (kpMainWindow *)
 {
     // We will not be called if there's nothing to paste, as the paste
     // action would have been disabled.  But do _not_ assert that
@@ -395,7 +395,7 @@ static bool HasSomethingToPasteWithDialogIfNot ()
 // private slot
 void kpMainWindow::slotEnablePaste ()
 {
-    const bool shouldEnable = ::HasSomethingToPaste ();
+    const bool shouldEnable = ::HasSomethingToPaste (this);
     d->actionPasteInNewWindow->setEnabled (shouldEnable);
     d->actionPaste->setEnabled (shouldEnable);
 }
