@@ -875,7 +875,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 // private virtual [base QWidget]
 void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
 {
-    e->setAccepted (kpSelectionDrag::canDecode (e) ||
+    e->setAccepted (kpSelectionDrag::canDecode (e->mimeData ()) ||
                     KUrl::List::canDecode (e->mimeData ()) ||
                     e->mimeData ()->hasText ());
 }
@@ -889,7 +889,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 
     KUrl::List urls;
 
-    kpAbstractImageSelection *sel = kpSelectionDrag::decode (e,
+    kpAbstractImageSelection *sel = kpSelectionDrag::decode (e->mimeData (),
         pasteWarnAboutLossInfo ());
     if (sel)
     {

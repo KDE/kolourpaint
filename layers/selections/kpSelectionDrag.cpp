@@ -25,7 +25,8 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_SELECTION_DRAG 0
+
+#define DEBUG_KP_SELECTION_DRAG 1
 
 
 #include <kpSelectionDrag.h>
@@ -50,29 +51,18 @@ const char * const kpSelectionDrag::SelectionMimeType =
 struct kpSelectionDragPrivate
 {
     kpSelectionDragPrivate ()
-        : selection (0)
     {
     }
-
-    kpAbstractImageSelection *selection;
 };
 
-kpSelectionDrag::kpSelectionDrag (QWidget *dragSource, const char *name)
-    : Q3ImageDrag (dragSource, name),
+kpSelectionDrag::kpSelectionDrag ()
+    : QMimeData (),
       d (new kpSelectionDragPrivate ())
 {
 }
 
-kpSelectionDrag::kpSelectionDrag (const QImage &image, QWidget *dragSource,
-        const char *name)
-    : Q3ImageDrag (image, dragSource, name),
-      d (new kpSelectionDragPrivate ())
-{
-}
-
-kpSelectionDrag::kpSelectionDrag (const kpAbstractImageSelection &sel,
-        QWidget *dragSource, const char *name)
-    : Q3ImageDrag (dragSource, name),
+kpSelectionDrag::kpSelectionDrag (const kpAbstractImageSelection &sel)
+    : QMimeData (),
       d (new kpSelectionDragPrivate ())
 {
     setSelection (sel);
@@ -80,7 +70,6 @@ kpSelectionDrag::kpSelectionDrag (const kpAbstractImageSelection &sel,
 
 kpSelectionDrag::~kpSelectionDrag ()
 {
-    delete d->selection;
     delete d;
 }
 
@@ -96,13 +85,19 @@ void kpSelectionDrag::setSelection (const kpAbstractImageSelection &sel)
 
     Q_ASSERT (sel.hasContent ());
 
-    delete d->selection;
-    d->selection = sel.clone ();
 
+    // Store as selection.
+    QByteArray ba;
+    {
+        QDataStream stream (&ba, QIODevice::WriteOnly);
+        stream << sel;
+    }
+    setData (kpSelectionDrag::SelectionMimeType, ba);
+
+
+    // Store as image (so that QMimeData::hasImage()) works).
     // OPT: an awful waste of memory storing image in both selection and QImage
-
-    // HACK: need to set image else QImageDrag::format() lies
-    const QImage image = kpPixmapFX::convertToQImage (d->selection->baseImage ());
+    const QImage image = kpPixmapFX::convertToQImage (sel.baseImage ());
 #if DEBUG_KP_SELECTION_DRAG && 1
     kDebug () << "\timage: w=" << image.width ()
                << " h=" << image.height ()
@@ -110,181 +105,32 @@ void kpSelectionDrag::setSelection (const kpAbstractImageSelection &sel)
 #endif
     if (image.isNull ())
     {
+        // TODO: proper error handling.
         kError () << "kpSelectionDrag::setSelection() could not convert to image"
                    << endl;
     }
-    setImage (image);
-}
-
-// protected
-bool kpSelectionDrag::holdsSelection () const
-{
-    return (d->selection != 0);
-}
-
-
-// public virtual [base QMimeSource]
-const char *kpSelectionDrag::format (int which) const
-{
-#if DEBUG_KP_SELECTION_DRAG && 0
-    kDebug () << "kpSelectionDrag::format(" << which << ")";
-#endif
-    const char *ret = Q3ImageDrag::format (which);
-    if (ret)
-    {
-    #if DEBUG_KP_SELECTION_DRAG && 0
-        kDebug () << "\tQImageDrag reports " << ret;
-    #endif
-        return ret;
-    }
-
-    int i;
-    for (i = 0; Q3ImageDrag::format (i); i++)
-        ;
-
-#if DEBUG_KP_SELECTION_DRAG && 0
-    kDebug () << "\tend of QImageDrag format list at " << i;
-#endif
-
-    if (i == which)
-    {
-    #if DEBUG_KP_SELECTION_DRAG && 0
-        kDebug () << "\treturning own mimetype";
-    #endif
-        return kpSelectionDrag::SelectionMimeType;
-    }
     else
-    {
-    #if DEBUG_KP_SELECTION_DRAG && 0
-        kDebug () << "\treturning non-existent";
-    #endif
-        return 0;
-    }
-}
-
-// public virtual [base QMimeSource]
-// Don't need to override in Qt 3.2 (the QMimeSource base will work)
-// but we do so just in case QImageDrag later decides to override it.
-bool kpSelectionDrag::provides (const char *mimeType) const
-{
-#if DEBUG_KP_SELECTION_DRAG
-    kDebug () << "kpSelectionDrag::provides(" << mimeType << ")";
-#endif
-
-    Q_ASSERT (mimeType);
-
-    const bool ret = (!strcmp (mimeType, kpSelectionDrag::SelectionMimeType) ||
-        Q3ImageDrag::provides (mimeType));
-#if DEBUG_KP_SELECTION_DRAG
-    kDebug () << "\treturning " << ret;
-#endif
-    return ret;
-}
-
-// public virtual [base QMimeSource]
-QByteArray kpSelectionDrag::encodedData (const char *mimeType) const
-{
-#if DEBUG_KP_SELECTION_DRAG
-    kDebug () << "kpSelectionDrag::encodedData(" << mimeType << ")";
-#endif
-
-    Q_ASSERT (mimeType);
-
-    // We want the output as a selection?
-    if (!strcmp (mimeType, kpSelectionDrag::SelectionMimeType))
-    {
-        QByteArray ba;
-        QDataStream stream (&ba, QIODevice::WriteOnly);
-
-    #if DEBUG_KP_SELECTION_DRAG
-        kDebug () << "\twant it as kpAbstractSelection in QByteArray";
-    #endif
-
-        if (holdsSelection ())
-        {
-        #if DEBUG_KP_SELECTION_DRAG
-            kDebug () << "\t\thave selection - return it";
-        #endif
-            stream << *d->selection;
-        }
-        else
-        {
-        #if DEBUG_KP_SELECTION_DRAG
-            kDebug () << "\t\thave image - call kpSelectionDrag::decode(QImage)";
-        #endif
-            QImage image;
-            if (kpSelectionDrag::decode (this, image/*ref*/))
-            {
-            #if DEBUG_KP_SELECTION_DRAG
-                kDebug () << "\t\t\tok - returning sel with image w="
-                           << image.width ()
-                           << " h="
-                           << image.height ()
-                           << endl;
-            #endif
-
-                // TODO: I think this needs kpPixmapFX::WarnAboutLossInfo.
-                QPixmap pixmap = kpPixmapFX::convertToPixmapAsLosslessAsPossible (image);
-
-                stream << kpRectangularImageSelection (
-                    QRect (0, 0, pixmap.width (), pixmap.height ()),
-                    pixmap);
-            }
-            else
-            {
-                kError () << "kpSelectionDrag::encodedData(" << mimeType << ")"
-                           << " kpSelectionDrag(QImage) could not decode data into QImage"
-                           << endl;
-                stream << kpRectangularImageSelection ();
-            }
-        }
-
-        return ba;
-    }
-    else
-    {
-    #if DEBUG_KP_SELECTION_DRAG
-        kDebug () << "\twant it as QImage in QByteArray";
-    #endif
-
-        QByteArray ba = Q3ImageDrag::encodedData (mimeType);
-
-    #if DEBUG_KP_SELECTION_DRAG
-        kDebug () << "\t\tba.size=" << ba.size ();
-    #endif
-        return ba;
-    }
+        setImageData (image);
 }
 
 
 // public static
-bool kpSelectionDrag::canDecode (const QMimeSource *e)
+bool kpSelectionDrag::canDecode (const QMimeData *e)
 {
 #if DEBUG_KP_SELECTION_DRAG
-    kDebug () << "kpSelectionDrag::canDecode()";
+    kDebug () << "kpSelectionDrag::canDecode()"
+              << "hasSel=" << e->hasFormat (kpSelectionDrag::SelectionMimeType)
+              << "hasImage=" << e->hasImage ();
 #endif
 
     Q_ASSERT (e);
 
-    return (e->provides (kpSelectionDrag::SelectionMimeType) ||
-            Q3ImageDrag::canDecode (e));
-}
-
-
-// public static
-bool kpSelectionDrag::decode (const QMimeSource *e, QImage &img)
-{
-#if DEBUG_KP_SELECTION_DRAG
-    kDebug () << "kpSelectionDrag::decode(QImage)";
-#endif
-    Q_ASSERT (e);
-
-    return (Q3ImageDrag::canDecode (e) &&  // prevents X errors, jumps based on unitialised values...
-            Q3ImageDrag::decode (e, img/*ref*/));
+    return (e->hasFormat (kpSelectionDrag::SelectionMimeType) ||
+            e->hasImage ());
 }
 
 // public static
-kpAbstractImageSelection *kpSelectionDrag::decode (const QMimeSource *e,
+kpAbstractImageSelection *kpSelectionDrag::decode (const QMimeData *e,
         const kpPixmapFX::WarnAboutLossInfo &wali)
 {
 #if DEBUG_KP_SELECTION_DRAG
@@ -292,12 +138,12 @@ kpAbstractImageSelection *kpSelectionDrag::decode (const QMimeSource *e,
 #endif
     Q_ASSERT (e);
 
-    if (e->provides (kpSelectionDrag::SelectionMimeType))
+    if (e->hasFormat (kpSelectionDrag::SelectionMimeType))
     {
     #if DEBUG_KP_SELECTION_DRAG
-        kDebug () << "\tmimeSource provides selection - just return it in QByteArray";
+        kDebug () << "\tmimeSource hasFormat selection - just return it in QByteArray";
     #endif
-        QByteArray data = e->encodedData (kpSelectionDrag::SelectionMimeType);
+        QByteArray data = e->data (kpSelectionDrag::SelectionMimeType);
         QDataStream stream (&data, QIODevice::ReadOnly);
 
         // Don't pass <wali> so that we suppress excessive warnings when copying
@@ -321,8 +167,8 @@ kpAbstractImageSelection *kpSelectionDrag::decode (const QMimeSource *e,
         kDebug () << "\tmimeSource doesn't provide selection - try image";
     #endif
 
-        QImage image;
-        if (kpSelectionDrag::decode (e, image/*ref*/))
+        QImage image = qvariant_cast <QImage> (e->imageData ());
+        if (!image.isNull ())
         {
         #if DEBUG_KP_SELECTION_DRAG
             kDebug () << "\tok w=" << image.width () << " h=" << image.height ();
@@ -342,5 +188,6 @@ kpAbstractImageSelection *kpSelectionDrag::decode (const QMimeSource *e,
         }
     }
 }
+
 
 #include <kpSelectionDrag.moc>

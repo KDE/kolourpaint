@@ -30,7 +30,7 @@
 #define KP_SELECTION_DRAG_H
 
 
-#include <q3dragobject.h>
+#include <QMimeData>
 
 #include <kpPixmapFX.h>
 
@@ -38,33 +38,24 @@
 class kpAbstractImageSelection;
 
 
-class kpSelectionDrag : public Q3ImageDrag
+class kpSelectionDrag : public QMimeData
 {
 Q_OBJECT
 
 public:
     static const char * const SelectionMimeType;
 
-    kpSelectionDrag (QWidget *dragSource = 0, const char *name = 0);
-    kpSelectionDrag (const QImage &image, QWidget *dragSource = 0,
-        const char *name = 0);
-    kpSelectionDrag (const kpAbstractImageSelection &sel, QWidget *dragSource = 0,
-        const char *name = 0);
+    kpSelectionDrag ();
+    // ASSUMPTION: <sel> has content (is not just a border).
+    kpSelectionDrag (const kpAbstractImageSelection &sel);
     virtual ~kpSelectionDrag ();
 
+    // ASSUMPTION: <sel> has content (is not just a border).
     void setSelection (const kpAbstractImageSelection &sel);
 
-protected:
-    bool holdsSelection () const;
-
 public:
-    virtual const char *format (int which = 0) const;
-    virtual bool provides (const char *mimeType) const;
-    virtual QByteArray encodedData (const char *mimeType) const;
-
-    static bool canDecode (const QMimeSource *e);
-    static bool decode (const QMimeSource *e, QImage &img);
-    static kpAbstractImageSelection *decode (const QMimeSource *e,
+    static bool canDecode (const QMimeData *e);
+    static kpAbstractImageSelection *decode (const QMimeData *e,
         const kpPixmapFX::WarnAboutLossInfo &wali =
             kpPixmapFX::WarnAboutLossInfo ());
 

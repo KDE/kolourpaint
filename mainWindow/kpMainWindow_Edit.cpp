@@ -296,13 +296,17 @@ void kpMainWindow::slotCopy ()
         //
         // REFACTOR: This logic should be moved into kpSelectionDrag as that
         //           would centralize this responsibility.
+        //
+        // TODO: This does not work under Qt4.
+        //       See kpPixmapFX::pixmapWithDefinedTransparentPixels() API Doc.
         imageSel->setBaseImage (
             kpPixmapFX::pixmapWithDefinedTransparentPixels (
                 rawImage,
                 Qt::white));  // CONFIG
 
-        QApplication::clipboard ()->setData (new kpSelectionDrag (*imageSel),
-                                             QClipboard::Clipboard);
+        QApplication::clipboard ()->setMimeData (
+            new kpSelectionDrag (*imageSel),
+            QClipboard::Clipboard);
     }
     else
         Q_ASSERT (!"Unknown selection type");
@@ -319,26 +323,16 @@ void kpMainWindow::slotEnablePaste ()
     timer.start ();
 #endif
 
-    bool shouldEnable = false;
-
-    QMimeSource *ms = QApplication::clipboard ()->data (QClipboard::Clipboard);
     const QMimeData *md = QApplication::clipboard ()->mimeData (QClipboard::Clipboard);
-    if (ms)
-    {
-        shouldEnable = (kpSelectionDrag::canDecode (ms) ||
-                        md->hasText ());
-    #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\t" << name () << "***canDecode=" << timer.restart ();
-        for (int i = 0; ; i++)
-        {
-            const char *fmt = ms->format (i);
-            if (!fmt)
-                break;
-
-            kDebug () << "\t'" << fmt << "'";
-        }
-    #endif
-    }
+    Q_ASSERT (md);
+        
+    const bool shouldEnable =
+        (kpSelectionDrag::canDecode (md) || md->hasText ());
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "\t" << name () << "***canDecode=" << shouldEnable
+              << "(time=" << timer.restart () << ")"
+              << "formats=" << md->formats ();
+#endif
 
     d->actionPasteInNewWindow->setEnabled (shouldEnable);
     d->actionPaste->setEnabled (shouldEnable);
@@ -664,21 +658,10 @@ void kpMainWindow::slotPaste ()
     // Acquire the image.
     //
 
-    QMimeSource *ms = QApplication::clipboard ()->data (QClipboard::Clipboard);
-    if (!ms)
-    {
-        kError () << "kpMainWindow::slotPaste() without mimeSource" << endl;
-        return;
-    }
-
     const QMimeData *md = QApplication::clipboard ()->mimeData (QClipboard::Clipboard);
-    if (md)
-    {
-	//kDebug () << "hasImage=" << md->hasImage ();
-        //qvariant_cast <QImage> (md->imageData ()).save ("cp.png", "PNG");
-    }
+    Q_ASSERT (md);
 
-    kpAbstractImageSelection *sel = kpSelectionDrag::decode (ms,
+    kpAbstractImageSelection *sel = kpSelectionDrag::decode (md,
         pasteWarnAboutLossInfo ());
     if (sel)
     {
@@ -695,11 +678,7 @@ void kpMainWindow::slotPaste ()
         kpSetOverrideCursorSaver cursorSaver (Qt::arrowCursor);
 
         kDebug () << "kpMainWindow::slotPaste() could not decode selection";
-        kDebug () << "\tFormats supported:";
-        for (int i = 0; ms->format (i); i++)
-        {
-            kDebug () << "\t\t" << i << ":" << ms->format (i);
-        }
+        kDebug () << "\tFormats supported:" << md->formats ();
 
         // TODO: fix Klipper
         KMessageBox::sorry (this,
