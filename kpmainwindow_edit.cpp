@@ -150,6 +150,9 @@ void kpMainWindow::enableEditMenuDocumentActions (bool enable)
     m_editMenuDocumentActionsEnabled = enable;
 
     // m_actionCopyToFile
+    // Unlike m_actionPaste, we disable this if there is no document.
+    // This is because "File / Open" would do the same thing, if there is
+    // no document.
     m_actionPasteFromFile->setEnabled (enable);
 }
 
@@ -272,24 +275,28 @@ void kpMainWindow::slotCopy ()
     QApplication::restoreOverrideCursor ();
 }
 
-// private slot
-void kpMainWindow::slotEnablePaste ()
+
+static bool HasSomethingToPaste (kpMainWindow *mw)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kdDebug () << "kpMainWindow(" << name () << ")::slotEnablePaste()" << endl;
+    kdDebug () << "kpMainWindow(" << mw->name () << "):HasSomethingToPaste()" << endl;
     QTime timer;
     timer.start ();
+#else
+    (void) mw;
 #endif
 
-    bool shouldEnable = false;
+    bool hasSomething = false;
 
     QMimeSource *ms = QApplication::clipboard ()->data (QClipboard::Clipboard);
     if (ms)
     {
-        shouldEnable = (kpSelectionDrag::canDecode (ms) ||
-                        QTextDrag::canDecode (ms));
+        // It's faster to test for QTextDrag::canDecode() first due to the
+        // lazy evaluation of the '||' operator.
+        hasSomething = (QTextDrag::canDecode (ms) ||
+                        kpSelectionDrag::canDecode (ms));
     #if DEBUG_KP_MAIN_WINDOW
-        kdDebug () << "\t" << name () << "***canDecode=" << timer.restart () << endl;
+        kdDebug () << "\t" << mw->name () << "***canDecode=" << timer.restart () << endl;
         for (int i = 0; ; i++)
         {
             const char *fmt = ms->format (i);
@@ -301,9 +308,73 @@ void kpMainWindow::slotEnablePaste ()
     #endif
     }
 
+    return hasSomething;
+}
+
+// HACK: SYNC: Non-Qt apps do not cause QApplication::clipboard() to
+//             emit dataChanged().  We don't want to have our paste
+//             action disabled when we can actually paste something.
+//
+//             So we make sure the paste action is always enabled and
+//             before any paste, we check if there's actually something
+//             to paste (HasSomethingToPasteWithDialogIfNot ()).
+
+#if 1  // Hack code path
+
+
+// Call before any paste only.
+static bool HasSomethingToPasteWithDialogIfNot (kpMainWindow *mw)
+{
+    if (::HasSomethingToPaste (mw))
+        return true;
+
+    // STRING: Unfortunately, we are in a string freeze.
+#if 1
+    (void) mw;
+#else
+    QApplication::setOverrideCursor (Qt::arrowCursor);
+
+    KMessageBox::sorry (mw,
+        STRING_FREEZE_i18n ("<qt><p>There is nothing in the clipboard to paste.</p></qt>"),
+        STRING_FREEZE_i18n ("Cannot Paste"));
+
+    QApplication::restoreOverrideCursor ();
+#endif
+
+    return false;
+}
+
+// private slot
+void kpMainWindow::slotEnablePaste ()
+{
+    const bool shouldEnable = true;
     m_actionPasteInNewWindow->setEnabled (shouldEnable);
     m_actionPaste->setEnabled (shouldEnable);
 }
+
+
+#else  // No hack
+
+
+// Call before any paste only.
+static bool HasSomethingToPasteWithDialogIfNot (kpMainWindow *)
+{
+    // We will not be called if there's nothing to paste, as the paste
+    // action would have been disabled.  But do _not_ assert that
+    // (see the slotPaste() "data unexpectedly disappeared" KMessageBox).
+    return true;
+}
+
+// private slot
+void kpMainWindow::slotEnablePaste ()
+{
+    const bool shouldEnable = ::HasSomethingToPaste (this);
+    m_actionPasteInNewWindow->setEnabled (shouldEnable);
+    m_actionPaste->setEnabled (shouldEnable);
+}
+ 
+ 
+#endif
 
 
 // private
@@ -601,6 +672,13 @@ void kpMainWindow::slotPaste ()
         tool ()->endShapeInternal ();
 
 
+    if (!::HasSomethingToPasteWithDialogIfNot (this))
+    {
+        QApplication::restoreOverrideCursor ();
+        return;
+    }
+
+
     //
     // Acquire the pixmap
     //
@@ -684,10 +762,18 @@ void kpMainWindow::slotPasteInNewWindow ()
     kdDebug () << "kpMainWindow::slotPasteInNewWindow() CALLED" << endl;
 #endif
 
+    // sync: restoreOverrideCursor() in all exit paths
     QApplication::setOverrideCursor (Qt::waitCursor);
 
     if (toolHasBegunShape ())
         tool ()->endShapeInternal ();
+
+
+    if (!::HasSomethingToPasteWithDialogIfNot (this))
+    {
+        QApplication::restoreOverrideCursor ();
+        return;
+    }
 
 
     //

@@ -4,6 +4,10 @@ KolourPaint 1.4_relight Series (branches/KDE/3.5/)
 
 KolourPaint 1.4.8_relight (Frozen 2007-10-08)
 
+   * Always enable the paste actions to guarantee that pasting from
+     non-Qt applications is always allowed (non-Qt applications do not
+     notify KolourPaint when they place objects into the clipboard)
+
    * Paste transparent pixels as white instead of uninitialized colors,
      when the app does not support pasting transparent pixels (such as
      OpenOffice.org)
@@ -16,7 +20,7 @@ KolourPaint 1.4.8_relight (Frozen 2007-10-08)
      that has opaque text and a transparent background, antialiases the
      text with the document below
 
-   * Edit / Paste From File..." respects the "Transparent" selection mode
+   * "Edit / Paste From File..." respects the "Transparent" selection mode
 
    * Focus an input field when the "Skew", "Rotate" and "Resize / Scale"
      dialogs are displayed -- this allows the user to edit values without
