@@ -977,6 +977,7 @@ void kpMainWindow::slotPasteFromFile ()
 
     paste (kpSelection (kpSelection::Rectangle,
                         QRect (0, 0, pixmap.width (), pixmap.height ()),
-                        pixmap));
+                        pixmap,
+                        selectionTransparency ()));
 }
 
