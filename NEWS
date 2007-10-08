@@ -16,7 +16,7 @@ KolourPaint 1.4.8_relight (Frozen 2007-10-08)
      that has opaque text and a transparent background, antialiases the
      text with the document below
 
-   * Edit / Paste from File..." respects the "Transparent" selection mode
+   * Edit / Paste From File..." respects the "Transparent" selection mode
 
    * Focus an input field when the "Skew", "Rotate" and "Resize / Scale"
      dialogs are displayed -- this allows the user to edit values without
