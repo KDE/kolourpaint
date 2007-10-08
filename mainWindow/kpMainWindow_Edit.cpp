@@ -188,6 +188,10 @@ void kpMainWindow::enableEditMenuDocumentActions (bool enable)
     d->editMenuDocumentActionsEnabled = enable;
 
     // d->actionCopyToFile
+
+    // Unlike d->actionPaste, we disable this if there is no document.
+    // This is because "File / Open" would do the same thing, if there is
+    // no document.
     d->actionPasteFromFile->setEnabled (enable);
 }
 
@@ -314,8 +318,8 @@ void kpMainWindow::slotCopy ()
     delete sel;
 }
 
-// private slot
-void kpMainWindow::slotEnablePaste ()
+
+static bool HasSomethingToPaste ()
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow(" << name () << ")::slotEnablePaste()";
@@ -323,20 +327,81 @@ void kpMainWindow::slotEnablePaste ()
     timer.start ();
 #endif
 
-    const QMimeData *md = QApplication::clipboard ()->mimeData (QClipboard::Clipboard);
+    const QMimeData *md =
+        QApplication::clipboard ()->mimeData (QClipboard::Clipboard);
     Q_ASSERT (md);
         
-    const bool shouldEnable =
+    const bool hasSomething =
         (kpSelectionDrag::canDecode (md) || md->hasText ());
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\t" << name () << "***canDecode=" << shouldEnable
+    kDebug () << "\t" << name () << "***canDecode=" << hasSomething
               << "(time=" << timer.restart () << ")"
               << "formats=" << md->formats ();
 #endif
 
+    return hasSomething;
+}
+
+// HACK: SYNC: Non-Qt apps do not cause QApplication::clipboard() to
+//             emit dataChanged().  We don't want to have our paste
+//             action disabled when we can actually paste something.
+//
+//             So we make sure the paste action is always enabled and
+//             before any paste, we check if there's actually something
+//             to paste (HasSomethingToPasteWithDialogIfNot ()).
+
+#if 1  // Hack code path
+
+
+// Call before any paste only.
+static bool HasSomethingToPasteWithDialogIfNot (kpMainWindow *mw)
+{
+    if (::HasSomethingToPaste ())
+        return true;
+
+    kpSetOverrideCursorSaver cursorSaver (Qt::arrowCursor);
+
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "\tFormats supported:" << md->formats ();
+#endif
+
+    KMessageBox::sorry (mw,
+        i18n ("<qt><p>There is nothing in the clipboard to paste.</p></qt>"),
+        i18n ("Cannot Paste"));
+    return false;
+}
+
+// private slot
+void kpMainWindow::slotEnablePaste ()
+{
+    const bool shouldEnable = true;
     d->actionPasteInNewWindow->setEnabled (shouldEnable);
     d->actionPaste->setEnabled (shouldEnable);
 }
+
+
+#else  // No hack
+
+
+// Call before any paste only.
+static bool HasSomethingToPasteWithDialogIfNot ()
+{
+    // We will not be called if there's nothing to paste, as the paste
+    // action would have been disabled.  But do _not_ assert that
+    // (see the slotPaste() "data unexpectedly disappeared" KMessageBox).
+    return true;
+}
+
+// private slot
+void kpMainWindow::slotEnablePaste ()
+{
+    const bool shouldEnable = ::HasSomethingToPaste ();
+    d->actionPasteInNewWindow->setEnabled (shouldEnable);
+    d->actionPaste->setEnabled (shouldEnable);
+}
+
+
+#endif
 
 
 // private
@@ -654,6 +719,10 @@ void kpMainWindow::slotPaste ()
     toolEndShape ();
 
 
+    if (!::HasSomethingToPasteWithDialogIfNot (this))
+        return;
+
+
     //
     // Acquire the image.
     //
@@ -720,6 +789,10 @@ void kpMainWindow::slotPasteInNewWindow ()
     kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
 
     toolEndShape ();
+
+
+    if (!::HasSomethingToPasteWithDialogIfNot (this))
+        return;
 
 
     //
@@ -999,4 +1072,5 @@ void kpMainWindow::slotPasteFromFile ()
         image,
         imageSelectionTransparency ()));
 }
+
 
