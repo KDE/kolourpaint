@@ -2,7 +2,7 @@
 KolourPaint 1.4_relight Series (branches/KDE/3.5/)
 ===============================
 
-KolourPaint 1.4.8_relight (Frozen 2007-10-07)
+KolourPaint 1.4.8_relight (Frozen 2007-10-08)
 
    * Paste transparent pixels as white instead of uninitialized colors,
      when the app does not support pasting transparent pixels (such as
@@ -17,7 +17,6 @@ KolourPaint 1.4.8_relight (Frozen 2007-10-07)
      text with the document below
 
    * Edit / Paste from File..." respects the "Transparent" selection mode
-     [2007-10-08; not sure this patch made it into 1.4.8_relight]
 
    * Focus an input field when the "Skew", "Rotate" and "Resize / Scale"
      dialogs are displayed -- this allows the user to edit values without
