@@ -436,6 +436,9 @@ void kpAbstractSelectionTool::draw (const QPoint &thisPoint, const QPoint & /*la
     kDebug () << "kpAbstractSelectionTool::draw (" << thisPoint
                << ",startPoint=" << startPoint ()
                << ",normalizedRect=" << normalizedRect << ")" << endl;
+#else
+    Q_UNUSED (thisPoint);
+    Q_UNUSED (normalizedRect);
 #endif
 
 
