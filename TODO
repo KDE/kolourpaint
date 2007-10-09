@@ -505,8 +505,6 @@ checkerboard + grid doesn't mix at certain zoom levels
 bug: draw rectangle, drag out selection, undo - kills rect but not selection
 is this a feature?
 
-double click on transparent in colour tablet and press OK - becomes black
-
 kpViewManager::setTextCursorBlinkState() needs to restart timer
 kpToolText: cursor doesn't immediately appear after creating or moving
             a text box
