@@ -73,22 +73,3 @@ QRect kpBug::QRect_Normalized (const QRect &rect)
 
     return out;
 }
-
-
-// public static
-void kpBug::QWidget_SetWhatsThis (QWidget *w, const QString &text)
-{
-#if DEBUG_KP_BUG
-    kDebug () << "kpBug::QWidget_SetWhatsThis(" << w << ",'" << text << "')";
-#endif
-
-    w->setWhatsThis (text);
-
-    foreach (QWidget *child, w->findChildren <QWidget *> ())
-    {
-    #if DEBUG_KP_BUG
-        kDebug () << "\tChild: " << child;
-    #endif
-        child->setWhatsThis (text);
-    }
-}

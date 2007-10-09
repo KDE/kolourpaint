@@ -38,7 +38,6 @@
 #include <KDebug>
 #include <KLocale>
 
-#include <kpBug.h>
 #include <kpColor.h>
 #include <kpColorCollection.h>
 #include <kpDefaultColorCollection.h>
@@ -192,10 +191,7 @@ kpColorCells::kpColorCells (QWidget *parent,
     setColorCollection (DefaultColorCollection ());
 
 
-    // Call this _after_ we've constructed all the child widgets.
-    // Of course, this will not work if any of our child widgets are clever
-    // and create more widgets at runtime.
-    kpBug::QWidget_SetWhatsThis (this,
+    setWhatsThis (
         i18n (
             "<qt>"
 

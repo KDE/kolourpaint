@@ -47,7 +47,6 @@
 #include <KVBox>
 #include <KDebug>
 
-#include <kpBug.h>
 #include <kpDefs.h>
 #include <kpDocumentMetaInfo.h>
 
@@ -178,10 +177,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     dpiLay->setRowStretch (1, 1);
 
 
-    // Call this _after_ we've constructed all the child widgets.
-    // Of course, this will not work if any of our child widgets are clever
-    // and create more widgets at runtime.
-    kpBug::QWidget_SetWhatsThis (dpiGroupBox,
+    dpiGroupBox->setWhatsThis (
         i18n (
             "<qt>"
             "<p><b>Dots Per Inch</b> (DPI) specifies the number of pixels"
@@ -245,10 +241,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     offsetLay->setRowStretch (1, 1);
 
 
-    // Call this _after_ we've constructed all the child widgets.
-    // Of course, this will not work if any of our child widgets are clever
-    // and create more widgets at runtime.
-    kpBug::QWidget_SetWhatsThis (offsetGroupBox,
+    offsetGroupBox->setWhatsThis (
         i18n (
             "<qt>"
             "<p>The <b>Offset</b> is the relative position where this image"
@@ -314,11 +307,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     fieldsLayout->addWidget (d->fieldsResetButton, 1, 1, Qt::AlignRight);
 
 
-    // Call this _after_ we've constructed all the child widgets.
-    // Of course, this will not work if any of our child widgets are clever
-    // and create more widgets at runtime.
-    // TODO: Seems this is not working well on d->fieldsTableWidget.
-    kpBug::QWidget_SetWhatsThis (fieldsGroupBox,
+    fieldsGroupBox->setWhatsThis (
         i18n (
             "<qt>"
             "<p><b>Text Fields</b> provide extra information about the image."

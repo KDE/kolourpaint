@@ -62,7 +62,6 @@
 #include <knuminput.h>
 
 #include <kpAbstractSelection.h>
-#include <kpBug.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
 #include <kpPixmapFX.h>
@@ -216,6 +215,24 @@ static void toolButtonSetLook (QToolButton *button,
 void kpTransformResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
 {
     m_operationGroupBox = new QGroupBox (i18n ("Operation"), baseWidget);
+    m_operationGroupBox->setWhatsThis(
+        i18n ("<qt>"
+              "<ul>"
+                  "<li><b>Resize</b>: The size of the picture will be"
+                  " increased"
+                  " by creating new areas to the right and/or bottom"
+                  " (filled in with the background color) or"
+                  " decreased by cutting"
+                  " it at the right and/or bottom.</li>"
+
+                  "<li><b>Scale</b>: The picture will be expanded"
+                  " by duplicating pixels or squashed by dropping pixels.</li>"
+
+                  "<li><b>Smooth Scale</b>: This is the same as"
+                  " <i>Scale</i> except that it blends neighboring"
+                  " pixels to produce a smoother looking picture.</li>"
+              "</ul>"
+              "</qt>"));
 
     m_resizeButton = new QToolButton (m_operationGroupBox);
     toolButtonSetLook (m_resizeButton,
@@ -261,29 +278,6 @@ void kpTransformResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
 
     operationLayout->addWidget (m_smoothScaleButton, 0, 2, Qt::AlignCenter);
     //operationLayout->addWidget (m_smoothScaleLabel, 1, 2, Qt::AlignCenter);
-
-
-    // Call this _after_ we've constructed all the child widgets.
-    // Of course, this will not work if any of our child widgets are clever
-    // and create more widgets at runtime.
-    kpBug::QWidget_SetWhatsThis (m_operationGroupBox,
-        i18n ("<qt>"
-              "<ul>"
-                  "<li><b>Resize</b>: The size of the picture will be"
-                  " increased"
-                  " by creating new areas to the right and/or bottom"
-                  " (filled in with the background color) or"
-                  " decreased by cutting"
-                  " it at the right and/or bottom.</li>"
-
-                  "<li><b>Scale</b>: The picture will be expanded"
-                  " by duplicating pixels or squashed by dropping pixels.</li>"
-
-                  "<li><b>Smooth Scale</b>: This is the same as"
-                  " <i>Scale</i> except that it blends neighboring"
-                  " pixels to produce a smoother looking picture.</li>"
-              "</ul>"
-              "</qt>"));
 
 
     connect (m_resizeButton, SIGNAL (toggled (bool)),
