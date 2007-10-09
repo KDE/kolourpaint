@@ -323,7 +323,7 @@ void kpMainWindow::slotCopy ()
 static bool HasSomethingToPaste (kpMainWindow *mw)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow(" << mw->name () << ")::slotEnablePaste()";
+    kDebug () << "kpMainWindow(" << mw->name () << "):HasSomethingToPaste()";
     QTime timer;
     timer.start ();
 #else
