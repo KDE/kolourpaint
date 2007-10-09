@@ -190,9 +190,15 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
     // realize what other processes have done e.g. Settings / Show Path
     cfg->reparseConfiguration ();
 
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "\trecent URLs=" << d->actionOpenRecent->items ();
+#endif
     // HACK: Something might have changed interprocess.
     // If we could PROPAGATE: interprocess, then this wouldn't be required.
     d->actionOpenRecent->loadEntries (cfg->group (kpSettingsGroupRecentFiles));
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "\tafter loading config=" << d->actionOpenRecent->items ();
+#endif
 
     d->actionOpenRecent->addUrl (url);
 
