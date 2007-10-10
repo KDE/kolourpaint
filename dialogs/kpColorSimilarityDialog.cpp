@@ -98,6 +98,8 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
     inputLayout->addWidget (m_whatIsLabel);
 
 
+    // COMPAT: This is not firing properly when the user is typing in a
+    //         new value.
     connect (m_colorSimilarityInput, SIGNAL (valueChanged (int)),
              this, SLOT (slotColorSimilarityValueChanged ()));
 
