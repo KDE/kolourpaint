@@ -778,9 +778,6 @@ void kpMainWindow::slotPaste ()
 }
 
 // private slot
-// HITODO: Pasting season.jpg with sel transparency settings of transparent,
-//         white background color and 27% color similarity has strange effects
-//         (undo/redo just after pasting to see what I mean).
 void kpMainWindow::slotPasteInNewWindow ()
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
