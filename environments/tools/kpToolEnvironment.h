@@ -71,12 +71,12 @@ public:
     double colorSimilarity () const;
     int processedColorSimilarity () const;
 
-    // (only valid in slots connected to HITODO:foregroundColorChanged())
+    // (only valid in kpTool::slotForegroundColorChanged())
     kpColor oldForegroundColor () const;
-    // (only valid in slots connected to HITODO:backgroundColorChanged())
+    // (only valid in kpTool::slotBackgroundColorChanged())
     kpColor oldBackgroundColor () const;
 
-    // (only valid in slots connected to HITODO:colorSimilarityChanged())
+    // (only valid in kpTool::slotColorSimilarityChanged())
     double oldColorSimilarity () const;
 
     // Flashes the Color Similarity Tool Bar Item to highlight to the user,
