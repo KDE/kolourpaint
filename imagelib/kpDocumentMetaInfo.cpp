@@ -150,6 +150,24 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
 
 
 // public
+kpCommandSize::SizeType kpDocumentMetaInfo::size () const
+{
+    kpCommandSize::SizeType ret = 0;
+
+    foreach (const QString key, d->m_textMap.keys ())
+    {
+        ret += kpCommandSize::StringSize (key) +
+               kpCommandSize::StringSize (d->m_textMap [key]);
+    }
+
+    // We don't know what the QMap size overhead is so overestimate the size
+    // rather than underestimating it.
+    // LOTODO: Find the proper size in bytes.
+    return ret * 3;
+}
+
+
+// public
 int kpDocumentMetaInfo::dotsPerMeterX () const
 {
     return d->m_dotsPerMeterX;

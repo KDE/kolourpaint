@@ -62,8 +62,7 @@ kpDocumentMetaInfoCommand::~kpDocumentMetaInfoCommand ()
 // public virtual [base kpCommand]
 kpCommandSize::SizeType kpDocumentMetaInfoCommand::size () const
 {
-    // HITODO
-    return 0;
+    return d->metaInfo.size () + d->oldMetaInfo.size ();
 }
 
 

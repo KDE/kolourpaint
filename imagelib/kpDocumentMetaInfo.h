@@ -35,6 +35,8 @@
 #include <qmap.h>
 #include <qstring.h>
 
+#include <kpCommandSize.h>
+
 
 class QPoint;
 class QStringList;
@@ -54,6 +56,9 @@ public:
 
 
     void printDebug (const QString &prefix) const;
+
+
+    kpCommandSize::SizeType size () const;
 
 
     //
