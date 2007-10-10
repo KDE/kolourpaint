@@ -694,7 +694,7 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
 
     QBuffer buffer (&data);
     buffer.open (QIODevice::WriteOnly);
-    kpDocument::savePixmapToDevice (*m_documentPixmap,
+    bool savedOK = kpDocument::savePixmapToDevice (*m_documentPixmap,
                                     &buffer,
                                     documentSaveOptions (),
                                     m_documentMetaInfo,
@@ -703,10 +703,31 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
     buffer.close ();
 
 
-    // COMPAT: [0] dangerous
     QImage image;
-    image.loadFromData (data,
-        KImageIO::typeForMime (mimeType ()) [0].toLatin1 ());
+
+    // Ignore any failed saves.
+    //
+    // Failed saves might literally have written half a file.  The final
+    // save (when the user clicks OK), _will_ fail so we shouldn't have a
+    // preview even if this "half a file" is actually loadable by
+    // QImage::loadFormData().
+    if (savedOK)
+    {
+        const QStringList types = KImageIO::typeForMime (mimeType ());
+        // kpDocument::savePixmapToDevice() would have failed otherwise.
+        Q_ASSERT (!types.isEmpty ());
+
+        // It's safe to arbitrarily choose the 0th type as any type in the list
+        // should invoke the same KImageIO image loader.
+        image.loadFromData (data, types [0].toLatin1 ());
+    }
+    else
+    {
+        // Leave <image> as invalid.
+        // TODO: This code path has not been well tested.
+        //       Will we trigger divide by zero errors in "m_previewDialog"?
+        // KDE3: Backport any fixes to KDE 3.
+    }
 
     // REFACTOR: merge with kpDocument::getPixmapFromFile()
     m_previewDialog->setFilePixmapAndSize (

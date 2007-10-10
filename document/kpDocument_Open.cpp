@@ -210,15 +210,15 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
 
     // sync: remember to "KIO::NetAccess::removeTempFile (tempFile)" in all exit paths
     {
-    #if 0
-        QString detectedMimeType = KImageIO::mimeType (tempFile);
-    #else  // COMPAT: this is wrong - should be what QImage::QImage() loaded file as
-        KMimeType::Ptr detectedMimeTypePtr = KMimeType::findByFileContent (tempFile);
-        QString detectedMimeType =
-            detectedMimeTypePtr != KMimeType::defaultMimeTypePtr () ?
-                detectedMimeTypePtr->name () :
-                QString();
-    #endif
+        QString detectedMimeType;
+
+        KMimeType::Ptr detectedMimeTypePtr = KMimeType::findByUrl (url);
+        if(detectedMimeTypePtr &&
+            detectedMimeTypePtr != KMimeType::defaultMimeTypePtr ())
+        {
+            detectedMimeType = detectedMimeTypePtr->name ();
+        }
+
         if (saveOptions)
             saveOptions->setMimeType (detectedMimeType);
 
@@ -226,7 +226,6 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
         kDebug () << "\ttempFile=" << tempFile;
         kDebug () << "\tmimetype=" << detectedMimeType;
         kDebug () << "\tsrc=" << url.path ();
-        // COMPAT kDebug () << "\tmimetype of src=" << KImageIO::mimeType (url.path ());
     #endif
 
         if (detectedMimeType.isEmpty ())
@@ -239,6 +238,17 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
         }
 
 
+        // TODO: <detectedMimeType> might be different.
+        //       Should we feed it into QImage to solve this problem?
+        //
+        //       If so, should we have used KMimeType::findByContent()
+        //       instead?  Are some image types not detectable by findByContent()
+        //       (e.g. image types that are only detected by extension)?
+        //
+        //       Currently, opening a PNG with a ".jpg" extension does not
+        //       work -- QImage and findByUrl() both think it's a JPG based
+        //       on the extension, but findByContent() correctly detects
+        //       it as a PNG.
         image = QImage (tempFile);
         KIO::NetAccess::removeTempFile (tempFile);
     }

@@ -170,7 +170,17 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     if (userCancelled)
         *userCancelled = false;
 
-    QString type = KImageIO::typeForMime (saveOptions.mimeType ()) [0];  // COMPAT: dangerous [0]
+    QStringList types = KImageIO::typeForMime (saveOptions.mimeType ());
+#if DEBUG_KP_DOCUMENT
+    kDebug () << "\ttypes=" << types;
+#endif
+    if (types.isEmpty ())
+        return false;
+
+    // It's safe to arbitrarily choose the 0th type as any type in the list
+    // should invoke the same KImageIO image loader.
+    const QString type = types [0];
+
 #if DEBUG_KP_DOCUMENT
     kDebug () << "\tmimeType=" << saveOptions.mimeType ()
                << " type=" << type << endl;
@@ -188,7 +198,7 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     }
 
 
-    // TODO: This does not work under Qt4  (we get black, instead of white,
+    // TODO: This does not work under Qt4 (we get black, instead of white,
     //       which is still OK, just not intended).
     //       See kpPixmapFX::pixmapWithDefinedTransparentPixels() API Doc.
     QPixmap pixmapToSave =
