@@ -58,10 +58,10 @@ bool kpPainter::pointsAreCardinallyAdjacent (const QPoint &p, const QPoint &q)
 }
 
 
-// Returns a random integer from 0 to 99 inclusive.
-static int RandomNumberFrom0to99 ()
+// Returns a random integer from 0 to 999 inclusive.
+static int RandomNumberFrom0to999 ()
 {
-    return (KRandom::random () % 100);
+    return (KRandom::random () % 1000);
 }
 
 // public static
@@ -70,17 +70,21 @@ QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
     bool cardinalAdjacency,
     double probability)
 {
+#if DEBUG_KP_PAINTER
+    kDebug () << "CALL(startPoint=" << startPoint
+              << ",endPoint=" << endPoint << ")";
+#endif
+
     QList <QPoint> ret;
 
     Q_ASSERT (probability >= 0.0 && probability <= 1.0);
-    const int probabilityTimes100 = int (probability * 100);
-#define SHOULD_DRAW()  (probabilityTimes100 == 100/*avoid ::RandomNumberFrom0to99() call*/ ||  \
-                        ::RandomNumberFrom0to99 () < probabilityTimes100)
+    const int probabilityTimes1000 = qRound (probability * 1000);
+#define SHOULD_DRAW()  (probabilityTimes1000 == 1000/*avoid ::RandomNumberFrom0to999() call*/ ||  \
+                        ::RandomNumberFrom0to999 () < probabilityTimes1000)
 
 #if 0
     kDebug () << "prob=" << probability
-               << " *100=" << probabilityTimes100
-               << endl;
+               << " *1000=" << probabilityTimes1000;
 #endif
 
 
