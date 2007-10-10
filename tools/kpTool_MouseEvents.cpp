@@ -66,9 +66,20 @@
 #include <kpViewManager.h>
 
 
+// HITODO: If you press a mouse button and move it out of the view _really_ fast
+//         and let go of the mouse button outside of the view, a mouseRelease
+//         event will not be generated, so the tool will still be in drawing mode
+//         (this is especially noticeable with the spraycan).
+//
+//         When you move the mouse back into the view, it will still continue
+//         continue drawing even though no mouse button is held down.
+//
+//         It is somewhat hard to reproduce so the best way is to position the
+//         mouse close to an edge of the view.  If you do it right, no mouseMoveEvent
+//         is generated at _all_, until you move it back into the view.
 void kpTool::mousePressEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 1 
+#if DEBUG_KP_TOOL && 1
     kDebug () << "kpTool::mousePressEvent pos=" << e->pos ()
                << " button=" << (int) e->button ()
                << " stateAfter: buttons=" << (int *) (int) e->buttons ()
@@ -176,7 +187,7 @@ void kpTool::mousePressEvent (QMouseEvent *e)
 //      selections' accidental drag detection feature cares?
 void kpTool::mouseMoveEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 0 
+#if DEBUG_KP_TOOL && 0
     kDebug () << "kpTool::mouseMoveEvent pos=" << e->pos ()
                << " stateAfter: buttons=" << (int *) (int) e->buttons ()
                << " modifiers=" << (int *) (int) e->modifiers ();
@@ -248,7 +259,7 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
 
 void kpTool::mouseReleaseEvent (QMouseEvent *e)
 {
-#if DEBUG_KP_TOOL && 1 
+#if DEBUG_KP_TOOL && 1
     kDebug () << "kpTool::mouseReleaseEvent pos=" << e->pos ()
                << " button=" << (int) e->button ()
                << " stateAfter: buttons=" << (int *) (int) e->buttons ()
