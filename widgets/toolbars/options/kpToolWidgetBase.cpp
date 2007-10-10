@@ -557,10 +557,10 @@ bool kpToolWidgetBase::selectNextOption ()
 // protected virtual [base QWidget]
 bool kpToolWidgetBase::event (QEvent *e)
 {
-    // HITODO: It's unclear when we should call the base, call accept() and
-    //         return true or false.  Look at other event() handlers.  The
-    //         kpToolText one is wrong since after calling accept(), it calls
-    //         its base which calls ignore() :)
+    // TODO: It's unclear when we should call the base, call accept() and
+    //       return true or false.  Look at other event() handlers.  The
+    //       kpToolText one is wrong since after calling accept(), it calls
+    //       its base which calls ignore() :)
     if (e->type () == QEvent::ToolTip)
     {
         QHelpEvent *he = (QHelpEvent *) e;
