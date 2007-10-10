@@ -226,7 +226,6 @@ QRegion kpView::selectionResizeHandlesViewRegion (bool forRenderer) const
 }
 
 // public
-// COMPAT: use Qt Flags to be safer
 int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
 {
 #if DEBUG_KP_VIEW
