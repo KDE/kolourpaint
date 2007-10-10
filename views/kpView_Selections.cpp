@@ -226,6 +226,7 @@ QRegion kpView::selectionResizeHandlesViewRegion (bool forRenderer) const
 }
 
 // public
+// REFACTOR: use QFlags as the return type for better type safety.
 int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
 {
 #if DEBUG_KP_VIEW
