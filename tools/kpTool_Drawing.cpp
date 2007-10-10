@@ -177,7 +177,8 @@ void kpTool::beginInternal ()
         d->controlPressed = (keyState & Qt::ControlModifier);
 
         // TODO: Can't do much about ALT - unless it's always KApplication::Modifier1?
-        //       Ditto for everywhere else where I set SHIFT & CTRL but not alt.  COMPAT: supported by Qt
+        //       Ditto for everywhere else where I set SHIFT & CTRL but not alt.
+        //       COMPAT: Later: Ths is now supported by Qt.
         d->altPressed = false;
     }
 }

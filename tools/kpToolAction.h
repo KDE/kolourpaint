@@ -37,8 +37,9 @@ class KActionCollection;
 
 
 // Same as KToggleAction but shows the first single key trigger in the tooltip.
-// COMPAT: either push into KDE 4.0 or make setText() and setShortcut() virtual,
-//         to remove updateAllActionsToolTips() hack.
+// REFACTOR: Either push into kdelibs 4.x or make setText() and setShortcut()
+//           virtual in KDE 5.x, to allow us to remove updateAllActionsToolTips()
+//           hack.
 class kpToolAction : public KToggleAction
 {
 Q_OBJECT
