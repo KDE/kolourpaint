@@ -998,11 +998,20 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 // private slot
 void kpMainWindow::slotScrollViewAboutToScroll ()
 {
-#if DEBUG_KP_MAIN_WINDOW && 0 || 1
-    kDebug () << "kpMainWindow::slotScrollViewAboutToScroll()";
-    kDebug () << "\tfastUpdates=" << viewManager ()->fastUpdates ()
-               << " queueUpdates=" << viewManager ()->queueUpdates ()
-               << endl;
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kDebug () << "kpMainWindow::slotScrollViewAboutToScroll() tool="
+              << tool () << "viewManager=" << viewManager ();
+    if (viewManager ())
+    {
+        kDebug () << "\tfastUpdates=" << viewManager ()->fastUpdates ()
+                  << " queueUpdates=" << viewManager ()->queueUpdates ();
+    }
+    else
+    {
+        // We're getting a late signal from the scrollview (thanks to
+        // a timer inside the Q3ScrollView).  By now, setDocument() has
+        // already killed the document(), tool() and viewManager().
+    }
 #endif
 
     QTimer::singleShot (0, this, SLOT (slotScrollViewAfterScroll ()));
@@ -1011,7 +1020,7 @@ void kpMainWindow::slotScrollViewAboutToScroll ()
 // private slot
 void kpMainWindow::slotScrollViewAfterScroll ()
 {
-#if DEBUG_KP_MAIN_WINDOW && 0 || 1
+#if DEBUG_KP_MAIN_WINDOW && 1
     kDebug () << "kpMainWindow::slotScrollViewAfterScroll() tool="
                << tool () << endl;
 #endif
@@ -1021,8 +1030,15 @@ void kpMainWindow::slotScrollViewAfterScroll ()
     //      double repainting?
     if (tool ())
     {
+    #if DEBUG_KP_MAIN_WINDOW && 1
+        kDebug () << "calling somethingBelowTheCursorChanged()";
+    #endif
         tool ()->somethingBelowTheCursorChanged ();
     }
+
+#if DEBUG_KP_MAIN_WINDOW && 1
+    kDebug () << "DONE";
+#endif
 }
 
 
@@ -1064,3 +1080,4 @@ void kpMainWindow::slotDocumentRestored ()
 
 
 #include <kpMainWindow.moc>
+
