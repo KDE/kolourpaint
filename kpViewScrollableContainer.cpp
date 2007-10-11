@@ -187,14 +187,30 @@ void kpGrip::updatePixmap ()
         return;
 
     QPixmap pixmap (width (), height ());
-    pixmap.fill (palette().color( QPalette::Highlight ) );
     kpPixmapFX::ensureTransparentAt (&pixmap, pixmap.rect ());
+
     const QRect hr = hotRect ();
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
     kDebug () << "\thotRect=" << hr;
 #endif
     if (hr.isValid ())
-        kpPixmapFX::ensureOpaqueAt (&pixmap, hr);
+    {
+        const QColor col = palette ().color (QPalette::Highlight);
+        if (col.alpha () > 0)
+        {
+            // Note that we nuke the color's alpha (QColor::rgb()) since
+            // kpPixmapFX methods can't handle it.
+            kpPixmapFX::fillRect (&pixmap,
+                hr.x (), hr.y (), hr.width (), hr.height (),
+                kpColor (col.rgb ()));
+        }
+        else
+        {
+            // You have a crazy color palette with a transparent highlight
+            // color.  Our pixmap is fully transparent already so nothing
+            // needs to be done.
+        }
+    }
 
     setPixmap (pixmap);
     if (!pixmap.mask ().isNull ())
