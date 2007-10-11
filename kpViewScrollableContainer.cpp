@@ -100,7 +100,7 @@ QCursor kpGrip::cursorForType (GripType type)
         return Qt::SizeHorCursor;
         break;  // one day you'll forget
 
-    case Qt::BottomRightCorner:
+    case kpGrip::BottomRight:
         return Qt::SizeFDiagCursor;
         break;  // one day you'll forget
     }
@@ -130,7 +130,7 @@ QRect kpGrip::hotRect (bool toGlobal) const
                      width (), GripHandleSize);
         break;
     }
-    case Qt::BottomRightCorner:
+    case kpGrip::BottomRight:
         // pixmap all opaque
         ret = rect ();
         break;
@@ -393,7 +393,7 @@ void kpGrip::paintEvent (QPaintEvent *e)
 
 
 kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent)
-    : Q3ScrollView ((QWidget *) parent, 0/*no name*/, Qt::WStaticContents | Qt::WNoAutoErase),
+    : Q3ScrollView ((QWidget *) parent),
       m_mainWindow (parent),
       m_contentsXSoon (-1), m_contentsYSoon (-1),
       m_view (0),
