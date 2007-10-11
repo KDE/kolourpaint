@@ -39,7 +39,6 @@
 
 #include <qbitmap.h>
 #include <qcursor.h>
-#include <q3dragobject.h>
 #include <qevent.h>
 #include <qpointer.h>
 #include <qimage.h>

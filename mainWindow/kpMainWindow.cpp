@@ -29,7 +29,6 @@
 #include <kpMainWindow.h>
 #include <kpMainWindowPrivate.h>
 
-#include <q3dragobject.h>
 #include <qevent.h>
 #include <qpainter.h>
 #include <qtimer.h>

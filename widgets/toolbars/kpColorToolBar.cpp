@@ -44,7 +44,6 @@
 #include <qwidget.h>
 
 #include <kapplication.h>
-#include <k3colordrag.h>
 #include <KColorMimeData>
 #include <kconfig.h>
 #include <kdebug.h>

@@ -33,7 +33,6 @@
 
 #include <math.h>
 
-#include <q3accel.h>
 #include <qapplication.h>
 #include <qboxlayout.h>
 #include <qbuttongroup.h>
