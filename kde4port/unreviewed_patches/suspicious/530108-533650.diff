@@ -131,34 +131,6 @@ Index: kptool.h
      static bool containsSingleKeyTrigger (const KShortcut &shortcut,
          KShortcut *shortcutWithoutSingleKeyTriggers);
  
-Index: widgets/kptooltoolbar.cpp
-===================================================================
---- widgets/kptooltoolbar.cpp	(revision 530107)
-+++ widgets/kptooltoolbar.cpp	(revision 533650)
-@@ -568,7 +568,7 @@ void kpToolToolBar::setOrientation (Qt::
- #endif
- 
-     // (QDockWindow::undock() calls us)
--    bool isOutsideDock = (place () == Q3DockWindow::OutsideDock);
-+    bool isOutsideDock = false; //(place () == Q3DockWindow::OutsideDock);
- 
-     if (!m_lastDockedOrientationSet || !isOutsideDock)
-     {
-Index: widgets/kpcolortoolbar.cpp
-===================================================================
---- widgets/kpcolortoolbar.cpp	(revision 530107)
-+++ widgets/kpcolortoolbar.cpp	(revision 533650)
-@@ -993,14 +993,14 @@ kpColorToolBar::kpColorToolBar (const QS
- 
- // virtual
- void kpColorToolBar::setOrientation (Qt::Orientation o)
- {
-     // (QDockWindow::undock() calls us)
--    bool isOutsideDock = (place () == Q3DockWindow::OutsideDock);
-+    bool isOutsideDock =  false; //(place () == Q3DockWindow::OutsideDock);
- 
-     if (!m_lastDockedOrientationSet || !isOutsideDock)
-     {
 Index: kpmainwindow_help.cpp
 ===================================================================
 --- kpmainwindow_help.cpp	(revision 530107)
