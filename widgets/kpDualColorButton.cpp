@@ -383,10 +383,7 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
     }
     else
     {
-        // TODO: Given we are no longer double buffering, is this even required?
-        //       Remember to check everywhere else in KolourPaint.
-        painter.fillRect (contentsRect (),
-            palette ().color (QPalette::Background));
+        // Use default widget background.
     }
 
 
