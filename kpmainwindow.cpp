@@ -987,10 +987,20 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 void kpMainWindow::slotScrollViewAboutToScroll ()
 {
 #if DEBUG_KP_MAIN_WINDOW && 0
-    kdDebug () << "kpMainWindow::slotScrollViewAboutToScroll()" << endl;
-    kdDebug () << "\tfastUpdates=" << viewManager ()->fastUpdates ()
-               << " queueUpdates=" << viewManager ()->queueUpdates ()
-               << endl;
+    kdDebug () << "kpMainWindow::slotScrollViewAboutToScroll() tool="
+               << tool () << " viewManager=" << viewManager () << endl;
+    if (viewManager ())
+    {
+        kdDebug () << "\tfastUpdates=" << viewManager ()->fastUpdates ()
+                   << " queueUpdates=" << viewManager ()->queueUpdates ()
+                   << endl;
+    }
+    else
+    {
+        // We're getting a late signal from the scrollview (thanks to
+        // a timer inside the QScrollView).  By now, setDocument() has
+        // already killed the document(), tool() and viewManager().
+    }
 #endif
 
     QTimer::singleShot (0, this, SLOT (slotScrollViewAfterScroll ()));
