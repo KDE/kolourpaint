@@ -1,17 +1,18 @@
 
-1. Look in BUGS
-2. Look in patches/
+1. Look in kdegraphics/kolourpaint/BUGS
+2. Look in kdegraphics/kolourpaint/patches/
 3. grep all files (not just .cpp and .h) for:
-   "COMPAT" - KDE 4 port breakage that must be fixed before the release
+   "COMPAT" - Signifies either:
+              a) KDE 4 port breakage
+              b) Considerations for backports to other KDE versions
    "CONFIG" - something that maybe should be configurable (either via GUI
               or by editing config file directly)
-   "HITODO" - something that _must_ be done before the next release
-   "LOTODO" - something that should be done but probably no one will care
+   "HACK" - ugly piece of code that _really_ should be done better
+   "KDE3" - something we need to backport to the KDE 3 branch
    "OPT" - something that could be optimised
    "PROPAGATE" - an update that should be sent to other KolourPaint processes
                  using an IPC mechanism (e.g. DBUS for KDE 4, DCOP for KDE 3)
-   "HACK" - something that _really_ should be done better
-   "REFACTOR" - bad coding style that should be fixed
+   "REFACTOR" - bad design or coding style that should be fixed
    "sync" - check dependencies between code when modifying
             e.g. "sync: kpView::paintEvent()" means synchronize changes with
             the corresponding "sync" in "kpView::paintEvent()".
@@ -19,8 +20,14 @@
             Qt release - if this is regarding a hack around a library bug,
             test if that hack still works and if it does, it's probably safer
             than removing that hack esp. in the stable branch of KDE
-   "STRING" - a string that should be added after the string freeze
-   "TODO" - something that should be done; some TODO's should really be LOTODO's or HITODO's
+   "STRING" - a string that should be added after a string freeze
+   "TODO" - something that should be done but can be delayed indefinitely;
+            some TODO's should really be LOTODO's or HITODO's
+
+    These strings may be prefixed with "LO" if probably no one will care
+    e.g. "LOTODO: Maybe the shade of green should be darker?".  Or with
+    "HI" if they _really_ should be done ASAP by the.g. "HITODO: This is likely
+    to crash".
 
 4. See below:
 
@@ -39,16 +46,6 @@ selections_opaque_transparent.  [Thurston]
 
 KolourPaint 4
 ~~~~~~~~~~~~~
-
-<24-bit screen warning at startup
-
-
-text box create != cmd
-=> deselecting empty (more accurately, untouched) box = no text box
-
-
-Spraycan is a bit thick even if drawn quickly.
-
 
 In light of crash Bug 117866, check that all timers are killed before e.g. adding
 a command to the command history.
