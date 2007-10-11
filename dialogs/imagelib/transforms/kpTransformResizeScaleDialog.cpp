@@ -205,7 +205,6 @@ static void toolButtonSetLook (QToolButton *button,
     
     button->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
     button->setText (name);
-    button->setShortcut (name);
     button->setFocusPolicy (Qt::StrongFocus);
     button->setCheckable (true);
 }
