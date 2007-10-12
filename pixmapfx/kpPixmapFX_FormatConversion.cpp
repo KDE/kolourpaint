@@ -402,8 +402,12 @@ QPixmap kpPixmapFX::pixmapWithDefinedTransparentPixels (const QPixmap &pixmap,
 {
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (pixmap);
 
-    if (!pixmap.mask ())
+    // Already opaque?
+    if (!kpPixmapFX::hasMask (pixmap))
+    {
+        // No transparent pixels to change RGB of.
         return pixmap;
+    }
 
     QPixmap retPixmap (pixmap.width (), pixmap.height ());
     retPixmap.fill (transparentColor);

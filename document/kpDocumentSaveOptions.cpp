@@ -34,12 +34,13 @@
 #include <qpixmap.h>
 #include <qstring.h>
 
-#include <ksharedconfig.h>
+#include <kconfiggroup.h>
 #include <kdebug.h>
 #include <kglobal.h>
+#include <ksharedconfig.h>
 
 #include <kpDefs.h>
-#include <kconfiggroup.h>
+#include <kpPixmapFX.h>
 
 
 class kpDocumentSaveOptionsPrivate
@@ -546,7 +547,7 @@ int kpDocumentSaveOptions::isLossyForSaving (const QPixmap &pixmap) const
     if (mimeTypeHasConfigurableColorDepth () &&
         !colorDepthIsInvalid () /*TODO: prevent*/ &&
         (colorDepth () < pixmap.depth () ||
-         colorDepth () < 32 && !pixmap.mask ().isNull ()))
+         colorDepth () < 32 && kpPixmapFX::hasMask (pixmap)))
     {
         ret |= ColorDepthLow;
     }

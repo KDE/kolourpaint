@@ -291,7 +291,7 @@ kpImage kpEffectToneEnhance::applyEffect (const kpImage &image,
 
 
     // Restore the mask.
-    if (!image.mask ().isNull ())
+    if (kpPixmapFX::hasMask (image))
         retPixmap.setMask (image.mask ());
 
     return retPixmap;

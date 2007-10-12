@@ -158,7 +158,7 @@ void kpTextSelection::drawTextInternal (QPixmap *destPixmap, const QRect &docRec
 
 
     // Are we drawing opaque text over potentially transparent document pixels?
-    if (!destPixmap->mask ().isNull () &&
+    if (kpPixmapFX::hasMask (*destPixmap) &&
         d->textStyle.foregroundColor ().isOpaque () &&
         d->textStyle.effectiveBackgroundColor ().isTransparent ())
     {

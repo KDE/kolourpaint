@@ -572,11 +572,11 @@ void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
     // Draw checkboard for transparent images and/or views with borders
     //
 
-    if (!docPixmap.mask ().isNull () ||
+    if (kpPixmapFX::hasMask (docPixmap) ||
         (tempImageWillBeRendered && vm->tempImage ()->paintMayAddMask ()))
     {
     #if DEBUG_KP_VIEW_RENDERER && 1
-        kDebug () << "\tmask=" << !docPixmap.mask ().isNull ()
+        kDebug () << "\tmask=" << kpPixmapFX::hasMask (docPixmap)
                    << endl;
     #endif
         paintEventDrawCheckerBoard (&painter, viewRect);
@@ -738,4 +738,5 @@ void kpView::paintEvent (QPaintEvent *e)
     kDebug () << "\tall done in: " << timer.restart () << "ms";
 #endif
 }
+
 

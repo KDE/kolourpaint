@@ -197,7 +197,7 @@ kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
 
 
     // Restore mask.
-    if (!image.mask ().isNull ())
+    if (kpPixmapFX::hasMask (image))
         retImage.setMask (image.mask ());
 
 

@@ -227,7 +227,7 @@ void kpDocument::imageSelectionPullFromDocument (const kpColor &backgroundColor)
         kpImage eraseImage (boundingRect.width (), boundingRect.height ());
         eraseImage.fill (backgroundColor.toQColor ());
 
-        if (!selTransparentImage.mask ().isNull ())
+        if (kpPixmapFX::hasMask (selTransparentImage))
             eraseImage.setMask (selTransparentImage.mask ());
 
         paintImageAt (eraseImage, boundingRect.topLeft ());

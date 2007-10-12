@@ -213,7 +213,7 @@ void kpGrip::updatePixmap ()
     }
 
     setPixmap (pixmap);
-    if (!pixmap.mask ().isNull ())
+    if (kpPixmapFX::hasMask (pixmap))
         setMask (pixmap.mask ());
 }
 
@@ -1459,4 +1459,5 @@ void kpViewScrollableContainer::resizeEvent (QResizeEvent *e)
 
 
 #include <kpViewScrollableContainer.moc>
+
 

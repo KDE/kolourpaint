@@ -237,7 +237,7 @@ void kpEffectReduceColors::applyEffect (QPixmap *destPixmapPtr, int depth, bool 
     //       Put the mask back.
     //
     //       Still required under Qt 4.3.1.
-    if (!destPixmapPtr->mask ().isNull())
+    if (kpPixmapFX::hasMask (*destPixmapPtr))
         pixmap.setMask (destPixmapPtr->mask ());
 
     *destPixmapPtr = pixmap;
