@@ -47,6 +47,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 
+#include <kactioncollection.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -57,13 +58,14 @@
 #include <kpColor.h>
 #include <kpColorToolBar.h>
 #include <kpDefs.h>
+#include <kpDocument.h>
+#include <kpImage.h>
 #include <kpPixmapFX.h>
 #include <kpToolAction.h>
 #include <kpToolEnvironment.h>
 #include <kpToolToolBar.h>
 #include <kpView.h>
 #include <kpViewManager.h>
-#include <kactioncollection.h>
 #undef environ  // macro on win32
 
 
@@ -368,6 +370,30 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
     {
         d->environ->selectPreviousTool ();
     }
+
+
+    // HACK: Since calls to endDrawInternal() happen fairly often (in fact,
+    //       after almost every time the mouse button is released), this is
+    //       a good place for us to test for a critical invariant and to
+    //       restore it if buggy code broke it (such code is far too easy to
+    //       write, so leave this check in, even in release builds).
+    //       This is far more efficient than using a timer or similar.
+    //
+    //       Note that the invariant has usually already been inadvertently
+    //       restored by kpPixmapFX::draw() (which does mask tricks), which
+    //       is called via most tools calling kpDocument::setPixmapAt() in
+    //       draw() and/or endDraw().  So the below code is really just in
+    //       case this has not happened.
+    kpImage *docImage = document ()->imagePointer ();
+    if (kpPixmapFX::hasAlphaChannel (*docImage))
+    {
+        // If this has been set to assert-crash (usually for debugging),
+        // then assert-crash.  Otherwise, this just prints a warning.
+        KP_PFX_CHECK_NO_ALPHA_CHANNEL (*docImage);
+
+        kError () << "Restoring no-alpha-channel invariant.";
+        kpPixmapFX::ensureNoAlphaChannel (docImage);
+    }
 }
 
 // private
@@ -380,3 +406,4 @@ void kpTool::endShapeInternal (const QPoint &thisPoint, const QRect &normalizedR
 void kpTool::endDraw (const QPoint &, const QRect &)
 {
 }
+
