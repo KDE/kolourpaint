@@ -175,7 +175,9 @@ void kpPixmapFX::initMaskOpsPre ()
 void kpPixmapFX::initMaskOpsPost ()
 {
 #if DEBUG_KP_PIXMAP_FX
-    kDebug () << "kpPixmapFX::initMaskOpsPost(): QPixmap().depth()=" << QPixmap ().depth ();
+    kDebug () << "kpPixmapFX::initMaskOpsPost():"
+              << "QPixmap().depth()=" << QPixmap ().depth ()
+              << "QPixmap::defaultDepth()=" << QPixmap::defaultDepth ();
 #endif
 
     // Check KolourPaint invariant.
@@ -183,55 +185,22 @@ void kpPixmapFX::initMaskOpsPost ()
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (QPixmap (1, 1));
     Q_ASSERT (QPixmap ().depth () == QPixmap::defaultDepth ());
     Q_ASSERT (QPixmap (1, 1).depth () == QPixmap::defaultDepth ());
+
+    // initMaskOpsPre() should have ensured this (if it was 32 previously, it
+    // should now be 24 due to the disabling of XRENDER).
+    Q_ASSERT (QPixmap::defaultDepth () < 32);
 }
 
 
 // public static
 bool kpPixmapFX::hasMask (const QPixmap &pixmap)
 {
-#ifdef Q_WS_X11
-    if (QPixmap::defaultDepth () == 32)
-    {
-        // Note:
-        //
-        // QPixmap::mask() is hideously slow, and always returns a non-null
-        // mask, if the pixmap has an alpha channel (even if the channel is
-        // supposed to be empty).
-        //
-        // initMaskOpsPre() has already disabled XRENDER.
-        //
-        // Without XRENDER, pixmaps definitely don't have alpha channels.
-        // As a result, QPixmap::mask() will be fast and, if there is no mask,
-        // it will correctly return a null bitmap.
-
-
-        // We need this code path since QPixmap::hasAlpha() lies and returns
-        // true purely because the depth is 32.
-        //
-        // Note: QPixmap::mask() is slightly slow even on a pixmap without an
-        //       alpha channel.
-        return !pixmap.mask ().isNull ();
-    }
-#endif
-
     return pixmap.hasAlpha ();
 }
-
 
 // public static
 bool kpPixmapFX::hasAlphaChannel (const QPixmap &pixmap)
 {
-#ifdef Q_WS_X11
-    if (QPixmap::defaultDepth () == 32)
-    {
-        // We need this code path since QPixmap::hasAlphaChannel() lies
-        // and returns true purely because the depth is 32.
-        //
-        // Without XRENDER, pixmaps definitely don't have alpha channels.
-        return false;
-    }
-#endif
-
     return pixmap.hasAlphaChannel ();
 }
 
@@ -403,5 +372,6 @@ void kpPixmapFX::ensureOpaqueAt (QPixmap *destPixmapPtr, const QRect &destRect)
 
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
 }
+
 
 

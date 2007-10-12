@@ -439,14 +439,13 @@ public:
     // Called by initPost() - do not call directly.
     static void initMaskOpsPost ();
 
-    // You must use this instead of QPixmap::hasAlpha() or
-    // !QPixmap::mask().isNull(), which give unexpectedly different results
-    // at 32bpp, compared to other screen depths (e.g. 16bpp and 24bpp).
+    // You should use this instead of !QPixmap::mask().isNull(), as this
+    // is faster, and instead of QPixmap::hasAlpha(), for encapsulation
+    // purposes.
     static bool hasMask (const QPixmap &pixmap);
 
-    // You must use this instead of QPixmap::hasAlphaChannel(),
-    // which gives unexpectedly different results at 32bpp, compared to
-    // other screen depths (e.g. 16bpp and 2bpp).
+    // You should use this instead of QPixmap::hasAlphaChannel(),
+    // for encapsulation purposes.
     static bool hasAlphaChannel (const QPixmap &pixmap);
 
     // Controls whether the KP_PFX_CHECK_NO_ALPHA_CHANNEL assert, if it
