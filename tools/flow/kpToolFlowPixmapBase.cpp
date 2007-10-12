@@ -88,6 +88,14 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
                 (*pit), brushWidth (), brushHeight ())
                     .topLeft () - docRect.topLeft ();
 
+        // OPT: This may be redrawing pixels that were drawn on a previous
+        //      iteration, since the brush is usually bigger than 1 pixel.
+        //      Maybe we could use QRegion to determine all the non-intersecting
+        //      regions and only draw each region once.
+        //
+        //      Try this at least for the easy case of the Eraser, which has
+        //      square, simply-filled brushes.  Profiling needs to be done as
+        //      QRegion is known to be a CPU hog.
         brushDrawFunction () (&image, point, brushDrawFunctionData ());
     }
 

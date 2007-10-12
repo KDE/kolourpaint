@@ -453,6 +453,12 @@ static QRect WashLineHelper (QPainter *rgbPainter, QPainter *maskPainter,
             pit != points.end ();
             pit++)
     {
+        // OPT: This may be reading and possibly writing pixels that were
+        //      visited on a previous iteration, since the pen is usually
+        //      bigger than 1 pixel.  Maybe we could use QRegion to determine
+        //      all the non-intersecting regions and only wash each region once.
+        //
+        //      Profiling needs to be done as QRegion is known to be a CPU hog.
         if (::ReadableImageWashRect (rgbPainter, maskPainter,
                 pack->readableImage,
                 pack->colorToReplace,
