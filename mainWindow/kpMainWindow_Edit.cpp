@@ -323,7 +323,7 @@ void kpMainWindow::slotCopy ()
 static bool HasSomethingToPaste (kpMainWindow *mw)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow(" << mw->name () << "):HasSomethingToPaste()";
+    kDebug () << "kpMainWindow(" << mw->objectName () << "):HasSomethingToPaste()";
     QTime timer;
     timer.start ();
 #else
@@ -339,7 +339,7 @@ static bool HasSomethingToPaste (kpMainWindow *mw)
     const bool hasSomething =
         (md->hasText () || kpSelectionDrag::canDecode (md));
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\t" << mw->name () << "***canDecode=" << hasSomething
+    kDebug () << "\t" << mw->objectName () << "***canDecode=" << hasSomething
               << "(time=" << timer.restart () << ")"
               << "formats=" << md->formats ();
 #endif
@@ -442,7 +442,7 @@ QRect kpMainWindow::calcUsefulPasteRect (int imageWidth, int imageHeight)
 void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kdDebug () << "kpMainWindow::paste(forceTopLeft=" << forceTopLeft << ")"
+    kDebug () << "kpMainWindow::paste(forceTopLeft=" << forceTopLeft << ")"
                << endl;
 #endif
 
@@ -491,9 +491,9 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
 
 
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kdDebug () << "sel.size=" << QSize (sel.width (), sel.height ())
+    kDebug () << "sel.size=" << QSize (sel.width (), sel.height ())
                << " document.size="
-               << QSize (m_document->width (), m_document->height ())
+               << QSize (d->document->width (), d->document->height ())
                << endl;
 #endif
 
@@ -810,7 +810,7 @@ void kpMainWindow::slotPasteInNewWindow ()
     if (transparency.isTransparent ())
     {
     #if DEBUG_KP_MAIN_WINDOW && 1
-        kdDebug () << "\tchanging image selection transparency to opaque" << endl;
+        kDebug () << "\tchanging image selection transparency to opaque" << endl;
     #endif
         transparency.setOpaque ();
         // Since we are setting selection transparency programmatically
