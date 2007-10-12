@@ -3,6 +3,12 @@ about 75% of kpView::paintEvent()'s time.  Bottleneck is
 QPainter::fillRect().  QPainter::drawPixmap() seems much faster.  For
 800x600, renderer goes from 10ms to 1ms.
 
+2007-10-12:
+Have not reprofiled KolourPaint under Qt4 to determine whether this patch
+is still worthwhile (I suspect it still is since QPainter/X11 could not
+magically have gotten faster).  In any case, the patch needs to be updated
+before being applied.
+
 --- kpmainwindow.cpp	2004-08-05 02:10:38.000000000 +1000
 +++ kpmainwindow.cpp	2004-09-29 11:24:45.000000000 +1000
 @@ -838,12 +838,116 @@
