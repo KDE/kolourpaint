@@ -161,6 +161,8 @@ void kpPixmapFX::widgetDrawStippledXORRect (QWidget *widget,
         return;
     }
 
+    // -1's compensate for Qt4's 1 pixel higher and wider
+    // QPainter::drawRect().
     p.drawRect (x, y, width - 1, height - 1);
 }
 

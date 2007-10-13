@@ -79,14 +79,14 @@ static void Draw (kpImage *destImage, const QPoint &topLeft, void *userData)
     case 0:
         kpPainter::drawEllipse (destImage,
             topLeft.x (), topLeft.y (), size, size,
-            pack->color/*color*/, 1/*width*/,
+            pack->color/*color*/, 1/*pen width*/,
             pack->color/*fill color*/);
         break;
         
     case 1:
         kpPainter::drawRect (destImage,
             topLeft.x (), topLeft.y (), size, size,
-            pack->color/*color*/, 1/*width*/,
+            pack->color/*color*/, 1/*pen width*/,
             pack->color/*fill color*/);
         break;
         
@@ -94,14 +94,14 @@ static void Draw (kpImage *destImage, const QPoint &topLeft, void *userData)
         kpPainter::drawLine (destImage,
             topLeft.x () + size - 1, topLeft.y (),
             topLeft.x (), topLeft.y () + size - 1,
-            pack->color, 1/*width*/);
+            pack->color, 1/*pen width*/);
         break;
         
     case 3:
         kpPainter::drawLine (destImage,
             topLeft.x (), topLeft.y (),
             topLeft.x () + size - 1, topLeft.y () + size - 1,
-            pack->color, 1/*width*/);
+            pack->color, 1/*pen width*/);
         break;
 
     default:

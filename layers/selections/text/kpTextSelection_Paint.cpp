@@ -105,9 +105,10 @@ static void DrawTextHelper (QPainter *p, bool drawingOnRGBLayer, void *data)
     //    layer anyway.
     // 2. More importantly, since QPainter::drawText() draws the same text
     //    with the same font differently on the RGB and mask layers, we don't
-    //    draw on the RGB layer to avoid artifacts.  TODO: Don't the shape
-    //    drawing methods have to worry about this too?  Why not centralize
-    //    this in draw()?
+    //    draw on the RGB layer to avoid artifacts.
+    //    TODO: Don't the shape drawing methods have to worry about this too?
+    //          Later: Yes they do, see kpPixmapFX::draw_ToQColor().
+    //          Why not centralize this in draw()?
     if (!(drawingOnRGBLayer && pack->textStyle.foregroundColor ().isTransparent ()))
     {
         p->setClipRect (pack->wholeAreaRect);

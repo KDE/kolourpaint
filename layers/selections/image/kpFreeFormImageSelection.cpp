@@ -32,7 +32,6 @@
 #include <kpFreeFormImageSelection.h>
 
 #include <QBitmap>
-#include <QPainter>
 
 #include <KDebug>
 
@@ -293,7 +292,7 @@ QRegion kpFreeFormImageSelection::shapeRegion () const
     //    Having said that, this is probably the safest option as region shifting
     //    is dodgy.  Also, this would guarantee that shapeBitmap() and shapeRegion()
     //    are consistent and we wouldn't need cardinally adjacent points either
-    //    (d->cardPoints*Cache).
+    //    (d->cardPointsCache and d->cardPointsLoopCache).
     const QRegion regionX = region.translated (1, 0);
     const QRegion regionY = region.translated (0, 1);
     const QRegion regionXY = region.translated (1, 1);

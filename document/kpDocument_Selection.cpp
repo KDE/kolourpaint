@@ -219,7 +219,7 @@ void kpDocument::imageSelectionPullFromDocument (const kpColor &backgroundColor)
     // Fill opaque bits of the hole in the document
     //
 
-    // TODO: this assumes backgroundColor == sel->transparency ().transparentColor()
+    // REFACTOR: this assumes backgroundColor == imageSel->transparency ().transparentColor()
     const kpImage selTransparentImage = imageSel->transparentImage ();
 
     if (backgroundColor.isOpaque ())

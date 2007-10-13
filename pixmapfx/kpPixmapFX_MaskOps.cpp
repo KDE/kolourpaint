@@ -233,8 +233,8 @@ void kpPixmapFX::ensureNoAlphaChannel (QPixmap *destPixmapPtr)
     if (kpPixmapFX::hasAlphaChannel (*destPixmapPtr))
     {
         // We need to change <destPixmapPtr> from 32-bit (RGBA
-        // i.e. hasAlphaChannel() returns true regardless of whether the
-        // channel has any content, causing trouble later on) to 24-bit
+        // i.e. hasAlphaChannel() returns true -- regardless of whether the
+        // channel has any actual content -- which causes trouble) to 24-bit
         // (RGB with possible mask).
         //
         // "destPixmapPtr->setMask (destPixmapPtr->mask())" is not

@@ -261,8 +261,9 @@ static void MatrixDebug (const QString matrixName, const QMatrix &matrix,
 // QPixmap::trueMatrix() returns 27.
 //
 // You should use the returned matrix to map points accurately (e.g. selection
-// borders).  For QPainter::drawPixmap() + setWorldMatrix() rendering accuracy,
-// pass the returned matrix through QPixmap::trueMatrix() and use that.
+// borders).  For QPainter::drawPixmap()/drawImage() + setWorldMatrix()
+// rendering accuracy, pass the returned matrix through QPixmap::trueMatrix()
+// and use that.
 //
 // TODO: If you put the flipMatrix() of tests/transforms.png through this,
 //       the output is the same as QPixmap::trueMatrix(): <dy> is one off

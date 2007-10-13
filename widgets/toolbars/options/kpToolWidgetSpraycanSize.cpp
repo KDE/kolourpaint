@@ -61,8 +61,6 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const QStri
         kDebug () << "\ticonName=" << iconName;
     #endif
 
-        // Ported to Qt4.
-
         QPixmap pixmap (s, s);
         pixmap.fill (Qt::white);
         
