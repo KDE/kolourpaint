@@ -34,6 +34,9 @@
 
 #include <klocale.h>
 
+#include <kpColor.h>
+#include <kpPixmapFX.h>
+
 
 static int lineWidths [] = {1, 2, 3, 5, 8};
 
@@ -51,24 +54,14 @@ kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent, const QString &na
     {
         QPixmap pixmap ((w <= 0 ? width () : w),
                         (h <= 0 ? height () : h));
-        pixmap.fill (Qt::white);
+        kpPixmapFX::fill (&pixmap, kpColor::Transparent);
 
-        QBitmap maskBitmap (pixmap.width (), pixmap.height ());
-        maskBitmap.fill (Qt::color0/*transparent*/);
-        
-        
-        QPainter painter (&pixmap), maskPainter (&maskBitmap);
-        painter.setPen (Qt::black), maskPainter.setPen (Qt::color1/*opaque*/);
-        painter.setBrush (Qt::black), maskPainter.setBrush (Qt::color1/*opaque*/);
 
-        QRect rect = QRect (0, (pixmap.height () - lineWidths [i]) / 2,
-                            pixmap.width (), lineWidths [i]);
-        painter.drawRect (rect), maskPainter.drawRect (rect);
-
-        painter.end (), maskPainter.end ();
+        kpPixmapFX::fillRect (&pixmap,
+            0, (pixmap.height () - lineWidths [i]) / 2,
+            pixmap.width (), lineWidths [i],
+            kpColor::Black);
         
-        
-        pixmap.setMask (maskBitmap);
 
         addOption (pixmap, QString::number (lineWidths [i]));
         startNewOptionRow ();
