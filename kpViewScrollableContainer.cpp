@@ -213,8 +213,7 @@ void kpGrip::updatePixmap ()
     }
 
     setPixmap (pixmap);
-    if (kpPixmapFX::hasMask (pixmap))
-        setMask (pixmap.mask ());
+    setMask (pixmap.mask ());
 }
 
 
