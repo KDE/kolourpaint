@@ -33,7 +33,6 @@
 
 #include <QKeyEvent>
 #include <QMouseEvent>
-#include <QPainter>
 #include <QTimer>
 
 #include <KConfigGroup>

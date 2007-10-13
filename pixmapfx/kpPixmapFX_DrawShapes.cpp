@@ -45,6 +45,7 @@
 #include <qrect.h>
 
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
@@ -54,7 +55,6 @@
 #include <kpColor.h>
 #include <kpDefs.h>
 #include <kpTool.h>
-#include <kconfiggroup.h>
 
 
 // Returns whether there is only 1 distinct point in <points>.
