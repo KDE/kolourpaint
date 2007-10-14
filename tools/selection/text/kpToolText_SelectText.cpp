@@ -66,20 +66,30 @@ void kpToolText::setCursorSelectText ()
 // private
 void kpToolText::beginDrawSelectText ()
 {
-    // This path is a bit dangerous since we don't call the base
-    // implementation.
-    //
-    // However, we are doing something unusual here in that we aren't
-    // drag-moving the selection - therefore it makes sense to not
-    // call the base.
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\t\tis select cursor pos" << endl;
+    kDebug () << "\t\tis select cursor pos";
 #endif
+    kpTextSelection *textSel = document ()->textSelection ();
+    Q_ASSERT (textSel);
 
-    Q_ASSERT (document ()->textSelection ());
-    viewManager ()->setTextCursorPosition (
-        document ()->textSelection ()->closestTextRowForPoint (currentPoint ()),
-        document ()->textSelection ()->closestTextColForPoint (currentPoint ()));
+    int newRow, newCol;
+
+    if (textSel->hasContent ())
+    {
+        newRow = textSel->closestTextRowForPoint (currentPoint ());
+        newCol = textSel->closestTextColForPoint (currentPoint ());
+    }
+    else
+    {
+        newRow = newCol = 0;
+    }
+
+#if DEBUG_KP_TOOL_TEXT
+    kDebug () << "\t\t\told: row=" << viewManager ()->textCursorRow ()
+              << "col=" << viewManager ()->textCursorCol ();
+    kDebug () << "\t\t\tnew: row=" << newRow << "col=" << newCol;
+#endif
+    viewManager ()->setTextCursorPosition (newRow, newCol);
 }
 
 

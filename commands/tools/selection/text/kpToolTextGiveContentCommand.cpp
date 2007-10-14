@@ -71,6 +71,9 @@ void kpToolTextGiveContentCommand::execute ()
     kpViewManager *vm = viewManager ();
     Q_ASSERT (vm);
 
+    // See API Doc for kpViewManager::textCursorRow() & textCursorCol().
+    Q_ASSERT (vm->textCursorRow () == 0 && vm->textCursorCol () == 0);
+
     vm->setQueueUpdates ();
     {
         //
@@ -116,6 +119,9 @@ void kpToolTextGiveContentCommand::execute ()
         textSelection ()->setTextLines (listOfOneEmptyString);
     }
     vm->restoreQueueUpdates ();
+
+    // This should not have changed from the start of the method.
+    Q_ASSERT (vm->textCursorRow () == 0 && vm->textCursorCol () == 0);
 }
 
 // public virtual [base kpCommand]
@@ -130,11 +136,19 @@ void kpToolTextGiveContentCommand::unexecute ()
     // Must have selection text content.
     Q_ASSERT (doc->textSelection () && doc->textSelection ()->hasContent ());
 
+    kpViewManager *vm = viewManager ();
+    Q_ASSERT (vm);
+    // All the commands after us have been unexecuted, so we must be back
+    // to the state we were after our execute().
+    Q_ASSERT (vm->textCursorRow () == 0 && vm->textCursorCol () == 0);
 
     // We can have faith that this is the state of the selection after
     // execute(), rather than after the user tried to throw us off by
     // simply selecting another region as to do that, a destroy command
     // must have been used.
     doc->textSelection ()->deleteContent ();
+
+    // This should not have changed from the start of the method.
+    Q_ASSERT (vm->textCursorRow () == 0 && vm->textCursorCol () == 0);
 }
 

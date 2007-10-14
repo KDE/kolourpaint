@@ -147,6 +147,9 @@ public:
     bool textCursorBlinkState () const;
     void setTextCursorBlinkState (bool on = true);
 
+    // By convention, a text box with no content (i.e. no text lines) should
+    // have a cursor position of (row=0,col=0).  Some code assumes this.
+    //
     // (no error checking is performed - the row and col are as per
     //  setTextCursorPosition() so may be out of the bounds of the
     //  text selection)
