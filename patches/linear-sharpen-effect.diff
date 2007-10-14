@@ -1,0 +1,150 @@
+Changes the "Sharpen" effect to Blitz::sharpen() instead of
+Blitz::gaussianSharpen(), in order to avoid parameters that are currently
+set in a dangerously adhoc fashion (radius, sigma, repeat).
+
+Unfortunately, the results do not look good.
+
+2007-08-14 20:35
+
+
+Index: imagelib/effects/kpEffectBlurSharpen.cpp
+===================================================================
+--- imagelib/effects/kpEffectBlurSharpen.cpp	(revision 699849)
++++ imagelib/effects/kpEffectBlurSharpen.cpp	(working copy)
+@@ -26,7 +26,7 @@
+ */
+ 
+ 
+-#define DEBUG_KP_EFFECT_BLUR_SHARPEN 0
++#define DEBUG_KP_EFFECT_BLUR_SHARPEN 1
+ 
+ 
+ #include <kpEffectBlurSharpen.h>
+@@ -46,18 +46,10 @@
+ #endif
+ 
+ 
+-static QImage BlurQImage (const QImage qimage_, int strength)
++static int RadiusForStrength (int strength)
+ {
+-    QImage qimage = qimage_;
+-    if (strength == 0)
+-        return qimage;
+-
+-
+-    // The numbers that follow were picked by experimentation to try to get
+-    // an effect linearly proportional to <strength> and at the same time,
+-    // be fast enough.
+-    //
+-    // I still have no idea what "radius" means.
++    // (must be in range and not 0)
++    Q_ASSERT (strength > 0 && strength <= kpEffectBlurSharpen::MaxStrength);
+ 
+     const double RadiusMin = 1;
+     const double RadiusMax = 10;
+@@ -67,92 +59,36 @@ static QImage BlurQImage (const QImage q
+         (kpEffectBlurSharpen::MaxStrength - 1);
+ 
+ #if DEBUG_KP_EFFECT_BLUR_SHARPEN
+-    kDebug () << "kpEffectBlurSharpen.cpp:BlurQImage(strength=" << strength << ")"
++    kDebug () << "kpEffectBlurSharpen.cpp:RadiusForStrength(strength=" << strength << ")"
+                << " radius=" << radius
+                << endl;
+ #endif
+ 
+-
+-    qimage = Blitz::blur (qimage, qRound (radius));
+-
+-
+-    return qimage;
++    return qRound (radius);
+ }
+ 
+-static QImage SharpenQImage (const QImage &qimage_, int strength)
++
++static QImage BlurQImage (const QImage qimage_, int strength)
+ {
+     QImage qimage = qimage_;
+     if (strength == 0)
+         return qimage;
+ 
+ 
+-    // The numbers that follow were picked by experimentation to try to get
+-    // an effect linearly proportional to <strength> and at the same time,
+-    // be fast enough.
+-    //
+-    // I still have no idea what "radius" and "sigma" mean.
+-
+-    const double RadiusMin = .1;
+-    const double RadiusMax = 2.5;
+-    const double radius = RadiusMin +
+-       (strength - 1) *
+-       (RadiusMax - RadiusMin) /
+-       (kpEffectBlurSharpen::MaxStrength - 1);
+-
+-    const double SigmaMin = .5;
+-    const double SigmaMax = 3.0;
+-    const double sigma = SigmaMin +
+-        (strength - 1) *
+-        (SigmaMax - SigmaMin) /
+-        (kpEffectBlurSharpen::MaxStrength - 1);
+-
+-    const double RepeatMin = 1;
+-    const double RepeatMax = 2;
+-    const double repeat = qRound (RepeatMin +
+-        (strength - 1) *
+-        (RepeatMax - RepeatMin) /
+-        (kpEffectBlurSharpen::MaxStrength - 1));
++    qimage = Blitz::blur (qimage, ::RadiusForStrength (strength));
+ 
+-// I guess these values are more proper as they use an auto-calculated
+-// radius but they cause sharpen() to be too slow.
+-#if 0
+-    const double radius = 0/*auto-calculate*/;
+-
+-    const double SigmaMin = .6;
+-    const double SigmaMax = 1.0;
+-    const double sigma = SigmaMin +
+-        (strength - 1) *
+-        (SigmaMax - SigmaMin) /
+-        (kpEffectBlurSharpen::MaxStrength - 1);
+ 
+-    const double RepeatMin = 1;
+-    const double RepeatMax = 3;
+-    const double repeat = qRound (RepeatMin +
+-        (strength - 1) *
+-        (RepeatMax - RepeatMin) /
+-        (kpEffectBlurSharpen::MaxStrength - 1));
+-#endif
++    return qimage;
++}
+ 
+-#if DEBUG_KP_EFFECT_BLUR_SHARPEN
+-    kDebug () << "kpEffectBlurSharpen.cpp:SharpenQImage(strength=" << strength << ")"
+-               << " radius=" << radius
+-               << " sigma=" << sigma
+-               << " repeat=" << repeat
+-               << endl;
+-#endif
++static QImage SharpenQImage (const QImage &qimage_, int strength)
++{
++    QImage qimage = qimage_;
++    if (strength == 0)
++        return qimage;
+ 
+ 
+-    for (int i = 0; i < repeat; i++)
+-    {
+-    #if DEBUG_KP_EFFECT_BLUR_SHARPEN
+-	QTime timer; timer.start ();
+-    #endif
+-        qimage = Blitz::gaussianSharpen (qimage, radius, sigma);
+-    #if DEBUG_KP_EFFECT_BLUR_SHARPEN
+-        kDebug () << "\titeration #" + QString::number (i)
+-                  << ": " + QString::number (timer.elapsed ()) << "ms" << endl;
+-    #endif
+-    }
++    qimage = Blitz::sharpen (qimage, ::RadiusForStrength (strength) * 10);
+ 
+ 
+     return qimage;
