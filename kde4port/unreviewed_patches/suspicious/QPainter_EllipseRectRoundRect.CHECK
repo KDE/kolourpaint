@@ -1,4 +1,0 @@
-double buffering
-one pixel higher and wider
-don't draw on RGB while mask active
-\v(QPainter|drawEllipse|drawRect|drawRoundRect)     
