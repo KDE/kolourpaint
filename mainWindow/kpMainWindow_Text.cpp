@@ -56,9 +56,10 @@ void kpMainWindow::setupTextToolBarActions ()
 {
     KActionCollection *ac = actionCollection ();
 
+    // COMPAT: Changing font does not seem to work.
     d->actionTextFontFamily = ac->add<KFontAction> ("text_font_family");
     d->actionTextFontFamily->setText (i18n ("Font Family"));
-    connect (d->actionTextFontFamily, SIGNAL (triggered (int)),
+    connect (d->actionTextFontFamily, SIGNAL (triggered (const QString &)),
              this, SLOT (slotTextFontFamilyChanged ()));
 
     d->actionTextFontSize = ac->add<KFontSizeAction> ("text_font_size");
@@ -102,7 +103,12 @@ void kpMainWindow::readAndApplyTextSettings ()
 {
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
 
-    d->actionTextFontFamily->setFont (cfg.readEntry (kpSettingFontFamily, QString::fromLatin1 ("Times")));
+    const QString font (cfg.readEntry (kpSettingFontFamily, QString::fromLatin1 ("Times")));
+    d->actionTextFontFamily->setFont (font);
+#if DEBUG_KP_MAIN_WINDOW
+    kDebug () << "asked setFont to set to=" << font
+              << "- got back=" << d->actionTextFontFamily->font ();
+#endif
     d->actionTextFontSize->setFontSize (cfg.readEntry (kpSettingFontSize, 14));
     d->actionTextBold->setChecked (cfg.readEntry (kpSettingBold, false));
     d->actionTextItalic->setChecked (cfg.readEntry (kpSettingItalic, false));
@@ -144,8 +150,10 @@ void kpMainWindow::slotTextFontFamilyChanged ()
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotTextFontFamilyChanged() alive="
                << d->isFullyConstructed
-               << " fontFamily="
+               << "fontFamily="
                << d->actionTextFontFamily->font ()
+               << "action.currentItem="
+               << d->actionTextFontFamily->currentItem ()
                << endl;
 #endif
 
