@@ -125,6 +125,7 @@ static void DrawTextHelper (QPainter *p, bool drawingOnRGBLayer, void *data)
         int baseLine = pack->textAreaRect.y () + fontMetrics.ascent ();
         foreach (QString str, pack->textLines)
         {
+            // Note: It seems text does not antialias without XRENDER.
             p->drawText (pack->textAreaRect.x (), baseLine, str);
 
             baseLine += fontMetrics.lineSpacing ();
@@ -147,48 +148,58 @@ void kpTextSelection::drawTextInternal (QPixmap *destPixmap, const QRect &docRec
     // Pixels are set to transparent only if the foreground is transparent.
     // In contrast, a transparent background does not set any pixels so we
     // don't include it in here.
-    const bool anyColorTransparent = (textStyle ().foregroundColor ().isTransparent ());
+    const bool anyColorTransparent =
+       (d->textStyle.foregroundColor ().isTransparent ());
 
+    // [Check 1]
     if (anyColorTransparent)
     {
-        // draw() normally does this for us but we have a check just below
+        // draw() normally does this for us but we have "Check 2" just below
         // (but before draw()) that needs to know whether we will have a mask
         // in draw().
+        //
+        // Currently, this makes no functional difference since "Subcheck 2.1"
+        // only passes if "Check 1" fails (us).  But this is good futureproofing
+        // in case another subcheck is placed under "Check 2".
         destPixmap->setMask (kpPixmapFX::getNonNullMask (*destPixmap));
     }
 
 
-    // Are we drawing opaque text over potentially transparent document pixels?
-    if (kpPixmapFX::hasMask (*destPixmap) &&
-        d->textStyle.foregroundColor ().isOpaque () &&
-        d->textStyle.effectiveBackgroundColor ().isTransparent ())
+    // [Check 2]
+    if (kpPixmapFX::hasMask (*destPixmap))
     {
-    #if DEBUG_KP_SELECTION
-        kDebug () << "\tensuring image's transparent pixels are defined";
-    #endif
+        // [Subcheck 2.1] Are we drawing opaque text over potentially
+        //                transparent document pixels?
+        if (d->textStyle.foregroundColor ().isOpaque () &&
+            d->textStyle.effectiveBackgroundColor ().isTransparent ())
+        {
+        #if DEBUG_KP_SELECTION
+            kDebug () << "\tensuring image's transparent pixels are defined";
+        #endif
 
-        // Set the RGB of transparent pixels to the foreground colour to avoid
-        // anti-aliasing the foreground colored text with undefined RGBs.
-    #if 1
-        // TODO: This might not work under Qt4.
-        //       See kpPixmapFX::pixmapWithDefinedTransparentPixels() API Doc.
-        *destPixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (*destPixmap,
-            d->textStyle.foregroundColor ().toQColor ());
-        // This touches fewer pixels and could be more efficient than the
-        // above but does not work since setPixmapAt() only copies the RGB
-        // data of non-transparent pixels.
-    #else
-        QRect modifyingRectRelPixmap = modifyingRect;
-        modifyingRectRelPixmap.translate (-docRect.x (), -docRect.y ());
+            // Set the RGB of transparent pixels to the foreground colour to avoid
+            // anti-aliasing the foreground colored text with undefined RGBs.
+        #if 1
+            // TODO: This might not work under Qt4.
+            //       See kpPixmapFX::pixmapWithDefinedTransparentPixels() API Doc.
+            *destPixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (*destPixmap,
+                d->textStyle.foregroundColor ().toQColor ());
+            // This touches fewer pixels and could be more efficient than the
+            // above but does not work since setPixmapAt() only copies the RGB
+            // data of non-transparent pixels.
+        #else
+            QRect modifyingRectRelPixmap = modifyingRect;
+            modifyingRectRelPixmap.translate (-docRect.x (), -docRect.y ());
 
-        // This does not work since setPixmapAt() only copies the RGB data
-        // of non-transparent pixels.
-        kpPixmapFX::setPixmapAt (destPixmap,
-            modifyingRectRelPixmap,
-            kpPixmapFX::pixmapWithDefinedTransparentPixels (
-                kpPixmapFX::getPixmapAt (*destPixmap, modifyingRectRelPixmap),
-                d->textStyle.foregroundColor ().toQColor ()));
-    #endif
+            // This does not work since setPixmapAt() only copies the RGB data
+            // of non-transparent pixels.
+            kpPixmapFX::setPixmapAt (destPixmap,
+                modifyingRectRelPixmap,
+                kpPixmapFX::pixmapWithDefinedTransparentPixels (
+                    kpPixmapFX::getPixmapAt (*destPixmap, modifyingRectRelPixmap),
+                    d->textStyle.foregroundColor ().toQColor ()));
+        #endif
+        }
     }
 
 
@@ -257,6 +268,7 @@ void kpTextSelection::drawText (QPixmap *destPixmap, const QRect &docRect) const
             modifyingRect.topLeft () - docRect.topLeft (),
             floatImage);
     }
+    // Opaque text on a transparent or opaque background?
     else
     {
         drawTextInternal (destPixmap, docRect);

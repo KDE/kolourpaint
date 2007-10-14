@@ -420,8 +420,10 @@ public:
     // The other approach would be to change screen depth to 24bpp but
     // such changes are not possible under X11 (XRANDR limitation).
     //
-    // This is nasty since it reduces the quality of the whole GUI.
-    // The proper fix would be to either:
+    // This is nasty since it reduces the quality of the whole GUI and
+    // prevents the text in text boxes from antialiasing.
+    //
+    // The proper fix -- as opposed to disabling XRENDER --  would be to either:
     //
     // a) Rewrite the kpImage class so that it's not tied to the screen
     //    depth (long term goal that would take months to do).
