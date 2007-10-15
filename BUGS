@@ -26,6 +26,8 @@ This file lists known bugs in this version that are not considered
    the percentages and dimensions in sync in the Resize / Scale dialog are
    manifestations of the current QSpinBox behaviour.
 
+   Update: Text input is broken in KDE4.
+
 6. a) The undo history and document modified state are not updated during
       the drawing of multi-segment shapes (Polygon, Connected Lines,
       Curve).  They are however updated after shapes' completion.
@@ -38,8 +40,7 @@ This file lists known bugs in this version that are not considered
       and the move - were added but only one was undone).
 
 7. Certain shapes may have the wrong size (usually only a pixel off and
-   only in extreme cases) e.g. an ellipse of height 1 always has a width 1
-   pixel less than it should be.  This is a Qt bug.
+   only in extreme cases).  This is a Qt bug.
 
 8. At zoom levels that aren't multiples of 100%, parts of the image may
    appear to move when the user interacts with it.  Other minor redraw
@@ -56,9 +57,6 @@ This file lists known bugs in this version that are not considered
 12. You cannot select only parts of the text you write.
 
 14. The text cursor may be momentarily misrendered when scrolling the view.
-
-16. The Edit/Paste option is not disabled when the clipboard data is lost
-    due to the owner terminating (no QClipboard::dataChanged() signal).
 
 17. a) Using KolourPaint on a remote X display may result in redraw errors
        and pixel data corruption.
@@ -88,18 +86,6 @@ This file lists known bugs in this version that are not considered
     KolourPaint running different Qt versions.  See
     QDataStream::setVersion().
 
-22. The Emboss, Blur and Sharpen effects give different results depending
-    on _both_:
-
-    a) The KDE version KolourPaint was compiled with
-       (due to KImageEffect not supporting strength settings for these
-        effects in KDE 3.0, KolourPaint repeats these effects in order to
-        simulate strength)
-
-    b) The KDE version KolourPaint is running under
-       (e.g. for the same function calls, KDE 3.2's effects are slower but
-        give better results than those in KDE 3.0)
-
 23. Changing tool options while in the middle of a drawing option should
     work but confuses KolourPaint instead.  For instance:
 
@@ -117,10 +103,20 @@ This file lists known bugs in this version that are not considered
     not drawing or KolourPaint may fail to detect the release of the Enter
     key.
 
-27. InputMethod has not been tested at zoom levels other than 100%.
+27. InputMethod support was not ported to Qt4 so has been disabled.
+    Previously, it had not been tested at zoom levels other than 100%.
 
 28. KolourPaint has not been tested against invalid or malicious clipboard
     data.
+
+29. The Tool Box and Color Tool Bar are no longer movable or floatable.
+
+30. The "Skew", "Rotate" and "Smooth Scale" effects produce low quality
+    results.
+
+31. The rendering quality of a text box with opaque text but a see-through
+    background, on top of transparent document areas, is lower than in KDE 3
+    versions of KolourPaint.
 
 
 Issue with XFree86 <= 3.3.6 with the "Emulate3Buttons" Option

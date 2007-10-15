@@ -2,50 +2,23 @@
 KolourPaint 4 Series (trunk/KDE/)
 ====================
 
-KolourPaint 4.0.0 BETA (Frozen 2007-10-21)
+KolourPaint 4.0.0 BETA (Frozen 2007-10-19)
 
    * Port to KDE 4 (Clarence Dang, Laurent Montel)
+     Note: This is a beta release and has not been through a full QA review
 
-   * Save local files atomically - KolourPaint will no longer truncate
-     an existing file if the KImageIO library for the file format is
-     missing or if you run out of disk space.
-     [also in branches/KDE/3.5]
-
-   * Add "File / Scan..." feature (Martin Koller)
-     [also in branches/KDE/3.5/]
+   * Configurable Color Palette
 
    * Add "Hue, Saturation, Value" effect (Mike Gashler)
 
    * Add "Histogram Equalizer" effect (Mike Gashler)
 
-   * Configurable color palette
-
    * Add Zoom Tool
 
    * Add "File / Properties..."
 
-   * Add global session save/restore (Bug #94651)
-     [also in branches/KDE/3.5/]
-
-   * Make "File / Open Recent" consistently work when multiple windows are
-     open
-     [also in branches/KDE/3.5/]
-
-   * CTRL+C'ing a text box also places the text in the middle-mouse-button
-     clipboard, in lieu of being able to highlight the text to do this
-     [also in branches/KDE/3.5/]
-
-   * Change minimum allowed zoom level for the grid from 600% to 400%
-     [also in branches/KDE/3.5/]
-
    * Rectangles, rounded rectangles and ellipsed are now bounded by
      the dimensions of the dragged out rectangle
-
-   * Printing improvements (Bug #108976)
-     - Respect image DPI
-     - Fit image to page if image is too big
-     - Centre image on page
-     [also in branches/KDE/3.5/]
 
    * Add, to the print dialog, a choice between printing the image at the
      top-left of the page or at the center (this was previously a hidden
@@ -54,20 +27,6 @@ KolourPaint 4.0.0 BETA (Frozen 2007-10-21)
 
    * Add hidden configuration option "Open Images in the Same Window"
      (Bug #125116)
-
-   * Fix crash triggered by rapidly deselecting a selection after
-     drag-scaling the selection (Bug #117866)
-     [also in branches/KDE/3.[345]/, branches/kolourpaint/1.2_kde3/]
-
-   * Paste transparent pixels as white instead of uninitialized colors,
-     when the app does not support pasting transparent pixels (such as
-     OpenOffice.org)
-     [also in branches/KDE/3.5/]
-
-   * Make "Edit / Paste in New Window" always paste white pixels as white
-     (it used to paste them as transparent when the selection transparency
-      mode was set to Transparent)
-     [also in branches/KDE/3.5/]
 
    * Add "Rotate Left" (CTRL+SHIFT+Left) and "Rotate Right" (CTRL+SHIFT+R)
      to "Image" menu as a quick way to access the common types of "Rotate..."
@@ -85,17 +44,73 @@ KolourPaint 4.0.0 BETA (Frozen 2007-10-21)
        - Also add "Image / Draw With Color Similarity" to duplicate the tool
          bar item
 
-   * REGRESSION: InputMethod support was not ported so has been disabled.
-
-   * REGRESSION: The rendering quality of a text box with opaque text but
-                 a see-through background, on top of transparent document
-                 areas, is lower than before.
-
    * Make the Tool Box use as much vertical space as possible, since it
      needs it for the option widgets.
 
+   * Save local files atomically - KolourPaint will no longer truncate
+     an existing file if the KImageIO plugin for the file format is
+     missing or if you run out of disk space.
+     [also in branches/KDE/3.5]
+
+   * Add "File / Scan..." feature (Martin Koller)
+     [also in branches/KDE/3.5/]
+
+   * Fix crash triggered by rapidly deselecting a selection after
+     drag-scaling the selection (Bug #117866)
+     [also in branches/KDE/3.[345]/, branches/kolourpaint/1.2_kde3/]
+
+   * Add global session save/restore (Bug #94651)
+     [also in branches/KDE/3.5/]
+
+   * Make "File / Open Recent" consistently work when multiple windows are
+     open
+     [also in branches/KDE/3.5/]
+
+   * CTRL+C'ing a text box also places the text in the middle-mouse-button
+     clipboard, in lieu of being able to highlight the text to do this
+     [also in branches/KDE/3.5/]
+
+   * Change minimum allowed zoom level for the grid from 600% to 400%
+     [also in branches/KDE/3.5/]
+
+   * Printing improvements (Bug #108976)
+     - Respect image DPI
+     - Fit image to page if image is too big
+     - Centre image on page
+     [also in branches/KDE/3.5/]
+
+   * Paste transparent pixels as black instead of uninitialized colors,
+     when the app does not support pasting transparent pixels (such as
+     OpenOffice.org)
+     [also in branches/KDE/3.5/]
+
+   * Make "Edit / Paste in New Window" always paste white pixels as white
+     (it used to paste them as transparent when the selection transparency
+      mode was set to Transparent)
+     [also in branches/KDE/3.5/]
+
+   * REGRESSION: The "Skew", "Rotate" and "Smooth Scale" effects produce
+                 low quality results
+                 (Bug #30)
+
+   * REGRESSION: The rendering quality of a text box with opaque text but
+                 a see-through background, on top of transparent document
+                 areas, is lower than in KDE 3 versions of KolourPaint
+                 (Bug #31)
+
+   * REGRESSION: Spinboxes do not support text input
+                 (see the "Update" part of Bug #4)
+
+   * REGRESSION: InputMethod support was not ported to Qt4 so has been disabled
+                 (Bug #27)
+
    * REGRESSION: The Tool Box and Color Tool Bar are no longer movable or
-                 floatable.
+                 floatable
+                 (Bug #29)
+
+    KolourPaint 4.0.0 BETA contains all the fixes and features in KolourPaint
+    1.4.8_relight (KDE 3.5.8), even though not all of them were listed
+    above.
 
 
 KolourPaint 1.4_relight Series (branches/KDE/3.5/)

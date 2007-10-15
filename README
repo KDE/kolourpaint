@@ -1,5 +1,5 @@
 
-KolourPaint Version 4.0.0 BETA (KDE 4.0.0 Release Frozen 2007-10-21)
+KolourPaint Version 4.0.0 BETA (KDE 4.0.0 Release Frozen 2007-10-19)
 http://www.kolourpaint.org/
 
 Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
@@ -41,7 +41,7 @@ libraries.
 * Tools (single key shortcuts available for all tools)
   - Brush, Color Eraser, Color Picker, Connected Lines a.k.a. Polyline
   - Curve, Ellipse, Eraser, Flood Fill, Line, Pen, Polygon, Rectangle
-  - Rounded Rectangle, Spraycan, Text
+  - Rounded Rectangle, Spraycan, Text, Zoom
 
 * Selections (fully undo- and redo-able)
   - Rectangular, Elliptical, Free-Form shapes
@@ -49,18 +49,22 @@ libraries.
   - Full Clipboard/Edit Menu support
   - Freehand resizeable
 
-* Colour Similarity means that you can fill regions in dithered images and
+* Configurable Color Palette
+
+* Color Similarity means that you can fill regions in dithered images and
   photos
 
 * Transparency
   - Draw transparent icons and logos on a checkerboard background
-  - All tools can draw in the "Transparent Colour"
+  - All tools can draw in the "Transparent Color"
 
 * Image Effects
   - Autocrop / Remove Internal Border
   - Balance (Brightness, Contrast, Gamma)
-  - Clear, Emboss, Flatten, Flip, Invert (with choice of channels)
-  - Reduce Colours, Reduce to Greyscale, Resize, Rotate
+  - Clear, Emboss, Flatten, Flip, Histogram Equalizer
+  - Hue, Saturation, Value
+  - Invert (with choice of channels)
+  - Reduce Colors, Reduce to Grayscale, Resize, Rotate
   - Scale, Set as Image (Crop), Skew, Smooth Scale, Soften & Sharpen
 
 * Close-up Editing
@@ -96,6 +100,6 @@ KolourPaint and even issues with 3rd party binary packages.
 ===========
 
 Please send bug reports and feature requests to http://bugs.kde.org/.
-Don't hesitate to report bugs nor hesitate to send us your wishes - it
+Don't hesitate to report bugs nor hesitate to send us your wishes -- it
 provides valuable feedback that will help to improve future versions of
 KolourPaint and you will not receive flames for reporting duplicates.
