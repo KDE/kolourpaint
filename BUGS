@@ -62,9 +62,6 @@ This file lists known bugs in this version that are not considered
 
 14. The text cursor may be momentarily misrendered when scrolling the view.
 
-16. The Edit/Paste option is not disabled when the clipboard data is lost
-    due to the owner terminating (no QClipboard::dataChanged() signal).
-
 17. a) Using KolourPaint on a remote X display may result in redraw errors
        and pixel data corruption.
 
