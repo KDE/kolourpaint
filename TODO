@@ -22,7 +22,7 @@
             than removing that hack esp. in the stable branch of KDE
    "STRING" - a string that should be added after a string freeze
    "TODO" - something that should be done but can be delayed indefinitely;
-            some TODO's should really be LOTODO's or HITODO's
+            some TODO's should really be LOTODO's or HITODO's or REFACTOR's
 
     These strings may be prefixed with "LO" if probably no one will care
     e.g. "LOTODO: Maybe the shade of green should be darker?".  Or with
@@ -36,8 +36,10 @@
 4.1. Docs
 4.2. Future Binary Releases
 4.3. KDE
-4.4. KolourPaint Code
-4.5. Minor KolourPaint Code Ideas
+4.4. KolourPaint Code (KDE4 specific)
+4.5. KolourPaint Code
+4.6. Minor KolourPaint Code Ideas
+4.7. KolourPaint Code Refactoring
 
 
 4.1. Docs
@@ -83,8 +85,29 @@ multicolumn KToolBar's (Bug #3)
 fix edit/paste may disappear due to klipper - Bug #85456
 
 
-4.4. KolourPaint Code
+4.4. KolourPaint Code (KDE4 specific)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+10. QA entire project due to Qt4 breakages.  Everything needs to be whitebox
+    tested again esp. the file saving path - format conversion, maximal
+    content preservation, formatting loss warnings etc.
+
+
+4.5. KolourPaint Code
 ~~~~~~~~~~~~~~~~~~~~~
+
+- when typing text, cursor moves ahead and the bits of the text where the cursor was
+  overlapping are updated, but the rest of the typed text is not displayed yet
+  - probably has something to do with delayed updates
+    - or mis-sync between text cursor position and updates
+      (due to kpViewManager and kpTextSelection functionality split)
+[especially noticeable in KolourPaint/KDE4 when zoomed in, where everything is slow]
+
+
+- "View / Actual Size" != actual/printed size -- rename it to "View / 100%"?
+  but "View / 100%" looks weird, "View / Unzoomed (100%)" looks weird and
+  confused with "Zoomed Thumbnail Mode".
+
 
 In light of crash Bug 117866, check that all timers are killed before e.g. adding
 a command to the command history.
@@ -339,7 +362,7 @@ Use kipiplugins' "sendimages" plugin instead of homebrew File / Mail...
 first etc.).
 
 
-"Universal Selections" modify selections after selecting
+"Universal Selections" -- modify selections after selecting
 
 
 RMB colour select & draw, holding shift are not discoverable.
@@ -369,6 +392,11 @@ and show it in the palette editor, as active one : changing it, results in
 a real time changing to the image - non-modal
 (Antonio Bianco)
 
+
+
+- aligning objects in pixel-based editor happens too often
+  - Krita's "guide lines"?
+ 
 snap-grid. If you dont know what I mean, you could have a look
 at XPaint [or PPaint/DPaint on any Amiga ;-) ]: You can give a x and y
 value and get a "magnetic grid" where the brush "snaps in"
@@ -497,10 +525,18 @@ better graphics backend
   + 8-bit palette images (Antonio Bianco)
 - supports alpha (Hogne Titlestad, Luke-Jr:Bug94607)
 - option for antialiasing tools (Stefan Taferner, Mikhail Capone, Antonio Bianco)
+- Use QImage as new backend?
+  - BAD: can't draw paletted images
+  - premultiplied format
+    - does using it lose quality?  don't think so since 16-bit values
+    - when set alpha to 0, RGB dies?  is this so important?
 
 
 in the "more effects" windows add "saturation" [done], "highlights" and "shadows"
 (Antonio Bianco)
+
+- find out common requests that require other programs e.g. dropshadow:
+  http://people.kde.nl/marco.html
 
 in the "image" menu add a "fade latest effect" voice, that if selected
 brings up a slider that fades the image before with the image after the
@@ -589,7 +625,7 @@ http://dot.kde.org/1078028599/:
 
 
 
-4.5. Minor KolourPaint Code Ideas
+4.6. Minor KolourPaint Code Ideas
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KolourPaint at >= 1.0 should be very usable.  So the following are just nice
@@ -718,3 +754,43 @@ CTRL+Ptrscreen. (Mikhail Capone)
 - add ksnapshot mode to paste grabbed thing directly into kolourpaint so
   that kolourpaint gets a "Take screenshot" menu item
 (Bela-Andreas Bargel)
+
+
+4.7. KolourPaint Code Refactoring
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Move all code that accesses kpImage internals (e.g. is aware of masks, alpha
+   channel or image depth; or uses the kpPixmapFX::draw() method) and/or renders
+   document pixels onto the view, to inside imagelib/.
+
+   Do a case-insensitive grep for "mask" or case-sensitive grep for QBitmap to
+   find _some_ violations of this.
+
+   Examples of violations:
+
+   * Parts of kpDocument (esp. the seleciton handling stuff)
+
+   * Selection classes
+
+   * kpAbstractImageSelection::fill() accesses the mask
+
+   * kpTextSelection_Paint.cpp
+
+
+11. Push as many classes as possible into kdelibs.
+* reduce size of code (51352-28 generated lines 2006-03-23; hopefully reduce by 10KLOC)
+  - go through each class finding stuff that can be factored into kdelibs
+    (also go through bug reports), SYNC, HACK, COMPAT etc.
+  - push kpSqueezedTextLabel out
+  - push kpCommandHistory out; now Qt has some command scheme in addition to
+    kdelibs, koffice and kolourpaint; and see kde-core-devel archives for yet another
+command scheme
+  - push multicolumn toolbar out (see how rodda's KAction changes affect it
+- ask rodda)
+    - ktoolbar support multicolumn - see how krita does it
+
+* Decouple more classes from kpMainWindow and friends by introducing more
+  environments/ facades
+
+
+* Rename "*Base" classes to "Abstract*"
