@@ -427,10 +427,7 @@ KUrl::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &
     fd.setOperationMode (KFileDialog::Opening);
 
     if (allowMultipleURLs)
-    {
-        // COMPAT: Doesn't work.  KFileDialog bug.
         fd.setMode (KFile::Files);
-    }
 
     // COMPAT: Doesn't work.  KFileDialog bug.
     fd.setPreviewWidget (new KImageFilePreview (&fd));
