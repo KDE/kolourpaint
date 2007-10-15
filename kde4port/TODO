@@ -16,59 +16,33 @@ Features to be implemented are in branches/kolourpaint/control/TODO.
    * The part of kpToolClearCommand::execute() manipulating the mask should be moved
      into imagelib/
 
-2. Move all dialogs to dialogs/
-
-3. Move all commands to commands/
-
-4. Fix tools/polygonal class hierarchy
-
-5. Fix tools/selection class hierarchy
-
-6. Rename files to match classes.  Make sure each file contains just one
-   public class. e.g. kpToolFlip.cpp contains class kpToolFlip but can also
-   contain MyPrivateHelperClass.
-
-12. Remove deprecated qt3support and kde3support references.
-
-
-7. Remove "Thanks To" section in kolourpaint.cpp - it's simply extra work to
-   coordinate with website updates, esp. during release freezes where updates
-   are not allowed.
-
 
 11. Push as many classes as possible into kdelibs.
 * reduce size of code (51352-28 generated lines 2006-03-23; hopefully reduce by 10KLOC)
   - go through each class finding stuff that can be factored into kdelibs
     (also go through bug reports), SYNC, HACK, COMPAT etc.
-  - push kpSqueezedTextLabel
+  - push kpSqueezedTextLabel out
   - push kpCommandHistory out; now Qt has some command scheme in addition to
-    kdelibs, koffice and kolourpaint; see kde-core-devel for yet another
+    kdelibs, koffice and kolourpaint; and see kde-core-devel archives for yet another
 command scheme
   - push multicolumn toolbar out (see how rodda's KAction changes affect it
 - ask rodda)
     - ktoolbar support multicolumn - see how krita does it
 
 
-9. Review all commits.  Credit people like Laurent Montel for porting.
-   Look in this folder.
-
 10. QA entire project due to Qt4 breakages.  Everything needs to be whitebox
     tested again esp. the file saving path - format conversion, maximal
     content preservation, formatting loss warnings etc.
 
-13. Profile startup time
-
-* KParts (see bug report by zrusin)
+* KParts
   - import-export for KOffice & KolourPaint
     - look up thread in mail where I said I'd rename to "Save A Copy" etc.
   - oldURL for error handling in general
-* smarter text tool
 * DPI GUI to close bug
   - View / Actual Size != actual size - rename to 100%
     but View / 100% looks weird, View / Unzoomed (100%) looks weird and
     confused with Zoomed Thumbnail Mode
 
-* patches lying around
 * make KolourPaint fun to use & popular again by implementing easy feature
   requests quickly
   - e.g. aligning objects in pixel-based editor happens too often
@@ -85,27 +59,27 @@ command scheme
     - lose quality?  don't think so since 16-bit values
     - when set alpha to 0, color dies?  is this so important?
 
-* arbitrary brushes
 
-
-
-* selection .diff sitting in local checkout for refactoring accidental drag detection
 
 * kpEffectReduceColors::convertImageDepth() must die
-
-* freeform, elliptical selections
 
 * kpdocument.cpp manipulates document using kpPixmapFX instead of kpPainter (for invert?); look for such a TODO
 
 
-KDE 4 - about dialog
-KDE 4 - ksavefile [see /home/kdevel for 357 diff]
-
-KDE 4 -dpi gui
-
-KDE 4 open recent crash
-
 KDE 4 constructorWidth,Height -> originalWidth,Height
 
-KDE 4 distribute copyright (InputMethod, Koller, Montel etc.)
 
+* Decouple more classes (kpDocument, kpTool*, dialogs) from kpMainWindow and friends by introducing facades, like kpCommandEnvironment.
+
+* Clean up kpTool.h, kpDocument.h and kpMainWindow.h and use dptr
+
+
+* Rename *Base classes to Abstract*
+
+
+* When zoomed in, very slow
+  - when typing text, cursor moves ahead and the bits of the text where the cursor was
+    overlapping are updated, but the rest of the typed text is not displayed yet
+    - probably has something to do with delayed updates
+      - or mis-sync between text cursor position and updates
+        (due to kpViewManager and kpTextSelection functionality split)
