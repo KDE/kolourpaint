@@ -1,3 +1,0 @@
-# Each header should only export 1 public class.
-# This script finds the headers that violate this rule.
-find -name \*.h | xargs egrep '^class.*[^;]$' | cut -d: -f1 | uniq -d
