@@ -39,7 +39,7 @@
 4.4. KolourPaint Code (KDE4 specific)
 4.5. KolourPaint Code
 4.6. Minor KolourPaint Code Ideas
-4.7. KolourPaint Code Refactoring
+4.7. KolourPaint Code Refactoring (KDE4 specific)
 
 
 4.1. Docs
@@ -756,8 +756,8 @@ CTRL+Ptrscreen. (Mikhail Capone)
 (Bela-Andreas Bargel)
 
 
-4.7. KolourPaint Code Refactoring
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.7. KolourPaint Code Refactoring (KDE4 specific)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Move all code that accesses kpImage internals (e.g. is aware of masks, alpha
    channel or image depth; or uses the kpPixmapFX::draw() method) and/or renders
@@ -794,3 +794,7 @@ command scheme
 
 
 * Rename "*Base" classes to "Abstract*"
+
+
+* Remove use of qt3support and kde3support with the help of
+  branches/kolourpaint/control/scripts/kde4port
