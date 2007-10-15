@@ -3,7 +3,7 @@
 //       e.g. You could have textCursorEnabled() but no text selection or
 //       vice versa.  And the cursor could be outside of the selection.
 //
-//       In fact, out text commands momentarily violate these "invariants":
+//       In fact, our text commands momentarily violate these "invariants":
 //
 //       1. A text box with content must have the cursor somewhere on an
 //          existing text line, possibly 1 position after the last character

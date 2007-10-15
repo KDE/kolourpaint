@@ -40,7 +40,9 @@ class QPixmap;
 class kpEffectReduceColors
 {
 public:
-    // TODO: why isn't applyEffect() for the public API sufficient?  Ans: see TODO in kpdocument.cpp.
+    // TODO: Why isn't applyEffect() for the public API sufficient?
+    //       Ans: See TODO in kpDocument_Save.cpp.  Maybe we should rename
+    //            this method?
     static QImage convertImageDepth (const QImage &image, int depth, bool dither);
 
     // (always preserves mask)

@@ -748,7 +748,20 @@ public:
 //
 // Should Qt support raster operations again, these methods should be
 // changed to use them with the given colors.  <colorHint1> and
-// <colorHint2> would then be ignored.
+// <colorHint2> would then be ignored.  Note that transparent pixels that
+// these raster operations might be drawing on -- and hence, blending with --
+// might have uninitialized RGB values.  This has to be dealt with somehow
+// (the KolourPaint/KDE3 approach is to simply use these uninitialized
+//  values -- although it's a bit dodgy, it works well enough as you usually
+//  get a stipple of arbitrary colors).
+// The testcase for KDE3, which might still apply is:
+//
+//     1. Open an image with transparent pixels
+//     2. Press CTRL+A to look at an XOR border
+//     3. Fill the transparent pixels with any color to initialize the
+//        RGB values
+//     4. Fill those pixels so that they are transparent again
+//     5. Press CTRL+A to look at an XOR border and compare with 2.
 //
 
 public:

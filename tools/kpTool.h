@@ -66,7 +66,7 @@ class kpToolToolBar;
 struct kpToolPrivate;
 
 // Base class for all tools.
-// TODO: rearrange method order to make sense and reflect kpTool_*.cpp split.
+// REFACTOR: rearrange method order to make sense and reflect kpTool_*.cpp split.
 class kpTool : public QObject
 {
 Q_OBJECT

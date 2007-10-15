@@ -220,11 +220,15 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     // Reduce colors if required
     //
 
+    // HITODO: Confusion between 24-bit and 32-bit?
     if (useSaveOptionsColorDepth &&
         imageToSave.depth () != saveOptions.colorDepth ())
     {
-        // TODO: I think this erases the alpha channel!
-        //       See comment in kpEffectReduceColors::applyEffect().
+        // TODO: I think this erases the mask!
+        //
+        //       I suspect this doesn't matter since this is only called to
+        //       reduce color depth and QImage's with depth < 32 don't
+        //       support masks anyway.
         imageToSave = kpEffectReduceColors::convertImageDepth (imageToSave,
                                            saveOptions.colorDepth (),
                                            saveOptions.dither ());

@@ -56,11 +56,20 @@ class kpAbstractSelection;
 class kpTextSelection;
 
 
+// REFACTOR: rearrange method order to make sense and reflect kpDocument_*.cpp split.
 class kpDocument : public QObject
 {
 Q_OBJECT
 
 public:
+    // REFACTOR: Hide constructor and have 2 factory methods:
+    //
+    //           Method 1. Creates a blank document with dimensions <w>x<h>.
+    //
+    //           Method 2. Calls open().  <w> and <h> (aka constructorWidth()
+    //              and constructorHeight()) need not be specified.
+    //
+    //           ?
     kpDocument (int w, int h, kpDocumentEnvironment *environ);
     ~kpDocument ();
 
@@ -84,8 +93,8 @@ public:
                                       QWidget *parent,
                                       kpDocumentSaveOptions *saveOptions = 0,
                                       kpDocumentMetaInfo *metaInfo = 0);
-    // TODO: fix: open*() should only be called once.
-    //            Create a new kpDocument() if you want to open again.
+    // REFACTOR: fix: open*() should only be called once.
+    //                Create a new kpDocument() if you want to open again.
     void openNew (const KUrl &url);
     bool open (const KUrl &url, bool newDocSameNameIfNotExist = false);
 
@@ -158,11 +167,13 @@ public:
     bool isModified () const;
     bool isEmpty () const;
 
+    // REFACTOR: Rename to originalWidth()?
     int constructorWidth () const;  // as passed to the constructor
     int width (bool ofSelection = false) const;
     int oldWidth () const;  // only valid in a slot connected to sizeChanged()
     void setWidth (int w, const kpColor &backgroundColor);
 
+    // REFACTOR: Rename to originalHeight()?
     int constructorHeight () const;  // as passed to the constructor
     int height (bool ofSelection = false) const;
     int oldHeight () const;  // only valid in a slot connected to sizeChanged()
