@@ -73,12 +73,9 @@ fix flicker when zooming in/out (Bug #1)
 - maybe don't allow QScrollview to do own logic - would also eliminate
   tearing when scrolling with wheel (and of course, drag scrolling)
 
-delta drawing of resize line to stop flicker
-
 
 
 Hogne Titlestad:
-- configurable palette size (up to 256 colours) + Stephen Sweeney + Antonio Bianco
 - "Would also be nice to have a keyboard shortcut to traverse through the
    palette. If I say have a palette with 16 greys, 16 reds, 16 blues etc
    then moving to the next/previous palette item with keys would be a
@@ -112,8 +109,6 @@ index 0. From there go one color forward or backward.
 Hogne Titlestad:
 - generate gradient between 2 colours in palette
 
-kpcolortoolbar - open/save palette
-
 
 
 text tool when click creating should use last size?
@@ -126,7 +121,8 @@ text tool could autoresize if font size changes or paste text (Bug #11)
 
 
 
-text toolbar permanently floats to stop view from bobbing up/down:
+text toolbar permanently floats to stop view from bobbing up/down, when the
+toolbar redocks:
 
 diff -ur -x'Makefile.rules*' -x'Makefile.calls*' -xMakefile.in -x'*.o' -x'*.moc' -x'*.lo' -x.deps -x.libs -xkolourpaint -xk -x'TODO*' -xMakefile -x'*.la' -x'*~' -x'*.txt' -xh -x'*.swp' -Npd -xkolourpaintlicense.h kolourpaint-pris/kpmainwindow.cpp kolourpaint/kpmainwindow.cpp
 --- kolourpaint-pris/kpmainwindow.cpp  2005-02-02 16:35:20.000000000 +1100
@@ -160,10 +156,11 @@ This probably works for Qt3 but not Qt4.
 
 
 
-kolourcircles.cpp; rendering glitches at 37% with rect sel tool
+tests/kolourcircles.cpp; rendering glitches at 37% with rect sel tool
 
 
-kptoolpreviewdialog: wrong if new pixels result in diff selection transparency
+kptoolpreviewdialog: incorrect preview for a selection, if new pixels result in
+                     different selection transparency
 
 - Smooth with hotkey (blur painting, not smudge) (Hogne Titlestad+Antonio Bianco)
 - "Lighten/Darken tool, even without antialiasing. Works *wonders* when
@@ -201,9 +198,6 @@ Need to change grid to a non-solid color pattern so that at 400%, it doesn't
 look like part of the image!
 
 
-[LO] fix Bug #23. Changing tool options while in the middle of a drawing option may
-   confuse KolourPaint.
-
 resize doc or sel freehand - usershapepoints should be (after string freeze):
 "oldX x oldY - newX x newY  |||  (+|-)deltaX x (+|-)deltaY"
 instead of
@@ -229,11 +223,19 @@ Goto next/prev color in palete
 
 
 * picture effect - simple effect missing - blur, sharpen,
-  Hue, saturation,... (mracek who is at the domain xko period or dot cz)
+  Hue, saturation,... [Later: as a freehand tool?]
+  (mracek who is at the domain xko period or dot cz)
 
 
-sel border should not be xored against uninitialised rgb values (transparent pixels)
-e.g. CTRL+A, Crop Outside the Selection
+[KDE3] Sel border should not be xored against uninitialised rgb values
+       (transparent pixels).  A testcase is to:
+
+       1. Open an image with transparent pixels
+       2. Press CTRL+A to look at an XOR border
+       3. Fill the transparent pixels with any color to initialize the
+          RGB values
+       4. Fill those pixels so that they are transparent again
+       5. Press CTRL+A to look at an XOR border and compare with 2.
 
 
 * kpsqueezedtextlabel could use (or be replaced by) KStringHandler::rPixelSqueeze()
@@ -253,17 +255,16 @@ prefers a cross (with thin lines), he may even now use the brush with the
 "
 
 
-refactor kpToolConvertToGrayscaleCommand:
-- become kpColorEffect
-- move in kpPixmapFX::convertToGrayscale()
-
-
-
 Bela-Andreas Bargel:
 - add a "info-button" (or menu-entry) which
   shows all (meta-)data about the image (eg. to set its
   dpi-resolution, its size, jpg/png-comments, colour
   mode, used colours, file size,EXIF-data...)
+Bart Symons
+- "Image" -> "Properties"
+
+[we now have "File / Properties..." but it lacks many of the above]
+
 
 
 [I think I fixed this is KSelectAction - KDE 4]
@@ -273,8 +274,6 @@ Jonathan Turner - userinstinct:
   press enter and continue painting - should reset to old zoom, maybe
   add tooltip to say press enter?
 
-Bart Symons
-- "Image" -> "Properties"
 
 
 
@@ -285,13 +284,10 @@ Edit/Find a particular colour
 Emmeran Seehuber:
 "
 > The Escape-key
-> could exit the input text mode, so that the other tools would be available
+> could exit the input text mode [without deselecting the text box], so
+> that the other tools would be available
 > again.
 "
-- also only disable single key triggers when the text sel border is complete
-  to avoid 100ms hit (after 100ms hit required to enable single key triggers
-  after old sel deselected) every time a new text selection is being drawn
-  out
 
 
 keyboard friendly scrollview
@@ -306,7 +302,7 @@ KolourPaint bin:
 - install in menu (Lutz Schweizer)
 - install_systemwide script as sent to: (Lutz Schweizer)
 - "By the way, to run the program I need only a single click on the script
-   file" (Lutz Schweizer)
+   file" [rather than the instruction about double-clicking] (Lutz Schweizer)
 - how about make bin first, then RPM that to fix KDE /usr or /opt/kde3 issues
 - docs for bin dist not work on debian - suspect different path and need better use of kde-config --docprefix or something
 
@@ -318,26 +314,7 @@ QImage::maxImageSize(); defaults to 4096 as max width and height could cause tro
 rename kolourpaint-1.4pre/kolourpaint to kolourpaint-1.4pre/src (there was
 a reason why this wasn't done but I forgot - document this time)
 
-unix2dos text files in all non-KDE releases to not give bad notepad impression
-
-
-[document for bindist]
-KolourPaint 1.2
-~~~~~~~~~~~~~~~
-
-Integer scaling bug workaround when one dimension is not scaled by int
-
-ALT+Shift+V brings up View menu instead of Curve tool in KDE 3.0
-(but not KDE 3.3)
-
-Is this related to:?
-~~~~
-line: shift+alt doesn't work but alt+shift does
-- doesn't look like Bug #64019
-- alt alone is backfiring anyway (conflicts with kwin)
-  so I'll just leave 30deg & 60deg lines as hidden functionality for now
-    (until I can think up a better key combo/way to activate it)
-~~~~
+unix2dos text files in all non-KDE releases to not give bad MS notepad impression
 
 
 KolourPaint 4.1
@@ -364,12 +341,14 @@ the kolourpaint window"
 easy resize tool for text (instead of trying to grab corners)
 
 
-Paste Into New Window when sel transparency is set to Transparent changes all white to transparent, sel transparency selector after pasting doesn't work because of Set as Image behaviour - unintuitive.
-
-
 
 add a key to show/hide all panels (toolbar, toolbox, palette box) giving a
 semi fullscreen mode (Antonio Bianco)
+
+allow user to hide Tool Box & Colour Palette if they really insist (it is
+possible to ALT+F4 them and can't get them back!)
+
+
 
 when in the palette editor window, clicking on the image selects the color
 and show it in the palette editor, as active one : changing it, results in
@@ -405,15 +384,8 @@ static in all places so that it's clear it's not part of the doc
 
 componentisation (Eric Laffoon, Sebastian Laout/BasKet)
 
-allow user to hide Tool Box & Colour Palette if they really insist (it is
-possible to ALT+F4 them and can't get them back!)
+DBUS scriptable
 
-DCOP scriptable
-
-
-
-
-Bug #12 - selectable text
 
 
 
@@ -421,8 +393,8 @@ Rethink kpView/kpViewManager design because of:
 - performance
 - problems with the image "sparkling" at zoom levels % 100 != 0
 Ideas:
-- time-based renderer (like game)
-- do something about this horrible tempPixmap hack (so slooooow)
+- time-based renderer (like in games)
+- do something about this horrible tempImage hack (so slooooow)
 - resize handles overlap text at 100% zoom; overlapping selected doesn't
   help; could show selection border outside of view in scrollview empty
   area (if selection is really to right and/or bottom); solid 1-width
@@ -430,10 +402,10 @@ Ideas:
 Bug #6: modified states incorrectly set
 - what undo/redo should do in middle of polyline?
 - what about being unable to redo since did another op?
-- when deselect empty text box, delete it --> create text box is not op until write in it for e.g.
 
-
-- maybe always have 1 width display of border - try editing a B&W icon to see what I mean
+- maybe borders (e.g. selection borders) should always have a view width of 1
+  - try currently editing a B&W icon to see what I mean (selection borders
+    have a document width of 1 so the borders are magnified with zoom)
 
 eraser cursor border should not get magnified
 
@@ -473,7 +445,7 @@ Bela-Andreas Bargel:
 - acquire from kamera
 
 
-scaling image with sel (no pixmap), and then manip sel adds extra "Selection: Create"
+scaling image with sel (with no content), and then manip sel adds extra "Selection: Create"
 (this is a rather difficult problem to fix since sel has already been used
  for Image/Scale so would be inapproriate to replace it in cmd history)
 
@@ -503,10 +475,6 @@ bug: draw rectangle, drag out selection, undo - kills rect but not selection
 is this a feature?
 
 kpViewManager::setTextCursorBlinkState() needs to restart timer
-kpToolText: cursor doesn't immediately appear after creating or moving
-            a text box
-
-When scrolling, text cursor is not fully repainted until next blink (Bug #14)
 
 
 KolourPaint 4.2
@@ -517,12 +485,9 @@ better graphics backend
   + 8-bit palette images (Antonio Bianco)
 - supports alpha (Hogne Titlestad, Luke-Jr:Bug94607)
 - option for antialiasing tools (Stefan Taferner, Mikhail Capone, Antonio Bianco)
-AUDIT: X.org has -pixmap24 & -pixmap32 - how will that affect Undo/Redo
-       size calculations
-creating new text selection sucks a lot of CPU
 
 
-in the "more effects" windows add "saturation", "highlights" and "shadows"
+in the "more effects" windows add "saturation" [done], "highlights" and "shadows"
 (Antonio Bianco)
 
 in the "image" menu add a "fade latest effect" voice, that if selected
@@ -532,10 +497,10 @@ effect : this allows fine adjustements, and it's really useful;
 
 
 intersect bounding rect with document rect when saving undo info
-- e.g. if you drag a large rect bigger than the view, waste a lot of memory
-ditto for setTempPixmapAt et. al. (maybe not for selections, still thinking)
+- e.g. if you drag out a large rectangle bigger than the view, it wastes a lot of memory
+on undo
 
-Bug: dragging a line extending outside of doc makes it transparent (RGB_A_ for PNG saves)
+Bug: dragging a line extending outside of doc makes the doc transparent (RGB_A_ for PNG saves)
 Hypothesis: kpPixmapFX::getPixmapAt() defines undefined pixels as transparent
 
 
@@ -656,7 +621,7 @@ line: shift+alt doesn't work but alt+shift does
 
 Colour Eraser as part of the Image Menu? You can dbl-click on the tool after all.
 
-On open, dither alpha channel to mask?
+On open, dither (instead of the current "threshold" approach) alpha channel to mask?
 
 Open 800x600 image, Skew, set horizontal to 60, vertical to 30 and play with
 vertical and the image flips over!  I'm sure that's not supposed to happen.
@@ -671,11 +636,9 @@ Christoph Eckert:
 shape selections should support CTRL, ALT, SHIFT to alter shape but
 ATM, CTRL means copy, SHIFT means sweep.
 
-if you undock a vertical toolbar and right click --> Orientation --> Bottom,
-it stays vertically oriented
+[KDE3] if you undock a vertical toolbar and right click --> Orientation --> Bottom,
+       it stays vertically oriented
 
-Look at KPixmapIO for QPixmap <-> QImage conversion optimisation
-Update: qt-copy/patches/0005-qpixmap_mitshm.patch: "this obsoletes KPixmapIO"
 
 Bela-Andreas Bargel:
 - extra toolbar with slideshow and other image viewing options
@@ -739,8 +702,6 @@ the mouse pointer. When you press left mouse the brush would just be painted
 into the picture at the given position. This is very usefull to retouch
 pictures.
 "
-
-QColor::enterAllocContext () looks interesting
 
 can't copy 1600x1200 season.jpg double scaled from one kolourpaint to another
 (Bug #20)
