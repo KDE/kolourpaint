@@ -37,6 +37,8 @@
 #include <qpixmap.h>
 #include <qsize.h>
 #include <QtDBus>
+#include <QtGui/QPrinter>
+#include <QtGui/QPrintDialog>
 
 #include <kapplication.h>
 #include <kaction.h>
@@ -52,12 +54,13 @@
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kprinter.h>
 #include <krecentfilesaction.h>
 #include <kscan.h>
 #include <kstandardshortcut.h>
 #include <kstandardaction.h>
 #include <ktoolinvocation.h>
+#include <kdeprintdialog.h>
+#include <kprintpreview.h>
 
 #include <kpCommandHistory.h>
 #include <kpDefs.h>
@@ -1063,7 +1066,7 @@ bool kpMainWindow::slotReload ()
 
 
 // private
-void kpMainWindow::sendFilenameToPrinter (KPrinter *printer)
+void kpMainWindow::sendFilenameToPrinter (QPrinter *printer)
 {
     KUrl url = d->document->url ();
     if (!url.isEmpty ())
@@ -1085,14 +1088,13 @@ void kpMainWindow::sendFilenameToPrinter (KPrinter *printer)
                    << endl;
     #endif
         printer->setDocName (fileName);
-        printer->setDocFileName (fileName);
-        printer->setDocDirectory (url.directory ());
+        printer->setOutputFileName (url.path ());
     }
 }
 
 
 // private
-void kpMainWindow::sendImageToPrinter (KPrinter *printer,
+void kpMainWindow::sendImageToPrinter (QPrinter *printer,
         bool showPrinterSetupDialog)
 {
     // Get image to be printed.
@@ -1243,13 +1245,19 @@ void kpMainWindow::sendImageToPrinter (KPrinter *printer,
 
 
     sendFilenameToPrinter (printer);
+    printer->setOutputToFile(false);
+
+    kpPrintDialogPage* optionsPage = new kpPrintDialogPage(this);
+    //Set this to whatever is saved in a conventional config option if you want persistance
+    optionsPage->setPrintImageCenteredOnPage(true);
 
     if (showPrinterSetupDialog)
     {
         // The user can mutate margins at their own risk in this dialog.
         // It doesn't seem to affect the size of the page as reported
         // by QPaintDeviceMetrics::{width,height}MM().  COMPAT: fix comment - no more QPaintDeviceMetrics
-        if (!printer->setup (this))
+        QPrintDialog *printDialog = KdePrint::createPrintDialog(printer, QList<QWidget*>() << optionsPage, this);
+        if (!printDialog->exec())
             return;
     }
 
@@ -1259,8 +1267,8 @@ void kpMainWindow::sendImageToPrinter (KPrinter *printer,
     // Center image on page?
     //
     // Only call this method after the user has set the print options i.e.
-    // after the print dialog ("printer->setup()") has been accepted.
-    if (kpPrintDialogPage::shouldPrintImageCenteredOnPage (printer))
+    // after the print dialog ("printDialog->exec()") has been accepted.
+    if (optionsPage->printImageCenteredOnPage ())
     {
         originX =
             (printerWidthMM * dpiX / KP_MILLIMETERS_PER_INCH - image.width ())
@@ -1288,8 +1296,7 @@ void kpMainWindow::slotPrint ()
 {
     toolEndShape ();
 
-    KPrinter printer;
-    printer.addDialogPage (new kpPrintDialogPage (this));
+    QPrinter printer;
 
     sendImageToPrinter (&printer, true/*showPrinterSetupDialog*/);
 }
@@ -1299,15 +1306,13 @@ void kpMainWindow::slotPrintPreview ()
 {
     toolEndShape ();
 
-    // Do not specify "false" to KPrinter::<ctor>()'s "restore" arg,
-    // since we want to use the same KPrinter::options(), set by
-    // kpPrintDialogPage.
-    KPrinter printer;
+    QPrinter printer;
 
-    // TODO: pass "this" as parent
-    printer.setPreviewOnly (true);
+    KPrintPreview printPreview(&printer);
 
     sendImageToPrinter (&printer, false/*don't showPrinterSetupDialog*/);
+
+    printPreview.exec();
 }
 
 

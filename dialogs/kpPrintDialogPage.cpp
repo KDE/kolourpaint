@@ -33,6 +33,7 @@
 
 #include <QRadioButton>
 #include <QVBoxLayout>
+#include <QtGui/QPrinter>
 
 #include <KDebug>
 #include <KDialog>
@@ -45,7 +46,6 @@
 
 // HITODO: It's not saving the option (kdelibs crashes on exit).
 //         And it doesn't PROPAGATE interprocess.
-#define OptionPrintImageCentered "kde-kolourpaint-print_image_centered_on_page"
 
 
 struct kpPrintDialogPagePrivate
@@ -54,14 +54,14 @@ struct kpPrintDialogPagePrivate
 };
 
 kpPrintDialogPage::kpPrintDialogPage (QWidget *parent)
-    : KPrintDialogPage (parent),
+    : QWidget (parent),
       d (new kpPrintDialogPagePrivate ())
 {
 #if DEBUG_KP_PRINT_DIALOG_PAGE
     kDebug () << "kpPrintDialogPage::<ctor>()";
 #endif
 
-    setTitle (i18n ("Ima&ge Position"));
+    setWindowTitle (i18n ("Ima&ge Position"));
 
     KVBox *base = new KVBox (this);
     base->setMargin (KDialog::marginHint ());
@@ -70,6 +70,7 @@ kpPrintDialogPage::kpPrintDialogPage (QWidget *parent)
         base);
     d->printTopLeftRadio = new QRadioButton (i18n ("Top-&left of the page"),
         base);
+    setPrintImageCenteredOnPage(true);
 }
 
 kpPrintDialogPage::~kpPrintDialogPage ()
@@ -78,64 +79,21 @@ kpPrintDialogPage::~kpPrintDialogPage ()
 }
 
 
-static bool ShouldPrintImageCenteredOnPage (const QString &printCenteredStr)
+bool kpPrintDialogPage::printImageCenteredOnPage ()
 {
 #if DEBUG_KP_PRINT_DIALOG_PAGE
-    kDebug () << "kpPrintDialogPage.cpp:ShouldPrintImageCenteredOnPage('"
-              << printCenteredStr << "')" << endl;
+    kDebug () << "kpPrintDialogPage::printImageCenteredOnPage()"
+              << " returning " << d->printCenteredRadio->isChecked() << endl;
 #endif
-    return (printCenteredStr.isEmpty () || printCenteredStr == "true");
-}
-
-// public static
-bool kpPrintDialogPage::shouldPrintImageCenteredOnPage (KPrinter *printer)
-{
-    const QString printCenteredStr = printer->option (OptionPrintImageCentered);
-    const bool ret = ::ShouldPrintImageCenteredOnPage (printCenteredStr);
-#if DEBUG_KP_PRINT_DIALOG_PAGE
-    kDebug () << "kpPrintDialogPage::shouldPrintImageCenteredOnPage()"
-              << " returning " << ret << endl;
-#endif
-    return ret;
+    return d->printCenteredRadio->isChecked ();
 }
 
 
-// public virtual [base KPrintDialogPage]
-void kpPrintDialogPage::getOptions (QMap <QString, QString> &options,
-        bool changeEvenIfUsingDefaultValues)
-{
-#if DEBUG_KP_PRINT_DIALOG_PAGE
-    kDebug () << "kpPrintDialogPage::getOptions(changeEvenIfUsingDefaultValues="
-              << changeEvenIfUsingDefaultValues << ")" << endl;
-#endif
-    const bool printCentered = d->printCenteredRadio->isChecked ();
-
-// SYNC: KPrinter bug?
-//       Changing the checkbox from the non-default (false) to the default
-//       value (true) does not work if we ignore default values.
-#if 0
-    if (changeEvenIfUsingDefaultValues || printCentered != true/*default*/)
-#endif
-    {
-    #if DEBUG_KP_PRINT_DIALOG_PAGE
-        kDebug () << "\tsetting config";
-    #endif
-        options [OptionPrintImageCentered] = printCentered ?
-            "true" :
-            "false";
-    }
-}
-
-// public virtual [base KPrintDialogPage]
-void kpPrintDialogPage::setOptions (const QMap <QString, QString> &options)
+void kpPrintDialogPage::setPrintImageCenteredOnPage (bool printCentered)
 {
 #if DEBUG_KP_PRINT_DIALOG_PAGE
     kDebug () << "kpPrintDialogPage::setOptions() filling dialog";
-#endif
-    const QString printCenteredStr = options [OptionPrintImageCentered];
-    const bool printCentered = ::ShouldPrintImageCenteredOnPage (printCenteredStr);
-#if DEBUG_KP_PRINT_DIALOG_PAGE
-    kDebug () << "\tgot config: printCentered=" << printCentered;
+    kDebug () << "\tpasswd in printCentered=" << printCentered;
 #endif
     if (printCentered)
         d->printCenteredRadio->setChecked (true);

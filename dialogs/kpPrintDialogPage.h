@@ -29,14 +29,10 @@
 #ifndef kpPrintDialogPage_H
 #define kpPrintDialogPage_H
 
-
-#include <KPrintDialogPage>
-
-
-class KPrinter;
+#include <QWidget>
 
 
-class kpPrintDialogPage : public KPrintDialogPage
+class kpPrintDialogPage : public QWidget
 {
 Q_OBJECT
 
@@ -44,13 +40,8 @@ public:
     kpPrintDialogPage (QWidget *parent);
     virtual ~kpPrintDialogPage ();
 
-    // This method allows us to group all print config logic inside this
-    // class.
-    static bool shouldPrintImageCenteredOnPage (KPrinter *printer);
-
-    virtual void getOptions (QMap <QString, QString> &options,
-            bool changeEvenIfUsingDefaultValues);
-    virtual void setOptions (const QMap <QString, QString> &options);
+    bool printImageCenteredOnPage ();
+    void setPrintImageCenteredOnPage (bool printCentered);
 
 private:
     struct kpPrintDialogPagePrivate * const d;

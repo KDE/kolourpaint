@@ -55,7 +55,7 @@ class KFontSizeAction;
 class KSelectAction;
 class KToggleAction;
 class KToolBar;
-class KPrinter;
+class QPrinter;
 class KRecentFilesAction;
 class KScanDialog;
 class KToggleFullScreenAction;
@@ -366,8 +366,8 @@ private slots:
     bool slotReload ();
 
 private:
-    void sendFilenameToPrinter (KPrinter *printer);
-    void sendImageToPrinter (KPrinter *printer, bool showPrinterSetupDialog);
+    void sendFilenameToPrinter (QPrinter *printer);
+    void sendImageToPrinter (QPrinter *printer, bool showPrinterSetupDialog);
 
 private slots:
     void slotPrint ();

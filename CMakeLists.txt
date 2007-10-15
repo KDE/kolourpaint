@@ -338,7 +338,7 @@ set(kolourpaint_lgpl_SRCS
 
 kde4_add_library(kolourpaint4_lgpl SHARED ${kolourpaint_lgpl_SRCS})
 
-target_link_libraries(kolourpaint4_lgpl ${KDE4_KDEPRINT_LIBS})
+target_link_libraries(kolourpaint4_lgpl ${KDE4_KIO_LIBS})
 set_target_properties(kolourpaint4_lgpl PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION})
 
 install(TARGETS kolourpaint4_lgpl DESTINATION ${LIB_INSTALL_DIR})
@@ -350,7 +350,7 @@ install(TARGETS kolourpaint4_lgpl DESTINATION ${LIB_INSTALL_DIR})
 
 kde4_add_executable(kolourpaint4 ${kolourpaint_SRCS})
 
-target_link_libraries(kolourpaint4 ${KDE4_KDEPRINT_LIBS}
+target_link_libraries(kolourpaint4 ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS}
 ${QT_QT3SUPPORT_LIBRARY} ${BLITZ_LIBRARIES} kolourpaint4_lgpl)
 
 install(TARGETS kolourpaint4 DESTINATION ${BIN_INSTALL_DIR})
