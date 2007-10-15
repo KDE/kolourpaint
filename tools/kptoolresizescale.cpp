@@ -662,6 +662,7 @@ void kpToolResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
               "</ul>"
               "</qt>"));
 
+    // TODO: ALT+R doesn't select the button.
     m_resizeButton = new QToolButton (m_operationGroupBox);
     toolButtonSetLook (m_resizeButton,
                        QString::fromLatin1 ("resize"),
