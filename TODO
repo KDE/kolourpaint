@@ -32,9 +32,15 @@
 4. See below:
 
 
+4.1. Docs
+4.2. Future Binary Releases
+4.3. KDE
+4.4. KolourPaint Code
+4.5. Minor KolourPaint Code Ideas
 
-Docs
-~~~~
+
+4.1. Docs
+~~~~~~~~~
 
 In the "Notes" section of the Handbook, change the second paragraph to avoid
 using "However ...".  [Thurston]
@@ -44,8 +50,40 @@ with brush_shapes, eraser_shapes, spraycan_patterns and
 selections_opaque_transparent.  [Thurston]
 
 
-KolourPaint 4
-~~~~~~~~~~~~~
+4.2. Future Binary Releases
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+KolourPaint bin:
+- install in menu (Lutz Schweizer)
+- install_systemwide script as sent to: (Lutz Schweizer)
+- "By the way, to run the program I need only a single click on the script
+   file" [rather than the instruction about double-clicking] (Lutz Schweizer)
+- how about make bin first, then RPM that to fix KDE /usr or /opt/kde3 issues
+- docs for bin dist not work on debian - suspect different path and need better use of kde-config --docprefix or something
+
+audit docs for refer to common:/ e.g. kde-default.css
+
+QT_HAVE_MAX_IMAGE_SIZE // An extension made by SUSE to Qt :-(((
+QImage::maxImageSize(); defaults to 4096 as max width and height could cause trouble
+
+rename kolourpaint-1.4pre/kolourpaint to kolourpaint-1.4pre/src (there was
+a reason why this wasn't done but I forgot - document this time)
+
+unix2dos text files in all non-KDE releases to not give bad MS notepad impression
+
+
+4.3. KDE
+~~~~~~~~
+
+re-enable the ICO write support
+
+multicolumn KToolBar's (Bug #3)
+
+fix edit/paste may disappear due to klipper - Bug #85456
+
+
+4.4. KolourPaint Code
+~~~~~~~~~~~~~~~~~~~~~
 
 In light of crash Bug 117866, check that all timers are killed before e.g. adding
 a command to the command history.
@@ -294,31 +332,6 @@ keyboard friendly scrollview
 
 
 
-[document for bindist]
-KolourPaint bindist
-~~~~~~~~~~~~~~~~~~~
-
-KolourPaint bin:
-- install in menu (Lutz Schweizer)
-- install_systemwide script as sent to: (Lutz Schweizer)
-- "By the way, to run the program I need only a single click on the script
-   file" [rather than the instruction about double-clicking] (Lutz Schweizer)
-- how about make bin first, then RPM that to fix KDE /usr or /opt/kde3 issues
-- docs for bin dist not work on debian - suspect different path and need better use of kde-config --docprefix or something
-
-audit docs for refer to common:/ e.g. kde-default.css
-
-QT_HAVE_MAX_IMAGE_SIZE // An extension made by SUSE to Qt :-(((
-QImage::maxImageSize(); defaults to 4096 as max width and height could cause trouble
-
-rename kolourpaint-1.4pre/kolourpaint to kolourpaint-1.4pre/src (there was
-a reason why this wasn't done but I forgot - document this time)
-
-unix2dos text files in all non-KDE releases to not give bad MS notepad impression
-
-
-KolourPaint 4.1
-~~~~~~~~~~~~~~~
 
 Use kipiplugins' "sendimages" plugin instead of homebrew File / Mail...
 (which has limitations like not being able to select format, must save
@@ -477,8 +490,6 @@ is this a feature?
 kpViewManager::setTextCursorBlinkState() needs to restart timer
 
 
-KolourPaint 4.2
-~~~~~~~~~~~~~~~
 
 better graphics backend
 - screen depth independent (Bug 85280)
@@ -576,18 +587,9 @@ http://dot.kde.org/1078028599/:
   - GIMP style rulers
 
 
-KDE
-~~~
 
-re-enable the ICO write support
-
-multicolumn KToolBar's (Bug #3)
-
-fix edit/paste may disappear due to klipper - Bug #85456
-
-
-Other Ideas
-~~~~~~~~~~~
+4.5. Minor KolourPaint Code Ideas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KolourPaint at >= 1.0 should be very usable.  So the following are just nice
 ideas (or things I should really do :)) that may or may not ever get
