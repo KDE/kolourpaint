@@ -144,7 +144,10 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
                 i18n ("<qt><p>Saving the image at the low color depth of %1-bit"
                         " may result in the loss of color information."
 
-                        " Any transparency will also be removed.</p>"
+                        // TODO: It looks like 8-bit QImage's now support alpha.
+                        //       Update kpDocumentSaveOptions::isLossyForSaving()
+                        //       and change "might" to "will".
+                        " Any transparency might also be removed.</p>"
 
                         "<p>Are you sure you want to save at this color depth?</p></qt>",
                       saveOptions.colorDepth ()),
@@ -205,6 +208,9 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
         kpPixmapFX::pixmapWithDefinedTransparentPixels (pixmap,
             Qt::white);  // CONFIG
     QImage imageToSave = kpPixmapFX::convertToQImage (pixmapToSave);
+#if DEBUG_KP_DOCUMENT
+    kDebug () << "image format=" << imageToSave.format ();
+#endif
 
 
     // TODO: fix dup with kpDocumentSaveOptions::isLossyForSaving()
@@ -220,7 +226,11 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     // Reduce colors if required
     //
 
-    // HITODO: Confusion between 24-bit and 32-bit?
+#if DEBUG_KP_DOCUMENT
+    kDebug () << "\tuseSaveOptionsColorDepth=" << useSaveOptionsColorDepth
+              << "current image depth=" << imageToSave.depth ()
+              << "save options depth=" << saveOptions.colorDepth ();
+#endif
     if (useSaveOptionsColorDepth &&
         imageToSave.depth () != saveOptions.colorDepth ())
     {

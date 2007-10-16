@@ -282,6 +282,7 @@ int kpDocumentSaveOptionsWidget::colorDepth () const
 {
     if (mode () & ColorDepth)
     {
+        // The returned values match QImage's supported depths.
         switch (m_colorDepthCombo->currentIndex ())
         {
         case 0:
@@ -293,6 +294,7 @@ int kpDocumentSaveOptionsWidget::colorDepth () const
             return 8;
 
         case 4:
+            // 24-bit is known as 32-bit with QImage.
             return 32;
 
         default:

@@ -42,6 +42,7 @@
 
 static QImage::Format DepthToFormat (int depth)
 {
+    // These values (1, 8, 32) are QImage's supported depths.
     switch (depth)
     {
     case 1:
@@ -51,15 +52,14 @@ static QImage::Format DepthToFormat (int depth)
     case 8:
         return QImage::Format_Indexed8;
 
-    case 24:
-        // If the src image has no mask, we should really return RGB32, to
-        // avoid introducing a mask.  But for some reason, a mask is not
-        // introduced so this is correct :)
+    // 24-bit is known as 32-bit with QImage.
+    case 32:
+        // TODO: If the src image has no mask, we should really return RGB32, to
+        //       avoid introducing a mask.
         return QImage::Format_ARGB32;
 
     default:
-        kError () << "kpeffectreducecolors.cpp:DepthToFormat(depth="
-                  << depth << ")" << endl;
+        Q_ASSERT (!"unknown depth");
         return QImage::Format_Invalid;
     }
 }
@@ -183,6 +183,10 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
         (dither ? Qt::DiffuseDither : Qt::ThresholdDither) |
         Qt::ThresholdAlphaDither |
         (dither ? Qt::PreferDither : Qt::AvoidDither));
+#if DEBUG_KP_EFFECT_REDUCE_COLORS
+    kDebug () << "\tformat: before=" << image.format ()
+              << "after=" << retImage.format ();
+#endif
 
 #if DEBUG_KP_EFFECT_REDUCE_COLORS && 0
     kDebug () << "After colour reduction:";
@@ -206,6 +210,7 @@ void kpEffectReduceColors::applyEffect (QPixmap *destPixmapPtr, int depth, bool 
     if (!destPixmapPtr)
         return;
 
+    // You can't "reduce" to 32-bit since it's the highest depth.
     if (depth != 1 && depth != 8)
         return;
 
