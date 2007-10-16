@@ -38,7 +38,6 @@
 #include <KDebug>
 #include <KDialog>
 #include <KLocale>
-#include <KPrinter>
 #include <KVBox>
 
 #include <kpDefs.h>
