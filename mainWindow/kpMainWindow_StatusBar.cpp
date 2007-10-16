@@ -81,6 +81,7 @@ void kpMainWindow::createStatusBar ()
     addPermanentStatusBarItem (StatusBarItemShapeSize,
                                (1/*+/-*/ + maxDimenLength) * 2 + 1/*x*/);
 
+    // TODO: This doesn't seem to fit "5000x5000".
     addPermanentStatusBarItem (StatusBarItemDocSize,
                                maxDimenLength + 1/*x*/ + maxDimenLength);
     addPermanentStatusBarItem (StatusBarItemDocDepth,
