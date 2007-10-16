@@ -139,6 +139,9 @@ void kpMainWindow::enableTextToolBarActions (bool enable)
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\thave toolbar - setShown";
     #endif
+        // COMPAT: KDE4 does not place the Text Tool Bar in a new row, underneath
+        //         the Main Tool Bar, if there isn't enough room.  This makes
+        //         accessing the Text Tool Bar's buttons difficult.
         textToolBar ()->setVisible (enable);
     }
 }

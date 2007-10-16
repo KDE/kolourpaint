@@ -4,7 +4,7 @@ SYNC: Do not change the number of quotes before the version number
       - it is parsed by the KolourPaint wrapper shell script (in standalone
       backport releases of KolourPaint)
 -->
-<gui name="kolourpaint4" version="62">
+<gui name="kolourpaint4" version="70">
 
 <!--
 SYNC: Check for duplicate actions in menus caused by some of our actions
@@ -162,7 +162,7 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
     <Action name="view_zoom_in" />
 </ToolBar>
 
-<ToolBar name="textToolBar" fullWidth="false" position="top" hidden="true"><text>Text Toolbar</text>
+<ToolBar name="textToolBar" fullWidth="false" position="top" iconText="icononly" hidden="true"><text>Text Toolbar</text>
     <Action name="text_font_family" />
     <Action name="text_font_size" />
     <Separator />
