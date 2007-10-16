@@ -1,6 +1,7 @@
 
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2007 John Layt <john@layt.net>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -43,10 +44,6 @@
 #include <kpDefs.h>
 
 
-// HITODO: It's not saving the option (kdelibs crashes on exit).
-//         And it doesn't PROPAGATE interprocess.
-
-
 struct kpPrintDialogPagePrivate
 {
     QRadioButton *printCenteredRadio, *printTopLeftRadio;
@@ -60,7 +57,7 @@ kpPrintDialogPage::kpPrintDialogPage (QWidget *parent)
     kDebug () << "kpPrintDialogPage::<ctor>()";
 #endif
 
-    setWindowTitle (i18n ("Ima&ge Position"));
+    setWindowTitle (i18n ("I&mage Position"));
 
     KVBox *base = new KVBox (this);
     base->setMargin (KDialog::marginHint ());
@@ -69,7 +66,8 @@ kpPrintDialogPage::kpPrintDialogPage (QWidget *parent)
         base);
     d->printTopLeftRadio = new QRadioButton (i18n ("Top-&left of the page"),
         base);
-    setPrintImageCenteredOnPage(true);
+
+    setPrintImageCenteredOnPage (true);
 }
 
 kpPrintDialogPage::~kpPrintDialogPage ()
@@ -91,8 +89,7 @@ bool kpPrintDialogPage::printImageCenteredOnPage ()
 void kpPrintDialogPage::setPrintImageCenteredOnPage (bool printCentered)
 {
 #if DEBUG_KP_PRINT_DIALOG_PAGE
-    kDebug () << "kpPrintDialogPage::setOptions() filling dialog";
-    kDebug () << "\tpasswd in printCentered=" << printCentered;
+    kDebug () << "kpPrintDialogPage::setOptions(" << printCentered << ")";
 #endif
     if (printCentered)
         d->printCenteredRadio->setChecked (true);

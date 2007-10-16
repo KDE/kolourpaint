@@ -130,6 +130,8 @@ void kpMainWindow::readGeneralSettings ()
         cfg.sync ();
     }
 
+    d->configPrintImageCenteredOnPage = cfg.readEntry (kpSettingPrintImageCenteredOnPage, true);
+
 
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\t\tGeneral Settings: firstTime=" << d->configFirstTime
@@ -138,7 +140,7 @@ void kpMainWindow::readGeneralSettings ()
                << " moreEffectsDialogLastEffect=" << d->moreEffectsDialogLastEffect
                << " resizeScaleDialogLastKeepAspect=" << d->resizeScaleDialogLastKeepAspect
                << " openImagesInSameWindow=" << d->configOpenImagesInSameWindow
-               << endl;
+               << " printImageCenteredOnPage=" << d->configPrintImageCenteredOnPage;
 #endif
 }
 

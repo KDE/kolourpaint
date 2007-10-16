@@ -366,7 +366,7 @@ private slots:
     bool slotReload ();
 
 private:
-    void sendFilenameToPrinter (QPrinter *printer);
+    void sendDocumentNameToPrinter (QPrinter *printer);
     void sendImageToPrinter (QPrinter *printer, bool showPrinterSetupDialog);
 
 private slots:

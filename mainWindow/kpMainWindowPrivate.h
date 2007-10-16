@@ -114,7 +114,7 @@ struct kpMainWindowPrivate
     // File Menu
     //
 
-    bool configOpenImagesInSameWindow;
+    bool configOpenImagesInSameWindow, configPrintImageCenteredOnPage;
 
     QAction *actionNew, *actionOpen;
     KRecentFilesAction *actionOpenRecent;

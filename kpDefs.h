@@ -77,6 +77,7 @@
 #define kpSettingShowPath QString::fromLatin1 ("Show Path")
 #define kpSettingColorSimilarity QString::fromLatin1 ("Color Similarity")
 #define kpSettingDitherOnOpen QString::fromLatin1 ("Dither on Open if Screen is 15/16bpp and Image Num Colors More Than")
+#define kpSettingPrintImageCenteredOnPage QString::fromLatin1 ("Print Image Centered On Page")
 #define kpSettingOpenImagesInSameWindow QString::fromLatin1 ("Open Images in the Same Window")
 
 #define kpSettingsGroupFileSaveAs QString::fromLatin1 ("File/Save As")
