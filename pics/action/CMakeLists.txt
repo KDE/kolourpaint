@@ -5,7 +5,5 @@
 # 3
 #
 
-add_subdirectory( action ) 
-add_subdirectory( app ) 
-add_subdirectory( custom ) 
+kde4_install_icons( ${DATA_INSTALL_DIR}/kolourpaint4/icons  )
  
