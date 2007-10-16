@@ -153,6 +153,7 @@ kpEffectReduceColorsWidget::~kpEffectReduceColorsWidget ()
 // public
 int kpEffectReduceColorsWidget::depth () const
 {
+    // These values (1, 8, 32) are QImage's supported depths.
     if (m_blackAndWhiteRadioButton->isChecked () ||
         m_blackAndWhiteDitheredRadioButton->isChecked ())
     {
@@ -165,7 +166,7 @@ int kpEffectReduceColorsWidget::depth () const
     }
     else if (m_24BitRadioButton->isChecked ())
     {
-        return 24;
+        return 32;
     }
     else
     {
