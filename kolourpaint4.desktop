@@ -80,6 +80,4 @@ MimeType=image/fax-g3;image/gif;image/jpeg2000;image/jpeg;image/png;image/tiff;i
 
 Categories=Qt;KDE;Graphics;
 Terminal=false
-X-KDE-StartupNotify=true
-X-DBUS-StartupType=Multi
 
