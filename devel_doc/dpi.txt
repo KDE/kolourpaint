@@ -1,0 +1,170 @@
+
+DPI
+
+This describes the general concept of "DPI" (Dots Per Inch) and refers
+to KolourPaint's behavior.
+
+1. DPI
+2. Printing
+3. Displaying on the Screen
+
+
+1. DPI
+~~~~~~
+
+A size of a bitmap is commonly given in terms of pixels e.g. 640x480.
+However, pixels are independent of physical measurements, such as meters or
+inches, so we have no idea whether our 640x480 image is supposed to be
+rendered 1cm or 1m wide or high.
+
+Therefore, most file formats in addition to storing pixel data, have DPI
+("Dots Per Inch" or "Pixels per Inch") fields for both the horizontal and
+vertical components.  Normally, both fields are identical but there is no
+theoretical reason why they need to be.
+
+As an example, a 640x480 image with 100 DPI horizontally and 72 DPI
+vertically is of the following physical dimensions:
+
+    Width: 640 dots / 100 dots per inch = 6.4 inches
+    Height: 480 dots / 72 dots per inch = 6.67 inches
+
+    Recall that 1 inch = 2.54 centimeters approximately.
+
+The exact same 640x480 image but with 1/10th of the DPI in both directions
+is much larger physically:
+
+    Width: 640 dots / 10 dots per inch = 64 inches
+    Height: 480 dots / 7.2 dots per inch = 66.67 inches
+
+
+2. Printing
+~~~~~~~~~~~
+
+This DPI is crucial when printing – without specifying it, the printer has
+no idea how big 640 pixels should be.  The DPI of the image (e.g. 72 DPI)
+is passed as the "logical resolution" to QPrinter::setResolution() (and
+unfortunately, Qt only supports identical horizontal and vertical DPIs).
+
+Most printers can only output exactly 300 or 600 blobs of ink per inch.  In
+other words, their "physical resolution" is 300 or 600 DPI.  If the logical
+resolution is identical to the physical resolution, the printer will use 1
+blob of ink per pixel.  In reality, this is a simplification because some
+printers use quality or color cartridge tricks and others don't use ink,
+but this is all unimportant to the programmer.
+
+If the logical resolution is lower than the physical resolution, the
+printer will simply use more than 1 blob of ink per pixel.  If the physical
+resolution is not a perfect multiple of the logical resolution, then you
+may end up with e.g. 1.2 blobs of ink per pixel.  This is physically
+impossible so what happens is that most pixels get 1 blob of ink while
+every so often, one pixel gets 2 blobs of ink such that it averages out to
+1.2 blobs/pixel.  The printer has many tricks so this generally looks fine.
+
+However, if the logical resolution is higher than the physical resolution
+(e.g. a high quality digital photo on a low quality printer), the printer
+would need to somehow e.g. fit 2 pixels into each blob of ink.  This is
+impossible no matter how hard you try.  The printer simply cannot do it and
+you end up with bad quality.  The only real way around this is to get a
+printer with a higher physical resolution or got to an expensive print
+shop.
+
+Versions of KolourPaint prior to 1.4.2_relight ignored the image DPI and
+simply used the default resolution of QPrinter (72 DPI).  Newer versions
+respect the image DPI unless the image would be too large to fit on paper,
+in which case, it overrides the DPI so that it fits while being as large as
+possible and maintaining aspect ratio.  Note that we override the DPI
+instead of scaling the image's pixels as such scaling (esp. if the image
+were to get smaller and pixels were to be dropped) would automatically
+reduce and cap the quality of the printout – we would rather send the
+original set of pixels to the printer for the printer to scale, in the
+almost certain case that it can do a better job.  See
+kpMainWindow::slotPrint().
+
+
+3. Displaying on the screen
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Because KolourPaint is supposed to be used to edit images on a pixel level,
+every image pixel is displayed as one screen pixel.  In other words, the
+image's DPI fields are ignored and the screen's DPI is used instead.  So
+the size of the image as displayed by KolourPaint on the screen is almost
+certainly not going to be the size of the image when printed.
+
+What is the DPI of the screen?  It depends on the current resolution and
+the physical size of the screen (as measured by a ruler).  For instance, at
+a resolution of 1024x768 (note the abuse and overloading of the term
+“resolution” here to “mean number of pixels”, instead of “number of pixels
+per inch”) if your screen is 10.24in x 7.68in:
+
+    Horizontal DPI = 1024 dots / 10.24 inches = 100 dots per inch
+    Vertical DPI = 768 dots / 7.68 inches = 100 dots per inch
+
+The display driver can return the screen DPI by looking up a monitor
+database. Under X11, you can run the "xdpyinfo" command or equivalently,
+the "kinfocenter" command to read this value.
+
+Unfortunately, the monitor database is frequently wrong or worse still, the
+DPI is hardcoded (usually as 72x72, 75x75, 96x96 or 100x100).  Luckily,
+this is unimportant as this apparent DPI value is not used when displaying
+images – like KolourPaint, most applications simply assign one image pixel
+to each screen pixel.
+
+The real problem of an incorrect DPI, reported by the display driver, is
+text. Text is not like images as these days, it is described as
+mathematical shapes (with infinite resolution) and its size is always
+described in physical measurements – points.  A point is always 1/72 inch.
+However, as the graphics card speaks in pixels, unlike a printer, the
+software text engine must translate from points to pixels, using the
+reported display DPI.  For instance, if the driver thinks the screen is 72
+DPI and we want to render a 10pt font, it will be rasterized as:
+
+    72 dots per inch * (10 points * 1/72) inches = 10 pixels
+
+If we were to measure the rendered font with a ruler, it would really be
+(10 * 1/72) inches.  However, if the display driver was wrong and the
+screen was actually 144 DPI (72 * 2), the ruler would find that it is only
+half the intended physical size (10 * 1/72 / 2 inches).  This is why having
+a correct DPI is so important.
+
+When a word processor renders text onto the screen, it does a very bad job,
+with few pixels per points, due to the limited resolution of the screen
+(e.g. 100 DPI).  It uses hinting and antialiasing tricks to minimise the
+effect of low resolution.
+
+However, when it prints, it queries the printer driver for the resolution
+of the printer and then prints at that high resolution (e.g. 600DPI) with
+many ink blobs per point.  Therefore, printed text almost always looks
+better than text displayed on screen.
+
+Printing to a file (e.g. postscript) in a word processor, before sending
+that file to a printer may be a bad idea because it means the text cannot
+be rendered at the resolution of the printer since it could be printed on
+any printer.  The word processor, in this case, defaults to some high DPI,
+such as 600 DPI, but this is not optimal if your printer supports a higher
+DPI.
+
+If one were to write text on top of an image in KolourPaint, what DPI is
+used to rasterise the text?  Strictly speaking, we should use the DPI of
+the image. Currently, we use the DPI of the screen with the nasty side
+effect of text being rendered in more or less pixels depending on the
+apparent DPI of whatever screen you are currently using.
+
+Drawing text in any paint program, or taking a screenshot of text in a word
+processor, and printing that almost always results in horribly low quality
+compared to printing text from a word processor.  This is because the text
+has been rasterised at the DPI of the screen, which is usually much lower
+than that of a printer.
+
+The zoom levels, in KolourPaint, are relative to the screen DPI.  A 100%
+zoom means that one image pixel is displayed per screen pixel.  A 50% zoom
+means that two image pixels are displayed per screen pixel (this looks bad
+as every second image pixel must be thrown away).  A 200% zoom means that
+one image pixel is displayed as two screen pixels.
+
+You can get KolourPaint to display the image using the image's DPI, instead
+of the screen's, by using the Print Preview feature.  This will be
+displayed at the same physical size as if it were to be printed, assuming
+the display driver knows the correct screen DPI to do the translation
+between the image DPI and the screen DPI.  If the image DPI exceeds the
+screen's DPI, this will look horrible – the printout will usually look
+better as the printer has much higher DPI than the screen.

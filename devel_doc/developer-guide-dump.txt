@@ -1,0 +1,163 @@
+This is a concise guide for maintaining and modifying KolourPaint.  Highly dynamic, implementation details, and hacks not really worth mentioning, are described in source code comments.
+
+
+Future Directions
+~~~~~~~~~~~~~~~~~
+
+* Major Rewrite [6 months of work]: rewriting the graphics engine to be device-independent and support 8-bit and alpha
+
+* Implement often requested features
+
+* Continual refinement to make it easier to use
+
+* Steal ideas from other editors
+
+
+
+People
+~~~~~~
+
+Clarence Dang is the founder and was the main developer.
+Thurston Dang provides advice on user interfaces changes and wrote the DocBook documentation (kdegraphics/doc/kolourpaint).
+
+Kristof Borrey drew the original set of icons, replacing Clarence's hopeless ones.
+
+Nuno Pinheiro and Danny Allen replaced most of the icons with newer ones.
+
+
+
+
+Licensing
+~~~~~~~~~
+
+KolourPaint/KDE3 is under the BSD license since we want the code to be usable by anyone, for anything.  This includes closed-source derivatives but actually, the main motivations are to allow:
+
+1.Moving of generic code into an LGPL library (you cannot do this with the GPL if the copyright is diluted and those other copyright holders disappear or stubbornly refuse to relicense)
+
+2.Reuse of the code in BSD projects, that don't agree with GPL licensing (which might be due to either die-hard philosophy and/or Reason 1).
+
+The great thing about the BSD license is that if you don't agree with it, you can make a fork under the GPL license.  In contrast, if you license under the GPL to start with, no one can fork it under the BSD license if they disagree with you.
+
+It is possible to add MIT/X11 licensed code since it's equivalent to
+BDD.
+
+KolourPaint/KDE4 adds LGPL code into a runtime library to avoid
+infecting the BSD code.
+
+There are ways to incorporate GPL code by introducing a plugin system,
+that has the intent of supporting arbitrary plugins but "just happens"
+to support a plugin containing the GPL code in question.  This must
+be done with caution and probably only works with GPLv2.
+
+Contrary to popular belief, the GPL does not prevent closed-source derivatives from being created as long as there is only one copyright holder or all copyright holders conspire together.
+
+
+
+Code Reliability
+~~~~~~~~~~~~~~~~
+
+The KDE 3.x versions received full code coverage white-box testing and full functionality testing with black-box testing.  This testing was paranoid.
+
+This is why the Coverity static code analyser failed to find a single non-false-positive out of more than 50 thousand lines of code.
+
+You will not get memory errors in KolourPaint code, except some memory leaks on application termination due to some missing destruction (but this is cleaned up by the OS anyway).  However:
+
+1. The selection code, combined with undo/redo, is very complicated.
+   It would not be surprising if there was a path that causes a crash
+   -- although a huge number of contrived paths have been tested.
+   We should simplify this code to fix this.
+
+2. Large images are poorly handled by Qt (you get memory allocation
+   errors and partial operation completion but no exceptions are
+   thrown).
+
+3. If the combined size of images in KolourPaint exceeds 2GB on a
+   32-bit system, the 32-bit int's are likely to overflowed somewhere.
+
+One of the main claims to fame of KolourPaint is its reliability.  This is in stark contrast to other opensource projects which have entire mailing lists devoted to crashes.
+
+The KDE 4.0 version of KolourPaint was done in a hurry and because of
+the new underlying libraries, we have to test all of KolourPaint all
+over again.
+
+
+Source Repository
+~~~~~~~~~~~~~~~~~
+
+Initial versions held on Clarence Dang's hard disk.
+
+After a while, this was moved into KDE CVS.
+
+KDE then converted the repository to KDE SVN.  The source code can be modified by anyone with an SVN account.
+
+branches/kolourpaint/control/ - persistent, documentation and non-source code information
+
+trunk/KDE/kdegraphics/{doc/,}kolourpaint – current development branch for KDE 4, for all future feature development.  On top of the normal kdelibs dependency, you need qimageblitz.
+
+Essentially, this is a port of KDE 3.5's KolourPaint to KDE 4 plus
+heavy refactoring and a few new features.  All regressions due to the
+port have been marked in the source code with "COMPAT".
+
+It contains all fixes and features in KDE 3.5.8's KolourPaint.
+
+branches/KDE/3.5/kdegraphics/{doc/,}kolourpaint – backport branch for KDE 3
+
+branches/KDE/3.4/kdegraphics/{doc/,}kolourpaint – dead backport branch
+
+branches/KDE/3.3/kdegraphics/{doc/,}kolourpaint – dead backport branch
+
+branches/kolourpaint/1.2_kde3/ - dead, standalone release branch for KDE 3.0 (we still need to extract the binary distribution scripts from there, for future standalone releases)
+
+branches/kolourpaint/1.0/ - dead, standalone release branch for KDE 3.0
+
+
+Coverity
+~~~~~~~~
+
+Coverity [http://www.coverity.com/] is a commercial and expensive static source analyser that finds bugs and false positives.  They do free scans of KDE but you need to apply to Coverity for an account to see the results of the scans.  Many KDE developers have Coverity accounts.
+
+
+Sourceforge
+~~~~~~~~~~~
+
+http://sourceforge.net/projects/kolourpaint/ is the Sourceforge project.  The admin,  Clarence Dang can give you access to this.
+
+
+Website
+~~~~~~~
+The website is http://kolourpaint.sourceforge.net/.  You need a Sourceforge account to modify the webpage via SSH at shell.sourceforge.net:/home/groups/k/ko/kolourpaint/htdocs/.
+
+The website is currently stored on Clarence Dang's computer using CVS and copied to that path every so often.  The HTML is edited directly, although small sections are generated from files which are not uploaded and also, some unfinished pages are not uploaded.
+
+It would be better if this site was hosted on KDE SVN and maintained by an interested  web developer.
+
+
+Mailinglists
+~~~~~~~~~~~~
+
+The mailing lists hosted on sourceforge are practically dead.
+
+<kolourpaint-support AT lists.sourceforge.net> is a support address but receives huge amounts of spam.
+
+
+http://bugs.kde.org
+~~~~~~~~~~~~~~~~~~~
+
+Some bugs are listed in the "BUGS" and "TODO" files, or marked in the
+source code.  Others are listed there.
+
+
+Other websites
+~~~~~~~~~~~~~
+
+There's a KolourPaint page at freshmeat.net and kde-apps.org.
+
+
+Domain Name
+~~~~~~~~~~~
+
+http://www.kolourpaint.org/ is currently a Namesecure domain that redirects to http://kolourpaint.sourceforge.net/.  The registrant is Clarence Dang, who pays for the domain.
+
+http://www.kolourpaint.com/ is registered to prevent someone else from
+misrepresenting the project.  We are not really concerned about kolourpaint.net, kolourpaint.com.au etc. since they are odd domains anyway while .org and .com are very ordinary.
+
