@@ -1,0 +1,57 @@
+
+1. Read ../maintaining.txt first.
+
+2. Grep sources for "COMPAT".
+
+3. Update using kolourpaint.desktop (don't overwite the MimeType= line though)
+   from KDE branch (e.g. branches/KDE/3.3/ for branches/kolourpaint/1.2_kde3/)
+
+4. Run branches/kolourpaint/control/backport_releases/update_kolourpaint_trans
+
+5. Docs
+   
+   a) Compile docs
+
+      Build branches/kolourpaint/1.2_kde3/kdegraphics/doc/kolourpaint/ using the
+      latest SVN checkout of KDE3.  Unlike the code, the docs will _not_ compile
+      on KDE 3.0.  They require at least KDE 3.2 (possibly 3.3? 3.4?).
+
+   b) Copy docs in preparation for modifying
+
+      cp index.cache.bz2 branches/kolourpaint/1.2_kde3/kdegraphics/kolourpaint/dist/doc/
+      cd branches/kolourpaint/1.2_kde3/kdegraphics/kolourpaint/dist/doc/
+      bunzip2 index.cache.bz2  # this makes diff's possible, wasn't done in
+the past
+      mv pris-index.cache hacked-index.cache
+   
+   c) svn copy kdelibs/doc/common/* to kolourpaint/dist/doc/
+      rm Makefile.am Makefile.in README.Doxygen appheader.html
+
+      we are probably including too many files but better safe than sorry.
+
+   d) hack-index_cache.pl hacked-index.cache
+
+   e) fgrep 'help:/
+common
+../' *
+
+      to find remaining troublesome references
+
+7. Edit 1.2_kde3.control
+
+8. Run "collectsrc 1.2_kde3.control".
+   This will guide you through all the steps needed to create a source package
+   i.e. kolourpaint-1.2.4_kde3.tar.bz2
+
+Note that a "RPATH       ${ORIGIN}/../lib" is OK even though I asked for no
+-rpath at all (actually it's desirable if I need to dynamically link Krita lib
+in future :)).  Just as long as RPATH doesn't contain an abs path like
+/usr/lib/qt3
+
+check static links for security fixes -lXinerama
+
+do .lsm and figure out sending to KDE FTP
+
+change hostname to localhost.localdomain - TODO: need?
+
+remove /usr/share/doc/HTML/en/kolourpaint/common
