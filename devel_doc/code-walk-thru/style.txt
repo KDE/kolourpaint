@@ -1,0 +1,61 @@
+
+Coding Style
+
+
+If in doubt, follow the style of the majority of the existing code.
+
+
+Fixing Existing Code
+~~~~~~~~~~~~~~~~~~~~
+
+Some code does not adhere to this style as the style changed multiple times
+during the years of KolourPaint development.  This code should be changed.
+
+
+Indentation
+~~~~~~~~~~~
+
+4 spaces.
+
+Justification: Consistent with much of KDE.  Avoids the consequences of
+people mixing spaces and tabs (a certain editor from GNU is famous for
+this) when they have a different tab setting from you.
+
+
+Header Files
+~~~~~~~~~~~~
+
+Header guards should be "#ifndef kpClassName_H."
+Justification: "kp" avoids namespace clashes.  Do not start with "_" or
+"__" as the compiler/lib reserves that.
+
+Group related methods together regardless of whether you have to keep
+changing access permissions.  cpp file should have methods defined in same
+order.
+
+Put field variables in "kpClassPrivate" structs defined in the C++ files.
+
+
+C++ Files
+~~~~~~~~~
+
+Comments are encouraged.
+
+
+Also, before every method, put:
+// {public, private, protected} {static,
+// {overrides, virtual} {[base sclass],}}
+
+overrides = non-virtual override (a method with the same name, which
+            usually calls the method being overridden)
+
+virtual = standard virtual method overriding
+
+sclass = class whose method definition this _method_ overrides (not
+         necessarily the immediate superclass of this class).  This is
+         so that you know to look up the API documentation of the
+         overridden method in "sclass".
+
+Justification: You don't have to keep flipping between the .h and .cpp to
+see who can access it and hence what assumptions and checks you can/should make.
+
