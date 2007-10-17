@@ -102,3 +102,27 @@ Test cases
 ~~~~~~~~~~
 
 TODO: List all functionality in every widget as test cases.
+
+
+
+
+
+kolourpaint doesnotexist.png
+[optional modification of image]
+CTRL+S forces a dialog open because it does not know what format it should
+be saved in.
+
+
+Also for JPEGs since don't know qualtiy.
+
+
+
+
+
+
+KolourPaint saving also handles KImageIO writer not existing for format.
+
+
+
+
+
