@@ -1,202 +1,11 @@
-This is a concise guide for maintaining and modifying KolourPaint.  Highly dynamic, implementation details, and hacks not really worth mentioning, are described in source code comments.
 
 
-Future Directions
-~~~~~~~~~~~~~~~~~
 
-* Major Rewrite [6 months of work]: rewriting the graphics engine to be device-independent and support 8-bit and alpha
 
-* Implement often requested features
 
-* Continual refinement to make it easier to use
 
-* Steal ideas from other editors
 
 
-
-People
-~~~~~~
-
-Clarence Dang is the founder and was the main developer.
-Thurston Dang provides advice on user interfaces changes and wrote the DocBook documentation (kdegraphics/doc/kolourpaint).
-
-Kristof Borrey drew the original set of icons, replacing Clarence's hopeless ones.
-
-Nuno Pinheiro and Danny Allen replaced most of the icons with newer ones.
-
-
-
-
-Licensing
-~~~~~~~~~
-
-KolourPaint/KDE3 is under the BSD license since we want the code to be usable by anyone, for anything.  This includes closed-source derivatives but actually, the main motivations are to allow:
-
-1.Moving of generic code into an LGPL library (you cannot do this with the GPL if the copyright is diluted and those other copyright holders disappear or stubbornly refuse to relicense)
-
-2.Reuse of the code in BSD projects, that don't agree with GPL licensing (which might be due to either die-hard philosophy and/or Reason 1).
-
-The great thing about the BSD license is that if you don't agree with it, you can make a fork under the GPL license.  In contrast, if you license under the GPL to start with, no one can fork it under the BSD license if they disagree with you.
-
-It is possible to add MIT/X11 licensed code since it's equivalent to
-BDD.
-
-KolourPaint/KDE4 adds LGPL code into a runtime library to avoid
-infecting the BSD code.
-
-There are ways to incorporate GPL code by introducing a plugin system,
-that has the intent of supporting arbitrary plugins but "just happens"
-to support a plugin containing the GPL code in question.  This must
-be done with caution and probably only works with GPLv2.
-
-Contrary to popular belief, the GPL does not prevent closed-source derivatives from being created as long as there is only one copyright holder or all copyright holders conspire together.
-
-
-
-Code Reliability
-~~~~~~~~~~~~~~~~
-
-The KDE 3.x versions received full code coverage white-box testing and full functionality testing with black-box testing.  This testing was paranoid.
-
-This is why the Coverity static code analyser failed to find a single non-false-positive out of more than 50 thousand lines of code.
-
-You will not get memory errors in KolourPaint code, except some memory leaks on application termination due to some missing destruction (but this is cleaned up by the OS anyway).  However:
-
-1. The selection code, combined with undo/redo, is very complicated.
-   It would not be surprising if there was a path that causes a crash
-   -- although a huge number of contrived paths have been tested.
-   We should simplify this code to fix this.
-
-2. Large images are poorly handled by Qt (you get memory allocation
-   errors and partial operation completion but no exceptions are
-   thrown).
-
-3. If the combined size of images in KolourPaint exceeds 2GB on a
-   32-bit system, the 32-bit int's are likely to overflowed somewhere.
-
-One of the main claims to fame of KolourPaint is its reliability.  This is in stark contrast to other opensource projects which have entire mailing lists devoted to crashes.
-
-The KDE 4.0 version of KolourPaint was done in a hurry and because of
-the new underlying libraries, we have to test all of KolourPaint all
-over again.
-
-
-Source Repository
-~~~~~~~~~~~~~~~~~
-
-Initial versions held on Clarence Dang's hard disk.
-
-After a while, this was moved into KDE CVS.
-
-KDE then converted the repository to KDE SVN.  The source code can be modified by anyone with an SVN account.
-
-branches/kolourpaint/control/ - persistent, documentation and non-source code information
-
-trunk/KDE/kdegraphics/{doc/,}kolourpaint – current development branch for KDE 4, for all future feature development.  On top of the normal kdelibs dependency, you need qimageblitz.
-
-Essentially, this is a port of KDE 3.5's KolourPaint to KDE 4 plus
-heavy refactoring and a few new features.  All regressions due to the
-port have been marked in the source code with "COMPAT".
-
-It contains all fixes and features in KDE 3.5.8's KolourPaint.
-
-branches/KDE/3.5/kdegraphics/{doc/,}kolourpaint – backport branch for KDE 3
-
-branches/KDE/3.4/kdegraphics/{doc/,}kolourpaint – dead backport branch
-
-branches/KDE/3.3/kdegraphics/{doc/,}kolourpaint – dead backport branch
-
-branches/kolourpaint/1.2_kde3/ - dead, standalone release branch for KDE 3.0 (we still need to extract the binary distribution scripts from there, for future standalone releases)
-
-branches/kolourpaint/1.0/ - dead, standalone release branch for KDE 3.0
-
-
-Coverity
-~~~~~~~~
-
-Coverity [http://www.coverity.com/] is a commercial and expensive static source analyser that finds bugs and false positives.  They do free scans of KDE but you need to apply to Coverity for an account to see the results of the scans.  Many KDE developers have Coverity accounts.
-
-
-Sourceforge
-~~~~~~~~~~~
-
-http://sourceforge.net/projects/kolourpaint/ is the Sourceforge project.  The admin,  Clarence Dang can give you access to this.
-
-
-Website
-~~~~~~~
-The website is http://kolourpaint.sourceforge.net/.  You need a Sourceforge account to modify the webpage via SSH at shell.sourceforge.net:/home/groups/k/ko/kolourpaint/htdocs/.
-
-The website is currently stored on Clarence Dang's computer using CVS and copied to that path every so often.  The HTML is edited directly, although small sections are generated from files which are not uploaded and also, some unfinished pages are not uploaded.
-
-It would be better if this site was hosted on KDE SVN and maintained by an interested  web developer.
-
-
-Mailinglists
-~~~~~~~~~~~~
-
-The mailing lists hosted on sourceforge are practically dead.
-
-<kolourpaint-support AT lists.sourceforge.net> is a support address but receives huge amounts of spam.
-
-
-http://bugs.kde.org
-~~~~~~~~~~~~~~~~~~~
-
-Some bugs are listed in the "BUGS" and "TODO" files, or marked in the
-source code.  Others are listed there.
-
-
-Other websites
-~~~~~~~~~~~~~
-
-There's a KolourPaint page at freshmeat.net and kde-apps.org.
-
-
-Domain Name
-~~~~~~~~~~~
-
-http://www.kolourpaint.org/ is currently a Namesecure domain that redirects to http://kolourpaint.sourceforge.net/.  The registrant is Clarence Dang, who pays for the domain.
-
-http://www.kolourpaint.com/ is registered to prevent someone else from
-misrepresenting the project.  We are not really concerned about kolourpaint.net, kolourpaint.com.au etc. since they are odd domains anyway while .org and .com are very ordinary.
-
-
-
-
-
-
-
-
-
-
-
-TODO
-~~~~
-Test case:
-kolourpaint doesnotexist.png
-[optional modification of image]
-CTRL+S forces a dialog open because it does not know what format it should be saved in.
-
-
-KDE 3.5:
-
-Every so often, an email will be sent to kde-cvs-announce@kde.org (all SVN
-commiters are on it) telling every maintainer to get ready for the next
-stable release.
-
-You need to "svn update" KolourPaint and check it still works.  Check that
-the changes since the last release are reasonable.  Forward-port anything
-that is missing in the trunk.  Trunk is always supposed to completely
-supersede the branch.
-
-Update the version numbers in README and VERSION.
-
-Document all changes in NEWS and
-www/sites/www/announcements/changelogs/changelog_branch_3_5.xml.
-
-Run the XSLT command in the .xml to regenerate the changelog.
-Check the changelog shows up correctly at http://www.kde.org/announcements/changelogs/changelog3_5_6to3_5_7.php
 
 
 kpCommnd can only exist while there is a kpDocument and kpView and kpViewManager and kpTool.
@@ -207,52 +16,6 @@ kpCommand and kpDocument are not GUI classes.  They should not access the kpMain
 kpTool creates kpCommand.
 
 
-Config
-~~~~~~
-
-config is per mainwindow
-
-Should the thumbnail save the config regarding its position relative to its
-parent (the kpMainWindow) or should its parent save that?  It should be the
-kpMainWindow since classes should only concern themselves with things
-inside them and the thumbnail position is "inside" the kpMainWindow, not
-inside itself.
-
-Hidden configuration setting defaults are written the first time the key
-is looked up (i.e. the functionality is used).  This is not optimal since
-looking at the config file gives the user no idea that the key exists,
-if it has never been queried.
-
-
-Non-Rectangular Image Selection Borders
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Rectangular image selections are straightforward since they have easy-to-handle
-rectangular borders.  In contrast, elliptical and freeform image selections
-are difficult to implement.  The following methods must act consistently:
-
-1. calculatePoints() - used to implement paintBorder().
-
-2. shapeBitmap() - used by the "Selection / Clear" menu item.
-
-3. shapeRegion() - used for pulling the selection image off the document
-and contains().
-
-This means that "Selection / Clear" must paint all pixels on, and inside, the
-border and none outside the border.  Similarly, a pull of the selection image
-must pull off those pixels on, and inside, the border and none outside.
-Otherwise, selection borders would be visually misleading.
-
-
-Test cases
-~~~~~~~~~~
-
-List all functionality in every widget as test cases.
-
-Moving Selections
------------------
-
-Hides the selection border during the move.  The text cursor must be disabled.
 
 
 
@@ -263,60 +26,21 @@ Hides the selection border during the move.  The text cursor must be disabled.
 
 
 
-
-
-
-
-
-View depends on existence of document - for simplicty.
-For instance, views pass on mouse events to tools which assume existence.
-If you destroy document, you must kill view first.
-setDocument() kills view and doc and creates doc and view.
-
-Exception is kpView::deleteLater():
-r385274 | dang | 2005-02-02 22:08:27 +1100 (Wed, 02 Feb 2005) | 21 lines
-
-* kpView: fix crash on access to deleted kpDocument in paintEvent()
-          due to kpMainWindow::setDocument(0) calling
-          "kpThumbnailView->deleteLater()" - thumbnailView was alive
-          even after document had died.  Used QGuardedPtr.
-          Crash can be reproduced by
-          opening a document, switching to brush tool, opening thumbnail,
-          zooming to 800%, then CTRL+W (close).
-          This only goes to show that deleteLater(), QTimer::singleShot(0,...)
-          and other event loop tricks only cause trouble.
-
-which is why kpView uses a guardded pointer to document.
-
-
-Configuration scheme:
-
-All config keys are read at kpMainWindow initialisation
-m_configThumbnailShown is read from the config files at kpMainWindow initialization.
-[it's currently not actually used so is sort of a bad example]
-
-Every time the thumbnail visibility is changed either programmatically
-or via the user, m_configThumbnailShown is updated _and_ written to the
-config file.  Unlike other programs, you do not need to exit the entire process so that setting changes are written to the disk.  Those other programs
-are confusing because opening a new process before exiting the first does not
-reflect the config changes made in the first.  Consider Settings / Show Path for instance.  TODO: test in KWrite.
-
-Windows opened in the same KolourPaint process will read m_configThumbnailShown.  Existing KolourPaint processes will read their m_configThumbnailShown.  In neither case does KolourPaint read from the config file, which may have been
-changed by another process.   This is reasonable behaviour as - TODO: is it?
-
-New KolourPaint processes will read the last m_configThumbnailShown written to the config file.  This is reasonable behaviour as a new process should
-use the setting from the last time the thumbnail setting changed.
-
-TODO: reparseConfig
-
-All other config settings work the same way in KolourPaint.
-
-TODO: interaction with session restore.  Don't re-read settings.  KApplication::isRestored().
 
 
 
 isFromURL is false for "kolourpaint doesnotexist.png"
 
+
+
+
+TODO
+~~~~
+Test case:
+kolourpaint doesnotexist.png
+[optional modification of image]
+CTRL+S forces a dialog open because it does not know what format it should
+be saved in.
 
 
 KolourPaint saving also handles KImageIO writer not existing for format.
@@ -325,41 +49,7 @@ KolourPaint saving also handles KImageIO writer not existing for format.
 
 
 
-Testing:
-
-Uninstall and install (needs find $KDEDIR -iname '*kolourpaint*')
-rm $KDEHOME/share/config/kolourpaintrc
-rm -rf $KDEHOME/share/apps/kolourpaint/ [kolourpaintui.rc here specifies toolbar config]
-TODO: who specifies shortcuts?
-
-Exhaustive test kolourpaint (open and save and a bit of doodling, Transparency
-) and help
 
 
 
 
-
-
-        // QPixmap::mask() is hideously slow, and always returns a non-null
-        // mask, if the pixmap has an alpha channel (even if the channel is
-        // supposed to be empty).
-        // QPixmap::hasAlpha() always returns
-        // true purely because the depth is 32.
-
-        // QPixmap::hasAlphaChannel() returns
-        // true purely because the depth is 32.
-
-
-        // Without an alpha channel, QPixmap::mask() will be fast and, if there is no mask,
-        // it will correctly return a null bitmap.
-        // Note: QPixmap::mask() is slightly slow even on a pixmap without an
-        //       alpha channel.
-
-
-        // Without XRENDER, pixmaps definitely don't have alpha channels.
-
-
-
-
-pixmaps are the same depth as the screen (e.g. 32-bit) by default.
-kpDocumentSaveOptions keeps the intended saving depth of the image (set by kpDocument_Open.cpp).

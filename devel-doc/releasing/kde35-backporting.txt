@@ -1,0 +1,20 @@
+
+KDE 3.5:
+
+Every so often, an email will be sent to kde-cvs-announce@kde.org (all SVN
+commiters are on it) telling every maintainer to get ready for the next
+stable release.
+
+You need to "svn update" KolourPaint and check it still works.  Check that
+the changes since the last release are reasonable.  Forward-port anything
+that is missing in the trunk.  Trunk is always supposed to completely
+supersede the branch.
+
+Update the version numbers in README and VERSION.
+
+Document all changes in NEWS and
+www/sites/www/announcements/changelogs/changelog_branch_3_5.xml.
+
+Run the XSLT command in the .xml to regenerate the changelog.
+Check the changelog shows up correctly at
+http://www.kde.org/announcements/changelogs/changelog3_5_6to3_5_7.php

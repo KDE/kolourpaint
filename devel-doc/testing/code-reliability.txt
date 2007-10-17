@@ -1,0 +1,32 @@
+Code Reliability
+~~~~~~~~~~~~~~~~
+
+The KDE 3.x versions received full code coverage white-box testing and full
+functionality testing with black-box testing.  This testing was paranoid.
+
+This is why the Coverity static code analyser failed to find a single
+non-false-positive out of more than 50 thousand lines of code.
+
+You will not get memory errors in KolourPaint code, except some memory
+leaks on application termination due to some missing destruction (but this
+is cleaned up by the OS anyway).  However:
+
+1. The selection code, combined with undo/redo, is very complicated.
+   It would not be surprising if there was a path that causes a crash
+   -- although a huge number of contrived paths have been tested.
+   We should simplify this code to fix this.
+
+2. Large images are poorly handled by Qt (you get memory allocation
+   errors and partial operation completion but no exceptions are
+   thrown).
+
+3. If the combined size of images in KolourPaint exceeds 2GB on a
+   32-bit system, the 32-bit int's are likely to overflowed somewhere.
+
+One of the main claims to fame of KolourPaint is its reliability.  This is
+in stark contrast to other opensource projects which have entire mailing
+lists devoted to crashes.
+
+The KDE 4.0 version of KolourPaint was done in a hurry and because of
+the new underlying libraries, we have to test all of KolourPaint all
+over again.

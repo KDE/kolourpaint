@@ -1,0 +1,35 @@
+Licensing
+~~~~~~~~~
+
+KolourPaint/KDE3 is under the BSD license since we want the code to be
+usable by anyone, for anything.  This includes closed-source derivatives
+but actually, the main motivations are to allow:
+
+1.Moving of generic code into an LGPL library (you cannot do this with the
+GPL if the copyright is diluted and those other copyright holders disappear
+or stubbornly refuse to relicense)
+
+2.Reuse of the code in BSD projects, that don't agree with GPL licensing
+(which might be due to either die-hard philosophy and/or Reason 1).
+
+The great thing about the BSD license is that if you don't agree with it,
+you can make a fork under the GPL license.  In contrast, if you license
+under the GPL to start with, no one can fork it under the BSD license if
+they disagree with you.
+
+It is possible to add MIT/X11 licensed code since it's equivalent to
+BDD.
+
+KolourPaint/KDE4 adds LGPL code into a runtime library to avoid
+infecting the BSD code.
+
+There are ways to incorporate GPL code by introducing a plugin system,
+that has the intent of supporting arbitrary plugins but "just happens"
+to support a plugin containing the GPL code in question.  This must
+be done with caution and probably only works with GPLv2.
+
+Contrary to popular belief, the GPL does not prevent closed-source
+derivatives from being created as long as there is only one copyright
+holder or all copyright holders conspire together.
+
+

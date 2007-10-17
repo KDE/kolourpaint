@@ -94,3 +94,39 @@ We can then use OpenGL for hardware accelerated color space conversion.
 
 TODO: describe stop gap Qt4 QPixmap solution without alpha channel.  Look
 at svn log and blog and imagelib/kppainter.h comments.
+
+
+
+
+
+
+
+
+
+
+        // QPixmap::mask() is hideously slow, and always returns a non-null
+        // mask, if the pixmap has an alpha channel (even if the channel is
+        // supposed to be empty).
+        // QPixmap::hasAlpha() always returns
+        // true purely because the depth is 32.
+
+        // QPixmap::hasAlphaChannel() returns
+        // true purely because the depth is 32.
+
+
+        // Without an alpha channel, QPixmap::mask() will be fast and, if
+there is no mask,
+        // it will correctly return a null bitmap.
+        // Note: QPixmap::mask() is slightly slow even on a pixmap without
+an
+        //       alpha channel.
+
+
+        // Without XRENDER, pixmaps definitely don't have alpha channels.
+
+
+
+
+pixmaps are the same depth as the screen (e.g. 32-bit) by default.
+kpDocumentSaveOptions keeps the intended saving depth of the image (set by
+kpDocument_Open.cpp).

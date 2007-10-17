@@ -1,0 +1,105 @@
+
+
+Source Repository
+~~~~~~~~~~~~~~~~~
+
+Initial versions held on Clarence Dang's hard disk.
+
+After a while, this was moved into KDE CVS.
+
+KDE then converted the repository to KDE SVN.  The source code can be
+modified by anyone with an SVN account.
+
+branches/kolourpaint/control/ - persistent, documentation and non-source
+code information
+
+trunk/KDE/kdegraphics/{doc/,}kolourpaint – current development branch for
+KDE 4, for all future feature development.  On top of the normal kdelibs
+dependency, you need qimageblitz.
+
+Essentially, this is a port of KDE 3.5's KolourPaint to KDE 4 plus
+heavy refactoring and a few new features.  All regressions due to the
+port have been marked in the source code with "COMPAT".
+
+It contains all fixes and features in KDE 3.5.8's KolourPaint.
+
+branches/KDE/3.5/kdegraphics/{doc/,}kolourpaint – backport branch for KDE 3
+
+branches/KDE/3.4/kdegraphics/{doc/,}kolourpaint – dead backport branch
+
+branches/KDE/3.3/kdegraphics/{doc/,}kolourpaint – dead backport branch
+
+branches/kolourpaint/1.2_kde3/ - dead, standalone release branch for KDE
+3.0 (we still need to extract the binary distribution scripts from there,
+for future standalone releases)
+
+branches/kolourpaint/1.0/ - dead, standalone release branch for KDE 3.0
+
+
+Coverity
+~~~~~~~~
+
+Coverity [http://www.coverity.com/] is a commercial and expensive static
+source analyser that finds bugs and false positives.  They do free scans of
+KDE but you need to apply to Coverity for an account to see the results of
+the scans.  Many KDE developers have Coverity accounts.
+
+
+Sourceforge
+~~~~~~~~~~~
+
+http://sourceforge.net/projects/kolourpaint/ is the Sourceforge project.
+The admin,  Clarence Dang can give you access to this.
+
+
+Website
+~~~~~~~
+The website is http://kolourpaint.sourceforge.net/.  You need a Sourceforge
+account to modify the webpage via SSH at
+shell.sourceforge.net:/home/groups/k/ko/kolourpaint/htdocs/.
+
+The website is currently stored on Clarence Dang's computer using CVS and
+copied to that path every so often.  The HTML is edited directly, although
+small sections are generated from files which are not uploaded and also,
+some unfinished pages are not uploaded.
+
+It would be better if this site was hosted on KDE SVN and maintained by an
+interested  web developer.
+
+
+Mailinglists
+~~~~~~~~~~~~
+
+The mailing lists hosted on sourceforge are practically dead.
+
+<kolourpaint-support AT lists.sourceforge.net> is a support address but
+receives huge amounts of spam.
+
+
+http://bugs.kde.org
+~~~~~~~~~~~~~~~~~~~
+
+Some bugs are listed in the "BUGS" and "TODO" files, or marked in the
+source code.  Others are listed there.
+
+
+Other websites
+~~~~~~~~~~~~~
+
+There's a KolourPaint page at freshmeat.net and kde-apps.org.
+
+
+Domain Name
+~~~~~~~~~~~
+
+http://www.kolourpaint.org/ is currently a Namesecure domain that redirects
+to http://kolourpaint.sourceforge.net/.  The registrant is Clarence Dang,
+who pays for the domain.
+
+http://www.kolourpaint.com/ is registered to prevent someone else from
+misrepresenting the project.  We are not really concerned about
+kolourpaint.net, kolourpaint.com.au etc. since they are odd domains anyway
+while .org and .com are very ordinary.
+
+
+

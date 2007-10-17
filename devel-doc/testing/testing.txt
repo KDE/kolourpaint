@@ -70,6 +70,22 @@ C. QPixmap pixmap (width, height);
    kpPixmapFX::anyMethod (&pixmap);
 
 
+
+Testing:
+
+Uninstall and install (needs find $KDEDIR -iname '*kolourpaint*')
+rm $KDEHOME/share/config/kolourpaintrc
+rm -rf $KDEHOME/share/apps/kolourpaint/ [kolourpaintui.rc here specifies
+toolbar config]
+TODO: who specifies shortcuts?
+
+Exhaustive test kolourpaint (open and save and a bit of doodling,
+Transparency
+) and help
+
+
+
+
 Reference Implementation
 
 If the behavior of any operation is in doubt, KolourPaint from KDE 3.4.0
@@ -79,3 +95,10 @@ considered the reference implementation, except for bugs that were fixed
 in later versions.  Later versions in the KDE 3.4.x and KDE 3.5.x series
 (even with those bugs fixed) are not reference implementations because
 they were not as well tested.
+
+
+
+Test cases
+~~~~~~~~~~
+
+TODO: List all functionality in every widget as test cases.

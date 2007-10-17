@@ -1,0 +1,53 @@
+
+Config
+~~~~~~
+
+config is per mainwindow
+
+Should the thumbnail save the config regarding its position relative to its
+parent (the kpMainWindow) or should its parent save that?  It should be the
+kpMainWindow since classes should only concern themselves with things
+inside them and the thumbnail position is "inside" the kpMainWindow, not
+inside itself.
+
+Hidden configuration setting defaults are written the first time the key
+is looked up (i.e. the functionality is used).  This is not optimal since
+looking at the config file gives the user no idea that the key exists,
+if it has never been queried.
+
+
+Configuration scheme:
+
+All config keys are read at kpMainWindow initialisation
+m_configThumbnailShown is read from the config files at kpMainWindow
+initialization.
+[it's currently not actually used so is sort of a bad example]
+
+Every time the thumbnail visibility is changed either programmatically
+or via the user, m_configThumbnailShown is updated _and_ written to the
+config file.  Unlike other programs, you do not need to exit the entire
+process so that setting changes are written to the disk.  Those other
+programs
+are confusing because opening a new process before exiting the first does
+not
+reflect the config changes made in the first.  Consider Settings / Show
+Path for instance.  TODO: test in KWrite.
+
+Windows opened in the same KolourPaint process will read
+m_configThumbnailShown.  Existing KolourPaint processes will read their
+m_configThumbnailShown.  In neither case does KolourPaint read from the
+config file, which may have been
+changed by another process.   This is reasonable behaviour as - TODO: is
+it?
+
+New KolourPaint processes will read the last m_configThumbnailShown written
+to the config file.  This is reasonable behaviour as a new process should
+use the setting from the last time the thumbnail setting changed.
+
+TODO: reparseConfig
+
+All other config settings work the same way in KolourPaint.
+
+TODO: interaction with session restore.  Don't re-read settings.
+KApplication::isRestored().
+
