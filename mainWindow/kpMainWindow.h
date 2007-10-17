@@ -200,6 +200,13 @@ private:
     //    pixels.  Your slot can now safely read the document as it's now
     //    consistent with what's on the screen.
     //
+    //    For example, consider the case where a line is being dragged out and
+    //    CTRL+I is pressed to invert the image, while the mouse is still held
+    //    down.  The CTRL+I invert code (kpMainWindow::slotInvertColors()) must
+    //    push the line kpTempImage onto the document before the invert can
+    //    meaningfully proceed (else the invert will see the state of the document
+    //    before the line was dragged out).
+    //
     //    Note that selection layers are not pushed down by this method.
     //    This is a feature, not a bug.  The user would be annoyed if e.g.
     //    slotSave() happened to push down the selection.  Use
