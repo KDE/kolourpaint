@@ -161,3 +161,15 @@ http://www.kolourpaint.org/ is currently a Namesecure domain that redirects to h
 http://www.kolourpaint.com/ is registered to prevent someone else from
 misrepresenting the project.  We are not really concerned about kolourpaint.net, kolourpaint.com.au etc. since they are odd domains anyway while .org and .com are very ordinary.
 
+
+
+
+
+
+
+
+
+
+
+TODO
+~~~~
