@@ -779,6 +779,7 @@ CTRL+Ptrscreen. (Mikhail Capone)
 
 11. Push as many classes as possible into kdelibs.
 * reduce size of code (51352-28 generated lines 2006-03-23; hopefully reduce by 10KLOC)
+  - all classes in generic/ and lgpl/generic/
   - go through each class finding stuff that can be factored into kdelibs
     (also go through bug reports), SYNC, HACK, COMPAT etc.
   - push kpSqueezedTextLabel out
