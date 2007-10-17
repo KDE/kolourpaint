@@ -142,6 +142,9 @@ public:
     // this gives a pretty good indication that the image stored at url()
     // is equal to image() (unless the something has happened to that url
     // outside of KolourPaint).
+    //
+    // e.g. If the user types "kolourpaint doesnotexist.png" to start
+    //      KolourPaint, this method will return false.
     bool isFromURL (bool checkURLStillExists = true) const;
 
     // (will convert: empty Url --> "Untitled")
