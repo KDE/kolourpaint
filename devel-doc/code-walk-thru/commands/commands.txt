@@ -1,0 +1,90 @@
+Commands [commands/]
+
+
+Overview
+~~~~~~~~
+
+Commands wrap changes to a document, to make them undoable and redoable.
+
+These classes are a clone of the KDE KCommand hierarchy with these extra
+features required by KolourPaint:
+
+- Methods for peeking the undo/redo history
+- Undo/Redo history limited by both number and size (in bytes) of stored
+
+These class are an implementation of the Command Design Pattern.
+
+
+Foundation Classes
+~~~~~~~~~~~~~~~~~~
+
+kpCommandSize - static methods that estimate the sizes of objects in bytes.
+-------------
+
+This is used by the command history to trim stored commands, once a
+certain amount of memory is used by those commands.
+
+kpCommandSize::SizeType is a large integer typedef for commands sizes,
+which is not expected to overlow.
+
+
+kpCommand - abstract base class for all commands
+---------
+
+size() must be implemented to return the estimated size of all fields in
+the command, in bytes.  kpCommandSize methods can help here.
+
+execute() must be implemented to run a command for the first time and also
+to redo.
+
+unexecute() must be implemented for undo.
+
+
+kpNamedCommand - abstract convenience base class for commands
+--------------
+
+This is the same as kpCommand except that name() is implemented to return
+the name passed to the constructor.
+
+
+kpCommandHistoryBase
+
+kpCommandHistory
+
+
+Interactions
+~~~~~~~~~~~~
+
+kpCommandSize methods are generally only called inside implementations of
+kpCommand::size().
+
+kpCommand, kpNamedCommand and kpMacroCommand are referenced extensively
+outside this module.  There is a substantial hierarchy of classes derived
+from these base classes, for each operation that acts on the document.
+Implementations of execute() and unexecute() should mutate the kpDocument
+returned by document() and control views using the kpViewManager returned
+by viewManager().  In order to reduce coupling with classes outside of the
+package, accesses to such classes should be done in kpCommandEnvironment
+only.
+
+execute() and unexecute() may be called without a command being in
+the command history.
+
+Commands are generally created, and added to the command history, by tools
+or by kpMainWindow.  Sometimes they are deleted and never placed in the
+command history as, for instance, a tool may construct a kpCommand while
+the user is dragging a shape but discards it when the user cancels that
+shape.
+
+A single kpCommandHistory is stored per kpMainWindow and accessible
+through the user-visible undo/redo actions.
+
+
+Derived Classes
+~~~~~~~~~~~~~~~
+
+
+Additional Interactions
+~~~~~~~~~~~~~~~~~~~~~~~
+
+imagelib commands use imagelib

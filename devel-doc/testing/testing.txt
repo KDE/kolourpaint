@@ -3,3 +3,79 @@ with and without valgrind; doc all tests
 
 test SYNC
 
+
+
+Testing
+
+There are 2 kinds of documents:
+
+RGB - the kind of document you get when you start KolourPaint or click "File /
+New".
+
+RGBM - RGB with a 0/1 transparency mask.  To get this, either open such a file
+       or draw on an RGB document using a transparent color.  There are
+       also some (careless) code paths in KolourPaint that convert from RGB to RGBM
+       even when no transparency in introduced.
+
+There are separate code paths (with large areas of commonality) for both
+so when you change something in KolourPaint, you must test both.
+
+KolourPaint code does not support QPixmap's with alpha channels
+(see the explanation at TODO).  The
+following are common examples of incorrect code:
+
+A. kpImage image;
+
+   QPainter p (&image);
+
+   // This is likely to introduce an alpha channel.
+   p.anyMethod ();
+
+   Change to:
+
+   kpImage image;
+
+   // This calls QPainter but in tricky ways to avoid introducing an alpha
+   // channel.
+   kpPainter::anyMethod (&image);
+
+B. QPixmap pixmap;
+
+   QPainter p (&pixmap);
+
+   // This is likely to introduce an alpha channel.
+   p.anyMethod ();
+
+   Change to:
+
+   QPixmap pixmap;
+
+   // This calls QPainter but in tricky ways to avoid introducing an alpha
+   // channel.
+   kpPixmapFX::anyMethod (&pixmap);
+
+C. QPixmap pixmap (width, height);
+
+   // <pixmap> is uninitialized and may have an alpha channel.
+   // If it does, calling kpPixmapFX::anyMethod() will trip an assert.
+   kpPixmapFX::anyMethod (&pixmap);
+
+   Change to:
+
+   // While this does not initialize the image data of <pixmap>,
+   // it establishes the no-alpha-channel invariant ...
+   QPixmap pixmap = kpPixmapFX::newPixmap (width, height);
+
+   // ... so this is safe to call.
+   kpPixmapFX::anyMethod (&pixmap);
+
+
+Reference Implementation
+
+If the behavior of any operation is in doubt, KolourPaint from KDE 3.4.0
+and running under KDE 3.4.0 (e.g. KDE 3.5 introduced a Recent Files bug),
+as shipped by Fedora Core 4, on a 32-bit screen, is the most tested configuration of KolourPaint and should be
+considered the reference implementation, except for bugs that were fixed
+in later versions.  Later versions in the KDE 3.4.x and KDE 3.5.x series
+(even with those bugs fixed) are not reference implementations because
+they were not as well tested.
