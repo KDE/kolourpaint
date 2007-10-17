@@ -210,7 +210,13 @@ kpTool creates kpCommand.
 Config
 ~~~~~~
 
-Should the thumbnail save the config regarding its position relative to its parent (the kpMainWindow) or should its parent save that?  It should be the kpMainWindow since classes should only concern themselves with things inside them and the thumbnail position is "inside" the kpMainWindow, not inside itself.
+config is per mainwindow
+
+Should the thumbnail save the config regarding its position relative to its
+parent (the kpMainWindow) or should its parent save that?  It should be the
+kpMainWindow since classes should only concern themselves with things
+inside them and the thumbnail position is "inside" the kpMainWindow, not
+inside itself.
 
 Hidden configuration setting defaults are written the first time the key
 is looked up (i.e. the functionality is used).  This is not optimal since
@@ -337,7 +343,7 @@ Exhaustive test kolourpaint (open and save and a bit of doodling, Transparency
         // QPixmap::mask() is hideously slow, and always returns a non-null
         // mask, if the pixmap has an alpha channel (even if the channel is
         // supposed to be empty).
-        // QPixmap::hasAlpha() always returns 
+        // QPixmap::hasAlpha() always returns
         // true purely because the depth is 32.
 
         // QPixmap::hasAlphaChannel() returns
