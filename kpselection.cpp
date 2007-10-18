@@ -545,14 +545,12 @@ void kpSelection::setPixmap (const QPixmap &pixmap)
     //       it's a border, not a text box) but saves memory when using
     //       that kpSelection::setPixmap (QPixmap ()) hack.
     m_pixmap = pixmap.isNull () ? 0 : new QPixmap (pixmap);
-
-    QRect oldRect = boundingRect ();
-    emit changed (oldRect);
+    QRect changedRect = boundingRect ();
 
     if (m_pixmap)
     {
-        const bool changedSize = (m_pixmap->width () != oldRect.width () ||
-                                  m_pixmap->height () != oldRect.height ());
+        const bool changedSize = (m_pixmap->width () != m_rect.width () ||
+                                  m_pixmap->height () != m_rect.height ());
         const bool changedFromText = (m_type == Text);
         if (changedSize || changedFromText)
         {
@@ -560,8 +558,8 @@ void kpSelection::setPixmap (const QPixmap &pixmap)
             {
                 kdError () << "kpSelection::setPixmap() changes the size of the selection!"
                         << "   old:"
-                        << " w=" << oldRect.width ()
-                        << " h=" << oldRect.height ()
+                        << " w=" << m_rect.width ()
+                        << " h=" << m_rect.height ()
                         << "   new:"
                         << " w=" << m_pixmap->width ()
                         << " h=" << m_pixmap->height ()
@@ -580,11 +578,13 @@ void kpSelection::setPixmap (const QPixmap &pixmap)
 
             m_textLines = QValueVector <QString> ();
 
-            emit changed (boundingRect ());
+            changedRect = changedRect.unite (boundingRect ());
         }
     }
 
     calculateTransparencyMask ();
+
+    emit changed (changedRect);
 }
 
 
