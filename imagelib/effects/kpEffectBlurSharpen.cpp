@@ -46,6 +46,22 @@
 #endif
 
 
+//
+// For info on "radius" and "sigma", see http://redskiesatnight.com/Articles/IMsharpen/
+//
+// Daniel Duley says:
+//
+// <quote>
+// I don't think I can describe it any better than the article: The radius
+// controls many how pixels are taken into account when determining the value
+// of the center pixel. This controls the quality [and speed] of the result but not
+// necessarily the strength. The sigma controls how those neighboring pixels
+// are weighted depending on how far the are from the center one. This is
+// closer to strength, but not exactly >:)
+// </quote>
+//
+
+
 static QImage BlurQImage (const QImage qimage_, int strength)
 {
     QImage qimage = qimage_;
