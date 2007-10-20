@@ -63,9 +63,10 @@ This file lists known bugs in this version that are not considered
 
     b) KolourPaint is screen depth dependent.  Opening an image with a
        an alpha channel and/or a depth higher than the screen and then
-       saving it will likely result in loss of colour information.  To
-       reduce data loss, run your screen at 24-bit.  This bug will be
-       addressed in a future version of KolourPaint.
+       saving it will likely result in loss of colour information.  Also,
+       8-bit screens are not supported at all.  To reduce data loss, run
+       your screen at 24-bit.  This bug will be addressed in a future
+       version of KolourPaint.
 
 19. Read support for EPS files is extremely slow.  You should not enable
     the "Save Preview" dialog when saving to EPS.  This is an issue with
