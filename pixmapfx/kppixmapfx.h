@@ -93,6 +93,23 @@ public:
     //
     // Converts <pixmap> to a QImage and returns it.
     //
+    // WARNING: On an 8-bit screen:
+    //
+    //              QPixmap result = convertToPixmap (convertToImage (pixmap));
+    //
+    //          <result> is slightly differently colored to <pixmap>.
+    //
+    //          KolourPaint needs to convert to QImage occasionally as
+    //          QImage allows KolourPaint to read pixels and because the QImage
+    //          methods give reliable results and pixel-identical results on
+    //          all platforms.  The QPixmap paint engine has no such guarantee
+    //          and even depends on the quality of the video driver.
+    //
+    //          As a result, KolourPaint should not be used on an 8-bit screen.
+    //          HITODO: Add warning on startup, like in KolourPaint/KDE4.
+    //
+    //          This bug will be fixed when KolourPaint gets a proper image library,
+    //          where QPixmap -> QImage -> QPixmap transitions will be not be needed.
     static QImage convertToImage (const QPixmap &pixmap);
 
     //
