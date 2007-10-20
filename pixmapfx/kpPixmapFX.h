@@ -95,7 +95,8 @@ public:
     // If the screen mode is paletted, it brings up a dialog warning the
     // user that KolourPaint has not been tested under such an environment
     // (paletted QImage's, usually created from paletted QPixmap's, need
-    //  completely different code paths to truecolor QImage's).
+    //  completely different code paths to truecolor QImage's; see also
+    //  the warning in convertToQImage()).
     //
     // Called by initPost() - do not call directly.
     static void initScreenDepthPost ();
@@ -125,6 +126,22 @@ public:
     //
     // Converts <pixmap> to a QImage and returns it.
     //
+    // WARNING: On an 8-bit screen:
+    //
+    //              QPixmap result = convertToPixmap (convertToQImage (pixmap));
+    //
+    //          <result> is slightly differently colored to <pixmap>.
+    //
+    //          KolourPaint needs to convert to QImage occasionally as
+    //          QImage allows KolourPaint to read pixels and because the QImage
+    //          paint engine gives reliable results and pixel-identical results on
+    //          all platforms.  The QPixmap paint engine has no such guarantee
+    //          and even depends on the quality of the video driver.
+    //
+    //          As a result, KolourPaint should not be used on an 8-bit screen.
+    //
+    //          This bug will be fixed when KolourPaint gets a proper image library,
+    //          where QPixmap -> QImage -> QPixmap transitions will be not be needed.
     static QImage convertToQImage (const QPixmap &pixmap);
 
     //
