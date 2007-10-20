@@ -310,6 +310,9 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
                                    bool lossyPrompt,
                                    QWidget *parent)
 {
+    // TODO: Use KIO::NetAccess:mostLocalURL() for accessing home:/ (and other
+    //       such local URLs) for efficiency and because only local writes
+    //       are atomic.
 #if DEBUG_KP_DOCUMENT
     kDebug () << "kpDocument::savePixmapToFile ("
                << url
