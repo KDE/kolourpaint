@@ -239,6 +239,9 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
         //       I suspect this doesn't matter since this is only called to
         //       reduce color depth and QImage's with depth < 32 don't
         //       support masks anyway.
+        //
+        //       Later: I think the mask is preserved for 8-bit since Qt4
+        //              seems to support it for QImage.
         imageToSave = kpEffectReduceColors::convertImageDepth (imageToSave,
                                            saveOptions.colorDepth (),
                                            saveOptions.dither ());
