@@ -155,6 +155,9 @@ public:
     //  text selection)
     int textCursorRow () const;
     int textCursorCol () const;
+    // See kpToolText::beginDrawSelectText() for a correct use of this
+    // method, satisfying the above convention.
+    //
     // WARNING: If the previous row and column are invalid (e.g. you just
     //          called kpTextSelection::setTextLines() such that the previous
     //          row and column now point outside the lines), this will not
