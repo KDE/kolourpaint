@@ -236,6 +236,30 @@ private:
 
 public:
     kpImageSelectionTransparency imageSelectionTransparency () const;
+    // The drawing background color is set to <transparency>.transparentColor()
+    // if the <transparency> is in Transparent mode or if <forceColorChange>
+    // is true (not the default).  [x]
+    //
+    // If <transparency> is in Opaque mode and <forceColorChange> is false,
+    // the background color is not changed because:
+    //
+    //   1. It is ignored by the selection in Opaque mode anyway.
+    //   2. This avoids irritating the user with an unnecessary background
+    //      color change.
+    //
+    // The only case where you should set <forceColorChange> to true is in
+    // kpToolImageSelectionTransparencyCommand to ensure that the state
+    // is identical to when the command was constructed.
+    // Later: I don't think setting it to true is ever necessary since:
+    //
+    //          1. The background color only counts in Transparent mode.
+    //
+    //          2. Any kpToolImageSelectionTransparencyCommand that switches to
+    //             Transparent mode will automatically set the background
+    //             color due to the first part of [x] anyway.
+    //
+    // The other fields of <transparency> are copied into the main window
+    // as expected.
     void setImageSelectionTransparency (const kpImageSelectionTransparency &transparency,
                                    bool forceColorChange = false);
     int settingImageSelectionTransparency () const;
