@@ -101,18 +101,23 @@ int kpToolText::calcClickCreateDimension (int mouseStart, int mouseEnd,
 }
 
 // private
-bool kpToolText::shouldCreate (bool dragHasBegun,
+bool kpToolText::shouldCreate (bool dragAccepted,
         const QPoint &accidentalDragAdjustedPoint,
         const kpTextStyle &textStyle,
         int *minimumWidthOut, int *minimumHeightOut,
-        bool *newDragHasBegun)
+        bool *newDragAccepted)
 {
-    *newDragHasBegun = dragHasBegun;
+#if DEBUG_KP_TOOL_TEXT && 1
+    kDebug () << "CALL(dragAccepted=" << dragAccepted
+              << ",accidentalDragAdjustedPoint=" << accidentalDragAdjustedPoint
+              << ")";
+#endif
+    *newDragAccepted = dragAccepted;
 
     // Is the drag so short that we're essentially just clicking?
     // Basically, we're trying to prevent unintentional creation of 1-pixel
     // selections.
-    if (!dragHasBegun && accidentalDragAdjustedPoint == startPoint ())
+    if (!dragAccepted && accidentalDragAdjustedPoint == startPoint ())
     {
         // We had an existing text box before the click?
         if (hadSelectionBeforeDraw ())
@@ -125,28 +130,17 @@ bool kpToolText::shouldCreate (bool dragHasBegun,
             // Therefore, we are not doing a drag.
             return false;
         }
-        // We must be creating a new box.
+        // We are probably creating a new box.
         else
         {
-            // This drag is currently a click - not a drag.
+            // This drag is currently a click -- not a drag.
+            // As a special case, allow user to create a text box,
+            // of reasonable ("preferred minimum") size, using a single
+            // click.
             //
-            // However, as a special case, allow user to create a text box using a single
-            // click.  But don't set newDragHasBegun since it would be untrue.
-            //
-            // This makes sure that a single click creation of text box
-            // works even if draw() is invoked more than once at the
-            // same position (esp. with accidental drag suppression
-            // (above)).
-
-            //
-            // User is possibly clicking to create a text box.
-            //
-            // Create a text box of reasonable ("preferred minimum") size.
-            //
-            // However, if it turns out that this is just the start of the drag,
-            // we will be called again but the above code will execute instead,
-            // ignoring this resonable size.
-            //
+            // If the user drags further, the normal drag-to-create-a-textbox
+            // branch [x] will execute and the size will be determined based on
+            // the size of the drag instead.
 
         #if DEBUG_KP_TOOL_TEXT && 1
             kDebug () << "\tclick creating text box" << endl;
@@ -178,9 +172,18 @@ bool kpToolText::shouldCreate (bool dragHasBegun,
                 document ()->height ());
 
 
+            // Do _not_ set "newDragAccepted" to true as we want
+            // this text box to remain at the click-given size, in the absence
+            // of any dragging.  In other words, if draw() is called again
+            // and therefore, we are called again, but the mouse has not
+            // moved, we do want this branch to execute again, not
+            // Branch [x].
             return true/*do create text box*/;
         }
     }
+    // Dragging to create a text box [x].
+    //
+    // The size will be determined based on the size of the drag.
     else
     {
     #if DEBUG_KP_TOOL_TEXT && 1
@@ -188,7 +191,8 @@ bool kpToolText::shouldCreate (bool dragHasBegun,
     #endif
         *minimumWidthOut = kpTextSelection::MinimumWidthForTextStyle (textStyle);
         *minimumHeightOut = kpTextSelection::MinimumHeightForTextStyle (textStyle);
-        *newDragHasBegun = true;
+
+        *newDragAccepted = true;
         return true/*do create text box*/;
     }
 
@@ -196,7 +200,7 @@ bool kpToolText::shouldCreate (bool dragHasBegun,
 
 // protected virtual [kpAbstractSelectionTool]
 bool kpToolText::drawCreateMoreSelectionAndUpdateStatusBar (
-        bool dragHasBegun,
+        bool dragAccepted,
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &normalizedRectIn)
 {
@@ -210,15 +214,15 @@ bool kpToolText::drawCreateMoreSelectionAndUpdateStatusBar (
     // Calculate Text Box Rectangle.
     //
 
-    bool newDragHasBegun = dragHasBegun;
+    bool newDragAccepted = dragAccepted;
 
     // (will set both variables)
     int minimumWidth = 0, minimumHeight = 0;
-    if (!shouldCreate (dragHasBegun, accidentalDragAdjustedPoint, textStyle,
-            &minimumWidth, &minimumHeight, &newDragHasBegun))
+    if (!shouldCreate (dragAccepted, accidentalDragAdjustedPoint, textStyle,
+            &minimumWidth, &minimumHeight, &newDragAccepted))
     {
         setUserShapePoints (accidentalDragAdjustedPoint);
-        return newDragHasBegun;
+        return newDragAccepted;
     }
 
 
@@ -279,6 +283,6 @@ bool kpToolText::drawCreateMoreSelectionAndUpdateStatusBar (
 
     setUserShapePoints (startPoint (), actualEndPoint);
 
-    return newDragHasBegun;
+    return newDragAccepted;
 }
 

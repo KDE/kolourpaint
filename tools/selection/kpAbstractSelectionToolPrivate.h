@@ -48,7 +48,12 @@ struct kpAbstractSelectionToolPrivate
     kpAbstractSelectionTool::DrawType drawType;
     kpAbstractSelectionContentCommand *currentSelContentCommand;
 
-    bool dragHasBegun;
+    // Whether the drag has been substantial enough to be considered as a
+    // non-NOP drag.  The "substantial enough" critera is draw-type
+    // dependent and is usually based on how far the mouse has been
+    // dragged.  See kpAbstractSelectionTool's API Doc for details.
+    bool dragAccepted;
+
     bool hadSelectionBeforeDraw;
 
     bool cancelledShapeButStillHoldingButtons;

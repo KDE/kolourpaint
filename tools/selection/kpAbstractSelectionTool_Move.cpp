@@ -214,7 +214,7 @@ void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*
 #endif
 
 
-    if (!d->dragHasBegun &&
+    if (!d->dragAccepted &&
         targetSelRect.topLeft () + d->startMoveDragFromSelectionTopLeft == startPoint ())
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
@@ -258,7 +258,7 @@ void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*
     if (shiftPressed ())
         d->currentMoveCommandIsSmear = true;
 
-    if (!d->dragHasBegun && (controlPressed () || shiftPressed ()))
+    if (!d->dragAccepted && (controlPressed () || shiftPressed ()))
         d->currentMoveCommand->copyOntoDocument ();
 
     d->currentMoveCommand->moveTo (targetSelRect.topLeft ());
@@ -278,7 +278,7 @@ void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*
     setUserShapeSize (end.x () - start.x (), end.y () - start.y ());
 
 
-    d->dragHasBegun = true;
+    d->dragAccepted = true;
 }
 
 
@@ -353,7 +353,7 @@ QVariant kpAbstractSelectionTool::operationMove (Operation op,
     (void) data1;
     (void) data2;
 
-    
+
     switch (op)
     {
     case HaventBegunDrawUserMessage:

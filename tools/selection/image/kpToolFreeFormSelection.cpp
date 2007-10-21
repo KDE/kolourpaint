@@ -57,19 +57,19 @@ kpToolFreeFormSelection::~kpToolFreeFormSelection ()
 
 // protected virtual [base kpAbstractSelectionTool]
 bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
-        bool dragHasBegun,
+        bool dragAccepted,
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &/*normalizedRect*/)
 {
 #if DEBUG_KP_TOOL_FREE_FROM_SELECTION
     kDebug () << "kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar("
-               << "dragHasBegun=" << dragHasBegun
+               << "dragAccepted=" << dragAccepted
                << ",accidentalDragAdjustedPoint=" << accidentalDragAdjustedPoint
                << ")" << endl;
 #endif
 
     // Prevent unintentional creation of 1-pixel selections.
-    if (!dragHasBegun && accidentalDragAdjustedPoint == startPoint ())
+    if (!dragAccepted && accidentalDragAdjustedPoint == startPoint ())
     {
     #if DEBUG_KP_TOOL_FREE_FROM_SELECTION && 1
         kDebug () << "\tnon-text NOP - return" << endl;
@@ -79,7 +79,7 @@ bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
     }
 
     Q_ASSERT (accidentalDragAdjustedPoint == currentPoint ());
-    Q_ASSERT (dragHasBegun == (bool) document ()->selection ());
+    Q_ASSERT (dragAccepted == (bool) document ()->selection ());
 
     const kpFreeFormImageSelection *oldPointsSel = 0;
     if (document ()->selection ())
@@ -93,7 +93,7 @@ bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
     QPolygon points;
 
     // First point in drag?
-    if (!dragHasBegun)
+    if (!dragAccepted)
     {
         points.append (startPoint ());
     }

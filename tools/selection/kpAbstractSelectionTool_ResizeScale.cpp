@@ -302,7 +302,7 @@ void kpAbstractSelectionTool::drawResizeScale (
 
     kpAbstractSelection *sel = document ()->selection ();
 
-    if (!d->dragHasBegun && thisPoint == startPoint ())
+    if (!d->dragAccepted && thisPoint == startPoint ())
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
         kDebug () << "\t\tnop" << endl;
@@ -356,7 +356,7 @@ void kpAbstractSelectionTool::drawResizeScale (
                         newHeight - originalSelection->height ());
 
 
-    d->dragHasBegun = true;
+    d->dragAccepted = true;
 }
 
 
@@ -401,7 +401,7 @@ QVariant kpAbstractSelectionTool::operationResizeScale (Operation op,
     (void) data1;
     (void) data2;
 
-    
+
     switch (op)
     {
     case HaventBegunDrawUserMessage:

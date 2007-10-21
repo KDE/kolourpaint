@@ -55,12 +55,12 @@ kpToolEllipticalSelection::~kpToolEllipticalSelection ()
 
 // protected virtual [base kpAbstractSelectionTool]
 bool kpToolEllipticalSelection::drawCreateMoreSelectionAndUpdateStatusBar (
-        bool dragHasBegun,
+        bool dragAccepted,
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &normalizedRect)
 {
     // Prevent unintentional creation of 1-pixel selections.
-    if (!dragHasBegun && accidentalDragAdjustedPoint == startPoint ())
+    if (!dragAccepted && accidentalDragAdjustedPoint == startPoint ())
     {
     #if DEBUG_KP_TOOL_ELLIPTICAL_SELECTION && 1
         kDebug () << "\tnon-text NOP - return" << endl;

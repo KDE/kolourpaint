@@ -148,8 +148,8 @@ void kpAbstractSelectionTool::drawCreate (const QPoint &thisPoint,
     QPoint accidentalDragAdjustedPoint = thisPoint;
     if (d->createNOPTimer->isActive ())
     {
-        // REFACTOR: Rearrange code to make this apparent.
-        Q_ASSERT (!d->dragHasBegun);
+        // See below "d->createNOPTimer->stop()".
+        Q_ASSERT (!d->dragAccepted);
 
         if (viewUnderStartPoint ()->transformDocToViewX (
                 (accidentalDragAdjustedPoint - startPoint ()).manhattanLength ()) <= 6)
@@ -171,13 +171,21 @@ void kpAbstractSelectionTool::drawCreate (const QPoint &thisPoint,
 
     const bool hadSelection = document ()->selection ();
 
-    const bool oldDragHasBegun = d->dragHasBegun;
-    d->dragHasBegun = /*virtual*/drawCreateMoreSelectionAndUpdateStatusBar (
-        d->dragHasBegun,
+    const bool oldDrawAcceptedAsDrag = d->dragAccepted;
+    d->dragAccepted = /*virtual*/drawCreateMoreSelectionAndUpdateStatusBar (
+        d->dragAccepted,
         accidentalDragAdjustedPoint,
         normalizedRect);
-    if (oldDragHasBegun)
-        Q_ASSERT (d->dragHasBegun);
+    if (oldDrawAcceptedAsDrag)
+        Q_ASSERT (d->dragAccepted);
+    if (d->dragAccepted)
+    {
+    #if DEBUG_KP_TOOL_SELECTION && 1
+        kDebug () << "\t\tdrawHasDoneSomething - kill create timer";
+    #endif
+        // No longer a NOP.
+        d->createNOPTimer->stop ();
+    }
 
     // Did we just create a selection?
     if (!hadSelection && document ()->selection ())
@@ -201,9 +209,6 @@ void kpAbstractSelectionTool::delayedDrawCreate ()
 
     if (hasBegunDraw ())
     {
-        // TODO: Why doesn't this modify "d->dragHasBegun"?
-        //       Maybe "d->dragHasBegun" should be replaced by
-        //       "!d->createNOPTimer->isActive()"?
         draw (currentPoint (), lastPoint (), normalizedRect ());
     }
 }
@@ -236,7 +241,7 @@ QVariant kpAbstractSelectionTool::operationCreate (Operation op,
     (void) data1;
     (void) data2;
 
-    
+
     switch (op)
     {
     case HaventBegunDrawUserMessage:

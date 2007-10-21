@@ -76,7 +76,7 @@ kpAbstractSelectionTool::kpAbstractSelectionTool (
     d->drawType = None;
     d->currentSelContentCommand = 0;
 
-    // d->dragHasBegun
+    // d->dragAccepted
     // d->hadSelectionBeforeDrag
 
     // d->cancelledShapeButStillHoldingButtons
@@ -104,7 +104,7 @@ kpAbstractSelectionTool::~kpAbstractSelectionTool ()
     Q_ASSERT (d->drawType == None);
     Q_ASSERT (!d->currentSelContentCommand);
 
-    // d->dragHasBegun
+    // d->dragAccepted
     // d->hadSelectionBeforeDraw
 
     // d->cancelledShapeButStillHoldingButtons
@@ -209,7 +209,6 @@ void kpAbstractSelectionTool::addNeedingContentCommand (kpCommand *cmd)
         macroCmd->addCommand (cmd);
 
         commandHistory ()->addCommand (macroCmd, false/*no exec*/);
-
     }
     else
     {
@@ -261,7 +260,7 @@ void kpAbstractSelectionTool::begin ()
     Q_ASSERT (d->drawType == None);
     Q_ASSERT (!d->currentSelContentCommand);
 
-    d->dragHasBegun = false;
+    d->dragAccepted = false;
     // d->hadSelectionBeforeDraw
 
     d->cancelledShapeButStillHoldingButtons = false;
@@ -307,7 +306,7 @@ void kpAbstractSelectionTool::end ()
     Q_ASSERT (d->drawType == None);
     Q_ASSERT (!d->currentSelContentCommand);
 
-    // d->dragHasBegun
+    // d->dragAccepted
     // d->hadSelectionBeforeDraw
 
     // d->cancelledShapeButStillHoldingButtons
@@ -393,7 +392,7 @@ void kpAbstractSelectionTool::beginDraw ()
     }
 
     d->drawType = calculateDrawType ();
-    d->dragHasBegun = false;
+    d->dragAccepted = false;
 
     kpAbstractSelection *sel = document ()->selection ();
     d->hadSelectionBeforeDraw = bool (sel);

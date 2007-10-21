@@ -54,13 +54,13 @@ kpToolRectSelection::~kpToolRectSelection ()
 
 // protected virtual [base kpAbstractSelectionTool]
 bool kpToolRectSelection::drawCreateMoreSelectionAndUpdateStatusBar (
-        bool dragHasBegun,
+        bool dragAccepted,
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &normalizedRect)
 {
     // Prevent unintentional creation of 1-pixel selections.
     // REFACTOR: This line is duplicated code with other tools.
-    if (!dragHasBegun && accidentalDragAdjustedPoint == startPoint ())
+    if (!dragAccepted && accidentalDragAdjustedPoint == startPoint ())
     {
     #if DEBUG_KP_TOOL_RECT_SELECTION && 1
         kDebug () << "\tnon-text NOP - return" << endl;

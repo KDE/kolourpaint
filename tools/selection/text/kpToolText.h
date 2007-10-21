@@ -65,6 +65,15 @@ class kpToolTextDeleteCommand;
 // a different kind of key (e.g. arrow key, backspace) or drags the mouse,
 // the command is no longer kept active.
 //
+//
+// kpToolText implements a new drawing type, "SelectText", for moving the
+// text cursor to the clicked location.
+//
+//
+// As an exception to the standard kpAbstractSelectionTool behavior,
+// a single click -- with no dragging -- can be used to create a new text
+// box.
+//
 class kpToolText : public kpAbstractSelectionTool
 {
 Q_OBJECT
@@ -199,14 +208,14 @@ private:
         int preferredMin, int smallestMin,
         int docSize);
     bool shouldCreate (
-        bool dragHasBegun,
+        bool drawAcceptedAsDrag,
         const QPoint &accidentalDragAdjustedPoint,
         const kpTextStyle &textStyle,
         int *minimumWidthOut, int *minimumHeightOut,
         bool *newDragHasBegun);
 protected:
     virtual bool drawCreateMoreSelectionAndUpdateStatusBar (
-        bool dragHasBegun,
+        bool drawAcceptedAsDrag,
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &normalizedRectIn);
 

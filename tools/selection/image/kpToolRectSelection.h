@@ -41,7 +41,7 @@ public:
 
 protected:
     virtual bool drawCreateMoreSelectionAndUpdateStatusBar (
-        bool dragHasBegun,
+        bool dragAccepted,
         const QPoint &accidentalDragAdjustedPoint,
         const QRect &normalizedRect);
 };
