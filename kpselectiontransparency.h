@@ -39,10 +39,18 @@ public:
     kpSelectionTransparency ();
     // Selection that's transparent at pixels with <color>
     kpSelectionTransparency (const kpColor &transparentColor, double colorSimilarity);
+    // If <isOpaque>, <transparentColor> is allowed to be anything
+    // (including invalid) as the color would have no effect.
+    // However, you are encouraged to set it as you would if !<isOpaque>,
+    // because setTransparent(true) might be called later, after which
+    // the <transparentColor> would suddenly become important.
+    //
+    // It is a similar case with <colorSimilarity>, although <colorSimilarity>
+    // must be in-range (see kpColorSimilarityDialog).
     kpSelectionTransparency (bool isOpaque, const kpColor &transparentColor, double colorSimilarity);
     // Returns whether they are visually equivalent.
     // This is the same as a memcmp() except that if they are both opaque,
-    // this function will return true regardless of the transaprentColor's.
+    // this function will return true regardless of the transparentColor's.
     bool operator== (const kpSelectionTransparency &rhs) const;
     bool operator!= (const kpSelectionTransparency &rhs) const;
     ~kpSelectionTransparency ();
@@ -52,6 +60,8 @@ public:
     void setOpaque (bool yes = true);
     void setTransparent (bool yes = true);
 
+    // If isOpaque(), transparentColor() is generally not called because
+    // the transparent color would have no effect.
     kpColor transparentColor () const;
     void setTransparentColor (const kpColor &transparentColor);
 
