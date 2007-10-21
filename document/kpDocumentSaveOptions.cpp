@@ -406,13 +406,17 @@ static bool mimeTypeSupportsProperty (const QString &mimeType,
 //
 // Only care about writable mimetypes.
 //
-// Run "branches/kolourpaint/control/scripts/gen_mimetype_line.sh Write" in
-// the version of kdelibs/kimgio/ (e.g. KDE 4.0) KolourPaint is shipped with,
+// Run:
+//
+//     branches/kolourpaint/control/scripts/gen_mimetype_line.sh Write |
+//         branches/kolourpaint/control/scripts/split_mimetype_line.pl
+//
+// in the version of kdelibs/kimgio/ (e.g. KDE 4.0) KolourPaint is shipped with,
 // to check for any new mimetypes to add info for.  In the methods below,
 // you can specify this info (maximum color depth, whether it's lossy etc.).
 //
-// Update the below list also and bump up "kpSettingsGroupMimeTypeProperties"
-// in kpdefs.h.
+// Update the below list and if you did change any of that info, bump up
+// "kpSettingsGroupMimeTypeProperties" in kpDefs.h.
 //
 // Currently, Depth and Quality settings are mutually exclusive with
 // Depth overriding Quality.  I've currently favoured Quality with the
@@ -420,10 +424,11 @@ static bool mimeTypeSupportsProperty (const QString &mimeType,
 // no Depth settings).
 //
 // Mimetypes done:
-//  image/jpeg2000 [UNTESTED]
-//  image/jpeg
-//  image/png
 //  image/bmp
+//  image/jpeg
+//  image/jpeg2000 [COULD NOT TEST]
+//  image/png
+//  image/tiff
 //  image/x-eps
 //  image/x-pcx
 //  image/x-portable-bitmap
@@ -433,6 +438,7 @@ static bool mimeTypeSupportsProperty (const QString &mimeType,
 //  image/x-tga
 //  image/x-xbitmap
 //  image/x-xpixmap
+//  video/x-mng [COULD NOT TEST]
 //
 // To test whether depth is configurable, write an image in the new
 // mimetype with all depths and read each one back.  See what
