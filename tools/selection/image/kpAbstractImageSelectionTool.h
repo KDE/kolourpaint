@@ -33,6 +33,9 @@
 #include <kpAbstractSelectionTool.h>
 
 
+class kpImageSelectionTransparency;
+
+
 // The only difference between the various subclasses of us is the kind of
 // selection that they create e.g. elliptical vs rectangular.
 //
@@ -79,7 +82,22 @@ protected:
 //
 
 protected:
-    void selectionTransparencyChanged (const QString &name);
+    bool shouldChangeImageSelectionTransparency () const;
+    // You must derive <oldTrans>, the old selection transparency, from the
+    // one obtained from the user's current settings, as given by the
+    // kpToolSelectionEnvironment.
+    //
+    // You must _not_ simply get the old selection transparency just by
+    // querying the selection i.e. do _not_ pass in
+    // "document()->imageSelection().transparency()".  The reason is that
+    // transparency().transparentColor() might not be defined in Opaque
+    // Mode.
+    //
+    // KDE3: Copy this comment into the KDE 3 branch.
+    void changeImageSelectionTransparency (
+        const QString &name,
+        const kpImageSelectionTransparency &newTrans,
+        const kpImageSelectionTransparency &oldTrans);
 
 protected slots:
     virtual void slotIsOpaqueChanged (bool isOpaque);

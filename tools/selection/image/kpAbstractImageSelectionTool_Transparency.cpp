@@ -52,6 +52,7 @@
 #include <kpDefs.h>
 #include <kpDocument.h>
 #include <kpMacroCommand.h>
+#include <kpSetOverrideCursorSaver.h>
 #include <kpTextSelection.h>
 #include <kpToolSelectionCreateCommand.h>
 #include <kpToolSelectionDestroyCommand.h>
@@ -66,69 +67,86 @@
 #include <kpViewManager.h>
 
 
-// private slot
-// HIREFACTOR: Who calls us?
-void kpAbstractImageSelectionTool::selectionTransparencyChanged (const QString & /*name*/)
+// protected
+bool kpAbstractImageSelectionTool::shouldChangeImageSelectionTransparency () const
 {
-#if 0
-#if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpAbstractImageSelectionTool::selectionTransparencyChanged(" << name << ")" << endl;
-#endif
-
     if (environ ()->settingImageSelectionTransparency ())
     {
     #if DEBUG_KP_TOOL_SELECTION
         kDebug () << "\trecursion - abort setting selection transparency: "
                    << environ ()->settingImageSelectionTransparency () << endl;
     #endif
-        return;
+        return false;
     }
 
-    if (document ()->selection ())
-    {
-    #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\thave sel - set transparency" << endl;
-    #endif
+    if (!document ()->imageSelection ())
+        return false;
 
-        kpImageSelectionTransparency oldST = document ()->selection ()->transparency ();
-        kpImageSelectionTransparency st = environ ()->selectionTransparency ();
+    // TODO: Can probably return false if the selection transparency mode
+    //       is Opaque, since neither background color nor color similarity
+    //       would matter.
 
-        // TODO: This "NOP" check causes us a great deal of trouble e.g.:
-        //
-        //       Select a solid red rectangle.
-        //       Switch to transparent and set red as the background colour.
-        //       (the selection is now invisible)
-        //       Invert Colours.
-        //       (the selection is now cyan)
-        //       Change the background colour to green.
-        //       (no command is added to undo this as the selection does not change)
-        //       Undo.
-        //       The rectangle is no longer invisible.
-        //
-        //if (document ()->selection ()->setTransparency (st, true/*check harder for no change in mask*/))
+    return true;
+}
 
-        document ()->selection ()->setTransparency (st);
-        if (true)
-        {
-        #if DEBUG_KP_TOOL_SELECTION
-            kDebug () << "\t\twhich changed the image" << endl;
-        #endif
-
-            commandHistory ()->addCommand (new kpToolImageSelectionTransparencyCommand (
-                i18n ("Selection: Transparency"), // name,
-                st, oldST,
-                environ ()->commandEnvironment ()),
-                false/* no exec*/);
-        }
-    }
+// protected
+void kpAbstractImageSelectionTool::changeImageSelectionTransparency (
+        const QString &name,
+        const kpImageSelectionTransparency &newTrans,
+        const kpImageSelectionTransparency &oldTrans)
+{
+#if DEBUG_KP_TOOL_SELECTION
+    kDebug () << "CALL(" << name << ")";
 #endif
 
-    // TODO: I've duplicated the code (see below 3x) to make sure
-    //       kpImageSelectionTransparency(oldST)::transparentColor() is defined
-    //       and not taken from kpDocument (where it may not be defined because
-    //       the transparency may be opaque).
+    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
+
+    if (hasBegunShape ())
+        endShapeInternal ();
+
+    kpAbstractImageSelection *imageSel = document ()->imageSelection ();
+
+    if (imageSel->hasContent () && newTrans.isTransparent ())
+        environ ()->flashColorSimilarityToolBarItem ();
+
+    imageSel->setTransparency (newTrans);
+
+    // We _must_ add the command even if kpAbstractImageSelection::setTransparency()
+    // above did not change the selection transparency mask at all.
+    // Consider the following case:
     //
-    //       That way kpToolImageSelectionTransparencyCommand can force set colours.
+    //   0. Ensure that selection transparency is opaque and any
+    //      color other than red is the background color.  Ensure that
+    //      the color similarity setting is 0.
+    //
+    //   1. Select a solid red rectangle and pull it off.
+    //
+    //   2. Switch to transparent and set red as the background color.
+    //      [the selection is now invisible as red is the background
+    //       color, which is the same as the contents of the selection]
+    //
+    //   3. Invert Colors.
+    //      [the selection is now cyan, red is still the background color]
+    //
+    //   4. Change the background color to green.
+    //      [the selection transparency mask does not change so the
+    //       selection is still cyan; green is the background color]
+    //
+    //   5. Undo
+    //
+    // If no transparency command were added for Step 4., the Undo
+    // in Step 5. would take us straight to the state after Step 2.,
+    // where we would expect the red selection to be invisible.  However,
+    // as the background color was changed to green in Step 4. and was not
+    // undone, the red selection is not invisible when it should be -- Undo
+    // has moved us to an incorrect state.
+    //
+    // KDE3: Copy this comment into the KDE 3 branch.
+    commandHistory ()->addCommand (new kpToolImageSelectionTransparencyCommand (
+        name,
+        newTrans, oldTrans,
+        environ ()->commandEnvironment ()),
+        false/*no exec*/);
 }
 
 
@@ -139,46 +157,19 @@ void kpAbstractImageSelectionTool::slotIsOpaqueChanged (bool /*isOpaque*/)
     kDebug () << "kpAbstractImageSelectionTool::slotIsOpaqueChanged()" << endl;
 #endif
 
-    if (environ ()->settingImageSelectionTransparency ())
-    {
-    #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\trecursion - abort setting selection transparency: "
-                   << environ ()->settingImageSelectionTransparency () << endl;
-    #endif
+    if (!shouldChangeImageSelectionTransparency ())
         return;
-    }
 
-    kpAbstractImageSelection *imageSel = document ()->imageSelection ();
-    if (imageSel)
-    {
-    #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\thave image sel - set transparency" << endl;
-    #endif
+    kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
 
-        QApplication::setOverrideCursor (Qt::WaitCursor);
+    kpImageSelectionTransparency oldST = st;
+    oldST.setOpaque (!oldST.isOpaque ());
 
-        if (hasBegunShape ())
-            endShapeInternal ();
-
-        kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
-        kpImageSelectionTransparency oldST = st;
-        oldST.setOpaque (!oldST.isOpaque ());
-
-        if (imageSel->hasContent () && st.isTransparent ())
-            environ ()->flashColorSimilarityToolBarItem ();
-
-        imageSel->setTransparency (st);
-
-        commandHistory ()->addCommand (new kpToolImageSelectionTransparencyCommand (
-            st.isOpaque () ?
-                i18n ("Selection: Opaque") :
-                i18n ("Selection: Transparent"),
-            st, oldST,
-            environ ()->commandEnvironment ()),
-            false/* no exec*/);
-
-        QApplication::restoreOverrideCursor ();
-    }
+    changeImageSelectionTransparency (
+        st.isOpaque () ?
+            i18n ("Selection: Opaque") :
+            i18n ("Selection: Transparent"),
+        st, oldST);
 }
 
 // protected slot virtual [base kpTool]
@@ -188,45 +179,17 @@ void kpAbstractImageSelectionTool::slotBackgroundColorChanged (const kpColor &)
     kDebug () << "kpAbstractImageSelectionTool::slotBackgroundColorChanged()" << endl;
 #endif
 
-    if (environ ()->settingImageSelectionTransparency ())
-    {
-    #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\trecursion - abort setting selection transparency: "
-                   << environ ()->settingImageSelectionTransparency () << endl;
-    #endif
+    if (!shouldChangeImageSelectionTransparency ())
         return;
-    }
 
-    kpAbstractImageSelection *imageSel = document ()->imageSelection ();
-    if (imageSel)
-    {
-    #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\thave image sel (hasContent=" << imageSel->hasContent ()
-                  << ") - set transparency" << endl;
-    #endif
+    kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
 
-        QApplication::setOverrideCursor (Qt::WaitCursor);
+    kpImageSelectionTransparency oldST = st;
+    oldST.setTransparentColor (oldBackgroundColor ());
 
-        kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
-    #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\tisTransparent=" << st.isTransparent () << endl;
-    #endif
-        kpImageSelectionTransparency oldST = st;
-        oldST.setTransparentColor (oldBackgroundColor ());
-
-        if (imageSel->hasContent () && st.isTransparent ())
-            environ ()->flashColorSimilarityToolBarItem ();
-
-        imageSel->setTransparency (st);
-
-        commandHistory ()->addCommand (new kpToolImageSelectionTransparencyCommand (
-            i18n ("Selection: Transparency Color"),
-            st, oldST,
-            environ ()->commandEnvironment ()),
-            false/* no exec*/);
-
-        QApplication::restoreOverrideCursor ();
-    }
+    changeImageSelectionTransparency (
+        i18n ("Selection: Transparency Color"),
+        st, oldST);
 }
 
 // protected slot virtual [base kpTool]
@@ -236,39 +199,15 @@ void kpAbstractImageSelectionTool::slotColorSimilarityChanged (double, int)
     kDebug () << "kpAbstractImageSelectionTool::slotColorSimilarityChanged()" << endl;
 #endif
 
-    if (environ ()->settingImageSelectionTransparency ())
-    {
-    #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\trecursion - abort setting selection transparency: "
-                   << environ ()->settingImageSelectionTransparency () << endl;
-    #endif
+    if (!shouldChangeImageSelectionTransparency ())
         return;
-    }
 
-    kpAbstractImageSelection *imageSel = document ()->imageSelection ();
-    if (document ()->imageSelection ())
-    {
-    #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\thave image sel - set transparency" << endl;
-    #endif
+    kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
 
-        QApplication::setOverrideCursor (Qt::WaitCursor);
+    kpImageSelectionTransparency oldST = st;
+    oldST.setColorSimilarity (oldColorSimilarity ());
 
-        kpImageSelectionTransparency st = environ ()->imageSelectionTransparency ();
-        kpImageSelectionTransparency oldST = st;
-        oldST.setColorSimilarity (oldColorSimilarity ());
-
-        if (imageSel->hasContent () && st.isTransparent ())
-            environ ()->flashColorSimilarityToolBarItem ();
-
-        imageSel->setTransparency (st);
-
-        commandHistory ()->addCommand (new kpToolImageSelectionTransparencyCommand (
-            i18n ("Selection: Transparency Color Similarity"),
-            st, oldST,
-            environ ()->commandEnvironment ()),
-            false/* no exec*/);
-
-        QApplication::restoreOverrideCursor ();
-    }
+    changeImageSelectionTransparency (
+        i18n ("Selection: Transparency Color Similarity"),
+        st, oldST);
 }
