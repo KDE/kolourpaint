@@ -219,7 +219,26 @@ void kpDocument::imageSelectionPullFromDocument (const kpColor &backgroundColor)
     // Fill opaque bits of the hole in the document
     //
 
-    // REFACTOR: this assumes backgroundColor == imageSel->transparency ().transparentColor()
+#if !defined (QT_NO_DEBUG) && !defined (NDEBUG)
+    if (imageSel->transparency ().isTransparent ())
+    {
+        Q_ASSERT (backgroundColor == imageSel->transparency ().transparentColor ());
+    }
+    else
+    {
+        // If this method is begin called by a tool, the assert does not
+        // have to hold since transparentColor() might not be defined in Opaque
+        // Mode.
+        //
+        // If we were called by a tricky sequence of undo/redo commands, the assert
+        // does not have to hold for additional reason, which is that
+        // kpMainWindow::setImageSelectionTransparency() does not have to
+        // set <backgroundColor> in Opaque Mode.
+        //
+        // In practice, it probably does hold but I wouldn't bet on it.
+    }
+#endif
+
     const kpImage selTransparentImage = imageSel->transparentImage ();
 
     if (backgroundColor.isOpaque ())
