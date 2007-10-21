@@ -2,10 +2,13 @@
 KolourPaint 4 Series (trunk/KDE/)
 ====================
 
-KolourPaint 4.0.0 BETA (Frozen 2007-10-19)
+KolourPaint 4.0.0 BETA (Frozen 2007-10-26)
 
    * Port to KDE 4 (Clarence Dang, Laurent Montel)
-     Note: This is a beta release and has not been through a full QA review
+
+     Note: This is a beta release and has not been through a full QA review.
+           If you want stability, use KolourPaint/KDE3, which can be
+           installed in parallel with KolourPaint4 BETA and runs under KDE4.
 
    * Configurable Color Palette
 
