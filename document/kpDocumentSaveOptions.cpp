@@ -415,7 +415,7 @@ static bool mimeTypeSupportsProperty (const QString &mimeType,
 // to check for any new mimetypes to add info for.  In the methods below,
 // you can specify this info (maximum color depth, whether it's lossy etc.).
 //
-// Update the below list and if you did change any of that info, bump up
+// Update the below list and if you do change any of that info, bump up
 // "kpSettingsGroupMimeTypeProperties" in kpDefs.h.
 //
 // Currently, Depth and Quality settings are mutually exclusive with
