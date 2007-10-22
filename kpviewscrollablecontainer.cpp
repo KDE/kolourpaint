@@ -389,6 +389,7 @@ void kpGrip::paintEvent (QPaintEvent *e)
 }
 
 
+// TODO: Are we checking for m_view == 0 often enough?
 kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent,
                                                       const char *name)
     : QScrollView ((QWidget *) parent, name, Qt::WStaticContents | Qt::WNoAutoErase),
