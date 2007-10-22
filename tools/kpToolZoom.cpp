@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_ZOOM 1
+#define DEBUG_KP_TOOL_ZOOM 0
 
 
 #include <kpToolZoom.h>

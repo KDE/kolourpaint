@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_CURVE 1
+#define DEBUG_KP_TOOL_CURVE 0
 
 
 #include <kpToolCurve.h>

@@ -27,7 +27,7 @@
 */
 
 
-#define DEBUG_KP_PRINT_DIALOG_PAGE 1
+#define DEBUG_KP_PRINT_DIALOG_PAGE 0
 
 
 #include <kpPrintDialogPage.h>
