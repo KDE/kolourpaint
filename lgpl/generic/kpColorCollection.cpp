@@ -260,6 +260,8 @@ static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
 
 static void SaveToFile (kpColorCollectionPrivate *d, QIODevice *device)
 {
+   // HITODO: QTextStream can fail but does not report errors.
+   //         Bug in KColorCollection too.
    QTextStream str (device);
 
    QString description = d->desc.trimmed();
