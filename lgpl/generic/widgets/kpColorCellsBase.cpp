@@ -361,7 +361,9 @@ int kpColorCellsBase::positionToCell(const QPoint &pos, bool ignoreBorders,
     Q_UNUSED( ignoreBorders )
 
     const int r = indexAt (pos).row (), c = indexAt (pos).column ();
+#if DEBUG_KP_COLOR_CELLS_BASE
     kDebug () << "r=" << r << "c=" << c;
+#endif
 
     if (r == -1 || c == -1)
        return -1;
