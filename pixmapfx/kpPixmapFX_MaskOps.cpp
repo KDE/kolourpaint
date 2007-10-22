@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_PIXMAP_FX 1
+#define DEBUG_KP_PIXMAP_FX 0
 
 
 #include <kpPixmapFX.h>
@@ -115,6 +115,7 @@ static int QPixmapCalculateDefaultDepthWithoutQApplication ()
         KApplication app;
 
         const int depth = QPixmap::defaultDepth ();
+        KP_PRINTF (("Child: writing default depth\n"));
         write (fds [Write], &depth, sizeof (depth));
         KP_PRINTF (("Child: wrote default depth\n"));
 
@@ -153,8 +154,10 @@ void kpPixmapFX::initMaskOpsPre ()
 {
 #ifdef Q_WS_X11
     const int defaultDepth = QPixmapCalculateDefaultDepthWithoutQApplication ();
-    KP_PRINTF ("kpPixmapFX::initMaskOpsPre() QPixmap::defaultDepth=%d\n",
-               defaultDepth);
+
+    // This is important for diagnosing KolourPaint bugs so always print it
+    // -- even in release mode.
+    printf ("Starting KolourPaint on a %d-bit screen...\n", defaultDepth);
 
     if (defaultDepth == 32)
     {
