@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_SCROLL_AREA_UTILS 1
+#define DEBUG_KP_SCROLL_AREA_UTILS 0
 
 
 #include <kpAbstractScrollAreaUtils.h>

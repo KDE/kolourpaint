@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------
 // KDE color collection
 
-#define DEBUG_KP_COLOR_COLLECTION 1
+#define DEBUG_KP_COLOR_COLLECTION 0
 
 #include "kpColorCollection.h"
 

@@ -41,7 +41,7 @@
 //       to get vastly differently colors in both sides yet they will be
 //       considered similar).
 
-#define DEBUG_KP_TOOL_AUTO_CROP 1
+#define DEBUG_KP_TOOL_AUTO_CROP 0
 
 
 #include <kpTransformAutoCrop.h>

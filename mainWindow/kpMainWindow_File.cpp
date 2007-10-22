@@ -798,7 +798,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 
         fdSaveOptions.setQuality (kpDocumentSaveOptions::defaultQuality (cfg));
     }
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     fdSaveOptions.printDebug ("\tcorrected saveOptions passed to fileDialog");
 #endif
 

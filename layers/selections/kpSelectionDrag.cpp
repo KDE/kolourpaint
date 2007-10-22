@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_SELECTION_DRAG 1
+#define DEBUG_KP_SELECTION_DRAG 0
 
 
 #include <kpSelectionDrag.h>

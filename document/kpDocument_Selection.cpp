@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_DOCUMENT 1
+#define DEBUG_KP_DOCUMENT 0
 
 
 #include <kpDocument.h>

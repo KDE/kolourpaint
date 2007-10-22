@@ -202,7 +202,7 @@ void kpMainWindow::slotHelpTakingScreenshots ()
 // private
 void kpMainWindow::slotHelpTakingScreenshotsFollowLink (const QString &link)
 {
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotHelpTakingScreenshotsFollowLink("
                << link << ")" << endl;
 #endif

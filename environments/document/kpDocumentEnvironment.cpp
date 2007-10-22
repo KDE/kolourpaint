@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_DOCUMENT_ENVIRONMENT 1
+#define DEBUG_KP_DOCUMENT_ENVIRONMENT 0
 
 
 #include <kpDocumentEnvironment.h>

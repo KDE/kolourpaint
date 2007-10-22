@@ -26,7 +26,7 @@
 */
 
 
-#define DEBUG_KP_TOOL_SELECTION 1
+#define DEBUG_KP_TOOL_SELECTION 0
 
 
 #include <kpToolSelectionDestroyCommand.h>

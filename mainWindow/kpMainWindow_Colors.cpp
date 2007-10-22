@@ -168,7 +168,7 @@ void kpMainWindow::deselectActionColorsKDE ()
 // private
 bool kpMainWindow::queryCloseColors ()
 {
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::queryCloseColors() colorCells.modified="
               << colorCells ()->isModified ();
 #endif
@@ -248,14 +248,14 @@ void kpMainWindow::slotColorsDefault ()
 // private
 bool kpMainWindow::openKDEColors (const QString &name)
 {
-#if DEBUG_KP_MAIN_WINDOW || 1
+#if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::openKDEColors(" << name << ")";
 #endif
 
     kpColorCollection colorCol;
     if (colorCol.openKDE (name, this))
     {
-    #if DEBUG_KP_MAIN_WINDOW || 1
+    #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "opened";
     #endif
         colorCells ()->setColorCollection (colorCol);
@@ -263,7 +263,7 @@ bool kpMainWindow::openKDEColors (const QString &name)
     }
     else
     {
-    #if DEBUG_KP_MAIN_WINDOW || 1
+    #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "failed to open";
     #endif
         return false;
@@ -370,7 +370,7 @@ void kpMainWindow::slotColorsReload ()
             }
         }
 
-    #if DEBUG_KP_MAIN_WINDOW || 1
+    #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "result=" << result
                   << "vs KMessageBox::Continue" << KMessageBox::Continue;
     #endif

@@ -106,7 +106,7 @@ QPixmap kpDocument::convertToPixmapAsLosslessAsPossible (
             metaInfo->setText (*it, image.text (*it));
         }
 
-    #if DEBUG_KP_DOCUMENT || 1
+    #if DEBUG_KP_DOCUMENT
         metaInfo->printDebug ("\tmetaInfo");
     #endif
     }
