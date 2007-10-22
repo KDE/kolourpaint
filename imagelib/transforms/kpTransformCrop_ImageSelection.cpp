@@ -81,13 +81,13 @@ SetDocumentToSelectionImageCommand::SetDocumentToSelectionImageCommand (kpComman
       m_backgroundColor (environ->backgroundColor ()),
       m_fromSelectionPtr (
         dynamic_cast <kpAbstractImageSelection *> (
-            environ->document ()->selection ()->clone ())),
-      m_imageIfFromSelectionDoesntHaveOne (
-        m_fromSelectionPtr->hasContent () ?
-            kpImage () :
-            document ()->getSelectedBaseImage ())
+            environ->document ()->selection ()->clone ()))
 {
     Q_ASSERT (m_fromSelectionPtr);
+    m_imageIfFromSelectionDoesntHaveOne =
+        m_fromSelectionPtr->hasContent () ?
+            kpImage () :
+            document ()->getSelectedBaseImage ();
 }
 
 SetDocumentToSelectionImageCommand::~SetDocumentToSelectionImageCommand ()
