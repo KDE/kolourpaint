@@ -407,6 +407,7 @@ void kpGrip::paintEvent (QPaintEvent *e)
 }
 
 
+// TODO: Are we checking for m_view == 0 often enough?  Also an issue in KDE 3.
 kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent)
     : Q3ScrollView ((QWidget *) parent),
       m_mainWindow (parent),
