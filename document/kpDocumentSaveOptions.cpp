@@ -452,12 +452,12 @@ int kpDocumentSaveOptions::mimeTypeMaximumColorDepth (const QString &mimeType)
 
     // SYNC: update mime info here
 
-    // Greyscale actually (unenforced since depth not set to configurable)
+    // Grayscale actually (unenforced since depth not set to configurable)
     defaultList << QLatin1String ("image/x-eps:32");
 
     defaultList << QLatin1String ("image/x-portable-bitmap:1");
 
-    // Greyscale actually (unenforced since depth not set to configurable)
+    // Grayscale actually (unenforced since depth not set to configurable)
     defaultList << QLatin1String ("image/x-portable-graymap:8");
 
     defaultList << QLatin1String ("image/x-xbitmap:1");
@@ -551,7 +551,7 @@ int kpDocumentSaveOptions::isLossyForSaving (const QPixmap &pixmap) const
     }
 
     if (mimeTypeHasConfigurableColorDepth () &&
-        !colorDepthIsInvalid () /*TODO: prevent*/ &&
+        !colorDepthIsInvalid () /*REFACTOR: guarantee it is valid*/ &&
         (colorDepth () < pixmap.depth () ||
          colorDepth () < 32 && kpPixmapFX::hasMask (pixmap)))
     {
