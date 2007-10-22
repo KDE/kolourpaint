@@ -82,7 +82,7 @@ public:
     // Use this instead of static casts all over the source base, to prepare
     // for the day when casting kpImage to and from QPixmap is invalid.
     //
-    // sync: While kpImage and QPixmap are still related, do not add data
+    // sync: As kpImage and QPixmap are still related, do not add data
     //       fields to kpImage or you'll break these methods.
     //
     static kpImage *CastPixmapPtr (QPixmap *pixmap);

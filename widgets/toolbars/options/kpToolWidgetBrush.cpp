@@ -43,7 +43,7 @@
 #include <kpPixmapFX.h>
 
 
-// TODO: more OO, no arrays (use safer structs).
+// LOREFACTOR: more OO, no arrays (use safer structs).
 /* sync: <brushes> */
 static int BrushSizes [][3] =
 {

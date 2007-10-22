@@ -138,7 +138,8 @@ public:
     //
     // TODO: Check all size() implementations are correct since we've
     //       started removing the old kpSelection::setPixmap(QPixmap())
-    //       space saving hack.
+    //       (now kpAbstractImageSelection::setBaseImage(kpImage()) or
+    //        kpAbstractImageSelection::deleteContent()) space saving hack.
     kpCommandSize::SizeType sizeWithoutImage () const;
 
 
