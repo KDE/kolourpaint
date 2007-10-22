@@ -29,6 +29,9 @@
     "HI" if they _really_ should be done ASAP by the.g. "HITODO: This is likely
     to crash".
 
+    Sometimes "SYNC" should be "sync" and vice-versa.  So before every release,
+    you'll have to check "sync" too :(
+
 4. See http://bugs.kde.org/.
 5. See below:
 
@@ -38,8 +41,10 @@
 4.3. KDE
 4.4. KolourPaint Code (KDE4 specific)
 4.5. KolourPaint Code
-4.6. Minor KolourPaint Code Ideas
-4.7. KolourPaint Code Refactoring (KDE4 specific)
+4.6. Image Library Rewrite
+4.7. Minor KolourPaint Code Ideas
+4.8. KolourPaint Code Refactoring/Auditing (KDE4 specific)
+4.9. KolourPaint Code Refactoring/Auditing
 
 
 4.1. Docs
@@ -51,6 +56,11 @@ using "However ...".  [Thurston]
 Rename fill_style.png and line_width.png to use the plural form for consistency
 with brush_shapes, eraser_shapes, spraycan_patterns and
 selections_opaque_transparent.  [Thurston]
+
+[Bug 125116] please add ability to "open in the same window" config GUI to KolourPaint
+document this in the manual under "Hidden Configuration Options"
+
+Remove KolourPaint compilation instructions as they are wrong for both KDE3 and KE4.
 
 
 4.2. Future Binary Releases
@@ -74,6 +84,54 @@ a reason why this wasn't done but I forgot - document this time)
 
 unix2dos text files in all non-KDE releases to not give bad MS notepad impression
 
+* KDE4 possiblity:
+
+~~~~
+KDE4 Patch to allow testing/execution of uninstalled kparts/XMLGUI applications
+From: Adam Treat <treat@kde.org>
+To: kde-core-devel@kde.org
+CC: kdevelop-devel@kdevelop.org
+Date: Mon, 8 Aug 2005 12:15:54 -0400
+   
+Hello,
+
+I have a simple patch to KStandardDirs that will allow developers to test and 
+run KParts/XMLGUI applications without having to install them first.
+
+What I've done is to simply look for a '.krcdirs' file in the same directory 
+where the application is currently being executed.  This file is a simple INI 
+file like so:
+
+[KStandardDirs]
+module = .libs
+[...]
+~~~~
+
+* "KDEHOME" for the "root" user should be "KDEROOTHOME"?
+
+* gettext bug:
+
+~~~~
+Re: i18n bug?
+From: David Faure <faure@kde.org>
+To: kde-core-devel@kde.org
+Subject: 6 Jul 2005 16:12:36 +0200
+
+[...]
+it's a bug in msgfmt.
+msgfmt (GNU gettext-tools) 0.14.1 produces a wrong .mo file
+msgfmt (GNU gettext) 0.10.35 (from gettext-kde on ftp.kde.org)
+produces a working .mo file
+
+More precisely, msgfmt-0.14.x produces a wrong hashtable (1,0,2,0,3,4,5)
+whereas the code, and the working version of msgfmt, work with a
+hashtable saying (1,0,5,3,4,0,2).
+
+BTW a workaround is "msgfmt --no-hash test3.po" 
+[...]
+~~~~
+
+
 
 4.3. KDE
 ~~~~~~~~
@@ -92,9 +150,23 @@ fix edit/paste may disappear due to klipper - Bug #85456
     tested again esp. the file saving path - format conversion, maximal
     content preservation, formatting loss warnings etc.
 
+* InputMethod hints for Qt4:
+
+~~~~
+Re: Qt / KDE and Skim / Xim
+From: Simon Hausmann <hausmann@kde.org>
+To: kde-core-devel@kde.org
+Date: Mon, 28 May 2007 15:59:25 +0200
+~~~~
+
 
 4.5. KolourPaint Code
 ~~~~~~~~~~~~~~~~~~~~~
+
+RTL/Arabic text support
+Also, http://bugs.kde.org/show_bug.cgi?id=137632 might be relevant -- and you
+can get some Arabic text from there too :)
+
 
 - when typing text, cursor moves ahead and the bits of the text where the cursor was
   overlapping are updated, but the rest of the typed text is not displayed yet
@@ -106,7 +178,8 @@ fix edit/paste may disappear due to klipper - Bug #85456
 
 - "View / Actual Size" != actual/printed size -- rename it to "View / 100%"?
   but "View / 100%" looks weird, "View / Unzoomed (100%)" looks weird and
-  confused with "Zoomed Thumbnail Mode".
+  confused with "Zoomed Thumbnail Mode".  "View / Actual Pixels" or "View / 1:1"?
+  Use CTRL+0 shortcut?
 
 
 In light of crash Bug 117866, check that all timers are killed before e.g. adding
@@ -134,6 +207,9 @@ Antonio Bianco
 fix flicker when zooming in/out (Bug #1)
 - maybe don't allow QScrollview to do own logic - would also eliminate
   tearing when scrolling with wheel (and of course, drag scrolling)
+  - Use QAbstractScrollArea with custom viewport widget and paint directly
+    on that widget (like GwenView in KDE3 and possibly, KDE4), not
+    QScrollArea, to avoid tearing
 
 
 
@@ -218,9 +294,6 @@ This probably works for Qt3 but not Qt4.
 
 
 
-tests/kolourcircles.cpp; rendering glitches at 37% with rect sel tool
-
-
 kptoolpreviewdialog: incorrect preview for a selection, if new pixels result in
                      different selection transparency
 
@@ -254,7 +327,7 @@ If you don't save the image:
 2. what name will it have?  0045_temp-user.png?
 3. why wouldn't you want a copy of an image you send to someone?  Yes, it's in your "Sent Items" but...
 Suggestion: Export instead of save.  But what if really want to save?  Would have to prompt, save, then invoke Mail again - a bit round about.
-What do other programs do?  KOffice?
+What do other programs do?  KOffice -- See KDE Bug #100002
 
 Need to change grid to a non-solid color pattern so that at 400%, it doesn't
 look like part of the image!
@@ -302,6 +375,8 @@ Goto next/prev color in palete
 
 * kpsqueezedtextlabel could use (or be replaced by) KStringHandler::rPixelSqueeze()
 
+
+
 a better set of cursors that don't obscure the pixel you're drawing at
 (e.g. compare the excellent Brush cursor to the Line Tool's cursor)
 
@@ -315,6 +390,8 @@ frankly, I would prefer the current arrow cursor for the "pen". If someone
 prefers a cross (with thin lines), he may even now use the brush with the
 "1x1" option; isn't that practically equivalent?
 "
+
+Also see KDE Bug #116783
 
 
 Bela-Andreas Bargel:
@@ -445,6 +522,16 @@ Bug #6: modified states incorrectly set
 - what undo/redo should do in middle of polyline?
 - what about being unable to redo since did another op?
 
+
+tests/kolourcircles.cpp; rendering glitches at 37% with rect sel tool
+
+[http://www.softpedia.com/reviews/linux/KIconEdit-Review-32338.shtml]:
+"I’m very satisfied with the rendering quality in the thumbnail. In a way it's 
+better than what you have in KolourPaint and here, what you see is what you 
+get."
+
+
+
 - maybe borders (e.g. selection borders) should always have a view width of 1
   - try currently editing a B&W icon to see what I mean (selection borders
     have a document width of 1 so the borders are magnified with zoom)
@@ -510,8 +597,24 @@ tool box icons should have same background color as the other controls
 
 
 config dialogs (look into new kconfig generator)
+- recent files history length
+- undo limit
+- grid tiling
+- saving transparency background
+  (for formats like BMP which don't suport transparency)
+- Un-DoNotAskAgain
 - visual transparency background
 checkerboard + grid doesn't mix at certain zoom levels
+
+[http://www.softpedia.com/reviews/linux/KIconEdit-Review-32338.shtml]:
+"At last, I want to say that there are actually some things that I like, and 
+if those were implemented in KolourPaint, it could easily take over 
+KIconEdit. I’m talking about the configuration options, especially options 
+regarding the checkerboard. In KolourPaint it doesn't overlap well with the 
+grid, but here it does it perfectly. In KIconEdit you can also select custom 
+[checkerboard] colors, even the size of its squares, and this is excellent
+when working at the pixel level."
+
 
 bug: draw rectangle, drag out selection, undo - kills rect but not selection
 is this a feature?
@@ -520,23 +623,12 @@ kpViewManager::setTextCursorBlinkState() needs to restart timer
 
 
 
-better graphics backend
-- screen depth independent (Bug 85280)
-  + 8-bit palette images (Antonio Bianco)
-- supports alpha (Hogne Titlestad, Luke-Jr:Bug94607)
-- option for antialiasing tools (Stefan Taferner, Mikhail Capone, Antonio Bianco)
-- Use QImage as new backend?
-  - BAD: can't draw paletted images
-  - premultiplied format
-    - does using it lose quality?  don't think so since 16-bit values
-    - when set alpha to 0, RGB dies?  is this so important?
-
 
 in the "more effects" windows add "saturation" [done], "highlights" and "shadows"
 (Antonio Bianco)
 
-- find out common requests that require other programs e.g. dropshadow:
-  http://people.kde.nl/marco.html
+- find out common requests that require other programs e.g. dropshadow
+  (e.g. like in Adobe ImageReady on MacOS X): http://people.kde.nl/marco.html
 
 in the "image" menu add a "fade latest effect" voice, that if selected
 brings up a slider that fades the image before with the image after the
@@ -590,15 +682,68 @@ Bela-Andreas Bargel:
 
 config flaws:
 - interprocess config propagation (grep for PROPAGATE) - surely this can be
-  done easily without KUniqueApplication or DCOP?
+  done easily without KUniqueApplication or DBUS?
 
-config dialogs (look into new kconfig generator)
-- recent files history length
-- undo limit
-- grid tiling
-- saving transparency background
-  (for formats like BMP which don't suport transparency)
-- Un-DoNotAskAgain
+To do it using DBUS:
+~~~~
+Re: How to update kdelibs variables globally
+From: David Faure <faure@kde.org>  (KDE)
+To: kde-core-devel@kde.org
+Date: 2007-04-29 3:44 am
+   
+On Saturday 28 April 2007, David Jarvie wrote:
+> I'm implementing the time zones KDEDModule, and it needs to update a couple of 
+> variables in KSystemTimeZones at initialisation and whenever it detects a 
+> change. This update needs to be available to all applications which are using 
+> KSystemTimeZones. What is the best way of doing this? I'm not familiar enough 
+> with how shared libraries work - is it possible to share a variable between 
+> applications, or is there always a separate copy of each static variable 
+> (class static or global static) for each individual application?
+
+You want inter-process communication here, so you need DBUS.
+(real shared memory is very complex to setup and not so portable, and overkill
+for one variable).
+
+It's quite standard to synchronize all instances of a given class among all processes
+using DBUS, a number of konqueror and kdepim classes do it.
+For instance, from kdepim/libkpimidentity/identitymanager.cpp :
+
+IdentityManager::IdentityManager([...]) : [...]
+{
+  new IdentityManagerAdaptor( this );
+  QDBusConnection dbus = QDBusConnection::sessionBus();
+  const QString dbusPath = newDBusObjectName(); // because there can be more than one instance per process. Otherwise just hardcode a name here.
+  const QString dbusInterface = "org.kde.pim.IdentityManager";
+  dbus.registerObject( dbusPath, this );
+  dbus.connect( QString(), dbusPath, dbusInterface, "identitiesChanged", this, SLOT(slotIdentitiesChanged(QString)) );
+  [...]
+}
+
+void IdentityManager::someSlot()
+{
+  // save new config to file
+  // (but you could just emit the variable value in the signal, too)
+
+  // DBus signal for other IdentityManager instances
+  emit identitiesChanged( QDBusConnection::sessionBus().baseService() );
+}
+
+void KPIM::IdentityManager::slotIdentitiesChanged( const QString &id )
+{
+  kDebug()<<" KPIM::IdentityManager::slotIdentitiesChanged :"<<id<<endl;
+  if ( id != QDBusConnection::sessionBus().baseService() ) {
+    mConfig->reparseConfiguration();
+    readConfig( mConfig );
+    // or just setting a variable instead
+    [...]
+  }
+}
+
+Hmm in your case it's even simpler, the emitter (the kded module) isn't the receiver (the kdelibs class)
+so there's no need to ship the baseService at all; just let the kded module emit a dbus signal and let
+the kdelibs class connect to it.
+~~~~
+
 
 tool/ruler (can even measure length & angle of diagonal lines)
 
@@ -624,8 +769,42 @@ http://dot.kde.org/1078028599/:
   - GIMP style rulers
 
 
+4.6. Image Library Rewrite
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-4.6. Minor KolourPaint Code Ideas
+better image library
+- screen depth independent (Bug 85280)
+  + 8-bit palette images (Antonio Bianco)
+- supports alpha (Hogne Titlestad, Luke-Jr:Bug94607)
+- option for antialiasing tools (Stefan Taferner, Mikhail Capone, Antonio Bianco)
+- Use QImage as new backend?
+  - BAD: can't draw paletted images
+  - premultiplied format
+    - does using it lose quality?  don't think so since 16-bit values
+    - when set alpha to 0, RGB dies?  is this so important?
+- See Bug 127995, 126751 and others
+
+X discussion at http://keithp.com/~keithp/talks/xarch_ols2004/xarch-ols2004-html/
+
+GraphicsMagick [http://www.graphicsmagick.org/] = ImageMagick with a stable API?
+
+arthur
+cairo
+kcanvas
+libart
+http://www.xaraxtreme.org/ - Claimed to be very fast
+OpenGL is probably the most promising
+GLSL -- see:
+
+~~~~
+Image manipulation using glsl
+From: Michael Thaler <michael.thaler@physik.tu-muenchen.de>  (LUG-TS)
+To: <kimageshop@kde.org>
+Date: Sun, 21 Jan 2007 16:00:26 +0100
+~~~~
+
+
+4.7. Minor KolourPaint Code Ideas
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KolourPaint at >= 1.0 should be very usable.  So the following are just nice
@@ -657,6 +836,9 @@ line: shift+alt doesn't work but alt+shift does
 - alt alone is backfiring anyway (conflicts with kwin)
   so I'll just leave 30deg & 60deg lines as hidden functionality for now
   (until I can think up a better key combo/way to activate it)
+
+While dragging out a rectangle, ALT adjusts top-left point
+
 
 Colour Eraser as part of the Image Menu? You can dbl-click on the tool after all.
 
@@ -756,8 +938,11 @@ CTRL+Ptrscreen. (Mikhail Capone)
 (Bela-Andreas Bargel)
 
 
-4.7. KolourPaint Code Refactoring (KDE4 specific)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.8. KolourPaint Code Refactoring/Auditing (KDE4 specific)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+0. Bug #100010 lists a lot of dirty design.  Some of this was fixed in KDE4 though.
+
 
 1. Move all code that accesses kpImage internals (e.g. is aware of masks, alpha
    channel or image depth; or uses the kpPixmapFX::draw() method) and/or renders
@@ -799,3 +984,49 @@ command scheme
 
 * Remove use of qt3support and kde3support with the help of
   branches/kolourpaint/control/scripts/kde4port
+
+
+* Instead of having "#if DEBUG_KP_MAIN_WINDOW" and similar:
+
+~~~~
+Re: kdegraphics/kolourpaint
+From: André Wöbbeking <Woebbeking@onlinehome.de>
+To: kde-cvs@kde.org [now kde-commits]
+CC: Clarence Dang <dang@kde.org>
+Date: 2005-02-03 5:54 pm
+   
+On Thursday 03 February 2005 02:00, Clarence Dang wrote:
+> CVS commit by dang:
+>
+> add #if 0'ed out debug for clipboard fmts dump
+
+#if 0 has the disadvantage that the code isn't compiled and starts to 
+rot over the time. A better solution is
+
+static const bool debugMainWindow = false;
+
+...
+
+if (debugMainWindow)
+{
+...
+}
+
+The code is compiled and can't rot but the compiler optimize it away.
+~~~~
+
+
+4.9. KolourPaint Code Refactoring/Auditing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Audit both KolourPaint/KDE3 and KolourPaint/KDE4 for methods emitting
+  signals before all fields have been set e.g.:
+
+  void kpSelection::setPixmap (const QPixmap &pixmap)
+  {
+      m_pixmap = pixmap;
+      emit changed ();  // <-- WRONG because slots connected to the signal
+                        //     see the object in an intermediate state.
+      m_transparencyMask = calculateTransparencyMask ();
+      // <--- You should emit it HERE instead.
+  }
