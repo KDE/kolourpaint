@@ -274,6 +274,9 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     if (useSaveOptionsQuality)
         quality = saveOptions.quality ();
 
+#if DEBUG_KP_DOCUMENT
+    kDebug () << "\tsaving";
+#endif
     if (!imageToSave.save (device, type.toLatin1 (), quality))
     {
     #if DEBUG_KP_DOCUMENT
