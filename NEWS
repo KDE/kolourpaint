@@ -25,7 +25,7 @@ KolourPaint 4.0.0 BETA (Frozen 2007-10-26)
 
    * Add, to the print dialog, a choice between printing the image at the
      top-left of the page or at the center (this was previously a hidden
-     configuration option, which is now ignored)
+     configuration option)
      (Bug #33481)
 
    * Add hidden configuration option "Open Images in the Same Window"
@@ -79,7 +79,7 @@ KolourPaint 4.0.0 BETA (Frozen 2007-10-26)
    * Printing improvements (Bug #108976)
      - Respect image DPI
      - Fit image to page if image is too big
-     - Centre image on page
+     - Center image on page
      [also in branches/KDE/3.5/]
 
    * Paste transparent pixels as black instead of uninitialized colors,
