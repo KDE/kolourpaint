@@ -160,7 +160,7 @@ kpToolWidgetFillStyle::FillStyle kpToolWidgetFillStyle::fillStyle () const
 }
 
 // public static
-// TODO: remove since this widget is for document options and we are returning an on-screen Qt brush instead of e.g. kpColor
+// REFACTOR: remove since this widget is for document options and we are returning an on-screen Qt brush instead of e.g. kpColor
 QBrush kpToolWidgetFillStyle::maskBrushForFillStyle (FillStyle fs,
                                                      const kpColor &foregroundColor,
                                                      const kpColor &backgroundColor)
@@ -185,7 +185,7 @@ QBrush kpToolWidgetFillStyle::maskBrushForFillStyle (FillStyle fs,
     }
 }
 
-// TODO: remove since this widget is for document options and we are returning an on-screen Qt brush instead of e.g. kpColor
+// REFACTOR: remove since this widget is for document options and we are returning an on-screen Qt brush instead of e.g. kpColor
 QBrush kpToolWidgetFillStyle::maskBrush (const kpColor &foregroundColor,
                                          const kpColor &backgroundColor)
 {
@@ -193,15 +193,13 @@ QBrush kpToolWidgetFillStyle::maskBrush (const kpColor &foregroundColor,
 }
 
 // public static
-// TODO: remove since this widget is for document options and we are returning an on-screen Qt brush instead of e.g. kpColor
+// REFACTOR: remove since this widget is for document options and we are returning an on-screen Qt brush instead of e.g. kpColor
 QBrush kpToolWidgetFillStyle::brushForFillStyle (FillStyle fs,
                                                  const kpColor &foregroundColor,
                                                  const kpColor &backgroundColor)
 {
     // do not complain about the "useless" breaks
     // as the return statements might not be return statements one day
-
-    // sync: kptoolpolygon.cpp pixmap()
 
     switch (fs)
     {
