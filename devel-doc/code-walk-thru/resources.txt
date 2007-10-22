@@ -45,6 +45,15 @@ KDE but you need to apply to Coverity for an account to see the results of
 the scans.  Many KDE developers have Coverity accounts.
 
 
+English Breakfast Network (EBN)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A KDE static source analyser [http://www.englishbreakfastnetwork.org/]
+like Coverity.
+
+Checks .docbook User Documentation and code for all KDE branches.
+
+
 Sourceforge
 ~~~~~~~~~~~
 
@@ -54,6 +63,7 @@ The admin,  Clarence Dang can give you access to this.
 
 Website
 ~~~~~~~
+
 The website is http://kolourpaint.sourceforge.net/.  You need a Sourceforge
 account to modify the webpage via SSH at
 shell.sourceforge.net:/home/groups/k/ko/kolourpaint/htdocs/.
@@ -73,7 +83,24 @@ Mailinglists
 The mailing lists hosted on sourceforge are practically dead.
 
 <kolourpaint-support AT lists.sourceforge.net> is a support address but
-receives huge amounts of spam.
+receives huge amounts of spam.  One implemented measure to reduce spam has
+been to configure mailman to stop replying to spammers with:
+
+~~~~
+Your mail to 'Kolourpaint-support' with the subject
+
+      XYZ
+
+  Is being held until the list moderator can review it for approval.
+
+  The reason it is being held:
+
+      Message has implicit destination
+
+  Either the message will get posted to the list, or you will receive
+  notification of the moderator's decision.  If you would like to cancel
+  this posting, please visit the following URL:
+~~~~
 
 
 http://bugs.kde.org
@@ -81,6 +108,10 @@ http://bugs.kde.org
 
 Some bugs are listed in the "BUGS" and "TODO" files, or marked in the
 source code.  Others are listed there.
+
+Bugs owned by "kolourpaint-support@lists.sourceforge.net" are KolourPaint
+bugs.  Bugs of which that address is CC'ed are not directly KolourPaint
+bugs but are interesting for KolourPaint.
 
 
 Other websites
@@ -102,4 +133,12 @@ kolourpaint.net, kolourpaint.com.au etc. since they are odd domains anyway
 while .org and .com are very ordinary.
 
 
+Artists
+~~~~~~~
 
+If you need more icons drawn, try:
+
+1. Reuse a standard KDE icon.
+2. The existing artists for KolourPaint's icons.
+3. http://www.kde-artists.org/ might be able to help.
+4. Find an artist community on the internet.
