@@ -267,6 +267,9 @@ protected:
 
     virtual void endDraw (const QPoint &thisPoint, const QRect &normalizedRect);
 
+    // TODO: I think reimplementations of this should be calling this base
+    //       implementation, so that endDraw() happens before the custom
+    //       endShape() logic of the reimplementation.
     virtual void endShape (const QPoint &thisPoint = QPoint (),
                            const QRect &normalizedRect = QRect ())
     {

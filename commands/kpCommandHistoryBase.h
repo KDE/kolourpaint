@@ -50,7 +50,8 @@ class kpTextSelection;
 class kpViewManager;
 
 
-// Clone of KCommandHistory with features required by KolourPaint:
+// Clone of KCommandHistory with features required by KolourPaint but which
+// could also be useful for other apps:
 // - nextUndoCommand()/nextRedoCommand()
 // - undo/redo history limited by both number and size
 //

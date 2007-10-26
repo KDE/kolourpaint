@@ -490,8 +490,13 @@ public:
     // Note that this method is slow so you should avoid calling it, if
     // possible.
     //
-    // Generally, the only time you need to call it is when you get a pixmap
-    // from a foreign source e.g. file or clipboard.
+    // Generally, the only time you need to call it is when you get a QImage
+    // from a foreign source (e.g. from a file or clipboard, not originally
+    // from a QPixmap) and need to convert it to a QPixmap.  You don't need
+    // to call it anywhere else since internally, all KolourPaint code is
+    // supposed to maintain the QPixmap-has-no-alpha-channel invariant.
+    // However, convertToPixmap() and convertToPixmapAsLosslessAsPossible()
+    // call this method for you anyway.
     //
     // It is invalid to use a QPainter directly on a QPixmap, which
     // usually introduces an alpha channel, and then to call this method to

@@ -381,7 +381,7 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
     //
     //       Note that the invariant has usually already been inadvertently
     //       restored by kpPixmapFX::draw() (which does mask tricks), which
-    //       is called via most tools calling kpDocument::setPixmapAt() in
+    //       is called via most tools calling kpDocument::setPixmapAt(), in
     //       draw() and/or endDraw().  So the below code is really just in
     //       case this has not happened.
     kpImage *docImage = document ()->imagePointer ();

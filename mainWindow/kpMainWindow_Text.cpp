@@ -56,7 +56,6 @@ void kpMainWindow::setupTextToolBarActions ()
 {
     KActionCollection *ac = actionCollection ();
 
-    // COMPAT: Changing font does not seem to work.
     d->actionTextFontFamily = ac->add<KFontAction> ("text_font_family");
     d->actionTextFontFamily->setText (i18n ("Font Family"));
     connect (d->actionTextFontFamily, SIGNAL (triggered (const QString &)),

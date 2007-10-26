@@ -215,6 +215,9 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
 
 
     // TODO: PROPAGATE: interprocess
+    // TODO: Is this loop safe since a KMainWindow later along in the list,
+    //       could be closed as the code in the body almost certainly re-enters
+    //       the event loop?  Problem for KDE 3 as well, I think.
     foreach (KMainWindow *kmw, KMainWindow::memberList ())
     {
         Q_ASSERT (dynamic_cast <kpMainWindow *> (kmw));

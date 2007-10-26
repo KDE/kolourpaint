@@ -87,6 +87,9 @@ public:
     //
     // If <cmd> creates a selection that is not just a border, this
     // method has the same effect as addCommand().
+    //
+    // REFACTOR: Why not just override addCommand() and test if it was given a
+    //           kpToolSelectionCreateCommand?
     void addCreateSelectionCommand (kpToolSelectionCreateCommand *cmd,
         bool execute = true);
 

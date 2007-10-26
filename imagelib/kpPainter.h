@@ -43,13 +43,11 @@ class QPolygon;
 // you should probably move it into kpPainter to avoid the overhead of
 // passing around this state (e.g. color, line width) and for reuse.
 //
-// Therefore, it should not be used as an on-screen replacement for
-// QPainter since kpImage is not supposed to have any relationship with
-// QPaintDevice in the future.
+// kpPainter is to kpImage as QPainter is to QPixmap.
 //
 // This encapsulates the set of functionality used by all of KolourPaint's
 // document drawing functions and nothing more, permitting rewriting of
-// the graphics backend.  Currently uses QPainter/kpPixmapFX as the backend.
+// the image library.  Currently uses QPainter/kpPixmapFX as the image library.
 //
 
 struct kpPainterPrivate;

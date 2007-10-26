@@ -216,7 +216,9 @@ public:
     // Slow: Let Qt buffer paint events via QWidget::update().
     //       Results in less flicker.  Paint events are probably merged
     //       so long-term efficiency is increased at the expense of
-    //       reduced responsiveness (default).
+    //       reduced responsiveness (default).  Generally, the paint
+    //       event happens a while later -- when you return to the event
+    //       loop.
     // Fast: Force Qt to redraw immediately.  No paint events
     //       are merged so there is great potential for flicker,
     //       if used inappropriately.  Use this when the redraw

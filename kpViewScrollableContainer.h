@@ -51,7 +51,7 @@ class kpView;
 class kpMainWindow;
 
 
-// TODO: refactor by sharing iface's with kpTool
+// REFACTOR: refactor by sharing iface's with kpTool
 class kpGrip : public QLabel
 {
 Q_OBJECT
