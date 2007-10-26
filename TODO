@@ -1,7 +1,7 @@
 
 1. Look in kdegraphics/kolourpaint/BUGS
 2. Look in kdegraphics/kolourpaint/patches/
-3. grep all files (not just .cpp and .h) for:
+3. grep all files (not just .cpp and .h) in kdegraphics/kolourpaint/ and in this folder (esp. devel-doc/) for:
    "COMPAT" - Signifies either:
               a) KDE 4 port breakage
               b) Considerations for backports to other KDE versions
