@@ -1,0 +1,463 @@
+KolourPaint/KDE4 from a long time ago (way, way before 18 Oct 2007).
+
+
+I think I was just typing "aut.jpg" in the open file dialog and possibly pressed Enter.
+
+~~~~
+$ fg
+gdb ./kolourpaint
+r
+warning: cannot close "shared object read from target memory": File in wrong format
+Starting program: /home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint/kolourpaint aut.jpg
+Reading symbols from shared object read from target memory...(no debugging symbols found)...done.
+Loaded system supplied DSO at 0xdc8000
+(no debugging symbols found)
+(no debugging symbols found)
+[Thread debugging using libthread_db enabled]
+[New Thread -1208305984 (LWP 5444)]
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+Detaching after fork from child process 5445.
+kdeui (KAction): Font not found times
+kolourpaint: kpColorCells::makeCellsMatchColorCollection(): r=0 c=0
+kolourpaint: kpColorCells::makeCellsMatchColorCollection(): r=2 c=11
+kolourpaint:    Setting cell 0: y=0 x=0 pos=0
+kolourpaint:            color=0xff000000
+kolourpaint:    Setting cell 1: y=0 x=1 pos=1
+kolourpaint:            color=0xff808080
+kolourpaint:    Setting cell 2: y=0 x=2 pos=2
+kolourpaint:            color=0xffff0000
+kolourpaint:    Setting cell 3: y=0 x=3 pos=3
+kolourpaint:            color=0xffff8000
+kolourpaint:    Setting cell 4: y=0 x=4 pos=4
+kolourpaint:            color=0xffffff00
+kolourpaint:    Setting cell 5: y=0 x=5 pos=5
+kolourpaint:            color=0xff00ff00
+kolourpaint:    Setting cell 6: y=0 x=6 pos=6
+kolourpaint:            color=0xff00ffff
+kolourpaint:    Setting cell 7: y=0 x=7 pos=7
+kolourpaint:            color=0xff0000ff
+kolourpaint:    Setting cell 8: y=0 x=8 pos=8
+kolourpaint:            color=0xffff00ff
+kolourpaint:    Setting cell 9: y=0 x=9 pos=9
+kolourpaint:            color=0xffff8080
+kolourpaint:    Setting cell 10: y=0 x=10 pos=10
+kolourpaint:            color=0xff80ff80
+kolourpaint:    Setting cell 11: y=1 x=0 pos=11
+kolourpaint:            color=0xffffffff
+kolourpaint:    Setting cell 12: y=1 x=1 pos=12
+kolourpaint:            color=0xffc0c0c0
+kolourpaint:    Setting cell 13: y=1 x=2 pos=13
+kolourpaint:            color=0xff800000
+kolourpaint:    Setting cell 14: y=1 x=3 pos=14
+kolourpaint:            color=0xff804000
+kolourpaint:    Setting cell 15: y=1 x=4 pos=15
+kolourpaint:            color=0xff808000
+kolourpaint:    Setting cell 16: y=1 x=5 pos=16
+kolourpaint:            color=0xff008000
+kolourpaint:    Setting cell 17: y=1 x=6 pos=17
+kolourpaint:            color=0xff008080
+kolourpaint:    Setting cell 18: y=1 x=7 pos=18
+kolourpaint:            color=0xff000080
+kolourpaint:    Setting cell 19: y=1 x=8 pos=19
+kolourpaint:            color=0xff800080
+kolourpaint:    Setting cell 20: y=1 x=9 pos=20
+kolourpaint:            color=0xff8080ff
+kolourpaint:    Setting cell 21: y=1 x=10 pos=21
+kolourpaint:            color=0xffffff80
+kolourpaint: kpColorCells::makeCellsMatchColorCollection(): r=2 c=11
+kolourpaint:    Setting cell 0: y=0 x=0 pos=0
+kolourpaint:            color=0xff000000
+kolourpaint:    Setting cell 1: y=0 x=1 pos=1
+kolourpaint:            color=0xff808080
+kolourpaint:    Setting cell 2: y=0 x=2 pos=2
+kolourpaint:            color=0xffff0000
+kolourpaint:    Setting cell 3: y=0 x=3 pos=3
+kolourpaint:            color=0xffff8000
+kolourpaint:    Setting cell 4: y=0 x=4 pos=4
+kolourpaint:            color=0xffffff00
+kolourpaint:    Setting cell 5: y=0 x=5 pos=5
+kolourpaint:            color=0xff00ff00
+kolourpaint:    Setting cell 6: y=0 x=6 pos=6
+kolourpaint:            color=0xff00ffff
+kolourpaint:    Setting cell 7: y=0 x=7 pos=7
+kolourpaint:            color=0xff0000ff
+kolourpaint:    Setting cell 8: y=0 x=8 pos=8
+kolourpaint:            color=0xffff00ff
+kolourpaint:    Setting cell 9: y=0 x=9 pos=9
+kolourpaint:            color=0xffff8080
+kolourpaint:    Setting cell 10: y=0 x=10 pos=10
+kolourpaint:            color=0xff80ff80
+kolourpaint:    Setting cell 11: y=1 x=0 pos=11
+kolourpaint:            color=0xffffffff
+kolourpaint:    Setting cell 12: y=1 x=1 pos=12
+kolourpaint:            color=0xffc0c0c0
+kolourpaint:    Setting cell 13: y=1 x=2 pos=13
+kolourpaint:            color=0xff800000
+kolourpaint:    Setting cell 14: y=1 x=3 pos=14
+kolourpaint:            color=0xff804000
+kolourpaint:    Setting cell 15: y=1 x=4 pos=15
+kolourpaint:            color=0xff808000
+kolourpaint:    Setting cell 16: y=1 x=5 pos=16
+kolourpaint:            color=0xff008000
+kolourpaint:    Setting cell 17: y=1 x=6 pos=17
+kolourpaint:            color=0xff008080
+kolourpaint:    Setting cell 18: y=1 x=7 pos=18
+kolourpaint:            color=0xff000080
+kolourpaint:    Setting cell 19: y=1 x=8 pos=19
+kolourpaint:            color=0xff800080
+kolourpaint:    Setting cell 20: y=1 x=9 pos=20
+kolourpaint:            color=0xff8080ff
+kolourpaint:    Setting cell 21: y=1 x=10 pos=21
+kolourpaint:            color=0xffffff80
+kolourpaint: kpColorCells::makeCellsMatchColorCollection(): r=2 c=11
+kolourpaint:    Setting cell 0: y=0 x=0 pos=0
+kolourpaint:            color=0xff000000
+kolourpaint:    Setting cell 1: y=0 x=1 pos=1
+kolourpaint:            color=0xff808080
+kolourpaint:    Setting cell 2: y=0 x=2 pos=2
+kolourpaint:            color=0xffff0000
+kolourpaint:    Setting cell 3: y=0 x=3 pos=3
+kolourpaint:            color=0xffff8000
+kolourpaint:    Setting cell 4: y=0 x=4 pos=4
+kolourpaint:            color=0xffffff00
+kolourpaint:    Setting cell 5: y=0 x=5 pos=5
+kolourpaint:            color=0xff00ff00
+kolourpaint:    Setting cell 6: y=0 x=6 pos=6
+kolourpaint:            color=0xff00ffff
+kolourpaint:    Setting cell 7: y=0 x=7 pos=7
+kolourpaint:            color=0xff0000ff
+kolourpaint:    Setting cell 8: y=0 x=8 pos=8
+kolourpaint:            color=0xffff00ff
+kolourpaint:    Setting cell 9: y=0 x=9 pos=9
+kolourpaint:            color=0xffff8080
+kolourpaint:    Setting cell 10: y=0 x=10 pos=10
+kolourpaint:            color=0xff80ff80
+kolourpaint:    Setting cell 11: y=1 x=0 pos=11
+kolourpaint:            color=0xffffffff
+kolourpaint:    Setting cell 12: y=1 x=1 pos=12
+kolourpaint:            color=0xffc0c0c0
+kolourpaint:    Setting cell 13: y=1 x=2 pos=13
+kolourpaint:            color=0xff800000
+kolourpaint:    Setting cell 14: y=1 x=3 pos=14
+kolourpaint:            color=0xff804000
+kolourpaint:    Setting cell 15: y=1 x=4 pos=15
+kolourpaint:            color=0xff808000
+kolourpaint:    Setting cell 16: y=1 x=5 pos=16
+kolourpaint:            color=0xff008000
+kolourpaint:    Setting cell 17: y=1 x=6 pos=17
+kolourpaint:            color=0xff008080
+kolourpaint:    Setting cell 18: y=1 x=7 pos=18
+kolourpaint:            color=0xff000080
+kolourpaint:    Setting cell 19: y=1 x=8 pos=19
+kolourpaint:            color=0xff800080
+kolourpaint:    Setting cell 20: y=1 x=9 pos=20
+kolourpaint:            color=0xff8080ff
+kolourpaint:    Setting cell 21: y=1 x=10 pos=21
+kolourpaint:            color=0xffffff80
+kolourpaint: kpDualColorButton::draw() rect=QRect(0,0 52x52)  contentsRect=QRect(1,1 50x50)
+kolourpaint:    backgroundColor=0xffffffff
+kolourpaint:    foregroundColor=0xff000000
+kolourpaint: kpDualColorButton::draw() rect=QRect(0,0 52x52)  contentsRect=QRect(1,1 50x50)
+kolourpaint:    backgroundColor=0xffffffff
+kolourpaint:    foregroundColor=0xff000000
+kolourpaint: kpDualColorButton::draw() rect=QRect(0,0 52x52)  contentsRect=QRect(1,1 50x50)
+kolourpaint:    backgroundColor=0xffffffff
+kolourpaint:    foregroundColor=0xff000000
+kdecore (KSycoca): Trying to open ksycoca from /var/tmp/kdecache-kde4/ksycoca4
+kio (KTrader): query for serviceType QImageIOPlugins : returning 21 offers
+kdecore (KLibLoader): className=KAbstractFileModule metaObject->className()=KFileModule
+kdecore (KLibLoader): className=KAbstractFileModule metaObject->className()=KAbstractFileModule
+kdecore (KLibLoader): create - 3
+kio (KDirLister): +KDirLister
+kio (KDirListerCache): +KDirListerCache
+kio (KDirWatch): Available methods: Stat, FAM
+kfile (kdelibs): mainWidget=[KFileDialog pointer(0xbfecfb18) to unnamed widget, geometry = 512x307+0+0]
+Unknown property spacing-top
+kolourpaint: [void KMimeTypeFactory::parseMagic()] Now parsing /usr/share/mime/magic
+kolourpaint: [void KMimeTypeFactory::parseMagic()] Now parsing /home/kde4/dist/share/mime/magic
+kfile (kdelibs):        emit filterChanged() checkbox=QCheckBox(0x9b6fd78)
+kfile (kdelibs): Figure out an extension:
+kfile (kdelibs): setSelection file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint/aut.jpg
+kolourpaint:  KFileItem::isDir can't say -> false
+kfile (kdelibs): KFileItem /home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint/aut.jpg false true false
+kolourpaint:  KFileItem::isDir can't say -> false
+kfile (kdelibs): filename aut.jpg
+kfile (kdelibs): image/x-ico
+kfile (kdelibs): image/gif
+kfile (kdelibs): image/jpeg
+kfile (kdelibs): video/x-mng
+kfile (kdelibs): image/x-xbitmap
+kfile (kdelibs): image/x-xcf
+kfile (kdelibs): image/x-portable-bitmap
+kfile (kdelibs): image/x-eps
+kfile (kdelibs): image/x-pcx
+kfile (kdelibs): image/tiff
+kfile (kdelibs): image/x-tga
+kfile (kdelibs): image/x-rgb
+kfile (kdelibs): image/x-hdr
+kfile (kdelibs): image/x-portable-graymap
+kfile (kdelibs): image/x-dds
+kfile (kdelibs): image/png
+kfile (kdelibs): image/x-xpixmap
+kfile (kdelibs): image/x-portable-pixmap
+kfile (kdelibs): image/bmp
+kfile (kdelibs): image/x-psd
+kio (KTrader): WARNING: KServiceTypeTrader: serviceType ThumbCreator not found
+kio (KTrader): WARNING: KServiceTypeTrader: serviceType ThumbCreator not found
+kfile (kdelibs):        emit filterChanged() checkbox=QCheckBox(0x9b6fd78)
+kfile (kdelibs): Figure out an extension:
+kfile (kdelibs): KFileDialog connecting signals
+Unknown property spacing-top
+Unknown property spacing-top
+Unknown property spacing-top
+kfile (kdelibs):        emit filterChanged() checkbox=QCheckBox(0x9b6fd78)
+kfile (kdelibs): Figure out an extension:
+kio (KDirListerCache): [bool KDirListerCache::listDir(KDirLister*, const KUrl&, bool, bool)] KDirLister(0x9a0cc98)  url=file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint keep=false reload=false
+kio (KDirListerCache): [void KDirListerCache::stop(KDirLister*)] lister: KDirLister(0x9a0cc98)
+kio (KDirListerCache): [void KDirListerCache::forgetDirs(KDirLister*)] KDirLister(0x9a0cc98)
+kio (KDirListerCache): listDir: Entry not in cache or reloaded: file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint
+kio (KDirWatch): Added Dir /home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint [KDirWatch-1]
+kio (KDirWatch):  Setup FAM (Req 1) for /home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint
+kfile (kdelibs):        emit filterChanged() checkbox=QCheckBox(0x9b6fd78)
+kfile (kdelibs): Figure out an extension:
+kio (KTrader): WARNING: KServiceTypeTrader: serviceType ThumbCreator not found
+QStringList HalManager::findDeviceByDeviceInterface(const Solid::DeviceInterface::Type&)  error:  "org.freedesktop.DBus.Error.Disconnected"
+
+QStringList HalManager::findDeviceByDeviceInterface(const Solid::DeviceInterface::Type&)  error:  "org.freedesktop.DBus.Error.Disconnected"
+
+QStringList HalManager::findDeviceByDeviceInterface(const Solid::DeviceInterface::Type&)  error:  "org.freedesktop.DBus.Error.Disconnected"
+
+kio (Slave): createSlave 'file' for file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint
+kio (KIOConnection): [void KIO::ConnectionServer::listenForRemote()] Listening on local:/tmp/ksocket-kde4/kolourpaintfB5444.slave-socket
+kolourpaint: [static KIO::Slave* KIO::Slave::createSlave(const QString&, const KUrl&, int&, QString&)] file  local:/tmp/ksocket-kde4/kolourpaintfB5444.slave-socket
+kio_file: ========= LIST file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint =========
+kio_file: ============= COMPLETED LIST ============
+kio (KDirListerCache): [void KDirListerCache::slotEntries(KIO::Job*, const KIO::UDSEntryList&)] new entries for file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint
+kio (KDirListerCache): [void KDirListerCache::slotResult(KJob*)] finished listing file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint
+[New Thread -1211216976 (LWP 5446)]
+kolourpaint: Could not stat file file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint//as
+[Thread -1211216976 (LWP 5446) exited]
+kio (KTrader): WARNING: KServiceTypeTrader: serviceType ThumbCreator not found
+kolourpaint: [bool KIconLoader::initIconThemes()]
+[New Thread -1211216976 (LWP 5447)]
+kolourpaint: Could not stat file file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint//aut
+[Thread -1211216976 (LWP 5447) exited]
+kolourpaint: Could not stat file file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint//aut
+kio (KIOJob): Job::kill this=KIO::PreviewJob(0x9c19f10)  KIO::PreviewJob
+kolourpaint: Could not stat file file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint//aut.png
+kio (KIOJob): Job::kill this=KIO::PreviewJob(0x9c184c0)  KIO::PreviewJob
+kolourpaint: Could not stat file file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint//aut.png
+kio (KIOJob): Job::kill this=KIO::PreviewJob(0x9bc6078)  KIO::PreviewJob
+kolourpaint: Could not stat file file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint//aut.png
+kio (KIOJob): Job::kill this=KIO::PreviewJob(0x9bc47d8)  KIO::PreviewJob
+kolourpaint: Could not stat file file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint//aut.png
+kio (KIOJob): Job::kill this=KIO::PreviewJob(0x9bc4ad0)  KIO::PreviewJob
+kio (KTrader): WARNING: KServiceTypeTrader: serviceType ThumbCreator not found
+kfile (kdelibs): slotOk
+kfile (kdelibs): Files
+kio (KIOJob): stat file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint/aut.png
+kio_file: FileProtocol::stat details=2
+kfile (kdelibs): slotStatResult
+kfile (kdelibs): filename file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint/aut.png
+kfile (kdelibs): ::urls()
+kfile (kdelibs): ::urls()
+kfile (kdelibs): KRecentDocument::add for file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint/aut.png
+kio (KDirLister): [virtual void KDirLister::stop()]
+kio (KDirListerCache): [void KDirListerCache::stop(KDirLister*)] lister: KDirLister(0x9a0cc98)
+kio (KDirLister): -KDirLister
+kio (KDirLister): [virtual void KDirLister::stop()]
+kio (KDirListerCache): [void KDirListerCache::stop(KDirLister*)] lister: KDirLister(0x9a0cc98)
+kio (KDirListerCache): [void KDirListerCache::forgetDirs(KDirLister*)] KDirLister(0x9a0cc98)
+kio (KDirListerCache): [void KDirListerCache::forgetDirs(KDirLister*, const KUrl&, bool)] KDirLister(0x9a0cc98)  _url: file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint
+kio (KDirListerCache): [void KDirListerCache::forgetDirs(KDirLister*, const KUrl&, bool)] KDirLister(0x9a0cc98)  item moved into cache: file:///home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint
+kolourpaint:    metaInfo:
+kolourpaint: dotsPerMeter X=3780 Y=3780 offset=QPoint(0,0)
+kolourpaint: key= text=:
+kolourpaint:    metaInfo:ENDS
+kdeui (KAction): Font not found times
+kolourpaint: kpColorCells::makeCellsMatchColorCollection(): r=0 c=0
+kolourpaint: kpColorCells::makeCellsMatchColorCollection(): r=2 c=11
+kolourpaint:    Setting cell 0: y=0 x=0 pos=0
+kolourpaint:            color=0xff000000
+kolourpaint:    Setting cell 1: y=0 x=1 pos=1
+kolourpaint:            color=0xff808080
+kolourpaint:    Setting cell 2: y=0 x=2 pos=2
+kolourpaint:            color=0xffff0000
+kolourpaint:    Setting cell 3: y=0 x=3 pos=3
+kolourpaint:            color=0xffff8000
+kolourpaint:    Setting cell 4: y=0 x=4 pos=4
+kolourpaint:            color=0xffffff00
+kolourpaint:    Setting cell 5: y=0 x=5 pos=5
+kolourpaint:            color=0xff00ff00
+kolourpaint:    Setting cell 6: y=0 x=6 pos=6
+kolourpaint:            color=0xff00ffff
+kolourpaint:    Setting cell 7: y=0 x=7 pos=7
+kolourpaint:            color=0xff0000ff
+kolourpaint:    Setting cell 8: y=0 x=8 pos=8
+kolourpaint:            color=0xffff00ff
+kolourpaint:    Setting cell 9: y=0 x=9 pos=9
+kolourpaint:            color=0xffff8080
+kolourpaint:    Setting cell 10: y=0 x=10 pos=10
+kolourpaint:            color=0xff80ff80
+kolourpaint:    Setting cell 11: y=1 x=0 pos=11
+kolourpaint:            color=0xffffffff
+kolourpaint:    Setting cell 12: y=1 x=1 pos=12
+kolourpaint:            color=0xffc0c0c0
+kolourpaint:    Setting cell 13: y=1 x=2 pos=13
+kolourpaint:            color=0xff800000
+kolourpaint:    Setting cell 14: y=1 x=3 pos=14
+kolourpaint:            color=0xff804000
+kolourpaint:    Setting cell 15: y=1 x=4 pos=15
+kolourpaint:            color=0xff808000
+kolourpaint:    Setting cell 16: y=1 x=5 pos=16
+kolourpaint:            color=0xff008000
+kolourpaint:    Setting cell 17: y=1 x=6 pos=17
+kolourpaint:            color=0xff008080
+kolourpaint:    Setting cell 18: y=1 x=7 pos=18
+kolourpaint:            color=0xff000080
+kolourpaint:    Setting cell 19: y=1 x=8 pos=19
+kolourpaint:            color=0xff800080
+kolourpaint:    Setting cell 20: y=1 x=9 pos=20
+kolourpaint:            color=0xff8080ff
+kolourpaint:    Setting cell 21: y=1 x=10 pos=21
+kolourpaint:            color=0xffffff80
+kolourpaint: kpColorCells::makeCellsMatchColorCollection(): r=2 c=11
+kolourpaint:    Setting cell 0: y=0 x=0 pos=0
+kolourpaint:            color=0xff000000
+kolourpaint:    Setting cell 1: y=0 x=1 pos=1
+kolourpaint:            color=0xff808080
+kolourpaint:    Setting cell 2: y=0 x=2 pos=2
+kolourpaint:            color=0xffff0000
+kolourpaint:    Setting cell 3: y=0 x=3 pos=3
+kolourpaint:            color=0xffff8000
+kolourpaint:    Setting cell 4: y=0 x=4 pos=4
+kolourpaint:            color=0xffffff00
+kolourpaint:    Setting cell 5: y=0 x=5 pos=5
+kolourpaint:            color=0xff00ff00
+kolourpaint:    Setting cell 6: y=0 x=6 pos=6
+kolourpaint:            color=0xff00ffff
+kolourpaint:    Setting cell 7: y=0 x=7 pos=7
+kolourpaint:            color=0xff0000ff
+kolourpaint:    Setting cell 8: y=0 x=8 pos=8
+kolourpaint:            color=0xffff00ff
+kolourpaint:    Setting cell 9: y=0 x=9 pos=9
+kolourpaint:            color=0xffff8080
+kolourpaint:    Setting cell 10: y=0 x=10 pos=10
+kolourpaint:            color=0xff80ff80
+kolourpaint:    Setting cell 11: y=1 x=0 pos=11
+kolourpaint:            color=0xffffffff
+kolourpaint:    Setting cell 12: y=1 x=1 pos=12
+kolourpaint:            color=0xffc0c0c0
+kolourpaint:    Setting cell 13: y=1 x=2 pos=13
+kolourpaint:            color=0xff800000
+kolourpaint:    Setting cell 14: y=1 x=3 pos=14
+kolourpaint:            color=0xff804000
+kolourpaint:    Setting cell 15: y=1 x=4 pos=15
+kolourpaint:            color=0xff808000
+kolourpaint:    Setting cell 16: y=1 x=5 pos=16
+kolourpaint:            color=0xff008000
+kolourpaint:    Setting cell 17: y=1 x=6 pos=17
+kolourpaint:            color=0xff008080
+kolourpaint:    Setting cell 18: y=1 x=7 pos=18
+kolourpaint:            color=0xff000080
+kolourpaint:    Setting cell 19: y=1 x=8 pos=19
+kolourpaint:            color=0xff800080
+kolourpaint:    Setting cell 20: y=1 x=9 pos=20
+kolourpaint:            color=0xff8080ff
+kolourpaint:    Setting cell 21: y=1 x=10 pos=21
+kolourpaint:            color=0xffffff80
+kolourpaint: kpColorCells::makeCellsMatchColorCollection(): r=2 c=11
+kolourpaint:    Setting cell 0: y=0 x=0 pos=0
+kolourpaint:            color=0xff000000
+kolourpaint:    Setting cell 1: y=0 x=1 pos=1
+kolourpaint:            color=0xff808080
+kolourpaint:    Setting cell 2: y=0 x=2 pos=2
+kolourpaint:            color=0xffff0000
+kolourpaint:    Setting cell 3: y=0 x=3 pos=3
+kolourpaint:            color=0xffff8000
+kolourpaint:    Setting cell 4: y=0 x=4 pos=4
+kolourpaint:            color=0xffffff00
+kolourpaint:    Setting cell 5: y=0 x=5 pos=5
+kolourpaint:            color=0xff00ff00
+kolourpaint:    Setting cell 6: y=0 x=6 pos=6
+kolourpaint:            color=0xff00ffff
+kolourpaint:    Setting cell 7: y=0 x=7 pos=7
+kolourpaint:            color=0xff0000ff
+kolourpaint:    Setting cell 8: y=0 x=8 pos=8
+kolourpaint:            color=0xffff00ff
+kolourpaint:    Setting cell 9: y=0 x=9 pos=9
+kolourpaint:            color=0xffff8080
+kolourpaint:    Setting cell 10: y=0 x=10 pos=10
+kolourpaint:            color=0xff80ff80
+kolourpaint:    Setting cell 11: y=1 x=0 pos=11
+kolourpaint:            color=0xffffffff
+kolourpaint:    Setting cell 12: y=1 x=1 pos=12
+kolourpaint:            color=0xffc0c0c0
+kolourpaint:    Setting cell 13: y=1 x=2 pos=13
+kolourpaint:            color=0xff800000
+kolourpaint:    Setting cell 14: y=1 x=3 pos=14
+kolourpaint:            color=0xff804000
+kolourpaint:    Setting cell 15: y=1 x=4 pos=15
+kolourpaint:            color=0xff808000
+kolourpaint:    Setting cell 16: y=1 x=5 pos=16
+kolourpaint:            color=0xff008000
+kolourpaint:    Setting cell 17: y=1 x=6 pos=17
+kolourpaint:            color=0xff008080
+kolourpaint:    Setting cell 18: y=1 x=7 pos=18
+kolourpaint:            color=0xff000080
+kolourpaint:    Setting cell 19: y=1 x=8 pos=19
+kolourpaint:            color=0xff800080
+kolourpaint:    Setting cell 20: y=1 x=9 pos=20
+kolourpaint:            color=0xff8080ff
+kolourpaint:    Setting cell 21: y=1 x=10 pos=21
+kolourpaint:            color=0xffffff80
+ASSERT: "mw" in file /home/kde4/celerysvn/branches-work/~dang/kdegraphics/kolourpaint/mainWindow/kpMainWindow_File.cpp, line 218 [addRecentURL()]
+kio (KDirListerCache): -KDirListerCache
+kio (KDirWatch): KDirWatchPrivate::removeEntry for '/home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint' sub_entry: 0x0
+kio (KDirWatch): Cancelled FAM (Req 1) for /home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint
+kio (KDirWatch): Removed Dir /home/kde4/celerysvn/branches-work/~dang/kdegraphics/build/kolourpaint [KDirWatch-1]
+The KLibLoader contains the library libkfilemodule (KLibrary(0x992cb60) )
+Factory still has object [KFileModule pointer(0x09b4fc38) to unnamed object]  Library = libkfilemodule
+
+Program exited with code 01.
+(gdb) r
+~~~~
+
+ALT + F4 race, or file dialog counts as mainwindow?
+
+Related to kpMainWindow:
+
+        // TODO: Is this loop safe since a KMainWindow later along in the list,
+        //       could be closed as the code in the body almost certainly re-enters
+        //       the event loop?  Problem for KDE 3 as well, I think.
+        foreach (KMainWindow *kmw, KMainWindow::memberList ())
+

@@ -1,0 +1,55 @@
+KolourPaint/KDE4.
+Definitely before 18 Oct 2007.
+
+
+Edit / Undo submenu crashes inside Qt (probably a KSelectAction setup bug):
+
+0x04e58a12 in QMenu::findIdForAction ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtGui.so.4
+(gdb) bt
+#0  0x04e58a12 in QMenu::findIdForAction ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtGui.so.4
+#1  0x04e6043c in QMenuPrivate::activateAction ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtGui.so.4
+#2  0x04e62a87 in QMenu::mouseReleaseEvent ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtGui.so.4
+#3  0x0116123a in KMenu::mouseReleaseEvent ()
+   from /home/kde4/dist/lib/libkdeui.so.5
+#4  0x04b67813 in QWidget::event ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtGui.so.4
+#5  0x04e5e475 in QMenu::event ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtGui.so.4
+#6  0x04b21e30 in QApplicationPrivate::notify_helper ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtGui.so.4
+#7  0x04b280f7 in QApplication::notify ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtGui.so.4
+#8  0x010acec3 in KApplication::notify ()
+   from /home/kde4/dist/lib/libkdeui.so.5
+#9  0x00e9881b in QCoreApplication::notifyInternal ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtCore.so.4
+#10 0x04b77f1b in QETWidget::translateMouseEvent ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtGui.so.4
+#11 0x04b76c63 in QApplication::x11ProcessEvent ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtGui.so.4
+#12 0x04b9958b in x11EventSourceDispatch ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtGui.so.4
+#13 0x4462a272 in g_main_context_dispatch ()
+   from /lib/libglib-2.0.so.0
+#14 0x4462d24f in g_main_context_check () from /lib/libglib-2.0.so.0
+#15 0x4462d7b5 in g_main_context_iteration ()
+   from /lib/libglib-2.0.so.0
+#16 0x00eb9ec8 in QEventDispatcherGlib::processEvents ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtCore.so.4
+#17 0x04b99205 in QGuiEventDispatcherGlib::processEvents ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtGui.so.4
+#18 0x00e97d91 in QEventLoop::processEvents ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtCore.so.4
+#19 0x00e97e9c in QEventLoop::exec ()
+---Type <return> to continue, or q <return> to quit---
+   from /home/kde4/celerysvn/qt-copy/lib/libQtCore.so.4
+#20 0x00e99eea in QCoreApplication::exec ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtCore.so.4
+#21 0x04b21547 in QApplication::exec ()
+   from /home/kde4/celerysvn/qt-copy/lib/libQtGui.so.4
+#22 0x0809369b in main ()
+

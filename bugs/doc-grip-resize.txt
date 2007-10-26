@@ -1,0 +1,57 @@
+KolourPaint/KDE4
+18 Oct 2007 or Earlier:
+
+
+32-bit screen with XRENDER off.
+
+Dragging the resize grips (out of the window?) and somehow kolourpaint not
+picking up the releaseevent, results in the resize continuing without the mouse
+being down, plus the below X errors.
+
+This might be vaguely related to tools/kpTool_MouseEvents.cpp:
+
+"
+// HITODO: If you press a mouse button and move it out of the view _really_ fast
+//         and let go of the mouse button outside of the view, a mouseRelease
+//         event will not be generated, so the tool will still be in drawing mode
+//         (this is especially noticeable with the spraycan).
+//
+//         When you move the mouse back into the view, it will still continue
+//         continue drawing even though no mouse button is held down.
+//
+//         It is somewhat hard to reproduce so the best way is to position the
+//         mouse close to an edge of the view.  If you do it right, no mouseMoveEvent
+//         is generated at _all_, until you move it back into the view.
+void kpTool::mousePressEvent (QMouseEvent *e)
+"
+
+34278, name = "tool_flood_fill") >::viewEvent(type= 12 ) returning false [QEvent::Paint]
+kolourpaint4(8468) kpTool::viewEvent: kpTool< "tool_flood_fill" , kpToolFloodFill(0x8434278, name = "tool_flood_fill") >::viewEvent(type= 24 ) returning false [QEvent::WindowActivate]
+kolourpaint4(8468) kpTool::viewEvent: kpTool< "tool_flood_fill" , kpToolFloodFill(0x8434278, name = "tool_flood_fill") >::viewEvent(type= 8 ) returning false [QEvent::FocusIn]
+X Error: RenderBadPicture (invalid Picture parameter) 180
+  Extension:    153 (RENDER)
+  Minor opcode: 5 (RenderChangePicture)
+  Resource id:  0x0
+X Error: RenderBadPicture (invalid Picture parameter) 180
+  Extension:    153 (RENDER)
+  Minor opcode: 5 (RenderChangePicture)
+  Resource id:  0x0
+X Error: RenderBadPicture (invalid Picture parameter) 180
+  Extension:    153 (RENDER)
+  Minor opcode: 5 (RenderChangePicture)
+  Resource id:  0x0
+X Error: RenderBadPicture (invalid Picture parameter) 180
+  Extension:    153 (RENDER)
+  Minor opcode: 5 (RenderChangePicture)
+  Resource id:  0x0
+X Error: RenderBadPicture (invalid Picture parameter) 180
+  Extension:    153 (RENDER)
+  Minor opcode: 5 (RenderChangePicture)
+  Resource id:  0x0
+X Error: RenderBadPicture (invalid Picture parameter) 180
+  Extension:    153 (RENDER)
+  Minor opcode: 5 (RenderChangePicture)
+  Resource id:  0x0
+kolourpaint4(8468) kpTool::viewEvent: kpTool< "tool_flood_fill" , kpToolFloodFill(0x8434278, name = "tool_flood_fill") >::viewEvent(type= 25 ) returning false [QEvent::WindowDeactivate]
+kolourpaint4(8468) kpTool::viewEvent: kpTool< "tool_flood_fill" , kpToolFloodFill(0x8434278, name = "tool_flood_fill") >::viewEvent(type= 9 ) returning false [QEvent::FocusOut]
+kolourpaint4(8468) kpTool::viewEvent: kpTool< "tool_flood_fill" , kpToolFloodFill(0x8434278, name = "tool_flood_fill") >::viewEvent(typ

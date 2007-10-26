@@ -95,3 +95,18 @@ Test 3
 Steps:
 1. Open a file whose format is supported for reading but not writing.
 2. CTRL+S should bring up a file dialog.
+
+
+Test 4
+------
+
+Session restore with:
+1. An new, untitled document.
+2. Closed document (CTRL+W).
+3. A normally opened document.
+
+
+Test 5
+------
+
+Hidden configuration options like "Open Images in the Same Window".

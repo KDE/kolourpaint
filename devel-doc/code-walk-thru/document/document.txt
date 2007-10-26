@@ -40,6 +40,9 @@ appearance of the selection border.  If setting a text selection, you must
 also specific text cursor parameters (such as the position within the text
 lines).
 
+There is special handling for "kolourpaint doesnotexist.png" opening a
+new document called "doesnotexist.png".
+
 
 [>>>] kpDocumentSaveOptions
 
@@ -66,8 +69,7 @@ don't want the image to get more grainy with altered pixel colors.
 
 Now, let us suppose that instead of drawing a new document, the user opens
 an 8-bit document.  This is converted to a kpImage, which is 24-bit,
-without
-any pixel colors being changed (you actually lose the 8-bit palette
+without any pixel colors being changed (you actually lose the 8-bit palette
 though).  So that if the user were to press "Save", the document will be
 saved as an 8-bit image, the "Color Depth" field of
 kpDocumentSaveOptionsWidget is set by kpDocument to 8-bit.  Since the image
@@ -76,9 +78,9 @@ data came from an 8-bit image in the first place, the reduction from the
 more than 256 colors i.e. opening an 8-bit image and saving it straight
 back should not change the appearance of the image.
 This is why kpDocument will set the "Dither" boolean to false.  The reason
-If kpDocument had set
-"Dither" to true, this would not have been lossless and repeatedly
-opening and resaving the same document would make it progressively blurier.
+If kpDocument had set "Dither" to true, this would not have been lossless and
+repeatedly opening and resaving the same document would make it progressively
+blurier.
 
 It cannot set the compression quality as Qt does not offer this information
 -- this is why, after opening a JPEG in KolourPaint, clicking "Save" brings
