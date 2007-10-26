@@ -43,8 +43,10 @@ Comments are encouraged.
 
 
 Also, before every method, put:
-// {public, private, protected} {static,
-// {overrides, virtual} {[base sclass],}}
+// {public, private, protected} {slot, }  \
+// {static, {overrides, virtual} {[base sclass],}, }
+
+e.g. // protected slot virtual [base kpTool]
 
 overrides = non-virtual override (a method with the same name, which
             usually calls the method being overridden)

@@ -296,13 +296,14 @@ Changing text style parameters is an undoable operation
 .................
 
 When the user drags to create a text box, it is, like with image
-selections, just a border.
+selections, just a border -- it has no text lines.
 
 Before modifying the text box (e.g. adding text or drag-moving the text
-box), you must give the text box "content" (i.e. mark it as editable / make
-it a "floating" selection) using kpToolTextGiveContentCommand.  This is unlike
-KolourPaint/KDE3, where merely dragging to create a text box added a command
-to the command history and the box was editable immediately.
+box), you must give the text box "content" (i.e. give it 1 empty text
+line and making it a "floating" selection) using
+kpToolTextGiveContentCommand.  This is unlike KolourPaint/KDE3, where merely
+dragging to create a text box added a command to the command history and the
+box was editable immediately.
 
 *** The above "giving of content" is mandatory before manipulating a
     text selection. ***
@@ -372,3 +373,25 @@ style (e.g. background color) has no immediate effect on the selection, it
 _must_ still be recorded as a command -- see
 kpAbstractImageSelectionTool::changeImageSelectionTransparency() for a
 discussion.
+
+Another tricky situation is where the user tries to mislead
+KolourPaint e.g.:
+
+  1. Drag out a rectangular border.
+
+  2. Drag-move the selection, which adds to the command history:
+     a) kpToolSelectionCreateCommand
+     b) kpMacroCommand consisting of kpToolSelectionPullFromDocumentCommand
+        and kpToolSelectionMoveCommand
+
+  3. Undo.  This puts us in the state after 2.a)., with our rectangular
+     border created by 1.
+
+  4. The user deliberately drags out a rectangular border elsewhere.
+     This does not change the command history since we only replaced a border,
+     not a floating selection (if it was a floating selection,
+     kpToolSelectionDestroyCommand would have been added to the command
+     history).
+
+  5. Redo.  2.b) is executed, but given a different border to when it was
+     constructed.  Thankfully, we handle that by ignoring the new border.
