@@ -1,4 +1,8 @@
       1 2 3 5 9 15 17 25 29
 Spraycan      ^     ^     ^
-Brush   ^   ^ ^ 
+Brush   ^   ^ ^
 Eraser      ^ ^     ^     ^
+Color Eraser^ ^     ^     ^
+
+Note that the Brush's circular brushes are 1 pixel shorter and thinner than
+the other shaped brushes, so that they can be circular.
