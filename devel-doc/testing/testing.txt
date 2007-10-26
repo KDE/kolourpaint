@@ -1,128 +1,97 @@
-blackbox test all capabilities (remember mask & no mask document cases)
-with and without valgrind; doc all tests
-
-test SYNC
-
-
 
 Testing
 
-There are 2 kinds of documents:
 
-RGB - the kind of document you get when you start KolourPaint or click "File /
-New".
-
-RGBM - RGB with a 0/1 transparency mask.  To get this, either open such a file
-       or draw on an RGB document using a transparent color.  There are
-       also some (careless) code paths in KolourPaint that convert from RGB to RGBM
-       even when no transparency in introduced.
-
-There are separate code paths (with large areas of commonality) for both
-so when you change something in KolourPaint, you must test both.
-
-KolourPaint code does not support QPixmap's with alpha channels
-(see the explanation at TODO).  The
-following are common examples of incorrect code:
-
-A. kpImage image;
-
-   QPainter p (&image);
-
-   // This is likely to introduce an alpha channel.
-   p.anyMethod ();
-
-   Change to:
-
-   kpImage image;
-
-   // This calls QPainter but in tricky ways to avoid introducing an alpha
-   // channel.
-   kpPainter::anyMethod (&image);
-
-B. QPixmap pixmap;
-
-   QPainter p (&pixmap);
-
-   // This is likely to introduce an alpha channel.
-   p.anyMethod ();
-
-   Change to:
-
-   QPixmap pixmap;
-
-   // This calls QPainter but in tricky ways to avoid introducing an alpha
-   // channel.
-   kpPixmapFX::anyMethod (&pixmap);
-
-C. QPixmap pixmap (width, height);
-
-   // <pixmap> is uninitialized and may have an alpha channel.
-   // If it does, calling kpPixmapFX::anyMethod() will trip an assert.
-   kpPixmapFX::anyMethod (&pixmap);
-
-   Change to:
-
-   // While this does not initialize the image data of <pixmap>,
-   // it establishes the no-alpha-channel invariant ...
-   QPixmap pixmap = kpPixmapFX::newPixmap (width, height);
-
-   // ... so this is safe to call.
-   kpPixmapFX::anyMethod (&pixmap);
+1. Reference Implementation
+2. Clean Install
+3. Test Scenarios
+4. Test Cases
 
 
-
-Testing:
-
-Uninstall and install (needs find $KDEDIR -iname '*kolourpaint*')
-rm $KDEHOME/share/config/kolourpaintrc
-rm -rf $KDEHOME/share/apps/kolourpaint/ [kolourpaintui.rc here specifies
-toolbar config]
-TODO: who specifies shortcuts?
-
-Exhaustive test kolourpaint (open and save and a bit of doodling,
-Transparency
-) and help
-
-
-
-
-Reference Implementation
+1. Reference Implementation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If the behavior of any operation is in doubt, KolourPaint from KDE 3.4.0
 and running under KDE 3.4.0 (e.g. KDE 3.5 introduced a Recent Files bug),
-as shipped by Fedora Core 4, on a 32-bit screen, is the most tested configuration of KolourPaint and should be
-considered the reference implementation, except for bugs that were fixed
-in later versions.  Later versions in the KDE 3.4.x and KDE 3.5.x series
-(even with those bugs fixed) are not reference implementations because
-they were not as well tested.
+as shipped by Fedora Core 4, on a 24-bit screen, is the most tested
+configuration of KolourPaint and should be considered the reference
+implementation, except for bugs that were fixed in later versions.  Later
+versions in the KDE 3.4.x and KDE 3.5.x series (even with those bugs fixed)
+are not reference implementations because they were not as well tested.
 
 
+2. Clean Install
+~~~~~~~~~~~~~~~~
 
-Test cases
-~~~~~~~~~~
+Remove any installed KolourPaint files in $KDEDIR and $KDEHOME
+("find $KDHEOME $KDEDIR -iname '*kolourpaint*'").
+
+This includes:
+  $KDEHOME/share/config/kolourpaintrc
+  $KDEHOME/share/apps/kolourpaint/ [kolourpaintui.rc in here specifies
+                                    toolbar config]
+  TODO: who specifies shortcuts?
+
+
+3. Test Scenarios
+~~~~~~~~~~~~~~~~~
+
+1. Try different screen modes (15/16-bit and 24-bit).
+   See pixmapfx/ documentation.
+
+2. Try with XRENDER on and off.
+   See pixmapfx/ documentation.
+
+3. Test all operations on images that don't have masks and images
+   with masks.
+
+   There are 2 kinds of documents:
+
+   RGB - the kind of document you get when you start KolourPaint or click
+         "File / New".
+
+   RGBM - RGB with a 0/1 transparency mask.  To get this, either open such a
+          file or draw on an RGB document using a transparent color.  There
+          are also some (careless) code paths in KolourPaint that convert from
+          RGB to RGBM even when no transparency needs to be introduced.
+
+   There are separate code paths (with large areas of commonality) for both
+   so when you change something in KolourPaint, you should test both.
+   See pixmapfx/ documentation.
+
+4. Trying running under valgrind
+
+
+4. Test Cases
+~~~~~~~~~~~~~
+
+Exhaustively test all functionality ostensibly accessible in the GUI.
+NEWS and the user handbook should describe additional functionality.
 
 TODO: List all functionality in every widget as test cases.
 
 
+Test 1
+------
+
+Steps:
+1. "kolourpaint doesnotexist.png"
+2. [optional modification of image]
+3. CTRL+S forces a dialog open because it does not know what format it should
+   be saved in.
 
 
+Test 2
+------
 
-kolourpaint doesnotexist.png
-[optional modification of image]
-CTRL+S forces a dialog open because it does not know what format it should
-be saved in.
-
-
-Also for JPEGs since don't know qualtiy.
+Steps:
+1. Open a JPEG.
+2. CTRL+S should bring up file dialog since JPEG quality is unknown.
 
 
+Test 3
+------
 
-
-
-
-KolourPaint saving also handles KImageIO writer not existing for format.
-
-
-
-
-
+Steps:
+1. Open a file whose format is supported for reading but not writing.
+2. CTRL+S should bring up a file dialog.

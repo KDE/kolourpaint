@@ -7,9 +7,9 @@ functionality testing with black-box testing.  This testing was paranoid.
 This is why the Coverity static code analyser failed to find a single
 non-false-positive out of more than 50 thousand lines of code.
 
-You will not get memory errors in KolourPaint code, except some memory
-leaks on application termination due to some missing destruction (but this
-is cleaned up by the OS anyway).  However:
+You will probably not get memory errors in KolourPaint code, except some
+memory leaks on application termination due to some missing destruction (but
+this is cleaned up by the OS anyway).  However:
 
 1. The selection code, combined with undo/redo, is very complicated.
    It would not be surprising if there was a path that causes a crash
