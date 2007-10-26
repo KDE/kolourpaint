@@ -1,8 +1,10 @@
 
 DPI
 
+
 This describes the general concept of "DPI" (Dots Per Inch) and refers
 to KolourPaint's behavior.
+
 
 1. DPI
 2. Printing
