@@ -23,6 +23,13 @@ kpMainWindow, kp*ToolBar or kpTool.
 
 kpTool creates kpCommand.
 
+TODO: Highlight main classes
 
 
+kpDefs.h
 
+
+kpThumbnail
+
+
+kpViewScrollableContainer.
