@@ -251,6 +251,9 @@ Constructing a kpColor object from QColor is usually wrong since QColor's
 come from on-screen pixels, which may lack the full color resolution of
 kpColor, due to the limited color range on e.g. a 16-bit screen.
 
+See the user manual and the WhatsThis for kpColorSimilarityToolBarItem for
+an explanation of kpColor Color Similarity.
+
 
 [>>>] kpDocumentMetaInfo
 
