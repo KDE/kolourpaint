@@ -1,22 +1,202 @@
 
-Main Window
-~~~~~~~~~~~
+mainWindow/ package
 
-Source code stored in mainwindow/ folder.  Is a monster-sized class.
 
-Far, too often main window pointers are passed around everywhere (since
-given a pointer to a main window, you can get a pointer to anything else).
-Unfortunately, this means that tools and commands are tied to the GUI.
-Worse still, we cannot have 2 main windows viewing the same document.
-ACTION: Change tools to use a kpToolEnvironment interface and commands to
-use a kpCommandEnvironment.
+The mainwindow class, whose important children are:
 
-The kpmainwindow_statusbar.cpp tries very hard to ensure that the status
-bar contains the correct text.  Far too many other KDE applications allow
+  1. kpDocument
+
+  2. kpViewScrollableContainer and the kpZoomedView "main view", for
+     visualizing the kpDocument
+
+  3. kpThumbnail and the kpThumbnailView, also for visualizing the kpDocument
+
+  4. kpViewManager, for controlling the views in 2. and 3.
+
+  5. kpColorToolBar and kpToolToolBar to allow the user to select colors and
+     tools respectively
+
+  6. kpCommandHistory to carry the Undo/Redo history
+
+  7. instances of the environments/ to pass to those classes that use them
+
+  8. most actions, except for kpToolAction's
+
+  9. all tools, which are also registerd with kpToolToolBar
+
+This is the top-level, monster-sized class -- instances are created by
+kolourpaint.cpp.  It is split into many files -- basically 1 per menu.
+
+It acts as a mediator for too many things and can get a pointer to basically
+anything.  As a result, in KolourPaint/KDE3, too often, kpMainWindow pointers
+were passed around everywhere.
+
+This meant that it was difficult to change kpMainWindow's interface and
+also, tools and commands were tied to the GUI.  In KolourPaint/KDE4, we
+largely fixed this by creating the environments/ package.
+
+
+1. kpMainWindow.cpp
+2. kpMainWindow_Colors.cpp
+3. kpMainWindow_Edit.cpp
+4. kpMainWindow_File.cpp
+5. kpMainWindow_Help.cpp
+6. kpMainWindow_Image.cpp
+7. kpMainWindow_Settings.cpp
+8. kpMainWindow_StatusBar.cpp
+9. kpMainWindow_Text.cpp
+10. kpMainWindow_Tools.cpp
+11. kpMainWindow_View.cpp
+12. kpMainWindow_View_Thumbnail.cpp
+13. kpMainWindow_View_Zoom.cpp
+
+
+1. kpMainWindow.cpp
+~~~~~~~~~~~~~~~~~~~
+
+* Initialization as split into 2 bits:
+
+  a) init():
+
+     Reads the config and creates the actions and GUI.
+
+     Called exactly once by the constructors.
+
+  b) setDocument(kpDocument*):
+
+     Sets the document to the argument, which can be 0 for no document.
+
+     Enables/disables actions, according to whether there is a document.
+
+     Creates/destroys views, according to whether there is a document
+
+     Connects many signals.  Of special note is the connecting of the
+     document's contentsChanged() and sizeChanged() signals to the
+     kpViewManager, to ensure that document mutations are reflected in
+     the views.
+
+     May or may not be called by the constructor.  Is later also called
+     for "File / New" and "File / Close".
+
+* Loading of per-main-window persistent config
+
+* Session save and restore (saveProperties() and restoreProperties())
+
+* Dropping a URL or text
+
+* Hack for drag-scrolling in kpViewScrollableContainer
+
+
+2. kpMainWindow_Colors.cpp
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+"Colors" menu.
+
+
+3. kpMainWindow_Edit.cpp
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+"Edit" menu.
+
+Note addDeselectFirstCommand(kpCommand*) which deselects any existing
+selection, adding kpToolSelectionDestroyCommand to the command
+history if necessary, before adding the given command.
+
+See layers/ documentation for more information on selections.
+
+
+4. kpMainWindow_File.cpp
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+"File" menu.
+
+
+5. kpMainWindow_Help.cpp
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+"Help" menu.
+
+
+6. kpMainWindow_Image.cpp
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+"Image" menu.
+
+Note addImageOrSelectionCommand(kpCommand*, bool, bool), which adds a
+command that either works on the entire document (the "image") or on the
+selection ("selection").  In the latter case, it will also add any needed
+kpToolSelectionCreateCommand and
+kpToolSelectionPullFromDocumentCommand/kpToolTextGiveContentCommand.
+
+See layers/ documentation for more information on selections.
+
+
+7. kpMainWindow_Settings.cpp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+"Settings" menu.
+
+
+8. kpMainWindow_StatusBar.cpp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This tries very hard to ensure that the statusbar contains the correct text
+as much of the time as possible.  Far too many other KDE applications allow
 some status bar text to be, for instance, wiped by a temporary notice and
-never re-appear.  KolourPaint does this right.
+never re-appear.  KolourPaint does this correctly.
 
-ACTION: However, the implementation is too concrete and should be converted
-into a general status bar update pattern that can be pushed into kdelibs.
-Different objects, say the view, could indicate things that affect that
-status bar, say the zoom level.
+TODO: However, the implementation is too concrete and should be converted
+      into a general status bar update pattern that can be pushed into
+      kdelibs.  Different objects, say the view, could indicate things that
+      affect that status bar, say the zoom level.
+
+
+9. kpMainWindow_Text.cpp
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Text Toolbar mediator, including config handling.
+
+* textStyle() combines all the GUI elements to calculate the currently
+  selected kpTextStyle
+  - setTextStyle() does the reverse -- it sets the GUI elements with the given
+    kpTextStyle
+
+
+10. kpMainWindow_Tools.cpp
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* kpToolToolBar, tools, tool option widgets and kpViewScrollableContainer
+  mediator
+
+* Config setting for last used tool
+
+* Another hack for drag-scrolling in kpViewScrollableContainer
+
+* toolEndShape() is usually called at the start of most slots in all of
+  kpMainWindow (see the API Doc for details)
+
+* imageSelectionTransparency() combines all the GUI elements to
+  calculate the currently selected kpImageSelectionTransparency values
+  - setImageSelectionTransparency() does the reverse -- it sets the GUI
+    elements with the given kpImageSelectionTransparency
+
+
+11. kpMainWindow_View.cpp
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Handles the grid option in the "View" menu.  All other "View" menu
+responsibilities are delegated to kpMainWindow_View_Thumbnail.cpp and
+kpMainWindow_View_Zoom.cpp.
+
+
+12. kpMainWindow_View_Thumbnail.cpp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Handles the thumbnail and thumbnail options offered in the "View" menu.
+Saves and restores the position of the thumbnail as config settings.
+
+
+13. kpMainWindow_View_Zoom.cpp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Handles all the zooming in the "View" menu.

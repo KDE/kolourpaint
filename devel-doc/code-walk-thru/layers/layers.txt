@@ -2,6 +2,9 @@
 layers/ package
 
 
+Selections and tools' "temp images"
+
+
 1. tempImage/
 
 2. selections/

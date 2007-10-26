@@ -1,53 +1,104 @@
 
-Config
-~~~~~~
-
-config is per mainwindow
-
-Should the thumbnail save the config regarding its position relative to its
-parent (the kpMainWindow) or should its parent save that?  It should be the
-kpMainWindow since classes should only concern themselves with things
-inside them and the thumbnail position is "inside" the kpMainWindow, not
-inside itself.
-
-Hidden configuration setting defaults are written the first time the key
-is looked up (i.e. the functionality is used).  This is not optimal since
-looking at the config file gives the user no idea that the key exists,
-if it has never been queried.
+Config Handling
 
 
-Configuration scheme:
+1. Who is Responsible For Saving/Restoring Config?
+2. Configuration Scheme
+3. Settings Propagation
+4. Hidden Configuration Options
+5. Session Restore
 
-All config keys are read at kpMainWindow initialisation
-m_configThumbnailShown is read from the config files at kpMainWindow
-initialization.
-[it's currently not actually used so is sort of a bad example]
 
-Every time the thumbnail visibility is changed either programmatically
-or via the user, m_configThumbnailShown is updated _and_ written to the
-config file.  Unlike other programs, you do not need to exit the entire
-process so that setting changes are written to the disk.  Those other
-programs
-are confusing because opening a new process before exiting the first does
-not
-reflect the config changes made in the first.  Consider Settings / Show
-Path for instance.  TODO: test in KWrite.
+1. Who is Responsible For Saving/Restoring Config?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Windows opened in the same KolourPaint process will read
-m_configThumbnailShown.  Existing KolourPaint processes will read their
-m_configThumbnailShown.  In neither case does KolourPaint read from the
-config file, which may have been
-changed by another process.   This is reasonable behaviour as - TODO: is
-it?
+As an example case:
 
-New KolourPaint processes will read the last m_configThumbnailShown written
-to the config file.  This is reasonable behaviour as a new process should
-use the setting from the last time the thumbnail setting changed.
+Should the thumbnail save the config regarding its position, relative to its
+parent (the kpMainWindow), or should its parent save that?
 
-TODO: reparseConfig
+It should be the kpMainWindow since classes should only concern themselves
+with things inside them and the thumbnail position is "inside" the
+kpMainWindow, not inside itself.
 
-All other config settings work the same way in KolourPaint.
+This reasoning can be applied generally.
 
-TODO: interaction with session restore.  Don't re-read settings.
-KApplication::isRestored().
 
+2. Configuration Scheme
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Most config keys are read at kpMainWindow initialisation, as they are
+per-mainwindow (e.g. d->configShowGrid).  Config key names are stored in
+kpDefs.h.  The config file is called
+/home/<user>/.kde/share/config/kolourpaint4rc ("kolourpaintrc" for
+KolourPaint/KDE3 and "/home/<user>/" can be overriden with $KDEHOME).
+
+Every time such an option is changed either programmatically or via the user,
+the per-mainwindow field (e.g. d->configShowGrid) is updated _and_ written to
+the config file.  This is the least confusing behavior -- unlike other
+programs, you do not need to exit the entire process so that setting changes
+are written to the disk.  So the next instance of KolourPaint that is started
+will read the latest value written to the config file.
+
+Suppose:
+
+  1. kpMainWindow A turns on the grid.
+     This sets A's d->configShowGrid to true and writes "true" for that key,
+     to the KolourPaint config file.
+
+  2. kpMainWindow B is opened.  It reads "true" from the config file so
+     the grid is enabled (once the zoom becomes >= 400%).
+
+  3. kpMainWindow B turns off the grid.
+     This sets B's d->configShowGrid to false and writes "false" for that key,
+     to the KolourPaint config file.
+
+Notice that A and B have separate d->configShowGrid fields, which correspond
+to the last setting set in the respective mainwindow.  In other
+words, already-open mainwindows are unaffected by settings changes in other
+mainwindows.  Otherwise, things could get rather annoying.
+
+An interesting glitch is that KConfig read-caches
+values per application instance so one instance will not see config changes
+in another instance, even if the config file has been updated straight away
+with KConfig::sync().  To get around this problem, we call
+KConfig::reparseConfiguration() just before kpMainWindow reads the config,
+at kpMainWindow construction time.
+
+
+3. Settings Propagation
+~~~~~~~~~~~~~~~~~~~~~~~
+
+A few settings, like the recent files list or shortcut changes, should be
+propagated to all KolourPaint instances as soon as they are updated.
+KolourPaint currently does not do this out of laziness, as it would require
+DBUS IPC trickery (see the TODO for how to do this).
+
+An imperfect workaround for the recent files list is to force a reload
+of the list from the config file (KConfig::reparseConfiguration() followed
+by the read), before adding a new URL, and then updating the config file
+with KConfig::sync().  This ensures that URLs added by other mainwindow's
+don't just disappear.
+
+The default size for a new document is also global across all KolourPaint
+instances.  Unlike the recent files list, propagating when the setting is
+read, is sufficient, since there is no GUI exposing the delayed
+propagation.  reparseConfiguration() is used in the same way as for the
+recent files list.
+
+
+4. Hidden Configuration Options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hidden configuration setting defaults are written the first time the
+respective key is looked up (i.e. the functionality is used).  This is not
+optimal since looking at the config file gives the user no idea that the key
+exists, if it has never been queried.
+
+
+5. Session Restore
+~~~~~~~~~~~~~~~~~~
+
+This is an automatic mechanism handled by KDE, invoked by kolourpaint.cpp.
+If the session is being restored, the default kpMainWindow constructor is
+called followed by readProperties().
