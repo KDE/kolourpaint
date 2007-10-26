@@ -53,6 +53,7 @@ static QImage::Format DepthToFormat (int depth)
         return QImage::Format_Indexed8;
 
     // 24-bit is known as 32-bit with QImage.
+    case 24:  // TODO: Why is this needed for flip on a 24-bit screen?
     case 32:
         // TODO: If the src image has no mask, we should really return RGB32, to
         //       avoid introducing a mask.
