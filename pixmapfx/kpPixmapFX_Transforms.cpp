@@ -817,7 +817,7 @@ QPixmap kpPixmapFX::flip (const QPixmap &pm, bool horz, bool vert)
         // (and therefore, <pm>) is only 8-bit.  The name "ReduceColors"
         // is a misnomer in this case.
         newQImage = kpEffectReduceColors::convertImageDepth (
-            newQImage, 24/*new depth*/, false/*no dither*/);
+            newQImage, 32/*new depth*/, false/*no dither*/);
 
         // For depth>1, we could do the entire transform using ::TransformPixmap()
         // but given the rounding error hacks in that method, we'd rather use
