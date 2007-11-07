@@ -102,7 +102,7 @@ void kpDocumentSaveOptionsWidget::init ()
     // and 101 quality settings would be weird.  So we lose 1 quality setting
     // according to QImage::save().
     // TODO: 100 quality is also misleading since that implies perfect quality.
-    m_qualityInput->setRange (1, 100, 1/*step*/, true/*slider*/);
+    m_qualityInput->setRange (1, 100);
 
     m_previewButton = new KPushButton (i18n ("&Preview"), this);
     m_previewButton->setCheckable (true);

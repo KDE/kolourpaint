@@ -53,8 +53,7 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
     QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
     m_amountInput = new KIntNumInput (this);
     m_amountInput->setRange (-kpEffectBlurSharpen::MaxStrength/*- for blur*/,
-        +kpEffectBlurSharpen::MaxStrength/*+ for sharpen*/,
-        1/*step*/, true/*slider*/);
+			     +kpEffectBlurSharpen::MaxStrength/*+ for sharpen*/);
 
     m_typeLabel = new QLabel (this);
 

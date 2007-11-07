@@ -217,16 +217,16 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
         Qt::AlignTop | Qt::AlignHCenter);
     d->horizOffsetInput->setRange (
         kpDocumentMetaInfo::MinOffset,
-        kpDocumentMetaInfo::MaxOffset,
-        1/*step*/, false/*no slider*/);
+        kpDocumentMetaInfo::MaxOffset);
+    d->horizOffsetInput->setSliderEnabled(false);
 
     d->vertOffsetInput = new KIntNumInput (offsetGroupBox);
     d->vertOffsetInput->setLabel (i18n ("Vertical:"),
         Qt::AlignTop | Qt::AlignHCenter);
     d->vertOffsetInput->setRange (
         kpDocumentMetaInfo::MinOffset,
-        kpDocumentMetaInfo::MaxOffset,
-        1/*step*/, false/*no slider*/);
+        kpDocumentMetaInfo::MaxOffset);
+    d->vertOffsetInput->setSliderEnabled(false);
 
 
     QGridLayout *offsetLay = new QGridLayout (offsetGroupBox);
