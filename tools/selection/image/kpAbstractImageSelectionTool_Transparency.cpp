@@ -154,7 +154,7 @@ void kpAbstractImageSelectionTool::changeImageSelectionTransparency (
 void kpAbstractImageSelectionTool::slotIsOpaqueChanged (bool /*isOpaque*/)
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpAbstractImageSelectionTool::slotIsOpaqueChanged()" << endl;
+    kDebug () << "kpAbstractImageSelectionTool::slotIsOpaqueChanged()";
 #endif
 
     if (!shouldChangeImageSelectionTransparency ())
@@ -176,7 +176,7 @@ void kpAbstractImageSelectionTool::slotIsOpaqueChanged (bool /*isOpaque*/)
 void kpAbstractImageSelectionTool::slotBackgroundColorChanged (const kpColor &)
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpAbstractImageSelectionTool::slotBackgroundColorChanged()" << endl;
+    kDebug () << "kpAbstractImageSelectionTool::slotBackgroundColorChanged()";
 #endif
 
     if (!shouldChangeImageSelectionTransparency ())
@@ -196,7 +196,7 @@ void kpAbstractImageSelectionTool::slotBackgroundColorChanged (const kpColor &)
 void kpAbstractImageSelectionTool::slotColorSimilarityChanged (double, int)
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpAbstractImageSelectionTool::slotColorSimilarityChanged()" << endl;
+    kDebug () << "kpAbstractImageSelectionTool::slotColorSimilarityChanged()";
 #endif
 
     if (!shouldChangeImageSelectionTransparency ())

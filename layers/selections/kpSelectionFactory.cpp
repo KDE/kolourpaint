@@ -51,7 +51,7 @@ kpAbstractImageSelection *kpSelectionFactory::FromStream (QDataStream &stream,
     stream >> serialID;
 
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "\tserialID=" << serialID << endl;
+    kDebug () << "\tserialID=" << serialID;
 #endif
 
     // Only image selections are marshalled.

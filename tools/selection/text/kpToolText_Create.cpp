@@ -123,7 +123,7 @@ bool kpToolText::shouldCreate (bool dragAccepted,
         if (hadSelectionBeforeDraw ())
         {
         #if DEBUG_KP_TOOL_TEXT && 1
-            kDebug () << "\ttext box deselect - NOP - return" << endl;
+            kDebug () << "\ttext box deselect - NOP - return";
         #endif
             // We must be attempting to deselect the text box.
             // This deselection has already been done by kpAbstractSelectionTool::beginDraw().
@@ -143,7 +143,7 @@ bool kpToolText::shouldCreate (bool dragAccepted,
             // the size of the drag instead.
 
         #if DEBUG_KP_TOOL_TEXT && 1
-            kDebug () << "\tclick creating text box" << endl;
+            kDebug () << "\tclick creating text box";
         #endif
 
             // (Click creating text box with RMB would not be obvious
@@ -187,7 +187,7 @@ bool kpToolText::shouldCreate (bool dragAccepted,
     else
     {
     #if DEBUG_KP_TOOL_TEXT && 1
-        kDebug () << "\tdrag creating text box" << endl;
+        kDebug () << "\tdrag creating text box";
     #endif
         *minimumWidthOut = kpTextSelection::MinimumWidthForTextStyle (textStyle);
         *minimumHeightOut = kpTextSelection::MinimumHeightForTextStyle (textStyle);

@@ -63,7 +63,7 @@ bool kpToolEllipticalSelection::drawCreateMoreSelectionAndUpdateStatusBar (
     if (!dragAccepted && accidentalDragAdjustedPoint == startPoint ())
     {
     #if DEBUG_KP_TOOL_ELLIPTICAL_SELECTION && 1
-        kDebug () << "\tnon-text NOP - return" << endl;
+        kDebug () << "\tnon-text NOP - return";
     #endif
         setUserShapePoints (accidentalDragAdjustedPoint);
         return false;

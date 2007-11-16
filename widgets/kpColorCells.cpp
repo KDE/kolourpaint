@@ -332,7 +332,7 @@ bool kpColorCells::isModified () const
 void kpColorCells::setModified (bool yes)
 {
 #if DEBUG_KP_COLOR_CELLS
-    kDebug () << "kpColorCells::setModified(" << yes << ")" << endl;
+    kDebug () << "kpColorCells::setModified(" << yes << ")";
 #endif
 
     if (yes == d->isModified)

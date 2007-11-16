@@ -155,14 +155,14 @@ void kpAbstractSelectionTool::drawCreate (const QPoint &thisPoint,
                 (accidentalDragAdjustedPoint - startPoint ()).manhattanLength ()) <= 6)
         {
         #if DEBUG_KP_TOOL_SELECTION && 1
-            kDebug () << "\t\tsuppress accidental movement" << endl;
+            kDebug () << "\t\tsuppress accidental movement";
         #endif
             accidentalDragAdjustedPoint = startPoint ();
         }
         else
         {
         #if DEBUG_KP_TOOL_SELECTION && 1
-            kDebug () << "\t\tit's a \"big\" intended move - stop timer" << endl;
+            kDebug () << "\t\tit's a \"big\" intended move - stop timer";
         #endif
             d->createNOPTimer->stop ();
         }
@@ -218,7 +218,7 @@ void kpAbstractSelectionTool::delayedDrawCreate ()
 void kpAbstractSelectionTool::cancelCreate ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\twas creating sel - kill" << endl;
+    kDebug () << "\twas creating sel - kill";
 #endif
 
     d->createNOPTimer->stop ();

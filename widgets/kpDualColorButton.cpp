@@ -224,7 +224,7 @@ void kpDualColorButton::dropEvent (QDropEvent *e)
 void kpDualColorButton::mousePressEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_DUAL_COLOR_BUTTON
-    kDebug () << "kpDualColorButton::mousePressEvent() pos=" << e->pos () << endl;
+    kDebug () << "kpDualColorButton::mousePressEvent() pos=" << e->pos ();
 #endif
 
     m_dragStartPoint = KP_INVALID_POINT;
@@ -257,7 +257,7 @@ void kpDualColorButton::mouseMoveEvent (QMouseEvent *e)
         e->y () > m_dragStartPoint.y () + delay)
     {
     #if DEBUG_KP_DUAL_COLOR_BUTTON
-        kDebug () << "\tstarting drag as long as it's in a rectangle" << endl;
+        kDebug () << "\tstarting drag as long as it's in a rectangle";
     #endif
 
         kpColor color;
@@ -345,7 +345,7 @@ void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
         }
 
     #if DEBUG_KP_DUAL_COLOR_BUTTON
-        kDebug () << "color=" << (int *) col.rgba () << endl;
+        kDebug () << "color=" << (int *) col.rgba ();
     #endif
 
         if (KColorDialog::getColor (col/*ref*/, this))

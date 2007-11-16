@@ -561,7 +561,7 @@ void kpMainWindow::pasteText (const QString &text,
         if (!textSel->hasContent ())
         {
         #if DEBUG_KP_MAIN_WINDOW && 1
-            kDebug () << "\t\tneeds content" << endl;
+            kDebug () << "\t\tneeds content";
         #endif
             commandHistory ()->addCreateSelectionCommand (
                 new kpToolSelectionCreateCommand (
@@ -813,7 +813,7 @@ void kpMainWindow::slotPasteInNewWindow ()
     if (transparency.isTransparent ())
     {
     #if DEBUG_KP_MAIN_WINDOW && 1
-        kDebug () << "\tchanging image selection transparency to opaque" << endl;
+        kDebug () << "\tchanging image selection transparency to opaque";
     #endif
         transparency.setOpaque ();
         // Since we are setting selection transparency programmatically

@@ -297,7 +297,7 @@ void kpAbstractSelectionTool::drawResizeScale (
         const QRect &/*normalizedRect*/)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "\tresize/scale" << endl;
+    kDebug () << "\tresize/scale";
 #endif
 
     kpAbstractSelection *sel = document ()->selection ();
@@ -305,7 +305,7 @@ void kpAbstractSelectionTool::drawResizeScale (
     if (!d->dragAccepted && thisPoint == startPoint ())
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
-        kDebug () << "\t\tnop" << endl;
+        kDebug () << "\t\tnop";
     #endif
 
         setUserShapePoints (QPoint (sel->width (), sel->height ()));
@@ -364,7 +364,7 @@ void kpAbstractSelectionTool::drawResizeScale (
 void kpAbstractSelectionTool::cancelResizeScale ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\twas resize/scale sel - kill" << endl;
+    kDebug () << "\twas resize/scale sel - kill";
 #endif
 
     // NOP drag?
@@ -372,7 +372,7 @@ void kpAbstractSelectionTool::cancelResizeScale ()
         return;
 
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\t\tundo currentResizeScaleCommand" << endl;
+    kDebug () << "\t\tundo currentResizeScaleCommand";
 #endif
     d->currentResizeScaleCommand->finalize ();  // (unneeded but let's be safe)
     d->currentResizeScaleCommand->unexecute ();

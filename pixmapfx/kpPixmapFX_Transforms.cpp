@@ -272,7 +272,7 @@ static void MatrixDebug (const QString matrixName, const QMatrix &matrix,
 static QMatrix MatrixWithZeroOrigin (const QMatrix &matrix, int width, int height)
 {
 #if DEBUG_KP_PIXMAP_FX
-    kDebug () << "matrixWithZeroOrigin(w=" << width << ",h=" << height << ")" << endl;
+    kDebug () << "matrixWithZeroOrigin(w=" << width << ",h=" << height << ")";
     kDebug () << "\tmatrix: m11=" << matrix.m11 ()
                << "m12=" << matrix.m12 ()
                << "m21=" << matrix.m21 ()
@@ -558,7 +558,7 @@ static QPixmap TransformPixmap (const QPixmap &pm, const QMatrix &transformMatri
 
 
 #if DEBUG_KP_PIXMAP_FX && 1
-    kDebug () << "Done" << endl << endl << endl;
+    kDebug () << "Done" << endl << endl;
 #endif
 
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (newPixmap);

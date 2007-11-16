@@ -62,7 +62,7 @@ kpToolTextGiveContentCommand::~kpToolTextGiveContentCommand ()
 void kpToolTextGiveContentCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolTextGiveContentCommand::execute()" << endl;
+    kDebug () << "kpToolTextGiveContentCommand::execute()";
 #endif
 
     kpDocument *doc = document ();
@@ -128,7 +128,7 @@ void kpToolTextGiveContentCommand::execute ()
 void kpToolTextGiveContentCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolTextGiveContentCommand::unexecute()" << endl;
+    kDebug () << "kpToolTextGiveContentCommand::unexecute()";
 #endif
 
     kpDocument *doc = document ();

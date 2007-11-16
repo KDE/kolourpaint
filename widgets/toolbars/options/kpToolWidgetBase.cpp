@@ -565,7 +565,7 @@ bool kpToolWidgetBase::event (QEvent *e)
     {
         QHelpEvent *he = (QHelpEvent *) e;
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kDebug () << "kpToolWidgetBase::event() QHelpEvent pos=" << he->pos () << endl;
+        kDebug () << "kpToolWidgetBase::event() QHelpEvent pos=" << he->pos ();
     #endif
 
         bool showedText = false;
@@ -596,7 +596,7 @@ bool kpToolWidgetBase::event (QEvent *e)
         if (!showedText)
         {
         #if DEBUG_KP_TOOL_WIDGET_BASE
-            kDebug () << "\thiding text" << endl;
+            kDebug () << "\thiding text";
         #endif
             QToolTip::hideText ();
         }

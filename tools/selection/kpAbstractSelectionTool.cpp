@@ -184,7 +184,7 @@ void kpAbstractSelectionTool::addNeedingContentCommand (kpCommand *cmd)
     {
         // Make the border creation a command.
     #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\thave currentSelContentCommand" << endl;
+        kDebug () << "\thave currentSelContentCommand";
     #endif
         commandHistory ()->addCreateSelectionCommand (
             new kpToolSelectionCreateCommand (
@@ -250,7 +250,7 @@ QString kpAbstractSelectionTool::haventBegunDrawUserMessage ()
 void kpAbstractSelectionTool::begin ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpAbstractSelectionTool<" << objectName () << ">::begin()" << endl;
+    kDebug () << "kpAbstractSelectionTool<" << objectName () << ">::begin()";
 #endif
 
     ::AssertAllTimersInactive (d);
@@ -290,7 +290,7 @@ void kpAbstractSelectionTool::begin ()
 void kpAbstractSelectionTool::end ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpAbstractSelectionTool<" << objectName () << ">::end()" << endl;
+    kDebug () << "kpAbstractSelectionTool<" << objectName () << ">::end()";
 #endif
 
     if (document ()->selection ())
@@ -328,7 +328,7 @@ void kpAbstractSelectionTool::end ()
 void kpAbstractSelectionTool::reselect ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpAbstractSelectionTool::reselect()" << endl;
+    kDebug () << "kpAbstractSelectionTool::reselect()";
 #endif
 
     if (document ()->selection ())
@@ -340,7 +340,7 @@ void kpAbstractSelectionTool::reselect ()
 kpAbstractSelectionTool::DrawType kpAbstractSelectionTool::calculateDrawTypeInsideSelection () const
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\t\tis move" << endl;
+    kDebug () << "\t\tis move";
 #endif
     return kpAbstractSelectionTool::Move;
 }
@@ -352,7 +352,7 @@ kpAbstractSelectionTool::DrawType kpAbstractSelectionTool::calculateDrawType () 
     if (!sel)
         return Create;
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\thas sel region rect=" << sel->boundingRect () << endl;
+    kDebug () << "\thas sel region rect=" << sel->boundingRect ();
 #endif
 
     if (onSelectionResizeHandle () && !controlOrShiftPressed ())
@@ -405,7 +405,7 @@ void kpAbstractSelectionTool::beginDraw ()
 void kpAbstractSelectionTool::hover (const QPoint &point)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpAbstractSelectionTool::hover" << point << endl;
+    kDebug () << "kpAbstractSelectionTool::hover" << point;
 #endif
 
     operation (calculateDrawType (), SetCursor);
@@ -472,7 +472,7 @@ void kpAbstractSelectionTool::cancelShape ()
         if (d->currentSelContentCommand)
         {
         #if DEBUG_KP_TOOL_SELECTION
-            kDebug () << "\t\tundo sel content" << endl;
+            kDebug () << "\t\tundo sel content";
         #endif
             d->currentSelContentCommand->unexecute ();
             delete d->currentSelContentCommand;
@@ -531,7 +531,7 @@ void kpAbstractSelectionTool::endDraw (const QPoint & /*thisPoint*/,
         const QRect & /*normalizedRect*/)
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpAbstractSelectionTool::endDraw()" << endl;
+    kDebug () << "kpAbstractSelectionTool::endDraw()";
 #endif
 
     const DrawType oldDrawType = d->drawType;

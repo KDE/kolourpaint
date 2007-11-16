@@ -67,7 +67,7 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
 
     int h = m_typeLabel->sizeHint ().height ();
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    kDebug () << "initial size hint height=" << h << endl;
+    kDebug () << "initial size hint height=" << h;
 #endif
 
     m_typeLabel->setText (
@@ -85,7 +85,7 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
     h = qMax (h, m_typeLabel->sizeHint ().height ());
 
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    kDebug () << "maximum size hint height" << h << endl;
+    kDebug () << "maximum size hint height" << h;
 #endif
     m_typeLabel->setFixedHeight (h);
     m_typeLabel->setAlignment (Qt::AlignCenter);

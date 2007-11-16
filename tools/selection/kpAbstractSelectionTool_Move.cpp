@@ -178,7 +178,7 @@ void kpAbstractSelectionTool::slotRMBMoveUpdateGUI ()
 void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*normalizedRect*/)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "\tmoving selection" << endl;
+    kDebug () << "\tmoving selection";
 #endif
 
     kpAbstractSelection *sel = document ()->selection ();
@@ -210,7 +210,7 @@ void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*
         targetSelRect.translate (0, document ()->height () - targetSelRect.top () - 1);
 
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "\t\t\tafter ensure sel rect clickable=" << targetSelRect << endl;
+    kDebug () << "\t\t\tafter ensure sel rect clickable=" << targetSelRect;
 #endif
 
 
@@ -218,7 +218,7 @@ void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*
         targetSelRect.topLeft () + d->startMoveDragFromSelectionTopLeft == startPoint ())
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
-        kDebug () << "\t\t\t\tnop" << endl;
+        kDebug () << "\t\t\t\tnop";
     #endif
 
 
@@ -286,7 +286,7 @@ void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*
 void kpAbstractSelectionTool::cancelMove ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\twas drag moving - undo drag and undo acquire" << endl;
+    kDebug () << "\twas drag moving - undo drag and undo acquire";
 #endif
 
     d->RMBMoveUpdateGUITimer->stop ();
@@ -296,7 +296,7 @@ void kpAbstractSelectionTool::cancelMove ()
         return;
 
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\t\tundo currentMoveCommand" << endl;
+    kDebug () << "\t\tundo currentMoveCommand";
 #endif
     d->currentMoveCommand->finalize ();
     d->currentMoveCommand->unexecute ();
@@ -324,7 +324,7 @@ void kpAbstractSelectionTool::endDrawMove ()
 
     kpMacroCommand *renamedCmd = 0;
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\thave moveCommand" << endl;
+    kDebug () << "\thave moveCommand";
 #endif
     if (d->currentMoveCommandIsSmear)
     {
