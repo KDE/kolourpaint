@@ -131,16 +131,19 @@ void kpMainWindow::setupImageMenuActions ()
 
     d->actionRotate = ac->addAction ("image_rotate");
     d->actionRotate->setText (i18n ("&Rotate..."));
+    d->actionRotate->setIcon (KIcon ("transform-rotate"));
     connect (d->actionRotate, SIGNAL (triggered (bool)), SLOT (slotRotate ()));
     d->actionRotate->setShortcut(Qt::CTRL + Qt::Key_R);
 
     d->actionRotateLeft = ac->addAction ("image_rotate_270deg");
     d->actionRotateLeft->setText (i18n ("Rotate &Left"));
+    d->actionRotateLeft->setIcon (KIcon ("object-rotate-left"));
     connect (d->actionRotateLeft, SIGNAL (triggered (bool)), SLOT (slotRotate270 ()));
     d->actionRotateLeft->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Left);
 
     d->actionRotateRight = ac->addAction ("image_rotate_90deg");
     d->actionRotateRight->setText (i18n ("Rotate Righ&t"));
+    d->actionRotateRight->setIcon (KIcon ("object-rotate-right"));
     connect (d->actionRotateRight, SIGNAL (triggered (bool)), SLOT (slotRotate90 ()));
     d->actionRotateRight->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Right);
 
