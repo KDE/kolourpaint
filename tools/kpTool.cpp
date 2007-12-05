@@ -233,7 +233,7 @@ QIcon kpTool::iconSet (int forceSize) const
     if (forceSize > 0)
         return BarIconSet (iconName (), forceSize);
     else
-        return BarIconSet (iconName ());
+        return KIcon (iconName ());
 }
 
 // public virtual
