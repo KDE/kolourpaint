@@ -106,7 +106,7 @@ void kpMainWindow::setupFileMenuActions ()
     connect(d->actionScan, SIGNAL(triggered(bool) ), SLOT (slotScan ()));
 
     d->actionProperties = ac->addAction ("file_properties");
-    d->actionProperties->setText ("Properties...");
+    d->actionProperties->setText (i18n ("Properties..."));
     d->actionProperties->setIcon (KIcon ("document-properties"));
     connect (d->actionProperties, SIGNAL (triggered (bool)), SLOT (slotProperties ()));
 
