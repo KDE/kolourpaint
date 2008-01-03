@@ -1,6 +1,7 @@
 [Desktop Entry]
 
 Name=KolourPaint
+Name[hi]=के-कलर-पेंट
 Name[nb]=KPaint
 Name[ne]=रङ पेन्ट
 Name[pa]=ਕੇ-ਰੰਗ-ਪੇਂਟ
@@ -28,6 +29,7 @@ GenericName[fr]=Petit programme de dessin
 GenericName[ga]=Clár Péinteála
 GenericName[gl]=Programa de debuxo
 GenericName[he]=תוכנית ציור
+GenericName[hi]=पेंट प्रोग्राम
 GenericName[hr]=Program za slikanje
 GenericName[hu]=Rajzolóprogram
 GenericName[is]=Teikniforrit
