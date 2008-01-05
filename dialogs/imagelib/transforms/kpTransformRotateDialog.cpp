@@ -68,7 +68,7 @@ kpTransformRotateDialog::kpTransformRotateDialog (bool actOnSelection,
     : kpTransformPreviewDialog (kpTransformPreviewDialog::AllFeatures,
         false/*don't reserve top row*/,
         actOnSelection ? i18n ("Rotate Selection") : i18n ("Rotate Image"),
-        i18n ("After Rotate:"),
+        i18n ("After rotate:"),
         actOnSelection,
         environ, parent)
 {

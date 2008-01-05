@@ -68,7 +68,7 @@ kpTransformSkewDialog::kpTransformSkewDialog (bool actOnSelection,
     : kpTransformPreviewDialog (kpTransformPreviewDialog::AllFeatures,
         false/*don't reserve top row*/,
         actOnSelection ? i18n ("Skew Selection") : i18n ("Skew Image"),
-        i18n ("After Skew:"),
+        i18n ("After skew:"),
         actOnSelection,
         environ, parent)
 {
