@@ -82,7 +82,7 @@ QString kpPixmapFX::effectDoesNotSupportPalettedScreenMessage ()
 
     // Even though we support 15-bit truecolor, we're more ambitious and
     // ask for 24-bit since it's safer (see kpPixmapFX::WarnAboutLossInfo).
-    return ki18n ("<qt><p>This effect does not support the current screen depth of %1bpp."
+    return ki18n ("<qt><p>This effect does not support the current screen depth of %1bpp.</p>"
                   "<p>To avoid this issue, please change your screen depth to 24bpp"
                   " and then restart KolourPaint.</p></qt>")
                .subs (QPixmap::defaultDepth ()).toString ();
