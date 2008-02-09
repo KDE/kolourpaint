@@ -329,7 +329,7 @@ void kpPixmapFX::paintMaskTransparentWithBrush (QPixmap *destPixmapPtr, const QP
     //
     //      kpPixmapFX should have a function that does this with only a
     //      single mask write.
-    foreach (QRect r, brushRegion.rects ())
+    foreach (const QRect &r, brushRegion.rects ())
     {
     #if DEBUG_KP_PIXMAP_FX && 0
         kDebug () << "\tcopy rect=" << r;

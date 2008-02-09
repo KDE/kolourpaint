@@ -123,7 +123,7 @@ static void DrawTextHelper (QPainter *p, bool drawingOnRGBLayer, void *data)
         // Else, the line heights become >QFontMetrics::height() if you type Chinese
         // characters (!) and then the cursor gets out of sync.
         int baseLine = pack->textAreaRect.y () + fontMetrics.ascent ();
-        foreach (QString str, pack->textLines)
+        foreach (const QString &str, pack->textLines)
         {
             // Note: It seems text does not antialias without XRENDER.
             p->drawText (pack->textAreaRect.x (), baseLine, str);

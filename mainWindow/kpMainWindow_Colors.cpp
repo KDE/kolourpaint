@@ -66,7 +66,7 @@ void kpMainWindow::setupColorsMenuActions ()
     //       installed?
     connect (d->actionColorsKDE, SIGNAL (triggered (QAction *)),
         SLOT (slotColorsKDE ()));
-    foreach (QString colName, ::KDEColorCollectionNames ())
+    foreach (const QString &colName, ::KDEColorCollectionNames ())
         d->actionColorsKDE->addAction (colName);
 
     d->actionColorsOpen = ac->addAction ("colors_open");

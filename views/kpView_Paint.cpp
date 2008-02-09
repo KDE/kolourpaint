@@ -366,7 +366,7 @@ void kpView::paintEventDrawSelectionResizeHandles (const QRect &clipRect)
 #endif
 
     const bool doXor = !selectionResizeHandleAtomicSizeCloseToZoomLevel ();
-    foreach (QRect r, selResizeHandlesRegion.rects ())
+    foreach (const QRect &r, selResizeHandlesRegion.rects ())
     {
         QRect s = r.intersect (clipRect);
         if (s.isEmpty ())
@@ -693,7 +693,7 @@ void kpView::paintEvent (QPaintEvent *e)
     // parts of nearby grid lines (which were drawn in a previous iteration)
     // with document pixels.  Those grid line parts are probably not going to
     // be redrawn, so will appear to be missing.
-    foreach (QRect r, rects)
+    foreach (const QRect &r, rects)
     {
         paintEventDrawDoc_Unclipped (r);
     }
@@ -709,7 +709,7 @@ void kpView::paintEvent (QPaintEvent *e)
     #if DEBUG_KP_VIEW_RENDERER && 1
         QTime gridTimer; gridTimer.start ();
     #endif
-        foreach (QRect r, rects)
+        foreach (const QRect &r, rects)
             paintEventDrawGridLines (&painter, r);
     #if DEBUG_KP_VIEW_RENDERER && 1
         kDebug () << "\tgrid time=" << gridTimer.elapsed ();

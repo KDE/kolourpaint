@@ -186,7 +186,7 @@ static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
 
     // Filter out duplicates.
     QPolygon noDups;
-    foreach (QPoint p, points)
+    foreach (const QPoint &p, points)
     {
         if (!noDups.isEmpty () && p == noDups.last ())
             continue;
@@ -199,7 +199,7 @@ static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
 
     // Interpolate to ensure cardinal adjacency.
     QPolygon cardPoints;
-    foreach (QPoint p, noDups)
+    foreach (const QPoint &p, noDups)
     {
         if (!cardPoints.isEmpty () &&
             !kpPainter::pointsAreCardinallyAdjacent (p, cardPoints.last ()))

@@ -600,7 +600,7 @@ static QRect SprayPointsHelper (QPainter *rgbPainter, QPainter *maskPainter,
                 false/*drawing on mask layer*/));
     }
 
-    foreach (QPoint p, pack->points)
+    foreach (const QPoint &p, pack->points)
     {
         for (int i = 0; i < 10; i++)
         {

@@ -911,7 +911,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         //         dialogs that might be called, with Qt::arrowCursor e.g. in
         //         kpDocument, kpPixmapFX::convertToPixmapAsLosslessAsPossible()
         //         and probably a lot more places.
-        foreach (KUrl u, urls)
+        foreach (const KUrl &u, urls)
             open (u);
     }
     else if (e->mimeData ()->hasText ())

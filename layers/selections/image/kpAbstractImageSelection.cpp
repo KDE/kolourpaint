@@ -291,7 +291,7 @@ kpImage kpAbstractImageSelection::givenImageMaskedByShape (const kpImage &image)
     // OPT: Hopelessly inefficent due to function call overhead.
     //      kpPixmapFX should have a function that does this.
     //      Or use QPainter::setClipRegion()?  Or use QPainter::setClipPath()?
-    foreach (QRect r, mRegion.rects ())
+    foreach (const QRect &r, mRegion.rects ())
     {
     #if DEBUG_KP_SELECTION
         kDebug () << "\tcopy rect=" << r;

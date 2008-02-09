@@ -111,7 +111,7 @@ void kpToolSelectionMoveCommand::execute ()
 
     vm->setQueueUpdates ();
     {
-        foreach (QPoint p, m_copyOntoDocumentPoints)
+        foreach (const QPoint &p, m_copyOntoDocumentPoints)
         {
             sel->moveTo (p);
             doc->selectionCopyOntoDocument ();

@@ -399,7 +399,7 @@ void kpDocumentMetaInfoDialog::setUIToOriginalMetaInfo ()
         d->fieldsTableWidget->setHorizontalHeaderLabels (fieldsHeader);
 
         int row = 0;
-        foreach (QString key, d->originalMetaInfoPtr->textKeys ())
+        foreach (const QString &key, d->originalMetaInfoPtr->textKeys ())
         {
             d->fieldsTableWidget->setItem (row, 0/*1st col*/,
                 new QTableWidgetItem (key));

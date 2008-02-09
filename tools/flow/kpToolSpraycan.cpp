@@ -156,7 +156,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
     //                  appearance.
 
     QList <QPoint> imagePoints;
-    foreach (QPoint dp, docPoints)
+    foreach (const QPoint &dp, docPoints)
         imagePoints.append (dp - docRect.topLeft ());
 
     kpPainter::sprayPoints (&image,
