@@ -89,10 +89,7 @@ void kpMainWindow::enableSettingsMenuDocumentActions (bool /*enable*/)
 // private slot
 void kpMainWindow::slotFullScreen ()
 {
-    if (d->actionFullScreen->isChecked ())
-        showFullScreen ();
-    else
-        showNormal ();
+    KToggleFullScreenAction::setFullScreen( this, d->actionFullScreen->isChecked ());
 }
 
 
