@@ -29,6 +29,7 @@
 #include <QDragMoveEvent>
 #include <QDropEvent>
 #include <QHeaderView>
+#include <QItemDelegate>
 #include <QMouseEvent>
 
 #include <KColorMimeData>
@@ -78,6 +79,8 @@ public:
 kpColorCellsBase::kpColorCellsBase( QWidget *parent, int rows, int cols )
     : QTableWidget( parent ), d(new kpColorCellsBasePrivate(this))
 {
+    setItemDelegate(new QItemDelegate(this));
+
     setFrameShape(QFrame::NoFrame);
     d->shade = true;
     setRowCount( rows );
