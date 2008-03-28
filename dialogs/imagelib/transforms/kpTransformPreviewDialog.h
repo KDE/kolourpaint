@@ -64,7 +64,7 @@ public:
         // (in the Dimensions Group Box) e.g. "After Skew:"
         const QString &afterActionText,
         bool actOnSelection,
-        kpTransformDialogEnvironment *environ,
+        kpTransformDialogEnvironment *_env,
         QWidget *parent);
     virtual ~kpTransformPreviewDialog ();
 

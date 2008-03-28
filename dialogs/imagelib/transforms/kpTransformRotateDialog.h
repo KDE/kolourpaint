@@ -49,7 +49,7 @@ Q_OBJECT
 
 public:
     kpTransformRotateDialog (bool actOnSelection,
-        kpTransformDialogEnvironment *environ,
+        kpTransformDialogEnvironment *_env,
         QWidget *parent);
     virtual ~kpTransformRotateDialog ();
 

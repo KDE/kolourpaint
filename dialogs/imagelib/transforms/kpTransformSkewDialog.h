@@ -47,7 +47,7 @@ Q_OBJECT
 
 public:
     kpTransformSkewDialog (bool actOnSelection,
-        kpTransformDialogEnvironment *environ, QWidget *parent);
+        kpTransformDialogEnvironment *_env, QWidget *parent);
     virtual ~kpTransformSkewDialog ();
 
 private:

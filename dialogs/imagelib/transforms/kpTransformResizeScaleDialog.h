@@ -59,7 +59,7 @@ class kpTransformResizeScaleDialog : public KDialog
 Q_OBJECT
 
 public:
-    kpTransformResizeScaleDialog (kpTransformDialogEnvironment *environ,
+    kpTransformResizeScaleDialog (kpTransformDialogEnvironment *_env,
         QWidget *parent);
     virtual ~kpTransformResizeScaleDialog ();
 

@@ -64,13 +64,13 @@ int kpTransformRotateDialog::s_lastAngleCustom = 0;
 
 
 kpTransformRotateDialog::kpTransformRotateDialog (bool actOnSelection,
-        kpTransformDialogEnvironment *environ, QWidget *parent)
+        kpTransformDialogEnvironment *_env, QWidget *parent)
     : kpTransformPreviewDialog (kpTransformPreviewDialog::AllFeatures,
         false/*don't reserve top row*/,
         actOnSelection ? i18n ("Rotate Selection") : i18n ("Rotate Image"),
         i18n ("After rotate:"),
         actOnSelection,
-        environ, parent)
+        _env, parent)
 {
     s_lastAngleCustom = 0;
 

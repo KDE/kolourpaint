@@ -64,13 +64,13 @@ int kpTransformSkewDialog::s_lastHorizontalAngle = 0,
 
 
 kpTransformSkewDialog::kpTransformSkewDialog (bool actOnSelection,
-        kpTransformDialogEnvironment *environ, QWidget *parent)
+        kpTransformDialogEnvironment *_env, QWidget *parent)
     : kpTransformPreviewDialog (kpTransformPreviewDialog::AllFeatures,
         false/*don't reserve top row*/,
         actOnSelection ? i18n ("Skew Selection") : i18n ("Skew Image"),
         i18n ("After skew:"),
         actOnSelection,
-        environ, parent)
+        _env, parent)
 {
     // Too confusing - disable for now
     s_lastHorizontalAngle = s_lastVerticalAngle = 0;

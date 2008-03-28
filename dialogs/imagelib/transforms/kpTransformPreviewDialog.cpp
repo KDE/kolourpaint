@@ -56,7 +56,7 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
         const QString &caption,
         const QString &afterActionText,
         bool actOnSelection,
-        kpTransformDialogEnvironment *environ,
+        kpTransformDialogEnvironment *_env,
         QWidget *parent)
     : KDialog (parent),
       m_afterActionText (afterActionText),
@@ -66,7 +66,7 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
       m_previewGroupBox (0),
       m_previewPixmapLabel (0),
       m_gridLayout (0),
-      m_environ (environ)
+      m_environ (_env)
 {
     setCaption (caption);
     setButtons (KDialog::Ok | KDialog::Cancel);

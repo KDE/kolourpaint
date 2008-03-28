@@ -94,9 +94,9 @@ double kpTransformResizeScaleDialog::s_lastPercentWidth = 100,
 
 
 kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (
-        kpTransformDialogEnvironment *environ, QWidget *parent)
+        kpTransformDialogEnvironment *_env, QWidget *parent)
     : KDialog (parent),
-      m_environ (environ),
+      m_environ (_env),
       m_ignoreKeepAspectRatio (0)
 {
     setCaption( i18n ("Resize / Scale") );

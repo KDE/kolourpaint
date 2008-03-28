@@ -64,7 +64,7 @@ int kpEffectsDialog::s_lastHeight = 620;
 
 
 kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
-                                  kpTransformDialogEnvironment *environ,
+                                  kpTransformDialogEnvironment *_env,
                                   QWidget *parent,
                                   int defaultSelectedEffect)
     : kpTransformPreviewDialog (kpTransformPreviewDialog::Preview,
@@ -72,7 +72,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
                            QString()/*caption*/,
                            QString()/*afterActionText (no Dimensions Group Box)*/,
                            actOnSelection,
-                           environ,
+                           _env,
                            parent),
       m_delayedUpdateTimer (new QTimer (this)),
       m_effectsComboBox (0),
