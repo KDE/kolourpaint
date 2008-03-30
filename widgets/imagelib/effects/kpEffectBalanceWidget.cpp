@@ -32,6 +32,7 @@
 #include <kpEffectBalanceWidget.h>
 
 #include <cmath>
+#include <math.h>
 
 #include <qgridlayout.h>
 #include <qlabel.h>
