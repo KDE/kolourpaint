@@ -195,7 +195,7 @@ kpColorCells::kpColorCells (QWidget *parent,
         i18n (
             "<qt>"
 
-            "<p>To select the foreground color that tools draw in,"
+            "<p>To select the foreground color that tools use to draw,"
             " left-click on a filled-in color cell."
             " To select the background color, right-click instead.</p>"
 
@@ -203,7 +203,7 @@ kpColorCells::kpColorCells (QWidget *parent,
 
             "<p>You can also swap the color of a filled-in cell with any other"
             " cell using drag and drop."
-            " And, if you hold the <b>Control</b> key, the destination"
+            " Also, if you hold down the <b>Ctrl</b> key, the destination"
             " cell's color will be"
             " overwritten, instead of being swapped with the color of the source cell.</p>"
 
