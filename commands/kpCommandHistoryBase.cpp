@@ -92,10 +92,10 @@ kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
     m_actionRedo->setEnabled (false);
 
 
-    connect (m_actionUndo->popupMenu (), SIGNAL (activated (int)),
-             this, SLOT (undoUpToNumber (int)));
-    connect (m_actionRedo->popupMenu (), SIGNAL (activated (int)),
-             this, SLOT (redoUpToNumber (int)));
+    connect (m_actionUndo->menu (), SIGNAL (triggered (QAction *)),
+             this, SLOT (undoUpToNumber (QAction *)));
+    connect (m_actionRedo->menu (), SIGNAL (triggered (QAction *)),
+             this, SLOT (redoUpToNumber (QAction *)));
 
 
     m_undoMinLimit = 10;
@@ -404,14 +404,14 @@ void kpCommandHistoryBase::redo ()
 
 
 // public slot virtual
-void kpCommandHistoryBase::undoUpToNumber (int which)
+void kpCommandHistoryBase::undoUpToNumber (QAction *which)
 {
 #if DEBUG_KP_COMMAND_HISTORY
     kDebug () << "kpCommandHistoryBase::undoUpToNumber(" << which << ")";
 #endif
 
     for (int i = 0;
-         i <= which && !m_undoCommandList.isEmpty ();
+         i <= which->data().toInt() && !m_undoCommandList.isEmpty ();
          i++)
     {
         undoInternal ();
@@ -421,14 +421,14 @@ void kpCommandHistoryBase::undoUpToNumber (int which)
 }
 
 // public slot virtual
-void kpCommandHistoryBase::redoUpToNumber (int which)
+void kpCommandHistoryBase::redoUpToNumber (QAction *which)
 {
 #if DEBUG_KP_COMMAND_HISTORY
     kDebug () << "kpCommandHistoryBase::redoUpToNumber(" << which << ")";
 #endif
 
     for (int i = 0;
-         i <= which && !m_redoCommandList.isEmpty ();
+         i <= which->data().toInt() && !m_redoCommandList.isEmpty ();
          i++)
     {
         redoInternal ();
@@ -623,7 +623,9 @@ static void populatePopupMenu (KMenu *popupMenu,
     int i = 0;
     while (i < 10 && it != commandList.end ())
     {
-        popupMenu->insertItem (i18n ("%1: %2", undoOrRedo, (*it)->name ()), i/*id*/);
+        QAction *action = new QAction(i18n ("%1: %2", undoOrRedo, (*it)->name ()), popupMenu);
+        action->setData(i);
+        popupMenu->addAction (action);
         i++, it++;
     }
 
@@ -657,7 +659,7 @@ void kpCommandHistoryBase::updateActions ()
 #if DEBUG_KP_COMMAND_HISTORY
     QTime timer; timer.start ();
 #endif
-    populatePopupMenu (m_actionUndo->popupMenu (),
+    populatePopupMenu (qobject_cast<KMenu*> (m_actionUndo->menu ()),
                        i18n ("Undo"),
                        m_undoCommandList);
 #if DEBUG_KP_COMMAND_HISTORY
@@ -678,7 +680,7 @@ void kpCommandHistoryBase::updateActions ()
 #if DEBUG_KP_COMMAND_HISTORY
     timer.restart ();
 #endif
-    populatePopupMenu (m_actionRedo->popupMenu (),
+    populatePopupMenu (qobject_cast<KMenu*> (m_actionRedo->menu ()),
                        i18n ("Redo"),
                        m_redoCommandList);
 #if DEBUG_KP_COMMAND_HISTORY

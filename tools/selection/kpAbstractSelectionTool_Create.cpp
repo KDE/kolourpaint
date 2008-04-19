@@ -96,7 +96,7 @@ void kpAbstractSelectionTool::endCreate ()
 // private
 void kpAbstractSelectionTool::setCursorCreate ()
 {
-    viewManager ()->setCursor (Qt::crossCursor);
+    viewManager ()->setCursor (Qt::CrossCursor);
 }
 
 

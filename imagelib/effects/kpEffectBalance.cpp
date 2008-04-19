@@ -124,13 +124,13 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
 #endif
 
 
-    Q_UINT8 transformRed [256],
+    quint8 transformRed [256],
             transformGreen [256],
             transformBlue [256];
 
     for (int i = 0; i < 256; i++)
     {
-        Q_UINT8 applied = (Q_UINT8) brightnessContrastGamma (i, brightness, contrast, gamma);
+        quint8 applied = (quint8) brightnessContrastGamma (i, brightness, contrast, gamma);
 
         if (channels & kpEffectBalance::Red)
             transformRed [i] = applied;
@@ -161,10 +161,10 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
             {
                 const QRgb rgb = qimage.pixel (x, y);
 
-                const Q_UINT8 red = (Q_UINT8) qRed (rgb);
-                const Q_UINT8 green = (Q_UINT8) qGreen (rgb);
-                const Q_UINT8 blue = (Q_UINT8) qBlue (rgb);
-                const Q_UINT8 alpha = (Q_UINT8) qAlpha (rgb);
+                const quint8 red = (quint8) qRed (rgb);
+                const quint8 green = (quint8) qGreen (rgb);
+                const quint8 blue = (quint8) qBlue (rgb);
+                const quint8 alpha = (quint8) qAlpha (rgb);
 
                 qimage.setPixel (x, y,
                     qRgba (transformRed [red],
@@ -187,10 +187,10 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
         {
             const QRgb rgb = qimage.color (i);
 
-            const Q_UINT8 red = (Q_UINT8) qRed (rgb);
-            const Q_UINT8 green = (Q_UINT8) qGreen (rgb);
-            const Q_UINT8 blue = (Q_UINT8) qBlue (rgb);
-            const Q_UINT8 alpha = (Q_UINT8) qAlpha (rgb);
+            const quint8 red = (quint8) qRed (rgb);
+            const quint8 green = (quint8) qGreen (rgb);
+            const quint8 blue = (quint8) qBlue (rgb);
+            const quint8 alpha = (quint8) qAlpha (rgb);
 
             qimage.setColor (i,
                 qRgba (transformRed [red],

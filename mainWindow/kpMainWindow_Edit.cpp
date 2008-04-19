@@ -210,7 +210,7 @@ void kpMainWindow::slotCut ()
     kDebug () << "kpMainWindow::slotCut() CALLED";
 #endif
 
-    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
     Q_ASSERT (d->document && d->document->selection ());
 
@@ -234,7 +234,7 @@ void kpMainWindow::slotCopy ()
     kDebug () << "kpMainWindow::slotCopy() CALLED";
 #endif
 
-    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
     Q_ASSERT (d->document && d->document->selection ());
 
@@ -364,7 +364,7 @@ static bool HasSomethingToPasteWithDialogIfNot (kpMainWindow *mw)
     if (::HasSomethingToPaste (mw))
         return true;
 
-    kpSetOverrideCursorSaver cursorSaver (Qt::arrowCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::ArrowCursor);
 
     KMessageBox::sorry (mw,
         i18n ("<qt><p>There is nothing in the clipboard to paste.</p></qt>"),
@@ -446,7 +446,7 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
                << endl;
 #endif
 
-    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
     toolEndShape ();
 
@@ -532,7 +532,7 @@ void kpMainWindow::pasteText (const QString &text,
         return;
 
 
-    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
     toolEndShape ();
 
@@ -665,7 +665,7 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
                << ")" << endl;
 #endif
 
-    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
     toolEndShape ();
 
@@ -715,7 +715,7 @@ void kpMainWindow::slotPaste ()
     kDebug () << "kpMainWindow::slotPaste() CALLED";
 #endif
 
-    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
     toolEndShape ();
 
@@ -745,7 +745,7 @@ void kpMainWindow::slotPaste ()
     }
     else
     {
-        kpSetOverrideCursorSaver cursorSaver (Qt::arrowCursor);
+        kpSetOverrideCursorSaver cursorSaver (Qt::ArrowCursor);
 
         kDebug () << "kpMainWindow::slotPaste() could not decode selection";
         kDebug () << "\tFormats supported:" << md->formats ();
@@ -787,7 +787,7 @@ void kpMainWindow::slotPasteInNewWindow ()
     kDebug () << "kpMainWindow::slotPasteInNewWindow() CALLED";
 #endif
 
-    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
     toolEndShape ();
 

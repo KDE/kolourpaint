@@ -72,7 +72,7 @@ void kpToolImageSelectionTransparencyCommand::execute ()
     kDebug () << "kpToolImageSelectionTransparencyCommand::execute()";
 #endif
 
-    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
         
     environ ()->setImageSelectionTransparency (m_st, true/*force colour change*/);
 
@@ -87,7 +87,7 @@ void kpToolImageSelectionTransparencyCommand::unexecute ()
     kDebug () << "kpToolImageSelectionTransparencyCommand::unexecute()";
 #endif
 
-    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
         
     environ ()->setImageSelectionTransparency (m_oldST, true/*force colour change*/);
 

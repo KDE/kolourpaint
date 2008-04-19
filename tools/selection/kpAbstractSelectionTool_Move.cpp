@@ -123,7 +123,7 @@ void kpAbstractSelectionTool::endMove ()
 // private
 void kpAbstractSelectionTool::setCursorMove ()
 {
-    viewManager ()->setCursor (Qt::sizeAllCursor);
+    viewManager ()->setCursor (Qt::SizeAllCursor);
 }
 
 

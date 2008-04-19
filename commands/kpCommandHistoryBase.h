@@ -36,6 +36,7 @@
 
 #include <kpCommandSize.h>
 
+class QAction;
 
 class KActionCollection;
 class KToolBarPopupAction;
@@ -100,8 +101,8 @@ public slots:
     virtual void undo ();
     virtual void redo ();
 
-    virtual void undoUpToNumber (int which);
-    virtual void redoUpToNumber (int which);
+    virtual void undoUpToNumber (QAction *which);
+    virtual void redoUpToNumber (QAction *which);
 
 protected:
     QString undoActionText () const;

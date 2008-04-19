@@ -302,7 +302,7 @@ void kpTool::wheelEvent (QWheelEvent *e)
     e->ignore ();
 
     // If CTRL not pressed, bye.
-    if ((e->modifiers () & Qt::ControlButton) == 0)
+    if ((e->modifiers () & Qt::ControlModifier) == 0)
     {
     #if DEBUG_KP_TOOL
         kDebug () << "\tno CTRL -> bye";

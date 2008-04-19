@@ -124,7 +124,7 @@ QString kpToolZoom::haventBegunDrawUserMessage () const
 // public virtual [base kpTool]
 void kpToolZoom::begin ()
 {
-    viewManager ()->setCursor (Qt::crossCursor);
+    viewManager ()->setCursor (Qt::CrossCursor);
 
     setUserMessage (haventBegunDrawUserMessage ());
 }
@@ -223,7 +223,7 @@ void kpToolZoom::endDraw (const QPoint &, const QRect &normalizedRect)
 
     // TODO: This cursor doesn't stay on for long enough because zooming uses
     //       event loop tricks.
-    kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
+    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
     viewManager ()->invalidateTempImage ();
 
