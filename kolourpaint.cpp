@@ -45,8 +45,8 @@ int main (int argc, char *argv [])
 {
     KAboutData aboutData
     (
-        "kolourpaint4", 0,
-        ki18n ("KolourPaint BETA"),
+        "kolourpaint", 0,
+        ki18n ("KolourPaint"),
         kpVersionText,
         ki18n ("Paint Program for KDE"),
         KAboutData::License_Custom,
@@ -54,9 +54,6 @@ int main (int argc, char *argv [])
         ki18n ("To obtain support, please visit the website."),
         "http://www.kolourpaint.org/"
     );
-
-    // Make http://bugs.kde.org/ work.
-    aboutData.setProductName ("kolourpaint");
 
     // (this is _not_ the same as KAboutData::License_BSD)
     aboutData.setLicenseText (ki18n (kpLicenseText));

@@ -1,4 +1,4 @@
-project(kolourpaint4)
+project(kolourpaint)
 
 include_directories(
 
@@ -571,32 +571,28 @@ set(kolourpaint_lgpl_SRCS
 # This MUST be a dynamic link library to avoid LGPL license infection.
 #
 
-kde4_add_library(kolourpaint4_lgpl SHARED ${kolourpaint_lgpl_SRCS})
+kde4_add_library(kolourpaint_lgpl SHARED ${kolourpaint_lgpl_SRCS})
 
-target_link_libraries(kolourpaint4_lgpl ${KDE4_KIO_LIBS})
-set_target_properties(kolourpaint4_lgpl PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION})
+target_link_libraries(kolourpaint_lgpl ${KDE4_KIO_LIBS})
+set_target_properties(kolourpaint_lgpl PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION})
 
-install(TARGETS kolourpaint4_lgpl ${INSTALL_TARGETS_DEFAULT_ARGS} )
+install(TARGETS kolourpaint_lgpl ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
 
 #
 # Executable
 #
 
-kde4_add_executable(kolourpaint4 ${kolourpaint_SRCS})
+kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
 
 message(STATUS "$mingw_libs: ${mingw_libs}")
-target_link_libraries(kolourpaint4 ${mingw_libs} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS}
-${QT_QT3SUPPORT_LIBRARY} ${BLITZ_LIBRARIES} kolourpaint4_lgpl)
+target_link_libraries(kolourpaint ${mingw_libs} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS}
+${QT_QT3SUPPORT_LIBRARY} ${BLITZ_LIBRARIES} kolourpaint_lgpl)
 
-install(TARGETS kolourpaint4 DESTINATION ${BIN_INSTALL_DIR})
+install(TARGETS kolourpaint DESTINATION ${BIN_INSTALL_DIR})
 
 
 ########### install files ###############
 
-install( FILES kolourpaint4.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
-install( FILES kolourpaint4ui.rc  DESTINATION
-${DATA_INSTALL_DIR}/kolourpaint4 )
-
-
-
+install(FILES kolourpaint.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES kolourpaintui.rc DESTINATION ${DATA_INSTALL_DIR}/kolourpaint)

@@ -203,7 +203,7 @@ void kpMainWindow::enableImageMenuDocumentActions (bool enable)
 // private slot
 void kpMainWindow::slotImageMenuUpdateDueToSelection ()
 {
-    // SYNC: kolourpaint4ui.rc
+    // SYNC: kolourpaintui.rc
     const QString MenuBarItemTextImage = i18nc (
         "Image/Selection Menu caption - make sure the translation has"
         " the same accel as the Select&ion translation",

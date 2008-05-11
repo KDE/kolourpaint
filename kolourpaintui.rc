@@ -4,7 +4,7 @@ SYNC: Do not change the number of quotes before the version number
       - it is parsed by the KolourPaint wrapper shell script (in standalone
       backport releases of KolourPaint)
 -->
-<gui name="kolourpaint4" version="70">
+<gui name="kolourpaint" version="71">
 
 <!--
 SYNC: Check for duplicate actions in menus caused by some of our actions

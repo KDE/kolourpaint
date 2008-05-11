@@ -72,11 +72,11 @@ GenericName[xh]=Udweliso lwenkqubo lwepeyinti
 GenericName[zh_CN]=绘图程序
 GenericName[zh_HK]=繪圖程式
 GenericName[zh_TW]=繪圖程式
-Icon=kolourpaint4
+Icon=kolourpaint
 
 Type=Application
-Exec=kolourpaint4 %u
-X-DocPath=kolourpaint4/index.html
+Exec=kolourpaint %u
+X-DocPath=kolourpaint/index.html
 
 # SYNC: Run branches/kolourpaint/control/scripts/kde4port/gen_mimetype_line.sh in
 #       the version of kdelibs/kimgio/ (e.g. KDE 4.0) KolourPaint is
