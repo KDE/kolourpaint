@@ -23,7 +23,7 @@
 <firstname>Thurston</firstname>
 <surname>Dang</surname>
 </personname>
-<email>thurston_dang@users.sourceforge.net</email>
+&Thurston.Dang.mail;
 </author>
 
 <othercredit role="reviewer">
@@ -42,7 +42,7 @@
 <copyright>
 <year>2004</year>
 <year>2005</year>
-<holder>Thurston Dang</holder>
+<holder>&Thurston.Dang;</holder>
 </copyright>
 
 <legalnotice>
@@ -1400,7 +1400,7 @@ honest documentation.
 &kolourpaint;-specific icons Copyright &copy; 2004, 2005
 Kristof Borrey <email>borrey@kde.org</email>,
 Nuno Pinheiro <email>nf.pinheiro@gmail.com</email>,
-Danny Allen <email>dannya40uk@yahoo.co.uk</email>
+&Danny.Allen; <email>dannya40uk@yahoo.co.uk</email>
 </para>
 
 <para>Documentation and additional documentation artwork Copyright &copy; 2004, 2005
@@ -1408,6 +1408,8 @@ Danny Allen <email>dannya40uk@yahoo.co.uk</email>
 
 <para>Portions reproduced with permission from <ulink
 url="http://kolourpaint.sourceforge.net/"></ulink>.</para>
+
+<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
 
 &underFDL;
 
