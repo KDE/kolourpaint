@@ -589,7 +589,7 @@ message(STATUS "$mingw_libs: ${mingw_libs}")
 target_link_libraries(kolourpaint ${mingw_libs} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS}
 ${QT_QT3SUPPORT_LIBRARY} ${BLITZ_LIBRARIES} kolourpaint_lgpl)
 
-install(TARGETS kolourpaint DESTINATION ${BIN_INSTALL_DIR})
+install(TARGETS kolourpaint ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 
 ########### install files ###############
