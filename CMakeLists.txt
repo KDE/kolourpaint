@@ -574,7 +574,7 @@ set(kolourpaint_lgpl_SRCS
 kde4_add_library(kolourpaint_lgpl SHARED ${kolourpaint_lgpl_SRCS})
 
 target_link_libraries(kolourpaint_lgpl ${KDE4_KIO_LIBS})
-set_target_properties(kolourpaint_lgpl PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION})
+set_target_properties(kolourpaint_lgpl PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION} DEFINE_SYMBOL MAKE_KOLOURPAINT4_LGPL_LIB )
 
 install(TARGETS kolourpaint_lgpl ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
