@@ -74,7 +74,7 @@ macro(CREATE_VERSION _in_FILE _out_FILE)
     FILE(READ ${_in_FILE} _contents)
     FILE(WRITE ${_out_FILE} "static const char * const kpVersionText =")
     STRING(REGEX REPLACE "\n" "" _contents "${_contents}" )
-    FILE(APPEND ${_out_FILE} "\"${_contents}\"")
+    FILE(APPEND ${_out_FILE} "${_contents}")
     FILE(APPEND ${_out_FILE} ";\n")
 endmacro(CREATE_VERSION)
 
