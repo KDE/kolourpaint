@@ -155,7 +155,7 @@ kpCommandSize::SizeType kpDocumentMetaInfo::size () const
 {
     kpCommandSize::SizeType ret = 0;
 
-    foreach (const QString key, d->m_textMap.keys ())
+    foreach (const QString &key, d->m_textMap.keys ())
     {
         ret += kpCommandSize::StringSize (key) +
                kpCommandSize::StringSize (d->m_textMap [key]);
