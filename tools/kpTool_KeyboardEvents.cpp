@@ -392,7 +392,7 @@ void kpTool::setControlPressed (bool pressed)
 
 void kpTool::setAltPressed (bool pressed)
 {
-    if (pressed = d->altPressed)
+    if (pressed == d->altPressed)
         return;
 
     d->altPressed = pressed;
