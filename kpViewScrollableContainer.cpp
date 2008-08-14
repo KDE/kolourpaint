@@ -605,10 +605,12 @@ QRect kpViewScrollableContainer::bottomResizeLineRect () const
     if (m_resizeRoundedLastViewX < 0 || m_resizeRoundedLastViewY < 0)
         return QRect ();
 
+    QRect visibleArea = QRect(QPoint(contentsX(),contentsY()), viewport()->size());
+
     return QRect (QPoint (0,
                           m_resizeRoundedLastViewY),
                   QPoint (m_resizeRoundedLastViewX - 1,
-                          m_resizeRoundedLastViewY + bottomResizeLineWidth () - 1));
+                          m_resizeRoundedLastViewY + bottomResizeLineWidth () - 1)).intersected(visibleArea);
 }
 
 // protected
@@ -617,10 +619,12 @@ QRect kpViewScrollableContainer::rightResizeLineRect () const
     if (m_resizeRoundedLastViewX < 0 || m_resizeRoundedLastViewY < 0)
         return QRect ();
 
+    QRect visibleArea = QRect(QPoint(contentsX(),contentsY()), viewport()->size());
+
     return QRect (QPoint (m_resizeRoundedLastViewX,
                           0),
                   QPoint (m_resizeRoundedLastViewX + rightResizeLineWidth () - 1,
-                          m_resizeRoundedLastViewY - 1));
+                          m_resizeRoundedLastViewY - 1)).intersected(visibleArea);
 }
 
 // protected
@@ -629,10 +633,12 @@ QRect kpViewScrollableContainer::bottomRightResizeLineRect () const
     if (m_resizeRoundedLastViewX < 0 || m_resizeRoundedLastViewY < 0)
         return QRect ();
 
+    QRect visibleArea = QRect(QPoint(contentsX(),contentsY()), viewport()->size());
+
     return QRect (QPoint (m_resizeRoundedLastViewX,
                           m_resizeRoundedLastViewY),
                   QPoint (m_resizeRoundedLastViewX + rightResizeLineWidth () - 1,
-                          m_resizeRoundedLastViewY + bottomResizeLineWidth () - 1));
+                          m_resizeRoundedLastViewY + bottomResizeLineWidth () - 1)).intersected(visibleArea);
 }
 
 
