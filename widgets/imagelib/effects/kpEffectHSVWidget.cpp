@@ -48,7 +48,7 @@ kpEffectHSVWidget::kpEffectHSVWidget (bool actOnSelection, QWidget *parent)
 
     QLabel *hueLabel = new QLabel (i18n ("&Hue:"), this);
     QLabel *saturationLabel = new QLabel (i18n ("&Saturation:"), this);
-    QLabel *valueLabel = new QLabel (i18n ("&Value:"), this);
+    QLabel *valueLabel = new QLabel (i18nc ("The V of HSV", "&Value:"), this);
 
     m_hueInput = new KDoubleNumInput (this);
     m_hueInput->setRange (-180, 180, 15/*step*/, true/*slider*/);
