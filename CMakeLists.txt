@@ -585,7 +585,9 @@ install(TARGETS kolourpaint_lgpl ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
 kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
 
+if( MINGW )
 message(STATUS "$mingw_libs: ${mingw_libs}")
+endif( MINGW)
 target_link_libraries(kolourpaint ${mingw_libs} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS}
 ${QT_QT3SUPPORT_LIBRARY} ${BLITZ_LIBRARIES} kolourpaint_lgpl)
 
