@@ -509,8 +509,9 @@ kpDocumentMetaInfo kpDocumentMetaInfoDialog::metaInfo (
                 Q_ASSERT (q != r);
 
                 *errorMessage =
-                    ki18n ("All text keys must be unique.  The text key \"%1\""
-                           " on lines %1 and %2 are identical.")
+                    ki18n ("All text keys must be unique. The text key \"%1\""
+                           " on lines %2 and %3 are identical.")
+                    .subs (key)
                     .subs (q + 1/*count from 1*/)
                     .subs (r + 1/*count from 1*/)
                     .toString ();
