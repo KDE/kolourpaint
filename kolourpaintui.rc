@@ -119,7 +119,7 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
     </Menu>
 
     <!-- HACK: See kpmainwindow.cpp:kpMainWindow::createGUI(). -->
-    <Menu name="toolToolBarHiddenMenu"><text>DO NOT TRANSLATE, JUST LEAVE AS IS: toolToolBarHiddenMenu</text>
+    <Menu name="toolToolBarHiddenMenu">
         <Action name="tool_brush" />
         <Action name="tool_color_eraser" />
         <Action name="tool_color_picker" />

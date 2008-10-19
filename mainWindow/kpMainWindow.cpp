@@ -39,6 +39,7 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
+#include <KMenu>
 #include <KMenuBar>
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
@@ -178,14 +179,11 @@ void kpMainWindow::createGUI ()
     //
     //       In kolourpaintui.rc, we get around this by plugging them into
     //       a fake menu.  Here, we hide that fake menu.
-    Q_ASSERT (menuBar ());
-    foreach (QAction *action, menuBar ()->actions ())
+    const QList<KMenu *> menuToHide = findChildren<KMenu *>("toolToolBarHiddenMenu");
+    // should only contain one but...
+    foreach (KMenu *menu, menuToHide)
     {
-        if (action->text () == "DO NOT TRANSLATE, JUST LEAVE AS IS: toolToolBarHiddenMenu")
-        {
-            action->setVisible (false);
-            break;
-        }
+        menu->menuAction()->setVisible(false);
     }
 }
 
