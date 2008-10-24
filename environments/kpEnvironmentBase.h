@@ -60,7 +60,7 @@ class kpViewManager;
 //
 // This class also avoids cramming excessive functionality into kpMainWindow.
 //
-// If this interface gets too bloated, push down the specialised methods into
+// If this interface gets too bloated, push down the specialized methods into
 // a new class.
 class kpEnvironmentBase : public QObject
 {
