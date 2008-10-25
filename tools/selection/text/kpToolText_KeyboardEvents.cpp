@@ -89,7 +89,7 @@ bool kpToolText::viewEvent (QEvent *e)
     // TODO: don't like this check
     else if ((ke->modifiers () &
                 (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier)) == 0 &&
-            ke->key () < 0x100 /*QChar (ke->key ()).isPrint () - unfortunately F1 is printable too...*/)
+             !( ke->text ().isEmpty ()))
     {
     #if DEBUG_KP_TOOL_TEXT
         kDebug () << "\tis text - grab";
