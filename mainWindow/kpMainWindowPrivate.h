@@ -41,6 +41,7 @@ class QActionGroup;
 
 class KSelectAction;
 class KToggleAction;
+class KAction;
 
 class kpCommandEnvironment;
 class kpDocumentEnvironment;
@@ -99,7 +100,7 @@ struct kpMainWindowPrivate
     int lastToolNumber;
 
     bool toolActionsEnabled;
-    QAction *actionPrevToolOptionGroup1,
+    KAction *actionPrevToolOptionGroup1,
             *actionNextToolOptionGroup1,
             *actionPrevToolOptionGroup2,
             *actionNextToolOptionGroup2;
@@ -118,7 +119,7 @@ struct kpMainWindowPrivate
 
     QAction *actionNew, *actionOpen;
     KRecentFilesAction *actionOpenRecent;
-    QAction *actionScan, *actionProperties,
+    KAction *actionScan, *actionProperties,
             *actionSave, *actionSaveAs, *actionExport,
             *actionReload,
             *actionPrint, *actionPrintPreview,
@@ -139,7 +140,7 @@ struct kpMainWindowPrivate
 
     bool editMenuDocumentActionsEnabled;
 
-    QAction *actionUndo, *actionRedo,
+    KAction *actionUndo, *actionRedo,
             *actionCut, *actionCopy,
             *actionPaste, *actionPasteInNewWindow,
             *actionDelete,
@@ -182,7 +183,7 @@ struct kpMainWindowPrivate
 
     bool imageMenuDocumentActionsEnabled;
 
-    QAction *actionResizeScale,
+    KAction *actionResizeScale,
             *actionCrop, *actionAutoCrop,
             *actionFlip,
             *actionRotate, *actionRotateLeft, *actionRotateRight,
