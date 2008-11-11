@@ -187,8 +187,8 @@ void kpMainWindow::createToolBox ()
              SLOT (updateActionDrawOpaqueChecked ()));
     updateActionDrawOpaqueChecked ();
 
-    for (QList <kpTool *>::const_iterator it = d->tools.begin ();
-         it != d->tools.end ();
+    for (QList <kpTool *>::const_iterator it = d->tools.constBegin ();
+         it != d->tools.constEnd ();
          it++)
     {
         d->toolToolBar->registerTool (*it);
@@ -238,8 +238,8 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
     d->toolToolBar->setEnabled (enable);
 
 
-    for (QList <kpTool *>::const_iterator it = d->tools.begin ();
-         it != d->tools.end ();
+    for (QList <kpTool *>::const_iterator it = d->tools.constBegin ();
+         it != d->tools.constEnd ();
          it++)
     {
         kpToolAction *action = (*it)->action ();
@@ -505,8 +505,8 @@ void kpMainWindow::readLastTool ()
 int kpMainWindow::toolNumber () const
 {
     int number = 0;
-    for (QList <kpTool *>::const_iterator it = d->tools.begin ();
-         it != d->tools.end ();
+    for (QList <kpTool *>::const_iterator it = d->tools.constBegin ();
+         it != d->tools.constEnd ();
          it++)
     {
         if (*it == tool ())

@@ -79,8 +79,8 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
     QList <QPoint> points = kpPainter::interpolatePoints (lastPoint, thisPoint,
         brushIsDiagonalLine ());
 
-    for (QList <QPoint>::const_iterator pit = points.begin ();
-         pit != points.end ();
+    for (QList <QPoint>::const_iterator pit = points.constBegin ();
+         pit != points.constEnd ();
          pit++)
     {
         const QPoint point =

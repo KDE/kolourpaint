@@ -137,8 +137,8 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
                << " offset=" << offset () << endl;
 
     QList <QString> keyList = textKeys ();
-    for (QList <QString>::const_iterator it = keyList.begin ();
-         it != keyList.end ();
+    for (QList <QString>::const_iterator it = keyList.constBegin ();
+         it != keyList.constEnd ();
          it++)
     {
         kDebug () << "key=" << (*it)

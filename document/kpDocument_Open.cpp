@@ -99,8 +99,8 @@ QPixmap kpDocument::convertToPixmapAsLosslessAsPossible (
         metaInfo->setOffset (image.offset ());
 
         QList <QString> keyList = image.textKeys ();
-        for (QList <QString>::const_iterator it = keyList.begin ();
-             it != keyList.end ();
+        for (QList <QString>::const_iterator it = keyList.constBegin ();
+             it != keyList.constEnd ();
              it++)
         {
             metaInfo->setText (*it, image.text (*it));

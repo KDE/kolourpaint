@@ -623,8 +623,8 @@ void kpMainWindow::pasteText (const QString &text,
             height += (textLines.size () - 1) * fontMetrics.leading ();
 
         int width = 0;
-        for (QList <QString>::const_iterator it = textLines.begin ();
-             it != textLines.end ();
+        for (QList <QString>::const_iterator it = textLines.constBegin ();
+             it != textLines.constEnd ();
              it++)
         {
             const int w = fontMetrics.width (*it);

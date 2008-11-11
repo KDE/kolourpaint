@@ -145,8 +145,8 @@ kpToolToolBar::kpToolToolBar (const QString &label, int colsOrRows, QWidget *par
                << timer.restart () << endl;
 #endif
 
-    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
-         it != m_toolWidgets.end ();
+    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.constBegin ();
+         it != m_toolWidgets.constEnd ();
          it++)
     {
         connect (*it, SIGNAL (optionSelected (int, int)),
@@ -238,8 +238,8 @@ int kpToolToolBar::defaultIconSize ()
 // public
 void kpToolToolBar::registerTool (kpTool *tool)
 {
-    for (QList <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
-         it != m_buttonToolPairs.end ();
+    for (QList <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.constBegin ();
+         it != m_buttonToolPairs.constEnd ();
          it++)
     {
         if ((*it).m_tool == tool)
@@ -381,8 +381,8 @@ void kpToolToolBar::selectPreviousTool ()
 // public
 void kpToolToolBar::hideAllToolWidgets ()
 {
-    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
-         it != m_toolWidgets.end ();
+    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.constBegin ();
+         it != m_toolWidgets.constEnd ();
          it++)
     {
         (*it)->hide ();
@@ -398,8 +398,8 @@ int kpToolToolBar::numShownToolWidgets () const
 
     int ret = 0;
 
-    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
-         it != m_toolWidgets.end ();
+    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.constBegin ();
+         it != m_toolWidgets.constEnd ();
          it++)
     {
     #if DEBUG_KP_TOOL_TOOL_BAR
@@ -419,8 +419,8 @@ kpToolWidgetBase *kpToolToolBar::shownToolWidget (int which) const
 {
     int uptoVisibleWidget = 0;
 
-    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
-         it != m_toolWidgets.end ();
+    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.constBegin ();
+         it != m_toolWidgets.constEnd ();
          it++)
     {
         if (!(*it)->isHidden ())
@@ -534,8 +534,8 @@ void kpToolToolBar::slotToolActionToolTipChanged ()
     if (!tool)
         return;
 
-    for (QList <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.begin ();
-        it != m_buttonToolPairs.end ();
+    for (QList <kpButtonToolPair>::const_iterator it = m_buttonToolPairs.constBegin ();
+        it != m_buttonToolPairs.constEnd ();
         it++)
     {
         if (tool == (*it).m_tool)
@@ -586,8 +586,8 @@ void kpToolToolBar::adjustToOrientation (Qt::Orientation o)
         num++;
     }
 
-    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.begin ();
-         it != m_toolWidgets.end ();
+    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.constBegin ();
+         it != m_toolWidgets.constEnd ();
          it++)
     {
         if (*it)
