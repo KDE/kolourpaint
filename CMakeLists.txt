@@ -60,7 +60,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imagelib/effects
 ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars
 ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/options
 
-${BLITZ_INCLUDES}
+${QIMAGEBLITZ_INCLUDES}
 ${KDE4_INCLUDE_DIR}
 ${QT_INCLUDES}
 
@@ -589,7 +589,7 @@ if( MINGW )
 message(STATUS "$mingw_libs: ${mingw_libs}")
 endif( MINGW)
 target_link_libraries(kolourpaint ${mingw_libs} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS}
-${QT_QT3SUPPORT_LIBRARY} ${BLITZ_LIBRARIES} kolourpaint_lgpl)
+${QT_QT3SUPPORT_LIBRARY} ${QIMAGEBLITZ_LIBRARIES} kolourpaint_lgpl)
 
 install(TARGETS kolourpaint ${INSTALL_TARGETS_DEFAULT_ARGS})
 
