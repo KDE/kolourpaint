@@ -1,6 +1,7 @@
 [Desktop Entry]
 
 Name=KolourPaint
+Name[ar]=كُولُرْبينْت
 Name[hi]=के-कलर-पेंट
 Name[nb]=KPaint
 Name[ne]=रङ पेन्ट
@@ -12,6 +13,7 @@ Name[x-test]=xxKolourPaintxx
 Name[zh_TW]=KolourPaint 小畫家
 GenericName=Paint Program
 GenericName[af]=Verf Program
+GenericName[ar]=برنامج التلوين
 GenericName[bg]=Графичен редактор
 GenericName[br]=Goulev tresañ
 GenericName[ca]=Programa de pintura
