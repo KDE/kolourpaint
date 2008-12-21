@@ -186,7 +186,6 @@ void kpPixmapFX::initMaskOpsPost ()
     // Check KolourPaint invariant.
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (QPixmap ());
     KP_PFX_CHECK_NO_ALPHA_CHANNEL (QPixmap (1, 1));
-    Q_ASSERT (QPixmap ().depth () == QPixmap::defaultDepth ());
     Q_ASSERT (QPixmap (1, 1).depth () == QPixmap::defaultDepth ());
 
     // initMaskOpsPre() should have ensured this (if it was 32 previously, it
