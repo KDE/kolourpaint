@@ -583,6 +583,8 @@ install(TARGETS kolourpaint_lgpl ${INSTALL_TARGETS_DEFAULT_ARGS} )
 # Executable
 #
 
+kde4_add_app_icon(kolourpaint_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/pics/app/hi*-app-kolourpaint.png")
+
 kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
 
 message(STATUS "$mingw_libs: ${mingw_libs}")
