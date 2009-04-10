@@ -61,7 +61,7 @@ void kpMainWindow::setupColorsMenuActions ()
         SLOT (slotColorsDefault ()));
 
     d->actionColorsKDE = ac->add <KSelectAction> ("colors_kde");
-    d->actionColorsKDE->setText (i18n ("Use KDE's"));
+    d->actionColorsKDE->setText (i18nc ("@item:inmenu colors", "Use KDE's"));
     // TODO: Will this slot be called spuriously if there are no colors
     //       installed?
     connect (d->actionColorsKDE, SIGNAL (triggered (QAction *)),
@@ -70,34 +70,34 @@ void kpMainWindow::setupColorsMenuActions ()
         d->actionColorsKDE->addAction (colName);
 
     d->actionColorsOpen = ac->addAction ("colors_open");
-    d->actionColorsOpen->setText (i18n ("&Open..."));
+    d->actionColorsOpen->setText (i18nc ("@item:inmenu colors", "&Open..."));
     connect (d->actionColorsOpen, SIGNAL (triggered (bool)),
         SLOT (slotColorsOpen ()));
 
     d->actionColorsReload = ac->addAction ("colors_reload");
-    d->actionColorsReload->setText (i18n ("Reloa&d"));
+    d->actionColorsReload->setText (i18nc ("@item:inmenu colors", "Reloa&d"));
     connect (d->actionColorsReload, SIGNAL (triggered (bool)),
         SLOT (slotColorsReload ()));
 
 
     d->actionColorsSave = ac->addAction ("colors_save");
-    d->actionColorsSave->setText (i18n ("&Save"));
+    d->actionColorsSave->setText (i18nc ("@item:inmenu colors", "&Save"));
     connect (d->actionColorsSave, SIGNAL (triggered (bool)),
         SLOT (slotColorsSave ()));
 
     d->actionColorsSaveAs = ac->addAction ("colors_save_as");
-    d->actionColorsSaveAs->setText (i18n ("Save &As..."));
+    d->actionColorsSaveAs->setText (i18nc ("@item:inmenu colors", "Save &As..."));
     connect (d->actionColorsSaveAs, SIGNAL (triggered (bool)),
         SLOT (slotColorsSaveAs ()));
 
 
     d->actionColorsAppendRow = ac->addAction ("colors_append_row");
-    d->actionColorsAppendRow->setText (i18n ("Add Row"));
+    d->actionColorsAppendRow->setText (i18nc ("@item:inmenu colors", "Add Row"));
     connect (d->actionColorsAppendRow, SIGNAL (triggered (bool)),
         SLOT (slotColorsAppendRow ()));
 
     d->actionColorsDeleteRow = ac->addAction ("colors_delete_row");
-    d->actionColorsDeleteRow->setText (i18n ("Delete Last Row"));
+    d->actionColorsDeleteRow->setText (i18nc ("@item:inmenu colors", "Delete Last Row"));
     connect (d->actionColorsDeleteRow, SIGNAL (triggered (bool)),
         SLOT (slotColorsDeleteRow ()));
 
