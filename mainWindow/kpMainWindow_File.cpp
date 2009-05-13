@@ -50,7 +50,6 @@
 #include <kfiledialog.h>
 #include <kglobal.h>
 #include <kiconloader.h>
-#include <kimagefilepreview.h>
 #include <kimageio.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
@@ -438,9 +437,6 @@ KUrl::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &
 
     if (allowMultipleURLs)
         fd.setMode (KFile::Files);
-
-    // COMPAT: Doesn't work.  KFileDialog bug.
-    fd.setPreviewWidget (new KImageFilePreview (&fd));
 
     if (fd.exec ())
         return fd.selectedUrls ();
