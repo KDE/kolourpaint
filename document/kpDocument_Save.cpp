@@ -362,7 +362,7 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
     // Local file?
     if (url.isLocalFile ())
     {
-        const QString filename = url.path ();
+        const QString filename = url.toLocalFile ();
 
         // sync: All failure exit paths _must_ call KSaveFile::abort() or
         //       else, the KSaveFile destructor will overwrite the file,
