@@ -217,6 +217,13 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
             detectedMimeTypePtr != KMimeType::defaultMimeTypePtr ())
         {
             detectedMimeType = detectedMimeTypePtr->name ();
+        } else {
+            detectedMimeTypePtr = KMimeType::findByPath (tempFile);
+            if(detectedMimeTypePtr &&
+                detectedMimeTypePtr != KMimeType::defaultMimeTypePtr ())
+            {
+                detectedMimeType = detectedMimeTypePtr->name ();
+            }
         }
 
         if (saveOptions)
