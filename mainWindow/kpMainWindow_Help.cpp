@@ -139,7 +139,7 @@ void kpMainWindow::slotHelpTakingScreenshots ()
 
             "<p>"
             "You may configure the <b>Desktop Screenshot</b> shortcut"
-            " in the KDE Control Center"
+            " in the KDE System Settings"
             " module <a href=\"configure kde shortcuts\">Keyboard Shortcuts</a>."
             "</p>"
 
