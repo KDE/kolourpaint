@@ -112,15 +112,18 @@ static int QPixmapCalculateDefaultDepthWithoutQApplication ()
         KP_PRINTF ("Child: created\n");
         close (fds [Read]);
 
-        KApplication app;
+        // use separate scope to force calling app destructor before exit()
+        {
+            KApplication app;
 
-        const int depth = QPixmap::defaultDepth ();
-        KP_PRINTF (("Child: writing default depth\n"));
-        write (fds [Write], &depth, sizeof (depth));
-        KP_PRINTF (("Child: wrote default depth\n"));
+            const int depth = QPixmap::defaultDepth ();
+            KP_PRINTF (("Child: writing default depth\n"));
+            write (fds [Write], &depth, sizeof (depth));
+            KP_PRINTF (("Child: wrote default depth\n"));
 
-        close (fds [Write]);
-        KP_PRINTF ("Child: exit\n");
+            close (fds [Write]);
+            KP_PRINTF ("Child: exit\n");
+        }
         exit (0);
     }
     // In parent?
