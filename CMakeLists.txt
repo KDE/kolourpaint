@@ -587,10 +587,7 @@ kde4_add_app_icon(kolourpaint_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/pics/app/hi*-app
 
 kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
 
-if( MINGW )
-message(STATUS "$mingw_libs: ${mingw_libs}")
-endif( MINGW)
-target_link_libraries(kolourpaint ${mingw_libs} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS}
+target_link_libraries(kolourpaint ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS}
 ${QT_QT3SUPPORT_LIBRARY} ${QIMAGEBLITZ_LIBRARIES} kolourpaint_lgpl)
 
 install(TARGETS kolourpaint ${INSTALL_TARGETS_DEFAULT_ARGS})
