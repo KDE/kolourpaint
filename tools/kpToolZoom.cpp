@@ -238,7 +238,7 @@ void kpToolZoom::endDraw (const QPoint &, const QRect &normalizedRect)
                                         out*/);
     }
     // Drag?
-    else
+    else if (normalizedRect.isValid())
     {
         environ ()->zoomToRect (
             normalizedRect,
