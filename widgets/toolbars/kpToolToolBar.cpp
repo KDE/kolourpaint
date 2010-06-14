@@ -403,8 +403,8 @@ int kpToolToolBar::numShownToolWidgets () const
          it++)
     {
     #if DEBUG_KP_TOOL_TOOL_BAR
-        kDebug () << "\t" << (*it)->name ()
-                   << " isShown=" << (*it)->isShown ()
+        kDebug () << "\t" << (*it)->objectName ()
+                   << " isShown=" << !(*it)->isHidden ()
                    << endl;
     #endif
         if (!(*it)->isHidden ())
@@ -501,7 +501,7 @@ void kpToolToolBar::slotToolActionActivated ()
 
 #if DEBUG_KP_TOOL_TOOL_BAR
     kDebug () << "kpToolToolBar::slotToolActionActivated() tool="
-               << (tool ? tool->name () : "null")
+               << (tool ? tool->objectName () : "null")
                << endl;
 #endif
 
@@ -527,7 +527,7 @@ void kpToolToolBar::slotToolActionToolTipChanged ()
 
 #if DEBUG_KP_TOOL_TOOL_BAR
     kDebug () << "kpToolToolBar::slotToolActionToolTipChanged() tool="
-               << (tool ? tool->name () : "null")
+               << (tool ? tool->objectName () : "null")
                << endl;
 #endif
 
