@@ -153,11 +153,15 @@ void kpToolSelectionDestroyCommand::unexecute ()
     {
         if (imageSel->transparency () != environ ()->imageSelectionTransparency ())
             environ ()->setImageSelectionTransparency (imageSel->transparency ());
+        if (dynamic_cast <kpTextSelection *> (doc->selection()))
+            doc->selectionPushOntoDocument();
     }
     else if (textSel)
     {
         if (textSel->textStyle () != environ ()->textStyle ())
             environ ()->setTextStyle (textSel->textStyle ());
+        if (dynamic_cast <kpAbstractImageSelection *> (doc->selection()))
+            doc->selectionPushOntoDocument();
     }
     else
         Q_ASSERT (!"Unknown selection type");
