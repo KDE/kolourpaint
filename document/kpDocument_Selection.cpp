@@ -291,7 +291,9 @@ void kpDocument::selectionDelete ()
 void kpDocument::selectionCopyOntoDocument (bool applySelTransparency)
 {
     Q_ASSERT (m_selection);
-    Q_ASSERT (m_selection->hasContent ());
+    // Empty selection, just doing nothing
+    if (!m_selection->hasContent())
+        return;
 
     const QRect boundingRect = m_selection->boundingRect ();
     Q_ASSERT (boundingRect.isValid ());
