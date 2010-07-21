@@ -48,8 +48,8 @@
 <legalnotice>
 &FDLNotice;
 </legalnotice>
-<date>2005-12-29</date>
-<releaseinfo>1.4_relight</releaseinfo>
+<date>2010-07-21</date>
+<releaseinfo>&kde; 4.5</releaseinfo>
 
 <abstract>
 <para>
@@ -81,6 +81,14 @@ effects</para>
 <para>Icon Editing - drawing clipart and logos with transparency</para>
 </listitem>
 </itemizedlist>
+
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="KolourPaint.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
 </chapter>
 
 <chapter id="using-kolourpaint">
@@ -1150,7 +1158,9 @@ This feature is accessible from the <link linkend="image-more-effects">More Effe
 <tip>
 <para>To quickly invert all channels, you do not need to use this dialog. You can instead
 access the <guimenuitem>Invert Colors</guimenuitem> item in the <guimenu>Image</guimenu> or
-<guimenu>Selection</guimenu> menu.
+<guimenu>Selection</guimenu> menu. The <guimenu>Selection</guimenu> item is only displayed 
+in the menubar if you use one of the selection tools. Aditionally you can reach this action 
+from the context menu opened with a &RMB; click in the image area.
 </para>
 </tip>
 
@@ -1176,7 +1186,7 @@ This reduces the number of colors used by the image or selection, with or withou
 
 <para>
 Dithering generally provides better quality results, however, you may wish to disable it for artistic effects;
-<abbrev>e.g.</abbrev> using <guilabel>Monochrome</guilabel> instead of
+&eg; using <guilabel>Monochrome</guilabel> instead of
 <guilabel>Monochrome (Dithered)</guilabel> gives a silhouette effect.
 </para>
 
@@ -1185,7 +1195,9 @@ Another important distinction is that while <guilabel>Monochrome (Dithered)</gui
 </para>
 
 <tip>
-<para>For a quick, dithered monochrome image or selection, use the <link linkend="image-monochrome">Reduce to Monochrome (Dithered)</link> item of the <guimenu>Image</guimenu> or <guimenu>Selection</guimenu> menu.
+<para>For a quick, dithered monochrome image or selection, use the <link linkend="image-monochrome">Reduce to Monochrome (Dithered)</link> item of the <guimenu>Image</guimenu> or <guimenu>Selection</guimenu> menu. The <guimenu>Selection</guimenu> item is only displayed 
+in the menubar if you use one of the selection tools. Aditionally you can reach this action 
+from the context menu opened with a &RMB; click in the image area.
 </para>
 </tip>
 
@@ -1459,12 +1471,6 @@ url="http://kolourpaint.sourceforge.net/">http://kolourpaint.sourceforge.net/</u
 
 </sect1>
 
-<sect1 id="requirements">
-<title>Requirements</title>
-
-<para> &kolourpaint; 1.4_relight requires &kde; 3.5.</para>
-</sect1>
-
 <sect1 id="compilation">
 <title>Compilation and Installation</title>
 
@@ -1477,12 +1483,6 @@ installed on this system and you do not need to follow these generic instruction
 
 &install.compile.documentation;
 
-</sect1>
-
-<sect1 id="configuration">
-<title>Configuration</title>
-
-<para>&kolourpaint; should run without any additional configuration.</para>
 </sect1>
 
 </appendix>
