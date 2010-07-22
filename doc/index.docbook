@@ -1159,7 +1159,7 @@ This feature is accessible from the <link linkend="image-more-effects">More Effe
 <para>To quickly invert all channels, you do not need to use this dialog. You can instead
 access the <guimenuitem>Invert Colors</guimenuitem> item in the <guimenu>Image</guimenu> or
 <guimenu>Selection</guimenu> menu. The <guimenu>Selection</guimenu> item is only displayed 
-in the menubar if you use one of the selection tools. Aditionally you can reach this action 
+in the menubar if you use one of the selection tools. Additionally you can reach this action 
 from the context menu opened with a &RMB; click in the image area.
 </para>
 </tip>
@@ -1196,7 +1196,7 @@ Another important distinction is that while <guilabel>Monochrome (Dithered)</gui
 
 <tip>
 <para>For a quick, dithered monochrome image or selection, use the <link linkend="image-monochrome">Reduce to Monochrome (Dithered)</link> item of the <guimenu>Image</guimenu> or <guimenu>Selection</guimenu> menu. The <guimenu>Selection</guimenu> item is only displayed 
-in the menubar if you use one of the selection tools. Aditionally you can reach this action 
+in the menubar if you use one of the selection tools. Additionally you can reach this action 
 from the context menu opened with a &RMB; click in the image area.
 </para>
 </tip>
