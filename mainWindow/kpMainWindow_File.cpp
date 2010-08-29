@@ -1147,7 +1147,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
         // what if you have multiple screens connected to the same computer
         // with different DPIs?
         // TODO: mysteriously, someone else is setting this to 96dpi always.
-        QPixmap arbitraryScreenElement;
+        QPixmap arbitraryScreenElement(1, 1);
         const QPaintDevice *screenDevice = &arbitraryScreenElement;
         const int dpiX = screenDevice->logicalDpiX (),
             dpiY = screenDevice->logicalDpiY ();
