@@ -1100,11 +1100,11 @@ void kpViewScrollableContainer::updateGrips ()
 
     if (m_view)
     {
-        m_bottomGrip->setFixedWidth (m_view->width ());
-        moveChild (m_bottomGrip, 0, m_view->height ());
+        m_bottomGrip->setFixedWidth (kpGrip::Size);
+        moveChild (m_bottomGrip, (m_view->width () - m_bottomGrip->width ()) / 2, m_view->height ());
 
-        m_rightGrip->setFixedHeight (m_view->height ());
-        moveChild (m_rightGrip, m_view->width (), 0);
+        m_rightGrip->setFixedHeight (kpGrip::Size);
+        moveChild (m_rightGrip, m_view->width (), (m_view->height () - m_bottomGrip->height ()) / 2);
 
         moveChild (m_bottomRightGrip, m_view->width (), m_view->height ());
     #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
