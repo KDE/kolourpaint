@@ -224,7 +224,8 @@ void kpAbstractSelectionTool::cancelCreate ()
     d->createNOPTimer->stop ();
 
     // TODO: should we give the user back the selection s/he had before (if any)?
-    document ()->selectionDelete ();
+    if (document ()->selection ())
+        document ()->selectionDelete ();
 }
 
 // private
