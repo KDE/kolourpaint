@@ -168,7 +168,7 @@ void kpMainWindow::slotConfigureToolBars ()
 
     KEditToolBar dialog (actionCollection (), this);
 
-    connect (&dialog, SIGNAL (newToolbarConfig ()),
+    connect (&dialog, SIGNAL (newToolBarConfig()),
              this, SLOT (slotNewToolBarConfig ()));
 
     dialog.exec ();
