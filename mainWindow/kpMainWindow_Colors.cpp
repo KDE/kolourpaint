@@ -111,7 +111,7 @@ void kpMainWindow::createColorBox ()
     d->colorToolBar = new kpColorToolBar (i18n ("Color Box"), this);
 
     // (needed for QMainWindow::saveState())
-    d->colorToolBar->setObjectName ("Color Box");
+    d->colorToolBar->setObjectName ( QLatin1String("Color Box" ));
 
     connect (colorCells (), SIGNAL (rowCountChanged (int)),
         SLOT (slotUpdateColorsDeleteRowActionEnabled ()));

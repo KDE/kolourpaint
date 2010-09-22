@@ -316,7 +316,7 @@ void kpMainWindow::createThumbnailView ()
             d->mainView,
             0/*scrollableContainer*/,
             d->thumbnail);
-        d->thumbnailView->setObjectName ("thumbnailView");
+        d->thumbnailView->setObjectName ( QLatin1String("thumbnailView" ));
     }
     else
     {
@@ -325,7 +325,7 @@ void kpMainWindow::createThumbnailView ()
             d->mainView,
             0/*scrollableContainer*/,
             d->thumbnail);
-        d->thumbnailView->setObjectName ("thumbnailView");
+        d->thumbnailView->setObjectName ( QLatin1String("thumbnailView" ));
     }
 
     d->thumbnailView->showBuddyViewScrollableContainerRectangle (

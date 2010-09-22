@@ -536,7 +536,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
     if (yes)
     {
         m_previewDialog = new kpDocumentSaveOptionsPreviewDialog( m_visualParent );
-        m_previewDialog->setObjectName( "previewSaveDialog" );
+        m_previewDialog->setObjectName( QLatin1String( "previewSaveDialog" ) );
         updatePreview ();
 
         connect (m_previewDialog, SIGNAL (finished ()),

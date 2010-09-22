@@ -316,7 +316,7 @@ void kpMainWindow::init ()
 
 
     d->scrollView = new kpViewScrollableContainer (this);
-    d->scrollView->setObjectName ("scrollView");
+    d->scrollView->setObjectName ( QLatin1String("scrollView" ));
     connect (d->scrollView, SIGNAL (beganDocResize ()),
              this, SLOT (slotBeganDocResize ()));
     connect (d->scrollView, SIGNAL (continuedDocResize (const QSize &)),
@@ -740,7 +740,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
                                        0/*buddyView*/,
                                        d->scrollView,
                                        d->scrollView->viewport ());
-        d->mainView->setObjectName ("mainView");
+        d->mainView->setObjectName ( QLatin1String("mainView" ));
 
         d->scrollView->addChild (d->mainView);
         d->viewManager->registerView (d->mainView);

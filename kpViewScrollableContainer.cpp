@@ -425,9 +425,9 @@ kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent)
       m_haveMovedFromOriginalDocSize (false)
 
 {
-    m_bottomGrip->setObjectName ("Bottom Grip");
-    m_rightGrip->setObjectName ("Right Grip");
-    m_bottomRightGrip->setObjectName ("BottomRight Grip");
+    m_bottomGrip->setObjectName ( QLatin1String("Bottom Grip" ));
+    m_rightGrip->setObjectName ( QLatin1String("Right Grip" ));
+    m_bottomRightGrip->setObjectName ( QLatin1String("BottomRight Grip" ));
 
     // HITODO: drawResizeLines() uses this feature -- it therefore
     //         flickers and only works on X11.  Fix drawResizeLines()

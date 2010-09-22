@@ -175,7 +175,7 @@ void kpMainWindow::createToolBox ()
     d->toolToolBar = new kpToolToolBar (i18n ("Tool Box"), 2/*columns/rows*/, this);
 
     // (needed for QMainWindow::saveState())
-    d->toolToolBar->setObjectName ("Tool Box");
+    d->toolToolBar->setObjectName ( QLatin1String("Tool Box" ));
 
     connect (d->toolToolBar, SIGNAL (sigToolSelected (kpTool *)),
              this, SLOT (slotToolSelected (kpTool *)));
