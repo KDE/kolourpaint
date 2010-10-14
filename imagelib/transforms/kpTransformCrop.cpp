@@ -42,9 +42,6 @@
 #include <kpTransformResizeScaleCommand.h>
 
 
-static const QString CommandName = i18n ("Set as Image");
-
-
 void kpTransformCrop (kpMainWindow *mainWindow)
 {
     kpDocument *doc = mainWindow->document ();
@@ -71,9 +68,9 @@ void kpTransformCrop (kpMainWindow *mainWindow)
     Q_ASSERT (!!textSel != !!imageSel);
 
     if (textSel)
-        ::kpTransformCrop_TextSelection (mainWindow, ::CommandName, resizeDocCommand);
+        ::kpTransformCrop_TextSelection (mainWindow, i18n ("Set as Image"), resizeDocCommand);
     else if (imageSel)
-        ::kpTransformCrop_ImageSelection (mainWindow, ::CommandName, resizeDocCommand);
+        ::kpTransformCrop_ImageSelection (mainWindow, i18n ("Set as Image"), resizeDocCommand);
     else
         Q_ASSERT (!"unreachable");
 }
