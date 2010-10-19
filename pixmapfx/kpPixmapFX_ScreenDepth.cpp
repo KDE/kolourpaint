@@ -32,6 +32,7 @@
 #include <kpPixmapFX.h>
 
 #include <QPixmap>
+#include <QApplication>
 
 #include <KLocale>
 #include <KMessageBox>
@@ -42,6 +43,11 @@
 // (KApplication has not been constructed yet)
 void kpPixmapFX::initScreenDepthPre ()
 {
+#ifdef Q_WS_X11
+    // kolourpaint only works properly with Qt's native X11 backend; override any compile-time
+    // or command line settings to raster or OpenGL.
+    QApplication::setGraphicsSystem (QLatin1String ("native"));
+#endif
 }
 
 // public static
