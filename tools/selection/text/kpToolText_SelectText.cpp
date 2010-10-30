@@ -120,7 +120,6 @@ QVariant kpToolText::selectTextOperation (Operation op,
 
     case Cancel:
         // Not called.  REFACTOR: Change this?
-        Q_ASSERT (!"Unexpected call");
         break;
 
     case EndDraw:
