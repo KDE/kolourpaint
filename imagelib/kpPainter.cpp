@@ -41,7 +41,6 @@
 #include <kdebug.h>
 #include <krandom.h>
 
-#include <kpBug.h>
 #include <kpImage.h>
 #include <kpPixmapFX.h>
 #include <kpTool.h>
@@ -376,8 +375,8 @@ static QRect Wash (kpImage *image,
 
     // Get the rectangle that bounds the changes and the pixmap for that
     // rectangle.
-    const QRect normalizedRect = kpBug::QRect_Normalized (
-        QRect (pack.startPoint, pack.endPoint));
+    const QRect normalizedRect =
+        QRect (pack.startPoint, pack.endPoint).normalized();
     pack.readableImageRect = kpTool::neededRect (normalizedRect,
         qMax (pack.penWidth, pack.penHeight));
 #if DEBUG_KP_PAINTER

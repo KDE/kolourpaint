@@ -143,7 +143,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/commands/tools/selection/text/kpToolTextDeleteComman
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/tools/selection/text/kpToolTextEnterCommand.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/tools/selection/text/kpToolTextGiveContentCommand.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/tools/selection/text/kpToolTextInsertCommand.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/compat/kpBug.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/cursors/kpCursorLightCross.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/cursors/kpCursorProvider.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/effects/kpEffectsDialog.cpp
@@ -377,7 +376,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/commands/tools/selection/text/kpToolTextDeleteComman
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/tools/selection/text/kpToolTextEnterCommand.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/tools/selection/text/kpToolTextGiveContentCommand.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/tools/selection/text/kpToolTextInsertCommand.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/compat/kpBug.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/cursors/kpCursorLightCross.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/cursors/kpCursorProvider.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/effects/kpEffectsDialog.cpp

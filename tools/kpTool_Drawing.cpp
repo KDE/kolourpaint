@@ -54,7 +54,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include <kpBug.h>
 #include <kpColor.h>
 #include <kpColorToolBar.h>
 #include <kpDefs.h>
@@ -120,7 +119,7 @@ QPoint kpTool::currentViewPoint () const
 // protected
 QRect kpTool::normalizedRect () const
 {
-    return kpBug::QRect_Normalized (QRect (d->startPoint, d->currentPoint));
+    return QRect (d->startPoint, d->currentPoint).normalized();
 }
 
 

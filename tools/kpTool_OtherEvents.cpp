@@ -56,7 +56,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include <kpBug.h>
 #include <kpColor.h>
 #include <kpColorToolBar.h>
 #include <kpDefs.h>

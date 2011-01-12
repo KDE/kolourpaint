@@ -38,7 +38,6 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpBug.h>
 #include <kpDocument.h>
 #include <kpTextSelection.h>
 #include <kpToolTextBackspaceCommand.h>

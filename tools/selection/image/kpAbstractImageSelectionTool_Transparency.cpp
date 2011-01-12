@@ -47,7 +47,6 @@
 
 #include <kpAbstractImageSelection.h>
 #include <kpAbstractSelection.h>
-#include <kpBug.h>
 #include <kpCommandHistory.h>
 #include <kpDefs.h>
 #include <kpDocument.h>

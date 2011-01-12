@@ -40,7 +40,6 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpBug.h>
 #include <kpColor.h>
 #include <kpCommandHistory.h>
 #include <kpDefs.h>

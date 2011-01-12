@@ -43,7 +43,6 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpBug.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
 #include <kpPainter.h>
@@ -144,7 +143,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
 
 
     // For efficiency, only get image after NOP check above.
-    QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
+    QRect docRect = QRect (thisPoint, lastPoint).normalized();
     docRect = neededRect (docRect, spraycanSize ());
     kpImage image = document ()->getImageAt (docRect);
 

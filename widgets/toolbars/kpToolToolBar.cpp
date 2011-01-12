@@ -50,7 +50,6 @@
 #include <KIconLoader>
 #include <ksharedconfig.h>
 
-#include <kpBug.h>
 #include <kpDefs.h>
 #include <kpTool.h>
 #include <kpToolAction.h>
@@ -341,7 +340,7 @@ void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
     }
     else
     {
-        QAbstractButton *b = kpBug::QButtonGroup_CheckedButton (m_buttonGroup);
+        QAbstractButton *b = m_buttonGroup->checkedButton();
     #if DEBUG_KP_TOOL_TOOL_BAR
         kDebug () << "\twant to select no tool - button selected=" << b;
     #endif
@@ -439,7 +438,7 @@ kpToolWidgetBase *kpToolToolBar::shownToolWidget (int which) const
 // private slot
 void kpToolToolBar::slotToolButtonClicked ()
 {
-    QAbstractButton *b = kpBug::QButtonGroup_CheckedButton (m_buttonGroup);
+    QAbstractButton *b = m_buttonGroup->checkedButton();
 
 #if DEBUG_KP_TOOL_TOOL_BAR
     kDebug () << "kpToolToolBar::slotToolButtonClicked() button=" << b;

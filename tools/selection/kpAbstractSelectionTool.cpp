@@ -41,7 +41,6 @@
 
 #include <kpAbstractSelection.h>
 #include <kpAbstractSelectionContentCommand.h>
-#include <kpBug.h>
 #include <kpCommandHistory.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
@@ -387,8 +386,7 @@ void kpAbstractSelectionTool::beginDraw ()
     if (hasBegunShape ())
     {
         endShape (currentPoint (),
-            kpBug::QRect_Normalized (
-                QRect (startPoint ()/* TODO: wrong */, currentPoint ())));
+                QRect (startPoint ()/* TODO: wrong */, currentPoint ()).normalized());
     }
 
     d->drawType = calculateDrawType ();

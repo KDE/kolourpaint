@@ -37,7 +37,6 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpBug.h>
 #include <kpCommandHistory.h>
 #include <kpDocument.h>
 #include <kpTextSelection.h>

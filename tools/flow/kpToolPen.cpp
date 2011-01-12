@@ -34,7 +34,6 @@
 
 #include <klocale.h>
 
-#include <kpBug.h>
 #include <kpColor.h>
 #include <kpDocument.h>
 #include <kpImage.h>
@@ -100,7 +99,7 @@ QRect kpToolPen::drawPoint (const QPoint &point)
 // protected virtual [base kpToolFlowBase]
 QRect kpToolPen::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
-    QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
+    QRect docRect = QRect (thisPoint, lastPoint).normalized();
     docRect = neededRect (docRect, 1/*pen width*/);
     kpImage image = document ()->getImageAt (docRect);
 

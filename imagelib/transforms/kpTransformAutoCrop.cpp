@@ -56,7 +56,6 @@
 #include <kmessagebox.h>
 
 #include <kpAbstractImageSelection.h>
-#include <kpBug.h>
 #include <kpColorToolBar.h>
 #include <kpCommandEnvironment.h>
 #include <kpCommandHistory.h>
@@ -237,9 +236,9 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
 
         if (numCols)
         {
-            m_rect = kpBug::QRect_Normalized (
+            m_rect =
                 QRect (QPoint (startX, 0),
-                       QPoint (startX + (numCols - 1) * dir, maxY)));
+                       QPoint (startX + (numCols - 1) * dir, maxY)).normalized();
             m_referenceColor = col;
         }
     }
@@ -268,9 +267,9 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
 
         if (numRows)
         {
-            m_rect = kpBug::QRect_Normalized (
+            m_rect =
                 QRect (QPoint (0, startY),
-                       QPoint (maxX, startY + (numRows - 1) * dir)));
+                       QPoint (maxX, startY + (numRows - 1) * dir)).normalized();
             m_referenceColor = col;
         }
     }

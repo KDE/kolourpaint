@@ -30,7 +30,6 @@
 
 #include <qbitmap.h>
 
-#include <kpBug.h>
 #include <kpColor.h>
 #include <kpDocument.h>
 #include <kpPainter.h>
@@ -71,7 +70,7 @@ QRect kpToolFlowPixmapBase::drawPoint (const QPoint & /*point*/)
 
 QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
-    QRect docRect = kpBug::QRect_Normalized (QRect (thisPoint, lastPoint));
+    QRect docRect = QRect (thisPoint, lastPoint).normalized();
     docRect = neededRect (docRect, qMax (brushWidth (), brushHeight ()));
     kpImage image = document ()->getImageAt (docRect);
 

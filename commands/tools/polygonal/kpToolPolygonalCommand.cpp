@@ -47,7 +47,6 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpBug.h>
 #include <kpDocument.h>
 #include <kpDefs.h>
 #include <kpImage.h>
