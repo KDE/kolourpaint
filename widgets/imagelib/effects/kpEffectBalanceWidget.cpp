@@ -66,16 +66,19 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
     QLabel *brightnessLabel = new QLabel (i18n ("&Brightness:"), this);
     m_brightnessInput = new KIntNumInput (0/*value*/, this);
     m_brightnessInput->setRange (-50, 50);
+    m_brightnessInput->setSliderEnabled();
     QPushButton *brightnessResetPushButton = new QPushButton (i18n ("Re&set"), this);
 
     QLabel *contrastLabel = new QLabel (i18n ("Co&ntrast:"), this);
     m_contrastInput = new KIntNumInput (0/*value*/, this);
     m_contrastInput->setRange (-50, 50);
+    m_contrastInput->setSliderEnabled();
     QPushButton *contrastResetPushButton = new QPushButton (i18n ("&Reset"), this);
 
     QLabel *gammaLabel = new QLabel (i18n ("&Gamma:"), this);
     m_gammaInput = new KIntNumInput (0/*value*/, this);
     m_gammaInput->setRange (-50, 50);
+    m_gammaInput->setSliderEnabled();
     // TODO: This is what should be shown in the m_gammaInput spinbox
     m_gammaLabel = new QLabel (this);
     // TODO: This doesn't seem to be wide enough with some fonts so the
