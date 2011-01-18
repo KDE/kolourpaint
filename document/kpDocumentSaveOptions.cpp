@@ -426,7 +426,7 @@ static bool mimeTypeSupportsProperty (const QString &mimeType,
 // Mimetypes done:
 //  image/bmp
 //  image/jpeg
-//  image/jpeg2000 [COULD NOT TEST]
+//  image/jp2
 //  image/png
 //  image/tiff
 //  image/x-eps
@@ -525,7 +525,7 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableQuality (const QString &mimeT
     QStringList defaultMimeTypes;
 
     // SYNC: update mime info here
-    defaultMimeTypes << QLatin1String ("image/jpeg2000");
+    defaultMimeTypes << QLatin1String ("image/jp2");
     defaultMimeTypes << QLatin1String ("image/jpeg");
 
     return mimeTypeSupportsProperty (mimeType,

@@ -148,7 +148,7 @@ X-DocPath=kolourpaint/index.html
 # SYNC: Run branches/kolourpaint/control/scripts/kde4port/gen_mimetype_line.sh in
 #       the version of kdelibs/kimgio/ (e.g. KDE 4.0) KolourPaint is
 #       shipped with.
-MimeType=image/bmp;image/gif;image/jpeg;image/jpeg2000;image/png;image/tiff;image/x-dds;image/x-eps;image/x-exr;image/x-hdr;image/x-ico;image/x-pcx;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-rgb;image/x-tga;image/x-xbitmap;image/x-xcf;image/x-xpixmap;video/x-mng;
+MimeType=image/bmp;image/gif;image/jpeg;image/jp2;image/png;image/tiff;image/x-dds;image/x-eps;image/x-exr;image/x-hdr;image/x-ico;image/x-pcx;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-rgb;image/x-tga;image/x-xbitmap;image/x-xcf;image/x-xpixmap;video/x-mng;
 
 Categories=Qt;KDE;Graphics;2DGraphics;RasterGraphics;
 Terminal=false
