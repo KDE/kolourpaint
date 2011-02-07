@@ -33,39 +33,17 @@
 //
 
 
-// LOTODO: reduce number of includes
 #define DEBUG_KP_TOOL 0
 
 
 #include <kpTool.h>
 #include <kpToolPrivate.h>
 
-#include <limits.h>
-
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qcursor.h>
-#include <qevent.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-
-#include <kapplication.h>
 #include <kdebug.h>
-#include <kiconloader.h>
-#include <klocale.h>
-#include <kmessagebox.h>
 
 #include <kpColor.h>
-#include <kpColorToolBar.h>
-#include <kpDefs.h>
-#include <kpPixmapFX.h>
-#include <kpToolAction.h>
-#include <kpToolToolBar.h>
-#include <kpView.h>
-#include <kpViewManager.h>
-#include <kactioncollection.h>
 
+//---------------------------------------------------------------------
 
 //
 // 1. View Events
@@ -85,10 +63,13 @@ bool kpTool::viewEvent (QEvent *e)
     return false;
 }
 
+//---------------------------------------------------------------------
 
 void kpTool::focusInEvent (QFocusEvent *)
 {
 }
+
+//---------------------------------------------------------------------
 
 void kpTool::focusOutEvent (QFocusEvent *)
 {
@@ -100,6 +81,7 @@ void kpTool::focusOutEvent (QFocusEvent *)
         endDrawInternal (d->currentPoint, normalizedRect ());
 }
 
+//---------------------------------------------------------------------
 
 void kpTool::enterEvent (QEvent *)
 {
@@ -107,6 +89,8 @@ void kpTool::enterEvent (QEvent *)
     kDebug () << "kpTool::enterEvent() beganDraw=" << d->beganDraw;
 #endif
 }
+
+//---------------------------------------------------------------------
 
 void kpTool::leaveEvent (QEvent *)
 {
@@ -123,7 +107,7 @@ void kpTool::leaveEvent (QEvent *)
     }
 }
 
-
+//---------------------------------------------------------------------
 //
 // 2. Non-view events
 //
@@ -140,6 +124,8 @@ void kpTool::slotColorsSwappedInternal (const kpColor &newForegroundColor,
         d->ignoreColorSignals = 0;
 }
 
+//---------------------------------------------------------------------
+
 void kpTool::slotForegroundColorChangedInternal (const kpColor &color)
 {
     if (d->ignoreColorSignals > 0)
@@ -153,6 +139,8 @@ void kpTool::slotForegroundColorChangedInternal (const kpColor &color)
 
     slotForegroundColorChanged (color);
 }
+
+//---------------------------------------------------------------------
 
 void kpTool::slotBackgroundColorChangedInternal (const kpColor &color)
 {
@@ -168,11 +156,14 @@ void kpTool::slotBackgroundColorChangedInternal (const kpColor &color)
     slotBackgroundColorChanged (color);
 }
 
+//---------------------------------------------------------------------
+
 void kpTool::slotColorSimilarityChangedInternal (double similarity, int processedSimilarity)
 {
     slotColorSimilarityChanged (similarity, processedSimilarity);
 }
 
+//---------------------------------------------------------------------
 
 // protected slot
 void kpTool::slotActionToolTipChanged (const QString &string)
@@ -180,8 +171,12 @@ void kpTool::slotActionToolTipChanged (const QString &string)
     emit actionToolTipChanged (string);
 }
 
+//---------------------------------------------------------------------
+
 // protected slots
 void kpTool::slotActionActivated ()
 {
     emit actionActivated ();
 }
+
+//---------------------------------------------------------------------

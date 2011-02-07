@@ -31,6 +31,8 @@
 #include <QHeaderView>
 #include <QItemDelegate>
 #include <QMouseEvent>
+#include <QPainter>
+#include <QImage>
 
 #include <KColorMimeData>
 #include <KDebug>
@@ -48,7 +50,6 @@ public:
         shade = false;
         acceptDrags = false;
         cellsResizable = true;
-        supportsAlpha = true;
     }
 
     kpColorCellsBase *q;
@@ -72,7 +73,6 @@ public:
     bool shade;
     bool acceptDrags;
     bool cellsResizable;
-    bool supportsAlpha;
     bool inMouse;
 };
 
@@ -184,11 +184,6 @@ void kpColorCellsBase::setAcceptDrags(bool _acceptDrags)
     d->acceptDrags = _acceptDrags;
 }
 
-void kpColorCellsBase::setSupportsAlpha(bool yes)
-{
-    d->supportsAlpha = yes;
-}
-
 void kpColorCellsBase::setCellsResizable(bool yes)
 {
     d->cellsResizable = yes;
@@ -206,12 +201,38 @@ int kpColorCellsBase::selectedIndex() const
     return d->selected;
 }
 
-static void TableWidgetItemSetColor (QTableWidgetItem *tableItem,
-        const QColor &color)
+//---------------------------------------------------------------------
+
+static void TableWidgetItemSetColor (QTableWidgetItem *tableItem, const QColor &color)
 {
     Q_ASSERT (tableItem);
-    tableItem->setData(Qt::BackgroundRole , QBrush(color));
+    QImage image(16, 16, QImage::Format_ARGB32_Premultiplied);
+    QPainter painter(&image);
+    const int StippleSize = 4;
+    QColor useColor;
+
+    for (int dy = 0; dy < 16; dy += StippleSize)
+    {
+        for (int dx = 0; dx < 16; dx += StippleSize)
+        {
+            const bool parity = ((dy + dx) / StippleSize) % 2;
+
+            if (!parity)
+                useColor = Qt::white;
+            else
+                useColor = Qt::lightGray;
+                
+            painter.fillRect(dx, dy, StippleSize, StippleSize, useColor);
+        }
+    }
+
+    painter.fillRect(image.rect(), color);
+    painter.end();
+
+    tableItem->setData(Qt::BackgroundRole , QBrush(image));
 }
+
+//---------------------------------------------------------------------
 
 void kpColorCellsBase::setColor( int column, const QColor &colorIn )
 {
@@ -222,11 +243,6 @@ void kpColorCellsBase::setColor( int column, const QColor &colorIn )
     Q_ASSERT( tableColumn >= 0 && tableColumn < columnCount() );
 
     QColor color = colorIn;
-    if (color.isValid ())
-    {
-        if (!d->supportsAlpha)
-            color = QColor (color.rgb ());
-    }
 
     d->colors[column] = color;
 
@@ -479,9 +495,6 @@ void kpColorCellsBase::dropEvent( QDropEvent *event)
                << "source=" << event->source () << "dragSourceCell=" << dragSourceCell;
 #endif
      if( c.isValid()) {
-          if (!d->supportsAlpha)
-            c = QColor (c.rgb ());
-
           ::SetDropAction (this, event);
 
           int cell = positionToCell(event->pos(), true, true/*allow empty cell*/);

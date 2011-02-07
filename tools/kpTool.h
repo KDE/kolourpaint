@@ -48,7 +48,7 @@ class QIcon;
 class QInputMethodEvent;
 class QKeyEvent;
 class QMouseEvent;
-class QPixmap;
+class QImage;
 class QWheelEvent;
 
 class KShortcut;
@@ -118,7 +118,7 @@ public:
 
 
     static QRect neededRect (const QRect &rect, int lineWidth);
-    static QPixmap neededPixmap (const QPixmap &pixmap, const QRect &boundingRect);
+    static QImage neededPixmap (const QImage &image, const QRect &boundingRect);
 
     bool hasCurrentPoint () const;
     // Returns the position of the cursor relative to the topleft point of
@@ -220,8 +220,6 @@ signals:
 
 
 public:
-    QIcon iconSet (int forceSize = 0) const;
-
     // Override this to use an icon whose name is not the same as the tool's
     // <name> as passed to the constructor.
     virtual QString iconName () const;
@@ -355,7 +353,6 @@ public:
 // Keyboard Events
 //
 
-// REFACTOR: Make these private?
 protected:
     void seeIfAndHandleModifierKey (QKeyEvent *e);
 

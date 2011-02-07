@@ -201,6 +201,8 @@ void kpMainWindow::setStatusBarShapeSize (const QSize &size)
     d->statusBarShapeLastSizeInitialised = true;
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::setStatusBarDocSize (const QSize &size)
 {
@@ -227,6 +229,8 @@ void kpMainWindow::setStatusBarDocSize (const QSize &size)
     }
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::setStatusBarDocDepth (int depth)
 {
@@ -251,6 +255,8 @@ void kpMainWindow::setStatusBarDocDepth (int depth)
     }
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::setStatusBarZoom (int zoom)
 {
@@ -274,6 +280,8 @@ void kpMainWindow::setStatusBarZoom (int zoom)
                                   StatusBarItemZoom);
     }
 }
+
+//---------------------------------------------------------------------
 
 void kpMainWindow::recalculateStatusBarMessage ()
 {
@@ -329,6 +337,8 @@ void kpMainWindow::recalculateStatusBarMessage ()
     }
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::recalculateStatusBarShape ()
 {
@@ -382,6 +392,8 @@ void kpMainWindow::recalculateStatusBarShape ()
     }
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::recalculateStatusBar ()
 {
@@ -417,3 +429,5 @@ void kpMainWindow::recalculateStatusBar ()
         setStatusBarZoom ();
     }
 }
+
+//---------------------------------------------------------------------

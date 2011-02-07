@@ -40,8 +40,6 @@ Q_OBJECT
 
 public:
     kpToolBrush (kpToolEnvironment *environ, QObject *parent);
-    virtual ~kpToolBrush ();
-
 
 protected:
     virtual QString haventBegunDrawUserMessage () const;

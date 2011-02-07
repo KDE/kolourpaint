@@ -35,11 +35,11 @@
 #include <klocale.h>
 
 
+//---------------------------------------------------------------------
+
 kpToolWidgetOpaqueOrTransparent::kpToolWidgetOpaqueOrTransparent (QWidget *parent, const QString &name)
     : kpToolWidgetBase (parent, name)
 {
-    setInvertSelectedPixmap (false);
-
     addOption (UserIcon ("option_opaque"), i18n ("Opaque")/*tooltip*/);
     startNewOptionRow ();
     addOption (UserIcon ("option_transparent"), i18n ("Transparent")/*tooltip*/);
@@ -47,9 +47,13 @@ kpToolWidgetOpaqueOrTransparent::kpToolWidgetOpaqueOrTransparent (QWidget *paren
     finishConstruction (0, 0);
 }
 
+//---------------------------------------------------------------------
+
 kpToolWidgetOpaqueOrTransparent::~kpToolWidgetOpaqueOrTransparent ()
 {
 }
+
+//---------------------------------------------------------------------
 
 
 // public

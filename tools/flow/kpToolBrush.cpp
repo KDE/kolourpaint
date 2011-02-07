@@ -25,11 +25,11 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include <kpToolBrush.h>
 
 #include <klocale.h>
 
+//---------------------------------------------------------------------
 
 kpToolBrush::kpToolBrush (kpToolEnvironment *environ, QObject *parent)
     : kpToolFlowPixmapBase (i18n ("Brush"),
@@ -39,10 +39,7 @@ kpToolBrush::kpToolBrush (kpToolEnvironment *environ, QObject *parent)
 {
 }
 
-kpToolBrush::~kpToolBrush ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // protected virtual [base kpToolFlowBase]
 QString kpToolBrush::haventBegunDrawUserMessage () const
@@ -50,6 +47,7 @@ QString kpToolBrush::haventBegunDrawUserMessage () const
     return i18n ("Click to draw dots or drag to draw strokes.");
 }
 
+//---------------------------------------------------------------------
 
 // See the our corresponding .h for brush selection.
 

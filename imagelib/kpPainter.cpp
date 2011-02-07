@@ -45,7 +45,9 @@
 #include <kpPixmapFX.h>
 #include <kpTool.h>
 #include <kpToolFlowBase.h>
+#include <bugfix.h>
 
+//---------------------------------------------------------------------
 
 // public static
 bool kpPainter::pointsAreCardinallyAdjacent (const QPoint &p, const QPoint &q)
@@ -56,12 +58,15 @@ bool kpPainter::pointsAreCardinallyAdjacent (const QPoint &p, const QPoint &q)
     return (dx + dy == 1);
 }
 
+//---------------------------------------------------------------------
 
 // Returns a random integer from 0 to 999 inclusive.
 static int RandomNumberFrom0to999 ()
 {
     return (KRandom::random () % 1000);
 }
+
+//---------------------------------------------------------------------
 
 // public static
 QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
@@ -173,6 +178,7 @@ QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
     return ret;
 }
 
+//---------------------------------------------------------------------
 
 // public static
 void kpPainter::drawLine (kpImage *image,
@@ -181,6 +187,8 @@ void kpPainter::drawLine (kpImage *image,
 {
     kpPixmapFX::drawLine (image, x1, y1, x2, y2, color, penWidth);
 }
+
+//---------------------------------------------------------------------
 
 
 // public static
@@ -191,6 +199,8 @@ void kpPainter::drawPolyline (kpImage *image,
     kpPixmapFX::drawPolyline (image, points, color, penWidth);
 }
 
+//---------------------------------------------------------------------
+
 // public static
 void kpPainter::drawPolygon (kpImage *image,
         const QPolygon &points,
@@ -200,6 +210,8 @@ void kpPainter::drawPolygon (kpImage *image,
 {
     kpPixmapFX::drawPolygon (image, points, fcolor, penWidth, bcolor, isFinal);
 }
+
+//---------------------------------------------------------------------
 
 
 // public static
@@ -213,6 +225,8 @@ void kpPainter::drawCurve (kpImage *image,
         startPoint, controlPointP, controlPointQ, endPoint, color, penWidth);
 }
 
+//---------------------------------------------------------------------
+
 
 // public static
 void kpPainter::fillRect (kpImage *image,
@@ -221,6 +235,8 @@ void kpPainter::fillRect (kpImage *image,
 {
     kpPixmapFX::fillRect (image, x, y, width, height, color);
 }
+
+//---------------------------------------------------------------------
 
 
 // public static
@@ -232,6 +248,8 @@ void kpPainter::drawRect (kpImage *image,
     kpPixmapFX::drawRect (image, x, y, width, height, fcolor, penWidth, bcolor);
 }
 
+//---------------------------------------------------------------------
+
 // public static
 void kpPainter::drawRoundedRect (kpImage *image,
         int x, int y, int width, int height,
@@ -240,6 +258,8 @@ void kpPainter::drawRoundedRect (kpImage *image,
 {
     kpPixmapFX::drawRoundedRect (image, x, y, width, height, fcolor, penWidth, bcolor);
 }
+
+//---------------------------------------------------------------------
 
 // public static
 void kpPainter::drawEllipse (kpImage *image,
@@ -250,15 +270,17 @@ void kpPainter::drawEllipse (kpImage *image,
     kpPixmapFX::drawEllipse (image, x, y, width, height, fcolor, penWidth, bcolor);
 }
 
+//---------------------------------------------------------------------
 
-// <rgbPainter> and <maskPainter> are operating on the original image
+
+// <rgbPainter> are operating on the original image
 // (the original image is not passed to this function).
 //
 // <image> = subset of the original image containing all the pixels in
 //           <imageRect>
 // <drawRect> = the rectangle, relative to the painters, whose pixels we
 //              want to change
-static bool ReadableImageWashRect (QPainter *rgbPainter, QPainter *maskPainter,
+static bool ReadableImageWashRect (QPainter *rgbPainter,
         const QImage &image,
         const kpColor &colorToReplace,
         const QRect &imageRect, const QRect &drawRect,
@@ -275,18 +297,12 @@ static bool ReadableImageWashRect (QPainter *rgbPainter, QPainter *maskPainter,
     // If you're going to pass painter pointers, those painters had better be
     // active (i.e. QPainter::begin() has been called).
     Q_ASSERT (!rgbPainter || rgbPainter->isActive ());
-    Q_ASSERT (!maskPainter || maskPainter->isActive ());
 
 // make use of scanline coherence
 #define FLUSH_LINE()                                        \
 {                                                           \
     if (rgbPainter)                                         \
         rgbPainter->drawLine (startDrawX + imageRect.x (),  \
-            y + imageRect.y (),                             \
-            x - 1 + imageRect.x (),                         \
-            y + imageRect.y ());                            \
-    if (maskPainter)                                        \
-        maskPainter->drawLine (startDrawX + imageRect.x (), \
             y + imageRect.y (),                             \
             x - 1 + imageRect.x (),                         \
             y + imageRect.y ());                            \
@@ -341,6 +357,7 @@ static bool ReadableImageWashRect (QPainter *rgbPainter, QPainter *maskPainter,
     return didSomething;
 }
 
+//---------------------------------------------------------------------
 
 struct WashPack
 {
@@ -354,17 +371,15 @@ struct WashPack
     QImage readableImage;
 };
 
+//---------------------------------------------------------------------
 
 static QRect Wash (kpImage *image,
         const QPoint &startPoint, const QPoint &endPoint,
         const kpColor &color, int penWidth, int penHeight,
         const kpColor &colorToReplace,
         int processedColorSimilarity,
-        QRect (*drawFunc) (QPainter * /*rgbPainter*/, QPainter * /*maskPainter*/,
-            void * /*data*/))
+        QRect (*drawFunc) (QPainter * /*rgbPainter*/, void * /*data*/))
 {
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*image);
-
     WashPack pack;
     pack.startPoint = startPoint; pack.endPoint = endPoint;
     pack.color = color;
@@ -376,7 +391,7 @@ static QRect Wash (kpImage *image,
     // Get the rectangle that bounds the changes and the pixmap for that
     // rectangle.
     const QRect normalizedRect =
-        QRect (pack.startPoint, pack.endPoint).normalized();
+        bugfix_QRect (pack.startPoint, pack.endPoint).normalized();
     pack.readableImageRect = kpTool::neededRect (normalizedRect,
         qMax (pack.penWidth, pack.penHeight));
 #if DEBUG_KP_PAINTER
@@ -386,50 +401,25 @@ static QRect Wash (kpImage *image,
               << " readableImageRect=" << pack.readableImageRect
               << endl;
 #endif
-    QPixmap pixmap = kpPixmapFX::getPixmapAt (*image, pack.readableImageRect);
+    pack.readableImage = kpPixmapFX::getPixmapAt (*image, pack.readableImageRect);
 
-
-    // Convert pixmap to QImage so that we can read off the pixels.
-#if DEBUG_KP_PAINTER && 0
-    timer.start ();
-#endif
-    pack.readableImage = kpPixmapFX::convertToQImage (pixmap);
-#if DEBUG_KP_PAINTER && 0
-    convAndWashTime = timer.restart ();
-    kDebug () << "\tconvert to image: " << convAndWashTime << " ms";
-#endif
-
-
-    const QRect ret = kpPixmapFX::draw (image, drawFunc,
-        color.isOpaque (), color.isTransparent (),
-        &pack);
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*image);
-    return ret;
+    QPainter painter(image);
+    return (*drawFunc)(&painter, &pack);
 }
 
-void WashHelperSetup (QPainter *rgbPainter, QPainter *maskPainter,
-        const WashPack *pack)
+//---------------------------------------------------------------------
+
+void WashHelperSetup (QPainter *rgbPainter, const WashPack *pack)
 {
     // Set the drawing colors for the painters.
 
     if (rgbPainter)
-    {
-        rgbPainter->setPen (
-            kpPixmapFX::draw_ToQColor (pack->color,
-                true/*drawing on RGB Layer*/));
-    }
-
-    if (maskPainter)
-    {
-        maskPainter->setPen (
-            kpPixmapFX::draw_ToQColor (pack->color,
-                false/*drawing on mask layer*/));
-    }
+        rgbPainter->setPen (pack->color.toQColor());
 }
 
+//---------------------------------------------------------------------
 
-static QRect WashLineHelper (QPainter *rgbPainter, QPainter *maskPainter,
-        void *data)
+static QRect WashLineHelper (QPainter *rgbPainter, void *data)
 {
 #if DEBUG_KP_PAINTER && 0
     kDebug () << "Washing pixmap (w=" << rect.width ()
@@ -442,7 +432,7 @@ static QRect WashLineHelper (QPainter *rgbPainter, QPainter *maskPainter,
 
 
     // Setup painters.
-    ::WashHelperSetup (rgbPainter, maskPainter, pack);
+    ::WashHelperSetup (rgbPainter, pack);
 
 
     bool didSomething = false;
@@ -458,7 +448,7 @@ static QRect WashLineHelper (QPainter *rgbPainter, QPainter *maskPainter,
         //      all the non-intersecting regions and only wash each region once.
         //
         //      Profiling needs to be done as QRegion is known to be a CPU hog.
-        if (::ReadableImageWashRect (rgbPainter, maskPainter,
+        if (::ReadableImageWashRect (rgbPainter,
                 pack->readableImage,
                 pack->colorToReplace,
                 pack->readableImageRect,
@@ -486,6 +476,8 @@ static QRect WashLineHelper (QPainter *rgbPainter, QPainter *maskPainter,
     return didSomething ? pack->readableImageRect : QRect ();
 }
 
+//---------------------------------------------------------------------
+
 // public static
 QRect kpPainter::washLine (kpImage *image,
         int x1, int y1, int x2, int y2,
@@ -501,9 +493,9 @@ QRect kpPainter::washLine (kpImage *image,
         &::WashLineHelper);
 }
 
+//---------------------------------------------------------------------
 
-static QRect WashRectHelper (QPainter *rgbPainter, QPainter *maskPainter,
-        void *data)
+static QRect WashRectHelper (QPainter *rgbPainter, void *data)
 {
 #if DEBUG_KP_PAINTER && 0
     kDebug () << "Washing pixmap (w=" << rect.width ()
@@ -516,14 +508,14 @@ static QRect WashRectHelper (QPainter *rgbPainter, QPainter *maskPainter,
 
 
     // Setup painters.
-    ::WashHelperSetup (rgbPainter, maskPainter, pack);
+    ::WashHelperSetup (rgbPainter, pack);
 
 
     const QRect drawRect (pack->startPoint, pack->endPoint);
 
     bool didSomething = false;
 
-    if (::ReadableImageWashRect (rgbPainter, maskPainter,
+    if (::ReadableImageWashRect (rgbPainter,
             pack->readableImage,
             pack->colorToReplace,
             pack->readableImageRect,
@@ -547,6 +539,8 @@ static QRect WashRectHelper (QPainter *rgbPainter, QPainter *maskPainter,
     return didSomething ? drawRect : QRect ();
 }
 
+//---------------------------------------------------------------------
+
 // public static
 QRect kpPainter::washRect (kpImage *image,
         int x, int y, int width, int height,
@@ -562,70 +556,7 @@ QRect kpPainter::washRect (kpImage *image,
         &::WashRectHelper);
 }
 
-
-struct SprayPointsPackage
-{
-    QList <QPoint> points;
-    kpColor color;
-    int spraycanSize;
-};
-
-static QRect SprayPointsHelper (QPainter *rgbPainter, QPainter *maskPainter,
-        void *data)
-{
-    SprayPointsPackage *pack = static_cast <SprayPointsPackage *> (data);
-
-#if DEBUG_KP_PAINTER
-    kDebug () << "kppainter.cpp:SprayPointsHelper("
-               << ") spraycanSize=" << pack->spraycanSize
-               << endl;
-#endif
-
-    const int radius = pack->spraycanSize / 2;
-
-    // Set the drawing colors for the painters.
-
-    if (rgbPainter)
-    {
-        rgbPainter->setPen (
-            kpPixmapFX::draw_ToQColor (pack->color,
-                true/*drawing on RGB Layer*/));
-    }
-
-    if (maskPainter)
-    {
-        maskPainter->setPen (
-            kpPixmapFX::draw_ToQColor (pack->color,
-                false/*drawing on mask layer*/));
-    }
-
-    foreach (const QPoint &p, pack->points)
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            const int dx = (KRandom::random () % pack->spraycanSize) - radius;
-            const int dy = (KRandom::random () % pack->spraycanSize) - radius;
-
-            // Make it look circular.
-            // TODO: Can be done better by doing a random vector angle & length
-            //       but would sin and cos be too slow?
-            if ((dx * dx) + (dy * dy) > (radius * radius))
-                continue;
-
-            const QPoint p2 (p.x () + dx, p.y () + dy);
-
-            if (rgbPainter)
-                rgbPainter->drawPoint (p2);
-
-            if (maskPainter)
-                maskPainter->drawPoint (p2);
-        }
-    }
-
-    // kpPainter::sprayPoints() ignores the return value of kpPixmapFX::draw(),
-    // which is based on this return value.
-    return QRect ();
-}
+//---------------------------------------------------------------------
 
 // public static
 void kpPainter::sprayPoints (kpImage *image,
@@ -639,13 +570,31 @@ void kpPainter::sprayPoints (kpImage *image,
 
     Q_ASSERT (spraycanSize > 0);
 
-    SprayPointsPackage pack;
-    pack.points = points;
-    pack.color = color;
-    pack.spraycanSize = spraycanSize;
+    QPainter painter(image);
+    const int radius = spraycanSize / 2;
 
-    kpPixmapFX::draw (image, &::SprayPointsHelper,
-        color.isOpaque (),
-        color.isTransparent (),
-        &pack);
+    // Set the drawing colors for the painters.
+
+    painter.setPen(color.toQColor());
+
+    foreach (const QPoint &p, points)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            const int dx = (KRandom::random () % spraycanSize) - radius;
+            const int dy = (KRandom::random () % spraycanSize) - radius;
+
+            // Make it look circular.
+            // TODO: Can be done better by doing a random vector angle & length
+            //       but would sin and cos be too slow?
+            if ((dx * dx) + (dy * dy) > (radius * radius))
+                continue;
+
+            const QPoint p2 (p.x () + dx, p.y () + dy);
+
+            painter.drawPoint(p2);
+        }
+    }
 }
+
+//---------------------------------------------------------------------

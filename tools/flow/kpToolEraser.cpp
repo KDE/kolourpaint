@@ -28,7 +28,6 @@
 
 #define DEBUG_KP_TOOL_ERASER 0
 
-
 #include <kpToolEraser.h>
 
 #include <klocale.h>
@@ -37,6 +36,7 @@
 #include <kpEffectClearCommand.h>
 #include <kpToolEnvironment.h>
 
+//---------------------------------------------------------------------
 
 kpToolEraser::kpToolEraser (kpToolEnvironment *environ, QObject *parent)
     : kpToolFlowPixmapBase (i18n ("Eraser"),
@@ -46,10 +46,7 @@ kpToolEraser::kpToolEraser (kpToolEnvironment *environ, QObject *parent)
 {
 }
 
-kpToolEraser::~kpToolEraser ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // public virtual [base kpTool]
 void kpToolEraser::globalDraw ()
@@ -65,6 +62,7 @@ void kpToolEraser::globalDraw ()
             environ ()->commandEnvironment ()));
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual [base kpToolFlowBase]
 QString kpToolEraser::haventBegunDrawUserMessage () const
@@ -72,6 +70,7 @@ QString kpToolEraser::haventBegunDrawUserMessage () const
     return i18n ("Click or drag to erase.");
 }
 
+//---------------------------------------------------------------------
 
 // See the our corresponding .h for brush selection.
 

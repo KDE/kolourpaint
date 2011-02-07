@@ -30,64 +30,9 @@
 #define KP_IMAGE_H
 
 
-#include <QPixmap>
+#include <QImage>
 
-
-//
-// Bitmap abstraction - pixel data.
-// Does not care about metadata (including DPI).
-//
-// Supposed to be independent of the screen and represents precious
-// document data that should not be dithered down.  Should support 1-bit
-// indexed, 8-bit indexed, 16-bit RGB(A) and 24-bit RGB(A) colour models
-// at least.
-//
-// Currently, the reality is that its color model is the same as the
-// screen mode (!) and it optionally contains a 0/1 transparency mask.  A
-// KolourPaint invariant is that it will not contain an alpha channel
-// -- it can either have a transparency mask or nothing at all.
-//
-// sync: kpAbstractImageSelection::sizeWithoutImage() depends on kpImage
-//       using copy-on-write.
-//
-// REFACTOR: Make this into a class that doesn't expose the underlying
-//           QPixmap except to methods in imagelib/
-//
-class kpImage : public QPixmap
-{
-public:
-    //
-    // These establish the invariant of no alpha channel.
-    //
-    // Use them to construct images that will be placed inside
-    // kpDocument's.  Definitely use instead of QPixmap's constructor.
-    //
-    // If constructing a pixmap (i.e. displayed on screen but never
-    // placed inside a kpDocument), use QPixmap() instead.
-    //
-    kpImage ();
-    kpImage (int width, int height);
-
-    kpImage (const kpImage &image);
-
-    // ASSUMPTION: <pixmap> satisfies the kpImage invariant of no alpha
-    //             channel.
-    kpImage (const QPixmap &pixmap);
-
-
-    //
-    // REFACTOR: Yucky compatibility stuff that must go once kpImage != QPixmap.
-    //
-    // Returns a static cast of the given pointer.
-    // Use this instead of static casts all over the source base, to prepare
-    // for the day when casting kpImage to and from QPixmap is invalid.
-    //
-    // sync: As kpImage and QPixmap are still related, do not add data
-    //       fields to kpImage or you'll break these methods.
-    //
-    static kpImage *CastPixmapPtr (QPixmap *pixmap);
-    static const kpImage *CastPixmapPtr (const QPixmap *pixmap);
-};
+typedef QImage kpImage;
 
 
 #endif  // KP_IMAGE_H

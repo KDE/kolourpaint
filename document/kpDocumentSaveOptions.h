@@ -30,7 +30,7 @@
 #define KP_DOCUMENT_SAVE_OPTIONS_H
 
 
-class QPixmap;
+class QImage;
 class QString;
 
 class KConfigGroup;
@@ -133,10 +133,10 @@ public:
         Quality = 4
     };
 
-    // Returns whether saving <pixmap> with these options will result in
+    // Returns whether saving <image> with these options will result in
     // loss of information.  Returned value is the bitwise OR of
     // LossType enum possiblities.
-    int isLossyForSaving (const QPixmap &pixmap) const;
+    int isLossyForSaving (const QImage &image) const;
 
 
 private:

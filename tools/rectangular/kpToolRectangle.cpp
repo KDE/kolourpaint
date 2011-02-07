@@ -27,10 +27,11 @@
 
 
 #include <kpToolRectangle.h>
+#include <kpPainter.h>
 
 #include <klocale.h>
 
-#include <kpPainter.h>
+//---------------------------------------------------------------------
 
 
 kpToolRectangle::kpToolRectangle (kpToolEnvironment *environ, QObject *parent)
@@ -42,9 +43,6 @@ kpToolRectangle::kpToolRectangle (kpToolEnvironment *environ, QObject *parent)
 {
 }
 
-kpToolRectangle::~kpToolRectangle ()
-{
-}
-
+//---------------------------------------------------------------------
 
 #include <kpToolRectangle.moc>

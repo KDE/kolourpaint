@@ -43,27 +43,6 @@
 
 
 // public static
-void kpEffectFlatten::applyEffect (QPixmap *destPixmapPtr,
-        const QColor &color1, const QColor &color2)
-{
-    if (!destPixmapPtr)
-        return;
-
-    QImage image = kpPixmapFX::convertToQImage (*destPixmapPtr);
-    applyEffect (&image, color1, color2);
-    *destPixmapPtr = kpPixmapFX::convertToPixmap (image);
-}
-
-// public static
-QPixmap kpEffectFlatten::applyEffect (const QPixmap &pm,
-        const QColor &color1, const QColor &color2)
-{
-    QImage image = kpPixmapFX::convertToQImage (pm);
-    applyEffect (&image, color1, color2);
-    return kpPixmapFX::convertToPixmap (image);
-}
-
-// public static
 void kpEffectFlatten::applyEffect (QImage *destImagePtr,
         const QColor &color1, const QColor &color2)
 {

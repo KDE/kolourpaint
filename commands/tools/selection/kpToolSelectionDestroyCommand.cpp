@@ -53,6 +53,7 @@
 #include <kpView.h>
 #include <kpViewManager.h>
 
+//---------------------------------------------------------------------
 
 kpToolSelectionDestroyCommand::kpToolSelectionDestroyCommand (const QString &name,
         bool pushOntoDocument,
@@ -63,11 +64,14 @@ kpToolSelectionDestroyCommand::kpToolSelectionDestroyCommand (const QString &nam
 {
 }
 
+//---------------------------------------------------------------------
+
 kpToolSelectionDestroyCommand::~kpToolSelectionDestroyCommand ()
 {
     delete m_oldSelectionPtr;
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
 kpCommandSize::SizeType kpToolSelectionDestroyCommand::size () const
@@ -76,6 +80,7 @@ kpCommandSize::SizeType kpToolSelectionDestroyCommand::size () const
            SelectionSize (m_oldSelectionPtr);
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
 void kpToolSelectionDestroyCommand::execute ()
@@ -104,6 +109,8 @@ void kpToolSelectionDestroyCommand::execute ()
 
     environ ()->somethingBelowTheCursorChanged ();
 }
+
+//---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
 void kpToolSelectionDestroyCommand::unexecute ()

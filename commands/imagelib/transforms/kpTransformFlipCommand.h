@@ -39,6 +39,7 @@ public:
     kpTransformFlipCommand (bool actOnSelection,
         bool horiz, bool vert,
         kpCommandEnvironment *environ);
+
     virtual ~kpTransformFlipCommand ();
 
     virtual QString name () const;

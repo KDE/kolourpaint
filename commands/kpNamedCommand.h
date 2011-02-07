@@ -39,7 +39,6 @@ class kpNamedCommand : public kpCommand
 {
 public:
     kpNamedCommand (const QString &name, kpCommandEnvironment *environ);
-    virtual ~kpNamedCommand ();
 
     virtual QString name () const;
 

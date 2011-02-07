@@ -31,25 +31,22 @@
 
 #include <kpToolWidgetFillStyle.h>
 
-#include <qbitmap.h>
 #include <qbrush.h>
 #include <qpainter.h>
 #include <qpixmap.h>
 
 #include <kdebug.h>
-#include <klocale.h>
 
 #include <kpColor.h>
 #include <kpDefs.h>
 #include <kpPixmapFX.h>
 #include <kpTool.h>
 
+//---------------------------------------------------------------------
 
 kpToolWidgetFillStyle::kpToolWidgetFillStyle (QWidget *parent, const QString &name)
     : kpToolWidgetBase (parent, name)
 {
-    setInvertSelectedPixmap ();
-
     for (int i = 0; i < (int) FillStyleNum; i++)
     {
         QPixmap pixmap;
@@ -65,64 +62,54 @@ kpToolWidgetFillStyle::kpToolWidgetFillStyle (QWidget *parent, const QString &na
     finishConstruction (0, 0);
 }
 
+//---------------------------------------------------------------------
+
 kpToolWidgetFillStyle::~kpToolWidgetFillStyle ()
 {
 }
 
+//---------------------------------------------------------------------
 
 // private
 QPixmap kpToolWidgetFillStyle::fillStylePixmap (FillStyle fs, int w, int h)
 {
     QPixmap pixmap ((w <= 0 ? width () : w), (h <= 0 ? height () : h));
-    pixmap.fill (Qt::white);
-
+    pixmap.fill(palette().color(QPalette::Window));
 
     const int penWidth = 2;
 
-    // -1's compensate for Qt4's 1 pixel higher and wider
-    // QPainter::drawRect().
-    const QRect rectRect (QRect (2, 2, w - 3, h - 3)
-        .adjusted (0, 0, -1, -1));
+    const QRect rectRect(1, 1, w - 2, h - 2);
 
+    QPainter painter(&pixmap);
+    painter.setPen(kpPixmapFX::QPainterDrawRectPen(Qt::black, penWidth));
 
-    // Draw on RGB layer.
-    QPainter painter (&pixmap);
+    switch ( fs )
     {
-        const QPen pen = kpPixmapFX::QPainterDrawRectPen (Qt::black, penWidth);
-
-        painter.setPen (pen);
-        painter.setBrush (
-            brushForFillStyle (fs,
-                kpColor (QColor (Qt::black).rgb ())/*foreground*/,
-                kpColor (QColor (Qt::gray).rgb ())/*background*/));
-
-        painter.drawRect (rectRect);
+      case NoFill:
+      {
+        painter.setBrush(Qt::NoBrush);
+        break;
+      }
+      case FillWithBackground:
+      {
+        painter.setBrush(Qt::gray);
+        break;
+      }
+      case FillWithForeground:
+      {
+        painter.setBrush(Qt::black);
+        break;
+      }
+      default: ;
     }
-    painter.end ();
 
-
-    QBitmap mask (pixmap.width (), pixmap.height ());
-    mask.fill (Qt::color0);
-
-    // Draw on mask layer.
-    painter.begin (&mask);
-    {
-        const QPen pen = kpPixmapFX::QPainterDrawRectPen (
-            Qt::color1/*opaque*/, penWidth);
-
-        painter.setPen (pen);
-        if (fs == FillWithBackground || fs == FillWithForeground)
-            painter.setBrush (Qt::color1);
-
-        painter.drawRect (rectRect);
-    }
-    painter.end ();
-
-    pixmap.setMask (mask);
-
+    painter.drawRect(rectRect);
+    painter.end();
 
     return pixmap;
 }
+
+//---------------------------------------------------------------------
 
 // private
 QString kpToolWidgetFillStyle::fillStyleName (FillStyle fs) const
@@ -147,6 +134,7 @@ QString kpToolWidgetFillStyle::fillStyleName (FillStyle fs) const
     }
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpToolWidgetFillStyle::FillStyle kpToolWidgetFillStyle::fillStyle () const
@@ -159,95 +147,26 @@ kpToolWidgetFillStyle::FillStyle kpToolWidgetFillStyle::fillStyle () const
     return (FillStyle) selectedRow ();
 }
 
-// public static
-// REFACTOR: remove since this widget is for document options and we are returning an on-screen Qt brush instead of e.g. kpColor
-QBrush kpToolWidgetFillStyle::maskBrushForFillStyle (FillStyle fs,
-                                                     const kpColor &foregroundColor,
-                                                     const kpColor &backgroundColor)
-{
-    // do not complain about the "useless" breaks
-    // as the return statements might not be return statements one day
-
-    switch (fs)
-    {
-    case NoFill:
-        return Qt::NoBrush;
-        break;
-    case FillWithBackground:
-        return QBrush (backgroundColor.maskColor ());
-        break;
-    case FillWithForeground:
-        return QBrush (foregroundColor.maskColor ());
-        break;
-    default:
-        return Qt::NoBrush;
-        break;
-    }
-}
-
-// REFACTOR: remove since this widget is for document options and we are returning an on-screen Qt brush instead of e.g. kpColor
-QBrush kpToolWidgetFillStyle::maskBrush (const kpColor &foregroundColor,
-                                         const kpColor &backgroundColor)
-{
-    return maskBrushForFillStyle (fillStyle (), foregroundColor, backgroundColor);
-}
-
-// public static
-// REFACTOR: remove since this widget is for document options and we are returning an on-screen Qt brush instead of e.g. kpColor
-QBrush kpToolWidgetFillStyle::brushForFillStyle (FillStyle fs,
-                                                 const kpColor &foregroundColor,
-                                                 const kpColor &backgroundColor)
-{
-    // do not complain about the "useless" breaks
-    // as the return statements might not be return statements one day
-
-    switch (fs)
-    {
-    case NoFill:
-        return Qt::NoBrush;
-        break;
-    case FillWithBackground:
-        if (backgroundColor.isOpaque ())
-            return QBrush (backgroundColor.toQColor ());
-        else
-            return Qt::NoBrush;
-        break;
-    case FillWithForeground:
-        if (foregroundColor.isOpaque ())
-            return QBrush (foregroundColor.toQColor ());
-        else
-            return Qt::NoBrush;
-        break;
-    default:
-        return Qt::NoBrush;
-        break;
-    }
-}
-
-// public
-// REFACTOR: remove since this widget is for document options and we are returning an on-screen Qt brush instead of e.g. kpColor
-QBrush kpToolWidgetFillStyle::brush (const kpColor &foregroundColor,
-                                     const kpColor &backgroundColor)
-{
-    return brushForFillStyle (fillStyle (), foregroundColor, backgroundColor);
-}
+//---------------------------------------------------------------------
 
 kpColor kpToolWidgetFillStyle::drawingBackgroundColor (
         const kpColor &foregroundColor, const kpColor &backgroundColor) const
 {
     switch (fillStyle ())
     {
-    default:
-    case NoFill:
+      default:
+      case NoFill:
         return kpColor::Invalid;
 
-    case FillWithBackground:
+      case FillWithBackground:
         return backgroundColor;
 
-    case FillWithForeground:
+      case FillWithForeground:
         return foregroundColor;
     }
 }
+
+//---------------------------------------------------------------------
 
 // virtual protected slot [base kpToolWidgetBase]
 bool kpToolWidgetFillStyle::setSelected (int row, int col, bool saveAsDefault)
@@ -258,5 +177,6 @@ bool kpToolWidgetFillStyle::setSelected (int row, int col, bool saveAsDefault)
     return ret;
 }
 
+//---------------------------------------------------------------------
 
 #include <kpToolWidgetFillStyle.moc>

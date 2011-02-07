@@ -35,6 +35,7 @@
 
 #include <kdebug.h>
 
+//---------------------------------------------------------------------
 
 kpColor::kpColor ()
     : m_rgbaIsValid (false),
@@ -44,6 +45,8 @@ kpColor::kpColor ()
     kDebug () << "kpColor::<ctor>()";
 #endif
 }
+
+//---------------------------------------------------------------------
 
 kpColor::kpColor (int red, int green, int blue, bool isTransparent)
     : m_colorCacheIsValid (false)
@@ -69,29 +72,19 @@ kpColor::kpColor (int red, int green, int blue, bool isTransparent)
     m_rgbaIsValid = true;
 }
 
+//---------------------------------------------------------------------
+
 kpColor::kpColor (const QRgb &rgba)
     : m_colorCacheIsValid (false)
 {
 #if DEBUG_KP_COLOR
     kDebug () << "kpColor::<ctor>(rgba=" << (int *) rgba << ")";
 #endif
-    if (qAlpha (rgba) > 0 && qAlpha (rgba) < 255)
-    {
-        kError () << "kpColor::<ctor>(QRgb) passed translucent alpha "
-                   << qAlpha (rgba)
-                   << " - trying to recover"
-                   << endl;
-
-        // Forget the alpha channel - make it opaque
-        m_rgba = qRgb (qRed (m_rgba), qGreen (m_rgba), qBlue (m_rgba));
-        m_rgbaIsValid = true;
-    }
-    else
-    {
-        m_rgba = rgba;
-        m_rgbaIsValid = true;
-    }
+    m_rgba = rgba;
+    m_rgbaIsValid = true;
 }
+
+//---------------------------------------------------------------------
 
 kpColor::kpColor (const kpColor &rhs)
     :  m_rgbaIsValid (rhs.m_rgbaIsValid),
@@ -104,6 +97,8 @@ kpColor::kpColor (const kpColor &rhs)
 #endif
 }
 
+//---------------------------------------------------------------------
+
 // friend
 QDataStream &operator<< (QDataStream &stream, const kpColor &color)
 {
@@ -111,6 +106,8 @@ QDataStream &operator<< (QDataStream &stream, const kpColor &color)
 
     return stream;
 }
+
+//---------------------------------------------------------------------
 
 // friend
 QDataStream &operator>> (QDataStream &stream, kpColor &color)
@@ -124,6 +121,8 @@ QDataStream &operator>> (QDataStream &stream, kpColor &color)
 
     return stream;
 }
+
+//---------------------------------------------------------------------
 
 kpColor &kpColor::operator= (const kpColor &rhs)
 {
@@ -151,12 +150,16 @@ bool kpColor::operator!= (const kpColor &rhs) const
     return !(*this == rhs);
 }
 
+//---------------------------------------------------------------------
+
 
 template <class dtype>
 inline dtype square (dtype val)
 {
     return val * val;
 }
+
+//---------------------------------------------------------------------
 
 // public static
 int kpColor::processSimilarity (double colorSimilarity)
@@ -166,6 +169,8 @@ int kpColor::processSimilarity (double colorSimilarity)
 
     return int (square (colorSimilarity) * (square (255) * 3));
 }
+
+//---------------------------------------------------------------------
 
 bool kpColor::isSimilarTo (const kpColor &rhs, int processedSimilarity) const
 {
@@ -184,20 +189,8 @@ bool kpColor::isSimilarTo (const kpColor &rhs, int processedSimilarity) const
 
     // --- both are now valid ---
 
-
-    if (isTransparent () != rhs.isTransparent ())
-        return false;
-
-    // Are both of us transparent?
-    if (isTransparent ())
-        return true;
-
-    // --- both are now valid and opaque ---
-
-
     if (m_rgba == rhs.m_rgba)
         return true;
-
 
     if (processedSimilarity == kpColor::Exact)
         return false;
@@ -210,10 +203,7 @@ bool kpColor::isSimilarTo (const kpColor &rhs, int processedSimilarity) const
     }
 }
 
-kpColor::~kpColor ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // public
 bool kpColor::isValid () const
@@ -221,6 +211,7 @@ bool kpColor::isValid () const
     return m_rgbaIsValid;
 }
 
+//---------------------------------------------------------------------
 
 // public
 int kpColor::red () const
@@ -231,14 +222,10 @@ int kpColor::red () const
         return 0;
     }
 
-    if (isTransparent ())
-    {
-        kError () << "kpColor::red() called with transparent kpColor" << endl;
-        return 0;
-    }
-
     return qRed (m_rgba);
 }
+
+//---------------------------------------------------------------------
 
 // public
 int kpColor::green () const
@@ -249,14 +236,10 @@ int kpColor::green () const
         return 0;
     }
 
-    if (isTransparent ())
-    {
-        kError () << "kpColor::green() called with transparent kpColor" << endl;
-        return 0;
-    }
-
     return qGreen (m_rgba);
 }
+
+//---------------------------------------------------------------------
 
 // public
 int kpColor::blue () const
@@ -267,14 +250,10 @@ int kpColor::blue () const
         return 0;
     }
 
-    if (isTransparent ())
-    {
-        kError () << "kpColor::blue() called with transparent kpColor" << endl;
-        return 0;
-    }
-
     return qBlue (m_rgba);
 }
+
+//---------------------------------------------------------------------
 
 // public
 int kpColor::alpha () const
@@ -285,20 +264,10 @@ int kpColor::alpha () const
         return 0;
     }
 
-    const int alpha = qAlpha (m_rgba);
-
-    if (alpha > 0 && alpha < 255)
-    {
-        kError () << "kpColor::alpha() called with translucent kpColor alpha=" << alpha << endl;
-
-        // no translucency
-        return alpha ? 255 : 0;
-    }
-    else
-    {
-        return alpha;
-    }
+    return qAlpha (m_rgba);
 }
+
+//---------------------------------------------------------------------
 
 // public
 bool kpColor::isTransparent () const
@@ -306,12 +275,7 @@ bool kpColor::isTransparent () const
     return (alpha () == 0);
 }
 
-// public
-bool kpColor::isOpaque () const
-{
-    return (alpha () == 255);
-}
-
+//---------------------------------------------------------------------
 
 // public
 QRgb kpColor::toQRgb () const
@@ -325,6 +289,8 @@ QRgb kpColor::toQRgb () const
     return m_rgba;
 }
 
+//---------------------------------------------------------------------
+
 // public
 QColor kpColor::toQColor () const
 {
@@ -337,30 +303,10 @@ QColor kpColor::toQColor () const
     if (m_colorCacheIsValid)
         return m_colorCache;
 
-    if (qAlpha (m_rgba) < 255)
-    {
-        kError () << "kpColor::toQColor() called with not fully opaque kpColor alpha="
-                   << qAlpha (m_rgba)
-                   << endl;
-        return Qt::black;
-    }
-
-    m_colorCache = QColor (m_rgba);
-    if (!m_colorCache.isValid ())
-    {
-        kError () << "kpColor::toQColor () internal error - could not return valid QColor"
-                   << endl;
-        return Qt::black;
-    }
-
+    m_colorCache = QColor(qRed(m_rgba), qGreen(m_rgba), qBlue(m_rgba), qAlpha(m_rgba));
     m_colorCacheIsValid = true;
 
     return m_colorCache;
 }
 
-// public
-QColor kpColor::maskColor () const
-{
-    return isTransparent () ? Qt::color0 : Qt::color1;
-}
-
+//---------------------------------------------------------------------

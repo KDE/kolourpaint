@@ -39,7 +39,6 @@ Q_OBJECT
 
 public:
     kpToolEllipse (kpToolEnvironment *environ, QObject *parent);
-    virtual ~kpToolEllipse ();
 };
 
 

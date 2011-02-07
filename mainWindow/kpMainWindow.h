@@ -299,26 +299,10 @@ private slots:
     void slotActionDrawColorSimilarity ();
 
 public slots:
-    void slotToolSpraycan ();
-    void slotToolBrush ();
-    void slotToolColorEraser ();
-    void slotToolColorPicker ();
-    void slotToolCurve ();
-    void slotToolEllipse ();
-    void slotToolEllipticalSelection ();
-    void slotToolEraser ();
-    void slotToolFloodFill ();
-    void slotToolFreeFormSelection ();
-    void slotToolLine ();
-    void slotToolPen ();
-    void slotToolPolygon ();
-    void slotToolPolyline ();
-    void slotToolRectangle ();
-    void slotToolRectSelection ();
-    void slotToolRoundedRectangle ();
-    void slotToolText ();
-    void slotToolZoom ();
-
+    void slotToolRectSelection();
+    void slotToolEllipticalSelection();
+    void slotToolFreeFormSelection();
+    void slotToolText();
 
 //
 // File Menu
@@ -358,9 +342,8 @@ private:
     // make sense to bubble the Recent Files list.
     bool open (const KUrl &url, bool newDocSameNameIfNotExist = false);
 
-    KUrl::List askForOpenURLs (const QString &caption,
-                               const QString &startURL,
-                               bool allowMultipleURLs = true);
+    KUrl::List askForOpenURLs(const QString &caption,
+                              bool allowMultipleURLs = true);
 
 private slots:
     void slotOpen ();
@@ -424,7 +407,6 @@ private slots:
 //
 
 private:
-    kpPixmapFX::WarnAboutLossInfo pasteWarnAboutLossInfo ();
     void setupEditMenuActions ();
     void enableEditMenuDocumentActions (bool enable = true);
 
@@ -595,6 +577,7 @@ public slots:
 private slots:
     void slotAutoCrop ();
     void slotFlip ();
+    void slotMirror ();
 
     void slotRotate ();
     void slotRotate270 ();
@@ -688,13 +671,14 @@ private:
     void addPermanentStatusBarItem (int id, int maxTextLen);
     void createStatusBar ();
 
+    void setStatusBarDocDepth (int depth = 0);
+
 private slots:
     void setStatusBarMessage (const QString &message = QString());
     void setStatusBarShapePoints (const QPoint &startPoint = KP_INVALID_POINT,
                                   const QPoint &endPoint = KP_INVALID_POINT);
     void setStatusBarShapeSize (const QSize &size = KP_INVALID_SIZE);
     void setStatusBarDocSize (const QSize &size = KP_INVALID_SIZE);
-    void setStatusBarDocDepth (int depth = 0);
     void setStatusBarZoom (int zoom = 0);
 
     void recalculateStatusBarMessage ();

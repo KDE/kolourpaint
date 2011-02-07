@@ -32,16 +32,11 @@
 
 class QColor;
 class QImage;
-class QPixmap;
 
 
 class kpEffectFlatten
 {
 public:
-    static void applyEffect (QPixmap *destPixmapPtr,
-        const QColor &color1, const QColor &color2);
-    static QPixmap applyEffect (const QPixmap &pm,
-        const QColor &color1, const QColor &color2);
     static void applyEffect (QImage *destImagePtr,
         const QColor &color1, const QColor &color2);
     static QImage applyEffect (const QImage &img,

@@ -40,7 +40,7 @@
 #include <qfile.h>
 #include <qimage.h>
 #include <qlist.h>
-#include <qpixmap.h>
+#include <QImage>
 #include <qpainter.h>
 #include <qrect.h>
 #include <qsize.h>
@@ -101,9 +101,10 @@ bool kpDocument::save (bool overwritePrompt, bool lossyPrompt)
                    lossyPrompt);
 }
 
+//---------------------------------------------------------------------
 
 // public static
-bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
+bool kpDocument::lossyPromptContinue (const QImage &pixmap,
                                       const kpDocumentSaveOptions &saveOptions,
                                       QWidget *parent)
 {
@@ -161,8 +162,10 @@ bool kpDocument::lossyPromptContinue (const QPixmap &pixmap,
     return true;
 }
 
+//---------------------------------------------------------------------
+
 // public static
-bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
+bool kpDocument::savePixmapToDevice (const QImage &image,
                                      QIODevice *device,
                                      const kpDocumentSaveOptions &saveOptions,
                                      const kpDocumentMetaInfo &metaInfo,
@@ -189,7 +192,7 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
                << " type=" << type << endl;
 #endif
 
-    if (lossyPrompt && !lossyPromptContinue (pixmap, saveOptions, parent))
+    if (lossyPrompt && !lossyPromptContinue (image, saveOptions, parent))
     {
         if (userCancelled)
             *userCancelled = true;
@@ -199,18 +202,6 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     #endif
         return false;
     }
-
-
-    // TODO: This does not work under Qt4 (we get black, instead of white,
-    //       which is still OK, just not intended).
-    //       See kpPixmapFX::pixmapWithDefinedTransparentPixels() API Doc.
-    QPixmap pixmapToSave =
-        kpPixmapFX::pixmapWithDefinedTransparentPixels (pixmap,
-            Qt::white);  // CONFIG
-    QImage imageToSave = kpPixmapFX::convertToQImage (pixmapToSave);
-#if DEBUG_KP_DOCUMENT
-    kDebug () << "image format=" << imageToSave.format ();
-#endif
 
 
     // TODO: fix dup with kpDocumentSaveOptions::isLossyForSaving()
@@ -228,9 +219,11 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
 
 #if DEBUG_KP_DOCUMENT
     kDebug () << "\tuseSaveOptionsColorDepth=" << useSaveOptionsColorDepth
-              << "current image depth=" << imageToSave.depth ()
+              << "current image depth=" << image.depth ()
               << "save options depth=" << saveOptions.colorDepth ();
 #endif
+    QImage imageToSave(image);
+
     if (useSaveOptionsColorDepth &&
         imageToSave.depth () != saveOptions.colorDepth ())
     {
@@ -292,12 +285,15 @@ bool kpDocument::savePixmapToDevice (const QPixmap &pixmap,
     return true;
 }
 
+//---------------------------------------------------------------------
 
 static void CouldNotCreateTemporaryFileDialog (QWidget *parent)
 {
     KMessageBox::error (parent,
                         i18n ("Could not save image - unable to create temporary file."));
 }
+
+//---------------------------------------------------------------------
 
 static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
 {
@@ -307,8 +303,10 @@ static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
                               kpUrlFormatter::PrettyFilename (url)));
 }
 
+//---------------------------------------------------------------------
+
 // public static
-bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
+bool kpDocument::savePixmapToFile (const QImage &pixmap,
                                    const KUrl &url,
                                    const kpDocumentSaveOptions &saveOptions,
                                    const kpDocumentMetaInfo &metaInfo,
@@ -479,6 +477,8 @@ bool kpDocument::savePixmapToFile (const QPixmap &pixmap,
     return true;
 }
 
+//---------------------------------------------------------------------
+
 bool kpDocument::saveAs (const KUrl &url,
                          const kpDocumentSaveOptions &saveOptions,
                          bool overwritePrompt,
@@ -510,3 +510,5 @@ bool kpDocument::saveAs (const KUrl &url,
         return false;
     }
 }
+
+//---------------------------------------------------------------------

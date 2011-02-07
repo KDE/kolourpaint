@@ -56,6 +56,8 @@
 #include <kpViewManager.h>
 
 
+//---------------------------------------------------------------------
+
 struct kpToolRectangularBasePrivate
 {
     kpToolRectangularBase::DrawShapeFunc drawShapeFunc;
@@ -66,6 +68,7 @@ struct kpToolRectangularBasePrivate
     QRect toolRectangleRect;
 };
 
+//---------------------------------------------------------------------
 
 kpToolRectangularBase::kpToolRectangularBase (
         const QString &text,
@@ -83,11 +86,14 @@ kpToolRectangularBase::kpToolRectangularBase (
     d->toolWidgetLineWidth = 0, d->toolWidgetFillStyle = 0;
 }
 
+//---------------------------------------------------------------------
 
 kpToolRectangularBase::~kpToolRectangularBase ()
 {
     delete d;
 }
+
+//---------------------------------------------------------------------
 
 
 // private slot virtual
@@ -97,6 +103,8 @@ void kpToolRectangularBase::slotLineWidthChanged ()
         updateShape ();
 }
 
+//---------------------------------------------------------------------
+
 // private slot virtual
 void kpToolRectangularBase::slotFillStyleChanged ()
 {
@@ -104,12 +112,16 @@ void kpToolRectangularBase::slotFillStyleChanged ()
         updateShape ();
 }
 
+//---------------------------------------------------------------------
+
 
 // private
 QString kpToolRectangularBase::haventBegunDrawUserMessage () const
 {
     return i18n ("Drag to draw.");
 }
+
+//---------------------------------------------------------------------
 
 // virtual
 void kpToolRectangularBase::begin ()
@@ -144,6 +156,8 @@ void kpToolRectangularBase::begin ()
     setUserMessage (haventBegunDrawUserMessage ());
 }
 
+//---------------------------------------------------------------------
+
 // virtual
 void kpToolRectangularBase::end ()
 {
@@ -171,6 +185,8 @@ void kpToolRectangularBase::end ()
 
     viewManager ()->unsetCursor ();
 }
+
+//---------------------------------------------------------------------
 
 void kpToolRectangularBase::applyModifiers ()
 {
@@ -236,10 +252,14 @@ void kpToolRectangularBase::applyModifiers ()
     d->toolRectangleRect = rect;
 }
 
+//---------------------------------------------------------------------
+
 void kpToolRectangularBase::beginDraw ()
 {
     setUserMessage (cancelUserMessage ());
 }
+
+//---------------------------------------------------------------------
 
 
 // private
@@ -247,6 +267,8 @@ kpColor kpToolRectangularBase::drawingForegroundColor () const
 {
     return color (mouseButton ());
 }
+
+//---------------------------------------------------------------------
 
 // private
 kpColor kpToolRectangularBase::drawingBackgroundColor () const
@@ -257,6 +279,8 @@ kpColor kpToolRectangularBase::drawingBackgroundColor () const
     return d->toolWidgetFillStyle->drawingBackgroundColor (
         foregroundColor, backgroundColor);
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpToolRectangularBase::updateShape ()
@@ -275,12 +299,11 @@ void kpToolRectangularBase::updateShape ()
                                 image);
 
     viewManager ()->setFastUpdates ();
-    {
-        viewManager ()->setTempImage (newTempImage);
-    }
+    viewManager ()->setTempImage (newTempImage);
     viewManager ()->restoreFastUpdates ();
 }
 
+//---------------------------------------------------------------------
 
 void kpToolRectangularBase::draw (const QPoint &, const QPoint &, const QRect &)
 {
@@ -325,6 +348,8 @@ void kpToolRectangularBase::draw (const QPoint &, const QPoint &, const QRect &)
     }
 }
 
+//---------------------------------------------------------------------
+
 void kpToolRectangularBase::cancelShape ()
 {
     viewManager ()->invalidateTempImage ();
@@ -332,10 +357,14 @@ void kpToolRectangularBase::cancelShape ()
     setUserMessage (i18n ("Let go of all the mouse buttons."));
 }
 
+//---------------------------------------------------------------------
+
 void kpToolRectangularBase::releasedAllButtons ()
 {
     setUserMessage (haventBegunDrawUserMessage ());
 }
+
+//---------------------------------------------------------------------
 
 void kpToolRectangularBase::endDraw (const QPoint &, const QRect &)
 {
@@ -359,6 +388,8 @@ void kpToolRectangularBase::endDraw (const QPoint &, const QRect &)
 
     setUserMessage (haventBegunDrawUserMessage ());
 }
+
+//---------------------------------------------------------------------
 
 
 #include <kpToolRectangularBase.moc>

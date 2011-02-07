@@ -42,11 +42,14 @@
 #include <kpToolEnvironment.h>
 #include <kpToolFloodFillCommand.h>
 
+//---------------------------------------------------------------------
 
 struct kpToolFloodFillPrivate
 {
     kpToolFloodFillCommand *currentCommand;
 };
+
+//---------------------------------------------------------------------
 
 kpToolFloodFill::kpToolFloodFill (kpToolEnvironment *environ, QObject *parent)
     : kpTool (i18n ("Flood Fill"), i18n ("Fills regions in the image"),
@@ -57,11 +60,14 @@ kpToolFloodFill::kpToolFloodFill (kpToolEnvironment *environ, QObject *parent)
     d->currentCommand = 0;
 }
 
+//---------------------------------------------------------------------
+
 kpToolFloodFill::~kpToolFloodFill ()
 {
     delete d;
 }
 
+//---------------------------------------------------------------------
 
 // private
 QString kpToolFloodFill::haventBegunDrawUserMessage () const
@@ -69,12 +75,15 @@ QString kpToolFloodFill::haventBegunDrawUserMessage () const
     return i18n ("Click to fill a region.");
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpTool]
 void kpToolFloodFill::begin ()
 {
     setUserMessage (haventBegunDrawUserMessage ());
 }
+
+//---------------------------------------------------------------------
 
 // public virtual [base kpTool]
 void kpToolFloodFill::beginDraw ()
@@ -114,11 +123,15 @@ void kpToolFloodFill::beginDraw ()
     setUserMessage (cancelUserMessage ());
 }
 
+//---------------------------------------------------------------------
+
 // public virtual [base kpTool]
 void kpToolFloodFill::draw (const QPoint &thisPoint, const QPoint &, const QRect &)
 {
     setUserShapePoints (thisPoint);
 }
+
+//---------------------------------------------------------------------
 
 // public virtual [base kpTool]
 void kpToolFloodFill::cancelShape ()
@@ -131,11 +144,15 @@ void kpToolFloodFill::cancelShape ()
     setUserMessage (i18n ("Let go of all the mouse buttons."));
 }
 
+//---------------------------------------------------------------------
+
 // public virtual [base kpTool]
 void kpToolFloodFill::releasedAllButtons ()
 {
     setUserMessage (haventBegunDrawUserMessage ());
 }
+
+//---------------------------------------------------------------------
 
 // public virtual [base kpTool]
 void kpToolFloodFill::endDraw (const QPoint &, const QRect &)
@@ -148,5 +165,6 @@ void kpToolFloodFill::endDraw (const QPoint &, const QRect &)
     setUserMessage (haventBegunDrawUserMessage ());
 }
 
+//---------------------------------------------------------------------
 
 #include <kpToolFloodFill.moc>

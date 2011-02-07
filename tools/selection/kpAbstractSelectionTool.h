@@ -117,6 +117,7 @@ public:
         int key,
         kpToolSelectionEnvironment *environ, QObject *parent,
         const QString &name);
+
     virtual ~kpAbstractSelectionTool ();
 
 

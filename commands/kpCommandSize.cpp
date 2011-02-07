@@ -32,7 +32,6 @@
 #include <kpCommandSize.h>
 
 #include <QImage>
-#include <QPixmap>
 #include <QPolygon>
 #include <QString>
 
@@ -40,15 +39,15 @@
 
 
 // public static
-kpCommandSize::SizeType kpCommandSize::PixmapSize (const QPixmap &pixmap)
+kpCommandSize::SizeType kpCommandSize::PixmapSize (const QImage &image)
 {
-    return kpCommandSize::PixmapSize (pixmap.width (), pixmap.height (), pixmap.depth ());
+    return kpCommandSize::PixmapSize (image.width (), image.height (), image.depth ());
 }
 
 // public static
-kpCommandSize::SizeType kpCommandSize::PixmapSize (const QPixmap *pixmap)
+kpCommandSize::SizeType kpCommandSize::PixmapSize (const QImage *image)
 {
-    return (pixmap ? kpCommandSize::PixmapSize (*pixmap) : 0);
+    return (image ? kpCommandSize::PixmapSize (*image) : 0);
 }
 
 // public static
@@ -107,14 +106,12 @@ kpCommandSize::SizeType kpCommandSize::QImageSize (int width, int height, int de
 // public static
 kpCommandSize::SizeType kpCommandSize::ImageSize (const kpImage &image)
 {
-    // (currently kpImage is QPixmap - this will change with a new image library)
     return kpCommandSize::PixmapSize (image);
 }
 
 // public static
 kpCommandSize::SizeType kpCommandSize::ImageSize (const kpImage *image)
 {
-    // (currently kpImage is QPixmap - this will change with a new image library)
     return kpCommandSize::PixmapSize (image);
 }
 

@@ -33,38 +33,22 @@
 #define DEBUG_KP_TOOL 0
 
 
-// TODO: reduce number of includes
 #include <kpTool.h>
 #include <kpToolPrivate.h>
 
-#include <limits.h>
-
-#include <qapplication.h>
-#include <qclipboard.h>
 #include <qcursor.h>
-#include <qevent.h>
-#include <qlayout.h>
-#include <qpainter.h>
 #include <qpixmap.h>
 
-#include <kactioncollection.h>
-#include <kapplication.h>
 #include <kdebug.h>
-#include <kiconloader.h>
-#include <klocale.h>
 #include <kmessagebox.h>
 
-#include <kpColor.h>
-#include <kpColorToolBar.h>
 #include <kpCommandSize.h>
 #include <kpDefs.h>
 #include <kpPainter.h>
 #include <kpPixmapFX.h>
-#include <kpToolAction.h>
-#include <kpToolToolBar.h>
 #include <kpView.h>
-#include <kpViewManager.h>
 
+//---------------------------------------------------------------------
 
 // static
 QRect kpTool::neededRect (const QRect &rect, int lineWidth)
@@ -80,18 +64,23 @@ QRect kpTool::neededRect (const QRect &rect, int lineWidth)
                   QPoint (x2 + lineWidth - 1, y2 + lineWidth - 1));
 }
 
+//---------------------------------------------------------------------
+
 // static
-QPixmap kpTool::neededPixmap (const QPixmap &pixmap, const QRect &boundingRect)
+QImage kpTool::neededPixmap (const QImage &image, const QRect &boundingRect)
 {
-    return kpPixmapFX::getPixmapAt (pixmap, boundingRect);
+    return kpPixmapFX::getPixmapAt (image, boundingRect);
 }
 
+//---------------------------------------------------------------------
 
 // public
 bool kpTool::hasCurrentPoint () const
 {
     return (viewUnderStartPoint () || viewUnderCursor ());
 }
+
+//---------------------------------------------------------------------
 
 // public
 QPoint kpTool::calculateCurrentPoint (bool zoomToDoc) const
@@ -137,6 +126,7 @@ QPoint kpTool::calculateCurrentPoint (bool zoomToDoc) const
     return docPos;
 }
 
+//---------------------------------------------------------------------
 
 // public slot
 void kpTool::somethingBelowTheCursorChanged ()
@@ -144,6 +134,8 @@ void kpTool::somethingBelowTheCursorChanged ()
     somethingBelowTheCursorChanged (calculateCurrentPoint (),
         calculateCurrentPoint (false/*view point*/));
 }
+
+//---------------------------------------------------------------------
 
 // private
 // TODO: don't dup code from mouseMoveEvent()
@@ -181,6 +173,7 @@ void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_,
     }
 }
 
+//---------------------------------------------------------------------
 
 bool kpTool::currentPointNextToLast () const
 {
@@ -193,6 +186,8 @@ bool kpTool::currentPointNextToLast () const
     return (dx <= 1 && dy <= 1);
 }
 
+//---------------------------------------------------------------------
+
 bool kpTool::currentPointCardinallyNextToLast () const
 {
     if (d->lastPoint == QPoint (-1, -1))
@@ -202,6 +197,7 @@ bool kpTool::currentPointCardinallyNextToLast () const
             kpPainter::pointsAreCardinallyAdjacent (d->currentPoint, d->lastPoint));
 }
 
+//---------------------------------------------------------------------
 
 // static
 // TODO: we don't handle Qt::XButton1 and Qt::XButton2 at the moment.
@@ -224,7 +220,7 @@ int kpTool::mouseButton (Qt::MouseButtons mouseButtons)
         return -1;
 }
 
-
+//---------------------------------------------------------------------
 
 // public static
 int kpTool::calculateLength (int start, int end)
@@ -239,6 +235,7 @@ int kpTool::calculateLength (int start, int end)
     }
 }
 
+//---------------------------------------------------------------------
 
 // public static
 bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
@@ -290,3 +287,5 @@ bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
         return true;
     }
 }
+
+//---------------------------------------------------------------------

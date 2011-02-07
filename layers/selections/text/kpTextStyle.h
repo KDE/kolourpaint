@@ -81,9 +81,7 @@ public:
     kpColor foregroundColor () const;
     void setForegroundColor (const kpColor &fcolor);
 
-    // Note: This is the _input_ backgroundColor without applying any
-    //       isBackground(Opaque|Transparent)() transformation.
-    //       See effectiveBackgroundColor().
+    // Note: This is the _input_ backgroundColor
     kpColor backgroundColor () const;
     void setBackgroundColor (const kpColor &bcolor);
 
@@ -93,10 +91,6 @@ public:
     bool isBackgroundTransparent () const;
     void setBackgroundTransparent (bool yes = true);
 
-
-    // If isBackgroundOpaque(), returns backgroundColor().
-    // Else, returns kpColor::Transparent.
-    kpColor effectiveBackgroundColor () const;
 
     QFont font () const;
     QFontMetrics fontMetrics () const;

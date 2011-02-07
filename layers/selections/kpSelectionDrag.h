@@ -32,9 +32,6 @@
 
 #include <QMimeData>
 
-#include <kpPixmapFX.h>
-
-
 class kpAbstractImageSelection;
 
 
@@ -45,22 +42,12 @@ Q_OBJECT
 public:
     static const char * const SelectionMimeType;
 
-    kpSelectionDrag ();
     // ASSUMPTION: <sel> has content (is not just a border).
     kpSelectionDrag (const kpAbstractImageSelection &sel);
-    virtual ~kpSelectionDrag ();
-
-    // ASSUMPTION: <sel> has content (is not just a border).
-    void setSelection (const kpAbstractImageSelection &sel);
 
 public:
     static bool canDecode (const QMimeData *e);
-    static kpAbstractImageSelection *decode (const QMimeData *e,
-        const kpPixmapFX::WarnAboutLossInfo &wali =
-            kpPixmapFX::WarnAboutLossInfo ());
-
-private:
-    struct kpSelectionDragPrivate * const d;
+    static kpAbstractImageSelection *decode (const QMimeData *e);
 };
 
 

@@ -36,6 +36,8 @@
 #include <kpPixmapFX.h>
 #include <kpToolFlowCommand.h>
 
+#include <bugfix.h>
+//---------------------------------------------------------------------
 
 kpToolFlowPixmapBase::kpToolFlowPixmapBase (const QString &text, const QString &description,
             int key,
@@ -44,33 +46,11 @@ kpToolFlowPixmapBase::kpToolFlowPixmapBase (const QString &text, const QString &
 {
 }
 
-kpToolFlowPixmapBase::~kpToolFlowPixmapBase ()
-{
-}
-
-
-// Wants porting to Qt4.  But may be a bogus optimization anyway.
-#if 0
-QRect kpToolFlowPixmapBase::drawPoint (const QPoint & /*point*/)
-{
-    if (color (mouseButton ()).isOpaque ())
-        document ()->paintPixmapAt (m_brushPixmap [mouseButton ()], hotPoint ());
-    else
-    {
-        kpPixmapFX::paintMaskTransparentWithBrush (document ()->image (),
-            hotPoint (),
-            kpPixmapFX::getNonNullMask (m_brushPixmap [mouseButton ()]));
-        document ()->slotContentsChanged (hotRect ());
-    }
-
-    return (hotRect ());
-}
-#endif
-
+//---------------------------------------------------------------------
 
 QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
-    QRect docRect = QRect (thisPoint, lastPoint).normalized();
+    QRect docRect = bugfix_QRect (thisPoint, lastPoint).normalized();
     docRect = neededRect (docRect, qMax (brushWidth (), brushHeight ()));
     kpImage image = document ()->getImageAt (docRect);
 
@@ -103,5 +83,6 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
     return docRect;
 }
 
+//---------------------------------------------------------------------
 
 #include <kpToolFlowPixmapBase.moc>

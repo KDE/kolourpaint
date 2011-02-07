@@ -68,7 +68,7 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const QStri
         painter.drawPixmap (0, 0, UserIcon (iconName));
         painter.end ();
 
-        QImage image = kpPixmapFX::convertToQImage (pixmap);
+        QImage image = pixmap.toImage();
 
         QBitmap mask (pixmap.width (), pixmap.height ());
         mask.fill (Qt::color0);

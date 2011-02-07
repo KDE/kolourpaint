@@ -73,6 +73,7 @@ int kpAbstractSelectionTool::onSelectionResizeHandle () const
     return v->mouseOnSelectionResizeHandle (currentViewPoint ());
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpAbstractSelectionTool::initResizeScale ()
@@ -110,6 +111,7 @@ void kpAbstractSelectionTool::endResizeScale ()
     // d->resizeScaleType
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpAbstractSelectionTool::setCursorResizeScale ()
@@ -146,6 +148,7 @@ void kpAbstractSelectionTool::setCursorResizeScale ()
     viewManager ()->setCursor (shape);
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual
 void kpAbstractSelectionTool::setSelectionBorderForBeginDrawResizeScale ()
@@ -158,6 +161,8 @@ void kpAbstractSelectionTool::setSelectionBorderForBeginDrawResizeScale ()
     viewManager ()->restoreQueueUpdates ();
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpAbstractSelectionTool::beginDrawResizeScale ()
 {
@@ -167,6 +172,8 @@ void kpAbstractSelectionTool::beginDrawResizeScale ()
 
     setUserMessage (cancelUserMessage ());
 }
+
+//---------------------------------------------------------------------
 
 
 // private
@@ -201,6 +208,8 @@ void kpAbstractSelectionTool::drawResizeScaleTryKeepAspect (
         *newWidthOut = qMax (originalSelection.minimumWidth (), *newWidthOut);
     }
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpAbstractSelectionTool::drawResizeScaleCalculateNewSelectionPosSize (
@@ -290,6 +299,8 @@ void kpAbstractSelectionTool::drawResizeScaleCalculateNewSelectionPosSize (
 #endif
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpAbstractSelectionTool::drawResizeScale (
         const QPoint &thisPoint,
@@ -358,6 +369,8 @@ void kpAbstractSelectionTool::drawResizeScale (
     d->dragAccepted = true;
 }
 
+//---------------------------------------------------------------------
+
 
 // private
 void kpAbstractSelectionTool::cancelResizeScale ()
@@ -379,6 +392,8 @@ void kpAbstractSelectionTool::cancelResizeScale ()
     d->currentResizeScaleCommand = 0;
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpAbstractSelectionTool::endDrawResizeScale ()
 {
@@ -392,6 +407,7 @@ void kpAbstractSelectionTool::endDrawResizeScale ()
     d->currentResizeScaleCommand = 0;
 }
 
+//---------------------------------------------------------------------
 
 // private
 QVariant kpAbstractSelectionTool::operationResizeScale (Operation op,
@@ -434,3 +450,5 @@ QVariant kpAbstractSelectionTool::operationResizeScale (Operation op,
 
     return QVariant ();
 }
+
+//---------------------------------------------------------------------

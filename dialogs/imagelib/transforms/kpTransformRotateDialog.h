@@ -30,7 +30,7 @@
 #define kpTransformRotateDialog_H
 
 
-#include <qpixmap.h>
+#include <QImage>
 #include <qpoint.h>
 
 #include <kpColor.h>
@@ -67,8 +67,8 @@ public:
 
 private:
     virtual QSize newDimensions () const;
-    virtual QPixmap transformPixmap (const QPixmap &pixmap,
-                                     int targetWidth, int targetHeight) const;
+    virtual QImage transformPixmap (const QImage &pixmap,
+                                    int targetWidth, int targetHeight) const;
 
 private slots:
     void slotAngleCustomRadioButtonToggled (bool isChecked);

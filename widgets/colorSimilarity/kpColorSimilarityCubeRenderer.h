@@ -30,7 +30,7 @@
 #define kpColorSimilarityCubeRenderer_H
 
 
-class QPixmap;
+class QImage;
 class QWidget;
 
 
@@ -48,9 +48,9 @@ public:
         int x, int y, int size,
         double colorSimilarity,
         int highlight = 0);
-    // ASSUMPTION: <pm> must not have an alpha channel
-    //             (kpPixmapfx.h:KP_PFX_CHECK_NO_ALPHA_CHANNEL).
-    static void Paint (QPixmap *pm,
+
+
+    static void Paint (QImage *pm,
         int x, int y, int size,
         double colorSimilarity,
         int highlight = 0);

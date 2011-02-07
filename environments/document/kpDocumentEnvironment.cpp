@@ -88,6 +88,7 @@ void kpDocumentEnvironment::restoreQueueViewUpdates () const
     ::ViewManager (mainWindow ())->restoreQueueUpdates ();
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &selection,
@@ -165,6 +166,8 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
     kDebug () << "kpDocumentEnvironment::switchToCompatibleTool(" << &selection << ") finished";
 #endif
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpDocumentEnvironment::assertMatchingUIState (const kpAbstractSelection &selection) const

@@ -101,9 +101,6 @@ protected:
     virtual void mousePressEvent (QMouseEvent *e);
     virtual void paintEvent (QPaintEvent *e);
 
-    void setInvertSelectedPixmap (bool yes = true) { m_invertSelectedPixmap = yes; }
-    bool m_invertSelectedPixmap;
-
     // coulbe be a QFrame or a ComboBox
     QWidget *m_baseWidget;
 

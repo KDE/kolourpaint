@@ -29,35 +29,21 @@
 // Tool initialisation and basic accessors.
 //
 
-
 #define DEBUG_KP_TOOL 0
 
-
-// TODO: reduce number of includes
 #include <kpTool.h>
 #include <kpToolPrivate.h>
 
 #include <limits.h>
 
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qcursor.h>
-#include <qevent.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kiconloader.h>
 #include <klocale.h>
-#include <kmessagebox.h>
 
 #include <kpColor.h>
 #include <kpColorToolBar.h>
 #include <kpDefs.h>
-#include <kpPixmapFX.h>
 #include <kpToolAction.h>
 #include <kpToolEnvironment.h>
 #include <kpToolToolBar.h>
@@ -65,6 +51,7 @@
 #include <kpViewManager.h>
 #undef environ  // macro on win32
 
+//---------------------------------------------------------------------
 
 kpTool::kpTool (const QString &text, const QString &description,
         int key,
@@ -90,6 +77,8 @@ kpTool::kpTool (const QString &text, const QString &description,
     initAction ();
 }
 
+//---------------------------------------------------------------------
+
 kpTool::~kpTool ()
 {
     // before destructing, stop using the tool
@@ -101,6 +90,7 @@ kpTool::~kpTool ()
     delete d;
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpTool::initAction ()
@@ -221,19 +211,7 @@ void kpTool::setDescription (const QString &description)
     d->action->setWhatsThis (d->description);
 }
 
-
-// public
-QIcon kpTool::iconSet (int forceSize) const
-{
-#if DEBUG_KP_TOOL && 0
-    kDebug () << "kpTool(" << objectName () << ")::iconSet(forceSize=" << forceSize << ") iconName=" << iconName ();
-#endif
-    // (robust in case BarIcon() default arg changes)
-    if (forceSize > 0)
-        return BarIconSet (iconName (), forceSize);
-    else
-        return KIcon (iconName ());
-}
+//---------------------------------------------------------------------
 
 // public virtual
 QString kpTool::iconName () const
@@ -241,13 +219,15 @@ QString kpTool::iconName () const
     return objectName ();
 }
 
+//---------------------------------------------------------------------
+
 // public
 kpToolAction *kpTool::action () const
 {
     return d->action;
 }
 
-
+//---------------------------------------------------------------------
 
 // REFACTOR: need to add access specifier comments (like "public virtual [base AmOverridingThisClass'Method]") not just in kpTool but all over KolourPaint source.
 

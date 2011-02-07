@@ -39,7 +39,6 @@ public:
     kpEffectHSVCommand (double hue, double saturation, double value,
             bool actOnSelection,
             kpCommandEnvironment *environ);
-    virtual ~kpEffectHSVCommand ();
 
 protected:
     virtual kpImage applyEffect (const kpImage &image);

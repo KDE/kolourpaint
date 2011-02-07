@@ -111,11 +111,9 @@ int kpTextSelection::serialID () const
 }
 
 // public virtual [base kpAbstractSelection]
-bool kpTextSelection::readFromStream (QDataStream &stream,
-        const kpPixmapFX::WarnAboutLossInfo &wali)
+bool kpTextSelection::readFromStream (QDataStream &stream)
 {
     (void) stream;
-    (void) wali;
 
     Q_ASSERT (!"Marshalling not supported");
     return false;

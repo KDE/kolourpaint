@@ -31,6 +31,7 @@
 #include <KLocale>
 #include <KUrl>
 
+//---------------------------------------------------------------------
 
 // public static
 QString kpUrlFormatter::PrettyUrl (const KUrl &url)
@@ -40,6 +41,8 @@ QString kpUrlFormatter::PrettyUrl (const KUrl &url)
     else
         return url.pathOrUrl ();
 }
+
+//---------------------------------------------------------------------
 
 // public static
 QString kpUrlFormatter::PrettyFilename (const KUrl &url)
@@ -51,3 +54,5 @@ QString kpUrlFormatter::PrettyFilename (const KUrl &url)
     else
         return url.fileName ();
 }
+
+//---------------------------------------------------------------------

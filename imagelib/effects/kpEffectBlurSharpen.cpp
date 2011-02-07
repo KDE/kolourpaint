@@ -46,6 +46,8 @@
 #endif
 
 
+//---------------------------------------------------------------------
+
 //
 // For info on "radius" and "sigma", see http://redskiesatnight.com/Articles/IMsharpen/
 //
@@ -94,6 +96,8 @@ static QImage BlurQImage (const QImage qimage_, int strength)
 
     return qimage;
 }
+
+//---------------------------------------------------------------------
 
 static QImage SharpenQImage (const QImage &qimage_, int strength)
 {
@@ -174,6 +178,7 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
     return qimage;
 }
 
+//---------------------------------------------------------------------
 
 // public static
 kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
@@ -188,35 +193,12 @@ kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
 
     Q_ASSERT (strength >= MinStrength && strength <= MaxStrength);
 
-
-    // Replace transparent pixels with white, the most "neutral" color.
-    // Else the blur effect assumes that those transparent pixels next to
-    // opaque pixels, are black, creating a black outline.
-    //
-    // Whether we should do this is arguable because we now create a white
-    // outline instead...
-    kpImage useImage = kpPixmapFX::pixmapWithDefinedTransparentPixels (
-        image,
-        Qt::white);
-    // See kpPixmapFX::pixmapWithDefinedTransparentPixels API Doc.
-    useImage.setMask (QBitmap ());
-
-
-    QImage qimage = kpPixmapFX::convertToQImage (useImage);
-
     if (type == Blur)
-        qimage = ::BlurQImage (qimage, strength);
+        return ::BlurQImage (image, strength);
     else if (type == Sharpen)
-        qimage = ::SharpenQImage (qimage, strength);
-
-    kpImage retImage = kpPixmapFX::convertToPixmap (qimage);
-
-
-    // Restore mask.
-    if (kpPixmapFX::hasMask (image))
-        retImage.setMask (image.mask ());
-
-
-    return retImage;
+        return ::SharpenQImage (image, strength);
+    else
+      return kpImage();
 }
 
+//---------------------------------------------------------------------

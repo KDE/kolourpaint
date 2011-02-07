@@ -92,8 +92,6 @@ protected:
     // "document()->imageSelection().transparency()".  The reason is that
     // transparency().transparentColor() might not be defined in Opaque
     // Mode.
-    //
-    // KDE3: Copy this comment into the KDE 3 branch.
     void changeImageSelectionTransparency (
         const QString &name,
         const kpImageSelectionTransparency &newTrans,

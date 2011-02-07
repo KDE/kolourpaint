@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -42,49 +41,23 @@
 #include <kpRectangularImageSelection.h>
 #include <kpSelectionFactory.h>
 
+//---------------------------------------------------------------------
 
 // public static
 const char * const kpSelectionDrag::SelectionMimeType =
     "application/x-kolourpaint-selection-400";
 
-
-struct kpSelectionDragPrivate
-{
-    kpSelectionDragPrivate ()
-    {
-    }
-};
-
-kpSelectionDrag::kpSelectionDrag ()
-    : QMimeData (),
-      d (new kpSelectionDragPrivate ())
-{
-}
+//---------------------------------------------------------------------
 
 kpSelectionDrag::kpSelectionDrag (const kpAbstractImageSelection &sel)
-    : QMimeData (),
-      d (new kpSelectionDragPrivate ())
-{
-    setSelection (sel);
-}
-
-kpSelectionDrag::~kpSelectionDrag ()
-{
-    delete d;
-}
-
-
-// public
-void kpSelectionDrag::setSelection (const kpAbstractImageSelection &sel)
 {
 #if DEBUG_KP_SELECTION_DRAG && 1
-    kDebug () << "kpSelectionDrag::setSelection() w=" << sel.width ()
+    kDebug () << "kpSelectionDrag() w=" << sel.width ()
                << " h=" << sel.height ()
                << endl;
 #endif
 
     Q_ASSERT (sel.hasContent ());
-
 
     // Store as selection.
     QByteArray ba;
@@ -94,10 +67,9 @@ void kpSelectionDrag::setSelection (const kpAbstractImageSelection &sel)
     }
     setData (kpSelectionDrag::SelectionMimeType, ba);
 
-
     // Store as image (so that QMimeData::hasImage()) works).
     // OPT: an awful waste of memory storing image in both selection and QImage
-    const QImage image = kpPixmapFX::convertToQImage (sel.baseImage ());
+    const QImage image = sel.baseImage ();
 #if DEBUG_KP_SELECTION_DRAG && 1
     kDebug () << "\timage: w=" << image.width ()
                << " h=" << image.height ()
@@ -113,6 +85,7 @@ void kpSelectionDrag::setSelection (const kpAbstractImageSelection &sel)
         setImageData (image);
 }
 
+//---------------------------------------------------------------------
 
 // public static
 bool kpSelectionDrag::canDecode (const QMimeData *e)
@@ -129,9 +102,10 @@ bool kpSelectionDrag::canDecode (const QMimeData *e)
             e->hasImage ());
 }
 
+//---------------------------------------------------------------------
+
 // public static
-kpAbstractImageSelection *kpSelectionDrag::decode (const QMimeData *e,
-        const kpPixmapFX::WarnAboutLossInfo &wali)
+kpAbstractImageSelection *kpSelectionDrag::decode (const QMimeData *e)
 {
 #if DEBUG_KP_SELECTION_DRAG
     kDebug () << "kpSelectionDrag::decode(kpAbstractSelection)";
@@ -146,19 +120,6 @@ kpAbstractImageSelection *kpSelectionDrag::decode (const QMimeData *e,
         QByteArray data = e->data (kpSelectionDrag::SelectionMimeType);
         QDataStream stream (&data, QIODevice::ReadOnly);
 
-        // Don't pass <wali> so that we suppress excessive warnings when copying
-        // and pasting selections.
-        //
-        // The marshalled selection must have come from another -- or the same --
-        // KolourPaint instance, running on the same display, with the same
-        // screen depth.  That other KolourPaint would have converted its
-        // selection QPixmap to QImage losslessly, and placed it in the
-        // clipboard.  Note that the original QPixmap could not have had an
-        // alpha channel as that's a KolourPaint invaraint.
-        //
-        // kpSelectionFactory::FromStream() will now convert the QImage back to
-        // a QPixmap _without_ dithering, so there should be no data loss
-        // anyway.
         return kpSelectionFactory::FromStream (stream);
     }
     else
@@ -175,8 +136,7 @@ kpAbstractImageSelection *kpSelectionDrag::decode (const QMimeData *e,
         #endif
 
             return new kpRectangularImageSelection (
-                QRect (0, 0, image.width (), image.height ()),
-                kpPixmapFX::convertToPixmapAsLosslessAsPossible (image, wali));
+                QRect (0, 0, image.width (), image.height ()), image);
         }
         else
         {
@@ -189,5 +149,6 @@ kpAbstractImageSelection *kpSelectionDrag::decode (const QMimeData *e,
     }
 }
 
+//---------------------------------------------------------------------
 
 #include <kpSelectionDrag.moc>

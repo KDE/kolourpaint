@@ -56,7 +56,7 @@ static void DrawImage (kpImage *destImage, const QPoint &topLeft, void *userData
 
     const int size = ::EraserSizes [pack->selected];
 
-    kpPainter::fillRect (kpImage::CastPixmapPtr (destImage),
+    kpPainter::fillRect (destImage,
         topLeft.x (), topLeft.y (), size, size,
         pack->color);
 }
@@ -82,12 +82,11 @@ static void DrawCursor (kpImage *destImage, const QPoint &topLeft, void *userDat
         kpColor::Black);
 }
 
+//---------------------------------------------------------------------
 
 kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const QString &name)
     : kpToolWidgetBase (parent, name)
 {
-    setInvertSelectedPixmap ();
-
     for (int i = 0; i < ::NumEraserSizes; i++)
     {
         if (i == 3 || i == 5)
@@ -95,36 +94,37 @@ kpToolWidgetEraserSize::kpToolWidgetEraserSize (QWidget *parent, const QString &
 
         const int s = ::EraserSizes [i];
 
-
-        QPixmap previewPixmap (s, s);
+        QImage previewPixmap (s, s, QImage::Format_ARGB32_Premultiplied);
         if (i < 3)
         {
             // HACK: kpToolWidgetBase's layout code sucks and gives uneven spacing
-            previewPixmap = QPixmap ((width () - 4) / 3, 9);
+            previewPixmap = QImage ((width () - 4) / 3, 9, QImage::Format_ARGB32_Premultiplied);
             Q_ASSERT (previewPixmap.width () >= s &&
                 previewPixmap.height () >= s);
         }
 
-        kpPainter::fillRect (kpImage::CastPixmapPtr (&previewPixmap),
-            0, 0, previewPixmap.width (), previewPixmap.height (),
-            kpColor::Transparent);
-            
+        previewPixmap.fill(0);
+
         DrawPackage pack = drawFunctionDataForSelected (kpColor::Black, i);
-        ::DrawImage (kpImage::CastPixmapPtr (&previewPixmap),
+        ::DrawImage (&previewPixmap,
             QPoint ((previewPixmap.width () - s) / 2,
                     (previewPixmap.height () - s) / 2),
             &pack);
 
 
-        addOption (previewPixmap, i18n ("%1x%2", s, s)/*tooltip*/);
+        addOption (QPixmap::fromImage(previewPixmap), i18n ("%1x%2", s, s)/*tooltip*/);
     }
 
     finishConstruction (1, 0);
 }
 
+//---------------------------------------------------------------------
+
 kpToolWidgetEraserSize::~kpToolWidgetEraserSize ()
 {
 }
+
+//---------------------------------------------------------------------
 
 
 // public
@@ -146,6 +146,8 @@ kpTempImage::UserFunctionType kpToolWidgetEraserSize::drawCursorFunction () cons
     return &::DrawCursor;
 }
 
+//---------------------------------------------------------------------
+
 
 // public static
 kpToolWidgetEraserSize::DrawPackage kpToolWidgetEraserSize::drawFunctionDataForSelected (
@@ -159,12 +161,16 @@ kpToolWidgetEraserSize::DrawPackage kpToolWidgetEraserSize::drawFunctionDataForS
     return pack;
 }
 
+//---------------------------------------------------------------------
+
 // public
 kpToolWidgetEraserSize::DrawPackage kpToolWidgetEraserSize::drawFunctionData (
         const kpColor &color) const
 {
     return drawFunctionDataForSelected (color, selected ());
 }
+
+//---------------------------------------------------------------------
 
     
 // protected slot virtual [base kpToolWidgetBase]
@@ -175,6 +181,8 @@ bool kpToolWidgetEraserSize::setSelected (int row, int col, bool saveAsDefault)
         emit eraserSizeChanged (eraserSize ());
     return ret;
 }
+
+//---------------------------------------------------------------------
 
 
 #include <kpToolWidgetEraserSize.moc>

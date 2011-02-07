@@ -301,7 +301,7 @@ void kpTransformPreviewDialog::updateShrunkenDocumentPixmap ()
                                                m_oldWidth,
                                                m_oldHeight);
 
-        kpImage pixmap;
+        kpImage image;
 
         if (m_actOnSelection)
         {
@@ -309,16 +309,16 @@ void kpTransformPreviewDialog::updateShrunkenDocumentPixmap ()
             if (!sel->hasContent ())
                 sel->setBaseImage (doc->getSelectedBaseImage ());
 
-            pixmap = sel->transparentImage ();
+            image = sel->transparentImage ();
             delete sel;
         }
         else
         {
-            pixmap = doc->image ();
+            image = doc->image ();
         }
 
         m_shrunkenDocumentPixmap = kpPixmapFX::scale (
-            pixmap,
+            image,
             scaleDimension (m_oldWidth,
                             keepsAspectScale,
                             1, m_previewPixmapLabel->width ()),
@@ -383,11 +383,11 @@ void kpTransformPreviewDialog::updatePreview ()
 
         // TODO: Some effects work directly on QImage; so could cache the
         //       QImage so that transformPixmap() is faster
-        QPixmap transformedShrunkenDocumentPixmap =
+        QImage transformedShrunkenDocumentPixmap =
             transformPixmap (m_shrunkenDocumentPixmap, targetWidth, targetHeight);
 
-        QPixmap previewPixmap (m_previewPixmapLabel->width (),
-                               m_previewPixmapLabel->height ());
+        QImage previewPixmap (m_previewPixmapLabel->width (),
+                              m_previewPixmapLabel->height (), QImage::Format_ARGB32_Premultiplied);
         kpPixmapFX::fill (&previewPixmap, kpColor::Transparent);
         kpPixmapFX::setPixmapAt (&previewPixmap,
                                  (previewPixmap.width () - transformedShrunkenDocumentPixmap.width ()) / 2,
@@ -415,7 +415,7 @@ void kpTransformPreviewDialog::updatePreview ()
                << endl;
 #endif
 
-        m_previewPixmapLabel->setPixmap (previewPixmap);
+        m_previewPixmapLabel->setPixmap (QPixmap::fromImage(previewPixmap));
 
         // immediate update esp. for expensive previews
         m_previewPixmapLabel->repaint ();

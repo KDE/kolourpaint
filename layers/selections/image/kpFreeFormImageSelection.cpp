@@ -133,10 +133,9 @@ int kpFreeFormImageSelection::serialID () const
 }
 
 // public virtual [base kpAbstractImageSelection]
-bool kpFreeFormImageSelection::readFromStream (QDataStream &stream,
-        const kpPixmapFX::WarnAboutLossInfo &wali)
+bool kpFreeFormImageSelection::readFromStream (QDataStream &stream)
 {
-    if (!kpAbstractImageSelection::readFromStream (stream, wali))
+    if (!kpAbstractImageSelection::readFromStream (stream))
         return false;
 
     stream >> d->orgPoints;
@@ -368,7 +367,7 @@ void kpFreeFormImageSelection::flip (bool horiz, bool vert)
 
 
 // public virtual [kpAbstractSelection]
-void kpFreeFormImageSelection::paintBorder (QPixmap *destPixmap, const QRect &docRect,
+void kpFreeFormImageSelection::paintBorder (QImage *destPixmap, const QRect &docRect,
         bool selectionFinished) const
 {
     if (selectionFinished)

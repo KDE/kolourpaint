@@ -25,63 +25,31 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-#define DEBUG_KP_PIXMAP_FX 0
-
-
 #include <kpPixmapFX.h>
 
-#include <math.h>
-
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qdatetime.h>
 #include <qimage.h>
-#include <qpainter.h>
-#include <qpainterpath.h>
-#include <qpixmap.h>
-#include <qpoint.h>
-#include <qpolygon.h>
-#include <qrect.h>
 
-#include <kconfig.h>
-#include <kconfiggroup.h>
-#include <kdebug.h>
-#include <kglobal.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-
-#include <kpAbstractSelection.h>
 #include <kpColor.h>
-#include <kpDefs.h>
-#include <kpTool.h>
 
+//---------------------------------------------------------------------
 
 // public static
-void kpPixmapFX::fill (QPixmap *destPixmapPtr, const kpColor &color)
+void kpPixmapFX::fill (QImage *destPixmapPtr, const kpColor &color)
 {
     if (!destPixmapPtr)
         return;
 
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
-
-    if (color.isOpaque ())
-    {
-        destPixmapPtr->setMask (QBitmap ());  // no mask = opaque
-        destPixmapPtr->fill (color.toQColor ());
-    }
-    else
-    {
-        kpPixmapFX::ensureTransparentAt (destPixmapPtr, destPixmapPtr->rect ());
-    }
-
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
+    destPixmapPtr->fill (color.toQRgb ());
 }
 
+//---------------------------------------------------------------------
+
 // public static
-QPixmap kpPixmapFX::fill (const QPixmap &pm, const kpColor &color)
+QImage kpPixmapFX::fill (const QImage &pm, const kpColor &color)
 {
-    QPixmap ret = pm;
+    QImage ret = pm;
     kpPixmapFX::fill (&ret, color);
     return ret;
 }
+
+//---------------------------------------------------------------------

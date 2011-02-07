@@ -31,20 +31,12 @@
 
 #include <kpEffectReduceColorsCommand.h>
 
-#include <qbitmap.h>
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qimage.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qradiobutton.h>
-
 #include <kdebug.h>
 #include <klocale.h>
 
 #include <kpEffectReduceColors.h>
-#include <kpPixmapFX.h>
 
+//---------------------------------------------------------------------
 
 kpEffectReduceColorsCommand::kpEffectReduceColorsCommand (int depth, bool dither,
         bool actOnSelection,
@@ -54,10 +46,7 @@ kpEffectReduceColorsCommand::kpEffectReduceColorsCommand (int depth, bool dither
 {
 }
 
-kpEffectReduceColorsCommand::~kpEffectReduceColorsCommand ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // public
 QString kpEffectReduceColorsCommand::commandName (int depth, int dither) const
@@ -82,6 +71,7 @@ QString kpEffectReduceColorsCommand::commandName (int depth, int dither) const
     }
 }
 
+//---------------------------------------------------------------------
 
 //
 // kpEffectReduceColorsCommand implements kpEffectCommandBase interface
@@ -93,4 +83,4 @@ kpImage kpEffectReduceColorsCommand::applyEffect (const kpImage &image)
     return kpEffectReduceColors::applyEffect (image, m_depth, m_dither);
 }
 
-
+//---------------------------------------------------------------------

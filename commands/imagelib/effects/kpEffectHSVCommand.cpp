@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2007 Mike Gashler <gashlerm@yahoo.com>
    All rights reserved.
@@ -25,14 +24,12 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include <kpEffectHSVCommand.h>
-
-#include <kdebug.h>
-#include <klocale.h>
-
 #include <kpEffectHSV.h>
 
+#include <klocale.h>
+
+//---------------------------------------------------------------------
 
 kpEffectHSVCommand::kpEffectHSVCommand (double hue, double saturation, double value,
         bool actOnSelection,
@@ -42,10 +39,7 @@ kpEffectHSVCommand::kpEffectHSVCommand (double hue, double saturation, double va
 {
 }
 
-kpEffectHSVCommand::~kpEffectHSVCommand ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // protected virtual [base kpEffectCommandBase]
 kpImage kpEffectHSVCommand::applyEffect (const kpImage &image)
@@ -53,3 +47,4 @@ kpImage kpEffectHSVCommand::applyEffect (const kpImage &image)
     return kpEffectHSV::applyEffect (image, m_hue, m_saturation, m_value);
 }
 
+//---------------------------------------------------------------------

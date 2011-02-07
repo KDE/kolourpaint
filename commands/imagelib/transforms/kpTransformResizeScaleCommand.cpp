@@ -408,7 +408,7 @@ void kpTransformResizeScaleCommand::unexecute ()
             QApplication::setOverrideCursor (Qt::WaitCursor);
 
 
-            kpImage newImage (m_oldWidth, m_oldHeight);
+            kpImage newImage (m_oldWidth, m_oldHeight, QImage::Format_ARGB32_Premultiplied);
 
             kpPixmapFX::setPixmapAt (&newImage, QPoint (0, 0),
                                      doc->image ());

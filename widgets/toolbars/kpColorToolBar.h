@@ -34,8 +34,6 @@
 #include <qframe.h>
 #include <qwidget.h>
 
-#include <kcolordialog.h>
-
 #include <kpColor.h>
 
 

@@ -54,13 +54,6 @@ kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,
 
 
     // See kpEffectToneEnhance::applyEffect().
-    if (kpPixmapFX::screenIsPaletted ())
-    {
-        QLabel *unsupportedLabel =
-            new QLabel (kpPixmapFX::effectDoesNotSupportPalettedScreenMessage ());
-        lay->addWidget (unsupportedLabel, 0, 0);
-    }
-    else
     {
         QLabel *granularityLabel = new QLabel (i18n ("&Granularity:"), this);
 

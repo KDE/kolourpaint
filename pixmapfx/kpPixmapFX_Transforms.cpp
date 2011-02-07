@@ -33,52 +33,37 @@
 
 #include <math.h>
 
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qdatetime.h>
-#include <qimage.h>
 #include <qpainter.h>
-#include <qpainterpath.h>
-#include <qpixmap.h>
+#include <QImage>
 #include <qpoint.h>
-#include <qpolygon.h>
 #include <qrect.h>
 
-#include <kconfig.h>
-#include <kconfiggroup.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <klocale.h>
-#include <kmessagebox.h>
 
 #include <kpAbstractSelection.h>
 #include <kpColor.h>
 #include <kpDefs.h>
-#include <kpEffectReduceColors.h>
-#include <kpTool.h>
 
+//---------------------------------------------------------------------
 
 // public static
-void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
+void kpPixmapFX::resize (QImage *destPtr, int w, int h,
                          const kpColor &backgroundColor)
 {
 #if DEBUG_KP_PIXMAP_FX && 1
     kDebug () << "kpPixmapFX::resize()";
 #endif
 
-    if (!destPixmapPtr)
+    if (!destPtr)
         return;
 
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
-
-    const int oldWidth = destPixmapPtr->width ();
-    const int oldHeight = destPixmapPtr->height ();
+    const int oldWidth = destPtr->width ();
+    const int oldHeight = destPtr->height ();
 
     if (w == oldWidth && h == oldHeight)
         return;
 
-
-    QPixmap newPixmap (w, h);
+    QImage newImage (w, h, QImage::Format_ARGB32_Premultiplied);
 
     // Would have new undefined areas?
     if (w > oldWidth || h > oldHeight)
@@ -87,51 +72,47 @@ void kpPixmapFX::resize (QPixmap *destPixmapPtr, int w, int h,
         kDebug () << "\tbacking with fill opqaque="
                   << backgroundColor.isOpaque () << endl;
     #endif
-        if (backgroundColor.isOpaque ())
-            newPixmap.fill (backgroundColor.toQColor ());
-        else
-        {
-            QBitmap newPixmapMask (w, h);
-            newPixmapMask.fill (Qt::color0/*transparent*/);
-            newPixmap.setMask (newPixmapMask);
-        }
+        newImage.fill (backgroundColor.toQRgb ());
     }
 
     // Copy over old pixmap.
-    setPixmapAt (&newPixmap, 0, 0, *destPixmapPtr);
+    QPainter painter(&newImage);
+    painter.drawImage(0, 0, *destPtr);
+    painter.end();
 
     // Replace pixmap with new one.
-    *destPixmapPtr = newPixmap;
-
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*destPixmapPtr);
+    *destPtr = newImage;
 }
 
+//---------------------------------------------------------------------
+
 // public static
-QPixmap kpPixmapFX::resize (const QPixmap &pm, int w, int h,
-                            const kpColor &backgroundColor)
+QImage kpPixmapFX::resize (const QImage &image, int w, int h,
+                           const kpColor &backgroundColor)
 {
-    QPixmap ret = pm;
+    QImage ret = image;
     kpPixmapFX::resize (&ret, w, h, backgroundColor);
     return ret;
 }
 
+//---------------------------------------------------------------------
 
 // public static
-void kpPixmapFX::scale (QPixmap *destPixmapPtr, int w, int h, bool pretty)
+void kpPixmapFX::scale (QImage *destPtr, int w, int h, bool pretty)
 {
-    if (!destPixmapPtr)
+    if (!destPtr)
         return;
 
-    *destPixmapPtr = kpPixmapFX::scale (*destPixmapPtr, w, h, pretty);
+    *destPtr = kpPixmapFX::scale (*destPtr, w, h, pretty);
 }
 
-// public static
-QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
-{
-    QPixmap retPixmap;
+//---------------------------------------------------------------------
 
+// public static
+QImage kpPixmapFX::scale (const QImage &image, int w, int h, bool pretty)
+{
 #if DEBUG_KP_PIXMAP_FX && 0
-    kDebug () << "kpPixmapFX::scale(oldRect=" << pm.rect ()
+    kDebug () << "kpPixmapFX::scale(oldRect=" << image.rect ()
                << ",w=" << w
                << ",h=" << h
                << ",pretty=" << pretty
@@ -139,72 +120,14 @@ QPixmap kpPixmapFX::scale (const QPixmap &pm, int w, int h, bool pretty)
                << endl;
 #endif
 
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (pm);
+    if (w == image.width () && h == image.height ())
+        return image;
 
-    if (w == pm.width () && h == pm.height ())
-        return pm;
-
-
-    if (pretty)
-    {
-        // We don't use QPixmap::scaled() with Qt::SmoothTransformation since
-        // that double-smoothes, making the image blurier than intended
-        // -- internally QPixmap::scaled() does the following:
-        //
-        // 1. Calls QImage::scaled() with Qt::SmoothTransformation, like we do.
-        //
-        // 2. But it then calls the Qt equivalent of kpPixmapFX::convertToPixmap(),
-        //    which will do an unwanted second smooth on screens of depth
-        //    < 32 (since it dithers down a 32-bit QImage).
-        QImage image = kpPixmapFX::convertToQImage (pm);
-
-    #if DEBUG_KP_PIXMAP_FX && 0
-        kDebug () << "\tBefore smooth scale:";
-        for (int y = 0; y < image.height (); y++)
-        {
-            for (int x = 0; x < image.width (); x++)
-            {
-                fprintf (stderr, " %08X", image.pixel (x, y));
-            }
-            fprintf (stderr, "\n");
-        }
-    #endif
-
-        image = image.scaled (w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
-    #if DEBUG_KP_PIXMAP_FX && 0
-        kDebug () << "\tAfter smooth scale:";
-        for (int y = 0; y < image.height (); y++)
-        {
-            for (int x = 0; x < image.width (); x++)
-            {
-                fprintf (stderr, " %08X", image.pixel (x, y));
-            }
-            fprintf (stderr, "\n");
-        }
-    #endif
-
-        // COMPAT: Regression compared to Qt3.
-        //         This causes some smudging between transparent and non-transparent
-        //         pixels after scaling.  Some transparent pixels on the boundary
-        //         become black.
-        retPixmap = kpPixmapFX::convertToPixmap (image, false/*let's not smooth it again*/);
-    }
-    else
-    {
-        QMatrix matrix;
-
-        matrix.scale (double (w) / double (pm.width ()),
-                      double (h) / double (pm.height ()));
-
-        retPixmap = pm.transformed (matrix);
-    }
-
-
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (retPixmap);
-    return retPixmap;
+    return image.scaled(w, h, Qt::IgnoreAspectRatio,
+                        pretty ? Qt::SmoothTransformation : Qt::FastTransformation);
 }
 
+//---------------------------------------------------------------------
 
 // public static
 const double kpPixmapFX::AngleInDegreesEpsilon =
@@ -254,6 +177,7 @@ static void MatrixDebug (const QString matrixName, const QMatrix &matrix,
 #endif  // DEBUG_KP_PIXMAP_FX
 }
 
+//---------------------------------------------------------------------
 
 // Theoretically, this should act the same as QPixmap::trueMatrix() but
 // it doesn't.  As an example, if you rotate tests/transforms.png by 90
@@ -302,6 +226,7 @@ static QMatrix MatrixWithZeroOrigin (const QMatrix &matrix, int width, int heigh
     return translatedMatrix;
 }
 
+//---------------------------------------------------------------------
 
 static double TrueMatrixEpsilon = 0.000001;
 
@@ -320,6 +245,8 @@ static double TrueMatrixFixInts (double x)
     else
         return x;
 }
+
+//---------------------------------------------------------------------
 
 static QMatrix TrueMatrix (const QMatrix &matrix, int srcPixmapWidth, int srcPixmapHeight)
 {
@@ -340,6 +267,7 @@ static QMatrix TrueMatrix (const QMatrix &matrix, int srcPixmapWidth, int srcPix
     return retMat;
 }
 
+//---------------------------------------------------------------------
 
 // Like QPixmap::transformed() but fills new areas with <backgroundColor>
 // (unless <backgroundColor> is invalid) and works around internal QMatrix
@@ -352,7 +280,7 @@ static QMatrix TrueMatrix (const QMatrix &matrix, int srcPixmapWidth, int srcPix
 //
 // Use <targetWidth> and <targetHeight> to specify the intended output size
 // of the pixmap.  -1 if don't care.
-static QPixmap TransformPixmap (const QPixmap &pm, const QMatrix &transformMatrix_,
+static QImage TransformPixmap (const QImage &pm, const QMatrix &transformMatrix_,
         const kpColor &backgroundColor,
         int targetWidth, int targetHeight)
 {
@@ -365,15 +293,6 @@ static QPixmap TransformPixmap (const QPixmap &pm, const QMatrix &transformMatri
                << ")"
                << endl;
 #endif
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (pm);
-
-    // Code path has not been tested on monochrone bitmaps.
-    //
-    // Futhermore, since Qt doesn't support masks on such bitmaps and their
-    // color channel only has up to 2 colors, it makes little sense to
-    // support arbitrary transformations of them (other than flipping,
-    // which is already covered by kpPixmapFX::flip() below).
-    Q_ASSERT (pm.depth () > 1);
 
     QRect newRect = transformMatrix.mapRect (pm.rect ());
 #if DEBUG_KP_PIXMAP_FX && 1
@@ -521,13 +440,6 @@ static QPixmap TransformPixmap (const QPixmap &pm, const QMatrix &transformMatri
 #endif
 
 
-    // Drawing a transformed QBitmap on top of a QBitmap causes
-    // X errors and does not work, if XRENDER is disabled (Qt 4.3.1 bug).
-    // So we can't use the normal kpPixmapFX::draw() mechanism.
-    //
-    // Use QImage and QPainter instead.
-    QImage srcQImage = kpPixmapFX::convertToQImage (pm);
-    
     // Note: Do _not_ use "p.setRenderHints (QPainter::SmoothPixmapTransform);"
     //       as the user does not want their image to get blurier every
     //       time they e.g. rotate it (especially important for multiples
@@ -543,28 +455,22 @@ static QPixmap TransformPixmap (const QPixmap &pm, const QMatrix &transformMatri
         // Fill the entire new image with the background color.
         if (backgroundColor.isValid ())
         {
-            if (backgroundColor.isOpaque ())
-                p.fillRect (newQImage.rect (), backgroundColor.toQColor ());
-            else
-                p.fillRect (newQImage.rect (), QColor (0, 0, 0, 0)/*transparent*/);
+            p.fillRect (newQImage.rect (), backgroundColor.toQColor ());
         }
 
         p.setMatrix (transformMatrix);
-        p.drawImage (QPoint (0, 0), srcQImage);
+        p.drawImage (QPoint (0, 0), pm);
     }
     p.end ();
-
-    const QPixmap newPixmap = kpPixmapFX::convertToPixmap (newQImage);
-
 
 #if DEBUG_KP_PIXMAP_FX && 1
     kDebug () << "Done" << endl << endl;
 #endif
 
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (newPixmap);
-    return newPixmap;
+    return newQImage;
 }
 
+//---------------------------------------------------------------------
 
 // public static
 QMatrix kpPixmapFX::skewMatrix (int width, int height, double hangle, double vangle)
@@ -613,28 +519,34 @@ QMatrix kpPixmapFX::skewMatrix (int width, int height, double hangle, double van
     return ::MatrixWithZeroOrigin (matrix, width, height);
 }
 
+//---------------------------------------------------------------------
+
 // public static
-QMatrix kpPixmapFX::skewMatrix (const QPixmap &pixmap, double hangle, double vangle)
+QMatrix kpPixmapFX::skewMatrix (const QImage &pixmap, double hangle, double vangle)
 {
     return kpPixmapFX::skewMatrix (pixmap.width (), pixmap.height (), hangle, vangle);
 }
 
+//---------------------------------------------------------------------
+
 
 // public static
-void kpPixmapFX::skew (QPixmap *destPixmapPtr, double hangle, double vangle,
+void kpPixmapFX::skew (QImage *destPtr, double hangle, double vangle,
                        const kpColor &backgroundColor,
                        int targetWidth, int targetHeight)
 {
-    if (!destPixmapPtr)
+    if (!destPtr)
         return;
 
-    *destPixmapPtr = kpPixmapFX::skew (*destPixmapPtr, hangle, vangle,
+    *destPtr = kpPixmapFX::skew (*destPtr, hangle, vangle,
                                        backgroundColor,
                                        targetWidth, targetHeight);
 }
 
+//---------------------------------------------------------------------
+
 // public static
-QPixmap kpPixmapFX::skew (const QPixmap &pm, double hangle, double vangle,
+QImage kpPixmapFX::skew (const QImage &pm, double hangle, double vangle,
                           const kpColor &backgroundColor,
                           int targetWidth, int targetHeight)
 {
@@ -668,6 +580,8 @@ QPixmap kpPixmapFX::skew (const QPixmap &pm, double hangle, double vangle,
     return ::TransformPixmap (pm, matrix, backgroundColor, targetWidth, targetHeight);
 }
 
+//---------------------------------------------------------------------
+
 
 // public static
 QMatrix kpPixmapFX::rotateMatrix (int width, int height, double angle)
@@ -684,11 +598,15 @@ QMatrix kpPixmapFX::rotateMatrix (int width, int height, double angle)
     return ::MatrixWithZeroOrigin (matrix, width, height);
 }
 
+//---------------------------------------------------------------------
+
 // public static
-QMatrix kpPixmapFX::rotateMatrix (const QPixmap &pixmap, double angle)
+QMatrix kpPixmapFX::rotateMatrix (const QImage &pixmap, double angle)
 {
     return kpPixmapFX::rotateMatrix (pixmap.width (), pixmap.height (), angle);
 }
+
+//---------------------------------------------------------------------
 
 
 // public static
@@ -723,22 +641,26 @@ bool kpPixmapFX::isLosslessRotation (double angle)
     return ret;
 }
 
+//---------------------------------------------------------------------
+
 
 // public static
-void kpPixmapFX::rotate (QPixmap *destPixmapPtr, double angle,
+void kpPixmapFX::rotate (QImage *destPtr, double angle,
                          const kpColor &backgroundColor,
                          int targetWidth, int targetHeight)
 {
-    if (!destPixmapPtr)
+    if (!destPtr)
         return;
 
-    *destPixmapPtr = kpPixmapFX::rotate (*destPixmapPtr, angle,
+    *destPtr = kpPixmapFX::rotate (*destPtr, angle,
                                          backgroundColor,
                                          targetWidth, targetHeight);
 }
 
+//---------------------------------------------------------------------
+
 // public static
-QPixmap kpPixmapFX::rotate (const QPixmap &pm, double angle,
+QImage kpPixmapFX::rotate (const QImage &pm, double angle,
                             const kpColor &backgroundColor,
                             int targetWidth, int targetHeight)
 {
@@ -753,6 +675,8 @@ QPixmap kpPixmapFX::rotate (const QPixmap &pm, double angle,
 
     return ::TransformPixmap (pm, matrix, backgroundColor, targetWidth, targetHeight);
 }
+
+//---------------------------------------------------------------------
 
 
 // public static
@@ -773,110 +697,27 @@ QMatrix kpPixmapFX::flipMatrix (int width, int height, bool horz, bool vert)
     return matrix;
 }
 
+//---------------------------------------------------------------------
+
 // public static
-QMatrix kpPixmapFX::flipMatrix (const QPixmap &pixmap, bool horz, bool vert)
+QMatrix kpPixmapFX::flipMatrix (const QImage &pixmap, bool horz, bool vert)
 {
     return kpPixmapFX::flipMatrix (pixmap.width (), pixmap.height (),
                                    horz, vert);
 }
 
+//---------------------------------------------------------------------
 
 // public static
-void kpPixmapFX::flip (QPixmap *destPixmapPtr, bool horz, bool vert)
+void kpPixmapFX::flip (QImage *destPtr, bool horz, bool vert)
 {
     if (!horz && !vert)
         return;
 
-    *destPixmapPtr = kpPixmapFX::flip (*destPixmapPtr, horz, vert);
+    *destPtr = kpPixmapFX::flip (*destPtr, horz, vert);
 }
 
-// public static
-QPixmap kpPixmapFX::flip (const QPixmap &pm, bool horz, bool vert)
-{
-#if DEBUG_KP_PIXMAP_FX && 1
-    kDebug () << "CALL(pm.depth=" << pm.depth ()
-              << ",horz=" << horz << ",vert=" << vert << ")";
-#endif
-
-    if (!horz && !vert)
-        return pm;
-
-    QImage newQImage = kpPixmapFX::convertToQImage (pm);
-#if DEBUG_KP_PIXMAP_FX && 1
-    kDebug () << "\tqimage.depth=" << newQImage.depth ()
-              << "format=" << newQImage.format ();
-#endif
-
-    QPixmap newPixmap;
-
-    if (pm.depth () > 1)
-    {
-        Q_ASSERT (newQImage.depth () > 1);
-
-        // Work around converToPixmap() nuking mask if the <newQImage>
-        // (and therefore, <pm>) is only 8-bit.  The name "ReduceColors"
-        // is a misnomer in this case.
-        newQImage = kpEffectReduceColors::convertImageDepth (
-            newQImage, 32/*new depth*/, false/*no dither*/);
-
-        // For depth>1, we could do the entire transform using ::TransformPixmap()
-        // but given the rounding error hacks in that method, we'd rather use
-        // this guaranteed way of doing it (QImage::mirrored()).
-        kpPixmapFX::flip (&newQImage, horz, vert);
-
-        newPixmap = kpPixmapFX::convertToPixmap (newQImage);
-    }
-    // pm.depth() == 1 is used by kpAbstractImageSelection::flip()
-    // flipping the selection transparency mask.
-    else if (pm.depth () == 1)
-    {
-        Q_ASSERT (newQImage.depth () == 1);
-
-        // For depth==1, drawing a transformed QBitmap on top of a QBitmap causes
-        // X errors and does not work, if XRENDER is disabled (Qt 4.3.1 bug).
-        // So we use QImage (and QImage::mirrored()) instead.
-        kpPixmapFX::flip (&newQImage, horz, vert);
-
-    #if 0
-        // Dump pixels from the QImage.
-        for (int y = 0; y < newQImage.height (); y++)
-        {
-            fprintf (stderr, "%d:", y);
-            for (int x = 0; x < newQImage.width (); x++)
-            {
-                fprintf (stderr, " %x", newQImage.pixel (x, y));
-            }
-            fprintf (stderr, "\n");
-        }
-    #endif
-
-        newPixmap = QBitmap::fromImage (newQImage,
-            Qt::MonoOnly/*to QBitmap*/ |
-            Qt::ThresholdDither/*no dither*/ |
-            Qt::ThresholdAlphaDither/*no dither alpha*/|
-            Qt::AvoidDither);
-    }
-    else
-    {
-        Q_ASSERT (!"unexpected pixmap depth");
-    }
-
-#if DEBUG_KP_PIXMAP_FX && 1
-    kDebug () << "\tnewPixmap.depth=" << newPixmap.depth ();
-#endif
-    Q_ASSERT (newPixmap.depth () == pm.depth ());
-
-    return newPixmap;
-}
-
-// public static
-void kpPixmapFX::flip (QImage *destImagePtr, bool horz, bool vert)
-{
-    if (!horz && !vert)
-        return;
-
-    *destImagePtr = kpPixmapFX::flip (*destImagePtr, horz, vert);
-}
+//---------------------------------------------------------------------
 
 // public static
 QImage kpPixmapFX::flip (const QImage &img, bool horz, bool vert)
@@ -886,3 +727,5 @@ QImage kpPixmapFX::flip (const QImage &img, bool horz, bool vert)
 
     return img.mirrored (horz, vert);
 }
+
+//---------------------------------------------------------------------

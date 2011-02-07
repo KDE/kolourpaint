@@ -77,61 +77,14 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
     buttonGroup->addButton (m_8BitDitheredRadioButton);
     buttonGroup->addButton (m_24BitRadioButton);
 
-
-    const int screenDepth = QPixmap::defaultDepth ();
-#if DEBUG_KP_EFFECT_REDUCE_COLORS
-    kDebug () << "kpEffectReduceColorsWidget::<ctor> screenDepth="
-               << screenDepth
-               << endl;
-#endif
-
-    // Note that everything is disabled for a 1-bit screen since there
-    // would be no effect.  I won't support 2-bit or 4-bit screens either :)
-    m_blackAndWhiteRadioButton->setEnabled (screenDepth >= 8);
-    m_blackAndWhiteDitheredRadioButton->setEnabled (screenDepth >= 8);
-    m_8BitRadioButton->setEnabled (screenDepth >= 8);
-    // (not enabled if screenDepth==8 as m_8BitRadioButton already serves
-    //  as NOP default)
-    m_8BitDitheredRadioButton->setEnabled (screenDepth > 8);
-    // (not "screenDepth >= 24" as we need a NOP default for 15/16-bit
-    //  screens)
-    m_24BitRadioButton->setEnabled (screenDepth > 8);
-
-
-    m_defaultRadioButton = 0;
-
-    if (m_24BitRadioButton->isEnabled ())
-    {
-    #if DEBUG_KP_EFFECT_REDUCE_COLORS
-        kDebug () << "\tdefault is 24-bit button";
-    #endif
-        m_defaultRadioButton = m_24BitRadioButton;
-    }
-    else if (m_8BitRadioButton->isEnabled ())
-    {
-    #if DEBUG_KP_EFFECT_REDUCE_COLORS
-        kDebug () << "\tdefault is 8-bit button";
-    #endif
-        m_defaultRadioButton = m_8BitRadioButton;
-    }
-    else
-    {
-    #if DEBUG_KP_EFFECT_REDUCE_COLORS
-        kDebug () << "\tuser must have a 1-bit screen - no default";
-    #endif
-    }
-
-
-    if (m_defaultRadioButton)
-        m_defaultRadioButton->setChecked (true);
-
+    m_defaultRadioButton = m_24BitRadioButton;
+    m_defaultRadioButton->setChecked (true);
 
     lay->addWidget (m_blackAndWhiteRadioButton);
     lay->addWidget (m_blackAndWhiteDitheredRadioButton);
     lay->addWidget (m_8BitRadioButton);
     lay->addWidget (m_8BitDitheredRadioButton);
     lay->addWidget (m_24BitRadioButton);
-
 
     connect (m_blackAndWhiteRadioButton, SIGNAL (toggled (bool)),
              this, SIGNAL (settingsChanged ()));
@@ -145,15 +98,13 @@ kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,
              this, SIGNAL (settingsChanged ()));
 }
 
-kpEffectReduceColorsWidget::~kpEffectReduceColorsWidget ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // public
 int kpEffectReduceColorsWidget::depth () const
 {
     // These values (1, 8, 32) are QImage's supported depths.
+    // TODO: Qt-4.7.1: 1, 8, 16, 24 and 32
     if (m_blackAndWhiteRadioButton->isChecked () ||
         m_blackAndWhiteDitheredRadioButton->isChecked ())
     {
@@ -174,6 +125,8 @@ int kpEffectReduceColorsWidget::depth () const
     }
 }
 
+//---------------------------------------------------------------------
+
 // public
 bool kpEffectReduceColorsWidget::dither () const
 {
@@ -181,7 +134,7 @@ bool kpEffectReduceColorsWidget::dither () const
             m_8BitDitheredRadioButton->isChecked ());
 }
 
-
+//---------------------------------------------------------------------
 //
 // kpEffectReduceColorsWidget implements kpEffectWidgetBase interface
 //
@@ -192,6 +145,7 @@ QString kpEffectReduceColorsWidget::caption () const
     return i18n ("Reduce To");
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpEffectWidgetBase]
 bool kpEffectReduceColorsWidget::isNoOp () const
@@ -199,12 +153,15 @@ bool kpEffectReduceColorsWidget::isNoOp () const
     return (!m_defaultRadioButton || m_defaultRadioButton->isChecked ());
 }
 
+//---------------------------------------------------------------------
+
 // public virtual [base kpEffectWidgetBase]
 kpImage kpEffectReduceColorsWidget::applyEffect (const kpImage &image)
 {
     return kpEffectReduceColors::applyEffect (image, depth (), dither ());
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpEffectWidgetBase]
 kpEffectCommandBase *kpEffectReduceColorsWidget::createCommand (
@@ -215,5 +172,6 @@ kpEffectCommandBase *kpEffectReduceColorsWidget::createCommand (
                                             cmdEnviron);
 }
 
+//---------------------------------------------------------------------
 
 #include <kpEffectReduceColorsWidget.moc>

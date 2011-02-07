@@ -34,7 +34,6 @@
 #include <QBoxLayout>
 #include <QScrollArea>
 
-#include <KColorDialog>
 
 #include <kpColorCells.h>
 #include <kpTransparentColorCell.h>

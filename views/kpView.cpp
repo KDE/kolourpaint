@@ -420,6 +420,7 @@ void kpView::updateBuddyViewScrollableContainerRectangle ()
         viewManager ()->restoreQueueUpdates ();
 }
 
+//---------------------------------------------------------------------
 
 // public
 double kpView::transformViewToDocX (double viewX) const
@@ -427,11 +428,15 @@ double kpView::transformViewToDocX (double viewX) const
     return (viewX - origin ().x ()) * 100.0 / zoomLevelX ();
 }
 
+//---------------------------------------------------------------------
+
 // public
 double kpView::transformViewToDocY (double viewY) const
 {
     return (viewY - origin ().y ()) * 100.0 / zoomLevelY ();
 }
+
+//---------------------------------------------------------------------
 
 // public
 QPoint kpView::transformViewToDoc (const QPoint &viewPoint) const
@@ -439,6 +444,8 @@ QPoint kpView::transformViewToDoc (const QPoint &viewPoint) const
     return QPoint ((int) transformViewToDocX (viewPoint.x ()),
                    (int) transformViewToDocY (viewPoint.y ()));
 }
+
+//---------------------------------------------------------------------
 
 // public
 QRect kpView::transformViewToDoc (const QRect &viewRect) const
@@ -463,6 +470,7 @@ QRect kpView::transformViewToDoc (const QRect &viewRect) const
     }
 }
 
+//---------------------------------------------------------------------
 
 // public
 double kpView::transformDocToViewX (double docX) const

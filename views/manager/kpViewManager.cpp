@@ -46,6 +46,7 @@
 #include <kpTool.h>
 #include <kpView.h>
 
+//---------------------------------------------------------------------
 
 kpViewManager::kpViewManager (kpMainWindow *mainWindow)
     : d (new kpViewManagerPrivate ())
@@ -76,6 +77,8 @@ kpViewManager::kpViewManager (kpMainWindow *mainWindow)
     d->queueUpdatesCounter = d->fastUpdatesCounter = 0;
 }
 
+//---------------------------------------------------------------------
+
 kpViewManager::~kpViewManager ()
 {
     unregisterAllViews ();
@@ -84,6 +87,7 @@ kpViewManager::~kpViewManager ()
     delete d;
 }
 
+//---------------------------------------------------------------------
 
 // private
 kpDocument *kpViewManager::document () const
@@ -91,6 +95,7 @@ kpDocument *kpViewManager::document () const
     return d->mainWindow->document ();
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpViewManager::registerView (kpView *view)
@@ -108,6 +113,8 @@ void kpViewManager::registerView (kpView *view)
     d->views.append (view);
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpViewManager::unregisterView (kpView *view)
 {
@@ -121,12 +128,15 @@ void kpViewManager::unregisterView (kpView *view)
     d->views.removeAll (view);
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpViewManager::unregisterAllViews ()
 {
     d->views.clear ();
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpView *kpViewManager::viewUnderCursor (bool usingQt) const
@@ -149,6 +159,8 @@ kpView *kpViewManager::viewUnderCursor (bool usingQt) const
         return 0;
     }
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpViewManager::setViewUnderCursor (kpView *view)
@@ -187,6 +199,7 @@ void kpViewManager::setViewUnderCursor (kpView *view)
     }
 }
 
+//---------------------------------------------------------------------
 
 // public
 bool kpViewManager::hasAViewWithFocus () const
@@ -202,6 +215,7 @@ bool kpViewManager::hasAViewWithFocus () const
     return false;
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpViewManager::setCursor (const QCursor &cursor)
@@ -216,6 +230,8 @@ void kpViewManager::setCursor (const QCursor &cursor)
     d->cursor = cursor;
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpViewManager::unsetCursor ()
 {
@@ -229,12 +245,15 @@ void kpViewManager::unsetCursor ()
     d->cursor = QCursor ();
 }
 
+//---------------------------------------------------------------------
 
 // public
 const kpTempImage *kpViewManager::tempImage () const
 {
     return d->tempImage;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpViewManager::setTempImage (const kpTempImage &tempImage)
@@ -267,6 +286,8 @@ void kpViewManager::setTempImage (const kpTempImage &tempImage)
     restoreQueueUpdates ();
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpViewManager::invalidateTempImage ()
 {
@@ -281,12 +302,15 @@ void kpViewManager::invalidateTempImage ()
     updateViews (oldRect);
 }
 
+//---------------------------------------------------------------------
 
 // public
 bool kpViewManager::selectionBorderVisible () const
 {
     return d->selectionBorderVisible;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpViewManager::setSelectionBorderVisible (bool yes)
@@ -300,12 +324,15 @@ void kpViewManager::setSelectionBorderVisible (bool yes)
         updateViews (document ()->selection ()->boundingRect ());
 }
 
+//---------------------------------------------------------------------
 
 // public
 bool kpViewManager::selectionBorderFinished () const
 {
     return d->selectionBorderFinished;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpViewManager::setSelectionBorderFinished (bool yes)
@@ -319,5 +346,6 @@ void kpViewManager::setSelectionBorderFinished (bool yes)
         updateViews (document ()->selection ()->boundingRect ());
 }
 
+//---------------------------------------------------------------------
 
 #include <kpViewManager.moc>

@@ -32,14 +32,8 @@
 #include <kpAbstractSelectionTool.h>
 #include <kpAbstractSelectionToolPrivate.h>
 
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qcursor.h>
 #include <qevent.h>
 #include <qmenu.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qpolygon.h>
 #include <qtimer.h>
 
 #include <kdebug.h>
@@ -62,6 +56,7 @@
 #include <kpView.h>
 #include <kpViewManager.h>
 
+//---------------------------------------------------------------------
 
 // private
 void kpAbstractSelectionTool::initMove ()
@@ -78,6 +73,8 @@ void kpAbstractSelectionTool::initMove ()
              this, SLOT (slotRMBMoveUpdateGUI ()));
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpAbstractSelectionTool::uninitMove ()
 {
@@ -91,6 +88,7 @@ void kpAbstractSelectionTool::uninitMove ()
     // d->RMBMoveUpdateGUITimer (deleted by QObject mechanism)
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpAbstractSelectionTool::beginMove ()
@@ -105,6 +103,8 @@ void kpAbstractSelectionTool::beginMove ()
     // d->RMBMoveUpdateGUITimer
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpAbstractSelectionTool::endMove ()
 {
@@ -118,6 +118,7 @@ void kpAbstractSelectionTool::endMove ()
     // d->RMBMoveUpdateGUITimer
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpAbstractSelectionTool::setCursorMove ()
@@ -125,6 +126,7 @@ void kpAbstractSelectionTool::setCursorMove ()
     viewManager ()->setCursor (Qt::SizeAllCursor);
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual
 void kpAbstractSelectionTool::setSelectionBorderForBeginDrawMove ()
@@ -137,6 +139,8 @@ void kpAbstractSelectionTool::setSelectionBorderForBeginDrawMove ()
     }
     viewManager ()->restoreQueueUpdates ();
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpAbstractSelectionTool::beginDrawMove ()
@@ -159,6 +163,8 @@ void kpAbstractSelectionTool::beginDrawMove ()
     setUserMessage (cancelUserMessage ());
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpAbstractSelectionTool::slotRMBMoveUpdateGUI ()
 {
@@ -172,6 +178,7 @@ void kpAbstractSelectionTool::slotRMBMoveUpdateGUI ()
         setUserShapePoints (sel->topLeft ());
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*normalizedRect*/)
@@ -280,6 +287,7 @@ void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*
     d->dragAccepted = true;
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpAbstractSelectionTool::cancelMove ()
@@ -303,12 +311,15 @@ void kpAbstractSelectionTool::cancelMove ()
     d->currentMoveCommand = 0;
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual
 QString kpAbstractSelectionTool::nonSmearMoveCommandName () const
 {
     return i18n ("Selection: Move");
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpAbstractSelectionTool::endDrawMove ()
@@ -344,6 +355,7 @@ void kpAbstractSelectionTool::endDrawMove ()
     addNeedingContentCommand (renamedCmd);
 }
 
+//---------------------------------------------------------------------
 
 // private
 QVariant kpAbstractSelectionTool::operationMove (Operation op,
@@ -383,6 +395,7 @@ QVariant kpAbstractSelectionTool::operationMove (Operation op,
         break;
     }
 
-
     return QVariant ();
 }
+
+//---------------------------------------------------------------------

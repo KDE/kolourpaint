@@ -34,7 +34,7 @@
 
 
 class QGroupBox;
-class QPixmap;
+class QImage;
 class QTimer;
 class QVBoxLayout;
 
@@ -62,7 +62,7 @@ public:
 
 protected:
     virtual QSize newDimensions () const;
-    virtual QPixmap transformPixmap (const QPixmap &pixmap,
+    virtual QImage transformPixmap (const QImage &pixmap,
                                      int targetWidth, int targetHeight) const;
 
 public:

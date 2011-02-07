@@ -186,8 +186,8 @@ void kpGrip::updatePixmap ()
     if (width () <= 0 || height () <= 0)
         return;
 
-    QPixmap pixmap (width (), height ());
-    kpPixmapFX::ensureTransparentAt (&pixmap, pixmap.rect ());
+    QImage image (width (), height (), QImage::Format_ARGB32_Premultiplied);
+    image.fill(0);
 
     const QRect hr = hotRect ();
 #if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
@@ -198,22 +198,19 @@ void kpGrip::updatePixmap ()
         const QColor col = palette ().color (QPalette::Highlight);
         if (col.alpha () > 0)
         {
-            // Note that we nuke the color's alpha (QColor::rgb()) since
-            // kpPixmapFX methods can't handle it.
-            kpPixmapFX::fillRect (&pixmap,
+            kpPixmapFX::fillRect (&image,
                 hr.x (), hr.y (), hr.width (), hr.height (),
-                kpColor (col.rgb ()));
+                kpColor (col.rgba()));
         }
         else
         {
             // You have a crazy color palette with a transparent highlight
-            // color.  Our pixmap is fully transparent already so nothing
+            // color.  Our image is fully transparent already so nothing
             // needs to be done.
         }
     }
 
-    setPixmap (pixmap);
-    setMask (pixmap.mask ());
+    setPixmap (QPixmap::fromImage(image));
 }
 
 
@@ -1226,8 +1223,9 @@ bool kpViewScrollableContainer::endDragScroll ()
     }
 }
 
+//---------------------------------------------------------------------
 
-static const int distanceFromRectToMultiplier (int dist)
+static int distanceFromRectToMultiplier (int dist)
 {
     if (dist < 0)
         return 0;
@@ -1239,6 +1237,7 @@ static const int distanceFromRectToMultiplier (int dist)
         return 4;
 }
 
+//---------------------------------------------------------------------
 
 // protected slot
 bool kpViewScrollableContainer::slotDragScroll (bool *didSomething)

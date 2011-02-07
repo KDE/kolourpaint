@@ -32,9 +32,6 @@
 
 #include <cstdlib>
 
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qcursor.h>
 #include <qimage.h>
 #include <qpainter.h>
 
@@ -57,6 +54,7 @@
 #include <kpToolWidgetEraserSize.h>
 #include <kpViewManager.h>
 
+//---------------------------------------------------------------------
 
 struct kpToolFlowBasePrivate
 {
@@ -89,6 +87,7 @@ struct kpToolFlowBasePrivate
     kpToolFlowCommand *currentCommand;
 };
 
+//---------------------------------------------------------------------
 
 kpToolFlowBase::kpToolFlowBase (const QString &text, const QString &description,
         int key,
@@ -105,11 +104,14 @@ kpToolFlowBase::kpToolFlowBase (const QString &text, const QString &description,
     d->currentCommand = 0;
 }
 
+//---------------------------------------------------------------------
+
 kpToolFlowBase::~kpToolFlowBase ()
 {
     delete d;
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpToolFlowBase::clearBrushCursorData ()
@@ -133,6 +135,7 @@ void kpToolFlowBase::clearBrushCursorData ()
     d->brushIsDiagonalLine = false;
 }
 
+//---------------------------------------------------------------------
 
 // virtual
 void kpToolFlowBase::begin ()
@@ -167,6 +170,8 @@ void kpToolFlowBase::begin ()
     setUserMessage (haventBegunDrawUserMessage ());
 }
 
+//---------------------------------------------------------------------
+
 // virtual
 void kpToolFlowBase::end ()
 {
@@ -195,6 +200,8 @@ void kpToolFlowBase::end ()
     clearBrushCursorData ();
 }
 
+//---------------------------------------------------------------------
+
 // virtual
 void kpToolFlowBase::beginDraw ()
 {
@@ -208,6 +215,8 @@ void kpToolFlowBase::beginDraw ()
 
     setUserMessage (cancelUserMessage ());
 }
+
+//---------------------------------------------------------------------
 
 // virtual
 void kpToolFlowBase::hover (const QPoint &point)
@@ -232,28 +241,18 @@ void kpToolFlowBase::hover (const QPoint &point)
         viewManager ()->restoreFastUpdates ();
     }
 
-#if DEBUG_KP_TOOL_FLOW_BASE && 0
-    if (document ()->rect ().contains (point))
-    {
-        QImage image = kpPixmapFX::convertToQImage (*document ()->pixmap ());
-
-        QRgb v = image.pixel (point.x (), point.y ());
-        kDebug () << "(" << point << "): r=" << qRed (v)
-                    << " g=" << qGreen (v)
-                    << " b=" << qBlue (v)
-                    << " a=" << qAlpha (v)
-                    << endl;
-    }
-#endif
-
     setUserShapePoints (point);
 }
+
+//---------------------------------------------------------------------
 
 // virtual
 QRect kpToolFlowBase::drawPoint (const QPoint &point)
 {
     return drawLine (point, point);
 }
+
+//---------------------------------------------------------------------
 
 // virtual
 void kpToolFlowBase::draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &normalizedRect)
@@ -287,6 +286,8 @@ void kpToolFlowBase::draw (const QPoint &thisPoint, const QPoint &lastPoint, con
     setUserShapePoints (thisPoint);
 }
 
+//---------------------------------------------------------------------
+
 // virtual
 void kpToolFlowBase::cancelShape ()
 {
@@ -301,10 +302,14 @@ void kpToolFlowBase::cancelShape ()
     setUserMessage (i18n ("Let go of all the mouse buttons."));
 }
 
+//---------------------------------------------------------------------
+
 void kpToolFlowBase::releasedAllButtons ()
 {
     setUserMessage (haventBegunDrawUserMessage ());
 }
+
+//---------------------------------------------------------------------
 
 // virtual
 void kpToolFlowBase::endDraw (const QPoint &, const QRect &)
@@ -321,6 +326,7 @@ void kpToolFlowBase::endDraw (const QPoint &, const QRect &)
     setUserMessage (haventBegunDrawUserMessage ());
 }
 
+//---------------------------------------------------------------------
 
 // TODO: maybe the base should be virtual?
 kpColor kpToolFlowBase::color (int which)
@@ -337,12 +343,15 @@ kpColor kpToolFlowBase::color (int which)
         return kpTool::color (which ? 0 : 1);  // don't trust !0 == 1
 }
 
+//---------------------------------------------------------------------
 
 // protected
 kpTempImage::UserFunctionType kpToolFlowBase::brushDrawFunction () const
 {
     return d->brushDrawFunc;
 }
+
+//---------------------------------------------------------------------
 
 // protected
 void *kpToolFlowBase::brushDrawFunctionData () const
@@ -375,6 +384,8 @@ kpToolFlowCommand *kpToolFlowBase::currentCommand () const
 {
     return d->currentCommand;
 }
+
+//---------------------------------------------------------------------
 
 // protected slot
 void kpToolFlowBase::updateBrushAndCursor ()
@@ -422,6 +433,7 @@ void kpToolFlowBase::updateBrushAndCursor ()
     hover (hasBegun () ? currentPoint () : calculateCurrentPoint ());
 }
 
+//---------------------------------------------------------------------
 
 // virtual private slot
 void kpToolFlowBase::slotForegroundColorChanged (const kpColor & /*col*/)
@@ -433,6 +445,8 @@ void kpToolFlowBase::slotForegroundColorChanged (const kpColor & /*col*/)
     updateBrushAndCursor ();
 }
 
+//---------------------------------------------------------------------
+
 // virtual private slot
 void kpToolFlowBase::slotBackgroundColorChanged (const kpColor & /*col*/)
 {
@@ -443,6 +457,7 @@ void kpToolFlowBase::slotBackgroundColorChanged (const kpColor & /*col*/)
     updateBrushAndCursor ();
 }
 
+//---------------------------------------------------------------------
 
 // public static
 QRect kpToolFlowBase::hotRectForMousePointAndBrushWidthHeight (
@@ -463,6 +478,8 @@ QRect kpToolFlowBase::hotRectForMousePointAndBrushWidthHeight (
         brushHeight);
 }
 
+//---------------------------------------------------------------------
+
 // protected
 QRect kpToolFlowBase::hotRect () const
 {
@@ -470,5 +487,6 @@ QRect kpToolFlowBase::hotRect () const
         d->brushWidth, d->brushHeight);
 }
 
+//---------------------------------------------------------------------
 
 #include <kpToolFlowBase.moc>

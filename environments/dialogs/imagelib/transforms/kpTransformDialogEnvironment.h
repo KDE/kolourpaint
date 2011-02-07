@@ -46,10 +46,6 @@ public:
     //       classes we are trying to hide as that would defeat the point of
     //       the facade.
     kpTransformDialogEnvironment (kpMainWindow *mainWindow);
-    virtual ~kpTransformDialogEnvironment ();
-
-private:
-    struct kpTransformDialogEnvironmentPrivate * const d;
 };
 
 

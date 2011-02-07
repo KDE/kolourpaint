@@ -52,7 +52,6 @@
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kmimetype.h>  // LOTODO: isn't this in KIO?
 #include <ktemporaryfile.h>
 
 #include <kpColor.h>
@@ -76,11 +75,15 @@ kpAbstractSelection *kpDocument::selection () const
     return m_selection;
 }
 
+//---------------------------------------------------------------------
+
 // public
 kpAbstractImageSelection *kpDocument::imageSelection () const
 {
     return dynamic_cast <kpAbstractImageSelection *> (m_selection);
 }
+
+//---------------------------------------------------------------------
 
 // public
 kpTextSelection *kpDocument::textSelection () const
@@ -88,6 +91,7 @@ kpTextSelection *kpDocument::textSelection () const
     return dynamic_cast <kpTextSelection *> (m_selection);
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpDocument::setSelection (const kpAbstractSelection &selection)
@@ -171,6 +175,8 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
 #endif
 }
 
+//---------------------------------------------------------------------
+
 // public
 kpImage kpDocument::getSelectedBaseImage () const
 {
@@ -191,6 +197,8 @@ kpImage kpDocument::getSelectedBaseImage () const
     return imageSel->givenImageMaskedByShape (getImageAt (boundingRect));
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpDocument::imageSelectionPullFromDocument (const kpColor &backgroundColor)
 {
@@ -203,9 +211,8 @@ void kpDocument::imageSelectionPullFromDocument (const kpColor &backgroundColor)
     const QRect boundingRect = imageSel->boundingRect ();
     Q_ASSERT (boundingRect.isValid ());
 
-
     //
-    // Get selection pixmap from document
+    // Get selection image from document
     //
 
     kpImage selectedImage = getSelectedBaseImage ();
@@ -213,7 +220,6 @@ void kpDocument::imageSelectionPullFromDocument (const kpColor &backgroundColor)
     d->environ->setQueueViewUpdates ();
 
     imageSel->setBaseImage (selectedImage);
-
 
     //
     // Fill opaque bits of the hole in the document
@@ -239,28 +245,20 @@ void kpDocument::imageSelectionPullFromDocument (const kpColor &backgroundColor)
     }
 #endif
 
-    const kpImage selTransparentImage = imageSel->transparentImage ();
+    kpImage eraseImage(boundingRect.size(), QImage::Format_ARGB32_Premultiplied);
+    eraseImage.fill(backgroundColor.toQRgb());
 
-    if (backgroundColor.isOpaque ())
-    {
-        kpImage eraseImage (boundingRect.width (), boundingRect.height ());
-        eraseImage.fill (backgroundColor.toQColor ());
-
-        if (kpPixmapFX::hasMask (selTransparentImage))
-            eraseImage.setMask (selTransparentImage.mask ());
-
-        paintImageAt (eraseImage, boundingRect.topLeft ());
-    }
-    else
-    {
-        kpPixmapFX::paintMaskTransparentWithBrush (m_image,
-                                                   boundingRect.topLeft (),
-                                                   kpPixmapFX::getNonNullMask (selTransparentImage));
-        slotContentsChanged (boundingRect);
-    }
+    // only paint the region of the shape of the selection
+    QPainter painter(m_image);
+    painter.setClipRegion(imageSel->shapeRegion());
+    painter.setCompositionMode(QPainter::CompositionMode_Source);
+    painter.drawImage(boundingRect.topLeft(), eraseImage);
+    slotContentsChanged(boundingRect);
 
     d->environ->restoreQueueViewUpdates ();
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpDocument::selectionDelete ()
@@ -286,6 +284,8 @@ void kpDocument::selectionDelete ()
 
     emit selectionEnabled (false);
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpDocument::selectionCopyOntoDocument (bool applySelTransparency)
@@ -314,12 +314,16 @@ void kpDocument::selectionCopyOntoDocument (bool applySelTransparency)
     slotContentsChanged (boundingRect);
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpDocument::selectionPushOntoDocument (bool applySelTransparency)
 {
     selectionCopyOntoDocument (applySelTransparency);
     selectionDelete ();
 }
+
+//---------------------------------------------------------------------
 
 // public
 kpImage kpDocument::imageWithSelection () const
@@ -353,3 +357,4 @@ kpImage kpDocument::imageWithSelection () const
     }
 }
 
+//---------------------------------------------------------------------

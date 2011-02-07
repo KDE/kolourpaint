@@ -34,7 +34,6 @@
 
 
 class QImage;
-class QPixmap;
 class QPolygon;
 class QString;
 
@@ -65,8 +64,8 @@ public:
     //       implementations of kpCommand::size()).
     typedef qlonglong SizeType;
 
-    static SizeType PixmapSize (const QPixmap &pixmap);
-    static SizeType PixmapSize (const QPixmap *pixmap);
+    static SizeType PixmapSize (const QImage &image);
+    static SizeType PixmapSize (const QImage *image);
     static SizeType PixmapSize (int width, int height, int depth);
 
     static SizeType QImageSize (const QImage &image);

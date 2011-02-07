@@ -669,6 +669,8 @@ void kpDocumentMetaInfoDialog::slotFieldsCurrentCellChanged (int row, int col,
     enableFieldsDeleteRowButtonIfShould ();
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpDocumentMetaInfoDialog::slotFieldsItemActivated (QTableWidgetItem *item)
 {
@@ -677,6 +679,8 @@ void kpDocumentMetaInfoDialog::slotFieldsItemActivated (QTableWidgetItem *item)
               << "item=" << item << ")" << endl;
 #endif
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpDocumentMetaInfoDialog::slotFieldsItemChanged (QTableWidgetItem *it)

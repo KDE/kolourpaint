@@ -33,40 +33,22 @@
 #define DEBUG_KP_TOOL 0
 
 
-// TODO: reduce number of includes
 #include <kpTool.h>
 #include <kpToolPrivate.h>
 
-#include <limits.h>
-
 #include <qapplication.h>
-#include <qclipboard.h>
-#include <qcursor.h>
-#include <qevent.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qpixmap.h>
 
-#include <kactioncollection.h>
-#include <kapplication.h>
 #include <kdebug.h>
-#include <kiconloader.h>
-#include <klocale.h>
-#include <kmessagebox.h>
 
-#include <kpColor.h>
-#include <kpColorToolBar.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpImage.h>
-#include <kpPixmapFX.h>
-#include <kpToolAction.h>
 #include <kpToolEnvironment.h>
-#include <kpToolToolBar.h>
 #include <kpView.h>
 #include <kpViewManager.h>
+
+#include <bugfix.h>
+
 #undef environ  // macro on win32
 
+//---------------------------------------------------------------------
 
 // protected
 int kpTool::mouseButton () const
@@ -74,6 +56,7 @@ int kpTool::mouseButton () const
     return d->mouseButton;
 }
 
+//---------------------------------------------------------------------
 
 // protected
 bool kpTool::shiftPressed () const
@@ -81,11 +64,15 @@ bool kpTool::shiftPressed () const
     return d->shiftPressed;
 }
 
+//---------------------------------------------------------------------
+
 // protected
 bool kpTool::controlPressed () const
 {
     return d->controlPressed;
 }
+
+//---------------------------------------------------------------------
 
 // protected
 bool kpTool::altPressed () const
@@ -100,6 +87,7 @@ QPoint kpTool::startPoint () const
     return d->startPoint;
 }
 
+//---------------------------------------------------------------------
 
 // protected
 QPoint kpTool::currentPoint () const
@@ -109,19 +97,23 @@ QPoint kpTool::currentPoint () const
     return d->currentPoint;
 }
 
+//---------------------------------------------------------------------
+
 // protected
 QPoint kpTool::currentViewPoint () const
 {
     return d->currentViewPoint;
 }
 
+//---------------------------------------------------------------------
 
 // protected
 QRect kpTool::normalizedRect () const
 {
-    return QRect (d->startPoint, d->currentPoint).normalized();
+    return bugfix_QRect (d->startPoint, d->currentPoint).normalized();
 }
 
+//---------------------------------------------------------------------
 
 // protected
 QPoint kpTool::lastPoint () const
@@ -129,12 +121,15 @@ QPoint kpTool::lastPoint () const
     return d->lastPoint;
 }
 
+//---------------------------------------------------------------------
 
 // protected
 kpView *kpTool::viewUnderStartPoint () const
 {
     return d->viewUnderStartPoint;
 }
+
+//---------------------------------------------------------------------
 
 // protected
 kpView *kpTool::viewUnderCursor () const
@@ -143,6 +138,7 @@ kpView *kpTool::viewUnderCursor () const
     return vm ? vm->viewUnderCursor () : 0;
 }
 
+//---------------------------------------------------------------------
 
 void kpTool::beginInternal ()
 {
@@ -184,6 +180,8 @@ void kpTool::beginInternal ()
     }
 }
 
+//---------------------------------------------------------------------
+
 void kpTool::endInternal ()
 {
     if (d->began)
@@ -209,6 +207,8 @@ void kpTool::endInternal ()
     }
 }
 
+//---------------------------------------------------------------------
+
 // virtual
 void kpTool::begin ()
 {
@@ -216,6 +216,8 @@ void kpTool::begin ()
     kDebug () << "kpTool::begin() base implementation";
 #endif
 }
+
+//---------------------------------------------------------------------
 
 // virtual
 void kpTool::end ()
@@ -225,13 +227,21 @@ void kpTool::end ()
 #endif
 }
 
+//---------------------------------------------------------------------
+
 
 bool kpTool::hasBegun () const { return d->began; }
 
+//---------------------------------------------------------------------
+
 bool kpTool::hasBegunDraw () const { return d->beganDraw; }
+
+//---------------------------------------------------------------------
 
 // virtual
 bool kpTool::hasBegunShape () const { return hasBegunDraw (); }
+
+//---------------------------------------------------------------------
 
 
 void kpTool::beginDrawInternal ()
@@ -245,10 +255,14 @@ void kpTool::beginDrawInternal ()
     }
 }
 
+//---------------------------------------------------------------------
+
 // virtual
 void kpTool::beginDraw ()
 {
 }
+
+//---------------------------------------------------------------------
 
 // virtual
 void kpTool::hover (const QPoint &point)
@@ -262,10 +276,14 @@ void kpTool::hover (const QPoint &point)
     setUserShapePoints (point);
 }
 
+//---------------------------------------------------------------------
+
 // virtual
 void kpTool::globalDraw ()
 {
 }
+
+//---------------------------------------------------------------------
 
 // virtual
 void kpTool::reselect ()
@@ -275,17 +293,23 @@ void kpTool::reselect ()
 #endif
 }
 
+//---------------------------------------------------------------------
+
 
 // virtual
 void kpTool::draw (const QPoint &, const QPoint &, const QRect &)
 {
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpTool::drawInternal ()
 {
     draw (d->currentPoint, d->lastPoint, normalizedRect ());
 }
+
+//---------------------------------------------------------------------
 
 
 // also called by kpView
@@ -315,15 +339,21 @@ void kpTool::cancelShapeInternal ()
     }
 }
 
+//---------------------------------------------------------------------
+
 // virtual
 void kpTool::cancelShape ()
 {
     kWarning () << "Tool cannot cancel operation!" ;
 }
 
+//---------------------------------------------------------------------
+
 void kpTool::releasedAllButtons ()
 {
 }
+
+//---------------------------------------------------------------------
 
 void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRect,
                               bool wantEndShape)
@@ -369,31 +399,9 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
     {
         d->environ->selectPreviousTool ();
     }
-
-
-    // HACK: Since calls to endDrawInternal() happen fairly often (in fact,
-    //       after almost every time the mouse button is released), this is
-    //       a good place for us to test for a critical invariant and to
-    //       restore it if buggy code broke it (such code is far too easy to
-    //       write, so leave this check in, even in release builds).
-    //       This is far more efficient than using a timer or similar.
-    //
-    //       Note that the invariant has usually already been inadvertently
-    //       restored by kpPixmapFX::draw() (which does mask tricks), which
-    //       is called via most tools calling kpDocument::setPixmapAt(), in
-    //       draw() and/or endDraw().  So the below code is really just in
-    //       case this has not happened.
-    kpImage *docImage = document ()->imagePointer ();
-    if (kpPixmapFX::hasAlphaChannel (*docImage))
-    {
-        // If this has been set to assert-crash (usually for debugging),
-        // then assert-crash.  Otherwise, this just prints a warning.
-        KP_PFX_CHECK_NO_ALPHA_CHANNEL (*docImage);
-
-        kError () << "Restoring no-alpha-channel invariant.";
-        kpPixmapFX::ensureNoAlphaChannel (docImage);
-    }
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpTool::endShapeInternal (const QPoint &thisPoint, const QRect &normalizedRect)
@@ -401,8 +409,11 @@ void kpTool::endShapeInternal (const QPoint &thisPoint, const QRect &normalizedR
     endDrawInternal (thisPoint, normalizedRect, true/*end shape*/);
 }
 
+//---------------------------------------------------------------------
+
 // virtual
 void kpTool::endDraw (const QPoint &, const QRect &)
 {
 }
 
+//---------------------------------------------------------------------

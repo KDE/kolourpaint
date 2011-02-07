@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -29,40 +28,12 @@
 // Tools' statusbar updates.
 //
 
-
-#define DEBUG_KP_TOOL 0
-
-
-// LOREFACTOR: reduce number of includes
 #include <kpTool.h>
 #include <kpToolPrivate.h>
 
-#include <limits.h>
-
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qcursor.h>
-#include <qevent.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-
-#include <kapplication.h>
-#include <kdebug.h>
-#include <kiconloader.h>
 #include <klocale.h>
-#include <kmessagebox.h>
 
-#include <kpColor.h>
-#include <kpColorToolBar.h>
-#include <kpDefs.h>
-#include <kpPixmapFX.h>
-#include <kpToolAction.h>
-#include <kpToolToolBar.h>
-#include <kpView.h>
-#include <kpViewManager.h>
-#include <kactioncollection.h>
-
+//---------------------------------------------------------------------
 
 // public static
 QString kpTool::cancelUserMessage (int mouseButton)
@@ -73,18 +44,23 @@ QString kpTool::cancelUserMessage (int mouseButton)
         return i18n ("Left click to cancel.");
 }
 
+//---------------------------------------------------------------------
+
 // public
 QString kpTool::cancelUserMessage () const
 {
     return cancelUserMessage (d->mouseButton);
 }
 
+//---------------------------------------------------------------------
 
 // public
 QString kpTool::userMessage () const
 {
     return d->userMessage;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpTool::setUserMessage (const QString &userMessage)
@@ -99,6 +75,7 @@ void kpTool::setUserMessage (const QString &userMessage)
     emit userMessageChanged (d->userMessage);
 }
 
+//---------------------------------------------------------------------
 
 // public
 QPoint kpTool::userShapeStartPoint () const
@@ -106,11 +83,15 @@ QPoint kpTool::userShapeStartPoint () const
     return d->userShapeStartPoint;
 }
 
+//---------------------------------------------------------------------
+
 // public
 QPoint kpTool::userShapeEndPoint () const
 {
     return d->userShapeEndPoint;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpTool::setUserShapePoints (const QPoint &startPoint,
@@ -136,11 +117,15 @@ void kpTool::setUserShapePoints (const QPoint &startPoint,
     }
 }
 
+//---------------------------------------------------------------------
+
 // public
 QSize kpTool::userShapeSize () const
 {
     return d->userShapeSize;
 }
+
+//---------------------------------------------------------------------
 
 // public
 int kpTool::userShapeWidth () const
@@ -148,11 +133,15 @@ int kpTool::userShapeWidth () const
     return d->userShapeSize.width ();
 }
 
+//---------------------------------------------------------------------
+
 // public
 int kpTool::userShapeHeight () const
 {
     return d->userShapeSize.height ();
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpTool::setUserShapeSize (const QSize &size)
@@ -164,8 +153,12 @@ void kpTool::setUserShapeSize (const QSize &size)
                                d->userShapeSize.height ());
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpTool::setUserShapeSize (int width, int height)
 {
     setUserShapeSize (QSize (width, height));
 }
+
+//---------------------------------------------------------------------

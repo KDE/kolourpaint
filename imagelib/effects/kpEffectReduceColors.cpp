@@ -31,18 +31,18 @@
 
 #include <kpEffectReduceColors.h>
 
-#include <qbitmap.h>
 #include <qimage.h>
-#include <qpixmap.h>
 
 #include <kdebug.h>
 
 #include <kpPixmapFX.h>
 
+//---------------------------------------------------------------------
 
 static QImage::Format DepthToFormat (int depth)
 {
     // These values (1, 8, 32) are QImage's supported depths.
+    // TODO: Qt-4.7.1 supports 1, 8, 16, 24 and 32.
     switch (depth)
     {
     case 1:
@@ -63,6 +63,8 @@ static QImage::Format DepthToFormat (int depth)
         return QImage::Format_Invalid;
     }
 }
+
+//---------------------------------------------------------------------
 
 // public static
 QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, bool dither)
@@ -177,7 +179,6 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
         }
     }
 
-
     QImage retImage = image.convertToFormat (::DepthToFormat (depth),
         Qt::AutoColor |
         (dither ? Qt::DiffuseDither : Qt::ThresholdDither) |
@@ -203,57 +204,31 @@ QImage kpEffectReduceColors::convertImageDepth (const QImage &image, int depth, 
     return retImage;
 }
 
+//---------------------------------------------------------------------
 
 // public static
-void kpEffectReduceColors::applyEffect (QPixmap *destPixmapPtr, int depth, bool dither)
+void kpEffectReduceColors::applyEffect (QImage *destPtr, int depth, bool dither)
 {
-    if (!destPixmapPtr)
+    if (!destPtr)
         return;
 
     // You can't "reduce" to 32-bit since it's the highest depth.
     if (depth != 1 && depth != 8)
         return;
 
+    *destPtr = kpEffectReduceColors::convertImageDepth (*destPtr, depth, dither);
 
-    QImage image = kpPixmapFX::convertToQImage (*destPixmapPtr);
-
-
-    image = kpEffectReduceColors::convertImageDepth (image, depth, dither);
-
-    if (image.isNull ())
+    if (destPtr->isNull ())
         return;
-
-
-    QPixmap pixmap = kpPixmapFX::convertToPixmap (image, false/*no dither*/);
-
-
-#if DEBUG_KP_EFFECT_REDUCE_COLORS
-    kDebug () << "after image depth conversion: hasMask="
-              << kpPixmapFX::hasMask (pixmap)
-              << " src.hasMask="
-              << kpPixmapFX::hasMask (*destPixmapPtr);
-#endif
-    
-
-    // HACK: The above "image.convertToFormat()" erases the mask
-    //       (at least for monochrome).
-    //       qpixmap.html says "alpha masks on monochrome images are ignored."
-    //
-    //       Put the mask back.
-    //
-    //       Still required under Qt 4.3.1.
-    if (kpPixmapFX::hasMask (*destPixmapPtr))
-        pixmap.setMask (destPixmapPtr->mask ());
-
-    *destPixmapPtr = pixmap;
 }
 
-// public static
-QPixmap kpEffectReduceColors::applyEffect (const QPixmap &pm, int depth, bool dither)
+//---------------------------------------------------------------------
+
+QImage kpEffectReduceColors::applyEffect (const QImage &pm, int depth, bool dither)
 {
-    QPixmap ret = pm;
+    QImage ret = pm;
     applyEffect (&ret, depth, dither);
     return ret;
 }
 
-
+//---------------------------------------------------------------------

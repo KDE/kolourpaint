@@ -27,11 +27,11 @@
 
 
 #include <kpToolEllipse.h>
+#include <kpPainter.h>
 
 #include <klocale.h>
 
-#include <kpPainter.h>
-
+//---------------------------------------------------------------------
 
 kpToolEllipse::kpToolEllipse (kpToolEnvironment *environ, QObject *parent)
     : kpToolRectangularBase (i18n ("Ellipse"),
@@ -42,9 +42,6 @@ kpToolEllipse::kpToolEllipse (kpToolEnvironment *environ, QObject *parent)
 {
 }
 
-kpToolEllipse::~kpToolEllipse ()
-{
-}
-
+//---------------------------------------------------------------------
 
 #include <kpToolEllipse.moc>

@@ -107,7 +107,7 @@ public:
 //
 
 public:
-    virtual void paintBorder (QPixmap *destPixmap, const QRect &docRect,
+    virtual void paintBorder (QImage *destPixmap, const QRect &docRect,
         bool selectionFinished) const;
 
 

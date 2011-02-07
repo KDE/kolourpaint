@@ -50,8 +50,11 @@ public:
     static QImage convertImageDepth (const QImage &image, int depth, bool dither);
 
     // (always preserves mask)
-    static void applyEffect (QPixmap *destPixmapPtr, int depth, bool dither);
-    static QPixmap applyEffect (const QPixmap &pm, int depth, bool dither);
+    //static void applyEffect (QPixmap *destPixmapPtr, int depth, bool dither);
+    //static QPixmap applyEffect (const QPixmap &pm, int depth, bool dither);
+
+    static void applyEffect (QImage *destPixmapPtr, int depth, bool dither);
+    static QImage applyEffect (const QImage &pm, int depth, bool dither);
 };
 
 

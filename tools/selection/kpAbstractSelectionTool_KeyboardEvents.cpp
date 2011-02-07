@@ -29,39 +29,18 @@
 #define DEBUG_KP_TOOL_SELECTION 0
 
 
+#include <kpDocument.h>
 #include <kpAbstractSelectionTool.h>
 #include <kpAbstractSelectionToolPrivate.h>
-
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qcursor.h>
-#include <qevent.h>
-#include <qmenu.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qpolygon.h>
-#include <qtimer.h>
-
-#include <kdebug.h>
-#include <klocale.h>
-
-#include <kpAbstractImageSelection.h>
-#include <kpAbstractSelection.h>
-#include <kpCommandHistory.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpMacroCommand.h>
-#include <kpToolSelectionCreateCommand.h>
-#include <kpToolSelectionDestroyCommand.h>
 #include <kpToolSelectionEnvironment.h>
 #include <kpToolSelectionMoveCommand.h>
-#include <kpToolSelectionResizeScaleCommand.h>
-#include <kpToolImageSelectionTransparencyCommand.h>
-#include <kpToolToolBar.h>
-#include <kpToolWidgetOpaqueOrTransparent.h>
-#include <kpView.h>
-#include <kpViewManager.h>
+#include <kpAbstractSelection.h>
 
+#include <qevent.h>
+
+#include <kdebug.h>
+
+//---------------------------------------------------------------------
 
 // protected virtual [base kpTool]
 void kpAbstractSelectionTool::keyPressEvent (QKeyEvent *e)
@@ -71,9 +50,7 @@ void kpAbstractSelectionTool::keyPressEvent (QKeyEvent *e)
               << e->text () << "')" << endl;
 #endif
 
-
     e->ignore ();
-
 
     if (document ()->selection () &&
         !hasBegunDraw () &&
@@ -87,9 +64,7 @@ void kpAbstractSelectionTool::keyPressEvent (QKeyEvent *e)
         pushOntoDocument ();
         e->accept ();
     }
-
-
-    if (!e->isAccepted ())
+    else
     {
     #if DEBUG_KP_TOOL_SELECTION && 0
         kDebug () << "\tkey processing did not accept (text was '"
@@ -98,7 +73,31 @@ void kpAbstractSelectionTool::keyPressEvent (QKeyEvent *e)
                    << endl;
     #endif
 
-        kpTool::keyPressEvent (e);
-        return;
+      if ( document()->selection() && !hasBegunDraw() &&
+           ((e->key() == Qt::Key_Left) ||
+            (e->key() == Qt::Key_Right) ||
+            (e->key() == Qt::Key_Up) ||
+            (e->key() == Qt::Key_Down)) )
+      {
+        // move selection with cursor keys pixel-wise
+        giveContentIfNeeded();
+
+        if ( !d->currentMoveCommand )
+        {
+          d->currentMoveCommand = new kpToolSelectionMoveCommand(
+              QString::null/*uninteresting child of macro cmd*/,	//krazy:exclude=nullstrassign for old broken gcc
+              environ()->commandEnvironment());
+          d->currentMoveCommandIsSmear = false;
+        }
+
+        int dx, dy;
+        arrowKeyPressDirection(e, &dx, &dy);
+        d->currentMoveCommand->moveTo(document()->selection()->topLeft() + QPoint(dx, dy));
+        endDrawMove();
+      }
+      else
+        kpTool::keyPressEvent(e);
     }
 }
+
+//---------------------------------------------------------------------

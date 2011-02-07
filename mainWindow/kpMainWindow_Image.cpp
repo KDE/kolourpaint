@@ -63,7 +63,6 @@
 #include <kpTransformCrop.h>
 #include <kpTransformDialogEnvironment.h>
 #include <kpTransformFlipCommand.h>
-#include <kpTransformFlipDialog.h>
 #include <kpTransformResizeScaleCommand.h>
 #include <kpTransformResizeScaleDialog.h>
 #include <kpTransformRotateCommand.h>
@@ -72,6 +71,8 @@
 #include <kpTransformSkewDialog.h>
 #include <kpViewManager.h>
 
+
+//---------------------------------------------------------------------
 
 // private
 kpTransformDialogEnvironment *kpMainWindow::transformDialogEnvironment ()
@@ -82,6 +83,7 @@ kpTransformDialogEnvironment *kpMainWindow::transformDialogEnvironment ()
     return d->transformDialogEnvironment;
 }
 
+//---------------------------------------------------------------------
 
 // private
 bool kpMainWindow::isSelectionActive () const
@@ -89,12 +91,15 @@ bool kpMainWindow::isSelectionActive () const
     return (d->document ? bool (d->document->selection ()) : false);
 }
 
+//---------------------------------------------------------------------
+
 // private
 bool kpMainWindow::isTextSelection () const
 {
     return (d->document && d->document->textSelection ());
 }
 
+//---------------------------------------------------------------------
 
 // private
 QString kpMainWindow::autoCropText () const
@@ -103,6 +108,7 @@ QString kpMainWindow::autoCropText () const
                                         kpTransformAutoCropCommand::ShowAccel);
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::setupImageMenuActions ()
@@ -125,9 +131,14 @@ void kpMainWindow::setupImageMenuActions ()
     d->actionAutoCrop->setShortcut(Qt::CTRL + Qt::Key_U);
 
     d->actionFlip = ac->addAction ("image_flip");
-    d->actionFlip->setText (i18n ("&Flip..."));
+    d->actionFlip->setText (i18n ("&Flip (upside down)"));
     connect (d->actionFlip, SIGNAL (triggered (bool)), SLOT (slotFlip ()));
     d->actionFlip->setShortcut(Qt::CTRL + Qt::Key_F);
+
+    d->actionMirror = ac->addAction ("image_mirror");
+    d->actionMirror->setText (i18n ("Mirror (horizontally)"));
+    connect (d->actionMirror, SIGNAL (triggered (bool)), SLOT (slotMirror ()));
+    //d->actionMirror->setShortcut(Qt::CTRL + Qt::Key_M);
 
     d->actionRotate = ac->addAction ("image_rotate");
     d->actionRotate->setText (i18n ("&Rotate..."));
@@ -179,6 +190,8 @@ void kpMainWindow::setupImageMenuActions ()
     enableImageMenuDocumentActions (false);
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpMainWindow::enableImageMenuDocumentActions (bool enable)
 {
@@ -186,6 +199,7 @@ void kpMainWindow::enableImageMenuDocumentActions (bool enable)
     d->actionCrop->setEnabled (enable);
     d->actionAutoCrop->setEnabled (enable);
     d->actionFlip->setEnabled (enable);
+    d->actionMirror->setEnabled (enable);
     d->actionRotate->setEnabled (enable);
     d->actionRotateLeft->setEnabled (enable);
     d->actionRotateRight->setEnabled (enable);
@@ -199,6 +213,7 @@ void kpMainWindow::enableImageMenuDocumentActions (bool enable)
     d->imageMenuDocumentActionsEnabled = enable;
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotImageMenuUpdateDueToSelection ()
@@ -237,6 +252,7 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
     d->actionAutoCrop->setText (autoCropText ());
     d->actionAutoCrop->setEnabled (enable);
     d->actionFlip->setEnabled (enable);
+    d->actionMirror->setEnabled (enable);
     d->actionRotate->setEnabled (enable);
     d->actionRotateLeft->setEnabled (enable);
     d->actionRotateRight->setEnabled (enable);
@@ -248,6 +264,7 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
     d->actionMoreEffects->setEnabled (enable);
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpColor kpMainWindow::backgroundColor (bool ofSelection) const
@@ -261,6 +278,7 @@ kpColor kpMainWindow::backgroundColor (bool ofSelection) const
     }
 }
 
+//---------------------------------------------------------------------
 
 // public
 // REFACTOR: sync: Code dup with kpAbstractSelectionTool::addNeedingContentCommand().
@@ -356,6 +374,8 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
         d->viewManager->restoreQueueUpdates ();
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotResizeScale ()
 {
@@ -415,6 +435,8 @@ void kpMainWindow::slotCrop ()
     ::kpTransformCrop (this);
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotAutoCrop ()
 {
@@ -423,22 +445,31 @@ void kpMainWindow::slotAutoCrop ()
     ::kpTransformAutoCrop (this);
 }
 
+//---------------------------------------------------------------------
+
 // private slot
-void kpMainWindow::slotFlip ()
+void kpMainWindow::slotFlip()
 {
-    toolEndShape ();
+    toolEndShape();
 
-    kpTransformFlipDialog dialog ((bool) d->document->selection (), this);
-
-    if (dialog.exec () && !dialog.isNoOp ())
-    {
-        addImageOrSelectionCommand (
-            new kpTransformFlipCommand (d->document->selection (),
-                                   dialog.getHorizontalFlip (), dialog.getVerticalFlip (),
-                                   commandEnvironment ()));
-    }
+    addImageOrSelectionCommand(
+        new kpTransformFlipCommand(d->document->selection(),
+                                   false, true, commandEnvironment()));
 }
 
+//---------------------------------------------------------------------
+
+// private slot
+void kpMainWindow::slotMirror()
+{
+    toolEndShape();
+
+    addImageOrSelectionCommand(
+        new kpTransformFlipCommand(d->document->selection(),
+                                   true, false, commandEnvironment()));
+}
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotRotate ()
@@ -501,6 +532,8 @@ void kpMainWindow::slotSkew ()
     }
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotConvertToBlackAndWhite ()
 {
@@ -511,6 +544,8 @@ void kpMainWindow::slotConvertToBlackAndWhite ()
             d->document->selection (),
             commandEnvironment ()));
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotConvertToGrayscale ()

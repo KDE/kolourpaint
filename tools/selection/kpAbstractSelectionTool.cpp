@@ -52,6 +52,9 @@
 #include <kpView.h>
 #include <kpViewManager.h>
 
+#include <bugfix.h>
+
+//---------------------------------------------------------------------
 
 // For either of these timers, they are only active during the "drawing" phase
 // of kpTool.
@@ -61,6 +64,7 @@ static void AssertAllTimersInactive (struct kpAbstractSelectionToolPrivate *d)
     Q_ASSERT (!d->RMBMoveUpdateGUITimer->isActive ());
 }
 
+//---------------------------------------------------------------------
 
 kpAbstractSelectionTool::kpAbstractSelectionTool (
         const QString &text,
@@ -92,6 +96,8 @@ kpAbstractSelectionTool::kpAbstractSelectionTool (
     ::AssertAllTimersInactive (d);
 }
 
+//---------------------------------------------------------------------
+
 kpAbstractSelectionTool::~kpAbstractSelectionTool ()
 {
     uninitCreate ();
@@ -114,6 +120,7 @@ kpAbstractSelectionTool::~kpAbstractSelectionTool ()
     delete d;
 }
 
+//---------------------------------------------------------------------
 
 // protected
 kpAbstractSelectionTool::DrawType kpAbstractSelectionTool::drawType () const
@@ -121,12 +128,15 @@ kpAbstractSelectionTool::DrawType kpAbstractSelectionTool::drawType () const
     return d->drawType;
 }
 
+//---------------------------------------------------------------------
+
 // protected
 bool kpAbstractSelectionTool::hadSelectionBeforeDraw () const
 {
     return d->hadSelectionBeforeDraw;
 }
 
+//---------------------------------------------------------------------
 
 // protected overrides [base kpTool]
 kpToolSelectionEnvironment *kpAbstractSelectionTool::environ () const
@@ -136,6 +146,7 @@ kpToolSelectionEnvironment *kpAbstractSelectionTool::environ () const
     return static_cast <kpToolSelectionEnvironment *> (e);
 }
 
+//---------------------------------------------------------------------
 
 // protected
 bool kpAbstractSelectionTool::controlOrShiftPressed () const
@@ -143,6 +154,7 @@ bool kpAbstractSelectionTool::controlOrShiftPressed () const
     return (controlPressed () || shiftPressed ());
 }
 
+//---------------------------------------------------------------------
 
 // protected
 void kpAbstractSelectionTool::pushOntoDocument ()
@@ -155,6 +167,7 @@ void kpAbstractSelectionTool::pushOntoDocument ()
     environ ()->deselectSelection ();
 }
 
+//---------------------------------------------------------------------
 
 // protected
 void kpAbstractSelectionTool::giveContentIfNeeded ()
@@ -171,6 +184,8 @@ void kpAbstractSelectionTool::giveContentIfNeeded ()
     d->currentSelContentCommand = /*virtual*/newGiveContentCommand ();
     d->currentSelContentCommand->execute ();
 }
+
+//---------------------------------------------------------------------
 
 // protected
 // REFACTOR: sync: Code dup with kpMainWindow::addImageOrSelectionCommand ().
@@ -216,6 +231,8 @@ void kpAbstractSelectionTool::addNeedingContentCommand (kpCommand *cmd)
     }
 }
 
+//---------------------------------------------------------------------
+
 
 // protected virtual
 void kpAbstractSelectionTool::setSelectionBorderForHaventBegunDraw ()
@@ -227,6 +244,8 @@ void kpAbstractSelectionTool::setSelectionBorderForHaventBegunDraw ()
     }
     viewManager ()->restoreQueueUpdates ();
 }
+
+//---------------------------------------------------------------------
 
 // private
 QString kpAbstractSelectionTool::haventBegunDrawUserMessage ()
@@ -244,6 +263,7 @@ QString kpAbstractSelectionTool::haventBegunDrawUserMessage ()
     return operation (calculateDrawType (), HaventBegunDrawUserMessage).toString ();
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpTool]
 void kpAbstractSelectionTool::begin ()
@@ -253,7 +273,6 @@ void kpAbstractSelectionTool::begin ()
 #endif
 
     ::AssertAllTimersInactive (d);
-
 
     // (state must be after construction, or after some time after end())
     Q_ASSERT (d->drawType == None);
@@ -284,6 +303,8 @@ void kpAbstractSelectionTool::begin ()
 
     setUserMessage (haventBegunDrawUserMessage ());
 }
+
+//---------------------------------------------------------------------
 
 // public virtual [base kpTool]
 void kpAbstractSelectionTool::end ()
@@ -322,6 +343,7 @@ void kpAbstractSelectionTool::end ()
     ::AssertAllTimersInactive (d);
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpTool]
 void kpAbstractSelectionTool::reselect ()
@@ -334,6 +356,7 @@ void kpAbstractSelectionTool::reselect ()
         pushOntoDocument ();
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual
 kpAbstractSelectionTool::DrawType kpAbstractSelectionTool::calculateDrawTypeInsideSelection () const
@@ -343,6 +366,8 @@ kpAbstractSelectionTool::DrawType kpAbstractSelectionTool::calculateDrawTypeInsi
 #endif
     return kpAbstractSelectionTool::Move;
 }
+
+//---------------------------------------------------------------------
 
 // protected virtual
 kpAbstractSelectionTool::DrawType kpAbstractSelectionTool::calculateDrawType () const
@@ -362,6 +387,8 @@ kpAbstractSelectionTool::DrawType kpAbstractSelectionTool::calculateDrawType () 
         return Create;
 }
 
+//---------------------------------------------------------------------
+
 // public virtual [base kpTool]
 void kpAbstractSelectionTool::beginDraw ()
 {
@@ -376,7 +403,6 @@ void kpAbstractSelectionTool::beginDraw ()
     // endDraw() and cancelShape() should have taken care of these.
     ::AssertAllTimersInactive (d);
 
-
     // In case the cursor was wrong to start with
     // (forgot to call kpTool::somethingBelowTheCursorChanged()),
     // make sure it is correct during this operation.
@@ -386,7 +412,7 @@ void kpAbstractSelectionTool::beginDraw ()
     if (hasBegunShape ())
     {
         endShape (currentPoint (),
-                QRect (startPoint ()/* TODO: wrong */, currentPoint ()).normalized());
+                bugfix_QRect (startPoint ()/* TODO: wrong */, currentPoint ()).normalized());
     }
 
     d->drawType = calculateDrawType ();
@@ -397,6 +423,8 @@ void kpAbstractSelectionTool::beginDraw ()
 
     operation (d->drawType, BeginDraw);
 }
+
+//---------------------------------------------------------------------
 
 
 // public virtual [base kpTool]
@@ -424,10 +452,12 @@ void kpAbstractSelectionTool::hover (const QPoint &point)
         setUserMessage (mess);
 }
 
+//---------------------------------------------------------------------
+
 
 // public virtual [base kpTool]
 void kpAbstractSelectionTool::draw (const QPoint &thisPoint, const QPoint & /*lastPoint*/,
-                            const QRect &normalizedRect)
+                                    const QRect &normalizedRect)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
     kDebug () << "kpAbstractSelectionTool::draw (" << thisPoint
@@ -446,6 +476,8 @@ void kpAbstractSelectionTool::draw (const QPoint &thisPoint, const QPoint & /*la
 
     operation (d->drawType, Draw);
 }
+
+//---------------------------------------------------------------------
 
 
 // public virtual [base kpTool]
@@ -490,6 +522,8 @@ void kpAbstractSelectionTool::cancelShape ()
     ::AssertAllTimersInactive (d);
 }
 
+//---------------------------------------------------------------------
+
 // public virtual [base kpTool]
 void kpAbstractSelectionTool::releasedAllButtons ()
 {
@@ -497,6 +531,7 @@ void kpAbstractSelectionTool::releasedAllButtons ()
     setUserMessage (haventBegunDrawUserMessage ());
 }
 
+//---------------------------------------------------------------------
 
 // protected
 void kpAbstractSelectionTool::popupRMBMenu ()
@@ -523,6 +558,8 @@ void kpAbstractSelectionTool::popupRMBMenu ()
     kDebug () << "DONE";
 #endif
 }
+
+//---------------------------------------------------------------------
 
 // public virtual [base kpTool]
 void kpAbstractSelectionTool::endDraw (const QPoint & /*thisPoint*/,
@@ -561,6 +598,7 @@ void kpAbstractSelectionTool::endDraw (const QPoint & /*thisPoint*/,
     //          (see the popupRMBMenu() API).
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual
 QVariant kpAbstractSelectionTool::operation (DrawType drawType, Operation op,
@@ -582,10 +620,12 @@ QVariant kpAbstractSelectionTool::operation (DrawType drawType, Operation op,
         return operationResizeScale (op, data1, data2);
 
     default:
-        Q_ASSERT (!"Unhandled drag type");
+        Q_ASSERT (!"Unhandled draw type");
         return QVariant ();
     }
 }
+
+//---------------------------------------------------------------------
 
 
 #include <kpAbstractSelectionTool.moc>

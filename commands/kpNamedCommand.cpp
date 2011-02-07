@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -25,12 +24,9 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-#define DEBUG_KP_COMMAND_HISTORY 0
-
-
 #include <kpNamedCommand.h>
 
+//---------------------------------------------------------------------
 
 kpNamedCommand::kpNamedCommand (const QString &name, kpCommandEnvironment *environ)
     : kpCommand (environ),
@@ -38,10 +34,7 @@ kpNamedCommand::kpNamedCommand (const QString &name, kpCommandEnvironment *envir
 {
 }
 
-kpNamedCommand::~kpNamedCommand ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
 QString kpNamedCommand::name () const
@@ -49,3 +42,4 @@ QString kpNamedCommand::name () const
     return m_name;
 }
 
+//---------------------------------------------------------------------

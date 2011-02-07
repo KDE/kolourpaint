@@ -87,8 +87,8 @@ protected:
     }
 
     virtual QSize newDimensions () const = 0;
-    virtual QPixmap transformPixmap (const QPixmap &pixmap,
-                                     int targetWidth, int targetHeight) const = 0;
+    virtual QImage transformPixmap (const QImage &pixmap,
+                                    int targetWidth, int targetHeight) const = 0;
 
 public:
     // Use to avoid excessive, expensive preview pixmap label recalcuations,
@@ -132,7 +132,7 @@ protected:
     QGroupBox *m_previewGroupBox;
     kpResizeSignallingLabel *m_previewPixmapLabel;
     QSize m_previewPixmapLabelSizeWhenUpdatedPixmap;
-    QPixmap m_shrunkenDocumentPixmap;
+    QImage m_shrunkenDocumentPixmap;
 
     QGridLayout *m_gridLayout;
     int m_gridNumRows;

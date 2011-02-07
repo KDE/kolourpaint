@@ -1,8 +1,9 @@
 
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
-   Copyright (c) 2007 Martin Koller <m.koller@surfeu.at>
+   Copyright (c) 2007 Martin Koller <kollix@aon.at>
    Copyright (c) 2007 John Layt <john@layt.net>
+   Copyright (c) 2011 Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -358,6 +359,7 @@ void kpMainWindow::setDocumentChoosingWindow (kpDocument *doc)
     }
 }
 
+//---------------------------------------------------------------------
 
 // private
 kpDocument *kpMainWindow::openInternal (const KUrl &url,
@@ -391,6 +393,8 @@ kpDocument *kpMainWindow::openInternal (const KUrl &url,
     return newDoc;
 }
 
+//---------------------------------------------------------------------
+
 // private
 bool kpMainWindow::open (const KUrl &url, bool newDocSameNameIfNotExist)
 {
@@ -415,10 +419,10 @@ bool kpMainWindow::open (const KUrl &url, bool newDocSameNameIfNotExist)
     }
 }
 
+//---------------------------------------------------------------------
 
 // private
-KUrl::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &startURL,
-                                         bool allowMultipleURLs)
+KUrl::List kpMainWindow::askForOpenURLs(const QString &caption, bool allowMultipleURLs)
 {
     QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
 #if DEBUG_KP_MAIN_WINDOW
@@ -432,9 +436,9 @@ KUrl::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &
 #endif
     QString filter = mimeTypes.join (" ");
 
-    KFileDialog fd (startURL, filter, this);
-    fd.setCaption (caption);
-    fd.setOperationMode (KFileDialog::Opening);
+    KFileDialog fd(KUrl("kfiledialog:///dir/"), filter, this);
+    fd.setCaption(caption);
+    fd.setOperationMode(KFileDialog::Opening);
 
     if (allowMultipleURLs)
         fd.setMode (KFile::Files);
@@ -445,14 +449,14 @@ KUrl::List kpMainWindow::askForOpenURLs (const QString &caption, const QString &
         return KUrl::List ();
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotOpen ()
 {
     toolEndShape ();
 
-
-    const KUrl::List urls = askForOpenURLs (i18n ("Open Image"),
-        d->document ? d->document->url ().url () : QString());
+    const KUrl::List urls = askForOpenURLs(i18n("Open Image"));
 
     for (KUrl::List::const_iterator it = urls.begin ();
          it != urls.end ();
@@ -461,6 +465,8 @@ void kpMainWindow::slotOpen ()
         open (*it);
     }
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotOpenRecent (const KUrl &url)
@@ -487,6 +493,7 @@ void kpMainWindow::slotOpenRecent (const KUrl &url)
     d->actionOpenRecent->setCurrentItem (-1);
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotScan ()
@@ -496,7 +503,6 @@ void kpMainWindow::slotScan ()
 #endif
 
     toolEndShape ();
-
 
     if (!d->scanDialog)
     {
@@ -583,6 +589,8 @@ void kpMainWindow::slotScan ()
     }
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotScanned (const QImage &image, int)
 {
@@ -611,40 +619,23 @@ void kpMainWindow::slotScanned (const QImage &image, int)
     // TODO: Maybe this code should be moved into kpdocument.cpp -
     //       since it resembles the responsibilities of kpDocument::open().
 
-    // Convert QImage to kpDocument's image format, gathering meta info
-    // from QImage.
     kpDocumentSaveOptions saveOptions;
     kpDocumentMetaInfo metaInfo;
-    const QPixmap pixmap = kpDocument::convertToPixmapAsLosslessAsPossible (
-        image,
-        kpMainWindow::pasteWarnAboutLossInfo (),
-        &saveOptions,
-        &metaInfo);
 
-    if (pixmap.isNull ())
-    {
-    #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tcould not convert to pixmap";
-    #endif
-        KMessageBox::sorry (this,
-                            i18n ("Cannot scan - out of graphics memory."),
-                            i18n ("Cannot Scan"));
-        return;
-    }
-
+    kpDocument::getDataFromImage(image, saveOptions, metaInfo);
 
     // Create document from image and meta info.
-    kpDocument *doc = new kpDocument (pixmap.width (), pixmap.height (),
+    kpDocument *doc = new kpDocument (image.width (), image.height (),
                                       documentEnvironment ());
-    doc->setImage (pixmap);
+    doc->setImage (image);
     doc->setSaveOptions (saveOptions);
     doc->setMetaInfo (metaInfo);
-
 
     // Send document to current or new window.
     setDocumentChoosingWindow (doc);
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotProperties ()
@@ -663,6 +654,7 @@ void kpMainWindow::slotProperties ()
     }
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 bool kpMainWindow::save (bool localOnly)
@@ -691,6 +683,8 @@ bool kpMainWindow::save (bool localOnly)
     }
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 bool kpMainWindow::slotSave ()
 {
@@ -698,6 +692,8 @@ bool kpMainWindow::slotSave ()
 
     return save ();
 }
+
+//---------------------------------------------------------------------
 
 // private
 KUrl kpMainWindow::askForSaveURL (const QString &caption,
@@ -811,7 +807,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
             docMetaInfo,
             this);
 
-    KFileDialog fd (startURL, QString(), this,
+    KFileDialog fd (KUrl("kfiledialog:///dir/"), QString(), this,
                     saveOptionsWidget);
     saveOptionsWidget->setVisualParent (&fd);
     fd.setCaption (caption);
@@ -888,14 +884,11 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 #undef SETUP_READ_CFG
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 bool kpMainWindow::saveAs (bool localOnly)
 {
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::saveAs URL=" << d->document->url ();
-#endif
-
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
     KUrl chosenURL = askForSaveURL (i18n ("Save Image As"),
@@ -928,6 +921,8 @@ bool kpMainWindow::saveAs (bool localOnly)
     return true;
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 bool kpMainWindow::slotSaveAs ()
 {
@@ -936,15 +931,12 @@ bool kpMainWindow::slotSaveAs ()
     return saveAs ();
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 bool kpMainWindow::slotExport ()
 {
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotExport()";
-#endif
-
     toolEndShape ();
-
 
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
@@ -964,7 +956,6 @@ bool kpMainWindow::slotExport ()
     if (chosenURL.isEmpty ())
         return false;
 
-
     if (!kpDocument::savePixmapToFile (d->document->imageWithSelection (),
                                        chosenURL,
                                        chosenSaveOptions, *d->document->metaInfo (),
@@ -978,7 +969,6 @@ bool kpMainWindow::slotExport ()
 
     addRecentURL (chosenURL);
 
-
     d->lastExportURL = chosenURL;
     d->lastExportSaveOptions = chosenSaveOptions;
 
@@ -987,12 +977,15 @@ bool kpMainWindow::slotExport ()
     return true;
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotEnableReload ()
 {
     d->actionReload->setEnabled (d->document);
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 bool kpMainWindow::slotReload ()
@@ -1309,7 +1302,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
     // Send image to printer.
     QPainter painter;
     painter.begin (printer);
-    painter.drawPixmap (qRound (originX), qRound (originY), image);
+    painter.drawImage (qRound (originX), qRound (originY), image);
     painter.end ();
 }
 

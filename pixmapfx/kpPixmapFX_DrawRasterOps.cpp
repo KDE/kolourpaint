@@ -26,45 +26,24 @@
 */
 
 
-#define DEBUG_KP_PIXMAP_FX 0
-
-
 #include <kpPixmapFX.h>
 
-#include <math.h>
-
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qdatetime.h>
-#include <qimage.h>
 #include <qpainter.h>
-#include <qpainterpath.h>
-#include <qpixmap.h>
-#include <qpoint.h>
+#include <QImage>
+#include <QWidget>
 #include <qpolygon.h>
 #include <qrect.h>
 
-#include <kconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <klocale.h>
-#include <kmessagebox.h>
 
-#include <kpAbstractSelection.h>
 #include <kpColor.h>
-#include <kpDefs.h>
-#include <kpTool.h>
-#include <kconfiggroup.h>
 
+//---------------------------------------------------------------------
 
 static void WidgetFillStippledRect (QWidget *widget,
         int x, int y, int width, int height,
         const kpColor &colorHint1, const kpColor &colorHint2)
 {
-    // (transparent color handling not yet implemented)
-    Q_ASSERT (colorHint1.isOpaque () && colorHint2.isOpaque ());
-
-
     // LOREFACTOR: code dup with FillRectHelper() but hard to not dup
     
     QPainter p (widget);
@@ -90,9 +69,10 @@ static void WidgetFillStippledRect (QWidget *widget,
     }
 }
 
+//---------------------------------------------------------------------
 
 // public static
-void kpPixmapFX::drawStippledXORPolygon (QPixmap *image,
+void kpPixmapFX::drawStippledXORPolygon (QImage *image,
         const QPolygon &points,
         const kpColor &fcolor1, const kpColor &fcolor2,
         const kpColor &colorHint1, const kpColor &colorHint2,
@@ -118,9 +98,10 @@ void kpPixmapFX::drawStippledXORPolygon (QPixmap *image,
     }
 }
 
+//---------------------------------------------------------------------
 
 // public static
-void kpPixmapFX::drawStippledXORRect (QPixmap *image,
+void kpPixmapFX::drawStippledXORRect (QImage *image,
         int x, int y, int width, int height,
         const kpColor &fcolor1, const kpColor &fcolor2,
         const kpColor &colorHint1, const kpColor &colorHint2)
@@ -133,6 +114,8 @@ void kpPixmapFX::drawStippledXORRect (QPixmap *image,
         colorHint2);
 }
 
+//---------------------------------------------------------------------
+
 // public static
 void kpPixmapFX::widgetDrawStippledXORRect (QWidget *widget,
         int x, int y, int width, int height,
@@ -142,9 +125,6 @@ void kpPixmapFX::widgetDrawStippledXORRect (QWidget *widget,
 {
     (void) fcolor1; (void) fcolor2;
 
-    // (transparent color handling not yet implemented)
-    Q_ASSERT (colorHint1.isOpaque () && colorHint2.isOpaque ());
-    
     QPainter p (widget);
 
     if (!clipRect.isEmpty ())
@@ -166,9 +146,11 @@ void kpPixmapFX::widgetDrawStippledXORRect (QWidget *widget,
     p.drawRect (x, y, width - 1, height - 1);
 }
 
+//---------------------------------------------------------------------
+
 
 // public static
-void kpPixmapFX::fillXORRect (QPixmap *image,
+void kpPixmapFX::fillXORRect (QImage *image,
         int x, int y, int width, int height,
         const kpColor &fcolor,
         const kpColor &colorHint1, const kpColor &colorHint2)
@@ -178,6 +160,8 @@ void kpPixmapFX::fillXORRect (QPixmap *image,
         x, y, width, height,
         colorHint1, colorHint2);
 }
+
+//---------------------------------------------------------------------
 
 // public static
 void kpPixmapFX::widgetFillXORRect (QWidget *widget,
@@ -191,9 +175,10 @@ void kpPixmapFX::widgetFillXORRect (QWidget *widget,
         colorHint1, colorHint2);
 }
 
+//---------------------------------------------------------------------
 
 // public static
-void kpPixmapFX::drawNOTRect (QPixmap *image,
+void kpPixmapFX::drawNOTRect (QImage *image,
         int x, int y, int width, int height,
         const kpColor &colorHint1, const kpColor &colorHint2)
 {
@@ -204,6 +189,7 @@ void kpPixmapFX::drawNOTRect (QPixmap *image,
         colorHint2);
 }
 
+//---------------------------------------------------------------------
 
 // public static
 void kpPixmapFX::widgetFillNOTRect (QWidget *widget,
@@ -214,3 +200,5 @@ void kpPixmapFX::widgetFillNOTRect (QWidget *widget,
         x, y, width, height,
         colorHint1, colorHint2);
 }
+
+//---------------------------------------------------------------------

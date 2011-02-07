@@ -169,6 +169,8 @@ void kpMainWindow::setupToolActions ()
         SLOT (slotActionDrawColorSimilarity ()));
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpMainWindow::createToolBox ()
 {
@@ -202,6 +204,8 @@ void kpMainWindow::createToolBox ()
     enableToolsDocumentActions (false);
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpMainWindow::enableToolsDocumentActions (bool enable)
 {
@@ -210,7 +214,6 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
 #endif
 
     d->toolActionsEnabled = enable;
-
 
     if (enable && !d->toolToolBar->isEnabled ())
     {
@@ -267,6 +270,8 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
     updateActionDrawOpaqueEnabled ();
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::updateToolOptionPrevNextActionsEnabled ()
 {
@@ -295,6 +300,7 @@ void kpMainWindow::updateToolOptionPrevNextActionsEnabled ()
         d->toolToolBar->shownToolWidget (1)->hasNextOption ());
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::updateActionDrawOpaqueChecked ()
@@ -311,6 +317,8 @@ void kpMainWindow::updateActionDrawOpaqueChecked ()
 
     d->actionDrawOpaque->setChecked (drawOpaque);
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::updateActionDrawOpaqueEnabled ()
@@ -331,6 +339,8 @@ void kpMainWindow::updateActionDrawOpaqueEnabled ()
     d->actionDrawOpaque->setEnabled (enable && toolIsASelectionTool ());
 }
 
+//---------------------------------------------------------------------
+
 
 // public
 QActionGroup *kpMainWindow::toolsActionGroup ()
@@ -341,6 +351,8 @@ QActionGroup *kpMainWindow::toolsActionGroup ()
     return d->toolsActionGroup;
 }
 
+//---------------------------------------------------------------------
+
 
 // public
 kpTool *kpMainWindow::tool () const
@@ -348,12 +360,16 @@ kpTool *kpMainWindow::tool () const
     return d->toolToolBar ? d->toolToolBar->tool () : 0;
 }
 
+//---------------------------------------------------------------------
+
 // public
 bool kpMainWindow::toolHasBegunShape () const
 {
     kpTool *currentTool = tool ();
     return (currentTool && currentTool->hasBegunShape ());
 }
+
+//---------------------------------------------------------------------
 
 // public
 bool kpMainWindow::toolIsASelectionTool (bool includingTextTool) const
@@ -366,11 +382,15 @@ bool kpMainWindow::toolIsASelectionTool (bool includingTextTool) const
             (currentTool == d->toolText && includingTextTool));
 }
 
+//---------------------------------------------------------------------
+
 // public
 bool kpMainWindow::toolIsTextTool () const
 {
     return (tool () == d->toolText);
 }
+
+//---------------------------------------------------------------------
 
 
 // private
@@ -380,6 +400,7 @@ void kpMainWindow::toolEndShape ()
         tool ()->endShapeInternal ();
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpImageSelectionTransparency kpMainWindow::imageSelectionTransparency () const
@@ -389,6 +410,8 @@ kpImageSelectionTransparency kpMainWindow::imageSelectionTransparency () const
 
     return kpImageSelectionTransparency (oot->isOpaque (), backgroundColor (), d->colorToolBar->colorSimilarity ());
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpMainWindow::setImageSelectionTransparency (const kpImageSelectionTransparency &transparency, bool forceColorChange)
@@ -415,12 +438,15 @@ void kpMainWindow::setImageSelectionTransparency (const kpImageSelectionTranspar
     d->settingImageSelectionTransparency--;
 }
 
+//---------------------------------------------------------------------
+
 // public
 int kpMainWindow::settingImageSelectionTransparency () const
 {
     return d->settingImageSelectionTransparency;
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotToolSelected (kpTool *tool)
@@ -491,6 +517,8 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
     updateActionDrawOpaqueEnabled ();
 }
 
+//---------------------------------------------------------------------
+
 
 // private
 void kpMainWindow::readLastTool ()
@@ -499,6 +527,8 @@ void kpMainWindow::readLastTool ()
 
     d->lastToolNumber = cfg.readEntry (kpSettingLastTool, -1);
 }
+
+//---------------------------------------------------------------------
 
 
 // private
@@ -518,6 +548,8 @@ int kpMainWindow::toolNumber () const
     return -1;
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpMainWindow::saveLastTool ()
 {
@@ -532,6 +564,8 @@ void kpMainWindow::saveLastTool ()
     cfg.sync ();
 }
 
+//---------------------------------------------------------------------
+
 
 // private
 bool kpMainWindow::maybeDragScrollingMainView () const
@@ -539,6 +573,8 @@ bool kpMainWindow::maybeDragScrollingMainView () const
     return (tool () && d->mainView &&
             tool ()->viewUnderStartPoint () == d->mainView);
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 bool kpMainWindow::slotDragScroll (const QPoint &docPoint,
@@ -562,12 +598,16 @@ bool kpMainWindow::slotDragScroll (const QPoint &docPoint,
     }
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 bool kpMainWindow::slotEndDragScroll ()
 {
     // (harmless if haven't started drag scroll)
     return d->scrollView->endDragScroll ();
 }
+
+//---------------------------------------------------------------------
 
 
 // private slot
@@ -578,17 +618,23 @@ void kpMainWindow::slotBeganDocResize ()
     recalculateStatusBarShape ();
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotContinuedDocResize (const QSize &)
 {
     recalculateStatusBarShape ();
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotCancelledDocResize ()
 {
     recalculateStatusBar ();
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotEndedDocResize (const QSize &size)
@@ -652,6 +698,8 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
 #undef DOC_RESIZE_COMPLETED
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotDocResizeMessageChanged (const QString &string)
 {
@@ -669,6 +717,8 @@ void kpMainWindow::slotDocResizeMessageChanged (const QString &string)
     recalculateStatusBarMessage ();
 }
 
+//---------------------------------------------------------------------
+
 
 // private slot
 void kpMainWindow::slotActionPrevToolOptionGroup1 ()
@@ -683,6 +733,8 @@ void kpMainWindow::slotActionPrevToolOptionGroup1 ()
     updateToolOptionPrevNextActionsEnabled ();
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotActionNextToolOptionGroup1 ()
 {
@@ -695,6 +747,8 @@ void kpMainWindow::slotActionNextToolOptionGroup1 ()
     d->toolToolBar->shownToolWidget (0)->selectNextOption ();
     updateToolOptionPrevNextActionsEnabled ();
 }
+
+//---------------------------------------------------------------------
 
 
 // private slot
@@ -710,6 +764,8 @@ void kpMainWindow::slotActionPrevToolOptionGroup2 ()
     updateToolOptionPrevNextActionsEnabled ();
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotActionNextToolOptionGroup2 ()
 {
@@ -723,6 +779,7 @@ void kpMainWindow::slotActionNextToolOptionGroup2 ()
     updateToolOptionPrevNextActionsEnabled ();
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotActionDrawOpaqueToggled ()
@@ -743,6 +800,8 @@ void kpMainWindow::slotActionDrawOpaqueToggled ()
         0/*column*/);
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotActionDrawColorSimilarity ()
 {
@@ -754,10 +813,11 @@ void kpMainWindow::slotActionDrawColorSimilarity ()
     d->colorToolBar->openColorSimilarityDialog ();
 }
 
+//---------------------------------------------------------------------
+
 
 // public slots
 
-// LOTODO: Who actually calls these?
 #define SLOT_TOOL(toolName)                       \
 void kpMainWindow::slotTool##toolName ()          \
 {                                                 \
@@ -770,22 +830,8 @@ void kpMainWindow::slotTool##toolName ()          \
     d->toolToolBar->selectTool (d->tool##toolName); \
 }
 
-SLOT_TOOL (Spraycan)
-SLOT_TOOL (Brush)
-SLOT_TOOL (ColorEraser)
-SLOT_TOOL (ColorPicker)
-SLOT_TOOL (Curve)
-SLOT_TOOL (Ellipse)
-SLOT_TOOL (EllipticalSelection)
-SLOT_TOOL (Eraser)
-SLOT_TOOL (FloodFill)
-SLOT_TOOL (FreeFormSelection)
-SLOT_TOOL (Line)
-SLOT_TOOL (Pen)
-SLOT_TOOL (Polygon)
-SLOT_TOOL (Polyline)
-SLOT_TOOL (Rectangle)
+
 SLOT_TOOL (RectSelection)
-SLOT_TOOL (RoundedRectangle)
+SLOT_TOOL (EllipticalSelection)
+SLOT_TOOL (FreeFormSelection)
 SLOT_TOOL (Text)
-SLOT_TOOL (Zoom)

@@ -255,45 +255,11 @@ kpImage kpEffectToneEnhance::applyEffect (const kpImage &image,
         return image;
 
 
-    // This effect does not currently support paletted images.  TODO: can we fix that?
-    //
-    // Regarding the implementation of this check:
-    //
-    //     Because kpImage's are currently QPixmap's, they are tied to the screen
-    //     (this assumption will change if we rewrite kpImage to use a proper
-    //     image library).
-    //
-    //     So if the screen is paletted, the kpImage's must be too.
-    Q_ASSERT (!kpPixmapFX::screenIsPaletted ());
-
-
-    // Replace transparent pixels with black, which this effect uses to
-    // produce white, the most "neutral" color.  This is actually not
-    // required as it is the default behavior when converting to QImage,
-    // but better safe than sorry.
-    //
-    // Whether we should do this is arguable because you could argue that
-    // we are warping the tone map.
-    QPixmap usePixmap = kpPixmapFX::pixmapWithDefinedTransparentPixels (
-        image,
-        Qt::black);
-    // See kpPixmapFX::pixmapWithDefinedTransparentPixels API Doc.
-    usePixmap.setMask (QBitmap ());
-
-
-    QImage qimage = kpPixmapFX::convertToQImage (usePixmap);
+    QImage qimage(image);
 
     // OPT: Cache the calculated values?
     kpEffectToneEnhanceApplier applier;
     applier.BalanceImageTone (&qimage, granularity, amount);
 
-    QPixmap retPixmap = kpPixmapFX::convertToPixmap (qimage);
-
-
-    // Restore the mask.
-    if (kpPixmapFX::hasMask (image))
-        retPixmap.setMask (image.mask ());
-
-    return retPixmap;
+    return qimage;
 }
-

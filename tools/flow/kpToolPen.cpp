@@ -40,10 +40,13 @@
 #include <kpPainter.h>
 #include <kpToolFlowCommand.h>
 
+#include <bugfix.h>
 
 struct kpToolPenPrivate
 {
 };
+
+//---------------------------------------------------------------------
 
 kpToolPen::kpToolPen (kpToolEnvironment *environ, QObject *parent)
     : kpToolFlowBase (i18n ("Pen"), i18n ("Draws dots and freehand strokes"),
@@ -53,10 +56,14 @@ kpToolPen::kpToolPen (kpToolEnvironment *environ, QObject *parent)
 {
 }
 
+//---------------------------------------------------------------------
+
 kpToolPen::~kpToolPen ()
 {
     delete d;
 }
+
+//---------------------------------------------------------------------
 
 
 // protected virtual [base kpToolFlowBase]
@@ -65,44 +72,14 @@ QString kpToolPen::haventBegunDrawUserMessage () const
     return i18n ("Click to draw dots or drag to draw strokes.");
 }
 
-
-// Wants porting to Qt4.  But may be a bogus optimization anyway.
-#if 0
-QRect kpToolPen::drawPoint (const QPoint &point)
-{
-    kpImage image (1, 1);
-
-    const kpColor c = color (mouseButton ());
-
-
-    // OPT: this seems hopelessly inefficient
-    if (c.isOpaque ())
-    {
-        image.fill (c.toQColor ());
-    }
-    else
-    {
-        QBitmap mask (1, 1);
-        mask.fill (Qt::color0/*transparent*/);
-
-        image.setMask (mask);
-    }
-
-    // draw onto doc
-    document ()->setImageAt (image, point);
-
-    return QRect (point, point);
-}
-#endif
-
+//---------------------------------------------------------------------
 
 // protected virtual [base kpToolFlowBase]
 QRect kpToolPen::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
-    QRect docRect = QRect (thisPoint, lastPoint).normalized();
+    QRect docRect = bugfix_QRect(thisPoint, lastPoint).normalized();
     docRect = neededRect (docRect, 1/*pen width*/);
     kpImage image = document ()->getImageAt (docRect);
-
 
     const QPoint sp = lastPoint - docRect.topLeft (),
                  ep = thisPoint - docRect.topLeft ();
@@ -112,7 +89,6 @@ QRect kpToolPen::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
         ep.x (), ep.y (),
         color (mouseButton ()),
         1/*pen width*/);
-
 
     document ()->setImageAt (image, docRect.topLeft ());
     return docRect;

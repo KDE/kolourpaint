@@ -9,8 +9,6 @@ This file lists known bugs in this version that are not considered
 "release critical" and are difficult to fix:
 
 
-1. Flicker when zooming in/out.
-
 3. Tool Box & Colour Box RMB ToolBar Menus do not work.
 
 4. Image dialog spinboxes should accept Enter Key (instead of the dialog's
@@ -60,13 +58,6 @@ This file lists known bugs in this version that are not considered
 
 17. a) Using KolourPaint on a remote X display may result in redraw errors
        and pixel data corruption.
-
-    b) KolourPaint is screen depth dependent.  Opening an image with a
-       an alpha channel and/or a depth higher than the screen and then
-       saving it will likely result in loss of colour information.  Also,
-       8-bit screens are not supported at all.  To reduce data loss, run
-       your screen at 24-bit.  This bug will be addressed in a future
-       version of KolourPaint.
 
 19. Read support for EPS files is extremely slow.  You should not enable
     the "Save Preview" dialog when saving to EPS.  This is an issue with

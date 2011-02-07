@@ -37,10 +37,8 @@ class QDataStream;
 
 
 //
-// kpColor is an object-oriented abstraction of QRgb, for document image data,
-// with the additional restriction of enforcing the KolourPaint convention of
-// only supporting totally transparent and totally opaque colors.  Eventually,
-// this restriction will be dropped.  In the future, other color models such as
+// kpColor is an object-oriented abstraction of QRgb, for document image data.
+// In the future, other color models such as
 // 8-bit indexed will be supported.  It also provides better error handling,
 // reporting (noisy kError()'s) and recovery compared to Qt.  This abstraction
 // will allow us to eventually dump the Qt paint routines.
@@ -126,7 +124,6 @@ public:
     // Usage: isSimilarTo (rhs, kpColor::processSimilarity (.1)) checks for
     //        Color Similarity within 10%
     bool isSimilarTo (const kpColor &rhs, int processedSimilarity) const;
-    ~kpColor ();
 
     bool isValid () const;
 
@@ -135,16 +132,12 @@ public:
     int blue () const;
     int alpha () const;
     bool isTransparent () const;
-    bool isOpaque () const;
 
     // Cast operators will most likely result in careless conversions so
     // use explicit functions instead:
     QRgb toQRgb () const;
 
-    // (only valid if isOpaque())
     QColor toQColor () const;
-
-    QColor maskColor () const;
 
 private:
     // Catch accidental call to "const QRgb &rgba" (unsigned int) ctor

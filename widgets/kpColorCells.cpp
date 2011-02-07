@@ -126,6 +126,8 @@ struct kpColorCellsPrivate
     bool blockColorChangedSig;
 };
 
+//---------------------------------------------------------------------
+
 kpColorCells::kpColorCells (QWidget *parent,
                             Qt::Orientation o)
     : kpColorCellsBase (parent, 0/*rows for now*/, 0/*cols for now*/),
@@ -145,8 +147,6 @@ kpColorCells::kpColorCells (QWidget *parent,
     setFocusPolicy (Qt::TabFocus);
 
     setShading (false);  // no 3D look
-
-    setSupportsAlpha (false);
 
     setAcceptDrops (true);
     setAcceptDrags (true);
@@ -210,10 +210,14 @@ kpColorCells::kpColorCells (QWidget *parent,
             "</qt>"));
 }
 
+//---------------------------------------------------------------------
+
 kpColorCells::~kpColorCells ()
 {
     delete d;
 }
+
+//---------------------------------------------------------------------
 
 
 // public static
@@ -222,12 +226,16 @@ kpColorCollection kpColorCells::DefaultColorCollection ()
     return kpDefaultColorCollection ();
 }
 
+//---------------------------------------------------------------------
+
 
 // public
 Qt::Orientation kpColorCells::orientation () const
 {
     return d->orientation;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpColorCells::setOrientation (Qt::Orientation o)
@@ -236,6 +244,8 @@ void kpColorCells::setOrientation (Qt::Orientation o)
 
     makeCellsMatchColorCollection ();
 }
+
+//---------------------------------------------------------------------
 
 
 // protected
@@ -312,7 +322,7 @@ void kpColorCells::makeCellsMatchColorCollection ()
     #if DEBUG_KP_COLOR_CELLS && 0
         kDebug () << "\tSetting cell " << i << ": y=" << y << " x=" << x
                   << " pos=" << pos << endl;
-        kDebug () << "\t\tcolor=" << (int *) d->colorCol.color (i).rgb ()
+        kDebug () << "\t\tcolor=" << (int *) d->colorCol.color (i).rgba()
                   << "isValid=" << d->colorCol.color (i).isValid ();
     #endif
 
@@ -323,11 +333,15 @@ void kpColorCells::makeCellsMatchColorCollection ()
     d->blockColorChangedSig = oldBlockColorChangedSig;
 }
 
+//---------------------------------------------------------------------
+
 
 bool kpColorCells::isModified () const
 {
     return d->isModified;
 }
+
+//---------------------------------------------------------------------
 
 void kpColorCells::setModified (bool yes)
 {
@@ -343,10 +357,14 @@ void kpColorCells::setModified (bool yes)
     emit isModifiedChanged (yes);
 }
 
+//---------------------------------------------------------------------
+
 void kpColorCells::setModified ()
 {
     setModified (true);
 }
+
+//---------------------------------------------------------------------
 
 
 KUrl kpColorCells::url () const
@@ -354,10 +372,14 @@ KUrl kpColorCells::url () const
     return d->url;
 }
 
+//---------------------------------------------------------------------
+
 QString kpColorCells::name () const
 {
     return d->colorCol.name ();
 }
+
+//---------------------------------------------------------------------
 
 
 const kpColorCollection *kpColorCells::colorCollection () const
@@ -365,12 +387,16 @@ const kpColorCollection *kpColorCells::colorCollection () const
     return &d->colorCol;
 }
 
+//---------------------------------------------------------------------
+
 
 void kpColorCells::ensureHaveAtLeastOneRow ()
 {
     if (d->colorCol.count () == 0)
         d->colorCol.resize (::TableDefaultNumColumns);
 }
+
+//---------------------------------------------------------------------
 
 void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const KUrl &url)
 {
@@ -386,6 +412,8 @@ void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const 
     emit urlChanged (d->url);
     emit nameChanged (name ());
 }
+
+//---------------------------------------------------------------------
 
 
 bool kpColorCells::openColorCollection (const KUrl &url)
@@ -410,6 +438,8 @@ bool kpColorCells::openColorCollection (const KUrl &url)
     return false;
 }
 
+//---------------------------------------------------------------------
+
 bool kpColorCells::saveColorCollectionAs (const KUrl &url)
 {
     // (this will pop up an error dialog on failure)
@@ -425,6 +455,8 @@ bool kpColorCells::saveColorCollectionAs (const KUrl &url)
     return false;
 }
 
+//---------------------------------------------------------------------
+
 bool kpColorCells::saveColorCollection ()
 {
     // (this will pop up an error dialog on failure)
@@ -436,6 +468,8 @@ bool kpColorCells::saveColorCollection ()
 
     return false;
 }
+
+//---------------------------------------------------------------------
 
 
 void kpColorCells::appendRow ()
@@ -453,6 +487,8 @@ void kpColorCells::appendRow ()
 
     emit rowCountChanged (rowCount ());
 }
+
+//---------------------------------------------------------------------
 
 void kpColorCells::deleteLastRow ()
 {
@@ -476,6 +512,8 @@ void kpColorCells::deleteLastRow ()
     emit rowCountChanged (rowCount ());
 }
 
+//---------------------------------------------------------------------
+
 
 // protected virtual [base QWidget]
 void kpColorCells::contextMenuEvent (QContextMenuEvent *e)
@@ -484,6 +522,8 @@ void kpColorCells::contextMenuEvent (QContextMenuEvent *e)
     e->accept ();
 }
 
+//---------------------------------------------------------------------
+
 // protected slot
 void kpColorCells::slotColorSelected (int cell, const QColor &color,
         Qt::MouseButton button)
@@ -491,7 +531,7 @@ void kpColorCells::slotColorSelected (int cell, const QColor &color,
 #if DEBUG_KP_COLOR_CELLS
     kDebug () << "kpColorCells::slotColorSelected(cell=" << cell
                << ") mouseButton = " << button
-               << " rgb=" << (int *) color.rgb ()
+               << " rgb=" << (int *) color.rgba()
                << endl;
 #else
     Q_UNUSED (cell);
@@ -499,11 +539,11 @@ void kpColorCells::slotColorSelected (int cell, const QColor &color,
 
     if (button == Qt::LeftButton)
     {
-        emit foregroundColorChanged (kpColor (color.rgb ()));
+        emit foregroundColorChanged (kpColor (color.rgba()));
     }
     else if (button == Qt::RightButton)
     {
-        emit backgroundColorChanged (kpColor (color.rgb ()));
+        emit backgroundColorChanged (kpColor (color.rgba()));
     }
 
     // REFACTOR: Make selectedness configurable inside kpColorCellsBase?
@@ -520,41 +560,26 @@ void kpColorCells::slotColorSelected (int cell, const QColor &color,
     clearSelection ();
 }
 
+//---------------------------------------------------------------------
+
 // protected slot
 void kpColorCells::slotColorDoubleClicked (int cell, const QColor &)
 {
-#if DEBUG_KP_COLOR_CELLS
-    kDebug () << "kpColorCells::slotColorDoubleClicked(cell="
-               << cell << ")" << endl;
-#endif
-
-    QColor color = kpColorCellsBase::color (cell);
-
-    // TODO: If you double-click on an invalid color and press OK, you get
-    //       white, instead of the color staying as invalid.
-    //
-    //       We should modify or fork KColorDialog to fix this.
-    //
-    //       It would be wrong to stop the user from double-clicking on an
-    //       invalid color as that would make it more difficult to initialize
-    //       the cell with a color (s/he would only be left with drag-and-drop).
-    //
-    // sync: see also kpDualColorButton::mouseDoubleClickEvent().
-    if (KColorDialog::getColor (color/*ref*/, this))
-    {
-        setColor (cell, color);
-
-        // setColor() should have cause slotColorChanged() to have been
-        // called.
-        Q_ASSERT (isModified ());
-    }
+    KColorDialog dialog(this);
+    dialog.setColor(kpColorCellsBase::color(cell));
+    dialog.setAlphaChannelEnabled(true);
+    dialog.setButtons(KDialog::Ok | KDialog::Cancel);
+    if ( dialog.exec() == QDialog::Accepted )
+      setColor (cell, dialog.color());
 }
+
+//---------------------------------------------------------------------
 
 // protected slot
 void kpColorCells::slotColorChanged (int cell, const QColor &color)
 {
 #if DEBUG_KP_COLOR_CELLS
-    kDebug () << "cell=" << cell << "color=" << (const int *) color.rgb ()
+    kDebug () << "cell=" << cell << "color=" << (const int *) color.rgba()
               << "d->colorCol.count()=" << d->colorCol.count ();
 #endif
 

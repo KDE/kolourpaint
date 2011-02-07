@@ -43,8 +43,6 @@ static int lineWidths [] = {1, 2, 3, 5, 8};
 kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent, const QString &name)
     : kpToolWidgetBase (parent, name)
 {
-    setInvertSelectedPixmap ();
-
     int numLineWidths = sizeof (lineWidths) / sizeof (lineWidths [0]);
 
     int w = (width () - 2/*margin*/) * 3 / 4;
@@ -52,8 +50,8 @@ kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent, const QString &na
 
     for (int i = 0; i < numLineWidths; i++)
     {
-        QPixmap pixmap ((w <= 0 ? width () : w),
-                        (h <= 0 ? height () : h));
+        QImage pixmap ((w <= 0 ? width () : w),
+                        (h <= 0 ? height () : h), QImage::Format_ARGB32_Premultiplied);
         kpPixmapFX::fill (&pixmap, kpColor::Transparent);
 
 
@@ -63,7 +61,7 @@ kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent, const QString &na
             kpColor::Black);
         
 
-        addOption (pixmap, QString::number (lineWidths [i]));
+        addOption (QPixmap::fromImage(pixmap), QString::number (lineWidths [i]));
         startNewOptionRow ();
     }
 

@@ -101,9 +101,7 @@ public:
 public:
     // You must override this if you have extra serializable fields.
     // Remember to call this base implementation before your code.
-    virtual bool readFromStream (QDataStream &stream,
-        const kpPixmapFX::WarnAboutLossInfo &wali
-            = kpPixmapFX::WarnAboutLossInfo ());
+    virtual bool readFromStream (QDataStream &stream);
 
     // You must override this if you have extra serializable fields.
     // Remember to call this base implementation before your code.
@@ -255,10 +253,10 @@ public:
 
 public:
     // (using transparent image)
-    virtual void paint (QPixmap *destPixmap, const QRect &docRect) const;
+    virtual void paint (QImage *destPixmap, const QRect &docRect) const;
 
     // (using base image)
-    void paintWithBaseImage (QPixmap *destPixmap, const QRect &docRect) const;
+    void paintWithBaseImage (QImage *destPixmap, const QRect &docRect) const;
 
 
 private:

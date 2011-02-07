@@ -67,6 +67,8 @@
 #endif
 
 
+//---------------------------------------------------------------------
+
 kpMainWindow::kpMainWindow ()
     : KXmlGuiWindow (0/*parent*/)
 {
@@ -75,6 +77,8 @@ kpMainWindow::kpMainWindow ()
 
     d->isFullyConstructed = true;
 }
+
+//---------------------------------------------------------------------
 
 kpMainWindow::kpMainWindow (const KUrl &url)
     : KXmlGuiWindow (0/*parent*/)
@@ -85,6 +89,8 @@ kpMainWindow::kpMainWindow (const KUrl &url)
     d->isFullyConstructed = true;
 }
 
+//---------------------------------------------------------------------
+
 kpMainWindow::kpMainWindow (kpDocument *newDoc)
     : KXmlGuiWindow (0/*parent*/)
 {
@@ -93,6 +99,8 @@ kpMainWindow::kpMainWindow (kpDocument *newDoc)
 
     d->isFullyConstructed = true;
 }
+
+//---------------------------------------------------------------------
 
 
 // TODO: Move into appropriate kpMainWindow_*.cpp or another class
@@ -145,6 +153,8 @@ void kpMainWindow::readGeneralSettings ()
 #endif
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpMainWindow::readThumbnailSettings ()
 {
@@ -168,6 +178,8 @@ void kpMainWindow::readThumbnailSettings ()
 #endif
 }
 
+//---------------------------------------------------------------------
+
 // private [override KXmlGuiWindow]
 void kpMainWindow::createGUI ()
 {
@@ -186,6 +198,8 @@ void kpMainWindow::createGUI ()
         menu->menuAction()->setVisible(false);
     }
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::init ()
@@ -371,6 +385,7 @@ void kpMainWindow::init ()
 #endif
 }
 
+//---------------------------------------------------------------------
 
 // private virtual [base KMainWindow]
 void kpMainWindow::readProperties (const KConfigGroup &configGroup)
@@ -425,6 +440,8 @@ void kpMainWindow::readProperties (const KConfigGroup &configGroup)
     }
 
 }
+
+//---------------------------------------------------------------------
 
 // private virtual [base KMainWindow]
 // WARNING: KMainWindow API Doc says "No user interaction is allowed
@@ -536,6 +553,8 @@ void kpMainWindow::saveProperties (KConfigGroup &configGroup)
     }
 }
 
+//---------------------------------------------------------------------
+
 
 kpMainWindow::~kpMainWindow ()
 {
@@ -558,12 +577,16 @@ kpMainWindow::~kpMainWindow ()
     delete d; d = 0;
 }
 
+//---------------------------------------------------------------------
+
 
 // public
 kpDocument *kpMainWindow::document () const
 {
     return d->document;
 }
+
+//---------------------------------------------------------------------
 
 // public
 kpDocumentEnvironment *kpMainWindow::documentEnvironment ()
@@ -574,11 +597,15 @@ kpDocumentEnvironment *kpMainWindow::documentEnvironment ()
     return d->documentEnvironment;
 }
 
+//---------------------------------------------------------------------
+
 // public
 kpViewManager *kpMainWindow::viewManager () const
 {
     return d->viewManager;
 }
+
+//---------------------------------------------------------------------
 
 // public
 kpColorToolBar *kpMainWindow::colorToolBar () const
@@ -586,11 +613,15 @@ kpColorToolBar *kpMainWindow::colorToolBar () const
     return d->colorToolBar;
 }
 
+//---------------------------------------------------------------------
+
 // public
 kpColorCells *kpMainWindow::colorCells () const
 {
     return d->colorToolBar ? d->colorToolBar->colorCells () : 0;
 }
+
+//---------------------------------------------------------------------
 
 // public
 kpToolToolBar *kpMainWindow::toolToolBar () const
@@ -598,11 +629,15 @@ kpToolToolBar *kpMainWindow::toolToolBar () const
     return d->toolToolBar;
 }
 
+//---------------------------------------------------------------------
+
 // public
 kpCommandHistory *kpMainWindow::commandHistory () const
 {
     return d->commandHistory;
 }
+
+//---------------------------------------------------------------------
 
 kpCommandEnvironment *kpMainWindow::commandEnvironment ()
 {
@@ -612,6 +647,7 @@ kpCommandEnvironment *kpMainWindow::commandEnvironment ()
     return d->commandEnvironment;
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::setupActions ()
@@ -628,6 +664,8 @@ void kpMainWindow::setupActions ()
     setupToolActions ();
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpMainWindow::enableDocumentActions (bool enable)
 {
@@ -640,6 +678,7 @@ void kpMainWindow::enableDocumentActions (bool enable)
     enableHelpMenuDocumentActions (enable);
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::setDocument (kpDocument *newDoc)
@@ -870,6 +909,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 #endif
 }
 
+//---------------------------------------------------------------------
 
 // private virtual [base QWidget]
 void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
@@ -881,6 +921,8 @@ void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
                     kpSelectionDrag::canDecode (e->mimeData ()));
 }
 
+//---------------------------------------------------------------------
+
 // private virtual [base QWidget]
 void kpMainWindow::dropEvent (QDropEvent *e)
 {
@@ -890,8 +932,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 
     KUrl::List urls;
 
-    kpAbstractImageSelection *sel = kpSelectionDrag::decode (e->mimeData (),
-        pasteWarnAboutLossInfo ());
+    kpAbstractImageSelection *sel = kpSelectionDrag::decode (e->mimeData ());
     if (sel)
     {
         // TODO: How do you actually drop a selection or ordinary images on
@@ -907,8 +948,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         //
         //         However, you would need to prefix all possible error/warning
         //         dialogs that might be called, with Qt::arrowCursor e.g. in
-        //         kpDocument, kpPixmapFX::convertToPixmapAsLosslessAsPossible()
-        //         and probably a lot more places.
+        //         kpDocument  and probably a lot more places.
         foreach (const KUrl &u, urls)
             open (u);
     }
@@ -994,6 +1034,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
     }
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotScrollViewAboutToScroll ()
@@ -1016,6 +1057,8 @@ void kpMainWindow::slotScrollViewAboutToScroll ()
 
     QTimer::singleShot (0, this, SLOT (slotScrollViewAfterScroll ()));
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotScrollViewAfterScroll ()
@@ -1041,6 +1084,7 @@ void kpMainWindow::slotScrollViewAfterScroll ()
 #endif
 }
 
+//---------------------------------------------------------------------
 
 // private virtual [base QWidget]
 void kpMainWindow::moveEvent (QMoveEvent * /*e*/)
@@ -1054,6 +1098,7 @@ void kpMainWindow::moveEvent (QMoveEvent * /*e*/)
     }
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotUpdateCaption ()
@@ -1070,6 +1115,8 @@ void kpMainWindow::slotUpdateCaption ()
     }
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotDocumentRestored ()
 {
@@ -1078,6 +1125,6 @@ void kpMainWindow::slotDocumentRestored ()
     slotUpdateCaption ();
 }
 
+//---------------------------------------------------------------------
 
 #include <kpMainWindow.moc>
-

@@ -39,7 +39,7 @@
 
 
 class KComboBox;
-class QPixmap;
+class QImage;
 class QLabel;
 class QTimer;
 
@@ -54,7 +54,7 @@ class kpDocumentSaveOptionsWidget : public QWidget
 Q_OBJECT
 
 public:
-    kpDocumentSaveOptionsWidget (const QPixmap &docPixmap,
+    kpDocumentSaveOptionsWidget (const QImage &docPixmap,
                                  const kpDocumentSaveOptions &saveOptions,
                                  const kpDocumentMetaInfo &metaInfo,
                                  QWidget *parent);
@@ -101,7 +101,7 @@ public slots:
 
 
 public:
-    void setDocumentPixmap (const QPixmap &documentPixmap);
+    void setDocumentPixmap (const QImage &documentPixmap);
     void setDocumentMetaInfo (const kpDocumentMetaInfo &metaInfo);
 
 
@@ -132,7 +132,7 @@ protected:
 
     Mode m_mode;
 
-    QPixmap *m_documentPixmap;
+    QImage *m_documentPixmap;
 
     kpDocumentSaveOptions m_baseDocumentSaveOptions;
     kpDocumentMetaInfo m_documentMetaInfo;

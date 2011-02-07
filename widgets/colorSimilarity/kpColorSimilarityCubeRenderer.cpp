@@ -34,7 +34,7 @@
 #include <math.h>
 
 #include <qpainter.h>
-#include <qpixmap.h>
+#include <QImage>
 #include <qpolygon.h>
 #include <QWidget>
 
@@ -71,12 +71,16 @@ static QColor Color (int redOrGreenOrBlue,
     }
 }
 
+//---------------------------------------------------------------------
+
 static QPoint PointBetween (const QPoint &p, const QPoint &q)
 {
     return QPoint ((p.x () + q.x ()) / 2, (p.y () + q.y ()) / 2);
 }
 
-static void DrawQuadrant (QWidget *w, QPixmap *pm,
+//---------------------------------------------------------------------
+
+static void DrawQuadrant (QWidget *w, QImage *pm,
         const QColor &col,
         const QPoint &p1, const QPoint &p2, const QPoint &p3,
         const QPoint pointNotOnOutline)
@@ -119,8 +123,8 @@ static void DrawQuadrant (QWidget *w, QPixmap *pm,
         // Polygon fill.
         kpPixmapFX::drawPolygon (pm,
             points,
-            kpColor (col.rgb ()), 1/*pen width*/,
-            kpColor (col.rgb ())/*fill*/);
+            kpColor (col.rgba()), 1/*pen width*/,
+            kpColor (col.rgba())/*fill*/);
 
 
         // Drawing black outline.
@@ -135,7 +139,7 @@ static void DrawQuadrant (QWidget *w, QPixmap *pm,
         Q_ASSERT (!"DrawQuadrant(): unexpected call");
 }
 
-static void DrawFace (QWidget *w, QPixmap *pm,
+static void DrawFace (QWidget *w, QImage *pm,
         double colorSimilarity,
         int redOrGreenOrBlue,
         const QPoint &tl, const QPoint &tr,
@@ -183,8 +187,8 @@ static void DrawFace (QWidget *w, QPixmap *pm,
                << " colorCubeDiagDist=" << kpColorSimilarityHolder::ColorCubeDiagonalDistance
                << endl
                << "\tbaseBrightness=" << baseBrightness
-               << " color[0]=" << ((colors [0].rgb () & RGB_MASK) >> ((2 - redOrGreenOrBlue) * 8))
-               << " color[1]=" << ((colors [1].rgb () & RGB_MASK) >> ((2 - redOrGreenOrBlue) * 8))
+               << " color[0]=" << ((colors [0].rgba() & RGB_MASK) >> ((2 - redOrGreenOrBlue) * 8))
+               << " color[1]=" << ((colors [1].rgba() & RGB_MASK) >> ((2 - redOrGreenOrBlue) * 8))
                << endl;
 #endif
 
@@ -195,7 +199,7 @@ static void DrawFace (QWidget *w, QPixmap *pm,
     ::DrawQuadrant (w, pm, colors [0], bm, br, mr, mm);
 }
 
-static void PaintInternal (QWidget *w, QPixmap *pm,
+static void PaintInternal (QWidget *w, QImage *pm,
         int x, int y, int cubeRectSize,
         double colorSimilarity,
         int highlight)
@@ -275,13 +279,11 @@ void kpColorSimilarityCubeRenderer::WidgetPaint (QWidget *w,
 }
 
 // public static
-void kpColorSimilarityCubeRenderer::Paint (QPixmap *pm,
+void kpColorSimilarityCubeRenderer::Paint (QImage *pm,
         int x, int y, int size,
         double colorSimilarity,
         int highlight)
 {
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*pm);
-
     ::PaintInternal (0/*no widget*/, pm,
         x, y, size, colorSimilarity, highlight);
 }

@@ -35,7 +35,7 @@
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qpixmap.h>
+#include <QImage>
 #include <qpolygon.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
@@ -229,10 +229,10 @@ QSize kpTransformRotateDialog::newDimensions () const
 }
 
 // private virtual [base kpTransformPreviewDialog]
-QPixmap kpTransformRotateDialog::transformPixmap (const QPixmap &pixmap,
-                                             int targetWidth, int targetHeight) const
+QImage kpTransformRotateDialog::transformPixmap (const QImage &image,
+                                                 int targetWidth, int targetHeight) const
 {
-    return kpPixmapFX::rotate (pixmap, angle (),
+    return kpPixmapFX::rotate (image, angle (),
                                m_environ->backgroundColor (m_actOnSelection),
                                targetWidth, targetHeight);
 }

@@ -38,7 +38,6 @@
 #include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qpixmap.h>
 #include <qtimer.h>
 
 #include <kcombobox.h>
@@ -62,7 +61,7 @@
 
 
 kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
-        const QPixmap &docPixmap,
+        const QImage &docPixmap,
         const kpDocumentSaveOptions &saveOptions,
         const kpDocumentMetaInfo &metaInfo,
         QWidget *parent)
@@ -455,10 +454,10 @@ void kpDocumentSaveOptionsWidget::setDocumentSaveOptions (
 
 
 // public
-void kpDocumentSaveOptionsWidget::setDocumentPixmap (const QPixmap &documentPixmap)
+void kpDocumentSaveOptionsWidget::setDocumentPixmap (const QImage &documentPixmap)
 {
     delete m_documentPixmap;
-    m_documentPixmap = new QPixmap (documentPixmap);
+    m_documentPixmap = new QImage (documentPixmap);
 
     updatePreview ();
 }
@@ -732,9 +731,7 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
     }
 
     // REFACTOR: merge with kpDocument::getPixmapFromFile()
-    m_previewDialog->setFilePixmapAndSize (
-        kpPixmapFX::convertToPixmapAsLosslessAsPossible (image),
-        data.size ());
+    m_previewDialog->setFilePixmapAndSize (image, data.size ());
 
     QApplication::restoreOverrideCursor ();
 }

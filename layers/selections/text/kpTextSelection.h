@@ -120,9 +120,7 @@ public:
 public:
     virtual int serialID () const;
 
-    virtual bool readFromStream (QDataStream &stream,
-        const kpPixmapFX::WarnAboutLossInfo &wali =
-            kpPixmapFX::WarnAboutLossInfo ());
+    virtual bool readFromStream (QDataStream &stream);
 
     virtual void writeToStream (QDataStream &stream) const;
 
@@ -257,13 +255,12 @@ public:
 //
 
 private:
-    void drawTextInternal (QPixmap *destPixmap, const QRect &docRect) const;
-    void drawText (QPixmap *destPixmap, const QRect &docRect) const;
+    void drawText(QImage *destPixmap, const QRect &docRect) const;
 
 public:
-    virtual void paint (QPixmap *destPixmap, const QRect &docRect) const;
+    virtual void paint (QImage *destPixmap, const QRect &docRect) const;
 
-    virtual void paintBorder (QPixmap *destPixmap, const QRect &docRect,
+    virtual void paintBorder (QImage *destPixmap, const QRect &docRect,
         bool selectionFinished) const;
 
 public:

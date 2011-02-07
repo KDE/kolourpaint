@@ -132,7 +132,7 @@ void SetDocumentToSelectionImageCommand::execute ()
         //       any transparent pixels.
         //
 
-        kpImage newDocImage (document ()->width (), document ()->height ());
+        kpImage newDocImage (document ()->width (), document ()->height (), QImage::Format_ARGB32_Premultiplied);
         kpPixmapFX::fill (&newDocImage, m_backgroundColor);
 
     #if DEBUG_KP_TOOL_CROP
@@ -162,9 +162,11 @@ void SetDocumentToSelectionImageCommand::execute ()
         #endif
         }
 
+#if 0
         kpPixmapFX::paintMaskTransparentWithBrush (&newDocImage,
             QPoint (0, 0),
             m_fromSelectionPtr->shapeBitmap ());
+#endif
 
         kpPixmapFX::paintPixmapAt (&newDocImage,
             QPoint (0, 0),

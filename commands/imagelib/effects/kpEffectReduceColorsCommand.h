@@ -42,7 +42,6 @@ public:
     kpEffectReduceColorsCommand (int depth, bool dither,
                                  bool actOnSelection,
                                  kpCommandEnvironment *environ);
-    virtual ~kpEffectReduceColorsCommand ();
 
     QString commandName (int depth, int dither) const;
 

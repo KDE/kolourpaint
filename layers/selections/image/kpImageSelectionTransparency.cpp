@@ -37,11 +37,15 @@
 #include <kpColorSimilarityHolder.h>
 
 
+//---------------------------------------------------------------------
+
 kpImageSelectionTransparency::kpImageSelectionTransparency ()
     : m_isOpaque (true)
 {
     setColorSimilarity (0);
 }
+
+//---------------------------------------------------------------------
 
 kpImageSelectionTransparency::kpImageSelectionTransparency (const kpColor &transparentColor, double colorSimilarity)
     : m_isOpaque (false),
@@ -50,6 +54,8 @@ kpImageSelectionTransparency::kpImageSelectionTransparency (const kpColor &trans
     setColorSimilarity (colorSimilarity);
 }
 
+//---------------------------------------------------------------------
+
 kpImageSelectionTransparency::kpImageSelectionTransparency (bool isOpaque, const kpColor &transparentColor,
                                                   double colorSimilarity)
     : m_isOpaque (isOpaque),
@@ -57,6 +63,8 @@ kpImageSelectionTransparency::kpImageSelectionTransparency (bool isOpaque, const
 {
     setColorSimilarity (colorSimilarity);
 }
+
+//---------------------------------------------------------------------
 
 bool kpImageSelectionTransparency::operator== (const kpImageSelectionTransparency &rhs) const
 {
@@ -95,15 +103,20 @@ bool kpImageSelectionTransparency::operator== (const kpImageSelectionTransparenc
             m_colorSimilarity == rhs.m_colorSimilarity);
 }
 
+//---------------------------------------------------------------------
+
 bool kpImageSelectionTransparency::operator!= (const kpImageSelectionTransparency &rhs) const
 {
     return !(*this == rhs);
 }
 
+//---------------------------------------------------------------------
+
 kpImageSelectionTransparency::~kpImageSelectionTransparency ()
 {
 }
 
+//---------------------------------------------------------------------
 
 // public
 bool kpImageSelectionTransparency::isOpaque () const
@@ -111,11 +124,15 @@ bool kpImageSelectionTransparency::isOpaque () const
     return m_isOpaque;
 }
 
+//---------------------------------------------------------------------
+
 // public
 bool kpImageSelectionTransparency::isTransparent () const
 {
     return !isOpaque ();
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpImageSelectionTransparency::setOpaque (bool yes)
@@ -123,11 +140,15 @@ void kpImageSelectionTransparency::setOpaque (bool yes)
     m_isOpaque = yes;
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpImageSelectionTransparency::setTransparent (bool yes)
 {
     setOpaque (!yes);
 }
+
+//---------------------------------------------------------------------
 
 
 // public
@@ -143,11 +164,15 @@ kpColor kpImageSelectionTransparency::transparentColor () const
     return m_transparentColor;
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpImageSelectionTransparency::setTransparentColor (const kpColor &transparentColor)
 {
     m_transparentColor = transparentColor;
 }
+
+//---------------------------------------------------------------------
 
 
 // public
@@ -163,6 +188,8 @@ double kpImageSelectionTransparency::colorSimilarity () const
     return m_colorSimilarity;
 }
 
+//---------------------------------------------------------------------
+
 // pubulic
 void kpImageSelectionTransparency::setColorSimilarity (double colorSimilarity)
 {
@@ -170,9 +197,12 @@ void kpImageSelectionTransparency::setColorSimilarity (double colorSimilarity)
     m_processedColorSimilarity = kpColor::processSimilarity (colorSimilarity);
 }
 
+//---------------------------------------------------------------------
+
 // public
 int kpImageSelectionTransparency::processedColorSimilarity () const
 {
     return m_processedColorSimilarity;
 }
 
+//---------------------------------------------------------------------

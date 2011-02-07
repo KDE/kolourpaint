@@ -31,7 +31,7 @@
 #include <kpDocumentSaveOptions.h>
 
 #include <qbitmap.h>
-#include <qpixmap.h>
+#include <QImage>
 #include <qstring.h>
 
 #include <kconfiggroup.h>
@@ -42,6 +42,7 @@
 #include <kpDefs.h>
 #include <kpPixmapFX.h>
 
+//---------------------------------------------------------------------
 
 class kpDocumentSaveOptionsPrivate
 {
@@ -52,6 +53,7 @@ public:
     int m_quality;
 };
 
+//---------------------------------------------------------------------
 
 kpDocumentSaveOptions::kpDocumentSaveOptions ()
     : d (new kpDocumentSaveOptionsPrivate ())
@@ -62,6 +64,8 @@ kpDocumentSaveOptions::kpDocumentSaveOptions ()
     d->m_quality = invalidQuality ();
 }
 
+//---------------------------------------------------------------------
+
 kpDocumentSaveOptions::kpDocumentSaveOptions (const kpDocumentSaveOptions &rhs)
     : d (new kpDocumentSaveOptionsPrivate ())
 {
@@ -70,6 +74,8 @@ kpDocumentSaveOptions::kpDocumentSaveOptions (const kpDocumentSaveOptions &rhs)
     d->m_dither = rhs.dither ();
     d->m_quality = rhs.quality ();
 }
+
+//---------------------------------------------------------------------
 
 kpDocumentSaveOptions::kpDocumentSaveOptions (QString mimeType, int colorDepth, bool dither, int quality)
     : d (new kpDocumentSaveOptionsPrivate ())
@@ -80,10 +86,14 @@ kpDocumentSaveOptions::kpDocumentSaveOptions (QString mimeType, int colorDepth, 
     d->m_quality = quality;
 }
 
+//---------------------------------------------------------------------
+
 kpDocumentSaveOptions::~kpDocumentSaveOptions ()
 {
     delete d;
 }
+
+//---------------------------------------------------------------------
 
 
 // public
@@ -95,11 +105,15 @@ bool kpDocumentSaveOptions::operator== (const kpDocumentSaveOptions &rhs) const
             quality () == rhs.quality ());
 }
 
+//---------------------------------------------------------------------
+
 // public
 bool kpDocumentSaveOptions::operator!= (const kpDocumentSaveOptions &rhs) const
 {
     return !(*this == rhs);
 }
+
+//---------------------------------------------------------------------
 
 
 // public
@@ -112,6 +126,8 @@ kpDocumentSaveOptions &kpDocumentSaveOptions::operator= (const kpDocumentSaveOpt
 
     return *this;
 }
+
+//---------------------------------------------------------------------
 
 
 // public
@@ -129,6 +145,8 @@ void kpDocumentSaveOptions::printDebug (const QString &prefix) const
                << endl;
 }
 
+//---------------------------------------------------------------------
+
 
 // public
 QString kpDocumentSaveOptions::mimeType () const
@@ -136,11 +154,15 @@ QString kpDocumentSaveOptions::mimeType () const
     return d->m_mimeType;
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpDocumentSaveOptions::setMimeType (const QString &mimeType)
 {
     d->m_mimeType = mimeType;
 }
+
+//---------------------------------------------------------------------
 
 
 // public static
@@ -149,17 +171,23 @@ QString kpDocumentSaveOptions::invalidMimeType ()
     return QString();
 }
 
+//---------------------------------------------------------------------
+
 // public static
 bool kpDocumentSaveOptions::mimeTypeIsInvalid (const QString &mimeType)
 {
     return (mimeType == invalidMimeType ());
 }
 
+//---------------------------------------------------------------------
+
 // public
 bool kpDocumentSaveOptions::mimeTypeIsInvalid () const
 {
     return mimeTypeIsInvalid (mimeType ());
 }
+
+//---------------------------------------------------------------------
 
 
 // public
@@ -276,11 +304,15 @@ int kpDocumentSaveOptions::defaultColorDepth (const KConfigGroup &config)
     return colorDepth;
 }
 
+//---------------------------------------------------------------------
+
 // public static
 void kpDocumentSaveOptions::saveDefaultColorDepth (KConfigGroup &config, int colorDepth)
 {
     config.writeEntry (kpSettingForcedColorDepth, colorDepth);
 }
+
+//---------------------------------------------------------------------
 
 
 // public static
@@ -289,11 +321,15 @@ int kpDocumentSaveOptions::defaultDither (const KConfigGroup &config)
     return config.readEntry (kpSettingForcedDither, initialDither ());
 }
 
+//---------------------------------------------------------------------
+
 // public static
 void kpDocumentSaveOptions::saveDefaultDither (KConfigGroup &config, bool dither)
 {
     config.writeEntry (kpSettingForcedDither, dither);
 }
+
+//---------------------------------------------------------------------
 
 
 // public static
@@ -306,11 +342,15 @@ int kpDocumentSaveOptions::defaultQuality (const KConfigGroup &config)
     return val;
 }
 
+//---------------------------------------------------------------------
+
 // public static
 void kpDocumentSaveOptions::saveDefaultQuality (KConfigGroup &config, int quality)
 {
     config.writeEntry (kpSettingForcedQuality, quality);
 }
+
+//---------------------------------------------------------------------
 
 
 // public static
@@ -328,6 +368,8 @@ kpDocumentSaveOptions kpDocumentSaveOptions::defaultDocumentSaveOptions (const K
 
     return saveOptions;
 }
+
+//---------------------------------------------------------------------
 
 // public static
 bool kpDocumentSaveOptions::saveDefaultDifferences (KConfigGroup &config,
@@ -369,6 +411,8 @@ bool kpDocumentSaveOptions::saveDefaultDifferences (KConfigGroup &config,
     return savedSomething;
 }
 
+//---------------------------------------------------------------------
+
 
 static QStringList mimeTypesSupportingProperty (const QString &property,
     const QStringList &defaultMimeTypesWithPropertyList)
@@ -392,6 +436,8 @@ static QStringList mimeTypesSupportingProperty (const QString &property,
     return mimeTypeList;
 }
 
+//---------------------------------------------------------------------
+
 static bool mimeTypeSupportsProperty (const QString &mimeType,
     const QString &property, const QStringList &defaultMimeTypesWithPropertyList)
 {
@@ -400,6 +446,8 @@ static bool mimeTypeSupportsProperty (const QString &mimeType,
 
     return mimeTypeList.contains (mimeType);
 }
+
+//---------------------------------------------------------------------
 
 
 // SYNC: update mime info
@@ -483,12 +531,15 @@ int kpDocumentSaveOptions::mimeTypeMaximumColorDepth (const QString &mimeType)
     return 32;
 }
 
+//---------------------------------------------------------------------
+
 // public
 int kpDocumentSaveOptions::mimeTypeMaximumColorDepth () const
 {
     return mimeTypeMaximumColorDepth (mimeType ());
 }
 
+//---------------------------------------------------------------------
 
 // public static
 bool kpDocumentSaveOptions::mimeTypeHasConfigurableColorDepth (const QString &mimeType)
@@ -512,12 +563,15 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableColorDepth (const QString &mi
         defaultMimeTypes);
 }
 
+//---------------------------------------------------------------------
+
 // public
 bool kpDocumentSaveOptions::mimeTypeHasConfigurableColorDepth () const
 {
     return mimeTypeHasConfigurableColorDepth (mimeType ());
 }
 
+//---------------------------------------------------------------------
 
 // public static
 bool kpDocumentSaveOptions::mimeTypeHasConfigurableQuality (const QString &mimeType)
@@ -533,27 +587,30 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableQuality (const QString &mimeT
         defaultMimeTypes);
 }
 
+//---------------------------------------------------------------------
+
 // public
 bool kpDocumentSaveOptions::mimeTypeHasConfigurableQuality () const
 {
     return mimeTypeHasConfigurableQuality (mimeType ());
 }
 
+//---------------------------------------------------------------------
 
 // public
-int kpDocumentSaveOptions::isLossyForSaving (const QPixmap &pixmap) const
+int kpDocumentSaveOptions::isLossyForSaving (const QImage &image) const
 {
     int ret = 0;
 
-    if (mimeTypeMaximumColorDepth () < pixmap.depth ())
+    if (mimeTypeMaximumColorDepth () < image.depth ())
     {
         ret |= MimeTypeMaximumColorDepthLow;
     }
 
     if (mimeTypeHasConfigurableColorDepth () &&
         !colorDepthIsInvalid () /*REFACTOR: guarantee it is valid*/ &&
-        (colorDepth () < pixmap.depth () ||
-         colorDepth () < 32 && kpPixmapFX::hasMask (pixmap)))
+        ((colorDepth () < image.depth ()) ||
+         (colorDepth () < 32 && image.hasAlphaChannel())))
     {
         ret |= ColorDepthLow;
     }
@@ -567,3 +624,4 @@ int kpDocumentSaveOptions::isLossyForSaving (const QPixmap &pixmap) const
     return ret;
 }
 
+//---------------------------------------------------------------------

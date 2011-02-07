@@ -2,17 +2,17 @@
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
-   
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
-   
+
    1. Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
    2. Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -31,7 +31,6 @@
 
 #include <kpToolWidgetBrush.h>
 
-#include <qbitmap.h>
 #include <qpainter.h>
 #include <qpixmap.h>
 
@@ -39,9 +38,8 @@
 #include <klocale.h>
 
 #include <kpDefs.h>
-#include <kpPainter.h>
-#include <kpPixmapFX.h>
 
+//---------------------------------------------------------------------
 
 // LOREFACTOR: more OO, no arrays (use safer structs).
 /* sync: <brushes> */
@@ -56,6 +54,8 @@ static int BrushSizes [][3] =
 #define BRUSH_SIZE_NUM_COLS (int (sizeof (::BrushSizes [0]) / sizeof (::BrushSizes [0][0])))
 #define BRUSH_SIZE_NUM_ROWS (int (sizeof (::BrushSizes) / sizeof (::BrushSizes [0])))
 
+
+//---------------------------------------------------------------------
 
 static void Draw (kpImage *destImage, const QPoint &topLeft, void *userData)
 {
@@ -73,36 +73,77 @@ static void Draw (kpImage *destImage, const QPoint &topLeft, void *userData)
     kDebug () << "\tsize=" << size;
 #endif
 
+    QPainter painter(destImage);
+
+    if ( size == 1 )
+    {
+      painter.setPen(pack->color.toQColor());
+      painter.drawPoint(topLeft);
+      return;
+    }
+
     // sync: <brushes>
     switch (pack->row/*shape*/)
     {
-    case 0:
-        kpPainter::drawEllipse (destImage,
-            topLeft.x (), topLeft.y (), size, size,
-            pack->color/*color*/, 1/*pen width*/,
-            pack->color/*fill color*/);
+      case 0:
+      {
+        // work around ugly circle when using QPainter on QImage
+        if ( size == 4 )
+        {
+          // do not draw a pixel twice, as with an alpha color it will become darker
+          painter.setPen(Qt::NoPen);
+          painter.setBrush(pack->color.toQColor());
+          painter.drawRect(topLeft.x() + 1, topLeft.y(), 2, size);
+          painter.setPen(pack->color.toQColor());
+          painter.drawLine(topLeft.x(), topLeft.y() + 1, topLeft.x(), topLeft.y() + 2);
+          painter.drawLine(topLeft.x() + 3, topLeft.y() + 1, topLeft.x() + 3, topLeft.y() + 2);
+        }
+        else if ( size == 8 )  // size defined in BrushSizes above
+        {
+          // do not draw a pixel twice, as with an alpha color it will become darker
+          painter.setPen(Qt::NoPen);
+          painter.setBrush(pack->color.toQColor());
+          painter.drawRect(topLeft.x() + 2, topLeft.y(), 4, size);
+          painter.drawRect(topLeft.x(), topLeft.y() + 2, 2, 4);
+          painter.drawRect(topLeft.x() + 6, topLeft.y() + 2, 2, 4);
+          painter.setPen(pack->color.toQColor());
+          painter.drawPoint(topLeft.x() + 1, topLeft.y() + 1);
+          painter.drawPoint(topLeft.x() + 6, topLeft.y() + 1);
+          painter.drawPoint(topLeft.x() + 1, topLeft.y() + 6);
+          painter.drawPoint(topLeft.x() + 6, topLeft.y() + 6);
+        }
+        else
+        {
+          Q_ASSERT(!"illegal size");
+        }
         break;
-        
-    case 1:
-        kpPainter::drawRect (destImage,
-            topLeft.x (), topLeft.y (), size, size,
-            pack->color/*color*/, 1/*pen width*/,
-            pack->color/*fill color*/);
+      }
+
+      case 1:
+      {
+        // only paint filling so that a color with an alpha channel does not
+        // create a darker border due to drawing some pixels twice with composition
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(pack->color.toQColor());
+        painter.drawRect(topLeft.x(), topLeft.y(), size, size);
         break;
-        
-    case 2:
-        kpPainter::drawLine (destImage,
-            topLeft.x () + size - 1, topLeft.y (),
-            topLeft.x (), topLeft.y () + size - 1,
-            pack->color, 1/*pen width*/);
+      }
+
+      case 2:
+      {
+        painter.setPen(pack->color.toQColor());
+        painter.drawLine(topLeft.x() + size - 1, topLeft.y(),
+                         topLeft.x(), topLeft.y() + size - 1);
         break;
-        
-    case 3:
-        kpPainter::drawLine (destImage,
-            topLeft.x (), topLeft.y (),
-            topLeft.x () + size - 1, topLeft.y () + size - 1,
-            pack->color, 1/*pen width*/);
+      }
+
+      case 3:
+      {
+        painter.setPen(pack->color.toQColor());
+        painter.drawLine(topLeft.x(), topLeft.y(),
+                         topLeft.x() + size - 1, topLeft.y() + size - 1);
         break;
+      }
 
     default:
         Q_ASSERT (!"Unknown row");
@@ -110,12 +151,11 @@ static void Draw (kpImage *destImage, const QPoint &topLeft, void *userData)
     }
 }
 
+//---------------------------------------------------------------------
 
 kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const QString &name)
     : kpToolWidgetBase (parent, name)
 {
-    setInvertSelectedPixmap ();
-
     for (int shape = 0; shape < BRUSH_SIZE_NUM_ROWS; shape++)
     {
         for (int i = 0; i < BRUSH_SIZE_NUM_COLS; i++)
@@ -128,20 +168,17 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const QString &name)
             const int h = (height () - 2/*margin*/ - 3/*spacing*/)
                 / BRUSH_SIZE_NUM_ROWS;
             Q_ASSERT (w >= s && h >= s);
-            QPixmap previewPixmap (w, h);
-
-            kpPainter::fillRect (kpImage::CastPixmapPtr (&previewPixmap),
-                0, 0, previewPixmap.width (), previewPixmap.height (),
-                kpColor::Transparent);
+            QImage previewPixmap (w, h, QImage::Format_ARGB32_Premultiplied);
+            previewPixmap.fill(0);
 
             DrawPackage pack = drawFunctionDataForRowCol (kpColor::Black, shape, i);
-            ::Draw (kpImage::CastPixmapPtr (&previewPixmap),
+            ::Draw (&previewPixmap,
                 QPoint ((previewPixmap.width () - s) / 2,
                         (previewPixmap.height () - s) / 2),
                 &pack);
 
 
-            addOption (previewPixmap, brushName (shape, i)/*tooltip*/);
+            addOption (QPixmap::fromImage(previewPixmap), brushName (shape, i)/*tooltip*/);
         }
 
         startNewOptionRow ();
@@ -150,19 +187,22 @@ kpToolWidgetBrush::kpToolWidgetBrush (QWidget *parent, const QString &name)
     finishConstruction (0, 0);
 }
 
+//---------------------------------------------------------------------
+
 kpToolWidgetBrush::~kpToolWidgetBrush ()
 {
 }
 
+//---------------------------------------------------------------------
 
 // private
 QString kpToolWidgetBrush::brushName (int shape, int whichSize) const
 {
     int s = ::BrushSizes [shape][whichSize];
-    
+
     if (s == 1)
         return i18n ("1x1");
-    
+
     QString shapeName;
 
     // sync: <brushes>
@@ -183,19 +223,22 @@ QString kpToolWidgetBrush::brushName (int shape, int whichSize) const
         shapeName = i18n ("Backslash");
         break;
     }
-    
+
     if (shapeName.isEmpty ())
         return QString();
-    
+
     return i18n ("%1x%2 %3", s, s, shapeName);
 }
 
+//---------------------------------------------------------------------
 
 // public
 int kpToolWidgetBrush::brushSize () const
 {
     return ::BrushSizes [selectedRow ()][selectedCol ()];
 }
+
+//---------------------------------------------------------------------
 
 // public
 bool kpToolWidgetBrush::brushIsDiagonalLine () const
@@ -204,6 +247,8 @@ bool kpToolWidgetBrush::brushIsDiagonalLine () const
     return (selectedRow () >= 2);
 }
 
+//---------------------------------------------------------------------
+
 
 // public
 kpTempImage::UserFunctionType kpToolWidgetBrush::drawFunction () const
@@ -211,21 +256,25 @@ kpTempImage::UserFunctionType kpToolWidgetBrush::drawFunction () const
     return &::Draw;
 }
 
+//---------------------------------------------------------------------
+
 
 // public static
 kpToolWidgetBrush::DrawPackage kpToolWidgetBrush::drawFunctionDataForRowCol (
         const kpColor &color, int row, int col)
 {
     Q_ASSERT (row >= 0 && col >= 0);
-    
+
     DrawPackage pack;
-    
+
     pack.row = row;
     pack.col = col;
     pack.color = color;
 
     return pack;
 }
+
+//---------------------------------------------------------------------
 
 // public
 kpToolWidgetBrush::DrawPackage kpToolWidgetBrush::drawFunctionData (
@@ -234,6 +283,7 @@ kpToolWidgetBrush::DrawPackage kpToolWidgetBrush::drawFunctionData (
     return drawFunctionDataForRowCol (color, selectedRow (), selectedCol ());
 }
 
+//---------------------------------------------------------------------
 
 // protected slot virtual [base kpToolWidgetBase]
 bool kpToolWidgetBrush::setSelected (int row, int col, bool saveAsDefault)
@@ -244,5 +294,6 @@ bool kpToolWidgetBrush::setSelected (int row, int col, bool saveAsDefault)
     return ret;
 }
 
+//---------------------------------------------------------------------
 
 #include <kpToolWidgetBrush.moc>

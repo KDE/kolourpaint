@@ -89,20 +89,5 @@ kpImage kpEffectEmboss::applyEffect (const kpImage &image, int strength)
 
     Q_ASSERT (strength >= MinStrength && strength <= MaxStrength);
 
-
-    QImage qimage = kpPixmapFX::convertToQImage (image);
-
-    qimage = ::EmbossQImage (qimage, strength);
-
-    kpImage retImage = kpPixmapFX::convertToPixmap (qimage);
-
-
-#if DEBUG_KP_EFFECT_EMBOSS
-    kDebug () << "\thave masks: input=" << image.hasAlpha ()
-              << " output=" << retImage.hasAlpha ()
-              << endl;
-#endif
-
-    return retImage;
+    return ::EmbossQImage (image, strength);
 }
-

@@ -173,11 +173,14 @@ kpToolToolBar::kpToolToolBar (const QString &label, int colsOrRows, QWidget *par
     setWidget (m_baseWidget);
 }
 
+//---------------------------------------------------------------------
+
 kpToolToolBar::~kpToolToolBar ()
 {
     unregisterAllTools ();
 }
 
+//---------------------------------------------------------------------
 
 // private
 int kpToolToolBar::defaultIconSize ()
@@ -234,6 +237,8 @@ int kpToolToolBar::defaultIconSize ()
     return m_defaultIconSize;
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpToolToolBar::registerTool (kpTool *tool)
 {
@@ -249,15 +254,14 @@ void kpToolToolBar::registerTool (kpTool *tool)
     QToolButton *b = new kpToolButton (tool, m_baseWidget);
     b->setAutoRaise (true);
     // Specify size of the button.
-    b->setIconSize (QSize (defaultIconSize (), defaultIconSize ()));
-    b->setToolButtonStyle (Qt::ToolButtonIconOnly);
-    b->setCheckable (true);
+    b->setIconSize(QSize(defaultIconSize(), defaultIconSize()));
+    b->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    b->setCheckable(true);
 
-    b->setText (tool->text ());
-    // Specify size of the source icon file.
-    b->setIcon (tool->iconSet (defaultIconSize ()));
-    b->setToolTip (tool->toolTip ());
-    b->setWhatsThis (tool->description ());
+    b->setText(tool->text ());
+    b->setIcon(KIcon(tool->iconName()));
+    b->setToolTip(tool->toolTip ());
+    b->setWhatsThis(tool->description ());
 
     m_buttonGroup->addButton (b);
     addButton (b, ::Orientation (), num);

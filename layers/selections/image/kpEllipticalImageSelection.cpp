@@ -31,7 +31,6 @@
 
 #include <kpEllipticalImageSelection.h>
 
-#include <QBitmap>
 #include <QPainter>
 #include <QRegion>
 
@@ -90,6 +89,7 @@ kpEllipticalImageSelection::~kpEllipticalImageSelection ()
     delete d;
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [kpAbstractSelection]
 int kpEllipticalImageSelection::serialID () const
@@ -97,6 +97,7 @@ int kpEllipticalImageSelection::serialID () const
     return SerialID;
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [kpAbstractSelection]
 bool kpEllipticalImageSelection::isRectangular () const
@@ -104,6 +105,7 @@ bool kpEllipticalImageSelection::isRectangular () const
     return false;
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [kpAbstractSelection]
 QPolygon kpEllipticalImageSelection::calculatePoints () const
@@ -140,17 +142,17 @@ QPolygon kpEllipticalImageSelection::calculatePoints () const
     return firstPolygonF.toPolygon ();
 }
 
+//---------------------------------------------------------------------
+
 
 // protected virtual [kpAbstractImageSelection]
 QRegion kpEllipticalImageSelection::shapeRegion () const
 {
-    // OPT: Construction QRegion using QBitmap is slow.
-    //      We could copy kpFreeFormImageSelection::shapeRegion () but
-    //      I have my worries about the accuracy of that method.
-    QRegion reg = QRegion (shapeBitmap ());
-    reg.translate (x (), y ());
+    QRegion reg(calculatePoints());
     return reg;
 }
+
+//---------------------------------------------------------------------
 
 
 // public virtual [kpAbstractSelection]
@@ -159,17 +161,19 @@ bool kpEllipticalImageSelection::contains (const QPoint &point) const
     if (!boundingRect ().contains (point))
         return false;
 
-    // We can't use the baseImage() (when non-null) and get the transparency of
-    // the pixel at <point>, instead of this region test, as the pixel may be
-    // transparent but still within the border.
     return shapeRegion ().contains (point);
 }
 
+//---------------------------------------------------------------------
+
 
 // public virtual [kpAbstractSelection]
-void kpEllipticalImageSelection::paintBorder (QPixmap *destPixmap, const QRect &docRect,
+void kpEllipticalImageSelection::paintBorder (QImage *destPixmap, const QRect &docRect,
         bool selectionFinished) const
 {
+    if ( !boundingRect().isValid() )
+      return;
+
     paintPolygonalBorder (calculatePoints (),
         destPixmap, docRect,
         selectionFinished);

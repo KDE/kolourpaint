@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -25,13 +24,12 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 #include <kpToolRoundedRectangle.h>
+#include <kpPainter.h>
 
 #include <klocale.h>
 
-#include <kpPainter.h>
-
+//---------------------------------------------------------------------
 
 kpToolRoundedRectangle::kpToolRoundedRectangle (kpToolEnvironment *environ,
         QObject *parent)
@@ -43,9 +41,6 @@ kpToolRoundedRectangle::kpToolRoundedRectangle (kpToolEnvironment *environ,
 {
 }
 
-kpToolRoundedRectangle::~kpToolRoundedRectangle ()
-{
-}
-
+//---------------------------------------------------------------------
 
 #include <kpToolRoundedRectangle.moc>

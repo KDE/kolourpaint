@@ -251,16 +251,6 @@ void kpTextStyle::setBackgroundTransparent (bool yes)
 
 
 // public
-kpColor kpTextStyle::effectiveBackgroundColor () const
-{
-    if (isBackgroundOpaque ())
-        return backgroundColor ();
-    else
-        return kpColor::Transparent;
-}
-
-
-// public
 QFont kpTextStyle::font () const
 {
     QFont fnt (m_fontFamily, m_fontSize);

@@ -26,14 +26,14 @@
 */
 
 
-#define DEBUG_KP_TEMP_IMAGE 0
-
-
 #include <kpTempImage.h>
 
 #include <kpPixmapFX.h>
 #include <kpViewManager.h>
 
+#include <QPainter>
+
+//---------------------------------------------------------------------
 
 kpTempImage::kpTempImage (bool isBrush, RenderMode renderMode,
         const QPoint &topLeft, const kpImage &image)
@@ -49,6 +49,8 @@ kpTempImage::kpTempImage (bool isBrush, RenderMode renderMode,
     Q_ASSERT (renderMode != UserFunction);
 }
 
+//---------------------------------------------------------------------
+
 kpTempImage::kpTempImage (bool isBrush, const QPoint &topLeft,
         UserFunctionType userFunction, void *userData,
         int width, int height)
@@ -62,6 +64,8 @@ kpTempImage::kpTempImage (bool isBrush, const QPoint &topLeft,
     Q_ASSERT (m_userFunction);
 }
 
+//---------------------------------------------------------------------
+
 kpTempImage::kpTempImage (const kpTempImage &rhs)
     : m_isBrush (rhs.m_isBrush),
       m_renderMode (rhs.m_renderMode),
@@ -72,6 +76,8 @@ kpTempImage::kpTempImage (const kpTempImage &rhs)
       m_userData (rhs.m_userData)
 {
 }
+
+//---------------------------------------------------------------------
 
 kpTempImage &kpTempImage::operator= (const kpTempImage &rhs)
 {
@@ -89,10 +95,7 @@ kpTempImage &kpTempImage::operator= (const kpTempImage &rhs)
     return *this;
 }
 
-kpTempImage::~kpTempImage ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // public
 bool kpTempImage::isBrush () const
@@ -100,11 +103,15 @@ bool kpTempImage::isBrush () const
     return m_isBrush;
 }
 
+//---------------------------------------------------------------------
+
 // public
 kpTempImage::RenderMode kpTempImage::renderMode () const
 {
     return m_renderMode;
 }
+
+//---------------------------------------------------------------------
 
 // public
 QPoint kpTempImage::topLeft () const
@@ -112,11 +119,15 @@ QPoint kpTempImage::topLeft () const
     return m_topLeft;
 }
 
+//---------------------------------------------------------------------
+
 // public
 kpImage kpTempImage::image () const
 {
     return m_image;
 }
+
+//---------------------------------------------------------------------
 
 // public
 kpTempImage::UserFunctionType kpTempImage::userFunction () const
@@ -124,18 +135,23 @@ kpTempImage::UserFunctionType kpTempImage::userFunction () const
     return m_userFunction;
 }
 
+//---------------------------------------------------------------------
+
 // public
 void *kpTempImage::userData () const
 {
     return m_userData;
 }
 
+//---------------------------------------------------------------------
 
 // public
 bool kpTempImage::isVisible (const kpViewManager *vm) const
 {
     return m_isBrush ? (bool) vm->viewUnderCursor () : true;
 }
+
+//---------------------------------------------------------------------
 
 // public
 QRect kpTempImage::rect () const
@@ -144,11 +160,15 @@ QRect kpTempImage::rect () const
                   m_width, m_height);
 }
 
+//---------------------------------------------------------------------
+
 // public
 int kpTempImage::width () const
 {
     return m_width;
 }
+
+//---------------------------------------------------------------------
 
 // public
 int kpTempImage::height () const
@@ -156,6 +176,7 @@ int kpTempImage::height () const
     return m_height;
 }
 
+//---------------------------------------------------------------------
 
 // public
 bool kpTempImage::paintMayAddMask () const
@@ -164,23 +185,33 @@ bool kpTempImage::paintMayAddMask () const
             m_renderMode == UserFunction);
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpTempImage::paint (kpImage *destImage, const QRect &docRect) const
 {
-#define REL_TOP_LEFT m_topLeft - docRect.topLeft ()
-#define PARAMS destImage, REL_TOP_LEFT, m_image
+    const QPoint REL_TOP_LEFT = m_topLeft - docRect.topLeft ();
+
     switch (m_renderMode)
     {
-    case SetImage:
-        kpPixmapFX::setPixmapAt (PARAMS);
+      case SetImage:
+      {
+        kpPixmapFX::setPixmapAt(destImage, REL_TOP_LEFT, m_image);
         break;
-    case PaintImage:
-        kpPixmapFX::paintPixmapAt (PARAMS);
+      }
+
+      case PaintImage:
+      {
+        kpPixmapFX::paintPixmapAt(destImage, REL_TOP_LEFT, m_image);
         break;
-    case UserFunction:
-        m_userFunction (destImage, REL_TOP_LEFT, m_userData);
+      }
+
+      case UserFunction:
+      {
+        m_userFunction(destImage, REL_TOP_LEFT, m_userData);
         break;
+      }
     }
-#undef PARAMS
-#undef REL_TOP_LEFT
 }
+
+//---------------------------------------------------------------------

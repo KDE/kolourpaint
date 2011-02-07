@@ -55,6 +55,9 @@
 #include <kpView.h>
 #include <kpViewManager.h>
 
+#include <bugfix.h>
+
+//---------------------------------------------------------------------
 
 kpToolSpraycan::kpToolSpraycan (kpToolEnvironment *environ, QObject *parent)
     : kpToolFlowBase (i18n ("Spraycan"), i18n ("Sprays graffiti"),
@@ -66,10 +69,7 @@ kpToolSpraycan::kpToolSpraycan (kpToolEnvironment *environ, QObject *parent)
     connect (m_timer, SIGNAL (timeout ()), this, SLOT (timeoutDraw ()));
 }
 
-kpToolSpraycan::~kpToolSpraycan ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // protected virtual [base kpToolFlowBase]
 QString kpToolSpraycan::haventBegunDrawUserMessage () const
@@ -77,6 +77,7 @@ QString kpToolSpraycan::haventBegunDrawUserMessage () const
     return i18n ("Click or drag to spray graffiti.");
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpToolFlowBase]
 void kpToolSpraycan::begin ()
@@ -143,7 +144,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
 
 
     // For efficiency, only get image after NOP check above.
-    QRect docRect = QRect (thisPoint, lastPoint).normalized();
+    QRect docRect = bugfix_QRect (thisPoint, lastPoint).normalized();
     docRect = neededRect (docRect, spraycanSize ());
     kpImage image = document ()->getImageAt (docRect);
 

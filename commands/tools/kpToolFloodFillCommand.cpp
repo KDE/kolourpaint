@@ -42,12 +42,15 @@
 #include <kpImage.h>
 #include <kpPixmapFX.h>
 
+//---------------------------------------------------------------------
 
 struct kpToolFloodFillCommandPrivate
 {
     kpImage oldImage;
     bool fillEntireImage;
 };
+
+//---------------------------------------------------------------------
 
 kpToolFloodFillCommand::kpToolFloodFillCommand (int x, int y,
         const kpColor &color, int processedColorSimilarity,
@@ -60,11 +63,14 @@ kpToolFloodFillCommand::kpToolFloodFillCommand (int x, int y,
     d->fillEntireImage = false;
 }
 
+//---------------------------------------------------------------------
+
 kpToolFloodFillCommand::~kpToolFloodFillCommand ()
 {
     delete d;
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
 QString kpToolFloodFillCommand::name () const
@@ -72,12 +78,15 @@ QString kpToolFloodFillCommand::name () const
     return i18n ("Flood Fill");
 }
 
+//---------------------------------------------------------------------
+
 // public virtual [base kpCommand]
 kpCommandSize::SizeType kpToolFloodFillCommand::size () const
 {
     return kpFloodFill::size () + ImageSize (d->oldImage);
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpToolFloodFillCommand::setFillEntireImage (bool yes)
@@ -85,6 +94,7 @@ void kpToolFloodFillCommand::setFillEntireImage (bool yes)
     d->fillEntireImage = yes;
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual [base kpCommand]
 void kpToolFloodFillCommand::execute ()
@@ -125,6 +135,8 @@ void kpToolFloodFillCommand::execute ()
     }
 }
 
+//---------------------------------------------------------------------
+
 // protected virtual [base kpCommand]
 void kpToolFloodFillCommand::unexecute ()
 {
@@ -155,3 +167,4 @@ void kpToolFloodFillCommand::unexecute ()
     }
 }
 
+//---------------------------------------------------------------------

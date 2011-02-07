@@ -50,9 +50,7 @@ static QRgb toGray (QRgb rgb)
 // public static
 kpImage kpEffectGrayscale::applyEffect (const kpImage &image)
 {
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (image);
-
-    QImage qimage = kpPixmapFX::convertToQImage (image);
+    kpImage qimage(image);
     
     // TODO: Why not just write to the kpImage directly?
     if (qimage.depth () > 8)
@@ -72,8 +70,5 @@ kpImage kpEffectGrayscale::applyEffect (const kpImage &image)
             qimage.setColor (i, toGray (qimage.color (i)));
     }
 
-    const kpImage ret = kpPixmapFX::convertToPixmap (qimage);
-
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (ret);
-    return ret;
+    return qimage;
 }

@@ -65,6 +65,7 @@ int main (int argc, char *argv [])
     aboutData.addAuthor (ki18n ("Clarence Dang"), ki18n ("Project Founder"), "dang@kde.org");
     aboutData.addAuthor (ki18n ("Thurston Dang"), ki18n ("Chief Investigator"),
                          "thurston_dang@users.sourceforge.net");
+    aboutData.addAuthor (ki18n ("Martin Koller"), ki18n ("Scanning Support, Alpha Support, Current Maintainer"), "kollix@aon.at");
     aboutData.addAuthor (ki18n ("Kristof Borrey"), ki18n ("Icons"), "borrey@kde.org");
     aboutData.addAuthor (ki18n ("Kazuki Ohta"), ki18n ("InputMethod Support"), "mover@hct.zaq.ne.jp");
     aboutData.addAuthor (ki18n ("Nuno Pinheiro"), ki18n ("Icons"), "nf.pinheiro@gmail.com");
@@ -74,7 +75,6 @@ int main (int argc, char *argv [])
     aboutData.addAuthor (ki18n ("Laurent Montel"), ki18n ("KDE 4 Porting"), "montel@kde.org");
 
     // TODO: missing a lot of people who helped with the KDE 4 port.
-    aboutData.addAuthor (ki18n ("Martin Koller"), ki18n ("Scanning Support"), "m.koller@surfeu.at");
 
 
     aboutData.addCredit (ki18n ("Thanks to the many others who have helped to make this program possible."));
@@ -86,11 +86,7 @@ int main (int argc, char *argv [])
     cmdLineOptions.add ("+[file]", ki18n ("Image file to open"));
     KCmdLineArgs::addCmdLineOptions (cmdLineOptions);
 
-    kpPixmapFX::initPre ();
-
     KApplication app;
-
-    kpPixmapFX::initPost ();
 
 
     if (app.isSessionRestored ())

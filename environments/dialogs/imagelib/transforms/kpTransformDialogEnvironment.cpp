@@ -31,20 +31,13 @@
 #include <kpMainWindow.h>
 
 
-struct kpTransformDialogEnvironmentPrivate
-{
-};
+//---------------------------------------------------------------------
 
-kpTransformDialogEnvironment::kpTransformDialogEnvironment (kpMainWindow *mainWindow)
-    : kpEnvironmentBase (mainWindow),
-      d (new kpTransformDialogEnvironmentPrivate ())
+kpTransformDialogEnvironment::kpTransformDialogEnvironment(kpMainWindow *mainWindow)
+    : kpEnvironmentBase(mainWindow)
 {
 }
 
-kpTransformDialogEnvironment::~kpTransformDialogEnvironment ()
-{
-    delete d;
-}
-
+//---------------------------------------------------------------------
 
 #include <kpTransformDialogEnvironment.moc>

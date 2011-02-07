@@ -248,16 +248,18 @@ void kpColorSimilarityToolBarItem::updateIcon ()
               << " side=" << side << endl;
 #endif
 
-    QPixmap icon (side, side);
-    kpPixmapFX::ensureTransparentAt (&icon, QRect (0, 0, side, side));
+    QImage icon (side, side, QImage::Format_ARGB32_Premultiplied);
+    icon.fill(0);
+
     kpColorSimilarityCubeRenderer::Paint (&icon,
         0/*x*/, 0/*y*/, side,
         colorSimilarity (), m_flashHighlight);
 
     setIconSize (QSize (side, side));
-    setIcon (icon);
+    setIcon (QPixmap::fromImage(icon));
 }
 
+//---------------------------------------------------------------------
 
 // private virtual [base QWidget]
 void kpColorSimilarityToolBarItem::resizeEvent (QResizeEvent *e)

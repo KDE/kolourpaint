@@ -77,6 +77,8 @@ void kpView::mousePressEvent (QMouseEvent *e)
     e->accept ();
 }
 
+//---------------------------------------------------------------------
+
 // protected virtual [base QWidget]
 void kpView::mouseReleaseEvent (QMouseEvent *e)
 {
@@ -94,6 +96,7 @@ void kpView::mouseReleaseEvent (QMouseEvent *e)
     e->accept ();
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base QWidget]
 void kpView::wheelEvent (QWheelEvent *e)
@@ -102,6 +105,7 @@ void kpView::wheelEvent (QWheelEvent *e)
         tool ()->wheelEvent (e);
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
 void kpView::keyPressEvent (QKeyEvent *e)
@@ -116,6 +120,8 @@ void kpView::keyPressEvent (QKeyEvent *e)
     e->accept ();
 }
 
+//---------------------------------------------------------------------
+
 // protected virtual [base QWidget]
 void kpView::keyReleaseEvent (QKeyEvent *e)
 {
@@ -129,6 +135,7 @@ void kpView::keyReleaseEvent (QKeyEvent *e)
     e->accept ();
 }
 
+//---------------------------------------------------------------------
 
 // COMPAT: Need to update InputMethod support.
 #if 0

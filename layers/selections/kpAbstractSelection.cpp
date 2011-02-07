@@ -76,11 +76,9 @@ kpAbstractSelection::~kpAbstractSelection ()
 
 
 // public virtual
-bool kpAbstractSelection::readFromStream (QDataStream &stream,
-        const kpPixmapFX::WarnAboutLossInfo &wali)
+bool kpAbstractSelection::readFromStream (QDataStream &stream)
 {
     stream >> d->rect;
-    (void) wali;
 
     return true;
 }
@@ -239,7 +237,7 @@ void kpAbstractSelection::moveTo (const QPoint &topLeftPoint)
 
 
 // protected
-void kpAbstractSelection::paintRectangularBorder (QPixmap *destPixmap,
+void kpAbstractSelection::paintRectangularBorder (QImage *destPixmap,
         const QRect &docRect,
         bool selectionFinished) const
 {
@@ -269,7 +267,7 @@ void kpAbstractSelection::paintRectangularBorder (QPixmap *destPixmap,
 
 // protected
 void kpAbstractSelection::paintPolygonalBorder (const QPolygon &points,
-        QPixmap *destPixmap,
+        QImage *destPixmap,
         const QRect &docRect,
         bool selectionFinished) const
 {

@@ -147,7 +147,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/cursors/kpCursorLightCross.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/cursors/kpCursorProvider.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/effects/kpEffectsDialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/kpDocumentMetaInfoDialog.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/transforms/kpTransformFlipDialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/transforms/kpTransformRotateDialog.cpp
@@ -184,7 +183,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpColor_Constants.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpColor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpDocumentMetaInfo.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpFloodFill.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpImage.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpPainter.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/transforms/kpTransformAutoCrop.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/transforms/kpTransformCrop.cpp
@@ -222,15 +220,10 @@ ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Tools.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View_Thumbnail.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View_Zoom.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_AbstractDraw.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_DrawRasterOps.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_DrawShapes.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_Effects.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_FormatConversion.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_GetSetPixmapParts.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_MaskOps.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_ScreenDepth.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_Transforms.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tools/flow/kpToolBrush.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tools/flow/kpToolColorEraser.cpp
@@ -380,7 +373,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/cursors/kpCursorLightCross.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/cursors/kpCursorProvider.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/effects/kpEffectsDialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/kpDocumentMetaInfoDialog.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/transforms/kpTransformFlipDialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/transforms/kpTransformPreviewDialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/transforms/kpTransformResizeScaleDialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib/transforms/kpTransformRotateDialog.cpp
@@ -417,7 +409,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpColor_Constants.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpColor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpDocumentMetaInfo.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpFloodFill.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpImage.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/kpPainter.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/transforms/kpTransformAutoCrop.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/transforms/kpTransformCrop.cpp
@@ -452,15 +443,10 @@ ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Tools.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View_Thumbnail.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View_Zoom.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_AbstractDraw.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_DrawRasterOps.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_DrawShapes.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_Effects.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_FormatConversion.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_GetSetPixmapParts.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_MaskOps.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_ScreenDepth.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_Transforms.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tools/flow/kpToolBrush.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tools/flow/kpToolColorEraser.cpp

@@ -40,10 +40,7 @@ Q_OBJECT
 
 public:
     kpToolEraser (kpToolEnvironment *environ, QObject *parent);
-    virtual ~kpToolEraser ();
 
-
-public:
     virtual void globalDraw ();
 
 

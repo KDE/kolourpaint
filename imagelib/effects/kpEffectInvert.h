@@ -31,7 +31,6 @@
 
 
 class QImage;
-class QPixmap;
 
 
 class kpEffectInvert
@@ -55,8 +54,6 @@ public:
     // 2. never inverts the Alpha Buffer
     //
 
-    static void applyEffect (QPixmap *destPixmapPtr, int channels = RGB);
-    static QPixmap applyEffect (const QPixmap &pm, int channels = RGB);
     static void applyEffect (QImage *destImagePtr, int channels = RGB);
     static QImage applyEffect (const QImage &img, int channels = RGB);
 };

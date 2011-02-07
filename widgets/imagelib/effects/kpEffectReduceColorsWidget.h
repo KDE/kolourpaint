@@ -43,8 +43,6 @@ Q_OBJECT
 public:
     kpEffectReduceColorsWidget (bool actOnSelection,
                                 QWidget *parent);
-    virtual ~kpEffectReduceColorsWidget ();
-
 
     int depth () const;
     bool dither () const;

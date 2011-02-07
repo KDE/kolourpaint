@@ -68,6 +68,9 @@
 #include <kpTool.h>
 #include <kpViewManager.h>
 
+#include <bugfix.h>
+
+//---------------------------------------------------------------------
 
 class kpTransformAutoCropBorder
 {
@@ -192,11 +195,14 @@ kpColor kpTransformAutoCropBorder::averageColor () const
     }
 }
 
+//---------------------------------------------------------------------
+
 bool kpTransformAutoCropBorder::isSingleColor () const
 {
     return m_isSingleColor;
 }
 
+//---------------------------------------------------------------------
 
 // public
 bool kpTransformAutoCropBorder::calculate (int isX, int dir)
@@ -207,7 +213,7 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
     int maxX = m_imagePtr->width () - 1;
     int maxY = m_imagePtr->height () - 1;
 
-    QImage qimage = kpPixmapFX::convertToQImage (*m_imagePtr);
+    QImage qimage = *m_imagePtr;
     Q_ASSERT (!qimage.isNull ());
 
     // (sync both branches)
@@ -237,7 +243,7 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
         if (numCols)
         {
             m_rect =
-                QRect (QPoint (startX, 0),
+                bugfix_QRect (QPoint (startX, 0),
                        QPoint (startX + (numCols - 1) * dir, maxY)).normalized();
             m_referenceColor = col;
         }
@@ -268,7 +274,7 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
         if (numRows)
         {
             m_rect =
-                QRect (QPoint (0, startY),
+                bugfix_QRect (QPoint (0, startY),
                        QPoint (maxX, startY + (numRows - 1) * dir)).normalized();
             m_referenceColor = col;
         }
@@ -279,7 +285,7 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
     {
         m_isSingleColor = true;
 
-        if (m_referenceColor.isOpaque () && m_processedColorSimilarity != 0)
+        if (m_processedColorSimilarity != 0)
         {
             for (int y = m_rect.top (); y <= m_rect.bottom (); y++)
             {
@@ -515,7 +521,7 @@ void kpTransformAutoCropCommand::unexecute ()
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
-    kpImage image (d->oldWidth, d->oldHeight);
+    kpImage image (d->oldWidth, d->oldHeight, QImage::Format_ARGB32_Premultiplied);
 
     // restore the position of the center image
     kpPixmapFX::setPixmapAt (&image, d->contentsRect,

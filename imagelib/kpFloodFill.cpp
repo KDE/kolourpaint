@@ -45,6 +45,7 @@
 #include <kpPixmapFX.h>
 #include <kpTool.h>
 
+//---------------------------------------------------------------------
 
 class kpFillLine
 {
@@ -62,11 +63,14 @@ public:
     int m_y, m_x1, m_x2;
 };
 
+//---------------------------------------------------------------------
+
 static kpCommandSize::SizeType FillLinesListSize (const QLinkedList <kpFillLine> &fillLines)
 {
     return (fillLines.size () * kpFillLine::size ());
 }
 
+//---------------------------------------------------------------------
 
 struct kpFloodFillPrivate
 {
@@ -91,8 +95,6 @@ struct kpFloodFillPrivate
     // Set by Step 2.
     //
 
-    QImage readableImage;
-
     QLinkedList <kpFillLine> fillLines;
     QList < QLinkedList <kpFillLine> > fillLinesCache;
 
@@ -100,6 +102,8 @@ struct kpFloodFillPrivate
 
     bool prepared;
 };
+
+//---------------------------------------------------------------------
 
 kpFloodFill::kpFloodFill (kpImage *image, int x, int y,
                          const kpColor &color, int processedColorSimilarity)
@@ -112,11 +116,14 @@ kpFloodFill::kpFloodFill (kpImage *image, int x, int y,
     d->prepared = false;
 }
 
+//---------------------------------------------------------------------
+
 kpFloodFill::~kpFloodFill ()
 {
     delete d;
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpColor kpFloodFill::color () const
@@ -124,12 +131,15 @@ kpColor kpFloodFill::color () const
     return d->color;
 }
 
+//---------------------------------------------------------------------
+
 // public
 int kpFloodFill::processedColorSimilarity () const
 {
     return d->processedColorSimilarity;
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpCommandSize::SizeType kpFloodFill::size () const
@@ -140,11 +150,12 @@ kpCommandSize::SizeType kpFloodFill::size () const
         fillLinesCacheSize += ::FillLinesListSize (linesList);
     }
 
-    return ::FillLinesListSize (d->fillLines) +
-           kpCommandSize::QImageSize (d->readableImage) +
+    return ::FillLinesListSize(d->fillLines) +
+           kpCommandSize::QImageSize(d->imagePtr) +
            fillLinesCacheSize;
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpFloodFill::prepareColorToChange ()
@@ -157,21 +168,9 @@ void kpFloodFill::prepareColorToChange ()
 #endif
 
     d->colorToChange = kpPixmapFX::getColorAtPixel (*d->imagePtr, QPoint (d->x, d->y));
-
-    if (d->colorToChange.isOpaque ())
-    {
-    #if DEBUG_KP_FLOOD_FILL && 1
-        kDebug () << "\tcolorToChange: " << (int *) d->colorToChange.toQRgb ()
-                  << endl;
-    #endif
-    }
-    else
-    {
-    #if DEBUG_KP_FLOOD_FILL && 1
-        kDebug () << "\tcolorToChange: transparent";
-    #endif
-    }
 }
+
+//---------------------------------------------------------------------
 
 // public
 kpColor kpFloodFill::colorToChange ()
@@ -181,9 +180,9 @@ kpColor kpFloodFill::colorToChange ()
     return d->colorToChange;
 }
 
+//---------------------------------------------------------------------
 
 // Derived from the zSprite2 Graphics Engine
-
 
 // private
 kpColor kpFloodFill::pixelColor (int x, int y, bool *beenHere) const
@@ -203,8 +202,10 @@ kpColor kpFloodFill::pixelColor (int x, int y, bool *beenHere) const
         }
     }
 
-    return kpPixmapFX::getColorAtPixel (d->readableImage, QPoint (x, y));
+    return kpPixmapFX::getColorAtPixel (*(d->imagePtr), QPoint (x, y));
 }
+
+//---------------------------------------------------------------------
 
 // private
 bool kpFloodFill::shouldGoTo (int x, int y) const
@@ -215,6 +216,7 @@ bool kpFloodFill::shouldGoTo (int x, int y) const
     return (!beenThere && col.isSimilarTo (d->colorToChange, d->processedColorSimilarity));
 }
 
+//---------------------------------------------------------------------
 
 // private
 int kpFloodFill::findMinX (int y, int x) const
@@ -231,6 +233,8 @@ int kpFloodFill::findMinX (int y, int x) const
     }
 }
 
+//---------------------------------------------------------------------
+
 // private
 int kpFloodFill::findMaxX (int y, int x) const
 {
@@ -246,6 +250,7 @@ int kpFloodFill::findMaxX (int y, int x) const
     }
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpFloodFill::addLine (int y, int x1, int x2)
@@ -260,6 +265,8 @@ void kpFloodFill::addLine (int y, int x1, int x2)
         kpFillLine (y/*OPT: can determine from array index*/, x1, x2));
     d->boundingRect = d->boundingRect.unite (QRect (QPoint (x1, y), QPoint (x2, y)));
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpFloodFill::findAndAddLines (const kpFillLine &fillLine, int dy)
@@ -286,6 +293,7 @@ void kpFloodFill::findAndAddLines (const kpFillLine &fillLine, int dy)
     }
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpFloodFill::prepare ()
@@ -314,13 +322,6 @@ void kpFloodFill::prepare ()
         d->prepared = true;  // sync with all "return true"'s
         return;
     }
-
-#if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "\tconverting to image";
-#endif
-
-    // The only way to read pixels.  Sigh.
-    d->readableImage = kpPixmapFX::convertToQImage (*d->imagePtr);
 
 #if DEBUG_KP_FLOOD_FILL && 1
     kDebug () << "\tcreating fillLinesCache";
@@ -366,11 +367,12 @@ void kpFloodFill::prepare ()
 #endif
 
     // finalize memory usage
-    d->readableImage = QImage ();
     d->fillLinesCache.clear ();
 
     d->prepared = true;  // sync with all "return true"'s
 }
+
+//---------------------------------------------------------------------
 
 // public
 QRect kpFloodFill::boundingRect ()
@@ -380,59 +382,32 @@ QRect kpFloodFill::boundingRect ()
     return d->boundingRect;
 }
 
-
-struct DrawLinesPackage
+//---------------------------------------------------------------------
+// public
+void kpFloodFill::fill ()
 {
-    const QLinkedList <kpFillLine> *lines;
-    kpColor color;
-};
+    prepare();
 
-static void DrawLinesHelper (QPainter *p,
-        bool drawingOnRGBLayer,
-        void *data)
-{
-    const DrawLinesPackage *pack = static_cast <DrawLinesPackage *> (data);
+    QApplication::setOverrideCursor (Qt::WaitCursor);
 
-#if DEBUG_KP_FLOOD_FILL
-    kDebug () << "DrawLinesHelper() lines"
-        << " color=" << (int *) pack->color.toQRgb ()
-        << endl;
-#endif
+    QPainter painter(d->imagePtr);
 
-    p->setPen (kpPixmapFX::draw_ToQColor (pack->color, drawingOnRGBLayer));
+    // by defintion, flood fill with a fully transparent color erases the pixels
+    // and sets them to be fully transparent
+    if ( d->color.isTransparent() )
+      painter.setCompositionMode(QPainter::CompositionMode_Clear);
 
-    foreach (const kpFillLine &l, *pack->lines)
+    painter.setPen(d->color.toQColor());
+
+    foreach (const kpFillLine &l, d->fillLines)
     {
         const QPoint p1 (l.m_x1, l.m_y);
         const QPoint p2 (l.m_x2, l.m_y);
 
-        p->drawLine (p1, p2);
+        painter.drawLine (p1, p2);
     }
-}
 
-static void DrawLines (kpImage *image,
-        const QLinkedList <kpFillLine> &lines,
-        const kpColor &color)
-{
-    DrawLinesPackage pack;
-    pack.lines = &lines;
-    pack.color = color;
-
-    kpPixmapFX::draw (image, &::DrawLinesHelper,
-        color.isOpaque (), color.isTransparent (),
-        &pack);
-}
-
-
-// public
-void kpFloodFill::fill ()
-{
-    prepare ();
-
-
-    QApplication::setOverrideCursor (Qt::WaitCursor);
-    {
-        ::DrawLines (d->imagePtr, d->fillLines, d->color);
-    }
     QApplication::restoreOverrideCursor ();
 }
+
+//---------------------------------------------------------------------

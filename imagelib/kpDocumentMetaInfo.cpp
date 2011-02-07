@@ -57,6 +57,7 @@ const int kpDocumentMetaInfo::MaxDotsPerMeter =
 const int kpDocumentMetaInfo::MaxOffset = (4000/*big image*/ * 100)/*a very big image*/;
 const int kpDocumentMetaInfo::MinOffset = -kpDocumentMetaInfo::MaxOffset;
 
+//---------------------------------------------------------------------
 
 struct kpDocumentMetaInfoPrivate
 {
@@ -66,6 +67,7 @@ struct kpDocumentMetaInfoPrivate
     QMap <QString, QString> m_textMap;
 };
 
+//---------------------------------------------------------------------
 
 // public
 kpDocumentMetaInfo::kpDocumentMetaInfo ()
@@ -76,6 +78,8 @@ kpDocumentMetaInfo::kpDocumentMetaInfo ()
     d->m_offset = QPoint (0, 0);
 }
 
+//---------------------------------------------------------------------
+
 kpDocumentMetaInfo::kpDocumentMetaInfo (const kpDocumentMetaInfo &rhs)
     : d (new kpDocumentMetaInfoPrivate ())
 {
@@ -85,12 +89,15 @@ kpDocumentMetaInfo::kpDocumentMetaInfo (const kpDocumentMetaInfo &rhs)
     d->m_textMap = rhs.textMap ();
 }
 
+//---------------------------------------------------------------------
+
 // public
 kpDocumentMetaInfo::~kpDocumentMetaInfo ()
 {
     delete d;
 }
 
+//---------------------------------------------------------------------
 
 // public
 bool kpDocumentMetaInfo::operator== (const kpDocumentMetaInfo &rhs) const
@@ -101,12 +108,15 @@ bool kpDocumentMetaInfo::operator== (const kpDocumentMetaInfo &rhs) const
             d->m_textMap == rhs.d->m_textMap);
 }
 
+//---------------------------------------------------------------------
+
 // public
 bool kpDocumentMetaInfo::operator!= (const kpDocumentMetaInfo &rhs) const
 {
     return !(*this == rhs);
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpDocumentMetaInfo &kpDocumentMetaInfo::operator= (const kpDocumentMetaInfo &rhs)
@@ -122,6 +132,7 @@ kpDocumentMetaInfo &kpDocumentMetaInfo::operator= (const kpDocumentMetaInfo &rhs
     return *this;
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpDocumentMetaInfo::printDebug (const QString &prefix) const
@@ -149,6 +160,7 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
     kDebug () << usedPrefix << "ENDS";
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpCommandSize::SizeType kpDocumentMetaInfo::size () const
@@ -167,12 +179,15 @@ kpCommandSize::SizeType kpDocumentMetaInfo::size () const
     return ret * 3;
 }
 
+//---------------------------------------------------------------------
 
 // public
 int kpDocumentMetaInfo::dotsPerMeterX () const
 {
     return d->m_dotsPerMeterX;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpDocumentMetaInfo::setDotsPerMeterX (int val)
@@ -187,12 +202,15 @@ void kpDocumentMetaInfo::setDotsPerMeterX (int val)
     d->m_dotsPerMeterX = qBound (MinDotsPerMeter, val, MaxDotsPerMeter);
 }
 
+//---------------------------------------------------------------------
 
 // public
 int kpDocumentMetaInfo::dotsPerMeterY () const
 {
     return d->m_dotsPerMeterY;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpDocumentMetaInfo::setDotsPerMeterY (int val)
@@ -207,12 +225,15 @@ void kpDocumentMetaInfo::setDotsPerMeterY (int val)
     d->m_dotsPerMeterY = qBound (MinDotsPerMeter, val, MaxDotsPerMeter);
 }
 
+//---------------------------------------------------------------------
 
 // public
 QPoint kpDocumentMetaInfo::offset () const
 {
     return d->m_offset;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpDocumentMetaInfo::setOffset (const QPoint &point)
@@ -223,6 +244,7 @@ void kpDocumentMetaInfo::setOffset (const QPoint &point)
     d->m_offset = QPoint (x, y);
 }
 
+//---------------------------------------------------------------------
 
 // public
 QMap <QString, QString> kpDocumentMetaInfo::textMap () const
@@ -230,12 +252,15 @@ QMap <QString, QString> kpDocumentMetaInfo::textMap () const
     return d->m_textMap;
 }
 
+//---------------------------------------------------------------------
+
 // public
 QList <QString> kpDocumentMetaInfo::textKeys () const
 {
     return d->m_textMap.keys ();
 }
 
+//---------------------------------------------------------------------
 
 // public
 QString kpDocumentMetaInfo::text (const QString &key) const
@@ -246,6 +271,8 @@ QString kpDocumentMetaInfo::text (const QString &key) const
     return d->m_textMap [key];
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpDocumentMetaInfo::setText (const QString &key, const QString &value)
 {
@@ -254,3 +281,5 @@ void kpDocumentMetaInfo::setText (const QString &key, const QString &value)
 
     d->m_textMap [key] = value;
 }
+
+//---------------------------------------------------------------------

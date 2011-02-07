@@ -57,8 +57,8 @@ private:
     void createAngleGroupBox ();
 
     virtual QSize newDimensions () const;
-    virtual QPixmap transformPixmap (const QPixmap &pixmap,
-                                     int targetWidth, int targetHeight) const;
+    virtual QImage transformPixmap (const QImage &image,
+                                    int targetWidth, int targetHeight) const;
 
     void updateLastAngles ();
 

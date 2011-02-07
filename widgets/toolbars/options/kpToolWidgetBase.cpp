@@ -47,13 +47,12 @@
 #include <kglobal.h>
 
 #include <kpDefs.h>
-#include <kpEffectInvert.h>
-#include <kpPixmapFX.h>
 
+
+//---------------------------------------------------------------------
 
 kpToolWidgetBase::kpToolWidgetBase (QWidget *parent, const QString &name)
     : QFrame (parent),
-      m_invertSelectedPixmap (true),
       m_selectedRow (-1), m_selectedCol (-1)
 {
     setObjectName (name);
@@ -64,10 +63,13 @@ kpToolWidgetBase::kpToolWidgetBase (QWidget *parent, const QString &name)
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Minimum);
 }
 
+//---------------------------------------------------------------------
+
 kpToolWidgetBase::~kpToolWidgetBase ()
 {
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpToolWidgetBase::addOption (const QPixmap &pixmap, const QString &toolTip)
@@ -80,6 +82,8 @@ void kpToolWidgetBase::addOption (const QPixmap &pixmap, const QString &toolTip)
     m_toolTips.last ().append (toolTip);
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpToolWidgetBase::startNewOptionRow ()
 {
@@ -87,6 +91,8 @@ void kpToolWidgetBase::startNewOptionRow ()
     m_pixmapRects.append (QList <QRect> ());
     m_toolTips.append (QList <QString> ());
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpToolWidgetBase::finishConstruction (int fallBackRow, int fallBackCol)
@@ -126,6 +132,7 @@ void kpToolWidgetBase::finishConstruction (int fallBackRow, int fallBackCol)
     }
 }
 
+//---------------------------------------------------------------------
 
 // private
 QList <int> kpToolWidgetBase::spreadOutElements (const QList <int> &sizes, int max)
@@ -160,7 +167,7 @@ QList <int> kpToolWidgetBase::spreadOutElements (const QList <int> &sizes, int m
         return retOffsets;
     }
 
-    int maxLeftOver = max - (totalSize + margin * 2);
+    int maxLeftOver = max - (totalSize + margin * 2 * sizes.count());
 
     int startCompensating = -1;
     int numCompensate = 0;
@@ -188,6 +195,7 @@ QList <int> kpToolWidgetBase::spreadOutElements (const QList <int> &sizes, int m
     return retOffsets;
 }
 
+//---------------------------------------------------------------------
 
 // public
 QPair <int, int> kpToolWidgetBase::defaultSelectedRowAndCol () const
@@ -212,17 +220,23 @@ QPair <int, int> kpToolWidgetBase::defaultSelectedRowAndCol () const
     return qMakePair (row, col);
 }
 
+//---------------------------------------------------------------------
+
 // public
 int kpToolWidgetBase::defaultSelectedRow () const
 {
     return defaultSelectedRowAndCol ().first;
 }
 
+//---------------------------------------------------------------------
+
 // public
 int kpToolWidgetBase::defaultSelectedCol () const
 {
     return defaultSelectedRowAndCol ().second;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpToolWidgetBase::saveSelectedAsDefault () const
@@ -243,6 +257,7 @@ void kpToolWidgetBase::saveSelectedAsDefault () const
     cfg.sync ();
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpToolWidgetBase::relayoutOptions ()
@@ -347,6 +362,8 @@ void kpToolWidgetBase::relayoutOptions ()
     update ();
 }
 
+//---------------------------------------------------------------------
+
 
 // public
 int kpToolWidgetBase::selectedRow () const
@@ -354,11 +371,15 @@ int kpToolWidgetBase::selectedRow () const
     return m_selectedRow;
 }
 
+//---------------------------------------------------------------------
+
 // public
 int kpToolWidgetBase::selectedCol () const
 {
     return m_selectedCol;
 }
+
+//---------------------------------------------------------------------
 
 // public
 int kpToolWidgetBase::selected () const
@@ -381,6 +402,8 @@ int kpToolWidgetBase::selected () const
 
     return upto;
 }
+
+//---------------------------------------------------------------------
 
 
 // public
@@ -425,6 +448,8 @@ bool kpToolWidgetBase::hasPreviousOption (int *row, int *col) const
     return true;
 }
 
+//---------------------------------------------------------------------
+
 // public
 bool kpToolWidgetBase::hasNextOption (int *row, int *col) const
 {
@@ -467,6 +492,8 @@ bool kpToolWidgetBase::hasNextOption (int *row, int *col) const
 
     return true;
 }
+
+//---------------------------------------------------------------------
 
 
 // public slot virtual
@@ -526,11 +553,15 @@ bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
     return true;
 }
 
+//---------------------------------------------------------------------
+
 // public slot
 bool kpToolWidgetBase::setSelected (int row, int col)
 {
     return setSelected (row, col, true/*set as default*/);
 }
+
+//---------------------------------------------------------------------
 
 
 // public slot
@@ -543,6 +574,8 @@ bool kpToolWidgetBase::selectPreviousOption ()
     return setSelected (newRow, newCol);
 }
 
+//---------------------------------------------------------------------
+
 // public slot
 bool kpToolWidgetBase::selectNextOption ()
 {
@@ -552,6 +585,8 @@ bool kpToolWidgetBase::selectNextOption ()
 
     return setSelected (newRow, newCol);
 }
+
+//---------------------------------------------------------------------
 
 
 // protected virtual [base QWidget]
@@ -607,6 +642,8 @@ bool kpToolWidgetBase::event (QEvent *e)
         return QWidget::event (e);
 }
 
+//---------------------------------------------------------------------
+
 
 // protected virtual [base QWidget]
 void kpToolWidgetBase::mousePressEvent (QMouseEvent *e)
@@ -631,6 +668,8 @@ void kpToolWidgetBase::mousePressEvent (QMouseEvent *e)
     }
 }
 
+//---------------------------------------------------------------------
+
 // protected virtual [base QWidget]
 void kpToolWidgetBase::paintEvent (QPaintEvent *e)
 {
@@ -640,7 +679,6 @@ void kpToolWidgetBase::paintEvent (QPaintEvent *e)
 
     // Draw frame first.
     QFrame::paintEvent (e);
-
 
     QPainter painter (this);
 
@@ -661,14 +699,7 @@ void kpToolWidgetBase::paintEvent (QPaintEvent *e)
 
             if (i == m_selectedRow && j == m_selectedCol)
             {
-                painter.fillRect (rect, Qt::blue/*selection color*/);
-
-                if (m_invertSelectedPixmap)
-                {
-                    // REFACTOR: Should use kpPixmapFX instead i.e. method on view content, not document content
-                    kpPixmapFX::ensureNoAlphaChannel (&pixmap);
-                    kpEffectInvert::applyEffect (&pixmap);
-                }
+                painter.fillRect(rect, palette().color(QPalette::Highlight).rgb());
             }
 
         #if DEBUG_KP_TOOL_WIDGET_BASE && 1
@@ -680,12 +711,13 @@ void kpToolWidgetBase::paintEvent (QPaintEvent *e)
 
         #endif
 
-            painter.drawPixmap (QPoint (rect.x () + (rect.width () - pixmap.width ()) / 2,
-                                        rect.y () + (rect.height () - pixmap.height ()) / 2),
-                                pixmap);
+            painter.drawPixmap(QPoint(rect.x () + (rect.width () - pixmap.width ()) / 2,
+                                      rect.y () + (rect.height () - pixmap.height ()) / 2),
+                               pixmap);
         }
     }
 }
 
+//---------------------------------------------------------------------
 
 #include <kpToolWidgetBase.moc>

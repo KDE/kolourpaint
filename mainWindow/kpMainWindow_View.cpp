@@ -86,6 +86,8 @@ void kpMainWindow::setupViewMenuActions ()
     enableViewMenuDocumentActions (false);
 }
 
+//---------------------------------------------------------------------
+
 // private
 bool kpMainWindow::viewMenuDocumentActionsEnabled () const
 {
@@ -105,6 +107,7 @@ void kpMainWindow::enableViewMenuDocumentActions (bool enable)
     enableViewMenuThumbnailDocumentActions (enable);
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::actionShowGridUpdate ()
@@ -119,6 +122,8 @@ void kpMainWindow::actionShowGridUpdate ()
     d->actionShowGrid->setChecked (enable && d->configShowGrid);
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotShowGridToggled ()
 {
@@ -128,12 +133,13 @@ void kpMainWindow::slotShowGridToggled ()
 
     updateMainViewGrid ();
 
-
     KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
 
     cfg.writeEntry (kpSettingShowGrid, d->configShowGrid = d->actionShowGrid->isChecked ());
     cfg.sync ();
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::updateMainViewGrid ()
@@ -146,6 +152,7 @@ void kpMainWindow::updateMainViewGrid ()
         d->mainView->showGrid (d->actionShowGrid->isChecked ());
 }
 
+//---------------------------------------------------------------------
 
 // private
 QRect kpMainWindow::mapToGlobal (const QRect &rect) const
@@ -153,8 +160,12 @@ QRect kpMainWindow::mapToGlobal (const QRect &rect) const
     return kpWidgetMapper::toGlobal (this, rect);
 }
 
+//---------------------------------------------------------------------
+
 // private
 QRect kpMainWindow::mapFromGlobal (const QRect &rect) const
 {
     return kpWidgetMapper::fromGlobal (this, rect);
 }
+
+//---------------------------------------------------------------------

@@ -111,11 +111,11 @@ QSize kpDocumentSaveOptionsPreviewDialog::preferredMinimumSize () const
 
 
 // public slot
-void kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize (const QPixmap &pixmap,
+void kpDocumentSaveOptionsPreviewDialog::setFilePixmapAndSize (const QImage &pixmap,
                                                                qint64 fileSize)
 {
     delete m_filePixmap;
-    m_filePixmap = new QPixmap (pixmap);
+    m_filePixmap = new QImage (pixmap);
 
     updatePixmapPreview ();
 
@@ -186,13 +186,13 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
     #endif
 
 
-        QPixmap transformedPixmap =
+        QImage transformedPixmap =
             kpPixmapFX::scale (*m_filePixmap,
                                newWidth, newHeight);
 
 
-        QPixmap labelPixmap (m_filePixmapLabel->width (),
-                             m_filePixmapLabel->height ());
+        QImage labelPixmap (m_filePixmapLabel->width (),
+                            m_filePixmapLabel->height (), QImage::Format_ARGB32_Premultiplied);
         kpPixmapFX::fill (&labelPixmap, kpColor::Transparent);
         kpPixmapFX::setPixmapAt (&labelPixmap,
             (labelPixmap.width () - transformedPixmap.width ()) / 2,
@@ -200,7 +200,7 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
             transformedPixmap);
 
 
-        m_filePixmapLabel->setPixmap (labelPixmap);
+        m_filePixmapLabel->setPixmap (QPixmap::fromImage(labelPixmap));
     }
     else
     {

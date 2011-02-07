@@ -38,7 +38,7 @@
 #include <kpPixmapFX.h>
 
 
-class QPixmap;
+class QImage;
 class QPolygon;
 class QPoint;
 class QRect;
@@ -104,9 +104,7 @@ public:
     //
     // You must override this.  Remember to call this base implementation
     // before your code.
-    virtual bool readFromStream (QDataStream &stream,
-        const kpPixmapFX::WarnAboutLossInfo &wali
-            = kpPixmapFX::WarnAboutLossInfo ());
+    virtual bool readFromStream (QDataStream &stream);
 
     // Marshalls the object into the <stream>.  This is called by
     // operator<<() so the serialID() has already been written into the
@@ -239,12 +237,12 @@ public:
     // However, there is no need to do any explicit clipping to <docRect>,
     // since any drawing outside the bounds of <destPixmap> is discarded.
     // However, you may choose to clip for whatever reason e.g. performance.
-    virtual void paint (QPixmap *destPixmap, const QRect &docRect) const = 0;
+    virtual void paint (QImage *destPixmap, const QRect &docRect) const = 0;
 
 
 protected:
     // Use this to implement paintBorder() for rectangular selections.
-    void paintRectangularBorder (QPixmap *destPixmap, const QRect &docRect,
+    void paintRectangularBorder (QImage *destPixmap, const QRect &docRect,
         bool selectionFinished) const;
 
     // Use this to implement paintBorder() for non-rectangular selections
@@ -252,7 +250,7 @@ protected:
     //
     // If <selectionFinished>, this also draws a bounding rectangular box.
     void paintPolygonalBorder (const QPolygon &points,
-        QPixmap *destPixmap, const QRect &docRect,
+        QImage *destPixmap, const QRect &docRect,
         bool selectionFinished) const;
 
 public:
@@ -262,7 +260,7 @@ public:
     //
     // If <selectionFinished> is false, the user is still dragging out the
     // selection border so it may be drawn differently.
-    virtual void paintBorder (QPixmap *destPixmap, const QRect &docRect,
+    virtual void paintBorder (QImage *destPixmap, const QRect &docRect,
         bool selectionFinished) const = 0;
 
 

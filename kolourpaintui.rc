@@ -4,7 +4,7 @@ SYNC: Do not change the number of quotes before the version number
       - it is parsed by the KolourPaint wrapper shell script (in standalone
       backport releases of KolourPaint)
 -->
-<gui name="kolourpaint" version="71">
+<gui name="kolourpaint" version="72">
 
 <!--
 SYNC: Check for duplicate actions in menus caused by some of our actions
@@ -76,6 +76,7 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
         <Separator />
         <Action name="image_resize_scale" />
         <Action name="image_flip" />
+        <Action name="image_mirror" />
         <Separator />
         <Action name="image_rotate_270deg" />
         <Action name="image_rotate_90deg" />
@@ -214,6 +215,7 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
         <Separator />
         <Action name="image_resize_scale" />
         <Action name="image_flip" />
+        <Action name="image_mirror" />
         <Action name="image_rotate" />
         <Action name="image_skew" />
         <Separator />

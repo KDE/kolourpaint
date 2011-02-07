@@ -54,6 +54,8 @@ bool kpView::isPaintBlank () const
     return (d->paintBlankCounter > 0);
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpView::setPaintBlank ()
 {
@@ -67,6 +69,8 @@ void kpView::setPaintBlank ()
         repaint ();
     }
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpView::restorePaintBlank ()
@@ -82,6 +86,8 @@ void kpView::restorePaintBlank ()
         update ();
     }
 }
+
+//---------------------------------------------------------------------
 
 
 // protected
@@ -127,6 +133,8 @@ QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
 
     return docRect;
 }
+
+//---------------------------------------------------------------------
 
 // public static
 void kpView::drawTransparentBackground (QPainter *painter,
@@ -188,6 +196,8 @@ void kpView::drawTransparentBackground (QPainter *painter,
     painter->restore ();
 }
 
+//---------------------------------------------------------------------
+
 // protected
 void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRect)
 {
@@ -231,8 +241,10 @@ void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRec
     drawTransparentBackground (painter, patternOrigin, viewRect);
 }
 
+//---------------------------------------------------------------------
+
 // protected
-void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
+void kpView::paintEventDrawSelection (QImage *destPixmap, const QRect &docRect)
 {
 #if DEBUG_KP_VIEW_RENDERER && 1 || 0
     kDebug () << "kpView::paintEventDrawSelection() docRect=" << docRect;
@@ -315,11 +327,15 @@ void kpView::paintEventDrawSelection (QPixmap *destPixmap, const QRect &docRect)
     }
 }
 
+//---------------------------------------------------------------------
+
 // protected
 bool kpView::selectionResizeHandleAtomicSizeCloseToZoomLevel () const
 {
     return (abs (selectionResizeHandleAtomicSize () - zoomLevelX () / 100) < 3);
 }
+
+//---------------------------------------------------------------------
 
 // protected
 void kpView::paintEventDrawSelectionResizeHandles (const QRect &clipRect)
@@ -388,8 +404,10 @@ void kpView::paintEventDrawSelectionResizeHandles (const QRect &clipRect)
     }
 }
 
+//---------------------------------------------------------------------
+
 // protected
-void kpView::paintEventDrawTempImage (QPixmap *destPixmap, const QRect &docRect)
+void kpView::paintEventDrawTempImage (QImage *destPixmap, const QRect &docRect)
 {
     kpViewManager *vm = viewManager ();
     if (!vm)
@@ -407,8 +425,10 @@ void kpView::paintEventDrawTempImage (QPixmap *destPixmap, const QRect &docRect)
     if (!tpi || !tpi->isVisible (vm))
         return;
 
-    tpi->paint (kpImage::CastPixmapPtr (destPixmap), docRect);
+    tpi->paint (destPixmap, docRect);
 }
+
+//---------------------------------------------------------------------
 
 // protected
 void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
@@ -478,6 +498,8 @@ void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
     }
 }
 
+//---------------------------------------------------------------------
+
 // This is called "_Unclipped" because it may draw outside of
 // <viewRect>.
 //
@@ -521,10 +543,8 @@ void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
     Q_ASSERT (vm);
     Q_ASSERT (doc);
 
-
     if (viewRect.isEmpty ())
         return;
-
 
     QRect docRect = paintEventGetDocRect (viewRect);
 
@@ -532,18 +552,16 @@ void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
     kDebug () << "\tdocRect=" << docRect;
 #endif
 
-
     QPainter painter (this);
+    //painter.setCompositionMode(QPainter::CompositionMode_Source);
 
-
-    QPixmap docPixmap;
+    QImage docPixmap;
     bool tempImageWillBeRendered = false;
 
     // LOTODO: I think <docRect> being empty would be a bug.
     if (!docRect.isEmpty ())
     {
         docPixmap = doc->getImageAt (docRect);
-        KP_PFX_CHECK_NO_ALPHA_CHANNEL (docPixmap);
 
     #if DEBUG_KP_VIEW_RENDERER && 1
         kDebug () << "\tdocPixmap.hasAlpha()="
@@ -572,22 +590,11 @@ void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
     // Draw checkboard for transparent images and/or views with borders
     //
 
-    if (kpPixmapFX::hasMask (docPixmap) ||
+    if (docPixmap.hasAlphaChannel() ||
         (tempImageWillBeRendered && vm->tempImage ()->paintMayAddMask ()))
     {
-    #if DEBUG_KP_VIEW_RENDERER && 1
-        kDebug () << "\tmask=" << kpPixmapFX::hasMask (docPixmap)
-                   << endl;
-    #endif
         paintEventDrawCheckerBoard (&painter, viewRect);
     }
-    else
-    {
-    #if DEBUG_KP_VIEW_RENDERER && 1
-        kDebug () << "\tno mask";
-    #endif
-    }
-
 
     if (!docRect.isEmpty ())
     {
@@ -615,8 +622,8 @@ void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
         painter.translate (origin ().x (), origin ().y ());
         painter.scale (double (zoomLevelX ()) / 100.0,
                        double (zoomLevelY ()) / 100.0);
-        painter.drawPixmap (docRect, docPixmap);
-        painter.resetMatrix ();  // back to 1-1 scaling
+        painter.drawImage (docRect, docPixmap);
+        //painter.resetMatrix ();  // back to 1-1 scaling
     #if DEBUG_KP_VIEW_RENDERER && 1
         kDebug () << "\tscale time=" << scaleTimer.elapsed ();
     #endif
@@ -627,6 +634,8 @@ void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
     kDebug () << "\tdrawDocRect done in: " << timer.restart () << "ms";
 #endif
 }
+
+//---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
 void kpView::paintEvent (QPaintEvent *e)
@@ -739,4 +748,4 @@ void kpView::paintEvent (QPaintEvent *e)
 #endif
 }
 
-
+//---------------------------------------------------------------------

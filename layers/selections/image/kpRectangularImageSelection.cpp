@@ -139,7 +139,7 @@ bool kpRectangularImageSelection::contains (const QPoint &point) const
 
 
 // public virtual [kpAbstractSelection]
-void kpRectangularImageSelection::paintBorder (QPixmap *destPixmap, const QRect &docRect,
+void kpRectangularImageSelection::paintBorder (QImage *destPixmap, const QRect &docRect,
         bool selectionFinished) const
 {
     paintRectangularBorder (destPixmap, docRect, selectionFinished);

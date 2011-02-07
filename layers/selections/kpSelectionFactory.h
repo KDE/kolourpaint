@@ -41,9 +41,7 @@ class kpAbstractImageSelection;
 class kpSelectionFactory
 {
 public:
-    static kpAbstractImageSelection *FromStream (QDataStream &stream,
-        const kpPixmapFX::WarnAboutLossInfo &wali =
-            kpPixmapFX::WarnAboutLossInfo ());
+    static kpAbstractImageSelection *FromStream (QDataStream &stream);
 };
 
 

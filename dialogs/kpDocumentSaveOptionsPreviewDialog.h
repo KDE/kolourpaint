@@ -36,7 +36,7 @@
 
 
 class QCloseEvent;
-class QPixmap;
+class QImage;
 class QLabel;
 class QMoveEvent;
 class QResizeEvent;
@@ -63,7 +63,7 @@ signals:
     void finished ();
 
 public slots:
-    void setFilePixmapAndSize (const QPixmap &filePixmap, qint64 fileSize);
+    void setFilePixmapAndSize (const QImage &filePixmap, qint64 fileSize);
     void updatePixmapPreview ();
 
 protected:
@@ -72,7 +72,7 @@ protected:
     virtual void resizeEvent (QResizeEvent *e);
 
 protected:
-    QPixmap *m_filePixmap;
+    QImage *m_filePixmap;
     qint64 m_fileSize;
 
     kpResizeSignallingLabel *m_filePixmapLabel;

@@ -147,8 +147,6 @@ struct kpMainWindowPrivate
             *actionSelectAll, *actionDeselect,
             *actionCopyToFile, *actionPasteFromFile;
 
-    KUrl lastPasteFromURL;
-
     KUrl lastCopyToURL;
     kpDocumentSaveOptions lastCopyToSaveOptions;
     bool copyToFirstTime;
@@ -185,7 +183,7 @@ struct kpMainWindowPrivate
 
     KAction *actionResizeScale,
             *actionCrop, *actionAutoCrop,
-            *actionFlip,
+            *actionFlip, *actionMirror,
             *actionRotate, *actionRotateLeft, *actionRotateRight,
             *actionSkew,
             *actionConvertToBlackAndWhite, *actionConvertToGrayscale,

@@ -67,9 +67,7 @@ public:
     static const int SerialID = 2;
     virtual int serialID () const;
 
-    virtual bool readFromStream (QDataStream &stream,
-        const kpPixmapFX::WarnAboutLossInfo &wali =
-            kpPixmapFX::WarnAboutLossInfo ());
+    virtual bool readFromStream (QDataStream &stream);
 
     virtual void writeToStream (QDataStream &stream) const;
 
@@ -149,7 +147,7 @@ public:
 //
 
 public:
-    virtual void paintBorder (QPixmap *destPixmap, const QRect &docRect,
+    virtual void paintBorder (QImage *destPixmap, const QRect &docRect,
         bool selectionFinished) const;
 
 

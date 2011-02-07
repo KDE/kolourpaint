@@ -36,7 +36,6 @@
 #include <qimage.h>
 #include <qlist.h>
 #include <qmenu.h>
-#include <qpixmap.h>
 
 #include <kaction.h>
 #include <kdebug.h>
@@ -72,50 +71,7 @@
 #include <kpZoomedView.h>
 
 
-// private
-kpPixmapFX::WarnAboutLossInfo kpMainWindow::pasteWarnAboutLossInfo ()
-{
-    return kpPixmapFX::WarnAboutLossInfo (
-        ki18n ("<qt><p>The image to be pasted"
-            " may have more colors than the current screen mode can support."
-            " In order to display it, some color information may be removed.</p>"
-
-            "<p><b>If you save this image, any color loss will become"
-            " permanent.</b></p>"
-
-            "<p>To avoid this issue, increase your screen depth to at"
-            " least %1bpp and then restart KolourPaint.</p>"
-
-            "<hr/>"
-
-            "<p>It also"
-
-            " contains translucency which is not fully"
-            " supported. The translucency data will be"
-            " approximated with a 1-bit transparency mask.</p>"
-
-            "<p><b>If you save this image, this loss of translucency will"
-            " become permanent.</b></p></qt>"),
-        ki18n ("<qt><p>The image to be pasted"
-            " may have more colors than the current screen mode can support."
-            " In order to display it, some color information may be removed.</p>"
-
-            "<p><b>If you save this image, any color loss will become"
-            " permanent.</b></p>"
-
-            "<p>To avoid this issue, increase your screen depth to at"
-            " least %1bpp and then restart KolourPaint.</p></qt>"),
-        i18n ("<qt><p>The image to be pasted"
-            " contains translucency which is not fully"
-            " supported. The translucency data will be"
-            " approximated with a 1-bit transparency mask.</p>"
-
-            "<p><b>If you save this image, this loss of translucency will"
-            " become permanent.</b></p></qt>"),
-        "paste",
-        this);
-}
-
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::setupEditMenuActions ()
@@ -165,12 +121,14 @@ void kpMainWindow::setupEditMenuActions ()
     d->editMenuDocumentActionsEnabled = false;
     enableEditMenuDocumentActions (false);
 
-    // Paste should always be enabled, as long as there is something paste
+    // Paste should always be enabled, as long as there is something to paste
     // (independent of whether we have a document or not)
     connect (QApplication::clipboard (), SIGNAL (dataChanged ()),
              this, SLOT (slotEnablePaste ()));
     slotEnablePaste ();
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::enableEditMenuDocumentActions (bool enable)
@@ -195,6 +153,7 @@ void kpMainWindow::enableEditMenuDocumentActions (bool enable)
     d->actionPasteFromFile->setEnabled (enable);
 }
 
+//---------------------------------------------------------------------
 
 // public
 QMenu *kpMainWindow::selectionToolRMBMenu ()
@@ -202,6 +161,7 @@ QMenu *kpMainWindow::selectionToolRMBMenu ()
     return qobject_cast <QMenu *> (guiFactory ()->container ("selectionToolRMBMenu", this));
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotCut ()
@@ -220,12 +180,16 @@ void kpMainWindow::slotCut ()
     slotDelete ();
 }
 
+//---------------------------------------------------------------------
+
 static QMimeData *NewTextMimeData (const QString &text)
 {
     QMimeData *md = new QMimeData ();
     md->setText (text);
     return md;
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotCopy ()
@@ -290,24 +254,7 @@ void kpMainWindow::slotCopy ()
         else
             rawImage = d->document->getSelectedBaseImage ();
 
-        // Some apps, such as OpenOffice.org 2.0.4, ignore the image mask
-        // when pasting.  For transparent pixels, the uninitialized RGB
-        // values are used.  Fix this by initializing those values to a
-        // neutral color -- white.
-        //
-        // Strangely enough, OpenOffice.org respects the mask when inserting
-        // an image from a file, as opposed to pasting one from the clipboard.
-        //
-        // REFACTOR: This logic should be moved into kpSelectionDrag as that
-        //           would centralize this responsibility.
-        //
-        // TODO: This does not work under Qt4 (we get black, instead of white,
-        //       which is still OK, just not intended).
-        //       See kpPixmapFX::pixmapWithDefinedTransparentPixels() API Doc.
-        imageSel->setBaseImage (
-            kpPixmapFX::pixmapWithDefinedTransparentPixels (
-                rawImage,
-                Qt::white));  // CONFIG
+        imageSel->setBaseImage ( rawImage );
 
         QApplication::clipboard ()->setMimeData (
             new kpSelectionDrag (*imageSel),
@@ -319,91 +266,23 @@ void kpMainWindow::slotCopy ()
     delete sel;
 }
 
+//---------------------------------------------------------------------
 
-static bool HasSomethingToPaste (kpMainWindow *mw)
+// private slot
+void kpMainWindow::slotEnablePaste ()
 {
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow(" << mw->objectName () << "):HasSomethingToPaste()";
-    QTime timer;
-    timer.start ();
-#else
-    (void) mw;
-#endif
-
     const QMimeData *md =
-        QApplication::clipboard ()->mimeData (QClipboard::Clipboard);
-    Q_ASSERT (md);
-        
+        QApplication::clipboard()->mimeData(QClipboard::Clipboard);
+
     // It's faster to test for QMimeData::hasText() first due to the
     // lazy evaluation of the '||' operator.
-    const bool hasSomething =
-        (md->hasText () || kpSelectionDrag::canDecode (md));
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\t" << mw->objectName () << "***canDecode=" << hasSomething
-              << "(time=" << timer.restart () << ")"
-              << "formats=" << md->formats ();
-#endif
+    const bool shouldEnable = (md->hasText() || kpSelectionDrag::canDecode(md));
 
-    return hasSomething;
+    d->actionPasteInNewWindow->setEnabled(shouldEnable);
+    d->actionPaste->setEnabled(shouldEnable);
 }
 
-// HACK: SYNC: Non-Qt apps do not cause QApplication::clipboard() to
-//             emit dataChanged().  We don't want to have our paste
-//             action disabled when we can actually paste something.
-//
-//             So we make sure the paste action is always enabled and
-//             before any paste, we check if there's actually something
-//             to paste (HasSomethingToPasteWithDialogIfNot ()).
-
-#if 1  // Hack code path
-
-
-// Call before any paste only.
-static bool HasSomethingToPasteWithDialogIfNot (kpMainWindow *mw)
-{
-    if (::HasSomethingToPaste (mw))
-        return true;
-
-    kpSetOverrideCursorSaver cursorSaver (Qt::ArrowCursor);
-
-    KMessageBox::sorry (mw,
-        i18n ("<qt><p>There is nothing in the clipboard to paste.</p></qt>"),
-        i18n ("Cannot Paste"));
-    return false;
-}
-
-// private slot
-void kpMainWindow::slotEnablePaste ()
-{
-    const bool shouldEnable = true;
-    d->actionPasteInNewWindow->setEnabled (shouldEnable);
-    d->actionPaste->setEnabled (shouldEnable);
-}
-
-
-#else  // No hack
-
-
-// Call before any paste only.
-static bool HasSomethingToPasteWithDialogIfNot (kpMainWindow *)
-{
-    // We will not be called if there's nothing to paste, as the paste
-    // action would have been disabled.  But do _not_ assert that
-    // (see the slotPaste() "data unexpectedly disappeared" KMessageBox).
-    return true;
-}
-
-// private slot
-void kpMainWindow::slotEnablePaste ()
-{
-    const bool shouldEnable = ::HasSomethingToPaste (this);
-    d->actionPasteInNewWindow->setEnabled (shouldEnable);
-    d->actionPaste->setEnabled (shouldEnable);
-}
-
-
-#endif
-
+//---------------------------------------------------------------------
 
 // private
 QRect kpMainWindow::calcUsefulPasteRect (int imageWidth, int imageHeight)
@@ -438,6 +317,8 @@ QRect kpMainWindow::calcUsefulPasteRect (int imageWidth, int imageHeight)
     return QRect (0, 0, imageWidth, imageHeight);
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
 {
@@ -449,7 +330,6 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
     toolEndShape ();
-
 
     //
     // Make sure we've got a document (esp. with File/Close)
@@ -463,7 +343,6 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
         // will also create viewManager
         setDocument (newDoc);
     }
-
 
     //
     // Paste as new selection
@@ -516,6 +395,8 @@ void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
     }
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpMainWindow::pasteText (const QString &text,
                               bool forceNewTextSelection,
@@ -543,7 +424,7 @@ void kpMainWindow::pasteText (const QString &text,
     for (int i = 0; i < (int) text.length (); i++)
     {
         if (text [i] == '\n')
-            textLines.push_back (QString::null);	//krazy:exclude=nullstrassign for old broken gcc
+            textLines.push_back (QString::null);  //krazy:exclude=nullstrassign for old broken gcc
         else
             textLines [textLines.size () - 1].append (text [i]);
     }
@@ -591,7 +472,7 @@ void kpMainWindow::pasteText (const QString &text,
             {
                 macroCmd->addCommand (
                     new kpToolTextEnterCommand (
-                        QString::null/*uninteresting child of macroCmd*/,	//krazy:exclude=nullstrassign for old broken gcc
+                        QString::null/*uninteresting child of macroCmd*/,  //krazy:exclude=nullstrassign for old broken gcc
                         d->viewManager->textCursorRow (),
                         d->viewManager->textCursorCol (),
                         kpToolTextEnterCommand::AddEnterNow,
@@ -600,7 +481,7 @@ void kpMainWindow::pasteText (const QString &text,
 
             macroCmd->addCommand (
                 new kpToolTextInsertCommand (
-                    QString::null/*uninteresting child of macroCmd*/,	//krazy:exclude=nullstrassign for old broken gcc
+                    QString::null/*uninteresting child of macroCmd*/,  //krazy:exclude=nullstrassign for old broken gcc
                     d->viewManager->textCursorRow (),
                     d->viewManager->textCursorCol (),
                     textLines [i],
@@ -652,6 +533,8 @@ void kpMainWindow::pasteText (const QString &text,
         }
     }
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
@@ -708,6 +591,8 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
     }
 }
 
+//---------------------------------------------------------------------
+
 // public slot
 void kpMainWindow::slotPaste ()
 {
@@ -719,11 +604,6 @@ void kpMainWindow::slotPaste ()
 
     toolEndShape ();
 
-
-    if (!::HasSomethingToPasteWithDialogIfNot (this))
-        return;
-
-
     //
     // Acquire the image.
     //
@@ -731,8 +611,7 @@ void kpMainWindow::slotPaste ()
     const QMimeData *md = QApplication::clipboard ()->mimeData (QClipboard::Clipboard);
     Q_ASSERT (md);
 
-    kpAbstractImageSelection *sel = kpSelectionDrag::decode (md,
-        pasteWarnAboutLossInfo ());
+    kpAbstractImageSelection *sel = kpSelectionDrag::decode (md);
     if (sel)
     {
         sel->setTransparency (imageSelectionTransparency ());
@@ -780,6 +659,8 @@ void kpMainWindow::slotPaste ()
     }
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotPasteInNewWindow ()
 {
@@ -790,11 +671,6 @@ void kpMainWindow::slotPasteInNewWindow ()
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
     toolEndShape ();
-
-
-    if (!::HasSomethingToPasteWithDialogIfNot (this))
-        return;
-
 
     //
     // Pasting must ensure that:
@@ -832,6 +708,8 @@ void kpMainWindow::slotPasteInNewWindow ()
     win->slotCrop ();
 }
 
+//---------------------------------------------------------------------
+
 // public slot
 void kpMainWindow::slotDelete ()
 {
@@ -858,6 +736,7 @@ void kpMainWindow::slotDelete ()
         commandEnvironment ()));
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotSelectAll ()
@@ -881,6 +760,7 @@ void kpMainWindow::slotSelectAll ()
         tool ()->somethingBelowTheCursorChanged ();
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
@@ -946,6 +826,7 @@ void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
     }
 }
 
+//---------------------------------------------------------------------
 
 // public slot
 void kpMainWindow::slotDeselect ()
@@ -960,6 +841,7 @@ void kpMainWindow::slotDeselect ()
     addDeselectFirstCommand (0);
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotCopyToFile ()
@@ -1036,6 +918,8 @@ void kpMainWindow::slotCopyToFile ()
     d->copyToFirstTime = false;
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotPasteFromFile ()
 {
@@ -1046,25 +930,20 @@ void kpMainWindow::slotPasteFromFile ()
     toolEndShape ();
 
 
-    KUrl::List urls = askForOpenURLs (i18n ("Paste From File"),
-                                      d->lastPasteFromURL.url (),
-                                      false/*only 1 URL*/);
+    KUrl::List urls = askForOpenURLs(i18n ("Paste From File"),
+                                     false/*only 1 URL*/);
 
     if (urls.count () != 1)
         return;
 
     KUrl url = urls.first ();
-    d->lastPasteFromURL = url;
-
 
     kpImage image = kpDocument::getPixmapFromFile (url,
         false/*show error message if doesn't exist*/,
         this);
 
-
     if (image.isNull ())
         return;
-
 
     addRecentURL (url);
 
@@ -1074,4 +953,4 @@ void kpMainWindow::slotPasteFromFile ()
         imageSelectionTransparency ()));
 }
 
-
+//---------------------------------------------------------------------

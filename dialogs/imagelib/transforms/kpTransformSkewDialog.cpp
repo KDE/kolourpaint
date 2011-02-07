@@ -39,7 +39,7 @@
 #include <qlayout.h>
 #include <qpushbutton.h>
 #include <qmatrix.h>
-#include <qpixmap.h>
+#include <QImage>
 #include <qpolygon.h>
 
 #include <kdebug.h>
@@ -165,10 +165,10 @@ QSize kpTransformSkewDialog::newDimensions () const
 }
 
 // private virtual [base kpTransformPreviewDialog]
-QPixmap kpTransformSkewDialog::transformPixmap (const QPixmap &pixmap,
+QImage kpTransformSkewDialog::transformPixmap (const QImage &image,
                                            int targetWidth, int targetHeight) const
 {
-    return kpPixmapFX::skew (pixmap,
+    return kpPixmapFX::skew (image,
                              horizontalAngleForPixmapFX (),
                              verticalAngleForPixmapFX (),
                              m_environ->backgroundColor (m_actOnSelection),

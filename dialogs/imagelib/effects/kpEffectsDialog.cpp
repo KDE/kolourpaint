@@ -34,8 +34,8 @@
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qpixmap.h>
 #include <qtimer.h>
+#include <QImage>
 
 #include <kapplication.h>
 #include <kcombobox.h>
@@ -190,10 +190,10 @@ QSize kpEffectsDialog::newDimensions () const
 }
 
 // protected virtual [base kpTransformPreviewDialog]
-QPixmap kpEffectsDialog::transformPixmap (const QPixmap &pixmap,
-                                          int targetWidth, int targetHeight) const
+QImage kpEffectsDialog::transformPixmap (const QImage &pixmap,
+                                         int targetWidth, int targetHeight) const
 {
-    QPixmap pixmapWithEffect;
+    QImage pixmapWithEffect;
 
     if (m_effectWidget && !m_effectWidget->isNoOp ())
         pixmapWithEffect = m_effectWidget->applyEffect (pixmap);

@@ -40,19 +40,12 @@
 #include <limits.h>
 
 #include <qapplication.h>
-#include <qclipboard.h>
 #include <qcursor.h>
 #include <qevent.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qpixmap.h>
 
 #include <kactioncollection.h>
-#include <kapplication.h>
 #include <kdebug.h>
-#include <kiconloader.h>
 #include <klocale.h>
-#include <kmessagebox.h>
 
 #include <kpColor.h>
 #include <kpColorToolBar.h>
@@ -64,6 +57,7 @@
 #include <kpView.h>
 #include <kpViewManager.h>
 
+//---------------------------------------------------------------------
 
 void kpTool::seeIfAndHandleModifierKey (QKeyEvent *e)
 {
@@ -93,6 +87,7 @@ void kpTool::seeIfAndHandleModifierKey (QKeyEvent *e)
     }
 }
 
+//---------------------------------------------------------------------
 
 // Returns in <dx> and <dy> the direction the arrow key "e->key()" is
 // pointing in or (0,0) if it's not a recognised arrow key.
@@ -119,6 +114,8 @@ void kpTool::arrowKeyPressDirection (const QKeyEvent *e, int *dx, int *dy)
     if (dy)
         *dy = dyLocal;
 }
+
+//---------------------------------------------------------------------
 
 void kpTool::seeIfAndHandleArrowKeyPress (QKeyEvent *e)
 {
@@ -176,6 +173,7 @@ void kpTool::seeIfAndHandleArrowKeyPress (QKeyEvent *e)
     e->accept ();
 }
 
+//---------------------------------------------------------------------
 
 bool kpTool::isDrawKey (int key)
 {
@@ -185,6 +183,8 @@ bool kpTool::isDrawKey (int key)
             key == Qt::Key_Clear/*Numpad 5 Key*/ ||
             key == Qt::Key_L);
 }
+
+//---------------------------------------------------------------------
 
 void kpTool::seeIfAndHandleBeginDrawKeyPress (QKeyEvent *e)
 {
@@ -252,6 +252,7 @@ void kpTool::seeIfAndHandleEndDrawKeyPress (QKeyEvent *e)
     e->accept ();
 }
 
+//---------------------------------------------------------------------
 
 void kpTool::keyPressEvent (QKeyEvent *e)
 {
@@ -295,6 +296,8 @@ void kpTool::keyPressEvent (QKeyEvent *e)
     }
 }
 
+//---------------------------------------------------------------------
+
 void kpTool::keyReleaseEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL && 0
@@ -306,7 +309,6 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
 
     e->ignore ();
 
-
     seeIfAndHandleModifierKey (e);
     if (e->isAccepted ())
         return;
@@ -316,6 +318,7 @@ void kpTool::keyReleaseEvent (QKeyEvent *e)
         return;
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpTool::keyUpdateModifierState (QKeyEvent *e)
@@ -353,6 +356,7 @@ void kpTool::keyUpdateModifierState (QKeyEvent *e)
     }
 }
 
+//---------------------------------------------------------------------
 
 void kpTool::notifyModifierStateChanged ()
 {
@@ -369,6 +373,8 @@ void kpTool::notifyModifierStateChanged ()
     }
 }
 
+//---------------------------------------------------------------------
+
 void kpTool::setShiftPressed (bool pressed)
 {
     if (pressed == d->shiftPressed)
@@ -378,6 +384,8 @@ void kpTool::setShiftPressed (bool pressed)
 
     notifyModifierStateChanged ();
 }
+
+//---------------------------------------------------------------------
 
 void kpTool::setControlPressed (bool pressed)
 {
@@ -389,6 +397,8 @@ void kpTool::setControlPressed (bool pressed)
     notifyModifierStateChanged ();
 }
 
+//---------------------------------------------------------------------
+
 void kpTool::setAltPressed (bool pressed)
 {
     if (pressed == d->altPressed)
@@ -398,3 +408,5 @@ void kpTool::setAltPressed (bool pressed)
 
     notifyModifierStateChanged ();
 }
+
+//---------------------------------------------------------------------

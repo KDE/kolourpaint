@@ -49,12 +49,8 @@
 //
 class kpSubWindow : public QDialog
 {
-public:
-    kpSubWindow (QWidget *parent);
-    virtual ~kpSubWindow ();
-
-private:
-    struct kpSubWindowPrivate * const d;
+  public:
+    kpSubWindow(QWidget *parent);
 };
 
 

@@ -30,11 +30,6 @@
 
 
 kpSubWindow::kpSubWindow (QWidget *parent)
-    : QDialog (parent),
-      d (0)
-{
-}
-
-kpSubWindow::~kpSubWindow ()
+    : QDialog (parent)
 {
 }

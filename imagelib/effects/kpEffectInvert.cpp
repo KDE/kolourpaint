@@ -32,28 +32,12 @@
 #include <kpEffectInvert.h>
 
 #include <qimage.h>
-#include <qpixmap.h>
+#include <QImage>
 
 #include <kdebug.h>
 
 #include <kpPixmapFX.h>
 
-
-// public static
-void kpEffectInvert::applyEffect (QPixmap *destPixmapPtr, int channels)
-{
-    QImage image = kpPixmapFX::convertToQImage (*destPixmapPtr);
-    applyEffect (&image, channels);
-    *destPixmapPtr = kpPixmapFX::convertToPixmap (image);
-}
-
-// public static
-QPixmap kpEffectInvert::applyEffect (const QPixmap &pm, int channels)
-{
-    QImage image = kpPixmapFX::convertToQImage (pm);
-    applyEffect (&image, channels);
-    return kpPixmapFX::convertToPixmap (image);
-}
 
 // public static
 void kpEffectInvert::applyEffect (QImage *destImagePtr, int channels)

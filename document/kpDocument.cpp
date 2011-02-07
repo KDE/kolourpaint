@@ -40,7 +40,7 @@
 #include <qfile.h>
 #include <qimage.h>
 #include <qlist.h>
-#include <qpixmap.h>
+#include <QImage>
 #include <qpainter.h>
 #include <qrect.h>
 #include <qsize.h>
@@ -51,8 +51,6 @@
 #include <kimageio.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
-#include <kmessagebox.h>
-#include <kmimetype.h>  // LOTODO: isn't this in KIO?
 #include <ktemporaryfile.h>
 
 #include <kpAbstractSelection.h>
@@ -68,8 +66,8 @@
 #include <kpTool.h>
 #include <kpToolToolBar.h>
 #include <kpUrlFormatter.h>
-#include <kpViewManager.h>
 
+//---------------------------------------------------------------------
 
 kpDocument::kpDocument (int w, int h,
         kpDocumentEnvironment *environ)
@@ -88,11 +86,13 @@ kpDocument::kpDocument (int w, int h,
     kDebug () << "kpDocument::kpDocument (" << w << "," << h << ")";
 #endif
 
-    m_image = new kpImage (w, h);
-    m_image->fill (Qt::white);
+    m_image = new kpImage(w, h, QImage::Format_ARGB32_Premultiplied);
+    m_image->fill(QColor(Qt::white).rgb());
 
     d->environ = environ;
 }
+
+//---------------------------------------------------------------------
 
 kpDocument::~kpDocument ()
 {
@@ -106,6 +106,7 @@ kpDocument::~kpDocument ()
     delete m_selection;
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpDocumentEnvironment *kpDocument::environ () const
@@ -113,12 +114,15 @@ kpDocumentEnvironment *kpDocument::environ () const
     return d->environ;
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpDocument::setEnviron (kpDocumentEnvironment *environ)
 {
     d->environ = environ;
 }
 
+//---------------------------------------------------------------------
 
 // public
 bool kpDocument::savedAtLeastOnceBefore () const
@@ -126,11 +130,15 @@ bool kpDocument::savedAtLeastOnceBefore () const
     return m_savedAtLeastOnceBefore;
 }
 
+//---------------------------------------------------------------------
+
 // public
 KUrl kpDocument::url () const
 {
     return m_url;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpDocument::setURL (const KUrl &url, bool isFromURL)
@@ -138,6 +146,8 @@ void kpDocument::setURL (const KUrl &url, bool isFromURL)
     m_url = url;
     m_isFromURL = isFromURL;
 }
+
+//---------------------------------------------------------------------
 
 // public
 bool kpDocument::isFromURL (bool checkURLStillExists) const
@@ -153,6 +163,7 @@ bool kpDocument::isFromURL (bool checkURLStillExists) const
                 d->environ->dialogParent ()));
 }
 
+//---------------------------------------------------------------------
 
 // public
 QString kpDocument::prettyUrl () const
@@ -160,12 +171,15 @@ QString kpDocument::prettyUrl () const
     return kpUrlFormatter::PrettyUrl (m_url);
 }
 
+//---------------------------------------------------------------------
+
 // public
 QString kpDocument::prettyFilename () const
 {
     return kpUrlFormatter::PrettyFilename (m_url);
 }
 
+//---------------------------------------------------------------------
 
 // public
 const kpDocumentSaveOptions *kpDocument::saveOptions () const
@@ -173,12 +187,15 @@ const kpDocumentSaveOptions *kpDocument::saveOptions () const
     return m_saveOptions;
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpDocument::setSaveOptions (const kpDocumentSaveOptions &saveOptions)
 {
     *m_saveOptions = saveOptions;
 }
 
+//---------------------------------------------------------------------
 
 // public
 const kpDocumentMetaInfo *kpDocument::metaInfo () const
@@ -186,12 +203,15 @@ const kpDocumentMetaInfo *kpDocument::metaInfo () const
     return m_metaInfo;
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpDocument::setMetaInfo (const kpDocumentMetaInfo &metaInfo)
 {
     *m_metaInfo = metaInfo;
 }
 
+//---------------------------------------------------------------------
 
 /*
  * Properties
@@ -208,21 +228,28 @@ void kpDocument::setModified (bool yes)
         emit documentModified ();
 }
 
+//---------------------------------------------------------------------
+
 bool kpDocument::isModified () const
 {
     return m_modified;
 }
+
+//---------------------------------------------------------------------
 
 bool kpDocument::isEmpty () const
 {
     return url ().isEmpty () && !isModified ();
 }
 
+//---------------------------------------------------------------------
 
 int kpDocument::constructorWidth () const
 {
     return m_constructorWidth;
 }
+
+//---------------------------------------------------------------------
 
 int kpDocument::width (bool ofSelection) const
 {
@@ -232,21 +259,28 @@ int kpDocument::width (bool ofSelection) const
         return m_image->width ();
 }
 
+//---------------------------------------------------------------------
+
 int kpDocument::oldWidth () const
 {
     return m_oldWidth;
 }
+
+//---------------------------------------------------------------------
 
 void kpDocument::setWidth (int w, const kpColor &backgroundColor)
 {
     resize (w, height (), backgroundColor);
 }
 
+//---------------------------------------------------------------------
 
 int kpDocument::constructorHeight () const
 {
     return m_constructorHeight;
 }
+
+//---------------------------------------------------------------------
 
 int kpDocument::height (bool ofSelection) const
 {
@@ -256,15 +290,21 @@ int kpDocument::height (bool ofSelection) const
         return m_image->height ();
 }
 
+//---------------------------------------------------------------------
+
 int kpDocument::oldHeight () const
 {
     return m_oldHeight;
 }
 
+//---------------------------------------------------------------------
+
 void kpDocument::setHeight (int h, const kpColor &backgroundColor)
 {
     resize (width (), h, backgroundColor);
 }
+
+//---------------------------------------------------------------------
 
 QRect kpDocument::rect (bool ofSelection) const
 {
@@ -274,12 +314,15 @@ QRect kpDocument::rect (bool ofSelection) const
         return m_image->rect ();
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpImage kpDocument::getImageAt (const QRect &rect) const
 {
     return kpPixmapFX::getPixmapAt (*m_image, rect);
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpDocument::setImageAt (const kpImage &image, const QPoint &at)
@@ -297,13 +340,7 @@ void kpDocument::setImageAt (const kpImage &image, const QPoint &at)
     slotContentsChanged (QRect (at.x (), at.y (), image.width (), image.height ()));
 }
 
-// public
-void kpDocument::paintImageAt (const kpImage &image, const QPoint &at)
-{
-    kpPixmapFX::paintPixmapAt (m_image, at, image);
-    slotContentsChanged (QRect (at.x (), at.y (), image.width (), image.height ()));
-}
-
+//---------------------------------------------------------------------
 
 // public
 kpImage kpDocument::image (bool ofSelection) const
@@ -320,23 +357,22 @@ kpImage kpDocument::image (bool ofSelection) const
     else
         ret = *m_image;
 
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (ret);
     return ret;
 }
+
+//---------------------------------------------------------------------
 
 // public
 kpImage *kpDocument::imagePointer () const
 {
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (*m_image);
     return m_image;
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpDocument::setImage (const kpImage &image)
 {
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (image);
-
     m_oldWidth = width (), m_oldHeight = height ();
 
     *m_image = image;
@@ -347,11 +383,11 @@ void kpDocument::setImage (const kpImage &image)
         slotSizeChanged (width (), height ());
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpDocument::setImage (bool ofSelection, const kpImage &image)
 {
-    KP_PFX_CHECK_NO_ALPHA_CHANNEL (image);
-
     if (ofSelection)
     {
         kpAbstractImageSelection *imageSel = imageSelection ();
@@ -365,6 +401,7 @@ void kpDocument::setImage (bool ofSelection, const kpImage &image)
         setImage (image);
 }
 
+//---------------------------------------------------------------------
 
 void kpDocument::fill (const kpColor &color)
 {
@@ -375,6 +412,8 @@ void kpDocument::fill (const kpColor &color)
     kpPixmapFX::fill (m_image, color);
     slotContentsChanged (m_image->rect ());
 }
+
+//---------------------------------------------------------------------
 
 void kpDocument::resize (int w, int h, const kpColor &backgroundColor)
 {
@@ -398,12 +437,15 @@ void kpDocument::resize (int w, int h, const kpColor &backgroundColor)
     slotSizeChanged (width (), height ());
 }
 
+//---------------------------------------------------------------------
 
 void kpDocument::slotContentsChanged (const QRect &rect)
 {
     setModified ();
     emit contentsChanged (rect);
 }
+
+//---------------------------------------------------------------------
 
 void kpDocument::slotSizeChanged (int newWidth, int newHeight)
 {
@@ -412,10 +454,14 @@ void kpDocument::slotSizeChanged (int newWidth, int newHeight)
     emit sizeChanged (QSize (newWidth, newHeight));
 }
 
+//---------------------------------------------------------------------
+
 void kpDocument::slotSizeChanged (const QSize &newSize)
 {
     slotSizeChanged (newSize.width (), newSize.height ());
 }
+
+//---------------------------------------------------------------------
 
 
 #include <kpDocument.moc>

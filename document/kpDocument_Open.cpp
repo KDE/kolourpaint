@@ -35,16 +35,7 @@
 #include <math.h>
 
 #include <qcolor.h>
-#include <qbitmap.h>
-#include <qbrush.h>
-#include <qfile.h>
 #include <qimage.h>
-#include <qlist.h>
-#include <qpixmap.h>
-#include <qpainter.h>
-#include <qrect.h>
-#include <qsize.h>
-#include <qmatrix.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
@@ -64,118 +55,34 @@
 #include <kpEffectReduceColors.h>
 #include <kpPixmapFX.h>
 #include <kpTool.h>
-#include <kpToolToolBar.h>
 #include <kpUrlFormatter.h>
 #include <kpViewManager.h>
 
+//---------------------------------------------------------------------
 
-QPixmap kpDocument::convertToPixmapAsLosslessAsPossible (
-        const QImage &image,
-        const kpPixmapFX::WarnAboutLossInfo &wali,
-
-        kpDocumentSaveOptions *saveOptions,
-        kpDocumentMetaInfo *metaInfo)
+void kpDocument::getDataFromImage(const QImage &image,
+                                  kpDocumentSaveOptions &saveOptions,
+                                  kpDocumentMetaInfo &metaInfo)
 {
-    if (image.isNull ())
-        return QPixmap ();
+  saveOptions.setColorDepth(image.depth());
+  saveOptions.setDither(false);  // avoid double dithering when saving
 
-#if DEBUG_KP_DOCUMENT
-    kDebug () << "\timage: depth=" << image.depth ()
-                << " (X display=" << QPixmap::defaultDepth () << ")"
-                << " hasAlphaChannel=" << image.hasAlphaChannel ()
-                << endl;
-#endif
+  metaInfo.setDotsPerMeterX(image.dotsPerMeterX());
+  metaInfo.setDotsPerMeterY(image.dotsPerMeterY());
+  metaInfo.setOffset(image.offset());
 
-    if (saveOptions)
-    {
-        saveOptions->setColorDepth (image.depth ());
-        saveOptions->setDither (false);  // avoid double dithering when saving
-    }
-
-    if (metaInfo)
-    {
-        metaInfo->setDotsPerMeterX (image.dotsPerMeterX ());
-        metaInfo->setDotsPerMeterY (image.dotsPerMeterY ());
-        metaInfo->setOffset (image.offset ());
-
-        QList <QString> keyList = image.textKeys ();
-        for (QList <QString>::const_iterator it = keyList.constBegin ();
-             it != keyList.constEnd ();
-             it++)
-        {
-            metaInfo->setText (*it, image.text (*it));
-        }
-
-    #if DEBUG_KP_DOCUMENT
-        metaInfo->printDebug ("\tmetaInfo");
-    #endif
-    }
-
-#if DEBUG_KP_DOCUMENT && 1
-{
-    if (image.width () <= 16 && image.height () <= 16)
-    {
-        kDebug () << "Image dump:";
-
-        for (int y = 0; y < image.height (); y++)
-        {
-            for (int x = 0; x < image.width (); x++)
-            {
-                const QRgb rgb = image.pixel (x, y);
-                fprintf (stderr, " %08X", rgb);
-            }
-            fprintf (stderr, "\n");
-        }
-    }
+  QStringList keys = image.textKeys();
+  for (int i = 0; i < keys.count(); i++)
+    metaInfo.setText(keys[i], image.text(keys[i]));
 }
-#endif
 
-
-    QPixmap newPixmap = kpPixmapFX::convertToPixmapAsLosslessAsPossible (image, wali);
-
-
-#if DEBUG_KP_DOCUMENT && 1
-{
-    const QImage image2 = kpPixmapFX::convertToQImage (newPixmap);
-    kDebug () << "(Converted to pixmap) Image dump:";
-
-    bool differsFromOrgImage = false;
-    unsigned long hash = 0;
-    int numDiff = 0;
-    for (int y = 0; y < image2.height (); y++)
-    {
-        for (int x = 0; x < image2.width (); x++)
-        {
-            const QRgb rgb = image2.pixel (x, y);
-            hash += ((x % 2) + 1) * rgb;
-            if (rgb != image.pixel (x, y))
-            {
-                differsFromOrgImage = true;
-                numDiff++;
-            }
-            if (image2.width () <= 16 && image2.height () <= 16)
-                fprintf (stderr, " %08X", rgb);
-        }
-        if (image2.width () <= 16 && image2.height () <= 16)
-            fprintf (stderr, "\n");
-    }
-
-    kDebug () << "\tdiffersFromOrgImage="
-               << differsFromOrgImage
-               << " numDiff="
-               << numDiff
-               << " hash=" << hash << endl;
-}
-#endif
-
-    return newPixmap;
-}
+//---------------------------------------------------------------------
 
 // public static
-QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExistDialog,
-                                       QWidget *parent,
-                                       kpDocumentSaveOptions *saveOptions,
-                                       kpDocumentMetaInfo *metaInfo)
+QImage kpDocument::getPixmapFromFile(const KUrl &url, bool suppressDoesntExistDialog,
+                                     QWidget *parent,
+                                     kpDocumentSaveOptions *saveOptions,
+                                     kpDocumentMetaInfo *metaInfo)
 {
 #if DEBUG_KP_DOCUMENT
     kDebug () << "kpDocument::getPixmapFromFile(" << url << "," << parent << ")";
@@ -186,7 +93,6 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
 
     if (metaInfo)
         *metaInfo = kpDocumentMetaInfo ();
-
 
     QString tempFile;
     if (url.isEmpty () || !KIO::NetAccess::download (url, tempFile, parent))
@@ -202,9 +108,8 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
                                       kpUrlFormatter::PrettyFilename (url)));
         }
 
-        return QPixmap ();
+        return QImage ();
     }
-
 
     QImage image;
 
@@ -241,7 +146,7 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
                                 i18n ("Could not open \"%1\" - unknown mimetype.",
                                     kpUrlFormatter::PrettyFilename (url)));
             KIO::NetAccess::removeTempFile (tempFile);
-            return QPixmap ();
+            return QImage ();
         }
 
 
@@ -266,73 +171,27 @@ QPixmap kpDocument::getPixmapFromFile (const KUrl &url, bool suppressDoesntExist
                             i18n ("Could not open \"%1\" - unsupported image format.\n"
                                   "The file may be corrupt.",
                                   kpUrlFormatter::PrettyFilename (url)));
-        return QPixmap ();
-    }
-
-    const QPixmap newPixmap = kpDocument::convertToPixmapAsLosslessAsPossible (image,
-        kpPixmapFX::WarnAboutLossInfo (
-             ki18n ("<qt><p>The image \"%1\""
-                    " may have more colors than the current screen mode can support."
-                    " In order to display it, some color information may be removed.</p>"
-
-                    "<p><b>If you save this image, any color loss will become"
-                    " permanent.</b></p>"
-                   
-                    "<p>To avoid this issue, increase your screen depth to at"
-                    " least %2bpp and then restart KolourPaint.</p>"
-
-                    "<hr/>"
-                    
-                    "<p>It also"
-
-                    " contains translucency which is not fully"
-                    " supported. The translucency data will be"
-                    " approximated with a 1-bit transparency mask.</p>"
-
-                    "<p><b>If you save this image, this loss of translucency will"
-                    " become permanent.</b></p></qt>")
-                .subs (kpUrlFormatter::PrettyFilename (url)),
-             ki18n ("<qt><p>The image \"%1\""
-                    " may have more colors than the current screen mode can support."
-                    " In order to display it, some color information may be removed.</p>"
-
-                    "<p><b>If you save this image, any color loss will become"
-                    " permanent.</b></p>"
-                   
-                    "<p>To avoid this issue, increase your screen depth to at"
-                    " least %2bpp and then restart KolourPaint.</p></qt>")
-                .subs (kpUrlFormatter::PrettyFilename (url)),
-             i18n ("<qt><p>The image \"%1\""
-                   " contains translucency which is not fully"
-                   " supported. The translucency data will be"
-                   " approximated with a 1-bit transparency mask.</p>"
-
-                   "<p><b>If you save this image, this loss of translucency will"
-                   " become permanent.</b></p></qt>",
-                   kpUrlFormatter::PrettyFilename (url)),
-            "docOpen",
-            parent),
-        saveOptions,
-        metaInfo);
-
-    if (newPixmap.isNull ())
-    {
-        KMessageBox::sorry (parent,
-                            i18n ("Could not open \"%1\" - out of graphics memory.",
-                                  kpUrlFormatter::PrettyFilename (url)));
-        return QPixmap ();
+        return QImage ();
     }
 
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "\tpixmap: depth=" << newPixmap.depth ()
-                << " hasAlphaChannelOrMask=" << newPixmap.hasAlpha ()
-                << " hasAlphaChannel=" << newPixmap.hasAlphaChannel ()
+    kDebug () << "\tpixmap: depth=" << image.depth ()
+                << " hasAlphaChannel=" << image.hasAlphaChannel ()
                 << endl;
 #endif
 
+    if ( saveOptions  && metaInfo )
+      getDataFromImage(image, *saveOptions, *metaInfo);
 
-    return newPixmap;
+    // make sure we always have Format_ARGB32_Premultiplied as this is the fastest to draw on
+    // and Qt can not draw onto Format_Indexed8 (Qt-4.7)
+    if ( image.format() != QImage::Format_ARGB32_Premultiplied )
+      image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+
+    return image;
 }
+
+//---------------------------------------------------------------------
 
 void kpDocument::openNew (const KUrl &url)
 {
@@ -340,7 +199,7 @@ void kpDocument::openNew (const KUrl &url)
     kDebug () << "kpDocument::openNew (" << url << ")";
 #endif
 
-    m_image->fill (Qt::white);
+    m_image->fill(QColor(Qt::white).rgb());
 
     setURL (url, false/*not from url*/);
     // TODO: Maybe we should guess the mimetype from "url"'s filename
@@ -356,6 +215,8 @@ void kpDocument::openNew (const KUrl &url)
     emit documentOpened ();
 }
 
+//---------------------------------------------------------------------
+
 bool kpDocument::open (const KUrl &url, bool newDocSameNameIfNotExist)
 {
 #if DEBUG_KP_DOCUMENT
@@ -364,7 +225,7 @@ bool kpDocument::open (const KUrl &url, bool newDocSameNameIfNotExist)
 
     kpDocumentSaveOptions newSaveOptions;
     kpDocumentMetaInfo newMetaInfo;
-    QPixmap newPixmap = kpDocument::getPixmapFromFile (url,
+    QImage newPixmap = kpDocument::getPixmapFromFile (url,
         newDocSameNameIfNotExist/*suppress "doesn't exist" dialog*/,
         d->environ->dialogParent (),
         &newSaveOptions,
@@ -405,3 +266,4 @@ bool kpDocument::open (const KUrl &url, bool newDocSameNameIfNotExist)
     }
 }
 
+//---------------------------------------------------------------------

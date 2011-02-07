@@ -29,41 +29,22 @@
 // Tool reaction to view mouse input.
 //
 
-
 #define DEBUG_KP_TOOL 0
 
-
-// TODO: reduce number of includes
 #include <kpTool.h>
 #include <kpToolPrivate.h>
 
-#include <limits.h>
-
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qcursor.h>
-#include <qevent.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-
-#include <kactioncollection.h>
-#include <kapplication.h>
 #include <kdebug.h>
-#include <kiconloader.h>
-#include <klocale.h>
-#include <kmessagebox.h>
 
-#include <kpColor.h>
-#include <kpColorToolBar.h>
-#include <kpDefs.h>
-#include <kpPixmapFX.h>
-#include <kpToolAction.h>
 #include <kpToolEnvironment.h>
-#include <kpToolToolBar.h>
 #include <kpView.h>
 #include <kpViewManager.h>
 
+#include <QMouseEvent>
+#include <QApplication>
+#include <QClipboard>
+
+//---------------------------------------------------------------------
 
 // HITODO: If you press a mouse button and move it out of the view _really_ fast
 //         and let go of the mouse button outside of the view, a mouseRelease
@@ -175,6 +156,8 @@ void kpTool::mousePressEvent (QMouseEvent *e)
     d->lastPoint = d->currentPoint;
 }
 
+//---------------------------------------------------------------------
+
 // OPT: If the mouse is moving in terms of view pixels, it still might
 //      not be moving in terms of document pixels (when zoomed in).
 //
@@ -256,6 +239,8 @@ void kpTool::mouseMoveEvent (QMouseEvent *e)
     }
 }
 
+//---------------------------------------------------------------------
+
 void kpTool::mouseReleaseEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_TOOL && 1
@@ -288,6 +273,7 @@ void kpTool::mouseReleaseEvent (QMouseEvent *e)
     }
 }
 
+//---------------------------------------------------------------------
 
 void kpTool::wheelEvent (QWheelEvent *e)
 {
@@ -347,3 +333,5 @@ void kpTool::wheelEvent (QWheelEvent *e)
         e->accept ();
     }
 }
+
+//---------------------------------------------------------------------

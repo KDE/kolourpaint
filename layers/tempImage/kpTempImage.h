@@ -71,7 +71,6 @@ public:
         int width, int height);
     kpTempImage (const kpTempImage &rhs);
     kpTempImage &operator= (const kpTempImage &rhs);
-    ~kpTempImage ();
 
     bool isBrush () const;
     RenderMode renderMode () const;

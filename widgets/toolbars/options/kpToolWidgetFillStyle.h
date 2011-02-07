@@ -62,18 +62,6 @@ private:
 public:
     FillStyle fillStyle () const;
 
-    static QBrush maskBrushForFillStyle (FillStyle fs,
-                                         const kpColor &foregroundColor,
-                                         const kpColor &backgroundColor);
-    QBrush maskBrush (const kpColor &foregroundColor,
-                      const kpColor &backgroundColor);
-
-    static QBrush brushForFillStyle (FillStyle fs,
-                                     const kpColor &foregroundColor,
-                                     const kpColor &backgroundColor);
-    QBrush brush (const kpColor &foregroundColor,
-                  const kpColor &backgroundColor);
-
     // Returns the actual fill colour.
     // e.g. "FillWithBackground" fillStyle() -> <backgroundColor>,
     //      "FillWithForeground" fillStyle() -> <foregroundColor>.

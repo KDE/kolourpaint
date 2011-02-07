@@ -39,7 +39,6 @@ Q_OBJECT
 
 public:
     kpToolRoundedRectangle (kpToolEnvironment *environ, QObject *parent);
-    virtual ~kpToolRoundedRectangle ();
 };
 
 

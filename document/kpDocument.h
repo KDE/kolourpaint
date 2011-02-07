@@ -81,39 +81,35 @@ public:
     // File I/O - Open
     //
 
-    // Wraps kpPixmapFX::convertToPixmapAsLosslessAsPossible() but also
-    // returns document meta information.
-    static QPixmap convertToPixmapAsLosslessAsPossible (
-        const QImage &image,
-        const kpPixmapFX::WarnAboutLossInfo &wali = kpPixmapFX::WarnAboutLossInfo (),
-        kpDocumentSaveOptions *saveOptions = 0,
-        kpDocumentMetaInfo *metaInfo = 0);
 
-    static QPixmap getPixmapFromFile (const KUrl &url, bool suppressDoesntExistDialog,
-                                      QWidget *parent,
-                                      kpDocumentSaveOptions *saveOptions = 0,
-                                      kpDocumentMetaInfo *metaInfo = 0);
+    static QImage getPixmapFromFile (const KUrl &url, bool suppressDoesntExistDialog,
+                                     QWidget *parent,
+                                     kpDocumentSaveOptions *saveOptions = 0,
+                                     kpDocumentMetaInfo *metaInfo = 0);
     // REFACTOR: fix: open*() should only be called once.
     //                Create a new kpDocument() if you want to open again.
     void openNew (const KUrl &url);
     bool open (const KUrl &url, bool newDocSameNameIfNotExist = false);
 
+    static void getDataFromImage(const QImage &image,
+                                 kpDocumentSaveOptions &saveOptions,
+                                 kpDocumentMetaInfo &metaInfo);
 
     //
     // File I/O - Save
     //
 
-    static bool lossyPromptContinue (const QPixmap &pixmap,
+    static bool lossyPromptContinue (const QImage &pixmap,
                                      const kpDocumentSaveOptions &saveOptions,
                                      QWidget *parent);
-    static bool savePixmapToDevice (const QPixmap &pixmap,
+    static bool savePixmapToDevice (const QImage &pixmap,
                                     QIODevice *device,
                                     const kpDocumentSaveOptions &saveOptions,
                                     const kpDocumentMetaInfo &metaInfo,
                                     bool lossyPrompt,
                                     QWidget *parent,
                                     bool *userCancelled = 0);
-    static bool savePixmapToFile (const QPixmap &pixmap,
+    static bool savePixmapToFile (const QImage &pixmap,
                                   const KUrl &url,
                                   const kpDocumentSaveOptions &saveOptions,
                                   const kpDocumentMetaInfo &metaInfo,
@@ -194,8 +190,6 @@ public:
     kpImage getImageAt (const QRect &rect) const;
 
     void setImageAt (const kpImage &image, const QPoint &at);
-
-    void paintImageAt (const kpImage &image, const QPoint &at);
 
     // "image(false)" returns a copy of the document's image, ignoring any
     // floating selection.

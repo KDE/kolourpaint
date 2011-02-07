@@ -37,12 +37,12 @@
 #include <kpEllipticalImageSelection.h>
 #include <kpFreeFormImageSelection.h>
 
+//---------------------------------------------------------------------
 
 // public static
 // TODO: KolourPaint has not been tested against invalid or malicious
 //       clipboard data [Bug #28].
-kpAbstractImageSelection *kpSelectionFactory::FromStream (QDataStream &stream,
-        const kpPixmapFX::WarnAboutLossInfo &wali)
+kpAbstractImageSelection *kpSelectionFactory::FromStream (QDataStream &stream)
 {
 #if DEBUG_KP_SELECTION && 1
     kDebug () << "kpSelectionFactory::FromStream()";
@@ -81,7 +81,7 @@ kpAbstractImageSelection *kpSelectionFactory::FromStream (QDataStream &stream,
         return 0;
     }
 
-    if (!imageSel->readFromStream (stream, wali))
+    if (!imageSel->readFromStream (stream))
     {
         delete imageSel;
         return 0;
@@ -89,3 +89,5 @@ kpAbstractImageSelection *kpSelectionFactory::FromStream (QDataStream &stream,
 
     return imageSel;
 }
+
+//---------------------------------------------------------------------

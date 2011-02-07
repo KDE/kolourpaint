@@ -164,14 +164,10 @@ static void AdjustHSV (QImage* pImage, double hue, double saturation, double val
 
 // public static
 kpImage kpEffectHSV::applyEffect (const kpImage &image,
-                                          double hue, double saturation, double value)
+                                  double hue, double saturation, double value)
 {
-    QImage qimage = kpPixmapFX::convertToQImage (image);
-
+    QImage qimage(image);
     ::AdjustHSV (&qimage, hue, saturation, value);
-
-    QPixmap retPixmap = kpPixmapFX::convertToPixmap (qimage);
-
-    return retPixmap;
+    return qimage;
 }
 

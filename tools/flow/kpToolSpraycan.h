@@ -47,8 +47,6 @@ Q_OBJECT
 
 public:
     kpToolSpraycan (kpToolEnvironment *environ, QObject *parent);
-    virtual ~kpToolSpraycan ();
-
 
 protected:
     virtual QString haventBegunDrawUserMessage () const;

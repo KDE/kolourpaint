@@ -35,7 +35,7 @@
 
 class QRect;
 
-class kpImage;
+//class kpImage;
 class kpMainWindow;
 class kpTransformAutoCropBorder;
 
