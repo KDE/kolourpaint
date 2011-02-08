@@ -91,13 +91,15 @@ void kpAbstractSelectionTool::endCreate ()
     // d->createNOPTimer
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpAbstractSelectionTool::setCursorCreate ()
 {
-    viewManager ()->setCursor (Qt::CrossCursor);
+    viewManager ()->setCursor (Qt::ArrowCursor);
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual
 void kpAbstractSelectionTool::setSelectionBorderForBeginDrawCreate ()

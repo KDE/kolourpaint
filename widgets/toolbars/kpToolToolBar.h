@@ -147,12 +147,6 @@ private:
     kpTool *m_previousTool, *m_currentTool;
 
     int m_defaultIconSize;
-
-private:
-    // There is no need to maintain binary compatibility at this stage.
-    // The d-pointer is just so that you can experiment without recompiling
-    // the kitchen sink.
-    class kpToolToolBarPrivate *d;
 };
 
 

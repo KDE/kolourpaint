@@ -96,11 +96,14 @@ kpToolPolygonalBase::kpToolPolygonalBase (
     d->originatingMouseButton = -1;
 }
 
+//---------------------------------------------------------------------
+
 kpToolPolygonalBase::~kpToolPolygonalBase ()
 {
     delete d;
 }
 
+//---------------------------------------------------------------------
 
 // virtual
 void kpToolPolygonalBase::begin ()
@@ -117,12 +120,14 @@ void kpToolPolygonalBase::begin ()
                 this, SLOT (updateShape ()));
     d->toolWidgetLineWidth->show ();
 
-    viewManager ()->setCursor (QCursor (Qt::CrossCursor));
+    viewManager ()->setCursor (QCursor (Qt::ArrowCursor));
 
     d->originatingMouseButton = -1;
 
     setUserMessage (/*virtual*/haventBegunShapeUserMessage ());
 }
+
+//---------------------------------------------------------------------
 
 // virtual
 void kpToolPolygonalBase::end ()

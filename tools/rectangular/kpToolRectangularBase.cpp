@@ -114,7 +114,6 @@ void kpToolRectangularBase::slotFillStyleChanged ()
 
 //---------------------------------------------------------------------
 
-
 // private
 QString kpToolRectangularBase::haventBegunDrawUserMessage () const
 {
@@ -151,7 +150,7 @@ void kpToolRectangularBase::begin ()
         SLOT (slotFillStyleChanged ()));
     d->toolWidgetFillStyle->show ();
 
-    viewManager ()->setCursor (QCursor (Qt::CrossCursor));
+    viewManager ()->setCursor (QCursor (Qt::ArrowCursor));
 
     setUserMessage (haventBegunDrawUserMessage ());
 }
