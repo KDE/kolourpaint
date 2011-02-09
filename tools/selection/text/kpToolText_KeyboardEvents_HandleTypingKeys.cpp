@@ -52,6 +52,8 @@
 #include <kpViewManager.h>
 
 
+//---------------------------------------------------------------------
+
 // protected
 void kpToolText::handleBackspaceKeyPress (QKeyEvent *e,
     const QList <QString> &textLines, int cursorRow, int cursorCol)
@@ -91,6 +93,8 @@ void kpToolText::handleBackspaceKeyPress (QKeyEvent *e,
 
     e->accept ();
 }
+
+//---------------------------------------------------------------------
 
 // protected
 void kpToolText::handleDeleteKeyPress (QKeyEvent *e,
@@ -137,6 +141,7 @@ void kpToolText::handleDeleteKeyPress (QKeyEvent *e,
     e->accept ();
 }
 
+//---------------------------------------------------------------------
 
 // protected
 void kpToolText::handleEnterKeyPress (QKeyEvent *e,
@@ -156,13 +161,14 @@ void kpToolText::handleEnterKeyPress (QKeyEvent *e,
     e->accept ();
 }
 
+//---------------------------------------------------------------------
 
 // protected
 void kpToolText::handleTextTyped (QKeyEvent *e,
     const QList <QString> & /*textLines*/, int /*cursorRow*/, int /*cursorCol*/)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\ttext='" << e->text () << "'";
+    kDebug () << "\ttext=" << e->text();
 #endif
     QString usableText;
     for (int i = 0; i < (int) e->text ().length (); i++)
@@ -171,7 +177,7 @@ void kpToolText::handleTextTyped (QKeyEvent *e,
             usableText += e->text ().at (i);
     }
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tusableText='" << usableText << "'";
+    kDebug () << "\tusableText=" << usableText;
 #endif
 
     if (usableText.isEmpty ())

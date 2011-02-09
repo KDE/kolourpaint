@@ -2,6 +2,7 @@
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    Copyright (c) 2005 Kazuki Ohta <mover@hct.zaq.ne.jp>
+   Copyright (c) 2010 Tasuku Suzuki <stasuku@gmail.com>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -31,42 +32,28 @@
 
 #include <kpToolText.h>
 #include <kpToolTextPrivate.h>
+#include <kpToolTextInsertCommand.h>
 
 #include <qevent.h>
-#include <qlist.h>
 
 #include <kdebug.h>
-#include <klocale.h>
 
 #include <kpDocument.h>
 #include <kpTextSelection.h>
-#include <kpToolTextBackspaceCommand.h>
-#include <kpToolTextChangeStyleCommand.h>
-#include <kpToolSelectionCreateCommand.h>
-#include <kpToolSelectionEnvironment.h>
-#include <kpToolTextDeleteCommand.h>
-#include <kpToolTextEnterCommand.h>
-#include <kpToolTextInsertCommand.h>
-#include <kpToolWidgetOpaqueOrTransparent.h>
 #include <kpView.h>
 #include <kpViewManager.h>
 
+//---------------------------------------------------------------------
 
-// COMPAT: Need to update InputMethod support.
-//
-// This code needs lots of updating not just to Qt/KDE4 but also to changes
-// in KolourPaint internals.
-#if 0
-
-void kpToolText::imStartEvent (QIMEvent *e)
+void kpToolText::inputMethodEvent (QInputMethodEvent *e)
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kDebug () << "kpToolText::imStartEvent() text='" << e->text ()
-               << " cursorPos=" << e->cursorPos ()
-               << " selectionLength=" << e->selectionLength ()
+    kDebug () << "kpToolText::inputMethodEvent() preeditString='" << e->preeditString ()
+               << "commitString = " << e->commitString ()
+               << " replacementStart=" << e->replacementStart ()
+               << " replacementLength=" << e->replacementLength ()
                << endl;
 #endif
-
     kpTextSelection *textSel = document ()->textSelection ();
     if (hasBegunDraw() || !textSel)
     {
@@ -74,137 +61,37 @@ void kpToolText::imStartEvent (QIMEvent *e)
         return;
     }
 
-    d->IMStartCursorRow = viewManager ()->textCursorRow ();
-    d->IMStartCursorCol = viewManager ()->textCursorCol ();
-    d->IMPreeditStr.clear ();
-}
+    kpPreeditText previous = textSel->preeditText ();
+    kpPreeditText next (e);
 
-void kpToolText::imComposeEvent (QIMEvent *e)
-{
-#if DEBUG_KP_TOOL_TEXT && 1
-    kDebug () << "kpToolText::imComposeEvent() text='" << e->text ()
-               << " cursorPos=" << e->cursorPos ()
-               << " selectionLength=" << e->selectionLength ()
-               << endl;
-#endif
-
-    kpTextSelection *textSel = document ()->textSelection ();
-    if (hasBegunDraw() || !textSel)
+    int textCursorRow = viewManager ()->textCursorRow ();
+    int textCursorCol = viewManager ()->textCursorCol ();
+    if (!next.isEmpty ())
     {
-        e->ignore();
-        return;
-    }
-
-    // remove old preedit
-    if (d->IMPreeditStr.length() > 0 )
-    {
-        // set cursor at the start input point
-        viewManager ()->setTextCursorPosition (d->IMStartCursorRow, d->IMStartCursorCol);
-        for (unsigned int i = 0; i < d->IMPreeditStr.length(); i++)
+        if (previous.position().x () < 0 && previous.position().y () < 0)
         {
-            if (!d->deleteCommand)
-            {
-                if (hasBegunShape ())
-                    endShape (currentPoint (), normalizedRect ());
-
-                d->deleteCommand = new kpToolTextDeleteCommand (i18n ("Text: Delete"),
-                    viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
-                    kpToolTextDeleteCommand::AddDeleteNow,
-                    environ ()->commandEnvironment ());
-                commandHistory ()->addCommand (d->deleteCommand, false/*no exec*/);
-            }
-            else
-                d->deleteCommand->addDelete ();
-        }
-    }
-
-    // insert new preedit
-    d->IMPreeditStr = e->text();
-    if (d->IMPreeditStr.length() > 0)
-    {
-        if (!d->insertCommand)
-        {
-            if (hasBegunShape ())
-                endShape (currentPoint (), normalizedRect ());
-
-            d->insertCommand = new kpToolTextInsertCommand (i18n ("Text: Write"),
-                                                           viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
-                                                           d->IMPreeditStr,
-                                                           environ ()->commandEnvironment ());
-            commandHistory ()->addCommand (d->insertCommand, false/*no exec*/);
+            next.setPosition (QPoint(textCursorCol, textCursorRow));
         }
         else
-            d->insertCommand->addText (d->IMPreeditStr);
-    }
-
-    // set cursor pos
-    if (d->IMStartCursorRow >= 0)
-    {
-        int row = d->IMStartCursorRow;
-        int col = d->IMStartCursorCol + e->cursorPos () /* + e->selectionLength()*/;
-        viewManager ()->setTextCursorPosition (row, col, true /* update MicroFocusHint */);
-    }
-}
-
-void kpToolText::imEndEvent (QIMEvent *e)
-{
-#if DEBUG_KP_TOOL_TEXT && 1
-    kDebug () << "kpToolText::imEndEvent() text='" << e->text ()
-               << " cursorPos=" << e->cursorPos ()
-               << " selectionLength=" << e->selectionLength ()
-               << endl;
-#endif
-
-    kpTextSelection *textSel = document ()->textSelection ();
-    if (hasBegunDraw() || !textSel)
-    {
-        e->ignore();
-        return;
-    }
-
-    // remove old preedit
-    if (d->IMPreeditStr.length() > 0 )
-    {
-        // set cursor at the start input point
-        viewManager ()->setTextCursorPosition (d->IMStartCursorRow, d->IMStartCursorCol);
-        for (unsigned int i = 0; i < d->IMPreeditStr.length(); i++)
         {
-            if (!d->deleteCommand)
-            {
-                if (hasBegunShape ())
-                    endShape (currentPoint (), normalizedRect ());
-
-                d->deleteCommand = new kpToolTextDeleteCommand (i18n ("Text: Delete"),
-                    viewManager ()->textCursorRow (),
-                    viewManager ()->textCursorCol (),
-                    kpToolTextDeleteCommand::AddDeleteNow,
-                    environ ()->commandEnvironment ());
-                commandHistory ()->addCommand (d->deleteCommand, false/*no exec*/);
-            }
-            else
-                d->deleteCommand->addDelete ();
+            next.setPosition(previous.position ());
         }
     }
-    d->IMPreeditStr.clear ();
+    textSel->setPreeditText (next);
+    textCursorCol = textCursorCol - previous.cursorPosition () + next.cursorPosition ();
+    viewManager ()->setTextCursorPosition (textCursorRow, textCursorCol);
 
-    // commit string
-    QString inputStr = e->text();
-    if (inputStr.length() > 0)
+    QString commitString = e->commitString ();
+    if (!commitString.isEmpty ())
     {
+        // commit string
         if (!d->insertCommand)
-        {
-            if (hasBegunShape ())
-                endShape (currentPoint (), normalizedRect ());
+            addNewInsertCommand (&d->insertCommand);
 
-            d->insertCommand = new kpToolTextInsertCommand (i18n ("Text: Write"),
-                                                           viewManager ()->textCursorRow (), viewManager ()->textCursorCol (),
-                                                           inputStr,
-                                                           environ ()->commandEnvironment ());
-            commandHistory ()->addCommand (d->insertCommand, false/*no exec*/);
-        }
-        else
-            d->insertCommand->addText (inputStr);
+        d->insertCommand->addText (commitString);
     }
+    textSel = document ()->textSelection ();
+    e->accept ();
 }
 
-#endif  // COMPAT
+//---------------------------------------------------------------------

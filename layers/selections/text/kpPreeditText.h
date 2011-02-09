@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2010 Tasuku Suzuki <stasuku@gmail.com>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -26,61 +26,40 @@
 */
 
 
-#ifndef kpViewManagerPrivate_H
-#define kpViewManagerPrivate_H
+#ifndef kpPreeditText_H
+#define kpPreeditText_H
 
+#include <QColor>
+#include <QInputMethodEvent>
+#include <QPoint>
 
-#include <QCursor>
-#include <QLinkedList>
-
-
-class kpMainWindow;
-class kpTempPixmap;
-class QTimer;
-class kpView;
-
-
-struct kpViewManagerPrivate
+class kpPreeditText
 {
-    kpMainWindow *mainWindow;
+public:
+    kpPreeditText ();
+    kpPreeditText (const QInputMethodEvent *event);
 
-    QLinkedList <kpView *> views;
-    kpView *viewUnderCursor;
+    bool isEmpty () const;
 
-    QCursor cursor;
+    const QString &preeditString () const;
+    int cursorPosition () const;
+    bool cursorVisible () const;
+    const QColor &cursorColor () const;
+    int selectionStart () const;
+    int selectionLength () const;
+    const QList<QInputMethodEvent::Attribute> &textFormatList () const;
 
-    kpTempImage *tempImage;
+    const QPoint &position () const;
+    void setPosition (const QPoint &position);
 
-    bool selectionBorderVisible;
-    bool selectionBorderFinished;
-
-
-    //
-    // Text Cursor
-    //
-
-    // Exists only if the text cursor is enabled.  0 otherwise.
-    QTimer *textCursorBlinkTimer;
-
-    // (undefined if there is not currently a text selection)
-    int textCursorRow, textCursorCol;
-
-    // (undefined if there is not currently a text selection)
-    bool textCursorBlinkState;
-
-
-    //
-    // View Updates
-    //
-
-    int queueUpdatesCounter, fastUpdatesCounter;
-
-    //
-    // Input Method
-    //
-
-    bool inputMethodEnabled;
+private:
+    QString m_preeditString;
+    int m_cursorPosition;
+    QColor m_cursorColor;
+    int m_selectionStart;
+    int m_selectionLength;
+    QList<QInputMethodEvent::Attribute> m_textFormatList;
+    QPoint m_position;
 };
 
-
-#endif  // kpViewManagerPrivate_H
+#endif  // kpPreeditText_H

@@ -206,6 +206,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/layers/selections/text/kpTextSelection.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/layers/selections/text/kpTextSelection_Cursor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/layers/selections/text/kpTextSelection_Paint.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/layers/selections/text/kpTextStyle.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/layers/selections/text/kpPreeditText.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/layers/tempImage/kpTempImage.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Colors.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow.cpp
@@ -429,6 +430,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/layers/selections/text/kpTextSelection.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/layers/selections/text/kpTextSelection_Cursor.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/layers/selections/text/kpTextSelection_Paint.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/layers/selections/text/kpTextStyle.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/layers/selections/text/kpPreeditText.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/layers/tempImage/kpTempImage.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Colors.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow.cpp

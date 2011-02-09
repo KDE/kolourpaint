@@ -2,6 +2,7 @@
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    Copyright (c) 2005 Kazuki Ohta <mover@hct.zaq.ne.jp>
+   Copyright (c) 2010 Tasuku Suzuki <stasuku@gmail.com>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -34,11 +35,18 @@
 #include <kpView.h>
 #include <kpViewPrivate.h>
 
+#if DEBUG_KP_VIEW
+#include <KDebug>
+#endif
+
 #include <QKeyEvent>
 #include <QMouseEvent>
 
 #include <kpTool.h>
 
+#include <kdebug.h>
+
+//---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
 void kpView::mouseMoveEvent (QMouseEvent *e)
@@ -110,8 +118,8 @@ void kpView::wheelEvent (QWheelEvent *e)
 // protected virtual [base QWidget]
 void kpView::keyPressEvent (QKeyEvent *e)
 {
-#if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << objectName () << ")::keyPressEvent()";
+#if DEBUG_KP_VIEW
+    kDebug () << "kpView(" << objectName () << ")::keyPressEvent()" << e->text();
 #endif
 
     if (tool ())
@@ -137,47 +145,17 @@ void kpView::keyReleaseEvent (QKeyEvent *e)
 
 //---------------------------------------------------------------------
 
-// COMPAT: Need to update InputMethod support.
-#if 0
-
-// private virtual
-void kpView::imStartEvent (QIMEvent *e)
+// protected virtual [base QWidget]
+void kpView::inputMethodEvent (QInputMethodEvent *e)
 {
 #if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << objectName () << ")::imStartEvent";
+    kDebug () << "kpView(" << objectName () << ")::inputMethodEvent()";
 #endif
 
     if (tool ())
-        tool ()->imStartEvent (e);
+        tool ()->inputMethodEvent (e);
     e->accept ();
 }
-
-// private virtual
-void kpView::imComposeEvent (QIMEvent *e)
-{
-#if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << objectName () << ")::imComposeEvent";
-#endif
-
-    if (tool ())
-        tool ()->imComposeEvent (e);
-    e->accept ();
-}
-
-// private virtual
-void kpView::imEndEvent (QIMEvent *e)
-{
-#if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << objectName () << ")::imEndEvent";
-#endif
-
-    if (tool ())
-        tool ()->imEndEvent (e);
-    e->accept ();
-}
-
-#endif  // COMPAT
-
 
 // protected virtual [base QWidget]
 bool kpView::event (QEvent *e)

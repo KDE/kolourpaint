@@ -2,6 +2,7 @@
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    Copyright (c) 2005 Kazuki Ohta <mover@hct.zaq.ne.jp>
+   Copyright (c) 2010 Tasuku Suzuki <stasuku@gmail.com>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -42,7 +43,6 @@
 #include <qevent.h>
 #include <qpointer.h>
 #include <qimage.h>
-#include <qpainter.h>
 #include <qpixmap.h>
 #include <qpoint.h>
 #include <qpolygon.h>
@@ -93,27 +93,14 @@ kpView::kpView (kpDocument *document,
     // Don't waste CPU drawing default background since its overridden by
     // our fully opaque drawing.  In reality, this seems to make no
     // difference in performance.
-    //
-    // TODO: qt.html says "Setting this flag implicitly disables double
-    //       buffering for the widget" but we don't get flicker...
-    //       Only WA_PaintOnScreen really seems to disable double buffering.
-    //       Am I confusing that with disabling the backing store?
-    //
-    //       http://lists.trolltech.com/qt-interest/2005-08/msg00865.html
-    //       suggests that the widget becomes see-through temporarily
-    //       when switching from another desktop (bad) but I can't reproduce
-    //       (maybe because it's not a toplevel widget?).  Making the pixmap
-    //       a brush (and having an empty paintEvent) is suggested for
-    //       speed if you don't mind resize glitches.
-    setAttribute (Qt::WA_NoSystemBackground, true);
+    setAttribute(Qt::WA_OpaquePaintEvent, true);
 
     setFocusPolicy (Qt::WheelFocus);
     setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
     setAttribute (Qt::WA_KeyCompression, true);
-
-    // COMPAT: Need to update InputMethod support.
-    //setAttribute (Qt::WA_InputMethodEnabled, true);  // ensure using InputMethod
 }
+
+//---------------------------------------------------------------------
 
 kpView::~kpView ()
 {
@@ -121,6 +108,8 @@ kpView::~kpView ()
 
     delete d;
 }
+
+//---------------------------------------------------------------------
 
 
 // public
@@ -565,6 +554,7 @@ void kpView::setHasMouse (bool yes)
         vm->setViewUnderCursor (0);
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpView::addToQueuedArea (const QRegion &region)
@@ -578,6 +568,8 @@ void kpView::addToQueuedArea (const QRegion &region)
     d->queuedUpdateArea += region;
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpView::addToQueuedArea (const QRect &rect)
 {
@@ -590,6 +582,8 @@ void kpView::addToQueuedArea (const QRect &rect)
     d->queuedUpdateArea += rect;
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpView::invalidateQueuedArea ()
 {
@@ -599,6 +593,8 @@ void kpView::invalidateQueuedArea ()
 
     d->queuedUpdateArea = QRegion ();
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpView::updateQueuedArea ()
@@ -625,21 +621,7 @@ void kpView::updateQueuedArea ()
     invalidateQueuedArea ();
 }
 
-// COMPAT: Need to update InputMethod support.
-#if 0
-// public
-void kpView::updateMicroFocusHint (const QRect &microFocusHint)
-{
-    int x = microFocusHint.topLeft().x();
-    int y = microFocusHint.topLeft().y();
-    int width = microFocusHint.width();
-    int height = microFocusHint.height();
-
-    (void) x; (void) y; (void) width; (void) height;
-    setMicroFocusHint (x, y, width, height);
-}
-#endif
-
+//---------------------------------------------------------------------
 
 // public
 QPoint kpView::mouseViewPoint (const QPoint &returnViewPoint) const
@@ -654,6 +636,41 @@ QPoint kpView::mouseViewPoint (const QPoint &returnViewPoint) const
     }
 }
 
+//---------------------------------------------------------------------
+
+// public virtual
+QVariant kpView::inputMethodQuery (Qt::InputMethodQuery query) const
+{
+#if DEBUG_KP_VIEW && 1
+    kDebug () << "kpView(" << objectName () << ")::inputMethodQuery()";
+#endif
+    QVariant ret;
+    switch (query)
+    {
+      case Qt::ImMicroFocus:
+      {
+          QRect r = d->viewManager->textCursorRect ();
+          r.setTopLeft (r.topLeft () + origin ());
+          r.setHeight (r.height() + 2);
+          r = transformDocToView (r);
+          ret = r;
+          break;
+      }
+      case Qt::ImFont:
+      {
+        if (textSelection ())
+        {
+            ret = textSelection ()->textStyle ().font ();
+        }
+        break;
+      }
+      default:
+        break;
+    }
+    return ret;
+}
+
+//---------------------------------------------------------------------
 
 #include <kpView.moc>
 

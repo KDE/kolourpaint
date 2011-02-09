@@ -61,12 +61,6 @@ kpToolText::kpToolText (kpToolSelectionEnvironment *environ, QObject *parent)
                        environ, parent, "tool_text"),
       d (new kpToolTextPrivate ())
 {
-// COMPAT: Need to update InputMethod support.
-#if 0
-    d->isIMStarted = false;
-    d->IMStartCursorRow = 0;
-    d->IMStartCursorCol = 0;
-#endif
 }
 
 kpToolText::~kpToolText ()
@@ -125,6 +119,7 @@ void kpToolText::begin ()
     // setSelectionBorderForHaventBegunDraw().  We leave this in for
     // consistency with end().
     viewManager ()->setTextCursorEnabled (true);
+    viewManager()->setInputMethodEnabled (true);
 
     endTypingCommands ();
 
@@ -140,6 +135,7 @@ void kpToolText::end ()
 
     kpAbstractSelectionTool::end ();
 
+    viewManager()->setInputMethodEnabled (false);
     viewManager ()->setTextCursorEnabled (false);
     environ ()->enableTextToolBarActions (false);
 }

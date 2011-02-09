@@ -45,14 +45,6 @@ struct kpToolTextPrivate
     kpToolTextEnterCommand *enterCommand;
     kpToolTextBackspaceCommand *backspaceCommand, *backspaceWordCommand;
     kpToolTextDeleteCommand *deleteCommand, *deleteWordCommand;
-
-// COMPAT: Need to update InputMethod support.
-#if 0
-    bool isIMStarted;
-    int IMStartCursorRow;
-    int IMStartCursorCol;
-    QString IMPreeditStr;
-#endif
 };
 
 

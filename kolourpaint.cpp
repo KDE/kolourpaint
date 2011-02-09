@@ -67,6 +67,7 @@ int main (int argc, char *argv [])
                          "thurston_dang@users.sourceforge.net");
     aboutData.addAuthor (ki18n ("Martin Koller"), ki18n ("Scanning Support, Alpha Support, Current Maintainer"), "kollix@aon.at");
     aboutData.addAuthor (ki18n ("Kristof Borrey"), ki18n ("Icons"), "borrey@kde.org");
+    aboutData.addAuthor (ki18n ("Tasuku Suzuki"), ki18n ("InputMethod Support"), "stasuku@gmail.com");
     aboutData.addAuthor (ki18n ("Kazuki Ohta"), ki18n ("InputMethod Support"), "mover@hct.zaq.ne.jp");
     aboutData.addAuthor (ki18n ("Nuno Pinheiro"), ki18n ("Icons"), "nf.pinheiro@gmail.com");
     aboutData.addAuthor (ki18n ("Danny Allen"), ki18n ("Icons"), "dannya40uk@yahoo.co.uk");
@@ -76,9 +77,7 @@ int main (int argc, char *argv [])
 
     // TODO: missing a lot of people who helped with the KDE 4 port.
 
-
     aboutData.addCredit (ki18n ("Thanks to the many others who have helped to make this program possible."));
-
 
     KCmdLineArgs::init (argc, argv, &aboutData);
 
@@ -87,7 +86,6 @@ int main (int argc, char *argv [])
     KCmdLineArgs::addCmdLineOptions (cmdLineOptions);
 
     KApplication app;
-
 
     if (app.isSessionRestored ())
     {
@@ -116,7 +114,6 @@ int main (int argc, char *argv [])
 
         args->clear ();
     }
-
 
     return app.exec ();
 }

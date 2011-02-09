@@ -18,6 +18,7 @@
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    Copyright (c) 2005 Kazuki Ohta <mover@hct.zaq.ne.jp>
+   Copyright (c) 2010 Tasuku Suzuki <stasuku@gmail.com>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -52,6 +53,7 @@
 #include <qapplication.h>
 #include <qlist.h>
 #include <qtimer.h>
+#include <QInputContext>
 
 #include <kdebug.h>
 
@@ -138,7 +140,7 @@ int kpViewManager::textCursorCol () const
 }
 
 // public
-void kpViewManager::setTextCursorPosition (int row, int col, bool isUpdateMicroFocusHint)
+void kpViewManager::setTextCursorPosition (int row, int col)
 {
     if (row == d->textCursorRow && col == d->textCursorCol)
         return;
@@ -160,34 +162,12 @@ void kpViewManager::setTextCursorPosition (int row, int col, bool isUpdateMicroF
     restoreQueueUpdates ();
     restoreFastUpdates ();
 
-// COMPAT: Need to update InputMethod support.
-#if 1
-    (void) isUpdateMicroFocusHint;
-#else
-    if (isUpdateMicroFocusHint)
-    {
-        const QRect r = textCursorRect ();
-        if (!r.isValid ())
-            return;
-
-        if (!d->viewUnderCursor)
-            return;
-
-        // TODO: I think you need to consider zooming e.g. try editing
-        //       text at 800% or with focus set to the thumbnail.
-        //       kpSelection/kpDocument works fully in unzoomed
-        //       coordinates unlike the view (which is zoomed and can
-        //       change size).
-        //
-        //       To fix it here, I think you should call
-        //       m_viewUnderCursor->transformDocToView(QRect).  However,
-        //       the rest of the InputMethod support still needs to
-        //       audited for this.
-        //
-        //       [Bug #27]
-        d->viewUnderCursor->updateMicroFocusHint (r);
+    if (d->viewUnderCursor) {
+        QInputContext *inputContext = d->viewUnderCursor->inputContext ();
+        if (inputContext) {
+            inputContext->update ();
+        }
     }
-#endif
 }
 
 

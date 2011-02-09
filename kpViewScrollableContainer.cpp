@@ -393,6 +393,7 @@ void kpGrip::leaveEvent (QEvent * /*e*/)
     }
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
 void kpGrip::paintEvent (QPaintEvent *e)
@@ -403,6 +404,7 @@ void kpGrip::paintEvent (QPaintEvent *e)
     QLabel::paintEvent (e);
 }
 
+//---------------------------------------------------------------------
 
 // TODO: Are we checking for m_view == 0 often enough?  Also an issue in KDE 3.
 kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent)
@@ -763,6 +765,7 @@ void kpViewScrollableContainer::drawResizeLines ()
 #undef FILL_NOT_RECT
 }
 
+//---------------------------------------------------------------------
 
 // protected
 void kpViewScrollableContainer::updateResizeLines (int viewX, int viewY,
@@ -810,6 +813,7 @@ void kpViewScrollableContainer::updateResizeLines (int viewX, int viewY,
     drawResizeLines ();
 }
 
+//---------------------------------------------------------------------
 
 // protected slot
 void kpViewScrollableContainer::slotGripBeganDraw ()

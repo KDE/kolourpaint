@@ -714,8 +714,7 @@ protected:
 //
 
 protected:
-    // COMPAT: Need to update InputMethod support.
-    // virtual void inputMethodEvent (QInputMethodEvent *e);
+    virtual void inputMethodEvent (QInputMethodEvent *e);
 
 
 private:

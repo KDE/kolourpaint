@@ -396,9 +396,7 @@ public:
      */
     void updateQueuedArea ();
 
-    // COMPAT: Need to update InputMethod support.
-    //void updateMicroFocusHint (const QRect &microFocusHint);
-
+    QVariant inputMethodQuery (Qt::InputMethodQuery query) const;
 
 public slots:
     /**
@@ -515,13 +513,8 @@ protected:
     virtual void keyPressEvent (QKeyEvent *e);
     virtual void keyReleaseEvent (QKeyEvent *e);
 
-
 protected:
-    // COMPAT: Need to update InputMethod Support
-    // virtual void imStartEvent (QIMEvent *e);
-    // virtual void imComposeEvent (QIMEvent *e);
-    // virtual void imEndEvent (QIMEvent *e);
-
+    virtual void inputMethodEvent (QInputMethodEvent *e);
 
 protected:
     virtual bool event (QEvent *e);

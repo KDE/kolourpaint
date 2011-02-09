@@ -166,8 +166,7 @@ public:
     //          Always ensure that the text cursor position is valid.
     //          TODO: We need to check this in all source files.
     //                e.g. It's definitely wrong for kpToolTextBackspaceCommand.
-    void setTextCursorPosition (int row, int col,
-        bool isUpdateMicroFocusHint = false);
+    void setTextCursorPosition (int row, int col);
 
     // Returns the document rectangle where cursor would be placed, using
     // textCursorRow() and textCursorCol ().
@@ -246,6 +245,8 @@ public slots:
 public slots:
     void adjustViewsToEnvironment ();
 
+public slots:
+    void setInputMethodEnabled (bool inputMethodEnabled);
 
 private:
     struct kpViewManagerPrivate * const d;

@@ -75,6 +75,8 @@ kpViewManager::kpViewManager (kpMainWindow *mainWindow)
 
 
     d->queueUpdatesCounter = d->fastUpdatesCounter = 0;
+
+    d->inputMethodEnabled = false;
 }
 
 //---------------------------------------------------------------------
@@ -167,14 +169,17 @@ void kpViewManager::setViewUnderCursor (kpView *view)
 {
 #if DEBUG_KP_VIEW_MANAGER && 1
     kDebug () << "kpViewManager::setViewUnderCursor ("
-               << (view ? view->name () : "(none)") << ")"
-               << "  old=" << (d->viewUnderCursor ? d->viewUnderCursor->name () : "(none)")
+               << (view ? view->objectName () : "(none)") << ")"
+               << "  old=" << (d->viewUnderCursor ? d->viewUnderCursor->objectName () : "(none)")
                << endl;
 #endif
     if (view == d->viewUnderCursor)
         return;
 
     d->viewUnderCursor = view;
+
+    if (d->viewUnderCursor)
+        d->viewUnderCursor->setAttribute (Qt::WA_InputMethodEnabled, d->inputMethodEnabled);
 
     if (!d->viewUnderCursor)
     {
@@ -262,7 +267,7 @@ void kpViewManager::setTempImage (const kpTempImage &tempImage)
     kDebug () << "kpViewManager::setTempImage(isBrush="
                << tempImage.isBrush ()
                << ",topLeft=" << tempImage.topLeft ()
-               << ",pixmap.rect=" << tempImage.pixmap ().rect ()
+               << ",image.rect=" << tempImage.image ().rect ()
                << ")" << endl;
 #endif
 
@@ -344,6 +349,15 @@ void kpViewManager::setSelectionBorderFinished (bool yes)
 
     if (document ()->selection ())
         updateViews (document ()->selection ()->boundingRect ());
+}
+
+//---------------------------------------------------------------------
+
+void kpViewManager::setInputMethodEnabled (bool inputMethodEnabled)
+{
+    d->inputMethodEnabled = inputMethodEnabled;
+    if (d->viewUnderCursor)
+        d->viewUnderCursor->setAttribute (Qt::WA_InputMethodEnabled, inputMethodEnabled);
 }
 
 //---------------------------------------------------------------------

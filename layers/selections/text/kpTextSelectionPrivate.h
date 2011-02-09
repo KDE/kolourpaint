@@ -34,12 +34,13 @@
 
 #include <kpImage.h>
 #include <kpTextStyle.h>
-
+#include <kpPreeditText.h>
 
 struct kpTextSelectionPrivate
 {
     QList <QString> textLines;
     kpTextStyle textStyle;
+    kpPreeditText preeditText;
 };
 
 

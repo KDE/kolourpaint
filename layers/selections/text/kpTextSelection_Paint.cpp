@@ -3,6 +3,7 @@
 
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2010 Tasuku Suzuki <stasuku@gmail.com>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -38,17 +39,80 @@
 #include <QFont>
 #include <QList>
 #include <QPainter>
+#include <QTextCharFormat>
 
 #include <KDebug>
 
 #include <kpPixmapFX.h>
 #include <kpTextStyle.h>
+#include <kpPreeditText.h>
 
+//---------------------------------------------------------------------
+
+void kpTextSelection::drawPreeditString(QPainter &painter, int &x, int y, const kpPreeditText &preeditText) const
+{
+    int i = 0;
+    QString preeditString = preeditText.preeditString ();
+    QString str;
+    foreach (const QInputMethodEvent::Attribute &attr, preeditText.textFormatList ())
+    {
+        int start = attr.start;
+        int length = attr.length;
+        QTextCharFormat format = qvariant_cast<QTextFormat> (attr.value).toCharFormat ();
+
+        if (i > start)
+        {
+            length = length - i + start;
+            start = i;
+        }
+        if (length <= 0) continue;
+
+        if (i < start)
+        {
+            str = preeditString.mid (i, start - i);
+            painter.drawText (x, y, str);
+            x += painter.fontMetrics ().width (str);
+        }
+
+        painter.save();
+        str = preeditString.mid (start, length);
+        int width = painter.fontMetrics().width (str);
+        if (format.background ().color () != Qt::black)
+        {
+            painter.save ();
+            painter.setPen (format.background ().color ());
+            painter.setBrush (format.background());
+            painter.drawRect (x, y - painter.fontMetrics ().ascent (), width, painter.fontMetrics ().height ());
+            painter.restore ();
+        }
+        if (format.foreground ().color () != Qt::black)
+        {
+            painter.setBrush (format.foreground ());
+            painter.setPen (format.foreground ().color ());
+        }
+        if (format.underlineStyle ())
+        {
+            painter.drawLine (x, y + painter.fontMetrics ().descent (), x + width, y + painter.fontMetrics ().descent ());
+        }
+        painter.drawText (x, y, str);
+
+        x += width;
+        painter.restore ();
+
+        i = start + length;
+    }
+    if (i < preeditString.length ())
+    {
+        str = preeditString.mid (i);
+        painter.drawText (x, y, str);
+        x += painter.fontMetrics ().width (str);
+    }
+}
 
 //---------------------------------------------------------------------
 
 // public virtual [kpAbstractSelection]
-void kpTextSelection::paint (QImage *destPixmap, const QRect &docRect) const
+void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
 {
 #if DEBUG_KP_SELECTION
     kDebug () << "kpTextSelection::paint() textStyle: fcol="
@@ -79,10 +143,8 @@ void kpTextSelection::paint (QImage *destPixmap, const QRect &docRect) const
     theWholeAreaRect = boundingRect ().translated (-modifyingRect.topLeft ());
     theTextAreaRect = textAreaRect ().translated (-modifyingRect.topLeft ());
 
-    QList <QString> theTextLines;
-    kpTextStyle theTextStyle;
-    theTextLines = textLines ();
-    theTextStyle = textStyle ();
+    QList <QString> theTextLines = textLines();
+    kpTextStyle theTextStyle = textStyle();
 
     const QFontMetrics fontMetrics (theTextStyle.font ());
 
@@ -128,11 +190,44 @@ void kpTextSelection::paint (QImage *destPixmap, const QRect &docRect) const
     // Else, the line heights become >QFontMetrics::height() if you type Chinese
     // characters (!) and then the cursor gets out of sync.
     int baseLine = theTextAreaRect.y () + fontMetrics.ascent ();
-    foreach (const QString &str, theTextLines)
+
+    kpPreeditText thePreeditText = preeditText();
+
+    if ( theTextLines.isEmpty() )
     {
-        painter.drawText (theTextAreaRect.x (), baseLine, str);
-        baseLine += fontMetrics.lineSpacing ();
+        if ( ! thePreeditText.isEmpty() )
+        {
+            int x = theTextAreaRect.x();
+            drawPreeditString(painter, x, baseLine, thePreeditText);
+        }
     }
+    else
+    {
+        int i = 0;
+        int row = thePreeditText.position().y();
+        int col = thePreeditText.position().x();
+        foreach (const QString &str, theTextLines)
+        {
+            if (row == i && !thePreeditText.isEmpty())
+            {
+                QString left = str.left(col);
+                QString right = str.mid(col);
+                int x = theTextAreaRect.x();
+                painter.drawText(x, baseLine, left);
+                x += fontMetrics.width(left);
+                drawPreeditString(painter, x, baseLine, thePreeditText);
+
+                painter.drawText(x, baseLine, right);
+            }
+            else
+            {
+                painter.drawText(theTextAreaRect.x (), baseLine, str);
+            }
+            baseLine += fontMetrics.lineSpacing();
+            i++;
+        }
+    }
+
 
     // ... convert that into "painting" transparent pixels on top of
     // the document.
@@ -152,7 +247,6 @@ void kpTextSelection::paintBorder (QImage *destPixmap, const QRect &docRect,
 }
 
 //---------------------------------------------------------------------
-
 
 // public
 kpImage kpTextSelection::approximateImage () const

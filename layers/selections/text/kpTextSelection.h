@@ -33,7 +33,7 @@
 #include <kpAbstractSelection.h>
 #include <kpImage.h>
 #include <kpTextStyle.h>
-
+#include <kpPreeditText.h>
 
 //
 // A rectangular text box containing lines of text, rendered in a given text
@@ -225,6 +225,14 @@ public:
 
 
 //
+// Preedit Text
+//
+
+public:
+    kpPreeditText preeditText () const;
+    void setPreeditText (const kpPreeditText &preeditText);
+
+//
 // Cursor
 //
 // A text cursor position is the row and column of a character in
@@ -255,13 +263,13 @@ public:
 //
 
 private:
-    void drawText(QImage *destPixmap, const QRect &docRect) const;
+    void drawPreeditString(QPainter &painter, int &x, int y, const kpPreeditText &preeditText) const;
 
 public:
-    virtual void paint (QImage *destPixmap, const QRect &docRect) const;
+    virtual void paint(QImage *destPixmap, const QRect &docRect) const;
 
-    virtual void paintBorder (QImage *destPixmap, const QRect &docRect,
-        bool selectionFinished) const;
+    virtual void paintBorder(QImage *destPixmap, const QRect &docRect,
+                             bool selectionFinished) const;
 
 public:
     // Returns an image that contains the painted text (without a border).

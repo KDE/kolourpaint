@@ -1,6 +1,7 @@
 
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2010 Tasuku Suzuki <stasuku@gmail.com>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -39,6 +40,7 @@
 
 #include <kpDefs.h>
 #include <kpTextStyle.h>
+#include <kpPreeditText.h>
 
 
 // public
@@ -85,30 +87,40 @@ int kpTextSelection::closestTextColForPoint (const QPoint &point) const
     return d->textLines [row].length ()/*past end of line*/;
 }
 
+//---------------------------------------------------------------------
 
 // public
 QPoint kpTextSelection::pointForTextRowCol (int row, int col) const
 {
-    if (row < 0 || row >= (int) d->textLines.size () ||
-        col < 0 || col > (int) d->textLines [row].length ())
+    kpPreeditText preeditText = d->preeditText;
+    if ((row < 0 || col < 0) ||
+        (preeditText.isEmpty () &&
+            (row >= (int) d->textLines.size () || col > (int) d->textLines [row].length ())))
     {
-    #if DEBUG_KP_SELECTION && 1
-        kDebug () << "kpTextSelection::pointForTextRowCol("
-                   << row << ","
-                   << col << ") out of range"
-                   << " textLines='"
-                   << text ()
-                   << "'"
-                   << endl;
-    #endif
+#if DEBUG_KP_SELECTION && 1
+    kDebug () << "kpTextSelection::pointForTextRowCol("
+               << row << ","
+               << col << ") out of range"
+               << " textLines='"
+               << text ()
+               << "'"
+               << endl;
+#endif
         return KP_INVALID_POINT;
     }
 
     const QFontMetrics fontMetrics (d->textStyle.fontMetrics ());
 
-    const int x = fontMetrics.width (d->textLines [row], col);
+    QString line = (d->textLines.count () > row) ? d->textLines[row] : QString ();
+    if (row == preeditText.position ().y ())
+    {
+        line.insert (preeditText.position ().x (), preeditText.preeditString ());
+    }
+    const int x = fontMetrics.width (line.left (col));
     const int y = row * fontMetrics.height () +
                   (row >= 1 ? row * fontMetrics.leading () : 0);
 
     return textAreaRect ().topLeft () + QPoint (x, y);
 }
+
+//---------------------------------------------------------------------

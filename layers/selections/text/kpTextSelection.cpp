@@ -1,6 +1,7 @@
 
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2010 Tasuku Suzuki <stasuku@gmail.com>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -76,6 +77,7 @@ kpTextSelection &kpTextSelection::operator= (const kpTextSelection &rhs)
 
     d->textLines = rhs.d->textLines;
     d->textStyle = rhs.d->textStyle;
+    d->preeditText = rhs.d->preeditText;
 
     return *this;
 }
@@ -330,5 +332,15 @@ void kpTextSelection::setTextStyle (const kpTextStyle &textStyle)
     emit changed (boundingRect ());
 }
 
+kpPreeditText kpTextSelection::preeditText () const
+{
+    return d->preeditText;
+}
+
+void kpTextSelection::setPreeditText (const kpPreeditText &preeditText)
+{
+    d->preeditText = preeditText;
+    emit changed (boundingRect ());
+}
 
 #include <kpTextSelection.moc>
