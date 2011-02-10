@@ -46,13 +46,14 @@ class QRect;
 class QResizeEvent;
 class QTimer;
 
-class kpGrip;
 class kpView;
 class kpMainWindow;
 
 
+//---------------------------------------------------------------------
+
 // REFACTOR: refactor by sharing iface's with kpTool
-class kpGrip : public QLabel
+class kpGrip : public QWidget
 {
 Q_OBJECT
 
@@ -66,13 +67,12 @@ public:
     static const int Size;
 
     kpGrip (GripType type, QWidget *parent);
-    virtual ~kpGrip ();
 
     GripType type () const;
 
     static QCursor cursorForType (GripType type);
 
-    QRect hotRect (bool toGlobal = false) const;
+    bool containsCursor();
 
     bool isDrawing () const;
 
@@ -93,7 +93,6 @@ public:
     void setUserMessage (const QString &message);
 
 protected:
-    void updatePixmap ();
     void cancel ();
 
 protected:
@@ -105,12 +104,9 @@ public:
 protected:
     virtual void mouseMoveEvent (QMouseEvent *e);
     virtual void mouseReleaseEvent (QMouseEvent *e);
-    virtual void resizeEvent (QResizeEvent *e);
 
     virtual void enterEvent (QEvent *e);
     virtual void leaveEvent (QEvent *e);
-
-    virtual void paintEvent (QPaintEvent *e);
 
 protected:
     GripType m_type;
@@ -119,6 +115,7 @@ protected:
     bool m_shouldReleaseMouseButtons;
 };
 
+//---------------------------------------------------------------------
 
 class kpViewScrollableContainer : public Q3ScrollView
 {
@@ -126,7 +123,6 @@ Q_OBJECT
 
 public:
     kpViewScrollableContainer (kpMainWindow *parent);
-    virtual ~kpViewScrollableContainer ();
 
     // Same as contentsX() and contentsY() except that after
     // contentsMovingSoon() is emitted and before the scrollview actually
@@ -182,10 +178,10 @@ protected:
     void repaintWidgetAtResizeLines (QWidget *widget);
     void eraseResizeLines ();
 
-    void drawResizeLines ();
-
     void updateResizeLines (int viewX, int viewY,
                             int viewDX, int viewDY);
+
+    void drawResizeLines();
 
 protected slots:
     void slotGripBeganDraw ();

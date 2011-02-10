@@ -55,30 +55,29 @@ static const int DragScrollNumPixels = 10;
 static const int DragDistanceFromRectMaxFor1stMultiplier = 50;
 static const int DragDistanceFromRectMaxFor2ndMultiplier = 100;
 
-static const int GripHandleSize = 7;
-
 // public static
 const int kpGrip::Size = 7;
 
+//---------------------------------------------------------------------
 
 kpGrip::kpGrip (GripType type, QWidget *parent)
-    : QLabel (parent),
+    : QWidget(parent),
       m_type (type),
       m_startPoint (KP_INVALID_POINT),
       m_currentPoint (KP_INVALID_POINT),
       m_shouldReleaseMouseButtons (false)
 {
-    setCursor (cursorForType (m_type));
+    setCursor(cursorForType(m_type));
 
-    setMouseTracking (true);  // mouseMoveEvent's even when no mousebtn down
+    setMouseTracking(true);  // mouseMoveEvent's even when no mousebtn down
 
-    updatePixmap ();
+    setAutoFillBackground(true);
+    setBackgroundRole(QPalette::Highlight);
+
+    setFixedSize(kpGrip::Size, kpGrip::Size);
 }
 
-kpGrip::~kpGrip ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // public
 kpGrip::GripType kpGrip::type () const
@@ -86,6 +85,7 @@ kpGrip::GripType kpGrip::type () const
     return m_type;
 }
 
+//---------------------------------------------------------------------
 
 // public static
 QCursor kpGrip::cursorForType (GripType type)
@@ -108,42 +108,17 @@ QCursor kpGrip::cursorForType (GripType type)
     return Qt::ArrowCursor;
 }
 
+//---------------------------------------------------------------------
 
 // public
-QRect kpGrip::hotRect (bool toGlobal) const
+bool kpGrip::containsCursor()
 {
-    QRect ret;
-
-    switch (m_type)
-    {
-    case kpGrip::Bottom:
-    {
-        const int handleX = (width () - GripHandleSize) / 2;
-        ret = QRect (handleX, 0,
-                     GripHandleSize, height ());
-        break;
-    }
-    case kpGrip::Right:
-    {
-        const int handleY = (height () - GripHandleSize) / 2;
-        ret = QRect (0, handleY,
-                     width (), GripHandleSize);
-        break;
-    }
-    case kpGrip::BottomRight:
-        // pixmap all opaque
-        ret = rect ();
-        break;
-
-    default:
-        return QRect ();
-    }
-
-    return (toGlobal ? QRect (mapToGlobal (ret.topLeft ()),
-                              mapToGlobal (ret.bottomRight ()))
-                     : ret);
+    return isVisible() &&
+           QRect(mapToGlobal(rect().topLeft()),
+                 mapToGlobal(rect().bottomRight())).contains(QCursor::pos());
 }
 
+//---------------------------------------------------------------------
 
 // public
 bool kpGrip::isDrawing () const
@@ -151,6 +126,7 @@ bool kpGrip::isDrawing () const
     return (m_startPoint != KP_INVALID_POINT);
 }
 
+//---------------------------------------------------------------------
 
 // public
 QString kpGrip::haventBegunDrawUserMessage () const
@@ -158,12 +134,15 @@ QString kpGrip::haventBegunDrawUserMessage () const
     return i18n ("Left drag the handle to resize the image.");
 }
 
+//---------------------------------------------------------------------
 
 // public
 QString kpGrip::userMessage () const
 {
     return m_userMessage;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpGrip::setUserMessage (const QString &message)
@@ -176,43 +155,7 @@ void kpGrip::setUserMessage (const QString &message)
     emit statusMessageChanged (message);
 }
 
-
-// protected
-void kpGrip::updatePixmap ()
-{
-#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kDebug () << "kpGrip::updatePixmap() rect=" << rect ();
-#endif
-    if (width () <= 0 || height () <= 0)
-        return;
-
-    QImage image (width (), height (), QImage::Format_ARGB32_Premultiplied);
-    image.fill(0);
-
-    const QRect hr = hotRect ();
-#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kDebug () << "\thotRect=" << hr;
-#endif
-    if (hr.isValid ())
-    {
-        const QColor col = palette ().color (QPalette::Highlight);
-        if (col.alpha () > 0)
-        {
-            kpPixmapFX::fillRect (&image,
-                hr.x (), hr.y (), hr.width (), hr.height (),
-                kpColor (col.rgba()));
-        }
-        else
-        {
-            // You have a crazy color palette with a transparent highlight
-            // color.  Our image is fully transparent already so nothing
-            // needs to be done.
-        }
-    }
-
-    setPixmap (QPixmap::fromImage(image));
-}
-
+//---------------------------------------------------------------------
 
 // protected
 void kpGrip::cancel ()
@@ -234,6 +177,7 @@ void kpGrip::cancel ()
     emit cancelledDraw ();
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
 void kpGrip::keyReleaseEvent (QKeyEvent *e)
@@ -244,6 +188,8 @@ void kpGrip::keyReleaseEvent (QKeyEvent *e)
         cancel ();
     }
 }
+
+//---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
 void kpGrip::mousePressEvent (QMouseEvent *e)
@@ -266,6 +212,8 @@ void kpGrip::mousePressEvent (QMouseEvent *e)
     }
 }
 
+//---------------------------------------------------------------------
+
 // public
 QPoint kpGrip::viewDeltaPoint () const
 {
@@ -281,6 +229,8 @@ QPoint kpGrip::viewDeltaPoint () const
 
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpGrip::mouseMovedTo (const QPoint &point, bool dueToDragScroll)
 {
@@ -293,6 +243,8 @@ void kpGrip::mouseMovedTo (const QPoint &point, bool dueToDragScroll)
                         ((m_type & kpGrip::Bottom) ? point.y () - m_startPoint.y () : 0),
                         dueToDragScroll);
 }
+
+//---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
 void kpGrip::mouseMoveEvent (QMouseEvent *e)
@@ -312,6 +264,8 @@ void kpGrip::mouseMoveEvent (QMouseEvent *e)
 
     mouseMovedTo (e->pos (), false/*not due to drag scroll*/);
 }
+
+//---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
 void kpGrip::mouseReleaseEvent (QMouseEvent *e)
@@ -346,16 +300,7 @@ void kpGrip::mouseReleaseEvent (QMouseEvent *e)
     }
 }
 
-
-// protected virtual [base QWidget]
-void kpGrip::resizeEvent (QResizeEvent *)
-{
-#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER
-    kDebug () << "kpGrip::resizeEvent()";
-#endif
-    updatePixmap ();
-}
-
+//---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
 void kpGrip::enterEvent (QEvent * /*e*/)
@@ -377,6 +322,8 @@ void kpGrip::enterEvent (QEvent * /*e*/)
     }
 }
 
+//---------------------------------------------------------------------
+
 // protected virtual [base QWidget]
 void kpGrip::leaveEvent (QEvent * /*e*/)
 {
@@ -394,16 +341,7 @@ void kpGrip::leaveEvent (QEvent * /*e*/)
 }
 
 //---------------------------------------------------------------------
-
-// protected virtual [base QWidget]
-void kpGrip::paintEvent (QPaintEvent *e)
-{
-#if DEBUG_KP_VIEW_SCROLLABLE_CONTAINER && 0
-    kDebug () << "kpGrip::paintEvent(" << e->rect () << ")";
-#endif
-    QLabel::paintEvent (e);
-}
-
+//---------------------------------------------------------------------
 //---------------------------------------------------------------------
 
 // TODO: Are we checking for m_view == 0 often enough?  Also an issue in KDE 3.
@@ -434,12 +372,10 @@ kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent)
     viewport ()->setAttribute (Qt::WA_PaintOutsidePaintEvent);
     viewport ()->setAttribute (Qt::WA_PaintUnclipped);
 
-    m_bottomGrip->setFixedHeight (kpGrip::Size);
     m_bottomGrip->hide ();
     addChild (m_bottomGrip);
     connectGripSignals (m_bottomGrip);
 
-    m_rightGrip->setFixedWidth (kpGrip::Size);
     m_rightGrip->hide ();
     addChild (m_rightGrip);
     connectGripSignals (m_rightGrip);
@@ -457,10 +393,7 @@ kpViewScrollableContainer::kpViewScrollableContainer (kpMainWindow *parent)
              this, SLOT (slotDragScroll ()));
 }
 
-kpViewScrollableContainer::~kpViewScrollableContainer ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // public
 int kpViewScrollableContainer::contentsXSoon ()
@@ -471,6 +404,8 @@ int kpViewScrollableContainer::contentsXSoon ()
         return m_contentsXSoon;
 }
 
+//---------------------------------------------------------------------
+
 // public
 int kpViewScrollableContainer::contentsYSoon ()
 {
@@ -480,6 +415,7 @@ int kpViewScrollableContainer::contentsYSoon ()
         return m_contentsYSoon;
 }
 
+//---------------------------------------------------------------------
 
 // protected
 void kpViewScrollableContainer::connectGripSignals (kpGrip *grip)
@@ -546,6 +482,7 @@ QSize kpViewScrollableContainer::newDocSize (int viewDX, int viewDY) const
     return QSize (qMax (1, docX), qMax (1, docY));
 }
 
+//---------------------------------------------------------------------
 
 // protected
 void kpViewScrollableContainer::calculateDocResizingGrip ()
@@ -560,12 +497,15 @@ void kpViewScrollableContainer::calculateDocResizingGrip ()
         m_docResizingGrip = 0;
 }
 
+//---------------------------------------------------------------------
+
 // protected
 kpGrip *kpViewScrollableContainer::docResizingGrip () const
 {
     return m_docResizingGrip;
 }
 
+//---------------------------------------------------------------------
 
 // protected
 int kpViewScrollableContainer::bottomResizeLineWidth () const
@@ -582,6 +522,8 @@ int kpViewScrollableContainer::bottomResizeLineWidth () const
         return 1;
 }
 
+//---------------------------------------------------------------------
+
 // protected
 int kpViewScrollableContainer::rightResizeLineWidth () const
 {
@@ -597,6 +539,7 @@ int kpViewScrollableContainer::rightResizeLineWidth () const
         return 1;
 }
 
+//---------------------------------------------------------------------
 
 // protected
 QRect kpViewScrollableContainer::bottomResizeLineRect () const
@@ -612,6 +555,8 @@ QRect kpViewScrollableContainer::bottomResizeLineRect () const
                           m_resizeRoundedLastViewY + bottomResizeLineWidth () - 1)).intersected(visibleArea);
 }
 
+//---------------------------------------------------------------------
+
 // protected
 QRect kpViewScrollableContainer::rightResizeLineRect () const
 {
@@ -625,6 +570,8 @@ QRect kpViewScrollableContainer::rightResizeLineRect () const
                   QPoint (m_resizeRoundedLastViewX + rightResizeLineWidth () - 1,
                           m_resizeRoundedLastViewY - 1)).intersected(visibleArea);
 }
+
+//---------------------------------------------------------------------
 
 // protected
 QRect kpViewScrollableContainer::bottomRightResizeLineRect () const
@@ -640,6 +587,8 @@ QRect kpViewScrollableContainer::bottomRightResizeLineRect () const
                           m_resizeRoundedLastViewY + bottomResizeLineWidth () - 1)).intersected(visibleArea);
 }
 
+//---------------------------------------------------------------------
+
 
 // TODO: are these 2 correct?  Remember that viewport()->x() == 1, viewport()->y() == 1
 
@@ -648,6 +597,8 @@ QPoint kpViewScrollableContainer::mapViewToViewport (const QPoint &viewPoint)
 {
     return viewPoint - QPoint (contentsX (), contentsY ());
 }
+
+//---------------------------------------------------------------------
 
 // protected
 QRect kpViewScrollableContainer::mapViewToViewport (const QRect &viewRect)
@@ -660,6 +611,7 @@ QRect kpViewScrollableContainer::mapViewToViewport (const QRect &viewRect)
     return ret;
 }
 
+//---------------------------------------------------------------------
 
 // protected
 QRect kpViewScrollableContainer::mapViewportToGlobal (const QRect &viewportRect)
@@ -667,12 +619,15 @@ QRect kpViewScrollableContainer::mapViewportToGlobal (const QRect &viewportRect)
     return kpWidgetMapper::toGlobal (viewport (), viewportRect);
 }
 
+//---------------------------------------------------------------------
+
 // protected
 QRect kpViewScrollableContainer::mapViewToGlobal (const QRect &viewRect)
 {
     return mapViewportToGlobal (mapViewToViewport (viewRect));
 }
 
+//---------------------------------------------------------------------
 
 // protected
 void kpViewScrollableContainer::repaintWidgetAtResizeLineViewRect (
@@ -695,6 +650,8 @@ void kpViewScrollableContainer::repaintWidgetAtResizeLineViewRect (
     }
 }
 
+//---------------------------------------------------------------------
+
 // protected
 void kpViewScrollableContainer::repaintWidgetAtResizeLines (QWidget *widget)
 {
@@ -702,6 +659,8 @@ void kpViewScrollableContainer::repaintWidgetAtResizeLines (QWidget *widget)
     repaintWidgetAtResizeLineViewRect (widget, bottomResizeLineRect ());
     repaintWidgetAtResizeLineViewRect (widget, bottomRightResizeLineRect ());
 }
+
+//---------------------------------------------------------------------
 
 // protected
 void kpViewScrollableContainer::eraseResizeLines ()
@@ -717,6 +676,7 @@ void kpViewScrollableContainer::eraseResizeLines ()
     }
 }
 
+//---------------------------------------------------------------------
 
 // protected
 void kpViewScrollableContainer::drawResizeLines ()
@@ -801,16 +761,7 @@ void kpViewScrollableContainer::updateResizeLines (int viewX, int viewY,
         m_resizeRoundedLastViewDY = 0;
     }
 
-    // TODO: This is suboptimal since if another window pops up on top of
-    //       KolourPaint then disappears, the lines are not redrawn
-    //       (although this doesn't happen very frequently since we grab the
-    //       keyboard and mouse when resizing):
-    //
-    //         e.g. sleep 5 && gedit & sleep 10 && killall gedit
-    //
-    //       Should be done in the paintEvent's of every child of the
-    //       scrollview.
-    drawResizeLines ();
+    drawResizeLines();
 }
 
 //---------------------------------------------------------------------
@@ -830,6 +781,8 @@ void kpViewScrollableContainer::slotGripBeganDraw ()
 
     emit beganDocResize ();
 }
+
+//---------------------------------------------------------------------
 
 // protected slot
 void kpViewScrollableContainer::slotGripContinuedDraw (int inViewDX, int inViewDY,
@@ -871,6 +824,8 @@ void kpViewScrollableContainer::slotGripContinuedDraw (int inViewDX, int inViewD
     emit continuedDocResize (newDocSize ());
 }
 
+//---------------------------------------------------------------------
+
 // protected slot
 void kpViewScrollableContainer::slotGripCancelledDraw ()
 {
@@ -884,6 +839,8 @@ void kpViewScrollableContainer::slotGripCancelledDraw ()
 
     endDragScroll ();
 }
+
+//---------------------------------------------------------------------
 
 // protected slot
 void kpViewScrollableContainer::slotGripEndedDraw (int viewDX, int viewDY)
@@ -912,6 +869,7 @@ void kpViewScrollableContainer::slotGripEndedDraw (int viewDX, int viewDY)
     endDragScroll ();
 }
 
+//---------------------------------------------------------------------
 
 // protected slot
 void kpViewScrollableContainer::slotGripStatusMessageChanged (const QString &string)
@@ -923,6 +881,7 @@ void kpViewScrollableContainer::slotGripStatusMessageChanged (const QString &str
     emit statusMessageChanged (string);
 }
 
+//---------------------------------------------------------------------
 
 // public slot
 void kpViewScrollableContainer::recalculateStatusMessage ()
@@ -933,9 +892,6 @@ void kpViewScrollableContainer::recalculateStatusMessage ()
                << " global visibleRect="
                << kpWidgetMapper::toGlobal (this,
                       QRect (0, 0, visibleWidth (), visibleHeight ()))
-               << " brGrip.hotRect=" << m_bottomRightGrip->hotRect (true)
-               << " bGrip.hotRect=" << m_bottomGrip->hotRect (true)
-               << " rGrip.hotRect=" << m_rightGrip->hotRect (true)
                << endl;
 #endif
 
@@ -948,21 +904,15 @@ void kpViewScrollableContainer::recalculateStatusMessage ()
                                   QRect (0, 0, visibleWidth (), visibleHeight ()))
             .contains (QCursor::pos ()))
     {
-        if (!m_bottomRightGrip->isHidden () &&
-            m_bottomRightGrip->hotRect (true/*to global*/)
-                .contains (QCursor::pos ()))
+        if ( m_bottomRightGrip->containsCursor() )
         {
             m_bottomRightGrip->setUserMessage (i18n ("Left drag the handle to resize the image."));
         }
-        else if (!m_bottomGrip->isHidden () &&
-                m_bottomGrip->hotRect (true/*to global*/)
-                    .contains (QCursor::pos ()))
+        else if ( m_bottomGrip->containsCursor() )
         {
             m_bottomGrip->setUserMessage (i18n ("Left drag the handle to resize the image."));
         }
-        else if (!m_rightGrip->isHidden () &&
-                m_rightGrip->hotRect (true/*to global*/)
-                    .contains (QCursor::pos ()))
+        else if ( m_rightGrip->containsCursor() )
         {
             m_rightGrip->setUserMessage (i18n ("Left drag the handle to resize the image."));
         }
@@ -977,6 +927,7 @@ void kpViewScrollableContainer::recalculateStatusMessage ()
     }
 }
 
+//---------------------------------------------------------------------
 
 // protected slot
 void kpViewScrollableContainer::slotContentsMoving (int x, int y)
@@ -996,6 +947,8 @@ void kpViewScrollableContainer::slotContentsMoving (int x, int y)
 
     QTimer::singleShot (0, this, SLOT (slotContentsMoved ()));
 }
+
+//---------------------------------------------------------------------
 
 // protected slot
 void kpViewScrollableContainer::slotContentsMoved ()
@@ -1026,6 +979,8 @@ void kpViewScrollableContainer::disconnectViewSignals ()
                 this, SLOT (slotViewDestroyed ()));
 }
 
+//---------------------------------------------------------------------
+
 // protected
 void kpViewScrollableContainer::connectViewSignals ()
 {
@@ -1035,6 +990,7 @@ void kpViewScrollableContainer::connectViewSignals ()
              this, SLOT (slotViewDestroyed ()));
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base QScrollView]
 void kpViewScrollableContainer::addChild (QWidget *widget, int x, int y)
@@ -1056,12 +1012,15 @@ void kpViewScrollableContainer::addChild (QWidget *widget, int x, int y)
     }
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpView *kpViewScrollableContainer::view () const
 {
     return m_view;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpViewScrollableContainer::setView (kpView *view)
@@ -1088,6 +1047,7 @@ void kpViewScrollableContainer::setView (kpView *view)
     }
 }
 
+//---------------------------------------------------------------------
 
 // public slot
 void kpViewScrollableContainer::updateGrips ()
@@ -1101,10 +1061,8 @@ void kpViewScrollableContainer::updateGrips ()
 
     if (m_view)
     {
-        m_bottomGrip->setFixedWidth (kpGrip::Size);
         moveChild (m_bottomGrip, (m_view->width () - m_bottomGrip->width ()) / 2, m_view->height ());
 
-        m_rightGrip->setFixedHeight (kpGrip::Size);
         moveChild (m_rightGrip, m_view->width (), (m_view->height () - m_bottomGrip->height ()) / 2);
 
         moveChild (m_bottomRightGrip, m_view->width (), m_view->height ());
@@ -1137,6 +1095,8 @@ void kpViewScrollableContainer::updateGrips ()
     recalculateStatusMessage ();
 }
 
+//---------------------------------------------------------------------
+
 // protected slot
 void kpViewScrollableContainer::slotViewDestroyed ()
 {
@@ -1149,6 +1109,7 @@ void kpViewScrollableContainer::slotViewDestroyed ()
     updateGrips ();
 }
 
+//---------------------------------------------------------------------
 
 // public slot
 bool kpViewScrollableContainer::beginDragScroll (const QPoint &/*docPoint*/,
@@ -1420,11 +1381,15 @@ QRect kpViewScrollableContainer::noDragScrollRect () const
                   height () - DragScrollLeftTopMargin - DragScrollRightBottomMargin);
 }
 
+//---------------------------------------------------------------------
+
 // protected virtual [base QScrollView]
 bool kpViewScrollableContainer::eventFilter (QObject *watchedObject, QEvent *event)
 {
     return Q3ScrollView::eventFilter (watchedObject, event);
 }
+
+//---------------------------------------------------------------------
 
 // protected virtual [base QScrollView]
 void kpViewScrollableContainer::viewportPaintEvent (QPaintEvent *e)
@@ -1442,6 +1407,8 @@ void kpViewScrollableContainer::viewportPaintEvent (QPaintEvent *e)
 #endif
 }
 
+//---------------------------------------------------------------------
+
 // protected virtual [base QFrame]
 void kpViewScrollableContainer::paintEvent (QPaintEvent *e)
 {
@@ -1458,6 +1425,8 @@ void kpViewScrollableContainer::paintEvent (QPaintEvent *e)
 #endif
 }
 
+//---------------------------------------------------------------------
+
 // protected virtual [base QScrollView]
 void kpViewScrollableContainer::resizeEvent (QResizeEvent *e)
 {
@@ -1466,7 +1435,6 @@ void kpViewScrollableContainer::resizeEvent (QResizeEvent *e)
     emit resized ();
 }
 
+//---------------------------------------------------------------------
 
 #include <kpViewScrollableContainer.moc>
-
-
