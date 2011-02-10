@@ -86,6 +86,7 @@ void kpCommandHistory::addCreateSelectionCommand (kpToolSelectionCreateCommand *
         addCommand (cmd, execute);
 }
 
+//---------------------------------------------------------------------
 
 // public slot virtual [base KCommandHistory]
 void kpCommandHistory::undo ()
@@ -103,6 +104,8 @@ void kpCommandHistory::undo ()
     else
         kpCommandHistoryBase::undo ();
 }
+
+//---------------------------------------------------------------------
 
 // public slot virtual [base KCommandHistory]
 void kpCommandHistory::redo ()

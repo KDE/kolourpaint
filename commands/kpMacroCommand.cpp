@@ -30,11 +30,13 @@
 
 
 #include <kpMacroCommand.h>
+#include <kpViewManager.h>
 
 #include <climits>
 
 #include <QtAlgorithms>
 
+//---------------------------------------------------------------------
 
 struct kpMacroCommandPrivate
 {
@@ -47,12 +49,15 @@ kpMacroCommand::kpMacroCommand (const QString &name, kpCommandEnvironment *envir
 {
 }
 
+//---------------------------------------------------------------------
+
 kpMacroCommand::~kpMacroCommand ()
 {
     qDeleteAll (m_commandList.begin (), m_commandList.end ());
     delete d;
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
 kpCommandSize::SizeType kpMacroCommand::size () const
@@ -81,6 +86,7 @@ kpCommandSize::SizeType kpMacroCommand::size () const
     return s;
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
 void kpMacroCommand::execute ()
@@ -88,6 +94,9 @@ void kpMacroCommand::execute ()
 #if DEBUG_KP_COMMAND_HISTORY
     kDebug () << "kpMacroCommand::execute()";
 #endif
+
+    viewManager()->setQueueUpdates();
+
     for (QLinkedList <kpCommand *>::const_iterator it = m_commandList.begin ();
          it != m_commandList.end ();
          it++)
@@ -97,7 +106,11 @@ void kpMacroCommand::execute ()
     #endif
         (*it)->execute ();
     }
+
+    viewManager()->restoreQueueUpdates();
 }
+
+//---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
 void kpMacroCommand::unexecute ()
@@ -105,6 +118,9 @@ void kpMacroCommand::unexecute ()
 #if DEBUG_KP_COMMAND_HISTORY
     kDebug () << "kpMacroCommand::unexecute()";
 #endif
+
+    viewManager()->setQueueUpdates();
+
     QLinkedList <kpCommand *>::const_iterator it = m_commandList.end ();
     it--;
 
@@ -117,8 +133,11 @@ void kpMacroCommand::unexecute ()
 
         it--;
     }
+
+    viewManager()->restoreQueueUpdates();
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpMacroCommand::addCommand (kpCommand *command)
@@ -126,3 +145,4 @@ void kpMacroCommand::addCommand (kpCommand *command)
     m_commandList.push_back (command);
 }
 
+//---------------------------------------------------------------------

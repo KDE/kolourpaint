@@ -35,6 +35,7 @@
 #include <kpTextSelection.h>
 #include <kpViewManager.h>
 
+//---------------------------------------------------------------------
 
 kpToolTextInsertCommand::kpToolTextInsertCommand (const QString &name,
         int row, int col, QString newText,
@@ -46,10 +47,7 @@ kpToolTextInsertCommand::kpToolTextInsertCommand (const QString &name,
     addText (newText);
 }
 
-kpToolTextInsertCommand::~kpToolTextInsertCommand ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // public
 void kpToolTextInsertCommand::addText (const QString &moreText)
@@ -69,6 +67,7 @@ void kpToolTextInsertCommand::addText (const QString &moreText)
     viewManager ()->setTextCursorPosition (m_row, m_col);
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
 kpCommandSize::SizeType kpToolTextInsertCommand::size () const
@@ -76,6 +75,7 @@ kpCommandSize::SizeType kpToolTextInsertCommand::size () const
     return (kpCommandSize::SizeType) m_newText.length () * sizeof (QChar);
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
 void kpToolTextInsertCommand::execute ()
@@ -86,6 +86,8 @@ void kpToolTextInsertCommand::execute ()
     m_newText.clear ();
     addText (text);
 }
+
+//---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
 void kpToolTextInsertCommand::unexecute ()
@@ -103,3 +105,4 @@ void kpToolTextInsertCommand::unexecute ()
     viewManager ()->setTextCursorPosition (m_row, m_col);
 }
 
+//---------------------------------------------------------------------

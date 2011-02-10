@@ -519,7 +519,7 @@ void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
 //
 //    We can't use QPainter::setClipRect() since it is buggy in Qt 4.3.1
 //    and clips too many pixels when used in combination with scale()
-//    [qt-bugs@trolltech.com issue N181038].
+//    [qt-bugs@trolltech.com issue N181038].  ==> MK 10.2.2011 - fixed since Qt-4.4.4
 //
 // B. paintEventGetDocRect() may, by design, return a larger document
 //    rectangle than what <viewRect> corresponds to, if the zoom levels
@@ -564,8 +564,8 @@ void kpView::paintEventDrawDoc_Unclipped (const QRect &viewRect)
         docPixmap = doc->getImageAt (docRect);
 
     #if DEBUG_KP_VIEW_RENDERER && 1
-        kDebug () << "\tdocPixmap.hasAlpha()="
-                  << docPixmap.hasAlpha () << endl;
+        kDebug () << "\tdocPixmap.hasAlphaChannel()="
+                  << docPixmap.hasAlphaChannel () << endl;
     #endif
 
         tempImageWillBeRendered =
@@ -686,7 +686,7 @@ void kpView::paintEvent (QPaintEvent *e)
     // part of the view (which could be quite small inside a scrollview).
     QRegion viewRegion = e->region ();
     QVector <QRect> rects = viewRegion.rects ();
-#if DEBUG_KP_VIEW_RENDERER && 1
+#if DEBUG_KP_VIEW_RENDERER
     kDebug () << "\t#rects = " << rects.count ();
 #endif
 

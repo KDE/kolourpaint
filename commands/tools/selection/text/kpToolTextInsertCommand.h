@@ -39,7 +39,6 @@ public:
     kpToolTextInsertCommand (const QString &name,
         int row, int col, QString newText,
         kpCommandEnvironment *environ);
-    virtual ~kpToolTextInsertCommand ();
 
     void addText (const QString &moreText);
 

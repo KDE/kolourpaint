@@ -36,6 +36,7 @@
 #include <qimage.h>
 #include <qlist.h>
 #include <qmenu.h>
+#include <QDesktopWidget>
 
 #include <kaction.h>
 #include <kdebug.h>
@@ -69,7 +70,6 @@
 #include <kpViewManager.h>
 #include <kpViewScrollableContainer.h>
 #include <kpZoomedView.h>
-
 
 //---------------------------------------------------------------------
 
@@ -417,18 +417,7 @@ void kpMainWindow::pasteText (const QString &text,
 
     toolEndShape ();
 
-
-    QList <QString> textLines;
-    textLines.append (QString ());
-
-    for (int i = 0; i < (int) text.length (); i++)
-    {
-        if (text [i] == '\n')
-            textLines.push_back (QString::null);  //krazy:exclude=nullstrassign for old broken gcc
-        else
-            textLines [textLines.size () - 1].append (text [i]);
-    }
-
+    QStringList textLines = text.split('\n');
 
     if (!forceNewTextSelection &&
         d->document && d->document->textSelection () &&
@@ -437,6 +426,8 @@ void kpMainWindow::pasteText (const QString &text,
     #if DEBUG_KP_MAIN_WINDOW && 1
         kDebug () << "\treusing existing Text Selection";
     #endif
+
+        d->viewManager->setQueueUpdates();
 
         kpTextSelection *textSel = d->document->textSelection ();
         if (!textSel->hasContent ())
@@ -489,6 +480,8 @@ void kpMainWindow::pasteText (const QString &text,
         }
 
         d->commandHistory->addCommand (macroCmd, false/*no exec*/);
+
+        d->viewManager->restoreQueueUpdates();
     }
     else
     {
@@ -513,6 +506,9 @@ void kpMainWindow::pasteText (const QString &text,
                 width = w;
         }
 
+        // limit the size to avoid memory overflow
+        width = qMin(qMax(QApplication::desktop()->width(), d->document->width()), width);
+        height = qMin(qMax(QApplication::desktop()->height(), d->document->height()), height);
 
         const int selWidth = qMax (kpTextSelection::MinimumWidthForTextStyle (ts),
                                    width + kpTextSelection::TextBorderSize () * 2);

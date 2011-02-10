@@ -180,6 +180,10 @@ void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
       {
           painter.drawText (theTextAreaRect.x (), baseLine, str);
           baseLine += fontMetrics.lineSpacing ();
+
+          // if the next textline would already be below the visible text area, stop drawing
+          if ( (baseLine - fontMetrics.ascent()) > (theTextAreaRect.y() + theTextAreaRect.height()) )
+            break;
       }
       // the next text drawing will now blend the text foreground color with
       // what is really below the text background
@@ -225,9 +229,12 @@ void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
             }
             baseLine += fontMetrics.lineSpacing();
             i++;
+
+            // if the next textline would already be below the visible text area, stop drawing
+            if ( (baseLine - fontMetrics.ascent()) > (theTextAreaRect.y() + theTextAreaRect.height()) )
+              break;
         }
     }
-
 
     // ... convert that into "painting" transparent pixels on top of
     // the document.

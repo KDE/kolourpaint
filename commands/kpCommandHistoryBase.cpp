@@ -310,6 +310,7 @@ void kpCommandHistoryBase::clear ()
     updateActions ();
 }
 
+//---------------------------------------------------------------------
 
 // protected slot
 void kpCommandHistoryBase::undoInternal ()
@@ -345,6 +346,8 @@ void kpCommandHistoryBase::undoInternal ()
     }
 }
 
+//---------------------------------------------------------------------
+
 // protected slot
 void kpCommandHistoryBase::redoInternal ()
 {
@@ -379,6 +382,7 @@ void kpCommandHistoryBase::redoInternal ()
     }
 }
 
+//---------------------------------------------------------------------
 
 // public slot virtual
 void kpCommandHistoryBase::undo ()
@@ -391,6 +395,8 @@ void kpCommandHistoryBase::undo ()
     trimCommandListsUpdateActions ();
 }
 
+//---------------------------------------------------------------------
+
 // public slot virtual
 void kpCommandHistoryBase::redo ()
 {
@@ -402,6 +408,7 @@ void kpCommandHistoryBase::redo ()
     trimCommandListsUpdateActions ();
 }
 
+//---------------------------------------------------------------------
 
 // public slot virtual
 void kpCommandHistoryBase::undoUpToNumber (QAction *which)
