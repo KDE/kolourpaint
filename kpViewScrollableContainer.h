@@ -48,6 +48,7 @@ class QTimer;
 
 class kpView;
 class kpMainWindow;
+class kpOverlay;
 
 
 //---------------------------------------------------------------------
@@ -64,8 +65,6 @@ public:
         BottomRight = Right | Bottom
     };
 
-    static const int Size;
-
     kpGrip (GripType type, QWidget *parent);
 
     GripType type () const;
@@ -75,6 +74,8 @@ public:
     bool containsCursor();
 
     bool isDrawing () const;
+
+    static const int Size;
 
 signals:
     void beganDraw ();
@@ -131,6 +132,19 @@ public:
     int contentsXSoon ();
     int contentsYSoon ();
 
+    QSize newDocSize () const;
+    bool haveMovedFromOriginalDocSize () const;
+    QString statusMessage () const;
+    void clearStatusMessage ();
+
+    // Calls setView(<widget>) after adding <widget> if it's a kpView.
+    virtual void addChild (QWidget *widget, int x = 0, int y = 0);
+
+    kpView *view () const;
+    void setView (kpView *view);
+
+    void drawResizeLines();  // public only for kpOverlay
+
 signals:
     // connect to this instead of contentsMoving(int,int) so that
     // contentsXSoon() and contentsYSoon() work
@@ -146,13 +160,21 @@ signals:
 
     void resized ();
 
-public:
-    QSize newDocSize () const;
-    bool haveMovedFromOriginalDocSize () const;
-    QString statusMessage () const;
-    void clearStatusMessage ();
+public slots:
+    void recalculateStatusMessage ();
 
-protected:
+    void updateGrips ();
+
+    // TODO: Why the QPoint's?
+    //       Why the need for view's zoomLevel?  We have the view() anyway.
+    bool beginDragScroll (const QPoint &, const QPoint &,
+                          int zoomLevel,
+                          bool *didSomething);
+    bool beginDragScroll (const QPoint &, const QPoint &,
+                          int zoomLevel);
+    bool endDragScroll ();
+
+private:
     void connectGripSignals (kpGrip *grip);
 
     QSize newDocSize (int viewDX, int viewDY) const;
@@ -167,23 +189,20 @@ protected:
     QRect rightResizeLineRect () const;
     QRect bottomRightResizeLineRect () const;
 
-    QPoint mapViewToViewport (const QPoint &viewPoint);
     QRect mapViewToViewport (const QRect &viewRect);
-
-    QRect mapViewportToGlobal (const QRect &viewportRect);
-    QRect mapViewToGlobal (const QRect &viewRect);
-
-    void repaintWidgetAtResizeLineViewRect (QWidget *widget,
-                                            const QRect &resizeLineViewRect);
-    void repaintWidgetAtResizeLines (QWidget *widget);
-    void eraseResizeLines ();
 
     void updateResizeLines (int viewX, int viewY,
                             int viewDX, int viewDY);
 
-    void drawResizeLines();
+    void disconnectViewSignals ();
+    void connectViewSignals ();
 
-protected slots:
+    QRect noDragScrollRect () const;
+
+    virtual void contentsWheelEvent (QWheelEvent *e);
+    virtual void resizeEvent (QResizeEvent *e);
+
+private slots:
     void slotGripBeganDraw ();
     void slotGripContinuedDraw (int viewDX, int viewDY, bool dueToScrollView);
     void slotGripCancelledDraw ();
@@ -191,59 +210,17 @@ protected slots:
 
     void slotGripStatusMessageChanged (const QString &string);
 
-public slots:
-    void recalculateStatusMessage ();
-
-protected slots:
     void slotContentsMoving (int x, int y);
     void slotContentsMoved ();
-
-protected:
-    void disconnectViewSignals ();
-    void connectViewSignals ();
-
-public:
-    // Calls setView(<widget>) after adding <widget> if it's a kpView.
-    virtual void addChild (QWidget *widget, int x = 0, int y = 0);
-
-    kpView *view () const;
-    void setView (kpView *view);
-
-public slots:
-    void updateGrips ();
-protected slots:
     void slotViewDestroyed ();
-
-public slots:
-    // TODO: Why the QPoint's?
-    //       Why the need for view's zoomLevel?  We have the view() anyway.
-    bool beginDragScroll (const QPoint &, const QPoint &,
-                          int zoomLevel,
-                          bool *didSomething);
-    bool beginDragScroll (const QPoint &, const QPoint &,
-                          int zoomLevel);
-    bool endDragScroll ();
-
-protected slots:
     bool slotDragScroll (bool *didSomething);
     bool slotDragScroll ();
 
-protected:
-    QRect noDragScrollRect () const;
-
-    virtual void contentsDragMoveEvent (QDragMoveEvent *e);
-    virtual void contentsMouseMoveEvent (QMouseEvent *e);
-    virtual void contentsWheelEvent (QWheelEvent *e);
-    virtual void mouseMoveEvent (QMouseEvent *e);
-    virtual bool eventFilter (QObject *watchedObject, QEvent *e);
-    virtual void viewportPaintEvent (QPaintEvent *e);
-    virtual void paintEvent (QPaintEvent *e);
-    virtual void resizeEvent (QResizeEvent *e);
-
-protected:
+private:
     kpMainWindow *m_mainWindow;
     int m_contentsXSoon, m_contentsYSoon;
     kpView *m_view;
+    kpOverlay *m_overlay;
     kpGrip *m_bottomGrip, *m_rightGrip, *m_bottomRightGrip;
     kpGrip *m_docResizingGrip;
     QTimer *m_dragScrollTimer;
@@ -254,6 +231,5 @@ protected:
     bool m_haveMovedFromOriginalDocSize;
     QString m_gripStatusMessage;
 };
-
 
 #endif  // KP_VIEW_SCROLLABLE_CONTAINER_H
