@@ -68,8 +68,6 @@
 #include <kpTool.h>
 #include <kpViewManager.h>
 
-#include <bugfix.h>
-
 //---------------------------------------------------------------------
 
 class kpTransformAutoCropBorder
@@ -243,8 +241,8 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
         if (numCols)
         {
             m_rect =
-                bugfix_QRect (QPoint (startX, 0),
-                       QPoint (startX + (numCols - 1) * dir, maxY)).normalized();
+                kpPainter::normalizedRect(QPoint(startX, 0),
+                       QPoint(startX + (numCols - 1) * dir, maxY));
             m_referenceColor = col;
         }
     }
@@ -273,9 +271,8 @@ bool kpTransformAutoCropBorder::calculate (int isX, int dir)
 
         if (numRows)
         {
-            m_rect =
-                bugfix_QRect (QPoint (0, startY),
-                       QPoint (maxX, startY + (numRows - 1) * dir)).normalized();
+            m_rect = kpPainter::normalizedRect(QPoint(0, startY),
+                         QPoint(maxX, startY + (numRows - 1) * dir));
             m_referenceColor = col;
         }
     }

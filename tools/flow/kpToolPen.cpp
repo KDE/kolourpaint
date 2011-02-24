@@ -40,8 +40,6 @@
 #include <kpPainter.h>
 #include <kpToolFlowCommand.h>
 
-#include <bugfix.h>
-
 struct kpToolPenPrivate
 {
 };
@@ -77,7 +75,7 @@ QString kpToolPen::haventBegunDrawUserMessage () const
 // protected virtual [base kpToolFlowBase]
 QRect kpToolPen::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
-    QRect docRect = bugfix_QRect(thisPoint, lastPoint).normalized();
+    QRect docRect = kpPainter::normalizedRect(thisPoint, lastPoint);
     docRect = neededRect (docRect, 1/*pen width*/);
     kpImage image = document ()->getImageAt (docRect);
 

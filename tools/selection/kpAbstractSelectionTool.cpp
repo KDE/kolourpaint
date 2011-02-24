@@ -51,8 +51,7 @@
 #include <kpToolWidgetOpaqueOrTransparent.h>
 #include <kpView.h>
 #include <kpViewManager.h>
-
-#include <bugfix.h>
+#include <kpPainter.h>
 
 //---------------------------------------------------------------------
 
@@ -411,8 +410,8 @@ void kpAbstractSelectionTool::beginDraw ()
     // Currently used only to end the current text
     if (hasBegunShape ())
     {
-        endShape (currentPoint (),
-                bugfix_QRect (startPoint ()/* TODO: wrong */, currentPoint ()).normalized());
+        endShape(currentPoint(),
+                 kpPainter::normalizedRect(startPoint()/* TODO: wrong */, currentPoint()));
     }
 
     d->drawType = calculateDrawType ();

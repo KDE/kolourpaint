@@ -36,7 +36,6 @@
 #include <kpPixmapFX.h>
 #include <kpToolFlowCommand.h>
 
-#include <bugfix.h>
 //---------------------------------------------------------------------
 
 kpToolFlowPixmapBase::kpToolFlowPixmapBase (const QString &text, const QString &description,
@@ -50,7 +49,7 @@ kpToolFlowPixmapBase::kpToolFlowPixmapBase (const QString &text, const QString &
 
 QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
-    QRect docRect = bugfix_QRect (thisPoint, lastPoint).normalized();
+    QRect docRect = kpPainter::normalizedRect(thisPoint, lastPoint);
     docRect = neededRect (docRect, qMax (brushWidth (), brushHeight ()));
     kpImage image = document ()->getImageAt (docRect);
 

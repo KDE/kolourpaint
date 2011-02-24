@@ -55,6 +55,14 @@ struct kpPainterPrivate;
 class kpPainter
 {
 public:
+    // helper to make a correct QRect out of 2 QPoints regardless of their relative position
+    // to each other
+    static QRect normalizedRect(const QPoint& p1, const QPoint& p2)
+    {
+      return QRect(qMin(p1.x(), p2.x()), qMin(p1.y(), p2.y()),
+                   qAbs(p2.x() - p1.x()) + 1, qAbs(p2.y() - p1.y()) + 1);
+    }
+
     // Returns whether the given points are cardinally adjacent (i.e. one point
     // is exactly 1 pixel north, east, south or west of the other).  Equal
     // points are not cardinally adjacent.

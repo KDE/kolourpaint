@@ -55,8 +55,6 @@
 #include <kpView.h>
 #include <kpViewManager.h>
 
-#include <bugfix.h>
-
 //---------------------------------------------------------------------
 
 kpToolSpraycan::kpToolSpraycan (kpToolEnvironment *environ, QObject *parent)
@@ -144,7 +142,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
 
 
     // For efficiency, only get image after NOP check above.
-    QRect docRect = bugfix_QRect (thisPoint, lastPoint).normalized();
+    QRect docRect = kpPainter::normalizedRect(thisPoint, lastPoint);
     docRect = neededRect (docRect, spraycanSize ());
     kpImage image = document ()->getImageAt (docRect);
 

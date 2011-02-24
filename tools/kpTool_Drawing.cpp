@@ -43,8 +43,7 @@
 #include <kpToolEnvironment.h>
 #include <kpView.h>
 #include <kpViewManager.h>
-
-#include <bugfix.h>
+#include <kpPainter.h>
 
 #undef environ  // macro on win32
 
@@ -110,7 +109,7 @@ QPoint kpTool::currentViewPoint () const
 // protected
 QRect kpTool::normalizedRect () const
 {
-    return bugfix_QRect (d->startPoint, d->currentPoint).normalized();
+    return kpPainter::normalizedRect(d->startPoint, d->currentPoint);
 }
 
 //---------------------------------------------------------------------

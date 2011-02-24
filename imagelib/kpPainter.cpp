@@ -33,9 +33,7 @@
 
 #include <cstdio>
 
-#include <QBitmap>
 #include <QPainter>
-#include <QPainterPath>
 #include <QPolygon>
 
 #include <kdebug.h>
@@ -45,7 +43,6 @@
 #include <kpPixmapFX.h>
 #include <kpTool.h>
 #include <kpToolFlowBase.h>
-#include <bugfix.h>
 
 //---------------------------------------------------------------------
 
@@ -189,7 +186,6 @@ void kpPainter::drawLine (kpImage *image,
 }
 
 //---------------------------------------------------------------------
-
 
 // public static
 void kpPainter::drawPolyline (kpImage *image,
@@ -390,8 +386,7 @@ static QRect Wash (kpImage *image,
 
     // Get the rectangle that bounds the changes and the pixmap for that
     // rectangle.
-    const QRect normalizedRect =
-        bugfix_QRect (pack.startPoint, pack.endPoint).normalized();
+    const QRect normalizedRect = kpPainter::normalizedRect(pack.startPoint, pack.endPoint);
     pack.readableImageRect = kpTool::neededRect (normalizedRect,
         qMax (pack.penWidth, pack.penHeight));
 #if DEBUG_KP_PAINTER
