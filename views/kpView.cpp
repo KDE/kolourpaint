@@ -38,35 +38,29 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include <qbitmap.h>
 #include <qcursor.h>
-#include <qevent.h>
-#include <qpointer.h>
-#include <qimage.h>
-#include <qpixmap.h>
 #include <qpoint.h>
-#include <qpolygon.h>
 #include <qrect.h>
 #include <qregion.h>
-#include <qvector.h>
+#include <QScrollBar>
 
 #include <KDebug>
 
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpPixmapFX.h>
-#include <kpTempImage.h>
 #include <kpTextSelection.h>
 #include <kpTool.h>
 #include <kpToolToolBar.h>
 #include <kpViewManager.h>
 #include <kpViewScrollableContainer.h>
 
+//---------------------------------------------------------------------
 
 // public static
 const int kpView::MinZoomLevel = 1;
 const int kpView::MaxZoomLevel = 3200;
 
+//---------------------------------------------------------------------
 
 kpView::kpView (kpDocument *document,
         kpToolToolBar *toolToolBar,
@@ -87,8 +81,6 @@ kpView::kpView (kpDocument *document,
     d->origin = QPoint (0, 0);
     d->showGrid = false;
     d->isBuddyViewScrollableContainerRectangleShown = false;
-
-    d->paintBlankCounter = 0;
 
     // Don't waste CPU drawing default background since its overridden by
     // our fully opaque drawing.  In reality, this seems to make no
@@ -111,12 +103,13 @@ kpView::~kpView ()
 
 //---------------------------------------------------------------------
 
-
 // public
 kpDocument *kpView::document () const
 {
     return d->document;
 }
+
+//---------------------------------------------------------------------
 
 // protected
 kpAbstractSelection *kpView::selection () const
@@ -124,12 +117,15 @@ kpAbstractSelection *kpView::selection () const
     return document () ? document ()->selection () : 0;
 }
 
+//---------------------------------------------------------------------
+
 // protected
 kpTextSelection *kpView::textSelection () const
 {
     return document () ? document ()->textSelection () : 0;
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpToolToolBar *kpView::toolToolBar () const
@@ -286,7 +282,7 @@ void kpView::showBuddyViewScrollableContainerRectangle (bool yes)
 
         if (buddyViewScrollableContainer ())
         {
-            connect (buddyViewScrollableContainer (), SIGNAL (contentsMovingSoon (int, int)),
+            connect (buddyViewScrollableContainer (), SIGNAL (contentsMoved()),
                      this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
             connect (buddyViewScrollableContainer (), SIGNAL (resized ()),
                      this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
@@ -313,7 +309,7 @@ void kpView::showBuddyViewScrollableContainerRectangle (bool yes)
 
         if (buddyViewScrollableContainer ())
         {
-            disconnect (buddyViewScrollableContainer (), SIGNAL (contentsMovingSoon (int, int)),
+            disconnect (buddyViewScrollableContainer (), SIGNAL (contentsMoved()),
                         this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
             disconnect (buddyViewScrollableContainer (), SIGNAL (resized ()),
                         this, SLOT (updateBuddyViewScrollableContainerRectangle ()));
@@ -365,12 +361,12 @@ void kpView::updateBuddyViewScrollableContainerRectangle ()
             buddyViewScrollableContainer () && buddyView ())
         {
             QRect docRect = buddyView ()->transformViewToDoc (
-                QRect (buddyViewScrollableContainer ()->contentsXSoon (),
-                       buddyViewScrollableContainer ()->contentsYSoon (),
+                QRect (buddyViewScrollableContainer ()->horizontalScrollBar()->value(),
+                       buddyViewScrollableContainer ()->verticalScrollBar()->value(),
                        qMin (buddyView ()->width (),
-                             buddyViewScrollableContainer ()->visibleWidth ()),
+                             buddyViewScrollableContainer ()->viewport()->width ()),
                        qMin (buddyView ()->height (),
-                             buddyViewScrollableContainer ()->visibleHeight ())));
+                             buddyViewScrollableContainer ()->viewport()->height ())));
 
 
             QRect viewRect = this->transformDocToView (docRect);

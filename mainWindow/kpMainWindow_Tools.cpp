@@ -590,7 +590,7 @@ bool kpMainWindow::slotDragScroll (const QPoint &docPoint,
 
     if (maybeDragScrollingMainView ())
     {
-        return d->scrollView->beginDragScroll (docPoint, docLastPoint, zoomLevel, scrolled);
+        return d->scrollView->beginDragScroll(zoomLevel, scrolled);
     }
     else
     {

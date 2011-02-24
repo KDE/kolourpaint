@@ -343,7 +343,7 @@ void kpMainWindow::init ()
     connect (d->scrollView, SIGNAL (statusMessageChanged (const QString &)),
              this, SLOT (slotDocResizeMessageChanged (const QString &)));
 
-    connect (d->scrollView, SIGNAL (contentsMoving (int, int)),
+    connect (d->scrollView, SIGNAL (contentsMoved()),
              this, SLOT (slotScrollViewAboutToScroll ()));
     setCentralWidget (d->scrollView);
     d->scrollView->show ();
@@ -781,7 +781,7 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
                                        d->scrollView->viewport ());
         d->mainView->setObjectName ( QLatin1String("mainView" ));
 
-        d->scrollView->addChild (d->mainView);
+        d->scrollView->setView (d->mainView);
         d->viewManager->registerView (d->mainView);
         d->mainView->show ();
 
@@ -984,8 +984,8 @@ void kpMainWindow::dropEvent (QDropEvent *e)
                             << " scrollView->globalRect="
                             << kpWidgetMapper::toGlobal (d->scrollView,
                                     QRect (0, 0,
-                                            d->scrollView->visibleWidth (),
-                                            d->scrollView->visibleHeight ()))
+                                            d->scrollView->viewport()->width (),
+                                            d->scrollView->viewport()->height ()))
                             << endl;
                 }
             #endif
@@ -1003,8 +1003,8 @@ void kpMainWindow::dropEvent (QDropEvent *e)
                          d->scrollView &&
                          kpWidgetMapper::toGlobal (d->scrollView,
                              QRect (0, 0,
-                                    d->scrollView->visibleWidth (),
-                                    d->scrollView->visibleHeight ()))
+                                    d->scrollView->viewport()->width (),
+                                    d->scrollView->viewport()->height ()))
                              .contains (globalPos))
                 {
                     view = d->mainView;
@@ -1050,7 +1050,7 @@ void kpMainWindow::slotScrollViewAboutToScroll ()
     else
     {
         // We're getting a late signal from the scrollview (thanks to
-        // a timer inside the Q3ScrollView).  By now, setDocument() has
+        // a timer inside the ScrollView).  By now, setDocument() has
         // already killed the document(), tool() and viewManager().
     }
 #endif

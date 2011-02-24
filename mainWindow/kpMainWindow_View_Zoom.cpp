@@ -33,6 +33,7 @@
 #include <qdatetime.h>
 #include <qpainter.h>
 #include <qtimer.h>
+#include <QScrollBar>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -42,7 +43,6 @@
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
 
-#include <kpAbstractScrollAreaUtils.h>
 #include <kpDefs.h>
 #include <kpDocument.h>
 #include <kpThumbnail.h>
@@ -54,7 +54,6 @@
 #include <kpWidgetMapper.h>
 #include <kpZoomedView.h>
 #include <kpZoomedThumbnailView.h>
-
 
 static int ZoomLevelFromString (const QString &stringIn)
 {
@@ -85,11 +84,14 @@ static int ZoomLevelFromString (const QString &stringIn)
         return zoomLevel;
 }
 
+//---------------------------------------------------------------------
+
 static QString ZoomLevelToString (int zoomLevel)
 {
     return i18n ("%1%", zoomLevel);
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::setupViewMenuZoomActions ()
@@ -121,19 +123,18 @@ void kpMainWindow::setupViewMenuZoomActions ()
     d->zoomList.append (1000); d->zoomList.append (1200); d->zoomList.append (1600);
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpMainWindow::enableViewMenuZoomDocumentActions (bool enable)
 {
     d->actionActualSize->setEnabled (enable);
-    /*d->actionFitToPage->setEnabled (enable);
+    d->actionFitToPage->setEnabled (enable);
     d->actionFitToWidth->setEnabled (enable);
-    d->actionFitToHeight->setEnabled (enable);*/
+    d->actionFitToHeight->setEnabled (enable);
 
     d->actionZoomIn->setEnabled (enable);
     d->actionZoomOut->setEnabled (enable);
-
-    // COMPAT: This seems to stay enabled no matter what.
-    //         Looks like a KSelectAction bug.
     d->actionZoom->setEnabled (enable);
 
 
@@ -147,6 +148,7 @@ void kpMainWindow::enableViewMenuZoomDocumentActions (bool enable)
     zoomTo (100);
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::sendZoomListToActionZoom ()
@@ -170,6 +172,7 @@ void kpMainWindow::sendZoomListToActionZoom ()
         d->actionZoom->setEnabled (e);
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::zoomToPre (int zoomLevel)
@@ -237,20 +240,6 @@ void kpMainWindow::zoomToPre (int zoomLevel)
     }
 
 
-    if (d->mainView)
-    {
-        // Ordinary flicker is better than the whole view moving (try
-        // zooming in from 100%, without this code).
-        //
-        // TODO: Use a more flexible scrollarea implementation to
-        //       eliminate this flicker.
-        //
-        // Later: The view takes a lot longer to resize in Qt4 so this
-        //        blanking is seen for too long and is ultra-annoying.
-        //        So I've disabled the blanking.
-        //d->mainView->setPaintBlank ();
-    }
-
     // TODO: Is this actually needed?
     if (d->viewManager)
         d->viewManager->setQueueUpdates ();
@@ -260,6 +249,8 @@ void kpMainWindow::zoomToPre (int zoomLevel)
         d->scrollView->setUpdatesEnabled (false);
     }
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::zoomToPost ()
@@ -296,12 +287,6 @@ void kpMainWindow::zoomToPost ()
     if (d->viewManager && d->viewManager->queueUpdates ()/*just in case*/)
         d->viewManager->restoreQueueUpdates ();
 
-    if (d->mainView)
-    {
-        //d->mainView->restorePaintBlank ();
-    }
-
-
     setStatusBarZoom (d->mainView ? d->mainView->zoomLevelX () : 0);
 
 #if DEBUG_KP_MAIN_WINDOW && 1
@@ -309,6 +294,7 @@ void kpMainWindow::zoomToPost ()
 #endif
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
@@ -319,17 +305,15 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
     if (d->scrollView && d->mainView)
     {
     #if DEBUG_KP_MAIN_WINDOW && 1
-        kDebug () << "\tscrollView   contentsX=" << d->scrollView->contentsX ()
-                   << " contentsY=" << d->scrollView->contentsY ()
-                   << " contentsWidth=" << d->scrollView->contentsWidth ()
-                   << " contentsHeight=" << d->scrollView->contentsHeight ()
-                   << " visibleWidth=" << d->scrollView->visibleWidth ()
-                   << " visibleHeight=" << d->scrollView->visibleHeight ()
+        kDebug () << "\tscrollView   contentsX=" << d->scrollView->horizontalScrollBar()->value ()
+                   << " contentsY=" << d->scrollView->verticalScrollBar()->value ()
+                   << " contentsWidth=" << d->scrollView->widget()->width ()
+                   << " contentsHeight=" << d->scrollView->widget()->height ()
+                   << " visibleWidth=" << d->scrollView->viewport()->width ()
+                   << " visibleHeight=" << d->scrollView->viewport()->height ()
                    << " oldZoomX=" << d->mainView->zoomLevelX ()
                    << " oldZoomY=" << d->mainView->zoomLevelY ()
                    << " newZoom=" << zoomLevel
-                   << " mainViewX=" << d->scrollView->childX (d->mainView)
-                   << " mainViewY=" << d->scrollView->childY (d->mainView)
                   << endl;
     #endif
 
@@ -340,7 +324,7 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
 
         // TODO: Use visibleRect() for greater accuracy?
         //       Or use kpAbstractScrollAreaUtils::EstimateUsableArea()
-        //       instead of Q3ScrollView::visible{Width,Height}(), as
+        //       instead of ScrollView::visible{Width,Height}(), as
         //       per zoomToRect()?
 
         int viewX, viewY;
@@ -368,12 +352,12 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         }
         else
         {
-            viewX = d->scrollView->contentsX () +
+            viewX = d->scrollView->horizontalScrollBar()->value () +
                         qMin (d->mainView->width (),
-                              d->scrollView->visibleWidth ()) / 2;
-            viewY = d->scrollView->contentsY () +
+                              d->scrollView->viewport()->width ()) / 2;
+            viewY = d->scrollView->verticalScrollBar()->value () +
                         qMin (d->mainView->height (),
-                              d->scrollView->visibleHeight ()) / 2;
+                              d->scrollView->viewport()->height ()) / 2;
         }
 
 
@@ -384,15 +368,15 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         d->mainView->setZoomLevel (zoomLevel, zoomLevel);
 
     #if DEBUG_KP_MAIN_WINDOW && 1
-        kDebug () << "\tvisibleWidth=" << d->scrollView->visibleWidth ()
-                    << " visibleHeight=" << d->scrollView->visibleHeight ()
+        kDebug () << "\tvisibleWidth=" << d->scrollView->viewport()->width ()
+                    << " visibleHeight=" << d->scrollView->viewport()->height ()
                     << endl;
         kDebug () << "\tnewCenterX=" << newCenterX
                     << " newCenterY=" << newCenterY << endl;
     #endif
 
-        d->scrollView->center (newCenterX, newCenterY);
-
+        d->scrollView->horizontalScrollBar()->setValue(newCenterX - (d->scrollView->viewport()->width() / 2));
+        d->scrollView->verticalScrollBar()->setValue(newCenterY - (d->scrollView->viewport()->height() / 2));
 
         if (centerUnderCursor &&
             targetDocAvail &&
@@ -462,8 +446,8 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
         }
 
     #if DEBUG_KP_MAIN_WINDOW && 1
-        kDebug () << "\t\tcheck (contentsX=" << d->scrollView->contentsX ()
-                    << ",contentsY=" << d->scrollView->contentsY ()
+        kDebug () << "\t\tcheck (contentsX=" << d->scrollView->horizontalScrollBar()->value ()
+                    << ",contentsY=" << d->scrollView->verticalScrollBar()->value ()
                     << ")" << endl;
     #endif
     }
@@ -471,6 +455,8 @@ void kpMainWindow::zoomTo (int zoomLevel, bool centerUnderCursor)
 
     zoomToPost ();
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::zoomToRect (const QRect &normalizedDocRect,
@@ -489,10 +475,13 @@ void kpMainWindow::zoomToRect (const QRect &normalizedDocRect,
     Q_ASSERT (careAboutWidth || careAboutHeight);
 
     // The size of the scroll view minus the current or future scrollbars.
-    const QSize usableScrollArea =
-        kpAbstractScrollAreaUtils::EstimateUsableArea (d->scrollView);
+    const QSize usableScrollArea
+      (d->scrollView->maximumViewportSize().width() - d->scrollView->verticalScrollBar()->sizeHint().width(),
+       d->scrollView->maximumViewportSize().height() - d->scrollView->horizontalScrollBar()->sizeHint().height());
+
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "size=" << d->scrollView->size ()
+    kDebug () << "size=" << d->scrollView->maximumViewportSize()
+              << "scrollbar w=" << d->scrollView->verticalScrollBar()->sizeHint().width()
               << "usableSize=" << usableScrollArea;
 #endif
     // Handle rounding error, mis-estimating the scroll view size and
@@ -501,7 +490,7 @@ void kpMainWindow::zoomToRect (const QRect &normalizedDocRect,
     // and friends.
     // least 2.
     // TODO: I might have fixed this but check later.
-    const int slack = 5;
+    const int slack = 0;
 
     // The grip and slack are in view coordinates but are never zoomed.
     const int viewWidth =
@@ -545,11 +534,13 @@ void kpMainWindow::zoomToRect (const QRect &normalizedDocRect,
         const QPoint viewPoint =
             d->mainView->transformDocToView (normalizedDocRect.topLeft ());
 
-        d->scrollView->setContentsPos (viewPoint.x (), viewPoint.y ());
+        d->scrollView->horizontalScrollBar()->setValue(viewPoint.x());
+        d->scrollView->verticalScrollBar()->setValue(viewPoint.y());
     }
     zoomToPost ();
 }
 
+//---------------------------------------------------------------------
 
 // public slot
 void kpMainWindow::slotActualSize ()
@@ -557,34 +548,48 @@ void kpMainWindow::slotActualSize ()
     zoomTo (100);
 }
 
+//---------------------------------------------------------------------
+
 // public slot
 void kpMainWindow::slotFitToPage ()
 {
+  if ( d->document )
+  {
     zoomToRect (
         d->document->rect (),
         true/*account for grips*/,
         true/*care about width*/, true/*care about height*/);
+  }
 }
+
+//---------------------------------------------------------------------
 
 // public slot
 void kpMainWindow::slotFitToWidth ()
 {
+  if ( d->document )
+  {
     const QRect docRect (
         0/*x*/,
-        (int) d->mainView->transformViewToDocY (d->scrollView->contentsY ())/*maintain y*/,
+        (int) d->mainView->transformViewToDocY (d->scrollView->verticalScrollBar()->value ())/*maintain y*/,
         d->document->width (),
         1/*don't care about height*/);
     zoomToRect (
         docRect,
         true/*account for grips*/,
         true/*care about width*/, false/*don't care about height*/);
+  }
 }
+
+//---------------------------------------------------------------------
 
 // public slot
 void kpMainWindow::slotFitToHeight ()
 {
+  if ( d->document )
+  {
     const QRect docRect (
-        (int) d->mainView->transformViewToDocX (d->scrollView->contentsX ())/*maintain x*/,
+        (int) d->mainView->transformViewToDocX (d->scrollView->horizontalScrollBar()->value ())/*maintain x*/,
         0/*y*/,
         1/*don't care about width*/,
         d->document->height ());
@@ -592,8 +597,10 @@ void kpMainWindow::slotFitToHeight ()
         docRect,
         true/*account for grips*/,
         false/*don't care about width*/, true/*care about height*/);
+  }
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpMainWindow::zoomIn (bool centerUnderCursor)
@@ -618,6 +625,8 @@ void kpMainWindow::zoomIn (bool centerUnderCursor)
     zoomAccordingToZoomAction (centerUnderCursor);
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpMainWindow::zoomOut (bool centerUnderCursor)
 {
@@ -641,6 +650,7 @@ void kpMainWindow::zoomOut (bool centerUnderCursor)
     zoomAccordingToZoomAction (centerUnderCursor);
 }
 
+//---------------------------------------------------------------------
 
 // public slot
 void kpMainWindow::slotZoomIn ()
@@ -652,6 +662,8 @@ void kpMainWindow::slotZoomIn ()
     zoomIn (false/*don't center under cursor*/);
 }
 
+//---------------------------------------------------------------------
+
 // public slot
 void kpMainWindow::slotZoomOut ()
 {
@@ -662,6 +674,7 @@ void kpMainWindow::slotZoomOut ()
     zoomOut (false/*don't center under cursor*/);
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpMainWindow::zoomAccordingToZoomAction (bool centerUnderCursor)
@@ -679,6 +692,8 @@ void kpMainWindow::zoomAccordingToZoomAction (bool centerUnderCursor)
                                    centerUnderCursor);
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotZoom ()
 {
@@ -689,3 +704,5 @@ void kpMainWindow::slotZoom ()
 
     zoomAccordingToZoomAction (false/*don't center under cursor*/);
 }
+
+//---------------------------------------------------------------------

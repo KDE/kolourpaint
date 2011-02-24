@@ -90,7 +90,7 @@ public slots:
      *
      * Call this if the size of the document changes.
      * Already connected to buddyViewScrollableContainer()'s
-     * contentsMovingSoon(int,int) signal.
+     * contentsMoved() signal.
      * Already called by @ref kpThumbnailView resizeEvent().
      *
      * Implements @ref kpView.

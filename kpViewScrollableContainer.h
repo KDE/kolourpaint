@@ -32,7 +32,7 @@
 
 #include <qlabel.h>
 #include <qpoint.h>
-#include <q3scrollview.h>
+#include <QScrollArea>
 #include <qsize.h>
 
 
@@ -47,7 +47,6 @@ class QResizeEvent;
 class QTimer;
 
 class kpView;
-class kpMainWindow;
 class kpOverlay;
 
 
@@ -118,27 +117,17 @@ protected:
 
 //---------------------------------------------------------------------
 
-class kpViewScrollableContainer : public Q3ScrollView
+class kpViewScrollableContainer : public QScrollArea
 {
 Q_OBJECT
 
 public:
-    kpViewScrollableContainer (kpMainWindow *parent);
-
-    // Same as contentsX() and contentsY() except that after
-    // contentsMovingSoon() is emitted and before the scrollview actually
-    // scrolls, they return the would be values of contentsX() and
-    // contentsY() after scrolling.
-    int contentsXSoon ();
-    int contentsYSoon ();
+    kpViewScrollableContainer(QWidget *parent);
 
     QSize newDocSize () const;
     bool haveMovedFromOriginalDocSize () const;
     QString statusMessage () const;
     void clearStatusMessage ();
-
-    // Calls setView(<widget>) after adding <widget> if it's a kpView.
-    virtual void addChild (QWidget *widget, int x = 0, int y = 0);
 
     kpView *view () const;
     void setView (kpView *view);
@@ -146,9 +135,7 @@ public:
     void drawResizeLines();  // public only for kpOverlay
 
 signals:
-    // connect to this instead of contentsMoving(int,int) so that
-    // contentsXSoon() and contentsYSoon() work
-    void contentsMovingSoon (int contentsX, int contentsY);
+    void contentsMoved();
 
     void beganDocResize ();
     void continuedDocResize (const QSize &size);
@@ -165,13 +152,10 @@ public slots:
 
     void updateGrips ();
 
-    // TODO: Why the QPoint's?
-    //       Why the need for view's zoomLevel?  We have the view() anyway.
-    bool beginDragScroll (const QPoint &, const QPoint &,
-                          int zoomLevel,
+    // TODO: Why the need for view's zoomLevel?  We have the view() anyway.
+    bool beginDragScroll (int zoomLevel,
                           bool *didSomething);
-    bool beginDragScroll (const QPoint &, const QPoint &,
-                          int zoomLevel);
+    bool beginDragScroll (int zoomLevel);
     bool endDragScroll ();
 
 private:
@@ -199,8 +183,8 @@ private:
 
     QRect noDragScrollRect () const;
 
-    virtual void contentsWheelEvent (QWheelEvent *e);
-    virtual void resizeEvent (QResizeEvent *e);
+    virtual void wheelEvent(QWheelEvent *e);
+    virtual void resizeEvent(QResizeEvent *e);
 
 private slots:
     void slotGripBeganDraw ();
@@ -210,15 +194,12 @@ private slots:
 
     void slotGripStatusMessageChanged (const QString &string);
 
-    void slotContentsMoving (int x, int y);
     void slotContentsMoved ();
     void slotViewDestroyed ();
     bool slotDragScroll (bool *didSomething);
     bool slotDragScroll ();
 
 private:
-    kpMainWindow *m_mainWindow;
-    int m_contentsXSoon, m_contentsYSoon;
     kpView *m_view;
     kpOverlay *m_overlay;
     kpGrip *m_bottomGrip, *m_rightGrip, *m_bottomRightGrip;

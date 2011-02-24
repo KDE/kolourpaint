@@ -38,6 +38,9 @@
 #include <kpViewManager.h>
 #include <kpViewScrollableContainer.h>
 
+#include <QScrollBar>
+
+//---------------------------------------------------------------------
 
 struct kpUnzoomedThumbnailViewPrivate
 {
@@ -61,7 +64,7 @@ kpUnzoomedThumbnailView::kpUnzoomedThumbnailView (
     if (buddyViewScrollableContainer ())
     {
         connect (buddyViewScrollableContainer (),
-                SIGNAL (contentsMovingSoon (int, int)),
+                SIGNAL (contentsMoved()),
                 this,
                 SLOT (adjustToEnvironment ()));
     }
@@ -70,12 +73,14 @@ kpUnzoomedThumbnailView::kpUnzoomedThumbnailView (
     adjustToEnvironment ();
 }
 
+//---------------------------------------------------------------------
 
 kpUnzoomedThumbnailView::~kpUnzoomedThumbnailView ()
 {
     delete d;
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpThumbnailView]
 QString kpUnzoomedThumbnailView::caption () const
@@ -83,6 +88,7 @@ QString kpUnzoomedThumbnailView::caption () const
     return i18n ("Unzoomed Mode - Thumbnail");
 }
 
+//---------------------------------------------------------------------
 
 // public slot virtual [base kpView]
 void kpUnzoomedThumbnailView::adjustToEnvironment ()
@@ -91,9 +97,9 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
         return;
 
     const int scrollViewContentsX =
-        buddyViewScrollableContainer ()->contentsXSoon ();
+        buddyViewScrollableContainer()->horizontalScrollBar()->value();
     const int scrollViewContentsY =
-        buddyViewScrollableContainer ()->contentsYSoon ();
+        buddyViewScrollableContainer ()->verticalScrollBar()->value();
 
 #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
     kDebug () << "kpUnzoomedThumbnailView(" << name ()
@@ -161,10 +167,10 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
         return;
 
     QRect docRect = buddyView ()->transformViewToDoc (
-        QRect (buddyViewScrollableContainer ()->contentsXSoon (),
-               buddyViewScrollableContainer ()->contentsYSoon (),
-               qMin (buddyView ()->width (), buddyViewScrollableContainer ()->visibleWidth ()),
-               qMin (buddyView ()->height (), buddyViewScrollableContainer ()->visibleHeight ())));
+        QRect (buddyViewScrollableContainer ()->horizontalScrollBar()->value(),
+               buddyViewScrollableContainer ()->verticalScrollBar()->value(),
+               qMin (buddyView ()->width (), buddyViewScrollableContainer ()->viewport()->width ()),
+               qMin (buddyView ()->height (), buddyViewScrollableContainer ()->viewport()->height ())));
 
     x = docRect.x () - (width () - docRect.width ()) / 2;
     kDebug () << "\tnew suggest x=" << x;

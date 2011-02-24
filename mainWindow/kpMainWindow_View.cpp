@@ -94,6 +94,8 @@ bool kpMainWindow::viewMenuDocumentActionsEnabled () const
     return d->viewMenuDocumentActionsEnabled;
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpMainWindow::enableViewMenuDocumentActions (bool enable)
 {

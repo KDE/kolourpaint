@@ -33,6 +33,7 @@
 
 #include <QContextMenuEvent>
 #include <QMouseEvent>
+#include <QScrollBar>
 
 #include <KColorDialog>
 #include <KDebug>
@@ -41,9 +42,8 @@
 #include <kpColor.h>
 #include <kpColorCollection.h>
 #include <kpDefaultColorCollection.h>
-#include <kpAbstractScrollAreaUtils.h>
 
-
+//---------------------------------------------------------------------
 //
 // Table Geometry
 //
@@ -165,7 +165,7 @@ kpColorCells::kpColorCells (QWidget *parent,
         // We do not dynamically reserve room based on the actual number of rows
         // of cells, as that would make our containing widgets too big.
         setMinimumSize (::TableDefaultWidth + frameWidth () * 2 +
-                            kpAbstractScrollAreaUtils::EstimateVerticalScrollBarWidth (this),
+                         verticalScrollBar()->sizeHint().width(),
                         ::TableDefaultHeight + frameWidth () * 2);
     }
     else

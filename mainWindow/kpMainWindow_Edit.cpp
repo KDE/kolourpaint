@@ -37,6 +37,7 @@
 #include <qlist.h>
 #include <qmenu.h>
 #include <QDesktopWidget>
+#include <QScrollBar>
 
 #include <kaction.h>
 #include <kdebug.h>
@@ -299,8 +300,8 @@ QRect kpMainWindow::calcUsefulPasteRect (int imageWidth, int imageHeight)
 
     if (d->mainView && d->scrollView)
     {
-        const QPoint viewTopLeft (d->scrollView->contentsX (),
-                                  d->scrollView->contentsY ());
+        const QPoint viewTopLeft (d->scrollView->horizontalScrollBar()->value (),
+                                  d->scrollView->verticalScrollBar()->value ());
 
         const QPoint docTopLeft = d->mainView->transformViewToDoc (viewTopLeft);
 

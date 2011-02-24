@@ -36,6 +36,7 @@
 #include <QPainter>
 #include <QPaintEvent>
 #include <QTime>
+#include <QScrollBar>
 
 #include <KDebug>
 
@@ -47,48 +48,7 @@
 #include <kpViewManager.h>
 #include <kpViewScrollableContainer.h>
 
-
-// public
-bool kpView::isPaintBlank () const
-{
-    return (d->paintBlankCounter > 0);
-}
-
 //---------------------------------------------------------------------
-
-// public
-void kpView::setPaintBlank ()
-{
-    d->paintBlankCounter++;
-
-    // Go from blank painting to normal painting.
-    if (d->paintBlankCounter == 1)
-    {
-        // We want to go blank _now_, as we are used to hide flicker in
-        // whatever operation that follows.
-        repaint ();
-    }
-}
-
-//---------------------------------------------------------------------
-
-// public
-void kpView::restorePaintBlank ()
-{
-    d->paintBlankCounter--;
-    Q_ASSERT (d->paintBlankCounter >= 0);
-
-    // Go from normal painting to blank painting.
-    if (d->paintBlankCounter == 0)
-    {
-        // Unlike setPaintBlank(), we can wait a while for the normal
-        // contents to re-appear, without any ill effects.
-        update ();
-    }
-}
-
-//---------------------------------------------------------------------
-
 
 // protected
 QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
@@ -217,19 +177,16 @@ void kpView::paintEventDrawCheckerBoard (QPainter *painter, const QRect &viewRec
     {
     #if DEBUG_KP_VIEW_RENDERER && 1
         kDebug () << "\tscrollableContainer: contents[XY]="
-                   << QPoint (scrollableContainer ()->contentsX (),
-                              scrollableContainer ()->contentsY ())
-                   << " contents[XY]Soon="
-                   << QPoint (scrollableContainer ()->contentsXSoon (),
-                              scrollableContainer ()->contentsYSoon ())
+                   << QPoint (scrollableContainer ()->horizontalScrollBar()->value (),
+                              scrollableContainer ()->verticalScrollBar()->value ())
                    << endl;
     #endif
         // Make checkerboard appear static relative to the scroll view.
         // This makes it more obvious that any visible bits of the
         // checkboard represent transparent pixels and not gray and white
         // squares.
-        patternOrigin = QPoint (scrollableContainer ()->contentsXSoon (),
-                                scrollableContainer ()->contentsYSoon ());
+        patternOrigin = QPoint (scrollableContainer ()->horizontalScrollBar()->value(),
+                                scrollableContainer ()->verticalScrollBar()->value());
     #if DEBUG_KP_VIEW_RENDERER && 1
         kDebug () << "\t\tpatternOrigin=" << patternOrigin;
     #endif
@@ -671,11 +628,6 @@ void kpView::paintEvent (QPaintEvent *e)
         addToQueuedArea (e->region ());
         return;
     }
-
-
-    if (isPaintBlank ())
-        return;
-
 
     kpDocument *doc = document ();
     if (!doc)

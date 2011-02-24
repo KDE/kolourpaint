@@ -167,7 +167,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/environments/document/kpDocumentEnvironment.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/environments/kpEnvironmentBase.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/environments/tools/kpToolEnvironment.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/environments/tools/selection/kpToolSelectionEnvironment.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/generic/kpAbstractScrollAreaUtils.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/kpSetOverrideCursorSaver.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/kpWidgetMapper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/widgets/kpResizeSignallingLabel.cpp
@@ -394,7 +393,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/environments/document/kpDocumentEnvironment.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/environments/kpEnvironmentBase.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/environments/tools/kpToolEnvironment.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/environments/tools/selection/kpToolSelectionEnvironment.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/generic/kpAbstractScrollAreaUtils.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/kpSetOverrideCursorSaver.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/kpWidgetMapper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/widgets/kpResizeSignallingLabel.cpp
@@ -577,7 +575,7 @@ kde4_add_app_icon(kolourpaint_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/pics/app/hi*-app
 kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
 
 target_link_libraries(kolourpaint ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS}
-${QT_QT3SUPPORT_LIBRARY} ${QIMAGEBLITZ_LIBRARIES} kolourpaint_lgpl)
+${QIMAGEBLITZ_LIBRARIES} kolourpaint_lgpl)
 
 install(TARGETS kolourpaint ${INSTALL_TARGETS_DEFAULT_ARGS})
 
