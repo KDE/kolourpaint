@@ -260,8 +260,7 @@ void kpColorCellsBase::setColor( int column, const QColor &colorIn )
     }
     else
     {
-        if (tableItem)
-            delete tableItem;
+        delete tableItem;
     }
 
     emit colorChanged (column, color);
