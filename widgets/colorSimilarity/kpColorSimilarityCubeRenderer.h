@@ -30,8 +30,7 @@
 #define kpColorSimilarityCubeRenderer_H
 
 
-class QImage;
-class QWidget;
+class QPaintDevice;
 
 
 class kpColorSimilarityCubeRenderer
@@ -44,13 +43,8 @@ public:
     //  .
     //  .
     //  255 = full highlight
-    static void WidgetPaint (QWidget *w,
-        int x, int y, int size,
-        double colorSimilarity,
-        int highlight = 0);
 
-
-    static void Paint (QImage *pm,
+    static void Paint(QPaintDevice *target,
         int x, int y, int size,
         double colorSimilarity,
         int highlight = 0);

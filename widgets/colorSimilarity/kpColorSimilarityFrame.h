@@ -30,22 +30,15 @@
 #define kpColorSimilarityFrame_H
 
 
-#include <QFrame>
+#include <QWidget>
 
 #include <kpColorSimilarityHolder.h>
 
 
-class kpColorSimilarityFrame : public QFrame, public kpColorSimilarityHolder
+class kpColorSimilarityFrame : public QWidget, public kpColorSimilarityHolder
 {
 public:
-    enum Look
-    {
-        Plain = 0,
-        Depressed = 1
-    };
-
-    kpColorSimilarityFrame (int look, QWidget *parent);
-    virtual ~kpColorSimilarityFrame ();
+    kpColorSimilarityFrame(QWidget *parent);
 
     virtual void setColorSimilarity (double similarity);
 

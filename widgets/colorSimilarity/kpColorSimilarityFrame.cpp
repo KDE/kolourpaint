@@ -31,48 +31,29 @@
 
 #include <kpColorSimilarityFrame.h>
 
-#include <math.h>
-
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qpolygon.h>
-
 #include <kdebug.h>
-#include <klocale.h>
 
-#include <kpColor.h>
 #include <kpColorSimilarityCubeRenderer.h>
-#include <kpDefs.h>
 
+//---------------------------------------------------------------------
 
-kpColorSimilarityFrame::kpColorSimilarityFrame (int look,
-        QWidget *parent)
-    : QFrame (parent),
-      kpColorSimilarityHolder ()
+kpColorSimilarityFrame::kpColorSimilarityFrame(QWidget *parent)
+    : QWidget(parent)
 {
-    if (look & Depressed)
-        setFrameStyle (QFrame::Panel | QFrame::Sunken);
-
     setWhatsThis (WhatsThis ());
 }
 
-kpColorSimilarityFrame::~kpColorSimilarityFrame ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // public virtual [base kpColorSimilarityHolder]
 void kpColorSimilarityFrame::setColorSimilarity (double similarity)
 {
-#if DEBUG_KP_COLOR_SIMILARITY_CUBE
-    kDebug () << "kpColorSimilarityFrame::setColorSimilarity(" << similarity << ")";
-#endif
-
     kpColorSimilarityHolder::setColorSimilarity (similarity);
 
     repaint ();
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
 QSize kpColorSimilarityFrame::sizeHint () const
@@ -80,26 +61,18 @@ QSize kpColorSimilarityFrame::sizeHint () const
     return QSize (52, 52);
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
 void kpColorSimilarityFrame::paintEvent (QPaintEvent *e)
 {
-#if DEBUG_KP_COLOR_SIMILARITY_CUBE
-    kDebug () << "kpColorSimilarityFrame::paintEvent()"
-              << " similarity=" << colorSimilarity () << endl;
-#endif
+    int cubeRectSize = qMin(width() * 6 / 8, height() * 6 / 8);
+    int x = (width() - cubeRectSize) / 2;
+    int y = (height() - cubeRectSize) / 2;
 
-    // Draw frame first.
-    QFrame::paintEvent (e);
-
-
-    int cubeRectSize = qMin (contentsRect ().width () * 6 / 8,
-                             contentsRect ().height () * 6 / 8);
-    int x = contentsRect ().x () + (contentsRect ().width () - cubeRectSize) / 2,
-        y = contentsRect ().y () + (contentsRect ().height () - cubeRectSize) / 2;
-
-
-    kpColorSimilarityCubeRenderer::WidgetPaint (this,
+    kpColorSimilarityCubeRenderer::Paint(this,
         x, y, cubeRectSize,
-        colorSimilarity ());
+        colorSimilarity());
 }
+
+//---------------------------------------------------------------------

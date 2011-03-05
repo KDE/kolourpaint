@@ -33,19 +33,15 @@
 
 #include <math.h>
 
-#include <qpainter.h>
-#include <QImage>
-#include <qpolygon.h>
-#include <QWidget>
+#include <QPainter>
+#include <QPolygonF>
 
 #include <kdebug.h>
-#include <klocale.h>
 
-#include <kpColor.h>
 #include <kpColorSimilarityHolder.h>
 #include <kpDefs.h>
-#include <kpPixmapFX.h>
 
+//---------------------------------------------------------------------
 
 static QColor Color (int redOrGreenOrBlue,
         int baseBrightness,
@@ -64,86 +60,51 @@ static QColor Color (int redOrGreenOrBlue,
 
     switch (redOrGreenOrBlue)
     {
-    default:
-    case 0: return QColor (brightness, highlight, highlight);
-    case 1: return QColor (highlight, brightness, highlight);
-    case 2: return QColor (highlight, highlight, brightness);
+      default:
+      case 0: return QColor (brightness, highlight, highlight);
+      case 1: return QColor (highlight, brightness, highlight);
+      case 2: return QColor (highlight, highlight, brightness);
     }
 }
 
 //---------------------------------------------------------------------
 
-static QPoint PointBetween (const QPoint &p, const QPoint &q)
+static QPointF PointBetween(const QPointF &p, const QPointF &q)
 {
-    return QPoint ((p.x () + q.x ()) / 2, (p.y () + q.y ()) / 2);
+    return QPointF((p.x() + q.x()) / 2.0, (p.y() + q.y()) / 2.0);
 }
 
 //---------------------------------------------------------------------
 
-static void DrawQuadrant (QWidget *w, QImage *pm,
+static void DrawQuadrant(QPaintDevice *target,
         const QColor &col,
-        const QPoint &p1, const QPoint &p2, const QPoint &p3,
-        const QPoint pointNotOnOutline)
+        const QPointF &p1, const QPointF &p2, const QPointF &p3,
+        const QPointF &pointNotOnOutline)
 {
-    // XOR - either <w> or <pm> is set but not both.
-    Q_ASSERT (!!w != !!pm);
-
-
-    QPolygon points (4);
+    QPolygonF points (4);
     points [0] = p1;
     points [1] = p2;
     points [2] = p3;
     points [3] = pointNotOnOutline;
 
+    QPainter p(target);
+    p.setRenderHints(QPainter::Antialiasing, true);
 
-    if (w)
-    {
-        QPainter p (w);
+    // Polygon fill.
+    p.setPen(col);
+    p.setBrush(col);
+    p.drawPolygon(points);
 
-
-        // Polygon fill.
-        p.setPen (QPen (col, 0/*neat line of width 1*/));
-        p.setBrush (col);
-        p.drawPolygon (points);
-
-
-        // Drawing black outline.
-        // TODO: what is "pointNotOnOutline" ???
-        points.resize (3);
-
-        p.setPen (QPen (Qt::black, 0/*neat line of width 1*/));
-        p.setBrush (Qt::NoBrush);
-        p.drawPolyline (points);
-    }
-    else if (pm)
-    {
-        // kpPainter converts a pen width of 1 to Qt's neat pen width of 0
-        // internally.
-
-        // Polygon fill.
-        kpPixmapFX::drawPolygon (pm,
-            points,
-            kpColor (col.rgba()), 1/*pen width*/,
-            kpColor (col.rgba())/*fill*/);
-
-
-        // Drawing black outline.
-        // TODO: what is "pointNotOnOutline" ???
-        points.resize (3);
-
-        kpPixmapFX::drawPolyline (pm,
-            points,
-            kpColor::Black, 1/*pen width*/);
-    }
-    else
-        Q_ASSERT (!"DrawQuadrant(): unexpected call");
+    // do not draw a black border. It looks ugly
 }
 
-static void DrawFace (QWidget *w, QImage *pm,
+//---------------------------------------------------------------------
+
+static void DrawFace (QPaintDevice *target,
         double colorSimilarity,
         int redOrGreenOrBlue,
-        const QPoint &tl, const QPoint &tr,
-        const QPoint &bl, const QPoint &br,
+        const QPointF &tl, const QPointF &tr,
+        const QPointF &bl, const QPointF &br,
         int highlight)
 {
 #if DEBUG_KP_COLOR_SIMILARITY_CUBE
@@ -164,12 +125,12 @@ static void DrawFace (QWidget *w, QImage *pm,
     //  |      |       |
     //  bl --- bm --- br
 
-    const QPoint tm (::PointBetween (tl, tr));
-    const QPoint bm (::PointBetween (bl, br));
+    const QPointF tm (::PointBetween (tl, tr));
+    const QPointF bm (::PointBetween (bl, br));
 
-    const QPoint ml (::PointBetween (tl, bl));
-    const QPoint mr (::PointBetween (tr, br));
-    const QPoint mm (::PointBetween (ml, mr));
+    const QPointF ml (::PointBetween (tl, bl));
+    const QPointF mr (::PointBetween (tr, br));
+    const QPointF mm (::PointBetween (ml, mr));
 
 
     const int baseBrightness =
@@ -193,13 +154,16 @@ static void DrawFace (QWidget *w, QImage *pm,
 #endif
 
 
-    ::DrawQuadrant (w, pm, colors [0], tm, tl, ml, mm);
-    ::DrawQuadrant (w, pm, colors [1], tm, tr, mr, mm);
-    ::DrawQuadrant (w, pm, colors [1], ml, bl, bm, mm);
-    ::DrawQuadrant (w, pm, colors [0], bm, br, mr, mm);
+    ::DrawQuadrant(target, colors [0], tm, tl, ml, mm);
+    ::DrawQuadrant(target, colors [1], tm, tr, mr, mm);
+    ::DrawQuadrant(target, colors [1], ml, bl, bm, mm);
+    ::DrawQuadrant(target, colors [0], bm, br, mr, mm);
 }
 
-static void PaintInternal (QWidget *w, QImage *pm,
+//---------------------------------------------------------------------
+
+// public static
+void kpColorSimilarityCubeRenderer::Paint(QPaintDevice *target,
         int x, int y, int cubeRectSize,
         double colorSimilarity,
         int highlight)
@@ -224,35 +188,35 @@ static void PaintInternal (QWidget *w, QImage *pm,
     const double angle = KP_DEGREES_TO_RADIANS (45);
     // S + S sin A = cubeRectSize
     // (1 + sin A) x S = cubeRectSize
-    const double side = double (cubeRectSize) / (1 + sin (angle));
+    const double side = double(cubeRectSize) / (1.0 + sin(angle));
 
 
-    const QPoint pointP (x + (int) (side * cos (angle)),
+    const QPointF pointP(x + (side * cos (angle)),
                          y);
-    const QPoint pointQ (x + (int) (side * cos (angle) + side),
+    const QPointF pointQ(x + cubeRectSize - 1,
                          y);
-    const QPoint pointR (x,
-                         y + (int) (side * sin (angle)));
-    const QPoint pointS (x + (int) (side),
-                         y + (int) (side * sin (angle)));
-    const QPoint pointU (x,
-                         y + (int) (side * sin (angle) + side));
-    const QPoint pointT (x + (int) (side + side * cos (angle)),
-                         y + (int) (side));
-    const QPoint pointV (x + (int) (side),
-                         y + (int) (side * sin (angle) + side));
+    const QPointF pointR(x,
+                         y + (side * sin (angle)));
+    const QPointF pointS(x + (side),
+                         y + (side * sin (angle)));
+    const QPointF pointT(x + cubeRectSize - 1,
+                         y + (side));
+    const QPointF pointU(x,
+                         y + cubeRectSize - 1);
+    const QPointF pointV(x + (side),
+                         y + cubeRectSize - 1);
 
 
     // Top Face
-    ::DrawFace (w, pm,
+    ::DrawFace(target,
         colorSimilarity, 0/*red*/,
         pointP, pointQ,
         pointR, pointS,
         highlight);
 
 
-    // Bottom Face
-    ::DrawFace (w, pm,
+    // Front Face
+    ::DrawFace(target,
         colorSimilarity, 1/*green*/,
         pointR, pointS,
         pointU, pointV,
@@ -260,30 +224,11 @@ static void PaintInternal (QWidget *w, QImage *pm,
 
 
     // Right Face
-    ::DrawFace (w, pm,
+    ::DrawFace(target,
         colorSimilarity, 2/*blue*/,
         pointS, pointQ,
         pointV, pointT,
         highlight);
 }
 
-
-// public static
-void kpColorSimilarityCubeRenderer::WidgetPaint (QWidget *w,
-        int x, int y, int size,
-        double colorSimilarity,
-        int highlight)
-{
-    ::PaintInternal (w, 0/*no pixmap*/,
-        x, y, size, colorSimilarity, highlight);
-}
-
-// public static
-void kpColorSimilarityCubeRenderer::Paint (QImage *pm,
-        int x, int y, int size,
-        double colorSimilarity,
-        int highlight)
-{
-    ::PaintInternal (0/*no widget*/, pm,
-        x, y, size, colorSimilarity, highlight);
-}
+//---------------------------------------------------------------------

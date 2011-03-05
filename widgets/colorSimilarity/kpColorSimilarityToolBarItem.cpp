@@ -31,9 +31,8 @@
 
 #include <kpColorSimilarityToolBarItem.h>
 
-#include <QKeyEvent>
-#include <QMouseEvent>
 #include <QTimer>
+#include <QPixmap>
 
 #include <KConfigGroup>
 #include <KLocale>
@@ -42,8 +41,8 @@
 #include <kpColorSimilarityDialog.h>
 #include <kpColorSimilarityCubeRenderer.h>
 #include <kpDefs.h>
-#include <kpPixmapFX.h>
 
+//---------------------------------------------------------------------
 
 kpColorSimilarityToolBarItem::kpColorSimilarityToolBarItem (QWidget *parent)
     : QToolButton (parent),
@@ -55,10 +54,6 @@ kpColorSimilarityToolBarItem::kpColorSimilarityToolBarItem (QWidget *parent)
       m_flashHighlight (0),
       m_suppressingFlashCounter (0)
 {
-#if DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM
-    kDebug () << "kpColorSimilarityToolBarItem::<ctor>()";
-#endif
-
     setAutoRaise (true);
     setFixedSize (52, 52);
 
@@ -73,16 +68,9 @@ kpColorSimilarityToolBarItem::kpColorSimilarityToolBarItem (QWidget *parent)
     m_flashTimer->setInterval (100/*ms*/);
     connect (m_flashTimer, SIGNAL (timeout ()),
              SLOT (slotFlashTimerTimeout ()));
-
-#if DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM
-    kDebug () << "kpColorSimilarityToolBarItem::<ctor>() ends";
-#endif
 }
 
-kpColorSimilarityToolBarItem::~kpColorSimilarityToolBarItem ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // public
 int kpColorSimilarityToolBarItem::processedColorSimilarity () const
@@ -90,6 +78,7 @@ int kpColorSimilarityToolBarItem::processedColorSimilarity () const
     return m_processedColorSimilarity;
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpColorSimilarityToolBarItem::setColorSimilarityInternal (double similarity,
@@ -119,6 +108,8 @@ void kpColorSimilarityToolBarItem::setColorSimilarityInternal (double similarity
     emit colorSimilarityChanged (colorSimilarity (), m_processedColorSimilarity);
 }
 
+//---------------------------------------------------------------------
+
 // public virtual [base kopColorSimilarityHolder]
 void kpColorSimilarityToolBarItem::setColorSimilarity (double similarity)
 {
@@ -126,6 +117,7 @@ void kpColorSimilarityToolBarItem::setColorSimilarity (double similarity)
     setColorSimilarityInternal (similarity, true/*write config*/);
 }
 
+//---------------------------------------------------------------------
 
 // public
 double kpColorSimilarityToolBarItem::oldColorSimilarity () const
@@ -133,6 +125,7 @@ double kpColorSimilarityToolBarItem::oldColorSimilarity () const
     return m_oldColorSimilarity;
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpColorSimilarityToolBarItem::openDialog ()
@@ -145,6 +138,7 @@ void kpColorSimilarityToolBarItem::openDialog ()
     }
 }
 
+//---------------------------------------------------------------------
 
 // private slot:
 void kpColorSimilarityToolBarItem::slotFlashTimerTimeout ()
@@ -164,6 +158,8 @@ void kpColorSimilarityToolBarItem::slotFlashTimerTimeout ()
     if (newHigh == 0)
         m_flashTimer->stop ();
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpColorSimilarityToolBarItem::flash ()
@@ -190,6 +186,7 @@ void kpColorSimilarityToolBarItem::flash ()
     m_flashTimer->start ();
 }
 
+//---------------------------------------------------------------------
 
 // public
 bool kpColorSimilarityToolBarItem::isSuppressingFlash () const
@@ -197,11 +194,15 @@ bool kpColorSimilarityToolBarItem::isSuppressingFlash () const
     return (m_suppressingFlashCounter > 0);
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpColorSimilarityToolBarItem::suppressFlash ()
 {
     m_suppressingFlashCounter++;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpColorSimilarityToolBarItem::unsupressFlash ()
@@ -210,6 +211,7 @@ void kpColorSimilarityToolBarItem::unsupressFlash ()
     Q_ASSERT (m_suppressingFlashCounter >= 0);
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpColorSimilarityToolBarItem::updateToolTip ()
@@ -233,6 +235,8 @@ void kpColorSimilarityToolBarItem::updateToolTip ()
     }
 }
 
+//---------------------------------------------------------------------
+
 // private
 // LOOPT: This gets called twice on KolourPaint startup by:
 //
@@ -248,15 +252,15 @@ void kpColorSimilarityToolBarItem::updateIcon ()
               << " side=" << side << endl;
 #endif
 
-    QImage icon (side, side, QImage::Format_ARGB32_Premultiplied);
-    icon.fill(0);
+    QPixmap icon(side, side);
+    icon.fill(Qt::transparent);
 
     kpColorSimilarityCubeRenderer::Paint (&icon,
         0/*x*/, 0/*y*/, side,
         colorSimilarity (), m_flashHighlight);
 
-    setIconSize (QSize (side, side));
-    setIcon (QPixmap::fromImage(icon));
+    setIconSize(QSize(side, side));
+    setIcon(icon);
 }
 
 //---------------------------------------------------------------------
@@ -273,5 +277,6 @@ void kpColorSimilarityToolBarItem::resizeEvent (QResizeEvent *e)
     updateIcon ();
 }
 
+//---------------------------------------------------------------------
 
 #include <kpColorSimilarityToolBarItem.moc>

@@ -52,8 +52,7 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
 
     QGroupBox *cubeGroupBox = new QGroupBox (i18n ("Preview"), baseWidget);
 
-    m_colorSimilarityFrame = new kpColorSimilarityFrame (kpColorSimilarityFrame::Plain,
-                                                       cubeGroupBox);
+    m_colorSimilarityFrame = new kpColorSimilarityFrame(cubeGroupBox);
     m_colorSimilarityFrame->setMinimumSize (240, 180);
 
     QPushButton *updatePushButton = new QPushButton (i18n ("&Update"), cubeGroupBox);

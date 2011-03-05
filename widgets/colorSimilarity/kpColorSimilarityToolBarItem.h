@@ -48,10 +48,7 @@ Q_OBJECT
 public:
     // (reads the color similarity config setting)
     kpColorSimilarityToolBarItem (QWidget *parent);
-    virtual ~kpColorSimilarityToolBarItem ();
 
-
-public:
     int processedColorSimilarity () const;
 
 private:
