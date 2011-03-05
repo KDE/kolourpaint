@@ -31,7 +31,8 @@
 
 
 #include <qlist.h>
-#include <QDockWidget>
+
+#include <KToolBar>
 
 
 class QAbstractButton;
@@ -50,16 +51,7 @@ class kpToolWidgetLineWidth;
 class kpToolWidgetOpaqueOrTransparent;
 class kpToolWidgetSpraycanSize;
 
-
-// COMPAT: Horizontal orientation and undocking were broken by the Qt4 port
-//         so kpMainWindow::init() keeps this tool bar in a constant position for
-//         the time being.  To help make this workaround possible, we use QDockWidget,
-//         instead of KToolBar, to prevent XMLGUI from managing the tool
-//         bar position.  This also allows us to use QMainWindow::setCorner(),
-//         so we should probably keep it as a QDockWidget in the long-term
-//         and once we fix orientation and undocking, we should put XMLGUI
-//         support back in, somehow (create a "KDockWidget" class?).
-class kpToolToolBar : public QDockWidget
+class kpToolToolBar : public KToolBar
 {
 Q_OBJECT
 
@@ -67,9 +59,6 @@ public:
     kpToolToolBar (const QString &label, int colsOrRows, QWidget *parent);
     virtual ~kpToolToolBar ();
 
-private:
-    int defaultIconSize ();
-public:
     void registerTool (kpTool *tool);
     void unregisterTool (kpTool *tool);
     void unregisterAllTools ();
@@ -89,8 +78,6 @@ public:
     kpToolWidgetOpaqueOrTransparent *toolWidgetOpaqueOrTransparent () const { return m_toolWidgetOpaqueOrTransparent; }
     kpToolWidgetSpraycanSize *toolWidgetSpraycanSize () const { return m_toolWidgetSpraycanSize; }
 
-public:
-    int numShownToolWidgets () const;
     kpToolWidgetBase *shownToolWidget (int which) const;
 
 signals:
@@ -103,11 +90,12 @@ private slots:
     void slotToolActionActivated ();
     void slotToolActionToolTipChanged ();
 
-private:
-    void adjustToOrientation (Qt::Orientation o);
+    void adjustToOrientation(Qt::Orientation o);
+    void slotIconSizeChanged(const QSize &);
 
 private:
     void addButton (QAbstractButton *button, Qt::Orientation o, int num);
+    void adjustSizeConstraint();
 
     int m_vertCols;
 
@@ -125,7 +113,6 @@ private:
 
     QList <kpToolWidgetBase *> m_toolWidgets;
 
-private:
     struct kpButtonToolPair
     {
         kpButtonToolPair (QAbstractButton *button, kpTool *tool)
@@ -145,8 +132,6 @@ private:
     QList <kpButtonToolPair> m_buttonToolPairs;
 
     kpTool *m_previousTool, *m_currentTool;
-
-    int m_defaultIconSize;
 };
 
 

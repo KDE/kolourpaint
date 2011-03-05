@@ -82,6 +82,8 @@ kpToolSelectionEnvironment *kpMainWindow::toolSelectionEnvironment ()
     return d->toolSelectionEnvironment;
 }
 
+//---------------------------------------------------------------------
+
 // private
 kpToolEnvironment *kpMainWindow::toolEnvironment ()
 {
@@ -89,6 +91,7 @@ kpToolEnvironment *kpMainWindow::toolEnvironment ()
     return toolSelectionEnvironment ();
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::setupToolActions ()
@@ -275,13 +278,6 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
 // private slot
 void kpMainWindow::updateToolOptionPrevNextActionsEnabled ()
 {
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::updateToolOptionPrevNextActionsEnabled()"
-               << " numShownToolWidgets="
-               << d->toolToolBar->numShownToolWidgets ()
-               << endl;
-#endif
-
     const bool enable = d->toolActionsEnabled;
 
 

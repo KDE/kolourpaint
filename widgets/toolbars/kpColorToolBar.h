@@ -62,7 +62,6 @@ Q_OBJECT
 
 public:
     kpColorToolBar (const QString &label, QWidget *parent);
-    virtual ~kpColorToolBar ();
 
     kpColorCells *colorCells () const;
 
@@ -119,8 +118,6 @@ private:
     kpDualColorButton *m_dualColorButton;
     kpColorPalette *m_colorPalette;
     kpColorSimilarityToolBarItem *m_colorSimilarityToolBarItem;
-
-    struct kpColorToolBarPrivate * const d;
 };
 
 

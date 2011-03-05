@@ -116,12 +116,15 @@ void kpTool::initAction ()
              this, SLOT (slotActionToolTipChanged (const QString &)));
 }
 
+//---------------------------------------------------------------------
 
 // public
 QString kpTool::text () const
 {
     return d->text;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpTool::setText (const QString &text)
@@ -131,12 +134,15 @@ void kpTool::setText (const QString &text)
     d->action->setText (d->text);
 }
 
+//---------------------------------------------------------------------
 
 static bool KeyIsText (int key)
 {
     // TODO: should work like !QKeyEvent::text().isEmpty()
     return !(key & (Qt::KeyboardModifierMask ^ Qt::ShiftModifier));
 }
+
+//---------------------------------------------------------------------
 
 // public static
 QString kpTool::toolTipForTextAndShortcut (const QString &text,
@@ -152,11 +158,15 @@ QString kpTool::toolTipForTextAndShortcut (const QString &text,
     return text;
 }
 
+//---------------------------------------------------------------------
+
 // public static
 QString kpTool::toolTip () const
 {
     return toolTipForTextAndShortcut (text (), shortcut ());
 }
+
+//---------------------------------------------------------------------
 
 
 // public
@@ -164,6 +174,8 @@ int kpTool::key () const
 {
     return d->key;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpTool::setKey (int key)
@@ -173,6 +185,8 @@ void kpTool::setKey (int key)
     // TODO: this probably not wise since it nukes the user's settings
     d->action->setShortcut (shortcutForKey (d->key));
 }
+
+//---------------------------------------------------------------------
 
 // public static
 KShortcut kpTool::shortcutForKey (int key)
@@ -190,18 +204,23 @@ KShortcut kpTool::shortcutForKey (int key)
     return shortcut;
 }
 
+//---------------------------------------------------------------------
+
 // public
 KShortcut kpTool::shortcut () const
 {
     return d->action->shortcut ();
 }
 
+//---------------------------------------------------------------------
 
 // public
 QString kpTool::description () const
 {
     return d->description;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpTool::setDescription (const QString &description)

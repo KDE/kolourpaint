@@ -49,8 +49,6 @@ public:
         const QString &pic, const KShortcut &shortcut,
         const QObject *receiver, const char *slot,
         KActionCollection *ac, const QString &name);
-    virtual ~kpToolAction ();
-
 
 signals:
     // Not emitted when toolTip is manually overridden by setToolTip()

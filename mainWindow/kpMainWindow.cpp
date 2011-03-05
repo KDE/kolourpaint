@@ -207,7 +207,6 @@ void kpMainWindow::init ()
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow(" << objectName () << ")::init()";
     QTime totalTime; totalTime.start ();
-    QTime time; time.start ();
 #endif
 
     d = new kpMainWindowPrivate;
@@ -249,10 +248,6 @@ void kpMainWindow::init ()
 
     setMinimumSize (320, 260);
     setAcceptDrops (true);
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tTIME: little init = " << time.restart () << "msec";
-#endif
-
 
     //
     // read config
@@ -261,73 +256,31 @@ void kpMainWindow::init ()
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
     // realize what other processes have done e.g. Settings / Show Path
     KGlobal::config ()->reparseConfiguration ();
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tTIME: reparseConfig = " << time.restart () << "msec";
-#endif
 
     readGeneralSettings ();
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tTIME: readGeneralSettings = " << time.restart () << "msec";
-#endif
-
     readThumbnailSettings ();
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tTIME: readThumbnailSettings = " << time.restart () << "msec";
-#endif
-
 
     //
     // create GUI
     //
-
     setupActions ();
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tTIME: setupActions = " << time.restart () << "msec";
-#endif
-
     createStatusBar ();
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tTIME: createStatusBar = " << time.restart () << "msec";
-#endif
-
     createGUI ();
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tTIME: createGUI = " << time.restart () << "msec";
-#endif
-
-
-    //
-    // Create more GUI.
-    //
 
     createColorBox ();
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tTIME: createColorBox = " << time.restart () << "msec";
-#endif
-
     createToolBox ();
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tTIME: createToolBox = " << time.restart () << "msec";
-#endif
 
 
     // Let the Tool Box take all the vertical space, since it can be quite
     // tall with all its tool option widgets.  This also avoids occasional
     // bugs like the Tool Box overlapping the Color Tool Bar.
-    setCorner (Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 
+    // no tabbed docks; does not make sense with only 2 dock widgets
+    setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::AllowNestedDocks);
 
-    // HACK: We couldn't get toolbar orientations and undocking to work
-    //       properly so we fix their positions for the time being.
-    //
-    //       Must be called before setAutoSaveSettings() or there are
-    //       massive redraw errors (don't know why).
-    addDockWidget (Qt::LeftDockWidgetArea, d->toolToolBar, Qt::Vertical);
-    d->toolToolBar->setFeatures (QDockWidget::NoDockWidgetFeatures);
-
-    addDockWidget (Qt::BottomDockWidgetArea, d->colorToolBar, Qt::Horizontal);
-    d->colorToolBar->setFeatures (QDockWidget::NoDockWidgetFeatures);
-
+    addDockWidget(Qt::BottomDockWidgetArea, d->colorToolBar, Qt::Horizontal);
 
     d->scrollView = new kpViewScrollableContainer (this);
     d->scrollView->setObjectName ( QLatin1String("scrollView" ));
@@ -343,14 +296,10 @@ void kpMainWindow::init ()
     connect (d->scrollView, SIGNAL (statusMessageChanged (const QString &)),
              this, SLOT (slotDocResizeMessageChanged (const QString &)));
 
-    connect (d->scrollView, SIGNAL (contentsMoved()),
-             this, SLOT (slotScrollViewAboutToScroll ()));
-    setCentralWidget (d->scrollView);
-    d->scrollView->show ();
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tTIME: d->scrollView = " << time.restart () << "msec";
-#endif
+    connect (d->scrollView, SIGNAL(contentsMoved()),
+             this, SLOT(slotScrollViewAfterScroll()));
 
+    setCentralWidget (d->scrollView);
 
     //
     // set initial pos/size of GUI
@@ -1037,51 +986,15 @@ void kpMainWindow::dropEvent (QDropEvent *e)
 //---------------------------------------------------------------------
 
 // private slot
-void kpMainWindow::slotScrollViewAboutToScroll ()
-{
-#if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::slotScrollViewAboutToScroll() tool="
-              << tool () << "viewManager=" << viewManager ();
-    if (viewManager ())
-    {
-        kDebug () << "\tfastUpdates=" << viewManager ()->fastUpdates ()
-                  << " queueUpdates=" << viewManager ()->queueUpdates ();
-    }
-    else
-    {
-        // We're getting a late signal from the scrollview (thanks to
-        // a timer inside the ScrollView).  By now, setDocument() has
-        // already killed the document(), tool() and viewManager().
-    }
-#endif
-
-    QTimer::singleShot (0, this, SLOT (slotScrollViewAfterScroll ()));
-}
-
-//---------------------------------------------------------------------
-
-// private slot
 void kpMainWindow::slotScrollViewAfterScroll ()
 {
-#if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::slotScrollViewAfterScroll() tool="
-               << tool () << endl;
-#endif
-
     // OPT: Why can't this be moved into kpViewScrollableContainer::slotDragScroll(),
     //      grouping all drag-scroll-related repaints, which would potentially avoid
     //      double repainting?
     if (tool ())
     {
-    #if DEBUG_KP_MAIN_WINDOW && 1
-        kDebug () << "calling somethingBelowTheCursorChanged()";
-    #endif
         tool ()->somethingBelowTheCursorChanged ();
     }
-
-#if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "DONE";
-#endif
 }
 
 //---------------------------------------------------------------------
@@ -1111,7 +1024,7 @@ void kpMainWindow::slotUpdateCaption ()
     }
     else
     {
-        setCaption (QString::null, false);	//krazy:exclude=nullstrassign for old broken gcc
+        setCaption (QString(), false);
     }
 }
 

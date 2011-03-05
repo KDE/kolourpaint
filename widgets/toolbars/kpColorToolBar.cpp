@@ -31,24 +31,12 @@
 
 #include <kpColorToolBar.h>
 
-#include <qbitmap.h>
-#include <qboxlayout.h>
-#include <qdrawutil.h>
-#include <qevent.h>
-#include <QLabel>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <QPushButton>
-#include <qsize.h>
-#include <qwidget.h>
+#include <QBoxLayout>
+#include <QDragEnterEvent>
+#include <QDragMoveEvent>
 
-#include <kapplication.h>
 #include <KColorMimeData>
-#include <kconfig.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
-#include <kiconloader.h>
 #include <klocale.h>
 
 #include <kpColorCells.h>
@@ -56,24 +44,16 @@
 #include <kpColorSimilarityToolBarItem.h>
 #include <kpDefs.h>
 #include <kpDualColorButton.h>
-#include <kpPixmapFX.h>
-#include <kpTool.h>
 #include <kpUrlFormatter.h>
-#include <kpView.h>
 
-
-struct kpColorToolBarPrivate
-{
-};
+//---------------------------------------------------------------------
 
 kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
-    : QDockWidget (parent),
-      d (new kpColorToolBarPrivate ())
+    : QDockWidget (parent)
 {
     setWindowTitle (label);
 
     setAcceptDrops (true);
-
 
     QWidget *base = new QWidget (this);
     m_boxLayout = new QBoxLayout (QBoxLayout::LeftToRight, base);
@@ -123,6 +103,8 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
     setWidget (base);
 }
 
+//---------------------------------------------------------------------
+
 void kpColorToolBar::adjustToOrientation (Qt::Orientation o)
 {
 #if DEBUG_KP_COLOR_TOOL_BAR
@@ -145,11 +127,7 @@ void kpColorToolBar::adjustToOrientation (Qt::Orientation o)
     m_colorPalette->setOrientation (o);
 }
 
-kpColorToolBar::~kpColorToolBar ()
-{
-    delete d;
-}
-
+//---------------------------------------------------------------------
 
 // public
 kpColorCells *kpColorToolBar::colorCells () const
@@ -157,6 +135,7 @@ kpColorCells *kpColorToolBar::colorCells () const
     return m_colorPalette->colorCells ();
 }
 
+//---------------------------------------------------------------------
 
 kpColor kpColorToolBar::color (int which) const
 {
@@ -165,6 +144,8 @@ kpColor kpColorToolBar::color (int which) const
     return m_dualColorButton->color (which);
 }
 
+//---------------------------------------------------------------------
+
 void kpColorToolBar::setColor (int which, const kpColor &color)
 {
     Q_ASSERT (which == 0 || which == 1);
@@ -172,10 +153,14 @@ void kpColorToolBar::setColor (int which, const kpColor &color)
     m_dualColorButton->setColor (which, color);
 }
 
+//---------------------------------------------------------------------
+
 kpColor kpColorToolBar::foregroundColor () const
 {
     return m_dualColorButton->foregroundColor ();
 }
+
+//---------------------------------------------------------------------
 
 void kpColorToolBar::setForegroundColor (const kpColor &color)
 {
@@ -186,10 +171,14 @@ void kpColorToolBar::setForegroundColor (const kpColor &color)
     m_dualColorButton->setForegroundColor (color);
 }
 
+//---------------------------------------------------------------------
+
 kpColor kpColorToolBar::backgroundColor () const
 {
     return m_dualColorButton->backgroundColor ();
 }
+
+//---------------------------------------------------------------------
 
 void kpColorToolBar::setBackgroundColor (const kpColor &color)
 {
@@ -200,49 +189,64 @@ void kpColorToolBar::setBackgroundColor (const kpColor &color)
     m_dualColorButton->setBackgroundColor (color);
 }
 
+//---------------------------------------------------------------------
+
 
 kpColor kpColorToolBar::oldForegroundColor () const
 {
     return m_dualColorButton->oldForegroundColor ();
 }
 
+//---------------------------------------------------------------------
+
 kpColor kpColorToolBar::oldBackgroundColor () const
 {
     return m_dualColorButton->oldBackgroundColor ();
 }
+
+//---------------------------------------------------------------------
 
 double kpColorToolBar::oldColorSimilarity () const
 {
     return m_colorSimilarityToolBarItem->oldColorSimilarity ();
 }
 
+//---------------------------------------------------------------------
 
 double kpColorToolBar::colorSimilarity () const
 {
     return m_colorSimilarityToolBarItem->colorSimilarity ();
 }
 
+//---------------------------------------------------------------------
+
 void kpColorToolBar::setColorSimilarity (double similarity)
 {
     m_colorSimilarityToolBarItem->setColorSimilarity (similarity);
 }
+
+//---------------------------------------------------------------------
 
 int kpColorToolBar::processedColorSimilarity () const
 {
     return m_colorSimilarityToolBarItem->processedColorSimilarity ();
 }
 
+//---------------------------------------------------------------------
 
 void kpColorToolBar::openColorSimilarityDialog ()
 {
     m_colorSimilarityToolBarItem->openDialog ();
 }
 
+//---------------------------------------------------------------------
+
 void kpColorToolBar::flashColorSimilarityToolBarItem ()
 {
     m_colorSimilarityToolBarItem->flash ();
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpColorToolBar::updateNameOrUrlLabel ()
@@ -292,6 +296,7 @@ void kpColorToolBar::updateNameOrUrlLabel ()
     setWindowTitle (labelStr.toString ());
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
 void kpColorToolBar::dragEnterEvent (QDragEnterEvent *e)
@@ -304,6 +309,8 @@ void kpColorToolBar::dragEnterEvent (QDragEnterEvent *e)
 #endif
 }
 
+//---------------------------------------------------------------------
+
 // protected virtual [base QWidget]
 void kpColorToolBar::dragMoveEvent (QDragMoveEvent *e)
 {
@@ -314,5 +321,6 @@ void kpColorToolBar::dragMoveEvent (QDragMoveEvent *e)
 #endif
 }
 
+//---------------------------------------------------------------------
 
 #include <kpColorToolBar.moc>

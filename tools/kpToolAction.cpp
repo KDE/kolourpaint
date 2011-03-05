@@ -58,10 +58,7 @@ kpToolAction::kpToolAction (const QString &text,
     ac->addAction (name, this);
 }
 
-kpToolAction::~kpToolAction ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // protected
 void kpToolAction::updateToolTip ()
@@ -81,6 +78,7 @@ void kpToolAction::updateToolTip ()
     emit toolTipChanged (newToolTip);
 }
 
+//---------------------------------------------------------------------
 
 // public static
 void kpToolAction::updateAllActionsToolTips (KActionCollection *ac)
@@ -99,7 +97,7 @@ void kpToolAction::updateAllActionsToolTips (KActionCollection *ac)
     }
 }
 
-
+//---------------------------------------------------------------------
 //
 // KToggleAction overrides
 //
@@ -116,6 +114,8 @@ void kpToolAction::setText (const QString &text)
     updateToolTip ();
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpToolAction::setShortcut (const KShortcut &shortcut)
 {
@@ -128,5 +128,6 @@ void kpToolAction::setShortcut (const KShortcut &shortcut)
     updateToolTip ();
 }
 
+//---------------------------------------------------------------------
 
 #include <kpToolAction.moc>

@@ -1,6 +1,6 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2011      Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -32,15 +32,12 @@
 #include <kpToolToolBar.h>
 
 #include <qboxlayout.h>
+#include <qgridlayout.h>
 #include <qbuttongroup.h>
 #include <qdatetime.h>
 #include <qevent.h>
-#include <qgridlayout.h>
-#include <QLabel>
-#include <qlayout.h>
 #include <qtoolbutton.h>
-
-#include <qwidget.h>
+#include <QMainWindow>
 
 #include <kconfiggroup.h>
 #include <kdebug.h>
@@ -48,7 +45,6 @@
 #include <kglobalsettings.h>
 #include <kicontheme.h>
 #include <KIconLoader>
-#include <ksharedconfig.h>
 
 #include <kpDefs.h>
 #include <kpTool.h>
@@ -60,6 +56,7 @@
 #include <kpToolWidgetOpaqueOrTransparent.h>
 #include <kpToolWidgetSpraycanSize.h>
 
+//---------------------------------------------------------------------
 
 class kpToolButton : public QToolButton
 {
@@ -70,13 +67,8 @@ public:
     {
     }
 
-    virtual ~kpToolButton ()
-    {
-    }
-
 protected:
-    // virtual [base QWidget]
-    void mouseDoubleClickEvent (QMouseEvent *e)
+    virtual void mouseDoubleClickEvent(QMouseEvent *e)
     {
         if (e->button () == Qt::LeftButton && m_tool)
             m_tool->globalDraw ();
@@ -85,46 +77,20 @@ protected:
     kpTool *m_tool;
 };
 
+//---------------------------------------------------------------------
 
-// TODO: Once we support moveable toolbars again, calls to this need to be
-//       changed to the non-static kpToolToolBar::orientation().
-static Qt::Orientation Orientation ()
-{
-    return Qt::Vertical;
-}
-
-kpToolToolBar::kpToolToolBar (const QString &label, int colsOrRows, QWidget *parent)
-    : QDockWidget (parent),
+kpToolToolBar::kpToolToolBar(const QString &label, int colsOrRows, QWidget *parent)
+    : KToolBar(label, parent),
       m_vertCols (colsOrRows),
       m_buttonGroup (0),
       m_baseWidget (0),
       m_baseLayout (0),
       m_toolLayout (0),
-      m_previousTool (0), m_currentTool (0),
-      m_defaultIconSize (0)
+      m_previousTool (0), m_currentTool (0)
 {
-    setWindowTitle (label);
-
-    // Hide the windowTitle() when it's docked.
-    // TODO: This currently hides the windowTitle() even when it's not docked.
-    setTitleBarWidget (new QLabel (this));
-
-
-    // With these lines enabled, mousePressEvent's weren't being generated
-    // when right clicking in empty part of the toolbar (each call affects
-    // the toolbar in its respective orientation).  They don't seem to be
-    // needed anyway since !isResizeEnabled().
-
-    //setHorizontallyStretchable (false);
-    //setVerticallyStretchable (false);
-
+    setWindowTitle(label);
 
     m_baseWidget = new QWidget (this);
-
-#if DEBUG_KP_TOOL_TOOL_BAR
-    QTime timer;
-    timer.start ();
-#endif
 
     m_toolWidgets.append (m_toolWidgetBrush =
         new kpToolWidgetBrush (m_baseWidget, "Tool Widget Brush"));
@@ -139,11 +105,6 @@ kpToolToolBar::kpToolToolBar (const QString &label, int colsOrRows, QWidget *par
     m_toolWidgets.append (m_toolWidgetSpraycanSize =
         new kpToolWidgetSpraycanSize (m_baseWidget, "Tool Widget Spraycan Size"));
 
-#if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "kpToolToolBar::<ctor> create tool widgets msec="
-               << timer.restart () << endl;
-#endif
-
     for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.constBegin ();
          it != m_toolWidgets.constEnd ();
          it++)
@@ -152,25 +113,19 @@ kpToolToolBar::kpToolToolBar (const QString &label, int colsOrRows, QWidget *par
                  this, SIGNAL (toolWidgetOptionSelected ()));
     }
 
-#if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "kpToolToolBar::<ctor> connect widgets msec="
-               << timer.restart () << endl;
-#endif
-
-    adjustToOrientation (::Orientation ());
-
-#if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "kpToolToolBar::<ctor> layout tool widgets msec="
-               << timer.elapsed () << endl;
-#endif
+    adjustToOrientation(orientation());
+    connect(this, SIGNAL(orientationChanged(Qt::Orientation)),
+            this, SLOT(adjustToOrientation(Qt::Orientation)));
 
     m_buttonGroup = new QButtonGroup (this);
     connect (m_buttonGroup, SIGNAL (buttonClicked (int)), SLOT (slotToolButtonClicked ()));
 
     hideAllToolWidgets ();
 
+    addWidget(m_baseWidget);
 
-    setWidget (m_baseWidget);
+    connect(this, SIGNAL(iconSizeChanged(const QSize &)),
+            this, SLOT(slotIconSizeChanged(const QSize &)));
 }
 
 //---------------------------------------------------------------------
@@ -178,63 +133,6 @@ kpToolToolBar::kpToolToolBar (const QString &label, int colsOrRows, QWidget *par
 kpToolToolBar::~kpToolToolBar ()
 {
     unregisterAllTools ();
-}
-
-//---------------------------------------------------------------------
-
-// private
-int kpToolToolBar::defaultIconSize ()
-{
-    // Cached?
-    if (m_defaultIconSize > 0)
-        return m_defaultIconSize;
-
-#if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "kpToolToolBar::defaultIconSize()";
-#endif
-
-
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupTools);
-
-    if (cfg.hasKey (kpSettingToolBoxIconSize))
-    {
-        // TODO: Specifying 48 gives me the 48 icon scaled down to 22 but the
-        //       button is still 48x48 (with lots of empty space).
-        m_defaultIconSize = cfg.readEntry (kpSettingToolBoxIconSize, 0);
-    #if DEBUG_KP_TOOL_TOOL_BAR
-        kDebug () << "\tread: " << m_defaultIconSize;
-    #endif
-    }
-    else
-    {
-        m_defaultIconSize = -1;
-#if DEBUG_KP_TOOL_TOOL_BAR
-        kDebug () << "\tfirst time - writing default: " << m_defaultIconSize;
-#endif
-        cfg.writeEntry (kpSettingToolBoxIconSize, m_defaultIconSize);
-        cfg.sync ();
-    }
-
-
-    if (m_defaultIconSize <= 0)
-    {
-        // Adapt according to screen geometry
-        const QRect desktopSize = KGlobalSettings::desktopGeometry (this);
-    #if DEBUG_KP_TOOL_TOOL_BAR
-        kDebug () << "\tadapting to screen size=" << desktopSize;
-    #endif
-
-        if (desktopSize.width () >= 1024 && desktopSize.height () >= 768)
-            m_defaultIconSize = KIconLoader::SizeSmallMedium/*22x22*/;
-        else
-            m_defaultIconSize = KIconLoader::SizeSmall/*16x16*/;
-    }
-
-
-#if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "\treturning " << m_defaultIconSize;
-#endif
-    return m_defaultIconSize;
 }
 
 //---------------------------------------------------------------------
@@ -253,8 +151,8 @@ void kpToolToolBar::registerTool (kpTool *tool)
 
     QToolButton *b = new kpToolButton (tool, m_baseWidget);
     b->setAutoRaise (true);
-    // Specify size of the button.
-    b->setIconSize(QSize(defaultIconSize(), defaultIconSize()));
+    b->setIconSize(iconSize());
+
     b->setToolButtonStyle(Qt::ToolButtonIconOnly);
     b->setCheckable(true);
 
@@ -264,16 +162,17 @@ void kpToolToolBar::registerTool (kpTool *tool)
     b->setWhatsThis(tool->description ());
 
     m_buttonGroup->addButton (b);
-    addButton (b, ::Orientation (), num);
+    addButton(b, orientation(), num);
 
     m_buttonToolPairs.append (kpButtonToolPair (b, tool));
-
 
     connect (tool, SIGNAL (actionActivated ()),
              this, SLOT (slotToolActionActivated ()));
     connect (tool, SIGNAL (actionToolTipChanged (const QString &)),
              this, SLOT (slotToolActionToolTipChanged ()));
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpToolToolBar::unregisterTool (kpTool *tool)
@@ -296,6 +195,8 @@ void kpToolToolBar::unregisterTool (kpTool *tool)
     }
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpToolToolBar::unregisterAllTools ()
 {
@@ -309,12 +210,15 @@ void kpToolToolBar::unregisterAllTools ()
     m_buttonToolPairs.clear ();
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpTool *kpToolToolBar::tool () const
 {
     return m_currentTool;
 }
+
+//---------------------------------------------------------------------
 
 // public
 void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
@@ -367,6 +271,7 @@ void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
     }
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpTool *kpToolToolBar::previousTool () const
@@ -374,12 +279,15 @@ kpTool *kpToolToolBar::previousTool () const
     return m_previousTool;
 }
 
+//---------------------------------------------------------------------
+
 // public
 void kpToolToolBar::selectPreviousTool ()
 {
     selectTool (m_previousTool);
 }
 
+//---------------------------------------------------------------------
 
 // public
 void kpToolToolBar::hideAllToolWidgets ()
@@ -392,30 +300,7 @@ void kpToolToolBar::hideAllToolWidgets ()
     }
 }
 
-// public
-int kpToolToolBar::numShownToolWidgets () const
-{
-#if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "kpToolToolBar::numShownToolWidgets()";
-#endif
-
-    int ret = 0;
-
-    for (QList <kpToolWidgetBase *>::const_iterator it = m_toolWidgets.constBegin ();
-         it != m_toolWidgets.constEnd ();
-         it++)
-    {
-    #if DEBUG_KP_TOOL_TOOL_BAR
-        kDebug () << "\t" << (*it)->objectName ()
-                   << " isShown=" << !(*it)->isHidden ()
-                   << endl;
-    #endif
-        if (!(*it)->isHidden ())
-            ret++;
-    }
-
-    return ret;
-}
+//---------------------------------------------------------------------
 
 // public
 kpToolWidgetBase *kpToolToolBar::shownToolWidget (int which) const
@@ -438,6 +323,7 @@ kpToolWidgetBase *kpToolToolBar::shownToolWidget (int which) const
     return 0;
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpToolToolBar::slotToolButtonClicked ()
@@ -494,13 +380,12 @@ void kpToolToolBar::slotToolButtonClicked ()
     emit sigToolSelected (m_currentTool);
 }
 
-
-#define CONST_KP_TOOL_SENDER() (dynamic_cast <const kpTool *> (sender ()))
+//---------------------------------------------------------------------
 
 // private slot
 void kpToolToolBar::slotToolActionActivated ()
 {
-    const kpTool *tool = CONST_KP_TOOL_SENDER ();
+    const kpTool *tool = dynamic_cast<const kpTool *>(sender());
 
 #if DEBUG_KP_TOOL_TOOL_BAR
     kDebug () << "kpToolToolBar::slotToolActionActivated() tool="
@@ -523,10 +408,12 @@ void kpToolToolBar::slotToolActionActivated ()
     selectTool (tool, true/*reselect if same tool*/);
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpToolToolBar::slotToolActionToolTipChanged ()
 {
-    const kpTool *tool = CONST_KP_TOOL_SENDER ();
+    const kpTool *tool = dynamic_cast<const kpTool *>(sender());
 
 #if DEBUG_KP_TOOL_TOOL_BAR
     kDebug () << "kpToolToolBar::slotToolActionToolTipChanged() tool="
@@ -549,17 +436,16 @@ void kpToolToolBar::slotToolActionToolTipChanged ()
     }
 }
 
+//---------------------------------------------------------------------
 
 // public
-void kpToolToolBar::adjustToOrientation (Qt::Orientation o)
+void kpToolToolBar::adjustToOrientation(Qt::Orientation o)
 {
 #if DEBUG_KP_TOOL_TOOL_BAR
     kDebug () << "kpToolToolBar::adjustToOrientation("
                << (o == Qt::Vertical ? "vertical" : "horizontal")
                << ") called!" << endl;
 #endif
-
-    Q_ASSERT (o == Qt::Vertical);
 
     delete m_baseLayout;
     if (o == Qt::Vertical)
@@ -570,6 +456,7 @@ void kpToolToolBar::adjustToOrientation (Qt::Orientation o)
     {
         m_baseLayout = new QBoxLayout (QBoxLayout::LeftToRight, m_baseWidget);
     }
+    m_baseLayout->setSizeConstraint(QLayout::SetFixedSize);
     m_baseLayout->setSpacing (10);
     m_baseLayout->setMargin (5);
 
@@ -601,12 +488,24 @@ void kpToolToolBar::adjustToOrientation (Qt::Orientation o)
         }
     }
 
-    // Pad out all the vertical space at the bottom of the Tool Box so that
-    // that the real Tool Box widgets aren't placed in the center of the Tool
-    // Box.
-    m_baseLayout->addItem (
-        new QSpacerItem (1, 1, QSizePolicy::Preferred, QSizePolicy::Expanding));
+    adjustSizeConstraint();
 }
+
+//---------------------------------------------------------------------
+// this makes the size handled correctly during dragging/undocking the toolbar
+
+void kpToolToolBar::adjustSizeConstraint()
+{
+    // remove constraints
+    setFixedSize(QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX));
+
+    if ( orientation() == Qt::Vertical )
+      setFixedWidth(m_baseLayout->sizeHint().width());
+    else
+      setFixedHeight(m_baseLayout->sizeHint().height());
+}
+
+//---------------------------------------------------------------------
 
 // private
 void kpToolToolBar::addButton (QAbstractButton *button, Qt::Orientation o, int num)
@@ -621,5 +520,21 @@ void kpToolToolBar::addButton (QAbstractButton *button, Qt::Orientation o, int n
     }
 }
 
+//---------------------------------------------------------------------
+
+void kpToolToolBar::slotIconSizeChanged(const QSize &size)
+{
+    for (QList <kpButtonToolPair>::iterator it = m_buttonToolPairs.begin ();
+         it != m_buttonToolPairs.end ();
+         it++)
+    {
+        (*it).m_button->setIconSize(size);
+    }
+
+    m_baseLayout->activate();
+    adjustSizeConstraint();
+}
+
+//---------------------------------------------------------------------
 
 #include <kpToolToolBar.moc>
