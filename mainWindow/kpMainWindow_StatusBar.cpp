@@ -1,6 +1,6 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2011 Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -37,15 +37,16 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kstatusbar.h>
+#include <KSqueezedTextLabel>
 
 #include <kpDefs.h>
 #include <kpDocument.h>
-#include <kpSqueezedTextLabel.h>
 #include <kpTool.h>
 #include <kpViewManager.h>
 #include <kpViewScrollableContainer.h>
 #include <kpZoomedView.h>
 
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::addPermanentStatusBarItem (int id, int maxTextLen)
@@ -61,6 +62,8 @@ void kpMainWindow::addPermanentStatusBarItem (int id, int maxTextLen)
     sb->changeItem (QString(), id);
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpMainWindow::createStatusBar ()
 {
@@ -69,23 +72,21 @@ void kpMainWindow::createStatusBar ()
     // 9999 pixels "ought to be enough for anybody"
     const int maxDimenLength = 4;
 
-    //sb->insertItem (QString(), StatusBarItemMessage, 1/*stretch*/);
-    //sb->setItemAlignment (StatusBarItemMessage, Qt::AlignLeft | Qt::AlignVCenter);
-
-    d->statusBarMessageLabel = new kpSqueezedTextLabel (sb);
-    //d->statusBarMessageLabel->setShowEllipsis (false);
-    sb->addWidget (d->statusBarMessageLabel, 1/*stretch*/);
+    d->statusBarMessageLabel = new KSqueezedTextLabel(sb);
+    // this is done to have the same height as the other labels in status bar; done like in kstatusbar.cpp
+    d->statusBarMessageLabel->setFixedHeight(d->statusBarMessageLabel->fontMetrics().height() + 2);
+    d->statusBarMessageLabel->setTextElideMode(Qt::ElideRight);  // this is the reason why we explicitely set a widget
+    sb->addWidget(d->statusBarMessageLabel, 1/*stretch*/);
 
     addPermanentStatusBarItem (StatusBarItemShapePoints,
                                (maxDimenLength + 1/*,*/ + maxDimenLength) * 2 + 3/* - */);
     addPermanentStatusBarItem (StatusBarItemShapeSize,
                                (1/*+/-*/ + maxDimenLength) * 2 + 1/*x*/);
 
-    // TODO: This doesn't seem to fit "5000x5000".
-    addPermanentStatusBarItem (StatusBarItemDocSize,
-                               maxDimenLength + 1/*x*/ + maxDimenLength);
-    addPermanentStatusBarItem (StatusBarItemDocDepth,
-                               5/*XXbpp*/);
+    QString numSample = i18n("%1 x %2", 5000, 5000);  // localized string; can e.g. be "5 000"
+    addPermanentStatusBarItem(StatusBarItemDocSize, numSample.length());
+
+    addPermanentStatusBarItem(StatusBarItemDocDepth, 5/*XXbpp*/);
 
     addPermanentStatusBarItem (StatusBarItemZoom,
                                5/*1600%*/);
@@ -95,6 +96,7 @@ void kpMainWindow::createStatusBar ()
     d->statusBarCreated = true;
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::setStatusBarMessage (const QString &message)
@@ -109,9 +111,10 @@ void kpMainWindow::setStatusBarMessage (const QString &message)
     if (!d->statusBarCreated)
         return;
 
-    //statusBar ()->changeItem (message, StatusBarItemMessage);
     d->statusBarMessageLabel->setText (message);
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
@@ -162,6 +165,8 @@ void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
     d->statusBarShapeLastEndPoint = endPoint;
     d->statusBarShapeLastPointsInitialised = true;
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::setStatusBarShapeSize (const QSize &size)
@@ -222,7 +227,7 @@ void kpMainWindow::setStatusBarDocSize (const QSize &size)
     }
     else
     {
-        statusBar ()->changeItem (i18n ("%1x%2",
+        statusBar ()->changeItem (i18n ("%1 x %2",
                                       size.width (),
                                       size.height ()),
                                   StatusBarItemDocSize);

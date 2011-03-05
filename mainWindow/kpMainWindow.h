@@ -138,20 +138,14 @@ private:
     void setupActions ();
     void enableDocumentActions (bool enable = true);
 
-private:
     void setDocument (kpDocument *newDoc);
 
     virtual void dragEnterEvent (QDragEnterEvent *e);
     virtual void dropEvent (QDropEvent *e);
-
-private slots:
-    void slotScrollViewAboutToScroll ();
-    void slotScrollViewAfterScroll ();
-
-private:
     virtual void moveEvent (QMoveEvent *e);
 
 private slots:
+    void slotScrollViewAfterScroll ();
     void slotUpdateCaption ();
     void slotDocumentRestored ();
 
@@ -660,7 +654,6 @@ private slots:
 private:
     enum
     {
-        StatusBarItemMessage,
         StatusBarItemShapePoints,
         StatusBarItemShapeSize,
         StatusBarItemDocSize,

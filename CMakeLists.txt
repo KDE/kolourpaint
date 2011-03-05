@@ -170,7 +170,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/environments/tools/selection/kpToolSelectionEnvironm
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/kpSetOverrideCursorSaver.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/kpWidgetMapper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/widgets/kpResizeSignallingLabel.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/generic/widgets/kpSqueezedTextLabel.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/widgets/kpSubWindow.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectBalance.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectBlurSharpen.cpp
@@ -396,7 +395,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/environments/tools/selection/kpToolSelectionEnvironm
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/kpSetOverrideCursorSaver.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/kpWidgetMapper.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/widgets/kpResizeSignallingLabel.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/generic/widgets/kpSqueezedTextLabel.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/generic/widgets/kpSubWindow.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectBalance.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectBlurSharpen.cpp
