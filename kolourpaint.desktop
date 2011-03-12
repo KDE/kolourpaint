@@ -1,16 +1,26 @@
 [Desktop Entry]
 
 Name=KolourPaint
+Name[ca]=KolourPaint
 Name[cs]=KolourPaint
+Name[es]=KolourPaint
+Name[nds]=KolourPaint
 Name[nl]=KolourPaint
 Name[pt]=KolourPaint
+Name[pt_BR]=KolourPaint
+Name[sv]=Kolourpaint
 Name[uk]=KolourPaint
 Name[x-test]=xxKolourPaintxx
 Name[zh_TW]=小畫家_KolourPaint
 GenericName=Paint Program
+GenericName[ca]=Programa de pintura
 GenericName[cs]=Program pro malování
+GenericName[es]=Programa de pintura
+GenericName[nds]=Maalprogramm
 GenericName[nl]=Tekenprogramma
 GenericName[pt]=Programa de Pintura
+GenericName[pt_BR]=Programa de desenho
+GenericName[sv]=Ritprogram
 GenericName[uk]=Програма для малювання
 GenericName[x-test]=xxPaint Programxx
 GenericName[zh_TW]=繪圖程式
