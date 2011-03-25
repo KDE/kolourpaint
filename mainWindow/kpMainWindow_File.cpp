@@ -33,12 +33,10 @@
 #include <kpMainWindowPrivate.h>
 
 #include <qdatastream.h>
-#include <QDBusInterface>
 #include <QDesktopWidget>
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qsize.h>
-#include <QtDBus>
 #include <QtGui/QPrinter>
 #include <QtGui/QPrintDialog>
 
@@ -124,13 +122,6 @@ void kpMainWindow::setupFileMenuActions ()
 
     d->actionMail = KStandardAction::mail (this, SLOT (slotMail ()), ac);
 
-    d->actionSetAsWallpaperCentered = ac->addAction ("file_set_as_wallpaper_centered");
-    d->actionSetAsWallpaperCentered->setText (i18n ("Set as Wa&llpaper (Centered)"));
-    connect(d->actionSetAsWallpaperCentered, SIGNAL(triggered(bool) ), SLOT (slotSetAsWallpaperCentered ()));
-    d->actionSetAsWallpaperTiled = ac->addAction ("file_set_as_wallpaper_tiled");
-    d->actionSetAsWallpaperTiled->setText (i18n ("Set as Wallpaper (&Tiled)"));
-    connect(d->actionSetAsWallpaperTiled, SIGNAL(triggered(bool) ), SLOT (slotSetAsWallpaperTiled ()));
-
     d->actionClose = KStandardAction::close (this, SLOT (slotClose ()), ac);
     d->actionQuit = KStandardAction::quit (this, SLOT (slotQuit ()), ac);
 
@@ -162,9 +153,6 @@ void kpMainWindow::enableFileMenuDocumentActions (bool enable)
     d->actionPrintPreview->setEnabled (enable);
 
     d->actionMail->setEnabled (enable);
-
-    d->actionSetAsWallpaperCentered->setEnabled (enable);
-    d->actionSetAsWallpaperTiled->setEnabled (enable);
 
     d->actionClose->setEnabled (enable);
     // d->actionQuit->setEnabled (enable);
@@ -1306,6 +1294,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
     painter.end ();
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotPrint ()
@@ -1316,6 +1305,8 @@ void kpMainWindow::slotPrint ()
 
     sendImageToPrinter (&printer, true/*showPrinterSetupDialog*/);
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotPrintPreview ()
@@ -1331,6 +1322,7 @@ void kpMainWindow::slotPrintPreview ()
     printPreview.exec ();
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotMail ()
@@ -1363,133 +1355,16 @@ void kpMainWindow::slotMail ()
     }
 
     KToolInvocation::invokeMailer (
-        QString::null/*to*/,	//krazy:exclude=nullstrassign for old broken gcc
+        QString()/*to*/,
         QString()/*cc*/,
         QString()/*bcc*/,
         d->document->prettyFilename()/*subject*/,
         QString()/*body*/,
         QString()/*messageFile*/,
-        QStringList (d->document->url ().url ())/*attachments*/);
+        QStringList(d->document->url().url())/*attachments*/);
 }
 
-
-// private
-void kpMainWindow::setAsWallpaper (bool centered)
-{
-    if (d->document->url ().isEmpty ()/*no name*/ ||
-        !d->document->url ().isLocalFile ()/*remote file*/ ||
-        !d->document->isFromURL () ||
-        d->document->isModified ()/*needs to be saved*/)
-    {
-        QString question;
-
-        if (!d->document->url ().isLocalFile ())
-        {
-            question = i18n ("Before this image can be set as the wallpaper, "
-                             "you must save it as a local file.\n"
-                             "Do you want to save it?");
-        }
-        else
-        {
-            question = i18n ("Before this image can be set as the wallpaper, "
-                             "you must save it.\n"
-                             "Do you want to save it?");
-        }
-
-        int result = KMessageBox::questionYesNo (this,
-                         question, QString(),
-                         KStandardGuiItem::save (), KStandardGuiItem::cancel ());
-
-        if (result == KMessageBox::Yes)
-        {
-            // save() is smart enough to pop up a filedialog if it's a
-            // remote file that should be saved locally
-            if (!save (true/*localOnly*/))
-            {
-                // save failed or aborted - don't set the wallpaper
-                return;
-            }
-        }
-        else
-        {
-            // don't want to save - don't set wallpaper
-            return;
-        }
-    }
-
-
-    QByteArray data;
-    QDataStream dataStream (&data, QIODevice::WriteOnly);
-
-    // write path
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::setAsWallpaper() path="
-               << d->document->url ().path () << endl;
-#endif
-    dataStream << QString (d->document->url ().path ());
-
-    // write position:
-    //
-    // SYNC: kdebase/kcontrol/background/bgsettings.h:
-    // 1 = Centered
-    // 2 = Tiled
-    // 6 = Scaled
-    // 9 = lastWallpaperMode
-    //
-    // Why restrict the user to Centered & Tiled?
-    // Why don't we let the user choose if it should be common to all desktops?
-    // Why don't we rewrite the Background control page?
-    //
-    // Answer: This is supposed to be a quick & convenient feature.
-    //
-    // If you want more options, go to kcontrol for that kind of
-    // flexiblity.  We don't want to slow down average users, who see way too
-    // many dialogs already and probably haven't even heard of "Centered Maxpect"...
-    //
-    dataStream << int (centered ? 1 : 2);
-
-
-    // I'm going to all this trouble because the user might not have kdebase
-    // installed so kdebase/kdesktop/KBackgroundIface.h might not be around
-    // to be compiled in (where user == developer :))
-// COMPAT
-
-#ifdef Q_WS_X11
-    int konq_screen_number = KApplication::desktop()->primaryScreen();
-    QByteArray appname;
-    if (konq_screen_number == 0)
-        appname = "org.kde.kdesktop";
-    else
-        appname = "org.kde.kdesktop-screen-" + QByteArray::number(konq_screen_number);
-    QDBusInterface kdesktop(appname, "/Background", "org.kde.kdesktop.Background");
-    QDBusReply<void> retVal = kdesktop.call( "setWallpaper", QString (d->document->url ().path ()), int (centered ? 1 : 2) );
-    if (!retVal.isValid())
-    {
-        KMessageBox::sorry (this, i18n ("Could not change wallpaper."));
-    }
-#else
-#ifdef __GNUC__
-    #warning "Setting wallpaper not implemented in non-X11"
-#endif
-#endif
-}
-
-// private slot
-void kpMainWindow::slotSetAsWallpaperCentered ()
-{
-    toolEndShape ();
-
-    setAsWallpaper (true/*centered*/);
-}
-
-// private slot
-void kpMainWindow::slotSetAsWallpaperTiled ()
-{
-    toolEndShape ();
-
-    setAsWallpaper (false/*tiled*/);
-}
-
+//---------------------------------------------------------------------
 
 // private
 bool kpMainWindow::queryCloseDocument ()
@@ -1517,6 +1392,8 @@ bool kpMainWindow::queryCloseDocument ()
     }
 }
 
+//---------------------------------------------------------------------
+
 // private virtual [base KMainWindow]
 bool kpMainWindow::queryClose ()
 {
@@ -1534,14 +1411,12 @@ bool kpMainWindow::queryClose ()
     return true;
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotClose ()
 {
     toolEndShape ();
-
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotClose()";
-#endif
 
     if (!queryCloseDocument ())
         return;
@@ -1549,16 +1424,14 @@ void kpMainWindow::slotClose ()
     setDocument (0);
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotQuit ()
 {
     toolEndShape ();
 
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotQuit()";
-#endif
-
     close ();  // will call queryClose()
 }
 
-
+//---------------------------------------------------------------------

@@ -383,12 +383,6 @@ private slots:
 
     void slotMail ();
 
-private:
-    void setAsWallpaper (bool centered);
-private slots:
-    void slotSetAsWallpaperCentered ();
-    void slotSetAsWallpaperTiled ();
-
     bool queryCloseDocument ();
     virtual bool queryClose ();
 

@@ -125,7 +125,6 @@ struct kpMainWindowPrivate
             *actionReload,
             *actionPrint, *actionPrintPreview,
             *actionMail,
-            *actionSetAsWallpaperTiled, *actionSetAsWallpaperCentered,
             *actionClose, *actionQuit;
 
     KScanDialog *scanDialog;
