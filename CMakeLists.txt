@@ -19,7 +19,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/commands/tools/polygonal
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/tools/rectangular
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/tools/selection
 ${CMAKE_CURRENT_SOURCE_DIR}/commands/tools/selection/text
-${CMAKE_CURRENT_SOURCE_DIR}/compat
 ${CMAKE_CURRENT_SOURCE_DIR}/cursors
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs
 ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagelib
