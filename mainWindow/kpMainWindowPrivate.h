@@ -120,7 +120,7 @@ struct kpMainWindowPrivate
 
     QAction *actionNew, *actionOpen;
     KRecentFilesAction *actionOpenRecent;
-    KAction *actionScan, *actionProperties,
+    KAction *actionScan, *actionScreenshot, *actionProperties,
             *actionSave, *actionSaveAs, *actionExport,
             *actionReload,
             *actionPrint, *actionPrintPreview,

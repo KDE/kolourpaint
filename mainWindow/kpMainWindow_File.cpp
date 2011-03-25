@@ -37,8 +37,9 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qsize.h>
-#include <QtGui/QPrinter>
-#include <QtGui/QPrintDialog>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QApplication>
 
 #include <kapplication.h>
 #include <kaction.h>
@@ -100,9 +101,13 @@ void kpMainWindow::setupFileMenuActions ()
     connect(d->actionExport, SIGNAL(triggered(bool) ), SLOT (slotExport ()));
 
     d->actionScan = ac->addAction("file_scan");
-    d->actionScan->setText (i18n ("Scan..."));
-    d->actionScan->setIcon (SmallIcon ("scanner"));
-    connect(d->actionScan, SIGNAL(triggered(bool) ), SLOT (slotScan ()));
+    d->actionScan->setText(i18n ("Scan..."));
+    d->actionScan->setIcon(SmallIcon("scanner"));
+    connect(d->actionScan, SIGNAL(triggered(bool)), SLOT(slotScan()));
+
+    d->actionScreenshot = ac->addAction("file_screenshot");
+    d->actionScreenshot->setText(i18n("Acquire Screenshot"));
+    connect(d->actionScreenshot, SIGNAL(triggered(bool)), SLOT(slotScreenshot()));
 
     d->actionProperties = ac->addAction ("file_properties");
     d->actionProperties->setText (i18n ("Properties"));
@@ -129,6 +134,8 @@ void kpMainWindow::setupFileMenuActions ()
 
     enableFileMenuDocumentActions (false);
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::enableFileMenuDocumentActions (bool enable)
@@ -157,6 +164,8 @@ void kpMainWindow::enableFileMenuDocumentActions (bool enable)
     d->actionClose->setEnabled (enable);
     // d->actionQuit->setEnabled (enable);
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::addRecentURL (const KUrl &url_)
@@ -238,6 +247,8 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
     }
 }
 
+//---------------------------------------------------------------------
+
 
 // private slot
 // TODO: Disable action if
@@ -260,6 +271,8 @@ void kpMainWindow::slotNew ()
         open (KUrl (), true/*create an empty doc*/);
     }
 }
+
+//---------------------------------------------------------------------
 
 
 // private
@@ -288,6 +301,8 @@ QSize kpMainWindow::defaultDocSize () const
     return docSize;
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpMainWindow::saveDefaultDocSize (const QSize &size)
 {
@@ -301,6 +316,7 @@ void kpMainWindow::saveDefaultDocSize (const QSize &size)
     cfg.sync ();
 }
 
+//---------------------------------------------------------------------
 
 // private
 bool kpMainWindow::shouldOpen ()
@@ -323,6 +339,8 @@ bool kpMainWindow::shouldOpen ()
     return true;
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpMainWindow::setDocumentChoosingWindow (kpDocument *doc)
 {
@@ -330,18 +348,12 @@ void kpMainWindow::setDocumentChoosingWindow (kpDocument *doc)
     if (d->document && !d->document->isEmpty () &&
         !d->configOpenImagesInSameWindow)
     {
-    #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\topen in new window";
-    #endif
         // Send doc to new window.
         kpMainWindow *win = new kpMainWindow (doc);
         win->show ();
     }
     else
     {
-    #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\topen in same window";
-    #endif
         // (sets up views, doc signals)
         setDocument (doc);
     }
@@ -621,6 +633,21 @@ void kpMainWindow::slotScanned (const QImage &image, int)
 
     // Send document to current or new window.
     setDocumentChoosingWindow (doc);
+}
+
+//---------------------------------------------------------------------
+
+void kpMainWindow::slotScreenshot()
+{
+    toolEndShape ();
+    QPixmap pixmap = QPixmap::grabWindow(QApplication::desktop()->winId());
+
+    kpDocument *doc = new kpDocument(pixmap.width(), pixmap.height(),
+                                     documentEnvironment());
+    doc->setImage(pixmap.toImage());
+
+    // Send document to current or new window.
+    setDocumentChoosingWindow(doc);
 }
 
 //---------------------------------------------------------------------

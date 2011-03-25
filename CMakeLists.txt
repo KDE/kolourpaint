@@ -212,7 +212,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Colors.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Edit.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_File.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Help.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Image.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Settings.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_StatusBar.cpp
@@ -434,7 +433,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Colors.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Edit.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_File.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Help.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Image.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_Settings.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_StatusBar.cpp

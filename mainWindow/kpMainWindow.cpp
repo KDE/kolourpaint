@@ -607,7 +607,6 @@ void kpMainWindow::setupActions ()
     setupImageMenuActions ();
     setupColorsMenuActions ();
     setupSettingsMenuActions ();
-    setupHelpMenuActions ();
 
     setupTextToolBarActions ();
     setupToolActions ();
@@ -624,7 +623,6 @@ void kpMainWindow::enableDocumentActions (bool enable)
     enableImageMenuDocumentActions (enable);
     enableColorsMenuDocumentActions (enable);
     enableSettingsMenuDocumentActions (enable);
-    enableHelpMenuDocumentActions (enable);
 }
 
 //---------------------------------------------------------------------

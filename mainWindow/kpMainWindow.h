@@ -346,6 +346,8 @@ private slots:
     void slotScan ();
     void slotScanned (const QImage &image, int);
 
+    void slotScreenshot();
+
     void slotProperties ();
 
     bool save (bool localOnly = false);
@@ -700,23 +702,8 @@ public:
     void setTextStyle (const kpTextStyle &textStyle_);
     int settingTextStyle () const;
 
-
-//
-// Help Menu
-//
-
-private:
-    void setupHelpMenuActions ();
-    void enableHelpMenuDocumentActions (bool enable = true);
-
-private slots:
-    void slotHelpTakingScreenshots ();
-    void slotHelpTakingScreenshotsFollowLink (const QString &link);
-
-
 private:
     struct kpMainWindowPrivate *d;
 };
-
 
 #endif  // KP_MAIN_WINDOW_H
