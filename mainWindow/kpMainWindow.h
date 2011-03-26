@@ -347,6 +347,7 @@ private slots:
     void slotScanned (const QImage &image, int);
 
     void slotScreenshot();
+    void slotMakeScreenshot();
 
     void slotProperties ();
 

@@ -40,13 +40,18 @@
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QApplication>
+#include <QTimer>
+#include <QLabel>
+#include <QCheckBox>
+#include <QVBoxLayout>
 
-#include <kapplication.h>
+#include <kdialog.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>
+#include <KIntSpinBox>
 #include <kfiledialog.h>
 #include <kglobal.h>
 #include <kiconloader.h>
@@ -639,15 +644,55 @@ void kpMainWindow::slotScanned (const QImage &image, int)
 
 void kpMainWindow::slotScreenshot()
 {
-    toolEndShape ();
-    QPixmap pixmap = QPixmap::grabWindow(QApplication::desktop()->winId());
+  toolEndShape();
 
-    kpDocument *doc = new kpDocument(pixmap.width(), pixmap.height(),
-                                     documentEnvironment());
-    doc->setImage(pixmap.toImage());
+  KDialog *dialog = new KDialog(this);
+  dialog->setButtons(KDialog::Ok | KDialog::Cancel);
 
-    // Send document to current or new window.
-    setDocumentChoosingWindow(doc);
+  QLabel *label = new QLabel(i18n("Snapshot Delay"));
+  KIntSpinBox *seconds = new KIntSpinBox;
+  seconds->setRange(0, 99);
+  seconds->setSuffix(ki18np(" second", " seconds"));
+  seconds->setSpecialValueText(i18n("No delay"));
+
+  QCheckBox *hideWindow = new QCheckBox(i18n("Hide Main Window"));
+  hideWindow->setChecked(true);
+
+  QVBoxLayout *vbox = new QVBoxLayout(dialog->mainWidget());
+  vbox->addWidget(label);
+  vbox->addWidget(seconds);
+  vbox->addWidget(hideWindow);
+
+  if ( dialog->exec() == KDialog::Rejected )
+  {
+    delete dialog;
+    return;
+  }
+
+  if ( hideWindow->isChecked() )
+    hide();
+
+  // at least 1 seconds to make sure the window is hidden and the hide effect already stopped
+  QTimer::singleShot((seconds->value() + 1) * 1000, this, SLOT(slotMakeScreenshot()));
+
+  delete dialog;
+}
+
+//---------------------------------------------------------------------
+
+void kpMainWindow::slotMakeScreenshot()
+{
+  QCoreApplication::processEvents();
+  QPixmap pixmap = QPixmap::grabWindow(QApplication::desktop()->winId());
+
+  kpDocument *doc = new kpDocument(pixmap.width(), pixmap.height(),
+                                   documentEnvironment());
+  doc->setImage(pixmap.toImage());
+
+  // Send document to current or new window.
+  setDocumentChoosingWindow(doc);
+
+  show();  // in case we hid the mainwindow, show it again
 }
 
 //---------------------------------------------------------------------
