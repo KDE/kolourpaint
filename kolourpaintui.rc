@@ -23,9 +23,6 @@ SYNC: Check for duplicate actions in menus caused by some of our actions
 
         <Action name="file_export" append="save_merge" />
         <Separator append="save_merge" />
-
-        <Action name="file_set_as_wallpaper_centered" />
-        <Action name="file_set_as_wallpaper_tiled" />
     </Menu>
 
     <Menu name="edit">
