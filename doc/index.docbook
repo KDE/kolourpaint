@@ -48,8 +48,8 @@
 <legalnotice>
 &FDLNotice;
 </legalnotice>
-<date>2010-07-21</date>
-<releaseinfo>&kde; 4.5</releaseinfo>
+<date>2011-04-03</date>
+<releaseinfo>&kde; 4.7</releaseinfo>
 
 <abstract>
 <para>
@@ -74,7 +74,10 @@ perfect for everyday tasks such as:</para>
 <para>Painting - drawing diagrams and <quote>finger painting</quote></para>
 </listitem>
 <listitem>
-<para>Image Manipulation - editing screenshots and photos; applying
+<para>Manipulating Screenshots - acquiring and editing screenshots</para>
+</listitem>
+<listitem>
+<para>Image Manipulation - editing photos and acquiried images; applying
 effects</para>
 </listitem>
 <listitem>
@@ -115,6 +118,30 @@ capabilities:</para>
 
 <chapter id="tools-chapter">
 <title>Tools</title>
+
+<sect1 id="acquiring-screenshots">
+<title>Aquiring Screenshots</title>
+
+<para>A <quote>screenshot</quote> is a snapshot of what is on your computer's screen. It can be useful
+to explain some actions that should be done to obtain the result, or to show the issue that you have found.
+</para>
+<para>To make screenshot ready for editing in &kolourpaint; window you can use <menuchoice><guimenu>File
+</guimenu><guimenuitem>Acquire screenshot</guimenuitem></menuchoice> item from &kolourpaint; main menu.
+</para>
+<para>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="screenshot_acquiring.png" format="PNG"/>
+</imageobject>
+</inlinemediaobject>
+</para>
+<para>
+Using the opened dialog you can change <guilabel>Screenshot Delay</guilabel> (in seconds), and choose
+to <guilabel>Hide Main Window</guilabel> during screenshoting. When you are ready to take screenshot 
+just click <guibutton>OK</guibutton>. The screenshot taken will be placed directly into the &kolourpaint;
+editing area.
+</para>
+</sect1>
 
 <sect1 id="tool-reference">
 <title>Tool Reference</title>
@@ -1021,11 +1048,12 @@ Otherwise, the thumbnail displays as much of the image as possible, starting fro
 <para><link linkend="image-clear">Clear</link></para>
 <para><link linkend="image-emboss">Emboss</link></para>
 <para><link linkend="image-flatten">Flatten</link></para>
-<para><link linkend="image-flip">Flip</link></para>
+<para><link linkend="image-flip">Flip (upside down)</link></para>
 <para><link linkend="image-invert">Invert</link></para>
 <para><link linkend="image-reduce-colors">Reduce Colors</link></para>
 <para><link linkend="image-grayscale">Reduce to Grayscale</link></para>
 <para><link linkend="image-monochrome">Reduce to Monochrome (Dithered)</link></para>
+<para><link linkend="image-mirror">Mirror (horizontally)</link></para>
 <para><link linkend="image-resize-scale">Resize / Scale</link></para>
 <para><link linkend="image-rotate">Rotate</link></para>
 <para><link linkend="image-set-as-image">Set as Image (Crop)</link></para>
@@ -1124,18 +1152,9 @@ This recolors the image with varying shades of the two selected colors.
 </sect1>
 
 <sect1 id="image-flip">
-<title>Flip</title>
+<title>Flip (upside down)</title>
 
-<para>
-<inlinemediaobject>
-<imageobject>
-<imagedata fileref="image_flip.png" format="PNG"/>
-</imageobject>
-</inlinemediaobject>
-</para>
-
-<para>This flips the entire image or selection horizontally or
-vertically.</para>
+<para>This flips the entire image or selection vertically.</para>
 
 </sect1>
 
@@ -1163,6 +1182,13 @@ in the menubar if you use one of the selection tools. Additionally you can reach
 from the context menu opened with a &RMB; click in the image area.
 </para>
 </tip>
+
+</sect1>
+
+<sect1 id="image-mirror">
+<title>Mirror (horizontally)</title>
+
+<para>This mirrors the entire image or selection horizontally.</para>
 
 </sect1>
 
