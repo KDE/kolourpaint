@@ -77,7 +77,7 @@ perfect for everyday tasks such as:</para>
 <para>Manipulating Screenshots - acquiring and editing screenshots</para>
 </listitem>
 <listitem>
-<para>Image Manipulation - editing photos and acquiried images; applying
+<para>Image Manipulation - editing photos and acquired images; applying
 effects</para>
 </listitem>
 <listitem>
@@ -120,13 +120,13 @@ capabilities:</para>
 <title>Tools</title>
 
 <sect1 id="acquiring-screenshots">
-<title>Aquiring Screenshots</title>
+<title>Acquiring Screenshots</title>
 
 <para>A <quote>screenshot</quote> is a snapshot of what is on your computer's screen. It can be useful
 to explain some actions that should be done to obtain the result, or to show the issue that you have found.
 </para>
 <para>To make screenshot ready for editing in &kolourpaint; window you can use <menuchoice><guimenu>File
-</guimenu><guimenuitem>Acquire screenshot</guimenuitem></menuchoice> item from &kolourpaint; main menu.
+</guimenu><guimenuitem>Acquire Screenshot</guimenuitem></menuchoice> item from &kolourpaint; main menu.
 </para>
 <para>
 <inlinemediaobject>
