@@ -70,6 +70,7 @@ ${QIMAGEBLITZ_INCLUDES}
 )
 
 add_subdirectory( pics )
+add_subdirectory( doc )
 
 
 ########### next target ###############
