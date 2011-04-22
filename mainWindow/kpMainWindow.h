@@ -103,12 +103,11 @@ public:
     //  window without a document at all).
     kpMainWindow (kpDocument *newDoc);
 
+    virtual void finalizeGUI(KXMLGUIClient *client);
+
 private:
     void readGeneralSettings ();
     void readThumbnailSettings ();
-
-    // WARNING: This is not virtual in our parent, KXmlGuiWindow.
-    void createGUI ();
 
     void init ();
 
@@ -451,17 +450,13 @@ private:
 
     bool viewMenuDocumentActionsEnabled () const;
     void enableViewMenuDocumentActions (bool enable = true);
-
-private:
     void actionShowGridUpdate ();
-private slots:
-    void slotShowGridToggled ();
-private:
     void updateMainViewGrid ();
-
-private:
     QRect mapToGlobal (const QRect &rect) const;
     QRect mapFromGlobal (const QRect &rect) const;
+
+private slots:
+    void slotShowGridToggled ();
 
 
 //
@@ -472,7 +467,6 @@ private:
     void setupViewMenuZoomActions ();
     void enableViewMenuZoomDocumentActions (bool enable);
 
-private:
     void sendZoomListToActionZoom ();
 
     void zoomToPre (int zoomLevel);
@@ -637,12 +631,6 @@ private slots:
     void slotShowPathToggled ();
 
     void slotKeyBindings ();
-
-    void slotConfigureToolBars ();
-    void slotNewToolBarConfig ();
-
-    void slotConfigure ();
-
 
 //
 // Status Bar

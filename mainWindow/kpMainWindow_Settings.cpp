@@ -30,14 +30,11 @@
 #include <kpMainWindowPrivate.h>
 
 #include <kactioncollection.h>
-#include <kapplication.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>
-#include <kedittoolbar.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <kmessagebox.h>
 #include <kshortcutsdialog.h>
 #include <kstandardaction.h>
 #include <ktogglefullscreenaction.h>
@@ -47,6 +44,7 @@
 #include <kpToolAction.h>
 #include <kpToolToolBar.h>
 
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::setupSettingsMenuActions ()
@@ -73,18 +71,20 @@ void kpMainWindow::setupSettingsMenuActions ()
 
 
     d->actionKeyBindings = KStandardAction::keyBindings (this, SLOT (slotKeyBindings ()), ac);
-    d->actionConfigureToolbars = KStandardAction::configureToolbars (this, SLOT (slotConfigureToolBars ()), ac);
-    // d->actionConfigure = KStandardAction::preferences (this, SLOT (slotConfigure ()), ac);
 
+    KStandardAction::configureToolbars(this, SLOT(configureToolbars()), actionCollection());
 
     enableSettingsMenuDocumentActions (false);
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::enableSettingsMenuDocumentActions (bool /*enable*/)
 {
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotFullScreen ()
@@ -92,6 +92,7 @@ void kpMainWindow::slotFullScreen ()
     KToggleFullScreenAction::setFullScreen( this, d->actionFullScreen->isChecked ());
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotEnableSettingsShowPath ()
@@ -105,6 +106,8 @@ void kpMainWindow::slotEnableSettingsShowPath ()
     d->actionShowPath->setEnabled (enable);
     d->actionShowPath->setChecked (enable && d->configShowPath);
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotShowPathToggled ()
@@ -124,6 +127,7 @@ void kpMainWindow::slotShowPathToggled ()
     cfg.sync ();
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotKeyBindings ()
@@ -147,47 +151,4 @@ void kpMainWindow::slotKeyBindings ()
     }
 }
 
-
-// private slot
-void kpMainWindow::slotConfigureToolBars ()
-{
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotConfigureToolBars()";
-#endif
-
-    toolEndShape ();
-
-// TODO: Do we need this?
-#if 0
-    // KConfig::readEntry() does not actually reread from disk, hence doesn't
-    // realize what other processes have done e.g. Settings / Show Path
-    KGlobal::config ()->reparseConfiguration ();
-#endif
-
-    saveMainWindowSettings (KGlobal::config ()->group (autoSaveGroup ()));
-
-    KEditToolBar dialog (actionCollection (), this);
-
-    connect (&dialog, SIGNAL (newToolBarConfig()),
-             this, SLOT (slotNewToolBarConfig ()));
-
-    dialog.exec ();
-}
-
-// private slot
-void kpMainWindow::slotNewToolBarConfig ()
-{
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotNewToolBarConfig()";
-#endif
-
-    createGUI();
-    applyMainWindowSettings (KGlobal::config ()->group (autoSaveGroup ()));
-}
-
-
-// private slot
-void kpMainWindow::slotConfigure ()
-{
-    // TODO
-}
+//---------------------------------------------------------------------

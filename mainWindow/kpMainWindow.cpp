@@ -180,23 +180,17 @@ void kpMainWindow::readThumbnailSettings ()
 
 //---------------------------------------------------------------------
 
-// private [override KXmlGuiWindow]
-void kpMainWindow::createGUI ()
+void kpMainWindow::finalizeGUI(KXMLGUIClient *client)
 {
-    KXmlGuiWindow::createGUI ();
-
-    // HACK: Until we have a proper kpToolToolBar where tool actions are
-    //       plugged into it properly, Qt4 will not recognise our actions'
-    //       shortcuts.
-    //
-    //       In kolourpaintui.rc, we get around this by plugging them into
-    //       a fake menu.  Here, we hide that fake menu.
+  if ( client == this )
+  {
     const QList<KMenu *> menuToHide = findChildren<KMenu *>("toolToolBarHiddenMenu");
     // should only contain one but...
     foreach (KMenu *menu, menuToHide)
     {
         menu->menuAction()->setVisible(false);
     }
+  }
 }
 
 //---------------------------------------------------------------------

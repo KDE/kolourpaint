@@ -72,6 +72,7 @@
 #include <kpViewScrollableContainer.h>
 #include <kpZoomedView.h>
 
+//---------------------------------------------------------------------
 
 // private
 kpToolSelectionEnvironment *kpMainWindow::toolSelectionEnvironment ()
@@ -202,9 +203,6 @@ void kpMainWindow::createToolBox ()
 
     // (from config file)
     readLastTool ();
-
-
-    enableToolsDocumentActions (false);
 }
 
 //---------------------------------------------------------------------
@@ -337,7 +335,6 @@ void kpMainWindow::updateActionDrawOpaqueEnabled ()
 
 //---------------------------------------------------------------------
 
-
 // public
 QActionGroup *kpMainWindow::toolsActionGroup ()
 {
@@ -348,7 +345,6 @@ QActionGroup *kpMainWindow::toolsActionGroup ()
 }
 
 //---------------------------------------------------------------------
-
 
 // public
 kpTool *kpMainWindow::tool () const
@@ -515,7 +511,6 @@ void kpMainWindow::slotToolSelected (kpTool *tool)
 
 //---------------------------------------------------------------------
 
-
 // private
 void kpMainWindow::readLastTool ()
 {
@@ -525,7 +520,6 @@ void kpMainWindow::readLastTool ()
 }
 
 //---------------------------------------------------------------------
-
 
 // private
 int kpMainWindow::toolNumber () const
@@ -561,7 +555,6 @@ void kpMainWindow::saveLastTool ()
 }
 
 //---------------------------------------------------------------------
-
 
 // private
 bool kpMainWindow::maybeDragScrollingMainView () const
