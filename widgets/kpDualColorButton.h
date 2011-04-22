@@ -35,22 +35,12 @@
 #include <kpColor.h>
 
 
-//
-// Widget similar to KDualColorButton.
-// Main differences:
-// - more consistent feel with other KolourPaint widgets
-//   (esp. kpColorPalette)
-// - displays the transparent colour using the special pixmap
-//   used by kpTransparentColorCell
-// - no obscure "current" colour
-//
 class kpDualColorButton : public QFrame
 {
 Q_OBJECT
 
 public:
     kpDualColorButton (QWidget *parent);
-    virtual ~kpDualColorButton ();
 
     kpColor color (int which) const;
     kpColor foregroundColor () const;

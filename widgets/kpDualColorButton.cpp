@@ -43,23 +43,20 @@
 
 #include <kpView.h>
 
+//---------------------------------------------------------------------
 
 kpDualColorButton::kpDualColorButton (QWidget *parent)
     : QFrame (parent),
       m_dragStartPoint (KP_INVALID_POINT)
 {
-    setSizePolicy (QSizePolicy::Minimum/*horizontal*/,
-                   QSizePolicy::Minimum/*vertical*/);
+    setSizePolicy (QSizePolicy::Fixed/*horizontal*/,
+                   QSizePolicy::Fixed/*vertical*/);
     setFrameStyle (QFrame::Panel | QFrame::Sunken);
 
     m_color [0] = kpColor (0, 0, 0);  // black
     m_color [1] = kpColor (255, 255, 255);  // white
 
     setAcceptDrops (true);
-}
-
-kpDualColorButton::~kpDualColorButton ()
-{
 }
 
 //---------------------------------------------------------------------
@@ -371,9 +368,6 @@ void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
 //---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
-// LOOPT: If we move the mouse around the KolourPaint window (not even on
-//        top of this widget), we get called a _lot_ of times unnecessarily.
-//        I have no idea why.
 void kpDualColorButton::paintEvent (QPaintEvent *e)
 {
 #if DEBUG_KP_DUAL_COLOR_BUTTON && 1
