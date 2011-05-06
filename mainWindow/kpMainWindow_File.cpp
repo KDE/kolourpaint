@@ -461,7 +461,7 @@ void kpMainWindow::slotOpen ()
 {
     toolEndShape ();
 
-    const KUrl::List urls = askForOpenURLs(i18n("Open Image"));
+    const KUrl::List urls = askForOpenURLs(i18nc("@title:window", "Open Image"));
 
     for (KUrl::List::const_iterator it = urls.begin ();
          it != urls.end ();
@@ -951,7 +951,7 @@ bool kpMainWindow::saveAs (bool localOnly)
 {
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
-    KUrl chosenURL = askForSaveURL (i18n ("Save Image As"),
+    KUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Save Image As"),
                                     d->document->url ().url (),
                                     d->document->imageWithSelection (),
                                     *d->document->saveOptions (),
@@ -1000,7 +1000,7 @@ bool kpMainWindow::slotExport ()
 
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
-    KUrl chosenURL = askForSaveURL (i18n ("Export"),
+    KUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Export"),
                                     d->lastExportURL.url (),
                                     d->document->imageWithSelection (),
                                     d->lastExportSaveOptions,
@@ -1317,7 +1317,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
                 printer,
                 QList <QWidget *> () << optionsPage,
                 this);
-        printDialog->setWindowTitle (i18n ("Print Image"));
+        printDialog->setWindowTitle (i18nc ("@title:window", "Print Image"));
 
         // Display dialog.
         const bool wantToPrint = printDialog->exec ();

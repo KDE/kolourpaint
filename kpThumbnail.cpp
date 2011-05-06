@@ -123,7 +123,7 @@ void kpThumbnail::setView (kpThumbnailView *view)
 // public slot
 void kpThumbnail::updateCaption ()
 {
-    setWindowTitle (view () ? view ()->caption () : i18n ("Thumbnail"));
+    setWindowTitle (view () ? view ()->caption () : i18nc ("@title:window", "Thumbnail"));
 }
 
 

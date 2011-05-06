@@ -57,7 +57,7 @@ kpPrintDialogPage::kpPrintDialogPage (QWidget *parent)
     kDebug () << "kpPrintDialogPage::<ctor>()";
 #endif
 
-    setWindowTitle (i18n ("I&mage Position"));
+    setWindowTitle (i18nc ("@title:tab", "I&mage Position"));
 
     KVBox *base = new KVBox (this);
     base->setMargin (KDialog::marginHint ());

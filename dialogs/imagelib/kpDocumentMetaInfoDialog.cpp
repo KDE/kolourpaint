@@ -120,7 +120,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     d->originalMetaInfoPtr = docMetaInfo;
 
 
-    setCaption (i18n ("Document Properties"));
+    setCaption (i18nc ("@title:window", "Document Properties"));
     setButtons (KDialog::Ok | KDialog::Cancel);
 
     QWidget *baseWidget = new QWidget (this);
@@ -828,7 +828,7 @@ void kpDocumentMetaInfoDialog::accept ()
     (void) metaInfo (&errorMessage);
     if (!errorMessage.isEmpty ())
     {
-        KMessageBox::sorry (this, errorMessage, i18n ("Invalid Text Fields"));
+        KMessageBox::sorry (this, errorMessage, i18nc ("@title:window", "Invalid Text Fields"));
         return;
     }
 

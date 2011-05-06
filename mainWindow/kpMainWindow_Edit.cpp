@@ -879,7 +879,7 @@ void kpMainWindow::slotCopyToFile ()
 
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
-    KUrl chosenURL = askForSaveURL (i18n ("Copy to File"),
+    KUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Copy to File"),
                                     d->lastCopyToURL.url (),
                                     imageToSave,
                                     d->lastCopyToSaveOptions,
@@ -927,7 +927,7 @@ void kpMainWindow::slotPasteFromFile ()
     toolEndShape ();
 
 
-    KUrl::List urls = askForOpenURLs(i18n ("Paste From File"),
+    KUrl::List urls = askForOpenURLs(i18nc ("@title:window", "Paste From File"),
                                      false/*only 1 URL*/);
 
     if (urls.count () != 1)

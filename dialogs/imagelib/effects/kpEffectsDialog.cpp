@@ -88,9 +88,9 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 
 
     if (actOnSelection)
-        setWindowTitle (i18n ("More Image Effects (Selection)"));
+        setWindowTitle (i18nc ("@title:window", "More Image Effects (Selection)"));
     else
-        setWindowTitle (i18n ("More Image Effects"));
+        setWindowTitle (i18nc ("@title:window", "More Image Effects"));
 
 
     m_delayedUpdateTimer->setSingleShot (true);

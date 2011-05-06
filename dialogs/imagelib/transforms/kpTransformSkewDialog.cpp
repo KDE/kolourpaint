@@ -67,7 +67,7 @@ kpTransformSkewDialog::kpTransformSkewDialog (bool actOnSelection,
         kpTransformDialogEnvironment *_env, QWidget *parent)
     : kpTransformPreviewDialog (kpTransformPreviewDialog::AllFeatures,
         false/*don't reserve top row*/,
-        actOnSelection ? i18n ("Skew Selection") : i18n ("Skew Image"),
+        actOnSelection ? i18nc ("@title:window", "Skew Selection") : i18nc ("@title:window", "Skew Image"),
         i18n ("After skew:"),
         actOnSelection,
         _env, parent)
@@ -257,7 +257,7 @@ void kpTransformSkewDialog::accept ()
 
                       "<p>Are you sure want to skew the selection?</p></qt>");
 
-            caption = i18n ("Skew Selection?");
+            caption = i18nc ("@title:window", "Skew Selection?");
             continueButtonText = i18n ("Sk&ew Selection");
         }
     }
@@ -272,7 +272,7 @@ void kpTransformSkewDialog::accept ()
 
                   "<p>Are you sure want to skew the image?</p></qt>");
 
-        caption = i18n ("Skew Image?");
+        caption = i18nc ("@title:window", "Skew Image?");
         continueButtonText = i18n ("Sk&ew Image");
     }
 

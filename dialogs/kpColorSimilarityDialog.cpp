@@ -44,7 +44,7 @@
 kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
     : KDialog (parent)
 {
-    setCaption (i18n ("Color Similarity"));
+    setCaption (i18nc ("@title:window", "Color Similarity"));
     setButtons (KDialog::Ok | KDialog::Cancel);
     QWidget *baseWidget = new QWidget (this);
     setMainWidget (baseWidget);

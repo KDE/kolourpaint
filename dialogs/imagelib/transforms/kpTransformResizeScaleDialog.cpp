@@ -99,7 +99,7 @@ kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (
       m_environ (_env),
       m_ignoreKeepAspectRatio (0)
 {
-    setCaption( i18n ("Resize / Scale") );
+    setCaption( i18nc ("@title:window", "Resize / Scale") );
     setButtons( KDialog::Ok | KDialog::Cancel);
     // Using the percentage from last time become too confusing so disable for now
     s_lastPercentWidth = 100, s_lastPercentHeight = 100;
@@ -700,7 +700,7 @@ void kpTransformResizeScaleDialog::accept ()
 
                       "<p>Are you sure you want to resize the text box?</p></qt>");
 
-            caption = i18n ("Resize Text Box?");
+            caption = i18nc ("@title:window", "Resize Text Box?");
             continueButtonText = i18n ("R&esize Text Box");
         }
         else if (actionTarget == eImage)
@@ -714,7 +714,7 @@ void kpTransformResizeScaleDialog::accept ()
 
                       "<p>Are you sure you want to resize the image?</p></qt>");
 
-            caption = i18n ("Resize Image?");
+            caption = i18nc ("@title:window", "Resize Image?");
             continueButtonText = i18n ("R&esize Image");
         }
 
@@ -732,7 +732,7 @@ void kpTransformResizeScaleDialog::accept ()
 
                       "<p>Are you sure you want to scale the image?</p></qt>");
 
-            caption = i18n ("Scale Image?");
+            caption = i18nc ("@title:window", "Scale Image?");
             continueButtonText = i18n ("Scal&e Image");
         }
         else if (actionTarget == eSelection)
@@ -746,7 +746,7 @@ void kpTransformResizeScaleDialog::accept ()
 
                       "<p>Are you sure you want to scale the selection?</p></qt>");
 
-            caption = i18n ("Scale Selection?");
+            caption = i18nc ("@title:window", "Scale Selection?");
             continueButtonText = i18n ("Scal&e Selection");
         }
 
@@ -764,7 +764,7 @@ void kpTransformResizeScaleDialog::accept ()
 
                       "<p>Are you sure you want to smooth scale the image?</p></qt>");
 
-            caption = i18n ("Smooth Scale Image?");
+            caption = i18nc ("@title:window", "Smooth Scale Image?");
             continueButtonText = i18n ("Smooth Scal&e Image");
         }
         else if (actionTarget == eSelection)
@@ -778,7 +778,7 @@ void kpTransformResizeScaleDialog::accept ()
 
                       "<p>Are you sure you want to smooth scale the selection?</p></qt>");
 
-            caption = i18n ("Smooth Scale Selection?");
+            caption = i18nc ("@title:window", "Smooth Scale Selection?");
             continueButtonText = i18n ("Smooth Scal&e Selection");
         }
 

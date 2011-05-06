@@ -621,7 +621,7 @@ static void ShowNothingToAutocropMessage (kpMainWindow *mainWindow, bool actOnSe
         KMessageBox::information (mainWindow,
             i18n ("KolourPaint cannot remove the selection's internal border as it"
                   " could not be located."),
-            i18n ("Cannot Remove Internal Border"),
+            i18nc ("@title:window", "Cannot Remove Internal Border"),
             "NothingToAutoCrop");
     }
     else
@@ -629,7 +629,7 @@ static void ShowNothingToAutocropMessage (kpMainWindow *mainWindow, bool actOnSe
         KMessageBox::information (mainWindow,
             i18n ("KolourPaint cannot automatically crop the image as its"
                   " border could not be located."),
-            i18n ("Cannot Autocrop"),
+            i18nc ("@title:window", "Cannot Autocrop"),
             "NothingToAutoCrop");
     }
 }

@@ -65,7 +65,7 @@ KDialogBase (parent, name, false/*non-modal*/,
       m_filePixmap (0),
       m_fileSize (0)
 {
-    setWindowTitle (i18n ("Save Preview"));
+    setWindowTitle (i18nc ("@title:window", "Save Preview"));
 
     QWidget *baseWidget = this;//new QWidget (this);
     //setMainWidget (baseWidget);
