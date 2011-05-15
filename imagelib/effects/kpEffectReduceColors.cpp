@@ -1,6 +1,7 @@
 
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2011 Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -31,32 +32,30 @@
 
 #include <kpEffectReduceColors.h>
 
-#include <qimage.h>
-
 #include <kdebug.h>
-
-#include <kpPixmapFX.h>
 
 //---------------------------------------------------------------------
 
 static QImage::Format DepthToFormat (int depth)
 {
-    // These values (1, 8, 32) are QImage's supported depths.
-    // TODO: Qt-4.7.1 supports 1, 8, 16, 24 and 32.
+    // These values are QImage's supported depths.
     switch (depth)
     {
     case 1:
         // (can be MSB instead, I suppose)
         return QImage::Format_MonoLSB;
-    
+
     case 8:
         return QImage::Format_Indexed8;
 
-    // 24-bit is known as 32-bit with QImage.
+    case 16:
+        return QImage::Format_ARGB4444_Premultiplied;
+
+    case 24:
+        return QImage::Format_ARGB6666_Premultiplied;
+
     case 32:
-        // TODO: If the src image has no mask, we should really return RGB32, to
-        //       avoid introducing a mask.
-        return QImage::Format_ARGB32;
+        return QImage::Format_ARGB32_Premultiplied;
 
     default:
         Q_ASSERT (!"unknown depth");
@@ -216,10 +215,13 @@ void kpEffectReduceColors::applyEffect (QImage *destPtr, int depth, bool dither)
     if (depth != 1 && depth != 8)
         return;
 
-    *destPtr = kpEffectReduceColors::convertImageDepth (*destPtr, depth, dither);
+    *destPtr = convertImageDepth(*destPtr, depth, dither);
 
-    if (destPtr->isNull ())
-        return;
+    // internally we always use QImage::Format_ARGB32_Premultiplied and
+    // this effect is just an "effect" in that it changes the image (the look) somehow
+    // When one wants a different depth on the file, then he needs to save the image
+    // in that depth
+    *destPtr = destPtr->convertToFormat(QImage::Format_ARGB32_Premultiplied);
 }
 
 //---------------------------------------------------------------------
