@@ -29,13 +29,7 @@
 #ifndef kpEffectReduceColors_H
 #define kpEffectReduceColors_H
 
-
-#include <kpImage.h>
-
-
-class QImage;
-class QPixmap;
-
+#include <QImage>
 
 // The <depth> specified must be supported by QImage.
 class kpEffectReduceColors
@@ -46,12 +40,8 @@ public:
     //            this method?
     //      
     //            Also, this can increase the image depth while applyEffect()
-    //            will not.  And this works on QImage, not QPixmap.
+    //            will not.
     static QImage convertImageDepth (const QImage &image, int depth, bool dither);
-
-    // (always preserves mask)
-    //static void applyEffect (QPixmap *destPixmapPtr, int depth, bool dither);
-    //static QPixmap applyEffect (const QPixmap &pm, int depth, bool dither);
 
     static void applyEffect (QImage *destPixmapPtr, int depth, bool dither);
     static QImage applyEffect (const QImage &pm, int depth, bool dither);
