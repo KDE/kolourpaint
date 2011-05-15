@@ -67,7 +67,7 @@ kpTransformRotateDialog::kpTransformRotateDialog (bool actOnSelection,
         kpTransformDialogEnvironment *_env, QWidget *parent)
     : kpTransformPreviewDialog (kpTransformPreviewDialog::AllFeatures,
         false/*don't reserve top row*/,
-        actOnSelection ? i18n ("Rotate Selection") : i18n ("Rotate Image"),
+        actOnSelection ? i18nc ("@title:window", "Rotate Selection") : i18nc ("@title:window", "Rotate Image"),
         i18n ("After rotate:"),
         actOnSelection,
         _env, parent)
@@ -276,7 +276,7 @@ void kpTransformRotateDialog::accept ()
 
                       "<p>Are you sure want to rotate the selection?</p></qt>");
 
-            caption = i18n ("Rotate Selection?");
+            caption = i18nc ("@title:window", "Rotate Selection?");
             continueButtonText = i18n ("Rotat&e Selection");
         }
     }
@@ -291,7 +291,7 @@ void kpTransformRotateDialog::accept ()
 
                   "<p>Are you sure want to rotate the image?</p></qt>");
 
-        caption = i18n ("Rotate Image?");
+        caption = i18nc ("@title:window", "Rotate Image?");
         continueButtonText = i18n ("Rotat&e Image");
     }
 

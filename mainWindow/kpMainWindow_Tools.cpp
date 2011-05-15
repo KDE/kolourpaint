@@ -667,7 +667,7 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
                     " image?</p></qt>",
                   d->docResizeWidth,
                   d->docResizeHeight),
-            i18n ("Resize Image?"),
+            i18nc ("@title:window", "Resize Image?"),
             i18n ("R&esize Image"),
             this))
     {

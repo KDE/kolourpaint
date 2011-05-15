@@ -92,7 +92,7 @@ bool kpDocument::save (bool overwritePrompt, bool lossyPrompt)
                   m_saveOptions->mimeType ().isEmpty () ?
                           i18n ("<empty>") :
                           m_saveOptions->mimeType ()),
-            i18n ("Internal Error"));
+            i18nc ("@title:window", "Internal Error"));
         return false;
     }
 
@@ -133,7 +133,7 @@ bool kpDocument::lossyPromptContinue (const QImage &pixmap,
                       KMimeType::mimeType (saveOptions.mimeType ())->comment ()),
                 // TODO: caption misleading for lossless formats that have
                 //       low maximum colour depth
-                i18n ("Lossy File Format"),
+                i18nc ("@title:window", "Lossy File Format"),
                 KStandardGuiItem::save (),
                 KStandardGuiItem::cancel(),
                 QLatin1String ("SaveInLossyMimeTypeDontAskAgain")));
@@ -152,7 +152,7 @@ bool kpDocument::lossyPromptContinue (const QImage &pixmap,
 
                         "<p>Are you sure you want to save at this color depth?</p></qt>",
                       saveOptions.colorDepth ()),
-                i18n ("Low Color Depth"),
+                i18nc ("@title:window", "Low Color Depth"),
                 KStandardGuiItem::save (),
                 KStandardGuiItem::cancel(),
                 QLatin1String ("SaveAtLowColorDepthDontAskAgain")));
