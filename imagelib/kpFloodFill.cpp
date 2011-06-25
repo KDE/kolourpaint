@@ -392,7 +392,7 @@ void kpFloodFill::fill ()
 
     QPainter painter(d->imagePtr);
 
-    // by defintion, flood fill with a fully transparent color erases the pixels
+    // by definition, flood fill with a fully transparent color erases the pixels
     // and sets them to be fully transparent
     if ( d->color.isTransparent() )
       painter.setCompositionMode(QPainter::CompositionMode_Clear);

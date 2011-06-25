@@ -158,7 +158,7 @@ kpColorCells::kpColorCells (QWidget *parent,
     {
         // Reserve enough room for the default color collection's cells _and_
         // a vertical scrollbar, which only appears when it's required.
-        // This ensures that if the vertical scrollbar apears, it does not obscure
+        // This ensures that if the vertical scrollbar appears, it does not obscure
         // any cells or require the addition of a horizontal scrollbar, which would
         // look ugly and take even more precious room.
         //

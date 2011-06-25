@@ -75,7 +75,7 @@ void kpMainWindow::createStatusBar ()
     d->statusBarMessageLabel = new KSqueezedTextLabel(sb);
     // this is done to have the same height as the other labels in status bar; done like in kstatusbar.cpp
     d->statusBarMessageLabel->setFixedHeight(d->statusBarMessageLabel->fontMetrics().height() + 2);
-    d->statusBarMessageLabel->setTextElideMode(Qt::ElideRight);  // this is the reason why we explicitely set a widget
+    d->statusBarMessageLabel->setTextElideMode(Qt::ElideRight);  // this is the reason why we explicitly set a widget
     sb->addWidget(d->statusBarMessageLabel, 1/*stretch*/);
 
     addPermanentStatusBarItem (StatusBarItemShapePoints,

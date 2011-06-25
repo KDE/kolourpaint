@@ -280,7 +280,7 @@ void kpMainWindow::zoomToPost ()
     if (d->scrollView)
     {
         // TODO: setUpdatesEnabled() should really return to old value
-        //       - not neccessarily "true"
+        //       - not necessarily "true"
         d->scrollView->setUpdatesEnabled (true);
     }
 
