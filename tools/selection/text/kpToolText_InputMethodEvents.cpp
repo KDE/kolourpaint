@@ -90,7 +90,6 @@ void kpToolText::inputMethodEvent (QInputMethodEvent *e)
 
         d->insertCommand->addText (commitString);
     }
-    textSel = document ()->textSelection ();
     e->accept ();
 }
 
