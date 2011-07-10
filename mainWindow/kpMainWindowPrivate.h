@@ -249,13 +249,6 @@ struct kpMainWindowPrivate
     int settingTextStyle;
     QString textOldFontFamily;
     int textOldFontSize;
-
-
-    //
-    // Help Menu
-    //
-
-    QAction *actionHelpTakingScreenshots;
 };
 
 
