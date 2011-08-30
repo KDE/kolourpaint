@@ -158,7 +158,7 @@ void kpMainWindow::sendZoomListToActionZoom ()
     const QList <int>::ConstIterator zoomListEnd (d->zoomList.end ());
     for (QList <int>::ConstIterator it = d->zoomList.constBegin ();
          it != zoomListEnd;
-         it++)
+         ++it)
     {
         items << ::ZoomLevelToString (*it);
     }

@@ -150,7 +150,7 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
     QList <QString> keyList = textKeys ();
     for (QList <QString>::const_iterator it = keyList.constBegin ();
          it != keyList.constEnd ();
-         it++)
+         ++it)
     {
         kDebug () << "key=" << (*it)
                   << " text=" << text (*it)

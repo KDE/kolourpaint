@@ -340,7 +340,7 @@ void kpFloodFill::prepare ()
 
     for (QLinkedList <kpFillLine>::ConstIterator it = d->fillLines.begin ();
          it != d->fillLines.end ();
-         it++)
+         ++it)
     {
     #if DEBUG_KP_FLOOD_FILL && 0
         kDebug () << "Expanding from y=" << (*it).m_y

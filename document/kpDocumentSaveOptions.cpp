@@ -516,7 +516,7 @@ int kpDocumentSaveOptions::mimeTypeMaximumColorDepth (const QString &mimeType)
     const QString mimeTypeColon = mimeType + QLatin1String (":");
     for (QStringList::const_iterator it = mimeTypeList.begin ();
          it != mimeTypeList.end ();
-         it++)
+         ++it)
     {
         if ((*it).startsWith (mimeTypeColon))
         {

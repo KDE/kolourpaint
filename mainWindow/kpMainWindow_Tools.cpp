@@ -195,7 +195,7 @@ void kpMainWindow::createToolBox ()
 
     for (QList <kpTool *>::const_iterator it = d->tools.constBegin ();
          it != d->tools.constEnd ();
-         it++)
+         ++it)
     {
         d->toolToolBar->registerTool (*it);
     }
@@ -244,7 +244,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
 
     for (QList <kpTool *>::const_iterator it = d->tools.constBegin ();
          it != d->tools.constEnd ();
-         it++)
+         ++it)
     {
         kpToolAction *action = (*it)->action ();
         if (action)
@@ -527,7 +527,7 @@ int kpMainWindow::toolNumber () const
     int number = 0;
     for (QList <kpTool *>::const_iterator it = d->tools.constBegin ();
          it != d->tools.constEnd ();
-         it++)
+         ++it)
     {
         if (*it == tool ())
             return number;

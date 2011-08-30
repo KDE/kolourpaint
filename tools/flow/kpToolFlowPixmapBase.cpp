@@ -59,7 +59,7 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
 
     for (QList <QPoint>::const_iterator pit = points.constBegin ();
          pit != points.constEnd ();
-         pit++)
+         ++pit)
     {
         const QPoint point =
             hotRectForMousePointAndBrushWidthHeight (

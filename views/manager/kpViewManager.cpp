@@ -152,7 +152,7 @@ kpView *kpViewManager::viewUnderCursor (bool usingQt) const
     {
         for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
              it != d->views.end ();
-             it++)
+             ++it)
         {
             if ((*it)->underMouse ())
                 return (*it);
@@ -211,7 +211,7 @@ bool kpViewManager::hasAViewWithFocus () const
 {
     for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
          it != d->views.end ();
-         it++)
+         ++it)
     {
         if ((*it)->isActiveWindow ())
             return true;
@@ -227,7 +227,7 @@ void kpViewManager::setCursor (const QCursor &cursor)
 {
     for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
          it != d->views.end ();
-         it++)
+         ++it)
     {
         (*it)->setCursor (cursor);
     }
@@ -242,7 +242,7 @@ void kpViewManager::unsetCursor ()
 {
     for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
          it != d->views.end ();
-         it++)
+         ++it)
     {
         (*it)->unsetCursor ();
     }

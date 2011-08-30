@@ -99,7 +99,7 @@ void kpMacroCommand::execute ()
 
     for (QLinkedList <kpCommand *>::const_iterator it = m_commandList.begin ();
          it != m_commandList.end ();
-         it++)
+         ++it)
     {
     #if DEBUG_KP_COMMAND_HISTORY
         kDebug () << "\texecuting " << (*it)->name ();

@@ -435,7 +435,7 @@ static QRect WashLineHelper (QPainter *rgbPainter, void *data)
     QList <QPoint> points = kpPainter::interpolatePoints (pack->startPoint, pack->endPoint);
     for (QList <QPoint>::const_iterator pit = points.constBegin ();
             pit != points.constEnd ();
-            pit++)
+            ++pit)
     {
         // OPT: This may be reading and possibly writing pixels that were
         //      visited on a previous iteration, since the pen is usually

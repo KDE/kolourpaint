@@ -252,7 +252,7 @@ bool kpDocument::savePixmapToDevice (const QImage &image,
     QList <QString> keyList = metaInfo.textKeys ();
     for (QList <QString>::const_iterator it = keyList.constBegin ();
          it != keyList.constEnd ();
-         it++)
+         ++it)
     {
         imageToSave.setText (*it, metaInfo.text (*it));
     }

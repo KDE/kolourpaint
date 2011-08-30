@@ -302,7 +302,7 @@ QString kpTextSelection::TextForTextLines (const QList <QString> &textLines)
 
     for (QList <QString>::const_iterator it = textLines.begin () + 1;
          it != textLines.end ();
-         it++)
+         ++it)
     {
         bigString += QLatin1String ("\n");
         bigString += (*it);

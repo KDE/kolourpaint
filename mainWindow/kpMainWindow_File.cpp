@@ -464,7 +464,7 @@ void kpMainWindow::slotOpen ()
 
     for (KUrl::List::const_iterator it = urls.begin ();
          it != urls.end ();
-         it++)
+         ++it)
     {
         open (*it);
     }

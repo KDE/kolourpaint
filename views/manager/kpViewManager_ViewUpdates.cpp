@@ -77,7 +77,7 @@ void kpViewManager::restoreQueueUpdates ()
     {
         for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
              it != d->views.end ();
-             it++)
+             ++it)
         {
             (*it)->updateQueuedArea ();
         }
@@ -204,7 +204,7 @@ void kpViewManager::updateViews (const QRect &docRect)
 
     for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
          it != d->views.end ();
-         it++)
+         ++it)
     {
         kpView *view = *it;
 
@@ -255,7 +255,7 @@ void kpViewManager::adjustViewsToEnvironment ()
 #endif
     for (QLinkedList <kpView *>::const_iterator it = d->views.begin ();
          it != d->views.end ();
-         it++)
+         ++it)
     {
         kpView *view = *it;
 
