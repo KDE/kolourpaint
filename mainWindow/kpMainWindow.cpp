@@ -118,7 +118,6 @@ void kpMainWindow::readGeneralSettings ()
     d->configShowGrid = cfg.readEntry (kpSettingShowGrid, false);
     d->configShowPath = cfg.readEntry (kpSettingShowPath, false);
     d->moreEffectsDialogLastEffect = cfg.readEntry (kpSettingMoreEffectsLastEffect, 0);
-    d->resizeScaleDialogLastKeepAspect = cfg.readEntry (kpSettingResizeScaleLastKeepAspect, false);
 
     if (cfg.hasKey (kpSettingOpenImagesInSameWindow))
     {
@@ -147,7 +146,6 @@ void kpMainWindow::readGeneralSettings ()
                << " showGrid=" << d->configShowGrid
                << " showPath=" << d->configShowPath
                << " moreEffectsDialogLastEffect=" << d->moreEffectsDialogLastEffect
-               << " resizeScaleDialogLastKeepAspect=" << d->resizeScaleDialogLastKeepAspect
                << " openImagesInSameWindow=" << d->configOpenImagesInSameWindow
                << " printImageCenteredOnPage=" << d->configPrintImageCenteredOnPage;
 #endif

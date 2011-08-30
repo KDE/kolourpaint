@@ -65,78 +65,71 @@
 // Settings
 //
 
-// (I would use QLatin1String but that doesn't compile with
-//  KConfigBase::readEntry()'s use of QVariant due to the lack of
-//  QLatin1String::QLatin1String(void))
+#define kpSettingsGroupRecentFiles "Recent Files"
 
-#define kpSettingsGroupRecentFiles QString::fromLatin1 ("Recent Files")
+#define kpSettingsGroupGeneral "General Settings"
+#define kpSettingFirstTime "First Time"
+#define kpSettingShowGrid "Show Grid"
+#define kpSettingShowPath "Show Path"
+#define kpSettingColorSimilarity "Color Similarity"
+#define kpSettingDitherOnOpen "Dither on Open if Screen is 15/16bpp and Image Num Colors More Than"
+#define kpSettingPrintImageCenteredOnPage "Print Image Centered On Page"
+#define kpSettingOpenImagesInSameWindow "Open Images in the Same Window"
 
-#define kpSettingsGroupGeneral QString::fromLatin1 ("General Settings")
-#define kpSettingFirstTime QString::fromLatin1 ("First Time")
-#define kpSettingShowGrid QString::fromLatin1 ("Show Grid")
-#define kpSettingShowPath QString::fromLatin1 ("Show Path")
-#define kpSettingColorSimilarity QString::fromLatin1 ("Color Similarity")
-#define kpSettingDitherOnOpen QString::fromLatin1 ("Dither on Open if Screen is 15/16bpp and Image Num Colors More Than")
-#define kpSettingPrintImageCenteredOnPage QString::fromLatin1 ("Print Image Centered On Page")
-#define kpSettingOpenImagesInSameWindow QString::fromLatin1 ("Open Images in the Same Window")
+#define kpSettingsGroupFileSaveAs "File/Save As"
+#define kpSettingsGroupFileExport "File/Export"
+#define kpSettingsGroupEditCopyTo "Edit/Copy To"
 
-#define kpSettingsGroupFileSaveAs QString::fromLatin1 ("File/Save As")
-#define kpSettingsGroupFileExport QString::fromLatin1 ("File/Export")
-#define kpSettingsGroupEditCopyTo QString::fromLatin1 ("Edit/Copy To")
+#define kpSettingForcedMimeType "Forced MimeType"
+#define kpSettingForcedColorDepth "Forced Color Depth"
+#define kpSettingForcedDither "Forced Dither"
+#define kpSettingForcedQuality "Forced Quality"
 
-#define kpSettingForcedMimeType QString::fromLatin1 ("Forced MimeType")
-#define kpSettingForcedColorDepth QString::fromLatin1 ("Forced Color Depth")
-#define kpSettingForcedDither QString::fromLatin1 ("Forced Dither")
-#define kpSettingForcedQuality QString::fromLatin1 ("Forced Quality")
+#define kpSettingLastDocSize "Last Document Size"
 
-#define kpSettingLastDocSize QString::fromLatin1 ("Last Document Size")
+#define kpSettingMoreEffectsLastEffect "More Effects - Last Effect"
 
-#define kpSettingMoreEffectsLastEffect QString::fromLatin1 ("More Effects - Last Effect")
-
-#define kpSettingResizeScaleLastKeepAspect QString::fromLatin1 ("Resize Scale - Last Keep Aspect")
-
-
-#define kpSettingsGroupMimeTypeProperties QString::fromLatin1 ("MimeType Properties Version 1.2-2")
-#define kpSettingMimeTypeMaximumColorDepth QString::fromLatin1 ("Maximum Color Depth")
-#define kpSettingMimeTypeHasConfigurableColorDepth QString::fromLatin1 ("Configurable Color Depth")
-#define kpSettingMimeTypeHasConfigurableQuality QString::fromLatin1 ("Configurable Quality Setting")
+#define kpSettingsGroupMimeTypeProperties "MimeType Properties Version 1.2-2"
+#define kpSettingMimeTypeMaximumColorDepth "Maximum Color Depth"
+#define kpSettingMimeTypeHasConfigurableColorDepth "Configurable Color Depth"
+#define kpSettingMimeTypeHasConfigurableQuality "Configurable Quality Setting"
 
 
-#define kpSettingsGroupUndoRedo QString::fromLatin1 ("Undo/Redo Settings")
-#define kpSettingUndoMinLimit QString::fromLatin1 ("Min Limit")
-#define kpSettingUndoMaxLimit QString::fromLatin1 ("Max Limit")
-#define kpSettingUndoMaxLimitSizeLimit QString::fromLatin1 ("Max Limit Size Limit")
+#define kpSettingsGroupUndoRedo "Undo/Redo Settings"
+#define kpSettingUndoMinLimit "Min Limit"
+#define kpSettingUndoMaxLimit "Max Limit"
+#define kpSettingUndoMaxLimitSizeLimit "Max Limit Size Limit"
 
 
-#define kpSettingsGroupThumbnail QString::fromLatin1 ("Thumbnail Settings")
-#define kpSettingThumbnailShown QString::fromLatin1 ("Shown")
-#define kpSettingThumbnailGeometry QString::fromLatin1 ("Geometry")
-#define kpSettingThumbnailZoomed QString::fromLatin1 ("Zoomed")
-#define kpSettingThumbnailShowRectangle QString::fromLatin1 ("ShowRectangle")
+#define kpSettingsGroupThumbnail "Thumbnail Settings"
+#define kpSettingThumbnailShown "Shown"
+#define kpSettingThumbnailGeometry "Geometry"
+#define kpSettingThumbnailZoomed "Zoomed"
+#define kpSettingThumbnailShowRectangle "ShowRectangle"
 
 
-#define kpSettingsGroupPreviewSave QString::fromLatin1 ("Save Preview Settings")
-#define kpSettingPreviewSaveGeometry QString::fromLatin1 ("Geometry")
-#define kpSettingPreviewSaveUpdateDelay QString::fromLatin1 ("Update Delay")
+#define kpSettingsGroupPreviewSave "Save Preview Settings"
+#define kpSettingPreviewSaveGeometry "Geometry"
+#define kpSettingPreviewSaveUpdateDelay "Update Delay"
 
 
-#define kpSettingsGroupTools QString::fromLatin1 ("Tool Settings")
-#define kpSettingLastTool QString::fromLatin1 ("Last Used Tool")
-#define kpSettingToolBoxIconSize QString::fromLatin1 ("Tool Box Icon Size")
+#define kpSettingsGroupTools "Tool Settings"
+#define kpSettingLastTool "Last Used Tool"
+#define kpSettingToolBoxIconSize "Tool Box Icon Size"
 
 
-#define kpSettingsGroupText QString::fromLatin1 ("Text Settings")
-#define kpSettingFontFamily QString::fromLatin1 ("Font Family")
-#define kpSettingFontSize QString::fromLatin1 ("Font Size")
-#define kpSettingBold QString::fromLatin1 ("Bold")
-#define kpSettingItalic QString::fromLatin1 ("Italic")
-#define kpSettingUnderline QString::fromLatin1 ("Underline")
-#define kpSettingStrikeThru QString::fromLatin1 ("Strike Thru")
+#define kpSettingsGroupText "Text Settings"
+#define kpSettingFontFamily "Font Family"
+#define kpSettingFontSize "Font Size"
+#define kpSettingBold "Bold"
+#define kpSettingItalic "Italic"
+#define kpSettingUnderline "Underline"
+#define kpSettingStrikeThru "Strike Thru"
 
 
-#define kpSettingsGroupFlattenEffect QString::fromLatin1 ("Flatten Effect Settings")
-#define kpSettingFlattenEffectColor1 QString::fromLatin1 ("Color1")
-#define kpSettingFlattenEffectColor2 QString::fromLatin1 ("Color2")
+#define kpSettingsGroupFlattenEffect "Flatten Effect Settings"
+#define kpSettingFlattenEffectColor1 "Color1"
+#define kpSettingFlattenEffectColor2 "Color2"
 
 
 //

@@ -381,9 +381,7 @@ void kpMainWindow::slotResizeScale ()
 {
     toolEndShape ();
 
-
-    kpTransformResizeScaleDialog dialog (transformDialogEnvironment (), this);
-    dialog.setKeepAspectRatio (d->resizeScaleDialogLastKeepAspect);
+    kpTransformResizeScaleDialog dialog(transformDialogEnvironment(), this);
 
     if (dialog.exec () && !dialog.isNoOp ())
     {
@@ -410,19 +408,9 @@ void kpMainWindow::slotResizeScale ()
             saveDefaultDocSize (QSize (dialog.imageWidth (), dialog.imageHeight ()));
         }
     }
-
-
-    if (d->resizeScaleDialogLastKeepAspect != dialog.keepAspectRatio ())
-    {
-        d->resizeScaleDialogLastKeepAspect = dialog.keepAspectRatio ();
-
-        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
-
-        cfg.writeEntry (kpSettingResizeScaleLastKeepAspect,
-                         d->resizeScaleDialogLastKeepAspect);
-        cfg.sync ();
-    }
 }
+
+//---------------------------------------------------------------------
 
 // public slot
 void kpMainWindow::slotCrop ()

@@ -196,8 +196,6 @@ struct kpMainWindowPrivate
     QAction *actionDrawColorSimilarity;
 
     int moreEffectsDialogLastEffect;
-    bool resizeScaleDialogLastKeepAspect;
-
 
     //
     // Colors Menu

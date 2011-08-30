@@ -1,6 +1,6 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2011 Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,6 @@
 
 class QCheckBox;
 class QGroupBox;
-class QLabel;
 class QToolButton;
 
 class KComboBox;
@@ -55,38 +54,22 @@ class kpTransformResizeScaleDialog : public KDialog
 {
 Q_OBJECT
 
-public:
-    kpTransformResizeScaleDialog (kpTransformDialogEnvironment *_env,
-        QWidget *parent);
-    virtual ~kpTransformResizeScaleDialog ();
+  public:
+    kpTransformResizeScaleDialog(kpTransformDialogEnvironment *_env, QWidget *parent);
 
     enum ActOn
     {
         Image, Selection
     };
 
-private:
-    static kpTransformResizeScaleCommand::Type s_lastType;
-    static double s_lastPercentWidth, s_lastPercentHeight;
+    int imageWidth () const;
+    int imageHeight () const;
+    bool actOnSelection () const;
+    kpTransformResizeScaleCommand::Type type () const;
 
-private:
-    kpDocument *document () const;
-    kpAbstractSelection *selection () const;
-    kpTextSelection *textSelection () const;
+    bool isNoOp () const;
 
-    void createActOnBox (QWidget *baseWidget);
-    void createOperationGroupBox (QWidget *baseWidget);
-    void createDimensionsGroupBox (QWidget *baseWidget);
-
-    void widthFitHeightToAspectRatio ();
-    void heightFitWidthToAspectRatio ();
-
-private:
-    bool resizeEnabled () const;
-    bool scaleEnabled () const;
-    bool smoothScaleEnabled () const;
-
-public slots:
+  public slots:
     void slotActOnChanged ();
     void slotTypeChanged ();
 
@@ -96,47 +79,45 @@ public slots:
     void slotPercentWidthChanged (double percentWidth);
     void slotPercentHeightChanged (double percentHeight);
 
-public:
-    // (refers only to the state of the checkbox - user of dialog does
-    //  not have to do extra calculations)
-    bool keepAspectRatio () const;
-public slots:
-    void setKeepAspectRatio (bool on);
+  private:
+    kpDocument *document () const;
+    kpAbstractSelection *selection () const;
+    kpTextSelection *textSelection () const;
 
-private:
+    KHBox *createActOnBox(QWidget *baseWidget);
+    QGroupBox *createOperationGroupBox(QWidget *baseWidget);
+    QGroupBox *createDimensionsGroupBox(QWidget *baseWidget);
+
+    void widthFitHeightToAspectRatio ();
+    void heightFitWidthToAspectRatio ();
+
+    bool resizeEnabled () const;
+    bool scaleEnabled () const;
+    bool smoothScaleEnabled () const;
     int originalWidth () const;
     int originalHeight () const;
 
-public:
-    int imageWidth () const;
-    int imageHeight () const;
-    bool actOnSelection () const;
-    kpTransformResizeScaleCommand::Type type () const;
+  private slots:
+    virtual void accept();
+    void setKeepAspectRatio(bool on);
 
-    bool isNoOp () const;
-
-private slots:
-    virtual void accept ();
-
-private:
+  private:
     kpTransformDialogEnvironment *m_environ;
 
-    KHBox *m_actOnBox;
-    QLabel *m_actOnLabel;
     KComboBox *m_actOnCombo;
 
-    QGroupBox *m_operationGroupBox;
     QToolButton *m_resizeButton,
                 *m_scaleButton,
                 *m_smoothScaleButton;
 
-    QGroupBox *m_dimensionsGroupBox;
     KIntNumInput *m_originalWidthInput, *m_originalHeightInput,
                  *m_newWidthInput, *m_newHeightInput;
     KDoubleNumInput *m_percentWidthInput, *m_percentHeightInput;
     QCheckBox *m_keepAspectRatioCheckBox;
 
     int m_ignoreKeepAspectRatio;
+
+    kpTransformResizeScaleCommand::Type m_lastType;
 };
 
 
