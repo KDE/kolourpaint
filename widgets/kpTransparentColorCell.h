@@ -42,7 +42,6 @@ Q_OBJECT
 
 public:
     kpTransparentColorCell (QWidget *parent);
-    virtual ~kpTransparentColorCell ();
 
     virtual QSize sizeHint () const;
 

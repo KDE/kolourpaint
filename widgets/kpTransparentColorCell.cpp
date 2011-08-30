@@ -40,35 +40,21 @@
 
 #include <kpColor.h>
 
+//---------------------------------------------------------------------
 
 kpTransparentColorCell::kpTransparentColorCell (QWidget *parent)
     : QFrame (parent)
 {
-#if DEBUG_KP_TRANSPARENT_COLOR_CELL
-    kDebug () << "kpTransparentColorCell::kpTransparentColorCell()";
-#endif
-    setSizePolicy (QSizePolicy::Minimum/*horizontal*/,
-                   QSizePolicy::Minimum/*vertical*/);
+    setSizePolicy (QSizePolicy::Fixed/*horizontal*/,
+                   QSizePolicy::Fixed/*vertical*/);
     setFrameStyle (QFrame::Panel | QFrame::Sunken);
-#if DEBUG_KP_TRANSPARENT_COLOR_CELL && 0
-    kDebug () << "\tdefault line width=" << lineWidth ()
-               << " frame width=" << frameWidth () << endl;
-#endif
-    //setLineWidth (2);
-#if DEBUG_KP_TRANSPARENT_COLOR_CELL && 0
-    kDebug () << "\tline width=" << lineWidth ()
-               << " frame width=" << frameWidth () << endl;
-#endif
 
     m_pixmap = UserIcon ("color_transparent_26x26");
 
     this->setToolTip( i18n ("Transparent"));
 }
 
-kpTransparentColorCell::~kpTransparentColorCell ()
-{
-}
-
+//---------------------------------------------------------------------
 
 // public virtual [base QWidget]
 QSize kpTransparentColorCell::sizeHint () const
@@ -76,6 +62,8 @@ QSize kpTransparentColorCell::sizeHint () const
     return QSize (m_pixmap.width () + frameWidth () * 2,
                   m_pixmap.height () + frameWidth () * 2);
 }
+
+//---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
 void kpTransparentColorCell::mousePressEvent (QMouseEvent * /*e*/)
@@ -86,12 +74,16 @@ void kpTransparentColorCell::mousePressEvent (QMouseEvent * /*e*/)
     // However, contrary to that blog, it doesn't seem to be needed?
 }
 
+//---------------------------------------------------------------------
+
 // protected virtual [base QWidget]
 void kpTransparentColorCell::contextMenuEvent (QContextMenuEvent *e)
 {
     // Eat right-mouse press to prevent it from getting to the toolbar.
     e->accept ();
 }
+
+//---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
 void kpTransparentColorCell::mouseReleaseEvent (QMouseEvent *e)
@@ -111,6 +103,8 @@ void kpTransparentColorCell::mouseReleaseEvent (QMouseEvent *e)
     }
 }
 
+//---------------------------------------------------------------------
+
 // protected virtual [base QWidget]
 void kpTransparentColorCell::paintEvent (QPaintEvent *e)
 {
@@ -128,6 +122,8 @@ void kpTransparentColorCell::paintEvent (QPaintEvent *e)
         p.drawPixmap (contentsRect (), m_pixmap);
     }
 }
+
+//---------------------------------------------------------------------
 
 
 #include <kpTransparentColorCell.moc>
