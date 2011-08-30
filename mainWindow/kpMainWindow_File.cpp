@@ -79,7 +79,6 @@
 #include <kpView.h>
 #include <kpViewManager.h>
 
-
 // private
 void kpMainWindow::setupFileMenuActions ()
 {
@@ -872,9 +871,6 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
     saveOptionsWidget->setVisualParent (&fd);
     fd.setCaption (caption);
     fd.setOperationMode (KFileDialog::Saving);
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tmimeTypes=" << mimeTypes;
-#endif
     fd.setMimeFilter (mimeTypes, fdSaveOptions.mimeType ());
     if (localOnly)
         fd.setMode (KFile::File | KFile::LocalOnly);
