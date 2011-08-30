@@ -208,8 +208,9 @@ static void toolButtonSetLook (QToolButton *button,
     button->setCheckable (true);
 }
 
-
+//---------------------------------------------------------------------
 // private
+
 void kpTransformResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
 {
     m_operationGroupBox = new QGroupBox (i18n ("Operation"), baseWidget);
@@ -247,17 +248,6 @@ void kpTransformResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
                        QLatin1String ("smooth_scale"),
                        i18n ("S&mooth Scale"));
 
-
-    //m_resizeLabel = new QLabel (i18n ("&Resize"), m_operationGroupBox);
-    //m_scaleLabel = new QLabel (i18n ("&Scale"), m_operationGroupBox);
-    //m_smoothScaleLabel = new QLabel (i18n ("S&mooth scale"), m_operationGroupBox);
-
-
-    //m_resizeLabel->setAlignment (m_resizeLabel->alignment () | Qt::TextShowMnemonic);
-    //m_scaleLabel->setAlignment (m_scaleLabel->alignment () | Qt::TextShowMnemonic);
-    //m_smoothScaleLabel->setAlignment (m_smoothScaleLabel->alignment () | Qt::TextShowMnemonic);
-
-
     QButtonGroup *resizeScaleButtonGroup = new QButtonGroup (baseWidget);
     resizeScaleButtonGroup->addButton (m_resizeButton);
     resizeScaleButtonGroup->addButton (m_scaleButton);
@@ -269,14 +259,8 @@ void kpTransformResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
     operationLayout->setSpacing (spacingHint ());
 
     operationLayout->addWidget (m_resizeButton, 0, 0, Qt::AlignCenter);
-    //operationLayout->addWidget (m_resizeLabel, 1, 0, Qt::AlignCenter);
-
     operationLayout->addWidget (m_scaleButton, 0, 1, Qt::AlignCenter);
-    //operationLayout->addWidget (m_scaleLabel, 1, 1, Qt::AlignCenter);
-
     operationLayout->addWidget (m_smoothScaleButton, 0, 2, Qt::AlignCenter);
-    //operationLayout->addWidget (m_smoothScaleLabel, 1, 2, Qt::AlignCenter);
-
 
     connect (m_resizeButton, SIGNAL (toggled (bool)),
              this, SLOT (slotTypeChanged ()));
@@ -286,7 +270,9 @@ void kpTransformResizeScaleDialog::createOperationGroupBox (QWidget *baseWidget)
              this, SLOT (slotTypeChanged ()));
 }
 
+//---------------------------------------------------------------------
 // private
+
 void kpTransformResizeScaleDialog::createDimensionsGroupBox (QWidget *baseWidget)
 {
     m_dimensionsGroupBox = new QGroupBox (i18n ("Dimensions"), baseWidget);
@@ -449,14 +435,8 @@ void kpTransformResizeScaleDialog::slotActOnChanged ()
 #endif
 
     m_resizeButton->setEnabled (resizeEnabled ());
-    //m_resizeLabel->setEnabled (resizeEnabled ());
-
     m_scaleButton->setEnabled (scaleEnabled ());
-    //m_scaleLabel->setEnabled (scaleEnabled ());
-
     m_smoothScaleButton->setEnabled (smoothScaleEnabled ());
-    //m_smoothScaleLabel->setEnabled (smoothScaleEnabled ());
-
 
     // TODO: somehow share logic with (resize|*scale)Enabled()
     if (actOnSelection ())

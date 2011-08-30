@@ -29,9 +29,6 @@
 #ifndef kpTransformResizeScaleDialog_H
 #define kpTransformResizeScaleDialog_H
 
-
-#include <qpixmap.h>
-
 #include <kdialog.h>
 
 #include <kpColor.h>
@@ -132,9 +129,6 @@ private:
     QToolButton *m_resizeButton,
                 *m_scaleButton,
                 *m_smoothScaleButton;
-    QLabel *m_resizeLabel,
-                 *m_scaleLabel,
-                 *m_smoothScaleLabel;
 
     QGroupBox *m_dimensionsGroupBox;
     KIntNumInput *m_originalWidthInput, *m_originalHeightInput,
