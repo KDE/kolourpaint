@@ -32,12 +32,11 @@
 #include <kpColorPalette.h>
 
 #include <QBoxLayout>
-#include <QScrollArea>
-
 
 #include <kpColorCells.h>
 #include <kpTransparentColorCell.h>
 
+//---------------------------------------------------------------------
 
 struct kpColorPalettePrivate
 {
@@ -50,14 +49,12 @@ struct kpColorPalettePrivate
     kpColorCells *colorCells;
 };
 
+//---------------------------------------------------------------------
+
 kpColorPalette::kpColorPalette (QWidget *parent, Qt::Orientation o)
     : QWidget (parent),
       d (new kpColorPalettePrivate ())
 {
-#if DEBUG_KP_COLOR_PALETTE
-    kDebug () << "kpColorPalette::kpColorPalette()";
-#endif
-
     d->boxLayout = 0;
 
     d->transparentColorCell = new kpTransparentColorCell (this);
@@ -75,16 +72,22 @@ kpColorPalette::kpColorPalette (QWidget *parent, Qt::Orientation o)
     setOrientation (o);
 }
 
+//---------------------------------------------------------------------
+
 kpColorPalette::~kpColorPalette ()
 {
     delete d;
 }
+
+//---------------------------------------------------------------------
 
 // public
 Qt::Orientation kpColorPalette::orientation () const
 {
     return d->orientation;
 }
+
+//---------------------------------------------------------------------
 
 void kpColorPalette::setOrientation (Qt::Orientation o)
 {
@@ -95,13 +98,13 @@ void kpColorPalette::setOrientation (Qt::Orientation o)
     if (o == Qt::Horizontal)
     {
         d->boxLayout = new QBoxLayout (QBoxLayout::LeftToRight, this);
-        d->boxLayout->addWidget (d->transparentColorCell, 0/*stretch*/, Qt::AlignVCenter);
+        d->boxLayout->addWidget (d->transparentColorCell, 0/*stretch*/, Qt::AlignTop);
         d->boxLayout->addWidget (d->colorCells);
     }
     else
     {
         d->boxLayout = new QBoxLayout (QBoxLayout::TopToBottom, this);
-        d->boxLayout->addWidget (d->transparentColorCell, 0/*stretch*/, Qt::AlignHCenter);
+        d->boxLayout->addWidget (d->transparentColorCell, 0/*stretch*/, Qt::AlignTop);
         d->boxLayout->addWidget (d->colorCells);
     }
     d->boxLayout->setSpacing (5);
@@ -109,6 +112,7 @@ void kpColorPalette::setOrientation (Qt::Orientation o)
     d->orientation = o;
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpColorCells *kpColorPalette::colorCells () const
@@ -116,5 +120,6 @@ kpColorCells *kpColorPalette::colorCells () const
     return d->colorCells;
 }
 
+//---------------------------------------------------------------------
 
 #include <kpColorPalette.moc>
