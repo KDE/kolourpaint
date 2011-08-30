@@ -133,10 +133,6 @@ kpColorCells::kpColorCells (QWidget *parent,
     : kpColorCellsBase (parent, 0/*rows for now*/, 0/*cols for now*/),
       d (new kpColorCellsPrivate ())
 {
-    // Remove when we fix vertical orientation.
-    Q_ASSERT (o == Qt::Horizontal);
-
-
     d->orientation = o;
     d->isModified = false;
     d->blockColorChangedSig = false;
