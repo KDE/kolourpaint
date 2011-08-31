@@ -263,19 +263,13 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
         baseWidget);
 
     d->fieldsTableWidget = new QTableWidget (fieldsGroupBox);
+    d->fieldsTableWidget->setEditTriggers(QAbstractItemView::AllEditTriggers);
+
     connect (d->fieldsTableWidget, SIGNAL (currentCellChanged (int, int, int, int)),
              SLOT (slotFieldsCurrentCellChanged (int, int, int, int)));
-    connect (d->fieldsTableWidget, SIGNAL (itemActivated (QTableWidgetItem *)),
-             SLOT (slotFieldsItemActivated (QTableWidgetItem *)));
+
     connect (d->fieldsTableWidget, SIGNAL (itemChanged (QTableWidgetItem *)),
              SLOT (slotFieldsItemChanged (QTableWidgetItem *)));
-    connect (d->fieldsTableWidget, SIGNAL (itemClicked (QTableWidgetItem *)),
-             SLOT (slotFieldsItemClicked (QTableWidgetItem *)));
-    connect (d->fieldsTableWidget, SIGNAL (itemEntered (QTableWidgetItem *)),
-             SLOT (slotFieldsItemEntered (QTableWidgetItem *)));
-    connect (d->fieldsTableWidget, SIGNAL (itemPressed (QTableWidgetItem *)),
-             SLOT (slotFieldsItemPressed (QTableWidgetItem *)));
-
 
     KHBox *fieldsAddDeleteButtonsBox = new KHBox (fieldsGroupBox);
     fieldsAddDeleteButtonsBox->setMargin (0);
@@ -353,6 +347,8 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
         resize (::LastWidth, ::LastHeight);
 }
 
+//---------------------------------------------------------------------
+
 kpDocumentMetaInfoDialog::~kpDocumentMetaInfoDialog ()
 {
     ::LastWidth = width (), ::LastHeight = height ();
@@ -360,15 +356,18 @@ kpDocumentMetaInfoDialog::~kpDocumentMetaInfoDialog ()
     delete d;
 }
 
-
+//---------------------------------------------------------------------
 // private
+
 void kpDocumentMetaInfoDialog::editCell (int r, int c)
 {
     d->fieldsTableWidget->setCurrentCell (r, c);
     d->fieldsTableWidget->editItem (d->fieldsTableWidget->item (r, c));
 }
 
+//---------------------------------------------------------------------
 // private slot
+
 void kpDocumentMetaInfoDialog::setUIToOriginalMetaInfo ()
 {
     // Set DPI spinboxes.
@@ -420,13 +419,15 @@ void kpDocumentMetaInfoDialog::setUIToOriginalMetaInfo ()
     enableFieldsDeleteRowButtonIfShould ();
 }
 
-
+//---------------------------------------------------------------------
 // public
+
 bool kpDocumentMetaInfoDialog::isNoOp () const
 {
     return (metaInfo () == *d->originalMetaInfoPtr);
 }
 
+//---------------------------------------------------------------------
 
 // public
 kpDocumentMetaInfo kpDocumentMetaInfoDialog::originalMetaInfo () const
@@ -670,19 +671,8 @@ void kpDocumentMetaInfoDialog::slotFieldsCurrentCellChanged (int row, int col,
 }
 
 //---------------------------------------------------------------------
-
 // private slot
-void kpDocumentMetaInfoDialog::slotFieldsItemActivated (QTableWidgetItem *item)
-{
-#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
-    kDebug () << "kpDocumentMetaInfoDialog::slotFieldsItemActivated("
-              << "item=" << item << ")" << endl;
-#endif
-}
 
-//---------------------------------------------------------------------
-
-// private slot
 void kpDocumentMetaInfoDialog::slotFieldsItemChanged (QTableWidgetItem *it)
 {
 #if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
@@ -741,47 +731,9 @@ void kpDocumentMetaInfoDialog::slotFieldsItemChanged (QTableWidgetItem *it)
 #endif
 }
 
+//---------------------------------------------------------------------
 // private slot
-void kpDocumentMetaInfoDialog::slotFieldsItemClicked (QTableWidgetItem *item)
-{
-#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
-    kDebug () << "kpDocumentMetaInfoDialog::slotFieldsItemClicked("
-              << "item=" << item << ")" << endl;
-#endif
-}
 
-// private slot
-void kpDocumentMetaInfoDialog::slotFieldsItemEntered (QTableWidgetItem *item)
-{
-#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
-    kDebug () << "kpDocumentMetaInfoDialog::slotFieldsItemEntered("
-              << "item=" << item << ")" << endl;
-#endif
-}
-
-// private slot
-void kpDocumentMetaInfoDialog::slotFieldsItemPressed (QTableWidgetItem *item)
-{
-#if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
-    kDebug () << "kpDocumentMetaInfoDialog::slotFieldsItemPressed("
-              << "item=" << item << ")" << endl;
-#endif
-
-    // Override the default button press behavior of just selecting the
-    // whole box: let the user edit the text straight away, without forcing
-    // them to double click.
-    //
-    // There is no reason why the user would want to select 1 or more boxes
-    // by pressing the mouse button, rather than choosing to edit text.
-    // And we don't do anything with selections anyway.
-    //
-    // From memory, openPersistentEditor() leads to all sorts of strange
-    // effects so use editItem() instead.
-    d->fieldsTableWidget->editItem (item);
-}
-
-
-// private slot
 void kpDocumentMetaInfoDialog::slotFieldsAddRowButtonClicked ()
 {
 #if DEBUG_KP_DOCUMENT_META_INFO_DIALOG
@@ -801,6 +753,8 @@ void kpDocumentMetaInfoDialog::slotFieldsAddRowButtonClicked ()
     // No one edits the value first (column 1).
     editCell ((r + 1)/*row*/, 0/*col*/);
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpDocumentMetaInfoDialog::slotFieldsDeleteRowButtonClicked ()

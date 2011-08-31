@@ -346,7 +346,7 @@ kpTransformAutoCropCommand::kpTransformAutoCropCommand (bool actOnSelection,
         const kpTransformAutoCropBorder &topBorder,
         const kpTransformAutoCropBorder &botBorder,
         kpCommandEnvironment *environ)
-    : kpNamedCommand (name (actOnSelection, DontShowAccel), environ),
+    : kpNamedCommand(text(actOnSelection, DontShowAccel), environ),
       d (new kpTransformAutoCropCommandPrivate ())
 {
     d->actOnSelection = actOnSelection;
@@ -368,6 +368,8 @@ kpTransformAutoCropCommand::kpTransformAutoCropCommand (bool actOnSelection,
     d->oldSelectionPtr = 0;
 }
 
+//---------------------------------------------------------------------
+
 kpTransformAutoCropCommand::~kpTransformAutoCropCommand ()
 {
     deleteUndoImages ();
@@ -376,9 +378,10 @@ kpTransformAutoCropCommand::~kpTransformAutoCropCommand ()
     delete d;
 }
 
-
+//---------------------------------------------------------------------
 // public static
-QString kpTransformAutoCropCommand::name (bool actOnSelection, int options)
+
+QString kpTransformAutoCropCommand::text(bool actOnSelection, int options)
 {
     if (actOnSelection)
     {
@@ -396,8 +399,9 @@ QString kpTransformAutoCropCommand::name (bool actOnSelection, int options)
     }
 }
 
-
+//---------------------------------------------------------------------
 // public virtual [base kpCommand]
+
 kpCommandSize::SizeType kpTransformAutoCropCommand::size () const
 {
     return d->leftBorder.size () +
@@ -411,8 +415,9 @@ kpCommandSize::SizeType kpTransformAutoCropCommand::size () const
            SelectionSize (d->oldSelectionPtr);
 }
 
-
+//---------------------------------------------------------------------
 // private
+
 void kpTransformAutoCropCommand::getUndoImage (const kpTransformAutoCropBorder &border, kpImage **image)
 {
     kpDocument *doc = document ();

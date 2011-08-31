@@ -58,7 +58,7 @@ public:
         ShowAccel = 1
     };
 
-    static QString name (bool actOnSelection, int options);
+    static QString text(bool actOnSelection, int options);
 
     virtual SizeType size () const;
 

@@ -57,14 +57,6 @@ public:
                               QWidget *parent);
     virtual ~kpDocumentMetaInfoDialog ();
 
-
-private:
-    void editCell (int r, int c);
-
-private slots:
-    void setUIToOriginalMetaInfo ();
-
-
 public:
     bool isNoOp () const;
 
@@ -89,39 +81,30 @@ public:
     // time it's called.
     kpDocumentMetaInfo metaInfo (QString *errorMessage = 0) const;
 
-
 private:
+    void editCell (int r, int c);
     void fieldsUpdateVerticalHeader ();
 
     void fieldsAddEmptyRow (int atRow);
     void fieldsAppendEmptyRow ();
 
-private:
     bool isFieldsRowDeleteable (int row) const;
     void fieldsDeleteRow (int r);
 
     void enableFieldsDeleteRowButtonIfShould ();
 
-
 private slots:
+    void setUIToOriginalMetaInfo ();
     void slotFieldsCurrentCellChanged (int row, int col, int oldRow, int oldCol);
-    void slotFieldsItemActivated (QTableWidgetItem *item);
 
     // Allows the user to add a row without pressing any pushbuttons:
     // Appends a new, blank row when text has been added to the last row.
     void slotFieldsItemChanged (QTableWidgetItem *item);
 
-    void slotFieldsItemClicked (QTableWidgetItem *item);
-    void slotFieldsItemEntered (QTableWidgetItem *item);
-    void slotFieldsItemPressed (QTableWidgetItem *item);
-
     void slotFieldsAddRowButtonClicked ();
     void slotFieldsDeleteRowButtonClicked ();
 
-
-private slots:
     virtual void accept ();
-
 
 private:
     struct kpDocumentMetaInfoDialogPrivate * const d;

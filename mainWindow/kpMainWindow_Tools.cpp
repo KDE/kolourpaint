@@ -571,6 +571,9 @@ bool kpMainWindow::slotDragScroll (const QPoint &docPoint,
                                    int zoomLevel,
                                    bool *scrolled)
 {
+  Q_UNUSED(docPoint)
+  Q_UNUSED(docLastPoint)
+
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotDragScroll() maybeDragScrolling="
                << maybeDragScrollingMainView ()

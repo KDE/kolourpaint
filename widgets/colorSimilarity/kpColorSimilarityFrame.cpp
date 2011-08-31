@@ -64,7 +64,7 @@ QSize kpColorSimilarityFrame::sizeHint () const
 //---------------------------------------------------------------------
 
 // protected virtual [base QWidget]
-void kpColorSimilarityFrame::paintEvent (QPaintEvent *e)
+void kpColorSimilarityFrame::paintEvent (QPaintEvent *)
 {
     int cubeRectSize = qMin(width() * 6 / 8, height() * 6 / 8);
     int x = (width() - cubeRectSize) / 2;

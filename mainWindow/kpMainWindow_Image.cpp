@@ -104,8 +104,8 @@ bool kpMainWindow::isTextSelection () const
 // private
 QString kpMainWindow::autoCropText () const
 {
-    return kpTransformAutoCropCommand::name (isSelectionActive (),
-                                        kpTransformAutoCropCommand::ShowAccel);
+    return kpTransformAutoCropCommand::text(isSelectionActive(),
+                                            kpTransformAutoCropCommand::ShowAccel);
 }
 
 //---------------------------------------------------------------------
