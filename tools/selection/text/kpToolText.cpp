@@ -82,7 +82,7 @@ kpAbstractSelectionContentCommand *kpToolText::newGiveContentCommand () const
     
     return new kpToolTextGiveContentCommand (
         *textSel,
-        QString::null/*uninteresting child of macro cmd*/,	//krazy:exclude=nullstrassign for old broken gcc
+        QString()/*uninteresting child of macro cmd*/,
         environ ()->commandEnvironment ());
 }
 

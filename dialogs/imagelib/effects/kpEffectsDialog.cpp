@@ -231,7 +231,7 @@ void kpEffectsDialog::selectEffect (int which)
     m_effectWidget = 0;
 
 
-    m_settingsGroupBox->setWindowTitle (QString::null);	//krazy:exclude=nullstrassign for old broken gcc
+    m_settingsGroupBox->setWindowTitle(QString());
 
 #define CREATE_EFFECT_WIDGET(name)  \
     m_effectWidget = new name (m_actOnSelection, m_settingsGroupBox)

@@ -85,7 +85,7 @@ void kpAbstractSelectionTool::keyPressEvent (QKeyEvent *e)
         if ( !d->currentMoveCommand )
         {
           d->currentMoveCommand = new kpToolSelectionMoveCommand(
-              QString::null/*uninteresting child of macro cmd*/,	//krazy:exclude=nullstrassign for old broken gcc
+              QString()/*uninteresting child of macro cmd*/,
               environ()->commandEnvironment());
           d->currentMoveCommandIsSmear = false;
         }

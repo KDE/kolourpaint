@@ -62,7 +62,7 @@ void kpTransformCrop_TextSelection (kpMainWindow *mainWindow,
 #endif
     kpToolSelectionMoveCommand *moveCmd =
         new kpToolSelectionMoveCommand (
-            QString::null/*uninteresting child of macro cmd*/,  //krazy:exclusion=nullstrassign for old broken gcc
+            QString()/*uninteresting child of macro cmd*/,
             environ);
     moveCmd->moveTo (QPoint (0, 0), true/*move on exec, not now*/);
     moveCmd->finalize ();

@@ -137,9 +137,7 @@ kpDocumentMetaInfo &kpDocumentMetaInfo::operator= (const kpDocumentMetaInfo &rhs
 // public
 void kpDocumentMetaInfo::printDebug (const QString &prefix) const
 {
-    const QString usedPrefix = !prefix.isEmpty () ?
-                                   QString(prefix + QLatin1String (":")) :
-                                   QString::null;	//krazy:exclude=nullstrassign for old broken gcc
+    const QString usedPrefix = !prefix.isEmpty() ? QString(prefix + QLatin1String(":")) : QString();
 
     kDebug () << usedPrefix;
 

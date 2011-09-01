@@ -464,7 +464,7 @@ void kpMainWindow::pasteText (const QString &text,
             {
                 macroCmd->addCommand (
                     new kpToolTextEnterCommand (
-                        QString::null/*uninteresting child of macroCmd*/,  //krazy:exclude=nullstrassign for old broken gcc
+                        QString()/*uninteresting child of macroCmd*/,
                         d->viewManager->textCursorRow (),
                         d->viewManager->textCursorCol (),
                         kpToolTextEnterCommand::AddEnterNow,
@@ -473,7 +473,7 @@ void kpMainWindow::pasteText (const QString &text,
 
             macroCmd->addCommand (
                 new kpToolTextInsertCommand (
-                    QString::null/*uninteresting child of macroCmd*/,  //krazy:exclude=nullstrassign for old broken gcc
+                    QString()/*uninteresting child of macroCmd*/,
                     d->viewManager->textCursorRow (),
                     d->viewManager->textCursorCol (),
                     textLines [i],

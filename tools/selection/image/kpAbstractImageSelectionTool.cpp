@@ -70,7 +70,7 @@ kpAbstractSelectionContentCommand *kpAbstractImageSelectionTool::newGiveContentC
     return new kpToolSelectionPullFromDocumentCommand (
             *imageSel,
             environ ()->backgroundColor (),
-            QString::null/*uninteresting child of macro cmd*/,	//krazy:exclude=nullstrassign for old broken gcc
+            QString()/*uninteresting child of macro cmd*/,
             environ ()->commandEnvironment ());
 }
 
