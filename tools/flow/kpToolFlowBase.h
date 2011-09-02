@@ -1,6 +1,6 @@
 
 /*
-   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright(c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -17,7 +17,7 @@
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
    IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
-   INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+   INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES(INCLUDING, BUT
    NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -30,8 +30,6 @@
 #define KP_TOOL_FLOW_BASE_H
 
 
-#include <qlist.h>
-#include <qpixmap.h>
 #include <qrect.h>
 
 #include <kpTempImage.h>
@@ -47,80 +45,74 @@ class kpToolFlowCommand;
 
 class kpToolFlowBase : public kpTool
 {
-Q_OBJECT
+  Q_OBJECT
 
-public:
-    kpToolFlowBase (const QString &text, const QString &description,
-        int key,
-        kpToolEnvironment *environ, QObject *parent, const QString &name);
-    virtual ~kpToolFlowBase ();
+  public:
+    kpToolFlowBase(const QString &text, const QString &description,
+                   int key,
+                   kpToolEnvironment *environ, QObject *parent, const QString &name);
 
-private:
-    void clearBrushCursorData ();
+    virtual ~kpToolFlowBase();
 
-protected:
-    virtual QString haventBegunDrawUserMessage () const = 0;
+    // Returns the dirty rectangle for drawing a brush(of size
+    // <brushWidth>x<brushHeight>) at <mousePoint>.  <mousePoint> will end
+    // up being the midpoint of the returned rectangle(subject to integer
+    // precision).
+    static QRect hotRectForMousePointAndBrushWidthHeight(
+        const QPoint &mousePoint,
+        int brushWidth, int brushHeight);
 
-    virtual bool haveSquareBrushes () const { return false; }
-    virtual bool haveDiverseBrushes () const { return false; }
-    bool haveAnyBrushes () const
-    {
-        return (haveSquareBrushes () || haveDiverseBrushes ());
-    }
+    virtual void begin();
+    virtual void end();
 
-    virtual bool colorsAreSwapped () const { return false; }
-
-public:
-    virtual void begin ();
-    virtual void end ();
-
-    virtual void beginDraw ();
-    virtual void hover (const QPoint &point);
+    virtual void beginDraw();
+    virtual void hover(const QPoint &point);
 
     // drawPoint() normally calls drawLine(point,point).  Override drawPoint()
     // if you think you can be more efficient.
-    virtual QRect drawPoint (const QPoint &point);
-    virtual QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint) = 0;
+    virtual QRect drawPoint(const QPoint &point);
+    virtual QRect drawLine(const QPoint &thisPoint, const QPoint &lastPoint) = 0;
 
-    virtual bool drawShouldProceed (const QPoint & /*thisPoint*/, const QPoint & /*lastPoint*/, const QRect & /*normalizedRect*/) { return true; }
-    virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint, const QRect &normalizedRect);
-    virtual void cancelShape ();
-    virtual void releasedAllButtons ();
-    virtual void endDraw (const QPoint &, const QRect &);
+    virtual bool drawShouldProceed(const QPoint & /*thisPoint*/, const QPoint & /*lastPoint*/, const QRect & /*normalizedRect*/) { return true; }
+    virtual void draw(const QPoint &thisPoint, const QPoint &lastPoint, const QRect &normalizedRect);
+    virtual void cancelShape();
+    virtual void releasedAllButtons();
+    virtual void endDraw(const QPoint &, const QRect &);
 
-protected:
-    kpTempImage::UserFunctionType brushDrawFunction () const;
-    void *brushDrawFunctionData () const;
+  protected:
+    virtual QString haventBegunDrawUserMessage() const = 0;
 
-    int brushWidth () const;
-    int brushHeight () const;
+    virtual bool haveSquareBrushes() const { return false; }
+    virtual bool haveDiverseBrushes() const { return false; }
+    bool haveAnyBrushes() const
+    {
+        return(haveSquareBrushes() || haveDiverseBrushes());
+    }
 
-    bool brushIsDiagonalLine () const;
+    virtual bool colorsAreSwapped() const { return false; }
 
-    kpToolFlowCommand *currentCommand () const;
+    kpTempImage::UserFunctionType brushDrawFunction() const;
+    void *brushDrawFunctionData() const;
 
-protected slots:
-    void updateBrushAndCursor ();
+    int brushWidth() const;
+    int brushHeight() const;
 
-    virtual void slotForegroundColorChanged (const kpColor &col);
-    virtual void slotBackgroundColorChanged (const kpColor &col);
+    bool brushIsDiagonalLine() const;
 
-protected:
-    virtual kpColor color (int which);
+    kpToolFlowCommand *currentCommand() const;
+    virtual kpColor color(int which);
+    QRect hotRect() const;
 
-public:
-    // Returns the dirty rectangle for drawing a brush (of size
-    // <brushWidth>x<brushHeight>) at <mousePoint>.  <mousePoint> will end
-    // up being the midpoint of the returned rectangle (subject to integer
-    // precision).
-    static QRect hotRectForMousePointAndBrushWidthHeight (
-        const QPoint &mousePoint,
-        int brushWidth, int brushHeight);
-protected:
-    QRect hotRect () const;
+  protected slots:
+    void updateBrushAndCursor();
 
+    virtual void slotForegroundColorChanged(const kpColor &col);
+    virtual void slotBackgroundColorChanged(const kpColor &col);
 
-private:
+  private:
+    void clearBrushCursorData();
+
+  private:
     struct kpToolFlowBasePrivate *d;
 };
 

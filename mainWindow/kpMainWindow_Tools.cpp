@@ -1,6 +1,6 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2011 Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -178,10 +178,8 @@ void kpMainWindow::setupToolActions ()
 // private
 void kpMainWindow::createToolBox ()
 {
-    d->toolToolBar = new kpToolToolBar (i18n ("Tool Box"), 2/*columns/rows*/, this);
-
-    // (needed for QMainWindow::saveState())
-    d->toolToolBar->setObjectName ( QLatin1String("Tool Box" ));
+    d->toolToolBar = new kpToolToolBar(QLatin1String("Tool Box"), 2/*columns/rows*/, this);
+    d->toolToolBar->setWindowTitle(i18n("Tool Box"));
 
     connect (d->toolToolBar, SIGNAL (sigToolSelected (kpTool *)),
              this, SLOT (slotToolSelected (kpTool *)));
@@ -193,13 +191,8 @@ void kpMainWindow::createToolBox ()
              SLOT (updateActionDrawOpaqueChecked ()));
     updateActionDrawOpaqueChecked ();
 
-    for (QList <kpTool *>::const_iterator it = d->tools.constBegin ();
-         it != d->tools.constEnd ();
-         ++it)
-    {
-        d->toolToolBar->registerTool (*it);
-    }
-
+    foreach (kpTool *tool, d->tools)
+      d->toolToolBar->registerTool(tool);
 
     // (from config file)
     readLastTool ();
@@ -234,7 +227,7 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
     }
     else if (!enable && d->toolToolBar->isEnabled ())
     {
-        // don't have a disabled Tool Box with an enabled Tool
+        // don't have a disabled Tool Box with a checked Tool
         d->toolToolBar->selectTool (0);
     }
 
@@ -242,28 +235,13 @@ void kpMainWindow::enableToolsDocumentActions (bool enable)
     d->toolToolBar->setEnabled (enable);
 
 
-    for (QList <kpTool *>::const_iterator it = d->tools.constBegin ();
-         it != d->tools.constEnd ();
-         ++it)
+    foreach (kpTool *tool, d->tools)
     {
-        kpToolAction *action = (*it)->action ();
-        if (action)
-        {
-        #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\tchanging enabled state of " << (*it)->objectName ();
-        #endif
+      kpToolAction *action = tool->action();
+      if (!enable && action->isChecked())
+          action->setChecked(false);
 
-            if (!enable && action->isChecked ())
-                action->setChecked (false);
-
-            action->setEnabled (enable);
-        }
-        else
-        {
-        #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\tno action for " << (*it)->objectName ();
-        #endif
-        }
+      action->setEnabled(enable);
     }
 
 

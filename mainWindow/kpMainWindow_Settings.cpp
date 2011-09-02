@@ -132,22 +132,13 @@ void kpMainWindow::slotShowPathToggled ()
 // private slot
 void kpMainWindow::slotKeyBindings ()
 {
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotKeyBindings()";
-#endif
-
     toolEndShape ();
 
     if (KShortcutsDialog::configure (actionCollection (),
             KShortcutsEditor::LetterShortcutsAllowed,
             this))
     {
-    #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tdialog accepted";
-    #endif
         // TODO: PROPAGATE: thru mainWindow's and interprocess
-
-        kpToolAction::updateAllActionsToolTips (actionCollection ());
     }
 }
 

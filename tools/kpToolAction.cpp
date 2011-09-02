@@ -1,6 +1,6 @@
-
 /*
-   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright(c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright(c) 2011 Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -17,7 +17,7 @@
    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
    IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
-   INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+   INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES(INCLUDING, BUT
    NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
@@ -25,107 +25,44 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#define DEBUG_KP_TOOL_ACTION 0
-
-
 #include <kpToolAction.h>
 
 #include <kactioncollection.h>
-#include <kdebug.h>
 #include <kicon.h>
 
 #include <kpTool.h>
 
+//---------------------------------------------------------------------
 
-kpToolAction::kpToolAction (const QString &text,
+kpToolAction::kpToolAction(const QString &text,
                             const QString &pic, const KShortcut &shortcut,
                             const QObject *receiver, const char *slot,
                             KActionCollection *ac, const QString &name)
-    : KToggleAction (KIcon (pic), text, ac)
+    : KToggleAction(KIcon(pic), text, ac)
 {
-#if DEBUG_KP_TOOL_ACTION
-    kDebug () << "kpToolAction<" << name << ">::kpToolAction(shortcut="
-              << shortcut.toString () << ")" << endl;
-#endif
+  KToggleAction::setShortcut(shortcut);
 
-    KToggleAction::setShortcut (shortcut);
+  if ( receiver && slot )
+    connect(this, SIGNAL(triggered(bool)), receiver, slot);
 
-    if (receiver && slot)
-        connect (this, SIGNAL (triggered (bool)), receiver, slot);
+  updateToolTip();
+  connect(this, SIGNAL(changed()), this, SLOT(updateToolTip()));
 
-    updateToolTip ();
-
-    ac->addAction (name, this);
+  ac->addAction(name, this);
 }
 
 //---------------------------------------------------------------------
 
 // protected
-void kpToolAction::updateToolTip ()
+void kpToolAction::updateToolTip()
 {
-    const QString newToolTip =
-        kpTool::toolTipForTextAndShortcut (text (), shortcut ());
-#if DEBUG_KP_TOOL_ACTION
-    kDebug () << "\tkpToolAction<" << objectName () << ">::updateToolTip()"
-              << " text='" << text () << "' shortcut=" << shortcut ().toString ()
-              << " oldToolTip=" << toolTip () << " newToolTip=" << newToolTip
-              << endl;
-#endif
-    if (newToolTip == toolTip ())
-        return;
+  const QString newToolTip =
+      kpTool::toolTipForTextAndShortcut(text(), shortcut());
 
-    setToolTip (newToolTip);
-    emit toolTipChanged (newToolTip);
-}
+  if ( newToolTip == toolTip() )
+    return;
 
-//---------------------------------------------------------------------
-
-// public static
-void kpToolAction::updateAllActionsToolTips (KActionCollection *ac)
-{
-#if DEBUG_KP_TOOL_ACTION
-    kDebug () << "kpToolAction::updateAllActionsToolTips()";
-#endif
-
-    foreach (QAction *action, ac->actions ())
-    {
-        kpToolAction *toolAction = qobject_cast <kpToolAction *> (action);
-        if (!toolAction)
-            continue;
-
-        toolAction->updateToolTip ();
-    }
-}
-
-//---------------------------------------------------------------------
-//
-// KToggleAction overrides
-//
-
-// public
-void kpToolAction::setText (const QString &text)
-{
-#if DEBUG_KP_TOOL_ACTION
-    kDebug () << "kpToolAction<" << objectName ()
-               << ">::setText(" << text << ")" << endl;
-#endif
-
-    KToggleAction::setText (text);
-    updateToolTip ();
-}
-
-//---------------------------------------------------------------------
-
-// public
-void kpToolAction::setShortcut (const KShortcut &shortcut)
-{
-#if DEBUG_KP_TOOL_ACTION
-    kDebug () << "kpToolAction<" << objectName ()
-               << ">::setShortcut(" << shortcut.toString () << ")" << endl;
-#endif
-
-    KToggleAction::setShortcut (shortcut);
-    updateToolTip ();
+  setToolTip(newToolTip);
 }
 
 //---------------------------------------------------------------------

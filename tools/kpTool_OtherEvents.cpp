@@ -164,19 +164,3 @@ void kpTool::slotColorSimilarityChangedInternal (double similarity, int processe
 }
 
 //---------------------------------------------------------------------
-
-// protected slot
-void kpTool::slotActionToolTipChanged (const QString &string)
-{
-    emit actionToolTipChanged (string);
-}
-
-//---------------------------------------------------------------------
-
-// protected slots
-void kpTool::slotActionActivated ()
-{
-    emit actionActivated ();
-}
-
-//---------------------------------------------------------------------

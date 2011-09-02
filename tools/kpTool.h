@@ -86,36 +86,17 @@ public:
             QObject *parent, const QString &name);
     virtual ~kpTool ();
 
-private:
-    // Only called by ctor to create action().
-    void initAction ();
+    kpToolAction *action () const;
 
-signals:
-    void actionToolTipChanged (const QString &string);
-
-protected slots:
-    void slotActionToolTipChanged (const QString &string);
-
-public:
     QString text () const;
-    void setText (const QString &text);
 
-    static QString toolTipForTextAndShortcut (const QString &text,
-        const KShortcut &shortcut);
+    static QString toolTipForTextAndShortcut (const QString &text, const KShortcut &shortcut);
     QString toolTip () const;
-
-    QString description () const;
-    void setDescription (const QString &description);
-
-    int key () const;
-    void setKey (int key);
 
     // Given a single <key>, returns a shortcut with <key>
     // (disabled when the user is editing text) and as an alternate,
     // <some modifiers>+<key>.
     static KShortcut shortcutForKey (int key);
-    KShortcut shortcut () const;
-
 
     static QRect neededRect (const QRect &rect, int lineWidth);
     static QImage neededPixmap (const QImage &image, const QRect &boundingRect);
@@ -138,6 +119,13 @@ public:
     // Keep in mind that if viewUnderStartPoint(), this can return coordinates
     // outside of the document/view.
     QPoint calculateCurrentPoint (bool zoomToDoc = true) const;
+
+private:
+    // Only called by ctor to create action().
+    void initAction ();
+
+signals:
+    void actionToolTipChanged();
 
 public slots:
     // Call this when something below the mouse cursor may have changed
@@ -175,9 +163,9 @@ protected:
 
 public:  // for kpMainWindow
     kpView *viewUnderStartPoint () const;
+
 protected:
     kpView *viewUnderCursor () const;
-
 
 public:
     // Called when the tool is selected.
@@ -218,21 +206,9 @@ signals:
     // emitted after cancelShape() has been called
     void cancelledShape (const QPoint &point);
 
-
-public:
-    // Override this to use an icon whose name is not the same as the tool's
-    // <name> as passed to the constructor.
-    virtual QString iconName () const;
-
-    kpToolAction *action () const;
-
 signals:
     // User clicked on the tool's action - i.e. select this tool
-    void actionActivated ();
-
-protected slots:
-    void slotActionActivated ();
-
+    void actionActivated();
 
 protected:
     // (this method is called by kpTool just as it is needed - its value
@@ -282,7 +258,6 @@ protected:
 
     kpColor color (int which) const;
 
-    // TODO: does anyone actually use these?
     kpColor foregroundColor () const;
     kpColor backgroundColor () const;
 

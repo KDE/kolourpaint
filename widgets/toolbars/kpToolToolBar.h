@@ -43,6 +43,7 @@ class QGridLayout;
 class QWidget;
 
 class kpTool;
+class kpToolButton;
 
 class kpToolWidgetBase;
 class kpToolWidgetBrush;
@@ -57,12 +58,11 @@ class kpToolToolBar : public KToolBar
 Q_OBJECT
 
 public:
-    kpToolToolBar (const QString &label, int colsOrRows, QWidget *parent);
+    kpToolToolBar (const QString &name, int colsOrRows, QMainWindow *parent);
     virtual ~kpToolToolBar ();
 
-    void registerTool (kpTool *tool);
-    void unregisterTool (kpTool *tool);
-    void unregisterAllTools ();
+    void registerTool(kpTool *tool);
+    void unregisterTool(kpTool *tool);
 
     kpTool *tool () const;
     void selectTool (const kpTool *tool, bool reselectIfSameTool = false);
@@ -89,10 +89,10 @@ private slots:
     void slotToolButtonClicked ();
 
     void slotToolActionActivated ();
-    void slotToolActionToolTipChanged ();
 
     void adjustToOrientation(Qt::Orientation o);
     void slotIconSizeChanged(const QSize &);
+    void slotToolButtonStyleChanged(Qt::ToolButtonStyle style);
 
 private:
     void addButton (QAbstractButton *button, Qt::Orientation o, int num);
@@ -112,25 +112,9 @@ private:
     kpToolWidgetOpaqueOrTransparent *m_toolWidgetOpaqueOrTransparent;
     kpToolWidgetSpraycanSize *m_toolWidgetSpraycanSize;
 
-    QList <kpToolWidgetBase *> m_toolWidgets;
+    QList<kpToolWidgetBase *> m_toolWidgets;
 
-    struct kpButtonToolPair
-    {
-        kpButtonToolPair (QAbstractButton *button, kpTool *tool)
-            : m_button (button), m_tool (tool)
-        {
-        }
-
-        kpButtonToolPair ()
-            : m_button (0), m_tool (0)
-        {
-        }
-
-        QAbstractButton *m_button;
-        kpTool *m_tool;
-    };
-
-    QList <kpButtonToolPair> m_buttonToolPairs;
+    QList<kpToolButton *> m_toolButtons;
 
     kpTool *m_previousTool, *m_currentTool;
 };

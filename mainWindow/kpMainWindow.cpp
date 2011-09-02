@@ -299,25 +299,17 @@ void kpMainWindow::init ()
 
     setAutoSaveSettings ();
 
-    // Put our non-XMLGUI toolbars in a sane place, the first time around
-    // (have to do this _after_ setAutoSaveSettings as that applies default
-    //  (i.e. random) settings to the toolbars)
+    // our non-XMLGUI tools-toolbar will get initially the toolButtonStyle as
+    // all other toolbars, but we want to show only icons for the tools by default
+    // (have to do this _after_ setAutoSaveSettings as that applies the default settings)
     if (d->configFirstTime)
     {
-    #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tfirstTime: positioning toolbars";
-    #endif
+      d->toolToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 
-    // Not needed due to above toolbar HACK.
-    #if 0
-        addToolBar (Qt::LeftToolBarArea, d->toolToolBar);
-        addToolBar (Qt::BottomToolBarArea, d->colorToolBar);
-    #endif
+      KConfigGroup cfg(KGlobal::config(), kpSettingsGroupGeneral);
 
-        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
-
-        cfg.writeEntry (kpSettingFirstTime, d->configFirstTime = false);
-        cfg.sync ();
+      cfg.writeEntry(kpSettingFirstTime, d->configFirstTime = false);
+      cfg.sync();
     }
 
 

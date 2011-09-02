@@ -42,6 +42,7 @@
 #include <kpSetOverrideCursorSaver.h>
 #include <kpTempImage.h>
 #include <kpToolEnvironment.h>
+#include <kpToolAction.h>
 #include <kpViewManager.h>
 
 
@@ -75,23 +76,20 @@ kpToolZoom::kpToolZoom (kpToolEnvironment *environ, QWidget *parent)
               environ, parent, "tool_zoom"),
       d (new kpToolZoomPrivate ())
 {
+  // different from objectName()
+  action()->setIcon(KIcon("zoom-original"));
 }
+
+//---------------------------------------------------------------------
 
 kpToolZoom::~kpToolZoom ()
 {
     delete d;
 }
 
-
+//---------------------------------------------------------------------
 // public virtual [base kpTool]
-QString kpToolZoom::iconName () const
-{
-    // Standard KDE action icon.
-    return QString ("zoom-original");
-}
 
-
-// public virtual [base kpTool]
 bool kpToolZoom::returnToPreviousToolAfterEndDraw () const
 {
     // If the user clicks to zoom in or out, s/he generally wants to click

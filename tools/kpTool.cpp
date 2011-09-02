@@ -53,19 +53,19 @@
 
 //---------------------------------------------------------------------
 
-kpTool::kpTool (const QString &text, const QString &description,
-        int key,
-        kpToolEnvironment *environ,
-        QObject *parent, const QString &name)
-    : QObject (parent),
-      d (new kpToolPrivate ())
+kpTool::kpTool(const QString &text, const QString &description,
+               int key,
+               kpToolEnvironment *environ,
+               QObject *parent, const QString &name)
+    : QObject(parent),
+      d(new kpToolPrivate())
 {
     d->key = key;
     d->action = 0;
     d->ignoreColorSignals = 0;
     d->shiftPressed = false, d->controlPressed = false, d->altPressed = false;  // set in beginInternal()
     d->beganDraw = false;
-    d->text = text, d->description = description; setObjectName (name);
+    d->text = text, d->description = description;
     d->began = false;
     d->viewUnderStartPoint = 0;
     d->userShapeStartPoint = KP_INVALID_POINT;
@@ -74,7 +74,8 @@ kpTool::kpTool (const QString &text, const QString &description,
 
     d->environ = environ;
 
-    initAction ();
+    setObjectName(name);
+    initAction();
 }
 
 //---------------------------------------------------------------------
@@ -95,43 +96,27 @@ kpTool::~kpTool ()
 // private
 void kpTool::initAction ()
 {
-#if DEBUG_KP_TOOL && 0
-    kDebug () << "kpTool(" << objectName () << "::initAction()";
-#endif
-
     KActionCollection *ac = d->environ->actionCollection ();
     Q_ASSERT (ac);
 
-
-    d->action = new kpToolAction (text (), iconName (), shortcutForKey (d->key),
-                                 this, SLOT (slotActionActivated ()),
-                                 ac, objectName ());
+    d->action = new kpToolAction(text(), objectName(), shortcutForKey(d->key),
+                                 this, SIGNAL(actionActivated()),
+                                 ac, objectName());
 
     // Make tools mutually exclusive by placing them in the same group.
-    d->action->setActionGroup (d->environ->toolsActionGroup ());
+    d->action->setActionGroup(d->environ->toolsActionGroup ());
 
-    d->action->setWhatsThis (description ());
+    d->action->setWhatsThis(d->description);
 
-    connect (d->action, SIGNAL (toolTipChanged (const QString &)),
-             this, SLOT (slotActionToolTipChanged (const QString &)));
+    connect(d->action, SIGNAL(changed()), this, SIGNAL (actionToolTipChanged()));
 }
 
 //---------------------------------------------------------------------
-
 // public
+
 QString kpTool::text () const
 {
     return d->text;
-}
-
-//---------------------------------------------------------------------
-
-// public
-void kpTool::setText (const QString &text)
-{
-    d->text = text;
-
-    d->action->setText (d->text);
 }
 
 //---------------------------------------------------------------------
@@ -160,35 +145,14 @@ QString kpTool::toolTipForTextAndShortcut (const QString &text,
 
 //---------------------------------------------------------------------
 
-// public static
 QString kpTool::toolTip () const
 {
-    return toolTipForTextAndShortcut (text (), shortcut ());
+    return toolTipForTextAndShortcut(d->text, d->action->shortcut());
 }
 
 //---------------------------------------------------------------------
-
-
-// public
-int kpTool::key () const
-{
-    return d->key;
-}
-
-//---------------------------------------------------------------------
-
-// public
-void kpTool::setKey (int key)
-{
-    d->key = key;
-
-    // TODO: this probably not wise since it nukes the user's settings
-    d->action->setShortcut (shortcutForKey (d->key));
-}
-
-//---------------------------------------------------------------------
-
 // public static
+
 KShortcut kpTool::shortcutForKey (int key)
 {
     KShortcut shortcut;
@@ -205,42 +169,8 @@ KShortcut kpTool::shortcutForKey (int key)
 }
 
 //---------------------------------------------------------------------
-
 // public
-KShortcut kpTool::shortcut () const
-{
-    return d->action->shortcut ();
-}
 
-//---------------------------------------------------------------------
-
-// public
-QString kpTool::description () const
-{
-    return d->description;
-}
-
-//---------------------------------------------------------------------
-
-// public
-void kpTool::setDescription (const QString &description)
-{
-    d->description = description;
-
-    d->action->setWhatsThis (d->description);
-}
-
-//---------------------------------------------------------------------
-
-// public virtual
-QString kpTool::iconName () const
-{
-    return objectName ();
-}
-
-//---------------------------------------------------------------------
-
-// public
 kpToolAction *kpTool::action () const
 {
     return d->action;
@@ -248,38 +178,47 @@ kpToolAction *kpTool::action () const
 
 //---------------------------------------------------------------------
 
-// REFACTOR: need to add access specifier comments (like "public virtual [base AmOverridingThisClass'Method]") not just in kpTool but all over KolourPaint source.
-
 kpDocument *kpTool::document () const
 {
     return d->environ->document ();
 }
+
+//---------------------------------------------------------------------
 
 kpViewManager *kpTool::viewManager () const
 {
     return d->environ->viewManager ();
 }
 
+//---------------------------------------------------------------------
+
 kpToolToolBar *kpTool::toolToolBar () const
 {
     return d->environ->toolToolBar ();
 }
+
+//---------------------------------------------------------------------
 
 kpColor kpTool::color (int which) const
 {
     return d->environ->color (which);
 }
 
+//---------------------------------------------------------------------
+
 kpColor kpTool::foregroundColor () const
 {
     return color (0);
 }
+
+//---------------------------------------------------------------------
 
 kpColor kpTool::backgroundColor () const
 {
     return color (1);
 }
 
+//---------------------------------------------------------------------
 
 // TODO: Some of these might not be common enough.
 //       Just put in kpToolEnvironment?

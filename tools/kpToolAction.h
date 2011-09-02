@@ -1,6 +1,6 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2011 Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -29,51 +29,24 @@
 #ifndef KP_TOOL_ACTION_H
 #define KP_TOOL_ACTION_H
 
-
 #include <ktoggleaction.h>
-
 
 class KActionCollection;
 
-
 // Same as KToggleAction but shows the first single key trigger in the tooltip.
-// REFACTOR: Either push into kdelibs 4.x or make setText() and setShortcut()
-//           virtual in KDE 5.x, to allow us to remove updateAllActionsToolTips()
-//           hack.
+
 class kpToolAction : public KToggleAction
 {
-Q_OBJECT
+  Q_OBJECT
 
-public:
-    kpToolAction (const QString &text,
-        const QString &pic, const KShortcut &shortcut,
-        const QObject *receiver, const char *slot,
-        KActionCollection *ac, const QString &name);
+  public:
+    kpToolAction(const QString &text,
+                 const QString &pic, const KShortcut &shortcut,
+                 const QObject *receiver, const char *slot,
+                 KActionCollection *ac, const QString &name);
 
-signals:
-    // Not emitted when toolTip is manually overridden by setToolTip()
-    void toolTipChanged (const QString &string);
-
-protected:
-    void updateToolTip ();
-
-public:
-    // For all kpToolAction's in <ac>, calls updateToolTip().
-    //
-    // Call this e.g. after shortcuts have been changed but
-    // kpToolAction::setShortcut() did not find out (since it's not
-    // virtual).
-    static void updateAllActionsToolTips (KActionCollection *ac);
-
-
-    //
-    // KToggleAction overrides
-    //
-
-    // WARNING: The KToggleAction base does not have these as virtual.
-public:
-    void setText (const QString &text);
-    void setShortcut (const KShortcut &shortcut);
+  private slots:
+    void updateToolTip();
 };
 
 
