@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -29,7 +28,6 @@
 #ifndef KP_SELECTION_DRAG_H
 #define KP_SELECTION_DRAG_H
 
-
 #include <QMimeData>
 
 class kpAbstractImageSelection;
@@ -37,17 +35,17 @@ class kpAbstractImageSelection;
 
 class kpSelectionDrag : public QMimeData
 {
-Q_OBJECT
+  Q_OBJECT
 
-public:
+  public:
     static const char * const SelectionMimeType;
 
     // ASSUMPTION: <sel> has content (is not just a border).
-    kpSelectionDrag (const kpAbstractImageSelection &sel);
+    kpSelectionDrag(const kpAbstractImageSelection &sel);
 
-public:
-    static bool canDecode (const QMimeData *e);
-    static kpAbstractImageSelection *decode (const QMimeData *e);
+  public:
+    static bool canDecode(const QMimeData *mimeData);
+    static kpAbstractImageSelection *decode(const QMimeData *mimeData);
 };
 
 

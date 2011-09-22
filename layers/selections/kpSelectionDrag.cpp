@@ -1,5 +1,6 @@
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2011 Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -31,12 +32,10 @@
 #include <kpSelectionDrag.h>
 
 #include <qdatastream.h>
-#include <qpixmap.h>
+#include <QImage>
 
 #include <kdebug.h>
 
-#include <kpPixmapFX.h>
-#include <kpAbstractSelection.h>
 #include <kpAbstractImageSelection.h>
 #include <kpRectangularImageSelection.h>
 #include <kpSelectionFactory.h>
@@ -86,38 +85,39 @@ kpSelectionDrag::kpSelectionDrag (const kpAbstractImageSelection &sel)
 }
 
 //---------------------------------------------------------------------
-
 // public static
-bool kpSelectionDrag::canDecode (const QMimeData *e)
+
+bool kpSelectionDrag::canDecode(const QMimeData *mimeData)
 {
+    Q_ASSERT(mimeData);
+
 #if DEBUG_KP_SELECTION_DRAG
-    kDebug () << "kpSelectionDrag::canDecode()"
-              << "hasSel=" << e->hasFormat (kpSelectionDrag::SelectionMimeType)
-              << "hasImage=" << e->hasImage ();
+    kDebug() << "kpSelectionDrag::canDecode()"
+             << "hasSel=" << mimeData->hasFormat(kpSelectionDrag::SelectionMimeType)
+             << "hasImage=" << mimeData->hasImage();
 #endif
 
-    Q_ASSERT (e);
-
-    return (e->hasFormat (kpSelectionDrag::SelectionMimeType) ||
-            e->hasImage ());
+    // mimeData->hasImage() would not check if the data is a valid image
+    return mimeData->hasFormat(kpSelectionDrag::SelectionMimeType) ||
+           !qvariant_cast<QImage>(mimeData->imageData()).isNull();
 }
 
 //---------------------------------------------------------------------
-
 // public static
-kpAbstractImageSelection *kpSelectionDrag::decode (const QMimeData *e)
+
+kpAbstractImageSelection *kpSelectionDrag::decode(const QMimeData *mimeData)
 {
 #if DEBUG_KP_SELECTION_DRAG
     kDebug () << "kpSelectionDrag::decode(kpAbstractSelection)";
 #endif
-    Q_ASSERT (e);
+    Q_ASSERT (mimeData);
 
-    if (e->hasFormat (kpSelectionDrag::SelectionMimeType))
+    if (mimeData->hasFormat (kpSelectionDrag::SelectionMimeType))
     {
     #if DEBUG_KP_SELECTION_DRAG
         kDebug () << "\tmimeSource hasFormat selection - just return it in QByteArray";
     #endif
-        QByteArray data = e->data (kpSelectionDrag::SelectionMimeType);
+        QByteArray data = mimeData->data (kpSelectionDrag::SelectionMimeType);
         QDataStream stream (&data, QIODevice::ReadOnly);
 
         return kpSelectionFactory::FromStream (stream);
@@ -128,7 +128,7 @@ kpAbstractImageSelection *kpSelectionDrag::decode (const QMimeData *e)
         kDebug () << "\tmimeSource doesn't provide selection - try image";
     #endif
 
-        QImage image = qvariant_cast <QImage> (e->imageData ());
+        QImage image = qvariant_cast <QImage> (mimeData->imageData ());
         if (!image.isNull ())
         {
         #if DEBUG_KP_SELECTION_DRAG

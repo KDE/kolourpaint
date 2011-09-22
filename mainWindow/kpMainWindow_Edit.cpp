@@ -1,6 +1,6 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2011 Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -321,7 +321,7 @@ QRect kpMainWindow::calcUsefulPasteRect (int imageWidth, int imageHeight)
 //---------------------------------------------------------------------
 
 // private
-void kpMainWindow::paste (const kpAbstractSelection &sel, bool forceTopLeft)
+void kpMainWindow::paste(const kpAbstractSelection &sel, bool forceTopLeft)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
     kDebug () << "kpMainWindow::paste(forceTopLeft=" << forceTopLeft << ")"
@@ -410,9 +410,8 @@ void kpMainWindow::pasteText (const QString &text,
                << ")" << endl;
 #endif
 
-    if (text.isEmpty ())
+    if ( text.isEmpty() )
         return;
-
 
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
 
@@ -508,8 +507,8 @@ void kpMainWindow::pasteText (const QString &text,
         }
 
         // limit the size to avoid memory overflow
-        width = qMin(qMax(QApplication::desktop()->width(), d->document->width()), width);
-        height = qMin(qMax(QApplication::desktop()->height(), d->document->height()), height);
+        width = qMin(qMax(QApplication::desktop()->width(), d->document ? d->document->width() : 0), width);
+        height = qMin(qMax(QApplication::desktop()->height(), d->document ? d->document->height() : 0), height);
 
         const int selWidth = qMax (kpTextSelection::MinimumWidthForTextStyle (ts),
                                    width + kpTextSelection::TextBorderSize () * 2);
@@ -589,70 +588,35 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
 }
 
 //---------------------------------------------------------------------
-
 // public slot
-void kpMainWindow::slotPaste ()
+
+void kpMainWindow::slotPaste()
 {
-#if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::slotPaste() CALLED";
-#endif
+    kpSetOverrideCursorSaver cursorSaver(Qt::WaitCursor);
 
-    kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
+    toolEndShape();
 
-    toolEndShape ();
+    const QMimeData *mimeData = QApplication::clipboard()->mimeData(QClipboard::Clipboard);
 
-    //
-    // Acquire the image.
-    //
-
-    const QMimeData *md = QApplication::clipboard ()->mimeData (QClipboard::Clipboard);
-    Q_ASSERT (md);
-
-    kpAbstractImageSelection *sel = kpSelectionDrag::decode (md);
-    if (sel)
+    kpAbstractImageSelection *sel = kpSelectionDrag::decode(mimeData);
+    if ( sel )
     {
-        sel->setTransparency (imageSelectionTransparency ());
-        paste (*sel);
+        sel->setTransparency(imageSelectionTransparency());
+        paste(*sel);
         delete sel;
     }
-    else if (md->hasText ())
+    else if ( mimeData->hasText() )
     {
-        pasteText (md->text ());
+        pasteText(mimeData->text());
     }
     else
     {
-        kpSetOverrideCursorSaver cursorSaver (Qt::ArrowCursor);
+        kpSetOverrideCursorSaver cursorSaver(Qt::ArrowCursor);
 
-        kDebug () << "kpMainWindow::slotPaste() could not decode selection";
-        kDebug () << "\tFormats supported:" << md->formats ();
-
-        // TODO: fix Klipper
-        KMessageBox::sorry (this,
-            i18n ("<qt><p>KolourPaint cannot paste the contents of"
-                  " the clipboard as the data unexpectedly disappeared.</p>"
-
-                  "<p>This usually occurs if the application which was"
-                  " responsible"
-                  " for the clipboard contents has been closed.</p></qt>"),
-            i18n ("Cannot Paste"));
-
-        // TODO: PROPAGATE: interprocess
-        // TODO: Is this loop safe since a KMainWindow later along in the list,
-        //       could be closed as the code in the body almost certainly re-enters
-        //       the event loop?  Problem for KDE 3 as well, I think.
-        foreach (KMainWindow *kmw, KMainWindow::memberList ())
-        {
-            Q_ASSERT (dynamic_cast <kpMainWindow *> (kmw));
-            kpMainWindow *mw = static_cast <kpMainWindow *> (kmw);
-
-        #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\t\tmw=" << mw;
-        #endif
-
-            mw->slotEnablePaste ();
-        }
-
-        return;
+        KMessageBox::sorry(this,
+            i18n("<qt>KolourPaint cannot paste the contents of"
+                 " the clipboard as it has an unknown format.</qt>"),
+            i18n("Cannot Paste"));
     }
 }
 
@@ -699,10 +663,14 @@ void kpMainWindow::slotPasteInNewWindow ()
     // (this handles Requirement 1. above)
     win->slotPaste ();
 
-    // (this handles Requirement 2. above;
-    //  slotDeselect() is not enough unless the document is filled with the
-    //  transparent color in advance)
-    win->slotCrop ();
+    // if slotPaste could not decode clipboard data, no document was created
+    if ( win->document() )
+    {
+      // (this handles Requirement 2. above;
+      //  slotDeselect() is not enough unless the document is filled with the
+      //  transparent color in advance)
+      win->slotCrop();
+    }
 }
 
 //---------------------------------------------------------------------

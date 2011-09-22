@@ -30,10 +30,8 @@
 #include <kpMainWindowPrivate.h>
 
 #include <qevent.h>
-#include <qpainter.h>
 #include <qtimer.h>
 
-#include <kapplication.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>
@@ -41,7 +39,6 @@
 #include <klocale.h>
 #include <KMenu>
 #include <KMenuBar>
-#include <kmessagebox.h>
 #include <krecentfilesaction.h>
 
 #include <kpAbstractImageSelection.h>
