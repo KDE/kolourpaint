@@ -866,7 +866,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
             docMetaInfo,
             this);
 
-    KFileDialog fd (KUrl("kfiledialog:///dir/"), QString(), this,
+    KFileDialog fd (startURL, QString(), this,
                     saveOptionsWidget);
     saveOptionsWidget->setVisualParent (&fd);
     fd.setCaption (caption);
@@ -883,7 +883,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
     if (mime->is(fdSaveOptions.mimeType()))
         fd.locationEdit()->setUrl(KUrl(startURL).fileName());
 
-    if (fd.exec ())
+    if ( fd.exec() == QDialog::Accepted )
     {
         kpDocumentSaveOptions newSaveOptions = saveOptionsWidget->documentSaveOptions ();
     #if DEBUG_KP_MAIN_WINDOW
