@@ -53,6 +53,9 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
 {
     setWindowTitle (label);
 
+    // not closable, as it's not a KDE toolbar yet and can not be made shown easily again
+    setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
+
     setAcceptDrops (true);
 
     QWidget *base = new QWidget (this);
