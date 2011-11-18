@@ -456,12 +456,12 @@ void kpAbstractImageSelection::recalculateTransparencyMaskCache ()
                 pixelCol.isSimilarTo (d->transparency.transparentColor (),
                                       d->transparency.processedColorSimilarity ()))
             {
-                transparencyMaskPainter.setPen (Qt::color0/*transparent*/);
+                transparencyMaskPainter.setPen (Qt::color1/*transparent*/);
                 hasTransparent = true;
             }
             else
             {
-                transparencyMaskPainter.setPen (Qt::color1/*opaque*/);
+                transparencyMaskPainter.setPen (Qt::color0/*opaque*/);
             }
 
             transparencyMaskPainter.drawPoint (x, y);
