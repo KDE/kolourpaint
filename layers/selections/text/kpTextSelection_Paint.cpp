@@ -158,11 +158,13 @@ void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
                << endl;
 #endif
 
-    const kpColor backColor = theTextStyle.backgroundColor ();
-
     QPainter painter(&floatImage);
-    // Fill in the background.
-    painter.fillRect (theWholeAreaRect, backColor.toQColor());
+
+    // Fill in the background using the transparent/opaque tool setting
+    if ( theTextStyle.isBackgroundTransparent() )
+      painter.fillRect(theWholeAreaRect, Qt::transparent);
+    else
+      painter.fillRect(theWholeAreaRect, theTextStyle.backgroundColor().toQColor());
 
     painter.setClipRect(theWholeAreaRect);
     painter.setPen(theTextStyle.foregroundColor().toQColor());
