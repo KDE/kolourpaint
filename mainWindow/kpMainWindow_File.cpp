@@ -878,11 +878,6 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
     connect (&fd, SIGNAL (filterChanged (const QString &)),
              saveOptionsWidget, SLOT (setMimeType (const QString &)));
 
-    //Honor the current filename if the mimetype is the same
-    KMimeType::Ptr mime = KMimeType::findByUrl(startURL);
-    if (mime->is(fdSaveOptions.mimeType()))
-        fd.locationEdit()->setUrl(KUrl(startURL).fileName());
-
     if ( fd.exec() == QDialog::Accepted )
     {
         kpDocumentSaveOptions newSaveOptions = saveOptionsWidget->documentSaveOptions ();
