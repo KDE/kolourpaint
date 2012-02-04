@@ -92,11 +92,36 @@ void kpAbstractSelectionTool::endCreate ()
 }
 
 //---------------------------------------------------------------------
+// use a crosshair cursor which is really always exactly 1 pixel wide
+// to the contrary of the "themed" crosshair cursors which might look nice
+// but does not allow to exactly position the hot-spot.
+/* XPM */
+static const char *crosshair[]={
+"17 17 2 1",
+". c None",
+"# c #000000",
+"........#........",
+"........#........",
+"........#........",
+"........#........",
+"........#........",
+"........#........",
+"........#........",
+"........#........",
+"########.########",
+"........#........",
+"........#........",
+"........#........",
+"........#........",
+"........#........",
+"........#........",
+"........#........",
+"........#........"};
 
 // private
 void kpAbstractSelectionTool::setCursorCreate ()
 {
-    viewManager ()->setCursor (Qt::ArrowCursor);
+    viewManager()->setCursor(QCursor(QPixmap(crosshair), 8, 8));
 }
 
 //---------------------------------------------------------------------
