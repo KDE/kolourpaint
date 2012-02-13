@@ -384,11 +384,11 @@ QRect kpFloodFill::boundingRect ()
 
 //---------------------------------------------------------------------
 // public
-void kpFloodFill::fill ()
+void kpFloodFill::fill()
 {
     prepare();
 
-    QApplication::setOverrideCursor (Qt::WaitCursor);
+    QApplication::setOverrideCursor(Qt::WaitCursor);
 
     QPainter painter(d->imagePtr);
 
@@ -401,13 +401,13 @@ void kpFloodFill::fill ()
 
     foreach (const kpFillLine &l, d->fillLines)
     {
-        const QPoint p1 (l.m_x1, l.m_y);
-        const QPoint p2 (l.m_x2, l.m_y);
-
-        painter.drawLine (p1, p2);
+      if ( l.m_x1 == l.m_x2 )
+        painter.drawPoint(l.m_x1, l.m_y);
+      else
+        painter.drawLine(l.m_x1, l.m_y, l.m_x2, l.m_y);
     }
 
-    QApplication::restoreOverrideCursor ();
+    QApplication::restoreOverrideCursor();
 }
 
 //---------------------------------------------------------------------
