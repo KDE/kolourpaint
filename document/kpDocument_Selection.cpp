@@ -34,39 +34,21 @@
 
 #include <math.h>
 
-#include <qcolor.h>
-#include <qbitmap.h>
-#include <qbrush.h>
-#include <qfile.h>
 #include <qimage.h>
-#include <qlist.h>
-#include <qpixmap.h>
 #include <qpainter.h>
 #include <qrect.h>
-#include <qsize.h>
-#include <qmatrix.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kimageio.h>
-#include <kio/netaccess.h>
 #include <klocale.h>
-#include <kmessagebox.h>
-#include <ktemporaryfile.h>
 
 #include <kpColor.h>
-#include <kpColorToolBar.h>
 #include <kpDefs.h>
 #include <kpDocumentEnvironment.h>
-#include <kpDocumentSaveOptions.h>
-#include <kpDocumentMetaInfo.h>
-#include <kpEffectReduceColors.h>
-#include <kpPixmapFX.h>
 #include <kpAbstractSelection.h>
 #include <kpAbstractImageSelection.h>
 #include <kpTextSelection.h>
-#include <kpTool.h>
-#include <kpToolToolBar.h>
 
 
 // public
@@ -263,7 +245,8 @@ void kpDocument::imageSelectionPullFromDocument (const kpColor &backgroundColor)
 // public
 void kpDocument::selectionDelete ()
 {
-    Q_ASSERT (m_selection);
+    if ( !m_selection )
+      return;
 
     const QRect boundingRect = m_selection->boundingRect ();
     Q_ASSERT (boundingRect.isValid ());
@@ -290,10 +273,9 @@ void kpDocument::selectionDelete ()
 // public
 void kpDocument::selectionCopyOntoDocument (bool applySelTransparency)
 {
-    Q_ASSERT (m_selection);
     // Empty selection, just doing nothing
-    if (!m_selection->hasContent())
-        return;
+    if ( !m_selection || !m_selection->hasContent() )
+      return;
 
     const QRect boundingRect = m_selection->boundingRect ();
     Q_ASSERT (boundingRect.isValid ());

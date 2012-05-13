@@ -90,11 +90,14 @@ SetDocumentToSelectionImageCommand::SetDocumentToSelectionImageCommand (kpComman
             document ()->getSelectedBaseImage ();
 }
 
+//---------------------------------------------------------------------
+
 SetDocumentToSelectionImageCommand::~SetDocumentToSelectionImageCommand ()
 {
     delete m_fromSelectionPtr;
 }
 
+//---------------------------------------------------------------------
 
 // public virtual [base kpCommand]
 void SetDocumentToSelectionImageCommand::execute ()
@@ -182,6 +185,8 @@ void SetDocumentToSelectionImageCommand::execute ()
     viewManager ()->restoreQueueUpdates ();
 }
 
+//---------------------------------------------------------------------
+
 // public virtual [base kpCommand]
 void SetDocumentToSelectionImageCommand::unexecute ()
 {
@@ -205,6 +210,8 @@ void SetDocumentToSelectionImageCommand::unexecute ()
     }
     viewManager ()->restoreQueueUpdates ();
 }
+
+//---------------------------------------------------------------------
 
 
 void kpTransformCrop_ImageSelection (kpMainWindow *mainWindow,
