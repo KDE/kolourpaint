@@ -262,9 +262,7 @@ public:
     //             (no base image).
     void imageSelectionPullFromDocument (const kpColor &backgroundColor);
 
-    // Deletes the current selection.
-    //
-    // ASSUMPTION: There is a selection().
+    // Deletes the current selection, if there is a selection(), else NOP
     void selectionDelete ();
 
     // Stamps a copy of the selection onto the document.
@@ -274,7 +272,7 @@ public:
     // the base image of the selection is used.  This argument is ignored
     // for non-image selections.
     //
-    // ASSUMPTION: There is a selection() with content.
+    // ASSUMPTION: There is a selection() with content, else NOP
     void selectionCopyOntoDocument (bool applySelTransparency = true);
 
     // Same as selectionCopyOntoDocument() but deletes the selection
