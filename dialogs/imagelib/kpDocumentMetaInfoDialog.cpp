@@ -199,7 +199,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
             "<p>If either DPI value is <b>Unspecified</b>, the image will also"
             " be printed to be the same size as on the screen.</p>"
 
-            "<p>Not all image formats support DPI values.  If the format you"
+            "<p>Not all image formats support DPI values. If the format you"
             " save in does not support them, they will not be saved.</p>"
             "</qt>"
         ));
@@ -311,7 +311,7 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
             " computer-interpreted data - that you should not modify -"
             " but this is unlikely.</p>"
 
-            "<p>Not all image formats support <b>Text Fields</b>.  If the format"
+            "<p>Not all image formats support <b>Text Fields</b>. If the format"
             " you save in does not support them, they will not be saved.</p>"
             "</qt>"
         ));

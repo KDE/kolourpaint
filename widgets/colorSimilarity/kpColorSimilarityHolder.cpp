@@ -101,7 +101,7 @@ QString kpColorSimilarityHolder::WhatsThisWithClickInstructions ()
         "</ul>"
         
         "<p>Higher settings mean that operations consider an increased range"
-        " of colors to be sufficiently <i>similar</i> so as to be the same.  Therefore,"
+        " of colors to be sufficiently <i>similar</i> so as to be the same. Therefore,"
         " you should increase the setting if the above operations are not"
         " affecting pixels whose colors you consider to be similar enough.</p>"
 
@@ -151,7 +151,7 @@ QString kpColorSimilarityHolder::WhatsThis ()
         "</ul>"
         
         "<p>Higher settings mean that operations consider an increased range"
-        " of colors to be sufficiently <i>similar</i> so as to be the same.  Therefore,"
+        " of colors to be sufficiently <i>similar</i> so as to be the same. Therefore,"
         " you should increase the setting if the above operations are not"
         " affecting pixels whose colors you consider to be similar enough.</p>"
 
