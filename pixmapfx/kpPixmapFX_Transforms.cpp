@@ -67,16 +67,11 @@ void kpPixmapFX::resize (QImage *destPtr, int w, int h,
 
     // Would have new undefined areas?
     if (w > oldWidth || h > oldHeight)
-    {
-    #if DEBUG_KP_PIXMAP_FX && 1
-        kDebug () << "\tbacking with fill opqaque="
-                  << backgroundColor.isOpaque () << endl;
-    #endif
         newImage.fill (backgroundColor.toQRgb ());
-    }
 
     // Copy over old pixmap.
     QPainter painter(&newImage);
+    painter.setCompositionMode(QPainter::CompositionMode_Source);
     painter.drawImage(0, 0, *destPtr);
     painter.end();
 
