@@ -850,11 +850,11 @@ void kpViewScrollableContainer::recalculateStatusMessage ()
 void kpViewScrollableContainer::slotContentsMoved ()
 {
     kpGrip *grip = docResizingGrip ();
-    if (!grip)
-        return;
-
-    grip->mouseMovedTo (grip->mapFromGlobal (QCursor::pos ()),
-                        true/*moved due to drag scroll*/);
+    if (grip)
+    {
+      grip->mouseMovedTo (grip->mapFromGlobal (QCursor::pos ()),
+                          true/*moved due to drag scroll*/);
+    }
 
     m_overlay->move(viewport()->pos());
     m_overlay->update();
