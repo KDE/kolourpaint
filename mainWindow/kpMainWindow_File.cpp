@@ -519,9 +519,6 @@ void kpMainWindow::slotScan ()
         //         $KDEDIR/share/services/scanservice.desktop to simulate this]
         if (!d->scanDialog)
         {
-        #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\tcould not create scan dialog";
-        #endif
             // Instead, we could try to create the scan dialog in the ctor
             // and just disable the action in the first place, removing
             // the need for this dialog.
@@ -533,7 +530,8 @@ void kpMainWindow::slotScan ()
             // Also, disabling the action is bad because the scan support
             // can be installed while KolourPaint is still running.
             KMessageBox::sorry (this,
-                         i18n ("Scanning support is not installed."),
+                         i18n ("No plugin was found which provides the scanner dialog.\n"
+                               "This usually means that the package providing the ksaneplugin is not installed."),
                          i18n ("No Scanning Support"));
             return;
         }
