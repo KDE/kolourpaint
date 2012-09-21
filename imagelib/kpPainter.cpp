@@ -295,15 +295,20 @@ static bool ReadableImageWashRect (QPainter *rgbPainter,
     Q_ASSERT (!rgbPainter || rgbPainter->isActive ());
 
 // make use of scanline coherence
-#define FLUSH_LINE()                                        \
-{                                                           \
-    if (rgbPainter)                                         \
-        rgbPainter->drawLine (startDrawX + imageRect.x (),  \
-            y + imageRect.y (),                             \
-            x - 1 + imageRect.x (),                         \
-            y + imageRect.y ());                            \
-    didSomething = true;                                    \
-    startDrawX = -1;                                        \
+#define FLUSH_LINE()                                             \
+{                                                                \
+    if (rgbPainter) {                                            \
+        if (startDrawX == x - 1)                                 \
+            rgbPainter->drawPoint (startDrawX + imageRect.x (),  \
+                y + imageRect.y ());                             \
+        else                                                     \
+            rgbPainter->drawLine (startDrawX + imageRect.x (),   \
+                y + imageRect.y (),                              \
+                x - 1 + imageRect.x (),                          \
+                y + imageRect.y ());                             \
+    }                                                            \
+    didSomething = true;                                         \
+    startDrawX = -1;                                             \
 }
 
     const int maxY = drawRect.bottom () - imageRect.top ();
