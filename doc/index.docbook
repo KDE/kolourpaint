@@ -12,9 +12,9 @@
   <!ENTITY % English "INCLUDE">
 ]>
 
-<book lang="&language;">
+<book id="kolourpaint" lang="&language;">
 
-<bookinfo>
+<book id="kolourpaint"info>
 <title>The &kolourpaint; Handbook</title>
 
 <authorgroup>
