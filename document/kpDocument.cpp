@@ -409,7 +409,7 @@ void kpDocument::fill (const kpColor &color)
     kDebug () << "kpDocument::fill ()";
 #endif
 
-    kpPixmapFX::fill (m_image, color);
+    m_image->fill(color.toQRgb());
     slotContentsChanged (m_image->rect ());
 }
 

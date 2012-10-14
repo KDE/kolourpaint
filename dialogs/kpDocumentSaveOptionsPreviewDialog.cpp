@@ -193,7 +193,7 @@ void kpDocumentSaveOptionsPreviewDialog::updatePixmapPreview ()
 
         QImage labelPixmap (m_filePixmapLabel->width (),
                             m_filePixmapLabel->height (), QImage::Format_ARGB32_Premultiplied);
-        kpPixmapFX::fill (&labelPixmap, kpColor::Transparent);
+        labelPixmap.fill(QColor(Qt::transparent).rgba());
         kpPixmapFX::setPixmapAt (&labelPixmap,
             (labelPixmap.width () - transformedPixmap.width ()) / 2,
             (labelPixmap.height () - transformedPixmap.height ()) / 2,

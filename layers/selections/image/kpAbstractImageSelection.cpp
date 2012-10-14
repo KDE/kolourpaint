@@ -502,8 +502,8 @@ kpImage kpAbstractImageSelection::transparentImage () const
 // public
 void kpAbstractImageSelection::fill (const kpColor &color)
 {
-    kpImage newImage (width (), height (), QImage::Format_ARGB32_Premultiplied);
-    kpPixmapFX::fill (&newImage, color);
+    QImage newImage(width(), height(), QImage::Format_ARGB32_Premultiplied);
+    newImage.fill(color.toQRgb());
 
     // LOTODO: Maybe disable Image/Clear menu item if transparent color
     if ( !color.isTransparent() )

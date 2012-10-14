@@ -135,15 +135,15 @@ void SetDocumentToSelectionImageCommand::execute ()
         //       any transparent pixels.
         //
 
-        kpImage newDocImage (document ()->width (), document ()->height (), QImage::Format_ARGB32_Premultiplied);
-        kpPixmapFX::fill (&newDocImage, m_backgroundColor);
+        QImage newDocImage(document()->width(), document()->height(), QImage::Format_ARGB32_Premultiplied);
+        newDocImage.fill(m_backgroundColor.toQRgb());
 
     #if DEBUG_KP_TOOL_CROP
         kDebug () << "\tsel: rect=" << m_fromSelectionPtr->boundingRect ()
                    << " pm=" << m_fromSelectionPtr->hasContent ()
                    << endl;
     #endif
-        kpImage setTransparentImage;
+        QImage setTransparentImage;
 
         if (m_fromSelectionPtr->hasContent ())
         {

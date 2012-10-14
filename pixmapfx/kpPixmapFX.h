@@ -120,19 +120,6 @@ public:
     static kpColor getColorAtPixel (const QImage &pm, int x, int y);
 
 //
-// Mask Operations
-//
-
-public:
-
-    //
-    // Fills an image in the given color.
-    //
-    static void fill (QImage *destPixmapPtr, const kpColor &color);
-    static QImage fill (const QImage &pm, const kpColor &color);
-
-
-//
 // Transforms
 //
 

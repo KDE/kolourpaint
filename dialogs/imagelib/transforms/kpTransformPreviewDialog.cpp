@@ -388,7 +388,7 @@ void kpTransformPreviewDialog::updatePreview ()
 
         QImage previewPixmap (m_previewPixmapLabel->width (),
                               m_previewPixmapLabel->height (), QImage::Format_ARGB32_Premultiplied);
-        kpPixmapFX::fill (&previewPixmap, kpColor::Transparent);
+        previewPixmap.fill(QColor(Qt::transparent).rgba());
         kpPixmapFX::setPixmapAt (&previewPixmap,
                                  (previewPixmap.width () - transformedShrunkenDocumentPixmap.width ()) / 2,
                                  (previewPixmap.height () - transformedShrunkenDocumentPixmap.height ()) / 2,

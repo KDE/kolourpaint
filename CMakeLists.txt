@@ -225,7 +225,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View_Thumbnail.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View_Zoom.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_DrawRasterOps.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_DrawShapes.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_Effects.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_GetSetPixmapParts.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_Transforms.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tools/flow/kpToolBrush.cpp
@@ -446,7 +445,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View_Thumbnail.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/mainWindow/kpMainWindow_View_Zoom.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_DrawRasterOps.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_DrawShapes.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_Effects.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_GetSetPixmapParts.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pixmapfx/kpPixmapFX_Transforms.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/tools/flow/kpToolBrush.cpp

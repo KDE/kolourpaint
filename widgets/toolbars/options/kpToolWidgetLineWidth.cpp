@@ -50,18 +50,18 @@ kpToolWidgetLineWidth::kpToolWidgetLineWidth (QWidget *parent, const QString &na
 
     for (int i = 0; i < numLineWidths; i++)
     {
-        QImage pixmap ((w <= 0 ? width () : w),
+        QImage image ((w <= 0 ? width () : w),
                         (h <= 0 ? height () : h), QImage::Format_ARGB32_Premultiplied);
-        kpPixmapFX::fill (&pixmap, kpColor::Transparent);
+        image.fill(QColor(Qt::transparent).rgba());
 
 
-        kpPixmapFX::fillRect (&pixmap,
-            0, (pixmap.height () - lineWidths [i]) / 2,
-            pixmap.width (), lineWidths [i],
+        kpPixmapFX::fillRect (&image,
+            0, (image.height () - lineWidths [i]) / 2,
+            image.width (), lineWidths [i],
             kpColor::Black);
         
 
-        addOption (QPixmap::fromImage(pixmap), QString::number (lineWidths [i]));
+        addOption (QPixmap::fromImage(image), QString::number (lineWidths [i]));
         startNewOptionRow ();
     }
 
