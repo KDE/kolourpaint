@@ -531,7 +531,7 @@ void kpAbstractImageSelection::flip (bool horiz, bool vert)
     #if DEBUG_KP_SELECTION && 1
         kDebug () << "\thave pixmap - flipping that";
     #endif
-        kpPixmapFX::flip (&d->baseImage, horiz, vert);
+        d->baseImage = d->baseImage.mirrored(horiz, vert);
     }
 
     if (!d->transparencyMaskCache.isNull ())
@@ -539,8 +539,7 @@ void kpAbstractImageSelection::flip (bool horiz, bool vert)
     #if DEBUG_KP_SELECTION && 1
         kDebug () << "\thave transparency mask - flipping that";
     #endif
-        QImage image = d->transparencyMaskCache.toImage();
-        kpPixmapFX::flip (&image, horiz, vert);
+        QImage image = d->transparencyMaskCache.toImage().mirrored(horiz, vert);
         d->transparencyMaskCache = QBitmap::fromImage(image);
     }
 

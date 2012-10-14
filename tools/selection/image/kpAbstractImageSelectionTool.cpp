@@ -35,11 +35,7 @@
 #include <kpToolSelectionEnvironment.h>
 #include <kpToolSelectionPullFromDocumentCommand.h>
 
-
-struct kpAbstractImageSelectionToolPrivate
-{
-};
-
+//---------------------------------------------------------------------
 
 kpAbstractImageSelectionTool::kpAbstractImageSelectionTool (
         const QString &text, const QString &description,
@@ -47,16 +43,11 @@ kpAbstractImageSelectionTool::kpAbstractImageSelectionTool (
         kpToolSelectionEnvironment *environ, QObject *parent,
         const QString &name)
     : kpAbstractSelectionTool (text, description,
-        key, environ, parent, name),
-      d (new kpAbstractImageSelectionToolPrivate ())
+        key, environ, parent, name)
 {
 }
 
-kpAbstractImageSelectionTool::~kpAbstractImageSelectionTool ()
-{
-    delete d;
-}
-
+//---------------------------------------------------------------------
 
 // protected virtual [kpAbstractSelectionTool]
 kpAbstractSelectionContentCommand *kpAbstractImageSelectionTool::newGiveContentCommand () const
@@ -74,32 +65,39 @@ kpAbstractSelectionContentCommand *kpAbstractImageSelectionTool::newGiveContentC
             environ ()->commandEnvironment ());
 }
 
-
+//---------------------------------------------------------------------
 // protected virtual [kpAbstractSelectionTool]
+
 QString kpAbstractImageSelectionTool::nameOfCreateCommand () const
 {
     return i18n ("Selection: Create");
 }
 
-
+//---------------------------------------------------------------------
 // protected virtual [kpAbstractSelectionTool]
+
 QString kpAbstractImageSelectionTool::haventBegunDrawUserMessageCreate () const
 {
     // TODO: This is wrong because you can still use RMB.
     return i18n ("Left drag to create selection.");
 }
 
+//---------------------------------------------------------------------
 // protected virtual [kpAbstractSelectionTool]
+
 QString kpAbstractImageSelectionTool::haventBegunDrawUserMessageMove () const
 {
     return i18n ("Left drag to move selection.");
 }
 
+//---------------------------------------------------------------------
 // protected virtual [kpAbstractSelectionTool]
+
 QString kpAbstractImageSelectionTool::haventBegunDrawUserMessageResizeScale () const
 {
     return i18n ("Left drag to scale selection.");
 }
 
+//---------------------------------------------------------------------
 
 #include <kpAbstractImageSelectionTool.moc>

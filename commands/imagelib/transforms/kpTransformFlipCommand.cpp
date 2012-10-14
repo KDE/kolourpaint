@@ -44,6 +44,7 @@
 #include <kpDocument.h>
 #include <kpPixmapFX.h>
 
+//---------------------------------------------------------------------
 
 kpTransformFlipCommand::kpTransformFlipCommand (bool actOnSelection,
         bool horiz, bool vert,
@@ -54,12 +55,15 @@ kpTransformFlipCommand::kpTransformFlipCommand (bool actOnSelection,
 {
 }
 
+//---------------------------------------------------------------------
+
 kpTransformFlipCommand::~kpTransformFlipCommand ()
 {
 }
 
-
+//---------------------------------------------------------------------
 // public virtual [base kpCommand]
+
 QString kpTransformFlipCommand::name () const
 {
     QString opName;
@@ -88,36 +92,39 @@ QString kpTransformFlipCommand::name () const
         return opName;
 }
 
-
+//---------------------------------------------------------------------
 // public virtual [base kpCommand]
+
 kpCommandSize::SizeType kpTransformFlipCommand::size () const
 {
     return 0;
 }
 
-
+//---------------------------------------------------------------------
 // public virtual [base kpCommand]
+
 void kpTransformFlipCommand::execute ()
 {
     flip ();
 }
 
+//---------------------------------------------------------------------
 // public virtual [base kpCommand]
+
 void kpTransformFlipCommand::unexecute ()
 {
     flip ();
 }
 
-
+//---------------------------------------------------------------------
 // private
+
 void kpTransformFlipCommand::flip ()
 {
     kpDocument *doc = document ();
     Q_ASSERT (doc);
 
-
     QApplication::setOverrideCursor (Qt::WaitCursor);
-
 
     if (m_actOnSelection)
     {
@@ -127,13 +134,8 @@ void kpTransformFlipCommand::flip ()
     }
     else
     {
-        kpImage newImage = kpPixmapFX::flip (doc->image (), m_horiz, m_vert);
-
-        doc->setImage (newImage);
+        doc->setImage(doc->image().mirrored(m_horiz, m_vert));
     }
-
 
     QApplication::restoreOverrideCursor ();
 }
-
-

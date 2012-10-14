@@ -54,7 +54,6 @@ public:
         int key,
         kpToolSelectionEnvironment *environ, QObject *parent,
         const QString &name);
-    virtual ~kpAbstractImageSelectionTool ();
 
 
 //
@@ -101,10 +100,6 @@ protected slots:
     virtual void slotIsOpaqueChanged (bool isOpaque);
     virtual void slotBackgroundColorChanged (const kpColor &color);
     virtual void slotColorSimilarityChanged (double similarity, int);
-
-
-private:
-    struct kpAbstractImageSelectionToolPrivate * const d;
 };
 
 

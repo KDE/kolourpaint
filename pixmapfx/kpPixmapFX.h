@@ -196,22 +196,6 @@ public:
                            const kpColor &backgroundColor,
                            int targetWidth = -1, int targetHeight = -1);
 
-
-    //
-    // Flips an image in the given directions.
-    //
-    static QMatrix flipMatrix (int width, int height, bool horz, bool vert);
-    static QMatrix flipMatrix (const QImage &pixmap, bool horz, bool vert);
-
-    // TODO: this kind of overloading is error prone
-    //       e.g. QPixmap pixmap;
-    //            kpPixmapFX::flip (pixmap, false, true);
-    //       looks like it will flip vertically but does absolutely nothing!
-    //       (should be &pixmap)
-    static void flip (QImage *destImagePtr, bool horz, bool vert);
-    static QImage flip (const QImage &img, bool horz, bool vert);
-
-
 //
 // Drawing Shapes
 //
