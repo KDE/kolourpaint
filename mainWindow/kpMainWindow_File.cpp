@@ -838,7 +838,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
                 fdSaveOptions.setMimeType (mimeTypes.first ());
         }
     }
-#undef MIME_TYPE_IN_LIST
+#undef MIME_TYPE_IS_VALID
 
     if (fdSaveOptions.colorDepthIsInvalid ())
     {

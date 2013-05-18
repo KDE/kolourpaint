@@ -89,7 +89,7 @@
 
 #define kpSettingMoreEffectsLastEffect "More Effects - Last Effect"
 
-#define kpSettingsGroupMimeTypeProperties "MimeType Properties Version 1.2-2"
+#define kpSettingsGroupMimeTypeProperties "MimeType Properties Version 1.2-3"
 #define kpSettingMimeTypeMaximumColorDepth "Maximum Color Depth"
 #define kpSettingMimeTypeHasConfigurableColorDepth "Configurable Color Depth"
 #define kpSettingMimeTypeHasConfigurableQuality "Configurable Quality Setting"

@@ -581,6 +581,7 @@ bool kpDocumentSaveOptions::mimeTypeHasConfigurableQuality (const QString &mimeT
     // SYNC: update mime info here
     defaultMimeTypes << QLatin1String ("image/jp2");
     defaultMimeTypes << QLatin1String ("image/jpeg");
+    defaultMimeTypes << QLatin1String ("image/x-webp");
 
     return mimeTypeSupportsProperty (mimeType,
         kpSettingMimeTypeHasConfigurableQuality,

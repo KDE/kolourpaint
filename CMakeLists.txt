@@ -6,6 +6,19 @@ include(KDE4Defaults)
 find_package(QImageBlitz REQUIRED)
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
+##################################
+# WebP image IO support
+
+find_library(FOUND_WEBP webp)
+if ( FOUND_WEBP )
+  set(kimg_webp_LIB_SRCS webp.cpp)
+  kde4_add_plugin(kimg_webp ${kimg_webp_LIB_SRCS})
+  target_link_libraries(kimg_webp ${KDE4_KDECORE_LIBS} ${QT_QTGUI_LIBRARY} webp)
+
+  install(TARGETS kimg_webp  DESTINATION ${PLUGIN_INSTALL_DIR}/plugins/imageformats/ )
+endif()
+
+##################################
 
 include_directories(
 
