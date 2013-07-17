@@ -287,14 +287,6 @@ void kpView::paintEventDrawSelection (QImage *destPixmap, const QRect &docRect)
 //---------------------------------------------------------------------
 
 // protected
-bool kpView::selectionResizeHandleAtomicSizeCloseToZoomLevel () const
-{
-    return (abs (selectionResizeHandleAtomicSize () - zoomLevelX () / 100) < 3);
-}
-
-//---------------------------------------------------------------------
-
-// protected
 void kpView::paintEventDrawSelectionResizeHandles (const QRect &clipRect)
 {
 #if DEBUG_KP_VIEW_RENDERER && 1
@@ -338,27 +330,12 @@ void kpView::paintEventDrawSelectionResizeHandles (const QRect &clipRect)
                << selResizeHandlesRegion << endl;
 #endif
 
-    const bool doXor = !selectionResizeHandleAtomicSizeCloseToZoomLevel ();
-    foreach (const QRect &r, selResizeHandlesRegion.rects ())
-    {
-        QRect s = r.intersect (clipRect);
-        if (s.isEmpty ())
-            continue;
+    QPainter painter(this);
+    painter.setPen(Qt::black);
+    painter.setBrush(Qt::cyan);
 
-        if (doXor)
-        {
-            kpPixmapFX::widgetFillXORRect (this,
-                s.x (), s.y (), s.width (), s.height (),
-                kpColor::White/*XOR color*/,
-                kpColor::Aqua/*1st hint color if XOR not supported*/,
-                kpColor::Red/*2nd hint color if XOR not supported*/);
-        }
-        else
-        {
-            QPainter p (this);
-            p.fillRect (s, Qt::cyan);
-        }
-    }
+    foreach (const QRect &r, selResizeHandlesRegion.rects())
+      painter.drawRect(r);
 }
 
 //---------------------------------------------------------------------
@@ -676,7 +653,6 @@ void kpView::paintEvent (QPaintEvent *e)
         kDebug () << "\tgrid time=" << gridTimer.elapsed ();
     #endif
     }
-
 
     const QRect bvsvRect = buddyViewScrollableContainerRectangle ();
     if (!bvsvRect.isEmpty ())

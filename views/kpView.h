@@ -578,8 +578,6 @@ protected:
     // <destPixmap> is the part of the document given by <docRect>.
     void paintEventDrawSelection (QImage *destPixmap, const QRect &docRect);
 
-    bool selectionResizeHandleAtomicSizeCloseToZoomLevel () const;
-
     // Draws the parts of the selection's resize handles that are inside
     // <clipRect> onto the view
     void paintEventDrawSelectionResizeHandles (const QRect &clipRect);
