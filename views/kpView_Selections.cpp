@@ -126,7 +126,7 @@ bool kpView::selectionLargeEnoughToHaveResizeHandlesIfAtomicSize (int atomicSize
 // public
 int kpView::selectionResizeHandleAtomicSize () const
 {
-    int atomicSize = qMin (7, qMax (4, zoomLevelX () / 100));
+    int atomicSize = qMin (13, qMax (9, zoomLevelX () / 100));
     while (atomicSize > 0 &&
            !selectionLargeEnoughToHaveResizeHandlesIfAtomicSize (atomicSize))
     {
