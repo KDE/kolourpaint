@@ -993,7 +993,7 @@ At zoom levels that aren't multiples of 100%, parts of the image may appear to m
 </para>
 </important>
 
-<para>At zoom levels of 600% or greater that are also multiples of 100%, you can <guimenuitem>Show Grid</guimenuitem> to more accurately edit individual pixels.</para>
+<para>At zoom levels of 400% or greater that are also multiples of 100%, you can <guimenuitem>Show Grid</guimenuitem> to more accurately edit individual pixels.</para>
 
 <para>
 <inlinemediaobject>
