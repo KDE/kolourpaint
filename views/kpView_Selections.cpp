@@ -192,24 +192,24 @@ QRegion kpView::selectionResizeHandlesViewRegion (bool forRenderer) const
     ret += QRect ((x), (y), type##AtomicLength, type##AtomicLength)
 
     ADD_BOX_RELATIVE_TO_SELECTION (normal,
-                                   selViewRect.width () - normalAtomicLength,
-                                   selViewRect.height () - normalAtomicLength);
+                                   selViewRect.width () - normalAtomicLength - 1,
+                                   selViewRect.height () - normalAtomicLength - 1);
     ADD_BOX_RELATIVE_TO_SELECTION (normal,
-                                   selViewRect.width () - normalAtomicLength,
+                                   selViewRect.width () - normalAtomicLength - 1,
                                    0);
     ADD_BOX_RELATIVE_TO_SELECTION (normal,
                                    0,
-                                   selViewRect.height () - normalAtomicLength);
+                                   selViewRect.height () - normalAtomicLength - 1);
     ADD_BOX_RELATIVE_TO_SELECTION (normal,
                                    0,
                                    0);
 
     ADD_BOX_RELATIVE_TO_SELECTION (vertEdge,
-                                   selViewRect.width () - vertEdgeAtomicLength,
+                                   selViewRect.width () - vertEdgeAtomicLength - 1,
                                    (selViewRect.height () - vertEdgeAtomicLength) / 2);
     ADD_BOX_RELATIVE_TO_SELECTION (normal,
                                    (selViewRect.width () - normalAtomicLength) / 2,
-                                   selViewRect.height () - normalAtomicLength);
+                                   selViewRect.height () - normalAtomicLength - 1);
     ADD_BOX_RELATIVE_TO_SELECTION (normal,
                                    (selViewRect.width () - normalAtomicLength) / 2,
                                    0);
