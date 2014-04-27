@@ -34,6 +34,7 @@
 #include <QPolygon>
 #include <QRect>
 
+#include <kdebug.h>
 
 struct kpAbstractSelectionPrivate
 {
@@ -235,6 +236,7 @@ void kpAbstractSelection::moveTo (const QPoint &topLeftPoint)
     moveBy (delta.x (), delta.y ());
 }
 
+//---------------------------------------------------------------------
 
 // protected
 void kpAbstractSelection::paintRectangularBorder (QImage *destPixmap,
@@ -261,9 +263,10 @@ void kpAbstractSelection::paintRectangularBorder (QImage *destPixmap,
         boundingRect ().y () - docRect.y (),
         boundingRect ().width (),
         boundingRect ().height (),
-        kpColor::White, kpColor::Blue,  // Stippled XOR colors
-        kpColor::Blue, kpColor::Yellow);  // Hint colors if XOR not supported
+        kpColor::Blue, kpColor::Yellow);
 }
+
+//---------------------------------------------------------------------
 
 // protected
 void kpAbstractSelection::paintPolygonalBorder (const QPolygon &points,

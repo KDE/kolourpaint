@@ -614,25 +614,47 @@ QRect kpViewScrollableContainer::mapViewToViewport (const QRect &viewRect)
 
 void kpViewScrollableContainer::drawResizeLines ()
 {
-#define FILL_NOT_RECT(rect)                                              \
-    kpPixmapFX::widgetFillNOTRect (m_overlay,                          \
-        rect.x (), rect.y (), rect.width (), rect.height (),             \
-        kpColor::Black/*1st hint color if "Raster NOT" not supported*/,  \
-        kpColor::White/*2nd hint color if "Raster NOT" not supported*/)
+  static const char *stipple[] =
+  {
+    "8 8 2 1",
+    ". c #000000",
+    "# c #ffffff",
+    "....####",
+    "....####",
+    "....####",
+    "....####",
+    "####....",
+    "####....",
+    "####....",
+    "####...."
+  };
 
-    const QRect rightRect = rightResizeLineRect ();
-    if (rightRect.isValid ())
-        FILL_NOT_RECT (mapViewToViewport (rightRect));
+  QPainter p(m_overlay);
+  p.setBackground(QPixmap(stipple));
 
-    const QRect bottomRect = bottomResizeLineRect ();
-    if (bottomRect.isValid ())
-        FILL_NOT_RECT (mapViewToViewport (bottomRect));
+  const QRect rightRect = rightResizeLineRect();
+  if ( rightRect.isValid() )
+  {
+    QRect rect = mapViewToViewport(rightRect);
+    p.setBrushOrigin(rect.x(), rect.y());
+    p.eraseRect(rect);
+  }
 
-    const QRect bottomRightRect = bottomRightResizeLineRect ();
-    if (bottomRightRect.isValid ())
-        FILL_NOT_RECT (mapViewToViewport (bottomRightRect));
+  const QRect bottomRect = bottomResizeLineRect();
+  if ( bottomRect.isValid() )
+  {
+    QRect rect = mapViewToViewport(bottomRect);
+    p.setBrushOrigin(rect.x(), rect.y());
+    p.eraseRect(rect);
+  }
 
-#undef FILL_NOT_RECT
+  const QRect bottomRightRect = bottomRightResizeLineRect ();
+  if ( bottomRightRect.isValid() )
+  {
+    QRect rect = mapViewToViewport(bottomRightRect);
+    p.setBrushOrigin(rect.x(), rect.y());
+    p.eraseRect(rect);
+  }
 }
 
 //---------------------------------------------------------------------

@@ -41,7 +41,6 @@
 #include <kpColor.h>
 
 
-class QBitmap;
 class QColor;
 class QImage;
 class QPixmap;
@@ -332,7 +331,6 @@ public:
     // (used for rectangular selection borders)
     static void drawStippledXORRect (QImage *image,
         int x, int y, int width, int height,
-        const kpColor &fcolor1, const kpColor &fcolor2,
         const kpColor &colorHint1, const kpColor &colorHint2);
 
     // The painter is clipped to <clipRect> if it is not empty.
@@ -342,7 +340,6 @@ public:
     //          are allowed to be transparent.
     static void widgetDrawStippledXORRect (QWidget *widget,
         int x, int y, int width, int height,
-        const kpColor &fcolor1, const kpColor &fcolor2,
         const kpColor &colorHint1, const kpColor &colorHint2,
         const QRect &clipRect = QRect ());
 
@@ -357,16 +354,6 @@ public:
         const kpColor &fcolor,
         const kpColor &colorHint1, const kpColor &colorHint2);
 
-    // (used for selection resize handles)
-    //
-    // WARNING: Just for this method, neither <colorHint1> nor <colorHint2>
-    //          are allowed to be transparent.
-    static void widgetFillXORRect (QWidget *widget,
-        int x, int y, int width, int height,
-        const kpColor &fcolor,
-        const kpColor &colorHint1, const kpColor &colorHint2);
-
-
     //
     // Simulated Raster NOP
     //
@@ -374,14 +361,6 @@ public:
     // (used for rectangular bounding border for non-rectangular selections
     //  and when dragging a rectangle to zoom into with the Zoom Tool)
     static void drawNOTRect (QImage *image,
-        int x, int y, int width, int height,
-        const kpColor &colorHint1, const kpColor &colorHint2);
-
-    // (used for document resizing lines)
-    //
-    // WARNING: Just for this method, neither <colorHint1> nor <colorHint2>
-    //          are allowed to be transparent.
-    static void widgetFillNOTRect (QWidget *widget,
         int x, int y, int width, int height,
         const kpColor &colorHint1, const kpColor &colorHint2);
 };

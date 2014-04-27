@@ -40,37 +40,6 @@
 
 //---------------------------------------------------------------------
 
-static void WidgetFillStippledRect (QWidget *widget,
-        int x, int y, int width, int height,
-        const kpColor &colorHint1, const kpColor &colorHint2)
-{
-    // LOREFACTOR: code dup with FillRectHelper() but hard to not dup
-    
-    QPainter p (widget);
-    p.setClipRect (x, y, width, height);
-    
-    const int StippleSize = 4;
-
-    for (int dy = 0; dy < height; dy += StippleSize)
-    {
-        for (int dx = 0; dx < width; dx += StippleSize)
-        {
-            const bool parity = ((dy + dx) / StippleSize) % 2;
-
-            kpColor useColor;
-            if (!parity)
-                useColor = colorHint1;
-            else
-                useColor = colorHint2;
-
-            p.fillRect (x + dx, y + dy, StippleSize, StippleSize,
-                useColor.toQColor ());
-        }
-    }
-}
-
-//---------------------------------------------------------------------
-
 // public static
 void kpPixmapFX::drawStippledXORPolygon (QImage *image,
         const QPolygon &points,
@@ -103,10 +72,8 @@ void kpPixmapFX::drawStippledXORPolygon (QImage *image,
 // public static
 void kpPixmapFX::drawStippledXORRect (QImage *image,
         int x, int y, int width, int height,
-        const kpColor &fcolor1, const kpColor &fcolor2,
         const kpColor &colorHint1, const kpColor &colorHint2)
 {
-    (void) fcolor1; (void) fcolor2;
     kpPixmapFX::drawRect (image,
         x, y, width, height,
         colorHint1, 1/*pen width*/,
@@ -119,12 +86,9 @@ void kpPixmapFX::drawStippledXORRect (QImage *image,
 // public static
 void kpPixmapFX::widgetDrawStippledXORRect (QWidget *widget,
         int x, int y, int width, int height,
-        const kpColor &fcolor1, const kpColor &fcolor2,
         const kpColor &colorHint1, const kpColor &colorHint2,
         const QRect &clipRect)
 {
-    (void) fcolor1; (void) fcolor2;
-
     QPainter p (widget);
 
     if (!clipRect.isEmpty ())
@@ -164,20 +128,6 @@ void kpPixmapFX::fillXORRect (QImage *image,
 //---------------------------------------------------------------------
 
 // public static
-void kpPixmapFX::widgetFillXORRect (QWidget *widget,
-        int x, int y, int width, int height,
-        const kpColor &fcolor,
-        const kpColor &colorHint1, const kpColor &colorHint2)
-{
-    (void) fcolor;
-    ::WidgetFillStippledRect (widget,
-        x, y, width, height,
-        colorHint1, colorHint2);
-}
-
-//---------------------------------------------------------------------
-
-// public static
 void kpPixmapFX::drawNOTRect (QImage *image,
         int x, int y, int width, int height,
         const kpColor &colorHint1, const kpColor &colorHint2)
@@ -187,18 +137,6 @@ void kpPixmapFX::drawNOTRect (QImage *image,
         colorHint1, 1/*pen width*/,
         kpColor::Invalid/*no background*/,
         colorHint2);
-}
-
-//---------------------------------------------------------------------
-
-// public static
-void kpPixmapFX::widgetFillNOTRect (QWidget *widget,
-        int x, int y, int width, int height,
-        const kpColor &colorHint1, const kpColor &colorHint2)
-{
-    ::WidgetFillStippledRect (widget,
-        x, y, width, height,
-        colorHint1, colorHint2);
 }
 
 //---------------------------------------------------------------------
