@@ -408,7 +408,10 @@ static void DrawGenericRect (QImage *image,
 static void DrawRectHelper (QPainter *p,
         int x, int y, int width, int height)
 {
-    p->drawRect (x, y, width, height);
+  // workaround for QTBUG-38617
+  QPainterPath path;
+  path.addRect(x, y, width, height);
+  p->drawPath(path);
 }
 
 //---------------------------------------------------------------------
