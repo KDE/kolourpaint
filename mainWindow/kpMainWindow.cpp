@@ -611,9 +611,7 @@ void kpMainWindow::enableDocumentActions (bool enable)
 // private
 void kpMainWindow::setDocument (kpDocument *newDoc)
 {
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::setDocument (" << newDoc << ")";
-#endif
+    //kDebug () << newDoc;
 
     // is it a close operation?
     if (!newDoc)
@@ -648,16 +646,8 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
         enableDocumentActions (false);
     }
 
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tdestroying views";
-#endif
-
     delete d->mainView; d->mainView = 0;
     slotDestroyThumbnail ();
-
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tdestroying viewManager";
-#endif
 
     // viewManager will die and so will the selection
     d->actionCopy->setEnabled (false);
@@ -695,22 +685,16 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
     #endif
         d->document->setEnviron (documentEnvironment ());
 
-    #if DEBUG_KP_MAIN_WINDOW
-        kDebug () <<"\tcreating viewManager";
-    #endif
         d->viewManager = new kpViewManager (this);
 
-    #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tcreating views";
-    #endif
         d->mainView = new kpZoomedView (d->document, d->toolToolBar, d->viewManager,
                                        0/*buddyView*/,
                                        d->scrollView,
                                        d->scrollView->viewport ());
         d->mainView->setObjectName ( QLatin1String("mainView" ));
 
-        d->scrollView->setView (d->mainView);
         d->viewManager->registerView (d->mainView);
+        d->scrollView->setView (d->mainView);
         d->mainView->show ();
 
     #if DEBUG_KP_MAIN_WINDOW
