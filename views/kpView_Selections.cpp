@@ -110,6 +110,7 @@ bool kpView::mouseOnSelectionToMove (const QPoint &viewPoint) const
             viewPointRelSel.y () >= selViewRect.height () - atomicSize);
 }
 
+//---------------------------------------------------------------------
 
 // protected
 bool kpView::selectionLargeEnoughToHaveResizeHandlesIfAtomicSize (int atomicSize) const
@@ -122,6 +123,8 @@ bool kpView::selectionLargeEnoughToHaveResizeHandlesIfAtomicSize (int atomicSize
     return (selViewRect.width () >= atomicSize * 5 ||
             selViewRect.height () >= atomicSize * 5);
 }
+
+//---------------------------------------------------------------------
 
 // public
 int kpView::selectionResizeHandleAtomicSize () const
@@ -136,17 +139,19 @@ int kpView::selectionResizeHandleAtomicSize () const
     return atomicSize;
 }
 
+//---------------------------------------------------------------------
+
 // public
 bool kpView::selectionLargeEnoughToHaveResizeHandles () const
 {
     return (selectionResizeHandleAtomicSize () > 0);
 }
 
+//---------------------------------------------------------------------
+
 // public
 QRegion kpView::selectionResizeHandlesViewRegion (bool forRenderer) const
 {
-    QRegion ret;
-
     const int atomicLength = selectionResizeHandleAtomicSize ();
     if (atomicLength <= 0)
         return QRegion ();
@@ -187,43 +192,46 @@ QRegion kpView::selectionResizeHandlesViewRegion (bool forRenderer) const
 
 
     const QRect selViewRect = selectionViewRect ();
+    QRegion ret;
 
-#define ADD_BOX_RELATIVE_TO_SELECTION(type,x,y)    \
-    ret += QRect ((x), (y), type##AtomicLength, type##AtomicLength)
+    // top left
+    ret += QRect(0, 0, normalAtomicLength, normalAtomicLength);
 
-    ADD_BOX_RELATIVE_TO_SELECTION (normal,
-                                   selViewRect.width () - normalAtomicLength,
-                                   selViewRect.height () - normalAtomicLength);
-    ADD_BOX_RELATIVE_TO_SELECTION (normal,
-                                   selViewRect.width () - normalAtomicLength,
-                                   0);
-    ADD_BOX_RELATIVE_TO_SELECTION (normal,
-                                   0,
-                                   selViewRect.height () - normalAtomicLength);
-    ADD_BOX_RELATIVE_TO_SELECTION (normal,
-                                   0,
-                                   0);
+    // top middle
+    ret += QRect((selViewRect.width() - normalAtomicLength) / 2, 0,
+                 normalAtomicLength, normalAtomicLength);
 
-    ADD_BOX_RELATIVE_TO_SELECTION (vertEdge,
-                                   selViewRect.width () - vertEdgeAtomicLength,
-                                   (selViewRect.height () - vertEdgeAtomicLength) / 2);
-    ADD_BOX_RELATIVE_TO_SELECTION (normal,
-                                   (selViewRect.width () - normalAtomicLength) / 2,
-                                   selViewRect.height () - normalAtomicLength);
-    ADD_BOX_RELATIVE_TO_SELECTION (normal,
-                                   (selViewRect.width () - normalAtomicLength) / 2,
-                                   0);
-    ADD_BOX_RELATIVE_TO_SELECTION (vertEdge,
-                                   0,
-                                   (selViewRect.height () - vertEdgeAtomicLength) / 2);
+    // top right
+    ret += QRect(selViewRect.width() - normalAtomicLength - 1, 0,
+                 normalAtomicLength, normalAtomicLength);
 
-#undef ADD_BOX_RELATIVE_TO_SELECTION
+    // left middle
+    ret += QRect(0, (selViewRect.height() - vertEdgeAtomicLength) / 2,
+                 vertEdgeAtomicLength, vertEdgeAtomicLength);
+
+    // right middle
+    ret += QRect(selViewRect.width() - vertEdgeAtomicLength - 1, (selViewRect.height() - vertEdgeAtomicLength) / 2,
+                 vertEdgeAtomicLength, vertEdgeAtomicLength);
+
+    // bottom left
+    ret += QRect(0, selViewRect.height() - normalAtomicLength - 1,
+                 normalAtomicLength, normalAtomicLength);
+
+    // bottom middle
+    ret += QRect((selViewRect.width() - normalAtomicLength) / 2, selViewRect.height() - normalAtomicLength - 1,
+                 normalAtomicLength, normalAtomicLength);
+
+    // bottom right
+    ret += QRect(selViewRect.width() - normalAtomicLength - 1, selViewRect.height() - normalAtomicLength - 1,
+                 normalAtomicLength, normalAtomicLength);
 
     ret.translate (selViewRect.x (), selViewRect.y ());
     ret = ret.intersect (selViewRect);
 
     return ret;
 }
+
+//---------------------------------------------------------------------
 
 // public
 // REFACTOR: use QFlags as the return type for better type safety.
