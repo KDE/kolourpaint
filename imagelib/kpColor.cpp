@@ -38,8 +38,8 @@
 //---------------------------------------------------------------------
 
 kpColor::kpColor()
-  : m_rgba(0),
-    m_rgbaIsValid(false),
+  : m_rgbaIsValid(false),
+    m_rgba(0),
     m_colorCacheIsValid(false)
 {
 }
