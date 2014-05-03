@@ -341,6 +341,9 @@ void kpTransformResizeScaleCommand::execute ()
                 Q_ASSERT (!"kpTransformResizeScaleCommand::execute() scaling text sel doesn't make sense");
 
             Q_ASSERT (m_oldSelectionPtr);
+            if ( !m_oldSelectionPtr )  // make coverity happy
+              return;
+
             QRect newRect = QRect (m_oldSelectionPtr->x (), m_oldSelectionPtr->y (),
                                    newImage.width (), newImage.height ());
 
