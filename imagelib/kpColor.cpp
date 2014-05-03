@@ -37,19 +37,17 @@
 
 //---------------------------------------------------------------------
 
-kpColor::kpColor ()
-    : m_rgbaIsValid (false),
-      m_colorCacheIsValid (false)
+kpColor::kpColor()
+  : m_rgba(0),
+    m_rgbaIsValid(false),
+    m_colorCacheIsValid(false)
 {
-#if DEBUG_KP_COLOR
-    kDebug () << "kpColor::<ctor>()";
-#endif
 }
 
 //---------------------------------------------------------------------
 
 kpColor::kpColor (int red, int green, int blue, bool isTransparent)
-    : m_colorCacheIsValid (false)
+  : m_rgba(0), m_colorCacheIsValid(false)
 {
 #if DEBUG_KP_COLOR
     kDebug () << "kpColor::<ctor>(r=" << red << ",g=" << green << ",b=" << blue

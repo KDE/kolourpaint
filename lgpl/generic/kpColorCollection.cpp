@@ -54,6 +54,7 @@ struct ColorNode
     QString name;
 };
 
+//---------------------------------------------------------------------
 
 //BEGIN kpColorCollectionPrivate
 class kpColorCollectionPrivate
@@ -61,7 +62,6 @@ class kpColorCollectionPrivate
 public:
     kpColorCollectionPrivate();
     kpColorCollectionPrivate(const kpColorCollectionPrivate&);
-    ~kpColorCollectionPrivate() {}
 
     QList<ColorNode> colorList;
     QString name;
@@ -70,6 +70,7 @@ public:
 };
 
 kpColorCollectionPrivate::kpColorCollectionPrivate()
+  : editable(kpColorCollection::Yes)
 {
 }
 
@@ -78,6 +79,8 @@ kpColorCollectionPrivate::kpColorCollectionPrivate(const kpColorCollectionPrivat
 {
 }
 //END kpColorCollectionPrivate
+
+//---------------------------------------------------------------------
 
 QStringList
 kpColorCollection::installedCollections()

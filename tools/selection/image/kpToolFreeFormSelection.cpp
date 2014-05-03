@@ -36,9 +36,9 @@
 
 #include <kpDocument.h>
 #include <kpFreeFormImageSelection.h>
-#include <kpPainter.h>
 #include <kpToolSelectionEnvironment.h>
 
+//---------------------------------------------------------------------
 
 kpToolFreeFormSelection::kpToolFreeFormSelection (kpToolSelectionEnvironment *environ,
         QObject *parent)
@@ -50,10 +50,13 @@ kpToolFreeFormSelection::kpToolFreeFormSelection (kpToolSelectionEnvironment *en
 {
 }
 
+//---------------------------------------------------------------------
+
 kpToolFreeFormSelection::~kpToolFreeFormSelection ()
 {
 }
 
+//---------------------------------------------------------------------
 
 // protected virtual [base kpAbstractSelectionTool]
 bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
@@ -95,13 +98,16 @@ bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
     // First point in drag?
     if (!dragAccepted)
     {
-        points.append (startPoint ());
+      points.append (startPoint ());
     }
     // Not first point in drag.
     else
     {
-        // Get existing points in selection.
-        points = oldPointsSel->cardinallyAdjacentPoints ();
+      if ( !oldPointsSel )  // assert above says we never reach this, but let's make coverity happy
+        return false;
+
+      // Get existing points in selection.
+      points = oldPointsSel->cardinallyAdjacentPoints ();
     }
 
 
@@ -131,3 +137,5 @@ bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
 
     return true;
 }
+
+//---------------------------------------------------------------------

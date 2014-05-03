@@ -201,37 +201,6 @@ void kpMainWindow::init ()
     d = new kpMainWindowPrivate;
 
     //
-    // Set fields that must be set early on.
-    //
-    // For all other fields that don't need to be set as urgently, please
-    // set them in their respective kpMainWindow_*.cpp.
-    //
-
-    d->isFullyConstructed = false;
-
-    d->scrollView = 0;
-    d->mainView = 0;
-    d->thumbnail = 0;
-    d->thumbnailView = 0;
-    d->document = 0;
-    d->viewManager = 0;
-    d->colorToolBar = 0;
-    d->toolToolBar = 0;
-    d->commandHistory = 0;
-    d->statusBarCreated = false;
-    d->settingImageSelectionTransparency = 0;
-    d->settingTextStyle = 0;
-
-    d->docResizeToBeCompleted = false;
-
-    d->documentEnvironment = 0;
-    d->commandEnvironment = 0;
-    d->toolSelectionEnvironment = 0;
-    d->toolsActionGroup = 0;
-    d->transformDialogEnvironment = 0;
-
-
-    //
     // set mainwindow properties
     //
 

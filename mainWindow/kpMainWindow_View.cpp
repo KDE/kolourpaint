@@ -60,9 +60,6 @@
 // private
 void kpMainWindow::setupViewMenuActions ()
 {
-    d->viewMenuDocumentActionsEnabled = false;
-
-
     KActionCollection *ac = actionCollection ();
 
     /*d->actionFullScreen = KStandardAction::fullScreen (0, 0, ac);

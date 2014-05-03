@@ -52,8 +52,8 @@
 //---------------------------------------------------------------------
 
 kpToolWidgetBase::kpToolWidgetBase (QWidget *parent, const QString &name)
-    : QFrame (parent),
-      m_selectedRow (-1), m_selectedCol (-1)
+    : QFrame(parent), m_baseWidget(0),
+      m_selectedRow(-1), m_selectedCol(-1)
 {
     setObjectName (name);
 

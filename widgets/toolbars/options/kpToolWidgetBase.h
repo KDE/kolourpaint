@@ -41,7 +41,6 @@
 class QMouseEvent;
 
 
-// TODO: frame becomes a combobox when its parent kpToolToolBar becomes too small
 // TODO: This is a crazy and overcomplicated class that invents its own (buggy)
 //       layout management.  It should be simplified or removed.
 class kpToolWidgetBase : public QFrame
@@ -101,7 +100,6 @@ protected:
     virtual void mousePressEvent (QMouseEvent *e);
     virtual void paintEvent (QPaintEvent *e);
 
-    // coulbe be a QFrame or a ComboBox
     QWidget *m_baseWidget;
 
     QList < QList <QPixmap> > m_pixmaps;

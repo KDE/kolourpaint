@@ -84,10 +84,14 @@ SetDocumentToSelectionImageCommand::SetDocumentToSelectionImageCommand (kpComman
             environ->document ()->selection ()->clone ()))
 {
     Q_ASSERT (m_fromSelectionPtr);
-    m_imageIfFromSelectionDoesntHaveOne =
+
+    if ( m_fromSelectionPtr )  // make coverity happy
+    {
+      m_imageIfFromSelectionDoesntHaveOne =
         m_fromSelectionPtr->hasContent () ?
             kpImage () :
             document ()->getSelectedBaseImage ();
+    }
 }
 
 //---------------------------------------------------------------------
@@ -222,6 +226,10 @@ void kpTransformCrop_ImageSelection (kpMainWindow *mainWindow,
         dynamic_cast <kpAbstractImageSelection *> (
             mainWindow->document ()->selection ()->clone ());
     Q_ASSERT (borderImageSel);
+
+    if ( !borderImageSel )  // make coverity happy
+      return;
+
     // (only interested in border)
     borderImageSel->deleteContent ();
     borderImageSel->moveTo (QPoint (0, 0));

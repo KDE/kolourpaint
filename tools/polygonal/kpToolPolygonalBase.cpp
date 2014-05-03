@@ -64,7 +64,7 @@
 struct kpToolPolygonalBasePrivate
 {
     kpToolPolygonalBasePrivate ()
-        : toolWidgetLineWidth (0)
+        : drawShapeFunc(0), toolWidgetLineWidth(0), originatingMouseButton(-1)
     {
     }
 
@@ -76,6 +76,8 @@ struct kpToolPolygonalBasePrivate
 
     QPolygon points;
 };
+
+//---------------------------------------------------------------------
 
 kpToolPolygonalBase::kpToolPolygonalBase (
         const QString &text,

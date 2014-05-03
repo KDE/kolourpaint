@@ -130,7 +130,7 @@ kpToolWidgetEraserSize::~kpToolWidgetEraserSize ()
 // public
 int kpToolWidgetEraserSize::eraserSize () const
 {
-    return ::EraserSizes [selected ()];
+    return ::EraserSizes[selected() < 0 ? 0 : selected()];
 }
 
 

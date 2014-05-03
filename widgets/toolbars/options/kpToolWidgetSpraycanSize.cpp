@@ -105,7 +105,7 @@ kpToolWidgetSpraycanSize::~kpToolWidgetSpraycanSize ()
 // public
 int kpToolWidgetSpraycanSize::spraycanSize () const
 {
-    return spraycanSizes [selected ()];
+    return spraycanSizes[selected() < 0 ? 0 : selected()];
 }
 
 // protected slot virtual [base kpToolWidgetBase]
