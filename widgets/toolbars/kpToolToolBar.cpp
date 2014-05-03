@@ -344,6 +344,8 @@ void kpToolToolBar::slotToolActionActivated ()
 #endif
 
     selectTool (tool, true/*reselect if same tool*/);
+    m_baseLayout->activate();
+    adjustSizeConstraint();
 }
 
 //---------------------------------------------------------------------
