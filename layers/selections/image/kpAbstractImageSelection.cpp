@@ -334,7 +334,10 @@ kpImage kpAbstractImageSelection::baseImage () const
 void kpAbstractImageSelection::setBaseImage (const kpImage &baseImage)
 {
     Q_ASSERT (::CanSetBaseImageTo (this, baseImage));
-    d->baseImage = baseImage;
+
+    // qt doc: the image format must be set to Format_ARGB32Premultiplied or Format_ARGB32
+    // for the composition modes to have any effect
+    d->baseImage = baseImage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
 
     recalculateTransparencyMaskCache ();
 
