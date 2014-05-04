@@ -366,9 +366,7 @@ bool kpAbstractImageSelection::setTransparency (
     QBitmap oldTransparencyMaskCache = d->transparencyMaskCache;
     recalculateTransparencyMaskCache ();
 
-
-    if (oldTransparencyMaskCache.width () == d->transparencyMaskCache.width () &&
-        oldTransparencyMaskCache.height () == d->transparencyMaskCache.height ())
+    if ( oldTransparencyMaskCache.size() == d->transparencyMaskCache.size() )
     {
         if (d->transparencyMaskCache.isNull ())
         {
@@ -392,8 +390,8 @@ bool kpAbstractImageSelection::setTransparency (
                     {
                     #if DEBUG_KP_SELECTION
                         kDebug () << "\tdiffer at " << QPoint (x, y)
-                                   << " old=" << (int *) kpPixmapFX::getColorAtPixel (oldTransparencyMaskImage, x, y).toQRgb ()
-                                   << " new=" << (int *) kpPixmapFX::getColorAtPixel (newTransparencyMaskImage, x, y).toQRgb ()
+                                   << " old=" << kpPixmapFX::getColorAtPixel (oldTransparencyMaskImage, x, y).toQRgb ()
+                                   << " new=" << kpPixmapFX::getColorAtPixel (newTransparencyMaskImage, x, y).toQRgb ()
                                    << endl;
                     #endif
                         changed = true;
@@ -441,9 +439,8 @@ void kpAbstractImageSelection::recalculateTransparencyMaskCache ()
         return;
     }
 
-    d->transparencyMaskCache = QBitmap (d->baseImage.width (), d->baseImage.height ());
+    d->transparencyMaskCache = QBitmap(d->baseImage.size());
 
-    QImage image = d->baseImage;
     QPainter transparencyMaskPainter (&d->transparencyMaskCache);
 
     bool hasTransparent = false;
@@ -451,7 +448,7 @@ void kpAbstractImageSelection::recalculateTransparencyMaskCache ()
     {
         for (int x = 0; x < d->baseImage.width (); x++)
         {
-            const kpColor pixelCol = kpPixmapFX::getColorAtPixel (image, x, y);
+            const kpColor pixelCol = kpPixmapFX::getColorAtPixel (d->baseImage, x, y);
             if (pixelCol == kpColor::Transparent ||
                 pixelCol.isSimilarTo (d->transparency.transparentColor (),
                                       d->transparency.processedColorSimilarity ()))

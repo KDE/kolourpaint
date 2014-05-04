@@ -43,16 +43,12 @@
 
 class QColor;
 class QImage;
-class QPixmap;
 class QMatrix;
-class QPainter;
 class QPen;
 class QImage;
 class QPoint;
 class QPolygon;
 class QRect;
-class QString;
-class QWidget;
 
 
 class kpAbstractSelection;
@@ -267,102 +263,18 @@ public:
         const kpColor &fcolor, int penWidth = 1,
         const kpColor &bcolor = kpColor::Invalid,
         const kpColor &fStippleColor = kpColor::Invalid);
+
     static void drawRoundedRect (QImage *image,
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth = 1,
         const kpColor &bcolor = kpColor::Invalid,
         const kpColor &fStippleColor = kpColor::Invalid);
+
     static void drawEllipse (QImage *image,
         int x, int y, int width, int height,
         const kpColor &fcolor, int penWidth = 1,
         const kpColor &bcolor = kpColor::Invalid,
         const kpColor &fStippleColor = kpColor::Invalid);
-
-
-//
-// Drawing Using Raster Operations
-//
-//
-// 2. Raster Operation Emulation
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Qt4 does not actually support raster operations, unlike Qt3.  So for
-// now, these methods ignore any given colors and produce a stipple of
-// <colorHint1> and <colorHint2>.
-//
-// LOTODO: For the widgetDraw*() methods (which aren't bound by the
-//         no-alpha-channel requirement), if XRENDER is currently active,
-//         we could do nice alpha effects instead of stippling.
-//
-// Should Qt support raster operations again, these methods should be
-// changed to use them with the given colors.  <colorHint1> and
-// <colorHint2> would then be ignored.  Note that transparent pixels that
-// these raster operations might be drawing on -- and hence, blending with --
-// might have uninitialized RGB values.  This has to be dealt with somehow
-// (the KolourPaint/KDE3 approach is to simply use these uninitialized
-//  values -- although it's a bit dodgy, it works well enough as you usually
-//  get a stipple of arbitrary colors).
-// The testcase for KDE3, which might still apply is:
-//
-//     1. Open an image with transparent pixels
-//     2. Press CTRL+A to look at an XOR border
-//     3. Fill the transparent pixels with any color to initialize the
-//        RGB values
-//     4. Fill those pixels so that they are transparent again
-//     5. Press CTRL+A to look at an XOR border and compare with 2.
-//
-
-public:
-
-    //
-    // Simulated Stippled Raster XOR
-    //
-
-    // (used for polygonal selection border)
-    static void drawStippledXORPolygon (QImage *image,
-        const QPolygon &points,
-        const kpColor &fcolor1, const kpColor &fcolor2,
-        const kpColor &colorHint1, const kpColor &colorHint2,
-        bool isFinal = true);
-
-    // Same as drawRect() but the border consists of stippled lines of
-    // <fcolor1> and <fcolor2>, XOR'ed with the existing contents of the
-    // pixmap.  Pen width is set to 1.
-    //
-    // (used for rectangular selection borders)
-    static void drawStippledXORRect (QImage *image,
-        int x, int y, int width, int height,
-        const kpColor &colorHint1, const kpColor &colorHint2);
-
-    // The painter is clipped to <clipRect> if it is not empty.
-    // (used for thumbnail rectangle)
-    //
-    // WARNING: Just for this method, neither <colorHint1> nor <colorHint2>
-    //          are allowed to be transparent.
-    static void widgetDrawStippledXORRect (QWidget *widget,
-        int x, int y, int width, int height,
-        const kpColor &colorHint1, const kpColor &colorHint2,
-        const QRect &clipRect = QRect ());
-
-
-    //
-    // Simulated Raster XOR Filling
-    //
-
-    // (used for text cursor)
-    static void fillXORRect (QImage *image,
-        int x, int y, int width, int height,
-        const kpColor &fcolor,
-        const kpColor &colorHint1, const kpColor &colorHint2);
-
-    //
-    // Simulated Raster NOP
-    //
-
-    // (used for rectangular bounding border for non-rectangular selections
-    //  and when dragging a rectangle to zoom into with the Zoom Tool)
-    static void drawNOTRect (QImage *image,
-        int x, int y, int width, int height,
-        const kpColor &colorHint1, const kpColor &colorHint2);
 };
 
 

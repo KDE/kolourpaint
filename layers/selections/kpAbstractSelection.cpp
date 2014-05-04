@@ -258,12 +258,14 @@ void kpAbstractSelection::paintRectangularBorder (QImage *destPixmap,
               << " h=" << boundingRect ().height ()
               << endl;
 #endif
-    kpPixmapFX::drawStippledXORRect (destPixmap,
+    kpPixmapFX::drawRect(destPixmap,
         boundingRect ().x () - docRect.x (),
         boundingRect ().y () - docRect.y (),
         boundingRect ().width (),
         boundingRect ().height (),
-        kpColor::Blue, kpColor::Yellow);
+        kpColor::Blue, 1/*pen width*/,
+        kpColor::Invalid/*no background*/,
+        kpColor::Yellow);
 }
 
 //---------------------------------------------------------------------
@@ -281,25 +283,30 @@ void kpAbstractSelection::paintPolygonalBorder (const QPolygon &points,
 
     QPolygon pointsTranslated = points;
     pointsTranslated.translate (-docRect.x (), -docRect.y ());
-    kpPixmapFX::drawStippledXORPolygon (destPixmap,
-        pointsTranslated,
-        kpColor::White, kpColor::Blue,  // Stippled XOR colors
-        kpColor::Blue, kpColor::Yellow,  // Hint colors if XOR not supported
-        selectionFinished);
 
-    // TODO: duplicate NOT and XOR pixels would cancel each other out.
-    if (selectionFinished)
+    if ( !selectionFinished )
     {
-        kpPixmapFX::drawNOTRect (destPixmap,
-            boundingRect ().x () - docRect.x (),
-            boundingRect ().y () - docRect.y (),
-            boundingRect ().width (),
-            boundingRect ().height (),
-            kpColor::LightGray/*1st hint color if "Raster NOT" not supported*/,
-            kpColor::DarkGray/*2nd hint color if "Raster NOT" not supported*/);
+      kpPixmapFX::drawPolyline(destPixmap,
+        pointsTranslated, kpColor::Blue, 1/*pen width*/, kpColor::Yellow);
+    }
+    else
+    {
+      kpPixmapFX::drawPolygon(destPixmap,
+          pointsTranslated,
+          kpColor::Blue, 1/*pen width*/,
+          kpColor::Invalid/*no background*/,
+          true/*is final*/,
+          kpColor::Yellow);
+
+      kpPixmapFX::drawRect(destPixmap,
+          boundingRect ().x () - docRect.x (),
+          boundingRect ().y () - docRect.y (),
+          boundingRect ().width (),
+          boundingRect ().height (),
+          kpColor::LightGray, 1/*pen width*/,
+          kpColor::Invalid/*no background*/,
+          kpColor::DarkGray);
     }
 }
 
-
 #include <kpAbstractSelection.moc>
-

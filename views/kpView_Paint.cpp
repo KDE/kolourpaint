@@ -274,12 +274,10 @@ void kpView::paintEventDrawSelection (QImage *destPixmap, const QRect &docRect)
         rect = rect.intersect (textSel->textAreaRect ());
         if (!rect.isEmpty ())
         {
-            kpPixmapFX::fillXORRect (destPixmap,
-                rect.x () - docRect.x (), rect.y () - docRect.y (),
-                rect.width (), rect.height (),
-                kpColor::White/*XOR color*/,
-                kpColor::LightGray/*1st hint color if XOR not supported*/,
-                kpColor::DarkGray/*2nd hint color if XOR not supported*/);
+          kpPixmapFX::fillRect(destPixmap,
+              rect.x () - docRect.x (), rect.y () - docRect.y (),
+              rect.width (), rect.height (),
+              kpColor::LightGray, kpColor::DarkGray);
         }
     }
 }
@@ -367,69 +365,26 @@ void kpView::paintEventDrawTempImage (QImage *destPixmap, const QRect &docRect)
 // protected
 void kpView::paintEventDrawGridLines (QPainter *painter, const QRect &viewRect)
 {
-    int hzoomMultiple = zoomLevelX () / 100;
-    int vzoomMultiple = zoomLevelY () / 100;
+  int hzoomMultiple = zoomLevelX () / 100;
+  int vzoomMultiple = zoomLevelY () / 100;
 
-    QPen ordinaryPen (Qt::gray);
-    QPen tileBoundaryPen (Qt::lightGray);
+  painter->setPen(Qt::gray);
 
-    painter->setPen (ordinaryPen);
+  // horizontal lines
+  int starty = viewRect.top();
+  if (starty % vzoomMultiple)
+    starty = (starty + vzoomMultiple) / vzoomMultiple * vzoomMultiple;
 
-    // horizontal lines
-    int starty = viewRect.top ();
-    if (starty % vzoomMultiple)
-        starty = (starty + vzoomMultiple) / vzoomMultiple * vzoomMultiple;
-#if 0
-    int tileHeight = 16 * vzoomMultiple;  // CONFIG
-#endif
-    for (int y = starty; y <= viewRect.bottom (); y += vzoomMultiple)
-    {
-    #if 0
-        if (tileHeight > 0 && (y - viewRect.y ()) % tileHeight == 0)
-        {
-            painter->setPen (tileBoundaryPen);
-            //painter.setRasterOp (Qt::XorROP);
-        }
-    #endif
+  for (int y = starty; y <= viewRect.bottom(); y += vzoomMultiple)
+    painter->drawLine(viewRect.left(), y, viewRect.right(), y);
 
-        painter->drawLine (viewRect.left (), y, viewRect.right (), y);
+  // vertical lines
+  int startx = viewRect.left();
+  if (startx % hzoomMultiple)
+    startx = (startx + hzoomMultiple) / hzoomMultiple * hzoomMultiple;
 
-    #if 0
-        if (tileHeight > 0 && (y - viewRect.y ()) % tileHeight == 0)
-        {
-            painter->setPen (ordinaryPen);
-            //painter.setRasterOp (Qt::CopyROP);
-        }
-    #endif
-    }
-
-    // vertical lines
-    int startx = viewRect.left ();
-    if (startx % hzoomMultiple)
-        startx = (startx + hzoomMultiple) / hzoomMultiple * hzoomMultiple;
-#if 0
-    int tileWidth = 16 * hzoomMultiple;  // CONFIG
-#endif
-    for (int x = startx; x <= viewRect.right (); x += hzoomMultiple)
-    {
-    #if 0
-        if (tileWidth > 0 && (x - viewRect.x ()) % tileWidth == 0)
-        {
-            painter->setPen (tileBoundaryPen);
-            //painter.setRasterOp (Qt::XorROP);
-        }
-    #endif
-
-        painter->drawLine (x, viewRect.top (), x, viewRect.bottom ());
-
-    #if 0
-        if (tileWidth > 0 && (x - viewRect.x ()) % tileWidth == 0)
-        {
-            painter->setPen (ordinaryPen);
-            //painter.setRasterOp (Qt::CopyROP);
-        }
-    #endif
-    }
+  for (int x = startx; x <= viewRect.right(); x += hzoomMultiple)
+    painter->drawLine(x, viewRect.top (), x, viewRect.bottom());
 }
 
 //---------------------------------------------------------------------
@@ -636,33 +591,28 @@ void kpView::paintEvent (QPaintEvent *e)
         paintEventDrawDoc_Unclipped (r);
     }
 
-
     //
     // Draw Grid Lines
     //
 
-    if (isGridShown ())
+    if ( isGridShown() )
     {
-        QPainter painter (this);
-    #if DEBUG_KP_VIEW_RENDERER && 1
-        QTime gridTimer; gridTimer.start ();
-    #endif
-        foreach (const QRect &r, rects)
-            paintEventDrawGridLines (&painter, r);
-    #if DEBUG_KP_VIEW_RENDERER && 1
-        kDebug () << "\tgrid time=" << gridTimer.elapsed ();
-    #endif
+      QPainter painter(this);
+      foreach (const QRect &r, rects)
+        paintEventDrawGridLines(&painter, r);
     }
 
-    const QRect bvsvRect = buddyViewScrollableContainerRectangle ();
-    if (!bvsvRect.isEmpty ())
+    const QRect r = buddyViewScrollableContainerRectangle();
+    if ( !r.isEmpty() )
     {
-        kpPixmapFX::widgetDrawStippledXORRect (this,
-            bvsvRect.x (), bvsvRect.y (), bvsvRect.width (), bvsvRect.height (),
-            kpColor::LightGray, kpColor::DarkGray,
-            e->rect ());
-    }
+      QPainter painter(this);
 
+      painter.setPen(QPen(Qt::lightGray, 1/*width*/, Qt::DotLine));
+      painter.setBackground(Qt::darkGray);
+      painter.setBackgroundMode(Qt::OpaqueMode);
+
+      painter.drawRect(r.x(), r.y(), r.width() - 1, r.height() - 1);
+    }
 
     if (doc->selection ())
     {
