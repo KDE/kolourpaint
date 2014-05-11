@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<component type="desktop">
+  <id>kolourpaint.desktop</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>LGPL-2.0+ and GPL-2.0+ and GFDL-1.2-without-invariant</project_license>
+  <name>KolourPaint</name>
+  <summary>Paint Program</summary>
+  <description>
+    <p>
+      KolourPaint is a simple painting program to quickly create raster images.
+      It is useful as a touch-up tool and simple image editing tasks.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Support for drawing various shapes - lines, rectangles, rounded rectangles, ovals and polygons</li>
+      <li>Curves, lines and text</li>
+      <li>Colour picker</li>
+      <li>Selections</li>
+      <li>Rotation, monochrome and other advanced effects.</li>
+    </ul>
+  </description>
+  <url type="homepage">http://www.kolourpaint.org/</url>
+  <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kolourpaint</url>
+  <url type="help">http://docs.kde.org/stable/en/kdegraphics/kolourpaint/index.html</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>http://kde.org/images/screenshots/kolourpaint.png</image>
+    </screenshot>
+  </screenshots>
+  <project_group>KDE</project_group>
+  <provides>
+    <binary>kolourpaint</binary>
+  </provides>
+</component>

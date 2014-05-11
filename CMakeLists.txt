@@ -576,4 +576,5 @@ install(TARGETS kolourpaint ${INSTALL_TARGETS_DEFAULT_ARGS})
 ########### install files ###############
 
 install(PROGRAMS kolourpaint.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES kolourpaint.appdata.xml DESTINATION share/appdata/)
 install(FILES kolourpaintui.rc DESTINATION ${DATA_INSTALL_DIR}/kolourpaint)
