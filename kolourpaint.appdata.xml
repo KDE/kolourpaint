@@ -4,20 +4,26 @@
   <metadata_license>MIT</metadata_license>
   <project_license>LGPL-2.0+ and GPL-2.0+ and GFDL-1.2-without-invariant</project_license>
   <name>KolourPaint</name>
+  <name xml:lang="cs">KolourPaint</name>
   <name xml:lang="de">KolourPaint</name>
   <name xml:lang="nds">KolourPaint</name>
   <name xml:lang="nl">KolourPaint</name>
+  <name xml:lang="pl">KolourPaint</name>
   <name xml:lang="pt">KolourPaint</name>
   <name xml:lang="pt-BR">KolourPaint</name>
+  <name xml:lang="sk">KolourPaint</name>
   <name xml:lang="sv">KolourPaint</name>
   <name xml:lang="uk">KolourPaint</name>
   <name xml:lang="x-test">xxKolourPaintxx</name>
   <summary>Paint Program</summary>
+  <summary xml:lang="cs">Program pro malování</summary>
   <summary xml:lang="de">Mal- und Zeichenprogramm</summary>
   <summary xml:lang="nds">Maalprogramm</summary>
   <summary xml:lang="nl">Tekenprogramma</summary>
+  <summary xml:lang="pl">Program Paint</summary>
   <summary xml:lang="pt">Programa de Pintura</summary>
   <summary xml:lang="pt-BR">Programa de desenho</summary>
+  <summary xml:lang="sk">Kresliaci program</summary>
   <summary xml:lang="sv">Ritprogram</summary>
   <summary xml:lang="uk">Програма для малювання</summary>
   <summary xml:lang="x-test">xxPaint Programxx</summary>
@@ -28,17 +34,22 @@
     </p>
     <p xml:lang="nds">KolourPaint is en eenfach Maalprogramm, mit dat sik gau Pixelbiller opstellen laat. Dat is goot för lütte Utbetern un eenfache Bildbewerken.</p>
     <p xml:lang="nl">KolourPaint is een eenvoudig tekenprogramma om snel rasterafbeeldingen te maken. Het is nuttig als een hulpmiddel voor bijwerken en eenvoudige taken voor bewerking van afbeeldingen.</p>
+    <p xml:lang="pl">KolourPaint jest prostym programem do malowania i szybkiego tworzenia obrazów rastrowych. Jest przydatny przy retuszowaniu i prostych pracach edytowania.</p>
     <p xml:lang="pt">O KolourPaint é um programa simples de pintura que cria rapidamente imagens rasterizadas. É útil como uma ferramenta de retoques e para tarefas simples de edição de imagens.</p>
     <p xml:lang="pt-BR">KolourPaint é um programa de desenho simples, que cria rapidamente imagens rasterizadas. É útil como uma ferramenta de retoques e para tarefas simples de edição de imagens.</p>
+    <p xml:lang="sk">KolourPaint je jednoduchý kresliaci program na rýchlu tvorbu rastrových obrázkov. Je užitočný ako touch-up nástroj a na jednoduché úpravy obrázkov.</p>
     <p xml:lang="sv">KolourPaint är ett enkelt ritprogram för att snabbt skapa punktavbildningar. Det är användbart som förbättringsverktyg och för enkla bildredigeringsuppgifter.</p>
     <p xml:lang="uk">KolourPaint — проста програма для малювання, за допомогою якої можна швидко створювати растрові зображення. Ця програма може бути корисною для виконання простих завдань з редагування зображень.</p>
     <p xml:lang="x-test">xxKolourPaint is a simple painting program to quickly create raster images. It is useful as a touch-up tool and simple image editing tasks.xx</p>
     <p>Features:</p>
+    <p xml:lang="cs">Vlastnosti:</p>
     <p xml:lang="de">Leistungsmerkmale:</p>
     <p xml:lang="nds">Markmalen:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
+    <p xml:lang="pl">Cechy:</p>
     <p xml:lang="pt">Características:</p>
     <p xml:lang="pt-BR">Funcionalidades:</p>
+    <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
@@ -46,8 +57,10 @@
       <li>Support for drawing various shapes - lines, rectangles, rounded rectangles, ovals and polygons</li>
       <li xml:lang="nds">Ünnerstütt dat Teken vun en Reeg vun Formen - Lienen, Rechtecks, afrundt Rechtecks, Ovalen un Veelecks</li>
       <li xml:lang="nl">Ondersteuning voor het tekenen van verschillende vormen - lijnen, rechthoeken, afgeronde rechthoeken, ovalen en polygonen</li>
+      <li xml:lang="pl">Obsługa rysowania rozmaitych kształtów - proste, prostokąty, zaokrąglone prostokąty, owale i wielokąty</li>
       <li xml:lang="pt">Suporte para desenhar várias formas - linhas, rectângulos, rectângulos arredondados, ovais e polígonos</li>
       <li xml:lang="pt-BR">Suporte para desenhar várias formas - linhas, retângulos, retângulos arredondados, ovais e polígonos</li>
+      <li xml:lang="sk">Podpora pre kreslenie rôznych tvarov - čiary, obdĺžniky, zaoblené obdĺžniky, ovály a polygóny</li>
       <li xml:lang="sv">Stöd för att rita diverse former: linjer, rektanglar, rundade rektanglar, ovaler och polygoner</li>
       <li xml:lang="uk">Підтримка малювання різноманітних форм: прямих, прямокутників, прямокутників із заокругленими кутами, овалів та багатокутників.</li>
       <li xml:lang="x-test">xxSupport for drawing various shapes - lines, rectangles, rounded rectangles, ovals and polygonsxx</li>
@@ -55,8 +68,10 @@
       <li xml:lang="de">Kurven, Linien und Text</li>
       <li xml:lang="nds">Bagens, Lienen un Text</li>
       <li xml:lang="nl">Krommen, lijnen en tekst</li>
+      <li xml:lang="pl">Krzywe, proste i teks</li>
       <li xml:lang="pt">Curvas, linhas e texto</li>
       <li xml:lang="pt-BR">Curvas, linhas e texto</li>
+      <li xml:lang="sk">Krivky, čiary a text</li>
       <li xml:lang="sv">Kurvor, linjer och text</li>
       <li xml:lang="uk">Можливість малювання кривих, прямих та тексту.</li>
       <li xml:lang="x-test">xxCurves, lines and textxx</li>
@@ -64,8 +79,10 @@
       <li xml:lang="de">Farbwähler</li>
       <li xml:lang="nds">Klöörköör</li>
       <li xml:lang="nl">Kleurkiezer</li>
+      <li xml:lang="pl">Wybierak barwy</li>
       <li xml:lang="pt">Selecção de cores</li>
       <li xml:lang="pt-BR">Seleção de cor</li>
+      <li xml:lang="sk">Výber farieb</li>
       <li xml:lang="sv">Färgväljare</li>
       <li xml:lang="uk">Піпетка для отримання кольору із зображення.</li>
       <li xml:lang="x-test">xxColour pickerxx</li>
@@ -73,16 +90,20 @@
       <li xml:lang="de">Auswahl</li>
       <li xml:lang="nds">Köören</li>
       <li xml:lang="nl">Selecties</li>
+      <li xml:lang="pl">Zaznaczenia</li>
       <li xml:lang="pt">Selecções</li>
       <li xml:lang="pt-BR">Seleções</li>
+      <li xml:lang="sk">Výbery</li>
       <li xml:lang="sv">Markeringar</li>
       <li xml:lang="uk">Можливість позначення ділянок зображення.</li>
       <li xml:lang="x-test">xxSelectionsxx</li>
       <li>Rotation, monochrome and other advanced effects.</li>
       <li xml:lang="nds">Dreihen, Swatt-witt un en Reeg verwiedert Effekten</li>
       <li xml:lang="nl">Roteren, monochroom en andere geavanceerde effecten.</li>
+      <li xml:lang="pl">Obrót, monochromatyczność i inne zaawansowane efekty.</li>
       <li xml:lang="pt">Rotação, monocromáticos e outros efeitos avançados.</li>
       <li xml:lang="pt-BR">Rotação, monocromático e outros efeitos avançados.</li>
+      <li xml:lang="sk">Otáčanie, monochromatické a iné pokročilé efekty.</li>
       <li xml:lang="sv">Rotation, svartvitt och andra avancerade effekter.</li>
       <li xml:lang="uk">Можливість обертання частин зображення, різноманітні ефекти перетворення зображення.</li>
       <li xml:lang="x-test">xxRotation, monochrome and other advanced effects.xx</li>
