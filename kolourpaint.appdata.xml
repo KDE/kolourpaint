@@ -7,9 +7,11 @@
   <name xml:lang="ca">KolourPaint</name>
   <name xml:lang="cs">KolourPaint</name>
   <name xml:lang="de">KolourPaint</name>
+  <name xml:lang="en-GB">KolourPaint</name>
   <name xml:lang="es">KolourPaint</name>
   <name xml:lang="fi">KolourPaint</name>
   <name xml:lang="hu">KolourPaint</name>
+  <name xml:lang="it">KolourPaint</name>
   <name xml:lang="nds">KolourPaint</name>
   <name xml:lang="nl">KolourPaint</name>
   <name xml:lang="pl">KolourPaint</name>
@@ -25,9 +27,11 @@
   <summary xml:lang="ca">Programa de pintura</summary>
   <summary xml:lang="cs">Program pro malování</summary>
   <summary xml:lang="de">Mal- und Zeichenprogramm</summary>
+  <summary xml:lang="en-GB">Paint Program</summary>
   <summary xml:lang="es">Programa de dibujo</summary>
   <summary xml:lang="fi">Piirto-ohjelma</summary>
   <summary xml:lang="hu">Rajzolóprogram</summary>
+  <summary xml:lang="it">Programma di disegno</summary>
   <summary xml:lang="nds">Maalprogramm</summary>
   <summary xml:lang="nl">Tekenprogramma</summary>
   <summary xml:lang="pl">Program Paint</summary>
@@ -45,6 +49,7 @@
       It is useful as a touch-up tool and simple image editing tasks.
     </p>
     <p xml:lang="ca">El KolourPaint és un programa senzill de pintura per crear ràpidament imatges ràster. És útil com a eina de retoc i tasques senzilles d'edició d'imatges.</p>
+    <p xml:lang="en-GB">KolourPaint is a simple painting program to quickly create raster images. It is useful as a touch-up tool and simple image editing tasks.</p>
     <p xml:lang="es">KolourPaint es un sencillo programa de dibujo que permite crear imágenes de mapas de bits de una forma rápida. Resulta útil como herramienta de retoque y para tareas de edición sencillas.</p>
     <p xml:lang="fi">KolourPaint on yksinkertainen piirto-ohjelma, jolla voi luoda nopeasti bittikartakuvia. Sitä voi käyttää myös kuvien parantamiseen ja yksinkertaiseen kuvankäsittelyyn.</p>
     <p xml:lang="hu">A KolourPaint egy egyszerű rajzolóprogram raszteres képek gyors létrehozásához. Hasznos retusálóeszközként és egyszerű képszerkesztő feladatokhoz.</p>
@@ -63,6 +68,7 @@
     <p xml:lang="ca">Funcionalitats:</p>
     <p xml:lang="cs">Vlastnosti:</p>
     <p xml:lang="de">Leistungsmerkmale:</p>
+    <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Funcionalidades:</p>
     <p xml:lang="fi">Ominaisuudet:</p>
     <p xml:lang="hu">Szolgáltatások:</p>
@@ -80,6 +86,7 @@
     <ul>
       <li>Support for drawing various shapes - lines, rectangles, rounded rectangles, ovals and polygons</li>
       <li xml:lang="ca">Permet dibuixar diverses formes: línies, rectangles, rectangles arrodonits, ovals i polígons</li>
+      <li xml:lang="en-GB">Support for drawing various shapes - lines, rectangles, rounded rectangles, ovals and polygons</li>
       <li xml:lang="es">Permite dibujar distintas formas (líneas, rectángulos, rectángulos de esquinas redondeadas, óvalos y polígonos)</li>
       <li xml:lang="fi">Piirtämistuki useille muodoille – viivoille, suorakaiteille, pyöristetyille suorakaiteille, ellipseille ja monikulmioille</li>
       <li xml:lang="hu">Különféle alakzatok rajzolásának támogatása - vonalak, téglalapok, lekerekített téglalapok, oválisok és sokszögek</li>
@@ -97,6 +104,7 @@
       <li>Curves, lines and text</li>
       <li xml:lang="ca">Corbes, línies i text</li>
       <li xml:lang="de">Kurven, Linien und Text</li>
+      <li xml:lang="en-GB">Curves, lines and text</li>
       <li xml:lang="es">Curvas, líneas y texto</li>
       <li xml:lang="fi">Käyrät, viivat ja teksti</li>
       <li xml:lang="hu">Görbék, vonalak és szöveg</li>
@@ -114,6 +122,7 @@
       <li>Colour picker</li>
       <li xml:lang="ca">Selector de color</li>
       <li xml:lang="de">Farbwähler</li>
+      <li xml:lang="en-GB">Colour picker</li>
       <li xml:lang="es">Selección de color</li>
       <li xml:lang="fi">Värivalitsin</li>
       <li xml:lang="hu">Színválasztó</li>
@@ -131,6 +140,7 @@
       <li>Selections</li>
       <li xml:lang="ca">Seleccions</li>
       <li xml:lang="de">Auswahl</li>
+      <li xml:lang="en-GB">Selections</li>
       <li xml:lang="es">Selecciones</li>
       <li xml:lang="fi">Valintatyökalu</li>
       <li xml:lang="hu">Kijelölések</li>
@@ -147,6 +157,7 @@
       <li xml:lang="zh-TW">選取區</li>
       <li>Rotation, monochrome and other advanced effects.</li>
       <li xml:lang="ca">Gir, monocrom i altres efectes avançats.</li>
+      <li xml:lang="en-GB">Rotation, monochrome and other advanced effects.</li>
       <li xml:lang="es">Rotación, conversión a monocromo y otros efectos avanzados.</li>
       <li xml:lang="fi">Kierto, pelkistäminen yksiväriseksi sekä muita tehosteita.</li>
       <li xml:lang="hu">Forgatás, fekete-fehér és egyéb speciális hatások.</li>
