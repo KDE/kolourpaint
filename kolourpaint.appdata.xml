@@ -12,6 +12,7 @@
   <name xml:lang="fi">KolourPaint</name>
   <name xml:lang="hu">KolourPaint</name>
   <name xml:lang="it">KolourPaint</name>
+  <name xml:lang="lt">KolourPaint</name>
   <name xml:lang="nds">KolourPaint</name>
   <name xml:lang="nl">KolourPaint</name>
   <name xml:lang="pl">KolourPaint</name>
@@ -32,6 +33,7 @@
   <summary xml:lang="fi">Piirto-ohjelma</summary>
   <summary xml:lang="hu">Rajzolóprogram</summary>
   <summary xml:lang="it">Programma di disegno</summary>
+  <summary xml:lang="lt">Piešimo programa</summary>
   <summary xml:lang="nds">Maalprogramm</summary>
   <summary xml:lang="nl">Tekenprogramma</summary>
   <summary xml:lang="pl">Program Paint</summary>
@@ -72,6 +74,7 @@
     <p xml:lang="es">Funcionalidades:</p>
     <p xml:lang="fi">Ominaisuudet:</p>
     <p xml:lang="hu">Szolgáltatások:</p>
+    <p xml:lang="lt">Galimybės:</p>
     <p xml:lang="nds">Markmalen:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="pl">Cechy:</p>
@@ -108,6 +111,7 @@
       <li xml:lang="es">Curvas, líneas y texto</li>
       <li xml:lang="fi">Käyrät, viivat ja teksti</li>
       <li xml:lang="hu">Görbék, vonalak és szöveg</li>
+      <li xml:lang="lt">Kreivės, tiesės ir tekstas</li>
       <li xml:lang="nds">Bagens, Lienen un Text</li>
       <li xml:lang="nl">Krommen, lijnen en tekst</li>
       <li xml:lang="pl">Krzywe, proste i teks</li>
@@ -126,6 +130,7 @@
       <li xml:lang="es">Selección de color</li>
       <li xml:lang="fi">Värivalitsin</li>
       <li xml:lang="hu">Színválasztó</li>
+      <li xml:lang="lt">Spalvų parinkiklis</li>
       <li xml:lang="nds">Klöörköör</li>
       <li xml:lang="nl">Kleurkiezer</li>
       <li xml:lang="pl">Wybierak barwy</li>
@@ -144,6 +149,7 @@
       <li xml:lang="es">Selecciones</li>
       <li xml:lang="fi">Valintatyökalu</li>
       <li xml:lang="hu">Kijelölések</li>
+      <li xml:lang="lt">Žymėjimai</li>
       <li xml:lang="nds">Köören</li>
       <li xml:lang="nl">Selecties</li>
       <li xml:lang="pl">Zaznaczenia</li>
