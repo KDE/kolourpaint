@@ -185,6 +185,7 @@
       <li xml:lang="zh-TW">選取區</li>
       <li>Rotation, monochrome and other advanced effects</li>
       <li xml:lang="ca">Gir, monocrom i altres efectes avançats.</li>
+      <li xml:lang="en-GB">Rotation, monochrome and other advanced effects</li>
       <li xml:lang="es">Rotación, conversión a monocromo y otros efectos avanzados</li>
       <li xml:lang="fi">Kierto, pelkistäminen yksiväriseksi sekä muita tehosteita</li>
       <li xml:lang="it">Rotazione, monocromia e altri effetti avanzati</li>
@@ -196,6 +197,7 @@
       <li xml:lang="sv">Rotation, svartvitt och andra avancerade effekter</li>
       <li xml:lang="uk">Можливість обертання частин зображення, перетворення зображення на чорно-біле, різноманітні ефекти перетворення зображення.</li>
       <li xml:lang="x-test">xxRotation, monochrome and other advanced effectsxx</li>
+      <li xml:lang="zh-TW">旋轉、單色與其他進階效果</li>
     </ul>
   </description>
   <url type="homepage">http://www.kolourpaint.org/</url>
