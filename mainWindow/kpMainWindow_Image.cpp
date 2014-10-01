@@ -118,50 +118,50 @@ void kpMainWindow::setupImageMenuActions ()
     d->actionResizeScale = ac->addAction ("image_resize_scale");
     d->actionResizeScale->setText (i18n ("R&esize / Scale..."));
     connect (d->actionResizeScale, SIGNAL (triggered (bool)), SLOT (slotResizeScale ()));
-    d->actionResizeScale->setShortcut(Qt::CTRL + Qt::Key_E);
+    ac->setDefaultShortcut (d->actionResizeScale, Qt::CTRL + Qt::Key_E);
 
     d->actionCrop = ac->addAction ("image_crop");
     d->actionCrop->setText (i18n ("Se&t as Image (Crop)"));
     connect (d->actionCrop, SIGNAL (triggered (bool)), SLOT (slotCrop ()));
-    d->actionCrop->setShortcut(Qt::CTRL + Qt::Key_T);
+    ac->setDefaultShortcut (d->actionCrop, Qt::CTRL + Qt::Key_T);
 
     d->actionAutoCrop = ac->addAction ("image_auto_crop");
     d->actionAutoCrop->setText (autoCropText ());
     connect (d->actionAutoCrop, SIGNAL (triggered (bool)), SLOT (slotAutoCrop ()));
-    d->actionAutoCrop->setShortcut(Qt::CTRL + Qt::Key_U);
+    ac->setDefaultShortcut (d->actionAutoCrop, Qt::CTRL + Qt::Key_U);
 
     d->actionFlip = ac->addAction ("image_flip");
     d->actionFlip->setText (i18n ("&Flip (upside down)"));
     connect (d->actionFlip, SIGNAL (triggered (bool)), SLOT (slotFlip ()));
-    d->actionFlip->setShortcut(Qt::CTRL + Qt::Key_F);
+    ac->setDefaultShortcut (d->actionFlip, Qt::CTRL + Qt::Key_F);
 
     d->actionMirror = ac->addAction ("image_mirror");
     d->actionMirror->setText (i18n ("Mirror (horizontally)"));
     connect (d->actionMirror, SIGNAL (triggered (bool)), SLOT (slotMirror ()));
-    //d->actionMirror->setShortcut(Qt::CTRL + Qt::Key_M);
+    //ac->setDefaultShortcut (d->actionMirror, Qt::CTRL + Qt::Key_M);
 
     d->actionRotate = ac->addAction ("image_rotate");
     d->actionRotate->setText (i18n ("&Rotate..."));
     d->actionRotate->setIcon (QIcon::fromTheme ("transform-rotate"));
     connect (d->actionRotate, SIGNAL (triggered (bool)), SLOT (slotRotate ()));
-    d->actionRotate->setShortcut(Qt::CTRL + Qt::Key_R);
+    ac->setDefaultShortcut (d->actionRotate, Qt::CTRL + Qt::Key_R);
 
     d->actionRotateLeft = ac->addAction ("image_rotate_270deg");
     d->actionRotateLeft->setText (i18n ("Rotate &Left"));
     d->actionRotateLeft->setIcon (QIcon::fromTheme ("object-rotate-left"));
     connect (d->actionRotateLeft, SIGNAL (triggered (bool)), SLOT (slotRotate270 ()));
-    d->actionRotateLeft->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Left);
+    ac->setDefaultShortcut (d->actionRotateLeft, Qt::CTRL + Qt::SHIFT + Qt::Key_Left);
 
     d->actionRotateRight = ac->addAction ("image_rotate_90deg");
     d->actionRotateRight->setText (i18n ("Rotate Righ&t"));
     d->actionRotateRight->setIcon (QIcon::fromTheme ("object-rotate-right"));
     connect (d->actionRotateRight, SIGNAL (triggered (bool)), SLOT (slotRotate90 ()));
-    d->actionRotateRight->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Right);
+    ac->setDefaultShortcut (d->actionRotateRight, Qt::CTRL + Qt::SHIFT + Qt::Key_Right);
 
     d->actionSkew = ac->addAction ("image_skew");
     d->actionSkew->setText (i18n ("S&kew..."));
     connect (d->actionSkew, SIGNAL (triggered (bool)), SLOT (slotSkew ()));
-    d->actionSkew->setShortcut(Qt::CTRL + Qt::Key_K);
+    ac->setDefaultShortcut (d->actionSkew, Qt::CTRL + Qt::Key_K);
 
     d->actionConvertToBlackAndWhite = ac->addAction ("image_convert_to_black_and_white");
     d->actionConvertToBlackAndWhite->setText (i18n ("Reduce to Mo&nochrome (Dithered)"));
@@ -174,17 +174,17 @@ void kpMainWindow::setupImageMenuActions ()
     d->actionInvertColors = ac->addAction ("image_invert_colors");
     d->actionInvertColors->setText (i18n ("&Invert Colors"));
     connect (d->actionInvertColors, SIGNAL (triggered (bool)), SLOT (slotInvertColors ()));
-    d->actionInvertColors->setShortcut(Qt::CTRL + Qt::Key_I);
+    ac->setDefaultShortcut (d->actionInvertColors, Qt::CTRL + Qt::Key_I);
 
     d->actionClear = ac->addAction ("image_clear");
     d->actionClear->setText (i18n ("C&lear"));
     connect (d->actionClear, SIGNAL (triggered (bool)), SLOT (slotClear ()));
-    d->actionClear->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
+    ac->setDefaultShortcut (d->actionClear, Qt::CTRL + Qt::SHIFT + Qt::Key_N);
 
     d->actionMoreEffects = ac->addAction ("image_more_effects");
     d->actionMoreEffects->setText (i18n ("&More Effects..."));
     connect (d->actionMoreEffects, SIGNAL (triggered (bool)), SLOT (slotMoreEffects ()));
-    d->actionMoreEffects->setShortcut(Qt::CTRL + Qt::Key_M);
+    ac->setDefaultShortcut (d->actionMoreEffects, Qt::CTRL + Qt::Key_M);
 
 
     enableImageMenuDocumentActions (false);

@@ -39,7 +39,7 @@ kpToolAction::kpToolAction(const QString &text,
                             KActionCollection *ac, const QString &name)
     : KToggleAction(QIcon::fromTheme(pic), text, ac)
 {
-  KToggleAction::setShortcuts(shortcut);
+  ac->setDefaultShortcuts(this, shortcut);
 
   if ( receiver && slot )
     connect(this, SIGNAL(triggered(bool)), receiver, slot);

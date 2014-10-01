@@ -70,7 +70,7 @@ void kpMainWindow::setupViewMenuThumbnailActions ()
     // TODO: This doesn't work when the thumbnail has focus. 
     //       Testcase: Press CTRL+H twice on a fresh KolourPaint.
     //                 The second CTRL+H doesn't close the thumbnail.
-    d->actionShowThumbnail->setShortcut (Qt::CTRL + Qt::Key_H);
+    ac->setDefaultShortcut (d->actionShowThumbnail, Qt::CTRL + Qt::Key_H);
     //d->actionShowThumbnail->setCheckedState (KGuiItem(i18n ("Hide T&humbnail")));
     connect (d->actionShowThumbnail, SIGNAL (triggered (bool)),
         SLOT (slotShowThumbnailToggled ()));

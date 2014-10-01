@@ -123,7 +123,7 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionReload->setText (i18n ("Reloa&d"));
     d->actionReload->setIcon (QIcon::fromTheme ("view-refresh"));
     connect(d->actionReload, SIGNAL(triggered(bool) ), SLOT (slotReload ()));
-    d->actionReload->setShortcuts(KStandardShortcut::reload ());
+    ac->setDefaultShortcuts (d->actionReload, KStandardShortcut::reload ());
     slotEnableReload ();
 
     d->actionPrint = KStandardAction::print (this, SLOT (slotPrint ()), ac);
