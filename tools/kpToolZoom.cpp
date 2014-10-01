@@ -78,7 +78,7 @@ kpToolZoom::kpToolZoom (kpToolEnvironment *environ, QWidget *parent)
       d (new kpToolZoomPrivate ())
 {
   // different from objectName()
-  action()->setIcon(KIcon("zoom-original"));
+  action()->setIcon(QIcon::fromTheme("zoom-original"));
 }
 
 //---------------------------------------------------------------------

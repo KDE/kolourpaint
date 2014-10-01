@@ -101,7 +101,7 @@ void kpMainWindow::setupFileMenuActions ()
 
     d->actionExport = ac->addAction("file_export");
     d->actionExport->setText (i18n ("E&xport..."));
-    d->actionExport->setIcon (KIcon ("document-export"));
+    d->actionExport->setIcon (QIcon::fromTheme ("document-export"));
     connect(d->actionExport, SIGNAL(triggered(bool) ), SLOT (slotExport ()));
 
     d->actionScan = ac->addAction("file_scan");
@@ -115,13 +115,13 @@ void kpMainWindow::setupFileMenuActions ()
 
     d->actionProperties = ac->addAction ("file_properties");
     d->actionProperties->setText (i18n ("Properties"));
-    d->actionProperties->setIcon (KIcon ("document-properties"));
+    d->actionProperties->setIcon (QIcon::fromTheme ("document-properties"));
     connect (d->actionProperties, SIGNAL (triggered (bool)), SLOT (slotProperties ()));
 
     //d->actionRevert = KStandardAction::revert (this, SLOT (slotRevert ()), ac);
     d->actionReload = ac->addAction ("file_revert");
     d->actionReload->setText (i18n ("Reloa&d"));
-    d->actionReload->setIcon (KIcon ("view-refresh"));
+    d->actionReload->setIcon (QIcon::fromTheme ("view-refresh"));
     connect(d->actionReload, SIGNAL(triggered(bool) ), SLOT (slotReload ()));
     d->actionReload->setShortcuts(KStandardShortcut::reload ());
     slotEnableReload ();

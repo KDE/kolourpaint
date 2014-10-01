@@ -77,12 +77,12 @@ kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
                                             KActionCollection *ac)
     : d (new kpCommandHistoryBasePrivate ())
 {
-    m_actionUndo = new KToolBarPopupAction (KIcon ("edit-undo"), undoActionText (), this);
+    m_actionUndo = new KToolBarPopupAction (QIcon::fromTheme ("edit-undo"), undoActionText (), this);
     ac->addAction (KStandardAction::name (KStandardAction::Undo), m_actionUndo);
     m_actionUndo->setShortcuts (KStandardShortcut::shortcut (KStandardShortcut::Undo));
     connect (m_actionUndo, SIGNAL(triggered(bool)), this, SLOT (undo ()));
 
-    m_actionRedo = new KToolBarPopupAction (KIcon ("edit-redo"), redoActionText (), this);
+    m_actionRedo = new KToolBarPopupAction (QIcon::fromTheme ("edit-redo"), redoActionText (), this);
     ac->addAction (KStandardAction::name (KStandardAction::Redo), m_actionRedo);
     m_actionRedo->setShortcuts (KStandardShortcut::shortcut (KStandardShortcut::Redo));
     connect (m_actionRedo, SIGNAL(triggered(bool)), this, SLOT (redo ()));

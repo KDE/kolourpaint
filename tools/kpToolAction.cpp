@@ -28,7 +28,6 @@
 #include <kpToolAction.h>
 
 #include <kactioncollection.h>
-#include <kicon.h>
 
 #include <kpTool.h>
 
@@ -38,7 +37,7 @@ kpToolAction::kpToolAction(const QString &text,
                             const QString &pic, const KShortcut &shortcut,
                             const QObject *receiver, const char *slot,
                             KActionCollection *ac, const QString &name)
-    : KToggleAction(KIcon(pic), text, ac)
+    : KToggleAction(QIcon::fromTheme(pic), text, ac)
 {
   KToggleAction::setShortcut(shortcut);
 
