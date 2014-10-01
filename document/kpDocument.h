@@ -33,8 +33,7 @@
 #include <qbitmap.h>
 #include <qobject.h>
 #include <qstring.h>
-
-#include <kurl.h>
+#include <qurl.h>
 
 #include <kpImage.h>
 #include <kpPixmapFX.h>

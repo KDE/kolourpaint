@@ -30,8 +30,9 @@
 #define KP_MAIN_WINDOW_H
 
 
+#include <QUrl>
+
 #include <kxmlguiwindow.h>
-#include <kurl.h>
 
 #include <kpDefs.h>
 #include <kpPixmapFX.h>
