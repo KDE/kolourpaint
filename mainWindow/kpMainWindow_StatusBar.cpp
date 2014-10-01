@@ -67,7 +67,8 @@ void kpMainWindow::addPermanentStatusBarItem (int id, int maxTextLen)
 // private
 void kpMainWindow::createStatusBar ()
 {
-    KStatusBar *sb = statusBar ();
+    KStatusBar *sb = new KStatusBar(this);
+    setStatusBar(sb);
 
     // 9999 pixels "ought to be enough for anybody"
     const int maxDimenLength = 4;
