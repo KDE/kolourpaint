@@ -39,7 +39,7 @@ QString kpUrlFormatter::PrettyUrl (const KUrl &url)
     if (url.isEmpty ())
         return i18n ("Untitled");
     else
-        return url.pathOrUrl ();
+        return url.url (QUrl::PreferLocalFile);
 }
 
 //---------------------------------------------------------------------
