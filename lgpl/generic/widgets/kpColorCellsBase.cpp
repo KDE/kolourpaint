@@ -25,6 +25,7 @@
 
 #include <kpColorCellsBase.h>
 
+#include <QApplication>
 #include <QDrag>
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
@@ -37,7 +38,6 @@
 
 #include <KColorMimeData>
 #include <KDebug>
-#include <KGlobalSettings>
 
 
 class kpColorCellsBase::kpColorCellsBasePrivate
@@ -411,7 +411,7 @@ void kpColorCellsBase::mouseMoveEvent( QMouseEvent *e )
     if( !(e->buttons() & Qt::LeftButton)) return;
 
     if(d->inMouse) {
-        int delay = KGlobalSettings::dndEventDelay();
+        int delay = QApplication::startDragDistance();
         if(e->x() > d->mousePos.x()+delay || e->x() < d->mousePos.x()-delay ||
            e->y() > d->mousePos.y()+delay || e->y() < d->mousePos.y()-delay){
             // Drag color object

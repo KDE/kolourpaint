@@ -31,6 +31,7 @@
 
 #include <kpDualColorButton.h>
 
+#include <QApplication>
 #include <QBitmap>
 #include <QDrag>
 #include <QMouseEvent>
@@ -40,7 +41,6 @@
 #include <KColorDialog>
 #include <KColorMimeData>
 #include <KDebug>
-#include <KGlobalSettings>
 #include <KIconLoader>
 
 #include <kpView.h>
@@ -279,7 +279,7 @@ void kpDualColorButton::mouseMoveEvent (QMouseEvent *e)
         return;
     }
 
-    const int delay = KGlobalSettings::dndEventDelay ();
+    const int delay = QApplication::startDragDistance ();
     if (e->x () < m_dragStartPoint.x () - delay ||
         e->x () > m_dragStartPoint.x () + delay ||
         e->y () < m_dragStartPoint.y () - delay ||
