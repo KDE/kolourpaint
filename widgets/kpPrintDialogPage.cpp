@@ -34,7 +34,7 @@
 
 #include <QRadioButton>
 #include <QVBoxLayout>
-#include <QtGui/QPrinter>
+#include <QPrinter>
 
 #include <KDebug>
 #include <KDialog>

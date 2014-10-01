@@ -34,10 +34,10 @@
 
 #include <kolourpaint_lgpl_export.h>
 
-#include <QtGui/QColor>
-#include <QtCore/QList>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
+#include <QColor>
+#include <QList>
+#include <QString>
+#include <QStringList>
 
 
 class KUrl;

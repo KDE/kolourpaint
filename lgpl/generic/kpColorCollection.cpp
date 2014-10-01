@@ -28,8 +28,8 @@
 
 #include "kpColorCollection.h"
 
-#include <QtCore/QFile>
-#include <QtCore/QTextIStream>
+#include <QFile>
+#include <QTextStream>
 
 #include <kglobal.h>
 #include <kio/netaccess.h>
