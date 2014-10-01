@@ -53,7 +53,7 @@
 #include <qapplication.h>
 #include <qlist.h>
 #include <qtimer.h>
-#include <QInputContext>
+//#include <QInputContext>
 
 #include <kdebug.h>
 
@@ -162,12 +162,14 @@ void kpViewManager::setTextCursorPosition (int row, int col)
     restoreQueueUpdates ();
     restoreFastUpdates ();
 
+#if 0 // TODO port to Qt5?
     if (d->viewUnderCursor) {
         QInputContext *inputContext = d->viewUnderCursor->inputContext ();
         if (inputContext) {
             inputContext->update ();
         }
     }
+#endif
 }
 
 
