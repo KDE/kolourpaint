@@ -44,7 +44,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>  // TODO: isn't this in KIO?
-#include <ktemporaryfile.h>
 
 #include <kpColor.h>
 #include <kpColorToolBar.h>

@@ -51,7 +51,6 @@
 #include <kimageio.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
-#include <ktemporaryfile.h>
 
 #include <kpAbstractSelection.h>
 #include <kpAbstractImageSelection.h>

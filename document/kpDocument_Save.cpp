@@ -44,6 +44,7 @@
 #include <qpainter.h>
 #include <qrect.h>
 #include <qsize.h>
+#include <qtemporaryfile.h>
 #include <qmatrix.h>
 
 #include <kdebug.h>
@@ -54,7 +55,6 @@
 #include <kmessagebox.h>
 #include <kmimetype.h>  // TODO: isn't this in KIO?
 #include <KSaveFile>
-#include <ktemporaryfile.h>
 
 #include <kpColor.h>
 #include <kpColorToolBar.h>
@@ -416,7 +416,7 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
     {
         // Create temporary file that is deleted when the variable goes
         // out of scope.
-        KTemporaryFile tempFile;
+        QTemporaryFile tempFile;
         if (!tempFile.open ())
         {
         #if DEBUG_KP_DOCUMENT

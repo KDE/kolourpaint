@@ -29,6 +29,7 @@
 #include "kpColorCollection.h"
 
 #include <QFile>
+#include <QTemporaryFile>
 #include <QTextStream>
 
 #include <kglobal.h>
@@ -39,7 +40,6 @@
 #include <kdebug.h>
 #include <kstandarddirs.h>
 #include <kstringhandler.h>
-#include <KTemporaryFile>
 #include <QUrl>
 #include <kdebug.h>
 
@@ -348,7 +348,7 @@ kpColorCollection::saveAs(const QUrl &url, bool showOverwritePrompt,
     {
         // Create temporary file that is deleted when the variable goes
         // out of scope.
-        KTemporaryFile tempFile;
+        QTemporaryFile tempFile;
         if (!tempFile.open ())
         {
         #if DEBUG_KP_COLOR_COLLECTION
