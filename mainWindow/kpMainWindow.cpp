@@ -109,7 +109,7 @@ void kpMainWindow::readGeneralSettings ()
     kDebug () << "\tkpMainWindow(" << objectName () << ")::readGeneralSettings()";
 #endif
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
 
     d->configFirstTime = cfg.readEntry (kpSettingFirstTime, true);
     d->configShowGrid = cfg.readEntry (kpSettingShowGrid, false);
@@ -157,7 +157,7 @@ void kpMainWindow::readThumbnailSettings ()
     kDebug () << "\tkpMainWindow(" << objectName () << ")::readThumbnailSettings()";
 #endif
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupThumbnail);
 
     d->configThumbnailShown = cfg.readEntry (kpSettingThumbnailShown, false);
     d->configThumbnailGeometry = cfg.readEntry (kpSettingThumbnailGeometry, QRect ());
@@ -213,7 +213,7 @@ void kpMainWindow::init ()
 
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
     // realize what other processes have done e.g. Settings / Show Path
-    KGlobal::config ()->reparseConfiguration ();
+    KSharedConfig::openConfig ()->reparseConfiguration ();
 
     readGeneralSettings ();
     readThumbnailSettings ();
@@ -272,7 +272,7 @@ void kpMainWindow::init ()
     {
       d->toolToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 
-      KConfigGroup cfg(KGlobal::config(), kpSettingsGroupGeneral);
+      KConfigGroup cfg(KSharedConfig::openConfig(), kpSettingsGroupGeneral);
 
       cfg.writeEntry(kpSettingFirstTime, d->configFirstTime = false);
       cfg.sync();

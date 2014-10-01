@@ -542,7 +542,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
                  this, SLOT (hidePreview ()));
 
 
-        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupPreviewSave);
+        KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupPreviewSave);
 
         if (cfg.hasKey (kpSettingPreviewSaveUpdateDelay))
         {
@@ -568,7 +568,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
         #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
             kDebug () << "\tread cfg preview dialog last rel geometry";
         #endif
-            KConfigGroup cfg (KGlobal::config (), kpSettingsGroupPreviewSave);
+            KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupPreviewSave);
 
             m_previewDialogLastRelativeGeometry = cfg.readEntry (
                 kpSettingPreviewSaveGeometry, QRect ());
@@ -643,7 +643,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
     {
         m_updatePreviewDialogLastRelativeGeometryTimer->stop ();
 
-        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupPreviewSave);
+        KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupPreviewSave);
 
         cfg.writeEntry (kpSettingPreviewSaveGeometry, m_previewDialogLastRelativeGeometry);
         cfg.sync ();

@@ -99,7 +99,7 @@ void kpMainWindow::setupTextToolBarActions ()
 // private
 void kpMainWindow::readAndApplyTextSettings ()
 {
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
 
     const QString font (cfg.readEntry (kpSettingFontFamily, QString::fromLatin1 ("Times")));
     d->actionTextFontFamily->setFont (font);
@@ -173,7 +173,7 @@ void kpMainWindow::slotTextFontFamilyChanged ()
     if (d->mainView)
         d->mainView->setFocus ();
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingFontFamily, d->actionTextFontFamily->font ());
     cfg.sync ();
 
@@ -206,7 +206,7 @@ void kpMainWindow::slotTextFontSizeChanged ()
     if (d->mainView)
         d->mainView->setFocus ();
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingFontSize, d->actionTextFontSize->fontSize ());
     cfg.sync ();
 
@@ -233,7 +233,7 @@ void kpMainWindow::slotTextBoldChanged ()
         d->toolText->slotBoldChanged (d->actionTextBold->isChecked ());
     }
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingBold, d->actionTextBold->isChecked ());
     cfg.sync ();
 }
@@ -258,7 +258,7 @@ void kpMainWindow::slotTextItalicChanged ()
         d->toolText->slotItalicChanged (d->actionTextItalic->isChecked ());
     }
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingItalic, d->actionTextItalic->isChecked ());
     cfg.sync ();
 }
@@ -283,7 +283,7 @@ void kpMainWindow::slotTextUnderlineChanged ()
         d->toolText->slotUnderlineChanged (d->actionTextUnderline->isChecked ());
     }
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingUnderline, d->actionTextUnderline->isChecked ());
     cfg.sync ();
 }
@@ -308,7 +308,7 @@ void kpMainWindow::slotTextStrikeThruChanged ()
         d->toolText->slotStrikeThruChanged (d->actionTextStrikeThru->isChecked ());
     }
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingStrikeThru, d->actionTextStrikeThru->isChecked ());
     cfg.sync ();
 }

@@ -91,7 +91,7 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionOpen = KStandardAction::open (this, SLOT (slotOpen ()), ac);
 
     d->actionOpenRecent = KStandardAction::openRecent (this, SLOT (slotOpenRecent (const QUrl &)), ac);
-    d->actionOpenRecent->loadEntries (KGlobal::config ()->group (kpSettingsGroupRecentFiles));
+    d->actionOpenRecent->loadEntries (KSharedConfig::openConfig ()->group (kpSettingsGroupRecentFiles));
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\trecent URLs=" << d->actionOpenRecent->items ();
 #endif
@@ -193,7 +193,7 @@ void kpMainWindow::addRecentURL (const QUrl &url_)
         return;
 
 
-    KSharedConfig::Ptr cfg = KGlobal::config();
+    KSharedConfig::Ptr cfg = KSharedConfig::openConfig();
 
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
     // realize what other processes have done e.g. Settings / Show Path
@@ -284,9 +284,9 @@ QSize kpMainWindow::defaultDocSize () const
 {
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
     // realize what other processes have done e.g. Settings / Show Path
-    KGlobal::config ()->reparseConfiguration ();
+    KSharedConfig::openConfig ()->reparseConfiguration ();
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
 
     QSize docSize = cfg.readEntry (kpSettingLastDocSize, QSize ());
 
@@ -314,7 +314,7 @@ void kpMainWindow::saveDefaultDocSize (const QSize &size)
     kDebug () << "\tCONFIG: saving Last Doc Size = " << size;
 #endif
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
 
     cfg.writeEntry (kpSettingLastDocSize, size);
     cfg.sync ();
@@ -778,11 +778,11 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
 #define SETUP_READ_CFG()                                                             \
     if (!reparsedConfiguration)                                                      \
     {                                                                                \
-        KGlobal::config ()->reparseConfiguration ();                                 \
+        KSharedConfig::openConfig ()->reparseConfiguration ();                       \
         reparsedConfiguration = true;                                                \
     }                                                                                \
                                                                                      \
-    KConfigGroup cfg (KGlobal::config (), forcedSaveOptionsGroup);    \
+    KConfigGroup cfg (KSharedConfig::openConfig (), forcedSaveOptionsGroup);
 
 
     if (chosenSaveOptions)
@@ -883,7 +883,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
         newSaveOptions.printDebug ("\tnewSaveOptions");
     #endif
 
-        KConfigGroup cfg (KGlobal::config (), forcedSaveOptionsGroup);
+        KConfigGroup cfg (KSharedConfig::openConfig (), forcedSaveOptionsGroup);
 
         // Save options user forced - probably want to use them in future
         kpDocumentSaveOptions::saveDefaultDifferences (cfg,
@@ -1317,7 +1317,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
             // Save config option even if the dialog was cancelled.
             d->configPrintImageCenteredOnPage = optionsPage->printImageCenteredOnPage ();
 
-            KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+            KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
             cfg.writeEntry (kpSettingPrintImageCenteredOnPage,
                            d->configPrintImageCenteredOnPage);
             cfg.sync ();

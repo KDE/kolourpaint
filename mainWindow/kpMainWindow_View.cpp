@@ -132,7 +132,7 @@ void kpMainWindow::slotShowGridToggled ()
 
     updateMainViewGrid ();
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
 
     cfg.writeEntry (kpSettingShowGrid, d->configShowGrid = d->actionShowGrid->isChecked ());
     cfg.sync ();

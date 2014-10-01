@@ -232,7 +232,7 @@ void kpCommandHistoryBase::readConfig ()
 #if DEBUG_KP_COMMAND_HISTORY
     kDebug () << "kpCommandHistoryBase::readConfig()";
 #endif
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupUndoRedo);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupUndoRedo);
 
     setUndoMinLimit (cfg.readEntry (kpSettingUndoMinLimit, undoMinLimit ()));
     setUndoMaxLimit (cfg.readEntry (kpSettingUndoMaxLimit, undoMaxLimit ()));
@@ -249,7 +249,7 @@ void kpCommandHistoryBase::writeConfig ()
 #if DEBUG_KP_COMMAND_HISTORY
     kDebug () << "kpCommandHistoryBase::writeConfig()";
 #endif
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupUndoRedo);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupUndoRedo);
 
     cfg.writeEntry (kpSettingUndoMinLimit, undoMinLimit ());
     cfg.writeEntry (kpSettingUndoMaxLimit, undoMaxLimit ());

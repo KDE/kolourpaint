@@ -419,7 +419,7 @@ static QStringList mimeTypesSupportingProperty (const QString &property,
 {
     QStringList mimeTypeList;
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupMimeTypeProperties);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupMimeTypeProperties);
 
     if (cfg.hasKey (property))
     {

@@ -121,7 +121,7 @@ void kpMainWindow::slotShowPathToggled ()
     slotUpdateCaption ();
 
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
 
     cfg.writeEntry (kpSettingShowPath, d->configShowPath);
     cfg.sync ();

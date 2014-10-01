@@ -204,7 +204,7 @@ QPair <int, int> kpToolWidgetBase::defaultSelectedRowAndCol () const
 
     if (!objectName ().isEmpty ())
     {
-        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupTools);
+        KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupTools);
 
         row = cfg.readEntry (objectName () + QLatin1String (" Row"), -1);
         col = cfg.readEntry (objectName () + QLatin1String (" Col"), -1);
@@ -250,7 +250,7 @@ void kpToolWidgetBase::saveSelectedAsDefault () const
     if (objectName ().isEmpty ())
         return;
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupTools);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupTools);
 
     cfg.writeEntry (objectName () + QLatin1String (" Row"), m_selectedRow);
     cfg.writeEntry (objectName () + QLatin1String (" Col"), m_selectedCol);

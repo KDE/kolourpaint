@@ -586,7 +586,7 @@ void kpMainWindow::slotMoreEffects ()
     {
         d->moreEffectsDialogLastEffect = dialog.selectedEffect ();
 
-        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+        KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
 
         cfg.writeEntry (kpSettingMoreEffectsLastEffect,
                          d->moreEffectsDialogLastEffect);

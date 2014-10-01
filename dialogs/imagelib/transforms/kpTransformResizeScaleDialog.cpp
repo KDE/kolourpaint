@@ -108,7 +108,7 @@ kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (
     baseLayout->addWidget(operationGroupBox);
     baseLayout->addWidget(dimensionsGroupBox);
 
-    KConfigGroup cfg(KGlobal::config(), kpSettingsGroupGeneral);
+    KConfigGroup cfg(KSharedConfig::openConfig(), kpSettingsGroupGeneral);
     setKeepAspectRatio(cfg.readEntry(kpSettingResizeScaleLastKeepAspect, false));
     m_lastType = static_cast<kpTransformResizeScaleCommand::Type>
                    (cfg.readEntry(kpSettingResizeScaleScaleType,
@@ -805,7 +805,7 @@ void kpTransformResizeScaleDialog::accept ()
     }
 
     // store settings
-    KConfigGroup cfg(KGlobal::config(), kpSettingsGroupGeneral);
+    KConfigGroup cfg(KSharedConfig::openConfig(), kpSettingsGroupGeneral);
 
     cfg.writeEntry(kpSettingResizeScaleLastKeepAspect, m_keepAspectRatioCheckBox->isChecked());
     cfg.writeEntry(kpSettingResizeScaleScaleType, static_cast<int>(m_lastType));
