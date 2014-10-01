@@ -637,11 +637,20 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 
 
     if (!d->lastCopyToURL.isEmpty ())
-        d->lastCopyToURL.setFileName (QString());
+    {
+        // remove file name from path
+        QString path = d->lastCopyToURL.path ();
+        path = path.left (path.lastIndexOf (QLatin1Char ('/')) + 1);
+        d->lastCopyToURL.setPath (path);
+    }
     d->copyToFirstTime = true;
 
     if (!d->lastExportURL.isEmpty ())
-        d->lastExportURL.setFileName (QString());
+    {
+        QString path = d->lastExportURL.path ();
+        path = path.left (path.lastIndexOf (QLatin1Char ('/')) + 1);
+        d->lastExportURL.setPath (path);
+    }
     d->exportFirstTime = true;
 
 
