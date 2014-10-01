@@ -25,6 +25,7 @@
 
 #include <kpColorCellsBase.h>
 
+#include <QDrag>
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
 #include <QDropEvent>
