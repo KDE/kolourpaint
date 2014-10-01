@@ -335,7 +335,7 @@ private:
     // make sense to bubble the Recent Files list.
     bool open (const KUrl &url, bool newDocSameNameIfNotExist = false);
 
-    KUrl::List askForOpenURLs(const QString &caption,
+    QList<QUrl> askForOpenURLs(const QString &caption,
                               bool allowMultipleURLs = true);
 
 private slots:

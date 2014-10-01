@@ -426,7 +426,7 @@ bool kpMainWindow::open (const KUrl &url, bool newDocSameNameIfNotExist)
 //---------------------------------------------------------------------
 
 // private
-KUrl::List kpMainWindow::askForOpenURLs(const QString &caption, bool allowMultipleURLs)
+QList<QUrl> kpMainWindow::askForOpenURLs(const QString &caption, bool allowMultipleURLs)
 {
     QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
 #if DEBUG_KP_MAIN_WINDOW
@@ -450,7 +450,7 @@ KUrl::List kpMainWindow::askForOpenURLs(const QString &caption, bool allowMultip
     if (fd.exec ())
         return fd.selectedUrls ();
     else
-        return KUrl::List ();
+        return QList<QUrl> ();
 }
 
 //---------------------------------------------------------------------
@@ -460,9 +460,9 @@ void kpMainWindow::slotOpen ()
 {
     toolEndShape ();
 
-    const KUrl::List urls = askForOpenURLs(i18nc("@title:window", "Open Image"));
+    const QList<QUrl> urls = askForOpenURLs(i18nc("@title:window", "Open Image"));
 
-    for (KUrl::List::const_iterator it = urls.begin ();
+    for (QList<QUrl>::const_iterator it = urls.begin ();
          it != urls.end ();
          ++it)
     {

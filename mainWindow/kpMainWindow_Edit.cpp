@@ -895,7 +895,7 @@ void kpMainWindow::slotPasteFromFile ()
     toolEndShape ();
 
 
-    KUrl::List urls = askForOpenURLs(i18nc ("@title:window", "Paste From File"),
+    QList<QUrl> urls = askForOpenURLs(i18nc ("@title:window", "Paste From File"),
                                      false/*only 1 URL*/);
 
     if (urls.count () != 1)
