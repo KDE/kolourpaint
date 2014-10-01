@@ -34,12 +34,12 @@
 //---------------------------------------------------------------------
 
 kpToolAction::kpToolAction(const QString &text,
-                            const QString &pic, const KShortcut &shortcut,
+                            const QString &pic, const QList<QKeySequence> &shortcut,
                             const QObject *receiver, const char *slot,
                             KActionCollection *ac, const QString &name)
     : KToggleAction(QIcon::fromTheme(pic), text, ac)
 {
-  KToggleAction::setShortcut(shortcut);
+  KToggleAction::setShortcuts(shortcut);
 
   if ( receiver && slot )
     connect(this, SIGNAL(triggered(bool)), receiver, slot);
@@ -56,7 +56,7 @@ kpToolAction::kpToolAction(const QString &text,
 void kpToolAction::updateToolTip()
 {
   const QString newToolTip =
-      kpTool::toolTipForTextAndShortcut(text(), shortcut());
+      kpTool::toolTipForTextAndShortcut(text(), shortcuts());
 
   if ( newToolTip == toolTip() )
     return;

@@ -51,8 +51,6 @@ class QMouseEvent;
 class QImage;
 class QWheelEvent;
 
-class KShortcut;
-
 class kpColor;
 class kpCommandHistory;
 class kpDocument;
@@ -90,13 +88,13 @@ public:
 
     QString text () const;
 
-    static QString toolTipForTextAndShortcut (const QString &text, const KShortcut &shortcut);
+    static QString toolTipForTextAndShortcut (const QString &text, const QList<QKeySequence> &shortcut);
     QString toolTip () const;
 
     // Given a single <key>, returns a shortcut with <key>
     // (disabled when the user is editing text) and as an alternate,
     // <some modifiers>+<key>.
-    static KShortcut shortcutForKey (int key);
+    static QList<QKeySequence> shortcutForKey (int key);
 
     static QRect neededRect (const QRect &rect, int lineWidth);
     static QImage neededPixmap (const QImage &image, const QRect &boundingRect);

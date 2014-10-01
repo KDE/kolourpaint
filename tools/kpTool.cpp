@@ -131,9 +131,9 @@ static bool KeyIsText (int key)
 
 // public static
 QString kpTool::toolTipForTextAndShortcut (const QString &text,
-                                           const KShortcut &shortcut)
+                                           const QList<QKeySequence> &shortcut)
 {
-    foreach(const QKeySequence &seq, shortcut.toList())
+    foreach(const QKeySequence &seq, shortcut)
     {
         if (seq.count () == 1 && ::KeyIsText (seq [0]))
             return i18nc ("<Tool Name> (<Single Accel Key>)",
@@ -147,22 +147,22 @@ QString kpTool::toolTipForTextAndShortcut (const QString &text,
 
 QString kpTool::toolTip () const
 {
-    return toolTipForTextAndShortcut(d->text, d->action->shortcut());
+    return toolTipForTextAndShortcut(d->text, d->action->shortcuts());
 }
 
 //---------------------------------------------------------------------
 // public static
 
-KShortcut kpTool::shortcutForKey (int key)
+QList<QKeySequence> kpTool::shortcutForKey (int key)
 {
-    KShortcut shortcut;
+    QList<QKeySequence> shortcut;
 
     if (key)
     {
-        shortcut.setPrimary (key);
+        shortcut.append (QKeySequence (key));
         // (CTRL+<key>, ALT+<key>, CTRL+ALT+<key>, CTRL+SHIFT+<key>
         //  all clash with global KDE shortcuts)
-        shortcut.setAlternate (Qt::ALT + Qt::SHIFT + key);
+        shortcut.append (QKeySequence (Qt::ALT + Qt::SHIFT + key));
     }
 
     return shortcut;
