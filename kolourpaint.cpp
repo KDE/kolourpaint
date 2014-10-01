@@ -26,7 +26,7 @@
 */
 
 
-#include <kaboutdata.h>
+#include <k4aboutdata.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <kdebug.h>
@@ -43,13 +43,13 @@
 
 int main (int argc, char *argv [])
 {
-    KAboutData aboutData
+    K4AboutData aboutData
     (
         "kolourpaint", 0,
         ki18n ("KolourPaint"),
         kpVersionText,
         ki18n ("Paint Program for KDE"),
-        KAboutData::License_Custom,
+        K4AboutData::License_Custom,
         ki18n (0/*copyright statement - see license instead*/),
         ki18n ("To obtain support, please visit the website."),
         "http://www.kolourpaint.org/"
