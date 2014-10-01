@@ -120,7 +120,7 @@ struct kpColorCellsPrivate
     // the modified flag.
     kpColorCollection colorCol;
 
-    KUrl url;
+    QUrl url;
     bool isModified;
 
     bool blockColorChangedSig;
@@ -363,7 +363,7 @@ void kpColorCells::setModified ()
 //---------------------------------------------------------------------
 
 
-KUrl kpColorCells::url () const
+QUrl kpColorCells::url () const
 {
     return d->url;
 }
@@ -394,7 +394,7 @@ void kpColorCells::ensureHaveAtLeastOneRow ()
 
 //---------------------------------------------------------------------
 
-void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const KUrl &url)
+void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const QUrl &url)
 {
     d->colorCol = colorCol;
     ensureHaveAtLeastOneRow ();
@@ -412,7 +412,7 @@ void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const 
 //---------------------------------------------------------------------
 
 
-bool kpColorCells::openColorCollection (const KUrl &url)
+bool kpColorCells::openColorCollection (const QUrl &url)
 {
     // (this will pop up an error dialog on failure)
     if (d->colorCol.open (url, this))
@@ -436,7 +436,7 @@ bool kpColorCells::openColorCollection (const KUrl &url)
 
 //---------------------------------------------------------------------
 
-bool kpColorCells::saveColorCollectionAs (const KUrl &url)
+bool kpColorCells::saveColorCollectionAs (const QUrl &url)
 {
     // (this will pop up an error dialog on failure)
     if (d->colorCol.saveAs (url, true/*show overwrite prompt*/, this))

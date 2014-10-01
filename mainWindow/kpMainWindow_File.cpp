@@ -90,7 +90,7 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionNew = KStandardAction::openNew (this, SLOT (slotNew ()), ac);
     d->actionOpen = KStandardAction::open (this, SLOT (slotOpen ()), ac);
 
-    d->actionOpenRecent = KStandardAction::openRecent (this, SLOT (slotOpenRecent (const KUrl &)), ac);
+    d->actionOpenRecent = KStandardAction::openRecent (this, SLOT (slotOpenRecent (const QUrl &)), ac);
     d->actionOpenRecent->loadEntries (KGlobal::config ()->group (kpSettingsGroupRecentFiles));
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\trecent URLs=" << d->actionOpenRecent->items ();
@@ -172,7 +172,7 @@ void kpMainWindow::enableFileMenuDocumentActions (bool enable)
 //---------------------------------------------------------------------
 
 // private
-void kpMainWindow::addRecentURL (const KUrl &url_)
+void kpMainWindow::addRecentURL (const QUrl &url_)
 {
     // HACK: KRecentFilesAction::loadEntries() clears the KRecentFilesAction::d->urls
     //       map.
@@ -184,7 +184,7 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
     //       To avoid the crash, make a copy of it before calling
     //       loadEntries() and use this copy, instead of the to-be-dangling
     //       ref.
-    const KUrl url = url_;
+    const QUrl url = url_;
 
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::addRecentURL(" << url << ")";
@@ -272,7 +272,7 @@ void kpMainWindow::slotNew ()
     }
     else
     {
-        open (KUrl (), true/*create an empty doc*/);
+        open (QUrl (), true/*create an empty doc*/);
     }
 }
 
@@ -366,7 +366,7 @@ void kpMainWindow::setDocumentChoosingWindow (kpDocument *doc)
 //---------------------------------------------------------------------
 
 // private
-kpDocument *kpMainWindow::openInternal (const KUrl &url,
+kpDocument *kpMainWindow::openInternal (const QUrl &url,
         const QSize &fallbackDocSize,
         bool newDocSameNameIfNotExist)
 {
@@ -400,7 +400,7 @@ kpDocument *kpMainWindow::openInternal (const KUrl &url,
 //---------------------------------------------------------------------
 
 // private
-bool kpMainWindow::open (const KUrl &url, bool newDocSameNameIfNotExist)
+bool kpMainWindow::open (const QUrl &url, bool newDocSameNameIfNotExist)
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::open(" << url
@@ -440,7 +440,7 @@ QList<QUrl> kpMainWindow::askForOpenURLs(const QString &caption, bool allowMulti
 #endif
     QString filter = mimeTypes.join (" ");
 
-    KFileDialog fd(KUrl("kfiledialog:///dir/"), filter, this);
+    KFileDialog fd(QUrl("kfiledialog:///dir/"), filter, this);
     fd.setCaption(caption);
     fd.setOperationMode(KFileDialog::Opening);
 
@@ -473,7 +473,7 @@ void kpMainWindow::slotOpen ()
 //---------------------------------------------------------------------
 
 // private slot
-void kpMainWindow::slotOpenRecent (const KUrl &url)
+void kpMainWindow::slotOpenRecent (const QUrl &url)
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotOpenRecent(" << url << ")";
@@ -753,7 +753,7 @@ bool kpMainWindow::slotSave ()
 //---------------------------------------------------------------------
 
 // private
-KUrl kpMainWindow::askForSaveURL (const QString &caption,
+QUrl kpMainWindow::askForSaveURL (const QString &caption,
                                   const QString &startURL,
                                   const kpImage &imageToBeSaved,
                                   const kpDocumentSaveOptions &startSaveOptions,
@@ -807,7 +807,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
     if (mimeTypes.isEmpty ())
     {
         kError () << "No KImageIO output mimetypes!" << endl;
-        return KUrl ();
+        return QUrl ();
     }
 
 #define MIME_TYPE_IS_VALID() (!fdSaveOptions.mimeTypeIsInvalid () &&                 \
@@ -929,7 +929,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
         return fd.selectedUrl ();
     }
     else
-        return KUrl ();
+        return QUrl ();
 #undef SETUP_READ_CFG
 }
 
@@ -940,7 +940,7 @@ bool kpMainWindow::saveAs (bool localOnly)
 {
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
-    KUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Save Image As"),
+    QUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Save Image As"),
                                     d->document->url ().url (),
                                     d->document->imageWithSelection (),
                                     *d->document->saveOptions (),
@@ -989,7 +989,7 @@ bool kpMainWindow::slotExport ()
 
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
-    KUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Export"),
+    QUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Export"),
                                     d->lastExportURL.url (),
                                     d->document->imageWithSelection (),
                                     d->lastExportSaveOptions,
@@ -1044,7 +1044,7 @@ bool kpMainWindow::slotReload ()
     Q_ASSERT (d->document);
 
 
-    KUrl oldURL = d->document->url ();
+    QUrl oldURL = d->document->url ();
 
 
     if (d->document->isModified ())
@@ -1118,7 +1118,7 @@ bool kpMainWindow::slotReload ()
 // private
 void kpMainWindow::sendDocumentNameToPrinter (QPrinter *printer)
 {
-    KUrl url = d->document->url ();
+    QUrl url = d->document->url ();
     if (!url.isEmpty ())
     {
         int dot;

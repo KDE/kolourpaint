@@ -299,7 +299,7 @@ void kpMainWindow::slotColorsKDE ()
 }
 
 // private
-bool kpMainWindow::openColors (const KUrl &url)
+bool kpMainWindow::openColors (const QUrl &url)
 {
     if (!colorCells ()->openColorCollection (url))
         return false;

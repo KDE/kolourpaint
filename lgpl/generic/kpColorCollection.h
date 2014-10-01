@@ -40,7 +40,7 @@
 #include <QStringList>
 
 
-class KUrl;
+class QUrl;
 
 /**
  * Class for handling color collections ("palettes").
@@ -92,7 +92,7 @@ public:
    // On success, it sets the name() to an empty string and returns true.
    //
    // Added for KolourPaint.
-   bool open(const KUrl &url, QWidget *parent);
+   bool open(const QUrl &url, QWidget *parent);
 
    // Same as open() but is given the name of a KDE palette, not a filename.
    //
@@ -112,7 +112,7 @@ public:
    // name() is set to an empty string.
    //
    // Added for KolourPaint.
-   bool saveAs(const KUrl &url, bool showOverwritePrompt, QWidget *parent) const;
+   bool saveAs(const QUrl &url, bool showOverwritePrompt, QWidget *parent) const;
 
    /**
     * Save the collection to the KDE-local store

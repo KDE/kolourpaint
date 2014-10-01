@@ -310,7 +310,7 @@ struct kpMainWindowPrivate
 
   KScanDialog *scanDialog;
 
-  KUrl lastExportURL;
+  QUrl lastExportURL;
   kpDocumentSaveOptions lastExportSaveOptions;
   bool exportFirstTime;
 
@@ -327,7 +327,7 @@ struct kpMainWindowPrivate
           *actionSelectAll, *actionDeselect,
           *actionCopyToFile, *actionPasteFromFile;
 
-  KUrl lastCopyToURL;
+  QUrl lastCopyToURL;
   kpDocumentSaveOptions lastCopyToSaveOptions;
   bool copyToFirstTime;
 

@@ -82,7 +82,7 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
 
     connect (m_colorPalette->colorCells (), SIGNAL (isModifiedChanged (bool)),
              SLOT (updateNameOrUrlLabel ()));
-    connect (m_colorPalette->colorCells (), SIGNAL (urlChanged (const KUrl &)),
+    connect (m_colorPalette->colorCells (), SIGNAL (urlChanged (const QUrl &)),
              SLOT (updateNameOrUrlLabel ()));
     connect (m_colorPalette->colorCells (), SIGNAL (nameChanged (const QString &)),
              SLOT (updateNameOrUrlLabel ()));

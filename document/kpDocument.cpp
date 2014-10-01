@@ -133,7 +133,7 @@ bool kpDocument::savedAtLeastOnceBefore () const
 //---------------------------------------------------------------------
 
 // public
-KUrl kpDocument::url () const
+QUrl kpDocument::url () const
 {
     return m_url;
 }
@@ -141,7 +141,7 @@ KUrl kpDocument::url () const
 //---------------------------------------------------------------------
 
 // public
-void kpDocument::setURL (const KUrl &url, bool isFromURL)
+void kpDocument::setURL (const QUrl &url, bool isFromURL)
 {
     m_url = url;
     m_isFromURL = isFromURL;

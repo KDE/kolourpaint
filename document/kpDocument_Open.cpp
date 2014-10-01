@@ -79,7 +79,7 @@ void kpDocument::getDataFromImage(const QImage &image,
 //---------------------------------------------------------------------
 
 // public static
-QImage kpDocument::getPixmapFromFile(const KUrl &url, bool suppressDoesntExistDialog,
+QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDialog,
                                      QWidget *parent,
                                      kpDocumentSaveOptions *saveOptions,
                                      kpDocumentMetaInfo *metaInfo)
@@ -193,7 +193,7 @@ QImage kpDocument::getPixmapFromFile(const KUrl &url, bool suppressDoesntExistDi
 
 //---------------------------------------------------------------------
 
-void kpDocument::openNew (const KUrl &url)
+void kpDocument::openNew (const QUrl &url)
 {
 #if DEBUG_KP_DOCUMENT
     kDebug () << "kpDocument::openNew (" << url << ")";
@@ -217,7 +217,7 @@ void kpDocument::openNew (const KUrl &url)
 
 //---------------------------------------------------------------------
 
-bool kpDocument::open (const KUrl &url, bool newDocSameNameIfNotExist)
+bool kpDocument::open (const QUrl &url, bool newDocSameNameIfNotExist)
 {
 #if DEBUG_KP_DOCUMENT
     kDebug () << "kpDocument::open (" << url << ")";
@@ -255,7 +255,7 @@ bool kpDocument::open (const KUrl &url, bool newDocSameNameIfNotExist)
         }
         else
         {
-            openNew (KUrl ());
+            openNew (QUrl ());
         }
 
         return true;

@@ -40,7 +40,7 @@
 #include <kstandarddirs.h>
 #include <kstringhandler.h>
 #include <KTemporaryFile>
-#include <KUrl>
+#include <QUrl>
 #include <kdebug.h>
 
 #include <kpUrlFormatter.h>
@@ -115,7 +115,7 @@ kpColorCollection::~kpColorCollection()
     delete d;
 }
 
-static void CouldNotOpenDialog (const KUrl &url, QWidget *parent)
+static void CouldNotOpenDialog (const QUrl &url, QWidget *parent)
 {
      KMessageBox::sorry (parent,
         i18n ("Could not open color palette \"%1\".",
@@ -124,7 +124,7 @@ static void CouldNotOpenDialog (const KUrl &url, QWidget *parent)
 
 // TODO: Set d->editable?
 bool
-kpColorCollection::open(const KUrl &url, QWidget *parent)
+kpColorCollection::open(const QUrl &url, QWidget *parent)
 {
   QString tempPaletteFilePath;
   if (url.isEmpty () || !KIO::NetAccess::download (url, tempPaletteFilePath, parent))
@@ -238,7 +238,7 @@ kpColorCollection::openKDE(const QString &name, QWidget *parent)
   }
 
   // (this will pop up an error dialog on failure)
-  if (!open (KUrl (filename), parent))
+  if (!open (QUrl (filename), parent))
   {
   #if DEBUG_KP_COLOR_COLLECTION
     kDebug () << "could not open";
@@ -253,7 +253,7 @@ kpColorCollection::openKDE(const QString &name, QWidget *parent)
   return true;
 }
 
-static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
+static void CouldNotSaveDialog (const QUrl &url, QWidget *parent)
 {
     // TODO: use file.errorString()
     KMessageBox::error (parent,
@@ -287,7 +287,7 @@ static void SaveToFile (kpColorCollectionPrivate *d, QIODevice *device)
 }
 
 bool
-kpColorCollection::saveAs(const KUrl &url, bool showOverwritePrompt,
+kpColorCollection::saveAs(const QUrl &url, bool showOverwritePrompt,
         QWidget *parent) const
 {
    if (showOverwritePrompt &&
@@ -402,7 +402,7 @@ kpColorCollection::saveKDE(QWidget *parent) const
 {
    const QString name = d->name;
    QString filename = KStandardDirs::locateLocal("config", "colors/" + name);
-   const bool ret = saveAs (KUrl (filename), false/*no overwite prompt*/, parent);
+   const bool ret = saveAs (QUrl (filename), false/*no overwite prompt*/, parent);
    // (d->name is wiped by saveAs()).
    d->name = name;
    return ret;

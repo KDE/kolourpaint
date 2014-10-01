@@ -70,14 +70,14 @@ kpMainWindow::kpMainWindow ()
     : KXmlGuiWindow (0/*parent*/)
 {
     init ();
-    open (KUrl (), true/*create an empty doc*/);
+    open (QUrl (), true/*create an empty doc*/);
 
     d->isFullyConstructed = true;
 }
 
 //---------------------------------------------------------------------
 
-kpMainWindow::kpMainWindow (const KUrl &url)
+kpMainWindow::kpMainWindow (const QUrl &url)
     : KXmlGuiWindow (0/*parent*/)
 {
     init ();
@@ -304,7 +304,7 @@ void kpMainWindow::readProperties (const KConfigGroup &configGroup)
     // Have a document.
     else
     {
-        const KUrl url = configGroup.readEntry (kpSessionSettingDocumentUrl,
+        const QUrl url = configGroup.readEntry (kpSessionSettingDocumentUrl,
                                                 QString ());
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\turl=" << url;
@@ -368,7 +368,7 @@ void kpMainWindow::saveProperties (KConfigGroup &configGroup)
         //       i) No URL
         //       ii) URL (from "kolourpaint doesnotexist.png")
 
-        const KUrl url = d->document->url ();
+        const QUrl url = d->document->url ();
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\turl=" << url;
     #endif
@@ -416,7 +416,7 @@ void kpMainWindow::saveProperties (KConfigGroup &configGroup)
             //       --- The below code does not compile but shows you want to do ---
 
             // Create unique name for the document in this main window.
-            const KUrl tempURL = homeDir +
+            const QUrl tempURL = homeDir +
                 "kolourpaint session " + sessionID +
                 mainWindowPtrToString + ".png";
             // TODO: Use lossless PNG saving options.
@@ -830,7 +830,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         //         However, you would need to prefix all possible error/warning
         //         dialogs that might be called, with Qt::arrowCursor e.g. in
         //         kpDocument  and probably a lot more places.
-        foreach (const KUrl &u, urls)
+        foreach (const QUrl &u, urls)
             open (u);
     }
     else if (e->mimeData ()->hasText ())

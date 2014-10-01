@@ -29,12 +29,12 @@
 #include <kpUrlFormatter.h>
 
 #include <KLocale>
-#include <KUrl>
+#include <QUrl>
 
 //---------------------------------------------------------------------
 
 // public static
-QString kpUrlFormatter::PrettyUrl (const KUrl &url)
+QString kpUrlFormatter::PrettyUrl (const QUrl &url)
 {
     if (url.isEmpty ())
         return i18n ("Untitled");
@@ -45,7 +45,7 @@ QString kpUrlFormatter::PrettyUrl (const KUrl &url)
 //---------------------------------------------------------------------
 
 // public static
-QString kpUrlFormatter::PrettyFilename (const KUrl &url)
+QString kpUrlFormatter::PrettyFilename (const QUrl &url)
 {
     if (url.isEmpty ())
         return i18n ("Untitled");

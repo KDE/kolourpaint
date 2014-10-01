@@ -295,7 +295,7 @@ static void CouldNotCreateTemporaryFileDialog (QWidget *parent)
 
 //---------------------------------------------------------------------
 
-static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
+static void CouldNotSaveDialog (const QUrl &url, QWidget *parent)
 {
     // TODO: use file.errorString()
     KMessageBox::error (parent,
@@ -307,7 +307,7 @@ static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
 
 // public static
 bool kpDocument::savePixmapToFile (const QImage &pixmap,
-                                   const KUrl &url,
+                                   const QUrl &url,
                                    const kpDocumentSaveOptions &saveOptions,
                                    const kpDocumentMetaInfo &metaInfo,
                                    bool overwritePrompt,
@@ -479,7 +479,7 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
 
 //---------------------------------------------------------------------
 
-bool kpDocument::saveAs (const KUrl &url,
+bool kpDocument::saveAs (const QUrl &url,
                          const kpDocumentSaveOptions &saveOptions,
                          bool overwritePrompt,
                          bool lossyPrompt)
