@@ -38,6 +38,7 @@
 #include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qpushbutton.h>
 #include <qtimer.h>
 
 #include <kcombobox.h>
@@ -48,7 +49,6 @@
 #include <kimageio.h>
 #include <klocale.h>
 #include <knuminput.h>
-#include <kpushbutton.h>
 #include <kconfiggroup.h>
 
 #include <kpDefs.h>
@@ -103,7 +103,7 @@ void kpDocumentSaveOptionsWidget::init ()
     // TODO: 100 quality is also misleading since that implies perfect quality.
     m_qualityInput->setRange (1, 100);
 
-    m_previewButton = new KPushButton (i18n ("&Preview"), this);
+    m_previewButton = new QPushButton (i18n ("&Preview"), this);
     m_previewButton->setCheckable (true);
 
 

@@ -44,7 +44,7 @@ class QLabel;
 class QTimer;
 
 class KIntNumInput;
-class KPushButton;
+class QPushButton;
 
 class kpDocumentSaveOptionsPreviewDialog;
 
@@ -145,7 +145,7 @@ protected:
     QLabel *m_qualityLabel;
     KIntNumInput *m_qualityInput;
 
-    KPushButton *m_previewButton;
+    QPushButton *m_previewButton;
     kpDocumentSaveOptionsPreviewDialog *m_previewDialog;
     QRect m_previewDialogLastRelativeGeometry;
     QTimer *m_updatePreviewTimer;
