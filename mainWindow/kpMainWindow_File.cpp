@@ -441,7 +441,7 @@ QList<QUrl> kpMainWindow::askForOpenURLs(const QString &caption, bool allowMulti
     QString filter = mimeTypes.join (" ");
 
     KFileDialog fd(QUrl("kfiledialog:///dir/"), filter, this);
-    fd.setCaption(caption);
+    fd.setWindowTitle(caption);
     fd.setOperationMode(KFileDialog::Opening);
 
     if (allowMultipleURLs)
@@ -867,7 +867,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     KFileDialog fd (startURL, QString(), this,
                     saveOptionsWidget);
     saveOptionsWidget->setVisualParent (&fd);
-    fd.setCaption (caption);
+    fd.setWindowTitle (caption);
     fd.setOperationMode (KFileDialog::Saving);
     fd.setMimeFilter (mimeTypes, fdSaveOptions.mimeType ());
     if (localOnly)

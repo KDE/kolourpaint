@@ -315,7 +315,7 @@ void kpMainWindow::slotColorsOpen ()
     toolEndShape ();
 
     KFileDialog fd (colorCells ()->url (), QString()/*filter*/, this);
-    fd.setCaption (i18nc ("@title:window", "Open Color Palette"));
+    fd.setWindowTitle (i18nc ("@title:window", "Open Color Palette"));
     fd.setOperationMode (KFileDialog::Opening);
 
     if (fd.exec ())
@@ -416,7 +416,7 @@ bool kpMainWindow::slotColorsSaveAs ()
     toolEndShape ();
 
     KFileDialog fd (colorCells ()->url (), QString()/*filter*/, this);
-    fd.setCaption (i18n ("Save Color Palette As"));
+    fd.setWindowTitle (i18n ("Save Color Palette As"));
     fd.setOperationMode (KFileDialog::Saving);
 
     if (fd.exec ())
