@@ -31,6 +31,7 @@
 
 #include <qaction.h>
 #include <qcolor.h>
+#include <qmenubar.h>
 #include <qsize.h>
 
 #include <kactioncollection.h>
@@ -40,7 +41,6 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <kmenubar.h>
 #include <KToggleAction>
 
 #include <kpAbstractImageSelection.h>

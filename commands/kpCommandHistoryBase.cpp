@@ -35,13 +35,13 @@
 
 #include <qdatetime.h>
 #include <qlinkedlist.h>
+#include <qmenu.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <kmenu.h>
 #include <kstandardshortcut.h>
 #include <kstandardaction.h>
 #include <ktoolbarpopupaction.h>
@@ -617,7 +617,7 @@ void kpCommandHistoryBase::trimCommandLists ()
 }
 
 
-static void populatePopupMenu (KMenu *popupMenu,
+static void populatePopupMenu (QMenu *popupMenu,
                                const QString &undoOrRedo,
                                const QLinkedList <kpCommand *> &commandList)
 {
@@ -640,7 +640,7 @@ static void populatePopupMenu (KMenu *popupMenu,
     {
         // TODO: maybe have a scrollview show all the items instead, like KOffice in KDE 3
         // LOCOMPAT: should be centered text.
-        popupMenu->addTitle (i18np ("%1 more item", "%1 more items",
+        popupMenu->addSection (i18np ("%1 more item", "%1 more items",
                                     commandList.size () - i));
     }
 }
@@ -666,7 +666,7 @@ void kpCommandHistoryBase::updateActions ()
 #if DEBUG_KP_COMMAND_HISTORY
     QTime timer; timer.start ();
 #endif
-    populatePopupMenu (qobject_cast<KMenu*> (m_actionUndo->menu ()),
+    populatePopupMenu (m_actionUndo->menu (),
                        i18n ("Undo"),
                        m_undoCommandList);
 #if DEBUG_KP_COMMAND_HISTORY
@@ -687,7 +687,7 @@ void kpCommandHistoryBase::updateActions ()
 #if DEBUG_KP_COMMAND_HISTORY
     timer.restart ();
 #endif
-    populatePopupMenu (qobject_cast<KMenu*> (m_actionRedo->menu ()),
+    populatePopupMenu (m_actionRedo->menu (),
                        i18n ("Redo"),
                        m_redoCommandList);
 #if DEBUG_KP_COMMAND_HISTORY

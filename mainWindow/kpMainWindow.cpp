@@ -30,6 +30,7 @@
 #include <kpMainWindowPrivate.h>
 
 #include <qevent.h>
+#include <qmenu.h>
 #include <qtimer.h>
 
 #include <kconfig.h>
@@ -37,8 +38,6 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <KMenu>
-#include <KMenuBar>
 #include <krecentfilesaction.h>
 
 #include <kpAbstractImageSelection.h>
@@ -179,9 +178,9 @@ void kpMainWindow::finalizeGUI(KXMLGUIClient *client)
 {
   if ( client == this )
   {
-    const QList<KMenu *> menuToHide = findChildren<KMenu *>("toolToolBarHiddenMenu");
+    const QList<QMenu *> menuToHide = findChildren<QMenu *>("toolToolBarHiddenMenu");
     // should only contain one but...
-    foreach (KMenu *menu, menuToHide)
+    foreach (QMenu *menu, menuToHide)
     {
         menu->menuAction()->setVisible(false);
     }
