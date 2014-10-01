@@ -807,7 +807,7 @@ void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
     // It's faster to test for QMimeData::hasText() first due to the
     // lazy evaluation of the '||' operator.
     e->setAccepted (e->mimeData ()->hasText () ||
-                    QList<QUrl>::canDecode (e->mimeData ()) ||
+                    e->mimeData ()->hasUrls () ||
                     kpSelectionDrag::canDecode (e->mimeData ()));
 }
 
@@ -832,7 +832,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         paste (*sel);
         delete sel;
     }
-    else if (!(urls = QList<QUrl>::fromMimeData (e->mimeData ())).isEmpty ())
+    else if (!(urls = e->mimeData ()->urls ()).isEmpty ())
     {
         // LOTODO: kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
         //
