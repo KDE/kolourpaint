@@ -1,7 +1,27 @@
 project(kolourpaint)
 
-find_package(KDE4 REQUIRED)
-include(KDE4Defaults)
+cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+set(QT_MIN_VERSION "5.2.0")
+
+find_package(ECM 1.3.0 REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+
+add_definitions(-DTRANSLATION_DOMAIN="kolourpaint")
+
+include(KDEInstallDirs)
+include(KDECompilerSettings)
+include(KDECMakeSettings)
+include(ECMInstallIcons)
+include(FeatureSummary)
+
+find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
+    Core
+    Widgets
+)
+
+find_package(KF5 REQUIRED COMPONENTS
+    KDELibs4Support
+)
 
 find_package(QImageBlitz REQUIRED)
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
@@ -553,7 +573,7 @@ set(kolourpaint_lgpl_SRCS
 
 kde4_add_library(kolourpaint_lgpl SHARED ${kolourpaint_lgpl_SRCS})
 
-target_link_libraries(kolourpaint_lgpl ${KDE4_KIO_LIBS})
+target_link_libraries(kolourpaint_lgpl KF5::KDELibs4Support)
 set_target_properties(kolourpaint_lgpl PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION} DEFINE_SYMBOL MAKE_KOLOURPAINT4_LGPL_LIB )
 
 install(TARGETS kolourpaint_lgpl ${INSTALL_TARGETS_DEFAULT_ARGS} )
@@ -567,7 +587,7 @@ kde4_add_app_icon(kolourpaint_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/pics/app/hi*-app
 
 kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
 
-target_link_libraries(kolourpaint ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS}
+target_link_libraries(kolourpaint KF5::KDELibs4Support
 ${QIMAGEBLITZ_LIBRARIES} kolourpaint_lgpl)
 
 install(TARGETS kolourpaint ${INSTALL_TARGETS_DEFAULT_ARGS})
