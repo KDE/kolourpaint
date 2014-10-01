@@ -29,7 +29,8 @@
 #include <kpMainWindow.h>
 #include <kpMainWindowPrivate.h>
 
-#include <KAction>
+#include <QAction>
+
 #include <KActionCollection>
 #include <KFileDialog>
 #include <KMessageBox>

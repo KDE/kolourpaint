@@ -32,6 +32,7 @@
 #include <kpMainWindow.h>
 #include <kpMainWindowPrivate.h>
 
+#include <qaction.h>
 #include <qdatastream.h>
 #include <QDesktopWidget>
 #include <qpainter.h>
@@ -46,7 +47,6 @@
 #include <QVBoxLayout>
 
 #include <kdialog.h>
-#include <kaction.h>
 #include <kactioncollection.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>

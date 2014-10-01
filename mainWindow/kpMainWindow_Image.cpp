@@ -29,10 +29,10 @@
 #include <kpMainWindow.h>
 #include <kpMainWindowPrivate.h>
 
+#include <qaction.h>
 #include <qcolor.h>
 #include <qsize.h>
 
-#include <kaction.h>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>

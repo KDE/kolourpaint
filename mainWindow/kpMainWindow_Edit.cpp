@@ -29,6 +29,7 @@
 #include <kpMainWindow.h>
 #include <kpMainWindowPrivate.h>
 
+#include <qaction.h>
 #include <qapplication.h>
 #include <qclipboard.h>
 #include <qdatetime.h>
@@ -39,7 +40,6 @@
 #include <QDesktopWidget>
 #include <QScrollBar>
 
-#include <kaction.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>

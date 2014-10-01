@@ -41,7 +41,6 @@ class QActionGroup;
 
 class KSelectAction;
 class KToggleAction;
-class KAction;
 class KSqueezedTextLabel;
 
 class kpCommandEnvironment;
@@ -283,7 +282,7 @@ struct kpMainWindowPrivate
   int lastToolNumber;
 
   bool toolActionsEnabled;
-  KAction *actionPrevToolOptionGroup1,
+  QAction *actionPrevToolOptionGroup1,
           *actionNextToolOptionGroup1,
           *actionPrevToolOptionGroup2,
           *actionNextToolOptionGroup2;
@@ -301,7 +300,7 @@ struct kpMainWindowPrivate
 
   QAction *actionNew, *actionOpen;
   KRecentFilesAction *actionOpenRecent;
-  KAction *actionScan, *actionScreenshot, *actionProperties,
+  QAction *actionScan, *actionScreenshot, *actionProperties,
           *actionSave, *actionSaveAs, *actionExport,
           *actionReload,
           *actionPrint, *actionPrintPreview,
@@ -320,7 +319,7 @@ struct kpMainWindowPrivate
 
   bool editMenuDocumentActionsEnabled;
 
-  KAction *actionUndo, *actionRedo,
+  QAction *actionUndo, *actionRedo,
           *actionCut, *actionCopy,
           *actionPaste, *actionPasteInNewWindow,
           *actionDelete,
@@ -359,7 +358,7 @@ struct kpMainWindowPrivate
 
   bool imageMenuDocumentActionsEnabled;
 
-  KAction *actionResizeScale,
+  QAction *actionResizeScale,
           *actionCrop, *actionAutoCrop,
           *actionFlip, *actionMirror,
           *actionRotate, *actionRotateLeft, *actionRotateRight,
