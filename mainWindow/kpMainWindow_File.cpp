@@ -864,7 +864,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
             docMetaInfo,
             this);
 
-    KFileDialog fd (startURL, QString(), this,
+    KFileDialog fd (QUrl (startURL), QString(), this,
                     saveOptionsWidget);
     saveOptionsWidget->setVisualParent (&fd);
     fd.setWindowTitle (caption);
@@ -896,7 +896,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
 
 
         bool shouldAllowOverwritePrompt =
-                (fd.selectedUrl () != startURL ||
+                (fd.selectedUrl () != QUrl (startURL) ||
                  newSaveOptions.mimeType () != startSaveOptions.mimeType ());
         if (allowOverwritePrompt)
         {

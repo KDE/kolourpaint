@@ -303,8 +303,8 @@ void kpMainWindow::readProperties (const KConfigGroup &configGroup)
     // Have a document.
     else
     {
-        const QUrl url = configGroup.readEntry (kpSessionSettingDocumentUrl,
-                                                QString ());
+        const QUrl url = QUrl (configGroup.readEntry (kpSessionSettingDocumentUrl,
+                                                QString ()));
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\turl=" << url;
     #endif

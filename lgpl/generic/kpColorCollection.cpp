@@ -238,7 +238,7 @@ kpColorCollection::openKDE(const QString &name, QWidget *parent)
   }
 
   // (this will pop up an error dialog on failure)
-  if (!open (QUrl (filename), parent))
+  if (!open (QUrl::fromLocalFile (filename), parent))
   {
   #if DEBUG_KP_COLOR_COLLECTION
     kDebug () << "could not open";
@@ -402,7 +402,7 @@ kpColorCollection::saveKDE(QWidget *parent) const
 {
    const QString name = d->name;
    QString filename = KStandardDirs::locateLocal("config", "colors/" + name);
-   const bool ret = saveAs (QUrl (filename), false/*no overwite prompt*/, parent);
+   const bool ret = saveAs (QUrl::fromLocalFile (filename), false/*no overwite prompt*/, parent);
    // (d->name is wiped by saveAs()).
    d->name = name;
    return ret;
