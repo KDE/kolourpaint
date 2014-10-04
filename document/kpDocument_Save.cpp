@@ -43,6 +43,7 @@
 #include <QImage>
 #include <qpainter.h>
 #include <qrect.h>
+#include <qsavefile.h>
 #include <qsize.h>
 #include <qtemporaryfile.h>
 #include <qmatrix.h>
@@ -54,7 +55,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>  // TODO: isn't this in KIO?
-#include <KSaveFile>
 
 #include <kpColor.h>
 #include <kpColorToolBar.h>
@@ -362,19 +362,19 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
     {
         const QString filename = url.toLocalFile ();
 
-        // sync: All failure exit paths _must_ call KSaveFile::abort() or
-        //       else, the KSaveFile destructor will overwrite the file,
+        // sync: All failure exit paths _must_ call QSaveFile::cancelWriting() or
+        //       else, the QSaveFile destructor will overwrite the file,
         //       <filename>, despite the failure.
-        KSaveFile atomicFileWriter (filename);
+        QSaveFile atomicFileWriter (filename);
         {
-            if (!atomicFileWriter.open ())
+            if (!atomicFileWriter.open (QIODevice::WriteOnly))
             {
                 // We probably don't need this as <filename> has not been
                 // opened.
-                atomicFileWriter.abort ();
+                atomicFileWriter.cancelWriting ();
 
             #if DEBUG_KP_DOCUMENT
-                kDebug () << "\treturning false because could not open KSaveFile"
+                kDebug () << "\treturning false because could not open QSaveFile"
                           << " error=" << atomicFileWriter.error () << endl;
             #endif
                 ::CouldNotCreateTemporaryFileDialog (parent);
@@ -387,7 +387,7 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
                                      false/*no lossy prompt*/,
                                      parent))
             {
-                atomicFileWriter.abort ();
+                atomicFileWriter.cancelWriting ();
 
             #if DEBUG_KP_DOCUMENT
                 kDebug () << "\treturning false because could not save pixmap to device"
@@ -399,17 +399,17 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
 
             // Atomically overwrite local file with the temporary file
             // we saved to.
-            if (!atomicFileWriter.finalize ())
+            if (!atomicFileWriter.commit ())
             {
-                atomicFileWriter.abort ();
+                atomicFileWriter.cancelWriting ();
 
             #if DEBUG_KP_DOCUMENT
-                kDebug () << "\tcould not close KSaveFile";
+                kDebug () << "\tcould not close QSaveFile";
             #endif
                 ::CouldNotSaveDialog (url, parent);
                 return false;
             }
-        }  // sync KSaveFile.abort()
+        }  // sync QSaveFile.cancelWriting()
     }
     // Remote file?
     else
