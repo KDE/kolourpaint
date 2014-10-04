@@ -33,12 +33,12 @@
 
 #include <QApplication>
 #include <QBitmap>
+#include <QColorDialog>
 #include <QDrag>
 #include <QMouseEvent>
 #include <QPainter>
 #include <qdrawutil.h>
 
-#include <KColorDialog>
 #include <KColorMimeData>
 #include <KDebug>
 #include <KIconLoader>
@@ -358,12 +358,11 @@ void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
 
     if (whichColor == 0 || whichColor == 1)
     {
-        KColorDialog dialog(this);
-        dialog.setColor(color(whichColor).toQColor());
-        dialog.setAlphaChannelEnabled(true);
-        dialog.setButtons(KDialog::Ok | KDialog::Cancel);
+        QColorDialog dialog(this);
+        dialog.setCurrentColor(color(whichColor).toQColor());
+        dialog.setOptions(QColorDialog::ShowAlphaChannel);
         if ( dialog.exec() == QDialog::Accepted )
-          setColor(whichColor, kpColor(dialog.color().rgba()));
+          setColor(whichColor, kpColor(dialog.currentColor().rgba()));
     }
 }
 

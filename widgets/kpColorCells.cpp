@@ -31,11 +31,11 @@
 
 #include <kpColorCells.h>
 
+#include <QColorDialog>
 #include <QContextMenuEvent>
 #include <QMouseEvent>
 #include <QScrollBar>
 
-#include <KColorDialog>
 #include <KDebug>
 #include <KLocale>
 
@@ -561,12 +561,11 @@ void kpColorCells::slotColorSelected (int cell, const QColor &color,
 // protected slot
 void kpColorCells::slotColorDoubleClicked (int cell, const QColor &)
 {
-    KColorDialog dialog(this);
-    dialog.setColor(kpColorCellsBase::color(cell));
-    dialog.setAlphaChannelEnabled(true);
-    dialog.setButtons(KDialog::Ok | KDialog::Cancel);
+    QColorDialog dialog(this);
+    dialog.setCurrentColor(kpColorCellsBase::color(cell));
+    dialog.setOptions(QColorDialog::ShowAlphaChannel);
     if ( dialog.exec() == QDialog::Accepted )
-      setColor (cell, dialog.color());
+      setColor (cell, dialog.currentColor());
 }
 
 //---------------------------------------------------------------------
