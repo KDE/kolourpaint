@@ -28,8 +28,10 @@
 
 #include "kpColorCollection.h"
 
+#include <QDir>
 #include <QFile>
 #include <QSaveFile>
+#include <QStandardPaths>
 #include <QTemporaryFile>
 #include <QTextStream>
 
@@ -38,7 +40,6 @@
 #include <KLocale>
 #include <KMessageBox>
 #include <kdebug.h>
-#include <kstandarddirs.h>
 #include <kstringhandler.h>
 #include <QUrl>
 #include <kdebug.h>
@@ -86,14 +87,11 @@ QStringList
 kpColorCollection::installedCollections()
 {
   QStringList paletteList;
-  KGlobal::dirs()->findAllResources("config", "colors/*", KStandardDirs::NoDuplicates, paletteList);
 
-  int strip = strlen("colors/");
-  for(QStringList::Iterator it = paletteList.begin();
-      it != paletteList.end();
-      ++it)
-  {
-      (*it) = (*it).mid(strip);
+  QStringList paths = QStandardPaths::locateAll(QStandardPaths::GenericConfigLocation, "colors",
+                                                QStandardPaths::LocateDirectory);
+  foreach (const QString &path, paths) {
+    paletteList.append(QDir(path).entryList(QStringList(), QDir::Files));
   }
 
   return paletteList;
@@ -227,7 +225,8 @@ kpColorCollection::openKDE(const QString &name, QWidget *parent)
     return false;
   }
 
-  QString filename = KStandardDirs::locate("config", "colors/"+name);
+  QString filename = QStandardPaths::locate(QStandardPaths::GenericConfigLocation,
+                                            "colors/" + name);
   if (filename.isEmpty())
   {
   #if DEBUG_KP_COLOR_COLLECTION
@@ -401,7 +400,8 @@ bool
 kpColorCollection::saveKDE(QWidget *parent) const
 {
    const QString name = d->name;
-   QString filename = KStandardDirs::locateLocal("config", "colors/" + name);
+   QString filename = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation)
+                                                       + "colors/" + name;
    const bool ret = saveAs (QUrl::fromLocalFile (filename), false/*no overwite prompt*/, parent);
    // (d->name is wiped by saveAs()).
    d->name = name;
