@@ -39,7 +39,6 @@
 #include <qrect.h>
 
 #include <kdebug.h>
-#include <kglobal.h>
 #include <kimageio.h>
 #include <klocale.h>
 

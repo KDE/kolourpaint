@@ -36,7 +36,6 @@
 
 #include <kconfiggroup.h>
 #include <kdebug.h>
-#include <kglobal.h>
 #include <ksharedconfig.h>
 
 #include <kpDefs.h>

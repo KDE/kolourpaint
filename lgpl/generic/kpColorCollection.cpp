@@ -35,7 +35,6 @@
 #include <QTemporaryFile>
 #include <QTextStream>
 
-#include <kglobal.h>
 #include <kio/netaccess.h>
 #include <KLocale>
 #include <KMessageBox>

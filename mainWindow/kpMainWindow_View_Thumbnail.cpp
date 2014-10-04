@@ -37,7 +37,6 @@
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>
-#include <kglobal.h>
 #include <klocale.h>
 #include <kselectaction.h>
 #include <kstandardaction.h>

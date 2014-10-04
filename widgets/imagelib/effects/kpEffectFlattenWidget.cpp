@@ -39,7 +39,6 @@
 #include <kconfiggroup.h>
 #include <kdialog.h>
 #include <kdebug.h>
-#include <kglobal.h>
 #include <klocale.h>
 #include <kvbox.h>
 

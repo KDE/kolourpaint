@@ -49,7 +49,6 @@
 #include <qmatrix.h>
 
 #include <kdebug.h>
-#include <kglobal.h>
 #include <kimageio.h>
 #include <kio/netaccess.h>
 #include <klocale.h>

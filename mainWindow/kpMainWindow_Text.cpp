@@ -36,7 +36,6 @@
 #include <kdebug.h>
 #include <kfontaction.h>
 #include <kfontsizeaction.h>
-#include <kglobal.h>
 #include <klocale.h>
 #include <KToolBar>
 #include <ktoggleaction.h>

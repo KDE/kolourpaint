@@ -40,7 +40,6 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
 #include <klocale.h>
 #include <kstandardshortcut.h>
 #include <kstandardaction.h>

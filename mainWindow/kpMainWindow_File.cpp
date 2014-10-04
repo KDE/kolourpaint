@@ -53,7 +53,6 @@
 #include <kdebug.h>
 #include <KIntSpinBox>
 #include <kfiledialog.h>
-#include <kglobal.h>
 #include <kiconloader.h>
 #include <kimageio.h>
 #include <kio/netaccess.h>
