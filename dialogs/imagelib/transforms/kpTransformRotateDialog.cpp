@@ -303,7 +303,7 @@ void kpTransformRotateDialog::accept ()
             continueButtonText,
             this))
     {
-        KDialog::accept ();
+        QDialog::accept ();
     }
 }
 

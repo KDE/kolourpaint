@@ -38,7 +38,6 @@
 
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kdialog.h>
 #include <klocale.h>
 
 #include <kpCommandSize.h>
@@ -56,11 +55,6 @@ const QSize kpDocumentSaveOptionsPreviewDialog::s_pixmapLabelMinimumSize (25, 25
 kpDocumentSaveOptionsPreviewDialog::kpDocumentSaveOptionsPreviewDialog (
     QWidget *parent )
     : kpSubWindow (parent),
-#if 0
-KDialogBase (parent, name, false/*non-modal*/,
-                   i18n ("Save Preview"),
-                   0/*no buttons*/),
-#endif
       m_filePixmap (0),
       m_fileSize (0)
 {

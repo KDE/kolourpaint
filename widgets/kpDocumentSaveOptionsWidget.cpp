@@ -44,7 +44,6 @@
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kdialog.h>
 #include <kimageio.h>
 #include <klocale.h>
 #include <knuminput.h>

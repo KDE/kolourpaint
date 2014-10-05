@@ -28,7 +28,6 @@
 
 #include <kpEffectCommandBase.h>
 
-#include <kdialog.h>
 #include <klocale.h>
 
 #include <kpDefs.h>

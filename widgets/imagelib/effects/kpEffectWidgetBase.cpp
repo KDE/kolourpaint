@@ -28,8 +28,6 @@
 
 #include <kpEffectWidgetBase.h>
 
-#include <KDialog>
-
 
 kpEffectWidgetBase::kpEffectWidgetBase (bool actOnSelection,
                                         QWidget *parent)

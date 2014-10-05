@@ -35,6 +35,8 @@
 #include <qaction.h>
 #include <qdatastream.h>
 #include <QDesktopWidget>
+#include <QDialog>
+#include <QDialogButtonBox>
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qsize.h>
@@ -46,7 +48,6 @@
 #include <QCheckBox>
 #include <QVBoxLayout>
 
-#include <kdialog.h>
 #include <kactioncollection.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
@@ -642,8 +643,11 @@ void kpMainWindow::slotScreenshot()
 {
   toolEndShape();
 
-  KDialog *dialog = new KDialog(this);
-  dialog->setButtons(KDialog::Ok | KDialog::Cancel);
+  QDialog *dialog = new QDialog(this);
+  QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok |
+                                                   QDialogButtonBox::Cancel, dialog);
+  connect (buttons, SIGNAL (accepted()), dialog, SLOT (accept()));
+  connect (buttons, SIGNAL (rejected()), dialog, SLOT (reject()));
 
   QLabel *label = new QLabel(i18n("Snapshot Delay"));
   KIntSpinBox *seconds = new KIntSpinBox;
@@ -654,12 +658,13 @@ void kpMainWindow::slotScreenshot()
   QCheckBox *hideWindow = new QCheckBox(i18n("Hide Main Window"));
   hideWindow->setChecked(true);
 
-  QVBoxLayout *vbox = new QVBoxLayout(dialog->mainWidget());
+  QVBoxLayout *vbox = new QVBoxLayout(dialog);
   vbox->addWidget(label);
   vbox->addWidget(seconds);
   vbox->addWidget(hideWindow);
+  vbox->addWidget(buttons);
 
-  if ( dialog->exec() == KDialog::Rejected )
+  if ( dialog->exec() == QDialog::Rejected )
   {
     delete dialog;
     return;

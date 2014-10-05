@@ -29,7 +29,7 @@
 #ifndef kpTransformResizeScaleDialog_H
 #define kpTransformResizeScaleDialog_H
 
-#include <kdialog.h>
+#include <QDialog>
 
 #include <kpColor.h>
 #include <kpTransformResizeScaleCommand.h>
@@ -49,7 +49,7 @@ class kpTextSelection;
 class kpTransformDialogEnvironment;
 
 
-class kpTransformResizeScaleDialog : public KDialog
+class kpTransformResizeScaleDialog : public QDialog
 {
 Q_OBJECT
 

@@ -30,9 +30,8 @@
 #define kpTransformPreviewDialog_H
 
 
+#include <QDialog>
 #include <qpixmap.h>
-
-#include <kdialog.h>
 
 
 class QLabel;
@@ -45,7 +44,7 @@ class kpResizeSignallingLabel;
 class kpTransformDialogEnvironment;
 
 
-class kpTransformPreviewDialog : public KDialog
+class kpTransformPreviewDialog : public QDialog
 {
 Q_OBJECT
 
@@ -77,6 +76,8 @@ public:
 
 protected:
     kpDocument *document () const;
+
+    QWidget *mainWidget () const;
 
     // All widgets must have mainWidget() as their parent
     void addCustomWidgetToFront (QWidget *w);  // see <reserveTopRow> in ctor
@@ -126,6 +127,7 @@ protected:
 
     int m_oldWidth, m_oldHeight;
 
+    QWidget *m_mainWidget;
     QGroupBox *m_dimensionsGroupBox;
     QLabel *m_afterTransformDimensionsLabel;
 

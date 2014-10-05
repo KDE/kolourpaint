@@ -36,6 +36,7 @@
 #include <qboxlayout.h>
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
+#include <qdialogbuttonbox.h>
 #include <qgridlayout.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
@@ -46,6 +47,7 @@
 
 #include <kcombobox.h>
 #include <kconfig.h>
+#include <kconfiggroup.h>
 #include <kdebug.h>
 #include <kiconeffect.h>
 #include <kiconloader.h>
@@ -84,16 +86,22 @@
 
 kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (
         kpTransformDialogEnvironment *_env, QWidget *parent)
-    : KDialog (parent),
+    : QDialog (parent),
       m_environ (_env),
       m_ignoreKeepAspectRatio (0),
       m_lastType(kpTransformResizeScaleCommand::Resize)
 {
-    setCaption( i18nc ("@title:window", "Resize / Scale") );
-    setButtons( KDialog::Ok | KDialog::Cancel);
+    setWindowTitle (i18nc ("@title:window", "Resize / Scale"));
+    QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
+                                                      QDialogButtonBox::Cancel, this);
+    connect (buttons, SIGNAL (accepted()), this, SLOT (accept()));
+    connect (buttons, SIGNAL (rejected()), this, SLOT (reject()));
 
     QWidget *baseWidget = new QWidget (this);
-    setMainWidget (baseWidget);
+
+    QVBoxLayout *dialogLayout = new QVBoxLayout (this);
+    dialogLayout->addWidget (baseWidget);
+    dialogLayout->addWidget (buttons);
 
     QWidget *actOnBox = createActOnBox(baseWidget);
     QGroupBox *operationGroupBox = createOperationGroupBox(baseWidget);
@@ -795,7 +803,7 @@ void kpTransformResizeScaleDialog::accept ()
             continueButtonText,
             this))
     {
-        KDialog::accept ();
+        QDialog::accept ();
     }
 
     // store settings

@@ -32,6 +32,7 @@
 #include <kpDocumentMetaInfoDialog.h>
 
 #include <QAbstractItemView>
+#include <QDialogButtonBox>
 #include <QLabel>
 #include <QGroupBox>
 #include <QGridLayout>
@@ -112,17 +113,23 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
         const kpDocumentMetaInfo *docMetaInfo,
         QWidget *parent)
 
-    : KDialog (parent),
+    : QDialog (parent),
       d (new kpDocumentMetaInfoDialogPrivate ())
 {
     d->originalMetaInfoPtr = docMetaInfo;
 
 
-    setCaption (i18nc ("@title:window", "Document Properties"));
-    setButtons (KDialog::Ok | KDialog::Cancel);
+    setWindowTitle (i18nc ("@title:window", "Document Properties"));
+    QDialogButtonBox * buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
+                                                       QDialogButtonBox::Cancel, this);
+    connect (buttons, SIGNAL (accepted()), this, SLOT (accept()));
+    connect (buttons, SIGNAL (rejected()), this, SLOT (reject()));
 
     QWidget *baseWidget = new QWidget (this);
-    setMainWidget (baseWidget);
+
+    QVBoxLayout *dialogLayout = new QVBoxLayout (this);
+    dialogLayout->addWidget (baseWidget);
+    dialogLayout->addWidget (buttons);
 
 
     //
@@ -776,7 +783,7 @@ void kpDocumentMetaInfoDialog::accept ()
         return;
     }
 
-    KDialog::accept ();
+    QDialog::accept ();
 }
 
 

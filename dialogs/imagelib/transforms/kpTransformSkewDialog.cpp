@@ -286,7 +286,7 @@ void kpTransformSkewDialog::accept ()
             continueButtonText,
             this))
     {
-        KDialog::accept ();
+        QDialog::accept ();
     }
 }
 

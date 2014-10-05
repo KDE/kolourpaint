@@ -32,8 +32,6 @@
 
 #include <qpixmap.h>
 
-#include <kdialog.h>
-
 #include <kpColor.h>
 #include <kpCommand.h>
 #include <kpImage.h>

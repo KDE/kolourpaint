@@ -30,7 +30,7 @@
 #define kpDocumentMetaInfoDialog_H
 
 
-#include <kdialog.h>
+#include <QDialog>
 
 
 class QTableWidgetItem;
@@ -48,7 +48,7 @@ class kpDocumentMetaInfo;
 // The Text Fields widget always keeps an empty key-value row at the bottom.
 // If text is entered in this row, a new one is created.  This allows users
 // to add new rows without pressing any pushbuttons.
-class kpDocumentMetaInfoDialog : public KDialog
+class kpDocumentMetaInfoDialog : public QDialog
 {
 Q_OBJECT
 
@@ -74,7 +74,7 @@ public:
     // If all data in the UI is valid and <errorMessage> is set, an empty
     // string will be returned through it.
     //
-    // If KDialog::exec() succeeded, all data in the UI was valid so the
+    // If QDialog::exec() succeeded, all data in the UI was valid so the
     // returned meta information will be complete and correct.
     //
     // This is a slow method as it recalculates the meta information each

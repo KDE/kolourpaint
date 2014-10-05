@@ -29,6 +29,7 @@
 #include <kpColorSimilarityDialog.h>
 
 #include <qboxlayout.h>
+#include <qdialogbuttonbox.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -42,13 +43,19 @@
 
 
 kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
-    : KDialog (parent)
+    : QDialog (parent)
 {
-    setCaption (i18nc ("@title:window", "Color Similarity"));
-    setButtons (KDialog::Ok | KDialog::Cancel);
-    QWidget *baseWidget = new QWidget (this);
-    setMainWidget (baseWidget);
+    setWindowTitle (i18nc ("@title:window", "Color Similarity"));
+    QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
+                                                      QDialogButtonBox::Cancel, this);
+    connect (buttons, SIGNAL (accepted()), this, SLOT (accept()));
+    connect (buttons, SIGNAL (rejected()), this, SLOT (reject()));
 
+    QWidget *baseWidget = new QWidget (this);
+
+    QVBoxLayout *dialogLayout = new QVBoxLayout (this);
+    dialogLayout->addWidget (baseWidget);
+    dialogLayout->addWidget (buttons);
 
     QGroupBox *cubeGroupBox = new QGroupBox (i18n ("Preview"), baseWidget);
 

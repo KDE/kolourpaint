@@ -37,7 +37,6 @@
 #include <kcolorbutton.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kdialog.h>
 #include <kdebug.h>
 #include <klocale.h>
 

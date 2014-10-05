@@ -33,6 +33,7 @@
 
 #include <qapplication.h>
 #include <qboxlayout.h>
+#include <qdialogbuttonbox.h>
 #include <qgridlayout.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
@@ -58,7 +59,7 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
         bool actOnSelection,
         kpTransformDialogEnvironment *_env,
         QWidget *parent)
-    : KDialog (parent),
+    : QDialog (parent),
       m_afterActionText (afterActionText),
       m_actOnSelection (actOnSelection),
       m_dimensionsGroupBox (0),
@@ -68,10 +69,18 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
       m_gridLayout (0),
       m_environ (_env)
 {
-    setCaption (caption);
-    setButtons (KDialog::Ok | KDialog::Cancel);
+    setWindowTitle (caption);
+    QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
+                                                      QDialogButtonBox::Cancel, this);
+    connect (buttons, SIGNAL (accepted()), this, SLOT (accept()));
+    connect (buttons, SIGNAL (rejected()), this, SLOT (reject()));
+
     QWidget *baseWidget = new QWidget (this);
-    setMainWidget (baseWidget);
+    m_mainWidget = baseWidget;
+
+    QVBoxLayout *dialogLayout = new QVBoxLayout (this);
+    dialogLayout->addWidget (baseWidget);
+    dialogLayout->addWidget (buttons);
 
 
     if (document ())
@@ -185,6 +194,11 @@ kpDocument *kpTransformPreviewDialog::document () const
     return m_environ->document ();
 }
 
+// protected
+QWidget *kpTransformPreviewDialog::mainWidget () const
+{
+    return m_mainWidget;
+}
 
 // protected
 void kpTransformPreviewDialog::addCustomWidgetToFront (QWidget *w)
@@ -203,7 +217,7 @@ void kpTransformPreviewDialog::addCustomWidget (QWidget *w)
 // public override [base QWidget]
 void kpTransformPreviewDialog::setUpdatesEnabled (bool enable)
 {
-    KDialog::setUpdatesEnabled (enable);
+    QDialog::setUpdatesEnabled (enable);
 
     if (enable)
         slotUpdateWithWaitCursor ();
