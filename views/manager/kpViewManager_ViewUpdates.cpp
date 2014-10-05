@@ -228,7 +228,7 @@ void kpViewManager::updateViews (const QRect &docRect)
                                    viewRect.y () - diff,
                                    viewRect.width () + 2 * diff,
                                    viewRect.height () + 2 * diff)
-                                .intersect (QRect (0, 0, view->width (), view->height ()));
+                                .intersected (QRect (0, 0, view->width (), view->height ()));
 
         #if DEBUG_KP_VIEW_MANAGER && 0
             kDebug () << "\t\tviewRect (+compensate)=" << newRect;

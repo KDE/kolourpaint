@@ -207,7 +207,7 @@ void kpToolSelectionMoveCommand::copyOntoDocument ()
         m_oldDocumentImage = doc->image ();
 
     QRect selBoundingRect = sel->boundingRect ();
-    m_documentBoundingRect.unite (selBoundingRect);
+    m_documentBoundingRect = m_documentBoundingRect.united (selBoundingRect);
 
     doc->selectionCopyOntoDocument ();
 

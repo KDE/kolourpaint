@@ -71,7 +71,7 @@ bool kpToolRectSelection::drawCreateMoreSelectionAndUpdateStatusBar (
 
     Q_ASSERT (accidentalDragAdjustedPoint == currentPoint ());
 
-    const QRect usefulRect = normalizedRect.intersect (document ()->rect ());
+    const QRect usefulRect = normalizedRect.intersected (document ()->rect ());
     document ()->setSelection (
         kpRectangularImageSelection (
             usefulRect,

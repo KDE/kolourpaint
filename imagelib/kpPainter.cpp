@@ -471,7 +471,7 @@ static QRect WashLineHelper (QPainter *rgbPainter, void *data)
 #endif
 
 
-    // TODO: Rectangle may be too big.  Use QRect::unite() incrementally?
+    // TODO: Rectangle may be too big.  Use QRect::united() incrementally?
     //       Efficiency?
     return didSomething ? pack->readableImageRect : QRect ();
 }

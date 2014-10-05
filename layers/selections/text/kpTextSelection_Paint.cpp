@@ -124,7 +124,7 @@ void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
 
     // Drawing text is slow so if the text box will be rendered completely
     // outside of <destRect>, don't bother rendering it at all.
-    const QRect modifyingRect = docRect.intersect (boundingRect ());
+    const QRect modifyingRect = docRect.intersected (boundingRect ());
     if (modifyingRect.isEmpty ())
         return;
 

@@ -226,7 +226,7 @@ QRegion kpView::selectionResizeHandlesViewRegion (bool forRenderer) const
                  normalAtomicLength, normalAtomicLength);
 
     ret.translate (selViewRect.x (), selViewRect.y ());
-    ret = ret.intersect (selViewRect);
+    ret = ret.intersected (selViewRect);
 
     return ret;
 }

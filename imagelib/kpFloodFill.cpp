@@ -263,7 +263,7 @@ void kpFloodFill::addLine (int y, int x1, int x2)
     d->fillLines.append (kpFillLine (y, x1, x2));
     d->fillLinesCache [y].append (
         kpFillLine (y/*OPT: can determine from array index*/, x1, x2));
-    d->boundingRect = d->boundingRect.unite (QRect (QPoint (x1, y), QPoint (x2, y)));
+    d->boundingRect = d->boundingRect.united (QRect (QPoint (x1, y), QPoint (x2, y)));
 }
 
 //---------------------------------------------------------------------
