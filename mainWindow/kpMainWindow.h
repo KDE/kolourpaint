@@ -32,7 +32,6 @@
 
 #include <QUrl>
 
-#include <kstatusbar.h>
 #include <kxmlguiwindow.h>
 
 #include <kpDefs.h>
@@ -648,9 +647,6 @@ private:
         StatusBarItemZoom
     };
 
-    KStatusBar * statusBar () {
-        return qobject_cast<KStatusBar *> (KXmlGuiWindow::statusBar ());
-    }
     void addPermanentStatusBarItem (int id, int maxTextLen);
     void createStatusBar ();
 

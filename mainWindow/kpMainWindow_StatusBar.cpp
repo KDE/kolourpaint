@@ -32,11 +32,11 @@
 #include <kpMainWindowPrivate.h>
 
 #include <qlabel.h>
+#include <qstatusbar.h>
 #include <qstring.h>
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <kstatusbar.h>
 #include <KSqueezedTextLabel>
 
 #include <kpDefs.h>
@@ -51,15 +51,21 @@
 // private
 void kpMainWindow::addPermanentStatusBarItem (int id, int maxTextLen)
 {
-    KStatusBar *sb = statusBar ();
+    QStatusBar *sb = statusBar ();
 
-    QString textWithMaxLen;
-    textWithMaxLen.fill (QString::number (8/*big fat*/).at (0),
-                         maxTextLen); //+ 2/*spaces on either side*/);
+    QLabel *label = new QLabel (sb);
+    label->setAlignment (Qt::AlignCenter);
+    label->setFixedHeight (label->fontMetrics ().height () + 2);
+    int maxWidth = label->fontMetrics ().width (QLatin1Char ('8')) * maxTextLen;
+    // add some margins
+    maxWidth += label->fontMetrics ().height ();
+    label->setFixedWidth (maxWidth);
 
     // Permanent --> place on the right
-    sb->insertPermanentFixedItem (textWithMaxLen, id);
-    sb->changeItem (QString(), id);
+    sb->addPermanentWidget (label);
+
+    d->statusBarLabels.append (label);
+    Q_ASSERT (d->statusBarLabels.at(id) == label);
 }
 
 //---------------------------------------------------------------------
@@ -67,8 +73,7 @@ void kpMainWindow::addPermanentStatusBarItem (int id, int maxTextLen)
 // private
 void kpMainWindow::createStatusBar ()
 {
-    KStatusBar *sb = new KStatusBar(this);
-    setStatusBar(sb);
+    QStatusBar *sb = statusBar();
 
     // 9999 pixels "ought to be enough for anybody"
     const int maxDimenLength = 4;
@@ -141,25 +146,24 @@ void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
         return;
     }
 
+    QLabel *statusBarLabel = d->statusBarLabels.at (StatusBarItemShapePoints);
     if (startPoint == KP_INVALID_POINT)
     {
-        statusBar ()->changeItem (QString(), StatusBarItemShapePoints);
+        statusBarLabel->setText (QString());
     }
     else if (endPoint == KP_INVALID_POINT)
     {
-        statusBar ()->changeItem (i18n ("%1,%2",
+        statusBarLabel->setText (i18n ("%1,%2",
                                       startPoint.x (),
-                                      startPoint.y ()),
-                                  StatusBarItemShapePoints);
+                                      startPoint.y ()));
     }
     else
     {
-        statusBar ()->changeItem (i18n  ("%1,%2 - %3,%4",
+        statusBarLabel->setText (i18n ("%1,%2 - %3,%4",
                                       startPoint.x (),
                                       startPoint.y (),
                                       endPoint.x (),
-                                      endPoint.y ()),
-                                  StatusBarItemShapePoints);
+                                      endPoint.y ()));
     }
 
     d->statusBarShapeLastStartPoint = startPoint;
@@ -191,16 +195,16 @@ void kpMainWindow::setStatusBarShapeSize (const QSize &size)
         return;
     }
 
+    QLabel *statusBarLabel = d->statusBarLabels.at (StatusBarItemShapeSize);
     if (size == KP_INVALID_SIZE)
     {
-        statusBar ()->changeItem (QString(), StatusBarItemShapeSize);
+        statusBarLabel->setText (QString());
     }
     else
     {
-        statusBar ()->changeItem (i18n ("%1x%2",
+        statusBarLabel->setText (i18n ("%1x%2",
                                       size.width (),
-                                      size.height ()),
-                                  StatusBarItemShapeSize);
+                                      size.height ()));
     }
 
     d->statusBarShapeLastSize = size;
@@ -222,16 +226,16 @@ void kpMainWindow::setStatusBarDocSize (const QSize &size)
     if (!d->statusBarCreated)
         return;
 
+    QLabel *statusBarLabel = d->statusBarLabels.at (StatusBarItemDocSize);
     if (size == KP_INVALID_SIZE)
     {
-        statusBar ()->changeItem (QString(), StatusBarItemDocSize);
+        statusBarLabel->setText (QString());
     }
     else
     {
-        statusBar ()->changeItem (i18n ("%1 x %2",
+        statusBarLabel->setText (i18n ("%1 x %2",
                                       size.width (),
-                                      size.height ()),
-                                  StatusBarItemDocSize);
+                                      size.height ()));
     }
 }
 
@@ -250,14 +254,14 @@ void kpMainWindow::setStatusBarDocDepth (int depth)
     if (!d->statusBarCreated)
         return;
 
+    QLabel *statusBarLabel = d->statusBarLabels.at (StatusBarItemDocDepth);
     if (depth <= 0)
     {
-        statusBar ()->changeItem (QString(), StatusBarItemDocDepth);
+        statusBarLabel->setText (QString());
     }
     else
     {
-        statusBar ()->changeItem (i18n ("%1bpp", depth),
-                                  StatusBarItemDocDepth);
+        statusBarLabel->setText (i18n ("%1bpp", depth));
     }
 }
 
@@ -276,14 +280,14 @@ void kpMainWindow::setStatusBarZoom (int zoom)
     if (!d->statusBarCreated)
         return;
 
+    QLabel *statusBarLabel = d->statusBarLabels.at (StatusBarItemZoom);
     if (zoom <= 0)
     {
-        statusBar ()->changeItem (QString(), StatusBarItemZoom);
+        statusBarLabel->setText (QString());
     }
     else
     {
-        statusBar ()->changeItem (i18n ("%1%", zoom),
-                                  StatusBarItemZoom);
+        statusBarLabel->setText (i18n ("%1%", zoom));
     }
 }
 

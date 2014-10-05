@@ -38,6 +38,7 @@
 
 class QAction;
 class QActionGroup;
+class QLabel;
 
 class KSelectAction;
 class KToggleAction;
@@ -403,6 +404,7 @@ struct kpMainWindowPrivate
 
   bool statusBarCreated;
   KSqueezedTextLabel *statusBarMessageLabel;
+  QList<QLabel *> statusBarLabels;
 
   bool statusBarShapeLastPointsInitialised;
   QPoint statusBarShapeLastStartPoint, statusBarShapeLastEndPoint;
