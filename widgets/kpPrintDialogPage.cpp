@@ -39,7 +39,6 @@
 #include <KDebug>
 #include <KDialog>
 #include <KLocale>
-#include <KVBox>
 
 #include <kpDefs.h>
 
@@ -59,13 +58,15 @@ kpPrintDialogPage::kpPrintDialogPage (QWidget *parent)
 
     setWindowTitle (i18nc ("@title:tab", "I&mage Position"));
 
-    KVBox *base = new KVBox (this);
-    base->setMargin (KDialog::marginHint ());
-
     d->printCenteredRadio = new QRadioButton (i18n ("&Center of the page"),
-        base);
+        this);
     d->printTopLeftRadio = new QRadioButton (i18n ("Top-&left of the page"),
-        base);
+        this);
+
+    QVBoxLayout *lay = new QVBoxLayout (this);
+    lay->addWidget (d->printCenteredRadio);
+    lay->addWidget (d->printTopLeftRadio);
+    lay->addStretch ();
 
     setPrintImageCenteredOnPage (true);
 }

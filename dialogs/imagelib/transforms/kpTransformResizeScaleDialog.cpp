@@ -47,7 +47,6 @@
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <khbox.h>
 #include <kiconeffect.h>
 #include <kiconloader.h>
 #include <klocale.h>
@@ -96,7 +95,7 @@ kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (
     QWidget *baseWidget = new QWidget (this);
     setMainWidget (baseWidget);
 
-    KHBox *actOnBox = createActOnBox(baseWidget);
+    QWidget *actOnBox = createActOnBox(baseWidget);
     QGroupBox *operationGroupBox = createOperationGroupBox(baseWidget);
     QGroupBox *dimensionsGroupBox = createDimensionsGroupBox(baseWidget);
 
@@ -149,10 +148,9 @@ kpTextSelection *kpTransformResizeScaleDialog::textSelection () const
 //---------------------------------------------------------------------
 // private
 
-KHBox *kpTransformResizeScaleDialog::createActOnBox(QWidget *baseWidget)
+QWidget *kpTransformResizeScaleDialog::createActOnBox(QWidget *baseWidget)
 {
-    KHBox *actOnBox = new KHBox (baseWidget);
-    actOnBox->setSpacing (spacingHint () * 2);
+    QWidget *actOnBox = new QWidget (baseWidget);
 
 
     QLabel *actOnLabel = new QLabel (i18n ("Ac&t on:"), actOnBox);
@@ -179,7 +177,10 @@ KHBox *kpTransformResizeScaleDialog::createActOnBox(QWidget *baseWidget)
     }
 
 
-    actOnBox->setStretchFactor (m_actOnCombo, 1);
+    QHBoxLayout *lay = new QHBoxLayout (actOnBox);
+    lay->setMargin (0);
+    lay->addWidget (actOnLabel);
+    lay->addWidget (m_actOnCombo, 1);
 
 
     connect (m_actOnCombo, SIGNAL (activated (int)),

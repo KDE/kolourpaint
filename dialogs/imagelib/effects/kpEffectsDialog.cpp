@@ -41,7 +41,6 @@
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <khbox.h>
 #include <klocale.h>
 
 #include <kpDefs.h>
@@ -98,10 +97,9 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
              this, SLOT (slotUpdateWithWaitCursor ()));
 
 
-    KHBox *effectContainer = new KHBox (mainWidget ());
-    effectContainer->setSpacing (spacingHint () * 4
-                                 /*need more space for QGroupBox titles*/);
-    effectContainer->setMargin (0);
+    QWidget *effectContainer = new QWidget (mainWidget ());
+    QHBoxLayout *containerLayout = new QHBoxLayout (effectContainer);
+    containerLayout->setMargin (0);
 
     QLabel *label = new QLabel (i18n ("&Effect:"), effectContainer);
 
@@ -118,8 +116,10 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     m_effectsComboBox->addItem (i18n ("Reduce Colors"));
     m_effectsComboBox->addItem (i18n ("Soften & Sharpen"));
 
+    containerLayout->addWidget (label);
+    containerLayout->addWidget (m_effectsComboBox, 1);
+
     label->setBuddy (m_effectsComboBox);
-    effectContainer->setStretchFactor (m_effectsComboBox, 1);
 
     addCustomWidgetToFront (effectContainer);
 

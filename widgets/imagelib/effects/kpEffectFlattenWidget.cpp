@@ -40,7 +40,6 @@
 #include <kdialog.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kvbox.h>
 
 #include <kpDefs.h>
 #include <kpEffectFlatten.h>
@@ -71,11 +70,8 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
 
     m_enableCheckBox = new QCheckBox (i18n ("E&nable"), this);
 
-    KVBox *colorButtonContainer = new KVBox (this);
-    colorButtonContainer->setMargin (KDialog::marginHint () / 2);
-    colorButtonContainer->setSpacing (spacingHint ());
-    m_color1Button = new KColorButton (s_lastColor1, colorButtonContainer);
-    m_color2Button = new KColorButton (s_lastColor2, colorButtonContainer);
+    m_color1Button = new KColorButton (s_lastColor1, this);
+    m_color2Button = new KColorButton (s_lastColor2, this);
 
 
     m_color1Button->setEnabled (false);
@@ -86,7 +82,8 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
     lay->setSpacing(spacingHint ());
     lay->setMargin(marginHint ());
     lay->addWidget (m_enableCheckBox);
-    lay->addWidget (colorButtonContainer);
+    lay->addWidget (m_color1Button);
+    lay->addWidget (m_color2Button);
 
 
     connect (m_enableCheckBox, SIGNAL (toggled (bool)),

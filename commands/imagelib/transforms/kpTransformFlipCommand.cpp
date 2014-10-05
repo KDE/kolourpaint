@@ -36,7 +36,6 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <kvbox.h>
 
 #include <kpAbstractImageSelection.h>
 #include <kpCommandEnvironment.h>

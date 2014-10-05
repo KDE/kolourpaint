@@ -41,7 +41,6 @@ class QToolButton;
 
 class KComboBox;
 class KDoubleNumInput;
-class KHBox;
 class KIntNumInput;
 
 class kpAbstractSelection;
@@ -84,7 +83,7 @@ Q_OBJECT
     kpAbstractSelection *selection () const;
     kpTextSelection *textSelection () const;
 
-    KHBox *createActOnBox(QWidget *baseWidget);
+    QWidget *createActOnBox(QWidget *baseWidget);
     QGroupBox *createOperationGroupBox(QWidget *baseWidget);
     QGroupBox *createDimensionsGroupBox(QWidget *baseWidget);
 

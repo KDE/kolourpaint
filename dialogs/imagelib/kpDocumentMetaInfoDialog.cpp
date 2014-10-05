@@ -39,12 +39,10 @@
 #include <QPushButton>
 #include <QTableWidget>
 
-#include <KHBox>
 #include <KDoubleNumInput>
 #include <KIntNumInput>
 #include <KLocale>
 #include <KMessageBox>
-#include <KVBox>
 #include <KDebug>
 
 #include <kpDefs.h>
@@ -271,34 +269,33 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     connect (d->fieldsTableWidget, SIGNAL (itemChanged (QTableWidgetItem *)),
              SLOT (slotFieldsItemChanged (QTableWidgetItem *)));
 
-    KHBox *fieldsAddDeleteButtonsBox = new KHBox (fieldsGroupBox);
-    fieldsAddDeleteButtonsBox->setMargin (0);
-    fieldsAddDeleteButtonsBox->setSpacing (spacingHint ());
-
     d->fieldsAddRowButton = new QPushButton (i18n ("&Add Row"),
-        fieldsAddDeleteButtonsBox);
+        fieldsGroupBox);
     connect (d->fieldsAddRowButton, SIGNAL (clicked ()),
              SLOT (slotFieldsAddRowButtonClicked ()));
 
     d->fieldsDeleteRowButton = new QPushButton (i18n ("&Delete Row"),
-        fieldsAddDeleteButtonsBox);
+        fieldsGroupBox);
     connect (d->fieldsDeleteRowButton, SIGNAL (clicked ()),
              SLOT (slotFieldsDeleteRowButtonClicked ()));
-
 
     d->fieldsResetButton = new QPushButton (i18n ("&Reset"),
         fieldsGroupBox);
     connect (d->fieldsResetButton, SIGNAL (clicked ()),
              SLOT (setUIToOriginalMetaInfo ()));
 
+    QHBoxLayout *fieldsButtonsLayout = new QHBoxLayout ();
+    fieldsButtonsLayout->addWidget (d->fieldsAddRowButton);
+    fieldsButtonsLayout->addWidget (d->fieldsDeleteRowButton);
+    fieldsButtonsLayout->addStretch ();
+    fieldsButtonsLayout->addWidget (d->fieldsResetButton);
 
-    QGridLayout *fieldsLayout = new QGridLayout (fieldsGroupBox);
+    QVBoxLayout *fieldsLayout = new QVBoxLayout (fieldsGroupBox);
     fieldsLayout->setSpacing (spacingHint ());
     fieldsLayout->setMargin (marginHint ());
 
-    fieldsLayout->addWidget (d->fieldsTableWidget, 0, 0, 1/*row span*/, 2/*col span*/);
-    fieldsLayout->addWidget (fieldsAddDeleteButtonsBox, 1, 0, Qt::AlignLeft);
-    fieldsLayout->addWidget (d->fieldsResetButton, 1, 1, Qt::AlignRight);
+    fieldsLayout->addWidget (d->fieldsTableWidget);
+    fieldsLayout->addLayout (fieldsButtonsLayout);
 
 
     fieldsGroupBox->setWhatsThis (
