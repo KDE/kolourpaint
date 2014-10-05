@@ -163,8 +163,6 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
 
 
     QGridLayout *dpiLay = new QGridLayout (dpiGroupBox);
-    dpiLay->setSpacing (spacingHint ());
-    dpiLay->setMargin (marginHint ());
 
     dpiLay->addWidget (d->horizDpiInput, 0, 0);
     dpiLay->addWidget (dpiXLabel, 0, 1);
@@ -228,8 +226,6 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
 
 
     QGridLayout *offsetLay = new QGridLayout (offsetGroupBox);
-    offsetLay->setSpacing (spacingHint ());
-    offsetLay->setMargin (marginHint ());
 
     offsetLay->addWidget (d->horizOffsetInput, 0, 0);
     offsetLay->addWidget (d->vertOffsetInput, 0, 1);
@@ -291,8 +287,6 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     fieldsButtonsLayout->addWidget (d->fieldsResetButton);
 
     QVBoxLayout *fieldsLayout = new QVBoxLayout (fieldsGroupBox);
-    fieldsLayout->setSpacing (spacingHint ());
-    fieldsLayout->setMargin (marginHint ());
 
     fieldsLayout->addWidget (d->fieldsTableWidget);
     fieldsLayout->addLayout (fieldsButtonsLayout);
@@ -320,7 +314,6 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
 
 
     QGridLayout *baseLayout = new QGridLayout (baseWidget);
-    baseLayout->setSpacing (spacingHint ());
     baseLayout->setMargin (0);
 
     // Col 0

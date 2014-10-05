@@ -116,8 +116,6 @@ void kpTransformRotateDialog::createDirectionGroupBox ()
 
 
     QGridLayout *directionLayout = new QGridLayout (directionGroupBox );
-    directionLayout->setSpacing( spacingHint() );
-    directionLayout->setMargin( marginHint () * 2 );
     directionLayout->addWidget (antiClockwisePixmapLabel, 0, 0, Qt::AlignCenter);
     directionLayout->addWidget (clockwisePixmapLabel, 0, 1, Qt::AlignCenter);
     directionLayout->addWidget (m_antiClockwiseRadioButton, 1, 0, Qt::AlignCenter);
@@ -152,8 +150,6 @@ void kpTransformRotateDialog::createAngleGroupBox ()
 
 
     QGridLayout *angleLayout = new QGridLayout (angleGroupBox );
-    angleLayout->setMargin( marginHint () * 2 );
-    angleLayout->setSpacing( spacingHint ());
 
     angleLayout->addWidget (m_angle90RadioButton, 0, 0, 1, 3);
     angleLayout->addWidget (m_angle180RadioButton, 1, 0, 1, 3);

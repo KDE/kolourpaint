@@ -46,8 +46,7 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
     : kpEffectWidgetBase (actOnSelection, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
-    lay->setSpacing (spacingHint ());
-    lay->setMargin (marginHint ());
+    lay->setMargin (0);
 
 
 #if 0

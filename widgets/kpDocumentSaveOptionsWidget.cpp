@@ -112,8 +112,7 @@ void kpDocumentSaveOptionsWidget::init ()
 
 
     QHBoxLayout *lay = new QHBoxLayout (this);
-    lay->setSpacing(KDialog::spacingHint ());
-    lay->setMargin(0/*margin*/);
+    lay->setMargin(0);
 
     lay->addWidget (m_colorDepthLabel, 0/*stretch*/, Qt::AlignLeft);
     lay->addWidget (m_colorDepthCombo, 0/*stretch*/);

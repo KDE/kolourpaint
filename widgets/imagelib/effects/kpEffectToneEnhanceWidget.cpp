@@ -49,8 +49,7 @@ kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,
 
 {
     QGridLayout *lay = new QGridLayout (this);
-    lay->setSpacing (spacingHint ());
-    lay->setMargin (marginHint ());
+    lay->setMargin (0);
 
 
     // See kpEffectToneEnhance::applyEffect().

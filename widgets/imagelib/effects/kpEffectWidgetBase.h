@@ -66,10 +66,6 @@ public:
         kpCommandEnvironment *cmdEnviron) const = 0;
 
 protected:
-    int marginHint () const;
-    int spacingHint () const;
-
-protected:
     bool m_actOnSelection;
 };
 

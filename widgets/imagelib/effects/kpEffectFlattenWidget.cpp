@@ -79,8 +79,7 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
 
 
     QVBoxLayout *lay = new QVBoxLayout (this);
-    lay->setSpacing(spacingHint ());
-    lay->setMargin(marginHint ());
+    lay->setMargin (0);
     lay->addWidget (m_enableCheckBox);
     lay->addWidget (m_color1Button);
     lay->addWidget (m_color2Button);

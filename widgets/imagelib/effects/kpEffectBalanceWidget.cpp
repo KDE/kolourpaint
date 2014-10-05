@@ -59,8 +59,7 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
     : kpEffectWidgetBase (actOnSelection, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
-    lay->setMargin (marginHint ());
-    lay->setSpacing (spacingHint ());
+    lay->setMargin (0);
 
 
     QLabel *brightnessLabel = new QLabel (i18n ("&Brightness:"), this);
@@ -89,7 +88,7 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
 
 
     QWidget *spaceWidget = new QLabel (this);
-    spaceWidget->setFixedSize (1, spacingHint ());
+    spaceWidget->setFixedSize (1, fontMetrics ().height () / 4);
 
 
     QLabel *channelLabel = new QLabel (i18n ("C&hannels:"), this);

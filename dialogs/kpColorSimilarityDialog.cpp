@@ -59,8 +59,6 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
 
 
     QVBoxLayout *cubeLayout = new QVBoxLayout (cubeGroupBox);
-    cubeLayout->setSpacing(spacingHint ());
-    cubeLayout->setMargin (marginHint () * 2);
     cubeLayout->addWidget (m_colorSimilarityFrame, 1/*stretch*/);
     cubeLayout->addWidget (updatePushButton, 0/*stretch*/, Qt::AlignHCenter);
 
@@ -91,8 +89,6 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
 
 
     QVBoxLayout *inputLayout = new QVBoxLayout (inputGroupBox);
-    inputLayout->setSpacing (spacingHint () * 4);
-    inputLayout->setMargin (marginHint () * 2);
 
     inputLayout->addWidget (m_colorSimilarityInput);
     inputLayout->addWidget (m_whatIsLabel);
@@ -105,8 +101,7 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
 
 
     QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget);
-    baseLayout->setSpacing (spacingHint () * 2);
-    baseLayout->setMargin (0/*margin*/);
+    baseLayout->setMargin (0);
     baseLayout->addWidget (cubeGroupBox, 1/*stretch*/);
     baseLayout->addWidget (inputGroupBox);
 }

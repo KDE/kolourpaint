@@ -49,8 +49,7 @@ kpEffectInvertWidget::kpEffectInvertWidget (bool actOnSelection,
     : kpEffectWidgetBase (actOnSelection, parent)
 {
     QVBoxLayout *topLevelLay = new QVBoxLayout (this);
-    topLevelLay->setSpacing(spacingHint ());
-    topLevelLay->setMargin(marginHint ());
+    topLevelLay->setMargin (0);
 
 
     QWidget *centerWidget = new QWidget (this);
@@ -58,14 +57,14 @@ kpEffectInvertWidget::kpEffectInvertWidget (bool actOnSelection,
 
 
     QVBoxLayout *centerWidgetLay = new QVBoxLayout (centerWidget );
-    centerWidgetLay->setSpacing( spacingHint() );
+    centerWidgetLay->setMargin (0);
 
     m_redCheckBox = new QCheckBox (i18n ("&Red"), centerWidget);
     m_greenCheckBox = new QCheckBox (i18n ("&Green"), centerWidget);
     m_blueCheckBox = new QCheckBox (i18n ("&Blue"), centerWidget);
 
     QWidget *spaceWidget = new QWidget (centerWidget);
-    spaceWidget->setFixedSize (1, spacingHint ());
+    spaceWidget->setFixedSize (1, fontMetrics ().height () / 4);
 
     m_allCheckBox = new QCheckBox (i18n ("&All"), centerWidget);
 

@@ -100,8 +100,7 @@ kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (
     QGroupBox *dimensionsGroupBox = createDimensionsGroupBox(baseWidget);
 
     QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget);
-    baseLayout->setSpacing (spacingHint ());
-    baseLayout->setMargin(0/*margin*/);
+    baseLayout->setMargin(0);
     baseLayout->addWidget(actOnBox);
     baseLayout->addWidget(operationGroupBox);
     baseLayout->addWidget(dimensionsGroupBox);
@@ -252,9 +251,6 @@ QGroupBox *kpTransformResizeScaleDialog::createOperationGroupBox (QWidget *baseW
 
 
     QGridLayout *operationLayout = new QGridLayout (operationGroupBox );
-    operationLayout->setMargin (marginHint () * 2/*don't overlap groupbox title*/);
-    operationLayout->setSpacing (spacingHint ());
-
     operationLayout->addWidget (m_resizeButton, 0, 0, Qt::AlignCenter);
     operationLayout->addWidget (m_scaleButton, 0, 1, Qt::AlignCenter);
     operationLayout->addWidget (m_smoothScaleButton, 0, 2, Qt::AlignCenter);
@@ -324,8 +320,6 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
 
 
     QGridLayout *dimensionsLayout = new QGridLayout (dimensionsGroupBox);
-    dimensionsLayout->setMargin (marginHint () * 2);
-    dimensionsLayout->setSpacing (spacingHint ());
     dimensionsLayout->setColumnStretch (1/*column*/, 1);
     dimensionsLayout->setColumnStretch (3/*column*/, 1);
 

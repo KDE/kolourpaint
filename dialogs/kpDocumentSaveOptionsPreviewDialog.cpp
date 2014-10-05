@@ -71,8 +71,6 @@ KDialogBase (parent, name, false/*non-modal*/,
 
 
     QGridLayout *lay = new QGridLayout ( baseWidget );
-    lay->setMargin( KDialog::marginHint () );
-    lay->setSpacing( KDialog::spacingHint ());
 
     m_filePixmapLabel = new kpResizeSignallingLabel (baseWidget);
     m_fileSizeLabel = new QLabel (baseWidget);
@@ -102,7 +100,7 @@ kpDocumentSaveOptionsPreviewDialog::~kpDocumentSaveOptionsPreviewDialog ()
 QSize kpDocumentSaveOptionsPreviewDialog::preferredMinimumSize () const
 {
     const int contentsWidth = 180;
-    const int totalMarginsWidth = 2 * KDialog::marginHint ();
+    const int totalMarginsWidth = fontMetrics ().height ();
 
     return QSize (contentsWidth + totalMarginsWidth,
                   contentsWidth * 3 / 4 + totalMarginsWidth);

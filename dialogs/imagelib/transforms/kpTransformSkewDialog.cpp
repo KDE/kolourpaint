@@ -129,8 +129,6 @@ void kpTransformSkewDialog::createAngleGroupBox ()
 
 
     QGridLayout *angleLayout = new QGridLayout (angleGroupBox);
-    angleLayout->setMargin (marginHint () * 2);
-    angleLayout->setSpacing (spacingHint ());
 
     angleLayout->addWidget (horizontalSkewPixmapLabel, 0, 0);
     angleLayout->addWidget (horizontalSkewLabel, 0, 1);

@@ -93,7 +93,7 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
 
 
     m_gridLayout = new QGridLayout (baseWidget );
-    m_gridLayout->setSpacing (spacingHint ());
+    m_gridLayout->setMargin (0);
     m_gridNumRows = reserveTopRow ? 1 : 0;
     if (m_dimensionsGroupBox || m_previewGroupBox)
     {
@@ -151,9 +151,6 @@ void kpTransformPreviewDialog::createDimensionsGroupBox ()
 
 
     QGridLayout *dimensionsLayout = new QGridLayout (m_dimensionsGroupBox );
-    dimensionsLayout->setMargin( marginHint () * 2 );
-    dimensionsLayout->setSpacing( spacingHint ());
-
     dimensionsLayout->addWidget (originalLabel, 0, 0, Qt::AlignBottom);
     dimensionsLayout->addWidget (originalDimensionsLabel, 0, 1, Qt::AlignBottom);
     dimensionsLayout->addWidget (afterTransformLabel, 1, 0, Qt::AlignTop);
@@ -177,9 +174,6 @@ void kpTransformPreviewDialog::createPreviewGroupBox ()
 
 
     QVBoxLayout *previewLayout = new QVBoxLayout (m_previewGroupBox);
-    previewLayout->setMargin (marginHint () * 2);
-    previewLayout->setSpacing (qMax (1, spacingHint () / 2));
-
     previewLayout->addWidget (m_previewPixmapLabel, 1/*stretch*/);
     previewLayout->addWidget (updatePushButton, 0/*stretch*/, Qt::AlignHCenter);
 }
