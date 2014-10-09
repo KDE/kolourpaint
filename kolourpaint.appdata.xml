@@ -107,6 +107,7 @@
     <ul>
       <li>Support for drawing various shapes - lines, rectangles, rounded rectangles, ovals and polygons</li>
       <li xml:lang="ca">Permet dibuixar diverses formes: línies, rectangles, rectangles arrodonits, ovals i polígons</li>
+      <li xml:lang="de">Das Zeichnen verschiedener Objekte wie Linien, Rechtecke, abgerundete Rechtecke, Ellipsen und Polygone wird unterstützt.</li>
       <li xml:lang="en-GB">Support for drawing various shapes - lines, rectangles, rounded rectangles, ovals and polygons</li>
       <li xml:lang="es">Permite dibujar distintas formas (líneas, rectángulos, rectángulos de esquinas redondeadas, óvalos y polígonos)</li>
       <li xml:lang="et">Mitmesuguste kujundite joonistamise toetus: jooned, ristkülikud, ümarnurksed ristkülikud, ovaalid, hulknurgad</li>
@@ -177,7 +178,7 @@
       <li xml:lang="zh-TW">顏色挑選器</li>
       <li>Selections</li>
       <li xml:lang="ca">Seleccions</li>
-      <li xml:lang="de">Auswahl</li>
+      <li xml:lang="de">Mehre Auswahlarten</li>
       <li xml:lang="en-GB">Selections</li>
       <li xml:lang="es">Selecciones</li>
       <li xml:lang="et">Valikud</li>
@@ -201,6 +202,7 @@
       <li xml:lang="zh-TW">選取區</li>
       <li>Rotation, monochrome and other advanced effects</li>
       <li xml:lang="ca">Gir, monocrom i altres efectes avançats.</li>
+      <li xml:lang="de">Drehung, Umwandlung in Schwarzweiß und weitere Effekte können angewendet werden</li>
       <li xml:lang="en-GB">Rotation, monochrome and other advanced effects</li>
       <li xml:lang="es">Rotación, conversión a monocromo y otros efectos avanzados</li>
       <li xml:lang="et">Pööramine, ühevärvilisus ja veel mõned efektid</li>
