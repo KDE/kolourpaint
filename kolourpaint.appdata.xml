@@ -25,6 +25,7 @@
   <name xml:lang="sk">KolourPaint</name>
   <name xml:lang="sl">KolourPaint</name>
   <name xml:lang="sv">KolourPaint</name>
+  <name xml:lang="tr">KolourPaint</name>
   <name xml:lang="uk">KolourPaint</name>
   <name xml:lang="x-test">xxKolourPaintxx</name>
   <name xml:lang="zh-TW">小畫家_KolourPaint</name>
@@ -50,6 +51,7 @@
   <summary xml:lang="sk">Kresliaci program</summary>
   <summary xml:lang="sl">Program za risanje</summary>
   <summary xml:lang="sv">Ritprogram</summary>
+  <summary xml:lang="tr">Boyama Programı</summary>
   <summary xml:lang="uk">Програма для малювання</summary>
   <summary xml:lang="x-test">xxPaint Programxx</summary>
   <summary xml:lang="zh-TW">繪圖程式</summary>
@@ -76,6 +78,7 @@
     <p xml:lang="sk">KolourPaint je jednoduchý kresliaci program na rýchlu tvorbu rastrových obrázkov. Je užitočný ako touch-up nástroj a na jednoduché úpravy obrázkov.</p>
     <p xml:lang="sl">KolourPaint je preprost program za risanje in hitro ustvarjanje rastrskih slik. Uporaben je za izboljšave slik in preprosto urejanje slik.</p>
     <p xml:lang="sv">KolourPaint är ett enkelt ritprogram för att snabbt skapa punktavbildningar. Det är användbart som förbättringsverktyg och för enkla bildredigeringsuppgifter.</p>
+    <p xml:lang="tr">KolourPaint hızlıca taramalı resimler oluşturabileceğiniz basit bir boyama programıdır. Bir rötuş aracı ve basit resim düzenleme görevleri için yararlıdır.</p>
     <p xml:lang="uk">KolourPaint — проста програма для малювання, за допомогою якої можна швидко створювати растрові зображення. Ця програма може бути корисною для виконання простих завдань з редагування зображень.</p>
     <p xml:lang="x-test">xxKolourPaint is a simple painting program to quickly create raster images. It is useful as a touch-up tool and simple image editing tasks.xx</p>
     <p xml:lang="zh-TW">KolourPaint 是一套類似小畫家的簡易繪圖程式。</p>
@@ -101,6 +104,7 @@
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sl">Zmožnosti:</p>
     <p xml:lang="sv">Funktioner:</p>
+    <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-TW">功能：</p>
@@ -125,6 +129,7 @@
       <li xml:lang="sk">Podpora pre kreslenie rôznych tvarov - čiary, obdĺžniky, zaoblené obdĺžniky, ovály a polygóny</li>
       <li xml:lang="sl">Podpora risanju različnih oblik - črt, pravokotnikov, zaobljenih pravokotnikov, ovalov in mnogokotnikov</li>
       <li xml:lang="sv">Stöd för att rita diverse former: linjer, rektanglar, rundade rektanglar, ovaler och polygoner</li>
+      <li xml:lang="tr">Çeşitli şekiller, çizgiler, dörtgenler, yuvarlatılmış dörtgenler, ovaller ve poligonlar desteği</li>
       <li xml:lang="uk">Підтримка малювання різноманітних форм: прямих, прямокутників, прямокутників із заокругленими кутами, овалів та багатокутників.</li>
       <li xml:lang="x-test">xxSupport for drawing various shapes - lines, rectangles, rounded rectangles, ovals and polygonsxx</li>
       <li xml:lang="zh-TW">支援繪出不同的形狀 -- 線條、矩形、圓角矩形、橢圓與多邊形等</li>
@@ -149,6 +154,7 @@
       <li xml:lang="sk">Krivky, čiary a text</li>
       <li xml:lang="sl">Krivulje, črte in besedilo</li>
       <li xml:lang="sv">Kurvor, linjer och text</li>
+      <li xml:lang="tr">Eğriler, çizgiler ve metin</li>
       <li xml:lang="uk">Можливість малювання кривих, прямих та тексту.</li>
       <li xml:lang="x-test">xxCurves, lines and textxx</li>
       <li xml:lang="zh-TW">曲線、線條與文字</li>
@@ -173,6 +179,7 @@
       <li xml:lang="sk">Výber farieb</li>
       <li xml:lang="sl">Izbirnik barv</li>
       <li xml:lang="sv">Färgväljare</li>
+      <li xml:lang="tr">Renk seçici</li>
       <li xml:lang="uk">Піпетка для отримання кольору із зображення.</li>
       <li xml:lang="x-test">xxColour pickerxx</li>
       <li xml:lang="zh-TW">顏色挑選器</li>
@@ -197,6 +204,7 @@
       <li xml:lang="sk">Výbery</li>
       <li xml:lang="sl">Izbire</li>
       <li xml:lang="sv">Markeringar</li>
+      <li xml:lang="tr">Seçimler</li>
       <li xml:lang="uk">Можливість позначення ділянок зображення.</li>
       <li xml:lang="x-test">xxSelectionsxx</li>
       <li xml:lang="zh-TW">選取區</li>
@@ -219,6 +227,7 @@
       <li xml:lang="sk">Otáčanie, monochromatické a iné pokročilé efekty</li>
       <li xml:lang="sl">Vrtenje, monokromatsko in drugi napredni učinki</li>
       <li xml:lang="sv">Rotation, svartvitt och andra avancerade effekter</li>
+      <li xml:lang="tr">Döndürme, tek renkli resim ve diğer gelişmiş efektler</li>
       <li xml:lang="uk">Можливість обертання частин зображення, перетворення зображення на чорно-біле, різноманітні ефекти перетворення зображення.</li>
       <li xml:lang="x-test">xxRotation, monochrome and other advanced effectsxx</li>
       <li xml:lang="zh-TW">旋轉、單色與其他進階效果</li>
