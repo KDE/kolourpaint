@@ -18,6 +18,7 @@
   <name xml:lang="it">KolourPaint</name>
   <name xml:lang="ko">KolourPaint</name>
   <name xml:lang="lt">KolourPaint</name>
+  <name xml:lang="nb">KolourPaint</name>
   <name xml:lang="nds">KolourPaint</name>
   <name xml:lang="nl">KolourPaint</name>
   <name xml:lang="pl">KolourPaint</name>
@@ -44,6 +45,7 @@
   <summary xml:lang="it">Programma di disegno</summary>
   <summary xml:lang="ko">그리기 프로그램</summary>
   <summary xml:lang="lt">Piešimo programa</summary>
+  <summary xml:lang="nb">Malepogram</summary>
   <summary xml:lang="nds">Maalprogramm</summary>
   <summary xml:lang="nl">Tekenprogramma</summary>
   <summary xml:lang="pl">Program Paint</summary>
@@ -72,6 +74,7 @@
     <p xml:lang="ia">KolourPAint es un simple programma per pinger o designar  per crear rapidemente imagines raster. Il es utile como instrumento de retocco e per cargas simplice de modificar imagines.</p>
     <p xml:lang="it">KolourPaint è un semplice programma di disegno per la creazione rapida di immagini. È utile come strumento da usare «al volo» e per effettuare semplici modifiche alle immagini.</p>
     <p xml:lang="ko">KolourPaint는 래스터 그림을 빠르게 만드는 프로그램입니다. 간단한 보정 도구 및 편집 도구로 사용할 수 있습니다.</p>
+    <p xml:lang="nb">KolourPaint er et enkelt maleprogram som kjapt kan lage rasterbilder. Det er et nyttig verktøy for retusjering og enkle redigeringsoppgaver.</p>
     <p xml:lang="nds">KolourPaint is en eenfach Maalprogramm, mit dat sik gau Pixelbiller opstellen laat. Dat is goot för lütte Utbetern un eenfache Bildbewerken.</p>
     <p xml:lang="nl">KolourPaint is een eenvoudig tekenprogramma om snel rasterafbeeldingen te maken. Het is nuttig als een hulpmiddel voor bijwerken en eenvoudige taken voor bewerking van afbeeldingen.</p>
     <p xml:lang="pl">KolourPaint jest prostym programem do malowania i szybkiego tworzenia obrazów rastrowych. Jest przydatny przy retuszowaniu i prostych pracach edytowania.</p>
@@ -98,6 +101,7 @@
     <p xml:lang="it">Caratteristiche:</p>
     <p xml:lang="ko">기능:</p>
     <p xml:lang="lt">Galimybės:</p>
+    <p xml:lang="nb">Funksjoner:</p>
     <p xml:lang="nds">Markmalen:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="pl">Cechy:</p>
@@ -123,6 +127,7 @@
       <li xml:lang="ia">Supporto pro designar varie formas - lineas, rectangulos, rectangulos tundite, ovales e polygonos</li>
       <li xml:lang="it">Supporto per il disegno di varie forme - linee, rettangoli, rettangoli arrotondati, ovali e poligoni</li>
       <li xml:lang="ko">다양한 도형 그리기 - 직선, 사각형, 둥근 사각형, 타원형, 다각형</li>
+      <li xml:lang="nb">Støtte for å tegne mange former – linjer, rektangler, avrundede rektangler, ovaler og polygoner</li>
       <li xml:lang="nds">Ünnerstütt dat Teken vun en Reeg vun Formen - Lienen, Rechtecks, afrundt Rechtecks, Ovalen un Veelecks</li>
       <li xml:lang="nl">Ondersteuning voor het tekenen van verschillende vormen - lijnen, rechthoeken, afgeronde rechthoeken, ovalen en polygonen</li>
       <li xml:lang="pl">Obsługa rysowania rozmaitych kształtów - proste, prostokąty, zaokrąglone prostokąty, owale i wielokąty</li>
@@ -148,6 +153,7 @@
       <li xml:lang="it">Curve, linee e testo</li>
       <li xml:lang="ko">곡선, 직선 및 텍스트</li>
       <li xml:lang="lt">Kreivės, tiesės ir tekstas</li>
+      <li xml:lang="nb">Kurver, linjer og tekst</li>
       <li xml:lang="nds">Bagens, Lienen un Text</li>
       <li xml:lang="nl">Krommen, lijnen en tekst</li>
       <li xml:lang="pl">Krzywe, proste i teks</li>
@@ -173,6 +179,7 @@
       <li xml:lang="it">Selettore del colore</li>
       <li xml:lang="ko">색 선택기</li>
       <li xml:lang="lt">Spalvų parinkiklis</li>
+      <li xml:lang="nb">Fargevelger</li>
       <li xml:lang="nds">Klöörköör</li>
       <li xml:lang="nl">Kleurkiezer</li>
       <li xml:lang="pl">Wybierak barwy</li>
@@ -198,6 +205,7 @@
       <li xml:lang="it">Selezioni</li>
       <li xml:lang="ko">선택</li>
       <li xml:lang="lt">Žymėjimai</li>
+      <li xml:lang="nb">Utvalg</li>
       <li xml:lang="nds">Köören</li>
       <li xml:lang="nl">Selecties</li>
       <li xml:lang="pl">Zaznaczenia</li>
@@ -221,6 +229,7 @@
       <li xml:lang="ia">Rotation, monochrome e altere effectos avantiate</li>
       <li xml:lang="it">Rotazione, monocromia e altri effetti avanzati</li>
       <li xml:lang="ko">회전, 흑백, 기타 고급 효과</li>
+      <li xml:lang="nb">Dreiing, monokrom og andre avanserte effekter</li>
       <li xml:lang="nds">Dreihen, Swatt-Witt un en Reeg verwiedert Effekten</li>
       <li xml:lang="nl">Roteren, monochroom en andere geavanceerde effecten</li>
       <li xml:lang="pl">Obrót, monochromatyczność i inne zaawansowane efekty</li>
