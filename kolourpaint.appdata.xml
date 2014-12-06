@@ -142,6 +142,7 @@
       <li xml:lang="zh-TW">支援繪出不同的形狀 -- 線條、矩形、圓角矩形、橢圓與多邊形等</li>
       <li>Curves, lines and text</li>
       <li xml:lang="ca">Corbes, línies i text</li>
+      <li xml:lang="cs">Křivky, čáry a text</li>
       <li xml:lang="de">Kurven, Linien und Text</li>
       <li xml:lang="el">Καμπύλες, ευθείες και κείμενο</li>
       <li xml:lang="en-GB">Curves, lines and text</li>
@@ -168,6 +169,7 @@
       <li xml:lang="zh-TW">曲線、線條與文字</li>
       <li>Colour picker</li>
       <li xml:lang="ca">Selector de color</li>
+      <li xml:lang="cs">Kapátko</li>
       <li xml:lang="de">Farbwähler</li>
       <li xml:lang="el">Επιλογέας χρωμάτων</li>
       <li xml:lang="en-GB">Colour picker</li>
@@ -194,6 +196,7 @@
       <li xml:lang="zh-TW">顏色挑選器</li>
       <li>Selections</li>
       <li xml:lang="ca">Seleccions</li>
+      <li xml:lang="cs">Výběry</li>
       <li xml:lang="de">Mehre Auswahlarten</li>
       <li xml:lang="el">Επιλογές</li>
       <li xml:lang="en-GB">Selections</li>
