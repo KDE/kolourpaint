@@ -38,7 +38,7 @@
 #include <kpDocumentSaveOptions.h>
 
 
-class KComboBox;
+class QComboBox;
 class QImage;
 class QLabel;
 class QTimer;
@@ -138,7 +138,7 @@ protected:
     kpDocumentMetaInfo m_documentMetaInfo;
 
     QLabel *m_colorDepthLabel;
-    KComboBox *m_colorDepthCombo;
+    QComboBox *m_colorDepthCombo;
     int m_colorDepthComboLastSelectedItem;
     QWidget *m_colorDepthSpaceWidget;
 

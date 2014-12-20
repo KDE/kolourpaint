@@ -34,12 +34,12 @@
 #include <cmath>
 #include <math.h>
 
+#include <qcombobox.h>
 #include <qgridlayout.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
 
-#include <kcombobox.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <knuminput.h>
@@ -92,7 +92,7 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
 
 
     QLabel *channelLabel = new QLabel (i18n ("C&hannels:"), this);
-    m_channelsComboBox = new KComboBox (this);
+    m_channelsComboBox = new QComboBox (this);
     m_channelsComboBox->addItem (i18n ("All"));
     m_channelsComboBox->addItem (i18n ("Red"));
     m_channelsComboBox->addItem (i18n ("Green"));

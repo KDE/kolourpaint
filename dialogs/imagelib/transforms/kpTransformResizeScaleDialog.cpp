@@ -36,6 +36,7 @@
 #include <qboxlayout.h>
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
+#include <qcombobox.h>
 #include <qdialogbuttonbox.h>
 #include <qgridlayout.h>
 #include <qgroupbox.h>
@@ -45,7 +46,6 @@
 #include <qsize.h>
 #include <qtoolbutton.h>
 
-#include <kcombobox.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>
@@ -161,7 +161,7 @@ QWidget *kpTransformResizeScaleDialog::createActOnBox(QWidget *baseWidget)
 
 
     QLabel *actOnLabel = new QLabel (i18n ("Ac&t on:"), actOnBox);
-    m_actOnCombo = new KComboBox (actOnBox);
+    m_actOnCombo = new QComboBox (actOnBox);
 
 
     actOnLabel->setBuddy (m_actOnCombo);

@@ -31,6 +31,7 @@
 
 #include <kpEffectsDialog.h>
 
+#include <qcombobox.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -38,7 +39,6 @@
 #include <QImage>
 
 #include <kapplication.h>
-#include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -103,7 +103,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 
     QLabel *label = new QLabel (i18n ("&Effect:"), effectContainer);
 
-    m_effectsComboBox = new KComboBox (effectContainer);
+    m_effectsComboBox = new QComboBox (effectContainer);
     // Keep in alphabetical order.
     // TODO: What about translations?
     // sync: order in selectEffect().

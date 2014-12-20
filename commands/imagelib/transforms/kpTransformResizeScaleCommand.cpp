@@ -44,7 +44,6 @@
 #include <qmatrix.h>
 
 #include <kapplication.h>
-#include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kiconeffect.h>

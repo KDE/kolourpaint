@@ -33,12 +33,11 @@
 #include <kpTransformPreviewDialog.h>
 
 
+class QComboBox;
 class QGroupBox;
 class QImage;
 class QTimer;
 class QVBoxLayout;
-
-class KComboBox;
 
 class kpEffectCommandBase;
 class kpEffectWidgetBase;
@@ -81,7 +80,7 @@ protected:
 
     QTimer *m_delayedUpdateTimer;
 
-    KComboBox *m_effectsComboBox;
+    QComboBox *m_effectsComboBox;
     QGroupBox *m_settingsGroupBox;
     QVBoxLayout *m_settingsLayout;
 

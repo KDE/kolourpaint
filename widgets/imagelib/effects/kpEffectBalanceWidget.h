@@ -36,7 +36,7 @@
 
 class QLabel;
 
-class KComboBox;
+class QComboBox;
 class KIntNumInput;
 
 
@@ -78,7 +78,7 @@ protected:
                  *m_contrastInput,
                  *m_gammaInput;
     QLabel *m_gammaLabel;
-    KComboBox *m_channelsComboBox;
+    QComboBox *m_channelsComboBox;
 };
 
 

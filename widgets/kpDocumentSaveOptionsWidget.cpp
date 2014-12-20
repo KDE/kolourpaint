@@ -33,6 +33,7 @@
 #include <qapplication.h>
 #include <qboxlayout.h>
 #include <qbuffer.h>
+#include <qcombobox.h>
 #include <qevent.h>
 #include <qgridlayout.h>
 #include <qimage.h>
@@ -41,7 +42,6 @@
 #include <qpushbutton.h>
 #include <qtimer.h>
 
-#include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kimageio.h>
@@ -89,7 +89,7 @@ void kpDocumentSaveOptionsWidget::init ()
 
 
     m_colorDepthLabel = new QLabel (i18n ("Convert &to:"), this);
-    m_colorDepthCombo = new KComboBox (this);
+    m_colorDepthCombo = new QComboBox (this);
 
     m_colorDepthSpaceWidget = new QWidget (this);
 

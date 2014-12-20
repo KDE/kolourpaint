@@ -36,10 +36,10 @@
 
 
 class QCheckBox;
+class QComboBox;
 class QGroupBox;
 class QToolButton;
 
-class KComboBox;
 class KDoubleNumInput;
 class KIntNumInput;
 
@@ -103,7 +103,7 @@ Q_OBJECT
   private:
     kpTransformDialogEnvironment *m_environ;
 
-    KComboBox *m_actOnCombo;
+    QComboBox *m_actOnCombo;
 
     QToolButton *m_resizeButton,
                 *m_scaleButton,
