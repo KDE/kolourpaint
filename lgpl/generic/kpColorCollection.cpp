@@ -36,7 +36,7 @@
 #include <QTextStream>
 
 #include <kio/netaccess.h>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMessageBox>
 #include <kdebug.h>
 #include <kstringhandler.h>

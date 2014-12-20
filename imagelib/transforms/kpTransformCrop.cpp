@@ -32,7 +32,7 @@
 #include <kpTransformCrop.h>
 #include <kpTransformCropPrivate.h>
 
-#include <KLocale>
+#include <KLocalizedString>
 
 #include <kpAbstractImageSelection.h>
 #include <kpAbstractSelection.h>

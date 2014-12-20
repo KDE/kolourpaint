@@ -36,7 +36,7 @@
 #include <QPainter>
 
 #include <KIconLoader>
-#include <KLocale>
+#include <KLocalizedString>
 
 #include <kpColor.h>
 

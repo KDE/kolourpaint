@@ -35,7 +35,8 @@
 #include <QPixmap>
 
 #include <KConfigGroup>
-#include <KLocale>
+#include <KLocalizedString>
+#include <KSharedConfig>
 
 #include <kpColor.h>
 #include <kpColorSimilarityDialog.h>

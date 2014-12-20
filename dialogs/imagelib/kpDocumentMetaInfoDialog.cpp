@@ -42,7 +42,7 @@
 
 #include <KDoubleNumInput>
 #include <KIntNumInput>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMessageBox>
 #include <KDebug>
 

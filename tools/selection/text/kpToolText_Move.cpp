@@ -31,7 +31,7 @@
 #include <kpToolText.h>
 #include <kpToolTextPrivate.h>
 
-#include <KLocale>
+#include <KLocalizedString>
 
 #include <kpViewManager.h>
 

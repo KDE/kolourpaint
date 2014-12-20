@@ -32,7 +32,7 @@
 #include <kpToolFreeFormSelection.h>
 
 #include <KDebug>
-#include <KLocale>
+#include <KLocalizedString>
 
 #include <kpDocument.h>
 #include <kpFreeFormImageSelection.h>

@@ -28,7 +28,7 @@
 
 #include <kpAbstractImageSelectionTool.h>
 
-#include <KLocale>
+#include <KLocalizedString>
 
 #include <kpAbstractImageSelection.h>
 #include <kpDocument.h>

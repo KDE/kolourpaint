@@ -33,7 +33,7 @@
 
 #include <QList>
 
-#include <KLocale>
+#include <KLocalizedString>
 #include <KDebug>
 
 #include <kpDocument.h>

@@ -37,7 +37,7 @@
 #include <QPrinter>
 
 #include <KDebug>
-#include <KLocale>
+#include <KLocalizedString>
 
 #include <kpDefs.h>
 

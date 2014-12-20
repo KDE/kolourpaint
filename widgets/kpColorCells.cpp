@@ -37,7 +37,7 @@
 #include <QScrollBar>
 
 #include <KDebug>
-#include <KLocale>
+#include <KLocalizedString>
 
 #include <kpColor.h>
 #include <kpColorCollection.h>

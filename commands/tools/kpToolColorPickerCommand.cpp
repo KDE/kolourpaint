@@ -31,7 +31,7 @@
 
 #include <kpToolColorPickerCommand.h>
 
-#include <KLocale>
+#include <KLocalizedString>
 
 #include <kpCommandEnvironment.h>
 #include <kpDefs.h>

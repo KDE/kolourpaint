@@ -28,7 +28,7 @@
 
 #include <kpUrlFormatter.h>
 
-#include <KLocale>
+#include <KLocalizedString>
 #include <QUrl>
 
 //---------------------------------------------------------------------
