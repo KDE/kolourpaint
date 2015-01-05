@@ -181,4 +181,3 @@ int kpEffectBlurSharpenWidget::strength () const
 }
 
 
-#include <kpEffectBlurSharpenWidget.moc>

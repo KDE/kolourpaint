@@ -180,4 +180,3 @@ void kpEllipticalImageSelection::paintBorder (QImage *destPixmap, const QRect &d
 }
 
 
-#include <kpEllipticalImageSelection.moc>

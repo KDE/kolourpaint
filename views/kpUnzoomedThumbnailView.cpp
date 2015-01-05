@@ -215,4 +215,3 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
 }
 
 
-#include <kpUnzoomedThumbnailView.moc>

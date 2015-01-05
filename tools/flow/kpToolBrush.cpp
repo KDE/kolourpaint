@@ -54,4 +54,3 @@ QString kpToolBrush::haventBegunDrawUserMessage () const
 // Logic is in kpToolFlowPixmapBase.
 
 
-#include <kpToolBrush.moc>

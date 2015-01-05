@@ -125,4 +125,3 @@ void kpCommandHistory::redo ()
 }
 
 
-#include <kpCommandHistory.moc>

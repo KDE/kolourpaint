@@ -111,4 +111,3 @@ void kpToolPolyline::endDraw (const QPoint &, const QRect &)
 }
 
 
-#include <kpToolPolyline.moc>

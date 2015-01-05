@@ -816,4 +816,3 @@ void kpTransformResizeScaleDialog::accept ()
 
 //---------------------------------------------------------------------
 
-#include <kpTransformResizeScaleDialog.moc>

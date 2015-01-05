@@ -361,4 +361,3 @@ void kpEffectsDialog::slotDelayedUpdate ()
 }
 
 
-#include <kpEffectsDialog.moc>

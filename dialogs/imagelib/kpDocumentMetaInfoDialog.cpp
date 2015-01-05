@@ -787,4 +787,3 @@ void kpDocumentMetaInfoDialog::accept ()
 }
 
 
-#include <kpDocumentMetaInfoDialog.moc>

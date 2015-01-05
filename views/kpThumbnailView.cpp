@@ -95,5 +95,4 @@ void kpThumbnailView::resizeEvent (QResizeEvent *e)
 }
 
 
-#include <kpThumbnailView.moc>
 

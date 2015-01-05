@@ -43,4 +43,3 @@ kpToolRoundedRectangle::kpToolRoundedRectangle (kpToolEnvironment *environ,
 
 //---------------------------------------------------------------------
 
-#include <kpToolRoundedRectangle.moc>

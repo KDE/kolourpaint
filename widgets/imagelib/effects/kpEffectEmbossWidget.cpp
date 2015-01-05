@@ -127,4 +127,3 @@ int kpEffectEmbossWidget::strength () const
 }
 
 
-#include <kpEffectEmbossWidget.moc>

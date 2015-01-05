@@ -45,4 +45,3 @@ kpToolRectangle::kpToolRectangle (kpToolEnvironment *environ, QObject *parent)
 
 //---------------------------------------------------------------------
 
-#include <kpToolRectangle.moc>

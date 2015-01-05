@@ -296,4 +296,3 @@ bool kpToolWidgetBrush::setSelected (int row, int col, bool saveAsDefault)
 
 //---------------------------------------------------------------------
 
-#include <kpToolWidgetBrush.moc>

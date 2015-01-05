@@ -48,4 +48,3 @@ QString kpEffectWidgetBase::caption () const
 }
 
 
-#include <kpEffectWidgetBase.moc>

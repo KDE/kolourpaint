@@ -391,4 +391,3 @@ void kpToolRectangularBase::endDraw (const QPoint &, const QRect &)
 //---------------------------------------------------------------------
 
 
-#include <kpToolRectangularBase.moc>

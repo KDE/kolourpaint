@@ -155,4 +155,3 @@ void kpColorSimilarityDialog::slotWhatIsLabelClicked ()
 }
 
 
-#include <kpColorSimilarityDialog.moc>

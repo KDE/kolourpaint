@@ -179,4 +179,3 @@ bool kpToolWidgetFillStyle::setSelected (int row, int col, bool saveAsDefault)
 
 //---------------------------------------------------------------------
 
-#include <kpToolWidgetFillStyle.moc>

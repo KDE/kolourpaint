@@ -343,4 +343,3 @@ void kpTextSelection::setPreeditText (const kpPreeditText &preeditText)
     emit changed (boundingRect ());
 }
 
-#include <kpTextSelection.moc>

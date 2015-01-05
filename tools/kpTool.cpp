@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -259,6 +258,3 @@ kpToolEnvironment *kpTool::environ () const
 {
     return d->environ;
 }
-
-
-#include <kpTool.moc>

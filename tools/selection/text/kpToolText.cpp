@@ -218,4 +218,3 @@ QVariant kpToolText::operation (DrawType drawType, Operation op,
 }
 
 
-#include <kpToolText.moc>

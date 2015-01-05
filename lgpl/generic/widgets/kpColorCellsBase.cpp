@@ -561,4 +561,3 @@ void kpColorCellsBase::mouseDoubleClickEvent( QMouseEvent * /*e*/ )
 }
 
 
-#include "kpColorCellsBase.moc"

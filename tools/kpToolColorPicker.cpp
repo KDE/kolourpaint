@@ -142,4 +142,3 @@ void kpToolColorPicker::endDraw (const QPoint &thisPoint, const QRect &)
 }
 
 
-#include <kpToolColorPicker.moc>

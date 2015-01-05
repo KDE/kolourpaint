@@ -176,4 +176,3 @@ void kpThumbnail::closeEvent (QCloseEvent *e)
 }
     
 
-#include <kpThumbnail.moc>

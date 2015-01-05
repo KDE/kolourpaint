@@ -140,4 +140,3 @@ kpEffectCommandBase *kpEffectToneEnhanceWidget::createCommand (
 }
 
 
-#include <kpEffectToneEnhanceWidget.moc>

@@ -456,4 +456,3 @@ void kpToolToolBar::slotToolButtonStyleChanged(Qt::ToolButtonStyle style)
 
 //---------------------------------------------------------------------
 
-#include <kpToolToolBar.moc>

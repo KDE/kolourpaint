@@ -87,4 +87,3 @@ bool kpToolWidgetLineWidth::setSelected (int row, int col, bool saveAsDefault)
 }
 
 
-#include <kpToolWidgetLineWidth.moc>

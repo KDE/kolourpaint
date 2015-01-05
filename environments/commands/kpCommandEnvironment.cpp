@@ -100,4 +100,3 @@ void kpCommandEnvironment::setTextStyle (const kpTextStyle &textStyle)
 }
 
 
-#include <kpCommandEnvironment.moc>

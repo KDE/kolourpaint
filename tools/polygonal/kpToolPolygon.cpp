@@ -159,4 +159,3 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
 }
 
 
-#include <kpToolPolygon.moc>

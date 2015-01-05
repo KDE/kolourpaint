@@ -160,4 +160,3 @@ QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPo
     return QRect ();
 }
 
-#include <kpToolColorEraser.moc>
