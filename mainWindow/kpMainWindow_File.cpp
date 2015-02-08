@@ -54,7 +54,7 @@
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>
-#include <KIntSpinBox>
+#include <KPluralHandlingSpinBox>
 #include <kfiledialog.h>
 #include <kiconloader.h>
 #include <kio/netaccess.h>
@@ -444,7 +444,11 @@ QList<QUrl> kpMainWindow::askForOpenURLs(const QString &caption, bool allowMulti
 
       filter += glob;
 
-      filterList << mime.comment() + QStringLiteral(" (") + glob + QLatin1Char(')');
+      // I want to show the mime comment AND the file glob pattern,
+      // but to avoid that the "All Supported Files" entry shows ALL glob patterns,
+      // I must add the pattern here a second time so that QFileDialog::HideNameFilterDetails
+      // can hide the first pattern and I still see the second one
+      filterList << mime.comment() + QString(" (%1)(%2)").arg(glob).arg(glob);
     }
   }
 
@@ -661,7 +665,7 @@ void kpMainWindow::slotScreenshot()
   connect (buttons, SIGNAL (rejected()), dialog, SLOT (reject()));
 
   QLabel *label = new QLabel(i18n("Snapshot Delay"));
-  KIntSpinBox *seconds = new KIntSpinBox;
+  KPluralHandlingSpinBox *seconds = new KPluralHandlingSpinBox;
   seconds->setRange(0, 99);
   seconds->setSuffix(ki18np(" second", " seconds"));
   seconds->setSpecialValueText(i18n("No delay"));

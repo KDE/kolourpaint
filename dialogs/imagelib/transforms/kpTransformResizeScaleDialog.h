@@ -39,9 +39,8 @@ class QCheckBox;
 class QComboBox;
 class QGroupBox;
 class QToolButton;
-
-class KDoubleNumInput;
-class KIntNumInput;
+class QSpinBox;
+class QDoubleSpinBox;
 
 class kpAbstractSelection;
 class kpDocument;
@@ -109,9 +108,9 @@ Q_OBJECT
                 *m_scaleButton,
                 *m_smoothScaleButton;
 
-    KIntNumInput *m_originalWidthInput, *m_originalHeightInput,
-                 *m_newWidthInput, *m_newHeightInput;
-    KDoubleNumInput *m_percentWidthInput, *m_percentHeightInput;
+    QSpinBox *m_originalWidthInput, *m_originalHeightInput,
+             *m_newWidthInput, *m_newHeightInput;
+    QDoubleSpinBox *m_percentWidthInput, *m_percentHeightInput;
     QCheckBox *m_keepAspectRatioCheckBox;
 
     int m_ignoreKeepAspectRatio;

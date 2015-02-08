@@ -141,17 +141,5 @@ void kpColorSimilarityDialog::slotColorSimilarityValueChanged ()
 // private slot
 void kpColorSimilarityDialog::slotWhatIsLabelClicked ()
 {
-    QWhatsThis::showText (QCursor::pos (), m_colorSimilarityFrame->whatsThis (),
-        this);
-
-    // LOTODO: It looks weird with the focus rectangle.
-    //         It's also very hard for the user to make it lose focus for some reason
-    //         (you must click on the label - nowhere else will work).
-    //
-    //         This doesn't work - I don't know why:
-    //             m_whatIsLabel->clearFocus ();
-    //
-    //         Maybe it's a weird kind of focus?
+  QWhatsThis::showText(QCursor::pos(), m_colorSimilarityFrame->whatsThis(), this);
 }
-
-

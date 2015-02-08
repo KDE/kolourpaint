@@ -45,6 +45,8 @@
 #include <qpixmap.h>
 #include <qsize.h>
 #include <qtoolbutton.h>
+#include <QSpinBox>
+#include <QDoubleSpinBox>
 
 #include <kconfig.h>
 #include <kconfiggroup.h>
@@ -52,7 +54,6 @@
 #include <kiconeffect.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <knuminput.h>
 
 #include <kpAbstractSelection.h>
 #include <kpDefs.h>
@@ -121,7 +122,7 @@ kpTransformResizeScaleDialog::kpTransformResizeScaleDialog (
 
     slotActOnChanged ();
 
-    m_newWidthInput->setEditFocus ();
+    m_newWidthInput->setFocus ();
 
     //enableButtonOk (!isNoOp ());
 }
@@ -286,33 +287,33 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
     heightLabel->setAlignment (heightLabel->alignment () | Qt::AlignHCenter);
 
     QLabel *originalLabel = new QLabel (i18n ("Original:"), dimensionsGroupBox);
-    m_originalWidthInput = new KIntNumInput (
-        document ()->width ((bool) selection ()),
-        dimensionsGroupBox);
+    m_originalWidthInput = new QSpinBox;
+    m_originalWidthInput->setValue(document()->width((bool)selection()));
     QLabel *xLabel0 = new QLabel (i18n ("x"), dimensionsGroupBox);
-    m_originalHeightInput = new KIntNumInput (
-        document ()->height ((bool) selection ()),
-        dimensionsGroupBox);
+    m_originalHeightInput = new QSpinBox;
+    m_originalHeightInput->setValue(document()->height((bool)selection()));
 
     QLabel *newLabel = new QLabel (i18n ("&New:"), dimensionsGroupBox);
-    m_newWidthInput = new KIntNumInput (dimensionsGroupBox);
+    m_newWidthInput = new QSpinBox;
     QLabel *xLabel1 = new QLabel (i18n ("x"), dimensionsGroupBox);
-    m_newHeightInput = new KIntNumInput (dimensionsGroupBox);
+    m_newHeightInput = new QSpinBox;
 
     QLabel *percentLabel = new QLabel (i18n ("&Percent:"), dimensionsGroupBox);
-    m_percentWidthInput = new KDoubleNumInput (0.01/*lower*/, 1000000/*upper*/,
-                                               100/*value*/,
-                                               dimensionsGroupBox,
-                                               1/*step*/,
-                                               2/*precision*/);
-    m_percentWidthInput->setSuffix (i18n ("%"));
+    m_percentWidthInput = new QDoubleSpinBox;
+    m_percentWidthInput->setRange(0.01, 1000000);
+    m_percentWidthInput->setValue(100);
+    m_percentWidthInput->setSingleStep(1);
+    m_percentWidthInput->setDecimals(2);
+    m_percentWidthInput->setSuffix(i18n("%"));
+
     QLabel *xLabel2 = new QLabel (i18n ("x"), dimensionsGroupBox);
-    m_percentHeightInput = new KDoubleNumInput (0.01/*lower*/, 1000000/*upper*/,
-                                                100/*value*/,
-                                                dimensionsGroupBox,
-                                                1/*step*/,
-                                                2/*precision*/);
-    m_percentHeightInput->setSuffix (i18n ("%"));
+
+    m_percentHeightInput = new QDoubleSpinBox;
+    m_percentHeightInput->setRange(0.01, 1000000);
+    m_percentHeightInput->setValue(100);
+    m_percentHeightInput->setSingleStep(1);
+    m_percentHeightInput->setDecimals(2);
+    m_percentHeightInput->setSuffix(i18n("%"));
 
     m_keepAspectRatioCheckBox = new QCheckBox (i18n ("Keep &aspect ratio"),
                                                dimensionsGroupBox);

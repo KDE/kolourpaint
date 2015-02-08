@@ -36,7 +36,7 @@
 
 class QCheckBox;
 
-class KIntNumInput;
+//class KIntNumInput;
 
 
 class kpEffectEmbossWidget : public kpEffectWidgetBase
