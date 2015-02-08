@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -32,7 +31,7 @@
 #include <QAction>
 
 #include <KActionCollection>
-#include <KFileDialog>
+#include <QFileDialog>
 #include <KMessageBox>
 #include <KSelectAction>
 #include <KStandardGuiItem>
@@ -43,12 +42,14 @@
 #include <kpColorToolBar.h>
 #include <kpUrlFormatter.h>
 
+//---------------------------------------------------------------------
 
 static QStringList KDEColorCollectionNames ()
 {
     return kpColorCollection::installedCollections ();
 }
 
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::setupColorsMenuActions ()
@@ -106,6 +107,8 @@ void kpMainWindow::setupColorsMenuActions ()
     enableColorsMenuDocumentActions (false);
 }
 
+//---------------------------------------------------------------------
+
 // private
 void kpMainWindow::createColorBox ()
 {
@@ -117,6 +120,8 @@ void kpMainWindow::createColorBox ()
     connect (colorCells (), SIGNAL (rowCountChanged (int)),
         SLOT (slotUpdateColorsDeleteRowActionEnabled ()));
 }
+
+//---------------------------------------------------------------------
 
 // private
 void kpMainWindow::enableColorsMenuDocumentActions (bool enable)
@@ -136,6 +141,8 @@ void kpMainWindow::enableColorsMenuDocumentActions (bool enable)
     slotUpdateColorsDeleteRowActionEnabled ();
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotUpdateColorsDeleteRowActionEnabled ()
 {
@@ -147,6 +154,8 @@ void kpMainWindow::slotUpdateColorsDeleteRowActionEnabled ()
     d->actionColorsDeleteRow->setEnabled (
         d->colorMenuDocumentActionsEnabled && (colorCells ()->rowCount () > 0));
 }
+
+//---------------------------------------------------------------------
 
 
 // Used in 2 situations:
@@ -164,6 +173,8 @@ void kpMainWindow::deselectActionColorsKDE ()
 {
     d->actionColorsKDE->setCurrentItem (-1);
 }
+
+//---------------------------------------------------------------------
 
 
 // private
@@ -224,6 +235,8 @@ bool kpMainWindow::queryCloseColors ()
     }
 }
 
+//---------------------------------------------------------------------
+
 
 // private
 void kpMainWindow::openDefaultColors ()
@@ -231,6 +244,8 @@ void kpMainWindow::openDefaultColors ()
     colorCells ()->setColorCollection (
         kpColorCells::DefaultColorCollection ());
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotColorsDefault ()
@@ -245,6 +260,8 @@ void kpMainWindow::slotColorsDefault ()
 
     deselectActionColorsKDE ();
 }
+
+//---------------------------------------------------------------------
 
 // private
 bool kpMainWindow::openKDEColors (const QString &name)
@@ -270,6 +287,8 @@ bool kpMainWindow::openKDEColors (const QString &name)
         return false;
     }
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotColorsKDE ()
@@ -299,6 +318,8 @@ void kpMainWindow::slotColorsKDE ()
         deselectActionColorsKDE ();
 }
 
+//---------------------------------------------------------------------
+
 // private
 bool kpMainWindow::openColors (const QUrl &url)
 {
@@ -308,25 +329,30 @@ bool kpMainWindow::openColors (const QUrl &url)
     return true;
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotColorsOpen ()
 {
     // Call due to dialog.
     toolEndShape ();
 
-    KFileDialog fd (colorCells ()->url (), QString()/*filter*/, this);
-    fd.setWindowTitle (i18nc ("@title:window", "Open Color Palette"));
-    fd.setOperationMode (KFileDialog::Opening);
+    QFileDialog fd(this);
+    fd.setDirectoryUrl(colorCells ()->url());
+    fd.setWindowTitle(i18nc ("@title:window", "Open Color Palette"));
 
     if (fd.exec ())
     {
         if (!queryCloseColors ())
             return;
 
-        if (openColors (fd.selectedUrl ()))
-            deselectActionColorsKDE ();
+        QList<QUrl> selected = fd.selectedUrls();
+        if ( selected.count() && openColors(selected[0]) )
+          deselectActionColorsKDE();
     }
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotColorsReload ()
@@ -394,6 +420,8 @@ void kpMainWindow::slotColorsReload ()
     }
 }
 
+//---------------------------------------------------------------------
+
 
 // private slot
 bool kpMainWindow::slotColorsSave ()
@@ -409,20 +437,24 @@ bool kpMainWindow::slotColorsSave ()
     return colorCells ()->saveColorCollection ();
 }
 
+//---------------------------------------------------------------------
+
 // private slot
 bool kpMainWindow::slotColorsSaveAs ()
 {
     // Call due to dialog.
     toolEndShape ();
 
-    KFileDialog fd (colorCells ()->url (), QString()/*filter*/, this);
-    fd.setWindowTitle (i18n ("Save Color Palette As"));
-    fd.setOperationMode (KFileDialog::Saving);
+    QFileDialog fd(this);
+    fd.setDirectoryUrl(colorCells ()->url());
+    fd.setWindowTitle(i18n("Save Color Palette As"));
+    fd.setAcceptMode(QFileDialog::AcceptSave);
 
     if (fd.exec ())
     {
-        if (!colorCells ()->saveColorCollectionAs (fd.selectedUrl ()))
-            return false;
+        QList<QUrl> selected = fd.selectedUrls();
+        if ( !selected.count() || !colorCells ()->saveColorCollectionAs(selected[0]) )
+          return false;
 
         // We're definitely using our own color collection now.
         deselectActionColorsKDE ();
@@ -433,6 +465,7 @@ bool kpMainWindow::slotColorsSaveAs ()
         return false;
 }
 
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotColorsAppendRow ()
@@ -443,6 +476,8 @@ void kpMainWindow::slotColorsAppendRow ()
     kpColorCells *colorCells = d->colorToolBar->colorCells ();
     colorCells->appendRow ();
 }
+
+//---------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotColorsDeleteRow ()

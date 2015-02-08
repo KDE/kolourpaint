@@ -1,9 +1,7 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
-   Copyright (c) 2007 Martin Koller <kollix@aon.at>
    Copyright (c) 2007 John Layt <john@layt.net>
-   Copyright (c) 2011 Martin Koller <kollix@aon.at>
+   Copyright (c) 2007,2011,2015 Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -37,6 +35,7 @@
 #include <QDesktopWidget>
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QFileDialog>
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qsize.h>
@@ -47,6 +46,9 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QVBoxLayout>
+#include <QImageReader>
+#include <QImageWriter>
+#include <QMimeDatabase>
 
 #include <kactioncollection.h>
 #include <kconfig.h>
@@ -55,7 +57,6 @@
 #include <KIntSpinBox>
 #include <kfiledialog.h>
 #include <kiconloader.h>
-#include <kimageio.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -428,29 +429,39 @@ bool kpMainWindow::open (const QUrl &url, bool newDocSameNameIfNotExist)
 // private
 QList<QUrl> kpMainWindow::askForOpenURLs(const QString &caption, bool allowMultipleURLs)
 {
-    QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
-#if DEBUG_KP_MAIN_WINDOW
-    QStringList sortedMimeTypes = mimeTypes;
-    sortedMimeTypes.sort ();
-    kDebug () << "kpMainWindow::askForURLs(allowMultiple="
-               << allowMultipleURLs
-               << ")" << endl
-               << "\tmimeTypes=" << mimeTypes << endl
-               << "\tsortedMimeTypes=" << sortedMimeTypes << endl;
-#endif
-    QString filter = mimeTypes.join (" ");
+  QMimeDatabase db;
+  QStringList filterList;
+  QString filter;
+  foreach(const QByteArray &type, QImageReader::supportedMimeTypes())
+  {
+    if ( !filter.isEmpty() )
+      filter += QLatin1Char(' ');
 
-    KFileDialog fd(QUrl("kfiledialog:///dir/"), filter, this);
-    fd.setWindowTitle(caption);
-    fd.setOperationMode(KFileDialog::Opening);
+    QMimeType mime(db.mimeTypeForName(QString::fromLatin1(type)));
+    if ( mime.isValid() )
+    {
+      QString glob = mime.globPatterns().join(QLatin1Char(' '));
 
-    if (allowMultipleURLs)
-        fd.setMode (KFile::Files);
+      filter += glob;
 
-    if (fd.exec ())
-        return fd.selectedUrls ();
-    else
-        return QList<QUrl> ();
+      filterList << mime.comment() + QStringLiteral(" (") + glob + QLatin1Char(')');
+    }
+  }
+
+  filterList.prepend(i18n("All Supported Files (%1)", filter));
+
+  QFileDialog fd(this);
+  fd.setNameFilters(filterList);
+  fd.setOption(QFileDialog::HideNameFilterDetails);
+  fd.setWindowTitle(caption);
+
+  if ( allowMultipleURLs )
+    fd.setFileMode(QFileDialog::ExistingFiles);
+
+  if ( fd.exec() )
+    return fd.selectedUrls();
+  else
+    return QList<QUrl>();
 }
 
 //---------------------------------------------------------------------
@@ -721,8 +732,8 @@ void kpMainWindow::slotProperties ()
 bool kpMainWindow::save (bool localOnly)
 {
     if (d->document->url ().isEmpty () ||
-        !KImageIO::mimeTypes (KImageIO::Writing)
-            .contains (d->document->saveOptions ()->mimeType ()) ||
+        !QImageWriter::supportedMimeTypes()
+            .contains(d->document->saveOptions ()->mimeType().toLatin1()) ||
         // SYNC: kpDocument::getPixmapFromFile() can't determine quality
         //       from file so it has been set initially to an invalid value.
         (d->document->saveOptions ()->mimeTypeHasConfigurableQuality () &&
@@ -801,7 +812,9 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
 
     kpDocumentSaveOptions fdSaveOptions = startSaveOptions;
 
-    QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Writing);
+    QStringList mimeTypes;
+    foreach(const QByteArray &type, QImageWriter::supportedMimeTypes())
+      mimeTypes << QString::fromLatin1(type);
 #if DEBUG_KP_MAIN_WINDOW
     QStringList sortedMimeTypes = mimeTypes;
     sortedMimeTypes.sort ();
@@ -810,7 +823,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
 #endif
     if (mimeTypes.isEmpty ())
     {
-        kError () << "No KImageIO output mimetypes!" << endl;
+        kError () << "No output mimetypes!" << endl;
         return QUrl ();
     }
 

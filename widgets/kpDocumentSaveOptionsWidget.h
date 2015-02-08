@@ -42,8 +42,7 @@ class QComboBox;
 class QImage;
 class QLabel;
 class QTimer;
-
-class KIntNumInput;
+class QSpinBox;
 class QPushButton;
 
 class kpDocumentSaveOptionsPreviewDialog;
@@ -143,7 +142,7 @@ protected:
     QWidget *m_colorDepthSpaceWidget;
 
     QLabel *m_qualityLabel;
-    KIntNumInput *m_qualityInput;
+    QSpinBox *m_qualityInput;
 
     QPushButton *m_previewButton;
     kpDocumentSaveOptionsPreviewDialog *m_previewDialog;

@@ -44,7 +44,6 @@
 
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kimageio.h>
 #include <klocale.h>
 #include <knuminput.h>
 #include <kconfiggroup.h>
@@ -93,8 +92,8 @@ void kpDocumentSaveOptionsWidget::init ()
 
     m_colorDepthSpaceWidget = new QWidget (this);
 
-    m_qualityLabel = new QLabel (i18n ("Quali&ty:"), this);
-    m_qualityInput = new KIntNumInput (this);
+    m_qualityLabel = new QLabel(i18n ("Quali&ty:"), this);
+    m_qualityInput = new QSpinBox(this);
     // Note that we set min to 1 not 0 since "0 Quality" is a bit misleading
     // and 101 quality settings would be weird.  So we lose 1 quality setting
     // according to QImage::save().
@@ -711,20 +710,13 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
     // QImage::loadFormData().
     if (savedOK)
     {
-        const QStringList types = KImageIO::typeForMime (mimeType ());
-        // kpDocument::savePixmapToDevice() would have failed otherwise.
-        Q_ASSERT (!types.isEmpty ());
-
-        // It's safe to arbitrarily choose the 0th type as any type in the list
-        // should invoke the same KImageIO image loader.
-        image.loadFromData (data, types [0].toLatin1 ());
+        image.loadFromData(data);
     }
     else
     {
         // Leave <image> as invalid.
         // TODO: This code path has not been well tested.
         //       Will we trigger divide by zero errors in "m_previewDialog"?
-        // KDE3: Backport any fixes to KDE 3.
     }
 
     // REFACTOR: merge with kpDocument::getPixmapFromFile()

@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -39,9 +38,8 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QTableWidget>
-
-#include <KDoubleNumInput>
-#include <KIntNumInput>
+#include <QSpinBox>
+#include <QDoubleSpinBox>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KDebug>
@@ -54,8 +52,8 @@ struct kpDocumentMetaInfoDialogPrivate
 {
     const kpDocumentMetaInfo *originalMetaInfoPtr;
 
-    KDoubleNumInput *horizDpiInput, *vertDpiInput;
-    KIntNumInput *horizOffsetInput, *vertOffsetInput;
+    QDoubleSpinBox *horizDpiInput, *vertDpiInput;
+    QSpinBox *horizOffsetInput, *vertOffsetInput;
 
     QTableWidget *fieldsTableWidget;
     QPushButton *fieldsAddRowButton, *fieldsDeleteRowButton, *fieldsResetButton;
@@ -136,48 +134,38 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     // DPI Group Box
     //
 
-
     Q_ASSERT (::DpiInputMin < ::DpiInputMax);
 
-    QGroupBox *dpiGroupBox = new QGroupBox (i18n ("Dots &Per Inch (DPI)"),
-        baseWidget);
+    QGroupBox *dpiGroupBox = new QGroupBox(i18n("Dots &Per Inch (DPI)"), baseWidget);
 
-    d->horizDpiInput = new KDoubleNumInput (
-        ::DpiInputMin/*lower*/,
-        ::DpiInputMax/*upper*/,
-        0/*value*/,
-        dpiGroupBox,
-        ::DpiInputStep/*step*/,
-        ::DpiPrecision/*precision*/);
-    d->horizDpiInput->setLabel (i18n ("Horizontal:"),
-        Qt::AlignTop | Qt::AlignHCenter);
-    d->horizDpiInput->setSpecialValueText (i18n ("Unspecified"));
+    d->horizDpiInput = new QDoubleSpinBox(dpiGroupBox);
+    d->horizDpiInput->setRange(::DpiInputMin, ::DpiInputMax);
+    d->horizDpiInput->setValue(0.0);
+    d->horizDpiInput->setSingleStep(::DpiInputStep);
+    d->horizDpiInput->setDecimals(::DpiPrecision);
+    d->horizDpiInput->setSpecialValueText(i18n("Unspecified"));
 
     QLabel *dpiXLabel = new QLabel (
         i18nc ("Horizontal DPI 'x' Vertical DPI", " x "), dpiGroupBox);
     dpiXLabel->setAlignment (Qt::AlignCenter);
 
-    d->vertDpiInput = new KDoubleNumInput (
-        ::DpiInputMin/*lower*/,
-        ::DpiInputMax/*upper*/,
-        0/*value*/,
-        dpiGroupBox,
-        ::DpiInputStep/*step*/,
-        ::DpiPrecision/*precision*/);
-    d->vertDpiInput->setLabel (i18n ("Vertical:"),
-        Qt::AlignTop | Qt::AlignHCenter);
-    d->vertDpiInput->setSpecialValueText (i18n ("Unspecified"));
+    d->vertDpiInput = new QDoubleSpinBox(dpiGroupBox);
+    d->vertDpiInput->setRange(::DpiInputMin, ::DpiInputMax);
+    d->vertDpiInput->setValue(0.0);
+    d->vertDpiInput->setSingleStep(::DpiInputStep);
+    d->vertDpiInput->setDecimals(::DpiPrecision);
+    d->vertDpiInput->setSpecialValueText(i18n("Unspecified"));
 
 
-    QGridLayout *dpiLay = new QGridLayout (dpiGroupBox);
+    QGridLayout *dpiLay = new QGridLayout(dpiGroupBox);
 
-    dpiLay->addWidget (d->horizDpiInput, 0, 0);
-    dpiLay->addWidget (dpiXLabel, 0, 1);
-    dpiLay->addWidget (d->vertDpiInput, 0, 2);
+    dpiLay->addWidget(new QLabel(i18n("Horizontal:")), 0, 0, Qt::AlignHCenter);
+    dpiLay->addWidget(d->horizDpiInput, 1, 0);
+    dpiLay->addWidget(dpiXLabel, 0, 1);
+    dpiLay->addWidget(new QLabel(i18n("Vertical:")), 0, 2, Qt::AlignHCenter);
+    dpiLay->addWidget(d->vertDpiInput, 1, 2);
 
-    dpiLay->addItem (new QSpacerItem (0/*width*/, 0/*height*/),
-        1, 0, 1/*row span*/, 3/*col span*/);
-    dpiLay->setRowStretch (1, 1);
+    dpiLay->setRowStretch(2, 1);
 
 
     dpiGroupBox->setWhatsThis (
@@ -212,34 +200,22 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     // Offset Group Box
     //
 
+    QGroupBox *offsetGroupBox = new QGroupBox(i18n ("O&ffset"), baseWidget);
 
-    QGroupBox *offsetGroupBox = new QGroupBox (i18n ("O&ffset"), baseWidget);
+    d->horizOffsetInput = new QSpinBox;
+    d->horizOffsetInput->setRange(kpDocumentMetaInfo::MinOffset, kpDocumentMetaInfo::MaxOffset);
 
-    d->horizOffsetInput = new KIntNumInput (offsetGroupBox);
-    d->horizOffsetInput->setLabel (i18n ("Horizontal:"),
-        Qt::AlignTop | Qt::AlignHCenter);
-    d->horizOffsetInput->setRange (
-        kpDocumentMetaInfo::MinOffset,
-        kpDocumentMetaInfo::MaxOffset);
-    d->horizOffsetInput->setSliderEnabled(false);
+    d->vertOffsetInput = new QSpinBox;
+    d->vertOffsetInput->setRange(kpDocumentMetaInfo::MinOffset, kpDocumentMetaInfo::MaxOffset);
 
-    d->vertOffsetInput = new KIntNumInput (offsetGroupBox);
-    d->vertOffsetInput->setLabel (i18n ("Vertical:"),
-        Qt::AlignTop | Qt::AlignHCenter);
-    d->vertOffsetInput->setRange (
-        kpDocumentMetaInfo::MinOffset,
-        kpDocumentMetaInfo::MaxOffset);
-    d->vertOffsetInput->setSliderEnabled(false);
+    QGridLayout *offsetLay = new QGridLayout(offsetGroupBox);
 
+    offsetLay->addWidget(new QLabel(i18n("Horizontal:")), 0, 0, Qt::AlignHCenter);
+    offsetLay->addWidget(d->horizOffsetInput, 1, 0);
+    offsetLay->addWidget(new QLabel(i18n("Vertical:")), 0, 1, Qt::AlignHCenter);
+    offsetLay->addWidget(d->vertOffsetInput, 1, 1);
 
-    QGridLayout *offsetLay = new QGridLayout (offsetGroupBox);
-
-    offsetLay->addWidget (d->horizOffsetInput, 0, 0);
-    offsetLay->addWidget (d->vertOffsetInput, 0, 1);
-
-    offsetLay->addItem (new QSpacerItem (0/*width*/, 0/*height*/),
-        1, 0, 1/*row span*/, 2/*col span*/);
-    offsetLay->setRowStretch (1, 1);
+    offsetLay->setRowStretch (2, 1);
 
 
     offsetGroupBox->setWhatsThis (

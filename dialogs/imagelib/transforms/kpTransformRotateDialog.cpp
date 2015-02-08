@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -36,6 +35,7 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <QImage>
+#include <QSpinBox>
 #include <qpolygon.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
@@ -43,7 +43,6 @@
 
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <knuminput.h>
 #include <klocale.h>
 
 #include <kpDefs.h>
@@ -140,9 +139,10 @@ void kpTransformRotateDialog::createAngleGroupBox ()
     m_angle270RadioButton = new QRadioButton (i18n ("270 de&grees"), angleGroupBox);
 
     m_angleCustomRadioButton = new QRadioButton (i18n ("C&ustom:"), angleGroupBox);
-    m_angleCustomInput = new KIntNumInput (s_lastAngleCustom, angleGroupBox);
-    m_angleCustomInput->setMinimum (-359);
-    m_angleCustomInput->setMaximum (+359);
+    m_angleCustomInput = new QSpinBox;
+    m_angleCustomInput->setMinimum(-359);
+    m_angleCustomInput->setMaximum(+359);
+    m_angleCustomInput->setValue(s_lastAngleCustom);
     QLabel *degreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
 
 
@@ -240,7 +240,7 @@ void kpTransformRotateDialog::slotAngleCustomRadioButtonToggled (bool isChecked)
     m_angleCustomInput->setEnabled (isChecked);
 
     if (isChecked)
-        m_angleCustomInput->setEditFocus ();
+        m_angleCustomInput->setFocus();
 }
 
 // private slot virtual [base kpTransformPreviewDialog]
