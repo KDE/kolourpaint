@@ -26,6 +26,7 @@
   <name xml:lang="pl">KolourPaint</name>
   <name xml:lang="pt">KolourPaint</name>
   <name xml:lang="pt-BR">KolourPaint</name>
+  <name xml:lang="ru">KolourPaint</name>
   <name xml:lang="sk">KolourPaint</name>
   <name xml:lang="sl">KolourPaint</name>
   <name xml:lang="sv">KolourPaint</name>
@@ -55,6 +56,7 @@
   <summary xml:lang="pl">Program Paint</summary>
   <summary xml:lang="pt">Programa de Pintura</summary>
   <summary xml:lang="pt-BR">Programa de desenho</summary>
+  <summary xml:lang="ru">Простой редактор изображений</summary>
   <summary xml:lang="sk">Kresliaci program</summary>
   <summary xml:lang="sl">Program za risanje</summary>
   <summary xml:lang="sv">Ritprogram</summary>
@@ -86,6 +88,7 @@
     <p xml:lang="pl">KolourPaint jest prostym programem do malowania i szybkiego tworzenia obrazów rastrowych. Jest przydatny przy retuszowaniu i prostych pracach edytowania.</p>
     <p xml:lang="pt">O KolourPaint é um programa simples de pintura que cria rapidamente imagens rasterizadas. É útil como uma ferramenta de retoques e para tarefas simples de edição de imagens.</p>
     <p xml:lang="pt-BR">KolourPaint é um programa de desenho simples, que cria rapidamente imagens rasterizadas. É útil como uma ferramenta de retoques e para tarefas simples de edição de imagens.</p>
+    <p xml:lang="ru">KolourPaint — простая программа для рисования и создания растровых изображений. Может быть полезна для внесения небольших правок в изображения.</p>
     <p xml:lang="sk">KolourPaint je jednoduchý kresliaci program na rýchlu tvorbu rastrových obrázkov. Je užitočný ako touch-up nástroj a na jednoduché úpravy obrázkov.</p>
     <p xml:lang="sl">KolourPaint je preprost program za risanje in hitro ustvarjanje rastrskih slik. Uporaben je za izboljšave slik in preprosto urejanje slik.</p>
     <p xml:lang="sv">KolourPaint är ett enkelt ritprogram för att snabbt skapa punktavbildningar. Det är användbart som förbättringsverktyg och för enkla bildredigeringsuppgifter.</p>
@@ -115,6 +118,7 @@
     <p xml:lang="pl">Cechy:</p>
     <p xml:lang="pt">Características:</p>
     <p xml:lang="pt-BR">Funcionalidades:</p>
+    <p xml:lang="ru">Возможности:</p>
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sl">Zmožnosti:</p>
     <p xml:lang="sv">Funktioner:</p>
@@ -143,6 +147,7 @@
       <li xml:lang="pl">Obsługa rysowania rozmaitych kształtów - proste, prostokąty, zaokrąglone prostokąty, owale i wielokąty</li>
       <li xml:lang="pt">Suporte para desenhar várias formas - linhas, rectângulos, rectângulos arredondados, ovais e polígonos</li>
       <li xml:lang="pt-BR">Suporte para desenhar várias formas - linhas, retângulos, retângulos arredondados, ovais e polígonos</li>
+      <li xml:lang="ru">Рисование различных фигур: отрезков, прямоугольников, скруглённых прямоугольников, овалов и многоугольников</li>
       <li xml:lang="sk">Podpora pre kreslenie rôznych tvarov - čiary, obdĺžniky, zaoblené obdĺžniky, ovály a polygóny</li>
       <li xml:lang="sl">Podpora risanju različnih oblik - črt, pravokotnikov, zaobljenih pravokotnikov, ovalov in mnogokotnikov</li>
       <li xml:lang="sv">Stöd för att rita diverse former: linjer, rektanglar, rundade rektanglar, ovaler och polygoner</li>
@@ -172,6 +177,7 @@
       <li xml:lang="pl">Krzywe, proste i teks</li>
       <li xml:lang="pt">Curvas, linhas e texto</li>
       <li xml:lang="pt-BR">Curvas, linhas e texto</li>
+      <li xml:lang="ru">Рисование гладких кривых, произвольных линий и вставка текста</li>
       <li xml:lang="sk">Krivky, čiary a text</li>
       <li xml:lang="sl">Krivulje, črte in besedilo</li>
       <li xml:lang="sv">Kurvor, linjer och text</li>
@@ -201,6 +207,7 @@
       <li xml:lang="pl">Wybierak barwy</li>
       <li xml:lang="pt">Selecção de cores</li>
       <li xml:lang="pt-BR">Seleção de cor</li>
+      <li xml:lang="ru">Окно палитры</li>
       <li xml:lang="sk">Výber farieb</li>
       <li xml:lang="sl">Izbirnik barv</li>
       <li xml:lang="sv">Färgväljare</li>
@@ -230,6 +237,7 @@
       <li xml:lang="pl">Zaznaczenia</li>
       <li xml:lang="pt">Selecções</li>
       <li xml:lang="pt-BR">Seleções</li>
+      <li xml:lang="ru">Выделение областей</li>
       <li xml:lang="sk">Výbery</li>
       <li xml:lang="sl">Izbire</li>
       <li xml:lang="sv">Markeringar</li>
@@ -257,6 +265,7 @@
       <li xml:lang="pl">Obrót, monochromatyczność i inne zaawansowane efekty</li>
       <li xml:lang="pt">Rotação, monocromáticos e outros efeitos avançados</li>
       <li xml:lang="pt-BR">Rotação, monocromático e outros efeitos avançados</li>
+      <li xml:lang="ru">Инструменты поворота, преобразования в чёрно-белое изображение и другие</li>
       <li xml:lang="sk">Otáčanie, monochromatické a iné pokročilé efekty</li>
       <li xml:lang="sl">Vrtenje, monokromatsko in drugi napredni učinki</li>
       <li xml:lang="sv">Rotation, svartvitt och andra avancerade effekter</li>
