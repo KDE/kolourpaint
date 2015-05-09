@@ -49,6 +49,7 @@
 #include <QImageReader>
 #include <QImageWriter>
 #include <QMimeDatabase>
+#include <QScreen>
 
 #include <kactioncollection.h>
 #include <kconfig.h>
@@ -699,10 +700,9 @@ void kpMainWindow::slotScreenshot()
 void kpMainWindow::slotMakeScreenshot()
 {
   QCoreApplication::processEvents();
-  QPixmap pixmap = QPixmap::grabWindow(QApplication::desktop()->winId());
+  QPixmap pixmap = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
 
-  kpDocument *doc = new kpDocument(pixmap.width(), pixmap.height(),
-                                   documentEnvironment());
+  kpDocument *doc = new kpDocument(pixmap.width(), pixmap.height(), documentEnvironment());
   doc->setImage(pixmap.toImage());
 
   // Send document to current or new window.
