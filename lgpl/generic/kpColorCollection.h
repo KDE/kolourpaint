@@ -38,7 +38,7 @@
 #include <QList>
 #include <QString>
 #include <QStringList>
-
+#include <QWidget>
 
 class QUrl;
 
