@@ -13,6 +13,7 @@ include(KDECompilerSettings)
 include(KDECMakeSettings)
 include(ECMInstallIcons)
 include(FeatureSummary)
+include(ECMAddAppIcon)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
     Core
@@ -85,7 +86,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imagelib/effects
 ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars
 ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/options
 
-${KDE4_INCLUDES}
+
 ${QIMAGEBLITZ_INCLUDES}
 )
 
@@ -326,8 +327,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/options/kpToolWidgetSpraycanSize.cp
 
 
 )  # set(kolourpaint_SRCS
-kde4_add_library(kolourpaint_lib1 STATIC ${kolourpaint_lib1_SRCS})
-kde4_add_library(kolourpaint_lib2 STATIC ${kolourpaint_lib2_SRCS})
+add_library(kolourpaint_lib1 STATIC ${kolourpaint_lib1_SRCS})
+add_library(kolourpaint_lib2 STATIC ${kolourpaint_lib2_SRCS})
 # doubled for the linker
 set(mingw_libs kolourpaint_lib1 kolourpaint_lib2 kolourpaint_lib1 kolourpaint_lib2)
 
@@ -557,7 +558,7 @@ set(kolourpaint_lgpl_SRCS
 # This MUST be a dynamic link library to avoid LGPL license infection.
 #
 
-kde4_add_library(kolourpaint_lgpl SHARED ${kolourpaint_lgpl_SRCS})
+add_library(kolourpaint_lgpl SHARED ${kolourpaint_lgpl_SRCS})
 
 target_link_libraries(kolourpaint_lgpl KF5::KDELibs4Support)
 set_target_properties(kolourpaint_lgpl PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION} DEFINE_SYMBOL MAKE_KOLOURPAINT4_LGPL_LIB )
@@ -569,9 +570,10 @@ install(TARGETS kolourpaint_lgpl ${INSTALL_TARGETS_DEFAULT_ARGS} )
 # Executable
 #
 
-kde4_add_app_icon(kolourpaint_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/pics/app/hi*-app-kolourpaint.png")
+file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/pics/app/hi*-app-kolourpaint.png")
+ecm_add_app_icon(kolourpaint_SRCS ICONS ${ICONS_SRCS})
 
-kde4_add_executable(kolourpaint ${kolourpaint_SRCS})
+add_executable(kolourpaint ${kolourpaint_SRCS})
 
 target_link_libraries(kolourpaint KF5::KDELibs4Support
 ${QIMAGEBLITZ_LIBRARIES} kolourpaint_lgpl)
