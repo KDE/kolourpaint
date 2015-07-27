@@ -35,9 +35,9 @@
 #include <qlayout.h>
 #include <qpushbutton.h>
 #include <QWhatsThis>
+#include <QSpinBox>
 
 #include <klocale.h>
-#include <knuminput.h>
 
 #include <kpColorSimilarityFrame.h>
 
@@ -77,10 +77,8 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
     QGroupBox *inputGroupBox = new QGroupBox (i18n ("&RGB Color Cube Distance"),
         baseWidget);
 
-    m_colorSimilarityInput = new KIntNumInput (inputGroupBox);
-    m_colorSimilarityInput->setRange (0, int (kpColorSimilarityHolder::MaxColorSimilarity * 100 + .1/*don't floor below target int*/),
-                                      5/*step*/);
-    m_colorSimilarityInput->setSliderEnabled (true);
+    m_colorSimilarityInput = new QSpinBox (inputGroupBox);
+    m_colorSimilarityInput->setRange (0, int (kpColorSimilarityHolder::MaxColorSimilarity * 100 + .1/*don't floor below target int*/));
     m_colorSimilarityInput->setSuffix (i18n ("%"));
     m_colorSimilarityInput->setSpecialValueText (i18n ("Exact Match"));
 

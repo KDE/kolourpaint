@@ -33,6 +33,7 @@
 #include <qrect.h>
 #include <qsize.h>
 #include <qwidget.h>
+#include <QDoubleSpinBox>
 
 #include <kpDocumentMetaInfo.h>
 #include <kpDocumentSaveOptions.h>

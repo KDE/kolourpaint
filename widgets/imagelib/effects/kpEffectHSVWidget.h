@@ -33,7 +33,7 @@
 #include <kpEffectWidgetBase.h>
 
 
-class KDoubleNumInput;
+class QDoubleSpinBox;
 
 
 class kpEffectHSVWidget : public kpEffectWidgetBase
@@ -53,9 +53,9 @@ public:
         kpCommandEnvironment *cmdEnviron) const;
 
 protected:
-    KDoubleNumInput *m_hueInput;
-    KDoubleNumInput *m_saturationInput;
-    KDoubleNumInput *m_valueInput;
+    QDoubleSpinBox *m_hueInput;
+    QDoubleSpinBox *m_saturationInput;
+    QDoubleSpinBox *m_valueInput;
 };
 
 

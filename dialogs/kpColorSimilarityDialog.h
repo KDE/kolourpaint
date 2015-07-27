@@ -31,11 +31,9 @@
 
 
 #include <QDialog>
-
+#include <QSpinBox>
 
 class QLabel;
-
-class KIntNumInput;
 
 class kpColorSimilarityFrame;
 
@@ -60,7 +58,7 @@ private slots:
 
 private:
     kpColorSimilarityFrame *m_colorSimilarityFrame;
-    KIntNumInput *m_colorSimilarityInput;
+    QSpinBox *m_colorSimilarityInput;
     QLabel *m_whatIsLabel;
 };
 

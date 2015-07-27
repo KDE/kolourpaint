@@ -49,7 +49,6 @@
 #include <kiconeffect.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <knuminput.h>
 
 #include <kpAbstractImageSelection.h>
 #include <kpCommandEnvironment.h>

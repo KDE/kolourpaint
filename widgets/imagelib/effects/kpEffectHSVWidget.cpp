@@ -30,10 +30,10 @@
 
 #include <qgridlayout.h>
 #include <qlabel.h>
+#include <QDoubleSpinBox>
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <knuminput.h>
 
 #include <kpEffectHSV.h>
 #include <kpEffectHSVCommand.h>
@@ -49,14 +49,17 @@ kpEffectHSVWidget::kpEffectHSVWidget (bool actOnSelection, QWidget *parent)
     QLabel *saturationLabel = new QLabel (i18n ("&Saturation:"), this);
     QLabel *valueLabel = new QLabel (i18nc ("The V of HSV", "&Value:"), this);
 
-    m_hueInput = new KDoubleNumInput (this);
-    m_hueInput->setRange (-180, 180, 15/*step*/, true/*slider*/);
+    m_hueInput = new QDoubleSpinBox (this);
+    m_hueInput->setRange(-180, 180);
+    m_hueInput->setSingleStep(15/*step*/);
 
-    m_saturationInput = new KDoubleNumInput (this);
-    m_saturationInput->setRange (-1, 1, .1/*step*/, true/*slider*/);
+    m_saturationInput = new QDoubleSpinBox (this);
+    m_saturationInput->setRange(-1, 1);
+    m_saturationInput->setSingleStep(.1/*step*/);
 
-    m_valueInput = new KDoubleNumInput (this);
-    m_valueInput->setRange (-1, 1, .1/*step*/, true/*slider*/);
+    m_valueInput = new QDoubleSpinBox (this);
+    m_valueInput->setRange(-1, 1);
+    m_valueInput->setSingleStep(.1/*step*/);
 
     hueLabel->setBuddy (m_hueInput);
     saturationLabel->setBuddy (m_saturationInput);

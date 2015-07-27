@@ -34,7 +34,6 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <knuminput.h>
 
 #include <kpEffectToneEnhance.h>
 #include <kpEffectToneEnhanceCommand.h>
@@ -58,11 +57,13 @@ kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,
 
         QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
 
-        m_granularityInput = new KDoubleNumInput (this);
-        m_granularityInput->setRange (0, 1, .1/*step*/, true/*slider*/);
+        m_granularityInput = new QDoubleSpinBox (this);
+        m_granularityInput->setRange(0, 1);
+        m_granularityInput->setSingleStep(.1/*step*/);
 
-        m_amountInput = new KDoubleNumInput (this);
-        m_amountInput->setRange (0, 1, .1/*step*/, true/*slider*/);
+        m_amountInput = new QDoubleSpinBox (this);
+        m_amountInput->setRange(0, 1);
+        m_amountInput->setSingleStep(.1/*step*/);
 
         granularityLabel->setBuddy (m_granularityInput);
         amountLabel->setBuddy (m_amountInput);
