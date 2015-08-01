@@ -29,6 +29,7 @@
 #ifndef kpEffectBlurSharpenWidget_H
 #define kpEffectBlurSharpenWidget_H
 
+#include <QSpinBox>
 
 #include <kpColor.h>
 
@@ -37,9 +38,6 @@
 
 
 class QLabel;
-
-class KIntNumInput;
-
 
 class kpEffectBlurSharpenWidget : public kpEffectWidgetBase
 {
@@ -64,7 +62,7 @@ protected:
     kpEffectBlurSharpen::Type type () const;
     int strength () const;
 
-    KIntNumInput *m_amountInput;
+    QSpinBox *m_amountInput;
     QLabel *m_typeLabel;
 };
 

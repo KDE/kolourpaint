@@ -36,8 +36,6 @@
 
 class QCheckBox;
 
-//class KIntNumInput;
-
 
 class kpEffectEmbossWidget : public kpEffectWidgetBase
 {
@@ -58,7 +56,6 @@ public:
 protected:
     int strength () const;
 
-    //KIntNumInput *m_amountInput;
     QCheckBox *m_enableCheckBox;
 };
 

@@ -45,7 +45,6 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <knuminput.h>
 #include <kconfiggroup.h>
 
 #include <kpDefs.h>
