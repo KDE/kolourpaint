@@ -41,6 +41,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <KToggleAction>
+#include <kiconloader.h>
 
 #include <kpAbstractImageSelection.h>
 #include <kpColor.h>
@@ -141,19 +142,19 @@ void kpMainWindow::setupImageMenuActions ()
 
     d->actionRotate = ac->addAction ("image_rotate");
     d->actionRotate->setText (i18n ("&Rotate..."));
-    d->actionRotate->setIcon (QIcon::fromTheme ("transform-rotate"));
+    d->actionRotate->setIcon(KDE::icon("transform-rotate"));
     connect (d->actionRotate, SIGNAL (triggered (bool)), SLOT (slotRotate ()));
     ac->setDefaultShortcut (d->actionRotate, Qt::CTRL + Qt::Key_R);
 
     d->actionRotateLeft = ac->addAction ("image_rotate_270deg");
     d->actionRotateLeft->setText (i18n ("Rotate &Left"));
-    d->actionRotateLeft->setIcon (QIcon::fromTheme ("object-rotate-left"));
+    d->actionRotateLeft->setIcon(KDE::icon("object-rotate-left"));
     connect (d->actionRotateLeft, SIGNAL (triggered (bool)), SLOT (slotRotate270 ()));
     ac->setDefaultShortcut (d->actionRotateLeft, Qt::CTRL + Qt::SHIFT + Qt::Key_Left);
 
     d->actionRotateRight = ac->addAction ("image_rotate_90deg");
     d->actionRotateRight->setText (i18n ("Rotate Righ&t"));
-    d->actionRotateRight->setIcon (QIcon::fromTheme ("object-rotate-right"));
+    d->actionRotateRight->setIcon(KDE::icon("object-rotate-right"));
     connect (d->actionRotateRight, SIGNAL (triggered (bool)), SLOT (slotRotate90 ()));
     ac->setDefaultShortcut (d->actionRotateRight, Qt::CTRL + Qt::SHIFT + Qt::Key_Right);
 

@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -35,6 +34,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <kiconloader.h>
 
 #include <kpDefs.h>
 #include <kpDocument.h>
@@ -45,6 +45,7 @@
 #include <kpToolAction.h>
 #include <kpViewManager.h>
 
+//---------------------------------------------------------------------
 
 struct DrawZoomRectPackage
 {
@@ -78,7 +79,7 @@ kpToolZoom::kpToolZoom (kpToolEnvironment *environ, QWidget *parent)
       d (new kpToolZoomPrivate ())
 {
   // different from objectName()
-  action()->setIcon(QIcon::fromTheme("zoom-original"));
+  action()->setIcon(KDE::icon("zoom-original"));
 }
 
 //---------------------------------------------------------------------

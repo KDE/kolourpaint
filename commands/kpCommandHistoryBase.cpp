@@ -46,6 +46,7 @@
 #include <ktoolbarpopupaction.h>
 #include <kactioncollection.h>
 #include <kconfiggroup.h>
+#include <kiconloader.h>
 
 #include <kpCommand.h>
 #include <kpCommandEnvironment.h>
@@ -54,6 +55,7 @@
 #include <kpMainWindow.h>
 #include <kpTool.h>
 
+//---------------------------------------------------------------------
 
 //template <typename T>
 static void ClearPointerList (QLinkedList <kpCommand *> *listPtr)
@@ -76,12 +78,12 @@ kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
                                             KActionCollection *ac)
     : d (new kpCommandHistoryBasePrivate ())
 {
-    m_actionUndo = new KToolBarPopupAction (QIcon::fromTheme ("edit-undo"), undoActionText (), this);
+    m_actionUndo = new KToolBarPopupAction(KDE::icon("edit-undo"), undoActionText (), this);
     ac->addAction (KStandardAction::name (KStandardAction::Undo), m_actionUndo);
     ac->setDefaultShortcuts (m_actionUndo, KStandardShortcut::shortcut (KStandardShortcut::Undo));
     connect (m_actionUndo, SIGNAL(triggered(bool)), this, SLOT (undo ()));
 
-    m_actionRedo = new KToolBarPopupAction (QIcon::fromTheme ("edit-redo"), redoActionText (), this);
+    m_actionRedo = new KToolBarPopupAction(KDE::icon("edit-redo"), redoActionText (), this);
     ac->addAction (KStandardAction::name (KStandardAction::Redo), m_actionRedo);
     ac->setDefaultShortcuts (m_actionRedo, KStandardShortcut::shortcut (KStandardShortcut::Redo));
     connect (m_actionRedo, SIGNAL(triggered(bool)), this, SLOT (redo ()));

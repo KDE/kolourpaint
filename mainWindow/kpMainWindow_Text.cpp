@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -39,6 +38,7 @@
 #include <klocale.h>
 #include <KToolBar>
 #include <ktoggleaction.h>
+#include <kiconloader.h>
 
 #include <kpColorToolBar.h>
 #include <kpDefs.h>
@@ -65,25 +65,25 @@ void kpMainWindow::setupTextToolBarActions ()
              this, SLOT (slotTextFontSizeChanged ()));
 
     d->actionTextBold = ac->add<KToggleAction> ("text_bold");
-    d->actionTextBold->setIcon (QIcon::fromTheme ("format-text-bold"));
+    d->actionTextBold->setIcon(KDE::icon("format-text-bold"));
     d->actionTextBold->setText (i18n ("Bold"));
     connect (d->actionTextBold, SIGNAL (triggered (bool)),
         SLOT (slotTextBoldChanged ()));
 
     d->actionTextItalic = ac->add<KToggleAction> ("text_italic");
-    d->actionTextItalic->setIcon (QIcon::fromTheme ("format-text-italic"));
+    d->actionTextItalic->setIcon (KDE::icon("format-text-italic"));
     d->actionTextItalic->setText (i18n ("Italic"));
     connect (d->actionTextItalic, SIGNAL (triggered (bool)),
         SLOT (slotTextItalicChanged ()));
 
     d->actionTextUnderline = ac->add<KToggleAction> ("text_underline");
-    d->actionTextUnderline->setIcon (QIcon::fromTheme ("format-text-underline"));
+    d->actionTextUnderline->setIcon (KDE::icon("format-text-underline"));
     d->actionTextUnderline->setText (i18n ("Underline"));
     connect (d->actionTextUnderline, SIGNAL (triggered (bool)),
         SLOT (slotTextUnderlineChanged ()));
 
     d->actionTextStrikeThru = ac->add<KToggleAction> ("text_strike_thru");
-    d->actionTextStrikeThru->setIcon (QIcon::fromTheme ("format-text-strikethrough"));
+    d->actionTextStrikeThru->setIcon(KDE::icon("format-text-strikethrough"));
     d->actionTextStrikeThru->setText (i18n ("Strike Through"));
     connect (d->actionTextStrikeThru, SIGNAL (triggered (bool)),
         SLOT (slotTextStrikeThruChanged ()));

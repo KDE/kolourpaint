@@ -26,10 +26,10 @@
 */
 
 #include <kpToolAction.h>
-
 #include <kactioncollection.h>
-
 #include <kpTool.h>
+
+#include <kiconloader.h>
 
 //---------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ kpToolAction::kpToolAction(const QString &text,
                             const QString &pic, const QList<QKeySequence> &shortcut,
                             const QObject *receiver, const char *slot,
                             KActionCollection *ac, const QString &name)
-    : KToggleAction(QIcon::fromTheme(pic), text, ac)
+    : KToggleAction(KDE::icon(pic), text, ac)
 {
   ac->setDefaultShortcuts(this, shortcut);
 
