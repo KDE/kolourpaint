@@ -343,16 +343,6 @@ set(kolourpaint_app_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/toolbars/options/kpToolWidgetSpraycanSize.cpp
 )  # set(kolourpaint_app_SRCS
 
-if(CMAKE_MAJOR_VERSION MATCHES "2" AND CMAKE_MINOR_VERSION MATCHES "4" AND MINGW)
-
-set(kolourpaint_SRCS ${kolourpaint_app_SRCS})
-
-add_library(kolourpaint_lib1 STATIC ${kolourpaint_lib1_SRCS})
-add_library(kolourpaint_lib2 STATIC ${kolourpaint_lib2_SRCS})
-# doubled for the linker
-set(mingw_libs kolourpaint_lib1 kolourpaint_lib2 kolourpaint_lib1 kolourpaint_lib2)
-
-else(CMAKE_MAJOR_VERSION MATCHES "2" AND CMAKE_MINOR_VERSION MATCHES "4" AND MINGW)
 
 set(kolourpaint_SRCS
     ${kolourpaint_lib1_SRCS}
@@ -360,7 +350,6 @@ set(kolourpaint_SRCS
     ${kolourpaint_app_SRCS}
 )
 
-endif(CMAKE_MAJOR_VERSION MATCHES "2" AND CMAKE_MINOR_VERSION MATCHES "4" AND MINGW)
 
 set(kolourpaint_lgpl_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/kpUrlFormatter.cpp
@@ -395,7 +384,6 @@ ecm_add_app_icon(kolourpaint_SRCS ICONS ${ICONS_SRCS})
 add_executable(kolourpaint ${kolourpaint_SRCS})
 
 target_link_libraries(kolourpaint
-    ${mingw_libs}
     KF5::KDELibs4Support
     ${QIMAGEBLITZ_LIBRARIES}
     ${KSANE_LIBRARY}
