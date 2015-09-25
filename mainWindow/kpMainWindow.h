@@ -343,8 +343,10 @@ private slots:
     void slotOpen ();
     void slotOpenRecent (const QUrl &url);
 
+#if HAVE_KSANE
     void slotScan ();
     void slotScanned (const QImage &image, int);
+#endif // HAVE_KSANE
 
     void slotScreenshot();
     void slotMakeScreenshot();
