@@ -60,7 +60,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
-#include <kscan.h>
 #include <kstandardshortcut.h>
 #include <kstandardaction.h>
 #include <ktoolinvocation.h>
@@ -78,6 +77,10 @@
 #include <kpPrintDialogPage.h>
 #include <kpView.h>
 #include <kpViewManager.h>
+
+#if HAVE_KSANE
+#include "../scan/sanedialog.h"
+#endif // HAVE_KSANE
 
 // private
 void kpMainWindow::setupFileMenuActions ()
@@ -107,7 +110,11 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionScan = ac->addAction("file_scan");
     d->actionScan->setText(i18n ("Scan..."));
     d->actionScan->setIcon(SmallIcon("scanner"));
+#if HAVE_KSANE
     connect(d->actionScan, SIGNAL(triggered(bool)), SLOT(slotScan()));
+#else
+    d->actionScan->setEnabled(false);
+#endif // HAVE_KSANE
 
     d->actionScreenshot = ac->addAction("file_screenshot");
     d->actionScreenshot->setText(i18n("Acquire Screenshot"));
@@ -499,6 +506,7 @@ void kpMainWindow::slotOpenRecent (const KUrl &url)
 
 //---------------------------------------------------------------------
 
+#if HAVE_KSANE
 // private slot
 void kpMainWindow::slotScan ()
 {
@@ -510,29 +518,15 @@ void kpMainWindow::slotScan ()
 
     if (!d->scanDialog)
     {
-        // Create scan dialog by looking for plugin.
-        // [takes about 500ms on 350Mhz]
-        d->scanDialog = KScanDialog::getScanDialog (this);
+        // Create scan dialog
+        d->scanDialog = new SaneDialog(this);
 
         // No scanning support (kdegraphics/libkscan) installed?
-        // [Remove $KDEDIR/share/servicetypes/kscan.desktop and
-        //         $KDEDIR/share/services/scanservice.desktop to simulate this]
         if (!d->scanDialog)
         {
-            // Instead, we could try to create the scan dialog in the ctor
-            // and just disable the action in the first place, removing
-            // the need for this dialog.
-            //
-            // But this increases startup time and is a bit risky e.g. if
-            // the scan support hangs, KolourPaint would not be able to be
-            // started at all.
-            //
-            // Also, disabling the action is bad because the scan support
-            // can be installed while KolourPaint is still running.
             KMessageBox::sorry (this,
-                         i18n ("No plugin was found which provides the scanner dialog.\n"
-                               "This usually means that the package providing the ksaneplugin is not installed."),
-                         i18n ("No Scanning Support"));
+                                i18n("Failed to open scanning dialog."),
+                                i18nc("@title:window", "Scanning Failed"));
             return;
         }
 
@@ -636,6 +630,7 @@ void kpMainWindow::slotScanned (const QImage &image, int)
     // Send document to current or new window.
     setDocumentChoosingWindow (doc);
 }
+#endif // HAVE_KSANE
 
 //---------------------------------------------------------------------
 

@@ -49,6 +49,8 @@ class kpDocumentEnvironment;
 class kpToolSelectionEnvironment;
 class kpTransformDialogEnvironment;
 
+class SaneDialog;
+
 
 struct kpMainWindowPrivate
 {
@@ -308,7 +310,7 @@ struct kpMainWindowPrivate
           *actionMail,
           *actionClose, *actionQuit;
 
-  KScanDialog *scanDialog;
+  SaneDialog *scanDialog;
 
   KUrl lastExportURL;
   kpDocumentSaveOptions lastExportSaveOptions;
