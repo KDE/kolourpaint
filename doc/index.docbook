@@ -754,6 +754,9 @@ setting other than Exact.</para>
 <para>You can apply Image Effects to a selection - see the <link
 linkend="image-effects-section">Image Effects</link> section for more
 information.</para>
+
+<para>It is possible to save selection to file using the <guimenuitem>Copy to File...</guimenuitem> item from the selection context menu or <menuchoice><guimenu>Edit</guimenu><guimenuitem>Copy to File...</guimenuitem></menuchoice> item from the main menu.
+</para>
 </sect1>
 
 <sect1 id="tool-spraycan">
