@@ -27,7 +27,6 @@ find_package(KF5 REQUIRED COMPONENTS
 find_package(QImageBlitz REQUIRED)
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 find_package(KF5Sane)
 
 if(KF5Sane_FOUND)
