@@ -26,8 +26,8 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
 #include <qaction.h>
 #include <qapplication.h>
@@ -47,30 +47,30 @@
 #include <kactioncollection.h>
 #include <kxmlguifactory.h>
 
-#include <kpAbstractImageSelection.h>
-#include <kpColorToolBar.h>
-#include <kpCommandHistory.h>
-#include <kpDocument.h>
-#include <kpDocumentMetaInfo.h>
-#include <kpDocumentSaveOptions.h>
-#include <kpImageSelectionTransparency.h>
-#include <kpMacroCommand.h>
-#include <kpPixmapFX.h>
-#include <kpRectangularImageSelection.h>
-#include <kpSelectionDrag.h>
-#include <kpSetOverrideCursorSaver.h>
-#include <kpTextSelection.h>
-#include <kpTool.h>
-#include <kpToolTextGiveContentCommand.h>
-#include <kpToolSelectionCreateCommand.h>
-#include <kpToolSelectionDestroyCommand.h>
-#include <kpToolTextEnterCommand.h>
-#include <kpToolTextInsertCommand.h>
-#include <kpTransformCrop.h>
-#include <kpTransformResizeScaleCommand.h>
-#include <kpViewManager.h>
-#include <kpViewScrollableContainer.h>
-#include <kpZoomedView.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "commands/kpCommandHistory.h"
+#include "document/kpDocument.h"
+#include "imagelib/kpDocumentMetaInfo.h"
+#include "document/kpDocumentSaveOptions.h"
+#include "layers/selections/image/kpImageSelectionTransparency.h"
+#include "commands/kpMacroCommand.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "layers/selections/image/kpRectangularImageSelection.h"
+#include "layers/selections/kpSelectionDrag.h"
+#include "generic/kpSetOverrideCursorSaver.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "tools/kpTool.h"
+#include "commands/tools/selection/text/kpToolTextGiveContentCommand.h"
+#include "commands/tools/selection/kpToolSelectionCreateCommand.h"
+#include "commands/tools/selection/kpToolSelectionDestroyCommand.h"
+#include "commands/tools/selection/text/kpToolTextEnterCommand.h"
+#include "commands/tools/selection/text/kpToolTextInsertCommand.h"
+#include "imagelib/transforms/kpTransformCrop.h"
+#include "commands/imagelib/transforms/kpTransformResizeScaleCommand.h"
+#include "views/manager/kpViewManager.h"
+#include "kpViewScrollableContainer.h"
+#include "views/kpZoomedView.h"
 
 //---------------------------------------------------------------------
 

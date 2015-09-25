@@ -29,10 +29,29 @@
 #define DEBUG_KP_DOCUMENT 0
 
 
-#include <kpDocument.h>
-#include <kpDocumentPrivate.h>
+#include "kpDocument.h"
+#include "kpDocumentPrivate.h"
+
+#include "layers/selections/kpAbstractSelection.h"
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "imagelib/kpColor.h"
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "kpDefs.h"
+#include "environments/document/kpDocumentEnvironment.h"
+#include "document/kpDocumentSaveOptions.h"
+#include "imagelib/kpDocumentMetaInfo.h"
+#include "imagelib/effects/kpEffectReduceColors.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "tools/kpTool.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "lgpl/generic/kpUrlFormatter.h"
 
 #include <math.h>
+
+#include <kdebug.h>
+#include <kimageio.h>
+#include <kio/netaccess.h>
+#include <klocale.h>
 
 #include <qcolor.h>
 #include <qbitmap.h>
@@ -45,25 +64,6 @@
 #include <qrect.h>
 #include <qsize.h>
 #include <qmatrix.h>
-
-#include <kdebug.h>
-#include <kimageio.h>
-#include <kio/netaccess.h>
-#include <klocale.h>
-
-#include <kpAbstractSelection.h>
-#include <kpAbstractImageSelection.h>
-#include <kpColor.h>
-#include <kpColorToolBar.h>
-#include <kpDefs.h>
-#include <kpDocumentEnvironment.h>
-#include <kpDocumentSaveOptions.h>
-#include <kpDocumentMetaInfo.h>
-#include <kpEffectReduceColors.h>
-#include <kpPixmapFX.h>
-#include <kpTool.h>
-#include <kpToolToolBar.h>
-#include <kpUrlFormatter.h>
 
 //---------------------------------------------------------------------
 

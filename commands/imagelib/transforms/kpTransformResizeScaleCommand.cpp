@@ -30,7 +30,16 @@
 #define DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG 0
 
 
-#include <kpTransformResizeScaleCommand.h>
+#include "kpTransformResizeScaleCommand.h"
+
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "layers/selections/image/kpFreeFormImageSelection.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "layers/selections/image/kpRectangularImageSelection.h"
+#include "layers/selections/text/kpTextSelection.h"
 
 #include <math.h>
 
@@ -49,15 +58,6 @@
 #include <kiconeffect.h>
 #include <kiconloader.h>
 #include <klocale.h>
-
-#include <kpAbstractImageSelection.h>
-#include <kpCommandEnvironment.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpFreeFormImageSelection.h>
-#include <kpPixmapFX.h>
-#include <kpRectangularImageSelection.h>
-#include <kpTextSelection.h>
 
 
 kpTransformResizeScaleCommand::kpTransformResizeScaleCommand (bool actOnSelection,

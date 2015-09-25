@@ -30,7 +30,7 @@
 #define kpEffectHSVWidget_H
 
 
-#include <kpEffectWidgetBase.h>
+#include "kpEffectWidgetBase.h"
 
 
 class QDoubleSpinBox;

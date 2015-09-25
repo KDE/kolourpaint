@@ -29,10 +29,11 @@
 #define DEBUG_KP_EFFECT_FLATTEN 0
 
 
-#include <kpEffectFlattenWidget.h>
+#include "kpEffectFlattenWidget.h"
 
-#include <qcheckbox.h>
-#include <qlayout.h>
+#include "kpDefs.h"
+#include "imagelib/effects/kpEffectFlatten.h"
+#include "commands/imagelib/effects/kpEffectFlattenCommand.h"
 
 #include <kcolorbutton.h>
 #include <kconfig.h>
@@ -40,9 +41,8 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpDefs.h>
-#include <kpEffectFlatten.h>
-#include <kpEffectFlattenCommand.h>
+#include <qcheckbox.h>
+#include <qlayout.h>
 
 
 // public static

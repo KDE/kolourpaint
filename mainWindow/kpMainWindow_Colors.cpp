@@ -25,22 +25,22 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
-#include <QAction>
+#include "widgets/kpColorCells.h"
+#include "lgpl/generic/kpColorCollection.h"
+#include "lgpl/generic/kpUrlFormatter.h"
+#include "widgets/toolbars/kpColorToolBar.h"
 
 #include <KActionCollection>
-#include <QFileDialog>
 #include <KMessageBox>
 #include <KSelectAction>
 #include <KStandardGuiItem>
 #include <KDebug>
 
-#include <kpColorCells.h>
-#include <kpColorCollection.h>
-#include <kpColorToolBar.h>
-#include <kpUrlFormatter.h>
+#include <QFileDialog>
+#include <QAction>
 
 //---------------------------------------------------------------------
 

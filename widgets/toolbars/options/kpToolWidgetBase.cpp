@@ -29,7 +29,14 @@
 #define DEBUG_KP_TOOL_WIDGET_BASE 0
 
 
-#include <kpToolWidgetBase.h>
+#include "kpToolWidgetBase.h"
+
+#include "kpDefs.h"
+
+#include <kapplication.h>
+#include <kconfig.h>
+#include <kconfiggroup.h>
+#include <kdebug.h>
 
 #include <qbitmap.h>
 #include <qcolor.h>
@@ -39,13 +46,6 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <QToolTip>
-
-#include <kapplication.h>
-#include <kconfig.h>
-#include <kconfiggroup.h>
-#include <kdebug.h>
-
-#include <kpDefs.h>
 
 
 //---------------------------------------------------------------------

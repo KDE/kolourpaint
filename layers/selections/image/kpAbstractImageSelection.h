@@ -30,10 +30,9 @@
 #define kpAbstractImageSelection_H
 
 
-#include <kpAbstractSelection.h>
-
-#include <kpImage.h>
-#include <kpImageSelectionTransparency.h>
+#include "kpImageSelectionTransparency.h"
+#include "layers/selections/kpAbstractSelection.h"
+#include "imagelib/kpImage.h"
 
 
 //

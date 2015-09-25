@@ -29,14 +29,14 @@
 #define DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW 0
 
 
-#include <kpUnzoomedThumbnailView.h>
+#include "views/kpUnzoomedThumbnailView.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpDocument.h>
-#include <kpViewManager.h>
-#include <kpViewScrollableContainer.h>
+#include "document/kpDocument.h"
+#include "views/manager/kpViewManager.h"
+#include "kpViewScrollableContainer.h"
 
 #include <QScrollBar>
 

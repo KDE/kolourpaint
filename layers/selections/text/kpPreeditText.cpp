@@ -25,7 +25,7 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <kpPreeditText.h>
+#include "layers/selections/text/kpPreeditText.h"
 
 //---------------------------------------------------------------------
 

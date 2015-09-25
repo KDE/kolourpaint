@@ -29,12 +29,12 @@
 #define DEBUG_KP_COLOR_PALETTE 0
 
 
-#include <kpColorPalette.h>
+#include "kpColorPalette.h"
+
+#include "kpColorCells.h"
+#include "kpTransparentColorCell.h"
 
 #include <QBoxLayout>
-
-#include <kpColorCells.h>
-#include <kpTransparentColorCell.h>
 
 //---------------------------------------------------------------------
 

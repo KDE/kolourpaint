@@ -29,14 +29,14 @@
 #define DEBUG_KP_EFFECT_INVERT 0
 
 
-#include <kpEffectInvert.h>
+#include "kpEffectInvert.h"
 
 #include <qimage.h>
 #include <QImage>
 
 #include <kdebug.h>
 
-#include <kpPixmapFX.h>
+#include "pixmapfx/kpPixmapFX.h"
 
 
 // public static

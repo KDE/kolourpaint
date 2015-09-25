@@ -27,17 +27,17 @@
 */
 
 
-#include <kpEffectToneEnhanceWidget.h>
+#include "kpEffectToneEnhanceWidget.h"
+
+#include "imagelib/effects/kpEffectToneEnhance.h"
+#include "commands/imagelib/effects/kpEffectToneEnhanceCommand.h"
+#include "pixmapfx/kpPixmapFX.h"
 
 #include <QGridLayout>
 #include <QLabel>
 
 #include <kdebug.h>
 #include <klocale.h>
-
-#include <kpEffectToneEnhance.h>
-#include <kpEffectToneEnhanceCommand.h>
-#include <kpPixmapFX.h>
 
 
 kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,

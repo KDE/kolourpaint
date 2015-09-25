@@ -26,7 +26,7 @@
 */
 
 
-#include <kpTransformFlipCommand.h>
+#include "kpTransformFlipCommand.h"
 
 #include <qapplication.h>
 #include <qgroupbox.h>
@@ -37,11 +37,11 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpAbstractImageSelection.h>
-#include <kpCommandEnvironment.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpPixmapFX.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "pixmapfx/kpPixmapFX.h"
 
 //---------------------------------------------------------------------
 

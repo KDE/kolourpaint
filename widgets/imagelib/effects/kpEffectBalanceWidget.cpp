@@ -28,7 +28,14 @@
 #define DEBUG_KP_EFFECT_BALANCE 0
 
 
-#include <kpEffectBalanceWidget.h>
+#include "kpEffectBalanceWidget.h"
+
+#include "imagelib/effects/kpEffectBalance.h"
+#include "commands/imagelib/effects/kpEffectBalanceCommand.h"
+#include "pixmapfx/kpPixmapFX.h"
+
+#include <kdebug.h>
+#include <klocale.h>
 
 #include <cmath>
 #include <math.h>
@@ -39,14 +46,6 @@
 #include <qlayout.h>
 #include <qpushbutton.h>
 #include <QSpinBox>
-
-#include <kdebug.h>
-#include <klocale.h>
-
-#include <kpEffectBalance.h>
-#include <kpEffectBalanceCommand.h>
-#include <kpPixmapFX.h>
-
 
 #if DEBUG_KP_EFFECT_BALANCE
     #include <qdatetime.h>

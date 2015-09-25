@@ -26,14 +26,14 @@
 */
 
 
-#include <kpAbstractImageSelectionTool.h>
+#include "kpAbstractImageSelectionTool.h"
 
 #include <KLocalizedString>
 
-#include <kpAbstractImageSelection.h>
-#include <kpDocument.h>
-#include <kpToolSelectionEnvironment.h>
-#include <kpToolSelectionPullFromDocumentCommand.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "document/kpDocument.h"
+#include "environments/tools/selection/kpToolSelectionEnvironment.h"
+#include "commands/tools/selection/kpToolSelectionPullFromDocumentCommand.h"
 
 //---------------------------------------------------------------------
 

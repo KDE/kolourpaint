@@ -30,8 +30,8 @@
 #define KP_PAINTER_H
 
 
-#include <kpColor.h>
-#include <kpImage.h>
+#include "kpColor.h"
+#include "kpImage.h"
 
 
 class QPolygon;

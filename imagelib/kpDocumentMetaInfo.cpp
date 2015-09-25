@@ -26,7 +26,7 @@
 */
 
 
-#include <kpDocumentMetaInfo.h>
+#include "kpDocumentMetaInfo.h"
 
 #include <cmath>
 #include <math.h>
@@ -36,7 +36,7 @@
 
 #include <kdebug.h>
 
-#include <kpDefs.h>
+#include "kpDefs.h"
 
 
 //

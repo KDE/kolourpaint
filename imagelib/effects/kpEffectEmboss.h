@@ -30,7 +30,7 @@
 #define kpEffectEmboss_H
 
 
-#include <kpImage.h>
+#include "imagelib/kpImage.h"
 
 
 class kpEffectEmboss

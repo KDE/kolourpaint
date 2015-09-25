@@ -30,8 +30,8 @@
 
 #define DEBUG_KP_TOOL 0
 
-#include <kpTool.h>
-#include <kpToolPrivate.h>
+#include "kpTool.h"
+#include "kpToolPrivate.h"
 
 #include <limits.h>
 
@@ -40,14 +40,14 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpColor.h>
-#include <kpColorToolBar.h>
-#include <kpDefs.h>
-#include <kpToolAction.h>
-#include <kpToolEnvironment.h>
-#include <kpToolToolBar.h>
-#include <kpView.h>
-#include <kpViewManager.h>
+#include "imagelib/kpColor.h"
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "kpDefs.h"
+#include "tools/kpToolAction.h"
+#include "environments/tools/kpToolEnvironment.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
 #undef environ  // macro on win32
 
 //---------------------------------------------------------------------

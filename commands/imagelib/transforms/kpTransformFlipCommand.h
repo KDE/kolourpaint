@@ -30,7 +30,7 @@
 #define kpTransformFlipCommand_H
 
 
-#include <kpCommand.h>
+#include "commands/kpCommand.h"
 
 
 class kpTransformFlipCommand : public kpCommand

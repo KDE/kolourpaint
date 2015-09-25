@@ -32,8 +32,8 @@
 #define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 1) || 0)
 
 
-#include <kpView.h>
-#include <kpViewPrivate.h>
+#include "views/kpView.h"
+#include "kpViewPrivate.h"
 
 #if DEBUG_KP_VIEW
 #include <KDebug>
@@ -42,7 +42,7 @@
 #include <QKeyEvent>
 #include <QMouseEvent>
 
-#include <kpTool.h>
+#include "tools/kpTool.h"
 
 #include <kdebug.h>
 

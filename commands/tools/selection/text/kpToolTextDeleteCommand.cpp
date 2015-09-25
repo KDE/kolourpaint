@@ -28,12 +28,12 @@
 #define DEBUG_KP_TOOL_TEXT 0
 
 
-#include <kpToolTextDeleteCommand.h>
+#include "kpToolTextDeleteCommand.h"
+
+#include "layers/selections/text/kpTextSelection.h"
+#include "views/manager/kpViewManager.h"
 
 #include <qlist.h>
-
-#include <kpTextSelection.h>
-#include <kpViewManager.h>
 
 
 kpToolTextDeleteCommand::kpToolTextDeleteCommand (const QString &name,

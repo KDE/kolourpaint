@@ -30,7 +30,7 @@
 #define kpTransformDialogEnvironment_H
 
 
-#include <kpEnvironmentBase.h>
+#include "environments/kpEnvironmentBase.h"
 
 
 class kpCommandEnvironment;

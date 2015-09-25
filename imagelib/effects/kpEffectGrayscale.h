@@ -30,7 +30,7 @@
 #define kpEffectGrayscale_H
 
 
-#include <kpImage.h>
+#include "imagelib/kpImage.h"
 
 
 //

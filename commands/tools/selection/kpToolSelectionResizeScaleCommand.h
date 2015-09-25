@@ -33,7 +33,7 @@
 #include <QObject>
 #include <QPoint>
 
-#include <kpNamedCommand.h>
+#include "commands/kpNamedCommand.h"
 
 
 class QTimer;

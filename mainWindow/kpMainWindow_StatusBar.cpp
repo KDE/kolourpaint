@@ -28,8 +28,8 @@
 #define DEBUG_STATUS_BAR (DEBUG_KP_MAIN_WINDOW && 0)
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "mainWindow/kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
 #include <qlabel.h>
 #include <qstatusbar.h>
@@ -39,12 +39,12 @@
 #include <klocale.h>
 #include <KSqueezedTextLabel>
 
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpTool.h>
-#include <kpViewManager.h>
-#include <kpViewScrollableContainer.h>
-#include <kpZoomedView.h>
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "tools/kpTool.h"
+#include "views/manager/kpViewManager.h"
+#include "kpViewScrollableContainer.h"
+#include "views/kpZoomedView.h"
 
 //---------------------------------------------------------------------
 

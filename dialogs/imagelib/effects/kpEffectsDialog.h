@@ -30,7 +30,7 @@
 #define KP_EFFECTS_DIALOG_H
 
 
-#include <kpTransformPreviewDialog.h>
+#include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"
 
 
 class QComboBox;

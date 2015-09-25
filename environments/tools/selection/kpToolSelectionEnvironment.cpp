@@ -26,11 +26,11 @@
 */
 
 
-#include <kpToolSelectionEnvironment.h>
+#include "kpToolSelectionEnvironment.h"
 
-#include <kpMainWindow.h>
-#include <kpImageSelectionTransparency.h>
-#include <kpTextStyle.h>
+#include "mainWindow/kpMainWindow.h"
+#include "layers/selections/image/kpImageSelectionTransparency.h"
+#include "layers/selections/text/kpTextStyle.h"
 
 
 struct kpToolSelectionEnvironmentPrivate

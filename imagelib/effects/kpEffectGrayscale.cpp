@@ -29,9 +29,9 @@
 #define DEBUG_KP_PIXMAP_FX 0
 
 
-#include <kpEffectGrayscale.h>
+#include "kpEffectGrayscale.h"
 
-#include <kpPixmapFX.h>
+#include "pixmapfx/kpPixmapFX.h"
 
 
 static QRgb toGray (QRgb rgb)

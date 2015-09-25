@@ -23,7 +23,7 @@
 
 #define DEBUG_KP_COLOR_CELLS_BASE 0
 
-#include <kpColorCellsBase.h>
+#include "kpColorCellsBase.h"
 
 #include <QApplication>
 #include <QDrag>

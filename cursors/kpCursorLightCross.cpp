@@ -28,12 +28,12 @@
 #define DEBUG_KP_CURSOR_LIGHT_CROSS 0
 
 
-#include <kpCursorLightCross.h>
+#include "kpCursorLightCross.h"
+
+#include <kdebug.h>
 
 #include <qbitmap.h>
 #include <qcursor.h>
-
-#include <kdebug.h>
 
 
 enum PixelValue

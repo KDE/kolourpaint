@@ -27,8 +27,8 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
 #include <qaction.h>
 #include <qdatastream.h>
@@ -69,16 +69,16 @@
 #include <kprintpreview.h>
 #include <kurlcombobox.h>
 
-#include <kpCommandHistory.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpDocumentMetaInfoCommand.h>
-#include <kpDocumentMetaInfoDialog.h>
-#include <kpDocumentSaveOptionsWidget.h>
-#include <kpPixmapFX.h>
-#include <kpPrintDialogPage.h>
-#include <kpView.h>
-#include <kpViewManager.h>
+#include "commands/kpCommandHistory.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "commands/imagelib/kpDocumentMetaInfoCommand.h"
+#include "dialogs/imagelib/kpDocumentMetaInfoDialog.h"
+#include "widgets/kpDocumentSaveOptionsWidget.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "widgets/kpPrintDialogPage.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
 
 #if HAVE_KSANE
 #include "../scan/sanedialog.h"

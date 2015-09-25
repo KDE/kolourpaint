@@ -30,7 +30,7 @@
 #define kpNamedCommand_H
 
 
-#include <kpCommand.h>
+#include "commands/kpCommand.h"
 
 #include <QString>
 

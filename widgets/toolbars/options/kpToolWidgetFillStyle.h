@@ -30,7 +30,7 @@
 #define KP_TOOL_WIDGET_FILL_STYLE_H
 
 
-#include <kpToolWidgetBase.h>
+#include "kpToolWidgetBase.h"
 
 
 class QBrush;

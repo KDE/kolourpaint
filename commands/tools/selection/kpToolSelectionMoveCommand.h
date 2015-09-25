@@ -34,8 +34,8 @@
 #include <QPolygon>
 #include <QRect>
 
-#include <kpImage.h>
-#include <kpNamedCommand.h>
+#include "imagelib/kpImage.h"
+#include "commands/kpNamedCommand.h"
 
 
 class kpAbstractSelection;

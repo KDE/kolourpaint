@@ -30,7 +30,7 @@
 #define KP_THUMBNAIL_VIEW_H
 
 
-#include <kpView.h>
+#include "views/kpView.h"
 
 
 /**

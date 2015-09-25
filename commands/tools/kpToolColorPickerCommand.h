@@ -30,8 +30,8 @@
 #define kpToolColorPickerCommand_H
 
 
-#include <kpColor.h>
-#include <kpCommand.h>
+#include "imagelib/kpColor.h"
+#include "commands/kpCommand.h"
 
 
 class kpToolColorPickerCommand : public kpCommand

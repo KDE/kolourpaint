@@ -30,9 +30,9 @@
 #define kpEffectBlurSharpenCommand_H
 
 
-#include <kpEffectBlurSharpen.h>
-#include <kpEffectCommandBase.h>
-#include <kpImage.h>
+#include "kpEffectCommandBase.h"
+#include "imagelib/effects/kpEffectBlurSharpen.h"
+#include "imagelib/kpImage.h"
 
 
 class kpEffectBlurSharpenCommand : public kpEffectCommandBase

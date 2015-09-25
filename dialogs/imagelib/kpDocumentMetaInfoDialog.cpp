@@ -28,7 +28,14 @@
 #define DEBUG_KP_DOCUMENT_META_INFO_DIALOG 0
 
 
-#include <kpDocumentMetaInfoDialog.h>
+#include "kpDocumentMetaInfoDialog.h"
+
+#include "kpDefs.h"
+#include "imagelib/kpDocumentMetaInfo.h"
+
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KDebug>
 
 #include <QAbstractItemView>
 #include <QDialogButtonBox>
@@ -40,12 +47,6 @@
 #include <QTableWidget>
 #include <QSpinBox>
 #include <QDoubleSpinBox>
-#include <KLocalizedString>
-#include <KMessageBox>
-#include <KDebug>
-
-#include <kpDefs.h>
-#include <kpDocumentMetaInfo.h>
 
 
 struct kpDocumentMetaInfoDialogPrivate

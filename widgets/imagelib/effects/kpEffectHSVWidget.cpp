@@ -26,7 +26,7 @@
 */
 
 
-#include <kpEffectHSVWidget.h>
+#include "kpEffectHSVWidget.h"
 
 #include <qgridlayout.h>
 #include <qlabel.h>
@@ -35,8 +35,8 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpEffectHSV.h>
-#include <kpEffectHSVCommand.h>
+#include "imagelib/effects/kpEffectHSV.h"
+#include "commands/imagelib/effects/kpEffectHSVCommand.h"
 
 
 kpEffectHSVWidget::kpEffectHSVWidget (bool actOnSelection, QWidget *parent)

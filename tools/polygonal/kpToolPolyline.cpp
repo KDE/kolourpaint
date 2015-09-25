@@ -29,12 +29,12 @@
 #define DEBUG_KP_TOOL_POLYLINE 0
 
 
-#include <kpToolPolyline.h>
+#include "kpToolPolyline.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpPainter.h>
+#include "imagelib/kpPainter.h"
 
 
 kpToolPolyline::kpToolPolyline (kpToolEnvironment *environ, QObject *parent)

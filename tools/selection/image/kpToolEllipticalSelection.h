@@ -30,7 +30,7 @@
 #define KP_TOOL_ELLIPTICAL_SELECTION_H
 
 
-#include <kpAbstractImageSelectionTool.h>
+#include "kpAbstractImageSelectionTool.h"
 
 
 class kpToolEllipticalSelection : public kpAbstractImageSelectionTool

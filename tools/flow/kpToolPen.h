@@ -30,7 +30,7 @@
 #define KP_TOOL_PEN_H
 
 
-#include <kpToolFlowBase.h>
+#include "kpToolFlowBase.h"
 
 
 // Pen = draws pixels, "interpolates" by "sweeping" pixels along a line (no brushes)

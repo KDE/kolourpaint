@@ -29,8 +29,8 @@
 #define DEBUG_KP_TOOL_SELECTION 0
 
 
-#include <kpAbstractSelectionTool.h>
-#include <kpAbstractSelectionToolPrivate.h>
+#include "kpAbstractSelectionTool.h"
+#include "kpAbstractSelectionToolPrivate.h"
 
 #include <qcursor.h>
 #include <qmenu.h>
@@ -39,19 +39,19 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpAbstractSelection.h>
-#include <kpAbstractSelectionContentCommand.h>
-#include <kpCommandHistory.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpMacroCommand.h>
-#include <kpToolSelectionCreateCommand.h>
-#include <kpToolSelectionEnvironment.h>
-#include <kpToolToolBar.h>
-#include <kpToolWidgetOpaqueOrTransparent.h>
-#include <kpView.h>
-#include <kpViewManager.h>
-#include <kpPainter.h>
+#include "layers/selections/kpAbstractSelection.h"
+#include "commands/tools/selection/kpAbstractSelectionContentCommand.h"
+#include "commands/kpCommandHistory.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "commands/kpMacroCommand.h"
+#include "commands/tools/selection/kpToolSelectionCreateCommand.h"
+#include "environments/tools/selection/kpToolSelectionEnvironment.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
+#include "imagelib/kpPainter.h"
 
 //---------------------------------------------------------------------
 

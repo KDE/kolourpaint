@@ -31,10 +31,10 @@
 
 #include <QSpinBox>
 
-#include <kpColor.h>
+#include "imagelib/kpColor.h"
 
-#include <kpEffectWidgetBase.h>
-#include <kpEffectBlurSharpen.h>
+#include "kpEffectWidgetBase.h"
+#include "imagelib/effects/kpEffectBlurSharpen.h"
 
 
 class QLabel;

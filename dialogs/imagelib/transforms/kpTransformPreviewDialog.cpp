@@ -29,7 +29,7 @@
 #define DEBUG_KP_TRANSFORM_PREVIEW_DIALOG 0
 
 
-#include <kpTransformPreviewDialog.h>
+#include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"
 
 #include <qapplication.h>
 #include <qboxlayout.h>
@@ -44,12 +44,12 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpAbstractImageSelection.h>
-#include <kpColor.h>
-#include <kpDocument.h>
-#include <kpPixmapFX.h>
-#include <kpResizeSignallingLabel.h>
-#include <kpTransformDialogEnvironment.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "imagelib/kpColor.h"
+#include "document/kpDocument.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "generic/widgets/kpResizeSignallingLabel.h"
+#include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
 
 
 kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,

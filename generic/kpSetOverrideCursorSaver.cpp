@@ -26,7 +26,7 @@
 */
 
 
-#include <kpSetOverrideCursorSaver.h>
+#include "generic/kpSetOverrideCursorSaver.h"
 
 #include <QApplication>
 

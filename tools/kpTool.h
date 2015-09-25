@@ -36,7 +36,7 @@
 #include <qsize.h>
 #include <qstring.h>
 
-#include <kpDefs.h>
+#include "kpDefs.h"
 #ifdef Q_OS_WIN
   #include <stdlib.h>
   #undef environ  // macro on win32

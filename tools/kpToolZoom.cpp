@@ -28,22 +28,22 @@
 #define DEBUG_KP_TOOL_ZOOM 0
 
 
-#include <kpToolZoom.h>
+#include "kpToolZoom.h"
 
-#include <QWidget>
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "generic/kpSetOverrideCursorSaver.h"
+#include "layers/tempImage/kpTempImage.h"
+#include "environments/tools/kpToolEnvironment.h"
+#include "tools/kpToolAction.h"
+#include "views/manager/kpViewManager.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kiconloader.h>
 
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpPixmapFX.h>
-#include <kpSetOverrideCursorSaver.h>
-#include <kpTempImage.h>
-#include <kpToolEnvironment.h>
-#include <kpToolAction.h>
-#include <kpViewManager.h>
+#include <QWidget>
 
 //---------------------------------------------------------------------
 

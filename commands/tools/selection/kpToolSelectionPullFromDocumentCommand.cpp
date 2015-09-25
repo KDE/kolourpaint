@@ -29,15 +29,15 @@
 #define DEBUG_KP_TOOL_SELECTION 0
 
 
-#include <kpToolSelectionPullFromDocumentCommand.h>
+#include "kpToolSelectionPullFromDocumentCommand.h"
+
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "document/kpDocument.h"
+#include "views/manager/kpViewManager.h"
 
 #include <kdebug.h>
 #include <klocale.h>
-
-#include <kpAbstractImageSelection.h>
-#include <kpCommandEnvironment.h>
-#include <kpDocument.h>
-#include <kpViewManager.h>
 
 
 kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (

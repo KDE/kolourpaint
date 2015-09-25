@@ -26,7 +26,7 @@
 */
 
 
-#include <kpSubWindow.h>
+#include "kpSubWindow.h"
 
 
 kpSubWindow::kpSubWindow (QWidget *parent)

@@ -26,7 +26,11 @@
 */
 
 
-#include <kpColorSimilarityDialog.h>
+#include "kpColorSimilarityDialog.h"
+
+#include "widgets/colorSimilarity/kpColorSimilarityFrame.h"
+
+#include <klocale.h>
 
 #include <qboxlayout.h>
 #include <qdialogbuttonbox.h>
@@ -36,10 +40,6 @@
 #include <qpushbutton.h>
 #include <QWhatsThis>
 #include <QSpinBox>
-
-#include <klocale.h>
-
-#include <kpColorSimilarityFrame.h>
 
 
 kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)

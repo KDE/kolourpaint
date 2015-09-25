@@ -29,16 +29,16 @@
 #define DEBUG_KP_SELECTION_DRAG 0
 
 
-#include <kpSelectionDrag.h>
+#include "kpSelectionDrag.h"
 
 #include <qdatastream.h>
 #include <QImage>
 
 #include <kdebug.h>
 
-#include <kpAbstractImageSelection.h>
-#include <kpRectangularImageSelection.h>
-#include <kpSelectionFactory.h>
+#include "kpSelectionFactory.h"
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "layers/selections/image/kpRectangularImageSelection.h"
 
 //---------------------------------------------------------------------
 

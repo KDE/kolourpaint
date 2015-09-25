@@ -30,9 +30,8 @@
 #define kpEffectReduceColorsCommand_H
 
 
-#include <kpEffectCommandBase.h>
-#include <kpImage.h>
-
+#include "kpEffectCommandBase.h"
+#include "imagelib/kpImage.h"
 
 
 class kpEffectReduceColorsCommand : public kpEffectCommandBase

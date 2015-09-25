@@ -30,8 +30,8 @@
 #define DEBUG_KP_TOOL_TEXT 0
 
 
-#include <kpToolText.h>
-#include <kpToolTextPrivate.h>
+#include "tools/selection/text/kpToolText.h"
+#include "kpToolTextPrivate.h"
 
 #include <qevent.h>
 #include <qlist.h>
@@ -39,20 +39,20 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpCommandHistory.h>
-#include <kpDocument.h>
-#include <kpTextSelection.h>
-#include <kpToolTextBackspaceCommand.h>
-#include <kpToolTextChangeStyleCommand.h>
-#include <kpToolTextGiveContentCommand.h>
-#include <kpToolSelectionCreateCommand.h>
-#include <kpToolSelectionEnvironment.h>
-#include <kpToolTextDeleteCommand.h>
-#include <kpToolTextEnterCommand.h>
-#include <kpToolTextInsertCommand.h>
-#include <kpToolWidgetOpaqueOrTransparent.h>
-#include <kpView.h>
-#include <kpViewManager.h>
+#include "commands/kpCommandHistory.h"
+#include "document/kpDocument.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "commands/tools/selection/text/kpToolTextBackspaceCommand.h"
+#include "commands/tools/selection/text/kpToolTextChangeStyleCommand.h"
+#include "commands/tools/selection/text/kpToolTextGiveContentCommand.h"
+#include "commands/tools/selection/kpToolSelectionCreateCommand.h"
+#include "environments/tools/selection/kpToolSelectionEnvironment.h"
+#include "commands/tools/selection/text/kpToolTextDeleteCommand.h"
+#include "commands/tools/selection/text/kpToolTextEnterCommand.h"
+#include "commands/tools/selection/text/kpToolTextInsertCommand.h"
+#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
 
 
 kpToolText::kpToolText (kpToolSelectionEnvironment *environ, QObject *parent)

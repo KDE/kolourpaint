@@ -30,7 +30,7 @@
 #define KP_TOOL_TEXT_INSERT_COMMAND_H
 
 
-#include <kpNamedCommand.h>
+#include "commands/kpNamedCommand.h"
 
 
 class kpToolTextInsertCommand : public kpNamedCommand

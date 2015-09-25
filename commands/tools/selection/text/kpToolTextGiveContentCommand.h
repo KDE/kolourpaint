@@ -30,7 +30,7 @@
 #define kpToolTextGiveContentCommand_H
 
 
-#include <kpAbstractSelectionContentCommand.h>
+#include "commands/tools/selection/kpAbstractSelectionContentCommand.h"
 
 
 class kpTextSelection;

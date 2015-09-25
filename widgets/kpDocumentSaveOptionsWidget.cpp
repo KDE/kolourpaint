@@ -28,7 +28,20 @@
 #define DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET 0
 
 
-#include <kpDocumentSaveOptionsWidget.h>
+#include "widgets/kpDocumentSaveOptionsWidget.h"
+
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "dialogs/kpDocumentSaveOptionsPreviewDialog.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "generic/widgets/kpResizeSignallingLabel.h"
+#include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"
+#include "generic/kpWidgetMapper.h"
+
+#include <kconfig.h>
+#include <kdebug.h>
+#include <klocale.h>
+#include <kconfiggroup.h>
 
 #include <qapplication.h>
 #include <qboxlayout.h>
@@ -41,19 +54,6 @@
 #include <qlayout.h>
 #include <qpushbutton.h>
 #include <qtimer.h>
-
-#include <kconfig.h>
-#include <kdebug.h>
-#include <klocale.h>
-#include <kconfiggroup.h>
-
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpDocumentSaveOptionsPreviewDialog.h>
-#include <kpPixmapFX.h>
-#include <kpResizeSignallingLabel.h>
-#include <kpTransformPreviewDialog.h>
-#include <kpWidgetMapper.h>
 
 
 kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (

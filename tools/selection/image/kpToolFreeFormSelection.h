@@ -30,7 +30,7 @@
 #define KP_TOOL_FREE_FORM_SELECTION_H
 
 
-#include <kpAbstractImageSelectionTool.h>
+#include "kpAbstractImageSelectionTool.h"
 
 
 class kpToolFreeFormSelection : public kpAbstractImageSelectionTool

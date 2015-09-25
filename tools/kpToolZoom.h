@@ -30,7 +30,7 @@
 #define KP_TOOL_ZOOM_H
 
 
-#include <kpTool.h>
+#include "tools/kpTool.h"
 
 
 class kpToolZoom : public kpTool

@@ -26,8 +26,9 @@
 */
 
 
-#include <kpToolRectangle.h>
-#include <kpPainter.h>
+#include "kpToolRectangle.h"
+
+#include "imagelib/kpPainter.h"
 
 #include <klocale.h>
 

@@ -30,7 +30,7 @@
 #define kpMacroCommand_H
 
 
-#include <kpNamedCommand.h>
+#include "commands/kpNamedCommand.h"
 
 #include <QLinkedList>
 

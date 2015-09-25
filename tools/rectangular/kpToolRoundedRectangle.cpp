@@ -24,8 +24,9 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <kpToolRoundedRectangle.h>
-#include <kpPainter.h>
+#include "kpToolRoundedRectangle.h"
+
+#include "imagelib/kpPainter.h"
 
 #include <klocale.h>
 

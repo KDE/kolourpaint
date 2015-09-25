@@ -29,7 +29,12 @@
 #define DEBUG_KP_PAINTER 0
 
 
-#include <kpPainter.h>
+#include "kpPainter.h"
+
+#include "kpImage.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "tools/kpTool.h"
+#include "tools/flow/kpToolFlowBase.h"
 
 #include <cstdio>
 
@@ -38,11 +43,6 @@
 
 #include <kdebug.h>
 #include <krandom.h>
-
-#include <kpImage.h>
-#include <kpPixmapFX.h>
-#include <kpTool.h>
-#include <kpToolFlowBase.h>
 
 //---------------------------------------------------------------------
 

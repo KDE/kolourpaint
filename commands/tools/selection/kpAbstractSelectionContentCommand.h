@@ -30,7 +30,7 @@
 #define kpAbstractSelectionContentCommand_H
 
 
-#include <kpNamedCommand.h>
+#include "commands/kpNamedCommand.h"
 
 
 // Converts a selection border to a selection with content.

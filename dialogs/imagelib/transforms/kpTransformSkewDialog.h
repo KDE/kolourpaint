@@ -28,8 +28,8 @@
 #ifndef kpTransformSkewDialog_H
 #define kpTransformSkewDialog_H
 
-#include <kpColor.h>
-#include <kpTransformPreviewDialog.h>
+#include "kpTransformPreviewDialog.h"
+#include "imagelib/kpColor.h"
 
 class QSpinBox;
 

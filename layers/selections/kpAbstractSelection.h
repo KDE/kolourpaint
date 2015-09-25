@@ -34,8 +34,8 @@
 
 #include <QObject>
 
-#include <kpCommandSize.h>
-#include <kpPixmapFX.h>
+#include "commands/kpCommandSize.h"
+#include "pixmapfx/kpPixmapFX.h"
 
 
 class QImage;

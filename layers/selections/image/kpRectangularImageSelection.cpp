@@ -29,7 +29,7 @@
 #define DEBUG_KP_SELECTION 0
 
 
-#include <kpRectangularImageSelection.h>
+#include "layers/selections/image/kpRectangularImageSelection.h"
 
 #include <QBitmap>
 #include <QRegion>

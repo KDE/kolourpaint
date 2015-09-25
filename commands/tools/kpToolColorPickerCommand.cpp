@@ -29,12 +29,12 @@
 #define DEBUG_KP_TOOL_COLOR_PICKER 0
 
 
-#include <kpToolColorPickerCommand.h>
+#include "kpToolColorPickerCommand.h"
+
+#include "environments/commands/kpCommandEnvironment.h"
+#include "kpDefs.h"
 
 #include <KLocalizedString>
-
-#include <kpCommandEnvironment.h>
-#include <kpDefs.h>
 
 
 kpToolColorPickerCommand::kpToolColorPickerCommand (

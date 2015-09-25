@@ -35,7 +35,7 @@
 #include <qmap.h>
 #include <qstring.h>
 
-#include <kpCommandSize.h>
+#include "commands/kpCommandSize.h"
 
 
 class QPoint;

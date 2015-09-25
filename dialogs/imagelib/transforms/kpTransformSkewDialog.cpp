@@ -29,7 +29,7 @@
 #define DEBUG_KP_TOOL_SKEW_DIALOG 0
 
 
-#include <kpTransformSkewDialog.h>
+#include "dialogs/imagelib/transforms/kpTransformSkewDialog.h"
 
 #include <qapplication.h>
 #include <qgridlayout.h>
@@ -45,11 +45,11 @@
 #include <kiconloader.h>
 #include <klocale.h>
 
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpPixmapFX.h>
-#include <kpTool.h>
-#include <kpTransformDialogEnvironment.h>
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "tools/kpTool.h"
+#include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
 
 
 // private static

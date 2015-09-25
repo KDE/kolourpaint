@@ -26,7 +26,7 @@
 */
 
 
-#include <kpEffectWidgetBase.h>
+#include "kpEffectWidgetBase.h"
 
 
 kpEffectWidgetBase::kpEffectWidgetBase (bool actOnSelection,

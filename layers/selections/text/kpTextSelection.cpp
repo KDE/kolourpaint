@@ -30,16 +30,16 @@
 #define DEBUG_KP_SELECTION 0
 
 
-#include <kpTextSelection.h>
-#include <kpTextSelectionPrivate.h>
+#include "kpTextSelection.h"
+#include "kpTextSelectionPrivate.h"
 
-#include <QFontMetrics>
-#include <QList>
+#include "kpDefs.h"
+#include "kpTextStyle.h"
 
 #include <KDebug>
 
-#include <kpDefs.h>
-#include <kpTextStyle.h>
+#include <QFontMetrics>
+#include <QList>
 
 
 // public

@@ -29,17 +29,17 @@
 #define DEBUG_KP_TOOL_SELECTION 0
 
 
-#include <kpToolImageSelectionTransparencyCommand.h>
+#include "kpToolImageSelectionTransparencyCommand.h"
 
-#include <qcursor.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "kpDefs.h"
+#include "generic/kpSetOverrideCursorSaver.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpAbstractImageSelection.h>
-#include <kpCommandEnvironment.h>
-#include <kpDefs.h>
-#include <kpSetOverrideCursorSaver.h>
+#include <qcursor.h>
 
 
 kpToolImageSelectionTransparencyCommand::kpToolImageSelectionTransparencyCommand (

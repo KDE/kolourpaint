@@ -29,7 +29,7 @@
 #define DEBUG_KP_COMMAND_HISTORY 0
 
 
-#include <kpCommandHistoryBase.h>
+#include "kpCommandHistoryBase.h"
 
 #include <climits>
 
@@ -48,12 +48,12 @@
 #include <kconfiggroup.h>
 #include <kiconloader.h>
 
-#include <kpCommand.h>
-#include <kpCommandEnvironment.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpTool.h>
+#include "kpCommand.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "mainWindow/kpMainWindow.h"
+#include "tools/kpTool.h"
 
 //---------------------------------------------------------------------
 

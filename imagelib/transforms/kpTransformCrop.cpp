@@ -29,17 +29,17 @@
 #define DEBUG_KP_TOOL_CROP 0
 
 
-#include <kpTransformCrop.h>
-#include <kpTransformCropPrivate.h>
+#include "kpTransformCrop.h"
+#include "kpTransformCropPrivate.h"
+
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "layers/selections/kpAbstractSelection.h"
+#include "document/kpDocument.h"
+#include "mainWindow/kpMainWindow.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "commands/imagelib/transforms/kpTransformResizeScaleCommand.h"
 
 #include <KLocalizedString>
-
-#include <kpAbstractImageSelection.h>
-#include <kpAbstractSelection.h>
-#include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpTextSelection.h>
-#include <kpTransformResizeScaleCommand.h>
 
 
 void kpTransformCrop (kpMainWindow *mainWindow)

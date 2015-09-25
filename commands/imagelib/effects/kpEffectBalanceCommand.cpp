@@ -29,12 +29,12 @@
 #define DEBUG_KP_EFFECT_BALANCE 0
 
 
-#include <kpEffectBalanceCommand.h>
+#include "kpEffectBalanceCommand.h"
+
+#include "imagelib/effects/kpEffectBalance.h"
 
 #include <kdebug.h>
 #include <klocale.h>
-
-#include <kpEffectBalance.h>
 
 
 kpEffectBalanceCommand::kpEffectBalanceCommand (int channels,

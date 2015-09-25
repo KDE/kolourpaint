@@ -30,7 +30,7 @@
 #define KP_TOOL_TEXT_H
 
 
-#include <kpAbstractSelectionTool.h>
+#include "tools/selection/kpAbstractSelectionTool.h"
 
 
 class QKeyEvent;

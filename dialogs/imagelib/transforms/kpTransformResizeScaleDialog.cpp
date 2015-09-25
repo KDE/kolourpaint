@@ -29,7 +29,7 @@
 #define DEBUG_KP_TOOL_RESIZE_SCALE_DIALOG 0
 
 
-#include <kpTransformResizeScaleDialog.h>
+#include "kpTransformResizeScaleDialog.h"
 
 #include <math.h>
 
@@ -55,12 +55,12 @@
 #include <kiconloader.h>
 #include <klocale.h>
 
-#include <kpAbstractSelection.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpTextSelection.h>
-#include <kpTool.h>
-#include <kpTransformDialogEnvironment.h>
+#include "layers/selections/kpAbstractSelection.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "tools/kpTool.h"
+#include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
 
 //---------------------------------------------------------------------
 

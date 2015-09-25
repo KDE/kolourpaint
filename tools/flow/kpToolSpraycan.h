@@ -30,7 +30,7 @@
 #define KP_TOOL_SPRAYCAN_H
 
 
-#include <kpToolFlowBase.h>
+#include "kpToolFlowBase.h"
 
 
 class QPoint;

@@ -30,8 +30,8 @@
 #define kpEffectEmbossWidget_H
 
 
-#include <kpColor.h>
-#include <kpEffectWidgetBase.h>
+#include "imagelib/kpColor.h"
+#include "kpEffectWidgetBase.h"
 
 
 class QCheckBox;

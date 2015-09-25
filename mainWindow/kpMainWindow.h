@@ -34,9 +34,9 @@
 
 #include <kxmlguiwindow.h>
 
-#include <kpDefs.h>
-#include <kpPixmapFX.h>
-#include <kpImage.h>
+#include "kpDefs.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "imagelib/kpImage.h"
 
 
 class QAction;

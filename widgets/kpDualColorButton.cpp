@@ -29,7 +29,13 @@
 #define DEBUG_KP_DUAL_COLOR_BUTTON 0
 
 
-#include <kpDualColorButton.h>
+#include "kpDualColorButton.h"
+
+#include "views/kpView.h"
+
+#include <KColorMimeData>
+#include <KDebug>
+#include <KIconLoader>
 
 #include <QApplication>
 #include <QBitmap>
@@ -38,12 +44,6 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <qdrawutil.h>
-
-#include <KColorMimeData>
-#include <KDebug>
-#include <KIconLoader>
-
-#include <kpView.h>
 
 //---------------------------------------------------------------------
 

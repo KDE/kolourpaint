@@ -30,10 +30,10 @@
 #define kpEffectClearCommand_H
 
 
-#include <kpCommand.h>
+#include "commands/kpCommand.h"
 
-#include <kpColor.h>
-#include <kpImage.h>
+#include "imagelib/kpColor.h"
+#include "imagelib/kpImage.h"
 
 
 class kpEffectClearCommand : public kpCommand

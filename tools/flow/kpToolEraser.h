@@ -30,7 +30,7 @@
 #define KP_TOOL_ERASER_H
 
 
-#include <kpToolFlowPixmapBase.h>
+#include "kpToolFlowPixmapBase.h"
 
 
 // Eraser = Brush but with foreground & background colors swapped (a few square brushes)

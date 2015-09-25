@@ -30,7 +30,7 @@
 #define KP_TOOL_ELLIPSE_H
 
 
-#include <kpToolRectangularBase.h>
+#include "tools/rectangular/kpToolRectangularBase.h"
 
 
 class kpToolEllipse : public kpToolRectangularBase

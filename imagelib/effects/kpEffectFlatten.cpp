@@ -29,7 +29,7 @@
 #define DEBUG_KP_EFFECT_FLATTEN 0
 
 
-#include <kpEffectFlatten.h>
+#include "kpEffectFlatten.h"
 
 #include <qimageblitz.h>
 
@@ -38,7 +38,7 @@
 
 #include <kdebug.h>
 
-#include <kpPixmapFX.h>
+#include "pixmapfx/kpPixmapFX.h"
 
 
 // public static

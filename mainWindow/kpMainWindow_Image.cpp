@@ -26,13 +26,36 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "mainWindow/kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
-#include <qaction.h>
-#include <qcolor.h>
-#include <qmenubar.h>
-#include <qsize.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "imagelib/kpColor.h"
+#include "kpDefs.h"
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "commands/kpCommandHistory.h"
+#include "document/kpDocument.h"
+#include "commands/imagelib/effects/kpEffectInvertCommand.h"
+#include "commands/imagelib/effects/kpEffectReduceColorsCommand.h"
+#include "dialogs/imagelib/effects/kpEffectsDialog.h"
+#include "commands/imagelib/effects/kpEffectClearCommand.h"
+#include "commands/imagelib/effects/kpEffectGrayscaleCommand.h"
+#include "commands/kpMacroCommand.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "commands/tools/selection/kpToolSelectionCreateCommand.h"
+#include "commands/tools/selection/kpToolSelectionPullFromDocumentCommand.h"
+#include "commands/tools/selection/text/kpToolTextGiveContentCommand.h"
+#include "imagelib/transforms/kpTransformAutoCrop.h"
+#include "imagelib/transforms/kpTransformCrop.h"
+#include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
+#include "commands/imagelib/transforms/kpTransformFlipCommand.h"
+#include "commands/imagelib/transforms/kpTransformResizeScaleCommand.h"
+#include "dialogs/imagelib/transforms/kpTransformResizeScaleDialog.h"
+#include "commands/imagelib/transforms/kpTransformRotateCommand.h"
+#include "dialogs/imagelib/transforms/kpTransformRotateDialog.h"
+#include "commands/imagelib/transforms/kpTransformSkewCommand.h"
+#include "dialogs/imagelib/transforms/kpTransformSkewDialog.h"
+#include "views/manager/kpViewManager.h"
 
 #include <kactioncollection.h>
 #include <kapplication.h>
@@ -43,33 +66,10 @@
 #include <KToggleAction>
 #include <kiconloader.h>
 
-#include <kpAbstractImageSelection.h>
-#include <kpColor.h>
-#include <kpDefs.h>
-#include <kpColorToolBar.h>
-#include <kpCommandHistory.h>
-#include <kpDocument.h>
-#include <kpEffectInvertCommand.h>
-#include <kpEffectReduceColorsCommand.h>
-#include <kpEffectsDialog.h>
-#include <kpEffectClearCommand.h>
-#include <kpEffectGrayscaleCommand.h>
-#include <kpMacroCommand.h>
-#include <kpTextSelection.h>
-#include <kpToolSelectionCreateCommand.h>
-#include <kpToolSelectionPullFromDocumentCommand.h>
-#include <kpToolTextGiveContentCommand.h>
-#include <kpTransformAutoCrop.h>
-#include <kpTransformCrop.h>
-#include <kpTransformDialogEnvironment.h>
-#include <kpTransformFlipCommand.h>
-#include <kpTransformResizeScaleCommand.h>
-#include <kpTransformResizeScaleDialog.h>
-#include <kpTransformRotateCommand.h>
-#include <kpTransformRotateDialog.h>
-#include <kpTransformSkewCommand.h>
-#include <kpTransformSkewDialog.h>
-#include <kpViewManager.h>
+#include <qaction.h>
+#include <qcolor.h>
+#include <qmenubar.h>
+#include <qsize.h>
 
 
 //---------------------------------------------------------------------

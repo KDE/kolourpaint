@@ -35,8 +35,8 @@
 #include <qstring.h>
 #include <qurl.h>
 
-#include <kpImage.h>
-#include <kpPixmapFX.h>
+#include "imagelib/kpImage.h"
+#include "pixmapfx/kpPixmapFX.h"
 #undef environ
 
 class QImage;

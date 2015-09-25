@@ -29,18 +29,18 @@
 #define DEBUG_KP_TOOL_COLOR_PICKER 0
 
 
-#include <kpToolColorPicker.h>
+#include "kpToolColorPicker.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpColorToolBar.h>
-#include <kpCommandHistory.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpPixmapFX.h>
-#include <kpToolColorPickerCommand.h>
-#include <kpToolEnvironment.h>
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "commands/kpCommandHistory.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "commands/tools/kpToolColorPickerCommand.h"
+#include "environments/tools/kpToolEnvironment.h"
 
 
 kpToolColorPicker::kpToolColorPicker (kpToolEnvironment *environ, QObject *parent)

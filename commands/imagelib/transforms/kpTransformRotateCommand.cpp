@@ -28,7 +28,16 @@
 #define DEBUG_KP_TOOL_ROTATE 0
 
 
-#include <kpTransformRotateCommand.h>
+#include "kpTransformRotateCommand.h"
+
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "layers/selections/image/kpFreeFormImageSelection.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "layers/selections/image/kpRectangularImageSelection.h"
+#include "views/manager/kpViewManager.h"
 
 #include <qapplication.h>
 #include <qpixmap.h>
@@ -37,15 +46,6 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-
-#include <kpAbstractImageSelection.h>
-#include <kpCommandEnvironment.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpFreeFormImageSelection.h>
-#include <kpPixmapFX.h>
-#include <kpRectangularImageSelection.h>
-#include <kpViewManager.h>
 
 
 kpTransformRotateCommand::kpTransformRotateCommand (bool actOnSelection,

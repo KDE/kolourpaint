@@ -29,7 +29,10 @@
 #define DEBUG_KP_EFFECT_INVERT 0
 
 
-#include <kpEffectInvertCommand.h>
+#include "kpEffectInvertCommand.h"
+
+#include "imagelib/effects/kpEffectInvert.h"
+#include "pixmapfx/kpPixmapFX.h"
 
 #include <qcheckbox.h>
 #include <qimage.h>
@@ -38,9 +41,6 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-
-#include <kpEffectInvert.h>
-#include <kpPixmapFX.h>
 
 
 kpEffectInvertCommand::kpEffectInvertCommand (int channels,

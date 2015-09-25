@@ -29,13 +29,13 @@
 
 // TODO: Clarence's code review
 
-#include <kpEffectToneEnhance.h>
+#include "kpEffectToneEnhance.h"
 
 #include <qimage.h>
 
 #include <kdebug.h>
 
-#include <kpPixmapFX.h>
+#include "pixmapfx/kpPixmapFX.h"
 
 
 #define RED_WEIGHT 77

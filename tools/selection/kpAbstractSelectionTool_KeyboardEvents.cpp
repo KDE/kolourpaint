@@ -29,12 +29,13 @@
 #define DEBUG_KP_TOOL_SELECTION 0
 
 
-#include <kpDocument.h>
-#include <kpAbstractSelectionTool.h>
-#include <kpAbstractSelectionToolPrivate.h>
-#include <kpToolSelectionEnvironment.h>
-#include <kpToolSelectionMoveCommand.h>
-#include <kpAbstractSelection.h>
+#include "kpAbstractSelectionTool.h"
+#include "kpAbstractSelectionToolPrivate.h"
+
+#include "document/kpDocument.h"
+#include "environments/tools/selection/kpToolSelectionEnvironment.h"
+#include "commands/tools/selection/kpToolSelectionMoveCommand.h"
+#include "layers/selections/kpAbstractSelection.h"
 
 #include <qevent.h>
 

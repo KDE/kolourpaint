@@ -29,19 +29,19 @@
 #define DEBUG_KP_TOOL_WIDGET_ERASER_SIZE 0
 
 
-#include <kpToolWidgetEraserSize.h>
+#include "kpToolWidgetEraserSize.h"
 
-#include <qbitmap.h>
-#include <qpainter.h>
-#include <qpixmap.h>
+#include "imagelib/kpColor.h"
+#include "imagelib/kpPainter.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "tools/kpTool.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpColor.h>
-#include <kpPainter.h>
-#include <kpPixmapFX.h>
-#include <kpTool.h>
+#include <qbitmap.h>
+#include <qpainter.h>
+#include <qpixmap.h>
 
 
 static int EraserSizes [] = {2, 3, 5, 9, 17, 29};

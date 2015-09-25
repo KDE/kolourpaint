@@ -24,8 +24,8 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <kpEffectHSVCommand.h>
-#include <kpEffectHSV.h>
+#include "kpEffectHSVCommand.h"
+#include "imagelib/effects/kpEffectHSV.h"
 
 #include <klocale.h>
 

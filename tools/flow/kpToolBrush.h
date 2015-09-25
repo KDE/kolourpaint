@@ -30,7 +30,7 @@
 #define KP_TOOL_BRUSH_H
 
 
-#include <kpToolFlowPixmapBase.h>
+#include "kpToolFlowPixmapBase.h"
 
 
 // Brush = draws pixmaps, "interpolates" by "sweeping" pixmaps along a line (interesting brushes)

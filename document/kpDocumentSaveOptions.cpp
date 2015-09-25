@@ -28,18 +28,18 @@
 #define DEBUG_KP_DOCUMENT_SAVE_OPTIONS 0
 
 
-#include <kpDocumentSaveOptions.h>
+#include "kpDocumentSaveOptions.h"
 
-#include <qbitmap.h>
-#include <QImage>
-#include <qstring.h>
+#include "kpDefs.h"
+#include "pixmapfx/kpPixmapFX.h"
 
 #include <kconfiggroup.h>
 #include <kdebug.h>
 #include <ksharedconfig.h>
 
-#include <kpDefs.h>
-#include <kpPixmapFX.h>
+#include <qbitmap.h>
+#include <QImage>
+#include <qstring.h>
 
 //---------------------------------------------------------------------
 

@@ -28,22 +28,22 @@
 
 #include "kpColorCollection.h"
 
-#include <QDir>
-#include <QFile>
-#include <QSaveFile>
-#include <QStandardPaths>
-#include <QTemporaryFile>
-#include <QTextStream>
+#include "kpUrlFormatter.h"
 
 #include <kio/netaccess.h>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <kdebug.h>
 #include <kstringhandler.h>
-#include <QUrl>
 #include <kdebug.h>
 
-#include <kpUrlFormatter.h>
+#include <QDir>
+#include <QFile>
+#include <QSaveFile>
+#include <QStandardPaths>
+#include <QTemporaryFile>
+#include <QTextStream>
+#include <QUrl>
 
 struct ColorNode
 {

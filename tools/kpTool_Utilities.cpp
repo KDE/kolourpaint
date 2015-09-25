@@ -33,8 +33,8 @@
 #define DEBUG_KP_TOOL 0
 
 
-#include <kpTool.h>
-#include <kpToolPrivate.h>
+#include "tools/kpTool.h"
+#include "kpToolPrivate.h"
 
 #include <qcursor.h>
 #include <qpixmap.h>
@@ -42,11 +42,11 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
-#include <kpCommandSize.h>
-#include <kpDefs.h>
-#include <kpPainter.h>
-#include <kpPixmapFX.h>
-#include <kpView.h>
+#include "commands/kpCommandSize.h"
+#include "kpDefs.h"
+#include "imagelib/kpPainter.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "views/kpView.h"
 
 //---------------------------------------------------------------------
 

@@ -47,8 +47,8 @@
 #define DEBUG_KP_VIEW_MANAGER 0
 
 
-#include <kpViewManager.h>
-#include <kpViewManagerPrivate.h>
+#include "kpViewManager.h"
+#include "kpViewManagerPrivate.h"
 
 #include <qapplication.h>
 #include <qlist.h>
@@ -57,13 +57,13 @@
 
 #include <kdebug.h>
 
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpTempImage.h>
-#include <kpTextSelection.h>
-#include <kpTool.h>
-#include <kpView.h>
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "mainWindow/kpMainWindow.h"
+#include "layers/tempImage/kpTempImage.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "tools/kpTool.h"
+#include "views/kpView.h"
 
 
 // public

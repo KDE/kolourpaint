@@ -30,7 +30,7 @@
 #define kpCommand_H
 
 
-#include <kpCommandSize.h>
+#include "kpCommandSize.h"
 #undef environ  // macro on win32
 
 

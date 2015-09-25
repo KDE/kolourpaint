@@ -28,7 +28,7 @@
 #define DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET 0
 
 
-#include <kpDocumentSaveOptionsPreviewDialog.h>
+#include "kpDocumentSaveOptionsPreviewDialog.h"
 
 #include <qevent.h>
 #include <qgridlayout.h>
@@ -40,12 +40,12 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpCommandSize.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpPixmapFX.h>
-#include <kpResizeSignallingLabel.h>
-#include <kpTransformPreviewDialog.h>
+#include "commands/kpCommandSize.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "generic/widgets/kpResizeSignallingLabel.h"
+#include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"
 
 
 // protected static

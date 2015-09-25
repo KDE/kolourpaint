@@ -25,9 +25,9 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <kpToolAction.h>
+#include "tools/kpToolAction.h"
 #include <kactioncollection.h>
-#include <kpTool.h>
+#include "tools/kpTool.h"
 
 #include <kiconloader.h>
 

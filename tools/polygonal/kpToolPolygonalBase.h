@@ -38,10 +38,10 @@
 #include <qpolygon.h>
 #include <qrect.h>
 
-#include <kpColor.h>
-#include <kpImage.h>
-#include <kpTool.h>
-#include <kpToolWidgetFillStyle.h>
+#include "imagelib/kpColor.h"
+#include "imagelib/kpImage.h"
+#include "tools/kpTool.h"
+#include "widgets/toolbars/options/kpToolWidgetFillStyle.h"
 
 
 class QPoint;

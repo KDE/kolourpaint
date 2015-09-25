@@ -29,12 +29,12 @@
 #define DEBUG_KP_TOOL_POLYGON 0
 
 
-#include <kpToolPolygon.h>
+#include "kpToolPolygon.h"
 
 #include <klocale.h>
 
-#include <kpPainter.h>
-#include <kpToolToolBar.h>
+#include "imagelib/kpPainter.h"
+#include "widgets/toolbars/kpToolToolBar.h"
 
 
 static void DrawPolygonShape (kpImage *image,

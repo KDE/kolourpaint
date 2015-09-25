@@ -29,7 +29,7 @@
 #define DEBUG_KP_TOOL_COLOR_ERASER 0
 
 
-#include <kpToolColorEraser.h>
+#include "kpToolColorEraser.h"
 
 #include <qbitmap.h>
 #include <qimage.h>
@@ -39,14 +39,14 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpColor.h>
-#include <kpCommandHistory.h>
-#include <kpDocument.h>
-#include <kpMacroCommand.h>
-#include <kpPainter.h>
-#include <kpPixmapFX.h>
-#include <kpToolFlowCommand.h>
-#include <kpToolEnvironment.h>
+#include "imagelib/kpColor.h"
+#include "commands/kpCommandHistory.h"
+#include "document/kpDocument.h"
+#include "commands/kpMacroCommand.h"
+#include "imagelib/kpPainter.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "commands/tools/flow/kpToolFlowCommand.h"
+#include "environments/tools/kpToolEnvironment.h"
 
 
 kpToolColorEraser::kpToolColorEraser (kpToolEnvironment *environ, QObject *parent)

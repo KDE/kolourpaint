@@ -33,8 +33,8 @@
 #include <QImage>
 #include <qpoint.h>
 
-#include <kpColor.h>
-#include <kpTransformPreviewDialog.h>
+#include "imagelib/kpColor.h"
+#include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"
 
 
 class QButtonGroup;

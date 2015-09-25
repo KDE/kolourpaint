@@ -44,29 +44,29 @@
 #define DEBUG_KP_TOOL_AUTO_CROP 0
 
 
-#include <kpTransformAutoCrop.h>
+#include "kpTransformAutoCrop.h"
 
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qimage.h>
-#include <qpainter.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "commands/kpCommandHistory.h"
+#include "document/kpDocument.h"
+#include "mainWindow/kpMainWindow.h"
+#include "imagelib/kpPainter.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "layers/selections/image/kpRectangularImageSelection.h"
+#include "generic/kpSetOverrideCursorSaver.h"
+#include "tools/kpTool.h"
+#include "views/manager/kpViewManager.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include <kpAbstractImageSelection.h>
-#include <kpColorToolBar.h>
-#include <kpCommandEnvironment.h>
-#include <kpCommandHistory.h>
-#include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpPainter.h>
-#include <kpPixmapFX.h>
-#include <kpRectangularImageSelection.h>
-#include <kpSetOverrideCursorSaver.h>
-#include <kpTool.h>
-#include <kpViewManager.h>
+#include <qapplication.h>
+#include <qbitmap.h>
+#include <qimage.h>
+#include <qpainter.h>
 
 //---------------------------------------------------------------------
 

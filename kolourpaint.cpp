@@ -29,7 +29,7 @@
 #include <kaboutdata.h>
 #include <kdeversion.h>
 
-#include <kpMainWindow.h>
+#include "mainWindow/kpMainWindow.h"
 #include <kolourpaintlicense.h>
 
 #include <QApplication>

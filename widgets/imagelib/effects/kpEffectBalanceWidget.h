@@ -31,8 +31,8 @@
 
 #include <QSpinBox>
 
-#include <kpEffectWidgetBase.h>
-#include <kpImage.h>
+#include "kpEffectWidgetBase.h"
+#include "imagelib/kpImage.h"
 
 
 class QLabel;

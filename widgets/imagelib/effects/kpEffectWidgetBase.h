@@ -32,7 +32,7 @@
 
 #include <qwidget.h>
 
-#include <kpImage.h>
+#include "imagelib/kpImage.h"
 
 
 class kpCommandEnvironment;

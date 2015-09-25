@@ -34,7 +34,7 @@
 #include <qstring.h>
 #include <qlinkedlist.h>
 
-#include <kpCommandSize.h>
+#include "commands/kpCommandSize.h"
 
 class QAction;
 

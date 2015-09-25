@@ -29,19 +29,19 @@
 #define DEBUG_KP_EFFECT_INVERT 0
 
 
-#include <kpEffectInvertWidget.h>
+#include "kpEffectInvertWidget.h"
+
+#include "imagelib/effects/kpEffectInvert.h"
+#include "commands/imagelib/effects/kpEffectInvertCommand.h"
+#include "pixmapfx/kpPixmapFX.h"
+
+#include <kdebug.h>
+#include <klocale.h>
 
 #include <qcheckbox.h>
 #include <qimage.h>
 #include <qlayout.h>
 #include <qpixmap.h>
-
-#include <kdebug.h>
-#include <klocale.h>
-
-#include <kpEffectInvert.h>
-#include <kpEffectInvertCommand.h>
-#include <kpPixmapFX.h>
 
 
 kpEffectInvertWidget::kpEffectInvertWidget (bool actOnSelection,

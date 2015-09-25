@@ -32,8 +32,8 @@
 
 #include <qrect.h>
 
-#include <kpTempImage.h>
-#include <kpTool.h>
+#include "layers/tempImage/kpTempImage.h"
+#include "tools/kpTool.h"
 
 
 class QPoint;

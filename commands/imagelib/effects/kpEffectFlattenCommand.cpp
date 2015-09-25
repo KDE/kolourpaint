@@ -29,12 +29,11 @@
 #define DEBUG_KP_EFFECT_FLATTEN 0
 
 
-#include <kpEffectFlattenCommand.h>
+#include "kpEffectFlattenCommand.h"
+#include "imagelib/effects/kpEffectFlatten.h"
 
 #include <kdebug.h>
 #include <klocale.h>
-
-#include <kpEffectFlatten.h>
 
 
 kpEffectFlattenCommand::kpEffectFlattenCommand (const QColor &color1,

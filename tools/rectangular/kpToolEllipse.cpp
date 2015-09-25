@@ -26,8 +26,9 @@
 */
 
 
-#include <kpToolEllipse.h>
-#include <kpPainter.h>
+#include "kpToolEllipse.h"
+
+#include "imagelib/kpPainter.h"
 
 #include <klocale.h>
 

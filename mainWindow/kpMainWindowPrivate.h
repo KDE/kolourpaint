@@ -33,7 +33,7 @@
 #define DEBUG_KP_MAIN_WINDOW 0
 
 
-#include <kpDocumentSaveOptions.h>
+#include "document/kpDocumentSaveOptions.h"
 
 
 class QAction;

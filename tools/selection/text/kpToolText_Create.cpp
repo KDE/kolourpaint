@@ -28,18 +28,18 @@
 #define DEBUG_KP_TOOL_TEXT 0
 
 
-#include <kpToolText.h>
-#include <kpToolTextPrivate.h>
+#include "tools/selection/text/kpToolText.h"
+#include "kpToolTextPrivate.h"
 
 #include <QList>
 
 #include <KLocalizedString>
 #include <KDebug>
 
-#include <kpDocument.h>
-#include <kpTextSelection.h>
-#include <kpToolSelectionEnvironment.h>
-#include <kpViewManager.h>
+#include "document/kpDocument.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "environments/tools/selection/kpToolSelectionEnvironment.h"
+#include "views/manager/kpViewManager.h"
 
 
 // protected virtual [kpAbstractSelectionTool]

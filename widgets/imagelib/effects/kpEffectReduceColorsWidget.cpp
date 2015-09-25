@@ -29,7 +29,14 @@
 #define DEBUG_KP_EFFECT_REDUCE_COLORS 0
 
 
-#include <kpEffectReduceColorsWidget.h>
+#include "kpEffectReduceColorsWidget.h"
+
+#include "imagelib/effects/kpEffectReduceColors.h"
+#include "commands/imagelib/effects/kpEffectReduceColorsCommand.h"
+#include "pixmapfx/kpPixmapFX.h"
+
+#include <kdebug.h>
+#include <klocale.h>
 
 #include <qbitmap.h>
 #include <qbuttongroup.h>
@@ -38,13 +45,6 @@
 #include <qlayout.h>
 #include <qpixmap.h>
 #include <qradiobutton.h>
-
-#include <kdebug.h>
-#include <klocale.h>
-
-#include <kpEffectReduceColors.h>
-#include <kpEffectReduceColorsCommand.h>
-#include <kpPixmapFX.h>
 
 
 kpEffectReduceColorsWidget::kpEffectReduceColorsWidget (bool actOnSelection,

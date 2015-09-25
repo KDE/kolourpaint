@@ -28,8 +28,8 @@
 #define DEBUG_KP_DOCUMENT 0
 
 
-#include <kpDocument.h>
-#include <kpDocumentPrivate.h>
+#include "kpDocument.h"
+#include "kpDocumentPrivate.h"
 
 #include <math.h>
 
@@ -54,18 +54,18 @@
 #include <kmessagebox.h>
 #include <kmimetype.h>  // TODO: isn't this in KIO?
 
-#include <kpColor.h>
-#include <kpColorToolBar.h>
-#include <kpDefs.h>
-#include <kpDocumentEnvironment.h>
-#include <kpDocumentSaveOptions.h>
-#include <kpDocumentMetaInfo.h>
-#include <kpEffectReduceColors.h>
-#include <kpPixmapFX.h>
-#include <kpTool.h>
-#include <kpToolToolBar.h>
-#include <kpUrlFormatter.h>
-#include <kpViewManager.h>
+#include "imagelib/kpColor.h"
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "kpDefs.h"
+#include "environments/document/kpDocumentEnvironment.h"
+#include "document/kpDocumentSaveOptions.h"
+#include "imagelib/kpDocumentMetaInfo.h"
+#include "imagelib/effects/kpEffectReduceColors.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "tools/kpTool.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "lgpl/generic/kpUrlFormatter.h"
+#include "views/manager/kpViewManager.h"
 
 
 bool kpDocument::save (bool overwritePrompt, bool lossyPrompt)

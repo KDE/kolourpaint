@@ -28,18 +28,18 @@
 #define DEBUG_KP_TOOL_TEXT 0
 
 
-#include <kpToolText.h>
-#include <kpToolTextPrivate.h>
+#include "kpToolText.h"
+#include "kpToolTextPrivate.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpToolSelectionEnvironment.h>
-#include <kpToolTextBackspaceCommand.h>
-#include <kpToolTextDeleteCommand.h>
-#include <kpToolTextEnterCommand.h>
-#include <kpToolTextInsertCommand.h>
-#include <kpViewManager.h>
+#include "environments/tools/selection/kpToolSelectionEnvironment.h"
+#include "commands/tools/selection/text/kpToolTextBackspaceCommand.h"
+#include "commands/tools/selection/text/kpToolTextDeleteCommand.h"
+#include "commands/tools/selection/text/kpToolTextEnterCommand.h"
+#include "commands/tools/selection/text/kpToolTextInsertCommand.h"
+#include "views/manager/kpViewManager.h"
 
 
 // private

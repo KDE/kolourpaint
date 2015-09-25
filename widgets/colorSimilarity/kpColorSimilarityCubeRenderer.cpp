@@ -29,7 +29,7 @@
 #define DEBUG_KP_COLOR_SIMILARITY_CUBE 0
 
 
-#include <kpColorSimilarityCubeRenderer.h>
+#include "kpColorSimilarityCubeRenderer.h"
 
 #include <math.h>
 
@@ -38,8 +38,8 @@
 
 #include <kdebug.h>
 
-#include <kpColorSimilarityHolder.h>
-#include <kpDefs.h>
+#include "widgets/colorSimilarity/kpColorSimilarityHolder.h"
+#include "kpDefs.h"
 
 //---------------------------------------------------------------------
 

@@ -30,7 +30,7 @@
 #define KP_TOOL_POLYLINE_H
 
 
-#include <kpToolPolygonalBase.h>
+#include "kpToolPolygonalBase.h"
 
 
 class kpToolPolyline : public kpToolPolygonalBase

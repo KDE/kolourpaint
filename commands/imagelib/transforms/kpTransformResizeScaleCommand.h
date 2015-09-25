@@ -32,9 +32,9 @@
 
 #include <qpixmap.h>
 
-#include <kpColor.h>
-#include <kpCommand.h>
-#include <kpImage.h>
+#include "imagelib/kpColor.h"
+#include "commands/kpCommand.h"
+#include "imagelib/kpImage.h"
 
 
 class QSize;

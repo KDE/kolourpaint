@@ -29,16 +29,16 @@
 #define DEBUG_KP_EFFECT_BLUR_SHARPEN 0
 
 
-#include <kpEffectBlurSharpenWidget.h>
+#include "kpEffectBlurSharpenWidget.h"
 
-#include <qgridlayout.h>
-#include <qlabel.h>
-#include <QSpinBox>
+#include "commands/imagelib/effects/kpEffectBlurSharpenCommand.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpEffectBlurSharpenCommand.h>
+#include <qgridlayout.h>
+#include <qlabel.h>
+#include <QSpinBox>
 
 
 kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,

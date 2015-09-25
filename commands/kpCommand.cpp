@@ -29,9 +29,9 @@
 #define DEBUG_KP_COMMAND_HISTORY 0
 
 
-#include <kpCommand.h>
+#include "kpCommand.h"
 
-#include <kpCommandEnvironment.h>
+#include "environments/commands/kpCommandEnvironment.h"
 
 
 kpCommand::kpCommand (kpCommandEnvironment *environ)

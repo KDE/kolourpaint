@@ -29,7 +29,19 @@
 #define DEBUG_KP_TOOL_SELECTION 0
 
 
-#include <kpToolSelectionMoveCommand.h>
+#include "kpToolSelectionMoveCommand.h"
+
+#include "layers/selections/kpAbstractSelection.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "tools/kpTool.h"
+#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
+
+#include <kdebug.h>
+#include <klocale.h>
 
 #include <qapplication.h>
 #include <qbitmap.h>
@@ -40,18 +52,6 @@
 #include <qpixmap.h>
 #include <qpolygon.h>
 #include <qtimer.h>
-
-#include <kdebug.h>
-#include <klocale.h>
-
-#include <kpAbstractSelection.h>
-#include <kpCommandEnvironment.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpTool.h>
-#include <kpToolWidgetOpaqueOrTransparent.h>
-#include <kpView.h>
-#include <kpViewManager.h>
 
 
 kpToolSelectionMoveCommand::kpToolSelectionMoveCommand (const QString &name,

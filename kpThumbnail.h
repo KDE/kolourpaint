@@ -30,7 +30,7 @@
 #define KP_THUMBNAIL_H
 
 
-#include <kpSubWindow.h>
+#include "generic/widgets/kpSubWindow.h"
 
 
 class QMoveEvent;

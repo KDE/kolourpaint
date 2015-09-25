@@ -29,7 +29,7 @@
 #define DEBUG_KP_COLOR_TOOL_BAR 0
 
 
-#include <kpColorToolBar.h>
+#include "widgets/toolbars/kpColorToolBar.h"
 
 #include <QBoxLayout>
 #include <QDragEnterEvent>
@@ -39,12 +39,12 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpColorCells.h>
-#include <kpColorPalette.h>
-#include <kpColorSimilarityToolBarItem.h>
-#include <kpDefs.h>
-#include <kpDualColorButton.h>
-#include <kpUrlFormatter.h>
+#include "widgets/kpColorCells.h"
+#include "widgets/kpColorPalette.h"
+#include "widgets/colorSimilarity/kpColorSimilarityToolBarItem.h"
+#include "kpDefs.h"
+#include "widgets/kpDualColorButton.h"
+#include "lgpl/generic/kpUrlFormatter.h"
 
 //---------------------------------------------------------------------
 

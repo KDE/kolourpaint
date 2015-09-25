@@ -30,8 +30,8 @@
 #define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 1) || 0)
 
 
-#include <kpView.h>
-#include <kpViewPrivate.h>
+#include "views/kpView.h"
+#include "kpViewPrivate.h"
 
 #include <QPainter>
 #include <QPaintEvent>
@@ -40,13 +40,13 @@
 
 #include <KDebug>
 
-#include <kpAbstractSelection.h>
-#include <kpColor.h>
-#include <kpDocument.h>
-#include <kpTempImage.h>
-#include <kpTextSelection.h>
-#include <kpViewManager.h>
-#include <kpViewScrollableContainer.h>
+#include "layers/selections/kpAbstractSelection.h"
+#include "imagelib/kpColor.h"
+#include "document/kpDocument.h"
+#include "layers/tempImage/kpTempImage.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "views/manager/kpViewManager.h"
+#include "kpViewScrollableContainer.h"
 
 //---------------------------------------------------------------------
 

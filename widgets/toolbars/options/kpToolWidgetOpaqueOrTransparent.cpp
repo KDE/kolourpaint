@@ -28,7 +28,7 @@
 #define DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT 0
 
 
-#include <kpToolWidgetOpaqueOrTransparent.h>
+#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
 
 #include <kdebug.h>
 #include <kiconloader.h>

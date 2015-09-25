@@ -26,15 +26,15 @@
 */
 
 
-#include <kpEffectClearCommand.h>
+#include "kpEffectClearCommand.h"
+
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "pixmapfx/kpPixmapFX.h"
 
 #include <kdebug.h>
 #include <klocale.h>
-
-#include <kpAbstractImageSelection.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpPixmapFX.h>
 
 
 kpEffectClearCommand::kpEffectClearCommand (bool actOnSelection,

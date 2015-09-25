@@ -30,9 +30,9 @@
 #define kpTransformSkewCommand_H
 
 
-#include <kpColor.h>
-#include <kpImage.h>
-#include <kpCommand.h>
+#include "imagelib/kpColor.h"
+#include "imagelib/kpImage.h"
+#include "commands/kpCommand.h"
 
 
 class kpAbstractSelection;

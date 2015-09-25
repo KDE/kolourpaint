@@ -30,12 +30,12 @@
 #define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 1) || 0)
 
 
-#include <kpView.h>
-#include <kpViewPrivate.h>
+#include "views/kpView.h"
+#include "kpViewPrivate.h"
 
-#include <kpAbstractSelection.h>
-#include <kpTextSelection.h>
-#include <kpTool.h>
+#include "layers/selections/kpAbstractSelection.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "tools/kpTool.h"
 
 
 // public

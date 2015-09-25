@@ -30,8 +30,8 @@
 #define kpEffectInvertCommand_H
 
 
-#include <kpEffectCommandBase.h>
-#include <kpImage.h>
+#include "kpEffectCommandBase.h"
+#include "imagelib/kpImage.h"
 
 
 

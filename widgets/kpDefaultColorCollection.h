@@ -30,7 +30,7 @@
 #define kpDefaultColorCollection_H
 
 
-#include <kpColorCollection.h>
+#include "lgpl/generic/kpColorCollection.h"
 
 
 //

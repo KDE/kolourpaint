@@ -32,20 +32,20 @@
 #define DEBUG_KP_SELECTION 0
 
 
-#include <kpTextSelection.h>
-#include <kpTextSelectionPrivate.h>
+#include "kpTextSelection.h"
+#include "kpTextSelectionPrivate.h"
+
+#include "kpTextStyle.h"
+#include "kpPreeditText.h"
+#include "pixmapfx/kpPixmapFX.h"
+
+#include <KDebug>
 
 #include <QBitmap>
 #include <QFont>
 #include <QList>
 #include <QPainter>
 #include <QTextCharFormat>
-
-#include <KDebug>
-
-#include <kpPixmapFX.h>
-#include <kpTextStyle.h>
-#include <kpPreeditText.h>
 
 //---------------------------------------------------------------------
 

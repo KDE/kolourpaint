@@ -29,12 +29,11 @@
 #ifndef KP_TOOL_WIDGET_ERASER_SIZE_H
 #define KP_TOOL_WIDGET_ERASER_SIZE_H
 
+#include "kpToolWidgetBase.h"
+#include "imagelib/kpColor.h"
+#include "layers/tempImage/kpTempImage.h"
 
 #include <qpixmap.h>
-
-#include <kpColor.h>
-#include <kpTempImage.h>
-#include <kpToolWidgetBase.h>
 
 
 class kpColor;

@@ -29,10 +29,9 @@
 #ifndef kpDocumentSaveOptionsPreviewDialog_H
 #define kpDocumentSaveOptionsPreviewDialog_H
 
+#include "generic/widgets/kpSubWindow.h"
 
 #include <qsize.h>
-
-#include <kpSubWindow.h>
 
 
 class QCloseEvent;

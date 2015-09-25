@@ -29,19 +29,19 @@
 #define DEBUG_KP_TOOL_CROP 0
 
 
-#include <kpTransformCrop.h>
-#include <kpTransformCropPrivate.h>
+#include "kpTransformCrop.h"
+#include "kpTransformCropPrivate.h"
 
-#include <kpAbstractImageSelection.h>
-#include <kpCommandEnvironment.h>
-#include <kpCommandHistory.h>
-#include <kpDocument.h>
-#include <kpImage.h>
-#include <kpMacroCommand.h>
-#include <kpMainWindow.h>
-#include <kpPixmapFX.h>
-#include <kpToolSelectionCreateCommand.h>
-#include <kpViewManager.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "commands/kpCommandHistory.h"
+#include "document/kpDocument.h"
+#include "imagelib/kpImage.h"
+#include "commands/kpMacroCommand.h"
+#include "mainWindow/kpMainWindow.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "commands/tools/selection/kpToolSelectionCreateCommand.h"
+#include "views/manager/kpViewManager.h"
 
 
 // See the "image selection" part of the kpTransformCrop() API Doc.

@@ -29,19 +29,19 @@
 #define DEBUG_KP_COLOR_CELLS 0
 
 
-#include <kpColorCells.h>
+#include "widgets/kpColorCells.h"
+
+#include "imagelib/kpColor.h"
+#include "lgpl/generic/kpColorCollection.h"
+#include "widgets/kpDefaultColorCollection.h"
+
+#include <KDebug>
+#include <KLocalizedString>
 
 #include <QColorDialog>
 #include <QContextMenuEvent>
 #include <QMouseEvent>
 #include <QScrollBar>
-
-#include <KDebug>
-#include <KLocalizedString>
-
-#include <kpColor.h>
-#include <kpColorCollection.h>
-#include <kpDefaultColorCollection.h>
 
 //---------------------------------------------------------------------
 //

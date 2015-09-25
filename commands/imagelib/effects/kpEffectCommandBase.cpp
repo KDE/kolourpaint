@@ -26,13 +26,13 @@
 */
 
 
-#include <kpEffectCommandBase.h>
+#include "kpEffectCommandBase.h"
 
 #include <klocale.h>
 
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpSetOverrideCursorSaver.h>
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "generic/kpSetOverrideCursorSaver.h"
 
 
 struct kpEffectCommandBasePrivate

@@ -27,7 +27,18 @@
 #define DEBUG_KP_TOOL_ROTATE 0
 
 
-#include <kpTransformRotateDialog.h>
+#include "kpTransformRotateDialog.h"
+
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "tools/kpTool.h"
+#include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
+#include "views/manager/kpViewManager.h"
+
+#include <kdebug.h>
+#include <kiconloader.h>
+#include <klocale.h>
 
 #include <qapplication.h>
 #include <qbuttongroup.h>
@@ -40,17 +51,6 @@
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <qmatrix.h>
-
-#include <kdebug.h>
-#include <kiconloader.h>
-#include <klocale.h>
-
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpPixmapFX.h>
-#include <kpTool.h>
-#include <kpTransformDialogEnvironment.h>
-#include <kpViewManager.h>
 
 
 // private static

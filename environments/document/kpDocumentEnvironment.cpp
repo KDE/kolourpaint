@@ -29,23 +29,23 @@
 #define DEBUG_KP_DOCUMENT_ENVIRONMENT 0
 
 
-#include <kpDocumentEnvironment.h>
+#include "environments/document/kpDocumentEnvironment.h"
 
 #include <KDebug>
 
-#include <kpMainWindow.h>
-#include <kpAbstractSelection.h>
-#include <kpDocument.h>
-#include <kpEllipticalImageSelection.h>
-#include <kpFreeFormImageSelection.h>
-#include <kpImageSelectionTransparency.h>
-#include <kpRectangularImageSelection.h>
-#include <kpTextSelection.h>
-#include <kpTextStyle.h>
+#include "mainWindow/kpMainWindow.h"
+#include "layers/selections/kpAbstractSelection.h"
+#include "document/kpDocument.h"
+#include "layers/selections/image/kpEllipticalImageSelection.h"
+#include "layers/selections/image/kpFreeFormImageSelection.h"
+#include "layers/selections/image/kpImageSelectionTransparency.h"
+#include "layers/selections/image/kpRectangularImageSelection.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "layers/selections/text/kpTextStyle.h"
 #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-    #include <kpTool.h>
+    #include "tools/kpTool.h"
 #endif
-#include <kpViewManager.h>
+#include "views/manager/kpViewManager.h"
 
 
 struct kpDocumentEnvironmentPrivate

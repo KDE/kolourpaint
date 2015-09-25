@@ -29,7 +29,7 @@
 #define DEBUG_KP_EFFECT_BALANCE 0
 
 
-#include <kpEffectBalance.h>
+#include "kpEffectBalance.h"
 
 #include <math.h>
 
@@ -37,7 +37,7 @@
 
 #include <kdebug.h>
 
-#include <kpPixmapFX.h>
+#include "pixmapfx/kpPixmapFX.h"
 
 
 #if DEBUG_KP_EFFECT_BALANCE

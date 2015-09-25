@@ -29,14 +29,14 @@
 #define DEBUG_KP_TOOL_FREE_FROM_SELECTION 0
 
 
-#include <kpToolFreeFormSelection.h>
+#include "kpToolFreeFormSelection.h"
 
 #include <KDebug>
 #include <KLocalizedString>
 
-#include <kpDocument.h>
-#include <kpFreeFormImageSelection.h>
-#include <kpToolSelectionEnvironment.h>
+#include "document/kpDocument.h"
+#include "layers/selections/image/kpFreeFormImageSelection.h"
+#include "environments/tools/selection/kpToolSelectionEnvironment.h"
 
 //---------------------------------------------------------------------
 

@@ -29,13 +29,13 @@
 #define DEBUG_KP_SELECTION 0
 
 
-#include <kpSelectionFactory.h>
+#include "kpSelectionFactory.h"
 
 #include <QDataStream>
 
-#include <kpRectangularImageSelection.h>
-#include <kpEllipticalImageSelection.h>
-#include <kpFreeFormImageSelection.h>
+#include "layers/selections/image/kpRectangularImageSelection.h"
+#include "layers/selections/image/kpEllipticalImageSelection.h"
+#include "layers/selections/image/kpFreeFormImageSelection.h"
 
 //---------------------------------------------------------------------
 

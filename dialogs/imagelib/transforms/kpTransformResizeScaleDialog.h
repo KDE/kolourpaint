@@ -31,8 +31,8 @@
 
 #include <QDialog>
 
-#include <kpColor.h>
-#include <kpTransformResizeScaleCommand.h>
+#include "imagelib/kpColor.h"
+#include "commands/imagelib/transforms/kpTransformResizeScaleCommand.h"
 
 
 class QCheckBox;

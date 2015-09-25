@@ -25,8 +25,8 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "mainWindow/kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
 #include <kactioncollection.h>
 #include <kapplication.h>
@@ -40,13 +40,13 @@
 #include <ktoggleaction.h>
 #include <kiconloader.h>
 
-#include <kpColorToolBar.h>
-#include <kpDefs.h>
-#include <kpTextStyle.h>
-#include <kpToolText.h>
-#include <kpToolToolBar.h>
-#include <kpToolWidgetOpaqueOrTransparent.h>
-#include <kpZoomedView.h>
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "kpDefs.h"
+#include "layers/selections/text/kpTextStyle.h"
+#include "tools/selection/text/kpToolText.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
+#include "views/kpZoomedView.h"
 
 
 // private

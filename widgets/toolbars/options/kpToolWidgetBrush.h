@@ -29,12 +29,11 @@
 #ifndef KP_TOOL_WIDGET_BRUSH_H
 #define KP_TOOL_WIDGET_BRUSH_H
 
+#include "kpToolWidgetBase.h"
+#include "imagelib/kpColor.h"
+#include "layers/tempImage/kpTempImage.h"
 
 #include <qpixmap.h>
-
-#include <kpColor.h>
-#include <kpTempImage.h>
-#include <kpToolWidgetBase.h>
 
 
 class kpToolWidgetBrush : public kpToolWidgetBase

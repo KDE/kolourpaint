@@ -28,13 +28,13 @@
 #define DEBUG_KP_TOOL_CROP 0
 
 
-#include <kpTransformCrop.h>
-#include <kpTransformCropPrivate.h>
+#include "kpTransformCrop.h"
+#include "kpTransformCropPrivate.h"
 
-#include <kpEffectClearCommand.h>
-#include <kpMacroCommand.h>
-#include <kpMainWindow.h>
-#include <kpToolSelectionMoveCommand.h>
+#include "commands/imagelib/effects/kpEffectClearCommand.h"
+#include "commands/kpMacroCommand.h"
+#include "mainWindow/kpMainWindow.h"
+#include "commands/tools/selection/kpToolSelectionMoveCommand.h"
 
 
 void kpTransformCrop_TextSelection (kpMainWindow *mainWindow,

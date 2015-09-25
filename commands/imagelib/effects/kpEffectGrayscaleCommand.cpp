@@ -26,11 +26,10 @@
 */
 
 
-#include <kpEffectGrayscaleCommand.h>
+#include "kpEffectGrayscaleCommand.h"
+#include "imagelib/effects/kpEffectGrayscale.h"
 
 #include <klocale.h>
-
-#include <kpEffectGrayscale.h>
 
 
 kpEffectGrayscaleCommand::kpEffectGrayscaleCommand (

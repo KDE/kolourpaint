@@ -32,8 +32,8 @@
 
 #include <qwidget.h>
 
-#include <kpCommand.h>
-#include <kpImage.h>
+#include "commands/kpCommand.h"
+#include "imagelib/kpImage.h"
 
 
 class kpEffectCommandBase : public kpCommand

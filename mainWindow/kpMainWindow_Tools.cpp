@@ -26,8 +26,8 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "mainWindow/kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
 #include <QActionGroup>
 #include <qlist.h>
@@ -39,37 +39,37 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpColorToolBar.h>
-#include <kpCommandHistory.h>
-#include <kpDocument.h>
-#include <kpImageSelectionTransparency.h>
-#include <kpTool.h>
-#include <kpToolAction.h>
-#include <kpToolBrush.h>
-#include <kpToolColorEraser.h>
-#include <kpToolColorPicker.h>
-#include <kpToolCurve.h>
-#include <kpToolEllipticalSelection.h>
-#include <kpToolEllipse.h>
-#include <kpToolEraser.h>
-#include <kpToolFloodFill.h>
-#include <kpToolFreeFormSelection.h>
-#include <kpToolLine.h>
-#include <kpToolPen.h>
-#include <kpToolPolygon.h>
-#include <kpToolPolyline.h>
-#include <kpToolRectangle.h>
-#include <kpToolRectSelection.h>
-#include <kpToolRoundedRectangle.h>
-#include <kpToolSelectionEnvironment.h>
-#include <kpToolSpraycan.h>
-#include <kpToolText.h>
-#include <kpToolToolBar.h>
-#include <kpToolWidgetOpaqueOrTransparent.h>
-#include <kpToolZoom.h>
-#include <kpTransformResizeScaleCommand.h>
-#include <kpViewScrollableContainer.h>
-#include <kpZoomedView.h>
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "commands/kpCommandHistory.h"
+#include "document/kpDocument.h"
+#include "layers/selections/image/kpImageSelectionTransparency.h"
+#include "tools/kpTool.h"
+#include "tools/kpToolAction.h"
+#include "tools/flow/kpToolBrush.h"
+#include "tools/flow/kpToolColorEraser.h"
+#include "tools/kpToolColorPicker.h"
+#include "tools/polygonal/kpToolCurve.h"
+#include "tools/selection/image/kpToolEllipticalSelection.h"
+#include "tools/rectangular/kpToolEllipse.h"
+#include "tools/flow/kpToolEraser.h"
+#include "tools/kpToolFloodFill.h"
+#include "tools/selection/image/kpToolFreeFormSelection.h"
+#include "tools/polygonal/kpToolLine.h"
+#include "tools/flow/kpToolPen.h"
+#include "tools/polygonal/kpToolPolygon.h"
+#include "tools/polygonal/kpToolPolyline.h"
+#include "tools/rectangular/kpToolRectangle.h"
+#include "tools/selection/image/kpToolRectSelection.h"
+#include "tools/rectangular/kpToolRoundedRectangle.h"
+#include "environments/tools/selection/kpToolSelectionEnvironment.h"
+#include "tools/flow/kpToolSpraycan.h"
+#include "tools/selection/text/kpToolText.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
+#include "tools/kpToolZoom.h"
+#include "commands/imagelib/transforms/kpTransformResizeScaleCommand.h"
+#include "kpViewScrollableContainer.h"
+#include "views/kpZoomedView.h"
 
 //---------------------------------------------------------------------
 

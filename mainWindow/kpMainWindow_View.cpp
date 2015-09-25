@@ -26,8 +26,8 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "mainWindow/kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
 #include <qdatetime.h>
 #include <qpainter.h>
@@ -43,17 +43,17 @@
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
 
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpThumbnail.h>
-#include <kpTool.h>
-#include <kpToolToolBar.h>
-#include <kpUnzoomedThumbnailView.h>
-#include <kpViewManager.h>
-#include <kpViewScrollableContainer.h>
-#include <kpWidgetMapper.h>
-#include <kpZoomedView.h>
-#include <kpZoomedThumbnailView.h>
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "kpThumbnail.h"
+#include "tools/kpTool.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "views/kpUnzoomedThumbnailView.h"
+#include "views/manager/kpViewManager.h"
+#include "kpViewScrollableContainer.h"
+#include "generic/kpWidgetMapper.h"
+#include "views/kpZoomedView.h"
+#include "views/kpZoomedThumbnailView.h"
 
 
 // private

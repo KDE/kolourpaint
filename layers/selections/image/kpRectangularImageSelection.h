@@ -30,7 +30,7 @@
 #define kpRectangularImageSelection_H
 
 
-#include <kpAbstractImageSelection.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
 
 
 class kpRectangularImageSelection : public kpAbstractImageSelection

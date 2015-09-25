@@ -32,7 +32,7 @@
 
 #include <QUrl>
 
-#include <kpColorCellsBase.h>
+#include "lgpl/generic/widgets/kpColorCellsBase.h"
 
 
 class QDropEvent;

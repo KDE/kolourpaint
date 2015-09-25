@@ -26,7 +26,7 @@
 */
 
 
-#include <kpTextStyle.h>
+#include "layers/selections/text/kpTextStyle.h"
 
 #include <qdatastream.h>
 #include <qfont.h>

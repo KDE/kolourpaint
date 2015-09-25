@@ -29,13 +29,12 @@
 #define DEBUG_KP_COMMAND_SIZE 0
 
 
-#include <kpCommandSize.h>
+#include "commands/kpCommandSize.h"
+#include "layers/selections/kpAbstractSelection.h"
 
 #include <QImage>
 #include <QPolygon>
 #include <QString>
-
-#include <kpAbstractSelection.h>
 
 
 // public static

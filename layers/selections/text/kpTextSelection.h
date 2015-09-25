@@ -30,10 +30,10 @@
 #define kpTextSelection_H
 
 
-#include <kpAbstractSelection.h>
-#include <kpImage.h>
-#include <kpTextStyle.h>
-#include <kpPreeditText.h>
+#include "layers/selections/kpAbstractSelection.h"
+#include "imagelib/kpImage.h"
+#include "layers/selections/text/kpTextStyle.h"
+#include "layers/selections/text/kpPreeditText.h"
 
 //
 // A rectangular text box containing lines of text, rendered in a given text

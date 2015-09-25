@@ -35,8 +35,8 @@
 #include <qwidget.h>
 #include <QDoubleSpinBox>
 
-#include <kpDocumentMetaInfo.h>
-#include <kpDocumentSaveOptions.h>
+#include "imagelib/kpDocumentMetaInfo.h"
+#include "document/kpDocumentSaveOptions.h"
 
 
 class QComboBox;

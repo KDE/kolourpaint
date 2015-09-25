@@ -30,7 +30,7 @@
 #define kpToolSelectionEnvironment_H
 
 
-#include <kpToolEnvironment.h>
+#include "environments/tools/kpToolEnvironment.h"
 
 
 class QMenu;

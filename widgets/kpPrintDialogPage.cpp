@@ -30,7 +30,7 @@
 #define DEBUG_KP_PRINT_DIALOG_PAGE 0
 
 
-#include <kpPrintDialogPage.h>
+#include "kpPrintDialogPage.h"
 
 #include <QRadioButton>
 #include <QVBoxLayout>
@@ -39,7 +39,7 @@
 #include <KDebug>
 #include <KLocalizedString>
 
-#include <kpDefs.h>
+#include "kpDefs.h"
 
 
 struct kpPrintDialogPagePrivate

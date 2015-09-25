@@ -28,8 +28,8 @@
 // Tools' statusbar updates.
 //
 
-#include <kpTool.h>
-#include <kpToolPrivate.h>
+#include "tools/kpTool.h"
+#include "kpToolPrivate.h"
 
 #include <klocale.h>
 

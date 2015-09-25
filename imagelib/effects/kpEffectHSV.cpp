@@ -27,7 +27,7 @@
 
 // TODO: Clarence's code review
 
-#include <kpEffectHSV.h>
+#include "kpEffectHSV.h"
 
 #include <math.h>
 
@@ -36,7 +36,7 @@
 
 #include <kdebug.h>
 
-#include <kpPixmapFX.h>
+#include "pixmapfx/kpPixmapFX.h"
 
 
 static void ColorToHSV(unsigned int c, float* pHue, float* pSaturation, float* pValue)

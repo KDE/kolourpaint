@@ -29,28 +29,28 @@
 #define DEBUG_KP_TOOL_RECTANGULAR_COMMAND 0
 
 
-#include <kpToolRectangularCommand.h>
+#include "kpToolRectangularCommand.h"
+
+#include "imagelib/kpColor.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "imagelib/kpPainter.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "layers/tempImage/kpTempImage.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/options/kpToolWidgetFillStyle.h"
+#include "widgets/toolbars/options/kpToolWidgetLineWidth.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
+
+#include <kdebug.h>
+#include <klocale.h>
 
 #include <qbitmap.h>
 #include <qcursor.h>
 #include <qevent.h>
 #include <qpainter.h>
 #include <qpixmap.h>
-
-#include <kdebug.h>
-#include <klocale.h>
-
-#include <kpColor.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpPainter.h>
-#include <kpPixmapFX.h>
-#include <kpTempImage.h>
-#include <kpToolToolBar.h>
-#include <kpToolWidgetFillStyle.h>
-#include <kpToolWidgetLineWidth.h>
-#include <kpView.h>
-#include <kpViewManager.h>
 
 
 struct kpToolRectangularCommandPrivate

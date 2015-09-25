@@ -30,7 +30,7 @@
 #define kpAbstractSelectionTool_H
 
 
-#include <kpTool.h>
+#include "tools/kpTool.h"
 
 #include <QVariant>
 

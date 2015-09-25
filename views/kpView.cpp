@@ -32,8 +32,8 @@
 #define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 1) || 0)
 
 
-#include <kpView.h>
-#include <kpViewPrivate.h>
+#include "kpView.h"
+#include "kpViewPrivate.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -46,13 +46,13 @@
 
 #include <KDebug>
 
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpTextSelection.h>
-#include <kpTool.h>
-#include <kpToolToolBar.h>
-#include <kpViewManager.h>
-#include <kpViewScrollableContainer.h>
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "tools/kpTool.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "views/manager/kpViewManager.h"
+#include "kpViewScrollableContainer.h"
 
 //---------------------------------------------------------------------
 

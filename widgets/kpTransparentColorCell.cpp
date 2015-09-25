@@ -29,16 +29,16 @@
 #define DEBUG_KP_TRANSPARENT_COLOR_CELL 0
 
 
-#include <kpTransparentColorCell.h>
+#include "kpTransparentColorCell.h"
 
-#include <QContextMenuEvent>
-#include <QMouseEvent>
-#include <QPainter>
+#include "imagelib/kpColor.h"
 
 #include <KIconLoader>
 #include <KLocalizedString>
 
-#include <kpColor.h>
+#include <QContextMenuEvent>
+#include <QMouseEvent>
+#include <QPainter>
 
 //---------------------------------------------------------------------
 

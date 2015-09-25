@@ -26,12 +26,26 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
-#include <qevent.h>
-#include <qmenu.h>
-#include <qtimer.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "widgets/kpColorCells.h"
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "commands/kpCommandHistory.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "environments/document/kpDocumentEnvironment.h"
+#include "layers/selections/kpSelectionDrag.h"
+#include "kpThumbnail.h"
+#include "tools/kpTool.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "views/manager/kpViewManager.h"
+#include "kpViewScrollableContainer.h"
+#include "generic/kpWidgetMapper.h"
+#include "views/kpZoomedThumbnailView.h"
+#include "views/kpZoomedView.h"
 
 #include <kconfig.h>
 #include <kconfiggroup.h>
@@ -39,23 +53,9 @@
 #include <klocale.h>
 #include <krecentfilesaction.h>
 
-#include <kpAbstractImageSelection.h>
-#include <kpCommandEnvironment.h>
-#include <kpColorCells.h>
-#include <kpColorToolBar.h>
-#include <kpCommandHistory.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpDocumentEnvironment.h>
-#include <kpSelectionDrag.h>
-#include <kpThumbnail.h>
-#include <kpTool.h>
-#include <kpToolToolBar.h>
-#include <kpViewManager.h>
-#include <kpViewScrollableContainer.h>
-#include <kpWidgetMapper.h>
-#include <kpZoomedThumbnailView.h>
-#include <kpZoomedView.h>
+#include <qevent.h>
+#include <qmenu.h>
+#include <qtimer.h>
 
 #if DEBUG_KP_MAIN_WINDOW
     #include <qdatetime.h>
