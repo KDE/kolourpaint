@@ -350,29 +350,7 @@ set(kolourpaint_SRCS
     ${kolourpaint_app_SRCS}
 )
 
-
-set(kolourpaint_lgpl_SRCS
-    ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/kpUrlFormatter.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/kpColorCollection.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/lgpl/generic/widgets/kpColorCellsBase.cpp
-    )
-
-
-#
-# LGPL Library
-#
-# This MUST be a dynamic link library to avoid LGPL license infection.
-#
-
-add_library(kolourpaint_lgpl SHARED ${kolourpaint_lgpl_SRCS})
-
-set(kolourpaint_lgpl_version 5)
-
-target_link_libraries(kolourpaint_lgpl KF5::KDELibs4Support)
-set_target_properties(kolourpaint_lgpl PROPERTIES VERSION ${kolourpaint_lgpl_version} DEFINE_SYMBOL MAKE_KOLOURPAINT4_LGPL_LIB)
-
-install(TARGETS kolourpaint_lgpl ${INSTALL_TARGETS_DEFAULT_ARGS} )
-
+add_subdirectory(lgpl)
 
 #
 # Executable
