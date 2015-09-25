@@ -28,14 +28,14 @@ find_package(QImageBlitz REQUIRED)
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
-# find_package(KSane)
+find_package(KF5Sane)
 
-if(KSANE_FOUND)
-    include_directories(${KSANE_INCLUDE_DIR})
+if(KF5Sane_FOUND)
     add_definitions(-DHAVE_KSANE=1)
-else(KSANE_FOUND)
+    set(KSANE_LIBRARIES KF5Sane)
+else(KF5Sane_FOUND)
     add_definitions(-DHAVE_KSANE=0)
-endif(KSANE_FOUND)
+endif(KF5Sane_FOUND)
 
 
 include_directories(
@@ -293,12 +293,12 @@ set(kolourpaint_lib2_SRCS
 )  # kolourpaint_lib2_SRCS
 
 
-if(KSANE_FOUND)
+if(KF5Sane_FOUND)
     set(kolourpaint_lib2_SRCS
         ${kolourpaint_lib2_SRCS}
         ${CMAKE_CURRENT_SOURCE_DIR}/scan/sanedialog.cpp
     )
-endif(KSANE_FOUND)
+endif(KF5Sane_FOUND)
 
 set(kolourpaint_app_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/views/kpThumbnailView.cpp
@@ -386,7 +386,7 @@ add_executable(kolourpaint ${kolourpaint_SRCS})
 target_link_libraries(kolourpaint
     KF5::KDELibs4Support
     ${QIMAGEBLITZ_LIBRARIES}
-    ${KSANE_LIBRARY}
+    ${KSANE_LIBRARIES}
     kolourpaint_lgpl
 )
 

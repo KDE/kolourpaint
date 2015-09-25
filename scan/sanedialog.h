@@ -26,7 +26,7 @@
 #ifndef SANEDIALOG_H
 #define SANEDIALOG_H
 
-#include <libksane/ksane.h>
+#include <KSane/KSane>
 
 #include <kpagedialog.h>
 
