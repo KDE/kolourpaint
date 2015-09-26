@@ -116,5 +116,3 @@ int SaneDialog::nextId()
 {
     return ++m_currentId;
 }
-
-#include "sanedialog.moc"

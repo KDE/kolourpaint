@@ -31,7 +31,7 @@ find_package(KF5Sane)
 
 if(KF5Sane_FOUND)
     add_definitions(-DHAVE_KSANE=1)
-    set(KSANE_LIBRARIES KF5Sane)
+    set(KSANE_LIBRARIES KF5::Sane)
 else(KF5Sane_FOUND)
     add_definitions(-DHAVE_KSANE=0)
 endif(KF5Sane_FOUND)
