@@ -51,7 +51,7 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
 
 #if 0
     QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
-    m_amountInput = new QSpinBox (this);
+    m_amountInput = new KIntNumInput (this);
     m_amountInput->setRange (kpEffectEmboss::MinStrength,
         kpEffectEmboss::MaxStrength, 1/*step*/, true/*slider*/);
     m_amountInput->setSpecialValueText (i18n ("None"));

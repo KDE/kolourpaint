@@ -29,7 +29,6 @@
 #ifndef kpEffectBalanceWidget_H
 #define kpEffectBalanceWidget_H
 
-#include <QSpinBox>
 
 #include "kpEffectWidgetBase.h"
 #include "imagelib/kpImage.h"
@@ -38,6 +37,8 @@
 class QLabel;
 
 class QComboBox;
+class KIntNumInput;
+
 
 
 class kpEffectBalanceWidget : public kpEffectWidgetBase
@@ -73,7 +74,7 @@ protected slots:
     void resetAll ();
 
 protected:
-    QSpinBox     *m_brightnessInput,
+    KIntNumInput *m_brightnessInput,
                  *m_contrastInput,
                  *m_gammaInput;
     QLabel *m_gammaLabel;

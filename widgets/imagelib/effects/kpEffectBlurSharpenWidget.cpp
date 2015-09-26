@@ -35,6 +35,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <knuminput.h>
 
 #include <qgridlayout.h>
 #include <qlabel.h>
@@ -50,7 +51,7 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
 
 
     QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
-    m_amountInput = new QSpinBox (this);
+    m_amountInput = new KIntNumInput (this);
     m_amountInput->setRange (-kpEffectBlurSharpen::MaxStrength/*- for blur*/,
 			     +kpEffectBlurSharpen::MaxStrength/*+ for sharpen*/);
 

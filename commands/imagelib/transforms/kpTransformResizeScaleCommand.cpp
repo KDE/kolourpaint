@@ -58,6 +58,7 @@
 #include <kiconeffect.h>
 #include <kiconloader.h>
 #include <klocale.h>
+#include <knuminput.h>
 
 
 kpTransformResizeScaleCommand::kpTransformResizeScaleCommand (bool actOnSelection,

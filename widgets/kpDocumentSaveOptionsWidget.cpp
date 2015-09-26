@@ -42,6 +42,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kconfiggroup.h>
+#include <knuminput.h>
 
 #include <qapplication.h>
 #include <qboxlayout.h>

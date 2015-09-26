@@ -32,10 +32,9 @@
 
 
 #include "kpEffectWidgetBase.h"
-#include <QDoubleSpinBox>
 
 
-class QDoubleSpinBox;
+class KDoubleNumInput;
 
 
 class kpEffectToneEnhanceWidget : public kpEffectWidgetBase
@@ -61,8 +60,8 @@ public:
         kpCommandEnvironment *cmdEnviron) const;
 
 protected:
-    QDoubleSpinBox *m_granularityInput;
-    QDoubleSpinBox *m_amountInput;
+    KDoubleNumInput *m_granularityInput;
+    KDoubleNumInput *m_amountInput;
 };
 
 

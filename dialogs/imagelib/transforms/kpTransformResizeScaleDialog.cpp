@@ -361,7 +361,7 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
     connect (m_newHeightInput, SIGNAL (valueChanged (int)),
              this, SLOT (slotHeightChanged (int)));
 
-    // COMPAT: QDoubleSpinBox only fires valueChanged(double) once per
+    // COMPAT: KDoubleNumInput only fires valueChanged(double) once per
     //         edit.  It should either fire:
     //
     //             1. At the end of the edit (triggered by clicking or tabbing
@@ -371,7 +371,7 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
     //
     //             2. Once per keystroke.
     //
-    //         Bug in QDoubleSpinBox.
+    //         Bug in KDoubleNumInput.
     connect (m_percentWidthInput, SIGNAL (valueChanged (double)),
              this, SLOT (slotPercentWidthChanged (double)));
     connect (m_percentHeightInput, SIGNAL (valueChanged (double)),
