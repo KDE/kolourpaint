@@ -375,9 +375,14 @@ target_link_libraries(kolourpaint
     ${KDE4_KIO_LIBS}
     ${KDE4_KUTILS_LIBS}
     ${QIMAGEBLITZ_LIBRARIES}
-    ${KSANE_LIBRARY}
     kolourpaint_lgpl
 )
+
+if(KSANE_FOUND)
+    target_link_libraries(kolourpaint
+        ${KSANE_LIBRARY}
+    )
+endif(KSANE_FOUND)
 
 install(TARGETS kolourpaint ${INSTALL_TARGETS_DEFAULT_ARGS})
 
