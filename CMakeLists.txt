@@ -9,6 +9,7 @@ add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 find_package(KSane)
+macro_log_feature(KSANE_FOUND "KSane" "KDE sane library" "https://quickgit.kde.org/?p=libksane.git" FALSE "" "Scanning support")
 
 if(KSANE_FOUND)
     include_directories(${KSANE_INCLUDE_DIR})
@@ -392,3 +393,5 @@ install(TARGETS kolourpaint ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS kolourpaint.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES kolourpaint.appdata.xml DESTINATION share/appdata/)
 install(FILES kolourpaintui.rc DESTINATION ${DATA_INSTALL_DIR}/kolourpaint)
+
+macro_display_feature_log()
