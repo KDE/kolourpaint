@@ -34,6 +34,7 @@
 
 #include <QApplication>
 #include <QCommandLineParser>
+#include <KLocalizedString>
 
 int main(int argc, char *argv [])
 {
@@ -76,6 +77,8 @@ int main(int argc, char *argv [])
   aboutData.addCredit(i18n("Thanks to the many others who have helped to make this program possible."));
 
   QApplication app(argc, argv);
+
+  KLocalizedString::setApplicationDomain("kolourpaint");
 
   QCommandLineParser cmdLine;
   KAboutData::setApplicationData(aboutData);
