@@ -59,6 +59,7 @@
   <summary xml:lang="nb">Malepogram</summary>
   <summary xml:lang="nds">Maalprogramm</summary>
   <summary xml:lang="nl">Tekenprogramma</summary>
+  <summary xml:lang="nn">Teikneprogram</summary>
   <summary xml:lang="pl">Program Paint</summary>
   <summary xml:lang="pt">Programa de Pintura</summary>
   <summary xml:lang="pt-BR">Programa de desenho</summary>
@@ -93,6 +94,7 @@
     <p xml:lang="nb">KolourPaint er et enkelt maleprogram som kjapt kan lage rasterbilder. Det er et nyttig verktøy for retusjering og enkle redigeringsoppgaver.</p>
     <p xml:lang="nds">KolourPaint is en eenfach Maalprogramm, mit dat sik gau Pixelbiller opstellen laat. Dat is goot för lütte Utbetern un eenfache Bildbewerken.</p>
     <p xml:lang="nl">KolourPaint is een eenvoudig tekenprogramma om snel rasterafbeeldingen te maken. Het is nuttig als een hulpmiddel voor bijwerken en eenvoudige taken voor bewerking van afbeeldingen.</p>
+    <p xml:lang="nn">KolourPaint er eit enkelt teikneprogram for punktgrafikk. Det er eit nyttig verktøy for retusjering og enkle redigeringsoppgåver.</p>
     <p xml:lang="pl">KolourPaint jest prostym programem do malowania i szybkiego tworzenia obrazów rastrowych. Jest przydatny przy retuszowaniu i prostych pracach edytowania.</p>
     <p xml:lang="pt">O KolourPaint é um programa simples de pintura que cria rapidamente imagens rasterizadas. É útil como uma ferramenta de retoques e para tarefas simples de edição de imagens.</p>
     <p xml:lang="pt-BR">KolourPaint é um programa de desenho simples, que cria rapidamente imagens rasterizadas. É útil como uma ferramenta de retoques e para tarefas simples de edição de imagens.</p>
@@ -125,6 +127,7 @@
     <p xml:lang="nb">Funksjoner:</p>
     <p xml:lang="nds">Markmalen:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
+    <p xml:lang="nn">Funksjonar:</p>
     <p xml:lang="pl">Cechy:</p>
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="pt-BR">Funcionalidades:</p>
@@ -156,6 +159,7 @@
       <li xml:lang="nb">Støtte for å tegne mange former – linjer, rektangler, avrundede rektangler, ovaler og polygoner</li>
       <li xml:lang="nds">Ünnerstütt dat Teken vun en Reeg vun Formen - Lienen, Rechtecks, afrundt Rechtecks, Ovalen un Veelecks</li>
       <li xml:lang="nl">Ondersteuning voor het tekenen van verschillende vormen - lijnen, rechthoeken, afgeronde rechthoeken, ovalen en polygonen</li>
+      <li xml:lang="nn">Støtte for å teikna mange former – linjer, rektangel, avrunda rektangel, ellipsar og mangekantar</li>
       <li xml:lang="pl">Obsługa rysowania rozmaitych kształtów - proste, prostokąty, zaokrąglone prostokąty, owale i wielokąty</li>
       <li xml:lang="pt">Suporte para desenhar várias formas - linhas, rectângulos, rectângulos arredondados, ovais e polígonos</li>
       <li xml:lang="pt-BR">Suporte para desenhar várias formas - linhas, retângulos, retângulos arredondados, ovais e polígonos</li>
@@ -188,6 +192,7 @@
       <li xml:lang="nb">Kurver, linjer og tekst</li>
       <li xml:lang="nds">Bagens, Lienen un Text</li>
       <li xml:lang="nl">Krommen, lijnen en tekst</li>
+      <li xml:lang="nn">Kurver, linjer og tekst</li>
       <li xml:lang="pl">Krzywe, proste i teks</li>
       <li xml:lang="pt">Curvas, linhas e texto</li>
       <li xml:lang="pt-BR">Curvas, linhas e texto</li>
@@ -220,6 +225,7 @@
       <li xml:lang="nb">Fargevelger</li>
       <li xml:lang="nds">Klöörköör</li>
       <li xml:lang="nl">Kleurkiezer</li>
+      <li xml:lang="nn">Fargeveljar</li>
       <li xml:lang="pl">Wybierak barwy</li>
       <li xml:lang="pt">Selecção de cores</li>
       <li xml:lang="pt-BR">Seleção de cor</li>
@@ -252,6 +258,7 @@
       <li xml:lang="nb">Utvalg</li>
       <li xml:lang="nds">Köören</li>
       <li xml:lang="nl">Selecties</li>
+      <li xml:lang="nn">Utval</li>
       <li xml:lang="pl">Zaznaczenia</li>
       <li xml:lang="pt">Selecções</li>
       <li xml:lang="pt-BR">Seleções</li>
@@ -282,6 +289,7 @@
       <li xml:lang="nb">Dreiing, monokrom og andre avanserte effekter</li>
       <li xml:lang="nds">Dreihen, Swatt-Witt un en Reeg verwiedert Effekten</li>
       <li xml:lang="nl">Roteren, monochroom en andere geavanceerde effecten</li>
+      <li xml:lang="nn">Dreiing, fargeredusering og fleire avanserte effektar</li>
       <li xml:lang="pl">Obrót, monochromatyczność i inne zaawansowane efekty</li>
       <li xml:lang="pt">Rotação, monocromáticos e outros efeitos avançados</li>
       <li xml:lang="pt-BR">Rotação, monocromático e outros efeitos avançados</li>
