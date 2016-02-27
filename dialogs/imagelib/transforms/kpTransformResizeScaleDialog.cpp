@@ -288,15 +288,19 @@ QGroupBox *kpTransformResizeScaleDialog::createDimensionsGroupBox(QWidget *baseW
 
     QLabel *originalLabel = new QLabel (i18n ("Original:"), dimensionsGroupBox);
     m_originalWidthInput = new QSpinBox;
+    m_originalWidthInput->setRange(1, INT_MAX);
     m_originalWidthInput->setValue(document()->width((bool)selection()));
     QLabel *xLabel0 = new QLabel (i18n ("x"), dimensionsGroupBox);
     m_originalHeightInput = new QSpinBox;
+    m_originalHeightInput->setRange(1, INT_MAX);
     m_originalHeightInput->setValue(document()->height((bool)selection()));
 
     QLabel *newLabel = new QLabel (i18n ("&New:"), dimensionsGroupBox);
     m_newWidthInput = new QSpinBox;
+    m_newWidthInput->setRange(1, INT_MAX);
     QLabel *xLabel1 = new QLabel (i18n ("x"), dimensionsGroupBox);
     m_newHeightInput = new QSpinBox;
+    m_newHeightInput->setRange(1, INT_MAX);
 
     QLabel *percentLabel = new QLabel (i18n ("&Percent:"), dimensionsGroupBox);
     m_percentWidthInput = new QDoubleSpinBox;
