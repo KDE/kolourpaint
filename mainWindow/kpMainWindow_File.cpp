@@ -1325,29 +1325,21 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
     }
 
 
+    // Send image to printer.
+    QPainter painter;
+    painter.begin(printer);
+
     double originX = 0, originY = 0;
 
     // Center image on page?
     if (d->configPrintImageCenteredOnPage)
     {
-        originX =
-            (printerWidthMM * dpiX / KP_MILLIMETERS_PER_INCH - image.width ())
-                / 2;
-        originY =
-            (printerHeightMM * dpiY / KP_MILLIMETERS_PER_INCH - image.height ())
-                / 2;
+        originX = (printer->width() - image.width ()) / 2;
+        originY = (printer->height() - image.height ()) / 2;
     }
 
-#if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\torigin: x=" << originX << " y=" << originY;
-#endif
-
-
-    // Send image to printer.
-    QPainter painter;
-    painter.begin (printer);
-    painter.drawImage (qRound (originX), qRound (originY), image);
-    painter.end ();
+    painter.drawImage(qRound(originX), qRound(originY), image);
+    painter.end();
 }
 
 //---------------------------------------------------------------------
