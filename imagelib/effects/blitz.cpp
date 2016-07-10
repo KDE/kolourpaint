@@ -65,6 +65,7 @@ ImageMagick Studio.
 #include "blitz.h"
 
 #include <QColor>
+#include <cmath>
 
 #define M_SQ2PI 2.50662827463100024161235523934010416269302368164062
 #define M_EPSILON 1.0e-6
