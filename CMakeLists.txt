@@ -24,7 +24,6 @@ find_package(KF5 REQUIRED COMPONENTS
     KDELibs4Support
 )
 
-find_package(QImageBlitz REQUIRED)
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
 find_package(KF5Sane)
@@ -39,7 +38,6 @@ endif(KF5Sane_FOUND)
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${QIMAGEBLITZ_INCLUDES}
 )
 
 add_subdirectory( pics )
@@ -129,6 +127,7 @@ set(kolourpaint_lib1_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/generic/kpWidgetMapper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/generic/widgets/kpResizeSignallingLabel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/generic/widgets/kpSubWindow.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/blitz.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectBalance.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectBlurSharpen.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/imagelib/effects/kpEffectEmboss.cpp
@@ -304,7 +303,6 @@ add_executable(kolourpaint ${kolourpaint_SRCS})
 
 target_link_libraries(kolourpaint
     KF5::KDELibs4Support
-    ${QIMAGEBLITZ_LIBRARIES}
     ${KSANE_LIBRARIES}
     kolourpaint_lgpl
 )

@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -30,11 +29,7 @@
 
 
 #include "kpEffectBlurSharpen.h"
-
-#include <qimageblitz.h>
-
-#include <qbitmap.h>
-#include <qimage.h>
+#include "blitz.h"
 
 #include <kdebug.h>
 
