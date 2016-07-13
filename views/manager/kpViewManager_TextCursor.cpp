@@ -47,23 +47,23 @@
 #define DEBUG_KP_VIEW_MANAGER 0
 
 
-#include <kpViewManager.h>
-#include <kpViewManagerPrivate.h>
+#include "kpViewManager.h"
+#include "kpViewManagerPrivate.h"
 
 #include <qapplication.h>
 #include <qlist.h>
 #include <qtimer.h>
-#include <QInputContext>
+//#include <QInputContext>
 
 #include <kdebug.h>
 
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpTempImage.h>
-#include <kpTextSelection.h>
-#include <kpTool.h>
-#include <kpView.h>
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "mainWindow/kpMainWindow.h"
+#include "layers/tempImage/kpTempImage.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "tools/kpTool.h"
+#include "views/kpView.h"
 
 
 // public
@@ -162,12 +162,14 @@ void kpViewManager::setTextCursorPosition (int row, int col)
     restoreQueueUpdates ();
     restoreFastUpdates ();
 
+#if 0 // TODO port to Qt5?
     if (d->viewUnderCursor) {
         QInputContext *inputContext = d->viewUnderCursor->inputContext ();
         if (inputContext) {
             inputContext->update ();
         }
     }
+#endif
 }
 
 

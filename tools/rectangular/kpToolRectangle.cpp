@@ -26,8 +26,9 @@
 */
 
 
-#include <kpToolRectangle.h>
-#include <kpPainter.h>
+#include "kpToolRectangle.h"
+
+#include "imagelib/kpPainter.h"
 
 #include <klocale.h>
 
@@ -45,4 +46,3 @@ kpToolRectangle::kpToolRectangle (kpToolEnvironment *environ, QObject *parent)
 
 //---------------------------------------------------------------------
 
-#include <kpToolRectangle.moc>

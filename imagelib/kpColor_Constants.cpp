@@ -29,7 +29,7 @@
 #define DEBUG_KP_COLOR 0
 
 
-#include <kpColor.h>
+#include "kpColor.h"
 
 
 static inline int RoundUp2 (int val)

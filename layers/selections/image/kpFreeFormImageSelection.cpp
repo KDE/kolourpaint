@@ -29,11 +29,11 @@
 #define DEBUG_KP_SELECTION 0
 
 
-#include <kpFreeFormImageSelection.h>
+#include "layers/selections/image/kpFreeFormImageSelection.h"
 
 #include <KDebug>
 
-#include <kpPainter.h>
+#include "imagelib/kpPainter.h"
 
 
 struct kpFreeFormImageSelectionPrivate
@@ -386,4 +386,3 @@ void kpFreeFormImageSelection::paintBorder (QImage *destPixmap, const QRect &doc
 }
 
 
-#include <kpFreeFormImageSelection.moc>

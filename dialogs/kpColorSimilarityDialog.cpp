@@ -26,29 +26,35 @@
 */
 
 
-#include <kpColorSimilarityDialog.h>
+#include "kpColorSimilarityDialog.h"
+
+#include "widgets/colorSimilarity/kpColorSimilarityFrame.h"
+
+#include <klocale.h>
+#include <knuminput.h>
 
 #include <qboxlayout.h>
+#include <qdialogbuttonbox.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
 #include <QWhatsThis>
 
-#include <klocale.h>
-#include <knuminput.h>
-
-#include <kpColorSimilarityFrame.h>
-
-
 kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
-    : KDialog (parent)
+    : QDialog (parent)
 {
-    setCaption (i18nc ("@title:window", "Color Similarity"));
-    setButtons (KDialog::Ok | KDialog::Cancel);
-    QWidget *baseWidget = new QWidget (this);
-    setMainWidget (baseWidget);
+    setWindowTitle (i18nc ("@title:window", "Color Similarity"));
+    QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
+                                                      QDialogButtonBox::Cancel, this);
+    connect (buttons, SIGNAL (accepted()), this, SLOT (accept()));
+    connect (buttons, SIGNAL (rejected()), this, SLOT (reject()));
 
+    QWidget *baseWidget = new QWidget (this);
+
+    QVBoxLayout *dialogLayout = new QVBoxLayout (this);
+    dialogLayout->addWidget (baseWidget);
+    dialogLayout->addWidget (buttons);
 
     QGroupBox *cubeGroupBox = new QGroupBox (i18n ("Preview"), baseWidget);
 
@@ -59,8 +65,6 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
 
 
     QVBoxLayout *cubeLayout = new QVBoxLayout (cubeGroupBox);
-    cubeLayout->setSpacing(spacingHint ());
-    cubeLayout->setMargin (marginHint () * 2);
     cubeLayout->addWidget (m_colorSimilarityFrame, 1/*stretch*/);
     cubeLayout->addWidget (updatePushButton, 0/*stretch*/, Qt::AlignHCenter);
 
@@ -91,8 +95,6 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
 
 
     QVBoxLayout *inputLayout = new QVBoxLayout (inputGroupBox);
-    inputLayout->setSpacing (spacingHint () * 4);
-    inputLayout->setMargin (marginHint () * 2);
 
     inputLayout->addWidget (m_colorSimilarityInput);
     inputLayout->addWidget (m_whatIsLabel);
@@ -105,8 +107,7 @@ kpColorSimilarityDialog::kpColorSimilarityDialog (QWidget *parent)
 
 
     QVBoxLayout *baseLayout = new QVBoxLayout (baseWidget);
-    baseLayout->setSpacing (spacingHint () * 2);
-    baseLayout->setMargin (0/*margin*/);
+    baseLayout->setMargin (0);
     baseLayout->addWidget (cubeGroupBox, 1/*stretch*/);
     baseLayout->addWidget (inputGroupBox);
 }
@@ -139,18 +140,5 @@ void kpColorSimilarityDialog::slotColorSimilarityValueChanged ()
 // private slot
 void kpColorSimilarityDialog::slotWhatIsLabelClicked ()
 {
-    QWhatsThis::showText (QCursor::pos (), m_colorSimilarityFrame->whatsThis (),
-        this);
-
-    // LOTODO: It looks weird with the focus rectangle.
-    //         It's also very hard for the user to make it lose focus for some reason
-    //         (you must click on the label - nowhere else will work).
-    //
-    //         This doesn't work - I don't know why:
-    //             m_whatIsLabel->clearFocus ();
-    //
-    //         Maybe it's a weird kind of focus?
+  QWhatsThis::showText(QCursor::pos(), m_colorSimilarityFrame->whatsThis(), this);
 }
-
-
-#include <kpColorSimilarityDialog.moc>

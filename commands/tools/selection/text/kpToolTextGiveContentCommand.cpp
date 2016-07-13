@@ -29,15 +29,15 @@
 #define DEBUG_KP_TOOL_SELECTION 0
 
 
-#include <kpToolTextGiveContentCommand.h>
+#include "kpToolTextGiveContentCommand.h"
+
+#include "environments/commands/kpCommandEnvironment.h"
+#include "document/kpDocument.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "views/manager/kpViewManager.h"
 
 #include <kdebug.h>
 #include <klocale.h>
-
-#include <kpCommandEnvironment.h>
-#include <kpDocument.h>
-#include <kpTextSelection.h>
-#include <kpViewManager.h>
 
 
 kpToolTextGiveContentCommand::kpToolTextGiveContentCommand (

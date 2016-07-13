@@ -30,7 +30,7 @@
 #define KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT_H
 
 
-#include <kpToolWidgetBase.h>
+#include "kpToolWidgetBase.h"
 
 
 class kpToolWidgetOpaqueOrTransparent : public kpToolWidgetBase

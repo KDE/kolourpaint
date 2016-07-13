@@ -26,8 +26,8 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "mainWindow/kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
 #include <qdatetime.h>
 #include <qpainter.h>
@@ -37,24 +37,23 @@
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>
-#include <kglobal.h>
 #include <klocale.h>
 #include <kselectaction.h>
 #include <kstandardaction.h>
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
 
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpThumbnail.h>
-#include <kpTool.h>
-#include <kpToolToolBar.h>
-#include <kpUnzoomedThumbnailView.h>
-#include <kpViewManager.h>
-#include <kpViewScrollableContainer.h>
-#include <kpWidgetMapper.h>
-#include <kpZoomedView.h>
-#include <kpZoomedThumbnailView.h>
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "kpThumbnail.h"
+#include "tools/kpTool.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "views/kpUnzoomedThumbnailView.h"
+#include "views/manager/kpViewManager.h"
+#include "kpViewScrollableContainer.h"
+#include "generic/kpWidgetMapper.h"
+#include "views/kpZoomedView.h"
+#include "views/kpZoomedThumbnailView.h"
 
 
 // private
@@ -70,7 +69,7 @@ void kpMainWindow::setupViewMenuThumbnailActions ()
     // TODO: This doesn't work when the thumbnail has focus. 
     //       Testcase: Press CTRL+H twice on a fresh KolourPaint.
     //                 The second CTRL+H doesn't close the thumbnail.
-    d->actionShowThumbnail->setShortcut (Qt::CTRL + Qt::Key_H);
+    ac->setDefaultShortcut (d->actionShowThumbnail, Qt::CTRL + Qt::Key_H);
     //d->actionShowThumbnail->setCheckedState (KGuiItem(i18n ("Hide T&humbnail")));
     connect (d->actionShowThumbnail, SIGNAL (triggered (bool)),
         SLOT (slotShowThumbnailToggled ()));
@@ -177,7 +176,7 @@ void kpMainWindow::slotSaveThumbnailGeometry ()
                 << endl;
 #endif
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupThumbnail);
 
     cfg.writeEntry (kpSettingThumbnailGeometry, d->configThumbnailGeometry);
     cfg.sync ();
@@ -192,7 +191,7 @@ void kpMainWindow::slotShowThumbnailToggled ()
 
     d->configThumbnailShown = d->actionShowThumbnail->isChecked ();
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupThumbnail);
 
     cfg.writeEntry (kpSettingThumbnailShown, d->configThumbnailShown);
     cfg.sync ();
@@ -226,7 +225,7 @@ void kpMainWindow::slotZoomedThumbnailToggled ()
 
     d->configZoomedThumbnail = d->actionZoomedThumbnail->isChecked ();
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupThumbnail);
 
     cfg.writeEntry (kpSettingThumbnailZoomed, d->configZoomedThumbnail);
     cfg.sync ();
@@ -244,7 +243,7 @@ void kpMainWindow::slotThumbnailShowRectangleToggled ()
 
     d->configThumbnailShowRectangle = d->actionShowThumbnailRectangle->isChecked ();
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupThumbnail);
 
     cfg.writeEntry (kpSettingThumbnailShowRectangle, d->configThumbnailShowRectangle);
     cfg.sync ();

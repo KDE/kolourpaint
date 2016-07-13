@@ -29,8 +29,8 @@
 #define DEBUG_KP_TOOL_SELECTION 0
 
 
-#include <kpAbstractSelectionTool.h>
-#include <kpAbstractSelectionToolPrivate.h>
+#include "kpAbstractSelectionTool.h"
+#include "kpAbstractSelectionToolPrivate.h"
 
 #include <qapplication.h>
 #include <qbitmap.h>
@@ -45,22 +45,22 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpAbstractImageSelection.h>
-#include <kpAbstractSelection.h>
-#include <kpCommandHistory.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpMacroCommand.h>
-#include <kpToolSelectionCreateCommand.h>
-#include <kpToolSelectionDestroyCommand.h>
-#include <kpToolSelectionEnvironment.h>
-#include <kpToolSelectionMoveCommand.h>
-#include <kpToolSelectionResizeScaleCommand.h>
-#include <kpToolImageSelectionTransparencyCommand.h>
-#include <kpToolToolBar.h>
-#include <kpToolWidgetOpaqueOrTransparent.h>
-#include <kpView.h>
-#include <kpViewManager.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "layers/selections/kpAbstractSelection.h"
+#include "commands/kpCommandHistory.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "commands/kpMacroCommand.h"
+#include "commands/tools/selection/kpToolSelectionCreateCommand.h"
+#include "commands/tools/selection/kpToolSelectionDestroyCommand.h"
+#include "environments/tools/selection/kpToolSelectionEnvironment.h"
+#include "commands/tools/selection/kpToolSelectionMoveCommand.h"
+#include "commands/tools/selection/kpToolSelectionResizeScaleCommand.h"
+#include "commands/tools/selection/kpToolImageSelectionTransparencyCommand.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
 
 
 // private

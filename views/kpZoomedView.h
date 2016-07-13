@@ -30,7 +30,7 @@
 #define KP_ZOOMED_VIEW_H
 
 
-#include <kpView.h>
+#include "views/kpView.h"
 
 
 /**

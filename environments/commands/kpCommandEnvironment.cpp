@@ -26,14 +26,14 @@
 */
 
 
-#include <kpCommandEnvironment.h>
+#include "environments/commands/kpCommandEnvironment.h"
 
-#include <kpColorToolBar.h>
-#include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpImageSelectionTransparency.h>
-#include <kpTextStyle.h>
-#include <kpTool.h>
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "document/kpDocument.h"
+#include "mainWindow/kpMainWindow.h"
+#include "layers/selections/image/kpImageSelectionTransparency.h"
+#include "layers/selections/text/kpTextStyle.h"
+#include "tools/kpTool.h"
 
 
 struct kpCommandEnvironmentPrivate
@@ -100,4 +100,3 @@ void kpCommandEnvironment::setTextStyle (const kpTextStyle &textStyle)
 }
 
 
-#include <kpCommandEnvironment.moc>

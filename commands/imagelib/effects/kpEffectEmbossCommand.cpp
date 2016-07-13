@@ -29,12 +29,11 @@
 #define DEBUG_KP_EFFECT_EMBOSS 0
 
 
-#include <kpEffectEmbossCommand.h>
+#include "kpEffectEmbossCommand.h"
+#include "imagelib/effects/kpEffectEmboss.h"
 
 #include <kdebug.h>
 #include <klocale.h>
-
-#include <kpEffectEmboss.h>
 
 
 kpEffectEmbossCommand::kpEffectEmbossCommand (int strength,

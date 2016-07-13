@@ -30,18 +30,16 @@
 #define DEBUG_KP_PRINT_DIALOG_PAGE 0
 
 
-#include <kpPrintDialogPage.h>
+#include "kpPrintDialogPage.h"
 
 #include <QRadioButton>
 #include <QVBoxLayout>
-#include <QtGui/QPrinter>
+#include <QPrinter>
 
 #include <KDebug>
-#include <KDialog>
-#include <KLocale>
-#include <KVBox>
+#include <KLocalizedString>
 
-#include <kpDefs.h>
+#include "kpDefs.h"
 
 
 struct kpPrintDialogPagePrivate
@@ -59,13 +57,15 @@ kpPrintDialogPage::kpPrintDialogPage (QWidget *parent)
 
     setWindowTitle (i18nc ("@title:tab", "I&mage Position"));
 
-    KVBox *base = new KVBox (this);
-    base->setMargin (KDialog::marginHint ());
-
     d->printCenteredRadio = new QRadioButton (i18n ("&Center of the page"),
-        base);
+        this);
     d->printTopLeftRadio = new QRadioButton (i18n ("Top-&left of the page"),
-        base);
+        this);
+
+    QVBoxLayout *lay = new QVBoxLayout (this);
+    lay->addWidget (d->printCenteredRadio);
+    lay->addWidget (d->printTopLeftRadio);
+    lay->addStretch ();
 
     setPrintImageCenteredOnPage (true);
 }
@@ -98,4 +98,3 @@ void kpPrintDialogPage::setPrintImageCenteredOnPage (bool printCentered)
 }
 
 
-#include <kpPrintDialogPage.moc>

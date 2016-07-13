@@ -30,7 +30,7 @@
 #define kpCommandEnvironment_H
 
 
-#include <kpEnvironmentBase.h>
+#include "environments/kpEnvironmentBase.h"
 
 
 class kpMainWindow;

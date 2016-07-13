@@ -26,14 +26,13 @@
 */
 
 
-#include <kpDocumentMetaInfoCommand.h>
+#include "kpDocumentMetaInfoCommand.h"
 
-#include <kdialog.h>
+#include "document/kpDocument.h"
+#include "imagelib/kpDocumentMetaInfo.h"
+#include "kpDefs.h"
+
 #include <klocale.h>
-
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpDocumentMetaInfo.h>
 
 
 struct kpDocumentMetaInfoCommandPrivate

@@ -26,19 +26,19 @@
 */
 
 
-#include <kpToolPen.h>
+#include "kpToolPen.h"
+
+#include "imagelib/kpColor.h"
+#include "document/kpDocument.h"
+#include "imagelib/kpImage.h"
+#include "imagelib/kpPainter.h"
+#include "commands/tools/flow/kpToolFlowCommand.h"
+
+#include <klocale.h>
 
 #include <qapplication.h>
 #include <qbitmap.h>
 #include <qpainter.h>
-
-#include <klocale.h>
-
-#include <kpColor.h>
-#include <kpDocument.h>
-#include <kpImage.h>
-#include <kpPainter.h>
-#include <kpToolFlowCommand.h>
 
 struct kpToolPenPrivate
 {
@@ -93,4 +93,3 @@ QRect kpToolPen::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 }
 
 
-#include <kpToolPen.moc>

@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -29,8 +28,8 @@
 #define DEBUG_KP_DOCUMENT 0
 
 
-#include <kpDocument.h>
-#include <kpDocumentPrivate.h>
+#include "kpDocument.h"
+#include "kpDocumentPrivate.h"
 
 #include <math.h>
 
@@ -43,31 +42,30 @@
 #include <QImage>
 #include <qpainter.h>
 #include <qrect.h>
+#include <qsavefile.h>
 #include <qsize.h>
+#include <qtemporaryfile.h>
 #include <qmatrix.h>
 
 #include <kdebug.h>
-#include <kglobal.h>
 #include <kimageio.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>  // TODO: isn't this in KIO?
-#include <KSaveFile>
-#include <ktemporaryfile.h>
 
-#include <kpColor.h>
-#include <kpColorToolBar.h>
-#include <kpDefs.h>
-#include <kpDocumentEnvironment.h>
-#include <kpDocumentSaveOptions.h>
-#include <kpDocumentMetaInfo.h>
-#include <kpEffectReduceColors.h>
-#include <kpPixmapFX.h>
-#include <kpTool.h>
-#include <kpToolToolBar.h>
-#include <kpUrlFormatter.h>
-#include <kpViewManager.h>
+#include "imagelib/kpColor.h"
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "kpDefs.h"
+#include "environments/document/kpDocumentEnvironment.h"
+#include "document/kpDocumentSaveOptions.h"
+#include "imagelib/kpDocumentMetaInfo.h"
+#include "imagelib/effects/kpEffectReduceColors.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "tools/kpTool.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "lgpl/generic/kpUrlFormatter.h"
+#include "views/manager/kpViewManager.h"
 
 
 bool kpDocument::save (bool overwritePrompt, bool lossyPrompt)
@@ -295,7 +293,7 @@ static void CouldNotCreateTemporaryFileDialog (QWidget *parent)
 
 //---------------------------------------------------------------------
 
-static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
+static void CouldNotSaveDialog (const QUrl &url, QWidget *parent)
 {
     // TODO: use file.errorString()
     KMessageBox::error (parent,
@@ -307,7 +305,7 @@ static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
 
 // public static
 bool kpDocument::savePixmapToFile (const QImage &pixmap,
-                                   const KUrl &url,
+                                   const QUrl &url,
                                    const kpDocumentSaveOptions &saveOptions,
                                    const kpDocumentMetaInfo &metaInfo,
                                    bool overwritePrompt,
@@ -362,19 +360,19 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
     {
         const QString filename = url.toLocalFile ();
 
-        // sync: All failure exit paths _must_ call KSaveFile::abort() or
-        //       else, the KSaveFile destructor will overwrite the file,
+        // sync: All failure exit paths _must_ call QSaveFile::cancelWriting() or
+        //       else, the QSaveFile destructor will overwrite the file,
         //       <filename>, despite the failure.
-        KSaveFile atomicFileWriter (filename);
+        QSaveFile atomicFileWriter (filename);
         {
-            if (!atomicFileWriter.open ())
+            if (!atomicFileWriter.open (QIODevice::WriteOnly))
             {
                 // We probably don't need this as <filename> has not been
                 // opened.
-                atomicFileWriter.abort ();
+                atomicFileWriter.cancelWriting ();
 
             #if DEBUG_KP_DOCUMENT
-                kDebug () << "\treturning false because could not open KSaveFile"
+                kDebug () << "\treturning false because could not open QSaveFile"
                           << " error=" << atomicFileWriter.error () << endl;
             #endif
                 ::CouldNotCreateTemporaryFileDialog (parent);
@@ -387,7 +385,7 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
                                      false/*no lossy prompt*/,
                                      parent))
             {
-                atomicFileWriter.abort ();
+                atomicFileWriter.cancelWriting ();
 
             #if DEBUG_KP_DOCUMENT
                 kDebug () << "\treturning false because could not save pixmap to device"
@@ -399,24 +397,24 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
 
             // Atomically overwrite local file with the temporary file
             // we saved to.
-            if (!atomicFileWriter.finalize ())
+            if (!atomicFileWriter.commit ())
             {
-                atomicFileWriter.abort ();
+                atomicFileWriter.cancelWriting ();
 
             #if DEBUG_KP_DOCUMENT
-                kDebug () << "\tcould not close KSaveFile";
+                kDebug () << "\tcould not close QSaveFile";
             #endif
                 ::CouldNotSaveDialog (url, parent);
                 return false;
             }
-        }  // sync KSaveFile.abort()
+        }  // sync QSaveFile.cancelWriting()
     }
     // Remote file?
     else
     {
         // Create temporary file that is deleted when the variable goes
         // out of scope.
-        KTemporaryFile tempFile;
+        QTemporaryFile tempFile;
         if (!tempFile.open ())
         {
         #if DEBUG_KP_DOCUMENT
@@ -479,7 +477,7 @@ bool kpDocument::savePixmapToFile (const QImage &pixmap,
 
 //---------------------------------------------------------------------
 
-bool kpDocument::saveAs (const KUrl &url,
+bool kpDocument::saveAs (const QUrl &url,
                          const kpDocumentSaveOptions &saveOptions,
                          bool overwritePrompt,
                          bool lossyPrompt)

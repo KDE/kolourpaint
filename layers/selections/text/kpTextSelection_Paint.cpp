@@ -32,20 +32,20 @@
 #define DEBUG_KP_SELECTION 0
 
 
-#include <kpTextSelection.h>
-#include <kpTextSelectionPrivate.h>
+#include "kpTextSelection.h"
+#include "kpTextSelectionPrivate.h"
+
+#include "kpTextStyle.h"
+#include "kpPreeditText.h"
+#include "pixmapfx/kpPixmapFX.h"
+
+#include <KDebug>
 
 #include <QBitmap>
 #include <QFont>
 #include <QList>
 #include <QPainter>
 #include <QTextCharFormat>
-
-#include <KDebug>
-
-#include <kpPixmapFX.h>
-#include <kpTextStyle.h>
-#include <kpPreeditText.h>
 
 //---------------------------------------------------------------------
 
@@ -124,7 +124,7 @@ void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
 
     // Drawing text is slow so if the text box will be rendered completely
     // outside of <destRect>, don't bother rendering it at all.
-    const QRect modifyingRect = docRect.intersect (boundingRect ());
+    const QRect modifyingRect = docRect.intersected (boundingRect ());
     if (modifyingRect.isEmpty ())
         return;
 

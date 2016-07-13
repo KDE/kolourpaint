@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -25,24 +24,12 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include "kpEffectFlatten.h"
+#include "blitz.h"
 
-#define DEBUG_KP_EFFECT_FLATTEN 0
-
-
-#include <kpEffectFlatten.h>
-
-#include <qimageblitz.h>
-
-#include <qimage.h>
-#include <qpixmap.h>
-
-#include <kdebug.h>
-#include <kglobal.h>
-
-#include <kpPixmapFX.h>
-
-
+//--------------------------------------------------------------------------------
 // public static
+
 void kpEffectFlatten::applyEffect (QImage *destImagePtr,
         const QColor &color1, const QColor &color2)
 {
@@ -52,7 +39,9 @@ void kpEffectFlatten::applyEffect (QImage *destImagePtr,
     Blitz::flatten (*destImagePtr/*ref*/, color1, color2);
 }
 
+//--------------------------------------------------------------------------------
 // public static
+
 QImage kpEffectFlatten::applyEffect (const QImage &img,
         const QColor &color1, const QColor &color2)
 {
@@ -61,4 +50,4 @@ QImage kpEffectFlatten::applyEffect (const QImage &img,
     return retImage;
 }
 
-
+//--------------------------------------------------------------------------------

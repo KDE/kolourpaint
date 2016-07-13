@@ -30,8 +30,8 @@
 #define DEBUG_KP_VIEW_RENDERER ((DEBUG_KP_VIEW && 1) || 0)
 
 
-#include <kpView.h>
-#include <kpViewPrivate.h>
+#include "views/kpView.h"
+#include "kpViewPrivate.h"
 
 #include <QPainter>
 #include <QPaintEvent>
@@ -40,13 +40,13 @@
 
 #include <KDebug>
 
-#include <kpAbstractSelection.h>
-#include <kpColor.h>
-#include <kpDocument.h>
-#include <kpTempImage.h>
-#include <kpTextSelection.h>
-#include <kpViewManager.h>
-#include <kpViewScrollableContainer.h>
+#include "layers/selections/kpAbstractSelection.h"
+#include "imagelib/kpColor.h"
+#include "document/kpDocument.h"
+#include "layers/tempImage/kpTempImage.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "views/manager/kpViewManager.h"
+#include "kpViewScrollableContainer.h"
 
 //---------------------------------------------------------------------
 
@@ -85,9 +85,9 @@ QRect kpView::paintEventGetDocRect (const QRect &viewRect) const
     kpDocument *doc = document ();
     if (doc)
     {
-        docRect = docRect.intersect (doc->rect ());
+        docRect = docRect.intersected (doc->rect ());
     #if DEBUG_KP_VIEW_RENDERER && 1
-        kDebug () << "\tintersect with doc=" << docRect;
+        kDebug () << "\tintersected with doc=" << docRect;
     #endif
     }
 
@@ -271,7 +271,7 @@ void kpView::paintEventDrawSelection (QImage *destPixmap, const QRect &docRect)
         !vm->hasAViewWithFocus ()))  // sync: call will break when vm is not held by 1 mainWindow
     {
         QRect rect = vm->textCursorRect ();
-        rect = rect.intersect (textSel->textAreaRect ());
+        rect = rect.intersected (textSel->textAreaRect ());
         if (!rect.isEmpty ())
         {
           kpPixmapFX::fillRect(destPixmap,

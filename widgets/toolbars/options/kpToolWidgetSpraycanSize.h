@@ -30,7 +30,7 @@
 #define KP_TOOL_WIDGET_SPRAYCAN_SIZE_H
 
 
-#include <kpToolWidgetBase.h>
+#include "kpToolWidgetBase.h"
 
 
 class kpToolWidgetSpraycanSize : public kpToolWidgetBase

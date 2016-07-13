@@ -29,7 +29,7 @@
 #define DEBUG_KP_SELECTION 0
 
 
-#include <kpEllipticalImageSelection.h>
+#include "layers/selections/image/kpEllipticalImageSelection.h"
 
 #include <QPainter>
 #include <QRegion>
@@ -180,4 +180,3 @@ void kpEllipticalImageSelection::paintBorder (QImage *destPixmap, const QRect &d
 }
 
 
-#include <kpEllipticalImageSelection.moc>

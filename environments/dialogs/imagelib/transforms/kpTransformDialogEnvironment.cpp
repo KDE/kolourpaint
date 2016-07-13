@@ -26,9 +26,9 @@
 */
 
 
-#include <kpTransformDialogEnvironment.h>
+#include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
 
-#include <kpMainWindow.h>
+#include "mainWindow/kpMainWindow.h"
 
 
 //---------------------------------------------------------------------
@@ -40,4 +40,3 @@ kpTransformDialogEnvironment::kpTransformDialogEnvironment(kpMainWindow *mainWin
 
 //---------------------------------------------------------------------
 
-#include <kpTransformDialogEnvironment.moc>

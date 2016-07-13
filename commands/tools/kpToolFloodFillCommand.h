@@ -30,8 +30,8 @@
 #define kpToolFloodFillCommand_H
 
 
-#include <kpCommand.h>
-#include <kpFloodFill.h>
+#include "commands/kpCommand.h"
+#include "imagelib/kpFloodFill.h"
 
 
 class kpColor;

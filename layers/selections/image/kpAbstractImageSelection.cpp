@@ -29,7 +29,7 @@
 #define DEBUG_KP_SELECTION 0
 
 
-#include <kpAbstractImageSelection.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
 
 #include <QBitmap>
 #include <QPainter>
@@ -580,4 +580,3 @@ void kpAbstractImageSelection::paintWithBaseImage (QImage *destImage,
 //---------------------------------------------------------------------
 
 
-#include <kpAbstractImageSelection.moc>

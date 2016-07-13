@@ -32,7 +32,7 @@
 #define KP_TOOL_FLOW_PIXMAP_BASE_H
 
 
-#include <kpToolFlowBase.h>
+#include "kpToolFlowBase.h"
 
 
 /**

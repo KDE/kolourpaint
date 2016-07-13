@@ -31,7 +31,7 @@
 #define kpEffectToneEnhanceCommand_H
 
 
-#include <kpEffectCommandBase.h>
+#include "kpEffectCommandBase.h"
 
 
 class kpEffectToneEnhanceCommand : public kpEffectCommandBase

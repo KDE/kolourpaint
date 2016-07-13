@@ -30,7 +30,7 @@
 #define kpToolSelectionCreateCommand_H
 
 
-#include <kpNamedCommand.h>
+#include "commands/kpNamedCommand.h"
 
 
 class kpAbstractSelection;

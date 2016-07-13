@@ -29,7 +29,7 @@
 #define DEBUG_KP_THUMBNAIL_VIEW 0
 
 
-#include <kpThumbnailView.h>
+#include "views/kpThumbnailView.h"
 
 #include <kdebug.h>
 
@@ -95,5 +95,4 @@ void kpThumbnailView::resizeEvent (QResizeEvent *e)
 }
 
 
-#include <kpThumbnailView.moc>
 

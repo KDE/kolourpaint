@@ -26,15 +26,15 @@
 */
 
 
-#include <kpToolFlowPixmapBase.h>
+#include "kpToolFlowPixmapBase.h"
+
+#include "imagelib/kpColor.h"
+#include "document/kpDocument.h"
+#include "imagelib/kpPainter.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "commands/tools/flow/kpToolFlowCommand.h"
 
 #include <qbitmap.h>
-
-#include <kpColor.h>
-#include <kpDocument.h>
-#include <kpPainter.h>
-#include <kpPixmapFX.h>
-#include <kpToolFlowCommand.h>
 
 //---------------------------------------------------------------------
 
@@ -84,4 +84,3 @@ QRect kpToolFlowPixmapBase::drawLine (const QPoint &thisPoint, const QPoint &las
 
 //---------------------------------------------------------------------
 
-#include <kpToolFlowPixmapBase.moc>

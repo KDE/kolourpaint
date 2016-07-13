@@ -29,7 +29,7 @@
 #define DEBUG_KP_TOOL_TOOL_BAR 0
 
 
-#include <kpToolToolBar.h>
+#include "widgets/toolbars/kpToolToolBar.h"
 
 #include <qboxlayout.h>
 #include <qgridlayout.h>
@@ -39,15 +39,15 @@
 
 #include <kdebug.h>
 
-#include <kpDefs.h>
-#include <kpTool.h>
-#include <kpToolAction.h>
-#include <kpToolWidgetBrush.h>
-#include <kpToolWidgetEraserSize.h>
-#include <kpToolWidgetFillStyle.h>
-#include <kpToolWidgetLineWidth.h>
-#include <kpToolWidgetOpaqueOrTransparent.h>
-#include <kpToolWidgetSpraycanSize.h>
+#include "kpDefs.h"
+#include "tools/kpTool.h"
+#include "tools/kpToolAction.h"
+#include "widgets/toolbars/options/kpToolWidgetBrush.h"
+#include "widgets/toolbars/options/kpToolWidgetEraserSize.h"
+#include "widgets/toolbars/options/kpToolWidgetFillStyle.h"
+#include "widgets/toolbars/options/kpToolWidgetLineWidth.h"
+#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
+#include "widgets/toolbars/options/kpToolWidgetSpraycanSize.h"
 
 //---------------------------------------------------------------------
 
@@ -456,4 +456,3 @@ void kpToolToolBar::slotToolButtonStyleChanged(Qt::ToolButtonStyle style)
 
 //---------------------------------------------------------------------
 
-#include <kpToolToolBar.moc>

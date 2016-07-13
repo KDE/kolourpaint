@@ -28,8 +28,23 @@
 
 #define DEBUG_KP_TOOL_SPRAYCAN 0
 
+#include "kpToolSpraycan.h"
+
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "imagelib/kpPainter.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "environments/tools/kpToolEnvironment.h"
+#include "commands/tools/flow/kpToolFlowCommand.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/options/kpToolWidgetSpraycanSize.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
 
 #include <cstdlib>
+
+#include <kdebug.h>
+#include <klocale.h>
 
 #include <qbitmap.h>
 #include <qpainter.h>
@@ -39,21 +54,6 @@
 #include <qpolygon.h>
 #include <qrect.h>
 #include <qtimer.h>
-
-#include <kdebug.h>
-#include <klocale.h>
-
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpPainter.h>
-#include <kpPixmapFX.h>
-#include <kpToolEnvironment.h>
-#include <kpToolFlowCommand.h>
-#include <kpToolSpraycan.h>
-#include <kpToolToolBar.h>
-#include <kpToolWidgetSpraycanSize.h>
-#include <kpView.h>
-#include <kpViewManager.h>
 
 //---------------------------------------------------------------------
 
@@ -260,5 +260,4 @@ void kpToolSpraycan::slotSpraycanSizeChanged (int size)
 }
 
 
-#include <kpToolSpraycan.moc>
 

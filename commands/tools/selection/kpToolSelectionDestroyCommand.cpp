@@ -29,7 +29,7 @@
 #define DEBUG_KP_TOOL_SELECTION 0
 
 
-#include <kpToolSelectionDestroyCommand.h>
+#include "kpToolSelectionDestroyCommand.h"
 
 #include <qapplication.h>
 #include <qbitmap.h>
@@ -43,15 +43,15 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpAbstractSelection.h>
-#include <kpAbstractImageSelection.h>
-#include <kpCommandEnvironment.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpTextSelection.h>
-#include <kpToolWidgetOpaqueOrTransparent.h>
-#include <kpView.h>
-#include <kpViewManager.h>
+#include "layers/selections/kpAbstractSelection.h"
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
 
 //---------------------------------------------------------------------
 

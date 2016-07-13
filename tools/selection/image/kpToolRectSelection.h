@@ -30,7 +30,7 @@
 #define KP_TOOL_RECT_SELECTION_H
 
 
-#include <kpAbstractImageSelectionTool.h>
+#include "kpAbstractImageSelectionTool.h"
 
 
 class kpToolRectSelection : public kpAbstractImageSelectionTool

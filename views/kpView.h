@@ -32,7 +32,7 @@
 
 #include <qwidget.h>
 
-#include <kpDefs.h>
+#include "kpDefs.h"
 
 
 class QDragEnterEvent;

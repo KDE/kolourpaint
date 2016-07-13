@@ -26,10 +26,10 @@
 */
 
 
-#include <kpTempImage.h>
+#include "layers/tempImage/kpTempImage.h"
 
-#include <kpPixmapFX.h>
-#include <kpViewManager.h>
+#include "pixmapfx/kpPixmapFX.h"
+#include "views/manager/kpViewManager.h"
 
 #include <QPainter>
 

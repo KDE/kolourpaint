@@ -28,22 +28,22 @@
 
 #include "kpColorCollection.h"
 
-#include <QtCore/QFile>
-#include <QtCore/QTextIStream>
+#include "kpUrlFormatter.h"
 
-#include <kglobal.h>
 #include <kio/netaccess.h>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMessageBox>
-#include <ksavefile.h>
 #include <kdebug.h>
-#include <kstandarddirs.h>
 #include <kstringhandler.h>
-#include <KTemporaryFile>
-#include <KUrl>
 #include <kdebug.h>
 
-#include <kpUrlFormatter.h>
+#include <QDir>
+#include <QFile>
+#include <QSaveFile>
+#include <QStandardPaths>
+#include <QTemporaryFile>
+#include <QTextStream>
+#include <QUrl>
 
 struct ColorNode
 {
@@ -86,14 +86,11 @@ QStringList
 kpColorCollection::installedCollections()
 {
   QStringList paletteList;
-  KGlobal::dirs()->findAllResources("config", "colors/*", KStandardDirs::NoDuplicates, paletteList);
 
-  int strip = strlen("colors/");
-  for(QStringList::Iterator it = paletteList.begin();
-      it != paletteList.end();
-      ++it)
-  {
-      (*it) = (*it).mid(strip);
+  QStringList paths = QStandardPaths::locateAll(QStandardPaths::GenericConfigLocation, "colors",
+                                                QStandardPaths::LocateDirectory);
+  foreach (const QString &path, paths) {
+    paletteList.append(QDir(path).entryList(QStringList(), QDir::Files));
   }
 
   return paletteList;
@@ -115,7 +112,7 @@ kpColorCollection::~kpColorCollection()
     delete d;
 }
 
-static void CouldNotOpenDialog (const KUrl &url, QWidget *parent)
+static void CouldNotOpenDialog (const QUrl &url, QWidget *parent)
 {
      KMessageBox::sorry (parent,
         i18n ("Could not open color palette \"%1\".",
@@ -124,7 +121,7 @@ static void CouldNotOpenDialog (const KUrl &url, QWidget *parent)
 
 // TODO: Set d->editable?
 bool
-kpColorCollection::open(const KUrl &url, QWidget *parent)
+kpColorCollection::open(const QUrl &url, QWidget *parent)
 {
   QString tempPaletteFilePath;
   if (url.isEmpty () || !KIO::NetAccess::download (url, tempPaletteFilePath, parent))
@@ -186,7 +183,7 @@ kpColorCollection::open(const KUrl &url, QWidget *parent)
         if (line.isEmpty()) continue;
         int r, g, b;
         int pos = 0;
-        if (sscanf(line.toAscii(), "%d %d %d%n", &r, &g, &b, &pos) >= 3)
+        if (sscanf(line.toLatin1(), "%d %d %d%n", &r, &g, &b, &pos) >= 3)
         {
            r = qBound(0, r, 255);
            g = qBound(0, g, 255);
@@ -227,7 +224,8 @@ kpColorCollection::openKDE(const QString &name, QWidget *parent)
     return false;
   }
 
-  QString filename = KStandardDirs::locate("config", "colors/"+name);
+  QString filename = QStandardPaths::locate(QStandardPaths::GenericConfigLocation,
+                                            "colors/" + name);
   if (filename.isEmpty())
   {
   #if DEBUG_KP_COLOR_COLLECTION
@@ -238,7 +236,7 @@ kpColorCollection::openKDE(const QString &name, QWidget *parent)
   }
 
   // (this will pop up an error dialog on failure)
-  if (!open (KUrl (filename), parent))
+  if (!open (QUrl::fromLocalFile (filename), parent))
   {
   #if DEBUG_KP_COLOR_COLLECTION
     kDebug () << "could not open";
@@ -253,7 +251,7 @@ kpColorCollection::openKDE(const QString &name, QWidget *parent)
   return true;
 }
 
-static void CouldNotSaveDialog (const KUrl &url, QWidget *parent)
+static void CouldNotSaveDialog (const QUrl &url, QWidget *parent)
 {
     // TODO: use file.errorString()
     KMessageBox::error (parent,
@@ -287,7 +285,7 @@ static void SaveToFile (kpColorCollectionPrivate *d, QIODevice *device)
 }
 
 bool
-kpColorCollection::saveAs(const KUrl &url, bool showOverwritePrompt,
+kpColorCollection::saveAs(const QUrl &url, bool showOverwritePrompt,
         QWidget *parent) const
 {
    if (showOverwritePrompt &&
@@ -307,19 +305,19 @@ kpColorCollection::saveAs(const KUrl &url, bool showOverwritePrompt,
    {
        const QString filename = url.toLocalFile ();
 
-        // sync: All failure exit paths _must_ call KSaveFile::abort() or
-        //       else, the KSaveFile destructor will overwrite the file,
+        // sync: All failure exit paths _must_ call QSaveFile::cancelWriting() or
+        //       else, the QSaveFile destructor will overwrite the file,
         //       <filename>, despite the failure.
-        KSaveFile atomicFileWriter (filename);
+        QSaveFile atomicFileWriter (filename);
         {
-            if (!atomicFileWriter.open ())
+            if (!atomicFileWriter.open (QIODevice::WriteOnly))
             {
                 // We probably don't need this as <filename> has not been
                 // opened.
-                atomicFileWriter.abort ();
+                atomicFileWriter.cancelWriting ();
 
             #if DEBUG_KP_COLOR_COLLECTION
-                kDebug () << "\treturning false because could not open KSaveFile"
+                kDebug () << "\treturning false because could not open QSaveFile"
                           << " error=" << atomicFileWriter.error () << endl;
             #endif
                 ::CouldNotSaveDialog (url, parent);
@@ -331,24 +329,24 @@ kpColorCollection::saveAs(const KUrl &url, bool showOverwritePrompt,
 
             // Atomically overwrite local file with the temporary file
             // we saved to.
-            if (!atomicFileWriter.finalize ())
+            if (!atomicFileWriter.commit ())
             {
-                atomicFileWriter.abort ();
+                atomicFileWriter.cancelWriting ();
 
             #if DEBUG_KP_COLOR_COLLECTION
-                kDebug () << "\tcould not close KSaveFile";
+                kDebug () << "\tcould not close QSaveFile";
             #endif
                 ::CouldNotSaveDialog (url, parent);
                 return false;
             }
-        }  // sync KSaveFile.abort()
+        }  // sync QSaveFile.cancelWriting()
     }
     // Remote file?
     else
     {
         // Create temporary file that is deleted when the variable goes
         // out of scope.
-        KTemporaryFile tempFile;
+        QTemporaryFile tempFile;
         if (!tempFile.open ())
         {
         #if DEBUG_KP_COLOR_COLLECTION
@@ -401,8 +399,9 @@ bool
 kpColorCollection::saveKDE(QWidget *parent) const
 {
    const QString name = d->name;
-   QString filename = KStandardDirs::locateLocal("config", "colors/" + name);
-   const bool ret = saveAs (KUrl (filename), false/*no overwite prompt*/, parent);
+   QString filename = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation)
+                                                       + "colors/" + name;
+   const bool ret = saveAs (QUrl::fromLocalFile (filename), false/*no overwite prompt*/, parent);
    // (d->name is wiped by saveAs()).
    d->name = name;
    return ret;

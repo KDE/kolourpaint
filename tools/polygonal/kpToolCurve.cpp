@@ -29,12 +29,12 @@
 #define DEBUG_KP_TOOL_CURVE 0
 
 
-#include <kpToolCurve.h>
+#include "kpToolCurve.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpPainter.h>
+#include "imagelib/kpPainter.h"
 
 
 static void DrawCurveShape (kpImage *image,
@@ -179,4 +179,3 @@ void kpToolCurve::endDraw (const QPoint &, const QRect &)
 }
 
 
-#include <kpToolCurve.moc>

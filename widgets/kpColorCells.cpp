@@ -29,19 +29,19 @@
 #define DEBUG_KP_COLOR_CELLS 0
 
 
-#include <kpColorCells.h>
+#include "widgets/kpColorCells.h"
 
+#include "imagelib/kpColor.h"
+#include "lgpl/generic/kpColorCollection.h"
+#include "widgets/kpDefaultColorCollection.h"
+
+#include <KDebug>
+#include <KLocalizedString>
+
+#include <QColorDialog>
 #include <QContextMenuEvent>
 #include <QMouseEvent>
 #include <QScrollBar>
-
-#include <KColorDialog>
-#include <KDebug>
-#include <KLocale>
-
-#include <kpColor.h>
-#include <kpColorCollection.h>
-#include <kpDefaultColorCollection.h>
 
 //---------------------------------------------------------------------
 //
@@ -120,7 +120,7 @@ struct kpColorCellsPrivate
     // the modified flag.
     kpColorCollection colorCol;
 
-    KUrl url;
+    QUrl url;
     bool isModified;
 
     bool blockColorChangedSig;
@@ -363,7 +363,7 @@ void kpColorCells::setModified ()
 //---------------------------------------------------------------------
 
 
-KUrl kpColorCells::url () const
+QUrl kpColorCells::url () const
 {
     return d->url;
 }
@@ -394,7 +394,7 @@ void kpColorCells::ensureHaveAtLeastOneRow ()
 
 //---------------------------------------------------------------------
 
-void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const KUrl &url)
+void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const QUrl &url)
 {
     d->colorCol = colorCol;
     ensureHaveAtLeastOneRow ();
@@ -412,7 +412,7 @@ void kpColorCells::setColorCollection (const kpColorCollection &colorCol, const 
 //---------------------------------------------------------------------
 
 
-bool kpColorCells::openColorCollection (const KUrl &url)
+bool kpColorCells::openColorCollection (const QUrl &url)
 {
     // (this will pop up an error dialog on failure)
     if (d->colorCol.open (url, this))
@@ -436,7 +436,7 @@ bool kpColorCells::openColorCollection (const KUrl &url)
 
 //---------------------------------------------------------------------
 
-bool kpColorCells::saveColorCollectionAs (const KUrl &url)
+bool kpColorCells::saveColorCollectionAs (const QUrl &url)
 {
     // (this will pop up an error dialog on failure)
     if (d->colorCol.saveAs (url, true/*show overwrite prompt*/, this))
@@ -561,12 +561,11 @@ void kpColorCells::slotColorSelected (int cell, const QColor &color,
 // protected slot
 void kpColorCells::slotColorDoubleClicked (int cell, const QColor &)
 {
-    KColorDialog dialog(this);
-    dialog.setColor(kpColorCellsBase::color(cell));
-    dialog.setAlphaChannelEnabled(true);
-    dialog.setButtons(KDialog::Ok | KDialog::Cancel);
+    QColorDialog dialog(this);
+    dialog.setCurrentColor(kpColorCellsBase::color(cell));
+    dialog.setOptions(QColorDialog::ShowAlphaChannel);
     if ( dialog.exec() == QDialog::Accepted )
-      setColor (cell, dialog.color());
+      setColor (cell, dialog.currentColor());
 }
 
 //---------------------------------------------------------------------
@@ -594,4 +593,3 @@ void kpColorCells::slotColorChanged (int cell, const QColor &color)
     setModified (true);
 }
 
-#include <kpColorCells.moc>

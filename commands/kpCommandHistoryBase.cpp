@@ -29,32 +29,33 @@
 #define DEBUG_KP_COMMAND_HISTORY 0
 
 
-#include <kpCommandHistoryBase.h>
+#include "kpCommandHistoryBase.h"
 
 #include <climits>
 
 #include <qdatetime.h>
 #include <qlinkedlist.h>
+#include <qmenu.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
 #include <klocale.h>
-#include <kmenu.h>
 #include <kstandardshortcut.h>
 #include <kstandardaction.h>
 #include <ktoolbarpopupaction.h>
 #include <kactioncollection.h>
 #include <kconfiggroup.h>
+#include <kiconloader.h>
 
-#include <kpCommand.h>
-#include <kpCommandEnvironment.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpTool.h>
+#include "kpCommand.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "mainWindow/kpMainWindow.h"
+#include "tools/kpTool.h"
 
+//---------------------------------------------------------------------
 
 //template <typename T>
 static void ClearPointerList (QLinkedList <kpCommand *> *listPtr)
@@ -77,14 +78,14 @@ kpCommandHistoryBase::kpCommandHistoryBase (bool doReadConfig,
                                             KActionCollection *ac)
     : d (new kpCommandHistoryBasePrivate ())
 {
-    m_actionUndo = new KToolBarPopupAction (KIcon ("edit-undo"), undoActionText (), this);
+    m_actionUndo = new KToolBarPopupAction(KDE::icon("edit-undo"), undoActionText (), this);
     ac->addAction (KStandardAction::name (KStandardAction::Undo), m_actionUndo);
-    m_actionUndo->setShortcuts (KStandardShortcut::shortcut (KStandardShortcut::Undo));
+    ac->setDefaultShortcuts (m_actionUndo, KStandardShortcut::shortcut (KStandardShortcut::Undo));
     connect (m_actionUndo, SIGNAL(triggered(bool)), this, SLOT (undo ()));
 
-    m_actionRedo = new KToolBarPopupAction (KIcon ("edit-redo"), redoActionText (), this);
+    m_actionRedo = new KToolBarPopupAction(KDE::icon("edit-redo"), redoActionText (), this);
     ac->addAction (KStandardAction::name (KStandardAction::Redo), m_actionRedo);
-    m_actionRedo->setShortcuts (KStandardShortcut::shortcut (KStandardShortcut::Redo));
+    ac->setDefaultShortcuts (m_actionRedo, KStandardShortcut::shortcut (KStandardShortcut::Redo));
     connect (m_actionRedo, SIGNAL(triggered(bool)), this, SLOT (redo ()));
 
 
@@ -232,7 +233,7 @@ void kpCommandHistoryBase::readConfig ()
 #if DEBUG_KP_COMMAND_HISTORY
     kDebug () << "kpCommandHistoryBase::readConfig()";
 #endif
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupUndoRedo);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupUndoRedo);
 
     setUndoMinLimit (cfg.readEntry (kpSettingUndoMinLimit, undoMinLimit ()));
     setUndoMaxLimit (cfg.readEntry (kpSettingUndoMaxLimit, undoMaxLimit ()));
@@ -249,7 +250,7 @@ void kpCommandHistoryBase::writeConfig ()
 #if DEBUG_KP_COMMAND_HISTORY
     kDebug () << "kpCommandHistoryBase::writeConfig()";
 #endif
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupUndoRedo);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupUndoRedo);
 
     cfg.writeEntry (kpSettingUndoMinLimit, undoMinLimit ());
     cfg.writeEntry (kpSettingUndoMaxLimit, undoMaxLimit ());
@@ -617,7 +618,7 @@ void kpCommandHistoryBase::trimCommandLists ()
 }
 
 
-static void populatePopupMenu (KMenu *popupMenu,
+static void populatePopupMenu (QMenu *popupMenu,
                                const QString &undoOrRedo,
                                const QLinkedList <kpCommand *> &commandList)
 {
@@ -640,7 +641,7 @@ static void populatePopupMenu (KMenu *popupMenu,
     {
         // TODO: maybe have a scrollview show all the items instead, like KOffice in KDE 3
         // LOCOMPAT: should be centered text.
-        popupMenu->addTitle (i18np ("%1 more item", "%1 more items",
+        popupMenu->addSection (i18np ("%1 more item", "%1 more items",
                                     commandList.size () - i));
     }
 }
@@ -666,7 +667,7 @@ void kpCommandHistoryBase::updateActions ()
 #if DEBUG_KP_COMMAND_HISTORY
     QTime timer; timer.start ();
 #endif
-    populatePopupMenu (qobject_cast<KMenu*> (m_actionUndo->menu ()),
+    populatePopupMenu (m_actionUndo->menu (),
                        i18n ("Undo"),
                        m_undoCommandList);
 #if DEBUG_KP_COMMAND_HISTORY
@@ -687,7 +688,7 @@ void kpCommandHistoryBase::updateActions ()
 #if DEBUG_KP_COMMAND_HISTORY
     timer.restart ();
 #endif
-    populatePopupMenu (qobject_cast<KMenu*> (m_actionRedo->menu ()),
+    populatePopupMenu (m_actionRedo->menu (),
                        i18n ("Redo"),
                        m_redoCommandList);
 #if DEBUG_KP_COMMAND_HISTORY
@@ -749,4 +750,3 @@ void kpCommandHistoryBase::documentSaved ()
 }
 
 
-#include <kpCommandHistoryBase.moc>

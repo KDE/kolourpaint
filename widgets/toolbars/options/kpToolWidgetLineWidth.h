@@ -30,7 +30,7 @@
 #define KP_TOOL_WIDGET_LINE_WIDTH_H
 
 
-#include <kpToolWidgetBase.h>
+#include "kpToolWidgetBase.h"
 
 
 class kpToolWidgetLineWidth : public kpToolWidgetBase

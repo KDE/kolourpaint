@@ -32,7 +32,7 @@
 
 #include <qstring.h>
 
-#include <kpColor.h>
+#include "imagelib/kpColor.h"
 
 
 class QDataStream;

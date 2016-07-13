@@ -30,7 +30,7 @@
 #define KP_ZOOMED_THUMBNAIL_VIEW_H
 
 
-#include <kpThumbnailView.h>
+#include "kpThumbnailView.h"
 
 
 /**

@@ -29,7 +29,7 @@
 #define DEBUG_KP_TOOL_POLYGON 0
 
 
-#include <kpToolPolygonalBase.h>
+#include "kpToolPolygonalBase.h"
 
 #include <float.h>
 #include <math.h>
@@ -47,18 +47,18 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpCommandHistory.h>
-#include <kpDocument.h>
-#include <kpDefs.h>
-#include <kpImage.h>
-#include <kpPainter.h>
-#include <kpPixmapFX.h>
-#include <kpTempImage.h>
-#include <kpToolEnvironment.h>
-#include <kpToolPolygonalCommand.h>
-#include <kpToolToolBar.h>
-#include <kpToolWidgetLineWidth.h>
-#include <kpViewManager.h>
+#include "commands/kpCommandHistory.h"
+#include "document/kpDocument.h"
+#include "kpDefs.h"
+#include "imagelib/kpImage.h"
+#include "imagelib/kpPainter.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "layers/tempImage/kpTempImage.h"
+#include "environments/tools/kpToolEnvironment.h"
+#include "commands/tools/polygonal/kpToolPolygonalCommand.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/options/kpToolWidgetLineWidth.h"
+#include "views/manager/kpViewManager.h"
 
 
 struct kpToolPolygonalBasePrivate
@@ -498,4 +498,3 @@ void kpToolPolygonalBase::slotBackgroundColorChanged (const kpColor &)
 }
 
 
-#include <kpToolPolygonalBase.moc>

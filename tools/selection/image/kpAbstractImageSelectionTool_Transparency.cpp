@@ -29,7 +29,30 @@
 #define DEBUG_KP_TOOL_SELECTION 0
 
 
-#include <kpAbstractImageSelectionTool.h>
+#include "kpAbstractImageSelectionTool.h"
+
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "layers/selections/kpAbstractSelection.h"
+#include "commands/kpCommandHistory.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "commands/kpMacroCommand.h"
+#include "generic/kpSetOverrideCursorSaver.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "commands/tools/selection/kpToolSelectionCreateCommand.h"
+#include "commands/tools/selection/kpToolSelectionDestroyCommand.h"
+#include "environments/tools/selection/kpToolSelectionEnvironment.h"
+#include "commands/tools/selection/kpToolSelectionMoveCommand.h"
+#include "commands/tools/selection/kpToolSelectionResizeScaleCommand.h"
+#include "commands/tools/selection/kpToolImageSelectionTransparencyCommand.h"
+#include "commands/tools/selection/text/kpToolTextGiveContentCommand.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
+
+#include <kdebug.h>
+#include <klocale.h>
 
 // LOREFACTOR: Remove unneeded #include
 #include <qapplication.h>
@@ -41,29 +64,6 @@
 #include <qpixmap.h>
 #include <qpolygon.h>
 #include <qtimer.h>
-
-#include <kdebug.h>
-#include <klocale.h>
-
-#include <kpAbstractImageSelection.h>
-#include <kpAbstractSelection.h>
-#include <kpCommandHistory.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpMacroCommand.h>
-#include <kpSetOverrideCursorSaver.h>
-#include <kpTextSelection.h>
-#include <kpToolSelectionCreateCommand.h>
-#include <kpToolSelectionDestroyCommand.h>
-#include <kpToolSelectionEnvironment.h>
-#include <kpToolSelectionMoveCommand.h>
-#include <kpToolSelectionResizeScaleCommand.h>
-#include <kpToolImageSelectionTransparencyCommand.h>
-#include <kpToolTextGiveContentCommand.h>
-#include <kpToolToolBar.h>
-#include <kpToolWidgetOpaqueOrTransparent.h>
-#include <kpView.h>
-#include <kpViewManager.h>
 
 
 // protected

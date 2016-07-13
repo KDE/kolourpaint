@@ -29,10 +29,9 @@
 #ifndef kpColorSimilarityFrame_H
 #define kpColorSimilarityFrame_H
 
+#include "kpColorSimilarityHolder.h"
 
 #include <QWidget>
-
-#include <kpColorSimilarityHolder.h>
 
 
 class kpColorSimilarityFrame : public QWidget, public kpColorSimilarityHolder

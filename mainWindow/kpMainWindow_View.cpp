@@ -26,8 +26,8 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "mainWindow/kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
 #include <qdatetime.h>
 #include <qpainter.h>
@@ -37,24 +37,23 @@
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>
-#include <kglobal.h>
 #include <klocale.h>
 #include <kselectaction.h>
 #include <kstandardaction.h>
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
 
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpThumbnail.h>
-#include <kpTool.h>
-#include <kpToolToolBar.h>
-#include <kpUnzoomedThumbnailView.h>
-#include <kpViewManager.h>
-#include <kpViewScrollableContainer.h>
-#include <kpWidgetMapper.h>
-#include <kpZoomedView.h>
-#include <kpZoomedThumbnailView.h>
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "kpThumbnail.h"
+#include "tools/kpTool.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "views/kpUnzoomedThumbnailView.h"
+#include "views/manager/kpViewManager.h"
+#include "kpViewScrollableContainer.h"
+#include "generic/kpWidgetMapper.h"
+#include "views/kpZoomedView.h"
+#include "views/kpZoomedThumbnailView.h"
 
 
 // private
@@ -71,7 +70,7 @@ void kpMainWindow::setupViewMenuActions ()
 
     d->actionShowGrid = ac->add <KToggleAction> ("view_show_grid");
     d->actionShowGrid->setText (i18n ("Show &Grid"));
-    d->actionShowGrid->setShortcut (Qt::CTRL + Qt::Key_G);
+    ac->setDefaultShortcut (d->actionShowGrid, Qt::CTRL + Qt::Key_G);
     //d->actionShowGrid->setCheckedState (KGuiItem(i18n ("Hide &Grid")));
     connect (d->actionShowGrid, SIGNAL (triggered (bool)),
         SLOT (slotShowGridToggled ()));
@@ -132,7 +131,7 @@ void kpMainWindow::slotShowGridToggled ()
 
     updateMainViewGrid ();
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
 
     cfg.writeEntry (kpSettingShowGrid, d->configShowGrid = d->actionShowGrid->isChecked ());
     cfg.sync ();

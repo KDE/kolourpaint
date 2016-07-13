@@ -29,7 +29,7 @@
 #define DEBUG_KP_COLOR_TOOL_BAR 0
 
 
-#include <kpColorToolBar.h>
+#include "widgets/toolbars/kpColorToolBar.h"
 
 #include <QBoxLayout>
 #include <QDragEnterEvent>
@@ -39,12 +39,12 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpColorCells.h>
-#include <kpColorPalette.h>
-#include <kpColorSimilarityToolBarItem.h>
-#include <kpDefs.h>
-#include <kpDualColorButton.h>
-#include <kpUrlFormatter.h>
+#include "widgets/kpColorCells.h"
+#include "widgets/kpColorPalette.h"
+#include "widgets/colorSimilarity/kpColorSimilarityToolBarItem.h"
+#include "kpDefs.h"
+#include "widgets/kpDualColorButton.h"
+#include "lgpl/generic/kpUrlFormatter.h"
 
 //---------------------------------------------------------------------
 
@@ -82,7 +82,7 @@ kpColorToolBar::kpColorToolBar (const QString &label, QWidget *parent)
 
     connect (m_colorPalette->colorCells (), SIGNAL (isModifiedChanged (bool)),
              SLOT (updateNameOrUrlLabel ()));
-    connect (m_colorPalette->colorCells (), SIGNAL (urlChanged (const KUrl &)),
+    connect (m_colorPalette->colorCells (), SIGNAL (urlChanged (const QUrl &)),
              SLOT (updateNameOrUrlLabel ()));
     connect (m_colorPalette->colorCells (), SIGNAL (nameChanged (const QString &)),
              SLOT (updateNameOrUrlLabel ()));
@@ -326,4 +326,3 @@ void kpColorToolBar::dragMoveEvent (QDragMoveEvent *e)
 
 //---------------------------------------------------------------------
 
-#include <kpColorToolBar.moc>

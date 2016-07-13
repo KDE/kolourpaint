@@ -26,18 +26,18 @@
 */
 
 
-#include <kpToolEnvironment.h>
+#include "kpToolEnvironment.h"
+
+#include "imagelib/kpColor.h"
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "mainWindow/kpMainWindow.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+
+#include <KActionCollection>
 
 #include <QActionGroup>
 #include <QPoint>
 #include <QString>
-
-#include <KActionCollection>
-
-#include <kpColor.h>
-#include <kpColorToolBar.h>
-#include <kpMainWindow.h>
-#include <kpToolToolBar.h>
 
 
 struct kpToolEnvironmentPrivate
@@ -209,4 +209,3 @@ void kpToolEnvironment::fitToPage () const
 }
 
 
-#include <kpToolEnvironment.moc>

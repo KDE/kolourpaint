@@ -26,26 +26,26 @@
 */
 
 
-#include <kpUrlFormatter.h>
+#include "kpUrlFormatter.h"
 
-#include <KLocale>
-#include <KUrl>
+#include <KLocalizedString>
+#include <QUrl>
 
 //---------------------------------------------------------------------
 
 // public static
-QString kpUrlFormatter::PrettyUrl (const KUrl &url)
+QString kpUrlFormatter::PrettyUrl (const QUrl &url)
 {
     if (url.isEmpty ())
         return i18n ("Untitled");
     else
-        return url.pathOrUrl ();
+        return url.url (QUrl::PreferLocalFile);
 }
 
 //---------------------------------------------------------------------
 
 // public static
-QString kpUrlFormatter::PrettyFilename (const KUrl &url)
+QString kpUrlFormatter::PrettyFilename (const QUrl &url)
 {
     if (url.isEmpty ())
         return i18n ("Untitled");

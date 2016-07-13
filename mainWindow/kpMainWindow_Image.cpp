@@ -26,50 +26,50 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "mainWindow/kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
-#include <qcolor.h>
-#include <qsize.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "imagelib/kpColor.h"
+#include "kpDefs.h"
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "commands/kpCommandHistory.h"
+#include "document/kpDocument.h"
+#include "commands/imagelib/effects/kpEffectInvertCommand.h"
+#include "commands/imagelib/effects/kpEffectReduceColorsCommand.h"
+#include "dialogs/imagelib/effects/kpEffectsDialog.h"
+#include "commands/imagelib/effects/kpEffectClearCommand.h"
+#include "commands/imagelib/effects/kpEffectGrayscaleCommand.h"
+#include "commands/kpMacroCommand.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "commands/tools/selection/kpToolSelectionCreateCommand.h"
+#include "commands/tools/selection/kpToolSelectionPullFromDocumentCommand.h"
+#include "commands/tools/selection/text/kpToolTextGiveContentCommand.h"
+#include "imagelib/transforms/kpTransformAutoCrop.h"
+#include "imagelib/transforms/kpTransformCrop.h"
+#include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
+#include "commands/imagelib/transforms/kpTransformFlipCommand.h"
+#include "commands/imagelib/transforms/kpTransformResizeScaleCommand.h"
+#include "dialogs/imagelib/transforms/kpTransformResizeScaleDialog.h"
+#include "commands/imagelib/transforms/kpTransformRotateCommand.h"
+#include "dialogs/imagelib/transforms/kpTransformRotateDialog.h"
+#include "commands/imagelib/transforms/kpTransformSkewCommand.h"
+#include "dialogs/imagelib/transforms/kpTransformSkewDialog.h"
+#include "views/manager/kpViewManager.h"
 
-#include <kaction.h>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>
-#include <kglobal.h>
 #include <klocale.h>
-#include <kmenubar.h>
 #include <KToggleAction>
+#include <kiconloader.h>
 
-#include <kpAbstractImageSelection.h>
-#include <kpColor.h>
-#include <kpDefs.h>
-#include <kpColorToolBar.h>
-#include <kpCommandHistory.h>
-#include <kpDocument.h>
-#include <kpEffectInvertCommand.h>
-#include <kpEffectReduceColorsCommand.h>
-#include <kpEffectsDialog.h>
-#include <kpEffectClearCommand.h>
-#include <kpEffectGrayscaleCommand.h>
-#include <kpMacroCommand.h>
-#include <kpTextSelection.h>
-#include <kpToolSelectionCreateCommand.h>
-#include <kpToolSelectionPullFromDocumentCommand.h>
-#include <kpToolTextGiveContentCommand.h>
-#include <kpTransformAutoCrop.h>
-#include <kpTransformCrop.h>
-#include <kpTransformDialogEnvironment.h>
-#include <kpTransformFlipCommand.h>
-#include <kpTransformResizeScaleCommand.h>
-#include <kpTransformResizeScaleDialog.h>
-#include <kpTransformRotateCommand.h>
-#include <kpTransformRotateDialog.h>
-#include <kpTransformSkewCommand.h>
-#include <kpTransformSkewDialog.h>
-#include <kpViewManager.h>
+#include <qaction.h>
+#include <qcolor.h>
+#include <qmenubar.h>
+#include <qsize.h>
 
 
 //---------------------------------------------------------------------
@@ -118,50 +118,50 @@ void kpMainWindow::setupImageMenuActions ()
     d->actionResizeScale = ac->addAction ("image_resize_scale");
     d->actionResizeScale->setText (i18n ("R&esize / Scale..."));
     connect (d->actionResizeScale, SIGNAL (triggered (bool)), SLOT (slotResizeScale ()));
-    d->actionResizeScale->setShortcut(Qt::CTRL + Qt::Key_E);
+    ac->setDefaultShortcut (d->actionResizeScale, Qt::CTRL + Qt::Key_E);
 
     d->actionCrop = ac->addAction ("image_crop");
     d->actionCrop->setText (i18n ("Se&t as Image (Crop)"));
     connect (d->actionCrop, SIGNAL (triggered (bool)), SLOT (slotCrop ()));
-    d->actionCrop->setShortcut(Qt::CTRL + Qt::Key_T);
+    ac->setDefaultShortcut (d->actionCrop, Qt::CTRL + Qt::Key_T);
 
     d->actionAutoCrop = ac->addAction ("image_auto_crop");
     d->actionAutoCrop->setText (autoCropText ());
     connect (d->actionAutoCrop, SIGNAL (triggered (bool)), SLOT (slotAutoCrop ()));
-    d->actionAutoCrop->setShortcut(Qt::CTRL + Qt::Key_U);
+    ac->setDefaultShortcut (d->actionAutoCrop, Qt::CTRL + Qt::Key_U);
 
     d->actionFlip = ac->addAction ("image_flip");
     d->actionFlip->setText (i18n ("&Flip (upside down)"));
     connect (d->actionFlip, SIGNAL (triggered (bool)), SLOT (slotFlip ()));
-    d->actionFlip->setShortcut(Qt::CTRL + Qt::Key_F);
+    ac->setDefaultShortcut (d->actionFlip, Qt::CTRL + Qt::Key_F);
 
     d->actionMirror = ac->addAction ("image_mirror");
     d->actionMirror->setText (i18n ("Mirror (horizontally)"));
     connect (d->actionMirror, SIGNAL (triggered (bool)), SLOT (slotMirror ()));
-    //d->actionMirror->setShortcut(Qt::CTRL + Qt::Key_M);
+    //ac->setDefaultShortcut (d->actionMirror, Qt::CTRL + Qt::Key_M);
 
     d->actionRotate = ac->addAction ("image_rotate");
     d->actionRotate->setText (i18n ("&Rotate..."));
-    d->actionRotate->setIcon (KIcon ("transform-rotate"));
+    d->actionRotate->setIcon(KDE::icon("transform-rotate"));
     connect (d->actionRotate, SIGNAL (triggered (bool)), SLOT (slotRotate ()));
-    d->actionRotate->setShortcut(Qt::CTRL + Qt::Key_R);
+    ac->setDefaultShortcut (d->actionRotate, Qt::CTRL + Qt::Key_R);
 
     d->actionRotateLeft = ac->addAction ("image_rotate_270deg");
     d->actionRotateLeft->setText (i18n ("Rotate &Left"));
-    d->actionRotateLeft->setIcon (KIcon ("object-rotate-left"));
+    d->actionRotateLeft->setIcon(KDE::icon("object-rotate-left"));
     connect (d->actionRotateLeft, SIGNAL (triggered (bool)), SLOT (slotRotate270 ()));
-    d->actionRotateLeft->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Left);
+    ac->setDefaultShortcut (d->actionRotateLeft, Qt::CTRL + Qt::SHIFT + Qt::Key_Left);
 
     d->actionRotateRight = ac->addAction ("image_rotate_90deg");
     d->actionRotateRight->setText (i18n ("Rotate Righ&t"));
-    d->actionRotateRight->setIcon (KIcon ("object-rotate-right"));
+    d->actionRotateRight->setIcon(KDE::icon("object-rotate-right"));
     connect (d->actionRotateRight, SIGNAL (triggered (bool)), SLOT (slotRotate90 ()));
-    d->actionRotateRight->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Right);
+    ac->setDefaultShortcut (d->actionRotateRight, Qt::CTRL + Qt::SHIFT + Qt::Key_Right);
 
     d->actionSkew = ac->addAction ("image_skew");
     d->actionSkew->setText (i18n ("S&kew..."));
     connect (d->actionSkew, SIGNAL (triggered (bool)), SLOT (slotSkew ()));
-    d->actionSkew->setShortcut(Qt::CTRL + Qt::Key_K);
+    ac->setDefaultShortcut (d->actionSkew, Qt::CTRL + Qt::Key_K);
 
     d->actionConvertToBlackAndWhite = ac->addAction ("image_convert_to_black_and_white");
     d->actionConvertToBlackAndWhite->setText (i18n ("Reduce to Mo&nochrome (Dithered)"));
@@ -174,17 +174,17 @@ void kpMainWindow::setupImageMenuActions ()
     d->actionInvertColors = ac->addAction ("image_invert_colors");
     d->actionInvertColors->setText (i18n ("&Invert Colors"));
     connect (d->actionInvertColors, SIGNAL (triggered (bool)), SLOT (slotInvertColors ()));
-    d->actionInvertColors->setShortcut(Qt::CTRL + Qt::Key_I);
+    ac->setDefaultShortcut (d->actionInvertColors, Qt::CTRL + Qt::Key_I);
 
     d->actionClear = ac->addAction ("image_clear");
     d->actionClear->setText (i18n ("C&lear"));
     connect (d->actionClear, SIGNAL (triggered (bool)), SLOT (slotClear ()));
-    d->actionClear->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
+    ac->setDefaultShortcut (d->actionClear, Qt::CTRL + Qt::SHIFT + Qt::Key_N);
 
     d->actionMoreEffects = ac->addAction ("image_more_effects");
     d->actionMoreEffects->setText (i18n ("&More Effects..."));
     connect (d->actionMoreEffects, SIGNAL (triggered (bool)), SLOT (slotMoreEffects ()));
-    d->actionMoreEffects->setShortcut(Qt::CTRL + Qt::Key_M);
+    ac->setDefaultShortcut (d->actionMoreEffects, Qt::CTRL + Qt::Key_M);
 
 
     enableImageMenuDocumentActions (false);
@@ -586,7 +586,7 @@ void kpMainWindow::slotMoreEffects ()
     {
         d->moreEffectsDialogLastEffect = dialog.selectedEffect ();
 
-        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+        KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
 
         cfg.writeEntry (kpSettingMoreEffectsLastEffect,
                          d->moreEffectsDialogLastEffect);

@@ -30,13 +30,13 @@
 #define kpEffectBalanceWidget_H
 
 
-#include <kpEffectWidgetBase.h>
-#include <kpImage.h>
+#include "kpEffectWidgetBase.h"
+#include "imagelib/kpImage.h"
 
 
 class QLabel;
 
-class KComboBox;
+class QComboBox;
 class KIntNumInput;
 
 
@@ -78,7 +78,7 @@ protected:
                  *m_contrastInput,
                  *m_gammaInput;
     QLabel *m_gammaLabel;
-    KComboBox *m_channelsComboBox;
+    QComboBox *m_channelsComboBox;
 };
 
 

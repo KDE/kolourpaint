@@ -28,12 +28,12 @@
 #define DEBUG_KP_TOOL_TEXT 0
 
 
-#include <kpToolTextChangeStyleCommand.h>
+#include "kpToolTextChangeStyleCommand.h"
+
+#include "environments/commands/kpCommandEnvironment.h"
+#include "layers/selections/text/kpTextSelection.h"
 
 #include <kdebug.h>
-
-#include <kpCommandEnvironment.h>
-#include <kpTextSelection.h>
 
 
 kpToolTextChangeStyleCommand::kpToolTextChangeStyleCommand (const QString &name,

@@ -29,18 +29,19 @@
 #define DEBUG_KP_COLOR_SIMILARITY_TOOL_BAR_ITEM 0
 
 
-#include <kpColorSimilarityToolBarItem.h>
+#include "kpColorSimilarityToolBarItem.h"
 
 #include <QTimer>
 #include <QPixmap>
 
 #include <KConfigGroup>
-#include <KLocale>
+#include <KLocalizedString>
+#include <KSharedConfig>
 
-#include <kpColor.h>
-#include <kpColorSimilarityDialog.h>
-#include <kpColorSimilarityCubeRenderer.h>
-#include <kpDefs.h>
+#include "imagelib/kpColor.h"
+#include "dialogs/kpColorSimilarityDialog.h"
+#include "kpColorSimilarityCubeRenderer.h"
+#include "kpDefs.h"
 
 //---------------------------------------------------------------------
 
@@ -61,7 +62,7 @@ kpColorSimilarityToolBarItem::kpColorSimilarityToolBarItem (QWidget *parent)
 
     connect (this, SIGNAL (clicked ()), SLOT (openDialog ()));
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
     setColorSimilarityInternal (cfg.readEntry (kpSettingColorSimilarity, 0.0),
         false/*don't write config*/);
 
@@ -100,7 +101,7 @@ void kpColorSimilarityToolBarItem::setColorSimilarityInternal (double similarity
 
     if (writeConfig)
     {
-        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+        KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
         cfg.writeEntry (kpSettingColorSimilarity, colorSimilarity ());
         cfg.sync ();
     }
@@ -279,4 +280,3 @@ void kpColorSimilarityToolBarItem::resizeEvent (QResizeEvent *e)
 
 //---------------------------------------------------------------------
 
-#include <kpColorSimilarityToolBarItem.moc>

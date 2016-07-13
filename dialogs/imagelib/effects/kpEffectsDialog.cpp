@@ -29,33 +29,32 @@
 #define DEBUG_KP_EFFECTS_DIALOG 0
 
 
-#include <kpEffectsDialog.h>
+#include "kpEffectsDialog.h"
 
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "widgets/imagelib/effects/kpEffectBalanceWidget.h"
+#include "widgets/imagelib/effects/kpEffectBlurSharpenWidget.h"
+#include "widgets/imagelib/effects/kpEffectEmbossWidget.h"
+#include "widgets/imagelib/effects/kpEffectFlattenWidget.h"
+#include "widgets/imagelib/effects/kpEffectHSVWidget.h"
+#include "widgets/imagelib/effects/kpEffectInvertWidget.h"
+#include "widgets/imagelib/effects/kpEffectReduceColorsWidget.h"
+#include "widgets/imagelib/effects/kpEffectToneEnhanceWidget.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
+
+#include <kapplication.h>
+#include <kconfig.h>
+#include <kdebug.h>
+#include <klocale.h>
+
+#include <qcombobox.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtimer.h>
 #include <QImage>
-
-#include <kapplication.h>
-#include <kcombobox.h>
-#include <kconfig.h>
-#include <kdebug.h>
-#include <khbox.h>
-#include <klocale.h>
-
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpEffectBalanceWidget.h>
-#include <kpEffectBlurSharpenWidget.h>
-#include <kpEffectEmbossWidget.h>
-#include <kpEffectFlattenWidget.h>
-#include <kpEffectHSVWidget.h>
-#include <kpEffectInvertWidget.h>
-#include <kpEffectReduceColorsWidget.h>
-#include <kpEffectToneEnhanceWidget.h>
-#include <kpPixmapFX.h>
-#include <kpTransformDialogEnvironment.h>
 
 
 // protected static
@@ -98,14 +97,13 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
              this, SLOT (slotUpdateWithWaitCursor ()));
 
 
-    KHBox *effectContainer = new KHBox (mainWidget ());
-    effectContainer->setSpacing (spacingHint () * 4
-                                 /*need more space for QGroupBox titles*/);
-    effectContainer->setMargin (0);
+    QWidget *effectContainer = new QWidget (mainWidget ());
+    QHBoxLayout *containerLayout = new QHBoxLayout (effectContainer);
+    containerLayout->setMargin (0);
 
     QLabel *label = new QLabel (i18n ("&Effect:"), effectContainer);
 
-    m_effectsComboBox = new KComboBox (effectContainer);
+    m_effectsComboBox = new QComboBox (effectContainer);
     // Keep in alphabetical order.
     // TODO: What about translations?
     // sync: order in selectEffect().
@@ -118,16 +116,16 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
     m_effectsComboBox->addItem (i18n ("Reduce Colors"));
     m_effectsComboBox->addItem (i18n ("Soften & Sharpen"));
 
+    containerLayout->addWidget (label);
+    containerLayout->addWidget (m_effectsComboBox, 1);
+
     label->setBuddy (m_effectsComboBox);
-    effectContainer->setStretchFactor (m_effectsComboBox, 1);
 
     addCustomWidgetToFront (effectContainer);
 
 
     m_settingsGroupBox = new QGroupBox (mainWidget ());
     m_settingsLayout = new QVBoxLayout ( m_settingsGroupBox );
-    m_settingsLayout->setMargin( marginHint () * 2 );
-    m_settingsLayout->setSpacing( spacingHint () );
     addCustomWidgetToBack (m_settingsGroupBox);
 
 
@@ -363,4 +361,3 @@ void kpEffectsDialog::slotDelayedUpdate ()
 }
 
 
-#include <kpEffectsDialog.moc>

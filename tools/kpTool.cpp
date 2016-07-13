@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -31,8 +30,8 @@
 
 #define DEBUG_KP_TOOL 0
 
-#include <kpTool.h>
-#include <kpToolPrivate.h>
+#include "kpTool.h"
+#include "kpToolPrivate.h"
 
 #include <limits.h>
 
@@ -41,14 +40,14 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpColor.h>
-#include <kpColorToolBar.h>
-#include <kpDefs.h>
-#include <kpToolAction.h>
-#include <kpToolEnvironment.h>
-#include <kpToolToolBar.h>
-#include <kpView.h>
-#include <kpViewManager.h>
+#include "imagelib/kpColor.h"
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "kpDefs.h"
+#include "tools/kpToolAction.h"
+#include "environments/tools/kpToolEnvironment.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
 #undef environ  // macro on win32
 
 //---------------------------------------------------------------------
@@ -131,9 +130,9 @@ static bool KeyIsText (int key)
 
 // public static
 QString kpTool::toolTipForTextAndShortcut (const QString &text,
-                                           const KShortcut &shortcut)
+                                           const QList<QKeySequence> &shortcut)
 {
-    foreach(const QKeySequence &seq, shortcut.toList())
+    foreach(const QKeySequence &seq, shortcut)
     {
         if (seq.count () == 1 && ::KeyIsText (seq [0]))
             return i18nc ("<Tool Name> (<Single Accel Key>)",
@@ -147,22 +146,22 @@ QString kpTool::toolTipForTextAndShortcut (const QString &text,
 
 QString kpTool::toolTip () const
 {
-    return toolTipForTextAndShortcut(d->text, d->action->shortcut());
+    return toolTipForTextAndShortcut(d->text, d->action->shortcuts());
 }
 
 //---------------------------------------------------------------------
 // public static
 
-KShortcut kpTool::shortcutForKey (int key)
+QList<QKeySequence> kpTool::shortcutForKey (int key)
 {
-    KShortcut shortcut;
+    QList<QKeySequence> shortcut;
 
     if (key)
     {
-        shortcut.setPrimary (key);
+        shortcut.append (QKeySequence (key));
         // (CTRL+<key>, ALT+<key>, CTRL+ALT+<key>, CTRL+SHIFT+<key>
         //  all clash with global KDE shortcuts)
-        shortcut.setAlternate (Qt::ALT + Qt::SHIFT + key);
+        shortcut.append (QKeySequence (Qt::ALT + Qt::SHIFT + key));
     }
 
     return shortcut;
@@ -259,6 +258,3 @@ kpToolEnvironment *kpTool::environ () const
 {
     return d->environ;
 }
-
-
-#include <kpTool.moc>

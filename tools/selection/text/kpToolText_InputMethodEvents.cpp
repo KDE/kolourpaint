@@ -30,18 +30,18 @@
 #define DEBUG_KP_TOOL_TEXT 0
 
 
-#include <kpToolText.h>
-#include <kpToolTextPrivate.h>
-#include <kpToolTextInsertCommand.h>
+#include "tools/selection/text/kpToolText.h"
+#include "kpToolTextPrivate.h"
+#include "commands/tools/selection/text/kpToolTextInsertCommand.h"
 
 #include <qevent.h>
 
 #include <kdebug.h>
 
-#include <kpDocument.h>
-#include <kpTextSelection.h>
-#include <kpView.h>
-#include <kpViewManager.h>
+#include "document/kpDocument.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
 
 //---------------------------------------------------------------------
 

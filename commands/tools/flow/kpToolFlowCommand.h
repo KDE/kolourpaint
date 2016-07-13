@@ -30,7 +30,7 @@
 #define KP_TOOL_FLOW_COMMAND_H
 
 
-#include <kpNamedCommand.h>
+#include "commands/kpNamedCommand.h"
 
 
 class QPoint;

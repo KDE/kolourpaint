@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -29,16 +28,12 @@
 #define DEBUG_KP_EFFECT_BLUR_SHARPEN 0
 
 
-#include <kpEffectBlurSharpen.h>
-
-#include <qimageblitz.h>
-
-#include <qbitmap.h>
-#include <qimage.h>
+#include "kpEffectBlurSharpen.h"
+#include "blitz.h"
 
 #include <kdebug.h>
 
-#include <kpPixmapFX.h>
+#include "pixmapfx/kpPixmapFX.h"
 
 
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN

@@ -30,7 +30,7 @@
 #define KP_TOOL_POLYGON_H
 
 
-#include <kpToolPolygonalBase.h>
+#include "kpToolPolygonalBase.h"
 
 
 class kpToolPolygon : public kpToolPolygonalBase

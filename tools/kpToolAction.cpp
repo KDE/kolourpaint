@@ -25,22 +25,21 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <kpToolAction.h>
-
+#include "tools/kpToolAction.h"
 #include <kactioncollection.h>
-#include <kicon.h>
+#include "tools/kpTool.h"
 
-#include <kpTool.h>
+#include <kiconloader.h>
 
 //---------------------------------------------------------------------
 
 kpToolAction::kpToolAction(const QString &text,
-                            const QString &pic, const KShortcut &shortcut,
+                            const QString &pic, const QList<QKeySequence> &shortcut,
                             const QObject *receiver, const char *slot,
                             KActionCollection *ac, const QString &name)
-    : KToggleAction(KIcon(pic), text, ac)
+    : KToggleAction(KDE::icon(pic), text, ac)
 {
-  KToggleAction::setShortcut(shortcut);
+  ac->setDefaultShortcuts(this, shortcut);
 
   if ( receiver && slot )
     connect(this, SIGNAL(triggered(bool)), receiver, slot);
@@ -57,7 +56,7 @@ kpToolAction::kpToolAction(const QString &text,
 void kpToolAction::updateToolTip()
 {
   const QString newToolTip =
-      kpTool::toolTipForTextAndShortcut(text(), shortcut());
+      kpTool::toolTipForTextAndShortcut(text(), shortcuts()).remove(QLatin1Char('&'));
 
   if ( newToolTip == toolTip() )
     return;
@@ -67,4 +66,3 @@ void kpToolAction::updateToolTip()
 
 //---------------------------------------------------------------------
 
-#include <kpToolAction.moc>

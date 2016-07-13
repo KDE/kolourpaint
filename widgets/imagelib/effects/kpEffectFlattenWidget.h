@@ -32,7 +32,7 @@
 
 #include <qcolor.h>
 
-#include <kpEffectWidgetBase.h>
+#include "kpEffectWidgetBase.h"
 
 
 class QCheckBox;

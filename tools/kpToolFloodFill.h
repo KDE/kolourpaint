@@ -30,7 +30,7 @@
 #define KP_TOOL_FLOOD_FILL_H
 
 
-#include <kpTool.h>
+#include "tools/kpTool.h"
 
 
 class kpToolFloodFill : public kpTool

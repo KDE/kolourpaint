@@ -36,7 +36,7 @@
 
 #include <kolourpaint_lgpl_export.h>
 
-#include <QtGui/QTableWidget>
+#include <QTableWidget>
 
 /**
 * A table of editable color cells.

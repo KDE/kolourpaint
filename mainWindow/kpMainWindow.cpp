@@ -26,38 +26,36 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
-#include <qevent.h>
-#include <qtimer.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "widgets/kpColorCells.h"
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "commands/kpCommandHistory.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "environments/document/kpDocumentEnvironment.h"
+#include "layers/selections/kpSelectionDrag.h"
+#include "kpThumbnail.h"
+#include "tools/kpTool.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "views/manager/kpViewManager.h"
+#include "kpViewScrollableContainer.h"
+#include "generic/kpWidgetMapper.h"
+#include "views/kpZoomedThumbnailView.h"
+#include "views/kpZoomedView.h"
 
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>
-#include <kglobal.h>
 #include <klocale.h>
-#include <KMenu>
-#include <KMenuBar>
 #include <krecentfilesaction.h>
 
-#include <kpAbstractImageSelection.h>
-#include <kpCommandEnvironment.h>
-#include <kpColorCells.h>
-#include <kpColorToolBar.h>
-#include <kpCommandHistory.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpDocumentEnvironment.h>
-#include <kpSelectionDrag.h>
-#include <kpThumbnail.h>
-#include <kpTool.h>
-#include <kpToolToolBar.h>
-#include <kpViewManager.h>
-#include <kpViewScrollableContainer.h>
-#include <kpWidgetMapper.h>
-#include <kpZoomedThumbnailView.h>
-#include <kpZoomedView.h>
+#include <qevent.h>
+#include <qmenu.h>
+#include <qtimer.h>
 
 #if DEBUG_KP_MAIN_WINDOW
     #include <qdatetime.h>
@@ -70,14 +68,14 @@ kpMainWindow::kpMainWindow ()
     : KXmlGuiWindow (0/*parent*/)
 {
     init ();
-    open (KUrl (), true/*create an empty doc*/);
+    open (QUrl (), true/*create an empty doc*/);
 
     d->isFullyConstructed = true;
 }
 
 //---------------------------------------------------------------------
 
-kpMainWindow::kpMainWindow (const KUrl &url)
+kpMainWindow::kpMainWindow (const QUrl &url)
     : KXmlGuiWindow (0/*parent*/)
 {
     init ();
@@ -109,7 +107,7 @@ void kpMainWindow::readGeneralSettings ()
     kDebug () << "\tkpMainWindow(" << objectName () << ")::readGeneralSettings()";
 #endif
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
 
     d->configFirstTime = cfg.readEntry (kpSettingFirstTime, true);
     d->configShowGrid = cfg.readEntry (kpSettingShowGrid, false);
@@ -157,7 +155,7 @@ void kpMainWindow::readThumbnailSettings ()
     kDebug () << "\tkpMainWindow(" << objectName () << ")::readThumbnailSettings()";
 #endif
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupThumbnail);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupThumbnail);
 
     d->configThumbnailShown = cfg.readEntry (kpSettingThumbnailShown, false);
     d->configThumbnailGeometry = cfg.readEntry (kpSettingThumbnailGeometry, QRect ());
@@ -179,9 +177,9 @@ void kpMainWindow::finalizeGUI(KXMLGUIClient *client)
 {
   if ( client == this )
   {
-    const QList<KMenu *> menuToHide = findChildren<KMenu *>("toolToolBarHiddenMenu");
+    const QList<QMenu *> menuToHide = findChildren<QMenu *>("toolToolBarHiddenMenu");
     // should only contain one but...
-    foreach (KMenu *menu, menuToHide)
+    foreach (QMenu *menu, menuToHide)
     {
         menu->menuAction()->setVisible(false);
     }
@@ -213,7 +211,7 @@ void kpMainWindow::init ()
 
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
     // realize what other processes have done e.g. Settings / Show Path
-    KGlobal::config ()->reparseConfiguration ();
+    KSharedConfig::openConfig ()->reparseConfiguration ();
 
     readGeneralSettings ();
     readThumbnailSettings ();
@@ -272,7 +270,7 @@ void kpMainWindow::init ()
     {
       d->toolToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 
-      KConfigGroup cfg(KGlobal::config(), kpSettingsGroupGeneral);
+      KConfigGroup cfg(KSharedConfig::openConfig(), kpSettingsGroupGeneral);
 
       cfg.writeEntry(kpSettingFirstTime, d->configFirstTime = false);
       cfg.sync();
@@ -304,8 +302,8 @@ void kpMainWindow::readProperties (const KConfigGroup &configGroup)
     // Have a document.
     else
     {
-        const KUrl url = configGroup.readEntry (kpSessionSettingDocumentUrl,
-                                                QString ());
+        const QUrl url = QUrl (configGroup.readEntry (kpSessionSettingDocumentUrl,
+                                                QString ()));
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\turl=" << url;
     #endif
@@ -368,7 +366,7 @@ void kpMainWindow::saveProperties (KConfigGroup &configGroup)
         //       i) No URL
         //       ii) URL (from "kolourpaint doesnotexist.png")
 
-        const KUrl url = d->document->url ();
+        const QUrl url = d->document->url ();
     #if DEBUG_KP_MAIN_WINDOW
         kDebug () << "\turl=" << url;
     #endif
@@ -416,7 +414,7 @@ void kpMainWindow::saveProperties (KConfigGroup &configGroup)
             //       --- The below code does not compile but shows you want to do ---
 
             // Create unique name for the document in this main window.
-            const KUrl tempURL = homeDir +
+            const QUrl tempURL = homeDir +
                 "kolourpaint session " + sessionID +
                 mainWindowPtrToString + ".png";
             // TODO: Use lossless PNG saving options.
@@ -637,11 +635,20 @@ void kpMainWindow::setDocument (kpDocument *newDoc)
 
 
     if (!d->lastCopyToURL.isEmpty ())
-        d->lastCopyToURL.setFileName (QString());
+    {
+        // remove file name from path
+        QString path = d->lastCopyToURL.path ();
+        path = path.left (path.lastIndexOf (QLatin1Char ('/')) + 1);
+        d->lastCopyToURL.setPath (path);
+    }
     d->copyToFirstTime = true;
 
     if (!d->lastExportURL.isEmpty ())
-        d->lastExportURL.setFileName (QString());
+    {
+        QString path = d->lastExportURL.path ();
+        path = path.left (path.lastIndexOf (QLatin1Char ('/')) + 1);
+        d->lastExportURL.setPath (path);
+    }
     d->exportFirstTime = true;
 
 
@@ -798,7 +805,7 @@ void kpMainWindow::dragEnterEvent (QDragEnterEvent *e)
     // It's faster to test for QMimeData::hasText() first due to the
     // lazy evaluation of the '||' operator.
     e->setAccepted (e->mimeData ()->hasText () ||
-                    KUrl::List::canDecode (e->mimeData ()) ||
+                    e->mimeData ()->hasUrls () ||
                     kpSelectionDrag::canDecode (e->mimeData ()));
 }
 
@@ -811,7 +818,7 @@ void kpMainWindow::dropEvent (QDropEvent *e)
     kDebug () << "kpMainWindow::dropEvent" << e->pos ();
 #endif
 
-    KUrl::List urls;
+    QList<QUrl> urls;
 
     kpAbstractImageSelection *sel = kpSelectionDrag::decode (e->mimeData ());
     if (sel)
@@ -823,14 +830,14 @@ void kpMainWindow::dropEvent (QDropEvent *e)
         paste (*sel);
         delete sel;
     }
-    else if (!(urls = KUrl::List::fromMimeData (e->mimeData ())).isEmpty ())
+    else if (!(urls = e->mimeData ()->urls ()).isEmpty ())
     {
         // LOTODO: kpSetOverrideCursorSaver cursorSaver (Qt::waitCursor);
         //
         //         However, you would need to prefix all possible error/warning
         //         dialogs that might be called, with Qt::arrowCursor e.g. in
         //         kpDocument  and probably a lot more places.
-        foreach (const KUrl &u, urls)
+        foreach (const QUrl &u, urls)
             open (u);
     }
     else if (e->mimeData ()->hasText ())
@@ -972,4 +979,3 @@ void kpMainWindow::slotDocumentRestored ()
 
 //---------------------------------------------------------------------
 
-#include <kpMainWindow.moc>

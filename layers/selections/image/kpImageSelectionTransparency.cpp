@@ -29,12 +29,12 @@
 #define DEBUG_KP_SELECTION_TRANSPARENCY 0
 
 
-#include <kpImageSelectionTransparency.h>
+#include "layers/selections/image/kpImageSelectionTransparency.h"
 
 #include <kdebug.h>
 
-#include <kpColor.h>
-#include <kpColorSimilarityHolder.h>
+#include "imagelib/kpColor.h"
+#include "widgets/colorSimilarity/kpColorSimilarityHolder.h"
 
 
 //---------------------------------------------------------------------

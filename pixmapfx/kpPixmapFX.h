@@ -38,7 +38,7 @@
 
 #include <klocalizedstring.h>
 
-#include <kpColor.h>
+#include "imagelib/kpColor.h"
 
 
 class QColor;

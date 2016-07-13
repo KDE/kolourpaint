@@ -29,12 +29,12 @@
 #define DEBUG_KP_EFFECT_REDUCE_COLORS 0
 
 
-#include <kpEffectReduceColorsCommand.h>
+#include "kpEffectReduceColorsCommand.h"
+
+#include "imagelib/effects/kpEffectReduceColors.h"
 
 #include <kdebug.h>
 #include <klocale.h>
-
-#include <kpEffectReduceColors.h>
 
 //---------------------------------------------------------------------
 

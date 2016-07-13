@@ -29,10 +29,23 @@
 #define DEBUG_KP_TOOL_POLYGON 0
 
 
-#include <kpToolPolygonalCommand.h>
+#include "kpToolPolygonalCommand.h"
+
+#include "document/kpDocument.h"
+#include "kpDefs.h"
+#include "imagelib/kpImage.h"
+#include "imagelib/kpPainter.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "layers/tempImage/kpTempImage.h"
+#include "tools/polygonal/kpToolPolygonalBase.h"
+#include "widgets/toolbars/options/kpToolWidgetLineWidth.h"
+#include "views/manager/kpViewManager.h"
 
 #include <float.h>
 #include <math.h>
+
+#include <kdebug.h>
+#include <klocale.h>
 
 #include <qbitmap.h>
 #include <qcursor.h>
@@ -43,19 +56,6 @@
 #include <qpolygon.h>
 #include <qpushbutton.h>
 #include <qrect.h>
-
-#include <kdebug.h>
-#include <klocale.h>
-
-#include <kpDocument.h>
-#include <kpDefs.h>
-#include <kpImage.h>
-#include <kpPainter.h>
-#include <kpPixmapFX.h>
-#include <kpTempImage.h>
-#include <kpToolPolygonalBase.h>
-#include <kpToolWidgetLineWidth.h>
-#include <kpViewManager.h>
 
 
 struct kpToolPolygonalCommandPrivate

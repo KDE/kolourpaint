@@ -29,6 +29,10 @@
 #include <KDebug>
 #include <KMessageBox>
 #include <KSharedConfig>
+#include <KWindowConfig>
+#include <KConfigGroup>
+
+#include <QtWidgets/QPushButton>
 
 SaneDialog::SaneDialog(QWidget *parent)
     : KPageDialog(parent)
@@ -36,10 +40,8 @@ SaneDialog::SaneDialog(QWidget *parent)
     setFaceType((KPageDialog::FaceType)Plain);
     setWindowTitle(i18nc("@title:window", "Acquire Image"));
 
-    setButtons(KDialog::Close);
-    setDefaultButton(KDialog::Close);
-//     buttonBox()->setStandardButtons((QDialogButtonBox::StandardButtons)Close);
-//     buttonBox()->button(QDialogButtonBox::Close)->setDefault(true);
+    buttonBox()->setStandardButtons(QDialogButtonBox::Close);
+    buttonBox()->button(QDialogButtonBox::Close)->setDefault(true);
 
 
     m_ksanew = new KSaneIface::KSaneWidget(this);
@@ -75,7 +77,7 @@ bool SaneDialog::setup()
 
     // restore scan dialog size and all options for the selected device if available
     KSharedConfigPtr configPtr = KSharedConfig::openConfig("scannersettings");
-    restoreDialogSize(KConfigGroup(configPtr, "ScanDialog"));
+    KWindowConfig::restoreWindowSize(windowHandle(), KConfigGroup(configPtr, "ScanDialog"));
     QString groupName = m_openDev;
     if (configPtr->hasGroup(groupName)) {
         KConfigGroup group(configPtr, groupName);
@@ -93,7 +95,7 @@ SaneDialog::~SaneDialog()
         // save scan dialog size and all options for the selected device if available
         KSharedConfigPtr configPtr = KSharedConfig::openConfig("scannersettings");
         KConfigGroup group(configPtr, "ScanDialog");
-        saveDialogSize(group, KConfigGroup::Persistent);
+        KWindowConfig::saveWindowSize(windowHandle(), group, KConfigGroup::Persistent);
         group = configPtr->group(m_openDev);
         QMap<QString, QString> opts;
         m_ksanew->getOptVals(opts);
@@ -114,5 +116,3 @@ int SaneDialog::nextId()
 {
     return ++m_currentId;
 }
-
-#include "sanedialog.moc"

@@ -28,12 +28,12 @@
 #define DEBUG_KP_TOOL_TEXT 0
 
 
-#include <kpToolText.h>
-#include <kpToolTextPrivate.h>
+#include "tools/selection/text/kpToolText.h"
+#include "kpToolTextPrivate.h"
 
-#include <KLocale>
+#include <KLocalizedString>
 
-#include <kpViewManager.h>
+#include "views/manager/kpViewManager.h"
 
 
 // protected virtual [kpAbstractSelectionTool]

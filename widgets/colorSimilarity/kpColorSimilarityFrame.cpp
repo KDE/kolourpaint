@@ -29,11 +29,11 @@
 #define DEBUG_KP_COLOR_SIMILARITY_CUBE 0
 
 
-#include <kpColorSimilarityFrame.h>
+#include "kpColorSimilarityFrame.h"
+
+#include "kpColorSimilarityCubeRenderer.h"
 
 #include <kdebug.h>
-
-#include <kpColorSimilarityCubeRenderer.h>
 
 //---------------------------------------------------------------------
 

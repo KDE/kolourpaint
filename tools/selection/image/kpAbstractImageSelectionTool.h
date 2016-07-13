@@ -30,7 +30,7 @@
 #define kpAbstractImageSelectionTool_H
 
 
-#include <kpAbstractSelectionTool.h>
+#include "tools/selection/kpAbstractSelectionTool.h"
 
 
 class kpImageSelectionTransparency;

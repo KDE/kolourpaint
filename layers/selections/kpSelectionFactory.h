@@ -30,7 +30,7 @@
 #define kpSelectionFactory_H
 
 
-#include <kpPixmapFX.h>
+#include "pixmapfx/kpPixmapFX.h"
 
 
 class QDataStream;

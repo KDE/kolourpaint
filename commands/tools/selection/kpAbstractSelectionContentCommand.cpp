@@ -26,9 +26,9 @@
 */
 
 
-#include <kpAbstractSelectionContentCommand.h>
+#include "kpAbstractSelectionContentCommand.h"
 
-#include <kpAbstractSelection.h>
+#include "layers/selections/kpAbstractSelection.h"
 
 
 struct kpAbstractSelectionContentCommandPrivate

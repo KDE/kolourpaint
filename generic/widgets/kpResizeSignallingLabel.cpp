@@ -29,7 +29,7 @@
 #define DEBUG_KP_RESIZE_SIGNALLING_LABEL 0
 
 
-#include <kpResizeSignallingLabel.h>
+#include "generic/widgets/kpResizeSignallingLabel.h"
 
 #include <qevent.h>
 
@@ -65,4 +65,3 @@ void kpResizeSignallingLabel::resizeEvent (QResizeEvent *e)
 }
 
 
-#include <kpResizeSignallingLabel.moc>

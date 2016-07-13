@@ -30,8 +30,8 @@
 #define kpToolImageSelectionTransparencyCommand_H
 
 
-#include <kpNamedCommand.h>
-#include <kpImageSelectionTransparency.h>
+#include "commands/kpNamedCommand.h"
+#include "layers/selections/image/kpImageSelectionTransparency.h"
 
 
 class kpToolImageSelectionTransparencyCommand : public kpNamedCommand

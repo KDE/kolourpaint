@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -29,34 +28,33 @@
 #define DEBUG_KP_DOCUMENT_META_INFO_DIALOG 0
 
 
-#include <kpDocumentMetaInfoDialog.h>
+#include "kpDocumentMetaInfoDialog.h"
+
+#include "kpDefs.h"
+#include "imagelib/kpDocumentMetaInfo.h"
+
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KDebug>
 
 #include <QAbstractItemView>
+#include <QDialogButtonBox>
 #include <QLabel>
 #include <QGroupBox>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QTableWidget>
-
-#include <KHBox>
-#include <KDoubleNumInput>
-#include <KIntNumInput>
-#include <KLocale>
-#include <KMessageBox>
-#include <KVBox>
-#include <KDebug>
-
-#include <kpDefs.h>
-#include <kpDocumentMetaInfo.h>
+#include <QSpinBox>
+#include <QDoubleSpinBox>
 
 
 struct kpDocumentMetaInfoDialogPrivate
 {
     const kpDocumentMetaInfo *originalMetaInfoPtr;
 
-    KDoubleNumInput *horizDpiInput, *vertDpiInput;
-    KIntNumInput *horizOffsetInput, *vertOffsetInput;
+    QDoubleSpinBox *horizDpiInput, *vertDpiInput;
+    QSpinBox *horizOffsetInput, *vertOffsetInput;
 
     QTableWidget *fieldsTableWidget;
     QPushButton *fieldsAddRowButton, *fieldsDeleteRowButton, *fieldsResetButton;
@@ -114,67 +112,61 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
         const kpDocumentMetaInfo *docMetaInfo,
         QWidget *parent)
 
-    : KDialog (parent),
+    : QDialog (parent),
       d (new kpDocumentMetaInfoDialogPrivate ())
 {
     d->originalMetaInfoPtr = docMetaInfo;
 
 
-    setCaption (i18nc ("@title:window", "Document Properties"));
-    setButtons (KDialog::Ok | KDialog::Cancel);
+    setWindowTitle (i18nc ("@title:window", "Document Properties"));
+    QDialogButtonBox * buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
+                                                       QDialogButtonBox::Cancel, this);
+    connect (buttons, SIGNAL (accepted()), this, SLOT (accept()));
+    connect (buttons, SIGNAL (rejected()), this, SLOT (reject()));
 
     QWidget *baseWidget = new QWidget (this);
-    setMainWidget (baseWidget);
+
+    QVBoxLayout *dialogLayout = new QVBoxLayout (this);
+    dialogLayout->addWidget (baseWidget);
+    dialogLayout->addWidget (buttons);
 
 
     //
     // DPI Group Box
     //
 
-
     Q_ASSERT (::DpiInputMin < ::DpiInputMax);
 
-    QGroupBox *dpiGroupBox = new QGroupBox (i18n ("Dots &Per Inch (DPI)"),
-        baseWidget);
+    QGroupBox *dpiGroupBox = new QGroupBox(i18n("Dots &Per Inch (DPI)"), baseWidget);
 
-    d->horizDpiInput = new KDoubleNumInput (
-        ::DpiInputMin/*lower*/,
-        ::DpiInputMax/*upper*/,
-        0/*value*/,
-        dpiGroupBox,
-        ::DpiInputStep/*step*/,
-        ::DpiPrecision/*precision*/);
-    d->horizDpiInput->setLabel (i18n ("Horizontal:"),
-        Qt::AlignTop | Qt::AlignHCenter);
-    d->horizDpiInput->setSpecialValueText (i18n ("Unspecified"));
+    d->horizDpiInput = new QDoubleSpinBox(dpiGroupBox);
+    d->horizDpiInput->setRange(::DpiInputMin, ::DpiInputMax);
+    d->horizDpiInput->setValue(0.0);
+    d->horizDpiInput->setSingleStep(::DpiInputStep);
+    d->horizDpiInput->setDecimals(::DpiPrecision);
+    d->horizDpiInput->setSpecialValueText(i18n("Unspecified"));
 
     QLabel *dpiXLabel = new QLabel (
         i18nc ("Horizontal DPI 'x' Vertical DPI", " x "), dpiGroupBox);
     dpiXLabel->setAlignment (Qt::AlignCenter);
 
-    d->vertDpiInput = new KDoubleNumInput (
-        ::DpiInputMin/*lower*/,
-        ::DpiInputMax/*upper*/,
-        0/*value*/,
-        dpiGroupBox,
-        ::DpiInputStep/*step*/,
-        ::DpiPrecision/*precision*/);
-    d->vertDpiInput->setLabel (i18n ("Vertical:"),
-        Qt::AlignTop | Qt::AlignHCenter);
-    d->vertDpiInput->setSpecialValueText (i18n ("Unspecified"));
+    d->vertDpiInput = new QDoubleSpinBox(dpiGroupBox);
+    d->vertDpiInput->setRange(::DpiInputMin, ::DpiInputMax);
+    d->vertDpiInput->setValue(0.0);
+    d->vertDpiInput->setSingleStep(::DpiInputStep);
+    d->vertDpiInput->setDecimals(::DpiPrecision);
+    d->vertDpiInput->setSpecialValueText(i18n("Unspecified"));
 
 
-    QGridLayout *dpiLay = new QGridLayout (dpiGroupBox);
-    dpiLay->setSpacing (spacingHint ());
-    dpiLay->setMargin (marginHint ());
+    QGridLayout *dpiLay = new QGridLayout(dpiGroupBox);
 
-    dpiLay->addWidget (d->horizDpiInput, 0, 0);
-    dpiLay->addWidget (dpiXLabel, 0, 1);
-    dpiLay->addWidget (d->vertDpiInput, 0, 2);
+    dpiLay->addWidget(new QLabel(i18n("Horizontal:")), 0, 0, Qt::AlignHCenter);
+    dpiLay->addWidget(d->horizDpiInput, 1, 0);
+    dpiLay->addWidget(dpiXLabel, 0, 1);
+    dpiLay->addWidget(new QLabel(i18n("Vertical:")), 0, 2, Qt::AlignHCenter);
+    dpiLay->addWidget(d->vertDpiInput, 1, 2);
 
-    dpiLay->addItem (new QSpacerItem (0/*width*/, 0/*height*/),
-        1, 0, 1/*row span*/, 3/*col span*/);
-    dpiLay->setRowStretch (1, 1);
+    dpiLay->setRowStretch(2, 1);
 
 
     dpiGroupBox->setWhatsThis (
@@ -209,36 +201,22 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     // Offset Group Box
     //
 
+    QGroupBox *offsetGroupBox = new QGroupBox(i18n ("O&ffset"), baseWidget);
 
-    QGroupBox *offsetGroupBox = new QGroupBox (i18n ("O&ffset"), baseWidget);
+    d->horizOffsetInput = new QSpinBox;
+    d->horizOffsetInput->setRange(kpDocumentMetaInfo::MinOffset, kpDocumentMetaInfo::MaxOffset);
 
-    d->horizOffsetInput = new KIntNumInput (offsetGroupBox);
-    d->horizOffsetInput->setLabel (i18n ("Horizontal:"),
-        Qt::AlignTop | Qt::AlignHCenter);
-    d->horizOffsetInput->setRange (
-        kpDocumentMetaInfo::MinOffset,
-        kpDocumentMetaInfo::MaxOffset);
-    d->horizOffsetInput->setSliderEnabled(false);
+    d->vertOffsetInput = new QSpinBox;
+    d->vertOffsetInput->setRange(kpDocumentMetaInfo::MinOffset, kpDocumentMetaInfo::MaxOffset);
 
-    d->vertOffsetInput = new KIntNumInput (offsetGroupBox);
-    d->vertOffsetInput->setLabel (i18n ("Vertical:"),
-        Qt::AlignTop | Qt::AlignHCenter);
-    d->vertOffsetInput->setRange (
-        kpDocumentMetaInfo::MinOffset,
-        kpDocumentMetaInfo::MaxOffset);
-    d->vertOffsetInput->setSliderEnabled(false);
+    QGridLayout *offsetLay = new QGridLayout(offsetGroupBox);
 
+    offsetLay->addWidget(new QLabel(i18n("Horizontal:")), 0, 0, Qt::AlignHCenter);
+    offsetLay->addWidget(d->horizOffsetInput, 1, 0);
+    offsetLay->addWidget(new QLabel(i18n("Vertical:")), 0, 1, Qt::AlignHCenter);
+    offsetLay->addWidget(d->vertOffsetInput, 1, 1);
 
-    QGridLayout *offsetLay = new QGridLayout (offsetGroupBox);
-    offsetLay->setSpacing (spacingHint ());
-    offsetLay->setMargin (marginHint ());
-
-    offsetLay->addWidget (d->horizOffsetInput, 0, 0);
-    offsetLay->addWidget (d->vertOffsetInput, 0, 1);
-
-    offsetLay->addItem (new QSpacerItem (0/*width*/, 0/*height*/),
-        1, 0, 1/*row span*/, 2/*col span*/);
-    offsetLay->setRowStretch (1, 1);
+    offsetLay->setRowStretch (2, 1);
 
 
     offsetGroupBox->setWhatsThis (
@@ -271,34 +249,31 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
     connect (d->fieldsTableWidget, SIGNAL (itemChanged (QTableWidgetItem *)),
              SLOT (slotFieldsItemChanged (QTableWidgetItem *)));
 
-    KHBox *fieldsAddDeleteButtonsBox = new KHBox (fieldsGroupBox);
-    fieldsAddDeleteButtonsBox->setMargin (0);
-    fieldsAddDeleteButtonsBox->setSpacing (spacingHint ());
-
     d->fieldsAddRowButton = new QPushButton (i18n ("&Add Row"),
-        fieldsAddDeleteButtonsBox);
+        fieldsGroupBox);
     connect (d->fieldsAddRowButton, SIGNAL (clicked ()),
              SLOT (slotFieldsAddRowButtonClicked ()));
 
     d->fieldsDeleteRowButton = new QPushButton (i18n ("&Delete Row"),
-        fieldsAddDeleteButtonsBox);
+        fieldsGroupBox);
     connect (d->fieldsDeleteRowButton, SIGNAL (clicked ()),
              SLOT (slotFieldsDeleteRowButtonClicked ()));
-
 
     d->fieldsResetButton = new QPushButton (i18n ("&Reset"),
         fieldsGroupBox);
     connect (d->fieldsResetButton, SIGNAL (clicked ()),
              SLOT (setUIToOriginalMetaInfo ()));
 
+    QHBoxLayout *fieldsButtonsLayout = new QHBoxLayout ();
+    fieldsButtonsLayout->addWidget (d->fieldsAddRowButton);
+    fieldsButtonsLayout->addWidget (d->fieldsDeleteRowButton);
+    fieldsButtonsLayout->addStretch ();
+    fieldsButtonsLayout->addWidget (d->fieldsResetButton);
 
-    QGridLayout *fieldsLayout = new QGridLayout (fieldsGroupBox);
-    fieldsLayout->setSpacing (spacingHint ());
-    fieldsLayout->setMargin (marginHint ());
+    QVBoxLayout *fieldsLayout = new QVBoxLayout (fieldsGroupBox);
 
-    fieldsLayout->addWidget (d->fieldsTableWidget, 0, 0, 1/*row span*/, 2/*col span*/);
-    fieldsLayout->addWidget (fieldsAddDeleteButtonsBox, 1, 0, Qt::AlignLeft);
-    fieldsLayout->addWidget (d->fieldsResetButton, 1, 1, Qt::AlignRight);
+    fieldsLayout->addWidget (d->fieldsTableWidget);
+    fieldsLayout->addLayout (fieldsButtonsLayout);
 
 
     fieldsGroupBox->setWhatsThis (
@@ -323,7 +298,6 @@ kpDocumentMetaInfoDialog::kpDocumentMetaInfoDialog (
 
 
     QGridLayout *baseLayout = new QGridLayout (baseWidget);
-    baseLayout->setSpacing (spacingHint ());
     baseLayout->setMargin (0);
 
     // Col 0
@@ -786,8 +760,7 @@ void kpDocumentMetaInfoDialog::accept ()
         return;
     }
 
-    KDialog::accept ();
+    QDialog::accept ();
 }
 
 
-#include <kpDocumentMetaInfoDialog.moc>

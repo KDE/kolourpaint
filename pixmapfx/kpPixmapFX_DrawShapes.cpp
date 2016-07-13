@@ -29,7 +29,7 @@
 #define DEBUG_KP_PIXMAP_FX 0
 
 
-#include <kpPixmapFX.h>
+#include "kpPixmapFX.h"
 
 #include <math.h>
 
@@ -41,9 +41,9 @@
 
 #include <kdebug.h>
 
-#include <kpAbstractSelection.h>
-#include <kpColor.h>
-#include <kpDefs.h>
+#include "layers/selections/kpAbstractSelection.h"
+#include "imagelib/kpColor.h"
+#include "kpDefs.h"
 
 //---------------------------------------------------------------------
 

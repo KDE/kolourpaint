@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -29,15 +28,12 @@
 #define DEBUG_KP_EFFECT_EMBOSS 0
 
 
-#include <kpEffectEmboss.h>
-
-#include <qimageblitz.h>
-
-#include <qimage.h>
+#include "kpEffectEmboss.h"
+#include "blitz.h"
 
 #include <kdebug.h>
 
-#include <kpPixmapFX.h>
+#include "pixmapfx/kpPixmapFX.h"
 
 
 static QImage EmbossQImage (const QImage &qimage_, int strength)

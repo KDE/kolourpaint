@@ -29,8 +29,8 @@
 #define DEBUG_KP_DOCUMENT 0
 
 
-#include <kpDocument.h>
-#include <kpDocumentPrivate.h>
+#include "kpDocument.h"
+#include "kpDocumentPrivate.h"
 
 #include <math.h>
 
@@ -39,16 +39,15 @@
 #include <qrect.h>
 
 #include <kdebug.h>
-#include <kglobal.h>
 #include <kimageio.h>
 #include <klocale.h>
 
-#include <kpColor.h>
-#include <kpDefs.h>
-#include <kpDocumentEnvironment.h>
-#include <kpAbstractSelection.h>
-#include <kpAbstractImageSelection.h>
-#include <kpTextSelection.h>
+#include "imagelib/kpColor.h"
+#include "kpDefs.h"
+#include "environments/document/kpDocumentEnvironment.h"
+#include "layers/selections/kpAbstractSelection.h"
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "layers/selections/text/kpTextSelection.h"
 
 
 // public

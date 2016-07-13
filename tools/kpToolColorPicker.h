@@ -30,8 +30,8 @@
 #define KP_TOOL_COLOR_PICKER_H
 
 
-#include <kpColor.h>
-#include <kpTool.h>
+#include "imagelib/kpColor.h"
+#include "tools/kpTool.h"
 
 
 class QPoint;

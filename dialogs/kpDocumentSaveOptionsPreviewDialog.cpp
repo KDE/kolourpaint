@@ -28,7 +28,7 @@
 #define DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET 0
 
 
-#include <kpDocumentSaveOptionsPreviewDialog.h>
+#include "kpDocumentSaveOptionsPreviewDialog.h"
 
 #include <qevent.h>
 #include <qgridlayout.h>
@@ -38,16 +38,14 @@
 
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kdialog.h>
-#include <kglobal.h>
 #include <klocale.h>
 
-#include <kpCommandSize.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpPixmapFX.h>
-#include <kpResizeSignallingLabel.h>
-#include <kpTransformPreviewDialog.h>
+#include "commands/kpCommandSize.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "generic/widgets/kpResizeSignallingLabel.h"
+#include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"
 
 
 // protected static
@@ -57,11 +55,6 @@ const QSize kpDocumentSaveOptionsPreviewDialog::s_pixmapLabelMinimumSize (25, 25
 kpDocumentSaveOptionsPreviewDialog::kpDocumentSaveOptionsPreviewDialog (
     QWidget *parent )
     : kpSubWindow (parent),
-#if 0
-KDialogBase (parent, name, false/*non-modal*/,
-                   i18n ("Save Preview"),
-                   0/*no buttons*/),
-#endif
       m_filePixmap (0),
       m_fileSize (0)
 {
@@ -72,8 +65,6 @@ KDialogBase (parent, name, false/*non-modal*/,
 
 
     QGridLayout *lay = new QGridLayout ( baseWidget );
-    lay->setMargin( KDialog::marginHint () );
-    lay->setSpacing( KDialog::spacingHint ());
 
     m_filePixmapLabel = new kpResizeSignallingLabel (baseWidget);
     m_fileSizeLabel = new QLabel (baseWidget);
@@ -103,7 +94,7 @@ kpDocumentSaveOptionsPreviewDialog::~kpDocumentSaveOptionsPreviewDialog ()
 QSize kpDocumentSaveOptionsPreviewDialog::preferredMinimumSize () const
 {
     const int contentsWidth = 180;
-    const int totalMarginsWidth = 2 * KDialog::marginHint ();
+    const int totalMarginsWidth = fontMetrics ().height ();
 
     return QSize (contentsWidth + totalMarginsWidth,
                   contentsWidth * 3 / 4 + totalMarginsWidth);
@@ -246,4 +237,3 @@ void kpDocumentSaveOptionsPreviewDialog::resizeEvent (QResizeEvent *e)
 }
 
 
-#include <kpDocumentSaveOptionsPreviewDialog.moc>

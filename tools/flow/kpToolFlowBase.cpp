@@ -28,7 +28,7 @@
 
 #define DEBUG_KP_TOOL_FLOW_BASE 0
 
-#include <kpToolFlowBase.h>
+#include "kpToolFlowBase.h"
 
 #include <cstdlib>
 
@@ -38,21 +38,21 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpColor.h>
-#include <kpCommandHistory.h>
-#include <kpCursorProvider.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpImage.h>
-#include <kpPainter.h>
-#include <kpPixmapFX.h>
-#include <kpTempImage.h>
-#include <kpToolEnvironment.h>
-#include <kpToolFlowCommand.h>
-#include <kpToolToolBar.h>
-#include <kpToolWidgetBrush.h>
-#include <kpToolWidgetEraserSize.h>
-#include <kpViewManager.h>
+#include "imagelib/kpColor.h"
+#include "commands/kpCommandHistory.h"
+#include "cursors/kpCursorProvider.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "imagelib/kpImage.h"
+#include "imagelib/kpPainter.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "layers/tempImage/kpTempImage.h"
+#include "environments/tools/kpToolEnvironment.h"
+#include "commands/tools/flow/kpToolFlowCommand.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/options/kpToolWidgetBrush.h"
+#include "widgets/toolbars/options/kpToolWidgetEraserSize.h"
+#include "views/manager/kpViewManager.h"
 
 //---------------------------------------------------------------------
 
@@ -489,4 +489,3 @@ QRect kpToolFlowBase::hotRect () const
 
 //---------------------------------------------------------------------
 
-#include <kpToolFlowBase.moc>

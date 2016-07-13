@@ -30,8 +30,8 @@
 #define KP_FLOOD_FILL_H
 
 
-#include <kpCommandSize.h>
-#include <kpImage.h>
+#include "kpImage.h"
+#include "commands/kpCommandSize.h"
 
 
 class kpColor;

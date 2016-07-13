@@ -30,12 +30,13 @@
 #define KP_MAIN_WINDOW_H
 
 
-#include <kxmlguiwindow.h>
-#include <kurl.h>
+#include <QUrl>
 
-#include <kpDefs.h>
-#include <kpPixmapFX.h>
-#include <kpImage.h>
+#include <kxmlguiwindow.h>
+
+#include "kpDefs.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "imagelib/kpImage.h"
 
 
 class QAction;
@@ -96,7 +97,7 @@ public:
 
     // Opens a new window with the document specified by <url>
     // or creates a blank document if <url> could not be opened.
-    kpMainWindow (const KUrl &url);
+    kpMainWindow (const QUrl &url);
 
     // Opens a new window with the document <newDoc>
     // (<newDoc> can be 0 although this would result in a new
@@ -305,7 +306,7 @@ private:
     void setupFileMenuActions ();
     void enableFileMenuDocumentActions (bool enable = true);
 
-    void addRecentURL (const KUrl &url);
+    void addRecentURL (const QUrl &url);
 
 private slots:
     void slotNew ();
@@ -319,7 +320,7 @@ private:
     void setDocumentChoosingWindow (kpDocument *doc);
 
 private:
-    kpDocument *openInternal (const KUrl &url,
+    kpDocument *openInternal (const QUrl &url,
         const QSize &fallbackDocSize,
         bool newDocSameNameIfNotExist);
     // Same as above except that it:
@@ -333,14 +334,14 @@ private:
     // to a user open request e.g. File / Open or "kolourpaint doesexist.png".
     // It should not be used for session restore - in that case, it does not
     // make sense to bubble the Recent Files list.
-    bool open (const KUrl &url, bool newDocSameNameIfNotExist = false);
+    bool open (const QUrl &url, bool newDocSameNameIfNotExist = false);
 
-    KUrl::List askForOpenURLs(const QString &caption,
+    QList<QUrl> askForOpenURLs(const QString &caption,
                               bool allowMultipleURLs = true);
 
 private slots:
     void slotOpen ();
-    void slotOpenRecent (const KUrl &url);
+    void slotOpenRecent (const QUrl &url);
 
 #if HAVE_KSANE
     void slotScan ();
@@ -356,7 +357,7 @@ private slots:
     bool slotSave ();
 
 private:
-    KUrl askForSaveURL (const QString &caption,
+    QUrl askForSaveURL (const QString &caption,
                         const QString &startURL,
                         const kpImage &imageToBeSaved,
                         const kpDocumentSaveOptions &startSaveOptions,
@@ -605,7 +606,7 @@ private slots:
     void slotColorsKDE ();
 
 private:
-    bool openColors (const KUrl &url);
+    bool openColors (const QUrl &url);
 private slots:
     void slotColorsOpen ();
 

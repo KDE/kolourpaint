@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -29,16 +28,10 @@
 #ifndef kpTransformSkewDialog_H
 #define kpTransformSkewDialog_H
 
+#include "kpTransformPreviewDialog.h"
+#include "imagelib/kpColor.h"
 
-#include <qpixmap.h>
-
-#include <kpColor.h>
-#include <kpTransformPreviewDialog.h>
-
-
-class QPixmap;
-
-class KIntNumInput;
+class QSpinBox;
 
 
 class kpTransformSkewDialog : public kpTransformPreviewDialog
@@ -83,7 +76,7 @@ private slots:
     virtual void accept ();
 
 private:
-    KIntNumInput *m_horizontalSkewInput, *m_verticalSkewInput;
+    QSpinBox *m_horizontalSkewInput, *m_verticalSkewInput;
 };
 
 

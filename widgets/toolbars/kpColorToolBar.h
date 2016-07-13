@@ -34,7 +34,7 @@
 #include <qframe.h>
 #include <qwidget.h>
 
-#include <kpColor.h>
+#include "imagelib/kpColor.h"
 
 
 class QBoxLayout;

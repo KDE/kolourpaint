@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -28,7 +27,18 @@
 #define DEBUG_KP_TOOL_ROTATE 0
 
 
-#include <kpTransformRotateDialog.h>
+#include "kpTransformRotateDialog.h"
+
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "tools/kpTool.h"
+#include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
+#include "views/manager/kpViewManager.h"
+
+#include <kdebug.h>
+#include <kiconloader.h>
+#include <klocale.h>
 
 #include <qapplication.h>
 #include <qbuttongroup.h>
@@ -36,22 +46,11 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <QImage>
+#include <QSpinBox>
 #include <qpolygon.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <qmatrix.h>
-
-#include <kdebug.h>
-#include <kiconloader.h>
-#include <knuminput.h>
-#include <klocale.h>
-
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpPixmapFX.h>
-#include <kpTool.h>
-#include <kpTransformDialogEnvironment.h>
-#include <kpViewManager.h>
 
 
 // private static
@@ -116,8 +115,6 @@ void kpTransformRotateDialog::createDirectionGroupBox ()
 
 
     QGridLayout *directionLayout = new QGridLayout (directionGroupBox );
-    directionLayout->setSpacing( spacingHint() );
-    directionLayout->setMargin( marginHint () * 2 );
     directionLayout->addWidget (antiClockwisePixmapLabel, 0, 0, Qt::AlignCenter);
     directionLayout->addWidget (clockwisePixmapLabel, 0, 1, Qt::AlignCenter);
     directionLayout->addWidget (m_antiClockwiseRadioButton, 1, 0, Qt::AlignCenter);
@@ -142,9 +139,10 @@ void kpTransformRotateDialog::createAngleGroupBox ()
     m_angle270RadioButton = new QRadioButton (i18n ("270 de&grees"), angleGroupBox);
 
     m_angleCustomRadioButton = new QRadioButton (i18n ("C&ustom:"), angleGroupBox);
-    m_angleCustomInput = new KIntNumInput (s_lastAngleCustom, angleGroupBox);
-    m_angleCustomInput->setMinimum (-359);
-    m_angleCustomInput->setMaximum (+359);
+    m_angleCustomInput = new QSpinBox;
+    m_angleCustomInput->setMinimum(-359);
+    m_angleCustomInput->setMaximum(+359);
+    m_angleCustomInput->setValue(s_lastAngleCustom);
     QLabel *degreesLabel = new QLabel (i18n ("degrees"), angleGroupBox);
 
 
@@ -152,8 +150,6 @@ void kpTransformRotateDialog::createAngleGroupBox ()
 
 
     QGridLayout *angleLayout = new QGridLayout (angleGroupBox );
-    angleLayout->setMargin( marginHint () * 2 );
-    angleLayout->setSpacing( spacingHint ());
 
     angleLayout->addWidget (m_angle90RadioButton, 0, 0, 1, 3);
     angleLayout->addWidget (m_angle180RadioButton, 1, 0, 1, 3);
@@ -244,7 +240,7 @@ void kpTransformRotateDialog::slotAngleCustomRadioButtonToggled (bool isChecked)
     m_angleCustomInput->setEnabled (isChecked);
 
     if (isChecked)
-        m_angleCustomInput->setEditFocus ();
+        m_angleCustomInput->setFocus();
 }
 
 // private slot virtual [base kpTransformPreviewDialog]
@@ -307,9 +303,8 @@ void kpTransformRotateDialog::accept ()
             continueButtonText,
             this))
     {
-        KDialog::accept ();
+        QDialog::accept ();
     }
 }
 
 
-#include <kpTransformRotateDialog.moc>

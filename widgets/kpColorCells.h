@@ -30,9 +30,9 @@
 #define kpColorCells_H
 
 
-#include <KUrl>
+#include <QUrl>
 
-#include <kpColorCellsBase.h>
+#include "lgpl/generic/widgets/kpColorCellsBase.h"
 
 
 class QDropEvent;
@@ -102,7 +102,7 @@ public slots:
 public:
     // The source URL of the kpColorCollection.  Empty for color
     // collections that did not come from files.
-    KUrl url () const;
+    QUrl url () const;
 
     // The name of the kpColorCollection.  Empty for color collections
     // managed by KDE.
@@ -115,10 +115,10 @@ private:
     void ensureHaveAtLeastOneRow ();
 public:
     void setColorCollection (const kpColorCollection &colorCol,
-        const KUrl &url = KUrl ());
+        const QUrl &url = QUrl ());
 
-    bool openColorCollection (const KUrl &url);
-    bool saveColorCollectionAs (const KUrl &url);
+    bool openColorCollection (const QUrl &url);
+    bool saveColorCollectionAs (const QUrl &url);
     bool saveColorCollection ();
 
     // These add and delete visual/table rows, independent of whether the number
@@ -146,7 +146,7 @@ signals:
     void rowCountChanged (int rowCount);
 
     void nameChanged (const QString &name);
-    void urlChanged (const KUrl &url);
+    void urlChanged (const QUrl &url);
 
     // Emitted when setModified() is called and the modified state changes.
     // It may be called at other times, even when the modified state did

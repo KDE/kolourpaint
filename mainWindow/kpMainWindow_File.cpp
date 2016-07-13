@@ -1,9 +1,7 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
-   Copyright (c) 2007 Martin Koller <kollix@aon.at>
    Copyright (c) 2007 John Layt <john@layt.net>
-   Copyright (c) 2011 Martin Koller <kollix@aon.at>
+   Copyright (c) 2007,2011,2015 Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -29,11 +27,15 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
+#include <qaction.h>
 #include <qdatastream.h>
 #include <QDesktopWidget>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QFileDialog>
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qsize.h>
@@ -44,18 +46,18 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QVBoxLayout>
+#include <QImageReader>
+#include <QImageWriter>
+#include <QMimeDatabase>
+#include <QScreen>
 
-#include <kdialog.h>
-#include <kaction.h>
 #include <kactioncollection.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>
-#include <KIntSpinBox>
+#include <KPluralHandlingSpinBox>
 #include <kfiledialog.h>
-#include <kglobal.h>
 #include <kiconloader.h>
-#include <kimageio.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -67,16 +69,16 @@
 #include <kprintpreview.h>
 #include <kurlcombobox.h>
 
-#include <kpCommandHistory.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpDocumentMetaInfoCommand.h>
-#include <kpDocumentMetaInfoDialog.h>
-#include <kpDocumentSaveOptionsWidget.h>
-#include <kpPixmapFX.h>
-#include <kpPrintDialogPage.h>
-#include <kpView.h>
-#include <kpViewManager.h>
+#include "commands/kpCommandHistory.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "commands/imagelib/kpDocumentMetaInfoCommand.h"
+#include "dialogs/imagelib/kpDocumentMetaInfoDialog.h"
+#include "widgets/kpDocumentSaveOptionsWidget.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "widgets/kpPrintDialogPage.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
 
 #if HAVE_KSANE
 #include "../scan/sanedialog.h"
@@ -93,8 +95,8 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionNew = KStandardAction::openNew (this, SLOT (slotNew ()), ac);
     d->actionOpen = KStandardAction::open (this, SLOT (slotOpen ()), ac);
 
-    d->actionOpenRecent = KStandardAction::openRecent (this, SLOT (slotOpenRecent (const KUrl &)), ac);
-    d->actionOpenRecent->loadEntries (KGlobal::config ()->group (kpSettingsGroupRecentFiles));
+    d->actionOpenRecent = KStandardAction::openRecent (this, SLOT (slotOpenRecent (const QUrl &)), ac);
+    d->actionOpenRecent->loadEntries (KSharedConfig::openConfig ()->group (kpSettingsGroupRecentFiles));
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "\trecent URLs=" << d->actionOpenRecent->items ();
 #endif
@@ -104,7 +106,7 @@ void kpMainWindow::setupFileMenuActions ()
 
     d->actionExport = ac->addAction("file_export");
     d->actionExport->setText (i18n ("E&xport..."));
-    d->actionExport->setIcon (KIcon ("document-export"));
+    d->actionExport->setIcon(KDE::icon("document-export"));
     connect(d->actionExport, SIGNAL(triggered(bool) ), SLOT (slotExport ()));
 
     d->actionScan = ac->addAction("file_scan");
@@ -122,15 +124,15 @@ void kpMainWindow::setupFileMenuActions ()
 
     d->actionProperties = ac->addAction ("file_properties");
     d->actionProperties->setText (i18n ("Properties"));
-    d->actionProperties->setIcon (KIcon ("document-properties"));
+    d->actionProperties->setIcon(KDE::icon("document-properties"));
     connect (d->actionProperties, SIGNAL (triggered (bool)), SLOT (slotProperties ()));
 
     //d->actionRevert = KStandardAction::revert (this, SLOT (slotRevert ()), ac);
     d->actionReload = ac->addAction ("file_revert");
     d->actionReload->setText (i18n ("Reloa&d"));
-    d->actionReload->setIcon (KIcon ("view-refresh"));
+    d->actionReload->setIcon(KDE::icon("view-refresh"));
     connect(d->actionReload, SIGNAL(triggered(bool) ), SLOT (slotReload ()));
-    d->actionReload->setShortcuts(KStandardShortcut::reload ());
+    ac->setDefaultShortcuts (d->actionReload, KStandardShortcut::reload ());
     slotEnableReload ();
 
     d->actionPrint = KStandardAction::print (this, SLOT (slotPrint ()), ac);
@@ -179,7 +181,7 @@ void kpMainWindow::enableFileMenuDocumentActions (bool enable)
 //---------------------------------------------------------------------
 
 // private
-void kpMainWindow::addRecentURL (const KUrl &url_)
+void kpMainWindow::addRecentURL (const QUrl &url_)
 {
     // HACK: KRecentFilesAction::loadEntries() clears the KRecentFilesAction::d->urls
     //       map.
@@ -191,7 +193,7 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
     //       To avoid the crash, make a copy of it before calling
     //       loadEntries() and use this copy, instead of the to-be-dangling
     //       ref.
-    const KUrl url = url_;
+    const QUrl url = url_;
 
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::addRecentURL(" << url << ")";
@@ -200,7 +202,7 @@ void kpMainWindow::addRecentURL (const KUrl &url_)
         return;
 
 
-    KSharedConfig::Ptr cfg = KGlobal::config();
+    KSharedConfig::Ptr cfg = KSharedConfig::openConfig();
 
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
     // realize what other processes have done e.g. Settings / Show Path
@@ -279,7 +281,7 @@ void kpMainWindow::slotNew ()
     }
     else
     {
-        open (KUrl (), true/*create an empty doc*/);
+        open (QUrl (), true/*create an empty doc*/);
     }
 }
 
@@ -291,9 +293,9 @@ QSize kpMainWindow::defaultDocSize () const
 {
     // KConfig::readEntry() does not actually reread from disk, hence doesn't
     // realize what other processes have done e.g. Settings / Show Path
-    KGlobal::config ()->reparseConfiguration ();
+    KSharedConfig::openConfig ()->reparseConfiguration ();
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
 
     QSize docSize = cfg.readEntry (kpSettingLastDocSize, QSize ());
 
@@ -321,7 +323,7 @@ void kpMainWindow::saveDefaultDocSize (const QSize &size)
     kDebug () << "\tCONFIG: saving Last Doc Size = " << size;
 #endif
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
 
     cfg.writeEntry (kpSettingLastDocSize, size);
     cfg.sync ();
@@ -373,7 +375,7 @@ void kpMainWindow::setDocumentChoosingWindow (kpDocument *doc)
 //---------------------------------------------------------------------
 
 // private
-kpDocument *kpMainWindow::openInternal (const KUrl &url,
+kpDocument *kpMainWindow::openInternal (const QUrl &url,
         const QSize &fallbackDocSize,
         bool newDocSameNameIfNotExist)
 {
@@ -407,7 +409,7 @@ kpDocument *kpMainWindow::openInternal (const KUrl &url,
 //---------------------------------------------------------------------
 
 // private
-bool kpMainWindow::open (const KUrl &url, bool newDocSameNameIfNotExist)
+bool kpMainWindow::open (const QUrl &url, bool newDocSameNameIfNotExist)
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::open(" << url
@@ -433,31 +435,45 @@ bool kpMainWindow::open (const KUrl &url, bool newDocSameNameIfNotExist)
 //---------------------------------------------------------------------
 
 // private
-KUrl::List kpMainWindow::askForOpenURLs(const QString &caption, bool allowMultipleURLs)
+QList<QUrl> kpMainWindow::askForOpenURLs(const QString &caption, bool allowMultipleURLs)
 {
-    QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
-#if DEBUG_KP_MAIN_WINDOW
-    QStringList sortedMimeTypes = mimeTypes;
-    sortedMimeTypes.sort ();
-    kDebug () << "kpMainWindow::askForURLs(allowMultiple="
-               << allowMultipleURLs
-               << ")" << endl
-               << "\tmimeTypes=" << mimeTypes << endl
-               << "\tsortedMimeTypes=" << sortedMimeTypes << endl;
-#endif
-    QString filter = mimeTypes.join (" ");
+  QMimeDatabase db;
+  QStringList filterList;
+  QString filter;
+  foreach(const QByteArray &type, QImageReader::supportedMimeTypes())
+  {
+    if ( !filter.isEmpty() )
+      filter += QLatin1Char(' ');
 
-    KFileDialog fd(KUrl("kfiledialog:///dir/"), filter, this);
-    fd.setCaption(caption);
-    fd.setOperationMode(KFileDialog::Opening);
+    QMimeType mime(db.mimeTypeForName(QString::fromLatin1(type)));
+    if ( mime.isValid() )
+    {
+      QString glob = mime.globPatterns().join(QLatin1Char(' '));
 
-    if (allowMultipleURLs)
-        fd.setMode (KFile::Files);
+      filter += glob;
 
-    if (fd.exec ())
-        return fd.selectedUrls ();
-    else
-        return KUrl::List ();
+      // I want to show the mime comment AND the file glob pattern,
+      // but to avoid that the "All Supported Files" entry shows ALL glob patterns,
+      // I must add the pattern here a second time so that QFileDialog::HideNameFilterDetails
+      // can hide the first pattern and I still see the second one
+      filterList << mime.comment() + QString(" (%1)(%2)").arg(glob).arg(glob);
+    }
+  }
+
+  filterList.prepend(i18n("All Supported Files (%1)", filter));
+
+  QFileDialog fd(this);
+  fd.setNameFilters(filterList);
+  fd.setOption(QFileDialog::HideNameFilterDetails);
+  fd.setWindowTitle(caption);
+
+  if ( allowMultipleURLs )
+    fd.setFileMode(QFileDialog::ExistingFiles);
+
+  if ( fd.exec() )
+    return fd.selectedUrls();
+  else
+    return QList<QUrl>();
 }
 
 //---------------------------------------------------------------------
@@ -467,9 +483,9 @@ void kpMainWindow::slotOpen ()
 {
     toolEndShape ();
 
-    const KUrl::List urls = askForOpenURLs(i18nc("@title:window", "Open Image"));
+    const QList<QUrl> urls = askForOpenURLs(i18nc("@title:window", "Open Image"));
 
-    for (KUrl::List::const_iterator it = urls.begin ();
+    for (QList<QUrl>::const_iterator it = urls.begin ();
          it != urls.end ();
          ++it)
     {
@@ -480,7 +496,7 @@ void kpMainWindow::slotOpen ()
 //---------------------------------------------------------------------
 
 // private slot
-void kpMainWindow::slotOpenRecent (const KUrl &url)
+void kpMainWindow::slotOpenRecent (const QUrl &url)
 {
 #if DEBUG_KP_MAIN_WINDOW
     kDebug () << "kpMainWindow::slotOpenRecent(" << url << ")";
@@ -638,11 +654,14 @@ void kpMainWindow::slotScreenshot()
 {
   toolEndShape();
 
-  KDialog *dialog = new KDialog(this);
-  dialog->setButtons(KDialog::Ok | KDialog::Cancel);
+  QDialog *dialog = new QDialog(this);
+  QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok |
+                                                   QDialogButtonBox::Cancel, dialog);
+  connect (buttons, SIGNAL (accepted()), dialog, SLOT (accept()));
+  connect (buttons, SIGNAL (rejected()), dialog, SLOT (reject()));
 
   QLabel *label = new QLabel(i18n("Snapshot Delay"));
-  KIntSpinBox *seconds = new KIntSpinBox;
+  KPluralHandlingSpinBox *seconds = new KPluralHandlingSpinBox;
   seconds->setRange(0, 99);
   seconds->setSuffix(ki18np(" second", " seconds"));
   seconds->setSpecialValueText(i18n("No delay"));
@@ -650,12 +669,13 @@ void kpMainWindow::slotScreenshot()
   QCheckBox *hideWindow = new QCheckBox(i18n("Hide Main Window"));
   hideWindow->setChecked(true);
 
-  QVBoxLayout *vbox = new QVBoxLayout(dialog->mainWidget());
+  QVBoxLayout *vbox = new QVBoxLayout(dialog);
   vbox->addWidget(label);
   vbox->addWidget(seconds);
   vbox->addWidget(hideWindow);
+  vbox->addWidget(buttons);
 
-  if ( dialog->exec() == KDialog::Rejected )
+  if ( dialog->exec() == QDialog::Rejected )
   {
     delete dialog;
     return;
@@ -675,10 +695,9 @@ void kpMainWindow::slotScreenshot()
 void kpMainWindow::slotMakeScreenshot()
 {
   QCoreApplication::processEvents();
-  QPixmap pixmap = QPixmap::grabWindow(QApplication::desktop()->winId());
+  QPixmap pixmap = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
 
-  kpDocument *doc = new kpDocument(pixmap.width(), pixmap.height(),
-                                   documentEnvironment());
+  kpDocument *doc = new kpDocument(pixmap.width(), pixmap.height(), documentEnvironment());
   doc->setImage(pixmap.toImage());
 
   // Send document to current or new window.
@@ -712,8 +731,8 @@ void kpMainWindow::slotProperties ()
 bool kpMainWindow::save (bool localOnly)
 {
     if (d->document->url ().isEmpty () ||
-        !KImageIO::mimeTypes (KImageIO::Writing)
-            .contains (d->document->saveOptions ()->mimeType ()) ||
+        !QImageWriter::supportedMimeTypes()
+            .contains(d->document->saveOptions ()->mimeType().toLatin1()) ||
         // SYNC: kpDocument::getPixmapFromFile() can't determine quality
         //       from file so it has been set initially to an invalid value.
         (d->document->saveOptions ()->mimeTypeHasConfigurableQuality () &&
@@ -748,7 +767,7 @@ bool kpMainWindow::slotSave ()
 //---------------------------------------------------------------------
 
 // private
-KUrl kpMainWindow::askForSaveURL (const QString &caption,
+QUrl kpMainWindow::askForSaveURL (const QString &caption,
                                   const QString &startURL,
                                   const kpImage &imageToBeSaved,
                                   const kpDocumentSaveOptions &startSaveOptions,
@@ -773,11 +792,11 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 #define SETUP_READ_CFG()                                                             \
     if (!reparsedConfiguration)                                                      \
     {                                                                                \
-        KGlobal::config ()->reparseConfiguration ();                                 \
+        KSharedConfig::openConfig ()->reparseConfiguration ();                       \
         reparsedConfiguration = true;                                                \
     }                                                                                \
                                                                                      \
-    KConfigGroup cfg (KGlobal::config (), forcedSaveOptionsGroup);    \
+    KConfigGroup cfg (KSharedConfig::openConfig (), forcedSaveOptionsGroup);
 
 
     if (chosenSaveOptions)
@@ -792,7 +811,9 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 
     kpDocumentSaveOptions fdSaveOptions = startSaveOptions;
 
-    QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Writing);
+    QStringList mimeTypes;
+    foreach(const QByteArray &type, QImageWriter::supportedMimeTypes())
+      mimeTypes << QString::fromLatin1(type);
 #if DEBUG_KP_MAIN_WINDOW
     QStringList sortedMimeTypes = mimeTypes;
     sortedMimeTypes.sort ();
@@ -801,8 +822,8 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 #endif
     if (mimeTypes.isEmpty ())
     {
-        kError () << "No KImageIO output mimetypes!" << endl;
-        return KUrl ();
+        kError () << "No output mimetypes!" << endl;
+        return QUrl ();
     }
 
 #define MIME_TYPE_IS_VALID() (!fdSaveOptions.mimeTypeIsInvalid () &&                 \
@@ -859,10 +880,10 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
             docMetaInfo,
             this);
 
-    KFileDialog fd (startURL, QString(), this,
+    KFileDialog fd (QUrl (startURL), QString(), this,
                     saveOptionsWidget);
     saveOptionsWidget->setVisualParent (&fd);
-    fd.setCaption (caption);
+    fd.setWindowTitle (caption);
     fd.setOperationMode (KFileDialog::Saving);
     fd.setMimeFilter (mimeTypes, fdSaveOptions.mimeType ());
     if (localOnly)
@@ -878,7 +899,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
         newSaveOptions.printDebug ("\tnewSaveOptions");
     #endif
 
-        KConfigGroup cfg (KGlobal::config (), forcedSaveOptionsGroup);
+        KConfigGroup cfg (KSharedConfig::openConfig (), forcedSaveOptionsGroup);
 
         // Save options user forced - probably want to use them in future
         kpDocumentSaveOptions::saveDefaultDifferences (cfg,
@@ -891,7 +912,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
 
 
         bool shouldAllowOverwritePrompt =
-                (fd.selectedUrl () != startURL ||
+                (fd.selectedUrl () != QUrl (startURL) ||
                  newSaveOptions.mimeType () != startSaveOptions.mimeType ());
         if (allowOverwritePrompt)
         {
@@ -924,7 +945,7 @@ KUrl kpMainWindow::askForSaveURL (const QString &caption,
         return fd.selectedUrl ();
     }
     else
-        return KUrl ();
+        return QUrl ();
 #undef SETUP_READ_CFG
 }
 
@@ -935,7 +956,7 @@ bool kpMainWindow::saveAs (bool localOnly)
 {
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
-    KUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Save Image As"),
+    QUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Save Image As"),
                                     d->document->url ().url (),
                                     d->document->imageWithSelection (),
                                     *d->document->saveOptions (),
@@ -984,7 +1005,7 @@ bool kpMainWindow::slotExport ()
 
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
-    KUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Export"),
+    QUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Export"),
                                     d->lastExportURL.url (),
                                     d->document->imageWithSelection (),
                                     d->lastExportSaveOptions,
@@ -1039,7 +1060,7 @@ bool kpMainWindow::slotReload ()
     Q_ASSERT (d->document);
 
 
-    KUrl oldURL = d->document->url ();
+    QUrl oldURL = d->document->url ();
 
 
     if (d->document->isModified ())
@@ -1113,7 +1134,7 @@ bool kpMainWindow::slotReload ()
 // private
 void kpMainWindow::sendDocumentNameToPrinter (QPrinter *printer)
 {
-    KUrl url = d->document->url ();
+    QUrl url = d->document->url ();
     if (!url.isEmpty ())
     {
         int dot;
@@ -1312,7 +1333,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
             // Save config option even if the dialog was cancelled.
             d->configPrintImageCenteredOnPage = optionsPage->printImageCenteredOnPage ();
 
-            KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+            KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
             cfg.writeEntry (kpSettingPrintImageCenteredOnPage,
                            d->configPrintImageCenteredOnPage);
             cfg.sync ();

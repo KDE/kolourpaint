@@ -30,8 +30,8 @@
 #define kpToolSelectionDestroyCommand_H
 
 
-#include <kpImage.h>
-#include <kpNamedCommand.h>
+#include "imagelib/kpImage.h"
+#include "commands/kpNamedCommand.h"
 
 
 class kpAbstractSelection;

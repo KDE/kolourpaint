@@ -29,18 +29,18 @@
 #define DEBUG_KP_TOOL_WIDGET_FILL_STYLE 0
 
 
-#include <kpToolWidgetFillStyle.h>
+#include "kpToolWidgetFillStyle.h"
+
+#include "imagelib/kpColor.h"
+#include "kpDefs.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "tools/kpTool.h"
+
+#include <kdebug.h>
 
 #include <qbrush.h>
 #include <qpainter.h>
 #include <qpixmap.h>
-
-#include <kdebug.h>
-
-#include <kpColor.h>
-#include <kpDefs.h>
-#include <kpPixmapFX.h>
-#include <kpTool.h>
 
 //---------------------------------------------------------------------
 
@@ -179,4 +179,3 @@ bool kpToolWidgetFillStyle::setSelected (int row, int col, bool saveAsDefault)
 
 //---------------------------------------------------------------------
 
-#include <kpToolWidgetFillStyle.moc>

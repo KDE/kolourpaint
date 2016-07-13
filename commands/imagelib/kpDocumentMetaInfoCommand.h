@@ -30,11 +30,10 @@
 #define kpDocumentMetaInfoCommand_H
 
 
-#include <kpNamedCommand.h>
+#include "commands/kpNamedCommand.h"
 
 
 class kpDocumentMetaInfo;
-
 
 class kpDocumentMetaInfoCommand : public kpNamedCommand
 {

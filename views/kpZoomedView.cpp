@@ -29,13 +29,13 @@
 #define DEBUG_KP_ZOOMED_VIEW 0
 
 
-#include <kpZoomedView.h>
+#include "views/kpZoomedView.h"
 
 #include <kdebug.h>
 
-#include <kpDocument.h>
-#include <kpView.h>
-#include <kpViewManager.h>
+#include "document/kpDocument.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
 
 
 kpZoomedView::kpZoomedView (kpDocument *document,
@@ -100,4 +100,3 @@ void kpZoomedView::adjustToEnvironment ()
 }
 
 
-#include <kpZoomedView.moc>

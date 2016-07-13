@@ -30,7 +30,7 @@
 #define KP_SELECTION_TRANSPARENCY_H
 
 
-#include <kpColor.h>
+#include "imagelib/kpColor.h"
 
 
 // This does not apply to the Text Tool.  Use kpTextStyle for that.

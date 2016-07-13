@@ -27,7 +27,11 @@
 */
 
 
-#include <kpEffectToneEnhanceWidget.h>
+#include "kpEffectToneEnhanceWidget.h"
+
+#include "imagelib/effects/kpEffectToneEnhance.h"
+#include "commands/imagelib/effects/kpEffectToneEnhanceCommand.h"
+#include "pixmapfx/kpPixmapFX.h"
 
 #include <QGridLayout>
 #include <QLabel>
@@ -35,10 +39,6 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <knuminput.h>
-
-#include <kpEffectToneEnhance.h>
-#include <kpEffectToneEnhanceCommand.h>
-#include <kpPixmapFX.h>
 
 
 kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,
@@ -49,8 +49,7 @@ kpEffectToneEnhanceWidget::kpEffectToneEnhanceWidget (bool actOnSelection,
 
 {
     QGridLayout *lay = new QGridLayout (this);
-    lay->setSpacing (spacingHint ());
-    lay->setMargin (marginHint ());
+    lay->setMargin (0);
 
 
     // See kpEffectToneEnhance::applyEffect().
@@ -141,4 +140,3 @@ kpEffectCommandBase *kpEffectToneEnhanceWidget::createCommand (
 }
 
 
-#include <kpEffectToneEnhanceWidget.moc>

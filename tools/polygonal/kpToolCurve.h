@@ -30,7 +30,7 @@
 #define KP_TOOL_CURVE_H
 
 
-#include <kpToolPolygonalBase.h>
+#include "kpToolPolygonalBase.h"
 
 
 class kpToolCurve : public kpToolPolygonalBase

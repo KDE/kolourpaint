@@ -23,8 +23,10 @@
 
 #define DEBUG_KP_COLOR_CELLS_BASE 0
 
-#include <kpColorCellsBase.h>
+#include "kpColorCellsBase.h"
 
+#include <QApplication>
+#include <QDrag>
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
 #include <QDropEvent>
@@ -33,10 +35,9 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QImage>
+#include <QDebug>
 
 #include <KColorMimeData>
-#include <KDebug>
-#include <KGlobalSettings>
 
 
 class kpColorCellsBase::kpColorCellsBasePrivate
@@ -134,7 +135,7 @@ void kpColorCellsBase::setRowColumnCounts (int rows, int columns)
     const int oldRows = rowCount (), oldCols = columnCount ();
     const int newRows = rows, newCols = columns;
 #if DEBUG_KP_COLOR_CELLS_BASE
-    kDebug () << "oldRows=" << oldRows << "oldCols=" << oldCols
+    qDebug () << "oldRows=" << oldRows << "oldCols=" << oldCols
         << "newRows=" << newRows << "newCols=" << newCols;
 #endif
 
@@ -380,7 +381,7 @@ int kpColorCellsBase::positionToCell(const QPoint &pos, bool ignoreBorders,
 
     const int r = indexAt (pos).row (), c = indexAt (pos).column ();
 #if DEBUG_KP_COLOR_CELLS_BASE
-    kDebug () << "r=" << r << "c=" << c;
+    qDebug () << "r=" << r << "c=" << c;
 #endif
 
     if (r == -1 || c == -1)
@@ -410,7 +411,7 @@ void kpColorCellsBase::mouseMoveEvent( QMouseEvent *e )
     if( !(e->buttons() & Qt::LeftButton)) return;
 
     if(d->inMouse) {
-        int delay = KGlobalSettings::dndEventDelay();
+        int delay = QApplication::startDragDistance();
         if(e->x() > d->mousePos.x()+delay || e->x() < d->mousePos.x()-delay ||
            e->y() > d->mousePos.y()+delay || e->y() < d->mousePos.y()-delay){
             // Drag color object
@@ -418,14 +419,14 @@ void kpColorCellsBase::mouseMoveEvent( QMouseEvent *e )
             if (cell != -1)
             {
             #if DEBUG_KP_COLOR_CELLS_BASE
-               kDebug () << "beginning drag from cell=" << cell
+               qDebug () << "beginning drag from cell=" << cell
                          << "color: isValid=" << d->colors [cell].isValid ()
                          << " rgba=" << (int *) d->colors [cell].rgba();
             #endif
                Q_ASSERT (d->colors[cell].isValid());
                KColorMimeData::createDrag(d->colors[cell], this)->start(Qt::CopyAction | Qt::MoveAction);
             #if DEBUG_KP_COLOR_CELLS_BASE
-               kDebug () << "finished drag";
+               qDebug () << "finished drag";
             #endif
             }
         }
@@ -456,7 +457,7 @@ static void SetDropAction (QWidget *self, QDropEvent *event)
 void kpColorCellsBase::dragEnterEvent( QDragEnterEvent *event)
 {
 #if DEBUG_KP_COLOR_CELLS_BASE
-     kDebug () << "kpColorCellsBase::dragEnterEvent() acceptDrags="
+     qDebug () << "kpColorCellsBase::dragEnterEvent() acceptDrags="
                << d->acceptDrags
                << " canDecode=" << KColorMimeData::canDecode(event->mimeData())
                << endl;
@@ -470,7 +471,7 @@ void kpColorCellsBase::dragEnterEvent( QDragEnterEvent *event)
 void kpColorCellsBase::dragMoveEvent (QDragMoveEvent *event)
 {
 #if DEBUG_KP_COLOR_CELLS_BASE
-     kDebug () << "kpColorCellsBase::dragMoveEvent() acceptDrags="
+     qDebug () << "kpColorCellsBase::dragMoveEvent() acceptDrags="
                << d->acceptDrags
                << " canDecode=" << KColorMimeData::canDecode(event->mimeData())
                << endl;
@@ -489,7 +490,7 @@ void kpColorCellsBase::dropEvent( QDropEvent *event)
          positionToCell (d->mousePos, true) :
          -1;
 #if DEBUG_KP_COLOR_CELLS_BASE
-     kDebug () << "kpColorCellsBase::dropEvent()"
+     qDebug () << "kpColorCellsBase::dropEvent()"
                << "color: rgba=" << (const int *) c.rgba () << "isValid=" << c.isValid()
                << "source=" << event->source () << "dragSourceCell=" << dragSourceCell;
 #endif
@@ -498,7 +499,7 @@ void kpColorCellsBase::dropEvent( QDropEvent *event)
 
           int cell = positionToCell(event->pos(), true, true/*allow empty cell*/);
      #if DEBUG_KP_COLOR_CELLS_BASE
-          kDebug () << "\tcell=" << cell;
+          qDebug () << "\tcell=" << cell;
      #endif
           // TODO: I believe kdelibs forgets to do this.
           if (cell == -1)
@@ -512,7 +513,7 @@ void kpColorCellsBase::dropEvent( QDropEvent *event)
 	  setColor(cell,c);
 
     #if DEBUG_KP_COLOR_CELLS_BASE
-          kDebug () << "\tdropAction=" << event->dropAction ()
+          qDebug () << "\tdropAction=" << event->dropAction ()
                     << "destOldColor.rgba=" << (const int *) destOldColor.rgba ();
     #endif
           if (event->dropAction () == Qt::MoveAction && dragSourceCell != -1) {
@@ -560,4 +561,3 @@ void kpColorCellsBase::mouseDoubleClickEvent( QMouseEvent * /*e*/ )
 }
 
 
-#include "kpColorCellsBase.moc"

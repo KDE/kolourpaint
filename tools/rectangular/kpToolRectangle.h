@@ -30,7 +30,7 @@
 #define KP_TOOL_RECTANGLE_H
 
 
-#include <kpToolRectangularBase.h>
+#include "tools/rectangular/kpToolRectangularBase.h"
 
 
 class kpToolRectangle : public kpToolRectangularBase

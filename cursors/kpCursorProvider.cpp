@@ -26,11 +26,11 @@
 */
 
 
-#include <kpCursorProvider.h>
+#include "kpCursorProvider.h"
+
+#include "kpCursorLightCross.h"
 
 #include <qcursor.h>
-
-#include <kpCursorLightCross.h>
 
 
 static const QCursor *TheLightCursor = 0;

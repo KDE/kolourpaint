@@ -30,8 +30,8 @@
 #define KP_TOOL_RECTANGULAR_COMMAND_H
 
 
-#include <kpNamedCommand.h>
-#include <kpToolRectangularBase.h>
+#include "commands/kpNamedCommand.h"
+#include "tools/rectangular/kpToolRectangularBase.h"
 
 
 class kpColor;

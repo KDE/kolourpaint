@@ -34,17 +34,16 @@
 #include <qsize.h>
 #include <qwidget.h>
 
-#include <kpDocumentMetaInfo.h>
-#include <kpDocumentSaveOptions.h>
+#include "imagelib/kpDocumentMetaInfo.h"
+#include "document/kpDocumentSaveOptions.h"
 
 
-class KComboBox;
+class QComboBox;
 class QImage;
 class QLabel;
 class QTimer;
-
-class KIntNumInput;
-class KPushButton;
+class QSpinBox;
+class QPushButton;
 
 class kpDocumentSaveOptionsPreviewDialog;
 
@@ -138,14 +137,14 @@ protected:
     kpDocumentMetaInfo m_documentMetaInfo;
 
     QLabel *m_colorDepthLabel;
-    KComboBox *m_colorDepthCombo;
+    QComboBox *m_colorDepthCombo;
     int m_colorDepthComboLastSelectedItem;
     QWidget *m_colorDepthSpaceWidget;
 
     QLabel *m_qualityLabel;
-    KIntNumInput *m_qualityInput;
+    QSpinBox *m_qualityInput;
 
-    KPushButton *m_previewButton;
+    QPushButton *m_previewButton;
     kpDocumentSaveOptionsPreviewDialog *m_previewDialog;
     QRect m_previewDialogLastRelativeGeometry;
     QTimer *m_updatePreviewTimer;

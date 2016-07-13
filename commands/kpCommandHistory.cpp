@@ -29,12 +29,12 @@
 #define DEBUG_KP_COMMAND_HISTORY 0
 
 
-#include <kpCommandHistory.h>
+#include "kpCommandHistory.h"
 
-#include <kpAbstractSelection.h>
-#include <kpMainWindow.h>
-#include <kpTool.h>
-#include <kpToolSelectionCreateCommand.h>
+#include "layers/selections/kpAbstractSelection.h"
+#include "mainWindow/kpMainWindow.h"
+#include "tools/kpTool.h"
+#include "commands/tools/selection/kpToolSelectionCreateCommand.h"
 
 
 kpCommandHistory::kpCommandHistory (bool doReadConfig, kpMainWindow *mainWindow)
@@ -125,4 +125,3 @@ void kpCommandHistory::redo ()
 }
 
 
-#include <kpCommandHistory.moc>

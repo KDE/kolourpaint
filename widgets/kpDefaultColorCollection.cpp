@@ -26,9 +26,9 @@
 */
 
 
-#include <kpDefaultColorCollection.h>
+#include "kpDefaultColorCollection.h"
 
-#include <kpColor.h>
+#include "imagelib/kpColor.h"
 
 
 kpDefaultColorCollection::kpDefaultColorCollection ()

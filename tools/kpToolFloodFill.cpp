@@ -29,18 +29,18 @@
 #define DEBUG_KP_TOOL_FLOOD_FILL 0
 
 
-#include <kpToolFloodFill.h>
+#include "kpToolFloodFill.h"
 
-#include <qapplication.h>
+#include "commands/kpCommandHistory.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "environments/tools/kpToolEnvironment.h"
+#include "commands/tools/kpToolFloodFillCommand.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpCommandHistory.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpToolEnvironment.h>
-#include <kpToolFloodFillCommand.h>
+#include <qapplication.h>
 
 //---------------------------------------------------------------------
 
@@ -167,4 +167,3 @@ void kpToolFloodFill::endDraw (const QPoint &, const QRect &)
 
 //---------------------------------------------------------------------
 
-#include <kpToolFloodFill.moc>

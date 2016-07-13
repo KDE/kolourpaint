@@ -1,6 +1,6 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2015 Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -27,93 +27,94 @@
 
 
 #include <kaboutdata.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
-#include <kdebug.h>
-#include <kimageio.h>
-#include <klocale.h>
-#include <KMessageBox>
+#include <kdeversion.h>
 
-#include <kpDefs.h>
-#include <kpMainWindow.h>
-
+#include "mainWindow/kpMainWindow.h"
 #include <kolourpaintlicense.h>
-#include <kolourpaintversion.h>
 
+#include <QApplication>
+#include <QCommandLineParser>
+#include <KLocalizedString>
 
-int main (int argc, char *argv [])
+int main(int argc, char *argv [])
 {
-    KAboutData aboutData
-    (
-        "kolourpaint", 0,
-        ki18n ("KolourPaint"),
-        kpVersionText,
-        ki18n ("Paint Program for KDE"),
-        KAboutData::License_Custom,
-        ki18n (0/*copyright statement - see license instead*/),
-        ki18n ("To obtain support, please visit the website."),
-        "http://www.kolourpaint.org/"
-    );
+  KAboutData aboutData
+  (
+    "kolourpaint",
+    i18n("KolourPaint"),
+    KDE_VERSION_STRING,
+    i18n("Paint Program for KDE"),
+    KAboutLicense::Custom,
+    QString(), // copyright statement - see license instead
+    QString(), // other text
+    QLatin1String("http://www.kolourpaint.org/")   // home page
+  );
 
-    // (this is _not_ the same as KAboutData::License_BSD)
-    aboutData.setLicenseText (ki18n (kpLicenseText));
+  // (this is _not_ the same as KAboutLicense::BSD)
+  aboutData.setLicenseText(i18n(kpLicenseText));
 
+  // Please add yourself here if you feel you're missing.
+  // SYNC: with AUTHORS
 
-    // Please add yourself here if you feel you're missing.
-    // SYNC: with AUTHORS
+  aboutData.addAuthor(i18n("Clarence Dang"), i18n("Project Founder"), QLatin1String("dang@kde.org"));
 
-    aboutData.addAuthor (ki18n ("Clarence Dang"), ki18n ("Project Founder"), "dang@kde.org");
-    aboutData.addAuthor (ki18n ("Thurston Dang"), ki18n ("Chief Investigator"),
-                         "thurston_dang@users.sourceforge.net");
-    aboutData.addAuthor (ki18n ("Martin Koller"), ki18n ("Scanning Support, Alpha Support, Current Maintainer"), "kollix@aon.at");
-    aboutData.addAuthor (ki18n ("Kristof Borrey"), ki18n ("Icons"), "borrey@kde.org");
-    aboutData.addAuthor (ki18n ("Tasuku Suzuki"), ki18n ("InputMethod Support"), "stasuku@gmail.com");
-    aboutData.addAuthor (ki18n ("Kazuki Ohta"), ki18n ("InputMethod Support"), "mover@hct.zaq.ne.jp");
-    aboutData.addAuthor (ki18n ("Nuno Pinheiro"), ki18n ("Icons"), "nf.pinheiro@gmail.com");
-    aboutData.addAuthor (ki18n ("Danny Allen"), ki18n ("Icons"), "dannya40uk@yahoo.co.uk");
-    aboutData.addAuthor (ki18n ("Mike Gashler"), ki18n ("Image Effects"), "gashlerm@yahoo.com");
+  aboutData.addAuthor(i18n("Thurston Dang"), i18n("Chief Investigator"),
+                      QLatin1String("thurston_dang@users.sourceforge.net"));
 
-    aboutData.addAuthor (ki18n ("Laurent Montel"), ki18n ("KDE 4 Porting"), "montel@kde.org");
+  aboutData.addAuthor(i18n("Martin Koller"), i18n("Scanning Support, Alpha Support, Current Maintainer"),
+                      QLatin1String("kollix@aon.at"));
 
-    // TODO: missing a lot of people who helped with the KDE 4 port.
+  aboutData.addAuthor(i18n("Kristof Borrey"), i18n("Icons"), QLatin1String("borrey@kde.org"));
+  aboutData.addAuthor(i18n("Tasuku Suzuki"), i18n("InputMethod Support"), QLatin1String("stasuku@gmail.com"));
+  aboutData.addAuthor(i18n("Kazuki Ohta"), i18n("InputMethod Support"), QLatin1String("mover@hct.zaq.ne.jp"));
+  aboutData.addAuthor(i18n("Nuno Pinheiro"), i18n("Icons"), QLatin1String("nf.pinheiro@gmail.com"));
+  aboutData.addAuthor(i18n("Danny Allen"), i18n("Icons"), QLatin1String("dannya40uk@yahoo.co.uk"));
+  aboutData.addAuthor(i18n("Mike Gashler"), i18n("Image Effects"), QLatin1String("gashlerm@yahoo.com"));
 
-    aboutData.addCredit (ki18n ("Thanks to the many others who have helped to make this program possible."));
+  aboutData.addAuthor(i18n("Laurent Montel"), i18n("KDE 4 Porting"), QLatin1String("montel@kde.org"));
+  aboutData.addAuthor(i18n("Christoph Feck"), i18n("KDE 5 Porting"), QLatin1String("christoph@maxiom.de"));
 
-    KCmdLineArgs::init (argc, argv, &aboutData);
+  aboutData.addCredit(i18n("Thanks to the many others who have helped to make this program possible."));
 
-    KCmdLineOptions cmdLineOptions;
-    cmdLineOptions.add ("+[file]", ki18n ("Image file to open"));
-    KCmdLineArgs::addCmdLineOptions (cmdLineOptions);
+  QApplication app(argc, argv);
 
-    KApplication app;
+  KLocalizedString::setApplicationDomain("kolourpaint");
 
-    if (app.isSessionRestored ())
+  QCommandLineParser cmdLine;
+  KAboutData::setApplicationData(aboutData);
+  cmdLine.addVersionOption();
+  cmdLine.addHelpOption();
+  cmdLine.addPositionalArgument("files", i18n("Image files to open, optionally"), "[files...]");
+
+  aboutData.setupCommandLine(&cmdLine);
+  cmdLine.process(app);
+  aboutData.processCommandLine(&cmdLine);
+
+  if ( app.isSessionRestored() )
+  {
+    // Creates a kpMainWindow using the default constructor and then
+    // calls kpMainWindow::readProperties().
+    RESTORE(kpMainWindow)
+  }
+  else
+  {
+    kpMainWindow *mainWindow;
+    QStringList args = cmdLine.positionalArguments();
+
+    if ( args.count() >= 1 )
     {
-        // Creates a kpMainWindow using the default constructor and then
-        // calls kpMainWindow::readProperties().
-        RESTORE (kpMainWindow)
+      for (int i = 0; i < args.count(); i++)
+      {
+        mainWindow = new kpMainWindow(QUrl::fromUserInput(args[i]));
+        mainWindow->show();
+      }
     }
     else
     {
-        kpMainWindow *mainWindow;
-        KCmdLineArgs *args = KCmdLineArgs::parsedArgs ();
-
-        if (args->count () >= 1)
-        {
-            for (int i = 0; i < args->count (); i++)
-            {
-                mainWindow = new kpMainWindow (args->url (i));
-                mainWindow->show ();
-            }
-        }
-        else
-        {
-            mainWindow = new kpMainWindow ();
-            mainWindow->show ();
-        }
-
-        args->clear ();
+      mainWindow = new kpMainWindow();
+      mainWindow->show();
     }
+  }
 
-    return app.exec ();
+  return app.exec();
 }

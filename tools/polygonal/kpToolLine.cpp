@@ -29,12 +29,12 @@
 #define DEBUG_KP_TOOL_LINE 0
 
 
-#include <kpToolLine.h>
+#include "kpToolLine.h"
+
+#include "kpToolPolyline.h"
 
 #include <kdebug.h>
 #include <klocale.h>
-
-#include <kpToolPolyline.h>
 
 
 static void DrawLineShape (kpImage *image,
@@ -90,4 +90,3 @@ void kpToolLine::endDraw (const QPoint &, const QRect &)
 }
 
 
-#include <kpToolLine.moc>

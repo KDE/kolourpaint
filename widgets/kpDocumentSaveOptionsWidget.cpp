@@ -28,36 +28,33 @@
 #define DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET 0
 
 
-#include <kpDocumentSaveOptionsWidget.h>
+#include "widgets/kpDocumentSaveOptionsWidget.h"
+
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "dialogs/kpDocumentSaveOptionsPreviewDialog.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "generic/widgets/kpResizeSignallingLabel.h"
+#include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"
+#include "generic/kpWidgetMapper.h"
+
+#include <kconfig.h>
+#include <kdebug.h>
+#include <klocale.h>
+#include <kconfiggroup.h>
+#include <knuminput.h>
 
 #include <qapplication.h>
 #include <qboxlayout.h>
 #include <qbuffer.h>
+#include <qcombobox.h>
 #include <qevent.h>
 #include <qgridlayout.h>
 #include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qpushbutton.h>
 #include <qtimer.h>
-
-#include <kcombobox.h>
-#include <kconfig.h>
-#include <kdebug.h>
-#include <kdialog.h>
-#include <kglobal.h>
-#include <kimageio.h>
-#include <klocale.h>
-#include <knuminput.h>
-#include <kpushbutton.h>
-#include <kconfiggroup.h>
-
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpDocumentSaveOptionsPreviewDialog.h>
-#include <kpPixmapFX.h>
-#include <kpResizeSignallingLabel.h>
-#include <kpTransformPreviewDialog.h>
-#include <kpWidgetMapper.h>
 
 
 kpDocumentSaveOptionsWidget::kpDocumentSaveOptionsWidget (
@@ -91,19 +88,19 @@ void kpDocumentSaveOptionsWidget::init ()
 
 
     m_colorDepthLabel = new QLabel (i18n ("Convert &to:"), this);
-    m_colorDepthCombo = new KComboBox (this);
+    m_colorDepthCombo = new QComboBox (this);
 
     m_colorDepthSpaceWidget = new QWidget (this);
 
-    m_qualityLabel = new QLabel (i18n ("Quali&ty:"), this);
-    m_qualityInput = new KIntNumInput (this);
+    m_qualityLabel = new QLabel(i18n ("Quali&ty:"), this);
+    m_qualityInput = new QSpinBox(this);
     // Note that we set min to 1 not 0 since "0 Quality" is a bit misleading
     // and 101 quality settings would be weird.  So we lose 1 quality setting
     // according to QImage::save().
     // TODO: 100 quality is also misleading since that implies perfect quality.
     m_qualityInput->setRange (1, 100);
 
-    m_previewButton = new KPushButton (i18n ("&Preview"), this);
+    m_previewButton = new QPushButton (i18n ("&Preview"), this);
     m_previewButton->setCheckable (true);
 
 
@@ -113,8 +110,7 @@ void kpDocumentSaveOptionsWidget::init ()
 
 
     QHBoxLayout *lay = new QHBoxLayout (this);
-    lay->setSpacing(KDialog::spacingHint ());
-    lay->setMargin(0/*margin*/);
+    lay->setMargin(0);
 
     lay->addWidget (m_colorDepthLabel, 0/*stretch*/, Qt::AlignLeft);
     lay->addWidget (m_colorDepthCombo, 0/*stretch*/);
@@ -542,7 +538,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
                  this, SLOT (hidePreview ()));
 
 
-        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupPreviewSave);
+        KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupPreviewSave);
 
         if (cfg.hasKey (kpSettingPreviewSaveUpdateDelay))
         {
@@ -568,7 +564,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
         #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
             kDebug () << "\tread cfg preview dialog last rel geometry";
         #endif
-            KConfigGroup cfg (KGlobal::config (), kpSettingsGroupPreviewSave);
+            KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupPreviewSave);
 
             m_previewDialogLastRelativeGeometry = cfg.readEntry (
                 kpSettingPreviewSaveGeometry, QRect ());
@@ -643,7 +639,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
     {
         m_updatePreviewDialogLastRelativeGeometryTimer->stop ();
 
-        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupPreviewSave);
+        KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupPreviewSave);
 
         cfg.writeEntry (kpSettingPreviewSaveGeometry, m_previewDialogLastRelativeGeometry);
         cfg.sync ();
@@ -714,20 +710,13 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
     // QImage::loadFormData().
     if (savedOK)
     {
-        const QStringList types = KImageIO::typeForMime (mimeType ());
-        // kpDocument::savePixmapToDevice() would have failed otherwise.
-        Q_ASSERT (!types.isEmpty ());
-
-        // It's safe to arbitrarily choose the 0th type as any type in the list
-        // should invoke the same KImageIO image loader.
-        image.loadFromData (data, types [0].toLatin1 ());
+        image.loadFromData(data);
     }
     else
     {
         // Leave <image> as invalid.
         // TODO: This code path has not been well tested.
         //       Will we trigger divide by zero errors in "m_previewDialog"?
-        // KDE3: Backport any fixes to KDE 3.
     }
 
     // REFACTOR: merge with kpDocument::getPixmapFromFile()
@@ -766,4 +755,3 @@ void kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry ()
 }
 
 
-#include <kpDocumentSaveOptionsWidget.moc>

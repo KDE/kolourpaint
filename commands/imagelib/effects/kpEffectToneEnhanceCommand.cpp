@@ -27,12 +27,12 @@
 */
 
 
-#include <kpEffectToneEnhanceCommand.h>
+#include "kpEffectToneEnhanceCommand.h"
+
+#include "imagelib/effects/kpEffectToneEnhance.h"
 
 #include <kdebug.h>
 #include <klocale.h>
-
-#include <kpEffectToneEnhance.h>
 
 
 kpEffectToneEnhanceCommand::kpEffectToneEnhanceCommand (double granularity, double amount,

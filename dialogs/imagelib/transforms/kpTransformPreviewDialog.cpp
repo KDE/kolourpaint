@@ -29,10 +29,11 @@
 #define DEBUG_KP_TRANSFORM_PREVIEW_DIALOG 0
 
 
-#include <kpTransformPreviewDialog.h>
+#include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"
 
 #include <qapplication.h>
 #include <qboxlayout.h>
+#include <qdialogbuttonbox.h>
 #include <qgridlayout.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
@@ -43,12 +44,12 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpAbstractImageSelection.h>
-#include <kpColor.h>
-#include <kpDocument.h>
-#include <kpPixmapFX.h>
-#include <kpResizeSignallingLabel.h>
-#include <kpTransformDialogEnvironment.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "imagelib/kpColor.h"
+#include "document/kpDocument.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "generic/widgets/kpResizeSignallingLabel.h"
+#include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
 
 
 kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
@@ -58,7 +59,7 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
         bool actOnSelection,
         kpTransformDialogEnvironment *_env,
         QWidget *parent)
-    : KDialog (parent),
+    : QDialog (parent),
       m_afterActionText (afterActionText),
       m_actOnSelection (actOnSelection),
       m_dimensionsGroupBox (0),
@@ -68,10 +69,18 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
       m_gridLayout (0),
       m_environ (_env)
 {
-    setCaption (caption);
-    setButtons (KDialog::Ok | KDialog::Cancel);
+    setWindowTitle (caption);
+    QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok |
+                                                      QDialogButtonBox::Cancel, this);
+    connect (buttons, SIGNAL (accepted()), this, SLOT (accept()));
+    connect (buttons, SIGNAL (rejected()), this, SLOT (reject()));
+
     QWidget *baseWidget = new QWidget (this);
-    setMainWidget (baseWidget);
+    m_mainWidget = baseWidget;
+
+    QVBoxLayout *dialogLayout = new QVBoxLayout (this);
+    dialogLayout->addWidget (baseWidget);
+    dialogLayout->addWidget (buttons);
 
 
     if (document ())
@@ -93,7 +102,7 @@ kpTransformPreviewDialog::kpTransformPreviewDialog (Features features,
 
 
     m_gridLayout = new QGridLayout (baseWidget );
-    m_gridLayout->setSpacing (spacingHint ());
+    m_gridLayout->setMargin (0);
     m_gridNumRows = reserveTopRow ? 1 : 0;
     if (m_dimensionsGroupBox || m_previewGroupBox)
     {
@@ -151,9 +160,6 @@ void kpTransformPreviewDialog::createDimensionsGroupBox ()
 
 
     QGridLayout *dimensionsLayout = new QGridLayout (m_dimensionsGroupBox );
-    dimensionsLayout->setMargin( marginHint () * 2 );
-    dimensionsLayout->setSpacing( spacingHint ());
-
     dimensionsLayout->addWidget (originalLabel, 0, 0, Qt::AlignBottom);
     dimensionsLayout->addWidget (originalDimensionsLabel, 0, 1, Qt::AlignBottom);
     dimensionsLayout->addWidget (afterTransformLabel, 1, 0, Qt::AlignTop);
@@ -177,9 +183,6 @@ void kpTransformPreviewDialog::createPreviewGroupBox ()
 
 
     QVBoxLayout *previewLayout = new QVBoxLayout (m_previewGroupBox);
-    previewLayout->setMargin (marginHint () * 2);
-    previewLayout->setSpacing (qMax (1, spacingHint () / 2));
-
     previewLayout->addWidget (m_previewPixmapLabel, 1/*stretch*/);
     previewLayout->addWidget (updatePushButton, 0/*stretch*/, Qt::AlignHCenter);
 }
@@ -191,6 +194,11 @@ kpDocument *kpTransformPreviewDialog::document () const
     return m_environ->document ();
 }
 
+// protected
+QWidget *kpTransformPreviewDialog::mainWidget () const
+{
+    return m_mainWidget;
+}
 
 // protected
 void kpTransformPreviewDialog::addCustomWidgetToFront (QWidget *w)
@@ -209,7 +217,7 @@ void kpTransformPreviewDialog::addCustomWidget (QWidget *w)
 // public override [base QWidget]
 void kpTransformPreviewDialog::setUpdatesEnabled (bool enable)
 {
-    KDialog::setUpdatesEnabled (enable);
+    QDialog::setUpdatesEnabled (enable);
 
     if (enable)
         slotUpdateWithWaitCursor ();
@@ -456,4 +464,3 @@ void kpTransformPreviewDialog::slotUpdateWithWaitCursor ()
 }
 
 
-#include <kpTransformPreviewDialog.moc>

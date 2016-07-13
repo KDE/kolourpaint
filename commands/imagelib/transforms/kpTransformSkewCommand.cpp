@@ -30,7 +30,15 @@
 #define DEBUG_KP_TOOL_SKEW_DIALOG 0
 
 
-#include <kpTransformSkewCommand.h>
+#include "kpTransformSkewCommand.h"
+
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "environments/commands/kpCommandEnvironment.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "layers/selections/image/kpFreeFormImageSelection.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "layers/selections/image/kpRectangularImageSelection.h"
 
 #include <qapplication.h>
 #include <qmatrix.h>
@@ -40,16 +48,8 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpAbstractImageSelection.h>
-#include <kpCommandEnvironment.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpFreeFormImageSelection.h>
-#include <kpPixmapFX.h>
-#include <kpRectangularImageSelection.h>
-
 // TODO: nasty, should avoid using GUI class in this command class
-#include <kpTransformSkewDialog.h>
+#include "dialogs/imagelib/transforms/kpTransformSkewDialog.h"
 
 
 kpTransformSkewCommand::kpTransformSkewCommand (bool actOnSelection,

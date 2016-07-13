@@ -30,8 +30,8 @@
 #define KP_TOOL_RECTANGULAR_BASE_H
 
 
-#include <kpImage.h>
-#include <kpTool.h>
+#include "imagelib/kpImage.h"
+#include "tools/kpTool.h"
 
 
 class QPoint;

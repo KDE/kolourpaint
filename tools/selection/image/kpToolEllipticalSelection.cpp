@@ -28,14 +28,14 @@
 #define DEBUG_KP_TOOL_ELLIPTICAL_SELECTION 0
 
 
-#include <kpToolEllipticalSelection.h>
+#include "kpToolEllipticalSelection.h"
 
 #include <klocale.h>
 #include <kdebug.h>
 
-#include <kpDocument.h>
-#include <kpEllipticalImageSelection.h>
-#include <kpToolSelectionEnvironment.h>
+#include "document/kpDocument.h"
+#include "layers/selections/image/kpEllipticalImageSelection.h"
+#include "environments/tools/selection/kpToolSelectionEnvironment.h"
 
 
 kpToolEllipticalSelection::kpToolEllipticalSelection (kpToolSelectionEnvironment *environ,

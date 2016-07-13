@@ -29,19 +29,19 @@
 #define DEBUG_KP_THUMBNAIL 0
 
 
-#include <kpThumbnail.h>
+#include "kpThumbnail.h"
 
-#include <QAction>
-#include <QLayout>
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "mainWindow/kpMainWindow.h"
+#include "views/kpThumbnailView.h"
+#include "tools/kpTool.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpThumbnailView.h>
-#include <kpTool.h>
+#include <QAction>
+#include <QLayout>
 
 
 struct kpThumbnailPrivate
@@ -176,4 +176,3 @@ void kpThumbnail::closeEvent (QCloseEvent *e)
 }
     
 
-#include <kpThumbnail.moc>

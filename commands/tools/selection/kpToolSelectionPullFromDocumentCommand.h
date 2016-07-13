@@ -30,8 +30,8 @@
 #define kpToolSelectionPullFromDocumentCommand_H
 
 
-#include <kpColor.h>
-#include <kpAbstractSelectionContentCommand.h>
+#include "kpAbstractSelectionContentCommand.h"
+#include "imagelib/kpColor.h"
 
 
 class kpAbstractImageSelection;

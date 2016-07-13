@@ -28,19 +28,18 @@
 #define DEBUG_KP_DOCUMENT_SAVE_OPTIONS 0
 
 
-#include <kpDocumentSaveOptions.h>
+#include "kpDocumentSaveOptions.h"
+
+#include "kpDefs.h"
+#include "pixmapfx/kpPixmapFX.h"
+
+#include <kconfiggroup.h>
+#include <kdebug.h>
+#include <ksharedconfig.h>
 
 #include <qbitmap.h>
 #include <QImage>
 #include <qstring.h>
-
-#include <kconfiggroup.h>
-#include <kdebug.h>
-#include <kglobal.h>
-#include <ksharedconfig.h>
-
-#include <kpDefs.h>
-#include <kpPixmapFX.h>
 
 //---------------------------------------------------------------------
 
@@ -419,7 +418,7 @@ static QStringList mimeTypesSupportingProperty (const QString &property,
 {
     QStringList mimeTypeList;
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupMimeTypeProperties);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupMimeTypeProperties);
 
     if (cfg.hasKey (property))
     {

@@ -28,13 +28,13 @@
 
 #define DEBUG_KP_TOOL_ERASER 0
 
-#include <kpToolEraser.h>
+#include "kpToolEraser.h"
+
+#include "commands/kpCommandHistory.h"
+#include "commands/imagelib/effects/kpEffectClearCommand.h"
+#include "environments/tools/kpToolEnvironment.h"
 
 #include <klocale.h>
-
-#include <kpCommandHistory.h>
-#include <kpEffectClearCommand.h>
-#include <kpToolEnvironment.h>
 
 //---------------------------------------------------------------------
 
@@ -77,4 +77,3 @@ QString kpToolEraser::haventBegunDrawUserMessage () const
 // Logic is in kpToolFlowPixmapBase.
 
 
-#include <kpToolEraser.moc>

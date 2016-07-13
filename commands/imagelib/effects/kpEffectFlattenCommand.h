@@ -32,8 +32,8 @@
 
 #include <qcolor.h>
 
-#include <kpEffectCommandBase.h>
-#include <kpImage.h>
+#include "kpEffectCommandBase.h"
+#include "imagelib/kpImage.h"
 
 
 class kpEffectFlattenCommand : public kpEffectCommandBase

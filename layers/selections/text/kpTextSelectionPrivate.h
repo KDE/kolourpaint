@@ -32,9 +32,9 @@
 
 #include <QList>
 
-#include <kpImage.h>
-#include <kpTextStyle.h>
-#include <kpPreeditText.h>
+#include "imagelib/kpImage.h"
+#include "layers/selections/text/kpTextStyle.h"
+#include "layers/selections/text/kpPreeditText.h"
 
 struct kpTextSelectionPrivate
 {

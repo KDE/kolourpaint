@@ -29,13 +29,13 @@
 #define DEBUG_KP_ZOOMED_THUMBNAIL_VIEW 0
 
 
-#include <kpZoomedThumbnailView.h>
+#include "views/kpZoomedThumbnailView.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpDocument.h>
-#include <kpViewManager.h>
+#include "document/kpDocument.h"
+#include "views/manager/kpViewManager.h"
 
 
 kpZoomedThumbnailView::kpZoomedThumbnailView (kpDocument *document,
@@ -137,4 +137,3 @@ void kpZoomedThumbnailView::adjustToEnvironment ()
 }
 
 
-#include <kpZoomedThumbnailView.moc>

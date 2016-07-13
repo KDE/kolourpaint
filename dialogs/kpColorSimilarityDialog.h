@@ -30,7 +30,7 @@
 #define KP_COLOR_SIMILARITY_DIALOG_H
 
 
-#include <kdialog.h>
+#include <QDialog>
 
 
 class QLabel;
@@ -42,7 +42,7 @@ class kpColorSimilarityFrame;
 
 // LOTODO: Why doesn't this dialog automatically enforce a minimum size
 //         based on layout magic, like Image -> Resize / Scale?
-class kpColorSimilarityDialog : public KDialog
+class kpColorSimilarityDialog : public QDialog
 {
 Q_OBJECT
 

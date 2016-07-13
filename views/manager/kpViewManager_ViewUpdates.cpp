@@ -29,8 +29,8 @@
 #define DEBUG_KP_VIEW_MANAGER 0
 
 
-#include <kpViewManager.h>
-#include <kpViewManagerPrivate.h>
+#include "views/manager/kpViewManager.h"
+#include "kpViewManagerPrivate.h"
 
 #include <qapplication.h>
 #include <qlist.h>
@@ -38,13 +38,13 @@
 
 #include <kdebug.h>
 
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpTempImage.h>
-#include <kpTextSelection.h>
-#include <kpTool.h>
-#include <kpView.h>
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "mainWindow/kpMainWindow.h"
+#include "layers/tempImage/kpTempImage.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "tools/kpTool.h"
+#include "views/kpView.h"
 
 
 // public slot
@@ -228,7 +228,7 @@ void kpViewManager::updateViews (const QRect &docRect)
                                    viewRect.y () - diff,
                                    viewRect.width () + 2 * diff,
                                    viewRect.height () + 2 * diff)
-                                .intersect (QRect (0, 0, view->width (), view->height ()));
+                                .intersected (QRect (0, 0, view->width (), view->height ()));
 
         #if DEBUG_KP_VIEW_MANAGER && 0
             kDebug () << "\t\tviewRect (+compensate)=" << newRect;

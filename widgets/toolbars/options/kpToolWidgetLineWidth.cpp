@@ -26,16 +26,16 @@
 */
 
 
-#include <kpToolWidgetLineWidth.h>
+#include "widgets/toolbars/options/kpToolWidgetLineWidth.h"
+
+#include "imagelib/kpColor.h"
+#include "pixmapfx/kpPixmapFX.h"
+
+#include <klocale.h>
 
 #include <qbitmap.h>
 #include <qpainter.h>
 #include <qpixmap.h>
-
-#include <klocale.h>
-
-#include <kpColor.h>
-#include <kpPixmapFX.h>
 
 
 static int lineWidths [] = {1, 2, 3, 5, 8};
@@ -87,4 +87,3 @@ bool kpToolWidgetLineWidth::setSelected (int row, int col, bool saveAsDefault)
 }
 
 
-#include <kpToolWidgetLineWidth.moc>

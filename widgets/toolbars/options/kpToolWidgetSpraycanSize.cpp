@@ -29,18 +29,18 @@
 #define DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE 0
 
 
-#include <kpToolWidgetSpraycanSize.h>
+#include "kpToolWidgetSpraycanSize.h"
 
-#include <qbitmap.h>
-#include <qimage.h>
-#include <qpainter.h>
-#include <qpixmap.h>
+#include "pixmapfx/kpPixmapFX.h"
 
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <klocale.h>
 
-#include <kpPixmapFX.h>
+#include <qbitmap.h>
+#include <qimage.h>
+#include <qpainter.h>
+#include <qpixmap.h>
 
 
 static int spraycanSizes [] = {9, 17, 29};
@@ -117,4 +117,3 @@ bool kpToolWidgetSpraycanSize::setSelected (int row, int col, bool saveAsDefault
     return ret;
 }
 
-#include <kpToolWidgetSpraycanSize.moc>

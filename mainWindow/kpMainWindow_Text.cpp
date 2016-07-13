@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -26,8 +25,8 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "mainWindow/kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
 #include <kactioncollection.h>
 #include <kapplication.h>
@@ -36,19 +35,18 @@
 #include <kdebug.h>
 #include <kfontaction.h>
 #include <kfontsizeaction.h>
-#include <kglobal.h>
-#include <kicon.h>
 #include <klocale.h>
 #include <KToolBar>
 #include <ktoggleaction.h>
+#include <kiconloader.h>
 
-#include <kpColorToolBar.h>
-#include <kpDefs.h>
-#include <kpTextStyle.h>
-#include <kpToolText.h>
-#include <kpToolToolBar.h>
-#include <kpToolWidgetOpaqueOrTransparent.h>
-#include <kpZoomedView.h>
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "kpDefs.h"
+#include "layers/selections/text/kpTextStyle.h"
+#include "tools/selection/text/kpToolText.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
+#include "views/kpZoomedView.h"
 
 
 // private
@@ -67,25 +65,25 @@ void kpMainWindow::setupTextToolBarActions ()
              this, SLOT (slotTextFontSizeChanged ()));
 
     d->actionTextBold = ac->add<KToggleAction> ("text_bold");
-    d->actionTextBold->setIcon (KIcon ("format-text-bold"));
+    d->actionTextBold->setIcon(KDE::icon("format-text-bold"));
     d->actionTextBold->setText (i18n ("Bold"));
     connect (d->actionTextBold, SIGNAL (triggered (bool)),
         SLOT (slotTextBoldChanged ()));
 
     d->actionTextItalic = ac->add<KToggleAction> ("text_italic");
-    d->actionTextItalic->setIcon (KIcon ("format-text-italic"));
+    d->actionTextItalic->setIcon (KDE::icon("format-text-italic"));
     d->actionTextItalic->setText (i18n ("Italic"));
     connect (d->actionTextItalic, SIGNAL (triggered (bool)),
         SLOT (slotTextItalicChanged ()));
 
     d->actionTextUnderline = ac->add<KToggleAction> ("text_underline");
-    d->actionTextUnderline->setIcon (KIcon ("format-text-underline"));
+    d->actionTextUnderline->setIcon (KDE::icon("format-text-underline"));
     d->actionTextUnderline->setText (i18n ("Underline"));
     connect (d->actionTextUnderline, SIGNAL (triggered (bool)),
         SLOT (slotTextUnderlineChanged ()));
 
     d->actionTextStrikeThru = ac->add<KToggleAction> ("text_strike_thru");
-    d->actionTextStrikeThru->setIcon (KIcon ("format-text-strikethrough"));
+    d->actionTextStrikeThru->setIcon(KDE::icon("format-text-strikethrough"));
     d->actionTextStrikeThru->setText (i18n ("Strike Through"));
     connect (d->actionTextStrikeThru, SIGNAL (triggered (bool)),
         SLOT (slotTextStrikeThruChanged ()));
@@ -100,7 +98,7 @@ void kpMainWindow::setupTextToolBarActions ()
 // private
 void kpMainWindow::readAndApplyTextSettings ()
 {
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
 
     const QString font (cfg.readEntry (kpSettingFontFamily, QString::fromLatin1 ("Times")));
     d->actionTextFontFamily->setFont (font);
@@ -174,7 +172,7 @@ void kpMainWindow::slotTextFontFamilyChanged ()
     if (d->mainView)
         d->mainView->setFocus ();
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingFontFamily, d->actionTextFontFamily->font ());
     cfg.sync ();
 
@@ -207,7 +205,7 @@ void kpMainWindow::slotTextFontSizeChanged ()
     if (d->mainView)
         d->mainView->setFocus ();
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingFontSize, d->actionTextFontSize->fontSize ());
     cfg.sync ();
 
@@ -234,7 +232,7 @@ void kpMainWindow::slotTextBoldChanged ()
         d->toolText->slotBoldChanged (d->actionTextBold->isChecked ());
     }
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingBold, d->actionTextBold->isChecked ());
     cfg.sync ();
 }
@@ -259,7 +257,7 @@ void kpMainWindow::slotTextItalicChanged ()
         d->toolText->slotItalicChanged (d->actionTextItalic->isChecked ());
     }
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingItalic, d->actionTextItalic->isChecked ());
     cfg.sync ();
 }
@@ -284,7 +282,7 @@ void kpMainWindow::slotTextUnderlineChanged ()
         d->toolText->slotUnderlineChanged (d->actionTextUnderline->isChecked ());
     }
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingUnderline, d->actionTextUnderline->isChecked ());
     cfg.sync ();
 }
@@ -309,7 +307,7 @@ void kpMainWindow::slotTextStrikeThruChanged ()
         d->toolText->slotStrikeThruChanged (d->actionTextStrikeThru->isChecked ());
     }
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupText);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupText);
     cfg.writeEntry (kpSettingStrikeThru, d->actionTextStrikeThru->isChecked ());
     cfg.sync ();
 }

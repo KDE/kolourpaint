@@ -30,8 +30,8 @@
 #define KP_TOOL_TEXT_CHANGE_STYLE_COMMAND_H
 
 
-#include <kpNamedCommand.h>
-#include <kpTextStyle.h>
+#include "commands/kpNamedCommand.h"
+#include "layers/selections/text/kpTextStyle.h"
 
 
 class kpToolTextChangeStyleCommand : public kpNamedCommand

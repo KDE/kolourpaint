@@ -26,9 +26,10 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
+#include <qaction.h>
 #include <qapplication.h>
 #include <qclipboard.h>
 #include <qdatetime.h>
@@ -39,7 +40,6 @@
 #include <QDesktopWidget>
 #include <QScrollBar>
 
-#include <kaction.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -47,30 +47,30 @@
 #include <kactioncollection.h>
 #include <kxmlguifactory.h>
 
-#include <kpAbstractImageSelection.h>
-#include <kpColorToolBar.h>
-#include <kpCommandHistory.h>
-#include <kpDocument.h>
-#include <kpDocumentMetaInfo.h>
-#include <kpDocumentSaveOptions.h>
-#include <kpImageSelectionTransparency.h>
-#include <kpMacroCommand.h>
-#include <kpPixmapFX.h>
-#include <kpRectangularImageSelection.h>
-#include <kpSelectionDrag.h>
-#include <kpSetOverrideCursorSaver.h>
-#include <kpTextSelection.h>
-#include <kpTool.h>
-#include <kpToolTextGiveContentCommand.h>
-#include <kpToolSelectionCreateCommand.h>
-#include <kpToolSelectionDestroyCommand.h>
-#include <kpToolTextEnterCommand.h>
-#include <kpToolTextInsertCommand.h>
-#include <kpTransformCrop.h>
-#include <kpTransformResizeScaleCommand.h>
-#include <kpViewManager.h>
-#include <kpViewScrollableContainer.h>
-#include <kpZoomedView.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "commands/kpCommandHistory.h"
+#include "document/kpDocument.h"
+#include "imagelib/kpDocumentMetaInfo.h"
+#include "document/kpDocumentSaveOptions.h"
+#include "layers/selections/image/kpImageSelectionTransparency.h"
+#include "commands/kpMacroCommand.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "layers/selections/image/kpRectangularImageSelection.h"
+#include "layers/selections/kpSelectionDrag.h"
+#include "generic/kpSetOverrideCursorSaver.h"
+#include "layers/selections/text/kpTextSelection.h"
+#include "tools/kpTool.h"
+#include "commands/tools/selection/text/kpToolTextGiveContentCommand.h"
+#include "commands/tools/selection/kpToolSelectionCreateCommand.h"
+#include "commands/tools/selection/kpToolSelectionDestroyCommand.h"
+#include "commands/tools/selection/text/kpToolTextEnterCommand.h"
+#include "commands/tools/selection/text/kpToolTextInsertCommand.h"
+#include "imagelib/transforms/kpTransformCrop.h"
+#include "commands/imagelib/transforms/kpTransformResizeScaleCommand.h"
+#include "views/manager/kpViewManager.h"
+#include "kpViewScrollableContainer.h"
+#include "views/kpZoomedView.h"
 
 //---------------------------------------------------------------------
 
@@ -98,7 +98,7 @@ void kpMainWindow::setupEditMenuActions ()
     d->actionPasteInNewWindow->setText (i18n ("Paste in &New Window"));
     connect (d->actionPasteInNewWindow, SIGNAL (triggered (bool)),
         SLOT (slotPasteInNewWindow ()));
-    d->actionPasteInNewWindow->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
+    ac->setDefaultShortcut (d->actionPasteInNewWindow, Qt::CTRL + Qt::SHIFT + Qt::Key_V);
 
     //d->actionDelete = KStandardAction::clear (this, SLOT (slotDelete ()), ac);
     d->actionDelete = ac->addAction ("edit_clear");
@@ -847,7 +847,7 @@ void kpMainWindow::slotCopyToFile ()
 
     kpDocumentSaveOptions chosenSaveOptions;
     bool allowOverwritePrompt, allowLossyPrompt;
-    KUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Copy to File"),
+    QUrl chosenURL = askForSaveURL (i18nc ("@title:window", "Copy to File"),
                                     d->lastCopyToURL.url (),
                                     imageToSave,
                                     d->lastCopyToSaveOptions,
@@ -895,13 +895,13 @@ void kpMainWindow::slotPasteFromFile ()
     toolEndShape ();
 
 
-    KUrl::List urls = askForOpenURLs(i18nc ("@title:window", "Paste From File"),
+    QList<QUrl> urls = askForOpenURLs(i18nc ("@title:window", "Paste From File"),
                                      false/*only 1 URL*/);
 
     if (urls.count () != 1)
         return;
 
-    KUrl url = urls.first ();
+    QUrl url = urls.first ();
 
     kpImage image = kpDocument::getPixmapFromFile (url,
         false/*show error message if doesn't exist*/,

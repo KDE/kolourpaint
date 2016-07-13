@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -29,25 +28,24 @@
 #define DEBUG_KP_EFFECT_BALANCE 0
 
 
-#include <kpEffectBalanceWidget.h>
+#include "kpEffectBalanceWidget.h"
 
-#include <cmath>
-#include <math.h>
+#include "imagelib/effects/kpEffectBalance.h"
+#include "commands/imagelib/effects/kpEffectBalanceCommand.h"
+#include "pixmapfx/kpPixmapFX.h"
 
-#include <qgridlayout.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-
-#include <kcombobox.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <knuminput.h>
 
-#include <kpEffectBalance.h>
-#include <kpEffectBalanceCommand.h>
-#include <kpPixmapFX.h>
+#include <cmath>
+#include <math.h>
 
+#include <qcombobox.h>
+#include <qgridlayout.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qpushbutton.h>
 
 #if DEBUG_KP_EFFECT_BALANCE
     #include <qdatetime.h>
@@ -59,8 +57,7 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
     : kpEffectWidgetBase (actOnSelection, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
-    lay->setMargin (marginHint ());
-    lay->setSpacing (spacingHint ());
+    lay->setMargin (0);
 
 
     QLabel *brightnessLabel = new QLabel (i18n ("&Brightness:"), this);
@@ -89,11 +86,11 @@ kpEffectBalanceWidget::kpEffectBalanceWidget (bool actOnSelection,
 
 
     QWidget *spaceWidget = new QLabel (this);
-    spaceWidget->setFixedSize (1, spacingHint ());
+    spaceWidget->setFixedSize (1, fontMetrics ().height () / 4);
 
 
     QLabel *channelLabel = new QLabel (i18n ("C&hannels:"), this);
-    m_channelsComboBox = new KComboBox (this);
+    m_channelsComboBox = new QComboBox (this);
     m_channelsComboBox->addItem (i18n ("All"));
     m_channelsComboBox->addItem (i18n ("Red"));
     m_channelsComboBox->addItem (i18n ("Green"));
@@ -322,4 +319,3 @@ void kpEffectBalanceWidget::resetAll ()
 }
 
 
-#include <kpEffectBalanceWidget.moc>

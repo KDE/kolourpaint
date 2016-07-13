@@ -30,7 +30,7 @@
 #define kpEffectHSVCommand_H
 
 
-#include <kpEffectCommandBase.h>
+#include "kpEffectCommandBase.h"
 
 
 class kpEffectHSVCommand : public kpEffectCommandBase

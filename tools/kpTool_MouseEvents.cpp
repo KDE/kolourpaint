@@ -31,14 +31,14 @@
 
 #define DEBUG_KP_TOOL 0
 
-#include <kpTool.h>
-#include <kpToolPrivate.h>
+#include "tools/kpTool.h"
+#include "kpToolPrivate.h"
 
 #include <kdebug.h>
 
-#include <kpToolEnvironment.h>
-#include <kpView.h>
-#include <kpViewManager.h>
+#include "environments/tools/kpToolEnvironment.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
 
 #include <QMouseEvent>
 #include <QApplication>

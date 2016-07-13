@@ -30,7 +30,7 @@
 #define kpFreeFormImageSelection_H
 
 
-#include <kpAbstractImageSelection.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
 
 
 class kpFreeFormImageSelection : public kpAbstractImageSelection

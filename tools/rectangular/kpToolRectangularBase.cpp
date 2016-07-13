@@ -29,7 +29,7 @@
 #define DEBUG_KP_TOOL_RECTANGULAR_BASE 0
 
 
-#include <kpToolRectangularBase.h>
+#include "tools/rectangular/kpToolRectangularBase.h"
 
 #include <qbitmap.h>
 #include <qcursor.h>
@@ -40,20 +40,20 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpColor.h>
-#include <kpCommandHistory.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpPainter.h>
-#include <kpPixmapFX.h>
-#include <kpTempImage.h>
-#include <kpToolEnvironment.h>
-#include <kpToolRectangularCommand.h>
-#include <kpToolToolBar.h>
-#include <kpToolWidgetFillStyle.h>
-#include <kpToolWidgetLineWidth.h>
-#include <kpView.h>
-#include <kpViewManager.h>
+#include "imagelib/kpColor.h"
+#include "commands/kpCommandHistory.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "imagelib/kpPainter.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "layers/tempImage/kpTempImage.h"
+#include "environments/tools/kpToolEnvironment.h"
+#include "commands/tools/rectangular/kpToolRectangularCommand.h"
+#include "widgets/toolbars/kpToolToolBar.h"
+#include "widgets/toolbars/options/kpToolWidgetFillStyle.h"
+#include "widgets/toolbars/options/kpToolWidgetLineWidth.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
 
 
 //---------------------------------------------------------------------
@@ -391,4 +391,3 @@ void kpToolRectangularBase::endDraw (const QPoint &, const QRect &)
 //---------------------------------------------------------------------
 
 
-#include <kpToolRectangularBase.moc>

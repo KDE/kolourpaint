@@ -26,23 +26,22 @@
 */
 
 
-#include <kpMainWindow.h>
-#include <kpMainWindowPrivate.h>
+#include "mainWindow/kpMainWindow.h"
+#include "kpMainWindowPrivate.h"
 
 #include <kactioncollection.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>
-#include <kglobal.h>
 #include <klocale.h>
 #include <kshortcutsdialog.h>
 #include <kstandardaction.h>
 #include <ktogglefullscreenaction.h>
 
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpToolAction.h>
-#include <kpToolToolBar.h>
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "tools/kpToolAction.h"
+#include "widgets/toolbars/kpToolToolBar.h"
 
 //---------------------------------------------------------------------
 
@@ -121,7 +120,7 @@ void kpMainWindow::slotShowPathToggled ()
     slotUpdateCaption ();
 
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupGeneral);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
 
     cfg.writeEntry (kpSettingShowPath, d->configShowPath);
     cfg.sync ();

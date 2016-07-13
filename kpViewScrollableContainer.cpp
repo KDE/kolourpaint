@@ -27,7 +27,7 @@
 
 #define DEBUG_KP_VIEW_SCROLLABLE_CONTAINER 0
 
-#include <kpViewScrollableContainer.h>
+#include "kpViewScrollableContainer.h"
 
 #include <qbitmap.h>
 #include <qcursor.h>
@@ -41,10 +41,10 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpDefs.h>
-#include <kpPixmapFX.h>
-#include <kpView.h>
-#include <kpWidgetMapper.h>
+#include "kpDefs.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "views/kpView.h"
+#include "generic/kpWidgetMapper.h"
 
 //---------------------------------------------------------------------
 
@@ -1178,4 +1178,3 @@ void kpViewScrollableContainer::resizeEvent (QResizeEvent *e)
 
 //---------------------------------------------------------------------
 
-#include <kpViewScrollableContainer.moc>

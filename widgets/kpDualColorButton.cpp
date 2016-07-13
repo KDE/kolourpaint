@@ -29,19 +29,21 @@
 #define DEBUG_KP_DUAL_COLOR_BUTTON 0
 
 
-#include <kpDualColorButton.h>
+#include "kpDualColorButton.h"
 
-#include <QBitmap>
-#include <QMouseEvent>
-#include <QPainter>
+#include "views/kpView.h"
 
-#include <KColorDialog>
 #include <KColorMimeData>
 #include <KDebug>
-#include <KGlobalSettings>
 #include <KIconLoader>
 
-#include <kpView.h>
+#include <QApplication>
+#include <QBitmap>
+#include <QColorDialog>
+#include <QDrag>
+#include <QMouseEvent>
+#include <QPainter>
+#include <qdrawutil.h>
 
 //---------------------------------------------------------------------
 
@@ -277,7 +279,7 @@ void kpDualColorButton::mouseMoveEvent (QMouseEvent *e)
         return;
     }
 
-    const int delay = KGlobalSettings::dndEventDelay ();
+    const int delay = QApplication::startDragDistance ();
     if (e->x () < m_dragStartPoint.x () - delay ||
         e->x () > m_dragStartPoint.x () + delay ||
         e->y () < m_dragStartPoint.y () - delay ||
@@ -356,12 +358,11 @@ void kpDualColorButton::mouseDoubleClickEvent (QMouseEvent *e)
 
     if (whichColor == 0 || whichColor == 1)
     {
-        KColorDialog dialog(this);
-        dialog.setColor(color(whichColor).toQColor());
-        dialog.setAlphaChannelEnabled(true);
-        dialog.setButtons(KDialog::Ok | KDialog::Cancel);
+        QColorDialog dialog(this);
+        dialog.setCurrentColor(color(whichColor).toQColor());
+        dialog.setOptions(QColorDialog::ShowAlphaChannel);
         if ( dialog.exec() == QDialog::Accepted )
-          setColor(whichColor, kpColor(dialog.color().rgba()));
+          setColor(whichColor, kpColor(dialog.currentColor().rgba()));
     }
 }
 
@@ -461,4 +462,3 @@ void kpDualColorButton::paintEvent (QPaintEvent *e)
 }
 
 
-#include <kpDualColorButton.moc>

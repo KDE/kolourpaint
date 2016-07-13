@@ -30,7 +30,7 @@
 #define KP_UNZOOMED_THUMBNAIL_VIEW_H
 
 
-#include <kpThumbnailView.h>
+#include "views/kpThumbnailView.h"
 
 
 class kpViewScrollableContainer;

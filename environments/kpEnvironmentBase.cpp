@@ -26,13 +26,13 @@
 */
 
 
-#include <kpEnvironmentBase.h>
+#include "environments/kpEnvironmentBase.h"
 
-#include <kpColorToolBar.h>
-#include <kpDocument.h>
-#include <kpMainWindow.h>
-#include <kpTextStyle.h>
-#include <kpTool.h>
+#include "widgets/toolbars/kpColorToolBar.h"
+#include "document/kpDocument.h"
+#include "mainWindow/kpMainWindow.h"
+#include "layers/selections/text/kpTextStyle.h"
+#include "tools/kpTool.h"
 
 
 struct kpEnvironmentBasePrivate
@@ -118,4 +118,3 @@ kpMainWindow *kpEnvironmentBase::mainWindow () const
 }
 
 
-#include <kpEnvironmentBase.moc>

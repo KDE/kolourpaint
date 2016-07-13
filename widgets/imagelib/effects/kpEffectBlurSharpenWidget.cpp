@@ -29,16 +29,17 @@
 #define DEBUG_KP_EFFECT_BLUR_SHARPEN 0
 
 
-#include <kpEffectBlurSharpenWidget.h>
+#include "kpEffectBlurSharpenWidget.h"
 
-#include <qgridlayout.h>
-#include <qlabel.h>
+#include "commands/imagelib/effects/kpEffectBlurSharpenCommand.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <knuminput.h>
 
-#include <kpEffectBlurSharpenCommand.h>
+#include <qgridlayout.h>
+#include <qlabel.h>
+#include <QSpinBox>
 
 
 kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
@@ -46,8 +47,7 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
     : kpEffectWidgetBase (actOnSelection, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
-    lay->setSpacing (spacingHint ());
-    lay->setMargin (marginHint ());
+    lay->setMargin (0);
 
 
     QLabel *amountLabel = new QLabel (i18n ("&Amount:"), this);
@@ -182,4 +182,3 @@ int kpEffectBlurSharpenWidget::strength () const
 }
 
 
-#include <kpEffectBlurSharpenWidget.moc>

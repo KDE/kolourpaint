@@ -30,7 +30,7 @@
 #define kpCommandHistory_H
 
 
-#include <kpCommandHistoryBase.h>
+#include "kpCommandHistoryBase.h"
 
 
 class kpToolSelectionCreateCommand;

@@ -31,7 +31,7 @@
 #define kpEffectToneEnhance_H
 
 
-#include <kpImage.h>
+#include "imagelib/kpImage.h"
 
 
 //

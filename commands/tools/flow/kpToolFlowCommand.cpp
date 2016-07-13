@@ -29,15 +29,15 @@
 #define DEBUG_KP_TOOL_FLOW_COMMAND 0
 
 
-#include <kpToolFlowCommand.h>
+#include "kpToolFlowCommand.h"
+
+#include "document/kpDocument.h"
+#include "imagelib/kpImage.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "tools/kpTool.h"
+#include "views/manager/kpViewManager.h"
 
 #include <qrect.h>
-
-#include <kpDocument.h>
-#include <kpImage.h>
-#include <kpPixmapFX.h>
-#include <kpTool.h>
-#include <kpViewManager.h>
 
 
 struct kpToolFlowCommandPrivate
@@ -109,7 +109,7 @@ void kpToolFlowCommand::updateBoundingRect (const QRect &rect)
                << rect
                << endl;
 #endif
-    d->boundingRect = d->boundingRect.unite (rect);
+    d->boundingRect = d->boundingRect.united (rect);
 #if DEBUG_KP_TOOL_FLOW_COMMAND & 0
     kDebug () << "\tresult=" << d->boundingRect;
 #endif

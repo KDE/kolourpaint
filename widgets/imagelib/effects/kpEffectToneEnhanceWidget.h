@@ -31,7 +31,7 @@
 #define kpEffectToneEnhanceWidget_H
 
 
-#include <kpEffectWidgetBase.h>
+#include "kpEffectWidgetBase.h"
 
 
 class KDoubleNumInput;

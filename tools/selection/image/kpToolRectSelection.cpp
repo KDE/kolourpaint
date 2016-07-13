@@ -27,14 +27,14 @@
 
 #define DEBUG_KP_TOOL_RECT_SELECTION 0
 
-#include <kpToolRectSelection.h>
+#include "kpToolRectSelection.h"
 
 #include <klocale.h>
 #include <kdebug.h>
 
-#include <kpDocument.h>
-#include <kpRectangularImageSelection.h>
-#include <kpToolSelectionEnvironment.h>
+#include "document/kpDocument.h"
+#include "layers/selections/image/kpRectangularImageSelection.h"
+#include "environments/tools/selection/kpToolSelectionEnvironment.h"
 
 
 kpToolRectSelection::kpToolRectSelection (kpToolSelectionEnvironment *environ,
@@ -71,7 +71,7 @@ bool kpToolRectSelection::drawCreateMoreSelectionAndUpdateStatusBar (
 
     Q_ASSERT (accidentalDragAdjustedPoint == currentPoint ());
 
-    const QRect usefulRect = normalizedRect.intersect (document ()->rect ());
+    const QRect usefulRect = normalizedRect.intersected (document ()->rect ());
     document ()->setSelection (
         kpRectangularImageSelection (
             usefulRect,

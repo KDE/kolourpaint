@@ -26,7 +26,7 @@
 */
 
 
-#include <kpWidgetMapper.h>
+#include "kpWidgetMapper.h"
 
 #include <qpoint.h>
 #include <qrect.h>

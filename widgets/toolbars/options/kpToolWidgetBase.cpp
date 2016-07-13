@@ -29,7 +29,14 @@
 #define DEBUG_KP_TOOL_WIDGET_BASE 0
 
 
-#include <kpToolWidgetBase.h>
+#include "kpToolWidgetBase.h"
+
+#include "kpDefs.h"
+
+#include <kapplication.h>
+#include <kconfig.h>
+#include <kconfiggroup.h>
+#include <kdebug.h>
 
 #include <qbitmap.h>
 #include <qcolor.h>
@@ -39,14 +46,6 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <QToolTip>
-
-#include <kapplication.h>
-#include <kconfig.h>
-#include <kconfiggroup.h>
-#include <kdebug.h>
-#include <kglobal.h>
-
-#include <kpDefs.h>
 
 
 //---------------------------------------------------------------------
@@ -204,7 +203,7 @@ QPair <int, int> kpToolWidgetBase::defaultSelectedRowAndCol () const
 
     if (!objectName ().isEmpty ())
     {
-        KConfigGroup cfg (KGlobal::config (), kpSettingsGroupTools);
+        KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupTools);
 
         row = cfg.readEntry (objectName () + QLatin1String (" Row"), -1);
         col = cfg.readEntry (objectName () + QLatin1String (" Col"), -1);
@@ -250,7 +249,7 @@ void kpToolWidgetBase::saveSelectedAsDefault () const
     if (objectName ().isEmpty ())
         return;
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupTools);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupTools);
 
     cfg.writeEntry (objectName () + QLatin1String (" Row"), m_selectedRow);
     cfg.writeEntry (objectName () + QLatin1String (" Col"), m_selectedCol);
@@ -720,4 +719,3 @@ void kpToolWidgetBase::paintEvent (QPaintEvent *e)
 
 //---------------------------------------------------------------------
 
-#include <kpToolWidgetBase.moc>

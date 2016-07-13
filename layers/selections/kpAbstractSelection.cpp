@@ -29,7 +29,7 @@
 #define DEBUG_KP_SELECTION 0
 
 
-#include <kpAbstractSelection.h>
+#include "layers/selections/kpAbstractSelection.h"
 
 #include <QPolygon>
 #include <QRect>
@@ -309,4 +309,3 @@ void kpAbstractSelection::paintPolygonalBorder (const QPolygon &points,
     }
 }
 
-#include <kpAbstractSelection.moc>

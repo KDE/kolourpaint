@@ -26,9 +26,7 @@
 */
 
 
-#include <kpEffectWidgetBase.h>
-
-#include <KDialog>
+#include "kpEffectWidgetBase.h"
 
 
 kpEffectWidgetBase::kpEffectWidgetBase (bool actOnSelection,
@@ -50,17 +48,3 @@ QString kpEffectWidgetBase::caption () const
 }
 
 
-// protected
-int kpEffectWidgetBase::marginHint () const
-{
-    return 0;
-}
-
-// protected
-int kpEffectWidgetBase::spacingHint () const
-{
-    return KDialog::spacingHint ();
-}
-
-
-#include <kpEffectWidgetBase.moc>

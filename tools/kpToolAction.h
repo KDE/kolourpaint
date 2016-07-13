@@ -41,7 +41,7 @@ class kpToolAction : public KToggleAction
 
   public:
     kpToolAction(const QString &text,
-                 const QString &pic, const KShortcut &shortcut,
+                 const QString &pic, const QList<QKeySequence> &shortcut,
                  const QObject *receiver, const char *slot,
                  KActionCollection *ac, const QString &name);
 

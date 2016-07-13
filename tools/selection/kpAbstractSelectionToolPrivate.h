@@ -29,10 +29,9 @@
 #ifndef kpAbstractSelectionToolPrivate_H
 #define kpAbstractSelectionToolPrivate_H
 
+#include "kpAbstractSelectionTool.h"
 
 #include <QPoint>
-
-#include <kpAbstractSelectionTool.h>
 
 
 class QTimer;

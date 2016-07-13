@@ -29,20 +29,18 @@
 #ifndef kpTransformResizeScaleDialog_H
 #define kpTransformResizeScaleDialog_H
 
-#include <kdialog.h>
+#include <QDialog>
 
-#include <kpColor.h>
-#include <kpTransformResizeScaleCommand.h>
+#include "imagelib/kpColor.h"
+#include "commands/imagelib/transforms/kpTransformResizeScaleCommand.h"
 
 
 class QCheckBox;
+class QComboBox;
 class QGroupBox;
 class QToolButton;
-
-class KComboBox;
-class KDoubleNumInput;
-class KHBox;
-class KIntNumInput;
+class QSpinBox;
+class QDoubleSpinBox;
 
 class kpAbstractSelection;
 class kpDocument;
@@ -50,7 +48,7 @@ class kpTextSelection;
 class kpTransformDialogEnvironment;
 
 
-class kpTransformResizeScaleDialog : public KDialog
+class kpTransformResizeScaleDialog : public QDialog
 {
 Q_OBJECT
 
@@ -84,7 +82,7 @@ Q_OBJECT
     kpAbstractSelection *selection () const;
     kpTextSelection *textSelection () const;
 
-    KHBox *createActOnBox(QWidget *baseWidget);
+    QWidget *createActOnBox(QWidget *baseWidget);
     QGroupBox *createOperationGroupBox(QWidget *baseWidget);
     QGroupBox *createDimensionsGroupBox(QWidget *baseWidget);
 
@@ -104,15 +102,15 @@ Q_OBJECT
   private:
     kpTransformDialogEnvironment *m_environ;
 
-    KComboBox *m_actOnCombo;
+    QComboBox *m_actOnCombo;
 
     QToolButton *m_resizeButton,
                 *m_scaleButton,
                 *m_smoothScaleButton;
 
-    KIntNumInput *m_originalWidthInput, *m_originalHeightInput,
-                 *m_newWidthInput, *m_newHeightInput;
-    KDoubleNumInput *m_percentWidthInput, *m_percentHeightInput;
+    QSpinBox *m_originalWidthInput, *m_originalHeightInput,
+             *m_newWidthInput, *m_newHeightInput;
+    QDoubleSpinBox *m_percentWidthInput, *m_percentHeightInput;
     QCheckBox *m_keepAspectRatioCheckBox;
 
     int m_ignoreKeepAspectRatio;

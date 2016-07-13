@@ -29,8 +29,8 @@
 #define DEBUG_KP_COMMAND_HISTORY 0
 
 
-#include <kpMacroCommand.h>
-#include <kpViewManager.h>
+#include "commands/kpMacroCommand.h"
+#include "views/manager/kpViewManager.h"
 
 #include <climits>
 

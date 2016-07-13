@@ -29,18 +29,18 @@
 #define DEBUG_KP_TOOL_FLOOD_FILL 0
 
 
-#include <kpToolFloodFillCommand.h>
+#include "kpToolFloodFillCommand.h"
 
-#include <qapplication.h>
+#include "imagelib/kpColor.h"
+#include "kpDefs.h"
+#include "document/kpDocument.h"
+#include "imagelib/kpImage.h"
+#include "pixmapfx/kpPixmapFX.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpColor.h>
-#include <kpDefs.h>
-#include <kpDocument.h>
-#include <kpImage.h>
-#include <kpPixmapFX.h>
+#include <qapplication.h>
 
 //---------------------------------------------------------------------
 

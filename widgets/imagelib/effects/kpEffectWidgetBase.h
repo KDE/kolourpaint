@@ -32,7 +32,7 @@
 
 #include <qwidget.h>
 
-#include <kpImage.h>
+#include "imagelib/kpImage.h"
 
 
 class kpCommandEnvironment;
@@ -64,10 +64,6 @@ public:
 
     virtual kpEffectCommandBase *createCommand (
         kpCommandEnvironment *cmdEnviron) const = 0;
-
-protected:
-    int marginHint () const;
-    int spacingHint () const;
 
 protected:
     bool m_actOnSelection;

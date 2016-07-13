@@ -30,8 +30,8 @@
 #define kpToolPolygonalCommand_H
 
 
-#include <kpNamedCommand.h>
-#include <kpToolPolygonalBase.h>
+#include "commands/kpNamedCommand.h"
+#include "tools/polygonal/kpToolPolygonalBase.h"
 
 
 class QPolygon;

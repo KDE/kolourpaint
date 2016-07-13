@@ -32,7 +32,7 @@
 
 #include <qframe.h>
 
-#include <kpColor.h>
+#include "imagelib/kpColor.h"
 
 
 class kpDualColorButton : public QFrame

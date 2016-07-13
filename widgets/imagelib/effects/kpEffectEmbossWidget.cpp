@@ -29,7 +29,7 @@
 #define DEBUG_KP_EFFECT_EMBOSS 0
 
 
-#include <kpEffectEmbossWidget.h>
+#include "kpEffectEmbossWidget.h"
 
 #include <qcheckbox.h>
 #include <qgridlayout.h>
@@ -37,8 +37,8 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpEffectEmboss.h>
-#include <kpEffectEmbossCommand.h>
+#include "imagelib/effects/kpEffectEmboss.h"
+#include "commands/imagelib/effects/kpEffectEmbossCommand.h"
 
 
 kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
@@ -46,8 +46,7 @@ kpEffectEmbossWidget::kpEffectEmbossWidget (bool actOnSelection,
     : kpEffectWidgetBase (actOnSelection, parent)
 {
     QGridLayout *lay = new QGridLayout (this);
-    lay->setSpacing (spacingHint ());
-    lay->setMargin (marginHint ());
+    lay->setMargin (0);
 
 
 #if 0
@@ -128,4 +127,3 @@ int kpEffectEmbossWidget::strength () const
 }
 
 
-#include <kpEffectEmbossWidget.moc>

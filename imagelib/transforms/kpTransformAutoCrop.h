@@ -30,7 +30,7 @@
 #define KP_TOOL_AUTO_CROP_H
 
 
-#include <kpNamedCommand.h>
+#include "commands/kpNamedCommand.h"
 
 
 class QRect;

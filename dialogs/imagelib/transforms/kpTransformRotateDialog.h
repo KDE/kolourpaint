@@ -33,14 +33,13 @@
 #include <QImage>
 #include <qpoint.h>
 
-#include <kpColor.h>
-#include <kpTransformPreviewDialog.h>
+#include "imagelib/kpColor.h"
+#include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"
 
 
 class QButtonGroup;
 class QRadioButton;
-
-class KIntNumInput;
+class QSpinBox;
 
 
 class kpTransformRotateDialog : public kpTransformPreviewDialog
@@ -86,7 +85,7 @@ private:
                  *m_angle180RadioButton,
                  *m_angle270RadioButton,
                  *m_angleCustomRadioButton;
-    KIntNumInput *m_angleCustomInput;
+    QSpinBox *m_angleCustomInput;
 };
 
 

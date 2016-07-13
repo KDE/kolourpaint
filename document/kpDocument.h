@@ -33,11 +33,10 @@
 #include <qbitmap.h>
 #include <qobject.h>
 #include <qstring.h>
+#include <qurl.h>
 
-#include <kurl.h>
-
-#include <kpImage.h>
-#include <kpPixmapFX.h>
+#include "imagelib/kpImage.h"
+#include "pixmapfx/kpPixmapFX.h"
 #undef environ
 
 class QImage;
@@ -82,14 +81,14 @@ public:
     //
 
 
-    static QImage getPixmapFromFile (const KUrl &url, bool suppressDoesntExistDialog,
+    static QImage getPixmapFromFile (const QUrl &url, bool suppressDoesntExistDialog,
                                      QWidget *parent,
                                      kpDocumentSaveOptions *saveOptions = 0,
                                      kpDocumentMetaInfo *metaInfo = 0);
     // REFACTOR: fix: open*() should only be called once.
     //                Create a new kpDocument() if you want to open again.
-    void openNew (const KUrl &url);
-    bool open (const KUrl &url, bool newDocSameNameIfNotExist = false);
+    void openNew (const QUrl &url);
+    bool open (const QUrl &url, bool newDocSameNameIfNotExist = false);
 
     static void getDataFromImage(const QImage &image,
                                  kpDocumentSaveOptions &saveOptions,
@@ -110,14 +109,14 @@ public:
                                     QWidget *parent,
                                     bool *userCancelled = 0);
     static bool savePixmapToFile (const QImage &pixmap,
-                                  const KUrl &url,
+                                  const QUrl &url,
                                   const kpDocumentSaveOptions &saveOptions,
                                   const kpDocumentMetaInfo &metaInfo,
                                   bool overwritePrompt,
                                   bool lossyPrompt,
                                   QWidget *parent);
     bool save (bool overwritePrompt = false, bool lossyPrompt = false);
-    bool saveAs (const KUrl &url,
+    bool saveAs (const QUrl &url,
                  const kpDocumentSaveOptions &saveOptions,
                  bool overwritePrompt = true,
                  bool lossyPrompt = true);
@@ -126,8 +125,8 @@ public:
     // Returns whether save() or saveAs() have ever been called and returned true
     bool savedAtLeastOnceBefore () const;
 
-    KUrl url () const;
-    void setURL (const KUrl &url, bool isFromURL);
+    QUrl url () const;
+    void setURL (const QUrl &url, bool isFromURL);
 
     // Returns whether the document's image was successfully opened from
     // or saved to the URL returned by url().  This is not true for a
@@ -339,7 +338,7 @@ private:
     int m_constructorWidth, m_constructorHeight;
     kpImage *m_image;
 
-    KUrl m_url;
+    QUrl m_url;
     bool m_isFromURL;
     bool m_savedAtLeastOnceBefore;
 

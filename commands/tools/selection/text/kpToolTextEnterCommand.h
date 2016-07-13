@@ -30,7 +30,7 @@
 #define KP_TOOL_TEXT_ENTER_COMMAND_H
 
 
-#include <kpNamedCommand.h>
+#include "commands/kpNamedCommand.h"
 
 
 class kpToolTextEnterCommand : public kpNamedCommand

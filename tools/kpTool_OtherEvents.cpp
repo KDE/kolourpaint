@@ -36,12 +36,12 @@
 #define DEBUG_KP_TOOL 0
 
 
-#include <kpTool.h>
-#include <kpToolPrivate.h>
+#include "tools/kpTool.h"
+#include "kpToolPrivate.h"
 
 #include <kdebug.h>
 
-#include <kpColor.h>
+#include "imagelib/kpColor.h"
 
 //---------------------------------------------------------------------
 

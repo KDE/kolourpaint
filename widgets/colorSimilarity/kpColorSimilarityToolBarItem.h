@@ -30,7 +30,7 @@
 #define kpColorSimilarityToolBarItem_H
 
 
-#include <kpColorSimilarityHolder.h>
+#include "widgets/colorSimilarity/kpColorSimilarityHolder.h"
 
 #include <QToolButton>
 

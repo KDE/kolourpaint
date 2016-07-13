@@ -33,17 +33,17 @@
 #define DEBUG_KP_TOOL 0
 
 
-#include <kpTool.h>
-#include <kpToolPrivate.h>
+#include "tools/kpTool.h"
+#include "kpToolPrivate.h"
 
 #include <qapplication.h>
 
 #include <kdebug.h>
 
-#include <kpToolEnvironment.h>
-#include <kpView.h>
-#include <kpViewManager.h>
-#include <kpPainter.h>
+#include "environments/tools/kpToolEnvironment.h"
+#include "views/kpView.h"
+#include "views/manager/kpViewManager.h"
+#include "imagelib/kpPainter.h"
 
 #undef environ  // macro on win32
 

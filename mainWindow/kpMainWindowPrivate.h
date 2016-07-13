@@ -33,15 +33,15 @@
 #define DEBUG_KP_MAIN_WINDOW 0
 
 
-#include <kpDocumentSaveOptions.h>
+#include "document/kpDocumentSaveOptions.h"
 
 
 class QAction;
 class QActionGroup;
+class QLabel;
 
 class KSelectAction;
 class KToggleAction;
-class KAction;
 class KSqueezedTextLabel;
 
 class kpCommandEnvironment;
@@ -285,7 +285,7 @@ struct kpMainWindowPrivate
   int lastToolNumber;
 
   bool toolActionsEnabled;
-  KAction *actionPrevToolOptionGroup1,
+  QAction *actionPrevToolOptionGroup1,
           *actionNextToolOptionGroup1,
           *actionPrevToolOptionGroup2,
           *actionNextToolOptionGroup2;
@@ -303,7 +303,7 @@ struct kpMainWindowPrivate
 
   QAction *actionNew, *actionOpen;
   KRecentFilesAction *actionOpenRecent;
-  KAction *actionScan, *actionScreenshot, *actionProperties,
+  QAction *actionScan, *actionScreenshot, *actionProperties,
           *actionSave, *actionSaveAs, *actionExport,
           *actionReload,
           *actionPrint, *actionPrintPreview,
@@ -312,7 +312,7 @@ struct kpMainWindowPrivate
 
   SaneDialog *scanDialog;
 
-  KUrl lastExportURL;
+  QUrl lastExportURL;
   kpDocumentSaveOptions lastExportSaveOptions;
   bool exportFirstTime;
 
@@ -322,14 +322,14 @@ struct kpMainWindowPrivate
 
   bool editMenuDocumentActionsEnabled;
 
-  KAction *actionUndo, *actionRedo,
+  QAction *actionUndo, *actionRedo,
           *actionCut, *actionCopy,
           *actionPaste, *actionPasteInNewWindow,
           *actionDelete,
           *actionSelectAll, *actionDeselect,
           *actionCopyToFile, *actionPasteFromFile;
 
-  KUrl lastCopyToURL;
+  QUrl lastCopyToURL;
   kpDocumentSaveOptions lastCopyToSaveOptions;
   bool copyToFirstTime;
 
@@ -361,7 +361,7 @@ struct kpMainWindowPrivate
 
   bool imageMenuDocumentActionsEnabled;
 
-  KAction *actionResizeScale,
+  QAction *actionResizeScale,
           *actionCrop, *actionAutoCrop,
           *actionFlip, *actionMirror,
           *actionRotate, *actionRotateLeft, *actionRotateRight,
@@ -406,6 +406,7 @@ struct kpMainWindowPrivate
 
   bool statusBarCreated;
   KSqueezedTextLabel *statusBarMessageLabel;
+  QList<QLabel *> statusBarLabels;
 
   bool statusBarShapeLastPointsInitialised;
   QPoint statusBarShapeLastStartPoint, statusBarShapeLastEndPoint;

@@ -29,23 +29,20 @@
 #define DEBUG_KP_EFFECT_FLATTEN 0
 
 
-#include <kpEffectFlattenWidget.h>
+#include "kpEffectFlattenWidget.h"
 
-#include <qcheckbox.h>
-#include <qlayout.h>
+#include "kpDefs.h"
+#include "imagelib/effects/kpEffectFlatten.h"
+#include "commands/imagelib/effects/kpEffectFlattenCommand.h"
 
 #include <kcolorbutton.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kdialog.h>
 #include <kdebug.h>
-#include <kglobal.h>
 #include <klocale.h>
-#include <kvbox.h>
 
-#include <kpDefs.h>
-#include <kpEffectFlatten.h>
-#include <kpEffectFlattenCommand.h>
+#include <qcheckbox.h>
+#include <qlayout.h>
 
 
 // public static
@@ -58,7 +55,7 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
 {
     if (!s_lastColor1.isValid () || !s_lastColor2.isValid ())
     {
-        KConfigGroup cfgGroupSaver (KGlobal::config (), kpSettingsGroupFlattenEffect);
+        KConfigGroup cfgGroupSaver (KSharedConfig::openConfig (), kpSettingsGroupFlattenEffect);
 
         s_lastColor1 = cfgGroupSaver.readEntry (kpSettingFlattenEffectColor1, QColor ());
         if (!s_lastColor1.isValid ())
@@ -72,11 +69,8 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
 
     m_enableCheckBox = new QCheckBox (i18n ("E&nable"), this);
 
-    KVBox *colorButtonContainer = new KVBox (this);
-    colorButtonContainer->setMargin (KDialog::marginHint () / 2);
-    colorButtonContainer->setSpacing (spacingHint ());
-    m_color1Button = new KColorButton (s_lastColor1, colorButtonContainer);
-    m_color2Button = new KColorButton (s_lastColor2, colorButtonContainer);
+    m_color1Button = new KColorButton (s_lastColor1, this);
+    m_color2Button = new KColorButton (s_lastColor2, this);
 
 
     m_color1Button->setEnabled (false);
@@ -84,10 +78,10 @@ kpEffectFlattenWidget::kpEffectFlattenWidget (bool actOnSelection,
 
 
     QVBoxLayout *lay = new QVBoxLayout (this);
-    lay->setSpacing(spacingHint ());
-    lay->setMargin(marginHint ());
+    lay->setMargin (0);
     lay->addWidget (m_enableCheckBox);
-    lay->addWidget (colorButtonContainer);
+    lay->addWidget (m_color1Button);
+    lay->addWidget (m_color2Button);
 
 
     connect (m_enableCheckBox, SIGNAL (toggled (bool)),
@@ -105,7 +99,7 @@ kpEffectFlattenWidget::~kpEffectFlattenWidget ()
     s_lastColor2 = color2 ();
 
 
-    KConfigGroup cfg (KGlobal::config (), kpSettingsGroupFlattenEffect);
+    KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupFlattenEffect);
 
     cfg.writeEntry (kpSettingFlattenEffectColor1, s_lastColor1);
     cfg.writeEntry (kpSettingFlattenEffectColor2, s_lastColor2);
@@ -184,4 +178,3 @@ void kpEffectFlattenWidget::slotEnableChanged (bool enable)
 }
 
 
-#include <kpEffectFlattenWidget.moc>

@@ -29,7 +29,7 @@
 #define DEBUG_KP_FLOOD_FILL 0
 
 
-#include <kpFloodFill.h>
+#include "kpFloodFill.h"
 
 #include <QApplication>
 #include <QImage>
@@ -39,11 +39,11 @@
 
 #include <kdebug.h>
 
-#include <kpColor.h>
-#include <kpDefs.h>
-#include <kpImage.h>
-#include <kpPixmapFX.h>
-#include <kpTool.h>
+#include "kpColor.h"
+#include "kpImage.h"
+#include "kpDefs.h"
+#include "pixmapfx/kpPixmapFX.h"
+#include "tools/kpTool.h"
 
 //---------------------------------------------------------------------
 
@@ -263,7 +263,7 @@ void kpFloodFill::addLine (int y, int x1, int x2)
     d->fillLines.append (kpFillLine (y, x1, x2));
     d->fillLinesCache [y].append (
         kpFillLine (y/*OPT: can determine from array index*/, x1, x2));
-    d->boundingRect = d->boundingRect.unite (QRect (QPoint (x1, y), QPoint (x2, y)));
+    d->boundingRect = d->boundingRect.united (QRect (QPoint (x1, y), QPoint (x2, y)));
 }
 
 //---------------------------------------------------------------------

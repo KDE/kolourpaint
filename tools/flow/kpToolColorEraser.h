@@ -30,7 +30,7 @@
 #define KP_TOOL_COLOR_ERASER_H
 
 
-#include <kpToolFlowBase.h>
+#include "kpToolFlowBase.h"
 
 
 // Color Eraser = Brush that replaces/washes the foreground color with the background color

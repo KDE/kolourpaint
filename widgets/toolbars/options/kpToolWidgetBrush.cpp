@@ -29,7 +29,7 @@
 #define DEBUG_KP_TOOL_WIDGET_BRUSH 0
 
 
-#include <kpToolWidgetBrush.h>
+#include "widgets/toolbars/options/kpToolWidgetBrush.h"
 
 #include <qpainter.h>
 #include <qpixmap.h>
@@ -37,7 +37,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-#include <kpDefs.h>
+#include "kpDefs.h"
 
 //---------------------------------------------------------------------
 
@@ -296,4 +296,3 @@ bool kpToolWidgetBrush::setSelected (int row, int col, bool saveAsDefault)
 
 //---------------------------------------------------------------------
 
-#include <kpToolWidgetBrush.moc>
