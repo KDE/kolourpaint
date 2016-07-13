@@ -72,7 +72,7 @@ int main(int argc, char *argv [])
   aboutData.addAuthor(i18n("Mike Gashler"), i18n("Image Effects"), QLatin1String("gashlerm@yahoo.com"));
 
   aboutData.addAuthor(i18n("Laurent Montel"), i18n("KDE 4 Porting"), QLatin1String("montel@kde.org"));
-  aboutData.addAuthor(i18n("Christoph Feck"), i18n("KDE 5 Porting"), QLatin1String("christoph@maxiom.de"));
+  aboutData.addAuthor(i18n("Christoph Feck"), i18n("KDE 5 Porting"), QLatin1String("cfeck@kde.org"));
 
   aboutData.addCredit(i18n("Thanks to the many others who have helped to make this program possible."));
 
