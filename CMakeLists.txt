@@ -296,8 +296,12 @@ add_subdirectory(lgpl)
 # Executable
 #
 
-file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/pics/app/hi*-app-kolourpaint.png")
-ecm_add_app_icon(kolourpaint_SRCS ICONS ${ICONS_SRCS})
+ecm_add_app_icon(kolourpaint_SRCS ICONS
+    16-apps-kolourpaint.png
+    22-apps-kolourpaint.png
+    32-apps-kolourpaint.png
+    48-apps-kolourpaint.png
+)
 
 add_executable(kolourpaint ${kolourpaint_SRCS})
 

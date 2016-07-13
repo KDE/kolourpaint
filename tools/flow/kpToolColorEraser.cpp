@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -28,14 +27,10 @@
 
 #define DEBUG_KP_TOOL_COLOR_ERASER 0
 
+#include <QApplication>
 
 #include "kpToolColorEraser.h"
 
-#include <qbitmap.h>
-#include <qimage.h>
-#include <qpainter.h>
-
-#include <kapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
 
@@ -48,6 +43,7 @@
 #include "commands/tools/flow/kpToolFlowCommand.h"
 #include "environments/tools/kpToolEnvironment.h"
 
+//--------------------------------------------------------------------------------
 
 kpToolColorEraser::kpToolColorEraser (kpToolEnvironment *environ, QObject *parent)
     : kpToolFlowBase (i18n ("Color Eraser"),
@@ -58,12 +54,15 @@ kpToolColorEraser::kpToolColorEraser (kpToolEnvironment *environ, QObject *paren
 {
 }
 
+//--------------------------------------------------------------------------------
+
 kpToolColorEraser::~kpToolColorEraser ()
 {
 }
 
-
+//--------------------------------------------------------------------------------
 // public virtual [base kpTool]
+
 void kpToolColorEraser::globalDraw ()
 {
 #if DEBUG_KP_TOOL_COLOR_ERASER
@@ -110,11 +109,14 @@ void kpToolColorEraser::globalDraw ()
     QApplication::restoreOverrideCursor ();
 }
 
+//--------------------------------------------------------------------------------
+
 QString kpToolColorEraser::haventBegunDrawUserMessage () const
 {
     return i18n ("Click or drag to erase pixels of the foreground color.");
 }
 
+//--------------------------------------------------------------------------------
 
 bool kpToolColorEraser::drawShouldProceed (const QPoint & /*thisPoint*/,
     const QPoint & /*lastPoint*/,
@@ -129,6 +131,7 @@ bool kpToolColorEraser::drawShouldProceed (const QPoint & /*thisPoint*/,
     return true;
 }
 
+//--------------------------------------------------------------------------------
 
 QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
@@ -160,3 +163,4 @@ QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPo
     return QRect ();
 }
 
+//--------------------------------------------------------------------------------

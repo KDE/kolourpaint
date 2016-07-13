@@ -1,9 +1,94 @@
-
-# Change this number every time you add an icon to force the build system
-# to rebuild and pick the icon up:
-#
-# 4
-#
-
-kde4_install_icons( ${DATA_INSTALL_DIR}/kolourpaint/icons )
- 
+ecm_install_icons(ICONS
+    16-actions-tool_brush.png
+    16-actions-tool_color_eraser.png
+    16-actions-tool_color_picker.png
+    16-actions-tool_curve.png
+    16-actions-tool_ellipse.png
+    16-actions-tool_elliptical_selection.png
+    16-actions-tool_eraser.png
+    16-actions-tool_flood_fill.png
+    16-actions-tool_free_form_selection.png
+    16-actions-tool_line.png
+    16-actions-tool_pen.png
+    16-actions-tool_polygon.png
+    16-actions-tool_polyline.png
+    16-actions-tool_rect_selection.png
+    16-actions-tool_rectangle.png
+    16-actions-tool_rounded_rectangle.png
+    16-actions-tool_spraycan.png
+    16-actions-tool_text.png
+    22-actions-tool_brush.png
+    22-actions-tool_color_eraser.png
+    22-actions-tool_color_picker.png
+    22-actions-tool_curve.png
+    22-actions-tool_ellipse.png
+    22-actions-tool_elliptical_selection.png
+    22-actions-tool_eraser.png
+    22-actions-tool_flood_fill.png
+    22-actions-tool_free_form_selection.png
+    22-actions-tool_line.png
+    22-actions-tool_pen.png
+    22-actions-tool_polygon.png
+    22-actions-tool_polyline.png
+    22-actions-tool_rect_selection.png
+    22-actions-tool_rectangle.png
+    22-actions-tool_rounded_rectangle.png
+    22-actions-tool_spraycan.png
+    22-actions-tool_text.png
+    32-actions-tool_brush.png
+    32-actions-tool_color_eraser.png
+    32-actions-tool_color_picker.png
+    32-actions-tool_curve.png
+    32-actions-tool_ellipse.png
+    32-actions-tool_elliptical_selection.png
+    32-actions-tool_eraser.png
+    32-actions-tool_flood_fill.png
+    32-actions-tool_free_form_selection.png
+    32-actions-tool_line.png
+    32-actions-tool_pen.png
+    32-actions-tool_polygon.png
+    32-actions-tool_polyline.png
+    32-actions-tool_rect_selection.png
+    32-actions-tool_rectangle.png
+    32-actions-tool_rounded_rectangle.png
+    32-actions-tool_spraycan.png
+    32-actions-tool_text.png
+    48-actions-tool_brush.png
+    48-actions-tool_color_eraser.png
+    48-actions-tool_color_picker.png
+    48-actions-tool_curve.png
+    48-actions-tool_ellipse.png
+    48-actions-tool_elliptical_selection.png
+    48-actions-tool_eraser.png
+    48-actions-tool_flood_fill.png
+    48-actions-tool_free_form_selection.png
+    48-actions-tool_line.png
+    48-actions-tool_pen.png
+    48-actions-tool_polygon.png
+    48-actions-tool_polyline.png
+    48-actions-tool_rect_selection.png
+    48-actions-tool_rectangle.png
+    48-actions-tool_rounded_rectangle.png
+    48-actions-tool_spraycan.png
+    48-actions-tool_text.png
+    sc-actions-tool_brush.svgz
+    sc-actions-tool_color_eraser.svgz
+    sc-actions-tool_color_picker.svgz
+    sc-actions-tool_curve.svgz
+    sc-actions-tool_ellipse.svgz
+    sc-actions-tool_elliptical_selection.svgz
+    sc-actions-tool_eraser.svgz
+    sc-actions-tool_flood_fill.svgz
+    sc-actions-tool_free_form_selection.svgz
+    sc-actions-tool_line.svgz
+    sc-actions-tool_pen.svgz
+    sc-actions-tool_polygon.svgz
+    sc-actions-tool_polyline.svgz
+    sc-actions-tool_rect_selection.svgz
+    sc-actions-tool_rectangle.svgz
+    sc-actions-tool_rounded_rectangle.svgz
+    sc-actions-tool_spraycan.svgz
+    sc-actions-tool_text.svgz
+    DESTINATION ${DATA_INSTALL_DIR}/kolourpaint/icons
+    THEME hicolor
+)

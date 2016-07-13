@@ -56,7 +56,7 @@ kpToolAction::kpToolAction(const QString &text,
 void kpToolAction::updateToolTip()
 {
   const QString newToolTip =
-      kpTool::toolTipForTextAndShortcut(text(), shortcuts());
+      kpTool::toolTipForTextAndShortcut(text(), shortcuts()).remove(QLatin1Char('&'));
 
   if ( newToolTip == toolTip() )
     return;
