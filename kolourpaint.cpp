@@ -42,7 +42,7 @@ int main(int argc, char *argv [])
   (
     "kolourpaint",
     i18n("KolourPaint"),
-    KDE_VERSION_STRING,
+    "5.0",  // kolourpaint version
     i18n("Paint Program for KDE"),
     KAboutLicense::Custom,
     QString(), // copyright statement - see license instead
