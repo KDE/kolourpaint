@@ -9,7 +9,7 @@ set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 add_definitions(-DTRANSLATION_DOMAIN="kolourpaint")
 
 include(KDEInstallDirs)
-include(KDECompilerSettings)
+include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 include(ECMInstallIcons)
 include(FeatureSummary)
@@ -323,7 +323,7 @@ install(TARGETS kolourpaint ${INSTALL_TARGETS_DEFAULT_ARGS})
 ########### install files ###############
 
 install(PROGRAMS kolourpaint.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
-install(FILES kolourpaint.appdata.xml DESTINATION share/appdata/)
+install(FILES kolourpaint.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 install(FILES kolourpaintui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/kolourpaint)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
