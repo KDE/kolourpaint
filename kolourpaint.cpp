@@ -27,8 +27,8 @@
 
 
 #include <kaboutdata.h>
-#include <kdeversion.h>
 
+#include "kpVersion.h"
 #include "mainWindow/kpMainWindow.h"
 #include <kolourpaintlicense.h>
 
@@ -42,7 +42,7 @@ int main(int argc, char *argv [])
   (
     "kolourpaint",
     i18n("KolourPaint"),
-    "5.0",  // kolourpaint version
+    QStringLiteral(KOLOURPAINT_VERSION_STRING),
     i18n("Paint Program for KDE"),
     KAboutLicense::Custom,
     QString(), // copyright statement - see license instead

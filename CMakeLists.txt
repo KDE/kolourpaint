@@ -12,8 +12,9 @@ include(KDEInstallDirs)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 include(ECMInstallIcons)
-include(FeatureSummary)
 include(ECMAddAppIcon)
+include(ECMSetupVersion)
+include(FeatureSummary)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
     Core
@@ -39,6 +40,20 @@ endif(KF5Sane_FOUND)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
+
+# KDE Application Version, managed by release script
+set(KDE_APPLICATIONS_VERSION_MAJOR "16")
+set(KDE_APPLICATIONS_VERSION_MINOR "07")
+set(KDE_APPLICATIONS_VERSION_MICRO "80")
+set(KDE_APPLICATIONS_VERSION "${KDE_APPLICATIONS_VERSION_MAJOR}.${KDE_APPLICATIONS_VERSION_MINOR}.${KDE_APPLICATIONS_VERSION_MICRO}")
+ 
+ 
+## Generate header with version number
+ecm_setup_version(${KDE_APPLICATIONS_VERSION}
+                  VARIABLE_PREFIX KOLOURPAINT
+                  VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kpVersion.h"
+)
+
 
 add_subdirectory( pics )
 add_subdirectory( doc )
@@ -297,10 +312,10 @@ add_subdirectory(lgpl)
 #
 
 ecm_add_app_icon(kolourpaint_SRCS ICONS
-    16-apps-kolourpaint.png
-    22-apps-kolourpaint.png
-    32-apps-kolourpaint.png
-    48-apps-kolourpaint.png
+    pics/app/16-apps-kolourpaint.png
+    pics/app/22-apps-kolourpaint.png
+    pics/app/32-apps-kolourpaint.png
+    pics/app/48-apps-kolourpaint.png
 )
 
 add_executable(kolourpaint ${kolourpaint_SRCS})
