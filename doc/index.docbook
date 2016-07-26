@@ -1,13 +1,11 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
-  <!ENTITY kappname "&kolourpaint;">
   <!ENTITY Clarence.Dang
 "<personname><firstname>Clarence</firstname><surname>Dang</surname></personname>">
   <!ENTITY Clarence.Dang.mail "<email>dang@kde.org</email>">
   <!ENTITY Thurston.Dang
 "<personname><firstname>Thurston</firstname><surname>Dang</surname></personname>">
   <!ENTITY Thurston.Dang.mail "<email>thurston_dang@users.sourceforge.net</email>">
-  <!ENTITY package "kdegraphics">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE">
 ]>
@@ -48,12 +46,12 @@
 <legalnotice>
 &FDLNotice;
 </legalnotice>
-<date>2011-04-03</date>
-<releaseinfo>&kde; 4.7</releaseinfo>
+<date>2016-07-25</date>
+<releaseinfo>Applications 16.08</releaseinfo>
 
 <abstract>
 <para>
-&kolourpaint; is a free, easy-to-use paint program for &kde;.
+&kolourpaint; is a free, easy-to-use paint program by &kde;.
 </para>
 </abstract>
 
@@ -1486,35 +1484,6 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 </literallayout>
 </chapter>
-
-<appendix id="installation">
-<title>Installation</title>
-<sect1 id="getting-kapp">
-<title>How to obtain &kolourpaint;</title>
-
-&install.intro.documentation;
-
-<para>More frequent releases with support for previous versions of &kde; are
-available at <ulink
-url="http://kolourpaint.sourceforge.net/">http://kolourpaint.sourceforge.net/</ulink>.</para>
-
-</sect1>
-
-<sect1 id="compilation">
-<title>Compilation and Installation</title>
-
-<note>
-<para>
-If you are reading this help in the &khelpcenter;, then &kolourpaint; has already been
-installed on this system and you do not need to follow these generic instructions.
-</para>
-</note>
-
-&install.compile.documentation;
-
-</sect1>
-
-</appendix>
 
 &documentation.index;
 </book>
