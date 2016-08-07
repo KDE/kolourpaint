@@ -40,7 +40,7 @@ class QDataStream;
 // kpColor is an object-oriented abstraction of QRgb, for document image data.
 // In the future, other color models such as
 // 8-bit indexed will be supported.  It also provides better error handling,
-// reporting (noisy kError()'s) and recovery compared to Qt.  This abstraction
+// reporting (noisy qCCritical(kpLogImagelib)'s) and recovery compared to Qt.  This abstraction
 // will allow us to eventually dump the Qt paint routines.
 //
 // In general, you should pass around kpColor objects instead of QRgb

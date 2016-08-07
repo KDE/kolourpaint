@@ -36,7 +36,7 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 #include <kselectaction.h>
 #include <kstandardaction.h>
@@ -111,7 +111,7 @@ void kpMainWindow::enableViewMenuDocumentActions (bool enable)
 void kpMainWindow::actionShowGridUpdate ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::actionShowGridUpdate()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::actionShowGridUpdate()";
 #endif
     const bool enable = (viewMenuDocumentActionsEnabled () &&
                          d->mainView && d->mainView->canShowGrid ());
@@ -126,7 +126,7 @@ void kpMainWindow::actionShowGridUpdate ()
 void kpMainWindow::slotShowGridToggled ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotActionShowGridToggled()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotActionShowGridToggled()";
 #endif
 
     updateMainViewGrid ();
@@ -143,7 +143,7 @@ void kpMainWindow::slotShowGridToggled ()
 void kpMainWindow::updateMainViewGrid ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::updateMainViewGrid ()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::updateMainViewGrid ()";
 #endif
 
     if (d->mainView)

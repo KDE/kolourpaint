@@ -54,7 +54,7 @@
 
 #include <kapplication.h>
 #include <kconfig.h>
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <kiconeffect.h>
 #include <kiconloader.h>
 #include <klocale.h>
@@ -195,7 +195,7 @@ bool kpTransformResizeScaleCommand::scaleSelectionWithImage () const
 void kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
-    kDebug () << "kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument"
+    qCDebug(kpLogCommands) << "kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument"
                << endl;
 #endif
 
@@ -253,7 +253,7 @@ void kpTransformResizeScaleCommand::scaleSelectionRegionWithDocument ()
 void kpTransformResizeScaleCommand::execute ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
-    kDebug () << "kpTransformResizeScaleCommand::execute() type="
+    qCDebug(kpLogCommands) << "kpTransformResizeScaleCommand::execute() type="
                << (int) m_type
                << " oldWidth=" << m_oldWidth
                << " oldHeight=" << m_oldHeight
@@ -373,7 +373,7 @@ void kpTransformResizeScaleCommand::execute ()
 void kpTransformResizeScaleCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_RESIZE_SCALE_COMMAND
-    kDebug () << "kpTransformResizeScaleCommand::unexecute() type="
+    qCDebug(kpLogCommands) << "kpTransformResizeScaleCommand::unexecute() type="
                << m_type << endl;
 #endif
 

@@ -36,7 +36,7 @@
 #include "layers/selections/text/kpTextSelection.h"
 #include "views/manager/kpViewManager.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 
@@ -47,7 +47,7 @@ kpToolTextGiveContentCommand::kpToolTextGiveContentCommand (
     : kpAbstractSelectionContentCommand (originalSelBorder, name, environ)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolTextGiveContentCommand::<ctor>() environ="
+    qCDebug(kpLogCommands) << "kpToolTextGiveContentCommand::<ctor>() environ="
                << environ
                << endl;
 #endif
@@ -62,7 +62,7 @@ kpToolTextGiveContentCommand::~kpToolTextGiveContentCommand ()
 void kpToolTextGiveContentCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolTextGiveContentCommand::execute()";
+    qCDebug(kpLogCommands) << "kpToolTextGiveContentCommand::execute()";
 #endif
 
     kpDocument *doc = document ();
@@ -128,7 +128,7 @@ void kpToolTextGiveContentCommand::execute ()
 void kpToolTextGiveContentCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolTextGiveContentCommand::unexecute()";
+    qCDebug(kpLogCommands) << "kpToolTextGiveContentCommand::unexecute()";
 #endif
 
     kpDocument *doc = document ();

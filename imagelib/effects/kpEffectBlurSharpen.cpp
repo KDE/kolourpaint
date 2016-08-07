@@ -31,7 +31,7 @@
 #include "kpEffectBlurSharpen.h"
 #include "blitz.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "pixmapfx/kpPixmapFX.h"
 
@@ -80,7 +80,7 @@ static QImage BlurQImage (const QImage qimage_, int strength)
         (kpEffectBlurSharpen::MaxStrength - 1);
 
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    kDebug () << "kpEffectBlurSharpen.cpp:BlurQImage(strength=" << strength << ")"
+    qCDebug(kpLogImagelib) << "kpEffectBlurSharpen.cpp:BlurQImage(strength=" << strength << ")"
                << " radius=" << radius
                << endl;
 #endif
@@ -149,7 +149,7 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
 #endif
 
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    kDebug () << "kpEffectBlurSharpen.cpp:SharpenQImage(strength=" << strength << ")"
+    qCDebug(kpLogImagelib) << "kpEffectBlurSharpen.cpp:SharpenQImage(strength=" << strength << ")"
                << " radius=" << radius
                << " sigma=" << sigma
                << " repeat=" << repeat
@@ -164,7 +164,7 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
     #endif
         qimage = Blitz::gaussianSharpen (qimage, radius, sigma);
     #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-        kDebug () << "\titeration #" + QString::number (i)
+        qCDebug(kpLogImagelib) << "\titeration #" + QString::number (i)
                   << ": " + QString::number (timer.elapsed ()) << "ms" << endl;
     #endif
     }
@@ -180,7 +180,7 @@ kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
         Type type, int strength)
 {
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    kDebug () << "kpEffectBlurSharpen::applyEffect(image.rect=" << image.rect ()
+    qCDebug(kpLogImagelib) << "kpEffectBlurSharpen::applyEffect(image.rect=" << image.rect ()
               << ",type=" << int (type)
               << ",strength=" << strength
               << ")" << endl;

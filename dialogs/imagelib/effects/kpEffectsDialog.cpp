@@ -46,7 +46,7 @@
 
 #include <kapplication.h>
 #include <kconfig.h>
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include <qcombobox.h>
@@ -80,7 +80,7 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
       m_effectWidget (0)
 {
 #if DEBUG_KP_EFFECTS_DIALOG
-    kDebug () << "kpEffectsDialog::kpEffectsDialog()";
+    qCDebug(kpLogDialogs) << "kpEffectsDialog::kpEffectsDialog()";
 #endif
     const bool e = updatesEnabled ();
     setUpdatesEnabled (false);
@@ -138,13 +138,13 @@ kpEffectsDialog::kpEffectsDialog (bool actOnSelection,
 
 
 #if DEBUG_KP_EFFECTS_DIALOG
-    kDebug () << "about to setUpdatesEnabled()";
+    qCDebug(kpLogDialogs) << "about to setUpdatesEnabled()";
 #endif
     // OPT: The preview pixmap gets recalculated here and then possibly
     //      again when QResizeEvent fires, when the dialog is shown.
     setUpdatesEnabled (e);
 #if DEBUG_KP_EFFECTS_DIALOG
-    kDebug () << endl
+    qCDebug(kpLogDialogs) << endl
               << endl
               << endl;
 #endif
@@ -212,7 +212,7 @@ int kpEffectsDialog::selectedEffect () const
 void kpEffectsDialog::selectEffect (int which)
 {
 #if DEBUG_KP_EFFECTS_DIALOG
-    kDebug () << "kpEffectsDialog::selectEffect(" << which << ")";
+    qCDebug(kpLogDialogs) << "kpEffectsDialog::selectEffect(" << which << ")";
 #endif
 
     if (which < 0 ||
@@ -277,7 +277,7 @@ void kpEffectsDialog::selectEffect (int which)
         setUpdatesEnabled (false);
 
     #if DEBUG_KP_EFFECTS_DIALOG
-        kDebug () << "widget exists for effect #";
+        qCDebug(kpLogDialogs) << "widget exists for effect #";
     #endif
         m_settingsGroupBox->setTitle (m_effectWidget->caption ());
 
@@ -286,11 +286,11 @@ void kpEffectsDialog::selectEffect (int which)
         // Don't resize the whole dialog when doing this.
         // This seems to work magically without any extra code with Qt4.
     #if DEBUG_KP_EFFECTS_DIALOG
-        kDebug () << "addWidget";
+        qCDebug(kpLogDialogs) << "addWidget";
     #endif
         m_settingsLayout->addWidget (m_effectWidget);
     #if DEBUG_KP_EFFECTS_DIALOG
-        kDebug () << "show widget";
+        qCDebug(kpLogDialogs) << "show widget";
     #endif
         m_effectWidget->show ();
 
@@ -302,14 +302,14 @@ void kpEffectsDialog::selectEffect (int which)
                  this, SLOT (slotDelayedUpdate ()));
 
     #if DEBUG_KP_EFFECTS_DIALOG
-        kDebug () << "about to setUpdatesEnabled()";
+        qCDebug(kpLogDialogs) << "about to setUpdatesEnabled()";
     #endif
         setUpdatesEnabled (e);
     }
 
 
 #if DEBUG_KP_EFFECTS_DIALOG
-    kDebug () << "done"
+    qCDebug(kpLogDialogs) << "done"
               << endl
               << endl
               << endl;
@@ -321,7 +321,7 @@ void kpEffectsDialog::selectEffect (int which)
 void kpEffectsDialog::slotUpdate ()
 {
 #if DEBUG_KP_EFFECTS_DIALOG
-    kDebug () << "kpEffectsDialog::slotUpdate()"
+    qCDebug(kpLogDialogs) << "kpEffectsDialog::slotUpdate()"
                << " timerActive=" << m_delayedUpdateTimer->isActive ()
                << endl;
 #endif
@@ -335,7 +335,7 @@ void kpEffectsDialog::slotUpdate ()
 void kpEffectsDialog::slotUpdateWithWaitCursor ()
 {
 #if DEBUG_KP_EFFECTS_DIALOG
-    kDebug () << "kpEffectsDialog::slotUpdateWithWaitCursor()"
+    qCDebug(kpLogDialogs) << "kpEffectsDialog::slotUpdateWithWaitCursor()"
                << " timerActive=" << m_delayedUpdateTimer->isActive ()
                << endl;
 #endif
@@ -350,7 +350,7 @@ void kpEffectsDialog::slotUpdateWithWaitCursor ()
 void kpEffectsDialog::slotDelayedUpdate ()
 {
 #if DEBUG_KP_EFFECTS_DIALOG
-    kDebug () << "kpEffectsDialog::slotDelayedUpdate()"
+    qCDebug(kpLogDialogs) << "kpEffectsDialog::slotDelayedUpdate()"
                << " timerActive=" << m_delayedUpdateTimer->isActive ()
                << endl;
 #endif

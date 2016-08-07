@@ -31,7 +31,7 @@
 
 #include "views/kpUnzoomedThumbnailView.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "document/kpDocument.h"
@@ -102,7 +102,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
         buddyViewScrollableContainer ()->verticalScrollBar()->value();
 
 #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
-    kDebug () << "kpUnzoomedThumbnailView(" << name ()
+    qCDebug(kpLogViews) << "kpUnzoomedThumbnailView(" << name ()
                << ")::adjustToEnvironment("
                << scrollViewContentsX
                << ","
@@ -120,7 +120,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
         x = (int) buddyView ()->transformViewToDocX (scrollViewContentsX);
         const int rightMostAllowedX = qMax (0, document ()->width () - width ());
     #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
-        kDebug () << "\tdocX=" << x
+        qCDebug(kpLogViews) << "\tdocX=" << x
                 << " docWidth=" << document ()->width ()
                 << " rightMostAllowedX=" << rightMostAllowedX
                 << endl;
@@ -143,7 +143,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
         y = (int) buddyView ()->transformViewToDocY (scrollViewContentsY);
         const int bottomMostAllowedY = qMax (0, document ()->height () - height ());
     #if DEBUG_KP_UNZOOMED_THUMBNAIL_VIEW
-        kDebug () << "\tdocY=" << y
+        qCDebug(kpLogViews) << "\tdocY=" << y
                     << " docHeight=" << document ()->height ()
                     << " bottomMostAllowedY=" << bottomMostAllowedY
                     << endl;
@@ -173,7 +173,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
                qMin (buddyView ()->height (), buddyViewScrollableContainer ()->viewport()->height ())));
 
     x = docRect.x () - (width () - docRect.width ()) / 2;
-    kDebug () << "\tnew suggest x=" << x;
+    qCDebug(kpLogViews) << "\tnew suggest x=" << x;
     const int rightMostAllowedX = qMax (0, document ()->width () - width ());
     if (x < 0)
         x = 0;
@@ -181,7 +181,7 @@ void kpUnzoomedThumbnailView::adjustToEnvironment ()
         x = rightMostAllowedX;
 
     y = docRect.y () - (height () - docRect.height ()) / 2;
-    kDebug () << "\tnew suggest y=" << y;
+    qCDebug(kpLogViews) << "\tnew suggest y=" << y;
     const int bottomMostAllowedY = qMax (0, document ()->height () - height ());
     if (y < 0)
         y = 0;

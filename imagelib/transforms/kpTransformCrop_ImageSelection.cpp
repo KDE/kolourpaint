@@ -107,7 +107,7 @@ SetDocumentToSelectionImageCommand::~SetDocumentToSelectionImageCommand ()
 void SetDocumentToSelectionImageCommand::execute ()
 {
 #if DEBUG_KP_TOOL_CROP
-    kDebug () << "SetDocumentToSelectionImageCommand::execute()";
+    qCDebug(kpLogImagelib) << "SetDocumentToSelectionImageCommand::execute()";
 #endif
 
     viewManager ()->setQueueUpdates ();
@@ -143,7 +143,7 @@ void SetDocumentToSelectionImageCommand::execute ()
         newDocImage.fill(m_backgroundColor.toQRgb());
 
     #if DEBUG_KP_TOOL_CROP
-        kDebug () << "\tsel: rect=" << m_fromSelectionPtr->boundingRect ()
+        qCDebug(kpLogImagelib) << "\tsel: rect=" << m_fromSelectionPtr->boundingRect ()
                    << " pm=" << m_fromSelectionPtr->hasContent ()
                    << endl;
     #endif
@@ -154,7 +154,7 @@ void SetDocumentToSelectionImageCommand::execute ()
             setTransparentImage = m_fromSelectionPtr->transparentImage ();
 
         #if DEBUG_KP_TOOL_CROP
-            kDebug () << "\thave pixmap; rect="
+            qCDebug(kpLogImagelib) << "\thave pixmap; rect="
                        << setTransparentImage.rect ()
                        << endl;
         #endif
@@ -163,7 +163,7 @@ void SetDocumentToSelectionImageCommand::execute ()
         {
             setTransparentImage = m_imageIfFromSelectionDoesntHaveOne;
         #if DEBUG_KP_TOOL_CROP
-            kDebug () << "\tno pixmap in sel - get it; rect="
+            qCDebug(kpLogImagelib) << "\tno pixmap in sel - get it; rect="
                        << setTransparentImage.rect ()
                        << endl;
         #endif
@@ -195,7 +195,7 @@ void SetDocumentToSelectionImageCommand::execute ()
 void SetDocumentToSelectionImageCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_CROP
-    kDebug () << "SetDocumentToSelectionImageCommand::unexecute()";
+    qCDebug(kpLogImagelib) << "SetDocumentToSelectionImageCommand::unexecute()";
 #endif
 
     viewManager ()->setQueueUpdates ();
@@ -204,7 +204,7 @@ void SetDocumentToSelectionImageCommand::unexecute ()
         m_oldImage = kpImage ();
 
     #if DEBUG_KP_TOOL_CROP
-        kDebug () << "\tsel: rect=" << m_fromSelectionPtr->boundingRect ()
+        qCDebug(kpLogImagelib) << "\tsel: rect=" << m_fromSelectionPtr->boundingRect ()
                    << " pm=" << m_fromSelectionPtr->hasContent ()
                    << endl;
     #endif
@@ -245,8 +245,8 @@ void kpTransformCrop_ImageSelection (kpMainWindow *mainWindow,
     macroCmd->addCommand (resizeDocCommand);
 
 #if DEBUG_KP_TOOL_CROP
-    kDebug () << "\tis pixmap sel";
-    kDebug () << "\tcreating SetImage cmd";
+    qCDebug(kpLogImagelib) << "\tis pixmap sel";
+    qCDebug(kpLogImagelib) << "\tcreating SetImage cmd";
 #endif
     macroCmd->addCommand (new SetDocumentToSelectionImageCommand (environ));
 

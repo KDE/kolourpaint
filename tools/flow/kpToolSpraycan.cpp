@@ -43,7 +43,7 @@
 
 #include <cstdlib>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include <qbitmap.h>
@@ -107,7 +107,7 @@ void kpToolSpraycan::end ()
 void kpToolSpraycan::beginDraw ()
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolSpraycan::beginDraw()";
+    qCDebug(kpLogTools) << "kpToolSpraycan::beginDraw()";
 #endif
 
     kpToolFlowBase::beginDraw ();
@@ -124,7 +124,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
          double probability)
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "CALL(thisPoint=" << thisPoint
+    qCDebug(kpLogTools) << "CALL(thisPoint=" << thisPoint
                << ",lastPoint=" << lastPoint
                << ")" << endl;
 #endif
@@ -133,7 +133,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
         false/*no need for cardinally adjacency points*/,
         probability);
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "\tdocPoints=" << docPoints;
+    qCDebug(kpLogTools) << "\tdocPoints=" << docPoints;
 #endif
 
 
@@ -176,7 +176,7 @@ QRect kpToolSpraycan::drawLineWithProbability (const QPoint &thisPoint,
 QRect kpToolSpraycan::drawPoint (const QPoint &point)
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolSpraycan::drawPoint" << point
+    qCDebug(kpLogTools) << "kpToolSpraycan::drawPoint" << point
                << " lastPoint=" << lastPoint ()
                << endl;
 #endif
@@ -197,7 +197,7 @@ QRect kpToolSpraycan::drawPoint (const QPoint &point)
 QRect kpToolSpraycan::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "CALL(thisPoint=" << thisPoint << ",lastPoint=" << lastPoint;
+    qCDebug(kpLogTools) << "CALL(thisPoint=" << thisPoint << ",lastPoint=" << lastPoint;
 #endif
 
     // Draw only every so often in response to movement.
@@ -209,7 +209,7 @@ QRect kpToolSpraycan::drawLine (const QPoint &thisPoint, const QPoint &lastPoint
 void kpToolSpraycan::timeoutDraw ()
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolSpraycan::timeoutDraw()";
+    qCDebug(kpLogTools) << "kpToolSpraycan::timeoutDraw()";
 #endif
 
     // Draw at this single point without delay.
@@ -226,7 +226,7 @@ void kpToolSpraycan::timeoutDraw ()
 void kpToolSpraycan::cancelShape ()
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolSpraycan::cancelShape()";
+    qCDebug(kpLogTools) << "kpToolSpraycan::cancelShape()";
 #endif
 
     m_timer->stop ();
@@ -238,7 +238,7 @@ void kpToolSpraycan::endDraw (const QPoint &thisPoint,
     const QRect &normalizedRect)
 {
 #if DEBUG_KP_TOOL_SPRAYCAN
-    kDebug () << "kpToolSpraycan::endDraw(thisPoint=" << thisPoint
+    qCDebug(kpLogTools) << "kpToolSpraycan::endDraw(thisPoint=" << thisPoint
                << ")" << endl;
 #endif
 

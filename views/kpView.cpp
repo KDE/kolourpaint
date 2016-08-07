@@ -44,7 +44,7 @@
 #include <qregion.h>
 #include <QScrollBar>
 
-#include <KDebug>
+#include "kpLogCategories.h"
 
 #include "kpDefs.h"
 #include "document/kpDocument.h"
@@ -205,13 +205,13 @@ QPoint kpView::origin () const
 void kpView::setOrigin (const QPoint &origin)
 {
 #if DEBUG_KP_VIEW
-    kDebug () << "kpView(" << objectName () << ")::setOrigin" << origin;
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::setOrigin" << origin;
 #endif
 
     if (origin == d->origin)
     {
     #if DEBUG_KP_VIEW
-        kDebug () << "\tNOP";
+        qCDebug(kpLogViews) << "\tNOP";
     #endif
         return;
     }
@@ -538,7 +538,7 @@ void kpView::setHasMouse (bool yes)
         return;
 
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << objectName ()
+    qCDebug(kpLogViews) << "kpView(" << objectName ()
                << ")::setHasMouse(" << yes
                << ") existing viewUnderCursor="
                << (vm->viewUnderCursor () ? vm->viewUnderCursor ()->objectName () : "(none)")
@@ -556,7 +556,7 @@ void kpView::setHasMouse (bool yes)
 void kpView::addToQueuedArea (const QRegion &region)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << objectName ()
+    qCDebug(kpLogViews) << "kpView(" << objectName ()
                << ")::addToQueuedArea() already=" << d->queuedUpdateArea
                << " - plus - " << region
                << endl;
@@ -570,7 +570,7 @@ void kpView::addToQueuedArea (const QRegion &region)
 void kpView::addToQueuedArea (const QRect &rect)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << objectName ()
+    qCDebug(kpLogViews) << "kpView(" << objectName ()
                << ")::addToQueuedArea() already=" << d->queuedUpdateArea
                << " - plus - " << rect
                << endl;
@@ -584,7 +584,7 @@ void kpView::addToQueuedArea (const QRect &rect)
 void kpView::invalidateQueuedArea ()
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView::invalidateQueuedArea()";
+    qCDebug(kpLogViews) << "kpView::invalidateQueuedArea()";
 #endif
 
     d->queuedUpdateArea = QRegion ();
@@ -597,7 +597,7 @@ void kpView::updateQueuedArea ()
 {
     kpViewManager *vm = viewManager ();
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << objectName ()
+    qCDebug(kpLogViews) << "kpView(" << objectName ()
                << ")::updateQueuedArea() vm=" << (bool) vm
                << " queueUpdates=" << (vm && vm->queueUpdates ())
                << " fastUpdates=" << (vm && vm->fastUpdates ())
@@ -638,7 +638,7 @@ QPoint kpView::mouseViewPoint (const QPoint &returnViewPoint) const
 QVariant kpView::inputMethodQuery (Qt::InputMethodQuery query) const
 {
 #if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << objectName () << ")::inputMethodQuery()";
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::inputMethodQuery()";
 #endif
     QVariant ret;
     switch (query)

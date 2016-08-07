@@ -31,7 +31,7 @@
 
 #include "layers/selections/image/kpImageSelectionTransparency.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "imagelib/kpColor.h"
 #include "widgets/colorSimilarity/kpColorSimilarityHolder.h"
@@ -69,13 +69,13 @@ kpImageSelectionTransparency::kpImageSelectionTransparency (bool isOpaque, const
 bool kpImageSelectionTransparency::operator== (const kpImageSelectionTransparency &rhs) const
 {
 #if DEBUG_KP_SELECTION_TRANSPARENCY && 0
-    kDebug () << "kpImageSelectionTransparency::operator==()";
+    qCDebug(kpLogLayers) << "kpImageSelectionTransparency::operator==()";
 #endif
     
     if (m_isOpaque != rhs.m_isOpaque)
     {
     #if DEBUG_KP_SELECTION_TRANSPARENCY && 0
-        kDebug () << "\tdifferent opacity: lhs=" << m_isOpaque
+        qCDebug(kpLogLayers) << "\tdifferent opacity: lhs=" << m_isOpaque
                    << " rhs=" << rhs.m_isOpaque
                    << endl;
     #endif
@@ -85,16 +85,16 @@ bool kpImageSelectionTransparency::operator== (const kpImageSelectionTransparenc
     if (m_isOpaque)
     {
     #if DEBUG_KP_SELECTION_TRANSPARENCY && 0
-        kDebug () << "\tboth opaque - eq";
+        qCDebug(kpLogLayers) << "\tboth opaque - eq";
     #endif
         return true;
     }
 
 #if DEBUG_KP_SELECTION_TRANSPARENCY && 0
-    kDebug () << "\tcolours: lhs=" << (int *) m_transparentColor.toQRgb ()
+    qCDebug(kpLogLayers) << "\tcolours: lhs=" << (int *) m_transparentColor.toQRgb ()
                << " rhs=" << (int *) rhs.m_transparentColor.toQRgb ()
                << endl;
-    kDebug () << "\tcolour similarity: lhs=" << m_colorSimilarity
+    qCDebug(kpLogLayers) << "\tcolour similarity: lhs=" << m_colorSimilarity
                << " rhs=" << rhs.m_colorSimilarity
                << endl;
 #endif
@@ -156,8 +156,8 @@ kpColor kpImageSelectionTransparency::transparentColor () const
 {
     if (m_isOpaque)
     {
-        // There are legitimate uses for this so no kError()
-        kDebug () << "kpImageSelectionTransparency::transparentColor() "
+        // There are legitimate uses for this so no qCCritical(kpLogLayers)
+        qCDebug(kpLogLayers) << "kpImageSelectionTransparency::transparentColor() "
                       "getting transparent color even though opaque" << endl;
     }
 
@@ -181,7 +181,7 @@ double kpImageSelectionTransparency::colorSimilarity () const
     if (m_colorSimilarity < 0 ||
         m_colorSimilarity > kpColorSimilarityHolder::MaxColorSimilarity)
     {
-        kError () << "kpImageSelectionTransparency::colorSimilarity() invalid colorSimilarity" << endl;
+        qCCritical(kpLogLayers) << "kpImageSelectionTransparency::colorSimilarity() invalid colorSimilarity" << endl;
         return 0;
     }
 

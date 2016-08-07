@@ -31,7 +31,7 @@
 
 #include "kpToolColorPicker.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "widgets/toolbars/kpColorToolBar.h"
@@ -59,7 +59,7 @@ kpToolColorPicker::~kpToolColorPicker ()
 kpColor kpToolColorPicker::colorAtPixel (const QPoint &p)
 {
 #if DEBUG_KP_TOOL_COLOR_PICKER && 0
-    kDebug () << "kpToolColorPicker::colorAtPixel" << p;
+    qCDebug(kpLogTools) << "kpToolColorPicker::colorAtPixel" << p;
 #endif
 
     return kpPixmapFX::getColorAtPixel (document ()->image (), p);

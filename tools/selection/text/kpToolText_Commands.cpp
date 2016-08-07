@@ -31,7 +31,7 @@
 #include "kpToolText.h"
 #include "kpToolTextPrivate.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "environments/tools/selection/kpToolSelectionEnvironment.h"

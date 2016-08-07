@@ -32,7 +32,7 @@
 #include <kactioncollection.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 #include <kshortcutsdialog.h>
 #include <kstandardaction.h>
@@ -97,7 +97,7 @@ void kpMainWindow::slotFullScreen ()
 void kpMainWindow::slotEnableSettingsShowPath ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotEnableSettingsShowPath()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotEnableSettingsShowPath()";
 #endif
 
     const bool enable = (d->document && !d->document->url ().isEmpty ());
@@ -112,7 +112,7 @@ void kpMainWindow::slotEnableSettingsShowPath ()
 void kpMainWindow::slotShowPathToggled ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotShowPathToggled()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotShowPathToggled()";
 #endif
 
     d->configShowPath = d->actionShowPath->isChecked ();

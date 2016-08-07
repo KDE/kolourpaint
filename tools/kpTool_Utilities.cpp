@@ -39,7 +39,7 @@
 #include <qcursor.h>
 #include <qpixmap.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <kmessagebox.h>
 
 #include "commands/kpCommandSize.h"
@@ -86,8 +86,8 @@ bool kpTool::hasCurrentPoint () const
 QPoint kpTool::calculateCurrentPoint (bool zoomToDoc) const
 {
 #if DEBUG_KP_TOOL && 0
-    kDebug () << "kpTool::currentPoint(zoomToDoc=" << zoomToDoc << ")";
-    kDebug () << "\tviewUnderStartPoint="
+    qCDebug(kpLogTools) << "kpTool::currentPoint(zoomToDoc=" << zoomToDoc << ")";
+    qCDebug(kpLogTools) << "\tviewUnderStartPoint="
                << (viewUnderStartPoint () ? viewUnderStartPoint ()->objectName () : "(none)")
                << " viewUnderCursor="
                << (viewUnderCursor () ? viewUnderCursor ()->objectName () : "(none)")
@@ -101,7 +101,7 @@ QPoint kpTool::calculateCurrentPoint (bool zoomToDoc) const
         if (!v)
         {
         #if DEBUG_KP_TOOL && 0
-            kDebug () << "\tno view - returning sentinel";
+            qCDebug(kpLogTools) << "\tno view - returning sentinel";
         #endif
             return KP_INVALID_POINT;
         }
@@ -111,7 +111,7 @@ QPoint kpTool::calculateCurrentPoint (bool zoomToDoc) const
     const QPoint globalPos = QCursor::pos ();
     const QPoint viewPos = v->mapFromGlobal (globalPos);
 #if DEBUG_KP_TOOL && 0
-    kDebug () << "\tglobalPos=" << globalPos
+    qCDebug(kpLogTools) << "\tglobalPos=" << globalPos
                << " viewPos=" << viewPos
                << endl;
 #endif
@@ -121,7 +121,7 @@ QPoint kpTool::calculateCurrentPoint (bool zoomToDoc) const
 
     const QPoint docPos = v->transformViewToDoc (viewPos);
 #if DEBUG_KP_TOOL && 0
-    kDebug () << "\tdocPos=" << docPos;
+    qCDebug(kpLogTools) << "\tdocPos=" << docPos;
 #endif
     return docPos;
 }
@@ -143,17 +143,17 @@ void kpTool::somethingBelowTheCursorChanged (const QPoint &currentPoint_,
         const QPoint &currentViewPoint_)
 {
 #if DEBUG_KP_TOOL && 1
-    kDebug () << "kpTool::somethingBelowTheCursorChanged(docPoint="
+    qCDebug(kpLogTools) << "kpTool::somethingBelowTheCursorChanged(docPoint="
                << currentPoint_
                << " viewPoint="
                << currentViewPoint_
                << ")" << endl;
-    kDebug () << "\tviewUnderStartPoint="
+    qCDebug(kpLogTools) << "\tviewUnderStartPoint="
                << (viewUnderStartPoint () ? viewUnderStartPoint ()->objectName () : "(none)")
                << " viewUnderCursor="
                << (viewUnderCursor () ? viewUnderCursor ()->objectName () : "(none)")
                << endl;
-    kDebug () << "\tbegan draw=" << d->beganDraw;
+    qCDebug(kpLogTools) << "\tbegan draw=" << d->beganDraw;
 #endif
 
     d->currentPoint = currentPoint_;
@@ -246,7 +246,7 @@ bool kpTool::warnIfBigImageSize (int oldWidth, int oldHeight,
                                  QWidget *parent)
 {
 #if DEBUG_KP_TOOL
-    kDebug () << "kpTool::warnIfBigImageSize()"
+    qCDebug(kpLogTools) << "kpTool::warnIfBigImageSize()"
                << " old: w=" << oldWidth << " h=" << oldWidth
                << " new: w=" << newWidth << " h=" << newHeight
                << " pixmapSize="

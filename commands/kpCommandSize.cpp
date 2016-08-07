@@ -58,7 +58,7 @@ kpCommandSize::SizeType kpCommandSize::PixmapSize (int width, int height, int de
         (kpCommandSize::SizeType) width * height * roundedDepth / 8;
 
 #if DEBUG_KP_COMMAND_SIZE && 0
-    kDebug () << "kpCommandSize::PixmapSize() w=" << width
+    qCDebug(kpLogCommands) << "kpCommandSize::PixmapSize() w=" << width
                << " h=" << height
                << " d=" << depth
                << " roundedDepth=" << roundedDepth
@@ -90,7 +90,7 @@ kpCommandSize::SizeType kpCommandSize::QImageSize (int width, int height, int de
         (kpCommandSize::SizeType) width * height * roundedDepth / 8;
 
 #if DEBUG_KP_COMMAND_SIZE && 0
-    kDebug () << "kpCommandSize::QImageSize() w=" << width
+    qCDebug(kpLogCommands) << "kpCommandSize::QImageSize() w=" << width
                << " h=" << height
                << " d=" << depth
                << " roundedDepth=" << roundedDepth
@@ -132,7 +132,7 @@ kpCommandSize::SizeType kpCommandSize::SelectionSize (const kpAbstractSelection 
 kpCommandSize::SizeType kpCommandSize::StringSize (const QString &string)
 {
 #if DEBUG_KP_COMMAND_SIZE && 1
-    kDebug () << "kpCommandSize::StringSize(" << string << ")"
+    qCDebug(kpLogCommands) << "kpCommandSize::StringSize(" << string << ")"
                << " len=" << string.length ()
                << " sizeof(QChar)=" << sizeof (QChar)
                << endl;
@@ -145,7 +145,7 @@ kpCommandSize::SizeType kpCommandSize::StringSize (const QString &string)
 kpCommandSize::SizeType kpCommandSize::PolygonSize (const QPolygon &points)
 {
 #if DEBUG_KP_COMMAND_SIZE && 1
-    kDebug () << "kpCommandSize::PolygonSize() points.size="
+    qCDebug(kpLogCommands) << "kpCommandSize::PolygonSize() points.size="
                << points.size ()
                << " sizeof(QPoint)=" << sizeof (QPoint)
                << endl;

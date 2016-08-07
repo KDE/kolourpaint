@@ -34,7 +34,7 @@
 #include <QPolygon>
 #include <QRect>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 struct kpAbstractSelectionPrivate
 {
@@ -94,7 +94,7 @@ void kpAbstractSelection::writeToStream (QDataStream &stream) const
 QDataStream &operator<< (QDataStream &stream, const kpAbstractSelection &selection)
 {
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "kpAbstractSelection::operator<<(sel: rect=" <<
+    qCDebug(kpLogLayers) << "kpAbstractSelection::operator<<(sel: rect=" <<
                  selection.boundingRect () << endl;
 #endif
     stream << selection.serialID ();
@@ -192,7 +192,7 @@ bool kpAbstractSelection::contains (int x, int y) const
 void kpAbstractSelection::moveBy (int dx, int dy)
 {
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "kpAbstractSelection::moveBy(" << dx << "," << dy << ")";
+    qCDebug(kpLogLayers) << "kpAbstractSelection::moveBy(" << dx << "," << dy << ")";
 #endif
 
     if (dx == 0 && dy == 0)
@@ -201,12 +201,12 @@ void kpAbstractSelection::moveBy (int dx, int dy)
     QRect oldRect = boundingRect ();
 
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "\toldRect=" << oldRect;
+    qCDebug(kpLogLayers) << "\toldRect=" << oldRect;
 #endif
 
     d->rect.translate (dx, dy);
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "\tnewRect=" << d->rect;
+    qCDebug(kpLogLayers) << "\tnewRect=" << d->rect;
 #endif
 
     emit changed (oldRect);
@@ -223,11 +223,11 @@ void kpAbstractSelection::moveTo (int dx, int dy)
 void kpAbstractSelection::moveTo (const QPoint &topLeftPoint)
 {
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "kpAbstractSelection::moveTo(" << topLeftPoint << ")";
+    qCDebug(kpLogLayers) << "kpAbstractSelection::moveTo(" << topLeftPoint << ")";
 #endif
     QRect oldBoundingRect = boundingRect ();
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "\toldBoundingRect=" << oldBoundingRect;
+    qCDebug(kpLogLayers) << "\toldBoundingRect=" << oldBoundingRect;
 #endif
     if (topLeftPoint == oldBoundingRect.topLeft ())
         return;
@@ -246,13 +246,13 @@ void kpAbstractSelection::paintRectangularBorder (QImage *destPixmap,
     (void) selectionFinished;
 
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "kpAbstractSelection::paintRectangularBorder() boundingRect="
+    qCDebug(kpLogLayers) << "kpAbstractSelection::paintRectangularBorder() boundingRect="
               << boundingRect () << endl;
 #endif
 
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "\tselection border = rectangle";
-    kDebug () << "\t\tx=" << boundingRect ().x () - docRect.x ()
+    qCDebug(kpLogLayers) << "\tselection border = rectangle";
+    qCDebug(kpLogLayers) << "\t\tx=" << boundingRect ().x () - docRect.x ()
               << " y=" << boundingRect ().y () - docRect.y ()
               << " w=" << boundingRect ().width ()
               << " h=" << boundingRect ().height ()
@@ -277,7 +277,7 @@ void kpAbstractSelection::paintPolygonalBorder (const QPolygon &points,
         bool selectionFinished) const
 {
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "kpAbstractSelection::paintPolygonalBorder() boundingRect="
+    qCDebug(kpLogLayers) << "kpAbstractSelection::paintPolygonalBorder() boundingRect="
               << boundingRect () << endl;
 #endif
 

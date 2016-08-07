@@ -38,7 +38,7 @@
 
 #include <qapplication.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "environments/tools/kpToolEnvironment.h"
 #include "views/kpView.h"
@@ -142,7 +142,7 @@ kpView *kpTool::viewUnderCursor () const
 void kpTool::beginInternal ()
 {
 #if DEBUG_KP_TOOL
-    kDebug () << "kpTool::beginInternal()";
+    qCDebug(kpLogTools) << "kpTool::beginInternal()";
 #endif
 
     if (!d->began)
@@ -212,7 +212,7 @@ void kpTool::endInternal ()
 void kpTool::begin ()
 {
 #if DEBUG_KP_TOOL
-    kDebug () << "kpTool::begin() base implementation";
+    qCDebug(kpLogTools) << "kpTool::begin() base implementation";
 #endif
 }
 
@@ -222,7 +222,7 @@ void kpTool::begin ()
 void kpTool::end ()
 {
 #if DEBUG_KP_TOOL
-    kDebug () << "kpTool::end() base implementation";
+    qCDebug(kpLogTools) << "kpTool::end() base implementation";
 #endif
 }
 
@@ -267,7 +267,7 @@ void kpTool::beginDraw ()
 void kpTool::hover (const QPoint &point)
 {
 #if DEBUG_KP_TOOL
-    kDebug () << "kpTool::hover" << point
+    qCDebug(kpLogTools) << "kpTool::hover" << point
                << " base implementation"
                << endl;
 #endif
@@ -288,7 +288,7 @@ void kpTool::globalDraw ()
 void kpTool::reselect ()
 {
 #if DEBUG_KP_TOOL
-    kDebug () << "kpTool::reselect() base implementation";
+    qCDebug(kpLogTools) << "kpTool::reselect() base implementation";
 #endif
 }
 
@@ -343,7 +343,7 @@ void kpTool::cancelShapeInternal ()
 // virtual
 void kpTool::cancelShape ()
 {
-    kWarning () << "Tool cannot cancel operation!" ;
+    qCWarning(kpLogTools) << "Tool cannot cancel operation!" ;
 }
 
 //---------------------------------------------------------------------
@@ -358,7 +358,7 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
                               bool wantEndShape)
 {
 #if DEBUG_KP_TOOL && 1
-    kDebug () << "kpTool::endDrawInternal() wantEndShape=" << wantEndShape;
+    qCDebug(kpLogTools) << "kpTool::endDrawInternal() wantEndShape=" << wantEndShape;
 #endif
 
     if (wantEndShape && !hasBegunShape ())
@@ -371,14 +371,14 @@ void kpTool::endDrawInternal (const QPoint &thisPoint, const QRect &normalizedRe
     if (wantEndShape)
     {
     #if DEBUG_KP_TOOL && 0
-        kDebug () << "\tcalling endShape()";
+        qCDebug(kpLogTools) << "\tcalling endShape()";
     #endif
         endShape (thisPoint, normalizedRect);
     }
     else
     {
     #if DEBUG_KP_TOOL && 0
-        kDebug () << "\tcalling endDraw()";
+        qCDebug(kpLogTools) << "\tcalling endDraw()";
     #endif
         endDraw (thisPoint, normalizedRect);
     }

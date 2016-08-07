@@ -30,7 +30,7 @@
 
 #include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <kiconloader.h>
 #include <klocale.h>
 
@@ -72,7 +72,7 @@ bool kpToolWidgetOpaqueOrTransparent::isTransparent () const
 void kpToolWidgetOpaqueOrTransparent::setOpaque (bool yes)
 {
 #if DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT && 1
-    kDebug () << "kpToolWidgetOpaqueOrTransparent::setOpaque(" << yes << ")";
+    qCDebug(kpLogWidgets) << "kpToolWidgetOpaqueOrTransparent::setOpaque(" << yes << ")";
 #endif
     setSelected (yes ? 0 : 1, 0, false/*don't save*/);
 }
@@ -81,7 +81,7 @@ void kpToolWidgetOpaqueOrTransparent::setOpaque (bool yes)
 void kpToolWidgetOpaqueOrTransparent::setTransparent (bool yes)
 {
 #if DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT && 1
-    kDebug () << "kpToolWidgetOpaqueOrTransparent::setTransparent(" << yes << ")";
+    qCDebug(kpLogWidgets) << "kpToolWidgetOpaqueOrTransparent::setTransparent(" << yes << ")";
 #endif
     setSelected (yes ? 1 : 0, 0, false/*don't save*/);
 }
@@ -91,7 +91,7 @@ void kpToolWidgetOpaqueOrTransparent::setTransparent (bool yes)
 bool kpToolWidgetOpaqueOrTransparent::setSelected (int row, int col, bool saveAsDefault)
 {
 #if DEBUG_KP_TOOL_WIDGET_OPAQUE_OR_TRANSPARENT && 1
-    kDebug () << "kpToolWidgetOpaqueOrTransparent::setSelected("
+    qCDebug(kpLogWidgets) << "kpToolWidgetOpaqueOrTransparent::setSelected("
                << row << "," << col << ")" << endl;
 #endif
     const bool ret = kpToolWidgetBase::setSelected (row, col, saveAsDefault);

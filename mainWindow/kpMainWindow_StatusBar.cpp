@@ -35,7 +35,7 @@
 #include <qstatusbar.h>
 #include <qstring.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 #include <KSqueezedTextLabel>
 
@@ -108,7 +108,7 @@ void kpMainWindow::createStatusBar ()
 void kpMainWindow::setStatusBarMessage (const QString &message)
 {
 #if DEBUG_STATUS_BAR && 1
-    kDebug () << "kpMainWindow::setStatusBarMessage("
+    qCDebug(kpLogMainWindow) << "kpMainWindow::setStatusBarMessage("
                << message
                << ") ok=" << d->statusBarCreated
                << endl;
@@ -127,7 +127,7 @@ void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
                                             const QPoint &endPoint)
 {
 #if DEBUG_STATUS_BAR && 0
-    kDebug () << "kpMainWindow::setStatusBarShapePoints("
+    qCDebug(kpLogMainWindow) << "kpMainWindow::setStatusBarShapePoints("
                << startPoint << "," << endPoint
                << ") ok=" << d->statusBarCreated
                << endl;
@@ -141,7 +141,7 @@ void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
         endPoint == d->statusBarShapeLastEndPoint)
     {
     #if DEBUG_STATUS_BAR && 0
-        kDebug () << "\tNOP";
+        qCDebug(kpLogMainWindow) << "\tNOP";
     #endif
         return;
     }
@@ -177,7 +177,7 @@ void kpMainWindow::setStatusBarShapePoints (const QPoint &startPoint,
 void kpMainWindow::setStatusBarShapeSize (const QSize &size)
 {
 #if DEBUG_STATUS_BAR && 0
-    kDebug () << "kpMainWindow::setStatusBarShapeSize("
+    qCDebug(kpLogMainWindow) << "kpMainWindow::setStatusBarShapeSize("
                << size
                << ") ok=" << d->statusBarCreated
                << endl;
@@ -190,7 +190,7 @@ void kpMainWindow::setStatusBarShapeSize (const QSize &size)
         size == d->statusBarShapeLastSize)
     {
     #if DEBUG_STATUS_BAR && 0
-        kDebug () << "\tNOP";
+        qCDebug(kpLogMainWindow) << "\tNOP";
     #endif
         return;
     }
@@ -217,7 +217,7 @@ void kpMainWindow::setStatusBarShapeSize (const QSize &size)
 void kpMainWindow::setStatusBarDocSize (const QSize &size)
 {
 #if DEBUG_STATUS_BAR && 0
-    kDebug () << "kpMainWindow::setStatusBarDocSize("
+    qCDebug(kpLogMainWindow) << "kpMainWindow::setStatusBarDocSize("
                << size
                << ") ok=" << d->statusBarCreated
                << endl;
@@ -245,7 +245,7 @@ void kpMainWindow::setStatusBarDocSize (const QSize &size)
 void kpMainWindow::setStatusBarDocDepth (int depth)
 {
 #if DEBUG_STATUS_BAR && 0
-    kDebug () << "kpMainWindow::setStatusBarDocDepth("
+    qCDebug(kpLogMainWindow) << "kpMainWindow::setStatusBarDocDepth("
                << depth
                << ") ok=" << d->statusBarCreated
                << endl;
@@ -271,7 +271,7 @@ void kpMainWindow::setStatusBarDocDepth (int depth)
 void kpMainWindow::setStatusBarZoom (int zoom)
 {
 #if DEBUG_STATUS_BAR && 0
-    kDebug () << "kpMainWindow::setStatusBarZoom("
+    qCDebug(kpLogMainWindow) << "kpMainWindow::setStatusBarZoom("
                << zoom
                << ") ok=" << d->statusBarCreated
                << endl;
@@ -296,14 +296,14 @@ void kpMainWindow::setStatusBarZoom (int zoom)
 void kpMainWindow::recalculateStatusBarMessage ()
 {
 #if DEBUG_STATUS_BAR && 1
-    kDebug () << "kpMainWindow::recalculateStatusBarMessage()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::recalculateStatusBarMessage()";
 #endif
     QString scrollViewMessage = d->scrollView->statusMessage ();
 #if DEBUG_STATUS_BAR && 1
-    kDebug () << "\tscrollViewMessage=" << scrollViewMessage;
-    kDebug () << "\tresizing doc? " << !d->scrollView->newDocSize ().isEmpty ()
+    qCDebug(kpLogMainWindow) << "\tscrollViewMessage=" << scrollViewMessage;
+    qCDebug(kpLogMainWindow) << "\tresizing doc? " << !d->scrollView->newDocSize ().isEmpty ()
                << endl;
-    kDebug () << "\tviewUnderCursor? "
+    qCDebug(kpLogMainWindow) << "\tviewUnderCursor? "
                << (d->viewManager && d->viewManager->viewUnderCursor ())
                << endl;
 #endif
@@ -316,7 +316,7 @@ void kpMainWindow::recalculateStatusBarMessage ()
         d->viewManager && d->viewManager->viewUnderCursor ())
     {
     #if DEBUG_STATUS_BAR && 1
-        kDebug () << "\t\tnot resizing & viewUnderCursor - message is wrong - clearing"
+        qCDebug(kpLogMainWindow) << "\t\tnot resizing & viewUnderCursor - message is wrong - clearing"
                    << endl;
     #endif
         d->scrollView->blockSignals (true);
@@ -325,7 +325,7 @@ void kpMainWindow::recalculateStatusBarMessage ()
 
         scrollViewMessage.clear ();
     #if DEBUG_STATUS_BAR && 1
-        kDebug () << "\t\t\tdone";
+        qCDebug(kpLogMainWindow) << "\t\t\tdone";
     #endif
     }
 
@@ -353,18 +353,18 @@ void kpMainWindow::recalculateStatusBarMessage ()
 void kpMainWindow::recalculateStatusBarShape ()
 {
 #if DEBUG_STATUS_BAR && 0
-    kDebug () << "kpMainWindow::recalculateStatusBarShape()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::recalculateStatusBarShape()";
 #endif
 
     QSize docResizeTo = d->scrollView->newDocSize ();
 #if DEBUG_STATUS_BAR && 0
-    kDebug () << "\tdocResizeTo=" << docResizeTo;
+    qCDebug(kpLogMainWindow) << "\tdocResizeTo=" << docResizeTo;
 #endif
     if (docResizeTo.isValid ())
     {
         const QPoint startPoint (d->document->width (), d->document->height ());
     #if DEBUG_STATUS_BAR && 0
-        kDebug () << "\thavedMovedFromOrgSize="
+        qCDebug(kpLogMainWindow) << "\thavedMovedFromOrgSize="
                    << d->scrollView->haveMovedFromOriginalDocSize () << endl;
     #endif
         if (!d->scrollView->haveMovedFromOriginalDocSize ())
@@ -386,7 +386,7 @@ void kpMainWindow::recalculateStatusBarShape ()
     {
         const kpTool *t = tool ();
     #if DEBUG_STATUS_BAR && 0
-        kDebug () << "\ttool=" << t;
+        qCDebug(kpLogMainWindow) << "\ttool=" << t;
     #endif
         if (t)
         {
@@ -408,7 +408,7 @@ void kpMainWindow::recalculateStatusBarShape ()
 void kpMainWindow::recalculateStatusBar ()
 {
 #if DEBUG_STATUS_BAR && 1
-    kDebug () << "kpMainWindow::recalculateStatusBar() ok="
+    qCDebug(kpLogMainWindow) << "kpMainWindow::recalculateStatusBar() ok="
                << d->statusBarCreated
                << endl;
 #endif

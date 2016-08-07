@@ -35,7 +35,7 @@
 #include "commands/imagelib/effects/kpEffectInvertCommand.h"
 #include "pixmapfx/kpPixmapFX.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include <qcheckbox.h>
@@ -106,7 +106,7 @@ kpEffectInvertWidget::~kpEffectInvertWidget ()
 int kpEffectInvertWidget::channels () const
 {
 #if DEBUG_KP_EFFECT_INVERT
-    kDebug () << "kpEffectInvertWidget::channels()"
+    qCDebug(kpLogWidgets) << "kpEffectInvertWidget::channels()"
                << " isChecked: r=" << m_redCheckBox->isChecked ()
                << " g=" << m_greenCheckBox->isChecked ()
                << " b=" << m_blueCheckBox->isChecked ()
@@ -127,7 +127,7 @@ int kpEffectInvertWidget::channels () const
 
 
 #if DEBUG_KP_EFFECT_INVERT
-    kDebug () << "\treturning channels=" << (int *) channels;
+    qCDebug(kpLogWidgets) << "\treturning channels=" << (int *) channels;
 #endif
     return channels;
 }

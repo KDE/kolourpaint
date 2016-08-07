@@ -43,7 +43,7 @@
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include <qbitmap.h>

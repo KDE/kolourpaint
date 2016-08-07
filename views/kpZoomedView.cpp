@@ -31,7 +31,7 @@
 
 #include "views/kpZoomedView.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "document/kpDocument.h"
 #include "views/kpView.h"
@@ -63,7 +63,7 @@ kpZoomedView::~kpZoomedView ()
 void kpZoomedView::setZoomLevel (int hzoom, int vzoom)
 {
 #if DEBUG_KP_ZOOMED_VIEW
-    kDebug () << "kpZoomedView(" << name () << ")::setZoomLevel("
+    qCDebug(kpLogViews) << "kpZoomedView(" << name () << ")::setZoomLevel("
                << hzoom << "," << vzoom << ")" << endl;
 #endif
 
@@ -85,7 +85,7 @@ void kpZoomedView::setZoomLevel (int hzoom, int vzoom)
 void kpZoomedView::adjustToEnvironment ()
 {
 #if DEBUG_KP_ZOOMED_VIEW
-    kDebug () << "kpZoomedView(" << name () << ")::adjustToEnvironment()"
+    qCDebug(kpLogViews) << "kpZoomedView(" << name () << ")::adjustToEnvironment()"
                << " doc: width=" << document ()->width ()
                << " height=" << document ()->height ()
                << endl;

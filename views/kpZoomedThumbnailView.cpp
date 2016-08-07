@@ -31,7 +31,7 @@
 
 #include "views/kpZoomedThumbnailView.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "document/kpDocument.h"
@@ -71,7 +71,7 @@ QString kpZoomedThumbnailView::caption () const
 void kpZoomedThumbnailView::adjustToEnvironment ()
 {
 #if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW
-    kDebug () << "kpZoomedThumbnailView(" << name ()
+    qCDebug(kpLogViews) << "kpZoomedThumbnailView(" << name ()
                << ")::adjustToEnvironment()"
                << " width=" << width ()
                << " height=" << height ()
@@ -82,14 +82,14 @@ void kpZoomedThumbnailView::adjustToEnvironment ()
         return;
 
 #if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW
-    kDebug () << "\tdoc: width=" << document ()->width ()
+    qCDebug(kpLogViews) << "\tdoc: width=" << document ()->width ()
                << " height=" << document ()->height ()
                << endl;
 #endif
 
     if (document ()->width () <= 0 || document ()->height () <= 0)
     {
-        kError () << "kpZoomedThumbnailView::adjustToEnvironment() doc:"
+        qCCritical(kpLogViews) << "kpZoomedThumbnailView::adjustToEnvironment() doc:"
                    << " width=" << document ()->width ()
                    << " height=" << document ()->height ()
                    << endl;
@@ -107,12 +107,12 @@ void kpZoomedThumbnailView::adjustToEnvironment ()
         hzoom = vzoom;
 
 #if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW && 1
-    kDebug () << "\tproposed zoom=" << hzoom;
+    qCDebug(kpLogViews) << "\tproposed zoom=" << hzoom;
 #endif
     if (hzoom > 100 || vzoom > 100)
     {
     #if DEBUG_KP_ZOOMED_THUMBNAIL_VIEW && 1
-        kDebug () << "\twon't magnify - setting zoom to 100%";
+        qCDebug(kpLogViews) << "\twon't magnify - setting zoom to 100%";
     #endif
         hzoom = 100, vzoom = 100;
     }

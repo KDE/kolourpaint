@@ -36,7 +36,7 @@
 
 #include <qevent.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "document/kpDocument.h"
 #include "layers/selections/text/kpTextSelection.h"
@@ -48,7 +48,7 @@
 void kpToolText::inputMethodEvent (QInputMethodEvent *e)
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kDebug () << "kpToolText::inputMethodEvent() preeditString='" << e->preeditString ()
+    qCDebug(kpLogTools) << "kpToolText::inputMethodEvent() preeditString='" << e->preeditString ()
                << "commitString = " << e->commitString ()
                << " replacementStart=" << e->replacementStart ()
                << " replacementLength=" << e->replacementLength ()

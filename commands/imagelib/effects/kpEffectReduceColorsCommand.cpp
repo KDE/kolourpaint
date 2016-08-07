@@ -33,7 +33,7 @@
 
 #include "imagelib/effects/kpEffectReduceColors.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 //---------------------------------------------------------------------

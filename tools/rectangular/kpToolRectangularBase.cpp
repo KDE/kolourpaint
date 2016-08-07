@@ -37,7 +37,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "imagelib/kpColor.h"
@@ -126,14 +126,14 @@ QString kpToolRectangularBase::haventBegunDrawUserMessage () const
 void kpToolRectangularBase::begin ()
 {
 #if DEBUG_KP_TOOL_RECTANGULAR_BASE
-    kDebug () << "kpToolRectangularBase::begin ()";
+    qCDebug(kpLogTools) << "kpToolRectangularBase::begin ()";
 #endif
 
     kpToolToolBar *tb = toolToolBar ();
     Q_ASSERT (tb);
 
 #if DEBUG_KP_TOOL_RECTANGULAR_BASE
-    kDebug () << "\ttoolToolBar=" << tb;
+    qCDebug(kpLogTools) << "\ttoolToolBar=" << tb;
 #endif
 
     d->toolWidgetLineWidth = tb->toolWidgetLineWidth ();
@@ -161,7 +161,7 @@ void kpToolRectangularBase::begin ()
 void kpToolRectangularBase::end ()
 {
 #if DEBUG_KP_TOOL_RECTANGULAR_BASE
-    kDebug () << "kpToolRectangularBase::end ()";
+    qCDebug(kpLogTools) << "kpToolRectangularBase::end ()";
 #endif
 
     if (d->toolWidgetLineWidth)
@@ -192,7 +192,7 @@ void kpToolRectangularBase::applyModifiers ()
     QRect rect = normalizedRect ();
 
 #if DEBUG_KP_TOOL_RECTANGULAR_BASE
-    kDebug () << "kpToolRectangularBase::applyModifiers(" << rect
+    qCDebug(kpLogTools) << "kpToolRectangularBase::applyModifiers(" << rect
                << ") shift=" << shiftPressed ()
                << " ctrl=" << controlPressed ()
                << endl;

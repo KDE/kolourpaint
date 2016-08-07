@@ -36,7 +36,7 @@
 #include "pixmapfx/kpPixmapFX.h"
 #include "tools/kpTool.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include <qbitmap.h>

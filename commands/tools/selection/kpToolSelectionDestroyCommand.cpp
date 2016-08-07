@@ -40,7 +40,7 @@
 #include <qpolygon.h>
 #include <qtimer.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "layers/selections/kpAbstractSelection.h"
@@ -87,7 +87,7 @@ kpCommandSize::SizeType kpToolSelectionDestroyCommand::size () const
 void kpToolSelectionDestroyCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelectionDestroyCommand::execute () CALLED";
+    qCDebug(kpLogCommands) << "kpToolSelectionDestroyCommand::execute () CALLED";
 #endif
 
     kpDocument *doc = document ();
@@ -117,7 +117,7 @@ void kpToolSelectionDestroyCommand::execute ()
 void kpToolSelectionDestroyCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelectionDestroyCommand::unexecute () CALLED";
+    qCDebug(kpLogCommands) << "kpToolSelectionDestroyCommand::unexecute () CALLED";
 #endif
 
     kpDocument *doc = document ();
@@ -128,7 +128,7 @@ void kpToolSelectionDestroyCommand::unexecute ()
         // not error because it's possible that the user dragged out a new
         // region (without pulling image), and then CTRL+Z
     #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "kpToolSelectionDestroyCommand::unexecute() already has sel region";
+        qCDebug(kpLogCommands) << "kpToolSelectionDestroyCommand::unexecute() already has sel region";
     #endif
 
         if (doc->selection ()->hasContent ())
@@ -143,13 +143,13 @@ void kpToolSelectionDestroyCommand::unexecute ()
     if (m_pushOntoDocument)
     {
     #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\tunpush oldDocImage onto doc first";
+        qCDebug(kpLogCommands) << "\tunpush oldDocImage onto doc first";
     #endif
         doc->setImageAt (m_oldDocImage, m_oldSelectionPtr->topLeft ());
     }
 
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\tsetting selection to: rect=" << m_oldSelectionPtr->boundingRect ()
+    qCDebug(kpLogCommands) << "\tsetting selection to: rect=" << m_oldSelectionPtr->boundingRect ()
                << " hasContent=" << m_oldSelectionPtr->hasContent ()
                << endl;
 #endif

@@ -33,7 +33,7 @@
 
 #include "pixmapfx/kpPixmapFX.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <kiconloader.h>
 #include <klocale.h>
 
@@ -49,7 +49,7 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const QStri
     : kpToolWidgetBase (parent, name)
 {
 #if DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE
-    kDebug () << "kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize() CALLED!";
+    qCDebug(kpLogWidgets) << "kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize() CALLED!";
 #endif
 
     for (int i = 0; i < int (sizeof (spraycanSizes) / sizeof (spraycanSizes [0])); i++)
@@ -58,7 +58,7 @@ kpToolWidgetSpraycanSize::kpToolWidgetSpraycanSize (QWidget *parent, const QStri
         QString iconName = QString ("tool_spraycan_%1x%2").arg (s).arg(s);
         
     #if DEBUG_KP_TOOL_WIDGET_SPRAYCAN_SIZE
-        kDebug () << "\ticonName=" << iconName;
+        qCDebug(kpLogWidgets) << "\ticonName=" << iconName;
     #endif
 
         QPixmap pixmap (s, s);

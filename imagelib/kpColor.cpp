@@ -33,7 +33,7 @@
 
 #include <qdatastream.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 //---------------------------------------------------------------------
 
@@ -50,14 +50,14 @@ kpColor::kpColor (int red, int green, int blue, bool isTransparent)
   : m_rgba(0), m_colorCacheIsValid(false)
 {
 #if DEBUG_KP_COLOR
-    kDebug () << "kpColor::<ctor>(r=" << red << ",g=" << green << ",b=" << blue
+    qCDebug(kpLogImagelib) << "kpColor::<ctor>(r=" << red << ",g=" << green << ",b=" << blue
               << ",isTrans=" << isTransparent << ")" << endl;
 #endif
     if (red < 0 || red > 255 ||
         green < 0 || green > 255 ||
         blue < 0 || blue > 255)
     {
-        kError () << "kpColor::<ctor>(r=" << red
+        qCCritical(kpLogImagelib) << "kpColor::<ctor>(r=" << red
                    << ",g=" << green
                    << ",b=" << blue
                    << ",t=" << isTransparent
@@ -76,7 +76,7 @@ kpColor::kpColor (const QRgb &rgba)
     : m_colorCacheIsValid (false)
 {
 #if DEBUG_KP_COLOR
-    kDebug () << "kpColor::<ctor>(rgba=" << (int *) rgba << ")";
+    qCDebug(kpLogImagelib) << "kpColor::<ctor>(rgba=" << (int *) rgba << ")";
 #endif
     m_rgba = rgba;
     m_rgbaIsValid = true;
@@ -91,7 +91,7 @@ kpColor::kpColor (const kpColor &rhs)
        m_colorCache (rhs.m_colorCache)
 {
 #if DEBUG_KP_COLOR
-    kDebug () << "kpColor::<copy_ctor>()";
+    qCDebug(kpLogImagelib) << "kpColor::<copy_ctor>()";
 #endif
 }
 
@@ -216,7 +216,7 @@ int kpColor::red () const
 {
     if (!m_rgbaIsValid)
     {
-        kError () << "kpColor::red() called with invalid kpColor" << endl;
+        qCCritical(kpLogImagelib) << "kpColor::red() called with invalid kpColor" << endl;
         return 0;
     }
 
@@ -230,7 +230,7 @@ int kpColor::green () const
 {
     if (!m_rgbaIsValid)
     {
-        kError () << "kpColor::green() called with invalid kpColor" << endl;
+        qCCritical(kpLogImagelib) << "kpColor::green() called with invalid kpColor" << endl;
         return 0;
     }
 
@@ -244,7 +244,7 @@ int kpColor::blue () const
 {
     if (!m_rgbaIsValid)
     {
-        kError () << "kpColor::blue() called with invalid kpColor" << endl;
+        qCCritical(kpLogImagelib) << "kpColor::blue() called with invalid kpColor" << endl;
         return 0;
     }
 
@@ -258,7 +258,7 @@ int kpColor::alpha () const
 {
     if (!m_rgbaIsValid)
     {
-        kError () << "kpColor::alpha() called with invalid kpColor" << endl;
+        qCCritical(kpLogImagelib) << "kpColor::alpha() called with invalid kpColor" << endl;
         return 0;
     }
 
@@ -280,7 +280,7 @@ QRgb kpColor::toQRgb () const
 {
     if (!m_rgbaIsValid)
     {
-        kError () << "kpColor::toQRgb() called with invalid kpColor" << endl;
+        qCCritical(kpLogImagelib) << "kpColor::toQRgb() called with invalid kpColor" << endl;
         return 0;
     }
 
@@ -294,7 +294,7 @@ QColor kpColor::toQColor () const
 {
     if (!m_rgbaIsValid)
     {
-        kError () << "kpColor::toQColor() called with invalid kpColor" << endl;
+        qCCritical(kpLogImagelib) << "kpColor::toQColor() called with invalid kpColor" << endl;
         return Qt::black;
     }
 

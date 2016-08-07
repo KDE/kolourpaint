@@ -31,7 +31,7 @@
 
 #include "environments/document/kpDocumentEnvironment.h"
 
-#include <KDebug>
+#include "kpLogCategories.h"
 
 #include "mainWindow/kpMainWindow.h"
 #include "layers/selections/kpAbstractSelection.h"
@@ -95,7 +95,7 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
         bool *isTextChanged) const
 {
 #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-    kDebug () << "kpDocumentEnvironment::switchToCompatibleTool("
+    qCDebug(kpLogEnvironments) << "kpDocumentEnvironment::switchToCompatibleTool("
               << &selection << ")"
               << " mainwindow.tool="
               << (mainWindow ()->tool () ? mainWindow ()->tool ()->objectName () : 0)
@@ -133,28 +133,28 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
         if (dynamic_cast <const kpRectangularImageSelection *> (&selection))
         {
         #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-            kDebug () << "\tswitch to rect selection tool";
+            qCDebug(kpLogEnvironments) << "\tswitch to rect selection tool";
         #endif
             mainWindow ()->slotToolRectSelection ();
         }
         else if (dynamic_cast <const kpEllipticalImageSelection *> (&selection))
         {
         #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-            kDebug () << "\tswitch to elliptical selection tool";
+            qCDebug(kpLogEnvironments) << "\tswitch to elliptical selection tool";
         #endif
             mainWindow ()->slotToolEllipticalSelection ();
         }
         else if (dynamic_cast <const kpFreeFormImageSelection *> (&selection))
         {
         #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-            kDebug () << "\tswitch to free form selection tool";
+            qCDebug(kpLogEnvironments) << "\tswitch to free form selection tool";
         #endif
             mainWindow ()->slotToolFreeFormSelection ();
         }
         else if (dynamic_cast <const kpTextSelection *> (&selection))
         {
         #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-            kDebug () << "\tswitch to text selection tool";
+            qCDebug(kpLogEnvironments) << "\tswitch to text selection tool";
         #endif
             mainWindow ()->slotToolText ();
         }
@@ -163,7 +163,7 @@ void kpDocumentEnvironment::switchToCompatibleTool (const kpAbstractSelection &s
     }
 
 #if DEBUG_KP_DOCUMENT_ENVIRONMENT
-    kDebug () << "kpDocumentEnvironment::switchToCompatibleTool(" << &selection << ") finished";
+    qCDebug(kpLogEnvironments) << "kpDocumentEnvironment::switchToCompatibleTool(" << &selection << ") finished";
 #endif
 }
 
@@ -182,11 +182,11 @@ void kpDocumentEnvironment::assertMatchingUIState (const kpAbstractSelection &se
     {
         if (imageSelection->transparency () != mainWindow ()->imageSelectionTransparency ())
         {
-            kError () << "kpDocument::setSelection() sel's transparency differs "
+            qCCritical(kpLogEnvironments) << "kpDocument::setSelection() sel's transparency differs "
                           "from mainWindow's transparency - setting mainWindow's transparency "
                           "to sel"
                        << endl;
-            kError () << "\tisOpaque: sel=" << imageSelection->transparency ().isOpaque ()
+            qCCritical(kpLogEnvironments) << "\tisOpaque: sel=" << imageSelection->transparency ().isOpaque ()
                        << " mainWindow=" << mainWindow ()->imageSelectionTransparency ().isOpaque ()
                        << endl;
             mainWindow ()->setImageSelectionTransparency (imageSelection->transparency ());
@@ -196,7 +196,7 @@ void kpDocumentEnvironment::assertMatchingUIState (const kpAbstractSelection &se
     {
         if (textSelection->textStyle () != mainWindow ()->textStyle ())
         {
-            kError () << "kpDocument::setSelection() sel's textStyle differs "
+            qCCritical(kpLogEnvironments) << "kpDocument::setSelection() sel's textStyle differs "
                           "from mainWindow's textStyle - setting mainWindow's textStyle "
                           "to sel"
                        << endl;

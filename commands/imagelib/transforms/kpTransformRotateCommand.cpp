@@ -44,7 +44,7 @@
 #include <qpolygon.h>
 #include <qmatrix.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 
@@ -159,7 +159,7 @@ void kpTransformRotateCommand::execute ()
             //       allowing the border width & height != pixmap width & height
             //       Or maybe autocrop?
         #if DEBUG_KP_TOOL_ROTATE
-            kDebug () << "kpTransformRotateCommand::execute() currentPoints.boundingRect="
+            qCDebug(kpLogCommands) << "kpTransformRotateCommand::execute() currentPoints.boundingRect="
                        << currentPoints.boundingRect ()
                        << " newPixmap: w=" << newImage.width ()
                        << " h=" << newImage.height ()

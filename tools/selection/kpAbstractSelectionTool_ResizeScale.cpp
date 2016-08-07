@@ -42,7 +42,7 @@
 #include <qpolygon.h>
 #include <qtimer.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "layers/selections/image/kpAbstractImageSelection.h"
@@ -117,7 +117,7 @@ void kpAbstractSelectionTool::endResizeScale ()
 void kpAbstractSelectionTool::setCursorResizeScale ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 0
-    kDebug () << "\tonSelectionResizeHandle="
+    qCDebug(kpLogTools) << "\tonSelectionResizeHandle="
                 << onSelectionResizeHandle () << endl;
 #endif
     Qt::CursorShape shape = Qt::ArrowCursor;
@@ -291,7 +291,7 @@ void kpAbstractSelectionTool::drawResizeScaleCalculateNewSelectionPosSize (
     }
 
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "\t\tnewX=" << *newX
+    qCDebug(kpLogTools) << "\t\tnewX=" << *newX
                 << " newY=" << *newY
                 << " newWidth=" << *newWidth
                 << " newHeight=" << *newHeight
@@ -307,7 +307,7 @@ void kpAbstractSelectionTool::drawResizeScale (
         const QRect &/*normalizedRect*/)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "\tresize/scale";
+    qCDebug(kpLogTools) << "\tresize/scale";
 #endif
 
     kpAbstractSelection *sel = document ()->selection ();
@@ -315,7 +315,7 @@ void kpAbstractSelectionTool::drawResizeScale (
     if (!d->dragAccepted && thisPoint == startPoint ())
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
-        kDebug () << "\t\tnop";
+        qCDebug(kpLogTools) << "\t\tnop";
     #endif
 
         setUserShapePoints (QPoint (sel->width (), sel->height ()));
@@ -376,7 +376,7 @@ void kpAbstractSelectionTool::drawResizeScale (
 void kpAbstractSelectionTool::cancelResizeScale ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\twas resize/scale sel - kill";
+    qCDebug(kpLogTools) << "\twas resize/scale sel - kill";
 #endif
 
     // NOP drag?
@@ -384,7 +384,7 @@ void kpAbstractSelectionTool::cancelResizeScale ()
         return;
 
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\t\tundo currentResizeScaleCommand";
+    qCDebug(kpLogTools) << "\t\tundo currentResizeScaleCommand";
 #endif
     d->currentResizeScaleCommand->finalize ();  // (unneeded but let's be safe)
     d->currentResizeScaleCommand->unexecute ();

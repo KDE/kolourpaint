@@ -238,14 +238,14 @@ QRegion kpView::selectionResizeHandlesViewRegion (bool forRenderer) const
 int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
 {
 #if DEBUG_KP_VIEW
-    kDebug () << "kpView::mouseOnSelectionResizeHandle(viewPoint="
+    qCDebug(kpLogViews) << "kpView::mouseOnSelectionResizeHandle(viewPoint="
                << viewPoint << ")" << endl;
 #endif
 
     if (!mouseOnSelection (viewPoint))
     {
     #if DEBUG_KP_VIEW
-        kDebug () << "\tmouse not on sel";
+        qCDebug(kpLogViews) << "\tmouse not on sel";
     #endif
         return 0;
     }
@@ -253,19 +253,19 @@ int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
 
     const QRect selViewRect = selectionViewRect ();
 #if DEBUG_KP_VIEW
-    kDebug () << "\tselViewRect=" << selViewRect;
+    qCDebug(kpLogViews) << "\tselViewRect=" << selViewRect;
 #endif
 
 
     const int atomicLength = selectionResizeHandleAtomicSize ();
 #if DEBUG_KP_VIEW
-    kDebug () << "\tatomicLength=" << atomicLength;
+    qCDebug(kpLogViews) << "\tatomicLength=" << atomicLength;
 #endif
 
     if (atomicLength <= 0)
     {
     #if DEBUG_KP_VIEW
-        kDebug () << "\tsel not large enough to have resize handles";
+        qCDebug(kpLogViews) << "\tsel not large enough to have resize handles";
     #endif
         // Want to make it possible to move a small selection
         return 0;
@@ -274,7 +274,7 @@ int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
 
     const QPoint viewPointRelSel = mouseViewPointRelativeToSelection (viewPoint);
 #if DEBUG_KP_VIEW
-    kDebug () << "\tviewPointRelSel=" << viewPointRelSel;
+    qCDebug(kpLogViews) << "\tviewPointRelSel=" << viewPointRelSel;
 #endif
 
 
@@ -320,7 +320,7 @@ int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
     else
     {
     #if DEBUG_KP_VIEW
-        kDebug () << "\tnot on sel resize handle";
+        qCDebug(kpLogViews) << "\tnot on sel resize handle";
     #endif
         return 0;
     }
@@ -331,14 +331,14 @@ int kpView::mouseOnSelectionResizeHandle (const QPoint &viewPoint) const
 bool kpView::mouseOnSelectionToSelectText (const QPoint &viewPoint) const
 {
 #if DEBUG_KP_VIEW
-    kDebug () << "kpView::mouseOnSelectionToSelectText(viewPoint="
+    qCDebug(kpLogViews) << "kpView::mouseOnSelectionToSelectText(viewPoint="
                << viewPoint << ")" << endl;
 #endif
 
     if (!mouseOnSelection (viewPoint))
     {
     #if DEBUG_KP_VIEW
-        kDebug () << "\tmouse non on sel";
+        qCDebug(kpLogViews) << "\tmouse non on sel";
     #endif
         return false;
     }
@@ -346,13 +346,13 @@ bool kpView::mouseOnSelectionToSelectText (const QPoint &viewPoint) const
     if (!textSelection ())
     {
     #if DEBUG_KP_VIEW
-        kDebug () << "\tsel not text";
+        qCDebug(kpLogViews) << "\tsel not text";
     #endif
         return false;
     }
 
 #if DEBUG_KP_VIEW
-    kDebug () << "\tmouse on sel: to move=" << mouseOnSelectionToMove ()
+    qCDebug(kpLogViews) << "\tmouse on sel: to move=" << mouseOnSelectionToMove ()
                << " to resize=" << mouseOnSelectionResizeHandle ()
                << endl;
 #endif

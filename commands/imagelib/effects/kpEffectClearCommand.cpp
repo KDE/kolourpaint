@@ -33,7 +33,7 @@
 #include "document/kpDocument.h"
 #include "pixmapfx/kpPixmapFX.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 

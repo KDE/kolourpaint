@@ -36,7 +36,7 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include <qbitmap.h>
 #include <qcolor.h>
@@ -97,7 +97,7 @@ void kpToolWidgetBase::startNewOptionRow ()
 void kpToolWidgetBase::finishConstruction (int fallBackRow, int fallBackCol)
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "kpToolWidgetBase(" << objectName ()
+    qCDebug(kpLogWidgets) << "kpToolWidgetBase(" << objectName ()
                << ")::kpToolWidgetBase(fallBack:row=" << fallBackRow
                << ",col=" << fallBackCol
                << ")"
@@ -124,7 +124,7 @@ void kpToolWidgetBase::finishConstruction (int fallBackRow, int fallBackCol)
         {
             if (!setSelected (0, 0))
             {
-                kError () << "kpToolWidgetBase::finishConstruction() "
+                qCCritical(kpLogWidgets) << "kpToolWidgetBase::finishConstruction() "
                               "can't even fall back to setSelected(row=0,col=0)" << endl;
             }
         }
@@ -210,7 +210,7 @@ QPair <int, int> kpToolWidgetBase::defaultSelectedRowAndCol () const
     }
 
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "kpToolWidgetBase(" << objectName ()
+    qCDebug(kpLogWidgets) << "kpToolWidgetBase(" << objectName ()
                << ")::defaultSelectedRowAndCol() returning row=" << row
                << " col=" << col
                << endl;
@@ -241,7 +241,7 @@ int kpToolWidgetBase::defaultSelectedCol () const
 void kpToolWidgetBase::saveSelectedAsDefault () const
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "kpToolWidgetBase(" << objectName ()
+    qCDebug(kpLogWidgets) << "kpToolWidgetBase(" << objectName ()
                << ")::saveSelectedAsDefault() row=" << m_selectedRow
                << " col=" << m_selectedCol << endl;
 #endif
@@ -262,13 +262,13 @@ void kpToolWidgetBase::saveSelectedAsDefault () const
 void kpToolWidgetBase::relayoutOptions ()
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "kpToolWidgetBase::relayoutOptions() size=" << size ();
+    qCDebug(kpLogWidgets) << "kpToolWidgetBase::relayoutOptions() size=" << size ();
 #endif
 
     while (!m_pixmaps.isEmpty () && m_pixmaps.last ().count () == 0)
     {
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kDebug () << "\tkilling #" << m_pixmaps.count () - 1;
+        qCDebug(kpLogWidgets) << "\tkilling #" << m_pixmaps.count () - 1;
     #endif
         m_pixmaps.removeLast ();
         m_pixmapRects.removeLast ();
@@ -279,8 +279,8 @@ void kpToolWidgetBase::relayoutOptions ()
         return;
 
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "\tsurvived killing of empty rows";
-    kDebug () << "\tfinding heights of rows:";
+    qCDebug(kpLogWidgets) << "\tsurvived killing of empty rows";
+    qCDebug(kpLogWidgets) << "\tfinding heights of rows:";
 #endif
 
     QList <int> maxHeightOfRow;
@@ -295,37 +295,37 @@ void kpToolWidgetBase::relayoutOptions ()
                 maxHeightOfRow [r] = m_pixmaps [r][c].height ();
         }
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kDebug () << "\t\t" << r << ": " << maxHeightOfRow [r];
+        qCDebug(kpLogWidgets) << "\t\t" << r << ": " << maxHeightOfRow [r];
     #endif
     }
 
     QList <int> rowYOffset = spreadOutElements (maxHeightOfRow, height ());
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "\tspread out offsets of rows:";
+    qCDebug(kpLogWidgets) << "\tspread out offsets of rows:";
     for (int r = 0; r < (int) rowYOffset.count (); r++)
-        kDebug () << "\t\t" << r << ": " << rowYOffset [r];
+        qCDebug(kpLogWidgets) << "\t\t" << r << ": " << rowYOffset [r];
 #endif
 
     for (int r = 0; r < (int) m_pixmaps.count (); r++)
     {
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kDebug () << "\tlaying out row " << r << ":";
+        qCDebug(kpLogWidgets) << "\tlaying out row " << r << ":";
     #endif
 
         QList <int> widths;
         for (int c = 0; c < (int) m_pixmaps [r].count (); c++)
             widths.append (m_pixmaps [r][c].width ());
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kDebug () << "\t\twidths of cols:";
+        qCDebug(kpLogWidgets) << "\t\twidths of cols:";
         for (int c = 0; c < (int) m_pixmaps [r].count (); c++)
-            kDebug () << "\t\t\t" << c << ": " << widths [c];
+            qCDebug(kpLogWidgets) << "\t\t\t" << c << ": " << widths [c];
     #endif
 
         QList <int> colXOffset = spreadOutElements (widths, width ());
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kDebug () << "\t\tspread out offsets of cols:";
+        qCDebug(kpLogWidgets) << "\t\tspread out offsets of cols:";
         for (int c = 0; c < (int) colXOffset.count (); c++)
-            kDebug () << "\t\t\t" << c << ": " << colXOffset [c];
+            qCDebug(kpLogWidgets) << "\t\t\t" << c << ": " << colXOffset [c];
     #endif
 
         for (int c = 0; c < (int) colXOffset.count (); c++)
@@ -409,7 +409,7 @@ int kpToolWidgetBase::selected () const
 bool kpToolWidgetBase::hasPreviousOption (int *row, int *col) const
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "kpToolWidgetBase(" << objectName ()
+    qCDebug(kpLogWidgets) << "kpToolWidgetBase(" << objectName ()
                << ")::hasPreviousOption() current row=" << m_selectedRow
                << " col=" << m_selectedCol
                << endl;
@@ -453,7 +453,7 @@ bool kpToolWidgetBase::hasPreviousOption (int *row, int *col) const
 bool kpToolWidgetBase::hasNextOption (int *row, int *col) const
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "kpToolWidgetBase(" << objectName ()
+    qCDebug(kpLogWidgets) << "kpToolWidgetBase(" << objectName ()
                << ")::hasNextOption() current row=" << m_selectedRow
                << " col=" << m_selectedCol
                << endl;
@@ -499,7 +499,7 @@ bool kpToolWidgetBase::hasNextOption (int *row, int *col) const
 bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "kpToolWidgetBase::setSelected(row=" << row
+    qCDebug(kpLogWidgets) << "kpToolWidgetBase::setSelected(row=" << row
                << ",col=" << col
                << ",saveAsDefault=" << saveAsDefault
                << ")"
@@ -510,7 +510,7 @@ bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
         row >= (int) m_pixmapRects.count () || col >= (int) m_pixmapRects [row].count ())
     {
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kDebug () << "\tout of range";
+        qCDebug(kpLogWidgets) << "\tout of range";
     #endif
         return false;
     }
@@ -518,7 +518,7 @@ bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
     if (row == m_selectedRow && col == m_selectedCol)
     {
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kDebug () << "\tNOP";
+        qCDebug(kpLogWidgets) << "\tNOP";
     #endif
 
         if (saveAsDefault)
@@ -542,7 +542,7 @@ bool kpToolWidgetBase::setSelected (int row, int col, bool saveAsDefault)
     update (m_pixmapRects [row][col]);
 
 #if DEBUG_KP_TOOL_WIDGET_BASE
-    kDebug () << "\tOK";
+    qCDebug(kpLogWidgets) << "\tOK";
 #endif
 
     if (saveAsDefault)
@@ -599,7 +599,7 @@ bool kpToolWidgetBase::event (QEvent *e)
     {
         QHelpEvent *he = (QHelpEvent *) e;
     #if DEBUG_KP_TOOL_WIDGET_BASE
-        kDebug () << "kpToolWidgetBase::event() QHelpEvent pos=" << he->pos ();
+        qCDebug(kpLogWidgets) << "kpToolWidgetBase::event() QHelpEvent pos=" << he->pos ();
     #endif
 
         bool showedText = false;
@@ -611,7 +611,7 @@ bool kpToolWidgetBase::event (QEvent *e)
                 {
                     const QString tip = m_toolTips [r][c];
                 #if DEBUG_KP_TOOL_WIDGET_BASE
-                    kDebug () << "\tin option: r=" << r << "c=" << c
+                    qCDebug(kpLogWidgets) << "\tin option: r=" << r << "c=" << c
                               << "tip='" << tip << "'" << endl;
                 #endif                
                     if (!tip.isEmpty ())
@@ -630,7 +630,7 @@ bool kpToolWidgetBase::event (QEvent *e)
         if (!showedText)
         {
         #if DEBUG_KP_TOOL_WIDGET_BASE
-            kDebug () << "\thiding text";
+            qCDebug(kpLogWidgets) << "\thiding text";
         #endif
             QToolTip::hideText ();
         }
@@ -673,7 +673,7 @@ void kpToolWidgetBase::mousePressEvent (QMouseEvent *e)
 void kpToolWidgetBase::paintEvent (QPaintEvent *e)
 {
 #if DEBUG_KP_TOOL_WIDGET_BASE && 1
-    kDebug () << "kpToolWidgetBase::paintEvent(): rect=" << contentsRect ();
+    qCDebug(kpLogWidgets) << "kpToolWidgetBase::paintEvent(): rect=" << contentsRect ();
 #endif
 
     // Draw frame first.
@@ -684,7 +684,7 @@ void kpToolWidgetBase::paintEvent (QPaintEvent *e)
     for (int i = 0; i < (int) m_pixmaps.count (); i++)
     {
         #if DEBUG_KP_TOOL_WIDGET_BASE && 1
-            kDebug () << "\tRow: " << i;
+            qCDebug(kpLogWidgets) << "\tRow: " << i;
         #endif
 
         for (int j = 0; j < (int) m_pixmaps [i].count (); j++)
@@ -693,7 +693,7 @@ void kpToolWidgetBase::paintEvent (QPaintEvent *e)
             QPixmap pixmap = m_pixmaps [i][j];
 
         #if DEBUG_KP_TOOL_WIDGET_BASE && 1
-            kDebug () << "\t\tCol: " << j << " rect=" << rect;
+            qCDebug(kpLogWidgets) << "\t\tCol: " << j << " rect=" << rect;
         #endif
 
             if (i == m_selectedRow && j == m_selectedCol)
@@ -702,7 +702,7 @@ void kpToolWidgetBase::paintEvent (QPaintEvent *e)
             }
 
         #if DEBUG_KP_TOOL_WIDGET_BASE && 1
-            kDebug () << "\t\t\tdraw pixmap @ x="
+            qCDebug(kpLogWidgets) << "\t\t\tdraw pixmap @ x="
                        << rect.x () + (rect.width () - pixmap.width ()) / 2
                        << " y="
                        << rect.y () + (rect.height () - pixmap.height ()) / 2

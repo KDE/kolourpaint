@@ -48,7 +48,7 @@
 
 #include <math.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <kimageio.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
@@ -81,7 +81,7 @@ kpDocument::kpDocument (int w, int h,
       d (new kpDocumentPrivate ())
 {
 #if DEBUG_KP_DOCUMENT && 0
-    kDebug () << "kpDocument::kpDocument (" << w << "," << h << ")";
+    qCDebug(kpLogDocument) << "kpDocument::kpDocument (" << w << "," << h << ")";
 #endif
 
     m_image = new kpImage(w, h, QImage::Format_ARGB32_Premultiplied);
@@ -326,7 +326,7 @@ kpImage kpDocument::getImageAt (const QRect &rect) const
 void kpDocument::setImageAt (const kpImage &image, const QPoint &at)
 {
 #if DEBUG_KP_DOCUMENT && 0
-    kDebug () << "kpDocument::setImageAt (image (w="
+    qCDebug(kpLogDocument) << "kpDocument::setImageAt (image (w="
                << image.width ()
                << ",h=" << image.height ()
                << "), x=" << at.x ()
@@ -404,7 +404,7 @@ void kpDocument::setImage (bool ofSelection, const kpImage &image)
 void kpDocument::fill (const kpColor &color)
 {
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "kpDocument::fill ()";
+    qCDebug(kpLogDocument) << "kpDocument::fill ()";
 #endif
 
     m_image->fill(color.toQRgb());
@@ -416,13 +416,13 @@ void kpDocument::fill (const kpColor &color)
 void kpDocument::resize (int w, int h, const kpColor &backgroundColor)
 {
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "kpDocument::resize (" << w << "," << h << ")";
+    qCDebug(kpLogDocument) << "kpDocument::resize (" << w << "," << h << ")";
 #endif
 
     m_oldWidth = width (), m_oldHeight = height ();
 
 #if DEBUG_KP_DOCUMENT && 1
-    kDebug () << "\toldWidth=" << m_oldWidth
+    qCDebug(kpLogDocument) << "\toldWidth=" << m_oldWidth
                << " oldHeight=" << m_oldHeight
                << endl;
 #endif

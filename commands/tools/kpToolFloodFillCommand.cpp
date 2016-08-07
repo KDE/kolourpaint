@@ -37,7 +37,7 @@
 #include "imagelib/kpImage.h"
 #include "pixmapfx/kpPixmapFX.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include <qapplication.h>
@@ -100,7 +100,7 @@ void kpToolFloodFillCommand::setFillEntireImage (bool yes)
 void kpToolFloodFillCommand::execute ()
 {
 #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-    kDebug () << "kpToolFloodFillCommand::execute() fillEntireImage="
+    qCDebug(kpLogCommands) << "kpToolFloodFillCommand::execute() fillEntireImage="
               << d->fillEntireImage << endl;
 #endif
 
@@ -129,7 +129,7 @@ void kpToolFloodFillCommand::execute ()
         else
         {
         #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-            kDebug () << "\tinvalid boundingRect - must be NOP case";
+            qCDebug(kpLogCommands) << "\tinvalid boundingRect - must be NOP case";
         #endif
         }
     }
@@ -141,7 +141,7 @@ void kpToolFloodFillCommand::execute ()
 void kpToolFloodFillCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-    kDebug () << "kpToolFloodFillCommand::unexecute() fillEntireImage="
+    qCDebug(kpLogCommands) << "kpToolFloodFillCommand::unexecute() fillEntireImage="
               << d->fillEntireImage << endl;
 #endif
 

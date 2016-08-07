@@ -52,7 +52,7 @@ kpToolEraser::kpToolEraser (kpToolEnvironment *environ, QObject *parent)
 void kpToolEraser::globalDraw ()
 {
 #if DEBUG_KP_TOOL_ERASER
-    kDebug () << "kpToolEraser::globalDraw()";
+    qCDebug(kpLogTools) << "kpToolEraser::globalDraw()";
 #endif
 
     commandHistory ()->addCommand (

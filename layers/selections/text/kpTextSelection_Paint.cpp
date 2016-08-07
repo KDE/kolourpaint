@@ -39,7 +39,7 @@
 #include "kpPreeditText.h"
 #include "pixmapfx/kpPixmapFX.h"
 
-#include <KDebug>
+#include "kpLogCategories.h"
 
 #include <QBitmap>
 #include <QFont>
@@ -115,7 +115,7 @@ void kpTextSelection::drawPreeditString(QPainter &painter, int &x, int y, const 
 void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
 {
 #if DEBUG_KP_SELECTION
-    kDebug () << "kpTextSelection::paint() textStyle: fcol="
+    qCDebug(kpLogLayers) << "kpTextSelection::paint() textStyle: fcol="
             << (int *) d->textStyle.foregroundColor ().toQRgb ()
             << " bcol="
             << (int *) d->textStyle.backgroundColor ().toQRgb ()
@@ -149,8 +149,8 @@ void kpTextSelection::paint(QImage *destPixmap, const QRect &docRect) const
     const QFontMetrics fontMetrics (theTextStyle.font ());
 
 #if DEBUG_KP_SELECTION
-    kDebug () << "kpTextSelection_Paint.cpp:DrawTextHelper";
-    kDebug () << "\theight=" << fontMetrics.height ()
+    qCDebug(kpLogLayers) << "kpTextSelection_Paint.cpp:DrawTextHelper";
+    qCDebug(kpLogLayers) << "\theight=" << fontMetrics.height ()
                << " leading=" << fontMetrics.leading ()
                << " ascent=" << fontMetrics.ascent ()
                << " descent=" << fontMetrics.descent ()

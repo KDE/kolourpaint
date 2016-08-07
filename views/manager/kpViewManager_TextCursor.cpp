@@ -55,7 +55,7 @@
 #include <qtimer.h>
 //#include <QInputContext>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "kpDefs.h"
 #include "document/kpDocument.h"
@@ -76,7 +76,7 @@ bool kpViewManager::textCursorEnabled () const
 void kpViewManager::setTextCursorEnabled (bool yes)
 {
 #if DEBUG_KP_VIEW_MANAGER && 1
-    kDebug () << "kpViewManager::setTextCursorEnabled(" << yes << ")";
+    qCDebug(kpLogViews) << "kpViewManager::setTextCursorEnabled(" << yes << ")";
 #endif
 
     if (yes == textCursorEnabled ())
@@ -203,7 +203,7 @@ QRect kpViewManager::textCursorRect () const
 void kpViewManager::updateTextCursor ()
 {
 #if DEBUG_KP_VIEW_MANAGER && 0
-    kDebug () << "kpViewManager::updateTextCursor()";
+    qCDebug(kpLogViews) << "kpViewManager::updateTextCursor()";
 #endif
 
     const QRect r = textCursorRect ();
@@ -222,7 +222,7 @@ void kpViewManager::updateTextCursor ()
 void kpViewManager::slotTextCursorBlink ()
 {
 #if DEBUG_KP_VIEW_MANAGER && 0
-    kDebug () << "kpViewManager::slotTextCursorBlink() cursorBlinkState="
+    qCDebug(kpLogViews) << "kpViewManager::slotTextCursorBlink() cursorBlinkState="
                << d->textCursorBlinkState << endl;
 #endif
 

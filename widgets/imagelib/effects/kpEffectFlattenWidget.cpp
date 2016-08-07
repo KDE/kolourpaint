@@ -38,7 +38,7 @@
 #include <kcolorbutton.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include <qcheckbox.h>
@@ -141,7 +141,7 @@ bool kpEffectFlattenWidget::isNoOp () const
 kpImage kpEffectFlattenWidget::applyEffect (const kpImage &image)
 {
 #if DEBUG_KP_EFFECT_FLATTEN
-    kDebug () << "kpEffectFlattenWidget::applyEffect() nop="
+    qCDebug(kpLogWidgets) << "kpEffectFlattenWidget::applyEffect() nop="
                << isNoOp () << endl;
 #endif
 
@@ -166,7 +166,7 @@ kpEffectCommandBase *kpEffectFlattenWidget::createCommand (
 void kpEffectFlattenWidget::slotEnableChanged (bool enable)
 {
 #if DEBUG_KP_EFFECT_FLATTEN
-    kDebug () << "kpEffectFlattenWidget::slotEnableChanged(" << enable
+    qCDebug(kpLogWidgets) << "kpEffectFlattenWidget::slotEnableChanged(" << enable
                << ") enableButton=" << m_enableCheckBox->isChecked ()
                << endl;
 #endif

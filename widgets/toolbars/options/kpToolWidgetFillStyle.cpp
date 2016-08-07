@@ -36,7 +36,7 @@
 #include "pixmapfx/kpPixmapFX.h"
 #include "tools/kpTool.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include <qbrush.h>
 #include <qpainter.h>
@@ -140,7 +140,7 @@ QString kpToolWidgetFillStyle::fillStyleName (FillStyle fs) const
 kpToolWidgetFillStyle::FillStyle kpToolWidgetFillStyle::fillStyle () const
 {
 #if DEBUG_KP_TOOL_WIDGET_FILL_STYLE
-    kDebug () << "kpToolWidgetFillStyle::fillStyle() selected="
+    qCDebug(kpLogWidgets) << "kpToolWidgetFillStyle::fillStyle() selected="
                << selectedRow ()
                << endl;
 #endif

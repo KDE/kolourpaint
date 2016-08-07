@@ -39,7 +39,7 @@
 #include "tools/kpToolAction.h"
 #include "views/manager/kpViewManager.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 #include <kiconloader.h>
 
@@ -140,7 +140,7 @@ void kpToolZoom::end ()
 void kpToolZoom::globalDraw ()
 {
 #if DEBUG_KP_TOOL_ZOOM
-    kDebug () << "CALL";
+    qCDebug(kpLogTools) << "CALL";
 #endif
     environ ()->fitToPage ();
 }
@@ -159,7 +159,7 @@ void kpToolZoom::beginDraw ()
 void kpToolZoom::draw (const QPoint &thisPoint, const QPoint &, const QRect &normalizedRect)
 {
 #if DEBUG_KP_TOOL_ZOOM
-    kDebug () << "kpToomZoom::draw() currentPoint=" << currentPoint ()
+    qCDebug(kpLogTools) << "kpToomZoom::draw() currentPoint=" << currentPoint ()
               << " lastPoint=" << lastPoint ()
               << endl;
 #endif
@@ -217,7 +217,7 @@ void kpToolZoom::releasedAllButtons ()
 void kpToolZoom::endDraw (const QPoint &, const QRect &normalizedRect)
 {
 #if DEBUG_KP_TOOL_ZOOM
-    kDebug () << "kpToolZoom::endDraw(rect=" << normalizedRect << ")"
+    qCDebug(kpLogTools) << "kpToolZoom::endDraw(rect=" << normalizedRect << ")"
         << " dragHasBegun=" << d->dragHasBegun << endl;
 #endif
 

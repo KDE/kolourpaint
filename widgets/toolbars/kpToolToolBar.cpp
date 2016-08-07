@@ -37,7 +37,7 @@
 #include <qevent.h>
 #include <qtoolbutton.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "kpDefs.h"
 #include "tools/kpTool.h"
@@ -194,7 +194,7 @@ kpTool *kpToolToolBar::tool () const
 void kpToolToolBar::selectTool (const kpTool *tool, bool reselectIfSameTool)
 {
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "kpToolToolBar::selectTool (tool=" << tool
+    qCDebug(kpLogWidgets) << "kpToolToolBar::selectTool (tool=" << tool
                << ") currentTool=" << m_currentTool
                << endl;
 #endif
@@ -283,7 +283,7 @@ void kpToolToolBar::slotToolButtonClicked ()
     QAbstractButton *b = m_buttonGroup->checkedButton();
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "kpToolToolBar::slotToolButtonClicked() button=" << b;
+    qCDebug(kpLogWidgets) << "kpToolToolBar::slotToolButtonClicked() button=" << b;
 #endif
 
     kpTool *tool = 0;
@@ -297,7 +297,7 @@ void kpToolToolBar::slotToolButtonClicked ()
     }
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "\ttool=" << tool
+    qCDebug(kpLogWidgets) << "\ttool=" << tool
                << " currentTool=" << m_currentTool
                << endl;
 #endif
@@ -340,7 +340,7 @@ void kpToolToolBar::slotToolActionActivated ()
     const kpTool *tool = dynamic_cast<const kpTool *>(sender());
 
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "kpToolToolBar::slotToolActionActivated() tool="
+    qCDebug(kpLogWidgets) << "kpToolToolBar::slotToolActionActivated() tool="
                << (tool ? tool->objectName () : "null")
                << endl;
 #endif
@@ -354,7 +354,7 @@ void kpToolToolBar::slotToolActionActivated ()
 void kpToolToolBar::adjustToOrientation(Qt::Orientation o)
 {
 #if DEBUG_KP_TOOL_TOOL_BAR
-    kDebug () << "kpToolToolBar::adjustToOrientation("
+    qCDebug(kpLogWidgets) << "kpToolToolBar::adjustToOrientation("
                << (o == Qt::Vertical ? "vertical" : "horizontal")
                << ") called!" << endl;
 #endif

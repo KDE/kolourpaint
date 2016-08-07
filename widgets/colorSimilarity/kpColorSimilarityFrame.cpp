@@ -33,7 +33,7 @@
 
 #include "kpColorSimilarityCubeRenderer.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 //---------------------------------------------------------------------
 

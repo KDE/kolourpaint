@@ -36,7 +36,7 @@
 #include "kpDefs.h"
 #include "generic/kpSetOverrideCursorSaver.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include <qcursor.h>
@@ -69,7 +69,7 @@ kpCommandSize::SizeType kpToolImageSelectionTransparencyCommand::size () const
 void kpToolImageSelectionTransparencyCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolImageSelectionTransparencyCommand::execute()";
+    qCDebug(kpLogCommands) << "kpToolImageSelectionTransparencyCommand::execute()";
 #endif
 
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
@@ -84,7 +84,7 @@ void kpToolImageSelectionTransparencyCommand::execute ()
 void kpToolImageSelectionTransparencyCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolImageSelectionTransparencyCommand::unexecute()";
+    qCDebug(kpLogCommands) << "kpToolImageSelectionTransparencyCommand::unexecute()";
 #endif
 
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);

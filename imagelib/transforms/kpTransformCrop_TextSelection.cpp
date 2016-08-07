@@ -48,8 +48,8 @@ void kpTransformCrop_TextSelection (kpMainWindow *mainWindow,
     macroCmd->addCommand (resizeDocCommand);
 
 #if DEBUG_KP_TOOL_CROP
-    kDebug () << "\tisText";
-    kDebug () << "\tclearing doc with trans cmd";
+    qCDebug(kpLogImagelib) << "\tisText";
+    qCDebug(kpLogImagelib) << "\tclearing doc with trans cmd";
 #endif
     macroCmd->addCommand (
         new kpEffectClearCommand (
@@ -58,7 +58,7 @@ void kpTransformCrop_TextSelection (kpMainWindow *mainWindow,
             environ));
 
 #if DEBUG_KP_TOOL_CROP
-    kDebug () << "\tmoving sel to (0,0) cmd";
+    qCDebug(kpLogImagelib) << "\tmoving sel to (0,0) cmd";
 #endif
     kpToolSelectionMoveCommand *moveCmd =
         new kpToolSelectionMoveCommand (

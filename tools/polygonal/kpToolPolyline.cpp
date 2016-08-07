@@ -31,7 +31,7 @@
 
 #include "kpToolPolyline.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "imagelib/kpPainter.h"
@@ -80,7 +80,7 @@ void kpToolPolyline::DrawShape (kpImage *image,
 void kpToolPolyline::endDraw (const QPoint &, const QRect &)
 {
 #if DEBUG_KP_TOOL_POLYLINE
-    kDebug () << "kpToolPolyline::endDraw()  points="
+    qCDebug(kpLogTools) << "kpToolPolyline::endDraw()  points="
         << points ()->toList () << endl;
 #endif
 
@@ -94,7 +94,7 @@ void kpToolPolyline::endDraw (const QPoint &, const QRect &)
     if (points ()->count () >= kpToolPolygonalBase::MaxPoints)
     {
     #if DEBUG_KP_TOOL_POLYLINE
-        kDebug () << "\tending shape";
+        qCDebug(kpLogTools) << "\tending shape";
     #endif
         endShape ();
         return;

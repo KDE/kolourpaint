@@ -37,7 +37,7 @@
 #include "views/kpThumbnailView.h"
 #include "tools/kpTool.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include <QAction>
@@ -84,7 +84,7 @@ kpThumbnailView *kpThumbnail::view () const
 void kpThumbnail::setView (kpThumbnailView *view)
 {
 #if DEBUG_KP_THUMBNAIL
-    kDebug () << "kpThumbnail::setView(" << view << ")";
+    qCDebug(kpLogMisc) << "kpThumbnail::setView(" << view << ")";
 #endif
 
     if (d->view == view)
@@ -131,7 +131,7 @@ void kpThumbnail::updateCaption ()
 void kpThumbnail::slotViewDestroyed ()
 {
 #if DEBUG_KP_THUMBNAIL
-    kDebug () << "kpThumbnail::slotViewDestroyed()";
+    qCDebug(kpLogMisc) << "kpThumbnail::slotViewDestroyed()";
 #endif
 
     d->view = 0;
@@ -143,7 +143,7 @@ void kpThumbnail::slotViewDestroyed ()
 void kpThumbnail::resizeEvent (QResizeEvent *e)
 {
 #if DEBUG_KP_THUMBNAIL
-    kDebug () << "kpThumbnail::resizeEvent(" << width ()
+    qCDebug(kpLogMisc) << "kpThumbnail::resizeEvent(" << width ()
                << "," << height () << ")" << endl;
 #endif
 

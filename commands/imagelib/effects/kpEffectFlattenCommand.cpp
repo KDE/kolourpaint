@@ -32,7 +32,7 @@
 #include "kpEffectFlattenCommand.h"
 #include "imagelib/effects/kpEffectFlatten.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 

@@ -41,7 +41,7 @@
 #include <qpixmap.h>
 #include <qpolygon.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 
@@ -174,7 +174,7 @@ double kpColorSimilarityHolder::colorSimilarity () const
 void kpColorSimilarityHolder::setColorSimilarity (double similarity)
 {
 #if DEBUG_KP_COLOR_SIMILARITY_CUBE
-    kDebug () << "kpColorSimilarityHolder::setColorSimilarity(" << similarity << ")";
+    qCDebug(kpLogWidgets) << "kpColorSimilarityHolder::setColorSimilarity(" << similarity << ")";
 #endif
 
     if (m_colorSimilarity == similarity)

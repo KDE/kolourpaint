@@ -37,7 +37,7 @@
 #include <QList>
 #include <QPainter>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "kpColor.h"
 #include "kpImage.h"
@@ -164,7 +164,7 @@ void kpFloodFill::prepareColorToChange ()
         return;
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "kpFloodFill::prepareColorToChange()";
+    qCDebug(kpLogImagelib) << "kpFloodFill::prepareColorToChange()";
 #endif
 
     d->colorToChange = kpPixmapFX::getColorAtPixel (*d->imagePtr, QPoint (d->x, d->y));
@@ -256,7 +256,7 @@ int kpFloodFill::findMaxX (int y, int x) const
 void kpFloodFill::addLine (int y, int x1, int x2)
 {
 #if DEBUG_KP_FLOOD_FILL && 0
-    kDebug () << "kpFillCommand::fillAddLine ("
+    qCDebug(kpLogImagelib) << "kpFillCommand::fillAddLine ("
               << y << "," << x1 << "," << x2 << ")" << endl;
 #endif
 
@@ -302,7 +302,7 @@ void kpFloodFill::prepare ()
         return;
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "kpFloodFill::prepare()";
+    qCDebug(kpLogImagelib) << "kpFloodFill::prepare()";
 #endif
 
     prepareColorToChange ();
@@ -311,7 +311,7 @@ void kpFloodFill::prepare ()
 
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "\tperforming NOP check";
+    qCDebug(kpLogImagelib) << "\tperforming NOP check";
 #endif
 
     // get the color we need to replace
@@ -324,7 +324,7 @@ void kpFloodFill::prepare ()
     }
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "\tcreating fillLinesCache";
+    qCDebug(kpLogImagelib) << "\tcreating fillLinesCache";
 #endif
 
     // ready cache
@@ -332,7 +332,7 @@ void kpFloodFill::prepare ()
          d->fillLinesCache.append (QLinkedList <kpFillLine> ());
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "\tcreating fill lines";
+    qCDebug(kpLogImagelib) << "\tcreating fill lines";
 #endif
 
     // draw initial line
@@ -343,7 +343,7 @@ void kpFloodFill::prepare ()
          ++it)
     {
     #if DEBUG_KP_FLOOD_FILL && 0
-        kDebug () << "Expanding from y=" << (*it).m_y
+        qCDebug(kpLogImagelib) << "Expanding from y=" << (*it).m_y
                    << " x1=" << (*it).m_x1
                    << " x2=" << (*it).m_x2
                    << endl;
@@ -363,7 +363,7 @@ void kpFloodFill::prepare ()
     }
 
 #if DEBUG_KP_FLOOD_FILL && 1
-    kDebug () << "\tfinalising memory usage";
+    qCDebug(kpLogImagelib) << "\tfinalising memory usage";
 #endif
 
     // finalize memory usage

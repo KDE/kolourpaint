@@ -31,7 +31,7 @@
 
 #include "kpToolCurve.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "imagelib/kpPainter.h"
@@ -117,7 +117,7 @@ bool kpToolCurve::drawingALine () const
 void kpToolCurve::endDraw (const QPoint &, const QRect &)
 {
 #if DEBUG_KP_TOOL_CURVE
-    kDebug () << "kpToolCurve::endDraw()  points="
+    qCDebug(kpLogTools) << "kpToolCurve::endDraw()  points="
         << points ()->toList () << endl;
 #endif
 
@@ -167,7 +167,7 @@ void kpToolCurve::endDraw (const QPoint &, const QRect &)
     // Have initial line and both control points?
     case 4:
     #if DEBUG_KP_TOOL_CURVE
-        kDebug () << "\tending shape";
+        qCDebug(kpLogTools) << "\tending shape";
     #endif
         endShape ();
         break;

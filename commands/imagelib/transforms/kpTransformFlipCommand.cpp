@@ -34,7 +34,7 @@
 #include <qpixmap.h>
 #include <qradiobutton.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "layers/selections/image/kpAbstractImageSelection.h"
@@ -79,7 +79,7 @@ QString kpTransformFlipCommand::name () const
         opName = i18n ("Flip vertically");
     else
     {
-        kError () << "kpTransformFlipCommand::name() not asked to flip" << endl;
+        qCCritical(kpLogCommands) << "kpTransformFlipCommand::name() not asked to flip" << endl;
         return QString();
     }
 #endif

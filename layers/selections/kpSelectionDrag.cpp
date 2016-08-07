@@ -34,7 +34,7 @@
 #include <qdatastream.h>
 #include <QImage>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "kpSelectionFactory.h"
 #include "layers/selections/image/kpAbstractImageSelection.h"
@@ -51,7 +51,7 @@ const char * const kpSelectionDrag::SelectionMimeType =
 kpSelectionDrag::kpSelectionDrag (const kpAbstractImageSelection &sel)
 {
 #if DEBUG_KP_SELECTION_DRAG && 1
-    kDebug () << "kpSelectionDrag() w=" << sel.width ()
+    qCDebug(kpLogLayers) << "kpSelectionDrag() w=" << sel.width ()
                << " h=" << sel.height ()
                << endl;
 #endif
@@ -70,14 +70,14 @@ kpSelectionDrag::kpSelectionDrag (const kpAbstractImageSelection &sel)
     // OPT: an awful waste of memory storing image in both selection and QImage
     const QImage image = sel.baseImage ();
 #if DEBUG_KP_SELECTION_DRAG && 1
-    kDebug () << "\timage: w=" << image.width ()
+    qCDebug(kpLogLayers) << "\timage: w=" << image.width ()
                << " h=" << image.height ()
                << endl;
 #endif
     if (image.isNull ())
     {
         // TODO: proper error handling.
-        kError () << "kpSelectionDrag::setSelection() could not convert to image"
+        qCCritical(kpLogLayers) << "kpSelectionDrag::setSelection() could not convert to image"
                    << endl;
     }
     else
@@ -92,7 +92,7 @@ bool kpSelectionDrag::canDecode(const QMimeData *mimeData)
     Q_ASSERT(mimeData);
 
 #if DEBUG_KP_SELECTION_DRAG
-    kDebug() << "kpSelectionDrag::canDecode()"
+    qCDebug(kpLogLayers) << "kpSelectionDrag::canDecode()"
              << "hasSel=" << mimeData->hasFormat(kpSelectionDrag::SelectionMimeType)
              << "hasImage=" << mimeData->hasImage();
 #endif
@@ -108,14 +108,14 @@ bool kpSelectionDrag::canDecode(const QMimeData *mimeData)
 kpAbstractImageSelection *kpSelectionDrag::decode(const QMimeData *mimeData)
 {
 #if DEBUG_KP_SELECTION_DRAG
-    kDebug () << "kpSelectionDrag::decode(kpAbstractSelection)";
+    qCDebug(kpLogLayers) << "kpSelectionDrag::decode(kpAbstractSelection)";
 #endif
     Q_ASSERT (mimeData);
 
     if (mimeData->hasFormat (kpSelectionDrag::SelectionMimeType))
     {
     #if DEBUG_KP_SELECTION_DRAG
-        kDebug () << "\tmimeSource hasFormat selection - just return it in QByteArray";
+        qCDebug(kpLogLayers) << "\tmimeSource hasFormat selection - just return it in QByteArray";
     #endif
         QByteArray data = mimeData->data (kpSelectionDrag::SelectionMimeType);
         QDataStream stream (&data, QIODevice::ReadOnly);
@@ -125,14 +125,14 @@ kpAbstractImageSelection *kpSelectionDrag::decode(const QMimeData *mimeData)
     else
     {
     #if DEBUG_KP_SELECTION_DRAG
-        kDebug () << "\tmimeSource doesn't provide selection - try image";
+        qCDebug(kpLogLayers) << "\tmimeSource doesn't provide selection - try image";
     #endif
 
         QImage image = qvariant_cast <QImage> (mimeData->imageData ());
         if (!image.isNull ())
         {
         #if DEBUG_KP_SELECTION_DRAG
-            kDebug () << "\tok w=" << image.width () << " h=" << image.height ();
+            qCDebug(kpLogLayers) << "\tok w=" << image.width () << " h=" << image.height ();
         #endif
 
             return new kpRectangularImageSelection (
@@ -141,7 +141,7 @@ kpAbstractImageSelection *kpSelectionDrag::decode(const QMimeData *mimeData)
         else
         {
         #if DEBUG_KP_SELECTION_DRAG
-            kDebug () << "kpSelectionDrag::decode(kpAbstractSelection) mimeSource had no sel "
+            qCDebug(kpLogLayers) << "kpSelectionDrag::decode(kpAbstractSelection) mimeSource had no sel "
                           "and could not decode to image" << endl;
         #endif
             return 0;

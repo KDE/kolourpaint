@@ -36,7 +36,7 @@
 #include "environments/dialogs/imagelib/transforms/kpTransformDialogEnvironment.h"
 #include "views/manager/kpViewManager.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <kiconloader.h>
 #include <klocale.h>
 

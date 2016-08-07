@@ -37,7 +37,7 @@
 #include "environments/tools/kpToolEnvironment.h"
 #include "commands/tools/kpToolFloodFillCommand.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include <qapplication.h>
@@ -89,7 +89,7 @@ void kpToolFloodFill::begin ()
 void kpToolFloodFill::beginDraw ()
 {
 #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-    kDebug () << "kpToolFloodFill::beginDraw()";
+    qCDebug(kpLogTools) << "kpToolFloodFill::beginDraw()";
 #endif
 
     QApplication::setOverrideCursor (Qt::WaitCursor);
@@ -104,7 +104,7 @@ void kpToolFloodFill::beginDraw ()
             environ ()->commandEnvironment ());
 
     #if DEBUG_KP_TOOL_FLOOD_FILL && 1
-        kDebug () << "\tperforming new-doc-corner-case check";
+        qCDebug(kpLogTools) << "\tperforming new-doc-corner-case check";
     #endif
 
         if (document ()->url ().isEmpty () && !document ()->isModified ())

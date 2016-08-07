@@ -31,7 +31,7 @@
 
 #include "layers/selections/image/kpFreeFormImageSelection.h"
 
-#include <KDebug>
+#include "kpLogCategories.h"
 
 #include "imagelib/kpPainter.h"
 
@@ -176,9 +176,9 @@ QPolygon kpFreeFormImageSelection::originalPoints () const
 static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
 {
 #if DEBUG_KP_SELECTION
-    kDebug () << "kpFreeFormImageSelection.cpp:RecalculateCardinallyAdjacentPoints()"
+    qCDebug(kpLogLayers) << "kpFreeFormImageSelection.cpp:RecalculateCardinallyAdjacentPoints()"
               << endl;
-    kDebug () << "\tpoints=" << points;
+    qCDebug(kpLogLayers) << "\tpoints=" << points;
 #endif
 
     // Filter out duplicates.
@@ -191,7 +191,7 @@ static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
         noDups.append (p);
     }
 #if DEBUG_KP_SELECTION
-    kDebug () << "\twithout dups=" << noDups;
+    qCDebug(kpLogLayers) << "\twithout dups=" << noDups;
 #endif
 
     // Interpolate to ensure cardinal adjacency.
@@ -223,7 +223,7 @@ static QPolygon RecalculateCardinallyAdjacentPoints (const QPolygon &points)
             cardPoints.append (p);
     }
 #if DEBUG_KP_SELECTION
-    kDebug () << "\tcardinally adjacent=" << cardPoints;
+    qCDebug(kpLogLayers) << "\tcardinally adjacent=" << cardPoints;
 #endif
 
     return cardPoints;

@@ -36,7 +36,7 @@
 #include <qlist.h>
 #include <qtimer.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "kpDefs.h"
 #include "document/kpDocument.h"
@@ -103,13 +103,13 @@ kpDocument *kpViewManager::document () const
 void kpViewManager::registerView (kpView *view)
 {
 #if DEBUG_KP_VIEW_MANAGER && 1
-    kDebug () << "kpViewManager::registerView (" << view << ")";
+    qCDebug(kpLogViews) << "kpViewManager::registerView (" << view << ")";
 #endif
     Q_ASSERT (view);
     Q_ASSERT (!d->views.contains (view));
 
 #if DEBUG_KP_VIEW_MANAGER && 1
-    kDebug () << "\tadded view";
+    qCDebug(kpLogViews) << "\tadded view";
 #endif
     view->setCursor (d->cursor);
     d->views.append (view);
@@ -168,7 +168,7 @@ kpView *kpViewManager::viewUnderCursor (bool usingQt) const
 void kpViewManager::setViewUnderCursor (kpView *view)
 {
 #if DEBUG_KP_VIEW_MANAGER && 1
-    kDebug () << "kpViewManager::setViewUnderCursor ("
+    qCDebug(kpLogViews) << "kpViewManager::setViewUnderCursor ("
                << (view ? view->objectName () : "(none)") << ")"
                << "  old=" << (d->viewUnderCursor ? d->viewUnderCursor->objectName () : "(none)")
                << endl;
@@ -187,7 +187,7 @@ void kpViewManager::setViewUnderCursor (kpView *view)
         if (d->tempImage && d->tempImage->isBrush ())
         {
         #if DEBUG_KP_VIEW_MANAGER && 1
-            kDebug () << "\thiding brush pixmap since cursor left view";
+            qCDebug(kpLogViews) << "\thiding brush pixmap since cursor left view";
         #endif
             updateViews (d->tempImage->rect ());
         }
@@ -197,7 +197,7 @@ void kpViewManager::setViewUnderCursor (kpView *view)
         if (d->mainWindow->tool ())
         {
         #if DEBUG_KP_VIEW_MANAGER && 1
-            kDebug () << "\tnotify tool that something changed below cursor";
+            qCDebug(kpLogViews) << "\tnotify tool that something changed below cursor";
         #endif
             d->mainWindow->tool ()->somethingBelowTheCursorChanged ();
         }
@@ -264,7 +264,7 @@ const kpTempImage *kpViewManager::tempImage () const
 void kpViewManager::setTempImage (const kpTempImage &tempImage)
 {
 #if DEBUG_KP_VIEW_MANAGER
-    kDebug () << "kpViewManager::setTempImage(isBrush="
+    qCDebug(kpLogViews) << "kpViewManager::setTempImage(isBrush="
                << tempImage.isBrush ()
                << ",topLeft=" << tempImage.topLeft ()
                << ",image.rect=" << tempImage.image ().rect ()

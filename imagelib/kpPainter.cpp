@@ -41,7 +41,7 @@
 #include <QPainter>
 #include <QPolygon>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <krandom.h>
 
 //---------------------------------------------------------------------
@@ -72,7 +72,7 @@ QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
     double probability)
 {
 #if DEBUG_KP_PAINTER
-    kDebug () << "CALL(startPoint=" << startPoint
+    qCDebug(kpLogImagelib) << "CALL(startPoint=" << startPoint
               << ",endPoint=" << endPoint << ")";
 #endif
 
@@ -84,7 +84,7 @@ QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
                         ::RandomNumberFrom0to999 () < probabilityTimes1000)
 
 #if 0
-    kDebug () << "prob=" << probability
+    qCDebug(kpLogImagelib) << "prob=" << probability
                << " *1000=" << probabilityTimes1000;
 #endif
 
@@ -285,7 +285,7 @@ static bool ReadableImageWashRect (QPainter *rgbPainter,
     bool didSomething = false;
 
 #if DEBUG_KP_PAINTER && 0
-    kDebug () << "kppixmapfx.cpp:WashRect(imageRect=" << imageRect
+    qCDebug(kpLogImagelib) << "kppixmapfx.cpp:WashRect(imageRect=" << imageRect
                << ",drawRect=" << drawRect
                << ")" << endl;
 #endif
@@ -395,7 +395,7 @@ static QRect Wash (kpImage *image,
     pack.readableImageRect = kpTool::neededRect (normalizedRect,
         qMax (pack.penWidth, pack.penHeight));
 #if DEBUG_KP_PAINTER
-    kDebug () << "kppainter.cpp:Wash() startPoint=" << startPoint
+    qCDebug(kpLogImagelib) << "kppainter.cpp:Wash() startPoint=" << startPoint
               << " endPoint=" << endPoint
               << " --> normalizedRect=" << normalizedRect
               << " readableImageRect=" << pack.readableImageRect
@@ -422,7 +422,7 @@ void WashHelperSetup (QPainter *rgbPainter, const WashPack *pack)
 static QRect WashLineHelper (QPainter *rgbPainter, void *data)
 {
 #if DEBUG_KP_PAINTER && 0
-    kDebug () << "Washing pixmap (w=" << rect.width ()
+    qCDebug(kpLogImagelib) << "Washing pixmap (w=" << rect.width ()
                 << ",h=" << rect.height () << ")" << endl;
     QTime timer;
     int convAndWashTime;
@@ -463,7 +463,7 @@ static QRect WashLineHelper (QPainter *rgbPainter, void *data)
 
 #if DEBUG_KP_PAINTER && 0
     int ms = timer.restart ();
-    kDebug () << "\ttried to wash: " << ms << "ms"
+    qCDebug(kpLogImagelib) << "\ttried to wash: " << ms << "ms"
                 << " (" << (ms ? (rect.width () * rect.height () / ms) : -1234)
                 << " pixels/ms)"
                 << endl;
@@ -498,7 +498,7 @@ QRect kpPainter::washLine (kpImage *image,
 static QRect WashRectHelper (QPainter *rgbPainter, void *data)
 {
 #if DEBUG_KP_PAINTER && 0
-    kDebug () << "Washing pixmap (w=" << rect.width ()
+    qCDebug(kpLogImagelib) << "Washing pixmap (w=" << rect.width ()
                 << ",h=" << rect.height () << ")" << endl;
     QTime timer;
     int convAndWashTime;
@@ -528,7 +528,7 @@ static QRect WashRectHelper (QPainter *rgbPainter, void *data)
 
 #if DEBUG_KP_PAINTER && 0
     int ms = timer.restart ();
-    kDebug () << "\ttried to wash: " << ms << "ms"
+    qCDebug(kpLogImagelib) << "\ttried to wash: " << ms << "ms"
                 << " (" << (ms ? (rect.width () * rect.height () / ms) : -1234)
                 << " pixels/ms)"
                 << endl;
@@ -565,7 +565,7 @@ void kpPainter::sprayPoints (kpImage *image,
         int spraycanSize)
 {
 #if DEBUG_KP_PAINTER
-    kDebug () << "kpPainter::sprayPoints()";
+    qCDebug(kpLogImagelib) << "kpPainter::sprayPoints()";
 #endif
 
     Q_ASSERT (spraycanSize > 0);

@@ -32,7 +32,7 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <kfontaction.h>
 #include <kfontsizeaction.h>
 #include <klocale.h>
@@ -103,7 +103,7 @@ void kpMainWindow::readAndApplyTextSettings ()
     const QString font (cfg.readEntry (kpSettingFontFamily, QString::fromLatin1 ("Times")));
     d->actionTextFontFamily->setFont (font);
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "asked setFont to set to=" << font
+    qCDebug(kpLogMainWindow) << "asked setFont to set to=" << font
               << "- got back=" << d->actionTextFontFamily->font ();
 #endif
     d->actionTextFontSize->setFontSize (cfg.readEntry (kpSettingFontSize, 14));
@@ -121,7 +121,7 @@ void kpMainWindow::readAndApplyTextSettings ()
 void kpMainWindow::enableTextToolBarActions (bool enable)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::enableTextToolBarActions(" << enable << ")";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::enableTextToolBarActions(" << enable << ")";
 #endif
 
     d->actionTextFontFamily->setEnabled (enable);
@@ -134,7 +134,7 @@ void kpMainWindow::enableTextToolBarActions (bool enable)
     if (textToolBar ())
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\thave toolbar - setShown";
+        qCDebug(kpLogMainWindow) << "\thave toolbar - setShown";
     #endif
         // COMPAT: KDE4 does not place the Text Tool Bar in a new row, underneath
         //         the Main Tool Bar, if there isn't enough room.  This makes
@@ -148,7 +148,7 @@ void kpMainWindow::enableTextToolBarActions (bool enable)
 void kpMainWindow::slotTextFontFamilyChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotTextFontFamilyChanged() alive="
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextFontFamilyChanged() alive="
                << d->isFullyConstructed
                << "fontFamily="
                << d->actionTextFontFamily->font ()
@@ -183,7 +183,7 @@ void kpMainWindow::slotTextFontFamilyChanged ()
 void kpMainWindow::slotTextFontSizeChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotTextFontSizeChanged() alive="
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextFontSizeChanged() alive="
                << d->isFullyConstructed
                << " fontSize="
                << d->actionTextFontSize->fontSize ()
@@ -216,7 +216,7 @@ void kpMainWindow::slotTextFontSizeChanged ()
 void kpMainWindow::slotTextBoldChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotTextFontBoldChanged() alive="
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextFontBoldChanged() alive="
                << d->isFullyConstructed
                << " bold="
                << d->actionTextBold->isChecked ()
@@ -241,7 +241,7 @@ void kpMainWindow::slotTextBoldChanged ()
 void kpMainWindow::slotTextItalicChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotTextFontItalicChanged() alive="
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextFontItalicChanged() alive="
                << d->isFullyConstructed
                << " bold="
                << d->actionTextItalic->isChecked ()
@@ -266,7 +266,7 @@ void kpMainWindow::slotTextItalicChanged ()
 void kpMainWindow::slotTextUnderlineChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotTextFontUnderlineChanged() alive="
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextFontUnderlineChanged() alive="
                << d->isFullyConstructed
                << " underline="
                << d->actionTextUnderline->isChecked ()
@@ -291,7 +291,7 @@ void kpMainWindow::slotTextUnderlineChanged ()
 void kpMainWindow::slotTextStrikeThruChanged ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotTextStrikeThruChanged() alive="
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotTextStrikeThruChanged() alive="
                << d->isFullyConstructed
                << " strikeThru="
                << d->actionTextStrikeThru->isChecked ()
@@ -353,7 +353,7 @@ kpTextStyle kpMainWindow::textStyle () const
 void kpMainWindow::setTextStyle (const kpTextStyle &textStyle_)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::setTextStyle()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::setTextStyle()";
 #endif
 
     d->settingTextStyle++;

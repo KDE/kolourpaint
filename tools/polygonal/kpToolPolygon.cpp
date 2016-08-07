@@ -128,7 +128,7 @@ kpColor kpToolPolygon::drawingBackgroundColor () const
 void kpToolPolygon::endDraw (const QPoint &, const QRect &)
 {
 #if DEBUG_KP_TOOL_POLYGON
-    kDebug () << "kpToolPolygon::endDraw()  points="
+    qCDebug(kpLogTools) << "kpToolPolygon::endDraw()  points="
         << points ()->toList () << endl;
 #endif
 
@@ -142,7 +142,7 @@ void kpToolPolygon::endDraw (const QPoint &, const QRect &)
     if (points ()->count () >= kpToolPolygonalBase::MaxPoints)
     {
     #if DEBUG_KP_TOOL_POLYGON
-        kDebug () << "\tending shape";
+        qCDebug(kpLogTools) << "\tending shape";
     #endif
         endShape ();
         return;

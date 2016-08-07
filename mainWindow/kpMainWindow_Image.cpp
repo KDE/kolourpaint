@@ -61,7 +61,7 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 #include <KToggleAction>
 #include <kiconloader.h>
@@ -287,7 +287,7 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
     bool addSelContentCmdIfSelAvail)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::addImageOrSelectionCommand()"
+    qCDebug(kpLogMainWindow) << "kpMainWindow::addImageOrSelectionCommand()"
                << " addSelCreateCmdIfSelAvail=" << addSelCreateCmdIfSelAvail
                << " addSelContentCmdIfSelAvail=" << addSelContentCmdIfSelAvail
                << endl;
@@ -302,7 +302,7 @@ void kpMainWindow::addImageOrSelectionCommand (kpCommand *cmd,
 
     kpAbstractSelection *sel = d->document->selection ();
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "\timage sel=" << sel
+    qCDebug(kpLogMainWindow) << "\timage sel=" << sel
                << " sel->hasContent=" << (sel ? sel->hasContent () : 0)
                << endl;
 #endif

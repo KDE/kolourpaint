@@ -35,7 +35,7 @@
 #include "commands/imagelib/effects/kpEffectReduceColorsCommand.h"
 #include "pixmapfx/kpPixmapFX.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include <qbitmap.h>

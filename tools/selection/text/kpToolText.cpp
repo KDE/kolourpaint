@@ -36,7 +36,7 @@
 #include <qevent.h>
 #include <qlist.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "commands/kpCommandHistory.h"
@@ -74,7 +74,7 @@ kpAbstractSelectionContentCommand *kpToolText::newGiveContentCommand () const
 {
     kpTextSelection *textSel = document ()->textSelection ();
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::newGiveContentCommand()"
+    qCDebug(kpLogTools) << "kpToolText::newGiveContentCommand()"
               << " textSel=" << textSel
               << "; hasContent=" << textSel->hasContent () << endl;
 #endif
@@ -110,7 +110,7 @@ void kpToolText::setSelectionBorderForHaventBegunDraw ()
 void kpToolText::begin ()
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kDebug () << "kpToolText::begin()";
+    qCDebug(kpLogTools) << "kpToolText::begin()";
 #endif
 
     environ ()->enableTextToolBarActions (true);
@@ -130,7 +130,7 @@ void kpToolText::begin ()
 void kpToolText::end ()
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kDebug () << "kpToolText::end()";
+    qCDebug(kpLogTools) << "kpToolText::end()";
 #endif
 
     kpAbstractSelectionTool::end ();
@@ -175,7 +175,7 @@ kpAbstractSelectionTool::DrawType kpToolText::calculateDrawTypeInsideSelection (
 void kpToolText::cancelShape ()
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::cancelShape()";
+    qCDebug(kpLogTools) << "kpToolText::cancelShape()";
 #endif
 
     if (drawType () != None)
@@ -195,7 +195,7 @@ void kpToolText::cancelShape ()
 void kpToolText::endShape (const QPoint &thisPoint, const QRect &normalizedRect)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::endShape()";
+    qCDebug(kpLogTools) << "kpToolText::endShape()";
 #endif
 
     if (drawType () != None)

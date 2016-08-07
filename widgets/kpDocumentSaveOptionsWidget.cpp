@@ -39,7 +39,7 @@
 #include "generic/kpWidgetMapper.h"
 
 #include <kconfig.h>
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 #include <kconfiggroup.h>
 #include <knuminput.h>
@@ -155,7 +155,7 @@ void kpDocumentSaveOptionsWidget::init ()
 kpDocumentSaveOptionsWidget::~kpDocumentSaveOptionsWidget ()
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsWidget::<dtor>()";
+    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::<dtor>()";
 #endif
     hidePreview ();
 
@@ -167,7 +167,7 @@ kpDocumentSaveOptionsWidget::~kpDocumentSaveOptionsWidget ()
 void kpDocumentSaveOptionsWidget::setVisualParent (QWidget *visualParent)
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsWidget::setVisualParent("
+    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::setVisualParent("
                << visualParent << ")" << endl;
 #endif
 
@@ -198,7 +198,7 @@ QString kpDocumentSaveOptionsWidget::mimeType () const
 void kpDocumentSaveOptionsWidget::setMimeType (const QString &string)
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsWidget::setMimeType(" << string
+    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::setMimeType(" << string
                << ") maxColorDepth="
                << kpDocumentSaveOptions::mimeTypeMaximumColorDepth (string)
                << endl;
@@ -208,7 +208,7 @@ void kpDocumentSaveOptionsWidget::setMimeType (const QString &string)
         kpDocumentSaveOptions::mimeTypeMaximumColorDepth (string);
 
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "\toldMimeType=" << mimeType ()
+    qCDebug(kpLogWidgets) << "\toldMimeType=" << mimeType ()
                << " maxColorDepth="
                << kpDocumentSaveOptions::mimeTypeMaximumColorDepth (
                       mimeType ())
@@ -239,7 +239,7 @@ void kpDocumentSaveOptionsWidget::setMimeType (const QString &string)
             m_colorDepthComboLastSelectedItem < m_colorDepthCombo->count ())
         {
         #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-            kDebug () << "\tsetting colorDepthCombo to "
+            qCDebug(kpLogWidgets) << "\tsetting colorDepthCombo to "
                        << m_colorDepthComboLastSelectedItem << endl;
         #endif
 
@@ -248,7 +248,7 @@ void kpDocumentSaveOptionsWidget::setMimeType (const QString &string)
         else
         {
         #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-            kDebug () << "\tsetting colorDepthCombo to max item since"
+            qCDebug(kpLogWidgets) << "\tsetting colorDepthCombo to max item since"
                        << " m_colorDepthComboLastSelectedItem="
                        << m_colorDepthComboLastSelectedItem
                        << " out of range" << endl;
@@ -356,7 +356,7 @@ int kpDocumentSaveOptionsWidget::colorDepthComboItemFromColorDepthAndDither (
 void kpDocumentSaveOptionsWidget::setColorDepthDither (int newDepth, bool newDither)
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsWidget::setColorDepthDither("
+    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::setColorDepthDither("
                << "depth=" << newDepth
                << ",dither=" << newDither
                << ")" << endl;
@@ -396,7 +396,7 @@ void kpDocumentSaveOptionsWidget::slotColorDepthSelected ()
     }
 
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsWidget::slotColorDepthSelected()"
+    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::slotColorDepthSelected()"
                << " mode&ColorDepth=" << (mode () & ColorDepth)
                << " colorDepthComboLastSelectedItem="
                << m_colorDepthComboLastSelectedItem
@@ -422,7 +422,7 @@ int kpDocumentSaveOptionsWidget::quality () const
 void kpDocumentSaveOptionsWidget::setQuality (int newQuality)
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsWidget::setQuality("
+    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::setQuality("
                << newQuality << ")" << endl;
 #endif
 
@@ -517,7 +517,7 @@ void kpDocumentSaveOptionsWidget::repaintLabels ()
 void kpDocumentSaveOptionsWidget::showPreview (bool yes)
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsWidget::showPreview(" << yes << ")"
+    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::showPreview(" << yes << ")"
                << " m_previewDialog=" << bool (m_previewDialog)
                << endl;
 #endif
@@ -553,7 +553,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
         if (m_updatePreviewDelay < 0)
             m_updatePreviewDelay = 0;
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-        kDebug () << "\tread cfg preview dialog update delay="
+        qCDebug(kpLogWidgets) << "\tread cfg preview dialog update delay="
                    << m_updatePreviewDelay
                    << endl;
     #endif
@@ -562,7 +562,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
         if (m_previewDialogLastRelativeGeometry.isEmpty ())
         {
         #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-            kDebug () << "\tread cfg preview dialog last rel geometry";
+            qCDebug(kpLogWidgets) << "\tread cfg preview dialog last rel geometry";
         #endif
             KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupPreviewSave);
 
@@ -571,7 +571,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
         }
 
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-        kDebug () << "\tpreviewDialogLastRelativeGeometry="
+        qCDebug(kpLogWidgets) << "\tpreviewDialogLastRelativeGeometry="
                    << m_previewDialogLastRelativeGeometry
                    << " visualParent->rect()=" << m_visualParent->rect ()
                    << endl;
@@ -582,14 +582,14 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
             m_visualParent->rect ().intersects (m_previewDialogLastRelativeGeometry))
         {
         #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-            kDebug () << "\tok";
+            qCDebug(kpLogWidgets) << "\tok";
         #endif
             relativeGeometry = m_previewDialogLastRelativeGeometry;
         }
         else
         {
         #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-            kDebug () << "\t\tinvalid";
+            qCDebug(kpLogWidgets) << "\t\tinvalid";
         #endif
             const int margin = 20;
 
@@ -607,7 +607,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
             kpWidgetMapper::toGlobal (m_visualParent,
                                       relativeGeometry);
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-        kDebug () << "\trelativeGeometry=" << relativeGeometry
+        qCDebug(kpLogWidgets) << "\trelativeGeometry=" << relativeGeometry
                    << " globalGeometry=" << globalGeometry
                    << endl;
     #endif
@@ -620,7 +620,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
 
 
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-        kDebug () << "\tgeometry after show="
+        qCDebug(kpLogWidgets) << "\tgeometry after show="
                    << QRect (m_previewDialog->x (), m_previewDialog->y (),
                               m_previewDialog->width (), m_previewDialog->height ())
                    << endl;
@@ -645,7 +645,7 @@ void kpDocumentSaveOptionsWidget::showPreview (bool yes)
         cfg.sync ();
 
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-        kDebug () << "\tsaving preview geometry "
+        qCDebug(kpLogWidgets) << "\tsaving preview geometry "
                    << m_previewDialogLastRelativeGeometry
                    << " (Qt would have us believe "
                    << kpWidgetMapper::fromGlobal (m_visualParent,
@@ -729,7 +729,7 @@ void kpDocumentSaveOptionsWidget::updatePreview ()
 void kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry ()
 {
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-    kDebug () << "kpDocumentSaveOptionsWidget::"
+    qCDebug(kpLogWidgets) << "kpDocumentSaveOptionsWidget::"
                << "updatePreviewDialogLastRelativeGeometry()"
                << endl;
 #endif
@@ -741,7 +741,7 @@ void kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry ()
                 QRect (m_previewDialog->x (), m_previewDialog->y (),
                        m_previewDialog->width (), m_previewDialog->height ()));
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-        kDebug () << "\tcaching pos = "
+        qCDebug(kpLogWidgets) << "\tcaching pos = "
                    << m_previewDialogLastRelativeGeometry
                    << endl;
     #endif
@@ -749,7 +749,7 @@ void kpDocumentSaveOptionsWidget::updatePreviewDialogLastRelativeGeometry ()
     else
     {
     #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS_WIDGET
-        kDebug () << "\tnot visible - ignoring geometry";
+        qCDebug(kpLogWidgets) << "\tnot visible - ignoring geometry";
     #endif
     }
 }

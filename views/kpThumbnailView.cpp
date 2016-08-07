@@ -31,7 +31,7 @@
 
 #include "views/kpThumbnailView.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 
 kpThumbnailView::kpThumbnailView (kpDocument *document,
@@ -57,7 +57,7 @@ kpThumbnailView::~kpThumbnailView ()
 void kpThumbnailView::setMaskToCoverDocument ()
 {
 #if DEBUG_KP_THUMBNAIL_VIEW
-    kDebug () << "kpThumbnailView::setMaskToCoverDocument()"
+    qCDebug(kpLogViews) << "kpThumbnailView::setMaskToCoverDocument()"
                << " origin=" << origin ()
                << " zoomedDoc: width=" << zoomedDocWidth ()
                << " height=" << zoomedDocHeight ()
@@ -73,7 +73,7 @@ void kpThumbnailView::setMaskToCoverDocument ()
 void kpThumbnailView::resizeEvent (QResizeEvent *e)
 {
 #if DEBUG_KP_THUMBNAIL_VIEW
-    kDebug () << "kpThumbnailView(" << name () << ")::resizeEvent()"
+    qCDebug(kpLogViews) << "kpThumbnailView(" << name () << ")::resizeEvent()"
                << endl;
 #endif
 

@@ -36,7 +36,7 @@
 #include <qmenu.h>
 #include <qtimer.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "layers/selections/image/kpAbstractImageSelection.h"
@@ -184,7 +184,7 @@ void kpAbstractSelectionTool::slotRMBMoveUpdateGUI ()
 void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*normalizedRect*/)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "\tmoving selection";
+    qCDebug(kpLogTools) << "\tmoving selection";
 #endif
 
     kpAbstractSelection *sel = document ()->selection ();
@@ -195,7 +195,7 @@ void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*
         sel->height ());
 
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "\t\tstartPoint=" << startPoint ()
+    qCDebug(kpLogTools) << "\t\tstartPoint=" << startPoint ()
                 << " thisPoint=" << thisPoint
                 << " startDragFromSel=" << d->startMoveDragFromSelectionTopLeft
                 << " targetSelRect=" << targetSelRect
@@ -216,7 +216,7 @@ void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*
         targetSelRect.translate (0, document ()->height () - targetSelRect.top () - 1);
 
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "\t\t\tafter ensure sel rect clickable=" << targetSelRect;
+    qCDebug(kpLogTools) << "\t\t\tafter ensure sel rect clickable=" << targetSelRect;
 #endif
 
 
@@ -224,7 +224,7 @@ void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*
         targetSelRect.topLeft () + d->startMoveDragFromSelectionTopLeft == startPoint ())
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
-        kDebug () << "\t\t\t\tnop";
+        qCDebug(kpLogTools) << "\t\t\t\tnop";
     #endif
 
 
@@ -293,7 +293,7 @@ void kpAbstractSelectionTool::drawMove (const QPoint &thisPoint, const QRect &/*
 void kpAbstractSelectionTool::cancelMove ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\twas drag moving - undo drag and undo acquire";
+    qCDebug(kpLogTools) << "\twas drag moving - undo drag and undo acquire";
 #endif
 
     d->RMBMoveUpdateGUITimer->stop ();
@@ -303,7 +303,7 @@ void kpAbstractSelectionTool::cancelMove ()
         return;
 
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\t\tundo currentMoveCommand";
+    qCDebug(kpLogTools) << "\t\tundo currentMoveCommand";
 #endif
     d->currentMoveCommand->finalize ();
     d->currentMoveCommand->unexecute ();
@@ -334,7 +334,7 @@ void kpAbstractSelectionTool::endDrawMove ()
 
     kpMacroCommand *renamedCmd = 0;
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\thave moveCommand";
+    qCDebug(kpLogTools) << "\thave moveCommand";
 #endif
     if (d->currentMoveCommandIsSmear)
     {

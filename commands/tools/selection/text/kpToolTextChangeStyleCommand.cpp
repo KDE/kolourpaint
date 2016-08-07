@@ -33,7 +33,7 @@
 #include "environments/commands/kpCommandEnvironment.h"
 #include "layers/selections/text/kpTextSelection.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 
 kpToolTextChangeStyleCommand::kpToolTextChangeStyleCommand (const QString &name,
@@ -61,7 +61,7 @@ kpCommandSize::SizeType kpToolTextChangeStyleCommand::size () const
 void kpToolTextChangeStyleCommand::execute ()
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kDebug () << "kpToolTextChangeStyleCommand::execute()"
+    qCDebug(kpLogCommands) << "kpToolTextChangeStyleCommand::execute()"
                << " font=" << m_newTextStyle.fontFamily ()
                << " fontSize=" << m_newTextStyle.fontSize ()
                << " isBold=" << m_newTextStyle.isBold ()
@@ -81,7 +81,7 @@ void kpToolTextChangeStyleCommand::execute ()
 void kpToolTextChangeStyleCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kDebug () << "kpToolTextChangeStyleCommand::unexecute()"
+    qCDebug(kpLogCommands) << "kpToolTextChangeStyleCommand::unexecute()"
                << " font=" << m_newTextStyle.fontFamily ()
                << " fontSize=" << m_newTextStyle.fontSize ()
                << " isBold=" << m_newTextStyle.isBold ()

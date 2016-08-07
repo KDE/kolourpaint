@@ -164,6 +164,7 @@ set(kolourpaint_lib1_SRCS
 )   # kolourpaint_lib1_SRCS
 
 set(kolourpaint_lib2_SRCS
+    ${CMAKE_CURRENT_SOURCE_DIR}/kpLogCategories.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kolourpaint.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kpThumbnail.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kpViewScrollableContainer.cpp

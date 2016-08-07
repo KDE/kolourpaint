@@ -33,7 +33,7 @@
 
 #include "commands/imagelib/effects/kpEffectBlurSharpenCommand.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 #include <knuminput.h>
 
@@ -67,7 +67,7 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
 
     int h = m_typeLabel->sizeHint ().height ();
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    kDebug () << "initial size hint height=" << h;
+    qCDebug(kpLogWidgets) << "initial size hint height=" << h;
 #endif
 
     m_typeLabel->setText (
@@ -85,7 +85,7 @@ kpEffectBlurSharpenWidget::kpEffectBlurSharpenWidget (bool actOnSelection,
     h = qMax (h, m_typeLabel->sizeHint ().height ());
 
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    kDebug () << "maximum size hint height" << h;
+    qCDebug(kpLogWidgets) << "maximum size hint height" << h;
 #endif
     m_typeLabel->setFixedHeight (h);
     m_typeLabel->setAlignment (Qt::AlignCenter);
@@ -150,14 +150,14 @@ void kpEffectBlurSharpenWidget::slotUpdateTypeLabel ()
     QString text = kpEffectBlurSharpenCommand::nameForType (type ());
 
 #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-    kDebug () << "kpEffectBlurSharpenWidget::slotUpdateTypeLabel() text="
+    qCDebug(kpLogWidgets) << "kpEffectBlurSharpenWidget::slotUpdateTypeLabel() text="
                << text << endl;
 #endif
     const int h = m_typeLabel->height ();
     m_typeLabel->setText (text);
     if (m_typeLabel->height () != h)
     {
-        kError () << "Label changed height despite the hack in ctor:"
+        qCCritical(kpLogWidgets) << "Label changed height despite the hack in ctor:"
                   << "was=" << h 
                   << "now=" << m_typeLabel->height ();
     }

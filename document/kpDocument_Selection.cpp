@@ -38,7 +38,7 @@
 #include <qpainter.h>
 #include <qrect.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <kimageio.h>
 #include <klocale.h>
 
@@ -78,7 +78,7 @@ kpTextSelection *kpDocument::textSelection () const
 void kpDocument::setSelection (const kpAbstractSelection &selection)
 {
 #if DEBUG_KP_DOCUMENT && 1
-    kDebug () << "kpDocument::setSelection() sel boundingRect="
+    qCDebug(kpLogDocument) << "kpDocument::setSelection() sel boundingRect="
                << selection.boundingRect ()
                << endl;
 #endif
@@ -122,7 +122,7 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
         //
 
     #if DEBUG_KP_DOCUMENT && 1
-        kDebug () << "\tcheck sel " << (int *) m_selection
+        qCDebug(kpLogDocument) << "\tcheck sel " << (int *) m_selection
                    << " boundingRect=" << m_selection->boundingRect ()
                    << endl;
     #endif
@@ -152,7 +152,7 @@ void kpDocument::setSelection (const kpAbstractSelection &selection)
     d->environ->restoreQueueViewUpdates ();
 
 #if DEBUG_KP_DOCUMENT && 1
-    kDebug () << "\tkpDocument::setSelection() ended";
+    qCDebug(kpLogDocument) << "\tkpDocument::setSelection() ended";
 #endif
 }
 
@@ -310,7 +310,7 @@ void kpDocument::selectionPushOntoDocument (bool applySelTransparency)
 kpImage kpDocument::imageWithSelection () const
 {
 #if DEBUG_KP_DOCUMENT && 1
-    kDebug () << "kpDocument::imageWithSelection()";
+    qCDebug(kpLogDocument) << "kpDocument::imageWithSelection()";
 #endif
 
     // Have selection?
@@ -320,7 +320,7 @@ kpImage kpDocument::imageWithSelection () const
     if (m_selection)
     {
     #if DEBUG_KP_DOCUMENT && 1
-        kDebug () << "\tselection @ " << m_selection->boundingRect ();
+        qCDebug(kpLogDocument) << "\tselection @ " << m_selection->boundingRect ();
     #endif
         kpImage output = *m_image;
 
@@ -332,7 +332,7 @@ kpImage kpDocument::imageWithSelection () const
     else
     {
     #if DEBUG_KP_DOCUMENT && 1
-        kDebug () << "\tno selection";
+        qCDebug(kpLogDocument) << "\tno selection";
     #endif
         return *m_image;
     }

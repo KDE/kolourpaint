@@ -33,7 +33,7 @@
 
 #include "kpToolPolyline.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 
@@ -80,7 +80,7 @@ QString kpToolLine::haventBegunShapeUserMessage () const
 void kpToolLine::endDraw (const QPoint &, const QRect &)
 {
 #if DEBUG_KP_TOOL_LINE
-    kDebug () << "kpToolLine::endDraw()  points="
+    qCDebug(kpLogTools) << "kpToolLine::endDraw()  points="
         << points ()->toList () << endl;
 #endif
 

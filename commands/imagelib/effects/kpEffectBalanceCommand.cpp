@@ -33,7 +33,7 @@
 
 #include "imagelib/effects/kpEffectBalance.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 

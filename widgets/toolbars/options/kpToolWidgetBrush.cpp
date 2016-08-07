@@ -34,7 +34,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "kpDefs.h"
@@ -63,14 +63,14 @@ static void Draw (kpImage *destImage, const QPoint &topLeft, void *userData)
         static_cast <kpToolWidgetBrush::DrawPackage *> (userData);
 
 #if DEBUG_KP_TOOL_WIDGET_BRUSH
-    kDebug () << "kptoolwidgetbrush.cpp:Draw(destImage,topLeft="
+    qCDebug(kpLogWidgets) << "kptoolwidgetbrush.cpp:Draw(destImage,topLeft="
               << topLeft << " pack: row=" << pack->row << " col=" << pack->col
               << " color=" << (int *) pack->color.toQRgb ()
               << endl;
 #endif
     const int size = ::BrushSizes [pack->row][pack->col];
 #if DEBUG_KP_TOOL_WIDGET_BRUSH
-    kDebug () << "\tsize=" << size;
+    qCDebug(kpLogWidgets) << "\tsize=" << size;
 #endif
 
     QPainter painter(destImage);

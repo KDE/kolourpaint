@@ -31,7 +31,7 @@
 #include "kpEffectEmboss.h"
 #include "blitz.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "pixmapfx/kpPixmapFX.h"
 
@@ -79,7 +79,7 @@ static QImage EmbossQImage (const QImage &qimage_, int strength)
 kpImage kpEffectEmboss::applyEffect (const kpImage &image, int strength)
 {
 #if DEBUG_KP_EFFECT_EMBOSS
-    kDebug () << "kpEffectEmboss::applyEffect(strength=" << strength << ")"
+    qCDebug(kpLogImagelib) << "kpEffectEmboss::applyEffect(strength=" << strength << ")"
                << endl;
 #endif
 

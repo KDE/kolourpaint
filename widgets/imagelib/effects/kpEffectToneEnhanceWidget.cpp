@@ -36,7 +36,7 @@
 #include <QGridLayout>
 #include <QLabel>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 #include <knuminput.h>
 

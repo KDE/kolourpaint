@@ -36,7 +36,7 @@
 #include "kpViewPrivate.h"
 
 #if DEBUG_KP_VIEW
-#include <KDebug>
+#include "kpLogCategories.h"
 #endif
 
 #include <QKeyEvent>
@@ -44,7 +44,7 @@
 
 #include "tools/kpTool.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 //---------------------------------------------------------------------
 
@@ -52,7 +52,7 @@
 void kpView::mouseMoveEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << objectName () << ")::mouseMoveEvent ("
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::mouseMoveEvent ("
                << e->x () << "," << e->y () << ")"
                << endl;
 #endif
@@ -72,7 +72,7 @@ void kpView::mouseMoveEvent (QMouseEvent *e)
 void kpView::mousePressEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << objectName () << ")::mousePressEvent ("
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::mousePressEvent ("
                << e->x () << "," << e->y () << ")"
                << endl;
 #endif
@@ -91,7 +91,7 @@ void kpView::mousePressEvent (QMouseEvent *e)
 void kpView::mouseReleaseEvent (QMouseEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << objectName () << ")::mouseReleaseEvent ("
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::mouseReleaseEvent ("
                << e->x () << "," << e->y () << ")"
                << endl;
 #endif
@@ -119,7 +119,7 @@ void kpView::wheelEvent (QWheelEvent *e)
 void kpView::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_VIEW
-    kDebug () << "kpView(" << objectName () << ")::keyPressEvent()" << e->text();
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::keyPressEvent()" << e->text();
 #endif
 
     if (tool ())
@@ -134,7 +134,7 @@ void kpView::keyPressEvent (QKeyEvent *e)
 void kpView::keyReleaseEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << objectName () << ")::keyReleaseEvent()";
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::keyReleaseEvent()";
 #endif
 
     if (tool ())
@@ -149,7 +149,7 @@ void kpView::keyReleaseEvent (QKeyEvent *e)
 void kpView::inputMethodEvent (QInputMethodEvent *e)
 {
 #if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << objectName () << ")::inputMethodEvent()";
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::inputMethodEvent()";
 #endif
 
     if (tool ())
@@ -161,18 +161,18 @@ void kpView::inputMethodEvent (QInputMethodEvent *e)
 bool kpView::event (QEvent *e)
 {
 #if DEBUG_KP_VIEW
-    kDebug () << "kpView::event() invoking kpTool::event()";
+    qCDebug(kpLogViews) << "kpView::event() invoking kpTool::event()";
 #endif
     if (tool () && tool ()->viewEvent (e))
     {
     #if DEBUG_KP_VIEW
-        kDebug () << "\tkpView::event() - tool said eat event, ret true";
+        qCDebug(kpLogViews) << "\tkpView::event() - tool said eat event, ret true";
     #endif
         return true;
     }
 
 #if DEBUG_KP_VIEW
-    kDebug () << "\tkpView::event() - no tool or said false, call QWidget::event()";
+    qCDebug(kpLogViews) << "\tkpView::event() - no tool or said false, call QWidget::event()";
 #endif
     return QWidget::event (e);
 }
@@ -182,7 +182,7 @@ bool kpView::event (QEvent *e)
 void kpView::focusInEvent (QFocusEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << objectName () << ")::focusInEvent()";
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::focusInEvent()";
 #endif
     if (tool ())
         tool ()->focusInEvent (e);
@@ -192,7 +192,7 @@ void kpView::focusInEvent (QFocusEvent *e)
 void kpView::focusOutEvent (QFocusEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << objectName () << ")::focusOutEvent()";
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::focusOutEvent()";
 #endif
     if (tool ())
         tool ()->focusOutEvent (e);
@@ -203,7 +203,7 @@ void kpView::focusOutEvent (QFocusEvent *e)
 void kpView::enterEvent (QEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << objectName () << ")::enterEvent()";
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::enterEvent()";
 #endif
 
     // Don't call setHasMouse(true) as it displays the brush cursor (if
@@ -225,7 +225,7 @@ void kpView::enterEvent (QEvent *e)
 void kpView::leaveEvent (QEvent *e)
 {
 #if DEBUG_KP_VIEW && 0
-    kDebug () << "kpView(" << objectName () << ")::leaveEvent()";
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::leaveEvent()";
 #endif
 
     setHasMouse (false);
@@ -238,7 +238,7 @@ void kpView::leaveEvent (QEvent *e)
 void kpView::dragEnterEvent (QDragEnterEvent *)
 {
 #if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << objectName () << ")::dragEnterEvent()";
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::dragEnterEvent()";
 #endif
 
     setHasMouse (true);
@@ -248,7 +248,7 @@ void kpView::dragEnterEvent (QDragEnterEvent *)
 void kpView::dragLeaveEvent (QDragLeaveEvent *)
 {
 #if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << objectName () << ")::dragLeaveEvent";
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::dragLeaveEvent";
 #endif
 
     setHasMouse (false);
@@ -259,7 +259,7 @@ void kpView::dragLeaveEvent (QDragLeaveEvent *)
 void kpView::resizeEvent (QResizeEvent *e)
 {
 #if DEBUG_KP_VIEW && 1
-    kDebug () << "kpView(" << objectName () << ")::resizeEvent("
+    qCDebug(kpLogViews) << "kpView(" << objectName () << ")::resizeEvent("
                << e->size ()
                << " vs actual=" << size ()
                << ") old=" << e->oldSize () << endl;

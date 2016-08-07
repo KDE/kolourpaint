@@ -36,7 +36,7 @@
 #include "document/kpDocument.h"
 #include "views/manager/kpViewManager.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 
@@ -49,7 +49,7 @@ kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (
       m_backgroundColor (backgroundColor)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolSelectionPullFromDocumentCommand::<ctor>() environ="
+    qCDebug(kpLogCommands) << "kpToolSelectionPullFromDocumentCommand::<ctor>() environ="
                << environ
                << endl;
 #endif
@@ -64,7 +64,7 @@ kpToolSelectionPullFromDocumentCommand::~kpToolSelectionPullFromDocumentCommand 
 void kpToolSelectionPullFromDocumentCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolSelectionPullFromDocumentCommand::execute()";
+    qCDebug(kpLogCommands) << "kpToolSelectionPullFromDocumentCommand::execute()";
 #endif
 
     kpDocument *doc = document ();
@@ -125,7 +125,7 @@ void kpToolSelectionPullFromDocumentCommand::execute ()
 void kpToolSelectionPullFromDocumentCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolSelectionPullFromDocumentCommand::unexecute()";
+    qCDebug(kpLogCommands) << "kpToolSelectionPullFromDocumentCommand::unexecute()";
 #endif
 
     kpDocument *doc = document ();

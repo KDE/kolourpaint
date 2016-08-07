@@ -31,7 +31,7 @@
 
 #include "imagelib/effects/kpEffectToneEnhance.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 

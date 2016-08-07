@@ -34,7 +34,7 @@
 #include "pixmapfx/kpPixmapFX.h"
 
 #include <kconfiggroup.h>
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <ksharedconfig.h>
 
 #include <qbitmap.h>
@@ -136,7 +136,7 @@ void kpDocumentSaveOptions::printDebug (const QString &prefix) const
                                    prefix + QLatin1String (": ") :
                                    QString();
 
-    kDebug () << usedPrefix
+    qCDebug(kpLogDocument) << usedPrefix
                << "mimeType=" << mimeType ()
                << " colorDepth=" << colorDepth ()
                << " dither=" << dither ()
@@ -378,7 +378,7 @@ bool kpDocumentSaveOptions::saveDefaultDifferences (KConfigGroup &config,
     bool savedSomething = false;
 
 #if DEBUG_KP_DOCUMENT_SAVE_OPTIONS
-    kDebug () << "kpDocumentSaveOptions::saveDefaultDifferences()";
+    qCDebug(kpLogDocument) << "kpDocumentSaveOptions::saveDefaultDifferences()";
     oldDocInfo.printDebug ("\told");
     newDocInfo.printDebug ("\tnew");
 #endif

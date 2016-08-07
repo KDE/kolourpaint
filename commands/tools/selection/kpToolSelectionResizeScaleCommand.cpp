@@ -42,7 +42,7 @@
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include <qapplication.h>
@@ -168,7 +168,7 @@ void kpToolSelectionResizeScaleCommand::killSmoothScaleTimer ()
 void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove(delayed="
+    qCDebug(kpLogCommands) << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove(delayed="
                << delayed << ")" << endl;
 #endif
 
@@ -219,7 +219,7 @@ void kpToolSelectionResizeScaleCommand::resizeScaleAndMove (bool delayed)
 void kpToolSelectionResizeScaleCommand::resizeScaleAndMove ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove()";
+    qCDebug(kpLogCommands) << "kpToolSelectionResizeScaleCommand::resizeScaleAndMove()";
 #endif
     resizeScaleAndMove (false/*no delay*/);
 }
@@ -229,7 +229,7 @@ void kpToolSelectionResizeScaleCommand::resizeScaleAndMove ()
 void kpToolSelectionResizeScaleCommand::finalize ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelectionResizeScaleCommand::finalize()"
+    qCDebug(kpLogCommands) << "kpToolSelectionResizeScaleCommand::finalize()"
                << " smoothScaleTimer->isActive="
                << m_smoothScaleTimer->isActive ()
                << endl;

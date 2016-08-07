@@ -31,7 +31,7 @@
 #include <qgridlayout.h>
 #include <qlabel.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 #include <knuminput.h>
 

@@ -30,7 +30,7 @@
 #include "kpToolRectSelection.h"
 
 #include <klocale.h>
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "document/kpDocument.h"
 #include "layers/selections/image/kpRectangularImageSelection.h"
@@ -63,7 +63,7 @@ bool kpToolRectSelection::drawCreateMoreSelectionAndUpdateStatusBar (
     if (!dragAccepted && accidentalDragAdjustedPoint == startPoint ())
     {
     #if DEBUG_KP_TOOL_RECT_SELECTION && 1
-        kDebug () << "\tnon-text NOP - return";
+        qCDebug(kpLogTools) << "\tnon-text NOP - return";
     #endif
         setUserShapePoints (accidentalDragAdjustedPoint);
         return false;

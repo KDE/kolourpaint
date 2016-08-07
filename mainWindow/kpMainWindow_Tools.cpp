@@ -36,7 +36,7 @@
 #include <kactioncollection.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "widgets/toolbars/kpColorToolBar.h"
@@ -203,7 +203,7 @@ void kpMainWindow::createToolBox ()
 void kpMainWindow::enableToolsDocumentActions (bool enable)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::enableToolsDocumentsAction(" << enable << ")";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::enableToolsDocumentsAction(" << enable << ")";
 #endif
 
     d->toolActionsEnabled = enable;
@@ -277,13 +277,13 @@ void kpMainWindow::updateToolOptionPrevNextActionsEnabled ()
 void kpMainWindow::updateActionDrawOpaqueChecked ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::updateActionDrawOpaqueChecked()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::updateActionDrawOpaqueChecked()";
 #endif
 
     const bool drawOpaque =
         (d->toolToolBar->toolWidgetOpaqueOrTransparent ()->selectedRow () == 0);
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tdrawOpaque=" << drawOpaque;
+    qCDebug(kpLogMainWindow) << "\tdrawOpaque=" << drawOpaque;
 #endif
 
     d->actionDrawOpaque->setChecked (drawOpaque);
@@ -295,13 +295,13 @@ void kpMainWindow::updateActionDrawOpaqueChecked ()
 void kpMainWindow::updateActionDrawOpaqueEnabled ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::updateActionDrawOpaqueEnabled()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::updateActionDrawOpaqueEnabled()";
 #endif
 
     const bool enable = d->toolActionsEnabled;
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tenable=" << enable
+    qCDebug(kpLogMainWindow) << "\tenable=" << enable
               << " tool=" << (tool () ? tool ()->objectName () : 0)
               << " (is selection=" << toolIsASelectionTool () << ")"
               << endl;
@@ -386,7 +386,7 @@ kpImageSelectionTransparency kpMainWindow::imageSelectionTransparency () const
 void kpMainWindow::setImageSelectionTransparency (const kpImageSelectionTransparency &transparency, bool forceColorChange)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::setImageSelectionTransparency() isOpaque=" << transparency.isOpaque ()
+    qCDebug(kpLogMainWindow) << "kpMainWindow::setImageSelectionTransparency() isOpaque=" << transparency.isOpaque ()
                << " color=" << (transparency.transparentColor ().isValid () ? (int *) transparency.transparentColor ().toQRgb () : 0)
                << " forceColorChange=" << forceColorChange
                << endl;
@@ -421,7 +421,7 @@ int kpMainWindow::settingImageSelectionTransparency () const
 void kpMainWindow::slotToolSelected (kpTool *tool)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotToolSelected (" << tool << ")";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotToolSelected (" << tool << ")";
 #endif
 
     kpTool *previousTool = d->toolToolBar ? d->toolToolBar->previousTool () : 0;
@@ -552,7 +552,7 @@ bool kpMainWindow::slotDragScroll (const QPoint &docPoint,
   Q_UNUSED(docLastPoint)
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotDragScroll() maybeDragScrolling="
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotDragScroll() maybeDragScrolling="
                << maybeDragScrollingMainView ()
                << endl;
 #endif
@@ -673,7 +673,7 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
 void kpMainWindow::slotDocResizeMessageChanged (const QString &string)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotDocResizeMessageChanged(" << string
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotDocResizeMessageChanged(" << string
                << ") docResizeToBeCompleted=" << d->docResizeToBeCompleted
                << endl;
 #else
@@ -754,7 +754,7 @@ void kpMainWindow::slotActionNextToolOptionGroup2 ()
 void kpMainWindow::slotActionDrawOpaqueToggled ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotActionDrawOpaqueToggled()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotActionDrawOpaqueToggled()";
 #endif
     toolEndShape ();
 
@@ -775,7 +775,7 @@ void kpMainWindow::slotActionDrawOpaqueToggled ()
 void kpMainWindow::slotActionDrawColorSimilarity ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotActionDrawColorSimilarity()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotActionDrawColorSimilarity()";
 #endif
     toolEndShape ();
 

@@ -36,7 +36,7 @@
 #include <QPainter>
 #include <QPolygonF>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "widgets/colorSimilarity/kpColorSimilarityHolder.h"
 #include "kpDefs.h"
@@ -108,7 +108,7 @@ static void DrawFace (QPaintDevice *target,
         int highlight)
 {
 #if DEBUG_KP_COLOR_SIMILARITY_CUBE
-    kDebug () << "kpColorSimilarityCubeRenderer.cpp:DrawFace(RorGorB=" << redOrGreenOrBlue
+    qCDebug(kpLogWidgets) << "kpColorSimilarityCubeRenderer.cpp:DrawFace(RorGorB=" << redOrGreenOrBlue
                << ",tl=" << tl
                << ",tr=" << tr
                << ",bl=" << bl
@@ -144,7 +144,7 @@ static void DrawFace (QPaintDevice *target,
     };
 
 #if DEBUG_KP_COLOR_SIMILARITY_CUBE
-    kDebug () << "\tmaxColorSimilarity=" << kpColorSimilarityHolder::MaxColorSimilarity
+    qCDebug(kpLogWidgets) << "\tmaxColorSimilarity=" << kpColorSimilarityHolder::MaxColorSimilarity
                << " colorCubeDiagDist=" << kpColorSimilarityHolder::ColorCubeDiagonalDistance
                << endl
                << "\tbaseBrightness=" << baseBrightness

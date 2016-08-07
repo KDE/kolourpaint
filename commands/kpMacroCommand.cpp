@@ -63,17 +63,17 @@ kpMacroCommand::~kpMacroCommand ()
 kpCommandSize::SizeType kpMacroCommand::size () const
 {
 #if DEBUG_KP_COMMAND_HISTORY && 0
-    kDebug () << "kpMacroCommand::size()";
+    qCDebug(kpLogCommands) << "kpMacroCommand::size()";
 #endif
     SizeType s = 0;
 
 #if DEBUG_KP_COMMAND_HISTORY && 0
-    kDebug () << "\tcalculating:";
+    qCDebug(kpLogCommands) << "\tcalculating:";
 #endif
     foreach (kpCommand *cmd, m_commandList)
     {
     #if DEBUG_KP_COMMAND_HISTORY && 0
-        kDebug () << "\t\tcurrentSize=" << s << " + "
+        qCDebug(kpLogCommands) << "\t\tcurrentSize=" << s << " + "
                    << cmd->name () << ".size=" << cmd->size ()
                    << endl;
     #endif
@@ -81,7 +81,7 @@ kpCommandSize::SizeType kpMacroCommand::size () const
     }
 
 #if DEBUG_KP_COMMAND_HISTORY && 0
-    kDebug () << "\treturning " << s;
+    qCDebug(kpLogCommands) << "\treturning " << s;
 #endif
     return s;
 }
@@ -92,7 +92,7 @@ kpCommandSize::SizeType kpMacroCommand::size () const
 void kpMacroCommand::execute ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kDebug () << "kpMacroCommand::execute()";
+    qCDebug(kpLogCommands) << "kpMacroCommand::execute()";
 #endif
 
     viewManager()->setQueueUpdates();
@@ -102,7 +102,7 @@ void kpMacroCommand::execute ()
          ++it)
     {
     #if DEBUG_KP_COMMAND_HISTORY
-        kDebug () << "\texecuting " << (*it)->name ();
+        qCDebug(kpLogCommands) << "\texecuting " << (*it)->name ();
     #endif
         (*it)->execute ();
     }
@@ -116,7 +116,7 @@ void kpMacroCommand::execute ()
 void kpMacroCommand::unexecute ()
 {
 #if DEBUG_KP_COMMAND_HISTORY
-    kDebug () << "kpMacroCommand::unexecute()";
+    qCDebug(kpLogCommands) << "kpMacroCommand::unexecute()";
 #endif
 
     viewManager()->setQueueUpdates();
@@ -127,7 +127,7 @@ void kpMacroCommand::unexecute ()
     while (it != m_commandList.end ())
     {
     #if DEBUG_KP_COMMAND_HISTORY
-        kDebug () << "\tunexecuting " << (*it)->name ();
+        qCDebug(kpLogCommands) << "\tunexecuting " << (*it)->name ();
     #endif
         (*it)->unexecute ();
 

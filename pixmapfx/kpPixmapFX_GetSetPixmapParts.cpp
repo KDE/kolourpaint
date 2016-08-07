@@ -38,7 +38,7 @@
 #include <qpoint.h>
 #include <qrect.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "imagelib/kpColor.h"
 
@@ -57,7 +57,7 @@ void kpPixmapFX::setPixmapAt(QImage *destPtr, const QRect &destRect,
                              const QImage &src)
 {
 #if DEBUG_KP_PIXMAP_FX && 1
-    kDebug () << "kpPixmapFX::setPixmapAt(destPixmap->rect="
+    qCDebug(kpLogPixmapfx) << "kpPixmapFX::setPixmapAt(destPixmap->rect="
                << destPtr->rect ()
                << ",destRect="
                << destRect

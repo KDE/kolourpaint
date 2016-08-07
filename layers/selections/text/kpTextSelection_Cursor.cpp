@@ -37,7 +37,7 @@
 #include "kpTextStyle.h"
 #include "kpPreeditText.h"
 
-#include <KDebug>
+#include "kpLogCategories.h"
 
 #include <QFontMetrics>
 #include <QList>
@@ -98,7 +98,7 @@ QPoint kpTextSelection::pointForTextRowCol (int row, int col) const
             (row >= (int) d->textLines.size () || col > (int) d->textLines [row].length ())))
     {
 #if DEBUG_KP_SELECTION && 1
-    kDebug () << "kpTextSelection::pointForTextRowCol("
+    qCDebug(kpLogLayers) << "kpTextSelection::pointForTextRowCol("
                << row << ","
                << col << ") out of range"
                << " textLines='"

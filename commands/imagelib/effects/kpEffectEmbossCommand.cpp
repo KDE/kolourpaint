@@ -32,7 +32,7 @@
 #include "kpEffectEmbossCommand.h"
 #include "imagelib/effects/kpEffectEmboss.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 

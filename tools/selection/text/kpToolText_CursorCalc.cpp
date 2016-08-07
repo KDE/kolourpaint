@@ -33,7 +33,7 @@
 #include <qevent.h>
 #include <qlist.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "document/kpDocument.h"

@@ -34,7 +34,7 @@
 #include <qevent.h>
 #include <qlist.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "commands/kpCommandHistory.h"
@@ -57,7 +57,7 @@ void kpToolText::handleUpKeyPress (QKeyEvent *e,
     const QList <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tup pressed";
+    qCDebug(kpLogTools) << "\tup pressed";
 #endif
 
     if (hasBegunShape ())
@@ -78,7 +78,7 @@ void kpToolText::handleDownKeyPress (QKeyEvent *e,
     const QList <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tdown pressed";
+    qCDebug(kpLogTools) << "\tdown pressed";
 #endif
 
     if (hasBegunShape ())
@@ -99,7 +99,7 @@ void kpToolText::handleLeftKeyPress (QKeyEvent *e,
     const QList <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tleft pressed";
+    qCDebug(kpLogTools) << "\tleft pressed";
 #endif
 
     if (hasBegunShape ())
@@ -110,7 +110,7 @@ void kpToolText::handleLeftKeyPress (QKeyEvent *e,
         if ((e->modifiers () & Qt::ControlModifier) == 0)
         {
         #if DEBUG_KP_TOOL_TEXT
-            kDebug () << "\tmove single char";
+            qCDebug(kpLogTools) << "\tmove single char";
         #endif
     
             MoveCursorLeft (textLines, &cursorRow, &cursorCol);
@@ -119,7 +119,7 @@ void kpToolText::handleLeftKeyPress (QKeyEvent *e,
         else
         {
         #if DEBUG_KP_TOOL_TEXT
-            kDebug () << "\tmove to start of word";
+            qCDebug(kpLogTools) << "\tmove to start of word";
         #endif
     
             MoveCursorToWordStart (textLines, &cursorRow, &cursorCol);
@@ -135,7 +135,7 @@ void kpToolText::handleRightKeyPress (QKeyEvent *e,
     const QList <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tright pressed";
+    qCDebug(kpLogTools) << "\tright pressed";
 #endif
 
     if (hasBegunShape ())
@@ -146,7 +146,7 @@ void kpToolText::handleRightKeyPress (QKeyEvent *e,
         if ((e->modifiers () & Qt::ControlModifier) == 0)
         {
         #if DEBUG_KP_TOOL_TEXT
-            kDebug () << "\tmove single char";
+            qCDebug(kpLogTools) << "\tmove single char";
         #endif
     
             MoveCursorRight (textLines, &cursorRow, &cursorCol);
@@ -155,7 +155,7 @@ void kpToolText::handleRightKeyPress (QKeyEvent *e,
         else
         {
         #if DEBUG_KP_TOOL_TEXT
-            kDebug () << "\tmove to start of next word";
+            qCDebug(kpLogTools) << "\tmove to start of next word";
         #endif
     
             MoveCursorToNextWordStart (textLines, &cursorRow, &cursorCol);
@@ -172,7 +172,7 @@ void kpToolText::handleHomeKeyPress (QKeyEvent *e,
     const QList <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\thome pressed";
+    qCDebug(kpLogTools) << "\thome pressed";
 #endif
 
     if (hasBegunShape ())
@@ -196,7 +196,7 @@ void kpToolText::handleEndKeyPress (QKeyEvent *e,
     const QList <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tend pressed";
+    qCDebug(kpLogTools) << "\tend pressed";
 #endif
 
     if (hasBegunShape ())

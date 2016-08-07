@@ -34,7 +34,7 @@
 #include <qcheckbox.h>
 #include <qgridlayout.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "imagelib/effects/kpEffectEmboss.h"

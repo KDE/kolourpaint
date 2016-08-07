@@ -34,7 +34,7 @@
 #include <qlist.h>
 #include <qpoint.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "kpDefs.h"
 
@@ -139,9 +139,9 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
 {
     const QString usedPrefix = !prefix.isEmpty() ? QString(prefix + QLatin1String(":")) : QString();
 
-    kDebug () << usedPrefix;
+    qCDebug(kpLogImagelib) << usedPrefix;
 
-    kDebug () << "dotsPerMeter X=" << dotsPerMeterX ()
+    qCDebug(kpLogImagelib) << "dotsPerMeter X=" << dotsPerMeterX ()
                << " Y=" << dotsPerMeterY ()
                << " offset=" << offset () << endl;
 
@@ -150,12 +150,12 @@ void kpDocumentMetaInfo::printDebug (const QString &prefix) const
          it != keyList.constEnd ();
          ++it)
     {
-        kDebug () << "key=" << (*it)
+        qCDebug(kpLogImagelib) << "key=" << (*it)
                   << " text=" << text (*it)
                   << endl;
     }
 
-    kDebug () << usedPrefix << "ENDS";
+    qCDebug(kpLogImagelib) << usedPrefix << "ENDS";
 }
 
 //---------------------------------------------------------------------

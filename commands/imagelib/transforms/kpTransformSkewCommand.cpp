@@ -45,7 +45,7 @@
 #include <qpixmap.h>
 #include <qpolygon.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 // TODO: nasty, should avoid using GUI class in this command class
@@ -146,7 +146,7 @@ void kpTransformSkewCommand::execute ()
             //       allowing the border width & height != pixmap width & height
             //       Or maybe autocrop?
         #if DEBUG_KP_TOOL_SKEW
-            kDebug () << "kpTransformSkewCommand::execute() currentPoints.boundingRect="
+            qCDebug(kpLogCommands) << "kpTransformSkewCommand::execute() currentPoints.boundingRect="
                        << currentPoints.boundingRect ()
                        << " newPixmap: w=" << newImage.width ()
                        << " h=" << newImage.height ()

@@ -34,7 +34,7 @@
 #include <qevent.h>
 #include <qlist.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "commands/kpCommandHistory.h"
@@ -59,7 +59,7 @@ void kpToolText::handleBackspaceKeyPress (QKeyEvent *e,
     const QList <QString> &textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tbackspace pressed";
+    qCDebug(kpLogTools) << "\tbackspace pressed";
 #endif
 
     if (!textLines.isEmpty ())
@@ -101,7 +101,7 @@ void kpToolText::handleDeleteKeyPress (QKeyEvent *e,
     const QList <QString> & textLines, int cursorRow, int cursorCol)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tdelete pressed";
+    qCDebug(kpLogTools) << "\tdelete pressed";
 #endif
 
     if (!textLines.isEmpty ())
@@ -148,7 +148,7 @@ void kpToolText::handleEnterKeyPress (QKeyEvent *e,
     const QList <QString> & /*textLines*/, int /*cursorRow*/, int /*cursorCol*/)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tenter pressed";
+    qCDebug(kpLogTools) << "\tenter pressed";
 #endif
 
     // It's OK for <textLines> to be empty.
@@ -168,7 +168,7 @@ void kpToolText::handleTextTyped (QKeyEvent *e,
     const QList <QString> & /*textLines*/, int /*cursorRow*/, int /*cursorCol*/)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\ttext=" << e->text();
+    qCDebug(kpLogTools) << "\ttext=" << e->text();
 #endif
     QString usableText;
     for (int i = 0; i < (int) e->text ().length (); i++)
@@ -177,7 +177,7 @@ void kpToolText::handleTextTyped (QKeyEvent *e,
             usableText += e->text ().at (i);
     }
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\tusableText=" << usableText;
+    qCDebug(kpLogTools) << "\tusableText=" << usableText;
 #endif
 
     if (usableText.isEmpty ())

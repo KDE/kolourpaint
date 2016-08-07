@@ -36,7 +36,7 @@
 #include <qmenu.h>
 #include <qtimer.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "layers/selections/kpAbstractSelection.h"
@@ -159,7 +159,7 @@ bool kpAbstractSelectionTool::controlOrShiftPressed () const
 void kpAbstractSelectionTool::pushOntoDocument ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpAbstractSelectionTool::pushOntoDocument() selection="
+    qCDebug(kpLogTools) << "kpAbstractSelectionTool::pushOntoDocument() selection="
               << document ()->selection () << endl;
 #endif
     Q_ASSERT (document ()->selection ());
@@ -197,7 +197,7 @@ void kpAbstractSelectionTool::addNeedingContentCommand (kpCommand *cmd)
     {
         // Make the border creation a command.
     #if DEBUG_KP_TOOL_SELECTION
-        kDebug () << "\thave currentSelContentCommand";
+        qCDebug(kpLogTools) << "\thave currentSelContentCommand";
     #endif
         commandHistory ()->addCreateSelectionCommand (
             new kpToolSelectionCreateCommand (
@@ -250,7 +250,7 @@ void kpAbstractSelectionTool::setSelectionBorderForHaventBegunDraw ()
 QString kpAbstractSelectionTool::haventBegunDrawUserMessage ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 0
-    kDebug () << "kpAbstractSelectionTool::haventBegunDrawUserMessage()"
+    qCDebug(kpLogTools) << "kpAbstractSelectionTool::haventBegunDrawUserMessage()"
                   " cancelledShapeButStillHoldingButtons="
                << d->cancelledShapeButStillHoldingButtons
                << endl;
@@ -268,7 +268,7 @@ QString kpAbstractSelectionTool::haventBegunDrawUserMessage ()
 void kpAbstractSelectionTool::begin ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpAbstractSelectionTool<" << objectName () << ">::begin()";
+    qCDebug(kpLogTools) << "kpAbstractSelectionTool<" << objectName () << ">::begin()";
 #endif
 
     ::AssertAllTimersInactive (d);
@@ -309,7 +309,7 @@ void kpAbstractSelectionTool::begin ()
 void kpAbstractSelectionTool::end ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpAbstractSelectionTool<" << objectName () << ">::end()";
+    qCDebug(kpLogTools) << "kpAbstractSelectionTool<" << objectName () << ">::end()";
 #endif
 
     if (document ()->selection ())
@@ -348,7 +348,7 @@ void kpAbstractSelectionTool::end ()
 void kpAbstractSelectionTool::reselect ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpAbstractSelectionTool::reselect()";
+    qCDebug(kpLogTools) << "kpAbstractSelectionTool::reselect()";
 #endif
 
     if (document ()->selection ())
@@ -361,7 +361,7 @@ void kpAbstractSelectionTool::reselect ()
 kpAbstractSelectionTool::DrawType kpAbstractSelectionTool::calculateDrawTypeInsideSelection () const
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\t\tis move";
+    qCDebug(kpLogTools) << "\t\tis move";
 #endif
     return kpAbstractSelectionTool::Move;
 }
@@ -375,7 +375,7 @@ kpAbstractSelectionTool::DrawType kpAbstractSelectionTool::calculateDrawType () 
     if (!sel)
         return Create;
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\thas sel region rect=" << sel->boundingRect ();
+    qCDebug(kpLogTools) << "\thas sel region rect=" << sel->boundingRect ();
 #endif
 
     if (onSelectionResizeHandle () && !controlOrShiftPressed ())
@@ -392,7 +392,7 @@ kpAbstractSelectionTool::DrawType kpAbstractSelectionTool::calculateDrawType () 
 void kpAbstractSelectionTool::beginDraw ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpAbstractSelectionTool::beginDraw() startPoint ()="
+    qCDebug(kpLogTools) << "kpAbstractSelectionTool::beginDraw() startPoint ()="
                << startPoint ()
                << " QCursor::pos() view startPoint="
                << viewUnderStartPoint ()->mapFromGlobal (QCursor::pos ())
@@ -430,7 +430,7 @@ void kpAbstractSelectionTool::beginDraw ()
 void kpAbstractSelectionTool::hover (const QPoint &point)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpAbstractSelectionTool::hover" << point;
+    qCDebug(kpLogTools) << "kpAbstractSelectionTool::hover" << point;
 #endif
 
     operation (calculateDrawType (), SetCursor);
@@ -459,7 +459,7 @@ void kpAbstractSelectionTool::draw (const QPoint &thisPoint, const QPoint & /*la
                                     const QRect &normalizedRect)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpAbstractSelectionTool::draw (" << thisPoint
+    qCDebug(kpLogTools) << "kpAbstractSelectionTool::draw (" << thisPoint
                << ",startPoint=" << startPoint ()
                << ",normalizedRect=" << normalizedRect << ")" << endl;
 #else
@@ -483,7 +483,7 @@ void kpAbstractSelectionTool::draw (const QPoint &thisPoint, const QPoint & /*la
 void kpAbstractSelectionTool::cancelShape ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpAbstractSelectionTool::cancelShape() mouseButton="
+    qCDebug(kpLogTools) << "kpAbstractSelectionTool::cancelShape() mouseButton="
               << mouseButton () << endl;
 #endif
 
@@ -501,7 +501,7 @@ void kpAbstractSelectionTool::cancelShape ()
         if (d->currentSelContentCommand)
         {
         #if DEBUG_KP_TOOL_SELECTION
-            kDebug () << "\t\tundo sel content";
+            qCDebug(kpLogTools) << "\t\tundo sel content";
         #endif
             d->currentSelContentCommand->unexecute ();
             delete d->currentSelContentCommand;
@@ -536,7 +536,7 @@ void kpAbstractSelectionTool::releasedAllButtons ()
 void kpAbstractSelectionTool::popupRMBMenu ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "CALL - exec'ing menu";
+    qCDebug(kpLogTools) << "CALL - exec'ing menu";
 #endif
 
     QMenu *pop = environ ()->selectionToolRMBMenu ();
@@ -546,7 +546,7 @@ void kpAbstractSelectionTool::popupRMBMenu ()
     // WARNING: Enters event loop - may re-enter view/tool event handlers.
     pop->exec (QCursor::pos ());
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "calling somethingBelowTheCursorChanged()";
+    qCDebug(kpLogTools) << "calling somethingBelowTheCursorChanged()";
 #endif
 
     // Cursor may have moved while the menu was up, triggering QMouseMoveEvents
@@ -554,7 +554,7 @@ void kpAbstractSelectionTool::popupRMBMenu ()
     // Update cursor position now.
     somethingBelowTheCursorChanged ();
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "DONE";
+    qCDebug(kpLogTools) << "DONE";
 #endif
 }
 
@@ -565,7 +565,7 @@ void kpAbstractSelectionTool::endDraw (const QPoint & /*thisPoint*/,
         const QRect & /*normalizedRect*/)
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpAbstractSelectionTool::endDraw()";
+    qCDebug(kpLogTools) << "kpAbstractSelectionTool::endDraw()";
 #endif
 
     const DrawType oldDrawType = d->drawType;

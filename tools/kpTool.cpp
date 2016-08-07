@@ -37,7 +37,7 @@
 
 #include <kactioncollection.h>
 #include <kapplication.h>
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "imagelib/kpColor.h"

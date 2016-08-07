@@ -31,7 +31,7 @@
 
 #include "kpEffectBlurSharpenCommand.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 

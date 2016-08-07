@@ -1,6 +1,5 @@
-
 /*
-   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2016 Martin Sandsmark <martin.sandsmark@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -25,43 +24,23 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#ifndef KPLOGCATEGORIES_H
+#define KPLOGCATEGORIES_H
 
-#define DEBUG_KP_RESIZE_SIGNALLING_LABEL 0
+#include <QLoggingCategory>
 
+Q_DECLARE_LOGGING_CATEGORY(kpLogMisc)
+Q_DECLARE_LOGGING_CATEGORY(kpLogDialogs)
+Q_DECLARE_LOGGING_CATEGORY(kpLogCommands)
+Q_DECLARE_LOGGING_CATEGORY(kpLogDocument)
+Q_DECLARE_LOGGING_CATEGORY(kpLogTools)
+Q_DECLARE_LOGGING_CATEGORY(kpLogViews)
+Q_DECLARE_LOGGING_CATEGORY(kpLogEnvironments)
+Q_DECLARE_LOGGING_CATEGORY(kpLogPixmapfx)
+Q_DECLARE_LOGGING_CATEGORY(kpLogWidgets)
+Q_DECLARE_LOGGING_CATEGORY(kpLogMainWindow)
+Q_DECLARE_LOGGING_CATEGORY(kpLogLayers)
+Q_DECLARE_LOGGING_CATEGORY(kpLogImagelib)
 
-#include "generic/widgets/kpResizeSignallingLabel.h"
-
-#include <qevent.h>
-
-#include "kpLogCategories.h"
-
-
-kpResizeSignallingLabel::kpResizeSignallingLabel (const QString &string,
-                                                  QWidget *parent )
-    : QLabel (string, parent)
-{
-}
-
-kpResizeSignallingLabel::kpResizeSignallingLabel (QWidget *parent )
-    : QLabel (parent)
-{
-}
-
-kpResizeSignallingLabel::~kpResizeSignallingLabel ()
-{
-}
-
-
-// protected virtual [base QLabel]
-void kpResizeSignallingLabel::resizeEvent (QResizeEvent *e)
-{
-#if DEBUG_KP_RESIZE_SIGNALLING_LABEL
-    qCDebug(kpLogMisc) << "kpResizeSignallingLabel::resizeEvent() newSize=" << e->size ()
-               << " oldSize=" << e->oldSize () << endl;
 #endif
-    QLabel::resizeEvent (e);
-
-    emit resized ();
-}
-
 

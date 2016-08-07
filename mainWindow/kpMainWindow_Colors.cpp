@@ -37,7 +37,7 @@
 #include <KMessageBox>
 #include <KSelectAction>
 #include <KStandardGuiItem>
-#include <KDebug>
+#include "kpLogCategories.h"
 
 #include <QFileDialog>
 #include <QAction>
@@ -181,7 +181,7 @@ void kpMainWindow::deselectActionColorsKDE ()
 bool kpMainWindow::queryCloseColors ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::queryCloseColors() colorCells.modified="
+    qCDebug(kpLogMainWindow) << "kpMainWindow::queryCloseColors() colorCells.modified="
               << colorCells ()->isModified ();
 #endif
 
@@ -267,14 +267,14 @@ void kpMainWindow::slotColorsDefault ()
 bool kpMainWindow::openKDEColors (const QString &name)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::openKDEColors(" << name << ")";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::openKDEColors(" << name << ")";
 #endif
 
     kpColorCollection colorCol;
     if (colorCol.openKDE (name, this))
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "opened";
+        qCDebug(kpLogMainWindow) << "opened";
     #endif
         colorCells ()->setColorCollection (colorCol);
         return true;
@@ -282,7 +282,7 @@ bool kpMainWindow::openKDEColors (const QString &name)
     else
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "failed to open";
+        qCDebug(kpLogMainWindow) << "failed to open";
     #endif
         return false;
     }
@@ -398,7 +398,7 @@ void kpMainWindow::slotColorsReload ()
         }
 
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "result=" << result
+        qCDebug(kpLogMainWindow) << "result=" << result
                   << "vs KMessageBox::Continue" << KMessageBox::Continue;
     #endif
         if (result != KMessageBox::Continue)

@@ -36,7 +36,7 @@
 #include "kpDefs.h"
 #include "kpTextStyle.h"
 
-#include <KDebug>
+#include "kpLogCategories.h"
 
 #include <QFontMetrics>
 #include <QList>

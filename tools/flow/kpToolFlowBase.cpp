@@ -35,7 +35,7 @@
 #include <qimage.h>
 #include <qpainter.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "imagelib/kpColor.h"
@@ -222,7 +222,7 @@ void kpToolFlowBase::beginDraw ()
 void kpToolFlowBase::hover (const QPoint &point)
 {
 #if DEBUG_KP_TOOL_FLOW_BASE && 0
-    kDebug () << "kpToolFlowBase::hover(" << point << ")"
+    qCDebug(kpLogTools) << "kpToolFlowBase::hover(" << point << ")"
                << " hasBegun=" << hasBegun ()
                << " hasBegunDraw=" << hasBegunDraw ()
                << " cursorPixmap.isNull=" << m_cursorPixmap.isNull ()
@@ -332,7 +332,7 @@ void kpToolFlowBase::endDraw (const QPoint &, const QRect &)
 kpColor kpToolFlowBase::color (int which)
 {
 #if DEBUG_KP_TOOL_FLOW_BASE && 0
-    kDebug () << "kpToolFlowBase::color (" << which << ")";
+    qCDebug(kpLogTools) << "kpToolFlowBase::color (" << which << ")";
 #endif
 
     // Pen & Brush
@@ -391,7 +391,7 @@ kpToolFlowCommand *kpToolFlowBase::currentCommand () const
 void kpToolFlowBase::updateBrushAndCursor ()
 {
 #if DEBUG_KP_TOOL_FLOW_BASE && 1
-    kDebug () << "kpToolFlowBase::updateBrushAndCursor()";
+    qCDebug(kpLogTools) << "kpToolFlowBase::updateBrushAndCursor()";
 #endif
 
     if (haveSquareBrushes ())
@@ -439,7 +439,7 @@ void kpToolFlowBase::updateBrushAndCursor ()
 void kpToolFlowBase::slotForegroundColorChanged (const kpColor & /*col*/)
 {
 #if DEBUG_KP_TOOL_FLOW_BASE
-    kDebug () << "kpToolFlowBase::slotForegroundColorChanged()";
+    qCDebug(kpLogTools) << "kpToolFlowBase::slotForegroundColorChanged()";
 #endif
 
     updateBrushAndCursor ();
@@ -451,7 +451,7 @@ void kpToolFlowBase::slotForegroundColorChanged (const kpColor & /*col*/)
 void kpToolFlowBase::slotBackgroundColorChanged (const kpColor & /*col*/)
 {
 #if DEBUG_KP_TOOL_FLOW_BASE
-    kDebug () << "kpToolFlowBase::slotBackgroundColorChanged()";
+    qCDebug(kpLogTools) << "kpToolFlowBase::slotBackgroundColorChanged()";
 #endif
 
     updateBrushAndCursor ();

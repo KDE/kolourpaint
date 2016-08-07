@@ -39,7 +39,7 @@
 
 #include <qevent.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 //---------------------------------------------------------------------
 
@@ -47,7 +47,7 @@
 void kpAbstractSelectionTool::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL_SELECTION && 0
-    kDebug () << "kpAbstractSelectionTool::keyPressEvent(e->text='"
+    qCDebug(kpLogTools) << "kpAbstractSelectionTool::keyPressEvent(e->text='"
               << e->text () << "')" << endl;
 #endif
 
@@ -58,7 +58,7 @@ void kpAbstractSelectionTool::keyPressEvent (QKeyEvent *e)
          e->key () == Qt::Key_Escape)
     {
     #if DEBUG_KP_TOOL_SELECTION && 0
-        kDebug () << "\tescape pressed with sel when not begun draw - deselecting"
+        qCDebug(kpLogTools) << "\tescape pressed with sel when not begun draw - deselecting"
                   << endl;
     #endif
 
@@ -68,7 +68,7 @@ void kpAbstractSelectionTool::keyPressEvent (QKeyEvent *e)
     else
     {
     #if DEBUG_KP_TOOL_SELECTION && 0
-        kDebug () << "\tkey processing did not accept (text was '"
+        qCDebug(kpLogTools) << "\tkey processing did not accept (text was '"
                    << e->text ()
                    << "') - passing on event to kpTool"
                    << endl;

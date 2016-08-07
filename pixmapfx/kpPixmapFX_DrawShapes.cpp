@@ -39,7 +39,7 @@
 #include <qpoint.h>
 #include <qpolygon.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "layers/selections/kpAbstractSelection.h"
 #include "imagelib/kpColor.h"
@@ -163,7 +163,7 @@ void kpPixmapFX::drawPolyline (QImage *image,
     if (Only1PixelInPointArray(points))
     {
     #if DEBUG_KP_PIXMAP_FX
-        kDebug () << "\tinvoking single point hack";
+        qCDebug(kpLogPixmapfx) << "\tinvoking single point hack";
     #endif
         painter.drawPoint(points[0]);
         return;
@@ -219,7 +219,7 @@ void kpPixmapFX::drawPolygon (QImage *image,
     if (Only1PixelInPointArray (points))
     {
     #if DEBUG_KP_PIXMAP_FX
-        kDebug () << "\tinvoking single point hack";
+        qCDebug(kpLogPixmapfx) << "\tinvoking single point hack";
     #endif
         p.drawPoint(points [0]);
         return;
@@ -258,7 +258,7 @@ void kpPixmapFX::drawCurve (QImage *image,
         controlPointQ == endPoint)
     {
     #if DEBUG_KP_PIXMAP_FX
-        kDebug () << "\tinvoking single point hack";
+        qCDebug(kpLogPixmapfx) << "\tinvoking single point hack";
     #endif
         p.drawPoint (startPoint);
         return;
@@ -323,7 +323,7 @@ static void DrawGenericRect (QImage *image,
         bool isEllipseLike)
 {
 #if DEBUG_KP_PIXMAP_FX
-    kDebug () << "kppixmapfx.cpp:DrawGenericRect(" << x << "," << y << ","
+    qCDebug(kpLogPixmapfx) << "kppixmapfx.cpp:DrawGenericRect(" << x << "," << y << ","
         << width << "," << height << ",func=" << func << ")"
         << " pen.color=" << (int *) fcolor.toQRgb ()
         << " penWidth=" << penWidth
@@ -349,7 +349,7 @@ static void DrawGenericRect (QImage *image,
     if (width == 1 || height == 1)
     {
     #if DEBUG_KP_PIXMAP_FX
-        kDebug () << "\twidth=1 or height=1 - draw line";
+        qCDebug(kpLogPixmapfx) << "\twidth=1 or height=1 - draw line";
     #endif
 
         kpPixmapFX::drawLine (image,
@@ -364,7 +364,7 @@ static void DrawGenericRect (QImage *image,
     if (penWidth * 2 >= width || penWidth * 2 >= height)
     {
     #if DEBUG_KP_PIXMAP_FX
-        kDebug () << "\toutline dominates fill - fill with outline";
+        qCDebug(kpLogPixmapfx) << "\toutline dominates fill - fill with outline";
     #endif
 
         // Fill with outline.

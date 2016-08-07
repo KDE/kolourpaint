@@ -40,7 +40,7 @@
 #include <QDesktopWidget>
 #include <QScrollBar>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandardaction.h>
@@ -168,7 +168,7 @@ QMenu *kpMainWindow::selectionToolRMBMenu ()
 void kpMainWindow::slotCut ()
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::slotCut() CALLED";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotCut() CALLED";
 #endif
 
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
@@ -196,7 +196,7 @@ static QMimeData *NewTextMimeData (const QString &text)
 void kpMainWindow::slotCopy ()
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::slotCopy() CALLED";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotCopy() CALLED";
 #endif
 
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
@@ -289,7 +289,7 @@ void kpMainWindow::slotEnablePaste ()
 QRect kpMainWindow::calcUsefulPasteRect (int imageWidth, int imageHeight)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::calcUsefulPasteRect("
+    qCDebug(kpLogMainWindow) << "kpMainWindow::calcUsefulPasteRect("
                << imageWidth << "," << imageHeight
                << ")"
                << endl;
@@ -324,7 +324,7 @@ QRect kpMainWindow::calcUsefulPasteRect (int imageWidth, int imageHeight)
 void kpMainWindow::paste(const kpAbstractSelection &sel, bool forceTopLeft)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::paste(forceTopLeft=" << forceTopLeft << ")"
+    qCDebug(kpLogMainWindow) << "kpMainWindow::paste(forceTopLeft=" << forceTopLeft << ")"
                << endl;
 #endif
 
@@ -371,7 +371,7 @@ void kpMainWindow::paste(const kpAbstractSelection &sel, bool forceTopLeft)
 
 
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "sel.size=" << QSize (sel.width (), sel.height ())
+    qCDebug(kpLogMainWindow) << "sel.size=" << QSize (sel.width (), sel.height ())
                << " document.size="
                << QSize (d->document->width (), d->document->height ())
                << endl;
@@ -404,7 +404,7 @@ void kpMainWindow::pasteText (const QString &text,
                               const QPoint &newTextSelectionTopLeft)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::pasteText(" << text
+    qCDebug(kpLogMainWindow) << "kpMainWindow::pasteText(" << text
                << ",forceNewTextSelection=" << forceNewTextSelection
                << ",newTextSelectionTopLeft=" << newTextSelectionTopLeft
                << ")" << endl;
@@ -424,7 +424,7 @@ void kpMainWindow::pasteText (const QString &text,
         d->commandHistory && d->viewManager)
     {
     #if DEBUG_KP_MAIN_WINDOW && 1
-        kDebug () << "\treusing existing Text Selection";
+        qCDebug(kpLogMainWindow) << "\treusing existing Text Selection";
     #endif
 
         d->viewManager->setQueueUpdates();
@@ -433,7 +433,7 @@ void kpMainWindow::pasteText (const QString &text,
         if (!textSel->hasContent ())
         {
         #if DEBUG_KP_MAIN_WINDOW && 1
-            kDebug () << "\t\tneeds content";
+            qCDebug(kpLogMainWindow) << "\t\tneeds content";
         #endif
             commandHistory ()->addCreateSelectionCommand (
                 new kpToolSelectionCreateCommand (
@@ -486,7 +486,7 @@ void kpMainWindow::pasteText (const QString &text,
     else
     {
     #if DEBUG_KP_MAIN_WINDOW && 1
-        kDebug () << "\tcreating Text Selection";
+        qCDebug(kpLogMainWindow) << "\tcreating Text Selection";
     #endif
 
         const kpTextStyle ts = textStyle ();
@@ -537,7 +537,7 @@ void kpMainWindow::pasteTextAt (const QString &text, const QPoint &point,
                                 bool allowNewTextSelectionPointShift)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::pasteTextAt(" << text
+    qCDebug(kpLogMainWindow) << "kpMainWindow::pasteTextAt(" << text
                << ",point=" << point
                << ",allowNewTextSelectionPointShift="
                << allowNewTextSelectionPointShift
@@ -626,7 +626,7 @@ void kpMainWindow::slotPaste()
 void kpMainWindow::slotPasteInNewWindow ()
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::slotPasteInNewWindow() CALLED";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotPasteInNewWindow() CALLED";
 #endif
 
     kpSetOverrideCursorSaver cursorSaver (Qt::WaitCursor);
@@ -650,7 +650,7 @@ void kpMainWindow::slotPasteInNewWindow ()
     if (transparency.isTransparent ())
     {
     #if DEBUG_KP_MAIN_WINDOW && 1
-        kDebug () << "\tchanging image selection transparency to opaque";
+        qCDebug(kpLogMainWindow) << "\tchanging image selection transparency to opaque";
     #endif
         transparency.setOpaque ();
         // Since we are setting selection transparency programmatically
@@ -679,12 +679,12 @@ void kpMainWindow::slotPasteInNewWindow ()
 void kpMainWindow::slotDelete ()
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::slotDelete() CALLED";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotDelete() CALLED";
 #endif
     if (!d->actionDelete->isEnabled ())
     {
     #if DEBUG_KP_MAIN_WINDOW && 1
-        kDebug () << "\taction not enabled - was probably called from kpTool::keyPressEvent()";
+        qCDebug(kpLogMainWindow) << "\taction not enabled - was probably called from kpTool::keyPressEvent()";
     #endif
         return;
     }
@@ -707,7 +707,7 @@ void kpMainWindow::slotDelete ()
 void kpMainWindow::slotSelectAll ()
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::slotSelectAll() CALLED";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotSelectAll() CALLED";
 #endif
     Q_ASSERT (d->document);
 
@@ -731,7 +731,7 @@ void kpMainWindow::slotSelectAll ()
 void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::addDeselectFirstCommand("
+    qCDebug(kpLogMainWindow) << "kpMainWindow::addDeselectFirstCommand("
                << cmd
                << ")"
                << endl;
@@ -741,7 +741,7 @@ void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
     kpAbstractSelection *sel = d->document->selection ();
 
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "\tsel=" << sel;
+    qCDebug(kpLogMainWindow) << "\tsel=" << sel;
 #endif
 
     if (sel)
@@ -751,7 +751,7 @@ void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
         if (!sel->hasContent ())
         {
         #if DEBUG_KP_MAIN_WINDOW && 1
-            kDebug () << "\tjust a fresh border - was nop - delete";
+            qCDebug(kpLogMainWindow) << "\tjust a fresh border - was nop - delete";
         #endif
             d->document->selectionDelete ();
             if (tool ())
@@ -763,7 +763,7 @@ void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
         else
         {
         #if DEBUG_KP_MAIN_WINDOW && 1
-            kDebug () << "\treal selection with image - push onto doc cmd";
+            qCDebug(kpLogMainWindow) << "\treal selection with image - push onto doc cmd";
         #endif
             kpCommand *deselectCommand = new kpToolSelectionDestroyCommand (
                 dynamic_cast <kpTextSelection *> (sel) ?
@@ -797,7 +797,7 @@ void kpMainWindow::addDeselectFirstCommand (kpCommand *cmd)
 void kpMainWindow::slotDeselect ()
 {
 #if DEBUG_KP_MAIN_WINDOW && 1
-    kDebug () << "kpMainWindow::slotDeselect() CALLED";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotDeselect() CALLED";
 #endif
     Q_ASSERT (d->document && d->document->selection ());
 
@@ -812,7 +812,7 @@ void kpMainWindow::slotDeselect ()
 void kpMainWindow::slotCopyToFile ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotCopyToFile()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotCopyToFile()";
 #endif
 
     toolEndShape ();
@@ -889,7 +889,7 @@ void kpMainWindow::slotCopyToFile ()
 void kpMainWindow::slotPasteFromFile ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotPasteFromFile()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotPasteFromFile()";
 #endif
 
     toolEndShape ();

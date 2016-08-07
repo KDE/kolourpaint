@@ -54,7 +54,7 @@
 #include <kactioncollection.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <KPluralHandlingSpinBox>
 #include <kfiledialog.h>
 #include <kiconloader.h>
@@ -88,7 +88,7 @@
 void kpMainWindow::setupFileMenuActions ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::setupFileMenuActions()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::setupFileMenuActions()";
 #endif
     KActionCollection *ac = actionCollection ();
 
@@ -98,7 +98,7 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionOpenRecent = KStandardAction::openRecent (this, SLOT (slotOpenRecent (const QUrl &)), ac);
     d->actionOpenRecent->loadEntries (KSharedConfig::openConfig ()->group (kpSettingsGroupRecentFiles));
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\trecent URLs=" << d->actionOpenRecent->items ();
+    qCDebug(kpLogMainWindow) << "\trecent URLs=" << d->actionOpenRecent->items ();
 #endif
 
     d->actionSave = KStandardAction::save (this, SLOT (slotSave ()), ac);
@@ -196,7 +196,7 @@ void kpMainWindow::addRecentURL (const QUrl &url_)
     const QUrl url = url_;
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::addRecentURL(" << url << ")";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::addRecentURL(" << url << ")";
 #endif
     if (url.isEmpty ())
         return;
@@ -209,13 +209,13 @@ void kpMainWindow::addRecentURL (const QUrl &url_)
     cfg->reparseConfiguration ();
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\trecent URLs=" << d->actionOpenRecent->items ();
+    qCDebug(kpLogMainWindow) << "\trecent URLs=" << d->actionOpenRecent->items ();
 #endif
     // HACK: Something might have changed interprocess.
     // If we could PROPAGATE: interprocess, then this wouldn't be required.
     d->actionOpenRecent->loadEntries (cfg->group (kpSettingsGroupRecentFiles));
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tafter loading config=" << d->actionOpenRecent->items ();
+    qCDebug(kpLogMainWindow) << "\tafter loading config=" << d->actionOpenRecent->items ();
 #endif
 
     d->actionOpenRecent->addUrl (url);
@@ -224,7 +224,7 @@ void kpMainWindow::addRecentURL (const QUrl &url_)
     cfg->sync ();
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tnew recent URLs=" << d->actionOpenRecent->items ();
+    qCDebug(kpLogMainWindow) << "\tnew recent URLs=" << d->actionOpenRecent->items ();
 #endif
 
 
@@ -238,7 +238,7 @@ void kpMainWindow::addRecentURL (const QUrl &url_)
         kpMainWindow *mw = static_cast <kpMainWindow *> (kmw);
 
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\t\tmw=" << mw;
+        qCDebug(kpLogMainWindow) << "\t\tmw=" << mw;
     #endif
 
         if (mw != this)
@@ -253,7 +253,7 @@ void kpMainWindow::addRecentURL (const QUrl &url_)
 
             mw->d->actionOpenRecent->loadEntries (cfg->group (kpSettingsGroupRecentFiles));
         #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\t\t\tcheck recent URLs="
+            qCDebug(kpLogMainWindow) << "\t\t\tcheck recent URLs="
                         << mw->d->actionOpenRecent->items () << endl;
         #endif
         }
@@ -320,7 +320,7 @@ QSize kpMainWindow::defaultDocSize () const
 void kpMainWindow::saveDefaultDocSize (const QSize &size)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tCONFIG: saving Last Doc Size = " << size;
+    qCDebug(kpLogMainWindow) << "\tCONFIG: saving Last Doc Size = " << size;
 #endif
 
     KConfigGroup cfg (KSharedConfig::openConfig (), kpSettingsGroupGeneral);
@@ -337,13 +337,13 @@ bool kpMainWindow::shouldOpen ()
     if (d->configOpenImagesInSameWindow)
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\topenImagesInSameWindow";
+        qCDebug(kpLogMainWindow) << "\topenImagesInSameWindow";
     #endif
         // (this brings up a dialog and might save the current doc)
         if (!queryCloseDocument ())
         {
         #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\t\tqueryCloseDocument() aborts open";
+            qCDebug(kpLogMainWindow) << "\t\tqueryCloseDocument() aborts open";
         #endif
             return false;
         }
@@ -391,14 +391,14 @@ kpDocument *kpMainWindow::openInternal (const QUrl &url,
     if (!newDoc->open (url, newDocSameNameIfNotExist))
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\topen failed";
+        qCDebug(kpLogMainWindow) << "\topen failed";
     #endif
         delete newDoc;
         return 0;
     }
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\topen OK";
+    qCDebug(kpLogMainWindow) << "\topen OK";
 #endif
     // Send document to current or new window.
     setDocumentChoosingWindow (newDoc);
@@ -412,7 +412,7 @@ kpDocument *kpMainWindow::openInternal (const QUrl &url,
 bool kpMainWindow::open (const QUrl &url, bool newDocSameNameIfNotExist)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::open(" << url
+    qCDebug(kpLogMainWindow) << "kpMainWindow::open(" << url
               << ",newDocSameNameIfNotExist=" << newDocSameNameIfNotExist
               << ")" << endl;
 #endif
@@ -499,8 +499,8 @@ void kpMainWindow::slotOpen ()
 void kpMainWindow::slotOpenRecent (const QUrl &url)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotOpenRecent(" << url << ")";
-    kDebug () << "\titems=" << d->actionOpenRecent->items ();
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotOpenRecent(" << url << ")";
+    qCDebug(kpLogMainWindow) << "\titems=" << d->actionOpenRecent->items ();
 #endif
 
     toolEndShape ();
@@ -527,7 +527,7 @@ void kpMainWindow::slotOpenRecent (const QUrl &url)
 void kpMainWindow::slotScan ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotScan() scanDialog=" << d->scanDialog;
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotScan() scanDialog=" << d->scanDialog;
 #endif
 
     toolEndShape ();
@@ -547,7 +547,7 @@ void kpMainWindow::slotScan ()
         }
 
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tcreated scanDialog=" << d->scanDialog;
+        qCDebug(kpLogMainWindow) << "\tcreated scanDialog=" << d->scanDialog;
     #endif
         connect (d->scanDialog, SIGNAL (finalImage (const QImage &, int)),
                  SLOT (slotScanned (const QImage &, int)));
@@ -573,7 +573,7 @@ void kpMainWindow::slotScan ()
 
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tcalling setup";
+    qCDebug(kpLogMainWindow) << "\tcalling setup";
 #endif
     // Bring up dialog to select scan device.
     // If there is no scanner, we find that this does not bring up a dialog
@@ -581,7 +581,7 @@ void kpMainWindow::slotScan ()
     if (d->scanDialog->setup ())
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\t\tOK - showing dialog";
+        qCDebug(kpLogMainWindow) << "\t\tOK - showing dialog";
     #endif
         // Called only if scanner configured/available.
         //
@@ -596,7 +596,7 @@ void kpMainWindow::slotScan ()
     {
         // Have never seen this code path execute even if "Cancel" is pressed.
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\t\tFAIL";
+        qCDebug(kpLogMainWindow) << "\t\tFAIL";
     #endif
     }
 }
@@ -607,11 +607,11 @@ void kpMainWindow::slotScan ()
 void kpMainWindow::slotScanned (const QImage &image, int)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::slotScanned() image.rect=" << image.rect ();
+    qCDebug(kpLogMainWindow) << "kpMainWindow::slotScanned() image.rect=" << image.rect ();
 #endif
 
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\thiding dialog";
+    qCDebug(kpLogMainWindow) << "\thiding dialog";
 #endif
     // (KScanDialog does not close itself after a scan is made)
     //
@@ -780,7 +780,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
                                   bool *allowLossyPrompt)
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::askForURL() startURL=" << startURL;
+    qCDebug(kpLogMainWindow) << "kpMainWindow::askForURL() startURL=" << startURL;
     startSaveOptions.printDebug ("\tstartSaveOptions");
 #endif
 
@@ -817,12 +817,12 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
 #if DEBUG_KP_MAIN_WINDOW
     QStringList sortedMimeTypes = mimeTypes;
     sortedMimeTypes.sort ();
-    kDebug () << "\tmimeTypes=" << mimeTypes
+    qCDebug(kpLogMainWindow) << "\tmimeTypes=" << mimeTypes
                << "\tsortedMimeTypes=" << sortedMimeTypes << endl;
 #endif
     if (mimeTypes.isEmpty ())
     {
-        kError () << "No output mimetypes!" << endl;
+        qCCritical(kpLogMainWindow) << "No output mimetypes!" << endl;
         return QUrl ();
     }
 
@@ -831,7 +831,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
     if (!MIME_TYPE_IS_VALID ())
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tmimeType=" << fdSaveOptions.mimeType ()
+        qCDebug(kpLogMainWindow) << "\tmimeType=" << fdSaveOptions.mimeType ()
                    << " not valid, get default" << endl;
     #endif
 
@@ -843,7 +843,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
         if (!MIME_TYPE_IS_VALID ())
         {
         #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\tmimeType=" << fdSaveOptions.mimeType ()
+            qCDebug(kpLogMainWindow) << "\tmimeType=" << fdSaveOptions.mimeType ()
                        << " not valid, get hardcoded" << endl;
         #endif
             if (mimeTypes.contains ("image/png"))
@@ -918,7 +918,7 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
         {
             *allowOverwritePrompt = shouldAllowOverwritePrompt;
         #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\tallowOverwritePrompt=" << *allowOverwritePrompt;
+            qCDebug(kpLogMainWindow) << "\tallowOverwritePrompt=" << *allowOverwritePrompt;
         #endif
         }
 
@@ -934,13 +934,13 @@ QUrl kpMainWindow::askForSaveURL (const QString &caption,
                  newSaveOptions.colorDepth () != startSaveOptions.colorDepth () ||
                  newSaveOptions.dither () != startSaveOptions.dither ());
         #if DEBUG_KP_MAIN_WINDOW
-            kDebug () << "\tallowLossyPrompt=" << *allowLossyPrompt;
+            qCDebug(kpLogMainWindow) << "\tallowLossyPrompt=" << *allowLossyPrompt;
         #endif
         }
 
 
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tselectedUrl=" << fd.selectedUrl ();
+        qCDebug(kpLogMainWindow) << "\tselectedUrl=" << fd.selectedUrl ();
     #endif
         return fd.selectedUrl ();
     }
@@ -1100,7 +1100,7 @@ bool kpMainWindow::slotReload ()
         (!oldURL.isEmpty () && KIO::NetAccess::exists (oldURL, KIO::NetAccess::SourceSide/*open*/, this)))
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "kpMainWindow::slotReload() reloading from disk!";
+        qCDebug(kpLogMainWindow) << "kpMainWindow::slotReload() reloading from disk!";
     #endif
 
         doc = new kpDocument (1, 1, documentEnvironment ());
@@ -1115,7 +1115,7 @@ bool kpMainWindow::slotReload ()
     else
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "kpMainWindow::slotReload() create doc";
+        qCDebug(kpLogMainWindow) << "kpMainWindow::slotReload() create doc";
     #endif
 
         doc = new kpDocument (d->document->constructorWidth (),
@@ -1147,7 +1147,7 @@ void kpMainWindow::sendDocumentNameToPrinter (QPrinter *printer)
             fileName.truncate (dot);
 
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "kpMainWindow::sendDocumentNameToPrinter() fileName="
+        qCDebug(kpLogMainWindow) << "kpMainWindow::sendDocumentNameToPrinter() fileName="
                    << fileName
                    << " dir="
                    << url.directory ()
@@ -1172,7 +1172,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
     double imageDotsPerMeterY =
         double (d->document->metaInfo ()->dotsPerMeterY ());
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::sendImageToPrinter() image:"
+    qCDebug(kpLogMainWindow) << "kpMainWindow::sendImageToPrinter() image:"
                << " width=" << image.width ()
                << " height=" << image.height ()
                << " dotsPerMeterX=" << imageDotsPerMeterX
@@ -1210,7 +1210,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
         const int dpiX = screenDevice->logicalDpiX (),
             dpiY = screenDevice->logicalDpiY ();
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tusing screen dpi: x=" << dpiX << " y=" << dpiY;
+        qCDebug(kpLogMainWindow) << "\tusing screen dpi: x=" << dpiX << " y=" << dpiY;
     #endif
 
         imageDotsPerMeterX = dpiX * KP_INCHES_PER_METER;
@@ -1228,7 +1228,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
     const int printerWidthMM = printer->widthMM ();
     const int printerHeightMM = printer->heightMM ();
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\tprinter: widthMM=" << printerWidthMM
+    qCDebug(kpLogMainWindow) << "\tprinter: widthMM=" << printerWidthMM
                << " heightMM=" << printerHeightMM
                << endl;
 #endif
@@ -1237,7 +1237,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
     double dpiX = imageDotsPerMeterX / KP_INCHES_PER_METER;
     double dpiY = imageDotsPerMeterY / KP_INCHES_PER_METER;
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\timage: dpiX=" << dpiX << " dpiY=" << dpiY;
+    qCDebug(kpLogMainWindow) << "\timage: dpiX=" << dpiX << " dpiY=" << dpiY;
 #endif
 
 
@@ -1253,7 +1253,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
             / dpiY;
     const double scaleDpi = qMax (scaleDpiX, scaleDpiY);
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "\t\tscaleDpi: x=" << scaleDpiX << " y=" << scaleDpiY
+    qCDebug(kpLogMainWindow) << "\t\tscaleDpi: x=" << scaleDpiX << " y=" << scaleDpiY
                << " --> scale at " << scaleDpi << " to fit?"
                << endl;
 #endif
@@ -1264,7 +1264,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
         dpiX *= scaleDpi;
         dpiY *= scaleDpi;
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\t\t\tto fit page, scaled to:"
+        qCDebug(kpLogMainWindow) << "\t\t\tto fit page, scaled to:"
                    << " dpiX=" << dpiX << " dpiY=" << dpiY << endl;
     #endif
     }
@@ -1278,7 +1278,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
     if (dpiX > dpiY)
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tdpiX > dpiY; stretching image height to equalise DPIs to dpiX="
+        qCDebug(kpLogMainWindow) << "\tdpiX > dpiY; stretching image height to equalise DPIs to dpiX="
                    << dpiX << endl;
     #endif
         kpPixmapFX::scale (&image,
@@ -1291,7 +1291,7 @@ void kpMainWindow::sendImageToPrinter (QPrinter *printer,
     else if (dpiY > dpiX)
     {
     #if DEBUG_KP_MAIN_WINDOW
-        kDebug () << "\tdpiY > dpiX; stretching image width to equalise DPIs to dpiY="
+        qCDebug(kpLogMainWindow) << "\tdpiY > dpiX; stretching image width to equalise DPIs to dpiY="
                    << dpiY << endl;
     #endif
         kpPixmapFX::scale (&image,
@@ -1467,7 +1467,7 @@ bool kpMainWindow::queryCloseDocument ()
 bool kpMainWindow::queryClose ()
 {
 #if DEBUG_KP_MAIN_WINDOW
-    kDebug () << "kpMainWindow::queryClose()";
+    qCDebug(kpLogMainWindow) << "kpMainWindow::queryClose()";
 #endif
     toolEndShape ();
 

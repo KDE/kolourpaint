@@ -42,7 +42,7 @@
 #include <qpolygon.h>
 #include <qtimer.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "layers/selections/image/kpAbstractImageSelection.h"
@@ -163,9 +163,9 @@ void kpAbstractSelectionTool::drawCreate (const QPoint &thisPoint,
         const QRect &normalizedRect)
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "\tnot moving - resizing rect to" << normalizedRect
+    qCDebug(kpLogTools) << "\tnot moving - resizing rect to" << normalizedRect
                 << endl;
-    kDebug () << "\t\tcreateNOPTimer->isActive()="
+    qCDebug(kpLogTools) << "\t\tcreateNOPTimer->isActive()="
                 << d->createNOPTimer->isActive ()
                 << " viewManhattanLength from startPoint="
                 << viewUnderStartPoint ()->transformDocToViewX ((thisPoint - startPoint ()).manhattanLength ())
@@ -182,14 +182,14 @@ void kpAbstractSelectionTool::drawCreate (const QPoint &thisPoint,
                 (accidentalDragAdjustedPoint - startPoint ()).manhattanLength ()) <= 6)
         {
         #if DEBUG_KP_TOOL_SELECTION && 1
-            kDebug () << "\t\tsuppress accidental movement";
+            qCDebug(kpLogTools) << "\t\tsuppress accidental movement";
         #endif
             accidentalDragAdjustedPoint = startPoint ();
         }
         else
         {
         #if DEBUG_KP_TOOL_SELECTION && 1
-            kDebug () << "\t\tit's a \"big\" intended move - stop timer";
+            qCDebug(kpLogTools) << "\t\tit's a \"big\" intended move - stop timer";
         #endif
             d->createNOPTimer->stop ();
         }
@@ -208,7 +208,7 @@ void kpAbstractSelectionTool::drawCreate (const QPoint &thisPoint,
     if (d->dragAccepted)
     {
     #if DEBUG_KP_TOOL_SELECTION && 1
-        kDebug () << "\t\tdrawHasDoneSomething - kill create timer";
+        qCDebug(kpLogTools) << "\t\tdrawHasDoneSomething - kill create timer";
     #endif
         // No longer a NOP.
         d->createNOPTimer->stop ();
@@ -223,7 +223,7 @@ void kpAbstractSelectionTool::drawCreate (const QPoint &thisPoint,
 void kpAbstractSelectionTool::delayedDrawCreate ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpAbstractSelectionTool::delayedDrawCreate() hasBegunDraw="
+    qCDebug(kpLogTools) << "kpAbstractSelectionTool::delayedDrawCreate() hasBegunDraw="
                << hasBegunDraw ()
                << " currentPoint=" << currentPoint ()
                << " lastPoint=" << lastPoint ()
@@ -245,7 +245,7 @@ void kpAbstractSelectionTool::delayedDrawCreate ()
 void kpAbstractSelectionTool::cancelCreate ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "\twas creating sel - kill";
+    qCDebug(kpLogTools) << "\twas creating sel - kill";
 #endif
 
     d->createNOPTimer->stop ();

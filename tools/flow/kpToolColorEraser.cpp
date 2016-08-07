@@ -31,7 +31,7 @@
 
 #include "kpToolColorEraser.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "imagelib/kpColor.h"
@@ -66,7 +66,7 @@ kpToolColorEraser::~kpToolColorEraser ()
 void kpToolColorEraser::globalDraw ()
 {
 #if DEBUG_KP_TOOL_COLOR_ERASER
-    kDebug () << "kpToolColorEraser::globalDraw()";
+    qCDebug(kpLogTools) << "kpToolColorEraser::globalDraw()";
 #endif
     if (!drawShouldProceed (QPoint ()/*unused*/, QPoint ()/*unused*/, QRect ()/*unused*/))
         return;
@@ -100,7 +100,7 @@ void kpToolColorEraser::globalDraw ()
     else
     {
     #if DEBUG_KP_TOOL_COLOR_ERASER
-        kDebug () << "\tisNOP";
+        qCDebug(kpLogTools) << "\tisNOP";
     #endif
         delete cmd;
         cmd = 0;
@@ -136,7 +136,7 @@ bool kpToolColorEraser::drawShouldProceed (const QPoint & /*thisPoint*/,
 QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
 #if DEBUG_KP_TOOL_COLOR_ERASER
-    kDebug () << "kpToolColorEraser::drawLine(thisPoint=" << thisPoint
+    qCDebug(kpLogTools) << "kpToolColorEraser::drawLine(thisPoint=" << thisPoint
         << ",lastPoint=" << lastPoint << ")" << endl;
 #endif
 
@@ -151,7 +151,7 @@ QRect kpToolColorEraser::drawLine (const QPoint &thisPoint, const QPoint &lastPo
         processedColorSimilarity ());
 
 #if DEBUG_KP_TOOL_COLOR_ERASER
-    kDebug () << "\tdirtyRect=" << dirtyRect;
+    qCDebug(kpLogTools) << "\tdirtyRect=" << dirtyRect;
 #endif
 
     if (!dirtyRect.isEmpty ())

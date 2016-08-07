@@ -40,7 +40,7 @@
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include <qapplication.h>
@@ -96,7 +96,7 @@ kpCommandSize::SizeType kpToolSelectionMoveCommand::size () const
 void kpToolSelectionMoveCommand::execute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolSelectionMoveCommand::execute()";
+    qCDebug(kpLogCommands) << "kpToolSelectionMoveCommand::execute()";
 #endif
 
     kpDocument *doc = document ();
@@ -128,7 +128,7 @@ void kpToolSelectionMoveCommand::execute ()
 void kpToolSelectionMoveCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "kpToolSelectionMoveCommand::unexecute()";
+    qCDebug(kpLogCommands) << "kpToolSelectionMoveCommand::unexecute()";
 #endif
 
     kpDocument *doc = document ();
@@ -146,7 +146,7 @@ void kpToolSelectionMoveCommand::unexecute ()
     if (!m_oldDocumentImage.isNull ())
         doc->setImageAt (m_oldDocumentImage, m_documentBoundingRect.topLeft ());
 #if DEBUG_KP_TOOL_SELECTION && 1
-    kDebug () << "\tmove to startPoint=" << m_startPoint;
+    qCDebug(kpLogCommands) << "\tmove to startPoint=" << m_startPoint;
 #endif
     sel->moveTo (m_startPoint);
 
@@ -159,7 +159,7 @@ void kpToolSelectionMoveCommand::unexecute ()
 void kpToolSelectionMoveCommand::moveTo (const QPoint &point, bool moveLater)
 {
 #if DEBUG_KP_TOOL_SELECTION && 0
-    kDebug () << "kpToolSelectionMoveCommand::moveTo" << point
+    qCDebug(kpLogCommands) << "kpToolSelectionMoveCommand::moveTo" << point
                << " moveLater=" << moveLater
                <<endl;
 #endif
@@ -192,7 +192,7 @@ void kpToolSelectionMoveCommand::moveTo (int x, int y, bool moveLater)
 void kpToolSelectionMoveCommand::copyOntoDocument ()
 {
 #if DEBUG_KP_TOOL_SELECTION
-    kDebug () << "kpToolSelectionMoveCommand::copyOntoDocument()";
+    qCDebug(kpLogCommands) << "kpToolSelectionMoveCommand::copyOntoDocument()";
 #endif
 
     kpDocument *doc = document ();

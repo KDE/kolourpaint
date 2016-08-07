@@ -35,7 +35,7 @@
 #include "lgpl/generic/kpColorCollection.h"
 #include "widgets/kpDefaultColorCollection.h"
 
-#include <KDebug>
+#include "kpLogCategories.h"
 #include <KLocalizedString>
 
 #include <QColorDialog>
@@ -262,9 +262,9 @@ void kpColorCells::makeCellsMatchColorCollection ()
     }
 
 #if DEBUG_KP_COLOR_CELLS
-    kDebug () << "kpColorCells::makeCellsMatchColorCollection():"
+    qCDebug(kpLogWidgets) << "kpColorCells::makeCellsMatchColorCollection():"
               << "r=" << r << "c=" << c;
-    kDebug () << "verticalScrollBar=" << verticalScrollBar ()
+    qCDebug(kpLogWidgets) << "verticalScrollBar=" << verticalScrollBar ()
               << " sizeHint="
               << (verticalScrollBar () ?
                     verticalScrollBar ()->sizeHint () :
@@ -316,9 +316,9 @@ void kpColorCells::makeCellsMatchColorCollection ()
             pos = y * c + x;
         }
     #if DEBUG_KP_COLOR_CELLS && 0
-        kDebug () << "\tSetting cell " << i << ": y=" << y << " x=" << x
+        qCDebug(kpLogWidgets) << "\tSetting cell " << i << ": y=" << y << " x=" << x
                   << " pos=" << pos << endl;
-        kDebug () << "\t\tcolor=" << (int *) d->colorCol.color (i).rgba()
+        qCDebug(kpLogWidgets) << "\t\tcolor=" << (int *) d->colorCol.color (i).rgba()
                   << "isValid=" << d->colorCol.color (i).isValid ();
     #endif
 
@@ -342,7 +342,7 @@ bool kpColorCells::isModified () const
 void kpColorCells::setModified (bool yes)
 {
 #if DEBUG_KP_COLOR_CELLS
-    kDebug () << "kpColorCells::setModified(" << yes << ")";
+    qCDebug(kpLogWidgets) << "kpColorCells::setModified(" << yes << ")";
 #endif
 
     if (yes == d->isModified)
@@ -525,7 +525,7 @@ void kpColorCells::slotColorSelected (int cell, const QColor &color,
         Qt::MouseButton button)
 {
 #if DEBUG_KP_COLOR_CELLS
-    kDebug () << "kpColorCells::slotColorSelected(cell=" << cell
+    qCDebug(kpLogWidgets) << "kpColorCells::slotColorSelected(cell=" << cell
                << ") mouseButton = " << button
                << " rgb=" << (int *) color.rgba()
                << endl;
@@ -574,7 +574,7 @@ void kpColorCells::slotColorDoubleClicked (int cell, const QColor &)
 void kpColorCells::slotColorChanged (int cell, const QColor &color)
 {
 #if DEBUG_KP_COLOR_CELLS
-    kDebug () << "cell=" << cell << "color=" << (const int *) color.rgba()
+    qCDebug(kpLogWidgets) << "cell=" << cell << "color=" << (const int *) color.rgba()
               << "d->colorCol.count()=" << d->colorCol.count ();
 #endif
 

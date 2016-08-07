@@ -34,7 +34,7 @@
 #include <qimage.h>
 #include <QImage>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "pixmapfx/kpPixmapFX.h"
 
@@ -47,7 +47,7 @@ void kpEffectInvert::applyEffect (QImage *destImagePtr, int channels)
                        (channels & Blue) ? 0xFF : 0,
                        0/*don't invert alpha*/);
 #if DEBUG_KP_EFFECT_INVERT
-    kDebug () << "kpEffectInvert::applyEffect(channels=" << channels
+    qCDebug(kpLogImagelib) << "kpEffectInvert::applyEffect(channels=" << channels
                << ") mask=" << (int *) mask
                << endl;
 #endif

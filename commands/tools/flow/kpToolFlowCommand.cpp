@@ -103,7 +103,7 @@ void kpToolFlowCommand::updateBoundingRect (const QPoint &point)
 void kpToolFlowCommand::updateBoundingRect (const QRect &rect)
 {
 #if DEBUG_KP_TOOL_FLOW_COMMAND & 0
-    kDebug () << "kpToolFlowCommand::updateBoundingRect()  existing="
+    qCDebug(kpLogCommands) << "kpToolFlowCommand::updateBoundingRect()  existing="
                << d->boundingRect
                << " plus="
                << rect
@@ -111,7 +111,7 @@ void kpToolFlowCommand::updateBoundingRect (const QRect &rect)
 #endif
     d->boundingRect = d->boundingRect.united (rect);
 #if DEBUG_KP_TOOL_FLOW_COMMAND & 0
-    kDebug () << "\tresult=" << d->boundingRect;
+    qCDebug(kpLogCommands) << "\tresult=" << d->boundingRect;
 #endif
 }
 

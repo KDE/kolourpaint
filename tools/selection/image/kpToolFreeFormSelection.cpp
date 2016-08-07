@@ -31,7 +31,7 @@
 
 #include "kpToolFreeFormSelection.h"
 
-#include <KDebug>
+#include "kpLogCategories.h"
 #include <KLocalizedString>
 
 #include "document/kpDocument.h"
@@ -65,7 +65,7 @@ bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
         const QRect &/*normalizedRect*/)
 {
 #if DEBUG_KP_TOOL_FREE_FROM_SELECTION
-    kDebug () << "kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar("
+    qCDebug(kpLogTools) << "kpToolFreeFormSelection::createMoreSelectionAndUpdateStatusBar("
                << "dragAccepted=" << dragAccepted
                << ",accidentalDragAdjustedPoint=" << accidentalDragAdjustedPoint
                << ")" << endl;
@@ -75,7 +75,7 @@ bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
     if (!dragAccepted && accidentalDragAdjustedPoint == startPoint ())
     {
     #if DEBUG_KP_TOOL_FREE_FROM_SELECTION && 1
-        kDebug () << "\tnon-text NOP - return";
+        qCDebug(kpLogTools) << "\tnon-text NOP - return";
     #endif
         setUserShapePoints (accidentalDragAdjustedPoint);
         return false;
@@ -112,7 +112,7 @@ bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
 
 
 #if DEBUG_KP_TOOL_FREE_FROM_SELECTION
-    kDebug () << "\tlast old point=" << points.last ();
+    qCDebug(kpLogTools) << "\tlast old point=" << points.last ();
 #endif
 
     // TODO: There should be an upper limit on this before drawing the
@@ -128,7 +128,7 @@ bool kpToolFreeFormSelection::drawCreateMoreSelectionAndUpdateStatusBar (
     oldPointsSel = 0;
 
 #if DEBUG_KP_TOOL_FREE_FROM_SELECTION && 1
-    kDebug () << "\t\tfreeform; #points="
+    qCDebug(kpLogTools) << "\t\tfreeform; #points="
               << document ()->selection ()->calculatePoints ().count ()
               << endl;
 #endif

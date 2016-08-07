@@ -30,7 +30,7 @@
 
 #include "kpCursorLightCross.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include <qbitmap.h>
 #include <qcursor.h>
@@ -84,7 +84,7 @@ static void setPixel (unsigned char *colorBitmap,
 const QCursor *kpCursorLightCrossCreate ()
 {
 #if DEBUG_KP_CURSOR_LIGHT_CROSS
-    kDebug () << "kpCursorLightCrossCreate() ";
+    qCDebug(kpLogMisc) << "kpCursorLightCrossCreate() ";
 #endif
 
     const int side = 24;

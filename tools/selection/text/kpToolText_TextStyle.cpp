@@ -34,7 +34,7 @@
 #include <qevent.h>
 #include <qlist.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "commands/kpCommandHistory.h"
@@ -59,7 +59,7 @@ bool kpToolText::shouldChangeTextStyle () const
     if (environ ()->settingTextStyle ())
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\trecursion - abort setting text style: "
+        qCDebug(kpLogTools) << "\trecursion - abort setting text style: "
                    << environ ()->settingTextStyle ()
                    << endl;
     #endif
@@ -69,7 +69,7 @@ bool kpToolText::shouldChangeTextStyle () const
     if (!document ()->textSelection ())
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tno text selection - abort setting text style";
+        qCDebug(kpLogTools) << "\tno text selection - abort setting text style";
     #endif
         return false;
     }
@@ -83,7 +83,7 @@ void kpToolText::changeTextStyle (const QString &name,
                                   const kpTextStyle &oldTextStyle)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::changeTextStyle(" << name << ")";
+    qCDebug(kpLogTools) << "kpToolText::changeTextStyle(" << name << ")";
 #endif
 
     if (hasBegunShape ())
@@ -102,7 +102,7 @@ void kpToolText::changeTextStyle (const QString &name,
 void kpToolText::slotIsOpaqueChanged (bool isOpaque)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotIsOpaqueChanged()";
+    qCDebug(kpLogTools) << "kpToolText::slotIsOpaqueChanged()";
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -125,7 +125,7 @@ void kpToolText::slotColorsSwapped (const kpColor &newForegroundColor,
                                     const kpColor &newBackgroundColor)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotColorsSwapped()";
+    qCDebug(kpLogTools) << "kpToolText::slotColorsSwapped()";
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -146,7 +146,7 @@ void kpToolText::slotColorsSwapped (const kpColor &newForegroundColor,
 void kpToolText::slotForegroundColorChanged (const kpColor & /*color*/)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotForegroundColorChanged()";
+    qCDebug(kpLogTools) << "kpToolText::slotForegroundColorChanged()";
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -166,7 +166,7 @@ void kpToolText::slotForegroundColorChanged (const kpColor & /*color*/)
 void kpToolText::slotBackgroundColorChanged (const kpColor & /*color*/)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotBackgroundColorChanged()";
+    qCDebug(kpLogTools) << "kpToolText::slotBackgroundColorChanged()";
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -195,7 +195,7 @@ void kpToolText::slotFontFamilyChanged (const QString &fontFamily,
                                         const QString &oldFontFamily)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotFontFamilyChanged() new="
+    qCDebug(kpLogTools) << "kpToolText::slotFontFamilyChanged() new="
                << fontFamily
                << " old="
                << oldFontFamily
@@ -222,7 +222,7 @@ void kpToolText::slotFontFamilyChanged (const QString &fontFamily,
 void kpToolText::slotFontSizeChanged (int fontSize, int oldFontSize)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotFontSizeChanged() new="
+    qCDebug(kpLogTools) << "kpToolText::slotFontSizeChanged() new="
                << fontSize
                << " old="
                << oldFontSize
@@ -250,7 +250,7 @@ void kpToolText::slotFontSizeChanged (int fontSize, int oldFontSize)
 void kpToolText::slotBoldChanged (bool isBold)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotBoldChanged(" << isBold << ")";
+    qCDebug(kpLogTools) << "kpToolText::slotBoldChanged(" << isBold << ")";
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -271,7 +271,7 @@ void kpToolText::slotBoldChanged (bool isBold)
 void kpToolText::slotItalicChanged (bool isItalic)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotItalicChanged(" << isItalic << ")";
+    qCDebug(kpLogTools) << "kpToolText::slotItalicChanged(" << isItalic << ")";
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -292,7 +292,7 @@ void kpToolText::slotItalicChanged (bool isItalic)
 void kpToolText::slotUnderlineChanged (bool isUnderline)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotUnderlineChanged(" << isUnderline << ")";
+    qCDebug(kpLogTools) << "kpToolText::slotUnderlineChanged(" << isUnderline << ")";
 #endif
 
     if (!shouldChangeTextStyle ())
@@ -313,7 +313,7 @@ void kpToolText::slotUnderlineChanged (bool isUnderline)
 void kpToolText::slotStrikeThruChanged (bool isStrikeThru)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::slotStrikeThruChanged(" << isStrikeThru << ")";
+    qCDebug(kpLogTools) << "kpToolText::slotStrikeThruChanged(" << isStrikeThru << ")";
 #endif
 
     if (!shouldChangeTextStyle ())

@@ -59,7 +59,7 @@
 #include "tools/kpTool.h"
 #include "views/manager/kpViewManager.h"
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 #include <kmessagebox.h>
 
@@ -206,7 +206,7 @@ bool kpTransformAutoCropBorder::isSingleColor () const
 bool kpTransformAutoCropBorder::calculate (int isX, int dir)
 {
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kDebug () << "kpTransformAutoCropBorder::calculate() CALLED!";
+    qCDebug(kpLogImagelib) << "kpTransformAutoCropBorder::calculate() CALLED!";
 #endif
     int maxX = m_imagePtr->width () - 1;
     int maxY = m_imagePtr->height () - 1;
@@ -424,8 +424,8 @@ void kpTransformAutoCropCommand::getUndoImage (const kpTransformAutoCropBorder &
     Q_ASSERT (doc);
 
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kDebug () << "kpTransformAutoCropCommand::getUndoImage()";
-    kDebug () << "\timage=" << image
+    qCDebug(kpLogImagelib) << "kpTransformAutoCropCommand::getUndoImage()";
+    qCDebug(kpLogImagelib) << "\timage=" << image
                << " border: rect=" << border.rect ()
                << " isSingleColor=" << border.isSingleColor ()
                << endl;
@@ -436,7 +436,7 @@ void kpTransformAutoCropCommand::getUndoImage (const kpTransformAutoCropBorder &
         if (*image)
         {
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
-            kDebug () << "\talready have *image - delete it";
+            qCDebug(kpLogImagelib) << "\talready have *image - delete it";
         #endif
             delete *image;
         }
@@ -461,7 +461,7 @@ void kpTransformAutoCropCommand::getUndoImages ()
 void kpTransformAutoCropCommand::deleteUndoImages ()
 {
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kDebug () << "kpTransformAutoCropCommand::deleteUndoImages()";
+    qCDebug(kpLogImagelib) << "kpTransformAutoCropCommand::deleteUndoImages()";
 #endif
 
     delete d->leftImage; d->leftImage = 0;
@@ -517,7 +517,7 @@ void kpTransformAutoCropCommand::execute ()
 void kpTransformAutoCropCommand::unexecute ()
 {
 #if DEBUG_KP_TOOL_AUTO_CROP && 1
-    kDebug () << "kpTransformAutoCropCommand::unexecute()";
+    qCDebug(kpLogImagelib) << "kpTransformAutoCropCommand::unexecute()";
 #endif
 
     kpDocument *doc = document ();
@@ -555,7 +555,7 @@ void kpTransformAutoCropCommand::unexecute ()
         {
             kpColor col = (*b)->referenceColor ();
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
-            kDebug () << "\tdrawing border " << (*b)->rect ()
+            qCDebug(kpLogImagelib) << "\tdrawing border " << (*b)->rect ()
                        << " rgb=" << (int *) col.toQRgb () /* %X hack */ << endl;
         #endif
 
@@ -567,7 +567,7 @@ void kpTransformAutoCropCommand::unexecute ()
         else
         {
         #if DEBUG_KP_TOOL_AUTO_CROP && 1
-            kDebug () << "\trestoring border image " << (*b)->rect ();
+            qCDebug(kpLogImagelib) << "\trestoring border image " << (*b)->rect ();
         #endif
             if (*p)
             {
@@ -642,7 +642,7 @@ static void ShowNothingToAutocropMessage (kpMainWindow *mainWindow, bool actOnSe
 bool kpTransformAutoCrop (kpMainWindow *mainWindow)
 {
 #if DEBUG_KP_TOOL_AUTO_CROP
-    kDebug () << "kpTransformAutoCrop() CALLED!";
+    qCDebug(kpLogImagelib) << "kpTransformAutoCrop() CALLED!";
 #endif
 
     Q_ASSERT (mainWindow);
@@ -688,7 +688,7 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
                        botBorder.exists ()) == 0))
     {
     #if DEBUG_KP_TOOL_AUTO_CROP
-        kDebug () << "\tcan't find border; leftBorder.rect=" << leftBorder.rect ()
+        qCDebug(kpLogImagelib) << "\tcan't find border; leftBorder.rect=" << leftBorder.rect ()
                    << " rightBorder.rect=" << rightBorder.rect ()
                    << " topBorder.rect=" << topBorder.rect ()
                    << " botBorder.rect=" << botBorder.rect ()
@@ -699,20 +699,20 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
     }
 
 #if DEBUG_KP_TOOL_AUTO_CROP
-    kDebug () << "\tnumRegions=" << numRegions;
-    kDebug () << "\t\tleft=" << leftBorder.rect ()
+    qCDebug(kpLogImagelib) << "\tnumRegions=" << numRegions;
+    qCDebug(kpLogImagelib) << "\t\tleft=" << leftBorder.rect ()
                << " refCol=" << (leftBorder.exists () ? (int *) leftBorder.referenceColor ().toQRgb () : 0)
                << " avgCol=" << (leftBorder.exists () ? (int *) leftBorder.averageColor ().toQRgb () : 0)
                << endl;
-    kDebug () << "\t\tright=" << rightBorder.rect ()
+    qCDebug(kpLogImagelib) << "\t\tright=" << rightBorder.rect ()
                << " refCol=" << (rightBorder.exists () ? (int *) rightBorder.referenceColor ().toQRgb () : 0)
                << " avgCol=" << (rightBorder.exists () ? (int *) rightBorder.averageColor ().toQRgb () : 0)
                << endl;
-    kDebug () << "\t\ttop=" << topBorder.rect ()
+    qCDebug(kpLogImagelib) << "\t\ttop=" << topBorder.rect ()
                << " refCol=" << (topBorder.exists () ? (int *) topBorder.referenceColor ().toQRgb () : 0)
                << " avgCol=" << (topBorder.exists () ? (int *) topBorder.averageColor ().toQRgb () : 0)
                << endl;
-    kDebug () << "\t\tbot=" << botBorder.rect ()
+    qCDebug(kpLogImagelib) << "\t\tbot=" << botBorder.rect ()
                << " refCol=" << (botBorder.exists () ? (int *) botBorder.referenceColor ().toQRgb () : 0)
                << " avgCol=" << (botBorder.exists () ? (int *) botBorder.averageColor ().toQRgb () : 0)
                << endl;
@@ -735,7 +735,7 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
             leftBorder.right () >= rightBorder.left () - 1)  // kissing or overlapping
         {
         #if DEBUG_KP_TOOL_AUTO_CROP
-            kDebug () << "\tignoring left border";
+            qCDebug(kpLogImagelib) << "\tignoring left border";
         #endif
             leftBorder.invalidate ();
         }
@@ -750,7 +750,7 @@ bool kpTransformAutoCrop (kpMainWindow *mainWindow)
             topBorder.bottom () >= botBorder.top () - 1)  // kissing or overlapping
         {
         #if DEBUG_KP_TOOL_AUTO_CROP
-            kDebug () << "\tignoring top border";
+            qCDebug(kpLogImagelib) << "\tignoring top border";
         #endif
             topBorder.invalidate ();
         }

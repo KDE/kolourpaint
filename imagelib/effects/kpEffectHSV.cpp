@@ -34,7 +34,7 @@
 #include <qbitmap.h>
 #include <qimage.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "pixmapfx/kpPixmapFX.h"
 

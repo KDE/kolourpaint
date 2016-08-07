@@ -31,7 +31,7 @@
 #include "tools/selection/text/kpToolText.h"
 #include "kpToolTextPrivate.h"
 
-#include <KDebug>
+#include "kpLogCategories.h"
 
 #include "document/kpDocument.h"
 #include "layers/selections/text/kpTextSelection.h"
@@ -67,7 +67,7 @@ void kpToolText::setCursorSelectText ()
 void kpToolText::beginDrawSelectText ()
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\t\tis select cursor pos";
+    qCDebug(kpLogTools) << "\t\tis select cursor pos";
 #endif
     kpTextSelection *textSel = document ()->textSelection ();
     Q_ASSERT (textSel);
@@ -85,9 +85,9 @@ void kpToolText::beginDrawSelectText ()
     }
 
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "\t\t\told: row=" << viewManager ()->textCursorRow ()
+    qCDebug(kpLogTools) << "\t\t\told: row=" << viewManager ()->textCursorRow ()
               << "col=" << viewManager ()->textCursorCol ();
-    kDebug () << "\t\t\tnew: row=" << newRow << "col=" << newCol;
+    qCDebug(kpLogTools) << "\t\t\tnew: row=" << newRow << "col=" << newCol;
 #endif
     viewManager ()->setTextCursorPosition (newRow, newCol);
 }

@@ -35,7 +35,7 @@
 
 #include <qimage.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 
 #include "pixmapfx/kpPixmapFX.h"
 
@@ -109,7 +109,7 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
         int brightness, int contrast, int gamma)
 {
 #if DEBUG_KP_EFFECT_BALANCE
-    kDebug () << "kpEffectBalance::applyEffect("
+    qCDebug(kpLogImagelib) << "kpEffectBalance::applyEffect("
                << "channels=" << channels
                << ",brightness=" << brightness
                << ",contrast=" << contrast
@@ -120,7 +120,7 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
 
     QImage qimage = image;
 #if DEBUG_KP_EFFECT_BALANCE
-    kDebug () << "\tconvertToImage=" << timer.restart ();
+    qCDebug(kpLogImagelib) << "\tconvertToImage=" << timer.restart ();
 #endif
 
 
@@ -149,7 +149,7 @@ kpImage kpEffectBalance::applyEffect (const kpImage &image,
     }
 
 #if DEBUG_KP_EFFECT_BALANCE
-    kDebug () << "\tbuild lookup=" << timer.restart ();
+    qCDebug(kpLogImagelib) << "\tbuild lookup=" << timer.restart ();
 #endif
 
 

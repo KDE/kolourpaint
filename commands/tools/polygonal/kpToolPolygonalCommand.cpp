@@ -44,7 +44,7 @@
 #include <float.h>
 #include <math.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include <qbitmap.h>

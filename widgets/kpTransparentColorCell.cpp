@@ -114,7 +114,7 @@ void kpTransparentColorCell::paintEvent (QPaintEvent *e)
     if (isEnabled ())
     {
     #if DEBUG_KP_TRANSPARENT_COLOR_CELL
-        kDebug () << "kpTransparentColorCell::paintEvent() contentsRect="
+        qCDebug(kpLogWidgets) << "kpTransparentColorCell::paintEvent() contentsRect="
                    << contentsRect ()
                    << endl;
     #endif

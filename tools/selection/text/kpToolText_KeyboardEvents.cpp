@@ -34,7 +34,7 @@
 #include <qevent.h>
 #include <qlist.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <klocale.h>
 
 #include "commands/kpCommandHistory.h"
@@ -60,7 +60,7 @@ bool kpToolText::viewEvent (QEvent *e)
     const bool haveTextSelection = document ()->textSelection ();
 
 #if DEBUG_KP_TOOL_TEXT && 0
-    kDebug () << "kpToolText::viewEvent() type=" << e->type ()
+    qCDebug(kpLogTools) << "kpToolText::viewEvent() type=" << e->type ()
               << " isShortcutOverrideEvent=" << isShortcutOverrideEvent
               << " haveTextSel=" << haveTextSelection
               << endl;
@@ -71,7 +71,7 @@ bool kpToolText::viewEvent (QEvent *e)
 
     QKeyEvent *ke = static_cast <QKeyEvent *> (e);
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::viewEvent() key=" << ke->key ()
+    qCDebug(kpLogTools) << "kpToolText::viewEvent() key=" << ke->key ()
               << " modifiers=" << ke->modifiers ()
               << " QChar.isPrint()=" << QChar (ke->key ()).isPrint ()
               << endl;
@@ -81,7 +81,7 @@ bool kpToolText::viewEvent (QEvent *e)
     if (ke->key () == 0 && ke->key () == Qt::Key_unknown)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tcan't be shortcut - safe to not react";
+        qCDebug(kpLogTools) << "\tcan't be shortcut - safe to not react";
     #endif
     }
     // Normal letter (w/ or w/o shift, keypad button ok)?
@@ -91,7 +91,7 @@ bool kpToolText::viewEvent (QEvent *e)
              !( ke->text ().isEmpty ()))
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tis text - grab";
+        qCDebug(kpLogTools) << "\tis text - grab";
     #endif
         e->accept ();
     }
@@ -110,7 +110,7 @@ bool kpToolText::viewEvent (QEvent *e)
 void kpToolText::keyPressEvent (QKeyEvent *e)
 {
 #if DEBUG_KP_TOOL_TEXT
-    kDebug () << "kpToolText::keyPressEvent(e->text='" << e->text () << "')";
+    qCDebug(kpLogTools) << "kpToolText::keyPressEvent(e->text='" << e->text () << "')";
 #endif
 
 
@@ -120,7 +120,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     if (hasBegunDraw ())
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\talready began draw with mouse - passing on event to kpTool";
+        qCDebug(kpLogTools) << "\talready began draw with mouse - passing on event to kpTool";
     #endif
         kpAbstractSelectionTool::keyPressEvent (e);
         return;
@@ -132,7 +132,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     if (!textSel)
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tno text sel - passing on event to kpTool";
+        qCDebug(kpLogTools) << "\tno text sel - passing on event to kpTool";
     #endif
         //if (hasBegunShape ())
         //    endShape (currentPoint (), normalizedRect ());
@@ -201,7 +201,7 @@ void kpToolText::keyPressEvent (QKeyEvent *e)
     if (!e->isAccepted ())
     {
     #if DEBUG_KP_TOOL_TEXT
-        kDebug () << "\tkey processing did not accept (text was '"
+        qCDebug(kpLogTools) << "\tkey processing did not accept (text was '"
                    << e->text ()
                    << "') - passing on event to kpAbstractSelectionTool"
                    << endl;

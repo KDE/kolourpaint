@@ -1,6 +1,5 @@
-
 /*
-   Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2016 Martin Sandsmark <martin.sandsmark@kde.org>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -25,43 +24,18 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-#define DEBUG_KP_RESIZE_SIGNALLING_LABEL 0
-
-
-#include "generic/widgets/kpResizeSignallingLabel.h"
-
-#include <qevent.h>
-
 #include "kpLogCategories.h"
 
-
-kpResizeSignallingLabel::kpResizeSignallingLabel (const QString &string,
-                                                  QWidget *parent )
-    : QLabel (string, parent)
-{
-}
-
-kpResizeSignallingLabel::kpResizeSignallingLabel (QWidget *parent )
-    : QLabel (parent)
-{
-}
-
-kpResizeSignallingLabel::~kpResizeSignallingLabel ()
-{
-}
-
-
-// protected virtual [base QLabel]
-void kpResizeSignallingLabel::resizeEvent (QResizeEvent *e)
-{
-#if DEBUG_KP_RESIZE_SIGNALLING_LABEL
-    qCDebug(kpLogMisc) << "kpResizeSignallingLabel::resizeEvent() newSize=" << e->size ()
-               << " oldSize=" << e->oldSize () << endl;
-#endif
-    QLabel::resizeEvent (e);
-
-    emit resized ();
-}
-
+Q_LOGGING_CATEGORY(kpLogMisc,           "kp.misc")
+Q_LOGGING_CATEGORY(kpLogDialogs,        "kp.dialogs")
+Q_LOGGING_CATEGORY(kpLogCommands,       "kp.commands")
+Q_LOGGING_CATEGORY(kpLogDocument,       "kp.document")
+Q_LOGGING_CATEGORY(kpLogTools,          "kp.tools")
+Q_LOGGING_CATEGORY(kpLogViews,          "kp.views")
+Q_LOGGING_CATEGORY(kpLogEnvironments,   "kp.environments")
+Q_LOGGING_CATEGORY(kpLogPixmapfx,       "kp.pixmapfx")
+Q_LOGGING_CATEGORY(kpLogWidgets,        "kp.widgets")
+Q_LOGGING_CATEGORY(kpLogMainWindow,     "kp.mainwindow")
+Q_LOGGING_CATEGORY(kpLogLayers,         "kp.layers")
+Q_LOGGING_CATEGORY(kpLogImagelib,       "kp.imagelib")
 

@@ -41,7 +41,7 @@
 #include <QImage>
 #include <QSpinBox>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <kiconloader.h>
 #include <klocale.h>
 

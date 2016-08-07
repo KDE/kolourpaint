@@ -49,7 +49,7 @@
 #include <qcolor.h>
 #include <qimage.h>
 
-#include <kdebug.h>
+#include "kpLogCategories.h"
 #include <kimageio.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
@@ -83,7 +83,7 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
                                      kpDocumentMetaInfo *metaInfo)
 {
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "kpDocument::getPixmapFromFile(" << url << "," << parent << ")";
+    qCDebug(kpLogDocument) << "kpDocument::getPixmapFromFile(" << url << "," << parent << ")";
 #endif
 
     if (saveOptions)
@@ -133,9 +133,9 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
             saveOptions->setMimeType (detectedMimeType);
 
     #if DEBUG_KP_DOCUMENT
-        kDebug () << "\ttempFile=" << tempFile;
-        kDebug () << "\tmimetype=" << detectedMimeType;
-        kDebug () << "\tsrc=" << url.path ();
+        qCDebug(kpLogDocument) << "\ttempFile=" << tempFile;
+        qCDebug(kpLogDocument) << "\tmimetype=" << detectedMimeType;
+        qCDebug(kpLogDocument) << "\tsrc=" << url.path ();
     #endif
 
         if (detectedMimeType.isEmpty ())
@@ -173,7 +173,7 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
     }
 
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "\tpixmap: depth=" << image.depth ()
+    qCDebug(kpLogDocument) << "\tpixmap: depth=" << image.depth ()
                 << " hasAlphaChannel=" << image.hasAlphaChannel ()
                 << endl;
 #endif
@@ -194,7 +194,7 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
 void kpDocument::openNew (const QUrl &url)
 {
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "kpDocument::openNew (" << url << ")";
+    qCDebug(kpLogDocument) << "kpDocument::openNew (" << url << ")";
 #endif
 
     m_image->fill(QColor(Qt::white).rgb());
@@ -218,7 +218,7 @@ void kpDocument::openNew (const QUrl &url)
 bool kpDocument::open (const QUrl &url, bool newDocSameNameIfNotExist)
 {
 #if DEBUG_KP_DOCUMENT
-    kDebug () << "kpDocument::open (" << url << ")";
+    qCDebug(kpLogDocument) << "kpDocument::open (" << url << ")";
 #endif
 
     kpDocumentSaveOptions newSaveOptions;

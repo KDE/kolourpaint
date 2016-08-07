@@ -34,7 +34,7 @@
 #include <QList>
 
 #include <KLocalizedString>
-#include <KDebug>
+#include "kpLogCategories.h"
 
 #include "document/kpDocument.h"
 #include "layers/selections/text/kpTextSelection.h"
@@ -108,7 +108,7 @@ bool kpToolText::shouldCreate (bool dragAccepted,
         bool *newDragAccepted)
 {
 #if DEBUG_KP_TOOL_TEXT && 1
-    kDebug () << "CALL(dragAccepted=" << dragAccepted
+    qCDebug(kpLogTools) << "CALL(dragAccepted=" << dragAccepted
               << ",accidentalDragAdjustedPoint=" << accidentalDragAdjustedPoint
               << ")";
 #endif
@@ -123,7 +123,7 @@ bool kpToolText::shouldCreate (bool dragAccepted,
         if (hadSelectionBeforeDraw ())
         {
         #if DEBUG_KP_TOOL_TEXT && 1
-            kDebug () << "\ttext box deselect - NOP - return";
+            qCDebug(kpLogTools) << "\ttext box deselect - NOP - return";
         #endif
             // We must be attempting to deselect the text box.
             // This deselection has already been done by kpAbstractSelectionTool::beginDraw().
@@ -143,7 +143,7 @@ bool kpToolText::shouldCreate (bool dragAccepted,
             // the size of the drag instead.
 
         #if DEBUG_KP_TOOL_TEXT && 1
-            kDebug () << "\tclick creating text box";
+            qCDebug(kpLogTools) << "\tclick creating text box";
         #endif
 
             // (Click creating text box with RMB would not be obvious
@@ -187,7 +187,7 @@ bool kpToolText::shouldCreate (bool dragAccepted,
     else
     {
     #if DEBUG_KP_TOOL_TEXT && 1
-        kDebug () << "\tdrag creating text box";
+        qCDebug(kpLogTools) << "\tdrag creating text box";
     #endif
         *minimumWidthOut = kpTextSelection::MinimumWidthForTextStyle (textStyle);
         *minimumHeightOut = kpTextSelection::MinimumHeightForTextStyle (textStyle);
@@ -247,7 +247,7 @@ bool kpToolText::drawCreateMoreSelectionAndUpdateStatusBar (
     }
 
 #if DEBUG_KP_TOOL_TEXT && 1
-    kDebug () << "\t\tnormalizedRect=" << normalizedRect
+    qCDebug(kpLogTools) << "\t\tnormalizedRect=" << normalizedRect
                 << " kpTextSelection::preferredMinimumSize="
                     << QSize (minimumWidth, minimumHeight)
                 << endl;
