@@ -59,12 +59,10 @@
 //
 
 
-static QImage BlurQImage (const QImage qimage_, int strength)
+static QImage BlurQImage(const QImage &qimage, int strength)
 {
-    QImage qimage = qimage_;
     if (strength == 0)
         return qimage;
-
 
     // The numbers that follow were picked by experimentation to try to get
     // an effect linearly proportional to <strength> and at the same time,
@@ -85,11 +83,8 @@ static QImage BlurQImage (const QImage qimage_, int strength)
                << endl;
 #endif
 
-
-    qimage = Blitz::blur (qimage, qRound (radius));
-
-
-    return qimage;
+    QImage img(qimage);
+    return Blitz::blur(img, qRound(radius));
 }
 
 //---------------------------------------------------------------------
@@ -160,7 +155,7 @@ static QImage SharpenQImage (const QImage &qimage_, int strength)
     for (int i = 0; i < repeat; i++)
     {
     #if DEBUG_KP_EFFECT_BLUR_SHARPEN
-	QTime timer; timer.start ();
+        QTime timer; timer.start ();
     #endif
         qimage = Blitz::gaussianSharpen (qimage, radius, sigma);
     #if DEBUG_KP_EFFECT_BLUR_SHARPEN
@@ -192,6 +187,11 @@ kpImage kpEffectBlurSharpen::applyEffect (const kpImage &image,
         return ::BlurQImage (image, strength);
     else if (type == Sharpen)
         return ::SharpenQImage (image, strength);
+    else if (type == MakeConfidential)
+    {
+        QImage img(image);
+        return Blitz::blur(img, qMin(20, img.width() / 2));
+    }
     else
       return kpImage();
 }

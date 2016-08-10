@@ -38,7 +38,7 @@ class kpEffectBlurSharpen
 public:
     enum Type
     {
-        None = 0, Blur, Sharpen
+        None = 0, Blur, Sharpen, MakeConfidential
     };
 
     // Blur or Sharpen with this strength is the same as None.

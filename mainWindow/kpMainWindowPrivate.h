@@ -191,6 +191,7 @@ struct kpMainWindowPrivate
       actionSkew(0),
       actionConvertToBlackAndWhite(0),
       actionConvertToGrayscale(0),
+      actionBlur(0),
       actionMoreEffects(0),
       actionInvertColors(0),
       actionClear(0),
@@ -367,7 +368,7 @@ struct kpMainWindowPrivate
           *actionRotate, *actionRotateLeft, *actionRotateRight,
           *actionSkew,
           *actionConvertToBlackAndWhite, *actionConvertToGrayscale,
-          *actionMoreEffects,
+          *actionBlur, *actionMoreEffects,
           *actionInvertColors, *actionClear;
 
   // Implemented in kpMainWindow_Tools.cpp, not kpImageWindow_Image.cpp

@@ -56,6 +56,8 @@
 #include "commands/imagelib/transforms/kpTransformSkewCommand.h"
 #include "dialogs/imagelib/transforms/kpTransformSkewDialog.h"
 #include "views/manager/kpViewManager.h"
+#include "commands/imagelib/effects/kpEffectBlurSharpenCommand.h"
+#include "imagelib/effects/kpEffectBlurSharpen.h"
 
 #include <kactioncollection.h>
 #include <kapplication.h>
@@ -181,6 +183,10 @@ void kpMainWindow::setupImageMenuActions ()
     connect (d->actionClear, SIGNAL (triggered (bool)), SLOT (slotClear ()));
     ac->setDefaultShortcut (d->actionClear, Qt::CTRL + Qt::SHIFT + Qt::Key_N);
 
+    d->actionBlur = ac->addAction("image_make_confidential");
+    d->actionBlur->setText(i18n("Make Confidential"));
+    connect(d->actionBlur, SIGNAL(triggered(bool)), SLOT(slotMakeConfidential()));
+
     d->actionMoreEffects = ac->addAction ("image_more_effects");
     d->actionMoreEffects->setText (i18n ("&More Effects..."));
     connect (d->actionMoreEffects, SIGNAL (triggered (bool)), SLOT (slotMoreEffects ()));
@@ -208,6 +214,7 @@ void kpMainWindow::enableImageMenuDocumentActions (bool enable)
     d->actionConvertToGrayscale->setEnabled (enable);
     d->actionInvertColors->setEnabled (enable);
     d->actionClear->setEnabled (enable);
+    d->actionBlur->setEnabled (enable);
     d->actionMoreEffects->setEnabled (enable);
 
     d->imageMenuDocumentActionsEnabled = enable;
@@ -261,6 +268,7 @@ void kpMainWindow::slotImageMenuUpdateDueToSelection ()
     d->actionConvertToGrayscale->setEnabled (enable);
     d->actionInvertColors->setEnabled (enable);
     d->actionClear->setEnabled (enable);
+    d->actionBlur->setEnabled (enable);
     d->actionMoreEffects->setEnabled (enable);
 }
 
@@ -545,6 +553,8 @@ void kpMainWindow::slotConvertToGrayscale ()
             commandEnvironment ()));
 }
 
+//--------------------------------------------------------------------------------
+
 // private slot
 void kpMainWindow::slotInvertColors ()
 {
@@ -554,6 +564,8 @@ void kpMainWindow::slotInvertColors ()
         new kpEffectInvertCommand (d->document->selection (),
             commandEnvironment ()));
 }
+
+//--------------------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotClear ()
@@ -566,6 +578,19 @@ void kpMainWindow::slotClear ()
             backgroundColor (),
             commandEnvironment ()));
 }
+
+//--------------------------------------------------------------------------------
+
+void kpMainWindow::slotMakeConfidential()
+{
+    toolEndShape();
+
+    addImageOrSelectionCommand(
+        new kpEffectBlurSharpenCommand(kpEffectBlurSharpen::MakeConfidential, kpEffectBlurSharpen::MaxStrength,
+                                       d->document->selection(), commandEnvironment()));
+}
+
+//--------------------------------------------------------------------------------
 
 // private slot
 void kpMainWindow::slotMoreEffects ()
@@ -593,3 +618,5 @@ void kpMainWindow::slotMoreEffects ()
         cfg.sync ();
     }
 }
+
+//--------------------------------------------------------------------------------

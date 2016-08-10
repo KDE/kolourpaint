@@ -558,11 +558,11 @@ public:
                                      bool addSelCreateCmdIfSelAvail = true,
                                      bool addSelContentCmdIfSelAvail = true);
 
-private slots:
-    void slotResizeScale ();
 public slots:
     void slotCrop ();
+
 private slots:
+    void slotResizeScale ();
     void slotAutoCrop ();
     void slotFlip ();
     void slotMirror ();
@@ -576,6 +576,7 @@ private slots:
     void slotConvertToGrayscale ();
     void slotInvertColors ();
     void slotClear ();
+    void slotMakeConfidential();
     void slotMoreEffects ();
 
 
