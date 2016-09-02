@@ -48,6 +48,7 @@
 
 #include <qcolor.h>
 #include <qimage.h>
+#include <QMimeDatabase>
 
 #include "kpLogCategories.h"
 #include <kimageio.h>
@@ -200,13 +201,21 @@ void kpDocument::openNew (const QUrl &url)
     m_image->fill(QColor(Qt::white).rgb());
 
     setURL (url, false/*not from url*/);
-    // TODO: Maybe we should guess the mimetype from "url"'s filename
-    //       extension.
-    //
-    //       That way "kolourpaint doesnotexist.bmp" would automatically
-    //       select the BMP file format when the save dialog comes up for
-    //       the first time.
+
     *m_saveOptions = kpDocumentSaveOptions ();
+
+    if ( !url.isEmpty() )
+    {
+      //  guess the mimetype from url's filename extension.
+      //
+      //  That way "kolourpaint doesnotexist.bmp" automatically
+      //  selects the BMP file format when the save dialog comes up for
+      //  the first time.
+
+      QMimeDatabase mimeDb;
+      m_saveOptions->setMimeType(mimeDb.mimeTypeForUrl(url).name());
+    }
+
     *m_metaInfo = kpDocumentMetaInfo ();
     m_modified = false;
 

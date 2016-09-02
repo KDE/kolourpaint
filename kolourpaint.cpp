@@ -1,6 +1,6 @@
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
-   Copyright (c) 2015 Martin Koller <kollix@aon.at>
+   Copyright (c) 2015,2016 Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,7 @@
 
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QDir>
 #include <KLocalizedString>
 
 int main(int argc, char *argv [])
@@ -105,7 +106,7 @@ int main(int argc, char *argv [])
     {
       for (int i = 0; i < args.count(); i++)
       {
-        mainWindow = new kpMainWindow(QUrl::fromUserInput(args[i]));
+        mainWindow = new kpMainWindow(QUrl::fromUserInput(args[i], QDir::currentPath(), QUrl::AssumeLocalFile));
         mainWindow->show();
       }
     }
