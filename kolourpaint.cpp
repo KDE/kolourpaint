@@ -34,6 +34,7 @@
 
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QDir>
 #include <KLocalizedString>
 
 int main(int argc, char *argv [])
@@ -105,7 +106,7 @@ int main(int argc, char *argv [])
     {
       for (int i = 0; i < args.count(); i++)
       {
-        mainWindow = new kpMainWindow(QUrl::fromUserInput(args[i]));
+        mainWindow = new kpMainWindow(QUrl::fromUserInput(args[i], QDir::currentPath(), QUrl::AssumeLocalFile));
         mainWindow->show();
       }
     }
