@@ -82,7 +82,7 @@ GenericName[bg]=Графичен редактор
 GenericName[br]=Goulev tresañ
 GenericName[bs]=Program za slikanje
 GenericName[ca]=Programa de dibuix
-GenericName[ca@valencia]=Programa de pintura
+GenericName[ca@valencia]=Programa de dibuix
 GenericName[cs]=Program pro malování
 GenericName[cy]=Rhaglen Peintio
 GenericName[da]=Maleprogram
@@ -153,7 +153,7 @@ GenericName[zh_TW]=繪圖程式
 
 Comment=An easy-to-use paint program
 Comment[ca]=Un programa de dibuix senzill d'usar
-Comment[ca@valencia]=Un programa de pintura senzill d'usar
+Comment[ca@valencia]=Un programa de dibuix senzill d'usar
 Comment[da]=Et nemt tegneprogram
 Comment[de]=Ein einfach zu benutzendes Mal- und Zeichenprogramm
 Comment[el]=Ένα εύκολο στη χρήση πρόγραμμα ζωγραφικής
