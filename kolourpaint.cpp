@@ -39,6 +39,10 @@
 
 int main(int argc, char *argv [])
 {
+  QApplication app(argc, argv);
+
+  KLocalizedString::setApplicationDomain("kolourpaint");
+
   KAboutData aboutData
   (
     "kolourpaint",
@@ -76,10 +80,6 @@ int main(int argc, char *argv [])
   aboutData.addAuthor(i18n("Christoph Feck"), i18n("KF 5 Porting"), QLatin1String("cfeck@kde.org"));
 
   aboutData.addCredit(i18n("Thanks to the many others who have helped to make this program possible."));
-
-  QApplication app(argc, argv);
-
-  KLocalizedString::setApplicationDomain("kolourpaint");
 
   QCommandLineParser cmdLine;
   KAboutData::setApplicationData(aboutData);
