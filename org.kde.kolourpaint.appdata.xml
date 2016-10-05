@@ -37,6 +37,7 @@
   <name xml:lang="tr">KolourPaint</name>
   <name xml:lang="uk">KolourPaint</name>
   <name xml:lang="x-test">xxKolourPaintxx</name>
+  <name xml:lang="zh-CN">KolourPaint</name>
   <name xml:lang="zh-TW">小畫家_KolourPaint</name>
   <summary>Paint Program</summary>
   <summary xml:lang="bs">Program za slikanje</summary>
@@ -138,6 +139,7 @@
     <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
+    <p xml:lang="zh-CN">功能：</p>
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Support for drawing various shapes - lines, rectangles, rounded rectangles, ovals and polygons</li>
