@@ -57,6 +57,7 @@ int main(int argc, char *argv [])
 
   // (this is _not_ the same as KAboutLicense::BSD)
   aboutData.setLicenseText(i18n(kpLicenseText));
+  aboutData.setDesktopFileName(QStringLiteral("org.kde.kolourpaint"));
 
   // Please add yourself here if you feel you're missing.
   // SYNC: with AUTHORS
