@@ -277,7 +277,7 @@ void kpMainWindow::slotEnablePaste ()
 
     // It's faster to test for QMimeData::hasText() first due to the
     // lazy evaluation of the '||' operator.
-    const bool shouldEnable = (md->hasText() || kpSelectionDrag::canDecode(md));
+    const bool shouldEnable = md && (md->hasText() || kpSelectionDrag::canDecode(md));
 
     d->actionPasteInNewWindow->setEnabled(shouldEnable);
     d->actionPaste->setEnabled(shouldEnable);
