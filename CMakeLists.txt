@@ -22,7 +22,7 @@ find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
 )
 
 find_package(KF5 REQUIRED COMPONENTS
-    KDELibs4Support
+    KDELibs4Support KExiv2
 )
 
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
@@ -36,9 +36,9 @@ else(KF5Sane_FOUND)
     add_definitions(-DHAVE_KSANE=0)
 endif(KF5Sane_FOUND)
 
-
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${KEXIV2_INCLUDE_DIR}
 )
 
 # KDE Application Version, managed by release script
@@ -323,6 +323,7 @@ add_executable(kolourpaint ${kolourpaint_SRCS})
 
 target_link_libraries(kolourpaint
     KF5::KDELibs4Support
+    KF5::KExiv2
     ${KSANE_LIBRARIES}
     kolourpaint_lgpl
 )

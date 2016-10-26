@@ -45,6 +45,7 @@
 #include "views/manager/kpViewManager.h"
 
 #include <math.h>
+#include <kexiv2/kexiv2.h>
 
 #include <qcolor.h>
 #include <qimage.h>
@@ -55,7 +56,7 @@
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kmimetype.h>  // TODO: isn't this in KIO?
+#include <kmimetype.h>
 
 //---------------------------------------------------------------------
 
@@ -161,6 +162,10 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
         //       on the extension, but findByContent() correctly detects
         //       it as a PNG.
         image = QImage (tempFile);
+
+        KExiv2Iface::KExiv2 exif(tempFile);
+        exif.rotateExifQImage(image, exif.getImageOrientation());
+
         KIO::NetAccess::removeTempFile (tempFile);
     }
 
