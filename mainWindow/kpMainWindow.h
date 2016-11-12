@@ -342,6 +342,7 @@ private:
 private slots:
     void slotOpen ();
     void slotOpenRecent (const QUrl &url);
+    void slotRecentListCleared();
 
 #if HAVE_KSANE
     void slotScan ();
