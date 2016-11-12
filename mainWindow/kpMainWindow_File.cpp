@@ -95,7 +95,8 @@ void kpMainWindow::setupFileMenuActions ()
     d->actionNew = KStandardAction::openNew (this, SLOT (slotNew ()), ac);
     d->actionOpen = KStandardAction::open (this, SLOT (slotOpen ()), ac);
 
-    d->actionOpenRecent = KStandardAction::openRecent (this, SLOT (slotOpenRecent (const QUrl &)), ac);
+    d->actionOpenRecent = KStandardAction::openRecent(this, &kpMainWindow::slotOpenRecent, ac);
+    connect(d->actionOpenRecent, &KRecentFilesAction::recentListCleared, this, &kpMainWindow::slotRecentListCleared);
     d->actionOpenRecent->loadEntries (KSharedConfig::openConfig ()->group (kpSettingsGroupRecentFiles));
 #if DEBUG_KP_MAIN_WINDOW
     qCDebug(kpLogMainWindow) << "\trecent URLs=" << d->actionOpenRecent->items ();
@@ -518,6 +519,13 @@ void kpMainWindow::slotOpenRecent (const QUrl &url)
     // 2. because it has not been opened.
     //
     d->actionOpenRecent->setCurrentItem (-1);
+}
+
+//---------------------------------------------------------------------
+
+void kpMainWindow::slotRecentListCleared()
+{
+  d->actionOpenRecent->saveEntries(KSharedConfig::openConfig()->group(kpSettingsGroupRecentFiles));
 }
 
 //---------------------------------------------------------------------
