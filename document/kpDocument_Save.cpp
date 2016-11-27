@@ -46,13 +46,13 @@
 #include <qsize.h>
 #include <qtemporaryfile.h>
 #include <qmatrix.h>
+#include <QMimeDatabase>
 
 #include "kpLogCategories.h"
 #include <kimageio.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kmimetype.h>  // TODO: isn't this in KIO?
 
 #include "imagelib/kpColor.h"
 #include "widgets/toolbars/kpColorToolBar.h"
@@ -122,13 +122,15 @@ bool kpDocument::lossyPromptContinue (const QImage &pixmap,
     if (lossyType & (kpDocumentSaveOptions::MimeTypeMaximumColorDepthLow |
                      kpDocumentSaveOptions::Quality))
     {
+        QMimeDatabase db;
+
         QUIT_IF_CANCEL (
             KMessageBox::warningContinueCancel (parent,
                 i18n ("<qt><p>The <b>%1</b> format may not be able"
                       " to preserve all of the image's color information.</p>"
 
                       "<p>Are you sure you want to save in this format?</p></qt>",
-                      KMimeType::mimeType (saveOptions.mimeType ())->comment ()),
+                      db.mimeTypeForName(saveOptions.mimeType()).comment()),
                 // TODO: caption misleading for lossless formats that have
                 //       low maximum colour depth
                 i18nc ("@title:window", "Lossy File Format"),

@@ -55,7 +55,6 @@
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kmimetype.h>
 
 //---------------------------------------------------------------------
 
@@ -110,64 +109,25 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
         return QImage ();
     }
 
-    QImage image;
+    QMimeDatabase db;
+    QMimeType mimeType = db.mimeTypeForFile(tempFile);
 
-    // sync: remember to "KIO::NetAccess::removeTempFile (tempFile)" in all exit paths
-    {
-        QString detectedMimeType;
+    if (saveOptions)
+        saveOptions->setMimeType(mimeType.name());
 
-        KMimeType::Ptr detectedMimeTypePtr = KMimeType::findByUrl (url);
-        if(detectedMimeTypePtr &&
-            detectedMimeTypePtr != KMimeType::defaultMimeTypePtr ())
-        {
-            detectedMimeType = detectedMimeTypePtr->name ();
-        } else {
-            detectedMimeTypePtr = KMimeType::findByPath (tempFile);
-            if(detectedMimeTypePtr &&
-                detectedMimeTypePtr != KMimeType::defaultMimeTypePtr ())
-            {
-                detectedMimeType = detectedMimeTypePtr->name ();
-            }
-        }
+#if DEBUG_KP_DOCUMENT
+    qCDebug(kpLogDocument) << "\ttempFile=" << tempFile;
+    qCDebug(kpLogDocument) << "\tmimetype=" << mimeType.name();
+    qCDebug(kpLogDocument) << "\tsrc=" << url.path ();
+#endif
 
-        if (saveOptions)
-            saveOptions->setMimeType (detectedMimeType);
+    QImageReader reader(tempFile);
+    reader.setAutoTransform(true);
+    reader.setDecideFormatFromContent(true);
 
-    #if DEBUG_KP_DOCUMENT
-        qCDebug(kpLogDocument) << "\ttempFile=" << tempFile;
-        qCDebug(kpLogDocument) << "\tmimetype=" << detectedMimeType;
-        qCDebug(kpLogDocument) << "\tsrc=" << url.path ();
-    #endif
+    QImage image = reader.read();
 
-        if (detectedMimeType.isEmpty ())
-        {
-            KMessageBox::sorry (parent,
-                                i18n ("Could not open \"%1\" - unknown mimetype.",
-                                    kpUrlFormatter::PrettyFilename (url)));
-            KIO::NetAccess::removeTempFile (tempFile);
-            return QImage ();
-        }
-
-
-        // TODO: <detectedMimeType> might be different.
-        //       Should we feed it into QImage to solve this problem?
-        //
-        //       If so, should we have used KMimeType::findByContent()
-        //       instead?  Are some image types not detectable by findByContent()
-        //       (e.g. image types that are only detected by extension)?
-        //
-        //       Currently, opening a PNG with a ".jpg" extension does not
-        //       work -- QImage and findByUrl() both think it's a JPG based
-        //       on the extension, but findByContent() correctly detects
-        //       it as a PNG.
-
-        QImageReader reader(tempFile);
-        reader.setAutoTransform(true);
-
-        image = reader.read();
-
-        KIO::NetAccess::removeTempFile(tempFile);
-    }
+    KIO::NetAccess::removeTempFile(tempFile);
 
     if (image.isNull ())
     {
