@@ -1,7 +1,7 @@
 project(kolourpaint)
 
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
-set(QT_MIN_VERSION "5.2.0")
+set(QT_MIN_VERSION "5.5.0")
 
 find_package(ECM 1.3.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
@@ -22,7 +22,7 @@ find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
 )
 
 find_package(KF5 REQUIRED COMPONENTS
-    KDELibs4Support KExiv2
+    KDELibs4Support
 )
 
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
@@ -38,7 +38,6 @@ endif(KF5Sane_FOUND)
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${KEXIV2_INCLUDE_DIR}
 )
 
 # KDE Application Version, managed by release script
@@ -323,7 +322,6 @@ add_executable(kolourpaint ${kolourpaint_SRCS})
 
 target_link_libraries(kolourpaint
     KF5::KDELibs4Support
-    KF5::KExiv2
     ${KSANE_LIBRARIES}
     kolourpaint_lgpl
 )

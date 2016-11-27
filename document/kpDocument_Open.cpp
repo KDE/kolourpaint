@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -45,11 +44,11 @@
 #include "views/manager/kpViewManager.h"
 
 #include <math.h>
-#include <kexiv2/kexiv2.h>
 
 #include <qcolor.h>
 #include <qimage.h>
 #include <QMimeDatabase>
+#include <QImageReader>
 
 #include "kpLogCategories.h"
 #include <kimageio.h>
@@ -161,12 +160,13 @@ QImage kpDocument::getPixmapFromFile(const QUrl &url, bool suppressDoesntExistDi
         //       work -- QImage and findByUrl() both think it's a JPG based
         //       on the extension, but findByContent() correctly detects
         //       it as a PNG.
-        image = QImage (tempFile);
 
-        KExiv2Iface::KExiv2 exif(tempFile);
-        exif.rotateExifQImage(image, exif.getImageOrientation());
+        QImageReader reader(tempFile);
+        reader.setAutoTransform(true);
 
-        KIO::NetAccess::removeTempFile (tempFile);
+        image = reader.read();
+
+        KIO::NetAccess::removeTempFile(tempFile);
     }
 
     if (image.isNull ())
