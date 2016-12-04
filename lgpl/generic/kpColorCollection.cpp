@@ -296,7 +296,7 @@ kpColorCollection::saveAs(const QUrl &url, bool showOverwritePrompt,
                 "Do you want to overwrite it?",
                 kpUrlFormatter::PrettyFilename (url)),
           QString (),
-          KGuiItem (i18n ("Overwrite")));
+          KStandardGuiItem::overwrite ());
        if (result != KMessageBox::Continue)
           return false;
    }
