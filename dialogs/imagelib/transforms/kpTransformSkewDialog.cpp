@@ -253,7 +253,7 @@ void kpTransformSkewDialog::accept ()
                       " responsiveness and cause other application resource"
                       " problems.</p>"
 
-                      "<p>Are you sure want to skew the selection?</p></qt>");
+                      "<p>Are you sure you want to skew the selection?</p></qt>");
 
             caption = i18nc ("@title:window", "Skew Selection?");
             continueButtonText = i18n ("Sk&ew Selection");
@@ -268,7 +268,7 @@ void kpTransformSkewDialog::accept ()
                   " responsiveness and cause other application resource"
                   " problems.</p>"
 
-                  "<p>Are you sure want to skew the image?</p></qt>");
+                  "<p>Are you sure you want to skew the image?</p></qt>");
 
         caption = i18nc ("@title:window", "Skew Image?");
         continueButtonText = i18n ("Sk&ew Image");

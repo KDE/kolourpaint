@@ -270,7 +270,7 @@ void kpTransformRotateDialog::accept ()
                       " responsiveness and cause other application resource"
                       " problems.</p>"
 
-                      "<p>Are you sure want to rotate the selection?</p></qt>");
+                      "<p>Are you sure you want to rotate the selection?</p></qt>");
 
             caption = i18nc ("@title:window", "Rotate Selection?");
             continueButtonText = i18n ("Rotat&e Selection");
@@ -285,7 +285,7 @@ void kpTransformRotateDialog::accept ()
                   " responsiveness and cause other application resource"
                   " problems.</p>"
 
-                  "<p>Are you sure want to rotate the image?</p></qt>");
+                  "<p>Are you sure you want to rotate the image?</p></qt>");
 
         caption = i18nc ("@title:window", "Rotate Image?");
         continueButtonText = i18n ("Rotat&e Image");
