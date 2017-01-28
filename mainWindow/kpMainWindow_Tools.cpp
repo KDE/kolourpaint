@@ -643,7 +643,7 @@ void kpMainWindow::slotEndedDocResize (const QSize &size)
                     " responsiveness and cause other application resource"
                     " problems.</p>"
 
-                    "<p>Are you sure want to resize the"
+                    "<p>Are you sure you want to resize the"
                     " image?</p></qt>",
                   d->docResizeWidth,
                   d->docResizeHeight),

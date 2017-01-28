@@ -447,7 +447,7 @@ public:
     //              " responsiveness and cause other application resource"
     //              " problems.</p>").arg (newWidth, newHeight)
     //
-    //              "<p>Are you sure want to (rotate|skew) the"
+    //              "<p>Are you sure you want to (rotate|skew) the"
     //              " (image|selection)?</p></qt>");
     // caption = i18n ("Rotate (Image|Selection)?");
     // continueButtonText = i18n ("Rotat&e (Image|Selection)");

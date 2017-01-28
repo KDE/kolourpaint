@@ -77,7 +77,6 @@ Name[zh_TW]=KolourPaint 小畫家
 GenericName=Paint Program
 GenericName[af]=Verf Program
 GenericName[ar]=برنامج التلوين
-GenericName[ast]=Programa de pintura
 GenericName[bg]=Графичен редактор
 GenericName[br]=Goulev tresañ
 GenericName[bs]=Program za slikanje
@@ -152,7 +151,6 @@ GenericName[zh_HK]=繪圖程式
 GenericName[zh_TW]=繪圖程式
 
 Comment=An easy-to-use paint program
-Comment[ast]=Un programa cenciellu d'usar pa pintar
 Comment[ca]=Un programa de dibuix senzill d'usar
 Comment[ca@valencia]=Un programa de dibuix senzill d'usar
 Comment[da]=Et nemt tegneprogram
