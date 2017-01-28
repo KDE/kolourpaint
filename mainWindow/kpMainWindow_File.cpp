@@ -50,6 +50,7 @@
 #include <QImageWriter>
 #include <QMimeDatabase>
 #include <QScreen>
+#include <QPrintPreviewDialog>
 
 #include <kactioncollection.h>
 #include <kconfig.h>
@@ -66,7 +67,6 @@
 #include <kstandardaction.h>
 #include <ktoolinvocation.h>
 #include <kdeprintdialog.h>
-#include <kprintpreview.h>
 #include <kurlcombobox.h>
 
 #include "commands/kpCommandHistory.h"
@@ -1165,7 +1165,14 @@ void kpMainWindow::sendDocumentNameToPrinter (QPrinter *printer)
     }
 }
 
+//--------------------------------------------------------------------------------
 
+void kpMainWindow::sendPreviewToPrinter(QPrinter *printer)
+{
+  sendImageToPrinter(printer, false);
+}
+
+//--------------------------------------------------------------------------------
 // private
 void kpMainWindow::sendImageToPrinter (QPrinter *printer,
         bool showPrinterSetupDialog)
@@ -1390,11 +1397,8 @@ void kpMainWindow::slotPrintPreview ()
 {
     toolEndShape ();
 
-    QPrinter printer;
-
-    KPrintPreview printPreview (&printer);
-
-    sendImageToPrinter (&printer, false/*don't showPrinterSetupDialog*/);
+    QPrintPreviewDialog printPreview(this);
+    connect(&printPreview, &QPrintPreviewDialog::paintRequested, this, &kpMainWindow::sendPreviewToPrinter);
 
     printPreview.exec ();
 }
