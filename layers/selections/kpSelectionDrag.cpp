@@ -33,6 +33,7 @@
 
 #include <qdatastream.h>
 #include <QImage>
+#include <QUrl>
 
 #include "kpLogCategories.h"
 
@@ -138,16 +139,28 @@ kpAbstractImageSelection *kpSelectionDrag::decode(const QMimeData *mimeData)
             return new kpRectangularImageSelection (
                 QRect (0, 0, image.width (), image.height ()), image);
         }
-        else
+        else if ( mimeData->hasUrls() )  // no image, check for path to local image file
         {
-        #if DEBUG_KP_SELECTION_DRAG
-            qCDebug(kpLogLayers) << "kpSelectionDrag::decode(kpAbstractSelection) mimeSource had no sel "
-                          "and could not decode to image" << endl;
-        #endif
-            return 0;
+          QList<QUrl> urls = mimeData->urls();
+
+          if ( urls.count() && urls[0].isLocalFile() )
+          {
+            image.load(urls[0].toLocalFile());
+
+            if ( !image.isNull() )
+            {
+              return new kpRectangularImageSelection(
+                  QRect(0, 0, image.width(), image.height()), image);
+            }
+          }
         }
+
+      #if DEBUG_KP_SELECTION_DRAG
+        qCDebug(kpLogLayers) << "kpSelectionDrag::decode(kpAbstractSelection) mimeSource had no sel "
+                      "and could not decode to image" << endl;
+      #endif
+      return 0;
     }
 }
 
 //---------------------------------------------------------------------
-
