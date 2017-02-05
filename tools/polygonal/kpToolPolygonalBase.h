@@ -30,12 +30,7 @@
 #define kpToolPolygonalBase_H
 
 
-#include <qbrush.h>
-#include <qpen.h>
-#include <qobject.h>
-#include <qpixmap.h>
 #include <qpoint.h>
-#include <qpolygon.h>
 #include <qrect.h>
 
 #include "imagelib/kpColor.h"
@@ -44,9 +39,7 @@
 #include "widgets/toolbars/options/kpToolWidgetFillStyle.h"
 
 
-class QPoint;
 class QPolygon;
-class QRect;
 class QString;
 
 class kpView;
@@ -94,7 +87,6 @@ class kpToolPolygonalBase : public kpTool
 Q_OBJECT
 
 public:
-    // (all arguments are as per kpPainter::drawPolygon())
     typedef void (*DrawShapeFunc) (kpImage * /*image*/,
         const QPolygon &/*points*/,
         const kpColor &/*fcolor*/, int /*penWidth = 1*/,

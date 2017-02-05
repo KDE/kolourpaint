@@ -1,4 +1,3 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
    All rights reserved.
@@ -30,44 +29,25 @@
 
 
 #include "kpToolLine.h"
-
 #include "kpToolPolyline.h"
-
 #include "kpLogCategories.h"
-#include <klocale.h>
 
+#include <KLocalizedString>
 
-static void DrawLineShape (kpImage *image,
-        const QPolygon &points,
-        const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor,
-        bool isFinal)
-{
-    Q_ASSERT (points.count () == 2);
-
-    kpToolPolyline::DrawShape (image,
-        points,
-        fcolor, penWidth,
-        bcolor,
-        isFinal);
-}
-
+//--------------------------------------------------------------------------------
 
 kpToolLine::kpToolLine (kpToolEnvironment *environ, QObject *parent)
     : kpToolPolygonalBase (
         i18n ("Line"),
         i18n ("Draws lines"),
-        &::DrawLineShape,
+        &kpToolPolyline::drawShape,
         Qt::Key_L,
         environ, parent,
         "tool_line")
 {
 }
 
-kpToolLine::~kpToolLine ()
-{
-}
-
+//--------------------------------------------------------------------------------
 
 // private virtual [base kpToolPolygonalBase]
 QString kpToolLine::haventBegunShapeUserMessage () const
@@ -75,6 +55,7 @@ QString kpToolLine::haventBegunShapeUserMessage () const
     return i18n ("Drag to draw.");
 }
 
+//--------------------------------------------------------------------------------
 
 // public virtual [base kpTool]
 void kpToolLine::endDraw (const QPoint &, const QRect &)
@@ -89,4 +70,4 @@ void kpToolLine::endDraw (const QPoint &, const QRect &)
     endShape ();
 }
 
-
+//--------------------------------------------------------------------------------

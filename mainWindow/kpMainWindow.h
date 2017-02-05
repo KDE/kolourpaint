@@ -635,6 +635,7 @@ private slots:
 
     void slotEnableSettingsShowPath ();
     void slotShowPathToggled ();
+    void slotDrawAntiAliasedToggled(bool on);
 
     void slotKeyBindings ();
 

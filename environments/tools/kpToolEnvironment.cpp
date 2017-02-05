@@ -39,6 +39,11 @@
 #include <QPoint>
 #include <QString>
 
+//--------------------------------------------------------------------------------
+
+bool kpToolEnvironment::drawAntiAliased = true;
+
+//--------------------------------------------------------------------------------
 
 struct kpToolEnvironmentPrivate
 {

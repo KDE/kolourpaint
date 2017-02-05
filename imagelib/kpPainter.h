@@ -98,59 +98,9 @@ public:
         bool cardinalAdjacency = false,
         double probability = 1.0);
 
-    // Draws a line from (x1,y1) to (x2,y2) onto <image>, with <color>
-    // and <penWidth>.  The corners are rounded and centred at those
-    // coordinates so if <width> > 1, the line is likely to extend past
-    // a rectangle with those corners.
-    static void drawLine (kpImage *image,
-        int x1, int y1, int x2, int y2,
-        const kpColor &color, int penWidth);
-    static void drawPolyline (kpImage *image,
-        const QPolygon &points,
-        const kpColor &color, int penWidth);
-    // <isFinal> = shape completed else drawing but haven't finalised.
-    // If not <isFinal>, the edge that would form the closure, if the
-    // shape were finalised now, is highlighted specially.  Unfortunately,
-    // the argument is currently ignored.
-    //
-    // Odd-even fill.
-    static void drawPolygon (kpImage *image,
-        const QPolygon &points,
-        const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor = kpColor::Invalid,
-        bool isFinal = true);
-    // Cubic Beizer.
-    static void drawCurve (kpImage *image,
-        const QPoint &startPoint,
-        const QPoint &controlPointP, const QPoint &controlPointQ,
-        const QPoint &endPoint,
-        const kpColor &color, int penWidth);
-
     static void fillRect (kpImage *image,
         int x, int y, int width, int height,
         const kpColor &color);
-
-    // Draws a rectangle / rounded rectangle / ellipse with top-left at
-    // (x, y) with width <width> and height <height>.  Unlike QPainter,
-    // this rectangle will really fit inside <width>x<height> and won't
-    // be one pixel higher or wider etc.
-    //
-    // <width> and <height> must be >= 0.
-    //
-    // <fcolor> must not be invalid.  However, <bcolor> may be invalid
-    // to signify an unfilled rectangle / rounded rectangle /ellipse.
-    static void drawRect (kpImage *image,
-        int x, int y, int width, int height,
-        const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::Invalid);
-    static void drawRoundedRect (kpImage *image,
-        int x, int y, int width, int height,
-        const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::Invalid);
-    static void drawEllipse (kpImage *image,
-        int x, int y, int width, int height,
-        const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::Invalid);
 
     // Replaces all pixels of <colorToReplace> on the line
     // from (x1,y1) to (x2,y2) of <image>, with a pen of <color> with

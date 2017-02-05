@@ -28,20 +28,21 @@
 
 #include "mainWindow/kpMainWindow.h"
 #include "kpMainWindowPrivate.h"
+#include "kpLogCategories.h"
 
 #include <kactioncollection.h>
-#include <kconfig.h>
+#include <KSharedConfig>
 #include <kconfiggroup.h>
-#include "kpLogCategories.h"
-#include <klocale.h>
 #include <kshortcutsdialog.h>
 #include <kstandardaction.h>
 #include <ktogglefullscreenaction.h>
+#include <KLocalizedString>
 
 #include "kpDefs.h"
 #include "document/kpDocument.h"
 #include "tools/kpToolAction.h"
 #include "widgets/toolbars/kpToolToolBar.h"
+#include "environments/tools/kpToolEnvironment.h"
 
 //---------------------------------------------------------------------
 
@@ -65,9 +66,12 @@ void kpMainWindow::setupSettingsMenuActions ()
     d->actionShowPath = ac->add<KToggleAction> ("settings_show_path");
     d->actionShowPath->setText (i18n ("Show &Path"));
     connect(d->actionShowPath, SIGNAL(triggered(bool) ), SLOT (slotShowPathToggled ()));
-    //d->actionShowPath->setCheckedState (KGuiItem(i18n ("Hide &Path")));
     slotEnableSettingsShowPath ();
 
+    KToggleAction *action = ac->add<KToggleAction>("settings_draw_antialiased");
+    action->setText(i18n("Draw Anti-Aliased"));
+    action->setChecked(kpToolEnvironment::drawAntiAliased);
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotDrawAntiAliasedToggled(bool)));
 
     d->actionKeyBindings = KStandardAction::keyBindings (this, SLOT (slotKeyBindings ()), ac);
 
@@ -124,6 +128,18 @@ void kpMainWindow::slotShowPathToggled ()
 
     cfg.writeEntry (kpSettingShowPath, d->configShowPath);
     cfg.sync ();
+}
+
+//---------------------------------------------------------------------
+
+void kpMainWindow::slotDrawAntiAliasedToggled(bool on)
+{
+    kpToolEnvironment::drawAntiAliased = on;
+
+    KConfigGroup cfg(KSharedConfig::openConfig(), kpSettingsGroupGeneral);
+
+    cfg.writeEntry(kpSettingDrawAntiAliased, kpToolEnvironment::drawAntiAliased);
+    cfg.sync();
 }
 
 //---------------------------------------------------------------------

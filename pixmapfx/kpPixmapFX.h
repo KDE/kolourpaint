@@ -208,6 +208,7 @@ public:
     // <qtWidth> is passed straight to QPen without modification.
     static QPen QPainterDrawLinePen (const QColor &color, int qtWidth);
 
+    static bool Only1PixelInPointArray(const QPolygon &points);
 
     // Draws a line from (x1,y1) to (x2,y2) onto <image>, with <color>
     // and <width>.  The corners are rounded and centred at those
@@ -218,11 +219,6 @@ public:
     // between long strips of <color> and short strips of <stippleColor>.
     static void drawPolyline (QImage *image,
         const QPolygon &points,
-        const kpColor &color, int penWidth,
-        const kpColor &stippleColor = kpColor::Invalid);
-
-    static void drawLine (QImage *image,
-        int x1, int y1, int x2, int y2,
         const kpColor &color, int penWidth,
         const kpColor &stippleColor = kpColor::Invalid);
 
@@ -237,44 +233,17 @@ public:
         const kpColor &bcolor = kpColor::Invalid,
         bool isFinal = true,
         const kpColor &fStippleColor = kpColor::Invalid);
-    // Cubic Beizer.
-    static void drawCurve (QImage *image,
-        const QPoint &startPoint,
-        const QPoint &controlPointP, const QPoint &controlPointQ,
-        const QPoint &endPoint,
-        const kpColor &color, int penWidth);
 
     static void fillRect (QImage *image,
         int x, int y, int width, int height,
         const kpColor &color,
         const kpColor &stippleColor = kpColor::Invalid);
 
-    // Draws a rectangle / rounded rectangle / ellipse with top-left at
-    // (x, y) with width <width> and height <height>.  Unlike QPainter,
-    // this rectangle will really fit inside <width>x<height> and won't
-    // be one pixel higher or wider etc.
-    //
-    // <width> and <height> must be >= 0.
-    //
-    // <fcolor> must not be invalid.  However, <bcolor> may be invalid
-    // to signify an unfilled rectangle / rounded rectangle /ellipse.
-    static void drawRect (QImage *image,
-        int x, int y, int width, int height,
-        const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::Invalid,
-        const kpColor &fStippleColor = kpColor::Invalid);
+    static void drawStippleRect(QImage *image,
+            int x, int y, int width, int height,
+            const kpColor &fcolor,
+            const kpColor &fStippleColor);
 
-    static void drawRoundedRect (QImage *image,
-        int x, int y, int width, int height,
-        const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::Invalid,
-        const kpColor &fStippleColor = kpColor::Invalid);
-
-    static void drawEllipse (QImage *image,
-        int x, int y, int width, int height,
-        const kpColor &fcolor, int penWidth = 1,
-        const kpColor &bcolor = kpColor::Invalid,
-        const kpColor &fStippleColor = kpColor::Invalid);
 };
 
 

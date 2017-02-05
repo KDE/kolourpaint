@@ -178,92 +178,11 @@ QList <QPoint> kpPainter::interpolatePoints (const QPoint &startPoint,
 //---------------------------------------------------------------------
 
 // public static
-void kpPainter::drawLine (kpImage *image,
-        int x1, int y1, int x2, int y2,
-        const kpColor &color, int penWidth)
-{
-    kpPixmapFX::drawLine (image, x1, y1, x2, y2, color, penWidth);
-}
-
-//---------------------------------------------------------------------
-
-// public static
-void kpPainter::drawPolyline (kpImage *image,
-        const QPolygon &points,
-        const kpColor &color, int penWidth)
-{
-    kpPixmapFX::drawPolyline (image, points, color, penWidth);
-}
-
-//---------------------------------------------------------------------
-
-// public static
-void kpPainter::drawPolygon (kpImage *image,
-        const QPolygon &points,
-        const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor,
-        bool isFinal)
-{
-    kpPixmapFX::drawPolygon (image, points, fcolor, penWidth, bcolor, isFinal);
-}
-
-//---------------------------------------------------------------------
-
-
-// public static
-void kpPainter::drawCurve (kpImage *image,
-    const QPoint &startPoint,
-    const QPoint &controlPointP, const QPoint &controlPointQ,
-    const QPoint &endPoint,
-    const kpColor &color, int penWidth)
-{
-    kpPixmapFX::drawCurve (image,
-        startPoint, controlPointP, controlPointQ, endPoint, color, penWidth);
-}
-
-//---------------------------------------------------------------------
-
-
-// public static
 void kpPainter::fillRect (kpImage *image,
         int x, int y, int width, int height,
         const kpColor &color)
 {
     kpPixmapFX::fillRect (image, x, y, width, height, color);
-}
-
-//---------------------------------------------------------------------
-
-
-// public static
-void kpPainter::drawRect (kpImage *image,
-        int x, int y, int width, int height,
-        const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor)
-{
-    kpPixmapFX::drawRect (image, x, y, width, height, fcolor, penWidth, bcolor);
-}
-
-//---------------------------------------------------------------------
-
-// public static
-void kpPainter::drawRoundedRect (kpImage *image,
-        int x, int y, int width, int height,
-        const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor)
-{
-    kpPixmapFX::drawRoundedRect (image, x, y, width, height, fcolor, penWidth, bcolor);
-}
-
-//---------------------------------------------------------------------
-
-// public static
-void kpPainter::drawEllipse (kpImage *image,
-        int x, int y, int width, int height,
-        const kpColor &fcolor, int penWidth,
-        const kpColor &bcolor)
-{
-    kpPixmapFX::drawEllipse (image, x, y, width, height, fcolor, penWidth, bcolor);
 }
 
 //---------------------------------------------------------------------

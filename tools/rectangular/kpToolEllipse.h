@@ -39,6 +39,11 @@ Q_OBJECT
 
 public:
     kpToolEllipse (kpToolEnvironment *environ, QObject *parent);
+
+    static void drawEllipse(kpImage *image,
+        int x, int y, int width, int height,
+        const kpColor &fcolor, int penWidth,
+        const kpColor &bcolor);
 };
 
 

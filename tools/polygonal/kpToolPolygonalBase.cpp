@@ -34,19 +34,14 @@
 #include <float.h>
 #include <math.h>
 
-#include <qbitmap.h>
 #include <qcursor.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qpixmap.h>
 #include <qpoint.h>
 #include <qpolygon.h>
-#include <qpushbutton.h>
 #include <qrect.h>
 
-#include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
+#include "kpLogCategories.h"
 #include "commands/kpCommandHistory.h"
 #include "document/kpDocument.h"
 #include "kpDefs.h"

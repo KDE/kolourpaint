@@ -39,7 +39,6 @@ Q_OBJECT
 
 public:
     kpToolLine (kpToolEnvironment *environ, QObject *parent);
-    virtual ~kpToolLine ();
 
 private:
     virtual QString haventBegunShapeUserMessage () const;

@@ -1,6 +1,6 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2017      Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -30,12 +30,17 @@
 
 
 #include "kpToolCurve.h"
-
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include "environments/tools/kpToolEnvironment.h"
+#include "pixmapfx/kpPixmapFX.h"
 
-#include "imagelib/kpPainter.h"
+#include <QPainter>
+#include <QPen>
+#include <QPainterPath>
 
+#include <KLocalizedString>
+
+//--------------------------------------------------------------------------------
 
 static void DrawCurveShape (kpImage *image,
         const QPolygon &points,
@@ -73,13 +78,25 @@ static void DrawCurveShape (kpImage *image,
         break;
     }
 
-    kpPainter::drawCurve (image,
-        startPoint,
-        controlPointP, controlPointQ,
-        endPoint,
-        fcolor, penWidth);
+    QPainter painter(image);
+    painter.setRenderHint(QPainter::Antialiasing, kpToolEnvironment::drawAntiAliased);
+
+    painter.setPen(QPen(fcolor.toQColor(), penWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+
+    if ( kpPixmapFX::Only1PixelInPointArray(points) )
+    {
+      painter.drawPoint(points[0]);
+      return;
+    }
+
+    QPainterPath curvePath;
+    curvePath.moveTo(startPoint);
+    curvePath.cubicTo(controlPointP, controlPointQ, endPoint);
+
+    painter.strokePath(curvePath, painter.pen());
 }
 
+//--------------------------------------------------------------------------------
 
 kpToolCurve::kpToolCurve (kpToolEnvironment *environ, QObject *parent)
     : kpToolPolygonalBase (

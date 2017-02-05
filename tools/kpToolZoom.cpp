@@ -38,12 +38,12 @@
 #include "environments/tools/kpToolEnvironment.h"
 #include "tools/kpToolAction.h"
 #include "views/manager/kpViewManager.h"
-
 #include "kpLogCategories.h"
-#include <klocale.h>
-#include <kiconloader.h>
 
 #include <QWidget>
+
+#include <kiconloader.h>
+#include <KLocalizedString>
 
 //---------------------------------------------------------------------
 
@@ -58,10 +58,9 @@ static void DrawZoomRect (kpImage *destImage,
 {
     DrawZoomRectPackage *pack = static_cast <DrawZoomRectPackage *> (userData);
 
-    kpPixmapFX::drawRect(destImage,
+    kpPixmapFX::drawStippleRect(destImage,
         topLeft.x (), topLeft.y (), pack->normalizedRect.width (), pack->normalizedRect.height (),
-        kpColor::Yellow, 1/*pen width*/,
-        kpColor::Invalid/*no background*/,
+        kpColor::Yellow,
         kpColor::Green);
 }
 

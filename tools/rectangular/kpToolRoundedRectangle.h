@@ -39,6 +39,11 @@ Q_OBJECT
 
 public:
     kpToolRoundedRectangle (kpToolEnvironment *environ, QObject *parent);
+
+    static void drawRoundedRect(kpImage *image,
+        int x, int y, int width, int height,
+        const kpColor &fcolor, int penWidth,
+        const kpColor &bcolor);
 };
 
 

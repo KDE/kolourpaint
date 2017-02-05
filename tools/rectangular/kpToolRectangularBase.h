@@ -62,6 +62,7 @@ public:
         int key,
         kpToolEnvironment *environ, QObject *parent,
         const QString &name);
+
     virtual ~kpToolRectangularBase ();
 
     virtual bool careAboutModifierState () const { return true; }

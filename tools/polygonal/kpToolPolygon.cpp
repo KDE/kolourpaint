@@ -1,6 +1,6 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2017      Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -30,12 +30,17 @@
 
 
 #include "kpToolPolygon.h"
-
-#include <klocale.h>
-
-#include "imagelib/kpPainter.h"
 #include "widgets/toolbars/kpToolToolBar.h"
+#include "environments/tools/kpToolEnvironment.h"
+#include "imagelib/kpColor.h"
+#include "pixmapfx/kpPixmapFX.h"
 
+#include <KLocalizedString>
+
+#include <QPainter>
+#include <QPen>
+
+//--------------------------------------------------------------------------------
 
 static void DrawPolygonShape (kpImage *image,
         const QPolygon &points,
@@ -43,13 +48,36 @@ static void DrawPolygonShape (kpImage *image,
         const kpColor &bcolor,
         bool isFinal)
 {
-    kpPainter::drawPolygon (image,
-        points,
-        fcolor, penWidth,
-        bcolor,
-        isFinal);
+  QPainter painter(image);
+  painter.setRenderHint(QPainter::Antialiasing, kpToolEnvironment::drawAntiAliased);
+
+  painter.setPen(QPen(fcolor.toQColor(), penWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+
+  if ( kpPixmapFX::Only1PixelInPointArray(points) )
+  {
+    painter.drawPoint(points[0]);
+    return;
+  }
+
+  if ( bcolor.isValid() )
+    painter.setBrush(QBrush(bcolor.toQColor()));
+  else
+    painter.setBrush(Qt::NoBrush);
+
+  painter.drawPolygon(points, Qt::OddEvenFill);
+
+  if ( isFinal )
+    return;
+
+  if ( points.count() <= 2 )
+    return;
+
+  painter.setCompositionMode(QPainter::RasterOp_SourceXorDestination);
+  painter.setPen(QPen(Qt::white));
+  painter.drawLine(points[0], points[points.count() - 1]);
 }
 
+//--------------------------------------------------------------------------------
 
 struct kpToolPolygonPrivate
 {

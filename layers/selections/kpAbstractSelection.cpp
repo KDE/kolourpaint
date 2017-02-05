@@ -258,13 +258,12 @@ void kpAbstractSelection::paintRectangularBorder (QImage *destPixmap,
               << " h=" << boundingRect ().height ()
               << endl;
 #endif
-    kpPixmapFX::drawRect(destPixmap,
+    kpPixmapFX::drawStippleRect(destPixmap,
         boundingRect ().x () - docRect.x (),
         boundingRect ().y () - docRect.y (),
         boundingRect ().width (),
         boundingRect ().height (),
-        kpColor::Blue, 1/*pen width*/,
-        kpColor::Invalid/*no background*/,
+        kpColor::Blue,
         kpColor::Yellow);
 }
 
@@ -298,13 +297,12 @@ void kpAbstractSelection::paintPolygonalBorder (const QPolygon &points,
           true/*is final*/,
           kpColor::Yellow);
 
-      kpPixmapFX::drawRect(destPixmap,
+      kpPixmapFX::drawStippleRect(destPixmap,
           boundingRect ().x () - docRect.x (),
           boundingRect ().y () - docRect.y (),
           boundingRect ().width (),
           boundingRect ().height (),
-          kpColor::LightGray, 1/*pen width*/,
-          kpColor::Invalid/*no background*/,
+          kpColor::LightGray,
           kpColor::DarkGray);
     }
 }

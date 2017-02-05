@@ -151,6 +151,8 @@ public:
 
     void fitToPage () const;
 
+    static bool drawAntiAliased;
+
 
 private:
     struct kpToolEnvironmentPrivate * const d;

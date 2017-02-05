@@ -1,5 +1,6 @@
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2017      Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -26,17 +27,21 @@
 
 #include "kpToolRoundedRectangle.h"
 
-#include "imagelib/kpPainter.h"
+#include "environments/tools/kpToolEnvironment.h"
+#include "imagelib/kpColor.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
+
+#include <QPainter>
+#include <QPen>
+#include <QBrush>
 
 //---------------------------------------------------------------------
 
-kpToolRoundedRectangle::kpToolRoundedRectangle (kpToolEnvironment *environ,
-        QObject *parent)
+kpToolRoundedRectangle::kpToolRoundedRectangle (kpToolEnvironment *environ, QObject *parent)
     : kpToolRectangularBase (i18n ("Rounded Rectangle"),
         i18n ("Draws rectangles and squares with rounded corners"),
-        &kpPainter::drawRoundedRect,
+        &kpToolRoundedRectangle::drawRoundedRect,
         Qt::Key_U,
         environ, parent, "tool_rounded_rectangle")
 {
@@ -44,3 +49,37 @@ kpToolRoundedRectangle::kpToolRoundedRectangle (kpToolEnvironment *environ,
 
 //---------------------------------------------------------------------
 
+void kpToolRoundedRectangle::drawRoundedRect(kpImage *image,
+        int x, int y, int width, int height,
+        const kpColor &fcolor, int penWidth,
+        const kpColor &bcolor)
+{
+  if ( (width == 0) || (height == 0) )
+    return;
+
+  QPainter painter(image);
+  painter.setRenderHint(QPainter::Antialiasing, kpToolEnvironment::drawAntiAliased);
+
+  if ( ((2 * penWidth) > width) || ((2 * penWidth) > height) )
+    penWidth = qMin(width, height) / 2;
+
+  painter.setPen(QPen(fcolor.toQColor(), penWidth, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
+
+  if ( bcolor.isValid() )
+    painter.setBrush(QBrush(bcolor.toQColor()));
+  else
+    painter.setBrush(Qt::NoBrush);
+
+  int offset = painter.testRenderHint(QPainter::Antialiasing) ? 1 : 0;
+
+  int radius = qMin(width, height) / 4;
+
+  painter.drawRoundedRect(
+        x + penWidth / 2 + offset,
+        y + penWidth / 2 + offset,
+        qMax(1, width - penWidth - offset),
+        qMax(1, height - penWidth - offset),
+        radius, radius);
+}
+
+//---------------------------------------------------------------------

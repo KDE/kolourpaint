@@ -31,14 +31,10 @@
 
 #include "tools/rectangular/kpToolRectangularBase.h"
 
-#include <qbitmap.h>
 #include <qcursor.h>
-#include <qevent.h>
-#include <qpainter.h>
-#include <qpixmap.h>
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "imagelib/kpColor.h"
 #include "commands/kpCommandHistory.h"

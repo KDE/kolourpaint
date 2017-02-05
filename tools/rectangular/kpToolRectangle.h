@@ -39,6 +39,11 @@ Q_OBJECT
 
 public:
     kpToolRectangle (kpToolEnvironment *environ, QObject *parent);
+
+    static void drawRect(kpImage *image,
+        int x, int y, int width, int height,
+        const kpColor &fcolor, int penWidth,
+        const kpColor &bcolor);
 };
 
 

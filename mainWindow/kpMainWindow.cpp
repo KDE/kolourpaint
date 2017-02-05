@@ -31,6 +31,7 @@
 
 #include "layers/selections/image/kpAbstractImageSelection.h"
 #include "environments/commands/kpCommandEnvironment.h"
+#include "environments/tools/kpToolEnvironment.h"
 #include "widgets/kpColorCells.h"
 #include "widgets/toolbars/kpColorToolBar.h"
 #include "commands/kpCommandHistory.h"
@@ -47,19 +48,15 @@
 #include "views/kpZoomedThumbnailView.h"
 #include "views/kpZoomedView.h"
 
-#include <kconfig.h>
+#include <KSharedConfig>
 #include <kconfiggroup.h>
-#include "kpLogCategories.h"
-#include <klocale.h>
-#include <krecentfilesaction.h>
+#include <KLocalizedString>
 
 #include <qevent.h>
 #include <qmenu.h>
 #include <qtimer.h>
 
-#if DEBUG_KP_MAIN_WINDOW
-    #include <qdatetime.h>
-#endif
+#include "kpLogCategories.h"
 
 
 //---------------------------------------------------------------------
@@ -113,6 +110,7 @@ void kpMainWindow::readGeneralSettings ()
     d->configShowGrid = cfg.readEntry (kpSettingShowGrid, false);
     d->configShowPath = cfg.readEntry (kpSettingShowPath, false);
     d->moreEffectsDialogLastEffect = cfg.readEntry (kpSettingMoreEffectsLastEffect, 0);
+    kpToolEnvironment::drawAntiAliased = cfg.readEntry(kpSettingDrawAntiAliased, true);
 
     if (cfg.hasKey (kpSettingOpenImagesInSameWindow))
     {

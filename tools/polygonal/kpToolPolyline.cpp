@@ -30,28 +30,29 @@
 
 
 #include "kpToolPolyline.h"
-
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include "environments/tools/kpToolEnvironment.h"
+#include "pixmapfx/kpPixmapFX.h"
 
-#include "imagelib/kpPainter.h"
+#include <KLocalizedString>
 
+#include <QPainter>
+#include <QPen>
+
+//--------------------------------------------------------------------------------
 
 kpToolPolyline::kpToolPolyline (kpToolEnvironment *environ, QObject *parent)
     : kpToolPolygonalBase (
         i18n ("Connected Lines"),
         i18n ("Draws connected lines"),
-        &DrawShape,
+        &drawShape,
         Qt::Key_N,
         environ, parent,
         "tool_polyline")
 {
 }
 
-kpToolPolyline::~kpToolPolyline ()
-{
-}
-
+//--------------------------------------------------------------------------------
 
 // private virtual [base kpToolPolygonalBase]
 QString kpToolPolyline::haventBegunShapeUserMessage () const
@@ -59,9 +60,10 @@ QString kpToolPolyline::haventBegunShapeUserMessage () const
     return i18n ("Drag to draw the first line.");
 }
 
-
+//--------------------------------------------------------------------------------
 // public static
-void kpToolPolyline::DrawShape (kpImage *image,
+
+void kpToolPolyline::drawShape(kpImage *image,
         const QPolygon &points,
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
@@ -70,11 +72,18 @@ void kpToolPolyline::DrawShape (kpImage *image,
     (void) bcolor;
     (void) isFinal;
 
-    kpPainter::drawPolyline (image,
-        points,
-        fcolor, penWidth);
+  QPainter painter(image);
+  painter.setRenderHint(QPainter::Antialiasing, kpToolEnvironment::drawAntiAliased);
+
+  painter.setPen(QPen(fcolor.toQColor(), penWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+
+  if ( kpPixmapFX::Only1PixelInPointArray(points) )
+    painter.drawPoint(points[0]);
+  else
+    painter.drawPolyline(points);
 }
 
+//--------------------------------------------------------------------------------
 
 // public virtual [base kpTool]
 void kpToolPolyline::endDraw (const QPoint &, const QRect &)
