@@ -31,16 +31,15 @@
 
 #include "kpToolImageSelectionTransparencyCommand.h"
 
-#include "layers/selections/image/kpAbstractImageSelection.h"
 #include "environments/commands/kpCommandEnvironment.h"
 #include "kpDefs.h"
 #include "generic/kpSetOverrideCursorSaver.h"
-
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include "layers/selections/image/kpAbstractImageSelection.h"
 
-#include <qcursor.h>
+#include <QCursor>
 
+//--------------------------------------------------------------------------------
 
 kpToolImageSelectionTransparencyCommand::kpToolImageSelectionTransparencyCommand (
         const QString &name,

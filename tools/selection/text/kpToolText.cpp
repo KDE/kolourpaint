@@ -32,12 +32,7 @@
 
 #include "tools/selection/text/kpToolText.h"
 #include "kpToolTextPrivate.h"
-
-#include <qevent.h>
-#include <qlist.h>
-
 #include "kpLogCategories.h"
-#include <klocale.h>
 
 #include "commands/kpCommandHistory.h"
 #include "document/kpDocument.h"
@@ -54,6 +49,7 @@
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
 
+#include <KLocalizedString>
 
 kpToolText::kpToolText (kpToolSelectionEnvironment *environ, QObject *parent)
     : kpAbstractSelectionTool (i18n ("Text"), i18n ("Writes text"),

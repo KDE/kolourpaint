@@ -30,7 +30,7 @@
 
 #include "widgets/colorSimilarity/kpColorSimilarityFrame.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <knuminput.h>
 
 #include <qboxlayout.h>

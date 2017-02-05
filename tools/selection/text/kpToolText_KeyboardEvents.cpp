@@ -35,8 +35,6 @@
 #include <qlist.h>
 
 #include "kpLogCategories.h"
-#include <klocale.h>
-
 #include "commands/kpCommandHistory.h"
 #include "document/kpDocument.h"
 #include "layers/selections/text/kpTextSelection.h"
@@ -51,6 +49,7 @@
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
 
+#include <KLocalizedString>
 
 // protected virtual [base kpTool]
 bool kpToolText::viewEvent (QEvent *e)

@@ -42,15 +42,7 @@
 #include "widgets/toolbars/options/kpToolWidgetLineWidth.h"
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
-
 #include "kpLogCategories.h"
-#include <klocale.h>
-
-#include <qbitmap.h>
-#include <qcursor.h>
-#include <qevent.h>
-#include <qpainter.h>
-#include <qpixmap.h>
 
 
 struct kpToolRectangularCommandPrivate

@@ -32,7 +32,7 @@
 #include "kpToolColorEraser.h"
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "imagelib/kpColor.h"
 #include "commands/kpCommandHistory.h"

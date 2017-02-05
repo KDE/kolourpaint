@@ -48,12 +48,12 @@
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 
-#include <kconfig.h>
+#include <KSharedConfig>
 #include <kconfiggroup.h>
 #include "kpLogCategories.h"
 #include <kiconeffect.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "layers/selections/kpAbstractSelection.h"
 #include "kpDefs.h"

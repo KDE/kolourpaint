@@ -39,18 +39,18 @@
 #include "layers/selections/image/kpFreeFormImageSelection.h"
 #include "pixmapfx/kpPixmapFX.h"
 #include "layers/selections/image/kpRectangularImageSelection.h"
+#include "kpLogCategories.h"
 
 #include <qapplication.h>
 #include <qmatrix.h>
-#include <qpixmap.h>
 #include <qpolygon.h>
-
-#include "kpLogCategories.h"
-#include <klocale.h>
 
 // TODO: nasty, should avoid using GUI class in this command class
 #include "dialogs/imagelib/transforms/kpTransformSkewDialog.h"
 
+#include <KLocalizedString>
+
+//--------------------------------------------------------------------------------
 
 kpTransformSkewCommand::kpTransformSkewCommand (bool actOnSelection,
         int hangle, int vangle,

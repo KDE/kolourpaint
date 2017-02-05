@@ -32,11 +32,12 @@
 #include "views/kpZoomedThumbnailView.h"
 
 #include "kpLogCategories.h"
-#include <klocale.h>
-
 #include "document/kpDocument.h"
 #include "views/manager/kpViewManager.h"
 
+#include <KLocalizedString>
+
+//--------------------------------------------------------------------------------
 
 kpZoomedThumbnailView::kpZoomedThumbnailView (kpDocument *document,
         kpToolToolBar *toolToolBar,

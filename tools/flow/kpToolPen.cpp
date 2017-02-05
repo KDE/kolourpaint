@@ -1,6 +1,6 @@
-
 /*
    Copyright (c) 2003-2007 Clarence Dang <dang@kde.org>
+   Copyright (c) 2017      Martin Koller <kollix@aon.at>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -33,36 +33,23 @@
 #include "imagelib/kpImage.h"
 #include "imagelib/kpPainter.h"
 #include "commands/tools/flow/kpToolFlowCommand.h"
+#include "environments/tools/kpToolEnvironment.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qpainter.h>
-
-struct kpToolPenPrivate
-{
-};
+#include <QPainter>
+#include <QPen>
 
 //---------------------------------------------------------------------
 
 kpToolPen::kpToolPen (kpToolEnvironment *environ, QObject *parent)
     : kpToolFlowBase (i18n ("Pen"), i18n ("Draws dots and freehand strokes"),
         Qt::Key_P,
-        environ, parent, "tool_pen"),
-      d (new kpToolPenPrivate ())
+        environ, parent, "tool_pen")
 {
 }
 
 //---------------------------------------------------------------------
-
-kpToolPen::~kpToolPen ()
-{
-    delete d;
-}
-
-//---------------------------------------------------------------------
-
 
 // protected virtual [base kpToolFlowBase]
 QString kpToolPen::haventBegunDrawUserMessage () const
@@ -75,21 +62,23 @@ QString kpToolPen::haventBegunDrawUserMessage () const
 // protected virtual [base kpToolFlowBase]
 QRect kpToolPen::drawLine (const QPoint &thisPoint, const QPoint &lastPoint)
 {
-    QRect docRect = kpPainter::normalizedRect(thisPoint, lastPoint);
-    docRect = neededRect (docRect, 1/*pen width*/);
-    kpImage image = document ()->getImageAt (docRect);
+  QRect docRect = kpPainter::normalizedRect(thisPoint, lastPoint);
+  docRect = neededRect (docRect, 1/*pen width*/);
+  kpImage image = document ()->getImageAt (docRect);
 
-    const QPoint sp = lastPoint - docRect.topLeft (),
-                 ep = thisPoint - docRect.topLeft ();
+  const QPoint sp = lastPoint - docRect.topLeft (),
+               ep = thisPoint - docRect.topLeft ();
 
-    kpPainter::drawLine (&image,
-        sp.x (), sp.y (),
-        ep.x (), ep.y (),
-        color (mouseButton ()),
-        1/*pen width*/);
+  QPainter painter(&image);
 
-    document ()->setImageAt (image, docRect.topLeft ());
-    return docRect;
+  // never use AA - it does not look good for the usually very short lines
+  //painter.setRenderHint(QPainter::Antialiasing, kpToolEnvironment::drawAntiAliased);
+
+  painter.setPen(color(mouseButton()).toQColor());
+  painter.drawLine(sp, ep);
+
+  document ()->setImageAt (image, docRect.topLeft ());
+  return docRect;
 }
 
-
+//--------------------------------------------------------------------------------

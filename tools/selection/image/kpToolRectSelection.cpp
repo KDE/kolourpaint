@@ -28,14 +28,12 @@
 #define DEBUG_KP_TOOL_RECT_SELECTION 0
 
 #include "kpToolRectSelection.h"
-
-#include <klocale.h>
 #include "kpLogCategories.h"
-
 #include "document/kpDocument.h"
 #include "layers/selections/image/kpRectangularImageSelection.h"
 #include "environments/tools/selection/kpToolSelectionEnvironment.h"
 
+#include <KLocalizedString>
 
 kpToolRectSelection::kpToolRectSelection (kpToolSelectionEnvironment *environ,
         QObject *parent)

@@ -36,7 +36,7 @@
 #include "pixmapfx/kpPixmapFX.h"
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <qcheckbox.h>
 #include <qimage.h>

@@ -40,14 +40,10 @@ Q_OBJECT
 
 public:
     kpToolPen (kpToolEnvironment *environ, QObject *parent);
-    virtual ~kpToolPen ();
 
 protected:
     virtual QString haventBegunDrawUserMessage () const;
     virtual QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint);
-
-private:
-    struct kpToolPenPrivate *d;
 };
 
 

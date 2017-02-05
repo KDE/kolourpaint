@@ -36,8 +36,8 @@
 #include <QDragMoveEvent>
 
 #include <KColorMimeData>
+#include <KLocalizedString>
 #include "kpLogCategories.h"
-#include <klocale.h>
 
 #include "widgets/kpColorCells.h"
 #include "widgets/kpColorPalette.h"

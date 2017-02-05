@@ -36,7 +36,7 @@
 #include "pixmapfx/kpPixmapFX.h"
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <qbitmap.h>
 #include <qbuttongroup.h>

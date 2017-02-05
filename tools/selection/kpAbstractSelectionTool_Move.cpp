@@ -31,14 +31,7 @@
 
 #include "kpAbstractSelectionTool.h"
 #include "kpAbstractSelectionToolPrivate.h"
-
-#include <qevent.h>
-#include <qmenu.h>
-#include <qtimer.h>
-
 #include "kpLogCategories.h"
-#include <klocale.h>
-
 #include "layers/selections/image/kpAbstractImageSelection.h"
 #include "layers/selections/kpAbstractSelection.h"
 #include "commands/kpCommandHistory.h"
@@ -55,6 +48,10 @@
 #include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
+
+#include <qtimer.h>
+
+#include <KLocalizedString>
 
 //---------------------------------------------------------------------
 

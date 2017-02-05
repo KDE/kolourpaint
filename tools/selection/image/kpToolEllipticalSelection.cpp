@@ -30,13 +30,12 @@
 
 #include "kpToolEllipticalSelection.h"
 
-#include <klocale.h>
 #include "kpLogCategories.h"
-
 #include "document/kpDocument.h"
 #include "layers/selections/image/kpEllipticalImageSelection.h"
 #include "environments/tools/selection/kpToolSelectionEnvironment.h"
 
+#include <KLocalizedString>
 
 kpToolEllipticalSelection::kpToolEllipticalSelection (kpToolSelectionEnvironment *environ,
         QObject *parent)

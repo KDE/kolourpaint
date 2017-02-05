@@ -31,9 +31,9 @@
 
 #include "kpEffectBlurSharpenCommand.h"
 
-#include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
+//--------------------------------------------------------------------------------
 
 kpEffectBlurSharpenCommand::kpEffectBlurSharpenCommand (kpEffectBlurSharpen::Type type,
         int strength,

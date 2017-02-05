@@ -29,16 +29,15 @@
 #include "kpMainWindowPrivate.h"
 
 #include <kactioncollection.h>
-#include <kapplication.h>
-#include <kconfig.h>
+#include <KSharedConfig>
 #include <kconfiggroup.h>
 #include "kpLogCategories.h"
 #include <kfontaction.h>
 #include <kfontsizeaction.h>
-#include <klocale.h>
 #include <KToolBar>
 #include <ktoggleaction.h>
 #include <kiconloader.h>
+#include <KLocalizedString>
 
 #include "widgets/toolbars/kpColorToolBar.h"
 #include "kpDefs.h"

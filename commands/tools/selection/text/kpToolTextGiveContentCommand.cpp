@@ -35,9 +35,7 @@
 #include "document/kpDocument.h"
 #include "layers/selections/text/kpTextSelection.h"
 #include "views/manager/kpViewManager.h"
-
 #include "kpLogCategories.h"
-#include <klocale.h>
 
 
 kpToolTextGiveContentCommand::kpToolTextGiveContentCommand (

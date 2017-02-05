@@ -42,8 +42,8 @@
 #include <qpolygon.h>
 
 #include "kpLogCategories.h"
-#include <klocale.h>
 
+#include <klocalizedstring.h>
 
 // public static
 const double kpColorSimilarityHolder::ColorCubeDiagonalDistance =

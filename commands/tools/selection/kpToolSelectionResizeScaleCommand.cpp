@@ -38,23 +38,15 @@
 #include "document/kpDocument.h"
 #include "layers/selections/image/kpRectangularImageSelection.h"
 #include "layers/selections/text/kpTextSelection.h"
-#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
-#include "views/kpView.h"
-#include "views/manager/kpViewManager.h"
-
 #include "kpLogCategories.h"
-#include <klocale.h>
 
 #include <qapplication.h>
-#include <qbitmap.h>
 #include <qcursor.h>
-#include <qevent.h>
-#include <qmenu.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qpolygon.h>
 #include <qtimer.h>
 
+#include <KLocalizedString>
+
+//--------------------------------------------------------------------------------
 
 kpToolSelectionResizeScaleCommand::kpToolSelectionResizeScaleCommand (
         kpCommandEnvironment *environ)

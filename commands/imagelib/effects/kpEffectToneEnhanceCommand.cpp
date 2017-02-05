@@ -31,9 +31,9 @@
 
 #include "imagelib/effects/kpEffectToneEnhance.h"
 
-#include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
+//--------------------------------------------------------------------------------
 
 kpEffectToneEnhanceCommand::kpEffectToneEnhanceCommand (double granularity, double amount,
         bool actOnSelection,

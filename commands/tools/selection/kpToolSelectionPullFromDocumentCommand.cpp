@@ -35,9 +35,7 @@
 #include "environments/commands/kpCommandEnvironment.h"
 #include "document/kpDocument.h"
 #include "views/manager/kpViewManager.h"
-
 #include "kpLogCategories.h"
-#include <klocale.h>
 
 
 kpToolSelectionPullFromDocumentCommand::kpToolSelectionPullFromDocumentCommand (

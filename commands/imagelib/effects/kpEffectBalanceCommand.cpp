@@ -25,17 +25,13 @@
    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
-#define DEBUG_KP_EFFECT_BALANCE 0
-
-
 #include "kpEffectBalanceCommand.h"
 
 #include "imagelib/effects/kpEffectBalance.h"
 
-#include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
+//--------------------------------------------------------------------------------
 
 kpEffectBalanceCommand::kpEffectBalanceCommand (int channels,
         int brightness, int contrast, int gamma,

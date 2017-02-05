@@ -26,22 +26,13 @@
 */
 
 
-#define DEBUG_KP_EFFECT_INVERT 0
-
-
 #include "kpEffectInvertCommand.h"
 
 #include "imagelib/effects/kpEffectInvert.h"
-#include "pixmapfx/kpPixmapFX.h"
 
-#include <qcheckbox.h>
-#include <qimage.h>
-#include <qlayout.h>
-#include <qpixmap.h>
+#include <KLocalizedString>
 
-#include "kpLogCategories.h"
-#include <klocale.h>
-
+//--------------------------------------------------------------------------------
 
 kpEffectInvertCommand::kpEffectInvertCommand (int channels,
         bool actOnSelection,

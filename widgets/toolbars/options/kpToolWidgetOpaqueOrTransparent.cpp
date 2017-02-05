@@ -32,7 +32,7 @@
 
 #include "kpLogCategories.h"
 #include <kiconloader.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 
 //---------------------------------------------------------------------

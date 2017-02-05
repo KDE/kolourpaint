@@ -37,7 +37,7 @@
 #include "tools/kpTool.h"
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <qbitmap.h>
 #include <qpainter.h>
@@ -77,9 +77,8 @@ static void DrawCursor (kpImage *destImage, const QPoint &topLeft, void *userDat
         return;
 
     // Draw 1-pixel border on all sides.
-    kpPainter::drawRect (destImage,
-        topLeft.x (), topLeft.y (), size, size,
-        kpColor::Black);
+    QPainter painter(destImage);
+    painter.drawRect(topLeft.x(), topLeft.y(), size - 1, size - 1);
 }
 
 //---------------------------------------------------------------------

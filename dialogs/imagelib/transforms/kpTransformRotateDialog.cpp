@@ -38,9 +38,8 @@
 
 #include "kpLogCategories.h"
 #include <kiconloader.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
-#include <qapplication.h>
 #include <qbuttongroup.h>
 #include <qgroupbox.h>
 #include <qlabel.h>

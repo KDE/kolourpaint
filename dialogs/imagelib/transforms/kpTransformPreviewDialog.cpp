@@ -42,7 +42,7 @@
 #include <qpushbutton.h>
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "layers/selections/image/kpAbstractImageSelection.h"
 #include "imagelib/kpColor.h"

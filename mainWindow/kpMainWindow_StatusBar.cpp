@@ -36,15 +36,15 @@
 #include <qstring.h>
 
 #include "kpLogCategories.h"
-#include <klocale.h>
-#include <KSqueezedTextLabel>
-
 #include "kpDefs.h"
 #include "document/kpDocument.h"
 #include "tools/kpTool.h"
 #include "views/manager/kpViewManager.h"
 #include "kpViewScrollableContainer.h"
 #include "views/kpZoomedView.h"
+
+#include <KSqueezedTextLabel>
+#include <KLocalizedString>
 
 //---------------------------------------------------------------------
 

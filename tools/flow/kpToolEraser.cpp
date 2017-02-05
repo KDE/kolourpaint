@@ -34,7 +34,7 @@
 #include "commands/imagelib/effects/kpEffectClearCommand.h"
 #include "environments/tools/kpToolEnvironment.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 //---------------------------------------------------------------------
 

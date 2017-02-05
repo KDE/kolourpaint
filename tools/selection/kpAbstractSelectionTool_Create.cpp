@@ -32,19 +32,13 @@
 #include "kpAbstractSelectionTool.h"
 #include "kpAbstractSelectionToolPrivate.h"
 
-#include <qapplication.h>
-#include <qbitmap.h>
 #include <qcursor.h>
-#include <qevent.h>
-#include <qmenu.h>
-#include <qpainter.h>
 #include <qpixmap.h>
-#include <qpolygon.h>
 #include <qtimer.h>
 
-#include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
+#include "kpLogCategories.h"
 #include "layers/selections/image/kpAbstractImageSelection.h"
 #include "layers/selections/kpAbstractSelection.h"
 #include "commands/kpCommandHistory.h"

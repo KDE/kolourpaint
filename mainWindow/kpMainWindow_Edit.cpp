@@ -29,10 +29,8 @@
 #include "kpMainWindow.h"
 #include "kpMainWindowPrivate.h"
 
-#include <qaction.h>
 #include <qapplication.h>
 #include <qclipboard.h>
-#include <qdatetime.h>
 #include <qfontmetrics.h>
 #include <qimage.h>
 #include <qlist.h>
@@ -41,11 +39,11 @@
 #include <QScrollBar>
 
 #include "kpLogCategories.h"
-#include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandardaction.h>
 #include <kactioncollection.h>
 #include <kxmlguifactory.h>
+#include <KLocalizedString>
 
 #include "layers/selections/image/kpAbstractImageSelection.h"
 #include "widgets/toolbars/kpColorToolBar.h"

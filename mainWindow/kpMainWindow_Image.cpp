@@ -58,18 +58,15 @@
 #include "views/manager/kpViewManager.h"
 #include "commands/imagelib/effects/kpEffectBlurSharpenCommand.h"
 #include "imagelib/effects/kpEffectBlurSharpen.h"
+#include "kpLogCategories.h"
 
 #include <kactioncollection.h>
-#include <kapplication.h>
-#include <kconfig.h>
+#include <KSharedConfig>
 #include <kconfiggroup.h>
-#include "kpLogCategories.h"
-#include <klocale.h>
-#include <KToggleAction>
-#include <kiconloader.h>
+#include <KLocalizedString>
+#include <KIconLoader>
 
 #include <qaction.h>
-#include <qcolor.h>
 #include <qmenubar.h>
 #include <qsize.h>
 

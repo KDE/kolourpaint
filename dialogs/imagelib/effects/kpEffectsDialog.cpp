@@ -47,7 +47,7 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <qcombobox.h>
 #include <qgroupbox.h>

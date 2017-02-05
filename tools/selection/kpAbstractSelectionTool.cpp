@@ -37,8 +37,6 @@
 #include <qtimer.h>
 
 #include "kpLogCategories.h"
-#include <klocale.h>
-
 #include "layers/selections/kpAbstractSelection.h"
 #include "commands/tools/selection/kpAbstractSelectionContentCommand.h"
 #include "commands/kpCommandHistory.h"
@@ -52,6 +50,8 @@
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
 #include "imagelib/kpPainter.h"
+
+#include <KLocalizedString>
 
 //---------------------------------------------------------------------
 

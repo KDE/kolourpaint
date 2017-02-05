@@ -32,8 +32,6 @@
 #include "imagelib/kpDocumentMetaInfo.h"
 #include "kpDefs.h"
 
-#include <klocale.h>
-
 
 struct kpDocumentMetaInfoCommandPrivate
 {

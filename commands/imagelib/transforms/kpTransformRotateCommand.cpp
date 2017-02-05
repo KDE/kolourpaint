@@ -38,15 +38,15 @@
 #include "pixmapfx/kpPixmapFX.h"
 #include "layers/selections/image/kpRectangularImageSelection.h"
 #include "views/manager/kpViewManager.h"
+#include "kpLogCategories.h"
 
 #include <qapplication.h>
-#include <qpixmap.h>
 #include <qpolygon.h>
 #include <qmatrix.h>
 
-#include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
+//--------------------------------------------------------------------------------
 
 kpTransformRotateCommand::kpTransformRotateCommand (bool actOnSelection,
         double angle,

@@ -37,7 +37,7 @@
 #include <QLabel>
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 #include <knuminput.h>
 
 

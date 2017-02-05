@@ -30,27 +30,13 @@
 
 
 #include "kpToolSelectionDestroyCommand.h"
-
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qcursor.h>
-#include <qevent.h>
-#include <qmenu.h>
-#include <qpainter.h>
-#include <qpolygon.h>
-#include <qtimer.h>
-
 #include "kpLogCategories.h"
-#include <klocale.h>
-
 #include "layers/selections/kpAbstractSelection.h"
 #include "layers/selections/image/kpAbstractImageSelection.h"
 #include "environments/commands/kpCommandEnvironment.h"
 #include "kpDefs.h"
 #include "document/kpDocument.h"
 #include "layers/selections/text/kpTextSelection.h"
-#include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
-#include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
 
 //---------------------------------------------------------------------

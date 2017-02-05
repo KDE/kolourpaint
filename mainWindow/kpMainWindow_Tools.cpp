@@ -32,12 +32,11 @@
 #include <QActionGroup>
 #include <qlist.h>
 
-#include <kapplication.h>
 #include <kactioncollection.h>
-#include <kconfig.h>
+#include <KSharedConfig>
 #include <kconfiggroup.h>
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "widgets/toolbars/kpColorToolBar.h"
 #include "commands/kpCommandHistory.h"

@@ -30,9 +30,7 @@
 
 #include "kpToolText.h"
 #include "kpToolTextPrivate.h"
-
 #include "kpLogCategories.h"
-#include <klocale.h>
 
 #include "environments/tools/selection/kpToolSelectionEnvironment.h"
 #include "commands/tools/selection/text/kpToolTextBackspaceCommand.h"
@@ -41,6 +39,7 @@
 #include "commands/tools/selection/text/kpToolTextInsertCommand.h"
 #include "views/manager/kpViewManager.h"
 
+#include <KLocalizedString>
 
 // private
 void kpToolText::endTypingCommands ()

@@ -29,13 +29,7 @@
 
 
 #include "tools/selection/text/kpToolText.h"
-
-#include <qevent.h>
-#include <qlist.h>
-
 #include "kpLogCategories.h"
-#include <klocale.h>
-
 #include "document/kpDocument.h"
 #include "layers/selections/text/kpTextSelection.h"
 #include "commands/tools/selection/text/kpToolTextBackspaceCommand.h"
@@ -49,6 +43,9 @@
 #include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
 
+#include <qlist.h>
+
+#include <KLocalizedString>
 
 // protected static
 bool kpToolText::CursorIsOnWordChar (const QList <QString> &textLines,

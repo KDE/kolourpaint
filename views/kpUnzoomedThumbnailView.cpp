@@ -32,13 +32,13 @@
 #include "views/kpUnzoomedThumbnailView.h"
 
 #include "kpLogCategories.h"
-#include <klocale.h>
-
 #include "document/kpDocument.h"
 #include "views/manager/kpViewManager.h"
 #include "kpViewScrollableContainer.h"
 
 #include <QScrollBar>
+
+#include <KLocalizedString>
 
 //---------------------------------------------------------------------
 

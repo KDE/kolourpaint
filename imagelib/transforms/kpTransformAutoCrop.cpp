@@ -60,13 +60,10 @@
 #include "views/manager/kpViewManager.h"
 
 #include "kpLogCategories.h"
-#include <klocale.h>
 #include <kmessagebox.h>
+#include <KLocalizedString>
 
-#include <qapplication.h>
-#include <qbitmap.h>
 #include <qimage.h>
-#include <qpainter.h>
 
 //---------------------------------------------------------------------
 

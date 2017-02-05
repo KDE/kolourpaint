@@ -34,7 +34,7 @@
 #include "commands/imagelib/effects/kpEffectBlurSharpenCommand.h"
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 #include <knuminput.h>
 
 #include <qgridlayout.h>

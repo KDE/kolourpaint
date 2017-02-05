@@ -51,7 +51,7 @@
 #include "kpLogCategories.h"
 #include <kimageio.h>
 #include <kio/netaccess.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <qcolor.h>
 #include <qbitmap.h>

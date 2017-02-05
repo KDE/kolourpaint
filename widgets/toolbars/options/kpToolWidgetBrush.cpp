@@ -34,9 +34,9 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 
-#include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
+#include "kpLogCategories.h"
 #include "kpDefs.h"
 
 //---------------------------------------------------------------------

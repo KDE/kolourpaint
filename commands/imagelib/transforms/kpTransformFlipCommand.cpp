@@ -29,19 +29,15 @@
 #include "kpTransformFlipCommand.h"
 
 #include <qapplication.h>
-#include <qgroupbox.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qradiobutton.h>
 
 #include "kpLogCategories.h"
-#include <klocale.h>
-
 #include "layers/selections/image/kpAbstractImageSelection.h"
 #include "environments/commands/kpCommandEnvironment.h"
 #include "kpDefs.h"
 #include "document/kpDocument.h"
 #include "pixmapfx/kpPixmapFX.h"
+
+#include <KLocalizedString>
 
 //---------------------------------------------------------------------
 

@@ -32,7 +32,7 @@
 #include <qlabel.h>
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 #include <knuminput.h>
 
 #include "imagelib/effects/kpEffectHSV.h"

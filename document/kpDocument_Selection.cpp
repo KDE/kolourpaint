@@ -40,7 +40,7 @@
 
 #include "kpLogCategories.h"
 #include <kimageio.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "imagelib/kpColor.h"
 #include "kpDefs.h"

@@ -44,22 +44,17 @@
 #include <math.h>
 
 #include <qapplication.h>
-#include <qpixmap.h>
 #include <qpoint.h>
 #include <qpolygon.h>
 #include <qrect.h>
 #include <qsize.h>
-#include <qtoolbutton.h>
 #include <qmatrix.h>
 
-#include <kapplication.h>
-#include <kconfig.h>
 #include "kpLogCategories.h"
-#include <kiconeffect.h>
-#include <kiconloader.h>
-#include <klocale.h>
-#include <knuminput.h>
 
+#include <KLocalizedString>
+
+//--------------------------------------------------------------------------------
 
 kpTransformResizeScaleCommand::kpTransformResizeScaleCommand (bool actOnSelection,
         int newWidth, int newHeight,

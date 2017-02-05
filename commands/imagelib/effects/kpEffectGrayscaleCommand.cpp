@@ -29,8 +29,9 @@
 #include "kpEffectGrayscaleCommand.h"
 #include "imagelib/effects/kpEffectGrayscale.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
+//--------------------------------------------------------------------------------
 
 kpEffectGrayscaleCommand::kpEffectGrayscaleCommand (
         bool actOnSelection,

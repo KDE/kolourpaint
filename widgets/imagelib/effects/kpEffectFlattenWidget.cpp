@@ -34,12 +34,12 @@
 #include "kpDefs.h"
 #include "imagelib/effects/kpEffectFlatten.h"
 #include "commands/imagelib/effects/kpEffectFlattenCommand.h"
+#include "kpLogCategories.h"
 
 #include <kcolorbutton.h>
-#include <kconfig.h>
-#include <kconfiggroup.h>
-#include "kpLogCategories.h"
-#include <klocale.h>
+#include <KSharedConfig>
+#include <KConfigGroup>
+#include <KLocalizedString>
 
 #include <qcheckbox.h>
 #include <qlayout.h>

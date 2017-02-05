@@ -35,7 +35,7 @@
 #include <qgridlayout.h>
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "imagelib/effects/kpEffectEmboss.h"
 #include "commands/imagelib/effects/kpEffectEmbossCommand.h"

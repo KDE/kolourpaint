@@ -32,9 +32,9 @@
 #include "kpEffectFlattenCommand.h"
 #include "imagelib/effects/kpEffectFlatten.h"
 
-#include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
+//--------------------------------------------------------------------------------
 
 kpEffectFlattenCommand::kpEffectFlattenCommand (const QColor &color1,
         const QColor &color2,

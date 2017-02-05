@@ -28,20 +28,15 @@
 
 #include "mainWindow/kpMainWindow.h"
 #include "kpMainWindowPrivate.h"
+#include "kpLogCategories.h"
 
-#include <qdatetime.h>
-#include <qpainter.h>
 #include <qtimer.h>
 
-#include <kapplication.h>
-#include <kconfig.h>
+#include <KSharedConfig>
 #include <kconfiggroup.h>
-#include "kpLogCategories.h"
-#include <klocale.h>
-#include <kselectaction.h>
-#include <kstandardaction.h>
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
+#include <KLocalizedString>
 
 #include "kpDefs.h"
 #include "document/kpDocument.h"

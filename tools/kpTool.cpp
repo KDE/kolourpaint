@@ -36,9 +36,8 @@
 #include <limits.h>
 
 #include <kactioncollection.h>
-#include <kapplication.h>
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "imagelib/kpColor.h"
 #include "widgets/toolbars/kpColorToolBar.h"

@@ -44,14 +44,9 @@
 #include <cstdlib>
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
-#include <qbitmap.h>
-#include <qpainter.h>
-#include <qpen.h>
-#include <qpixmap.h>
 #include <qpoint.h>
-#include <qpolygon.h>
 #include <qrect.h>
 #include <qtimer.h>
 

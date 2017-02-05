@@ -38,11 +38,10 @@
 #include "dialogs/imagelib/transforms/kpTransformPreviewDialog.h"
 #include "generic/kpWidgetMapper.h"
 
-#include <kconfig.h>
 #include "kpLogCategories.h"
-#include <klocale.h>
-#include <kconfiggroup.h>
 #include <knuminput.h>
+#include <KSharedConfig>
+#include <KConfigGroup>
 
 #include <qapplication.h>
 #include <qboxlayout.h>

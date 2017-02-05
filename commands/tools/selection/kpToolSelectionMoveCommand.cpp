@@ -37,22 +37,11 @@
 #include "document/kpDocument.h"
 #include "tools/kpTool.h"
 #include "widgets/toolbars/options/kpToolWidgetOpaqueOrTransparent.h"
-#include "views/kpView.h"
 #include "views/manager/kpViewManager.h"
 
 #include "kpLogCategories.h"
-#include <klocale.h>
 
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qcursor.h>
-#include <qevent.h>
-#include <qmenu.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qpolygon.h>
-#include <qtimer.h>
-
+//--------------------------------------------------------------------------------
 
 kpToolSelectionMoveCommand::kpToolSelectionMoveCommand (const QString &name,
         kpCommandEnvironment *environ)

@@ -31,11 +31,10 @@
 #include "layers/selections/image/kpAbstractImageSelection.h"
 #include "kpDefs.h"
 #include "document/kpDocument.h"
-#include "pixmapfx/kpPixmapFX.h"
 
-#include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
+//--------------------------------------------------------------------------------
 
 kpEffectClearCommand::kpEffectClearCommand (bool actOnSelection,
         const kpColor &newColor,

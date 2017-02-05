@@ -43,7 +43,7 @@
 
 #include "kpLogCategories.h"
 #include <kiconloader.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "kpDefs.h"
 #include "document/kpDocument.h"

@@ -27,7 +27,7 @@
 
 #include "kpToolBrush.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 //---------------------------------------------------------------------
 

@@ -30,11 +30,9 @@
 
 
 #include "kpEffectReduceColorsCommand.h"
-
 #include "imagelib/effects/kpEffectReduceColors.h"
 
-#include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
 //---------------------------------------------------------------------
 

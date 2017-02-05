@@ -31,7 +31,7 @@
 #include "imagelib/kpColor.h"
 #include "pixmapfx/kpPixmapFX.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <qbitmap.h>
 #include <qpainter.h>

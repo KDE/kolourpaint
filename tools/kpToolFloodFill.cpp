@@ -38,7 +38,7 @@
 #include "commands/tools/kpToolFloodFillCommand.h"
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <qapplication.h>
 

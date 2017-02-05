@@ -38,7 +38,7 @@
 
 #include <kconfig.h>
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "commands/kpCommandSize.h"
 #include "kpDefs.h"

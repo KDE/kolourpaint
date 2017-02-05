@@ -41,6 +41,7 @@
 #include <qsize.h>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QScreen>
 #include <QApplication>
 #include <QTimer>
 #include <QLabel>
@@ -49,26 +50,24 @@
 #include <QImageReader>
 #include <QImageWriter>
 #include <QMimeDatabase>
-#include <QScreen>
 #include <QPrintPreviewDialog>
 
 #include <kactioncollection.h>
-#include <kconfig.h>
+#include <KSharedConfig>
 #include <kconfiggroup.h>
-#include "kpLogCategories.h"
 #include <KPluralHandlingSpinBox>
 #include <kfiledialog.h>
 #include <kiconloader.h>
 #include <kio/netaccess.h>
-#include <klocale.h>
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
 #include <kstandardshortcut.h>
 #include <kstandardaction.h>
 #include <ktoolinvocation.h>
+#include <KLocalizedString>
 #include <kdeprintdialog.h>
-#include <kurlcombobox.h>
 
+#include "kpLogCategories.h"
 #include "commands/kpCommandHistory.h"
 #include "kpDefs.h"
 #include "document/kpDocument.h"

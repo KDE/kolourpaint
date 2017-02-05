@@ -35,12 +35,11 @@
 #include "kpDefs.h"
 #include "document/kpDocument.h"
 #include "imagelib/kpImage.h"
-#include "pixmapfx/kpPixmapFX.h"
-
 #include "kpLogCategories.h"
-#include <klocale.h>
 
 #include <qapplication.h>
+
+#include <KLocalizedString>
 
 //---------------------------------------------------------------------
 

@@ -33,22 +33,20 @@
 
 #include <climits>
 
-#include <qdatetime.h>
 #include <qlinkedlist.h>
 #include <qmenu.h>
 
-#include <kapplication.h>
-#include <kconfig.h>
-#include "kpLogCategories.h"
-#include <klocale.h>
+#include <KSharedConfig>
+#include <kconfiggroup.h>
 #include <kstandardshortcut.h>
 #include <kstandardaction.h>
 #include <ktoolbarpopupaction.h>
 #include <kactioncollection.h>
-#include <kconfiggroup.h>
 #include <kiconloader.h>
+#include <KLocalizedString>
 
 #include "kpCommand.h"
+#include "kpLogCategories.h"
 #include "environments/commands/kpCommandEnvironment.h"
 #include "kpDefs.h"
 #include "document/kpDocument.h"

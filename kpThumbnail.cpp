@@ -38,7 +38,7 @@
 #include "tools/kpTool.h"
 
 #include "kpLogCategories.h"
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <QAction>
 #include <QLayout>

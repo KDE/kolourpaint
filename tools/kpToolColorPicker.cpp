@@ -30,10 +30,7 @@
 
 
 #include "kpToolColorPicker.h"
-
 #include "kpLogCategories.h"
-#include <klocale.h>
-
 #include "widgets/toolbars/kpColorToolBar.h"
 #include "commands/kpCommandHistory.h"
 #include "kpDefs.h"
@@ -42,6 +39,7 @@
 #include "commands/tools/kpToolColorPickerCommand.h"
 #include "environments/tools/kpToolEnvironment.h"
 
+#include <KLocalizedString>
 
 kpToolColorPicker::kpToolColorPicker (kpToolEnvironment *environ, QObject *parent)
     : kpTool (i18n ("Color Picker"), i18n ("Lets you select a color from the image"),

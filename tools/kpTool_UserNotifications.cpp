@@ -31,7 +31,7 @@
 #include "tools/kpTool.h"
 #include "kpToolPrivate.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 //---------------------------------------------------------------------
 

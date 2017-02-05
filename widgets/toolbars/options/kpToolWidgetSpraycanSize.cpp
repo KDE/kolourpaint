@@ -35,7 +35,7 @@
 
 #include "kpLogCategories.h"
 #include <kiconloader.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <qbitmap.h>
 #include <qimage.h>
