@@ -48,7 +48,7 @@ int main(int argc, char *argv [])
     "kolourpaint",
     i18n("KolourPaint"),
     QStringLiteral(KOLOURPAINT_VERSION_STRING),
-    i18n("Paint Program for KDE"),
+    i18n("Paint Program by KDE"),
     KAboutLicense::Custom,
     QString(), // copyright statement - see license instead
     QString(), // other text
