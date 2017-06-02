@@ -138,23 +138,23 @@ private:
 //
 
 protected:
-    virtual kpAbstractSelectionContentCommand *newGiveContentCommand () const;
+    kpAbstractSelectionContentCommand *newGiveContentCommand () const Q_DECL_OVERRIDE;
 
-    virtual QString nameOfCreateCommand () const;
+    QString nameOfCreateCommand () const Q_DECL_OVERRIDE;
 
 
 protected:
-    virtual void setSelectionBorderForHaventBegunDraw ();
+    void setSelectionBorderForHaventBegunDraw () Q_DECL_OVERRIDE;
 
 
 public:
-    virtual void begin ();
-    virtual void end ();
+    void begin () Q_DECL_OVERRIDE;
+    void end () Q_DECL_OVERRIDE;
 
 
 public:
     bool hasBegunText () const;
-    virtual bool hasBegunShape () const;
+    bool hasBegunShape () const Q_DECL_OVERRIDE;
 
 
 //
@@ -162,15 +162,15 @@ public:
 //
 
 protected:
-    virtual DrawType calculateDrawTypeInsideSelection () const;
+    DrawType calculateDrawTypeInsideSelection () const Q_DECL_OVERRIDE;
 
 
 public:
-    virtual void cancelShape ();
+    void cancelShape () Q_DECL_OVERRIDE;
 
 
 public:
-    virtual void endShape (const QPoint &thisPoint, const QRect &normalizedRect);
+    void endShape (const QPoint &thisPoint, const QRect &normalizedRect) Q_DECL_OVERRIDE;
 
 
 //
@@ -178,8 +178,8 @@ public:
 //
 
 protected:
-    virtual QVariant operation (DrawType drawType, Operation op,
-        const QVariant &data1 = QVariant (), const QVariant &data2 = QVariant ());
+    QVariant operation (DrawType drawType, Operation op,
+        const QVariant &data1 = QVariant (), const QVariant &data2 = QVariant ()) Q_DECL_OVERRIDE;
 
 
 //
@@ -187,11 +187,11 @@ protected:
 //
 
 protected:
-    virtual QString haventBegunDrawUserMessageCreate () const;
+    QString haventBegunDrawUserMessageCreate () const Q_DECL_OVERRIDE;
 
 
 protected:
-    virtual void setSelectionBorderForBeginDrawCreate ();
+    void setSelectionBorderForBeginDrawCreate () Q_DECL_OVERRIDE;
 
 
 private:
@@ -214,10 +214,10 @@ private:
         int *minimumWidthOut, int *minimumHeightOut,
         bool *newDragHasBegun);
 protected:
-    virtual bool drawCreateMoreSelectionAndUpdateStatusBar (
+    bool drawCreateMoreSelectionAndUpdateStatusBar (
         bool drawAcceptedAsDrag,
         const QPoint &accidentalDragAdjustedPoint,
-        const QRect &normalizedRectIn);
+        const QRect &normalizedRectIn) Q_DECL_OVERRIDE;
 
 
 //
@@ -225,15 +225,15 @@ protected:
 //
 
 protected:
-    virtual QString haventBegunDrawUserMessageMove () const;
+    QString haventBegunDrawUserMessageMove () const Q_DECL_OVERRIDE;
 
 
 protected:
-    virtual void setSelectionBorderForBeginDrawMove ();
+    void setSelectionBorderForBeginDrawMove () Q_DECL_OVERRIDE;
 
 
 protected:
-    virtual QString nonSmearMoveCommandName () const;
+    QString nonSmearMoveCommandName () const Q_DECL_OVERRIDE;
 
 
 //
@@ -241,11 +241,11 @@ protected:
 //
 
 protected:
-    virtual QString haventBegunDrawUserMessageResizeScale () const;
+    QString haventBegunDrawUserMessageResizeScale () const Q_DECL_OVERRIDE;
 
 
 protected:
-    virtual void setSelectionBorderForBeginDrawResizeScale ();
+    void setSelectionBorderForBeginDrawResizeScale () Q_DECL_OVERRIDE;
 
 
 //
@@ -295,7 +295,7 @@ protected:
                           const kpTextStyle &oldTextStyle);
 
 protected slots:
-    virtual void slotIsOpaqueChanged (bool isOpaque);
+    void slotIsOpaqueChanged (bool isOpaque) Q_DECL_OVERRIDE;
 
 
 protected:
@@ -305,15 +305,15 @@ protected:
      *
      * Re-implemented from kpTool.
      */
-    virtual bool careAboutColorsSwapped () const { return true; }
+    bool careAboutColorsSwapped () const Q_DECL_OVERRIDE { return true; }
 
 protected slots:
-    virtual void slotColorsSwapped (const kpColor &newForegroundColor,
-                                    const kpColor &newBackgroundColor);
+    void slotColorsSwapped (const kpColor &newForegroundColor,
+                                    const kpColor &newBackgroundColor) Q_DECL_OVERRIDE;
 
-    virtual void slotForegroundColorChanged (const kpColor &color);
-    virtual void slotBackgroundColorChanged (const kpColor &color);
-    virtual void slotColorSimilarityChanged (double, int);
+    void slotForegroundColorChanged (const kpColor &color) Q_DECL_OVERRIDE;
+    void slotBackgroundColorChanged (const kpColor &color) Q_DECL_OVERRIDE;
+    void slotColorSimilarityChanged (double, int) Q_DECL_OVERRIDE;
 
 public slots:
     void slotFontFamilyChanged (const QString &fontFamily, const QString &oldFontFamily);
@@ -686,7 +686,7 @@ protected:
     // keystrokes while a text selection is active.  This is important
     // because the Tool Box actions default to single letter/number
     // shortcuts.
-    virtual bool viewEvent (QEvent *e);
+    bool viewEvent (QEvent *e) Q_DECL_OVERRIDE;
 
     /**
      * Handles key press events.
@@ -706,7 +706,7 @@ protected:
      * Re-implemented from kpAbstractSelectionTool.
      */
 
-    virtual void keyPressEvent (QKeyEvent *e);
+    void keyPressEvent (QKeyEvent *e) Q_DECL_OVERRIDE;
 
 
 //
@@ -714,7 +714,7 @@ protected:
 //
 
 protected:
-    virtual void inputMethodEvent (QInputMethodEvent *e);
+    void inputMethodEvent (QInputMethodEvent *e) Q_DECL_OVERRIDE;
 
 
 private:

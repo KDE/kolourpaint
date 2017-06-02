@@ -45,7 +45,7 @@ public:
     virtual ~kpEffectBalanceCommand ();
 
 protected:
-    virtual kpImage applyEffect (const kpImage &image);
+    kpImage applyEffect (const kpImage &image) Q_DECL_OVERRIDE;
 
 protected:
     int m_channels;

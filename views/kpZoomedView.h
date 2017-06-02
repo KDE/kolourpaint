@@ -72,7 +72,7 @@ public:
     /**
      * Extends @kpView.  Calls adjustToEnvironment().
      */
-    virtual void setZoomLevel (int hzoom, int vzoom);
+    void setZoomLevel (int hzoom, int vzoom) Q_DECL_OVERRIDE;
 
 
 public slots:
@@ -85,7 +85,7 @@ public slots:
      *
      * Implements @ref kpView.
      */
-    virtual void adjustToEnvironment ();
+    void adjustToEnvironment () Q_DECL_OVERRIDE;
 
 
 private:

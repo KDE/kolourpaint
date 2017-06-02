@@ -48,10 +48,10 @@ public:
         kpCommandEnvironment *environ);
     virtual ~kpToolRectangularCommand ();
 
-    virtual kpCommandSize::SizeType size () const;
+    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
 
-    virtual void execute ();
-    virtual void unexecute ();
+    void execute () Q_DECL_OVERRIDE;
+    void unexecute () Q_DECL_OVERRIDE;
 
 private:
     struct kpToolRectangularCommandPrivate * const d;

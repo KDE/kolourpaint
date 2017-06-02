@@ -45,12 +45,12 @@ private:
     QString haventBegunDrawUserMessage () const;
 
 public:
-    virtual void begin ();
-    virtual void beginDraw ();
-    virtual void draw (const QPoint &thisPoint, const QPoint &, const QRect &);
-    virtual void cancelShape ();
-    virtual void releasedAllButtons ();
-    virtual void endDraw (const QPoint &, const QRect &);
+    void begin () Q_DECL_OVERRIDE;
+    void beginDraw () Q_DECL_OVERRIDE;
+    void draw (const QPoint &thisPoint, const QPoint &, const QRect &) Q_DECL_OVERRIDE;
+    void cancelShape () Q_DECL_OVERRIDE;
+    void releasedAllButtons () Q_DECL_OVERRIDE;
+    void endDraw (const QPoint &, const QRect &) Q_DECL_OVERRIDE;
 
 private:
     struct kpToolFloodFillPrivate * const d;

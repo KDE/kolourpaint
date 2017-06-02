@@ -48,7 +48,7 @@ public:
 
     // generally the user goes to pick a color but wants to return to using
     // his/her previous drawing tool
-    virtual bool returnToPreviousToolAfterEndDraw () const { return true; }
+    bool returnToPreviousToolAfterEndDraw () const Q_DECL_OVERRIDE { return true; }
 
 private:
     kpColor colorAtPixel (const QPoint &p);
@@ -56,12 +56,12 @@ private:
     QString haventBegunDrawUserMessage () const;
 
 public:
-    virtual void begin ();
-    virtual void beginDraw ();
-    virtual void draw (const QPoint &thisPoint, const QPoint &, const QRect &);
-    virtual void cancelShape ();
-    virtual void releasedAllButtons ();
-    virtual void endDraw (const QPoint &thisPoint, const QRect &);
+    void begin () Q_DECL_OVERRIDE;
+    void beginDraw () Q_DECL_OVERRIDE;
+    void draw (const QPoint &thisPoint, const QPoint &, const QRect &) Q_DECL_OVERRIDE;
+    void cancelShape () Q_DECL_OVERRIDE;
+    void releasedAllButtons () Q_DECL_OVERRIDE;
+    void endDraw (const QPoint &thisPoint, const QRect &) Q_DECL_OVERRIDE;
 
 private:
     kpColor m_oldColor;

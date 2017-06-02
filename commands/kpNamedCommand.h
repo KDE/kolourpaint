@@ -40,7 +40,7 @@ class kpNamedCommand : public kpCommand
 public:
     kpNamedCommand (const QString &name, kpCommandEnvironment *environ);
 
-    virtual QString name () const;
+    QString name () const Q_DECL_OVERRIDE;
 
 protected:
     QString m_name;

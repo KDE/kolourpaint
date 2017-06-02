@@ -54,7 +54,7 @@ public:
 
     kpFreeFormImageSelection &operator= (const kpFreeFormImageSelection &rhs);
 
-    virtual kpFreeFormImageSelection *clone () const;
+    kpFreeFormImageSelection *clone () const Q_DECL_OVERRIDE;
 
     virtual ~kpFreeFormImageSelection ();
 
@@ -65,11 +65,11 @@ public:
 
 public:
     static const int SerialID = 2;
-    virtual int serialID () const;
+    int serialID () const Q_DECL_OVERRIDE;
 
-    virtual bool readFromStream (QDataStream &stream);
+    bool readFromStream (QDataStream &stream) Q_DECL_OVERRIDE;
 
-    virtual void writeToStream (QDataStream &stream) const;
+    void writeToStream (QDataStream &stream) const Q_DECL_OVERRIDE;
 
 
 //
@@ -77,9 +77,9 @@ public:
 //
 
 public:
-    virtual kpCommandSize::SizeType size () const;
+    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
 
-    virtual bool isRectangular () const;
+    bool isRectangular () const Q_DECL_OVERRIDE;
 
     // (as passed to the constructor)
     QPolygon originalPoints () const;
@@ -113,7 +113,7 @@ public:
     // Implements kpAbstractSelection interface - same as
     // cardinallyAdjacentPointsLoop ().
     // This implementation is fast.
-    virtual QPolygon calculatePoints () const;
+    QPolygon calculatePoints () const Q_DECL_OVERRIDE;
 
 
 //
@@ -121,7 +121,7 @@ public:
 //
 
 public:
-    virtual QRegion shapeRegion () const;
+    QRegion shapeRegion () const Q_DECL_OVERRIDE;
 
 
 //
@@ -129,7 +129,7 @@ public:
 //
 
 public:
-    virtual bool contains (const QPoint &point) const;
+    bool contains (const QPoint &point) const Q_DECL_OVERRIDE;
 
 
 //
@@ -137,9 +137,9 @@ public:
 //
 
 public:
-    virtual void moveBy (int dx, int dy);
+    void moveBy (int dx, int dy) Q_DECL_OVERRIDE;
 
-    virtual void flip (bool horiz, bool vert);
+    void flip (bool horiz, bool vert) Q_DECL_OVERRIDE;
 
 
 //
@@ -147,8 +147,8 @@ public:
 //
 
 public:
-    virtual void paintBorder (QImage *destPixmap, const QRect &docRect,
-        bool selectionFinished) const;
+    void paintBorder (QImage *destPixmap, const QRect &docRect,
+        bool selectionFinished) const Q_DECL_OVERRIDE;
 
 
 private:

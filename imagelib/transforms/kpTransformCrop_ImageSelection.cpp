@@ -54,9 +54,9 @@ public:
     virtual ~SetDocumentToSelectionImageCommand ();
 
     /* (uninteresting child of macro cmd) */
-    virtual QString name () const { return QString(); }
+    QString name () const Q_DECL_OVERRIDE { return QString(); }
 
-    virtual kpCommandSize::SizeType size () const
+    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE
     {
         return ImageSize (m_oldImage) +
                SelectionSize (m_fromSelectionPtr) +
@@ -65,8 +65,8 @@ public:
 
     // ASSUMPTION: Document has been resized to be the same size as the
     //             selection.
-    virtual void execute ();
-    virtual void unexecute ();
+    void execute () Q_DECL_OVERRIDE;
+    void unexecute () Q_DECL_OVERRIDE;
 
 protected:
     kpColor m_backgroundColor;

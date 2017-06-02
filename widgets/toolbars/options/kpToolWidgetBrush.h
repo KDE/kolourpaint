@@ -73,7 +73,7 @@ signals:
     void brushChanged ();
 
 protected slots:
-    virtual bool setSelected (int row, int col, bool saveAsDefault);
+    bool setSelected (int row, int col, bool saveAsDefault) Q_DECL_OVERRIDE;
 };
 
 

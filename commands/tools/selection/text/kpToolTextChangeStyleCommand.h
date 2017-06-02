@@ -42,10 +42,10 @@ public:
         kpCommandEnvironment *environ);
     virtual ~kpToolTextChangeStyleCommand ();
 
-    virtual kpCommandSize::SizeType size () const;
+    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
 
-    virtual void execute ();
-    virtual void unexecute ();
+    void execute () Q_DECL_OVERRIDE;
+    void unexecute () Q_DECL_OVERRIDE;
 
 protected:
     kpTextStyle m_newTextStyle, m_oldTextStyle;

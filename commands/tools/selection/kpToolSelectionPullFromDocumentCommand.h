@@ -48,8 +48,8 @@ public:
         kpCommandEnvironment *environ);
     virtual ~kpToolSelectionPullFromDocumentCommand ();
 
-    virtual void execute ();
-    virtual void unexecute ();
+    void execute () Q_DECL_OVERRIDE;
+    void unexecute () Q_DECL_OVERRIDE;
 
 private:
     kpColor m_backgroundColor;

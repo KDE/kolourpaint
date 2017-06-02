@@ -42,8 +42,8 @@ public:
     kpToolBrush (kpToolEnvironment *environ, QObject *parent);
 
 protected:
-    virtual QString haventBegunDrawUserMessage () const;
-    virtual bool haveDiverseBrushes () const { return true; }
+    QString haventBegunDrawUserMessage () const Q_DECL_OVERRIDE;
+    bool haveDiverseBrushes () const Q_DECL_OVERRIDE { return true; }
 };
 
 

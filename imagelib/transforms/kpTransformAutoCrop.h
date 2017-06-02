@@ -60,7 +60,7 @@ public:
 
     static QString text(bool actOnSelection, int options);
 
-    virtual SizeType size () const;
+    SizeType size () const Q_DECL_OVERRIDE;
 
 private:
     void getUndoImage (const kpTransformAutoCropBorder &border, kpImage **image);
@@ -68,8 +68,8 @@ private:
     void deleteUndoImages ();
 
 public:
-    virtual void execute ();
-    virtual void unexecute ();
+    void execute () Q_DECL_OVERRIDE;
+    void unexecute () Q_DECL_OVERRIDE;
 
 private:
     QRect contentsRect () const;

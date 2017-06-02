@@ -49,7 +49,7 @@ public:
     //
 
 protected:
-    virtual kpImage applyEffect (const kpImage &image);
+    kpImage applyEffect (const kpImage &image) Q_DECL_OVERRIDE;
 
     int m_depth;
     bool m_dither;

@@ -61,9 +61,9 @@ public:
 //
 
 protected:
-    virtual kpAbstractSelectionContentCommand *newGiveContentCommand () const;
+    kpAbstractSelectionContentCommand *newGiveContentCommand () const Q_DECL_OVERRIDE;
 
-    virtual QString nameOfCreateCommand () const;
+    QString nameOfCreateCommand () const Q_DECL_OVERRIDE;
 
 
 //
@@ -71,9 +71,9 @@ protected:
 //
 
 protected:
-    virtual QString haventBegunDrawUserMessageCreate () const;
-    virtual QString haventBegunDrawUserMessageMove () const;
-    virtual QString haventBegunDrawUserMessageResizeScale () const;
+    QString haventBegunDrawUserMessageCreate () const Q_DECL_OVERRIDE;
+    QString haventBegunDrawUserMessageMove () const Q_DECL_OVERRIDE;
+    QString haventBegunDrawUserMessageResizeScale () const Q_DECL_OVERRIDE;
 
 
 //
@@ -97,9 +97,9 @@ protected:
         const kpImageSelectionTransparency &oldTrans);
 
 protected slots:
-    virtual void slotIsOpaqueChanged (bool isOpaque);
-    virtual void slotBackgroundColorChanged (const kpColor &color);
-    virtual void slotColorSimilarityChanged (double similarity, int);
+    void slotIsOpaqueChanged (bool isOpaque) Q_DECL_OVERRIDE;
+    void slotBackgroundColorChanged (const kpColor &color) Q_DECL_OVERRIDE;
+    void slotColorSimilarityChanged (double similarity, int) Q_DECL_OVERRIDE;
 };
 
 

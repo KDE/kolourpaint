@@ -61,9 +61,9 @@ protected slots:
     void slotViewDestroyed ();
 
 protected:
-    virtual void resizeEvent (QResizeEvent *e);
-    virtual void moveEvent (QMoveEvent *e);
-    virtual void closeEvent (QCloseEvent *e);
+    void resizeEvent (QResizeEvent *e) Q_DECL_OVERRIDE;
+    void moveEvent (QMoveEvent *e) Q_DECL_OVERRIDE;
+    void closeEvent (QCloseEvent *e) Q_DECL_OVERRIDE;
 
 signals:
     void windowClosed ();

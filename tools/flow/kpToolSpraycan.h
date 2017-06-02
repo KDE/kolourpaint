@@ -49,27 +49,27 @@ public:
     kpToolSpraycan (kpToolEnvironment *environ, QObject *parent);
 
 protected:
-    virtual QString haventBegunDrawUserMessage () const;
+    QString haventBegunDrawUserMessage () const Q_DECL_OVERRIDE;
 
 
 public:
-    virtual void begin ();
-    virtual void end ();
+    void begin () Q_DECL_OVERRIDE;
+    void end () Q_DECL_OVERRIDE;
 
 
 public:
-    virtual void beginDraw ();
+    void beginDraw () Q_DECL_OVERRIDE;
 protected:
     // (ASSUMPTION: <probability> is between 0.0 and 1.0 inclusive)
     QRect drawLineWithProbability (const QPoint &thisPoint,
          const QPoint &lastPoint,
          double probability);
 public:
-    virtual QRect drawPoint (const QPoint &point);
-    virtual QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint);
-    virtual void cancelShape ();
-    virtual void endDraw (const QPoint &thisPoint,
-        const QRect &normalizedRect);
+    QRect drawPoint (const QPoint &point) Q_DECL_OVERRIDE;
+    QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint) Q_DECL_OVERRIDE;
+    void cancelShape () Q_DECL_OVERRIDE;
+    void endDraw (const QPoint &thisPoint,
+        const QRect &normalizedRect) Q_DECL_OVERRIDE;
 
 protected slots:
     void timeoutDraw ();

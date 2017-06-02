@@ -41,14 +41,14 @@ Q_OBJECT
 public:
     kpToolEraser (kpToolEnvironment *environ, QObject *parent);
 
-    virtual void globalDraw ();
+    void globalDraw () Q_DECL_OVERRIDE;
 
 
 protected:
-    virtual QString haventBegunDrawUserMessage () const;
+    QString haventBegunDrawUserMessage () const Q_DECL_OVERRIDE;
 
-    virtual bool haveSquareBrushes () const { return true; }
-    virtual bool colorsAreSwapped () const { return true; }
+    bool haveSquareBrushes () const Q_DECL_OVERRIDE { return true; }
+    bool colorsAreSwapped () const Q_DECL_OVERRIDE { return true; }
 };
 
 

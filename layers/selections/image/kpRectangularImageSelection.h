@@ -54,7 +54,7 @@ public:
 
     kpRectangularImageSelection &operator= (const kpRectangularImageSelection &rhs);
 
-    virtual kpRectangularImageSelection *clone () const;
+    kpRectangularImageSelection *clone () const Q_DECL_OVERRIDE;
 
     virtual ~kpRectangularImageSelection ();
 
@@ -65,7 +65,7 @@ public:
 
 public:
     static const int SerialID = 0;
-    virtual int serialID () const;
+    int serialID () const Q_DECL_OVERRIDE;
 
 
 //
@@ -73,7 +73,7 @@ public:
 //
 
 public:
-    virtual bool isRectangular () const;
+    bool isRectangular () const Q_DECL_OVERRIDE;
 
 
 //
@@ -81,7 +81,7 @@ public:
 //
 
 public:
-    virtual QPolygon calculatePoints () const;
+    QPolygon calculatePoints () const Q_DECL_OVERRIDE;
 
 
 //
@@ -89,9 +89,9 @@ public:
 //
 
 public:
-    virtual QBitmap shapeBitmap (bool nullForRectangular = false) const;
+    QBitmap shapeBitmap (bool nullForRectangular = false) const Q_DECL_OVERRIDE;
 
-    virtual QRegion shapeRegion () const;
+    QRegion shapeRegion () const Q_DECL_OVERRIDE;
 
 
 //
@@ -99,7 +99,7 @@ public:
 //
 
 public:
-    virtual bool contains (const QPoint &point) const;
+    bool contains (const QPoint &point) const Q_DECL_OVERRIDE;
 
 
 //
@@ -107,8 +107,8 @@ public:
 //
 
 public:
-    virtual void paintBorder (QImage *destPixmap, const QRect &docRect,
-        bool selectionFinished) const;
+    void paintBorder (QImage *destPixmap, const QRect &docRect,
+        bool selectionFinished) const Q_DECL_OVERRIDE;
 
 
 private:

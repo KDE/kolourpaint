@@ -95,10 +95,10 @@ signals:
     void optionSelected (int row, int col);
 
 protected:
-    virtual bool event (QEvent *e);
+    bool event (QEvent *e) Q_DECL_OVERRIDE;
  
-    virtual void mousePressEvent (QMouseEvent *e);
-    virtual void paintEvent (QPaintEvent *e);
+    void mousePressEvent (QMouseEvent *e) Q_DECL_OVERRIDE;
+    void paintEvent (QPaintEvent *e) Q_DECL_OVERRIDE;
 
     QWidget *m_baseWidget;
 

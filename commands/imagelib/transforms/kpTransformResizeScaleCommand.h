@@ -59,8 +59,8 @@ public:
         kpCommandEnvironment *environ);
     virtual ~kpTransformResizeScaleCommand ();
 
-    virtual QString name () const;
-    virtual SizeType size () const;
+    QString name () const Q_DECL_OVERRIDE;
+    SizeType size () const Q_DECL_OVERRIDE;
 
 public:
     int newWidth () const;
@@ -79,8 +79,8 @@ private:
     void scaleSelectionRegionWithDocument ();
 
 public:
-    virtual void execute ();
-    virtual void unexecute ();
+    void execute () Q_DECL_OVERRIDE;
+    void unexecute () Q_DECL_OVERRIDE;
 
 protected:
     bool m_actOnSelection;

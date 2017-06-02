@@ -41,7 +41,7 @@ public:
             kpCommandEnvironment *environ);
 
 protected:
-    virtual kpImage applyEffect (const kpImage &image);
+    kpImage applyEffect (const kpImage &image) Q_DECL_OVERRIDE;
 
 protected:
     double m_hue, m_saturation, m_value;

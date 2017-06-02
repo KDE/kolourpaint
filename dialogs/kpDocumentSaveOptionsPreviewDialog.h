@@ -66,9 +66,9 @@ public slots:
     void updatePixmapPreview ();
 
 protected:
-    virtual void closeEvent (QCloseEvent *e);
-    virtual void moveEvent (QMoveEvent *e);
-    virtual void resizeEvent (QResizeEvent *e);
+    void closeEvent (QCloseEvent *e) Q_DECL_OVERRIDE;
+    void moveEvent (QMoveEvent *e) Q_DECL_OVERRIDE;
+    void resizeEvent (QResizeEvent *e) Q_DECL_OVERRIDE;
 
 protected:
     QImage *m_filePixmap;

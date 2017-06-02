@@ -42,8 +42,8 @@ public:
     kpToolPen (kpToolEnvironment *environ, QObject *parent);
 
 protected:
-    virtual QString haventBegunDrawUserMessage () const;
-    virtual QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint);
+    QString haventBegunDrawUserMessage () const Q_DECL_OVERRIDE;
+    QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint) Q_DECL_OVERRIDE;
 };
 
 

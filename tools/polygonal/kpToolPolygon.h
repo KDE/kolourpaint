@@ -42,17 +42,17 @@ public:
     virtual ~kpToolPolygon ();
 
 private:
-    virtual QString haventBegunShapeUserMessage () const;
+    QString haventBegunShapeUserMessage () const Q_DECL_OVERRIDE;
 
 public:
-    virtual void begin ();
-    virtual void end ();
+    void begin () Q_DECL_OVERRIDE;
+    void end () Q_DECL_OVERRIDE;
 
 protected:
-    virtual kpColor drawingBackgroundColor () const;
+    kpColor drawingBackgroundColor () const Q_DECL_OVERRIDE;
 
 public:
-    virtual void endDraw (const QPoint &, const QRect &);
+    void endDraw (const QPoint &, const QRect &) Q_DECL_OVERRIDE;
 
 private:
     struct kpToolPolygonPrivate *d;

@@ -49,13 +49,13 @@ public:
     kpEffectBlurSharpenWidget (bool actOnSelection, QWidget *parent);
     virtual ~kpEffectBlurSharpenWidget ();
 
-    virtual QString caption () const;
+    QString caption () const Q_DECL_OVERRIDE;
 
-    virtual bool isNoOp () const;
-    virtual kpImage applyEffect (const kpImage &image);
+    bool isNoOp () const Q_DECL_OVERRIDE;
+    kpImage applyEffect (const kpImage &image) Q_DECL_OVERRIDE;
 
-    virtual kpEffectCommandBase *createCommand (
-        kpCommandEnvironment *cmdEnviron) const;
+    kpEffectCommandBase *createCommand (
+        kpCommandEnvironment *cmdEnviron) const Q_DECL_OVERRIDE;
 
 protected slots:
     void slotUpdateTypeLabel ();

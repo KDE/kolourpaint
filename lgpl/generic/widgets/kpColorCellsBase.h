@@ -154,21 +154,21 @@ protected:
   /** Grays out the cells, when the object is disabled.
       Added for KolourPaint.
   */
-  virtual void changeEvent( QEvent* event );
+  void changeEvent( QEvent* event ) Q_DECL_OVERRIDE;
 
   // the three methods below are used to ensure equal column widths and row heights
   // for all cells and to update the widths/heights when the widget is resized
-  virtual int sizeHintForColumn(int column) const;
-  virtual int sizeHintForRow(int column) const;
-  virtual void resizeEvent( QResizeEvent* event );
+  int sizeHintForColumn(int column) const Q_DECL_OVERRIDE;
+  int sizeHintForRow(int column) const Q_DECL_OVERRIDE;
+  void resizeEvent( QResizeEvent* event ) Q_DECL_OVERRIDE;
 
-  virtual void mouseReleaseEvent( QMouseEvent * );
-  virtual void mousePressEvent( QMouseEvent * );
-  virtual void mouseMoveEvent( QMouseEvent * );
-  virtual void dragEnterEvent( QDragEnterEvent * );
-  virtual void dragMoveEvent( QDragMoveEvent * );
-  virtual void dropEvent( QDropEvent *);
-  virtual void mouseDoubleClickEvent( QMouseEvent * );
+  void mouseReleaseEvent( QMouseEvent * ) Q_DECL_OVERRIDE;
+  void mousePressEvent( QMouseEvent * ) Q_DECL_OVERRIDE;
+  void mouseMoveEvent( QMouseEvent * ) Q_DECL_OVERRIDE;
+  void dragEnterEvent( QDragEnterEvent * ) Q_DECL_OVERRIDE;
+  void dragMoveEvent( QDragMoveEvent * ) Q_DECL_OVERRIDE;
+  void dropEvent( QDropEvent *) Q_DECL_OVERRIDE;
+  void mouseDoubleClickEvent( QMouseEvent * ) Q_DECL_OVERRIDE;
 
   /** <allowEmptyCell> was added for KolourPaint. */
   int positionToCell(const QPoint &pos, bool ignoreBorders=false,

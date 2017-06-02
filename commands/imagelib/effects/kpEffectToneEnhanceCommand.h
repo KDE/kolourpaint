@@ -43,7 +43,7 @@ public:
     virtual ~kpEffectToneEnhanceCommand ();
 
 protected:
-    virtual kpImage applyEffect (const kpImage &image);
+    kpImage applyEffect (const kpImage &image) Q_DECL_OVERRIDE;
 
 protected:
     double m_granularity, m_amount;

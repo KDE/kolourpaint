@@ -44,12 +44,12 @@ public:
         kpCommandEnvironment *environ);
     virtual ~kpEffectCommandBase ();
 
-    virtual QString name () const;
-    virtual SizeType size () const;
+    QString name () const Q_DECL_OVERRIDE;
+    SizeType size () const Q_DECL_OVERRIDE;
 
 public:
-    virtual void execute ();
-    virtual void unexecute ();
+    void execute () Q_DECL_OVERRIDE;
+    void unexecute () Q_DECL_OVERRIDE;
 
 public:
     // Return true if applyEffect(applyEffect(image)) == image

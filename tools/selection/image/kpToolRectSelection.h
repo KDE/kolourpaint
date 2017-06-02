@@ -40,10 +40,10 @@ public:
     virtual ~kpToolRectSelection ();
 
 protected:
-    virtual bool drawCreateMoreSelectionAndUpdateStatusBar (
+    bool drawCreateMoreSelectionAndUpdateStatusBar (
         bool dragAccepted,
         const QPoint &accidentalDragAdjustedPoint,
-        const QRect &normalizedRect);
+        const QRect &normalizedRect) Q_DECL_OVERRIDE;
 };
 
 

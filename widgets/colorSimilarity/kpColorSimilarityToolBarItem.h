@@ -56,7 +56,7 @@ private:
     // setting.
     void setColorSimilarityInternal (double similarity, bool writeConfig);
 public:
-    virtual void setColorSimilarity (double similarity);
+    void setColorSimilarity (double similarity) Q_DECL_OVERRIDE;
 
 signals:
     void colorSimilarityChanged (double similarity, int processedSimilarity);
@@ -90,7 +90,7 @@ private:
     void updateToolTip ();
     void updateIcon ();
 
-    virtual void resizeEvent (QResizeEvent *e);
+    void resizeEvent (QResizeEvent *e) Q_DECL_OVERRIDE;
 
 
 private:

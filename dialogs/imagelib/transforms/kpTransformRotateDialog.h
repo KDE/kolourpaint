@@ -61,20 +61,20 @@ private:
     void createAngleGroupBox ();
 
 public:
-    virtual bool isNoOp () const;
+    bool isNoOp () const Q_DECL_OVERRIDE;
     int angle () const;  // 0 <= angle < 360 (clockwise);
 
 private:
-    virtual QSize newDimensions () const;
-    virtual QImage transformPixmap (const QImage &pixmap,
-                                    int targetWidth, int targetHeight) const;
+    QSize newDimensions () const Q_DECL_OVERRIDE;
+    QImage transformPixmap (const QImage &pixmap,
+                                    int targetWidth, int targetHeight) const Q_DECL_OVERRIDE;
 
 private slots:
     void slotAngleCustomRadioButtonToggled (bool isChecked);
-    virtual void slotUpdate ();
+    void slotUpdate () Q_DECL_OVERRIDE;
 
 private slots:
-    virtual void accept ();
+    void accept () Q_DECL_OVERRIDE;
 
 private:
     QRadioButton *m_antiClockwiseRadioButton,

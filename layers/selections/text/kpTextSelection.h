@@ -104,7 +104,7 @@ public:
 
     kpTextSelection &operator= (const kpTextSelection &rhs);
 
-    virtual kpTextSelection *clone () const;
+    kpTextSelection *clone () const Q_DECL_OVERRIDE;
 
     // Returns a copy of the text selection but with new dimensions
     // <newWidth> x <newHeight>.
@@ -118,11 +118,11 @@ public:
 //
 
 public:
-    virtual int serialID () const;
+    int serialID () const Q_DECL_OVERRIDE;
 
-    virtual bool readFromStream (QDataStream &stream);
+    bool readFromStream (QDataStream &stream) Q_DECL_OVERRIDE;
 
-    virtual void writeToStream (QDataStream &stream) const;
+    void writeToStream (QDataStream &stream) const Q_DECL_OVERRIDE;
 
 
 //
@@ -130,12 +130,12 @@ public:
 //
 
 public:
-    virtual QString name () const;
+    QString name () const Q_DECL_OVERRIDE;
 
-    virtual kpCommandSize::SizeType size () const;
+    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
 
 public:
-    virtual bool isRectangular () const;
+    bool isRectangular () const Q_DECL_OVERRIDE;
 
 
 //
@@ -157,8 +157,8 @@ public:
     //
     //           Otherwise, if enforcement fails, e.g. textAreaRect() will
     //           not work.
-    virtual int minimumWidth () const;
-    virtual int minimumHeight () const;
+    int minimumWidth () const Q_DECL_OVERRIDE;
+    int minimumHeight () const Q_DECL_OVERRIDE;
 
 public:
     // Returns the suggested minimum size that a textbox should be if it is of
@@ -180,7 +180,7 @@ public:
     QRect textAreaRect () const;
 
 public:
-    virtual QPolygon calculatePoints () const;
+    QPolygon calculatePoints () const Q_DECL_OVERRIDE;
 
 
 //
@@ -188,7 +188,7 @@ public:
 //
 
 public:
-    virtual bool contains (const QPoint &point) const;
+    bool contains (const QPoint &point) const Q_DECL_OVERRIDE;
 
 public:
     bool pointIsInTextBorderArea (const QPoint &point) const;
@@ -201,9 +201,9 @@ public:
 
 public:
     // (see class header comment)
-    virtual bool hasContent () const;
+    bool hasContent () const Q_DECL_OVERRIDE;
 
-    virtual void deleteContent ();
+    void deleteContent () Q_DECL_OVERRIDE;
 
 public:
     QList <QString> textLines () const;
@@ -266,10 +266,10 @@ private:
     void drawPreeditString(QPainter &painter, int &x, int y, const kpPreeditText &preeditText) const;
 
 public:
-    virtual void paint(QImage *destPixmap, const QRect &docRect) const;
+    void paint(QImage *destPixmap, const QRect &docRect) const Q_DECL_OVERRIDE;
 
-    virtual void paintBorder(QImage *destPixmap, const QRect &docRect,
-                             bool selectionFinished) const;
+    void paintBorder(QImage *destPixmap, const QRect &docRect,
+                             bool selectionFinished) const Q_DECL_OVERRIDE;
 
 public:
     // Returns an image that contains the painted text (without a border).

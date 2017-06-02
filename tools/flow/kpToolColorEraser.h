@@ -44,21 +44,21 @@ public:
 
 
 public:
-    virtual void globalDraw ();
+    void globalDraw () Q_DECL_OVERRIDE;
 
 
 protected:
-    virtual QString haventBegunDrawUserMessage () const;
+    QString haventBegunDrawUserMessage () const Q_DECL_OVERRIDE;
 
-    virtual bool drawShouldProceed (const QPoint &thisPoint,
+    bool drawShouldProceed (const QPoint &thisPoint,
         const QPoint &lastPoint,
-        const QRect &normalizedRect);
+        const QRect &normalizedRect) Q_DECL_OVERRIDE;
 
-    virtual bool haveSquareBrushes () const { return true; }
-    virtual bool colorsAreSwapped () const { return true; }
+    bool haveSquareBrushes () const Q_DECL_OVERRIDE { return true; }
+    bool colorsAreSwapped () const Q_DECL_OVERRIDE { return true; }
 
 
-    virtual QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint);
+    QRect drawLine (const QPoint &thisPoint, const QPoint &lastPoint) Q_DECL_OVERRIDE;
 };
 
 

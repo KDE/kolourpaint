@@ -62,11 +62,11 @@ class kpToolFlowBase : public kpTool
         const QPoint &mousePoint,
         int brushWidth, int brushHeight);
 
-    virtual void begin();
-    virtual void end();
+    void begin() Q_DECL_OVERRIDE;
+    void end() Q_DECL_OVERRIDE;
 
-    virtual void beginDraw();
-    virtual void hover(const QPoint &point);
+    void beginDraw() Q_DECL_OVERRIDE;
+    void hover(const QPoint &point) Q_DECL_OVERRIDE;
 
     // drawPoint() normally calls drawLine(point,point).  Override drawPoint()
     // if you think you can be more efficient.
@@ -74,10 +74,10 @@ class kpToolFlowBase : public kpTool
     virtual QRect drawLine(const QPoint &thisPoint, const QPoint &lastPoint) = 0;
 
     virtual bool drawShouldProceed(const QPoint & /*thisPoint*/, const QPoint & /*lastPoint*/, const QRect & /*normalizedRect*/) { return true; }
-    virtual void draw(const QPoint &thisPoint, const QPoint &lastPoint, const QRect &normalizedRect);
-    virtual void cancelShape();
-    virtual void releasedAllButtons();
-    virtual void endDraw(const QPoint &, const QRect &);
+    void draw(const QPoint &thisPoint, const QPoint &lastPoint, const QRect &normalizedRect) Q_DECL_OVERRIDE;
+    void cancelShape() Q_DECL_OVERRIDE;
+    void releasedAllButtons() Q_DECL_OVERRIDE;
+    void endDraw(const QPoint &, const QRect &) Q_DECL_OVERRIDE;
 
   protected:
     virtual QString haventBegunDrawUserMessage() const = 0;
@@ -106,8 +106,8 @@ class kpToolFlowBase : public kpTool
   protected slots:
     void updateBrushAndCursor();
 
-    virtual void slotForegroundColorChanged(const kpColor &col);
-    virtual void slotBackgroundColorChanged(const kpColor &col);
+    void slotForegroundColorChanged(const kpColor &col) Q_DECL_OVERRIDE;
+    void slotBackgroundColorChanged(const kpColor &col) Q_DECL_OVERRIDE;
 
   private:
     void clearBrushCursorData();

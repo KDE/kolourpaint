@@ -124,7 +124,7 @@ public:
     // Inform kpTool to call draw() when CTRL, SHIFT and friends are
     // pressed.  CTRL is used for copying, instead of moving, the
     // selection.  SHIFT is used for sweeping.
-    virtual bool careAboutModifierState () const { return true; }
+    bool careAboutModifierState () const Q_DECL_OVERRIDE { return true; }
 
 
 //
@@ -245,12 +245,12 @@ private:
 
 
 public:
-    virtual void begin ();
-    virtual void end ();
+    void begin () Q_DECL_OVERRIDE;
+    void end () Q_DECL_OVERRIDE;
 
 
 public:
-    virtual void reselect ();
+    void reselect () Q_DECL_OVERRIDE;
 
 
 //
@@ -289,7 +289,7 @@ protected:
     // returning "None" instead of calling the base implementation.
     virtual DrawType calculateDrawType () const;
 public:
-    virtual void beginDraw ();
+    void beginDraw () Q_DECL_OVERRIDE;
 
 
 //
@@ -297,9 +297,9 @@ public:
 //
 
 public:
-    virtual void hover (const QPoint &point);
-    virtual void draw (const QPoint &thisPoint, const QPoint &lastPoint,
-                       const QRect &normalizedRect);
+    void hover (const QPoint &point) Q_DECL_OVERRIDE;
+    void draw (const QPoint &thisPoint, const QPoint &lastPoint,
+                       const QRect &normalizedRect) Q_DECL_OVERRIDE;
 
 
 //
@@ -307,8 +307,8 @@ public:
 //
 
 public:
-    virtual void cancelShape ();
-    virtual void releasedAllButtons ();
+    void cancelShape () Q_DECL_OVERRIDE;
+    void releasedAllButtons () Q_DECL_OVERRIDE;
 
 
 protected:
@@ -323,7 +323,7 @@ protected:
     //          code in your handler after the call.
     void popupRMBMenu ();
 public:
-    virtual void endDraw (const QPoint &thisPoint, const QRect &normalizedRect);
+    void endDraw (const QPoint &thisPoint, const QRect &normalizedRect) Q_DECL_OVERRIDE;
 
 
 //
@@ -589,7 +589,7 @@ protected slots:
 protected:
     // Reimplemented to trap Esc presses for deselecting the selection.
     // All other keypresses are passed to the base implementation.
-    virtual void keyPressEvent (QKeyEvent *e);
+    void keyPressEvent (QKeyEvent *e) Q_DECL_OVERRIDE;
 
 
 private:

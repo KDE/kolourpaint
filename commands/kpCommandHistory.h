@@ -94,8 +94,8 @@ public:
         bool execute = true);
 
 public slots:
-    virtual void undo ();
-    virtual void redo ();
+    void undo () Q_DECL_OVERRIDE;
+    void redo () Q_DECL_OVERRIDE;
 
 protected:
     kpMainWindow *m_mainWindow;

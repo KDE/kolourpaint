@@ -46,10 +46,10 @@ public:
     // kpCommand Interface
     //
 
-    virtual SizeType size () const;
+    SizeType size () const Q_DECL_OVERRIDE;
 
-    virtual void execute ();
-    virtual void unexecute ();
+    void execute () Q_DECL_OVERRIDE;
+    void unexecute () Q_DECL_OVERRIDE;
 
 
     //

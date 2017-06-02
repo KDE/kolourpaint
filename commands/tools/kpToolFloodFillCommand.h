@@ -48,17 +48,17 @@ public:
                             kpCommandEnvironment *environ);
     virtual ~kpToolFloodFillCommand ();
 
-    virtual QString name () const;
+    QString name () const Q_DECL_OVERRIDE;
 
-    virtual kpCommandSize::SizeType size () const;
+    kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
 
     // Optimization hack: filling a fresh, unmodified document does not require
     //                    reading any pixels - just set the whole document to
     //                    <color>.
     void setFillEntireImage (bool yes = true);
 
-    virtual void execute ();
-    virtual void unexecute ();
+    void execute () Q_DECL_OVERRIDE;
+    void unexecute () Q_DECL_OVERRIDE;
 
 private:
     kpToolFloodFillCommandPrivate * const d;

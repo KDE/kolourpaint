@@ -83,7 +83,7 @@ protected:
      *
      * Extends @ref kpView.
      */
-    virtual void resizeEvent (QResizeEvent *e);
+    void resizeEvent (QResizeEvent *e) Q_DECL_OVERRIDE;
 };
 
 

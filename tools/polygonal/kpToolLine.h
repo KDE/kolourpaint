@@ -41,10 +41,10 @@ public:
     kpToolLine (kpToolEnvironment *environ, QObject *parent);
 
 private:
-    virtual QString haventBegunShapeUserMessage () const;
+    QString haventBegunShapeUserMessage () const Q_DECL_OVERRIDE;
 
 public:
-    virtual void endDraw (const QPoint &, const QRect &);
+    void endDraw (const QPoint &, const QRect &) Q_DECL_OVERRIDE;
 };
 
 
