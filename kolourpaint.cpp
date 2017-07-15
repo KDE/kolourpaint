@@ -84,6 +84,7 @@ int main(int argc, char *argv [])
 
   QCommandLineParser cmdLine;
   KAboutData::setApplicationData(aboutData);
+  QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("kolourpaint"), app.windowIcon()));
   cmdLine.addVersionOption();
   cmdLine.addHelpOption();
   cmdLine.addPositionalArgument("files", i18n("Image files to open, optionally"), "[files...]");
