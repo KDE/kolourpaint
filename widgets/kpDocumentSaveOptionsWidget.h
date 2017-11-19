@@ -61,7 +61,7 @@ public:
 private:
     void init ();
 public:
-    virtual ~kpDocumentSaveOptionsWidget ();
+    ~kpDocumentSaveOptionsWidget () override;
 
 
     // <visualParent> is usually the filedialog

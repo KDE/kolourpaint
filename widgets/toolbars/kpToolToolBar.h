@@ -59,7 +59,7 @@ Q_OBJECT
 
 public:
     kpToolToolBar (const QString &name, int colsOrRows, QMainWindow *parent);
-    virtual ~kpToolToolBar ();
+    ~kpToolToolBar () override;
 
     void registerTool(kpTool *tool);
     void unregisterTool(kpTool *tool);

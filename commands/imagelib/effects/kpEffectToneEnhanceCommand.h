@@ -40,7 +40,7 @@ public:
     kpEffectToneEnhanceCommand (double granularity, double amount,
                                 bool actOnSelection,
                                 kpCommandEnvironment *environ);
-    virtual ~kpEffectToneEnhanceCommand ();
+    ~kpEffectToneEnhanceCommand () override;
 
 protected:
     kpImage applyEffect (const kpImage &image) Q_DECL_OVERRIDE;

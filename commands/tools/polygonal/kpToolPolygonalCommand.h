@@ -52,7 +52,7 @@ public:
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
         kpCommandEnvironment *environ);
-    virtual ~kpToolPolygonalCommand ();
+    ~kpToolPolygonalCommand () override;
 
     kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
 

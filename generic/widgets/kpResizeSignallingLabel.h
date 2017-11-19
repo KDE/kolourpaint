@@ -43,7 +43,7 @@ Q_OBJECT
 public:
     kpResizeSignallingLabel (const QString &string, QWidget *parent);
     kpResizeSignallingLabel (QWidget *parent);
-    virtual ~kpResizeSignallingLabel ();
+    ~kpResizeSignallingLabel () override;
 
 signals:
     void resized ();

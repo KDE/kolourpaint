@@ -45,7 +45,7 @@ public:
     kpToolTextBackspaceCommand (const QString &name,
         int row, int col, Action action,
         kpCommandEnvironment *environ);
-    virtual ~kpToolTextBackspaceCommand ();
+    ~kpToolTextBackspaceCommand () override;
 
     void addBackspace ();
 

@@ -50,7 +50,7 @@ Q_OBJECT
 
 public:
     kpViewManager (kpMainWindow *mainWindow);
-    ~kpViewManager ();
+    ~kpViewManager () override;
 
 
 private:

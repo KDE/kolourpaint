@@ -81,7 +81,7 @@ Q_OBJECT
 public:
     kpColorCells (QWidget *parent,
                   Qt::Orientation o = Qt::Horizontal);
-    virtual ~kpColorCells ();
+    ~kpColorCells () override;
 
     static kpColorCollection DefaultColorCollection ();
 

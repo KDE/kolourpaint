@@ -82,7 +82,7 @@ public:
             int key,
             kpToolEnvironment *environ,
             QObject *parent, const QString &name);
-    virtual ~kpTool ();
+    ~kpTool () override;
 
     kpToolAction *action () const;
 

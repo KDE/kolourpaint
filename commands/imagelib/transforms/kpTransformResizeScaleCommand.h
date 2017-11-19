@@ -57,7 +57,7 @@ public:
         int newWidth, int newHeight,
         Type type,
         kpCommandEnvironment *environ);
-    virtual ~kpTransformResizeScaleCommand ();
+    ~kpTransformResizeScaleCommand () override;
 
     QString name () const Q_DECL_OVERRIDE;
     SizeType size () const Q_DECL_OVERRIDE;

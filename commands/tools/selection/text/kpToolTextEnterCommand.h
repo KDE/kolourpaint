@@ -45,7 +45,7 @@ public:
     kpToolTextEnterCommand (const QString &name,
         int row, int col, Action action,
         kpCommandEnvironment *environ);
-    virtual ~kpToolTextEnterCommand ();
+    ~kpToolTextEnterCommand () override;
 
     void addEnter ();
 

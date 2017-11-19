@@ -55,7 +55,7 @@ public:
     //       classes we are trying to hide as that would defeat the point of
     //       the facade.
     kpToolEnvironment (kpMainWindow *mainWindow);
-    virtual ~kpToolEnvironment ();
+    ~kpToolEnvironment () override;
 
 
     KActionCollection *actionCollection () const;

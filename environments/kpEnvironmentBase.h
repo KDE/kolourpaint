@@ -72,7 +72,7 @@ protected:
     //       classes we are trying to hide as that would defeat the point of
     //       the facade.
     kpEnvironmentBase (kpMainWindow *mainWindow);
-    virtual ~kpEnvironmentBase ();
+    ~kpEnvironmentBase () override;
 
 public:
     kpDocument *document () const;

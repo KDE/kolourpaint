@@ -48,7 +48,7 @@ Q_OBJECT
 
 public:
     kpThumbnail (kpMainWindow *parent);
-    virtual ~kpThumbnail ();
+    ~kpThumbnail () override;
 
 public:
     kpThumbnailView *view () const;

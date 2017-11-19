@@ -37,7 +37,7 @@ class kpToolFreeFormSelection : public kpAbstractImageSelectionTool
 {
 public:
     kpToolFreeFormSelection (kpToolSelectionEnvironment *environ, QObject *parent);
-    virtual ~kpToolFreeFormSelection ();
+    ~kpToolFreeFormSelection () override;
 
 protected:
     bool drawCreateMoreSelectionAndUpdateStatusBar (

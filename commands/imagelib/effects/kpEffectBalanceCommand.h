@@ -42,7 +42,7 @@ public:
                             int brightness, int contrast, int gamma,
                             bool actOnSelection,
                             kpCommandEnvironment *environ);
-    virtual ~kpEffectBalanceCommand ();
+    ~kpEffectBalanceCommand () override;
 
 protected:
     kpImage applyEffect (const kpImage &image) Q_DECL_OVERRIDE;

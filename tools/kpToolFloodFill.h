@@ -39,7 +39,7 @@ Q_OBJECT
 
 public:
     kpToolFloodFill (kpToolEnvironment *environ, QObject *parent);
-    virtual ~kpToolFloodFill ();
+    ~kpToolFloodFill () override;
 
 private:
     QString haventBegunDrawUserMessage () const;

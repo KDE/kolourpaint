@@ -42,7 +42,7 @@ public:
         const kpDocumentMetaInfo &metaInfo,
         const kpDocumentMetaInfo &oldMetaInfo,
         kpCommandEnvironment *environ);
-    virtual ~kpDocumentMetaInfoCommand ();
+    ~kpDocumentMetaInfoCommand () override;
 
     SizeType size () const Q_DECL_OVERRIDE;
 

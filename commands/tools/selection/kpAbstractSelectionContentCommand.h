@@ -55,7 +55,7 @@ public:
         const kpAbstractSelection &originalSelBorder,
         const QString &name,
         kpCommandEnvironment *environ);
-    virtual ~kpAbstractSelectionContentCommand ();
+    ~kpAbstractSelectionContentCommand () override;
 
     kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
 

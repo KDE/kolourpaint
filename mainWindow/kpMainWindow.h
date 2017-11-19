@@ -122,7 +122,7 @@ private:
     void saveProperties (KConfigGroup &configGroup) Q_DECL_OVERRIDE;
 
 public:
-    ~kpMainWindow ();
+    ~kpMainWindow () override;
 
 public:
     kpDocument *document () const;

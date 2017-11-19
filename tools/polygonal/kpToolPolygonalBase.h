@@ -99,7 +99,7 @@ public:
         int key,
         kpToolEnvironment *environ, QObject *parent,
         const QString &name);
-    virtual ~kpToolPolygonalBase ();
+    ~kpToolPolygonalBase () override;
 
     bool careAboutModifierState () const Q_DECL_OVERRIDE { return true; }
 

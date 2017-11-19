@@ -43,7 +43,7 @@ Q_OBJECT
 public:
     kpEffectInvertWidget (bool actOnSelection,
                           QWidget *parent);
-    virtual ~kpEffectInvertWidget ();
+    ~kpEffectInvertWidget () override;
 
 
     int channels () const;

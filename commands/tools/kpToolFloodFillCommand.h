@@ -46,7 +46,7 @@ public:
     kpToolFloodFillCommand (int x, int y,
                             const kpColor &color, int processedColorSimilarity,
                             kpCommandEnvironment *environ);
-    virtual ~kpToolFloodFillCommand ();
+    ~kpToolFloodFillCommand () override;
 
     QString name () const Q_DECL_OVERRIDE;
 

@@ -46,7 +46,7 @@ Q_OBJECT
 
 public:
     kpEffectFlattenWidget (bool actOnSelection, QWidget *parent);
-    virtual ~kpEffectFlattenWidget ();
+    ~kpEffectFlattenWidget () override;
 
 
     static QColor s_lastColor1, s_lastColor2;

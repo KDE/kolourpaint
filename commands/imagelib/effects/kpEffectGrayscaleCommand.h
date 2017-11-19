@@ -39,7 +39,7 @@ class kpEffectGrayscaleCommand : public kpEffectCommandBase
 public:
     kpEffectGrayscaleCommand (bool actOnSelection,
                               kpCommandEnvironment *environ);
-    virtual ~kpEffectGrayscaleCommand ();
+    ~kpEffectGrayscaleCommand () override;
 
 
     //

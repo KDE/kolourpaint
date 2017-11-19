@@ -39,7 +39,7 @@ Q_OBJECT
 
 public:
     kpToolCurve (kpToolEnvironment *environ, QObject *parent);
-    virtual ~kpToolCurve ();
+    ~kpToolCurve () override;
 
 protected:
     QString haventBegunShapeUserMessage () const Q_DECL_OVERRIDE;

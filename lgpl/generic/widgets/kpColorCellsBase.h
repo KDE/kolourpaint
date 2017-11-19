@@ -79,7 +79,7 @@ public:
    * Specifying <rows> and <columns> was made optional for KolourPaint.
    */
   kpColorCellsBase( QWidget *parent, int rows = 0, int columns = 0 );
-  ~kpColorCellsBase();
+  ~kpColorCellsBase() override;
 
 private:
   /** Added for KolourPaint. */

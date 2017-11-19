@@ -63,7 +63,7 @@ public:
         kpToolEnvironment *environ, QObject *parent,
         const QString &name);
 
-    virtual ~kpToolRectangularBase ();
+    ~kpToolRectangularBase () override;
 
     bool careAboutModifierState () const Q_DECL_OVERRIDE { return true; }
 

@@ -44,7 +44,7 @@ Q_OBJECT
 public:
     kpEffectToneEnhanceWidget (bool actOnSelection,
                                QWidget *parent);
-    virtual ~kpEffectToneEnhanceWidget ();
+    ~kpEffectToneEnhanceWidget () override;
 
     QString caption () const Q_DECL_OVERRIDE;
 

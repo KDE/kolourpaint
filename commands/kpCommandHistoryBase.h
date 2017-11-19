@@ -65,7 +65,7 @@ Q_OBJECT
 
 public:
     kpCommandHistoryBase (bool doReadConfig, KActionCollection *ac);
-    virtual ~kpCommandHistoryBase ();
+    ~kpCommandHistoryBase () override;
 
 public:
     // (provided for compatibility with KCommandHistory)

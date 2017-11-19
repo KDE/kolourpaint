@@ -39,7 +39,7 @@ Q_OBJECT
 
 public:
     kpToolPolygon (kpToolEnvironment *environ, QObject *parent);
-    virtual ~kpToolPolygon ();
+    ~kpToolPolygon () override;
 
 private:
     QString haventBegunShapeUserMessage () const Q_DECL_OVERRIDE;

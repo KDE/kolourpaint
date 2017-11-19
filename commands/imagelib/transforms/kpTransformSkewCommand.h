@@ -44,7 +44,7 @@ public:
     kpTransformSkewCommand (bool actOnSelection,
         int hangle, int vangle,
         kpCommandEnvironment *environ);
-    virtual ~kpTransformSkewCommand ();
+    ~kpTransformSkewCommand () override;
 
     QString name () const Q_DECL_OVERRIDE;
 

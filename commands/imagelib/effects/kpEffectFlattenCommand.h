@@ -42,7 +42,7 @@ public:
     kpEffectFlattenCommand (const QColor &color1, const QColor &color2,
                             bool actOnSelection,
                             kpCommandEnvironment *environ);
-    virtual ~kpEffectFlattenCommand ();
+    ~kpEffectFlattenCommand () override;
 
 
     //

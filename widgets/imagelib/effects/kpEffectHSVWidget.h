@@ -42,7 +42,7 @@ Q_OBJECT
 
 public:
     kpEffectHSVWidget (bool actOnSelection, QWidget *parent);
-    virtual ~kpEffectHSVWidget ();
+    ~kpEffectHSVWidget () override;
 
     QString caption () const Q_DECL_OVERRIDE;
 

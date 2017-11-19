@@ -47,7 +47,7 @@ Q_OBJECT
 
 public:
     kpEffectBlurSharpenWidget (bool actOnSelection, QWidget *parent);
-    virtual ~kpEffectBlurSharpenWidget ();
+    ~kpEffectBlurSharpenWidget () override;
 
     QString caption () const Q_DECL_OVERRIDE;
 

@@ -45,7 +45,7 @@ Q_OBJECT
 
 public:
     kpEffectEmbossWidget (bool actOnSelection, QWidget *parent);
-    virtual ~kpEffectEmbossWidget ();
+    ~kpEffectEmbossWidget () override;
 
     QString caption () const Q_DECL_OVERRIDE;
 

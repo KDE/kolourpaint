@@ -44,7 +44,7 @@ public:
     kpTransformRotateCommand (bool actOnSelection,
         double angle,  // 0 <= angle < 360 (clockwise)
         kpCommandEnvironment *environ);
-    virtual ~kpTransformRotateCommand ();
+    ~kpTransformRotateCommand () override;
 
     QString name () const Q_DECL_OVERRIDE;
 

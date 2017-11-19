@@ -48,7 +48,7 @@ Q_OBJECT
 
 public:
     kpColorSimilarityDialog (QWidget *parent);
-    virtual ~kpColorSimilarityDialog ();
+    ~kpColorSimilarityDialog () override;
 
     double colorSimilarity () const;
     void setColorSimilarity (double similarity);

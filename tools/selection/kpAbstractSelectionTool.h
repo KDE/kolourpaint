@@ -118,7 +118,7 @@ public:
         kpToolSelectionEnvironment *environ, QObject *parent,
         const QString &name);
 
-    virtual ~kpAbstractSelectionTool ();
+    ~kpAbstractSelectionTool () override;
 
 
     // Inform kpTool to call draw() when CTRL, SHIFT and friends are

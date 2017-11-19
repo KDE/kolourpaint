@@ -50,7 +50,7 @@ public:
         const kpTransformAutoCropBorder &topBorder,
         const kpTransformAutoCropBorder &botBorder,
         kpCommandEnvironment *environ);
-    virtual ~kpTransformAutoCropCommand ();
+    ~kpTransformAutoCropCommand () override;
 
     enum NameOptions
     {

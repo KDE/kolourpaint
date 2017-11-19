@@ -52,7 +52,7 @@ class kpToolFlowBase : public kpTool
                    int key,
                    kpToolEnvironment *environ, QObject *parent, const QString &name);
 
-    virtual ~kpToolFlowBase();
+    ~kpToolFlowBase() override;
 
     // Returns the dirty rectangle for drawing a brush(of size
     // <brushWidth>x<brushHeight>) at <mousePoint>.  <mousePoint> will end

@@ -45,7 +45,7 @@ Q_OBJECT
 
 public:
     kpToolWidgetFillStyle (QWidget *parent, const QString &name);
-    virtual ~kpToolWidgetFillStyle ();
+    ~kpToolWidgetFillStyle () override;
 
     enum FillStyle
     {

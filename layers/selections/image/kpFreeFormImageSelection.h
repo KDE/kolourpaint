@@ -56,7 +56,7 @@ public:
 
     kpFreeFormImageSelection *clone () const Q_DECL_OVERRIDE;
 
-    virtual ~kpFreeFormImageSelection ();
+    ~kpFreeFormImageSelection () override;
 
 
 //

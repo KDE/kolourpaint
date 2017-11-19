@@ -40,7 +40,7 @@ Q_OBJECT
 
 public:
     kpToolColorEraser (kpToolEnvironment *environ, QObject *parent);
-    virtual ~kpToolColorEraser ();
+    ~kpToolColorEraser () override;
 
 
 public:

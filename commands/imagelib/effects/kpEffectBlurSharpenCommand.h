@@ -42,7 +42,7 @@ public:
                                 int strength,
                                 bool actOnSelection,
                                 kpCommandEnvironment *environ);
-    virtual ~kpEffectBlurSharpenCommand ();
+    ~kpEffectBlurSharpenCommand () override;
 
     static QString nameForType (kpEffectBlurSharpen::Type type);
 

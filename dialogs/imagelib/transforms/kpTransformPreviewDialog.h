@@ -65,7 +65,7 @@ public:
         bool actOnSelection,
         kpTransformDialogEnvironment *_env,
         QWidget *parent);
-    virtual ~kpTransformPreviewDialog ();
+    ~kpTransformPreviewDialog () override;
 
 private:
     void createDimensionsGroupBox ();

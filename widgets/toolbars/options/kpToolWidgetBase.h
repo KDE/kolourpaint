@@ -50,7 +50,7 @@ Q_OBJECT
 public:
     // (must provide a <name> for config to work)
     kpToolWidgetBase (QWidget *parent, const QString &name);
-    virtual ~kpToolWidgetBase ();
+    ~kpToolWidgetBase () override;
 
 public:
     void addOption (const QPixmap &pixmap, const QString &toolTip = QString());

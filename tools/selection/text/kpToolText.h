@@ -80,7 +80,7 @@ Q_OBJECT
 
 public:
     kpToolText (kpToolSelectionEnvironment *environ, QObject *parent);
-    virtual ~kpToolText ();
+    ~kpToolText () override;
 
 
 //

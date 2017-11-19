@@ -55,7 +55,7 @@ Q_OBJECT
 public:
     kpDocumentMetaInfoDialog (const kpDocumentMetaInfo *docMetaInfo,
                               QWidget *parent);
-    virtual ~kpDocumentMetaInfoDialog ();
+    ~kpDocumentMetaInfoDialog () override;
 
 public:
     bool isNoOp () const;

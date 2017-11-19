@@ -39,7 +39,7 @@ Q_OBJECT
 
 public:
     kpToolZoom (kpToolEnvironment *environ, QWidget *parent);
-    virtual ~kpToolZoom ();
+    ~kpToolZoom () override;
 
     bool returnToPreviousToolAfterEndDraw () const Q_DECL_OVERRIDE;
 

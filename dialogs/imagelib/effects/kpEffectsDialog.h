@@ -54,7 +54,7 @@ public:
                      kpTransformDialogEnvironment *_env,
                      QWidget *parent,
                      int defaultSelectedEffect = 0);
-    virtual ~kpEffectsDialog ();
+    ~kpEffectsDialog () override;
 
     bool isNoOp () const Q_DECL_OVERRIDE;
     kpEffectCommandBase *createCommand () const;

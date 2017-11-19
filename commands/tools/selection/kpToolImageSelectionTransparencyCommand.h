@@ -41,7 +41,7 @@ public:
         const kpImageSelectionTransparency &st,
         const kpImageSelectionTransparency &oldST,
         kpCommandEnvironment *environ);
-    virtual ~kpToolImageSelectionTransparencyCommand ();
+    ~kpToolImageSelectionTransparencyCommand () override;
 
     kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
 

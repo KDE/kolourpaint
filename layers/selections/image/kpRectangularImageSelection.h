@@ -56,7 +56,7 @@ public:
 
     kpRectangularImageSelection *clone () const Q_DECL_OVERRIDE;
 
-    virtual ~kpRectangularImageSelection ();
+    ~kpRectangularImageSelection () override;
 
 
 //

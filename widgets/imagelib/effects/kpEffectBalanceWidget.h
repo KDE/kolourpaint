@@ -47,7 +47,7 @@ Q_OBJECT
 
 public:
     kpEffectBalanceWidget (bool actOnSelection, QWidget *parent);
-    virtual ~kpEffectBalanceWidget ();
+    ~kpEffectBalanceWidget () override;
 
     QString caption () const Q_DECL_OVERRIDE;
 

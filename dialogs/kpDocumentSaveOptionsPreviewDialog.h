@@ -49,7 +49,7 @@ Q_OBJECT
 
 public:
     kpDocumentSaveOptionsPreviewDialog (QWidget *parent);
-    virtual ~kpDocumentSaveOptionsPreviewDialog ();
+    ~kpDocumentSaveOptionsPreviewDialog () override;
 
     QSize preferredMinimumSize () const;
 

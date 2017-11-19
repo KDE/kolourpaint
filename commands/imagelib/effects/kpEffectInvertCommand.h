@@ -43,7 +43,7 @@ public:
                            kpCommandEnvironment *environ);
     kpEffectInvertCommand (bool actOnSelection,
                            kpCommandEnvironment *environ);
-    virtual ~kpEffectInvertCommand ();
+    ~kpEffectInvertCommand () override;
 
 
     //

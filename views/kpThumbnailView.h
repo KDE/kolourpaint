@@ -58,7 +58,7 @@ public:
     /**
      * Destructs this thumbnail view.
      */
-    virtual ~kpThumbnailView ();
+    ~kpThumbnailView () override;
 
 
     /**

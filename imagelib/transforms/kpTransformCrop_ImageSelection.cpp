@@ -51,7 +51,7 @@ class SetDocumentToSelectionImageCommand : public kpCommand
 {
 public:
     SetDocumentToSelectionImageCommand (kpCommandEnvironment *environ);
-    virtual ~SetDocumentToSelectionImageCommand ();
+    ~SetDocumentToSelectionImageCommand () override;
 
     /* (uninteresting child of macro cmd) */
     QString name () const Q_DECL_OVERRIDE { return QString(); }

@@ -40,7 +40,7 @@ public:
     kpToolColorPickerCommand (int mouseButton,
                               const kpColor &newColor, const kpColor &oldColor,
                               kpCommandEnvironment *environ);
-    virtual ~kpToolColorPickerCommand ();
+    ~kpToolColorPickerCommand () override;
 
     QString name () const Q_DECL_OVERRIDE;
 

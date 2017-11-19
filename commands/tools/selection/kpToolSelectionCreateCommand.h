@@ -43,7 +43,7 @@ public:
     // (if fromSelection doesn't have a pixmap, it will only recreate the region)
     kpToolSelectionCreateCommand (const QString &name, const kpAbstractSelection &fromSelection,
                                   kpCommandEnvironment *environ);
-    virtual ~kpToolSelectionCreateCommand ();
+    ~kpToolSelectionCreateCommand () override;
 
     kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
 

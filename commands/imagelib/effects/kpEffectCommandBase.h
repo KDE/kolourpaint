@@ -42,7 +42,7 @@ public:
     kpEffectCommandBase (const QString &name,
         bool actOnSelection,
         kpCommandEnvironment *environ);
-    virtual ~kpEffectCommandBase ();
+    ~kpEffectCommandBase () override;
 
     QString name () const Q_DECL_OVERRIDE;
     SizeType size () const Q_DECL_OVERRIDE;

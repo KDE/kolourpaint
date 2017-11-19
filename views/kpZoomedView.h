@@ -66,7 +66,7 @@ public:
     /**
      * Destructs an unzoomed view.
      */
-    virtual ~kpZoomedView ();
+    ~kpZoomedView () override;
 
 
     /**

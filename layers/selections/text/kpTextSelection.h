@@ -110,7 +110,7 @@ public:
     // <newWidth> x <newHeight>.
     kpTextSelection *resized (int newWidth, int newHeight) const;
 
-    virtual ~kpTextSelection ();
+    ~kpTextSelection () override;
 
 
 //

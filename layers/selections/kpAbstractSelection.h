@@ -84,7 +84,7 @@ public:
     // implementation of operator=().
     virtual kpAbstractSelection *clone () const = 0;
 
-    virtual ~kpAbstractSelection ();
+    ~kpAbstractSelection () override;
 
 
 //

@@ -40,7 +40,7 @@ public:
     kpEffectEmbossCommand (int strength,
                            bool actOnSelection,
                            kpCommandEnvironment *environ);
-    virtual ~kpEffectEmbossCommand ();
+    ~kpEffectEmbossCommand () override;
 
 protected:
     kpImage applyEffect (const kpImage &image) Q_DECL_OVERRIDE;

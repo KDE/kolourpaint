@@ -58,7 +58,7 @@ Q_OBJECT
 
 public:
     kpToolSelectionResizeScaleCommand (kpCommandEnvironment *environ);
-    virtual ~kpToolSelectionResizeScaleCommand ();
+    ~kpToolSelectionResizeScaleCommand () override;
 
     kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
 

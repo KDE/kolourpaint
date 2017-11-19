@@ -90,7 +90,7 @@ public:
     // (Covariant return-type specialization of superclass pure virtual method)
     kpAbstractImageSelection *clone () const Q_DECL_OVERRIDE = 0;
 
-    virtual ~kpAbstractImageSelection ();
+    ~kpAbstractImageSelection () override;
 
 
 //

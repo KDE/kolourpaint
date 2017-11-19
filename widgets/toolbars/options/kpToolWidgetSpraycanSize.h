@@ -39,7 +39,7 @@ Q_OBJECT
 
 public:
     kpToolWidgetSpraycanSize (QWidget *parent, const QString &name);
-    virtual ~kpToolWidgetSpraycanSize ();
+    ~kpToolWidgetSpraycanSize () override;
 
     int spraycanSize () const;
 

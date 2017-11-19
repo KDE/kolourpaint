@@ -70,7 +70,7 @@ public:
     //
     //           ?
     kpDocument (int w, int h, kpDocumentEnvironment *environ);
-    ~kpDocument ();
+    ~kpDocument () override;
 
     kpDocumentEnvironment *environ () const;
     void setEnviron (kpDocumentEnvironment *environ);

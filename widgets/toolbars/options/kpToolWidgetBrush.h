@@ -42,7 +42,7 @@ Q_OBJECT
 
 public:
     kpToolWidgetBrush (QWidget *parent, const QString &name);
-    virtual ~kpToolWidgetBrush ();
+    ~kpToolWidgetBrush () override;
 
 private:
     QString brushName (int shape, int whichSize) const;

@@ -70,7 +70,7 @@ public:
     /**
      * Destructs an unzoomed thumbnail view.
      */
-    virtual ~kpUnzoomedThumbnailView ();
+    ~kpUnzoomedThumbnailView () override;
 
 
     /**

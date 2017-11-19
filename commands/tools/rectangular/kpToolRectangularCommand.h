@@ -46,7 +46,7 @@ public:
         const kpColor &fcolor, int penWidth,
         const kpColor &bcolor,
         kpCommandEnvironment *environ);
-    virtual ~kpToolRectangularCommand ();
+    ~kpToolRectangularCommand () override;
 
     kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
 

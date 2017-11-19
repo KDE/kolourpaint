@@ -40,7 +40,7 @@ public:
         bool horiz, bool vert,
         kpCommandEnvironment *environ);
 
-    virtual ~kpTransformFlipCommand ();
+    ~kpTransformFlipCommand () override;
 
     QString name () const Q_DECL_OVERRIDE;
 

@@ -45,7 +45,7 @@ Q_OBJECT
 
 public:
     kpToolWidgetEraserSize (QWidget *parent, const QString &name);
-    virtual ~kpToolWidgetEraserSize ();
+    ~kpToolWidgetEraserSize () override;
 
     int eraserSize () const;
     

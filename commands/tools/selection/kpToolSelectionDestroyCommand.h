@@ -42,7 +42,7 @@ class kpToolSelectionDestroyCommand : public kpNamedCommand
 public:
     kpToolSelectionDestroyCommand (const QString &name, bool pushOntoDocument,
                                    kpCommandEnvironment *environ);
-    virtual ~kpToolSelectionDestroyCommand ();
+    ~kpToolSelectionDestroyCommand () override;
 
     kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
 

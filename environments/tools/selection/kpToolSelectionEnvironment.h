@@ -49,7 +49,7 @@ public:
     //       classes we are trying to hide as that would defeat the point of
     //       the facade.
     kpToolSelectionEnvironment (kpMainWindow *mainWindow);
-    virtual ~kpToolSelectionEnvironment ();
+    ~kpToolSelectionEnvironment () override;
 
     kpImageSelectionTransparency imageSelectionTransparency () const;
     int settingImageSelectionTransparency () const;

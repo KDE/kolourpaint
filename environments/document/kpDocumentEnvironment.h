@@ -49,7 +49,7 @@ public:
     //       classes we are trying to hide as that would defeat the point of
     //       the facade.
     kpDocumentEnvironment (kpMainWindow *mainWindow);
-    virtual ~kpDocumentEnvironment ();
+    ~kpDocumentEnvironment () override;
 
 
     QWidget *dialogParent () const;

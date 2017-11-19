@@ -41,7 +41,7 @@ class kpToolFlowCommand : public kpNamedCommand
 {
 public:
     kpToolFlowCommand (const QString &name, kpCommandEnvironment *environ);
-    virtual ~kpToolFlowCommand ();
+    ~kpToolFlowCommand () override;
 
     kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
 

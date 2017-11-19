@@ -97,7 +97,7 @@ public:
      * Destructs this view.  Informs the viewManager() that the mouse
      * cursor is no longer above this view.
      */
-    virtual ~kpView ();
+    ~kpView () override;
 
 
     //

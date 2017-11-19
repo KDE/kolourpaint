@@ -56,7 +56,7 @@ public:
 
     kpEllipticalImageSelection *clone () const Q_DECL_OVERRIDE;
 
-    virtual ~kpEllipticalImageSelection ();
+    ~kpEllipticalImageSelection () override;
 
 
 //

@@ -63,7 +63,7 @@ Q_OBJECT
 
 public:
     kpCommandHistory (bool doReadConfig, kpMainWindow *mainWindow);
-    virtual ~kpCommandHistory ();
+    ~kpCommandHistory () override;
 
 public:
     // Same as addCommand(), except that this has a more desirable behavior

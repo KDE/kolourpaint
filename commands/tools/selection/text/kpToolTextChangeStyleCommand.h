@@ -40,7 +40,7 @@ public:
     kpToolTextChangeStyleCommand (const QString &name,
         const kpTextStyle &newTextStyle, const kpTextStyle &oldTextStyle,
         kpCommandEnvironment *environ);
-    virtual ~kpToolTextChangeStyleCommand ();
+    ~kpToolTextChangeStyleCommand () override;
 
     kpCommandSize::SizeType size () const Q_DECL_OVERRIDE;
 

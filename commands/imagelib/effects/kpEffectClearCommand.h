@@ -42,7 +42,7 @@ public:
     kpEffectClearCommand (bool actOnSelection,
         const kpColor &newColor,
         kpCommandEnvironment *environ);
-    virtual ~kpEffectClearCommand ();
+    ~kpEffectClearCommand () override;
 
     QString name () const Q_DECL_OVERRIDE;
 

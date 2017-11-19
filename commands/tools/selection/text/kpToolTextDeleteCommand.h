@@ -45,7 +45,7 @@ public:
     kpToolTextDeleteCommand (const QString &name,
         int row, int col, Action action,
         kpCommandEnvironment *environ);
-    virtual ~kpToolTextDeleteCommand ();
+    ~kpToolTextDeleteCommand () override;
 
     void addDelete ();
 

@@ -39,7 +39,7 @@ class kpMacroCommand : public kpNamedCommand
 {
 public:
     kpMacroCommand (const QString &name, kpCommandEnvironment *environ);
-    virtual ~kpMacroCommand ();
+    ~kpMacroCommand () override;
 
 
     //

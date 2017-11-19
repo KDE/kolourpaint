@@ -44,7 +44,7 @@ Q_OBJECT
 public:
     kpColorPalette (QWidget *parent,
                     Qt::Orientation o = Qt::Horizontal);
-    virtual ~kpColorPalette ();
+    ~kpColorPalette () override;
 
     Qt::Orientation orientation () const;
     void setOrientation (Qt::Orientation o);

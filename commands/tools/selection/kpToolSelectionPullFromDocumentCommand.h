@@ -46,7 +46,7 @@ public:
         const kpColor &backgroundColor,
         const QString &name,
         kpCommandEnvironment *environ);
-    virtual ~kpToolSelectionPullFromDocumentCommand ();
+    ~kpToolSelectionPullFromDocumentCommand () override;
 
     void execute () Q_DECL_OVERRIDE;
     void unexecute () Q_DECL_OVERRIDE;

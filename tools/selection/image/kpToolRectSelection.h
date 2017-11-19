@@ -37,7 +37,7 @@ class kpToolRectSelection : public kpAbstractImageSelectionTool
 {
 public:
     kpToolRectSelection (kpToolSelectionEnvironment *environ, QObject *parent);
-    virtual ~kpToolRectSelection ();
+    ~kpToolRectSelection () override;
 
 protected:
     bool drawCreateMoreSelectionAndUpdateStatusBar (

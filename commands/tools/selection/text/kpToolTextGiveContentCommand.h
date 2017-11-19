@@ -49,7 +49,7 @@ public:
         const kpTextSelection &originalSelBorder,
         const QString &name,
         kpCommandEnvironment *environ);
-    virtual ~kpToolTextGiveContentCommand ();
+    ~kpToolTextGiveContentCommand () override;
 
     void execute () Q_DECL_OVERRIDE;
     void unexecute () Q_DECL_OVERRIDE;

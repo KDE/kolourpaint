@@ -45,7 +45,7 @@ class kpToolSelectionMoveCommand : public kpNamedCommand
 {
 public:
     kpToolSelectionMoveCommand (const QString &name, kpCommandEnvironment *environ);
-    virtual ~kpToolSelectionMoveCommand ();
+    ~kpToolSelectionMoveCommand () override;
 
     kpAbstractSelection *originalSelectionClone () const;
 

@@ -44,7 +44,7 @@ Q_OBJECT
 
 public:
     kpToolColorPicker (kpToolEnvironment *environ, QObject *parent);
-    virtual ~kpToolColorPicker ();
+    ~kpToolColorPicker () override;
 
     // generally the user goes to pick a color but wants to return to using
     // his/her previous drawing tool

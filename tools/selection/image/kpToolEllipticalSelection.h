@@ -37,7 +37,7 @@ class kpToolEllipticalSelection : public kpAbstractImageSelectionTool
 {
 public:
     kpToolEllipticalSelection (kpToolSelectionEnvironment *environ, QObject *parent);
-    virtual ~kpToolEllipticalSelection ();
+    ~kpToolEllipticalSelection () override;
 
 protected:
     bool drawCreateMoreSelectionAndUpdateStatusBar (

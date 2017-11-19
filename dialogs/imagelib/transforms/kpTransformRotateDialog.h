@@ -50,7 +50,7 @@ public:
     kpTransformRotateDialog (bool actOnSelection,
         kpTransformDialogEnvironment *_env,
         QWidget *parent);
-    virtual ~kpTransformRotateDialog ();
+    ~kpTransformRotateDialog () override;
 
 private:
     static int s_lastWidth, s_lastHeight;
